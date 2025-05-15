@@ -1,216 +1,595 @@
-Return-Path: <linux-arm-msm+bounces-58048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E23BBAB827B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 11:26:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFC1BAB828C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 11:28:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A800B7AED2A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 09:24:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F350F3BA69C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 09:27:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2768329672F;
-	Thu, 15 May 2025 09:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7338297A6B;
+	Thu, 15 May 2025 09:27:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SfuDSFwe"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uTEToiTa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A14B221296
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 09:26:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97AC297A45
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 09:27:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747301164; cv=none; b=unf9/JUp11pjQBGa8PBSxFdcGE5H0uoLP0DVBPJ9tTt0/nqyOtbspxwou9LjN9Hjn1EGozM7PPI6RhBYlkRJFBxc7JXefj6Dfdng1oBDooZDvrDFLsIj9xxkdiXUC3/ENLabVov9W4G6inGtGBtIEOiIChDES8LanCcKbH9uXQ0=
+	t=1747301263; cv=none; b=AcELDpkGYer6jnc+fFEzv/ks2yn+4oFUScVMq39MtECPgOnv1T5eiYRBcoI5X54DQyJLokjHvASjvNwrhHD/DFglyjj/whJ51yycv7vLYTYaNeET3YquygrFB7QcKHRVigJjCS3L6DDoJUgNbxW2bJcxnYu6zZY2MDWocqhxzXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747301164; c=relaxed/simple;
-	bh=TsiCl8rKFCWFeDp/0oWqqwMBaN4ci8el3pbkSyntbwE=;
+	s=arc-20240116; t=1747301263; c=relaxed/simple;
+	bh=VrP32xg2Du2kc1boSBnqnBfn7U1rh2NfrZijQ/lFDdU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VMIxsirARhUyhSclnGCPvVCbKB4neLAYuSB+rZaMmNxjZEQll0xJhBtXik6lwj/g1Ed/WKUP9iWNb8Ec+/8eV7NAn7FBDCDFpPU0/hav4pgB7pIn76kX5jIoYfugnT9epLrIqmT29HaP61viQ3i/VGmr/B75qf+J8VZuJu6+FHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SfuDSFwe; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EL6A2x004749
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 09:26:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BFf3kk5fRW6YH4wNGhcvSpuk3KJMe8O3C7JOUEAZ1g8=; b=SfuDSFweQIoDdrHk
-	yRWpqw67fyyTANjrhYakd/p1cCVVrGsbgTxLp/Z4jVRFkRMNYkhl5JMN699spDhJ
-	nUqlGSnyNwcnNLI95n4vUYNXxwNvMAOVyvoDKE3L3oMxcSPrvFdx0JvEpjq5QGpN
-	P/7wqQXlRE4ePsMI3NkRK45NgJQFi4rzaGQjiXEwwFeKSuEsPRrPYjqFG68pCzCt
-	uZHifI0cvXw+XEEKOewnUo+92l4vjWyKLGL86UUW4wPbPbwH9PhYo8u/kCNdyhRO
-	ZNxyhy9tR9ch8sZ2FakDv3CY+jcYJ2lWpCrQ3rYKsli1cly/+Kv/u3fBq6oJN8BZ
-	p9sDqQ==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcnwm0w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 09:26:01 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6f2b50a75d8so12289316d6.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 02:26:01 -0700 (PDT)
+	 To:Cc:Content-Type; b=DUzQgp92rD/ZIfA9FlkS4z/+KmePxL2A1J9kg68GvcNcmSQdXotVdkqJovr6Jxl9TsjkkNYmLiNbr3CzJp80YFsqxn679488K0Kybd/p59A7I3pnYlJnG3+Cg5YOpmMepKtRZmSR8b3HPnM1/Otrjut4friC6kThKdtFirzDxZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uTEToiTa; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4774611d40bso233021cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 02:27:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1747301259; x=1747906059; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vLVWrpXHwyZFM5AS7GCsykQ+QWDj2ywEXacPF0HLVGE=;
+        b=uTEToiTa/+ZZbzvYL4Fp/bLuZTJjJQiCT5bnMhaAXnQmxKluAUhU6FtDv2aTekJA17
+         rnKS89a0Lncj1at6PrOap8hXs30JfZo/9QJ5Eh9vsbCavbJLGgWDhGewaJTPcZYUel62
+         6d3PbAvHC5o2z6GNdrGUn3H81p9v76JmIG3LHH6OQsAfCuQfrb9+Z7UbqvsLoVWGe2xJ
+         RDLhYlGHIt2WD4FMMXrHss0Pg8ExJeYlECyxh3TDXxjntqu4x1g5ZGaVVoUk8l7UQV+y
+         ibtkOcGB0cW6eE5LccA6ZuFP8+1yeLzxD0/AC2dm0f4Qu9I50WOCI8jT7gU4ovcbAWeq
+         mfMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747301160; x=1747905960;
+        d=1e100.net; s=20230601; t=1747301259; x=1747906059;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BFf3kk5fRW6YH4wNGhcvSpuk3KJMe8O3C7JOUEAZ1g8=;
-        b=qFtGXREmfoEEMWvJzGOm6HBUADa+ev6wrM06kea300wUWih+r7eHeWOqeMEy1zpbA3
-         g8SuMgHXG+u9EU8jQVRbKDtuHBSuid2JEXx1DIjAFT53Vb9MOl9oUu2tDn8LtizDIhK8
-         HjuMhhbcQRJMfoenkN4++g5heVAF6s4eE6VFO7yrmOKq6lnDZn4/JZot12fBmTMWu/9j
-         RbyU1nml2jU1ZDxJikP0jD0Ez8v3AFGf3Y1P64ql0p8OlKy7bwHste8LH4MtxOQ2FcMB
-         qzCo2Y4V14Wjx5CyYM4s/+Kyn/vxT1TfShv6pCubRLj4pL1DBvVA/UwtHEcmeVLcohZw
-         nV8A==
-X-Forwarded-Encrypted: i=1; AJvYcCUB0FFLtcVKKAx8f7aIno7ulqfyRPuuP+6V+fuso43C7CMVvOc4DTS0QrJ1YroAKaubHK242yN1ZNZEkvup@vger.kernel.org
-X-Gm-Message-State: AOJu0YxlxH9Gt4GI79Yygy4cf2gOI4bexdZJXJfHNPaZv+ox/n88mZsh
-	Tlme1J5uMWiPsD4ri/v4J5UX0IM4OiLbGlubBLoP/WYEOjBoWUvb9yS5I6Q6nEDv/SwDlZ+rALf
-	uOep0NiqLnuooWiXjyYSeR3oWJtfCRBYgqeYqIkwWoHpJuTQDfUE9DV1Y6qvB5OmKkFCk1u1Ykv
-	G0G7bqea1MD8o1NSzeltTy63J3ikkOOoeNQD4/fHs=
-X-Gm-Gg: ASbGncur4aIRCnNbBUl2tFvAaLxksVmEGDJn2stGlk1I/Svbxdk959qKTx9C79lO9lX
-	p5SSXXp+fYswxyIFCNMDUqzBNX36jVjQw/eR96R1dSHjM3AG3sSKSOTI/tWQ8guvaR7Jxlg==
-X-Received: by 2002:ad4:5767:0:b0:6ea:d393:962f with SMTP id 6a1803df08f44-6f8a4ba04femr34972576d6.16.1747301160311;
-        Thu, 15 May 2025 02:26:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHZn/QLQ9H0PPhOFWB7KPz2TUlcByNdtm3QN5xNY9Kr6JAaxQha8QMIXlF4No+E6QQoXLT5iLdWZvw8D/JG4fE=
-X-Received: by 2002:ad4:5767:0:b0:6ea:d393:962f with SMTP id
- 6a1803df08f44-6f8a4ba04femr34972206d6.16.1747301159925; Thu, 15 May 2025
- 02:25:59 -0700 (PDT)
+        bh=vLVWrpXHwyZFM5AS7GCsykQ+QWDj2ywEXacPF0HLVGE=;
+        b=TU8sclKs6iMwTDOEN5p6ngeQkRpMB87FFPzINQUdqqtXW5BPiIYI5SSDerNvavXirv
+         fw9EPU/mP0JUttA1zlG2TZPy1eb2g1qJbuvoCrlBNU427DnUHptOAZaDrjX50fPel23q
+         W/O4YEPryqIoKI7e7QA6v0UDOX7x1yZNVIff75z/8pQtg/UWDfoGeSJKsEAyuq2iL4Og
+         EDvXg+XE74A3Cj3JWRNM/vn8nwaX1o2GCgcTQ/Jf1r5DV9GJOcPfs/ucELdL9IrekjY5
+         1LFFgaqg9lY2CPEzGK7vjKXPw49NFypxPlWbUGEoaEeVUKOYXycDF7Y46g9RaKjbQKER
+         jX6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWc0tU5r4ORS1MNcHqBULXmAKhw7oDXbe+6FcjlTCqN3AfCa9YxKHi4WBGZnSnX4A0QoIhBHiB0cl6JWWkD@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxcErTJzdURl2TsbHvLD5HgYmSUsp28zdW6/SJrCh+Eo71JGxW
+	DF+M3VdOBTgxupu9zbM8sydiVHFtY7LTOcxSfITlC17VUeoUw9pj4YGNr7YKVJGRn6l5FRiOYpE
+	5L34bw9d577tN0nNXJfiQ5sgvSVcX3Z+8fNb3o0Us
+X-Gm-Gg: ASbGncvPs/39g2ztBqt7FMkwgY4Wi6SadA0O2rJAj8x+HFWwr/46VojzDmEs6I0kmsG
+	oQQ3rkPqKW0jxBqmOaYQhpgMCjSNB8xtReFb3dJfCUMYZdP6rQkNwn9DTlOTlSLuJrKjcfsZfim
+	0886bOBgM56bwcOuWcBv/q0LbZf0A8OmOYNktH1gAwT7YCxN0exAOg5/8Mju1V
+X-Google-Smtp-Source: AGHT+IEY3Xzc7fr4+j+8c7Xmzn1ASJ0g0PGM20FPE+6j6dnC/T4ZD4yfgoiNZfuCxktxFtJP7fxNgol2XsmKPY/V9Ak=
+X-Received: by 2002:ac8:5a0f:0:b0:494:763e:d971 with SMTP id
+ d75a77b69052e-494a339efa1mr2170171cf.23.1747301259016; Thu, 15 May 2025
+ 02:27:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250513142353.2572563-1-vladimir.zapolskiy@linaro.org>
- <20250513142353.2572563-6-vladimir.zapolskiy@linaro.org> <33caa974-75f7-4054-9f75-9b97981335f1@linaro.org>
-In-Reply-To: <33caa974-75f7-4054-9f75-9b97981335f1@linaro.org>
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Date: Thu, 15 May 2025 11:25:48 +0200
-X-Gm-Features: AX0GCFvPI8LxEcJdTIQapIpsFreiHwMV5ZDRgtGS5mljzrBwKwZjJkDDVAhEAFw
-Message-ID: <CAFEp6-1aKuFWQNYG3-PMdvnZKMBSKQY7792JsSj37NEFKA9QGw@mail.gmail.com>
-Subject: Re: [PATCH 5/9] media: qcom: camss: unconditionally set async
- notifier of subdevices
-To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hans.verkuil@cisco.com>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
+References: <20250513163438.3942405-14-tabba@google.com> <20250514212653.1011484-1-jthoughton@google.com>
+In-Reply-To: <20250514212653.1011484-1-jthoughton@google.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Thu, 15 May 2025 11:27:02 +0200
+X-Gm-Features: AX0GCFtxdi9w1pFV0otXB7lxTAtPlqLdBKg0KJODZ4v7UKNCvRCSP9F597nrSVg
+Message-ID: <CA+EHjTy1UoOXDKbH-9DgE_ULGBp9OtWb5R8aK1DWvgu8ECrMsA@mail.gmail.com>
+Subject: Re: [PATCH v9 13/17] KVM: arm64: Handle guest_memfd()-backed guest
+ page faults
+To: James Houghton <jthoughton@google.com>
+Cc: ackerleytng@google.com, akpm@linux-foundation.org, amoorthy@google.com, 
+	anup@brainfault.org, aou@eecs.berkeley.edu, brauner@kernel.org, 
+	catalin.marinas@arm.com, chao.p.peng@linux.intel.com, chenhuacai@kernel.org, 
+	david@redhat.com, dmatlack@google.com, fvdl@google.com, hch@infradead.org, 
+	hughd@google.com, ira.weiny@intel.com, isaku.yamahata@gmail.com, 
+	isaku.yamahata@intel.com, james.morse@arm.com, jarkko@kernel.org, 
+	jgg@nvidia.com, jhubbard@nvidia.com, keirf@google.com, 
+	kirill.shutemov@linux.intel.com, kvm@vger.kernel.org, liam.merwick@oracle.com, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, mail@maciej.szmigiero.name, 
+	maz@kernel.org, mic@digikod.net, michael.roth@amd.com, mpe@ellerman.id.au, 
+	oliver.upton@linux.dev, palmer@dabbelt.com, pankaj.gupta@amd.com, 
+	paul.walmsley@sifive.com, pbonzini@redhat.com, peterx@redhat.com, 
+	qperret@google.com, quic_cvanscha@quicinc.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_tsoni@quicinc.com, rientjes@google.com, 
+	roypat@amazon.co.uk, seanjc@google.com, shuah@kernel.org, 
+	steven.price@arm.com, suzuki.poulose@arm.com, vannapurve@google.com, 
+	vbabka@suse.cz, viro@zeniv.linux.org.uk, wei.w.wang@intel.com, 
+	will@kernel.org, willy@infradead.org, xiaoyao.li@intel.com, 
+	yilun.xu@intel.com, yuzenghui@huawei.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-GUID: TOIwIr4TSkbsQWjBTVYehz3HO-NHrhpa
-X-Proofpoint-ORIG-GUID: TOIwIr4TSkbsQWjBTVYehz3HO-NHrhpa
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDA5MSBTYWx0ZWRfX2rikWpdrUgKv
- JY+lQcu3Qbm2lkzy9g9gvJujymLudCCCfltk3xpEA1lbhowaFtGvQinIQDdFgZrDKmaHilvESFa
- nF46A3sxbHnIej4PcTrfobNuykaIG3aFYo+st0U73nTGEWo22kx6FxPWhqFk3xfV+WWSvzkEZ2I
- NCRQiK6059o0CuVr7t2ec5gUBCyPkXzbhURp81DUsqW45WHGEX6FHmRi7+SqFP1goKmbqb7AJkK
- 6k8ukKZInKxpFUS8bi4TXJwSFDh/BzrvbtkXJ8/fa3WMh02HToRo1kgpzjt3id8JvBsuye0vKlb
- Yw7/fvYNHnI+BD7Cjez/nMYoh6opfTdCi1tohbqkm8EDs6hbpB1wg+8WC+4F4xlU64I3LO4x1Er
- Au4OJ89UM6CswMFeN4w3brEC6TXo55PAxORNuMvEj6Q3tsvmwC2lYfZkfJO9n+igmjT4wOr9
-X-Authority-Analysis: v=2.4 cv=Gp9C+l1C c=1 sm=1 tr=0 ts=6825b329 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
- a=KKAkSRfTAAAA:8 a=k3plp_31mCQdX9J8InAA:9 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-15_04,2025-05-14_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0 impostorscore=0
- bulkscore=0 adultscore=0 suspectscore=0 priorityscore=1501 mlxscore=0
- malwarescore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505150091
 
-On Tue, May 13, 2025 at 5:47=E2=80=AFPM Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
+Hi James,
+
+On Wed, 14 May 2025 at 23:26, James Houghton <jthoughton@google.com> wrote:
 >
-> On 13/05/2025 15:23, Vladimir Zapolskiy wrote:
-> > For sake of simplicity it makes sense to register async notifier
-> > for all type of subdevices, both CAMSS components and sensors.
+> On Tue, May 13, 2025 at 9:35=E2=80=AFAM Fuad Tabba <tabba@google.com> wro=
+te:
 > >
-> > The case of sensors not connected to CAMSS is extraordinary and
-> > degenerate, it does not deserve any specific optimization.
+> > Add arm64 support for handling guest page faults on guest_memfd
+> > backed memslots.
 > >
-> > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> > For now, the fault granule is restricted to PAGE_SIZE.
+> >
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
 > > ---
-> >   drivers/media/platform/qcom/camss/camss.c | 30 ++++++----------------=
--
-> >   1 file changed, 8 insertions(+), 22 deletions(-)
+> >  arch/arm64/kvm/mmu.c     | 94 +++++++++++++++++++++++++---------------
+> >  include/linux/kvm_host.h |  5 +++
+> >  virt/kvm/kvm_main.c      |  5 ---
+> >  3 files changed, 64 insertions(+), 40 deletions(-)
 > >
-> > diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/=
-platform/qcom/camss/camss.c
-> > index 976b70cc6d6a..4e91e4b6ef52 100644
-> > --- a/drivers/media/platform/qcom/camss/camss.c
-> > +++ b/drivers/media/platform/qcom/camss/camss.c
-> > @@ -3556,7 +3556,6 @@ static int camss_probe(struct platform_device *pd=
-ev)
-> >   {
-> >       struct device *dev =3D &pdev->dev;
-> >       struct camss *camss;
-> > -     int num_subdevs;
-> >       int ret;
+> > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> > index d756c2b5913f..9a48ef08491d 100644
+> > --- a/arch/arm64/kvm/mmu.c
+> > +++ b/arch/arm64/kvm/mmu.c
+> > @@ -1466,6 +1466,30 @@ static bool kvm_vma_mte_allowed(struct vm_area_s=
+truct *vma)
+> >         return vma->vm_flags & VM_MTE_ALLOWED;
+> >  }
 > >
-> >       camss =3D devm_kzalloc(dev, sizeof(*camss), GFP_KERNEL);
-> > @@ -3627,11 +3626,9 @@ static int camss_probe(struct platform_device *p=
-dev)
+> > +static kvm_pfn_t faultin_pfn(struct kvm *kvm, struct kvm_memory_slot *=
+slot,
+> > +                            gfn_t gfn, bool write_fault, bool *writabl=
+e,
+> > +                            struct page **page, bool is_gmem)
+> > +{
+> > +       kvm_pfn_t pfn;
+> > +       int ret;
+> > +
+> > +       if (!is_gmem)
+> > +               return __kvm_faultin_pfn(slot, gfn, write_fault ? FOLL_=
+WRITE : 0, writable, page);
+> > +
+> > +       *writable =3D false;
+> > +
+> > +       ret =3D kvm_gmem_get_pfn(kvm, slot, gfn, &pfn, page, NULL);
+> > +       if (!ret) {
+> > +               *writable =3D !memslot_is_readonly(slot);
+> > +               return pfn;
+> > +       }
+> > +
+> > +       if (ret =3D=3D -EHWPOISON)
+> > +               return KVM_PFN_ERR_HWPOISON;
+> > +
+> > +       return KVM_PFN_ERR_NOSLOT_MASK;
+>
+> I don't think the above handling for the `ret !=3D 0` case is correct. I =
+think
+> we should just be returning `ret` out to userspace.
+
+Ack.
+
+>
+> The diff I have below is closer to what I think we must do.
+>
+> > +}
+> > +
+> >  static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa=
+,
+> >                           struct kvm_s2_trans *nested,
+> >                           struct kvm_memory_slot *memslot, unsigned lon=
+g hva,
+> > @@ -1473,19 +1497,20 @@ static int user_mem_abort(struct kvm_vcpu *vcpu=
+, phys_addr_t fault_ipa,
+> >  {
+> >         int ret =3D 0;
+> >         bool write_fault, writable;
+> > -       bool exec_fault, mte_allowed;
+> > +       bool exec_fault, mte_allowed =3D false;
+> >         bool device =3D false, vfio_allow_any_uc =3D false;
+> >         unsigned long mmu_seq;
+> >         phys_addr_t ipa =3D fault_ipa;
+> >         struct kvm *kvm =3D vcpu->kvm;
+> > -       struct vm_area_struct *vma;
+> > -       short page_shift;
+> > +       struct vm_area_struct *vma =3D NULL;
+> > +       short page_shift =3D PAGE_SHIFT;
+> >         void *memcache;
+> > -       gfn_t gfn;
+> > +       gfn_t gfn =3D ipa >> PAGE_SHIFT;
+> >         kvm_pfn_t pfn;
+> >         bool logging_active =3D memslot_is_logging(memslot);
+> > -       bool force_pte =3D logging_active || is_protected_kvm_enabled()=
+;
+> > -       long page_size, fault_granule;
+> > +       bool is_gmem =3D kvm_slot_has_gmem(memslot);
+> > +       bool force_pte =3D logging_active || is_gmem || is_protected_kv=
+m_enabled();
+> > +       long page_size, fault_granule =3D PAGE_SIZE;
+> >         enum kvm_pgtable_prot prot =3D KVM_PGTABLE_PROT_R;
+> >         struct kvm_pgtable *pgt;
+> >         struct page *page;
+> > @@ -1529,17 +1554,20 @@ static int user_mem_abort(struct kvm_vcpu *vcpu=
+, phys_addr_t fault_ipa,
+> >          * Let's check if we will get back a huge page backed by hugetl=
+bfs, or
+> >          * get block mapping for device MMIO region.
+> >          */
+> > -       mmap_read_lock(current->mm);
+> > -       vma =3D vma_lookup(current->mm, hva);
+> > -       if (unlikely(!vma)) {
+> > -               kvm_err("Failed to find VMA for hva 0x%lx\n", hva);
+> > -               mmap_read_unlock(current->mm);
+> > -               return -EFAULT;
+> > +       if (!is_gmem) {
+> > +               mmap_read_lock(current->mm);
+> > +               vma =3D vma_lookup(current->mm, hva);
+> > +               if (unlikely(!vma)) {
+> > +                       kvm_err("Failed to find VMA for hva 0x%lx\n", h=
+va);
+> > +                       mmap_read_unlock(current->mm);
+> > +                       return -EFAULT;
+> > +               }
+> > +
+> > +               vfio_allow_any_uc =3D vma->vm_flags & VM_ALLOW_ANY_UNCA=
+CHED;
+> > +               mte_allowed =3D kvm_vma_mte_allowed(vma);
+> >         }
 > >
-> >       pm_runtime_enable(dev);
+> > -       if (force_pte)
+> > -               page_shift =3D PAGE_SHIFT;
+> > -       else
+> > +       if (!force_pte)
+> >                 page_shift =3D get_vma_page_shift(vma, hva);
 > >
-> > -     num_subdevs =3D camss_of_parse_ports(camss);
-> > -     if (num_subdevs < 0) {
-> > -             ret =3D num_subdevs;
-> > +     ret =3D camss_of_parse_ports(camss);
-> > +     if (ret < 0)
-> >               goto err_v4l2_device_unregister;
-> > -     }
+> >         switch (page_shift) {
+> > @@ -1605,27 +1633,23 @@ static int user_mem_abort(struct kvm_vcpu *vcpu=
+, phys_addr_t fault_ipa,
+> >                 ipa &=3D ~(page_size - 1);
+> >         }
 > >
-> >       ret =3D camss_register_entities(camss);
-> >       if (ret < 0)
-> > @@ -3647,23 +3644,12 @@ static int camss_probe(struct platform_device *=
-pdev)
-> >               goto err_register_subdevs;
-> >       }
-> >
-> > -     if (num_subdevs) {
-> > -             camss->notifier.ops =3D &camss_subdev_notifier_ops;
+> > -       gfn =3D ipa >> PAGE_SHIFT;
+> > -       mte_allowed =3D kvm_vma_mte_allowed(vma);
 > > -
-> > -             ret =3D v4l2_async_nf_register(&camss->notifier);
-> > -             if (ret) {
-> > -                     dev_err(dev,
-> > -                             "Failed to register async subdev nodes: %=
-d\n",
-> > -                             ret);
-> > -                     goto err_media_device_unregister;
-> > -             }
-> > -     } else {
-> > -             ret =3D v4l2_device_register_subdev_nodes(&camss->v4l2_de=
-v);
-> > -             if (ret < 0) {
-> > -                     dev_err(dev, "Failed to register subdev nodes: %d=
-\n",
-> > -                             ret);
-> > -                     goto err_media_device_unregister;
-> > -             }
-> > +     camss->notifier.ops =3D &camss_subdev_notifier_ops;
-> > +     ret =3D v4l2_async_nf_register(&camss->notifier);
-> > +     if (ret) {
-> > +             dev_err(dev,
-> > +                     "Failed to register async subdev nodes: %d\n", re=
-t);
-> > +             goto err_media_device_unregister;
-> >       }
+> > -       vfio_allow_any_uc =3D vma->vm_flags & VM_ALLOW_ANY_UNCACHED;
+> > -
+> > -       /* Don't use the VMA after the unlock -- it may have vanished *=
+/
+> > -       vma =3D NULL;
+> > +       if (!is_gmem) {
+> > +               /* Don't use the VMA after the unlock -- it may have va=
+nished */
+> > +               vma =3D NULL;
+>
+> I think we can just move the vma declaration inside the earlier `if (is_g=
+mem)`
+> bit above. It should be really hard to accidentally attempt to use `vma` =
+or
+> `hva` in the is_gmem case. `vma` we can easily make it impossible; `hva` =
+is
+> harder.
+
+To be honest, I think we need to refactor user_mem_abort(). It's
+already a bit messy, and with the guest_memfd code, and in the
+(hopefully) soon, pkvm code, it's going to get messier. Some of the
+things things to keep in mind are, like you suggest, ensuring that vma
+and hva aren't in scope where they're not needed.
+
+>
+> See below for what I think this should look like.
+>
 > >
-> >       return 0;
+> > -       /*
+> > -        * Read mmu_invalidate_seq so that KVM can detect if the result=
+s of
+> > -        * vma_lookup() or __kvm_faultin_pfn() become stale prior to
+> > -        * acquiring kvm->mmu_lock.
+> > -        *
+> > -        * Rely on mmap_read_unlock() for an implicit smp_rmb(), which =
+pairs
+> > -        * with the smp_wmb() in kvm_mmu_invalidate_end().
+> > -        */
+> > -       mmu_seq =3D vcpu->kvm->mmu_invalidate_seq;
+> > -       mmap_read_unlock(current->mm);
+> > +               /*
+> > +                * Read mmu_invalidate_seq so that KVM can detect if th=
+e results
+> > +                * of vma_lookup() or faultin_pfn() become stale prior =
+to
+> > +                * acquiring kvm->mmu_lock.
+> > +                *
+> > +                * Rely on mmap_read_unlock() for an implicit smp_rmb()=
+, which
+> > +                * pairs with the smp_wmb() in kvm_mmu_invalidate_end()=
+.
+> > +                */
+> > +               mmu_seq =3D vcpu->kvm->mmu_invalidate_seq;
+> > +               mmap_read_unlock(current->mm);
+> > +       }
+> >
+> > -       pfn =3D __kvm_faultin_pfn(memslot, gfn, write_fault ? FOLL_WRIT=
+E : 0,
+> > -                               &writable, &page);
+> > +       pfn =3D faultin_pfn(kvm, memslot, gfn, write_fault, &writable, =
+&page, is_gmem);
+> >         if (pfn =3D=3D KVM_PFN_ERR_HWPOISON) {
+> >                 kvm_send_hwpoison_signal(hva, page_shift);
 >
-> If I've understood the intent here, don't think this is right.
+> `hva` is used here even for the is_gmem case, and that should be slightly
+> concerning. And indeed it is, this is not the appropriate way to handle
+> hwpoison for gmem (and it is different than the behavior you have for x86=
+). x86
+> handles this by returning a KVM_MEMORY_FAULT_EXIT to userspace; we should=
+ do
+> the same.
+
+You're right. My initial thought was that by having a best-effort
+check that that would be enough, and not change the arm64 behavior all
+that much. Exiting to userspace is cleaner.
+
+> I've put what I think is more appropriate in the diff below.
 >
-> For cases where we want to run CSID TPG or standalone TPG we would not
-> necessarily have a sensor connected.
+> And just to be clear, IMO, we *cannot* do what you have written now, espe=
+cially
+> given that we are getting rid of the userspace_addr sanity check (but tha=
+t
+> check was best-effort anyway).
+>
+> >                 return 0;
+> > @@ -1677,7 +1701,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, =
+phys_addr_t fault_ipa,
+> >
+> >         kvm_fault_lock(kvm);
+> >         pgt =3D vcpu->arch.hw_mmu->pgt;
+> > -       if (mmu_invalidate_retry(kvm, mmu_seq)) {
+> > +       if (!is_gmem && mmu_invalidate_retry(kvm, mmu_seq)) {
+> >                 ret =3D -EAGAIN;
+> >                 goto out_unlock;
+> >         }
+> > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> > index f9bb025327c3..b317392453a5 100644
+> > --- a/include/linux/kvm_host.h
+> > +++ b/include/linux/kvm_host.h
+> > @@ -1884,6 +1884,11 @@ static inline int memslot_id(struct kvm *kvm, gf=
+n_t gfn)
+> >         return gfn_to_memslot(kvm, gfn)->id;
+> >  }
+> >
+> > +static inline bool memslot_is_readonly(const struct kvm_memory_slot *s=
+lot)
+> > +{
+> > +       return slot->flags & KVM_MEM_READONLY;
+> > +}
+>
+> I think if you're going to move this helper to include/linux/kvm_host.h, =
+you
+> might want to do so in its own patch and change all of the existing place=
+s
+> where we check KVM_MEM_READONLY directly. *shrug*
 
-I understand it will work because Vladimir moved the media device
-registering earlier in the probe, so the media pipeline will be ready,
-even if no subdev sensor has been registered.
+It's a tough job, but someone's gotta do it :)
 
-Regards,
-Loic
+>
+> > +
+> >  static inline gfn_t
+> >  hva_to_gfn_memslot(unsigned long hva, struct kvm_memory_slot *slot)
+> >  {
+> > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> > index 6289ea1685dd..6261d8638cd2 100644
+> > --- a/virt/kvm/kvm_main.c
+> > +++ b/virt/kvm/kvm_main.c
+> > @@ -2640,11 +2640,6 @@ unsigned long kvm_host_page_size(struct kvm_vcpu=
+ *vcpu, gfn_t gfn)
+> >         return size;
+> >  }
+> >
+> > -static bool memslot_is_readonly(const struct kvm_memory_slot *slot)
+> > -{
+> > -       return slot->flags & KVM_MEM_READONLY;
+> > -}
+> > -
+> >  static unsigned long __gfn_to_hva_many(const struct kvm_memory_slot *s=
+lot, gfn_t gfn,
+> >                                        gfn_t *nr_pages, bool write)
+> >  {
+> > --
+> > 2.49.0.1045.g170613ef41-goog
+> >
+>
+> Alright, here's the diff I have in mind:
+
+Thank you James.
+
+Cheers,
+/fuad
+
+
+>
+> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> index 9a48ef08491db..74eae19792373 100644
+> --- a/arch/arm64/kvm/mmu.c
+> +++ b/arch/arm64/kvm/mmu.c
+> @@ -1466,28 +1466,30 @@ static bool kvm_vma_mte_allowed(struct vm_area_st=
+ruct *vma)
+>         return vma->vm_flags & VM_MTE_ALLOWED;
+>  }
+>
+> -static kvm_pfn_t faultin_pfn(struct kvm *kvm, struct kvm_memory_slot *sl=
+ot,
+> -                            gfn_t gfn, bool write_fault, bool *writable,
+> -                            struct page **page, bool is_gmem)
+> +static kvm_pfn_t faultin_pfn(struct kvm *kvm, struct kvm_vcpu *vcpu,
+> +                            struct kvm_memory_slot *slot, gfn_t gfn,
+> +                            bool exec_fault, bool write_fault, bool *wri=
+table,
+> +                            struct page **page, bool is_gmem, kvm_pfn_t =
+*pfn)
+>  {
+> -       kvm_pfn_t pfn;
+>         int ret;
+>
+> -       if (!is_gmem)
+> -               return __kvm_faultin_pfn(slot, gfn, write_fault ? FOLL_WR=
+ITE : 0, writable, page);
+> +       if (!is_gmem) {
+> +               *pfn =3D __kvm_faultin_pfn(slot, gfn, write_fault ? FOLL_=
+WRITE : 0, writable, page);
+> +               return 0;
+> +       }
+>
+>         *writable =3D false;
+>
+> -       ret =3D kvm_gmem_get_pfn(kvm, slot, gfn, &pfn, page, NULL);
+> -       if (!ret) {
+> -               *writable =3D !memslot_is_readonly(slot);
+> -               return pfn;
+> +       ret =3D kvm_gmem_get_pfn(kvm, slot, gfn, pfn, page, NULL);
+> +       if (ret) {
+> +               kvm_prepare_memory_fault_exit(vcpu, gfn << PAGE_SHIFT,
+> +                                             PAGE_SIZE, write_fault,
+> +                                             exec_fault, false);
+> +               return ret;
+>         }
+>
+> -       if (ret =3D=3D -EHWPOISON)
+> -               return KVM_PFN_ERR_HWPOISON;
+> -
+> -       return KVM_PFN_ERR_NOSLOT_MASK;
+> +       *writable =3D !memslot_is_readonly(slot);
+> +       return 0;
+>  }
+>
+>  static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+> @@ -1502,7 +1504,6 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, ph=
+ys_addr_t fault_ipa,
+>         unsigned long mmu_seq;
+>         phys_addr_t ipa =3D fault_ipa;
+>         struct kvm *kvm =3D vcpu->kvm;
+> -       struct vm_area_struct *vma =3D NULL;
+>         short page_shift =3D PAGE_SHIFT;
+>         void *memcache;
+>         gfn_t gfn =3D ipa >> PAGE_SHIFT;
+> @@ -1555,6 +1556,8 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, ph=
+ys_addr_t fault_ipa,
+>          * get block mapping for device MMIO region.
+>          */
+>         if (!is_gmem) {
+> +               struct vm_area_struct *vma =3D NULL;
+> +
+>                 mmap_read_lock(current->mm);
+>                 vma =3D vma_lookup(current->mm, hva);
+>                 if (unlikely(!vma)) {
+> @@ -1565,33 +1568,44 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, =
+phys_addr_t fault_ipa,
+>
+>                 vfio_allow_any_uc =3D vma->vm_flags & VM_ALLOW_ANY_UNCACH=
+ED;
+>                 mte_allowed =3D kvm_vma_mte_allowed(vma);
+> -       }
+>
+> -       if (!force_pte)
+> -               page_shift =3D get_vma_page_shift(vma, hva);
+> +               if (!force_pte)
+> +                       page_shift =3D get_vma_page_shift(vma, hva);
+> +
+> +               /*
+> +                * Read mmu_invalidate_seq so that KVM can detect if the =
+results
+> +                * of vma_lookup() or faultin_pfn() become stale prior to
+> +                * acquiring kvm->mmu_lock.
+> +                *
+> +                * Rely on mmap_read_unlock() for an implicit smp_rmb(), =
+which
+> +                * pairs with the smp_wmb() in kvm_mmu_invalidate_end().
+> +                */
+> +               mmu_seq =3D vcpu->kvm->mmu_invalidate_seq;
+> +               mmap_read_unlock(current->mm);
+>
+> -       switch (page_shift) {
+> +               switch (page_shift) {
+>  #ifndef __PAGETABLE_PMD_FOLDED
+> -       case PUD_SHIFT:
+> -               if (fault_supports_stage2_huge_mapping(memslot, hva, PUD_=
+SIZE))
+> -                       break;
+> -               fallthrough;
+> +               case PUD_SHIFT:
+> +                       if (fault_supports_stage2_huge_mapping(memslot, h=
+va, PUD_SIZE))
+> +                               break;
+> +                       fallthrough;
+>  #endif
+> -       case CONT_PMD_SHIFT:
+> -               page_shift =3D PMD_SHIFT;
+> -               fallthrough;
+> -       case PMD_SHIFT:
+> -               if (fault_supports_stage2_huge_mapping(memslot, hva, PMD_=
+SIZE))
+> +               case CONT_PMD_SHIFT:
+> +                       page_shift =3D PMD_SHIFT;
+> +                       fallthrough;
+> +               case PMD_SHIFT:
+> +                       if (fault_supports_stage2_huge_mapping(memslot, h=
+va, PMD_SIZE))
+> +                               break;
+> +                       fallthrough;
+> +               case CONT_PTE_SHIFT:
+> +                       page_shift =3D PAGE_SHIFT;
+> +                       force_pte =3D true;
+> +                       fallthrough;
+> +               case PAGE_SHIFT:
+>                         break;
+> -               fallthrough;
+> -       case CONT_PTE_SHIFT:
+> -               page_shift =3D PAGE_SHIFT;
+> -               force_pte =3D true;
+> -               fallthrough;
+> -       case PAGE_SHIFT:
+> -               break;
+> -       default:
+> -               WARN_ONCE(1, "Unknown page_shift %d", page_shift);
+> +               default:
+> +                       WARN_ONCE(1, "Unknown page_shift %d", page_shift)=
+;
+> +               }
+>         }
+>
+>         page_size =3D 1UL << page_shift;
+> @@ -1633,24 +1647,16 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, =
+phys_addr_t fault_ipa,
+>                 ipa &=3D ~(page_size - 1);
+>         }
+>
+> -       if (!is_gmem) {
+> -               /* Don't use the VMA after the unlock -- it may have vani=
+shed */
+> -               vma =3D NULL;
+> -
+> +       ret =3D faultin_pfn(kvm, vcpu, memslot, gfn, exec_fault, write_fa=
+ult,
+> +                         &writable, &page, is_gmem, &pfn);
+> +       if (ret)
+> +               return ret;
+> +       if (pfn =3D=3D KVM_PFN_ERR_HWPOISON) {
+>                 /*
+> -                * Read mmu_invalidate_seq so that KVM can detect if the =
+results
+> -                * of vma_lookup() or faultin_pfn() become stale prior to
+> -                * acquiring kvm->mmu_lock.
+> -                *
+> -                * Rely on mmap_read_unlock() for an implicit smp_rmb(), =
+which
+> -                * pairs with the smp_wmb() in kvm_mmu_invalidate_end().
+> +                * For gmem, hwpoison should be communicated via a memory=
+ fault
+> +                * exit, not via a SIGBUS.
+>                  */
+> -               mmu_seq =3D vcpu->kvm->mmu_invalidate_seq;
+> -               mmap_read_unlock(current->mm);
+> -       }
+> -
+> -       pfn =3D faultin_pfn(kvm, memslot, gfn, write_fault, &writable, &p=
+age, is_gmem);
+> -       if (pfn =3D=3D KVM_PFN_ERR_HWPOISON) {
+> +               WARN_ON_ONCE(is_gmem);
+>                 kvm_send_hwpoison_signal(hva, page_shift);
+>                 return 0;
+>         }
 
