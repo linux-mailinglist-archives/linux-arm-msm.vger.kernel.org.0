@@ -1,183 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-58114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9634CAB8DD4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 19:34:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7047AB8DDA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 19:34:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75E2F188BA56
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 17:34:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 69FD73AC576
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 17:34:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1F52207DE2;
-	Thu, 15 May 2025 17:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7191125A2DA;
+	Thu, 15 May 2025 17:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=proton.me header.i=@proton.me header.b="lwSUTHmW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dt92vZcI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9CD1D54EF
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 17:33:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.77.79.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C422F259CBE;
+	Thu, 15 May 2025 17:34:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747330438; cv=none; b=g97Ytpx68j9OA7OySwgL4dnQhbYeT47SFGMFBHqc0R6rtyg6OAxOGimh3ooOME8F6yQ6OY3t9y3LQdl9Q1BhPDh2RJllw5eN8PqTb2uNtia96qeJGe24MIdwX3/8TGTKnr3xtSaPBQ1K4gOCjDCfvEes5u7QdhBycsIKfEM7ERg=
+	t=1747330463; cv=none; b=Z5jBHi+FNYBC/0b6+DgSXUHhc4dubUsnZgywC5ld/BvnuVTKwwOaEd5UTzctcQ1eXPoIHIcST0u8rIkPewWSnPhWxwIOR6PGBoIP0NsaQdTSM97xgIiodrIr/X805NRv/IpBTwpoM6AvaYdaU3caxZSxD6rFSdmCBRyyzkuG8o8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747330438; c=relaxed/simple;
-	bh=QjbIKsNwQsilQSTCPC4ogvIhRicdIGCGqSshCNWSc6k=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DV1m6FzlKiyHWVqWyJYpS3sGMcV4lorYLOaZcdXDYARKZpMFgNlCRy9dohlhUS20VpZuSbMNxUN3Dgsl9C2VFyOVWXRtBll50vG8MRhW84gfGDtAWg0qNLiapRsMJImRk+yA+sb+7LS/Cfp+zuZ6hQZtgc7tfj5Vm+fBWuUQpsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=lwSUTHmW; arc=none smtp.client-ip=51.77.79.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1747330426; x=1747589626;
-	bh=eMncJgSExIrvYrm15fzLzbqOrXbXjQptW5tx6rKcD4I=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=lwSUTHmW6N+zQ/NW38uEV4P2MhL9KZS6+XrPKUKG8pmscbGxrmYDdsy2E0QY8a8Ad
-	 zloyMRqwi+ZGpgGamuodFCt08pt3kP283lyMkowlmMRZ9P+VvrktpmXv0RH+uLvAsU
-	 wUvljNwbqcP63kKVn37ILqzR0+CvoqA15NtAL8e02fFMSa6s+ktCv+p2X1RWDmtEVD
-	 XB20eYvxdMpxkjw9aRr01z+UBrcIkciJ58GM0EyF7smzzjw82G9nckk4VOH641apED
-	 WAuY/jVLa6qONkh1L0hjvaks7bvTrPkltGZfvRbG43IN7w/DOY69vaUo0vXaY+dYzA
-	 emqthYKG/HHQQ==
-Date: Thu, 15 May 2025 17:33:41 +0000
-To: Niklas Cassel <cassel@kernel.org>
-From: Laszlo Fiat <laszlo.fiat@proton.me>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, =?utf-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, Krishna chaitanya chundru <quic_krichai@quicinc.com>, Wilfred Mallawa <wilfred.mallawa@wdc.com>, Damien Le Moal <dlemoal@kernel.org>, Hans Zhang <18255117159@163.com>, =?utf-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 0/4] PCI: dwc: Link Up IRQ fixes
-Message-ID: <fCMPjWu_crgW5GkH4DJd17WBjnCAsb363N9N_h6ld1i8NqNNGR9PTpQWAO9-kwv4DUL6um48dwP0GJ8GmdL4uQf-WniBepwuxTEhjmbBnug=@proton.me>
-In-Reply-To: <aCNSBqWM-HM2vX7K@ryzen>
-References: <20250506073934.433176-6-cassel@kernel.org> <7zcrjlv5aobb22q5tyexca236gnly6aqhmidx6yri6j7wowteh@mylkqbwehak7> <aCNSBqWM-HM2vX7K@ryzen>
-Feedback-ID: 130963441:user:proton
-X-Pm-Message-ID: 83d36aa26181c4d7b2012c55407c6d5d0302af1c
+	s=arc-20240116; t=1747330463; c=relaxed/simple;
+	bh=1rYqW+oT2EB+8Mj8UgMcXgu50r6mqg0ahSQdN67crks=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Enus+BPdkXNbHPK7VfjE0bT8tyE+T+BEI6oxbH1Z7BDs4zeg4HaTIaxcGLa0Lg5h0FnyXJfXOXV3woqU7i6wXl+IFbrbUt1Laz8FQQE2MeY0KtntR0lH2BfxHkKmQnX7caGfrP0UuyGNwnCvlRUeIafMzqZjbM8LBKz5pIfwhPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dt92vZcI; arc=none smtp.client-ip=209.85.166.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-3d91db4f0c3so5950305ab.3;
+        Thu, 15 May 2025 10:34:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747330461; x=1747935261; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oBvq9UI2sATIO55B70P6yA+6iJUThTyZYQiqWABHx6U=;
+        b=dt92vZcI8uM9QIyTUV/9MKsx/RLy6WzRrA4nqqflMsQ797qibiXLl4oRfN5nBHNTyj
+         RI4aAfiS9BYMGhAS0MvUe56H6tIhY2ZLY4klUjTtYi/3WNbu1SmUf3T6md7kmZ1yQqjY
+         d7heWeaYzUUPqXSnCl3whzYzFQHVBYHHYkOs2wHb3Oe/V01FkUpx4S8cLPN20jud7y8d
+         gNUXGBmXFIBC/3LpMgy6o3YVR8nNAD/ZwrNof79Hv1LT3GUK+nh71ZTpz3euOHutECTc
+         U62G37VO0Mv9s1FNmkPRvXOBuQAcf9/g2AJ5EcLufhvwkpklK4Jm+ZQXm45/9D893y+0
+         gS6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747330461; x=1747935261;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oBvq9UI2sATIO55B70P6yA+6iJUThTyZYQiqWABHx6U=;
+        b=iex19q2tFgBaCdufVim2JbBNjAhVErPgvkIMpvBgVOx/WHYmmgyaDMt9OjeW6jJ3BR
+         Z4SaJnfolWi7nKaGqaS2QJQ1zrtwUyX/AtLqZ7tNxlWhLJfbubeGxCrZS+awgKyFjsnv
+         CztjcRauH4wXgJfJs/hg0TsW+h6tnMJ12wA/XQbLhB19a5kQqexFJv622s5GBD0Sm+Qe
+         7ubdTYqggLZUFfwrXEm11wDcF5IVKvnHuYHJCoIl2WJ3QrXXsDAGd18dE8+xjWstlYd+
+         92sD0yq7/qsbBwVmqOwBjdvIt7KbTMbfyBxyTyjII4cHW/yL+trCae6kszPYRR48FokD
+         Cwww==
+X-Forwarded-Encrypted: i=1; AJvYcCUkBSlQSMx4EEAX1BdKNKomCBTuqODcyxHGTQj0zp5tt12HaSeEfSGF+6w3SLYJhRc3LAK/0qF9Lqe6G1hj@vger.kernel.org, AJvYcCXaSJSw+PQNd/hY9kl7xQZU2X5e0d4miv2o4INA3nm3nhpGBUcgj9NsBzgphXyau4fGnXO/VWbD9/8Szqal@vger.kernel.org
+X-Gm-Message-State: AOJu0YxKlOyeqYD/iRbCbt4hoJmxHZjueC6v8fouF4iSgivIlDoRlzZI
+	yWQHjtqVNvYxgasjn2yzSdsugAXxuZo5x98MfN6GkEopbxwlrOronryhXUGgt03qKU9eF/clZZk
+	BXpvpqzMItGr9untMaN4uhSaKoQ/angE=
+X-Gm-Gg: ASbGncsXfkGk9nwVprETyh2Zk+q/Xf3H9+sX++d/oFc7oNiixkkVfB7DEMBSWSixISd
+	nhIlGepjpyBarx4k3276y3JN5Xxe9mhlC2magPpVDTHZx20RuICXlEk5a9mp7PbtYGGdv4zIVW6
+	i3lWfyI8suFiMPDXvQWul6NYeRSSCoeCyAij+yNnimMub+5TLVJ6HCWd2MoitSzJM=
+X-Google-Smtp-Source: AGHT+IFo7dA4rLp6ykvkJGelKTIBK/jYm2mycq9pSqylADODrZL4vePtqwPyU+VeHrif1+6q3HNeRs0zSX7JtstjEZM=
+X-Received: by 2002:a05:6e02:1a27:b0:3d4:3fbf:967d with SMTP id
+ e9e14a558f8ab-3db842b9d5amr9264885ab.7.1747330460697; Thu, 15 May 2025
+ 10:34:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20250514175527.42488-1-robdclark@gmail.com> <20250514175527.42488-3-robdclark@gmail.com>
+ <aCWtINcOUWciwx8L@pollux> <CAF6AEGsm6JgK6QQe7se6bzv6QLnm-sxsJRmv=r3OWKhf6rfOSA@mail.gmail.com>
+ <aCYIiJpMe1ljGxqz@pollux>
+In-Reply-To: <aCYIiJpMe1ljGxqz@pollux>
+From: Rob Clark <robdclark@gmail.com>
+Date: Thu, 15 May 2025 10:34:07 -0700
+X-Gm-Features: AX0GCFuIl_V8-qE_5cvk8OrrV6aLtTAWInICihd0L8AvsvwbHBJVwOGaN3l2YtI
+Message-ID: <CAF6AEGvLpekBNLxVOavkXJtcZZQBH6WznKA=F0Jn9idxBMypkA@mail.gmail.com>
+Subject: Re: [PATCH v4 02/40] drm/gpuvm: Allow VAs to hold soft reference to BOs
+To: Danilo Krummrich <dakr@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>, 
+	Rob Clark <robdclark@chromium.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
+On Thu, May 15, 2025 at 8:30=E2=80=AFAM Danilo Krummrich <dakr@kernel.org> =
+wrote:
+>
+> On Thu, May 15, 2025 at 07:59:16AM -0700, Rob Clark wrote:
+>
+> Thanks for the detailed explanation!
+>
+> > On Thu, May 15, 2025 at 2:00=E2=80=AFAM Danilo Krummrich <dakr@kernel.o=
+rg> wrote:
+> > >
+> > > On Wed, May 14, 2025 at 10:53:16AM -0700, Rob Clark wrote:
+> > > > From: Rob Clark <robdclark@chromium.org>
+> > > >
+> > > > Eases migration for drivers where VAs don't hold hard references to
+> > > > their associated BO, avoiding reference loops.
+> > > >
+> > > > In particular, msm uses soft references to optimistically keep arou=
+nd
+> > > > mappings until the BO is distroyed.  Which obviously won't work if =
+the
+> > > > VA (the mapping) is holding a reference to the BO.
+> > >
+> > > Ick! This is all complicated enough. Allow drivers to bypass the prop=
+er
+> > > reference counting for GEM objects in the context of VM_BO structures=
+ seems like
+> > > an insane footgun.
+> > >
+> > > I don't understand why MSM would need weak references here. Why does =
+msm need
+> > > that, but nouveau, Xe, panthor, PowerVR do not?
+> >
+> > Most of those drivers were designed (and had their UABI designed) with
+> > gpuvm, or at least sparse, in mind from the get go.  I'm not sure
+> > about nouveau, but I guess it just got lucky that it's UABI semantics
+> > fit having the VMA hold a reference to the BO.
+> >
+> > Unfortunately, msm pre-dates sparse.. and in the beginning there was
+> > only a single global VM, multiple VMs was something retrofitted ~6yrs
+> > (?) back.  For existing msm, the VMA(s) are implicitly torn down when
+> > the GEM obj is freed.  This won't work with the VMA(s) holding hard
+> > references to the BO.
+>
+> Ok, that makes sense to me, but why can't this be changed? I don't see ho=
+w the
+> uAPI would be affected, this is just an implementation detail, no?
 
-Hello,
+It's about the behaviour of the API, there is no explicit VMA
+creation/destruction in the uAPI.
 
-On Tuesday, May 13th, 2025 at 4:07 PM, Niklas Cassel <cassel@kernel.org> wr=
-ote:
+> > When userspace opts-in to "VM_BIND" mode, which it has to do before
+> > the VM is created, then we don't set this flag, the VMA holds a hard
+> > reference to the BO as it does with other drivers.  But consider this
+> > use-case, which is perfectly valid for old (existing) userspace:
+> >
+> > 1) Userspace creates a BO
+> > 2) Submits rendering referencing the BO
+> > 3) Immediately closes the BO handle, without waiting for the submit to =
+complete
+> >
+> > In this case, the submit holds a reference to the BO which holds a
+> > reference to the VMA.
+>
+> Can't you just instead create the VMAs, which hold a reference to the VM_=
+BO,
+> which holds a reference to the BO, then drop the drop the original BO ref=
+erence
+> and finally, when everything is completed, remove all VMAs of the VM_BO?
 
-> Hello Mani,
->=20
-> On Tue, May 13, 2025 at 11:53:29AM +0100, Manivannan Sadhasivam wrote:
->=20
-> > This wait time is a grey area in the spec tbh. If the Readiness Notific=
-ation
-> > (RN) is not supported, then the spec suggests waiting 1s for the device=
- to
-> > become 'configuration ready'. That's why we have the 1s delay in dwc dr=
-iver.
-> >=20
-> > Also, it has the below in r6.0, sec 6.6.1:
-> >=20
-> > `* On the completion of Link Training (entering the DL_Active state, se=
-e =C2=A7 Section 3.2 ), a component must be able to receive and process TLP=
-s and DLLPs. * Following exit from a Conventional Reset of a device, within=
- 1.0 s the device must be able to receive a Configuration Request and retur=
-n a Successful Completion if the Request is valid. This period is independe=
-nt of how quickly Link training completes. If Readiness Notifications mecha=
-nisms are used (see =C2=A7 Section 6.22 .), this period may be shorter.`
-> >=20
-> > As per the first note, once link training is completed, the device shou=
-ld be
-> > ready to accept configuration requests from the host. So no delay shoul=
-d be
-> > required.
-> >=20
-> > But the second note says that the 1s delay is independent of how quickl=
-y the
-> > link training completes. This essentially contradicts with the above po=
-int.
-> >=20
-> > So I think it is not required to add delay after completing the LTSSM, =
-unless
-> > someone sees any issue.
->=20
->=20
-> If you look at the commit message in patch 1/2, the whole reason for this
-> series is that someone has seen an issue :)
->=20
-> While I personally haven't seen any issue, the user reporting that commit
-> ec9fd499b9c6 ("PCI: dw-rockchip: Don't wait for link since we can detect
-> Link Up") regressed his system so that it can no longer mount rootfs
-> (which is on a PLEXTOR PX-256M8PeGN NVMe SSD) clearly has seen an issue.
->=20
-> It is possible that his device is not following the spec.
-> I simply compared the code before and after ec9fd499b9c6, to try to
-> figure out why it was actually working before, and came up with this,
-> which made his device functional again.
->=20
-> Perhaps we should add a comment above the sleep that says that this
-> should strictly not be needed as per the spec?
-> (And also add the same comment in the (single) controller driver in
-> mainline which already does an msleep(PCIE_T_RRS_READY_MS).)
+Perhaps the submit could hold a ref to the VM_BO instead of the BO to
+cover that particular case.
 
-I am the one experiencing the issue with my Orange PI 3B (RK3566, 8 GB RAM)=
- and a PLEXTOR PX-256M8PeGN NVMe SSD.=20
+But for the legacy world, the VMA is implicitly torn down when the BO
+is freed.  Which will never happen if the VM_BO holds a reference to
+the BO.
 
-I first detected the problem while upgrading from 6.13.8 to 6.14.3, that my=
- system cannot find the NVME SSD which contains the rootfs. After reverting=
- the two patches:
+> This should do exactly the same *and* be conformant with GPUVM design.
+>
+> > Everything is torn down gracefully when the
+> > submit completes.  But if the VMA held a hard reference to the BO then
+> > you'd have a reference loop.
+> >
+> > So there really is no other way to use gpuvm _and_ maintain backwards
+> > compatibility with the semantics of the pre-VM_BIND UAPI without this
+> > flag.
+>
+> Again, how is this important for maintaining backwards compatibility with=
+ the
+> uAPI? This all seems like a driver internal implementation detail to me.
+>
+> So, is there a technical reason, or is it more that it would be more effo=
+rt on
+> the driver end to rework things accordingly?
 
-- ec9fd499b9c6 ("PCI: dw-rockchip: Don't wait for link since we can detect =
-Link Up")
-- 0e0b45ab5d77 ("PCI: dw-rockchip: Enumerate endpoints based on dll_link_up=
- IRQ")
+If there were a way to work without WEAK_REF, it seems like it would
+be harder and much less of a drop in change.
 
-my system booted fine again.=20
-After that I tested the patches sent by Niklas in this thread, which fixed =
-the issue, so I sent Tested-by.
+BR,
+-R
 
-I did another test Today with 6.15.0-rc6, which in itself does not find my =
-SSD. Niklas asked me to test with these=20
-
-- revert ec9fd499b9c6 ("PCI: dw-rockchip: Don't wait for link since we can =
-detect Link Up")
-- revert 0e0b45ab5d77 ("PCI: dw-rockchip: Enumerate endpoints based on dll_=
-link_up IRQ")
-- apply the following patch:
-
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/con=
-troller/dwc/pcie-designware.c
-index b3615d125942..5dee689ecd95 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -692,7 +692,7 @@ int dw_pcie_wait_for_link(struct dw_pcie *pci)
-                if (dw_pcie_link_up(pci))
-                        break;
-
--               msleep(LINK_WAIT_SLEEP_MS);
-+               usleep_range(100, 200);
-        }
-
-        if (retries >=3D LINK_WAIT_MAX_RETRIES) {
-
-
-which restores the original behaviour to wait for link-up, then shorten the=
- time. This resulted again a non booting system, this time with "Phy link n=
-ever came up" error message.
-So please allow to fix the regression that is already in 6.14.x. I now so f=
-ar only I have reported this, but we cannot be sure how many SSDs have this=
- timing issue. Most users use older, distribution packaged kernels, so othe=
-rs will face this later.
-
-Bye,
-
-Laszlo Fiat
-
->=20
->=20
-> Kind regards,
-> Niklas
+> > Fortunately DRM_GPUVM_VA_WEAK_REF is minimally intrusive.  Otherwise I
+> > probably would have had to fork my own copy of gpuvm.
+> >
+> > BR,
+> > -R
 
