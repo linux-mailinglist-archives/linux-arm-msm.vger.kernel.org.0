@@ -1,102 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-58113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75E2BAB8DC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 19:30:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9634CAB8DD4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 19:34:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3CC341BC54DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 17:30:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75E2F188BA56
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 17:34:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26D0D2594AA;
-	Thu, 15 May 2025 17:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1F52207DE2;
+	Thu, 15 May 2025 17:33:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DzdUMlrW"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=proton.me header.i=@proton.me header.b="lwSUTHmW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BCA258CD8;
-	Thu, 15 May 2025 17:30:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9CD1D54EF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 17:33:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.77.79.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747330202; cv=none; b=k1klb7PeN3wp2moPogVirfbBigGGmG7QTASVOJjyVqLY6cIG587PLi0gnUMEHcOj9QvbLe3Ie3CwahY1PQMUO0IlIxThDysjJo4nfi8nJbhwKD2l8vv8Ky6eYT1RHAVZTeFMK9KQ1JK0YvaEl8qRMuZ6fyrUuQsLkc3UeeDYwMA=
+	t=1747330438; cv=none; b=g97Ytpx68j9OA7OySwgL4dnQhbYeT47SFGMFBHqc0R6rtyg6OAxOGimh3ooOME8F6yQ6OY3t9y3LQdl9Q1BhPDh2RJllw5eN8PqTb2uNtia96qeJGe24MIdwX3/8TGTKnr3xtSaPBQ1K4gOCjDCfvEes5u7QdhBycsIKfEM7ERg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747330202; c=relaxed/simple;
-	bh=Hke/yO7FqtLJ+q550xCAf3LK2tczfK5NfvanpWrVDEo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=atItuC+kwLfax75/lNkIODDt/7ko0KHaqI4+m/sm86kzbAs91WqjSoB/37QGke08Yg+AfKUmrLk/MZaP2P6LlpWtjKMKWfTwgFhVoLRVkqJr60sGiNhk5slRDZUKhwxJAXtEGs+Zq5WqPMA9jJybfLEHOzQTZe6nKVA6aSyCwBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DzdUMlrW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E8EC4CEE7;
-	Thu, 15 May 2025 17:29:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747330201;
-	bh=Hke/yO7FqtLJ+q550xCAf3LK2tczfK5NfvanpWrVDEo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DzdUMlrWQQDdNKXyR4zvX+NJwwG/gFkAVpsWJp/MLgoafxNERKr6JdVink1pMfbmF
-	 a57ODNtc2ODCxr4TVkOjCSsFApX4b4kDffVvqrsiUox3tWNSe98pvKSiWR5Bpesqtv
-	 k0WQGbuCN4wudkR7DwOtCeTt4cqn7H4B5/4tQ67d4l4P1+OJ3w9giBB423Sagm1wiE
-	 Mz62LWU1RSkB6Cr/qQjTfdXjKJe/j0Zx4hMgk6M9V/Y2wbac8tWk9pC3hWFY0vZsDc
-	 4xzLUcm+FbwL9RCoe11V5SiJBbr1hY+I9WOwPISgVeL+jOSxYeYKZ8DmwIiMC3PjKT
-	 KjNFQREF2Iddw==
-Date: Thu, 15 May 2025 19:29:55 +0200
-From: Danilo Krummrich <dakr@kernel.org>
-To: Connor Abbott <cwabbott0@gmail.com>
-Cc: Rob Clark <robdclark@chromium.org>, phasta@kernel.org,
-	Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	Matthew Brost <matthew.brost@intel.com>,
-	Christian =?iso-8859-1?Q?K=F6nig?= <ckoenig.leichtzumerken@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	open list <linux-kernel@vger.kernel.org>,
-	Boris Brezillon <boris.brezillon@collabora.com>
-Subject: Re: [PATCH v4 04/40] drm/sched: Add enqueue credit limit
-Message-ID: <aCYkk4Y7feltfp79@pollux>
-References: <20250514170118.40555-1-robdclark@gmail.com>
- <20250514170118.40555-5-robdclark@gmail.com>
- <51f87f358fa1b7ef8db8b67ee6cde38ae071fbe8.camel@mailbox.org>
- <CAJs_Fx771FFVDVFMn8YJkR9f9Ad-UQspJ9KKQw4u6Cu4TA7YPA@mail.gmail.com>
- <CACu1E7EL+E-M0N-EAN9Bx7u9O6_pECQQdPE2ph575idhVb2Szg@mail.gmail.com>
+	s=arc-20240116; t=1747330438; c=relaxed/simple;
+	bh=QjbIKsNwQsilQSTCPC4ogvIhRicdIGCGqSshCNWSc6k=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DV1m6FzlKiyHWVqWyJYpS3sGMcV4lorYLOaZcdXDYARKZpMFgNlCRy9dohlhUS20VpZuSbMNxUN3Dgsl9C2VFyOVWXRtBll50vG8MRhW84gfGDtAWg0qNLiapRsMJImRk+yA+sb+7LS/Cfp+zuZ6hQZtgc7tfj5Vm+fBWuUQpsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=lwSUTHmW; arc=none smtp.client-ip=51.77.79.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1747330426; x=1747589626;
+	bh=eMncJgSExIrvYrm15fzLzbqOrXbXjQptW5tx6rKcD4I=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=lwSUTHmW6N+zQ/NW38uEV4P2MhL9KZS6+XrPKUKG8pmscbGxrmYDdsy2E0QY8a8Ad
+	 zloyMRqwi+ZGpgGamuodFCt08pt3kP283lyMkowlmMRZ9P+VvrktpmXv0RH+uLvAsU
+	 wUvljNwbqcP63kKVn37ILqzR0+CvoqA15NtAL8e02fFMSa6s+ktCv+p2X1RWDmtEVD
+	 XB20eYvxdMpxkjw9aRr01z+UBrcIkciJ58GM0EyF7smzzjw82G9nckk4VOH641apED
+	 WAuY/jVLa6qONkh1L0hjvaks7bvTrPkltGZfvRbG43IN7w/DOY69vaUo0vXaY+dYzA
+	 emqthYKG/HHQQ==
+Date: Thu, 15 May 2025 17:33:41 +0000
+To: Niklas Cassel <cassel@kernel.org>
+From: Laszlo Fiat <laszlo.fiat@proton.me>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, =?utf-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, Krishna chaitanya chundru <quic_krichai@quicinc.com>, Wilfred Mallawa <wilfred.mallawa@wdc.com>, Damien Le Moal <dlemoal@kernel.org>, Hans Zhang <18255117159@163.com>, =?utf-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 0/4] PCI: dwc: Link Up IRQ fixes
+Message-ID: <fCMPjWu_crgW5GkH4DJd17WBjnCAsb363N9N_h6ld1i8NqNNGR9PTpQWAO9-kwv4DUL6um48dwP0GJ8GmdL4uQf-WniBepwuxTEhjmbBnug=@proton.me>
+In-Reply-To: <aCNSBqWM-HM2vX7K@ryzen>
+References: <20250506073934.433176-6-cassel@kernel.org> <7zcrjlv5aobb22q5tyexca236gnly6aqhmidx6yri6j7wowteh@mylkqbwehak7> <aCNSBqWM-HM2vX7K@ryzen>
+Feedback-ID: 130963441:user:proton
+X-Pm-Message-ID: 83d36aa26181c4d7b2012c55407c6d5d0302af1c
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACu1E7EL+E-M0N-EAN9Bx7u9O6_pECQQdPE2ph575idhVb2Szg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-(Cc: Boris)
 
-On Thu, May 15, 2025 at 12:22:18PM -0400, Connor Abbott wrote:
-> For some context, other drivers have the concept of a "synchronous"
-> VM_BIND ioctl which completes immediately, and drivers implement it by
-> waiting for the whole thing to finish before returning.
+Hello,
 
-Nouveau implements sync by issuing a normal async VM_BIND and subsequently
-waits for the out-fence synchronously.
+On Tuesday, May 13th, 2025 at 4:07 PM, Niklas Cassel <cassel@kernel.org> wr=
+ote:
 
-> But this
-> doesn't work for native context, where everything has to be
-> asynchronous, so we're trying a new approach where we instead submit
-> an asynchronous bind for "normal" (non-sparse/driver internal)
-> allocations and only attach its out-fence to the in-fence of
-> subsequent submits to other queues.
+> Hello Mani,
+>=20
+> On Tue, May 13, 2025 at 11:53:29AM +0100, Manivannan Sadhasivam wrote:
+>=20
+> > This wait time is a grey area in the spec tbh. If the Readiness Notific=
+ation
+> > (RN) is not supported, then the spec suggests waiting 1s for the device=
+ to
+> > become 'configuration ready'. That's why we have the 1s delay in dwc dr=
+iver.
+> >=20
+> > Also, it has the below in r6.0, sec 6.6.1:
+> >=20
+> > `* On the completion of Link Training (entering the DL_Active state, se=
+e =C2=A7 Section 3.2 ), a component must be able to receive and process TLP=
+s and DLLPs. * Following exit from a Conventional Reset of a device, within=
+ 1.0 s the device must be able to receive a Configuration Request and retur=
+n a Successful Completion if the Request is valid. This period is independe=
+nt of how quickly Link training completes. If Readiness Notifications mecha=
+nisms are used (see =C2=A7 Section 6.22 .), this period may be shorter.`
+> >=20
+> > As per the first note, once link training is completed, the device shou=
+ld be
+> > ready to accept configuration requests from the host. So no delay shoul=
+d be
+> > required.
+> >=20
+> > But the second note says that the 1s delay is independent of how quickl=
+y the
+> > link training completes. This essentially contradicts with the above po=
+int.
+> >=20
+> > So I think it is not required to add delay after completing the LTSSM, =
+unless
+> > someone sees any issue.
+>=20
+>=20
+> If you look at the commit message in patch 1/2, the whole reason for this
+> series is that someone has seen an issue :)
+>=20
+> While I personally haven't seen any issue, the user reporting that commit
+> ec9fd499b9c6 ("PCI: dw-rockchip: Don't wait for link since we can detect
+> Link Up") regressed his system so that it can no longer mount rootfs
+> (which is on a PLEXTOR PX-256M8PeGN NVMe SSD) clearly has seen an issue.
+>=20
+> It is possible that his device is not following the spec.
+> I simply compared the code before and after ec9fd499b9c6, to try to
+> figure out why it was actually working before, and came up with this,
+> which made his device functional again.
+>=20
+> Perhaps we should add a comment above the sleep that says that this
+> should strictly not be needed as per the spec?
+> (And also add the same comment in the (single) controller driver in
+> mainline which already does an msleep(PCIE_T_RRS_READY_MS).)
 
-This is what nouveau does and I think other drivers like Xe and panthor do this
-as well.
+I am the one experiencing the issue with my Orange PI 3B (RK3566, 8 GB RAM)=
+ and a PLEXTOR PX-256M8PeGN NVMe SSD.=20
 
-> Once you do this then you need a
-> limit like this to prevent memory usage from pending page table
-> updates from getting out of control. Other drivers haven't needed this
-> yet, but they will when they get native context support.
+I first detected the problem while upgrading from 6.13.8 to 6.14.3, that my=
+ system cannot find the NVME SSD which contains the rootfs. After reverting=
+ the two patches:
 
-What are the cases where you did run into this, i.e. which application in
-userspace hit this? Was it the CTS, some game, something else?
+- ec9fd499b9c6 ("PCI: dw-rockchip: Don't wait for link since we can detect =
+Link Up")
+- 0e0b45ab5d77 ("PCI: dw-rockchip: Enumerate endpoints based on dll_link_up=
+ IRQ")
+
+my system booted fine again.=20
+After that I tested the patches sent by Niklas in this thread, which fixed =
+the issue, so I sent Tested-by.
+
+I did another test Today with 6.15.0-rc6, which in itself does not find my =
+SSD. Niklas asked me to test with these=20
+
+- revert ec9fd499b9c6 ("PCI: dw-rockchip: Don't wait for link since we can =
+detect Link Up")
+- revert 0e0b45ab5d77 ("PCI: dw-rockchip: Enumerate endpoints based on dll_=
+link_up IRQ")
+- apply the following patch:
+
+diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/con=
+troller/dwc/pcie-designware.c
+index b3615d125942..5dee689ecd95 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -692,7 +692,7 @@ int dw_pcie_wait_for_link(struct dw_pcie *pci)
+                if (dw_pcie_link_up(pci))
+                        break;
+
+-               msleep(LINK_WAIT_SLEEP_MS);
++               usleep_range(100, 200);
+        }
+
+        if (retries >=3D LINK_WAIT_MAX_RETRIES) {
+
+
+which restores the original behaviour to wait for link-up, then shorten the=
+ time. This resulted again a non booting system, this time with "Phy link n=
+ever came up" error message.
+So please allow to fix the regression that is already in 6.14.x. I now so f=
+ar only I have reported this, but we cannot be sure how many SSDs have this=
+ timing issue. Most users use older, distribution packaged kernels, so othe=
+rs will face this later.
+
+Bye,
+
+Laszlo Fiat
+
+>=20
+>=20
+> Kind regards,
+> Niklas
 
