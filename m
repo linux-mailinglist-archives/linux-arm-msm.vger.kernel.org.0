@@ -1,169 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-58119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A12DAB8E1F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 19:51:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D69F1AB8E24
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 19:51:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5989B3ADA40
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 17:50:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DBAE618899C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 17:51:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34C9C244679;
-	Thu, 15 May 2025 17:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A62D625A32C;
+	Thu, 15 May 2025 17:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="apcIm3/Z"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XlQ2rUfV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0854F8F6E;
-	Thu, 15 May 2025 17:51:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E4F256C9C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 17:51:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747331474; cv=none; b=aOz42G4Ky6kXwtqou2siM+3kKohvSXBICwoIDTuuJpHf8BX1EjDdaW7dQkXllh/I85pKtRRHMYYoiL5oCi7X1uTV++msiW5eX/SwCioMumeJ5CFRYwDkGxtCjgJVMJ/yUS5fq2uf+IdMuYPbUSI5YbXJjjXGEOuvQsiwaPMWz8w=
+	t=1747331499; cv=none; b=BEhNxDgJXyfnrnuxU+L9PSp+GwoJWNNsn/2+rVBgrD3YKqKtMj3W6QVXNDuVLeaBTeNCpr6e05vtMpN9vNqYrsKCcsvJHMwQa3VDeedbxA2FnmBlLaq7cVL2pMJBVZCxOShr6TMudlmNM05T6kG33cRjjrAre5SMaF3B6E1kZoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747331474; c=relaxed/simple;
-	bh=WEmiD2qPElaxQs4rm++MltavxTtaRvw54uPnnWldrlQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aDc/UkwXk5xBiAAnNDkXwMW60O8qVXdN26/vZSWGnozNdwok+PXfgr92t5F/VXlBRRi7pOh62MSS1Xpy7aney61alQOBkY075IhM2x9alAKLDmY6X2rWomOrfMfRx6NgrqOPKOrid8emqltyUNTfDvqGUaxnrhivk4pgafwTYSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=apcIm3/Z; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25D4C4CEE7;
-	Thu, 15 May 2025 17:51:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747331473;
-	bh=WEmiD2qPElaxQs4rm++MltavxTtaRvw54uPnnWldrlQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=apcIm3/Zgw3JdtyllNBhGKu/wxHkUS097f/pylBkpClWGFpBkHX0am9I48La/S2l8
-	 vIZGLk2Ow45XRldoeH4aKarsjlvMb7nV6qunZjojO46CHxFaQ5UtaVtqi11KhLAh8n
-	 B00ODfyjHk95ExSCHivXJ+uPgJY20gzIEkYbmRhFvNhuTq/h6oXH++2fEYUGHM3p9p
-	 BB5S+GlgpFFbK2XbWkkmIft79BqxRwIALRC5yoMvUdYjhb/RwAwwBFMRDKgpuSlKVl
-	 dB+myCtZwjXi9bPbL1TiYmMvC7sbVObNV149QlShIoJlXYhh1ErPKVOc9ODvVeDm64
-	 UesnVHiAd3Scw==
-Date: Thu, 15 May 2025 19:51:08 +0200
-From: Danilo Krummrich <dakr@kernel.org>
-To: Rob Clark <robdclark@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>,
-	Rob Clark <robdclark@chromium.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 02/40] drm/gpuvm: Allow VAs to hold soft reference to
- BOs
-Message-ID: <aCYpjJPvSOf2RzbU@pollux>
-References: <20250514175527.42488-1-robdclark@gmail.com>
- <20250514175527.42488-3-robdclark@gmail.com>
- <aCWtINcOUWciwx8L@pollux>
- <CAF6AEGsm6JgK6QQe7se6bzv6QLnm-sxsJRmv=r3OWKhf6rfOSA@mail.gmail.com>
- <aCYIiJpMe1ljGxqz@pollux>
- <CAF6AEGvLpekBNLxVOavkXJtcZZQBH6WznKA=F0Jn9idxBMypkA@mail.gmail.com>
+	s=arc-20240116; t=1747331499; c=relaxed/simple;
+	bh=3dzTsmHfTdzI26tCQQiLWGKJXhohdOyMVUIj8nA8fWI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=vCXvT6TUtyxhrokOg+6pHl8NtGGwLL4oEe50aDTK8OxCLnhggMn+mQdt2gNBjC+noJIZS2fzUSF/9K1aYtLQd6G2hsKlIqirWomttWgiZs+KIJb8rwdNsPghWidUcJjnQPU7sualkBMzLMsHqLkov1ZnbviddkR1FEh2nJhksao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XlQ2rUfV; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43cf06eabdaso11762425e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 10:51:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1747331496; x=1747936296; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FtLELk5UwOispvrTOOSkPzk7frJcAfVvOdFwBbXiG4M=;
+        b=XlQ2rUfV3GD+/MwzbPNJiQHvkb6RArqZamMDFetTki5ejto+8EIf9o2GWBFKWnPJ+F
+         ec0eizr905FH9dvLWLbvMD9ooM810K7ysJCyONvVFsR6dgHCOsXJZX+x7Be6JaMQaNTJ
+         KmlouCWnclKwe0qqB5Zy9WKMYX2ElMDbWB/ZTJPQ5le3nj5R8EuHj8omxNjV6zb7maj3
+         IMUQeZsPFxDnMx9L6khyZHuPr6Bw5qig1Mo3t9EIx8vaKBnL4DkPOLOUBhk1DnBfs6cO
+         ElxRcmhgJO2qIDSdlM1RtyNI94b69ak3qWxv8FAwPAC94SbFaSbaknipTUPtDj3EWqss
+         Dvjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747331496; x=1747936296;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FtLELk5UwOispvrTOOSkPzk7frJcAfVvOdFwBbXiG4M=;
+        b=tGhvX35VG8ErFlWCGV06V5TFBbSYcmQbeIQBr2FazMWZVurCmMLsMLp1yQXk2XK+T1
+         6mzIdO9DD6S35f/AabdlgGktUx0camkQBKG1Jp7XQ9zRBbEKl1VPOt6eIoSPuH2qsNLX
+         m6VxmVcgnnoW1jtn0gs13sbCEjwuzvYE9YAJDnSThCVE5WIWwJ/h1JMzAwaZscJI+xps
+         2aIVR74y5YWsU1MRwSQPz64UTbkBAdcVcv3nUFGz98K2GhwCfg/LEIBj+WDeSi4fjiFb
+         UBpxxkC7YGfU1/IrjevcS4zVbiQ1tcCZJWLvOSy3wJrB/gz+s9IiQHNBAf2GnMmnhNPr
+         UhXg==
+X-Forwarded-Encrypted: i=1; AJvYcCX/N4HxIlHTM1c9uYpKcMd6TKjSB/9eHZjIqD34GaDGdMLFyNdQr0kLLIItiDjzeTHt0qzViNcm1ZgitqJB@vger.kernel.org
+X-Gm-Message-State: AOJu0YzjTGP7QzYe7HBdNw99MU7VIh22B7i9ZS/CrzM37LtQXR3ckb4F
+	V/e0hWiexfPGHzDIY0HkxeShyRfAxc8uqndO3wY+38H4xg5KzycmHcUPX/0npDFfN6M=
+X-Gm-Gg: ASbGncunsXzdyF+ca8uFeo+YicFDGIHMSSO7tO8RJfe8LRV6Mu/tXPinob2f4Hprwni
+	i4PdjC8sPxlsZLfuTGQ/Gz1U9KTrgc7wVi+XXXSHYoH3SoUx8gXOYXfwFFwJjzhl/syk3FQtyXl
+	Q1L6OW28FqhA8dvi29wmBwtbjM21s/t6yftnOKwrh0OkXZc5/+1IkcXLQqRy7uBBo7rjwqO7BCt
+	JZ2KEhA/M6Ai4O2QCfzeanC37Nc0V3iMu/ApqKpYwDsl5PRSHHmtGMzGGYgZ2+n6wVqPa6kvdmC
+	OmcOUjA+EZFAIbCoqYXGaqTH3BsC759Wy+MZo6OfkET+UXnuogjLBagmuhZcUUJwBgt6R7keYhL
+	SyFwxYj+lL0xS
+X-Google-Smtp-Source: AGHT+IEAaO3Y6axB/+CwqerL4ksM660QpoVKeffLGtMp+IYWpiArFTV//tatHJxiGIAzY9TSUK+oNg==
+X-Received: by 2002:a5d:64eb:0:b0:39a:c9b3:e1d7 with SMTP id ffacd0b85a97d-3a35c83c068mr832771f8f.29.1747331495997;
+        Thu, 15 May 2025 10:51:35 -0700 (PDT)
+Received: from [10.61.1.70] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca63753sm192263f8f.59.2025.05.15.10.51.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 May 2025 10:51:35 -0700 (PDT)
+Message-ID: <767909a0-70ea-47d3-b6bf-b57e5d7e7c5c@linaro.org>
+Date: Thu, 15 May 2025 18:51:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGvLpekBNLxVOavkXJtcZZQBH6WznKA=F0Jn9idxBMypkA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] media: venus: fix TOCTOU vulnerability when
+ reading packets from shared memory
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Hans Verkuil <hans.verkuil@cisco.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Vedang Nagar <quic_vnagar@quicinc.com>
+References: <20250514-venus-fixes-v3-0-32298566011f@quicinc.com>
+ <20250514-venus-fixes-v3-1-32298566011f@quicinc.com>
+ <ad92cf06-636a-417a-b03b-0d90c9243446@linaro.org>
+ <0c50c24a-35fa-acfb-a807-b4ed5394506b@quicinc.com>
+ <b0c48989-4ce7-4338-b4bb-565ea8b6cd82@linaro.org>
+ <b663539d-5ad6-399b-1e7b-0b8b9daca10d@quicinc.com>
+ <bd704149-694f-4d89-90d9-a22307488743@linaro.org>
+ <f7df808c-0724-3f4d-b910-6e44637c7aaf@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <f7df808c-0724-3f4d-b910-6e44637c7aaf@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, May 15, 2025 at 10:34:07AM -0700, Rob Clark wrote:
-> On Thu, May 15, 2025 at 8:30 AM Danilo Krummrich <dakr@kernel.org> wrote:
-> >
-> > On Thu, May 15, 2025 at 07:59:16AM -0700, Rob Clark wrote:
-> >
-> > Thanks for the detailed explanation!
-> >
-> > > On Thu, May 15, 2025 at 2:00 AM Danilo Krummrich <dakr@kernel.org> wrote:
-> > > >
-> > > > On Wed, May 14, 2025 at 10:53:16AM -0700, Rob Clark wrote:
-> > > > > From: Rob Clark <robdclark@chromium.org>
-> > > > >
-> > > > > Eases migration for drivers where VAs don't hold hard references to
-> > > > > their associated BO, avoiding reference loops.
-> > > > >
-> > > > > In particular, msm uses soft references to optimistically keep around
-> > > > > mappings until the BO is distroyed.  Which obviously won't work if the
-> > > > > VA (the mapping) is holding a reference to the BO.
-> > > >
-> > > > Ick! This is all complicated enough. Allow drivers to bypass the proper
-> > > > reference counting for GEM objects in the context of VM_BO structures seems like
-> > > > an insane footgun.
-> > > >
-> > > > I don't understand why MSM would need weak references here. Why does msm need
-> > > > that, but nouveau, Xe, panthor, PowerVR do not?
-> > >
-> > > Most of those drivers were designed (and had their UABI designed) with
-> > > gpuvm, or at least sparse, in mind from the get go.  I'm not sure
-> > > about nouveau, but I guess it just got lucky that it's UABI semantics
-> > > fit having the VMA hold a reference to the BO.
-> > >
-> > > Unfortunately, msm pre-dates sparse.. and in the beginning there was
-> > > only a single global VM, multiple VMs was something retrofitted ~6yrs
-> > > (?) back.  For existing msm, the VMA(s) are implicitly torn down when
-> > > the GEM obj is freed.  This won't work with the VMA(s) holding hard
-> > > references to the BO.
-> >
-> > Ok, that makes sense to me, but why can't this be changed? I don't see how the
-> > uAPI would be affected, this is just an implementation detail, no?
-> 
-> It's about the behaviour of the API, there is no explicit VMA
-> creation/destruction in the uAPI.
+On 15/05/2025 14:23, Vikash Garodia wrote:
+>> Re-reading to see if the firmware wrote new bad data to the transmitted packet
+>> in-memory is not a fix before or after the memcpy() because the time you do that
+>> re-read is not fixed - locked wrt the freerunning firmware.
+> It would be more meaningful if you can suggest the vulnerability you see with
+> the changes suggested i.e adding the check in local packet against the size read
+> from shared queue. Based on that we can see how to fix it, otherwise this
+> discussion in not leading to any conclusion.
 
-But that shouldn't matter? Userspace gives you a BO, the driver creates VMAs
-itself, which can have a reference on the VM_BO, which references the original
-BO. At this point you can drop the original reference of the BO and just destroy
-all corresponding VMAs once the driver fulfilled the request from userspace?
+So to re-iterate.
 
-> > > When userspace opts-in to "VM_BIND" mode, which it has to do before
-> > > the VM is created, then we don't set this flag, the VMA holds a hard
-> > > reference to the BO as it does with other drivers.  But consider this
-> > > use-case, which is perfectly valid for old (existing) userspace:
-> > >
-> > > 1) Userspace creates a BO
-> > > 2) Submits rendering referencing the BO
-> > > 3) Immediately closes the BO handle, without waiting for the submit to complete
-> > >
-> > > In this case, the submit holds a reference to the BO which holds a
-> > > reference to the VMA.
-> >
-> > Can't you just instead create the VMAs, which hold a reference to the VM_BO,
-> > which holds a reference to the BO, then drop the drop the original BO reference
-> > and finally, when everything is completed, remove all VMAs of the VM_BO?
-> 
-> Perhaps the submit could hold a ref to the VM_BO instead of the BO to
-> cover that particular case.
-> 
-> But for the legacy world, the VMA is implicitly torn down when the BO
-> is freed.  Which will never happen if the VM_BO holds a reference to
-> the BO.
+TOCTOU is this
 
-Sure, I get that; what I do not get is why it can't be changed, e.g. in the way
-described above.
+if (*ptr_val >> 2 >= MAX)
+     return -EBAD;
 
-> > This should do exactly the same *and* be conformant with GPUVM design.
-> >
-> > > Everything is torn down gracefully when the
-> > > submit completes.  But if the VMA held a hard reference to the BO then
-> > > you'd have a reference loop.
-> > >
-> > > So there really is no other way to use gpuvm _and_ maintain backwards
-> > > compatibility with the semantics of the pre-VM_BIND UAPI without this
-> > > flag.
-> >
-> > Again, how is this important for maintaining backwards compatibility with the
-> > uAPI? This all seems like a driver internal implementation detail to me.
-> >
-> > So, is there a technical reason, or is it more that it would be more effort on
-> > the driver end to rework things accordingly?
-> 
-> If there were a way to work without WEAK_REF, it seems like it would
-> be harder and much less of a drop in change.
+memcpy(dst, src, *ptr_val >> 2);
 
-So, you're saying there is no technical blocker to rework it?
+Here a malicious actor can change *ptr_val between our check and our use.
+
+not
+
+data_value = *ptr_val >> 2;
+
+if (data_value >= MAX)
+     return -EBAD;
+
+memcpy(dst, src, data_value);
+
+Here the taking a copy of the value and subsequently relying on that 
+value mitigates TOCTOU, because the value *ptr_val is latched - read 
+into a local variable which cannot be manipulated from an outside agent 
+i.e. venus firmware.
+
+The example in the commit log is not a TOCTOU for that reason.
+
+Adding an additional check _after_ the memcpy() seems silly to me because
+
+data_value = *ptr_val >> 2;
+
+if (data_value >= MAX)
+     return -EBAD;
+
+memcpy(dst, src, data_value);
+
+// This statement could be false
+if (data_value != *ptr_value >> 2)
+     return -EBAD;
+
+// while this subsequent statement is true
+if (data_value != *ptr_value >> 2)
+     return -EBAD;
+
+And in any case this is a post-use sanity check not a mitigation for 
+TOCTOU which we don't have.
+
+---
+bod
 
