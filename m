@@ -1,595 +1,330 @@
-Return-Path: <linux-arm-msm+bounces-58050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFC1BAB828C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 11:28:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 370C4AB828F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 11:28:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F350F3BA69C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 09:27:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 499863BD661
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 09:28:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7338297A6B;
-	Thu, 15 May 2025 09:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D668297115;
+	Thu, 15 May 2025 09:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uTEToiTa"
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="H+/UIf47"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97AC297A45
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 09:27:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6E829672F;
+	Thu, 15 May 2025 09:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747301263; cv=none; b=AcELDpkGYer6jnc+fFEzv/ks2yn+4oFUScVMq39MtECPgOnv1T5eiYRBcoI5X54DQyJLokjHvASjvNwrhHD/DFglyjj/whJ51yycv7vLYTYaNeET3YquygrFB7QcKHRVigJjCS3L6DDoJUgNbxW2bJcxnYu6zZY2MDWocqhxzXw=
+	t=1747301300; cv=none; b=i/YjpIMy9JN1xFkXDFGg/vOex2eGDT3nkyJFU5+csmsrDYz0IS8mj74+/Hp4ZrGaaxhD2XZG5rGDcgOGgtSym8ba1O2i7JjqITCvq4g53Hw7uzDDaq1pdLrgLIixXJj3TWTruVb7Yvc4kT5Ez8mSuSbxjdwNUdJVcNiQjGUBfQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747301263; c=relaxed/simple;
-	bh=VrP32xg2Du2kc1boSBnqnBfn7U1rh2NfrZijQ/lFDdU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DUzQgp92rD/ZIfA9FlkS4z/+KmePxL2A1J9kg68GvcNcmSQdXotVdkqJovr6Jxl9TsjkkNYmLiNbr3CzJp80YFsqxn679488K0Kybd/p59A7I3pnYlJnG3+Cg5YOpmMepKtRZmSR8b3HPnM1/Otrjut4friC6kThKdtFirzDxZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uTEToiTa; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4774611d40bso233021cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 02:27:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747301259; x=1747906059; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vLVWrpXHwyZFM5AS7GCsykQ+QWDj2ywEXacPF0HLVGE=;
-        b=uTEToiTa/+ZZbzvYL4Fp/bLuZTJjJQiCT5bnMhaAXnQmxKluAUhU6FtDv2aTekJA17
-         rnKS89a0Lncj1at6PrOap8hXs30JfZo/9QJ5Eh9vsbCavbJLGgWDhGewaJTPcZYUel62
-         6d3PbAvHC5o2z6GNdrGUn3H81p9v76JmIG3LHH6OQsAfCuQfrb9+Z7UbqvsLoVWGe2xJ
-         RDLhYlGHIt2WD4FMMXrHss0Pg8ExJeYlECyxh3TDXxjntqu4x1g5ZGaVVoUk8l7UQV+y
-         ibtkOcGB0cW6eE5LccA6ZuFP8+1yeLzxD0/AC2dm0f4Qu9I50WOCI8jT7gU4ovcbAWeq
-         mfMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747301259; x=1747906059;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vLVWrpXHwyZFM5AS7GCsykQ+QWDj2ywEXacPF0HLVGE=;
-        b=TU8sclKs6iMwTDOEN5p6ngeQkRpMB87FFPzINQUdqqtXW5BPiIYI5SSDerNvavXirv
-         fw9EPU/mP0JUttA1zlG2TZPy1eb2g1qJbuvoCrlBNU427DnUHptOAZaDrjX50fPel23q
-         W/O4YEPryqIoKI7e7QA6v0UDOX7x1yZNVIff75z/8pQtg/UWDfoGeSJKsEAyuq2iL4Og
-         EDvXg+XE74A3Cj3JWRNM/vn8nwaX1o2GCgcTQ/Jf1r5DV9GJOcPfs/ucELdL9IrekjY5
-         1LFFgaqg9lY2CPEzGK7vjKXPw49NFypxPlWbUGEoaEeVUKOYXycDF7Y46g9RaKjbQKER
-         jX6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWc0tU5r4ORS1MNcHqBULXmAKhw7oDXbe+6FcjlTCqN3AfCa9YxKHi4WBGZnSnX4A0QoIhBHiB0cl6JWWkD@vger.kernel.org
-X-Gm-Message-State: AOJu0YxxcErTJzdURl2TsbHvLD5HgYmSUsp28zdW6/SJrCh+Eo71JGxW
-	DF+M3VdOBTgxupu9zbM8sydiVHFtY7LTOcxSfITlC17VUeoUw9pj4YGNr7YKVJGRn6l5FRiOYpE
-	5L34bw9d577tN0nNXJfiQ5sgvSVcX3Z+8fNb3o0Us
-X-Gm-Gg: ASbGncvPs/39g2ztBqt7FMkwgY4Wi6SadA0O2rJAj8x+HFWwr/46VojzDmEs6I0kmsG
-	oQQ3rkPqKW0jxBqmOaYQhpgMCjSNB8xtReFb3dJfCUMYZdP6rQkNwn9DTlOTlSLuJrKjcfsZfim
-	0886bOBgM56bwcOuWcBv/q0LbZf0A8OmOYNktH1gAwT7YCxN0exAOg5/8Mju1V
-X-Google-Smtp-Source: AGHT+IEY3Xzc7fr4+j+8c7Xmzn1ASJ0g0PGM20FPE+6j6dnC/T4ZD4yfgoiNZfuCxktxFtJP7fxNgol2XsmKPY/V9Ak=
-X-Received: by 2002:ac8:5a0f:0:b0:494:763e:d971 with SMTP id
- d75a77b69052e-494a339efa1mr2170171cf.23.1747301259016; Thu, 15 May 2025
- 02:27:39 -0700 (PDT)
+	s=arc-20240116; t=1747301300; c=relaxed/simple;
+	bh=1GpS5F8dcSRi2jWJJUN1lHr26JuIlGhlNGjoxOA0AQM=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=tYzL6f7SHj8S9LfAJG09AJvf65YE3+dQoP4o/HhKf+/zbqDm/FF3DPzW3J14w/VMFzvtXePSzkMcY1jw1cLUbf5jK1XA4LBdNo4k3F8n0jQVXKBcgwBwI9GjKcAvt3PvSNZrK6geTXPXXWPNSYXuEbxhS6gCWcA6Q59W9ScnMvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=H+/UIf47; arc=none smtp.client-ip=80.241.56.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4ZylHw3vBRz9tK7;
+	Thu, 15 May 2025 11:28:12 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1747301292; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cBm+7dx/76CkBsioMHKcluhBiEdz9fLttBYI4SLScxM=;
+	b=H+/UIf47HA87lOuGthYJRFKTq6N0Ic7oqHLFePN2FRNMWgw25oiDIEsMjcvvNuJEg4Q8OT
+	eBAQhS+lR2jDLQayUMHcZ2vYjHjTmr8iK7+toVkV2Mv2Oi4zJJ2urGbYTNANCKxaOZs3aG
+	7qaM8dvKidcXeThIXhefPK5SkBZ+o4XoEsl1Eq0+3JEFHZPiUHePDk1aKdvvDl7U813+Hw
+	jPggUsRtQSnkXYQ9Eli47MBpBrR/jZVdC+nBF0aRmwHuei+0g/gCzVE4ZqVI7cC8eTVL3T
+	gsKDTgSsq158ZjjWtsQCfHaxFuN5BZDtJxQVkGtNvVJCpp/kYaf25WUtBBAm6A==
+Message-ID: <51f87f358fa1b7ef8db8b67ee6cde38ae071fbe8.camel@mailbox.org>
+Subject: Re: [PATCH v4 04/40] drm/sched: Add enqueue credit limit
+From: Philipp Stanner <phasta@mailbox.org>
+Reply-To: phasta@kernel.org
+To: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, Connor
+ Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>, Matthew
+ Brost <matthew.brost@intel.com>, Danilo Krummrich <dakr@kernel.org>,
+ Philipp Stanner <phasta@kernel.org>, Christian =?ISO-8859-1?Q?K=F6nig?=
+ <ckoenig.leichtzumerken@gmail.com>, Maarten Lankhorst
+ <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+ Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, open list <linux-kernel@vger.kernel.org>
+Date: Thu, 15 May 2025 11:28:07 +0200
+In-Reply-To: <20250514170118.40555-5-robdclark@gmail.com>
+References: <20250514170118.40555-1-robdclark@gmail.com>
+	 <20250514170118.40555-5-robdclark@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250513163438.3942405-14-tabba@google.com> <20250514212653.1011484-1-jthoughton@google.com>
-In-Reply-To: <20250514212653.1011484-1-jthoughton@google.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Thu, 15 May 2025 11:27:02 +0200
-X-Gm-Features: AX0GCFtxdi9w1pFV0otXB7lxTAtPlqLdBKg0KJODZ4v7UKNCvRCSP9F597nrSVg
-Message-ID: <CA+EHjTy1UoOXDKbH-9DgE_ULGBp9OtWb5R8aK1DWvgu8ECrMsA@mail.gmail.com>
-Subject: Re: [PATCH v9 13/17] KVM: arm64: Handle guest_memfd()-backed guest
- page faults
-To: James Houghton <jthoughton@google.com>
-Cc: ackerleytng@google.com, akpm@linux-foundation.org, amoorthy@google.com, 
-	anup@brainfault.org, aou@eecs.berkeley.edu, brauner@kernel.org, 
-	catalin.marinas@arm.com, chao.p.peng@linux.intel.com, chenhuacai@kernel.org, 
-	david@redhat.com, dmatlack@google.com, fvdl@google.com, hch@infradead.org, 
-	hughd@google.com, ira.weiny@intel.com, isaku.yamahata@gmail.com, 
-	isaku.yamahata@intel.com, james.morse@arm.com, jarkko@kernel.org, 
-	jgg@nvidia.com, jhubbard@nvidia.com, keirf@google.com, 
-	kirill.shutemov@linux.intel.com, kvm@vger.kernel.org, liam.merwick@oracle.com, 
-	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, mail@maciej.szmigiero.name, 
-	maz@kernel.org, mic@digikod.net, michael.roth@amd.com, mpe@ellerman.id.au, 
-	oliver.upton@linux.dev, palmer@dabbelt.com, pankaj.gupta@amd.com, 
-	paul.walmsley@sifive.com, pbonzini@redhat.com, peterx@redhat.com, 
-	qperret@google.com, quic_cvanscha@quicinc.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_tsoni@quicinc.com, rientjes@google.com, 
-	roypat@amazon.co.uk, seanjc@google.com, shuah@kernel.org, 
-	steven.price@arm.com, suzuki.poulose@arm.com, vannapurve@google.com, 
-	vbabka@suse.cz, viro@zeniv.linux.org.uk, wei.w.wang@intel.com, 
-	will@kernel.org, willy@infradead.org, xiaoyao.li@intel.com, 
-	yilun.xu@intel.com, yuzenghui@huawei.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MBO-RS-ID: 64bdc0b238082e2d16c
+X-MBO-RS-META: g6hdxza7zti7q1hq17xft5ip4yg86shr
 
-Hi James,
+Hello,
 
-On Wed, 14 May 2025 at 23:26, James Houghton <jthoughton@google.com> wrote:
->
-> On Tue, May 13, 2025 at 9:35=E2=80=AFAM Fuad Tabba <tabba@google.com> wro=
-te:
-> >
-> > Add arm64 support for handling guest page faults on guest_memfd
-> > backed memslots.
-> >
-> > For now, the fault granule is restricted to PAGE_SIZE.
-> >
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >  arch/arm64/kvm/mmu.c     | 94 +++++++++++++++++++++++++---------------
-> >  include/linux/kvm_host.h |  5 +++
-> >  virt/kvm/kvm_main.c      |  5 ---
-> >  3 files changed, 64 insertions(+), 40 deletions(-)
-> >
-> > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> > index d756c2b5913f..9a48ef08491d 100644
-> > --- a/arch/arm64/kvm/mmu.c
-> > +++ b/arch/arm64/kvm/mmu.c
-> > @@ -1466,6 +1466,30 @@ static bool kvm_vma_mte_allowed(struct vm_area_s=
-truct *vma)
-> >         return vma->vm_flags & VM_MTE_ALLOWED;
-> >  }
-> >
-> > +static kvm_pfn_t faultin_pfn(struct kvm *kvm, struct kvm_memory_slot *=
-slot,
-> > +                            gfn_t gfn, bool write_fault, bool *writabl=
-e,
-> > +                            struct page **page, bool is_gmem)
-> > +{
-> > +       kvm_pfn_t pfn;
-> > +       int ret;
-> > +
-> > +       if (!is_gmem)
-> > +               return __kvm_faultin_pfn(slot, gfn, write_fault ? FOLL_=
-WRITE : 0, writable, page);
-> > +
-> > +       *writable =3D false;
-> > +
-> > +       ret =3D kvm_gmem_get_pfn(kvm, slot, gfn, &pfn, page, NULL);
-> > +       if (!ret) {
-> > +               *writable =3D !memslot_is_readonly(slot);
-> > +               return pfn;
-> > +       }
-> > +
-> > +       if (ret =3D=3D -EHWPOISON)
-> > +               return KVM_PFN_ERR_HWPOISON;
-> > +
-> > +       return KVM_PFN_ERR_NOSLOT_MASK;
->
-> I don't think the above handling for the `ret !=3D 0` case is correct. I =
-think
-> we should just be returning `ret` out to userspace.
+On Wed, 2025-05-14 at 09:59 -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+>=20
+> Similar to the existing credit limit mechanism, but applying to jobs
+> enqueued to the scheduler but not yet run.
+>=20
+> The use case is to put an upper bound on preallocated, and
+> potentially
+> unneeded, pgtable pages.=C2=A0 When this limit is exceeded, pushing new
+> jobs
+> will block until the count drops below the limit.
 
-Ack.
+the commit message doesn't make clear why that's needed within the
+scheduler.
 
->
-> The diff I have below is closer to what I think we must do.
->
-> > +}
-> > +
-> >  static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa=
-,
-> >                           struct kvm_s2_trans *nested,
-> >                           struct kvm_memory_slot *memslot, unsigned lon=
-g hva,
-> > @@ -1473,19 +1497,20 @@ static int user_mem_abort(struct kvm_vcpu *vcpu=
-, phys_addr_t fault_ipa,
-> >  {
-> >         int ret =3D 0;
-> >         bool write_fault, writable;
-> > -       bool exec_fault, mte_allowed;
-> > +       bool exec_fault, mte_allowed =3D false;
-> >         bool device =3D false, vfio_allow_any_uc =3D false;
-> >         unsigned long mmu_seq;
-> >         phys_addr_t ipa =3D fault_ipa;
-> >         struct kvm *kvm =3D vcpu->kvm;
-> > -       struct vm_area_struct *vma;
-> > -       short page_shift;
-> > +       struct vm_area_struct *vma =3D NULL;
-> > +       short page_shift =3D PAGE_SHIFT;
-> >         void *memcache;
-> > -       gfn_t gfn;
-> > +       gfn_t gfn =3D ipa >> PAGE_SHIFT;
-> >         kvm_pfn_t pfn;
-> >         bool logging_active =3D memslot_is_logging(memslot);
-> > -       bool force_pte =3D logging_active || is_protected_kvm_enabled()=
-;
-> > -       long page_size, fault_granule;
-> > +       bool is_gmem =3D kvm_slot_has_gmem(memslot);
-> > +       bool force_pte =3D logging_active || is_gmem || is_protected_kv=
-m_enabled();
-> > +       long page_size, fault_granule =3D PAGE_SIZE;
-> >         enum kvm_pgtable_prot prot =3D KVM_PGTABLE_PROT_R;
-> >         struct kvm_pgtable *pgt;
-> >         struct page *page;
-> > @@ -1529,17 +1554,20 @@ static int user_mem_abort(struct kvm_vcpu *vcpu=
-, phys_addr_t fault_ipa,
-> >          * Let's check if we will get back a huge page backed by hugetl=
-bfs, or
-> >          * get block mapping for device MMIO region.
-> >          */
-> > -       mmap_read_lock(current->mm);
-> > -       vma =3D vma_lookup(current->mm, hva);
-> > -       if (unlikely(!vma)) {
-> > -               kvm_err("Failed to find VMA for hva 0x%lx\n", hva);
-> > -               mmap_read_unlock(current->mm);
-> > -               return -EFAULT;
-> > +       if (!is_gmem) {
-> > +               mmap_read_lock(current->mm);
-> > +               vma =3D vma_lookup(current->mm, hva);
-> > +               if (unlikely(!vma)) {
-> > +                       kvm_err("Failed to find VMA for hva 0x%lx\n", h=
-va);
-> > +                       mmap_read_unlock(current->mm);
-> > +                       return -EFAULT;
-> > +               }
-> > +
-> > +               vfio_allow_any_uc =3D vma->vm_flags & VM_ALLOW_ANY_UNCA=
-CHED;
-> > +               mte_allowed =3D kvm_vma_mte_allowed(vma);
-> >         }
-> >
-> > -       if (force_pte)
-> > -               page_shift =3D PAGE_SHIFT;
-> > -       else
-> > +       if (!force_pte)
-> >                 page_shift =3D get_vma_page_shift(vma, hva);
-> >
-> >         switch (page_shift) {
-> > @@ -1605,27 +1633,23 @@ static int user_mem_abort(struct kvm_vcpu *vcpu=
-, phys_addr_t fault_ipa,
-> >                 ipa &=3D ~(page_size - 1);
-> >         }
-> >
-> > -       gfn =3D ipa >> PAGE_SHIFT;
-> > -       mte_allowed =3D kvm_vma_mte_allowed(vma);
-> > -
-> > -       vfio_allow_any_uc =3D vma->vm_flags & VM_ALLOW_ANY_UNCACHED;
-> > -
-> > -       /* Don't use the VMA after the unlock -- it may have vanished *=
-/
-> > -       vma =3D NULL;
-> > +       if (!is_gmem) {
-> > +               /* Don't use the VMA after the unlock -- it may have va=
-nished */
-> > +               vma =3D NULL;
->
-> I think we can just move the vma declaration inside the earlier `if (is_g=
-mem)`
-> bit above. It should be really hard to accidentally attempt to use `vma` =
-or
-> `hva` in the is_gmem case. `vma` we can easily make it impossible; `hva` =
-is
-> harder.
+From what I understand from the cover letter, this is a (rare?) Vulkan
+feature. And as important as Vulkan is, it's the drivers that implement
+support for it. I don't see why the scheduler is a blocker.
 
-To be honest, I think we need to refactor user_mem_abort(). It's
-already a bit messy, and with the guest_memfd code, and in the
-(hopefully) soon, pkvm code, it's going to get messier. Some of the
-things things to keep in mind are, like you suggest, ensuring that vma
-and hva aren't in scope where they're not needed.
+All the knowledge about when to stop pushing into the entity is in the
+driver, and the scheduler obtains all the knowledge about that from the
+driver anyways.
 
->
-> See below for what I think this should look like.
->
-> >
-> > -       /*
-> > -        * Read mmu_invalidate_seq so that KVM can detect if the result=
-s of
-> > -        * vma_lookup() or __kvm_faultin_pfn() become stale prior to
-> > -        * acquiring kvm->mmu_lock.
-> > -        *
-> > -        * Rely on mmap_read_unlock() for an implicit smp_rmb(), which =
-pairs
-> > -        * with the smp_wmb() in kvm_mmu_invalidate_end().
-> > -        */
-> > -       mmu_seq =3D vcpu->kvm->mmu_invalidate_seq;
-> > -       mmap_read_unlock(current->mm);
-> > +               /*
-> > +                * Read mmu_invalidate_seq so that KVM can detect if th=
-e results
-> > +                * of vma_lookup() or faultin_pfn() become stale prior =
-to
-> > +                * acquiring kvm->mmu_lock.
-> > +                *
-> > +                * Rely on mmap_read_unlock() for an implicit smp_rmb()=
-, which
-> > +                * pairs with the smp_wmb() in kvm_mmu_invalidate_end()=
+So you could do
+
+if (my_vulkan_condition())
+   drm_sched_entity_push_job();
+
+couldn't you?
+
+>=20
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+> =C2=A0drivers/gpu/drm/scheduler/sched_entity.c | 16 ++++++++++++++--
+> =C2=A0drivers/gpu/drm/scheduler/sched_main.c=C2=A0=C2=A0 |=C2=A0 3 +++
+> =C2=A0include/drm/gpu_scheduler.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 13 ++++++++++++-
+> =C2=A03 files changed, 29 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/scheduler/sched_entity.c
+> b/drivers/gpu/drm/scheduler/sched_entity.c
+> index dc0e60d2c14b..c5f688362a34 100644
+> --- a/drivers/gpu/drm/scheduler/sched_entity.c
+> +++ b/drivers/gpu/drm/scheduler/sched_entity.c
+> @@ -580,11 +580,21 @@ void drm_sched_entity_select_rq(struct
+> drm_sched_entity *entity)
+> =C2=A0 * under common lock for the struct drm_sched_entity that was set u=
+p
+> for
+> =C2=A0 * @sched_job in drm_sched_job_init().
+> =C2=A0 */
+> -void drm_sched_entity_push_job(struct drm_sched_job *sched_job)
+> +int drm_sched_entity_push_job(struct drm_sched_job *sched_job)
+
+Return code would need to be documented in the docstring, too. If we'd
+go for that solution.
+
+> =C2=A0{
+> =C2=A0	struct drm_sched_entity *entity =3D sched_job->entity;
+> +	struct drm_gpu_scheduler *sched =3D sched_job->sched;
+> =C2=A0	bool first;
+> =C2=A0	ktime_t submit_ts;
+> +	int ret;
+> +
+> +	ret =3D wait_event_interruptible(
+> +			sched->job_scheduled,
+> +			atomic_read(&sched->enqueue_credit_count) <=3D
+> +			sched->enqueue_credit_limit);
+
+This very significantly changes the function's semantics. This function
+is used in a great many drivers, and here it would be transformed into
+a function that can block.
+
+From what I see below those credits are to be optional. But even if, it
+needs to be clearly documented when a function can block.
+
+> +	if (ret)
+> +		return ret;
+> +	atomic_add(sched_job->enqueue_credits, &sched-
+> >enqueue_credit_count);
+> =C2=A0
+> =C2=A0	trace_drm_sched_job(sched_job, entity);
+> =C2=A0	atomic_inc(entity->rq->sched->score);
+> @@ -609,7 +619,7 @@ void drm_sched_entity_push_job(struct
+> drm_sched_job *sched_job)
+> =C2=A0			spin_unlock(&entity->lock);
+> =C2=A0
+> =C2=A0			DRM_ERROR("Trying to push to a killed
+> entity\n");
+> -			return;
+> +			return -EINVAL;
+> =C2=A0		}
+> =C2=A0
+> =C2=A0		rq =3D entity->rq;
+> @@ -626,5 +636,7 @@ void drm_sched_entity_push_job(struct
+> drm_sched_job *sched_job)
+> =C2=A0
+> =C2=A0		drm_sched_wakeup(sched);
+> =C2=A0	}
+> +
+> +	return 0;
+> =C2=A0}
+> =C2=A0EXPORT_SYMBOL(drm_sched_entity_push_job);
+> diff --git a/drivers/gpu/drm/scheduler/sched_main.c
+> b/drivers/gpu/drm/scheduler/sched_main.c
+> index 9412bffa8c74..1102cca69cb4 100644
+> --- a/drivers/gpu/drm/scheduler/sched_main.c
+> +++ b/drivers/gpu/drm/scheduler/sched_main.c
+> @@ -1217,6 +1217,7 @@ static void drm_sched_run_job_work(struct
+> work_struct *w)
+> =C2=A0
+> =C2=A0	trace_drm_run_job(sched_job, entity);
+> =C2=A0	fence =3D sched->ops->run_job(sched_job);
+> +	atomic_sub(sched_job->enqueue_credits, &sched-
+> >enqueue_credit_count);
+> =C2=A0	complete_all(&entity->entity_idle);
+> =C2=A0	drm_sched_fence_scheduled(s_fence, fence);
+> =C2=A0
+> @@ -1253,6 +1254,7 @@ int drm_sched_init(struct drm_gpu_scheduler
+> *sched, const struct drm_sched_init_
+> =C2=A0
+> =C2=A0	sched->ops =3D args->ops;
+> =C2=A0	sched->credit_limit =3D args->credit_limit;
+> +	sched->enqueue_credit_limit =3D args->enqueue_credit_limit;
+> =C2=A0	sched->name =3D args->name;
+> =C2=A0	sched->timeout =3D args->timeout;
+> =C2=A0	sched->hang_limit =3D args->hang_limit;
+> @@ -1308,6 +1310,7 @@ int drm_sched_init(struct drm_gpu_scheduler
+> *sched, const struct drm_sched_init_
+> =C2=A0	INIT_LIST_HEAD(&sched->pending_list);
+> =C2=A0	spin_lock_init(&sched->job_list_lock);
+> =C2=A0	atomic_set(&sched->credit_count, 0);
+> +	atomic_set(&sched->enqueue_credit_count, 0);
+> =C2=A0	INIT_DELAYED_WORK(&sched->work_tdr, drm_sched_job_timedout);
+> =C2=A0	INIT_WORK(&sched->work_run_job, drm_sched_run_job_work);
+> =C2=A0	INIT_WORK(&sched->work_free_job, drm_sched_free_job_work);
+> diff --git a/include/drm/gpu_scheduler.h
+> b/include/drm/gpu_scheduler.h
+> index da64232c989d..d830ffe083f1 100644
+> --- a/include/drm/gpu_scheduler.h
+> +++ b/include/drm/gpu_scheduler.h
+> @@ -329,6 +329,7 @@ struct drm_sched_fence *to_drm_sched_fence(struct
+> dma_fence *f);
+> =C2=A0 * @s_fence: contains the fences for the scheduling of job.
+> =C2=A0 * @finish_cb: the callback for the finished fence.
+> =C2=A0 * @credits: the number of credits this job contributes to the
+> scheduler
+> + * @enqueue_credits: the number of enqueue credits this job
+> contributes
+> =C2=A0 * @work: Helper to reschedule job kill to different context.
+> =C2=A0 * @id: a unique id assigned to each job scheduled on the scheduler=
 .
-> > +                */
-> > +               mmu_seq =3D vcpu->kvm->mmu_invalidate_seq;
-> > +               mmap_read_unlock(current->mm);
-> > +       }
-> >
-> > -       pfn =3D __kvm_faultin_pfn(memslot, gfn, write_fault ? FOLL_WRIT=
-E : 0,
-> > -                               &writable, &page);
-> > +       pfn =3D faultin_pfn(kvm, memslot, gfn, write_fault, &writable, =
-&page, is_gmem);
-> >         if (pfn =3D=3D KVM_PFN_ERR_HWPOISON) {
-> >                 kvm_send_hwpoison_signal(hva, page_shift);
->
-> `hva` is used here even for the is_gmem case, and that should be slightly
-> concerning. And indeed it is, this is not the appropriate way to handle
-> hwpoison for gmem (and it is different than the behavior you have for x86=
-). x86
-> handles this by returning a KVM_MEMORY_FAULT_EXIT to userspace; we should=
- do
-> the same.
+> =C2=A0 * @karma: increment on every hang caused by this job. If this
+> exceeds the hang
+> @@ -366,6 +367,7 @@ struct drm_sched_job {
+> =C2=A0
+> =C2=A0	enum drm_sched_priority		s_priority;
+> =C2=A0	u32				credits;
+> +	u32				enqueue_credits;
 
-You're right. My initial thought was that by having a best-effort
-check that that would be enough, and not change the arm64 behavior all
-that much. Exiting to userspace is cleaner.
+What's the policy of setting this?
 
-> I've put what I think is more appropriate in the diff below.
->
-> And just to be clear, IMO, we *cannot* do what you have written now, espe=
-cially
-> given that we are getting rid of the userspace_addr sanity check (but tha=
-t
-> check was best-effort anyway).
->
-> >                 return 0;
-> > @@ -1677,7 +1701,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, =
-phys_addr_t fault_ipa,
-> >
-> >         kvm_fault_lock(kvm);
-> >         pgt =3D vcpu->arch.hw_mmu->pgt;
-> > -       if (mmu_invalidate_retry(kvm, mmu_seq)) {
-> > +       if (!is_gmem && mmu_invalidate_retry(kvm, mmu_seq)) {
-> >                 ret =3D -EAGAIN;
-> >                 goto out_unlock;
-> >         }
-> > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> > index f9bb025327c3..b317392453a5 100644
-> > --- a/include/linux/kvm_host.h
-> > +++ b/include/linux/kvm_host.h
-> > @@ -1884,6 +1884,11 @@ static inline int memslot_id(struct kvm *kvm, gf=
-n_t gfn)
-> >         return gfn_to_memslot(kvm, gfn)->id;
-> >  }
-> >
-> > +static inline bool memslot_is_readonly(const struct kvm_memory_slot *s=
-lot)
-> > +{
-> > +       return slot->flags & KVM_MEM_READONLY;
-> > +}
->
-> I think if you're going to move this helper to include/linux/kvm_host.h, =
-you
-> might want to do so in its own patch and change all of the existing place=
-s
-> where we check KVM_MEM_READONLY directly. *shrug*
+drm_sched_job_init() and drm_sched_job_arm() are responsible for
+initializing jobs.
 
-It's a tough job, but someone's gotta do it :)
+> =C2=A0	/** @last_dependency: tracks @dependencies as they signal */
+> =C2=A0	unsigned int			last_dependency;
+> =C2=A0	atomic_t			karma;
+> @@ -485,6 +487,10 @@ struct drm_sched_backend_ops {
+> =C2=A0 * @ops: backend operations provided by the driver.
+> =C2=A0 * @credit_limit: the credit limit of this scheduler
+> =C2=A0 * @credit_count: the current credit count of this scheduler
+> + * @enqueue_credit_limit: the credit limit of jobs pushed to
+> scheduler and not
+> + *=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 yet r=
+un
+> + * @enqueue_credit_count: the current crdit count of jobs pushed to
+> scheduler
+> + *=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 but n=
+ot yet run
+> =C2=A0 * @timeout: the time after which a job is removed from the
+> scheduler.
+> =C2=A0 * @name: name of the ring for which this scheduler is being used.
+> =C2=A0 * @num_rqs: Number of run-queues. This is at most
+> DRM_SCHED_PRIORITY_COUNT,
+> @@ -518,6 +524,8 @@ struct drm_gpu_scheduler {
+> =C2=A0	const struct drm_sched_backend_ops	*ops;
+> =C2=A0	u32				credit_limit;
+> =C2=A0	atomic_t			credit_count;
+> +	u32				enqueue_credit_limit;
+> +	atomic_t			enqueue_credit_count;
+> =C2=A0	long				timeout;
+> =C2=A0	const char			*name;
+> =C2=A0	u32=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 num_rqs;
+> @@ -550,6 +558,8 @@ struct drm_gpu_scheduler {
+> =C2=A0 * @num_rqs: Number of run-queues. This may be at most
+> DRM_SCHED_PRIORITY_COUNT,
+> =C2=A0 *	=C2=A0=C2=A0=C2=A0=C2=A0 as there's usually one run-queue per pr=
+iority, but may
+> be less.
+> =C2=A0 * @credit_limit: the number of credits this scheduler can hold fro=
+m
+> all jobs
+> + * @enqueue_credit_limit: the number of credits that can be enqueued
+> before
+> + *=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 drm_s=
+ched_entity_push_job() blocks
 
->
-> > +
-> >  static inline gfn_t
-> >  hva_to_gfn_memslot(unsigned long hva, struct kvm_memory_slot *slot)
-> >  {
-> > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-> > index 6289ea1685dd..6261d8638cd2 100644
-> > --- a/virt/kvm/kvm_main.c
-> > +++ b/virt/kvm/kvm_main.c
-> > @@ -2640,11 +2640,6 @@ unsigned long kvm_host_page_size(struct kvm_vcpu=
- *vcpu, gfn_t gfn)
-> >         return size;
-> >  }
-> >
-> > -static bool memslot_is_readonly(const struct kvm_memory_slot *slot)
-> > -{
-> > -       return slot->flags & KVM_MEM_READONLY;
-> > -}
-> > -
-> >  static unsigned long __gfn_to_hva_many(const struct kvm_memory_slot *s=
-lot, gfn_t gfn,
-> >                                        gfn_t *nr_pages, bool write)
-> >  {
-> > --
-> > 2.49.0.1045.g170613ef41-goog
-> >
->
-> Alright, here's the diff I have in mind:
+Is it optional or not? Can it be deactivated?
 
-Thank you James.
-
-Cheers,
-/fuad
+It seems to me that it is optional, and so far only used in msm. If
+there are no other parties in need for that mechanism, the right place
+to have this feature probably is msm, which has all the knowledge about
+when to block already.
 
 
->
-> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> index 9a48ef08491db..74eae19792373 100644
-> --- a/arch/arm64/kvm/mmu.c
-> +++ b/arch/arm64/kvm/mmu.c
-> @@ -1466,28 +1466,30 @@ static bool kvm_vma_mte_allowed(struct vm_area_st=
-ruct *vma)
->         return vma->vm_flags & VM_MTE_ALLOWED;
->  }
->
-> -static kvm_pfn_t faultin_pfn(struct kvm *kvm, struct kvm_memory_slot *sl=
-ot,
-> -                            gfn_t gfn, bool write_fault, bool *writable,
-> -                            struct page **page, bool is_gmem)
-> +static kvm_pfn_t faultin_pfn(struct kvm *kvm, struct kvm_vcpu *vcpu,
-> +                            struct kvm_memory_slot *slot, gfn_t gfn,
-> +                            bool exec_fault, bool write_fault, bool *wri=
-table,
-> +                            struct page **page, bool is_gmem, kvm_pfn_t =
-*pfn)
->  {
-> -       kvm_pfn_t pfn;
->         int ret;
->
-> -       if (!is_gmem)
-> -               return __kvm_faultin_pfn(slot, gfn, write_fault ? FOLL_WR=
-ITE : 0, writable, page);
-> +       if (!is_gmem) {
-> +               *pfn =3D __kvm_faultin_pfn(slot, gfn, write_fault ? FOLL_=
-WRITE : 0, writable, page);
-> +               return 0;
-> +       }
->
->         *writable =3D false;
->
-> -       ret =3D kvm_gmem_get_pfn(kvm, slot, gfn, &pfn, page, NULL);
-> -       if (!ret) {
-> -               *writable =3D !memslot_is_readonly(slot);
-> -               return pfn;
-> +       ret =3D kvm_gmem_get_pfn(kvm, slot, gfn, pfn, page, NULL);
-> +       if (ret) {
-> +               kvm_prepare_memory_fault_exit(vcpu, gfn << PAGE_SHIFT,
-> +                                             PAGE_SIZE, write_fault,
-> +                                             exec_fault, false);
-> +               return ret;
->         }
->
-> -       if (ret =3D=3D -EHWPOISON)
-> -               return KVM_PFN_ERR_HWPOISON;
-> -
-> -       return KVM_PFN_ERR_NOSLOT_MASK;
-> +       *writable =3D !memslot_is_readonly(slot);
-> +       return 0;
->  }
->
->  static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> @@ -1502,7 +1504,6 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, ph=
-ys_addr_t fault_ipa,
->         unsigned long mmu_seq;
->         phys_addr_t ipa =3D fault_ipa;
->         struct kvm *kvm =3D vcpu->kvm;
-> -       struct vm_area_struct *vma =3D NULL;
->         short page_shift =3D PAGE_SHIFT;
->         void *memcache;
->         gfn_t gfn =3D ipa >> PAGE_SHIFT;
-> @@ -1555,6 +1556,8 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, ph=
-ys_addr_t fault_ipa,
->          * get block mapping for device MMIO region.
->          */
->         if (!is_gmem) {
-> +               struct vm_area_struct *vma =3D NULL;
-> +
->                 mmap_read_lock(current->mm);
->                 vma =3D vma_lookup(current->mm, hva);
->                 if (unlikely(!vma)) {
-> @@ -1565,33 +1568,44 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, =
-phys_addr_t fault_ipa,
->
->                 vfio_allow_any_uc =3D vma->vm_flags & VM_ALLOW_ANY_UNCACH=
-ED;
->                 mte_allowed =3D kvm_vma_mte_allowed(vma);
-> -       }
->
-> -       if (!force_pte)
-> -               page_shift =3D get_vma_page_shift(vma, hva);
-> +               if (!force_pte)
-> +                       page_shift =3D get_vma_page_shift(vma, hva);
-> +
-> +               /*
-> +                * Read mmu_invalidate_seq so that KVM can detect if the =
-results
-> +                * of vma_lookup() or faultin_pfn() become stale prior to
-> +                * acquiring kvm->mmu_lock.
-> +                *
-> +                * Rely on mmap_read_unlock() for an implicit smp_rmb(), =
-which
-> +                * pairs with the smp_wmb() in kvm_mmu_invalidate_end().
-> +                */
-> +               mmu_seq =3D vcpu->kvm->mmu_invalidate_seq;
-> +               mmap_read_unlock(current->mm);
->
-> -       switch (page_shift) {
-> +               switch (page_shift) {
->  #ifndef __PAGETABLE_PMD_FOLDED
-> -       case PUD_SHIFT:
-> -               if (fault_supports_stage2_huge_mapping(memslot, hva, PUD_=
-SIZE))
-> -                       break;
-> -               fallthrough;
-> +               case PUD_SHIFT:
-> +                       if (fault_supports_stage2_huge_mapping(memslot, h=
-va, PUD_SIZE))
-> +                               break;
-> +                       fallthrough;
->  #endif
-> -       case CONT_PMD_SHIFT:
-> -               page_shift =3D PMD_SHIFT;
-> -               fallthrough;
-> -       case PMD_SHIFT:
-> -               if (fault_supports_stage2_huge_mapping(memslot, hva, PMD_=
-SIZE))
-> +               case CONT_PMD_SHIFT:
-> +                       page_shift =3D PMD_SHIFT;
-> +                       fallthrough;
-> +               case PMD_SHIFT:
-> +                       if (fault_supports_stage2_huge_mapping(memslot, h=
-va, PMD_SIZE))
-> +                               break;
-> +                       fallthrough;
-> +               case CONT_PTE_SHIFT:
-> +                       page_shift =3D PAGE_SHIFT;
-> +                       force_pte =3D true;
-> +                       fallthrough;
-> +               case PAGE_SHIFT:
->                         break;
-> -               fallthrough;
-> -       case CONT_PTE_SHIFT:
-> -               page_shift =3D PAGE_SHIFT;
-> -               force_pte =3D true;
-> -               fallthrough;
-> -       case PAGE_SHIFT:
-> -               break;
-> -       default:
-> -               WARN_ONCE(1, "Unknown page_shift %d", page_shift);
-> +               default:
-> +                       WARN_ONCE(1, "Unknown page_shift %d", page_shift)=
-;
-> +               }
->         }
->
->         page_size =3D 1UL << page_shift;
-> @@ -1633,24 +1647,16 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, =
-phys_addr_t fault_ipa,
->                 ipa &=3D ~(page_size - 1);
->         }
->
-> -       if (!is_gmem) {
-> -               /* Don't use the VMA after the unlock -- it may have vani=
-shed */
-> -               vma =3D NULL;
-> -
-> +       ret =3D faultin_pfn(kvm, vcpu, memslot, gfn, exec_fault, write_fa=
-ult,
-> +                         &writable, &page, is_gmem, &pfn);
-> +       if (ret)
-> +               return ret;
-> +       if (pfn =3D=3D KVM_PFN_ERR_HWPOISON) {
->                 /*
-> -                * Read mmu_invalidate_seq so that KVM can detect if the =
-results
-> -                * of vma_lookup() or faultin_pfn() become stale prior to
-> -                * acquiring kvm->mmu_lock.
-> -                *
-> -                * Rely on mmap_read_unlock() for an implicit smp_rmb(), =
-which
-> -                * pairs with the smp_wmb() in kvm_mmu_invalidate_end().
-> +                * For gmem, hwpoison should be communicated via a memory=
- fault
-> +                * exit, not via a SIGBUS.
->                  */
-> -               mmu_seq =3D vcpu->kvm->mmu_invalidate_seq;
-> -               mmap_read_unlock(current->mm);
-> -       }
-> -
-> -       pfn =3D faultin_pfn(kvm, memslot, gfn, write_fault, &writable, &p=
-age, is_gmem);
-> -       if (pfn =3D=3D KVM_PFN_ERR_HWPOISON) {
-> +               WARN_ON_ONCE(is_gmem);
->                 kvm_send_hwpoison_signal(hva, page_shift);
->                 return 0;
->         }
+Regards
+P.
+
+
+> =C2=A0 * @hang_limit: number of times to allow a job to hang before
+> dropping it.
+> =C2=A0 *		This mechanism is DEPRECATED. Set it to 0.
+> =C2=A0 * @timeout: timeout value in jiffies for submitted jobs.
+> @@ -564,6 +574,7 @@ struct drm_sched_init_args {
+> =C2=A0	struct workqueue_struct *timeout_wq;
+> =C2=A0	u32 num_rqs;
+> =C2=A0	u32 credit_limit;
+> +	u32 enqueue_credit_limit;
+> =C2=A0	unsigned int hang_limit;
+> =C2=A0	long timeout;
+> =C2=A0	atomic_t *score;
+> @@ -600,7 +611,7 @@ int drm_sched_job_init(struct drm_sched_job *job,
+> =C2=A0		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct drm_sched_entity *ent=
+ity,
+> =C2=A0		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 u32 credits, void *owner);
+> =C2=A0void drm_sched_job_arm(struct drm_sched_job *job);
+> -void drm_sched_entity_push_job(struct drm_sched_job *sched_job);
+> +int drm_sched_entity_push_job(struct drm_sched_job *sched_job);
+> =C2=A0int drm_sched_job_add_dependency(struct drm_sched_job *job,
+> =C2=A0				 struct dma_fence *fence);
+> =C2=A0int drm_sched_job_add_syncobj_dependency(struct drm_sched_job *job,
+
 
