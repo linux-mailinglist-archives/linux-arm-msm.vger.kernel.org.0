@@ -1,159 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-58130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DFF2AB8F90
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 20:59:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1820EAB8FC6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 21:16:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9611A3A81C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 18:58:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1F9A53B4D40
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 19:16:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F03D29B762;
-	Thu, 15 May 2025 18:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF78A4690;
+	Thu, 15 May 2025 19:16:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aqukJCwA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EeapQvRr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D93628642D;
-	Thu, 15 May 2025 18:58:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501FA191F6C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 19:16:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747335512; cv=none; b=MCfO5awCNF4Sb3BIgHVXB8dyk4MtoIkEceqcB0sUFg/yMUxMSSht8o3myL7DEANHGbyWvFzcWNY2UbxdKxifPqDS9IKvTLvo1ixL1NGZm/cZfbi8x32ZKTpilFdjmkL0EEtJ2kJlz0um2E1uQQj3Xr9rXREOgfcpRGOPbyRyp2A=
+	t=1747336592; cv=none; b=Cu8xky1P1MF2JQilYexGX1wT0KsUoJew5jWEfUevqlMu4ed6nHo7sdO4VKcvZJDPLS/XQf4K4vD74Ah9VZalEq5RapH5MwgngvLiug6U9lX1OrW+R3HTvaw7cgWXtwPNxoDSrbM5jrE36lQXqGAmJRfOa9S+dtItzZyAeDBBPZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747335512; c=relaxed/simple;
-	bh=R9+E/jvRIAgbErtUCsQF7o2wS8bqNaKox9ed/uj0mR0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JHZjpU5ZPLHhoykqNRpi6MMCD6bZSWJ9Q0tEB7pphZNYYHIsvsRuie0Tjd6Qe+rfZoMZ7ptKHna18pv6J/c4ZxrfaPuUWMTFJD8Ph5EUmqdZDQ/jp691MqMHIxebtfW+8/JXt/z55NE/j/4wE7V9Hl26G4zoTYqdVBwaApbAwY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aqukJCwA; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-441d1ed82faso10422705e9.0;
-        Thu, 15 May 2025 11:58:29 -0700 (PDT)
+	s=arc-20240116; t=1747336592; c=relaxed/simple;
+	bh=6gx4VxiCZp/8s5LdcEThfA6AUSuIOJ+dOXNvZScqpZw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yh2VYL7PpEbJbaBX3YezxexkK2FvyYhp/ecR9mT/AG8kwJjo3zFF528v5vrjRF6WN5zMLZuQDyPSYn92WYhYSiwXmUpEYh8+ao1yTN9hNrHNuWFiHErFSYcFD/plJhEjT1lBJfj/vvrbgEIUnDR+fDSfJvQ/ldEWc2triQ0ns8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EeapQvRr; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-74068f95d9fso1262967b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 12:16:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747335508; x=1747940308; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2uyejmtz0c+qWQ5LaiwciCgzl0ypKnF8Po4gKuJr/+k=;
-        b=aqukJCwAtkf9mpyrqE9NT82ARLqmmRP/XfUrI4USwx1/QbOGwgT0CmKXhO+LD76Cb+
-         46DSSX7igFPq7hx4K9MUMS/rNXBHmKKpQHmEVrkyKZ2wGHFWErK5Qf/Uc6oJ4othMhw6
-         6eUwGWGPAX0yAW62j2swPPDEGdwjoY9fww1EPtpM6zxuC4c228HMKiahdDLY8Qjkl7TL
-         pAcxGsGkQF14VLdIDv7JMHlR7Xwp+V6EAknPImthBZf4xXVY+KcIPg0Bgls1V6JoLZwq
-         yETFY/qiDkOQIbQDmL+o2PcXwZV3wKwbI2FQx3CNtII7Sd3JjXB0EKNHziI0wWltyRuA
-         deoQ==
+        d=linaro.org; s=google; t=1747336590; x=1747941390; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xpGvtrdgAlWK1GS1LjsTZA3K4q6PeKTyfdS4buJzP1w=;
+        b=EeapQvRremYQ7UatWetsKT12fYVKmEs9OZfquc4AGhJbcOVDtl+o0d+VCHt9hb0QlS
+         V1WbKTPTjiOGHW6soum5Cy+uX+/sNVy0SJVXrkBXfkrbG+kKlOmAbUNR+Fmgf5xCNqo8
+         f0Qe4DzxkKqLTonOPqprY+KKdBbl4OWqV/a8JHnzjH1eH81BvnN8jlZhZmdV/+hxbExp
+         XgUrfhFuV3yBijdWwLVdGkwqdGIcxNAfyjVjCKuC8Gv2Zk+RXSi2odeiW5EXwdMF38FW
+         5+Ohy2Js4CQtwwVDzFVXp3NKlrqUPO921ukM8Z25cei5Ff/bobiQyLZ69gnZaNj4cuXp
+         cbpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747335508; x=1747940308;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2uyejmtz0c+qWQ5LaiwciCgzl0ypKnF8Po4gKuJr/+k=;
-        b=TcC1SWB8mQTry67aQ6x+RO+L5X9wmAzGx+FY0ns2SHFL0CPTtXoSPhyjQjQNEd/pEz
-         2Is00qv+Hj4miyUqBoTg4amLE3LDKpndjRAtl7k4j8Sk8rzSts1nm+PiYM80ZD6lZdpD
-         jNxW8mQTBVmX53oWtUYoMg9Cu17r1J4sXp27MXyFg7b5DISRKdqMKuRYSae2ZqNKN+5n
-         /FszLtC/S+JGcAGkP5fT0CRMm6kt8JT2EgSImAwGN+AfiqyRohemy+52Eu90nE5JTGJf
-         ZgHCmkvxSzr5QxHVnDLae3diqGZKG4Hk8r8BxZIFDZ8o8BlaNIcVLlkN4G4Mdg43XXXW
-         QkJA==
-X-Forwarded-Encrypted: i=1; AJvYcCUAwAjZD5OAyRTef4QcLldN6+2hSteQ/HfxcRPK5kWa8lDOfCwqTByPiJcxGWGyo6/iXqJQg/H64PQk67B/@vger.kernel.org, AJvYcCVuXrZLk68uDlGb1F/DcPxAXxWVm7J6BGDhemJAFaexoWi1Wq054YYjRm5XMTkDcus9Jl/qpDE5BgSYOh2B@vger.kernel.org, AJvYcCW4HgxQWVV0sB+iyGvO/9kkY2k3xkk4ZCL/BnS8Tqwqq0ONW4AHLRd7gXEvrr4UR+8nOQxz7mrFufPE@vger.kernel.org
-X-Gm-Message-State: AOJu0YyBJYq7jn0oJkWN/JJyqC/3kBImiJ1HlPYtI/bxdbhPNasG0244
-	nGt2kNm9LTWK93mjeUlIfgmGQF3XrrsXSMEMIu3zpi/CgdcUeXifsI3fAstUeQ==
-X-Gm-Gg: ASbGncuS/mLl1UUUV376Dlgaj6B2yRR1DJlK/j6PDe3U0UNog35vsk7R3r5zrPSinTD
-	qbRhjnf4CDupqB/8ieces9/rSndwHCdGztwExHhLqx6bc+WzYzyDyohAl49L2Y/dRwxs8j60Aa2
-	nI7y5B3SXQUbF9YAYIFkd+Qi2KkEn/3DbtSfZZtslD3J1QsrBTSxnARrscMrvQThwYXDxUySmL1
-	YQn/FszqzUl5g+1f3RuUm+9QrnA2AubsacTtTBaNAvKLJK0kqVpHEyXCw999RWhmPW4Pug11K6c
-	ASGQ1D+OZ5q3SxaqD6jvQcif7iWI6+nCYHm/UjWP1TiWzM9tTOMhLImrz+T+oMhMP0ZG7QY+2BO
-	IsN8E
-X-Google-Smtp-Source: AGHT+IHaF5/8q+je2iW1pwj88K62M744soT9y5wHNJ4gvYxacC9IaeaSHOljAqzLiWm7Ak+nx/AzHA==
-X-Received: by 2002:a05:6000:1446:b0:3a1:fe77:9e0b with SMTP id ffacd0b85a97d-3a35c843f52mr1022650f8f.16.1747335508447;
-        Thu, 15 May 2025 11:58:28 -0700 (PDT)
-Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3a35ca5a857sm335778f8f.32.2025.05.15.11.58.27
+        d=1e100.net; s=20230601; t=1747336590; x=1747941390;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xpGvtrdgAlWK1GS1LjsTZA3K4q6PeKTyfdS4buJzP1w=;
+        b=NoFAgWgVz8HEJBjGg9IHROayNnBonefS0A3KricgUfJ5IlD2Q8/qMn7zK5c8CbQ8t/
+         1zK4QdrKBrOb4isu+Qm6+FZc5rppcNHt5Kl0lZiMgCKGxP6hM5xbe1ajyyiQtEHMkImJ
+         PxIVceXbgGKxWWez52d8NpMbIAbe8/lzOxbsYX+YVu86A6kJdU0rbD/tgTAfdDesZzFK
+         xN3pkdL1aeGmEPCqv8Pm4AbvF4hVw8bJEWR0qPhRED7NDfsRXwytWB0V8Zs0RF5Z1KGp
+         /UCjGz1TFdaR4hMAKv1y3Ax3nfqoGP/uJOl1QwEnSuhkUYttJgA5xHVRxj2NMXUM6Jt4
+         t+tw==
+X-Gm-Message-State: AOJu0YyVn6W9gFwhGvVIQjwa/FYb/6GJ8ceqVt92pFslIKMjjsWS2lyA
+	ajzjTs3GpdCtDm4KNe1oyodIAYKhEo+V2GubwUQOUginQL97QmPpS6cM2UGO0hQ5EJTZL/qNSut
+	w4Bfp
+X-Gm-Gg: ASbGncu1YOzgHqsN3NkE5Xj80ox4WrzLCXC4b2wpUL1b9Qmq97OPvpCJwdx2KTrPNP1
+	18bHG9MszV2ZAFEvcnoel/0TnioPtXGyRwVI0UnH/ukMgizja4bRor6m+ilROmv9BhU4nivclNY
+	Eb+N5AOl8U+ArcGDGuAT7xDzFQOYmeJxnHSFhbP4+4x1Hit9qAcHv2auG0/zpGiT0zEq9penfO4
+	z70OL3sURlsmb4rVaH5Ggl6VIiEbNBrCoPDyEK2/sCdvbjTuUIVGjYnJCHM24goEVM8E6gwMmp4
+	QzBLGWqYFV5rw3hkXa7HOKY/vIeMMglH4PopxzZn9s7GlmFzyi1ipVk=
+X-Google-Smtp-Source: AGHT+IGZupUWMej+hx+Dw+EEdAD/oqenAqiibpJbxASZMfi6QIT8v+zU2mA4H5vMiCO29lJkfqgdEQ==
+X-Received: by 2002:a05:6a20:6f90:b0:204:695f:47e1 with SMTP id adf61e73a8af0-21621909218mr943369637.23.1747336590376;
+        Thu, 15 May 2025 12:16:30 -0700 (PDT)
+Received: from p14s ([2604:3d09:148c:c800:1d7a:b4f2:fe56:fa4e])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a982b853sm163131b3a.98.2025.05.15.12.16.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 May 2025 11:58:28 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Thu, 15 May 2025 20:58:06 +0200
-Subject: [PATCH 2/2] spi: spi-qpic-snand: extend FIELD_PREP() macro usage
+        Thu, 15 May 2025 12:16:29 -0700 (PDT)
+Date: Thu, 15 May 2025 13:16:27 -0600
+From: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] Revert "remoteproc: core: Clear table_sz when
+ rproc_shutdown"
+Message-ID: <aCY9i0iwB9msN-iR@p14s>
+References: <20250513-revert-rproc-table-sz-v1-1-a8c6b5d6f8a7@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250515-qpic-snand-use-bitmasks-v1-2-11729aeae73b@gmail.com>
-References: <20250515-qpic-snand-use-bitmasks-v1-0-11729aeae73b@gmail.com>
-In-Reply-To: <20250515-qpic-snand-use-bitmasks-v1-0-11729aeae73b@gmail.com>
-To: Mark Brown <broonie@kernel.org>
-Cc: Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250513-revert-rproc-table-sz-v1-1-a8c6b5d6f8a7@kernel.org>
 
-Large part of the code uses the FIELD_PREP() macro already to construct
-values to be written to hardware registers. Change the code to use also
-the macro for more registers of which the corresponding bitmasks are
-defined already.
+On Tue, May 13, 2025 at 04:52:46PM +0100, Bjorn Andersson wrote:
+> Clearing the table_sz on cleanup seemed reasonable, but further
+> discussions concluded that this merely working around the issue
+> and that the fix is incomplete.
+> 
+> As such, revert commit efdde3d73ab2 ("remoteproc: core: Clear table_sz
+> when rproc_shutdown") to avoid carrying a partial fix.
+> 
+> Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+> ---
+>  drivers/remoteproc/remoteproc_core.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
 
-This makes the code more readable. It also syncs the affected
-codes with their counterparts in the 'qcom_nandc' driver, so it
-makes it easier to spot the differences between the two
-implementations.
+I have applied this patch.
 
-No functional changes intended.
+Thanks,
+Mathieu
 
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
- drivers/spi/spi-qpic-snand.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index bc45b834fadc5456eda1fe778e5ca8b16177465e..ad01bb456a88b54f0ffc801dd14eb3fa2708ec2e 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -130,9 +130,9 @@ static void qcom_spi_set_read_loc_first(struct qcom_nand_controller *snandc,
- 					int is_last_read_loc)
- {
- 	__le32 locreg_val;
--	u32 val = (((cw_offset) << READ_LOCATION_OFFSET) |
--		  ((read_size) << READ_LOCATION_SIZE) | ((is_last_read_loc)
--		  << READ_LOCATION_LAST));
-+	u32 val = FIELD_PREP(READ_LOCATION_OFFSET_MASK, cw_offset) |
-+		  FIELD_PREP(READ_LOCATION_SIZE_MASK, read_size) |
-+		  FIELD_PREP(READ_LOCATION_LAST_MASK, is_last_read_loc);
- 
- 	locreg_val = cpu_to_le32(val);
- 
-@@ -151,9 +151,9 @@ static void qcom_spi_set_read_loc_last(struct qcom_nand_controller *snandc,
- 				       int is_last_read_loc)
- {
- 	__le32 locreg_val;
--	u32 val = (((cw_offset) << READ_LOCATION_OFFSET) |
--		  ((read_size) << READ_LOCATION_SIZE) | ((is_last_read_loc)
--		  << READ_LOCATION_LAST));
-+	u32 val = FIELD_PREP(READ_LOCATION_OFFSET_MASK, cw_offset) |
-+		  FIELD_PREP(READ_LOCATION_SIZE_MASK, read_size) |
-+		  FIELD_PREP(READ_LOCATION_LAST_MASK, is_last_read_loc);
- 
- 	locreg_val = cpu_to_le32(val);
- 
-@@ -352,7 +352,7 @@ static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
- 			       FIELD_PREP(ECC_MODE_MASK, 0) |
- 			       FIELD_PREP(ECC_PARITY_SIZE_BYTES_BCH_MASK, ecc_cfg->ecc_bytes_hw);
- 
--	ecc_cfg->ecc_buf_cfg = 0x203 << NUM_STEPS;
-+	ecc_cfg->ecc_buf_cfg = FIELD_PREP(NUM_STEPS_MASK, 0x203);
- 	ecc_cfg->clrflashstatus = FS_READY_BSY_N;
- 	ecc_cfg->clrreadstatus = 0xc0;
- 
-
--- 
-2.49.0
-
+> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+> index 48d146e1fa560397c11eeb8f824ae0fb844a022b..81b2ccf988e852ac79cee375c7e3f118c2a4b41a 100644
+> --- a/drivers/remoteproc/remoteproc_core.c
+> +++ b/drivers/remoteproc/remoteproc_core.c
+> @@ -2025,7 +2025,6 @@ int rproc_shutdown(struct rproc *rproc)
+>  	kfree(rproc->cached_table);
+>  	rproc->cached_table = NULL;
+>  	rproc->table_ptr = NULL;
+> -	rproc->table_sz = 0;
+>  out:
+>  	mutex_unlock(&rproc->lock);
+>  	return ret;
+> 
+> ---
+> base-commit: aa94665adc28f3fdc3de2979ac1e98bae961d6ca
+> change-id: 20250513-revert-rproc-table-sz-53ecf24726ae
+> 
+> Best regards,
+> -- 
+> Bjorn Andersson <andersson@kernel.org>
+> 
 
