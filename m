@@ -1,133 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-58131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1820EAB8FC6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 21:16:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFF6BAB9046
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 21:56:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1F9A53B4D40
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 19:16:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0090F16D299
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 19:56:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF78A4690;
-	Thu, 15 May 2025 19:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2DF325A646;
+	Thu, 15 May 2025 19:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EeapQvRr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eSFzTJkx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501FA191F6C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 19:16:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176E31F3FE3;
+	Thu, 15 May 2025 19:56:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747336592; cv=none; b=Cu8xky1P1MF2JQilYexGX1wT0KsUoJew5jWEfUevqlMu4ed6nHo7sdO4VKcvZJDPLS/XQf4K4vD74Ah9VZalEq5RapH5MwgngvLiug6U9lX1OrW+R3HTvaw7cgWXtwPNxoDSrbM5jrE36lQXqGAmJRfOa9S+dtItzZyAeDBBPZY=
+	t=1747339013; cv=none; b=PoZm89HOGArWKrCGJmCpVsYVPfk9OFReX9BXtskduTOYIRnEL4xV9jODxApiEJ7JNnxBkni6UIIa9fPdmTntv69ba28sadCgEuAg7rbAh7iV1kbtBtAAPZzYENSp/uJSjGLxc6Lokt7YHNlmI8qK7WfldxN2kT27S59mwDCIsPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747336592; c=relaxed/simple;
-	bh=6gx4VxiCZp/8s5LdcEThfA6AUSuIOJ+dOXNvZScqpZw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yh2VYL7PpEbJbaBX3YezxexkK2FvyYhp/ecR9mT/AG8kwJjo3zFF528v5vrjRF6WN5zMLZuQDyPSYn92WYhYSiwXmUpEYh8+ao1yTN9hNrHNuWFiHErFSYcFD/plJhEjT1lBJfj/vvrbgEIUnDR+fDSfJvQ/ldEWc2triQ0ns8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EeapQvRr; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-74068f95d9fso1262967b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 12:16:30 -0700 (PDT)
+	s=arc-20240116; t=1747339013; c=relaxed/simple;
+	bh=BSk6HMXbHqy4bmF2p4V47cUoMUq5f+6F3jsfiwPTCqw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oQtCSXa1uAFumKsuqYLnv7vO/ISDXERDKOot+Oek5YkplVmQsvvgKUKn5AI52bVTwei+uFv/ff+ioPJ/jF/vFeXk8RqiRPty5JIkCpfGotSJZvNZvYV5SrQLCp9DjPBv/9FhgXsNub1cqyFga0OJonJBC8trQnJ6nM2wR3Ty3uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eSFzTJkx; arc=none smtp.client-ip=209.85.166.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-85e73562577so119341939f.0;
+        Thu, 15 May 2025 12:56:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747336590; x=1747941390; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xpGvtrdgAlWK1GS1LjsTZA3K4q6PeKTyfdS4buJzP1w=;
-        b=EeapQvRremYQ7UatWetsKT12fYVKmEs9OZfquc4AGhJbcOVDtl+o0d+VCHt9hb0QlS
-         V1WbKTPTjiOGHW6soum5Cy+uX+/sNVy0SJVXrkBXfkrbG+kKlOmAbUNR+Fmgf5xCNqo8
-         f0Qe4DzxkKqLTonOPqprY+KKdBbl4OWqV/a8JHnzjH1eH81BvnN8jlZhZmdV/+hxbExp
-         XgUrfhFuV3yBijdWwLVdGkwqdGIcxNAfyjVjCKuC8Gv2Zk+RXSi2odeiW5EXwdMF38FW
-         5+Ohy2Js4CQtwwVDzFVXp3NKlrqUPO921ukM8Z25cei5Ff/bobiQyLZ69gnZaNj4cuXp
-         cbpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747336590; x=1747941390;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1747339011; x=1747943811; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xpGvtrdgAlWK1GS1LjsTZA3K4q6PeKTyfdS4buJzP1w=;
-        b=NoFAgWgVz8HEJBjGg9IHROayNnBonefS0A3KricgUfJ5IlD2Q8/qMn7zK5c8CbQ8t/
-         1zK4QdrKBrOb4isu+Qm6+FZc5rppcNHt5Kl0lZiMgCKGxP6hM5xbe1ajyyiQtEHMkImJ
-         PxIVceXbgGKxWWez52d8NpMbIAbe8/lzOxbsYX+YVu86A6kJdU0rbD/tgTAfdDesZzFK
-         xN3pkdL1aeGmEPCqv8Pm4AbvF4hVw8bJEWR0qPhRED7NDfsRXwytWB0V8Zs0RF5Z1KGp
-         /UCjGz1TFdaR4hMAKv1y3Ax3nfqoGP/uJOl1QwEnSuhkUYttJgA5xHVRxj2NMXUM6Jt4
-         t+tw==
-X-Gm-Message-State: AOJu0YyVn6W9gFwhGvVIQjwa/FYb/6GJ8ceqVt92pFslIKMjjsWS2lyA
-	ajzjTs3GpdCtDm4KNe1oyodIAYKhEo+V2GubwUQOUginQL97QmPpS6cM2UGO0hQ5EJTZL/qNSut
-	w4Bfp
-X-Gm-Gg: ASbGncu1YOzgHqsN3NkE5Xj80ox4WrzLCXC4b2wpUL1b9Qmq97OPvpCJwdx2KTrPNP1
-	18bHG9MszV2ZAFEvcnoel/0TnioPtXGyRwVI0UnH/ukMgizja4bRor6m+ilROmv9BhU4nivclNY
-	Eb+N5AOl8U+ArcGDGuAT7xDzFQOYmeJxnHSFhbP4+4x1Hit9qAcHv2auG0/zpGiT0zEq9penfO4
-	z70OL3sURlsmb4rVaH5Ggl6VIiEbNBrCoPDyEK2/sCdvbjTuUIVGjYnJCHM24goEVM8E6gwMmp4
-	QzBLGWqYFV5rw3hkXa7HOKY/vIeMMglH4PopxzZn9s7GlmFzyi1ipVk=
-X-Google-Smtp-Source: AGHT+IGZupUWMej+hx+Dw+EEdAD/oqenAqiibpJbxASZMfi6QIT8v+zU2mA4H5vMiCO29lJkfqgdEQ==
-X-Received: by 2002:a05:6a20:6f90:b0:204:695f:47e1 with SMTP id adf61e73a8af0-21621909218mr943369637.23.1747336590376;
-        Thu, 15 May 2025 12:16:30 -0700 (PDT)
-Received: from p14s ([2604:3d09:148c:c800:1d7a:b4f2:fe56:fa4e])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a982b853sm163131b3a.98.2025.05.15.12.16.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 May 2025 12:16:29 -0700 (PDT)
-Date: Thu, 15 May 2025 13:16:27 -0600
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] Revert "remoteproc: core: Clear table_sz when
- rproc_shutdown"
-Message-ID: <aCY9i0iwB9msN-iR@p14s>
-References: <20250513-revert-rproc-table-sz-v1-1-a8c6b5d6f8a7@kernel.org>
+        bh=fMAdLoMT5L/a1MOnGEYuM9x+axh2zb+MjQ/Qq0Mzs2g=;
+        b=eSFzTJkx/Bp4aZsHqo/NxJ5F9iCGJoac/adBSHKWVt+Am1ssUm/WJFdzqFZDr0iSyE
+         P8t+TawyFOy/5uUdMHwbAurmc1qoZt6TOUTDdx20DeYR9a4tlnWRLjrxUXn3T8HzmuCZ
+         xQiZoVHBu1bmGoCtdDlP7LMELVPyrBqYxm8pc150Z3j2Tx6WXSY5/KTXeNSoKJqr9vTX
+         pVItT7IVi0wLzfVLhZuAdZrj0LqODAqa5fYs0qHuKTlbwf4m8K9tjorF8voDGcG9eOpV
+         2AHOvdRxvjGFXrZ+PbJANnbKbi1tEcNnBt1+w+xD9CbiwiKcZEtlO6OsfTHcBh0jb1Wf
+         U1wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747339011; x=1747943811;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fMAdLoMT5L/a1MOnGEYuM9x+axh2zb+MjQ/Qq0Mzs2g=;
+        b=ml03JUZ5CU4N31U3/Jltngf4guQaeAPRJIl2F52w1de6S9RAXfLJ9sGTS/XNRH55iA
+         5Py8TGYsGTrXHxwidrm+nlmZLnCu4x5jk/oCv7wv7k/Kzx9Smw0k0B1KDnnuHx0zLtp/
+         VBZyzt4VRvObDbfbOCmfqOZTWnoxJD1GhkCtsSp7TwFBp4ba2m4kQ5JO9Zb2GpxqhFHr
+         eDGb6v+jpwwSHX1ImxeT+tpylGoxP1dlPTJTBN72RhqCewQRZM+eCa55/e+raVlkdcZN
+         XXTUTCKwvu9dB2myAem8oawUsdjd1MIg7kUo+4j/vnjMe0ShGNvkKMkJvfCmmOQax1rX
+         Rcjw==
+X-Forwarded-Encrypted: i=1; AJvYcCUX8L9qdntGY/wTAKhA6JfTPI36waOL8QkPGv/sHDKZAR+cNlSf9nV8rYx1RO60Ko2U4iCbj5Onpsl7gqse@vger.kernel.org, AJvYcCXM7O6qS0ub30ugJro3VL+0PrAKiumY88Xhn1tTD1fm/aORfjeUeS1v+x9FB/k9uAvualVYcWWDHyIbBN2b@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3TzkT3/laZVLcDLyCx3kkLUHQOHL7TSAjDlOBNnwiSltioVJ0
+	VHGZqKSL66Ka+aZfv0kgogsSJ29gswTpl9XpiUgq17T7d2rUWp/ytU600kSTwV5GlKOkXkHspFv
+	o1cwmHwakghhMTqAbRUU64Xs/FsRWl+8=
+X-Gm-Gg: ASbGnct9nJx2fPMzNXOHnIv/QDj2Zc+Q4osSrfy4RoyorBf+FL6v5zAMlOyBuKhav99
+	01tXxDr+etBMuF6BzNQlx5rMPX7A9zSe2NWgyoVDa/C0DzujjCfdy41uvms1QmEZWWLSPpMKox3
+	s0yRe/H2NfZ5AabCrbgpykjd+lKL9NtXE7VJE5G5NUMFvu7TYjqqukk16ES5fap/BfuFg=
+X-Google-Smtp-Source: AGHT+IFPCvF4LukcF3e+PrLa/e7+Ptn8ausMxE8i1Ao10DvbOVg+94kocFag8Mx84gWnNCqcKrfEOwhvTgh/Bgnpj6k=
+X-Received: by 2002:a05:6602:2744:b0:867:325d:6247 with SMTP id
+ ca18e2360f4ac-86a231c39d6mr191572739f.7.1747339010947; Thu, 15 May 2025
+ 12:56:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250513-revert-rproc-table-sz-v1-1-a8c6b5d6f8a7@kernel.org>
+References: <20250514170118.40555-1-robdclark@gmail.com> <20250514170118.40555-5-robdclark@gmail.com>
+ <51f87f358fa1b7ef8db8b67ee6cde38ae071fbe8.camel@mailbox.org>
+ <CAJs_Fx771FFVDVFMn8YJkR9f9Ad-UQspJ9KKQw4u6Cu4TA7YPA@mail.gmail.com>
+ <CACu1E7EL+E-M0N-EAN9Bx7u9O6_pECQQdPE2ph575idhVb2Szg@mail.gmail.com>
+ <aCYkk4Y7feltfp79@pollux> <CAF6AEGsoG_W3A3+BHV4n5EKZQazFubrCyfrtxVUH7+H4-j7i5A@mail.gmail.com>
+ <aCY42rgJC4sQ4tp4@pollux>
+In-Reply-To: <aCY42rgJC4sQ4tp4@pollux>
+From: Rob Clark <robdclark@gmail.com>
+Date: Thu, 15 May 2025 12:56:38 -0700
+X-Gm-Features: AX0GCFvRdC4lKpvLHD4k1lEo4Kh-CGTqFLXWxbdj5_u0cbuv5zT5opAiGIP9Ch8
+Message-ID: <CAF6AEGubHkdhfJz=bAZvctO1aTKDLwRsRyPzkoVrQ7tA6dRbKw@mail.gmail.com>
+Subject: Re: [PATCH v4 04/40] drm/sched: Add enqueue credit limit
+To: Danilo Krummrich <dakr@kernel.org>
+Cc: Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>, phasta@kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, Matthew Brost <matthew.brost@intel.com>, 
+	=?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	open list <linux-kernel@vger.kernel.org>, 
+	Boris Brezillon <boris.brezillon@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 13, 2025 at 04:52:46PM +0100, Bjorn Andersson wrote:
-> Clearing the table_sz on cleanup seemed reasonable, but further
-> discussions concluded that this merely working around the issue
-> and that the fix is incomplete.
-> 
-> As such, revert commit efdde3d73ab2 ("remoteproc: core: Clear table_sz
-> when rproc_shutdown") to avoid carrying a partial fix.
-> 
-> Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-> ---
->  drivers/remoteproc/remoteproc_core.c | 1 -
->  1 file changed, 1 deletion(-)
+On Thu, May 15, 2025 at 11:56=E2=80=AFAM Danilo Krummrich <dakr@kernel.org>=
+ wrote:
 >
+> On Thu, May 15, 2025 at 10:40:15AM -0700, Rob Clark wrote:
+> > On Thu, May 15, 2025 at 10:30=E2=80=AFAM Danilo Krummrich <dakr@kernel.=
+org> wrote:
+> > >
+> > > (Cc: Boris)
+> > >
+> > > On Thu, May 15, 2025 at 12:22:18PM -0400, Connor Abbott wrote:
+> > > > For some context, other drivers have the concept of a "synchronous"
+> > > > VM_BIND ioctl which completes immediately, and drivers implement it=
+ by
+> > > > waiting for the whole thing to finish before returning.
+> > >
+> > > Nouveau implements sync by issuing a normal async VM_BIND and subsequ=
+ently
+> > > waits for the out-fence synchronously.
+> >
+> > As Connor mentioned, we'd prefer it to be async rather than blocking,
+> > in normal cases, otherwise with drm native context for using native
+> > UMD in guest VM, you'd be blocking the single host/VMM virglrender
+> > thread.
+> >
+> > The key is we want to keep it async in the normal cases, and not have
+> > weird edge case CTS tests blow up from being _too_ async ;-)
+>
+> I really wonder why they don't blow up in Nouveau, which also support ful=
+l
+> asynchronous VM_BIND. Mind sharing which tests blow up? :)
 
-I have applied this patch.
+Maybe it was dEQP-VK.sparse_resources.buffer.ssbo.sparse_residency.buffer_s=
+ize_2_24,
+but I might be mixing that up, I'd have to back out this patch and see
+where things blow up, which would take many hours.
 
-Thanks,
-Mathieu
+There definitely was one where I was seeing >5k VM_BIND jobs pile up,
+so absolutely throttling like this is needed.
 
-> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> index 48d146e1fa560397c11eeb8f824ae0fb844a022b..81b2ccf988e852ac79cee375c7e3f118c2a4b41a 100644
-> --- a/drivers/remoteproc/remoteproc_core.c
-> +++ b/drivers/remoteproc/remoteproc_core.c
-> @@ -2025,7 +2025,6 @@ int rproc_shutdown(struct rproc *rproc)
->  	kfree(rproc->cached_table);
->  	rproc->cached_table = NULL;
->  	rproc->table_ptr = NULL;
-> -	rproc->table_sz = 0;
->  out:
->  	mutex_unlock(&rproc->lock);
->  	return ret;
-> 
-> ---
-> base-commit: aa94665adc28f3fdc3de2979ac1e98bae961d6ca
-> change-id: 20250513-revert-rproc-table-sz-53ecf24726ae
-> 
-> Best regards,
-> -- 
-> Bjorn Andersson <andersson@kernel.org>
-> 
+Part of the VM_BIND for msm series adds some tracepoints for amount of
+memory preallocated vs used for each job.  That plus scheduler
+tracepoints should let you see how much memory is tied up in
+prealloc'd pgtables.  You might not be noticing only because you are
+running on a big desktop with lots of RAM ;-)
+
+> > > > But this
+> > > > doesn't work for native context, where everything has to be
+> > > > asynchronous, so we're trying a new approach where we instead submi=
+t
+> > > > an asynchronous bind for "normal" (non-sparse/driver internal)
+> > > > allocations and only attach its out-fence to the in-fence of
+> > > > subsequent submits to other queues.
+> > >
+> > > This is what nouveau does and I think other drivers like Xe and panth=
+or do this
+> > > as well.
+> >
+> > No one has added native context support for these drivers yet
+>
+> Huh? What exactly do you mean with "native context" then?
+
+It is a way to use native usermode driver in a guest VM, by remoting
+at the UAPI level, as opposed to the vk or gl API level.  You can
+generally get equal to native performance, but the guest/host boundary
+strongly encourages asynchronous to hide the guest->host latency.
+
+https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/693
+https://indico.freedesktop.org/event/2/contributions/53/attachments/76/121/=
+XDC2022_%20virtgpu%20drm%20native%20context.pdf
+
+So far there is (merged) support for msm + freedreno/turnip, amdgpu +
+radeonsi/radv, with MRs in-flight for i915 and asahi.
+
+BR,
+-R
+
+> > > > Once you do this then you need a
+> > > > limit like this to prevent memory usage from pending page table
+> > > > updates from getting out of control. Other drivers haven't needed t=
+his
+> > > > yet, but they will when they get native context support.
+> > >
+> > > What are the cases where you did run into this, i.e. which applicatio=
+n in
+> > > userspace hit this? Was it the CTS, some game, something else?
+> >
+> > CTS tests that do weird things with massive # of small bind/unbind.  I
+> > wouldn't expect to hit the blocking case in the real world.
+>
+> As mentioned above, can you please share them? I'd like to play around a =
+bit. :)
+>
+> - Danilo
 
