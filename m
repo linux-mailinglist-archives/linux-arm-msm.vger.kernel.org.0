@@ -1,88 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-58066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 969DBAB896A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 16:27:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D584AB8982
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 16:33:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 356A9189BE45
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 14:25:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0106A188C586
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 14:33:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DD701DF963;
-	Thu, 15 May 2025 14:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FB721AAE13;
+	Thu, 15 May 2025 14:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h6uy7Ivw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PpDzTORU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321211DDE9;
-	Thu, 15 May 2025 14:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6353634CF9;
+	Thu, 15 May 2025 14:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747319100; cv=none; b=Syth4tfcNizRQgbX1VNYR144NKfXpwc3l3dvrUy0IMdcofDQkBbvKxhv1UtYa4fOMQDmD6QXYQ7WrJojXIQcQJGAiNgYPPS7miJDxdCAWOLe4FGJMVrhXQ6sVUvsZ6f7P3pUHkwoz87uawAWz1ngfMG4KnL0dhIsWcOWC7FvwZY=
+	t=1747319599; cv=none; b=nDNtosqNSAcbd6+lSCnX59pb2zwHpn7x4IZoQixhYjZ+CFJG7gip72r6J3K+EkLuuKH4fYR7z5AwDkl3WyfKP782YCJFEFKnhbi79DO3zcI/9hkIYFuKtjH1XusqYQdNEob7foy9Gk9g93XhhZBYH30vmSF4Ov66SCS1g3jMe6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747319100; c=relaxed/simple;
-	bh=tWrm7BPeedjVfZdi0Xy9LN5h23eDVe5370ORyn81HXc=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JU05EXzUrr5JwtJzIlOe8UVe64XwzEL0abUBq8TiXY3EirVPguzpBV9PqjdEyTSY78linNdmCjJobZS2a9iER4q8O/UYG7+rVf4OfLsCb4UlyDYa/rI53aE22vMzXCG131JG9q+Q5PmFWyR3SaOfecoFDh1aNAx+V0qz31FtXFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h6uy7Ivw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35D7C4CEE7;
-	Thu, 15 May 2025 14:24:58 +0000 (UTC)
+	s=arc-20240116; t=1747319599; c=relaxed/simple;
+	bh=aK3rHV9MtBbtgEpm1YycksMWHc3n6cne+RJGaA7nDSk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DzM3W9rod9HP0GAI8ZM0PFu1R1owEpqreFy7NQCPD4MsFsiRBhGFSGXhvhh9PSXfoWalIZdMzu5P1UZ02aMRDBxp8sX1KzpmE9hK2qNZiqp8+oxG7Uo8eekE62Xm2tDQt9X29E9Cfzq3debUmPiWq5qyHT8/VDM0gCongtFV0g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PpDzTORU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39541C4CEE7;
+	Thu, 15 May 2025 14:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747319099;
-	bh=tWrm7BPeedjVfZdi0Xy9LN5h23eDVe5370ORyn81HXc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=h6uy7Ivw5uVytRpIjUIapvQr1UD2XRbIsnpYepOmDyjGJSONCl9xg6X30Lc4WLpE/
-	 6TTtIZS9zF1sZvEdhJzHunjHuZH785SmkJmy3v1NqHt3H6NjpIfvbulcA2J8auFvYu
-	 pb+PMmaNroSKboOgr51QHqBWXVvzjlIoytD+Gtr6bPWvq0JzIftul78PgRL0R21Y3c
-	 VT8HouAaLACD5E8B8OJ9hY6trABjNKSTRN399UDi99SDHBdhjXHRNwy8OROapf3vrF
-	 tx6KhQTltmhJ8XfrFn7GwpVBbbSN5dP/CfRfrRt4fyPdoMI/W33QSbxJzSi9djnln8
-	 efBh8+ND6CwXg==
-Date: Thu, 15 May 2025 07:24:57 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Luo Jie <quic_luoj@quicinc.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
- <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Lei Wei
- <quic_leiwei@quicinc.com>, Suruchi Agarwal <quic_suruchia@quicinc.com>,
- Pavithra R <quic_pavir@quicinc.com>, Simon Horman <horms@kernel.org>,
- Jonathan Corbet <corbet@lwn.net>, Kees Cook <kees@kernel.org>, "Gustavo A.
- R. Silva" <gustavoars@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
- <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-doc@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
- <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>,
- <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
- <john@phrozen.org>
-Subject: Re: [PATCH net-next v4 00/14] Add PPE driver for Qualcomm IPQ9574
- SoC
-Message-ID: <20250515072457.55902bfd@kernel.org>
-In-Reply-To: <27cf4b47-2ded-4a37-9717-1ede521d8639@quicinc.com>
-References: <20250513-qcom_ipq_ppe-v4-0-4fbe40cbbb71@quicinc.com>
-	<20250514195821.56df5c60@kernel.org>
-	<27cf4b47-2ded-4a37-9717-1ede521d8639@quicinc.com>
+	s=k20201202; t=1747319596;
+	bh=aK3rHV9MtBbtgEpm1YycksMWHc3n6cne+RJGaA7nDSk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PpDzTORUkYWu9YTyP3G2LZ7vGtA3BEZ2rlgSomrVu/Qdp7QEu06jbSvRoTUVw7ETl
+	 2132dOSL1pBhWlbL4iIVF7X2tepv3AXp/CLBJmHOKzzQpfBRQudCNEwIuHpMKPbesq
+	 Q6aNfPEJFou2azINgLxWxRfz7Eq4XGO4fITkgUtc5YNkl/3J1kCjQx37SlRLdiSINS
+	 hPZo085VL/QYlszeM5vkLjzK9+5UxoN/rjy9R5I9BzcjaSolNnum29uHVz+Sk+Lb+Z
+	 209P6QhUvdxfysoe/EQKlYmfnXt2SQwSkCtXyCazKNh3Bah6NQYrUXcH6nr3PyoCRH
+	 AkDCR0a5YUUeA==
+Date: Thu, 15 May 2025 15:33:10 +0100
+From: Will Deacon <will@kernel.org>
+To: Rob Clark <robdclark@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>, Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
+	"open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4 05/40] iommu/io-pgtable-arm: Add quirk to quiet
+ WARN_ON()
+Message-ID: <20250515143309.GA12165@willie-the-truck>
+References: <20250514175527.42488-1-robdclark@gmail.com>
+ <20250514175527.42488-6-robdclark@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250514175527.42488-6-robdclark@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Thu, 15 May 2025 22:19:11 +0800 Luo Jie wrote:
-> However, from the patchwork result as below, it seems the dependent
-> patch series (for FIELD_MODIFY() macro) did not get picked to validate
-> the PPE driver patch series together. This dependency is mentioned in
-> the cover letter. Could you advise what could be wrong here, which is
-> preventing the dependent patch to be picked up? Thanks.
+On Wed, May 14, 2025 at 10:53:19AM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> In situations where mapping/unmapping sequence can be controlled by
+> userspace, attempting to map over a region that has not yet been
+> unmapped is an error.  But not something that should spam dmesg.
+> 
+> Now that there is a quirk, we can also drop the selftest_running
+> flag, and use the quirk instead for selftests.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Acked-by: Robin Murphy <robin.murphy@arm.com>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/iommu/io-pgtable-arm.c | 27 ++++++++++++++-------------
+>  include/linux/io-pgtable.h     |  8 ++++++++
+>  2 files changed, 22 insertions(+), 13 deletions(-)
 
-Please try to read more about kernel development process.
-These patches are not in Linus's tree or the networking tree.
-If you want to use them you have to wait with your submission
-until after the next merge window.
+[...]
+
+> diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
+> index bba2a51c87d2..639b8f4fb87d 100644
+> --- a/include/linux/io-pgtable.h
+> +++ b/include/linux/io-pgtable.h
+> @@ -88,6 +88,13 @@ struct io_pgtable_cfg {
+>  	 *
+>  	 * IO_PGTABLE_QUIRK_ARM_HD: Enables dirty tracking in stage 1 pagetable.
+>  	 * IO_PGTABLE_QUIRK_ARM_S2FWB: Use the FWB format for the MemAttrs bits
+> +	 *
+> +	 * IO_PGTABLE_QUIRK_NO_WARN_ON: Do not WARN_ON() on conflicting
+> +	 *	mappings, but silently return -EEXISTS.  Normally an attempt
+> +	 *	to map over an existing mapping would indicate some sort of
+> +	 *	kernel bug, which would justify the WARN_ON().  But for GPU
+> +	 *	drivers, this could be under control of userspace.  Which
+> +	 *	deserves an error return, but not to spam dmesg.
+>  	 */
+>  	#define IO_PGTABLE_QUIRK_ARM_NS			BIT(0)
+>  	#define IO_PGTABLE_QUIRK_NO_PERMS		BIT(1)
+> @@ -97,6 +104,7 @@ struct io_pgtable_cfg {
+>  	#define IO_PGTABLE_QUIRK_ARM_OUTER_WBWA		BIT(6)
+>  	#define IO_PGTABLE_QUIRK_ARM_HD			BIT(7)
+>  	#define IO_PGTABLE_QUIRK_ARM_S2FWB		BIT(8)
+> +	#define IO_PGTABLE_QUIRK_NO_WARN_ON		BIT(9)
+
+This feels a bit fragile to me:
+  * IOMMU-API users of io-pgtable shouldn't be passing this quirk
+    but might end up doing so to paper over driver bugs.
+
+  * Low-level users of io-pgtable who expose page-table operations to
+    userspace need to pass the quirk, but might well not bother because
+    well-behaved userspace doesn't trigger the warning.
+
+So overall, it's all a bit unsatisfactory. Is there a way we could have
+the warnings only when invoked via the IOMMU API?
+
+Will
 
