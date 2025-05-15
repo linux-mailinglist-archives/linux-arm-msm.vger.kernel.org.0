@@ -1,147 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-58118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71EF8AB8DFB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 19:40:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A12DAB8E1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 19:51:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 529387B581E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 17:39:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5989B3ADA40
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 17:50:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DB022580D0;
-	Thu, 15 May 2025 17:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34C9C244679;
+	Thu, 15 May 2025 17:51:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IEJ2ndro"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="apcIm3/Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9979218858;
-	Thu, 15 May 2025 17:40:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0854F8F6E;
+	Thu, 15 May 2025 17:51:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747330830; cv=none; b=BDRnfA6Isu4Z1xroQBTXGuqlOZY6N/tcTLfZCkcD09vRdDj+XN98y4mCGYELkOZFoHRW9JXSAbRm9nlZialAdoflZRyyjaYSj6rS5Zm0FFKSrYyjd5UdBl6FaaVCOs1fVScPta32OeX2C+/lSlMPobfoVc8Xx3/Z/D3VgNi5uak=
+	t=1747331474; cv=none; b=aOz42G4Ky6kXwtqou2siM+3kKohvSXBICwoIDTuuJpHf8BX1EjDdaW7dQkXllh/I85pKtRRHMYYoiL5oCi7X1uTV++msiW5eX/SwCioMumeJ5CFRYwDkGxtCjgJVMJ/yUS5fq2uf+IdMuYPbUSI5YbXJjjXGEOuvQsiwaPMWz8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747330830; c=relaxed/simple;
-	bh=0IzJdOxR81ygQCmsqANdLatnRP0Wcuz+EfKUEkhkJEA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l1otjG/l9HSYM/dahDBKbBgxrAXMsgakUioZixh4itaVsfuVdGe3vrB8LwYTR74P9XKc1x5+dVMjVzFqa+IpOdRlZhmDYfW2dv1cLQ+lyNE3QU8XGwniY41v83UMpJ/rur73NBN+nqr4Um4Vay/dMgVteFjOVIGB724m9GzD1ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IEJ2ndro; arc=none smtp.client-ip=209.85.166.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3da73e9cf17so8945435ab.2;
-        Thu, 15 May 2025 10:40:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747330828; x=1747935628; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9Gv+jyqF5iQ9QDCMmj+4HNiLTyap9tDvvCFpoRNaACI=;
-        b=IEJ2ndros5wAvfxAQmVcITjhyjVxyHMT9y6bVlUIqax36s/hwgJE6tZ6Bnuy2MKzIf
-         oxIpmjpcIJG8qGQv8OFNAFnbCiy1olDcFfCM+5cCQ0jd3m1Q8dBfn23jgbtHLjgKqLXP
-         IrmJqSwPmkAYvNiosEKFrWDltcQj4IjQf8v37pHk5V/7DN+RUwXsQZPjPV+axV+hHeXn
-         wp2SiGyn1nG5rYBroH0x84q65Owordgt88vzAHRACZhjTRYKoOJdR6WzyC+MiCBr5m0R
-         yZbTqnDVwDL+sIXh5r1O0M5U4qOrT077/C9cQ5P26mAiB49jSoUZdgbrCZ81IcQtFRlc
-         7AWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747330828; x=1747935628;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9Gv+jyqF5iQ9QDCMmj+4HNiLTyap9tDvvCFpoRNaACI=;
-        b=EIfF4eF08sw6T1rtdvQmOlT/oLTx5E60UpEqsAbNqacoPjnSGgltuV2QgdtPm1mF9y
-         fVdd6QkK29LfNsYVMBIvQniHGCstCpw9oGg5EGfu9wsZhGwZWNrJnuaB01LjlYrzVNxL
-         dFxODCbW6nvg3cgVoKf5HmbggQADNfXTe10mwFDJ63Rn0/IbqDmoi5rk6lpYFl3ZMzbS
-         8qC8iXfgSis/WMl7xWqQFNz7ua4KXjBnk/CrQ9mri/6rszV64DwIgocmrO9d/j7e++yO
-         b0MHckXrxcwccTs15Pct7Mjox4H/8iZnfq6Fud+kkdYBkrkUNxmyKhHKU9LUMN4DVpze
-         XFxg==
-X-Forwarded-Encrypted: i=1; AJvYcCUyd2jmLa6yHmOjTwUbQdWkuP5S6yO2ZL+blPOr3ZgMiq3lkXL1oLgy5IA2r+8qcw93rRRl/VUHwABd8cPE@vger.kernel.org, AJvYcCVisMzaFlOQq72J3aQIzkin4YqErpIVxZaAF2qdEWXA9MEqKXIZL6/Eb08gcb0XNNhZ2w4MR79HtD/U7VKi@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw9k32Fulhldq81WbzQxX56vVjkKl5MpBMOGVdIclZ0EVvcTM5o
-	glADaAHQnMVgNrp21L/ALCmh09BIsLRlFDnqWeqdYozHixqAGYvG9tyVXGYt2PU+Q/2fYCDrh/D
-	3Ze7JWNKE/YKda36WeAaOJUOQIzppgVk=
-X-Gm-Gg: ASbGncu55MHQNSXY04MlmScBAoIS4YIFFC05y1RXNwojSkmcMw2F1H2PLOfZnSjsrbv
-	APwy61U4rpUaxKIcC+H4pwtAMs5ubxT8cxaEiPbzKSE7gKBAXOzcnB7+xM0RdD0pCTdoLyvZT7o
-	D5LrZ67bPspvhvDg95FXl3fGZPZ2S7Pg6kW0hu/3LurDd8kNd4vxCX7cwvGcEyrb0=
-X-Google-Smtp-Source: AGHT+IEJipXdl2VdU/Oec1bGlBvZGZ7tO6kaKvHUZEoNz8drXkpWOZVfZlKq5HOiApXq2RnjQWE/s2cZ189LZWiNKr4=
-X-Received: by 2002:a05:6e02:1a6c:b0:3d9:398f:b836 with SMTP id
- e9e14a558f8ab-3db84321988mr8926665ab.17.1747330827801; Thu, 15 May 2025
- 10:40:27 -0700 (PDT)
+	s=arc-20240116; t=1747331474; c=relaxed/simple;
+	bh=WEmiD2qPElaxQs4rm++MltavxTtaRvw54uPnnWldrlQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aDc/UkwXk5xBiAAnNDkXwMW60O8qVXdN26/vZSWGnozNdwok+PXfgr92t5F/VXlBRRi7pOh62MSS1Xpy7aney61alQOBkY075IhM2x9alAKLDmY6X2rWomOrfMfRx6NgrqOPKOrid8emqltyUNTfDvqGUaxnrhivk4pgafwTYSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=apcIm3/Z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25D4C4CEE7;
+	Thu, 15 May 2025 17:51:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747331473;
+	bh=WEmiD2qPElaxQs4rm++MltavxTtaRvw54uPnnWldrlQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=apcIm3/Zgw3JdtyllNBhGKu/wxHkUS097f/pylBkpClWGFpBkHX0am9I48La/S2l8
+	 vIZGLk2Ow45XRldoeH4aKarsjlvMb7nV6qunZjojO46CHxFaQ5UtaVtqi11KhLAh8n
+	 B00ODfyjHk95ExSCHivXJ+uPgJY20gzIEkYbmRhFvNhuTq/h6oXH++2fEYUGHM3p9p
+	 BB5S+GlgpFFbK2XbWkkmIft79BqxRwIALRC5yoMvUdYjhb/RwAwwBFMRDKgpuSlKVl
+	 dB+myCtZwjXi9bPbL1TiYmMvC7sbVObNV149QlShIoJlXYhh1ErPKVOc9ODvVeDm64
+	 UesnVHiAd3Scw==
+Date: Thu, 15 May 2025 19:51:08 +0200
+From: Danilo Krummrich <dakr@kernel.org>
+To: Rob Clark <robdclark@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4 02/40] drm/gpuvm: Allow VAs to hold soft reference to
+ BOs
+Message-ID: <aCYpjJPvSOf2RzbU@pollux>
+References: <20250514175527.42488-1-robdclark@gmail.com>
+ <20250514175527.42488-3-robdclark@gmail.com>
+ <aCWtINcOUWciwx8L@pollux>
+ <CAF6AEGsm6JgK6QQe7se6bzv6QLnm-sxsJRmv=r3OWKhf6rfOSA@mail.gmail.com>
+ <aCYIiJpMe1ljGxqz@pollux>
+ <CAF6AEGvLpekBNLxVOavkXJtcZZQBH6WznKA=F0Jn9idxBMypkA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250514170118.40555-1-robdclark@gmail.com> <20250514170118.40555-5-robdclark@gmail.com>
- <51f87f358fa1b7ef8db8b67ee6cde38ae071fbe8.camel@mailbox.org>
- <CAJs_Fx771FFVDVFMn8YJkR9f9Ad-UQspJ9KKQw4u6Cu4TA7YPA@mail.gmail.com>
- <CACu1E7EL+E-M0N-EAN9Bx7u9O6_pECQQdPE2ph575idhVb2Szg@mail.gmail.com> <aCYkk4Y7feltfp79@pollux>
-In-Reply-To: <aCYkk4Y7feltfp79@pollux>
-From: Rob Clark <robdclark@gmail.com>
-Date: Thu, 15 May 2025 10:40:15 -0700
-X-Gm-Features: AX0GCFtd_SrDNpGNgyp8XAQPhmBBmDgvcdrcdNZ8xnRlH3UestZq2hfK_c4xVuQ
-Message-ID: <CAF6AEGsoG_W3A3+BHV4n5EKZQazFubrCyfrtxVUH7+H4-j7i5A@mail.gmail.com>
-Subject: Re: [PATCH v4 04/40] drm/sched: Add enqueue credit limit
-To: Danilo Krummrich <dakr@kernel.org>
-Cc: Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>, phasta@kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, Matthew Brost <matthew.brost@intel.com>, 
-	=?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	open list <linux-kernel@vger.kernel.org>, 
-	Boris Brezillon <boris.brezillon@collabora.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGvLpekBNLxVOavkXJtcZZQBH6WznKA=F0Jn9idxBMypkA@mail.gmail.com>
 
-On Thu, May 15, 2025 at 10:30=E2=80=AFAM Danilo Krummrich <dakr@kernel.org>=
- wrote:
->
-> (Cc: Boris)
->
-> On Thu, May 15, 2025 at 12:22:18PM -0400, Connor Abbott wrote:
-> > For some context, other drivers have the concept of a "synchronous"
-> > VM_BIND ioctl which completes immediately, and drivers implement it by
-> > waiting for the whole thing to finish before returning.
->
-> Nouveau implements sync by issuing a normal async VM_BIND and subsequentl=
-y
-> waits for the out-fence synchronously.
+On Thu, May 15, 2025 at 10:34:07AM -0700, Rob Clark wrote:
+> On Thu, May 15, 2025 at 8:30 AM Danilo Krummrich <dakr@kernel.org> wrote:
+> >
+> > On Thu, May 15, 2025 at 07:59:16AM -0700, Rob Clark wrote:
+> >
+> > Thanks for the detailed explanation!
+> >
+> > > On Thu, May 15, 2025 at 2:00 AM Danilo Krummrich <dakr@kernel.org> wrote:
+> > > >
+> > > > On Wed, May 14, 2025 at 10:53:16AM -0700, Rob Clark wrote:
+> > > > > From: Rob Clark <robdclark@chromium.org>
+> > > > >
+> > > > > Eases migration for drivers where VAs don't hold hard references to
+> > > > > their associated BO, avoiding reference loops.
+> > > > >
+> > > > > In particular, msm uses soft references to optimistically keep around
+> > > > > mappings until the BO is distroyed.  Which obviously won't work if the
+> > > > > VA (the mapping) is holding a reference to the BO.
+> > > >
+> > > > Ick! This is all complicated enough. Allow drivers to bypass the proper
+> > > > reference counting for GEM objects in the context of VM_BO structures seems like
+> > > > an insane footgun.
+> > > >
+> > > > I don't understand why MSM would need weak references here. Why does msm need
+> > > > that, but nouveau, Xe, panthor, PowerVR do not?
+> > >
+> > > Most of those drivers were designed (and had their UABI designed) with
+> > > gpuvm, or at least sparse, in mind from the get go.  I'm not sure
+> > > about nouveau, but I guess it just got lucky that it's UABI semantics
+> > > fit having the VMA hold a reference to the BO.
+> > >
+> > > Unfortunately, msm pre-dates sparse.. and in the beginning there was
+> > > only a single global VM, multiple VMs was something retrofitted ~6yrs
+> > > (?) back.  For existing msm, the VMA(s) are implicitly torn down when
+> > > the GEM obj is freed.  This won't work with the VMA(s) holding hard
+> > > references to the BO.
+> >
+> > Ok, that makes sense to me, but why can't this be changed? I don't see how the
+> > uAPI would be affected, this is just an implementation detail, no?
+> 
+> It's about the behaviour of the API, there is no explicit VMA
+> creation/destruction in the uAPI.
 
-As Connor mentioned, we'd prefer it to be async rather than blocking,
-in normal cases, otherwise with drm native context for using native
-UMD in guest VM, you'd be blocking the single host/VMM virglrender
-thread.
+But that shouldn't matter? Userspace gives you a BO, the driver creates VMAs
+itself, which can have a reference on the VM_BO, which references the original
+BO. At this point you can drop the original reference of the BO and just destroy
+all corresponding VMAs once the driver fulfilled the request from userspace?
 
-The key is we want to keep it async in the normal cases, and not have
-weird edge case CTS tests blow up from being _too_ async ;-)
+> > > When userspace opts-in to "VM_BIND" mode, which it has to do before
+> > > the VM is created, then we don't set this flag, the VMA holds a hard
+> > > reference to the BO as it does with other drivers.  But consider this
+> > > use-case, which is perfectly valid for old (existing) userspace:
+> > >
+> > > 1) Userspace creates a BO
+> > > 2) Submits rendering referencing the BO
+> > > 3) Immediately closes the BO handle, without waiting for the submit to complete
+> > >
+> > > In this case, the submit holds a reference to the BO which holds a
+> > > reference to the VMA.
+> >
+> > Can't you just instead create the VMAs, which hold a reference to the VM_BO,
+> > which holds a reference to the BO, then drop the drop the original BO reference
+> > and finally, when everything is completed, remove all VMAs of the VM_BO?
+> 
+> Perhaps the submit could hold a ref to the VM_BO instead of the BO to
+> cover that particular case.
+> 
+> But for the legacy world, the VMA is implicitly torn down when the BO
+> is freed.  Which will never happen if the VM_BO holds a reference to
+> the BO.
 
-> > But this
-> > doesn't work for native context, where everything has to be
-> > asynchronous, so we're trying a new approach where we instead submit
-> > an asynchronous bind for "normal" (non-sparse/driver internal)
-> > allocations and only attach its out-fence to the in-fence of
-> > subsequent submits to other queues.
->
-> This is what nouveau does and I think other drivers like Xe and panthor d=
-o this
-> as well.
+Sure, I get that; what I do not get is why it can't be changed, e.g. in the way
+described above.
 
-No one has added native context support for these drivers yet
+> > This should do exactly the same *and* be conformant with GPUVM design.
+> >
+> > > Everything is torn down gracefully when the
+> > > submit completes.  But if the VMA held a hard reference to the BO then
+> > > you'd have a reference loop.
+> > >
+> > > So there really is no other way to use gpuvm _and_ maintain backwards
+> > > compatibility with the semantics of the pre-VM_BIND UAPI without this
+> > > flag.
+> >
+> > Again, how is this important for maintaining backwards compatibility with the
+> > uAPI? This all seems like a driver internal implementation detail to me.
+> >
+> > So, is there a technical reason, or is it more that it would be more effort on
+> > the driver end to rework things accordingly?
+> 
+> If there were a way to work without WEAK_REF, it seems like it would
+> be harder and much less of a drop in change.
 
-> > Once you do this then you need a
-> > limit like this to prevent memory usage from pending page table
-> > updates from getting out of control. Other drivers haven't needed this
-> > yet, but they will when they get native context support.
->
-> What are the cases where you did run into this, i.e. which application in
-> userspace hit this? Was it the CTS, some game, something else?
-
-CTS tests that do weird things with massive # of small bind/unbind.  I
-wouldn't expect to hit the blocking case in the real world.
-
-BR,
--R
+So, you're saying there is no technical blocker to rework it?
 
