@@ -1,149 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-58126-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF3A9AB8F67
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 20:54:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3971DAB8F79
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 20:56:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 88FE11BC1C37
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 18:54:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C7EDA17EF8D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 18:56:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64094285405;
-	Thu, 15 May 2025 18:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69BB828AAE1;
+	Thu, 15 May 2025 18:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZjgI61e5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R+bgmgrr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CA32690E0;
-	Thu, 15 May 2025 18:53:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AAD28B414;
+	Thu, 15 May 2025 18:56:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747335237; cv=none; b=K/S/7imxWh1j6U9YayssdNfTcNf+/n9EEpG/6BFptVcQXrCJWqnIdKh/vNZB5YmrJi7bHRLKlqIBqlm3id0fPvjO3hx/Whj6JheaJnNFVYyhTlOxHRGaWzMtI/PLk+oUsJb9wqE+tvqVVcN40sSISZJfh4ztIxSboT0vzKhcHHE=
+	t=1747335393; cv=none; b=uTl3XK4U27zKzxUX+3iutWByT9TtQLdKXvAY7zRqhUohZme4EQjmGff3AA+aYtBjt/aVbgKyiOSOnycaD2gB1zz9VjrBF87W9o2G+a6nZqCCDiLQ6AA96o8DjX1WBj39V+Mx43nQtzHitWPNpE5Xc+yNPN7YhZmrNZRusP3m364=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747335237; c=relaxed/simple;
-	bh=t4ojkGfVhwVHH43H5b+OeBvk8PTzeb+S6OnVFeMPohs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Y9sEQ+ail46aYeQMQgPWhLrixeGLi/NLxATLsmdaagm8X7BLRc4YnZw90Tajk5Q8LyDEHx3zR/dLl09uEHyLS5EHYc38gs3lhVr5HnoBpqSLamUI/+jCuK0csAPqNKMII4P2jlJj1wTqyK4qk8QTVdpK1+Rwq/rpfrxMyVW7Oo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZjgI61e5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FEFE5T009131;
-	Thu, 15 May 2025 18:53:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Xp9oibChdql+/xwAjjJoORUpqecaqXdTQ5e3XcbEzr4=; b=ZjgI61e51By8u5xk
-	K/Rd6cMOMfqFpo+vwGrt5u4HRa4mEEUpJJ9crkNrabU3wf/MOUOgOru0XirfjEfa
-	qu9paesSzIVw61fwmvE5FUzg8//1XwVaoMsNYkYBKPP0RY4xd7EDhTBfHrJ/6vO/
-	Waf/X9Pgc69ZdvmQ8DuwJ6LApVrrq1tODx8exBgxlgyMxNaQRt1hbGUi6wqpDS2n
-	DANnh+BMH3j5dIJ1Ng2xoWvlZLnIDjF96ewQzWRX5m2ifKN00FLlBljqnFJJmqM1
-	+l9KwycSVwBCf9H3urPyR6x5gxga/HNX21NZdDabhaAsW2QLpfxRmteN8DFOmMjQ
-	/bBxiQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbex7au3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 May 2025 18:53:52 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54FIrq42017518
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 May 2025 18:53:52 GMT
-Received: from [10.216.63.6] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 15 May
- 2025 11:53:49 -0700
-Message-ID: <21ae6a2d-c8dd-4064-a851-6a10649ddf90@quicinc.com>
-Date: Fri, 16 May 2025 00:23:46 +0530
+	s=arc-20240116; t=1747335393; c=relaxed/simple;
+	bh=0oMo3ObWhyjpLagy7Im7orZnu51xGp0zGqFOXr+BZHE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dg/tO6Ir/LXOm1JlZJKY6tLa/JHxJyj+hnG24QCFj64QGMaX9T/tmuZdDs7cGbwvL2FSWv20keYexJjZLKY7J5FyJtu8h1ayXfcN4U6a766pJ552oEVFjcbgxEjFrpkSDUnQlNY9ev7TGiQ6pSPL+Ia4Y144/Z46VDLC9wb6388=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R+bgmgrr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D099C4CEE7;
+	Thu, 15 May 2025 18:56:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747335392;
+	bh=0oMo3ObWhyjpLagy7Im7orZnu51xGp0zGqFOXr+BZHE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=R+bgmgrrOYecNejZjRwiv/OI1ZxGUPNzJxqa6j1WWwoWgFA7KKa+TFHCaFef/ltwi
+	 Ugn1RM2M1Isa2kgTMFIG22v0VNKj3LSiC9drfrFaDv6ieWx0wKo8uMwNlnTl1XvU/1
+	 imAmTHWXmU8kT02BcY4Q2ER79/ib+FJQFU+jcev21fCBTKANtX1l2R78SbO406sF7n
+	 RVrCx+JbwnacJCUSgEAFA8JQHtwpzzz+1k4cpQfny1yWORlC/gtl2GTbsG6hmvBsMB
+	 GHSWslcfLua56msJsaaTpYRylU8ll9beO3lUZ/Gm8BpGPu+11gPoi59FtnHSSMxurk
+	 5MXkgzTk6mLwg==
+Date: Thu, 15 May 2025 20:56:26 +0200
+From: Danilo Krummrich <dakr@kernel.org>
+To: Rob Clark <robdclark@gmail.com>
+Cc: Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>,
+	phasta@kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	Matthew Brost <matthew.brost@intel.com>,
+	Christian =?iso-8859-1?Q?K=F6nig?= <ckoenig.leichtzumerken@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	open list <linux-kernel@vger.kernel.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>
+Subject: Re: [PATCH v4 04/40] drm/sched: Add enqueue credit limit
+Message-ID: <aCY42rgJC4sQ4tp4@pollux>
+References: <20250514170118.40555-1-robdclark@gmail.com>
+ <20250514170118.40555-5-robdclark@gmail.com>
+ <51f87f358fa1b7ef8db8b67ee6cde38ae071fbe8.camel@mailbox.org>
+ <CAJs_Fx771FFVDVFMn8YJkR9f9Ad-UQspJ9KKQw4u6Cu4TA7YPA@mail.gmail.com>
+ <CACu1E7EL+E-M0N-EAN9Bx7u9O6_pECQQdPE2ph575idhVb2Szg@mail.gmail.com>
+ <aCYkk4Y7feltfp79@pollux>
+ <CAF6AEGsoG_W3A3+BHV4n5EKZQazFubrCyfrtxVUH7+H4-j7i5A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i2c: qcom-geni: fix I2C frequency table to achieve
- accurate bus rates
-To: Andi Shyti <andi.shyti@kernel.org>,
-        Kathiravan Thirumoorthy
-	<kathiravan.thirumoorthy@oss.qualcomm.com>
-CC: Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-        Manikanta Mylavarapu
-	<quic_mmanikan@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>, <linux-i2c@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <stable@kernel.org>
-References: <20250513-i2c-bus-freq-v1-1-9a333ad5757f@oss.qualcomm.com>
- <y4t3xshxsbrx6xqkxroai3vixjacskco5baaoip2apzjkehjxx@ah6wxu2gy24g>
-Content-Language: en-US
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-In-Reply-To: <y4t3xshxsbrx6xqkxroai3vixjacskco5baaoip2apzjkehjxx@ah6wxu2gy24g>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE4NyBTYWx0ZWRfX6SpepcnAFrd/
- jv+IzRKzstqw6PkbkEDtkUMb+s8JJLNSdgYx+PGn3970Wla0b0I8B06ngudqAUvgi/lxyxNOm0b
- EMov0lSc57itG48YQU/yBQhjjranebvkFvoHeeaf5oN/uXE7f5n5T1Kf6M3TPdZW7Rd6e6YgKrg
- pjXJwLdHFA+9OKbiY7VAkN2fvqQyKMq74tAop+pn2EEbpnJihVTpG32ggCQMV1BzV871AYRql6B
- mEC1sgiGnh/hwYz6LZmFGIh7QabYqmhZwWhCk5hgKTfv5u+tPwqmX5qcqc0mXquFOKGTNM1boRI
- AIxBoEfid1eirbgrKA6WM1fZVINSQs2kaPSJl7vMuh8piRubSDYRJGeUTT0FNHHM+dUv8aC8pGo
- 73RKydEOdvoq11TPoOzrxkywr808J6pzUfVB+t6EbOnXouM0b7ULl9jvcN1N8nCplFpegfPN
-X-Proofpoint-ORIG-GUID: _I0bN7ovhdIHJP90ZG01mPiVzAR0UKmj
-X-Proofpoint-GUID: _I0bN7ovhdIHJP90ZG01mPiVzAR0UKmj
-X-Authority-Analysis: v=2.4 cv=IcuHWXqa c=1 sm=1 tr=0 ts=68263840 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8
- a=EsNJcRE4yQKf4b2fgh4A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-15_08,2025-05-15_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 mlxscore=0 adultscore=0 mlxlogscore=921 bulkscore=0
- clxscore=1011 spamscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 suspectscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505070000 definitions=main-2505150187
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGsoG_W3A3+BHV4n5EKZQazFubrCyfrtxVUH7+H4-j7i5A@mail.gmail.com>
 
-Thanks Andi !
+On Thu, May 15, 2025 at 10:40:15AM -0700, Rob Clark wrote:
+> On Thu, May 15, 2025 at 10:30 AM Danilo Krummrich <dakr@kernel.org> wrote:
+> >
+> > (Cc: Boris)
+> >
+> > On Thu, May 15, 2025 at 12:22:18PM -0400, Connor Abbott wrote:
+> > > For some context, other drivers have the concept of a "synchronous"
+> > > VM_BIND ioctl which completes immediately, and drivers implement it by
+> > > waiting for the whole thing to finish before returning.
+> >
+> > Nouveau implements sync by issuing a normal async VM_BIND and subsequently
+> > waits for the out-fence synchronously.
+> 
+> As Connor mentioned, we'd prefer it to be async rather than blocking,
+> in normal cases, otherwise with drm native context for using native
+> UMD in guest VM, you'd be blocking the single host/VMM virglrender
+> thread.
+> 
+> The key is we want to keep it async in the normal cases, and not have
+> weird edge case CTS tests blow up from being _too_ async ;-)
 
-On 5/14/2025 9:04 PM, Andi Shyti wrote:
+I really wonder why they don't blow up in Nouveau, which also support full
+asynchronous VM_BIND. Mind sharing which tests blow up? :)
 
-[...]
->>   /* source_clock = 32 MHz */
->>   static const struct geni_i2c_clk_fld geni_i2c_clk_map_32mhz[] = {
->> -	{ I2C_MAX_STANDARD_MODE_FREQ, 8, 14, 18, 40 },
->> -	{ I2C_MAX_FAST_MODE_FREQ, 4,  3, 11, 20 },
->> -	{ I2C_MAX_FAST_MODE_PLUS_FREQ, 2, 3,  6, 15 },
->> +	{ I2C_MAX_STANDARD_MODE_FREQ, 8, 14, 18, 38 },
->> +	{ I2C_MAX_FAST_MODE_FREQ, 4,  3, 9, 19 },
->> +	{ I2C_MAX_FAST_MODE_PLUS_FREQ, 2, 3, 5, 15 },
+> > > But this
+> > > doesn't work for native context, where everything has to be
+> > > asynchronous, so we're trying a new approach where we instead submit
+> > > an asynchronous bind for "normal" (non-sparse/driver internal)
+> > > allocations and only attach its out-fence to the in-fence of
+> > > subsequent submits to other queues.
+> >
+> > This is what nouveau does and I think other drivers like Xe and panthor do this
+> > as well.
 > 
-> argh!
-> 
-> Can someone from Qualcomm look at this fix? Mukesh, Viken?
-Yes, I am reviewing internally and verifying the same with latest 
-Guidance and updates. Let me update on this once reviewed.
-> 
-> Thanks,
-> Andi
-> 
->>   	{}
->>   };
->>   
->>
->> ---
->> base-commit: edef457004774e598fc4c1b7d1d4f0bcd9d0bb30
->> change-id: 20250513-i2c-bus-freq-ac46343869a4
->>
->> Best regards,
->> -- 
->> Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
->>
+> No one has added native context support for these drivers yet
 
+Huh? What exactly do you mean with "native context" then?
+
+> > > Once you do this then you need a
+> > > limit like this to prevent memory usage from pending page table
+> > > updates from getting out of control. Other drivers haven't needed this
+> > > yet, but they will when they get native context support.
+> >
+> > What are the cases where you did run into this, i.e. which application in
+> > userspace hit this? Was it the CTS, some game, something else?
+> 
+> CTS tests that do weird things with massive # of small bind/unbind.  I
+> wouldn't expect to hit the blocking case in the real world.
+
+As mentioned above, can you please share them? I'd like to play around a bit. :)
+
+- Danilo
 
