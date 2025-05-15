@@ -1,67 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-58095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B59D8AB8C54
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 18:27:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C019BAB8C5B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 18:28:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6659C3AAEE4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 16:27:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B3B8C4E0AFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 16:28:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B911A21FF4D;
-	Thu, 15 May 2025 16:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A4A9221F04;
+	Thu, 15 May 2025 16:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LbM1pP7+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bL2tigql"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E21121E0B2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6EE21FF2E;
 	Thu, 15 May 2025 16:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747326473; cv=none; b=dFXFnTmj0n3OXPA8CiIsIW479gFJaUvI37Dg3p5t9zTiAOe7RffYA0OySgwXSD/nKLDOG7slr7QHCTaSuPtj7iUaVmhgceM3skiMkAW2XZXkf7L+q5MB0glZZrKN3cT6ggW20iVvTmSRbJLFdo+QjbeTapzoISfwoKS7sFArfQE=
+	t=1747326474; cv=none; b=PkA19VwPgK95FqZeZmkoIoAn8Z26O+Cmk/xfpmO4PAuy2iIYccW0tBBlFg0FlhZSko9tncZw8t28DFDe+uqmZMskFCEmdWXJm0Y4GAt2HA3qbEdP5b2A0Was70MI4fkeR2wFvJx1Tn7uunvSx88ogP5UtEWLrCkmhx3zdPTuMe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747326473; c=relaxed/simple;
-	bh=ODlwDn7mWOdHaZi9LQuUdkrRueBSs4irntnvUW0Kw64=;
+	s=arc-20240116; t=1747326474; c=relaxed/simple;
+	bh=3fi6v8INgJue7ca4Y8kkzIylFIcTl3tjUPEwnyMvdJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jrJGDUwzJo7gOVLuuiPIltDe5Bnn+hsHHEgPmNFmVYqZCrm+AwS9E02fb5k4U0AfveoiyZ+cdhtSpodhUVcfj8yF2hEu1+gDVQHwd87Hflm25XFQQg9BibzX6hfqMFtuvoW8qqpoNd2ueODEfwbPjMHIFGb2bikNABGgUNwu7wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LbM1pP7+; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version; b=XsSXSFe6A7L5h6eTOKh1GiAaN2DOeHUV9zOAPNSRxnufWJAfk9qyWW01Jh/Vatv5c+IirqNXyyQusheSerrRFdagDID8d+fe3MgpAo8sqy6smsRnXEqQBcxjtDYvzVNIL2PClANXWZZDGHmuIBQRBj7Q/UoZ5jYbVFB64NlNyaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bL2tigql; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FEFCJH007843;
-	Thu, 15 May 2025 16:27:30 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FEFLTN002029;
+	Thu, 15 May 2025 16:27:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=IgDWW+Mz5cI
-	QlJCaHgPvgdL6vfBP0EnLvWOEhSUxXzg=; b=LbM1pP7+3qjoXVb5RcMQtmClNnC
-	Uq4JFKId0y4YjtFBUVmhiKkEmhq253SuTNHcyFCSOa4I2uucnllAFs7UCNaXsm2Y
-	cQ/KnECnFLjcwVM5lJNfZn6gH/yOnZGtYTVmOzkVUuLyz+1kjBBdtlogFwmeFqk/
-	/TrxYfJTj7vmA6ZErZnHFB6gDEZsZt1ihltmq3hIL/gh5Ti4X3yvd9nkBrJivWe5
-	T7MxDL6gbxW2NlICQ/QQDHYydjbPewsVasURxhv1QSeuU0KGg1w5UhW2A9AEWTjd
-	tA5pIy3qGrBsReWg2pj19fWaLtmGUPagsuQRJz3YTSLlAn2OWGTVnmxoJRw==
+	:mime-version:references:subject:to; s=qcppdkim1; bh=eqw+UqbDQAR
+	vMy8qDjzgBj4QqCxUtc/Ge5A9KiAe3Nw=; b=bL2tigql0qw2zY1/5nMco0cfINv
+	Gh67VVzXjdEstiPvCYEReKFxY+MtlxdqVMbwHvmhTAY93r74b+LRNAueYGD/MUNb
+	YIdlkVLmePLYyP2gz6P7xb2xyIJSbRjHqTUqlmsM491f8TP6+ipsJl2k19EvGFUZ
+	SJT4zjrE6C50kBurarLQGa6cBp71aXjrA7rdF2HGLGfE+vLmH260QI50GRt4podW
+	daLM5lg2T92vKcfvNVgMtVhej5L+Psm/FvrwTWTQyHUf76TU+M4i0YhoJzY9xH+q
+	bGvIcvtsDRh7IwNThK8QQW9tN4y9uSA/L3hhSzcNEhXYWEu0pjzAjnFa2rQ==
 Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcpxuv4-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcrerq3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 May 2025 16:27:29 +0000 (GMT)
+	Thu, 15 May 2025 16:27:30 +0000 (GMT)
 Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FGRQMa023545;
-	Thu, 15 May 2025 16:27:26 GMT
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 54FGRRcw023562;
+	Thu, 15 May 2025 16:27:27 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 46hyvmvnn5-1
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 46hyvmvnnb-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Thu, 15 May 2025 16:27:26 +0000
+	Thu, 15 May 2025 16:27:27 +0000
 Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54FGRQjp023540;
-	Thu, 15 May 2025 16:27:26 GMT
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54FGRRGO023551;
+	Thu, 15 May 2025 16:27:27 GMT
 Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 54FGRPtD023537;
-	Thu, 15 May 2025 16:27:26 +0000
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 54FGRQ2r023549;
+	Thu, 15 May 2025 16:27:27 +0000
 Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-	id 681F25015B1; Thu, 15 May 2025 21:57:25 +0530 (+0530)
+	id 6F1445015B0; Thu, 15 May 2025 21:57:26 +0530 (+0530)
 From: Nitin Rawat <quic_nitirawa@quicinc.com>
 To: vkoul@kernel.org, kishon@kernel.org, manivannan.sadhasivam@linaro.org,
         James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com,
@@ -71,9 +71,9 @@ Cc: quic_rdwivedi@quicinc.com, quic_cang@quicinc.com,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
         Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: [PATCH V5 01/11] scsi: ufs: qcom: add a new phy calibrate API call
-Date: Thu, 15 May 2025 21:57:12 +0530
-Message-ID: <20250515162722.6933-2-quic_nitirawa@quicinc.com>
+Subject: [PATCH V5 02/11] phy: qcom-qmp-ufs: Rename qmp_ufs_enable and qmp_ufs_power_on
+Date: Thu, 15 May 2025 21:57:13 +0530
+Message-ID: <20250515162722.6933-3-quic_nitirawa@quicinc.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250515162722.6933-1-quic_nitirawa@quicinc.com>
 References: <20250515162722.6933-1-quic_nitirawa@quicinc.com>
@@ -88,56 +88,81 @@ X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: aFlGPPMjhHrkYxKD2E3BB3X0AJWSaUDh
-X-Proofpoint-ORIG-GUID: aFlGPPMjhHrkYxKD2E3BB3X0AJWSaUDh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE2MyBTYWx0ZWRfXz//8jwHEEef8
- 8r9K6GeDLEVzayLS1M0kKe5yvUPYTTrvA3ljS5bTu+kCdhlJgZhc1ly4jA8vy65ENoEO+JPaAbT
- XL/48fcdaMhRZWX+HdKrr/VYUCgYEV4MIb8BHzAA5M9fcCExgKUSDD20QnanG0H+yZnbhQX/lyG
- BPAyX/UTjHVvUXPMuPaUj5KnBqXCR0Xfkn2K8KiUVsznZcO5MoUGfLNO+Om5U/buPOMdlWwHJAT
- QT7eT5rP1Z80JxMOfsQJw7WxRdkdEagx7XgN3yeq0QDbjaZqTygax3/8QEfqFkzYh5ZhwP/lVyU
- Rs3OmV5IIYJSjkgTd4FtNbPmzPL0H3Tdd8TnOtkI1vN0gkkhXbaXWyIl8pSoqaILZHb7XDfFnAU
- Z2nfWA1sCEcDQuFNZ3EtvaTS8u/zb4ISNnrMRrJxPHvm6kwxCdaRrxTH+5o1usSO9rOMedOj
-X-Authority-Analysis: v=2.4 cv=KcvSsRYD c=1 sm=1 tr=0 ts=682615f1 cx=c_pps
+X-Proofpoint-ORIG-GUID: R_cR6di3rKaCRK1bGAXrlZvehQqvvwYJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE2MyBTYWx0ZWRfX8RUSq3alCB9F
+ 9u/+CB4WPVfNRPkguq82qFEk3EyPM1mViRc5blgTVUFLYTslKg8S64Y1ybMobiGC23+z/wrbUlP
+ AHZEPsy6KHlOPAymXC/pA/pehfHTu2YP4BHbUt2aQKbrxRmcMkRVmuRGzTrwH0nVeja/rrcE9za
+ NdoSyEWhTi/RAJZV0DcFFZxgUa9uxSKhIO/+jmC8VT4AB+yTE4nDECXt8RgMsMUJmABd4FzyIvC
+ /6KTZqcWs4L8n3Y80jQQjlenLFgE5HxbD6L0SGsz9s2p1l5xFcf773eq0H7U4OrFhM63mIFJy7k
+ 1pjtwYGvKoLBm3tna0bd9ONA0yLrEmx3g3J3vWVs2GuTdfa46cjeOesDwq5fUcIdmkYy3jLN1ei
+ wo6ikqNZRATVE/PvhSjOU5yEJwM7Zy/UFcF23o0TlDRpo5f+IyBePGSP+UVF2VyQr6HugiNW
+X-Authority-Analysis: v=2.4 cv=K7UiHzWI c=1 sm=1 tr=0 ts=682615f2 cx=c_pps
  a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=jLEhXYc_IhqhhXrxegcA:9
+ a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=jENGRIT2ScPjwYuSNhQA:9
  a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: R_cR6di3rKaCRK1bGAXrlZvehQqvvwYJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-15_07,2025-05-15_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0 phishscore=0
- lowpriorityscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 impostorscore=0
- mlxscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ adultscore=0 priorityscore=1501 mlxscore=0 suspectscore=0 malwarescore=0
+ phishscore=0 mlxlogscore=999 clxscore=1015 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
  definitions=main-2505150163
 
-Introduce a new phy calibrate API call in the UFS Qualcomm driver to
-separate phy calibration from phy power-on. This change is a precursor
-to the next patchset in this series, which requires these two operations
-to be distinct.
+Rename qmp_ufs_enable to qmp_ufs_power_on and qmp_ufs_power_on to
+qmp_ufs_phy_calibrate to better reflect their functionality. Also
+update function calls and structure assignments accordingly.
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Co-developed-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 ---
- drivers/ufs/host/ufs-qcom.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 37887ec68412..23b4fc84dc8c 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -531,6 +531,12 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
- 		goto out_disable_phy;
- 	}
- 
-+	ret = phy_calibrate(phy);
-+	if (ret) {
-+		dev_err(hba->dev, "Failed to calibrate PHY: %d\n", ret);
-+		goto out_disable_phy;
-+	}
-+
- 	ufs_qcom_select_unipro_mode(host);
- 
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+index b33e2e2b5014..a67cf0a64f74 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+@@ -1838,7 +1838,7 @@ static int qmp_ufs_init(struct phy *phy)
  	return 0;
+ }
+ 
+-static int qmp_ufs_power_on(struct phy *phy)
++static int qmp_ufs_phy_calibrate(struct phy *phy)
+ {
+ 	struct qmp_ufs *qmp = phy_get_drvdata(phy);
+ 	const struct qmp_phy_cfg *cfg = qmp->cfg;
+@@ -1899,7 +1899,7 @@ static int qmp_ufs_exit(struct phy *phy)
+ 	return 0;
+ }
+ 
+-static int qmp_ufs_enable(struct phy *phy)
++static int qmp_ufs_power_on(struct phy *phy)
+ {
+ 	int ret;
+ 
+@@ -1907,7 +1907,7 @@ static int qmp_ufs_enable(struct phy *phy)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = qmp_ufs_power_on(phy);
++	ret = qmp_ufs_phy_calibrate(phy);
+ 	if (ret)
+ 		qmp_ufs_exit(phy);
+ 
+@@ -1941,7 +1941,7 @@ static int qmp_ufs_set_mode(struct phy *phy, enum phy_mode mode, int submode)
+ }
+ 
+ static const struct phy_ops qcom_qmp_ufs_phy_ops = {
+-	.power_on	= qmp_ufs_enable,
++	.power_on	= qmp_ufs_power_on,
+ 	.power_off	= qmp_ufs_disable,
+ 	.set_mode	= qmp_ufs_set_mode,
+ 	.owner		= THIS_MODULE,
 -- 
 2.48.1
 
