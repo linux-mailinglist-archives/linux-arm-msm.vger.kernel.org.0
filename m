@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-58022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D18CBAB7A92
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 02:28:20 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 238C2AB7A9A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 02:32:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 70F59189958A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 00:28:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F32727B29EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 00:31:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3ED7208CA;
-	Thu, 15 May 2025 00:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 745DB1CAA4;
+	Thu, 15 May 2025 00:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dx+XTGRP"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mykXdNsl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2492D4B1E4C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 00:28:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21E34C6E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 00:32:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747268892; cv=none; b=ubHTWZtZtE/2Hb5xCJv4SsSUvHrMpLdgMXgWbHsbZNdJJ84AbuPYBzrTOjSEucdLh5mVh9ackH4N/S8wiK4JGPN/w1z3IMEfooW/biTeYbWFHURjBkdc4VZxON690oIpnU3bc4et/0m7sUGouxdTDeEZgZf0bIYeTptikzCWOwk=
+	t=1747269152; cv=none; b=gAAGdc9IP1CPo1x28xLfweVGA15y9HvCSAsRlNFtj6Otbu+c91pqLjvc823PLxOKCnF99XjYfDNDERRSixoEVv6SIb2v7xpQsU1mlqhicen1Q6+ZiHp0j1FCJo/H7isMIooQMxKb9UYZ5PfCoCxFvL4GChl/9hJGzJ0S8PnQ33Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747268892; c=relaxed/simple;
-	bh=+q4GAhcVN7Mro6zssuEEWH3i70quaTZT16lMRtQFayQ=;
+	s=arc-20240116; t=1747269152; c=relaxed/simple;
+	bh=NqfXuxll00nvn2wxG+WlLr4Air09LSBeueadi9GjzwQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qTGLjYiskgjHRQk6yuyJGYU9fIKfZyb1tsjb0Cn0+NbsnGHyuvhwAgwQ4ugrDiELPf9ltjJGK4aLfwVxzE6P8W+lNAFydBDjegAJPETg3pFjsl9Du+BPCHtC9xBzAvwKz5oPE4hHy/TBwTHh8J0dkux7qAS5vtCL1JrJK9aogmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dx+XTGRP; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=lYT7QM0s3fklG1VXrpoy+aIFM4xKDr/yWxHZRXkbAIqSuQTUwd+OHdxqM7/fLAic5qdJ5bujdndCQU/FxDop5wtasaGzVvGrXmddVKI4gTqccs5guesX0zx5x1oUHyI/6uLPptYtUvbYbPkKNgpcVCvtfGH5ZYOX+wM8Fv8qlCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mykXdNsl; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EKbLkc020133
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 00:28:09 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54EKF3aE013189
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 00:32:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=B2cvFYkDiNTcJpepfH9pXulh
-	1NUdq2hXaOLZdeTdJc0=; b=dx+XTGRPNXPEIu5UdnahImaAP9VxwgudhGUBxdiq
-	XlXFf2qiIiJkkTg9mC132unm/Yrk/n1R7BzQA7obddC3YkWEXuT+Zz2URarbI69X
-	BwNr9msMUNqwhAYtCUjkg1GTyUStZURsIJ05M//4lyrsptkS1AbUGLoAKseF15Yz
-	ZSf1wuuYa2jsQfxTSqvQytTwGdwm9YZaAJ+Q9aafVrs5UeEVDaaFT/+xDWPhPVRo
-	Fz6YV2b2vVBYEfftW8Co5ZSI2ncZWEUJSVCo3yiUy7cqk/d4/6JFAuyoqGxIX3qq
-	+yl5SCcK9LWwtP7vLWEwq3B0ArnMkHVb32GPvzJ7JgEvfA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcnmdyv-1
+	:references:subject:to; s=qcppdkim1; bh=7wCujduK3vbMXq78OiNobIBg
+	xC9SjRSYXxxSDTrP8aQ=; b=mykXdNsli6DB1Z/HAfYnvDzduCMYjw0RYMQ96WUm
+	fCqJQFsoEqTBOkSeT+gyw4xS13xzuEhXgKTyIJvcwG31dtwfKIf+fNfplr53o7fP
+	Z0U69kpxlca7C4UB6uTmryTmvXIfMjt8oKV2CPvMKbQWfs8iKjf+fnK/atbixxAA
+	V2zbvYjW0fjx4PCMowInXehOQrIPbRVGy7lKgxRW1o5WCUKLfwXAA7SjlqVlsFSZ
+	7wK+VoE1rdCMI3E3lb7j/pVNNRWpuy390U/TQTij6ghjGBA7DSmywWIV5/dK/hZ6
+	X/bz+0clRAHqgRTfbrY7n0RnhaMSgCDCMjW1KDa/q1djkA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcmmgf7-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 00:28:08 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c5750ca8b2so48250485a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 17:28:08 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 00:32:29 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7caee988153so65109885a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 May 2025 17:32:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747268888; x=1747873688;
+        d=1e100.net; s=20230601; t=1747269148; x=1747873948;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=B2cvFYkDiNTcJpepfH9pXulh1NUdq2hXaOLZdeTdJc0=;
-        b=xMrHpB14U77cBvHlTaucE1g9v+ywAU5SAWycmL/JXHEuCh7D7cUAJDOYjfVYKLMPwv
-         QcXDDPVV+jb+Tj3o7m4qrPLvbnT/aw/wnyrCRVAUGMvqR9OUBQ3povAvaO5MsqVJRvlq
-         YIQV6WLeZx4VYeY7d8lxaEZhPxgDf3uiKImrBB6OeU2ilMtakb7i9aJgwMrquA9cleaU
-         GTiR3P0Ja6Z/qWTFLa3VF3Awp8lyizHsj/SfjB9tRi2kLCxz4Gs9JOCGpy4b8uBSFGmq
-         kTBfRJO+j4A6TMgOIOV9bCNwWWM1r9slS/sUMoF4q0M5Dk61x//9dTHeAgE4IFvzgtzJ
-         EFbg==
-X-Forwarded-Encrypted: i=1; AJvYcCVMy3cwmv5aVZlqeg+Xc7k9BD2iTYFOrBCSf+W97zUtjiAJMt60hZwUXAXys49o0NAm7U5bz15oicXpDRp/@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw2XG5FZ0qcbYDm0gIyXvKUBeayrEcXhyDNtjBVeudjsh7WTAiP
-	+twNOHJGE/XRPpwU4LlaGP/s0h7MNO0Od2lMhon3pbuRMPV/IX60YTRi0jaWzIDL2ui9/KzkDdN
-	+ddT4Vb+DWqLZSC4h7CA3m0/lSVQm26rt16pEu3E/z/4Sg8EVpAjFSPlqNGrD1vX4
-X-Gm-Gg: ASbGncvXOfSdjUedy412wVtHPnnC7wQu7pA8dts18zy81ciI77mYhR7YpeUgzKS8CVY
-	/s4V71Ew02jcUDNnbAMyZDsevi80inKSYajG24MRrdMa6sFmUzOZzIXF98DX4mYgMa3l84fsDp4
-	XGpH7GJp2/tzOXIP7E1kb82LAZgNB1X2XxSq3x73vdy1rbgeyJiiAv/852LPhdi1l5MONZ3/j+r
-	Doyr0t5P3CRzeoGxquUDwhOfV430XJNyvsmbWFAipKQyklRz5PPm5NqFlFFFfVwzkXffW1PIB4A
-	AHvyOrDmAWaAbOtS1DuxJj0btGalENS9Ipu9cnVaDnfx8+S0B4BmyzUMEp3aEf92M6uQ7gU4Gfw
+        bh=7wCujduK3vbMXq78OiNobIBgxC9SjRSYXxxSDTrP8aQ=;
+        b=L0h9y5/7kAGDXxU0ozdt4gDJpevobcDAzx3GvZaSn2mzYrM/d4jJump+5dJf26DGbN
+         3e7p6w2dhTaGHzfCxs0zHOGRXhxE0PtINuTTLyuaQwraI5L4YaRRCjoDlbkENvJHsVk8
+         XOZXiVFcjORLlAR33mySHbI4+zxQAE6RwUQal3T3ifCOpogPzQS+HOEmje/KB913JsAS
+         +Kdr1OqKLSWNe6wGoPcbxJXP2ECPgdtJnbwUl5LWzwbvejtAhw2iNIJP2UczN1N8OkAL
+         V7YbyZLNMNaRj8wdhOOwEX60xB6jCWo8C/9WTN6c43LDh3aXBY7k+31pvAhzkRBRQkp/
+         g18A==
+X-Forwarded-Encrypted: i=1; AJvYcCWvmf2sl14VKoI7OKwwOR10xCNE+B/pUSGaLUfZXT2Ad2o5ZYrapMxUzXsjQeQT25TM8pEHEf6Dclmn7/IG@vger.kernel.org
+X-Gm-Message-State: AOJu0YynDsrZ0wcwgjHLGgzaG4pJTPkuYzS0dXNcr19UnppXOTFDMkrL
+	OCv4m5k+m2Rd0BZz6QxKVhqQVPdO/P547K85vlsXMWVnMTyXNquBvH/ax57FfrBTazt+n5dQIFD
+	NNUx9YX+Qaz3krTtcy8uChKy7E8Ld3JOAMgTEcSNLKM75z7+/Hb+aY3i7LmeIZMDs
+X-Gm-Gg: ASbGncvcy/tJy6VOfX67OIFkDvu2YhQLzXwkfJwI+5AjP1aXF09lo2N7n6Tm5tqsEGK
+	P9O2YCZ4/jdkoFlal1b0ZYsXnAIgfyqwVWDwT0nkYFHFi1yqGMvJ0qy/MGh7FG94SvXBVeaeDZ5
+	yYxQlBMJpCvhswWpDD44f5AEnUDYK1yFXyst5EkcXvbtDU5iB3pAAcfpae2UtcDIcA1m9swenkG
+	+6p5PkpQgJb5ypjW99Kk1FNRayk0wVCHv8rg3fs5CKPnriqczJwV2x9JeXfLHSm3asL87cHYaDg
+	aXuXeKLERREAcfoB7bIBv7GLedoZHLR22RGlADeur60WUX1gvyYVmhzfqefEzmTk4ySMSL8OBMY
 	=
-X-Received: by 2002:a05:620a:294f:b0:7ca:f65c:2032 with SMTP id af79cd13be357-7cd287df0e3mr755662585a.5.1747268887949;
-        Wed, 14 May 2025 17:28:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFt2xaXNowfMYXBT44y4aANaDgJRpOyGL+qTVAMGUeuxqwInoNRP+sTL7AzLDhnS1ZiX9uKoA==
-X-Received: by 2002:a05:620a:294f:b0:7ca:f65c:2032 with SMTP id af79cd13be357-7cd287df0e3mr755660485a.5.1747268887560;
-        Wed, 14 May 2025 17:28:07 -0700 (PDT)
+X-Received: by 2002:a05:620a:468e:b0:7c7:a5e1:f204 with SMTP id af79cd13be357-7cd2885d1camr804937085a.56.1747269148588;
+        Wed, 14 May 2025 17:32:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGFLy/qxzAK6/2dzjOlUxFMW7+rsjpErZR6f687TEG75VgVdyNraMDrOlRULwKla6JyuE365g==
+X-Received: by 2002:a05:620a:468e:b0:7c7:a5e1:f204 with SMTP id af79cd13be357-7cd2885d1camr804933585a.56.1747269148227;
+        Wed, 14 May 2025 17:32:28 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54fc64b6f96sm2433950e87.142.2025.05.14.17.28.06
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54fc645cdb5sm2435228e87.57.2025.05.14.17.32.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 May 2025 17:28:06 -0700 (PDT)
-Date: Thu, 15 May 2025 03:28:05 +0300
+        Wed, 14 May 2025 17:32:27 -0700 (PDT)
+Date: Thu, 15 May 2025 03:32:25 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 To: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -90,11 +90,10 @@ Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <abhinav.kumar@oss.qualcomm.com>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/5] drm/msm/dpu: Check mode against PINGPONG or DSC max
- width
-Message-ID: <f2brfgvsnwqu5rudr32fkjx6qiuut2im546mjqrk2ouego4npx@g6avls6o7kws>
+Subject: Re: [PATCH 5/5] drm/msm/dpu: Remove max_mixer_width from catalog
+Message-ID: <zymzf7cfy22kdlh7iyirzfrcmovaogkjtfatzt7lcaldymm7za@ppde2klezccn>
 References: <20250514-max-mixer-width-v1-0-c8ba0d9bb858@oss.qualcomm.com>
- <20250514-max-mixer-width-v1-3-c8ba0d9bb858@oss.qualcomm.com>
+ <20250514-max-mixer-width-v1-5-c8ba0d9bb858@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,95 +102,67 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250514-max-mixer-width-v1-3-c8ba0d9bb858@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: zm9k_3ty3BPO3NqIcfa-3hiTOOC3keIx
-X-Authority-Analysis: v=2.4 cv=aIbwqa9m c=1 sm=1 tr=0 ts=68253518 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=s1QDowjoCeJB2mqXB6oA:9 a=CjuIK1q_8ugA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-GUID: zm9k_3ty3BPO3NqIcfa-3hiTOOC3keIx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDAwMiBTYWx0ZWRfX8NM0a2XWB2jc
- niqa0WvS75ez33kHqWFJMyH+sUsBxvQFQZG8704bZSXAhhE7DDmATUk/j6iS5i9dEXR3i+otty2
- NZFRzJ4yQsPdVhuhQyQl6P0jt0NvA+guhhyKuccFafFa54Sd6OSrFqNPsudL8I+xoH+hSrABqcO
- AgOP/u0Ltq0Yrk/DensIIkNUiWOz98/G64m6+5j4Y+mHVo0iCv5U2KGsuxOijKYaNLgbdiv4+VD
- pVdc88kBEtb+eF046/KYJ6zGEr0dVRZd2Mfs2c2NU6ZPjVCR7y5NdcyWM2ZXxSTpp4aevcjf9eX
- w59xl0WyiOTgWZ5NVmn+7/siJVDgq7GTf7/vFHuk9W8BwfYbd09Cx9uKPwYK6QIbj2iF6+mWpUD
- cwvfOB0XJVgEhrQHueitNizVBu+vpar85O5vdrMpQeCQr+I3kzsjAJILvLPDJ/kuG6YYYEOn
+In-Reply-To: <20250514-max-mixer-width-v1-5-c8ba0d9bb858@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDAwMyBTYWx0ZWRfX/MkWAtIhi2e+
+ AFgsmlsOAqQTk1UkiJaKUG2lvik7PjRllsghvO2SDUWbQFqRVs77rEclH+oBWeJVFREX2TsPdzE
+ VQ48G+jEizpqpL9Ap1LN1GYdUtc+jNh/EwLpX6lJMqszor3Gqi5up94huA+BI+SqgBHhJcF30rW
+ TR0eFR4i5I2KBv1e21L9Wj2D5Wx3xZjpSRIpEp8H29KQgsPjVbyuUuoNc6Pt7nCcYjSgw0vK7BK
+ V8kPRriGsPFFwYBUq+yP3ztv3h4iS+Ox033Cl18nw4PhnYiM7X8fCwTJeZSZaV8y2jZJB3dK19T
+ fWaTEh+tOilJxUOrV5Xtt951QVj0OdWJ3w2aCU6Gm34lpWsYs4iBO0W47ij8dQFz2LobcjZN7uw
+ mbsuxEoHtdDmjOZZvppRxrzFIVx+4SP1n4ErFm/GqLj11328jnbwMofD+sUzWaFF0EovdY9Q
+X-Authority-Analysis: v=2.4 cv=G5scE8k5 c=1 sm=1 tr=0 ts=6825361d cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=uPaXGRBW1wo5ZQqY0uYA:9 a=CjuIK1q_8ugA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-GUID: q5Bof3lFvNX2rhtRgzE7Eaa1l9JQeq0N
+X-Proofpoint-ORIG-GUID: q5Bof3lFvNX2rhtRgzE7Eaa1l9JQeq0N
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-14_05,2025-05-14_03,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxlogscore=999 malwarescore=0 bulkscore=0 impostorscore=0
- clxscore=1015 phishscore=0 suspectscore=0 mlxscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505070000 definitions=main-2505150002
+ priorityscore=1501 mlxlogscore=848 clxscore=1015 phishscore=0 bulkscore=0
+ suspectscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
+ malwarescore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505150003
 
-On Wed, May 14, 2025 at 04:52:31PM -0700, Jessica Zhang wrote:
-> Validate requested mode and topology based on the PINGPONG or DSC encoder
-> max width. In addition, drop MAX_HDISPLAY_SPLIT and base LM reservation
-> off of PINGPONG or DSC encoder max width
-
-Separate commit for num_lm, please.
-
-> 
-> As noted in the patch, while DPU 8.x+ supports a max linewidth of 8960
-> for PINGPONG_0, there is some additional logic that needs to be added to
-> the resource manager to specifically try and reserve PINGPONG_0 for
-> modes that are greater than 5k.
-> 
-> Since this is out of the scope of this series, add a helper that will
-> get the overall minimum PINGPONG max linewidth for a given chipset.
+On Wed, May 14, 2025 at 04:52:33PM -0700, Jessica Zhang wrote:
+> Remove the now-unused max_mixer_width field from the HW catalog
 > 
 > Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 46 +++++++++++++++++++++++++++-----
->  1 file changed, 39 insertions(+), 7 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h  | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h  | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h  | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h  | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h  | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h  | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h | 1 -
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h           | 2 --
+>  28 files changed, 29 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 0714936d8835..6131d071b051 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -723,6 +723,31 @@ void dpu_crtc_complete_commit(struct drm_crtc *crtc)
->  	_dpu_crtc_complete_flip(crtc);
->  }
->  
-> +static int msm_display_get_max_pingpong_width(struct dpu_kms *dpu_kms)
-> +{
-> +	const struct dpu_pingpong_cfg *pingpong;
-> +	u32 max_pingpong_width = dpu_kms->catalog->pingpong[0].max_linewidth;
-> +
-> +	/*
-> +	 * Find the smallest overall PINGPONG max_linewidth in the catalog since
-> +	 * max_linewidth can differ between PINGPONGs even within the same
-> +	 * chipset.
-> +	 *
-> +	 * Note: While, for DPU 8.x+, PINGPONG_0 can technically support up to
-> +	 * 8k resolutions, this requires reworking the RM to try to reserve
-> +	 * PINGPONG_0 for modes greater than 5k.
-> +	 *
-> +	 * Once this additional logic is implemented, we can drop this helper
-> +	 * and use the reserved PINGPONG's max_linewidth
-> +	 */
-> +	for (int i = 1; i < dpu_kms->catalog->pingpong_count; i++) {
-> +		pingpong = &dpu_kms->catalog->pingpong[i];
-> +		max_pingpong_width = min(max_pingpong_width, pingpong->max_linewidth);
-> +	}
 
-Since we are skipping PINGPONG_0, wouldn't it be enough to return
-max_linewidth of PP_1 ?
-
-I think, it would be easier to follow .max_dsc_encoder_width and store
-.max_pingpong_linewidth in dpu_caps (and later add special
-.max_pp0_linewidth).
-
-> +
-> +	return max_pingpong_width;
-> +}
-> +
->  static int _dpu_crtc_check_and_setup_lm_bounds(struct drm_crtc *crtc,
->  		struct drm_crtc_state *state)
->  {
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
 -- 
 With best wishes
