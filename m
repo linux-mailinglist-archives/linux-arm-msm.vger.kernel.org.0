@@ -1,153 +1,365 @@
-Return-Path: <linux-arm-msm+bounces-58089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2723AAB8B9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 17:55:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B023AB8C0E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 18:15:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 857323A423A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 15:52:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E4FA81BC4CD2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 16:15:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC6B4214A8B;
-	Thu, 15 May 2025 15:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05C0F21A95D;
+	Thu, 15 May 2025 16:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Lrxfj1VC"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="jp1/HY1K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8792744D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 15:52:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE4021638D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 16:15:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747324359; cv=none; b=cobMRutX/BDi+OMYv65Ku6gmsn1fRNeBH3iq0UsIYA47fIlcy+D0J5gAGdGaE5bmNJEqBmvRdxFdObCxzu7iOumxGfbUotyXlbOBSkZr5Yv8TCCnV2kGulEKouxM7AaTYXLSCNN5M29NICmYlh7cJodoFxCeTyVOrHSZUmgAmBA=
+	t=1747325722; cv=none; b=bP95WtD4hh+1zv/2ZcXKVynuMSYr7GJDq0xWXjiRbtMIssamltXuHcA49qveL3c1jf9/zN5X0mO7qEUR9LDxpriKEiyK7lbpogNbPqVSv3cxIDoWxfRB1MQXKy0V+MbKE5FeP+usgGTQNpkBeJNpQjgm7DZKEmLLfQyXVhp2yE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747324359; c=relaxed/simple;
-	bh=lGeDorq0qICcLt/slCL+UOnehjwhsYWEa4SRdbqgYRY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bFXJT3Z2vC2QNBDdjH0yQ77AVdcFSlzTmOiDlPqpfKLnZE6l3LsCntkruYgObudkHiLTVUGl7DQmDtNGeo+HTHmQ5KSqhrc+5InmZWNFFwAZe6Ni3uz3wNrftadpO+of9aehO0ZzcmlNv8vzq0Be5H/7P9zJMWU3AmBau1phXDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Lrxfj1VC; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FEFWkf014970
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 15:52:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	PWMmFCrAfuYggrwFp3r2207gsXdzwcTP1brIqToPnVo=; b=Lrxfj1VCnnKJH6aB
-	LQGvZdV0KHsUgasZWpTn7gqQwlr2iEZ2lQ6Wn3SKdE2Ffmnf0t3voK4DOXDjzbmW
-	/G4EcgS6MYXs9xZWLY+Uu+SBzNgolAILHYuO2F9QkH0ZUYxP2PP77ZiLgy6wbrpl
-	2DzLo7aWfWIuFnJoD5eUXUQUhTq9x1rN6gmrVBeoovEqLV5elpQmp2PpE20eWru0
-	xgE/ItC1QDhn4MvwMlFeMDSMQR/w+4dzXaW7tYT+Kb97dkznYYnnDvgEYsY0YnzQ
-	PyFjYiT2SJE/2lbo0HbOUWODfIw3SXofdDDYwRIJ2hgGMKLFefCyvekAIJiQgHHj
-	4DEV/A==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcpett4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 15:52:37 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c547ab8273so21391185a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 08:52:37 -0700 (PDT)
+	s=arc-20240116; t=1747325722; c=relaxed/simple;
+	bh=O59YkUFKto2EW0G20JlqWzX6MMTVS9xPsjFqMJDEvss=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KjfDi2nXkPOs19IylHTxuo0iFBh6ab+x0qkRoCBAOxF7NI9bJ9oE46hmzcUGc1z7oyXX7SzL8b9wFeU3zHn+69WERBw0ji9ZYF2iAPkJBhufCa6Yjq8CA7QS/3kmRYcGuMB8GB1E0VbqHw3/6ONXUXSlESp7IRfRNimokPMUYwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=jp1/HY1K; arc=none smtp.client-ip=209.85.166.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-3db8356ee37so1494285ab.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 09:15:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1747325720; x=1747930520; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=prsqP4nD217ZbIH9QBiPBpSKysXGw5zY0pcLHNKvFfo=;
+        b=jp1/HY1K6TTKlcNfvX2Erhhpda9GKG+0R8RgA2j1Xnxa4Z0HHPr5NQP/bBtMHL49bw
+         ImHYZQs2Qo20Ad7jSzzdBDtFhxawKTy6s1kDaOxRfYY16rbN9iI5w/xHZtV0WaXAmnCQ
+         DAdoTGpp6eIQF70nU3gvw3HWeM5xK6HuoAzow=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747324356; x=1747929156;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PWMmFCrAfuYggrwFp3r2207gsXdzwcTP1brIqToPnVo=;
-        b=rIRCk9rD34nbtx1dlArYbTJSruahF1mz0+flfzJGoMSHie6E59iqQ9YNcgEDwRxr0R
-         toEFVt8E2CsKDIwOXeeB6YDWXOYp2aY6YCPc5cGFP10c93WgJXSK5DsEyzBOy0YPIQXF
-         lZgxA2h6cOJEEHmcKhSbVZmjAPZYdb5H6O1Dc0iUHMJ8iwyaShs26S/i7zjwtmGU9u+P
-         WHzyMTKBn4Er+VSaYlCUOCNR8yeRvvTgshQVBJXm84t836f0U1M4eHKrapuz/+Q6I/cO
-         RYF1luhzdQYj0MbriI7Ol2pnxQtWq1jw+fn+MYQSSzJJLes5cYfP+yy5c6tgFIPQzq1i
-         raSA==
-X-Forwarded-Encrypted: i=1; AJvYcCU4p26xgudZAP4kcOHLTDY6n6pNVzorE3NCCtwzpbJu1XinjTnPh6vhQqggk1Ej/5HhbCcIZl8tbzkxX2bE@vger.kernel.org
-X-Gm-Message-State: AOJu0YztuZH80FZSSScxEKB58XjTmKWMhAMp7nePGcju5DkWkW1eYmmJ
-	HD54PMKDwjVI1UpIJvVeMBZFaEtgReM4zACgvqhNMAy+LOowObqdjbdvQy3wCMkHWL5n5qo7QpU
-	JEn274VJeDYTzBB6rPaf3BMuqYc5BmuGslCnCiVLm1IqV5lMD72m+BEpn2mFD2xYfFE3a
-X-Gm-Gg: ASbGnctmgESdywT6OCEvvz/CMxPHF9nIQNc47P0iJkwo9twPyJ6lPCV9eE7MBi+fY9S
-	ehuuK+3WrUa9MZZqA10ae62anpBhtQ3QdOdSy+2EEiolbj5ys93hJ+BxX0KdDXwIXxYjke8wfx1
-	GY47eIY/LCoB5GQz+D16KF4wLhyB0fvgfmUmIK6fAQalWpA8ommdnYNCO18bg3BEVptoJTi7Y4/
-	0eSgMmHtMMRiv2Rrxnn8uroqD23DT6cjIPNuTkcLgtZBmgB3Fppv9gDXT+SEhc9vNr8dFe0j58a
-	LwuRGmhWsqq0SEYee0neQnlyygi94Ssm9NP7Gqn1nfCgQ3CQ1fRpU7MUxCg/GcndNQ==
-X-Received: by 2002:a05:620a:26a9:b0:7c0:bb63:5375 with SMTP id af79cd13be357-7cd4673b3f0mr1353085a.4.1747324356118;
-        Thu, 15 May 2025 08:52:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHrFV/2EQXmPxJircJAV7XiXDHBdvEj6UPYt6UTWF/ixiBBQlETA2RLAhwfWdEO68zo3VBYbQ==
-X-Received: by 2002:a05:620a:26a9:b0:7c0:bb63:5375 with SMTP id af79cd13be357-7cd4673b3f0mr1351285a.4.1747324355750;
-        Thu, 15 May 2025 08:52:35 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6005a6e637dsm27454a12.43.2025.05.15.08.52.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 May 2025 08:52:35 -0700 (PDT)
-Message-ID: <a068ae00-fca0-4c53-9b59-a855caca12a9@oss.qualcomm.com>
-Date: Thu, 15 May 2025 17:52:33 +0200
+        d=1e100.net; s=20230601; t=1747325720; x=1747930520;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=prsqP4nD217ZbIH9QBiPBpSKysXGw5zY0pcLHNKvFfo=;
+        b=Z5v7VzCWDOGaaUgay2s7ebc118AbAlmmRlzTHvl53QKQNzm/FRbCT0hv51SBIhK5iP
+         4BSWHP4eLnoZOLzfWroAZXZYC9UI0bt5ym47kzk+YTXCMLlMH0etW2Fk6iOHXaM2g454
+         T8Hc0AqJByg8twHLd/D/ahELm2igPsU+rhOOOkxk7QdEzGV4A3OYMioThL1WBm1AYki4
+         whK5ZK+Gzdc3DTvo8dRerk34pyWlN24YHHSWVQPXmY3/Wwyq/S3yJIf5oArJcWzIGaQc
+         t+31wXPHfuTE4PnBKZH3Mw1E/+r0eVGrGRTNZvkUejNs1/e02SEw+IyBtZAnDOXcCg8O
+         VIfA==
+X-Forwarded-Encrypted: i=1; AJvYcCXweAbb5M1KVPO6ZydW8JeLw8ZZRXMgIcwjGPTEo3579bjP3J+bSrVWlNJzfB+xvloQXZl+WeOG7Sj01A3z@vger.kernel.org
+X-Gm-Message-State: AOJu0YxX1j7HEezKCjAz8GGAv5T8Kd5mTxqjnZzjdXxe59+htYPShLN7
+	Ubpn6rVb9Zwmk/XWFE5di8sElozJJ5Q4TLdLeyGMt8tZhv0pDyrO2V6NOdk4PoWhVrTEhmWBW1I
+	74B+rcCeZkHuD38oeC7a3Y2uwifhIzvO0abOAQiQo
+X-Gm-Gg: ASbGncsrLaK58/Xx36+7M3xSf9dB0bXhulh7rMBMwmjOUuPBl89X3SqBkOVpF6TXuQA
+	XrXI1HOo/yuYWZy+8k9wnGp+ZBX9nvSoBVB5bkH2qwFKDIbMLeigh31B6CQN0KvLa72n8hoyFj/
+	BcIll8zPXCpygMQggmv/YRDYtg1wXEnQXyf5DdG+rCpVtfdw4N19KO5AZC9R9JpaKx3nI=
+X-Google-Smtp-Source: AGHT+IFkg4IcMTLJxZT2Ip8DIdDTDuTHvjElsNxFmWMgla8933AUxoHLWahuhWUOpQ9EN6P27inOKdRo2eE+a34iAwI=
+X-Received: by 2002:a05:6e02:1745:b0:3d0:47cf:869c with SMTP id
+ e9e14a558f8ab-3db843383f3mr3428435ab.19.1747325719826; Thu, 15 May 2025
+ 09:15:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFT v2 12/15] drm/msm/a6xx: Drop cfg->ubwc_swizzle
- override
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250514-topic-ubwc_central-v2-0-09ecbc0a05ce@oss.qualcomm.com>
- <20250514-topic-ubwc_central-v2-12-09ecbc0a05ce@oss.qualcomm.com>
- <3uflij5hthurgt67rdnfhqtcoconybsnykirrwnk7idtz6672n@26qdq2e2ehtz>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <3uflij5hthurgt67rdnfhqtcoconybsnykirrwnk7idtz6672n@26qdq2e2ehtz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: CY-e-PEUNORKH_dgFnFG9efWNVcH_fr2
-X-Proofpoint-ORIG-GUID: CY-e-PEUNORKH_dgFnFG9efWNVcH_fr2
-X-Authority-Analysis: v=2.4 cv=cO7gskeN c=1 sm=1 tr=0 ts=68260dc5 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=jslb4AC7pnrZMK7c9NUA:9
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDE1OCBTYWx0ZWRfX9RgVpse7lDIE
- rGR4Z3YIxHO0DPiJZXiLNMuXFytYnRKGUC06vHkfQY5CXBxFJva7xc4rgRz1EO4JA19yOUFpPWO
- GBHrlbC42MpE5QfdctDq47JaEsrb/5BOvgzFRcQCLpt378ETTMNUqz8KndUlNGyyYIIQJf+/S2z
- rxL3BH8nJsU8H2hvUk2rzIUR57lgtfi+tyBl35sDswRxKIxLQ6MacIca8HIntpGsSu1MY9gRcDw
- olbil9p/dtZuDfgb+WiV0/eRDunmIVHe3qujgqnQFKhA785WRB1icm600J0Aa9ggaJUW8h0FIsc
- 11N/E0s8bwSCQ+EdN8+T2/Ulay1HWNdb8x4aAIAudzexuoVxp8PGjApKZTJZ5Q+QQ6GX9IdzeYA
- CzpS3xL5t4IfJ9e9hu5c4MNocXpi4WWn8fxKXQlN/fvL021a+SCdyvZTuGeLlUyOUhQIdXox
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-15_07,2025-05-15_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=735 spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505150158
+References: <20250514170118.40555-1-robdclark@gmail.com> <20250514170118.40555-5-robdclark@gmail.com>
+ <51f87f358fa1b7ef8db8b67ee6cde38ae071fbe8.camel@mailbox.org>
+In-Reply-To: <51f87f358fa1b7ef8db8b67ee6cde38ae071fbe8.camel@mailbox.org>
+From: Rob Clark <robdclark@chromium.org>
+Date: Thu, 15 May 2025 09:15:08 -0700
+X-Gm-Features: AX0GCFtFODqrTO3H3dBowcUSsEdz5qQZdMlabkP_W3dElVRS6DjZ3druTsaG-j8
+Message-ID: <CAJs_Fx771FFVDVFMn8YJkR9f9Ad-UQspJ9KKQw4u6Cu4TA7YPA@mail.gmail.com>
+Subject: Re: [PATCH v4 04/40] drm/sched: Add enqueue credit limit
+To: phasta@kernel.org
+Cc: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	Connor Abbott <cwabbott0@gmail.com>, Matthew Brost <matthew.brost@intel.com>, 
+	Danilo Krummrich <dakr@kernel.org>, =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 5/14/25 10:32 PM, Dmitry Baryshkov wrote:
-> On Wed, May 14, 2025 at 05:10:32PM +0200, Konrad Dybcio wrote:
->> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>
->> On A663 (SA8775P) the value matches exactly.
->>
->> On A610, the value matches on SM6115, but is different on SM6125. That
->> turns out not to be a problem, as the bits that differ aren't even
->> interpreted.
-> 
-> We also don't set swizzle for a lot of UBWC 1.0 targets (as MDSS wasn't
-> programming those). Should we fix all of them to use 6 by default? Or 7?
+On Thu, May 15, 2025 at 2:28=E2=80=AFAM Philipp Stanner <phasta@mailbox.org=
+> wrote:
+>
+> Hello,
+>
+> On Wed, 2025-05-14 at 09:59 -0700, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Similar to the existing credit limit mechanism, but applying to jobs
+> > enqueued to the scheduler but not yet run.
+> >
+> > The use case is to put an upper bound on preallocated, and
+> > potentially
+> > unneeded, pgtable pages.  When this limit is exceeded, pushing new
+> > jobs
+> > will block until the count drops below the limit.
+>
+> the commit message doesn't make clear why that's needed within the
+> scheduler.
+>
+> From what I understand from the cover letter, this is a (rare?) Vulkan
+> feature. And as important as Vulkan is, it's the drivers that implement
+> support for it. I don't see why the scheduler is a blocker.
 
-I don't think any default value is a good idea - this is the sort of
-programming error you track down 4 years after you go bald looking
-for it
+Maybe not rare, or at least it comes up with a group of deqp-vk tests ;-)
 
-Konrad
+Basically it is a way to throttle userspace to prevent it from OoM'ing
+itself.  (I suppose userspace could throttle itself, but it doesn't
+really know how much pre-allocation will need to be done for pgtable
+updates.)
+
+> All the knowledge about when to stop pushing into the entity is in the
+> driver, and the scheduler obtains all the knowledge about that from the
+> driver anyways.
+>
+> So you could do
+>
+> if (my_vulkan_condition())
+>    drm_sched_entity_push_job();
+>
+> couldn't you?
+
+It would need to reach in and use the sched's job_scheduled
+wait_queue_head_t...  if that isn't too ugly, maybe the rest could be
+implemented on top of sched.  But it seemed like a reasonable thing
+for the scheduler to support directly.
+
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >  drivers/gpu/drm/scheduler/sched_entity.c | 16 ++++++++++++++--
+> >  drivers/gpu/drm/scheduler/sched_main.c   |  3 +++
+> >  include/drm/gpu_scheduler.h              | 13 ++++++++++++-
+> >  3 files changed, 29 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/scheduler/sched_entity.c
+> > b/drivers/gpu/drm/scheduler/sched_entity.c
+> > index dc0e60d2c14b..c5f688362a34 100644
+> > --- a/drivers/gpu/drm/scheduler/sched_entity.c
+> > +++ b/drivers/gpu/drm/scheduler/sched_entity.c
+> > @@ -580,11 +580,21 @@ void drm_sched_entity_select_rq(struct
+> > drm_sched_entity *entity)
+> >   * under common lock for the struct drm_sched_entity that was set up
+> > for
+> >   * @sched_job in drm_sched_job_init().
+> >   */
+> > -void drm_sched_entity_push_job(struct drm_sched_job *sched_job)
+> > +int drm_sched_entity_push_job(struct drm_sched_job *sched_job)
+>
+> Return code would need to be documented in the docstring, too. If we'd
+> go for that solution.
+>
+> >  {
+> >       struct drm_sched_entity *entity =3D sched_job->entity;
+> > +     struct drm_gpu_scheduler *sched =3D sched_job->sched;
+> >       bool first;
+> >       ktime_t submit_ts;
+> > +     int ret;
+> > +
+> > +     ret =3D wait_event_interruptible(
+> > +                     sched->job_scheduled,
+> > +                     atomic_read(&sched->enqueue_credit_count) <=3D
+> > +                     sched->enqueue_credit_limit);
+>
+> This very significantly changes the function's semantics. This function
+> is used in a great many drivers, and here it would be transformed into
+> a function that can block.
+>
+> From what I see below those credits are to be optional. But even if, it
+> needs to be clearly documented when a function can block.
+
+Sure.  The behavior changes only for drivers that use the
+enqueue_credit_limit, so other drivers should be unaffected.
+
+I can improve the docs.
+
+(Maybe push_credit or something else would be a better name than
+enqueue_credit?)
+
+>
+> > +     if (ret)
+> > +             return ret;
+> > +     atomic_add(sched_job->enqueue_credits, &sched-
+> > >enqueue_credit_count);
+> >
+> >       trace_drm_sched_job(sched_job, entity);
+> >       atomic_inc(entity->rq->sched->score);
+> > @@ -609,7 +619,7 @@ void drm_sched_entity_push_job(struct
+> > drm_sched_job *sched_job)
+> >                       spin_unlock(&entity->lock);
+> >
+> >                       DRM_ERROR("Trying to push to a killed
+> > entity\n");
+> > -                     return;
+> > +                     return -EINVAL;
+> >               }
+> >
+> >               rq =3D entity->rq;
+> > @@ -626,5 +636,7 @@ void drm_sched_entity_push_job(struct
+> > drm_sched_job *sched_job)
+> >
+> >               drm_sched_wakeup(sched);
+> >       }
+> > +
+> > +     return 0;
+> >  }
+> >  EXPORT_SYMBOL(drm_sched_entity_push_job);
+> > diff --git a/drivers/gpu/drm/scheduler/sched_main.c
+> > b/drivers/gpu/drm/scheduler/sched_main.c
+> > index 9412bffa8c74..1102cca69cb4 100644
+> > --- a/drivers/gpu/drm/scheduler/sched_main.c
+> > +++ b/drivers/gpu/drm/scheduler/sched_main.c
+> > @@ -1217,6 +1217,7 @@ static void drm_sched_run_job_work(struct
+> > work_struct *w)
+> >
+> >       trace_drm_run_job(sched_job, entity);
+> >       fence =3D sched->ops->run_job(sched_job);
+> > +     atomic_sub(sched_job->enqueue_credits, &sched-
+> > >enqueue_credit_count);
+> >       complete_all(&entity->entity_idle);
+> >       drm_sched_fence_scheduled(s_fence, fence);
+> >
+> > @@ -1253,6 +1254,7 @@ int drm_sched_init(struct drm_gpu_scheduler
+> > *sched, const struct drm_sched_init_
+> >
+> >       sched->ops =3D args->ops;
+> >       sched->credit_limit =3D args->credit_limit;
+> > +     sched->enqueue_credit_limit =3D args->enqueue_credit_limit;
+> >       sched->name =3D args->name;
+> >       sched->timeout =3D args->timeout;
+> >       sched->hang_limit =3D args->hang_limit;
+> > @@ -1308,6 +1310,7 @@ int drm_sched_init(struct drm_gpu_scheduler
+> > *sched, const struct drm_sched_init_
+> >       INIT_LIST_HEAD(&sched->pending_list);
+> >       spin_lock_init(&sched->job_list_lock);
+> >       atomic_set(&sched->credit_count, 0);
+> > +     atomic_set(&sched->enqueue_credit_count, 0);
+> >       INIT_DELAYED_WORK(&sched->work_tdr, drm_sched_job_timedout);
+> >       INIT_WORK(&sched->work_run_job, drm_sched_run_job_work);
+> >       INIT_WORK(&sched->work_free_job, drm_sched_free_job_work);
+> > diff --git a/include/drm/gpu_scheduler.h
+> > b/include/drm/gpu_scheduler.h
+> > index da64232c989d..d830ffe083f1 100644
+> > --- a/include/drm/gpu_scheduler.h
+> > +++ b/include/drm/gpu_scheduler.h
+> > @@ -329,6 +329,7 @@ struct drm_sched_fence *to_drm_sched_fence(struct
+> > dma_fence *f);
+> >   * @s_fence: contains the fences for the scheduling of job.
+> >   * @finish_cb: the callback for the finished fence.
+> >   * @credits: the number of credits this job contributes to the
+> > scheduler
+> > + * @enqueue_credits: the number of enqueue credits this job
+> > contributes
+> >   * @work: Helper to reschedule job kill to different context.
+> >   * @id: a unique id assigned to each job scheduled on the scheduler.
+> >   * @karma: increment on every hang caused by this job. If this
+> > exceeds the hang
+> > @@ -366,6 +367,7 @@ struct drm_sched_job {
+> >
+> >       enum drm_sched_priority         s_priority;
+> >       u32                             credits;
+> > +     u32                             enqueue_credits;
+>
+> What's the policy of setting this?
+>
+> drm_sched_job_init() and drm_sched_job_arm() are responsible for
+> initializing jobs.
+
+It should be set before drm_sched_entity_push_job().  I wouldn't
+really expect drivers to know the value at drm_sched_job_init() time.
+But they would by the time drm_sched_entity_push_job() is called.
+
+> >       /** @last_dependency: tracks @dependencies as they signal */
+> >       unsigned int                    last_dependency;
+> >       atomic_t                        karma;
+> > @@ -485,6 +487,10 @@ struct drm_sched_backend_ops {
+> >   * @ops: backend operations provided by the driver.
+> >   * @credit_limit: the credit limit of this scheduler
+> >   * @credit_count: the current credit count of this scheduler
+> > + * @enqueue_credit_limit: the credit limit of jobs pushed to
+> > scheduler and not
+> > + *                        yet run
+> > + * @enqueue_credit_count: the current crdit count of jobs pushed to
+> > scheduler
+> > + *                        but not yet run
+> >   * @timeout: the time after which a job is removed from the
+> > scheduler.
+> >   * @name: name of the ring for which this scheduler is being used.
+> >   * @num_rqs: Number of run-queues. This is at most
+> > DRM_SCHED_PRIORITY_COUNT,
+> > @@ -518,6 +524,8 @@ struct drm_gpu_scheduler {
+> >       const struct drm_sched_backend_ops      *ops;
+> >       u32                             credit_limit;
+> >       atomic_t                        credit_count;
+> > +     u32                             enqueue_credit_limit;
+> > +     atomic_t                        enqueue_credit_count;
+> >       long                            timeout;
+> >       const char                      *name;
+> >       u32                             num_rqs;
+> > @@ -550,6 +558,8 @@ struct drm_gpu_scheduler {
+> >   * @num_rqs: Number of run-queues. This may be at most
+> > DRM_SCHED_PRIORITY_COUNT,
+> >   *        as there's usually one run-queue per priority, but may
+> > be less.
+> >   * @credit_limit: the number of credits this scheduler can hold from
+> > all jobs
+> > + * @enqueue_credit_limit: the number of credits that can be enqueued
+> > before
+> > + *                        drm_sched_entity_push_job() blocks
+>
+> Is it optional or not? Can it be deactivated?
+>
+> It seems to me that it is optional, and so far only used in msm. If
+> there are no other parties in need for that mechanism, the right place
+> to have this feature probably is msm, which has all the knowledge about
+> when to block already.
+>
+
+As with the existing credit_limit, it is optional.  Although I think
+it would be also useful for other drivers that use drm sched for
+VM_BIND queues, for the same reason.
+
+BR,
+-R
+
+>
+> Regards
+> P.
+>
+>
+> >   * @hang_limit: number of times to allow a job to hang before
+> > dropping it.
+> >   *           This mechanism is DEPRECATED. Set it to 0.
+> >   * @timeout: timeout value in jiffies for submitted jobs.
+> > @@ -564,6 +574,7 @@ struct drm_sched_init_args {
+> >       struct workqueue_struct *timeout_wq;
+> >       u32 num_rqs;
+> >       u32 credit_limit;
+> > +     u32 enqueue_credit_limit;
+> >       unsigned int hang_limit;
+> >       long timeout;
+> >       atomic_t *score;
+> > @@ -600,7 +611,7 @@ int drm_sched_job_init(struct drm_sched_job *job,
+> >                      struct drm_sched_entity *entity,
+> >                      u32 credits, void *owner);
+> >  void drm_sched_job_arm(struct drm_sched_job *job);
+> > -void drm_sched_entity_push_job(struct drm_sched_job *sched_job);
+> > +int drm_sched_entity_push_job(struct drm_sched_job *sched_job);
+> >  int drm_sched_job_add_dependency(struct drm_sched_job *job,
+> >                                struct dma_fence *fence);
+> >  int drm_sched_job_add_syncobj_dependency(struct drm_sched_job *job,
+>
 
