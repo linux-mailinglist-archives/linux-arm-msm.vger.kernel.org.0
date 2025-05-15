@@ -1,260 +1,332 @@
-Return-Path: <linux-arm-msm+bounces-58056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 954A6AB835D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 11:55:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EFD0AB8364
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 11:57:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A061A9E0596
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 09:55:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9A2373BC9B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 09:56:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0833A296713;
-	Thu, 15 May 2025 09:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55674296729;
+	Thu, 15 May 2025 09:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=westermo.com header.i=@westermo.com header.b="mJfsUgN2";
-	dkim=pass (1024-bit key) header.d=beijerelectronicsab.onmicrosoft.com header.i=@beijerelectronicsab.onmicrosoft.com header.b="Q00HaCby"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gSXO3jlU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx08-0057a101.pphosted.com (mx08-0057a101.pphosted.com [185.183.31.45])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7601FCFFC;
-	Thu, 15 May 2025 09:55:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=185.183.31.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747302927; cv=fail; b=Tig4gqrjFVqh/74F1t1q0XIcEstunNrupMBOU8M3Ko0p6Ir8khgIs5XfDbgFkwxXnF7xC5ik0yqo7wT/qWH2OEWxAoC7DkF1M9TqRrVxAOzXvet1cq5VwhkecO0Ht6GP4CHndZEKDdZ7HzNwuOWv+EJzTLnaDKnnB/m31ZPY3GY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747302927; c=relaxed/simple;
-	bh=rrppWb6p6+mvECAy3axl9KZcRApZm6FC+kepKyslEsY=;
-	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=LKu3Gt2EqmOB/UL7yyMeSQbUMYjoOs8m3HIbjGO+AJepL0vhXtZlAC1B4nGCOnrfFfIpsQHL3Srovt3+I9xrMb6EOfItm7JLEII4wTd39FmcbHovv8rJo7oLHyzhHbKslFrMmPFwR0PXzBi03cjm8u7Mk2SsxvnnCrnivz9O7Xg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=westermo.com; spf=pass smtp.mailfrom=westermo.com; dkim=pass (2048-bit key) header.d=westermo.com header.i=@westermo.com header.b=mJfsUgN2; dkim=pass (1024-bit key) header.d=beijerelectronicsab.onmicrosoft.com header.i=@beijerelectronicsab.onmicrosoft.com header.b=Q00HaCby; arc=fail smtp.client-ip=185.183.31.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=westermo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=westermo.com
-Received: from pps.filterd (m0214196.ppops.net [127.0.0.1])
-	by mx07-0057a101.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54F5ROaF012623;
-	Thu, 15 May 2025 11:55:22 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=westermo.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=270620241; bh=PTTpgws/311vWIzfvsD6qL
-	eM3eFY69bnXk8y1w88wPU=; b=mJfsUgN2mIOOTVetiFSfzB9hUQzqV5MwgDrkD7
-	5pOZUEOujglo4jr22unWtRybI4d6AE6MMHiVaYHkBQN4tpustg480JXN7f5UI9Sc
-	//rvMKetWIDRpHDk3EN3Af0IMFplXR09p3Hg2goHTollmvGGw7qcXc4BJ5sI2gen
-	N9uiJ3nUAkivdOXQ3eiQ1/bBstKHo5gKZIr9JpfUocZH668RZGxAqpWs4bBFuBJK
-	AZrKrhD8VCt8GUkFblRpLuFnN3uggf0oo+/i0zuQTxcG5OMSUFzDHTK9w3QxcpeF
-	2JRSARov9AwQSF7IWRgUGX6+MvPMNyixgP2UApWurpi6fTPQ==
-Received: from eur02-vi1-obe.outbound.protection.outlook.com (mail-vi1eur02lp2041.outbound.protection.outlook.com [104.47.11.41])
-	by mx07-0057a101.pphosted.com (PPS) with ESMTPS id 46htt45p67-1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F20529615A;
+	Thu, 15 May 2025 09:56:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747303017; cv=none; b=r9Kgj51OUvki6odJNwPFLWJm6vv1lszOT3SBVlPbP0bxJnUDAiJIlKTjEotu44MIDX+9U5iWYnvMiGKIgHcCLtvKuG7xb4KVvxgSJRHfDyPnj/1qSZrDfMSmQuFyftM7+D9vzgzhr3FRd8BJRwcn7kTTgHT3RpaGx2VDW31y70M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747303017; c=relaxed/simple;
+	bh=3bVabG5wuWAuoJv+aIqIxKDBMpqwpxiNsKjVfJd0U+Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=JHv85FGd07IvnzlxFJec5oBZGVgjb2VCssaTS7AtVjGDgDAMYO47UdnJ62zid9lVBSgrQgChWxD3EF6kJdg+A8p3V3sBaqMZ+8nLgWc+o2pyEExqTgMf109EyAUKtgMqf9d5rcm7TmzwkhR/UlMu4b+U7bKXiIFtWsHHaFlp1h0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gSXO3jlU; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54F975YA002615;
+	Thu, 15 May 2025 09:56:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	WOOov3RS6Ydo3ngYOkahPy2c/nhvIBfF4PmFxRVZE/w=; b=gSXO3jlU0KV+m/Ru
+	/Xlqg8zIKmENXelSfCkxoMvyVYVeVci5c/wuPB0a/8cQ0AqC/udup6ttQiaIXX9K
+	zpTgTVfDwZMLFezVs028SOW/uklT45L8BGTjKg2uXHYKaZ6dtEFGO2vjVcd/SJGZ
+	14FaYEFq0iZywPL9opYdZ2Mq+2tN+xYfLE9wQk5pSY2DIWNJkcbpuy0nuwRsZ9Pc
+	2XbZL9gKGIWzF/6/65RFUnPgYa98uUBEiCRnnyvIubXFtvaG2iw++T0qTR0DlTmx
+	dHhXBTIYol4uKQyIgr5QjmR+FyvvZabaK1PLXmfiL1lFe26WNxxygYkco3FKFnuk
+	nqce+A==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbex5qsp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 May 2025 11:55:22 +0200 (MEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PQL0zNpG1v6NY383oXR77QEG1l+PdffzB4OMYcP4uGNHoDMMcfJqYffVAl5O2G/731g08fJZ+a/P1/E0gRufI4/snnJvxPpl/MQicnx5jXEZwcYxXdAQp7X6tR0a0sfnWniucZHY2tD6v6HYTqxTLAUh7VXMTX8EkAVMCDyFIJNqkYjHIqUqK56VqnIA46twdzopGMyYKeNtsSQreIr6+NOMHPCrhzGBoLK529ekaaNKeUvnp66h3gg0QufKdQTkXlKip1ACt273Q63DU6M/V8F2/88A2DtzecbRsTC8qNKnxgoqrIdxHLkiOxdA9UNgfJMfAgvZw5nbldiLGGV6wg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PTTpgws/311vWIzfvsD6qLeM3eFY69bnXk8y1w88wPU=;
- b=SYPfnqnuFO4INyhJBT6AAHjt4kQYOuba/0i0cVtxH2XM0AUaQTRcr9ThqDCadcPjsF4UEcO9NQOb+5oIHbvXPwmq6K8otTs6EzGYoXoBQlHIK5w4zviDfqA8FL8J4PAHIwSIhdnFuAvxfICSrk4T2dzYdjRvw4RfC4CnbPUMruePh8yFs7mP46SaMuwoIfIwUrnvK/pQsA5irSemELgm0oW/X+ApG1iCiiyAT40DRmaeisg58eAx/uJKZFUIyHHTm7BgLFykca54xmuRwhNp+K7eikW2DyfwCWZNBV/qkjt7zawcIut7AkALdCi8o/gA4UkQW4EJXSGC9hYUrBMkkA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=westermo.com; dmarc=pass action=none header.from=westermo.com;
- dkim=pass header.d=westermo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=beijerelectronicsab.onmicrosoft.com;
- s=selector1-beijerelectronicsab-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PTTpgws/311vWIzfvsD6qLeM3eFY69bnXk8y1w88wPU=;
- b=Q00HaCbySdQmUXErNEV4b6AsJsp4mEod9d262Z6So3333+HuI9JLyiP9Y4gUuXeOQfMldS6v5SG8Li8+JhsgYH8nOeM0K7JIDlmFtDMeXUfKq2LyqhhjzgiK8Wum+5hzTjAWxixhZOiiKCPB6JZ6jDSYpCpHerqwRKq/2vnElUk=
-Received: from AS8P192MB2240.EURP192.PROD.OUTLOOK.COM (2603:10a6:20b:63a::18)
- by AM6P192MB2475.EURP192.PROD.OUTLOOK.COM (2603:10a6:20b:69f::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.24; Thu, 15 May
- 2025 09:55:19 +0000
-Received: from AS8P192MB2240.EURP192.PROD.OUTLOOK.COM
- ([fe80::bee5:29b7:49f2:cf70]) by AS8P192MB2240.EURP192.PROD.OUTLOOK.COM
- ([fe80::bee5:29b7:49f2:cf70%3]) with mapi id 15.20.8722.027; Thu, 15 May 2025
- 09:55:18 +0000
-From: Alexander Wilhelm <alexander.wilhelm@westermo.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] bus: mhi: host: fix endianness of BHI vector table
-Date: Thu, 15 May 2025 11:55:16 +0200
-Message-Id: <20250515095517.1867846-1-alexander.wilhelm@westermo.com>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: GVZP280CA0042.SWEP280.PROD.OUTLOOK.COM
- (2603:10a6:150:26f::9) To AS8P192MB2240.EURP192.PROD.OUTLOOK.COM
- (2603:10a6:20b:63a::18)
+	Thu, 15 May 2025 09:56:49 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54F9uimM009401
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 15 May 2025 09:56:44 GMT
+Received: from [10.50.16.181] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 15 May
+ 2025 02:56:41 -0700
+Message-ID: <0c50c24a-35fa-acfb-a807-b4ed5394506b@quicinc.com>
+Date: Thu, 15 May 2025 15:26:38 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS8P192MB2240:EE_|AM6P192MB2475:EE_
-X-MS-Office365-Filtering-Correlation-Id: e7e44010-5934-4f35-f7c5-08dd93969980
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?qHC/uXcEs2BA/Rcr6d/yLJdq9taR8VhYz/mWZM3gJevqlohZBQqDG4og1e2w?=
- =?us-ascii?Q?Hu6kpp/bGLdb01Uk++VYZ75pHdTEx2qQqfcLX2GZ8/FWzDRjK2utM71VHA9K?=
- =?us-ascii?Q?LRZGPMj8aFtVmoIkjlnJlycC+x4es9aXO7iIWO2rYFUcOvale661lUhCJwMy?=
- =?us-ascii?Q?Gsq18eqXQj1onYaJG7i/s2LKSFqMlK4jhEOAC7euU4cBzT8BOXhst/lT9m3t?=
- =?us-ascii?Q?ocN9unYMz22jReCWLHF5wQfBBnYJbJRH2Eo/9i7oUISOyH+KS7w3ERLfKYeS?=
- =?us-ascii?Q?BXHxchcNDDTrvqdXa8C1bQbwSkuIMKgTxq7+G+cANZ9X6C4R/lI9L0OZPEzQ?=
- =?us-ascii?Q?7Kka/5oqjjL0i9ublMcu7dVdLeoOHWWtb87XHAbDSoVgbmrmtn69GYulI3B/?=
- =?us-ascii?Q?lSajtm1p2X1CNI9Bj+WPmwPORL2uNBmEZ8nliJk5jjajksf1f3LWhNZ04r59?=
- =?us-ascii?Q?foXnhtSKxftI4ze/sG3q6gmfRQL1t7gKqZjNcpL9+LuAxO5wZ0SM4jTaVuU1?=
- =?us-ascii?Q?tEZVDa6NnHM0zEilVKsDSUQEX4FpT4USbKaarR/FCHi3dC7EF4YhyVOTfrHM?=
- =?us-ascii?Q?CSgtQlXTI70TcFF/hX9/nNaP1dyYHTcIZgpNBx54pAWJ9oqhJfAVCi4QeWJh?=
- =?us-ascii?Q?kbuz2mP5NIw6IUGFHUxjLa6OtPuBqfFgenmmhYV11SoNiVAy2FpbeneBQbZZ?=
- =?us-ascii?Q?fsZQ84ZbQ6x6ODQc6SfOHw3wmjH2dvR0F4wHpJ7NV3pTyg0rN/wrwvNdPhCU?=
- =?us-ascii?Q?ATCp5e26RnF2ePmx9FLkIkrEd5r8y8H5F1o/duoaJw8T4xRxFpEL/St+tzRc?=
- =?us-ascii?Q?pdPyPmtAG3cKGH3wQTPgJjP390DE1gzMw8KfRqZGESYOgXN7BnUV4xJVOq4Q?=
- =?us-ascii?Q?lFsw/FM87EilIb5zvrFhybL2zLeKBEQbflNXoX6D0qPpibOBY3/QoCgg0rT4?=
- =?us-ascii?Q?axuUxNPxa1KVujxuBUBDknUOsk9tx1CE5uli7gdQO5jxxOBQPXY4KcsabtM2?=
- =?us-ascii?Q?5gZJVM15wgcWHTgGRokzT8glMhKmxqycKRe0Dy4GB49cxrvnJEwWjYlnz+ro?=
- =?us-ascii?Q?KV8oOHSt+GLL4pivTWo0suNLqpn71RG1TfglBqaXz3ZL9Of1Z0TR9de4rGA+?=
- =?us-ascii?Q?gXWxaQck3f58TwIDFnxV1ZJHtTXDloYU7yrYzCeVXnMYB/CeIFX6V/RbRE32?=
- =?us-ascii?Q?bqgbC3q7oGxZk6TY/ekCg274ZqxGQp0aP9ngCWfvAU+lrfg2UkbNX8lqeXsQ?=
- =?us-ascii?Q?8ieY8WbCDZZ5H6lopaRxrJqYuAy2rT72e2e2Uq/pFm77SpxNdY+ltJEKYhTq?=
- =?us-ascii?Q?1XDEhJYpwh1Ms3PcEHSgmQDNnYTooZ08wcU2Ww42Z/hxXzrzNC3a2n4b9eMG?=
- =?us-ascii?Q?moU6RZ9f7HsNHmPMOMQ0SV0p0TKFFpjze7DJfW0kDXL7mTyISUr+TUsX1OWj?=
- =?us-ascii?Q?jDqI6jTMh0w=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8P192MB2240.EURP192.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?dTBaBQhsbKwVGtzV5/DUJ30eDrWX1BFQZaC5VgG3Wc89ImJTFnekqcakTl5s?=
- =?us-ascii?Q?1VoEoLOnpLd5BhXUTMaV0VTbMDFjTvVU4AaXJTonX3KwCSlodY3sBSEYiheH?=
- =?us-ascii?Q?BXXCKiYDahhvF5UF93DyTaJrY7TaPboE2bxgJbv/i9o5jjZH4bItTyRMcWnQ?=
- =?us-ascii?Q?a8oyRvSH2cRq565g2o+aSD03xUa906Lr+XVCgt4dZq7ctna4eCzZt4r6Dfeb?=
- =?us-ascii?Q?MMLkDWfzXrJNM85fKCHVQdH3Fzekw/BAaBtuSHtI18nYwPsoIu6L/QoLsZNi?=
- =?us-ascii?Q?d2FeED9A6FqzwRdpQNg13zNiOHHGx8izbgVJaynukCQs+aWX5va/+t4gH4ny?=
- =?us-ascii?Q?5/JmtKi17+A9bSM7cxkcux7quwB1qw6Gdvq5yPEWFx26dl1QAGa/9s/oLBuy?=
- =?us-ascii?Q?OmAIRePmPq2i1WktGlZjYMIYg7RWgVqpyA7BV2li1aWKmJ2bSD6pDcL9khO5?=
- =?us-ascii?Q?F/C8xQg9yqprKdkLfR0Vi0Muv0+M232TGC9odknWpWZpcu6g6tgUUDeVvXBf?=
- =?us-ascii?Q?681GBqp+y1lsItjr+vg0q9CB4YDtonfOiMo6r6w7DoeSXNZz7FPDyNE9oXhu?=
- =?us-ascii?Q?BqzrCRMJGirq27TJChcrPpk6JJ2IGpzDbeAVaI17iMOdqdAqagkFe7jtNFtp?=
- =?us-ascii?Q?0/YTGxLHC7sD8bGHcEapYxHdYPrrnmQ0jWBdURukdY8jThFm+urdHQsO+qZM?=
- =?us-ascii?Q?GdSqd5VHpc7W4tlrF+QGZQUadw5165ncyPZ28Rb/3qHevp8udomOlWpY7NOV?=
- =?us-ascii?Q?D9NPA4kJkvhjZD5yLkgV9PJUegpVnjXMhoxZqafZRhYaecmds2WGBRMtyiR5?=
- =?us-ascii?Q?YGGI65I1MZsc7QyMBR0IVxkNfmWY8XEd5k3eYXDBKJdj8/LVGV/i7IEWbwfF?=
- =?us-ascii?Q?a/M3+ACEplo5N/2diibDAXsRHAIJllRjhyTP1vNkbea/IvYMjWr8eR1kJmVw?=
- =?us-ascii?Q?4lr0cAnOF6fAYYo7t+jJjDI0fdAEUx8m3wkpQxpNfO2X2SSaE13iYDUCjCGN?=
- =?us-ascii?Q?KHmUzqbupm2QOlTVNV8LoiAvTBobEgHkk8NJj6L/9UpYjGgH+19FGhmdsWtx?=
- =?us-ascii?Q?BKSuF4mkS1pjDC2j5XvjECrBStqkpw5grKP0ukNCPtwpudirX8m+N5xA9Bch?=
- =?us-ascii?Q?mpyY6K5UbVAJHEIfgSVXNsQ1JAih80LCfDrijFZ6p5su3UBHWls+P2g+PQX2?=
- =?us-ascii?Q?8VmG5mxBvHQ6gG//jM4GWTieSlQSzk648LxukqKSr1CS9kxinH7JLNRJzNGM?=
- =?us-ascii?Q?kegxRWvKxDibOtXE/bQBPfm7cmHEEv6iE3eUxx4Zn9HYpuV9s4O7Dg8bdxOj?=
- =?us-ascii?Q?I31qCxB5065OvStpeU/Z/OBA0Ov7uEr5EhZOL0XabFO7zRTwAxt11bP02i/v?=
- =?us-ascii?Q?7GsJ/LS93lrn/qHdzXUsd1ftM71ayuzOygEU/Bze2dl2Uez8Epmo0JX8g1AW?=
- =?us-ascii?Q?dnhzm1RxwcxoAqzE9z7YXb3xClcPrGx3gUSV12sZWuya3RB0B1FsTovQdn9F?=
- =?us-ascii?Q?HsaajmSJwIrypeLNmPvx7GsSx254yjsTcqfNmsVA76U3sf+vGXENrfbn/ij7?=
- =?us-ascii?Q?X3whgTXr0NJskYYhcpFF1dXYRZ8dhhScaWbVS1mg?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	khnWhSg6kQ2NR4ytULcBUPrxK3wdcCNqrUmkKY8dv8g0EMMRy+oio8tq5NuW5a6aGUDg1WVoGVOfw/gkbCH8C0kJMYkRvOCi+jgex8PdVqHKColoJvJw7gTZ2y0G5vYQIrAK79Yf8drYDZrXv91sUpsEXrmipggOFaQXUYSqykcKsNDaLwAySv5TAojJgkAs89d2loqUF8Egi+QQ1fLaYb7vwUY0WNi2lwGTFGBGIFrW8OFKEYRrG6vru4vbSWTXmSGpqWMFa4gDINPkKO7lPcZxIVwmSs1V6zmg8ar3135EmgFj5j40XCO92h2+2my+WlD1976uRxhV83BHYbsAFexgabyvZzeGiq2UjYiJNp8mrIM6xnDzHyC7NiNcT+C/iamvGj3I5Dxss8Op8HUy7XNv2QrEifadW0t+0beUBdpacWkmoCYjqh0YBPhnnKqbyR8xes26XXs1hR/Gsfq+KOae9kaulcBAyUB8U3zUlEO814eujfAj1BOaoS8C2CFreRTHSyyrX5v44LTdo6rqaSO1gQSXwta5oGXnLkbYn887WtnmX+t2+BzPE9T4s7ymZEbKPAdEU0A+Er7Kox081qmk/RRhb1qDDD8aSkwcqVgli/kbSVLQQplO4MyAxu3w
-X-OriginatorOrg: westermo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e7e44010-5934-4f35-f7c5-08dd93969980
-X-MS-Exchange-CrossTenant-AuthSource: AS8P192MB2240.EURP192.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2025 09:55:18.7419
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4b2e9b91-de77-4ca7-8130-c80faee67059
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4PwNJ7mwoGXocIKzE0Qbo/u0epAdFzhPvX+rJmmPmjuD8WMlpYJFrKXhJfjHxabm4xgHFH8S/aM2OSHgCVqmpA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6P192MB2475
-X-MS-Exchange-CrossPremises-AuthSource: AS8P192MB2240.EURP192.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossPremises-AuthAs: Internal
-X-MS-Exchange-CrossPremises-AuthMechanism: 14
-X-MS-Exchange-CrossPremises-Mapi-Admin-Submission:
-X-MS-Exchange-CrossPremises-MessageSource: StoreDriver
-X-MS-Exchange-CrossPremises-BCC:
-X-MS-Exchange-CrossPremises-OriginalClientIPAddress: 104.151.95.196
-X-MS-Exchange-CrossPremises-TransportTrafficType: Email
-X-MS-Exchange-CrossPremises-Antispam-ScanContext:
-	DIR:Originating;SFV:NSPM;SKIP:0;
-X-MS-Exchange-CrossPremises-SCL: 1
-X-MS-Exchange-CrossPremises-Processed-By-Journaling: Journal Agent
-X-OrganizationHeadersPreserved: AM6P192MB2475.EURP192.PROD.OUTLOOK.COM
-X-Proofpoint-GUID: dDJTPpE3vPEatikvzG3yhB-V0aDbyxv-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDA5NiBTYWx0ZWRfX66nI1/2fRJe3 WkcmGgmLTXgRo37H01BVHOffyK+zbl90sRVzcNlXuOOiQjp9yhdD+4DzNAuZU5x5QFF/eL9zaxv zsUV/A4+Plp6Bk9AMV06DuPPdsgzWqOoS3DnNlTYhsQjXRoLRB2x1qohX/XQdSD6aQwElmoTU4e
- Pcljy8YqVQMlhP3xL4/OZp1XIggZh4kWX7XQJ9vGqyH7osOEcqfzVxpRRF9h5tNrO+VyXwYulvq IafqJRnV12jG/+2clby/kP/mouNppGurvrbDyhXH/PLgALKetNZFvvBVFbtO6WfqdN9XXYUvzID aa2zl5FLdDy2JlgygWNWGR4Ytf4yIIs+Y9I5qjGUvDG61hPKDroQBMurCh9QyTZjwy16Cw/tGrr
- /gJtULTMO+Wl3I2PjjfZrd4nzaZfvXDnq/U6b3rP13numdSe2v5uhgXG9BU73azBSniRu+nX
-X-Proofpoint-ORIG-GUID: dDJTPpE3vPEatikvzG3yhB-V0aDbyxv-
-X-Authority-Analysis: v=2.4 cv=SJtCVPvH c=1 sm=1 tr=0 ts=6825ba0a cx=c_pps a=Qf1mswPHpNN1WXcnD2EiMQ==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=dt9VzEwgFbYA:10
- a=8gLI3H-aZtYA:10 a=N9GNhs4bAAAA:8 a=ZddV4WD-gSN6lUJ0vOgA:9 a=PZhj9NlD-CKO8hVp7yCs:22
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3 1/2] media: venus: fix TOCTOU vulnerability when
+ reading packets from shared memory
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Dikshita Agarwal
+	<quic_dikshita@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Hans Verkuil
+	<hans.verkuil@cisco.com>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Vedang Nagar <quic_vnagar@quicinc.com>
+References: <20250514-venus-fixes-v3-0-32298566011f@quicinc.com>
+ <20250514-venus-fixes-v3-1-32298566011f@quicinc.com>
+ <ad92cf06-636a-417a-b03b-0d90c9243446@linaro.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <ad92cf06-636a-417a-b03b-0d90c9243446@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDA5NyBTYWx0ZWRfXxMHtXyIg6Na9
+ pUQneZDdJQpGMK8W0j5pRsFH+pnxGpAQwHeYkE5uw1FSCS9+CpzFPgvbUi9ilSRZzZf3xWHgvv5
+ ehXTwCOc/QCU5DAFKDquyW7QTMUADjJF4bCwg4dbvwMxNf2LaFPHXr9yQPlvR3bRGNtcBEHED7+
+ GRHG50APIuGLuHtk6eUNKZ1Ycq9Iv1ZghCXTB6Z6hHY5lBqJKGe8D2AlsA+GAXG6nOm3F4ajfbS
+ 5GVMT11AzXPWOE9PDuVE1CQBNr7aHHAd/dQeBN5g3Wlaif/L+e3DjGDS1n558axMXc6JNfHeNoZ
+ eWUF6sBEflyzgWQJiT+kQ+LfZQWqGbYRp3EpJxWw9dLD+oics2iUNjN/JcJLPTXj3PxZkIhigwJ
+ ylY1wNqX3CWUINKGcAiapE9MqduM1ACTbUdwt0mVFy8m1pY1dGjdMJNK4mCAVY0kmvi/cORc
+X-Proofpoint-ORIG-GUID: M6MTVWHT6bfHjPQWLyua17DViAxKSf3J
+X-Proofpoint-GUID: M6MTVWHT6bfHjPQWLyua17DViAxKSf3J
+X-Authority-Analysis: v=2.4 cv=IcuHWXqa c=1 sm=1 tr=0 ts=6825ba61 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
+ a=Yz-U3Qp7xdBScDdbXjEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-15_04,2025-05-14_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 mlxscore=0 adultscore=0 mlxlogscore=999 bulkscore=0
+ clxscore=1011 spamscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505070000 definitions=main-2505150097
 
-On big endian platforms like PowerPC the DMA address and size are required
-to be swapped. Otherwise the MHI bus does not start properly. The following
-example shows the error messages by using qcn9274 wireless radio module
-with ath12k driver:
 
-    ath12k_pci 0001:01:00.0: BAR 0: assigned [mem 0xc00000000-0xc001fffff 64bit]
-    ath12k_pci 0001:01:00.0: MSI vectors: 1
-    ath12k_pci 0001:01:00.0: Hardware name: qcn9274 hw2.0
-    ath12k_pci 0001:01:00.0: failed to set mhi state: POWER_ON(2)
-    ath12k_pci 0001:01:00.0: failed to start mhi: -110
-    ath12k_pci 0001:01:00.0: failed to power up :-110
-    ath12k_pci 0001:01:00.0: failed to create soc core: -110
-    ath12k_pci 0001:01:00.0: failed to init core: -110
-    ath12k_pci: probe of 0001:01:00.0 failed with error -110
 
-Signed-off-by: Alexander Wilhelm <alexander.wilhelm@westermo.com>
----
-Changes in v2:
-  - Set __le64 type for dma_addr and size.
+On 5/15/2025 2:47 PM, Bryan O'Donoghue wrote:
+> On 14/05/2025 14:38, Dikshita Agarwal wrote:
+>> From: Vedang Nagar <quic_vnagar@quicinc.com>
+>>
+>> Currently, Time-Of-Check to Time-Of-Use (TOCTOU) issue happens when
+>> handling packets from firmware via shared memory.
+>>
+>> The problematic code pattern:
+>>
+>> u32 dwords = *rd_ptr >> 2;
+>> if (!dwords || (dwords << 2) >  IFACEQ_VAR_HUGE_PKT_SIZE))
+>>     return -EINVAL;
+>>
+>> memcpy(pkt, rd_ptr, dwords << 2);
+>>
+>> Here, *rd_ptr is used to determine the size of the packet and is
+>> validated. However, since rd_ptr points to firmware-controlled memory,
+>> the firmware could change the contents (e.g., embedded header fields
+>> like pkt->hdr.size) after the size was validated but before or during
+>> the memcpy() call.
+>>
+>> This opens up a race window where a malicious or buggy firmware could
+>> inject inconsistent or malicious data, potentially leading to
+>> information leaks, driver crashes, or undefined behavior.
+>>
+>> Fix this by rechecking the packet size field from shared memory
+>> immediately before the memcpy() to ensure it has not beenn altered.
+>>
+>> Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+>> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+>> Co-developed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>> ---
+>>   drivers/media/platform/qcom/venus/hfi_venus.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c
+>> b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> index
+>> b5f2ea8799507f9b83f1529e70061ea89a9cc5c8..163c8d16530bc44a84b2b21076e6189d476fe360 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> @@ -295,6 +295,9 @@ static int venus_read_queue(struct venus_hfi_device *hdev,
+>>       new_rd_idx = rd_idx + dwords;
+>>       if (((dwords << 2) <= IFACEQ_VAR_HUGE_PKT_SIZE) && rd_idx <= qsize) {
+>>           if (new_rd_idx < qsize) {
+>> +            if ((*rd_ptr >> 2) != dwords)
+>> +                return -EINVAL;
+>> +
+>>               memcpy(pkt, rd_ptr, dwords << 2);
+>>           } else {
+>>               size_t len;
+>>
+> 
+> Here's how this code fragment looks after the change, I'll add two "}" for
+> readability and annotate
+> 
+> dwords = *rd_ptr >> 2; // read the value here
+> if (!dwords)
+>        return -EINVAL;
+> 
+> new_rd_idx = rd_idx + dwords;
+> 
+> // validate the size against a maximum value
+> // this step is correct
+> if (((dwords << 2) <= IFACEQ_VAR_HUGE_PKT_SIZE) && rd_idx <= qsize) {
+>         if (new_rd_idx < qsize) {
+>                 // Re-read the value because firmware
+>                 // might have changed the value
+>                 if ((*rd_ptr >> 2) != dwords)
+>                         return -EINVAL;
+> 
+>                 // now trust dwords
+>                 memcpy(pkt, rd_ptr, dwords << 2);
+>         }
+> }
+> 
+> But this is all wrong.
+> 
+> There is no atomicity on the APSS side between the first verification of dwords
+> size and the mempcpy() the commit log itself shows that the firmware is
+> free-running with respect to the instruction pipeline of the APSS, it is an AMP
+> problem.
+> 
+> Adding another check of the dwords side right before the memcpy() doesn't
+> address the problem which the commit log describes as the firmware updating the
+> length field of a header in shared memory.
+> 
+> There are perhaps 10 assembly instructions between the first check and the
+> procedure prologue of the memcpy();
+> 
+> Adding another length check right before the memcpy() simply reduces the number
+> of CPU instructions - the effective window that the firmware can update that
+> header still.
+> 
+> if ((*rd_ptr >> 2) != dwords) // conditional branch operation
+> 
+> memcpy(pkt, rd_ptr, dwords << 2);
+> 
+> Begins with a procedure prologue - setting up the call stack - and then is a
+> series of fetch/stores to copy data from here to there
+> 
+> The memcpy() itself by its nature it not atomic on the front-side-bus of the
+> APSS to shared DRAM with the firmware.
+> 
+> On a CPU and SoC architecture level this fix just doesn't work.
+> 
+> To be honest we are already doing the right thing in this routine.
+> 
+> 1. Reading the value from the packet header.
+> 2. Validating the given size against the maximum size
+> 3. Rejecting the memcpy() if the given size _at_the_time_we_read_ is too
+>    large.
+> 
+> The alternative to guarantee would be something like
+> 
+> asm("bus master asserts bus lock to PAGE/PAGES involved");
+> dwords = *rd_ptr;
+> if (dwords > MAX_VALUE)
+>     return -EFIRMWARE_BUG;
+> memcpy(dst, src, dwords >> 2);
+> 
+> asm("bus master unlocks memory");
+> 
+> Lets say we make the change proposed in this patch, here is how it breaks:
+> 
+> if ((*rd_ptr >> 2) != dwords)
+>     return -EINVAL;
+> 
+> // now trust dwords
+> memcpy(pkt, rd_ptr, dwords << 2);
+> 
+> 
+> objdump
+> qlt-kernel/build/x1e80100-crd_qlt_integration/drivers/media/platform/qcom/venus/venus-core.o --disassemble=venus_read_queue.isra.0
+> 
+> 5c48:    540000c9     b.ls    5c60 <venus_read_queue.isra.0+0x110>  // b.plast
+> 5c4c:    2a0303e2     mov    w2, w3
+> 5c50:    aa0703e0     mov    x0, x7
+> 5c54:    94000000     bl    0 <memcpy>
+> 5c58:    52800000     mov    w0, #0x0
+> 
+> Your conditional jump is @ 0x5c48 your call to memcpy @ 0x5c54
+> 
+> Between 0x5c48 and 0x5c54 the firmware can update the value _again_
+> Indeed the firmware can update the value up until the time we complete reading
+> the bit of the pkt header in memcpy() so an additional few instructions for sure.
+> 
+> You could make some type of argument to re-verify the content of the pkt _after_
+> the memcpy()
+> 
+> But the only verification that makes any sense _before_ the memcpy() is to
+> verify the length at the point you _read_ - subsequent to the latching operation
+> - were we fetch the length value from DRAM into our CPU cache, operating stack
+> and/or local registers.
+> 
+> Once that data is fetched within the cache/stack/registers of the CPU/APSS that
+> is the relevant value.
+> 
+> For the fix you have here to work you need this
+> 
+> 5c48:   MAGICOP         memorybuslock
+> 5c48:    540000c9     b.ls    5c60 <venus_read_queue.isra.0+0x110>  // b.plast
+> 5c4c:    2a0303e2     mov    w2, w3
+> 5c50:    aa0703e0     mov    x0, x7
+> 5c54:    94000000     bl    0 <memcpy>
+> 5c58:    52800000     mov    w0, #0x0
+> 5c5c:   MAGICUNOP       memorybusunlock
+> 
+> Because the firmware is free-running - with respect to the instruction pipeline
+> of the above assembly.
+> 
+> If you really want to verify the data is still valid - it should be done _after_
+> the memcpy();
+> 
+> But even then I'd say to you, why verify _after_ the memcpy() - and what happens
+> on the instruction directly _after_ the verification - is the data considered
+> more valid now ?
+the patch _only_ reduces the window where data in shared queue can go wrong.
+Doing it after memcpy() would be better here given the data would not be read
+further from shared queue, which would avoid the case of data getting updated later.
 
- drivers/bus/mhi/host/boot.c     | 8 ++++----
- drivers/bus/mhi/host/internal.h | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+memcpy(hfi_dev->pkt_buf, rd_ptr from shared queue, dwords..)
 
-diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-index efa3b6dddf4d..205d83ac069f 100644
---- a/drivers/bus/mhi/host/boot.c
-+++ b/drivers/bus/mhi/host/boot.c
-@@ -31,8 +31,8 @@ int mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
- 	int ret;
- 
- 	for (i = 0; i < img_info->entries - 1; i++, mhi_buf++, bhi_vec++) {
--		bhi_vec->dma_addr = mhi_buf->dma_addr;
--		bhi_vec->size = mhi_buf->len;
-+		bhi_vec->dma_addr = cpu_to_le64(mhi_buf->dma_addr);
-+		bhi_vec->size = cpu_to_le64(mhi_buf->len);
- 	}
- 
- 	dev_dbg(dev, "BHIe programming for RDDM\n");
-@@ -431,8 +431,8 @@ static void mhi_firmware_copy_bhie(struct mhi_controller *mhi_cntrl,
- 	while (remainder) {
- 		to_cpy = min(remainder, mhi_buf->len);
- 		memcpy(mhi_buf->buf, buf, to_cpy);
--		bhi_vec->dma_addr = mhi_buf->dma_addr;
--		bhi_vec->size = to_cpy;
-+		bhi_vec->dma_addr = cpu_to_le64(mhi_buf->dma_addr);
-+		bhi_vec->size = cpu_to_le64(to_cpy);
- 
- 		buf += to_cpy;
- 		remainder -= to_cpy;
-diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-index ce566f7d2e92..1dbc3f736161 100644
---- a/drivers/bus/mhi/host/internal.h
-+++ b/drivers/bus/mhi/host/internal.h
-@@ -25,8 +25,8 @@ struct mhi_ctxt {
- };
- 
- struct bhi_vec_entry {
--	u64 dma_addr;
--	u64 size;
-+	__le64 dma_addr;
-+	__le64 size;
- };
- 
- enum mhi_fw_load_type {
--- 
-2.34.1
+pkt_hdr = (struct hfi_pkt_hdr *) (hfi_dev->pkt_buf);
 
+if ((pkt_hdr->size >> 2) != dwords)
+    return -EINVAL;
+
+Regards,
+Vikash
+> 
+> i.e. this:
+> 
+> memcpy(pkt, rd_ptr, dwords << 2);
+> 
+> if ((*rd_ptr >> 2) != dwords)
+>     return -EINVAL;
+> 
+> doesn't have the above described architectural race condition but it doesn't
+> make the data any more trustworthy - because it doesn't have atomicity
+> 
+> memcpy(pkt, rd_ptr, dwords << 2);
+> 
+> if ((*rd_ptr >> 2) != dwords)
+>     return -EINVAL;
+> 
+> dev_info(dev, "The value of *rd_ptr %lu!=%lu can be different now\n",
+>          *rd_ptr >> 2, dwords);
+> 
+> Sorry this patch just can't work. It's a very hard NAK from me.
+> 
+> ---
+> bod
 
