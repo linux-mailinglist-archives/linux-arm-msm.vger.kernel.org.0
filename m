@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-58135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11834AB9069
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 22:00:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1662AB9070
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 22:01:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CA0C57ADFD3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 19:59:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 67CA51759A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 20:00:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 032D829B229;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA1DB29B23E;
 	Thu, 15 May 2025 19:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K9IfwLGO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AhbYZCPM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72302298CAC
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 19:59:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C9A296FCB
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 19:59:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747339182; cv=none; b=gp2mk9SItRS+xc5mlNkCv+ACD8pDTlhvxqjHS3AYtHk1Lehu12Wx7k4Vrkuv3dublpjjoaYzVKfjhTRalco5oPoJnUaVYFDxOAtjnE/omHjKzJ71MqMdib0uJNPdTbXBOnca5v5ExedJYYdUP3IYs1wkQsHfviokO3NklggzCbc=
+	t=1747339183; cv=none; b=nCPG6qXxlQHydKqXur1AtqO2ev1ToMhPSmxvW9KuXF6vi+VKwOzOGy9Iw72JTMkzFsfKe2k2icyq/Hv1DwyPtb4u3N7ESHOYi1CCEAoJ7/fKO/iUnaeacWOTiVvfppL67CahEDKCn9l2sr5dKL25eFZXCis6VIqI2Zo2+YKVrGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747339182; c=relaxed/simple;
-	bh=yKFBdsoANpail9eN0dLOxr2jAWKJ9zute64DqhO2lxc=;
+	s=arc-20240116; t=1747339183; c=relaxed/simple;
+	bh=NuuNOSzcg6T6eP7lLDMW2wQqpv+M7MyGEuNFao145fo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=icGwwKe3HwDUuAVG/xGja6mlIs7oUHminQ3rX0rVyWR7Ce5OJ5Y3v1AYrLK1cRROSvvrP6F1duiXgAhKRSwyvwejEA9/LH0uIq+7099UUx0I9nLgH/DWD6fYGACQIlogIRyrvPZwPw6akx6uAnvbp8HAuhWQlN4Faa/in5+i824=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K9IfwLGO; arc=none smtp.client-ip=209.85.160.173
+	 In-Reply-To:To:Cc; b=JSWEJ3JeL6b+vfl+F/c+o7gZ3jkL/CS8r5xZhY09tQn5S1PYpyKuseDoG3nV8S5xHbibD08iX4CuYETAA4DhqqbaOZXEjCS8OoOhl+watgw3uMq5cgQSr/hlQNAIvY/rnv0PsmDu5XcAHJYs8/8/9m0PogeMITXqubhxm7Cs0f8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AhbYZCPM; arc=none smtp.client-ip=209.85.222.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-47680c117fdso2308681cf.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 12:59:40 -0700 (PDT)
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-7c5a3334fddso23443085a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 12:59:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747339179; x=1747943979; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747339181; x=1747943981; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=20DcKlS2hTvAgodxaUTpKC1CD/IfYxghOMwo8wKmU7s=;
-        b=K9IfwLGOy9B5oEmefKotp5vMLT+oG6rohJLlJL/duQ84pB0BBrqp1N6oB4HW9/PIbJ
-         EfKtOeOj1XYBwe08CAErwD3Lir6KwlcwIDgWCgYU6e1cnCfTiugjJGsh2HZzg+HTRsR1
-         3fqjkId3oW0vC29tpHa6leDFPJ8GkXP08DkOAtxf1Mk9xN91c57HD6TrZGgAHiJqOwup
-         QRRmR/CbkfhOXtnnkY7U0c/gcBCksLzzYuHJuX6VS9t1k7CwhJIx07wdFyDdQ5miIArU
-         L6ctrqb+XGp61p3zr7ou5k9C6eA8pU6pqfSSQAF++q+1mwI/cP+irD9w9BQypfF0cj7L
-         giew==
+        bh=aRX2mmgMKg0kWmEalfWfPxyKsLjxoohp0lPvLbYN2U4=;
+        b=AhbYZCPMJ8jfK8Wk3gMLcAvsbBGER5OoRpKYvezpFHbSOewoaY2nMEjUHWDMRtvRpU
+         5sgp8ikCqey1uXaSQOGsugitxk3H9M6ExH338SbkWFgrw1SSRAhSHKUXRg3MKVOM2YXs
+         rWi7dDmnBvExJm6jG5E1jmn1GpCn6DpzmSVmKl6Adi86TOnWa8UZQb3Iv1zPMpB3n6iR
+         /jLjH7HOsco8YsladjMSXTDWy40FTemOWCh8wIyMeJR52DSehPiBwzJTCLZVGXDZlyD1
+         IvsTTsB46lconTWKbECfchSFt+8SaDM5NJu+Bf9Q2lp4KCqoA30AMhzSD+bWKXlFF5rv
+         JoAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747339179; x=1747943979;
+        d=1e100.net; s=20230601; t=1747339181; x=1747943981;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=20DcKlS2hTvAgodxaUTpKC1CD/IfYxghOMwo8wKmU7s=;
-        b=CIxGZUV+9vtRwp5FxZFKg2YA8uKBo7/rFZakV6eW1sVTRDGZsLDA/XJb9655D5EYLI
-         QxTUGPC6GtYEWSkLVg3u77ZRqTqWDCUF0XCcz3XzuJgZ6vdDKf+KS9d75UvKSPgd5wHo
-         TaHDQupbevQPYYvpqQ+OhSQdsJxHkhk1z4aQmcb/7vrf/JOgn5l890TOv99sfpugJhT8
-         fd2chEg5DEGExfVEpZJ2vgUtvllpOpVSvcglkpmvLk2YpR3ZhGW8TleUwM3gVg0Z9mFC
-         sFvLkiK9dBoMISTtj2MvqvM0OAdwrkmfblYUi3aeiPNtJNdD9lDaLCuvrysoskmHpXzN
-         j5CQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXg5rrXlZq+q8Jbpm+gQIOQ4qHKka+CpRJytRP18Bz6njYnBoJRcZxbzA5z8RYBlgCKftnDPfXQndQtNs+l@vger.kernel.org
-X-Gm-Message-State: AOJu0YyAGRwwyfv3/ql1XIN09RdYhJ+uDs5m8gZmp050+OyhmGyaEkQn
-	aJPhyV8zgcmCkIia2LxMx0otpMbSgOwadT3axXBf88zvlEO+465ElgV+
-X-Gm-Gg: ASbGnctHBwGdpldlNdPpjCvwplNWxAX7q/fPhinCI7LJTG7JzEKrpeGkq4aBWG6zvAp
-	nLkuf/Or8hSCL6eoNXkc4Yq1WTk3yF5uEyl/3Z6dXSrogwny6WkkgXEz/eGFo4ZJoo4c/y5EQFz
-	p5E/GcVSnNxWufQg2x/5IL53U9SDdLmsgZqsoJyq9vwWBV4SHf/kvZ1LIHjLQwZWSKONZAvjcsR
-	GQOPNvYsXIsiR92S9xfu10tzMkKYXpYPPBczXRMYwXFMiTnMgcqV02OpuTBYvhqyYcGVWTNwfBp
-	oP+mmS46czEQutgaUozoLWu8ZegRPywdVsGId1MBJRLA5OE+LI6i8rs0V/H+7GB8Zu4Lbvljoul
-	Y0iNnYXGoUZxvqY8lg94=
-X-Google-Smtp-Source: AGHT+IEiZCk//3KnZJ9QFraR8/9r40L9GjGgn7adTJxnnP/o4rKsmZ4SlZHA8YvdjcwS+Khc00ipDg==
-X-Received: by 2002:a05:622a:43:b0:476:add4:d2b6 with SMTP id d75a77b69052e-494ae339167mr4150621cf.1.1747339179131;
-        Thu, 15 May 2025 12:59:39 -0700 (PDT)
+        bh=aRX2mmgMKg0kWmEalfWfPxyKsLjxoohp0lPvLbYN2U4=;
+        b=VNm2kGNeB3kbbnDvGmI8DWhoPcSrvfsuKXfQLli+/RKB1bxpKXbJehkKm4F+lv1f8C
+         wOErBLybCwFnx6hhPU4Cr6d619vcCY3n+w+caruB+8ULLceBghxWyMqeN3ctw1xjNaBj
+         cZpB9dKtzI3JT+Z4I+MnwjHzrnJMlhFjJYpJPEJsh3aZxIcvfaMJv3GoabJKpLVhTXZD
+         5rv52caNAv4KgchpSyOwXQvYejVNh2F71r2Nh4iAkwONN73MNvHm4HcX+iL5gDiJ3gg6
+         xuu46Ob4RXjw/TJVC97OqzAItj6O92S72+Net6BoO0E2xii09youlXgvI51JC3T2kQPX
+         j0SA==
+X-Forwarded-Encrypted: i=1; AJvYcCWfk7lOTB4B7ozfo8I9CgYVtDZJRQVIAYEjZ1+EIC6VAngaVpp1IHwqzWJpg06hLXQ2mONmkWtrb88m5Jub@vger.kernel.org
+X-Gm-Message-State: AOJu0YxRhOJb9fUiEIulUNN5yDAtQ3pJDoaCB4tMZOw8AmkTFTutwNmj
+	LLw/rvZ09Vh9po/NRBHnp/oodij3nCofD0Npg196kGCWyrc/udVU12y3
+X-Gm-Gg: ASbGncunSFBCCCPv5RMuByaSVobjN/RKPf4Ato+DHXuw2fG0dhkiiPRGUdGhRRC3oop
+	u76m9y1L5qwqoeamYrWV2lXlceUmJ1fXAwof7goOx6bcEQDJhdO8RuNXg7Ak5h5IU3LFn+LXIY7
+	9Gx2r15rMJP/JRtPPfcsEHyOnINQnlc+EfOZE4MbOI8SjmM61Rv6IIyKwcHc2ZUBBKDMHCCRhpE
+	NCjBR36SV8yOhCsT8q5MEbllbMviVpv4aqu9cSVwr2/vPYZvtrO5ML68kXWC6EWT0/rWfQLlNpe
+	KVuKwF59KYEvrFs8RYJaZLA45CcBWAxiriwZJdNsuVso15SPiGuBNrBi6+tItrc4TW9GDluZPY5
+	XpyijAvh9hw0bQ0ja5TI=
+X-Google-Smtp-Source: AGHT+IFDWp8u+QjgmXSWCzrAKUKVyvuRDbgutIyJGTYJ63yX5WXLYpLuZEG+9WHmxaOHRSYMoJ0INw==
+X-Received: by 2002:a05:622a:1306:b0:474:e664:691b with SMTP id d75a77b69052e-494ae37764emr4557401cf.8.1747339180611;
+        Thu, 15 May 2025 12:59:40 -0700 (PDT)
 Received: from [192.168.124.1] (syn-067-243-142-039.res.spectrum.com. [67.243.142.39])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-494ae4fd80bsm1957231cf.56.2025.05.15.12.59.38
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-494ae4fd80bsm1957231cf.56.2025.05.15.12.59.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 May 2025 12:59:38 -0700 (PDT)
+        Thu, 15 May 2025 12:59:40 -0700 (PDT)
 From: Connor Abbott <cwabbott0@gmail.com>
-Date: Thu, 15 May 2025 15:58:44 -0400
-Subject: [PATCH v6 2/7] iommu/arm-smmu: Move handing of RESUME to the
- context fault handler
+Date: Thu, 15 May 2025 15:58:45 -0400
+Subject: [PATCH v6 3/7] iommu/arm-smmu-qcom: Make set_stall work when the
+ device is on
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250515-msm-gpu-fault-fixes-next-v6-2-4fe2a583a878@gmail.com>
+Message-Id: <20250515-msm-gpu-fault-fixes-next-v6-3-4fe2a583a878@gmail.com>
 References: <20250515-msm-gpu-fault-fixes-next-v6-0-4fe2a583a878@gmail.com>
 In-Reply-To: <20250515-msm-gpu-fault-fixes-next-v6-0-4fe2a583a878@gmail.com>
 To: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>, 
@@ -98,129 +98,90 @@ Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, freedreno@lists.freedesktop.org, 
  Connor Abbott <cwabbott0@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1747339176; l=5231;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747339176; l=3349;
  i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
- bh=yKFBdsoANpail9eN0dLOxr2jAWKJ9zute64DqhO2lxc=;
- b=tuXpSyUWL02D4yi11LDbI98odEa/K1GIb7KgJHtYoH2rfOsfAexwNEoBtysuOMrgQmJQBgNIq
- 7yU62f0j+OqDJs/HwcLdtj+Mw72LGRQBJhNrGx5ApqAFYflwvH73z4v
+ bh=NuuNOSzcg6T6eP7lLDMW2wQqpv+M7MyGEuNFao145fo=;
+ b=G8f7cSFchFa6Ol5NZmbPn25aQKQkCTssSAZn+8lrwlFIh1x96h6u6Eq2OveCkRVCprigujkFM
+ gF8bATUpx0qDSrjfTkYolsLQIxjAjr3aU2RLL0cOv0MsHcy5zrhpUHQ
 X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
  pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
 
-The upper layer fault handler is now expected to handle everything
-required to retry the transaction or dump state related to it, since we
-enable threaded IRQs. This means that we can take charge of writing
-RESUME, making sure that we always write it after writing FSR as
-recommended by the specification.
-
-The iommu handler should write -EAGAIN if a transaction needs to be
-retried. This avoids tricky cross-tree changes in drm/msm, since it
-never wants to retry the transaction and it already returns 0 from its
-fault handler. Therefore it will continue to correctly terminate the
-transaction without any changes required.
-
-devcoredumps from drm/msm will temporarily be broken until it is fixed
-to collect devcoredumps inside its fault handler, but fixing that first
-would actually be worse because MMU-500 ignores writes to RESUME unless
-all fields of FSR (except SS of course) are clear and raises an
-interrupt when only SS is asserted. Right now, things happen to work
-most of the time if we collect a devcoredump, because RESUME is written
-asynchronously in the fault worker after the fault handler clears FSR
-and finishes, although there will be some spurious faults, but if this
-is changed before this commit fixes the FSR/RESUME write order then SS
-will never be cleared, the interrupt will never be cleared, and the
-whole system will hang every time a fault happens. It will therefore
-help bisectability if this commit goes first.
-
-I've changed the TBU path to also accept -EAGAIN and do the same thing,
-while keeping the old -EBUSY behavior. Although the old path was broken
-because you'd get a storm of interrupts due to returning IRQ_NONE that
-would eventually result in the interrupt being disabled, and I think it
-was dead code anyway, so it should eventually be deleted. Note that
-drm/msm never uses TBU so this is untested.
+Up until now we have only called the set_stall callback during
+initialization when the device is off. But we will soon start calling it
+to temporarily disable stall-on-fault when the device is on, so handle
+that by checking if the device is on and writing SCTLR.
 
 Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c |  9 +++++++++
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c       | 14 --------------
- drivers/iommu/arm/arm-smmu/arm-smmu.c            |  6 ++++++
- 3 files changed, 15 insertions(+), 14 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 33 +++++++++++++++++++++++++++---
+ include/linux/adreno-smmu-priv.h           |  6 +++---
+ 2 files changed, 33 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-index 548783f3f8e89fd978367afa65c473002f66e2e7..3e0c2c7c639b0c09243578ebb95129398c630ef2 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-@@ -406,6 +406,12 @@ irqreturn_t qcom_smmu_context_fault(int irq, void *dev)
- 			arm_smmu_print_context_fault_info(smmu, idx, &cfi);
- 
- 		arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, cfi.fsr);
-+
-+		if (cfi.fsr & ARM_SMMU_CB_FSR_SS) {
-+			arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_RESUME,
-+					  ret == -EAGAIN ? 0 : ARM_SMMU_RESUME_TERMINATE);
-+		}
-+
- 		return IRQ_HANDLED;
- 	}
- 
-@@ -416,6 +422,9 @@ irqreturn_t qcom_smmu_context_fault(int irq, void *dev)
- 	if (!tmp || tmp == -EBUSY) {
- 		ret = IRQ_HANDLED;
- 		resume = ARM_SMMU_RESUME_TERMINATE;
-+	} else if (tmp == -EAGAIN) {
-+		ret = IRQ_HANDLED;
-+		resume = 0;
- 	} else {
- 		phys_addr_t phys_atos = qcom_smmu_verify_fault(smmu_domain, cfi.iova, cfi.fsr);
- 
 diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 2b21b7208bc7b439d69e36ca678acd2eacbd5b85..d71404ad90376b2c258d67e07ec380674961a429 100644
+index d71404ad90376b2c258d67e07ec380674961a429..98927be42bd1af25dcc3f667cb75d250a320c447 100644
 --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
 +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -86,19 +86,6 @@ static void qcom_adreno_smmu_set_stall(const void *cookie, bool enabled)
- 		qsmmu->stall_enabled &= ~BIT(cfg->cbndx);
- }
+@@ -78,12 +78,39 @@ static void qcom_adreno_smmu_set_stall(const void *cookie, bool enabled)
+ {
+ 	struct arm_smmu_domain *smmu_domain = (void *)cookie;
+ 	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+-	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu_domain->smmu);
++	struct arm_smmu_device *smmu = smmu_domain->smmu;
++	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
++	u32 mask = BIT(cfg->cbndx);
++	bool stall_changed = !!(qsmmu->stall_enabled & mask) != enabled;
++	unsigned long flags;
  
--static void qcom_adreno_smmu_resume_translation(const void *cookie, bool terminate)
--{
--	struct arm_smmu_domain *smmu_domain = (void *)cookie;
--	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
--	struct arm_smmu_device *smmu = smmu_domain->smmu;
--	u32 reg = 0;
--
--	if (terminate)
--		reg |= ARM_SMMU_RESUME_TERMINATE;
--
--	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
--}
--
- #define QCOM_ADRENO_SMMU_GPU_SID 0
- 
- static bool qcom_adreno_smmu_is_gpu_device(struct device *dev)
-@@ -238,7 +225,6 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
- 	priv->set_ttbr0_cfg = qcom_adreno_smmu_set_ttbr0_cfg;
- 	priv->get_fault_info = qcom_adreno_smmu_get_fault_info;
- 	priv->set_stall = qcom_adreno_smmu_set_stall;
--	priv->resume_translation = qcom_adreno_smmu_resume_translation;
- 
- 	return 0;
- }
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-index ade4684c14c9b2724a71e2457288dbfaf7562c83..90a1b23223b4c25cfa033c28a2823e60e8b0c5a4 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -470,6 +470,12 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
- 		arm_smmu_print_context_fault_info(smmu, idx, &cfi);
- 
- 	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, cfi.fsr);
+ 	if (enabled)
+-		qsmmu->stall_enabled |= BIT(cfg->cbndx);
++		qsmmu->stall_enabled |= mask;
+ 	else
+-		qsmmu->stall_enabled &= ~BIT(cfg->cbndx);
++		qsmmu->stall_enabled &= ~mask;
 +
-+	if (cfi.fsr & ARM_SMMU_CB_FSR_SS) {
-+		arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_RESUME,
-+				  ret == -EAGAIN ? 0 : ARM_SMMU_RESUME_TERMINATE);
++	/*
++	 * If the device is on and we changed the setting, update the register.
++	 * The spec pseudocode says that CFCFG is resampled after a fault, and
++	 * we believe that no implementations cache it in the TLB, so it should
++	 * be safe to change it without a TLB invalidation.
++	 */
++	if (stall_changed && pm_runtime_get_if_active(smmu->dev) > 0) {
++		spin_lock_irqsave(&smmu_domain->cb_lock, flags);
++
++		u32 reg = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR);
++
++		if (enabled)
++			reg |= ARM_SMMU_SCTLR_CFCFG;
++		else
++			reg &= ~ARM_SMMU_SCTLR_CFCFG;
++
++		arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR, reg);
++
++		spin_unlock_irqrestore(&smmu_domain->cb_lock, flags);
++
++		pm_runtime_put_autosuspend(smmu->dev);
 +	}
-+
- 	return IRQ_HANDLED;
  }
  
+ #define QCOM_ADRENO_SMMU_GPU_SID 0
+diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno-smmu-priv.h
+index c637e0997f6d8eedcc42a03a9d303700f62f8cf2..8ed94fb39e6ec6a3d8e6fabe61ff142682f1764c 100644
+--- a/include/linux/adreno-smmu-priv.h
++++ b/include/linux/adreno-smmu-priv.h
+@@ -45,9 +45,9 @@ struct adreno_smmu_fault_info {
+  *                 TTBR0 translation is enabled with the specified cfg
+  * @get_fault_info: Called by the GPU fault handler to get information about
+  *                  the fault
+- * @set_stall:     Configure whether stall on fault (CFCFG) is enabled.  Call
+- *                 before set_ttbr0_cfg().  If stalling on fault is enabled,
+- *                 the GPU driver must call resume_translation()
++ * @set_stall:     Configure whether stall on fault (CFCFG) is enabled. If
++ *                 stalling on fault is enabled, the GPU driver must call
++ *                 resume_translation()
+  * @resume_translation: Resume translation after a fault
+  *
+  *
 
 -- 
 2.47.1
