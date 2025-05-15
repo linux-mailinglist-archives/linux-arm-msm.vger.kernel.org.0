@@ -1,247 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-58141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1940AAB9091
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 22:10:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9423CAB909D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 22:13:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FED13B46A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 20:10:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2EB5450015A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 May 2025 20:13:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE60227056D;
-	Thu, 15 May 2025 20:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E81C1DE3A5;
+	Thu, 15 May 2025 20:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cYYFh8dN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hEFA3tw7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274931F153C;
-	Thu, 15 May 2025 20:10:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A309C27F75F;
+	Thu, 15 May 2025 20:13:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747339849; cv=none; b=dZwQoxIB2hVUaMeV2PesO2GMqKQ2wAYaRs8jI4MLGzwTnLQQcPWOf/RoDrfCNK8EWTkQk4elG+y1lBOoZ/wSzW8kzw1JmGmgHQJgwRcHToSlrgdlIAL0FrpzKSU1qX+Y7njQYMc9NMF3kAPxHxSwLWTZWHsDylIV28W/STGnw94=
+	t=1747340019; cv=none; b=HH/CxaGOutkgs/Wvjan/AEe+2E6yQnMHNAyRS1RK7y5SJA/Ll8kqijx2xXN18MIbQZaETT9ZkeFDK7LJ4X37gQGPUdbtlPn7ymvE9udPRmtP+XYGpvEahtrbtnxZ0Dm5Ey4T38dMplXnhbxjh3ipv7yavG7yQVWp5Jzxv/Jf/08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747339849; c=relaxed/simple;
-	bh=4tMRLG1iTysE+h6YDnFBw48xymEqEUEbwTXY6WodhfM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R2nmO+qKiU2IHSsnx1DGCdKZ2dUZEf9+Npw0MyuObk9z6HW6OkP2lc3kuEYWG1kctBZ/+n10/96FdmQjRC/pnLyPy/2/CVtcnjSApQd2bqYA1zKBnVtIv7dz/hgCS0PcX22ynq0W0cDkGCA8PIjSh4GbRMSgVPtGG2jvYXqTML8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cYYFh8dN; arc=none smtp.client-ip=209.85.166.50
+	s=arc-20240116; t=1747340019; c=relaxed/simple;
+	bh=ylgYcjlgh9rGDFe8987LAqtE0I8aoviICsthulq3/xo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=t5+htzw9HBxMGNQ/hnIzdmW1YtgMPCpsOHc+n5b7KMkNAVwBHQ1Hd3+UPg5wk+U7J2P5m0Ou+lT7clF7KppekswRNfxAyMIoRtDNqnF+c+jS01bxfXBCJWZvQ2Nr0y490EGudtg7vd90+bUzXxNlOQIDUzbFwvC4XA9dSpOKMQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hEFA3tw7; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-8644aa73dfcso40980139f.0;
-        Thu, 15 May 2025 13:10:47 -0700 (PDT)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43ede096d73so9740285e9.2;
+        Thu, 15 May 2025 13:13:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747339847; x=1747944647; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9fSgK7ssf2dm8Q7yOhdTUyMWZzsPLlNnfjUB0IW4r/o=;
-        b=cYYFh8dNQ76jCzr9xEYGV+RvzatqS75TalDwRZt57HG5Xk626xSBsVfEiqPfDkfp7q
-         fefzn9V00D423FK161prtWVf6rlH0p4aKyV9zH1O0hFm4Il8FikdTv/sQfP43d4WRnSb
-         UJeWTzOLwfGK0h0rX5FNbfHSe8UsLvLF8vU8YSJImb3VgoqG2M9jr+WgqPBhIDma7R62
-         w3Jaqh89jWeL+x3xUKWFDUQQZ2/hBpwHuQE/+emjBkkAI7aN/NsYLc22D0j7trNWuzpG
-         ii4Cs85yDSpYRDmSMXp1PB9hjoWaUCy1kko8Pcq4isK/8iGaMHrULtqL0QfYkusUmtbM
-         R4XA==
+        d=gmail.com; s=20230601; t=1747340016; x=1747944816; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZuJGtF+v5v/zwiKXtg5bHQxWdc3nNCiHNpzHfrfyNeg=;
+        b=hEFA3tw7MqVpu7fUp+xjszCQtL9+6bIFDqo/BslicjrFPnG/1RXnhsOlf3iLSCQS2D
+         RscDTDmYfdWGEsTUkkKd014GfVL3eJ3wyoJjkNPSG/hJ3pPQZyWyPfMyv4m5u3vPy4S5
+         zTyRf/MzoX30K1bWq2/b8t8ZffssGC6dT5TGt5QsV6/NEXwrgFCZU3pumuYL4EXbNuZz
+         0fDqU42/sYTdZoKD/s8/FdI4NAEaKiYcxqIafTPbwyV5384CXtAbSdQIxeTkvOLa7sJb
+         j+2a2MTvrZBJMue86uGcuTpNUPBfLBA4et6k9MKeVK1PLfjD16bOSGPPXq/uKMx3KUur
+         jNPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747339847; x=1747944647;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9fSgK7ssf2dm8Q7yOhdTUyMWZzsPLlNnfjUB0IW4r/o=;
-        b=aCcctUenJln+DQYymJoUHJOz5hXddnKn/pNS0Y8xPaD1FBATv+n0T7T7aAYmVxg1Sr
-         1ldk7MBVryb0q05mGBndAY6MKCD+piA16470eScVStl7oWq6OHL0umschnzdcgVvSM0q
-         S9X9r40Q1Mda1DSUo8rqQMHhUOQAuQKUJFk1v6uAYc+myD9SvOi+wZsRMkr/t48mAoGs
-         N1HzfDSEmh4jtU4gJSAqhCGghmT+q3xIBVYF4kiJ60ZJnZCI/Bmf+WkpHbk6c2t1s6ZY
-         /2sMKSq8mceMNMvaWho3K88bZhFXByVCuUb8B4rgpBZeUbr6o36hYST+FSCH8YFzcrAO
-         ui+A==
-X-Forwarded-Encrypted: i=1; AJvYcCWf5mAmUrYGd2YNuVlBnk3mBA/h6t6g+rcMzvA8ogwYBE3pRJOC7i0BkpE3O5C8WRcBlBtWvAwDkKgnNInM@vger.kernel.org, AJvYcCXLowdQ/yWvxIXZLBvgssuWgCipf7US/D5DjwiutWyuKiCAFo/sXe/mzLZfaafmwHFRsymv2N/pY7HnF2he@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/tBqFoHAYVM8K8LNzf0Q2T5J6Yuynfdg8wnRz2kM58Ln7Rran
-	ZL1eg7EmwBcDdIshjB22Djy1wn0oVl9XQcBn1i+z0CGjsFL44ITaWpYnZvfM4MQF8yjdefIXmsV
-	4rq9nT56zHYkxOcSekXJOgWW0bbOuQI4=
-X-Gm-Gg: ASbGncu8iT/ZgCMCWLRwbodBYY3n7MvvT8Ypfcy5EJbAGAUFHHdTrGrZKyygBSTp1jH
-	Gzz1nZ97aervrAT7ZoWZbddNcb27Y7Vq6ldoY04iXs9qU9NBe/Uhciv9Lq9TyKZwiYbi6gdPl1e
-	IGst1lni2+YOpjRPitxc7igcZvg0gu3DuOENd3YwSYxSHbh7ljCGfWX9fNlPUbNbDmiWBZu4J4Q
-	A==
-X-Google-Smtp-Source: AGHT+IElYN1Rh6xvHEcxS29AOpeVEBIl+G958Hitti5xJMV3ss/DOnUlfOXj5cBcRSPr0KcHm1EawDhax9vJdzWBanE=
-X-Received: by 2002:a05:6602:2744:b0:861:c238:bf03 with SMTP id
- ca18e2360f4ac-86a231ce6cbmr170432639f.8.1747339847033; Thu, 15 May 2025
- 13:10:47 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747340016; x=1747944816;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZuJGtF+v5v/zwiKXtg5bHQxWdc3nNCiHNpzHfrfyNeg=;
+        b=uzSzAa61qYAoqrprj8UHolUjupoKkrMIKZIPpBr8r0wP+jTcaIxfuImJtR74qDY6t3
+         oD0pYoBsInOhDjSg1BlebJoZppC3jpHf0uOZQdX9e6sLMyjQHpWWc3+lx4LadErCuv90
+         jmpvi/hlddkrY7tAcQAVZ44KiUXwoeZkgFyKU6+CZfrGfYCGxr8bQoU7lOKFMD/yIKX2
+         4ux22PCbgPC17w3TSJqkNx/CyxJY5HPXfV502y4oBTtwHOte7qPfbvB1NBC1GAym//ql
+         zURN2e0hPrdUmr4DR5dytnCx5gshWa2eNGNn5Aj/gSiOHy9MsfEBIJUoPvMTAoSgvXG7
+         7vKw==
+X-Forwarded-Encrypted: i=1; AJvYcCUbth23XlgIbXhqTOb8knKq2CHYwhQPKuIvAuWC2V/z8iHP99vW7u5+Gdbn2CeCy+SYckZqyjoPkq3+zlls@vger.kernel.org, AJvYcCWRgEJndhzwZ2tN+v1Z6PpBB2tzvmntzNn55uYC9ZMATD7bMHgglYGR1ooqpr2xaD3v3lX+ZgHTRN1e@vger.kernel.org, AJvYcCWX8l1qY8AEVG9fAdK7T79vBkhez5YvF7NMzTgUzUIDiHsiMTvLucqYfEV23qO5rNgzlvSOhGV6j+KgGUu8@vger.kernel.org
+X-Gm-Message-State: AOJu0Yys/3E4UNWwkG4ULDn/1809iyS67Smkh6xgHJfRS8H03+etH4kB
+	UqXFp7C5lUuwnWplyMCSd27bI66sBuX2CjBM+ABbyb+yrgF7yH7jjRmBz18A+w==
+X-Gm-Gg: ASbGncs4Csnfzk6p4JIehcdJehasU/vj9LGEt9R7R3HKbAas4WNgg5YtkzgXgbfuiEP
+	O3DQGQyun3sUKE3gSoC5ATz2HJlnGOjsfjOKaSvMmZxoNRR0xQE/xqsAp6WfAYinRMvAZ7Ck56A
+	vbMwtyzWbFu47sv4YVZ0KeD4bTO2P1k1lvM3wKTl9JyqC7BiI1Gv3nSoB5lAaf/gWOqRtaZvLN5
+	qxbkf895ByddW8I+ESgQ2lA8rWe1Gg/oGyehcJbYXSbmsPd+wHEdYDIFCQQUnWbHggEwF+z/S2h
+	3WxpHqrSo9JtFc6/bcw1d9zZWJaUp9l7uu0K2pOuSZQ9K0H++QdbjbAOG4Fw4eD+5JDDq5Ir4v0
+	cswQS
+X-Google-Smtp-Source: AGHT+IHG6RNWwbRDay3N+hyQJzL+sBLOAagvHNHCy6oSlBzCgno6ceuyCOZJAL6IFJsmeYnHqoVwUA==
+X-Received: by 2002:a05:600c:a378:b0:43c:f70a:2af0 with SMTP id 5b1f17b1804b1-442fd64dfb3mr10603535e9.16.1747340015618;
+        Thu, 15 May 2025 13:13:35 -0700 (PDT)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-442f3369293sm83248585e9.6.2025.05.15.13.13.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 May 2025 13:13:35 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Thu, 15 May 2025 22:13:29 +0200
+Subject: [PATCH] spi: spi-qpic-snand: return early on error from
+ qcom_spi_io_op()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250514175527.42488-1-robdclark@gmail.com> <20250514175527.42488-3-robdclark@gmail.com>
- <aCWtINcOUWciwx8L@pollux> <CAF6AEGsm6JgK6QQe7se6bzv6QLnm-sxsJRmv=r3OWKhf6rfOSA@mail.gmail.com>
- <aCYIiJpMe1ljGxqz@pollux> <CAF6AEGvLpekBNLxVOavkXJtcZZQBH6WznKA=F0Jn9idxBMypkA@mail.gmail.com>
- <aCYpjJPvSOf2RzbU@pollux>
-In-Reply-To: <aCYpjJPvSOf2RzbU@pollux>
-From: Rob Clark <robdclark@gmail.com>
-Date: Thu, 15 May 2025 13:10:34 -0700
-X-Gm-Features: AX0GCFs_RUOGNUoophfLe_ZVT4ojoR2aoDzR_PRqcC6i1DAbUuDOdWeHDIPx-Z0
-Message-ID: <CAF6AEGuUH6nZCvb3Qayh7Z9ydOmPhTn6rqMifPyagLknbjerng@mail.gmail.com>
-Subject: Re: [PATCH v4 02/40] drm/gpuvm: Allow VAs to hold soft reference to BOs
-To: Danilo Krummrich <dakr@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>, 
-	Rob Clark <robdclark@chromium.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250515-qpic-snand-early-error-v1-1-681c87611213@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAOhKJmgC/x3MQQ5AMBBA0avIrE2ipYKriEXVYBIppomQxt01l
+ m/xf4RAwhSgyyIIXRx49wkqz8Ct1i+EPCWDLrQpjDJ4HuwweOsnJCvbgySyCzZ16apR6drMLaT
+ 4EJr5/sf98L4fECVEOWgAAAA=
+X-Change-ID: 20250515-qpic-snand-early-error-863c4b1265f9
+To: Mark Brown <broonie@kernel.org>
+Cc: Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Md Sadre Alam <quic_mdalam@quicinc.com>, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 
-On Thu, May 15, 2025 at 10:51=E2=80=AFAM Danilo Krummrich <dakr@kernel.org>=
- wrote:
->
-> On Thu, May 15, 2025 at 10:34:07AM -0700, Rob Clark wrote:
-> > On Thu, May 15, 2025 at 8:30=E2=80=AFAM Danilo Krummrich <dakr@kernel.o=
-rg> wrote:
-> > >
-> > > On Thu, May 15, 2025 at 07:59:16AM -0700, Rob Clark wrote:
-> > >
-> > > Thanks for the detailed explanation!
-> > >
-> > > > On Thu, May 15, 2025 at 2:00=E2=80=AFAM Danilo Krummrich <dakr@kern=
-el.org> wrote:
-> > > > >
-> > > > > On Wed, May 14, 2025 at 10:53:16AM -0700, Rob Clark wrote:
-> > > > > > From: Rob Clark <robdclark@chromium.org>
-> > > > > >
-> > > > > > Eases migration for drivers where VAs don't hold hard reference=
-s to
-> > > > > > their associated BO, avoiding reference loops.
-> > > > > >
-> > > > > > In particular, msm uses soft references to optimistically keep =
-around
-> > > > > > mappings until the BO is distroyed.  Which obviously won't work=
- if the
-> > > > > > VA (the mapping) is holding a reference to the BO.
-> > > > >
-> > > > > Ick! This is all complicated enough. Allow drivers to bypass the =
-proper
-> > > > > reference counting for GEM objects in the context of VM_BO struct=
-ures seems like
-> > > > > an insane footgun.
-> > > > >
-> > > > > I don't understand why MSM would need weak references here. Why d=
-oes msm need
-> > > > > that, but nouveau, Xe, panthor, PowerVR do not?
-> > > >
-> > > > Most of those drivers were designed (and had their UABI designed) w=
-ith
-> > > > gpuvm, or at least sparse, in mind from the get go.  I'm not sure
-> > > > about nouveau, but I guess it just got lucky that it's UABI semanti=
-cs
-> > > > fit having the VMA hold a reference to the BO.
-> > > >
-> > > > Unfortunately, msm pre-dates sparse.. and in the beginning there wa=
-s
-> > > > only a single global VM, multiple VMs was something retrofitted ~6y=
-rs
-> > > > (?) back.  For existing msm, the VMA(s) are implicitly torn down wh=
-en
-> > > > the GEM obj is freed.  This won't work with the VMA(s) holding hard
-> > > > references to the BO.
-> > >
-> > > Ok, that makes sense to me, but why can't this be changed? I don't se=
-e how the
-> > > uAPI would be affected, this is just an implementation detail, no?
-> >
-> > It's about the behaviour of the API, there is no explicit VMA
-> > creation/destruction in the uAPI.
->
-> But that shouldn't matter? Userspace gives you a BO, the driver creates V=
-MAs
-> itself, which can have a reference on the VM_BO, which references the ori=
-ginal
-> BO. At this point you can drop the original reference of the BO and just =
-destroy
-> all corresponding VMAs once the driver fulfilled the request from userspa=
-ce?
+When submitting of the descriptors fails, it is quite likely that
+the register read buffer contains no valid data. Even if the data
+is valid the function returns with an error code anyway.
 
-Having the submit hold a reference to the VM_BO, and then this funny
-looking bit of code in gem_close() gets us part way there:
+Change the code to return early if qcom_submit_descs() fails to
+avoid superfluously copying possibly invalid data.
 
-   vm_bo =3D drm_gpuvm_bo_find(ctx->vm, obj);
-   if (vm_bo) {
-      drm_gpuvm_bo_put(vm_bo);
-      drm_gpuvm_bo_put(vm_bo);
-  }
+Also change the return statement at the end of the function to use
+zero value to indicate success obviusly.
 
-But we still leak BO's used in other VMs.. scanout, and various other
-fw and other internal BOs... those would all have to be tracked down
-and to find _someplace_ to break the VM_BO  circular reference loop.
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+ drivers/spi/spi-qpic-snand.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-> > > > When userspace opts-in to "VM_BIND" mode, which it has to do before
-> > > > the VM is created, then we don't set this flag, the VMA holds a har=
-d
-> > > > reference to the BO as it does with other drivers.  But consider th=
-is
-> > > > use-case, which is perfectly valid for old (existing) userspace:
-> > > >
-> > > > 1) Userspace creates a BO
-> > > > 2) Submits rendering referencing the BO
-> > > > 3) Immediately closes the BO handle, without waiting for the submit=
- to complete
-> > > >
-> > > > In this case, the submit holds a reference to the BO which holds a
-> > > > reference to the VMA.
-> > >
-> > > Can't you just instead create the VMAs, which hold a reference to the=
- VM_BO,
-> > > which holds a reference to the BO, then drop the drop the original BO=
- reference
-> > > and finally, when everything is completed, remove all VMAs of the VM_=
-BO?
-> >
-> > Perhaps the submit could hold a ref to the VM_BO instead of the BO to
-> > cover that particular case.
-> >
-> > But for the legacy world, the VMA is implicitly torn down when the BO
-> > is freed.  Which will never happen if the VM_BO holds a reference to
-> > the BO.
->
-> Sure, I get that; what I do not get is why it can't be changed, e.g. in t=
-he way
-> described above.
->
-> > > This should do exactly the same *and* be conformant with GPUVM design=
-.
-> > >
-> > > > Everything is torn down gracefully when the
-> > > > submit completes.  But if the VMA held a hard reference to the BO t=
-hen
-> > > > you'd have a reference loop.
-> > > >
-> > > > So there really is no other way to use gpuvm _and_ maintain backwar=
-ds
-> > > > compatibility with the semantics of the pre-VM_BIND UAPI without th=
-is
-> > > > flag.
-> > >
-> > > Again, how is this important for maintaining backwards compatibility =
-with the
-> > > uAPI? This all seems like a driver internal implementation detail to =
-me.
-> > >
-> > > So, is there a technical reason, or is it more that it would be more =
-effort on
-> > > the driver end to rework things accordingly?
-> >
-> > If there were a way to work without WEAK_REF, it seems like it would
-> > be harder and much less of a drop in change.
->
-> So, you're saying there is no technical blocker to rework it?
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index 7207bbb57802ce53dfab4d9689113e7f9ba8f131..02b7e21479e5d5f663cd054b9241e6deb284b8ef 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -1405,8 +1405,10 @@ static int qcom_spi_io_op(struct qcom_nand_controller *snandc, const struct spi_
+ 	}
+ 
+ 	ret = qcom_submit_descs(snandc);
+-	if (ret)
++	if (ret) {
+ 		dev_err(snandc->dev, "failure in submitting descriptor for:%d\n", opcode);
++		return ret;
++	}
+ 
+ 	if (copy) {
+ 		qcom_nandc_dev_to_mem(snandc, true);
+@@ -1420,7 +1422,7 @@ static int qcom_spi_io_op(struct qcom_nand_controller *snandc, const struct spi_
+ 		memcpy(op->data.buf.in, &val, snandc->buf_count);
+ 	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static bool qcom_spi_is_page_op(const struct spi_mem_op *op)
 
-Not clear.. it would certainly make conversion to gpuvm a much bigger
-flag-day, because without WEAK_REF the way gpuvm works is exactly
-backwards from how the thing it is replacing works.
+---
+base-commit: 4614fd6342ab69feebb067d5db84a9bfb9aada9f
+change-id: 20250515-qpic-snand-early-error-863c4b1265f9
 
-BR,
--R
+Best regards,
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
+
 
