@@ -1,140 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-58235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DA41ABA220
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 19:44:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E262ABA314
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 20:43:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75C621C01508
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 17:44:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2F40E1BC78B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 18:43:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4ECA12749DD;
-	Fri, 16 May 2025 17:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B62E9278E6B;
+	Fri, 16 May 2025 18:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="h0BEcgse"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="DDyMzMFq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B458D22B595
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 17:43:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747417392; cv=none; b=EaQJratQlMD2Gq56SuL1ii6kWDu+t7CVr+fP/fOYNnIdR8/mdxgikcFo/gDmabq7Dy+m9PVjrxccEC+XFE0GbJX+an0apQFiCsA18WL/0yawwhZzWD7Feo5uCHlCRJzheZR5opiC26oGO+N302jrztb8gYgRjNthfSP7zrRVDOE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747417392; c=relaxed/simple;
-	bh=sBay1aenEjXfkacn+ZY+Cr1OwhROHPoxGk23mUtmbX8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n/LXIcdLDz9iehSnzMxU0lh/a1hFQ2Crdy+4AquSkuSG8xoWBVNXpDfSNsBKCMCIP6vfq1LinL6HNkTCfF2r9+5KMVFCdBWAnp4+AczZQ5zbw+ElgmnTOV/GSAtD1z7F9wPknuqVY//55xKXUbNjVWPFBMysJaGATQKG/6vJdPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=h0BEcgse; arc=none smtp.client-ip=209.85.215.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-b1f7357b5b6so1602211a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 10:43:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1747417387; x=1748022187; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+KFX83QNItwP0IuJnpM+8MJlz755t87bEyDF8uRue2k=;
-        b=h0BEcgse+4Yczf20cCnqEAvOb8fv6in2JMEMEcO7gK72AGJcKaRHgkjWJk8cG8acM+
-         LUV3+NLy/aacexnlAhd9UTLJIkAY5t/CNuuaTeX8LpLrymc/AxKJAp8EerIb30ju54FM
-         zkUbtcTcuvS+KnA2f34bSFvC4FLwV15N23P6Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747417387; x=1748022187;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+KFX83QNItwP0IuJnpM+8MJlz755t87bEyDF8uRue2k=;
-        b=VGBh1w36oIFSLJwONlM/iP/nMwrBr9qP//lr0Zxe8Q4ybb9luRVIVhRBEwMH7kug3/
-         yXzRpzbf5VNCArAnw0V/v1QmUITPa5P9ht4oJktoaBOxCav2J+9ICXdiCAQ0er5eMslI
-         TLVXV3SdtfGMYfVBQH9yyqixb2vmPg0GSLoPzGjwaPQbGSoi+iqZyxhYGiCRnoVivEMZ
-         saKnjiGNZagyKQ2ZxvtVIHV7LtXyI6/LTifUCl3Nd0otgkMlByFrI5EWKkq1GaXjEls4
-         OsYJ7tDhDy/K/0f1nNl0eZ3b7UPkIWoV5dTr5UpijHl0fLz+Wwtu0jcE+utoOL5DHMN5
-         4+Mw==
-X-Forwarded-Encrypted: i=1; AJvYcCVKNtnYOzHjw1q2qN8r0QpjFwG/a/EXtnIFJZzZAjNDXT3ipLvqr802JTJI3Ltsd8hurIvYUIZ2g56LSUzj@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyCEP71zfQDJkuIC4PbHGXn80i5Jt0tD8N+f8eR/a8ZM09E8Lm
-	8irAprD/2q47tzgC9WmylUMmbKFDVfildO/PGtfZ/zjglsmiEPllOpi0lTn/5y3HT8qzcAJLsly
-	FK4Q=
-X-Gm-Gg: ASbGncsvNrdmzsCdrBD/vGgQNcCg44DetfOGnOcCipXXVzn4eMbrAofN9sQnxB/7Rxf
-	wnOAwbTdhe2dk4CXB6cK6FN+Q0tM+i2o2rue4EIpXt53CILmsLsAcpst1qP9V4b2lSqddXwuZ05
-	j6i9VgAfXGBi0opGSHaJcmOHtfada1HRHvKaWVUhJQ5OBK9gsCkJEzo6UxiNM7bFpTYACbhc0Im
-	L32F7wu1liTkGQ0Y3W+MuApxZtb7BbEmjGCeR4dgJ5GK+U1izmI0yJN7zJ2NTZOMT51oDylhZXP
-	oLb602Vb7qlYDxDad1eaSXwqKXVTdhhhneuiYJyswQFqX4Is2+iv/SxXE9C47o3m0C9I1vphctQ
-	VRYlVZW9CdJ1i761yVB8=
-X-Google-Smtp-Source: AGHT+IGy1qxG0QfDvcBAStn3wbmTxTsOxNgpJJylpWn5APPq+b2SCRMPMSUukTHs+HjlCxPSbm4UMw==
-X-Received: by 2002:a17:903:2f4c:b0:21f:522b:690f with SMTP id d9443c01a7336-231d45af194mr56714395ad.46.1747417387406;
-        Fri, 16 May 2025 10:43:07 -0700 (PDT)
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com. [209.85.210.177])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4eedb3csm16951985ad.259.2025.05.16.10.43.05
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 May 2025 10:43:05 -0700 (PDT)
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-741b3e37a1eso2693792b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 10:43:05 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXAR5nSHfw36wnKyGe2g9HhXCekDbPsG2XklfIo/LCHTyCRljuM72H89PLcjjkDmNa1SaNUYhFf3V3EtfoX@vger.kernel.org
-X-Received: by 2002:a17:903:3d0f:b0:231:7e15:f7a with SMTP id
- d9443c01a7336-231d453469cmr47600355ad.27.1747417384710; Fri, 16 May 2025
- 10:43:04 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7131A0BF1;
+	Fri, 16 May 2025 18:43:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747420993; cv=pass; b=jiqWumT/zXKp5614m+0dAAGoj2n/bnarKxJywKzZ/5BrRqE/huqeZ19atqJS9mxmfGSRexYmCLH6E7hNxNLH+aa4kiqWi/cDCz5sSRluMVYqVzQOlOifu+YC7eCwZ0SYvtYkA7fHJeP5Lpi/nKx6G1zNJt7tSKITxweyuPHNQb4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747420993; c=relaxed/simple;
+	bh=zBZfFiPZUzPpPv3FClLAoIyveXSca1TLINgJk/0B2s0=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=ATd+zC+w5lqLUmFSAFDR7RJdUbBJ4zJx1u1k8AByElzxDW2/kX7eRZHyCF98xu63jV+CedYCAr2vIooLhdk/GePwRGYornW0R6TVJiv9z6jLoEfpBItmEdWZ5BITliX5A/ItP3p6hsZ1T04xr7cgCEu7/aKo83kW4P6zDqd6CSo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=DDyMzMFq; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1747420952; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=UB58WcAzPfmeQxe/5HlsaQ5qwCCfD3VwmFuzrSEowItxfPOF5c3Q2xLQQNXim4CWyY/t2tGz7TA0digxQxndyRoFUiCbuvsz90gQJR2hBB6QetgDJdSO2yavqNdkbtvowdFwQzig8zgTOslXFazXQApQd9TdwdVuyYpsrVMjt/c=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1747420952; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=MzzkSiZrg4oJeY3DBEUNx4n2bS19YxHxGP5sLJRKfY8=; 
+	b=MDf3bxyMFRUmfvwUSN8BfhmOcz5TC5subx1VSeD/d3+mEQR475vYKDlIiAbNMUlY9MVfp75dWp5TbwYtJ4lmhsPRjEKqIttwy/QpXSfUB+/ogf4uFsDc/5oZxjYllJsjzwrBZA4CsMdPv/quI4fKmHerHrGy3qjTevFWALK37So=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
+	dmarc=pass header.from=<usama.anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1747420952;
+	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=MzzkSiZrg4oJeY3DBEUNx4n2bS19YxHxGP5sLJRKfY8=;
+	b=DDyMzMFqhCtktAIbag3MZAEfhMX2KogDJacB8zTo/0Ctr7PTYEvaLiHmFt44rQtI
+	x8jrfeV3A04XflvyyemEfVEa2J8laJZOKUJg/ojNjePSC9OWS6zcvHvkYK2dm+6z5mZ
+	BcVokWCp3hz5UmDeuY+VDrMYm2egk1Y8T6MKMGfo=
+Received: by mx.zohomail.com with SMTPS id 17474209503341.7831844100325043;
+	Fri, 16 May 2025 11:42:30 -0700 (PDT)
+Message-ID: <0e21b693-e03e-4a76-aada-0c48aeae6eec@collabora.com>
+Date: Fri, 16 May 2025 23:42:21 +0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250515211110.8806-1-robdclark@gmail.com>
-In-Reply-To: <20250515211110.8806-1-robdclark@gmail.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Fri, 16 May 2025 10:42:53 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VhOhGHnHZKBmzFKAFG-WnGhWRyqPm=FwK5mxUJ-ChWGQ@mail.gmail.com>
-X-Gm-Features: AX0GCFsvr22QrX8yE42n8nz9bH4x0JASq7vWnUdqtPzSrItPo7-Ymzm-4RYVtfc
-Message-ID: <CAD=FV=VhOhGHnHZKBmzFKAFG-WnGhWRyqPm=FwK5mxUJ-ChWGQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/panel-edp: Add BOE NV133WUM-N61 panel entry
-To: Rob Clark <robdclark@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	Rob Clark <robdclark@chromium.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Cc: usama.anjum@collabora.com, kernel@collabora.com,
+ sebastian.reichel@collabora.com, Jeff Johnson
+ <jeff.johnson@oss.qualcomm.com>, Baochen Qiang <quic_bqiang@quicinc.com>,
+ mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
+ ath11k@lists.infradead.org, ath12k@lists.infradead.org
+Subject: Re: [PATCH v5] bus: mhi: host: don't free bhie tables during
+ suspend/hibernation
+To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Jeff Johnson <jjohnson@kernel.org>, Youssef Samir
+ <quic_yabdulra@quicinc.com>, Matthew Leung <quic_mattleun@quicinc.com>,
+ Yan Zhen <yanzhen@vivo.com>, Alex Elder <elder@kernel.org>,
+ Kunwu Chan <chentao@kylinos.cn>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+ "Dr. David Alan Gilbert" <linux@treblig.org>
+References: <20250514081447.279981-1-usama.anjum@collabora.com>
+ <f6eac84d-3d67-4f99-a9c5-a9f03d748010@oss.qualcomm.com>
+Content-Language: en-US
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+In-Reply-To: <f6eac84d-3d67-4f99-a9c5-a9f03d748010@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Hi,
+On 5/16/25 7:59 PM, Jeff Hugo wrote:
+> On 5/14/2025 2:14 AM, Muhammad Usama Anjum wrote:
+>> Fix dma_direct_alloc() failure at resume time during bhie_table
+>> allocation because of memory pressure. There is a report where at
+>> resume time, the memory from the dma doesn't get allocated and MHI
+>> fails to re-initialize.
+>>
+>> To fix it, don't free the memory at power down during suspend /
+>> hibernation. Instead, use the same allocated memory again after every
+>> resume / hibernation. This patch has been tested with resume and
+>> hibernation both.
+>>
+>> There are two allocations of bhie; rddm and fbc. Optimize both of those
+> 
+> There are 3, but you touch 2.  I just commented on this in v4.  Only
+> touching two is fine (the device for the 3rd one doesn't need this), but
+> the documentation must be accurate.
+Yeah, for 3rd one in mhi_load_image_bhie(), this optimization isn't
+needed. Let me rephrase and resent v6.
 
-On Thu, May 15, 2025 at 2:11=E2=80=AFPM Rob Clark <robdclark@gmail.com> wro=
-te:
->
-> From: Rob Clark <robdclark@chromium.org>
->
-> Add an eDP panel for BOE NV133WUM-N61, which appears to be a 3rd panel
-> option on the lenevo x13s laptop.
->
-> edid:
-> 00 ff ff ff ff ff ff 00 09 e5 64 09 00 00 00 00
-> 16 1e 01 04 a5 1d 12 78 03 55 8e a7 51 4c 9c 26
-> 0f 52 53 00 00 00 01 01 01 01 01 01 01 01 01 01
-> 01 01 01 01 01 01 74 3c 80 a0 70 b0 28 40 30 20
-> 36 00 1e b3 10 00 00 1a 5d 30 80 a0 70 b0 28 40
-> 30 20 36 00 1e b3 10 00 00 1a 00 00 00 fe 00 42
-> 4f 45 20 48 46 0a 20 20 20 20 20 20 00 00 00 fe
-> 00 4e 56 31 33 33 57 55 4d 2d 4e 36 31 0a 00 7d
->
-> datasheet: https://datasheet4u.com/pdf-down/N/V/1/NV133WUM-N61-BOE.pdf
->
-> v2: Actually get the panel name correct in the table
->
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/gpu/drm/panel/panel-edp.c | 1 +
->  1 file changed, 1 insertion(+)
+> 
+>> allocations. The rddm is of constant size for a given hardware. While
+>> the fbc_image size depends on the firmware. If the firmware changes,
+>> we'll free and allocate new memory for it. This patch is moticated from
+> 
+> moticated?  Motivated maybe?
+I'm using checkpatch --strict --codespell and hopping that it'll catch
+typos. But it misses some of them. Do you use any such tool?
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> 
+>> the ath12k [1] and ath11k [2] patches. They don't free the memory and
+>> reuse the same memory if new size is same. The firmware caching hasn't
+>> been implemented for the drivers other than the nouveau. (The changing
+>> of firmware isn't tested/supported for wireless drivers. But let's
+>> follow the example patches here.)
+>>
+>> [1] https://lore.kernel.org/all/20240419034034.2842-1-
+>> quic_bqiang@quicinc.com/
+>> [2] https://lore.kernel.org/all/20220506141448.10340-1-
+>> quic_akolli@quicinc.com/
+>>
+>> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-
+>> QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
+>> Tested-on: WCN7850 hw2.0 WLAN.HMT.1.1.c5-00284-
+>> QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+>>
+>> Acked-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+>> Tested-by: Baochen Qiang <quic_bqiang@quicinc.com>
+>> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+>> ---
+>> Changes since v1:
+>> - Don't free bhie tables during suspend/hibernation only
+>> - Handle fbc_image changed size correctly
+>> - Remove fbc_image getting set to NULL in *free_bhie_table()
+>>
+>> Changes since v2:
+>> - Remove the new mhi_partial_unprepare_after_power_down() and instead
+>>    update mhi_power_down_keep_dev() to use
+>>    mhi_power_down_unprepare_keep_dev() as suggested by Mani
+>> - Update all users of this API such as ath12k (previously only ath11k
+>>    was updated)
+>> - Define prev_fw_sz in docs
+>> - Do better alignment of comments
+>>
+>> Changes since v3:
+>> - Fix state machine of ath12k by setting ATH12K_MHI_DEINIT with
+>>    ATH12K_MHI_POWER_OFF_KEEP_DEV state (Thanks Sebastian for testing and
+>>    finding the problem)
+>> - Use static with mhi_power_down_unprepare_keep_dev()
+>> - Remove crash log as it was showing that kworker wasn't able to
+>>    allocate memory.
+>>
+>> Changes since v4:
+>> - Update desctiption
+> 
+> While I'm commenting on spelling, "description"
+> 
+> 
+> Code looks ok to me. I think we just need to hash out some of the
+> documentation and this will be good to go.
+Thanks
 
-Pushed to drm-misc-next
+> 
 
-[1/1] drm/panel-edp: Add BOE NV133WUM-N61 panel entry
-      commit: 3330b71caff6cdc387fdad68a895c9c81cc2f477
+
+-- 
+Regards,
+Usama
 
