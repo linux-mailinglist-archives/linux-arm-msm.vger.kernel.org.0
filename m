@@ -1,199 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-58158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52E05AB934C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 02:47:16 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 803FBAB934E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 02:48:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CEF76A0054E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 00:46:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A6D2189DC10
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 00:48:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65047DDBC;
-	Fri, 16 May 2025 00:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C54C28F5E;
+	Fri, 16 May 2025 00:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b="hStKVzGF"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aoarfBbP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11010039.outbound.protection.outlook.com [52.101.228.39])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D45CE55B;
-	Fri, 16 May 2025 00:46:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.228.39
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747356418; cv=fail; b=OoZ78fsULvuP+iMaxrvK+fVl8T8XOLiDYU6bc9iLa3WEsFqps78/pPpohpUM8EwIQ4i/iRKuxffgNSi217E+wU5DPjZ3k/rnB1repK9x3IoCk+RxbulgIb+LtYtTXHwNA8dVQwW8Mc4XrUvHsTnMZWoUSWBAu/+8g5Ew34Fb6AE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747356418; c=relaxed/simple;
-	bh=ZORfbgtL28zWAsWqPJ8CayE7dMYJtSqaVhfHY+ulevk=;
-	h=Message-ID:From:Subject:To:In-Reply-To:References:Content-Type:
-	 Date:MIME-Version; b=XtuKgq1KYONaB8zwBIhLyGAxP5iiMNMyNDgoKLv7L1p/FkPjvZmp8edhyo5t5UOEcf0/92nEA/VAke3N0G/U9IPIKIVrHTMAaRM5DQ+GMSVi/ht6EvriPKejhSEtbRyYbCgJixj68xaybRPJpB1Mak/0HIFhlL6qOtDfoNY0bWk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com; spf=pass smtp.mailfrom=renesas.com; dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b=hStKVzGF; arc=fail smtp.client-ip=52.101.228.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ckXI9m3NTze2HmMLCcRo3up+CszpbCuLL0wD6XqsckRi+aAKGUHkOICC7CNaCYWOqGH9fzkGQBXlmHwwdasx0jbhxSQl+tGli46eMpFHYNN4E6jAxzdcVTt14NNSANYsQwSzmUiPsERMLqwOu9eYobjypzBk+ufQnMzqEqTBqEa+diSZs0pDzgjBLpQdaBlC0VCBQctENvA2U5L3KOrx0YkwdS65NE8P4KaB/53p2oYaQk+XvtuG4AtyLz2B8LoGEXiQM0ClWn++d45pJRTsWzc32C5Yh6IRQVGhh3PzQRdj52R2HAc/SqhSbd5w0BgIfYM3Py0zIdFgR7IlliyWMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=u+rhdbHwlBSNavPGZWUkZlACZbK8meu9lWj+oCBPckI=;
- b=f2oA0bGRUoaZTwcI4LqKEKcjt0omvkuUB8eAAAuFMxBT6PPzZB++4TrplKJTK8mp/8yCN+T/aS+bbk/fdu5ac3+GkpGO2a6crSRPDx+7CUsdxho/0i9gf35PemXxc3WJvjTKFdq2ER4h8Fb8yarqedBmF1lxNDvFUk9XVmjtCIsmpb4jQFzDHWlF5+5Gu1ybF15emYRl9h62Ib2ns2x4JsTVUqTdKlDyzKypmUpwIEwisW/nXXLqXMjFfAg0D2VOGyXH2IfH/LfwxWxTdszarnvnRERiZpoLRjbABR7oEGQz7snBPMZW69qYx0G57qo96oM3w1GyuxKHa7ihtdOx4A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=u+rhdbHwlBSNavPGZWUkZlACZbK8meu9lWj+oCBPckI=;
- b=hStKVzGFrYriKHXLbDdm1otelrK3fkToIls0E+LOV2FUZ3pxJKTB2NxPGpbhpBIZzbJE4rkpS2gB00BXrhtpf5jdXyB8ZqfNxTR0wbiZGyCl4V5lKaMmtAZcD4A9C2xXsLywcsMJJjUb4oFk1QU7AZB65rkLnt2f+14G+L+ygis=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-Received: from TYCPR01MB10914.jpnprd01.prod.outlook.com
- (2603:1096:400:3a9::11) by TY3PR01MB10044.jpnprd01.prod.outlook.com
- (2603:1096:400:1df::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.30; Fri, 16 May
- 2025 00:46:54 +0000
-Received: from TYCPR01MB10914.jpnprd01.prod.outlook.com
- ([fe80::c568:1028:2fd1:6e11]) by TYCPR01MB10914.jpnprd01.prod.outlook.com
- ([fe80::c568:1028:2fd1:6e11%6]) with mapi id 15.20.8722.031; Fri, 16 May 2025
- 00:46:54 +0000
-Message-ID: <877c2htm9u.wl-kuninori.morimoto.gx@renesas.com>
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Subject: [PATCH v3 3/3] ASoC: remove component->id
-User-Agent: Wanderlust/2.15.9 Emacs/29.3 Mule/6.0
-To: Jaroslav Kysela <perex@perex.cz>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Takashi Iwai <tiwai@suse.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org
-In-Reply-To: <87bjrttmbe.wl-kuninori.morimoto.gx@renesas.com>
-References: <87bjrttmbe.wl-kuninori.morimoto.gx@renesas.com>
-Content-Type: text/plain; charset=US-ASCII
-Date: Fri, 16 May 2025 00:46:54 +0000
-X-ClientProxiedBy: TYAPR01CA0102.jpnprd01.prod.outlook.com
- (2603:1096:404:2a::18) To TYCPR01MB10914.jpnprd01.prod.outlook.com
- (2603:1096:400:3a9::11)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8D44B1E50
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 00:48:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747356494; cv=none; b=lzr5T8NRw4ae5NXpwE6DGxCom80jIdiF4FsivILC5bVF536dmw4xG+qD//IfU/z+Y90Cnx8MgF2O2pyTIZ44KIYK5JPu2jszXXq5NGPNXxlB0qBoFReiwK4rtVD3sA44v2MH9FJCF3iStK7ybqoJNT98UPzCsZ00PWI87cC4Www=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747356494; c=relaxed/simple;
+	bh=3wIUKWTrTNwPNjT23Pty+AAKX8fHLi6iY8Q9CEOL+O0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=F455Hw1Mq30zCg/cl/v3e5jyBMq7yKRx8XLIfzKAmTRosSZOfKanrHwJ3NXuRRYCLpCcXzr+1e7a7bwwv2jFW9eXIGTP9Mdv7bVmDUSoA6CVyOUj5W6Ky+QtjBmOt5U6zVTM+H9rkaO2VvdRU8AhjG+CZt8jSZz0D9mvFy1q12k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aoarfBbP; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FEFEOA009131
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 00:48:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	eJwe0WaTATjPuDQBRpYRk46bCtNvD5nI4hYmgIuJ90M=; b=aoarfBbPpBtN8svj
+	4epA/14KwUKec8F93WrbzmB9VNHXsMWyZyJYJvAmjmWE3C3cFDvoIxX130g9bC3K
+	5hIgnTbhZns/4STZmAD7SGzUN0uYGUIuRu3vlL/CVK7Y7p9V7Op8a7xtBH67lWVf
+	GvESWPew7YPB3PloZSVZ75GUIqxUEPtJz9O/Vza6n6QM4n5kvhD52o9jPAiACobW
+	t2NAcmjCMT8TQOZnIh4sc3lfdmtDtT2WcLcCrsz9pHnjVRvHstHzNhD0g6nK/BAP
+	07ELv9TW6ZGz03+tVwYEiiLPxAYGrzJudZYeMPUgJwnAXUoBCiQ69EOm0yO9WRel
+	YgVZvw==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbex83y3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 00:48:12 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b26e4fe0c08so554805a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 17:48:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747356491; x=1747961291;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eJwe0WaTATjPuDQBRpYRk46bCtNvD5nI4hYmgIuJ90M=;
+        b=JLiIlRNBVEzIOZDL7YhrIGhxggDUxgZU7rhodgkMALICxe8bWttEJZrQWces6lIE2m
+         kjSSVZnj3yz8afLi6PnhC2MBTTPm8XZMKSbl4KsRJtfuBEPFt2MYX5n781kJO1q9YUhn
+         UBJ7Q8hfmWiogd71VTKUuMW0J0+oQ5mwLCKEWSJo1kwzdm2Rqv61NIpdUvxge0m+htXX
+         Nor01iZybAy3DtQzBOCx+XW5OfMtZQ9X5ap4w7/JijgDP6gRhkDtVJacLGcKgDO6HK6u
+         LsLL2dn3RSF7oVT9K8Ya0/CDiOlO5hQxgEx6Iq+O8/redKaGjMGNkzHYSgXRWg2bIxqn
+         PxEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWwreRKlmslyBoOL78tv4w1iAPwQITee4itduhALpgSWxThkXoj09AXvhKtMddyWoWYgcAfg1UTqL0G1Qns@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxohouv3PgQFGFTBQleqEQYxxcVzUzFQgVuogtjfPpYQT3gfB+4
+	VHqLT1FhmpUnEMWiW+oT1E5IA0PXxKv87m0LbXRdWS2V7Vinu/bkfYDDDTep4DYgCVbhR1uQIUN
+	S+8XwniXN++iEnqDumxufZc5rjWtK58TfddpHTHbOzKA5FcJD0gdVsgW5jE3j+HwInjXD
+X-Gm-Gg: ASbGncuZoaCJA9eVSmmiDpkTPxHt3s29ZTr94Fnc+edUAZRAXf3BW+dtEByhGjh/Ki7
+	YdRxbllSV1LGZYiNzQsttNZ6UeSlqGNu1yHzwE9bSvQD6E5JG+fA54LUyurKWvnsf+1HUUzuEx6
+	sUclVV3PgS1+YmSop6nCRR/X+uURfiPHUsLMr55rbytZ2KCq+fMF0E+gicb2iom4VCxQH1YHI57
+	3wCv4oYRp23Pe5bJIgLIDwBVHO0BNZyLx1mH9w3xjjG+Ck14UAtBrF00kL09Syw9zL+2E3o6uy4
+	X419UCjISGbuB8h4B34TNhDsyJ+QLHeeEakiGWOQaNaumTzfa1ZAZVQVKIVhRL557YSC/w==
+X-Received: by 2002:a05:6a20:9143:b0:1ee:c7c8:ca4 with SMTP id adf61e73a8af0-216219f8d84mr2191395637.36.1747356491306;
+        Thu, 15 May 2025 17:48:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IElOJZvNSsuOCJC5gbWoMAaCBBEQUY+Qd1QGBRr8weuXx6OAJxIlMvUCJtTtrI6xCzlhuO7Gg==
+X-Received: by 2002:a05:6a20:9143:b0:1ee:c7c8:ca4 with SMTP id adf61e73a8af0-216219f8d84mr2191369637.36.1747356490958;
+        Thu, 15 May 2025 17:48:10 -0700 (PDT)
+Received: from [10.134.71.99] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a9877056sm420384b3a.143.2025.05.15.17.48.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 May 2025 17:48:10 -0700 (PDT)
+Message-ID: <65cb9653-e315-4b8c-ad21-14cabb7d2ac0@oss.qualcomm.com>
+Date: Thu, 15 May 2025 17:48:09 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYCPR01MB10914:EE_|TY3PR01MB10044:EE_
-X-MS-Office365-Filtering-Correlation-Id: e5c71601-4ee3-4934-4c91-08dd94132750
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|52116014|1800799024|366016|38350700014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?X9kd11UO2EFEyK54S34jOBeP5+Z4PXCqyRF0fNqdWGJhayHfgxT24ph4XSmW?=
- =?us-ascii?Q?q4Q/bssplb0WAHG7JbdyLg50uQphv15yxLyxhgttNvh5iu4nPIc2/q7ixxFD?=
- =?us-ascii?Q?CWFTUCIQ3Uq0psTWCnKsX1w2IFX7BRzFm1BFLfg+KI/Jsq3Cyw+2kbRt8n/3?=
- =?us-ascii?Q?gmtCRHTaauT09XpOQqqib3D7h/hGS+IGZdQcap4G7vM9DMSVj4sLMEy6upmd?=
- =?us-ascii?Q?/crEdcju7U1If4yMIXJZAkLWYcV+kYA1XioFc1RxXZBb3rWIGLqLQvpSnHOz?=
- =?us-ascii?Q?77vC22Y92/Znuaj/Ntiyk8dKHE5olmyv/xzm2rDCnbK4UCHQNjT0lfKVu3p3?=
- =?us-ascii?Q?mU7g6EAXCpYU2txlVYC0Yn0mhxcjJT7JSfoCO+paCRpBpJeELfwSTeLIxutG?=
- =?us-ascii?Q?Ndn4xfAprlRwnAmOfQ4gLMcdTSZzJ+xWoB6TBVerz2QCS94CVNpj4DFmMLud?=
- =?us-ascii?Q?2pdRxOepJ5b+uz3fjufwNiRQ5ZfmVDxP1unZUw5oJfCaAmPzZcql2vk2+ljY?=
- =?us-ascii?Q?eLo5Xn2DGzHsXPAqpARmA6ezF70lAXkloWmbZKNNB7Z4qfB2F69yepV5WkI1?=
- =?us-ascii?Q?vX/hlB9JiCH2E0zqDM0NjBJx6Hoq8H226K+2AsZKgh3TvHe1nN63NzZea8Gb?=
- =?us-ascii?Q?C9fDpQ9YKr+GoDwlpDQmbgkUCcgjDrYhTmbr8eheAUBHZiHP56tm/bMtKF/l?=
- =?us-ascii?Q?tQO0TygNcfUKtOBmLXrpi7XH+NezeZa46gEfndGb9ZLeGFHStmlkyujoUFAg?=
- =?us-ascii?Q?DOxm8ypNseCJ2XPLh66LVsQo3aVeoJSeO0z/BVTXAJCOhw56/7ZlcAtW7gjk?=
- =?us-ascii?Q?vHrTXlcyVvdDU7u7Vz1PgkxlWV2ZHlW8UNTJxn09ab4hJy+1MFvVn2cS62EL?=
- =?us-ascii?Q?G5sLVdyxBpWawEE48z3bZpF2tERD9/+XQD9DVbLXx4ckwcEaLe6EGZnbnf2Y?=
- =?us-ascii?Q?GgCv07EWaGjhl0byguFdB2iiaC4WA49WSdWOoUsgtViPZe4Jj8sealJ7Eb2t?=
- =?us-ascii?Q?vHeO9fTMTEALJPbfqkveb6JvDSd6fyxNMjB972c/RYZKQ37AcfVXwGmkBEj/?=
- =?us-ascii?Q?tatsvhkqTHCyPVeLMTUCwmwetIjLzl/rOvwNhWgyZzqUnENX2Y099mEJcMxM?=
- =?us-ascii?Q?fUbWidN/P4dUuZ9V9Y1pwUqo2E5yl1xvVsBLf1uOZ9BywcJlF6YQxw16+nOY?=
- =?us-ascii?Q?8RUwvfbBu28tw6hu+VcAGdVFWFJ34R3EWBZ0vbElSE2d0c9z2/nLGSPVOMfz?=
- =?us-ascii?Q?FXUnEbx4oV4xCdETKlhGF2HSo8XcnSiPtU5lkcgXtpKyv8T4Ws4/M8RgFUrD?=
- =?us-ascii?Q?PicIqvcOU1L9YzkFJMUVsBtZAnMB3y6x6j2XXtjzDcOQ2E0iEkFG0oYfOvzj?=
- =?us-ascii?Q?iIc1Rs7SBUjs6PzVEYZ/PzRexiqkjfiB0FkLCpAx3luRofBWg8Bsp7G9fBpd?=
- =?us-ascii?Q?cZ2XMvqz2lIS3WDvKMoaz8aknvzPFQXR4UgAC533Bejws5IfLTlylA=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYCPR01MB10914.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(52116014)(1800799024)(366016)(38350700014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?LnsWZ/1i6TmBaki26K7VllGe8G/RiabKwSy0+DBTXcKZXOd2KGcKndvdQ0Ka?=
- =?us-ascii?Q?1D6Tw8tB97aRdtk4qNTeSuDZo8uPaj+IoZbtxc/F539DDUUoe9R2uCs/9Y6w?=
- =?us-ascii?Q?40XEcRUy+Qs0xZLCfpqLcj8HHXA77mpriLSKt25M3ka6h08EY7Ll9UCIgnqA?=
- =?us-ascii?Q?N29eDwSO8neV9X0jBhfFwNzuVH8uPFKp7Y19+c2ggQi0aK2yFxbNjDGwIjrT?=
- =?us-ascii?Q?iUgJCriaYkzl8qVRgukyNNr0LH76ro6W6txNgnG1NNypYF4cszeNglkOm0p5?=
- =?us-ascii?Q?rymZ33MgfvykfhiEEtFQKCb69oBYelpQAm7NygRZsA8tldrPpG6Xc9LZlO27?=
- =?us-ascii?Q?MJVZIMdDUuJiS1bP8OBQzPRaj8xAV8rnoSGuUsmz0fFH6l11qDhcSaxuN4H/?=
- =?us-ascii?Q?A7Nix733rVT0aBwIDd40D/4nX6FoI0TzPjzZ+sIk4msMU7+fLgoJEtQUAYfJ?=
- =?us-ascii?Q?c4vu8+R+T9d9HwIKS59ZewWuzkJ/xQc5uX6XH+yJuRB++zHH7rSG5DtaI8++?=
- =?us-ascii?Q?n2xEcf/NmF1eXyrKPV7dR01orvWf1TrrUyY+gd7esBUAsiLxjah/LB53mHdF?=
- =?us-ascii?Q?jg40jAsn/AJK/aQKB8+FPMVCFs22SboRxp4MFYH/nBxaiKomxYuY3XMv9HJv?=
- =?us-ascii?Q?XOkFr/Fi5KTVkdaNgEILvs6ATWoIXaNyHH4dOQ0k0FzbUEIxnURh6A3BJJuY?=
- =?us-ascii?Q?wLTry0GIMS+4vRRQV8z+28yWok7wOxAaQxlXh+ENpUPcPn5oN5VpTVMi8pQY?=
- =?us-ascii?Q?wXa8GoSfYwJjbjIrKe17BI15lS/LwJB9ymmlBf5Qa2V+KBTkTfpz7plICGYC?=
- =?us-ascii?Q?yfeX59Oo7KVKBS1wvSSvNlqjzEUm64TMDQ/VVO6MlSrxYHX3LDRl2U2A8S7i?=
- =?us-ascii?Q?G/sAKbiLatRGeYbDbFT4boV6RJ/dMyPbXG2sp4fHohwipY9XQpYlhKFf7meu?=
- =?us-ascii?Q?kO6QljncYkIxBHsc+IkNXPyRbX7iGnsSkCEZ7HggIKXJEo8K9qn4zDo4vkhl?=
- =?us-ascii?Q?7Nt056vFPocBNh878MAiTB+L5n3sI6ouK03sT8HglIvrgsj0Dw1sjIuteVbw?=
- =?us-ascii?Q?ZWiETEZ9tCAh8t06y5GZiX/Zyj/+WiFV9VMkXEH2ERnZXKER6EefbM8NrFbr?=
- =?us-ascii?Q?eeBpmccUP26eOAUQn0IgSBpLTgFvyEVnj516wwL9pjQjyvE3L3XuHXDnVE4z?=
- =?us-ascii?Q?Sei79fNx7Lt5cMOZDBM4QIAvbN1T1YQtayOEVluTMLlJiQE8nBJzlyG47AKs?=
- =?us-ascii?Q?dQCTCgsrJXHb5jgGPtIl0DgVRqNeOApvPYfjLyCOtXhn/T8fb2zH2p8kErsN?=
- =?us-ascii?Q?kEAmhrXgQkeFqmEt1UIZuKvNE3mL4CCIUmX+C46N+ojsOiN2HoLOLDvKBUmE?=
- =?us-ascii?Q?NEgT54WOddQE8F8TDEhJ35OYWaXMafQtFLfJXDSFA8h1Y/4gYge08oQ0HbjN?=
- =?us-ascii?Q?UGgHxEn85p02goMFBcEl0bCvNVCTUQFxMncSvl4GlV+KGIDXdmCPXGlcUxaj?=
- =?us-ascii?Q?zWWpcr1tKUpkq8kGPuXsdOOJTjXvDQS6Hmg1+STpWptamsLzGd9X1a3SdOiF?=
- =?us-ascii?Q?dcmaqAmedSHrucMMW/KFWjnDLfuycRbiOogPRqkrXNkD13dd9sQ73XZuWcMW?=
- =?us-ascii?Q?XR3YgBiaS5by/EAS/5X+KcM=3D?=
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e5c71601-4ee3-4934-4c91-08dd94132750
-X-MS-Exchange-CrossTenant-AuthSource: TYCPR01MB10914.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 May 2025 00:46:54.2752
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: amXPmR2zS+0W3ksbm/lxJ0NJzmld5ZmHI1bzWgk+Xfa6U5S8vdknX2+ORf6uFs3l6UPpUGlZe8AVFNifRLLcyGZXbNhudOf9/jWtP3IJPw7buTQx14YMGKOivkY89W4B
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY3PR01MB10044
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] drm/msm/dpu: Filter writeback modes using writeback
+ maxlinewidth
+To: Dmitry Baryshkov <lumag@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Abhinav Kumar <abhinav.kumar@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20250514-max-mixer-width-v1-0-c8ba0d9bb858@oss.qualcomm.com>
+ <20250514-max-mixer-width-v1-4-c8ba0d9bb858@oss.qualcomm.com>
+ <CALT56yPxcsLhA2eigirjvNiWR5JBFW4jsOAi7QWkgmJgbMnKXw@mail.gmail.com>
+Content-Language: en-US
+From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+In-Reply-To: <CALT56yPxcsLhA2eigirjvNiWR5JBFW4jsOAi7QWkgmJgbMnKXw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDAwNSBTYWx0ZWRfX1gHYpcyLM48Z
+ /xmKSQo6kiVjBwEM8/97U4r8Zl5UU8Mu0mgDyqXUEIVL1Apl3PqsYNfUS+IZ2cQ/vXoR5ar8OHk
+ 6yDXjgzEQYNcvSEmrFDdNyDeuZA5BXp2nK1bqjsR8qPKLOzxqV43/U8hTp8+8dE13ppZsxz8Em4
+ Y+VGCnbiZG/l3HgDXEqMkhL1A/ycPFTwMXTz1zMnk2NYtPoXsWctcb6AGhUtxjfVQdAdSJ4VeQr
+ qmACU9gC8xCth+FC8odVIQcEqGUIgJeP2jWbDPbanrytvWPR2mx0TcequcMXGFTJWtssnS+O940
+ /NO2GQBp+Fd0uUmzv5ciC0+e1XrJKIrZsaasWyzDhRSTNQFV0RlMFkzQEaEYeS0Bv74TZ19FTrx
+ TIzjFjD0lBziYigph+meyzMBFIXiziqVnwuyhneTxtQlJFbKi2w30R394T5El4IMn/XFkPit
+X-Proofpoint-ORIG-GUID: nBORggu8UtL99fnJS3-R7Owd-k67QemR
+X-Proofpoint-GUID: nBORggu8UtL99fnJS3-R7Owd-k67QemR
+X-Authority-Analysis: v=2.4 cv=IcuHWXqa c=1 sm=1 tr=0 ts=68268b4c cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=TtJqN5EYLmW1Dglx0zoA:9
+ a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-15_11,2025-05-15_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 mlxscore=0 adultscore=0 mlxlogscore=999 bulkscore=0
+ clxscore=1015 spamscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505070000 definitions=main-2505160005
 
-No one is using component->id.
-One idea is we can re-use it as serial number for component.
-But we have no usage, so far. Let's just remove it for now.
 
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
----
- include/sound/soc-component.h | 1 -
- sound/soc/soc-core.c          | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/sound/soc-component.h b/include/sound/soc-component.h
-index 61534ac0edd1d..2caa807c6249c 100644
---- a/include/sound/soc-component.h
-+++ b/include/sound/soc-component.h
-@@ -206,7 +206,6 @@ struct snd_soc_component_driver {
- 
- struct snd_soc_component {
- 	const char *name;
--	int id;
- 	const char *name_prefix;
- 	struct device *dev;
- 	struct snd_soc_card *card;
-diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
-index 80569209ce051..39ecf0123a444 100644
---- a/sound/soc/soc-core.c
-+++ b/sound/soc/soc-core.c
-@@ -2835,7 +2835,7 @@ int snd_soc_component_initialize(struct snd_soc_component *component,
- 	mutex_init(&component->io_mutex);
- 
- 	if (!component->name) {
--		component->name = fmt_single_name(dev, &component->id);
-+		component->name = fmt_single_name(dev, NULL);
- 		if (!component->name) {
- 			dev_err(dev, "ASoC: Failed to allocate name\n");
- 			return -ENOMEM;
--- 
-2.43.0
+On 5/14/2025 5:17 PM, Dmitry Baryshkov wrote:
+> On Thu, 15 May 2025 at 02:52, Jessica Zhang
+> <jessica.zhang@oss.qualcomm.com> wrote:
+>>
+>> Since the max mixer width is not a strict hardware limit, use the actual
+> 
+> Is it? What is the actual max width that the mixer can support?
+
+Hi Dmitry,
+
+By hardware limit, I mean restrictions based on the size of buffers 
+within the hardware block itself.
+
+PINGPONG, DSC encoder, and WB blocks all have buffers, so they do have a 
+max supported width based on the size of their hardware buffers. On the 
+other hand, LM doesn't so it isn't necessarily restricted by a max width.
+
+I can clarify this in the commit message and cover letter.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+>> hardware limit (the writeback maxlinewidth) to filter modes.
+>>
+>> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 9 +--------
+>>   1 file changed, 1 insertion(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+>> index 8ff496082902..0a198896f656 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+>> @@ -14,14 +14,7 @@ static int dpu_wb_conn_get_modes(struct drm_connector *connector)
+>>          struct msm_drm_private *priv = dev->dev_private;
+>>          struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
+>>
+>> -       /*
+>> -        * We should ideally be limiting the modes only to the maxlinewidth but
+>> -        * on some chipsets this will allow even 4k modes to be added which will
+>> -        * fail the per SSPP bandwidth checks. So, till we have dual-SSPP support
+>> -        * and source split support added lets limit the modes based on max_mixer_width
+>> -        * as 4K modes can then be supported.
+>> -        */
+>> -       return drm_add_modes_noedid(connector, dpu_kms->catalog->caps->max_mixer_width,
+>> +       return drm_add_modes_noedid(connector, dpu_kms->catalog->wb->maxlinewidth,
+>>                          dev->mode_config.max_height);
+>>   }
+>>
+>>
+>> --
+>> 2.49.0
+>>
 
 
