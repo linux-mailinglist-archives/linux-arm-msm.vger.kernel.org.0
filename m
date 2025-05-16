@@ -1,202 +1,373 @@
-Return-Path: <linux-arm-msm+bounces-58241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25F09ABA3B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 21:25:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E23DABA507
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 23:24:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27C9DA25421
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 19:24:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D76E11B674DC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 21:24:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C89D27F727;
-	Fri, 16 May 2025 19:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CB9A27A935;
+	Fri, 16 May 2025 21:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="C1CMQbKb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SLqhDYT6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98902280019
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 19:22:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA1C19CCEA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 21:24:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747423357; cv=none; b=UMCQjRtRAUiVuxcTlgGwQ9zqIBWmXckSFxS9X2QMgSKVzHzBNTIwGOtqBtjl6dPP0plbxZ/UxGRABbwZ5f2191xry0t9GNOcRW9C7aiNtiYHI6wqFvb7cI2oWpNrUYBAxBx3en+45ZJFMlkG4fpb3fe4ixw17JRe7sb2mhYFMRw=
+	t=1747430665; cv=none; b=JD4UQ2wYYEIFTxdnPjo+cs519UC/kR+bnrNrxxfEgTkyyloEM/wbkLDOl2FCuoBninYiRxn8eU2putVBbMXAvZ3pFkqcWSSt0B8PY65mJHGoDW5Cv01etGttuLsQyoKRlmudyAGKcHASeHoXLHHzdNrEKJKJbDAEENgPOWSjU2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747423357; c=relaxed/simple;
-	bh=mv1Ins7jvbobKa3n2jnizEHtuD4BULDUPYaGteSuvOE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P6eAO7X/pVtH82qDxH/mjs3EBQrv0/UnOsqrYKF7bBAoD16wnKB06Q0L5GlAm5NuoZmjsCna7Z3s0c4iDaEpgI1J5gwTZQtusuvDUoOfYwfXKCt/vbZX8vQoVg0c+y8w4WoaJ7jjwZTLWNKufMYo+QjpS0yW4uTlqO/9Mm0EobQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=C1CMQbKb; arc=none smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-7082e46880eso24149307b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 12:22:35 -0700 (PDT)
+	s=arc-20240116; t=1747430665; c=relaxed/simple;
+	bh=jrE3QDqq+EnMotHZUJywhmTfzp9sTLZO5iDOrvuwU6c=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=pxvFArSvonk6/C5gQu/48viHKD93obwc7fpNzotxTcTYOituF0+h20my4VN8u3pBRkKvXsYjv4pplgMaxELeHiT/FOeX/hZRCVLoObVv50icbELOX3iB5O7k0k8GcSCODAHEFE8BKO1IYFwNSf4jFhbAQkUaEsT3DSve47jdlDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SLqhDYT6; arc=none smtp.client-ip=209.85.166.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-85dac9728cdso94944939f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 14:24:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747423354; x=1748028154; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=X5csGcQ8badg6OQc2j12fcylP9C8BoCep+FBckAp9xQ=;
-        b=C1CMQbKb13wdheh5RbK8OT4VZyiX0o20ZWgRmHOLxPPIR43ZifNSAwB/mWzjpKjZ3t
-         m6Vc1TMJlIP1vIxm2vN71sGPbl8cKSzcPARflld3T/wD4T3+TGT10f+lDIoOGdjxpnAZ
-         NuCZwYKxj7NhM/eCw9AF5zbanrdpyCdS3ucNI0x/DkO3CEPJPxwKD05bM2rgIR0Oa2vE
-         lpxSkXlZBzv4Cr6avrKeRcWaJKCzxyY67ZVRBiW4lBOJDY3GjMO7WIpSBYFnaW2itO8d
-         lMsHsskl8O+496VKaT8UpDFRY39DWnSgy1OSyIcpaSzIEeiryIGI2NpLX7nWtTJcof6B
-         b9cQ==
+        d=gmail.com; s=20230601; t=1747430662; x=1748035462; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=hunQ4H8lTiSGjqzJkC/Ab+nMJU3/VnMxmp9TrDpedc8=;
+        b=SLqhDYT6CXXwnWVa5p686B72AsYoSaTtIOTJlwAGQKLyDntcWBYy8fwFr+Oa/qn2SI
+         +GNl4xu0cJTvCtTYTEavRYBeK6wFA1nGxq6wtXylRH5JTCSEKSrbnMY9isKv9BQfW4MH
+         rG+BGLEfA7DjEd8WAelUZbpw5zFY228I1IRMM4VYPi1hE+2UGGVcPbRcgQ+Ug4RcD71E
+         vxqbVn8UwS665/Fh2IiaVijx8GIFbtCrEdYAm11Vj4zBzqAQlFcQ3FFZrGzofidO9R26
+         /CJtQn6//zTx7qQxiGOthUJYhgbhfK8u6GgrY5kpO3PyKmUHwWKEkkV/xRVnEjBiZXw2
+         pqgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747423354; x=1748028154;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=X5csGcQ8badg6OQc2j12fcylP9C8BoCep+FBckAp9xQ=;
-        b=uxQu32A9LKfSGZsCtz7k7++Q6KliiK9sshJMI/cPNEtxZghmbPL3YLfImMjESTBJsC
-         FJCFL/wSJ3hoRpytMibktHcELSILnpaGdj1BzbGqMieqML4CbcaD5De97JTst+o7AUQt
-         4XmYNRFC/tQm3jpVpg5rPZVMwIb9hdU88pwybzHJXTi/FxMhg9RHoWNn9qENZcSD+jj9
-         FeSjpt7VTKyz5YHiT+o8errTpFU56+CHefaRj8vtW4Ki00VCFkfI10+o32cPtNcLiyaL
-         zOmgWd9C6ihgUJqqsIuJWxHPZUWHoR9rKNZ7c4tKllt6fQMR4nDk0pbm33B9y9n5UhaI
-         qhZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVlYeyXCj5kXMzyArADkUMLjBUkG/gnwYVwOotNQT9y2KSzQ6n7QXMUn6SP9FcifLDXuDG9IOBn8RwIY9+8@vger.kernel.org
-X-Gm-Message-State: AOJu0YzvKNGbO5mV1zJKDa3Y+g5nP1yC8ZQcp8PzpQmdnP19H26ugIVA
-	hUG1tSNcRo4shuycTkEDFWiCXxMa8WYbmP6rfaKFJ9u1NfWCONj3xZJaKnf/BJt52oiU4GZi2KI
-	1pKo5XnDGw5YCohvmjfPDnCCDOMla95igNjmh1iHc+7aNk8Aj+OGJ183i04H1gw==
-X-Gm-Gg: ASbGnctVFBl4NjSaRYK/hZ5Ju1hncOab0Jcz1ejSZLMZtLalq5+iPXns48ZpLXohOQK
-	Tl0Ds3M1hN6ppi55M0QPAkadLDnbV8Kg5egR8zkyB2fZrdna9lUpppDRsorA4plRSea3MeHJ6B9
-	+rGcZ88R73NL1NBh3GhWTP8oPPB8r7k7qc3oQYYJaGyPuy6c1pAyf2hYAGEkKOOw==
-X-Google-Smtp-Source: AGHT+IHmB5XBLYghERElfsJfzIa8m2PhXb5Oe8yfTFbW3QD907B5QsRiG5OVykLoPEH8ozkVNKkbLJW7xYSYXhG8Zqs=
-X-Received: by 2002:a05:690c:6f03:b0:6fb:8461:e828 with SMTP id
- 00721157ae682-70ca7c108f1mr74013577b3.30.1747423354023; Fri, 16 May 2025
- 12:22:34 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747430662; x=1748035462;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hunQ4H8lTiSGjqzJkC/Ab+nMJU3/VnMxmp9TrDpedc8=;
+        b=I4wNLbfzqAZHVJT9eXskJvIps+UeTO3SWHJI5GjZWOFCLGyriSNiL1VYSsFubhgSiN
+         ApyFWHsIN8O+a/PR4njtrVpz//l/0IgM+lb0/KakiBTlziQkaEYDVh37jDNqbCSubSZZ
+         mJsJD47STNVjXWu0qM9dfIyxag+8ASUclgMW9Muk8tQnQk4q64EP5WcYcJ58s5D/QToX
+         gFW2+m6GGv+5WVAjYKs+1OW44okcsQm4+AL/yfgbjJ4xq+G/btwmuuouKUHxYZiNtaO9
+         iTrEWrCGmf8nAotAPsJR0kYBenwUEdJgFfJIOP1IBB8h3h21Q3W9aFReEYDRqG19Q4u9
+         XuAg==
+X-Gm-Message-State: AOJu0YxgFSLZYV2GN2Us4lFAO7gomFyKz1186n1+fPLgBZsw0Qt8tbx/
+	/9R4NtrvvNJLYpJ33QTAN7YWojaMqzYqKc4joNzHFHV0r3GT/3jBnW+UmzvK1TNRNy666yjLZ50
+	TTMFZzHZ3JYYZgl2CDFugnel+pzguVP4=
+X-Gm-Gg: ASbGncsKQnZULWut9xnKpKwIb/tLjSb9d2ckqyi9H+1CHStBRHG1DO0P24wPz1tVinQ
+	XwS0OOop/Jl5LPGGCdRusUpH0sfriHdkCxuBCgbevlcfx1LCHfGZsrBar/eS7FAxHeOanRAtiJN
+	hT2DaPdeu1+e2aTSKt5Pqts6dTNnZCXcnK9c1GIFxAZCQgiZow3BATMMpTevg+7YYqkoU=
+X-Google-Smtp-Source: AGHT+IGjdEO/w3gIhDVBeeFTdrysqgOxyuo+RYwDrAXCZDpJPU96mUtcQdg57oSVoKaM/mKy1IloXCJ4GHTlv4pID58=
+X-Received: by 2002:a05:6602:371b:b0:85b:3f1a:30aa with SMTP id
+ ca18e2360f4ac-86a23229aabmr680256739f.9.1747430662007; Fri, 16 May 2025
+ 14:24:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250513163438.3942405-8-tabba@google.com> <diqzsel8pdab.fsf@ackerleytng-ctop.c.googlers.com>
-In-Reply-To: <diqzsel8pdab.fsf@ackerleytng-ctop.c.googlers.com>
-From: James Houghton <jthoughton@google.com>
-Date: Fri, 16 May 2025 12:21:58 -0700
-X-Gm-Features: AX0GCFtvTxSjQg-C2lcu7Fqz9j01UftX46-yoNDwQ9IypZOUYYVgSBCYUAztoPs
-Message-ID: <CADrL8HX4WfmHk8cLKxL2xrA9a_mLpOmwiojxeFRMdYfvMH0vOQ@mail.gmail.com>
-Subject: Re: [PATCH v9 07/17] KVM: guest_memfd: Allow host to map
- guest_memfd() pages
-To: Ackerley Tng <ackerleytng@google.com>
-Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mm@kvack.org, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
+From: Rob Clark <robdclark@gmail.com>
+Date: Fri, 16 May 2025 14:24:10 -0700
+X-Gm-Features: AX0GCFtP7DvImGIA2Ku6TTPV3B-2Yia4D2Tnclm3a819MTvBpglGhA8TuDsVtaw
+Message-ID: <CAF6AEGv2Go+nseaEwRgeZbecet-h+Pf2oBKw1CobCF01xu2XVg@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-next-2025-05-16 for v6.16
+To: Dave Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
+	dri-devel <dri-devel@lists.freedesktop.org>, 
+	freedreno <freedreno@lists.freedesktop.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Bjorn Andersson <andersson@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 13, 2025 at 11:37=E2=80=AFAM Ackerley Tng <ackerleytng@google.c=
-om> wrote:
->
-> Fuad Tabba <tabba@google.com> writes:
-> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> > index 6db515833f61..8e6d1866b55e 100644
-> > --- a/virt/kvm/guest_memfd.c
-> > +++ b/virt/kvm/guest_memfd.c
-> > @@ -312,7 +312,88 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memor=
-y_slot *slot, gfn_t gfn)
-> >       return gfn - slot->base_gfn + slot->gmem.pgoff;
-> >  }
-> >
-> > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
-> > +
-> > +static bool kvm_gmem_supports_shared(struct inode *inode)
-> > +{
-> > +     uint64_t flags =3D (uint64_t)inode->i_private;
-> > +
-> > +     return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> > +}
-> > +
-> > +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
-> > +{
-> > +     struct inode *inode =3D file_inode(vmf->vma->vm_file);
-> > +     struct folio *folio;
-> > +     vm_fault_t ret =3D VM_FAULT_LOCKED;
-> > +
-> > +     filemap_invalidate_lock_shared(inode->i_mapping);
-> > +
-> > +     folio =3D kvm_gmem_get_folio(inode, vmf->pgoff);
-> > +     if (IS_ERR(folio)) {
-> > +             int err =3D PTR_ERR(folio);
-> > +
-> > +             if (err =3D=3D -EAGAIN)
-> > +                     ret =3D VM_FAULT_RETRY;
-> > +             else
-> > +                     ret =3D vmf_error(err);
-> > +
-> > +             goto out_filemap;
-> > +     }
-> > +
-> > +     if (folio_test_hwpoison(folio)) {
-> > +             ret =3D VM_FAULT_HWPOISON;
-> > +             goto out_folio;
-> > +     }
+Hi Dave, Simona,
 
-nit: shmem_fault() does not include an equivalent of the above
-HWPOISON check, and __do_fault() already handles HWPOISON.
+Pull for v6.16 as described below.  There are a pair of x1e80100 dts
+patches, ack'd by Bjorn, to preserve ordering (the driver part needs
+to land before the dts part).  These should not conflict with any
+other dts patches in flight this cycle.
 
-It's very unlikely for `folio` to be hwpoison and not up-to-date, and
-even then, writing over poison (to zero the folio) is not usually
-fatal.
+The following changes since commit 0d607a59a0f6593e72630854a8bcb8b01b8dce40:
 
-> > +
-> > +     if (WARN_ON_ONCE(folio_test_large(folio))) {
-> > +             ret =3D VM_FAULT_SIGBUS;
-> > +             goto out_folio;
-> > +     }
+  drm/panel-edp: Add support for CSW MNE007QS3-8 panel (2025-04-29
+09:20:32 -0700)
 
-nit: I would prefer we remove this SIGBUS bit and change the below
-clearing logic to handle large folios. Up to you I suppose.
+are available in the Git repository at:
 
-> > +
-> > +     if (!folio_test_uptodate(folio)) {
-> > +             clear_highpage(folio_page(folio, 0));
-> > +             kvm_gmem_mark_prepared(folio);
-> > +     }
-> > +
-> > +     vmf->page =3D folio_file_page(folio, vmf->pgoff);
-> > +
-> > +out_folio:
-> > +     if (ret !=3D VM_FAULT_LOCKED) {
-> > +             folio_unlock(folio);
-> > +             folio_put(folio);
-> > +     }
-> > +
-> > +out_filemap:
-> > +     filemap_invalidate_unlock_shared(inode->i_mapping);
->
-> Do we need to hold the filemap_invalidate_lock while zeroing? Would
-> holding the folio lock be enough?
+  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-next-2025-05-16
 
-Do we need to hold the filemap_invalidate_lock for reading *at all*?
+for you to fetch changes up to fc5c669c902c3039aa41731b6c58c0960d0b1bbf:
 
-I don't see why we need it. We're not checking gmem->bindings, and
-filemap_grab_folio() already synchronizes with filemap removal
-properly.
+  dt-bindings: display: msm: correct example in SM8350 MDSS schema
+(2025-05-13 21:53:34 +0300)
 
->
-> > +
-> > +     return ret;
-> > +}
+----------------------------------------------------------------
+Updates for v6.16
+
+CI:
+- uprev mesa
+
+GPU:
+- ACD (Adaptive Clock Distribution) support for X1-85.  This is required
+  enable the higher frequencies.
+- Drop fictional `address_space_size`.  For some older devices, the address
+  space size is limited to 4GB to avoid potential 64b rollover math problems
+  in the fw.  For these, an `ADRENO_QUIRK_4GB_VA` quirk is added.  For
+  everyone else we get the address space size from the SMMU `ias` (input
+  address sizes), which is usually 48b.
+- Improve robustness when GMU HFI responses time out
+- Fix crash when throttling GPU immediately during boot
+- Fix for rgb565_predicator on Adreno 7c3
+- Remove `MODULE_FIRMWARE()`s for GPU, the GPU can load the firmware after
+  probe and having partial set of fw (ie. sqe+gmu but not zap) causes problems
+
+MDSS:
+- Added SAR2130P support to MDSS driver
+
+DPU:
+- Changed to use single CTL path for flushing on DPU 5.x+
+- Improved SSPP allocation code to allow sharing of SSPP between planes
+- Enabled SmartDMA on SM8150, SC8180X, SC8280XP, SM8550
+- Added SAR2130P support
+- Disabled DSC support on MSM8937, MSM8917, MSM8953, SDM660
+- Misc fixes
+
+DP:
+- Switch to use new helpers for DP Audio / HDMI codec handling
+- Fixed LTTPR handling
+
+DSI:
+- Added support for SA8775P
+- Added SAR2130P support
+
+MDP4:
+- Fixed LCDC / LVDS controller on
+
+HDMI:
+- Switched to use new helpers for ACR data
+- Fixed old standing issue of HPD not working in some cases
+
+----------------------------------------------------------------
+Akhil P Oommen (7):
+      drm/msm/adreno: Add support for ACD
+      drm/msm/a6xx: Increase HFI response timeout
+      drm/msm: a6x: Rework qmp_get() error handling
+      drm/msm/adreno: Add module param to disable ACD
+      dt-bindings: opp: Add v2-qcom-adreno vendor bindings
+      arm64: dts: qcom: x1e80100: Add ACD levels for GPU
+      arm64: dts: qcom: x1e80100: Add OPPs up to Turbo L3 for GPU
+
+Aleksandrs Vinarskis (4):
+      drm/msm/dp: Fix support of LTTPR initialization
+      drm/msm/dp: Account for LTTPRs capabilities
+      drm/msm/dp: Prepare for link training per-segment for LTTPRs
+      drm/msm/dp: Introduce link training per-segment for LTTPRs
+
+Ayushi Makhija (5):
+      dt-bindings: display: msm-dsi-phy-7nm: document the SA8775P DSI PHY
+      dt-bindings: msm: dsi-controller-main: document the SA8775P DSI CTRL
+      dt-bindings: display: msm: document DSI controller and phy on SA8775P
+      drm/msm/dsi: add DSI PHY configuration on SA8775P
+      drm/msm/dsi: add DSI support for SA8775P
+
+Chen Ni (1):
+      drm/msm: Convert comma to semicolon
+
+Connor Abbott (1):
+      drm/msm: Be more robust when HFI response times out
+
+Dmitry Baryshkov (51):
+      drm/msm/dpu: don't overwrite CTL_MERGE_3D_ACTIVE register
+      drm/msm/dpu: program master INTF value
+      drm/msm/dpu: pass master interface to CTL configuration
+      drm/msm/dpu: use single CTL if it is the only CTL returned by RM
+      drm/msm/dpu: don't select single flush for active CTL blocks
+      drm/msm/dpu: allocate single CTL for DPU >= 5.0
+      drm/msm/dpu: remove DPU_CTL_SPLIT_DISPLAY from CTL blocks on DPU >= 5.0
+      drm/msm/dpu: drop now-unused condition for has_legacy_ctls
+      dt-bindings: display: msm: mdp4: add LCDC clock and PLL source
+      drm/msm/mdp4: drop mpd4_lvds_pll_init stub
+      drm/msm/mdp4: register the LVDS PLL as a clock provider
+      drm/msm/mdp4: use parent_data for LVDS PLL
+      drm/msm/mdp4: move move_valid callback to lcdc_encoder
+      drm/msm/mdp4: switch LVDS to use drm_bridge/_connector
+      drm/msm/dpu: allow sharing SSPP between planes
+      drm/msm/dpu: enable SmartDMA on SM8150
+      drm/msm/dpu: enable SmartDMA on SC8180X
+      drm/msm/dpu: enable SmartDMA on SC8280XP
+      drm/msm/dpu: enable SmartDMA on SM8550
+      drm/msm/dpu: rename non-SmartDMA feature masks to be more explicit
+      dt-bindings: display/msm: dp-controller: describe SAR2130P
+      dt-bindings: display/msm: dsi-controller-main: describe SAR2130P
+      dt-bindings: display/msm: dsi-phy-7nm: describe SAR2130P
+      dt-bindings: display/msm: qcom,sc7280-dpu: describe SAR2130P
+      dt-bindings: display/msm: Add Qualcomm SAR2130P
+      drm/msm/mdss: add SAR2130P device configuration
+      drm/msm/dsi/phy: add configuration for SAR2130P
+      drm/msm/dpu: add catalog entry for SAR2130P
+      drm/msm/hdmi: move msm_hdmi_audio_update() out of msm_hdmi_set_timings()
+      drm/msm/hdmi: use new helper for ACR tables
+      drm/msm/dpu: remove DSC feature bit for PINGPONG on MSM8937
+      drm/msm/dpu: remove DSC feature bit for PINGPONG on MSM8917
+      drm/msm/dpu: remove DSC feature bit for PINGPONG on MSM8953
+      drm/msm/dpu: drop TE2 definitions
+      drm/msm/dpu: remove DSC feature bit for PINGPONG on SDM630
+      drm/msm/dp: reuse generic HDMI codec implementation
+      dt-bindings: display/msm/hdmi: drop obsolete GPIOs from schema
+      drm/msm/hdmi: convert clock and regulator arrays to const arrays
+      drm/msm/hdmi: move the alt_iface clock to the hpd list
+      drm/msm/hdmi: simplify extp clock handling
+      drm/msm/hdmi: drop clock frequency assignment
+      drm/msm/hdmi: switch to clk_bulk API
+      drm/msm/hdmi: switch to pm_runtime_resume_and_get()
+      drm/msm/hdmi: add runtime PM calls to DDC transfer function
+      drm/msm/hdmi: implement proper runtime PM handling
+      drm/msm/hdmi: rename hpd_clks to pwr_clks
+      drm/msm/hdmi: expand the HDMI_CFG macro
+      drm/msm/hdmi: ensure that HDMI is up if HPD is requested
+      drm/msm/hdmi: wire in hpd_enable/hpd_disable bridge ops
+      drm/msm/dpu: remove DPU_CTL_SPLIT_DISPLAY from SAR2130P CTL blocks
+      dt-bindings: display: msm: correct example in SM8350 MDSS schema
+
+Konrad Dybcio (2):
+      dt-bindings: display: msm: sm8350-mdss: Describe the CPU-CFG icc path
+      drm/msm/a6xx: Disable rgb565_predicator on Adreno 7c3
+
+Krzysztof Kozlowski (7):
+      drm/msm/dpu: Add missing "fetch" name to set_active_pipes()
+      drm/msm/dpu: Clear CTL_FETCH_PIPE_ACTIVE on mixer reset
+      drm/msm/dpu: Clear CTL_FETCH_PIPE_ACTIVE on ctl_path reset
+      drm/msm/dpu: Clear CTL_FETCH_PIPE_ACTIVE before blend setup
+      drm/msm/dpu: Drop useless comments
+      drm/msm/dpu: Add LM_7, DSC_[67], PP_[67] and MERGE_3D_5
+      drm/msm/dpu: Add handling of LM_6 and LM_7 bits in pending flush mask
+
+Luca Weiss (1):
+      dt-bindings: msm: qcom,mdss: Document interconnect paths
+
+Rob Clark (3):
+      Merge remote-tracking branch 'drm-misc/drm-misc-next' into msm-next
+      drm/msm/adreno: Drop fictional address_space_size
+      drm/msm/adreno: Remove MODULE_FIRMWARE()'s
+
+Rob Herring (Arm) (1):
+      dt-bindings: display/msm: hdmi: Fix constraints on additional
+'port' properties
+
+Stephan Gerhold (1):
+      drm/msm/gpu: Fix crash when throttling GPU immediately during boot
+
+Vignesh Raman (1):
+      drm/ci: uprev mesa
+
+ .../bindings/display/msm/dp-controller.yaml        |   1 +
+ .../bindings/display/msm/dsi-controller-main.yaml  |   4 +
+ .../bindings/display/msm/dsi-phy-7nm.yaml          |   2 +
+ .../devicetree/bindings/display/msm/hdmi.yaml      |  19 +-
+ .../devicetree/bindings/display/msm/mdp4.yaml      |   9 +-
+ .../devicetree/bindings/display/msm/qcom,mdss.yaml |  12 +
+ .../bindings/display/msm/qcom,sa8775p-mdss.yaml    | 181 ++++++++-
+ .../bindings/display/msm/qcom,sar2130p-mdss.yaml   | 439 +++++++++++++++++++++
+ .../bindings/display/msm/qcom,sc7280-dpu.yaml      |   1 +
+ .../bindings/display/msm/qcom,sm8350-mdss.yaml     |  13 +-
+ .../bindings/opp/opp-v2-qcom-adreno.yaml           |  96 +++++
+ MAINTAINERS                                        |   1 +
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi             |  27 +-
+ drivers/gpu/drm/ci/build-igt.sh                    |   2 +-
+ drivers/gpu/drm/ci/build.sh                        |   6 +-
+ drivers/gpu/drm/ci/gitlab-ci.yml                   |   6 +-
+ drivers/gpu/drm/ci/image-tags.yml                  |   2 +-
+ drivers/gpu/drm/ci/lava-submit.sh                  |   2 +-
+ drivers/gpu/drm/msm/Kconfig                        |   1 +
+ drivers/gpu/drm/msm/Makefile                       |   1 -
+ drivers/gpu/drm/msm/adreno/a2xx_catalog.c          |   5 -
+ drivers/gpu/drm/msm/adreno/a3xx_catalog.c          |   5 -
+ drivers/gpu/drm/msm/adreno/a4xx_catalog.c          |   3 -
+ drivers/gpu/drm/msm/adreno/a5xx_catalog.c          |   9 -
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c          |  44 +--
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |  96 ++++-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |   1 +
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  11 +-
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.c              |  73 +++-
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.h              |  21 +
+ drivers/gpu/drm/msm/adreno/adreno_device.c         |   4 +
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c            |  19 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   4 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h    |   5 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h   |   4 -
+ .../drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h   |   2 -
+ .../drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h   |   5 -
+ .../drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h    |  12 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |   8 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h |  11 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h |   8 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h |   8 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h |  21 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  20 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h |  14 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h |   6 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h |   5 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |   8 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |   4 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h |   8 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |   2 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h |   4 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |   5 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |  21 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |   5 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h    |   5 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  25 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h   | 433 ++++++++++++++++++++
+ .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   |   5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |  14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  13 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |   2 +
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  43 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   7 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  35 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   6 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          | 230 ++++++++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |  25 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h             |   2 +
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c           |  34 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h           |  16 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c  |  50 ++-
+ .../gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c    | 121 ------
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_pll.c      |  51 ++-
+ drivers/gpu/drm/msm/dp/dp_audio.c                  | 131 +-----
+ drivers/gpu/drm/msm/dp/dp_audio.h                  |  27 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c                   | 126 ++++--
+ drivers/gpu/drm/msm/dp/dp_display.c                |  55 ++-
+ drivers/gpu/drm/msm/dp/dp_display.h                |   6 -
+ drivers/gpu/drm/msm/dp/dp_drm.c                    |   8 +
+ drivers/gpu/drm/msm/dp/dp_link.h                   |   4 +
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |  12 +-
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |  18 +
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |   1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |   4 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |   2 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          |  50 +++
+ drivers/gpu/drm/msm/hdmi/hdmi.c                    | 133 ++++---
+ drivers/gpu/drm/msm/hdmi/hdmi.h                    |  26 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_audio.c              | 107 +----
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c             |  63 ++-
+ drivers/gpu/drm/msm/hdmi/hdmi_hpd.c                |  89 +----
+ drivers/gpu/drm/msm/hdmi/hdmi_i2c.c                |  14 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c                |   6 +-
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c              |   1 +
+ drivers/gpu/drm/msm/msm_mdss.c                     |  11 +
+ drivers/gpu/drm/msm/msm_ringbuffer.c               |   2 +-
+ .../gpu/drm/msm/registers/adreno/adreno_pm4.xml    |   7 +
+ 101 files changed, 2272 insertions(+), 1064 deletions(-)
+ create mode 100644
+Documentation/devicetree/bindings/display/msm/qcom,sar2130p-mdss.yaml
+ create mode 100644
+Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h
+ delete mode 100644 drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
 
