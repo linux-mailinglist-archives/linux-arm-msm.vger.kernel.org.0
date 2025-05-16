@@ -1,913 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-58231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52851ABA09D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 18:07:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B68A4ABA0B4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 18:19:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 80A21171BB2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 16:07:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4C1224E5CDA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 16:19:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23B19323D;
-	Fri, 16 May 2025 16:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D10EB157E99;
+	Fri, 16 May 2025 16:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JHoehglL"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MItW8aR9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9544C1A256B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 16:06:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC631FAA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 16:19:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747411604; cv=none; b=airOU9brjuaOPsinXof1fYgK1XB0BWwOMmZGl9AeKKpz6/ru8tu9c11YORXY7e3b9VYDX678i6wt0zRhFAF/1ERVeXy0WP3hK4IOL/TIYJDCz+TiSvAYJMkY8+Hf/HRvjIEb2SdgoPWGgJqdzp+Xxo7s4zJQG+IbHjh5nrPFypU=
+	t=1747412370; cv=none; b=tNxVubPppOE033eYICEnc0oiENK+Tt6X9T61bfkLJeMcci+c93uGzsYexaP6tNYy6HN7bpWxcKLa99/u/OBixbfTpU1OEOfGlCIDVnSg9U2dXp175rqQ9Mq7P5XycIhE1TuBg4yWhc4cU3QyDPuwifoeyqL2uX10d5Co0iWZTPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747411604; c=relaxed/simple;
-	bh=kB8vD6vS+xMfg5oW0pXmIDGCiCraxGKG15a8MMPOxIc=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Wk9wJMcW5nCm4uj9K3gAm/LX2Vnh59P9z1PcfRnr5DqMw+nCcUPZV0neId2i2V+iQskva+plwBwBmuVxB1/ovxuyhYTJ+5lK3L+V3VU/MJAdDvO5rDAcvN2rqTZSmbZ1HkCPocYiZjulNbR1cVXBbeNBOMOpXrKaagezb4xI2og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JHoehglL; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1747412370; c=relaxed/simple;
+	bh=zpJssZjgpXtPwKxUER/XjTyVBwAzoIYqohP1WRwvgd0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JQVfLV1diD5TkHcdNa92YE/5e9xBcEPTr966ikYTYa+0QNcKbYKzcjnrwjE/ss5fY+zV4N/vgzbM2woWJ3PcHVKZzUmb2wWWRhNsD2MIvR8JtvJd1GEruJB1G2ZBQSf6tD4szTgt432dsITwWbx/8q7Dsoanpk4ZlGAr+GD9ZQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MItW8aR9; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54GBeXfP024603
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 16:06:40 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54GB5nBd000334
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 16:19:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=qKBgTcUj4gpd3E6/+ewYpB1hHJE7dOSkYYB
-	nIZbfar8=; b=JHoehglLg6ccy3J1y7D0c5ajKMQ5lgGlrsHtp8/C1S+bbD3m4JJ
-	0aKNtyB6WgSbz23bK42lkk1Lr6H9UBEGzeWHIRlTpL3S/0O3nJfKGPc909e1hbL5
-	AQiPhVrF9EAjl8EHhL2hpB5ogaAp7gT9d0kygbkGKC+u8n/2NYP2v/3fzCN1VOnG
-	2G9+RH90K20R7+g/1n1QqwVaSnLRcLZYHI+jBDVLO5rVOdg5LysnR5GvtMi+BnXg
-	3wnh4DAbp/8Q36+JMd8oQwtqBU1LMC9G9wa4aAMBLiRngQawENl6cU8MV6Wq8scr
-	rILGFSdGZlQNIfTTZAZryIpfzFtE6woteEg==
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=OdHizHb7IuxrNJHGu0bm0O5d
+	8pJGDXJ9pmm12RIOU2I=; b=MItW8aR9W3Iw+ODPZeqNt4Au+DvaYjveXh/+vnOg
+	dm/hYgCHUFCWb7y+vLGWDb+tHN4zSlxYT4wF/zvdtzaygkyRJLRWB/2aQ34V5Nrh
+	hKD6dSHdAxwBcretFC5uT2ndyQ5UkokTl8lXR2BIRTTKbwjtTCSCjuIbqxqyfLT5
+	QS63PSuVC3w4+grRgY5KwJDPfj6YgxWbN0VM74d8LotqPU0rSJWAYiBugYciKVZ9
+	qBbst25/aj7Ul1GhBehSmrRXqp/QZH69HoDq2YFsPsFVJ5vMeFnlSGdm2Veq/4zP
+	zqTwnIoVlUV4tbKENkRoFF62pQvS6Bq9Pjmw9g8P7LGw4A==
 Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcp2gff-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcp2fm3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 16:06:40 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-af9564001cbso1480573a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 09:06:40 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 16:19:27 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-af8e645a1d1so1432922a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 09:19:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747411599; x=1748016399;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1747412366; x=1748017166;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qKBgTcUj4gpd3E6/+ewYpB1hHJE7dOSkYYBnIZbfar8=;
-        b=KmL33aX4rkzWwpn2GkrRSP6RX9x3uaYmjV4LOY+E0MNooH6QFfpWkUrJonxcAQnzdn
-         m3RzCqDYrAZ+NaCx7JrAXYrhE0jNXMnBPwal/OU27fhYRVYUFT49nhBCzW5FmOrvm20n
-         4tTSXHD9AWADJmN/NhEEgEo+0+dNa+sAY/F6kAhhQpN72lSULzUOl0YiX/o1Iwx0Rwg9
-         henMz8Ia5Klf1mb7jkdxsyJ3MnPcZ4tyiBNvwjvSGtEqsWxo93kGRTWucH1iAGetDve7
-         N0ygJPJc/CJi8i5z/rE0YRW5on+xjh9CP1V5LFB6P4sSEkWX5VdJ3NKIEb4L8YlI+VRy
-         LyCg==
-X-Gm-Message-State: AOJu0Yw7IPHUQcQJPKbuSJREuXLxYeZ9Rh1atGa6Pb9D7G1iSdL2TOXf
-	8LMsq6AOu2Buvc0Hd6s2RrkT3ygWLgkr3kwgjuylY+2FYr0AIILuURwedJc/Rwu31pMt3ocXyFD
-	x1b6vaJhvjb1oHPB/IZo0pfqiI5YsG4h9A4mxAceMPUDDkoAgsPqv0phzp9PQvrLQMpxm+/kNtT
-	4J
-X-Gm-Gg: ASbGncvA33AahhirIaajuavmGqgiewnvnZNLxgZn7Vn0hRQ3JwtsOVDO4sBvVnDZakN
-	HD02K5H5MrxDc0UOo9Nwh6brHbY4L/HbLY263iLaUHo7d3n0f7eEVRwWPmxN/7YGwG5fzvP3zrL
-	fxb11X7sIN44PIYTR0miZKLU1lgOrcfWDX0ZO2IkS1yI+tmNk7KrKnAwnxFSvFtNvfXc57/7hq+
-	FhRs56OUzXDDvWLbrYjkACdlLlYGG4eo5e+7NiS/Z7nuelIzqenuob6D7n4ZKJdKkOrFF/ybzu1
-	tFG/+zzFV80oVliKtL8L7MiA7WRrucTojW9Hdl4x+x4tXpAhMF2XAj8StF1w
-X-Received: by 2002:a17:90b:534e:b0:2ef:67c2:4030 with SMTP id 98e67ed59e1d1-30e7d5b7599mr5771097a91.27.1747411598739;
-        Fri, 16 May 2025 09:06:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE0RjyU9KPxRQfTDBk2sckhQ1Or+VhszGh7WzSkFOBuGm0iOh7mNDLtv96Gz0GeuLD2Uttmxw==
-X-Received: by 2002:a17:90b:534e:b0:2ef:67c2:4030 with SMTP id 98e67ed59e1d1-30e7d5b7599mr5771025a91.27.1747411598048;
-        Fri, 16 May 2025 09:06:38 -0700 (PDT)
-Received: from jhugo-lnx.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b26eb0b3953sm1745462a12.75.2025.05.16.09.06.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 May 2025 09:06:37 -0700 (PDT)
-From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-To: quic_carlv@quicinc.com, quic_thanson@quicinc.com, lizhi.hou@amd.com,
-        jacek.lawrynowicz@linux.intel.com, quic_yabdulra@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Subject: [PATCH v2] accel/qaic: Add Reliability, Accessibility, Serviceability (RAS)
-Date: Fri, 16 May 2025 10:06:34 -0600
-Message-Id: <20250516160634.1408309-1-jeff.hugo@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        bh=OdHizHb7IuxrNJHGu0bm0O5d8pJGDXJ9pmm12RIOU2I=;
+        b=k768gDizheYMRLsNIl2mSluHW6NOr1OIb+tZKHvcLGJdi4AQIMH+OP+9XLnBsNlvMO
+         tEJ6SZhOhuGkGNVPBUDgDvKwqh6nvVfuqpFIXIN+OS+0DTgglcIzd1NFuVeAMQyjOsyq
+         jn+WaoJmpxsw1nOe3KWJeQlV8VQolCuJYNxVXW2yBoXhwnqGonqUeL4ypzSA/sMkY9Bh
+         9ZvmBDEXi5gnusyE4wFe+GMN+B5ns9drC7wD4OfJi8Yf8qIWxWrMtZGihiQEMusb0uDf
+         LcpOYgExLrjhBBsm/IchJahVENytT1z5DrKoEWxAjfk7kNm9sRHHde8Hii9DT7XUGM2X
+         Q7Uw==
+X-Forwarded-Encrypted: i=1; AJvYcCU3KYaKg1sTLMsMaqHaEn6vln3WmmVMPw82ybGiG1zdCqiB+KK4Fs8o8/6yfCH29ax3lUQP1L0nexMWm1C0@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0YME3c61ZScaPeh2YZoYSHc6bSDQX+mRjz/AEapAXVxHHajSR
+	JVT0E35972tMrSjgU8n76dh1sWcrusjv7iAiyLFh2OgVpf3wimtKEADFlhHuT3gUQFu9c6OPNcy
+	vcio5GX4BuT0TE3HVNgLlLlcOfeyQOwil7JSk1FMfoIYAXxJ2D6AFK5X5Vc+wJGTBlcgcTEMGIm
+	nWcnSbOM/k0U88BpQXMEJqR56OIXbEFo7UiawoKBT0lzQ=
+X-Gm-Gg: ASbGnct44S+YzW4n6XtPMtc312rGp0RRQkxHC7YmWJAS3f0vP0sza0XzG4i92uYGMaY
+	T873UvPSaSQJpTKi0NtQyIzy4owD0UKznBGz58IQAMcIbQI5uHr4ERV1AIj0a1qSNmMXxaWnwN7
+	ysfCGkv2A6IfFmGud8R1DBKDah
+X-Received: by 2002:a17:902:dac5:b0:22e:4509:cb89 with SMTP id d9443c01a7336-231de21d4d5mr41482005ad.0.1747412366026;
+        Fri, 16 May 2025 09:19:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFSVcF+K+W28H2kWBwMf5GyuWgdNhhGke3bb+WX4ooyAH/AXp2dXaZPpDFx8tw2S8pmh8/7WKHKH4LH3dgd+hY=
+X-Received: by 2002:a17:902:dac5:b0:22e:4509:cb89 with SMTP id
+ d9443c01a7336-231de21d4d5mr41481555ad.0.1747412365584; Fri, 16 May 2025
+ 09:19:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: GeykQR3oLPz3RCR_7OVGcbOUejxcpt-U
-X-Authority-Analysis: v=2.4 cv=D8dHKuRj c=1 sm=1 tr=0 ts=68276290 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=dt9VzEwgFbYA:10 a=e5mUnYsNAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
- a=n3TxRm9iixUwe2X3kbkA:9 a=bFCP_H2QrGi7Okbo017w:22 a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDE1NyBTYWx0ZWRfXzTVSGtYH7QWT
- PAng+8F8lpfGJBKGTC/RFxmnciTXwX9CuWVhjKOKEKaoV+OpC5os4SmaH9tYvIgHIWkVQH+Mf42
- 8eD8umFgH6VRVsYfCvuAHz/s5ljHB37CxLBaChM86l288uOc6t1FOj/1IkxdrmhImaLiVjp/H+e
- endW9szVZ+USklhSEDL64YEorecubPXrD1M+RgkmhWGk4M40KCQvMubHeWq/rSwNBjSROf7zGNU
- AG9VaU5SlXcBiyoeukg0TtnQ7f8S95VqkH89bouufDDVYV7z9EhUgGkzYM77iJIOPoJHd163htX
- 2YC129KIYRSSkkh+nCUe4QrziG+Is0244AkjWVtEBttq63nUTvuORwYTlT0N00CtqBxDMeMBEAu
- spsANZDBqNtIpOhmK0utFQEE9WzTet5BwrbrT8intyge7hPNgN+/wo3RNUGMSEJqm7ZiYoZz
-X-Proofpoint-GUID: GeykQR3oLPz3RCR_7OVGcbOUejxcpt-U
+References: <20250514-max-mixer-width-v1-0-c8ba0d9bb858@oss.qualcomm.com>
+ <20250514-max-mixer-width-v1-3-c8ba0d9bb858@oss.qualcomm.com>
+ <f2brfgvsnwqu5rudr32fkjx6qiuut2im546mjqrk2ouego4npx@g6avls6o7kws> <24e419da-71f8-4b0d-9416-0fe4c63eed0f@oss.qualcomm.com>
+In-Reply-To: <24e419da-71f8-4b0d-9416-0fe4c63eed0f@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Fri, 16 May 2025 19:19:13 +0300
+X-Gm-Features: AX0GCFs30z0wUwczwcpcFSVo58xy4x1zGA8X22Qv0jPIM8FmHAw1HbbWJAzWeGA
+Message-ID: <CAO9ioeVnbgWt8Ov0LF8y5dqydLM_7PhwHN3h=PEu-T2aibpkDA@mail.gmail.com>
+Subject: Re: [PATCH 3/5] drm/msm/dpu: Check mode against PINGPONG or DSC max width
+To: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Abhinav Kumar <abhinav.kumar@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-GUID: Oy7TceXWVcb_K6uHiqI-Sue7lMW7kOCL
+X-Proofpoint-ORIG-GUID: Oy7TceXWVcb_K6uHiqI-Sue7lMW7kOCL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDE1OSBTYWx0ZWRfX+iywKaVQw4rQ
+ fdw4Ck8IJiBM7L44M+Iic3QAWjrdUNKkbJInbwB7cEDgiEdisI99oKuekZRaJbH/1apObBtjQzO
+ X6lFntkHS5Z48Mz7jTHLAp2hrxWeL8P76xw/sOYjSFxxwWyiI9pmQEa7Rf1Tvj3QP3L50w6Ab+X
+ 1ePLCRmuVWiy/G91TPOkkIgdaY9lfwxHpDjQLfQFDlcTS8HGZlLrgHqyJOrihZc9uQNZoL/CW0G
+ E9MwNwIwX4yFGjvxGM+3EuP31WURIaLxg2/a5apTCfySEQ9QmkAObKAD4BK89IcVd/hLiNjn27N
+ rOG2SHrsiWSygWfE3fX5nFAoT0bGwVLQelyroaUs88R+7CwYActf8b3oAE30lkZPZjNyxJkGWio
+ Uiy+wavYdWzKRec2xZDaD+qguuZgJvkBxjCPezi3kEz+tOkRQZp/R9t5g1J+PfUdGsq/FJaZ
+X-Authority-Analysis: v=2.4 cv=Gp9C+l1C c=1 sm=1 tr=0 ts=6827658f cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
+ a=EUspDBNiAAAA:8 a=YjGi-erzSBDx4MDg3asA:9 a=QEXdDO2ut3YA:10
+ a=bFCP_H2QrGi7Okbo017w:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-16_05,2025-05-16_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- suspectscore=0 malwarescore=0 mlxscore=0 adultscore=0 phishscore=0
- clxscore=1015 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505070000 definitions=main-2505160157
+ phishscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0 impostorscore=0
+ bulkscore=0 adultscore=0 suspectscore=0 priorityscore=1501 mlxscore=0
+ malwarescore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505160159
 
-AIC100 devices generates Reliability, Availability, Serviceability events
-via MHI QAIC_STATUS channel. Support such events and print a structured
-log with details of the events, and if the event describes an uncorrected
-error, reset the device to put it back into service. As these events may
-not all be reported via other mechanisms like AER, maintain counts of
-the number of errors observed for each type.
+On Fri, 16 May 2025 at 03:39, Jessica Zhang
+<jessica.zhang@oss.qualcomm.com> wrote:
+>
+>
+>
+> On 5/14/2025 5:28 PM, Dmitry Baryshkov wrote:
+> > On Wed, May 14, 2025 at 04:52:31PM -0700, Jessica Zhang wrote:
+> >> Validate requested mode and topology based on the PINGPONG or DSC encoder
+> >> max width. In addition, drop MAX_HDISPLAY_SPLIT and base LM reservation
+> >> off of PINGPONG or DSC encoder max width
+> >
+> > Separate commit for num_lm, please.
+>
+> Hi Dmitry,
+>
+> Ack.
+>
+> >
+> >>
+> >> As noted in the patch, while DPU 8.x+ supports a max linewidth of 8960
+> >> for PINGPONG_0, there is some additional logic that needs to be added to
+> >> the resource manager to specifically try and reserve PINGPONG_0 for
+> >> modes that are greater than 5k.
+> >>
+> >> Since this is out of the scope of this series, add a helper that will
+> >> get the overall minimum PINGPONG max linewidth for a given chipset.
+> >>
+> >> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+> >> ---
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 46 +++++++++++++++++++++++++++-----
+> >>   1 file changed, 39 insertions(+), 7 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> >> index 0714936d8835..6131d071b051 100644
+> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> >> @@ -723,6 +723,31 @@ void dpu_crtc_complete_commit(struct drm_crtc *crtc)
+> >>      _dpu_crtc_complete_flip(crtc);
+> >>   }
+> >>
+> >> +static int msm_display_get_max_pingpong_width(struct dpu_kms *dpu_kms)
+> >> +{
+> >> +    const struct dpu_pingpong_cfg *pingpong;
+> >> +    u32 max_pingpong_width = dpu_kms->catalog->pingpong[0].max_linewidth;
+> >> +
+> >> +    /*
+> >> +     * Find the smallest overall PINGPONG max_linewidth in the catalog since
+> >> +     * max_linewidth can differ between PINGPONGs even within the same
+> >> +     * chipset.
+> >> +     *
+> >> +     * Note: While, for DPU 8.x+, PINGPONG_0 can technically support up to
+> >> +     * 8k resolutions, this requires reworking the RM to try to reserve
+> >> +     * PINGPONG_0 for modes greater than 5k.
+> >> +     *
+> >> +     * Once this additional logic is implemented, we can drop this helper
+> >> +     * and use the reserved PINGPONG's max_linewidth
+> >> +     */
+> >> +    for (int i = 1; i < dpu_kms->catalog->pingpong_count; i++) {
+> >> +            pingpong = &dpu_kms->catalog->pingpong[i];
+> >> +            max_pingpong_width = min(max_pingpong_width, pingpong->max_linewidth);
+> >> +    }
+> >
+> > Since we are skipping PINGPONG_0, wouldn't it be enough to return
+> > max_linewidth of PP_1 ?
+>
+> I don't think we're skipping PINGPONG_0 here since `u32
+> max_pingpong_width = dpu_kms->catalog->pingpong[0].max_linewidth;` at
+> the top of the function.
+>
+> >
+> > I think, it would be easier to follow .max_dsc_encoder_width and store
+> > .max_pingpong_linewidth in dpu_caps (and later add special
+> > .max_pp0_linewidth).
+>
+> Ack. I think my only concern for this is that max_pp0_linewidth won't be
+> set for all chipsets. But if you're fine with that I'll go ahead and
+> make this change.
 
-Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
----
+You can set it for all chipsets having PINGPONG_0. It might be the
+same as .max_pingpong_linewidth, but that's not a problem.
 
-v2:
--Fix SPDX comment in header
--New line before #endif in header
--Add a comment about printk() use
--Print err_threshold
+>
+> Thanks,
+>
+> Jessica Zhang
+>
+> >
+> >> +
+> >> +    return max_pingpong_width;
+> >> +}
+> >> +
+> >>   static int _dpu_crtc_check_and_setup_lm_bounds(struct drm_crtc *crtc,
+> >>              struct drm_crtc_state *state)
+> >>   {
+> >
+>
 
- Documentation/ABI/testing/sysfs-driver-qaic |  18 +
- MAINTAINERS                                 |   1 +
- drivers/accel/qaic/Makefile                 |   1 +
- drivers/accel/qaic/qaic.h                   |   8 +
- drivers/accel/qaic/qaic_drv.c               |   6 +
- drivers/accel/qaic/qaic_ras.c               | 642 ++++++++++++++++++++
- drivers/accel/qaic/qaic_ras.h               |  10 +
- 7 files changed, 686 insertions(+)
- create mode 100644 Documentation/ABI/testing/sysfs-driver-qaic
- create mode 100644 drivers/accel/qaic/qaic_ras.c
- create mode 100644 drivers/accel/qaic/qaic_ras.h
-
-diff --git a/Documentation/ABI/testing/sysfs-driver-qaic b/Documentation/ABI/testing/sysfs-driver-qaic
-new file mode 100644
-index 000000000000..f794fd734163
---- /dev/null
-+++ b/Documentation/ABI/testing/sysfs-driver-qaic
-@@ -0,0 +1,18 @@
-+What:		/sys/bus/pci/drivers/qaic/XXXX:XX:XX.X/ce_count
-+Date:		May 2025
-+KernelVersion:	6.17
-+Contact:	dri-devel@lists.freedesktop.org
-+Description:	Number of correctable errors received from device since driver is loaded.
-+
-+What:		/sys/bus/pci/drivers/qaic/XXXX:XX:XX.X/ue_count
-+Date:		May 2025
-+KernelVersion:	6.17
-+Contact:	dri-devel@lists.freedesktop.org
-+Description:	Number of uncorrectable errors received from device since driver is loaded.
-+
-+What:		/sys/bus/pci/drivers/qaic/XXXX:XX:XX.X/ue_nonfatal_count
-+Date:		May 2025
-+KernelVersion:	6.17
-+Contact:	dri-devel@lists.freedesktop.org
-+Description:	Number of uncorrectable non-fatal errors received from device since driver
-+		is loaded.
-diff --git a/MAINTAINERS b/MAINTAINERS
-index fe9773af465a..5801adfe4927 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -19916,6 +19916,7 @@ L:	linux-arm-msm@vger.kernel.org
- L:	dri-devel@lists.freedesktop.org
- S:	Supported
- T:	git https://gitlab.freedesktop.org/drm/misc/kernel.git
-+F:	Documentation/ABI/testing/sysfs-driver-qaic
- F:	Documentation/accel/qaic/
- F:	drivers/accel/qaic/
- F:	include/uapi/drm/qaic_accel.h
-diff --git a/drivers/accel/qaic/Makefile b/drivers/accel/qaic/Makefile
-index 35e883515629..1106b876f737 100644
---- a/drivers/accel/qaic/Makefile
-+++ b/drivers/accel/qaic/Makefile
-@@ -10,6 +10,7 @@ qaic-y := \
- 	qaic_control.o \
- 	qaic_data.o \
- 	qaic_drv.o \
-+	qaic_ras.o \
- 	qaic_timesync.o \
- 	sahara.o
- 
-diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
-index 0dbb8e32e4b9..3fa47385aae4 100644
---- a/drivers/accel/qaic/qaic.h
-+++ b/drivers/accel/qaic/qaic.h
-@@ -167,6 +167,14 @@ struct qaic_device {
- 	struct workqueue_struct *bootlog_wq;
- 	/* Synchronizes access of pages in MHI bootlog device */
- 	struct mutex            bootlog_mutex;
-+	/* MHI RAS channel device */
-+	struct mhi_device	*ras_ch;
-+	/* Correctable error count */
-+	unsigned int		ce_count;
-+	/* Un-correctable error count */
-+	unsigned int		ue_count;
-+	/* Un-correctable non-fatal error count */
-+	unsigned int		ue_nf_count;
- };
- 
- struct qaic_drm_device {
-diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-index 3b415e2c9431..e31bcb0ecfc9 100644
---- a/drivers/accel/qaic/qaic_drv.c
-+++ b/drivers/accel/qaic/qaic_drv.c
-@@ -29,6 +29,7 @@
- #include "mhi_controller.h"
- #include "qaic.h"
- #include "qaic_debugfs.h"
-+#include "qaic_ras.h"
- #include "qaic_timesync.h"
- #include "sahara.h"
- 
-@@ -695,6 +696,10 @@ static int __init qaic_init(void)
- 	if (ret)
- 		pr_debug("qaic: qaic_bootlog_register failed %d\n", ret);
- 
-+	ret = qaic_ras_register();
-+	if (ret)
-+		pr_debug("qaic: qaic_ras_register failed %d\n", ret);
-+
- 	return 0;
- 
- free_mhi:
-@@ -722,6 +727,7 @@ static void __exit qaic_exit(void)
- 	 * reinitializing the link_up state after the cleanup is done.
- 	 */
- 	link_up = true;
-+	qaic_ras_unregister();
- 	qaic_bootlog_unregister();
- 	qaic_timesync_deinit();
- 	sahara_unregister();
-diff --git a/drivers/accel/qaic/qaic_ras.c b/drivers/accel/qaic/qaic_ras.c
-new file mode 100644
-index 000000000000..39c6f9cf98cc
---- /dev/null
-+++ b/drivers/accel/qaic/qaic_ras.c
-@@ -0,0 +1,642 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/* Copyright (c) 2020-2021, The Linux Foundation. All rights reserved. */
-+/* Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved. */
-+/* Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries. */
-+
-+#include <asm/byteorder.h>
-+#include <linux/device.h>
-+#include <linux/kernel.h>
-+#include <linux/mhi.h>
-+
-+#include "qaic.h"
-+#include "qaic_ras.h"
-+
-+#define MAGIC		0x55AA
-+#define VERSION		0x2
-+#define HDR_SZ		12
-+#define NUM_TEMP_LVL	3
-+#define POWER_BREAK	BIT(0)
-+
-+enum msg_type {
-+	MSG_PUSH, /* async push from device */
-+	MSG_REQ,  /* sync request to device */
-+	MSG_RESP, /* sync response from device */
-+};
-+
-+enum err_type {
-+	CE,	/* correctable error */
-+	UE,	/* uncorrectable error */
-+	UE_NF,	/* uncorrectable error that is non-fatal, expect a disruption */
-+	ERR_TYPE_MAX,
-+};
-+
-+static const char * const err_type_str[] = {
-+	[CE]    = "Correctable",
-+	[UE]    = "Uncorrectable",
-+	[UE_NF] = "Uncorrectable Non-Fatal",
-+};
-+
-+static const char * const err_class_str[] = {
-+	[CE]    = "Warning",
-+	[UE]    = "Fatal",
-+	[UE_NF] = "Warning",
-+};
-+
-+enum err_source {
-+	SOC_MEM,
-+	PCIE,
-+	DDR,
-+	SYS_BUS1,
-+	SYS_BUS2,
-+	NSP_MEM,
-+	TSENS,
-+};
-+
-+static const char * const err_src_str[TSENS + 1] = {
-+	[SOC_MEM]	= "SoC Memory",
-+	[PCIE]		= "PCIE",
-+	[DDR]		= "DDR",
-+	[SYS_BUS1]	= "System Bus source 1",
-+	[SYS_BUS2]	= "System Bus source 2",
-+	[NSP_MEM]	= "NSP Memory",
-+	[TSENS]		= "Temperature Sensors",
-+};
-+
-+struct ras_data {
-+	/* header start */
-+	/* Magic number to validate the message */
-+	u16 magic;
-+	/* RAS version number */
-+	u16 ver;
-+	u32 seq_num;
-+	/* RAS message type */
-+	u8  type;
-+	u8  id;
-+	/* Size of RAS message without the header in byte */
-+	u16 len;
-+	/* header end */
-+	s32 result;
-+	/*
-+	 * Error source
-+	 * 0 : SoC Memory
-+	 * 1 : PCIE
-+	 * 2 : DDR
-+	 * 3 : System Bus source 1
-+	 * 4 : System Bus source 2
-+	 * 5 : NSP Memory
-+	 * 6 : Temperature Sensors
-+	 */
-+	u32 source;
-+	/*
-+	 * Stores the error type, there are three types of error in RAS
-+	 * 0 : correctable error (CE)
-+	 * 1 : uncorrectable error (UE)
-+	 * 2 : uncorrectable error that is non-fatal (UE_NF)
-+	 */
-+	u32 err_type;
-+	u32 err_threshold;
-+	u32 ce_count;
-+	u32 ue_count;
-+	u32 intr_num;
-+	/* Data specific to error source */
-+	u8  syndrome[64];
-+} __packed;
-+
-+struct soc_mem_syndrome {
-+	u64 error_address[8];
-+} __packed;
-+
-+struct nsp_mem_syndrome {
-+	u32 error_address[8];
-+	u8 nsp_id;
-+} __packed;
-+
-+struct ddr_syndrome {
-+	u32 count;
-+	u32 irq_status;
-+	u32 data_31_0[2];
-+	u32 data_63_32[2];
-+	u32 data_95_64[2];
-+	u32 data_127_96[2];
-+	u32 addr_lsb;
-+	u16 addr_msb;
-+	u16 parity_bits;
-+	u16 instance;
-+	u16 err_type;
-+} __packed;
-+
-+struct tsens_syndrome {
-+	u32 threshold_type;
-+	s32 temp;
-+} __packed;
-+
-+struct sysbus1_syndrome {
-+	u32 slave;
-+	u32 err_type;
-+	u16 addr[8];
-+	u8  instance;
-+} __packed;
-+
-+struct sysbus2_syndrome {
-+	u32 lsb3;
-+	u32 msb3;
-+	u32 lsb2;
-+	u32 msb2;
-+	u32 ext_id;
-+	u16 path;
-+	u16 op_type;
-+	u16 len;
-+	u16 redirect;
-+	u8  valid;
-+	u8  word_error;
-+	u8  non_secure;
-+	u8  opc;
-+	u8  error_code;
-+	u8  trans_type;
-+	u8  addr_space;
-+	u8  instance;
-+} __packed;
-+
-+struct pcie_syndrome {
-+	/* CE info */
-+	u32 bad_tlp;
-+	u32 bad_dllp;
-+	u32 replay_rollover;
-+	u32 replay_timeout;
-+	u32 rx_err;
-+	u32 internal_ce_count;
-+	/* UE_NF info */
-+	u32 fc_timeout;
-+	u32 poison_tlp;
-+	u32 ecrc_err;
-+	u32 unsupported_req;
-+	u32 completer_abort;
-+	u32 completion_timeout;
-+	/* UE info */
-+	u32 addr;
-+	u8  index;
-+	/*
-+	 * Flag to indicate specific event of PCIe
-+	 * BIT(0): Power break (low power)
-+	 * BIT(1) to BIT(7): Reserved
-+	 */
-+	u8 flag;
-+} __packed;
-+
-+static const char * const threshold_type_str[NUM_TEMP_LVL] = {
-+	[0] = "lower",
-+	[1] = "upper",
-+	[2] = "critical",
-+};
-+
-+static void ras_msg_to_cpu(struct ras_data *msg)
-+{
-+	struct sysbus1_syndrome *sysbus1_syndrome = (struct sysbus1_syndrome *)&msg->syndrome[0];
-+	struct sysbus2_syndrome *sysbus2_syndrome = (struct sysbus2_syndrome *)&msg->syndrome[0];
-+	struct soc_mem_syndrome *soc_syndrome = (struct soc_mem_syndrome *)&msg->syndrome[0];
-+	struct nsp_mem_syndrome *nsp_syndrome = (struct nsp_mem_syndrome *)&msg->syndrome[0];
-+	struct tsens_syndrome *tsens_syndrome = (struct tsens_syndrome *)&msg->syndrome[0];
-+	struct pcie_syndrome *pcie_syndrome = (struct pcie_syndrome *)&msg->syndrome[0];
-+	struct ddr_syndrome *ddr_syndrome = (struct ddr_syndrome *)&msg->syndrome[0];
-+	int i;
-+
-+	le16_to_cpus(&msg->magic);
-+	le16_to_cpus(&msg->ver);
-+	le32_to_cpus(&msg->seq_num);
-+	le16_to_cpus(&msg->len);
-+	le32_to_cpus(&msg->result);
-+	le32_to_cpus(&msg->source);
-+	le32_to_cpus(&msg->err_type);
-+	le32_to_cpus(&msg->err_threshold);
-+	le32_to_cpus(&msg->ce_count);
-+	le32_to_cpus(&msg->ue_count);
-+	le32_to_cpus(&msg->intr_num);
-+
-+	switch (msg->source) {
-+	case SOC_MEM:
-+		for (i = 0; i < 8; i++)
-+			le64_to_cpus(&soc_syndrome->error_address[i]);
-+		break;
-+	case PCIE:
-+		le32_to_cpus(&pcie_syndrome->bad_tlp);
-+		le32_to_cpus(&pcie_syndrome->bad_dllp);
-+		le32_to_cpus(&pcie_syndrome->replay_rollover);
-+		le32_to_cpus(&pcie_syndrome->replay_timeout);
-+		le32_to_cpus(&pcie_syndrome->rx_err);
-+		le32_to_cpus(&pcie_syndrome->internal_ce_count);
-+		le32_to_cpus(&pcie_syndrome->fc_timeout);
-+		le32_to_cpus(&pcie_syndrome->poison_tlp);
-+		le32_to_cpus(&pcie_syndrome->ecrc_err);
-+		le32_to_cpus(&pcie_syndrome->unsupported_req);
-+		le32_to_cpus(&pcie_syndrome->completer_abort);
-+		le32_to_cpus(&pcie_syndrome->completion_timeout);
-+		le32_to_cpus(&pcie_syndrome->addr);
-+		break;
-+	case DDR:
-+		le16_to_cpus(&ddr_syndrome->instance);
-+		le16_to_cpus(&ddr_syndrome->err_type);
-+		le32_to_cpus(&ddr_syndrome->count);
-+		le32_to_cpus(&ddr_syndrome->irq_status);
-+		le32_to_cpus(&ddr_syndrome->data_31_0[0]);
-+		le32_to_cpus(&ddr_syndrome->data_31_0[1]);
-+		le32_to_cpus(&ddr_syndrome->data_63_32[0]);
-+		le32_to_cpus(&ddr_syndrome->data_63_32[1]);
-+		le32_to_cpus(&ddr_syndrome->data_95_64[0]);
-+		le32_to_cpus(&ddr_syndrome->data_95_64[1]);
-+		le32_to_cpus(&ddr_syndrome->data_127_96[0]);
-+		le32_to_cpus(&ddr_syndrome->data_127_96[1]);
-+		le16_to_cpus(&ddr_syndrome->parity_bits);
-+		le16_to_cpus(&ddr_syndrome->addr_msb);
-+		le32_to_cpus(&ddr_syndrome->addr_lsb);
-+		break;
-+	case SYS_BUS1:
-+		le32_to_cpus(&sysbus1_syndrome->slave);
-+		le32_to_cpus(&sysbus1_syndrome->err_type);
-+		for (i = 0; i < 8; i++)
-+			le16_to_cpus(&sysbus1_syndrome->addr[i]);
-+		break;
-+	case SYS_BUS2:
-+		le16_to_cpus(&sysbus2_syndrome->op_type);
-+		le16_to_cpus(&sysbus2_syndrome->len);
-+		le16_to_cpus(&sysbus2_syndrome->redirect);
-+		le16_to_cpus(&sysbus2_syndrome->path);
-+		le32_to_cpus(&sysbus2_syndrome->ext_id);
-+		le32_to_cpus(&sysbus2_syndrome->lsb2);
-+		le32_to_cpus(&sysbus2_syndrome->msb2);
-+		le32_to_cpus(&sysbus2_syndrome->lsb3);
-+		le32_to_cpus(&sysbus2_syndrome->msb3);
-+		break;
-+	case NSP_MEM:
-+		for (i = 0; i < 8; i++)
-+			le32_to_cpus(&nsp_syndrome->error_address[i]);
-+		break;
-+	case TSENS:
-+		le32_to_cpus(&tsens_syndrome->threshold_type);
-+		le32_to_cpus(&tsens_syndrome->temp);
-+		break;
-+	}
-+}
-+
-+static void decode_ras_msg(struct qaic_device *qdev, struct ras_data *msg)
-+{
-+	struct sysbus1_syndrome *sysbus1_syndrome = (struct sysbus1_syndrome *)&msg->syndrome[0];
-+	struct sysbus2_syndrome *sysbus2_syndrome = (struct sysbus2_syndrome *)&msg->syndrome[0];
-+	struct soc_mem_syndrome *soc_syndrome = (struct soc_mem_syndrome *)&msg->syndrome[0];
-+	struct nsp_mem_syndrome *nsp_syndrome = (struct nsp_mem_syndrome *)&msg->syndrome[0];
-+	struct tsens_syndrome *tsens_syndrome = (struct tsens_syndrome *)&msg->syndrome[0];
-+	struct pcie_syndrome *pcie_syndrome = (struct pcie_syndrome *)&msg->syndrome[0];
-+	struct ddr_syndrome *ddr_syndrome = (struct ddr_syndrome *)&msg->syndrome[0];
-+	char *class;
-+	char *level;
-+
-+	if (msg->magic != MAGIC) {
-+		pci_warn(qdev->pdev, "Dropping RAS message with invalid magic %x\n", msg->magic);
-+		return;
-+	}
-+
-+	if (!msg->ver || msg->ver > VERSION) {
-+		pci_warn(qdev->pdev, "Dropping RAS message with invalid version %d\n", msg->ver);
-+		return;
-+	}
-+
-+	if (msg->type != MSG_PUSH) {
-+		pci_warn(qdev->pdev, "Dropping non-PUSH RAS message\n");
-+		return;
-+	}
-+
-+	if (msg->len != sizeof(*msg) - HDR_SZ) {
-+		pci_warn(qdev->pdev, "Dropping RAS message with invalid len %d\n", msg->len);
-+		return;
-+	}
-+
-+	if (msg->err_type >= ERR_TYPE_MAX) {
-+		pci_warn(qdev->pdev, "Dropping RAS message with err type %d\n", msg->err_type);
-+		return;
-+	}
-+
-+	if (msg->err_type == UE)
-+		level = KERN_ERR;
-+	else
-+		level = KERN_WARNING;
-+
-+	switch (msg->source) {
-+	case SOC_MEM:
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nError Threshold for this report %d\nSyndrome:\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n    0x%llx\n",
-+			   err_class_str[msg->err_type],
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source],
-+			   msg->err_threshold,
-+			   soc_syndrome->error_address[0],
-+			   soc_syndrome->error_address[1],
-+			   soc_syndrome->error_address[2],
-+			   soc_syndrome->error_address[3],
-+			   soc_syndrome->error_address[4],
-+			   soc_syndrome->error_address[5],
-+			   soc_syndrome->error_address[6],
-+			   soc_syndrome->error_address[7]);
-+		break;
-+	case PCIE:
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nError Threshold for this report %d\n",
-+			   err_class_str[msg->err_type],
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source],
-+			   msg->err_threshold);
-+
-+		switch (msg->err_type) {
-+		case CE:
-+			/*
-+			 * Modeled after AER prints. This continues the pci_printk() from a few
-+			 * lines up. We reduce duplication of code, but also avoid re-printing the
-+			 * PCI device info so that the end result looks uniform to the log user.
-+			 */
-+			printk(KERN_WARNING pr_fmt("Syndrome:\n    Bad TLP count %d\n    Bad DLLP count %d\n    Replay Rollover count %d\n    Replay Timeout count %d\n    Recv Error count %d\n    Internal CE count %d\n"),
-+			       pcie_syndrome->bad_tlp,
-+			       pcie_syndrome->bad_dllp,
-+			       pcie_syndrome->replay_rollover,
-+			       pcie_syndrome->replay_timeout,
-+			       pcie_syndrome->rx_err,
-+			       pcie_syndrome->internal_ce_count);
-+			if (msg->ver > 0x1)
-+				pr_warn("    Power break %s\n",
-+					pcie_syndrome->flag & POWER_BREAK ? "ON" : "OFF");
-+			break;
-+		case UE:
-+			printk(KERN_ERR pr_fmt("Syndrome:\n    Index %d\n    Address 0x%x\n"),
-+			       pcie_syndrome->index, pcie_syndrome->addr);
-+			break;
-+		case UE_NF:
-+			printk(KERN_WARNING pr_fmt("Syndrome:\n    FC timeout count %d\n    Poisoned TLP count %d\n    ECRC error count %d\n    Unsupported request count %d\n    Completer abort count %d\n    Completion timeout count %d\n"),
-+			       pcie_syndrome->fc_timeout,
-+			       pcie_syndrome->poison_tlp,
-+			       pcie_syndrome->ecrc_err,
-+			       pcie_syndrome->unsupported_req,
-+			       pcie_syndrome->completer_abort,
-+			       pcie_syndrome->completion_timeout);
-+			break;
-+		default:
-+			break;
-+		}
-+		break;
-+	case DDR:
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nError Threshold for this report %d\nSyndrome:\n    Instance %d\n    Count %d\n    Data 31_0 0x%x 0x%x\n    Data 63_32 0x%x 0x%x\n    Data 95_64 0x%x 0x%x\n    Data 127_96 0x%x 0x%x\n    Parity bits 0x%x\n    Address msb 0x%x\n    Address lsb 0x%x\n",
-+			   err_class_str[msg->err_type],
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source],
-+			   msg->err_threshold,
-+			   ddr_syndrome->instance,
-+			   ddr_syndrome->count,
-+			   ddr_syndrome->data_31_0[1],
-+			   ddr_syndrome->data_31_0[0],
-+			   ddr_syndrome->data_63_32[1],
-+			   ddr_syndrome->data_63_32[0],
-+			   ddr_syndrome->data_95_64[1],
-+			   ddr_syndrome->data_95_64[0],
-+			   ddr_syndrome->data_127_96[1],
-+			   ddr_syndrome->data_127_96[0],
-+			   ddr_syndrome->parity_bits,
-+			   ddr_syndrome->addr_msb,
-+			   ddr_syndrome->addr_lsb);
-+		break;
-+	case SYS_BUS1:
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nError Threshold for this report %d\nSyndrome:\n    instance %d\n    %s\n    err_type %d\n    address0 0x%x\n    address1 0x%x\n    address2 0x%x\n    address3 0x%x\n    address4 0x%x\n    address5 0x%x\n    address6 0x%x\n    address7 0x%x\n",
-+			   err_class_str[msg->err_type],
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source],
-+			   msg->err_threshold,
-+			   sysbus1_syndrome->instance,
-+			   sysbus1_syndrome->slave ? "Slave" : "Master",
-+			   sysbus1_syndrome->err_type,
-+			   sysbus1_syndrome->addr[0],
-+			   sysbus1_syndrome->addr[1],
-+			   sysbus1_syndrome->addr[2],
-+			   sysbus1_syndrome->addr[3],
-+			   sysbus1_syndrome->addr[4],
-+			   sysbus1_syndrome->addr[5],
-+			   sysbus1_syndrome->addr[6],
-+			   sysbus1_syndrome->addr[7]);
-+		break;
-+	case SYS_BUS2:
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nError Threshold for this report %d\nSyndrome:\n    instance %d\n    valid %d\n    word error %d\n    non-secure %d\n    opc %d\n    error code %d\n    transaction type %d\n    address space %d\n    operation type %d\n    len %d\n    redirect %d\n    path %d\n    ext_id %d\n    lsb2 %d\n    msb2 %d\n    lsb3 %d\n    msb3 %d\n",
-+			   err_class_str[msg->err_type],
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source],
-+			   msg->err_threshold,
-+			   sysbus2_syndrome->instance,
-+			   sysbus2_syndrome->valid,
-+			   sysbus2_syndrome->word_error,
-+			   sysbus2_syndrome->non_secure,
-+			   sysbus2_syndrome->opc,
-+			   sysbus2_syndrome->error_code,
-+			   sysbus2_syndrome->trans_type,
-+			   sysbus2_syndrome->addr_space,
-+			   sysbus2_syndrome->op_type,
-+			   sysbus2_syndrome->len,
-+			   sysbus2_syndrome->redirect,
-+			   sysbus2_syndrome->path,
-+			   sysbus2_syndrome->ext_id,
-+			   sysbus2_syndrome->lsb2,
-+			   sysbus2_syndrome->msb2,
-+			   sysbus2_syndrome->lsb3,
-+			   sysbus2_syndrome->msb3);
-+		break;
-+	case NSP_MEM:
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nError Threshold for this report %d\nSyndrome:\n    NSP ID %d\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n    0x%x\n",
-+			   err_class_str[msg->err_type],
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source],
-+			   msg->err_threshold,
-+			   nsp_syndrome->nsp_id,
-+			   nsp_syndrome->error_address[0],
-+			   nsp_syndrome->error_address[1],
-+			   nsp_syndrome->error_address[2],
-+			   nsp_syndrome->error_address[3],
-+			   nsp_syndrome->error_address[4],
-+			   nsp_syndrome->error_address[5],
-+			   nsp_syndrome->error_address[6],
-+			   nsp_syndrome->error_address[7]);
-+		break;
-+	case TSENS:
-+		if (tsens_syndrome->threshold_type >= NUM_TEMP_LVL) {
-+			pci_warn(qdev->pdev, "Dropping RAS message with invalid temp threshold %d\n",
-+				 tsens_syndrome->threshold_type);
-+			break;
-+		}
-+
-+		if (msg->err_type)
-+			class = "Fatal";
-+		else if (tsens_syndrome->threshold_type)
-+			class = "Critical";
-+		else
-+			class = "Warning";
-+
-+		pci_printk(level, qdev->pdev, "RAS event.\nClass:%s\nDescription:%s %s %s\nError Threshold for this report %d\nSyndrome:\n    %s threshold\n    %d deg C\n",
-+			   class,
-+			   err_type_str[msg->err_type],
-+			   "error from",
-+			   err_src_str[msg->source],
-+			   msg->err_threshold,
-+			   threshold_type_str[tsens_syndrome->threshold_type],
-+			   tsens_syndrome->temp);
-+		break;
-+	}
-+
-+	/* Uncorrectable errors are fatal */
-+	if (msg->err_type == UE)
-+		mhi_soc_reset(qdev->mhi_cntrl);
-+
-+	switch (msg->err_type) {
-+	case CE:
-+		if (qdev->ce_count != UINT_MAX)
-+			qdev->ce_count++;
-+		break;
-+	case UE:
-+		if (qdev->ce_count != UINT_MAX)
-+			qdev->ue_count++;
-+		break;
-+	case UE_NF:
-+		if (qdev->ce_count != UINT_MAX)
-+			qdev->ue_nf_count++;
-+		break;
-+	default:
-+		/* not possible */
-+		break;
-+	}
-+}
-+
-+static ssize_t ce_count_show(struct device *dev, struct device_attribute *attr, char *buf)
-+{
-+	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(dev));
-+
-+	return snprintf(buf, PAGE_SIZE, "%d\n", qdev->ce_count);
-+}
-+
-+static ssize_t ue_count_show(struct device *dev, struct device_attribute *attr, char *buf)
-+{
-+	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(dev));
-+
-+	return snprintf(buf, PAGE_SIZE, "%d\n", qdev->ue_count);
-+}
-+
-+static ssize_t ue_nonfatal_count_show(struct device *dev, struct device_attribute *attr, char *buf)
-+{
-+	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(dev));
-+
-+	return snprintf(buf, PAGE_SIZE, "%d\n", qdev->ue_nf_count);
-+}
-+
-+static DEVICE_ATTR_RO(ce_count);
-+static DEVICE_ATTR_RO(ue_count);
-+static DEVICE_ATTR_RO(ue_nonfatal_count);
-+
-+static struct attribute *ras_attrs[] = {
-+	&dev_attr_ce_count.attr,
-+	&dev_attr_ue_count.attr,
-+	&dev_attr_ue_nonfatal_count.attr,
-+	NULL,
-+};
-+
-+static struct attribute_group ras_group = {
-+	.attrs = ras_attrs,
-+};
-+
-+static int qaic_ras_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_id *id)
-+{
-+	struct qaic_device *qdev = pci_get_drvdata(to_pci_dev(mhi_dev->mhi_cntrl->cntrl_dev));
-+	struct ras_data *resp;
-+	int ret;
-+
-+	ret = mhi_prepare_for_transfer(mhi_dev);
-+	if (ret)
-+		return ret;
-+
-+	resp = kzalloc(sizeof(*resp), GFP_KERNEL);
-+	if (!resp) {
-+		mhi_unprepare_from_transfer(mhi_dev);
-+		return -ENOMEM;
-+	}
-+
-+	ret = mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, resp, sizeof(*resp), MHI_EOT);
-+	if (ret) {
-+		kfree(resp);
-+		mhi_unprepare_from_transfer(mhi_dev);
-+		return ret;
-+	}
-+
-+	ret = device_add_group(&qdev->pdev->dev, &ras_group);
-+	if (ret) {
-+		mhi_unprepare_from_transfer(mhi_dev);
-+		pci_dbg(qdev->pdev, "ras add sysfs failed %d\n", ret);
-+		return ret;
-+	}
-+
-+	dev_set_drvdata(&mhi_dev->dev, qdev);
-+	qdev->ras_ch = mhi_dev;
-+
-+	return ret;
-+}
-+
-+static void qaic_ras_mhi_remove(struct mhi_device *mhi_dev)
-+{
-+	struct qaic_device *qdev;
-+
-+	qdev = dev_get_drvdata(&mhi_dev->dev);
-+	qdev->ras_ch = NULL;
-+	device_remove_group(&qdev->pdev->dev, &ras_group);
-+	mhi_unprepare_from_transfer(mhi_dev);
-+}
-+
-+static void qaic_ras_mhi_ul_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result) {}
-+
-+static void qaic_ras_mhi_dl_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
-+{
-+	struct qaic_device *qdev = dev_get_drvdata(&mhi_dev->dev);
-+	struct ras_data *msg = mhi_result->buf_addr;
-+	int ret;
-+
-+	if (mhi_result->transaction_status) {
-+		kfree(msg);
-+		return;
-+	}
-+
-+	ras_msg_to_cpu(msg);
-+	decode_ras_msg(qdev, msg);
-+
-+	ret = mhi_queue_buf(qdev->ras_ch, DMA_FROM_DEVICE, msg, sizeof(*msg), MHI_EOT);
-+	if (ret) {
-+		dev_err(&mhi_dev->dev, "Cannot requeue RAS recv buf %d\n", ret);
-+		kfree(msg);
-+	}
-+}
-+
-+static const struct mhi_device_id qaic_ras_mhi_match_table[] = {
-+	{ .chan = "QAIC_STATUS", },
-+	{},
-+};
-+
-+static struct mhi_driver qaic_ras_mhi_driver = {
-+	.id_table = qaic_ras_mhi_match_table,
-+	.remove = qaic_ras_mhi_remove,
-+	.probe = qaic_ras_mhi_probe,
-+	.ul_xfer_cb = qaic_ras_mhi_ul_xfer_cb,
-+	.dl_xfer_cb = qaic_ras_mhi_dl_xfer_cb,
-+	.driver = {
-+		.name = "qaic_ras",
-+	},
-+};
-+
-+int qaic_ras_register(void)
-+{
-+	return mhi_driver_register(&qaic_ras_mhi_driver);
-+}
-+
-+void qaic_ras_unregister(void)
-+{
-+	mhi_driver_unregister(&qaic_ras_mhi_driver);
-+}
-diff --git a/drivers/accel/qaic/qaic_ras.h b/drivers/accel/qaic/qaic_ras.h
-new file mode 100644
-index 000000000000..d44a4eeeb060
---- /dev/null
-+++ b/drivers/accel/qaic/qaic_ras.h
-@@ -0,0 +1,10 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/* Copyright (c) 2020, The Linux Foundation. All rights reserved. */
-+
-+#ifndef __QAIC_RAS_H__
-+#define __QAIC_RAS_H__
-+
-+int qaic_ras_register(void);
-+void qaic_ras_unregister(void);
-+
-+#endif /* __QAIC_RAS_H__ */
--- 
-2.34.1
-
+--
+With best wishes
+Dmitry
 
