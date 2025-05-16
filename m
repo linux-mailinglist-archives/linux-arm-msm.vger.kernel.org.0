@@ -1,198 +1,344 @@
-Return-Path: <linux-arm-msm+bounces-58176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE366AB9664
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 09:08:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2DA3AB968D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 09:28:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CCFA9177BBF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 07:07:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B57B0A079EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 07:28:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 151BE225407;
-	Fri, 16 May 2025 07:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A7B3227B9F;
+	Fri, 16 May 2025 07:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HF6xKfWq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lRccnhuY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E16224AE4
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 07:07:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5019D1F4727;
+	Fri, 16 May 2025 07:28:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747379275; cv=none; b=cPfSbkfQ/sNWQWPZdUprXyNQ8JY41yWxI7tlaHhDeN1miS3F/D2ERVcUJmymn7xSa43RCOPwTALQ8RtmnPzhNi2/lmJetyHvRwrjx+IIspY84fzfngB5KXh2eXs6krQQmSJjvDQsd+cKIft5CU1bIgyNX4UmEP5PhwnjChwm+Rw=
+	t=1747380526; cv=none; b=MYsm+DNEFW0Wnx++Bd5ZuPd0mUw1sOWopqQ8RMPPbhQivAUdkDc7gn1eSJbM5KamzsRKwlGE3STk6YBcZ9mBGSF7oXJ6yEwM4W1KV8y7tpnbFZs0LBZwR+v5UhXYd4gj9qTNncy46jQ7EdSDZIQ1u+NaQ3UafJk6slsT9vJiQNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747379275; c=relaxed/simple;
-	bh=3oLVKjT6FynUdAfD1yHKsv9E49xwhlj+0GLTikY4vhE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BZ0yaUPkb1hKCYucRbEpTJukQ5k6GydK2028HWj3YLsb+gQ+Bg5aBA9RlxFDbiZ4lXT0J9qq6gWg4/IlSWD6tiv0oVFJFeegwzANYzOlozsYutxno7VgaTUKIRkCVcDd6URtiQ77S4L+cScKmqfli712Njhq2yvPe0tzhTOvgZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=HF6xKfWq; arc=none smtp.client-ip=209.85.160.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-47e9fea29easo163601cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 00:07:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747379272; x=1747984072; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Tez76IHCMQvsnU7yC7Z3dKm3rIS9agTxMo2b8/a0wh8=;
-        b=HF6xKfWqu5fZSCnJLsB1JTkxLDzMaYpJsyl+/4IoVJW5Sm5kXPOXkgeVjv+59Y3r3Z
-         HKwFZCP+4Ax9xhqK7hykXHSAFR+rd+X0UWwtQtvL9onxLHZ5HrfpK3mS8Pwjx95yKegJ
-         gEywPlXaybtQJMLPhZiAlSJy/JPdhoEbMA9ezFW4jMP9uWbkjeFaYfh+iMUeQCcdeMFW
-         jHhXU/Yzp7XSq3lw7Sw0MAGR1hVukv5SxAamPUMATwtAjZZBeN77Ho6tvstt5Z//mMHM
-         YHcGUDgseZQwlmb99ygpx4pI4hjJ+de0ZY7eB6v4oWBSkpVe6+W74ccfu9BqHW0Jdj7j
-         baOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747379272; x=1747984072;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Tez76IHCMQvsnU7yC7Z3dKm3rIS9agTxMo2b8/a0wh8=;
-        b=Nq52XbTFQ8nOYcm0/jqu83f1IrwHLxSoK4YsEkH1FOZgKZZZtvQa4NA0YxWB6nKv32
-         aoOZN5fn2H8ZIGRPFIUO7maFDzrENAoM8y0Lk3EurowqsvHccItP1GbRxpKehmAAGyVp
-         5q2b3eE7R1Oe0/ryJRiGJpGox7M5lT1B2XtRMGIJwl6CO5W4irvSkKfeNUV8MZu+a3uN
-         Tk3mhPHdm/PppmlTYtaoMeaoxcgJgSs+qMhyWt+0ycCAmP53tXEHcFAxHmBugS3iHdc+
-         SMfOKlmBD74jBMpkhiUg1Khy11YywCTfvawkr4XLl9BSLJtwiDR3HyRUjiz8fmAglOAl
-         +jVA==
-X-Forwarded-Encrypted: i=1; AJvYcCVjtZr5Jyo+rCyCeE51asxQiRNVV83nBdj8wgVK9hILiLoBfvPv1cEQcfcTG7jGyAmNr/fbrBeZ5WtxGu9r@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWGA2VMdUd7UbaAihUU0FIqS68IYqhRPTYcthDN1wKht3BagXm
-	ixhGWi2r9aZ7T4IYD7ZMlOkBJgy8N9k2MLl3tlR2g65SnGtyEhVPsIn1DsyBY1htr76qT+NT2Gx
-	sfxciU17EqnVatEPSFQ9zIn1iYi0kJxL5SegkK9v6
-X-Gm-Gg: ASbGncvi9me9Eh6cisOj8KZmY4LmQIyPlFSV3WUaOzGxdqHzoEclmnLDGomQ0jW5vWX
-	QwMA2f04txLJOVeRc6FZSl3o0Yk5wSYFvZLbsEb/6hoX0ll38NjUxg3gcr1MZdMf9ubQIPULD+J
-	QeU0NtJqF/djOgwDDEfr/Lh5d+EZMsZDyKMpuUruv6E0Y7yV+HzY7yef2ftcg=
-X-Google-Smtp-Source: AGHT+IH1mZBkYFzRyPJJzHe/yhizT4xopI+iUzKMP75ZWa3A53DZt9+qbKlgib2wRN1O5HYqi0njFiCig3+NWslOs0Y=
-X-Received: by 2002:a05:622a:1646:b0:47d:c9f0:da47 with SMTP id
- d75a77b69052e-494a3399474mr6319641cf.19.1747379271821; Fri, 16 May 2025
- 00:07:51 -0700 (PDT)
+	s=arc-20240116; t=1747380526; c=relaxed/simple;
+	bh=vbamsRClycmD0AcVt/iAvz202RrKFcQ4I4wdT1HanSY=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=sanMUPN2zO5QsA3VHkRfquB129TWg78Mdq61ZddVa9oxXzBuSpDvq/ZRWUEnf1Wsrd9jhT+YZWfyG+UZgh3ZxMw9hVS8wE/89Y5ROsA2qRCyA/7EM/JdOhntJlM6MeW9YoWdYCoUK/ubWrsNm5+wRoqy1aHhGtBFPgDmJz3vmdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lRccnhuY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54G3R3Um007950;
+	Fri, 16 May 2025 07:28:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=qkhnsikbRoTEbIXyNpd9ac
+	mVIdj7l4Am8uh2qrLrri4=; b=lRccnhuY6cH4ipChmMn3K9qgDGFKfVP6ZBaHKw
+	0TGhIAv3Nv4CopGLROyApVOkr4Kva7EndWOS9vozesUgcSJf2UCIN+gxrWeQW86i
+	rvi0pKRpCheo5lWOLnSTb/DE5xVay2af5qP53Z/HvdoHOQQ4icOQiSHnIIaxr9x5
+	05SGDoMizjzYG8CHXDj09wc84WwxZWx2+q8ym8bSwu3UNK919V4LOczvcmS0gejX
+	uPEvzftOdZcH2tte/5STOEurg7z3wC043DC8Ne/v72a1yNZNWnJfKNXHdBdft8Eg
+	jLkFfDw/2LnmGrOCRus9wPIeAiGUnQbS+CeFutPebhVWEQhA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcq1223-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 May 2025 07:28:38 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54G7SanY014625
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 May 2025 07:28:37 GMT
+Received: from cse-cd01-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 16 May 2025 00:28:33 -0700
+From: Wenmeng Liu <quic_wenmliu@quicinc.com>
+To: <rfoss@kernel.org>, <bryan.odonoghue@linaro.org>, <todor.too@gmail.com>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <quic_depengs@quicinc.com>, <quic_wenmliu@quicinc.com>
+Subject: [PATCH RESEND] arm64: dts: qcom: sm8550: Add support for camss
+Date: Fri, 16 May 2025 15:27:07 +0800
+Message-ID: <20250516072707.388332-1-quic_wenmliu@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250513163438.3942405-1-tabba@google.com> <20250513163438.3942405-15-tabba@google.com>
- <CADrL8HXN=9r0Kat5Rix8OdAFmHK+qqRNqyCU93XPK7WbM4f2vg@mail.gmail.com>
-In-Reply-To: <CADrL8HXN=9r0Kat5Rix8OdAFmHK+qqRNqyCU93XPK7WbM4f2vg@mail.gmail.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Fri, 16 May 2025 09:07:14 +0200
-X-Gm-Features: AX0GCFumrLCfwGJXXpv4sHDm4HWDeYyncTUE9HPJGeDi50TPwzgeh3m6MxJtEMo
-Message-ID: <CA+EHjTzrsx+=mfAOpQ4mT1vOYotMTAz9c3MBMVDu3m-eZaTAbA@mail.gmail.com>
-Subject: Re: [PATCH v9 14/17] KVM: arm64: Enable mapping guest_memfd in arm64
-To: James Houghton <jthoughton@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: br1k9fbd3Z6UNgOSv5LXjm6xJysRzL2I
+X-Proofpoint-ORIG-GUID: br1k9fbd3Z6UNgOSv5LXjm6xJysRzL2I
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDA2OSBTYWx0ZWRfXwbQ36jKvU6VR
+ v1UYVUjVqNnpBvawWLG7ZBwrSIy1x91lMGrMp++/YYe6vL4HWcaWywfQ6FLPI6+Gy3YBvDR0XAI
+ qwS4BGIIcYmEQUbvp6JIJ6Bvmtl6VkwIE4oopwFkyPIEfwO/bYQhoW8+uJUtfbqxdLkm/TGjRVH
+ mtr25MDQnAL7F3fQbt4dUjb5/meWwIyuTKjFsFgs1bluPPhjBssODXXSFbwPmyS9+NbcHRQhVPc
+ T9ooROLXWDSb/3fVLo35T6kJ0rH8v6sQS0bg83qdoMtFikHmocByopPs7KdDNeWa8/dNrYXl82l
+ 9Gi0JH/WF848EjR5CvpUr7pYADwI1NaiKlNcRQxhwYEwJNoLOPSjtyUEQehTADSqBdz5L5M9XbW
+ yLQKDfutmWIgsL6iOMyepeYrghJJrUDkQ52m03Sy1wakaEjpjiZq3nU26DFXnbClh4i3SBKN
+X-Authority-Analysis: v=2.4 cv=KcvSsRYD c=1 sm=1 tr=0 ts=6826e926 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=-Dqg9KxjyIUy_Lgdb-YA:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-16_03,2025-05-15_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0 phishscore=0
+ lowpriorityscore=0 mlxlogscore=665 spamscore=0 malwarescore=0 impostorscore=0
+ mlxscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505160069
 
-Hi James,
+Add support for the camera subsystem on the SM8550 Qualcomm SoC. This
+includes bringing up the CSIPHY, CSID, VFE/RDI interfaces.
 
-On Fri, 16 May 2025 at 01:51, James Houghton <jthoughton@google.com> wrote:
->
-> On Tue, May 13, 2025 at 9:35=E2=80=AFAM Fuad Tabba <tabba@google.com> wro=
-te:
-> >
-> > Enable mapping guest_memfd in arm64. For now, it applies to all
-> > VMs in arm64 that use guest_memfd. In the future, new VM types
-> > can restrict this via kvm_arch_gmem_supports_shared_mem().
-> >
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >  arch/arm64/include/asm/kvm_host.h | 10 ++++++++++
-> >  arch/arm64/kvm/Kconfig            |  1 +
-> >  2 files changed, 11 insertions(+)
-> >
-> > diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm=
-/kvm_host.h
-> > index 08ba91e6fb03..2514779f5131 100644
-> > --- a/arch/arm64/include/asm/kvm_host.h
-> > +++ b/arch/arm64/include/asm/kvm_host.h
-> > @@ -1593,4 +1593,14 @@ static inline bool kvm_arch_has_irq_bypass(void)
-> >         return true;
-> >  }
-> >
-> > +static inline bool kvm_arch_supports_gmem(struct kvm *kvm)
-> > +{
-> > +       return IS_ENABLED(CONFIG_KVM_GMEM);
-> > +}
->
-> This is written as if it is okay for CONFIG_KVM_GMEM not to be
-> enabled, but when disabling CONFIG_KVM_GMEM you will get an error for
-> redefining kvm_arch_supports_gmem().
->
-> I think you either want to include:
->
-> #define kvm_arch_supports_gmem kvm_arch_supports_gmem
->
-> or just do something closer to what x86 does:
->
-> #ifdef CONFIG_KVM_GMEM
-> #define kvm_arch_supports_gmem(kvm) true
-> #endif
-> > +
-> > +static inline bool kvm_arch_vm_supports_gmem_shared_mem(struct kvm *kv=
-m)
-> > +{
-> > +       return IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM);
-> > +}
->
-> And this applies here as well.
->
-> #define kvm_arch_vm_supports_gmem_shared_mem
-> kvm_arch_vm_supports_gmem_shared_mem
->
-> or
->
-> #ifdef CONFIG_KVM_GMEM
-> #define kvm_arch_vm_supports_gmem_shared_mem(kvm)
-> IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM);
-> #endif
->
-> > +
-> >  #endif /* __ARM64_KVM_HOST_H__ */
-> > diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
-> > index 096e45acadb2..8c1e1964b46a 100644
-> > --- a/arch/arm64/kvm/Kconfig
-> > +++ b/arch/arm64/kvm/Kconfig
-> > @@ -38,6 +38,7 @@ menuconfig KVM
-> >         select HAVE_KVM_VCPU_RUN_PID_CHANGE
-> >         select SCHED_INFO
-> >         select GUEST_PERF_EVENTS if PERF_EVENTS
-> > +       select KVM_GMEM_SHARED_MEM
->
-> This makes it impossible to see the error, but I think we should fix
-> it anyway. :)
+SM8550 provides
+- 3 x VFE, 3 RDI per VFE
+- 2 x VFE Lite, 4 RDI per VFE
+- 3 x CSID
+- 2 x CSID Lite
+- 8 x CSI PHY
 
-Ack.
+Co-developed-by: Depeng Shao <quic_depengs@quicinc.com>
+Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 210 +++++++++++++++++++++++++++
+ 1 file changed, 210 insertions(+)
 
-Thank you!
-/fuad
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index e9bb077aa9f0..722521496a2d 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -3326,6 +3326,216 @@ cci2_i2c1: i2c-bus@1 {
+ 			};
+ 		};
+ 
++		isp: isp@acb7000 {
++			compatible = "qcom,sm8550-camss";
++
++			reg = <0x0 0x0acb7000 0x0 0x0d00>,
++			      <0x0 0x0acb9000 0x0 0x0d00>,
++			      <0x0 0x0acbb000 0x0 0x0d00>,
++			      <0x0 0x0acca000 0x0 0x0a00>,
++			      <0x0 0x0acce000 0x0 0x0a00>,
++			      <0x0 0x0acb6000 0x0 0x1000>,
++			      <0x0 0x0ace4000 0x0 0x2000>,
++			      <0x0 0x0ace6000 0x0 0x2000>,
++			      <0x0 0x0ace8000 0x0 0x2000>,
++			      <0x0 0x0acea000 0x0 0x2000>,
++			      <0x0 0x0acec000 0x0 0x2000>,
++			      <0x0 0x0acee000 0x0 0x2000>,
++			      <0x0 0x0acf0000 0x0 0x2000>,
++			      <0x0 0x0acf2000 0x0 0x2000>,
++			      <0x0 0x0ac62000 0x0 0xf000>,
++			      <0x0 0x0ac71000 0x0 0xf000>,
++			      <0x0 0x0ac80000 0x0 0xf000>,
++			      <0x0 0x0accb000 0x0 0x1800>,
++			      <0x0 0x0accf000 0x0 0x1800>;
++			reg-names = "csid0",
++				    "csid1",
++				    "csid2",
++				    "csid_lite0",
++				    "csid_lite1",
++				    "csid_wrapper",
++				    "csiphy0",
++				    "csiphy1",
++				    "csiphy2",
++				    "csiphy3",
++				    "csiphy4",
++				    "csiphy5",
++				    "csiphy6",
++				    "csiphy7",
++				    "vfe0",
++				    "vfe1",
++				    "vfe2",
++				    "vfe_lite0",
++				    "vfe_lite1";
++
++			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
++				 <&camcc CAM_CC_CPAS_AHB_CLK>,
++				 <&camcc CAM_CC_CPAS_FAST_AHB_CLK>,
++				 <&camcc CAM_CC_CPAS_IFE_LITE_CLK>,
++				 <&camcc CAM_CC_CPAS_IFE_0_CLK>,
++				 <&camcc CAM_CC_CPAS_IFE_1_CLK>,
++				 <&camcc CAM_CC_CPAS_IFE_2_CLK>,
++				 <&camcc CAM_CC_CSID_CLK>,
++				 <&camcc CAM_CC_CSIPHY0_CLK>,
++				 <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSIPHY1_CLK>,
++				 <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSIPHY2_CLK>,
++				 <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSIPHY3_CLK>,
++				 <&camcc CAM_CC_CSI3PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSIPHY4_CLK>,
++				 <&camcc CAM_CC_CSI4PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSIPHY5_CLK>,
++				 <&camcc CAM_CC_CSI5PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSIPHY6_CLK>,
++				 <&camcc CAM_CC_CSI6PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSIPHY7_CLK>,
++				 <&camcc CAM_CC_CSI7PHYTIMER_CLK>,
++				 <&camcc CAM_CC_CSID_CSIPHY_RX_CLK>,
++				 <&gcc GCC_CAMERA_HF_AXI_CLK>,
++				 <&camcc CAM_CC_IFE_0_CLK>,
++				 <&camcc CAM_CC_IFE_0_FAST_AHB_CLK>,
++				 <&camcc CAM_CC_IFE_1_CLK>,
++				 <&camcc CAM_CC_IFE_1_FAST_AHB_CLK>,
++				 <&camcc CAM_CC_IFE_2_CLK>,
++				 <&camcc CAM_CC_IFE_2_FAST_AHB_CLK>,
++				 <&camcc CAM_CC_IFE_LITE_CLK>,
++				 <&camcc CAM_CC_IFE_LITE_AHB_CLK>,
++				 <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>,
++				 <&camcc CAM_CC_IFE_LITE_CSID_CLK>;
++			clock-names = "camnoc_axi",
++				      "cpas_ahb",
++				      "cpas_fast_ahb_clk",
++				      "cpas_ife_lite",
++				      "cpas_vfe0",
++				      "cpas_vfe1",
++				      "cpas_vfe2",
++				      "csid",
++				      "csiphy0",
++				      "csiphy0_timer",
++				      "csiphy1",
++				      "csiphy1_timer",
++				      "csiphy2",
++				      "csiphy2_timer",
++				      "csiphy3",
++				      "csiphy3_timer",
++				      "csiphy4",
++				      "csiphy4_timer",
++				      "csiphy5",
++				      "csiphy5_timer",
++				      "csiphy6",
++				      "csiphy6_timer",
++				      "csiphy7",
++				      "csiphy7_timer",
++				      "csiphy_rx",
++				      "gcc_axi_hf",
++				      "vfe0",
++				      "vfe0_fast_ahb",
++				      "vfe1",
++				      "vfe1_fast_ahb",
++				      "vfe2",
++				      "vfe2_fast_ahb",
++				      "vfe_lite",
++				      "vfe_lite_ahb",
++				      "vfe_lite_cphy_rx",
++				      "vfe_lite_csid";
++
++			interrupts = <GIC_SPI 601 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 603 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 431 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 605 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 376 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 122 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 89 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 278 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 277 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 602 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 604 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 688 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 606 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 377 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "csid0",
++					  "csid1",
++					  "csid2",
++					  "csid_lite0",
++					  "csid_lite1",
++					  "csiphy0",
++					  "csiphy1",
++					  "csiphy2",
++					  "csiphy3",
++					  "csiphy4",
++					  "csiphy5",
++					  "csiphy6",
++					  "csiphy7",
++					  "vfe0",
++					  "vfe1",
++					  "vfe2",
++					  "vfe_lite0",
++					  "vfe_lite1";
++
++			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
++					 &config_noc SLAVE_CAMERA_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
++					<&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
++			interconnect-names = "ahb",
++					     "hf_0_mnoc";
++
++			iommus = <&apps_smmu 0x800 0x20>;
++
++			power-domains = <&camcc CAM_CC_IFE_0_GDSC>,
++					<&camcc CAM_CC_IFE_1_GDSC>,
++					<&camcc CAM_CC_IFE_2_GDSC>,
++					<&camcc CAM_CC_TITAN_TOP_GDSC>;
++			power-domain-names = "ife0",
++					     "ife1",
++					     "ife2",
++					     "top";
++
++			status = "disabled";
++
++			ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++				};
++
++				port@1 {
++					reg = <1>;
++				};
++
++				port@2 {
++					reg = <2>;
++				};
++
++				port@3 {
++					reg = <3>;
++				};
++
++				port@4 {
++					reg = <4>;
++				};
++
++				port@5 {
++					reg = <5>;
++				};
++
++				port@6 {
++					reg = <6>;
++				};
++
++				port@7 {
++					reg = <7>;
++				};
++			};
++		};
++
+ 		camcc: clock-controller@ade0000 {
+ 			compatible = "qcom,sm8550-camcc";
+ 			reg = <0 0x0ade0000 0 0x20000>;
+-- 
+2.34.1
 
-> >         help
-> >           Support hosting virtualized guest machines.
-> >
-> > --
-> > 2.49.0.1045.g170613ef41-goog
-> >
 
