@@ -1,179 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-58240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4862ABA36E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 21:09:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25F09ABA3B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 21:25:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75E981896F3D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 19:09:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27C9DA25421
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 19:24:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B98B327FB22;
-	Fri, 16 May 2025 19:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C89D27F727;
+	Fri, 16 May 2025 19:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Rh88UX7x"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="C1CMQbKb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5C727E7F3
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 19:08:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98902280019
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 19:22:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747422537; cv=none; b=pN1U61voaYq2tchHlfUzL3Y9PfPk+Ju7DGkvFKqjDPQQ6amH1YsMj8biRCAM/Fv5cive2YV5TQuUBSTM/P8ONoo/Hvvo/+K1Ix75UgH2Z9GcESMC9udUUqU11ptVNl73FxhbGtpKkuX8WI4d/z6rcid4EPnXipxHvLQdJK+XopQ=
+	t=1747423357; cv=none; b=UMCQjRtRAUiVuxcTlgGwQ9zqIBWmXckSFxS9X2QMgSKVzHzBNTIwGOtqBtjl6dPP0plbxZ/UxGRABbwZ5f2191xry0t9GNOcRW9C7aiNtiYHI6wqFvb7cI2oWpNrUYBAxBx3en+45ZJFMlkG4fpb3fe4ixw17JRe7sb2mhYFMRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747422537; c=relaxed/simple;
-	bh=pxXpE/fZNq6yLvc52y7PdDeNl9o9v335j69UIWK1LFc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AN1Sb2gBH52EBj3ywTAc2eEp3PUtHqfWfkz5WoEtFRe6Rz7U9AtwgZqa6f0q8XEowCTJy+cq4rYOBoGYkLMJ6L5bpSq2aGxx3nowsVCcFVCy/9IB8Np1ScD5xWo9VUSprq4cH07rkTFVBLmaMVLerSeoGNVKsd3Dx0b9o7Fedzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Rh88UX7x; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54GCL6W7014952
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 19:08:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	W1EJKheOMiPM9GqihfGtt+delr480OzcwQJk/CmfpTs=; b=Rh88UX7xz+3klM2w
-	aTUXEORusMkVUL3WJQOOb3b2/WiVDz6HndDxyIzoyosIg9PJK2r6iH6H1BqCuadA
-	1Fji2zptDczbA7437/kxynI4nB1ijYe1Y0XIebjYan5Wo/1/DUxCH1Fo62nLqG/R
-	SsCBNDwHi6SUYkT1wMbs1R1k5/HwnVAe26DEVa18hh9heI513OIPktfYscrgIfyB
-	8MzssdGq+f/9mo81ZGjp49Av5NU8nVLmEs62umkqCfoMDdgHvLejec4yRZA+cgS6
-	AHOdZpAiFm5hKMlgNRsY3F5O1NcUfwsCHSoGon0To+vBlTZj9eAURzpV0sWg/n89
-	yG2ZRg==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46nx9jtdkr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 19:08:54 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-30e895056f0so963833a91.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 12:08:54 -0700 (PDT)
+	s=arc-20240116; t=1747423357; c=relaxed/simple;
+	bh=mv1Ins7jvbobKa3n2jnizEHtuD4BULDUPYaGteSuvOE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=P6eAO7X/pVtH82qDxH/mjs3EBQrv0/UnOsqrYKF7bBAoD16wnKB06Q0L5GlAm5NuoZmjsCna7Z3s0c4iDaEpgI1J5gwTZQtusuvDUoOfYwfXKCt/vbZX8vQoVg0c+y8w4WoaJ7jjwZTLWNKufMYo+QjpS0yW4uTlqO/9Mm0EobQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=C1CMQbKb; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-7082e46880eso24149307b3.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 12:22:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1747423354; x=1748028154; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=X5csGcQ8badg6OQc2j12fcylP9C8BoCep+FBckAp9xQ=;
+        b=C1CMQbKb13wdheh5RbK8OT4VZyiX0o20ZWgRmHOLxPPIR43ZifNSAwB/mWzjpKjZ3t
+         m6Vc1TMJlIP1vIxm2vN71sGPbl8cKSzcPARflld3T/wD4T3+TGT10f+lDIoOGdjxpnAZ
+         NuCZwYKxj7NhM/eCw9AF5zbanrdpyCdS3ucNI0x/DkO3CEPJPxwKD05bM2rgIR0Oa2vE
+         lpxSkXlZBzv4Cr6avrKeRcWaJKCzxyY67ZVRBiW4lBOJDY3GjMO7WIpSBYFnaW2itO8d
+         lMsHsskl8O+496VKaT8UpDFRY39DWnSgy1OSyIcpaSzIEeiryIGI2NpLX7nWtTJcof6B
+         b9cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747422533; x=1748027333;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W1EJKheOMiPM9GqihfGtt+delr480OzcwQJk/CmfpTs=;
-        b=PeOiYQfFOn1rhLWfMPT/n0v1NoO+lv3zfKauNd1KVv8rLW5I/FDbDRUImSje9NDH75
-         cAmLHwBFFsbo9WsuN0dYr1Qgwq9SkHCZkgbpAM7dzn0DEjtgzObqtRhM0ZSeMsrcBkTb
-         xTsMQCNamD1Dks6k/Dh1UD6cC8VSu6T0OytEmrMEzUKSrXirJ/1Lzfn7T/MHmobSrTU7
-         p16AsJYB9eOAsbvu5INVFJL1xbqCsTE2YZuuUvyaEgaBPBYJSmJg//CF4ZpPAxsBCjI4
-         QHokMt3G9BgAeVzcEGU04o7pLHjJWvH9uK+mbVnjQ7ol8rSrK0qLcIL2BrF1cXOhUEjB
-         /raQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWgFZoqLAhwgdjgHZciqiDSknbqp2W3iZ/agnlfHl/Gz0VHMHkVjcVGTtDfuzRYai9wxSPoCyoBHInMoejo@vger.kernel.org
-X-Gm-Message-State: AOJu0YxwN357VtLY6nWAfzbQbfYp3dFP2rXP4+LfOKbcnfwHbyMz59qI
-	6pkkqs8ePN/qxQK68J8tnsn9fkTnLy0lQlYFy+XvMH14aJq9mdSDEjYHgT2zCZ+EGRViIQH35Fl
-	Mi3XywwuAqJsOLmURNFh/iNFIuzOr7rm2NFO79CoAGP0H2JMC6GNNw0C7soD6XaAW5w58
-X-Gm-Gg: ASbGncuvT5JjJIKvF51JfO7F/J7szrwsw3P6TEVSU/w7CPvDsnkj2D6zdDb9aWGDO8y
-	1ZFz5iAWhHo0Jgm19P4z1rZUAU0SEecNKBAHdLZGiPs3SkvvWpPgie0JrVUQeQL1QXVZYTbxZwZ
-	02rD1A0/zR2DLHZK7jyoaWFvImaOvFD2S+U6JCJda37R+S3k0DGVHLGDun+oz+F1EpKI2YXzVTQ
-	mHi/lbMRvLYvrc4zb68QF4Frj9i2/9YQJPFktKSM0/onx68uaWo16OCvJXFa7mS365iww3oelzL
-	sQLCyBSuX3Mh3WjXPO15KvDTELn2Af7l2pD43VusC6z95ehbVPN3qkX1chvKEQ==
-X-Received: by 2002:a17:90b:1dd1:b0:30c:5255:ffd6 with SMTP id 98e67ed59e1d1-30e7d4f4016mr6537226a91.6.1747422533663;
-        Fri, 16 May 2025 12:08:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEjCoMdR7R7xPNjV/d+MGNlVvf+FoMIYIPH77AH2OP/4hldS1ZVPlxtnh5tCoi/7JYkYDA0OQ==
-X-Received: by 2002:a17:90b:1dd1:b0:30c:5255:ffd6 with SMTP id 98e67ed59e1d1-30e7d4f4016mr6537202a91.6.1747422533311;
-        Fri, 16 May 2025 12:08:53 -0700 (PDT)
-Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30e334fb87dsm5537527a91.47.2025.05.16.12.08.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 May 2025 12:08:52 -0700 (PDT)
-Message-ID: <7fa413b1-99ee-4f60-b458-cce2a2bca388@oss.qualcomm.com>
-Date: Fri, 16 May 2025 13:08:49 -0600
+        d=1e100.net; s=20230601; t=1747423354; x=1748028154;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=X5csGcQ8badg6OQc2j12fcylP9C8BoCep+FBckAp9xQ=;
+        b=uxQu32A9LKfSGZsCtz7k7++Q6KliiK9sshJMI/cPNEtxZghmbPL3YLfImMjESTBJsC
+         FJCFL/wSJ3hoRpytMibktHcELSILnpaGdj1BzbGqMieqML4CbcaD5De97JTst+o7AUQt
+         4XmYNRFC/tQm3jpVpg5rPZVMwIb9hdU88pwybzHJXTi/FxMhg9RHoWNn9qENZcSD+jj9
+         FeSjpt7VTKyz5YHiT+o8errTpFU56+CHefaRj8vtW4Ki00VCFkfI10+o32cPtNcLiyaL
+         zOmgWd9C6ihgUJqqsIuJWxHPZUWHoR9rKNZ7c4tKllt6fQMR4nDk0pbm33B9y9n5UhaI
+         qhZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVlYeyXCj5kXMzyArADkUMLjBUkG/gnwYVwOotNQT9y2KSzQ6n7QXMUn6SP9FcifLDXuDG9IOBn8RwIY9+8@vger.kernel.org
+X-Gm-Message-State: AOJu0YzvKNGbO5mV1zJKDa3Y+g5nP1yC8ZQcp8PzpQmdnP19H26ugIVA
+	hUG1tSNcRo4shuycTkEDFWiCXxMa8WYbmP6rfaKFJ9u1NfWCONj3xZJaKnf/BJt52oiU4GZi2KI
+	1pKo5XnDGw5YCohvmjfPDnCCDOMla95igNjmh1iHc+7aNk8Aj+OGJ183i04H1gw==
+X-Gm-Gg: ASbGnctVFBl4NjSaRYK/hZ5Ju1hncOab0Jcz1ejSZLMZtLalq5+iPXns48ZpLXohOQK
+	Tl0Ds3M1hN6ppi55M0QPAkadLDnbV8Kg5egR8zkyB2fZrdna9lUpppDRsorA4plRSea3MeHJ6B9
+	+rGcZ88R73NL1NBh3GhWTP8oPPB8r7k7qc3oQYYJaGyPuy6c1pAyf2hYAGEkKOOw==
+X-Google-Smtp-Source: AGHT+IHmB5XBLYghERElfsJfzIa8m2PhXb5Oe8yfTFbW3QD907B5QsRiG5OVykLoPEH8ozkVNKkbLJW7xYSYXhG8Zqs=
+X-Received: by 2002:a05:690c:6f03:b0:6fb:8461:e828 with SMTP id
+ 00721157ae682-70ca7c108f1mr74013577b3.30.1747423354023; Fri, 16 May 2025
+ 12:22:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6] bus: mhi: host: don't free bhie tables during
- suspend/hibernation
-To: Muhammad Usama Anjum <usama.anjum@collabora.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        Youssef Samir
- <quic_yabdulra@quicinc.com>,
-        Matthew Leung <quic_mattleun@quicinc.com>,
-        Carl Vanderlip <quic_carlv@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
-        Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-        Alex Elder <elder@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Kunwu Chan <chentao@kylinos.cn>,
-        "Dr. David Alan Gilbert"
- <linux@treblig.org>,
-        Troy Hanson <quic_thanson@quicinc.com>
-Cc: kernel@collabora.com, sebastian.reichel@collabora.com,
-        Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-        Baochen Qiang <quic_bqiang@quicinc.com>,
-        Sumit Garg <sumit.garg@kernel.org>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
-        ath12k@lists.infradead.org
-References: <20250516184952.878726-1-usama.anjum@collabora.com>
-Content-Language: en-US
-From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-In-Reply-To: <20250516184952.878726-1-usama.anjum@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 9_9BHDj0AivQS-P_mJ7CcCASO4pWFCgA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDE4OCBTYWx0ZWRfX6gCQ7NG4hOtZ
- yl/kCCPvMGUx3nwkobDWipl1ALKVfxw/fhKZSPDzO8M3L8YB/43JXo5n/lVX5R6yOj9mpZEyD2i
- YqZOmpyseeobOo/qySj+VjPSPS43soo1Vvs/Ve6Bq2rtWWCTBHfwp2ruwsb3MfwBwDFwf1htXKM
- /ONP20ydi3eGwmf0HtTfHHCBEy9dbSlLlwOB10aqYl0+48+V+mMHdw1cLEgo/1YFbkcZefva7x9
- srBL5a/wMXA0qed0VSqc5tP1sw14MKjgK5eZuR4oKzRsoC3wHpTHnp18lOxxbZ5UqqSenkdEZid
- sBC7qqjjtgjv9yyO5YZJMQi+Wa/9g+WzSgoSC2B6FGWugwWXwCD/YPFqobgojwAe5KTjxEpETkI
- Rf1afQutOgO/U2tO4mURmI/77Zoj22YDmzBamRd6wiJutzj56AE/32dysgyYtlOT4DKgISDD
-X-Authority-Analysis: v=2.4 cv=CIIqXQrD c=1 sm=1 tr=0 ts=68278d46 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=QX4gbG5DAAAA:8 a=uZSOL5_7EVOPlFl7amgA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22 a=TjNXssC_j7lpFel5tvFf:22 a=AbAUZ8qAyYyZVLSsDulk:22
-X-Proofpoint-GUID: 9_9BHDj0AivQS-P_mJ7CcCASO4pWFCgA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-16_06,2025-05-16_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0
- phishscore=0 mlxlogscore=999 spamscore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505160188
+References: <20250513163438.3942405-8-tabba@google.com> <diqzsel8pdab.fsf@ackerleytng-ctop.c.googlers.com>
+In-Reply-To: <diqzsel8pdab.fsf@ackerleytng-ctop.c.googlers.com>
+From: James Houghton <jthoughton@google.com>
+Date: Fri, 16 May 2025 12:21:58 -0700
+X-Gm-Features: AX0GCFtvTxSjQg-C2lcu7Fqz9j01UftX46-yoNDwQ9IypZOUYYVgSBCYUAztoPs
+Message-ID: <CADrL8HX4WfmHk8cLKxL2xrA9a_mLpOmwiojxeFRMdYfvMH0vOQ@mail.gmail.com>
+Subject: Re: [PATCH v9 07/17] KVM: guest_memfd: Allow host to map
+ guest_memfd() pages
+To: Ackerley Tng <ackerleytng@google.com>
+Cc: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-mm@kvack.org, pbonzini@redhat.com, chenhuacai@kernel.org, 
+	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 5/16/2025 12:49 PM, Muhammad Usama Anjum wrote:
-> Fix dma_direct_alloc() failure at resume time during bhie_table
-> allocation because of memory pressure. There is a report where at
-> resume time, the memory from the dma doesn't get allocated and MHI
-> fails to re-initialize.
-> 
-> To fix it, don't free the memory at power down during suspend /
-> hibernation. Instead, use the same allocated memory again after every
-> resume / hibernation. This patch has been tested with resume and
-> hibernation both.
-> 
-> Optimize the rddm and fbc bhie allocations. The rddm is of constant
-> size for a given hardware. While the fbc_image size depends on the
-> firmware. If the firmware changes, we'll free and allocate new memory
-> for it. This patch is motivated from the ath12k [1] and ath11k [2]
-> patches. They don't free the memory and reuse the same memory if new
-> size is same. The firmware caching hasn't been implemented for the
-> drivers other than in the nouveau. (The changing of firmware isn't
-> tested/supported for wireless drivers. But let's follow the example
-> patches here.)
-> 
-> [1] https://lore.kernel.org/all/20240419034034.2842-1-quic_bqiang@quicinc.com/
-> [2] https://lore.kernel.org/all/20220506141448.10340-1-quic_akolli@quicinc.com/
-> 
-> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
-> Tested-on: WCN7850 hw2.0 WLAN.HMT.1.1.c5-00284-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-> 
-> Acked-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-> Tested-by: Baochen Qiang <quic_bqiang@quicinc.com>
-> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+On Tue, May 13, 2025 at 11:37=E2=80=AFAM Ackerley Tng <ackerleytng@google.c=
+om> wrote:
+>
+> Fuad Tabba <tabba@google.com> writes:
+> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> > index 6db515833f61..8e6d1866b55e 100644
+> > --- a/virt/kvm/guest_memfd.c
+> > +++ b/virt/kvm/guest_memfd.c
+> > @@ -312,7 +312,88 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memor=
+y_slot *slot, gfn_t gfn)
+> >       return gfn - slot->base_gfn + slot->gmem.pgoff;
+> >  }
+> >
+> > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> > +
+> > +static bool kvm_gmem_supports_shared(struct inode *inode)
+> > +{
+> > +     uint64_t flags =3D (uint64_t)inode->i_private;
+> > +
+> > +     return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
+> > +}
+> > +
+> > +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
+> > +{
+> > +     struct inode *inode =3D file_inode(vmf->vma->vm_file);
+> > +     struct folio *folio;
+> > +     vm_fault_t ret =3D VM_FAULT_LOCKED;
+> > +
+> > +     filemap_invalidate_lock_shared(inode->i_mapping);
+> > +
+> > +     folio =3D kvm_gmem_get_folio(inode, vmf->pgoff);
+> > +     if (IS_ERR(folio)) {
+> > +             int err =3D PTR_ERR(folio);
+> > +
+> > +             if (err =3D=3D -EAGAIN)
+> > +                     ret =3D VM_FAULT_RETRY;
+> > +             else
+> > +                     ret =3D vmf_error(err);
+> > +
+> > +             goto out_filemap;
+> > +     }
+> > +
+> > +     if (folio_test_hwpoison(folio)) {
+> > +             ret =3D VM_FAULT_HWPOISON;
+> > +             goto out_folio;
+> > +     }
 
-I think we are in a good spot now.
+nit: shmem_fault() does not include an equivalent of the above
+HWPOISON check, and __do_fault() already handles HWPOISON.
 
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+It's very unlikely for `folio` to be hwpoison and not up-to-date, and
+even then, writing over poison (to zero the folio) is not usually
+fatal.
+
+> > +
+> > +     if (WARN_ON_ONCE(folio_test_large(folio))) {
+> > +             ret =3D VM_FAULT_SIGBUS;
+> > +             goto out_folio;
+> > +     }
+
+nit: I would prefer we remove this SIGBUS bit and change the below
+clearing logic to handle large folios. Up to you I suppose.
+
+> > +
+> > +     if (!folio_test_uptodate(folio)) {
+> > +             clear_highpage(folio_page(folio, 0));
+> > +             kvm_gmem_mark_prepared(folio);
+> > +     }
+> > +
+> > +     vmf->page =3D folio_file_page(folio, vmf->pgoff);
+> > +
+> > +out_folio:
+> > +     if (ret !=3D VM_FAULT_LOCKED) {
+> > +             folio_unlock(folio);
+> > +             folio_put(folio);
+> > +     }
+> > +
+> > +out_filemap:
+> > +     filemap_invalidate_unlock_shared(inode->i_mapping);
+>
+> Do we need to hold the filemap_invalidate_lock while zeroing? Would
+> holding the folio lock be enough?
+
+Do we need to hold the filemap_invalidate_lock for reading *at all*?
+
+I don't see why we need it. We're not checking gmem->bindings, and
+filemap_grab_folio() already synchronizes with filemap removal
+properly.
+
+>
+> > +
+> > +     return ret;
+> > +}
 
