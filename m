@@ -1,177 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-58236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E262ABA314
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 20:43:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 074EEABA325
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 20:49:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2F40E1BC78B0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 18:43:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E7C63BC020
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 18:49:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B62E9278E6B;
-	Fri, 16 May 2025 18:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EED2C27E7E3;
+	Fri, 16 May 2025 18:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="DDyMzMFq"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=proton.me header.i=@proton.me header.b="YfSLBGme"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from mail-24425.protonmail.ch (mail-24425.protonmail.ch [109.224.244.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7131A0BF1;
-	Fri, 16 May 2025 18:43:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747420993; cv=pass; b=jiqWumT/zXKp5614m+0dAAGoj2n/bnarKxJywKzZ/5BrRqE/huqeZ19atqJS9mxmfGSRexYmCLH6E7hNxNLH+aa4kiqWi/cDCz5sSRluMVYqVzQOlOifu+YC7eCwZ0SYvtYkA7fHJeP5Lpi/nKx6G1zNJt7tSKITxweyuPHNQb4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747420993; c=relaxed/simple;
-	bh=zBZfFiPZUzPpPv3FClLAoIyveXSca1TLINgJk/0B2s0=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=ATd+zC+w5lqLUmFSAFDR7RJdUbBJ4zJx1u1k8AByElzxDW2/kX7eRZHyCF98xu63jV+CedYCAr2vIooLhdk/GePwRGYornW0R6TVJiv9z6jLoEfpBItmEdWZ5BITliX5A/ItP3p6hsZ1T04xr7cgCEu7/aKo83kW4P6zDqd6CSo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=DDyMzMFq; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1747420952; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=UB58WcAzPfmeQxe/5HlsaQ5qwCCfD3VwmFuzrSEowItxfPOF5c3Q2xLQQNXim4CWyY/t2tGz7TA0digxQxndyRoFUiCbuvsz90gQJR2hBB6QetgDJdSO2yavqNdkbtvowdFwQzig8zgTOslXFazXQApQd9TdwdVuyYpsrVMjt/c=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1747420952; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=MzzkSiZrg4oJeY3DBEUNx4n2bS19YxHxGP5sLJRKfY8=; 
-	b=MDf3bxyMFRUmfvwUSN8BfhmOcz5TC5subx1VSeD/d3+mEQR475vYKDlIiAbNMUlY9MVfp75dWp5TbwYtJ4lmhsPRjEKqIttwy/QpXSfUB+/ogf4uFsDc/5oZxjYllJsjzwrBZA4CsMdPv/quI4fKmHerHrGy3qjTevFWALK37So=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
-	dmarc=pass header.from=<usama.anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1747420952;
-	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
-	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=MzzkSiZrg4oJeY3DBEUNx4n2bS19YxHxGP5sLJRKfY8=;
-	b=DDyMzMFqhCtktAIbag3MZAEfhMX2KogDJacB8zTo/0Ctr7PTYEvaLiHmFt44rQtI
-	x8jrfeV3A04XflvyyemEfVEa2J8laJZOKUJg/ojNjePSC9OWS6zcvHvkYK2dm+6z5mZ
-	BcVokWCp3hz5UmDeuY+VDrMYm2egk1Y8T6MKMGfo=
-Received: by mx.zohomail.com with SMTPS id 17474209503341.7831844100325043;
-	Fri, 16 May 2025 11:42:30 -0700 (PDT)
-Message-ID: <0e21b693-e03e-4a76-aada-0c48aeae6eec@collabora.com>
-Date: Fri, 16 May 2025 23:42:21 +0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6782274FF9;
+	Fri, 16 May 2025 18:49:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.25
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747421359; cv=none; b=qiZHLvHNu64Z5YtRp2Di5Wa9xZ74GgxP6I/HVw9vkp/KW43sxGdkLU/8/7t1P804taduVadRPXB191M1AozJ0KlhsGaqFGRXGlg4tYrxa+h38HtAEXGfXaep/inOHYNLSEPAnqohx3IR+wZskJEE5HBcdxiGGplrZr7w557KrcI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747421359; c=relaxed/simple;
+	bh=L2zfEnGbFxXlzozh3R4xBVOc9dI6O3z7CfzV+z8eaD4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CU+S0F1wrjNI5jzsNzY5+BEeJQfciximkKVOP41gwSfkj1e5SIAvtqB3ZQfHkK0FMTQrLuAqWmDzyuvYs++la8WMMvKG3wSd0mtYnb6MFDMRBMoHtNzasfbJPYWZAN6A0sTJJvHmYpjsWw6ldyVbCl7QA5YA0E3HcvdRBC6hMSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=YfSLBGme; arc=none smtp.client-ip=109.224.244.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1747421348; x=1747680548;
+	bh=7yNiiKDF+KREAb3BL5tgjMXVU2VSaNddorcUcOqgweU=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=YfSLBGme+j8sYt6NOtKuOUslAYSSy5jMhTgXKeh1Te/z8i1Ab3lSiBojNz003mqfi
+	 Diz0TWon7Y/W3BD/3c0ViEiGDAxFzRpV1EyJOiyz6PYCfr2N0QjKanbMEfjnsUy/HC
+	 256JSo7wEkjVwq/HEK6Hh1IwvUTOE7hT8tEJz/BIzMw7WtBV2s5fj/PjUzTfGHjGJs
+	 j56yR09sxYPfbIU/gn/gY4RAF/2PRY9JoHBzkCaC22evAvIooVP3C3nr/Jme/Hr0fb
+	 zn3wsw07kH2W73i/q/J6sYWLpcqnZL/G0LBrPa0FaAwp4N6FsgzKcTF4wdMvVg1CmT
+	 zxsEcQ9CJf95A==
+Date: Fri, 16 May 2025 18:48:59 +0000
+To: Niklas Cassel <cassel@kernel.org>
+From: Laszlo Fiat <laszlo.fiat@proton.me>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, =?utf-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, Krishna chaitanya chundru <quic_krichai@quicinc.com>, Wilfred Mallawa <wilfred.mallawa@wdc.com>, Damien Le Moal <dlemoal@kernel.org>, Hans Zhang <18255117159@163.com>, =?utf-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-rockchip@lists.infradead.org" <linux-rockchip@lists.infradead.org>, "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v2 0/4] PCI: dwc: Link Up IRQ fixes
+Message-ID: <5l0eAX7zaDMDMp1vJhvB9MVKXSPn3Ra0ZiP5e2q1E4rwmADBB6MlREZO9cuD_zvclAOhhBE0-NFthVbOajeSCfYjchT-83OgLbjclOgx3T4=@proton.me>
+In-Reply-To: <aCcMrtTus-QTNNiu@ryzen>
+References: <20250506073934.433176-6-cassel@kernel.org> <7zcrjlv5aobb22q5tyexca236gnly6aqhmidx6yri6j7wowteh@mylkqbwehak7> <aCNSBqWM-HM2vX7K@ryzen> <fCMPjWu_crgW5GkH4DJd17WBjnCAsb363N9N_h6ld1i8NqNNGR9PTpQWAO9-kwv4DUL6um48dwP0GJ8GmdL4uQf-WniBepwuxTEhjmbBnug=@proton.me> <aCcMrtTus-QTNNiu@ryzen>
+Feedback-ID: 130963441:user:proton
+X-Pm-Message-ID: a32a7c4b900ed4f1e27a751ddab136cfa7cdfb9b
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: usama.anjum@collabora.com, kernel@collabora.com,
- sebastian.reichel@collabora.com, Jeff Johnson
- <jeff.johnson@oss.qualcomm.com>, Baochen Qiang <quic_bqiang@quicinc.com>,
- mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
- ath11k@lists.infradead.org, ath12k@lists.infradead.org
-Subject: Re: [PATCH v5] bus: mhi: host: don't free bhie tables during
- suspend/hibernation
-To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Jeff Johnson <jjohnson@kernel.org>, Youssef Samir
- <quic_yabdulra@quicinc.com>, Matthew Leung <quic_mattleun@quicinc.com>,
- Yan Zhen <yanzhen@vivo.com>, Alex Elder <elder@kernel.org>,
- Kunwu Chan <chentao@kylinos.cn>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
- "Dr. David Alan Gilbert" <linux@treblig.org>
-References: <20250514081447.279981-1-usama.anjum@collabora.com>
- <f6eac84d-3d67-4f99-a9c5-a9f03d748010@oss.qualcomm.com>
-Content-Language: en-US
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
-In-Reply-To: <f6eac84d-3d67-4f99-a9c5-a9f03d748010@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 5/16/25 7:59 PM, Jeff Hugo wrote:
-> On 5/14/2025 2:14 AM, Muhammad Usama Anjum wrote:
->> Fix dma_direct_alloc() failure at resume time during bhie_table
->> allocation because of memory pressure. There is a report where at
->> resume time, the memory from the dma doesn't get allocated and MHI
->> fails to re-initialize.
->>
->> To fix it, don't free the memory at power down during suspend /
->> hibernation. Instead, use the same allocated memory again after every
->> resume / hibernation. This patch has been tested with resume and
->> hibernation both.
->>
->> There are two allocations of bhie; rddm and fbc. Optimize both of those
-> 
-> There are 3, but you touch 2.  I just commented on this in v4.  Only
-> touching two is fine (the device for the 3rd one doesn't need this), but
-> the documentation must be accurate.
-Yeah, for 3rd one in mhi_load_image_bhie(), this optimization isn't
-needed. Let me rephrase and resent v6.
+Hello,
+-------- Original Message --------
+On 16/05/2025 12:00, Niklas Cassel <cassel@kernel.org> wrote:
 
-> 
->> allocations. The rddm is of constant size for a given hardware. While
->> the fbc_image size depends on the firmware. If the firmware changes,
->> we'll free and allocate new memory for it. This patch is moticated from
-> 
-> moticated?  Motivated maybe?
-I'm using checkpatch --strict --codespell and hopping that it'll catch
-typos. But it misses some of them. Do you use any such tool?
+>  On Thu, May 15, 2025 at 05:33:41PM +0000, Laszlo Fiat wrote:
+>  > I am the one experiencing the issue with my Orange PI 3B (RK3566, 8 GB=
+ RAM) and a PLEXTOR PX-256M8PeGN NVMe SSD.
+>  >
+>  > I first detected the problem while upgrading from 6.13.8 to 6.14.3, th=
+at my system cannot find the NVME SSD which contains the rootfs. After reve=
+rting the two patches:
+>  >
+>  > - ec9fd499b9c6 ("PCI: dw-rockchip: Don't wait for link since we can de=
+tect Link Up")
+>  > - 0e0b45ab5d77 ("PCI: dw-rockchip: Enumerate endpoints based on dll_li=
+nk_up IRQ")
+>  >
+>  > my system booted fine again.
+>  > After that I tested the patches sent by Niklas in this thread, which f=
+ixed the issue, so I sent Tested-by.
+>  >
+>  > I did another test Today with 6.15.0-rc6, which in itself does not fin=
+d my SSD. Niklas asked me to test with these
+>  >
+>  > - revert ec9fd499b9c6 ("PCI: dw-rockchip: Don't wait for link since we=
+ can detect Link Up")
+>  > - revert 0e0b45ab5d77 ("PCI: dw-rockchip: Enumerate endpoints based on=
+ dll_link_up IRQ")
+>  > - apply the following patch:
+>  >
+>  > diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pc=
+i/controller/dwc/pcie-designware.c
+>  > index b3615d125942..5dee689ecd95 100644
+>  > --- a/drivers/pci/controller/dwc/pcie-designware.c
+>  > +++ b/drivers/pci/controller/dwc/pcie-designware.c
+>  > @@ -692,7 +692,7 @@ int dw_pcie_wait_for_link(struct dw_pcie *pci)
+>  >                 if (dw_pcie_link_up(pci))
+>  >                         break;
+>  >
+>  > -               msleep(LINK_WAIT_SLEEP_MS);
+>  > +               usleep_range(100, 200);
+>  >         }
+>  >
+>  >         if (retries >=3D LINK_WAIT_MAX_RETRIES) {
+>  >
+>  >
+>  > which restores the original behaviour to wait for link-up, then shorte=
+n the time. This resulted again a non booting system, this time with "Phy l=
+ink never came up" error message.
+> =20
+>  That message was unexpected.
+> =20
+>  What I expected to happen was that the link would come up, but by reduci=
+ng
+>  delay between "link is up" and device is accessed (from 90 ms -> 100 us)=
+,
+>  I was that you would see the same problem on "older" kernels as you do w=
+ith
+>  the "link up IRQ" patches (which originally had no delay, but this serie=
+s
+>  basically re-added the same delay (PCIE_T_RRS_READY_MS, 100 ms) as we ha=
+d
+>  before (LINK_WAIT_SLEEP_MS, 90 ms).
+> =20
+>  But I see the problem with the test code that I asked you to test to ver=
+ify
+>  that this problem also existed before (if you had a shorter delay).
+>  (By reducing the delay, the LINK_WAIT_MAX_RETRIES also need to be bumped=
+.)
+> =20
+>  Could you please test:
+>  diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/=
+controller/dwc/pcie-designware.c
+>  index b3615d125942..5dee689ecd95 100644
+>  --- a/drivers/pci/controller/dwc/pcie-designware.c
+>  +++ b/drivers/pci/controller/dwc/pcie-designware.c
+>  @@ -692,7 +692,7 @@ int dw_pcie_wait_for_link(struct dw_pcie *pci)
+>                  if (dw_pcie_link_up(pci))
+>                          break;
+> =20
+>  -               msleep(LINK_WAIT_SLEEP_MS);
+>  +               usleep_range(100, 200);
+>          }
+> =20
+>          if (retries >=3D LINK_WAIT_MAX_RETRIES) {
+>  diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/=
+controller/dwc/pcie-designware.h
+>  index 4dd16aa4b39e..8422661b79d5 100644
+>  --- a/drivers/pci/controller/dwc/pcie-designware.h
+>  +++ b/drivers/pci/controller/dwc/pcie-designware.h
+>  @@ -61,7 +61,7 @@
+>          set_bit(DW_PCIE_CAP_ ## _cap, &(_pci)->caps)
+> =20
+>   /* Parameters for the waiting for link up routine */
+>  -#define LINK_WAIT_MAX_RETRIES          10
+>  +#define LINK_WAIT_MAX_RETRIES          10000
+>   #define LINK_WAIT_SLEEP_MS             90
+> =20
+>   /* Parameters for the waiting for iATU enabled routine */
+> =20
+> =20
+>  On top of an old kernel instead?
+>
 
-> 
->> the ath12k [1] and ath11k [2] patches. They don't free the memory and
->> reuse the same memory if new size is same. The firmware caching hasn't
->> been implemented for the drivers other than the nouveau. (The changing
->> of firmware isn't tested/supported for wireless drivers. But let's
->> follow the example patches here.)
->>
->> [1] https://lore.kernel.org/all/20240419034034.2842-1-
->> quic_bqiang@quicinc.com/
->> [2] https://lore.kernel.org/all/20220506141448.10340-1-
->> quic_akolli@quicinc.com/
->>
->> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-
->> QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
->> Tested-on: WCN7850 hw2.0 WLAN.HMT.1.1.c5-00284-
->> QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
->>
->> Acked-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
->> Tested-by: Baochen Qiang <quic_bqiang@quicinc.com>
->> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
->> ---
->> Changes since v1:
->> - Don't free bhie tables during suspend/hibernation only
->> - Handle fbc_image changed size correctly
->> - Remove fbc_image getting set to NULL in *free_bhie_table()
->>
->> Changes since v2:
->> - Remove the new mhi_partial_unprepare_after_power_down() and instead
->>    update mhi_power_down_keep_dev() to use
->>    mhi_power_down_unprepare_keep_dev() as suggested by Mani
->> - Update all users of this API such as ath12k (previously only ath11k
->>    was updated)
->> - Define prev_fw_sz in docs
->> - Do better alignment of comments
->>
->> Changes since v3:
->> - Fix state machine of ath12k by setting ATH12K_MHI_DEINIT with
->>    ATH12K_MHI_POWER_OFF_KEEP_DEV state (Thanks Sebastian for testing and
->>    finding the problem)
->> - Use static with mhi_power_down_unprepare_keep_dev()
->> - Remove crash log as it was showing that kworker wasn't able to
->>    allocate memory.
->>
->> Changes since v4:
->> - Update desctiption
-> 
-> While I'm commenting on spelling, "description"
-> 
-> 
-> Code looks ok to me. I think we just need to hash out some of the
-> documentation and this will be good to go.
-Thanks
+I have compiled a vanilla 6.12.28, that booted fine, as expeced. Then compi=
+led a  version with the patch directly above.
 
-> 
+>  We expect the link to come up, but that you will not be able to mount ro=
+otfs.
+> =20
 
+That is exactly what happened.=20
 
--- 
-Regards,
-Usama
+>  If that is the case, we are certain that the this patch series is 100% n=
+eeded
+>  for your device to have the same functional behavior as before.
+
+That is the case.
+
+Bye,
+
+Laszlo Fiat=20
+> =20
+> =20
+>  Kind regards,
+>  Niklas
+>  
 
