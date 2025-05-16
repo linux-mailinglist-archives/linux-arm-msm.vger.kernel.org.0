@@ -1,160 +1,240 @@
-Return-Path: <linux-arm-msm+bounces-58168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DA04AB94BF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 05:29:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46526AB95D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 08:09:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D526F1BA8664
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 03:29:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3356BA20677
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 06:09:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7710425DAE0;
-	Fri, 16 May 2025 03:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E76913790B;
+	Fri, 16 May 2025 06:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mWyrktOk"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="e5ZH2h++"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC6D25CC58;
-	Fri, 16 May 2025 03:28:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655ED221FD9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 06:09:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747366092; cv=none; b=qtXSqbuflXSTtoJDqAx2ndUsNokrjDWCA4iec62JGGQNX7A3OIObU0zZdBJpj3jyMid2zvm3c8xgYHuiUOwI/gWBMCaNYwo3ttu0e3jeTHKhdxgqwQHxxzbC3OSE+Gk+bKg61VjJay6yDRQ/BnsbXey/bXQO9QpKJEprdplw6Ck=
+	t=1747375769; cv=none; b=N6AiJrKDmcc/KsiRkuSTtUXTeOzM01dlcPVSdT+ca9IofDWMluISD7rVataL6T6Hg5Wjh4xAK/5ojpu86viqHW4NAb3rRjowgetQKNl5BZKMRFgsLuw8Vp8MnOSmSqUiWSlC3+DkJdrY7CyvqTt1EiSMH3cF46wkrLeImrtgQVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747366092; c=relaxed/simple;
-	bh=WbclKrKNpH+XumO8udCZ+WnQuj7DovTwmfHCDYT4Vbo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=SoSAiEu4A45Bkw02uq3ySL4povcE6hyDGOEr6oIFWObk/QWkHIxoDuUS/YSWwk3BphOAlX2vsmbARIFrrGO8+T8RtGQ4ui9I4s58umY0DaI9Aq3xYuPZ2zUZLmkTPyuX8dFAKq1ZDXEHzA1nQnhZjmqHpkX7yRp5EPJ4QP+r5eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mWyrktOk; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54FEFCjB024320;
-	Fri, 16 May 2025 03:28:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2xgZgVXFHKNEqF2MV79SagmshPphfRqIpWisK7VReKk=; b=mWyrktOkY7xqov48
-	SOgyQYggFjmAJgQujfYUbY3HSLQ/A8OozKDu9pUA9rwEax5KQvk7ucRw3s7bmu9t
-	xNG+DZn+zMG7kRPYKkLsa/vpfeEzfbCHKn1FrwkYUj8O6ALjXuw/K2+9xplYvD/u
-	OYZvN5syQHzYlH1fTlDcTqdG/QToP/wc0MPRFXaWJQKH5uAF6acpq0iYbPmc+Pi2
-	IXdLgpl022jcq0sb/he+tvsChJN36eOShn7WUrx2Y10sUWy0gFfpKX8epVf/bbX4
-	7rYcKNd//oBu8jtSnP53MTwtqKPK+j0M868NfIlKHe7DEGGV7aRhM9BWtVr+Znf3
-	HNrqNg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcn0kwt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 May 2025 03:28:06 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54G3S5Ca019335
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 May 2025 03:28:06 GMT
-Received: from lijuang3-gv.ap.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 15 May 2025 20:27:59 -0700
-From: Lijuan Gao <quic_lijuang@quicinc.com>
-Date: Fri, 16 May 2025 11:27:07 +0800
-Subject: [PATCH v3 6/6] arm64: dts: qcom: qcs615-ride: enable remoteprocs
+	s=arc-20240116; t=1747375769; c=relaxed/simple;
+	bh=EkONSVFSNf6RbN/OEtrBrRqcdGVQNNZthV9GRn3rF54=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ayem/QF96MmZ+r0N94LmVzsQFUIe1wL4lQOOgNIoQTHIKZziuNPwZAXw/YCN3v8fc/7/Oj24O27AqsksxUhcgzBLrjKNqH8HPxNEqFeqxUhuQx4JoXeHE0tJPemOaccZgsB24zpfQWDvzRipFF+VgF4csZHCx3MwF/pDGKS1BjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=e5ZH2h++; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1747375766;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=oPcG3FsFOiRXpv1XjAvU2NgERd/jyk19PD8+swcCIJ4=;
+	b=e5ZH2h++N1BRfQC4Qei3V/EpCY9IsT+vmjtjmybnYVGc8cve10bVbUFXaMo3PSuCMRZTw3
+	+Dd2Wn0uacOuMhx7i3oOC4txurn++8pfi/bngQcjS000gNpW6EmFg1nRGt7UuCRXb8oVJL
+	iJeXBO77WVxorOfOFYbd6ckzVeLZpAI=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-672-1A9wJ8CtMN6ic17QH4tANw-1; Fri, 16 May 2025 02:09:23 -0400
+X-MC-Unique: 1A9wJ8CtMN6ic17QH4tANw-1
+X-Mimecast-MFC-AGG-ID: 1A9wJ8CtMN6ic17QH4tANw_1747375763
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-30ab4d56096so2141231a91.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 May 2025 23:09:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747375762; x=1747980562;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oPcG3FsFOiRXpv1XjAvU2NgERd/jyk19PD8+swcCIJ4=;
+        b=g+s9QJwcaoJoEKA5S3BFPNwMxBu8aKhoXfQv9kdfJfZ2SknNjVNJL67hX2dlrDi9jZ
+         ZvUGQ1LZfuhqPg0rRg7AL9/rF5Yqh/jvw8u8tjyeRrY6t1o78R6m7wv2WzGuWHHOFoGY
+         0LYIXBTx2L58AcAzzn86z7K4HbWakgN8vrQJyyhhHI63Gt/zFemOmV4BziV1V3o1yozD
+         DmvsE2bRSaNHK+seDOmtIdgYDVOpH+PeogeH/1929lemOYHWHQlyuaPW26IEx+1Hkzkw
+         dORENPi3qqzdtUwx4GseQL48cSl8L9RfpC9BdId8qCipK5APniwmlXWVYnHpVEntyuS6
+         EICw==
+X-Forwarded-Encrypted: i=1; AJvYcCWTI0SJaVQmRDBOFjlBHcDeg0/pyWLUEiks3d1Kft7V9CAJCZBFjqTl/ZUdjxgaSQXXX9At35ndDOr1VOIm@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYH70eYOknhghg72D4WGJWhSU7ubv5KXkJPwe4REFdFGwRPGNM
+	fHzhJkATTI8EdJyzwufBPbwKe/dL3TkNV4FYR1qUQeBMrl+l6lMWzqa8ZBi4Sa7s/OUMGjVsB/r
+	8KJZISPFY5B21uPtWZByUjgZMidFLZJuQQlWFmeK0HCcSjgd/yHiiu+Z0sOsMYjPKis7NR/lpD+
+	rffQ==
+X-Gm-Gg: ASbGncueaPabW/X75sRSMYLMQgth33yQFyXdDdhGaL1pi16DaQ1Yl2YSuofeBVLf9m9
+	fJiDIoQbMw2RSmhsEKdCIYo02K7CXwlIf1dmBKJrG05C1o2gOo2ZuBjPfdd+bKzJtbMsXbQHNbc
+	bYjba7Ft5ttQYGPhRKTEV/P2axBTHDxMweUCLR3F87xjKWB48cxCT/I9MZc8o/A0PS4CrSJtmml
+	+UlrOnyEtFsyoQ8m8Rxz0ss25o8DUojnex/1dA+2K+gXSBdEa6VEnJNORuvbCrZa5XKCtBlWYE6
+	V/tZbujuAUc/
+X-Received: by 2002:a17:90b:33c2:b0:2fe:afa7:eaf8 with SMTP id 98e67ed59e1d1-30e7d50b040mr2667245a91.13.1747375761691;
+        Thu, 15 May 2025 23:09:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEH5a8qqAjTmy08j8thqP+B00LVXrWtv611P5leiCrTuccrUC6wK6bUstDZ0smUsTwppAcRCA==
+X-Received: by 2002:a17:90b:33c2:b0:2fe:afa7:eaf8 with SMTP id 98e67ed59e1d1-30e7d50b040mr2667176a91.13.1747375761099;
+        Thu, 15 May 2025 23:09:21 -0700 (PDT)
+Received: from [192.168.68.51] ([180.233.125.65])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30e7d4892c3sm825602a91.12.2025.05.15.23.09.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 May 2025 23:09:20 -0700 (PDT)
+Message-ID: <c48843fb-c492-44d4-8000-705413aa9f08@redhat.com>
+Date: Fri, 16 May 2025 16:08:59 +1000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 07/17] KVM: guest_memfd: Allow host to map
+ guest_memfd() pages
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
+ vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
+ david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com,
+ liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250513163438.3942405-1-tabba@google.com>
+ <20250513163438.3942405-8-tabba@google.com>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20250513163438.3942405-8-tabba@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250516-add_qcs615_remoteproc_support-v3-6-ad12ceeafdd0@quicinc.com>
-References: <20250516-add_qcs615_remoteproc_support-v3-0-ad12ceeafdd0@quicinc.com>
-In-Reply-To: <20250516-add_qcs615_remoteproc_support-v3-0-ad12ceeafdd0@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Lijuan Gao <quic_lijuang@quicinc.com>,
-        "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1747366059; l=980;
- i=quic_lijuang@quicinc.com; s=20240827; h=from:subject:message-id;
- bh=WbclKrKNpH+XumO8udCZ+WnQuj7DovTwmfHCDYT4Vbo=;
- b=C6B/hKz39+Z00u7JGfkomlnzf4sxE4nfViUaqYJQXCRecnJ6QFBZ8OuO5JOVQ21a2NRrCk/kg
- AVHv4XwfBllB+xr0ysfz146Dvku0Qf1t8S7UBT0189boILM+kQ1qVNi
-X-Developer-Key: i=quic_lijuang@quicinc.com; a=ed25519;
- pk=1zeM8FpQK/J1jSFHn8iXHeb3xt7F/3GvHv7ET2RNJxE=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VbX_RiCtxAdk9hU11s_XdC-fKtv43rTM
-X-Authority-Analysis: v=2.4 cv=HZ4UTjE8 c=1 sm=1 tr=0 ts=6826b0c6 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=tk-iKo2JpmutBzwaR1gA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: VbX_RiCtxAdk9hU11s_XdC-fKtv43rTM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDAzMSBTYWx0ZWRfXz72LvI9zet5S
- bHzGFV92xW0y+rYFVdLCksfN5y4M1wIxCSkH46rqpuVJSRnJ3t4uPEogOTgwvHvZPO4YW5nP7/j
- APsglEXUIzuLG3YybAgGluBwRTrgsjDc6WQY5tJfaLQtiJqBTIyX/bRZhdSNHok/yzU439RigPY
- wNn4sqXY/eGiPZDupL2zp3oDqy4FP3UBx4kY2AFV9Z86bXle6o+cn0z1IJktp9tAr9D/B7fzjsx
- rKfmTX1Q7zT0PcSh+sNgLqk472kFbNQx1T9u0XAYotJGF50Vrl9fjvs5aK0LjIf4G6hOnjBj2yg
- JCTtXXxEOEJ30+a3Ua3qIpiVZ5oVb/1RumdODVyuJp3rFj3u1lgxU8eCw/Wrb6QDj06ijtz89AH
- erFlsMocCIGRIBrL7SnJvRAr8Gb9sok68Zw5zpD3tlKeFTr+hdOQw+GYNTUXNHbJeMrkVLtN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-16_01,2025-05-15_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- suspectscore=0 mlxscore=0 mlxlogscore=637 lowpriorityscore=0 malwarescore=0
- bulkscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505160031
 
-Enable all remoteproc nodes on the qcs615-ride board and point to the
-appropriate firmware files to allow proper functioning of the remote
-processors.
+Hi Fuad,
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs615-ride.dts | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+On 5/14/25 2:34 AM, Fuad Tabba wrote:
+> This patch enables support for shared memory in guest_memfd, including
+> mapping that memory at the host userspace. This support is gated by the
+> configuration option KVM_GMEM_SHARED_MEM, and toggled by the guest_memfd
+> flag GUEST_MEMFD_FLAG_SUPPORT_SHARED, which can be set when creating a
+> guest_memfd instance.
+> 
+> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
+> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>   arch/x86/include/asm/kvm_host.h | 10 ++++
+>   include/linux/kvm_host.h        | 13 +++++
+>   include/uapi/linux/kvm.h        |  1 +
+>   virt/kvm/Kconfig                |  5 ++
+>   virt/kvm/guest_memfd.c          | 88 +++++++++++++++++++++++++++++++++
+>   5 files changed, 117 insertions(+)
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-index 2b5aa3c66867676bda59ff82b902b6e4974126f8..a6652e4817d1c218c7981b04daeb035e2852ac1a 100644
---- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-@@ -240,6 +240,18 @@ &qupv3_id_0 {
- 	status = "okay";
- };
- 
-+&remoteproc_adsp {
-+	firmware-name = "qcom/qcs615/adsp.mbn";
-+
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/qcs615/cdsp.mbn";
-+
-+	status = "okay";
-+};
-+
- &rpmhcc {
- 	clocks = <&xo_board_clk>;
- };
+[...]
 
--- 
-2.34.1
+> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> index 6db515833f61..8e6d1866b55e 100644
+> --- a/virt/kvm/guest_memfd.c
+> +++ b/virt/kvm/guest_memfd.c
+> @@ -312,7 +312,88 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
+>   	return gfn - slot->base_gfn + slot->gmem.pgoff;
+>   }
+>   
+> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> +
+> +static bool kvm_gmem_supports_shared(struct inode *inode)
+> +{
+> +	uint64_t flags = (uint64_t)inode->i_private;
+> +
+> +	return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
+> +}
+> +
+> +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
+> +{
+> +	struct inode *inode = file_inode(vmf->vma->vm_file);
+> +	struct folio *folio;
+> +	vm_fault_t ret = VM_FAULT_LOCKED;
+> +
+> +	filemap_invalidate_lock_shared(inode->i_mapping);
+> +
+> +	folio = kvm_gmem_get_folio(inode, vmf->pgoff);
+> +	if (IS_ERR(folio)) {
+> +		int err = PTR_ERR(folio);
+> +
+> +		if (err == -EAGAIN)
+> +			ret = VM_FAULT_RETRY;
+> +		else
+> +			ret = vmf_error(err);
+> +
+> +		goto out_filemap;
+> +	}
+> +
+> +	if (folio_test_hwpoison(folio)) {
+> +		ret = VM_FAULT_HWPOISON;
+> +		goto out_folio;
+> +	}
+> +
+> +	if (WARN_ON_ONCE(folio_test_large(folio))) {
+> +		ret = VM_FAULT_SIGBUS;
+> +		goto out_folio;
+> +	}
+> +
+
+I don't think there is a large folio involved since the max/min folio order
+(stored in struct address_space::flags) should have been set to 0, meaning
+only order-0 is possible when the folio (page) is allocated and added to the
+page-cache. More details can be referred to AS_FOLIO_ORDER_MASK. It's unnecessary
+check but not harmful. Maybe a comment is needed to mention large folio isn't
+around yet, but double confirm.
+
+
+> +	if (!folio_test_uptodate(folio)) {
+> +		clear_highpage(folio_page(folio, 0));
+> +		kvm_gmem_mark_prepared(folio);
+> +	}
+> +
+
+I must be missing some thing here. This chunk of code is out of sync to kvm_gmem_get_pfn(),
+where kvm_gmem_prepare_folio() and kvm_arch_gmem_prepare() are executed, and then
+PG_uptodate is set after that. In the latest ARM CCA series, kvm_arch_gmem_prepare()
+isn't used, but it would delegate the folio (page) with the prerequisite that
+the folio belongs to the private address space.
+
+I guess that kvm_arch_gmem_prepare() is skipped here because we have the assumption that
+the folio belongs to the shared address space? However, this assumption isn't always
+true. We probably need to ensure the folio range is really belonging to the shared
+address space by poking kvm->mem_attr_array, which can be modified by VMM through
+ioctl KVM_SET_MEMORY_ATTRIBUTES.
+
+> +	vmf->page = folio_file_page(folio, vmf->pgoff);
+> +
+> +out_folio:
+> +	if (ret != VM_FAULT_LOCKED) {
+> +		folio_unlock(folio);
+> +		folio_put(folio);
+> +	}
+> +
+> +out_filemap:
+> +	filemap_invalidate_unlock_shared(inode->i_mapping);
+> +
+> +	return ret;
+> +}
+> +
+
+Thanks,
+Gavin
 
 
