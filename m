@@ -1,152 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-58233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7216FABA0B9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 18:20:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B447DABA0D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 18:35:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5F9BAA24A98
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 16:20:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A026E3A8A3F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 16:35:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9CAC17A30B;
-	Fri, 16 May 2025 16:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB7ED1C9EB1;
+	Fri, 16 May 2025 16:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A6R/jeLJ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lzZKB86H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248E61FAA;
-	Fri, 16 May 2025 16:20:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01E7224F6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 16:35:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747412442; cv=none; b=E/BT+7FhYFBcw/LEc8JzcBirSgMI0E5vJfKezBpSkXRtbf+SNFuDyteG6aE1anPCobRs6qjLhUmWvLA9eaGXgDAMvgnfevjZlWxlI1W2drZbB8UKP4Jnk92aYjajzxBhEcOUQ/ng5t1ZT9pu0fC2aw5RMfhVlTAIn8vgyjduWqA=
+	t=1747413323; cv=none; b=KlDAvMo3ICdyiByybzhYu1RFRBhhsi9Y2BsbICK7ZP/sF4il9YpO8pjKwDQ0apBbQhOsT5HEp72mrtWPD0KRo7ucoTvyzeiAkUG286DhgSYtyNGP5mPH36g9aTXjNg+FK5m2dWmYbefqCvIxNZoA3MSxIVKazZNs/v2MCtPvZFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747412442; c=relaxed/simple;
-	bh=TPlAi/mO14+GwPJa9+PtFUo/NVtQvh5EJl0KI78bFL4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XxVZy9iFQPTDPrjPtFUutiJYhQe6owyP4LuU0taYSChYbqVmC5pBOVXOXtRYauDE2jH5w/OnLJR5CI5fYP6xP2d3K8qMnE9MP4OpdTwbBrNO/qqA1PZCHiF9bJ3rtmR4AwNLrIVJd4FMqtE4Byu8JBMEjfqsSGGiHWaYnRFXIEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A6R/jeLJ; arc=none smtp.client-ip=209.85.166.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-85d9a87660fso217539539f.1;
-        Fri, 16 May 2025 09:20:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747412440; x=1748017240; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mT/Vsqhlq5iMS/QXBvcl16DqfLTsg9iUCxC/+p3/IyE=;
-        b=A6R/jeLJF+tqkZuwmk5+9Hz/UnKJuEpfgqOnmmTz/GDAQhhvtRjV8Oap6VGaU3qEOc
-         zwMMe3W9LzD8CU7PmWaKrIwvUIJwgb5Ly7BjWMk9QF/5KgD3UW1HjiCNiYiScv4Ncc73
-         ixcz0d211EgYM7RP/pZxcou0Zq4TK+RBizMZoiB59g+TJuiEQgVAIdqbfCELTMRtE9dg
-         MUWi70jgomtRu8JqqNIiPEc1THO63/nLD+/fM+RAcaMEteT50eMH2nRdNoLTbzstm9PG
-         H1V1LonpvfBJCMpAU2ly50L6/Bo9ed8JG18NPMNDISyRkJVAlOos/Q1TFCbtYHazojFV
-         EKiw==
+	s=arc-20240116; t=1747413323; c=relaxed/simple;
+	bh=es/iLpQ7h491Bm1ao/ZtHs92YEBYb8fiiply/JOiIR8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=G9jAThNMOVAFEq9rkdqjygnV/VdZZEpVD1r4mH9fudfQQbRexMNaZNBbTs0NB7sX9X4GSPIRaGpvGsKoOSIF0kG5yKarUtIuCBEd1F8n1BD8Ac9dbOkSWKM6A9uY9lQA0922I1YXtWYRwWPEQpNpC2gDeBP240DNyOUd3jDKS7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lzZKB86H; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54GAkP4Y007863
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 16:35:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	BTmwEqQ8XcBgL6KMnmGn0Js5nNwnbxm2fJwGxsiwNzw=; b=lzZKB86Hz1wJz1yL
+	SCH9OoTzfYdnDjPGW1XLSuIF1HEvwIcANflxs80nIOLJiWiXIqv5iXpHTy/MepnY
+	ofN4THVwZ4he4iZGIQpcgXnjIbcwYB5FATPK3DILd+0qeQVeH9OzJbjup0V97+UG
+	6HYodvtDQm2qgxlXK5JZNBTFhd3mi3SYFCTbL4+gxemvmETLA5j8VI8uvZWmmMsJ
+	kTlxHqSxnfQNyhQxOFA7hEX3hk3OqIEspRbTisvEEuy/Yq9SyRji4P1uGLgZRYei
+	Uk4jYSogWz+9g9YH9EuA/FNZh6myfh29qTVtm+S9omoqDUEPg/FTC5StCuC7e9ES
+	KXzX4w==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcq2j39-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 16:35:20 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6f8aab0a94cso3378766d6.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 09:35:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747412440; x=1748017240;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mT/Vsqhlq5iMS/QXBvcl16DqfLTsg9iUCxC/+p3/IyE=;
-        b=bQy4TD4yM7UN0qk5Pvr6gphmvIRVE5Sh04KBb9ielvHf0ddrrUkdeQ5Mnbrmm2B6NL
-         koLe/Zk2fnjHhmAOYDSNXz/VvgK0ER2FxldnSxfqNWsea+d6tFw6y/ILlfZFRvO8pe5A
-         8EMVps6K3/T896u3PT01Nd+/c3x+oGDCpyExzGQUvakZza2dYtsuA+yKUZuJexBAXYtr
-         ekMYgTR4kaULwx7nvkM8YEzIxQgcloT7Qyr4ghDWFFrQr3Ue/TyfgkOpTiyJXS/C7iyr
-         Kfj5QW9DnjU6jOGBx/fBz2bDTIuyMDA6ohaKW6oHiJmOjFZ3pMoWoDHL7qKU3rZcMKRx
-         XVrQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVUxr944Kw7u5QPkLRyCXmUV7hr3o2cuez4FQ0uJ3ICPyhKNvD502lRaI6axO9sRRiMGJk4v/w3z9UFNJeg@vger.kernel.org, AJvYcCWj1uvMY8OMZD9d1MkgZHoPFZBads1QGFpTmONprPkkVTf27mg+fGYGBYxlNNc68qSnfgW9qWWVUMBWlZJb@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2hpYHd5AXHvWRSKPsEPcYeF57XDlbxzKUqEd9zZbirqU3q51y
-	VcvtLU++PSQ5ffkiWB4X9vV+C0lJ9YJ3fl6KlIqIeS+48kKccsa6pPjhZd6Wx57Ooqqd7PwE4nC
-	2cqZY2Xbo+BgPLhvKBJdv15UOMMmFr9Vr9A==
-X-Gm-Gg: ASbGncsKNAro4AfeCl6MSc7hKTbyScvMxnErMy5BqPt+s1l4BnfqnrimtSiEmqp2EVy
-	ZJwf5L1nvYdfleww15/sqftHOG8wki+ho+lBNng3A6muEVpBfqZS3VfjkdRVCeF25kKfNAXdi63
-	G54jCSJoL0Mz1Tl7kVOE17VUvnbofJaUL5KUYe8jl/pwluFdivhDIaNgQpbiBZlg==
-X-Google-Smtp-Source: AGHT+IHC22IsC+3PhSpVeBM4f8XtPUyPUQIGsJ0NXAFw0bJzSA+bcpEP1Wgy59i2TILp96QoX7r/vuNK+QzWWSMkZuM=
-X-Received: by 2002:a05:6e02:339f:b0:3d4:2409:ce6 with SMTP id
- e9e14a558f8ab-3db857282d6mr32363085ab.5.1747412440172; Fri, 16 May 2025
- 09:20:40 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747413320; x=1748018120;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BTmwEqQ8XcBgL6KMnmGn0Js5nNwnbxm2fJwGxsiwNzw=;
+        b=Ap7p8NLR7P1DBd7Dp6q9tpglitFF+1LjtfxM73f5AxHZIdtARS674Z2v3CJ0BV2mWc
+         SEbJelr0gQUApf+FC49wGxLpQopJ3LmMlKvgDy473Jsce1oyma57VlkwCHSCrkEyrsi4
+         0i41sIRuk/X/ITiEV9/XcpqpY+5R84a5Tt1Nl5Vm9IupYDNLhdYXxQD9sweDAhQpdSKj
+         UUyX7uJRtwyiWrNPJrJ1d3HZo+vw0jwO+pkKV1DQ0fTVaqmNwyl28BI1nlKx1IggExvc
+         PmGeXdwwfTBXeI3wsLVtQAFguJ/jlx61LggFmjpE5ECjZ5CAfJlPvBlfmbFuP5bKMvjQ
+         9laA==
+X-Gm-Message-State: AOJu0YygQYlLpFI7dzX5lAhbpcwUG0Okr90axUz0H2Bi1ikogXAS9dsr
+	0GWMe0U8l1hoOVbHi3CL1oQPUUAIiuPqbV7kbyuDRzNgeqMjjt7KXB+gQjJ6XsmSXipa7nUliGD
+	FxB0Ec6to1LS26Yca8sGkPOMEjq1I1f63BXUzV62o/mPlVTBvSD0TB6ju0AVERoMrQDxP
+X-Gm-Gg: ASbGnctuiNZHcpm2GPmfnMpAEqNbraIQlkKupe5Ise5AxrJeJ4uf9OZ3Gprun7vWAKX
+	NOyd46TnW8W4tKTMmPwa1Tm6v8D2tfNjndnh3dKGW2aS0tsT4WINkkASOyGU1Go2003XLb2XL0/
+	fPpX4oz664qsfG1g7uUFvlCTK2bH9VWJhEH3Znhryk24PxpCBGNPSb27saQiJmWUOTU0kOtJ3Zb
+	aDHwfXFVnRu3Ly4dYi4vGoZEIWOFs6YsYNLLgwv+/O8vK9MksLaKGc74z14BC7fKfVD4E4Re8ba
+	x1pkrv/Uc+3VUhWX4G94etyaBzzovl1DCzAWjewfCxvTxXQuqa0WaXi/C2hFtorVlg==
+X-Received: by 2002:a05:6214:21e8:b0:6d8:99b2:63c7 with SMTP id 6a1803df08f44-6f8b09029a2mr22550036d6.9.1747413319514;
+        Fri, 16 May 2025 09:35:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrejNuXm5xcNzQ2NQrSkT0Ek+i35JQqkBQixmZL/6pvDp3di/K8cA/Ni3c15xUoOUfouZokg==
+X-Received: by 2002:a05:6214:21e8:b0:6d8:99b2:63c7 with SMTP id 6a1803df08f44-6f8b09029a2mr22549896d6.9.1747413319075;
+        Fri, 16 May 2025 09:35:19 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d4909e1sm178126666b.125.2025.05.16.09.35.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 May 2025 09:35:18 -0700 (PDT)
+Message-ID: <21bd89b9-9f6e-42d0-bcd3-b6476cf91705@oss.qualcomm.com>
+Date: Fri, 16 May 2025 18:35:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250514175527.42488-1-robdclark@gmail.com> <20250514175527.42488-2-robdclark@gmail.com>
- <aCWrwz2IF6VBUi4e@pollux> <aCWueFzx2QzF7LVg@pollux> <CAF6AEGu9MPxKnkHo45gSRxaCP+CTzqsKZjiLuy4Ne4GbrsStGA@mail.gmail.com>
- <aCYqlvp_T77LyuMa@pollux> <CAF6AEGsOTNedZhuBzipSQgNpG0SyVObaeq+g5U1hGUFfRYjw8w@mail.gmail.com>
- <aCb-72KH-NrzvGXy@pollux>
-In-Reply-To: <aCb-72KH-NrzvGXy@pollux>
-From: Rob Clark <robdclark@gmail.com>
-Date: Fri, 16 May 2025 09:20:27 -0700
-X-Gm-Features: AX0GCFuCbsPiWqD4XrqPgC4swP3tk-lMdO3-9EFfEFghtloLESQfLQoMv-hd73E
-Message-ID: <CAF6AEGu=KzCnkxuUsYvCHBGwo-e2W16u_cRT1NFAXLphty1_ig@mail.gmail.com>
-Subject: Re: [PATCH v4 01/40] drm/gpuvm: Don't require obj lock in destructor path
-To: Danilo Krummrich <dakr@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>, 
-	Rob Clark <robdclark@chromium.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] watchdog: qcom: add support to read the restart
+ reason from IMEM
+To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck
+ <linux@roeck-us.net>, bod.linux@nxsw.ie,
+        Srinivas Kandagatla <srini@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
+References: <20250502-wdt_reset_reason-v3-0-b2dc7ace38ca@oss.qualcomm.com>
+ <20250502-wdt_reset_reason-v3-4-b2dc7ace38ca@oss.qualcomm.com>
+ <2036ef2f-c7ef-4f42-858d-8d95c430c21a@oss.qualcomm.com>
+ <68d280db-f7df-48c8-821d-f7d408c302ad@oss.qualcomm.com>
+ <8a763c70-adcf-4a14-bb68-72ddc61fa045@oss.qualcomm.com>
+ <8c2a53c2-c11b-4d49-bfb5-b948767ba6c7@oss.qualcomm.com>
+ <1e871aed-705f-4142-b72d-4232ae729a37@oss.qualcomm.com>
+ <6274641a-7366-41cd-a0a7-a9e9cc41b8e6@oss.qualcomm.com>
+ <0a73989f-b018-473c-872a-5cbc2e7d1783@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <0a73989f-b018-473c-872a-5cbc2e7d1783@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: R70oPx_POt0Nez7hHbrWpscWLLeXo_YQ
+X-Proofpoint-ORIG-GUID: R70oPx_POt0Nez7hHbrWpscWLLeXo_YQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDE2MiBTYWx0ZWRfX1lI7zH2qshJo
+ 2arbtVLY3fAzODnuSspE9pZTSsjzbNGCJloJ8FEnZpUVerVOBkH/ZVbdD3+QVqDwcE3uu/02w4P
+ 9FLLrp2xjyinb4lferxDKqLTjIet0uEH04LAZMnu3ZgvUgpIUa4U2EvHpkuZsfAGDCkCNHo+bk0
+ 94jXA1fO4PBKnx1oODOYcbjRwChlrVzEaeWu0LRC82pQgZH/lviGvbMYYG2mpPap9+lUhAxglku
+ Dk4uwr6zFYUu+0cyGMWzNCCLg2btMtPYVzImjFEOvorudWPzcWaG2pztNHtymfMICJ9JUPgBlu+
+ V0N83Y8SvDEAz+gkXr9bbdoIoRB1ClWTTs4R8I8nbCgai9APZUcSzYul7AK7h4oCm0Q8QzW+4FV
+ 6iuWQxuoFaXviddTAcAbMv+k5iLLgZFZMC8nfAIwJcvFS1GFyxObEi/tkdqW7O7G2llOol5d
+X-Authority-Analysis: v=2.4 cv=KcvSsRYD c=1 sm=1 tr=0 ts=68276948 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VNoyoka1EbeTPVikYY0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-16_05,2025-05-16_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0 phishscore=0
+ lowpriorityscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 impostorscore=0
+ mlxscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505160162
 
-On Fri, May 16, 2025 at 2:01=E2=80=AFAM Danilo Krummrich <dakr@kernel.org> =
-wrote:
->
-> On Thu, May 15, 2025 at 02:57:46PM -0700, Rob Clark wrote:
-> > On Thu, May 15, 2025 at 10:55=E2=80=AFAM Danilo Krummrich <dakr@kernel.=
-org> wrote:
-> > > Anyways, I don't agree with that. Even if you can tweak your driver t=
-o not run
-> > > into trouble with this, we can't introduce a mode that violates GOUVM=
-'s internal
-> > > lifetimes and subsequently fix it up with WARN_ON() or BUG_ON().
-> > >
-> > > I still don't see a real technical reason why msm can't be reworked t=
-o follow
-> > > those lifetime rules.
-> >
-> > The basic issue is that (a) it would be really awkward to have two
-> > side-by-side VM/VMA management/tracking systems.  But in legacy mode,
-> > we have the opposite direction of reference holding.  (But at the same
-> > time, don't need/use most of the features of gpuvm.)
->
-> Ok, let's try to move this forward; I see three options (in order of desc=
-ending
-> preference):
->
->   1) Rework the legacy code to properly work with GPUVM.
->   2) Don't use GPUVM for the legacy mode.
->   .
->   .
->   .
->   3) Get an ACK from Dave / Sima to implement those workarounds for MSM i=
-n
->      GPUVM.
->
-> If you go for 3), the code introduced by those two patches should be guar=
-ded
-> with a flag that makes it very clear that this is a workaround specifical=
-ly
-> for MSM legacy mode and does not give any guarantees in terms of correctn=
-ess
-> regarding lifetimes etc., e.g. DRM_GPUVM_MSM_LEGACY_QUIRK.
+On 5/16/25 2:52 PM, Kathiravan Thirumoorthy wrote:
+> 
+> On 5/16/2025 4:48 PM, Konrad Dybcio wrote:
+>> On 5/14/25 3:15 PM, Kathiravan Thirumoorthy wrote:
+>>> On 5/6/2025 4:31 PM, Kathiravan Thirumoorthy wrote:
+>>>> On 5/3/2025 3:53 AM, Konrad Dybcio wrote:
+>>>>> On 5/2/25 6:28 PM, Kathiravan Thirumoorthy wrote:
+>>>>>> On 5/2/2025 7:33 PM, Konrad Dybcio wrote:
+>>>>>>>> +static int qcom_wdt_get_restart_reason(struct qcom_wdt *wdt,
+>>>>>>>> +                    const struct qcom_wdt_match_data *data)
+>>>>>>>> +{
+>>>>>>>> +    struct regmap *imem;
+>>>>>>>> +    unsigned int val;
+>>>>>>>> +    int ret;
+>>>>>>>> +
+>>>>>>>> +    imem = syscon_regmap_lookup_by_compatible(data->imem_compatible);
+>>>>>>> Try syscon_regmap_lookup_by_phandle_args() and pass a phandle, see e.g.
+>>>>>>> drivers/phy/qualcomm/phy-qcom-qmp-pcie.c & phy@1bfc000 in x1e80100.dtsi
+>>>>>>>
+>>>>>>> That way all platform specifics will live in the DT, requiring no
+>>>>>>> hardcode-y driver changes on similar platforms
+>>>>>> Thanks. I thought about this API but it didn't strike that I can use the args to fetch and match the value.
+>>>>>>
+>>>>>> I need a suggestion here. There is a plan to extend this feature to other IPQ targets and also support WDIOF_POWERUNDER and WDIOF_OVERHEAT cause as well. For IPQ5424, all 3 cause will support and for other IPQ platforms, we are exploring how to integrate WDIOF_OVERHEAT. In any case, can I define the DT entry like below
+>>>>>>
+>>>>>>           imem,phandle = <&imem 0x7b0 <Non secure WDT value> <Power Under value> <Overheat value>>;
+>>>>>>
+>>>>>> and store these in values args[1], args[2] and args[3] respectively and use it for manipulation? If any of the platform doesn't support all 3, I can update the bindings and define the number of args as required.
+>>>>> Let's call the property qcom,restart-reason and only pass the register value
+>>>>>
+>>>>> Because we may have any number of crazy combinations of various restart
+>>>>> reasons, we can go two paths:
+>>>>>
+>>>>> 1. promise really really really hard we won't be too crazy with the number
+>>>>>      of possible values and put them in the driver
+>>>>> 2. go all out on DT properties (such as `bootstatus-overheat`,
+>>>>> `bootstatus-fanfault` etc.
+>>>>
+>>>> Thanks Konrad for the suggestions and the offline discussions.
+>>>>
+>>>> @Guenter, I need a suggestion here. Currently as part of this series, we are planning to expose WDIOF_CARDRESET, WDIOF_POWERUNDER, WDIOF_OVERHEAT reasons.
+>>>>
+>>>> Once this is done, we do have the custom reason codes like Kernel Panic, Secure Watchdog Bite, Bus error timeout, Bus error access and few many. Is it okay to expose these values also via the bootstatus sysFS by extending the current list of reasons? Since these are outside the scope of watchdog, need your thoughts on this.
+>>>
+>>> Konrad / Guenter,
+>>>
+>>> We had a further discussion on this internally. Outcome is, it wouldn't be ideal to hook the custom restart reason codes in watchdog framework, since there is no involvement of watchdog in such cases. Also I don't find any references to hook the custom values in watchdog's bootstatus.
+>>>
+>>> If this is fine, I'm planning to resend the series to handle only the non secure watchdog timeout case. In that case, as suggested by Konrad, everything will be handled in DT like below to avoid the device data.
+>>>
+>>> imem,phandle = <&phandle <imem_offset> <value>>;
+>> the part before the comma is a vendor prefix, so that must be qcom,xyz
+> 
+> 
+> Sure, will name it as qcom,imem-phandle. Hope this name is fine.
 
-I'm not even sure how #2 would work, other than just copy/pasta all of
-drm_gpuvm into msm, which doesn't really seem great.
+just qcom,imem is fine, phandle is a datatype described in dt-bindings
 
-As for #1, even if I could get it to work, it would still be a lot
-more mmu map/unmap (like on every pageflip, vs the current state that
-the vma is kept around until the object is freed).  For the
-non-VM_BIND world, there are advantages to the BO holding the ref to
-the VMA, rather than the other way around.  Even at just a modest
-single layer 1080p the map takes ~.2ms and unmap ~.3ms (plus the unmap
-costs a tlbinv).  So from that standpoint, #3 is the superior option.
+>> what are your plans for the other reboot reasons? are we scrapping them?
+> 
+> 
+> No, we are not scrapping it. We are exploring further on where to put this. May be we can put those logic in some simple driver named as ipq-restart-reason.c under drivers/soc/qcom/?
 
-BR,
--R
+I see drivers/power/reset/at91-reset.c does something like this
+
+Konrad
 
