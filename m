@@ -1,208 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-58221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A938AB9CAA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 14:53:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 903BDAB9CF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 15:10:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F21E09E19BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 12:52:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA50B189B6D9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 13:10:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8060F23FC74;
-	Fri, 16 May 2025 12:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9F132417F2;
+	Fri, 16 May 2025 13:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KnetjtkJ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cPClHFTp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE28D23C507
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 12:52:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006B6242D8B;
+	Fri, 16 May 2025 13:09:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747399947; cv=none; b=s1Cw0P+IPa81+iUARcI/zat7TeT7kmSKcqQEavbvCU4r98OYu807T1hK993gV6CV6T/VaXNWabwkULvnPSvoMsICUAIDvUxg1nui8c08frFAqwxcm1R0WTdAtyV+b+HToGi5MAYPcIxjfkXfMNrUBs39c/w09XJtw0kQlx7TQck=
+	t=1747400989; cv=none; b=u+TF3oBuxvWXVu3HUO3//j9Uo+0dpn7JECGDxgaBgp5CSSGyME9fY9EBGrX5OwmI8MS9R4WqjfoycVLyRPMJTMjhzYnHuiSdxcJ9r/bZdg5IOafbPcgMOwz0bhhqd5mBljjBglolg0tL11VnfYjBMMvicxv2S8vooy3L48Xg6mU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747399947; c=relaxed/simple;
-	bh=uKhICCuk0zTYgGsjguAvEIXXEbAvO6LehqtVILPdKRA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Pryp8VlKxvdeOjZQssMM4rn4bAKDvJ0tmnSXx9ZMG1w/bVPpYZlC/tb9csnFLCspCcxMZ1mY+i1TehF0Uqh3DlrfscRUnRQppyFpdtnOSiUBB/tiz1EKht1jJcWY5U9Xt6ro4Y0NsM+tWOSnLjjdsggBDrREcJMukVhzcRIP+6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KnetjtkJ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54GB0Wbq014649
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 12:52:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2V/BUr7ZXr0lhQ+QdHNR/34NUNiNJwz+Ra2V6/Brrso=; b=KnetjtkJCYDxiUPt
-	fhSA/JC+TupadgIGlq6bl46qq5XxA+rkLlp174BOWeAU3OhfZuv3m9O22kUM4KKW
-	73uQY4KbwTta9m9GWvcdkr3LBaC12Ff9vBRZC7SkXuOnj5qoOrElpXFY3zMBDVbM
-	Opiyp6qdsM1V/xdp/dc7KZLyVi0ApI05My2a/YkxJnnJFtFooul48A2GI7BOPzHZ
-	+lbWTlizeLwvKaIyAyCuO1adFdmCpFpO7OEBDo4UJFPcW4b4u3S0l2JBkBWChMPe
-	2fDQePc4QQTMHstqcc6sXXzyCl4RRFaTn3wTRkvclCXXY+vFoLjF555iBF7FPgee
-	EQLWBA==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcpj44q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 12:52:24 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7424eb14904so1946063b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 05:52:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747399944; x=1748004744;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2V/BUr7ZXr0lhQ+QdHNR/34NUNiNJwz+Ra2V6/Brrso=;
-        b=Yhjv0ljl1P8Fe6LvAUTp5vc7U17x3xMMUWuT7Rt3EqStw4H+gtNWFeM8qY9pjcCNBR
-         0k0jBWUNLR3KOi3A0l+A0f2HhuqNHzz3/K5YnWFFYGTWBgm2LqokoWVA+wHRHEWHgxLi
-         RpF+I3QUuasR6chWT6K6vGjGfjIUMySte/7c4lGETD2rcJB9y2ZiONjvX3k8ic9qPWru
-         X13rPjaFVA68Q/AwAB2n8zsIPzIstm9Nkqr2712v+w264OfcZib1K5vEZyOvB1ZttdIw
-         wdnl9ROIfb10KT2IsbBkPuyu8EgNQkVsPCz1LpJK6jRUBMt/nSGuGf1jXaCVfcON9UM1
-         +28g==
-X-Gm-Message-State: AOJu0Yzqq4MxNg7/OnvRhsu/AmncjvXGVgnPrfCdQ9XIxe5VK66C1IeC
-	UVhHOzxYUUf8/6domdm7UEosO1LLSHbrhyaqKje/gSnrlx23a7Cpw8EjrMFwm0LcAUAiWbGMNXQ
-	gc+JDFkJboDiw9TwcEvbZWnAzY8z36PINJ1IhoCnkPcnIFF8mvOoK+umO2Lh0CR6k6mJx
-X-Gm-Gg: ASbGnctW0u178YLQhnpEGCF3NQwWD8j2PFSm1304Z6xq52OTJFvxw1q51p1p8Vb0Gm2
-	BaSIbZMSbvjpQX/XQmRZ5kzB0j1YQ0nMQRiiQNli6yGDEQSYQgvtJbgFnRNtVX+FncmW6UP2Y6/
-	pLXYZ/ukPa0oUqqdlmyVm1RcT9nyNQkv2yREFtH8w/vEH6bs+o5Nau/1z19IWukJQIwRgtIGFEo
-	qhG0ytA54tPxyto4UQCCPu7S3GtIGlhHQ42u6AOttyTSkQgpueOD2gKS2iGT5cQoXk3GTqFAu+n
-	/5EGJAmllLYi03MzIMkn1nfz5f7cBN4rDxIsejsEN80L04lJF0Si
-X-Received: by 2002:a05:6a20:9f43:b0:1f3:40a9:2c36 with SMTP id adf61e73a8af0-216218c3e5amr4376691637.10.1747399944136;
-        Fri, 16 May 2025 05:52:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEzCWQn+x5MwV9MAlN0kJn7a3Uyg2pwQjt2HdaQjQuLi16hEehwK+dqDOyCULfIHpBaR7lccw==
-X-Received: by 2002:a05:6a20:9f43:b0:1f3:40a9:2c36 with SMTP id adf61e73a8af0-216218c3e5amr4376660637.10.1747399943696;
-        Fri, 16 May 2025 05:52:23 -0700 (PDT)
-Received: from [192.168.1.4] ([122.164.85.132])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a98a2550sm1427482b3a.167.2025.05.16.05.52.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 May 2025 05:52:23 -0700 (PDT)
-Message-ID: <0a73989f-b018-473c-872a-5cbc2e7d1783@oss.qualcomm.com>
-Date: Fri, 16 May 2025 18:22:17 +0530
+	s=arc-20240116; t=1747400989; c=relaxed/simple;
+	bh=kgV4jLI+lHbevVtE/xrY035nKOIawFE2ady5GL4s7Ro=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m+b/IuCce2DeT+hKZc4iKyzh2lHT4Eoq2WbbpFhAIlKdBX1ZNnWMcqiZJvEBTrVEwZpvUXhEHAXRmYVFFv6+ZfTAVHDTaSY5HYz9RPIgyX8tJa/jyiQysx0e98gM+Xd8aTOBqaxe454sbQ1Q1VD8HBgD8ue5vLVgSU6x5oDfg8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cPClHFTp; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1747400988; x=1778936988;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=kgV4jLI+lHbevVtE/xrY035nKOIawFE2ady5GL4s7Ro=;
+  b=cPClHFTpFWKKq/0xgJvowD4D5hnwUEl4GyXU5W+XNgv4QfxB1eGPRTzn
+   HQ5gyAoyzcimgWIX4s5q6PqW5STATMLCIKjKQ8MYcdnT/+9MGG2E0Ws4C
+   C0ZDfSYntZBpRJMRZT8Id23Ka4+7GwFddpZNUkdvOobF1nTKvhI+LgE/u
+   Tkg4LRZXgYgV0T4LFbDlWN6vvVRTZ9HMRasGblnD5rifg6CFSBGFMMSqD
+   Zjn0xz+bBU5xrRkt2Q7Y/KnqiU8lUMTwKe1uzCekfaYAuVEp/FPiaA4s4
+   enx9FUnWRRdfLwSvUiHL6Wbjf9GyLE1aCETKVkvCb+t6VnDVGp9KbaZWC
+   g==;
+X-CSE-ConnectionGUID: BmaIt31gSEiePPo1AGCLYw==
+X-CSE-MsgGUID: mzyS6wPbQqWcjWdRC7G+VA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11435"; a="60010924"
+X-IronPort-AV: E=Sophos;i="6.15,293,1739865600"; 
+   d="scan'208";a="60010924"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 May 2025 06:09:47 -0700
+X-CSE-ConnectionGUID: RCWs+DXOSeapkbm9PVWYEA==
+X-CSE-MsgGUID: AIqY6aH4QA6e6m/Zp5UAZg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,293,1739865600"; 
+   d="scan'208";a="143810615"
+Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
+  by orviesa005.jf.intel.com with ESMTP; 16 May 2025 06:09:44 -0700
+Received: from kbuild by 1992f890471c with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uFuon-000JMZ-20;
+	Fri, 16 May 2025 13:09:41 +0000
+Date: Fri, 16 May 2025 21:09:18 +0800
+From: kernel test robot <lkp@intel.com>
+To: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+	Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: x1p42100-lenovo-thinkbook-16: dt
+ definition for Thinkbook 16
+Message-ID: <202505162035.hYLdjmWr-lkp@intel.com>
+References: <20250515-tb16-dt-v1-4-dc5846a25c48@oldschoolsolutions.biz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] watchdog: qcom: add support to read the restart
- reason from IMEM
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck
- <linux@roeck-us.net>, bod.linux@nxsw.ie,
-        Srinivas Kandagatla <srini@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
-References: <20250502-wdt_reset_reason-v3-0-b2dc7ace38ca@oss.qualcomm.com>
- <20250502-wdt_reset_reason-v3-4-b2dc7ace38ca@oss.qualcomm.com>
- <2036ef2f-c7ef-4f42-858d-8d95c430c21a@oss.qualcomm.com>
- <68d280db-f7df-48c8-821d-f7d408c302ad@oss.qualcomm.com>
- <8a763c70-adcf-4a14-bb68-72ddc61fa045@oss.qualcomm.com>
- <8c2a53c2-c11b-4d49-bfb5-b948767ba6c7@oss.qualcomm.com>
- <1e871aed-705f-4142-b72d-4232ae729a37@oss.qualcomm.com>
- <6274641a-7366-41cd-a0a7-a9e9cc41b8e6@oss.qualcomm.com>
-Content-Language: en-US
-From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-In-Reply-To: <6274641a-7366-41cd-a0a7-a9e9cc41b8e6@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: xs-L_esw0iWRTaKyPN0HSYB_CO7TGHBN
-X-Proofpoint-ORIG-GUID: xs-L_esw0iWRTaKyPN0HSYB_CO7TGHBN
-X-Authority-Analysis: v=2.4 cv=cO7gskeN c=1 sm=1 tr=0 ts=68273509 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=P+HiGktFAnQmcg2NW2se+w==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=FpJc--pfKuwgGcmHpKQA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDEyNCBTYWx0ZWRfX4Gr3GPxqRRBA
- JKKyfFc76MDISGvx0IBCFIr1JE2ILM4xIsM2Er/DYKVpzMNTEzYX5qiTjNK2hF11r/aYMg6Ywil
- 8Ebil1yimhrZzbTDYLsBgIFbrqPaEAeG8ERr0ec91ToRY67bzF+Z5/blfCO+rZKA8TKXA9+DbfT
- rO0v1kVijuWda6PLZ+l4BqhsUq/IwZGR0wbwltIVdbZ215D6UeVk4hArupZpvdb/VT55agDlUWL
- LlkmPCNG3Ki3FB4oLu7m6A8sTLWcibRaFZ8Br0euJBYC9zTdgZ8mRn+BxVHz1HfQ8hOIL7mBJaX
- pUW24Jj76r0J0ueOKw79WL3sf65iHaFOOe4KPzBAmBGQrHIbXzChydz5WUh4VdrF5FDQgCwt9jI
- jPEH+ZF3k1vxJqkQMLph5lLEOvddJFz2SqOTW9wpkwP4QRpGWhEmjNjYBU12HL/lcfuWJx1u
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-16_05,2025-05-16_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505160124
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250515-tb16-dt-v1-4-dc5846a25c48@oldschoolsolutions.biz>
 
+Hi Jens,
 
-On 5/16/2025 4:48 PM, Konrad Dybcio wrote:
-> On 5/14/25 3:15 PM, Kathiravan Thirumoorthy wrote:
->> On 5/6/2025 4:31 PM, Kathiravan Thirumoorthy wrote:
->>> On 5/3/2025 3:53 AM, Konrad Dybcio wrote:
->>>> On 5/2/25 6:28 PM, Kathiravan Thirumoorthy wrote:
->>>>> On 5/2/2025 7:33 PM, Konrad Dybcio wrote:
->>>>>>> +static int qcom_wdt_get_restart_reason(struct qcom_wdt *wdt,
->>>>>>> +                    const struct qcom_wdt_match_data *data)
->>>>>>> +{
->>>>>>> +    struct regmap *imem;
->>>>>>> +    unsigned int val;
->>>>>>> +    int ret;
->>>>>>> +
->>>>>>> +    imem = syscon_regmap_lookup_by_compatible(data->imem_compatible);
->>>>>> Try syscon_regmap_lookup_by_phandle_args() and pass a phandle, see e.g.
->>>>>> drivers/phy/qualcomm/phy-qcom-qmp-pcie.c & phy@1bfc000 in x1e80100.dtsi
->>>>>>
->>>>>> That way all platform specifics will live in the DT, requiring no
->>>>>> hardcode-y driver changes on similar platforms
->>>>> Thanks. I thought about this API but it didn't strike that I can use the args to fetch and match the value.
->>>>>
->>>>> I need a suggestion here. There is a plan to extend this feature to other IPQ targets and also support WDIOF_POWERUNDER and WDIOF_OVERHEAT cause as well. For IPQ5424, all 3 cause will support and for other IPQ platforms, we are exploring how to integrate WDIOF_OVERHEAT. In any case, can I define the DT entry like below
->>>>>
->>>>>           imem,phandle = <&imem 0x7b0 <Non secure WDT value> <Power Under value> <Overheat value>>;
->>>>>
->>>>> and store these in values args[1], args[2] and args[3] respectively and use it for manipulation? If any of the platform doesn't support all 3, I can update the bindings and define the number of args as required.
->>>> Let's call the property qcom,restart-reason and only pass the register value
->>>>
->>>> Because we may have any number of crazy combinations of various restart
->>>> reasons, we can go two paths:
->>>>
->>>> 1. promise really really really hard we won't be too crazy with the number
->>>>      of possible values and put them in the driver
->>>> 2. go all out on DT properties (such as `bootstatus-overheat`,
->>>> `bootstatus-fanfault` etc.
->>>
->>> Thanks Konrad for the suggestions and the offline discussions.
->>>
->>> @Guenter, I need a suggestion here. Currently as part of this series, we are planning to expose WDIOF_CARDRESET, WDIOF_POWERUNDER, WDIOF_OVERHEAT reasons.
->>>
->>> Once this is done, we do have the custom reason codes like Kernel Panic, Secure Watchdog Bite, Bus error timeout, Bus error access and few many. Is it okay to expose these values also via the bootstatus sysFS by extending the current list of reasons? Since these are outside the scope of watchdog, need your thoughts on this.
->>
->> Konrad / Guenter,
->>
->> We had a further discussion on this internally. Outcome is, it wouldn't be ideal to hook the custom restart reason codes in watchdog framework, since there is no involvement of watchdog in such cases. Also I don't find any references to hook the custom values in watchdog's bootstatus.
->>
->> If this is fine, I'm planning to resend the series to handle only the non secure watchdog timeout case. In that case, as suggested by Konrad, everything will be handled in DT like below to avoid the device data.
->>
->> imem,phandle = <&phandle <imem_offset> <value>>;
-> the part before the comma is a vendor prefix, so that must be qcom,xyz
+kernel test robot noticed the following build errors:
 
+[auto build test ERROR on bdd609656ff5573db9ba1d26496a528bdd297cf2]
 
-Sure, will name it as qcom,imem-phandle. Hope this name is fine.
+url:    https://github.com/intel-lab-lkp/linux/commits/Jens-Glathe-via-B4-Relay/dt-bindings-arm-qcom-Add-Lenovo-Thinkbook-16/20250516-044052
+base:   bdd609656ff5573db9ba1d26496a528bdd297cf2
+patch link:    https://lore.kernel.org/r/20250515-tb16-dt-v1-4-dc5846a25c48%40oldschoolsolutions.biz
+patch subject: [PATCH 4/4] arm64: dts: qcom: x1p42100-lenovo-thinkbook-16: dt definition for Thinkbook 16
+config: arm64-randconfig-001-20250516 (https://download.01.org/0day-ci/archive/20250516/202505162035.hYLdjmWr-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 9.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250516/202505162035.hYLdjmWr-lkp@intel.com/reproduce)
 
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202505162035.hYLdjmWr-lkp@intel.com/
 
->
-> what are your plans for the other reboot reasons? are we scrapping them?
+All errors (new ones prefixed by >>):
 
+>> Error: arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts:22.15-30 Label or path pm8010_thermal not found
+>> FATAL ERROR: Syntax error parsing input tree
 
-No, we are not scrapping it. We are exploring further on where to put 
-this. May be we can put those logic in some simple driver named as 
-ipq-restart-reason.c under drivers/soc/qcom/?
-
-
->
-> Konrad
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
