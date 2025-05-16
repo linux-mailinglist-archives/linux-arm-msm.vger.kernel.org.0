@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-58191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32624AB99D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 12:13:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 537B8AB99EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 12:15:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0B5289E2F24
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 10:12:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B34D3BD4B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 10:15:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE1A3233727;
-	Fri, 16 May 2025 10:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70683213E8E;
+	Fri, 16 May 2025 10:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SvH+DbcZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m6P3fYOj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C94D233712
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 10:11:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54581C862B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 10:15:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747390301; cv=none; b=ChLWpb69Yq7Hjsd7BI5w0zYNNmAHwa/Ix0i3HhqV974BYP2fo5UkL/kj8MOYPFTqVtNS7+MljWLnp3WCVflf+TcBVNmpfjOMwiQMfqNhstZK/k4RyOaEJmCiT6GVZo3FENIm+edRP5kC6Wn0hkxLHKX2t4aL1qqQZ71C81NgIy4=
+	t=1747390554; cv=none; b=GyLhyVB57DkNl3TwZY9Womyle9OcqmxGdgi5McrXOpFWxIxS5s9IcG7bxolBK9u89zS3SthHIbHsWgBsG0zPCcbk/ZCskNH/9xl/GfXaQ1+EDnUFtf28u0vYES6ZJcFhReyxSQwn0LJXz0sOS0Yc8pN1Sn6zTyklKZHloCDFlOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747390301; c=relaxed/simple;
-	bh=PHD79eIwWCw9V5lNQ7QYdkVLrAR+HF/Hje38keTFPFc=;
+	s=arc-20240116; t=1747390554; c=relaxed/simple;
+	bh=QA7w+JQP1X41RoztXYe1wBWPs6Q/cQ0RamgdfI5nt5o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FoE2gNaXFLfSw6AB8xVl+dyqepvx02UuJdkNERYLEh+MSUQqMMoIVQAOiXQgsQKi8nR2XFe3p5eMZQeVVqu8rJrn8Ix1gg7ITYvg+BTu9rTjz8UZ77k68rgBqkYZDL/bE9UHgN3EjFiFPlCoDMBFPdn3Qy59+/DEOpV1PscNYvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SvH+DbcZ; arc=none smtp.client-ip=209.85.221.46
+	 In-Reply-To:Content-Type; b=g24YxxI/gmQtL3o5IZ7jurmv4SndkRQMDTXsNZN1ZShhuvVE705gyxXJW5Fh54WNh43kNAZm9T6tYYjuEzBprkIezO/OpjgVXQExmF9xmZURJaEZ2A6PaLFt6Cym4oq8S/CF3swVF+HlM4KFAYcBYYShPiMAHMYMUWGtHfjuzEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m6P3fYOj; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3a363d15c64so59244f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 03:11:39 -0700 (PDT)
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a35b7e60cbso926324f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 03:15:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747390298; x=1747995098; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1747390551; x=1747995351; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=FK5emDR4y7307fTZlqtGJXVVpQCgklOy57Bb5kZPQdc=;
-        b=SvH+DbcZuDdpa8iXC1jr2c3Ywxtm6z2bWqo3ZhCsITj2rL4pkwvBvrsXK+FpSckHSq
-         Sq89UwmY6BihghzgV6Il7Ks+rSQBKruOHIjRefNhNLl8KKIrhUERQME62NWoa27KoWpf
-         jWoUFJfiYRwNP/eBDjl2JtviHPapZB2jQqbHBW3i74/QEqovQgf50WD3y3OlukGLmLkH
-         +LTsYyQBQPeOuOroa8sBS/Jdj6VDIatNioNIeG38322dsqD2R9mjvETyupOM+aOzK6W0
-         8ioGQiMgAbEHgCr8gGSslMTisds8iUk279eu/amA3NXsN2hxXq8PXy6/uuI61bYVGzcz
-         ig7g==
+        bh=hf9JUffKXEnurX0H5ucC/QRAQlUyAYzPYXVgjENoyR8=;
+        b=m6P3fYOjAN/nQnftkKb8T75OTFJiTS65g7wnxVMaA0W1tdE800dH4ZB7OnvDEiTSMr
+         S11aPrC0kfEZqCEE+3KvIvnB9h/WwW8xdZaTNzcschMm0ji48CjSMJhM6slZtJDpxCT9
+         qvUQrb6tc5T/qP3AYrCtCTfrjbY07XPs9LmdwCnNjGKZGS6eD8enAafOkqVQx5aXFPue
+         MbYrcLFkP/HlcqOiiWKqYLZCoNNn3DWeJT5cPyvkBNSK4k0C2uEQtLo8EtiFl4n2lEq/
+         m6UfwWA4bsHOCsIsoqossIoIZ9jT24YZtMBVC6RNUfWGv46kdvkhJyhCYTrE55dAKP8C
+         nf/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747390298; x=1747995098;
+        d=1e100.net; s=20230601; t=1747390551; x=1747995351;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FK5emDR4y7307fTZlqtGJXVVpQCgklOy57Bb5kZPQdc=;
-        b=dHlAhzDf/Sj+MaDaq81rnAwvOoi0eKoLxtKF4mjJEmg0fmSbc/KvSjgmiOovle6Ufw
-         M2lacxHyN7JTeGTvWjG3faNPWsQsBUla97gqwD6i+Mht/YV68OyQLkH40HFtQJPdaKfs
-         5d/64dmsRz0GiN5LnlBWNbgzKdZT8V5bv30254HyHzLqCCEe0FG5Qz0yx1Bmb+HYToJ1
-         69hAGDK8XyBbdBNYozRHjQWSyzOYTfa8/pzx8Bu2c/d0L9UpKg/NOt/3Itvrk9l2o9jY
-         /8UGzRlNvWY+tj/sU4qHX5P2LQkLK/Na0lz4/JUbwDwzfEvy7YHUf1Q1EL7Amg2Xo2L/
-         SuJw==
-X-Forwarded-Encrypted: i=1; AJvYcCXuv5IfK2EomopKJB5LECYQ7O0tCd5SywOYUtyW6WaEOkOSDc6zqbrl0eppQ50NdEAp4Zd+R8lXzIBUIBLS@vger.kernel.org
-X-Gm-Message-State: AOJu0YxpSm/o9XYZvqxJfR6+ySwFBAYxca5InBH5kMjo308ltrbAeLnS
-	ycNJGBlfW0ZzdGkOpt4Om/xh4lrCG0iOcbF9MZ1VRba3B1XeaPhNoUzfwx2nKtTKKTU=
-X-Gm-Gg: ASbGncsUY1WlDETQI5Ano5GE6wCZLLFvUJIllzIY6GVMZIpqxJ6dcarLvi+cXgBycW+
-	CiOJuDoeAfZeyuvZG5ox8FGJSpEOg6izWeZyVYdaGQTGwL/4NgDi64jMAH8yn5uhkCKHZ7gktCI
-	ZUy/n/eZTZWbVBMk6jUIq/JSlnWTHPE+HixKPmGKFnK/OH4DXKSsFx7XCV5CY5B9/PB144FSeEx
-	NJcA4xttCxV8SbL6eTCYSg5AD5SsFDnSpE+aYAja4QlvQL3wo/K0ncrpWF4qTyF1FEmFwgI+gmH
-	gBlQdiFMWRjbvHDlLa3db22uhIGfS5zHNh86Nzfd4ww3UusecAh88PeNoXP4E/E7uncHn0HtL1Z
-	zX0DSVIH47XrH
-X-Google-Smtp-Source: AGHT+IENqe0ySJELs1LHO+iGEWDGqtm1yvWiW49LkEbYEHxbTK/1es1hMOvGyGFEKYjY38sVDEx5OA==
-X-Received: by 2002:a05:6000:3110:b0:3a0:b550:ded4 with SMTP id ffacd0b85a97d-3a35c821bbcmr2765151f8f.13.1747390297854;
-        Fri, 16 May 2025 03:11:37 -0700 (PDT)
+        bh=hf9JUffKXEnurX0H5ucC/QRAQlUyAYzPYXVgjENoyR8=;
+        b=gOsiiure+63dOuHMDECetF7naebzwcCjUNHaxUEfs5hwH3DlZu4l1ROXk3vTpMwcb2
+         X+9JNvl053p6PFHSS568vwWK18z80wNrkK39mibm9I/e6z4/fS2kTRIK09oRFl7Od6tA
+         zbuBwvQviawNvfBhF3Vi+LOYIvaEBn5Voa1y8N/WtaqxRAkYxGjRtEZI1ioJ6UiQe5kJ
+         JIDiLTS7w1cvvTtCfVYhsd7kEe085TV9oDwlmKJsWDtBj5A3VL577Wfc+M48u49//JLC
+         8dBraYatuR3aaymWuVnaiqAgEw6l2aEAiLnVnAtptALWAX1BYNcNDwuroZMB2W+Fhis/
+         4xJw==
+X-Gm-Message-State: AOJu0YyY9u21Xq+KVMfpXG18SJwRR+E5KnGR4xORMUy2ZZIzJnVy9Bg4
+	qU5HmjzabEBZkNwfnFO4PpCY6MkPEwsV1drTZNI68/KhCk+Ro7+YjBPwpSADKqxlB1uoWba2+v1
+	JqnQE/jf4ZQ==
+X-Gm-Gg: ASbGncu0YLCiXQXTsOYW+CbLP+G2l/qH3Hhn69VoiljSfantx3zyxpEdrg+6Bu//346
+	OLKSxx5oVzRLghD9y5qT7S5rxL+zoD0SQMgPAoOdEYHiXSsPi6iQRXJ++sYABcH4p5zdyGnvkQ4
+	1BglorPIw9AXrz7Lc6LOBEivMtGplAOBQkHy08Sb1BZv2wjH8R3vqmS5XRhQlUgKWj9CMyfErFC
+	i2gD7r5SUOQzX4pRI7uGga9wMXREAGFWS1Tcx6I0GeoMYuacm8g7RltDKpCV37Jm1Chi8+hhnr7
+	8ql/x1JSq/HQDdRMRAKAk4fc2ct0QAedNMowzHO70GxNYkumr+KZzHNJilGFzEdN3PTLKzADPQV
+	M9vjoVcYZrRwc
+X-Google-Smtp-Source: AGHT+IFhNRLORL0s3WapKxF1HYgMEShdvKo3BGr0+F77ZeAxJEMvDNCLG/bxou1DJVtfsgYa4Ni5yg==
+X-Received: by 2002:a5d:4e0d:0:b0:3a3:6434:5d34 with SMTP id ffacd0b85a97d-3a364345dc6mr22238f8f.17.1747390550909;
+        Fri, 16 May 2025 03:15:50 -0700 (PDT)
 Received: from [10.61.1.70] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a3620dbc6asm1284004f8f.88.2025.05.16.03.11.36
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a3622b8a3esm1222224f8f.14.2025.05.16.03.15.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 May 2025 03:11:37 -0700 (PDT)
-Message-ID: <c394186d-83ce-41f4-b564-e074e0dabb90@linaro.org>
-Date: Fri, 16 May 2025 11:11:36 +0100
+        Fri, 16 May 2025 03:15:50 -0700 (PDT)
+Message-ID: <36f02ed8-b440-4760-8d08-b633406ce92a@linaro.org>
+Date: Fri, 16 May 2025 11:15:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,43 +82,45 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] media: venus: fix TOCTOU vulnerability when
- reading packets from shared memory
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Stanimir Varbanov <stanimir.varbanov@linaro.org>,
- Hans Verkuil <hans.verkuil@cisco.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, Vedang Nagar <quic_vnagar@quicinc.com>
-References: <20250514-venus-fixes-v3-0-32298566011f@quicinc.com>
- <20250514-venus-fixes-v3-1-32298566011f@quicinc.com>
- <ad92cf06-636a-417a-b03b-0d90c9243446@linaro.org>
- <0c50c24a-35fa-acfb-a807-b4ed5394506b@quicinc.com>
- <b0c48989-4ce7-4338-b4bb-565ea8b6cd82@linaro.org>
- <b663539d-5ad6-399b-1e7b-0b8b9daca10d@quicinc.com>
- <bd704149-694f-4d89-90d9-a22307488743@linaro.org>
- <f7df808c-0724-3f4d-b910-6e44637c7aaf@quicinc.com>
- <767909a0-70ea-47d3-b6bf-b57e5d7e7c5c@linaro.org>
- <13887de6-4f84-9d0c-bd48-de6f0472d9ef@quicinc.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8550: Add support for camss
+To: Wenmeng Liu <quic_wenmliu@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Depeng Shao <quic_depengs@quicinc.com>
+References: <20250415-sm8550_camss-v1-1-d4b7daa168ac@quicinc.com>
+ <wOxjiEBKO2XU-PikPlT8IMpSGOrP4ocgZEIj_zNhLzzBjySkhGQzupjmJAFhUHcnknLKSASwk33LjBI6WrZ9vg==@protonmail.internalid>
+ <1ee8587b-2bf6-418a-9834-8f8cbf1e94d8@oss.qualcomm.com>
+ <4e81a1fe-3ee5-4f5f-b958-13e6cf9138f7@linaro.org>
+ <db059233-523d-420b-81a7-73b02beef4d1@quicinc.com>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <13887de6-4f84-9d0c-bd48-de6f0472d9ef@quicinc.com>
+In-Reply-To: <db059233-523d-420b-81a7-73b02beef4d1@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 15/05/2025 19:25, Vikash Garodia wrote:
-> Check the pseudo code which i proposed earlier in this conversation [1]. It does
-> not rely on ptr_val at all to check the sanity after memcpy.
+On 16/05/2025 08:34, Wenmeng Liu wrote:
+>> This should be 689 yes
+>>
+>> ---
+>> bod
 > 
-> [1]https://lore.kernel.org/all/0c50c24a-35fa-acfb-a807- 
-> b4ed5394506b@quicinc.com/
+> Hi Bryan,Konrad,
+> 
+> I confirmed that the value is 688 instead of 689. The documentation 
+> incorrectly listed it as 689. To CC linux-media, I have resent the patch:
+> https://lore.kernel.org/linux-arm-msm/20250516072707.388332-1- 
+> quic_wenmliu@quicinc.com/
 
-Understood.
+Do you mean the documentation in the kernel or the documentation inside 
+of qcom ?
 
-Another version of this patch to check after the memcpy() for 
-verification purposes might be correct but, IMO there's no scope for a 
-TOCTOU based modification here.
+I checked the internal silicon definition, I think Konrad did also.
+
+Which documentation do you mean here ?
 
 ---
 bod
