@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-58202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEE07AB9ACD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 13:12:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A424AB9AD1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 13:18:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 83AD81BC3D2E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 11:13:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9B5C15021B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 11:18:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61C722367D6;
-	Fri, 16 May 2025 11:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 352A9288DA;
+	Fri, 16 May 2025 11:18:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="FZvU68c1"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="G9dlIQuW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A001FFC77
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 11:12:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9852C226177
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 11:18:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747393973; cv=none; b=ReW8ECQYcK+LTZIl0BKOdql8tmpz2MlonRJtnYmIAyjjVHsoFdrSZvLk/BV9lzUl4Vth7mZ67ECe/YB7mQDJyOvqwmI1Cn1BYAuohD77wiWwDNNaNSQuYgsjP7cMbenygztLVfYFZUdUsfKoo0cVmNX9rcdmBvNPdhxc2tNDyqs=
+	t=1747394290; cv=none; b=Z0WrYEAozv1sjnvmLWV660skjgWyT9Nt1tn7kXUvPxIONQYH7vwfAsQ7T4TLDYMMGfuZwNK6DF4Swm7p9jzzJJMYgqnKQllBD4bh3i+fCRbJh8fMfRCqtLDGoYa34TwQkyy3S7gXM2/fUD/MjgbCdHw8AgnrgllAKc86Z0jtYYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747393973; c=relaxed/simple;
-	bh=BuLoLNIlp6izYQ3sOmImqlPS+DYdxAau/ZMMQMsjkjg=;
+	s=arc-20240116; t=1747394290; c=relaxed/simple;
+	bh=2j5qkobccot9LL1RM0m5iDEPEb8bSMGKA6Syb6/7mEU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Re0Eg+UxGR/72CKs/HyEqBt1qYzhz1ut16hzvoWrofGC6u8aNpVeF6yeaX4lYJ4zYgKJIOFVW12oyxIuMc8UHObA3secoUI6X8AA4In/lh6VKvUPx3RZ11EYDdyPDMn3LexenW5Rk9yojT5pHKhoFTePlLDyktkNGkewUK5Reh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=FZvU68c1; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1747393969;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bKu/W8DU3ij6rwr4JOg/v4VOvnNcQknWHlz00s+AUBg=;
-	b=FZvU68c1UluEraohPJyPqwJ9glpiDyh0kxdW4pvwBNRXzs93/cbjQ9CNFhbrv2hfNfzm4B
-	1BsXXMy4pJD3MctTZV+zOGkemTsZ/KBYCKDp1s49BZ+sQC0mHLPsI7hJEhcLKhJM9XGHtH
-	R9UW4xCWQ4F+pHI1L2GbXZREz0ScO44=
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
- [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-nrKB6v_6P2ysdh1L8vj-eQ-1; Fri, 16 May 2025 07:12:48 -0400
-X-MC-Unique: nrKB6v_6P2ysdh1L8vj-eQ-1
-X-Mimecast-MFC-AGG-ID: nrKB6v_6P2ysdh1L8vj-eQ_1747393968
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-74255209c4bso3380613b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 04:12:48 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=QJXiIJ//7+eCD7o8kYqr5TqNbjNUSgAlJoSgaiwQQQKUd05cvO8LnwKYgdGoESC8GM/Gk1MioN4NhF3r3fZuLTfihcXjU+htbHfZaYwYI9T2TAJnn9qqdQFxFUdjzBXKT08dB5RXn6PRCx70Ps9eRUIRD9rZP/NylL/tKspX/ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=G9dlIQuW; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54G4MowU014086
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 11:18:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3I2uY5YtBknRZgs8vRXNey7xsxmE+I1qZE/v1ysmnR8=; b=G9dlIQuWI1U5kXYF
+	bfOSZgrRVn7CQZW7eBn5Z/2HgDKBRXwiHibG0WUNAAmj7pZ6Rw+BDKjfp0M8HoMI
+	BqSApYwq88Uq7Aiba2k5ujcYI+56peCzsPl4bSmXc1TVIvcZTGwOGH4FNfoiTR0y
+	GEOahr+90WUdNaqGtwgCjqtW2hCm1coUVzp0EUWFae4AuGMd8tfuRGGv18i4rX0h
+	g4IHY7sURdf20ijRqFJC3Q2vL9vReNSuDXOseAjQgAWBSdGaQshQKgw4yroRwDat
+	Zl5Xb3UbwrwhRfgInxtvd89Y+/S6sBo4ZAVNwwJoHMcNwO2xaoYU1ZKGDt+Ksu1G
+	Ak65lw==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46nx9js630-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 11:18:06 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6f8b297c78aso1804916d6.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 04:18:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747393967; x=1747998767;
+        d=1e100.net; s=20230601; t=1747394285; x=1747999085;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bKu/W8DU3ij6rwr4JOg/v4VOvnNcQknWHlz00s+AUBg=;
-        b=rZgz4lSAIKOfTnfpgTgrgtaz4JdlNMLYfRRd8Cp2ji2Mc4iXSh5rmcQMZJISQ1zutr
-         L/57foFuZJQjrkB1UqxEhQAKQ+cBS0OZWwvBVIS9QGmwfAtRokn+OuZtElUjvSd09FXY
-         Kx51KaWf32GMIQp85LSx0ysPNNGJaea6y3gyS59SpaOGQx07Bo6v0cSfN476Xf5TxzHg
-         h2hAJckgUT5K1GLO/nmz1cNc8N2k3URXq+cMR/tJZhZM0aqk7GNtv2YkoMwuY9XxQBEP
-         IkgvsVd6N2pipYByhVpORfWgj5M/HS1tcDlwC7ZbntvqS3x8grgVtYOjPr32/O9UsOwg
-         J6aA==
-X-Forwarded-Encrypted: i=1; AJvYcCVB5e7YFYzuAybuDdFTtb9QWkN2upuZAixLaWmmOQcYsAWv9Szp/hUkZO1tsAJIodR1256Fo0Ox4Vke1HKo@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx5FI/XQfn9xaGiAF3mlE2wkDQR/XLtWu8zEatx9AksdfDrjxsu
-	s25XWd7aoZy/PcJCItkRluGYaGjRxfHVign506wUNNi2GKdvHk7ZjtR9S5BufS4xQUv0lzuo64z
-	plZh1YbOq04mpaUEW6NNFf8qW8Tx5aiN7ZpmYw0YmgtX187wTe5LMB5l1heObROb4yFw=
-X-Gm-Gg: ASbGncum2E3gbtIija6yGRyYYHf7vVR8xyXKPMgfpGEYZf/NH22DMHPlhm9GDI1UI8V
-	/g7BEHqdSE4J7nYqWzycN1eRJI+5BRgwjsK+ziKeeR1905zmzSthWihsSNz5g6qLrTiNfo+bfQM
-	H0jm4yWXy3VtU8Bhp0MeN3mdqEUjMW9zPn1uJbKIu0D4xgeDMjmo3lXxI/DFyPDpiITBM0rM/5U
-	qeT88NiSLENM/QI0CGuQ867YcxWJlG+Z6fIOWxbtrWaJlytrw6X48EV8sZcilRFABXzRzPSuPJf
-	Eq8WgfkBr5SE
-X-Received: by 2002:a05:6a20:432b:b0:1f5:709d:e0c6 with SMTP id adf61e73a8af0-2170ce3c83bmr3582252637.42.1747393967510;
-        Fri, 16 May 2025 04:12:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGxpvxHOG99CzRGK2Zc4xi+ExxaRfU8D1erG5H74rgtlSvuPwg5IuG+lL5c4ya8/S7YPRObzQ==
-X-Received: by 2002:a05:6a20:432b:b0:1f5:709d:e0c6 with SMTP id adf61e73a8af0-2170ce3c83bmr3582175637.42.1747393966998;
-        Fri, 16 May 2025 04:12:46 -0700 (PDT)
-Received: from [192.168.68.51] ([180.233.125.65])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4ac91b7sm12339915ad.19.2025.05.16.04.12.27
+        bh=3I2uY5YtBknRZgs8vRXNey7xsxmE+I1qZE/v1ysmnR8=;
+        b=Ng954eJxmOO6qj1YMWCo18ATLKOJ148r8wqygv7qgzCmyTeOOO5SPXwmZdyfgchxhh
+         CJGyogUejbcCPTxOFjVZSbj6FW0TM9hdz+GdNSxszlPwwpvz/ksY1Ac4IhGBhwkHrFIE
+         34OfYK9yKHDqpREar1IoPC1LgFtqlN/V5eaqZSEyV24SdEdUbA/alAi64i+JKMoNoDfk
+         k8eoL7c4OBGVgcbpn9KdtUJwrmlSnHc9gm5HFqZu+hHYzz/HY9pC6lu6xcixUtaa+VSF
+         MJrZHgi000UZOx4OhIV4zvAujbYk5Hmgjas+O+t5Rr9BPG/wR9j8gBTAw05QN/iJP9nq
+         +wCg==
+X-Gm-Message-State: AOJu0YxWPlQSL8exsYyhtln6uYxkXFyg+OVNJ8rG491Ye4MfjOhV52WU
+	3mgp0YBvOEX0UXi4Q+E7zpuJWdAqZPIx8q722AaFZyMrHn03tlBjfLPUPSnbTb/ElZFDUyxbHK/
+	NY03sUfzzKU6nLOKPmSVgXe25UGH1AUxljgYaZkATQ/BwblgN2EsTm2WyMI2QgerpRaj+
+X-Gm-Gg: ASbGncu/i2EqrvUcx94jqhxXEDeiJgjXe4seYKqoa1NYHfq5RYcUPV0cxrBemOt/c0y
+	qeb5APB3LdSoJo4WrAmG3NuP/r+aRSrrc5HUYDZZKF80yEHZtguS3Zs2dnfUVNB/diQvr89cCAA
+	lwe+Qez+VTCt3WKmdvB0uX+AqWOeGaG9PCbRrV3NfXaBV+hJ2jZXTajayK97Llf40meFaGATebL
+	n2n/kNRdxy0LQ9lds7IRBM9DxmgIaFSDlCcFRZrX3h2dtuK4BV5b0VI6yDx0nY7RNE9nNHCBzJ/
+	mEvRALGrBWjyQoKryUuYEZvXCJ9p26g524wWoPXlmJIsQIQztOdeWfmovv7iH2eLCQ==
+X-Received: by 2002:a05:6214:1c09:b0:6f2:c10b:db04 with SMTP id 6a1803df08f44-6f8b0835130mr20320746d6.1.1747394284652;
+        Fri, 16 May 2025 04:18:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGYedXsXWaYRFu3TMFMA0Ooxjh8cjz2T+AoU7nKygC1w6HBVJRE7mCkn7yTavhKYax2hXyneQ==
+X-Received: by 2002:a05:6214:1c09:b0:6f2:c10b:db04 with SMTP id 6a1803df08f44-6f8b0835130mr20320616d6.1.1747394284092;
+        Fri, 16 May 2025 04:18:04 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6004d502b03sm1287390a12.29.2025.05.16.04.18.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 May 2025 04:12:46 -0700 (PDT)
-Message-ID: <de375d2e-21ec-4494-8a8e-800e66076647@redhat.com>
-Date: Fri, 16 May 2025 21:12:25 +1000
+        Fri, 16 May 2025 04:18:03 -0700 (PDT)
+Message-ID: <6274641a-7366-41cd-a0a7-a9e9cc41b8e6@oss.qualcomm.com>
+Date: Fri, 16 May 2025 13:18:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,194 +88,114 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 07/17] KVM: guest_memfd: Allow host to map
- guest_memfd() pages
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
- pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
- vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
- david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com,
- liam.merwick@oracle.com, isaku.yamahata@gmail.com,
- kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
- steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
- quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
- quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
- quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
- yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
- will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
- shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
- jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250513163438.3942405-1-tabba@google.com>
- <20250513163438.3942405-8-tabba@google.com>
- <c48843fb-c492-44d4-8000-705413aa9f08@redhat.com>
- <CA+EHjTwYfZf0rsFa-O386qowRKCsKHvhUjtc-q_+9aKddRVCFQ@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] watchdog: qcom: add support to read the restart
+ reason from IMEM
+To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Rob Herring
+ <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck
+ <linux@roeck-us.net>, bod.linux@nxsw.ie,
+        Srinivas Kandagatla <srini@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
+References: <20250502-wdt_reset_reason-v3-0-b2dc7ace38ca@oss.qualcomm.com>
+ <20250502-wdt_reset_reason-v3-4-b2dc7ace38ca@oss.qualcomm.com>
+ <2036ef2f-c7ef-4f42-858d-8d95c430c21a@oss.qualcomm.com>
+ <68d280db-f7df-48c8-821d-f7d408c302ad@oss.qualcomm.com>
+ <8a763c70-adcf-4a14-bb68-72ddc61fa045@oss.qualcomm.com>
+ <8c2a53c2-c11b-4d49-bfb5-b948767ba6c7@oss.qualcomm.com>
+ <1e871aed-705f-4142-b72d-4232ae729a37@oss.qualcomm.com>
 Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <CA+EHjTwYfZf0rsFa-O386qowRKCsKHvhUjtc-q_+9aKddRVCFQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <1e871aed-705f-4142-b72d-4232ae729a37@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: V-DiDNYsCwOrfUCua3O33bVVsJVFEtR1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDEwNyBTYWx0ZWRfX4JkWK2s9R9QW
+ hX8TGXJ9tGVQgyHoUyQHWQ8uitUjzHAwcTfOn7PUGJDbkTgLNvIEl1hBpsyxgsw2OJ48AWB6Xa6
+ w++GGrJeqFp2OyHqoigm3HoSebAi5wGCNuy2pxre6kZX5JH0JhO+Bn4XG/nNJt0gmcAxlZIsDTL
+ osWI52oCuBJ24wPFBrDWRDHXQeGwBUJzWVcFZfJaQfDA2DaCKDWdLLi05m3fOuCeNwtX2wLPTHC
+ L/H3SUxY5NZ5RqXeZHWeMVjrnI/h71WmPPafIH0rEwfohO5a4O8RPBr9FDfNuKo8SiqwOd7eG4+
+ zZRv5uRjardi8/Znri/59KzQC+iNpcm1WYgsDojvkFsuQxY6pHjJpymhzMGg6EnajBcLJlMd6gY
+ ZlJ6EtT4lHXRlCHnRtP83Aqe3WKQHthpIlgUoj7AQXcUgzfvBMiWegyCylV0LIN5ayP+CVqq
+X-Authority-Analysis: v=2.4 cv=CIIqXQrD c=1 sm=1 tr=0 ts=68271eef cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=IBNWLNMZBAz7KTYeBUwA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-GUID: V-DiDNYsCwOrfUCua3O33bVVsJVFEtR1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-16_04,2025-05-16_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0
+ phishscore=0 mlxlogscore=999 spamscore=0 impostorscore=0 clxscore=1015
+ priorityscore=1501 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505160107
 
-Hi Fuad,
-
-On 5/16/25 5:56 PM, Fuad Tabba wrote:
-> On Fri, 16 May 2025 at 08:09, Gavin Shan <gshan@redhat.com> wrote:
->> On 5/14/25 2:34 AM, Fuad Tabba wrote:
->>> This patch enables support for shared memory in guest_memfd, including
->>> mapping that memory at the host userspace. This support is gated by the
->>> configuration option KVM_GMEM_SHARED_MEM, and toggled by the guest_memfd
->>> flag GUEST_MEMFD_FLAG_SUPPORT_SHARED, which can be set when creating a
->>> guest_memfd instance.
+On 5/14/25 3:15 PM, Kathiravan Thirumoorthy wrote:
+> 
+> On 5/6/2025 4:31 PM, Kathiravan Thirumoorthy wrote:
+>>
+>> On 5/3/2025 3:53 AM, Konrad Dybcio wrote:
+>>> On 5/2/25 6:28 PM, Kathiravan Thirumoorthy wrote:
+>>>> On 5/2/2025 7:33 PM, Konrad Dybcio wrote:
+>>>>>> +static int qcom_wdt_get_restart_reason(struct qcom_wdt *wdt,
+>>>>>> +                    const struct qcom_wdt_match_data *data)
+>>>>>> +{
+>>>>>> +    struct regmap *imem;
+>>>>>> +    unsigned int val;
+>>>>>> +    int ret;
+>>>>>> +
+>>>>>> +    imem = syscon_regmap_lookup_by_compatible(data->imem_compatible);
+>>>>> Try syscon_regmap_lookup_by_phandle_args() and pass a phandle, see e.g.
+>>>>> drivers/phy/qualcomm/phy-qcom-qmp-pcie.c & phy@1bfc000 in x1e80100.dtsi
+>>>>>
+>>>>> That way all platform specifics will live in the DT, requiring no
+>>>>> hardcode-y driver changes on similar platforms
+>>>>
+>>>> Thanks. I thought about this API but it didn't strike that I can use the args to fetch and match the value.
+>>>>
+>>>> I need a suggestion here. There is a plan to extend this feature to other IPQ targets and also support WDIOF_POWERUNDER and WDIOF_OVERHEAT cause as well. For IPQ5424, all 3 cause will support and for other IPQ platforms, we are exploring how to integrate WDIOF_OVERHEAT. In any case, can I define the DT entry like below
+>>>>
+>>>>          imem,phandle = <&imem 0x7b0 <Non secure WDT value> <Power Under value> <Overheat value>>;
+>>>>
+>>>> and store these in values args[1], args[2] and args[3] respectively and use it for manipulation? If any of the platform doesn't support all 3, I can update the bindings and define the number of args as required.
+>>> Let's call the property qcom,restart-reason and only pass the register value
 >>>
->>> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
->>> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
->>> Signed-off-by: Fuad Tabba <tabba@google.com>
->>> ---
->>>    arch/x86/include/asm/kvm_host.h | 10 ++++
->>>    include/linux/kvm_host.h        | 13 +++++
->>>    include/uapi/linux/kvm.h        |  1 +
->>>    virt/kvm/Kconfig                |  5 ++
->>>    virt/kvm/guest_memfd.c          | 88 +++++++++++++++++++++++++++++++++
->>>    5 files changed, 117 insertions(+)
+>>> Because we may have any number of crazy combinations of various restart
+>>> reasons, we can go two paths:
 >>>
+>>> 1. promise really really really hard we won't be too crazy with the number
+>>>     of possible values and put them in the driver
+>>> 2. go all out on DT properties (such as `bootstatus-overheat`,
+>>> `bootstatus-fanfault` etc.
 >>
->> [...]
 >>
->>> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
->>> index 6db515833f61..8e6d1866b55e 100644
->>> --- a/virt/kvm/guest_memfd.c
->>> +++ b/virt/kvm/guest_memfd.c
->>> @@ -312,7 +312,88 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
->>>        return gfn - slot->base_gfn + slot->gmem.pgoff;
->>>    }
->>>
->>> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
->>> +
->>> +static bool kvm_gmem_supports_shared(struct inode *inode)
->>> +{
->>> +     uint64_t flags = (uint64_t)inode->i_private;
->>> +
->>> +     return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
->>> +}
->>> +
->>> +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
->>> +{
->>> +     struct inode *inode = file_inode(vmf->vma->vm_file);
->>> +     struct folio *folio;
->>> +     vm_fault_t ret = VM_FAULT_LOCKED;
->>> +
->>> +     filemap_invalidate_lock_shared(inode->i_mapping);
->>> +
->>> +     folio = kvm_gmem_get_folio(inode, vmf->pgoff);
->>> +     if (IS_ERR(folio)) {
->>> +             int err = PTR_ERR(folio);
->>> +
->>> +             if (err == -EAGAIN)
->>> +                     ret = VM_FAULT_RETRY;
->>> +             else
->>> +                     ret = vmf_error(err);
->>> +
->>> +             goto out_filemap;
->>> +     }
->>> +
->>> +     if (folio_test_hwpoison(folio)) {
->>> +             ret = VM_FAULT_HWPOISON;
->>> +             goto out_folio;
->>> +     }
->>> +
->>> +     if (WARN_ON_ONCE(folio_test_large(folio))) {
->>> +             ret = VM_FAULT_SIGBUS;
->>> +             goto out_folio;
->>> +     }
->>> +
+>> Thanks Konrad for the suggestions and the offline discussions.
 >>
->> I don't think there is a large folio involved since the max/min folio order
->> (stored in struct address_space::flags) should have been set to 0, meaning
->> only order-0 is possible when the folio (page) is allocated and added to the
->> page-cache. More details can be referred to AS_FOLIO_ORDER_MASK. It's unnecessary
->> check but not harmful. Maybe a comment is needed to mention large folio isn't
->> around yet, but double confirm.
+>> @Guenter, I need a suggestion here. Currently as part of this series, we are planning to expose WDIOF_CARDRESET, WDIOF_POWERUNDER, WDIOF_OVERHEAT reasons.
+>>
+>> Once this is done, we do have the custom reason codes like Kernel Panic, Secure Watchdog Bite, Bus error timeout, Bus error access and few many. Is it okay to expose these values also via the bootstatus sysFS by extending the current list of reasons? Since these are outside the scope of watchdog, need your thoughts on this.
 > 
-> The idea is to document the lack of hugepage support in code, but if
-> you think it's necessary, I could add a comment.
 > 
+> Konrad / Guenter,
+> 
+> We had a further discussion on this internally. Outcome is, it wouldn't be ideal to hook the custom restart reason codes in watchdog framework, since there is no involvement of watchdog in such cases. Also I don't find any references to hook the custom values in watchdog's bootstatus.
+> 
+> If this is fine, I'm planning to resend the series to handle only the non secure watchdog timeout case. In that case, as suggested by Konrad, everything will be handled in DT like below to avoid the device data.
+> 
+> imem,phandle = <&phandle <imem_offset> <value>>;
 
-Ok, I was actually nit-picky since we're at v9, which is close to integration,
-I guess. If another respin is needed, a comment wouldn't be harmful, but it's
-also perfectly fine without it :)
+the part before the comma is a vendor prefix, so that must be qcom,xyz
 
-> 
->>
->>> +     if (!folio_test_uptodate(folio)) {
->>> +             clear_highpage(folio_page(folio, 0));
->>> +             kvm_gmem_mark_prepared(folio);
->>> +     }
->>> +
->>
->> I must be missing some thing here. This chunk of code is out of sync to kvm_gmem_get_pfn(),
->> where kvm_gmem_prepare_folio() and kvm_arch_gmem_prepare() are executed, and then
->> PG_uptodate is set after that. In the latest ARM CCA series, kvm_arch_gmem_prepare()
->> isn't used, but it would delegate the folio (page) with the prerequisite that
->> the folio belongs to the private address space.
->>
->> I guess that kvm_arch_gmem_prepare() is skipped here because we have the assumption that
->> the folio belongs to the shared address space? However, this assumption isn't always
->> true. We probably need to ensure the folio range is really belonging to the shared
->> address space by poking kvm->mem_attr_array, which can be modified by VMM through
->> ioctl KVM_SET_MEMORY_ATTRIBUTES.
-> 
-> This series only supports shared memory, and the idea is not to use
-> the attributes to check. We ensure that only certain VM types can set
-> the flag (e.g., VM_TYPE_DEFAULT and KVM_X86_SW_PROTECTED_VM).
-> 
-> In the patch series that builds on it, with in-place conversion
-> between private and shared, we do add a check that the memory faulted
-> in is in-fact shared.
-> 
+what are your plans for the other reboot reasons? are we scrapping them?
 
-Ok, thanks for your clarification. I plan to review that series, but not
-getting a chance yet. Right, it's sensible to limit the capability of modifying
-page's attribute (private vs shared) to the particular machine types since
-the whole feature (restricted mmap and in-place conversion) is applicable
-to particular machine types. I can understand KVM_X86_SW_PROTECTED_VM
-(similar to pKVM) needs the feature, but I don't understand why VM_TYPE_DEFAULT
-needs the feature. I guess we may want to use guest-memfd as to tmpfs or
-shmem, meaning all the address space associated with a guest-memfd is shared,
-but without the corresponding private space pointed by struct kvm_userspace_memory_region2
-::userspace_addr. Instead, the 'userspace_addr' will be mmap(guest-memfd) from
-VMM's perspective if I'm correct.
-
-Thanks,
-Gavin
-
-> Thanks,
-> /fuad
-> 
->>> +     vmf->page = folio_file_page(folio, vmf->pgoff);
->>> +
->>> +out_folio:
->>> +     if (ret != VM_FAULT_LOCKED) {
->>> +             folio_unlock(folio);
->>> +             folio_put(folio);
->>> +     }
->>> +
->>> +out_filemap:
->>> +     filemap_invalidate_unlock_shared(inode->i_mapping);
->>> +
->>> +     return ret;
->>> +}
->>> +
->>
->> Thanks,
->> Gavin
->>
-> 
-
+Konrad
 
