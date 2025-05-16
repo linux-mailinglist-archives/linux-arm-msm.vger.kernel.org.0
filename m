@@ -1,140 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-58223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5D42AB9DD8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 15:47:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF2DAAB9DEB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 15:50:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC1883B6556
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 13:45:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D8FD01C0168E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 13:48:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 218FA190072;
-	Fri, 16 May 2025 13:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9997510E9;
+	Fri, 16 May 2025 13:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="H4R6vJaT"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="UVDhcUvK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B87E149DFF;
-	Fri, 16 May 2025 13:42:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C9E2A1AA;
+	Fri, 16 May 2025 13:48:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747402961; cv=none; b=Eh82vTNpiOc+uNI4hL5V2jpS3ODfHudX9IzsPm1LWluVg8pKHtiZCO9vB1qYMrafXRwpuyVpucZnCrsN7nlkqb+RWeBPDMOQ/G6+2eE73ocGhIqncr1CBigQRvNQ2mOc/g9XD46nzIzsu4zUzjwwERw/EIbCkIQc3a/FvDDboHI=
+	t=1747403314; cv=none; b=oY+cGW+roIDVR9pxNmUk8a3Fffz7RefoXjpny0Fh+a2uax8UbH1BbMsAafByeK0ccKOH6zl1ATsa6q/YJ0Y0Jp8JA0kIEmLt/0E0qlYtnzYLug/nRpbE6cd7wL1uogKieYoRoyUPODI8mVZBZi9k/xuwfG3KC/IdWpdKwDSCouc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747402961; c=relaxed/simple;
-	bh=0bUIUe4Sx2DWxLW1yYo6Ms1yEOIpi/0LQIRHc31B0Ik=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XLLq4mxw1KKSQVPzezRvnUgcwarhV8EpbF3vgI0IXpPMUPlJ8ropBlZOuSQTtEi0p44ZkfnJnZwE878qUeGVMuH393SWS9yYA7oUwbYaSpoc42q24AAguT5HfMZDJLXchOi22mQDUetnKGgMEDIFChgO4yCaNlmeRkrIuddB5pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=H4R6vJaT; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54GC6QOd018190;
-	Fri, 16 May 2025 13:42:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=oW5TDyB0lDxwJpPJULvDTcBi
-	kCCDI6hqCKTXY32JOKM=; b=H4R6vJaTK73tW5Cyn7NFCclwh8hfLxS7T3S9ld1R
-	sj9hOeZpIKX24PWFdtF5zofuDtQ/stOEk4loRhcvjLZ0QrhJHW+Ghrwb/Hvmxa07
-	w/IGpehkBawkyo4Mr08LhG2qc2L1hCJtt+GEunxiRIu4sYaWsWlZskE+FA6MAfBg
-	FmXiX4ZcfZJgUKBnUZtfhQ9AWPgYOsE/L0Rej61YF+zpzcFMOz1UW4bcKFGtpLRq
-	zovC6+d+/zbnOOZHn0D/wC4BFGGUAzPjwjkRRdpBqT5ydqWntZ7MnX8i3DSW7yG6
-	Sjpks/V1cO9kQN3M/rRuvDlNDJLXC2g4I14jQFQGm2q89Q==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcnt18s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 May 2025 13:42:34 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54GDgXdd021142
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 May 2025 13:42:33 GMT
-Received: from hu-wasimn-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 16 May 2025 06:42:27 -0700
-Date: Fri, 16 May 2025 19:12:17 +0530
-From: Wasim Nazir <quic_wasimn@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Richard Cochran
-	<richardcochran@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <kernel@quicinc.com>, <kernel@oss.qualcomm.com>
-Subject: Re: [PATCH 5/8] dt-bindings: arm: qcom: Add bindings for qam8775p SOM
-Message-ID: <aCdAuTS4pg7arxwC@hu-wasimn-hyd.qualcomm.com>
-References: <20250507065116.353114-1-quic_wasimn@quicinc.com>
- <20250507065116.353114-6-quic_wasimn@quicinc.com>
- <55d11250-75b1-4606-a110-84cdc0592c33@kernel.org>
+	s=arc-20240116; t=1747403314; c=relaxed/simple;
+	bh=TMuT8a4ncnhyl4/VD++TX0W+ECcbOx8qcjaLMl+w3+A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=obtlx/ZXL7b8mfvHFFtka63nBfeD2LLW55wpQJ/bemMDsIcYlwkq8W6OhPl2W7DJWiEiwNlyRF8zg3p0oJl6ApLsM5nw02gLpXxpy0OKy+1Gs1TCGD33dyTN4GGQaN5YuBcadsZGArH6Y3+ZZRiF+C9HKRHFtR1QIumohX5BLdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=UVDhcUvK; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Hkbeh72Y0ucq/iJdWN5aU8aatswoMTC6+WwiWepvQvA=; b=UVDhcUvKoxA8PncS3akl1v1GSQ
+	b34xI5NT8Q5z28EX3kAMIYvVsVmI7FhwsIf1Z7cV8lfPlW3j0Czw5KNBsxyCjGhBRb8k8i5GjhRov
+	9XljFAjG4qH5+n5mdW7Yw8uxa85a6DHOlSsgXLu8H4SNoNutHNI32bCLN54ayYtUzPW5q6+Kw3drU
+	PJCMKk0YdP7MBl/7+OQoqV3nwodlm7lXpswuu6qxqfro2qOq2SybpiZFHcZNWvIh2xdjAXGFy0NJW
+	wiOMTOTCfteuukjPsd/dQoMIOcRCS4H09pCJ/eHMTIDKlNYM3NvSg1cNxzCxUnmePaHZsazEBn5Dp
+	m+4w9jJg==;
+Received: from [179.180.238.246] (helo=[192.168.68.116])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1uFvKL-0096fp-4V; Fri, 16 May 2025 15:48:15 +0200
+Message-ID: <80673b87-792b-49f9-a68e-657c16a9b04a@igalia.com>
+Date: Fri, 16 May 2025 10:48:09 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <55d11250-75b1-4606-a110-84cdc0592c33@kernel.org>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: I-jYnTPIFCLUrKBmxL999qlgodyVDq99
-X-Authority-Analysis: v=2.4 cv=aIbwqa9m c=1 sm=1 tr=0 ts=682740ca cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=kj9zAlcOel0A:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=x0sF0_AxRbDvk2FnIs8A:9 a=CjuIK1q_8ugA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: I-jYnTPIFCLUrKBmxL999qlgodyVDq99
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDEzMiBTYWx0ZWRfX8qDYzt0ATIZz
- 5ATZwk+WybOWYTcnX7jap2+XdKeCmS2fZyqNG8CmER1uZpra+PPEBsAMrjNx97wYVfyW7Mp1MXH
- AdlvycoYN0vGdRpyxMjXtH3QZy4mmmNgVXayjDDmF+jO5tDAsPypum2UYy0j2IHC/pFdbpBgAqU
- y6Hb4G3ki9HiTbE0dHAnaAzrVm+7srFSm4GCjxKQwCgZ+Nsl7yyHXQcSQaP96ga92UnuT80/jdf
- bFJiKH8keQ/2bBIFQigb/gI/NZHcnzMzDIgtr6U/1kQnaRQdyT13GfoP691DtjjXuhB4kCsvV0N
- 8CkQEIwjLiW+7rwIIZRWtv23oufcHh/sXF0yBD0RyOri3HuAnA9kVHiL5VLjFRm1/luelq4Tbs4
- KVfRNKqyZdVhTOXyDh+1e9X35H49rne2WXHK1NDjZIVXLJyHW6zrVph7NAXWSUHzQxWF4q4q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-16_05,2025-05-16_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxlogscore=572 malwarescore=0 bulkscore=0 impostorscore=0
- clxscore=1015 phishscore=0 suspectscore=0 mlxscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505070000 definitions=main-2505160132
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm: ci: skip msm_mapping@shadow on SM8350
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Helen Koike <helen.fornazier@gmail.com>,
+ Vignesh Raman <vignesh.raman@collabora.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20250513-msm-ci-fixes-v1-1-baba185529a2@oss.qualcomm.com>
+Content-Language: en-US
+From: Helen Koike <koike@igalia.com>
+In-Reply-To: <20250513-msm-ci-fixes-v1-1-baba185529a2@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, May 07, 2025 at 09:00:18AM +0200, Krzysztof Kozlowski wrote:
-> On 07/05/2025 08:51, Wasim Nazir wrote:
-> > Add devicetree bindings for QAM8775p SOM which is based on sa8775p SOC.
+
+
+On 5/13/25 15:49, Dmitry Baryshkov wrote:
+> The msm_mapping@shadow test fails on SM8350, which means that the write
+> might get through (hopefully not though). Disable the test completely
+> for now until we can fix the issue.
 > 
-> You do not add new bindings. You instead change existing ones without
-> explanation why making that change.
+> Link: https://gitlab.freedesktop.org/drm/msm/-/issues/77
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
+Acked-by: Helen Koike <koike@igalia.com>
+
+Thanks
+Helen
+
+> ---
+>   drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-skips.txt | 5 +++++
+>   1 file changed, 5 insertions(+)
 > 
-
-I understand your concern. We thought of adding it to define the SOM HW
-which was not done earlier.
-I will drop all the SOM bindings and maintain only SOM DT structure on
-IQ9 target (qcs9100), which we need it to add memory-map updates.
-
-Also, I will drop similar change from IQ-9075-evk series [1] for maintaining
-similar dt-bindings for IQ9 (qcs9100 & qcs9075) series of targets.
-
-[1]
-https://lore.kernel.org/all/20250429054906.113317-1-quic_wasimn@quicinc.com/
-
+> diff --git a/drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-skips.txt b/drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-skips.txt
+> index 9450f2a002fd7e68f0f674ac6ac84aeebf28347f..a8b535abc8ef0d996d0c73ece1c7a9622250928e 100644
+> --- a/drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-skips.txt
+> +++ b/drivers/gpu/drm/ci/xfails/msm-sm8350-hdk-skips.txt
+> @@ -210,3 +210,8 @@ msm/msm_mapping@ring
+>   # [  229.752499] CPU features: 0x18,00000017,00200928,4200720b
+>   # [  229.758095] Memory Limit: none
+>   # [  229.761291] ---[ end Kernel panic - not syncing: softlockup: hung tasks ]---
+> +
+> +# Protection doesn't seem to be enforced, don't perform write which might get through
+> +# https://gitlab.freedesktop.org/drm/msm/-/issues/77
+> +msm/msm_mapping@shadow
+> +
 > 
+> ---
+> base-commit: 8f5264d302e803e7ef82a61f9632a0d2ef67413f
+> change-id: 20250513-msm-ci-fixes-3e7ce259d1d9
 > 
 > Best regards,
-> Krzysztof
 
-Regards,
-Wasim
 
