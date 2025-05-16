@@ -1,63 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-58204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D00AAAB9AD4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 13:18:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9066DAB9B17
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 13:32:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5EE7250225E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 11:18:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9828B1B6558A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 May 2025 11:32:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88DD4230BDB;
-	Fri, 16 May 2025 11:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4D232376EB;
+	Fri, 16 May 2025 11:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GJU0Mw3d"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dRqR66ap"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0281288DA;
-	Fri, 16 May 2025 11:18:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34612238C0B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 11:31:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747394324; cv=none; b=TyDnTKSKmTR3oWjq4TrdevLNHG4Ltzr/uZ8AfHIZZGhk6scBh30oOZ8DXtPKZTlp9RjictTK3m4HfgBAfY5dKhAzVsoAtTNNpk7Y3HPUj0p5ZhtK7u3HtS4JHEqVaUnrsOt4EgFue50CHpCdJUu9WnQWmZGcG0ZaYBl8yUuN/9Y=
+	t=1747395116; cv=none; b=hc1+EQjloUfQDjwnwFs9dQN7QC7qBjCCj4QHIuXvWnuCH+IXv8lvDrfLP64VV+z+h+y2cfIBPyzxS65u9jqsLyKsw1pQCTR4pCz3XpfoLDB+uAOnSWNLnVvBX6daHm/6SYcmQ5VN+XWa4GofMz8VF/eH0HcCFtOQyqRS7ytiNLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747394324; c=relaxed/simple;
-	bh=Z6ix2AobmqPSTyYspV+r9Ykk1K6VOdLVqiA4ZaQNw4Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gODO9BkcN+bExTIvTtNTkXe2G76I8sumcSL7xpQ9J7XKS/eF76YIVeyJ1gg6mXxYLP6FSADTiavp2FBH5nXcgO4tRuversC4LiCaRCuRCq1RmNzedC2LSCbFpqBahYXApuenhfdBuN/xvqZDzIFz/OiathWYu3Vsn92ZBZv3t6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GJU0Mw3d; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54G3ZFU5014464;
-	Fri, 16 May 2025 11:18:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1747395116; c=relaxed/simple;
+	bh=FycK2ZODVKZ+lpAYgjUK8m4GTFrVQc0AVRZfmvA+wIc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mvdpEUWXPg+09tQ8I+e/3Is218LSIYd5a+EnXel/rjd73pvwbjm+O/JpsD233VOrxVrOekvSUGMfQmMNZvbacbj7/TWEN3gf1SGKl6jfo4H7HklC0zNq6oSouXMohm+BSuC517EebDqodF1nb8+McbwQHI8b2SGKMsN0OJdi0wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dRqR66ap; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54G3Bl5V019550
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 11:31:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zs8WGsYXClyT002JkjXgz6mVO9bx4X9BuJeaUjLHDcA=; b=GJU0Mw3dp7ivwKjd
-	03j37FKLL7IBI9TxUZzTgzhLt/OhNLJVeuoynqdYsxQrGLXB3XbT6ws8GzKhkv1+
-	GY2RX29yiTtG3yvEZNYhv8zmeQpz0Alm6cKmpOFs4QUXuQSXUeitec3dcWhpIHIc
-	fqCcCsiGqM/6m3bhI+hT/Cur1ow0A2vP7MK0LGJmQbawdncKF6yDrwGDn5H3wQQk
-	X+a6Z+owadqEftP6QBmb6UvLqGydkugTrQJHO2fMaK8UFC5skbPJcwtvvKk/ekbn
-	ITWVWqhDFfX+QNMfTWXMmJCO0gaTNBCgc9QW3OVbggbUuzLs8vtCvxZTobkX2nhZ
-	rmOz1w==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcphvgu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 May 2025 11:18:24 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54GBIN5p026069
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 May 2025 11:18:23 GMT
-Received: from [10.253.35.32] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 16 May
- 2025 04:18:18 -0700
-Message-ID: <582a87e0-ed91-452e-8acf-eeff79990802@quicinc.com>
-Date: Fri, 16 May 2025 19:18:15 +0800
+	fnzC285t3rkaZwxrXZ55mpC+N/Zc/3Ny+FfdlNU2kLY=; b=dRqR66apEnvPjJPH
+	yeID3G5+Rg5NPfrXuFh3aGQIqGG5DIuplLekO0sl+RQJkooeU4ONUMMXJ0X3RCvW
+	3ktUwywPWGnVeY1XUpZknIlM92ZBbQnmZ/6Qiwd3kftYppZep6jrqsPQPMFWhENh
+	xEzh2sxpEvSN384z8sFftn/0k5TDMkA28Seumy3ILgk4y47lJP+qd0EDaFDHkDb5
+	9Y+Sxf368DK8pHZPpczNgJCcuwn7tuICBNS9tbuEEVrD+4iITgb9J6uAK3pKCwcz
+	cwcAVUEcDhUXO3WeyLd1zzUHSvWV5Wo64a2CFcFCFV1fFgZbE83sbPvkwxzo2cnM
+	lbLKNQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46mbcnspwg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 11:31:53 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-49452798bd4so5105681cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 May 2025 04:31:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747395113; x=1747999913;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fnzC285t3rkaZwxrXZ55mpC+N/Zc/3Ny+FfdlNU2kLY=;
+        b=fHPW7feHvRGAojRY7v1+LqGLKDJKxjYgPLhnpXlob2otYAvYx5NyGJ24lAJF2IPDSH
+         16aZju20AlMpujKddbhvKdeFSeA5RvkChAxORIXxSI+MEDw70CPjpdzrb6KSv1otW2YO
+         ozTiYGqPlMqMGy4wKmfNKcqY8EeYVDV7pzuJCdaZVLkdmIYNhlw1Tdriuz4Yk6G9krmL
+         5E5V/7fhhak1D5uZEtpAIK+nXIhA6C/27BBAnY5zeaiCAJ5L5wsMzD7SaE2/ENn37LVf
+         xbexT+3O2+gUNlxIy6OCFj+BtoFb3Pbj/VOa0Njn7aZhRHE/tyMVi1cCYrdgV3AVYvhP
+         0+/A==
+X-Forwarded-Encrypted: i=1; AJvYcCVzE/UNwzMhDeXVpG5Qc5TiSErHXcMs6TNYSHZr65750u5j4hNqYWb/Azq21/lZnzEnlsTGGpk5qHOMQXxX@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5Qw2NOXqAfSyoCHbJGFMmKTDFXU4z38z6jDeXpnM0c60pBlGq
+	iPnRXG01/9XlABk+1PZgqlaKpRI56UNFKTWoSaU3NkuvVpKJ/gamQ4TMZrQk7OLkZdZCVsXoZWt
+	0PtEBJp0cDPyJCONUgWuxTMUSGWo5QZGBzWXHfiRY1vsC5JTZIhVt1Ken6+6WJEwifUlJ
+X-Gm-Gg: ASbGncvnX0fyT50W6oduvZ8M+CvOq+z8If8UcZ4qZ3t2QQfVEyDVw8MP/PImCf9tHGg
+	Afc2iGdO+DrdJDi6aPxbs47GxISAlhMVQ5Jys8bQfl5B7/cOD0s69/HJDbUqYon+BnU4hS8mar5
+	FsEt+j8Yj83OL70Nl2RKscIl3uQFTFUW0tbU7gIlUyShBZdCw5jYwmRupbRdPSgKWqSm0vwcP7g
+	flSQx6SzEc+TdpX5NOkPkmeBBiSkyFBehtcXDploNssR7Ey1RMzMvPZ8CAyPGbPriDvoHZ54tAu
+	NzVgDsK4gatvdpgBD58j06gvrhXzRruYI1wXvZYsv5pnt7H9BuB8XNsxS0AuyPCWsg==
+X-Received: by 2002:ad4:5765:0:b0:6f6:d4a8:1a6c with SMTP id 6a1803df08f44-6f8b0806decmr20294226d6.1.1747395112923;
+        Fri, 16 May 2025 04:31:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFCEBLp3n/whIhi4REkgwi84pjCbz7w5PCZVecxxq7YLAuV1dBIWRpjJYZo6uKW+5BD+6N3Pg==
+X-Received: by 2002:ad4:5765:0:b0:6f6:d4a8:1a6c with SMTP id 6a1803df08f44-6f8b0806decmr20293946d6.1.1747395112304;
+        Fri, 16 May 2025 04:31:52 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6005a6dfd41sm1294532a12.35.2025.05.16.04.31.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 May 2025 04:31:51 -0700 (PDT)
+Message-ID: <f8e44e19-0c86-435e-adc0-b9cd5b24b1ed@oss.qualcomm.com>
+Date: Fri, 16 May 2025 13:31:49 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,219 +89,99 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v5 0/5] Add PCS support for Qualcomm IPQ9574 SoC
-To: <mr.nuke.me@gmail.com>, "Russell King (Oracle)" <linux@armlinux.org.uk>,
-        Jakub Kicinski <kuba@kernel.org>
-CC: Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Paolo Abeni
-	<pabeni@redhat.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Andrew Lunn
-	<andrew@lunn.ch>,
-        Heiner Kallweit <hkallweit1@gmail.com>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_kkumarcs@quicinc.com>,
-        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>,
-        <quic_linchen@quicinc.com>, <quic_luoj@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
-        <vsmuthu@qti.qualcomm.com>, <john@phrozen.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20250207-ipq_pcs_6-14_rc1-v5-0-be2ebec32921@quicinc.com>
- <20250211195934.47943371@kernel.org> <Z6x1xD0krK0_eycB@shell.armlinux.org.uk>
- <71a69eb6-9e24-48ab-8301-93ec3ff43cc7@quicinc.com>
- <0c1a0dbd-fd24-40d7-bec9-c81583be1081@gmail.com>
- <c6a78dd6-763c-41a0-8a6e-2e81723412be@quicinc.com>
- <62c98d4f-8f02-43cc-8af6-99edfa5f6c88@gmail.com>
- <df2fa427-00d9-4d74-adec-c81feda69df5@quicinc.com>
- <be7f0fda-ac21-4f94-a6cf-b4c3ca59630a@gmail.com>
+Subject: Re: [v15 5/6] usb: dwc3: qcom: Configure wakeup interrupts during
+ suspend
+To: Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>
+Cc: devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_vpulyala@quicinc.com,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+References: <1651740973-7944-1-git-send-email-quic_kriskura@quicinc.com>
+ <1651740973-7944-6-git-send-email-quic_kriskura@quicinc.com>
 Content-Language: en-US
-From: Lei Wei <quic_leiwei@quicinc.com>
-In-Reply-To: <be7f0fda-ac21-4f94-a6cf-b4c3ca59630a@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3HYvdMJmqexQwJIflig_w5gep5NqMpfU
-X-Proofpoint-ORIG-GUID: 3HYvdMJmqexQwJIflig_w5gep5NqMpfU
-X-Authority-Analysis: v=2.4 cv=cO7gskeN c=1 sm=1 tr=0 ts=68271f00 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
- a=NEAV23lmAAAA:8 a=pGLkceISAAAA:8 a=COk6AnOGAAAA:8 a=mI-91yCrK8bXjQCpjj0A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDEwNyBTYWx0ZWRfXwAPMj1GnZuSc
- uvIe7qO3WJYHNH43U8cE3YRvkx+mcYBuNmr0bS1lo2CXbz1LTZNG3oDbcoxrWFO+np5EU2F2hBU
- KE59MH2l1xFTmn/yFd7fDCUaKW/x7kzcMZfxNzkzOjdUqRnLW5KJXfNxr3Zn/3iKIedgi2+TNQG
- rNktdj7/NAraehAvf5ojVnkJQyJofaEHE3dqbrzQUrXM2bjeoc2TlgY/r4ySYMDicBcCzshV/0Z
- 7wbuUWU94SElXotpSdemShIAK2Mf0lk37n7eHZdXfq7egRoJYCWDJf2a6NrmrNLpXzjQ3BxozKs
- DYhr850hnrcxyXSJVW7BXG5FygpEwHBlWXodmJUUMbaPZr6sSfaeBzKJLbn2CDRyygu+fv8izLm
- jpvfZynT28J3X9HpL/oUV9bRvebb1wEi7LpbVcBGIUnZA7G0ynpivzVx86cQyb/SJOlDbvED
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <1651740973-7944-6-git-send-email-quic_kriskura@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: A47RlFGgB5bWdlJW6FQdKbryNFv_TKn-
+X-Authority-Analysis: v=2.4 cv=aIbwqa9m c=1 sm=1 tr=0 ts=68272229 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=bXvnuBKqF766Z0xgLQAA:9
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: A47RlFGgB5bWdlJW6FQdKbryNFv_TKn-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE2MDExMCBTYWx0ZWRfXyYG85t22osT0
+ Zc7QJ1jzo1ivy6fVPfZyPjArqN0oT+wrEpm/8ZdiWCvVrkCXqLQJSxp37AMuTQpiRdwx/be0ulB
+ DIy5lDkt7WN1qwYqItKpbalgC5JpIRYMntcZ2g2mNLFI2BoaMViCBAkNK4D+8kyyL2z8ff+Sb+z
+ hrEqwo91s1lRCF0ATXIcPtKrSiz1iAlZ36XepWjrW8wz/Ps4Xg1hUU5XNjVzTjYuIB+3BtBnqX2
+ bNS8QaN8BBo1HuXS7JtH9R8DrInZaiP63wBva86sh0aWQoI6LWfWVbZSVoYOZrxwjcAMi2LG2qd
+ WOAtsSjXh7SYIrfLMv52fxcAwYRWxFliVcZHrd+Vgp7LRioKlXbCDD/2IjzlxYONMiSznJLRyka
+ HmkxPQtXMfxmwbhSS9QnjB+yj7CEwiT+lO/QF5HFN72L9J8HA1fD3dKEDG+eQdsOrAJO9Ksg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-16_04,2025-05-16_02,2025-03-28_01
+ definitions=2025-05-16_05,2025-05-16_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505160107
+ adultscore=0 mlxlogscore=937 malwarescore=0 bulkscore=0 impostorscore=0
+ clxscore=1015 phishscore=0 suspectscore=0 mlxscore=0 spamscore=0
+ lowpriorityscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505070000 definitions=main-2505160110
 
+On 5/5/22 10:56 AM, Krishna Kurapati wrote:
+> From: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> 
+> Configure DP/DM interrupts to detect line state changes based on
+> hs_phy_mode. Enable the triggers opposite of what the current
+> DP, DM levels. For HS/FS mode enable DM interrupt and for LS enable DP
+> interrupt.
 
+This is not what the patch does for FS
 
-On 5/16/2025 9:40 AM, mr.nuke.me@gmail.com wrote:
-> On 5/15/25 10:27 AM, Lei Wei wrote:
->>
->>
->> On 5/15/2025 10:32 AM, Alex G. wrote:
->>> On 5/14/25 11:03, Lei Wei wrote:> On 5/13/2025 6:56 AM, 
->>> mr.nuke.me@gmail.com wrote:
->>>>> On 2/19/25 4:46 AM, Lei Wei wrote:
->>>>>
->>>>> I tried this PCS driver, and I am seeing a circular dependency in 
->>>>> the clock init. If the clock tree is:
->>>>>      GCC -> NSSCC -> PCS(uniphy) -> NSSCC -> PCS(mii)
->>>>>
->>>>> The way I understand it, the UNIPHY probe depends on the MII probe. 
->>>>> If MII .probe() returns -EPROBE_DEFER, then so will the 
->>>>> UNIPHY .probe(). But the MII cannot probe until the UNIPHY is done, 
->>>>> due to the clock dependency. How is it supposed to work?
->>>>>
->>>>> The way I found to resolve this is to move the probing of the MII 
->>>>> clocks to ipq_pcs_get().
->>>>>
->>>>> This is the kernel log that I see:
->>>>>
->>>>> [   12.008754] platform 39b00000.clock-controller: deferred probe 
->>>>> pending: platform: supplier 7a00000.ethernet-pcs not ready
->>>>> [   12.008788] mdio_bus 90000.mdio-1:18: deferred probe pending: 
->>>>> mdio_bus: supplier 7a20000.ethernet-pcs not ready
->>>>> [   12.018704] mdio_bus 90000.mdio-1:00: deferred probe pending: 
->>>>> mdio_bus: supplier 90000.mdio-1:18 not ready
->>>>> [   12.028588] mdio_bus 90000.mdio-1:01: deferred probe pending: 
->>>>> mdio_bus: supplier 90000.mdio-1:18 not ready
->>>>> [   12.038310] mdio_bus 90000.mdio-1:02: deferred probe pending: 
->>>>> mdio_bus: supplier 90000.mdio-1:18 not ready
->>>>> [   12.047943] mdio_bus 90000.mdio-1:03: deferred probe pending: 
->>>>> mdio_bus: supplier 90000.mdio-1:18 not ready
->>>>> [   12.057579] platform 7a00000.ethernet-pcs: deferred probe 
->>>>> pending: ipq9574_pcs: Failed to get MII 0 RX clock
->>>>> [   12.067209] platform 7a20000.ethernet-pcs: deferred probe 
->>>>> pending: ipq9574_pcs: Failed to get MII 0 RX clock
->>>>> [   12.077200] platform 3a000000.qcom-ppe: deferred probe pending: 
->>>>> platform: supplier 39b00000.clock-controller not ready
->>>>>
->>>>>
->>>>
->>>> Hello, thanks for bringing this to our notice. Let me try to 
->>>> understand the reason for the probe failure:
->>>>
->>>> The merged NSSCC DTS does not reference the PCS node directly in the 
->>>> "clocks" property. It uses a placeholder phandle '<0>' for the 
->>>> reference. Please see below patch which is merged.
->>>> https://lore.kernel.org/all/20250313110359.242491-6- 
->>>> quic_mmanikan@quicinc.com/
->>>>
->>>> Ideally there should be no direct dependency from NSSCC to PCS 
->>>> driver if
->>>> we use this version of the NSSCC DTS.
->>>>
->>>> Hence it seems that you may have a modified patch here, and DTS 
->>>> changes have been applied to enable all the Ethernet components 
->>>> including PCS and NSSCC, and NSSCC modified to have a direct 
->>>> reference to PCS? However even in this case, I think the driver 
->>>> probe should work if the drivers are built as modules. Can you 
->>>> please confirm if the NSSCC and PCS drivers are built-in to the 
->>>> kernel and not built as modules
->>>
->>> The NSSCC and PCS built-in. I also added the uniphy PCS clocks to the 
->>> NSSCC in order to expose the issue.
->>>
->>> I have a heavily patched tree with PPE driver and EDMA support. 
->>> That's the final use case in order to support ethernet, right?
->>>
->>
->> Yes, all the drivers are eventually for enabling the Ethernet function
->> on IPQ9574.
->>
->>>
->>>> For the case where the drivers are built-in to kernel, and the NSSCC 
->>>> DTS
->>>> node has a direct reference to PCS node, we can use the below solution:
->>>> [Note that the 'UNIPHY' PCS clocks are not needed for NSSCC clocks
->>>> initialization/registration.]
->>>>
->>>>      Enable 'post-init-providers' property in the NSSCC DTS node to 
->>>> mark
->>>>     'UNIPHY' PCS as post-initialization providers to NSSCC. This will
->>>>      ensure following probe order by the kernel:
->>>>
->>>>      1.) NSSCC driver
->>>>      2.) PCS driver.
->>>>
->>>> Please let me know if the above suggestion can help.
->>>
->>> I see. Adding the 'post-init-providers' property does fix the 
->>> circular dependency. Thank you!
->>>
->>> I have another question. Do you have a public repository with the 
->>> unmerged IPQ9574 patches, including, PCS, PPE, EDMA, QCA8084 ?
->>>
->>
->> May I know the source of your PPE/EDMA changes using which this issue
->> is seen?
-> 
-> I use a mix of upstream submissions, and openwrt patches. As noted, 
-> using 'post-init-providers' takes care of the problem.
-> 
-> https://github.com/mrnuke/linux/commits/ipq95xx-devel-20250515/
-> 
->>
->> The openwrt repository contains the unmerged IPQ9574 patches, Although
->> this version will be updated very soon with latest code(with some 
->> fixes), the version of the code in the repo currently is also 
->> functional and tested.
->>
->> https://github.com/CodeLinaro/openwrt/tree/main/target/linux/ 
->> qualcommbe/ patches-6.6
-> 
-> 
-> Will you be updating a clock example with IPQ9574 + QCA8084 to the repo?
-> 
-> Alex
-> 
+[...]
 
-Yes. We are planning to post the updated version of QCA8084 PHY driver 
-along with the QCA8084 PHY DT example in the DT bindings. This should be 
-available by the next review cycle.
+> +	if (dwc->hs_phy_mode & PHY_MODE_USB_HOST_LS) {
 
->>>
->>>> Later once the IPQ PCS driver is merged, we are planning to push the 
->>>> PCS DTS changes, along with an update of the NSSCC DTS to point to 
->>>> the PCS node and mark the "post-init-providers" property. This 
->>>> should work for all cases.
->>>>
->>>> Also, in my view, it is not suitable to move PCS MII clocks get to
->>>> "ipq_pcs_get()" because the natural loading order for the drivers
->>>> is as below:
->>>>
->>>> 1) NSSCC driver
->>>> 2) PCS driver
->>>> 3) Ethernet driver.
->>>>
->>>> Additionally, the community is currently working on an 
->>>> infrastructure to
->>>> provide a common pcs get method. (Christian and Sean Anderson has 
->>>> been working on this). Therefore, I expect "ipq_pcs_get" to be 
->>>> dropped in the future and replaced with the common pcs get method 
->>>> once this common infra is merged.
->>>
->>> That makes sense. Thank you for clarifying.
->>
-> 
+to do so, this check should cover FS too
 
+Konrad
+
+> +		dwc3_qcom_disable_wakeup_irq(qcom->dp_hs_phy_irq);
+> +	} else if (dwc->hs_phy_mode & PHY_MODE_USB_HOST_HS) {
+> +		dwc3_qcom_disable_wakeup_irq(qcom->dm_hs_phy_irq);
+> +	} else {
+> +		dwc3_qcom_disable_wakeup_irq(qcom->dp_hs_phy_irq);
+> +		dwc3_qcom_disable_wakeup_irq(qcom->dm_hs_phy_irq);
+> +	}
+>  
+>  	dwc3_qcom_disable_wakeup_irq(qcom->ss_phy_irq);
+>  }
+>  
+>  static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
+>  {
+> -	dwc3_qcom_enable_wakeup_irq(qcom->hs_phy_irq);
+> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+>  
+> -	dwc3_qcom_enable_wakeup_irq(qcom->dp_hs_phy_irq);
+> +	dwc3_qcom_enable_wakeup_irq(qcom->hs_phy_irq);
+>  
+> -	dwc3_qcom_enable_wakeup_irq(qcom->dm_hs_phy_irq);
+> +	if (dwc->hs_phy_mode & PHY_MODE_USB_HOST_LS) {
+> +		dwc3_qcom_enable_wakeup_irq(qcom->dp_hs_phy_irq);
+> +	} else if (dwc->hs_phy_mode & PHY_MODE_USB_HOST_HS) {
+> +		dwc3_qcom_enable_wakeup_irq(qcom->dm_hs_phy_irq);
+> +	} else {
+> +		dwc3_qcom_enable_wakeup_irq(qcom->dp_hs_phy_irq);
+> +		dwc3_qcom_enable_wakeup_irq(qcom->dm_hs_phy_irq);
+> +	}
+>  
+>  	dwc3_qcom_enable_wakeup_irq(qcom->ss_phy_irq);
+>  }
 
