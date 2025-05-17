@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-58266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 462BCABAB60
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 May 2025 19:28:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 526FFABAB63
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 May 2025 19:28:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EDCD83BB468
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 May 2025 17:28:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A091D189F24E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 May 2025 17:28:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D60920D50B;
-	Sat, 17 May 2025 17:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D41A6210F4B;
+	Sat, 17 May 2025 17:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a7ZUWE15"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UZtAva41"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6704720D4EB;
-	Sat, 17 May 2025 17:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A357621019E;
+	Sat, 17 May 2025 17:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747502889; cv=none; b=VWHQ5kkJqdQenYqGtGlIul5/SgurRV3T9NH1F8bGQGrBiAI0KNijPbGV+lLvoPjhAP6Vso08sRT1i926bXvxFf8Xt2yWhTTIyhIvI2WnAqolRDJVIzUOtSgDaiufgGKo+v6Mvt4wTY2S58rOvGNO5s0rrhJk5+HlCWj5j+l6aWI=
+	t=1747502893; cv=none; b=sOUbFLmk0nonLzJyY6TrgwAraOwAQlZAufeIGQVKjgiEDk14qX4+sM8IFOYBRhqeEqn1mQhotqVHzHltHAitC38VjQpUTTOqe5cZCm5GATB9wyeq8uQr+cjaRUikqIueeMv/XueEbty2XX60H6XxUgc537EJIF29bgRwN5Mb6jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747502889; c=relaxed/simple;
-	bh=062RmATaJHg1+JNK3SlnDQyFrSpSj7KSwC8nySXa7Pc=;
+	s=arc-20240116; t=1747502893; c=relaxed/simple;
+	bh=JVEQxDFr1oBoBMSgA9Z2WU+IEPU+6po+f3inf4JbNrI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Xw4XUp/DMu0gNnwFbwMM3kcWM9oH6a6PHsI5pakoSTQyANYuJJ2rHPjmWZDs1g+3PbvOEtNpSaTlsRA7Sy709oJH9xFSAz5buE/T25shEze7UczL0PnDqXQgtaYVXoZYmeGiPglXuepvugPQH0dhpOloNQTAljtHEwW36tmYu8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a7ZUWE15; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA14DC4CEE3;
-	Sat, 17 May 2025 17:28:04 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=u/fHCv9hvxfK5oG4RfE+6uT1mZflpfruosirVyb2Io0+kDofLUnS/JFvnHT0pul8HgFUcrCjMBbNDwYCjY3fhmywSag1YsP9Rt14pN5QEgfJhW2ZWK0+r3ZYoROBdheC3PA4fXw5Lk3LfqXxI8MitXlVaF9fI3YMmb7pLyPMz9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UZtAva41; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59176C4CEF0;
+	Sat, 17 May 2025 17:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747502888;
-	bh=062RmATaJHg1+JNK3SlnDQyFrSpSj7KSwC8nySXa7Pc=;
+	s=k20201202; t=1747502893;
+	bh=JVEQxDFr1oBoBMSgA9Z2WU+IEPU+6po+f3inf4JbNrI=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=a7ZUWE153k51Y3ZONtbzmYyMT6oS5nfTRYwN9dcZ0hjp1vY15tcvjNKrCfG87kY44
-	 pead8zabmO0dGWuYVnppHec758XBJamtacWXzPBHgRE9ji3dAb7PNjYUQ4dHFa/Il/
-	 xypkNk+8cM6Y2yqSLDspQsAUA/DjsJkMDS6loQgDLVpm2N1j3cJwBGwsjoO8hHPwUQ
-	 T/kJ/MbDma/vHfpukRcFlPM0Dmoqp7NfTCELp13LcPE8BJ6Kc62qdmN3/SLgYtxAYl
-	 FpwYVSQL+BS+lSf/GJ315Rv88jI8lElFXNJb0hPsi49df44V8NR+Nz4/VuBRm0hbE7
-	 s/R40BaF2cUjA==
+	b=UZtAva41q4GAXA2HwnrOi5ktzOhaSYYT3YYMQU+supB9vKILFmS7SqQAJBANycOll
+	 TfLEFUywJ5VmAHQv0avZ+nHcsKhn2bCSKcrZurVXmTedmhB9bS1xR0zt0IAOSIO3py
+	 vnXqBN8ePRT+MZdEzlXjeLVFb8P+95OJpW7jWzSFmdr9yAd11evPuDrwp2Y2tT4BJD
+	 CWj8H2Dw4AsBlOz3w45uZUVsT3SIqR6+lH5Tq/93OUB4jVHQZSihWW6GG22AlJangL
+	 cH2XDFF4JwSxeTi086FdfSyiPI1szS37acgRQnpANdQKSP+TB4+QNN9X1PqwmJ8Seb
+	 dnxP1Y8kXdG2Q==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Sat, 17 May 2025 19:27:51 +0200
-Subject: [PATCH v2 2/5] arm64: dts: qcom: sc8280xp: Fix node order
+Date: Sat, 17 May 2025 19:27:52 +0200
+Subject: [PATCH v2 3/5] arm64: dts: qcom: sc8280xp: Add SLPI
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,7 +52,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250517-topic-8280_slpi-v2-2-1f96f86ac3ae@oss.qualcomm.com>
+Message-Id: <20250517-topic-8280_slpi-v2-3-1f96f86ac3ae@oss.qualcomm.com>
 References: <20250517-topic-8280_slpi-v2-0-1f96f86ac3ae@oss.qualcomm.com>
 In-Reply-To: <20250517-topic-8280_slpi-v2-0-1f96f86ac3ae@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -66,629 +66,147 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1747502874; l=17883;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747502874; l=3655;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=o4vvJe+dKVC6zH1d9tYG5Y4ze0AndgFi2VUDuEHKxRE=;
- b=seT+cxW7EX1gxNDzR3NVPBjioADlz90m2JO4B3M83YDlYNN5EeBQgXswa8p4GlhsrSxkOYCKH
- O3ycyNtPZdHBz6Kb2XPJ7MfakPSEI7VfnzNxklGKo/hPNjiUZpLeoC5
+ bh=NTpPYjRM1aEKBIJ6EFzGdjafUGuz3bdEpt2oY9zN99A=;
+ b=9wUHo4STnGbHN1nj3RzhYrjAaDl5lpmzfnBkCqlFgtW2ZBEwFiPkLDHw7k2oiTcOG8LWFmEVI
+ 8abX8B+WjciAG0jTGbwAojeIdjDgpIJfW70CtyBwlt31bh3fPdKD5hd
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Certain /soc@0 subnodes are very out of order. Reshuffle them.
+SC8280XP features a SLPI (Sensor Low Power Island) core. Describe it.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 574 ++++++++++++++++-----------------
- 1 file changed, 287 insertions(+), 287 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 99 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 27d21e1a2d50c6fc12f324ab2b4dfa4b99791b81..94dcbccca62e992030bcdd6eb3bc3fcd879c1e8a 100644
+index 94dcbccca62e992030bcdd6eb3bc3fcd879c1e8a..87555a119d947dca75415675807f7965b2f203ac 100644
 --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -2454,293 +2454,6 @@ tcsr: syscon@1fc0000 {
+@@ -695,6 +695,11 @@ pil_adsp_mem: adsp-region@86c00000 {
+ 			no-map;
+ 		};
+ 
++		pil_slpi_mem: slpi-region@88c00000 {
++			reg = <0 0x88c00000 0 0x1500000>;
++			no-map;
++		};
++
+ 		pil_nsp0_mem: cdsp0-region@8a100000 {
+ 			reg = <0 0x8a100000 0 0x1e00000>;
+ 			no-map;
+@@ -783,6 +788,30 @@ smp2p_nsp1_in: slave-kernel {
+ 		};
+ 	};
+ 
++	smp2p-slpi {
++		compatible = "qcom,smp2p";
++		qcom,smem = <481>, <430>;
++		interrupts-extended = <&ipcc IPCC_CLIENT_SLPI
++					     IPCC_MPROC_SIGNAL_SMP2P
++					     IRQ_TYPE_EDGE_RISING>;
++		mboxes = <&ipcc IPCC_CLIENT_SLPI
++				IPCC_MPROC_SIGNAL_SMP2P>;
++
++		qcom,local-pid = <0>;
++		qcom,remote-pid = <3>;
++
++		smp2p_slpi_out: master-kernel {
++			qcom,entry-name = "master-kernel";
++			#qcom,smem-state-cells = <1>;
++		};
++
++		smp2p_slpi_in: slave-kernel {
++			qcom,entry-name = "slave-kernel";
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++	};
++
+ 	soc: soc@0 {
+ 		compatible = "simple-bus";
+ 		#address-cells = <2>;
+@@ -2454,6 +2483,76 @@ tcsr: syscon@1fc0000 {
  			reg = <0x0 0x01fc0000 0x0 0x30000>;
  		};
  
--		gpu: gpu@3d00000 {
--			compatible = "qcom,adreno-690.0", "qcom,adreno";
--
--			reg = <0 0x03d00000 0 0x40000>,
--			      <0 0x03d9e000 0 0x1000>,
--			      <0 0x03d61000 0 0x800>;
--			reg-names = "kgsl_3d0_reg_memory",
--				    "cx_mem",
--				    "cx_dbgc";
--			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
--			iommus = <&gpu_smmu 0 0xc00>, <&gpu_smmu 1 0xc00>;
--			operating-points-v2 = <&gpu_opp_table>;
--
--			qcom,gmu = <&gmu>;
--			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
--			interconnect-names = "gfx-mem";
--			#cooling-cells = <2>;
--
--			status = "disabled";
--
--			gpu_opp_table: opp-table {
--				compatible = "operating-points-v2";
--
--				opp-270000000 {
--					opp-hz = /bits/ 64 <270000000>;
--					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
--					opp-peak-kBps = <451000>;
--				};
--
--				opp-410000000 {
--					opp-hz = /bits/ 64 <410000000>;
--					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
--					opp-peak-kBps = <1555000>;
--				};
--
--				opp-500000000 {
--					opp-hz = /bits/ 64 <500000000>;
--					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
--					opp-peak-kBps = <1555000>;
--				};
--
--				opp-547000000 {
--					opp-hz = /bits/ 64 <547000000>;
--					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
--					opp-peak-kBps = <1555000>;
--				};
--
--				opp-606000000 {
--					opp-hz = /bits/ 64 <606000000>;
--					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
--					opp-peak-kBps = <2736000>;
--				};
--
--				opp-640000000 {
--					opp-hz = /bits/ 64 <640000000>;
--					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
--					opp-peak-kBps = <2736000>;
--				};
--
--				opp-655000000 {
--					opp-hz = /bits/ 64 <655000000>;
--					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
--					opp-peak-kBps = <2736000>;
--				};
--
--				opp-690000000 {
--					opp-hz = /bits/ 64 <690000000>;
--					opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
--					opp-peak-kBps = <2736000>;
--				};
--			};
--		};
--
--		gmu: gmu@3d6a000 {
--			compatible = "qcom,adreno-gmu-690.0", "qcom,adreno-gmu";
--			reg = <0 0x03d6a000 0 0x34000>,
--			      <0 0x03de0000 0 0x10000>,
--			      <0 0x0b290000 0 0x10000>;
--			reg-names = "gmu", "rscc", "gmu_pdc";
--			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "hfi", "gmu";
--			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
--				 <&gpucc GPU_CC_CXO_CLK>,
--				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
--				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
--				 <&gpucc GPU_CC_AHB_CLK>,
--				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
--				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
--			clock-names = "gmu",
--				      "cxo",
--				      "axi",
--				      "memnoc",
--				      "ahb",
--				      "hub",
--				      "smmu_vote";
--			power-domains = <&gpucc GPU_CC_CX_GDSC>,
--					<&gpucc GPU_CC_GX_GDSC>;
--			power-domain-names = "cx",
--					     "gx";
--			iommus = <&gpu_smmu 5 0xc00>;
--			operating-points-v2 = <&gmu_opp_table>;
--
--			gmu_opp_table: opp-table {
--				compatible = "operating-points-v2";
--
--				opp-200000000 {
--					opp-hz = /bits/ 64 <200000000>;
--					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
--				};
--
--				opp-500000000 {
--					opp-hz = /bits/ 64 <500000000>;
--					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
--				};
--			};
--		};
--
--		gpucc: clock-controller@3d90000 {
--			compatible = "qcom,sc8280xp-gpucc";
--			reg = <0 0x03d90000 0 0x9000>;
--			clocks = <&rpmhcc RPMH_CXO_CLK>,
--				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
--				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
--			clock-names = "bi_tcxo",
--				      "gcc_gpu_gpll0_clk_src",
--				      "gcc_gpu_gpll0_div_clk_src";
--
--			power-domains = <&rpmhpd SC8280XP_GFX>;
--			#clock-cells = <1>;
--			#reset-cells = <1>;
--			#power-domain-cells = <1>;
--		};
--
--		gpu_smmu: iommu@3da0000 {
--			compatible = "qcom,sc8280xp-smmu-500", "qcom,adreno-smmu",
--				     "qcom,smmu-500", "arm,mmu-500";
--			reg = <0 0x03da0000 0 0x20000>;
--			#iommu-cells = <2>;
--			#global-interrupts = <2>;
--			interrupts = <GIC_SPI 672 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 688 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 689 IRQ_TYPE_LEVEL_HIGH>;
--
--			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
--				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
--				 <&gpucc GPU_CC_AHB_CLK>,
--				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
--				 <&gpucc GPU_CC_CX_GMU_CLK>,
--				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
--				 <&gpucc GPU_CC_HUB_AON_CLK>;
--			clock-names = "gcc_gpu_memnoc_gfx_clk",
--				      "gcc_gpu_snoc_dvm_gfx_clk",
--				      "gpu_cc_ahb_clk",
--				      "gpu_cc_hlos1_vote_gpu_smmu_clk",
--				      "gpu_cc_cx_gmu_clk",
--				      "gpu_cc_hub_cx_int_clk",
--				      "gpu_cc_hub_aon_clk";
--
--			power-domains = <&gpucc GPU_CC_CX_GDSC>;
--			dma-coherent;
--		};
--
--		usb_0_hsphy: phy@88e5000 {
--			compatible = "qcom,sc8280xp-usb-hs-phy",
--				     "qcom,usb-snps-hs-5nm-phy";
--			reg = <0 0x088e5000 0 0x400>;
--			clocks = <&rpmhcc RPMH_CXO_CLK>;
--			clock-names = "ref";
--			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
--
--			#phy-cells = <0>;
--
--			status = "disabled";
--		};
--
--		usb_2_hsphy0: phy@88e7000 {
--			compatible = "qcom,sc8280xp-usb-hs-phy",
--				     "qcom,usb-snps-hs-5nm-phy";
--			reg = <0 0x088e7000 0 0x400>;
--			clocks = <&gcc GCC_USB2_HS0_CLKREF_CLK>;
--			clock-names = "ref";
--			resets = <&gcc GCC_QUSB2PHY_HS0_MP_BCR>;
--
--			#phy-cells = <0>;
--
--			status = "disabled";
--		};
--
--		usb_2_hsphy1: phy@88e8000 {
--			compatible = "qcom,sc8280xp-usb-hs-phy",
--				     "qcom,usb-snps-hs-5nm-phy";
--			reg = <0 0x088e8000 0 0x400>;
--			clocks = <&gcc GCC_USB2_HS1_CLKREF_CLK>;
--			clock-names = "ref";
--			resets = <&gcc GCC_QUSB2PHY_HS1_MP_BCR>;
--
--			#phy-cells = <0>;
--
--			status = "disabled";
--		};
--
--		usb_2_hsphy2: phy@88e9000 {
--			compatible = "qcom,sc8280xp-usb-hs-phy",
--				     "qcom,usb-snps-hs-5nm-phy";
--			reg = <0 0x088e9000 0 0x400>;
--			clocks = <&gcc GCC_USB2_HS2_CLKREF_CLK>;
--			clock-names = "ref";
--			resets = <&gcc GCC_QUSB2PHY_HS2_MP_BCR>;
--
--			#phy-cells = <0>;
--
--			status = "disabled";
--		};
--
--		usb_2_hsphy3: phy@88ea000 {
--			compatible = "qcom,sc8280xp-usb-hs-phy",
--				     "qcom,usb-snps-hs-5nm-phy";
--			reg = <0 0x088ea000 0 0x400>;
--			clocks = <&gcc GCC_USB2_HS3_CLKREF_CLK>;
--			clock-names = "ref";
--			resets = <&gcc GCC_QUSB2PHY_HS3_MP_BCR>;
--
--			#phy-cells = <0>;
--
--			status = "disabled";
--		};
--
--		usb_2_qmpphy0: phy@88ef000 {
--			compatible = "qcom,sc8280xp-qmp-usb3-uni-phy";
--			reg = <0 0x088ef000 0 0x2000>;
--
--			clocks = <&gcc GCC_USB3_MP_PHY_AUX_CLK>,
--				 <&gcc GCC_USB3_MP0_CLKREF_CLK>,
--				 <&gcc GCC_USB3_MP_PHY_COM_AUX_CLK>,
--				 <&gcc GCC_USB3_MP_PHY_PIPE_0_CLK>;
--			clock-names = "aux", "ref", "com_aux", "pipe";
--
--			resets = <&gcc GCC_USB3_UNIPHY_MP0_BCR>,
--				 <&gcc GCC_USB3UNIPHY_PHY_MP0_BCR>;
--			reset-names = "phy", "phy_phy";
--
--			power-domains = <&gcc USB30_MP_GDSC>;
--
--			#clock-cells = <0>;
--			clock-output-names = "usb2_phy0_pipe_clk";
--
--			#phy-cells = <0>;
--
--			status = "disabled";
--		};
--
--		usb_2_qmpphy1: phy@88f1000 {
--			compatible = "qcom,sc8280xp-qmp-usb3-uni-phy";
--			reg = <0 0x088f1000 0 0x2000>;
--
--			clocks = <&gcc GCC_USB3_MP_PHY_AUX_CLK>,
--				 <&gcc GCC_USB3_MP1_CLKREF_CLK>,
--				 <&gcc GCC_USB3_MP_PHY_COM_AUX_CLK>,
--				 <&gcc GCC_USB3_MP_PHY_PIPE_1_CLK>;
--			clock-names = "aux", "ref", "com_aux", "pipe";
--
--			resets = <&gcc GCC_USB3_UNIPHY_MP1_BCR>,
--				 <&gcc GCC_USB3UNIPHY_PHY_MP1_BCR>;
--			reset-names = "phy", "phy_phy";
--
--			power-domains = <&gcc USB30_MP_GDSC>;
--
--			#clock-cells = <0>;
--			clock-output-names = "usb2_phy1_pipe_clk";
--
--			#phy-cells = <0>;
--
--			status = "disabled";
--		};
--
++		remoteproc_slpi: remoteproc@2400000 {
++			compatible = "qcom,sc8280xp-slpi-pas", "qcom,sm8350-slpi-pas";
++			reg = <0 0x02400000 0 0x10000>;
++
++			interrupts-extended = <&pdc 9 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_slpi_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_slpi_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_slpi_in 2 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_slpi_in 3 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "wdog",
++					  "fatal",
++					  "ready",
++					  "handover",
++					  "stop-ack";
++
++			clocks = <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "xo";
++
++			power-domains = <&rpmhpd SC8280XP_LCX>,
++					<&rpmhpd SC8280XP_LMX>;
++			power-domain-names = "lcx", "lmx";
++
++			memory-region = <&pil_slpi_mem>;
++
++			qcom,qmp = <&aoss_qmp>;
++
++			qcom,smem-states = <&smp2p_slpi_out 0>;
++			qcom,smem-state-names = "stop";
++
++			status = "disabled";
++
++			glink-edge {
++				interrupts-extended = <&ipcc IPCC_CLIENT_SLPI
++							     IPCC_MPROC_SIGNAL_GLINK_QMP
++							     IRQ_TYPE_EDGE_RISING>;
++				mboxes = <&ipcc IPCC_CLIENT_SLPI
++						IPCC_MPROC_SIGNAL_GLINK_QMP>;
++
++				label = "slpi";
++				qcom,remote-pid = <3>;
++
++				fastrpc {
++					compatible = "qcom,fastrpc";
++					qcom,glink-channels = "fastrpcglink-apps-dsp";
++					label = "sdsp";
++					qcom,non-secure-domain;
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					compute-cb@1 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <1>;
++						iommus = <&apps_smmu 0x0521 0x0>;
++					};
++
++					compute-cb@2 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <2>;
++						iommus = <&apps_smmu 0x0522 0x0>;
++					};
++
++					compute-cb@3 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <3>;
++						iommus = <&apps_smmu 0x0523 0x0>;
++					};
++				};
++			};
++		};
++
  		remoteproc_adsp: remoteproc@3000000 {
  			compatible = "qcom,sc8280xp-adsp-pas";
  			reg = <0 0x03000000 0 0x10000>;
-@@ -3166,6 +2879,180 @@ lpasscc: clock-controller@33e0000 {
- 			#reset-cells = <1>;
- 		};
- 
-+		gpu: gpu@3d00000 {
-+			compatible = "qcom,adreno-690.0", "qcom,adreno";
-+
-+			reg = <0 0x03d00000 0 0x40000>,
-+			      <0 0x03d9e000 0 0x1000>,
-+			      <0 0x03d61000 0 0x800>;
-+			reg-names = "kgsl_3d0_reg_memory",
-+				    "cx_mem",
-+				    "cx_dbgc";
-+			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-+			iommus = <&gpu_smmu 0 0xc00>, <&gpu_smmu 1 0xc00>;
-+			operating-points-v2 = <&gpu_opp_table>;
-+
-+			qcom,gmu = <&gmu>;
-+			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "gfx-mem";
-+			#cooling-cells = <2>;
-+
-+			status = "disabled";
-+
-+			gpu_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-270000000 {
-+					opp-hz = /bits/ 64 <270000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+					opp-peak-kBps = <451000>;
-+				};
-+
-+				opp-410000000 {
-+					opp-hz = /bits/ 64 <410000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-+					opp-peak-kBps = <1555000>;
-+				};
-+
-+				opp-500000000 {
-+					opp-hz = /bits/ 64 <500000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+					opp-peak-kBps = <1555000>;
-+				};
-+
-+				opp-547000000 {
-+					opp-hz = /bits/ 64 <547000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
-+					opp-peak-kBps = <1555000>;
-+				};
-+
-+				opp-606000000 {
-+					opp-hz = /bits/ 64 <606000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-+					opp-peak-kBps = <2736000>;
-+				};
-+
-+				opp-640000000 {
-+					opp-hz = /bits/ 64 <640000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-+					opp-peak-kBps = <2736000>;
-+				};
-+
-+				opp-655000000 {
-+					opp-hz = /bits/ 64 <655000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
-+					opp-peak-kBps = <2736000>;
-+				};
-+
-+				opp-690000000 {
-+					opp-hz = /bits/ 64 <690000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
-+					opp-peak-kBps = <2736000>;
-+				};
-+			};
-+		};
-+
-+		gmu: gmu@3d6a000 {
-+			compatible = "qcom,adreno-gmu-690.0", "qcom,adreno-gmu";
-+			reg = <0 0x03d6a000 0 0x34000>,
-+			      <0 0x03de0000 0 0x10000>,
-+			      <0 0x0b290000 0 0x10000>;
-+			reg-names = "gmu", "rscc", "gmu_pdc";
-+			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hfi", "gmu";
-+			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
-+				 <&gpucc GPU_CC_CXO_CLK>,
-+				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
-+				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-+				 <&gpucc GPU_CC_AHB_CLK>,
-+				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
-+				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
-+			clock-names = "gmu",
-+				      "cxo",
-+				      "axi",
-+				      "memnoc",
-+				      "ahb",
-+				      "hub",
-+				      "smmu_vote";
-+			power-domains = <&gpucc GPU_CC_CX_GDSC>,
-+					<&gpucc GPU_CC_GX_GDSC>;
-+			power-domain-names = "cx",
-+					     "gx";
-+			iommus = <&gpu_smmu 5 0xc00>;
-+			operating-points-v2 = <&gmu_opp_table>;
-+
-+			gmu_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-200000000 {
-+					opp-hz = /bits/ 64 <200000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-+				};
-+
-+				opp-500000000 {
-+					opp-hz = /bits/ 64 <500000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-+				};
-+			};
-+		};
-+
-+		gpucc: clock-controller@3d90000 {
-+			compatible = "qcom,sc8280xp-gpucc";
-+			reg = <0 0x03d90000 0 0x9000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
-+				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-+			clock-names = "bi_tcxo",
-+				      "gcc_gpu_gpll0_clk_src",
-+				      "gcc_gpu_gpll0_div_clk_src";
-+
-+			power-domains = <&rpmhpd SC8280XP_GFX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		gpu_smmu: iommu@3da0000 {
-+			compatible = "qcom,sc8280xp-smmu-500", "qcom,adreno-smmu",
-+				     "qcom,smmu-500", "arm,mmu-500";
-+			reg = <0 0x03da0000 0 0x20000>;
-+			#iommu-cells = <2>;
-+			#global-interrupts = <2>;
-+			interrupts = <GIC_SPI 672 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 688 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 689 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-+				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
-+				 <&gpucc GPU_CC_AHB_CLK>,
-+				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
-+				 <&gpucc GPU_CC_CX_GMU_CLK>,
-+				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
-+				 <&gpucc GPU_CC_HUB_AON_CLK>;
-+			clock-names = "gcc_gpu_memnoc_gfx_clk",
-+				      "gcc_gpu_snoc_dvm_gfx_clk",
-+				      "gpu_cc_ahb_clk",
-+				      "gpu_cc_hlos1_vote_gpu_smmu_clk",
-+				      "gpu_cc_cx_gmu_clk",
-+				      "gpu_cc_hub_cx_int_clk",
-+				      "gpu_cc_hub_aon_clk";
-+
-+			power-domains = <&gpucc GPU_CC_CX_GDSC>;
-+			dma-coherent;
-+		};
-+
- 		sdc2: mmc@8804000 {
- 			compatible = "qcom,sc8280xp-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0 0x08804000 0 0x1000>;
-@@ -3209,6 +3096,71 @@ opp-202000000 {
- 			};
- 		};
- 
-+		usb_0_hsphy: phy@88e5000 {
-+			compatible = "qcom,sc8280xp-usb-hs-phy",
-+				     "qcom,usb-snps-hs-5nm-phy";
-+			reg = <0 0x088e5000 0 0x400>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "ref";
-+			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
-+
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
-+		};
-+
-+		usb_2_hsphy0: phy@88e7000 {
-+			compatible = "qcom,sc8280xp-usb-hs-phy",
-+				     "qcom,usb-snps-hs-5nm-phy";
-+			reg = <0 0x088e7000 0 0x400>;
-+			clocks = <&gcc GCC_USB2_HS0_CLKREF_CLK>;
-+			clock-names = "ref";
-+			resets = <&gcc GCC_QUSB2PHY_HS0_MP_BCR>;
-+
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
-+		};
-+
-+		usb_2_hsphy1: phy@88e8000 {
-+			compatible = "qcom,sc8280xp-usb-hs-phy",
-+				     "qcom,usb-snps-hs-5nm-phy";
-+			reg = <0 0x088e8000 0 0x400>;
-+			clocks = <&gcc GCC_USB2_HS1_CLKREF_CLK>;
-+			clock-names = "ref";
-+			resets = <&gcc GCC_QUSB2PHY_HS1_MP_BCR>;
-+
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
-+		};
-+
-+		usb_2_hsphy2: phy@88e9000 {
-+			compatible = "qcom,sc8280xp-usb-hs-phy",
-+				     "qcom,usb-snps-hs-5nm-phy";
-+			reg = <0 0x088e9000 0 0x400>;
-+			clocks = <&gcc GCC_USB2_HS2_CLKREF_CLK>;
-+			clock-names = "ref";
-+			resets = <&gcc GCC_QUSB2PHY_HS2_MP_BCR>;
-+
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
-+		};
-+
-+		usb_2_hsphy3: phy@88ea000 {
-+			compatible = "qcom,sc8280xp-usb-hs-phy",
-+				     "qcom,usb-snps-hs-5nm-phy";
-+			reg = <0 0x088ea000 0 0x400>;
-+			clocks = <&gcc GCC_USB2_HS3_CLKREF_CLK>;
-+			clock-names = "ref";
-+			resets = <&gcc GCC_QUSB2PHY_HS3_MP_BCR>;
-+
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
-+		};
-+
- 		usb_0_qmpphy: phy@88eb000 {
- 			compatible = "qcom,sc8280xp-qmp-usb43dp-phy";
- 			reg = <0 0x088eb000 0 0x4000>;
-@@ -3256,6 +3208,54 @@ port@2 {
- 			};
- 		};
- 
-+		usb_2_qmpphy0: phy@88ef000 {
-+			compatible = "qcom,sc8280xp-qmp-usb3-uni-phy";
-+			reg = <0 0x088ef000 0 0x2000>;
-+
-+			clocks = <&gcc GCC_USB3_MP_PHY_AUX_CLK>,
-+				 <&gcc GCC_USB3_MP0_CLKREF_CLK>,
-+				 <&gcc GCC_USB3_MP_PHY_COM_AUX_CLK>,
-+				 <&gcc GCC_USB3_MP_PHY_PIPE_0_CLK>;
-+			clock-names = "aux", "ref", "com_aux", "pipe";
-+
-+			resets = <&gcc GCC_USB3_UNIPHY_MP0_BCR>,
-+				 <&gcc GCC_USB3UNIPHY_PHY_MP0_BCR>;
-+			reset-names = "phy", "phy_phy";
-+
-+			power-domains = <&gcc USB30_MP_GDSC>;
-+
-+			#clock-cells = <0>;
-+			clock-output-names = "usb2_phy0_pipe_clk";
-+
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
-+		};
-+
-+		usb_2_qmpphy1: phy@88f1000 {
-+			compatible = "qcom,sc8280xp-qmp-usb3-uni-phy";
-+			reg = <0 0x088f1000 0 0x2000>;
-+
-+			clocks = <&gcc GCC_USB3_MP_PHY_AUX_CLK>,
-+				 <&gcc GCC_USB3_MP1_CLKREF_CLK>,
-+				 <&gcc GCC_USB3_MP_PHY_COM_AUX_CLK>,
-+				 <&gcc GCC_USB3_MP_PHY_PIPE_1_CLK>;
-+			clock-names = "aux", "ref", "com_aux", "pipe";
-+
-+			resets = <&gcc GCC_USB3_UNIPHY_MP1_BCR>,
-+				 <&gcc GCC_USB3UNIPHY_PHY_MP1_BCR>;
-+			reset-names = "phy", "phy_phy";
-+
-+			power-domains = <&gcc USB30_MP_GDSC>;
-+
-+			#clock-cells = <0>;
-+			clock-output-names = "usb2_phy1_pipe_clk";
-+
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
-+		};
-+
- 		usb_1_hsphy: phy@8902000 {
- 			compatible = "qcom,sc8280xp-usb-hs-phy",
- 				     "qcom,usb-snps-hs-5nm-phy";
 
 -- 
 2.49.0
