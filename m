@@ -1,60 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-58288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFA1FABACCD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 00:37:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C93AABACDF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 01:49:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05EBA189D9DE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 May 2025 22:38:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4D2DF17CD54
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 May 2025 23:49:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57A831DF963;
-	Sat, 17 May 2025 22:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35F151DF968;
+	Sat, 17 May 2025 23:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="duJ9dqwL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mj4EFy+e"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2295234CDD;
-	Sat, 17 May 2025 22:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047188F58;
+	Sat, 17 May 2025 23:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747521462; cv=none; b=FIl6s3aWVCq/httOMcKZZTNfsdtdg1rKhAGvgVX+PfgL7Yur4B69+mXRDPS8TDRJAEZ8sCjq+ieIzHe8P6ikfcQXqeg7fTDefrgn5SXlsAKoWer5qt5WepVMQZIMmj5lM1Y5RUWzGlBMjV7uX1jRrVgh7OyBJk7fKUXogSW1kmQ=
+	t=1747525794; cv=none; b=D0Vmb62eR3BjFSMMUI9HHkFh41OXl5G2rZYanJiAJGXtCOxv2BMJRWd4w83NgXNg8cB0qp5MHKB6wOFwQfmgGUPNxyo37a84mPWMQVmhqAzSPKb3WcIIFDr7gpFPSIWnrPow8qICJk1rOLZURFi5WbamC2jgbcC28oKw7rya4zE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747521462; c=relaxed/simple;
-	bh=5ssddi3ZYH35EgOAIDe01xbwCR+djAr8ZHv3VetzRA8=;
+	s=arc-20240116; t=1747525794; c=relaxed/simple;
+	bh=yj7jL01qlTU0tyKVX/W2yTouWGscqqVS68dM03uOvzI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sq7LX9r2iNJEsMNAV2F2P9i0lWNkE3euiMfr5anoMOGlVwJOsJbE3xWik+lk8Gcpf/kNDZ5qwyF0vkqSOFvitcp0A504IJLCZqP4ahYq6cf1S96fZQ+TpbH4+yAyCrjj34yB0Byd8CtWooJl2tgvgegCFTf+N84hc1BRSZlJVP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=duJ9dqwL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B55BC4CEE3;
-	Sat, 17 May 2025 22:37:25 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Sqk9Qu1jYQcrnWSWCEPCHVQahal1ekZ6iLkbQJIopumk/DCFd7nJbJ5Zap1HxLdWaQ7ppcVcJ1wghWvoIqtc+CHVj4nSFW6194JPCUhehA9J2Lhv1ad9JJwyELDuK1d9h/rvSZ8du/D7NnGaaY/8NgD9ShXQ8FItOgArQGxp0+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mj4EFy+e; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA96AC4CEE3;
+	Sat, 17 May 2025 23:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747521459;
-	bh=5ssddi3ZYH35EgOAIDe01xbwCR+djAr8ZHv3VetzRA8=;
+	s=k20201202; t=1747525793;
+	bh=yj7jL01qlTU0tyKVX/W2yTouWGscqqVS68dM03uOvzI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=duJ9dqwLqOgwgL+tevc3L7sZRbiXi7pmj6KE1nMvNIZwhjsgvJHWggHWpC9uxBaN0
-	 yRXV65O01yxahCvcTknKap6yXczMgYO1Vdgv5ztiYMcun8xr05pYvyP6Zz1Tw9hohO
-	 zhYvQqk7GZBddEpmjUA87RigkfKqvwVrB9U0lAS8C0OMJT3oQOlQoApRiypGaSBhxh
-	 qtTaYU5fe8y2fy+PhTtXJ2PzaSu57H+cJu3LlDGXPiWi8e6tSd+eWFclt+EqciQBs2
-	 QEHgJ1j/L2btj7zhzxDj+aDhCmG/ZXzTMwovZLPlTM6FnJz8v+S7Gv3Vf35NktvPYC
-	 IExBOmhdhXXMQ==
-Date: Sat, 17 May 2025 17:37:18 -0500
+	b=mj4EFy+eGyxcscPnLgYOHgrnt3GHnq7aKp6GTu5kJl7bad5P84TXtuRyFTXRH+dmg
+	 8duiSo7IHmBkKFszIL9HExqqY5LsPvOJ3KL6vqKktMzR6DpzhqHHh2t3jtItsxdcv1
+	 +oAgJmgggVnyWwYfCAPF8l1WorCCbR51dws/8vORxxnBdQ+DWyKg0ABZI68OXo8e/C
+	 j0g3S4luCxJxNyeq2xTknS0jCG3oJKWeyIgt5UwHY/6EccHJ/LcObzGE5s2Ib29HnH
+	 g2ZiZKXU184yeYQRpxw5HUX2k4rjVmkNZQRyS2yxli2lbC/TY2x/7tyCFTq04JYFpw
+	 CpQCB1s/B+FIQ==
+Date: Sat, 17 May 2025 18:49:35 -0500
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Melody Olvera <quic_molvera@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, 
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Shivnandan Kumar <quic_kshivnan@quicinc.com>
-Subject: Re: [PATCH v3] arm64: dts: qcom: sm8750: Add BWMONs
-Message-ID: <cpwyee5bgu3r36sh76mfd2o7oc2dnm3weuvynkvbsklr5nhm7l@gb2utngj6vfl>
-References: <20250304-sm8750_bwmon_master-v3-1-01a5cb330dd9@quicinc.com>
- <d2640b21-41f7-4bb4-a616-42b6bd9cab0b@oss.qualcomm.com>
+Cc: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>, 
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	quic_srichara@quicinc.com, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_varada@quicinc.com
+Subject: Re: [PATCH v2] arm64: dts: qcom: ipq5424: fix and relocate uart1
+ gpio configurations
+Message-ID: <iunafkwsdnr3c7tyzotxuv7wfg3restfhtms6clg27uxderp4l@bj4gnkqstwt7>
+References: <20250318064939.3638381-1-quic_mmanikan@quicinc.com>
+ <a80b5d0c-8e45-4b48-a160-3dce84479601@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,34 +61,57 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d2640b21-41f7-4bb4-a616-42b6bd9cab0b@oss.qualcomm.com>
+In-Reply-To: <a80b5d0c-8e45-4b48-a160-3dce84479601@oss.qualcomm.com>
 
-On Sat, Mar 08, 2025 at 07:15:06PM +0100, Konrad Dybcio wrote:
-> On 5.03.2025 1:33 AM, Melody Olvera wrote:
-> > From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+On Wed, Apr 09, 2025 at 09:36:00PM +0200, Konrad Dybcio wrote:
+> On 3/18/25 7:49 AM, Manikanta Mylavarapu wrote:
+> > Update the bias configuration for UART1 TX and RX pins to ensure correct
+> > settings for RDP466.
 > > 
-> > Add the CPU BWMONs for SM8750 SoCs.
+> > Additionally, move the UART1 GPIO configurations from the common .dtsi
+> > file to the RDP-specific .dts files to account for differing bias
+> > configurations across RDPs of IPQ5424.
 > > 
-> > Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
-> > Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> > Fixes: 1a91d2a6021e ("arm64: dts: qcom: add IPQ5424 SoC and rdp466 board support")
+> > Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 > > ---
-> > Changes in v3:
-> > - Change cluster 1 destination interconnect to tag active only from tag
-> >   always
-> > - Link to v2: https://lore.kernel.org/r/20250304-sm8750_bwmon_master-v2-1-ead16909397d@quicinc.com
+> > Changes in V2:
+> > 	- Consolidated uart1_tx_state and uart1_rx_state nodes into a
+> > 	  single qup_uart1_default_state node, which includes the
+> > 	  configuration for both UART1 TX and RX pins.
+> > 	- Inserted a blank line before the status property in the UART1
+> > 	  node.
+> > 	- Fixed review comments from Kathiravan Thirumoorthy.
 > > 
-> > Changes in v2:
-> > - Change destination interconnect to tag active only from tag always
-> > - Link to v1: https://lore.kernel.org/r/20250113-sm8750_bwmon_master-v1-0-f082da3a3308@quicinc.com
-> > ---
+> >  arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts | 19 ++++++++++++++++++-
+> >  arch/arm64/boot/dts/qcom/ipq5424.dtsi       |  7 -------
+> >  2 files changed, 18 insertions(+), 8 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
+> > index b9752e8d579e..f0cba6b2be70 100644
+> > --- a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
+> > +++ b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
+> > @@ -102,6 +102,22 @@ &ssphy_0 {
+> >  };
+> >  
+> >  &tlmm {
+> > +	qup_uart1_default_state: qup-uart1-default-state {
+> > +		uart1-tx-pins {
+> > +			pins = "gpio44";
+> > +			function = "uart1";
+> > +			drive-strength = <8>;
+> > +			bias-pull-down;
 > 
-> This looks good, but I found that this platform may require some more
-> changes for bwmon, we're investigating that
+> Pull*down* on TX? Are there noise issues or similar?
 > 
 
-Did we reach a conclusion on this?
+Pull down doesn't make sense to me either but I don't see any answer to
+the question. If this is correct, please add a line/paragraph in the
+commit message describing why this should be pulled down.
 
-Regards,
+Dropping this from my review queue now.
+
+Thanks,
 Bjorn
 
 > Konrad
