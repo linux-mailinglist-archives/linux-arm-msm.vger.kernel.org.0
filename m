@@ -1,129 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-58287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9DF6ABAC9A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 May 2025 23:41:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFA1FABACCD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 00:37:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E87F917BF73
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 May 2025 21:41:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05EBA189D9DE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 May 2025 22:38:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49093266B6A;
-	Sat, 17 May 2025 21:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57A831DF963;
+	Sat, 17 May 2025 22:37:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gsdATuH8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="duJ9dqwL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1958F242D90
-	for <linux-arm-msm@vger.kernel.org>; Sat, 17 May 2025 21:41:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2295234CDD;
+	Sat, 17 May 2025 22:37:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747518100; cv=none; b=EUFSBlEEDPUXhBULvGBVce2yVexCul+Ur1l0NYFaNO4abARASuydJBesub3weRtuwIMN6fLVPCaJFPDXxfmT5DMp5YhEA6dn4ac6MGQ/hGB7L3MxVS9y5oYrXSNaeiarBrYBwc1jYpf3tbiz85kjZgG7j1RYh3qR7nffpNj9QTs=
+	t=1747521462; cv=none; b=FIl6s3aWVCq/httOMcKZZTNfsdtdg1rKhAGvgVX+PfgL7Yur4B69+mXRDPS8TDRJAEZ8sCjq+ieIzHe8P6ikfcQXqeg7fTDefrgn5SXlsAKoWer5qt5WepVMQZIMmj5lM1Y5RUWzGlBMjV7uX1jRrVgh7OyBJk7fKUXogSW1kmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747518100; c=relaxed/simple;
-	bh=rgf3AmO0KzSB0QITDvORX+Y0fa0RiFi81JHdrxxkzEM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kaQQhNWKRw//Rh9JFrmdNXLUV7Wuju7pTd4a20ajj2EhPhBnfDsh3W1UEQXaVcHMpEo3auKU2P0VSFf4ODSNDQ51ltl/Fk6RTRNfoVCSmz9/lkSK5wP8LOjA0CH21+MisA69eGcEGd5NcTX10ST4RNp5MfNTvgFjpqicEdvVjQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gsdATuH8; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-442eb5d143eso30912715e9.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 May 2025 14:41:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747518095; x=1748122895; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bY76AEEcyf1ZaP0Q4E8CqeVAvvQqjzY+efsftGL0QMU=;
-        b=gsdATuH8YVlgoetNJoOdL4qdoHuo7aeQzZcjQfwhholFOFSiT48g+ir1YOpkAd2Gix
-         laCenLPlpn7Dq7jnLcpBijYIZVbricScxpaAqyBm3DkmFtfiwlO5azXswn0AYQpz8S2G
-         tW8LKo9CyKvMnBswbMtgI/I3i1Q6cUiuS7d967NGSUETHQ4LseNd5NrQCChl0sgijZk2
-         euw+D4YX11O3FiGGN1YC3Y1FQAMeQB0WomsSpHz9O4h2QaUsA+d8mBOojDBR16rgU5JD
-         m8hVU1l72cUq/3ubTfQ+AfSTjC/psj2iz2xunUX42qPEGKzLkV9Fxi8NbHspDWtVVnaL
-         MsvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747518095; x=1748122895;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bY76AEEcyf1ZaP0Q4E8CqeVAvvQqjzY+efsftGL0QMU=;
-        b=ooam0Qp/QqZmU5NlZpDoCeEODm/3vrJhZ1WtBDag2UU6x3O09eDxXynyJjRVq1vYKO
-         bQ/bo2hm4mKOjojWqx8kqY8C1XxLf1QDUJicic77P3NK+AOP8AFGUw7I6zZ7lfTueuKv
-         W5DeT//C5HU5OrXv1xs0ia0iq2FUgRCJlrOyoGj6ZiFhhiGYv/dg5YgtCabX5JqBG19A
-         Nx6mDYllENgtSGTptZehQIOZb62Gg39cN3r0PD8ux2cswU0rbLPRqpBJW8ARhKdeyTMh
-         v4tG3AtjWVElcR5GewsC9v5aXxLxl2RcAY2q2pCHDNf/rWAszc5uc+wiVctfEtiVOeMF
-         mziw==
-X-Forwarded-Encrypted: i=1; AJvYcCVcLR/vtZzuexZjdkro89gNXO2J/o/vXVtWub8A//i+6TnDy2NHm76Pkk8/N7jEceDtngO3DS6vFbiDPKeq@vger.kernel.org
-X-Gm-Message-State: AOJu0YzyzwP/L6mlCXWJ+p7YjPDojAE5/7HHqEdJFYN0Npc4TvNTVx96
-	uHG5K8jURNKYy6hG9MgEX6JgYaEHiqLovQbIuhJbCLtDKe7l2Zd6mNYA+PXDLK+ZcE0=
-X-Gm-Gg: ASbGncutpM4xEAgXHGSH74McA0tHs2PgYutpxaoIbiuyTIn49BdMuiKy30z1K81Vmhr
-	APQBTDyjqHlwLA08lzaXNAkS5gJ0ayXOKm+tJuDGgH1sre5LwsfnCPfsbe+Bw4APOaJHJjwgExS
-	8CqvrvpwBJ12BJWo4W8CvZNl2b9Ap7oJAAv4nh7cM0l5/PmupeseLZrYwYT7WLff1rAh64XOxmR
-	TNth5jsnnQTVNGcks7ur35/1WOMZaIlCwauNG/Cbzr6RtFrov1Dhrss6+wrEN863RDf+FH5URVy
-	I8JaQhViEN0/kP8pCmSs6zmQrm2bjsrCNkp6Sbm46WdUluhz59sZOscvbsHt7ARhKzeRbdM5Sog
-	91zHJ5Vep2mAHUpXi
-X-Google-Smtp-Source: AGHT+IEfLRMthem1h4Iqf+AVyw92a10FVG/gJvB+jnvXapWRtPRHbKjdboZGt4Z0ylILdnQ8uegkeg==
-X-Received: by 2002:a05:600c:a105:b0:441:ac58:eb31 with SMTP id 5b1f17b1804b1-442fda3038amr54007955e9.20.1747518095254;
-        Sat, 17 May 2025 14:41:35 -0700 (PDT)
-Received: from [192.168.0.27] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f39e852fsm163281875e9.27.2025.05.17.14.41.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 17 May 2025 14:41:34 -0700 (PDT)
-Message-ID: <f39310ec-ff30-45b4-ae80-768f252b7ed5@linaro.org>
-Date: Sat, 17 May 2025 22:41:33 +0100
+	s=arc-20240116; t=1747521462; c=relaxed/simple;
+	bh=5ssddi3ZYH35EgOAIDe01xbwCR+djAr8ZHv3VetzRA8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sq7LX9r2iNJEsMNAV2F2P9i0lWNkE3euiMfr5anoMOGlVwJOsJbE3xWik+lk8Gcpf/kNDZ5qwyF0vkqSOFvitcp0A504IJLCZqP4ahYq6cf1S96fZQ+TpbH4+yAyCrjj34yB0Byd8CtWooJl2tgvgegCFTf+N84hc1BRSZlJVP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=duJ9dqwL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B55BC4CEE3;
+	Sat, 17 May 2025 22:37:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747521459;
+	bh=5ssddi3ZYH35EgOAIDe01xbwCR+djAr8ZHv3VetzRA8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=duJ9dqwLqOgwgL+tevc3L7sZRbiXi7pmj6KE1nMvNIZwhjsgvJHWggHWpC9uxBaN0
+	 yRXV65O01yxahCvcTknKap6yXczMgYO1Vdgv5ztiYMcun8xr05pYvyP6Zz1Tw9hohO
+	 zhYvQqk7GZBddEpmjUA87RigkfKqvwVrB9U0lAS8C0OMJT3oQOlQoApRiypGaSBhxh
+	 qtTaYU5fe8y2fy+PhTtXJ2PzaSu57H+cJu3LlDGXPiWi8e6tSd+eWFclt+EqciQBs2
+	 QEHgJ1j/L2btj7zhzxDj+aDhCmG/ZXzTMwovZLPlTM6FnJz8v+S7Gv3Vf35NktvPYC
+	 IExBOmhdhXXMQ==
+Date: Sat, 17 May 2025 17:37:18 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Melody Olvera <quic_molvera@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, 
+	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Shivnandan Kumar <quic_kshivnan@quicinc.com>
+Subject: Re: [PATCH v3] arm64: dts: qcom: sm8750: Add BWMONs
+Message-ID: <cpwyee5bgu3r36sh76mfd2o7oc2dnm3weuvynkvbsklr5nhm7l@gb2utngj6vfl>
+References: <20250304-sm8750_bwmon_master-v3-1-01a5cb330dd9@quicinc.com>
+ <d2640b21-41f7-4bb4-a616-42b6bd9cab0b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] media: venus: Fix OOB read due to missing payload
- bound check
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Stanimir Varbanov <stanimir.varbanov@linaro.org>,
- Hans Verkuil <hans.verkuil@cisco.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, Vedang Nagar <quic_vnagar@quicinc.com>
-References: <20250514-venus-fixes-v3-0-32298566011f@quicinc.com>
- <20250514-venus-fixes-v3-2-32298566011f@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250514-venus-fixes-v3-2-32298566011f@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d2640b21-41f7-4bb4-a616-42b6bd9cab0b@oss.qualcomm.com>
 
-On 14/05/2025 14:38, Dikshita Agarwal wrote:
-> From: Vedang Nagar <quic_vnagar@quicinc.com>
+On Sat, Mar 08, 2025 at 07:15:06PM +0100, Konrad Dybcio wrote:
+> On 5.03.2025 1:33 AM, Melody Olvera wrote:
+> > From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+> > 
+> > Add the CPU BWMONs for SM8750 SoCs.
+> > 
+> > Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+> > Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> > ---
+> > Changes in v3:
+> > - Change cluster 1 destination interconnect to tag active only from tag
+> >   always
+> > - Link to v2: https://lore.kernel.org/r/20250304-sm8750_bwmon_master-v2-1-ead16909397d@quicinc.com
+> > 
+> > Changes in v2:
+> > - Change destination interconnect to tag active only from tag always
+> > - Link to v1: https://lore.kernel.org/r/20250113-sm8750_bwmon_master-v1-0-f082da3a3308@quicinc.com
+> > ---
 > 
-> Currently, The event_seq_changed() handler processes a variable number
-> of properties sent by the firmware. The number of properties is indicated
-> by the firmware and used to iterate over the payload. However, the
-> payload size is not being validated against the actual message length.
+> This looks good, but I found that this platform may require some more
+> changes for bwmon, we're investigating that
 > 
-> This can lead to out-of-bounds memory access if the firmware provides a
-> property count that exceeds the data available in the payload. Such a
-> condition can result in kernel crashes or potential information leaks if
-> memory beyond the buffer is accessed.
-> 
-> Fix this by properly validating the remaining size of the payload before
-> each property access and updating bounds accordingly as properties are
-> parsed.
-> 
-> This ensures that property parsing is safely bounded within the received
-> message buffer and protects against malformed or malicious firmware
-> behavior.
-> 
-> Fixes: 09c2845e8fe4 ("[media] media: venus: hfi: add Host Firmware Interface (HFI)")
-> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
-> Co-developed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Did we reach a conclusion on this?
+
+Regards,
+Bjorn
+
+> Konrad
 
