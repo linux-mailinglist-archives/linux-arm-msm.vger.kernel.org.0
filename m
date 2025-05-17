@@ -1,355 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-58284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93A6CABABAE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 May 2025 19:36:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3696ABABCD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 May 2025 20:16:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C1A464A33CA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 May 2025 17:35:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3098E17E90B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 May 2025 18:16:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BDDF20C01B;
-	Sat, 17 May 2025 17:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CFF818DB03;
+	Sat, 17 May 2025 18:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m+uvKU4u"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MeklBNUO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4555520E6F9;
-	Sat, 17 May 2025 17:33:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D641991CD
+	for <linux-arm-msm@vger.kernel.org>; Sat, 17 May 2025 18:16:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747503233; cv=none; b=BYqs5YjDFs5eqPJ7hZL/bfxdxpjHhWjTbrgC0Ultg94DBhqaNWG/dtfFGDx5kc5P/L1FYVekF6uNVDwf7ku1XbgiTclcg080EPFQf0pNFK7qSisBYU1HT6wW3pSQ+4Dv2rauOFCEdkrrEj+qDuO4wVAp9bDThpL2YLJhGv53O/0=
+	t=1747505796; cv=none; b=abSmUUhFxtAqYgCBz3UGMkcrGOH6xrDCe25rXkBJTB3Jng6vxzgjKoAwmES6GxCcEmzRyb3LoMbVpf4DPxdEsFMzN8xkr2RJKzl02RaRjOJNHNskw/HPLbynfkhFX+Xyk0+1S1Xfj+5oCIY/yy1mQvJ2JSP9niE2pvt9HfV/EKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747503233; c=relaxed/simple;
-	bh=8JgnV9w8Qs8+TWaZFGvbNd9iTaTP3yQS/UJrvhzXGDw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=d6S2P0Ri0DHnLGNCUOt6I4cuv+A5FCbI8tDI+B4B17jAnrr4A4f/A9OtwIjE9v0GXO9nAhXjqjdUCAXawx+e6hVfVxX4SgkvyazkQ/Gs+CWA6gLSt6Ki0yKZcxkOyesZCKe1KLabpsIHV3gjTdz5jQW/yVIztKCDQP9LHbN93UM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m+uvKU4u; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFA1C4CEE3;
-	Sat, 17 May 2025 17:33:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747503232;
-	bh=8JgnV9w8Qs8+TWaZFGvbNd9iTaTP3yQS/UJrvhzXGDw=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=m+uvKU4u0RSm9ZSjfrQ+tLnXeg1H7h++DvA/oqhsxVfSj70TEswf1pEqsAHqsJ8Be
-	 zT7NIJtoKem9uqNwAq/gUp/zVsA2NO2rcmA2iIi9SGzluqkvq0MkmbQWGP60bUjtGX
-	 HQCCGSIWEc+4sldEuarPAUWmQdXTNkbgJLGSbcDF2XIYWFzvtN/V1Wf0wAh3BgEDRm
-	 mVwag0ubAS/fub2tclAb0xifhXA+b0kS9VilmnDZ+lMgUy1sf84uxXY5Uc2nQtxmUT
-	 IzRk+jePZl+Fqph69ChznAQN5WG4ZHsOlS80mrSq/VbpIGfBH4D9YwQF34V9i6EqPO
-	 eC9Bj1DrvwYrg==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Sat, 17 May 2025 19:32:48 +0200
-Subject: [PATCH RFT v3 14/14] drm/msm/adreno: Switch to the common UBWC
- config struct
+	s=arc-20240116; t=1747505796; c=relaxed/simple;
+	bh=M4m17yyuXbBVV9nswjASUOSO+8084mzbcNw1wJdCEDw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=A0cHQO0gbNw+iXFx1iK7Vk4Ju/lMjtZ6qLvJ0SzXIkNrGHOnGV+kq4kwCAnPjsxM+EgjMPpj5dr/IyWyjFTIfich4V2A3Ggps01pX/QYiES8x3IpajnNEsX5PeZXaHQlqeg7xdLw3iDiYFHjPnaApyMDWw4G3Jf6GiaCTr3ciHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MeklBNUO; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54HEvKYv027624
+	for <linux-arm-msm@vger.kernel.org>; Sat, 17 May 2025 18:16:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	bnBJCA42Fcz95KKCL7XfwOVPDCEaWi9lJaJ6xnj8QNE=; b=MeklBNUOJk+gzfaT
+	wZOEtq9X+JzyiZ2sdefk+IEyy0yww3R5/vMXagzzRsh7QTuyzqDatRKqR9YEPWfw
+	yX2Yiw9p/4k/pMGfKyXZHeAs6n9oQ+C4ubruy/bCBIZhQupUnTv2FdnELWCw9u7T
+	w+LacuW1M0vCQ7mXsPs5cU3nVFiRrs/9GWFb28YnuSbRodLkdLh+ifSECm5K3f9T
+	JEnVDzn63WgmHtuyjd586e2v+x076w1uTF+KqacytWqfxHiHPhdKYV4AR7Jmzifr
+	UwT2qEJKbDAX52lR6J7xwo48TkrPkQV+SCuEGN1P0V4cWKPdcwf5xzdRPYuQVzT4
+	i7Hspw==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pjjsryt9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 17 May 2025 18:16:32 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6f8a8883437so4156076d6.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 May 2025 11:16:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747505792; x=1748110592;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bnBJCA42Fcz95KKCL7XfwOVPDCEaWi9lJaJ6xnj8QNE=;
+        b=jzhzOg+CU0efLQxYUvCb3NW3omsp3G/dKHDM/jo0juGHYOG3lbpxs7YEO/Myf13e8v
+         qnW48heDrav0JLy4WUzDVZ0wbcwTs/R3XwJiRE8YjPkp+EEVn6/iG7ETPNmp2y8uvQG8
+         /fo8m80D8jbeNtzE/qjLLz8ik86NYCiIBTnt6EtnUsMJzgHsE1lA96o2T8HD/0/bKPYt
+         Dt6vZmxk+F7Cs3uINEBSv7WD3iiB18HKTM7gXRpB3n0fH5LwFCN/rBM9ppxY8IRHhoKw
+         ctlHFhDVvwL01w5jaEs8RM03BDtZCJ0S5QfgPuY5vuoJAMUDWMFsm/JTAv9FQ0ynlvZo
+         5VOw==
+X-Forwarded-Encrypted: i=1; AJvYcCXMX5Q5mo+X7FsGG3ymkHtW/PHiw1gD4avnu9PtQxeCnNFBQ0hsmUGZpbUiIsBBoD3oojudi9ZCIvh4sORl@vger.kernel.org
+X-Gm-Message-State: AOJu0YwwtUJM7UAIBkL5Rr9GOBqNe/CBaY6UunCX9wn00m1KZFkAK1Ff
+	v7AffkkcKfWu/giJayFMh+i9hvzaxfmER5c4gWEqeQvAiXXOO/WDBkAggz/bSSB6MjhH6e4UpXL
+	JNsWdWrlc80JQEtDSQno9SZpt6FQhjmLVgs8I/6c83mt+ORDl5SLWPtRPvBe5QFfLmZ1N
+X-Gm-Gg: ASbGncvn0nA7AtpBKdOSTXopjm3Id2Dlfu9EH93ugYUibgsz3J3CDOGy+vU4tcCwfrc
+	LCmvzJOg09rpKvVVmVXX8vTyjQ2f/79EYo2d3tSIRKXi+3N1/HCTEOs78gmmr0LVp323nYEgX3I
+	xyh3qaEDWz24uRSZ5pQXDrfXRdaTRn9ji70rG07h28C+kYlys3C8ig5aHowiyRoY4lGc4QnhCHh
+	SudAp8L6jloQSCLJUZw/BjLIN0n37xtbVIIxs111Yh7FVaXXiwwfE0I/zxAE/yGwy+3VhOjV+XX
+	livWXoclPYCMm1y9dA9kO3Rhzsdr2HeNF42CR5kejDhyifj6fAif6P4zcKLFGewEiA==
+X-Received: by 2002:a05:6214:e66:b0:6f8:c773:367 with SMTP id 6a1803df08f44-6f8c773156emr16307686d6.10.1747505792223;
+        Sat, 17 May 2025 11:16:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFPPQtbYciftNueP6WNh9ccRSDo+w+J7+XKx+nyCa4V5rw6SiuDQB/u7qA1Xq3T2ePW05WFQw==
+X-Received: by 2002:a05:6214:e66:b0:6f8:c773:367 with SMTP id 6a1803df08f44-6f8c773156emr16307526d6.10.1747505791887;
+        Sat, 17 May 2025 11:16:31 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d441fe5sm324919266b.111.2025.05.17.11.16.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 17 May 2025 11:16:31 -0700 (PDT)
+Message-ID: <8e900d20-009b-4cc7-ba1d-52582e414402@oss.qualcomm.com>
+Date: Sat, 17 May 2025 20:16:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250517-topic-ubwc_central-v3-14-3c8465565f86@oss.qualcomm.com>
-References: <20250517-topic-ubwc_central-v3-0-3c8465565f86@oss.qualcomm.com>
-In-Reply-To: <20250517-topic-ubwc_central-v3-0-3c8465565f86@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Akhil P Oommen <quic_akhilpo@quicinc.com>, Sean Paul <sean@poorly.run>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1747503160; l=10528;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=AA4+j+aW9ntBqRudN5ryD1NwEUIVLYhOdj7ZhFD8bqg=;
- b=YW8/TCA9k9E3A3yWSKmFY+VwjkfWD4SKbszBIgO5rf5JNNirwFzDt1KwlZN9N0/knnnPOZDdc
- /Uug8TtlhXRB3WG7Pm/oz/fYfFUyajK/XxADmv2abMHBnAI5YvXJvfn
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] phy: qcom: qmp-pcie: Update PHY settings for
+ SA8775P
+To: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        krishna.chundru@oss.qualcomm.com, quic_vbadigan@quicinc.com,
+        quic_nayiluri@quicinc.com, quic_ramkri@quicinc.com,
+        quic_nitegupt@quicinc.com, Mrinmay Sarkar <quic_msarkar@quicinc.com>
+References: <20250514-update_phy-v2-0-d4f319221474@quicinc.com>
+ <20250514-update_phy-v2-1-d4f319221474@quicinc.com>
+Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250514-update_phy-v2-1-d4f319221474@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: bKrCL2fQ375tojvzozTaAedbZp_-uTE_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE3MDE4MCBTYWx0ZWRfX+x+h1OvMNyCe
+ qpkwguwJqMmydFrs06LTacK+WzJJ4/7JuumxWztu++blzd7yRSBqkmIYt+nvSRbgbEjKqXsBUuX
+ A5GMRKOdi2VGVDQF9+XeGBpzYj1qfjaItdJDuiKkdGNSVwp2Nkur62SoNOgbhjQghcwHm1LBDPQ
+ 37YOWtQxU63oocJD0B5ll03iF5XMkR8Jt8H6UIOMqE1GRjEHDIj6QF8dzv4Qks+DD6OvqEhq7AG
+ NQAlDRKXPDaIkkShXz50FYMmr7gmeKmsNmmgVgwG3KZWhRDbqJZU3w7YN6VPx9+XCePyfIoulBd
+ 74bjsrifq9ZYpf1wjvtROLa4+UZdijParVH6AO80S/9DX8Kjo0vCXFQODnwtDxSk4ebTg6eZFGg
+ 2+7rcYKQ2Z8alVjAV5KBI3/gE66+MU+Ta2HFtIDQtRgwZRsroHhSqIs15pBGLAqrhPoQlAIH
+X-Authority-Analysis: v=2.4 cv=K4giHzWI c=1 sm=1 tr=0 ts=6828d281 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=9rkGdShBa9mjovGmxRoA:9
+ a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-GUID: bKrCL2fQ375tojvzozTaAedbZp_-uTE_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-17_08,2025-05-16_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0 mlxlogscore=526 suspectscore=0 phishscore=0
+ clxscore=1015 malwarescore=0 lowpriorityscore=0 impostorscore=0
+ priorityscore=1501 mlxscore=0 adultscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505070000 definitions=main-2505170180
 
-Now that Adreno specifics are out of the way, use the common config
-(but leave the HBB hardcoding in place until that is wired up on the
-other side).
+On 5/14/25 1:37 PM, Mrinmay Sarkar wrote:
+> From: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+> 
+> Make changes to update the PHY settings to align with the latest
+> PCIe PHY Hardware Programming Guide for both PCIe controllers
+> on the SA8775P platform.
+> 
+> Add the ln_shrd region for SA8775P, incorporating new register
+> writes as specified in the updated Hardware Programming Guide.
+> 
+> Update pcs table for QCS8300, since both QCS8300 and SA8775P are
+> closely related and share same pcs settings.
+> 
+> Signed-off-by: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+> ---
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c   | 20 ++++-----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 76 ++++++++++++++++++---------------
- drivers/gpu/drm/msm/adreno/adreno_gpu.c |  6 +--
- drivers/gpu/drm/msm/adreno/adreno_gpu.h | 45 +++----------------
- 4 files changed, 60 insertions(+), 87 deletions(-)
+So I took a closer look and please re-validate the changes, I
+checked one write randomly and it turned out to be inconsistent
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index 650e5bac225f372e819130b891f1d020b464f17f..4ab16ba56741896ba5e0003c5528ec98264afb9a 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -833,8 +833,8 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 
- 	gpu_write(gpu, REG_A5XX_RBBM_AHB_CNTL2, 0x0000003F);
- 
--	BUG_ON(adreno_gpu->ubwc_config.highest_bank_bit < 13);
--	hbb = adreno_gpu->ubwc_config.highest_bank_bit - 13;
-+	BUG_ON(adreno_gpu->ubwc_config->highest_bank_bit < 13);
-+	hbb = adreno_gpu->ubwc_config->highest_bank_bit - 13;
- 
- 	gpu_write(gpu, REG_A5XX_TPL1_MODE_CNTL, hbb << 7);
- 	gpu_write(gpu, REG_A5XX_RB_MODE_CNTL, hbb << 1);
-@@ -1754,6 +1754,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct platform_device *pdev = priv->gpu_pdev;
- 	struct adreno_platform_config *config = pdev->dev.platform_data;
-+	const struct qcom_ubwc_cfg_data *common_cfg;
- 	struct a5xx_gpu *a5xx_gpu = NULL;
- 	struct adreno_gpu *adreno_gpu;
- 	struct msm_gpu *gpu;
-@@ -1790,15 +1791,14 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
- 	/* Set up the preemption specific bits and pieces for each ringbuffer */
- 	a5xx_preempt_init(gpu);
- 
--	/* Set the highest bank bit */
--	if (adreno_is_a540(adreno_gpu) || adreno_is_a530(adreno_gpu))
--		adreno_gpu->ubwc_config.highest_bank_bit = 15;
--	else
--		adreno_gpu->ubwc_config.highest_bank_bit = 14;
-+	/* Inherit the common config and make some necessary fixups */
-+	common_cfg = qcom_ubwc_config_get_data();
-+	if (IS_ERR(common_cfg))
-+		return ERR_CAST(common_cfg);
- 
--	/* a5xx only supports UBWC 1.0, these are not configurable */
--	adreno_gpu->ubwc_config.macrotile_mode = 0;
--	adreno_gpu->ubwc_config.ubwc_swizzle = 0x7;
-+	/* Copy the data into the internal struct to drop the const qualifier (temporarily) */
-+	adreno_gpu->_ubwc_config = *common_cfg;
-+	adreno_gpu->ubwc_config = &adreno_gpu->_ubwc_config;
- 
- 	adreno_gpu->uche_trap_base = 0x0001ffffffff0000ull;
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 6dd5281678a5f31be9c59e3b247cfd5a34341ec1..1d942377c84be1e54a12fc7c202e9ae475f0a21a 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -587,64 +587,70 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
- 
- static int a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
- {
--	/* Inherit the common config and make some necessary fixups */
--	gpu->common_ubwc_cfg = qcom_ubwc_config_get_data();
--	if (IS_ERR(gpu->common_ubwc_cfg))
--		return PTR_ERR(gpu->common_ubwc_cfg);
-+	const struct qcom_ubwc_cfg_data *common_cfg;
-+	struct qcom_ubwc_cfg_data *cfg = &gpu->_ubwc_config;
- 
--	gpu->ubwc_config.ubwc_swizzle = 0x6;
--	gpu->ubwc_config.macrotile_mode = 0;
--	gpu->ubwc_config.highest_bank_bit = 15;
-+	/* Inherit the common config and make some necessary fixups */
-+	common_cfg = qcom_ubwc_config_get_data();
-+	if (IS_ERR(common_cfg))
-+		return PTR_ERR(common_cfg);
-+
-+	/* Copy the data into the internal struct to drop the const qualifier (temporarily) */
-+	*cfg = *common_cfg;
-+
-+	cfg->ubwc_swizzle = 0x6;
-+	cfg->highest_bank_bit = 15;
- 
- 	if (adreno_is_a610(gpu)) {
--		gpu->ubwc_config.highest_bank_bit = 13;
--		gpu->ubwc_config.ubwc_swizzle = 0x7;
-+		cfg->highest_bank_bit = 13;
-+		cfg->ubwc_swizzle = 0x7;
- 	}
- 
- 	if (adreno_is_a618(gpu))
--		gpu->ubwc_config.highest_bank_bit = 14;
-+		cfg->highest_bank_bit = 14;
- 
- 	if (adreno_is_a619(gpu))
- 		/* TODO: Should be 14 but causes corruption at e.g. 1920x1200 on DP */
--		gpu->ubwc_config.highest_bank_bit = 13;
-+		cfg->highest_bank_bit = 13;
- 
- 	if (adreno_is_a619_holi(gpu))
--		gpu->ubwc_config.highest_bank_bit = 13;
-+		cfg->highest_bank_bit = 13;
- 
- 	if (adreno_is_a621(gpu))
--		gpu->ubwc_config.highest_bank_bit = 13;
-+		cfg->highest_bank_bit = 13;
- 
--	if (adreno_is_a623(gpu)) {
--		gpu->ubwc_config.highest_bank_bit = 16;
--		gpu->ubwc_config.macrotile_mode = 1;
--	}
--
--	if (adreno_is_a680(gpu))
--		gpu->ubwc_config.macrotile_mode = 1;
-+	if (adreno_is_a623(gpu))
-+		cfg->highest_bank_bit = 16;
- 
- 	if (adreno_is_a650(gpu) ||
- 	    adreno_is_a660(gpu) ||
- 	    adreno_is_a690(gpu) ||
- 	    adreno_is_a730(gpu) ||
- 	    adreno_is_a740_family(gpu)) {
--		/* TODO: get ddr type from bootloader and use 2 for LPDDR4 */
--		gpu->ubwc_config.highest_bank_bit = 16;
--		gpu->ubwc_config.macrotile_mode = 1;
-+		/* TODO: get ddr type from bootloader and use 15 for LPDDR4 */
-+		cfg->highest_bank_bit = 16;
- 	}
- 
- 	if (adreno_is_a663(gpu)) {
--		gpu->ubwc_config.highest_bank_bit = 13;
--		gpu->ubwc_config.macrotile_mode = 1;
--		gpu->ubwc_config.ubwc_swizzle = 0x4;
-+		cfg->highest_bank_bit = 13;
-+		cfg->ubwc_swizzle = 0x4;
- 	}
- 
--	if (adreno_is_7c3(gpu)) {
--		gpu->ubwc_config.highest_bank_bit = 14;
--		gpu->ubwc_config.macrotile_mode = 1;
--	}
-+	if (adreno_is_7c3(gpu))
-+		cfg->highest_bank_bit = 14;
- 
- 	if (adreno_is_a702(gpu))
--		gpu->ubwc_config.highest_bank_bit = 14;
-+		cfg->highest_bank_bit = 14;
-+
-+	if (cfg->highest_bank_bit != common_cfg->highest_bank_bit)
-+		DRM_WARN_ONCE("Inconclusive highest_bank_bit value: %u (GPU) vs %u (UBWC_CFG)\n",
-+			      cfg->highest_bank_bit, common_cfg->highest_bank_bit);
-+
-+	if (cfg->ubwc_swizzle != common_cfg->ubwc_swizzle)
-+		DRM_WARN_ONCE("Inconclusive ubwc_swizzle value: %u (GPU) vs %u (UBWC_CFG)\n",
-+			      cfg->ubwc_swizzle, common_cfg->ubwc_swizzle);
-+
-+	gpu->ubwc_config = &gpu->_ubwc_config;
- 
- 	return 0;
- }
-@@ -652,14 +658,14 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
- static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
--	const struct qcom_ubwc_cfg_data *cfg = adreno_gpu->common_ubwc_cfg;
-+	const struct qcom_ubwc_cfg_data *cfg = adreno_gpu->ubwc_config;
- 	/*
- 	 * We subtract 13 from the highest bank bit (13 is the minimum value
- 	 * allowed by hw) and write the lowest two bits of the remaining value
- 	 * as hbb_lo and the one above it as hbb_hi to the hardware.
- 	 */
--	BUG_ON(adreno_gpu->ubwc_config.highest_bank_bit < 13);
--	u32 hbb = adreno_gpu->ubwc_config.highest_bank_bit - 13;
-+	BUG_ON(cfg->highest_bank_bit < 13);
-+	u32 hbb = cfg->highest_bank_bit - 13;
- 	bool rgb565_predicator = cfg->ubwc_enc_version >= UBWC_4_0;
- 	u32 level2_swizzling_dis = !(cfg->ubwc_swizzle & BIT(1));
- 	bool ubwc_mode = qcom_ubwc_get_ubwc_mode(cfg);
-@@ -701,7 +707,7 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
- 		  min_acc_len_64b << 23 | hbb_lo << 21);
- 
- 	gpu_write(gpu, REG_A6XX_RBBM_NC_MODE_CNTL,
--		  adreno_gpu->ubwc_config.macrotile_mode);
-+		  cfg->macrotile_mode);
- }
- 
- static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 2348ffb35f7eb73a26da47881901d9111dca1ad9..f072c2156e94dfba8273e33e752167d919dc4db5 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -388,16 +388,16 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
- 		*value = ctx->aspace->va_size;
- 		return 0;
- 	case MSM_PARAM_HIGHEST_BANK_BIT:
--		*value = adreno_gpu->ubwc_config.highest_bank_bit;
-+		*value = adreno_gpu->ubwc_config->highest_bank_bit;
- 		return 0;
- 	case MSM_PARAM_RAYTRACING:
- 		*value = adreno_gpu->has_ray_tracing;
- 		return 0;
- 	case MSM_PARAM_UBWC_SWIZZLE:
--		*value = adreno_gpu->ubwc_config.ubwc_swizzle;
-+		*value = adreno_gpu->ubwc_config->ubwc_swizzle;
- 		return 0;
- 	case MSM_PARAM_MACROTILE_MODE:
--		*value = adreno_gpu->ubwc_config.macrotile_mode;
-+		*value = adreno_gpu->ubwc_config->macrotile_mode;
- 		return 0;
- 	case MSM_PARAM_UCHE_TRAP_BASE:
- 		*value = adreno_gpu->uche_trap_base;
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 06be95d3efaee94e4107a484ad3132e0a6a9ea46..ebbca9672f25861bbbfa3ff28878c581fae6402c 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -207,45 +207,12 @@ struct adreno_gpu {
- 	/* firmware: */
- 	const struct firmware *fw[ADRENO_FW_MAX];
- 
--	struct {
--		/**
--		 * @rgb565_predicator: Unknown, introduced with A650 family,
--		 * related to UBWC mode/ver 4
--		 */
--		u32 rgb565_predicator;
--		/** @uavflagprd_inv: Unknown, introduced with A650 family */
--		u32 uavflagprd_inv;
--		/** @min_acc_len: Whether the minimum access length is 64 bits */
--		u32 min_acc_len;
--		/**
--		 * @ubwc_swizzle: Whether to enable level 1, 2 & 3 bank swizzling.
--		 *
--		 * UBWC 1.0 always enables all three levels.
--		 * UBWC 2.0 removes level 1 bank swizzling, leaving levels 2 & 3.
--		 * UBWC 4.0 adds the optional ability to disable levels 2 & 3.
--		 *
--		 * This is a bitmask where BIT(0) enables level 1, BIT(1)
--		 * controls level 2, and BIT(2) enables level 3.
--		 */
--		u32 ubwc_swizzle;
--		/**
--		 * @highest_bank_bit: Highest Bank Bit
--		 *
--		 * The Highest Bank Bit value represents the bit of the highest
--		 * DDR bank.  This should ideally use DRAM type detection.
--		 */
--		u32 highest_bank_bit;
--		u32 amsbc;
--		/**
--		 * @macrotile_mode: Macrotile Mode
--		 *
--		 * Whether to use 4-channel macrotiling mode or the newer
--		 * 8-channel macrotiling mode introduced in UBWC 3.1. 0 is
--		 * 4-channel and 1 is 8-channel.
--		 */
--		u32 macrotile_mode;
--	} ubwc_config;
--	const struct qcom_ubwc_cfg_data *common_ubwc_cfg;
-+	/*
-+	 * The migration to the central UBWC config db is still in flight - keep
-+	 * a copy containing some local fixups until that's done.
-+	 */
-+	const struct qcom_ubwc_cfg_data *ubwc_config;
-+	struct qcom_ubwc_cfg_data _ubwc_config;
- 
- 	/*
- 	 * Register offsets are different between some GPUs.
+[...]
 
--- 
-2.49.0
 
+> -	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_VGA_CAL_MAN_VAL, 0x08),
+> -	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_RX_EQU_ADAPTOR_CNTRL4, 0x0b),
+> +	QMP_PHY_INIT_CFG(QSERDES_V5_20_RX_VGA_CAL_MAN_VAL, 0x03),
+
+^ this should be 0x0a according to reference v1.19 for RC mode
+
+Konrad
 
