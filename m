@@ -1,71 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-58298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9333DABAE73
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 09:26:13 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3084FABAE87
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 09:54:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2CC453B821E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 07:25:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10B921899AF5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 07:54:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6005220C005;
-	Sun, 18 May 2025 07:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 713CF20125F;
+	Sun, 18 May 2025 07:53:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RnDYHf9o"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Pmdf0UZn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F90E209F45;
-	Sun, 18 May 2025 07:25:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD62D1DE885
+	for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 07:53:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747553156; cv=none; b=l7Uyn0BGkGnf5Z0YJBpXG+uHDOe/RM1jh/pUzhoWP2kd7PJg1aNbnKQcalJFkf7hO5NDTRiPk//jCSfhWsDN+arBKzEz86CULtCBKhPpMRoVJMOKJUfpZywkpu5BGfOV4Lkdd/ZoX4z7N5FM5pobTVyhyEhcEPmeX00SIkXZvlc=
+	t=1747554837; cv=none; b=l+zryzBXkI7FA3n6gkDv0Yjs/F9boxFIwR/CdDvqE1YYkDsKQJhIo8qwD759QdmKp5WmUQuwisF9lRK+blPmSQfxmvdQTBlS0yWRcRbpzSZJtFkQtKYrirvRzAKmPLmSE86D4d36rlOiC7eYRHEan9o/q7ueJgWR5+Q6evMsTAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747553156; c=relaxed/simple;
-	bh=ky8ltk0PF8tipHAfrZMLL47eVSRk2GhrTPhK+KO2jkM=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=oSYHZSbfG2GQrE+iYBuhqlOnrcBEizYor0JQRn7/ShYd3IzxdDBqb6qcq1aa8VshpmRWslTfiJUm6o+hO9Fi7OeJ5VVSNiZf7g2DTJgqh2ZnqZDz90gyHhNNAnmV7YjwoPlNnfk0hNih97S1o2RT0nNkQKxAOwp8ATErLgSdIoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RnDYHf9o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62450C4CEE7;
-	Sun, 18 May 2025 07:25:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747553155;
-	bh=ky8ltk0PF8tipHAfrZMLL47eVSRk2GhrTPhK+KO2jkM=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=RnDYHf9oZN3/hxA3PVG2rCoBTPcHWox/oW7OmWhOE7sDnwpqkDHpFB3Cmmr9sUS8X
-	 GEzXPV52858rOuQghFpecsbhSqGKs6UKAKFneK6UuCdheOUDfetVQCL+7OWqKRdtYv
-	 H+/7h8aD+yjeOpML0dVYcWhcY5XP3OG6XhrBYl0+p9c7+V4U0xFx7vEBhv0iP4jXuZ
-	 X2KX6sA5zRXYz307HtP9tC2cocR0dEO44whmOJAM5GzgkAwhscPgTJAvaDlg3kLECn
-	 UAr+hYCFxLIiqQwA+fnymirgk7PL01hotg7+H4AUARd3jC3VHDE3lFQU5SjzWW4tcW
-	 uHIKVr0v3Oj2Q==
-Date: Sun, 18 May 2025 02:25:54 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1747554837; c=relaxed/simple;
+	bh=Gd55qKkP2RAyQotoXpy3bz9qZf9+eboVp2M8Dx2fBqk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=McrkHCUZWafFqSdZWgMAXITAXuFnrveVL3n1X3pLD99MbbsOF9jm+bmUyBeU5K91lGfNM99n2rwU4u8O6cdZgp/7mAAE98g8gX4awEYtBWIwiVUb+gShKr6lORRFS6/lSseGDYWkZ0MNryd+hCD1Tm4/ZnicrWjbPkRAcxm9sdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Pmdf0UZn; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54I7Hn84001756
+	for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 07:53:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=NCH+kNpv+MTmqfuSvretGbKV
+	gr9iuqAvqLCjN+G0eSM=; b=Pmdf0UZnmApJ+osE1qrPh+6i2oxrv7k/OGaB4DfS
+	LBshRMH9KLDA6Mz0owk9OjgLbWxaaabLEl5GSn5paes52lUAXpDGqvcTL6V+rV9S
+	cfRlLrrrqYAF6PoH1XywYC0Q08OJHl/PUaimVkPfaWR211WallK7Xp8yI3v4skFg
+	4+nwvzsHTmcQq+IpPs+4lSyZZdGkPJmOUU//CaN1jdm8Ke1w1+DIFIdLq5X74LzD
+	IwP7UVNN4wUeBgBhk6WQJfOwRktGP+N5bBS3ojrSH8jEFWe28F5/TOHITRmht8Ip
+	aAkXm65Dye9RELxL2hvglDEBIkoqj+Tj3szc1gmkgf/eIg==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pjp31pfg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 07:53:54 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6f8c8a36d8eso17384396d6.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 00:53:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747554833; x=1748159633;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NCH+kNpv+MTmqfuSvretGbKVgr9iuqAvqLCjN+G0eSM=;
+        b=NMY/FwMrkVrXFAid81LgeQnWj0/Mn9OpKrV4x3WmXqDzJ/wOLaC1epeYFzQOYiEOZ5
+         1EBizEAuo2mrWHVXmQaqMp5JuG3Eeqr30ZKMlKTMY4+k6bpXlwJojMMPSEJDE8FzxtN6
+         FlFrr9Hwx0PD/kPyS5CD2kwiJRNtbxBe2SP2LIRDuB/MjZ7qnhe5ustDfNLGJq80ECfY
+         Gr4VcH+u7S6rp7c3QBjv3zC147FnFxfkDyzd+kWyAOH8AEH4P0xi80sFPESM5DpqnU7Z
+         6I6YanAmxNV2G1ATIb7zv3pSdGRW6GykV/wnGOjNubYuGVs6UYvTK1bivKsKuW+FxbLU
+         jntw==
+X-Forwarded-Encrypted: i=1; AJvYcCWo+oNuRgJdO68hbghPgai5VA/dVm82UmEYjUZqr4TF3JwX2I3UMXolvTHCjWgjiCLgyrKeh0SFpNAd23Mr@vger.kernel.org
+X-Gm-Message-State: AOJu0YzbT6KShZRsDldqeOoUJv1ojdiw4taTZ2BLAC8yzSWca7rCkIXk
+	vfZaLsumQZMkXLZIIqCdFxjKGzuGM1Qvaubq0sGWAGV9J27NUwKD+P6LiwdNjZWL8fyHCC55MCO
+	Cfhgck1QhrPUHI4bPSI71IeujLYL8I9JYehsLIsCreCJYbXFOxJHRpksI5ejxkz5KZ5Qa
+X-Gm-Gg: ASbGncu+IIWIePzOPUOhml3XfnKDmUl0dgm1DyGjnGqjvDlJV66FpijubOJeSGh1yDH
+	yAsQYN8kb5Ync/OoCqMqmKQhtESQPHiW+goY+HJ1+97XzxFOfYbCky1HzfLPWotLdVHGzyriBDp
+	I5Cgu/7eYCtlZq2s2VkO+y9Q/nKFpzNHaJ/Ly46wiatlG0FKimorA5K7OMCzyDzxxIyxWHwsjzQ
+	55BNHFXlI1Xqgy3TrEe2JRZ4qDKfLWcQyMfJBEnAkWEoIIyWvpdMVZbWwNQgtk/GykBEUJgjU39
+	cLEjUFUJiZZRXynloBEtGjgrZyIWeeVUp/VFqK6OwYdNsSLwhkHmFYAIpC6W3K3uR88J50i4BUU
+	=
+X-Received: by 2002:ad4:5f8e:0:b0:6ef:3de:5ff7 with SMTP id 6a1803df08f44-6f8b0866722mr157539806d6.15.1747554833466;
+        Sun, 18 May 2025 00:53:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5UQa6GtkbtnH1jyMstQjulp/q5Zi30s8N50lryqhsEDLJ9mabwv/z0hxlSz4ENs+TLfPPyQ==
+X-Received: by 2002:ad4:5f8e:0:b0:6ef:3de:5ff7 with SMTP id 6a1803df08f44-6f8b0866722mr157539606d6.15.1747554833090;
+        Sun, 18 May 2025 00:53:53 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-550e6f161ecsm1331272e87.43.2025.05.18.00.53.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 May 2025 00:53:52 -0700 (PDT)
+Date: Sun, 18 May 2025 10:53:49 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Wenmeng Liu <quic_wenmliu@quicinc.com>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: media: Add qcom,qcs615-camss binding
+Message-ID: <rgomihkry7flm3kjbd766itt6lvi7shr7w65q5iujkin7ermkh@dcfd5v76fmv3>
+References: <20250518-qcs615_camss-v1-0-12723e26ea3e@quicinc.com>
+ <20250518-qcs615_camss-v1-1-12723e26ea3e@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: linux-media@vger.kernel.org, Robert Foss <rfoss@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Todor Tomov <todor.too@gmail.com>, linux-kernel@vger.kernel.org, 
- Mauro Carvalho Chehab <mchehab@kernel.org>
-To: Wenmeng Liu <quic_wenmliu@quicinc.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20250518-qcs615_camss-v1-1-12723e26ea3e@quicinc.com>
-References: <20250518-qcs615_camss-v1-0-12723e26ea3e@quicinc.com>
- <20250518-qcs615_camss-v1-1-12723e26ea3e@quicinc.com>
-Message-Id: <174755315042.2793587.17691583538434075316.robh@kernel.org>
-Subject: Re: [PATCH 1/3] dt-bindings: media: Add qcom,qcs615-camss binding
+X-Authority-Analysis: v=2.4 cv=B8u50PtM c=1 sm=1 tr=0 ts=68299212 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=gEfo2CItAAAA:8 a=COk6AnOGAAAA:8 a=PrroZY9GjRLnrjcbjksA:9
+ a=CjuIK1q_8ugA:10 a=1HOtulTD9v-eNWfpl4qZ:22 a=sptkURWiP4Gy88Gu7hUp:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: XiF_wAUzrie41SXJDWBHvWV2-vnMkVLa
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE4MDA3MyBTYWx0ZWRfX9k00OojGOX2a
+ wJqQsiU5FuETKSz6ibMZd9jYlhYeURM8NTCT7uHVd4AbDOiit80NMw7omwAl9y3MFzASNepEhLD
+ QSV0Ib69iNMM9wtcr92fcwcAf43nlnzZNL5g6AZhhXPF8i6zP/vYOsXEQF6B29MLSXvAgSexUL2
+ NBKOfO64nL7D21ljg7zAOZWLfAsX87U6O702L05Aj5jABW144JvsQzIxjfvUREdKSJwF6HBheC7
+ HkbBbP/kTiqQ/l7n2XMRYlePZuWlE1llCTCkaddJL+0FXWMgSQy74IYj+PuK9F6l3sVtR14sHJL
+ 0iGXOBUnqBEKh1A8HNrVDXbM059AKSWHuBRn9LOEWGF99G+oGm+G4ibsBxSgK5jd7lsUp71yDqf
+ wAGoV3ZNMKDsujVVF4JPoZTaCkuGMUmM3RcmVuJE0IP8O45JGhxG7n1MAwpyBDe4m+VuQzpI
+X-Proofpoint-GUID: XiF_wAUzrie41SXJDWBHvWV2-vnMkVLa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-18_04,2025-05-16_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015 malwarescore=0 mlxlogscore=986 lowpriorityscore=0
+ mlxscore=0 suspectscore=0 phishscore=0 impostorscore=0 priorityscore=1501
+ spamscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505180073
 
-
-On Sun, 18 May 2025 14:33:07 +0800, Wenmeng Liu wrote:
+On Sun, May 18, 2025 at 02:33:07PM +0800, Wenmeng Liu wrote:
 > Add bindings for qcom,qcs615-camss in order to support the camera
 > subsystem for qcs615.
 > 
@@ -74,36 +137,49 @@ On Sun, 18 May 2025 14:33:07 +0800, Wenmeng Liu wrote:
 >  .../bindings/media/qcom,qcs615-camss.yaml          | 356 +++++++++++++++++++++
 >  1 file changed, 356 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,qcs615-camss.yaml b/Documentation/devicetree/bindings/media/qcom,qcs615-camss.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..9a87243f88d4b739cc29033509878ae706d3017f
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,qcs615-camss.yaml
+> @@ -0,0 +1,356 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/media/qcom,qcs615-camss.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm QCS615 Camera Subsystem (CAMSS)
+> +
 
-My bot found errors running 'make dt_binding_check' on your patch:
+[...]
 
-yamllint warnings/errors:
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,rpmh.h>
+> +    #include <dt-bindings/clock/qcom,qcs615-camcc.h>
+> +    #include <dt-bindings/clock/qcom,qcs615-gcc.h>
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/media/qcom,qcs615-camss.example.dts:25:18: fatal error: dt-bindings/clock/qcom,qcs615-camcc.h: No such file or directory
-   25 |         #include <dt-bindings/clock/qcom,qcs615-camcc.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.dtbs:131: Documentation/devicetree/bindings/media/qcom,qcs615-camss.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1524: dt_binding_check] Error 2
-make: *** [Makefile:248: __sub-make] Error 2
+Could you please update internal guidelines: when adding support for new
+hardware, don't use bindings for clock controllers, use ephemeral clocks
+instead. See below.
 
-doc reference errors (make refcheckdocs):
+> +    #include <dt-bindings/interconnect/qcom,icc.h>
+> +    #include <dt-bindings/interconnect/qcom,qcs615-rpmh.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/power/qcom-rpmpd.h>
+> +
+> +
+> +            clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
+> +                     <&camcc CAM_CC_CPAS_AHB_CLK>,
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250518-qcs615_camss-v1-1-12723e26ea3e@quicinc.com
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+So this can become <&camcc_camnoc_axi_clk>, <&camnoc_cpas_ahb_clk>, etc.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+> +                     <&camcc CAM_CC_CPHY_RX_CLK_SRC>,
 
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+-- 
+With best wishes
+Dmitry
 
