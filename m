@@ -1,219 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-58349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 761B9ABB0A3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 17:18:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F928ABB16F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 21:29:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0E30E175F17
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 15:18:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B8C0C1744F1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 19:29:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AB661D6DC5;
-	Sun, 18 May 2025 15:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63F5F1FBE8A;
+	Sun, 18 May 2025 19:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mkooatep"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AmNHQYwk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A79372635
-	for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 15:18:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCCB1FA178;
+	Sun, 18 May 2025 19:29:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747581486; cv=none; b=EUvERfQchdlyuwV2hz0MT/AiO/OZ7VDW8tH3BrdOlkvvKi76UvOGhpwxnKSiuhRGWGlxudYbmB8HcFAGPc4ZyKgEGc5yz8EDSkF7/ptxoT/3wDhlVYDoVPhZVvRRy0Q0LaPTxzet1YNmfdVzr7cPbmDFOt1mfpxk6bDuf6R+QXs=
+	t=1747596565; cv=none; b=rklXNC6/9HAvlebyD96Nb5fXdsntYcRaE0CSFtF45sdyEBJYdzVjOVN9j8wHbk6tTi13ZTPeGen3bHhCg1dD4aqVuI5kgmznZ2tj2L5QyFkFfCwuUC5dJfW9fJMIZuAuv6AWbZtOATdWt7ezYExGpgVwP7cUOzpd+LA11tCVv5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747581486; c=relaxed/simple;
-	bh=j5bH60nzc1Wy2cpmmt83VduYjN1P8wEIccp/ebbjVQ8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Da9402aG4g9AUIqcq+59Nnwz6HJCKDEAUDpNiGa9rbWCFbRjpr+GlBfxq2s3VMzmePBrZ5HGXvi3v9IL8Zh2BeXYGIRgsedkK62vxF1QnQJLKQIhmlsqxmJ0J0H0zAZ4/nds01NGWm41F5i2NqmUrMHDp04nmIMQ0ompDUduY28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mkooatep; arc=none smtp.client-ip=209.85.160.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-47666573242so370781cf.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 08:18:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747581483; x=1748186283; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=89H6l5EPE7llhy2U2sdeyWXbsFYSBwqQ2gw98qt9JjI=;
-        b=mkooatepoRA1cYfwU3tdxhzWj+wrz1f1K2mP0VXbowySzDk2/FtBzH+7FjZ+JkZwTO
-         Z+tcjO2b9QbkDZGylwOOAkN0QjYMGyNSAiL1UYX6fzCPWyrEnm5jlZCcTS66dXTwNgnB
-         KBBeDutBsVJ6xMh6bc1k0oBcrRYHZt/XQ7z6I2c7nh5RGirF6J39LDsTx6tv0eWZMfmD
-         9g3qx2hLzIfLuy/A5PmfyPqOpvGl3/TbWGOH0Vo69cmRN2ZqIRKGippvCEpBok9kg4Ob
-         sKoH7oMYVnlJ4IUgGcSBoVdzKPogoMvD4E17/bDoPI7cWff3rA4gBvOqkW1WK734DLLy
-         qr1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747581483; x=1748186283;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=89H6l5EPE7llhy2U2sdeyWXbsFYSBwqQ2gw98qt9JjI=;
-        b=NFfVcfNfF1yJ7cNXn01H4LMDVdHpj50e+wSraWNNDwHRyNxdjkat4OFGTiwRu7GznX
-         54FHN9Ax62Pbp5siQqjpPCvQc10lFySyfjE9F7Q10WkJy39wPnzyj8PalF5LP6WuQoJd
-         HvrloNw9hkp23GGOvxgw9yEuvSAU37uBuNfzpZK0RxO5ij7qXfyaQJOccw6zWR0IMonE
-         Bg4qicbeexgIB0ldC5bwyWm8buAO61nvGfWGZa5bOgkQa2UxL5QaGc8SaQx06nE/xIfC
-         pYaW3AS5vauHkSnmrxN68jsPCtwv2FrnR626XdYdtA0zy5tztdDwtJAJP+hWHSiT+sYo
-         pdJw==
-X-Forwarded-Encrypted: i=1; AJvYcCVKkh5zYyCJ9/xFtCTKhQR/D8QybwVgDAeqX13nOeAuacXn654PibUCAEmQJ4YsD8jFTiA6A+gyiN336/WW@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGwBD1RCrQKneGDMG9bFq9+oxOnBNj0qkrGeb+FrMnzxkbgtP4
-	xeze5oTw3sRemSO35YSPStb3DyjG67brjIkxOYVRbA3mRNnZEgW45HN/ZjHM0GH7tgMBUMwAuYw
-	nFhdzEMmyjyrrWZwPQ+RPnE3phiaMMKznmalq77QP
-X-Gm-Gg: ASbGnctW/UYSsS/Ju9tIAOrFVp8jUjIIs5eyqV69I0tmZqOnr8Si/lFEKCNBqXTH59E
-	pd6ez79hnRlVa1EsfTfs1Z5WJaIOJU4JsLE86MSVNFCJqQdfkyEnAzxnd1VzIQr4nLUMiHzRSum
-	IfbVsmENJB9bOicxYLxbOTO8T4Nhal5QpgeNJ9BzxM+tkA4OjZg6HdMCM=
-X-Google-Smtp-Source: AGHT+IFRzewsTYnfRaUxtfMHOlJKr+aHtCr5bWwYiAywfSAbjQ0plDNnk3E1Hhl9zLOMpM1iIOObSO8HVZNQbyqIF1E=
-X-Received: by 2002:ac8:5a8e:0:b0:477:8686:901d with SMTP id
- d75a77b69052e-495ff6d3f0dmr3340951cf.1.1747581482781; Sun, 18 May 2025
- 08:18:02 -0700 (PDT)
+	s=arc-20240116; t=1747596565; c=relaxed/simple;
+	bh=ky8ltk0PF8tipHAfrZMLL47eVSRk2GhrTPhK+KO2jkM=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=QJuN3VqB/dy75gePupL526DzxrN0qbov+XzFv41JffcEp2HT38KrSBvR8l6kmvEOhS/JGYiw5GGZ2PHAAektfHX7GK6sI6lB/j1pgLoz3FnaRcqzLX7mY796Eut8NfgIWh79YWRQYkkrg1e2O9pouQ+Jzz9CqDY+igI0qWWH4OU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AmNHQYwk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9D0C4CEEF;
+	Sun, 18 May 2025 19:29:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747596564;
+	bh=ky8ltk0PF8tipHAfrZMLL47eVSRk2GhrTPhK+KO2jkM=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=AmNHQYwkuFARltIGixBKJ9ZxLWRmpIbOrVcQ32onddVDrb3cQC30m80Ubni5YZfDs
+	 euNYuLPKhRdt9+q6x5/PKfwRSL3I69HKPHt2taVCcMS0ijICNoKW7IiR4jlI54SWTh
+	 pp1ZI9fzqq2S1p40FBOCx1oyB6JhKJ4iysY5Vmx3ZhdHoKXGEhHUjOrczoyLihJmAe
+	 +ltHazaRZ74X2GWe36qZamMCd65g9cV91Y7JGtJ+Twe3GMnMchw6wMijeUa+RDzebD
+	 3QCpQiIb7jKe69HoDbfZXwwF12iVXzm/Esi+yYZHA+gDlz083j8NAHxdl+rWYnmubg
+	 6oVbZI5ScNnRw==
+Date: Sun, 18 May 2025 14:29:23 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250513163438.3942405-8-tabba@google.com> <diqzsel8pdab.fsf@ackerleytng-ctop.c.googlers.com>
- <CADrL8HX4WfmHk8cLKxL2xrA9a_mLpOmwiojxeFRMdYfvMH0vOQ@mail.gmail.com>
-In-Reply-To: <CADrL8HX4WfmHk8cLKxL2xrA9a_mLpOmwiojxeFRMdYfvMH0vOQ@mail.gmail.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Sun, 18 May 2025 17:17:10 +0200
-X-Gm-Features: AX0GCFssYVagTak9Gz2PtNx886k7vA2OBbm85fBLGgkvBAmAIyAh5VjNRHYwgYY
-Message-ID: <CA+EHjTz7JzgceGF4ZBTEuj_CidKe=pVcanuFfPMrXhubV7c2ug@mail.gmail.com>
-Subject: Re: [PATCH v9 07/17] KVM: guest_memfd: Allow host to map
- guest_memfd() pages
-To: James Houghton <jthoughton@google.com>
-Cc: Ackerley Tng <ackerleytng@google.com>, kvm@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, pbonzini@redhat.com, 
-	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org, 
-	willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com, 
-	yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org, 
-	amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com, 
-	mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, 
-	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
-	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: linux-media@vger.kernel.org, Robert Foss <rfoss@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Todor Tomov <todor.too@gmail.com>, linux-kernel@vger.kernel.org, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+To: Wenmeng Liu <quic_wenmliu@quicinc.com>
+In-Reply-To: <20250518-qcs615_camss-v1-1-12723e26ea3e@quicinc.com>
+References: <20250518-qcs615_camss-v1-0-12723e26ea3e@quicinc.com>
+ <20250518-qcs615_camss-v1-1-12723e26ea3e@quicinc.com>
+Message-Id: <174755315042.2793587.17691583538434075316.robh@kernel.org>
+Subject: Re: [PATCH 1/3] dt-bindings: media: Add qcom,qcs615-camss binding
 
-Hi James,
 
-On Fri, 16 May 2025 at 21:22, James Houghton <jthoughton@google.com> wrote:
->
-> On Tue, May 13, 2025 at 11:37=E2=80=AFAM Ackerley Tng <ackerleytng@google=
-.com> wrote:
-> >
-> > Fuad Tabba <tabba@google.com> writes:
-> > > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> > > index 6db515833f61..8e6d1866b55e 100644
-> > > --- a/virt/kvm/guest_memfd.c
-> > > +++ b/virt/kvm/guest_memfd.c
-> > > @@ -312,7 +312,88 @@ static pgoff_t kvm_gmem_get_index(struct kvm_mem=
-ory_slot *slot, gfn_t gfn)
-> > >       return gfn - slot->base_gfn + slot->gmem.pgoff;
-> > >  }
-> > >
-> > > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
-> > > +
-> > > +static bool kvm_gmem_supports_shared(struct inode *inode)
-> > > +{
-> > > +     uint64_t flags =3D (uint64_t)inode->i_private;
-> > > +
-> > > +     return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> > > +}
-> > > +
-> > > +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
-> > > +{
-> > > +     struct inode *inode =3D file_inode(vmf->vma->vm_file);
-> > > +     struct folio *folio;
-> > > +     vm_fault_t ret =3D VM_FAULT_LOCKED;
-> > > +
-> > > +     filemap_invalidate_lock_shared(inode->i_mapping);
-> > > +
-> > > +     folio =3D kvm_gmem_get_folio(inode, vmf->pgoff);
-> > > +     if (IS_ERR(folio)) {
-> > > +             int err =3D PTR_ERR(folio);
-> > > +
-> > > +             if (err =3D=3D -EAGAIN)
-> > > +                     ret =3D VM_FAULT_RETRY;
-> > > +             else
-> > > +                     ret =3D vmf_error(err);
-> > > +
-> > > +             goto out_filemap;
-> > > +     }
-> > > +
-> > > +     if (folio_test_hwpoison(folio)) {
-> > > +             ret =3D VM_FAULT_HWPOISON;
-> > > +             goto out_folio;
-> > > +     }
->
-> nit: shmem_fault() does not include an equivalent of the above
-> HWPOISON check, and __do_fault() already handles HWPOISON.
->
-> It's very unlikely for `folio` to be hwpoison and not up-to-date, and
-> even then, writing over poison (to zero the folio) is not usually
-> fatal.
+On Sun, 18 May 2025 14:33:07 +0800, Wenmeng Liu wrote:
+> Add bindings for qcom,qcs615-camss in order to support the camera
+> subsystem for qcs615.
+> 
+> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
+> ---
+>  .../bindings/media/qcom,qcs615-camss.yaml          | 356 +++++++++++++++++++++
+>  1 file changed, 356 insertions(+)
+> 
 
-No strong preference, but the fact the it's still possible (even if
-unlikely) makes me lean towards keeping it.
+My bot found errors running 'make dt_binding_check' on your patch:
 
-> > > +
-> > > +     if (WARN_ON_ONCE(folio_test_large(folio))) {
-> > > +             ret =3D VM_FAULT_SIGBUS;
-> > > +             goto out_folio;
-> > > +     }
->
-> nit: I would prefer we remove this SIGBUS bit and change the below
-> clearing logic to handle large folios. Up to you I suppose.
+yamllint warnings/errors:
 
-No strong preference here either. This is meant as a way to point out
-the lack of hugepage support, based on suggestions from a previous
-spin of this series.
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/media/qcom,qcs615-camss.example.dts:25:18: fatal error: dt-bindings/clock/qcom,qcs615-camcc.h: No such file or directory
+   25 |         #include <dt-bindings/clock/qcom,qcs615-camcc.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [scripts/Makefile.dtbs:131: Documentation/devicetree/bindings/media/qcom,qcs615-camss.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1524: dt_binding_check] Error 2
+make: *** [Makefile:248: __sub-make] Error 2
 
-> > > +
-> > > +     if (!folio_test_uptodate(folio)) {
-> > > +             clear_highpage(folio_page(folio, 0));
-> > > +             kvm_gmem_mark_prepared(folio);
-> > > +     }
-> > > +
-> > > +     vmf->page =3D folio_file_page(folio, vmf->pgoff);
-> > > +
-> > > +out_folio:
-> > > +     if (ret !=3D VM_FAULT_LOCKED) {
-> > > +             folio_unlock(folio);
-> > > +             folio_put(folio);
-> > > +     }
-> > > +
-> > > +out_filemap:
-> > > +     filemap_invalidate_unlock_shared(inode->i_mapping);
-> >
-> > Do we need to hold the filemap_invalidate_lock while zeroing? Would
-> > holding the folio lock be enough?
->
-> Do we need to hold the filemap_invalidate_lock for reading *at all*?
->
-> I don't see why we need it. We're not checking gmem->bindings, and
-> filemap_grab_folio() already synchronizes with filemap removal
-> properly.
+doc reference errors (make refcheckdocs):
 
-Ack.
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250518-qcs615_camss-v1-1-12723e26ea3e@quicinc.com
 
-Thanks!
-/fuad
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
-> >
-> > > +
-> > > +     return ret;
-> > > +}
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
