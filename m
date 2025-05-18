@@ -1,62 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-58347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F958ABB02D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 14:18:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B99AABB047
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 15:06:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B0DFF1895641
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 12:18:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9FFB175373
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 13:06:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 220E121ABAE;
-	Sun, 18 May 2025 12:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67E3D28E0F;
+	Sun, 18 May 2025 13:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="MDoRHQhw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PROUTI3V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.smtpout.orange.fr (smtp-30.smtpout.orange.fr [80.12.242.30])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C520E8F6F;
-	Sun, 18 May 2025 12:17:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.30
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB633635;
+	Sun, 18 May 2025 13:06:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747570675; cv=none; b=KeIXNxdrouGvheUuOsQz0TIi6wpqwZB2Pstq0ZaS/MXrBDal3aSAOsWRgFZrSznudTwHk3LhjnlyRteIW+OgkWwpbuUWVrm74R5OUFh3uy8VzKu9pL+pggIgbv42G7Rfz3Bmeih0rRdpcJYcBPHd29KeE9cdsCKvxCGqEGsx5MA=
+	t=1747573590; cv=none; b=B1LbeDKlRwuShLNrYgcrFNFGlcqnIXkeml/fGk9zYWUQ0xtdg3WWlKR0sJTONKxff733QFXaW/8ZAdB4HpI5Q4dxskLh/RMtBgJjFurHkrN5ZgxQeC5vEj2Hyxj8NRE+/8SbM1bKSr7sMFow4gFmbedjfVNDvMlHgzLFIVaZSr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747570675; c=relaxed/simple;
-	bh=0v/G4KcYtPxRvt1h3Inzd4Yw8+tP49EnSXrRK1XGvCc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=U2gWSr+9KFpF88rqMu9/RdZpZ25iEq6RfyK6+BDhD6rASLPAOWZHM/DS+siOVnaJk8+k+Ex+sxqx3XD8tJdXZfaVs2/JW4xrQOem0830IDF7F0ZTpF6lf8OdhRyEodTobIsdjPedVfNwBdi0HpdJw9+7n+VGTplQrJ+cBBByp5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=MDoRHQhw; arc=none smtp.client-ip=80.12.242.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
-Received: from localhost.localdomain ([90.11.132.44])
-	by smtp.orange.fr with ESMTPA
-	id GcwQuJOtAXqD9GcwQuDNR9; Sun, 18 May 2025 14:16:30 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1747570590;
-	bh=oK1c9fHfkRUZnB9Q4IFRGsFSdnhn8KItWVH7jNnZ+1o=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=MDoRHQhwQ/guYGLQEVlIIvLoC+fZLYp+b95jI4Qc+g6ZO94jUkHT8rq7DxOq/Kdsk
-	 TDc4hmW1BnxJLT1RiIXB6bNCJ29ibWR6N0yG4+jPj/tgf1nTTHMUitn2QKlkWr5hFM
-	 ZVwHV+MXHXgocbx2KT2d8bk2//zVe0N5gaBASKWn70pArsgZR/kRHS1Zz/a9k9dzMq
-	 RVXAwpLgKRosVwdhqDInRVs0LZSXJf581aFGx29O0ANqDJf414FJ4BUPEPR012faoT
-	 LdAKtHusGGrZrYvuvtl0Dn7K/ALXU1OW7z8FPhX2gVaBvls1EF9epkV0G21HTJ46ss
-	 sKmMm/AyC5G9Q==
-X-ME-Helo: localhost.localdomain
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Sun, 18 May 2025 14:16:30 +0200
-X-ME-IP: 90.11.132.44
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To: Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH] regulator: qcom_spmi: Constify struct spmi_voltage_range
-Date: Sun, 18 May 2025 14:16:21 +0200
-Message-ID: <ef2a4b6df61e19470ddf6cbd1f3ca1ce88a3c1a0.1747570556.git.christophe.jaillet@wanadoo.fr>
+	s=arc-20240116; t=1747573590; c=relaxed/simple;
+	bh=QKPfHl99X4kso7jChN1jE5UUNDv8LQK2gzGmhxNr2cg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UfT9sKHS/wNhvH+QUqYD3PdAm3AahxV1jaIGQX1Vh43U3aO90UdbJHo8EcbY/AF6BVQsOFVvKQDyDRKeboGVXJEK7oX8fFnF4x/GL5U6oeaFHVgg/1T4FXoREPGjg3qagzac2gcDPJ0TpEqLdIv15E1oSQhd8zHvMZFgjgI9gto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PROUTI3V; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2302d90c7f7so45708595ad.3;
+        Sun, 18 May 2025 06:06:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747573588; x=1748178388; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GQzOnhmj39ccEfRo0gYtUZqATjFu0/HR0pPxsBGgL7I=;
+        b=PROUTI3VsM4j3ut+o5Zzjal/ldvnB5+wPz7xrjOoiM095Mal8G8HiI/yfNijO39923
+         C6Du7GvPFdhGx6x4FOleMCXdZKREF+gNN5TLpLCcuXpfRQ7Kr+vf/exUxAXvmDBIRmSP
+         OdJGzONAoi4W5Zkc2taO+gKue/UVlqbtsSoUkGlNBfh2yPG0j/iDrZ7v4aeIpgTwp8g6
+         OV8MIB2bDnWDbUMbfQh5QYNPdEVacPEfexWWb1+YSN7D3ZjovMqeoLHtbrwZhCLUK6iQ
+         YlshfiBd1V3i3sTYMDigoUETVe4d4GSMbDiTmj7icn/wjGeuPmxgu3XNGAWer1IbzU1O
+         YLtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747573588; x=1748178388;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GQzOnhmj39ccEfRo0gYtUZqATjFu0/HR0pPxsBGgL7I=;
+        b=F8vlBFq+M2FWawj7ff6CYSFngZOxjJNFtSeY+l29SEcm0lD2PrtfTppcoC5wouFjkP
+         B1VHJvUlkgScdgzLqqtN9qqoSoDGHYgID39kYQtoeBFHhHeYv38TwyBrc4BcsC50l1Ue
+         iNIiSZm/CDMbqgOwRBBBoiqnQolUeYzT3hB1KkK1vQ0p54ZtTnVIc9Z2TQtaT8ow9hIi
+         zZecmAkE2GFtYJtj6dA2al5CKbCuZsLUYTSOLEqEAqYPl87wbgQ4Tdi8EjVpAg9fdGYq
+         LmbQ8KnsnERoW8ZppZQV8RhMPiE2ddLKHaJZCnXaNcU1JNrCxVisg5YZw29/G6ChmY4/
+         75oQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUoOtffMwEDkxBnelJvOW341fiqnz61bo1KKdVl/+s3xalIUzMZiHDZIZJ4G9itVKqIycXo6XcGkPY=@vger.kernel.org, AJvYcCVgIUliL/WQ5Trgzkex7ETkekT0YRChEDWu7XeGU6PFSAIv2SoyO0rE4dU4jQYmXn5nA2mJIUNPZcoaGKDE@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkXImoQF+64L5pE5kqKnp4GwgqT0IE44O/36CVpU4s1QhIpn6E
+	/JUprBLny36YTCHWxqLB+Tkesuf1SYhYUl6fC1KRBSbyh+iEj1KBVE11
+X-Gm-Gg: ASbGncuLgHAcYV9MQdgQYSvRORz7gfLD3D84l13iS+9mQleufLkbk+yBUR93GlyC4Sb
+	Van3teo/akt0YeggBftwc5lkE06ULpvG7m5wdcSFD+mh/Z1LJlsecsJJ2rCAFbI8AKpOqzmC/J2
+	p1jkrBAHziD9y0Gb3ullRt5SZaIpSEleoW0s+rcxOZRZM3pMMcssVeapESSESmsQdOpjQnkycxy
+	C3xfN0fUd0AKq08EFecdqhrUCoYGyUkku0Q43Qvkp7LKFdRBbV/cbJVY/GBttKyvhxLd+RrBMkW
+	y5nWBYK/yGBw3G/hRyypSw4XyW0G7A188rF7zGYXAyFaCIj/iA==
+X-Google-Smtp-Source: AGHT+IEbYz0zL6FUPuBDK6XmqwcyKT86zRveJT1Y3LuagJ7jKeVl+9KS1OpoBAzzEnt7nUQYsecdDw==
+X-Received: by 2002:a17:903:228b:b0:231:c05f:29d5 with SMTP id d9443c01a7336-231d438b54emr111092345ad.6.1747573587958;
+        Sun, 18 May 2025 06:06:27 -0700 (PDT)
+Received: from nuvole.. ([144.202.86.13])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4adbfe1sm43469475ad.66.2025.05.18.06.06.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 May 2025 06:06:27 -0700 (PDT)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Pengyu Luo <mitltlatltl@gmail.com>
+Subject: [PATCH v2 RESEND] clk: qcom: rpmh: make clkaN optional
+Date: Sun, 18 May 2025 21:04:03 +0800
+Message-ID: <20250518130403.440971-1-mitltlatltl@gmail.com>
 X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -66,218 +91,78 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-'struct spmi_voltage_range' are only modified at runtime to compile a
-field, n_voltages, that could be computed at compile time.
+On SM8650, clkaN are missing in cmd-db for some specific devices. This
+caused a boot failure. Printing log during initramfs phase, I found
 
-So, simplify spmi_calculate_num_voltages() and compute n_voltages at
-compile time within the SPMI_VOLTAGE_RANGE macro.
+[    0.053281] clk-rpmh 17a00000.rsc:clock-controller: missing RPMh resource address for clka1
 
-Constifying these structures moves some data to a read-only section, so
-increase overall security.
+Adding the optional property to avoid probing failure which causes
+countless deferred probe. In the downstream tree,similar workarounds
+are introduced for SM7635, SM8550, SM8635, SM8650, SM8750.
 
-On a x86_64, with allmodconfig:
-Before:
-======
-   text	   data	    bss	    dec	    hex	filename
-  85437	  26776	    512	 112725	  1b855	drivers/regulator/qcom_spmi-regulator.o
-
-After:
-=====
-   text	   data	    bss	    dec	    hex	filename
-  86857	  24760	    512	 112129	  1b601	drivers/regulator/qcom_spmi-regulator.o
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
 ---
-Compile tested-only.
-
-I've also checked in the .s file that n_voltages was set initialized with
-the correct value.
+Changes in v2:
+- using capital letters, sm[0-9]+ => SM[0-9]+, rpmh => RPMh (Dmitry)
+- correct typo, alform => plaform (Dmitry)
+- remove tested-by tag from myself (Dmitry)
+- line break to keep 80 characters per line (Dmitry)
+- Link to v1: https://lore.kernel.org/all/20250404072003.515796-1-mitltlatltl@gmail.com
 ---
- drivers/regulator/qcom_spmi-regulator.c | 69 ++++++++++++-------------
- 1 file changed, 32 insertions(+), 37 deletions(-)
+ drivers/clk/qcom/clk-rpmh.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
-index d66a0f61637e..c1a41ce70b36 100644
---- a/drivers/regulator/qcom_spmi-regulator.c
-+++ b/drivers/regulator/qcom_spmi-regulator.c
-@@ -400,7 +400,7 @@ struct spmi_voltage_range {
-  * so that range[i].set_point_max_uV < range[i+1].set_point_min_uV.
-  */
- struct spmi_voltage_set_points {
--	struct spmi_voltage_range		*range;
-+	const struct spmi_voltage_range		*range;
- 	int					count;
- 	unsigned				n_voltages;
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index c7675930f..0aea8e1b7 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -66,6 +66,8 @@ struct clk_rpmh {
+ struct clk_rpmh_desc {
+ 	struct clk_hw **clks;
+ 	size_t num_clks;
++	/* RPMh clock clkaN are optional for this platform */
++	bool clka_optional;
  };
-@@ -474,6 +474,9 @@ struct spmi_regulator_data {
- 		.set_point_max_uV	= _set_point_max_uV, \
- 		.step_uV		= _step_uV, \
- 		.range_sel		= _range_sel, \
-+		.n_voltages		= (_set_point_max_uV != 0) ? \
-+						((_set_point_max_uV - _set_point_min_uV) / _step_uV) + 1 : \
-+						0, \
- 	}
- 
- #define DEFINE_SPMI_SET_POINTS(name) \
-@@ -489,110 +492,110 @@ struct spmi_voltage_set_points name##_set_points = { \
-  * increasing and unique.  The set_voltage callback functions expect these
-  * properties to hold.
-  */
--static struct spmi_voltage_range pldo_ranges[] = {
-+static const struct spmi_voltage_range pldo_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(2,  750000,  750000, 1537500, 1537500, 12500),
- 	SPMI_VOLTAGE_RANGE(3, 1500000, 1550000, 3075000, 3075000, 25000),
- 	SPMI_VOLTAGE_RANGE(4, 1750000, 3100000, 4900000, 4900000, 50000),
+
+ static DEFINE_MUTEX(rpmh_clk_lock);
+@@ -648,6 +650,7 @@ static struct clk_hw *sm8550_rpmh_clocks[] = {
+ static const struct clk_rpmh_desc clk_rpmh_sm8550 = {
+ 	.clks = sm8550_rpmh_clocks,
+ 	.num_clks = ARRAY_SIZE(sm8550_rpmh_clocks),
++	.clka_optional = true,
  };
- 
--static struct spmi_voltage_range nldo1_ranges[] = {
-+static const struct spmi_voltage_range nldo1_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(2,  750000,  750000, 1537500, 1537500, 12500),
+
+ static struct clk_hw *sm8650_rpmh_clocks[] = {
+@@ -679,6 +682,7 @@ static struct clk_hw *sm8650_rpmh_clocks[] = {
+ static const struct clk_rpmh_desc clk_rpmh_sm8650 = {
+ 	.clks = sm8650_rpmh_clocks,
+ 	.num_clks = ARRAY_SIZE(sm8650_rpmh_clocks),
++	.clka_optional = true,
  };
- 
--static struct spmi_voltage_range nldo2_ranges[] = {
-+static const struct spmi_voltage_range nldo2_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0,  375000,       0,       0, 1537500, 12500),
- 	SPMI_VOLTAGE_RANGE(1,  375000,  375000,  768750,  768750,  6250),
- 	SPMI_VOLTAGE_RANGE(2,  750000,  775000, 1537500, 1537500, 12500),
+
+ static struct clk_hw *sc7280_rpmh_clocks[] = {
+@@ -847,6 +851,7 @@ static struct clk_hw *sm8750_rpmh_clocks[] = {
+ static const struct clk_rpmh_desc clk_rpmh_sm8750 = {
+ 	.clks = sm8750_rpmh_clocks,
+ 	.num_clks = ARRAY_SIZE(sm8750_rpmh_clocks),
++	.clka_optional = true,
  };
- 
--static struct spmi_voltage_range nldo3_ranges[] = {
-+static const struct spmi_voltage_range nldo3_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0,  375000,  375000, 1537500, 1537500, 12500),
- 	SPMI_VOLTAGE_RANGE(1,  375000,       0,       0, 1537500, 12500),
- 	SPMI_VOLTAGE_RANGE(2,  750000,       0,       0, 1537500, 12500),
- };
- 
--static struct spmi_voltage_range ln_ldo_ranges[] = {
-+static const struct spmi_voltage_range ln_ldo_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(1,  690000,  690000, 1110000, 1110000, 60000),
- 	SPMI_VOLTAGE_RANGE(0, 1380000, 1380000, 2220000, 2220000, 120000),
- };
- 
--static struct spmi_voltage_range smps_ranges[] = {
-+static const struct spmi_voltage_range smps_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0,  375000,  375000, 1562500, 1562500, 12500),
- 	SPMI_VOLTAGE_RANGE(1, 1550000, 1575000, 3125000, 3125000, 25000),
- };
- 
--static struct spmi_voltage_range ftsmps_ranges[] = {
-+static const struct spmi_voltage_range ftsmps_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0,       0,  350000, 1275000, 1275000,  5000),
- 	SPMI_VOLTAGE_RANGE(1,       0, 1280000, 2040000, 2040000, 10000),
- };
- 
--static struct spmi_voltage_range ftsmps2p5_ranges[] = {
-+static const struct spmi_voltage_range ftsmps2p5_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0,   80000,  350000, 1355000, 1355000,  5000),
- 	SPMI_VOLTAGE_RANGE(1,  160000, 1360000, 2200000, 2200000, 10000),
- };
- 
--static struct spmi_voltage_range ftsmps426_ranges[] = {
-+static const struct spmi_voltage_range ftsmps426_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0,       0,  320000, 1352000, 1352000,  4000),
- };
- 
--static struct spmi_voltage_range boost_ranges[] = {
-+static const struct spmi_voltage_range boost_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0, 4000000, 4000000, 5550000, 5550000, 50000),
- };
- 
--static struct spmi_voltage_range boost_byp_ranges[] = {
-+static const struct spmi_voltage_range boost_byp_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0, 2500000, 2500000, 5200000, 5650000, 50000),
- };
- 
--static struct spmi_voltage_range ult_lo_smps_ranges[] = {
-+static const struct spmi_voltage_range ult_lo_smps_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0,  375000,  375000, 1562500, 1562500, 12500),
- 	SPMI_VOLTAGE_RANGE(1,  750000,       0,       0, 1525000, 25000),
- };
- 
--static struct spmi_voltage_range ult_ho_smps_ranges[] = {
-+static const struct spmi_voltage_range ult_ho_smps_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0, 1550000, 1550000, 2325000, 2325000, 25000),
- };
- 
--static struct spmi_voltage_range ult_nldo_ranges[] = {
-+static const struct spmi_voltage_range ult_nldo_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0,  375000,  375000, 1537500, 1537500, 12500),
- };
- 
--static struct spmi_voltage_range ult_pldo_ranges[] = {
-+static const struct spmi_voltage_range ult_pldo_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0, 1750000, 1750000, 3337500, 3337500, 12500),
- };
- 
--static struct spmi_voltage_range pldo660_ranges[] = {
-+static const struct spmi_voltage_range pldo660_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0, 1504000, 1504000, 3544000, 3544000, 8000),
- };
- 
--static struct spmi_voltage_range nldo660_ranges[] = {
-+static const struct spmi_voltage_range nldo660_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0,  320000,  320000, 1304000, 1304000, 8000),
- };
- 
--static struct spmi_voltage_range ht_lvpldo_ranges[] = {
-+static const struct spmi_voltage_range ht_lvpldo_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0, 1504000, 1504000, 2000000, 2000000, 8000),
- };
- 
--static struct spmi_voltage_range ht_nldo_ranges[] = {
-+static const struct spmi_voltage_range ht_nldo_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0,  312000,  312000, 1304000, 1304000, 8000),
- };
- 
--static struct spmi_voltage_range hfs430_ranges[] = {
-+static const struct spmi_voltage_range hfs430_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0, 320000, 320000, 2040000, 2040000, 8000),
- };
- 
--static struct spmi_voltage_range ht_p150_ranges[] = {
-+static const struct spmi_voltage_range ht_p150_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0, 1616000, 1616000, 3304000, 3304000, 8000),
- };
- 
--static struct spmi_voltage_range ht_p600_ranges[] = {
-+static const struct spmi_voltage_range ht_p600_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0, 1704000, 1704000, 1896000, 1896000, 8000),
- };
- 
--static struct spmi_voltage_range nldo_510_ranges[] = {
-+static const struct spmi_voltage_range nldo_510_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0, 320000, 320000, 1304000, 1304000, 8000),
- };
- 
--static struct spmi_voltage_range ftsmps510_ranges[] = {
-+static const struct spmi_voltage_range ftsmps510_ranges[] = {
- 	SPMI_VOLTAGE_RANGE(0, 300000, 300000, 1372000, 1372000, 4000),
- };
- 
-@@ -1676,18 +1679,10 @@ static const struct spmi_regulator_mapping supported_regulators[] = {
- 
- static void spmi_calculate_num_voltages(struct spmi_voltage_set_points *points)
- {
--	unsigned int n;
--	struct spmi_voltage_range *range = points->range;
--
--	for (; range < points->range + points->count; range++) {
--		n = 0;
--		if (range->set_point_max_uV) {
--			n = range->set_point_max_uV - range->set_point_min_uV;
--			n = (n / range->step_uV) + 1;
--		}
--		range->n_voltages = n;
--		points->n_voltages += n;
--	}
-+	const struct spmi_voltage_range *range = points->range;
+
+ static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
+@@ -890,6 +895,13 @@ static int clk_rpmh_probe(struct platform_device *pdev)
+ 		rpmh_clk = to_clk_rpmh(hw_clks[i]);
+ 		res_addr = cmd_db_read_addr(rpmh_clk->res_name);
+ 		if (!res_addr) {
++			hw_clks[i] = NULL;
 +
-+	for (; range < points->range + points->count; range++)
-+		points->n_voltages += range->n_voltages;
- }
- 
- static int spmi_regulator_match(struct spmi_regulator *vreg, u16 force_type)
++			if (desc->clka_optional &&
++			    !strncmp(rpmh_clk->res_name, "clka",
++				     sizeof("clka") - 1))
++				continue;
++
+ 			dev_err(&pdev->dev, "missing RPMh resource address for %s\n",
+ 				rpmh_clk->res_name);
+ 			return -ENODEV;
 -- 
 2.49.0
-
 
