@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-58321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37525ABAF81
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 12:55:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5A1EABAF88
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 12:55:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C3F433A61EC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 10:55:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A3BE7188CE72
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 10:56:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA33C218ADE;
-	Sun, 18 May 2025 10:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F46E219303;
+	Sun, 18 May 2025 10:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nahe8YxR"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ETZPnM02"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440C72185A0
-	for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 10:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB53F217F29
+	for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 10:55:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747565731; cv=none; b=pf7xZCqC86DC/4BKlQ1Qhvy9B0LJQlaeWiCbJBSJBbcu6+ozMQ/9qu2KaWoM9JPUXFQM2Awe9zJY30MhASdx0hLHgGDPJYgxH/8B26YGfG18oz2rHZUM+gBvkQR4z+KtP9UUU9aSmjvnmtL+1sG4/c4/37+ccMLGn+kq9WZ9j2A=
+	t=1747565733; cv=none; b=YcfRlPllv8jbxrN5TElxIbtVP+IUpxs9sX5EA1f7Lihdj2U6oEPvcxaDiZJAKJJN6lrXmS/KipAaasbforGienKpLgZptgzWDvnyrsUjYjhfqv3p/BvugNuAqdM9evbOH7TeoJ3UKWM6MdXv0REdnhs/ulziLwAs8LwA35jmE/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747565731; c=relaxed/simple;
-	bh=AdrdjdzHPQQcBxZ5qmg59kaGK1b5+B2F6XfHvaKYS9k=;
+	s=arc-20240116; t=1747565733; c=relaxed/simple;
+	bh=npSuxvWMmhzKLh8mAO06E84f1kOeMHWURDV7gpjmnuQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=E47GZPCjttwl0C8Oo9xO97n+leCvr1oTG7H7TvXp7t3nemRDD6c312L1N2GwlvfeCLJ+R920BNx4Bhqb0oArIm2uw8rIAPmtQRNNErFHPPGZNQwbCnBRxz+3tG57ZKIml3X/uLVYUtQjv/poB/odceIC2PrJwlQjRnM4BnwVuxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nahe8YxR; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=Tyi6IDip+V4W+fFLdhnDAmA2YpIOdPg6lNczXBFV5CdqHxf7KDQEPO6s7RwIgspryCHS332Ja3t0XXZFpG7b0lWd/tzW05AgKpYBpX2a/2ykBjvA3rLHj96qNdDJTLoHprIOlyuvjGGGRtkxszGKyWy1/8Xi4xbxk5SjYlXSap0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ETZPnM02; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54IAaxam028701
-	for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 10:55:29 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54I5Qc3h021291
+	for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 10:55:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2XRxC+rcd4lvez8neQ9jCV1W0aJMb78tI+WpAHrRAYk=; b=nahe8YxRHW5xg9PY
-	dXbIVB/TrD8zdCizJb8GHcupO550BKaGOv8QR3LQzTXbmj5omcdhp4FHBySECvkF
-	lzkFQIK3B1YnxBW2v0kuFheHrpmH4/3G0OtTNl6+8LVxnuA2VB7uxifRjEJ/EUPn
-	m9XuvYzU2O5XCfwArnxbCodmFsbBnuCkSxUq/EOhOrcmlWTUg1aFTx4h8adrBLZX
-	JZycjE7CamaZurPG2gGMsdyociQjb77zX3LArgiQyvzgo7BxjeDizFkos4IWJBAs
-	ZdnpDz6AfmYf9wwdaybR+FX413ik3Z5ye+s21yQ7esJjFq2ptA0EKVgBbHMZLS92
-	/gDnXw==
+	R6N0tvqMMnaFd6rXphyiPbtd6QUTPIJgEbiauM+ZAzk=; b=ETZPnM02ZjSAu5J2
+	JEVcF4H9kQ/0c7Yi+AUdLIUokRsCDmC2DYcbXUwCQg+OYr11L6KefBQH1dnf3fL4
+	BSwkQuwjpg9yXDpthOn5lGzJ5n30fFcSorYrzf8T5W6aqP4sxWFA/IyODlQ+DEzW
+	3iAvnVQwMOypqDwhp95Z08saFNy9KWOlKd5XXg2NY/fuoa4rhhhUCH8TGeTT453G
+	LnoRQDbhgII1x0Djlm1D1F7InYIOaAWfjVGdZ6zbJZPEj6ndVgqXPR1aGbymTJjn
+	ewB38+ZBxfEoFNNWf92qtfqcS0I/fIrAMPfMZRe26hHJORYDd4UUEGT/4dbfb+e8
+	CJVQAQ==
 Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pjkyhvmf-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pkr9stjr-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 10:55:29 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6f8bdbd9174so69759406d6.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 03:55:29 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 10:55:30 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6eeb5e86c5fso37043966d6.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 03:55:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747565728; x=1748170528;
+        d=1e100.net; s=20230601; t=1747565729; x=1748170529;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2XRxC+rcd4lvez8neQ9jCV1W0aJMb78tI+WpAHrRAYk=;
-        b=nLEdhZylLhRCTAFXVuj2Td99Z7ovIPoUx3GZ9jxgp52ZzFbw8Uk/YVEF4O8Co+Um2w
-         fYLiXlyl6Vbld7C2e1CBO52xNdAp/ZKm5xUz2uYl8E1h7hbv8ZZJ9oESLeo0U41qfiNf
-         YBYm0fOvAg+uz7I1fPaOmUaelLD3XoylRL37vWk1Goz6m8gdFM/mKU8TkiqUrxaa9NEz
-         Y1W+oYa89OFBtcSCmVIpgRbheBJ9VpH7tEgKmh8ypT39gvcPgqY2rvO4TmDz3HqF17Ul
-         8B4zAX4ceanJC8V3iBwX7GOK4yBqlzMi/yP6Le511Kxtqm867Mhj+voSAxm51HH0eUG3
-         wb2g==
-X-Gm-Message-State: AOJu0Yw06wihDKT4hky96RvTKZBiHb8xigyyLnXfCdoNTRqa20fURsaK
-	U3TXq4JoLdFGx+6PNdMmKcWlseTsD2r2JIXh4rlCSQ8b8/BVOyrn+giDKVWr9n5OcxK4WZ8RPN3
-	kJGT1nUWYlI7dPwgIsBsVeK1asaC0o0GAuIBTpVToJDLk2ddcTyuV8DP4tP3vaBhyIo6X
-X-Gm-Gg: ASbGnctKEZrCfVoinj88acbTi/r4qNeIoAnNcoaMGnPW44z+vfuuExA5caZXkoATurE
-	LFGQAEAh+invGjvGPr/mjuklzDyFXqILSrCorLuLr77vKwoGNi40tBFXADO0FkTkUcssYWx1Zlv
-	bUkHdbL9WzDu2wcrICYrvkqX/RgkCf2ECqXzFSCE5EmaCm8lFoLTruxxqSdDndEXovgD1IAzkpj
-	yuLHou70nUSV2eb1OisXvVOYTQ08BCUfeYUwA0HHUz4F+esSzN3/tlwmLDW2DovPXnpusfFkMdd
-	KomasSquAFvf5QsIZgJZ75I3Kx8ByqlA6byWmqvFbEOByKLlUZWva5p0E+V8UG2FMRlG+4rztUG
-	cOdXTj4eCbDXymobtcvkUnxaA
-X-Received: by 2002:a05:6214:260e:b0:6e8:f470:2b11 with SMTP id 6a1803df08f44-6f8b2c95b78mr153800176d6.23.1747565728054;
-        Sun, 18 May 2025 03:55:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGfwzLMkmBkdbwjFViOIMLrKHJUrUiuLpJ8M0qtJYTrZeZHRoKtHam4c0qJtlboNh/7FpPSgA==
-X-Received: by 2002:a05:6214:260e:b0:6e8:f470:2b11 with SMTP id 6a1803df08f44-6f8b2c95b78mr153799976d6.23.1747565727641;
-        Sun, 18 May 2025 03:55:27 -0700 (PDT)
+        bh=R6N0tvqMMnaFd6rXphyiPbtd6QUTPIJgEbiauM+ZAzk=;
+        b=A7LmNletQeKnjqz28KUsFLI3ZZrWlVocgOdEjiJVeSRS09V2X37SK+1MeutCARjbty
+         nq2HhlNnq61jQ8EO9AWaWqx8sNeQ5EokLEW7dnUKEij2RSj5lCves0wxwLjKenqqAFYV
+         fHB/S6SrK4FeEysSNnHFVVRsIj/RSNPdUJ1dS7hHA3UMzi9YzStBPad91YxE6z49FC/s
+         HQaJyDxXUti8Jzx4GRAyH/diARqzfle2vc4ragJTAZedMb8dfM6rbUuKOfAG39mt82fY
+         BjPpakR7LestouSNiGHEhMq/H+oSZYueWDLNNe5PP59RLoge8/t7SU6roh1Zgm8BLw4/
+         F0lw==
+X-Gm-Message-State: AOJu0Yy/gnlVA5CprLMlcCJjLPXM7gQR4aEwCdc11XWGavCagBlFi7Rq
+	fFC1hxMw+bSE/UAaASnliCGIBIchXBy5FkhvwyaWoMszoQD/dE6lr6sw/tUWDUkIeFZ9mopwBsM
+	mQtABtaI/I1HYiXBJbypJPpLiiG5M+HZuIZwOydEUiU3hANNijSQMbJIngDJ/QhyC1qND
+X-Gm-Gg: ASbGncuWZzW92311K8ThIPPu/5P9slQYj1YmVrAq9J/UJDwB1cUHQMv6LQms06unzt9
+	jnJJSTx31dB2pWQ9fipyDrxyyHJ3A0AJQEYWxTYx68w4s94PZXTh+X7qw+Z/x5/heHfWAs03dgA
+	rbYaHoJUoxVIsmVyCQIc9izVWFaNXsELJsXERPCbu6DnMykRHQcyNgaatGufxJPABVwPRIiBNqz
+	/sSH06Y520VaSlVnD5Db/NHZE3phCde6ONaReXZY8CFdm/GKjCkVbe9CeVw6QiHMMQNox3juFQD
+	ReIzmMDLU6hPqAn2JYCVHslFvUBlGbvrsFgjS0Ow1pX4RfhjuyNucWdTa3eCxUm5NbeYduUxyY3
+	Ty10Xo50jLbnQN3CZAgyUvPph
+X-Received: by 2002:a05:6214:2303:b0:6e8:ec85:8325 with SMTP id 6a1803df08f44-6f8b094a1c1mr132319716d6.39.1747565729525;
+        Sun, 18 May 2025 03:55:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFBrNgDaAWSJPUXl4Pq1ttzJ470HNM0rC+ZfMUsp3qTG5xgKN+t5e9KePjsQljKtP2aOM6tPQ==
+X-Received: by 2002:a05:6214:2303:b0:6e8:ec85:8325 with SMTP id 6a1803df08f44-6f8b094a1c1mr132319546d6.39.1747565729174;
+        Sun, 18 May 2025 03:55:29 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-328085cf8ccsm14314451fa.99.2025.05.18.03.55.26
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-328085cf8ccsm14314451fa.99.2025.05.18.03.55.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 May 2025 03:55:26 -0700 (PDT)
+        Sun, 18 May 2025 03:55:28 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Sun, 18 May 2025 13:55:20 +0300
-Subject: [PATCH v3 02/11] drm/msm: move helper calls to msm_kms.c
+Date: Sun, 18 May 2025 13:55:21 +0300
+Subject: [PATCH v3 03/11] drm/msm/mdp4: get rid of mdp4_crtc.id
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,7 +91,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250518-msm-gpu-split-v3-2-0e91e8e77023@oss.qualcomm.com>
+Message-Id: <20250518-msm-gpu-split-v3-3-0e91e8e77023@oss.qualcomm.com>
 References: <20250518-msm-gpu-split-v3-0-0e91e8e77023@oss.qualcomm.com>
 In-Reply-To: <20250518-msm-gpu-split-v3-0-0e91e8e77023@oss.qualcomm.com>
 To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -102,141 +102,116 @@ To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3518;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3130;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=AdrdjdzHPQQcBxZ5qmg59kaGK1b5+B2F6XfHvaKYS9k=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoKbyZDa8XSHH8mycqheTvtaIQ9DTALExlx1ErQ
- VrWxLqtNBOJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaCm8mQAKCRCLPIo+Aiko
- 1bufB/9xNZEFnQ3iUAr5/qfQECmudD+538OkFFnwxzChSUqhOVDUvBNMhKH9eMIKYqXiLTyXbnr
- NXQh5FdSYae51nMVEfLiy/HVdJJ9kUtpxF3iB2aV3dhMYiGvIppuxe3QrXX77Cd+d2ovZNCtf6E
- O9qjdbopuZWbMr/1dE2f7aNOJPsTb6Ofl6L6pNnLTRIiHSQ9mpVLM5q9qumb21edQiWxtqKlWwc
- C/TuIQ5Uk1moxvvnCTasRV44BeM5UGg4oIz+NJHjU6iUTSKi0pKXvp/sw9SS9AHQ+owMLqmNsOa
- spGY/zt8ns9QKuPTUuDuYflG4mXrcFZgMMKdfreD94+z+NXL
+ bh=npSuxvWMmhzKLh8mAO06E84f1kOeMHWURDV7gpjmnuQ=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoKbyZ9AeY7obsJ4wix1fDb2P5WNV2DJztH7KUX
+ 3sUn48fmuSJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaCm8mQAKCRCLPIo+Aiko
+ 1YPGCACN8kXmecU+jG3vEQvTISfrFHslcPAcRaXFPhbbi4VHPcFPFd/CUJ/AH9rrZnpVoBDZy6V
+ 1PVdYXdiazunhHd8l+Q+3DK0QPU3kMNS7CQWosLuWXXsk+mo5dZDEZ1KEee4yOFgZhp/wah9ghu
+ /pNvAk4d7lrD/lYKjbjsyIBNPDkTPHdmS84bFJmCl1Us5guAjcT0Nev6LbOl095c/43foQOEUhk
+ BCkAL6TS7XGsy5N6W9lb7lQG1n/f038edX+/tL13aSCY9xS8+K2sIzLP/rdwzJb0lSlEyncAhaa
+ 2jjXKhtiP5QnmxP+LTFc0s5aIZLqn+wQfTqgjpyhyYUH7ely
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-GUID: XQ4IdxmmL5YF02jQy8NBXx5H5Cbtlemm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE4MDEwNCBTYWx0ZWRfXwTqC1jsqpC0U
- ai++H1Yqu2+McjZkiwB0qj7j05snuN/i+K0cVWHwWOuhoxQif7tjiprf0foLwZfB5Ge/tOkz7ut
- XzrIQm8U0Si2An6H9/ECkatAZRMvHIFEDShJyDaJ3BxJtFs+zwyPz+MqHMPGcExHmMXesbLF6My
- Zk/SV/dMDUX2JA8l27FWZ9k8Xhwq0qV7o2XDTE61YJ1dXPA9D+IxfrfAHp/bKI7Du7K2fwsRJRf
- XPaHtC8vQtIQqa83Nt94Q2y1JzXQ/5U6vzYX9NOEtimHprQD6r3mbfbFzDIhuYAZtUc76W0Qdow
- L6g27BfDGoewkiyxm8mmAfyCfWqhDP5ZYAkCRZ8bcJ2Mmgw1m2tvnWZ8oFyYuQApgkP8T0mYa2S
- 11h+qs/7zJs1PiI1RopcyGvopkY55fBPS30eaO2zpkK8V0AqcmuZZaDcSa/yGSurjbYbz6xQ
-X-Authority-Analysis: v=2.4 cv=H8Pbw/Yi c=1 sm=1 tr=0 ts=6829bca1 cx=c_pps
+X-Proofpoint-GUID: Wi9Lh3_k0L9CpiUrY1DbVzazF52M1hpm
+X-Proofpoint-ORIG-GUID: Wi9Lh3_k0L9CpiUrY1DbVzazF52M1hpm
+X-Authority-Analysis: v=2.4 cv=DdAXqutW c=1 sm=1 tr=0 ts=6829bca2 cx=c_pps
  a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=5yuRF9vT8A_X6ws8YtoA:9
- a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: XQ4IdxmmL5YF02jQy8NBXx5H5Cbtlemm
+ a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=JeS6effYNUkig2QXyjUA:9 a=QEXdDO2ut3YA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE4MDEwNCBTYWx0ZWRfX8u4+yxezc5V3
+ eNgJppUcqKXmOg1sL9Vj6scU430f+Ar10z/WqWmtyZ+wK3fHIHkKzxjicTGBVxT9cfvP4xvI2eX
+ eqpGFitgf3YVX3AtkGIqF/NOXEKltewzhKUUjEjs62MEJhl/PnHBhmMoK+vahjJ+EdO8Hz+x3va
+ 4kEFV/1f8Mbj5KqaWTpx68RWhG3+UurnNqWvi3SJViWnAZxSKlLnK6xGp3XiZWkQkAB7PE+5ta+
+ eeRX0tSbjWM3287SPuOoPShA04zGvDSLyoB4lr/7PblDSgsO8kpL6cgQgckZA8qrJIC82FEyDUw
+ dQmw/SXYkBofdxKf5YO7HnpnXTvYCiAEmA4o5xesNicr3O8hVBG9IR1xNi6dknMgRLRlau+IPzF
+ 7+SHK3pQsKswO0X5FwzmMhjtC/ctQKOkDrpVGvfSax1ercq/d6E2tBOmf3v7mWJr3v86Wx6u
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-18_05,2025-05-16_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 mlxlogscore=999 adultscore=0
- phishscore=0 mlxscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
- impostorscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505180104
+ mlxlogscore=996 clxscore=1015 phishscore=0 adultscore=0 mlxscore=0
+ spamscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 bulkscore=0
+ impostorscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505070000 definitions=main-2505180104
 
-Extract two more KMS-related codepieces to msm_kms.c, removing last
-pieces of KMS code from msm_drv.c.
+There is no reason to store CRTC id, it's a part of the drm_crtc. Drop
+this member and use drm_crtc.name for the warning message.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/msm_drv.c |  9 +++------
- drivers/gpu/drm/msm/msm_kms.c | 20 ++++++++++++++++++++
- drivers/gpu/drm/msm/msm_kms.h |  2 ++
- 3 files changed, 25 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c | 7 ++-----
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c  | 2 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h  | 2 +-
+ 3 files changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 78cea9d4999488648b4131a2da425fb349d1b664..2c6997c85fbbc3767315ca3a166a99b322f1218a 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -11,7 +11,6 @@
- #include <linux/of_address.h>
- #include <linux/uaccess.h>
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
+index 5e1e62256c382426f70d21a5312fb40dda68d695..7596b45e234bdcf1b7cf37c4a8d39862f48819a8 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
+@@ -17,7 +17,6 @@
+ struct mdp4_crtc {
+ 	struct drm_crtc base;
+ 	char name[8];
+-	int id;
+ 	int ovlp;
+ 	enum mdp4_dma dma;
+ 	bool enabled;
+@@ -539,7 +538,7 @@ static void mdp4_crtc_wait_for_flush_done(struct drm_crtc *crtc)
+ 			mdp4_crtc->flushed_mask),
+ 		msecs_to_jiffies(50));
+ 	if (ret <= 0)
+-		dev_warn(dev->dev, "vblank time out, crtc=%d\n", mdp4_crtc->id);
++		dev_warn(dev->dev, "vblank time out, crtc=%s\n", mdp4_crtc->base.name);
  
--#include <drm/clients/drm_client_setup.h>
- #include <drm/drm_drv.h>
- #include <drm/drm_file.h>
- #include <drm/drm_ioctl.h>
-@@ -79,7 +78,7 @@ static int msm_drm_uninit(struct device *dev)
- 	if (ddev->registered) {
- 		drm_dev_unregister(ddev);
- 		if (priv->kms)
--			drm_atomic_helper_shutdown(ddev);
-+			msm_drm_kms_unregister(dev);
- 	}
+ 	mdp4_crtc->flushed_mask = 0;
  
- 	msm_gem_shrinker_cleanup(ddev);
-@@ -275,10 +274,8 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
- 	if (ret)
- 		goto err_msm_uninit;
+@@ -624,7 +623,7 @@ static void mdp4_crtc_flip_cleanup(struct drm_device *dev, void *ptr)
  
--	if (priv->kms_init) {
--		drm_kms_helper_poll_init(ddev);
--		drm_client_setup(ddev, NULL);
--	}
-+	if (priv->kms_init)
-+		msm_drm_kms_post_init(dev);
- 
- 	return 0;
- 
-diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
-index 184a4503fef0deff7234a3ce332e0bf564fbce46..49a56873100b2fdcded3eb6adcc7032bf404212c 100644
---- a/drivers/gpu/drm/msm/msm_kms.c
-+++ b/drivers/gpu/drm/msm/msm_kms.c
-@@ -13,6 +13,7 @@
- #include <drm/drm_drv.h>
- #include <drm/drm_mode_config.h>
- #include <drm/drm_vblank.h>
-+#include <drm/clients/drm_client_setup.h>
- 
- #include "disp/msm_disp_snapshot.h"
- #include "msm_drv.h"
-@@ -217,6 +218,15 @@ struct msm_gem_address_space *msm_kms_init_aspace(struct drm_device *dev)
- 	return aspace;
- }
- 
-+void msm_drm_kms_unregister(struct device *dev)
-+{
-+	struct platform_device *pdev = to_platform_device(dev);
-+	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-+	struct drm_device *ddev = priv->dev;
-+
-+	drm_atomic_helper_shutdown(ddev);
-+}
-+
- void msm_drm_kms_uninit(struct device *dev)
+ /* initialize crtc */
+ struct drm_crtc *mdp4_crtc_init(struct drm_device *dev,
+-		struct drm_plane *plane, int id, int ovlp_id,
++		struct drm_plane *plane, int ovlp_id,
+ 		enum mdp4_dma dma_id)
  {
- 	struct platform_device *pdev = to_platform_device(dev);
-@@ -366,3 +376,13 @@ void msm_kms_shutdown(struct platform_device *pdev)
- 	if (drm && drm->registered && priv->kms)
- 		drm_atomic_helper_shutdown(drm);
- }
-+
-+void msm_drm_kms_post_init(struct device *dev)
-+{
-+	struct platform_device *pdev = to_platform_device(dev);
-+	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-+	struct drm_device *ddev = priv->dev;
-+
-+	drm_kms_helper_poll_init(ddev);
-+	drm_client_setup(ddev, NULL);
-+}
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index e52649bbee7dc6a80abfecf7f8d5bcfad3d8f60b..26cbb662e7533fdfd55fb7f200b99c79c3fd3211 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -200,6 +200,8 @@ static inline void msm_kms_destroy(struct msm_kms *kms)
- 		for_each_if (drm_crtc_mask(crtc) & (crtc_mask))
+ 	struct drm_crtc *crtc = NULL;
+@@ -639,8 +638,6 @@ struct drm_crtc *mdp4_crtc_init(struct drm_device *dev,
  
- int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv);
-+void msm_drm_kms_post_init(struct device *dev);
-+void msm_drm_kms_unregister(struct device *dev);
- void msm_drm_kms_uninit(struct device *dev);
+ 	crtc = &mdp4_crtc->base;
  
- #endif /* __MSM_KMS_H__ */
+-	mdp4_crtc->id = id;
+-
+ 	mdp4_crtc->ovlp = ovlp_id;
+ 	mdp4_crtc->dma = dma_id;
+ 
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+index 7e942c1337b3597d557abd3e2e418c3958e5eb3f..00920bd44f6f73099ff2c293473e427caa49b873 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+@@ -338,7 +338,7 @@ static int modeset_init(struct mdp4_kms *mdp4_kms)
+ 			goto fail;
+ 		}
+ 
+-		crtc  = mdp4_crtc_init(dev, plane, priv->num_crtcs, i,
++		crtc  = mdp4_crtc_init(dev, plane, i,
+ 				mdp4_crtcs[i]);
+ 		if (IS_ERR(crtc)) {
+ 			DRM_DEV_ERROR(dev->dev, "failed to construct crtc for %s\n",
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
+index f9d988076337cb6fb63af8e76be59b2eb34ab327..fb348583dc84de5c57c77fdf246894e9334af514 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
+@@ -185,7 +185,7 @@ void mdp4_crtc_set_config(struct drm_crtc *crtc, uint32_t config);
+ void mdp4_crtc_set_intf(struct drm_crtc *crtc, enum mdp4_intf intf, int mixer);
+ void mdp4_crtc_wait_for_commit_done(struct drm_crtc *crtc);
+ struct drm_crtc *mdp4_crtc_init(struct drm_device *dev,
+-		struct drm_plane *plane, int id, int ovlp_id,
++		struct drm_plane *plane, int ovlp_id,
+ 		enum mdp4_dma dma_id);
+ 
+ long mdp4_dtv_round_pixclk(struct drm_encoder *encoder, unsigned long rate);
 
 -- 
 2.39.5
