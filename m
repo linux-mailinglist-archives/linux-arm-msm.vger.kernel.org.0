@@ -1,121 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-58293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3003EABADFC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 06:53:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7B07ABAE2C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 08:33:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 39DD51898E90
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 04:53:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 33ECC177389
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 06:33:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38A0C1922FA;
-	Sun, 18 May 2025 04:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBD1B1FDE22;
+	Sun, 18 May 2025 06:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HN86NyaT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n5TfWFpi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B10800;
-	Sun, 18 May 2025 04:52:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E241F8AF8;
+	Sun, 18 May 2025 06:33:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747543982; cv=none; b=SovFbthaRo3H8ovtaLlhia+CMCialP3SSitU6Td7E2rQnMadEmg7CCSNA3WuDWIzCDOVl891t+OchaOtiC2fAphIY7NgWbp38tvjFF5cIX41awN1vCB/0LhsTgEd57LHIg44bPoC9hlneEJ9Ip9+wH/ciasGG68z+53DnzprNVw=
+	t=1747550013; cv=none; b=W1IFXP6o2svwQ8ZWPMvPwSp63+1WmR+NwOnAGaShG7M097YnfHnGcQjFH6ziQ1JGkv4sU6YykU6FVHFdg/7DDKn46FPY7L7ciQ27q5HimwskFy6QQKEFPlPt5cNLArafIl3HI/5pwDGS17pEUfN8p1CavqC8k0FCJX8tNhHYsl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747543982; c=relaxed/simple;
-	bh=Tl+/bI4JwREUGkxjpSb0RGZADW8LJu4lETQehDCuUv4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aR66CQ+IHH0kILDmCeCfCj1+Kz4zpaTkpp8lelVzOpoYrOLd8K7Ft7YRoigFPJK1rqO4DLV90eCdQj3M85uTVa0Hs/pvd1RySX2nO9fDoYxGzcCt4lvkN5ycZLVDUJOsGnTFqtSlFzd7VhoepRVWEZAapFC5Ksk0rKuWXth4lN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HN86NyaT; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1747543980; x=1779079980;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Tl+/bI4JwREUGkxjpSb0RGZADW8LJu4lETQehDCuUv4=;
-  b=HN86NyaTTvf0TAIpXqpnvzlZPKbVnf6SrzDrXvAi6SBvnhu4XciHkZaK
-   ZK0sPxgTTc9TsOh503I5IP9njSAQeAlgdZe5juG/dTK1TOLlA4GgUlFFx
-   iTicC0knv5u7IjfZDl+LzBDitAbIHPeH7nPfCxnFZtYDdDaCsIDNviAq7
-   efuDericKuTcTKZpHcpCCuLJMKnj3L425FJno+OMH8X5QkKwwuH5n+BGt
-   ksEgqEaMTfOwDtjCvFAPpIAdcAjrzXnn8w0leN+rw0B+MXWxx9fIlBDtL
-   1yzIJ5g1s1pW7uuJcQqgjZvqAajMOhUsPXr2/JErAlepHRUvhr+/388bS
-   g==;
-X-CSE-ConnectionGUID: SuRCt1YqRxq51dgiMbaoQQ==
-X-CSE-MsgGUID: OEH++MmuRNajgfD7J799ig==
-X-IronPort-AV: E=McAfee;i="6700,10204,11436"; a="71970904"
-X-IronPort-AV: E=Sophos;i="6.15,298,1739865600"; 
-   d="scan'208";a="71970904"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 May 2025 21:52:59 -0700
-X-CSE-ConnectionGUID: Ji3GgWruQTawsTWaFD8C7g==
-X-CSE-MsgGUID: sWiKOAwCRIq8RtY64V/4nQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,298,1739865600"; 
-   d="scan'208";a="140072658"
-Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
-  by fmviesa009.fm.intel.com with ESMTP; 17 May 2025 21:52:55 -0700
-Received: from kbuild by 1992f890471c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uGW16-000Kcp-22;
-	Sun, 18 May 2025 04:52:52 +0000
-Date: Sun, 18 May 2025 12:52:31 +0800
-From: kernel test robot <lkp@intel.com>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH RFT v3 04/14] drm/msm/a6xx: Get a handle to the common
- UBWC config
-Message-ID: <202505181204.fkaJyv3U-lkp@intel.com>
-References: <20250517-topic-ubwc_central-v3-4-3c8465565f86@oss.qualcomm.com>
+	s=arc-20240116; t=1747550013; c=relaxed/simple;
+	bh=vifoSAbNyZFcqohH0mGp5O6Gve6RQ93AlyKtqRLl/xA=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=Dkz+o6F/xeXqgDdJYfARBILSyHH6MRT3BuQTsdkc6KDaRbLrR7AwIEUodfoifb8DtMFhPYO4YHNtAqj8NqAGUPyzn4wF0+5QN33dvOose307izyr5LPN7lnxp1mOQFDHPXoqlzIkLj0/7BCTZS0SKMrplRQ05tQA5QLLx+Eh1Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n5TfWFpi; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54I4CfnF022425;
+	Sun, 18 May 2025 06:33:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=25NeiK13uE2l8LiXYkZhuI
+	AFwk5P6Avfvk3FMLDnzro=; b=n5TfWFpiuoBckozJvOYJqzN0N/qqk+p95H1J6w
+	+3uaRy09AqzK6H5cKeRkNMzK3bxUJxw8G+5Q4RI2C9pvgPuaJRM0qbXkPDFJsBZb
+	l+qJwhuB/SxNF+A1hHUUrXuqIQ3EBsqnUQtoO3uXKg3RRcnln45taHmdktOjHhRs
+	oh7/HIf4vY93bhUwp3lnvDed5LsTjlxDfRl8+eR2cQB+iNLtW1aNxfU08M3E5xMN
+	NrSn0zt8FK3274rE4ATCVyMUs7zqeQMzDujomeri6OWcl+5cXf3lwzaLr1dcUDRT
+	02UPEa4654fVKI9xuilGuT1dEsgtH9ibKQyUqrr+hKLZ0QkA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pjmeskt1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 18 May 2025 06:33:27 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54I6XPQx006531
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 18 May 2025 06:33:25 GMT
+Received: from cse-cd01-lnx.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sat, 17 May 2025 23:33:22 -0700
+From: Wenmeng Liu <quic_wenmliu@quicinc.com>
+Subject: [PATCH 0/3] media: qcom: camss: Add qcs615 support
+Date: Sun, 18 May 2025 14:33:06 +0800
+Message-ID: <20250518-qcs615_camss-v1-0-12723e26ea3e@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250517-topic-ubwc_central-v3-4-3c8465565f86@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACN/KWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDU0ML3cLkYjND0/jkxNziYt00Y+MUC9M0I8tUszQloJaCotS0zAqwcdG
+ xtbUAuAykSF4AAAA=
+X-Change-ID: 20250518-qcs615_camss-f33d85f29e6f
+To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        "Bryan
+ O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Wenmeng Liu
+	<quic_wenmliu@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747550001; l=1686;
+ i=quic_wenmliu@quicinc.com; s=20250211; h=from:subject:message-id;
+ bh=vifoSAbNyZFcqohH0mGp5O6Gve6RQ93AlyKtqRLl/xA=;
+ b=Pz55cir5Me1mDPgMt0R00yjOwhFdcEN21KKmyZVgpmL38MJyMQA8YGq+NyvlzAE0+q43Col2t
+ PoPyeCnrAQTBlmvjYiKgGAoI5x7Bu+LylNDJP0Y9erutd2Bum/fWjMY
+X-Developer-Key: i=quic_wenmliu@quicinc.com; a=ed25519;
+ pk=PTegr3w0f1C9dOSL6CUdJR5+u+X/4vsW7VMfwIMeMXQ=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=RoDFLDmK c=1 sm=1 tr=0 ts=68297f37 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=WuS4yPkh8SfIzpwGxFYA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: m5gJJM-rZ4A_J0jSY9dY2dStQv6QJ7dy
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE4MDA1OCBTYWx0ZWRfX/ZitIibwKj9K
+ 3FZH/iSqkF0qsFxHPJYvZSKU0kDuXha6jG64RDQ7aysTyIzeLVYReQ1mK5lEPtIz5AlVRTdwiNT
+ mEBWuDSLs8xRxlSBQPwZFdqonLHEOzBCUTLWOKuE+3jygsc5a2cSmD+vFlwZeWW0635zozyszHh
+ o0fEiWQabl9Nw0+cDPEial4ufwcumNjlNuNEItbapeHzAlRlq5+LnwLP+OHyl1uXluU4qYnu6E5
+ eA/e4cuBXlILQixFLcx9k9/8iPpNwwDaeKmqWI2aC75UTiXIyX5GD5FrJ2L1D9j/sq+JjyOcD4F
+ zynQO//i3MM4oWWvqWxZeORqPqMmQGXBYi/6vVBzyEgqJNGnCpDV/KOIzDHIGGdRzV0VkLhuiva
+ ESmPvC35WUHHcPsyr71kYH266cpvUv9yf+5TX+fChARmZe1Pr7zgtjWBwEicaMDgAtrgf2v6
+X-Proofpoint-GUID: m5gJJM-rZ4A_J0jSY9dY2dStQv6QJ7dy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-18_03,2025-05-16_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 impostorscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
+ clxscore=1015 bulkscore=0 priorityscore=1501 mlxscore=0 mlxlogscore=999
+ phishscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505180058
 
-Hi Konrad,
+QCS615 is a Qualcomm flagship SoC. This series adds support to
+bring up the CSIPHY, CSID, VFE/RDI interfaces in QCS615.
 
-kernel test robot noticed the following build errors:
+QCS615 provides
 
-[auto build test ERROR on edef457004774e598fc4c1b7d1d4f0bcd9d0bb30]
+- 2 x VFE, 3 RDI per VFE
+- 1 x VFE Lite, 4 RDI per VFE
+- 2 x CSID
+- 1 x CSID Lite
+- 3 x CSI PHY
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Konrad-Dybcio/soc-qcom-Add-UBWC-config-provider/20250518-013605
-base:   edef457004774e598fc4c1b7d1d4f0bcd9d0bb30
-patch link:    https://lore.kernel.org/r/20250517-topic-ubwc_central-v3-4-3c8465565f86%40oss.qualcomm.com
-patch subject: [PATCH RFT v3 04/14] drm/msm/a6xx: Get a handle to the common UBWC config
-config: arm64-randconfig-004-20250518 (https://download.01.org/0day-ci/archive/20250518/202505181204.fkaJyv3U-lkp@intel.com/config)
-compiler: clang version 21.0.0git (https://github.com/llvm/llvm-project f819f46284f2a79790038e1f6649172789734ae8)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250518/202505181204.fkaJyv3U-lkp@intel.com/reproduce)
+Tested this on QCS615 ADP AIR board with CSID TPG.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202505181204.fkaJyv3U-lkp@intel.com/
+Tested with following commands:
+media-ctl --reset
+v4l2-ctl -d /dev/v4l-subdev3 -c test_pattern=0
+media-ctl -V '"msm_csid0":0[fmt:SRGGB10/1920x1080 field:none]'
+media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/1920x1080 field:none]'
+media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+v4l2-ctl -d /dev/v4l-subdev3 -c test_pattern=9
+yavta -B capture-mplane -n 5 -f SRGGB10P -s 1920x1080 /dev/video0 --capture=7
 
-All errors (new ones prefixed by >>):
+---
+This patch series depends on patch series:
+https://lore.kernel.org/all/20250424-qcs615-mm-v7-clock-controllers-v8-0-bacad5b3659a@quicinc.com
+---
 
->> ld.lld: error: undefined symbol: qcom_ubwc_config_get_data
-   >>> referenced by a6xx_gpu.c
-   >>>               drivers/gpu/drm/msm/adreno/a6xx_gpu.o:(a6xx_gpu_init) in archive vmlinux.a
+Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
 
+---
+Wenmeng Liu (3):
+      dt-bindings: media: Add qcom,qcs615-camss binding
+      media: qcom: camss: csiphy: Add 14nm CSIPHY 2ph DPHY v2.0.0 init sequence
+      media: qcom: camss: Add qcs615 camss support
+
+ .../bindings/media/qcom,qcs615-camss.yaml          | 356 +++++++++++++++++++++
+ .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     |  85 +++++
+ drivers/media/platform/qcom/camss/camss-vfe.c      |   2 +
+ drivers/media/platform/qcom/camss/camss.c          | 196 ++++++++++++
+ drivers/media/platform/qcom/camss/camss.h          |   1 +
+ 5 files changed, 640 insertions(+)
+---
+base-commit: 3e324f3a60a8b7c484c46275be0897a0f5d7fc31
+change-id: 20250518-qcs615_camss-f33d85f29e6f
+
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Wenmeng Liu <quic_wenmliu@quicinc.com>
+
 
