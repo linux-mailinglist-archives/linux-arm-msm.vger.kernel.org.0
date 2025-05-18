@@ -1,168 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-58348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B99AABB047
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 15:06:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 761B9ABB0A3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 17:18:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9FFB175373
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 13:06:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0E30E175F17
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 May 2025 15:18:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67E3D28E0F;
-	Sun, 18 May 2025 13:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AB661D6DC5;
+	Sun, 18 May 2025 15:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PROUTI3V"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mkooatep"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB633635;
-	Sun, 18 May 2025 13:06:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A79372635
+	for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 15:18:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747573590; cv=none; b=B1LbeDKlRwuShLNrYgcrFNFGlcqnIXkeml/fGk9zYWUQ0xtdg3WWlKR0sJTONKxff733QFXaW/8ZAdB4HpI5Q4dxskLh/RMtBgJjFurHkrN5ZgxQeC5vEj2Hyxj8NRE+/8SbM1bKSr7sMFow4gFmbedjfVNDvMlHgzLFIVaZSr4=
+	t=1747581486; cv=none; b=EUvERfQchdlyuwV2hz0MT/AiO/OZ7VDW8tH3BrdOlkvvKi76UvOGhpwxnKSiuhRGWGlxudYbmB8HcFAGPc4ZyKgEGc5yz8EDSkF7/ptxoT/3wDhlVYDoVPhZVvRRy0Q0LaPTxzet1YNmfdVzr7cPbmDFOt1mfpxk6bDuf6R+QXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747573590; c=relaxed/simple;
-	bh=QKPfHl99X4kso7jChN1jE5UUNDv8LQK2gzGmhxNr2cg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UfT9sKHS/wNhvH+QUqYD3PdAm3AahxV1jaIGQX1Vh43U3aO90UdbJHo8EcbY/AF6BVQsOFVvKQDyDRKeboGVXJEK7oX8fFnF4x/GL5U6oeaFHVgg/1T4FXoREPGjg3qagzac2gcDPJ0TpEqLdIv15E1oSQhd8zHvMZFgjgI9gto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PROUTI3V; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2302d90c7f7so45708595ad.3;
-        Sun, 18 May 2025 06:06:28 -0700 (PDT)
+	s=arc-20240116; t=1747581486; c=relaxed/simple;
+	bh=j5bH60nzc1Wy2cpmmt83VduYjN1P8wEIccp/ebbjVQ8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Da9402aG4g9AUIqcq+59Nnwz6HJCKDEAUDpNiGa9rbWCFbRjpr+GlBfxq2s3VMzmePBrZ5HGXvi3v9IL8Zh2BeXYGIRgsedkK62vxF1QnQJLKQIhmlsqxmJ0J0H0zAZ4/nds01NGWm41F5i2NqmUrMHDp04nmIMQ0ompDUduY28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mkooatep; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-47666573242so370781cf.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 May 2025 08:18:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747573588; x=1748178388; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GQzOnhmj39ccEfRo0gYtUZqATjFu0/HR0pPxsBGgL7I=;
-        b=PROUTI3VsM4j3ut+o5Zzjal/ldvnB5+wPz7xrjOoiM095Mal8G8HiI/yfNijO39923
-         C6Du7GvPFdhGx6x4FOleMCXdZKREF+gNN5TLpLCcuXpfRQ7Kr+vf/exUxAXvmDBIRmSP
-         OdJGzONAoi4W5Zkc2taO+gKue/UVlqbtsSoUkGlNBfh2yPG0j/iDrZ7v4aeIpgTwp8g6
-         OV8MIB2bDnWDbUMbfQh5QYNPdEVacPEfexWWb1+YSN7D3ZjovMqeoLHtbrwZhCLUK6iQ
-         YlshfiBd1V3i3sTYMDigoUETVe4d4GSMbDiTmj7icn/wjGeuPmxgu3XNGAWer1IbzU1O
-         YLtw==
+        d=google.com; s=20230601; t=1747581483; x=1748186283; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=89H6l5EPE7llhy2U2sdeyWXbsFYSBwqQ2gw98qt9JjI=;
+        b=mkooatepoRA1cYfwU3tdxhzWj+wrz1f1K2mP0VXbowySzDk2/FtBzH+7FjZ+JkZwTO
+         Z+tcjO2b9QbkDZGylwOOAkN0QjYMGyNSAiL1UYX6fzCPWyrEnm5jlZCcTS66dXTwNgnB
+         KBBeDutBsVJ6xMh6bc1k0oBcrRYHZt/XQ7z6I2c7nh5RGirF6J39LDsTx6tv0eWZMfmD
+         9g3qx2hLzIfLuy/A5PmfyPqOpvGl3/TbWGOH0Vo69cmRN2ZqIRKGippvCEpBok9kg4Ob
+         sKoH7oMYVnlJ4IUgGcSBoVdzKPogoMvD4E17/bDoPI7cWff3rA4gBvOqkW1WK734DLLy
+         qr1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747573588; x=1748178388;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GQzOnhmj39ccEfRo0gYtUZqATjFu0/HR0pPxsBGgL7I=;
-        b=F8vlBFq+M2FWawj7ff6CYSFngZOxjJNFtSeY+l29SEcm0lD2PrtfTppcoC5wouFjkP
-         B1VHJvUlkgScdgzLqqtN9qqoSoDGHYgID39kYQtoeBFHhHeYv38TwyBrc4BcsC50l1Ue
-         iNIiSZm/CDMbqgOwRBBBoiqnQolUeYzT3hB1KkK1vQ0p54ZtTnVIc9Z2TQtaT8ow9hIi
-         zZecmAkE2GFtYJtj6dA2al5CKbCuZsLUYTSOLEqEAqYPl87wbgQ4Tdi8EjVpAg9fdGYq
-         LmbQ8KnsnERoW8ZppZQV8RhMPiE2ddLKHaJZCnXaNcU1JNrCxVisg5YZw29/G6ChmY4/
-         75oQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUoOtffMwEDkxBnelJvOW341fiqnz61bo1KKdVl/+s3xalIUzMZiHDZIZJ4G9itVKqIycXo6XcGkPY=@vger.kernel.org, AJvYcCVgIUliL/WQ5Trgzkex7ETkekT0YRChEDWu7XeGU6PFSAIv2SoyO0rE4dU4jQYmXn5nA2mJIUNPZcoaGKDE@vger.kernel.org
-X-Gm-Message-State: AOJu0YzkXImoQF+64L5pE5kqKnp4GwgqT0IE44O/36CVpU4s1QhIpn6E
-	/JUprBLny36YTCHWxqLB+Tkesuf1SYhYUl6fC1KRBSbyh+iEj1KBVE11
-X-Gm-Gg: ASbGncuLgHAcYV9MQdgQYSvRORz7gfLD3D84l13iS+9mQleufLkbk+yBUR93GlyC4Sb
-	Van3teo/akt0YeggBftwc5lkE06ULpvG7m5wdcSFD+mh/Z1LJlsecsJJ2rCAFbI8AKpOqzmC/J2
-	p1jkrBAHziD9y0Gb3ullRt5SZaIpSEleoW0s+rcxOZRZM3pMMcssVeapESSESmsQdOpjQnkycxy
-	C3xfN0fUd0AKq08EFecdqhrUCoYGyUkku0Q43Qvkp7LKFdRBbV/cbJVY/GBttKyvhxLd+RrBMkW
-	y5nWBYK/yGBw3G/hRyypSw4XyW0G7A188rF7zGYXAyFaCIj/iA==
-X-Google-Smtp-Source: AGHT+IEbYz0zL6FUPuBDK6XmqwcyKT86zRveJT1Y3LuagJ7jKeVl+9KS1OpoBAzzEnt7nUQYsecdDw==
-X-Received: by 2002:a17:903:228b:b0:231:c05f:29d5 with SMTP id d9443c01a7336-231d438b54emr111092345ad.6.1747573587958;
-        Sun, 18 May 2025 06:06:27 -0700 (PDT)
-Received: from nuvole.. ([144.202.86.13])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4adbfe1sm43469475ad.66.2025.05.18.06.06.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 May 2025 06:06:27 -0700 (PDT)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Pengyu Luo <mitltlatltl@gmail.com>
-Subject: [PATCH v2 RESEND] clk: qcom: rpmh: make clkaN optional
-Date: Sun, 18 May 2025 21:04:03 +0800
-Message-ID: <20250518130403.440971-1-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.49.0
+        d=1e100.net; s=20230601; t=1747581483; x=1748186283;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=89H6l5EPE7llhy2U2sdeyWXbsFYSBwqQ2gw98qt9JjI=;
+        b=NFfVcfNfF1yJ7cNXn01H4LMDVdHpj50e+wSraWNNDwHRyNxdjkat4OFGTiwRu7GznX
+         54FHN9Ax62Pbp5siQqjpPCvQc10lFySyfjE9F7Q10WkJy39wPnzyj8PalF5LP6WuQoJd
+         HvrloNw9hkp23GGOvxgw9yEuvSAU37uBuNfzpZK0RxO5ij7qXfyaQJOccw6zWR0IMonE
+         Bg4qicbeexgIB0ldC5bwyWm8buAO61nvGfWGZa5bOgkQa2UxL5QaGc8SaQx06nE/xIfC
+         pYaW3AS5vauHkSnmrxN68jsPCtwv2FrnR626XdYdtA0zy5tztdDwtJAJP+hWHSiT+sYo
+         pdJw==
+X-Forwarded-Encrypted: i=1; AJvYcCVKkh5zYyCJ9/xFtCTKhQR/D8QybwVgDAeqX13nOeAuacXn654PibUCAEmQJ4YsD8jFTiA6A+gyiN336/WW@vger.kernel.org
+X-Gm-Message-State: AOJu0YyGwBD1RCrQKneGDMG9bFq9+oxOnBNj0qkrGeb+FrMnzxkbgtP4
+	xeze5oTw3sRemSO35YSPStb3DyjG67brjIkxOYVRbA3mRNnZEgW45HN/ZjHM0GH7tgMBUMwAuYw
+	nFhdzEMmyjyrrWZwPQ+RPnE3phiaMMKznmalq77QP
+X-Gm-Gg: ASbGnctW/UYSsS/Ju9tIAOrFVp8jUjIIs5eyqV69I0tmZqOnr8Si/lFEKCNBqXTH59E
+	pd6ez79hnRlVa1EsfTfs1Z5WJaIOJU4JsLE86MSVNFCJqQdfkyEnAzxnd1VzIQr4nLUMiHzRSum
+	IfbVsmENJB9bOicxYLxbOTO8T4Nhal5QpgeNJ9BzxM+tkA4OjZg6HdMCM=
+X-Google-Smtp-Source: AGHT+IFRzewsTYnfRaUxtfMHOlJKr+aHtCr5bWwYiAywfSAbjQ0plDNnk3E1Hhl9zLOMpM1iIOObSO8HVZNQbyqIF1E=
+X-Received: by 2002:ac8:5a8e:0:b0:477:8686:901d with SMTP id
+ d75a77b69052e-495ff6d3f0dmr3340951cf.1.1747581482781; Sun, 18 May 2025
+ 08:18:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250513163438.3942405-8-tabba@google.com> <diqzsel8pdab.fsf@ackerleytng-ctop.c.googlers.com>
+ <CADrL8HX4WfmHk8cLKxL2xrA9a_mLpOmwiojxeFRMdYfvMH0vOQ@mail.gmail.com>
+In-Reply-To: <CADrL8HX4WfmHk8cLKxL2xrA9a_mLpOmwiojxeFRMdYfvMH0vOQ@mail.gmail.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Sun, 18 May 2025 17:17:10 +0200
+X-Gm-Features: AX0GCFssYVagTak9Gz2PtNx886k7vA2OBbm85fBLGgkvBAmAIyAh5VjNRHYwgYY
+Message-ID: <CA+EHjTz7JzgceGF4ZBTEuj_CidKe=pVcanuFfPMrXhubV7c2ug@mail.gmail.com>
+Subject: Re: [PATCH v9 07/17] KVM: guest_memfd: Allow host to map
+ guest_memfd() pages
+To: James Houghton <jthoughton@google.com>
+Cc: Ackerley Tng <ackerleytng@google.com>, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, pbonzini@redhat.com, 
+	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org, 
+	willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com, 
+	yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org, 
+	amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com, 
+	mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, 
+	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
+	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	peterx@redhat.com, pankaj.gupta@amd.com, ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On SM8650, clkaN are missing in cmd-db for some specific devices. This
-caused a boot failure. Printing log during initramfs phase, I found
+Hi James,
 
-[    0.053281] clk-rpmh 17a00000.rsc:clock-controller: missing RPMh resource address for clka1
+On Fri, 16 May 2025 at 21:22, James Houghton <jthoughton@google.com> wrote:
+>
+> On Tue, May 13, 2025 at 11:37=E2=80=AFAM Ackerley Tng <ackerleytng@google=
+.com> wrote:
+> >
+> > Fuad Tabba <tabba@google.com> writes:
+> > > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> > > index 6db515833f61..8e6d1866b55e 100644
+> > > --- a/virt/kvm/guest_memfd.c
+> > > +++ b/virt/kvm/guest_memfd.c
+> > > @@ -312,7 +312,88 @@ static pgoff_t kvm_gmem_get_index(struct kvm_mem=
+ory_slot *slot, gfn_t gfn)
+> > >       return gfn - slot->base_gfn + slot->gmem.pgoff;
+> > >  }
+> > >
+> > > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> > > +
+> > > +static bool kvm_gmem_supports_shared(struct inode *inode)
+> > > +{
+> > > +     uint64_t flags =3D (uint64_t)inode->i_private;
+> > > +
+> > > +     return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
+> > > +}
+> > > +
+> > > +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
+> > > +{
+> > > +     struct inode *inode =3D file_inode(vmf->vma->vm_file);
+> > > +     struct folio *folio;
+> > > +     vm_fault_t ret =3D VM_FAULT_LOCKED;
+> > > +
+> > > +     filemap_invalidate_lock_shared(inode->i_mapping);
+> > > +
+> > > +     folio =3D kvm_gmem_get_folio(inode, vmf->pgoff);
+> > > +     if (IS_ERR(folio)) {
+> > > +             int err =3D PTR_ERR(folio);
+> > > +
+> > > +             if (err =3D=3D -EAGAIN)
+> > > +                     ret =3D VM_FAULT_RETRY;
+> > > +             else
+> > > +                     ret =3D vmf_error(err);
+> > > +
+> > > +             goto out_filemap;
+> > > +     }
+> > > +
+> > > +     if (folio_test_hwpoison(folio)) {
+> > > +             ret =3D VM_FAULT_HWPOISON;
+> > > +             goto out_folio;
+> > > +     }
+>
+> nit: shmem_fault() does not include an equivalent of the above
+> HWPOISON check, and __do_fault() already handles HWPOISON.
+>
+> It's very unlikely for `folio` to be hwpoison and not up-to-date, and
+> even then, writing over poison (to zero the folio) is not usually
+> fatal.
 
-Adding the optional property to avoid probing failure which causes
-countless deferred probe. In the downstream tree,similar workarounds
-are introduced for SM7635, SM8550, SM8635, SM8650, SM8750.
+No strong preference, but the fact the it's still possible (even if
+unlikely) makes me lean towards keeping it.
 
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
----
-Changes in v2:
-- using capital letters, sm[0-9]+ => SM[0-9]+, rpmh => RPMh (Dmitry)
-- correct typo, alform => plaform (Dmitry)
-- remove tested-by tag from myself (Dmitry)
-- line break to keep 80 characters per line (Dmitry)
-- Link to v1: https://lore.kernel.org/all/20250404072003.515796-1-mitltlatltl@gmail.com
----
- drivers/clk/qcom/clk-rpmh.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+> > > +
+> > > +     if (WARN_ON_ONCE(folio_test_large(folio))) {
+> > > +             ret =3D VM_FAULT_SIGBUS;
+> > > +             goto out_folio;
+> > > +     }
+>
+> nit: I would prefer we remove this SIGBUS bit and change the below
+> clearing logic to handle large folios. Up to you I suppose.
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index c7675930f..0aea8e1b7 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -66,6 +66,8 @@ struct clk_rpmh {
- struct clk_rpmh_desc {
- 	struct clk_hw **clks;
- 	size_t num_clks;
-+	/* RPMh clock clkaN are optional for this platform */
-+	bool clka_optional;
- };
+No strong preference here either. This is meant as a way to point out
+the lack of hugepage support, based on suggestions from a previous
+spin of this series.
 
- static DEFINE_MUTEX(rpmh_clk_lock);
-@@ -648,6 +650,7 @@ static struct clk_hw *sm8550_rpmh_clocks[] = {
- static const struct clk_rpmh_desc clk_rpmh_sm8550 = {
- 	.clks = sm8550_rpmh_clocks,
- 	.num_clks = ARRAY_SIZE(sm8550_rpmh_clocks),
-+	.clka_optional = true,
- };
+> > > +
+> > > +     if (!folio_test_uptodate(folio)) {
+> > > +             clear_highpage(folio_page(folio, 0));
+> > > +             kvm_gmem_mark_prepared(folio);
+> > > +     }
+> > > +
+> > > +     vmf->page =3D folio_file_page(folio, vmf->pgoff);
+> > > +
+> > > +out_folio:
+> > > +     if (ret !=3D VM_FAULT_LOCKED) {
+> > > +             folio_unlock(folio);
+> > > +             folio_put(folio);
+> > > +     }
+> > > +
+> > > +out_filemap:
+> > > +     filemap_invalidate_unlock_shared(inode->i_mapping);
+> >
+> > Do we need to hold the filemap_invalidate_lock while zeroing? Would
+> > holding the folio lock be enough?
+>
+> Do we need to hold the filemap_invalidate_lock for reading *at all*?
+>
+> I don't see why we need it. We're not checking gmem->bindings, and
+> filemap_grab_folio() already synchronizes with filemap removal
+> properly.
 
- static struct clk_hw *sm8650_rpmh_clocks[] = {
-@@ -679,6 +682,7 @@ static struct clk_hw *sm8650_rpmh_clocks[] = {
- static const struct clk_rpmh_desc clk_rpmh_sm8650 = {
- 	.clks = sm8650_rpmh_clocks,
- 	.num_clks = ARRAY_SIZE(sm8650_rpmh_clocks),
-+	.clka_optional = true,
- };
+Ack.
 
- static struct clk_hw *sc7280_rpmh_clocks[] = {
-@@ -847,6 +851,7 @@ static struct clk_hw *sm8750_rpmh_clocks[] = {
- static const struct clk_rpmh_desc clk_rpmh_sm8750 = {
- 	.clks = sm8750_rpmh_clocks,
- 	.num_clks = ARRAY_SIZE(sm8750_rpmh_clocks),
-+	.clka_optional = true,
- };
+Thanks!
+/fuad
 
- static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
-@@ -890,6 +895,13 @@ static int clk_rpmh_probe(struct platform_device *pdev)
- 		rpmh_clk = to_clk_rpmh(hw_clks[i]);
- 		res_addr = cmd_db_read_addr(rpmh_clk->res_name);
- 		if (!res_addr) {
-+			hw_clks[i] = NULL;
-+
-+			if (desc->clka_optional &&
-+			    !strncmp(rpmh_clk->res_name, "clka",
-+				     sizeof("clka") - 1))
-+				continue;
-+
- 			dev_err(&pdev->dev, "missing RPMh resource address for %s\n",
- 				rpmh_clk->res_name);
- 			return -ENODEV;
--- 
-2.49.0
+> >
+> > > +
+> > > +     return ret;
+> > > +}
 
