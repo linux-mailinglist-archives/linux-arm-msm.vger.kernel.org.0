@@ -1,178 +1,698 @@
-Return-Path: <linux-arm-msm+bounces-58441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF3A7ABBBDD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 13:02:47 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBE57ABBC08
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 13:10:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 29DC83A1B0B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 11:02:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DA8797AA362
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 11:09:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87DA626FA7B;
-	Mon, 19 May 2025 11:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBF0B274650;
+	Mon, 19 May 2025 11:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jVgQlqwo"
+	dkim=pass (2048-bit key) header.d=damsy.net header.i=@damsy.net header.b="WDarQUzK";
+	dkim=permerror (0-bit key) header.d=damsy.net header.i=@damsy.net header.b="kCK9k2zH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from jeth.damsy.net (jeth.damsy.net [51.159.152.102])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B4527510B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 11:01:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2B5269AFD;
+	Mon, 19 May 2025 11:10:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.159.152.102
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747652501; cv=none; b=TX61c3UJN7LqmYgGef4gWUbRvKQGHG5IJfVoN/KzDWm+U/GljCGKpKUU6vpGLAOiiGt6aPZG66w+z0sHjrlqJx4biQGX7gt2WiN8AKh3bLjC/SQNRrnktw3ojf3mC61IrE0ydsuMC5opWzLeCHLyljvlg/KHOo02bge5gHYypvQ=
+	t=1747653018; cv=none; b=edkO662+mMCxxGHDh7QjTqjo4bMO5ydYAbzB2HFqUU4L31HU4B+O5j1sNYGJIhsITrtXcYzYv3CwMUUFl8ApVQXx7WWHyG1BeyQNPdmYwFjk/3XTc0yy3rW1/KFcLMHdCXWfWP8KTC+krJMxYCfxz4ZAY4U60S5I+YXk1H9kZNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747652501; c=relaxed/simple;
-	bh=ZUsw6HDpkokcwzIquJ5+cZ4i6BF4ATZ7/SQJ1RjXOnk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kFy4oHGABy2+CSXYR0hswc8xRQjQn+jKNEWoQBha+VNRqDtYpRxCsFWgjadpbL3QSm3CsDy78v14aF71O5c2qwYe6TemvVc3A6awRyXjASboZKghQDFga3LSoacFzxi2ukg9EJ3ED0ztqI3lWQsU6GZYsCUXM9AnnnyCWpDkopg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jVgQlqwo; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54J8pI2q027166
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 11:01:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UeyIDj9ITmlg4UbTsleNvBIjtMOcAznKnaaucglFJbg=; b=jVgQlqwo98uDWery
-	807Wwz4XzJ56eiN5p0+kE761PJx6+8earbKQt5zkbCNutxgPvS5CrkSNao61fZQM
-	0KKw7s+M87jucNoQEdLiHSv2C2J62nur6sqCr9euy2Q21rQUMEJ6TfzOwz6bYbGl
-	QhYwuNBRxdCVSGwSamMKHNXOmqaEUeGEhpAx8iWu5QKDjCg7tHJbbharEyyAqIZc
-	WwQrMA2ZrcTfNpWrvrFovjPuX3gGBp8tQQLRNZSQ5HD4Y6Zg1BAapiV8+F0PP3cT
-	QUQ2B5cm6MGkwPFtyLCd3/cgLMqslo4oeG+D8dWhtZ5wehJBh69iv6Nk8QYagzL7
-	T3tpoQ==
-Received: from mail-il1-f197.google.com (mail-il1-f197.google.com [209.85.166.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pkr9v3f6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 11:01:38 +0000 (GMT)
-Received: by mail-il1-f197.google.com with SMTP id e9e14a558f8ab-3db86648a91so24559785ab.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 04:01:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747652498; x=1748257298;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UeyIDj9ITmlg4UbTsleNvBIjtMOcAznKnaaucglFJbg=;
-        b=aKOwnZdMs/wgGC/3RBf+SDRvTSHkwhIVCHMtseWUXb5mV+NIx3v7lIuhBG95boV569
-         pfhEQQR4zMuIAF4kaRXETvCu7Fki8QE7qGc91cgY8yzeCtPyNtMrU+76mxIaIvcQuhhD
-         RDsWns/9gQ6HQla8CxmvPMdJ3szdDPVUs6D8SN4aikBdSIPBuMdqfA70iVocUJtEbk6S
-         qPzanBg18RWqQnPw6oYRchNDZtpA+47re/WrszgbhkqcHZ1CAOQt2PFJfLdFoBu2tyQP
-         VoP44jBPGX4FPPPE69n5WnYOEYWhhw2eeuObVZWswN+C4rcvzoREi3+w2ML0Qt430qrk
-         kWOw==
-X-Forwarded-Encrypted: i=1; AJvYcCUhClwAOMKwTMyIa/tUwrQ2P98Tcgdzx0N8/abSS0gc0SyUylWyuNSIqZdPiYjYrlsWaU8ZGrT2KYgvI4MD@vger.kernel.org
-X-Gm-Message-State: AOJu0YxEElRH7xBLfW8hGAjknwpLFnaAlfWHZLQOFjK9OIo6Ws9pAPLw
-	LmAuvAXq9cNlW+zxGrtwwVQoIN5+7vrMAXs1rc0sanyfzCxypYTy337O3BdKR4Npcc37cpSeMvy
-	xQsBdTKSgrbnjyxQ6IjPgpJoflcX7h0FA7cbqyHmugKbwfdkxSYlnDub0ujow9YJ0opUD
-X-Gm-Gg: ASbGncvwidouGbfT1ull2LI28PcvYMDnmWY03hAm3/D/GwfpDoAqo2bc50YRDwKQ/Ts
-	TZmxs/JPHdyQMUwgRtuRm00CwWYXUiVxOCz7ayFTesUXa1Y5cvG7b/2TP53BV7L1+KBcIg0vI/C
-	Pr+Xv4dcbwB7AWxGPka57Vxc7Zoq8doU3QjjhFGlg2LyuMPYTS1HDsUNnV6LumQSKGYwI4ZB8ss
-	Opl9/iCB44fYNaJWgk/r3nSl3MMKPLVtDGI7ANClm2FdUu09ROkxy8+CGe51NS36/mrl9ePzybz
-	RBBRbFHaZE6oRCj23YQ6a+nPfK0kXAoeRcAv1OUsR2UcA2LHx0aale77Hp0eg5IXh1jrWnmDho4
-	=
-X-Received: by 2002:a05:6e02:4503:b0:3dc:635b:6724 with SMTP id e9e14a558f8ab-3dc635b68aamr48847235ab.10.1747652497927;
-        Mon, 19 May 2025 04:01:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHIo93Ctw8RMLn2/Q9we0cDjAuETBrcair7HSgGdmyDSyuXUvh0S6+dTmbsrmUeaGWzk1JYWA==
-X-Received: by 2002:a05:6e02:4503:b0:3dc:635b:6724 with SMTP id e9e14a558f8ab-3dc635b68aamr48846915ab.10.1747652497479;
-        Mon, 19 May 2025 04:01:37 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-328085b908dsm18641871fa.72.2025.05.19.04.01.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 May 2025 04:01:36 -0700 (PDT)
-Date: Mon, 19 May 2025 14:01:35 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Lijuan Gao <quic_lijuang@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, kernel@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 5/6] arm64: dts: qcom: qcs615: add ADSP and CDSP nodes
-Message-ID: <6ysyyj7sn2isoddooj5y5evuayplwd7pzayepnij4ioi7hx2o3@43wd4fd4uaha>
-References: <20250516-add_qcs615_remoteproc_support-v3-0-ad12ceeafdd0@quicinc.com>
- <20250516-add_qcs615_remoteproc_support-v3-5-ad12ceeafdd0@quicinc.com>
- <thtk5vv2hpbnoapmt6j7nlgrcyedjzjbi3ntlyb3ll7atks46n@bp4isaoert67>
- <73a689a1-e8a3-4417-b0e6-374ec9b091d5@oss.qualcomm.com>
- <14091125-20f4-405d-8022-f02ac3c311b9@quicinc.com>
+	s=arc-20240116; t=1747653018; c=relaxed/simple;
+	bh=hb7NBlUsZVpJPOULoPin+qN++w8FIRoo1Z0FDdEdsas=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=mRNDcpGXZv+UmTKUGkDPjn/lmQWWtvnq3pN1y2q4a0/FIdzoWM6LD+UIrnW2EeFDGzck4fBjRwgpLUYEq9EYkd3O73IHZiFs1lSgTgTkUvPW4i9rn/pAPsJCV+dY7aQ087Dj/Y/IFBrYRsWWJ2P+EKwSOVTIH35bIxujoRgUQVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=damsy.net; spf=pass smtp.mailfrom=damsy.net; dkim=pass (2048-bit key) header.d=damsy.net header.i=@damsy.net header.b=WDarQUzK; dkim=permerror (0-bit key) header.d=damsy.net header.i=@damsy.net header.b=kCK9k2zH; arc=none smtp.client-ip=51.159.152.102
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=damsy.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=damsy.net
+DKIM-Signature: v=1; a=rsa-sha256; s=202408r; d=damsy.net; c=relaxed/relaxed;
+	h=To:From:Subject:Date:Message-ID; t=1747652566; bh=eUiaDaeqJm7Zeyup7esQuXL
+	t76Rrb7u6ry9OzV0J7EA=; b=WDarQUzK/y5oA/tw5qQ1hst2w7ChDMqbfylh2EPO7yWMH+uCpY
+	MlkeWDPWwkX6EUQuB05RwdPuNiqDevtbYTrfJ43knDV2jpjHqTZ1v+f4hlVjIo1c/Pj+cvIITR3
+	7cJgIpE1RpxDypuieo9L2td8fPj7gTXGcZoIrj+BsFBdrW1YazAp1FopCE5dmsqP+mrddPTuy1/
+	4FGUpGCpy4u+k1HmqUc1vWVDFRmKR8a8hUHUAFrcWucME8dk5dsd2RXpflNP/zJrhnqeYwFp8S7
+	BJDKdWzKeofZ++JQnRSNnbcuVif1WwQaDuHG/NQ17ymcG+IEt+pT036ofOb5zzw131Q==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202408e; d=damsy.net; c=relaxed/relaxed;
+	h=To:From:Subject:Date:Message-ID; t=1747652566; bh=eUiaDaeqJm7Zeyup7esQuXL
+	t76Rrb7u6ry9OzV0J7EA=; b=kCK9k2zHIlwd/krwt4l6rieHU0MhHvVjTwdmxCR4p09qB4PTlW
+	zDNHX8JJ8xGJPZ5mMZOu4xJB6we113+0PkCA==;
+Message-ID: <882eeee1-cc36-4287-8437-b39c6c84562e@damsy.net>
+Date: Mon, 19 May 2025 13:02:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 02/10] drm/sched: store the drm client_id in
+ drm_sched_fence
+From: Pierre-Eric Pelloux-Prayer <pierre-eric@damsy.net>
+To: phasta@kernel.org, Matthew Brost <matthew.brost@intel.com>,
+ Danilo Krummrich <dakr@kernel.org>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ amd-gfx@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
+ lima@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Min Ma <min.ma@amd.com>, Lizhi Hou <lizhi.hou@amd.com>,
+ Oded Gabbay <ogabbay@kernel.org>, Felix Kuehling <Felix.Kuehling@amd.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Lucas Stach <l.stach@pengutronix.de>,
+ Russell King <linux+etnaviv@armlinux.org.uk>,
+ Christian Gmeiner <christian.gmeiner@gmail.com>,
+ Frank Binns <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>,
+ Thomas Zimmermann <tzimmermann@suse.de>, Qiang Yu <yuq825@gmail.com>,
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>, Lyude Paul
+ <lyude@redhat.com>, Boris Brezillon <boris.brezillon@collabora.com>,
+ Rob Herring <robh@kernel.org>, Steven Price <steven.price@arm.com>,
+ Liviu Dudau <liviu.dudau@arm.com>, Melissa Wen <mwen@igalia.com>,
+ =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>,
+ Lucas De Marchi <lucas.demarchi@intel.com>,
+ =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, Maxime Ripard <mripard@kernel.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+References: <20250424083834.15518-1-pierre-eric.pelloux-prayer@amd.com>
+ <20250424083834.15518-3-pierre-eric.pelloux-prayer@amd.com>
+ <d747fef82a50466b2a2f9568f737bd80f5128b77.camel@mailbox.org>
+ <2d206814-968d-47df-b670-cbd8db68c5c6@damsy.net>
+Content-Language: en-US
+In-Reply-To: <2d206814-968d-47df-b670-cbd8db68c5c6@damsy.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <14091125-20f4-405d-8022-f02ac3c311b9@quicinc.com>
-X-Proofpoint-GUID: bMC_EyeReYp45xI_bTXRXLQDOuBy_g5x
-X-Proofpoint-ORIG-GUID: bMC_EyeReYp45xI_bTXRXLQDOuBy_g5x
-X-Authority-Analysis: v=2.4 cv=DdAXqutW c=1 sm=1 tr=0 ts=682b0f93 cx=c_pps
- a=5fI0PjkolUL5rJELGcJ+0g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=dt9VzEwgFbYA:10 a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
- a=UVS_QiJXTVoWLX6X8-wA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=HaQ4K6lYObfyUnnIi04v:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE5MDEwMyBTYWx0ZWRfX+dyh4Pr1AUKA
- ijLRgeeJhpHaZe1+rlI2FfvgVsJSd43PPfUSu3q153HPetHL65XH0WcEQpA5G30MllMKEu3uKdH
- GwKyM2+GCKGkQWe9FWf6UoZo/XNjFSohv+IqN0QMqSLaYzCNVBsBK+xUvfzjS7kocF8zr6zS8fv
- /EJ05VWtA7uMOt5mnU+rHPySDvAi9guLsO1WGecVnTAYhEGgd427l40gMaeh2S+L2Y32CuxeKvf
- HlZFlkfSlTBSAjSk69Wsb04d3apHdnMBnXD59WoMaYx5FWqJ/yOvAgwMSNQ3YSY5So7ZH2OqWhX
- Om0sjIBCY2hctVqiqigPP7cUnX9u+aj378+2aPiyA/wHG99xw32LgUO2Tz+8Z8EdKw95FSBq0xg
- lstDLEsxCeBUORZmALCCnEcNkXXBN0C75FVyDgbOh5OEeLYHIVBUKcrGbhnb4MzCAZ0Twm7I
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-19_04,2025-05-16_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=943 clxscore=1015 phishscore=0 adultscore=0 mlxscore=0
- spamscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 bulkscore=0
- impostorscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505070000 definitions=main-2505190103
 
-On Mon, May 19, 2025 at 03:12:39PM +0800, Lijuan Gao wrote:
-> 
-> 
-> 在 5/18/2025 12:59 AM, Konrad Dybcio 写道:
-> > On 5/17/25 12:11 AM, Dmitry Baryshkov wrote:
-> > > On Fri, May 16, 2025 at 11:27:06AM +0800, Lijuan Gao wrote:
-> > > > Add nodes for remoteprocs: ADSP and CDSP for QCS615 SoC to enable proper
-> > > > remoteproc functionality.
-> > > > 
-> > > > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> > > > Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
-> > > > ---
-> > > >   arch/arm64/boot/dts/qcom/qcs615.dtsi | 86 ++++++++++++++++++++++++++++++++++++
-> > > >   1 file changed, 86 insertions(+)
-> > > 
-> > > Is the MPSS not present on the QCS615? It was a part of the SM6150
-> > > design.
-> > 
-> > Hmm.. good point..
-> > 
-> > It's surely not there on QC*S*
-> > 
-> > it is there on SM6150 though, quite obviously
-> > 
-> > downstream ref:
-> > 
-> > https://github.com/ianmacd/gts6lwifi/blob/master/arch/arm64/boot/dts/qcom/sm6150.dtsi
-> > 
-> > Konrad
-> 
-> Hi Konrad and Dmitry,
-> 
-> I have confirmed with the relavant folks, and this variant of the QCS615
-> does not support modem.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
--- 
-With best wishes
-Dmitry
+Le 15/05/2025 à 08:53, Pierre-Eric Pelloux-Prayer a écrit :
+> Hi,
+> 
+> Le 14/05/2025 à 14:44, Philipp Stanner a écrit :
+>> On Thu, 2025-04-24 at 10:38 +0200, Pierre-Eric Pelloux-Prayer wrote:
+>>> This will be used in a later commit to trace the drm client_id in
+>>> some of the gpu_scheduler trace events.
+>>>
+>>> This requires changing all the users of drm_sched_job_init to
+>>> add an extra parameter.
+>>>
+>>> The newly added drm_client_id field in the drm_sched_fence is a bit
+>>> of a duplicate of the owner one. One suggestion I received was to
+>>> merge those 2 fields - this can't be done right now as amdgpu uses
+>>> some special values (AMDGPU_FENCE_OWNER_*) that can't really be
+>>> translated into a client id. Christian is working on getting rid of
+>>> those; when it's done we should be able to squash owner/drm_client_id
+>>> together.
+>>>
+>>> Reviewed-by: Christian König <christian.koenig@amd.com>
+>>> Signed-off-by: Pierre-Eric Pelloux-Prayer
+>>> <pierre-eric.pelloux-prayer@amd.com>
+>>> ---
+>>>   drivers/accel/amdxdna/aie2_ctx.c                 |  3 ++-
+>>>   drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c       |  2 +-
+>>>   drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c           |  3 ++-
+>>>   drivers/gpu/drm/amd/amdgpu/amdgpu_job.c          |  8 +++++---
+>>>   drivers/gpu/drm/amd/amdgpu/amdgpu_job.h          |  3 ++-
+>>>   drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c     |  2 +-
+>>>   drivers/gpu/drm/imagination/pvr_job.c            |  2 +-
+>>>   drivers/gpu/drm/imagination/pvr_queue.c          |  5 +++--
+>>>   drivers/gpu/drm/imagination/paac             |  8 +++++---
+>>>   drivers/gpu/drm/nouveau/nouveau_sched.c          |  3 ++-
+>>>   drivers/gpu/drm/panfrost/panfrost_drv.c          |  2 +-
+>>>   drivers/gpu/drm/panthor/panthor_drv.c            |  3 ++-
+>>>   drivers/gpu/drm/panthor/panthor_mmu.c            |  2 +-
+>>>   drivers/gpu/drm/panthor/panthor_sched.c          |  5 +++--
+>>>   drivers/gpu/drm/panthor/panthor_sched.h          |  3 ++-
+>>>   drivers/gpu/drm/scheduler/sched_fence.c          |  4 ++
+>>>   drivers/gpu/drm/scheduler/sched_internal.h       |  2 +-
+>>>   drivers/gpu/drm/scheduler/sched_main.c           |  6 ++++--
+>>>   drivers/gpu/drm/scheduler/tests/mock_scheduler.c |  2 +-
+>>>   drivers/gpu/drm/v3d/v3d_submit.c                 |  2 +-
+>>>   drivers/gpu/drm/xe/xe_sched_job.c                |  3 ++-
+>>>   include/drm/gpu_scheduler.h                      | 10 +++++++++-
+>>>   26 files changed, 62 insertions(+), 34 deletions(-)
+>>
+>> I think last time I asked about what your merge plan for this is, since
+>> it touches so many drivers. Should I take that?
+> 
+> Based on:
+> 
+> https://drm.pages.freedesktop.org/maintainer-tools/committer/committer-drm-misc.html
+> 
+> "drm-misc is for drm core (non-driver) patches, subsystem-wide refactorings,
+> and small trivial patches all over (including drivers)."
+> 
+> I assume it should go through drm-misc.
+
+I've addressed your comments and pushed an updated branch to 
+https://gitlab.freedesktop.org/pepp/linux/-/commits/improve_gpu_scheduler_trace_v10
+
+Any chance to get this merged soon?
+
+Thanks,
+Pierre-Eric
+
+
+
+> 
+> 
+>>
+>> Besides one comment below, scheduler bits look fine.
+>>
+>>>
+>>> diff --git a/drivers/accel/amdxdna/aie2_ctx.c
+>>> b/drivers/accel/amdxdna/aie2_ctx.c
+>>> index e04549f64d69..3e38a5f637ea 100644
+>>> --- a/drivers/accel/amdxdna/aie2_ctx.c
+>>> +++ b/drivers/accel/amdxdna/aie2_ctx.c
+>>> @@ -848,7 +848,8 @@ int aie2_cmd_submit(struct amdxdna_hwctx *hwctx,
+>>> struct amdxdna_sched_job *job,
+>>>           goto up_sem;
+>>>       }
+>>> -    ret = drm_sched_job_init(&job->base, &hwctx->priv->entity,
+>>> 1, hwctx);
+>>> +    ret = drm_sched_job_init(&job->base, &hwctx->priv->entity,
+>>> 1, hwctx,
+>>> +                 hwctx->client->filp->client_id);
+>>>       if (ret) {
+>>>           XDNA_ERR(xdna, "DRM job init failed, ret %d", ret);
+>>>           goto free_chain;
+>>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+>>> b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+>>> index 4cec3a873995..1a77ba7036c9 100644
+>>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+>>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+>>> @@ -639,7 +639,7 @@ int amdgpu_amdkfd_submit_ib(struct amdgpu_device
+>>> *adev,
+>>>           goto err;
+>>>       }
+>>> -    ret = amdgpu_job_alloc(adev, NULL, NULL, NULL, 1, &job);
+>>> +    ret = amdgpu_job_alloc(adev, NULL, NULL, NULL, 1, &job, 0);
+>>>       if (ret)
+>>>           goto err;
+>>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+>>> b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+>>> index 82df06a72ee0..5a231b997d65 100644
+>>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+>>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+>>> @@ -293,7 +293,8 @@ static int amdgpu_cs_pass1(struct
+>>> amdgpu_cs_parser *p,
+>>>       for (i = 0; i < p->gang_size; ++i) {
+>>>           ret = amdgpu_job_alloc(p->adev, vm, p->entities[i],
+>>> vm,
+>>> -                       num_ibs[i], &p->jobs[i]);
+>>> +                       num_ibs[i], &p->jobs[i],
+>>> +                       p->filp->client_id);
+>>>           if (ret)
+>>>               goto free_all_kdata;
+>>>           p->jobs[i]->enforce_isolation = p->adev-
+>>>> enforce_isolation[fpriv->xcp_id];
+>>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+>>> b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+>>> index acb21fc8b3ce..75262ce8db27 100644
+>>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+>>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+>>> @@ -204,7 +204,8 @@ static enum drm_gpu_sched_stat
+>>> amdgpu_job_timedout(struct drm_sched_job *s_job)
+>>>   int amdgpu_job_alloc(struct amdgpu_device *adev, struct amdgpu_vm
+>>> *vm,
+>>>                struct drm_sched_entity *entity, void *owner,
+>>> -             unsigned int num_ibs, struct amdgpu_job **job)
+>>> +             unsigned int num_ibs, struct amdgpu_job **job,
+>>> +             u64 drm_client_id)
+>>>   {
+>>>       if (num_ibs == 0)
+>>>           return -EINVAL;
+>>> @@ -222,7 +223,8 @@ int amdgpu_job_alloc(struct amdgpu_device *adev,
+>>> struct amdgpu_vm *vm,
+>>>       if (!entity)
+>>>           return 0;
+>>> -    return drm_sched_job_init(&(*job)->base, entity, 1, owner);
+>>> +    return drm_sched_job_init(&(*job)->base, entity, 1, owner,
+>>> +                  drm_client_id);
+>>>   }
+>>>   int amdgpu_job_alloc_with_ib(struct amdgpu_device *adev,
+>>> @@ -232,7 +234,7 @@ int amdgpu_job_alloc_with_ib(struct amdgpu_device
+>>> *adev,
+>>>   {
+>>>       int r;
+>>> -    r = amdgpu_job_alloc(adev, NULL, entity, owner, 1, job);
+>>> +    r = amdgpu_job_alloc(adev, NULL, entity, owner, 1, job, 0);
+>>>       if (r)
+>>>           return r;
+>>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
+>>> b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
+>>> index ce6b9ba967ff..5a8bc6342222 100644
+>>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
+>>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
+>>> @@ -90,7 +90,8 @@ static inline struct amdgpu_ring
+>>> *amdgpu_job_ring(struct amdgpu_job *job)
+>>>   int amdgpu_job_alloc(struct amdgpu_device *adev, struct amdgpu_vm
+>>> *vm,
+>>>                struct drm_sched_entity *entity, void *owner,
+>>> -             unsigned int num_ibs, struct amdgpu_job **job);
+>>> +             unsigned int num_ibs, struct amdgpu_job **job,
+>>> +             u64 drm_client_id);
+>>>   int amdgpu_job_alloc_with_ib(struct amdgpu_device *adev,
+>>>                    struct drm_sched_entity *entity, void
+>>> *owner,
+>>>                    size_t size, enum amdgpu_ib_pool_type
+>>> pool_type,
+>>> diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
+>>> b/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
+>>> index 3c0a5c3e0e3d..76c742328edb 100644
+>>> --- a/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
+>>> +++ b/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
+>>> @@ -534,7 +534,7 @@ int etnaviv_ioctl_gem_submit(struct drm_device
+>>> *dev, void *data,
+>>>       ret = drm_sched_job_init(&submit->sched_job,
+>>>                    &ctx->sched_entity[args->pipe],
+>>> -                 1, submit->ctx);
+>>> +                 1, submit->ctx, file->client_id);
+>>>       if (ret)
+>>>           goto err_submit_put;
+>>> diff --git a/drivers/gpu/drm/imagination/pvr_job.c
+>>> b/drivers/gpu/drm/imagination/pvr_job.c
+>>> index 59b334d094fa..7564b0f21b42 100644
+>>> --- a/drivers/gpu/drm/imagination/pvr_job.c
+>>> +++ b/drivers/gpu/drm/imagination/pvr_job.c
+>>> @@ -446,7 +446,7 @@ create_job(struct pvr_device *pvr_dev,
+>>>       if (err)
+>>>           goto err_put_job;
+>>> -    err = pvr_queue_job_init(job);
+>>> +    err = pvr_queue_job_init(job, pvr_file->file->client_id);
+>>>       if (err)
+>>>           goto err_put_job;
+>>> diff --git a/drivers/gpu/drm/imagination/pvr_queue.c
+>>> b/drivers/gpu/drm/imagination/pvr_queue.c
+>>> index 5e9bc0992824..5a41ee79fed6 100644
+>>> --- a/drivers/gpu/drm/imagination/pvr_queue.c
+>>> +++ b/drivers/gpu/drm/imagination/pvr_queue.c
+>>> @@ -1073,6 +1073,7 @@ static int pvr_queue_cleanup_fw_context(struct
+>>> pvr_queue *queue)
+>>>   /**
+>>>    * pvr_queue_job_init() - Initialize queue related fields in a
+>>> pvr_job object.
+>>>    * @job: The job to initialize.
+>>> + * @drm_client_id: drm_file.client_id submitting the job
+>>>    *
+>>>    * Bind the job to a queue and allocate memory to guarantee
+>>> pvr_queue_job_arm()
+>>>    * and pvr_queue_job_push() can't fail. We also make sure the
+>>> context type is
+>>> @@ -1082,7 +1083,7 @@ static int pvr_queue_cleanup_fw_context(struct
+>>> pvr_queue *queue)
+>>>    *  * 0 on success, or
+>>>    *  * An error code if something failed.
+>>>    */
+>>> -int pvr_queue_job_init(struct pvr_job *job)
+>>> +int pvr_queue_job_init(struct pvr_job *job, u64 drm_client_id)
+>>>   {
+>>>       /* Fragment jobs need at least one native fence wait on the
+>>> geometry job fence. */
+>>>       u32 min_native_dep_count = job->type ==
+>>> DRM_PVR_JOB_TYPE_FRAGMENT ? 1 : 0;
+>>> @@ -1099,7 +1100,7 @@ int pvr_queue_job_init(struct pvr_job *job)
+>>>       if (!pvr_cccb_cmdseq_can_fit(&queue->cccb,
+>>> job_cmds_size(job, min_native_dep_count)))
+>>>           return -E2BIG;
+>>> -    err = drm_sched_job_init(&job->base, &queue->entity, 1,
+>>> THIS_MODULE);
+>>> +    err = drm_sched_job_init(&job->base, &queue->entity, 1,
+>>> THIS_MODULE, drm_client_id);
+>>>       if (err)
+>>>           return err;
+>>> diff --git a/drivers/gpu/drm/imagination/pvr_queue.h
+>>> b/drivers/gpu/drm/imagination/pvr_queue.h
+>>> index 93fe9ac9f58c..fc1986d73fc8 100644
+>>> --- a/drivers/gpu/drm/imagination/pvr_queue.h
+>>> +++ b/drivers/gpu/drm/imagination/pvr_queue.h
+>>> @@ -143,7 +143,7 @@ struct pvr_queue {
+>>>   bool pvr_queue_fence_is_ufo_backed(struct dma_fence *f);
+>>> -int pvr_queue_job_init(struct pvr_job *job);
+>>> +int pvr_queue_job_init(struct pvr_job *job, u64 drm_client_id);
+>>>   void pvr_queue_job_cleanup(struct pvr_job *job);
+>>> diff --git a/drivers/gpu/drm/lima/lima_gem.c
+>>> b/drivers/gpu/drm/lima/lima_gem.c
+>>> index 5deec673c11e..9722b847a539 100644
+>>> --- a/drivers/gpu/drm/lima/lima_gem.c
+>>> +++ b/drivers/gpu/drm/lima/lima_gem.c
+>>> @@ -341,7 +341,7 @@ int lima_gem_submit(struct drm_file *file, struct
+>>> lima_submit *submit)
+>>>       err = lima_sched_task_init(
+>>>           submit->task, submit->ctx->context + submit->pipe,
+>>> -        bos, submit->nr_bos, vm);
+>>> +        bos, submit->nr_bos, vm, file->client_id);
+>>>       if (err)
+>>>           goto err_out1;
+>>> diff --git a/drivers/gpu/drm/lima/lima_sched.c
+>>> b/drivers/gpu/drm/lima/lima_sched.c
+>>> index 7934098e651b..954f4325b859 100644
+>>> --- a/drivers/gpu/drm/lima/lima_sched.c
+>>> +++ b/drivers/gpu/drm/lima/lima_sched.c
+>>> @@ -113,7 +113,8 @@ static inline struct lima_sched_pipe
+>>> *to_lima_pipe(struct drm_gpu_scheduler *sch
+>>>   int lima_sched_task_init(struct lima_sched_task *task,
+>>>                struct lima_sched_context *context,
+>>>                struct lima_bo **bos, int num_bos,
+>>> -             struct lima_vm *vm)
+>>> +             struct lima_vm *vm,
+>>> +             u64 drm_client_id)
+>>>   {
+>>>       int err, i;
+>>> @@ -124,7 +125,8 @@ int lima_sched_task_init(struct lima_sched_task
+>>> *task,
+>>>       for (i = 0; i < num_bos; i++)
+>>>           drm_gem_object_get(&bos[i]->base.base);
+>>> -    err = drm_sched_job_init(&task->base, &context->base, 1,
+>>> vm);
+>>> +    err = drm_sched_job_init(&task->base, &context->base, 1, vm,
+>>> +                 drm_client_id);
+>>>       if (err) {
+>>>           kfree(task->bos);
+>>>           return err;
+>>> diff --git a/drivers/gpu/drm/lima/lima_sched.h
+>>> b/drivers/gpu/drm/lima/lima_sched.h
+>>> index 85b23ba901d5..1a08faf8a529 100644
+>>> --- a/drivers/gpu/drm/lima/lima_sched.h
+>>> +++ b/drivers/gpu/drm/lima/lima_sched.h
+>>> @@ -88,7 +88,8 @@ struct lima_sched_pipe {
+>>>   int lima_sched_task_init(struct lima_sched_task *task,
+>>>                struct lima_sched_context *context,
+>>>                struct lima_bo **bos, int num_bos,
+>>> -             struct lima_vm *vm);
+>>> +             struct lima_vm *vm,
+>>> +             u64 drm_client_id);
+>>>   void lima_sched_task_fini(struct lima_sched_task *task);
+>>>   int lima_sched_context_init(struct lima_sched_pipe *pipe,
+>>> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c
+>>> b/drivers/gpu/drm/msm/msm_gem_submit.c
+>>> index 3e9aa2cc38ef..d9be0fe3d674 100644
+>>> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+>>> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+>>> @@ -30,7 +30,7 @@
+>>>   static struct msm_gem_submit *submit_create(struct drm_device *dev,
+>>>           struct msm_gpu *gpu,
+>>>           struct msm_gpu_submitqueue *queue, uint32_t nr_bos,
+>>> -        uint32_t nr_cmds)
+>>> +        uint32_t nr_cmds, u64 drm_client_id)
+>>>   {
+>>>       static atomic_t ident = ATOMIC_INIT(0);
+>>>       struct msm_gem_submit *submit;
+>>> @@ -54,7 +54,8 @@ static struct msm_gem_submit *submit_create(struct
+>>> drm_device *dev,
+>>>           return ERR_PTR(ret);
+>>>       }
+>>> -    ret = drm_sched_job_init(&submit->base, queue->entity, 1,
+>>> queue);
+>>> +    ret = drm_sched_job_init(&submit->base, queue->entity, 1,
+>>> queue,
+>>> +                 drm_client_id);
+>>>       if (ret) {
+>>>           kfree(submit->hw_fence);
+>>>           kfree(submit);
+>>> @@ -693,7 +694,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev,
+>>> void *data,
+>>>           }
+>>>       }
+>>> -    submit = submit_create(dev, gpu, queue, args->nr_bos, args-
+>>>> nr_cmds);
+>>> +    submit = submit_create(dev, gpu, queue, args->nr_bos, args-
+>>>> nr_cmds,
+>>> +                   file->client_id);
+>>>       if (IS_ERR(submit)) {
+>>>           ret = PTR_ERR(submit);
+>>>           goto out_post_unlock;
+>>> diff --git a/drivers/gpu/drm/nouveau/nouveau_sched.c
+>>> b/drivers/gpu/drm/nouveau/nouveau_sched.c
+>>> index d326e55d2d24..460a5fb02412 100644
+>>> --- a/drivers/gpu/drm/nouveau/nouveau_sched.c
+>>> +++ b/drivers/gpu/drm/nouveau/nouveau_sched.c
+>>> @@ -87,7 +87,8 @@ nouveau_job_init(struct nouveau_job *job,
+>>>       }
+>>>       ret = drm_sched_job_init(&job->base, &sched->entity,
+>>> -                 args->credits, NULL);
+>>> +                 args->credits, NULL,
+>>> +                 job->file_priv->client_id);
+>>>       if (ret)
+>>>           goto err_free_chains;
+>>> diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c
+>>> b/drivers/gpu/drm/panfrost/panfrost_drv.c
+>>> index b87f83e94eda..d5c2c6530ed8 100644
+>>> --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
+>>> +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
+>>> @@ -312,7 +312,7 @@ static int panfrost_ioctl_submit(struct
+>>> drm_device *dev, void *data,
+>>>       ret = drm_sched_job_init(&job->base,
+>>>                    &file_priv->sched_entity[slot],
+>>> -                 1, NULL);
+>>> +                 1, NULL, file->client_id);
+>>>       if (ret)
+>>>           goto out_put_job;
+>>> diff --git a/drivers/gpu/drm/panthor/panthor_drv.c
+>>> b/drivers/gpu/drm/panthor/panthor_drv.c
+>>> index 06fe46e32073..bd8e1900c919 100644
+>>> --- a/drivers/gpu/drm/panthor/panthor_drv.c
+>>> +++ b/drivers/gpu/drm/panthor/panthor_drv.c
+>>> @@ -989,7 +989,8 @@ static int panthor_ioctl_group_submit(struct
+>>> drm_device *ddev, void *data,
+>>>           const struct drm_panthor_queue_submit *qsubmit =
+>>> &jobs_args[i];
+>>>           struct drm_sched_job *job;
+>>> -        job = panthor_job_create(pfile, args->group_handle,
+>>> qsubmit);
+>>> +        job = panthor_job_create(pfile, args->group_handle,
+>>> qsubmit,
+>>> +                     file->client_id);
+>>>           if (IS_ERR(job)) {
+>>>               ret = PTR_ERR(job);
+>>>               goto out_cleanup_submit_ctx;
+>>> diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c
+>>> b/drivers/gpu/drm/panthor/panthor_mmu.c
+>>> index 12a02e28f50f..e0c79bd2d173 100644
+>>> --- a/drivers/gpu/drm/panthor/panthor_mmu.c
+>>> +++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+>>> @@ -2516,7 +2516,7 @@ panthor_vm_bind_job_create(struct drm_file
+>>> *file,
+>>>       kref_init(&job->refcount);
+>>>       job->vm = panthor_vm_get(vm);
+>>> -    ret = drm_sched_job_init(&job->base, &vm->entity, 1, vm);
+>>> +    ret = drm_sched_job_init(&job->base, &vm->entity, 1, vm,
+>>> file->client_id);
+>>>       if (ret)
+>>>           goto err_put_job;
+>>> diff --git a/drivers/gpu/drm/panthor/panthor_sched.c
+>>> b/drivers/gpu/drm/panthor/panthor_sched.c
+>>> index 446ec780eb4a..2af860c9068a 100644
+>>> --- a/drivers/gpu/drm/panthor/panthor_sched.c
+>>> +++ b/drivers/gpu/drm/panthor/panthor_sched.c
+>>> @@ -3729,7 +3729,8 @@ struct panthor_vm *panthor_job_vm(struct
+>>> drm_sched_job *sched_job)
+>>>   struct drm_sched_job *
+>>>   panthor_job_create(struct panthor_file *pfile,
+>>>              u16 group_handle,
+>>> -           const struct drm_panthor_queue_submit *qsubmit)
+>>> +           const struct drm_panthor_queue_submit *qsubmit,
+>>> +           u64 drm_client_id)
+>>>   {
+>>>       struct panthor_group_pool *gpool = pfile->groups;
+>>>       struct panthor_job *job;
+>>> @@ -3801,7 +3802,7 @@ panthor_job_create(struct panthor_file *pfile,
+>>>       ret = drm_sched_job_init(&job->base,
+>>>                    &job->group->queues[job-
+>>>> queue_idx]->entity,
+>>> -                 credits, job->group);
+>>> +                 credits, job->group,
+>>> drm_client_id);
+>>>       if (ret)
+>>>           goto err_put_job;
+>>> diff --git a/drivers/gpu/drm/panthor/panthor_sched.h
+>>> b/drivers/gpu/drm/panthor/panthor_sched.h
+>>> index e650a445cf50..742b0b4ff3a3 100644
+>>> --- a/drivers/gpu/drm/panthor/panthor_sched.h
+>>> +++ b/drivers/gpu/drm/panthor/panthor_sched.h
+>>> @@ -29,7 +29,8 @@ int panthor_group_get_state(struct panthor_file
+>>> *pfile,
+>>>   struct drm_sched_job *
+>>>   panthor_job_create(struct panthor_file *pfile,
+>>>              u16 group_handle,
+>>> -           const struct drm_panthor_queue_submit *qsubmit);
+>>> +           const struct drm_panthor_queue_submit *qsubmit,
+>>> +           u64 drm_client_id);
+>>>   struct drm_sched_job *panthor_job_get(struct drm_sched_job *job);
+>>>   struct panthor_vm *panthor_job_vm(struct drm_sched_job *sched_job);
+>>>   void panthor_job_put(struct drm_sched_job *job);
+>>> diff --git a/drivers/gpu/drm/scheduler/sched_fence.c
+>>> b/drivers/gpu/drm/scheduler/sched_fence.c
+>>> index e971528504a5..d208d384d38d 100644
+>>> --- a/drivers/gpu/drm/scheduler/sched_fence.c
+>>> +++ b/drivers/gpu/drm/scheduler/sched_fence.c
+>>> @@ -206,7 +206,8 @@ struct drm_sched_fence *to_drm_sched_fence(struct
+>>> dma_fence *f)
+>>>   EXPORT_SYMBOL(to_drm_sched_fence);
+>>>   struct drm_sched_fence *drm_sched_fence_alloc(struct
+>>> drm_sched_entity *entity,
+>>> -                          void *owner)
+>>> +                          void *owner,
+>>> +                          u64 drm_client_id)
+>>>   {
+>>>       struct drm_sched_fence *fence = NULL;
+>>> @@ -215,6 +216,7 @@ struct drm_sched_fence
+>>> *drm_sched_fence_alloc(struct drm_sched_entity *entity,
+>>>           return NULL;
+>>>       fence->owner = owner;
+>>> +    fence->drm_client_id = drm_client_id;
+>>>       spin_lock_init(&fence->lock);
+>>>       return fence;
+>>> diff --git a/drivers/gpu/drm/scheduler/sched_internal.h
+>>> b/drivers/gpu/drm/scheduler/sched_internal.h
+>>> index 599cf6e1bb74..7ea5a6736f98 100644
+>>> --- a/drivers/gpu/drm/scheduler/sched_internal.h
+>>> +++ b/drivers/gpu/drm/scheduler/sched_internal.h
+>>> @@ -24,7 +24,7 @@ void drm_sched_entity_select_rq(struct
+>>> drm_sched_entity *entity);
+>>>   struct drm_sched_job *drm_sched_entity_pop_job(struct
+>>> drm_sched_entity *entity);
+>>>   struct drm_sched_fence *drm_sched_fence_alloc(struct
+>>> drm_sched_entity *s_entity,
+>>> -                          void *owner);
+>>> +                          void *owner, u64
+>>> drm_client_id);
+>>>   void drm_sched_fence_init(struct drm_sched_fence *fence,
+>>>                 struct drm_sched_entity *entity);
+>>>   void drm_sched_fence_free(struct drm_sched_fence *fence);
+>>> diff --git a/drivers/gpu/drm/scheduler/sched_main.c
+>>> b/drivers/gpu/drm/scheduler/sched_main.c
+>>> index 829579c41c6b..60611618f3ab 100644
+>>> --- a/drivers/gpu/drm/scheduler/sched_main.c
+>>> +++ b/drivers/gpu/drm/scheduler/sched_main.c
+>>> @@ -764,6 +764,7 @@ EXPORT_SYMBOL(drm_sched_resubmit_jobs);
+>>>    * @credits: the number of credits this job contributes to the
+>>> schedulers
+>>>    * credit limit
+>>>    * @owner: job owner for debugging
+>>> + * @drm_client_id: drm_file.client_id of the owner
+>>
+>> For the docu generation to link that properly it must be written as
+>>
+>> &struct drm_file.client_id
+> 
+> Noted.
+> 
+>>
+>> Besides, if this were an optional parameter, one should document it.
+>> I'm not sure if it is, I haven't used these client_id's before.
+> 
+> Passing an invalid client_id would only cause the trace events to print the invalid client_id.
+> 
+> Thanks,
+> Pierre-Eric
+> 
+> 
+>>
+>> P.
+>>
+>>>    *
+>>>    * Refer to drm_sched_entity_push_job() documentation
+>>>    * for locking considerations.
+>>> @@ -784,7 +785,8 @@ EXPORT_SYMBOL(drm_sched_resubmit_jobs);
+>>>    */
+>>>   int drm_sched_job_init(struct drm_sched_job *job,
+>>>                  struct drm_sched_entity *entity,
+>>> -               u32 credits, void *owner)
+>>> +               u32 credits, void *owner,
+>>> +               uint64_t drm_client_id)
+>>>   {
+>>>       if (!entity->rq) {
+>>>           /* This will most likely be followed by missing
+>>> frames
+>>> @@ -810,7 +812,7 @@ int drm_sched_job_init(struct drm_sched_job *job,
+>>>       job->entity = entity;
+>>>       job->credits = credits;
+>>> -    job->s_fence = drm_sched_fence_alloc(entity, owner);
+>>> +    job->s_fence = drm_sched_fence_alloc(entity, owner,
+>>> drm_client_id);
+>>>       if (!job->s_fence)
+>>>           return -ENOMEM;
+>>> diff --git a/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
+>>> b/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
+>>> index f999c8859cf7..09ffbdb32d76 100644
+>>> --- a/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
+>>> +++ b/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
+>>> @@ -35,7 +35,7 @@ drm_mock_sched_entity_new(struct kunit *test,
+>>>       ret = drm_sched_entity_init(&entity->base,
+>>>                       priority,
+>>>                       &drm_sched, 1,
+>>> -                    NULL);
+>>> +                    NULL, 1);
+>>>       KUNIT_ASSERT_EQ(test, ret, 0);
+>>>       entity->test = test;
+>>> diff --git a/drivers/gpu/drm/v3d/v3d_submit.c
+>>> b/drivers/gpu/drm/v3d/v3d_submit.c
+>>> index 4ff5de46fb22..5171ffe9012d 100644
+>>> --- a/drivers/gpu/drm/v3d/v3d_submit.c
+>>> +++ b/drivers/gpu/drm/v3d/v3d_submit.c
+>>> @@ -169,7 +169,7 @@ v3d_job_init(struct v3d_dev *v3d, struct drm_file
+>>> *file_priv,
+>>>       job->file = file_priv;
+>>>       ret = drm_sched_job_init(&job->base, &v3d_priv-
+>>>> sched_entity[queue],
+>>> -                 1, v3d_priv);
+>>> +                 1, v3d_priv, file_priv->client_id);
+>>>       if (ret)
+>>>           return ret;
+>>> diff --git a/drivers/gpu/drm/xe/xe_sched_job.c
+>>> b/drivers/gpu/drm/xe/xe_sched_job.c
+>>> index 1905ca590965..f4679cb9a56b 100644
+>>> --- a/drivers/gpu/drm/xe/xe_sched_job.c
+>>> +++ b/drivers/gpu/drm/xe/xe_sched_job.c
+>>> @@ -113,7 +113,8 @@ struct xe_sched_job *xe_sched_job_create(struct
+>>> xe_exec_queue *q,
+>>>       kref_init(&job->refcount);
+>>>       xe_exec_queue_get(job->q);
+>>> -    err = drm_sched_job_init(&job->drm, q->entity, 1, NULL);
+>>> +    err = drm_sched_job_init(&job->drm, q->entity, 1, NULL,
+>>> +                 q->xef->drm->client_id);
+>>>       if (err)
+>>>           goto err_free;
+>>> diff --git a/include/drm/gpu_scheduler.h
+>>> b/include/drm/gpu_scheduler.h
+>>> index 1a7e377d4cbb..6fe3b4c0cffb 100644
+>>> --- a/include/drm/gpu_scheduler.h
+>>> +++ b/include/drm/gpu_scheduler.h
+>>> @@ -305,6 +305,13 @@ struct drm_sched_fence {
+>>>            * @owner: job owner for debugging
+>>>            */
+>>>       void                *owner;
+>>> +
+>>> +    /**
+>>> +     * @drm_client_id:
+>>> +     *
+>>> +     * The client_id of the drm_file which owns the job.
+>>> +     */
+>>> +    uint64_t            drm_client_id;
+>>>   };
+>>>   struct drm_sched_fence *to_drm_sched_fence(struct dma_fence *f);
+>>> @@ -629,7 +636,8 @@ drm_sched_pick_best(struct drm_gpu_scheduler
+>>> **sched_list,
+>>>   int drm_sched_job_init(struct drm_sched_job *job,
+>>>                  struct drm_sched_entity *entity,
+>>> -               u32 credits, void *owner);
+>>> +               u32 credits, void *owner,
+>>> +               u64 drm_client_id);
+>>>   void drm_sched_job_arm(struct drm_sched_job *job);
+>>>   void drm_sched_entity_push_job(struct drm_sched_job *sched_job);
+>>>   int drm_sched_job_add_dependency(struct drm_sched_job *job,
+
 
