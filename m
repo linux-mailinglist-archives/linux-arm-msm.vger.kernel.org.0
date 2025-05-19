@@ -1,115 +1,258 @@
-Return-Path: <linux-arm-msm+bounces-58393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB19AABB9EB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 11:46:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 12FD2ABB9FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 11:48:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC3323AB67D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 09:42:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C79677A6CBF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 09:44:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEB3D27815B;
-	Mon, 19 May 2025 09:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 183C9201100;
+	Mon, 19 May 2025 09:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f3I4xO3e"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eu9CU4Pb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE212741D6;
-	Mon, 19 May 2025 09:35:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59153204C3B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 09:42:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747647322; cv=none; b=MGfsXYV0jVAISMN64W97PY9v/lA9wkvrthPKydLPyrnDFZMFkSaD2/2rtjc9zVcA922UTlSOUk3LiHAV++yCfJtW10U5Py2OZfQhrCbHyM6z31wBTA5dstRSdKQfKmpflXUMj7fAJnEd9Z4cy84cY0uS3uKCBMBlF8GnxBrxL44=
+	t=1747647754; cv=none; b=ZynmCRo50QKjSOsywVsJdyI4CQ2o4B/TuSLagzKdVkFdBZuTXVvESgaGReFkSnqoIAAle0aJjOuyPqxkTEgHoGfR/BEMtIIPYkMIm2807aH94/+fdB7wkwIZylMJ4zk62W7kcXAU/eEOU5LjSZNgYc3hUzJAes+bpazDSOVaNvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747647322; c=relaxed/simple;
-	bh=iNnqgRM4tS2Ydxe6LCZtHcCZ3+syCBaxdApKAY/snWY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HOfdOl0glKOXZ3qlc0gJJFnfHc72+BT/HvMaeQXtb0VoZk07/aNRDOpxlcp3DxRH4hD/13qEr0kZDzOc8ZHc474KnYh+Yt1NEx8Ej11kI0t6pIi8cg2Y6s0V8b7vF8UKco0Ogl8rDtwIpJFTmOVi4y8jttLKPk9vS+0mPiNoxQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f3I4xO3e; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F5CC4CEED;
-	Mon, 19 May 2025 09:35:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747647322;
-	bh=iNnqgRM4tS2Ydxe6LCZtHcCZ3+syCBaxdApKAY/snWY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=f3I4xO3eoexMsKxGptv/FaMiPRIfiBSVNxD6n6tT+ksz2lxaYdqNprUoD+qe/pbSy
-	 5fuj6fqZJcL+l/DLJTV6STbw9J1h9KC12lCE0IubhUWN7890zoycxyyEU850iQ3rFI
-	 Dqr3M0paPSQKOPMKVvPwR8v2vs6THP38RVxRYuNCGxDHVjrdQhsCBickqI03zC9z/D
-	 zr7exP210FrqcWWWOP7qfDGovGd7nC9P8e/tUoQ9aRNZKdpTyuhgyidBo1mYmNCjoq
-	 OOVHhMnqwMftZS0/5bUXOOUGik7+pciVjiuKWyw7nLMRUOkZumHoSerT+STSrfwqoH
-	 5QxYvwnmuvsYw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1uGwtv-000000001Ok-35sw;
-	Mon, 19 May 2025 11:35:15 +0200
-Date: Mon, 19 May 2025 11:35:15 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v2 0/5] SC8280XP SLPI
-Message-ID: <aCr7UzmK7XCjpsOx@hovoldconsulting.com>
-References: <20250517-topic-8280_slpi-v2-0-1f96f86ac3ae@oss.qualcomm.com>
+	s=arc-20240116; t=1747647754; c=relaxed/simple;
+	bh=E3NkA6uH614ySqMHBo8o678d+83U+3iUYauudgnzNVU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=b1jFFv2VlXsYKm3vtBKMJsyHjG2jXzBZLO8TNLv+JmDtdIkvY4HoLUtyxqw0rMzO5VV2Rpoy9SMheF+LOE10L42Gam2Mq8mhbrL8saPPR6WkY+LAyT0zVB3bSVZhiT06Gez6kPZBEbsReZHWaqE0IiK0djnRC56ADOQAr4GPmAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eu9CU4Pb; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54J6Oiaf006146
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 09:42:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=8Xdkk5ppMUCw7u+31/KTTq
+	mStofyaJ7T2kwr9altaWU=; b=eu9CU4PbEUXefPcWbAyWOs01/AyR95FGM1YrA8
+	dGkR4fizbmtGnQUy+L4n4d0UutUDOduIyFxuQMn+xcZX++YeLwYi0zQR35gYFsV5
+	OC8rVKFCiR3D/rkHZ4bvWySE6R5RxhYa04+fmtbBAbexyNoMzImcLMwIvCOyz1zB
+	wwq1vlES5R7eTveMADNzEMJvS+2LaHg0C3QmY9CaMW4y7+WIcv7V9TLSwrH5fHZD
+	DTFEK4a8ABRExlFIInDto75SgZmdLJqnNUOhSK4ADoY3cly4fH7pgqbup9lTEn+s
+	UQxwFYEr1iAIaFZIsTj1HJgeHmbAnniipriynh+xPDM4iOqA==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46qybkgm7y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 09:42:31 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-742b01ad1a5so3908614b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 02:42:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747647750; x=1748252550;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8Xdkk5ppMUCw7u+31/KTTqmStofyaJ7T2kwr9altaWU=;
+        b=AngTqUXbnt1yucDVcpzwkoosv23tqxNIz3HgQyZGg7V7C3wbfkV4+g9cKcisY2bU71
+         xsgg48QmO225DJvTfmZKV4usUp5js3N6VutD5bNW7OvVgmL/dPFQrwLrgiSqdsYTrQDa
+         x+SH3oivTvenvdCFqEeV3+8jCJv3SXoWHh1o81TwN98tKSgXVlm+tiGXxTemjNzFo3D+
+         +1mTOq49bLLOU6Cb7Q8LZIWb04oudFhsn01KGXcPxqmSIB7cv61PyWRPuDKHrYJ3E8F4
+         Y+0/4z7CDqc4hAK6OuAmG7QALIkLJvmNa2Fhesa4taMbrM0kZO+aCuD11P2e/gV9sRot
+         7GoA==
+X-Forwarded-Encrypted: i=1; AJvYcCW3VSnIFXfOWlmLoaE8w2MQMQsCjK6WXmQofbH4LmAOZPZijwPB/3dxkTpFQP/qs1qEbXOuYMfAs3+eqWgs@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6Qrer0/2+QX/MA7/hOGtjmn95EUFv65hO3V3NbD90eiTkHXU9
+	YHO1h4BnoBg7jPOPb0995moBf+D7ptlzZKURbM9likkbh05tyryhSpL98uYmNuWfnBDjQ5CDhcB
+	9uNljRQZU+sGd7RNnfQK5ysBEvO9Tz7J/QYSmhiR4lLboSy3Yh4hQrbaX4jSP2W3zOofRdB37Jb
+	BM
+X-Gm-Gg: ASbGncviAPFRo51M93ahWtu0671dDw9v9d0BGGzZtM91yRR8rvtC2FER29G6F8wz61P
+	q00h2F1bOwzBHKF0HzlMqeRRUsT0xriDoQGcRC5tBoqCIbCIVc6eGmYkMs+K+HKBwEoJUm5Zza1
+	ssi1R+OjB44IEaqI4/hDCQy8CpiFewacfH42bCP2DzFfMMb14qzso7310W1z4JuLYT2SLAp9Zie
+	wkDi2V8F4JNKOLcS4O0dJExuSlppRTZJ7G8QMB3iW/7zoafexq+4RVUq3jALN46b6gf/9bIDNQM
+	i/C+Ih8jwPT1QNDUXL6l0P8kFwSvsFI67gV0sOARXwXTOr8=
+X-Received: by 2002:a05:6a00:a06:b0:736:5c8e:baaa with SMTP id d2e1a72fcca58-742acc8e94cmr16949358b3a.2.1747647750202;
+        Mon, 19 May 2025 02:42:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFoCNHIy8vm7UNK06bHoqEfkocfr01VDi6iYCVtGhO8fkUV8H34cgcNYNSP8u4+8ZFmO53vpQ==
+X-Received: by 2002:a05:6a00:a06:b0:736:5c8e:baaa with SMTP id d2e1a72fcca58-742acc8e94cmr16949320b3a.2.1747647749707;
+        Mon, 19 May 2025 02:42:29 -0700 (PDT)
+Received: from hu-krichai-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a97398f8sm5809092b3a.78.2025.05.19.02.42.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 May 2025 02:42:29 -0700 (PDT)
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: [PATCH v3 00/11] bus: mhi: host: Add support for mhi bus bw
+Date: Mon, 19 May 2025 15:12:13 +0530
+Message-Id: <20250519-mhi_bw_up-v3-0-3acd4a17bbb5@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250517-topic-8280_slpi-v2-0-1f96f86ac3ae@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAPX8KmgC/23NzQ6CMAzA8VchPTuyD0Hx5HsYQzYY0kQYbjI1h
+ He3cNEDlyb/pvl1gmA92gCnZAJvIwZ0PYXaJVC1ur9ZhjU1SC4zLsWBdS2W5lWOA2uUUDzXWa6
+ EAbofvG3wvVqXK3WL4en8Z6WjWLZbShSMs8LoWti9NLURZxdC+hj1vXJdl9KABYvyB9Dff0ASc
+ MyLSiuSuWk2gHmev5ZAhGnqAAAA
+X-Change-ID: 20250217-mhi_bw_up-f31306a5631b
+To: Bjorn Helgaas <bhelgaas@google.com>,
+        =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
+        qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com,
+        quic_vpernami@quicinc.com, quic_mrana@quicinc.com,
+        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+        Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+        Miaoqing Pan <quic_miaoqing@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747647743; l=5246;
+ i=krishna.chundru@oss.qualcomm.com; s=20230907; h=from:subject:message-id;
+ bh=E3NkA6uH614ySqMHBo8o678d+83U+3iUYauudgnzNVU=;
+ b=/lyU+5ydxEoQf3CrCMazF+8+/lgCqzeWYYIHuE+LMKA5vLfcz15M/CGdyq92AMFU1qdQu3173
+ U7ZTed1Gw0lCrGIIKbJ6/caEFmvdkEmopnoewqoF5QA5DmGGkEhNYDX
+X-Developer-Key: i=krishna.chundru@oss.qualcomm.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
+X-Proofpoint-GUID: TwAib4iUq6j3lamBuBSYXx3s9nO-ck9b
+X-Proofpoint-ORIG-GUID: TwAib4iUq6j3lamBuBSYXx3s9nO-ck9b
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE5MDA5MSBTYWx0ZWRfX/tQ7Xj3N7mN6
+ 3zkOJylzlCq3CoHbB5MK3ekiumM9XAtTiJcCwtNQRwLK6MYn2Om2pSeKQfHVTeBoPpM7/5xjoHT
+ 4LSGUh0g6jKaxEwsfqnDMK9dbgJCY2NLlfWNsbXPEZ1SQDZhHr5GiG1b91+6TM8Fi0KeVVdlA4D
+ maZy2YMSQ3Mx/ojonN0xXYx2BPKSV3bJHH6NyPPoUfLAgQh4UzEnJFoI3J72wqeujSrrq4cy1/C
+ S4/VnOBYYxrtUrDW7r41Cjt00r/VEr0a8b3uqs2/HqdTcf2Q+aoxml7KQofxZ2uXzaZE1lgWaZG
+ AxMGnJ6jsXMowmy1qcfFejymQe43KleTGEhVwS3TLmtCsqsIj+iX/gRHwtME02KcGa4wA9jKxST
+ 2QlW1KqjYi9l/kjlKzWGZ4iB8MdlFrlsch8zHTGtxDl6S2WLg7noNUu80Y2SPooHpr+LTf9X
+X-Authority-Analysis: v=2.4 cv=RZeQC0tv c=1 sm=1 tr=0 ts=682afd07 cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=a1UGM4vktcZ-V-6vu5QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-19_04,2025-05-16_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 phishscore=0 mlxlogscore=999 malwarescore=0
+ priorityscore=1501 clxscore=1015 lowpriorityscore=0 mlxscore=0 suspectscore=0
+ impostorscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505190091
 
-On Sat, May 17, 2025 at 07:27:49PM +0200, Konrad Dybcio wrote:
-> SC8280XP features a SLPI, much like its distant relative, SM8350.
+As per MHI spec sec 14, MHI supports bandwidth scaling to reduce power
+consumption. MHI bandwidth scaling is advertised in devices that contain
+the bandwidth scaling capability registers. If enabled, the device
+aggregates bandwidth requirements and sends them to the host in the form
+of an event. After the host performs the bandwidth switch, it sends an
+acknowledgment by ringing a doorbell.
 
-Please get into the habit of spelling out *and* explaining internal
-Qualcomm acronyms like "SLPI" so that your cover letter and commit
-messages makes sense to people outside of Qualcomm.
+if the host supports bandwidth scaling events, then it must set
+BW_CFG.ENABLED bit, set BW_CFG.DB_CHAN_ID to the channel ID to the
+doorbell that will be used by the host to communicate the bandwidth
+scaling status and BW_CFG.ER_INDEX to the index for the event ring
+to which the device should send bandwidth scaling request in the
+bandwidth scaling capability register.
 
-Also say something about whether and how this is useful for anyone
-currently or if it, for example, depends on Qualcomm proprietary user
-space bits.
+As part of mmio init check if the bw scale capability is present or not,
+if present advertise host supports bw scale by setting all the required
+fields.
 
-> Dmitry Baryshkov (1):
->       arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: enable sensors DSP
+MHI layer will only forward the bw scaling request to the controller
+driver, it is responsibility of the controller driver to do actual bw
+scaling and then pass status to the MHI. MHI will response back to the
+device based up on the status of the bw scale received.
 
-At first I was worried that missing firmware could cause issues here
-(e.g. drivers not reaching sync state as with venus), but Lenovo has
-indeed released the SLPI firmware already.
+Add a new get_misc_doorbell() to get doorbell for misc capabilities to
+use the doorbell with mhi events like MHI BW scale etc.
 
-Are there any other potential downsides to enabling this (e.g. before
-anyone can actually use the sensors)?
+Use workqueue & mutex for the bw scale events as the pci_set_target_speed()
+which will called by the mhi controller driver can sleep.
 
-> Konrad Dybcio (4):
->       dt-bindings: remoteproc: qcom,sm8350-pas: Add SC8280XP
->       arm64: dts: qcom: sc8280xp: Fix node order
->       arm64: dts: qcom: sc8280xp: Add SLPI
+If the driver want to move higher data rate/speed then the current data
+rate/speed then the controller driver may need to change certain votes
+so that link may come up in requested data rate/speed like QCOM PCIe
+controllers need to change their RPMh (Resource Power Manager-hardened)
+state. And also once link retraining is done controller drivers needs
+to adjust their votes based on the final data rate/speed.
 
->       arm64: dts: qcom: sc8280xp-crd: Enable SLPI
+Some controllers also may need to update their bandwidth voting like
+ICC bw votings etc.
 
-Without firmware this results in errors like:
+So, add pre_scale_bus_bw() & post_scale_bus_bw() op to call before & after
+the link re-train. There is no explicit locking mechanisms as these are
+called by a single client endpoint driver
 
-	remoteproc remoteproc0: slpi is available
-	remoteproc remoteproc0: Direct firmware load for qcom/sc8280xp/qcslpi8280.mbn failed with error -2
-	remoteproc remoteproc0: powering up slpi
-	remoteproc remoteproc0: Direct firmware load for qcom/sc8280xp/qcslpi8280.mbn failed with error -2
-	remoteproc remoteproc0: request_firmware failed: -2
+In case of PCIe switch, if there is a request to change target speed for a
+downstream port then no need to call these function ops as these are
+outside the scope of the controller drivers.
 
-but enabling for the CRD reference design and requiring users (read:
-developers) to copy it from Windows should be OK.
+Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+---
+Changes in v3:
+- Move update speed logic to pwrctrl driver (Mani)
+- Move pre_bus_bw & post_bus_bw to bridge as these are bridge driver specific ops,
+it feels to me we need to add these in the host bridge driver similar to recently
+added one reset_slot.
+- Remove dwc level wrapper (Mani)
+- Enable ASPM only if they are enabled already (Mani)
+- Change the name of mhi_get_capability_offset to mhi_find_capability() (Bjorn)
+- Fix comments in the code, subjects etc (Mani & Bjorn)
+- Link to v2: https://lore.kernel.org/r/20250313-mhi_bw_up-v2-0-869ca32170bf@oss.qualcomm.com
 
-Johan
+Changes in v2:
+- Update the comments.
+- Split the icc bw patch as sepertate one (Bjorn)
+- update the aspm disablement comment (Bjorn)
+- Use FIELD_GET & FIELD_PREP instead of hard macros and couple of nits
+  suggested by (Ilpo Järvinen)
+- Create a new function to change lnkcntrl2speed to enum pci_bus_speed (Jeff)
+- Link to v1: https://lore.kernel.org/r/20250217-mhi_bw_up-v1-0-9bad1e42bdb1@oss.qualcomm.com
+
+---
+Krishna Chaitanya Chundru (9):
+      PCI: Update current bus speed as part of pci_pwrctrl_notify()
+      PCI/bwctrl: Add support to scale bandwidth before & after link re-training
+      PCI/ASPM: Return enabled ASPM states as part of pcie_aspm_enabled()
+      PCI/ASPM: Clear aspm_disable as part of __pci_enable_link_state()
+      PCI: qcom: Extract core logic from qcom_pcie_icc_opp_update()
+      PCI: qcom: Add support for PCIe bus bw scaling
+      bus: mhi: host: Add support for Bandwidth scale
+      PCI: Export pci_set_target_speed()
+      PCI: Add function to convert lnkctl2speed to pci_bus_speed
+
+Miaoqing Pan (1):
+      wifi: ath11k: Add support for MHI bandwidth scaling
+
+Vivek Pernamitta (1):
+      bus: mhi: host: Add support to read MHI capabilities
+
+ drivers/bus/mhi/common.h               |  20 ++++++
+ drivers/bus/mhi/host/init.c            |  90 +++++++++++++++++++++++-
+ drivers/bus/mhi/host/internal.h        |   7 +-
+ drivers/bus/mhi/host/main.c            |  98 +++++++++++++++++++++++++-
+ drivers/bus/mhi/host/pm.c              |  10 ++-
+ drivers/net/wireless/ath/ath11k/mhi.c  |  41 +++++++++++
+ drivers/pci/controller/dwc/pcie-qcom.c | 124 ++++++++++++++++++++++++++-------
+ drivers/pci/pci.c                      |  12 ++++
+ drivers/pci/pcie/aspm.c                |   5 +-
+ drivers/pci/pcie/bwctrl.c              |  16 +++++
+ drivers/pci/pwrctrl/core.c             |   5 ++
+ include/linux/mhi.h                    |  13 ++++
+ include/linux/pci.h                    |  19 ++++-
+ 13 files changed, 425 insertions(+), 35 deletions(-)
+---
+base-commit: fee3e843b309444f48157e2188efa6818bae85cf
+change-id: 20250217-mhi_bw_up-f31306a5631b
+
+Best regards,
+-- 
+Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+
 
