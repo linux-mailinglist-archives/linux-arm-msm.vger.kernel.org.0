@@ -1,229 +1,300 @@
-Return-Path: <linux-arm-msm+bounces-58510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A37A0ABC4F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 18:53:18 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF7F6ABC63A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 19:57:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 332497A1451
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 16:52:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 25B367A29F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 17:54:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11AAC2882BC;
-	Mon, 19 May 2025 16:53:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EADF288C1A;
+	Mon, 19 May 2025 17:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="L3IWVzl4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ea54zt69"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D9B28641D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 16:53:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9483B2874E6;
+	Mon, 19 May 2025 17:54:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747673593; cv=none; b=kBlS5/LSp6tC8O9s7VkE5rni/ry9wow1CWaT1s+8kAYzXYz/d25gvP1qLlWTozxAHqUSqYAm+USKQg1QjzlDPp1qMV0WlSQF3igNDX9eB0BLkaZJ4Bj50n0TYULvaZflyXhXsHZ/H6JdusdeY2Dy3wBDh7mLGZU/poP2uYtcR9A=
+	t=1747677258; cv=none; b=Ib2YLsGTr6JpeL9b2jYbR0hojEj3651Tm4juaWGjUZDZ7ttnEAgfHH1abrpwvEya1FSogVYPDy/vqO3/t7cqwrguG8k8DcrNZIX0X8qA6QZH4bX4f/dNtcDzv7R89t3IbP0d8XZ094gLBiW9BogkCFqKUCSv25lpy8krqlexwdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747673593; c=relaxed/simple;
-	bh=k+WX/VGR+GLyTcXpjgk0GiZP4ydVVhFRDfjsBGYfPvs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lRNvKqhnivKDF+EeiCTlfiT9WxoB64ENka2PG4NZ5EbIQZCUm2YK4E8ZoTNQxUkOXE6+GdGGXLfmxwcWEl9c5RD15rCYu6XOKVgXpS3d/H2emGPqI7yYG9jzRGLewgXUD/91HIUnU/sfolIRLR5hJFUd1q0uLTaj40VMcJQ7H4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=L3IWVzl4; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54J9iogJ005266
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 16:53:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mb4xLfXZNKPtfn9wmLcWyrskW+Yx8ILVuk5MPBj/GR8=; b=L3IWVzl42QPTsvqb
-	hCmT8q7X/25zGTL2aMN3lLVLS1K+IxsKT4F7nzx1yTuXlqM8kfS1lduqhVdTM8zd
-	zoxRxc3BmMrj5J5K6gchQzCskuPmr8cJE3MTxbODocuzCeZXFKj9jOZfmVNXvqES
-	FTQNY+sbyk04EXbf6GtGO/42+UCcNjgJCz7Qw6O9rnWcPrpbykvUiMtpkKTraTZY
-	itQuSPzRKAelUHUuv8LckKQ+gayHYEZC2Oo6QYkeGcBNmQ8RhIv6OdoStXYqskSg
-	OqGKk3qdP+cCkzYT4hPq10ybt6c+hRZ8wX7AUEtX0i1t2Sy54uiTs4sCDfGcYKiv
-	cijs5A==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pjm4w38m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 16:53:10 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6f8d448a7f3so24243646d6.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 09:53:10 -0700 (PDT)
+	s=arc-20240116; t=1747677258; c=relaxed/simple;
+	bh=JqSbP2mRbsEIshyq4VeYctrtUBNxPieDIlhv0ksGXH8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BANQBb1HaMX8dxy7PI/70Ki0Wh9/2g52uoP3L4cVKZAYg5rGGBI2/4x/3fwksTyFUz7+nrUL99SoGyihoUMZMi5aRcBxZB7yxL6pwuQkUx8l0+gL2PF3jSnnuW3W5W6whC7fA0j78wuv3fekNGaiwAXnbemeR1iIs6ETuYLRs5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ea54zt69; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-306b6ae4fb2so3797817a91.3;
+        Mon, 19 May 2025 10:54:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747677256; x=1748282056; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eZAvWXQeJhHVypWidg5RnFUIsUxQ00MWa7gy2+exJW0=;
+        b=Ea54zt69Bd5LQ9GWTnDnBJd89FrZlTYf6v/FzFHpY7asYE5vabkNlHSbfQoSgetbCa
+         HECjjwLo9LJsU5w1kQSjDV/c0aBsOXeG+ANzSYjpNJG24SGzGX173uDttvVJOHFbNF9n
+         zwKtqIwtLw2OyPNBvJb/jH97/ExL0OK6EppLMOO+0l2SDGjHH/LZxT6w2QFCgCqFYHX0
+         cUOTZyfizOI8GtKnvNaeBsBrY2h+VcJte8DGlk330ScEiVpBEvN5P/ArSSaQN/zVyHJX
+         xTBqZRiF1tudcve4TAw7Ssp9iIKNesRY9BUxconmw5H2x2MjcQClSUbNJw3A6m4i7ry0
+         +lHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747673589; x=1748278389;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mb4xLfXZNKPtfn9wmLcWyrskW+Yx8ILVuk5MPBj/GR8=;
-        b=bh+8NOoQ8lZZppqtasJR3yZ/mxviMTfizEPQ/gpbUq9AiXLIgVicj/HD6CkYloKjMl
-         yRXLC8aV3MFNAaA8k/TBCoOVqY0QtP+59EuBVFPCZjbAMfI2OEJir/zgc1TgvgnCk6x2
-         rkLYeY+KzyKupL+38NNzHFprVGY3pvO1XrsF/nAL5Rssz6xXwpNupIZOsnywOWmiud1o
-         GE/Kmm8su+8YekAN27WCV7VCJXeAoG7mdT0BzsVrwxXcN3ckpyMOfOP6gSazDEn13bbK
-         QmpYPRPVcq8Aj+5ZwbO7rzkjhihFZpJOQRCyu/lnFWFa4ku7UHH8bpP0gUZ2PGlZLMqH
-         t2MA==
-X-Forwarded-Encrypted: i=1; AJvYcCUyL5jONPQ0klJSecm2Z8dIaRVL/AE1R8DXmJEWy+G9f/xMAlbrkeugxkdu0yq1qylg6wPXAnBXDl2u6yjo@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKhP++dW57BVWya7CANDsghO7I3g9/hznSy1qVsLuPpjUar8U/
-	ti2kRozcVY7mBBderGsLkZL8Q3G30KJCGCT5vbIHSgc/hVal5WVFuXFgAvHxzt0uf2NjyusllG9
-	I0NTDNJfq9C+sfaw0LfaF94J2mGT2BbhYa0SN19eVDet1lOYXad5DQUlV3EvMGnMeeQMK
-X-Gm-Gg: ASbGncuE/wIEAG8T7CQy0hEAwZmuUYrQcSTmvv84Keo31UMwx0xMxR6kxWyVHl3DwpU
-	exlltIQq/qrwj9jd0UJ/5YkqM1IDow5WaS9bPJMhULsXZY6gOvR/Q9XZpYpLF5c7j/CwiSZ9Mlg
-	GRahp458R+W0OIfR29C06rJCdpjaM8NK+StJqBgrtRn5R90uwy+YCFBKvgsVKaouqgCM439zpyQ
-	lK+aSfb0aExMcd2QaRHYsZgJOItUbnUo3cPT8vut5k+a6MB7OppiSwhzJsyRH8pNJyCfkiLGIWz
-	8kbbnz5kAOnST/yRuoHz9OfBATQ/IlLdJiD2T1mXNO5kkYCPKM5IDMyGlxl5ESOWpBh2
-X-Received: by 2002:a05:6214:405:b0:6f5:3e46:63eb with SMTP id 6a1803df08f44-6f8b0833007mr195922036d6.13.1747673588598;
-        Mon, 19 May 2025 09:53:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHvIqC4SYEoxg7ld+LNMo4kHLPjNfRWk0GWcdCnLzJRTGyDzMhLlP7Cr3xiD3OkNvOQg+196A==
-X-Received: by 2002:a05:6214:405:b0:6f5:3e46:63eb with SMTP id 6a1803df08f44-6f8b0833007mr195921246d6.13.1747673587898;
-        Mon, 19 May 2025 09:53:07 -0700 (PDT)
-Received: from [10.153.41.224] (176-93-133-115.bb.dnainternet.fi. [176.93.133.115])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-550e702da4dsm1935650e87.202.2025.05.19.09.53.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 May 2025 09:53:06 -0700 (PDT)
-Message-ID: <7d7f1712-b037-4f47-96a3-e57a13b58295@oss.qualcomm.com>
-Date: Mon, 19 May 2025 19:53:05 +0300
+        d=1e100.net; s=20230601; t=1747677256; x=1748282056;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eZAvWXQeJhHVypWidg5RnFUIsUxQ00MWa7gy2+exJW0=;
+        b=qR2bkJJD8CKp5/5N96Oog+I6joljt4ITO/6hxRHAaxCGMqgx+Xea2Det7BwXZxqYE1
+         wP0LpE4lWokUcwz1j80iNRfV/1UivI3NlFtx851zov1S0q6W32jTQIZ9fR9dOvZymTbx
+         bBtbIDXoUbwYv6hSnoaFe8CsYZJC33OIo1y9QqozTIMDslx3glsrOzmOJPk0jkTx+Cd6
+         tjggM18sEzApW7LZYOsVFOyuCNywOKm3MCcxm0k8UnuV/4OWEwP14n64NUX6mG46aNjg
+         FxscqIb+VOhQC1pKZbR4/MYl3Y333hQvXe8e0nJ4plwgESzycmj0eqdm9jV+wQUvZQxy
+         y4Qw==
+X-Forwarded-Encrypted: i=1; AJvYcCULRyvhXC3MLuE+O61SjpwoP+aEDbPSHnJkkIAZqdJP41QKNhQ+YpSsU0Ef/2Vtz2/L0cQ23/eqyAGt1xfg@vger.kernel.org, AJvYcCWZZ4WNvgz4Tmu8BiYwAOsNieD6HwWZz5kAFvLanNzufGJAnpqCDOH4WXJmGi9zh1CsMctIIi+JAIJZWGM=@vger.kernel.org, AJvYcCXP5sWnswuldgIAI+/XPsxJjwaXU8yKkLmO6VTBhh63U2L1kKltkEy+/ex+j6OKk7hXzh04wH2P8Z4GZT0+@vger.kernel.org
+X-Gm-Message-State: AOJu0YzC04srcClgVITjMEB2XXyAcA5Rvj9mzWUUqnvP2jwO9t8Ore0h
+	rjMsPO+vKRKzFfD9rzR5DTOQobCSeOn/YMkgEsUnwBODUvclo2arjeAD
+X-Gm-Gg: ASbGncsrJI84hJXyrEjSjSA1mA/2O4ZYtdhGcB350BZk+E1f1puz8nPlfpYQMzDA4Et
+	FSsGPGTU8K6u+YYDbj24Sh/JT3vyZhSMkmx+EAEKG/7bY32+bUVpKtwdNoGjPdx/3vDQbKB49KP
+	MhUn+Dvjds6HAyh2QxJCUPb2PaRewFyQNnRhbjE3w+JniuUkXE2AskmuOlKdRdhBGaCVaXktcL5
+	IVU3DK1OBO67Jmb3rjlGYrRZIgY/U+0RaSLaPe9g8Lbbv4vQVQCJAzF9d7yEIBGSOExWqM0XeK2
+	NugHlHwzMo9PdSsjWuaNk5z7anm18SvsaPP55YNFs3cOZG0u6dCmvT/rc1SL373s1++jLxc01Pq
+	N68UwtfKv0m0i7Td5w8RSjZZ0r6Jktiu2v7FR
+X-Google-Smtp-Source: AGHT+IH48ofu6vsBIRA77pQQk/Q03Uz8nSOktq6u6GzIKjiC5r3en5LiOZQS/u+qjGmMjOW/KPfXhA==
+X-Received: by 2002:a17:90b:4a50:b0:30e:7b26:f687 with SMTP id 98e67ed59e1d1-30e7d5cfb22mr21163448a91.29.1747677255528;
+        Mon, 19 May 2025 10:54:15 -0700 (PDT)
+Received: from localhost ([2a00:79e0:3e00:2601:3afc:446b:f0df:eadc])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30e899cbb20sm5509793a91.1.2025.05.19.10.54.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 May 2025 10:54:14 -0700 (PDT)
+From: Rob Clark <robdclark@gmail.com>
+To: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	Connor Abbott <cwabbott0@gmail.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>,
+	Christopher Snowhill <chris@kode54.net>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Eugene Lepshy <fekz115@gmail.com>,
+	iommu@lists.linux.dev (open list:IOMMU SUBSYSTEM),
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Jun Nie <jun.nie@linaro.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING FRAMEWORK:Keyword:\bdma_(?:buf|fence|resv)\b),
+	linux-arm-kernel@lists.infradead.org (moderated list:ARM SMMU DRIVERS),
+	linux-kernel@vger.kernel.org (open list),
+	linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK:Keyword:\bdma_(?:buf|fence|resv)\b),
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Sean Paul <sean@poorly.run>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH v5 00/40] drm/msm: sparse / "VM_BIND" support
+Date: Mon, 19 May 2025 10:51:23 -0700
+Message-ID: <20250519175348.11924-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 21/24] drm/msm/dpu: Implement 10-bit color alpha for
- v12.0 DPU
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>, linux-clk@vger.kernel.org,
-        Srinivas Kandagatla <srini@kernel.org>
-References: <20250430-b4-sm8750-display-v5-0-8cab30c3e4df@linaro.org>
- <20250430-b4-sm8750-display-v5-21-8cab30c3e4df@linaro.org>
- <ygd6givaigkmypmaufpeidkqauoujcndm2xemi5pm5zue6ou7j@zonusie3tuap>
- <b4dace94-afa1-4910-b77d-20de08b5a6b9@quicinc.com>
-Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <b4dace94-afa1-4910-b77d-20de08b5a6b9@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=dIimmPZb c=1 sm=1 tr=0 ts=682b61f6 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=wJfVPMc1y4yLOrLMgEZDyw==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=QqOX20ToenTIRIA7GcIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: rDg1fIYhBi0wPhOEGzvF9ltic-YFAiqH
-X-Proofpoint-GUID: rDg1fIYhBi0wPhOEGzvF9ltic-YFAiqH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE5MDE1NiBTYWx0ZWRfX+6jRlXJzQDuL
- lmvI95gChEHqYdqpRwU9e00wAs0mYV0hwhjDW+JwijYazo2+HMJzTzNdel1KefUvqytHnJCY4p3
- 6zJEsXYTT+T8OEB9H7db7H7bONhgHUlIZE5r1Q5UtGoonvyNreEDPSWZN5W7rlErwgnW0vxKU8+
- OgPhAyPgJaJA0iEedSSBfK8qBSAzPfQr+QveSgOBLaOXvWC77fIeShp395AWJV5nB24EhuJw5/H
- ZhcNiDz5phCjzn9vehYmqQh3hWc+PndrHh+OMLMZ22P5ClUGoIpU3riLls1RHNZZU+Vq78+HKc5
- qF6QBBhVCoLs0vjPG1O54ytSmPZ/PmyX2S5jFV1Cp5FhQROKjOy3f+0YdNo18zLmYd07r0ZeLtY
- JqWIHVFcMk0V2pDO6lepdmRzSQuzYCuBJxGTuiByhPOYGWQ2E2JPoeBj0o6RH1NNzAu4zLzB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-19_07,2025-05-16_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 mlxscore=0 bulkscore=0 malwarescore=0 suspectscore=0
- impostorscore=0 clxscore=1015 phishscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505190156
 
-On 19/05/2025 19:49, Abhinav Kumar wrote:
-> 
-> 
-> On 5/5/2025 5:24 AM, Dmitry Baryshkov wrote:
->> On Wed, Apr 30, 2025 at 03:00:51PM +0200, Krzysztof Kozlowski wrote:
->>> v12.0 DPU on SM8750 comes with 10-bit color alpha.  Add register
->>> differences and new implementations of setup_alpha_out(),
->>> setup_border_color() and setup_blend_config().
->>>
->>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>
->>> ---
->>>
->>> Changes in v4:
->>> 1. Lowercase hex, use spaces for define indentation
->>> 2. _dpu_crtc_setup_blend_cfg(): pass mdss_ver instead of ctl
->>>
->>> Changes in v3:
->>> 1. New patch, split from previous big DPU v12.0.
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 19 ++++---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c | 84 ++++++++++++++++++++ 
->>> +++++++++--
->>>   2 files changed, 94 insertions(+), 9 deletions(-)
->>>
->>> @@ -175,12 +246,19 @@ struct dpu_hw_mixer *dpu_hw_lm_init(struct 
->>> drm_device *dev,
->>>       c->idx = cfg->id;
->>>       c->cap = cfg;
->>>       c->ops.setup_mixer_out = dpu_hw_lm_setup_out;
->>> -    if (mdss_ver->core_major_ver >= 4)
->>> +    if (mdss_ver->core_major_ver >= 12)
->>> +        c->ops.setup_blend_config = 
->>> dpu_hw_lm_setup_blend_config_combined_alpha_v12;
->>> +    else if (mdss_ver->core_major_ver >= 4)
->>>           c->ops.setup_blend_config = 
->>> dpu_hw_lm_setup_blend_config_combined_alpha;
->>>       else
->>>           c->ops.setup_blend_config = dpu_hw_lm_setup_blend_config;
->>> -    c->ops.setup_alpha_out = dpu_hw_lm_setup_color3;
->>> -    c->ops.setup_border_color = dpu_hw_lm_setup_border_color;
->>> +    if (mdss_ver->core_major_ver < 12) {
->>> +        c->ops.setup_alpha_out = dpu_hw_lm_setup_color3;
->>> +        c->ops.setup_border_color = dpu_hw_lm_setup_border_color;
->>> +    } else {
->>> +        c->ops.setup_alpha_out = dpu_hw_lm_setup_color3_v12;
->>> +        c->ops.setup_border_color = dpu_hw_lm_setup_border_color_v12;
->>> +    }
->>
->> I tried picking up these patches, and choked on this one. This heavility
->> depends on the DPU fetures bits rework patchset (mentioned in the cover
->> letter, it's fine), but granted the lack of the reviews / updates on
->> that patchset I can neither apply this patch (and its dependencies) nor
->> steer Krzysztof away from basing on that patchset (this patch provides a
->> perfect example of why that series is useful and correct).
->>
->> Abhinav, could you please continue reviewing that patch series?
->>
-> 
-> I think we could have continued this series on top of the current 
-> feature bits model and I thought we were doing that based on #linux-arm- 
-> msm chats in Feb between you and me. Not sure what happened there.
+From: Rob Clark <robdclark@chromium.org>
 
-I'm also not so sure. Krzysztof has been posting it on top of the 
-feature-removal series, so be it. Let's see, how many patches of that 
-series would be acceptable in the end and decide the fate of this series 
-afterwards.
+Conversion to DRM GPU VA Manager[1], and adding support for Vulkan Sparse
+Memory[2] in the form of:
 
-> 
-> Regarding the review, myself and Jessica have discussed this last week 
-> and Jessica will take over the review of that series and please work 
-> with addressing the comments provided there by her.
+1. A new VM_BIND submitqueue type for executing VM MSM_SUBMIT_BO_OP_MAP/
+   MAP_NULL/UNMAP commands
 
-Ack
+2. A new VM_BIND ioctl to allow submitting batches of one or more
+   MAP/MAP_NULL/UNMAP commands to a VM_BIND submitqueue
+
+I did not implement support for synchronous VM_BIND commands.  Since
+userspace could just immediately wait for the `SUBMIT` to complete, I don't
+think we need this extra complexity in the kernel.  Synchronous/immediate
+VM_BIND operations could be implemented with a 2nd VM_BIND submitqueue.
+
+The corresponding mesa MR: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/32533
+
+Changes in v5:
+- Improved drm/sched enqueue_credit comments, and better define the
+  return from drm_sched_entity_push_job()
+- Improve DRM_GPUVM_VA_WEAK_REF comments, and additional WARN_ON()s to
+  make it clear that some of the gpuvm functionality is not available
+  in this mode.
+- Link to v4: https://lore.kernel.org/all/20250514175527.42488-1-robdclark@gmail.com/
+
+Changes in v4:
+- Various locking/etc fixes
+- Optimize the pgtable preallocation.  If userspace sorts the VM_BIND ops
+  then the kernel detects ops that fall into the same 2MB last level PTD
+  to avoid duplicate page preallocation.
+- Add way to throttle pushing jobs to the scheduler, to cap the amount of
+  potentially temporary prealloc'd pgtable pages.
+- Add vm_log to devcoredump for debugging.  If the vm_log_shift module
+  param is set, keep a log of the last 1<<vm_log_shift VM updates for
+  easier debugging of faults/crashes.
+- Link to v3: https://lore.kernel.org/all/20250428205619.227835-1-robdclark@gmail.com/
+
+Changes in v3:
+- Switched to seperate VM_BIND ioctl.  This makes the UABI a bit
+  cleaner, but OTOH the userspace code was cleaner when the end result
+  of either type of VkQueue lead to the same ioctl.  So I'm a bit on
+  the fence.
+- Switched to doing the gpuvm bookkeeping synchronously, and only
+  deferring the pgtable updates.  This avoids needing to hold any resv
+  locks in the fence signaling path, resolving the last shrinker related
+  lockdep complaints.  OTOH it means userspace can trigger invalid
+  pgtable updates with multiple VM_BIND queues.  In this case, we ensure
+  that unmaps happen completely (to prevent userspace from using this to
+  access free'd pages), mark the context as unusable, and move on with
+  life.
+- Link to v2: https://lore.kernel.org/all/20250319145425.51935-1-robdclark@gmail.com/
+
+Changes in v2:
+- Dropped Bibek Kumar Patro's arm-smmu patches[3], which have since been
+  merged.
+- Pre-allocate all the things, and drop HACK patch which disabled shrinker.
+  This includes ensuring that vm_bo objects are allocated up front, pre-
+  allocating VMA objects, and pre-allocating pages used for pgtable updates.
+  The latter utilizes io_pgtable_cfg callbacks for pgtable alloc/free, that
+  were initially added for panthor. 
+- Add back support for BO dumping for devcoredump.
+- Link to v1 (RFC): https://lore.kernel.org/dri-devel/20241207161651.410556-1-robdclark@gmail.com/T/#t
+
+[1] https://www.kernel.org/doc/html/next/gpu/drm-mm.html#drm-gpuvm
+[2] https://docs.vulkan.org/spec/latest/chapters/sparsemem.html
+[3] https://patchwork.kernel.org/project/linux-arm-kernel/list/?series=909700
+
+Rob Clark (40):
+  drm/gpuvm: Don't require obj lock in destructor path
+  drm/gpuvm: Allow VAs to hold soft reference to BOs
+  drm/gem: Add ww_acquire_ctx support to drm_gem_lru_scan()
+  drm/sched: Add enqueue credit limit
+  iommu/io-pgtable-arm: Add quirk to quiet WARN_ON()
+  drm/msm: Rename msm_file_private -> msm_context
+  drm/msm: Improve msm_context comments
+  drm/msm: Rename msm_gem_address_space -> msm_gem_vm
+  drm/msm: Remove vram carveout support
+  drm/msm: Collapse vma allocation and initialization
+  drm/msm: Collapse vma close and delete
+  drm/msm: Don't close VMAs on purge
+  drm/msm: drm_gpuvm conversion
+  drm/msm: Convert vm locking
+  drm/msm: Use drm_gpuvm types more
+  drm/msm: Split out helper to get iommu prot flags
+  drm/msm: Add mmu support for non-zero offset
+  drm/msm: Add PRR support
+  drm/msm: Rename msm_gem_vma_purge() -> _unmap()
+  drm/msm: Drop queued submits on lastclose()
+  drm/msm: Lazily create context VM
+  drm/msm: Add opt-in for VM_BIND
+  drm/msm: Mark VM as unusable on GPU hangs
+  drm/msm: Add _NO_SHARE flag
+  drm/msm: Crashdump prep for sparse mappings
+  drm/msm: rd dumping prep for sparse mappings
+  drm/msm: Crashdec support for sparse
+  drm/msm: rd dumping support for sparse
+  drm/msm: Extract out syncobj helpers
+  drm/msm: Use DMA_RESV_USAGE_BOOKKEEP/KERNEL
+  drm/msm: Add VM_BIND submitqueue
+  drm/msm: Support IO_PGTABLE_QUIRK_NO_WARN_ON
+  drm/msm: Support pgtable preallocation
+  drm/msm: Split out map/unmap ops
+  drm/msm: Add VM_BIND ioctl
+  drm/msm: Add VM logging for VM_BIND updates
+  drm/msm: Add VMA unmap reason
+  drm/msm: Add mmu prealloc tracepoint
+  drm/msm: use trylock for debugfs
+  drm/msm: Bump UAPI version
+
+ drivers/gpu/drm/drm_gem.c                     |   14 +-
+ drivers/gpu/drm/drm_gpuvm.c                   |   38 +-
+ drivers/gpu/drm/msm/Kconfig                   |    1 +
+ drivers/gpu/drm/msm/Makefile                  |    1 +
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.c         |   25 +-
+ drivers/gpu/drm/msm/adreno/a2xx_gpummu.c      |    5 +-
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c         |   17 +-
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c         |   17 +-
+ drivers/gpu/drm/msm/adreno/a5xx_debugfs.c     |    4 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |   22 +-
+ drivers/gpu/drm/msm/adreno/a5xx_power.c       |    2 +-
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c     |   10 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c         |   32 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h         |    2 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c         |   49 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c   |    6 +-
+ drivers/gpu/drm/msm/adreno/a6xx_preempt.c     |   10 +-
+ drivers/gpu/drm/msm/adreno/adreno_device.c    |    4 -
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c       |   99 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h       |   23 +-
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |   14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c   |   18 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h   |    2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   18 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     |   14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h     |    4 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c     |    6 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c      |   28 +-
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c    |   12 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c     |    4 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      |   19 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c    |   12 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c            |   14 +-
+ drivers/gpu/drm/msm/msm_drv.c                 |  184 +--
+ drivers/gpu/drm/msm/msm_drv.h                 |   35 +-
+ drivers/gpu/drm/msm/msm_fb.c                  |   18 +-
+ drivers/gpu/drm/msm/msm_fbdev.c               |    2 +-
+ drivers/gpu/drm/msm/msm_gem.c                 |  494 +++---
+ drivers/gpu/drm/msm/msm_gem.h                 |  247 ++-
+ drivers/gpu/drm/msm/msm_gem_prime.c           |   15 +
+ drivers/gpu/drm/msm/msm_gem_shrinker.c        |  104 +-
+ drivers/gpu/drm/msm/msm_gem_submit.c          |  295 ++--
+ drivers/gpu/drm/msm/msm_gem_vma.c             | 1471 ++++++++++++++++-
+ drivers/gpu/drm/msm/msm_gpu.c                 |  211 ++-
+ drivers/gpu/drm/msm/msm_gpu.h                 |  144 +-
+ drivers/gpu/drm/msm/msm_gpu_trace.h           |   14 +
+ drivers/gpu/drm/msm/msm_iommu.c               |  302 +++-
+ drivers/gpu/drm/msm/msm_kms.c                 |   18 +-
+ drivers/gpu/drm/msm/msm_kms.h                 |    2 +-
+ drivers/gpu/drm/msm/msm_mmu.h                 |   38 +-
+ drivers/gpu/drm/msm/msm_rd.c                  |   62 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.c          |   10 +-
+ drivers/gpu/drm/msm/msm_submitqueue.c         |   96 +-
+ drivers/gpu/drm/msm/msm_syncobj.c             |  172 ++
+ drivers/gpu/drm/msm/msm_syncobj.h             |   37 +
+ drivers/gpu/drm/scheduler/sched_entity.c      |   19 +-
+ drivers/gpu/drm/scheduler/sched_main.c        |    3 +
+ drivers/iommu/io-pgtable-arm.c                |   27 +-
+ include/drm/drm_gem.h                         |   10 +-
+ include/drm/drm_gpuvm.h                       |   19 +-
+ include/drm/gpu_scheduler.h                   |   24 +-
+ include/linux/io-pgtable.h                    |    8 +
+ include/uapi/drm/msm_drm.h                    |  149 +-
+ 63 files changed, 3526 insertions(+), 1250 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/msm_syncobj.c
+ create mode 100644 drivers/gpu/drm/msm/msm_syncobj.h
 
 -- 
-With best wishes
-Dmitry
+2.49.0
+
 
