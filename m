@@ -1,88 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-58394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12FD2ABB9FE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 11:48:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A089ABBA13
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 11:50:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C79677A6CBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 09:44:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9ADCB7A09DE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 09:45:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 183C9201100;
-	Mon, 19 May 2025 09:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D68826FDA7;
+	Mon, 19 May 2025 09:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eu9CU4Pb"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JsMyobqf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59153204C3B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 09:42:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC6F26FD8C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 09:42:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747647754; cv=none; b=ZynmCRo50QKjSOsywVsJdyI4CQ2o4B/TuSLagzKdVkFdBZuTXVvESgaGReFkSnqoIAAle0aJjOuyPqxkTEgHoGfR/BEMtIIPYkMIm2807aH94/+fdB7wkwIZylMJ4zk62W7kcXAU/eEOU5LjSZNgYc3hUzJAes+bpazDSOVaNvU=
+	t=1747647760; cv=none; b=V5SWlk/ZO7yhwy2I2TRHGQE4i6FBTteuSk6Q2l9foMPgQGxaSlI1nHM2VuHoivv/s7QMZDYF5GaR0U8vvedNtV8vIZ3HanacEjIkEhfUJkFNtuOrJwKp76LCocZraqIyVXSje4HgsTCmh0YPAOdKsvD29o7TSU8zD1VxL0NyTXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747647754; c=relaxed/simple;
-	bh=E3NkA6uH614ySqMHBo8o678d+83U+3iUYauudgnzNVU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=b1jFFv2VlXsYKm3vtBKMJsyHjG2jXzBZLO8TNLv+JmDtdIkvY4HoLUtyxqw0rMzO5VV2Rpoy9SMheF+LOE10L42Gam2Mq8mhbrL8saPPR6WkY+LAyT0zVB3bSVZhiT06Gez6kPZBEbsReZHWaqE0IiK0djnRC56ADOQAr4GPmAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eu9CU4Pb; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1747647760; c=relaxed/simple;
+	bh=uFH7gvcXfq8PXUbSnW4zFmBHt5LxnpwhDzcE1X+yWFo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=cAeeFa69+Lxxeqmt+dyYgMlk1+tpenQJoy4mD3Hmz75B8M0/bODynWfXnvU6fLNcRibQCBRW9y8pHztb2OLJAjHx7n3Ydd3L2BZmKV1uYQ6tikcZUZZV6jCHHVY2uMjVYxSkn1Gi+3iIvAerNSGjJRYCOkYxuakUAcT+V8DjoWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JsMyobqf; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54J6Oiaf006146
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 09:42:31 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54J8dXGZ002845
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 09:42:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=8Xdkk5ppMUCw7u+31/KTTq
-	mStofyaJ7T2kwr9altaWU=; b=eu9CU4PbEUXefPcWbAyWOs01/AyR95FGM1YrA8
-	dGkR4fizbmtGnQUy+L4n4d0UutUDOduIyFxuQMn+xcZX++YeLwYi0zQR35gYFsV5
-	OC8rVKFCiR3D/rkHZ4bvWySE6R5RxhYa04+fmtbBAbexyNoMzImcLMwIvCOyz1zB
-	wwq1vlES5R7eTveMADNzEMJvS+2LaHg0C3QmY9CaMW4y7+WIcv7V9TLSwrH5fHZD
-	DTFEK4a8ABRExlFIInDto75SgZmdLJqnNUOhSK4ADoY3cly4fH7pgqbup9lTEn+s
-	UQxwFYEr1iAIaFZIsTj1HJgeHmbAnniipriynh+xPDM4iOqA==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46qybkgm7y-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	uU7PofubsUvHU2URxMpgS+EVNoeW1gK8KIbpSjZ8wvs=; b=JsMyobqftJleRTbj
+	B11FC/2JAVgMNtjie8qW+mRAiSMr00ZwBIKJaCtY3K7PJC1hvmlA+odTItz9mkCP
+	GIU5Beb95mBvQF1MoNpLuAZAKckt3FHFHBhceDgDSiLuQSndTkJrh3vfHvxrVIyp
+	5Y+5+bEuE1WQC5majbNemPAgNASOi3DER8bcp3B5C0fCH4hSP1TxY/fEQJYUKzPF
+	uXoHW6oUhwk4bFr8uqL/aKBxxmsApl1JfFXI1U6EDfPjcYkiq/nG3RWA99sCIJtj
+	ZtvMxwTMCxFSyfvqeexb0VY2onCr+1/JBfnbs5Tb36ISaKeTEGQGtL6FR/1P+pCX
+	4KULVQ==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46r1atg6fq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 09:42:31 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-742b01ad1a5so3908614b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 02:42:31 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 09:42:37 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7377139d8b1so3489466b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 02:42:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747647750; x=1748252550;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8Xdkk5ppMUCw7u+31/KTTqmStofyaJ7T2kwr9altaWU=;
-        b=AngTqUXbnt1yucDVcpzwkoosv23tqxNIz3HgQyZGg7V7C3wbfkV4+g9cKcisY2bU71
-         xsgg48QmO225DJvTfmZKV4usUp5js3N6VutD5bNW7OvVgmL/dPFQrwLrgiSqdsYTrQDa
-         x+SH3oivTvenvdCFqEeV3+8jCJv3SXoWHh1o81TwN98tKSgXVlm+tiGXxTemjNzFo3D+
-         +1mTOq49bLLOU6Cb7Q8LZIWb04oudFhsn01KGXcPxqmSIB7cv61PyWRPuDKHrYJ3E8F4
-         Y+0/4z7CDqc4hAK6OuAmG7QALIkLJvmNa2Fhesa4taMbrM0kZO+aCuD11P2e/gV9sRot
-         7GoA==
-X-Forwarded-Encrypted: i=1; AJvYcCW3VSnIFXfOWlmLoaE8w2MQMQsCjK6WXmQofbH4LmAOZPZijwPB/3dxkTpFQP/qs1qEbXOuYMfAs3+eqWgs@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6Qrer0/2+QX/MA7/hOGtjmn95EUFv65hO3V3NbD90eiTkHXU9
-	YHO1h4BnoBg7jPOPb0995moBf+D7ptlzZKURbM9likkbh05tyryhSpL98uYmNuWfnBDjQ5CDhcB
-	9uNljRQZU+sGd7RNnfQK5ysBEvO9Tz7J/QYSmhiR4lLboSy3Yh4hQrbaX4jSP2W3zOofRdB37Jb
-	BM
-X-Gm-Gg: ASbGncviAPFRo51M93ahWtu0671dDw9v9d0BGGzZtM91yRR8rvtC2FER29G6F8wz61P
-	q00h2F1bOwzBHKF0HzlMqeRRUsT0xriDoQGcRC5tBoqCIbCIVc6eGmYkMs+K+HKBwEoJUm5Zza1
-	ssi1R+OjB44IEaqI4/hDCQy8CpiFewacfH42bCP2DzFfMMb14qzso7310W1z4JuLYT2SLAp9Zie
-	wkDi2V8F4JNKOLcS4O0dJExuSlppRTZJ7G8QMB3iW/7zoafexq+4RVUq3jALN46b6gf/9bIDNQM
-	i/C+Ih8jwPT1QNDUXL6l0P8kFwSvsFI67gV0sOARXwXTOr8=
-X-Received: by 2002:a05:6a00:a06:b0:736:5c8e:baaa with SMTP id d2e1a72fcca58-742acc8e94cmr16949358b3a.2.1747647750202;
-        Mon, 19 May 2025 02:42:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFoCNHIy8vm7UNK06bHoqEfkocfr01VDi6iYCVtGhO8fkUV8H34cgcNYNSP8u4+8ZFmO53vpQ==
-X-Received: by 2002:a05:6a00:a06:b0:736:5c8e:baaa with SMTP id d2e1a72fcca58-742acc8e94cmr16949320b3a.2.1747647749707;
-        Mon, 19 May 2025 02:42:29 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747647756; x=1748252556;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uU7PofubsUvHU2URxMpgS+EVNoeW1gK8KIbpSjZ8wvs=;
+        b=ZEiq1PIqADw0bMCOPIABfcAs2IoV99Kra4eSmlwZNH4OLte2TrqKJBwhggOqz5Q05m
+         p6uupmtPqo3cM/qM9P/WqQnkUPnOeFVAzcM1TLM7x22JEt/wkJXVpfsMg0873jbIpiQt
+         b7r6n7axg747rmLbtcpfHD5e57RtoSGw1KAj+juUPVW7RVwFVqHuHbA54vCIX9ObJIwk
+         mPFS41n/u4E0m1DR1j69UUbYlBt2wk8n431BAiF+vUN6OmeikmcKwyEY/kGZogGfYM3u
+         Vuc+iKuoQiI4gVJhx37489wqs2t1MRO49UF0TU75D64xtqltRO9ih9fXrZd/BhC6rQUJ
+         02IQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVAZt/rB0LLbJLmReK/GI4YiD5letaqph3n5t7IK6bQbt6PTjeE1Q44xsBgIzll80UKcKN/jT7k3zc2+Cw/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx1jpQkRLlae3ZZA20ucGT5HxiLpkv39YaXrx3Pzcf5/aaIgJ1+
+	xFOZiq0wV/YYdSrXck6C8jrRfHEOOXIdT2QlSsaroXc4HlsX17eM2JgRdItpvBN5vG08k72t9ED
+	BNEmvjEXd7UqubSeoOmw6L32UMq6jR6aVno/dpWV9rGshlZOeqnUSIPa8AKDpYlOYnnFAnUpoI9
+	bd
+X-Gm-Gg: ASbGncunrJLOQggVJveo6kubP7TddtwHUHVIxUk7ki9LpkvEfH2ZxVUAJU8YwinEX3z
+	BoE2Ndwagn7y3NXDgvy1lA5p233LXZe5O1u1pkL6tfLMLbrhmwvHtLrMhYz2qfSiGiCM1NVFkFv
+	j6xK34ROuE9VL84Yt2lYaoJo7EHIlJteYioBlNMrFLChKdr9FvepHl2FuuFvlCs2IabT2T8JvLC
+	hNHYQTwKNIMEjdG2vXOGVAsfcaKGMF/BcG6T4tfeJNjpVvF59nOlk+0l2lnMHQyCWECb2tXQKbo
+	grnXK/Chtz59Nw1QuXEjZTX7m8wLk/4ikwAbC+H2cUXLENw=
+X-Received: by 2002:a05:6a00:ae1c:b0:742:b3a6:db10 with SMTP id d2e1a72fcca58-742b3a6dc2bmr11994272b3a.18.1747647755742;
+        Mon, 19 May 2025 02:42:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE99iUQ+YVc/maiKCsxdLZP8n8nikcwdzK+f/VpTPSVQgsMwchfjJqT1QzUS2xVouHmoYvWTQ==
+X-Received: by 2002:a05:6a00:ae1c:b0:742:b3a6:db10 with SMTP id d2e1a72fcca58-742b3a6dc2bmr11994251b3a.18.1747647755364;
+        Mon, 19 May 2025 02:42:35 -0700 (PDT)
 Received: from hu-krichai-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a97398f8sm5809092b3a.78.2025.05.19.02.42.24
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a97398f8sm5809092b3a.78.2025.05.19.02.42.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 May 2025 02:42:29 -0700 (PDT)
+        Mon, 19 May 2025 02:42:35 -0700 (PDT)
 From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Subject: [PATCH v3 00/11] bus: mhi: host: Add support for mhi bus bw
-Date: Mon, 19 May 2025 15:12:13 +0530
-Message-Id: <20250519-mhi_bw_up-v3-0-3acd4a17bbb5@oss.qualcomm.com>
+Date: Mon, 19 May 2025 15:12:14 +0530
+Subject: [PATCH v3 01/11] PCI: Update current bus speed as part of
+ pci_pwrctrl_notify()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,12 +92,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAPX8KmgC/23NzQ6CMAzA8VchPTuyD0Hx5HsYQzYY0kQYbjI1h
- He3cNEDlyb/pvl1gmA92gCnZAJvIwZ0PYXaJVC1ur9ZhjU1SC4zLsWBdS2W5lWOA2uUUDzXWa6
- EAbofvG3wvVqXK3WL4en8Z6WjWLZbShSMs8LoWti9NLURZxdC+hj1vXJdl9KABYvyB9Dff0ASc
- MyLSiuSuWk2gHmev5ZAhGnqAAAA
-X-Change-ID: 20250217-mhi_bw_up-f31306a5631b
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250519-mhi_bw_up-v3-1-3acd4a17bbb5@oss.qualcomm.com>
+References: <20250519-mhi_bw_up-v3-0-3acd4a17bbb5@oss.qualcomm.com>
+In-Reply-To: <20250519-mhi_bw_up-v3-0-3acd4a17bbb5@oss.qualcomm.com>
 To: Bjorn Helgaas <bhelgaas@google.com>,
         =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
         Jingoo Han <jingoohan1@gmail.com>,
@@ -112,147 +112,79 @@ Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
         qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com,
         quic_vpernami@quicinc.com, quic_mrana@quicinc.com,
         Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-        Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-        Miaoqing Pan <quic_miaoqing@quicinc.com>
+        Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1747647743; l=5246;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747647743; l=1353;
  i=krishna.chundru@oss.qualcomm.com; s=20230907; h=from:subject:message-id;
- bh=E3NkA6uH614ySqMHBo8o678d+83U+3iUYauudgnzNVU=;
- b=/lyU+5ydxEoQf3CrCMazF+8+/lgCqzeWYYIHuE+LMKA5vLfcz15M/CGdyq92AMFU1qdQu3173
- U7ZTed1Gw0lCrGIIKbJ6/caEFmvdkEmopnoewqoF5QA5DmGGkEhNYDX
+ bh=uFH7gvcXfq8PXUbSnW4zFmBHt5LxnpwhDzcE1X+yWFo=;
+ b=lXyiRKWe2dUM/NoKi98YA2ST4iD+GyJH/JWFyhdLHqiaIoNSFdOEcmMxv7oVHUvW2lVe0h7ZL
+ UYVeLSPwgrlBOdS2f0m/xziM1YsPsEV3QKXX1cYho1bhDVgeJ3/rrYA
 X-Developer-Key: i=krishna.chundru@oss.qualcomm.com; a=ed25519;
  pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-Proofpoint-GUID: TwAib4iUq6j3lamBuBSYXx3s9nO-ck9b
-X-Proofpoint-ORIG-GUID: TwAib4iUq6j3lamBuBSYXx3s9nO-ck9b
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE5MDA5MSBTYWx0ZWRfX/tQ7Xj3N7mN6
- 3zkOJylzlCq3CoHbB5MK3ekiumM9XAtTiJcCwtNQRwLK6MYn2Om2pSeKQfHVTeBoPpM7/5xjoHT
- 4LSGUh0g6jKaxEwsfqnDMK9dbgJCY2NLlfWNsbXPEZ1SQDZhHr5GiG1b91+6TM8Fi0KeVVdlA4D
- maZy2YMSQ3Mx/ojonN0xXYx2BPKSV3bJHH6NyPPoUfLAgQh4UzEnJFoI3J72wqeujSrrq4cy1/C
- S4/VnOBYYxrtUrDW7r41Cjt00r/VEr0a8b3uqs2/HqdTcf2Q+aoxml7KQofxZ2uXzaZE1lgWaZG
- AxMGnJ6jsXMowmy1qcfFejymQe43KleTGEhVwS3TLmtCsqsIj+iX/gRHwtME02KcGa4wA9jKxST
- 2QlW1KqjYi9l/kjlKzWGZ4iB8MdlFrlsch8zHTGtxDl6S2WLg7noNUu80Y2SPooHpr+LTf9X
-X-Authority-Analysis: v=2.4 cv=RZeQC0tv c=1 sm=1 tr=0 ts=682afd07 cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=a1UGM4vktcZ-V-6vu5QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoOABgeZipijB_acs4fv:22
+X-Authority-Analysis: v=2.4 cv=OfqYDgTY c=1 sm=1 tr=0 ts=682afd0d cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=3phiJa3m8EW-4BHYHVwA:9 a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: kajFFNfwfpr23duvyZ-H9TWWNqNXoUyI
+X-Proofpoint-GUID: kajFFNfwfpr23duvyZ-H9TWWNqNXoUyI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE5MDA5MSBTYWx0ZWRfX4zinSkH69thl
+ RntgtjfMzIHKZbc1S1UJcM4VV/spApANKDRqzjVmPFD11xI8w/x7Z7zPjgCPORBMytww9nVRSVJ
+ DDPVRTC4L9E/qJ1ea+T5pLi/8+8ZK8sEOSPucifORQpyFeVnNDVY8ITyCZrwqCwjYI00TuOt8xO
+ TC5RzVucU4HLXfpV0vpc4EGJCfNquFLM9kATQfXvGqPb1A4gkiCC6rNX9aDdsgdlTxPRpP8UuRY
+ O3LI+pNw6huBnW2frhc13YilTe3DV9ml78h8apy1D8vRyQFKu11p6pi41YJUQsFRlvVCC0CgqmV
+ KuZGIvslx08RvpIxd00+t9YMKHfssHcEryiisCEyTihDQ7ERSKq+NgUfBzXzKnSWGJ/vfCy63cP
+ yKM+aBKw+qT/eaed5ns2Iu08qAid8owj8vZicRYFv9UNZr8ZFPggEhCipNS0PTV7kT0cqinW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-19_04,2025-05-16_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 phishscore=0 mlxlogscore=999 malwarescore=0
- priorityscore=1501 clxscore=1015 lowpriorityscore=0 mlxscore=0 suspectscore=0
- impostorscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ impostorscore=0 lowpriorityscore=0 phishscore=0 mlxscore=0 malwarescore=0
+ bulkscore=0 suspectscore=0 priorityscore=1501 spamscore=0 mlxlogscore=999
+ clxscore=1015 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
  definitions=main-2505190091
 
-As per MHI spec sec 14, MHI supports bandwidth scaling to reduce power
-consumption. MHI bandwidth scaling is advertised in devices that contain
-the bandwidth scaling capability registers. If enabled, the device
-aggregates bandwidth requirements and sends them to the host in the form
-of an event. After the host performs the bandwidth switch, it sends an
-acknowledgment by ringing a doorbell.
+If the link is not up till the pwrctl drivers enable power to endpoints
+then cur_bus_speed will not be updated with correct speed.
 
-if the host supports bandwidth scaling events, then it must set
-BW_CFG.ENABLED bit, set BW_CFG.DB_CHAN_ID to the channel ID to the
-doorbell that will be used by the host to communicate the bandwidth
-scaling status and BW_CFG.ER_INDEX to the index for the event ring
-to which the device should send bandwidth scaling request in the
-bandwidth scaling capability register.
+As part of rescan, pci_pwrctrl_notify() will be called when new devices
+are added and as part of it update the link bus speed.
 
-As part of mmio init check if the bw scale capability is present or not,
-if present advertise host supports bw scale by setting all the required
-fields.
-
-MHI layer will only forward the bw scaling request to the controller
-driver, it is responsibility of the controller driver to do actual bw
-scaling and then pass status to the MHI. MHI will response back to the
-device based up on the status of the bw scale received.
-
-Add a new get_misc_doorbell() to get doorbell for misc capabilities to
-use the doorbell with mhi events like MHI BW scale etc.
-
-Use workqueue & mutex for the bw scale events as the pci_set_target_speed()
-which will called by the mhi controller driver can sleep.
-
-If the driver want to move higher data rate/speed then the current data
-rate/speed then the controller driver may need to change certain votes
-so that link may come up in requested data rate/speed like QCOM PCIe
-controllers need to change their RPMh (Resource Power Manager-hardened)
-state. And also once link retraining is done controller drivers needs
-to adjust their votes based on the final data rate/speed.
-
-Some controllers also may need to update their bandwidth voting like
-ICC bw votings etc.
-
-So, add pre_scale_bus_bw() & post_scale_bus_bw() op to call before & after
-the link re-train. There is no explicit locking mechanisms as these are
-called by a single client endpoint driver
-
-In case of PCIe switch, if there is a request to change target speed for a
-downstream port then no need to call these function ops as these are
-outside the scope of the controller drivers.
-
+Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 ---
-Changes in v3:
-- Move update speed logic to pwrctrl driver (Mani)
-- Move pre_bus_bw & post_bus_bw to bridge as these are bridge driver specific ops,
-it feels to me we need to add these in the host bridge driver similar to recently
-added one reset_slot.
-- Remove dwc level wrapper (Mani)
-- Enable ASPM only if they are enabled already (Mani)
-- Change the name of mhi_get_capability_offset to mhi_find_capability() (Bjorn)
-- Fix comments in the code, subjects etc (Mani & Bjorn)
-- Link to v2: https://lore.kernel.org/r/20250313-mhi_bw_up-v2-0-869ca32170bf@oss.qualcomm.com
+ drivers/pci/pwrctrl/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Changes in v2:
-- Update the comments.
-- Split the icc bw patch as sepertate one (Bjorn)
-- update the aspm disablement comment (Bjorn)
-- Use FIELD_GET & FIELD_PREP instead of hard macros and couple of nits
-  suggested by (Ilpo Järvinen)
-- Create a new function to change lnkcntrl2speed to enum pci_bus_speed (Jeff)
-- Link to v1: https://lore.kernel.org/r/20250217-mhi_bw_up-v1-0-9bad1e42bdb1@oss.qualcomm.com
+diff --git a/drivers/pci/pwrctrl/core.c b/drivers/pci/pwrctrl/core.c
+index 9cc7e2b7f2b5608ee67c838b6500b2ae4a07ad52..034f0a5d7868fe956e3fc6a9b7ed485bb69caa04 100644
+--- a/drivers/pci/pwrctrl/core.c
++++ b/drivers/pci/pwrctrl/core.c
+@@ -10,16 +10,21 @@
+ #include <linux/pci-pwrctrl.h>
+ #include <linux/property.h>
+ #include <linux/slab.h>
++#include "../pci.h"
+ 
+ static int pci_pwrctrl_notify(struct notifier_block *nb, unsigned long action,
+ 			      void *data)
+ {
+ 	struct pci_pwrctrl *pwrctrl = container_of(nb, struct pci_pwrctrl, nb);
+ 	struct device *dev = data;
++	struct pci_bus *bus = to_pci_dev(dev)->bus;
+ 
+ 	if (dev_fwnode(dev) != dev_fwnode(pwrctrl->dev))
+ 		return NOTIFY_DONE;
+ 
++	if (bus->self)
++		pcie_update_link_speed((struct pci_bus *)bus);
++
+ 	switch (action) {
+ 	case BUS_NOTIFY_ADD_DEVICE:
+ 		/*
 
----
-Krishna Chaitanya Chundru (9):
-      PCI: Update current bus speed as part of pci_pwrctrl_notify()
-      PCI/bwctrl: Add support to scale bandwidth before & after link re-training
-      PCI/ASPM: Return enabled ASPM states as part of pcie_aspm_enabled()
-      PCI/ASPM: Clear aspm_disable as part of __pci_enable_link_state()
-      PCI: qcom: Extract core logic from qcom_pcie_icc_opp_update()
-      PCI: qcom: Add support for PCIe bus bw scaling
-      bus: mhi: host: Add support for Bandwidth scale
-      PCI: Export pci_set_target_speed()
-      PCI: Add function to convert lnkctl2speed to pci_bus_speed
-
-Miaoqing Pan (1):
-      wifi: ath11k: Add support for MHI bandwidth scaling
-
-Vivek Pernamitta (1):
-      bus: mhi: host: Add support to read MHI capabilities
-
- drivers/bus/mhi/common.h               |  20 ++++++
- drivers/bus/mhi/host/init.c            |  90 +++++++++++++++++++++++-
- drivers/bus/mhi/host/internal.h        |   7 +-
- drivers/bus/mhi/host/main.c            |  98 +++++++++++++++++++++++++-
- drivers/bus/mhi/host/pm.c              |  10 ++-
- drivers/net/wireless/ath/ath11k/mhi.c  |  41 +++++++++++
- drivers/pci/controller/dwc/pcie-qcom.c | 124 ++++++++++++++++++++++++++-------
- drivers/pci/pci.c                      |  12 ++++
- drivers/pci/pcie/aspm.c                |   5 +-
- drivers/pci/pcie/bwctrl.c              |  16 +++++
- drivers/pci/pwrctrl/core.c             |   5 ++
- include/linux/mhi.h                    |  13 ++++
- include/linux/pci.h                    |  19 ++++-
- 13 files changed, 425 insertions(+), 35 deletions(-)
----
-base-commit: fee3e843b309444f48157e2188efa6818bae85cf
-change-id: 20250217-mhi_bw_up-f31306a5631b
-
-Best regards,
 -- 
-Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+2.34.1
 
 
