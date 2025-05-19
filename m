@@ -1,154 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-58374-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D68FABB6B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 10:05:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 059C0ABB6E6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 10:16:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E0F2E16D46C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 08:05:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BEBE11898A83
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 08:16:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35784269811;
-	Mon, 19 May 2025 08:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D01EC269816;
+	Mon, 19 May 2025 08:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G629HJlG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hpGTNOOr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE75418C004
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 08:05:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97789153BD9;
+	Mon, 19 May 2025 08:16:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747641914; cv=none; b=lSwjYya/NuivhsMXO/XTICMW6x0+j1737zu+C1xS8uiwDOYTaM1Pn8uRJLDvj8F1SKV+tjAxn6Zm8lxlRbo+PkCv37VYWGzkDIJ8K3HoWqDc7gGdMJF86Q/6Hj7TCC11YKAi66BsnXPAxhFwFMCQh6ZqMvpLD9CjmqbWpOKVDVQ=
+	t=1747642581; cv=none; b=G2J8ANA4+9FMgkIrgkcu3RsXXGSJcnqtL/yB7Fu60UAkXjEEj7Mrf5fImQH5bdfQWm5mVVHEwH6Gqd1Cc5GGatfWzz19cSDxDodZ3tcKC+rg2lH1x78ihV+gRuGncvVcOPxIsAVsf2CCyZPRtJaxBnzh2dvyQZzqeudd8NwtDac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747641914; c=relaxed/simple;
-	bh=eNjYz8w5sMtLPA6MRlmwOuJOvQJcZkOlZvehWvQGnwc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hKy/P8qvHPuixU3Zxk1QqOe4gmn7vjxkTrBDXTpYhz13/USLN8WiQPnDMCnstow4w4wfeof9le4VOSM1s2fplmUgOWkhAmaD1FzrdxlOQfrO9T4SdQx43YvyOkPw2PjIva70ZYqOqZ1ksHCwsWknppJUIQUuAJSGu4Va2CYfHf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=G629HJlG; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a362e099cfso389774f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 01:05:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747641910; x=1748246710; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8/uUno12+MugHV7pnu6lW/BQmxMIkNtzIi2L3w3Py9U=;
-        b=G629HJlGOK/DqDwwRndxRb7kVPzIaiOhUQ2N7hr31r+aqRcStJXWZy/Cf4qzzv8Cmn
-         B70ha21/+0Yh/nPJnuDLImVWLKBSpmAcDu+JgCIjkOdfIdm0Sn/FUB7hD2A4QqBtAvCo
-         re/AdMFeEuRqzWaP7v4nmHkhD/HODM16c8hc/p+wsuWUFXFOHP27edJsffZIw3XL5VeZ
-         PEJU16/uvPLNK4rgsTUN286sVs9sOZs8Yv6esHlZ+0SWsWPitpvViZZSssUZC1+uuV+j
-         H/IL/TieZ5GghwbqknA6T2FP11kHt/oK7lE6V8y9Q87r9D0ptUZFo0BjA4P7yrCMdBpQ
-         mfvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747641910; x=1748246710;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8/uUno12+MugHV7pnu6lW/BQmxMIkNtzIi2L3w3Py9U=;
-        b=LG6slJqHCoVCC3LY9qsr3diBizQq+5JlhNePLfTTMIzZDP+zh76BKUdKOL7mQnh8Qv
-         3+lBWOIcWn4oeB+IfUNTB6CgtVpqXwPQ4j239A5vI0oJh5V36s7OMpNDVMgePTxc685b
-         J9cMTI0cQtFBVV5H1zx4Pfs947G6J2qyJKOMgZrdlkCHdcv9y2CuBxDpuDB8AkI1oTNX
-         WFrEtwb6lAKj8N+GGtknvTfl1AvIj9GiTtU5trEt2V7PG5E9Sbk3W95eQt4WfaCgtZfe
-         eiblDEVTvBxS7sLemynrBOiFhyiBptGiBsMsL03elxKj7UejFjuQksD0gEOGVZJueH5c
-         uecQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU9B3GCByudJCXC6wkL7buS5gps2P6sTffvRQ2h2vsq0poI0jzU2t/fdfnyVZE3YAM35JgEM+/73LoALDSs@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz8N9xi5lRts2rgH63K6+m16k8zCsn5wjL4Bvgj9vb8h9KvOJBD
-	p4PiIjZWZvdhCJ4dIqWyXlcX8ci6Q6AEyv1hYaFicgngJ9S8PA+YDpy/V9EICA7FsdM=
-X-Gm-Gg: ASbGnctJMTp0rL8GZnwhll7ZP9nR4/uyn6SUWAwxVK2RZdILL/MyVlirsVvLCCIhpPe
-	elgW2y2X8ag5eDhBiChxMjq3L2lkUq9X7DX6RauB6RuTlkQ4byITNji1Q3X4EZkecN+u33hWUjR
-	PXkb5yxl12s/WdPeM8gfhxecilbN0+2ULVOvw/ZpJWnFOoMrX6QDJd5EeDlJLF0Je1MLNsaLxt+
-	jlcK4l583YCy0VnqzRzXlGB59dqnzAgF958oBOLBsS9xlBY+vCQReOa/GV02YUgmhqqAnj8D9/S
-	P4eR/MvYfrf6lZPOTq1NKe4yrwuHpFe0Of2pMWa5gRrVU4aeOD+d4pl2+xM7Lw==
-X-Google-Smtp-Source: AGHT+IFeaCCRDIubiGu54CbK3aqd0Ov35Z88utQJJcSo42eFJKtNFYB/mAl3+BbnejgRY1XpJld7rQ==
-X-Received: by 2002:a05:600c:3b95:b0:43d:2318:ed7f with SMTP id 5b1f17b1804b1-442fd5a2cb4mr40169245e9.0.1747641910121;
-        Mon, 19 May 2025 01:05:10 -0700 (PDT)
-Received: from kuoka.. ([178.197.223.125])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f3951854sm198293705e9.24.2025.05.19.01.05.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 May 2025 01:05:09 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Rao Mandadapu <quic_srivasam@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH] dt-bindings: soundwire: qcom: Document v2.1.0 version of IP block
-Date: Mon, 19 May 2025 10:04:54 +0200
-Message-ID: <20250519080453.29858-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1747642581; c=relaxed/simple;
+	bh=DvnlKbccpce+ZLmY4HBn+RM09MSGUVos8+IsFw28Ywc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QLqHnS+tzM/1VOVJglViWY4xmEJsZDRYmyAnIpQMRDmYk9Kq3GqB4fgVzMO+y0zw0MmkuktXn87/X3IZWKVlRGDbkzaMgjZJp8b3mdQJOHa3SmtSdv3Qjox8UkV+N2npi29LG4J303MT3exnVvxaTG8MErQiZ7+RRRE3kTmxPuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hpGTNOOr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D460C4CEE4;
+	Mon, 19 May 2025 08:16:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747642578;
+	bh=DvnlKbccpce+ZLmY4HBn+RM09MSGUVos8+IsFw28Ywc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hpGTNOOrWSFUDHgI6XCMYfrSYWMtBuqAWnHne0vqSTAMz/FBpZvw7dBI3hnI7zVit
+	 Bw+B76++GEnYckqbgpz62CuGsKPWxRq8Ad/h+iK801pGqx2ZEOH5XMyNmIHkUaMTnK
+	 DqDDpg4H5gHNzU/rdbfdR45Mm2bOb1FSh+wM65K8Ra+0arTgLFSxs+xM+urN6jpJ5B
+	 SXNfRI3G4IAN/D5QOckZK+JAdEQEoMc2o2TGD052ElTEFKKeiMjBsIqTNotj2jHwMv
+	 /WLvjXccX53XD9XK9LYtht1CjnW3S/aNMWASi0PFoXJLU+4uRXmHCExfI/O9A91Li+
+	 rCDlE+Dkwbmxg==
+Date: Mon, 19 May 2025 10:16:15 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Lei Wei <quic_leiwei@quicinc.com>, Suruchi Agarwal <quic_suruchia@quicinc.com>, 
+	Pavithra R <quic_pavir@quicinc.com>, Simon Horman <horms@kernel.org>, 
+	Jonathan Corbet <corbet@lwn.net>, Kees Cook <kees@kernel.org>, 
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, linux-hardening@vger.kernel.org, 
+	quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com, srinivas.kandagatla@linaro.org, 
+	bartosz.golaszewski@linaro.org, john@phrozen.org
+Subject: Re: [PATCH net-next v4 01/14] dt-bindings: net: Add PPE for Qualcomm
+ IPQ9574 SoC
+Message-ID: <20250519-garrulous-monumental-shrimp-94ad70@kuoka>
+References: <20250513-qcom_ipq_ppe-v4-0-4fbe40cbbb71@quicinc.com>
+ <20250513-qcom_ipq_ppe-v4-1-4fbe40cbbb71@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1500; i=krzysztof.kozlowski@linaro.org;
- h=from:subject; bh=eNjYz8w5sMtLPA6MRlmwOuJOvQJcZkOlZvehWvQGnwc=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoKuYlT1JUthzmjuD+5hZUrrF5hzhw0Rxr6qB8W
- fqh1D8/n8iJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaCrmJQAKCRDBN2bmhouD
- 1/ZmD/9yMrVo5Z1OUYC5ystLok/+hkuXW+ZI2t8xpC7liKuSsx+sQGa/mIC6E2dlZArUMyj/IFO
- Vic7WtnzS7PUr5I+EyR4Jj/EnlMIOAvqrUXEUBnzBwYNXcdPfpLKc74oGuLaXsy91AlhfyueNag
- wXcw6tmf2ExFNmzB8QkKh3FQlhwNmuYPt0TOa+xmsjaiOGhqtP+5iahvuQAq83mNwe1zf1UY2rn
- tVqAaMsV/knQga1I7Ut4KKhxtWaLQCT/NyYutJnagPPn7Ez1vPSAkqEebbuvwKdWWns30oRig7h
- a5Y4ycgybvLKRFKn0k6hHDPM2ZOcyIyuoTx0KS0PWWCR/jg5y1Jz05ODeN5sHJ61cqKr8bSmJeS
- dOxeVvxPtDE8+Na+3mYd3NZNYVOH+DgUFidjMqG0G1f0WSTd6yRAH5CjEgORNN4g/wSNNgeKcRk
- dM4gFGIHffItVVYLfr6HZPuSp+eK7LQCvPNU6kbc9WrZlupCGozt8JgvwljcSIo+MnM2ehN3dGr
- HIteZvFVxNBOGtIJoysMRKYQShVVlTDAXrBAuuns53X8O1cCBKUUhzh3h25yJBg3QWAeoOrwe/v
- 456r0QTrl+hOYBEji8KtOJJm/6kmpg8lqXzwQqhEjwAf2/7IMqFsbXZ2RvIAJFrmKd37ZB5wmvs zTdOtaBYkfdJpuw==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250513-qcom_ipq_ppe-v4-1-4fbe40cbbb71@quicinc.com>
 
-All Qualcomm SoC Soundwire controllers are version-detectable (even
-1.x), however certain unidentified quirks might be potentially needed,
-so document v2.1 version used on Qualcomm SM8650 and SM8750 SoCs,
-fallbacking to v2.0.
+On Tue, May 13, 2025 at 05:58:21PM GMT, Luo Jie wrote:
+> The PPE (packet process engine) hardware block is available in Qualcomm
+> IPQ chipsets that support PPE architecture, such as IPQ9574. The PPE in
+> the IPQ9574 SoC includes six ethernet ports (6 GMAC and 6 XGMAC), which
+> are used to connect with external PHY devices by PCS. It includes an L2
+> switch function for bridging packets among the 6 ethernet ports and the
+> CPU port. The CPU port enables packet transfer between the ethernet
+> ports and the ARM cores in the SoC, using the ethernet DMA.
+> 
+> The PPE also includes packet processing offload capabilities for various
+> networking functions such as route and bridge flows, VLANs, different
+> tunnel protocols and VPN.
+> 
+> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> ---
+>  .../devicetree/bindings/net/qcom,ipq9574-ppe.yaml  | 406 +++++++++++++++++++++
+>  1 file changed, 406 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/net/qcom,ipq9574-ppe.yaml b/Documentation/devicetree/bindings/net/qcom,ipq9574-ppe.yaml
+> new file mode 100644
+> index 000000000000..f36f4d180674
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/qcom,ipq9574-ppe.yaml
+> @@ -0,0 +1,406 @@
+> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/qcom,ipq9574-ppe.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm IPQ packet process engine (PPE)
+> +
+> +maintainers:
+> +  - Luo Jie <quic_luoj@quicinc.com>
+> +  - Lei Wei <quic_leiwei@quicinc.com>
+> +  - Suruchi Agarwal <quic_suruchia@quicinc.com>
+> +  - Pavithra R <quic_pavir@quicinc.com>>
 
-Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../bindings/soundwire/qcom,soundwire.yaml    | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+Double >>
 
-diff --git a/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml b/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
-index 3591c8c49bfe..95d947fda6a7 100644
---- a/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
-+++ b/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
-@@ -15,13 +15,18 @@ description:
- 
- properties:
-   compatible:
--    enum:
--      - qcom,soundwire-v1.3.0
--      - qcom,soundwire-v1.5.0
--      - qcom,soundwire-v1.5.1
--      - qcom,soundwire-v1.6.0
--      - qcom,soundwire-v1.7.0
--      - qcom,soundwire-v2.0.0
-+    oneOf:
-+      - enum:
-+          - qcom,soundwire-v1.3.0
-+          - qcom,soundwire-v1.5.0
-+          - qcom,soundwire-v1.5.1
-+          - qcom,soundwire-v1.6.0
-+          - qcom,soundwire-v1.7.0
-+          - qcom,soundwire-v2.0.0
-+      - items:
-+          - enum:
-+              - qcom,soundwire-v2.1.0
-+          - const: qcom,soundwire-v2.0.0
- 
-   reg:
-     maxItems: 1
--- 
-2.45.2
+> +
+> +description:
+
+You got here comment didn't you?
+
+> +  The Ethernet functionality in the PPE (Packet Process Engine) is comprised
+> +  of three components, the switch core, port wrapper and Ethernet DMA.
+> +
+> +  The Switch core in the IPQ9574 PPE has maximum of 6 front panel ports and
+> +  two FIFO interfaces. One of the two FIFO interfaces is used for Ethernet
+> +  port to host CPU communication using Ethernet DMA. The other is used
+> +  communicating to the EIP engine which is used for IPsec offload. On the
+> +  IPQ9574, the PPE includes 6 GMAC/XGMACs that can be connected with external
+> +  Ethernet PHY. Switch core also includes BM (Buffer Management), QM (Queue
+> +  Management) and SCH (Scheduler) modules for supporting the packet processing.
+
+...
+
+> +  clock-names:
+> +    items:
+> +      - const: ppe
+> +      - const: apb
+> +      - const: ipe
+> +      - const: btq
+> +
+> +  resets:
+> +    maxItems: 1
+> +    description: PPE reset, which is necessary before configuring PPE hardware
+> +
+> +  interconnects:
+> +    items:
+> +      - description: Clock path leading to PPE switch core function
+> +      - description: Clock path leading to PPE register access
+> +      - description: Clock path leading to QoS generation
+> +      - description: Clock path leading to timeout reference
+> +      - description: Clock path leading to NSS NOC from memory NOC
+> +      - description: Clock path leading to memory NOC from NSS NOC
+> +      - description: Clock path leading to enhanced memory NOC from NSS NOC
+> +
+> +  interconnect-names:
+> +    items:
+> +      - const: ppe
+> +      - const: ppe_cfg
+> +      - const: qos_gen
+> +      - const: timeout_ref
+> +      - const: nssnoc_memnoc
+> +      - const: memnoc_nssnoc
+> +      - const: memnoc_nssnoc_1
+> +
+> +  ethernet-dma:
+
+I don't get why this is a separate node.
+
+> +    type: object
+> +    additionalProperties: false
+> +    description:
+> +      EDMA (Ethernet DMA) is used to transmit packets between PPE and ARM
+> +      host CPU. There are 32 TX descriptor rings, 32 TX completion rings,
+> +      24 RX descriptor rings and 8 RX fill rings supported.
+> +
+> +    properties:
+> +      clocks:
+> +        items:
+> +          - description: EDMA system clock from NSS Clock Controller
+> +          - description: EDMA APB (Advanced Peripheral Bus) clock from
+> +              NSS Clock Controller
+> +
+> +      clock-names:
+> +        items:
+> +          - const: sys
+> +          - const: apb
+> +
+> +      resets:
+> +        maxItems: 1
+> +        description: EDMA reset from NSS clock controller
+> +
+> +      interrupts:
+> +        minItems: 29
+> +        maxItems: 57
+
+Why is this flexible on the same SoC?
+
+Best regards,
+Krzysztof
 
 
