@@ -1,115 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-58428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E903ABBBAE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 12:59:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2D3CABBBAF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 12:59:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 47425170976
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 10:59:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7ECE13B111D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 10:58:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5D8F272E51;
-	Mon, 19 May 2025 10:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EA10274FEA;
+	Mon, 19 May 2025 10:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nXT8/90U"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AgMTqKBm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38593245037
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 10:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5449A274673
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 10:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747652333; cv=none; b=tgIVQsSkcTpg5MP2lJXi56FXa8Pyu0jA2DLFfAjZ7TN/zc0jq2IdhbBqjBOH37Gjj/MgLBTzPtYts8BGOdQw9TZrD3zBJtJ09T9RrU4Hc+LtWkEdvvylMZHocT/XZHv2ypK/ICUYpb4h+dugLAhUfTUlwlulZZPqy5wyWPRwfAU=
+	t=1747652335; cv=none; b=aMLtpLYFMyBYeADqVUwfmUL8xLQ5vQGv02+d0seSBv8pfKwsNWnCxuAjXX6Te5ROjxJXDsyj9sCTm9JXYyXRA1Z6sHrAgRcsVIV2bWQA28dllXoBU5VwFHAG1HakvIPpxhTfNk4LZxaiel84Il+ZNJAWY9+rsJS0phXZb2l8x0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747652333; c=relaxed/simple;
-	bh=O68Yf4MVfSbvrTGnH2tyPtJDd/D9PTw/7oag6m4b3Hk=;
+	s=arc-20240116; t=1747652335; c=relaxed/simple;
+	bh=laU7zJS3YV56vTABXTYYyCyaK7vtQP0nr2IhS/ljwl4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hThOokHzaFODt7IzRhbiF4Fg1ptgdtTe/djruJtJPTb8g+edhDK5o39cllMR0PtMzTZ5lZacN3RCbD4dLj1UQxdnOxXirCuxX4gBUPkzj4djQSSOE1zbqlNqn6J9e6dacUsIxcXoaAjiy93oJrM/lbea9U1FmyIDU7Fnl7JuHq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nXT8/90U; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version:Content-Type; b=IlxUjx1ySLgJJ8q+sW4IFQSPShcMHVfyz0GXu9/mXBWfjLDOLZFnyXWGDGJcnpmvq+GVBJyxfzTsPoeGolVfi5DyoFafMoZiAgawXLSyrBJcuNHiL2GP9APWoFTpVjWaMqr0/hZ+oszfkMIqEb7IPvDbMN9KEzrztEk8w7ZLSow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AgMTqKBm; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54J9XnHr023770
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 10:58:51 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54J9G17R006013
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 10:58:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VqRNS/AP2L0HYV/XzQMxzhswyBS2iB5hSp0sUNl5kjs=; b=nXT8/90UtPNYFOVl
-	lO89wI7YQKOORwYNbXDwpUcHcHCYJEEnnNE/d2sZ5vcwuHD1lFP11G1pUGwuApvn
-	crn7cvzPlakbrP9FtDv28Tme1qNFW5ZXiRzXro63fVro/1EzE9y+ORx6CdZU5kVi
-	rEfcFJbXwaegQ5suYLTplGNyNMYqWGlfiH3DZS897k6cc/FtEa/We/gu8MTjqb9C
-	ADDaqr8EiaX1n9jIdugSl6TqJSdZ0c1Ye0BZhms2r5FATXD1L/q5fPAZ8SoXha6p
-	tBpVWX9dOeQB8usjOVYApGbmeeIfE4fEajD+zFGFF4Z0ZoRp0tLj8e/dMAwXwI6X
-	kbx81w==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pjnym4fg-1
+	P97x1i15pR0DFA8r2mBaSyn//YiqASvzqBgFrFYv0Xc=; b=AgMTqKBmMNCFRM3d
+	QmR+FeI7IoPU3llq3T4SCH2Hfx8Oet0nJ/zWjbnHMg5qQKZHW2qhJLn4I32vWn1S
+	H1WjjmW4q32mwrRmapFrMFAzwTo5UXwChnWes5kAuGwYkYM5+kFImwG2SSMZB7sZ
+	tEjMXc//6RKqHdcXXj5978JejS6taGAXEjRUDrm88wtkUsOWYEQARJXuoF1Wjj7J
+	ZIYzmgKcoYZ5a76Y/l2jL+IjOKL/PjpzTVUGyTP1rLR6eXpHEIs1+qV/pUO+X8hi
+	XEldOAP6lKYg0454DFIFsmcqoyOVHYynk7woKlVs5XShCB6YZ52tzPNB22kvNk4J
+	rbTWoQ==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pjnym4fn-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 10:58:50 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6f8ae3c3d80so72232446d6.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 03:58:50 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 10:58:51 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6f8e1d900e5so1040436d6.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 03:58:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747652329; x=1748257129;
+        d=1e100.net; s=20230601; t=1747652331; x=1748257131;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VqRNS/AP2L0HYV/XzQMxzhswyBS2iB5hSp0sUNl5kjs=;
-        b=M9Ut3DSa8RevEH9YJ2c4AFzVTrIUpk9IdpONlBou2vNPO4xOafPlddZysGYuBO7gKn
-         DSyMOZLLiaoHypT7kqVEM8kdMGVIYAnbhK/jWN09CQaV0GJ6yjyU0Esp7e8kQkQvUbjT
-         OYdzTGhoSbHIkHfcgA96ffLlfHOI44VQ4oEXSxLnmgtrJy9sHFdcb/7Ctfvz9YNGMowq
-         n+KkAB1TC+iaEVeI632VBzgDSj3ik/xZDZhFIczotgJ8v1Ti05iYT9mGpSiSfATd6iYZ
-         XVL0EEP4V+u6vfraUJB+onx1EOOoGRn1mtaglNgkdsryj6qzuLqIju2nlMNw7ybm1K82
-         1XAA==
-X-Gm-Message-State: AOJu0YzeqiLJZ8NN0nIJ6yqnzDrHRupkpwn+JZ2w2dL43OjDS/kBlsfZ
-	at/taoDT/YpItArbFmb+b4tM0oGCS7zNyhvty0dBC2ApOUeGm7RwFig3lf1Hrm7fQRwJYqHQEaD
-	8oudR2nf9GoYGO0DI8lZm1FESPfnvLqdmgurfwXl37GpSBFeyH+W7p4htlMJkcqcOXV+q
-X-Gm-Gg: ASbGncuxa3R2MtuCwAxFT4r0sLo33iCOs0rn1CSeDvsWBBKK+tyQjc4OOTdWxi6uP6Q
-	6Sfn/uSuH5DYboVjCs/vcePjAgRDZCOLyktWlEHjJFlRbEJaVaYNC1t/P+j2Q9zoJbx/h74gqo+
-	DJA+W3aRAnU7mLfQhWKvVO9m+fOSRXMs6/PmrQFdlp3Xf5W4RqyZQ4FKiOcGUrnXBaTZ1sIohHt
-	t9Tr6NTXUPkpt8UK3sVMe1pRUzp2ugHwzl5H5WIzZgDhD9N0K5/K0KejIC9StNfqhmGfDDmzEnb
-	a6T6uEeBNTam3jpveV4PW50n42VdnSW8ayCjdChovymp0Ppoj87x0iuZaeccvb94KF3r9bgiEsK
-	T3oALyEhOPa9wccVkaRDF2Cjo
-X-Received: by 2002:ad4:4eee:0:b0:6f5:3b8b:9115 with SMTP id 6a1803df08f44-6f8b085299cmr198057966d6.33.1747652329524;
-        Mon, 19 May 2025 03:58:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZ8hMq2kgsgTEUTk7YggTkRUuA47iDtbotHwLHe0Dgywfs65yOnHSbIBuW35N62G91KOkcXw==
-X-Received: by 2002:ad4:4eee:0:b0:6f5:3b8b:9115 with SMTP id 6a1803df08f44-6f8b085299cmr198057586d6.33.1747652329096;
-        Mon, 19 May 2025 03:58:49 -0700 (PDT)
+        bh=P97x1i15pR0DFA8r2mBaSyn//YiqASvzqBgFrFYv0Xc=;
+        b=t/hnJUnDNzHCgaDP69d0o08nkYjZCLXnrp1991tt4gUpxWeirKQgyJLx2QvYs/2c5L
+         7JyYdbrkSG0+/4r5khUn25e/kmgmClAEWtkD+YvJosjmX8qGqht/Tyhp9wuuwYLdTPF+
+         5tfUG5n4H08EzXjspPwPG714X+/Ua9dzujui82XZzzcPVgHqEyGww2aWXe9AvxRjydpI
+         rIPe9EVRLMQdnNEinDCM74xdQ1ki9YCvkJM0njZe5SkLf91ivFQ8GTxG5lcnr39e2Jyi
+         iz7eL5cDLFSF5CzzFnJVPnxueSLw25ztDXrIqgSZuVvUm16lS3QcAKUCcX432UfvrMzb
+         XxbA==
+X-Forwarded-Encrypted: i=1; AJvYcCUVLhV0XzREcc/qwJzxWY+mMHGUw+rgXt6JSNIRteXFYR55fBS6NQ1+bRoifnMhP1QoAEqAPd2mR00CXwMm@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSPojw0feEyBdABqYtOOjD9LrVzcQVgB8E1NciBvS39jOrP8JZ
+	0/37u+SiXsD7co3wVbbiEgRymz0ao4QxEF+LKyknaduu3GYI4O4KJiIU6K2aJcf2I2U4f8MxCUK
+	lEmu6N0z45fijwwLigpQoKh7WtoCAb5UXHWDEmXoKfI/pmwZv3zEnhaaqq2ZnB17D3k86
+X-Gm-Gg: ASbGncuQLGkyzOevynFxYAYb2kA0adRYd5Frkvv/+R7/njf6cbt2J3LznHTFPGrrCDq
+	1qYPEmezZtjVrrNkPq2U31QpBGcU7U6w92GuThvbLvUKpqTbNV/Xz+dLYEozLgxUqY/NfdCdkL8
+	cgeZ2pr4NiwSXklBXoRu8SWuoTqIOsHEO91L0QHXwSe8jRNZU7UMTmBB7IKYO+dySLyDu923tSz
+	13WwNPyITRuoHnztinBN/kvnr33iGhVTdT5i8iO9ii4LC6dGB/gHFNULlD6NjaASXYDEfBFVzUQ
+	9j+LXMrZz7RYHOR0nBVZIueOGhwOjJlMo+kJU8/DKnoTwdeGgk1gnkl30iD+jRHg1WPlNLt4FzA
+	HW7syFuCzIv3Nzu3KFLhBzDKV
+X-Received: by 2002:a05:6214:1cca:b0:6f2:c94f:8cfe with SMTP id 6a1803df08f44-6f8b08b7479mr224935676d6.23.1747652331155;
+        Mon, 19 May 2025 03:58:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHRauQlOm++SfaTq2hFhTkCOAP4U1NEnYr+eOjzxOglAC03Q1vWVud53//B6i/067FYK6Nu1Q==
+X-Received: by 2002:a05:6214:1cca:b0:6f2:c94f:8cfe with SMTP id 6a1803df08f44-6f8b08b7479mr224935316d6.23.1747652330775;
+        Mon, 19 May 2025 03:58:50 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-550e6f314a2sm1801140e87.77.2025.05.19.03.58.47
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-550e6f314a2sm1801140e87.77.2025.05.19.03.58.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 May 2025 03:58:48 -0700 (PDT)
+        Mon, 19 May 2025 03:58:49 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+To: Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
         Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, Konrad Dybcio <konradybcio@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Hermes Wu <Hermes.wu@ite.com.tw>, Dmitry Baryshkov <lumag@kernel.org>,
         Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v5 00/10] drm/msm: add support for SAR2130P
-Date: Mon, 19 May 2025 13:58:34 +0300
-Message-Id: <174637445761.1385605.10286310480029078025.b4-ty@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v7] drm/msm/dp: reuse generic HDMI codec implementation
+Date: Mon, 19 May 2025 13:58:35 +0300
+Message-Id: <174637445759.1385605.11279102681373913656.b4-ty@oss.qualcomm.com>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250418-sar2130p-display-v5-0-442c905cb3a4@oss.qualcomm.com>
-References: <20250418-sar2130p-display-v5-0-442c905cb3a4@oss.qualcomm.com>
+In-Reply-To: <20250423-dp-hdmi-audio-v7-1-8407a23e55b2@oss.qualcomm.com>
+References: <20250423-dp-hdmi-audio-v7-1-8407a23e55b2@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -118,59 +113,44 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE5MDEwNCBTYWx0ZWRfX8dQNkIpfwXQO
- InE6RhEHVxqENGwaab0SFvzBa6rn0ijjitk8b1FcdXGCUV5Y9GzlhFx9IlR+9691SeuU/7yDhgi
- J62mUgWQbt8wBlpD4UNGYXQ5BgqKKnSfo8td9r2BSL2MwN16ZQc9DtxW5Ik0GBRNzXxCinYg0Ri
- tA+/G3vJS1mn8jXS3Woep9SYHY8hs210DMJcCflwabvCA/48G7BCArNP7oQvEgSDy5quoTsY7iR
- ceC0JTrw9vgSPSHvVuIQzpxEhUBclIRl9O3GPsqcPdlltk++il6Eo4lRJa0xNgwjP3Pvahbo002
- ejHs/O1JSte6ugvMXENJ4g+r2wiGoH4HfmyKHQdO5GWQj6NXi2UXMjg5GpjFOFvsO8SHxga1IIc
- +mDuvG93cofTqsvpAAlbduPZqVknX3K1eGDsdIm/ZPs0U8K1uyP6uk/9M3KN5uz36otxs+Xt
-X-Authority-Analysis: v=2.4 cv=Z9XsHGRA c=1 sm=1 tr=0 ts=682b0eea cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=dt9VzEwgFbYA:10 a=e5mUnYsNAAAA:8 a=EUspDBNiAAAA:8 a=iEGPaXCqe01J9_RIJz0A:9
- a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22 a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-GUID: YcnyJPr8cPGAqVcCn7RL-Ggnp_9auDHl
-X-Proofpoint-ORIG-GUID: YcnyJPr8cPGAqVcCn7RL-Ggnp_9auDHl
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE5MDEwNCBTYWx0ZWRfX4tHFe5bYOJeZ
+ SoVjsBT7/MU6SfZAG3LaTcmewDuJiotDCbt/iDiejB1LpT6fbxxi2G0G4iZTjwtWCOHGpKfOF4L
+ X+8t0yyzHEzgksCGSgQ1EXc/hlbNnBAlHX5T98ysZDHeqj5vL/mytxsKUF7TjqshThLJ92upmRh
+ dflRPMWBAruR5HwulvYOeSrjcliag7nSRMiyf/0HbpdfJDsGaTeUoP+rAkKg6cSMVTe/EVMH16e
+ uueumwycyKzhd1WSJhF4lHvRo6ZnoN0flu6XdQ1cbCzFyVM6pO5TSj8rpmgd8olPyT//hoeQAwm
+ lOcV7gDawWbBks3g7iC24xgVoQXiRZkXv8bbHNSrtxiir5/kvc7ZfldwO5U4Jd/WrW/ge3Kh7On
+ 5OOsCwi+fndqCLKopQu585LoqvWmE2VFhvNy/PwAvgW3JJEOHoEe6cCLIaGm3hqwa6I41Tmn
+X-Authority-Analysis: v=2.4 cv=Z9XsHGRA c=1 sm=1 tr=0 ts=682b0eeb cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=dt9VzEwgFbYA:10 a=e5mUnYsNAAAA:8 a=EUspDBNiAAAA:8 a=ElSFvC5XDyh-nl6B9PUA:9
+ a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22 a=Vxmtnl_E_bksehYqCbjh:22
+X-Proofpoint-GUID: RlkInjhg72a4lMVJ2lZwAqKCWZLwqr-O
+X-Proofpoint-ORIG-GUID: RlkInjhg72a4lMVJ2lZwAqKCWZLwqr-O
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-19_04,2025-05-16_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 mlxlogscore=874 mlxscore=0 priorityscore=1501
+ phishscore=0 lowpriorityscore=0 mlxlogscore=877 mlxscore=0 priorityscore=1501
  adultscore=0 impostorscore=0 bulkscore=0 suspectscore=0 clxscore=1015
  malwarescore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
  definitions=main-2505190104
 
 
-On Fri, 18 Apr 2025 10:49:55 +0300, Dmitry Baryshkov wrote:
-> Add support for the Mobile Display SubSystem (MDSS) device present on
-> the Qualcomm SAR2130P platform. The MDSS device is similar to SM8550, it
-> features two MIPI DSI controllers, two MIPI DSI PHYs and one DisplayPort
-> controller.
+On Wed, 23 Apr 2025 20:52:45 +0300, Dmitry Baryshkov wrote:
+> The MSM DisplayPort driver implements several HDMI codec functions
+> in the driver, e.g. it manually manages HDMI codec device registration,
+> returning ELD and plugged_cb support. In order to reduce code
+> duplication reuse drm_hdmi_audio_* helpers and drm_bridge_connector
+> integration.
 > 
-> Note, due to the technical limitations DP controller wasn't completely
-> evaluated.
 > 
 > [...]
 
 Applied, thanks!
 
-[01/10] dt-bindings: display/msm: dp-controller: describe SAR2130P
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/b341da1172fe
-[02/10] dt-bindings: display/msm: dsi-controller-main: describe SAR2130P
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/3c70c9d0a99d
-[03/10] dt-bindings: display/msm: dsi-phy-7nm: describe SAR2130P
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/262650e71854
-[04/10] dt-bindings: display/msm: qcom,sc7280-dpu: describe SAR2130P
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/759fe7181723
-[05/10] dt-bindings: display/msm: Add Qualcomm SAR2130P
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/3096209b7a62
-[06/10] drm/msm/mdss: add SAR2130P device configuration
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/1e7cbfea6624
-[07/10] drm/msm/dsi/phy: add configuration for SAR2130P
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/8e63b2075e01
-[08/10] drm/msm/dpu: add catalog entry for SAR2130P
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/178575173472
+[1/1] drm/msm/dp: reuse generic HDMI codec implementation
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/98a8920e7b07
 
 Best regards,
 -- 
