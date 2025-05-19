@@ -1,204 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-58463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A6E0ABBF5E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 15:41:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 78DB0ABBF91
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 15:45:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 82DE71B60133
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 13:41:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 405631B62593
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 13:45:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61D9827A13F;
-	Mon, 19 May 2025 13:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA774280A20;
+	Mon, 19 May 2025 13:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="noZrZf2b"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kIUFAD3a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968C227A132;
-	Mon, 19 May 2025 13:41:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0246A280002
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 13:44:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747662086; cv=none; b=MIrr4ljP2OIMxdojMOt7USoZ17rMoPBBk76bdYoQV9rUqlQGR5ERK8cqGJzukdQJaB6dv2iS65RnKncKXVyyyulC86WyHtGPP6KjJ7KzuYuLtmvBMUv8OvEr2DRlPsXiO/mDdnuJurqLk9cM+k1tW5Tv7fBK8xyK3VwDkOyOtbo=
+	t=1747662256; cv=none; b=iobRitUFxo8jFRDHLY1DI5rkRThabcBmgdy48FOdm5tXvMCNe5LQof51uchOVGsXJbAKtGO4VvcHDoXFDQNa6j+fBH2L0npnRMcu1+o7z3Osyc+eZgzRLUJSGnkeJgW2dqnzAGk+xYuDCx/oZaNAGtykQmtju+n5Uqn0ujgCkGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747662086; c=relaxed/simple;
-	bh=3IS3Ncoc5c73n48DFKYqt3CL6SCqQYzG/GBDtDeZIrs=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=c0jXq2eWHnMuNFEWnsV6JcRPIxBYxy8SHBL0OBLT710a8a6WawYQp9MuaATYQdBmzDd04jOKGRTh3JY8ZnIt89gB2FU6VsVVZShzHO3BHFvMNUu5dn/aUtZAzBjRaU1Q6fH1rCvFR9U6mREFPWtHT3Jcr99AV9FyIVJAzjtuLuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=noZrZf2b; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1747662085; x=1779198085;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=3IS3Ncoc5c73n48DFKYqt3CL6SCqQYzG/GBDtDeZIrs=;
-  b=noZrZf2bN8FcuC2JuLEwA5gcbs3U22TF0QkXoUyEKon8TB8wt07fCWSd
-   MzSSTyZQdpazuG3B7i1W4MsBhoFN3Ck6XvFglf7tSdeCkIoWUCOfUj0KU
-   LJ9ZTQMmYkuObxHie4v/U33amPmy2eFlT6+svUqSKCnxCb6v+2nNAZ7Rr
-   y6T1yqXX+RJWGJU5TQLrl8Cc8mnykVMWQbvgSimrlhxBuH6dOIWd+EYny
-   f1ezqx4Bmmf5NqpVJOLdFm5yuC8eBTAYXK5RA7fwZ6J8lYVmUzVRVwN7s
-   ZfxeecIkesvZky5BRDXoPq9szPFQW2YcurDMyFRBxHFhoN9x7YZKZQ6Sz
-   A==;
-X-CSE-ConnectionGUID: R83+RC8YSQervXr/7TZzUw==
-X-CSE-MsgGUID: oArhUDdDSVqjX/DeqmiK+g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11438"; a="72068377"
-X-IronPort-AV: E=Sophos;i="6.15,300,1739865600"; 
-   d="scan'208";a="72068377"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2025 06:41:24 -0700
-X-CSE-ConnectionGUID: xiCe6jHWSFiukJ+4d5r18Q==
-X-CSE-MsgGUID: QIi+kBBLR+qVO64ODwwDrA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,300,1739865600"; 
-   d="scan'208";a="139269228"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.35])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2025 06:41:18 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Mon, 19 May 2025 16:41:14 +0300 (EEST)
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-cc: Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
-    Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-    Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kw@linux.com>, 
-    Rob Herring <robh@kernel.org>, Johannes Berg <johannes@sipsolutions.net>, 
-    Jeff Johnson <jjohnson@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-    linux-pci@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
-    linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, 
-    linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, 
-    qiang.yu@oss.qualcomm.com, quic_vbadigan@quicinc.com, 
-    quic_vpernami@quicinc.com, quic_mrana@quicinc.com, 
-    Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: Re: [PATCH v3 02/11] PCI/bwctrl: Add support to scale bandwidth
- before & after link re-training
-In-Reply-To: <20250519-mhi_bw_up-v3-2-3acd4a17bbb5@oss.qualcomm.com>
-Message-ID: <2a539ddc-95d6-7c37-4cfe-3a54ffce0861@linux.intel.com>
-References: <20250519-mhi_bw_up-v3-0-3acd4a17bbb5@oss.qualcomm.com> <20250519-mhi_bw_up-v3-2-3acd4a17bbb5@oss.qualcomm.com>
+	s=arc-20240116; t=1747662256; c=relaxed/simple;
+	bh=yolDzczYpjPodf29Rfbyb9DI2HpvxGwqgiLVvEp10jc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=DnxS3tNvy9euBDokxjWHbDR4tNBMeq+lThTtM6ETydtgL825vJjMHopUlBV2mpfE+Mp+NiiOEdYGw6yWvr+/0Vr3hVvQqEfFEcmk6mtPa9vwhINEJxRSzvO9zh2qHw7MZpu3EOz1rwJJPsLTyDJAsnuRSWZEi3mMEqTcyu5oliw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kIUFAD3a; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54J9Mb5S000806
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 13:44:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=xRZkj0PsbJSbrYHAqES7DG
+	XowTaGFY8sh3Gy0YZ8AWg=; b=kIUFAD3aULLaEX9l0oph1yfdN3gsuTdSGmaJt8
+	dE+KVxnDUXIHcNYzQGoy87z/uTS30P0DDTNRe7fwdLiZaG3o1qzOmsBSi84KTOzr
+	cOXWOy1xKIRk4BXHHbN8FhzcD1kkwZD6kcBdJSe4MTewKrMQTyMAuICHhfMa2xa/
+	i/HL9USX6o/A4cxMU5YmkTJCUl471LsseroYxemPg+SVJk27xQHTbb8Qu6u9KRh4
+	1Bi2yWrCrwVM+IUNSUrcvZNbXqKySyrt87IfnzeQ+iBfpquPaqgR6gRb1b0LV0WR
+	aUK1U1kb91vOiLaDM998UUY7MCoc3NGbLYKzWwY5YepEmh7w==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pkr9vh1u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 13:44:13 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-742d077bdfaso1360262b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 06:44:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747662253; x=1748267053;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xRZkj0PsbJSbrYHAqES7DGXowTaGFY8sh3Gy0YZ8AWg=;
+        b=uEU2UD1UnB9MPKFmfE4HhoJTGncf9Koaoc/URNHnXTdtG+Qvwy9m8ZcjYqrsC2TiF2
+         Ks5cumUNCWfT8VyMXt4wbIZ/1Htkry+20vF097nPq8HriE6FS4HpB8+POHd0OxRrQ8eH
+         FvLtRpHBFLPO1enJcQywm3ZXn8J4YMGv/5leJ1wHyywsRf9GKckPvi1oMtXRVZAwnDj0
+         9DAzXNHMZifV0OHz8ujzrkBa4ZSpXHZf4AIbHXPhPO8GxHxfEsqdA99cG6oywSDc2pss
+         53vERS5u//YCDXlU+aAggcT+IX+kEm28kfIFoB4ZhJZvwNdFMPi65ZeTIthS1bVMCRZM
+         XQiA==
+X-Gm-Message-State: AOJu0Yxi3gcQIWXH4FShS34CDBPYZIQVQcYP4favTfuP0BYCxBKFdLZ3
+	ZA/rzY/ERonFjHkI/EazQtQXsgT303B+xsfwzaJug2GbZY5D/ViT2NP2eyxebmraYREYp6Av175
+	h4ui/opceLQ8rpFhEfT+JAkAoOu/zylOKB6A59ypJvAHTA74YTuGPhUYAfw/dtbcH6dv2
+X-Gm-Gg: ASbGnctaUt1caLIUE9NnJyDOAH9EC6vNhT2UP9aiMbZc5GT+TxHRmKqCH7XQNNWkSBL
+	xXXcpdmmgmWFbLjcoDaLHDC+Kky0UMtg4ZBSu8xOgKw0H+9fzNQHiBV6/dg7ZisZeOF7xAu7oJk
+	zCpnw/y9W/IJ63NCZv+BP5yfNGzRU3Y2HY3do96HDUNE5Oug2eYmVyPYuV4n6WXZDcmlOYlJSBt
+	Dpt0ju2lL5D/E01H1oiJK9ugoyik9kSGEN/BXH4/K8BnOstwca543ETUh7mS/rWpuCP7pxe7O1N
+	vDX6UXs8K1eLqIGphAf3ZPcbEXzRqMKNwRZpX8wsWgcq2qo84idAm4To53KGEzG/K+IZvUusZU3
+	K/jl9xOSe5PQLpZnyFgWsI/Zsw8MpGuVbZhtn/Bjk5/19AW4=
+X-Received: by 2002:a05:6a21:6e4a:b0:1f5:67e2:7790 with SMTP id adf61e73a8af0-216218c9b00mr18986026637.17.1747662252950;
+        Mon, 19 May 2025 06:44:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGigiSPG56p4nzNA806fGLVPlqz8iHmGoh9R+kqK0uOaBp+WtDnh7QYxYoYPX/S8Opata9wyw==
+X-Received: by 2002:a05:6a21:6e4a:b0:1f5:67e2:7790 with SMTP id adf61e73a8af0-216218c9b00mr18985987637.17.1747662252576;
+        Mon, 19 May 2025 06:44:12 -0700 (PDT)
+Received: from hu-kathirav-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a9829c7asm6224051b3a.85.2025.05.19.06.44.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 May 2025 06:44:12 -0700 (PDT)
+From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Date: Mon, 19 May 2025 19:14:01 +0530
+Subject: [PATCH] soc: qcom: socinfo: Add support to retrieve TME build
+ details
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250519-tme-crm-version-v1-1-a6dceadc10aa@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAKE1K2gC/x2MSQqAMAwAvyI5G2gr4vIV8VBi1ByskkoRxL9bP
+ Q7MzA2RVThCX9ygnCTKHjLYsgBafVgYZcoMzrja1LbDc2Mk3TCxfi56S433FXHrDOTqUJ7l+o/
+ D+Dwvm8Gba2EAAAA=
+X-Change-ID: 20250519-tme-crm-version-a1c7aa3ce820
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747662250; l=1476;
+ i=kathiravan.thirumoorthy@oss.qualcomm.com; s=20230906;
+ h=from:subject:message-id; bh=yolDzczYpjPodf29Rfbyb9DI2HpvxGwqgiLVvEp10jc=;
+ b=hqd+Frb16y2/LvEKRCK5XyT3xzYM+U1MeoW7Z9/rtXv9jRgvhAzxVi1Q4xpKncJnRsyi1tuHg
+ kE4F9JRgGbJAEc6RNKsy4QZMj7aqeR6PBqCFCqI9GWMKITIRloUnrxI
+X-Developer-Key: i=kathiravan.thirumoorthy@oss.qualcomm.com; a=ed25519;
+ pk=xWsR7pL6ch+vdZ9MoFGEaP61JUaRf0XaZYWztbQsIiM=
+X-Proofpoint-GUID: X6jLP8HChd39CBQzoudAXK4e7c4NYfXG
+X-Proofpoint-ORIG-GUID: X6jLP8HChd39CBQzoudAXK4e7c4NYfXG
+X-Authority-Analysis: v=2.4 cv=DdAXqutW c=1 sm=1 tr=0 ts=682b35ad cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=0tr5gUXQH48V7W0Z41EA:9
+ a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE5MDEyNyBTYWx0ZWRfX9UlUa6OkIuF4
+ wb6DGBcxeetOzog57LELqSFZmDIwWkjl54OdfHxyRN2vfMgeoYZQXeM6Yr+GJnfos7xuug8XW98
+ s/IRkmryVp798VXyJjGqVz9x7kOoiFN/HyRJgOuQUtvzjcY4SazYJkobOyOfL0/eOthAXGlurI1
+ ppZheXaucSLlb+vSExcXluMcWxF9Oy2upYP0hNR1Jf/DpCXfiqFjzf1TxmXwhQ/5OX6KgYwH4iX
+ HBLv7JyZUa19tpYJWURwBtWTSv+blAdpZgiZJrolKnkmINvJH3ydGH2CGgih4HBIj7tD4J8Acof
+ 2K84LgRa7bEJuOQv9g8vHG05UMkt5uSjPBAHnMblE03MtkhRiQMqWzm3+VQ3clS4H13L/5e/I0B
+ /QIWqn1vbHAxvUvsQ1M+fl+mTrJ7TlTW4ZeayGWFzxVQ7Y8MRSYJdk0HHqBkFxdgCuK88t4g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-19_06,2025-05-16_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=839 clxscore=1015 phishscore=0 adultscore=0 mlxscore=0
+ spamscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 bulkscore=0
+ impostorscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505070000 definitions=main-2505190127
 
-On Mon, 19 May 2025, Krishna Chaitanya Chundru wrote:
+Add support to retrieve Trust Management Engine (TME) image details
+from SMEM, which is present in the IPQ5424 SoC.
 
-> If the driver wants to move to higher data rate/speed than the current data
-> rate then the controller driver may need to change certain votes so that
-> link may come up at requested data rate/speed like QCOM PCIe controllers
-> need to change their RPMh (Resource Power Manager-hardened) state. Once
-> link retraining is done controller drivers needs to adjust their votes
-> based on the final data rate.
-> 
-> Some controllers also may need to update their bandwidth voting like
-> ICC bw votings etc.
-> 
-> So, add pre_scale_bus_bw() & post_scale_bus_bw() op to call before & after
-> the link re-train. There is no explicit locking mechanisms as these are
-> called by a single client endpoint driver.
-> 
-> In case of PCIe switch, if there is a request to change target speed for a
-> downstream port then no need to call these function ops as these are
-> outside the scope of the controller drivers.
-> 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
->  drivers/pci/pcie/bwctrl.c | 15 +++++++++++++++
->  include/linux/pci.h       | 14 ++++++++++++++
->  2 files changed, 29 insertions(+)
-> 
-> diff --git a/drivers/pci/pcie/bwctrl.c b/drivers/pci/pcie/bwctrl.c
-> index d8d2aa85a22928b99c5bba1d2bcc5647c0edeeb6..3525bc0cd10f1dd7794abbe84ccb10e2c53a10af 100644
-> --- a/drivers/pci/pcie/bwctrl.c
-> +++ b/drivers/pci/pcie/bwctrl.c
-> @@ -161,6 +161,8 @@ static int pcie_bwctrl_change_speed(struct pci_dev *port, u16 target_speed, bool
->  int pcie_set_target_speed(struct pci_dev *port, enum pci_bus_speed speed_req,
->  			  bool use_lt)
->  {
-> +	struct pci_host_bridge *host = pci_find_host_bridge(port->bus);
-> +	bool is_rootbus = pci_is_root_bus(port->bus);
->  	struct pci_bus *bus = port->subordinate;
->  	u16 target_speed;
->  	int ret;
-> @@ -173,6 +175,16 @@ int pcie_set_target_speed(struct pci_dev *port, enum pci_bus_speed speed_req,
->  
->  	target_speed = pcie_bwctrl_select_speed(port, speed_req);
->  
-> +	/*
-> +	 * The host bridge driver may need to be scaled for targeted speed
-> +	 * otherwise link might not come up at requested speed.
-> +	 */
-> +	if (is_rootbus && host->pre_scale_bus_bw) {
-> +		ret = host->pre_scale_bus_bw(host, port, target_speed);
-> +		if (ret)
-> +			return ret;
-> +	}
-> +
->  	scoped_guard(rwsem_read, &pcie_bwctrl_setspeed_rwsem) {
->  		struct pcie_bwctrl_data *data = port->link_bwctrl;
->  
-> @@ -197,6 +209,9 @@ int pcie_set_target_speed(struct pci_dev *port, enum pci_bus_speed speed_req,
->  	    !list_empty(&bus->devices))
->  		ret = -EAGAIN;
->  
-> +	if (bus && is_rootbus && host->post_scale_bus_bw)
-> +		host->post_scale_bus_bw(host, port, pci_bus_speed2lnkctl2(bus->cur_bus_speed));
-> +
->  	return ret;
->  }
->  
-> diff --git a/include/linux/pci.h b/include/linux/pci.h
-> index 51e2bd6405cda5acc33d268bbe1d491b145e083f..7eb0856ba0ed20bd1336683b68add124c7483902 100644
-> --- a/include/linux/pci.h
-> +++ b/include/linux/pci.h
-> @@ -601,6 +601,20 @@ struct pci_host_bridge {
->  	void (*release_fn)(struct pci_host_bridge *);
->  	int (*enable_device)(struct pci_host_bridge *bridge, struct pci_dev *dev);
->  	void (*disable_device)(struct pci_host_bridge *bridge, struct pci_dev *dev);
-> +	/*
-> +	 * Callback to the host bridge drivers to update ICC bw votes, clock frequencies etc
+Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+---
+Note: On IPQ SoCs, the Trust Management Engine is referred to as TME-L
+(Lite). Other SoCs from different business units may use variants like
+TME-M. For consistency, the image name is retained as "TME".
+---
+ drivers/soc/qcom/socinfo.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-BW
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index 8c4147737c35e3878db2def47f34c03ffc1fea52..391380820f082d8daa5c764d5f3c44e6240e18a2 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -48,6 +48,7 @@
+ #define SMEM_IMAGE_TABLE_CDSP1_INDEX    19
+ #define SMEM_IMAGE_TABLE_GPDSP_INDEX    20
+ #define SMEM_IMAGE_TABLE_GPDSP1_INDEX   21
++#define SMEM_IMAGE_TABLE_TME_INDEX	28
+ #define SMEM_IMAGE_VERSION_TABLE       469
+ 
+ /*
+@@ -67,6 +68,7 @@ static const char *const socinfo_image_names[] = {
+ 	[SMEM_IMAGE_TABLE_CDSP1_INDEX] = "cdsp1",
+ 	[SMEM_IMAGE_TABLE_GPDSP_INDEX] = "gpdsp",
+ 	[SMEM_IMAGE_TABLE_GPDSP1_INDEX] = "gpdsp1",
++	[SMEM_IMAGE_TABLE_TME_INDEX] = "tme",
+ };
+ 
+ static const char *const pmic_models[] = {
 
-> +	 * for the link re-train to come up in targeted speed. These are intended to be
-> +	 * called by devices directly attached to the root port. These are called by a single
+---
+base-commit: 8566fc3b96539e3235909d6bdda198e1282beaed
+change-id: 20250519-tme-crm-version-a1c7aa3ce820
 
-Root Port
-
-> +	 * client endpoint driver, so there is no need for explicit locking mechanisms.
-
-Endpoint
-
-> +	 */
-> +	int (*pre_scale_bus_bw)(struct pci_host_bridge *bridge, struct pci_dev *dev, int speed);
-> +	/*
-> +	 * Callback to the host bridge drivers to adjust ICC bw votes, clock frequencies etc
-> +	 * to the updated speed after link re-train. These are intended to be called by
-> +	 * devices directly attached to the root port. These are called by a single client
-> +	 * endpoint driver, so there is no need for explicit locking mechanisms.
-> +	 */
-
-Please fold comments to 80 characters.
-
-> +	void (*post_scale_bus_bw)(struct pci_host_bridge *bridge, struct pci_dev *dev, int speed);
-
-I still don't like the names. Maybe simply pre/post_link_speed_change 
-would sound more generic.
-
-Not a show-stopper but the current name sounds pretty esoteric.
-
->  	void		*release_data;
->  	unsigned int	ignore_reset_delay:1;	/* For entire hierarchy */
->  	unsigned int	no_ext_tags:1;		/* No Extended Tags */
-> 
-> 
-
+Best regards,
 -- 
- i.
+Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 
 
