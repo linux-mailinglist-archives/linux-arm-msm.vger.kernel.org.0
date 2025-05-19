@@ -1,183 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-58450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A1E7ABBD83
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 14:16:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3C26ABBE0B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 14:37:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 270F117CC63
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 12:16:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 03351189C31D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 May 2025 12:37:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8075F277029;
-	Mon, 19 May 2025 12:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B7D220C00E;
+	Mon, 19 May 2025 12:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="I0vycz/6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kFP3E5nz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFDD1714B3
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 12:16:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B926279356
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 12:37:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747656980; cv=none; b=J6IucWOa5KC4ISAz4xKzE8TmcLJttcXQP+/RmC8jtcRpG187eCq8fq/aY9Q2WJQNODQ/6jTH1lDsOa5xoFxUsRA7rXUXpOZEdD96MyO/cG9PFsC+FM26yTQbJyT9mKpFPdFTHLwCWT8xwexF3RkVDJINy/RYai8kCuLVbXsE90o=
+	t=1747658247; cv=none; b=DH33I88EVFJBgqZxkKg8RQ6CS/GM9qfmoMX9+NYzMK5+NLZ5LGcla83p081Zl0zAi9ZoEqAHhXvqeM4l20DT0HYp0OJKpouBQdmLA/KGwVKAyC4+k2bAz8YwyP9z/aUUgFFiuPP5+td1VKkzMoErcoglMwL3fiQd699b/gnuUiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747656980; c=relaxed/simple;
-	bh=u4G4v/3QWDx7UFXsSJeLbnLzxethnDdnhnF/yuDl88A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l7S1NnvuCPCzF/VvVhgSYKsw5BJ88S8rqrZcB/tVBBvL30msXxzUOopTGrC7FZjvZVlJOT5VYFZB5rUt0NakSBJKVDmlz3YJDcr7E3ro6V9B+7KMMvvBDcQEJ4F46kiH01gw/QEpGvB8WPsBQjrX+F5Em476bsyrL9qzEH8TQhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=I0vycz/6; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54J9Xo77023467
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 12:16:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	u4G4v/3QWDx7UFXsSJeLbnLzxethnDdnhnF/yuDl88A=; b=I0vycz/65xIbhlSZ
-	HzJdZQqIWkMD+AWh9lNYeHIMQpSisW3Q51HE6Lm9ZvXoo6XmZD3R4DmHVqPWBlhV
-	V9E2kysF9y2xZm4yBj7nZbyAHwghU4cq/9Zd3cN5Vva2r2crxry/NWsZse6PV+rL
-	JTNM5R//ur4WxUPn3AIK7iAZF254iPPzzqPWen2N9e79Yf4htVsZbDoyWzYGqK4+
-	2T4lyb0EGkIpLiaRcCrWPqC6vGehKRbtw8oVQg52a7bdR3mHsowDjO1dtBAbBGPf
-	26RA+2sIxpYKiPb3+SCJTXfUres6F7mVVzA0qM+c288fvq2+/nzwovk+/wEbeA52
-	qJkv+w==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pju7c9df-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 12:16:17 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-23222fdb4f2so23574775ad.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 05:16:17 -0700 (PDT)
+	s=arc-20240116; t=1747658247; c=relaxed/simple;
+	bh=AbuXatVFzppSvZX8Et0Ft0+ymczP6Jt4xh0ApfvPav0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sO/pQsijwZsrZ62As2+TqiJByp/lcQizs5g8OVG7NTFSmGnWI9hF87Pyqb8wy/FqyuYmo24Yf2csBL1oumrQT9+JBMs0NTvlHTJkqoI7akzpIiMRogrZsldq/kTQpVHMPaLIshu58kaT474jYyu7fQL8+4oBXxRlFeiB7xFJufg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kFP3E5nz; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-601968db16bso4124037a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 05:37:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1747658244; x=1748263044; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bGruH2OWyN5Kdhy7bKxvrOX/NNRx5g3JGk/NfDWwg9E=;
+        b=kFP3E5nzsGV3r6yqnDBKrhPoiOr+9wmzrao1NWjVSR8vx+tPHloHMGa4hDtKqDzCD9
+         V8XzlwStzNTNKrFoB6e1blpG2/Z5F8fVhjwBoEZWOqU4Gh5AcBGWW9rLTHH4YIIG8poM
+         qqQug9BfjFHA0mVRe3lsCGWylOHBl+Iy4Yu/rMtSE89qW+lKvOrxmbTHYyXjPsmO9CW3
+         JhcIhXfnFJ0JaXQWOrKxF3SpB/bfFY38yvMYTutwxmcPqDiaeJIXxm9wuQJxgY1RXrBj
+         gjkeHau3HNCHFfmtM7+jj8l2v8czXo0tKqvLllx9J4hw9uzlEE2LbmtEem5JfQS4fsq0
+         mZng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747656976; x=1748261776;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1747658244; x=1748263044;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=u4G4v/3QWDx7UFXsSJeLbnLzxethnDdnhnF/yuDl88A=;
-        b=b2IG6ztVk4GV/JbzkIAuSn6DdAQW3Wa4G3eJxe11XbDUVYBZyIMtrIDhIfgI+fxFcu
-         I+H/TuVGQ/5ZDeJTmYUJVdVp3SbtVSh4EdtIrQfdB2Ot9vYdeVEbrjJqJ/fU86zlToEA
-         Ei9RQTg1+C8JGBF27O/9+drVOxYvUh2HggWvw4KXMASEwsyy6N2BIZOKgtEToo6h6aR6
-         6gL7oG5lGqoxw6qHJh16PQD7TLf1cDYQH7o3YyvZ3unU+01baDlkp4kO6SSHn93kBf0q
-         nylRk5+1Qbqr6qC3kDYmTtwV+ihiS63yViQxSFtfxp3PcAGeZoHL/bg3fQYPx4pxxPLr
-         UhNg==
-X-Forwarded-Encrypted: i=1; AJvYcCXJTVKdRXeeGNkyfh3cAsCW2ivnbQPmP9DxzadcD+T+G4nTZF13y2zSzKIx82FniJuC+b6YlsHGl2kUKE1l@vger.kernel.org
-X-Gm-Message-State: AOJu0YxEHTMs5VfCEqKF4w0xkdZI2rkiltYSPWxm0jlHornpoexnILTe
-	g0Ebl+UMoK5eGLf6blJS7UxbafhqykTJPL9/0hfMTao60awuJ0wB1Njvtu/2YfH/yt9pcZvgxdk
-	7A445qjH4bAHRj1rGGaK7ZiaYxNAuz0Oe3LamaIBSjMXOhiorwhKUe/SsljC3pizb1nl16u6tEX
-	DsuR3WJUTl0j1s511zNSGdlIcUBrUvYjgKKfUT623izLY=
-X-Gm-Gg: ASbGncuFJYrEqiGee2PdGbdBFZMn3HSjCxFjg0sw+QYkVCGejDRE58znhDHIJaySxrF
-	Hx8WA2X+KhlToPBh1jkCdaJOMPbF8r+0kQwSNYZsA7XqLd897u2IGYdsu09s+3LfaQhUvZA==
-X-Received: by 2002:a17:902:e801:b0:231:7f29:bda0 with SMTP id d9443c01a7336-231de5b0ba7mr160018275ad.52.1747656976198;
-        Mon, 19 May 2025 05:16:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEHd8pbYGLE6SycYb8UZ6wrWsr0sYw3IPLE+tXeV+ix6q6M438C0T4/cbceiUfp/qjiHUeu+4uzOdIUmRTLGKQ=
-X-Received: by 2002:a17:902:e801:b0:231:7f29:bda0 with SMTP id
- d9443c01a7336-231de5b0ba7mr160017815ad.52.1747656975770; Mon, 19 May 2025
- 05:16:15 -0700 (PDT)
+        bh=bGruH2OWyN5Kdhy7bKxvrOX/NNRx5g3JGk/NfDWwg9E=;
+        b=q0ZLpiq7/QyPT/wzbewRNteag1cRaNBnGrWixNcneQnMuxZCVaS9IQoZsuS3sX3xsr
+         Ha9w0EThRLlwYPWRm7A+GiGXlXA4ismP55G4D2YAZCWsZ6g80pz5cDtuMRPsEMuxnRlu
+         EqlvuXEt5Atzrf5oLQT92Z1BBSfY1tGfcbaF7T0lGEyHviyQDfEbmVkK7VHMxPqbIl/Z
+         tNAjY4MPCHJ9GNEGhOQy6R00Ge0HvF0heDYtxYItAGyItmWZW2Geb+PTFivoc5jKhaCe
+         wYzvL+QhUjS4gqTznf45QB++5o1qG5m89oQfg77XmAYl63Fd/IUHnIBxpzZZr1kytRtu
+         vLnw==
+X-Forwarded-Encrypted: i=1; AJvYcCXXVT2+8QDzBAljwS7VbVJO7uVNEO/TfvAwhcvi/QDLp9PdeEWO3YCAuZlf/40NErBrel1jih/xcXCJqaTk@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy9iMNjYp13OHpzKg4nI+tNbO+rWZZ1Po3R5mSR9ZEqe+/zDCKe
+	jk4kofHa1BuwGCHhpyUES/dLmFWc83z/0OszPD3TzwxK05PMPMhJl4/SjPpGgEoMZg==
+X-Gm-Gg: ASbGnctEKFPgeNxTV+fXr2Yeff/r9NDBhFPzaifa87hjEMlrA88wjMWcA5KVG/ZzFCO
+	O2Sp89DaoWOsxQfx22zGvUw8L/nxPjh07OXMDT/wjN7ufqPG29K4B+dZPgUk49YcIpYmvJk+Zcd
+	1aa3UE4fq/lzoDxObwKU8mkfOIxhC49mIaa2MasLEVBrUYFg8aiAtv4nBsYnq2WI9cPhMD4WjGO
+	6TLDKbZvxWuYCQh+UtfBjhXWrYQ4qp4h4kYKM4bAn5QyWCfj3HmzGnqXsdghzJsDTWjDFlnV0AH
+	cVeaGOlPXNhnvcZ8mm77vG/tGwqjnkZqljY9ge6jZvpeUoP1CR5Z2lxhSvBfip5SKyiTy+5JI1n
+	IOz+eGC+x6oWbU8P9hvHdQsZdUeIsBxh0Jqgh3yCikBraWbEvEaYoJ0pnd+fmRT5+YpU=
+X-Google-Smtp-Source: AGHT+IEJuSH8cyFiHfFYB8+TPURo7EpATg7AlDroWHzASyTyrwqYV4s/mzXF21Rux5m6FuouAAfVig==
+X-Received: by 2002:a17:907:1b0f:b0:ad5:5293:f236 with SMTP id a640c23a62f3a-ad55293f282mr759959666b.3.1747658244437;
+        Mon, 19 May 2025 05:37:24 -0700 (PDT)
+Received: from thinkpad.homenet.telecomitalia.it (host-87-20-215-169.retail.telecomitalia.it. [87.20.215.169])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d4967e2sm580970466b.128.2025.05.19.05.37.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 May 2025 05:37:23 -0700 (PDT)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Niklas Cassel <cassel@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hans Zhang <18255117159@163.com>,
+	Laszlo Fiat <laszlo.fiat@proton.me>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 0/4] PCI: dwc: Link Up IRQ fixes
+Date: Mon, 19 May 2025 13:37:18 +0100
+Message-ID: <174765807809.8857.13152215627311569796.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250506073934.433176-6-cassel@kernel.org>
+References: <20250506073934.433176-6-cassel@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250514-update_phy-v2-0-d4f319221474@quicinc.com>
- <20250514-update_phy-v2-2-d4f319221474@quicinc.com> <8ba99df8-012b-4883-af6a-970dd9f877f6@linaro.org>
- <f5e1510f-3496-4f5e-b093-623d3b4be428@oss.qualcomm.com> <CAMyL0qPH2r8oXOrNp3jF-nBJCRCZzJr8rYrHn+Yp0MHR0Wy-vw@mail.gmail.com>
- <bpc4tsp4kghqohoxm42qls7gzd5me7xrpodmazyhpvjjlkkay2@paoq5zygczdd>
-In-Reply-To: <bpc4tsp4kghqohoxm42qls7gzd5me7xrpodmazyhpvjjlkkay2@paoq5zygczdd>
-From: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
-Date: Mon, 19 May 2025 17:46:04 +0530
-X-Gm-Features: AX0GCFvgmiM69A2CqrAIbnHrTDa4cVJKrTijAb5UUN_qj4VtV9AOkvTBIyXtUYc
-Message-ID: <CAMyL0qNQWN1ORReZu3wrw_Ex+nAmAJxhTMCt4Jw6PyEN4tEtGQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sa8775p: Remove max link speed
- property for PCIe EP
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, krishna.chundru@oss.qualcomm.com,
-        quic_vbadigan@quicinc.com, quic_nayiluri@quicinc.com,
-        quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
-        Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=XKEwSRhE c=1 sm=1 tr=0 ts=682b2111 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
- a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=12gvMKcd2kyX8A_DGUMA:9
- a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: bAQR_NsoIv_mqeLSyvZElerWFhR-iTR4
-X-Proofpoint-GUID: bAQR_NsoIv_mqeLSyvZElerWFhR-iTR4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE5MDExNSBTYWx0ZWRfX+K4SDsMzoGkU
- XnjZublKwgFaPyFhxMf9tnJMUarrN9C4WipbRnX5lstQE5DLhkeZmscXac998Gfel8lJItL1sCC
- sykyfIgnHjUbzbQT3V4OKDzWelym2Q2OnSiWyfpE05NQCdyj3HEE6scSEXiZ1yaySKnxVN84nn8
- LAmJ7Ywv95GCb//2MtKrfRUbck3eLarA6tizkLYsJXAG8f0Eh1RBw0Kqlr6SkdsOZAS3V137r7N
- vSCoJS1u61VO1d9XBJWkDMZhR/opG53ZS0jRe63KzCcIll3QqLZFEYCxgtXo9p7DWQ/mJxC23iM
- 4EfAnPJWb5SqYdAOeYxPOSaR2rmJi09r9pC7uSROT5MhLjqbEsLNjP19DHhRNrKT5wTNgvF8sOf
- HhvTf66ds2IGnU/4pTGnutmjbuT9l+Y1z5BNyUEHmXb3EkqGrmTfFUKc2mbFkZXUgG0DnExd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-19_05,2025-05-16_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
- spamscore=0 suspectscore=0 malwarescore=0 adultscore=0 mlxscore=0
- mlxlogscore=999 phishscore=0 bulkscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505070000 definitions=main-2505190115
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Sat, May 17, 2025 at 3:33=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> On Fri, May 16, 2025 at 03:59:02PM +0530, Mrinmay Sarkar wrote:
-> > On Fri, May 16, 2025 at 2:30=E2=80=AFPM Konrad Dybcio
-> > <konrad.dybcio@oss.qualcomm.com> wrote:
-> > >
-> > > On 5/14/25 6:38 PM, neil.armstrong@linaro.org wrote:
-> > > > On 14/05/2025 13:37, Mrinmay Sarkar wrote:
-> > > >> From: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
-> > > >>
-> > > >> The maximum link speed was previously restricted to Gen3 due to th=
-e
-> > > >> absence of Gen4 equalization support in the driver.
-> > > >>
-> > > >> Add change to remove max link speed property, Since Gen4 equalizat=
-ion
-> > > >> support has already been added into the driver.
-> > > >
-> > > > Which driver, PHY or Controller ?
-> > >
-> > > Controller, see
-> > >
-> > > 09483959e34d ("PCI: dwc: Add support for configuring lane equalizatio=
-n presets")
-> >
-> > Yes, this patch is helping to solve gen4 stability issue.
-> > >
-> > > and commits around it
-> > >
-> > > does this change depends on the patch 1 PHY settings update ?
-> > >
-> > > That I'm curious about too, but I would guesstimate no
-> > >
-> > this change doesn't depends on the patch 1 PHY settings update
->
-> Then what has changed, as previously it was documented to have stability
-> issues.
->
-Actually this controller change is solving the stability issue with
-gen4: "PCI: qcom: Add equalization settings for 16.0 GT/s"
-https://lore.kernel.org/linux-pci/20240911-pci-qcom-gen4-stability-v7-3-743=
-f5c1fd027@linaro.org/
 
-Thanks,
-Mrinmay
-> --
-> With best wishes
-> Dmitry
+On Tue, 06 May 2025 09:39:35 +0200, Niklas Cassel wrote:
+> Commit 8d3bf19f1b58 ("PCI: dwc: Don't wait for link up if driver can detect
+> Link Up event") added support for DWC to not wait for link up before
+> enumerating the bus. However, we cannot simply enumerate the bus after
+> receiving a Link Up IRQ, we still need to wait PCIE_T_RRS_READY_MS time
+> to allow a device to become ready after deasserting PERST. To avoid
+> bringing back an conditional delay during probe, perform the wait in the
+> threaded IRQ handler instead.
+> 
+> [...]
+
+Applied to controller/dw-rockchip, thanks!
+
+[1/4] PCI: dw-rockchip: Do not enumerate bus before endpoint devices are ready
+      commit: c1c9c4b6130defb671c45b53ec12fcd92afea971
+[3/4] PCI: dw-rockchip: Replace PERST sleep time with proper macro
+      commit: 9ad44a6f6f8775786a9543427c82625d96a340b4
+[4/4] PCI: qcom: Replace PERST sleep time with proper macro
+      commit: be0b42befa87d81780aa0f003644b0ad520b0234
+
+(I do need to change the name of the topic-branch now...)
+
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
