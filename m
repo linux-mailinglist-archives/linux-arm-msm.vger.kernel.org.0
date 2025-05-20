@@ -1,144 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-58713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17FAFABD6D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 13:31:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DA21ABD718
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 13:42:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7FE853AEF1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 11:31:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1F04917B3C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 11:42:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D81F0274FD0;
-	Tue, 20 May 2025 11:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E365F27B519;
+	Tue, 20 May 2025 11:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ofdYLbVw"
+	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="GzTXMwsi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A910921A45A;
-	Tue, 20 May 2025 11:31:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDCE264A97;
+	Tue, 20 May 2025 11:42:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.132.182.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747740713; cv=none; b=Cfdwxxacv/CLNVilKFiB41XmN+xEF0agT3Jed8+k0f+KNQcAtjlLZkhPTHZ4HYySheL8oBk1tk99dvZ70bduHWNB0BTE8lTG28t3mxvvfIi05k+/P96Y+vUpbkfZLiUm4U57kMu92eC6phs/qDimr1bgvK4FKVEiI5Q+vkQSH50=
+	t=1747741330; cv=none; b=A5UjHbVs890v3KfXw26RlUxJi3uznq2t3V1onNetwgdUHd5cKLWY0zGD89Jzbe5BA+OCY/2atbcqBBDn98J0jnjhNRTkr9LbH16yoWblD+Cil30wCPWlqB2/uGHxMH/n2UIWXgkRo6HMALwHa+lf/aFzsLseY3m6lHbSIinVKXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747740713; c=relaxed/simple;
-	bh=CvDybhlQLGgsaauWyvnvy0fUfy35kQUTWzKrr9rQm+w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d2hszaevYOhM4uDxGs6iYWT5FSAAL29yh2PQ9RSBjTms3S4RfyGytIP+NNnO3NvyslD5GRKxpnxbxfU9ffjiQMPf3voJfiF/BVtXpCyq6Pp31YRpP0DwAHgaVW8gWj+FKqF0XGrMoXCe78VEe/K3ffqr5pgEiOzLpeQI4EEIPMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ofdYLbVw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9268CC4CEEB;
-	Tue, 20 May 2025 11:31:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747740713;
-	bh=CvDybhlQLGgsaauWyvnvy0fUfy35kQUTWzKrr9rQm+w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ofdYLbVw9naWOMB+EzGo9kBZvwW4kLEAFulhRj7U1+SNOP7XzubmjaDjq3xXD81HE
-	 asVMbkGWrhZ02beHdrEgtHSSE9HSvsdrEJbtnnivmJKg77MuwnIMOFtxW0CgeSVNmf
-	 EqKNtxziB0IwrCIK/8elCyKsALdB9DCl+ciWml5O6Uh2Dm1ucCGNJVn2++eMOpAQLr
-	 yJeOi8layAs/ZP0wKWsmnlJiJS9PTXienZtRWaYPw2Whbu1eOKsSbLKLE69kPDiTZi
-	 DBZexSPA57nr7OzlVuH3WE/qc0XzVc3H6bg35HEBDqxL3dGvQ+qZhssW/A47l2JlYh
-	 DhtXNITYVLfkw==
-Date: Tue, 20 May 2025 12:31:47 +0100
-From: Will Deacon <will@kernel.org>
-To: Rob Clark <robdclark@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>,
-	Rob Clark <robdclark@chromium.org>,
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>, Nicolin Chen <nicolinc@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
-	"open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 05/40] iommu/io-pgtable-arm: Add quirk to quiet
- WARN_ON()
-Message-ID: <20250520113146.GA18435@willie-the-truck>
-References: <20250514175527.42488-1-robdclark@gmail.com>
- <20250514175527.42488-6-robdclark@gmail.com>
- <20250515143309.GA12165@willie-the-truck>
- <CAF6AEGsnOD8fZmTXAEZZNrdK-NXdUJF51s51EhYQ6Ed7dCFM0A@mail.gmail.com>
+	s=arc-20240116; t=1747741330; c=relaxed/simple;
+	bh=UExusS9wGruu2jirSHupY+orQc1NwlzDHTp5gtaUL6E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qR01rG5J0jHTvQscNNox1eUPy43r6ovEnmcdhuRnDM+cC6kXncsInSvwEZL7MR7jFBIFz85ExiH94E8yCeV1CUnjBPpmvVHW0znvqSYvEESQermE856ffqrZ4+zc70vTLElOnxH1MNc+sJNqUj+v/kURTb2F1Uu63pkvyKGtkdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=GzTXMwsi; arc=none smtp.client-ip=185.132.182.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
+Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
+	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54K9UC8E021011;
+	Tue, 20 May 2025 13:41:16 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=selector1; bh=
+	UExusS9wGruu2jirSHupY+orQc1NwlzDHTp5gtaUL6E=; b=GzTXMwsiZejt1O8H
+	HSMOo4JJMYdWKi4XLUZACmweuNUHMXMcoKBaBK4izDYF74vuwBPhTZk6IexHobg/
+	qK9I73asI1F+eYDQZiyzxP43hKUrX/gpKv/++Q/63O4zRbJXsKcyIXJRe8YtHdoV
+	RPwyyY04Tk6DjBcJZpMMLx0wfWgVldqOE1FvIgNQm9RI5S0gb+O/faMVPHN8vYO7
+	xVKBfv+hc1nAbKmBD0/cmEDphgVskJ4VOESdBzuwEbJOODz1O+/U82sx8FwgyLMU
+	7hCq2HGWxCcmbZsgQoNFKYIKbh+ZOklyV2oLZ5i1xQm8eShnTM2y/drHpPFlUzAG
+	h0IOcQ==
+Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
+	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 46pht1w43t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 May 2025 13:41:16 +0200 (MEST)
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 1C0F740049;
+	Tue, 20 May 2025 13:38:29 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
+	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 4B551AE2BFA;
+	Tue, 20 May 2025 13:37:16 +0200 (CEST)
+Received: from [10.252.29.31] (10.252.29.31) by SHFDAG1NODE2.st.com
+ (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 20 May
+ 2025 13:37:13 +0200
+Message-ID: <b1d3f93b-8206-481b-bd8a-d7c0953e0ea5@foss.st.com>
+Date: Tue, 20 May 2025 13:37:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 15/22] drm/bridge: stm_lvds: convert to
+ devm_drm_bridge_alloc() API
+To: Luca Ceresoli <luca.ceresoli@bootlin.com>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman
+	<jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jagan Teki
+	<jagan@amarulasolutions.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer
+	<s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk@kernel.org>
+CC: Anusha Srivatsa <asrivats@redhat.com>,
+        Paul Kocialkowski
+	<paulk@sys-base.io>,
+        Dmitry Baryshkov <lumag@kernel.org>, Hui Pu
+	<Hui.Pu@gehealthcare.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        <dri-devel@lists.freedesktop.org>, <asahi@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>, <chrome-platform@lists.linux.dev>,
+        <imx@lists.linux.dev>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-amlogic@lists.infradead.org>,
+        <linux-renesas-soc@vger.kernel.org>,
+        <platform-driver-x86@vger.kernel.org>,
+        <linux-samsung-soc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        Alexandre Torgue
+	<alexandre.torgue@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Philippe Cornu <philippe.cornu@foss.st.com>,
+        Yannick Fertre
+	<yannick.fertre@foss.st.com>
+References: <20250509-drm-bridge-convert-to-alloc-api-v3-0-b8bc1f16d7aa@bootlin.com>
+ <20250509-drm-bridge-convert-to-alloc-api-v3-15-b8bc1f16d7aa@bootlin.com>
+Content-Language: en-US
+From: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+In-Reply-To: <20250509-drm-bridge-convert-to-alloc-api-v3-15-b8bc1f16d7aa@bootlin.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGsnOD8fZmTXAEZZNrdK-NXdUJF51s51EhYQ6Ed7dCFM0A@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-ClientProxiedBy: EQNCAS1NODE3.st.com (10.75.129.80) To SHFDAG1NODE2.st.com
+ (10.75.129.70)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-20_04,2025-05-16_03,2025-03-28_01
 
-On Thu, May 15, 2025 at 07:48:39AM -0700, Rob Clark wrote:
-> On Thu, May 15, 2025 at 7:33 AM Will Deacon <will@kernel.org> wrote:
-> >
-> > On Wed, May 14, 2025 at 10:53:19AM -0700, Rob Clark wrote:
-> > > From: Rob Clark <robdclark@chromium.org>
-> > >
-> > > In situations where mapping/unmapping sequence can be controlled by
-> > > userspace, attempting to map over a region that has not yet been
-> > > unmapped is an error.  But not something that should spam dmesg.
-> > >
-> > > Now that there is a quirk, we can also drop the selftest_running
-> > > flag, and use the quirk instead for selftests.
-> > >
-> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > Acked-by: Robin Murphy <robin.murphy@arm.com>
-> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > ---
-> > >  drivers/iommu/io-pgtable-arm.c | 27 ++++++++++++++-------------
-> > >  include/linux/io-pgtable.h     |  8 ++++++++
-> > >  2 files changed, 22 insertions(+), 13 deletions(-)
-> >
-> > [...]
-> >
-> > > diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
-> > > index bba2a51c87d2..639b8f4fb87d 100644
-> > > --- a/include/linux/io-pgtable.h
-> > > +++ b/include/linux/io-pgtable.h
-> > > @@ -88,6 +88,13 @@ struct io_pgtable_cfg {
-> > >        *
-> > >        * IO_PGTABLE_QUIRK_ARM_HD: Enables dirty tracking in stage 1 pagetable.
-> > >        * IO_PGTABLE_QUIRK_ARM_S2FWB: Use the FWB format for the MemAttrs bits
-> > > +      *
-> > > +      * IO_PGTABLE_QUIRK_NO_WARN_ON: Do not WARN_ON() on conflicting
-> > > +      *      mappings, but silently return -EEXISTS.  Normally an attempt
-> > > +      *      to map over an existing mapping would indicate some sort of
-> > > +      *      kernel bug, which would justify the WARN_ON().  But for GPU
-> > > +      *      drivers, this could be under control of userspace.  Which
-> > > +      *      deserves an error return, but not to spam dmesg.
-> > >        */
-> > >       #define IO_PGTABLE_QUIRK_ARM_NS                 BIT(0)
-> > >       #define IO_PGTABLE_QUIRK_NO_PERMS               BIT(1)
-> > > @@ -97,6 +104,7 @@ struct io_pgtable_cfg {
-> > >       #define IO_PGTABLE_QUIRK_ARM_OUTER_WBWA         BIT(6)
-> > >       #define IO_PGTABLE_QUIRK_ARM_HD                 BIT(7)
-> > >       #define IO_PGTABLE_QUIRK_ARM_S2FWB              BIT(8)
-> > > +     #define IO_PGTABLE_QUIRK_NO_WARN_ON             BIT(9)
-> >
-> > This feels a bit fragile to me:
-> >   * IOMMU-API users of io-pgtable shouldn't be passing this quirk
-> >     but might end up doing so to paper over driver bugs.
-> >
-> >   * Low-level users of io-pgtable who expose page-table operations to
-> >     userspace need to pass the quirk, but might well not bother because
-> >     well-behaved userspace doesn't trigger the warning.
-> >
-> > So overall, it's all a bit unsatisfactory. Is there a way we could have
-> > the warnings only when invoked via the IOMMU API?
-> 
-> iommu drivers _not_ setting this flag seems like a good way to achieve that ;-)
-> 
-> The alternative is to move the warns to the iommu driver... but they
-> could just as easily remove the WARN_ON()s as they could set the
-> NO_WARN_ON quirk, so :shrug:?
+Hi Luca,
 
-Bah, I also don't have a good idea to improve this, so I guess I'll take
-what you have for now.
+On 5/9/25 15:53, Luca Ceresoli wrote:
+> This is the new API for allocating DRM bridges.
+>
+> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+>
+> ---
+>
+> Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
+> Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>
+> Cc: Philippe Cornu <philippe.cornu@foss.st.com>
+> Cc: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+> Cc: Yannick Fertre <yannick.fertre@foss.st.com>
+> ---
 
-Will
+I went away from keyboard for some time.  Sorry for the delay :
+
+Acked-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+
+
+Regards,
+Raphaël
+
 
