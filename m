@@ -1,73 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-58755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EA83ABE17D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 19:06:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D28BABE1C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 19:23:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 88DAB1BA75B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 17:06:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6AC8A17B3A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 17:23:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7FB22741B2;
-	Tue, 20 May 2025 17:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BFED2750FD;
+	Tue, 20 May 2025 17:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CVHRK1Nt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ude66uDn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B524288D6;
-	Tue, 20 May 2025 17:06:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3FD35893;
+	Tue, 20 May 2025 17:23:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747760762; cv=none; b=egMaAMNE5wpiPBUBRNZNrT1QHciIku9bNhFGAcIKcHLtioBz6wi1TJyGYI/YnVCNxVVv5PslgbdHchwstLPwiq7zDSa73gJ/Lc90rxbXLp9dn/543QWO3kmi71m1VOS0zBZ3E2GPJG3a4MSJA2a9hMge1CLb1/r01a0C8BBLg+A=
+	t=1747761789; cv=none; b=KH6/CsSvU6hxUddStORZpTplrTQq/xVfs3jYeEw4prSPF0mHVd1jMgBPQxy5i1Iys440tpeD5s5ARXuNFWprazWDRN38ts1EQcup8/khFgdPLcsHgoiJrdj1sSfc/ap3yEjyTPip+8Lwwb9F0kKyiJ7QjlSuHgiiSY2scOwrkwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747760762; c=relaxed/simple;
-	bh=LYXk7Zx9Sol1gLspwEygZpRd3hvjMbgUe1MHTTcA9XI=;
+	s=arc-20240116; t=1747761789; c=relaxed/simple;
+	bh=8eZED5w9zKxVp6d7OJ00CYNhKuARUjjMVJwyR3aUQqY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GCr1j3aC9rJosCY/SaTRCzPVHkoB22v/PAFIJDQpbz/2vIgmvgDIXrz6eZhC7ulp8LTb0ZOokzq2hYYqsaZ3DNT3IRDoEd6MP3Zesrctn3HK+lSh+WjMZYi1K8JSItiNs/fxsmfSiGGl/slIiazH0AOvGooneliNynq3aLUo9HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CVHRK1Nt; arc=none smtp.client-ip=209.85.216.45
+	 To:Cc:Content-Type; b=IU+JtjL080+CKip9WdyAIkUyPJaGkdbP76u6ghC4CSJQbrqCX7OYMMDSOSKUnBoUStGdnsQUasiTzVPg73VVT7iiqpdxIYZNs6BCig7jYplqZ7ObPaYnqkU560GZgbWk9TjOmprKxsg5nvyvtOoDEGF0C2zI6KLobEQP9hyEJaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ude66uDn; arc=none smtp.client-ip=209.85.166.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-30e7ee5fe74so920161a91.3;
-        Tue, 20 May 2025 10:06:00 -0700 (PDT)
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-3da6fb115a6so45435235ab.1;
+        Tue, 20 May 2025 10:23:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747760760; x=1748365560; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747761786; x=1748366586; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BSxEkDXbJDIhMR3kFQKAYgsi/4CQTU4cPfem70BSEkY=;
-        b=CVHRK1Nt8e3YDHWHC8AhqeWrf7kXSK4/oJBPiPFu3OJzbgDU5yqXpeiqaoBTIcWSXH
-         d7XYMSKzPd2PmZlvc/gQCQziDPVGo6U7gm6glpYI6UrBwCqOUV2y0P4sVVUgknVVpCPt
-         PxpRS9X9yH/ig78yiRB4Laol+2fv0/m7zyQRNWA+XpJn8txUZV6s/KjSqc2ROqCQPRXF
-         JnCfeVsMDkTNJNiDF395fq/ZXH/iyQlC/vKGNiYTn90TYaQ6yRdZqzjDblcDP5F4DyIc
-         zv43U4NiLhLyd7NwvsD4nAyt5dh/YTkmykS8bWYVZgD8qBkRCWk3VX4ixcd/M8cFKift
-         DHPg==
+        bh=v/1eH7FjHnXuwS8GNeCtTiHpwIYDozegXN0D5gLrtdM=;
+        b=Ude66uDnhmOWvwnkB2+5tUu+ZlhzpL6v1ko6WZGdCAlXuuJZk4MM3ocZUnrXBhAaXS
+         GGUb4bPXC2OVhfbQuQ6W4XsZnorew8nO0fPODMVPTY+bylGVpXSccqGZ3PVy4RTdC5bZ
+         bBvlLAmetMHHqttvn9UWZPu+mlzQFyS6cVeArEKdJYwOTfVJn4SbGx1B1BwH3mv+xoUC
+         MnbOzu7GbB1AgXEjmxkaVBiLHUaX/X6ual9/48HRsiVjFHm7/EDh+xQCdF4PJQ20+JQK
+         8tGpChH3BzVOrCBgwHrzhpi+tLCvMvWlssUY2Jb3xaPbJP69M4xMmbR5IiU9d3osc8ug
+         5Puw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747760760; x=1748365560;
+        d=1e100.net; s=20230601; t=1747761786; x=1748366586;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BSxEkDXbJDIhMR3kFQKAYgsi/4CQTU4cPfem70BSEkY=;
-        b=j+7rWUQkXufMzLyqwp/YJu7U1KFRfe9GzviA1LNSPkWgG4LzQKIy9S2R4jQJyuIVp5
-         Sonjkfzg3NJ9QWfVfQTuilLmdOjrpPXGzdrJtRri6IGb+MfO9dnq2OedXhxBzHg63jCu
-         tH6wCvPK6aw32GMMxjtvEKomQO/Ngx4n4j44uQep1I5M/C//Q4C87rKFHRlOZjALaefs
-         Op01zZmw2B3xPqFo7cDO52eIkiV4n67w19oWL5yQn4q7F9TH56FS79w7W9MuhG5Un3AK
-         HEa3HC11HHHeXYH3wgkSaQXokhAvMu8YE2BfTGgxn3+5Iobkc2MpqXncmkzG152fe4Kt
-         7dCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWZIXwgDlcbuaefUDToVpFHWliwTtthxfrTfC2qR9V0FTcYwrP5fzWD1LTRTzopdkELFtOYTX+EpW3nXaue@vger.kernel.org, AJvYcCXpZMzRsFbE0mc1TAcvlmdCnRHmBZiTD2UV7yj+SA1GEa4YJmPPIZi3XGb5CqUxpxI+tiBsiQgbQCuRxMyT@vger.kernel.org
-X-Gm-Message-State: AOJu0YxH8JTUCkuoZljYVROozhekDI3e8aHL98csKFbSOS7WUWLaBIKF
-	Ga/y+SRq+RRZY0JfNEzZSnRkp25zCujYoaVs2vQPawpKtClRMF+kufZdLfuHcaoP8ez8/gSPjj5
-	xq3C1MFveS4mdkVAta8AaDZoYE7dXwCc=
-X-Gm-Gg: ASbGncsd5Z/+YVhuDmSXrwRNDlB4jZvYNJSIiaWUVAHVFUAo2BPtafe2uqaD1RxIpVC
-	SW+kw6YCEtqcI9BN+nuQWk27M5ymwbbsIQQHVoJby7HeuG9NA1Hv6mtgslTYLcUx45CsJrtpiQc
-	pwNd2CaPKPwuQW4ZFt6tWglQINzPMeMgfs4dE2iPopgo0=
-X-Google-Smtp-Source: AGHT+IHsOqBineUHxLJx9akQIdSVlbC4CtdZpwW/0uzDJXEMDO7/CjK53KJcvCLjE7LdutD2WX0uucRok2QjsWFIgmI=
-X-Received: by 2002:a17:90b:4ac1:b0:30a:80bc:ad4 with SMTP id
- 98e67ed59e1d1-30e7d2fd72emr10302244a91.0.1747760760170; Tue, 20 May 2025
- 10:06:00 -0700 (PDT)
+        bh=v/1eH7FjHnXuwS8GNeCtTiHpwIYDozegXN0D5gLrtdM=;
+        b=Bffb24zm0I95ye4i2amj47eoSPTwO/dGuehpixvzaY89sEfGeii23YHGdb/42MFTpL
+         2bAOjsi34qYtT752Icl7/JelAT0BQv2usehhlxZ+A28AhNBDS4iFloRJu9feeDuVZpvP
+         v6Q2FcCsEOpbdPeYC0RRCTo36cvjZgtHnL421UpGM3cNANCxhAaxX9Y6OFol1/Tx6V6L
+         IPFI6dXPSzsbLvW8DVzI1Pvq3zQeHfA4ROqHlHToN8aPkLmUWbRIDSJY3doAtHtRCo/2
+         5kfShGghLcB56AHH7FRkyO8xHklII67eRSuzDVfLpz8/WzHbryk2qXBnp3Xn9WnjfMKP
+         lzKA==
+X-Forwarded-Encrypted: i=1; AJvYcCXjCWyE5bxPLm8BhqAdO2QxQ2SZVlvp3t5nNNbwJlYDSvLL9SKyeR2fMgesWSivEB9OUaXvi4paqr6An6zm@vger.kernel.org, AJvYcCXxXV2X64SsLFh3nUqYXwhGjbxeG7FK52wIFceDiPFpRCAHH7NKsAsST3GNd4igmeyKYyVoTgabBEj705wq@vger.kernel.org
+X-Gm-Message-State: AOJu0YzlH6QN9XvHM8dqDTThj/xxtTdY9hbUNpryro4j8cMLNuQVyYJx
+	R+GRl8ekkDGd6KZAfJFCPOlHzuy6ExEfE1Pdtuf2y+BhkUR7wnhTHO3ezNTWsV2T+OKM5eMmPkN
+	rDzznuUItdyW6MwEBI5jLGtcSplISwr4=
+X-Gm-Gg: ASbGncugW8A+zz8JEfTEEg5p9vb2gnlwYWBUZOrLFKIGBkQm0/3Lc/moKih6OzZRK7I
+	Y77vUWti3pWLEZhflHIOvtnsaYLh+EuDWCwHiXc7Lkj9O+GChzYro/5CT/P1+Z/Pn9uel0aHiHn
+	6CyFvjQt0yRVjPeyWZ9OgXuiU0U3+KQORcMaIgKNFIN/o8oYlHm6olhBlRk500Wim/s2JKdRD+p
+	A==
+X-Google-Smtp-Source: AGHT+IHpQA08tYTT02U2iTROdpr5ReReyZy/jVFOO0KEV8Wa4oUzzDHXqMwq9idWIskV4i26glWc97QtN/cPQ9E+S6o=
+X-Received: by 2002:a05:6e02:23c8:b0:3dc:76ad:e3a8 with SMTP id
+ e9e14a558f8ab-3dc76ade94dmr62670085ab.11.1747761786345; Tue, 20 May 2025
+ 10:23:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,13 +83,13 @@ References: <20250514170118.40555-5-robdclark@gmail.com> <51f87f358fa1b7ef8db8b6
  <aCwqAGLLCC2ZLSBK@pollux> <CAF6AEGspvuTHU0t9z__p_HkdRNi=cXir3t453AbR6DFNzDpgvw@mail.gmail.com>
  <aCyzyAPbQ1SYbo4q@pollux>
 In-Reply-To: <aCyzyAPbQ1SYbo4q@pollux>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Tue, 20 May 2025 13:05:49 -0400
-X-Gm-Features: AX0GCFudq4Uk9hVggM5__uGXxd07kkOoRDiLKGh7USy4Eu6RGR5O4yyQhzMT2o8
-Message-ID: <CACu1E7GEqm+5pmz8rOeCp0FP-7Q3UrEqkkvG3ZbbkPJzjqRhyw@mail.gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Tue, 20 May 2025 10:22:54 -0700
+X-Gm-Features: AX0GCFssom0OIu9t5oGBdb8b5O6J5LNG6iWic-G7BUb-iO0A4ra9weO2FuUipaU
+Message-ID: <CAF6AEGs+WmTO_624A3Pek-1-SD6B4PFu4sDv3htko0ABhfHFzw@mail.gmail.com>
 Subject: Re: [PATCH v4 04/40] drm/sched: Add enqueue credit limit
 To: Danilo Krummrich <dakr@kernel.org>
-Cc: Rob Clark <robdclark@gmail.com>, Rob Clark <robdclark@chromium.org>, phasta@kernel.org, 
+Cc: Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>, phasta@kernel.org, 
 	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
 	linux-arm-msm@vger.kernel.org, Matthew Brost <matthew.brost@intel.com>, 
 	=?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>, 
@@ -99,7 +100,7 @@ Cc: Rob Clark <robdclark@gmail.com>, Rob Clark <robdclark@chromium.org>, phasta@
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-n Tue, May 20, 2025 at 12:54=E2=80=AFPM Danilo Krummrich <dakr@kernel.org> =
+On Tue, May 20, 2025 at 9:54=E2=80=AFAM Danilo Krummrich <dakr@kernel.org> =
 wrote:
 >
 > On Tue, May 20, 2025 at 09:07:05AM -0700, Rob Clark wrote:
@@ -183,23 +184,6 @@ at's
 > understand what test causes the issue and why other drivers are not affec=
 ted
 > (yet).
-
-Once again, it's well understood why other drivers aren't affected.
-They have both synchronous and asynchronous VM_BINDs in the uabi, and
-the userspace driver uses synchronous VM_BIND for everything except
-sparse mappings. For freedreno we tried to change that because async
-works better for native context, which exposed the pre-existing issue
-with async VM_BINDs causing the whole system to hang when we run out
-of memory since more mappings started being async.
-
-I think it would be possible in theory for other drivers to forward
-synchronous VM_BINDs asynchronously to the host as long as the host
-kernel executes them synchronously, so maybe other drivers won't have
-a problem with native context support. But it will still be possible
-to make them fall over if you poke them the right way.
-
-Connor
-
 >
 > > > > There definitely was one where I was seeing >5k VM_BIND jobs pile u=
 p,
@@ -227,7 +211,9 @@ f
 > addressing this, rather than trying to work around it in the scheduler, w=
 here we
 > can only set an arbitrary credit limit.
->
+
+Perhaps.. but that seems like a bigger can of worms
+
 > > > But let's assume we agree that we want to avoid that userspace can ev=
 er OOM itself
 > > > through async VM_BIND, then the proposed solution seems wrong:
@@ -262,4 +248,16 @@ rspace
 > for no reason, no?
 >
 > If the machine has very limited resources, it might already be too much?
+
+It may be a bit arbitrary, but then again I'm not sure that userspace
+is in any better position to pick an appropriate limit.
+
+4MB of in-flight pages isn't going to be too much for anything that is
+capable enough to run vk, but still allows for a lot of in-flight
+maps.  As I mentioned before, I don't expect anyone to hit this case
+normally, unless they are just trying to poke the driver in weird
+ways.  Having the kernel guard against that doesn't seem unreasonable.
+
+BR,
+-R
 
