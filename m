@@ -1,158 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-58613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCC54ABD02C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 09:18:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 588D1ABD05A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 09:23:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2236F3B1A11
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 07:18:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 87F881896986
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 07:23:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8C4825D1F4;
-	Tue, 20 May 2025 07:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77DF525CC46;
+	Tue, 20 May 2025 07:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VIHV3IEn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="utsHWFdp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79C92571CA;
-	Tue, 20 May 2025 07:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500D41C84C0;
+	Tue, 20 May 2025 07:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747725533; cv=none; b=PTVnPZEflMHE67969jVuj+1EqIi9nDGMy7ds6CifsJIZmwziG1bsS1wmWIuoBg+dKEXUJPur7bq73cs1SWdqXJwH9edCpA4Nv+Dr8NCgBDm0LbchPpjFmq6ZG/6kaB7nhW9QBdgdIovjOBwX1W+CG99hh6UzubY3LK+j1Y+d/8I=
+	t=1747725793; cv=none; b=iSejR4/3BU2p5kmhRKbpLebMwEtMyPZifTb0l3uJV3WmOS785HAs1Vh90K7oiUWFYu3t/cYyAZAgbIRtumHhBUFBQxMpQrKj8pfmtbVNbhgATGammUfvIJHG9V+k1CufnUg8Q6XbELOM2t054t1GxH3GXMsVJQXnk2J4RCh+Cbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747725533; c=relaxed/simple;
-	bh=0dgpHM6X5ylXIfc/EcEGibieH0olYU53fdjUR+UZzG0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BKzHGZG1mxXcZ8Uo8/63uaLrPlufSkDWxUElaHK3lfykZ7NcA+emQxVuoLsBOPGxOxX7MmMRs6nnPrKlpIG7Iqrj1AlmrxIFwyUzwi/71LpplTsRUSWMPH1MjwlYOeBLZE+aDbEIxeB/Me0MFiNDtBdyKrMbkgL23q8+0A/yzws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VIHV3IEn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742FAC4CEE9;
-	Tue, 20 May 2025 07:18:48 +0000 (UTC)
+	s=arc-20240116; t=1747725793; c=relaxed/simple;
+	bh=axV148epcCnH8V4IUGh3tEhgUD1SmtDSAbyYQaGyLUY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=faHdx/6g9jMk4eiCl4ILbh87YmblOGEkHZEDoJaXS4JzhRV5dpEE+GHoBbE9Nui4RSbBqeK5SrxvapyoI+9SkYkqCgFWvQh5O9jYf8vx54Gu3omyyN5qSqfUTYgcIAxe5T//i1N8eY3Q9Bt7eBxeNJZMBym4JB87iqp2AceylqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=utsHWFdp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFF2C4CEE9;
+	Tue, 20 May 2025 07:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747725532;
-	bh=0dgpHM6X5ylXIfc/EcEGibieH0olYU53fdjUR+UZzG0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=VIHV3IEnVoIZr59y520JyK1rDWYem9zcOuYv+W7yr2vZpklL0JQkgvherUZwr6v7n
-	 nHX1oOIpkaJg0eoTOKvrl0PRY486zrZjrtFAV430NT5ktpAjmqAAVVteq7DyZr8iq+
-	 dsLSbYA39nxk18DwCaiPAZUqmPbK2hTJPa7eE5Ia3dkcdB86Alg93Ck79evVkyPgMV
-	 zxCCId2RDQ0vz60xAe/D/Wcabw19XCk7w5dV5YUjbbVZ8BRBiC/fZsFGd9mZV34NO+
-	 f5TYhWfRiRz3MMPziD5jg+RyZGFc28jmY7Z63QxECAN8q5M0jL2wPu4Wk7Aham9TFE
-	 iLzrccnjGcicg==
-Message-ID: <8c6d37bb-8e07-4e44-bef1-f4376b54b853@kernel.org>
-Date: Tue, 20 May 2025 09:18:46 +0200
+	s=k20201202; t=1747725792;
+	bh=axV148epcCnH8V4IUGh3tEhgUD1SmtDSAbyYQaGyLUY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=utsHWFdp+aNZIybpy2w2/kulETWFThZUUGtwqTkkH59zikOi3fzIgH20T0ExBzDS/
+	 vbe5Wq5brUWmJCyNOtMSIH8TkgPKhDRaaU1h/IivjV8dTKTv/Mg1thBbqJ/qr2s2Uk
+	 I07KmNQokCcfH2NFUAc5Qu2Y4lRhMjNIe4SdDid1tgbmDxWMRZkvsbpdsVicBS4TY/
+	 G2Rq8A3zbns2w7FQkSiIH6g07DY7ESqpATWYJOWfD6hXH8uZBgaerRvq1TyxYvOk/T
+	 iupLImO3zK8kHdu66CVFNOI1hTVGN4kTB8CICzhVdgqXOzfKX0XxntGQ/LTwTtjOQN
+	 NlSai1pVNunDw==
+Date: Tue, 20 May 2025 09:23:07 +0200
+From: Danilo Krummrich <dakr@kernel.org>
+To: Rob Clark <robdclark@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 01/40] drm/gpuvm: Don't require obj lock in destructor
+ path
+Message-ID: <aCwt20O7SH1zQLlV@pollux>
+References: <20250519175348.11924-1-robdclark@gmail.com>
+ <20250519175348.11924-2-robdclark@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 1/3] dt-bindings: mmc: qcom: Document level shifter
- flag for SD card
-To: Sarthak Garg <quic_sartgarg@quicinc.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
- Bhupesh Sharma <bhupesh.sharma@linaro.org>, linux-mmc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, quic_cang@quicinc.com,
- quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
- quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
- quic_nitirawa@quicinc.com, quic_sachgupt@quicinc.com,
- quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com, kernel@quicinc.com
-References: <20241107080505.29244-1-quic_sartgarg@quicinc.com>
- <20241107080505.29244-2-quic_sartgarg@quicinc.com>
- <qffggh2ld2cw7d3eqwaerzicerhvdqojwsasherx7dgoda42b7@bigsjxr6vtao>
- <ba49151a-e32d-438d-8a2a-50840368a87c@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
- QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
- +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
- ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
- 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
- hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
- tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
- 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
- naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
- hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
- whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
- qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
- RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
- Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
- H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
- dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
- AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
- jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
- zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
- XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <ba49151a-e32d-438d-8a2a-50840368a87c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250519175348.11924-2-robdclark@gmail.com>
 
-On 20/05/2025 08:58, Sarthak Garg wrote:
+On Mon, May 19, 2025 at 10:51:24AM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
+> See commit a414fe3a2129 ("drm/msm/gem: Drop obj lock in
+> msm_gem_free_object()") for justification.
+
+I asked for a proper commit message in v4.
+
+Only referring to a driver commit and let the people figure out how the driver
+works and what it does in order to motivate a change in the generic
+infrastructure is simply unreasonable.
+
+> Cc: Danilo Krummrich <dakr@kernel.org>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/drm_gpuvm.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
 > 
-> On 11/7/2024 3:29 PM, Krzysztof Kozlowski wrote:
->> On Thu, Nov 07, 2024 at 01:35:03PM +0530, Sarthak Garg wrote:
->>> Introduce a flag to indicate if the Qualcomm platform has a level
->>> shifter for SD cards. With level shifter addition some extra delay is
->>> seen on RX data path leading to CRC errors. To compensate these delays
->>> and avoid CRC errors below things needs to be done:
->>>
->>> 1) Enable tuning for SDR50 mode
->>> 2) Limit HS mode frequency to 37.5MHz from 50MHz
->>>
->>> Add this flag for all targets with a level shifter to handle these
->>> issues for SD card.
->>>
->>> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
->>> ---
->>>   Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 3 +++
->>>   1 file changed, 3 insertions(+)
->>>
->>
->> This wasn't tested, so just short review - platform means SoC usually,
->> so this looks SoC specific, thus implied by compatible.
->>  > Best regards,
->> Krzysztof
->>
-> 
-> Sure will redesign this logic and use compatible in patch V2.
+> diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
+> index f9eb56f24bef..1e89a98caad4 100644
+> --- a/drivers/gpu/drm/drm_gpuvm.c
+> +++ b/drivers/gpu/drm/drm_gpuvm.c
+> @@ -1511,7 +1511,9 @@ drm_gpuvm_bo_destroy(struct kref *kref)
+>  	drm_gpuvm_bo_list_del(vm_bo, extobj, lock);
+>  	drm_gpuvm_bo_list_del(vm_bo, evict, lock);
+>  
+> -	drm_gem_gpuva_assert_lock_held(obj);
+> +	if (kref_read(&obj->refcount) > 0)
+> +		drm_gem_gpuva_assert_lock_held(obj);
 
-Hi, I hope you are well and that was just some mishap, but I cannot help
-but notice that you received review within two hours after posting
-patch, but now you responded to my review after 6 months.
+Again, this is broken. What if the reference count drops to zero right after
+the kref_read() check, but before drm_gem_gpuva_assert_lock_held() is called?
 
-Sometimes I really consider reviewing at the end of 2 weeks - the usual
-maximum time frame.
+Putting conditionals on a refcount is always suspicious.
 
-Best regards,
-Krzysztof
+If you still really want this, please guard it with
+
+	if (unlikely(gpuvm->flags & DRM_GPUVM_MSM_LEGACY_QUIRK))
+
+and get an explicit waiver from Dave / Sima.
 
