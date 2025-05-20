@@ -1,246 +1,241 @@
-Return-Path: <linux-arm-msm+bounces-58808-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58809-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B27D1ABE614
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 23:31:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 858DBABE61D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 23:32:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C6248188E276
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 21:31:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BA0DB1884C4A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 21:32:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27B96253F1D;
-	Tue, 20 May 2025 21:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1191251791;
+	Tue, 20 May 2025 21:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RUfq7W63"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZeP1pZjg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842E8242D89
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 21:31:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114AC242D89
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 21:31:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747776663; cv=none; b=JDQdZJSbDPmt83JmThYYWp+JecgN1AQLs9Q2+aVQmqyo8jMVLVweiNeXbfjDek2nTPBA8CN2icMgGV916DonVOSoXFXlmeup/5gvG+oapBuUnavrg3bm5iHWw/EoLtOERd2ZGfp1rPtD7JXULWQxMVnivLoNrNcnOO6kZE+LsTA=
+	t=1747776721; cv=none; b=p6rmvUdhNYUUq675p1treeggO037ls8xot3AxUfsrqn0u74YDLGjycoflwP7tsGJAmAFtkDTPXjSEnHhkfWPN9hLz7eNySVxAXAOD8g99fbe+JBSbi8V52dkkCMBZob99+avjN+KQczGE8QgIERpbo4ZLOqo8gjCrozbGffbQ08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747776663; c=relaxed/simple;
-	bh=ykKE4jKPGHFreqbSA8L6TvTpeZ5J+yyk1+NtFS/HP+Y=;
+	s=arc-20240116; t=1747776721; c=relaxed/simple;
+	bh=HrumOK1lD/TxRKWp4CXD9ZjpAsCHHBFPGhttXykXyuw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cOWOUmNBmDrkgi/IzlfS0A/m/EVps4bLlwQbgS8KP1esUEHJhba+xVgJPBUdjVfqjuwRYBPb6gzR91dQfheL2nsh7/y1Nd6+xYtw9cjNUnuQbDMilPVjTXOttbgC5Idov/xQiJkp3+eJmsY82QvAwFt8Jix7jfZwzBAMs37GuCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RUfq7W63; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=r3oRKTpk+uqB6XvZHJzcCqwEo6xWC4SRW85B6fWlBjiajMYHeW5n3tZhhKEbOOCNDFICZyygg6vo/jlceJmHLz+8FVXOelxm6gFeLypMqWB2zoJcVq3w+EJBhXDg9CwRhRCCC86HpDexdZOrnmjBJdSAMEl0V7oTncy5QPnR5IE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZeP1pZjg; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KGdsOM000591
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 21:31:00 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KGe0hR000737
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 21:31:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=R5feMRXUbS4wQ06aTExWKDnE
-	JW6wVqMRR4Tp50ILFfc=; b=RUfq7W63dbi7b1KGny1t6dsAE+EabY3+vywKqe3d
-	27NC2yVruNHQOmPf5Zmp73lDwI4+hIe2+HLxIVC0eBN5viVwKTcHFfE2EEOOJ7W5
-	iJwe92mV39IbkWcvkYWMltCyMsXj7oai6OoLlX7ZaCjD+B9ClqgUAdPP83A7IarQ
-	UfUGqM6vYxMN4xF5byOtVI0QIUZkgEok3D1hUylPd+XdvUp963cEXHbKSP/ARQ9s
-	riXCGxiaYC0t7X62hTah0IZLjOIKwR4RRIGjsKiGvQlrQkcozJl2+UpnBroqWH+8
-	zuGl+J0P7GpWktnSPUgCY08CHFdWxaOpsO0prRDSkdgmsQ==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com [209.85.222.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf0gp0m-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	228HrrCuuX1HRGPycnehYOiQbNMU4YvNE3lwMK2PIuE=; b=ZeP1pZjglGeCXCsC
+	pcpScdyBaTyMp40+3IZODWiRD4PAdP6gWw2rRpKWmhL861inMfSQ9r2+OA0zhpc8
+	HLWCpY+2DDHpXVeuleMTqFaUMb+7+BjzFZ9fKJpTWZqVYcNaZtAFg7ODRFwsLW0M
+	IZuu6MpT8NX/Kk0uJia/22UYZR3VzTbKqCQGNZfXAZUY7KVI25b4w0ZQhFjtu1Nz
+	cZD1wFG3Gm4GektXQt2Gy1sT9CPCEDfKxBq7xBBYsg54ZdaraCXnnuu0e2ZhjlMT
+	o+K5PFk+1rw0mc5e4z0Ta1XLhcfvobShPVMwux5KuaNSbz09BuUlf9i15lsmjN61
+	TPf3jw==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf4rnfn-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 21:31:00 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id a1e0cc1a2514c-87be5305307so3933536241.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 14:31:00 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 21:31:58 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6f8aaba2f62so114473596d6.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 14:31:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747776659; x=1748381459;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R5feMRXUbS4wQ06aTExWKDnEJW6wVqMRR4Tp50ILFfc=;
-        b=Xxy79qNh6093A2O//h8HIDe2q15F8CMGKdlW7YLy8J1PtEZ6MKvitBJ8dmt5mHMjHA
-         f4v+aSGa0ZrfefV4Y5OlhMPeFjr+49IcRMW1PsJx55OKh8nVX+y2ifbOi10ORw8kRQwS
-         kKa/JXUsQd20VZ9dSRm2Oc5TyxBSEKjbH9B7l/J0i+JjnGK9GsBJewMijQkPD6xWNLHq
-         EsS54sjeJnyVSPJunFUmvKAyPlHY/NIgG/CuYDqdxsyhemLW5AC/iCd4CBEJ9JLfxWgI
-         6CAE6I8UwSd6AOuu8M42TFVGKhZtxN0zqI115YxvjdOnp+cNz78ykOswlO8B3m4+BER0
-         cwUA==
-X-Forwarded-Encrypted: i=1; AJvYcCVcFkPLx9ZZjExLeE1cn84NAr7SSIjYN7TiJIuKCLjCWvSi3PtvR2dEpOFDEDxAIGr5HFyIdqAo+k3VVS0I@vger.kernel.org
-X-Gm-Message-State: AOJu0YxVXxgw3OXRs6oOu4SHy2d7XutiMExVkS0ZLG7q+FsFhD+Q2Gap
-	OrXgSJNCpcFJ8j4BIfsFnjzUSWsWwpUXh5bDc28fSTOZZaS42xqwsAMuTdYmA/8p+5GPRT6u26h
-	lnK+KfX9SI4P1ZtNa3LFOPzh/hfiG6Y7/yZNg7PEm/n8m3UaT0iW5MncM1LxHH2M1l5jU
-X-Gm-Gg: ASbGncsod/QMT1imjaXxA8/Y1IdF04DMBBnShtBdTui2Obv37hxMdnUzEu/H0DKSExR
-	hYBZasjlDueObm8YWf15PVCyl2MHWsBjlZjDMSWNv6+7ePH2+Ne+5JMVUUuUNpB+CLUGaYvGjD/
-	xwISfEkjq0cJLDDWbVEOhawMY+Qj92QBM+mgSN8YHuV5xBmsjS0ITcz6sPcOuQQgTgqUhXhed1E
-	GexeWJUCnuhkVo/Uy018HEK+Hf43oaS9+eedcNFRTEXCgW6IUJLBOCaayITQAz3sPnhTUUgGvL+
-	kXLr3TNX9weOwGvORdM3GaGWb6iyuXW1eheLYuc+NGPycEa/oPFN7JmNJG8Xpv1rG+9DUGHw8II
+        d=1e100.net; s=20230601; t=1747776718; x=1748381518;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=228HrrCuuX1HRGPycnehYOiQbNMU4YvNE3lwMK2PIuE=;
+        b=f8bjHbl0rjx+Kgy/EI6zmNVWdGrm72sArvA1JV03deUKxWAba7ksfXo97lMbpMQitu
+         JtWpMPNAFxvzcotUrJvfZ1IFcdEFJwqVCuWH/zRk18nU0viSHziKtKRubgRTxGzrsDCy
+         rbk6enWwnYnV8IzYQ8L3jsEvVo7EshMm6Pe3NJfot+6Xqe4A0kERPdYLsVJVI7+NNCoq
+         9RadpS0FDDBCUjHT8N8bwTItK7tGmMvDKKmNmpSnf1J/D8zQL9AI7BPzS0ABZAcPaVoE
+         CBfR+PA07T6q18oU+UhbnyiCXMGrvUGnYTryoe6C9A79+27kVCt05DhpsQ9uGOyhFj12
+         eXKg==
+X-Forwarded-Encrypted: i=1; AJvYcCXLhmF69bnFgSvP4CEaOR5CP10p05MkhcHckHNycelxho0tJR6pXzpZsP+mgOJzDItpbSarZ5k5NQLjYdCi@vger.kernel.org
+X-Gm-Message-State: AOJu0YwpEGTpZUoxQ8YkWUnY89Wp9mzqPyTOTAr3/BORnXW5FktKwu0u
+	+X06ZI3BjVH9HqtVZsPJaZQQFoT3TwEYc920kEhoDpPyEbXjwOGIHqDMCNNpRiIX0Usna8RladU
+	IeEY44QoU2b+gX5T8ALilYDif/+hxeOsUqv2EANOOcHADorZOtIh4e4SYwfYkPFdOXyCq
+X-Gm-Gg: ASbGncvZXTI2af6BGdIdN8kFFv7npu4zvFnBU9Y9/MX1WnbvpEOO3N0ia8NMZdtrcAT
+	QYDHahuPzMR1yeO1VSPkjviyqjPfE2VOLR1Sudjxw5e1qBWZg6CNNo4Y2/u2WIt6XWgenJAj8eD
+	dk0q0+nu3xK56TXS3LkAj8Ni8lhHJdsbCwP1rX1ZYuEemJcJp1qyCX9FVWis+jJ7Oze/DhTSQAJ
+	Mno8cxH/lAdkM7VZaGeBvIthrBkYknteW4dNcAZXndit2U71da/6qfBHG2DKKFVaGLgMYdtQ92c
+	Jz/gp5w+iuipvJq8ETVQNRq7lezFtF42mJahLcL9rGse7t9N7AwUeeKGdIH7SmSTqKh50Q9wiK8
 	=
-X-Received: by 2002:a05:6102:14a1:b0:4df:a58d:9db2 with SMTP id ada2fe7eead31-4dfa6b586f8mr20307436137.9.1747776659102;
-        Tue, 20 May 2025 14:30:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQ0JUa9lKmM7vc8ucq5JsEnBy+m6NXYoj4X4dcDZidirslkniyjDSG1QivD3U9k2FiRTgBqA==
-X-Received: by 2002:a05:6102:14a1:b0:4df:a58d:9db2 with SMTP id ada2fe7eead31-4dfa6b586f8mr20307392137.9.1747776658678;
-        Tue, 20 May 2025 14:30:58 -0700 (PDT)
+X-Received: by 2002:a05:6214:20c2:b0:6f8:cbaf:468b with SMTP id 6a1803df08f44-6f8cbaf4afcmr206722846d6.9.1747776717854;
+        Tue, 20 May 2025 14:31:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzGFw0ReLy0rYNMlKSRzU7jDAyhoHTDEg4/RZ+gRpFWj1CnjjsVCutbb0+HA7GYlp4CuOmBA==
+X-Received: by 2002:a05:6214:20c2:b0:6f8:cbaf:468b with SMTP id 6a1803df08f44-6f8cbaf4afcmr206722386d6.9.1747776717461;
+        Tue, 20 May 2025 14:31:57 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-550e701804esm2530018e87.152.2025.05.20.14.30.56
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-328085edc14sm24746141fa.107.2025.05.20.14.31.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 14:30:56 -0700 (PDT)
-Date: Wed, 21 May 2025 00:30:54 +0300
+        Tue, 20 May 2025 14:31:55 -0700 (PDT)
+Date: Wed, 21 May 2025 00:31:54 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Vinod Koul <vkoul@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 20/30] drm/msm/dpu: get rid of DPU_MDP_AUDIO_SELECT
-Message-ID: <ym37vvngy3pvwreic56sxyneo5pkvuzrzqg7hu5x4g4smswalq@my2pe4naswdm>
-References: <20250519-dpu-drop-features-v4-0-6c5e88e31383@oss.qualcomm.com>
- <20250519-dpu-drop-features-v4-20-6c5e88e31383@oss.qualcomm.com>
- <ab430c92-ac4f-47a9-9808-ebf5c77f5a86@linaro.org>
+To: Taeyoung Kwon <xoduddk12345@gmail.com>
+Cc: Sebastian Reichel <sre@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taeyoung Kwon <Taeyoung.Kwon@telit.com>
+Subject: Re: [PATCH v1] power: reset: qcom-pon: Rename variables to use
+ generic naming
+Message-ID: <uwkqsapadx62dvuauuiqx2bmy32sbiebrszyliksbcjhn2jcr3@o6qevejpn4u2>
+References: <20250520212740.2729-1-Taeyoung.Kwon@telit.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ab430c92-ac4f-47a9-9808-ebf5c77f5a86@linaro.org>
-X-Proofpoint-GUID: JHIekrzTF9wbXrfyIH-o1ATNu2DzyAVf
-X-Authority-Analysis: v=2.4 cv=J/Sq7BnS c=1 sm=1 tr=0 ts=682cf494 cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=EkPWHm4ox5rSgcNimlMA:9
- a=CjuIK1q_8ugA:10 a=1WsBpfsz9X-RYQiigVTh:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: JHIekrzTF9wbXrfyIH-o1ATNu2DzyAVf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDE3MyBTYWx0ZWRfX2KYu0CyVddo9
- uUX1WxhJWQf9tfoQ2xY3LhOVlLzilYXxJiOvhvjH4heMufYIL6+Vl+yNzzL1A/E46QKehNInSjf
- IwHki/stf0xce2a14Ro1deesNvyz0Wgn59AP6uFCrGpZkTfCzboAdkzKfO2uhtXP6cJH4JSA59S
- BGR6PbHmMYOFrAOuZypGG+ThwpoePI8Ff6TzsIboRBKJT2LdxC/lPebMJ5RJksMixo2O42EBv/7
- 91fArmYLhzYbHG2w8kzfF+r79v3tMP7jMCaxmevFw2COqyHRSeC34rM3Z8yDElrU/bgGWolSdia
- AWXfBae2ZzizJ+GQsvcb4eRMVVtF9cCVtRM61EBDa5DOTQar9NTsCVc/Z88E1QStQCWAM+4RXyP
- cpTF9vrHLIAbpHkDspVH8NhOm7kH21TcqOP5f1wsEy40JClBYugQyaqUtKu685ecrIQvYZUu
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250520212740.2729-1-Taeyoung.Kwon@telit.com>
+X-Proofpoint-GUID: nciE4dwUygq0-oXGj3Y6auchFMw_UGeW
+X-Proofpoint-ORIG-GUID: nciE4dwUygq0-oXGj3Y6auchFMw_UGeW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDE3MyBTYWx0ZWRfXyRCUaSJfn+Ec
+ Jax6oVBH0JoYSebiE7THEpv8jLSihOP6RQrORikawvL78abVCYmGnI59+QHe754381EG2mZZNOq
+ Ojapcyuz6MN3wCVVmkFi7qFYchviwMZuyIqGNF7fB9J4KMOWLZJdE5FdFnnKmum19zvua/DFO2p
+ 51b6Orl/pHkIOUUYWcFPib+78abOxZHhiBExfXoreVUYosPlpiQm+NTw0daoJQriRR7tTZFcVXs
+ yrnmVPNDEHLDrCzfRaxIOHGruy0NyKIde16zYyRwgrzNS3sqnGVru10AA12GYdUU2YgdcQ+55dH
+ 7r62SrYE7SqvFMPKhyLQ3pd6h6uBdq4J9h6F6wxT0NP3KGOfZRAZx9+kzQJhdYdKuf1rOUPoaFc
+ zesd58R3b+BrSnsXOj6Nh/ZrZRhlHMC8Dnfj8i0PN/Pd0fN3fV/SOpi7zjxTOl/OT4n8UUFD
+X-Authority-Analysis: v=2.4 cv=R7UDGcRX c=1 sm=1 tr=0 ts=682cf4ce cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=dt9VzEwgFbYA:10 a=8xVn4GeRAAAA:8 a=Npgqdn6Q5xmw3uMjWK4A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22 a=By6hKCY_mHIbKsINY6vW:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-20_09,2025-05-20_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015 mlxlogscore=999 suspectscore=0 spamscore=0
- priorityscore=1501 bulkscore=0 phishscore=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505200173
+ phishscore=0 clxscore=1015 mlxlogscore=999 priorityscore=1501 spamscore=0
+ bulkscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0 mlxscore=0
+ impostorscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505200173
 
-On Tue, May 20, 2025 at 09:53:42AM +0200, neil.armstrong@linaro.org wrote:
-> On 19/05/2025 18:04, Dmitry Baryshkov wrote:
-> > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > 
-> > Continue migration to the MDSS-revision based checks and replace
-> > DPU_MDP_AUDIO_SELECT feature bit with the core_major_ver == 8 ||
-> > core_major_ver == 5 check.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h  | 1 -
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h  | 1 -
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h  | 1 -
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 1 -
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h  | 1 -
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h          | 1 -
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c              | 3 ++-
-> >   7 files changed, 2 insertions(+), 7 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-> > index 3e66feb3e18dcc1d9ed5403a42989d97f84a8edc..72a7257b4d7ba5bfe89ec76bac19550e023a2b50 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-> > @@ -23,7 +23,6 @@ static const struct dpu_caps sdm845_dpu_caps = {
-> >   static const struct dpu_mdp_cfg sdm845_mdp = {
-> >   	.name = "top_0",
-> >   	.base = 0x0, .len = 0x45c,
-> > -	.features = BIT(DPU_MDP_AUDIO_SELECT),
-> >   	.clk_ctrls = {
-> >   		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
-> >   		[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0 },
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
-> > index 3a60432a758a942eb1541f143018bd466b2bdf20..ce169a610e195cbb6f0fee1362bcaaf05df777cb 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
-> > @@ -11,7 +11,6 @@
-> >   static const struct dpu_mdp_cfg sdm670_mdp = {
-> >   	.name = "top_0",
-> >   	.base = 0x0, .len = 0x45c,
-> > -	.features = BIT(DPU_MDP_AUDIO_SELECT),
-> >   	.clk_ctrls = {
-> >   		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
-> >   		[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0 },
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> > index e07c2cc4188bb12e2253068ca8666ce9364c69c1..23a3a458dd5c260399a42e5f4d4361b3c4e82c4f 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> > @@ -23,7 +23,6 @@ static const struct dpu_caps sm8150_dpu_caps = {
-> >   static const struct dpu_mdp_cfg sm8150_mdp = {
-> >   	.name = "top_0",
-> >   	.base = 0x0, .len = 0x45c,
-> > -	.features = BIT(DPU_MDP_AUDIO_SELECT),
-> >   	.clk_ctrls = {
-> >   		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
-> >   		[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0 },
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> > index b350dba28caed77e542d6a41ceac191a93e165a7..75f8f69123a4a6afe8234a9de21ce68b23c11605 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> > @@ -23,7 +23,6 @@ static const struct dpu_caps sc8180x_dpu_caps = {
-> >   static const struct dpu_mdp_cfg sc8180x_mdp = {
-> >   	.name = "top_0",
-> >   	.base = 0x0, .len = 0x45c,
-> > -	.features = BIT(DPU_MDP_AUDIO_SELECT),
-> >   	.clk_ctrls = {
-> >   		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
-> >   		[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0 },
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h
-> > index 27c71a8a1f31921e5e1f4b6b15e0efc25fb63537..6b895eca2fac53505f7a1d857d30bb8a5d23d4c8 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h
-> > @@ -23,7 +23,6 @@ static const struct dpu_caps sm7150_dpu_caps = {
-> >   static const struct dpu_mdp_cfg sm7150_mdp = {
-> >   	.name = "top_0",
-> >   	.base = 0x0, .len = 0x45c,
-> > -	.features = BIT(DPU_MDP_AUDIO_SELECT),
-> >   	.clk_ctrls = {
-> >   		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
-> >   		[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0 },
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> > index d3a7f46488a21e81a24a9af5071a9a7f5f48cdac..9ba9e273f81ab1966db1865b4ce28f8c18f750b8 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> > @@ -38,7 +38,6 @@
-> >   enum {
-> >   	DPU_MDP_PANIC_PER_PIPE = 0x1,
-> >   	DPU_MDP_10BIT_SUPPORT,
-> > -	DPU_MDP_AUDIO_SELECT,
-> >   	DPU_MDP_MAX
-> >   };
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> > index c49a67da86b0d46d12c32466981be7f00519974c..5c811f0142d5e2a012d7e9b3a918818f22ec11cf 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> > @@ -280,7 +280,8 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
-> >   	if (mdss_rev->core_major_ver >= 5)
-> >   		ops->dp_phy_intf_sel = dpu_hw_dp_phy_intf_sel;
-> > -	if (cap & BIT(DPU_MDP_AUDIO_SELECT))
-> > +	if (mdss_rev->core_major_ver == 4 ||
-> > +	    mdss_rev->core_major_ver == 5)
+On Tue, May 20, 2025 at 09:27:20PM +0000, Taeyoung Kwon wrote:
+> The qcom-pon driver was originally implemented for the PM8916 PMIC, and
+> as a result, several internal variable names still refer to 'pm8916'.
+> However, the driver has since been extended to support other PMICs as
+> well.
 > 
-> Commit message says: core_major_ver == 8 || core_major_ver == 5
+> This patch renames those variables to use more generic and consistent
+> names, improving clarity and reducing confusion for non-PM8916 devices.
 > 
-> Which one is right ?
+> Signed-off-by: Taeyoung Kwon <Taeyoung.Kwon@telit.com>
+> ---
+> From: Taeyoung Kwon <Taeyoung.Kwon@telit.com>
 
-It should be 4, as in the code, I'll fix it later on.
+I'm sorry for not being clear enough. This should be the first line of
+the commit message text (with an empty line afterwards).
 
 > 
-> Neil
+> Changes in v1:
+> - Moved explanation under the '---' line
 > 
-> >   		ops->intf_audio_select = dpu_hw_intf_audio_select;
-> >   }
-> > 
+> Since my company email automatically adds a footer signature,
+> I’m sending this patch from my personal Gmail account.
+> Is this acceptable, or should I resend the patch using
+> an email that matches the Signed-off-by line?
+> 
+>  drivers/power/reset/qcom-pon.c | 30 +++++++++++++++---------------
+>  1 file changed, 15 insertions(+), 15 deletions(-)
+> 
+> diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
+> index 1344b361a475..7e108982a582 100644
+> --- a/drivers/power/reset/qcom-pon.c
+> +++ b/drivers/power/reset/qcom-pon.c
+> @@ -19,7 +19,7 @@
+>  
+>  #define NO_REASON_SHIFT			0
+>  
+> -struct pm8916_pon {
+> +struct qcom_pon {
+>  	struct device *dev;
+>  	struct regmap *regmap;
+>  	u32 baseaddr;
+> @@ -27,11 +27,11 @@ struct pm8916_pon {
+>  	long reason_shift;
+>  };
+>  
+> -static int pm8916_reboot_mode_write(struct reboot_mode_driver *reboot,
+> +static int qcom_pon_reboot_mode_write(struct reboot_mode_driver *reboot,
+>  				    unsigned int magic)
+>  {
+> -	struct pm8916_pon *pon = container_of
+> -			(reboot, struct pm8916_pon, reboot_mode);
+> +	struct qcom_pon *pon = container_of
+> +			(reboot, struct qcom_pon, reboot_mode);
+>  	int ret;
+>  
+>  	ret = regmap_update_bits(pon->regmap,
+> @@ -44,9 +44,9 @@ static int pm8916_reboot_mode_write(struct reboot_mode_driver *reboot,
+>  	return ret;
+>  }
+>  
+> -static int pm8916_pon_probe(struct platform_device *pdev)
+> +static int qcom_pon_probe(struct platform_device *pdev)
+>  {
+> -	struct pm8916_pon *pon;
+> +	struct qcom_pon *pon;
+>  	long reason_shift;
+>  	int error;
+>  
+> @@ -72,7 +72,7 @@ static int pm8916_pon_probe(struct platform_device *pdev)
+>  	if (reason_shift != NO_REASON_SHIFT) {
+>  		pon->reboot_mode.dev = &pdev->dev;
+>  		pon->reason_shift = reason_shift;
+> -		pon->reboot_mode.write = pm8916_reboot_mode_write;
+> +		pon->reboot_mode.write = qcom_pon_reboot_mode_write;
+>  		error = devm_reboot_mode_register(&pdev->dev, &pon->reboot_mode);
+>  		if (error) {
+>  			dev_err(&pdev->dev, "can't register reboot mode\n");
+> @@ -85,7 +85,7 @@ static int pm8916_pon_probe(struct platform_device *pdev)
+>  	return devm_of_platform_populate(&pdev->dev);
+>  }
+>  
+> -static const struct of_device_id pm8916_pon_id_table[] = {
+> +static const struct of_device_id qcom_pon_id_table[] = {
+>  	{ .compatible = "qcom,pm8916-pon", .data = (void *)GEN1_REASON_SHIFT },
+>  	{ .compatible = "qcom,pm8941-pon", .data = (void *)NO_REASON_SHIFT },
+>  	{ .compatible = "qcom,pms405-pon", .data = (void *)GEN1_REASON_SHIFT },
+> @@ -93,16 +93,16 @@ static const struct of_device_id pm8916_pon_id_table[] = {
+>  	{ .compatible = "qcom,pmk8350-pon", .data = (void *)GEN2_REASON_SHIFT },
+>  	{ }
+>  };
+> -MODULE_DEVICE_TABLE(of, pm8916_pon_id_table);
+> +MODULE_DEVICE_TABLE(of, qcom_pon_id_table);
+>  
+> -static struct platform_driver pm8916_pon_driver = {
+> -	.probe = pm8916_pon_probe,
+> +static struct platform_driver qcom_pon_driver = {
+> +	.probe = qcom_pon_probe,
+>  	.driver = {
+> -		.name = "pm8916-pon",
+> -		.of_match_table = pm8916_pon_id_table,
+> +		.name = "qcom-pon",
+> +		.of_match_table = qcom_pon_id_table,
+>  	},
+>  };
+> -module_platform_driver(pm8916_pon_driver);
+> +module_platform_driver(qcom_pon_driver);
+>  
+> -MODULE_DESCRIPTION("pm8916 Power On driver");
+> +MODULE_DESCRIPTION("Qualcomm Power On driver");
+>  MODULE_LICENSE("GPL v2");
+> -- 
+> 2.49.0
 > 
 
 -- 
