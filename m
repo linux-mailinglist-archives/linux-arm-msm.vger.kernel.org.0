@@ -1,82 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-58775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E5CFABE363
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 21:09:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5670EABE36C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 21:09:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0BAB01B6634F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 19:09:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3A7F0166EE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 19:09:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D76527815B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE19D27AC30;
 	Tue, 20 May 2025 19:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zr6M+960"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CCBsuHZn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8E32701A0
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 19:09:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD12F27C875;
+	Tue, 20 May 2025 19:09:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747768146; cv=none; b=T+OAmRqYJoXMC1SHBTaluWUxOQAkT4L9jNLXPv+4dlL87ENVlL5Th5gZP/BMc9WZMuXDtHU26TZ4Jz29Wqxj3CSUgQJYGFXOyI7XpjiE4vGc6EQDrvFX0vc5UQj+H7OeYWQM9sy1sIAWIDFC9nFvZ4Flwdu8I5veR8Z5dAyTxKM=
+	t=1747768146; cv=none; b=EN6Lc9RIYclpgBIJGTl2pLXyJWgCavNOlS/OkLXwgapttuHJWHxjJp6h2b0kZek13t+or5j1vR39y8NGUPzGt+VFghSlcavDxk9XEPefn0cM+QCpIJWlvgqDCH0c4S2F5KpWOCYh9acB7MTW3MgD6+8HkFWfpRQAELyoUxYgwaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747768146; c=relaxed/simple;
-	bh=RnNUWR8apEx6WPWRc8HjEOtdMZqQUWqHrofPXnVy62Q=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=H46EXwg4d3zqYuNx9m5Xy3TaDWxW7ole9GkQFRQUZ95LR5uMUgIsfieQVShLJurKId/MMKewAB4LEoUkdDMvbe9WDayS2nRmveXoNEkM789IFdNGMZKLLzOglNwUD9QNpbBR7vJ4Or6xDAqE0D9nOYRaQ/XOsCfquhqKyef+S2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zr6M+960; arc=none smtp.client-ip=209.85.219.44
+	bh=HEjDEuN2jlIEAxYT9AqChIu7/aHpR2dzu8+sXaRc8T0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=EqeCWYqkO2RIpxsnE8RRFh3sJdTIRA9tEUD+iExeSjjr4KdnC3cpuyppmsj4uhnDHqlSgvgjm31YDRHeag+6Z3vvv4pCxu4u6I/ooNFOV1IV2EROlFSOyz3Aozh9AygScpSsLRZGX1DihIeuQsYCrR5VrevV6ukVrTN1yCaJf/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CCBsuHZn; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-6f8a694d622so12034966d6.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 12:09:03 -0700 (PDT)
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3a376ba6f08so1328013f8f.1;
+        Tue, 20 May 2025 12:09:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1747768143; x=1748372943; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rlMnByBJdLmm3G9/G0GQ/d4DyVfZJhKLZ7MqYnU+doc=;
-        b=Zr6M+960UCNPDsHwNKtH2UO6bGEth31KSeqog5z1kvqBHw4PPy7Rd1nFtV+b/iwpmS
-         wDDzoAuL2VUjNahLXhXsxzpwWLJustrfFrLwAxy6B0rg0lu81SIvchy56EV/DW/uLEUE
-         tHwYzeQIJPl0GjZUs+wFyZDExdP9mMelwWPpqs7PzhXrZ9f55D5JlZVp9KBsjtt0gf3G
-         RJY4j50rUwGpLZQlOsbDa6/b7U47c27RgAZoFsN05z8EStP8ExsYgifZGWQQKfJQdoyI
-         StRkkbh2L/VqTwiJekNqMUa5yP6Os0lk1z0mGGHZuDIgCPiC221arhYyDfyZHdoTu3JL
-         oh/A==
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=e2K6MoWsuqULzUu6YkUYRAAATfxs31Smc/0Z0m7qtI8=;
+        b=CCBsuHZneLqZ5zc3owU2X+0ep7Fc8uCbNqAsEjQgyPJJawnNA53N0OiJeA3eEk1eBy
+         VQmn1Xmo0xtgg7L/vo6+yLQK0QbBGIIf63LnKP1AYNzOPKPsjx43Fud4InEyB2U8tRAe
+         9MkvJgXBLrmeH+F4A6LeKiiycEKLx/F0kTj6a2TyIQ09QKO9fLqmnc6rXrZGWTIDtrgF
+         UAt/aPjziMW3OUap//be5Swe1iLoJn4EHemHPc8HYW0+A9ZrKKV+ChL0vIdybc9KQFZ1
+         9b4wWfwIq44dr1H9yR8L8n6ojbYyjLAFrKm0uB+z1CHP+ByH0V7i76El0TImjaTnAovq
+         k06Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1747768143; x=1748372943;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rlMnByBJdLmm3G9/G0GQ/d4DyVfZJhKLZ7MqYnU+doc=;
-        b=Pp2DObWZPNaMxAY6J2cUXxtxmhpe3+RS8hXJAnVH345ubwjQenue5+fwHQn3DPlYYo
-         HVbjYE5XAhzmHHmr9AaYg/IAzS9dBHcM7QUdRlBXDO3653FAunK282dAsTUt7M9ymQB3
-         AdCWXIv3Ar0Cf2X0nyM2F1XX5MRLcyjjmzzRC2PJYfWZgPF2+0D7Bo3taxgYvfpGkN4l
-         RNdH61osgd1V+UDh0oSoQgk1x8WPErsF9gCj5dcLMjxH7vuCGcS1zBvwE+m9Wg7JJ5aH
-         DkJwJ+IqnQiNo6f/fEwaCQ70XWkCXri2MKcMDMvuuqjb0Jubkhz3vw+/bfDf+MJ9odbN
-         2N2w==
-X-Forwarded-Encrypted: i=1; AJvYcCUXVQDPKwGNWHfzJTRO2um+zLcSJCT9lr+U/LKLb+5EaVNernUO/zwFu9aoq/1VhYNF1pE8A7wU96H43WhT@vger.kernel.org
-X-Gm-Message-State: AOJu0YznkqQJ/ZtYusZaWxZfwSKQYU7xOIKffjumB83JPLZpxSVzUH2P
-	5vJezYwNSdZ9apJIvjnhSoWuswsJekoBqUKZoVFa8fhHVB6wkpWqVHcI
-X-Gm-Gg: ASbGnctEm8gmRnEqYWr69yCN9ppgXdXyW3ta7LOatHZ7OtdIM6bAxNPICYDo2ZLY1Mb
-	WOqR9q6Ze6ewfjZRf9OljSmFzq5EwSCfRtDUjWSz9KPdjvW6REjAUNVg+2r/PTf0TDn3ziBFjZx
-	1ypyhNY1ykegWAM73lS4sWUZZQ3bI8QtDQdXNbRTZ3H8rPDBTz9DOdcukwPiDMnrcAvX7DegL2G
-	0oHYnLpetyXfYWJbWTKpI3t/KdvKNhmN1OyaNnaa+7d8qfwCp1lfi4VOF12nYCBgtQzfePKqqLh
-	UTru9+q+RwEehNb3VrFEHbbYaRbxqE5jc+K50Q2I46GDDCBREbaNii+HX8bI/2Zj0KxCpvbvJjk
-	WV19gZ4LZQ9tXO047WS0=
-X-Google-Smtp-Source: AGHT+IGIrgJ2dmANNY3EjX9kZvxGmi8VdnrE3uOp5o3gsUKwQp+d16sgiHehsoeADCEn10ddqVWxMg==
-X-Received: by 2002:a05:622a:587:b0:48b:6eeb:f98e with SMTP id d75a77b69052e-494ae330988mr104811741cf.2.1747768142906;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=e2K6MoWsuqULzUu6YkUYRAAATfxs31Smc/0Z0m7qtI8=;
+        b=cyet3nFQe1nGYBkFS9LE99fPMjW5ySSEu2ulOltRfC2kPHrJ+9bj5355pDTxs8ibRD
+         gmC8qnyhFMhZNQHngE/uQ+05gHVENW4jK88/0LPEdQpjy9oFFxHAUER5sP0Ougwpp0ko
+         UEhA+wWfAqBhUsuPz2TGIYU/GSTZ0w7i2ux03wb9QWIH6u6OCgRZdqe1gTtC5As/ouRN
+         YKNcybseB2I9hgPmd5LNvu0vcRj8pE/RmOImSlDCG/J3IJfWNfXAZftZCBvo0WI+/UuQ
+         9mZ9GsxueYrJjwO139tv+yYQRdmkYJDpVR61qisHi6IXsJVe9IsbY0eyL2mYeHJvDZrd
+         IFEA==
+X-Forwarded-Encrypted: i=1; AJvYcCWKalPGDFigCWmCH8RMXE7JJH0BaJBWjBj46/uOy6wTmYsDvE1LV3QkDNX2TMt5ZwhNfYOjAfDx+YeieR2C@vger.kernel.org, AJvYcCX40WG81q1J3kgknPAI0BlF1lSm8hfWg1usMDe0va0xLN2ttuIb5lNRStljw+HGsklYoxBDKDNhnhOw@vger.kernel.org, AJvYcCXtNX29QnU1rDW6OCI0x0CXCspzp8mdUOpU0RrTh/ta53tIZcgZNjEF1eF3OZpuVys5l5w8l+Zpt+HjxjIF@vger.kernel.org
+X-Gm-Message-State: AOJu0YzF/K+reO1+lIQMhomD6Rzm35qmGpsNI0StTLs12vB9wVlI1/O7
+	XryofmyMNHvcuFk6MyqsTGe6wV+RvdeYBsxQ2Oo+0sInE7gJ0BRTSBKIMf65cg==
+X-Gm-Gg: ASbGncvK+Vp/0Gi5CNJGqnoLzS68Tw88NI2LR3tkZLIuuRsy0lwIUJhb49bypicnW8M
+	86OvcvyLEgtQDVl9IS7az1vh9FAyaaJ3yOUIj5mmRP1PbaLflD7ZCr/XQoWYHp/mSEOPNFRW3mM
+	TOnX92w+P4EHJ1Uq/KJ0uiA8/xW48krBMafNtOg5WnzIo8YhUw9I9UIEG+cQulCHAvD6Jp2Z0Nu
+	Ru6A8dpJelY5L24W9yX8mPkOpDf7zptrOOlfg5sygLDgtaJzQVQDiwzo23+Bhq5MnZoQJX4XR5m
+	CUA8L2m5C/jJ7JpLwhmS0TjnfAHYA+1SwJegyx3EI7RL7mHocJb2ZQIFYtF812S9j6zsXU8JqqK
+	tVlpj
+X-Google-Smtp-Source: AGHT+IH3V6A6ySleXz4Mm/IFzFSTFv6ap6SC5pohNVPeEh9z8mi2hHYoVR4dCF/KVQ7Uv17+2clYrg==
+X-Received: by 2002:a05:6000:1449:b0:3a3:7638:d754 with SMTP id ffacd0b85a97d-3a37638d82bmr5517381f8f.21.1747768142935;
         Tue, 20 May 2025 12:09:02 -0700 (PDT)
-Received: from [192.168.124.1] (syn-067-243-142-039.res.spectrum.com. [67.243.142.39])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-494ae445b99sm76554051cf.48.2025.05.20.12.09.02
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-447f6b29619sm44130955e9.7.2025.05.20.12.09.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 20 May 2025 12:09:02 -0700 (PDT)
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Tue, 20 May 2025 15:08:56 -0400
-Subject: [PATCH v8 3/7] iommu/arm-smmu-qcom: Make set_stall work when the
- device is on
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Tue, 20 May 2025 21:08:56 +0200
+Subject: [PATCH next] spi: spi-qpic-snand: remove superfluous parameters of
+ qcom_spi_check_error()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,105 +83,141 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250520-msm-gpu-fault-fixes-next-v8-3-fce6ee218787@gmail.com>
-References: <20250520-msm-gpu-fault-fixes-next-v8-0-fce6ee218787@gmail.com>
-In-Reply-To: <20250520-msm-gpu-fault-fixes-next-v8-0-fce6ee218787@gmail.com>
-To: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>, 
- Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, 
- Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, freedreno@lists.freedesktop.org, 
- Connor Abbott <cwabbott0@gmail.com>
+Message-Id: <20250520-qpic-snand-superfluous-params-v1-1-86dd4963e90f@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAEfTLGgC/x3MywrCQAwF0F8pWRvo9OHrV8RFaG81oOk4caRQ+
+ u8dXJ7NWcmRFE7XaqWEn7rOVhAOFQ1PsQdYx2Jq6qav+9DyJ+rAbmIje45I0yvP2TlKkrczzp3
+ giBancKFyxIRJl/9/I8Pypfu27W52QoF1AAAA
+X-Change-ID: 20250513-qpic-snand-superfluous-params-e84ae6e3e719
+To: Mark Brown <broonie@kernel.org>
+Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Gabor Juhos <j4g8y7@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1747768138; l=3453;
- i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
- bh=RnNUWR8apEx6WPWRc8HjEOtdMZqQUWqHrofPXnVy62Q=;
- b=Gva2s5Z7Ds/ygUrvduDeZ/TWE6RzxCRXnJg0Zhx6Z4wRmr7VRKNIHU/2xJaO+oPPC4dZhG1Tb
- GdN7Dm+NI2yANHk93Y3MujPoXjVnGL92q+a8IWtX3FmhfkHr+wCKih3
-X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
- pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
 
-Up until now we have only called the set_stall callback during
-initialization when the device is off. But we will soon start calling it
-to temporarily disable stall-on-fault when the device is on, so handle
-that by checking if the device is on and writing SCTLR.
+The qcom_spi_check_error() function determines the errors of a previous
+page read operation solely by using the cached register values in the
+register read buffer. The data pointed by the 'data_buf' and the 'oob_buf'
+parameters are not used for that at all.
 
-Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
-Reviewed-by: Rob Clark <robdclark@gmail.com>
+Remove the superfluous parameters of the function along with the related
+local variables to simplify the code. Also, remove the variables from the
+caller functions which became unused due to the change.
+
+Note:
+Althought the similar parse_read_errors() function in the 'qcom_nand'
+driver has the same parameters, but that function passes down the
+pointers to check_for_erased_page() at the end of the function.
+
+It is not clear, that a similar call is missing here, or the superfluous
+parameters are simply leftovers of the development process. Nevertheless,
+if additional code is needed, the parameters can be added back later.
+
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 33 +++++++++++++++++++++++++++---
- include/linux/adreno-smmu-priv.h           |  6 +++---
- 2 files changed, 33 insertions(+), 6 deletions(-)
+ drivers/spi/spi-qpic-snand.c | 30 +++++-------------------------
+ 1 file changed, 5 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index c84730d33a30c013a37e603d10319fb83203eaa5..f7430c131c21f40308df36fe25fe75d31558c817 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -112,12 +112,39 @@ static void qcom_adreno_smmu_set_stall(const void *cookie, bool enabled)
- {
- 	struct arm_smmu_domain *smmu_domain = (void *)cookie;
- 	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
--	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu_domain->smmu);
-+	struct arm_smmu_device *smmu = smmu_domain->smmu;
-+	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
-+	u32 mask = BIT(cfg->cbndx);
-+	bool stall_changed = !!(qsmmu->stall_enabled & mask) != enabled;
-+	unsigned long flags;
- 
- 	if (enabled)
--		qsmmu->stall_enabled |= BIT(cfg->cbndx);
-+		qsmmu->stall_enabled |= mask;
- 	else
--		qsmmu->stall_enabled &= ~BIT(cfg->cbndx);
-+		qsmmu->stall_enabled &= ~mask;
-+
-+	/*
-+	 * If the device is on and we changed the setting, update the register.
-+	 * The spec pseudocode says that CFCFG is resampled after a fault, and
-+	 * we believe that no implementations cache it in the TLB, so it should
-+	 * be safe to change it without a TLB invalidation.
-+	 */
-+	if (stall_changed && pm_runtime_get_if_active(smmu->dev) > 0) {
-+		spin_lock_irqsave(&smmu_domain->cb_lock, flags);
-+
-+		u32 reg = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR);
-+
-+		if (enabled)
-+			reg |= ARM_SMMU_SCTLR_CFCFG;
-+		else
-+			reg &= ~ARM_SMMU_SCTLR_CFCFG;
-+
-+		arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_SCTLR, reg);
-+
-+		spin_unlock_irqrestore(&smmu_domain->cb_lock, flags);
-+
-+		pm_runtime_put_autosuspend(smmu->dev);
-+	}
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index 7207bbb57802ce53dfab4d9689113e7f9ba8f131..b5960df106ffa2eea10890901828b6a730750588 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -587,7 +587,7 @@ static int qcom_spi_read_last_cw(struct qcom_nand_controller *snandc,
+ 	return ret;
  }
  
- static void qcom_adreno_smmu_set_prr_bit(const void *cookie, bool set)
-diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno-smmu-priv.h
-index abec23c7744f49bea70f3352da9385304ed3702e..d83c9175828f792f1f43bcc8056102a43d822c96 100644
---- a/include/linux/adreno-smmu-priv.h
-+++ b/include/linux/adreno-smmu-priv.h
-@@ -45,9 +45,9 @@ struct adreno_smmu_fault_info {
-  *                 TTBR0 translation is enabled with the specified cfg
-  * @get_fault_info: Called by the GPU fault handler to get information about
-  *                  the fault
-- * @set_stall:     Configure whether stall on fault (CFCFG) is enabled.  Call
-- *                 before set_ttbr0_cfg().  If stalling on fault is enabled,
-- *                 the GPU driver must call resume_translation()
-+ * @set_stall:     Configure whether stall on fault (CFCFG) is enabled. If
-+ *                 stalling on fault is enabled, the GPU driver must call
-+ *                 resume_translation()
-  * @resume_translation: Resume translation after a fault
-  *
-  * @set_prr_bit:   [optional] Configure the GPU's Partially Resident
+-static int qcom_spi_check_error(struct qcom_nand_controller *snandc, u8 *data_buf, u8 *oob_buf)
++static int qcom_spi_check_error(struct qcom_nand_controller *snandc)
+ {
+ 	struct snandc_read_status *buf;
+ 	struct qpic_ecc *ecc_cfg = snandc->qspi->ecc;
+@@ -604,15 +604,6 @@ static int qcom_spi_check_error(struct qcom_nand_controller *snandc, u8 *data_bu
+ 
+ 	for (i = 0; i < num_cw; i++, buf++) {
+ 		u32 flash, buffer, erased_cw;
+-		int data_len, oob_len;
+-
+-		if (i == (num_cw - 1)) {
+-			data_len = NANDC_STEP_SIZE - ((num_cw - 1) << 2);
+-			oob_len = num_cw << 2;
+-		} else {
+-			data_len = ecc_cfg->cw_data;
+-			oob_len = 0;
+-		}
+ 
+ 		flash = le32_to_cpu(buf->snandc_flash);
+ 		buffer = le32_to_cpu(buf->snandc_buffer);
+@@ -636,11 +627,6 @@ static int qcom_spi_check_error(struct qcom_nand_controller *snandc, u8 *data_bu
+ 			snandc->qspi->ecc_stats.corrected += stat;
+ 			max_bitflips = max(max_bitflips, stat);
+ 		}
+-
+-		if (data_buf)
+-			data_buf += data_len;
+-		if (oob_buf)
+-			oob_buf += oob_len + ecc_cfg->bytes;
+ 	}
+ 
+ 	if (flash_op_err)
+@@ -794,15 +780,12 @@ static int qcom_spi_read_page_ecc(struct qcom_nand_controller *snandc,
+ 				  const struct spi_mem_op *op)
+ {
+ 	struct qpic_ecc *ecc_cfg = snandc->qspi->ecc;
+-	u8 *data_buf = NULL, *data_buf_start, *oob_buf = NULL, *oob_buf_start;
++	u8 *data_buf = NULL, *oob_buf = NULL;
+ 	int ret, i;
+ 	u32 cfg0, cfg1, ecc_bch_cfg, num_cw = snandc->qspi->num_cw;
+ 
+ 	data_buf = op->data.buf.in;
+-	data_buf_start = data_buf;
+-
+ 	oob_buf = snandc->qspi->oob_buf;
+-	oob_buf_start = oob_buf;
+ 
+ 	snandc->buf_count = 0;
+ 	snandc->buf_start = 0;
+@@ -883,21 +866,18 @@ static int qcom_spi_read_page_ecc(struct qcom_nand_controller *snandc,
+ 		return ret;
+ 	}
+ 
+-	return qcom_spi_check_error(snandc, data_buf_start, oob_buf_start);
++	return qcom_spi_check_error(snandc);
+ }
+ 
+ static int qcom_spi_read_page_oob(struct qcom_nand_controller *snandc,
+ 				  const struct spi_mem_op *op)
+ {
+ 	struct qpic_ecc *ecc_cfg = snandc->qspi->ecc;
+-	u8 *data_buf = NULL, *data_buf_start, *oob_buf = NULL, *oob_buf_start;
++	u8 *oob_buf = NULL;
+ 	int ret, i;
+ 	u32 cfg0, cfg1, ecc_bch_cfg, num_cw = snandc->qspi->num_cw;
+ 
+ 	oob_buf = op->data.buf.in;
+-	oob_buf_start = oob_buf;
+-
+-	data_buf_start = data_buf;
+ 
+ 	snandc->buf_count = 0;
+ 	snandc->buf_start = 0;
+@@ -965,7 +945,7 @@ static int qcom_spi_read_page_oob(struct qcom_nand_controller *snandc,
+ 		return ret;
+ 	}
+ 
+-	return qcom_spi_check_error(snandc, data_buf_start, oob_buf_start);
++	return qcom_spi_check_error(snandc);
+ }
+ 
+ static int qcom_spi_read_page(struct qcom_nand_controller *snandc,
 
+---
+base-commit: 5b31d2d81a4bcdd9915e7b152fb3cdc3dc7f4ecb
+change-id: 20250513-qpic-snand-superfluous-params-e84ae6e3e719
+
+Best regards,
 -- 
-2.47.1
+Gabor Juhos <j4g8y7@gmail.com>
 
 
