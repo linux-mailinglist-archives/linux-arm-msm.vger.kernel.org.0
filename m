@@ -1,79 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-58716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6338EABD81A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 14:19:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FB6CABD8D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 15:06:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D79C33A6FED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 12:19:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4040C4C0E05
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 13:06:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE5C21D554;
-	Tue, 20 May 2025 12:19:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cvJUbteA"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8284122B8D4;
+	Tue, 20 May 2025 13:06:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02304A06
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 12:19:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF41E27715;
+	Tue, 20 May 2025 13:06:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747743577; cv=none; b=fDP8rZVy55wzCSTIx8yQ4Mf13XQ2vc+QkESe6JpFakFCxy9fkDvANlI5eeXUqbnJDMwHyVeoxuDTHNBBph/wIq6kBv+5uR3zKcPezBnz4SYstn1P5XA6XgnuNgYgAEIvBdyXwg3yBWl8NAiYxDLZdNH4dkiiSgNJed6btGyxHT0=
+	t=1747746380; cv=none; b=CpMTyziixGRNIP9gZS15JiHw4PdhsgGagkAYVtvfJODVe6tBRkWq3JG/hvJKewgCdfAoS1FHcbsYjw+PVjNdiseMK+m93z1z/yi4ajHlAvyQlPUQjJRSC1WgMQ4QaFS/s1Y8HI6CI8I1myHb7G6G4rRcxkNxdSSaaHulad/3gk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747743577; c=relaxed/simple;
-	bh=yN2oz4RGfjWsr3L/yxfEwmYkVPvraUmd8R28Gu6B0Yc=;
+	s=arc-20240116; t=1747746380; c=relaxed/simple;
+	bh=EhHgwsMF9jbokFc/Vz8L0N0DcVCZGcCGPxUtzcJihjU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fcQRe18pHaYKiRdyDpxiMBFOct0ILyOi7rWhUbnDigneCp7t1AQ5SdZ37eAtcP2hsCQMIHetqeYm8fmW4SeNJW90eWZMXDDPTNXgGzC2O7OrUOlvomF82UMqVpgHy1g66xHzisTy11YwzgFC3AgV5eswVphmS7qzE1HuJWstTDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cvJUbteA; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-54b0da81302so478224e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 05:19:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747743574; x=1748348374; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LGxzwmCx0aVZaskSD1cvnXeY9ifmH8LA11mbYYh9vMI=;
-        b=cvJUbteAf8Xw1WV0DNcfrB6Gq7qu3YaAU2jIeoXNxuwobYZJaM9B92l7zNJOqQ7tGE
-         stjLqXPn001yaYEfc53tGjDzdqAGecNhLq19p8afw4UyVsNZWuGFpv2QdL90Q5KFqoj0
-         KpXJRO10E0uhPM94iUjgwPzYjGhGHjYHOa9XNYDme7MzhPg+aM/Ek4Za3RBGg6dUeNSl
-         yp3S02zp6aioPjUmWbytHsQOtJp/gSgFtFEo3oKcr36DW6woZ3VGCpZ6yk9+yTRDgnxt
-         a09+1o9CkJubWKQWFqg8TUOZhOjbBr6RgKCD2SUO4HwMiEma8QiIYfTaxfi6pbImVEnz
-         Z6Lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747743574; x=1748348374;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LGxzwmCx0aVZaskSD1cvnXeY9ifmH8LA11mbYYh9vMI=;
-        b=pjR3WgIdlWQw6IpKItJPEw2j4Ig16T6gk0XW8cWBPqJUjdJJkHAMkyvuPVdV701V5I
-         JyCfmFvlnrqHwcOIfZWwHxGfC78DyGKB60mOMEDwkRFNkBWDiGPzHBwASRXE+4iTb4EY
-         LrsHiH7MKJ5V5g0qhNXXzdFIQw/CBJUiOLVAGikNe4zo7jh8RE0xuzz9///OThLBicu4
-         iwbiZ7hPe3duOKcDMQkdkNyloSaluMz0e+0NCFPB8TQD9lDYYpNYBmkv1SYgU6klkojy
-         FXLHLrup5W0fxC4cmMuh9ZCrpyiz+JFH2HPwc9GKJrEuNZSfWJSMuLoii9BIp3fjYzFU
-         LTuA==
-X-Gm-Message-State: AOJu0YzS3ytCSXJfBHZvLxDFytHqOUfgEzynV34scgrpkBRVduC60tLB
-	oJDvjPn/K/V4pcT6+7Iv/7GKQWklxbjlr7s0ycWXt200nymAVBNPVs1mwJP+pJmb07Q=
-X-Gm-Gg: ASbGncu2O36KoGIWDI06Vd0GX1xAuY2TzZmKhW35pcDzM+8W079vtu9DWzggLzOFng0
-	wmCN3CoTTpoMG/XPerwwdAJKVqjTEwCdPZV+zqNJFIS0CNiJymFYnxEJNxL4yW8W6vkwiYZfZJj
-	nVUB2UsM67LYg9PXN+M2npGwjB1kmTMPdvsf2owsnsk878xXFh/UQZ7Lcdja659Uygor9cwQA8O
-	uoVAgAAu3kfinUYx4tU2yFU9X4nOdBeWiXzgZe3a0gS3EgYp8yRDgtwnqfuUKAOPDFXSxs58LOD
-	wu3N5WEXqxTqxWhJ7G74K7+RY8J/Nyww3lUputwB2SbFVveiw/PkKHnxbtu+PfjdLHjtFBRNItg
-	26AvSkqvJtK0x2odgGzBGPHq/h3EnMg==
-X-Google-Smtp-Source: AGHT+IFHmFbjhmDs8JEJN8j6pzPYHRP0s5f+jZkbENRKCNk16g6eKwVvixfcndrmuMQxR0FYU+h/Iw==
-X-Received: by 2002:a05:6512:2909:b0:550:ed9e:1b32 with SMTP id 2adb3069b0e04-550ed9e1fbfmr1194001e87.1.1747743573823;
-        Tue, 20 May 2025 05:19:33 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-550e6f2fcb3sm2327121e87.86.2025.05.20.05.19.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 May 2025 05:19:33 -0700 (PDT)
-Message-ID: <748f96f7-d690-4823-845f-67642db97a06@linaro.org>
-Date: Tue, 20 May 2025 15:19:25 +0300
+	 In-Reply-To:Content-Type; b=VHWyt5M82tm41XS5MGz3LEiGqO1kfjgv54FeO9nukeQlaHgC4VHLmetcZZiQ/lOcQv5b24shojdekuSe/2JKu1JomRvd4ht4e7eoXMczsor9s2ygeRtuWcbDTik7dhIsWgBAo2inz+gwVToHdZAg3krRv5JpUM3z5T7ZVwOTHX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BD1FB1516;
+	Tue, 20 May 2025 06:06:04 -0700 (PDT)
+Received: from [10.57.79.215] (unknown [10.57.79.215])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C0CB13F5A1;
+	Tue, 20 May 2025 06:06:15 -0700 (PDT)
+Message-ID: <def13dd2-3a23-4091-a732-e4c079df7f41@arm.com>
+Date: Tue, 20 May 2025 14:06:09 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,54 +42,101 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs615: Enable camss for
- qcs615-adp-air
-Content-Language: ru-RU
-To: Wenmeng Liu <quic_wenmliu@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, bryan.odonoghue@linaro.org, todor.too@gmail.com,
- rfoss@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
-References: <20250520-qcs615-adp-air-camss-v1-0-ac25ca137d34@quicinc.com>
- <20250520-qcs615-adp-air-camss-v1-2-ac25ca137d34@quicinc.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20250520-qcs615-adp-air-camss-v1-2-ac25ca137d34@quicinc.com>
+Subject: Re: [PATCH v4 05/40] iommu/io-pgtable-arm: Add quirk to quiet
+ WARN_ON()
+To: Will Deacon <will@kernel.org>, Rob Clark <robdclark@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>,
+ Rob Clark <robdclark@chromium.org>, Joerg Roedel <joro@8bytes.org>,
+ Jason Gunthorpe <jgg@ziepe.ca>, Nicolin Chen <nicolinc@nvidia.com>,
+ Kevin Tian <kevin.tian@intel.com>, Joao Martins <joao.m.martins@oracle.com>,
+ "moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
+ "open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>,
+ open list <linux-kernel@vger.kernel.org>
+References: <20250514175527.42488-1-robdclark@gmail.com>
+ <20250514175527.42488-6-robdclark@gmail.com>
+ <20250515143309.GA12165@willie-the-truck>
+ <CAF6AEGsnOD8fZmTXAEZZNrdK-NXdUJF51s51EhYQ6Ed7dCFM0A@mail.gmail.com>
+ <20250520113146.GA18435@willie-the-truck>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <20250520113146.GA18435@willie-the-truck>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hello Wenmeng,
-
-On 5/20/25 11:56, Wenmeng Liu wrote:
-> This change enables camera driver for QCS615 ADP AIR board.
-
-what is the rationale of enabling CAMSS on the board without giving any
-description of any sensors connected to the SoC?
-
-> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/qcs615-ride.dts | 7 +++++++
->   1 file changed, 7 insertions(+)
+On 2025-05-20 12:31 pm, Will Deacon wrote:
+> On Thu, May 15, 2025 at 07:48:39AM -0700, Rob Clark wrote:
+>> On Thu, May 15, 2025 at 7:33 AM Will Deacon <will@kernel.org> wrote:
+>>>
+>>> On Wed, May 14, 2025 at 10:53:19AM -0700, Rob Clark wrote:
+>>>> From: Rob Clark <robdclark@chromium.org>
+>>>>
+>>>> In situations where mapping/unmapping sequence can be controlled by
+>>>> userspace, attempting to map over a region that has not yet been
+>>>> unmapped is an error.  But not something that should spam dmesg.
+>>>>
+>>>> Now that there is a quirk, we can also drop the selftest_running
+>>>> flag, and use the quirk instead for selftests.
+>>>>
+>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>>> Acked-by: Robin Murphy <robin.murphy@arm.com>
+>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>>> ---
+>>>>   drivers/iommu/io-pgtable-arm.c | 27 ++++++++++++++-------------
+>>>>   include/linux/io-pgtable.h     |  8 ++++++++
+>>>>   2 files changed, 22 insertions(+), 13 deletions(-)
+>>>
+>>> [...]
+>>>
+>>>> diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
+>>>> index bba2a51c87d2..639b8f4fb87d 100644
+>>>> --- a/include/linux/io-pgtable.h
+>>>> +++ b/include/linux/io-pgtable.h
+>>>> @@ -88,6 +88,13 @@ struct io_pgtable_cfg {
+>>>>         *
+>>>>         * IO_PGTABLE_QUIRK_ARM_HD: Enables dirty tracking in stage 1 pagetable.
+>>>>         * IO_PGTABLE_QUIRK_ARM_S2FWB: Use the FWB format for the MemAttrs bits
+>>>> +      *
+>>>> +      * IO_PGTABLE_QUIRK_NO_WARN_ON: Do not WARN_ON() on conflicting
+>>>> +      *      mappings, but silently return -EEXISTS.  Normally an attempt
+>>>> +      *      to map over an existing mapping would indicate some sort of
+>>>> +      *      kernel bug, which would justify the WARN_ON().  But for GPU
+>>>> +      *      drivers, this could be under control of userspace.  Which
+>>>> +      *      deserves an error return, but not to spam dmesg.
+>>>>         */
+>>>>        #define IO_PGTABLE_QUIRK_ARM_NS                 BIT(0)
+>>>>        #define IO_PGTABLE_QUIRK_NO_PERMS               BIT(1)
+>>>> @@ -97,6 +104,7 @@ struct io_pgtable_cfg {
+>>>>        #define IO_PGTABLE_QUIRK_ARM_OUTER_WBWA         BIT(6)
+>>>>        #define IO_PGTABLE_QUIRK_ARM_HD                 BIT(7)
+>>>>        #define IO_PGTABLE_QUIRK_ARM_S2FWB              BIT(8)
+>>>> +     #define IO_PGTABLE_QUIRK_NO_WARN_ON             BIT(9)
+>>>
+>>> This feels a bit fragile to me:
+>>>    * IOMMU-API users of io-pgtable shouldn't be passing this quirk
+>>>      but might end up doing so to paper over driver bugs.
+>>>
+>>>    * Low-level users of io-pgtable who expose page-table operations to
+>>>      userspace need to pass the quirk, but might well not bother because
+>>>      well-behaved userspace doesn't trigger the warning.
+>>>
+>>> So overall, it's all a bit unsatisfactory. Is there a way we could have
+>>> the warnings only when invoked via the IOMMU API?
+>>
+>> iommu drivers _not_ setting this flag seems like a good way to achieve that ;-)
+>>
+>> The alternative is to move the warns to the iommu driver... but they
+>> could just as easily remove the WARN_ON()s as they could set the
+>> NO_WARN_ON quirk, so :shrug:?
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> index 2b5aa3c66867676bda59ff82b902b6e4974126f8..be8b829ec508d7de7a4cd6be6d1d4e83b09734bb 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> @@ -211,6 +211,13 @@ vreg_l17a: ldo17 {
->   	};
->   };
->   
-> +&camss {
-> +	vdda-phy-supply = <&vreg_l5a>;
-> +	vdda-pll-supply = <&vreg_l12a>;
-> +
-> +	status = "ok";
-> +};
-> +
+> Bah, I also don't have a good idea to improve this, so I guess I'll take
+> what you have for now.
 
---
-Best wishes,
-Vladimir
+Hmm, just a nit on reflection, how about fixing up the name to just 
+IO_PGTABLE_QUIRK_NO_WARN? Given that it's already quite long, and we 
+have a well-established DMA_ATTR_NO_WARN with equivalent semantics over 
+in the DMA API.
+
+Cheers,
+Robin.
 
