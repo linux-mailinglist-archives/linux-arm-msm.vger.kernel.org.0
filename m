@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-58649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99F51ABD15C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 10:05:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D745EABD161
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 10:05:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A14261BA12AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 08:05:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 56FBF8A5FE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 08:05:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3BD978F4E;
-	Tue, 20 May 2025 08:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AC8A255F59;
+	Tue, 20 May 2025 08:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eJBoNza5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BRLXQtoj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA2525D20D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 08:05:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60EE21A43C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 08:05:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747728304; cv=none; b=SIbv1jbMyBmXcUn0RZX2aAgEmps468KfuLtYSeFPAnlqW6sVf7ejt/keG6rrttnyDMUc/5+9Y2ariB0FOaphRYbOtkTCaZBxtEsbLupiqizvHWepnGUdBq9qWh+B6++ccYBH4bOgisOSK2/q/aZdQ1MgaL8wh2Hgmc47ZdxhEfg=
+	t=1747728315; cv=none; b=I1wE9rdFt9+HyVrBbc/SvzB7XawSfgm7zahle9MPQCW8Tz/G3KRe/XRSgShH423MGgeZxa/0nEpjbpZRKzAeipc4QEhSao6nCS4ca997qcW5NdXhVP3YjqVV+zUGyHD0Psl7UBfdlyeBz2zreSG81vdsnph7UmbujRaYbF+W5Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747728304; c=relaxed/simple;
-	bh=dVd66/LTvQ2RN45Jr2m5S/pHVpsDjYhPNQPEkpudd+4=;
+	s=arc-20240116; t=1747728315; c=relaxed/simple;
+	bh=wWkafiNEWdpxukzyksw2hTHdNCcqHphqd37cyWmEwYA=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Wf73oSVkr1Jd+dL3p8tNLVENuGdsK7Gkz7juMn5/KFrOVr8aaDzJccqCjXA/bu8xPNVTsVFYLnxDRjJNmTXzm12R1JKvvMSB7S6ts/A7FYR00n8SOjwDCyvw2Evmp9FfWH96PrtW+sG3nuYLJYq3vhqSsjGSOPysGMEvfKfP2y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eJBoNza5; arc=none smtp.client-ip=209.85.128.45
+	 In-Reply-To:Content-Type; b=faAh8jFGp9pK9W9O+t664QggNIBBSmlJwOb6NvIscPCeJDRQcjT5h1L3BpUkJjZMd+Vj/LJ+Dli0uvREELLJEH5alwwlCbowri4VBXMJ95jd74KAsueCMxZQvJcSzbH7TakAKwZOzZ6RGfErbJs3lHqu/eQaBNGyyML9XWPcWVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BRLXQtoj; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-442f5b3c710so41935075e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 01:05:01 -0700 (PDT)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43cfebc343dso39539705e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 01:05:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747728299; x=1748333099; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1747728312; x=1748333112; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=PTvudJvnhDEPuyFu1j/pIjb7A7vd2K7xc6jlT71fWUc=;
-        b=eJBoNza5GBMuEknl8sGd4T+k+AGif5XIgyXeYosjyKZzs/1rA/zV8CestdM4a3rSJN
-         zUl9864KjZgXt2zS2n6ECOFiVkvc/r9Yu+OUmEVfyHAwpFRyEF5iq6k4/NbxElctyzQl
-         ph0NHIwFdYxSgMvoZtMdaXWjTyiVGEjQKg6ldp+u7yYdqEa1UPe9nQG6OQwKlbzznHao
-         W07bJ/7vH3mDG5camfk1r/AO9QBjLCTWqcKX418mBy2KF7BNUe2JeD3sIAFhRNACLoZM
-         1Wt5kkYRaILW95ubGJLfQyqvV0tnK1pEAdxxl+pqR/VvQXFj2aS6G4MtEwQsT72vIp/a
-         FK4A==
+        bh=5GL9/WVnDzCRjHM7KCqjvky6ly317+0xsVdOQlS6d90=;
+        b=BRLXQtoj3XcKiP9Nu+QgLGK2NVz90m9JFCZyvTC29GhRcYHyEh+19gNaJUfRJHxntl
+         KUm9tt33iomk1SkN5s3hyoUC0DRCiLUwWb3KYMo8rHxxhIstYX9vuy0dXi674Krcvyuv
+         4HbpFucAJfDGuQkEn96gIQqvpZ8e6IbAPz1stqKtZk6RdDSPlL+MI494nqvGMlbDylFi
+         5C41mgjndOnKBZpvZrQkJmUi3/kjp6yhk0EtIr0VFcb05E1SAWR3AbhEN+ZmIiP78WxZ
+         p4wuks0QtZw1vTQoBO95seE+QFnwo/HYtQ9B0FLw/qNLZCgkIWEVMhpx+tyKOHEH7PF9
+         N6PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747728299; x=1748333099;
+        d=1e100.net; s=20230601; t=1747728312; x=1748333112;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=PTvudJvnhDEPuyFu1j/pIjb7A7vd2K7xc6jlT71fWUc=;
-        b=A6VMbynkGye7ym9kLeQqNVnRJpIgrGa5NHHqZ7lYspded7B4PrxtExVHI0b6DNLZrb
-         1VG6u0ApMxgiANGernJZcky6bBsizY/9oFNoTm25uu9uCqYDH9NFkBqF+qySJYB3O4Tu
-         Ua8vIYEFRAP4vJdiN83G414ENaOftqtRt/Olsg1SzR8dq+ExF2q0huBhyZh9ZB2tibmC
-         On4q7pJAOxiU0UdFAaUpr+iwh+c/ME4o9gJONG214NXZvE1yl2sAVAwUcf1m2kPDvOEQ
-         IJBqvd1OBbbYLfMz/VvNgurXZwmRVH6pe9Fj9tgSWPJQPjRK3/DXYWW6jfePvNapqoZx
-         r/Vg==
-X-Gm-Message-State: AOJu0YxLZ7CHhQ/93JmAXZnCvdf96zItIGXMif4KU1UF+ozsM/YNsD83
-	6nyabkZGQbjfowE5YzIst0Cna4tNAx77Mo2trnSqQEUcjiEd/KPzGAp8W8o5d0iCbOg=
-X-Gm-Gg: ASbGncv5mRxrHrG495x6U/T1RFNEEkTwuvyxRQM89YI0AshL8CEWD7I2VmE/6zzr0ra
-	kXuOUXJxVgcH3NjDTo+1WyKpT8bBg7RyQPsDHLPMsFub44ltB44s/O+1qW09rr8HzKOWxfM4FLK
-	rTccaCOLxGMtpCZn/mpyCLVucCDCsPPOhi4aMlZB8A9Bj/OmuN5Xndsl2YcsgZrtU6nDZe/geV0
-	5OKF/aYs6puWn1b/BXIbTzztJiHpchjlZ3++dKtCtZU5kOn+y5lDfhlzHNFb2ktEEuTDZLGTpmA
-	l0TVzZDdcMkGAod+Zo/Tf2n7RShS/MfekcpdAs/ukubrp+RRA6c3EWhqdlOVvNYjnaYiqerIDW+
-	McnYW21iZJyVQ31WKYM50wHXrnZZCoVRq4iNaGq8=
-X-Google-Smtp-Source: AGHT+IGUPKh2A40EZEfnAPoVQ3zMAxuIk1SlR6DLZKDJjOuSfQInyC6VjSaaWvvIanac18fckF6Umw==
-X-Received: by 2002:a05:600c:34d4:b0:442:e0e0:250 with SMTP id 5b1f17b1804b1-442fd67200emr144060775e9.29.1747728299447;
-        Tue, 20 May 2025 01:04:59 -0700 (PDT)
+        bh=5GL9/WVnDzCRjHM7KCqjvky6ly317+0xsVdOQlS6d90=;
+        b=iy5bVhwPMzAYODUth3xfjg4tXcJFC2kK+lLaD6DfMpxAJeS5BIsbh2N+ut6vv7617U
+         R3ydub3kLRB3Q/a2tWDFUCVEWFmH634qFBOjkeRqw1KRuUkfc77Omt8v+ldEdu2ZoJcX
+         OhpAhgIY6mkmqnlRfkY7T4uWyzhpZ4RHQQjxpE0rvAFAteKXdfdp0xkAjs6mBAq4WAXg
+         FZ9UOPx4KSpgfVsj+QqTflTwRsE7TL+ke1uRQMJMHuN9WvORhD84LeFY78r2HhMZZmnC
+         3sqHTb85jKdswaw+Pf1h6JhDwUkvy1UI+PCFpE/kVNynNrgAODxOQj4YbiJUKOb/4j4V
+         zXFA==
+X-Gm-Message-State: AOJu0YyziQBK9hRfC83FPQdVDy36Uv9puId3r8ED6OlUcpzBf3y4vbW2
+	+4hOIn09ovt4lxjrt7vlCBRXVuCSiNFp/ASn9Kpo4Wp7xgsdpDXM6I7JtRIETf1NmGw=
+X-Gm-Gg: ASbGncuTwEhkmVr50+dGI4Ra64X0E4sLpouHfpJUvB42dhrH9qPnLY/Yz0akKOCBXYv
+	ILFF0/KJRoeVqiwS8LsGzczQDqXQYXCF/JQczPDZyPjlnxeFajYBWdW3Kc/bp2aPv/vwMMIdXm1
+	xGQDcM07e98OuGHAX6PFaUgqkq6dxjlyfeoMjcY0jMRmYcLKgMvMgDN2Fg9XpN1+aCsdZV8y3Mt
+	sh34kjzoWZkBGPrQntI/GaReJqB2ACxDAvrhJg/C3jv3LoZkh7ZtUB7o8YT7L+OXEDNuMdCVLZb
+	ovUhVuB4d4KI+iI5sOk9Xs0CzVvGtgKhfKHsh8YiI8HoM/JGiopIlyRXlvoIZNims4P4MREarnn
+	kIpDhsowIrPiVKnXy6mIE0l01LCgN
+X-Google-Smtp-Source: AGHT+IGP1iT2KS7C1jAAS9avfiRYegZAXZJbq43ThFN2fqZehYB3eN8S1ivyCQg/LLIAvxsCPpLRRg==
+X-Received: by 2002:a05:600c:3f06:b0:43b:ca39:6c75 with SMTP id 5b1f17b1804b1-442fd63c7aemr176158525e9.16.1747728311950;
+        Tue, 20 May 2025 01:05:11 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:3d9:2080:fb2e:6266:4e39:ce68? ([2a01:e0a:3d9:2080:fb2e:6266:4e39:ce68])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a362997dc8sm13872656f8f.46.2025.05.20.01.04.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca88990sm15825687f8f.68.2025.05.20.01.05.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 May 2025 01:04:59 -0700 (PDT)
-Message-ID: <b6ef6e15-cff4-40d2-a54d-55dd0218f966@linaro.org>
-Date: Tue, 20 May 2025 10:04:58 +0200
+        Tue, 20 May 2025 01:05:11 -0700 (PDT)
+Message-ID: <7142ab55-9173-431a-98fb-a78acf0e5ddb@linaro.org>
+Date: Tue, 20 May 2025 10:05:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,7 +85,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 26/30] drm/msm/dpu: get rid of DPU_SSPP_QOS_8LVL
+Subject: Re: [PATCH v4 27/30] drm/msm/dpu: drop unused MDP TOP features
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
  Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
  Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
@@ -95,7 +95,7 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 References: <20250519-dpu-drop-features-v4-0-6c5e88e31383@oss.qualcomm.com>
- <20250519-dpu-drop-features-v4-26-6c5e88e31383@oss.qualcomm.com>
+ <20250519-dpu-drop-features-v4-27-6c5e88e31383@oss.qualcomm.com>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -122,109 +122,45 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20250519-dpu-drop-features-v4-26-6c5e88e31383@oss.qualcomm.com>
+In-Reply-To: <20250519-dpu-drop-features-v4-27-6c5e88e31383@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 19/05/2025 18:04, Dmitry Baryshkov wrote:
 > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> Continue migration to the MDSS-revision based checks and replace
-> DPU_SSPP_QOS_8LVL feature bit with the core_major_ver >= 4 check.
+> Drop unused MDP TOP features from the current codebase.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 6 +++---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 --
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c    | 5 ++++-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h    | 2 ++
->   4 files changed, 9 insertions(+), 6 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 13 -------------
+>   1 file changed, 13 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 6d7be74bafe326a1998a69ed9b3495c5acf6350f..a276a1beaf95d183f6119452e5516fa8ee60cef6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -35,12 +35,12 @@
->   	(VIG_MASK | BIT(DPU_SSPP_SCALER_QSEED3_COMPATIBLE))
->   
->   #define VIG_SDM845_MASK_NO_SDMA \
-> -	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3_COMPATIBLE))
-> +	(VIG_MASK | BIT(DPU_SSPP_SCALER_QSEED3_COMPATIBLE))
->   
->   #define VIG_SDM845_MASK_SDMA \
->   	(VIG_SDM845_MASK_NO_SDMA | BIT(DPU_SSPP_SMART_DMA_V2))
->   
-> -#define VIG_QCM2290_MASK (VIG_BASE_MASK | BIT(DPU_SSPP_QOS_8LVL))
-> +#define VIG_QCM2290_MASK (VIG_BASE_MASK)
->   
->   #define DMA_MSM8953_MASK \
->   	(BIT(DPU_SSPP_QOS))
-> @@ -60,7 +60,7 @@
->   	(VIG_SC7280_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
->   
->   #define DMA_SDM845_MASK_NO_SDMA \
-> -	(BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_QOS_8LVL) |\
-> +	(BIT(DPU_SSPP_QOS) | \
->   	BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_TS_PREFILL_REC1) |\
->   	BIT(DPU_SSPP_CDP) | BIT(DPU_SSPP_EXCL_RECT))
->   
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 8c394e7d6496ca2d120c81c7776b4b979368be23..c582ef1ffe022f2e92b1b80cbab97ff41a2acfe9 100644
+> index c582ef1ffe022f2e92b1b80cbab97ff41a2acfe9..9658561c4cb653ca86094d67f7b5dc92d36d38cd 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -50,7 +50,6 @@ enum {
->    * @DPU_SSPP_CSC_10BIT,      Support of 10-bit Color space conversion
->    * @DPU_SSPP_CURSOR,         SSPP can be used as a cursor layer
->    * @DPU_SSPP_QOS,            SSPP support QoS control, danger/safe/creq
-> - * @DPU_SSPP_QOS_8LVL,       SSPP support 8-level QoS control
->    * @DPU_SSPP_EXCL_RECT,      SSPP supports exclusion rect
->    * @DPU_SSPP_SMART_DMA_V1,   SmartDMA 1.0 support
->    * @DPU_SSPP_SMART_DMA_V2,   SmartDMA 2.0 support
-> @@ -68,7 +67,6 @@ enum {
->   	DPU_SSPP_CSC_10BIT,
->   	DPU_SSPP_CURSOR,
->   	DPU_SSPP_QOS,
-> -	DPU_SSPP_QOS_8LVL,
->   	DPU_SSPP_EXCL_RECT,
->   	DPU_SSPP_SMART_DMA_V1,
->   	DPU_SSPP_SMART_DMA_V2,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> index 32c7c80845533d720683dbcde3978d98f4972cce..7dfd0e0a779535e1f6b003f48188bc90d29d6853 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> @@ -543,7 +543,7 @@ static void dpu_hw_sspp_setup_qos_lut(struct dpu_hw_sspp *ctx,
->   		return;
+> @@ -28,19 +28,6 @@
 >   
->   	_dpu_hw_setup_qos_lut(&ctx->hw, SSPP_DANGER_LUT,
-> -			      test_bit(DPU_SSPP_QOS_8LVL, &ctx->cap->features),
-> +			      ctx->mdss_ver->core_major_ver >= 4,
->   			      cfg);
->   }
+>   #define MAX_XIN_COUNT 16
 >   
-> @@ -703,6 +703,9 @@ struct dpu_hw_sspp *dpu_hw_sspp_init(struct drm_device *dev,
->   	hw_pipe->ubwc = mdss_data;
->   	hw_pipe->idx = cfg->id;
->   	hw_pipe->cap = cfg;
-> +
-> +	hw_pipe->mdss_ver = mdss_rev;
-> +
->   	_setup_layer_ops(hw_pipe, hw_pipe->cap->features, mdss_rev);
->   
->   	return hw_pipe;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> index 56a0edf2a57c6dcef7cddf4a1bcd6f6df5ad60f6..ed90e78d178a497ae7e2dc12b09a37c8a3f79621 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> @@ -314,6 +314,8 @@ struct dpu_hw_sspp {
->   	enum dpu_sspp idx;
->   	const struct dpu_sspp_cfg *cap;
->   
-> +	const struct dpu_mdss_version *mdss_ver;
-> +
->   	/* Ops */
->   	struct dpu_hw_sspp_ops ops;
->   };
+> -/**
+> - * MDP TOP BLOCK features
+> - * @DPU_MDP_PANIC_PER_PIPE Panic configuration needs to be done per pipe
+> - * @DPU_MDP_10BIT_SUPPORT, Chipset supports 10 bit pixel formats
+> - * @DPU_MDP_MAX            Maximum value
+> -
+> - */
+> -enum {
+> -	DPU_MDP_PANIC_PER_PIPE = 0x1,
+> -	DPU_MDP_10BIT_SUPPORT,
+> -	DPU_MDP_MAX
+> -};
+> -
+>   /**
+>    * SSPP sub-blocks/features
+>    * @DPU_SSPP_SCALER_QSEED2,  QSEED2 algorithm support
 > 
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
