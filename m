@@ -1,62 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-58618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD569ABD0A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 09:40:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3D70ABD0A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 09:41:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 160B71B670C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 07:41:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 758B53B3A9F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 07:40:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A6DB25DAF9;
-	Tue, 20 May 2025 07:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25B6825DAFF;
+	Tue, 20 May 2025 07:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="duhG9Y/r"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KMDhK0o0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C90625D21A;
-	Tue, 20 May 2025 07:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99B820E32B;
+	Tue, 20 May 2025 07:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747726853; cv=none; b=XeNS7L8z821IDPYvt5fIS7IE+nhoWUcAnwYKE/6MPXXZ5tDfJAfwMVQ5kM9C1h4iZ5NRlF8Wgdgby38+++1gyh/SGLDopa482xXs+bTVImZ4Tzmay1bk76OR2Lk6HxFaggAHbkv2OJLghnpK6m+/pjDmoM9pIj3Rs1hBKgnPGec=
+	t=1747726872; cv=none; b=Ey8JS/Cu1G7kGnykWMAvHatC2rd9nvyAS90cSmmtBXEZS7hN6cWZ6r6t8iY4BJMRSMR4xboaYHLlk33Nc3NLRs36/dXrIJvd2HioPl1M8ZLR3SaeYE9p5jajW3blWyDtDe5cp5FyeYBBEZnxQu3kTYt5NYdf0au9Ey2AwcJwbHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747726853; c=relaxed/simple;
-	bh=du74CvAlwH4+uIAs8YMtDE8dudviPCVlSuJEObPE4mI=;
+	s=arc-20240116; t=1747726872; c=relaxed/simple;
+	bh=cRRPFwxj9fwEYbXrKPBQ8+y/AY7gnH+o6jx9SKRqHfo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fa3dsMEtQEugRRTeX3kOL4rw2NSRSD86V8YdAyHVJtwrCZmAfOnmIISTY/RyTjSLU+gcbRH8e15J7FdEhuxxRZvKn0dKaHDl4Mgd3uR4+7aEu1PVKEaKvdewYTNjkjSWuBdibCcRIfFxBmF+PPLVK5QOOCK+oAO7cItFT22lLmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=duhG9Y/r; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C58C4CEE9;
-	Tue, 20 May 2025 07:40:50 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=M3RTkVHtYL0tlyKjvggiPQswdOGSktGwvZHscppphOrM0tka5tp4bgH1Bq9TrKAfgY6ntdfqiZkBCLsMaPSL5MFFBoNPYOyJPR4FkUwby2KaG5wN6RFRwz07fVeMHv61ItLPaXi2wjnNculIjI0nQL0flsVnlqS2QXGGH5tc3mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KMDhK0o0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A736C4CEE9;
+	Tue, 20 May 2025 07:41:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747726852;
-	bh=du74CvAlwH4+uIAs8YMtDE8dudviPCVlSuJEObPE4mI=;
+	s=k20201202; t=1747726871;
+	bh=cRRPFwxj9fwEYbXrKPBQ8+y/AY7gnH+o6jx9SKRqHfo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=duhG9Y/rUhQTeP5uq0AvsyPyA05wrS1p6pnd3HTUHErD22cXzXEUD74P0Muc5lzgr
-	 pSi6kcm8M6ZmvksEV66bQsu0jMdZLz88XzZ4re6wYkRztJZ2tfnLCI/yzgS5PdteQk
-	 xD5zp7EmiwEvIDrXYf/2uUJKV3DkyrUgY64DEYlDme4ovUJrNHVKHZ33zpDTYLBq06
-	 16nJ6VpllazGgcoTYBQhc056TzooRD1c3BJ8dph1i8z8VNFhPnQ8/ZW8X24loc2W5y
-	 quMPl+RljKtPnzw9Oih2EBowcIPHlu306jTqXVths11vKrLunhSStzKPx8X6gSBMve
-	 /dwEblfQ0YSaw==
-Date: Tue, 20 May 2025 09:40:47 +0200
-From: Danilo Krummrich <dakr@kernel.org>
-To: Rob Clark <robdclark@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>,
-	Rob Clark <robdclark@chromium.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 02/40] drm/gpuvm: Allow VAs to hold soft reference to
- BOs
-Message-ID: <aCwx_9KIc9QBd7_0@pollux>
-References: <20250519175348.11924-1-robdclark@gmail.com>
- <20250519175348.11924-3-robdclark@gmail.com>
+	b=KMDhK0o0668Mj8E9mjpCXB42jQjXNeoq3iVbUNSH/eGw2+9A6XQzcCr90CtSGGbHO
+	 f2G+z5IPgCDq9YmyQell4uio47Klj98S3eFIeHYcTWCLWae31EGYOKWP0qmpA8F0Nd
+	 CRaGDXMBAmT234O9zuhtWUEhKAbHwn78/FqMopopWuMySqZYWuwq0YxD6ACtWjsn4b
+	 JGhCsPW71kloc/u8XqSb+3YhDe7dmVoYZpbNTu3E6TmwSkE2ICMF8Ja7NC5l4hknRc
+	 5LPAH10o7maHNgR6LauUgd7BujCRP5OjUcCeAo5GdMjeZDWf/BEf3+7O1DienfJlg6
+	 UZLg3jUesyjWQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1uHHb0-0000000014r-2g5p;
+	Tue, 20 May 2025 09:41:07 +0200
+Date: Tue, 20 May 2025 09:41:06 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH 0/4] rtc: pm8xxx: fix uefi offset lookup
+Message-ID: <aCwyElMgSqcCK7Re@hovoldconsulting.com>
+References: <20250423075143.11157-1-johan+linaro@kernel.org>
+ <aBsRxbBb91e_sQn3@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,85 +66,52 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250519175348.11924-3-robdclark@gmail.com>
+In-Reply-To: <aBsRxbBb91e_sQn3@hovoldconsulting.com>
 
-On Mon, May 19, 2025 at 10:51:25AM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+Hi Alexandre,
+
+On Wed, May 07, 2025 at 09:54:46AM +0200, Johan Hovold wrote:
+> Hi Alexandre and Bjorn,
 > 
-> Eases migration for drivers where VAs don't hold hard references to
-> their associated BO, avoiding reference loops.
+> On Wed, Apr 23, 2025 at 09:51:39AM +0200, Johan Hovold wrote:
+
+> > This series adds a 'qcom,uefi-rtc-info' boolean DT property to indicate
+> > that the RTC offset is stored in a Qualcomm specific UEFI variable so
+> > that the OS can determine whether to wait for it to become available.
+> > 
+> > I used such a property in v1 of the series adding support for the UEFI
+> > offset [1], but mistakenly convinced myself that it was not needed given
+> > that the efivars driver would need to remain built in. As Rob Clark
+> > noticed, this is however not sufficient and the driver can currently
+> > fail to look up the offset if the RTC driver is built in or if a
+> > dependency of the efivars driver is built as a module. [2]
+
+> > Preferably the binding and driver fix can be merged for 6.15-rc by
+> > Alexandre, while Bjorn takes the DT changes through the branch which has
+> > the DT patches from v2 (which unfortunately missed 6.15 but may possibly
+> > be sent as hw enablement fixups). [3]
 > 
-> In particular, msm uses soft references to optimistically keep around
-> mappings until the BO is distroyed.  Which obviously won't work if the
-> VA (the mapping) is holding a reference to the BO.
-> 
-> By making this a per-VM flag, we can use normal hard-references for
-> mappings in a "VM_BIND" managed VM, but soft references in other cases,
-> such as kernel-internal VMs (for display scanout, etc).
-> 
-> Cc: Danilo Krummrich <dakr@kernel.org>
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/gpu/drm/drm_gpuvm.c | 37 ++++++++++++++++++++++++++++++++-----
->  include/drm/drm_gpuvm.h     | 19 +++++++++++++++++--
->  2 files changed, 49 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
-> index 1e89a98caad4..892b62130ff8 100644
-> --- a/drivers/gpu/drm/drm_gpuvm.c
-> +++ b/drivers/gpu/drm/drm_gpuvm.c
-> @@ -1125,6 +1125,8 @@ __drm_gpuvm_prepare_objects(struct drm_gpuvm *gpuvm,
->  	LIST_HEAD(extobjs);
->  	int ret = 0;
->  
-> +	WARN_ON(gpuvm->flags & DRM_GPUVM_VA_WEAK_REF);
+> It seems we won't have RTC support in 6.15, but could you please pick
+> these up for 6.16 to make sure that the RTC works also when the driver
+> is built in?
 
-No, here and below, please don't scatter WARN_ON() calls in various code paths
-for this hack.
+It's only been two weeks since my last last reminder about this series,
+but can you please pick up the binding and driver patches for 6.16?
 
-This won't ever be a valid and supported mode, please keep the diff as small as
-possible.
+Bjorn has already sent his DT changes for 6.16, but since these are
+fixes he should be able to get them in during the 6.16 cycle.
 
-<snip>
+It would help a lot if the driver changes are in place then.
 
-> diff --git a/include/drm/drm_gpuvm.h b/include/drm/drm_gpuvm.h
-> index 2a9629377633..652e0fb66413 100644
-> --- a/include/drm/drm_gpuvm.h
-> +++ b/include/drm/drm_gpuvm.h
-> @@ -205,10 +205,25 @@ enum drm_gpuvm_flags {
->  	 */
->  	DRM_GPUVM_RESV_PROTECTED = BIT(0),
->  
-> +	/**
-> +	 * @DRM_GPUVM_VA_WEAK_REF:
-> +	 *
-> +	 * Flag indicating that the &drm_gpuva (or more correctly, the
-> +	 * &drm_gpuvm_bo) only holds a weak reference to the &drm_gem_object.
-> +	 * This mode is intended to ease migration to drm_gpuvm for drivers
-> +	 * where the GEM object holds a referece to the VA, rather than the
-> +	 * other way around.
-> +	 *
-> +	 * In this mode, drm_gpuvm does not track evicted or external objects.
-> +	 * It is intended for legacy mode, where the needed objects are attached
-> +	 * to the command submission ioctl, therefore this tracking is unneeded.
-> +	 */
-> +	DRM_GPUVM_VA_WEAK_REF = BIT(1),
+> > [1] https://lore.kernel.org/all/20250120144152.11949-1-johan+linaro@kernel.org/
+> > [2] https://lore.kernel.org/all/aAecIkgmTTlThKEZ@hovoldconsulting.com/
+> > [3] https://lore.kernel.org/lkml/20250219134118.31017-1-johan+linaro@kernel.org/
+> > 
+> > Johan Hovold (4):
+> >   dt-bindings: rtc: qcom-pm8xxx: add uefi-variable offset
+> >   rtc: pm8xxx: fix uefi offset lookup
+> >   arm64: dts: qcom: sc8280xp-x13s: describe uefi rtc offset
+> >   arm64: dts: qcom: x1e80100: describe uefi rtc offset
 
-As mentioned in v4, I do *not* agree with making this a valid and supported
-mode. If at all, it should be an exception for MSM, i.e.
-DRM_GPUVM_MSM_LEGACY_QUIRK with an explicit approval from Dave / Sima [1].
-
-It invalidates the whole design and makes a lot of functions fundamentally
-invalid to call, which is well demonstrated by all the WARN_ON() calls this
-patch attempts to add.
-
-> +
->  	/**
->  	 * @DRM_GPUVM_USERBITS: user defined bits
->  	 */
-> -	DRM_GPUVM_USERBITS = BIT(1),
-> +	DRM_GPUVM_USERBITS = BIT(2),
->  };
-
-[1] https://lore.kernel.org/dri-devel/aCb-72KH-NrzvGXy@pollux/
+Johan
 
