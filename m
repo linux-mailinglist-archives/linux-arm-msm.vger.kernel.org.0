@@ -1,192 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-58593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02D47ABCE27
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 06:12:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 230ABABCEC5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 07:50:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2DAD2189B160
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 04:12:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 207991B63E70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 05:50:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A13B425A34B;
-	Tue, 20 May 2025 04:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9462B2571B9;
+	Tue, 20 May 2025 05:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lywcwxId"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Pa0orcc2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52385259C98
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 04:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD13E1E51FE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 05:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747714337; cv=none; b=Ok2kXfh2QWqyNCh73GsNHVsXdQfvGdAJmxF6yMYxmR1ctbHKcs837JrcFLekFp25dxOsM+gUt+ccc2prjvDeoYsq0/iUsNQ1ypP8f/S6lrvBg8GcxkqWh7+mHJXejOPK0Ub/zxenLO1Y9M5hUsaskQFzYi7KTMr0XgjD1sO4sLs=
+	t=1747720237; cv=none; b=FNruJ/zAEVwNOSVrVmEds7ntMXhAYX0Aj6ulqlzlTCBd4pG80HaJJxYmeomKN8VmV+5fkoMUcbPBnwplZ1gPEo8TIUwexFav1lU6mBRBJbjdXVQt3QsVAgTWOgRm3N3YQR9HevYzbKGPICx/CKis3WeeobkcFkJ2FizB+0GdY9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747714337; c=relaxed/simple;
-	bh=AA5z1Iv12EICjBiN6kqrFqLyeWGwCCQ1jyhoLxGEHpU=;
+	s=arc-20240116; t=1747720237; c=relaxed/simple;
+	bh=KyK6TkIDOqoAf2nGdGYf5nH04CfJe0exGvpmgXebnc8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VmsOKL5kWln+2+O3DuqA0hetIs+298KmSL5sHeRjCi/I5RQkjtkbLvfT9xeC8wCUlakC3Jt3kdoytmQlP4KKffHmsw3RyM/lQQ4uRAGcIq7hnCt54o+d5Oq7TZ6JIRZeY5B7h3icbIvnCJ+l/Pq7Kj7L9h6ESKRbr05rxIJSZbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lywcwxId; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=IgqvHsfeziVcznkUo0O9CCJzjWj5F/p4NUSO8+c2uQp+GvZVk01Qa3NByDqMFB1dzfu1DmZCHI9EB03PCF8IPg8Zd/qD/FeIX86bVfuKNeLG+1RAqGeNypvP0RyzIaiqdWfg6wvCWaWM2bq8WPSSrA3nCxih+jOcSj9/J73g7Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Pa0orcc2; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54JJOLhQ012060
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 04:12:14 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54JHmmbW027166
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 05:50:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	K3tXKNyZNuZQgUCz+o2yPQ/bI2CEVtZtYjF3TqmtdC4=; b=lywcwxId5OmbcrEh
-	/CJqR1sA26WgjKj0WAtXnpSsrQwYfBonv/giChvR+jIHajB/VGcR68mBjrdLQ0NM
-	cl2NxTMuRbWyqyqm12gPwb+FY0++nlu4jcsU/NwMZw/pimxeUo92OhrlfRiynK/M
-	++t0uan5lGrEB+fyfI6D3Mk1cgBdbo8ata8BQa67CDleiLbiZ7G+QmJSr/cCc3DG
-	5yztyiOXyaZTQEMa2vT6fSSvr2EfwOwcUPfZpjtd/Tq6N6vgfbTAi9V5KEjSdF+P
-	uhYAOSlAJxKKA0pVNfoWgcMFBkOF50LdHMMeotam+IePGjH1Y5LZRwf+0+z6VXtC
-	onRlsQ==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pkr9xeq4-1
+	Km24dUIRiYW8aOGNbg1DsjspZziPv5hT8ihdXJjpuKI=; b=Pa0orcc2Ha5EfEbi
+	f/iYtzOr3XM0A1KpPbUB24rqCz3gAsFgWyZmdcpZT6cd/liO2Gv8te56Bw7bQNBv
+	2l4aUUVEUxr2PmqmH+Fsvlm7ohGu4u3iz6DZHdxCEEXWeGypY3t4ehMHZOeG1NRt
+	RtVaBlL7lDOjLI+CCUVDXm91nsAMI8hyatiRHI+8buvFcs6+zQNX55IXRj/KA+aF
+	ilZrxqeMdSHHEWtHAM7P24wEqAqquUovnXcQoRwDzwAJ8Z30/LPVP8kgVDW7vZDX
+	d5T9NPuNX7ISmOapXs2ohqtF/VmT1GxfC8nQfba7RbrA/gxYcSwN8+tvuwQrM3Jf
+	W6qTYA==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pkr9xn40-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 04:12:14 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b26e38174e5so4987999a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 21:12:14 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 05:50:34 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-30e896e116fso3026966a91.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 22:50:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747714333; x=1748319133;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1747720234; x=1748325034;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K3tXKNyZNuZQgUCz+o2yPQ/bI2CEVtZtYjF3TqmtdC4=;
-        b=ZS2r1F2WVLXsKH7QTD+bta7OXU6YE71GoY95sPAI/skJNjzMo9eEOtaNWb3OyWABUk
-         pP5PTGoRKdsAeGAn8707KPvHOyBJooZWQsp4WC0BCjPxsYiE2BCJayITGNZEeBqCfalf
-         R7/dQzLYgjAsZJCQVdbZVbuv6EE1YAYn1sNtEe771w6LSdfPeUD6d+lWPv87BM3l0MsK
-         s6LfT20dsidbMIj/ATY0YlnQ68lCzP1FfHbY8fP8o5KLjvWliwu4t9S6JWzSAreaGWgd
-         CCFbUfs4qSZo3xlpNBPI/9/iIbNLDlTLzOO67jGQPxbjWup+6cSuwaA9jFilsINZ48JF
-         aOFw==
-X-Forwarded-Encrypted: i=1; AJvYcCWMessEpN9lQTcTnoHcRBOBSgRfbQAZBY0T49x9/bQ0B+dBKUvKWfNuVrfL4hjWRISZCoL98FXq/lfCFVI5@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyvv6NuO2s0yqIIE1gh+RC9lNyqAQlOf8ntBIVvHtOMsXecpAaX
-	ljeeKDWOdM78a8UXgpvIN1YexOS0cFPHKt81RL+KXcBGjHDsFI8yMHBOuKoUp73SD9HTYEii3+d
-	PqjsR/0KqVMl9ezo+DmSn3fxuwArFKJow/G1/C88+5xcYWukrXHS/G5fT6xq1usU/ReZ+
-X-Gm-Gg: ASbGncvVOtuLCn2sFx74U6jfTyPkz7ZvYBLL/75XUAIIpp+LcK2zLktIkQEkDRr88cd
-	FOOkqQDGfWYUPFDchC9ezsctUnteicdNFyyLGVSptArBr9WtRiTtzUVmr7VWqCngkGJGVHJpXnG
-	0e7TT1FK1BaQ+co3tAkFiDzqlTX0g2GKEbcpdfP6wOSPxdzY0PQotdSpkGxV81Oi3o0BiBbwsZJ
-	eoRGuqHR0qh03IhEPZUZ8Az3OFJe0OQ1HrfIgYCxswCJezsFZqx/CFStNVIXCuNmUubeyz7uAHL
-	QUa/FfDLZyEkYig66N7krYuDJ5FFYRXy7MC15y9Z6w==
-X-Received: by 2002:a05:6300:218b:b0:216:1ea0:a51a with SMTP id adf61e73a8af0-216219fffedmr22921465637.38.1747714333306;
-        Mon, 19 May 2025 21:12:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IECTNHl0XI2RQjqcne0zYA1ZVA00vadeEtwniXUnY/EXFpPQMXaSNaBx2qH/VBg0UrtXPfDsQ==
-X-Received: by 2002:a05:6300:218b:b0:216:1ea0:a51a with SMTP id adf61e73a8af0-216219fffedmr22921423637.38.1747714332879;
-        Mon, 19 May 2025 21:12:12 -0700 (PDT)
-Received: from [10.92.214.105] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b26eb082c66sm7092530a12.60.2025.05.19.21.12.07
+        bh=Km24dUIRiYW8aOGNbg1DsjspZziPv5hT8ihdXJjpuKI=;
+        b=nyo4stKb77XsbtenTyEXoKSa+f5j18BZyFtFJv+IuqnNIbW5GWALqfuKvovIlGQzzz
+         T6s6Alq4iTMCZYjmV4qaMm3Q+RcRtUBrsUM/WvMUVsUxPP+QLRWqvUuHnXYbctFCnz2Y
+         VGrnWhiTbAYY/jjd5UpZ5VUiYovIHN40bevEXQH6XEKEyOlkxXOuOHXcoFm/Bf+kbJhV
+         MROo5+nOYkjL5CIJAMQrVQJbF88MtZSl3DB2SDcfdzEX6aIFKa3XsVsKkXDoATifJYFR
+         SOBbKmE32mXXsLGPo5ZSTWUbYM+QwB/yCyvBMorMVIWSU1GO3njiytf8wqvYD6v0/+en
+         Lv9A==
+X-Forwarded-Encrypted: i=1; AJvYcCVHi+sHl9FyT4WlJWcesJIorbXBT/jHTg5P1Y+H6dDFRGElDLrmrnqSNWeI/5T7Q3eHU2OBa+86fiTQ+ezP@vger.kernel.org
+X-Gm-Message-State: AOJu0YysQMjMfSvl+8fX0lyhyFuXMaZX2vn5Wq5RozxWgQJ7hZ0lqk2G
+	eCEbKRgc5hYRaLE08wW0SxokIShRL/NfhiLS9b0uVRjYBl642bA8DFVP9rJkFE+6dqNPtt4HJAd
+	EuqOiTuHuzIe7vJsFj8lsXNrrfSDwvrWm38SinJSMUEkPa2GUlkMTMXl3MUSEnVYgqPtN
+X-Gm-Gg: ASbGncsqWF2U59kagJjE+WQWlTIAGGQkMXT47eGvx92+8WMBrvoQRIz099RMF8fSN60
+	Vq7ICKEYKE6abOnB/YJ/CWZ3men4Vgc7D4JZgIiKpa42fU1XztG97yyLfqmFwedpCUVZekHLRko
+	7julKGbWp2hqNK0v0q7n3ltCkuSRckdFFnlLwcxyxT5YWlO5rh8S5YNL4T57ugGPFRo1DQ6VPcg
+	rLPAGiGSP85Vi3rHvXAzzpl5NNKB+r1y6K7egKIxi49qFhHZ1wrGa4YDFK0XYGvfcfISFeKJ2U1
+	62cHwWheEqAKMD1tsb3YNG2abWftiP06GUxeJw==
+X-Received: by 2002:a17:90b:3b8f:b0:2ee:f677:aa14 with SMTP id 98e67ed59e1d1-30e830ebf2cmr22720474a91.13.1747720233941;
+        Mon, 19 May 2025 22:50:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFBZXuHT9cFq7ul2z/CNCiWSV/jZQ/+36VmU/IwET4aSX4ZC+a5hPtAj6e+8aiVHHcONSHRaA==
+X-Received: by 2002:a17:90b:3b8f:b0:2ee:f677:aa14 with SMTP id 98e67ed59e1d1-30e830ebf2cmr22720448a91.13.1747720233503;
+        Mon, 19 May 2025 22:50:33 -0700 (PDT)
+Received: from [10.204.65.175] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30f365b2d80sm772308a91.4.2025.05.19.22.50.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 May 2025 21:12:12 -0700 (PDT)
-Message-ID: <b3d818f5-942c-1761-221d-af7d7e8f3624@oss.qualcomm.com>
-Date: Tue, 20 May 2025 09:42:05 +0530
+        Mon, 19 May 2025 22:50:33 -0700 (PDT)
+Message-ID: <af7d73b8-6907-4520-bf92-bff2065a5ac6@oss.qualcomm.com>
+Date: Tue, 20 May 2025 11:20:29 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v3 04/11] PCI/ASPM: Clear aspm_disable as part of
- __pci_enable_link_state()
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] misc: fastrpc: Fix channel resource access in
+ device_open
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: srinivas.kandagatla@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+        dri-devel@lists.freedesktop.org, arnd@arndb.de, stable@kernel.org
+References: <20250517072432.1331803-1-ekansh.gupta@oss.qualcomm.com>
+ <cq3ib5nunqiuysyfezkrr5qkcqutwjxjmabpeihpsizbx5tmm4@rhhjhzaq5km4>
 Content-Language: en-US
-To: =?UTF-8?Q?Ilpo_J=c3=a4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, linux-pci@vger.kernel.org,
-        LKML <linux-kernel@vger.kernel.org>, linux-arm-msm@vger.kernel.org,
-        mhi@lists.linux.dev, linux-wireless@vger.kernel.org,
-        ath11k@lists.infradead.org, qiang.yu@oss.qualcomm.com,
-        quic_vbadigan@quicinc.com, quic_vpernami@quicinc.com,
-        quic_mrana@quicinc.com, Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-References: <20250519-mhi_bw_up-v3-0-3acd4a17bbb5@oss.qualcomm.com>
- <20250519-mhi_bw_up-v3-4-3acd4a17bbb5@oss.qualcomm.com>
- <649c2bb2-d9a3-66ce-8bc5-2735195aaa5e@linux.intel.com>
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <649c2bb2-d9a3-66ce-8bc5-2735195aaa5e@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 8ANgdT7YIxKauZBweC-LJzy428cHHTn7
-X-Proofpoint-ORIG-GUID: 8ANgdT7YIxKauZBweC-LJzy428cHHTn7
-X-Authority-Analysis: v=2.4 cv=DdAXqutW c=1 sm=1 tr=0 ts=682c011e cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=cbGetAF2pF-RjulI4vsA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDAzMiBTYWx0ZWRfX11R8ekapA2JD
- 8iMllr9od1yMoPy28zpqYOAx3R5JInTUC9VMZKg2xme0bCxUAXkGUdCbSnPrptTJHXgMUt8N2sl
- 2ePesq9GW9VTDQMH3Zrb3ZrM8HinO/u7lLoN6b5DNIkSXF7WDVneBlo6QZhv3fq+/WsKq9xpFCZ
- /9i7kTF5Z11IeK6PEKajK3uGuyRw424zJi/dVHDTYKHq57IYT4AgYC13AIxa4XC24/Nrsya8qu4
- 9CVA8fB88pLPqHT+ZNNX90NroBpRpDbRZmTDDYad4lWyvXSAl3Qh96EEzDc5CPLEtxJ5RxEGOi+
- /JAmUkO0+3WcYMA7bamQIFv1U02ZBvit5ZoZBjhtBPyY4oxr5umViIzUalq1VSuxUBpJffP4Nx4
- 349fUQgQ85c0GlEkRnV2YxArxKfgmLrgdfT7DzRvseHAFRJ4kQsEQS8A3XbK+wXrooxq391U
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+In-Reply-To: <cq3ib5nunqiuysyfezkrr5qkcqutwjxjmabpeihpsizbx5tmm4@rhhjhzaq5km4>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: MsPB0fZ66Gj5V8UrMFrXC2oA7u1ay7Yt
+X-Proofpoint-ORIG-GUID: MsPB0fZ66Gj5V8UrMFrXC2oA7u1ay7Yt
+X-Authority-Analysis: v=2.4 cv=DdAXqutW c=1 sm=1 tr=0 ts=682c182a cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=ormgAfd318N_yApGj20A:9 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDA0NiBTYWx0ZWRfXwwaah01S6FHi
+ Miio34RrECMUxMQCoWUlaMcokIqP7l7dng63AoRg5hYCDJTRHpUThJARvPcl2Y8oNGmnpCkdvb4
+ 3bHjwPxQpa1VZQWDr0RzSDrtWNh1HjAhKm34v+KJwzP6izy/AKY/y6/YJChztSUKW5YD9g6d41X
+ Uu5QZ25G40RqjBhTibyXXkR2811/HGGHeNSM4wdpdTN3EaZITnr216358qDofog0H5V8i8ylcNu
+ vInl6Cgu8l5qaQBuGWqi0FfqrtGgCLwMHT8vkB21BDqUu/Qo3c+b+eFulphmIjw1ZwAlDKx7FKh
+ zDpIPhEP+kfpQ7tiV5UYXLaJYuKAVzN5v9dTyk5TixaGtNQYIEKlD2hETlymK+dSMaLILLa9EBV
+ F/JcvgkFdsZiaHFnvdusajI8J9j3a32HtX2v5JgXSsxBuwDlhn6wtTFAH7GmCwUsJdiseQ10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-20_02,2025-05-16_03,2025-03-28_01
+ definitions=2025-05-20_03,2025-05-16_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  mlxlogscore=999 clxscore=1015 phishscore=0 adultscore=0 mlxscore=0
  spamscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 bulkscore=0
  impostorscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505070000 definitions=main-2505200032
+ engine=8.19.0-2505070000 definitions=main-2505200046
 
 
 
-On 5/19/2025 6:51 PM, Ilpo Järvinen wrote:
-> On Mon, 19 May 2025, Krishna Chaitanya Chundru wrote:
-> 
->> If a driver wants to enable ASPM back after disabling ASPM for some
->> usecase, it is not being enabled properly because of the aspm_disable
->> flag is not getting cleared. This flag is being properly when aspm
->> is controlled by sysfs.
-> 
-> This sentence has broken grammar/is missing something?
-> 
-> aspm -> ASPM
-> 
->>
->> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+On 5/18/2025 4:33 PM, Dmitry Baryshkov wrote:
+> On Sat, May 17, 2025 at 12:54:32PM +0530, Ekansh Gupta wrote:
+>> During rpmsg_probe, fastrpc device nodes are created first, then
+>> channel specific resources are initialized, followed by
+>> of_platform_populate, which triggers context bank probing. This
+>> sequence can cause issues as applications might open the device
+>> node before channel resources are initialized or the session is
+>> available, leading to problems. For example, spin_lock is initialized
+>> after the device node creation, but it is used in device_open,
+>> potentially before initialization. Add a check in device_open for
+>> rpdev and update rpdev at the end of rpmsg_probe to resources are
+>> available before applications allocate sessions.
+> Can we fix this by registering the device node after initializing
+> channel resources?
+Ack.
+
+Thanks.
+>
+>> Fixes: f6f9279f2bf0e ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
+>> Cc: stable@kernel.org
+>> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 >> ---
->>   drivers/pci/pcie/aspm.c | 1 +
->>   1 file changed, 1 insertion(+)
+>>  drivers/misc/fastrpc.c | 6 +++++-
+>>  1 file changed, 5 insertions(+), 1 deletion(-)
 >>
->> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
->> index 94324fc0d3e650cd3ca2c0bb8c1895ca7e647b9d..0f858ef86111b43328bc7db01e6493ce67178458 100644
->> --- a/drivers/pci/pcie/aspm.c
->> +++ b/drivers/pci/pcie/aspm.c
->> @@ -1453,6 +1453,7 @@ static int __pci_enable_link_state(struct pci_dev *pdev, int state, bool locked)
->>   		down_read(&pci_bus_sem);
->>   	mutex_lock(&aspm_lock);
->>   	link->aspm_default = pci_calc_aspm_enable_mask(state);
->> +	link->aspm_disable &= ~state;
->>   	pcie_config_aspm_link(link, policy_to_aspm_state(link));
->>   
->>   	link->clkpm_default = (state & PCIE_LINK_STATE_CLKPM) ? 1 : 0;
-> 
-> I disagree with this change.
-> 
-> The problem currently with ASPM driver is that pci_disable_link_state()
-> and pci_enable_link_state() are not symmetric pairs despite their
-> misleading names. pci_enable_link_state() should be renamed to
-> pci_set_default_link_state() and if the symmetric pair is needed for
-> pci_disable_link_state(), it would have to be added separately.
-> 
-I just want to know what are disadvantages/side effects having this
-change here, we can use same API to be symmetric with 
-pci_disable_link_state(). The drivers which are using this API has
-already option to specific the ASPM states which they want to enable and 
-they don't need to call pci_disable_link_state() to specify the states
-they want to disable.
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index 7b7a22c91fe4..40c7fa048ba7 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -1568,6 +1568,9 @@ static int fastrpc_device_open(struct inode *inode, struct file *filp)
+>>  	fdevice = miscdev_to_fdevice(filp->private_data);
+>>  	cctx = fdevice->cctx;
+>>  
+>> +	if (!cctx->rpdev)
+>> +		return -ENODEV;
+>> +
+>>  	fl = kzalloc(sizeof(*fl), GFP_KERNEL);
+>>  	if (!fl)
+>>  		return -ENOMEM;
+>> @@ -2363,12 +2366,13 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>  	spin_lock_init(&data->lock);
+>>  	idr_init(&data->ctx_idr);
+>>  	data->domain_id = domain_id;
+>> -	data->rpdev = rpdev;
+>>  
+>>  	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
+>>  	if (err)
+>>  		goto populate_error;
+>>  
+>> +	data->rpdev = rpdev;
+>> +
+>>  	return 0;
+>>  
+>>  populate_error:
+>> -- 
+>> 2.34.1
+>>
 
-- Krishna Chaitanya.
-> I've some (rotting) patches which try to do that, in case you want to try
-> to solve this inconsistency in the ASPM driver (I can send them to you)?
-> 
 
