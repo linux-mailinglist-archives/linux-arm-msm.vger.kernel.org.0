@@ -1,74 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-58659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FEB8ABD1F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 10:30:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 53B96ABD227
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 10:40:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 631C04A4679
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 08:30:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F364F168B0B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 08:40:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20D4D264A90;
-	Tue, 20 May 2025 08:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 817EE26156A;
+	Tue, 20 May 2025 08:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TX3L8Gvk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YabBjgQz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E614E264637;
-	Tue, 20 May 2025 08:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FFE22609DF;
+	Tue, 20 May 2025 08:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747729834; cv=none; b=LR6UvS48Clp/b9DykLezIpG/iatbuzuv2gjbt8QskeoVF1OhWZFanTdkz+an6qBvZlcGqELHUkoI6n2v97VONeriAsNQWir+/lQ3/Ds7b0TLbD5sJ0gyLPgQWgoFFQ/UzBlybsTviHNUQ4Pg7CncLfO1BQ2mQLMFh9orAoHWPNE=
+	t=1747730402; cv=none; b=kvm/olsZwHNGBhscpCl8ZXj1TnsPvSQHQrb9l0QSadCvVOiJ1cZ8aafb6Ue71B/G/bImPbgCAn8GWO0jV9YjIHZnmUwkG5h/CqIMCBZvMOvOyJoFTeNVxxpE3DN8+Gypfix8psDoVzazg+G9UYTdJ+I5XLlsRKDn1lFd5ZQFnCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747729834; c=relaxed/simple;
-	bh=TTfmzlZVvfifJTlZjjrBTsPPuUufHs+nsAPYNFaapNc=;
+	s=arc-20240116; t=1747730402; c=relaxed/simple;
+	bh=HM0GGY3irUg3QKTBApeyVRpqXb1LAeJz4U5K3BBkn2c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iJxHESRz7Csv28+sT9pc129e7dWDTBLJSeY4o8uUiMmkd1DqIUXVSyG/0oLnkPM1yQdzapLC2XyuAmbIt5e3xcAYCvuC1pto0cfiFm+WydfaiY9SxlzI0ntXVYmWrUOajznOlvveDu0C7zcR8nRptkITX3wyTuIa6LqdHGeQ9d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TX3L8Gvk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70D2C4CEE9;
-	Tue, 20 May 2025 08:30:33 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=cMQilKkRnQQruphd1SigkGcGq70VfVrdEUW9+omeri3odR9e12+jUwxhqM5Wmt7SXOyMB0S005kdfqNQlmbHSaLm4MQ1mLAbDV9ZoyJrCg97j5syHlD6zFeP5G84tbCNuUVFkAKAFqeMi0F7liyGUqPOG+unMsc1SHf1fRgHyF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YabBjgQz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E5FC4CEE9;
+	Tue, 20 May 2025 08:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747729833;
-	bh=TTfmzlZVvfifJTlZjjrBTsPPuUufHs+nsAPYNFaapNc=;
+	s=k20201202; t=1747730401;
+	bh=HM0GGY3irUg3QKTBApeyVRpqXb1LAeJz4U5K3BBkn2c=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TX3L8GvkquQpp+gtwcy1w+B4YLAW28PyqQFexAl4Bb0VzPIHR68a5r8xndZpCWVjH
-	 eW4olLrWlJasNXlpZVCg2KAgq0cNSmMt73nxEIlKY3C60QKMwYAR48tLHtlG0CrDlF
-	 IsWi/s8aPBLmbTIh1uchYbbPy4QUh4a6zoHhj1Rq93YrvnTT8Ot3TBLwl/25tNc6Mw
-	 2d/LK3hR0PSRkvGln2qizA3PEHeYyQmeL7JhX12P4++e+HOsyeR71t1ebOtYi071DF
-	 yoXsIMXCkFUpZpn0uQNg1k5e8YlE+eLFFK3AIKTZWUVSlWg8MHlehk1454tj50X3KL
-	 yjIuqdZpaZKcA==
+	b=YabBjgQzzi6yZBO3a+CvXinC69sMvMj3bPpZdAc8KM7FIjmvUCJxaYoKcFL0JHMoq
+	 CeQShmS0IvgMECr2o5RUpoGCaW9oGVRYVgF3zVUFqdx0Im3yVfBedvbo3FVXWPLhq9
+	 Rizh5y4n/mddGEOaeIYJgk7pDqW+y6PSyEshQOUDzqcEmX9mfbrI9r2uLOdS19SqJ4
+	 2dtZydzf7soZAJThcntnJ1gDz6KKH13hjcW7J0OTGlD2FCNe15nyWGrmX4dv7Q4BZL
+	 K6uXRHALXhPbtkOLOYOidlmu2jroHz8Y1mTorizAOTccnIXDaHS3L2B8qOuXTUfIH+
+	 TW/InlT7DDEGg==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1uHIMn-0000000020Y-2nQb;
-	Tue, 20 May 2025 10:30:29 +0200
-Date: Tue, 20 May 2025 10:30:29 +0200
+	id 1uHIVx-000000002A4-0DVA;
+	Tue, 20 May 2025 10:39:57 +0200
+Date: Tue, 20 May 2025 10:39:57 +0200
 From: Johan Hovold <johan@kernel.org>
-To: Christopher Obbard <christopher.obbard@linaro.org>
-Cc: Douglas Anderson <dianders@chromium.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Rui Miguel Silva <rui.silva@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH v5 0/3] Add support for OLED panel used on Snapdragon
- Lenovo T14s Gen6
-Message-ID: <aCw9pYehCdfXXeiR@hovoldconsulting.com>
-References: <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] media: qcom: camss: vfe: Stop spamming logs with
+ version
+Message-ID: <aCw_3cDSCQ09NSKB@hovoldconsulting.com>
+References: <20250429180828.950219-4-krzysztof.kozlowski@linaro.org>
+ <aBHQejn_ksLyyUm1@hovoldconsulting.com>
+ <3e34ce09-1207-4dba-bff8-38c01cad9b78@linaro.org>
+ <4d942a6c-cbff-41ac-af8b-12a1ff5181aa@linaro.org>
+ <883eb54a-fcaf-443c-a4d7-e1278fd43f5a@linaro.org>
+ <ea9f570c-b135-4a98-91ea-ceeb2f48a0e5@linaro.org>
+ <aCw09Vci12txhYj-@hovoldconsulting.com>
+ <190100e7-8a59-4cf3-8434-bcb6292cacb2@linaro.org>
+ <aCw78CRda6VS6ost@hovoldconsulting.com>
+ <8a2f2269-d07f-42b2-ab6c-dcff30a1f431@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,32 +74,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org>
+In-Reply-To: <8a2f2269-d07f-42b2-ab6c-dcff30a1f431@linaro.org>
 
-Hi Chris,
-
-On Wed, Apr 02, 2025 at 03:36:31PM +0100, Christopher Obbard wrote:
-> The Snapdragon Lenovo T14s Gen6 can be bought with a number of different
-> panels. This patch series adds support for the OLED model which has a
-> Samsung ATNA40YK20 panel.
+On Tue, May 20, 2025 at 10:30:16AM +0200, Krzysztof Kozlowski wrote:
+> On 20/05/2025 10:23, Johan Hovold wrote:
+> > On Tue, May 20, 2025 at 10:02:32AM +0200, Krzysztof Kozlowski wrote:
+> >> On 20/05/2025 09:53, Johan Hovold wrote:
+> > 
+> >>> Spamming the logs as the driver currently does is clearly broken and
+> >>> should be fixed. Keeping a hw version dev_dbg() is generally perfectly
+> >>> fine, though.
+> > 
+> >> My main argument, expressed in the commit msg to which no one objected,
+> >> is that this debug is 100% useless: deducible from the compatible,
+> >> always known upfront, always the same.
+> > 
+> > To me that deduction does not seem straightforward, at least not without
+> > access to internal qualcomm docs, for example:
+> > 
+> > 	compatible = "qcom,sc8280xp-camss";
+> > 
+> >         qcom-camss ac5a000.camss: VFE:0 HW Version = 1.2.2
+> > 	qcom-camss ac5a000.camss: VFE:1 HW Version = 1.2.2
+> >         qcom-camss ac5a000.camss: VFE:2 HW Version = 1.2.2
+> >         qcom-camss ac5a000.camss: VFE:3 HW Version = 1.2.2
+> >         qcom-camss ac5a000.camss: VFE:4 HW Version = 1.3.0
+> >         qcom-camss ac5a000.camss: VFE:5 HW Version = 1.3.0
+> >         qcom-camss ac5a000.camss: VFE:6 HW Version = 1.3.0
+> >         qcom-camss ac5a000.camss: VFE:7 HW Version = 1.3.0
+> > 
 > 
-> With this patch series the backlight of the OLED eDP panel does not
-> illuminate since the brightness is incorrectly read from the eDP panel
-> as (to be clear this is not a regression). This is fixed in [0].
-> 
-> [0]: https://lore.kernel.org/all/20250330-wip-obbardc-qcom-t14s-oled-panel-brightness-v6-1-84ad1cd1078a@linaro.org/
+> I understand that deduction is not straightforward, but it is also a
+> fixed one, meaning it will be always sc8280xp -> (vFOO, vBAR), thus the
+> only usefulness of above is to map each compatible to pair of two HW
+> versions. This can be done via debugfs interface once and stored in
+> public docs. No need to do that mapping every time driver probes and my
+> patches drop nice chunk of code, including indirect function calls.
 
-It would be good to get OLED support for the T14s merged. Are you
-planning on sending another revision of this series?
+If you still want to export it through debugfs at some point, then it
+seems there is still some worth in having it.
 
-> Christopher Obbard (3):
->       arm64: dts: qcom: x1e80100: add epd hpd pinctrl
->       arm64: dts: qcom: x1e78100-t14s: add hpd gpio to dp controller
-
->       arm64: dts: qcom: x1e78100-t14s-oled: add edp panel
-
-Strictly speaking you could have posted this last patch on it's own as
-it doesn't depend on adding the hpd pinctrl.
+I'm sure the implementation is terrible, and maybe that's reason enough
+to simply drop it in this case. But again, generally it's perfectly fine
+to print a hardware revision at debug level (once) during probe.
 
 Johan
 
