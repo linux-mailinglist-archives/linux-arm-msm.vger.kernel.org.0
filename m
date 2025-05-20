@@ -1,176 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-58742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CB83ABDFCF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 18:01:13 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7173FABDFFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 18:07:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8DC5E7B0A6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 15:59:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 296C17A4E70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 16:06:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E7A4258CFA;
-	Tue, 20 May 2025 16:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFC6D265CD8;
+	Tue, 20 May 2025 16:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="o4ggdOot"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XXlHndhU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC0D319C578
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 16:00:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A1D2686B1;
+	Tue, 20 May 2025 16:07:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747756859; cv=none; b=OD0bmSmpY53c++YeJKi0Sf+g38vOtC9/2uP7v1faTrdR+M3uGK9dxge27x5X7SNdCWxizwdZTSaNRlvR69tBUd8A/huOP8b5wJudlP+WEMo1QK6iRYr0t5NVzmKTrCzseHTT1mP53rhJL9vLvOhfKA1O/WUgo6jcpU1PdrZEy/A=
+	t=1747757241; cv=none; b=fLpGY8XK3hy6GBUsKpgn/4U8oPA0R5s4/EAatjZ+NqkQpq1Mn8LyVDDgWnq3Ph1C1TEVULFmePsgZqQv59Ap7+VG7+dOac4n2mrTWW/Ux8+e4qN/JpdymqbkrqMeYAns/iAvPvmL+i/b5C+5JjVbjzEq7mpNAQvqbDNNC6CYuhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747756859; c=relaxed/simple;
-	bh=XShGFTgNmrvDCJE12WoFrXmQEnD7TePscFZvl3S0xEI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QGyWPlpu6E36pWggSuh7QgAMEAtgpGZv8DMpwr6su8GSWFvd9G99AeHG/+IfnALgUaaK234hU7cacDsmVBcLOkeWSfVWTai2N7fX+SC+ka4G9zpbR5CBcejjOn6dOsh6yhGfyAwO4Yt+Lma3BoRuw8gMvAfxbo3zjD9pXk4K8mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=o4ggdOot; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KE0HeI023178
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 16:00:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	yMB/4NFBbPr7e4v0JqDh+lXqkZdCYFJ/eYQU5wDTN68=; b=o4ggdOotUb3sY02R
-	1ogiP6sF3rrUcmgrtkBPdV9Ix3pyfkmh9en6HT0RlojQsjou+94YUrfuN1TUv3PL
-	5V7t08jGnFidPgJwdpw5hk4/b8AcP5QaByBhqgWCkolxFVMnrm/Ub9F1+FWxT126
-	U1ZAMQ2EUnuCC77uPvwwhFzfyNusvRhErZ4IJ/0bvySslaS82tqmhk4ptXXwJpqG
-	3v+y8DZVKTFLOEyv0WtRCq/JNF23+Shft4pxbxSGlPqOdvTJ6Ft1+zHqQtpiGGdA
-	JT5SwIQ57/eZfXj6L088CzmoeQijxnGE45jdayhW92hcrV+0fXuw+2Ie9ZL5pZqz
-	3/PBTA==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46r041vwes-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 16:00:56 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6f2c8929757so17389856d6.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 09:00:56 -0700 (PDT)
+	s=arc-20240116; t=1747757241; c=relaxed/simple;
+	bh=lPPKaD6JIaa49k5hB+azXiSPpoE9hff6spghRgeoDPc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OecATDFAT4EJZavb6WgLODw9DFppqJ9+4cHY2b4/5DR5J0EENSZaaxFj3pY/YQkkiG68uHBXOyedOK92BjPWJ/aJh6Q3EhPrab1iYJcD/FqRQxlUhKKX71Kew3XKnPNt4A3isTV7hEW72QfET0rRPS+Yq5rua0auLZhBvue2uog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XXlHndhU; arc=none smtp.client-ip=209.85.166.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-86a052d7897so390293539f.0;
+        Tue, 20 May 2025 09:07:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747757238; x=1748362038; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lIlNhHqv93GvQWrqGB3ZPQbb3QiLFh5pTwSkFYPcNvg=;
+        b=XXlHndhU54C5oAYHlo/jsCDsq6q117SOyioyUiVKOFi0SpRwvqaey6qR2vcnUS1feU
+         O2/yC/bn1eP4llaGLGxmt+psJuvbkJX5LfwIE9Nu0N/zOI28RTElJJsQYN3BKd3tyNOE
+         FnfMBMT49RhIW30mivK7bpqoQJqYMuMxlo39hVMZAs0n1mMco5QHimG278qye/a6WTJc
+         NkpX13wEuE+0eSAWC3sVt9EU+sbuYhSYRC1jlb77MZtf4o6zJKx3zp2SdUrG60YUuOW+
+         aeJmuGC/88mds28W/C79CmpRV3sLJbYAi0UTXGLmvSSfIfjTOaGWUTxEgXCT/82tx8dv
+         WEiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747756855; x=1748361655;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yMB/4NFBbPr7e4v0JqDh+lXqkZdCYFJ/eYQU5wDTN68=;
-        b=pBjSjAdJV+8LDH5qVNeRCZ1SC/Fu5/CecIULmf3KJFxRqxFbKYVCZgtfrZ3w9xcGHz
-         FIx9DMe1KOMQIRtiqlt9Odtu8Rtt6RcfVXupPNQFPzluX+hGvdpmhr+Nfm84x7jKg3zt
-         1zEgAK0vQhmNivbuxhLiEADkO5z85rNk+jNKq3bL7TYK4nlUJsDH3fpdxmg5FxTXB6OB
-         II/nJL/a/vHjDkpep3P606EaWzgtr7TpdjdlbdhUozHG2OhuX8H7ZCL5t2qxARU62ZMd
-         fqP99/+ycnA9JqYa4VSkezyAYAl+pHGo4HQxPNKAGFFro24VnskyHHomsYLODMEDs4ui
-         o08g==
-X-Forwarded-Encrypted: i=1; AJvYcCUQ/fFIXksYYs6C2Skxmrf25oIfFl3WkPcC8sFB2npwe88ZuYBPRCodpjnnoK8ae1Xuo2JTvYA8wkx73ZPI@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSALjkabIj11p77XWXOODHZFkPo8pN03wXA8T1Ss/P/FkhkOz5
-	dTKTV9rgbAhxBH0eg7QRFsKaiIZSk6g+fq9rd8QNYaMxgh3N/8vKoUkfmhI1JZu9xketFWO8ohn
-	5/qsqmkHeNhwmszmJJbwnwkE4L4yumcyDQ9ONg4JW/wgBR33d6trmUijnkqKGnc/+JNzcWuhfnA
-	8N
-X-Gm-Gg: ASbGnctIDDCKRPq4F8xGB2eGL5ujPhy0JBzONsByWqj3Dpf6DSz826mxuwE994vQbO7
-	4s4nZ87tXMXaS/Lsbbk9jPjh76ktW2fR86byrcw+jG9rvNfvIbQbr36LW5xyZwncPybbHijj985
-	zAV57qVQ8ZoHD9923WDHgeFMxP9xRM/6JvZuWo7Jyjcf6Q9C1dCA96Xnx0QlF8nTb/3dYMVuX52
-	yD2ZmwC6lrbI+gk67T3heza8+zLtx7Hi8fMSn0pvnint8qkQl6x92NewWIRCYG59T9nBwRqMzGD
-	33MM9GY+EqdLS29xjEvV4UPXfSJnSv1qz4dcN/O2ThqmRuvvDm3ZEQT6u736uzrFDQ==
-X-Received: by 2002:a05:6214:20ab:b0:6e8:fd2b:1801 with SMTP id 6a1803df08f44-6f8b08282d4mr98336126d6.2.1747756855205;
-        Tue, 20 May 2025 09:00:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHUfgy1w4r+nTJ4LSFmejma8AcEDkG3KohHEdj355IJKL4b9rH4agpxCV3msGdiryUvKcnbXQ==
-X-Received: by 2002:a05:6214:20ab:b0:6e8:fd2b:1801 with SMTP id 6a1803df08f44-6f8b08282d4mr98335706d6.2.1747756854525;
-        Tue, 20 May 2025 09:00:54 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d438c1bsm756346466b.95.2025.05.20.09.00.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 May 2025 09:00:53 -0700 (PDT)
-Message-ID: <37bd619d-242e-4488-8d45-c2c85612bee9@oss.qualcomm.com>
-Date: Tue, 20 May 2025 18:00:49 +0200
+        d=1e100.net; s=20230601; t=1747757238; x=1748362038;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lIlNhHqv93GvQWrqGB3ZPQbb3QiLFh5pTwSkFYPcNvg=;
+        b=bCfwg5eJ8lkv6cUUkJb/ONjhgkJRkg0WZjYUC3/7FJkYk7Al1tfvu8jXRdFOJxMotQ
+         bQ61CrTH93UWddjTVD+3/XKMClZ7SlgdUEwvq7yfJjHY39StoBlf7Q4V1tMME6k++bIM
+         1KPrWRWIaDg6eFJ0dFFPnGgrT0zDYkkqqez8MpSgHeNl/dVp9BPoV7kHpc5KriVLzI2W
+         EqW76d0VTSFNPI/VNWOlgjmyfXmEFFVxxBD+/A3/um44Vrj1ikdRXwT9sE1Ss18hyzji
+         cCYGbHpCDpPWU4inC+y9eAv1cXFes7Tj1Ybll8vzC8RqsTjGjQLmCMqWkiHzHfZ25iyl
+         ZOdw==
+X-Forwarded-Encrypted: i=1; AJvYcCV7qVBvCSPRA4qAYojBUtGm6t0O1hjvkfaSgaW7pZvXItb98mJsrArPdshEzMo9lPNBBUGvYII/rTBiQpLu@vger.kernel.org, AJvYcCXDpiSp7iFRZVwwuUD6F7OFbtY956MRRaEKioeWLi91TKh+tMwRI4zf3HpqkuLJTGyn0ZSrpFeV8f/6hXPl@vger.kernel.org
+X-Gm-Message-State: AOJu0YxEmm378Ip2EuitccIHngXAiVwy04hcLDB/uhUeZMKrVAe+IRVv
+	DvKAUKC9CV5E9vfAyFHG3mbtZAe008pyBLCKi8Y9UNnuEMGm2+cBfywmGSzPteIMJ8wKHcKGjiW
+	DQwK2SDxAQnpuU/l5wpoaOSj0cIzj8os=
+X-Gm-Gg: ASbGncvR0X+N6SGeoL/wPIqeD54FPtx4PUKayH668l+lHQgI+b2oHEh5aEVwoRUX3Mh
+	SmVjPKttEoHYOijYeUWDw8p5EsfNkWhc8Bo7Z8PjyNElPWzvWbAXzldi/9/sz/oxzQO2SPtRHWe
+	0/MgiMlEGpKd/sGL+AcRzI8v6aOZScDKJ4UWUVtLbbCSK+WFVd5wdIAo6kRPR5yB4=
+X-Google-Smtp-Source: AGHT+IFKjqLjdxKN137jXayMzSnHUHC3u3SlHWSxPDUnqzAx/6aHZ9mgDTFP7BV1sTPkWNww7XgabgYxTfCrrozjj6s=
+X-Received: by 2002:a05:6602:4186:b0:85c:c7f9:9a1c with SMTP id
+ ca18e2360f4ac-86a23283c78mr2385708639f.13.1747757237853; Tue, 20 May 2025
+ 09:07:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] dt-bindings: watchdog: qcom-wdt: Document
- qcom,imem property
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck
- <linux@roeck-us.net>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
-References: <20250519-wdt_reset_reason-v4-0-d59d21275c75@oss.qualcomm.com>
- <20250519-wdt_reset_reason-v4-3-d59d21275c75@oss.qualcomm.com>
- <20250520-portable-anteater-of-respect-c7be5c@kuoka>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250520-portable-anteater-of-respect-c7be5c@kuoka>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDEzMSBTYWx0ZWRfX7nZIilBJO8ok
- pebaWyJ4e4X6BlhZrD4gq4SjaEvhRBgDivNPGEFzuXTpMipCm02wOkWQFVDrwI+QnMvjHEpk1DP
- M5oUGi3A3M9jMmKYlN6S6TTLUzZn9fgw1lGe9AnG99OvF0FJp4APkQST4pK9LDBa/k+hm1e5lLS
- S+wpI0Qe3zZLzYe1nprZRpjDAOofn1T8B6ZQKqD2kNfh6QcdmKGFIa+/Syvk8+56B4MOVh9WFHF
- 1e7sPrPLxSYziQFqXWbQVrxgl78ilZIB4PICoR1q6qllvlL/ut73sD2IUYAW54wHaFnqtqlu9X6
- hdkTTb8fIGtnkeCcBOfgwvcler0jYuKOxgDNLVQqg6mL9EGaBYKuwuOTXcrk0dcgioYtQpUvY0y
- anEqjlPRjZuytER2zH008X1TtHA+7FwCLa8dCTyH4cD4sXBDgjQJ5dOsMbUS0xkPU3FGzdhF
-X-Proofpoint-ORIG-GUID: TCH1li7Mkwy_ZZ-ev2lt94p-biRcjeP7
-X-Proofpoint-GUID: TCH1li7Mkwy_ZZ-ev2lt94p-biRcjeP7
-X-Authority-Analysis: v=2.4 cv=HIjDFptv c=1 sm=1 tr=0 ts=682ca738 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=qkre8nadHetdGucJBgsA:9
- a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-20_06,2025-05-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0 clxscore=1015
- bulkscore=0 suspectscore=0 spamscore=0 priorityscore=1501 malwarescore=0
- impostorscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505070000 definitions=main-2505200131
+References: <20250514170118.40555-1-robdclark@gmail.com> <20250514170118.40555-5-robdclark@gmail.com>
+ <51f87f358fa1b7ef8db8b67ee6cde38ae071fbe8.camel@mailbox.org>
+ <CAJs_Fx771FFVDVFMn8YJkR9f9Ad-UQspJ9KKQw4u6Cu4TA7YPA@mail.gmail.com>
+ <CACu1E7EL+E-M0N-EAN9Bx7u9O6_pECQQdPE2ph575idhVb2Szg@mail.gmail.com>
+ <aCYkk4Y7feltfp79@pollux> <CAF6AEGsoG_W3A3+BHV4n5EKZQazFubrCyfrtxVUH7+H4-j7i5A@mail.gmail.com>
+ <aCY42rgJC4sQ4tp4@pollux> <CAF6AEGubHkdhfJz=bAZvctO1aTKDLwRsRyPzkoVrQ7tA6dRbKw@mail.gmail.com>
+ <aCwqAGLLCC2ZLSBK@pollux>
+In-Reply-To: <aCwqAGLLCC2ZLSBK@pollux>
+From: Rob Clark <robdclark@gmail.com>
+Date: Tue, 20 May 2025 09:07:05 -0700
+X-Gm-Features: AX0GCFuJB8HyZPWl9Jg_jf4wMyFY6rVV8-Xlv-hqm4CZrVysg_4nnA4WGO4qoKc
+Message-ID: <CAF6AEGspvuTHU0t9z__p_HkdRNi=cXir3t453AbR6DFNzDpgvw@mail.gmail.com>
+Subject: Re: [PATCH v4 04/40] drm/sched: Add enqueue credit limit
+To: Danilo Krummrich <dakr@kernel.org>
+Cc: Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>, phasta@kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, Matthew Brost <matthew.brost@intel.com>, 
+	=?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	open list <linux-kernel@vger.kernel.org>, 
+	Boris Brezillon <boris.brezillon@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 5/20/25 9:25 AM, Krzysztof Kozlowski wrote:
-> On Mon, May 19, 2025 at 02:04:03PM GMT, Kathiravan Thirumoorthy wrote:
->> Document the "qcom,imem" property for the watchdog device on Qualcomm
->> IPQ platforms. Use this property to extract the restart reason from
->> IMEM, which is updated by XBL. Populate the watchdog's bootstatus sysFS
->> entry with this information, when the system reboots due to a watchdog
->> timeout.
->>
->> Describe this property for the IPQ5424 watchdog device and extend support
->> to other targets subsequently.
->>
->> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
->> ---
->> Changes in v4:
->> 	- New patch
->> ---
->>  .../devicetree/bindings/watchdog/qcom-wdt.yaml       | 20 ++++++++++++++++++++
->>  1 file changed, 20 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
->> index 49e2b807db0bc9d3edfc93ec41ad0df0b74ed032..bbe9b68ff4c8b813744ffd86bb52303943366fa2 100644
->> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
->> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
->> @@ -81,6 +81,16 @@ properties:
->>      minItems: 1
->>      maxItems: 5
->>  
->> +  qcom,imem:
-> 
-> Shoouldn't this be existing 'sram' property? If IMEM is something
-> similar to OCMEM, then we already use sram for that.
+On Tue, May 20, 2025 at 12:06=E2=80=AFAM Danilo Krummrich <dakr@kernel.org>=
+ wrote:
+>
+> On Thu, May 15, 2025 at 12:56:38PM -0700, Rob Clark wrote:
+> > On Thu, May 15, 2025 at 11:56=E2=80=AFAM Danilo Krummrich <dakr@kernel.=
+org> wrote:
+> > >
+> > > On Thu, May 15, 2025 at 10:40:15AM -0700, Rob Clark wrote:
+> > > > On Thu, May 15, 2025 at 10:30=E2=80=AFAM Danilo Krummrich <dakr@ker=
+nel.org> wrote:
+> > > > >
+> > > > > (Cc: Boris)
+> > > > >
+> > > > > On Thu, May 15, 2025 at 12:22:18PM -0400, Connor Abbott wrote:
+> > > > > > For some context, other drivers have the concept of a "synchron=
+ous"
+> > > > > > VM_BIND ioctl which completes immediately, and drivers implemen=
+t it by
+> > > > > > waiting for the whole thing to finish before returning.
+> > > > >
+> > > > > Nouveau implements sync by issuing a normal async VM_BIND and sub=
+sequently
+> > > > > waits for the out-fence synchronously.
+> > > >
+> > > > As Connor mentioned, we'd prefer it to be async rather than blockin=
+g,
+> > > > in normal cases, otherwise with drm native context for using native
+> > > > UMD in guest VM, you'd be blocking the single host/VMM virglrender
+> > > > thread.
+> > > >
+> > > > The key is we want to keep it async in the normal cases, and not ha=
+ve
+> > > > weird edge case CTS tests blow up from being _too_ async ;-)
+> > >
+> > > I really wonder why they don't blow up in Nouveau, which also support=
+ full
+> > > asynchronous VM_BIND. Mind sharing which tests blow up? :)
+> >
+> > Maybe it was dEQP-VK.sparse_resources.buffer.ssbo.sparse_residency.buff=
+er_size_2_24,
+>
+> The test above is part of the smoke testing I do for nouveau, but I haven=
+'t seen
+> such issues yet for nouveau.
 
-We specifically want a handle to a predefined byte in IMEM, something akin
-to qcom,4ln-config-sel in
+nouveau is probably not using async binds for everything?  Or maybe
+I'm just pointing to the wrong test.
 
-Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> > but I might be mixing that up, I'd have to back out this patch and see
+> > where things blow up, which would take many hours.
+>
+> Well, you said that you never had this issue with "real" workloads, but o=
+nly
+> with VK CTS, so I really think we should know what we are trying to fix h=
+ere.
+>
+> We can't just add new generic infrastructure without reasonable and *well
+> understood* justification.
 
-Konrad
+What is not well understood about this?  We need to pre-allocate
+memory that we likely don't need for pagetables.
+
+In the worst case, a large # of async PAGE_SIZE binds, you end up
+needing to pre-allocate 3 pgtable pages (4 lvl pgtable) per one page
+of mapping.  Queue up enough of those and you can explode your memory
+usage.
+
+> > There definitely was one where I was seeing >5k VM_BIND jobs pile up,
+> > so absolutely throttling like this is needed.
+>
+> I still don't understand why the kernel must throttle this? If userspace =
+uses
+> async VM_BIND, it obviously can't spam the kernel infinitely without runn=
+ing
+> into an OOM case.
+
+It is a valid question about whether the kernel or userspace should be
+the one to do the throttling.
+
+I went for doing it in the kernel because the kernel has better
+knowledge of how much it needs to pre-allocate.
+
+(There is also the side point, that this pre-allocated memory is not
+charged to the calling process from a PoV of memory accounting.  So
+with that in mind it seems like a good idea for the kernel to throttle
+memory usage.)
+
+> But let's assume we agree that we want to avoid that userspace can ever O=
+OM itself
+> through async VM_BIND, then the proposed solution seems wrong:
+>
+> Do we really want the driver developer to set an arbitrary boundary of a =
+number
+> of jobs that can be submitted before *async* VM_BIND blocks and becomes
+> semi-sync?
+>
+> How do we choose this number of jobs? A very small number to be safe, whi=
+ch
+> scales badly on powerful machines? A large number that scales well on pow=
+erful
+> machines, but OOMs on weaker ones?
+
+The way I am using it in msm, the credit amount and limit are in units
+of pre-allocated pages in-flight.  I set the enqueue_credit_limit to
+1024 pages, once there are jobs queued up exceeding that limit, they
+start blocking.
+
+The number of _jobs_ is irrelevant, it is # of pre-alloc'd pages in flight.
+
+> I really think, this isn't the correct solution, but more a workaround.
+>
+> > Part of the VM_BIND for msm series adds some tracepoints for amount of
+> > memory preallocated vs used for each job.  That plus scheduler
+> > tracepoints should let you see how much memory is tied up in
+> > prealloc'd pgtables.  You might not be noticing only because you are
+> > running on a big desktop with lots of RAM ;-)
+> >
+> > > > > > But this
+> > > > > > doesn't work for native context, where everything has to be
+> > > > > > asynchronous, so we're trying a new approach where we instead s=
+ubmit
+> > > > > > an asynchronous bind for "normal" (non-sparse/driver internal)
+> > > > > > allocations and only attach its out-fence to the in-fence of
+> > > > > > subsequent submits to other queues.
+> > > > >
+> > > > > This is what nouveau does and I think other drivers like Xe and p=
+anthor do this
+> > > > > as well.
+> > > >
+> > > > No one has added native context support for these drivers yet
+> > >
+> > > Huh? What exactly do you mean with "native context" then?
+> >
+> > It is a way to use native usermode driver in a guest VM, by remoting
+> > at the UAPI level, as opposed to the vk or gl API level.  You can
+> > generally get equal to native performance, but the guest/host boundary
+> > strongly encourages asynchronous to hide the guest->host latency.
+>
+> For the context we're discussing this isn't different to other drivers su=
+pporing
+> async VM_BIND utilizing it from the host, rather than from a guest.
+>
+> So, my original statement about nouveau, Xe, panthor doing the same thing
+> without running into trouble should be valid.
+
+Probably the difference is that we don't do any _synchronous_ binds.
+And that is partially motivated by the virtual machine case.
+
+BR,
+-R
 
