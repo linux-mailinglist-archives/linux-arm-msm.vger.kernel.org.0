@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-58648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7601FABD158
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 10:04:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99F51ABD15C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 10:05:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7DCA01884B4A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 08:04:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A14261BA12AA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 08:05:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F84425C829;
-	Tue, 20 May 2025 08:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3BD978F4E;
+	Tue, 20 May 2025 08:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="l9DshWhk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eJBoNza5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EC821A43C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 08:04:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA2525D20D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 08:05:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747728280; cv=none; b=tR3RRnz4zoH8cIpiRZnqeY7Lh/g1/zAcAAYk+1nrOhIZU46XIpE803n81sgZkwnuD/d2ga4SfTkfB3mJ4Z5t0u+ny9X8KMk0y37EoI69Bt1swvoemR+TaEX6s0+W6vytIrLROr59+B1iqqc/O199AIS5Emn9U0iQMiL2xIIFVKw=
+	t=1747728304; cv=none; b=SIbv1jbMyBmXcUn0RZX2aAgEmps468KfuLtYSeFPAnlqW6sVf7ejt/keG6rrttnyDMUc/5+9Y2ariB0FOaphRYbOtkTCaZBxtEsbLupiqizvHWepnGUdBq9qWh+B6++ccYBH4bOgisOSK2/q/aZdQ1MgaL8wh2Hgmc47ZdxhEfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747728280; c=relaxed/simple;
-	bh=GQ8Jwo1PEGp/1qPhf2tJ1ZfuOpjVwOp8z0xcvNjR6Fo=;
+	s=arc-20240116; t=1747728304; c=relaxed/simple;
+	bh=dVd66/LTvQ2RN45Jr2m5S/pHVpsDjYhPNQPEkpudd+4=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=QhUcXjXDohn53PATWzEQafWTb3L58DNdT+aFVe4/bA8R2M2DCW/E28eOgHHtUsqKDDQSY3SnIkeOg8k/hhelwzc1IyCsbazzRt+EmWeXkGVAnIXSESF03mDi53wGnkUrqVxxah7aYCF2xtpULfIMp/IHEkVC/lTdxxL5SYZY9co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=l9DshWhk; arc=none smtp.client-ip=209.85.128.52
+	 In-Reply-To:Content-Type; b=Wf73oSVkr1Jd+dL3p8tNLVENuGdsK7Gkz7juMn5/KFrOVr8aaDzJccqCjXA/bu8xPNVTsVFYLnxDRjJNmTXzm12R1JKvvMSB7S6ts/A7FYR00n8SOjwDCyvw2Evmp9FfWH96PrtW+sG3nuYLJYq3vhqSsjGSOPysGMEvfKfP2y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eJBoNza5; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-442ec3ce724so43220315e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 01:04:37 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-442f5b3c710so41935075e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 01:05:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747728276; x=1748333076; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1747728299; x=1748333099; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nsCw49AzZ93CgoYb0m1yC/n/Gw3MHEgFticB37uAwIU=;
-        b=l9DshWhkWO89h6e4dPz4hq3euQe4opxIqgv97IPFjixqte2ilyplEUcMmm+EKihGun
-         pnSHUPalxLtiHlXLuDZdCpqmjgG88Zj9q55aDYkeVtqJALrVKssqdyXJ+58n6TNoml+g
-         XcWBDkmViI6z3yHfHn3x0ue7108aKq4pR0L+D0hhq0BM0OVlyZ1lXJ8L35UOACDTnUjr
-         H0olJcGYP4wuMTr9SXygT1KxycVVUCmh1Jcim83hegWNXbsvvPH/Ba9he/qFtqBzu8vm
-         brwKBqFfO2ebDT9CWKck5QZvFw4uF4GWtxkVybtiXroJAF9DbIeWOsJm6c7nWE9a0JM8
-         I/Ug==
+        bh=PTvudJvnhDEPuyFu1j/pIjb7A7vd2K7xc6jlT71fWUc=;
+        b=eJBoNza5GBMuEknl8sGd4T+k+AGif5XIgyXeYosjyKZzs/1rA/zV8CestdM4a3rSJN
+         zUl9864KjZgXt2zS2n6ECOFiVkvc/r9Yu+OUmEVfyHAwpFRyEF5iq6k4/NbxElctyzQl
+         ph0NHIwFdYxSgMvoZtMdaXWjTyiVGEjQKg6ldp+u7yYdqEa1UPe9nQG6OQwKlbzznHao
+         W07bJ/7vH3mDG5camfk1r/AO9QBjLCTWqcKX418mBy2KF7BNUe2JeD3sIAFhRNACLoZM
+         1Wt5kkYRaILW95ubGJLfQyqvV0tnK1pEAdxxl+pqR/VvQXFj2aS6G4MtEwQsT72vIp/a
+         FK4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747728276; x=1748333076;
+        d=1e100.net; s=20230601; t=1747728299; x=1748333099;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=nsCw49AzZ93CgoYb0m1yC/n/Gw3MHEgFticB37uAwIU=;
-        b=LIjPxPsKzFw8q5sFSxcGKTZ3gQPpmk+tXSBnhQpoYlFdvlbRyD5xLu4tYYWryXdjBb
-         mDoKtrVnCKxmDaUSC2SP4B/DQY8GvoAd52a4eSBe/oj+r5KghDg0RM4deMrI6fNLwszC
-         uHO8eb9CyHc/XQecuYAkbcvtFilH7d7CMyfTet8IaDjE5I3GEAo+bXPyrOD5ARH5B1JL
-         NWMF5VK6ZppN1atyQzZo/lIkQwv/F/DlgVbTJWT6lFZJJphgANMOrJA4Kz4m1EvGCE1G
-         8OvVaKIPqFOU0qYxOZS8Fpb0eZa6s4cLC+MjgTEGQPFlmsNYTu8hG+TfmoXIeh6VK4K/
-         83ig==
-X-Gm-Message-State: AOJu0Yxnt4pbOlaqrHcpNJLJ8+lS+jwZ4oENZWZG+QEjlziBhQMWJ7QN
-	x/nM+yGG2+Vl8cxD+87kMFliu1rX9l1sDayk7/x5pO4veN1Il5wezD7S5Ys8GQvIx0k=
-X-Gm-Gg: ASbGnct1Ttm154n7g0AccMsx4KcxiXw+rFR8mc+klSY2gSGVAGAzlIVYVNXJtuT7UPp
-	DSHdDlW15BNC1oLEvMEGv0YQuCrumudZdBDIhElHXPO5XBRXYYgpvOEDjUKdUVh2DVILRRs1sV3
-	lF46cFmaKyhwKjj3fC8o8gQMcY2MmJ5eT4j/WROXkg3TpGoAqKSBZ3YcPI4d0gY2w0kWqY8jHdp
-	U5snM1eg7FIA0VAsILBtu5kwDwH2UXQuku3BZvi1LdbZV6OVEHMvAU4iKg8STN2hQn2q1RDXBnN
-	98aRYP9WsTUi546B0reLgj4FrdzBMqxXhMpA/f2c7nYaHb4jMRKsZSfuI78H01BZfevh+uJfS1l
-	l+HMNxLUavAkHndPQwiPywJPgIYVt
-X-Google-Smtp-Source: AGHT+IGzkE7LtvZ8XO8M5qS6SZ4XvqkgcIuyzXtLU3CMAvcOVKO72aJc5vRUmte7/yKJtWkfH4+cjg==
-X-Received: by 2002:a05:600c:35c8:b0:441:d43d:4f68 with SMTP id 5b1f17b1804b1-442fd63c6b7mr169374425e9.15.1747728276322;
-        Tue, 20 May 2025 01:04:36 -0700 (PDT)
+        bh=PTvudJvnhDEPuyFu1j/pIjb7A7vd2K7xc6jlT71fWUc=;
+        b=A6VMbynkGye7ym9kLeQqNVnRJpIgrGa5NHHqZ7lYspded7B4PrxtExVHI0b6DNLZrb
+         1VG6u0ApMxgiANGernJZcky6bBsizY/9oFNoTm25uu9uCqYDH9NFkBqF+qySJYB3O4Tu
+         Ua8vIYEFRAP4vJdiN83G414ENaOftqtRt/Olsg1SzR8dq+ExF2q0huBhyZh9ZB2tibmC
+         On4q7pJAOxiU0UdFAaUpr+iwh+c/ME4o9gJONG214NXZvE1yl2sAVAwUcf1m2kPDvOEQ
+         IJBqvd1OBbbYLfMz/VvNgurXZwmRVH6pe9Fj9tgSWPJQPjRK3/DXYWW6jfePvNapqoZx
+         r/Vg==
+X-Gm-Message-State: AOJu0YxLZ7CHhQ/93JmAXZnCvdf96zItIGXMif4KU1UF+ozsM/YNsD83
+	6nyabkZGQbjfowE5YzIst0Cna4tNAx77Mo2trnSqQEUcjiEd/KPzGAp8W8o5d0iCbOg=
+X-Gm-Gg: ASbGncv5mRxrHrG495x6U/T1RFNEEkTwuvyxRQM89YI0AshL8CEWD7I2VmE/6zzr0ra
+	kXuOUXJxVgcH3NjDTo+1WyKpT8bBg7RyQPsDHLPMsFub44ltB44s/O+1qW09rr8HzKOWxfM4FLK
+	rTccaCOLxGMtpCZn/mpyCLVucCDCsPPOhi4aMlZB8A9Bj/OmuN5Xndsl2YcsgZrtU6nDZe/geV0
+	5OKF/aYs6puWn1b/BXIbTzztJiHpchjlZ3++dKtCtZU5kOn+y5lDfhlzHNFb2ktEEuTDZLGTpmA
+	l0TVzZDdcMkGAod+Zo/Tf2n7RShS/MfekcpdAs/ukubrp+RRA6c3EWhqdlOVvNYjnaYiqerIDW+
+	McnYW21iZJyVQ31WKYM50wHXrnZZCoVRq4iNaGq8=
+X-Google-Smtp-Source: AGHT+IGUPKh2A40EZEfnAPoVQ3zMAxuIk1SlR6DLZKDJjOuSfQInyC6VjSaaWvvIanac18fckF6Umw==
+X-Received: by 2002:a05:600c:34d4:b0:442:e0e0:250 with SMTP id 5b1f17b1804b1-442fd67200emr144060775e9.29.1747728299447;
+        Tue, 20 May 2025 01:04:59 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:3d9:2080:fb2e:6266:4e39:ce68? ([2a01:e0a:3d9:2080:fb2e:6266:4e39:ce68])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a3643e24e2sm13174633f8f.79.2025.05.20.01.04.35
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a362997dc8sm13872656f8f.46.2025.05.20.01.04.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 May 2025 01:04:36 -0700 (PDT)
-Message-ID: <7809bd16-f415-4843-aadc-59114d142073@linaro.org>
-Date: Tue, 20 May 2025 10:04:35 +0200
+        Tue, 20 May 2025 01:04:59 -0700 (PDT)
+Message-ID: <b6ef6e15-cff4-40d2-a54d-55dd0218f966@linaro.org>
+Date: Tue, 20 May 2025 10:04:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,7 +85,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 25/30] drm/msm/dpu: get rid of DPU_WB_INPUT_CTRL
+Subject: Re: [PATCH v4 26/30] drm/msm/dpu: get rid of DPU_SSPP_QOS_8LVL
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
  Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
  Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
@@ -95,7 +95,7 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 References: <20250519-dpu-drop-features-v4-0-6c5e88e31383@oss.qualcomm.com>
- <20250519-dpu-drop-features-v4-25-6c5e88e31383@oss.qualcomm.com>
+ <20250519-dpu-drop-features-v4-26-6c5e88e31383@oss.qualcomm.com>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -122,294 +122,109 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20250519-dpu-drop-features-v4-25-6c5e88e31383@oss.qualcomm.com>
+In-Reply-To: <20250519-dpu-drop-features-v4-26-6c5e88e31383@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 19/05/2025 18:04, Dmitry Baryshkov wrote:
+> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
 > Continue migration to the MDSS-revision based checks and replace
-> DPU_WB_INPUT_CTRL feature bit with the core_major_ver >= 5 check.
+> DPU_SSPP_QOS_8LVL feature bit with the core_major_ver >= 4 check.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h  | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h   | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h  | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h   | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h   | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h   | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h   | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h   | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h   | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h  | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c           | 3 ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h           | 3 ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c                | 2 +-
->   19 files changed, 17 insertions(+), 23 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 6 +++---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 --
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c    | 5 ++++-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h    | 2 ++
+>   4 files changed, 9 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h
-> index 013314b2e716a6d939393b77b0edc87170dba27b..56d3c38c87781edb438b277c77382848b679198f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h
-> @@ -318,7 +318,7 @@ static const struct dpu_wb_cfg sm8650_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.xin_id = 6,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> index 5d3b864d28a86fb86fc4576210c9418604afd844..ae1b2ed96e9f10a6e7a710fc8bb4e40dec665cf9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> @@ -275,7 +275,7 @@ static const struct dpu_wb_cfg sm8150_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.clk_ctrl = DPU_CLK_CTRL_WB2,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> index a6e9dfc583f283d752545b3f700c3d509e2a2965..fc80406759cd52f0d633927c8ba876feaff48e07 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> @@ -281,7 +281,7 @@ static const struct dpu_wb_cfg sc8180x_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.clk_ctrl = DPU_CLK_CTRL_WB2,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h
-> index fe9c9301e3d9d2d3a0a34ab9aed0f307d08c34ca..a56c288ac10cd3dfe8d49a6e476b9fff062f8003 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h
-> @@ -241,7 +241,7 @@ static const struct dpu_wb_cfg sm7150_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.clk_ctrl = DPU_CLK_CTRL_WB2,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
-> index 8fb926bff36d32fb4ce1036cb69513599dc7b6b7..a065f102ce592311376f1186add7a47dca7fd84f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h
-> @@ -154,7 +154,7 @@ static const struct dpu_wb_cfg sm6150_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.clk_ctrl = DPU_CLK_CTRL_WB2,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-> index 5c2c8c5f812347970c534769d72f9699e6e7049a..2950245e7b3f5e38f3f501a7314bb97c66d05982 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-> @@ -133,7 +133,7 @@ static const struct dpu_wb_cfg sm6125_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.clk_ctrl = DPU_CLK_CTRL_WB2,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-> index 9ceff398fd6f554085440f509b6f8398b4fbf304..7b8b7a1c2d767eafca7e7440098bb28e2e108902 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-> @@ -312,7 +312,7 @@ static const struct dpu_wb_cfg sm8250_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.clk_ctrl = DPU_CLK_CTRL_WB2,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-> index f6a0f1a39dcc3c9e82c07889d71905434274cdf9..c990ba3b5db02d65934179d5ad42bd740f6944b2 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-> @@ -148,7 +148,7 @@ static const struct dpu_wb_cfg sc7180_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.clk_ctrl = DPU_CLK_CTRL_WB2,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-> index a46e9e3ff565ba5ef233af76f1c6cebb1d0c318a..093d16bdc450af348da1775ff017d982236b11b0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
-> @@ -142,7 +142,7 @@ static const struct dpu_wb_cfg sm6350_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.clk_ctrl = DPU_CLK_CTRL_WB2,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> index b4d41e2644349bdbdbdacbe1e9b3748f90df4f3b..85aae40c210f3aa1b29bf0b5ea81ee1f551a6ef6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> @@ -285,7 +285,7 @@ static const struct dpu_wb_cfg sm8350_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.clk_ctrl = DPU_CLK_CTRL_WB2,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> index 5d88f0261d8320a78f8d64c9bb68b938f83160a0..8f978b9c345202d3ea1a7781e4ef2763b46c6f6e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> @@ -159,7 +159,7 @@ static const struct dpu_wb_cfg sc7280_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.clk_ctrl = DPU_CLK_CTRL_WB2,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> index 3c0728a4b37ea6af25ab64315cfe63ba6f8d2774..b09a6af4c474aa9301c0ef6bc0ce71ba42cce3a2 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> @@ -298,7 +298,7 @@ static const struct dpu_wb_cfg sm8450_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.clk_ctrl = DPU_CLK_CTRL_WB2,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
-> index b8a1646395916fde04b9750cf548edca5729d9c2..0f7b4a224e4c971f482c3778c92e8c170b44223f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
-> @@ -305,7 +305,7 @@ static const struct dpu_wb_cfg sa8775p_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.clk_ctrl = DPU_CLK_CTRL_WB2,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> index ef22a9adf43ddc9d15be5f1359ea5f6690e9f27c..465b6460f8754df18bbcf4baac2f8a3ebdea3324 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> @@ -294,7 +294,7 @@ static const struct dpu_wb_cfg sm8550_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.xin_id = 6,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h
-> index 2e7d4403835353927bc85a5acd3e6c5967cac455..6caa7d40f368802793c8690544c1c82b49a617cd 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h
-> @@ -294,7 +294,7 @@ static const struct dpu_wb_cfg sar2130p_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.xin_id = 6,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-> index ac95d46b3ecf2d95ec0d516a79567fe9c204b5f6..7243eebb85f36f2a8ae848f2c95d21b0bc3bebef 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
-> @@ -294,7 +294,7 @@ static const struct dpu_wb_cfg x1e80100_wb[] = {
->   	{
->   		.name = "wb_2", .id = WB_2,
->   		.base = 0x65000, .len = 0x2c8,
-> -		.features = WB_SM8250_MASK,
-> +		.features = WB_SDM845_MASK,
->   		.format_list = wb2_formats_rgb_yuv,
->   		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
->   		.xin_id = 6,
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index ad0460aa5b5ce5a373dab18c89e4159855da4d2b..6d7be74bafe326a1998a69ed9b3495c5acf6350f 100644
+> index 6d7be74bafe326a1998a69ed9b3495c5acf6350f..a276a1beaf95d183f6119452e5516fa8ee60cef6 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -98,9 +98,6 @@
->   			 BIT(DPU_WB_QOS_8LVL) | \
->   			 BIT(DPU_WB_CDP))
+> @@ -35,12 +35,12 @@
+>   	(VIG_MASK | BIT(DPU_SSPP_SCALER_QSEED3_COMPATIBLE))
 >   
-> -#define WB_SM8250_MASK (WB_SDM845_MASK | \
-> -			 BIT(DPU_WB_INPUT_CTRL))
-> -
->   #define DEFAULT_PIXEL_RAM_SIZE		(50 * 1024)
->   #define DEFAULT_DPU_LINE_WIDTH		2048
->   #define DEFAULT_DPU_OUTPUT_LINE_WIDTH	2560
+>   #define VIG_SDM845_MASK_NO_SDMA \
+> -	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3_COMPATIBLE))
+> +	(VIG_MASK | BIT(DPU_SSPP_SCALER_QSEED3_COMPATIBLE))
+>   
+>   #define VIG_SDM845_MASK_SDMA \
+>   	(VIG_SDM845_MASK_NO_SDMA | BIT(DPU_SSPP_SMART_DMA_V2))
+>   
+> -#define VIG_QCM2290_MASK (VIG_BASE_MASK | BIT(DPU_SSPP_QOS_8LVL))
+> +#define VIG_QCM2290_MASK (VIG_BASE_MASK)
+>   
+>   #define DMA_MSM8953_MASK \
+>   	(BIT(DPU_SSPP_QOS))
+> @@ -60,7 +60,7 @@
+>   	(VIG_SC7280_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
+>   
+>   #define DMA_SDM845_MASK_NO_SDMA \
+> -	(BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_QOS_8LVL) |\
+> +	(BIT(DPU_SSPP_QOS) | \
+>   	BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_TS_PREFILL_REC1) |\
+>   	BIT(DPU_SSPP_CDP) | BIT(DPU_SSPP_EXCL_RECT))
+>   
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 41906dadff5a8ef39b2e90f3e80bb699a5cf59b7..8c394e7d6496ca2d120c81c7776b4b979368be23 100644
+> index 8c394e7d6496ca2d120c81c7776b4b979368be23..c582ef1ffe022f2e92b1b80cbab97ff41a2acfe9 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -140,8 +140,6 @@ enum {
->     * @DPU_WB_QOS,             Writeback supports QoS control, danger/safe/creq
->     * @DPU_WB_QOS_8LVL,        Writeback supports 8-level QoS control
->     * @DPU_WB_CDP              Writeback supports client driven prefetch
-> -  * @DPU_WB_INPUT_CTRL       Writeback supports from which pp block input pixel
-> -  *                          data arrives.
->     * @DPU_WB_CROP             CWB supports cropping
->     * @DPU_WB_MAX              maximum value
->     */
-> @@ -155,7 +153,6 @@ enum {
->   	DPU_WB_QOS,
->   	DPU_WB_QOS_8LVL,
->   	DPU_WB_CDP,
-> -	DPU_WB_INPUT_CTRL,
->   	DPU_WB_CROP,
->   	DPU_WB_MAX
+> @@ -50,7 +50,6 @@ enum {
+>    * @DPU_SSPP_CSC_10BIT,      Support of 10-bit Color space conversion
+>    * @DPU_SSPP_CURSOR,         SSPP can be used as a cursor layer
+>    * @DPU_SSPP_QOS,            SSPP support QoS control, danger/safe/creq
+> - * @DPU_SSPP_QOS_8LVL,       SSPP support 8-level QoS control
+>    * @DPU_SSPP_EXCL_RECT,      SSPP supports exclusion rect
+>    * @DPU_SSPP_SMART_DMA_V1,   SmartDMA 1.0 support
+>    * @DPU_SSPP_SMART_DMA_V2,   SmartDMA 2.0 support
+> @@ -68,7 +67,6 @@ enum {
+>   	DPU_SSPP_CSC_10BIT,
+>   	DPU_SSPP_CURSOR,
+>   	DPU_SSPP_QOS,
+> -	DPU_SSPP_QOS_8LVL,
+>   	DPU_SSPP_EXCL_RECT,
+>   	DPU_SSPP_SMART_DMA_V1,
+>   	DPU_SSPP_SMART_DMA_V2,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> index 32c7c80845533d720683dbcde3978d98f4972cce..7dfd0e0a779535e1f6b003f48188bc90d29d6853 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> @@ -543,7 +543,7 @@ static void dpu_hw_sspp_setup_qos_lut(struct dpu_hw_sspp *ctx,
+>   		return;
+>   
+>   	_dpu_hw_setup_qos_lut(&ctx->hw, SSPP_DANGER_LUT,
+> -			      test_bit(DPU_SSPP_QOS_8LVL, &ctx->cap->features),
+> +			      ctx->mdss_ver->core_major_ver >= 4,
+>   			      cfg);
+>   }
+>   
+> @@ -703,6 +703,9 @@ struct dpu_hw_sspp *dpu_hw_sspp_init(struct drm_device *dev,
+>   	hw_pipe->ubwc = mdss_data;
+>   	hw_pipe->idx = cfg->id;
+>   	hw_pipe->cap = cfg;
+> +
+> +	hw_pipe->mdss_ver = mdss_rev;
+> +
+>   	_setup_layer_ops(hw_pipe, hw_pipe->cap->features, mdss_rev);
+>   
+>   	return hw_pipe;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> index 56a0edf2a57c6dcef7cddf4a1bcd6f6df5ad60f6..ed90e78d178a497ae7e2dc12b09a37c8a3f79621 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> @@ -314,6 +314,8 @@ struct dpu_hw_sspp {
+>   	enum dpu_sspp idx;
+>   	const struct dpu_sspp_cfg *cap;
+>   
+> +	const struct dpu_mdss_version *mdss_ver;
+> +
+>   	/* Ops */
+>   	struct dpu_hw_sspp_ops ops;
 >   };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> index 4853e516c48733231de240b9c32ad51d4cf18f0d..478a091aeccfc7cf298798e1c119df56737e3dc4 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> @@ -208,7 +208,7 @@ static void _setup_wb_ops(struct dpu_hw_wb_ops *ops,
->   	if (test_bit(DPU_WB_CDP, &features))
->   		ops->setup_cdp = dpu_hw_wb_setup_cdp;
->   
-> -	if (test_bit(DPU_WB_INPUT_CTRL, &features))
-> +	if (mdss_rev->core_major_ver >= 5)
->   		ops->bind_pingpong_blk = dpu_hw_wb_bind_pingpong_blk;
->   
->   	if (mdss_rev->core_major_ver >= 9)
 > 
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
