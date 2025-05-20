@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-58590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6271DABCE0E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 06:04:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C97D2ABCE14
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 06:06:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 031FF168469
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 04:04:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F8343AD558
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 04:05:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7893F1E51FE;
-	Tue, 20 May 2025 04:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67A3E25A2CD;
+	Tue, 20 May 2025 04:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MzNNnOPG"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ok2dYX/2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB88A253F27
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 04:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9B91E51FE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 04:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747713848; cv=none; b=mTJhOq/xtnuNoTppM5VjeLmabGa1mohGML35jPin/XPCeEAYfbdbvTuN/HkBCnyNlkNKJJvmME4fDbDeK6boUE1dVAWpnfCY9wa04/U3t7qPxyrbUS2TU7rfYgGgV1HYJjeTGjkURcs4oqLcWWPUYRCme0a3LOU18E/XO9rCFi0=
+	t=1747713969; cv=none; b=Uc1RmYy3Rt8fKqV1Kx1uqp469OE00BQKKmwXRehF9Ip514koHbSmDXVg5iIOfSikcvAEiT56hnIt+0xdmHgYULooPCVvEJvwDHXZPQd1++QpJi70Ijntf4R7JVcCdp3TGqSGYWfITOBFl0dBYtbTRt96N+w1jtsaYzEhbjH+s6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747713848; c=relaxed/simple;
-	bh=KMb6HEc989YS4nvOynxObwK2sZg5PsL820yo8xKWB0Q=;
+	s=arc-20240116; t=1747713969; c=relaxed/simple;
+	bh=OjHg+Vyus8o0ZLxaz0u47ocwameFVHjmY7vBPG4yAT0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tkkWkIHLrH4z7Q6cyD0+SXNnb8JU9NVooT+jULos9BBHqjQhA1WeAfaFBLREEH3o8o8b22mmlaEJyXr/TypoMGteYlvtcLWBnKAhErfr8WPwp0Nge/lpBIm0kRI+Cqm+PzlJuUn1fXKdf1JEu92VsACYeLhptZAtE5xNkfPDwcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MzNNnOPG; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=EZewBynLf+pOjbXSz4B9FYZv1ZPs7KVM8KHRn7uyf6hBHuagAzXDva7kgKctP53xz82wOcbJsRpuGD7kgRdxbhTgcytnZZWiWrSzWn4bG3i9f8jmeW7IzRbb8q50uxjhcD5tAr6k1qyIn2H3l0ECp0gCUgnRdi3qpizJG9j8+VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ok2dYX/2; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54JKZHX6005266
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 04:04:05 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54JNdSP0030732
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 04:06:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	o+n9bkF0VD0V2oJ0zneDmypvwTmyRBfAOtjQDo3asjA=; b=MzNNnOPGPyV/g4gL
-	Io3VpNxBw/F+jVACkQGvFl0/BXrvWr+zDY5nVInGTf8gLF6kI9JmgqpNIhvKW385
-	/4dk0rIZDiP/AkSaJI/8ctqm/DlEUJ/u34ymu+XQVht8xG3xP/CVMbfJ97/sV2ty
-	XtDRWnQQW1g0+2xV1/ZDKu8e5VfkbhqBMRLqQ/hKaOyP3IrDlszg/7/nopdJabSJ
-	F/j0KWltPyd7FzKWqH7HicCnyYpNHTkWj/w697dOgfd20RcP4u/kqWoqc2EQTMQl
-	4zq/i6ns5gO4SdSZMDxj/hYPx6IQ7VTz3SgH40qTZ/2bFLMH621ogpmrmaKabgO0
-	cu+VIw==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pjm4xfu6-1
+	mRkL6ZD37aILbTjnj5L1nOvB0DmK7nmgx/7Bty5lsHA=; b=ok2dYX/2JfvIPoT5
+	1EdJ6q1GigS8gpD+pcbPatWPkZVETqe0DYpUc8C50rI0AHNF6NWQuYu6OrO9zTF5
+	sc7MlmfF9JG7cGOGVvPfyNhs07LnS3ykzrWV1YpJcyUdrpvOHdcEpWGkJQZYp8no
+	5wFcgJJhoKju92/h2mCRC7a0zwME8nqH46J4mKl7Wha4CRpscBqrZNgGm+Z7vuwp
+	6dDmpSaDx8aHL7ypmvUw1jY6rWMGHa6a6EqVy4bnYffiExWD3RWgVa0x0zqFYB+C
+	WLUIPi54xiZlGU29YULaKW10p095pn4FoqRQpTL1otMeVPAECP3Iwls+a8MlwSQP
+	5rlSmw==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pkr9xe8v-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 04:04:04 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-742c7227d7dso1493201b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 21:04:04 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 04:06:05 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b0e0c573531so3496590a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 21:06:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747713844; x=1748318644;
+        d=1e100.net; s=20230601; t=1747713965; x=1748318765;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=o+n9bkF0VD0V2oJ0zneDmypvwTmyRBfAOtjQDo3asjA=;
-        b=QUehdIeazTbzO4scbgt5aFUh9Lu9QoJjTcWfUwAoe0GzUmEqlZo0+sm2e2JAStwhKO
-         /YnzZHzmpPW9Avu1e9+nY9icqFKsslMc7JnJrxx3hbeetPTXmpM1VMP1pjktInBK5oga
-         cUHYZ8bHZT/mfHQnxZIXpHK2MDZFHc0AZ5O+fNOrVOSqXhNv0Y4O0ZSfMY7y7HSEHN7w
-         8IIOWSyvYzwUY5F5/xib1qkocjvo48ZrpELoSFJgQdfChZ/UzqRjedwy6+53AYei41jW
-         xcCmuJ9sem7VffkW5rbLHJrKmz5BIGsnRDpYMZGgPVz+7i+8IUO2EnJfMlDaQb42x+I1
-         w1ww==
-X-Forwarded-Encrypted: i=1; AJvYcCWVEmt1VNFpYpieUblv4l2GkxljAVJk5coiob+fQos4WK6tKcBoqpNH3UO7yADs3QgQamAZ7Lv6DBKyrpwc@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz6BojJ71xmO1BDaNVfrUFbAVNEdaTEPzDBeF7IDpZsVp6DVkPA
-	B3Eu0gmoFoJi4SDEg3mLDL2dt1YLAikq3LP+Co++VQesfvxQSXlmbzXeaTtNcGpKtSSzUSS0XGJ
-	bSS6Dt5FaVgrkwpP1AWLjB3tDn1DCNu4clY+GniNRZDjowZXXIGAWq7iG4jYLcZI3vVMY
-X-Gm-Gg: ASbGnctkBeyHJ3TCBon90Wftr7EOhFKP6aNbyrgScKzodW4m+9OXdrtAuK7v72aU631
-	eijpacsk4CZUK83VUr3zTOoUdh87OGTJy4Bn+NhndzZHny+vf0lQGty90i69tVPZ1PGTOTbl3l2
-	bqUBpecAH2RREA+ec3eldp/Wh/TveVtbjHmqgzQgCMuQwuzcKb6b/JEzWrWz+oN1r9f7B5d1zWK
-	Hmc+TnQ7zQm1Mxb+dFny0c4swb/VfPY/XXTrP1Qj0L1RFTUigZX/0OETLlz2M56LkoMLPk7693V
-	rs5lkmd1eYMD1Af//xSOQw1KEvuLcLQuBQ/lnUCj7A==
-X-Received: by 2002:a05:6a00:23c8:b0:73c:b86:b47f with SMTP id d2e1a72fcca58-742acc8da94mr19341309b3a.4.1747713844016;
-        Mon, 19 May 2025 21:04:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGtuj7Wq5AEHuJuYXpcnavQTfMcYG2SpoMb7J/CFpeG/fY8muA2u1bn6wkzdg+/GXDT/INQfA==
-X-Received: by 2002:a05:6a00:23c8:b0:73c:b86:b47f with SMTP id d2e1a72fcca58-742acc8da94mr19341277b3a.4.1747713843631;
-        Mon, 19 May 2025 21:04:03 -0700 (PDT)
+        bh=mRkL6ZD37aILbTjnj5L1nOvB0DmK7nmgx/7Bty5lsHA=;
+        b=PpgjOIob3Ky1+DBzuOIgHFIx5V+paqaPuIwZMh6LK4yhSK+wCJIBmouQwjEBX1WFLF
+         XhrrLUyD4f6+jXPLvT2BUKX+DfKbRtcHAzgm5rcPy+j09z1W00zFSofYSXpQg/MayAtj
+         EN/69Y9OgoiflTynz8Sa2rv9pcGd1tZytzUQ2xW+ws3jkMZ6axigyDYGc49CC08XW8Ir
+         7Se2k3+ypuGRW4mR+QJ5hvGvN6gBxEMtuxWEKdjRD5GsYVVmK6maoYnmTOgge6lLOl3Z
+         TFc+Gq9ljMxTfxPNMyuLxxU8sWVNLwFRIOdovFaP3izGyo5zb3gESclkUAs/9SEfQMt7
+         kPTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWi2WCB2QoyrSgIYQ7DDN7SiSlMz0EOzvbsH/PnmNYBGUeVnNlbGUXx6M7/3tw6dCFz+tOicJdOIvlxX8PS@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzD1NkMbnjTdlJNXJaLKS+Ep20IVkxqg4VljTHngARnencLFnj
+	F0Cx2f3PuGzeNqevi5NjMJlOyIygGN8fQD6rBdZpVx4aV7ZGlWBj/cxRJ9AKbvb4/WuHfOH3LtT
+	M3pXUh+aA7i7B433ImDRAxdYJULJ4iEYPf90g8q0bS79F5mJvV7kH9AOuVKt317ZQy4iU
+X-Gm-Gg: ASbGncv6VOLNxCTPtEZ5QqLWg+1c0D5DHYk5CWeRqB7OEzElmpgfrkBXtz3upbOFo0e
+	2PW43Cs8xW9Eg0I3IvAcDty6VADk45aMBICLbZa/5zGhFbijy5GkMIqLEKO5BSUu7//D2P0ydME
+	hH8g8lER6g7i9TK+hSoEZHuxeS1kmFmi884wXea53LcRZVBz6xC7K/On1LasnYdslQKzsxIP7Jf
+	tidZ6Nq6SE/aJFhB7jm5N47iveC1K+xaO1E4om73gJRwk6B6e6VVuZ+ZoUUkKVpqKA+oA3SF+zq
+	/vxkYXVQk4v3ircuvimYxWKA/TLI2c99ui0g5Oz50A==
+X-Received: by 2002:a17:903:1987:b0:223:5e76:637a with SMTP id d9443c01a7336-231d451906dmr235890405ad.23.1747713965021;
+        Mon, 19 May 2025 21:06:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFCF1HMD5IOIAcLUdbyDa32PLQI1LeHPs7Pwruc6NNnS2Fm+f5VrtQdL4uL+gDaDwT1GlS9+w==
+X-Received: by 2002:a17:903:1987:b0:223:5e76:637a with SMTP id d9443c01a7336-231d451906dmr235890025ad.23.1747713964612;
+        Mon, 19 May 2025 21:06:04 -0700 (PDT)
 Received: from [10.92.214.105] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a970d777sm7243378b3a.68.2025.05.19.21.04.01
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4e98009sm67639245ad.152.2025.05.19.21.05.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 May 2025 21:04:03 -0700 (PDT)
-Message-ID: <48a98603-d2b0-c279-6b04-0c89baf32d05@oss.qualcomm.com>
-Date: Tue, 20 May 2025 09:34:00 +0530
+        Mon, 19 May 2025 21:06:04 -0700 (PDT)
+Message-ID: <25723231-c396-2d20-aea1-5e506b44a778@oss.qualcomm.com>
+Date: Tue, 20 May 2025 09:35:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,118 +90,104 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.1
-Subject: Re: [PATCH v4] bus: mhi: host: fix endianness of BHI vector table
+Subject: Re: [PATCH v3 01/11] PCI: Update current bus speed as part of
+ pci_pwrctrl_notify()
 Content-Language: en-US
-To: Alexander Wilhelm <alexander.wilhelm@westermo.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Jeff Hugo <jeff.hugo@oss.qualcomm.com>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250519145837.958153-1-alexander.wilhelm@westermo.com>
+To: =?UTF-8?Q?Ilpo_J=c3=a4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>, linux-pci@vger.kernel.org,
+        LKML <linux-kernel@vger.kernel.org>, linux-arm-msm@vger.kernel.org,
+        mhi@lists.linux.dev, linux-wireless@vger.kernel.org,
+        ath11k@lists.infradead.org, qiang.yu@oss.qualcomm.com,
+        quic_vbadigan@quicinc.com, quic_vpernami@quicinc.com,
+        quic_mrana@quicinc.com, Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+References: <20250519-mhi_bw_up-v3-0-3acd4a17bbb5@oss.qualcomm.com>
+ <20250519-mhi_bw_up-v3-1-3acd4a17bbb5@oss.qualcomm.com>
+ <10de35f5-bec6-5df3-768d-04f88c4e3d77@linux.intel.com>
 From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <20250519145837.958153-1-alexander.wilhelm@westermo.com>
+In-Reply-To: <10de35f5-bec6-5df3-768d-04f88c4e3d77@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=dIimmPZb c=1 sm=1 tr=0 ts=682bff35 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=N9GNhs4bAAAA:8 a=EUspDBNiAAAA:8
- a=QTSRpw9t3mQaVZ-RB_kA:9 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
- a=PZhj9NlD-CKO8hVp7yCs:22
-X-Proofpoint-ORIG-GUID: aHSE4kLmjozlxgkwLEWFPmes8VcLpvRN
-X-Proofpoint-GUID: aHSE4kLmjozlxgkwLEWFPmes8VcLpvRN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDAzMSBTYWx0ZWRfXxkxpITHHG1BT
- Ux93PmM1+wvnL9xSeGlHxmHpdMzPZivb1f9lbs7+vwTLzdBpAmqX6ZiqrNc3N5Gb6EA+421yQVg
- WMTHXkidKb1RUmg36vyrOFzq/zFqT8jdugtT+uO81f8HsfFNFpzbxOXl5QQQZZGsqSgf484wDVt
- 3iGjdzeiZOZifuBEl+VZEM6Ew7nTbllBiKhwaG3HUBsGOUtCK9JtKS02Z2Vmh+6hp0SkMKcwiyk
- tMzanOZvB1dTCmNVmCup/vWvnIHl4OSCL6NOI8SPwR2GB60+3wGJU2cVl/cv33tKIC34rUUPSgO
- VZFtV65EIt3+4Wb+XykhreZesgjqRSO597RR7F5NU3jGf5Ex8N+QeF1Xv6N1tFZEYUcwzuKImRN
- QxmtYEMXp398Ko+nCP/E+uK1TUg88bbsIU1UnwB1ad7Y0bHdE3x+lw4/P/aukF2lZ6BWcmVQ
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 6z9qFyoYGmMPmkPLozeTMWZuFIJdy1RJ
+X-Proofpoint-ORIG-GUID: 6z9qFyoYGmMPmkPLozeTMWZuFIJdy1RJ
+X-Authority-Analysis: v=2.4 cv=DdAXqutW c=1 sm=1 tr=0 ts=682bffad cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=tf4daXCc1kDTc5M98m0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=3WC7DwWrALyhR5TkjVHa:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDAzMSBTYWx0ZWRfX8TTW2cdWaYPZ
+ wrXprYIhgm8Ui1rOIUk1NFU9X2+5QOE4vsvd4YgJyD2PDGNMvwaJClAqAGZWhexvSYsitjkCOJM
+ Gn5LwEt8+W7mGuqtY+JUIwrOOtRsbPBSfIPk/rnOVrOdjrxHkmYkN3M9DjTkQUN+HYTW2dHJcMW
+ UFLD56i8aRp6yhCzFQzAttjrBmFZQFwmVLUslXBXW+kmpan7Y0q3MEcNMLRccA+sY1vspYixlz4
+ SUNWtpzuUZJdb77yeU+eHeBSLlqf+7sXCnSibkddHG1mfxeUoIEG8KEYA5NCmfxi6DQ4qmtRhpG
+ MP7IGK4DSKA6tX/3HE3AS3u1V5h1OZ5DcM3lrVa+oK+S+kW7UfG+aQOWPhyXVH0PKQggO5XULM5
+ 9HZ4AnsijgAq9IncdHNrc/agI2pxByK1844+Donq7UrSxOTNEmeihJpB8pBfQ94EdvA5jQe4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-20_02,2025-05-16_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 mlxscore=0 bulkscore=0 malwarescore=0 suspectscore=0
- impostorscore=0 clxscore=1015 phishscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
- definitions=main-2505200031
+ mlxlogscore=999 clxscore=1015 phishscore=0 adultscore=0 mlxscore=0
+ spamscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 bulkscore=0
+ impostorscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505070000 definitions=main-2505200031
 
 
 
-On 5/19/2025 8:28 PM, Alexander Wilhelm wrote:
-> On big endian platform like PowerPC the MHI bus does not start properly.
-> The following example shows the error messages by using qcn9274 wireless
-> radio module with ath12k driver:
+On 5/19/2025 6:39 PM, Ilpo Järvinen wrote:
+> On Mon, 19 May 2025, Krishna Chaitanya Chundru wrote:
 > 
->      ath12k_pci 0001:01:00.0: BAR 0: assigned [mem 0xc00000000-0xc001fffff 64bit]
->      ath12k_pci 0001:01:00.0: MSI vectors: 1
->      ath12k_pci 0001:01:00.0: Hardware name: qcn9274 hw2.0
->      ath12k_pci 0001:01:00.0: failed to set mhi state: POWER_ON(2)
->      ath12k_pci 0001:01:00.0: failed to start mhi: -110
->      ath12k_pci 0001:01:00.0: failed to power up :-110
->      ath12k_pci 0001:01:00.0: failed to create soc core: -110
->      ath12k_pci 0001:01:00.0: failed to init core: -110
->      ath12k_pci: probe of 0001:01:00.0 failed with error -110
+>> If the link is not up till the pwrctl drivers enable power to endpoints
+>> then cur_bus_speed will not be updated with correct speed.
+>>
+>> As part of rescan, pci_pwrctrl_notify() will be called when new devices
+>> are added and as part of it update the link bus speed.
+>>
+>> Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+>> ---
+>>   drivers/pci/pwrctrl/core.c | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+>> diff --git a/drivers/pci/pwrctrl/core.c b/drivers/pci/pwrctrl/core.c
+>> index 9cc7e2b7f2b5608ee67c838b6500b2ae4a07ad52..034f0a5d7868fe956e3fc6a9b7ed485bb69caa04 100644
+>> --- a/drivers/pci/pwrctrl/core.c
+>> +++ b/drivers/pci/pwrctrl/core.c
+>> @@ -10,16 +10,21 @@
+>>   #include <linux/pci-pwrctrl.h>
+>>   #include <linux/property.h>
+>>   #include <linux/slab.h>
+>> +#include "../pci.h"
+>>   
+>>   static int pci_pwrctrl_notify(struct notifier_block *nb, unsigned long action,
+>>   			      void *data)
+>>   {
+>>   	struct pci_pwrctrl *pwrctrl = container_of(nb, struct pci_pwrctrl, nb);
+>>   	struct device *dev = data;
+>> +	struct pci_bus *bus = to_pci_dev(dev)->bus;
+>>   
+>>   	if (dev_fwnode(dev) != dev_fwnode(pwrctrl->dev))
+>>   		return NOTIFY_DONE;
+>>   
+>> +	if (bus->self)
+>> +		pcie_update_link_speed((struct pci_bus *)bus);
 > 
-> Fix it by swapping DMA address and size of the BHI vector table.
+> Why are you casting here?? (Perhaps it's a leftover).
 > 
-> Fixes: 6cd330ae76ff ("bus: mhi: core: Add support for ringing channel/event ring doorbells")
-> Signed-off-by: Alexander Wilhelm <alexander.wilhelm@westermo.com>
-> Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
-> Changes in v2:
->    - Set __le64 type for dma_addr and size.
+yeah it is a leftover I will remove it in next patch.
+
+- Krishna Chaitanya.
+>> +
+>>   	switch (action) {
+>>   	case BUS_NOTIFY_ADD_DEVICE:
+>>   		/*
+>>
+>>
 > 
-> Changes in v3:
->    - Improve the clarity of the commit message.
-> 
-> Changes in v4:
->    - Add missing fixes tag.
->    - Fix commit message character width.
-> 
->   drivers/bus/mhi/host/boot.c     | 8 ++++----
->   drivers/bus/mhi/host/internal.h | 4 ++--
->   2 files changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-> index efa3b6dddf4d..205d83ac069f 100644
-> --- a/drivers/bus/mhi/host/boot.c
-> +++ b/drivers/bus/mhi/host/boot.c
-> @@ -31,8 +31,8 @@ int mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
->   	int ret;
->   
->   	for (i = 0; i < img_info->entries - 1; i++, mhi_buf++, bhi_vec++) {
-> -		bhi_vec->dma_addr = mhi_buf->dma_addr;
-> -		bhi_vec->size = mhi_buf->len;
-> +		bhi_vec->dma_addr = cpu_to_le64(mhi_buf->dma_addr);
-> +		bhi_vec->size = cpu_to_le64(mhi_buf->len);
->   	}
->   
->   	dev_dbg(dev, "BHIe programming for RDDM\n");
-> @@ -431,8 +431,8 @@ static void mhi_firmware_copy_bhie(struct mhi_controller *mhi_cntrl,
->   	while (remainder) {
->   		to_cpy = min(remainder, mhi_buf->len);
->   		memcpy(mhi_buf->buf, buf, to_cpy);
-> -		bhi_vec->dma_addr = mhi_buf->dma_addr;
-> -		bhi_vec->size = to_cpy;
-> +		bhi_vec->dma_addr = cpu_to_le64(mhi_buf->dma_addr);
-> +		bhi_vec->size = cpu_to_le64(to_cpy);
->   
->   		buf += to_cpy;
->   		remainder -= to_cpy;
-> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-> index ce566f7d2e92..1dbc3f736161 100644
-> --- a/drivers/bus/mhi/host/internal.h
-> +++ b/drivers/bus/mhi/host/internal.h
-> @@ -25,8 +25,8 @@ struct mhi_ctxt {
->   };
->   
->   struct bhi_vec_entry {
-> -	u64 dma_addr;
-> -	u64 size;
-> +	__le64 dma_addr;
-> +	__le64 size;
->   };
->   
->   enum mhi_fw_load_type {
 
