@@ -1,161 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-58711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C314ABD688
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 13:16:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46A0FABD698
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 13:19:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8C5827B4987
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 11:13:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E3B14C347E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 11:17:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD93B272E5C;
-	Tue, 20 May 2025 11:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A649D205E3E;
+	Tue, 20 May 2025 11:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y7oJTeUX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iRFs209/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73CE276034
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 11:13:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0A01F153C;
+	Tue, 20 May 2025 11:16:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747739617; cv=none; b=oxSuPKVljDbn1Sbhn0bL6KUSjXMipEuROB2VHFsc5xjw4sSmTUUQRDQJ5x8K3UMJ4N0G4TvVFtlK4h9twGhLQTWviHxuAQj1rBVVFHVDQ1KY9v2mlf7uVrqwSyStQKdswMYrwIQk5dCHeTy5ErEJdDDZHcFily9VzHpGY30HjSA=
+	t=1747739818; cv=none; b=lzzkMaeuKnDIWKSFADYYE8ALaskscSa2WpX1xFv6yUppTWsfi555BnUv9J0ig6k3h5bkR06OZ57SGwFYwU0MGxoKMOgWU8Okg637sCgGaqYbJvgk2PImsdsm1KFra8pyE87StM0lqepi/TvFQJ+QQyBLFWolvrdUTZkCoP4rHJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747739617; c=relaxed/simple;
-	bh=exVZFWCvYTW3X5Aq8gygTLrHXFVVVXwyjtGZsGCFRu4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=vD4yp2N7bK66C8Zp5saknKOk02zdK6ooXluQGo6YFZzqR9SO3wvDtg9zy07IwHJs0lYliXxXGGHvXJN5BN1Pv4y1Hc4QYK5ZN0/E+8x9DfjnpGfcEQ6o4Vx7pP0vr5JLJGIPzczOUb5vhJEyhGm+KLr2eG6RLG/KVmJavgy4PwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y7oJTeUX; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ad56886dedbso21829366b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 04:13:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747739614; x=1748344414; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RRlboOLx+lZB7I+Un/8mETz9yhVxKhkELAyD1TFnFzc=;
-        b=y7oJTeUX8dZ1zGGLPG38SWW+mw6sJQ/TMzTCBJSlWHwfrJyI2RbFXJxxhYb3agbmHA
-         MvorxyXOn2Mx4eLXuaaJP3lLmOmy3GeQviI+e/xmUXZzzp6rCzQGrfUhm1Je1wHBIxDQ
-         60eElrpc4jWbsCxClLyf5agjq/cTsPXtFcJlnNehd2odGM94vZ6ZE2dCKn5VGgQZsY9S
-         N2kNlSoG3Oi1e2aZtb0mVYC8AjgObXHy6XKm44GKOq5HC0pBuLFn8kbJmhVCg1I/rjgS
-         SHdYKKkHQxUl/N9aXX4F5vAQkCilbSyoO+m3mPKswcDkSvPeIeDWzu6UJ5wbj3tdHqeA
-         K+Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747739614; x=1748344414;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RRlboOLx+lZB7I+Un/8mETz9yhVxKhkELAyD1TFnFzc=;
-        b=fqYyU120Z+uZqsq1cPcUUXEAQEAsDy/11Ui9qdVM/Ds9klNw55RCowKDehJEUJkX5K
-         5utgOGtIIWqSiCJ68bPi/sP/GptXxtFPPSoWXcuqh8NQK866fCNBO5LWRW4xoJZL6v7s
-         E4M5a8tLXwDHg19uJPc1GbFifDOvOEk+n+U35OhCTbO7TRzyNdMIsgoirWtZteu8zla9
-         APK3Fe2bFRQsC0cMIvK0wG281aXZewmFIIYYHXAKR/GPAKAzwhCLeKqs+lDrkHgPvG8t
-         w0bgeQCKw4oey/VQENKZ6VhwQRDP+8IwAa04tXeKYSJ5UiaLGjDFBRfHu1cPTn2q/uYK
-         ugFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUnHvvD95YAl/VLBUvOXZfe11ObwNi9cIuBhEruMQ/a/5/cd/8zIi8oDcqmvGs8esFz6rttItcWusUbMsDB@vger.kernel.org
-X-Gm-Message-State: AOJu0YwS/0oa5wMf/7D+Kypcx2DGkU6PHgzWYok7r8jZrc7wGq+W4pAV
-	hCp0UjFR66e8P1OYPbx4xR4erKvL9hL9eFLnqO+bvpBFW+wUrpGjeNDG3EXuaoilRPNNwlGuu5z
-	CNwco
-X-Gm-Gg: ASbGncvepj9JpMKCY4Vt9uXtewUznvAjQEgkcfT2AEOhUHM1SODAqcTuY0bPY+8yiIg
-	EzMVw8S3LiB8O4pmmHgRD0Ndr/wmq7DvNtKmxpPEpuUpax2EMtODzHI3pnBtX79fhNCu8E99esp
-	y224xHm7J79/wvNBd8lhsMSYwQPjHIZtdaANRISkUdC8X/Ojnn0c81ng7ZiWYWsy2aRWsRJA12m
-	AJbEkav6Gps8vq1VwtU/GPggQCZUAmqFn+eGgcCcXWohzwkaL77fb4kyrfttGRLdG7fZdxdtalZ
-	Pvyn+WPV+7yPB+Arf84cGkU+mOFe+GUxH1hibf7dTQIVOc57FPUixuLxtqja7w==
-X-Google-Smtp-Source: AGHT+IFFcBDcparokAPL5zf+2MVmyXm6MMa40X1yEJQwnjwLJ2/1hy2g6L0BYpZ3G9y+lJt2xMiYYg==
-X-Received: by 2002:a17:907:2ce7:b0:ad5:28f5:fe2b with SMTP id a640c23a62f3a-ad52d4ce281mr470163266b.8.1747739614072;
-        Tue, 20 May 2025 04:13:34 -0700 (PDT)
-Received: from kuoka.. ([178.197.223.125])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d06dcafsm729676766b.54.2025.05.20.04.13.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 04:13:33 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH] drm/msm/dsi/dsi_phy_10nm: Fix missing initial VCO rate
-Date: Tue, 20 May 2025 13:13:26 +0200
-Message-ID: <20250520111325.92352-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1747739818; c=relaxed/simple;
+	bh=ePV7KS5ahxsc5XrKAwy1Zy/sOqAbGlQ1CwAuKzCICNY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=GRvcK8274R+s6Ec26WgsI+mami8YXJmj1pUACi8ms1gfDNR1Iq2eO3DqTKsL2ZF4oAPXrBVpEYceo6nz2i5aQEgH0z7oE0Bw6ulT7iJREw0nMNbS3oin5Cw0/nUWFKH39srzB3Y8WfcUkmYCbElj9AhohU6aJn7IvZSENIgEsj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iRFs209/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KBEVNU028704;
+	Tue, 20 May 2025 11:16:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	CLY4lD5JEd+wrB3Pa6UJ01FZeLiuUjx1sm5mklY+w6g=; b=iRFs209/SaBWoM7d
+	wZyO0K6SfrrPdlNb8nRYeihyqTHgW070eMq9kTbSbBUG93of76C8+k+jt4SxWXkU
+	Wi3sOMgyyhqEDMsEm3IX7M4vV3JUTLlVYWw4vGIPaDFKD8/03q1bCgHswcPU1N8r
+	xsS6CN1xj+QzbzF1udqSZrjz3FC/q+KnCo/eXdA1YWjFbfusnxdT4F7BRjdkqOvh
+	BcRUJlrATzhIyOzzjCQhPW0UNEQt5p+ZwE4/Kd4ZlxEe3csEWKxuHJipHFwx6fK0
+	g2PlP0iMhbxs+a5Fd1iyuFAANjfVGZATWn3WzGZ9vxJLzO4DbiVniugm/Di5bwIl
+	rAig8A==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pju7fh37-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 May 2025 11:16:49 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54KBGm3f019289
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 May 2025 11:16:48 GMT
+Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 20 May
+ 2025 04:16:46 -0700
+Message-ID: <a2ff429f-cc49-403f-9f2d-6a6b6361044d@quicinc.com>
+Date: Tue, 20 May 2025 16:46:43 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1818; i=krzysztof.kozlowski@linaro.org;
- h=from:subject; bh=exVZFWCvYTW3X5Aq8gygTLrHXFVVVXwyjtGZsGCFRu4=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoLGPVUPKROx0QJfCbeV9e4WfBu8DXgXuh8g72/
- jKif7Qo68CJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaCxj1QAKCRDBN2bmhouD
- 10/kD/9jtNDXdVvPG/epppsydCeNKKYkfy5GiosLMLkTw2AlTI+faS7MwaR/KH12qRYSn9JpZ3S
- vhFnGpBmA0ZAKfCYKRFc6pCmbdvAVp4oc9I3PQSbUrgUJDMbVclf9wZu8QC7QdrYJaJjhhI6Fyy
- 95I96JTEEIlHZ++cJCGIm3N3rCw45GJaUlaIIIvfV7mzU0906I2WR+vJPpJ/5V9LhufwDtdMAJG
- rZdiO976aT+nt5kaN5gkaux274MOL9WVK2wNfHpVd3BmoE9f7ktSQgcuX1dzcDcNu0bMLvcDuki
- DjS4XAwZcVRH86XSeoLxEKwySguj5fZeSvMtlk9ZqfPXWzgr/Q4RTRlwI5/q9pPL/bNK2b8Glp+
- O22ndNnkmA6wfpyCKxkliWxS+RBI8RBF8M1Wtu0Qu+BP6P2+GhVKsODGFPFPTX7+PXFi25vvxWU
- lnFxnZ4D1+5E/1UPmEiZcx001aLXa6e48MwkWCVGB8C9yuHEONKd19pyRv4ytTqnpS1RPe4awgR
- 9+k5aNcBvgDyc8rnjaXWfUV3sqVIeM7NYHOt1q+03j4FNY0f9yjoGVnDWk4IymXQAtTcXVEsoff
- W3QVUZk9QlqM05zZyWOlsR2Sgt8cf36zRZpq4Hz8s9/IMk5x+QjW7dk8KVB5igadGjjLJXRQPZS 2T9qrqXbYy3b7SA==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] i2c: qup: Add error handling in qup_i2c_xfer_v2()
+To: Wentao Liang <vulab@iscas.ac.cn>, <andi.shyti@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
+References: <20250519141918.2522-1-vulab@iscas.ac.cn>
+Content-Language: en-US
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <20250519141918.2522-1-vulab@iscas.ac.cn>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=XKEwSRhE c=1 sm=1 tr=0 ts=682c64a1 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
+ a=xU49TFnZvl5CdPniB3sA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: oYF8yg5dhM4ttH8eZw0FiJb0CC48uiwb
+X-Proofpoint-GUID: oYF8yg5dhM4ttH8eZw0FiJb0CC48uiwb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDA5MiBTYWx0ZWRfX+MIiIeyaVPCG
+ Ptm7r4dVqeU1N+op2jnVFIU3az5IRtHtlEoz8zCpFVLGkE0pXImYStuIhbNLO9yqe7ypwV2Oron
+ xjdq5v5x+t3xJQxhHMfYvepx/qpllu+rh4x/z0knAdUnP2747pKJgPYLs/J2TpphmofmYu2KSzJ
+ BB5QZKaiQf3lexL6V/xxP1GRUy9B4wSLNzqcC6QXMNrhglnaMtzk8+DknK45/l+mLd+OmpP3+0j
+ aWjxWetm4regCY19cXBdJaUlZrURfJFh169A5biIy33yNfiSYm263KIu0nOOJnBtHWUxtwjfDV2
+ eH4nTtpPYizzVS3MW4nuTiRZzH/5LyH14rwR/s/8XOisoTQTCmSc1nciosIbKKPlfUCdzGvZkeU
+ gGzGbS7MDBqvRmq6DgaRGGEo+89EgYDg9zeO3HNFv6zngBWUP+TLuLVU6MicRmkre0lB4u21
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-20_04,2025-05-16_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 impostorscore=0 clxscore=1011
+ spamscore=0 suspectscore=0 malwarescore=0 adultscore=0 mlxscore=0
+ mlxlogscore=999 phishscore=0 bulkscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505070000 definitions=main-2505200092
 
-Driver unconditionally saves current state on first init in
-dsi_pll_10nm_init(), but does not save the VCO rate, only some of the
-divider registers.  The state is then restored during probe/enable via
-msm_dsi_phy_enable() -> msm_dsi_phy_pll_restore_state() ->
-dsi_10nm_pll_restore_state().
 
-Restoring calls dsi_pll_10nm_vco_set_rate() with
-pll_10nm->vco_current_rate=0, which basically overwrites existing rate of
-VCO and messes with clock hierarchy, by setting frequency to 0 to clock
-tree.  This makes anyway little sense - VCO rate was not saved, so
-should not be restored.
 
-If PLL was not configured configure it to minimum rate to avoid glitches
-and configuring entire in clock hierarchy to 0 Hz.
-
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/sz4kbwy5nwsebgf64ia7uq4ee7wbsa5uy3xmlqwcstsbntzcov@ew3dcyjdzmi2/
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
----
-
-Not tested on hardware.
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-index 9812b4d69197..af2e30f3f842 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-@@ -704,6 +704,13 @@ static int dsi_pll_10nm_init(struct msm_dsi_phy *phy)
- 	/* TODO: Remove this when we have proper display handover support */
- 	msm_dsi_phy_pll_save_state(phy);
- 
-+	/*
-+	 * Store also proper vco_current_rate, because its value will be used in
-+	 * dsi_10nm_pll_restore_state().
-+	 */
-+	if (!dsi_pll_10nm_vco_recalc_rate(&pll_10nm->clk_hw, VCO_REF_CLK_RATE))
-+		pll_10nm->vco_current_rate = pll_10nm->phy->cfg->min_pll_rate;
-+
- 	return 0;
- }
- 
--- 
-2.45.2
+On 5/19/2025 7:49 PM, Wentao Liang wrote:
+> The qup_i2c_xfer_v2() calls the qup_i2c_change_state() but does
+> not check its return value. A proper implementation can be
+> found in qup_i2c_xfer().
+> 
+> Add error handling for qup_i2c_change_state(). If the function
+> fails, return the error code.
+> 
+> Fixes: 7545c7dba169 ("i2c: qup: reorganization of driver code to remove polling for qup v2")
+> Cc: stable@vger.kernel.org # v4.17
+> Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+> ---
+>   drivers/i2c/busses/i2c-qup.c | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
+> index da20b4487c9a..2477f570fe86 100644
+> --- a/drivers/i2c/busses/i2c-qup.c
+> +++ b/drivers/i2c/busses/i2c-qup.c
+> @@ -1538,7 +1538,7 @@ static int qup_i2c_xfer_v2(struct i2c_adapter *adap,
+>   			   int num)
+>   {
+>   	struct qup_i2c_dev *qup = i2c_get_adapdata(adap);
+> -	int ret, idx = 0;
+> +	int ret, err, idx = 0;
+>   
+>   	qup->bus_err = 0;
+>   	qup->qup_err = 0;
+> @@ -1588,7 +1588,9 @@ static int qup_i2c_xfer_v2(struct i2c_adapter *adap,
+>   		ret = qup_i2c_bus_active(qup, ONE_BYTE);
+>   
+>   	if (!ret)
+> -		qup_i2c_change_state(qup, QUP_RESET_STATE);
+> +		err = qup_i2c_change_state(qup, QUP_RESET_STATE);
+> +	if (err)
+> +		return err;
+Is there an error seen around this ? Expecting this to work as is.
+After an error, what next ? Just return back to framework ?
+>   
+>   	if (ret == 0)
+>   		ret = num;
 
 
