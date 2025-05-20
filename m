@@ -1,100 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-58746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4AF2ABE09E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 18:26:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D9A1ABE0F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 18:45:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6581517889C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 16:22:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BD3FC8A59A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 16:44:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D356252287;
-	Tue, 20 May 2025 16:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD57D27055C;
+	Tue, 20 May 2025 16:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gS9PU2qF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B/FHzbIR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046221B6CE3;
-	Tue, 20 May 2025 16:22:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B67248F46;
+	Tue, 20 May 2025 16:44:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747758128; cv=none; b=t7ACKP408ulTYaE7DAPZnrXKu+vMWPMcHLf75MuQ13CSeB7EV3C7V3ttvxgR9/Evv8IK1+/kVgl3fDvLYLLUEd9L8Smg2nZ7wBSfGFYmF2waJV8qUrV1S/FlhhSyE+MM2oSlWX7LMrcOJah7fef5ebrQJ9l3dNQnJ6KUVpU7Ikg=
+	t=1747759492; cv=none; b=itZdPzwqVDKwZBXTty81f1ztG9JbixOWhhquf9lu3/optSlZ0EEn7pFBFAF+TGgri0XVtts+wk94g5eQYzYqF95N4sx3bXleZZpR7XWwntD2oh6ic7DFLLOJWWLVPR+IeB2bwme1ETPp66nwbHbsAkYX3TT6ADUoYdpwhGjUJNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747758128; c=relaxed/simple;
-	bh=PwfREHNjD08LoQHQb+2a+oNlUMWRFVPe7Pshx9/+Sd8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kPSWB7r1U+jV+NYb/MDxuk4tDQ5g/nxvMGEt4tLvUac3ucCIHSg+8d+8gcDOaYr11TOB9XLqhKdeSU9wj2ZuprArNg7/3fPQF4I6I8NX8/O4FDw+9TZlOpQKbK78RrVpGNq/E/sPpCYheHEJPauBCP+kEOrkDAI595slLJr/6gE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gS9PU2qF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E5CC4CEE9;
-	Tue, 20 May 2025 16:22:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747758127;
-	bh=PwfREHNjD08LoQHQb+2a+oNlUMWRFVPe7Pshx9/+Sd8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gS9PU2qFMkHTyXBWHGpMjGBqnmICcI/5UxWYCsftTsMxQJZSbXiHsnyZTkAsmvodx
-	 PDnqBphspLZrY1SqdwpDyUyTKeQR1TO/3tFW9tvS2+lG4vQY0Ov7pSCuVolxAVrTPi
-	 mi/07FRg6VDuihqB85ocMl3Uo+09+GJd7NNeMFvd3SfFIx3riM4iSyXPAZEoYDUmgt
-	 91SteDzb6V0ab6zijrraG+XA0Z01RAbS1eb7rEFFkPKUxmd2dNrqFvul0liYWaKYNl
-	 gU5oNX85u7X/IJ9zNNjfeNGI8Igl1eqicTPUnEDc6w6bsZ53DLqQFCMNVM9KWzA8e5
-	 mDoNeqPHaWbdA==
-Date: Tue, 20 May 2025 18:22:02 +0200
-From: Danilo Krummrich <dakr@kernel.org>
-To: Rob Clark <robdclark@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>,
-	Rob Clark <robdclark@chromium.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 02/40] drm/gpuvm: Allow VAs to hold soft reference to
- BOs
-Message-ID: <aCysKgGyq5eOXW87@cassiopeiae>
-References: <20250519175348.11924-1-robdclark@gmail.com>
- <20250519175348.11924-3-robdclark@gmail.com>
- <aCwx_9KIc9QBd7_0@pollux>
- <CAF6AEGs6_ZgBpKwe7weZWUppCZ87Y6wOt9RsF68hsJO-VpeiJA@mail.gmail.com>
+	s=arc-20240116; t=1747759492; c=relaxed/simple;
+	bh=xWCsQzdrdiPokZKnGHhLi0nzidYVTPQvwDy4E6Ruzrk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZCtfsk019pY7irAg9u/dOezRm+l/lO24rUISapwXhxb+JNBUfIEuSmsW9+s2tLuEQbrmGxRAskRWf+ao+dkD6/rKLWrWUK4z+SFTmitQpaIWXlZra2RfPlMxynS8ZI9LoH0P5ZCssmcGeZHdXyWkS07Rfd74PiQn+oxLBBcjMbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B/FHzbIR; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-233b1e4376fso789215ad.0;
+        Tue, 20 May 2025 09:44:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747759490; x=1748364290; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=raaMPey0rkHKajk8tyVYlWOb4mxfJ4ZQ+4vrv9/8SeA=;
+        b=B/FHzbIRlmLqUfp0Wgm7eYyKx0xWOtTNo0KaQxRKucEi499VEYvzDCD4AhHd+JfV9y
+         APOqpp/g/DiofdzI546kBqRcSs9DDGcHE22aybZmYbLjPz3ndGbndr9vbBqTaUmIu46X
+         z54LNcYWn3cJ+eFhVtdFb41/t9Rge5PcKOqc9dMs7G5vNBXDcUrG0tmeE3Tfir+/bG4W
+         +KHhvc44AfbTDimw1NsXc3+o3QzKUUyp312zQOLZMes94etIvBzlzDN2BJu4Asp3cUhR
+         /x8rauEdJ3YIcpDytcBeWkBRBISYMzs0FBBJ82JY+zHbDsHdFqAiT6fAY1uNc1LO/HmY
+         jI+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747759490; x=1748364290;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=raaMPey0rkHKajk8tyVYlWOb4mxfJ4ZQ+4vrv9/8SeA=;
+        b=WSACu6KnFUyBFAUgsAobWrLL3aEeQrfMGsqUIGdssTrAs7/uNYgRZXGCy50Ou6Ivrt
+         CkrVdmJR35p7OgVWwvYcjLQoHvSe1+wloh6B+8/aQejvhTSCS7EkylcOdQ0aT2xhGbww
+         Y+A5JLwe2xfETpiH2bDRsoS/Rs4Xk5hg+qzXSF3L4oalQLsMo1dk2tP50XUhw28IHWGA
+         O3i0jfLHaKTJkUwry4FcIeDihGQdGd2pVXWhTIrq6MU5RzU3JzzkMYG6hDM8Ysze+5Tx
+         +4KeLTTjLb9AfT0YlW4HIf0IKj5jHwfsFVrNL+YYWGEKIVoo7A7JhPetfUHPXjOVGmkf
+         nB3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWmQVtuoMlHjxB9vtlwW8oF9npLC2BLXywW3OIaZv1N8RzBx+JzxaCgAwmMbHwdJ4PVI7gqfQ+7izT1iCB6@vger.kernel.org, AJvYcCXOBemq+7inQYZl/ioBjq//EefoFvgQwQTlbtVpY8FV3pAkNgIl+upf4Ff+an3pfN+4WAJNKQ6HM0s6@vger.kernel.org
+X-Gm-Message-State: AOJu0YwlEamF15Yl9dymDKfrrdmCohf3rBu0v1pXPwINkzn+UIdMK+qr
+	fr4yLf0R67HvNugi5hA1AeZESW2yl62VbF8+62X3MAeVk9hEqedZejKQ
+X-Gm-Gg: ASbGncvhlFvVatsde4a3zZ1UgvWPnJNyxER4Qcvtj40hIOFndH8bgshfLYR1P79Kna8
+	tCTtNFc92neA5rSJuhdtvk9wxNQfrE3KqwE3B3sHZr1ksLiBdPGAr81GmsI9MUEcjVrN2ZDL7+5
+	Gbh2UYuly37fUDfbPKgONQtjB21wZ+YZxh7fY4pY9dYCSHn8dG06fXoTt5VAeorHvCxz4+4AXbx
+	LsRS3rFcJKJzLHgwj0UYCfZI3uuKT+6J69yDjnU7rAZxj6mKoPbZdd4fKXdbAC5ppPXvXzX/+Vj
+	80843b/GsJO1ylbJiRmEcVtTHYkGHC++vV889i0ihZF4NZ48Aw==
+X-Google-Smtp-Source: AGHT+IHNEJ2zAnt6MeP+t81APpuG8oTNngDxsuW7MvC7FQ43V9hR2igZnzg4OfilzwLB4OwAIV00xw==
+X-Received: by 2002:a17:902:e803:b0:22e:50f6:b95b with SMTP id d9443c01a7336-231d438b517mr258326255ad.11.1747759490279;
+        Tue, 20 May 2025 09:44:50 -0700 (PDT)
+Received: from nuvole.. ([144.202.86.13])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-233abb99a06sm3548205ad.254.2025.05.20.09.44.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 May 2025 09:44:49 -0700 (PDT)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Pengyu Luo <mitltlatltl@gmail.com>
+Subject: [PATCH 0/2] arm64: dts: qcom: Introduce Oneplus Pad Pro
+Date: Wed, 21 May 2025 00:42:06 +0800
+Message-ID: <20250520164208.516675-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGs6_ZgBpKwe7weZWUppCZ87Y6wOt9RsF68hsJO-VpeiJA@mail.gmail.com>
 
-On Tue, May 20, 2025 at 08:54:53AM -0700, Rob Clark wrote:
-> On Tue, May 20, 2025 at 12:40 AM Danilo Krummrich <dakr@kernel.org> wrote:
-> > On Mon, May 19, 2025 at 10:51:25AM -0700, Rob Clark wrote:
-> > It invalidates the whole design and makes a lot of functions fundamentally
-> > invalid to call, which is well demonstrated by all the WARN_ON() calls this
-> > patch attempts to add.
-> 
-> I think of it more as adding a different mode of operation.  One
-> where, perhaps some functions of gpuvm are not available, but that is
-> fine because they are also unneeded in that mode of operation.  Hence
-> the WARN_ON()s to make that clear.
+The OnePlus Pad Pro is an Android tablet based on the Qualcomm SM8650
+platform. Its device codename is "caihong". These patches adds an
+initial devicetree for basic functionality.
 
-This isn't a different mode of operation. You're breaking the design and
-internal guarantees and validity the code relies on. And as a consequence you
-have to disable the functions that are obviously broken by scattering it with
-WARN_ON() calls.
+Pengyu Luo (2):
+  dt-bindings: arm: qcom: Add Oneplus Pad Pro (caihong)
+  arm64: dts: qcom: sm8650: Add support for Oneplus Pad Pro (caihong)
 
-And for the remaining code that is not disabled we'd have entirely new
-requirements on the guarantees the caller must provide in terms of reference
-counts.
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ .../boot/dts/qcom/sm8650-oneplus-caihong.dts  | 960 ++++++++++++++++++
+ 2 files changed, 961 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8650-oneplus-caihong.dts
 
-This is as if I'd try to promote a car with a broken engine control unit and
-would tell you "It's just in a different mode of operation, where driving isn't
-supported, but you can still heat the cabin and power the radio with the
-engine.", hoping that the broken engine control unit has no other side effects.
+-- 
+2.49.0
 
-Sorry, as much as I'd like to help and unblock you, I don't buy it.
 
