@@ -1,66 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-58583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 351B7ABCD1C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 04:18:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 06137ABCD1E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 04:18:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2E2934A4FF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 02:18:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C0DF54A5154
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 02:18:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C24825E832;
-	Tue, 20 May 2025 02:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 623B125EFB7;
+	Tue, 20 May 2025 02:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I8XooI2/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gjF8KoI7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7C1257455;
-	Tue, 20 May 2025 02:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B6225DD12;
+	Tue, 20 May 2025 02:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747707329; cv=none; b=kt8zlYJlgTAJos852FcLuxy3o95RKrjRHGVdH1wsbobmTTUmeNeJQ5tq6jxeAgW5v+pnudRUeJ2HS+AWFWR4lVNq2ydLBjJO8ANjkrfUx8xYo8P+AdaSrD+J8E5zQVNeeNiOjfZpoldddjXWAo/rQ+Oc/+DbhYR9a8V55znq9Rs=
+	t=1747707330; cv=none; b=feCMwiodtq62USPabFHyCRyD83PyURhcFF4nGCiEzB29+tiFlY5Q2RVJjf1E1wayUC+eiTiAF+75FlzhJfkeiIeFnJO5Ga6D8tuvp1gbye0tOmLip6OGQoMzrsDEIhp5/XPlG8S1aE8nm3v5mp/s7daQPLGq/nr30bBwolv4BNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747707329; c=relaxed/simple;
-	bh=lrhoOxWYvesLQKap0UvoukCJf2mnXwfef9fhv5kh05g=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PJEFwkuj2fJnkGxm5pXHbrs6hcS6Qo/ywQZSXFZJaGf8RYHv6CsGQVL2PCIYzL1sSsV5SnR2k32M/Qh4uGwM+zxnmNU5RqXaqtEG+7rVhg9ThB0pzmBH5cwRlfwZCV7BpVaTsNz2JrHlzi9hEY2FEBKlJUJNF+mGfrwL8FJNmaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I8XooI2/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26D2C4CEEF;
-	Tue, 20 May 2025 02:15:27 +0000 (UTC)
+	s=arc-20240116; t=1747707330; c=relaxed/simple;
+	bh=XTHMk6i2tPPM3JKHlaucStHPiYXNKrRtoWA3ciVIYpk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ZMTFFuFbc9kLPaxdoQ8kvplXObaSEZkpzwuCWcMrkVDBpnlZ4K5E6NN2i2Yj94hS9dn42e6OH2Gt+r4YS239ChQBdLgHGnkXK94m3AXcjyFrSTugy6YiFfLX8MjyZYNmib9Pm8t2NEAjubNTDwQnRTLtOEw3A4bMjyzH+RWvAQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gjF8KoI7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA633C4CEED;
+	Tue, 20 May 2025 02:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747707328;
-	bh=lrhoOxWYvesLQKap0UvoukCJf2mnXwfef9fhv5kh05g=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=I8XooI2/Unx7chKw5GItoSW18dHWeGFlHmxBthKw25ReT8O1kYNeBgwuT0P+wbgoF
-	 yig5OSwnKKn08gmjhUZk22DbRTlJjlA9LlWUWApYwx9e6p3fH0Gyha5BgOhLotD7+2
-	 QdwLJBhus5VFic4wn4J1zDUQKXuK5/YHpB9yd6YmK7abQEVV+Jh6cu/KLNt8E9TGOW
-	 bSVDMMr+fZZVZ39TUe+aG/vWNYYZwv/42SNcQUAAF5FyUZfscDQNQnhftwXwspwvJ4
-	 crXzoNI9L3bpxoeArQTOvxlM/yTMhJCQv4mIOrVBwikg7HZcnGQoCDAAvjycd8ZaY9
-	 02BTaqI8EJmpg==
+	s=k20201202; t=1747707329;
+	bh=XTHMk6i2tPPM3JKHlaucStHPiYXNKrRtoWA3ciVIYpk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=gjF8KoI7kUmxtgERU6T1w0/vbtbPK7ac/c4m3JYL9bR+Hjc2jSNk7Q4J6iCYJouLE
+	 pHQ73mYcKnj/PZRpIIWMbb9sBwLQQCDewcNPtC5lRxWZtDp58TIL71NDl6rMoqQACG
+	 bFNVhAAWBiHJaA66oVQKhnkvxNgCp5NQznATyYxw9mdOEtSuG5PAbEVz5QurKNBo1X
+	 h1ioIgbz4WtZgZwSFRZpl0aveuvjqz7GpDNH+zSnuemzuuKKfTCRKK3DVoRPIK+Xen
+	 Es9rCdnUE2LEIAvc7mrjBs/VfN/+qo59BVMIJI9+M7YijZn8Y0zzitFijleEHLwAD0
+	 CMl59EpvlrOAw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: bhelgaas@google.com,
-	lpieralisi@kernel.org,
-	kw@linux.com,
-	manivannan.sadhasivam@linaro.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	konradybcio@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org,
+To: cros-qcom-dts-watchers@chromium.org,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Xilin Wu <sophon@radxa.com>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Varadarajan Narayanan <quic_varada@quicinc.com>
-Subject: Re: (subset) [PATCH v14 0/4] Add PCIe support for Qualcomm IPQ5332
-Date: Mon, 19 May 2025 21:14:55 -0500
-Message-ID: <174770727713.36693.12572385539660853642.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Mark FastRPC context banks as dma-coherent
+Date: Mon, 19 May 2025 21:14:56 -0500
+Message-ID: <174770727730.36693.11415805267303193965.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250317100029.881286-1-quic_varada@quicinc.com>
-References: <20250317100029.881286-1-quic_varada@quicinc.com>
+In-Reply-To: <20250416-sc7280-fastrpc-dma-v1-1-60ca91116b1e@radxa.com>
+References: <20250416-sc7280-fastrpc-dma-v1-1-60ca91116b1e@radxa.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,26 +67,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 17 Mar 2025 15:30:25 +0530, Varadarajan Narayanan wrote:
-> Patch series adds support for enabling the PCIe controller and
-> UNIPHY found on Qualcomm IPQ5332 platform. PCIe0 is Gen3 X1 and
-> PCIe1 is Gen3 X2 are added.
+On Wed, 16 Apr 2025 18:54:18 +0800, Xilin Wu wrote:
+> The FastRPC context banks are DMA-coherent on sc7280 platform. Mark them
+> as such.
 > 
-> This series combines [1] and [2]. [1] introduces IPQ5018 PCIe
-> support and [2] depends on [1] to introduce IPQ5332 PCIe support.
-> Since the community was interested in [2] (please see [3]), tried
-> to revive IPQ5332's PCIe support with v2 of this patch series.
+> This allows LLM inferencing on the CDSP using Qualcomm AI Engine Direct
+> SDK on the qcs6490 platform.
+> 
 > 
 > [...]
 
 Applied, thanks!
 
-[2/4] arm64: dts: qcom: ipq9574: Add MHI to pcie nodes
-      commit: c249a0b6a4229141ccc1a3c0e2bf9f3b2750b592
-[3/4] arm64: dts: qcom: ipq5332: Add PCIe related nodes
-      commit: 9ef45543627021143dc1044a041d4117c882e926
-[4/4] arm64: dts: qcom: ipq5332-rdp441: Enable PCIe phys and controllers
-      commit: 1838d9297f9345900f0417ac8a4ea78a51449f19
+[1/1] arm64: dts: qcom: sc7280: Mark FastRPC context banks as dma-coherent
+      commit: 2a49326081e1e5f08e0e6d65a1632652ee11a319
 
 Best regards,
 -- 
