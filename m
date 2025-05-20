@@ -1,70 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-58624-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D24C2ABD0DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 09:48:31 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD435ABD0E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 09:49:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8308F4A66E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 07:48:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C15A77A19D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 07:47:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F05625DCF3;
-	Tue, 20 May 2025 07:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 037CE25E832;
+	Tue, 20 May 2025 07:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QnOsBHQX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oag6NdYh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54C425E460;
-	Tue, 20 May 2025 07:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2F625E821;
+	Tue, 20 May 2025 07:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747727289; cv=none; b=SAQ+mMVIOI5WLaz+4w22PhNoBP6EYiVI+uMU8ZPUnEKo2+UW6WuNYC0IpeWgKnxpuAAnyui3lP0VfOe7juxrsFmycjqsXScFllWSBWcTP+7YipIL0SmZM6vRZc+H9zD6O4XH1aTZmGpWgfLV8AwzMxECls4J1Lk7DO9CZyGfaWU=
+	t=1747727292; cv=none; b=prz/M4zFLWSGtG54dPkEJFtJmVdr6d2ayhO8+SdkxlOioNhZyAP2ApAyJW1I1u0DZSy7UeRD5ZskwKp6qdrPuuVnO4RlOYof/tWSoo+QF4YbWcSR/ZPigGX6oHUOU1hE1m5fQJD8lqTRagaxLEwbvFZJDkJ/tQXlDAEf0oDfbjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747727289; c=relaxed/simple;
-	bh=vkSWXGd19gmNSP9npfbrN5UA72vmjE4fzO6Z1X6c6SE=;
+	s=arc-20240116; t=1747727292; c=relaxed/simple;
+	bh=3ade5NNbcbkks/ieGbkZlgPqHXOeSyThNGjaZIOKmOU=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A4JzQqf1eKmoZ/xc/fnAhq+6DJEuybUC95e2gRb0FVe2gbOZK8ig0cyZknHENV44MGzTT0Qc2wimGVPUzsheZwJ/3y7Hii/MDeKTYrbbuxHVKEMj6FrEyF++3rSeD3NHVLfq13R+1rqmRNQhPR2Fvvvyk3dTyPwcYFP4MTi++gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QnOsBHQX; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=Nt9+X1ZgM+d2vmEVasoqzPhNF2KF9Jw/jWJv7oRZ2l8F46n6nZQZURW3VuUUmOLrppNE/2+rH4sA9IGkT4wk9b5+3smZWmIqt/6eUaXs0CS60nX1EMp+nW/X4FdmfPH/Flnj5fFN7VeP6ICdM4xx8slQv7TIeJnaxJ3n1Bb82Bo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oag6NdYh; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54K6Qgpf027166;
-	Tue, 20 May 2025 07:48:04 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54K4lpIw022850;
+	Tue, 20 May 2025 07:48:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	vXtNjMJXQnzIz9vkpl5FMzptlTgSdEEoMQV45P5w1w0=; b=QnOsBHQXxZTqCtiH
-	2VZ2j1x9kLMeP2xsadkMtB3nMPoQ8Zr6bPwQt3Tmp/nP3DpYJR7jhvaACbO4LPDn
-	kgKjzqI383TOqImHPKx7g2bpBYN18rgQMRiwcfB6OvN2jVZHQs65lvVmSuq+1/Eq
-	hwFD/wHBV2ELJv32vRliNiAGxMsYzNZ1aKiM+IoKOWacZoLyqdR5mvjwOG3665Wz
-	n6T0D1gc75dr9KxwPgpsVMbWgCBNvz+3VNABPHL8uB0BT/4VzEXxNGtTBydR0xFF
-	4tGT5IQA28MD2nljyEhRnfApn0MhaGiaQU/MlcBgngrOXOiaw/pDdHMLFc+LJ0Bo
-	4JdO8A==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pkr9xy17-1
+	TOnFgP9Ua5wi+hdrYmU6mQfxDUyMa6LWWNeMxXh5vHA=; b=oag6NdYh+ANU7BmX
+	21B2NJgPQey79ylkxvk+PjDrKkAGEkfuBWL+G0uQmtlJ5XPRuS/qLs4xUYlpQ0cA
+	Epaa4zqYO1gSRVmlglhWEOVzKaT5QYQNmCOH8Lj0k2szD0AlOlQdplJJtzZQUw4S
+	yZ7QgmSCU2NKLJ4KFAVrANl3SeFyebpyUhB36MTsekb9vG9mWHZAZF+VDOnMwJms
+	0E3XQA7BUmQBwIyz40HH4OGUzMt9WEwnhYT/x7m3sUWnGDkCyXdazOuH5yVUOXrE
+	WDScC5KjP82FVxuYVWuTXAch4X2zfOdLGID0E3ECSr3XJrmE1KnyjrT/jqSZrso3
+	NUuf8g==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46r041uhwj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 May 2025 07:48:04 +0000 (GMT)
+	Tue, 20 May 2025 07:48:06 +0000 (GMT)
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54K7m3oH023073
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54K7m6NS003566
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 May 2025 07:48:03 GMT
+	Tue, 20 May 2025 07:48:06 GMT
 Received: from hu-lxu5-sha.qualcomm.com (10.80.80.8) by
  nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 20 May 2025 00:48:00 -0700
+ 15.2.1544.9; Tue, 20 May 2025 00:48:03 -0700
 From: Ling Xu <quic_lxu5@quicinc.com>
 To: <cros-qcom-dts-watchers@chromium.org>, <andersson@kernel.org>,
         <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
         <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <quic_lxu5@quicinc.com>, <ekansh.gupta@oss.qualcomm.com>
-Subject: [PATCH v3 1/3] arm64: dts: qcom: sc7280: Add memory region for audiopd
-Date: Tue, 20 May 2025 13:17:35 +0530
-Message-ID: <20250520074737.1883495-2-quic_lxu5@quicinc.com>
+Subject: [PATCH v3 2/3] arm64: dts: qcom: sc7280: Add nsessions property for adsp
+Date: Tue, 20 May 2025 13:17:36 +0530
+Message-ID: <20250520074737.1883495-3-quic_lxu5@quicinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250520074737.1883495-1-quic_lxu5@quicinc.com>
 References: <20250520074737.1883495-1-quic_lxu5@quicinc.com>
@@ -80,66 +80,49 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JzX-bjFuEh9HzNO0dttLjkDWgPlkM34f
-X-Proofpoint-ORIG-GUID: JzX-bjFuEh9HzNO0dttLjkDWgPlkM34f
-X-Authority-Analysis: v=2.4 cv=DdAXqutW c=1 sm=1 tr=0 ts=682c33b4 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDA2MiBTYWx0ZWRfXz1zNkP+SNEln
+ IHLqK+uc4DheSKU/3YcjuDg2+RZz7Q6YZzAip88oqDN+9UNiTR0jkTU9ZQoaRGlDPLJJi6/vGh3
+ UDcLDjNmQ9ck4q32XbNIspTwK5rc96OEJ3vNv0UEhCA7rLsmT16V5Z8LtetaSdAOAKtwKhDsNt+
+ TiG8s4jK+vD+MSjXJKiyzaQ3/l93pYo1k40edf5Sw1m4z+qGXlq5rV4DSX2DmtmOshhlSy4XRjQ
+ kyoGbNfCRWrVQG+4LhYFobkJcxqRSDPAHyzemoSue9ZBGgtERqRz86rckAS+TUE9JjFalc1EfKh
+ ygyRICPfR5V2N/u4gQ7Kw+eY7eUatcpKlnNi9m1zyxvKRy9CiEwXHJ8gkDwu4CgXnsTNz8o0J7p
+ ev/VsKbeLmXixQ8hIESgDZN8mLU7Uj+RoPymwbIq1aaFIN3HJVvHikfQ67gmlUjVcbmErl98
+X-Proofpoint-ORIG-GUID: ild9Eq3gVbr1Ha3XfvI55N6kEKl2MAFN
+X-Proofpoint-GUID: ild9Eq3gVbr1Ha3XfvI55N6kEKl2MAFN
+X-Authority-Analysis: v=2.4 cv=HIjDFptv c=1 sm=1 tr=0 ts=682c33b6 cx=c_pps
  a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=o7O2lQN-kgvADfYeIdcA:9
- a=TVi5PsLu-Zlr5RWK:21 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDA2MiBTYWx0ZWRfX6R3vb+iur9WM
- XJK5GBmtDCv4xIlde96090S6up6cOLL7WKTo7NRZR97dKUPdNp9ooi1Ws+uGXh8ccGHlZr1ME5i
- FlRaQZ+9t7iv9taU1Iqu2ENSqgGbj03l9ZIqygtLXgPvE0lqkGXuLmxYV/XFInK7pJXdvF8m1NE
- 70RC/oEyu3CC02YI4VaQct9+5zmqOHYVMm9aayWh4VnInHlWwOOH899ECSf++nqvdJvyWLXeTYh
- +LnO1yPUTofBLPN+rjEKb9LyvCAyzmTkN95nCoTncA6rksRVsMZHzCNG3i9NtgYUV8ohm/C+CTW
- lTljIFPSzGT2Zc+kg1Wx3mka+3qWr0dGeBu09rA1Ipn5UeE7Yb6J6rhGfwe1v6AF4Eh95N4tJot
- rtvELUCjPjKJCgrG0q33R8TOavU9Z24J5i4oSNE9vEf/PkA6aKLA5o3kg0pgK3F5O5cO4NIm
+ a=GEpy-HfZoHoA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=xzk0jXLcH6ia1Ng78ZoA:9
+ a=kph8uwvA8Js1ya5A:21 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-20_03,2025-05-16_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=528 clxscore=1015 phishscore=0 adultscore=0 mlxscore=0
- spamscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 bulkscore=0
- impostorscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ phishscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0 clxscore=1015
+ bulkscore=0 suspectscore=0 spamscore=0 priorityscore=1501 malwarescore=0
+ impostorscore=0 mlxlogscore=761 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2505070000 definitions=main-2505200062
 
-Add reserved memory region and VMIDs for audio PD dynamic loading and
-remote heap memory requirements.
+Add nsessions property for adsp context bank to make sessions
+available for ADSP offload.
 
 Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 8e86d75cc6b4..aae6c54bcdd9 100644
+index aae6c54bcdd9..17f244929714 100644
 --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -188,6 +188,14 @@ rmtfs_mem: rmtfs@9c900000 {
- 			qcom,client-id = <1>;
- 			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
- 		};
-+
-+		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap {
-+			compatible = "shared-dma-pool";
-+			size = <0x0 0x800000>;
-+			alignment = <0x0 0x100000>;
-+			alloc-ranges = <0x0 0x80000000 0x0 0x40000000>;
-+			no-map;
-+		};
- 	};
- 
- 	cpus {
-@@ -3863,6 +3871,9 @@ fastrpc {
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
- 					qcom,non-secure-domain;
-+					memory-region = <&adsp_rpc_remote_heap_mem>;
-+					qcom,vmids = <QCOM_SCM_VMID_LPASS>,
-+						     <QCOM_SCM_VMID_ADSP_HEAP>;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
+@@ -3893,6 +3893,7 @@ compute-cb@5 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+ 						reg = <5>;
+ 						iommus = <&apps_smmu 0x1805 0x0>;
++						qcom,nsessions = <5>;
+ 					};
+ 				};
+ 			};
 -- 
 2.34.1
 
