@@ -1,149 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-58712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46A0FABD698
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 13:19:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17FAFABD6D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 13:31:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E3B14C347E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 11:17:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7FE853AEF1A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 11:31:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A649D205E3E;
-	Tue, 20 May 2025 11:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D81F0274FD0;
+	Tue, 20 May 2025 11:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iRFs209/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ofdYLbVw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0A01F153C;
-	Tue, 20 May 2025 11:16:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A910921A45A;
+	Tue, 20 May 2025 11:31:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747739818; cv=none; b=lzzkMaeuKnDIWKSFADYYE8ALaskscSa2WpX1xFv6yUppTWsfi555BnUv9J0ig6k3h5bkR06OZ57SGwFYwU0MGxoKMOgWU8Okg637sCgGaqYbJvgk2PImsdsm1KFra8pyE87StM0lqepi/TvFQJ+QQyBLFWolvrdUTZkCoP4rHJs=
+	t=1747740713; cv=none; b=Cfdwxxacv/CLNVilKFiB41XmN+xEF0agT3Jed8+k0f+KNQcAtjlLZkhPTHZ4HYySheL8oBk1tk99dvZ70bduHWNB0BTE8lTG28t3mxvvfIi05k+/P96Y+vUpbkfZLiUm4U57kMu92eC6phs/qDimr1bgvK4FKVEiI5Q+vkQSH50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747739818; c=relaxed/simple;
-	bh=ePV7KS5ahxsc5XrKAwy1Zy/sOqAbGlQ1CwAuKzCICNY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=GRvcK8274R+s6Ec26WgsI+mami8YXJmj1pUACi8ms1gfDNR1Iq2eO3DqTKsL2ZF4oAPXrBVpEYceo6nz2i5aQEgH0z7oE0Bw6ulT7iJREw0nMNbS3oin5Cw0/nUWFKH39srzB3Y8WfcUkmYCbElj9AhohU6aJn7IvZSENIgEsj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iRFs209/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KBEVNU028704;
-	Tue, 20 May 2025 11:16:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	CLY4lD5JEd+wrB3Pa6UJ01FZeLiuUjx1sm5mklY+w6g=; b=iRFs209/SaBWoM7d
-	wZyO0K6SfrrPdlNb8nRYeihyqTHgW070eMq9kTbSbBUG93of76C8+k+jt4SxWXkU
-	Wi3sOMgyyhqEDMsEm3IX7M4vV3JUTLlVYWw4vGIPaDFKD8/03q1bCgHswcPU1N8r
-	xsS6CN1xj+QzbzF1udqSZrjz3FC/q+KnCo/eXdA1YWjFbfusnxdT4F7BRjdkqOvh
-	BcRUJlrATzhIyOzzjCQhPW0UNEQt5p+ZwE4/Kd4ZlxEe3csEWKxuHJipHFwx6fK0
-	g2PlP0iMhbxs+a5Fd1iyuFAANjfVGZATWn3WzGZ9vxJLzO4DbiVniugm/Di5bwIl
-	rAig8A==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pju7fh37-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 May 2025 11:16:49 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54KBGm3f019289
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 May 2025 11:16:48 GMT
-Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 20 May
- 2025 04:16:46 -0700
-Message-ID: <a2ff429f-cc49-403f-9f2d-6a6b6361044d@quicinc.com>
-Date: Tue, 20 May 2025 16:46:43 +0530
+	s=arc-20240116; t=1747740713; c=relaxed/simple;
+	bh=CvDybhlQLGgsaauWyvnvy0fUfy35kQUTWzKrr9rQm+w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d2hszaevYOhM4uDxGs6iYWT5FSAAL29yh2PQ9RSBjTms3S4RfyGytIP+NNnO3NvyslD5GRKxpnxbxfU9ffjiQMPf3voJfiF/BVtXpCyq6Pp31YRpP0DwAHgaVW8gWj+FKqF0XGrMoXCe78VEe/K3ffqr5pgEiOzLpeQI4EEIPMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ofdYLbVw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9268CC4CEEB;
+	Tue, 20 May 2025 11:31:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747740713;
+	bh=CvDybhlQLGgsaauWyvnvy0fUfy35kQUTWzKrr9rQm+w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ofdYLbVw9naWOMB+EzGo9kBZvwW4kLEAFulhRj7U1+SNOP7XzubmjaDjq3xXD81HE
+	 asVMbkGWrhZ02beHdrEgtHSSE9HSvsdrEJbtnnivmJKg77MuwnIMOFtxW0CgeSVNmf
+	 EqKNtxziB0IwrCIK/8elCyKsALdB9DCl+ciWml5O6Uh2Dm1ucCGNJVn2++eMOpAQLr
+	 yJeOi8layAs/ZP0wKWsmnlJiJS9PTXienZtRWaYPw2Whbu1eOKsSbLKLE69kPDiTZi
+	 DBZexSPA57nr7OzlVuH3WE/qc0XzVc3H6bg35HEBDqxL3dGvQ+qZhssW/A47l2JlYh
+	 DhtXNITYVLfkw==
+Date: Tue, 20 May 2025 12:31:47 +0100
+From: Will Deacon <will@kernel.org>
+To: Rob Clark <robdclark@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>, Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
+	"open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4 05/40] iommu/io-pgtable-arm: Add quirk to quiet
+ WARN_ON()
+Message-ID: <20250520113146.GA18435@willie-the-truck>
+References: <20250514175527.42488-1-robdclark@gmail.com>
+ <20250514175527.42488-6-robdclark@gmail.com>
+ <20250515143309.GA12165@willie-the-truck>
+ <CAF6AEGsnOD8fZmTXAEZZNrdK-NXdUJF51s51EhYQ6Ed7dCFM0A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i2c: qup: Add error handling in qup_i2c_xfer_v2()
-To: Wentao Liang <vulab@iscas.ac.cn>, <andi.shyti@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
-References: <20250519141918.2522-1-vulab@iscas.ac.cn>
-Content-Language: en-US
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-In-Reply-To: <20250519141918.2522-1-vulab@iscas.ac.cn>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=XKEwSRhE c=1 sm=1 tr=0 ts=682c64a1 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
- a=xU49TFnZvl5CdPniB3sA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: oYF8yg5dhM4ttH8eZw0FiJb0CC48uiwb
-X-Proofpoint-GUID: oYF8yg5dhM4ttH8eZw0FiJb0CC48uiwb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDA5MiBTYWx0ZWRfX+MIiIeyaVPCG
- Ptm7r4dVqeU1N+op2jnVFIU3az5IRtHtlEoz8zCpFVLGkE0pXImYStuIhbNLO9yqe7ypwV2Oron
- xjdq5v5x+t3xJQxhHMfYvepx/qpllu+rh4x/z0knAdUnP2747pKJgPYLs/J2TpphmofmYu2KSzJ
- BB5QZKaiQf3lexL6V/xxP1GRUy9B4wSLNzqcC6QXMNrhglnaMtzk8+DknK45/l+mLd+OmpP3+0j
- aWjxWetm4regCY19cXBdJaUlZrURfJFh169A5biIy33yNfiSYm263KIu0nOOJnBtHWUxtwjfDV2
- eH4nTtpPYizzVS3MW4nuTiRZzH/5LyH14rwR/s/8XOisoTQTCmSc1nciosIbKKPlfUCdzGvZkeU
- gGzGbS7MDBqvRmq6DgaRGGEo+89EgYDg9zeO3HNFv6zngBWUP+TLuLVU6MicRmkre0lB4u21
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-20_04,2025-05-16_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 clxscore=1011
- spamscore=0 suspectscore=0 malwarescore=0 adultscore=0 mlxscore=0
- mlxlogscore=999 phishscore=0 bulkscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505070000 definitions=main-2505200092
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGsnOD8fZmTXAEZZNrdK-NXdUJF51s51EhYQ6Ed7dCFM0A@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-
-
-On 5/19/2025 7:49 PM, Wentao Liang wrote:
-> The qup_i2c_xfer_v2() calls the qup_i2c_change_state() but does
-> not check its return value. A proper implementation can be
-> found in qup_i2c_xfer().
+On Thu, May 15, 2025 at 07:48:39AM -0700, Rob Clark wrote:
+> On Thu, May 15, 2025 at 7:33 AM Will Deacon <will@kernel.org> wrote:
+> >
+> > On Wed, May 14, 2025 at 10:53:19AM -0700, Rob Clark wrote:
+> > > From: Rob Clark <robdclark@chromium.org>
+> > >
+> > > In situations where mapping/unmapping sequence can be controlled by
+> > > userspace, attempting to map over a region that has not yet been
+> > > unmapped is an error.  But not something that should spam dmesg.
+> > >
+> > > Now that there is a quirk, we can also drop the selftest_running
+> > > flag, and use the quirk instead for selftests.
+> > >
+> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > Acked-by: Robin Murphy <robin.murphy@arm.com>
+> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > ---
+> > >  drivers/iommu/io-pgtable-arm.c | 27 ++++++++++++++-------------
+> > >  include/linux/io-pgtable.h     |  8 ++++++++
+> > >  2 files changed, 22 insertions(+), 13 deletions(-)
+> >
+> > [...]
+> >
+> > > diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
+> > > index bba2a51c87d2..639b8f4fb87d 100644
+> > > --- a/include/linux/io-pgtable.h
+> > > +++ b/include/linux/io-pgtable.h
+> > > @@ -88,6 +88,13 @@ struct io_pgtable_cfg {
+> > >        *
+> > >        * IO_PGTABLE_QUIRK_ARM_HD: Enables dirty tracking in stage 1 pagetable.
+> > >        * IO_PGTABLE_QUIRK_ARM_S2FWB: Use the FWB format for the MemAttrs bits
+> > > +      *
+> > > +      * IO_PGTABLE_QUIRK_NO_WARN_ON: Do not WARN_ON() on conflicting
+> > > +      *      mappings, but silently return -EEXISTS.  Normally an attempt
+> > > +      *      to map over an existing mapping would indicate some sort of
+> > > +      *      kernel bug, which would justify the WARN_ON().  But for GPU
+> > > +      *      drivers, this could be under control of userspace.  Which
+> > > +      *      deserves an error return, but not to spam dmesg.
+> > >        */
+> > >       #define IO_PGTABLE_QUIRK_ARM_NS                 BIT(0)
+> > >       #define IO_PGTABLE_QUIRK_NO_PERMS               BIT(1)
+> > > @@ -97,6 +104,7 @@ struct io_pgtable_cfg {
+> > >       #define IO_PGTABLE_QUIRK_ARM_OUTER_WBWA         BIT(6)
+> > >       #define IO_PGTABLE_QUIRK_ARM_HD                 BIT(7)
+> > >       #define IO_PGTABLE_QUIRK_ARM_S2FWB              BIT(8)
+> > > +     #define IO_PGTABLE_QUIRK_NO_WARN_ON             BIT(9)
+> >
+> > This feels a bit fragile to me:
+> >   * IOMMU-API users of io-pgtable shouldn't be passing this quirk
+> >     but might end up doing so to paper over driver bugs.
+> >
+> >   * Low-level users of io-pgtable who expose page-table operations to
+> >     userspace need to pass the quirk, but might well not bother because
+> >     well-behaved userspace doesn't trigger the warning.
+> >
+> > So overall, it's all a bit unsatisfactory. Is there a way we could have
+> > the warnings only when invoked via the IOMMU API?
 > 
-> Add error handling for qup_i2c_change_state(). If the function
-> fails, return the error code.
+> iommu drivers _not_ setting this flag seems like a good way to achieve that ;-)
 > 
-> Fixes: 7545c7dba169 ("i2c: qup: reorganization of driver code to remove polling for qup v2")
-> Cc: stable@vger.kernel.org # v4.17
-> Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-> ---
->   drivers/i2c/busses/i2c-qup.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-> index da20b4487c9a..2477f570fe86 100644
-> --- a/drivers/i2c/busses/i2c-qup.c
-> +++ b/drivers/i2c/busses/i2c-qup.c
-> @@ -1538,7 +1538,7 @@ static int qup_i2c_xfer_v2(struct i2c_adapter *adap,
->   			   int num)
->   {
->   	struct qup_i2c_dev *qup = i2c_get_adapdata(adap);
-> -	int ret, idx = 0;
-> +	int ret, err, idx = 0;
->   
->   	qup->bus_err = 0;
->   	qup->qup_err = 0;
-> @@ -1588,7 +1588,9 @@ static int qup_i2c_xfer_v2(struct i2c_adapter *adap,
->   		ret = qup_i2c_bus_active(qup, ONE_BYTE);
->   
->   	if (!ret)
-> -		qup_i2c_change_state(qup, QUP_RESET_STATE);
-> +		err = qup_i2c_change_state(qup, QUP_RESET_STATE);
-> +	if (err)
-> +		return err;
-Is there an error seen around this ? Expecting this to work as is.
-After an error, what next ? Just return back to framework ?
->   
->   	if (ret == 0)
->   		ret = num;
+> The alternative is to move the warns to the iommu driver... but they
+> could just as easily remove the WARN_ON()s as they could set the
+> NO_WARN_ON quirk, so :shrug:?
 
+Bah, I also don't have a good idea to improve this, so I guess I'll take
+what you have for now.
+
+Will
 
