@@ -1,171 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-58612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E1FEABD011
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 09:06:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCC54ABD02C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 09:18:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3A3864A34B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 07:06:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2236F3B1A11
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 07:18:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E3691F416A;
-	Tue, 20 May 2025 07:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8C4825D1F4;
+	Tue, 20 May 2025 07:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nHRwGMKE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VIHV3IEn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437E1374D1;
-	Tue, 20 May 2025 07:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79C92571CA;
+	Tue, 20 May 2025 07:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747724807; cv=none; b=g710qo5tU3BsTx3xeUuqaeqWVOodap2803xUCSHT1Xo449SQmOXWzhGL410hf9CH8ZIiFQRNaRecb2lgzxXNcK48rgCS7dypMnBE/gdqeHgL42ByjKwLxYWlnbwcpt2VFSwIiZQpd5rFo4BLMJOObrdTsWhwA2d+JrAVPmsfkls=
+	t=1747725533; cv=none; b=PTVnPZEflMHE67969jVuj+1EqIi9nDGMy7ds6CifsJIZmwziG1bsS1wmWIuoBg+dKEXUJPur7bq73cs1SWdqXJwH9edCpA4Nv+Dr8NCgBDm0LbchPpjFmq6ZG/6kaB7nhW9QBdgdIovjOBwX1W+CG99hh6UzubY3LK+j1Y+d/8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747724807; c=relaxed/simple;
-	bh=xbkcSstQSM7LsThUd3dW/NohXvrSVzg1IBKTfxC5v5Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QSfCS+k7vtWqnjAPaT4m+xTq++YXHO6yPeBCE8B5+/fVwbrrKE/Rid+tKZ9zrQVfMJcl6CLq6byUUfOqSaVoyETAIYeZlmo1zWZzD0XTaLtwytryhBtOF8XRzPZcJMqV6HUDh/oES4rq9qO0nMV7WhfsLEhPX51DYQ0q8Ctzi34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nHRwGMKE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84AEDC4CEE9;
-	Tue, 20 May 2025 07:06:43 +0000 (UTC)
+	s=arc-20240116; t=1747725533; c=relaxed/simple;
+	bh=0dgpHM6X5ylXIfc/EcEGibieH0olYU53fdjUR+UZzG0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BKzHGZG1mxXcZ8Uo8/63uaLrPlufSkDWxUElaHK3lfykZ7NcA+emQxVuoLsBOPGxOxX7MmMRs6nnPrKlpIG7Iqrj1AlmrxIFwyUzwi/71LpplTsRUSWMPH1MjwlYOeBLZE+aDbEIxeB/Me0MFiNDtBdyKrMbkgL23q8+0A/yzws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VIHV3IEn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742FAC4CEE9;
+	Tue, 20 May 2025 07:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747724806;
-	bh=xbkcSstQSM7LsThUd3dW/NohXvrSVzg1IBKTfxC5v5Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nHRwGMKE8GzXffixF2oL6QS7YA6mXHmHgBYzNy00RsRKFYBJZaAt0fDrn4+dm0rMk
-	 xdrpD7fkjIBEWU/8v9/YLzIJAGWIR8gBJ3Ct6RbQLUlRevhKE7OyDfre2jUTwto1mI
-	 dV6oeCAoLAMScVqvjQ5ie9ZzkS4YtEL2xVHPCAOuxLa07PmMDbSB/Http52In5e5In
-	 xj0RVUR9fSE2PvgwAq/eq90IgL177hdSlY2NBfTTCWedeIvfZf074PQtdOmpg6EI3i
-	 mFiB71XJwTAA9v8PXq5QS8fbl8MAjgFalmA+V6S4+R5CYz8Z9CdxeMAf3SSOGg7Pr6
-	 j0vVoCyTCHhJw==
-Date: Tue, 20 May 2025 09:06:40 +0200
-From: Danilo Krummrich <dakr@kernel.org>
-To: Rob Clark <robdclark@gmail.com>
-Cc: Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>,
-	phasta@kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	Matthew Brost <matthew.brost@intel.com>,
-	Christian =?iso-8859-1?Q?K=F6nig?= <ckoenig.leichtzumerken@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	open list <linux-kernel@vger.kernel.org>,
-	Boris Brezillon <boris.brezillon@collabora.com>
-Subject: Re: [PATCH v4 04/40] drm/sched: Add enqueue credit limit
-Message-ID: <aCwqAGLLCC2ZLSBK@pollux>
-References: <20250514170118.40555-1-robdclark@gmail.com>
- <20250514170118.40555-5-robdclark@gmail.com>
- <51f87f358fa1b7ef8db8b67ee6cde38ae071fbe8.camel@mailbox.org>
- <CAJs_Fx771FFVDVFMn8YJkR9f9Ad-UQspJ9KKQw4u6Cu4TA7YPA@mail.gmail.com>
- <CACu1E7EL+E-M0N-EAN9Bx7u9O6_pECQQdPE2ph575idhVb2Szg@mail.gmail.com>
- <aCYkk4Y7feltfp79@pollux>
- <CAF6AEGsoG_W3A3+BHV4n5EKZQazFubrCyfrtxVUH7+H4-j7i5A@mail.gmail.com>
- <aCY42rgJC4sQ4tp4@pollux>
- <CAF6AEGubHkdhfJz=bAZvctO1aTKDLwRsRyPzkoVrQ7tA6dRbKw@mail.gmail.com>
+	s=k20201202; t=1747725532;
+	bh=0dgpHM6X5ylXIfc/EcEGibieH0olYU53fdjUR+UZzG0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=VIHV3IEnVoIZr59y520JyK1rDWYem9zcOuYv+W7yr2vZpklL0JQkgvherUZwr6v7n
+	 nHX1oOIpkaJg0eoTOKvrl0PRY486zrZjrtFAV430NT5ktpAjmqAAVVteq7DyZr8iq+
+	 dsLSbYA39nxk18DwCaiPAZUqmPbK2hTJPa7eE5Ia3dkcdB86Alg93Ck79evVkyPgMV
+	 zxCCId2RDQ0vz60xAe/D/Wcabw19XCk7w5dV5YUjbbVZ8BRBiC/fZsFGd9mZV34NO+
+	 f5TYhWfRiRz3MMPziD5jg+RyZGFc28jmY7Z63QxECAN8q5M0jL2wPu4Wk7Aham9TFE
+	 iLzrccnjGcicg==
+Message-ID: <8c6d37bb-8e07-4e44-bef1-f4376b54b853@kernel.org>
+Date: Tue, 20 May 2025 09:18:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGubHkdhfJz=bAZvctO1aTKDLwRsRyPzkoVrQ7tA6dRbKw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V1 1/3] dt-bindings: mmc: qcom: Document level shifter
+ flag for SD card
+To: Sarthak Garg <quic_sartgarg@quicinc.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
+ Bhupesh Sharma <bhupesh.sharma@linaro.org>, linux-mmc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, quic_cang@quicinc.com,
+ quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
+ quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
+ quic_nitirawa@quicinc.com, quic_sachgupt@quicinc.com,
+ quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com, kernel@quicinc.com
+References: <20241107080505.29244-1-quic_sartgarg@quicinc.com>
+ <20241107080505.29244-2-quic_sartgarg@quicinc.com>
+ <qffggh2ld2cw7d3eqwaerzicerhvdqojwsasherx7dgoda42b7@bigsjxr6vtao>
+ <ba49151a-e32d-438d-8a2a-50840368a87c@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <ba49151a-e32d-438d-8a2a-50840368a87c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, May 15, 2025 at 12:56:38PM -0700, Rob Clark wrote:
-> On Thu, May 15, 2025 at 11:56 AM Danilo Krummrich <dakr@kernel.org> wrote:
-> >
-> > On Thu, May 15, 2025 at 10:40:15AM -0700, Rob Clark wrote:
-> > > On Thu, May 15, 2025 at 10:30 AM Danilo Krummrich <dakr@kernel.org> wrote:
-> > > >
-> > > > (Cc: Boris)
-> > > >
-> > > > On Thu, May 15, 2025 at 12:22:18PM -0400, Connor Abbott wrote:
-> > > > > For some context, other drivers have the concept of a "synchronous"
-> > > > > VM_BIND ioctl which completes immediately, and drivers implement it by
-> > > > > waiting for the whole thing to finish before returning.
-> > > >
-> > > > Nouveau implements sync by issuing a normal async VM_BIND and subsequently
-> > > > waits for the out-fence synchronously.
-> > >
-> > > As Connor mentioned, we'd prefer it to be async rather than blocking,
-> > > in normal cases, otherwise with drm native context for using native
-> > > UMD in guest VM, you'd be blocking the single host/VMM virglrender
-> > > thread.
-> > >
-> > > The key is we want to keep it async in the normal cases, and not have
-> > > weird edge case CTS tests blow up from being _too_ async ;-)
-> >
-> > I really wonder why they don't blow up in Nouveau, which also support full
-> > asynchronous VM_BIND. Mind sharing which tests blow up? :)
+On 20/05/2025 08:58, Sarthak Garg wrote:
 > 
-> Maybe it was dEQP-VK.sparse_resources.buffer.ssbo.sparse_residency.buffer_size_2_24,
-
-The test above is part of the smoke testing I do for nouveau, but I haven't seen
-such issues yet for nouveau.
-
-> but I might be mixing that up, I'd have to back out this patch and see
-> where things blow up, which would take many hours.
-
-Well, you said that you never had this issue with "real" workloads, but only
-with VK CTS, so I really think we should know what we are trying to fix here.
-
-We can't just add new generic infrastructure without reasonable and *well
-understood* justification.
-
-> There definitely was one where I was seeing >5k VM_BIND jobs pile up,
-> so absolutely throttling like this is needed.
-
-I still don't understand why the kernel must throttle this? If userspace uses
-async VM_BIND, it obviously can't spam the kernel infinitely without running
-into an OOM case.
-
-But let's assume we agree that we want to avoid that userspace can ever OOM itself
-through async VM_BIND, then the proposed solution seems wrong:
-
-Do we really want the driver developer to set an arbitrary boundary of a number
-of jobs that can be submitted before *async* VM_BIND blocks and becomes
-semi-sync?
-
-How do we choose this number of jobs? A very small number to be safe, which
-scales badly on powerful machines? A large number that scales well on powerful
-machines, but OOMs on weaker ones?
-
-I really think, this isn't the correct solution, but more a workaround.
-
-> Part of the VM_BIND for msm series adds some tracepoints for amount of
-> memory preallocated vs used for each job.  That plus scheduler
-> tracepoints should let you see how much memory is tied up in
-> prealloc'd pgtables.  You might not be noticing only because you are
-> running on a big desktop with lots of RAM ;-)
 > 
-> > > > > But this
-> > > > > doesn't work for native context, where everything has to be
-> > > > > asynchronous, so we're trying a new approach where we instead submit
-> > > > > an asynchronous bind for "normal" (non-sparse/driver internal)
-> > > > > allocations and only attach its out-fence to the in-fence of
-> > > > > subsequent submits to other queues.
-> > > >
-> > > > This is what nouveau does and I think other drivers like Xe and panthor do this
-> > > > as well.
-> > >
-> > > No one has added native context support for these drivers yet
-> >
-> > Huh? What exactly do you mean with "native context" then?
+> On 11/7/2024 3:29 PM, Krzysztof Kozlowski wrote:
+>> On Thu, Nov 07, 2024 at 01:35:03PM +0530, Sarthak Garg wrote:
+>>> Introduce a flag to indicate if the Qualcomm platform has a level
+>>> shifter for SD cards. With level shifter addition some extra delay is
+>>> seen on RX data path leading to CRC errors. To compensate these delays
+>>> and avoid CRC errors below things needs to be done:
+>>>
+>>> 1) Enable tuning for SDR50 mode
+>>> 2) Limit HS mode frequency to 37.5MHz from 50MHz
+>>>
+>>> Add this flag for all targets with a level shifter to handle these
+>>> issues for SD card.
+>>>
+>>> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+>>> ---
+>>>   Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 3 +++
+>>>   1 file changed, 3 insertions(+)
+>>>
+>>
+>> This wasn't tested, so just short review - platform means SoC usually,
+>> so this looks SoC specific, thus implied by compatible.
+>>  > Best regards,
+>> Krzysztof
+>>
 > 
-> It is a way to use native usermode driver in a guest VM, by remoting
-> at the UAPI level, as opposed to the vk or gl API level.  You can
-> generally get equal to native performance, but the guest/host boundary
-> strongly encourages asynchronous to hide the guest->host latency.
+> Sure will redesign this logic and use compatible in patch V2.
 
-For the context we're discussing this isn't different to other drivers supporing
-async VM_BIND utilizing it from the host, rather than from a guest.
+Hi, I hope you are well and that was just some mishap, but I cannot help
+but notice that you received review within two hours after posting
+patch, but now you responded to my review after 6 months.
 
-So, my original statement about nouveau, Xe, panthor doing the same thing
-without running into trouble should be valid.
+Sometimes I really consider reviewing at the end of 2 weeks - the usual
+maximum time frame.
+
+Best regards,
+Krzysztof
 
