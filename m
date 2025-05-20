@@ -1,155 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-58714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DA21ABD718
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 13:42:16 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05A38ABD75D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 13:51:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1F04917B3C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 11:42:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3ED961885BCC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 11:52:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E365F27B519;
-	Tue, 20 May 2025 11:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 471E12673B5;
+	Tue, 20 May 2025 11:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="GzTXMwsi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hzoxQKyT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDCE264A97;
-	Tue, 20 May 2025 11:42:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.132.182.106
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1737A219A8A;
+	Tue, 20 May 2025 11:51:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747741330; cv=none; b=A5UjHbVs890v3KfXw26RlUxJi3uznq2t3V1onNetwgdUHd5cKLWY0zGD89Jzbe5BA+OCY/2atbcqBBDn98J0jnjhNRTkr9LbH16yoWblD+Cil30wCPWlqB2/uGHxMH/n2UIWXgkRo6HMALwHa+lf/aFzsLseY3m6lHbSIinVKXM=
+	t=1747741901; cv=none; b=hTPMl3U6QjsU+GRltkUtDUXssBaWhNzgmFwif0twSW3YxcP7K8J7YISIiEiQVbbrLynHa+pXvYTZBw/y9Xv23q2N6dcJ2RqrFfsXSKAZ244xxFy6ug9aHCxycbAYrbD4xF1QjHgYe7FTU8Ol2pkLGRfIEZtRTdGz4mTi93NpY7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747741330; c=relaxed/simple;
-	bh=UExusS9wGruu2jirSHupY+orQc1NwlzDHTp5gtaUL6E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qR01rG5J0jHTvQscNNox1eUPy43r6ovEnmcdhuRnDM+cC6kXncsInSvwEZL7MR7jFBIFz85ExiH94E8yCeV1CUnjBPpmvVHW0znvqSYvEESQermE856ffqrZ4+zc70vTLElOnxH1MNc+sJNqUj+v/kURTb2F1Uu63pkvyKGtkdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=GzTXMwsi; arc=none smtp.client-ip=185.132.182.106
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
-Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
-	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54K9UC8E021011;
-	Tue, 20 May 2025 13:41:16 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=selector1; bh=
-	UExusS9wGruu2jirSHupY+orQc1NwlzDHTp5gtaUL6E=; b=GzTXMwsiZejt1O8H
-	HSMOo4JJMYdWKi4XLUZACmweuNUHMXMcoKBaBK4izDYF74vuwBPhTZk6IexHobg/
-	qK9I73asI1F+eYDQZiyzxP43hKUrX/gpKv/++Q/63O4zRbJXsKcyIXJRe8YtHdoV
-	RPwyyY04Tk6DjBcJZpMMLx0wfWgVldqOE1FvIgNQm9RI5S0gb+O/faMVPHN8vYO7
-	xVKBfv+hc1nAbKmBD0/cmEDphgVskJ4VOESdBzuwEbJOODz1O+/U82sx8FwgyLMU
-	7hCq2HGWxCcmbZsgQoNFKYIKbh+ZOklyV2oLZ5i1xQm8eShnTM2y/drHpPFlUzAG
-	h0IOcQ==
-Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
-	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 46pht1w43t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 May 2025 13:41:16 +0200 (MEST)
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 1C0F740049;
-	Tue, 20 May 2025 13:38:29 +0200 (CEST)
-Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
-	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 4B551AE2BFA;
-	Tue, 20 May 2025 13:37:16 +0200 (CEST)
-Received: from [10.252.29.31] (10.252.29.31) by SHFDAG1NODE2.st.com
- (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 20 May
- 2025 13:37:13 +0200
-Message-ID: <b1d3f93b-8206-481b-bd8a-d7c0953e0ea5@foss.st.com>
-Date: Tue, 20 May 2025 13:37:12 +0200
+	s=arc-20240116; t=1747741901; c=relaxed/simple;
+	bh=n8d75Ug7ysY4z81dfYm2kCWqg7JynZz03oOVkZ/Grto=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EQgyaa09AAjeUcKqpoHFucdPZZunIKcbsZt5HAWCBhsFFP1MgVpvyDESzLlpczeZbZ7xUBor88o35+4+4k1k2lfa/AyPEpY9uBNTvfSHRsBqscHG+DhbR0l8dPIMuBUYPTFg5f1fC1jg3yz37UHh1RilQZwpOA4uWhytJbzYj4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hzoxQKyT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24603C4CEED;
+	Tue, 20 May 2025 11:51:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747741899;
+	bh=n8d75Ug7ysY4z81dfYm2kCWqg7JynZz03oOVkZ/Grto=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hzoxQKyTYARMfL34PU8F04/Qxv9ZoV4GDpb6hqwUVkW8weZZLoBVh/GVk4hiUbwHl
+	 etLDIu2BqWaCGolZKugIXfS+vETyiBz5BBeC63xX/8EUcs1V6wYBPo1xEkjaHbmOyx
+	 l0zlO6qpNirbIlkLzqlwIbRtQA8SQ7u/CPSgquK70XqbJ1IkGamQio0nFqT9fnc2Fs
+	 07IEOgDWmCQ3Fn7APmq6ZAtU/qljDWmqNMOVto7Nt8u04sTiCIQaMvem1+7MfRnKMO
+	 vjEfyLOzKBRtalCe5EibjG+CN2BWQfiqyiiQ4xaGAyCfM57Adstx+qdfwUMTJh1u2p
+	 Y9VSP6DnooG4A==
+Date: Tue, 20 May 2025 13:51:36 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Cc: Wentao Liang <vulab@iscas.ac.cn>, linux-arm-msm@vger.kernel.org, 
+	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] i2c: qup: Add error handling in qup_i2c_xfer_v2()
+Message-ID: <mibpejiq6cu7ehhitvksmdwdnmx76dce24ngybccpvlb5x6v7q@wgdlvcmg7uxa>
+References: <20250519141918.2522-1-vulab@iscas.ac.cn>
+ <a2ff429f-cc49-403f-9f2d-6a6b6361044d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/22] drm/bridge: stm_lvds: convert to
- devm_drm_bridge_alloc() API
-To: Luca Ceresoli <luca.ceresoli@bootlin.com>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman
-	<jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jagan Teki
-	<jagan@amarulasolutions.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer
-	<s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk@kernel.org>
-CC: Anusha Srivatsa <asrivats@redhat.com>,
-        Paul Kocialkowski
-	<paulk@sys-base.io>,
-        Dmitry Baryshkov <lumag@kernel.org>, Hui Pu
-	<Hui.Pu@gehealthcare.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        <dri-devel@lists.freedesktop.org>, <asahi@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>, <chrome-platform@lists.linux.dev>,
-        <imx@lists.linux.dev>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-amlogic@lists.infradead.org>,
-        <linux-renesas-soc@vger.kernel.org>,
-        <platform-driver-x86@vger.kernel.org>,
-        <linux-samsung-soc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Alexandre Torgue
-	<alexandre.torgue@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Philippe Cornu <philippe.cornu@foss.st.com>,
-        Yannick Fertre
-	<yannick.fertre@foss.st.com>
-References: <20250509-drm-bridge-convert-to-alloc-api-v3-0-b8bc1f16d7aa@bootlin.com>
- <20250509-drm-bridge-convert-to-alloc-api-v3-15-b8bc1f16d7aa@bootlin.com>
-Content-Language: en-US
-From: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-In-Reply-To: <20250509-drm-bridge-convert-to-alloc-api-v3-15-b8bc1f16d7aa@bootlin.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: EQNCAS1NODE3.st.com (10.75.129.80) To SHFDAG1NODE2.st.com
- (10.75.129.70)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-20_04,2025-05-16_03,2025-03-28_01
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a2ff429f-cc49-403f-9f2d-6a6b6361044d@quicinc.com>
 
-Hi Luca,
+Hi Mukesh,
 
-On 5/9/25 15:53, Luca Ceresoli wrote:
-> This is the new API for allocating DRM bridges.
->
-> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
->
-> ---
->
-> Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
-> Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>
-> Cc: Philippe Cornu <philippe.cornu@foss.st.com>
-> Cc: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-> Cc: Yannick Fertre <yannick.fertre@foss.st.com>
-> ---
+...
 
-I went away from keyboard for some time.  Sorry for the delay :
+> > @@ -1588,7 +1588,9 @@ static int qup_i2c_xfer_v2(struct i2c_adapter *adap,
+> >   		ret = qup_i2c_bus_active(qup, ONE_BYTE);
+> >   	if (!ret)
+> > -		qup_i2c_change_state(qup, QUP_RESET_STATE);
+> > +		err = qup_i2c_change_state(qup, QUP_RESET_STATE);
+> > +	if (err)
+> > +		return err;
+> Is there an error seen around this ? Expecting this to work as is.
+> After an error, what next ? Just return back to framework ?
 
-Acked-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+thanks for chiming in. qup_i2c_change_state() can fail, why
+shouldn't we consider the possibility to fail?
 
-
-Regards,
-Raphaël
-
+Thanks,
+Andi
 
