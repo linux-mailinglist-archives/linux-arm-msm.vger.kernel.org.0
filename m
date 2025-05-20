@@ -1,77 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-58793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A6E2ABE4BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 22:32:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 07F3DABE4C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 22:35:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A9F304A435B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 20:31:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5579217A728
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 20:35:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F21BB28C850;
-	Tue, 20 May 2025 20:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20CC22820C2;
+	Tue, 20 May 2025 20:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MwFkArGp"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gq35RemC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF0428C2CF;
-	Tue, 20 May 2025 20:31:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5C844C7C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 20:35:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747773095; cv=none; b=se7gdbgiiLtATVW56cK1X5kVJ++vjSZTCMeYKVkvpfoJJJLu5A/3ADG/d/WztA3YPnqBxVzhm49c4iy7ZPr7o6iMR0xYn+W4Kr8MkKwvnbxDE8Ok5NdI2bvVgRu0pomhi6pihDBeb8YyBIcTfM8nGFgEkPiiAzNyRxqxQjLSugE=
+	t=1747773348; cv=none; b=GcgTKqJyF7T+5AaeQqte3qv07+pwKBZwni3Zc6gZfAxHmekN0mvqYyuqlf6FCuDROE4RqI7DIgj5tyJitC2NQevjk3Bm2hlRjkzlu+xX8LfVl4cl85fIsWDodmfyyuWYUjER850zKtqr8nYrGRx2GCdbus6d3LwmmVbCm08tFpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747773095; c=relaxed/simple;
-	bh=3GWxq42/tgSqBxgPB7yrDRaLb7a882QSAs5qQK5Arp4=;
+	s=arc-20240116; t=1747773348; c=relaxed/simple;
+	bh=8YtDnrfQwAauwiWArmVD3Eb572CsqEFcBXMUIHo3eZA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YxSDwfZbZt0O9gNOJxCGqt3xr22Ua8ZBRVXPIXHgdWnNfzD/dlCcQ+cyiq39AIcCVIdN2UzvbGNdewZrAN0HjEakoJAvrYWZUtlWlrunzBmLhgoKuJe2toNU+s7xiFtT/HNznNSkvKQvZN1Hh2uKFiL0YW4GpikiC4b6vMhyLYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MwFkArGp; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1747773093; x=1779309093;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=3GWxq42/tgSqBxgPB7yrDRaLb7a882QSAs5qQK5Arp4=;
-  b=MwFkArGpeogcwVgPjgL2rJMTtRAcbp9562nAO5+Ho28kuMYAZgAPA45R
-   YucRJdLLEipn66ji1PB36597lvHwlgT6I0mpng0ReYBqGVtRx+281SUfg
-   2CKNbgmiiskW+rDoF7hSY782cSM8MST3TckWrwYVVVsNfc657cl7cI1H4
-   XBzGphp60vK8nA9qGxFaRdqUU2OklW+eF4H0XyosxWMbcyFUlFlfnxIG2
-   hjHbCredLgRrG1IBkzu/qlYfp5AiHhWZCR0YwI8Kw1oHh8tZ3VqV6H0jg
-   /Rh1yTKt2H46rY/GJbY2wzAH81dPsJjRj9VG8j1ozzLiGj5Rwa85vdMSL
-   A==;
-X-CSE-ConnectionGUID: zq8BqAp1QEGwr3K86DZSxg==
-X-CSE-MsgGUID: pKLRBb06Sc2bf3jBiEhCLg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11439"; a="49861355"
-X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; 
-   d="scan'208";a="49861355"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2025 13:31:32 -0700
-X-CSE-ConnectionGUID: q0AcIwtGTrC78y+QjzCHfg==
-X-CSE-MsgGUID: JQOZXCiKQOu/6s3LgSjiSA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; 
-   d="scan'208";a="176941458"
-Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
-  by orviesa001.jf.intel.com with ESMTP; 20 May 2025 13:31:30 -0700
-Received: from kbuild by 1992f890471c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uHTcW-000NXg-0K;
-	Tue, 20 May 2025 20:31:28 +0000
-Date: Wed, 21 May 2025 04:30:34 +0800
-From: kernel test robot <lkp@intel.com>
-To: Wentao Liang <vulab@iscas.ac.cn>, andi.shyti@kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Wentao Liang <vulab@iscas.ac.cn>,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] i2c: qup: Add error handling in qup_i2c_xfer_v2()
-Message-ID: <202505210438.G4nfkpQ2-lkp@intel.com>
-References: <20250519141918.2522-1-vulab@iscas.ac.cn>
+	 Content-Type:Content-Disposition:In-Reply-To; b=l5pl2s0qy6MIq5umVZpf/F7BsbI8HKB9p4VJpfXBFWo1mISJDLk85Lv1Wh2JduJGtJn/mO2LVrjY9q9GbSVOIr6r8UaRB8NmcOWsJq3Mv8Pf9pY1y7EKL4jyDQQpfJWG+EgCQ/lvXnlxGY07gALF/3j3mr/BxNXHMsgIWAhLuRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gq35RemC; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KGl19f012755
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 20:35:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=BOzaeAjRPbR4Ral+ZicyhMnS
+	y0Qc/MtOAgofjjWMqDA=; b=gq35RemC3vbS1CnqU+i4Bu3TqP5cBB7gJD1VAHpH
+	Dp27FBrBJm4gDlJ/3SUBWy9ApWneiysjQvdg2emjPLoy7UVk6pZeSPrw6yeSUKrn
+	VZ9TgqcWpLVy3jxsPipVuAz2M5qbazT4F3vVkSAe+SMAnvUzmpPY8SiIWUxMBcwP
+	xJfVdNQqiI16rg9MPDXu0J0U8vCM48X6Gz5CF7NvU4VAKfQeIVWJUm6vx/U+bM3x
+	OHsxWRKwAvwhChoPrrgfF0QgOIrMUbKGPg1pHM5Am7LbeBJfudBmoLel4qcSEfM/
+	HEDxBctVa2MJaxjOaLpyrunxqCPWPnHlmGWEZjJ9bar1YA==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf6rjqj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 20:35:45 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6f8e23d6657so32560066d6.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 13:35:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747773344; x=1748378144;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BOzaeAjRPbR4Ral+ZicyhMnSy0Qc/MtOAgofjjWMqDA=;
+        b=qERSpksMG8dChMXHYouRtX2qOG9cDKtyZyNIioDDXDsN3EjAVDIUjRk1LJsx5LeC5c
+         PMeSm5mZ3ZLszqjAT4AgW8AH5z0mm+INkwoVd8B4Gwe/X9ttvPUSJ8pYWw16xE9gVrpC
+         KEVOAh46vDD2AAMuVmyv/Mi1wfGYr0MOP0kNl76UZcVkRsoI0pK6k6/EjYY08blCAuBz
+         8p89jQse6TECrmPFkfcEMBnV4/em4FReNbqUwzpdL/9YSc5Y8LjPwU5az856ac3M3/Rr
+         7bf3Lfj9W5j1e9RaQ+CAR0p5gi0Jt1UwSnuyWtsFed6Jmb/zYYdOGL75D3hvvW89x20Q
+         1sgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCULqa4PQWeScnYUZ630hM3wsjkHaMii5qUecmecHYeP3mcmjafrvnlAcnaZEuBMZecFbLyEA8eEXQuUxff4@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSD1XPIwexnQqRroBxFUecM1ZEgFPPNUZJKr3ENpFDMrPHDyg2
+	uhYpMtc8IdpaqIli+bVMrBnW6xDs3ECdBQfZZ9hpk8QcosKCGYmKOEH50BEAqiS4ZpIeV2vKe7O
+	NjmFx6K1dmPd4FqPdhfxXs7WdrOuWCulxybt2EBnbTdQouLSPSZ7mfmt6pE8csQKS525W
+X-Gm-Gg: ASbGncuGsTmyfE/pwMxDlw4WfTCZkVzguKxtPvwMQhWxjIGT++ZKS1rzKvoZWFjmXCF
+	xHG7hrwiHqpDPrxU74QPbouE8NUwd2xIqn58QJyk/bLd9H9rMZt3jbzecKa6sW5hDVV6bI3FIU+
+	3OrYQlgyVyO4RLWcG7KHTn3qgb5kf/T89T6LFRI83DPbTQP1wxSeHLp/7lNTpKVADJcLOk3Bs/i
+	EOYtQcFBoexllDuvOOFP4ENM7UM/wej8BE+h8MLCJqpnACthymvwoJBHGKCqbLv0l1XhWDYWtjz
+	8wtiZcw2jyHEhAYoEorDnzm/zJThpO+rqGgsFa/LD5kH3k+rWlAvJeNqjTxG1dxGbuXA7HKdYys
+	=
+X-Received: by 2002:a05:6214:cc2:b0:6f8:a6fe:24ed with SMTP id 6a1803df08f44-6f8b082861fmr289469306d6.10.1747773344292;
+        Tue, 20 May 2025 13:35:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHAkP639HcUZ1nSxa6ug5u6UZLcMp1VanGG+n7IG1RTAVz+h/i7VJ8/XTm9hA+dno+sXsN6mw==
+X-Received: by 2002:a05:6214:cc2:b0:6f8:a6fe:24ed with SMTP id 6a1803df08f44-6f8b082861fmr289469086d6.10.1747773343935;
+        Tue, 20 May 2025 13:35:43 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-550e704026esm2482834e87.241.2025.05.20.13.35.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 May 2025 13:35:43 -0700 (PDT)
+Date: Tue, 20 May 2025 23:35:41 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, jens.glathe@oldschoolsolutions.biz,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: x1p42100: Fix thermal sensor
+ configuration
+Message-ID: <46jqmeaozwvpcnfxxctyeslcouzhpqshztdl6l6uex37ybtyt4@ghwxqs32dqzs>
+References: <20250520-topic-x1p4_tsens-v2-1-9687b789a4fb@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,123 +102,57 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250519141918.2522-1-vulab@iscas.ac.cn>
+In-Reply-To: <20250520-topic-x1p4_tsens-v2-1-9687b789a4fb@oss.qualcomm.com>
+X-Proofpoint-GUID: 0qCYXBoaDgu1ngarwTNo1q-OmGcgomxJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDE2NyBTYWx0ZWRfX6Fqt/u+D4ZeD
+ Kb+OL197CGm9XstbSjZVWsFOuiSuswB4tHTGN40tZqVpme/LZuy7X2F+ZYGKYGnaY6l+yQXI80r
+ 5CHPnVWtOEhjNyp7HUHPld3nMnkx1afUrCqmMjmUiR/LRSwxfXIsk0HhUPCTh2Bu+Bt6gWsti4r
+ qVROPNaVZuZRpicsn4zJcAbXT1LZ8AwCcc2IoLKrUiaYQ1fl1W1omSX5nqhmZlzNf4oxmCqg6hi
+ /KGhAPbY1RhweewAmNSt6anIQKZRls6+27ypekuz/8+UrwJs2GjksAiNd2GN3BQoHRPmxTTU6z3
+ DautlpapFH3JQOWU/myGka9xtxIfQgPAU4dj6qdaJmlO8s1j/qzzwJgs1zQlblpcBRzw8n0MIQH
+ cxywturenO/IMm+uAEVLGFpvOv7NJqiHvoGCnX5hSnLiCtoj1/JGts86vZJkdcUjSQSubwse
+X-Authority-Analysis: v=2.4 cv=fZOty1QF c=1 sm=1 tr=0 ts=682ce7a1 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=gxl3bz0cAAAA:8
+ a=wngnwIPPOuKcIasdbY4A:9 a=CjuIK1q_8ugA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+ a=kiRiLd-pWN9FGgpmzFdl:22
+X-Proofpoint-ORIG-GUID: 0qCYXBoaDgu1ngarwTNo1q-OmGcgomxJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-20_09,2025-05-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 mlxscore=0 adultscore=0 spamscore=0 bulkscore=0 suspectscore=0
+ malwarescore=0 priorityscore=1501 impostorscore=0 mlxlogscore=999
+ lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505160000 definitions=main-2505200167
 
-Hi Wentao,
+On Tue, May 20, 2025 at 10:14:46PM +0200, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> The 8-core SKUs of the X1 family have a different sensor configuration.
+> Override it to expose what the sensors really measure.
+> 
+> Fixes: f08edb529916 ("arm64: dts: qcom: Add X1P42100 SoC and CRD")
+> Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+> Compile-tested only
+> ---
+> Changes in v2:
+> - Rename trip-point1 to trip-point0 under zones where there's only one
+>   of them
+> - Pick up t-b
+> - Link to v1: https://lore.kernel.org/r/20250520-topic-x1p4_tsens-v1-1-bdadd91b7024@oss.qualcomm.com
+> ---
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi |   2 +-
+>  arch/arm64/boot/dts/qcom/x1p42100.dtsi | 556 +++++++++++++++++++++++++++++++++
+>  2 files changed, 557 insertions(+), 1 deletion(-)
+> 
 
-kernel test robot noticed the following build warnings:
-
-[auto build test WARNING on andi-shyti/i2c/i2c-host]
-[also build test WARNING on linus/master v6.15-rc7 next-20250516]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Wentao-Liang/i2c-qup-Add-error-handling-in-qup_i2c_xfer_v2/20250519-222137
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/andi.shyti/linux.git i2c/i2c-host
-patch link:    https://lore.kernel.org/r/20250519141918.2522-1-vulab%40iscas.ac.cn
-patch subject: [PATCH] i2c: qup: Add error handling in qup_i2c_xfer_v2()
-config: hexagon-randconfig-001-20250521 (https://download.01.org/0day-ci/archive/20250521/202505210438.G4nfkpQ2-lkp@intel.com/config)
-compiler: clang version 20.1.2 (https://github.com/llvm/llvm-project 58df0ef89dd64126512e4ee27b4ac3fd8ddf6247)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250521/202505210438.G4nfkpQ2-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202505210438.G4nfkpQ2-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/i2c/busses/i2c-qup.c:1619:6: warning: variable 'err' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
-    1619 |         if (!ret)
-         |             ^~~~
-   drivers/i2c/busses/i2c-qup.c:1621:6: note: uninitialized use occurs here
-    1621 |         if (err)
-         |             ^~~
-   drivers/i2c/busses/i2c-qup.c:1619:2: note: remove the 'if' if its condition is always true
-    1619 |         if (!ret)
-         |         ^~~~~~~~~
-    1620 |                 err = qup_i2c_change_state(qup, QUP_RESET_STATE);
-   drivers/i2c/busses/i2c-qup.c:1570:14: note: initialize the variable 'err' to silence this warning
-    1570 |         int ret, err, idx = 0;
-         |                     ^
-         |                      = 0
-   1 warning generated.
-
-
-vim +1619 drivers/i2c/busses/i2c-qup.c
-
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1564  
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1565  static int qup_i2c_xfer_v2(struct i2c_adapter *adap,
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1566  			   struct i2c_msg msgs[],
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1567  			   int num)
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1568  {
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1569  	struct qup_i2c_dev *qup = i2c_get_adapdata(adap);
-61f647e9d36d67 Wentao Liang          2025-05-19  1570  	int ret, err, idx = 0;
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1571  
-fbf9921f8b35d9 Sricharan Ramabadhran 2016-06-10  1572  	qup->bus_err = 0;
-fbf9921f8b35d9 Sricharan Ramabadhran 2016-06-10  1573  	qup->qup_err = 0;
-fbf9921f8b35d9 Sricharan Ramabadhran 2016-06-10  1574  
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1575  	ret = pm_runtime_get_sync(qup->dev);
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1576  	if (ret < 0)
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1577  		goto out;
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1578  
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1579  	ret = qup_i2c_determine_mode_v2(qup, msgs, num);
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1580  	if (ret)
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1581  		goto out;
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1582  
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1583  	writel(1, qup->base + QUP_SW_RESET);
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1584  	ret = qup_i2c_poll_state(qup, QUP_RESET_STATE);
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1585  	if (ret)
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1586  		goto out;
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1587  
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1588  	/* Configure QUP as I2C mini core */
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1589  	writel(I2C_MINI_CORE | I2C_N_VAL_V2, qup->base + QUP_CONFIG);
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1590  	writel(QUP_V2_TAGS_EN, qup->base + QUP_I2C_MASTER_GEN);
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1591  
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1592  	if (qup_i2c_poll_state_i2c_master(qup)) {
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1593  		ret = -EIO;
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1594  		goto out;
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1595  	}
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1596  
-eb422b539c1f39 Abhishek Sahu         2018-03-12  1597  	if (qup->use_dma) {
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1598  		reinit_completion(&qup->xfer);
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1599  		ret = qup_i2c_bam_xfer(adap, &msgs[0], num);
-eb422b539c1f39 Abhishek Sahu         2018-03-12  1600  		qup->use_dma = false;
-9cedf3b2f09946 Sricharan Ramabadhran 2016-02-22  1601  	} else {
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1602  		qup_i2c_conf_mode_v2(qup);
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1603  
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1604  		for (idx = 0; idx < num; idx++) {
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1605  			qup->msg = &msgs[idx];
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1606  			qup->is_last = idx == (num - 1);
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1607  
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1608  			ret = qup_i2c_xfer_v2_msg(qup, idx,
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1609  					!!(msgs[idx].flags & I2C_M_RD));
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1610  			if (ret)
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1611  				break;
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1612  		}
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1613  		qup->msg = NULL;
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1614  	}
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1615  
-f74187932d30e4 Sricharan Ramabadhran 2016-01-19  1616  	if (!ret)
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1617  		ret = qup_i2c_bus_active(qup, ONE_BYTE);
-7545c7dba169c4 Abhishek Sahu         2018-03-12  1618  
-7545c7dba169c4 Abhishek Sahu         2018-03-12 @1619  	if (!ret)
-61f647e9d36d67 Wentao Liang          2025-05-19  1620  		err = qup_i2c_change_state(qup, QUP_RESET_STATE);
-61f647e9d36d67 Wentao Liang          2025-05-19  1621  	if (err)
-61f647e9d36d67 Wentao Liang          2025-05-19  1622  		return err;
-f74187932d30e4 Sricharan Ramabadhran 2016-01-19  1623  
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1624  	if (ret == 0)
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1625  		ret = num;
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1626  out:
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1627  	pm_runtime_mark_last_busy(qup->dev);
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1628  	pm_runtime_put_autosuspend(qup->dev);
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1629  
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1630  	return ret;
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1631  }
-191424bb6166f6 Sricharan Ramabadhran 2016-01-19  1632  
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+With best wishes
+Dmitry
 
