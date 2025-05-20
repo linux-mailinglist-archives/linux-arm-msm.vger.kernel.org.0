@@ -1,189 +1,297 @@
-Return-Path: <linux-arm-msm+bounces-58594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 230ABABCEC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 07:50:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2558ABCEE6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 08:03:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 207991B63E70
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 05:50:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 820207A3589
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 06:02:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9462B2571B9;
-	Tue, 20 May 2025 05:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B91EB25B683;
+	Tue, 20 May 2025 06:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Pa0orcc2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wMvhR67+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD13E1E51FE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 05:50:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AD31DB124
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 06:03:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747720237; cv=none; b=FNruJ/zAEVwNOSVrVmEds7ntMXhAYX0Aj6ulqlzlTCBd4pG80HaJJxYmeomKN8VmV+5fkoMUcbPBnwplZ1gPEo8TIUwexFav1lU6mBRBJbjdXVQt3QsVAgTWOgRm3N3YQR9HevYzbKGPICx/CKis3WeeobkcFkJ2FizB+0GdY9k=
+	t=1747721003; cv=none; b=bAaVy5y8Jw9631f+S3jcA84ElLikUZ6i0H7Tmf2+0qpU4yFUelgbvnktAjwdswS3cO4YtaZZIY4Cbhc2p2MnrtbNPfd1VWypPwzwscrJnBma9Lle+hCFtVBPqPV9wO6PGcjFhXCfXIXGX2X3rnKGaaqKoZhgfk3ka3n6W4L2JsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747720237; c=relaxed/simple;
-	bh=KyK6TkIDOqoAf2nGdGYf5nH04CfJe0exGvpmgXebnc8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IgqvHsfeziVcznkUo0O9CCJzjWj5F/p4NUSO8+c2uQp+GvZVk01Qa3NByDqMFB1dzfu1DmZCHI9EB03PCF8IPg8Zd/qD/FeIX86bVfuKNeLG+1RAqGeNypvP0RyzIaiqdWfg6wvCWaWM2bq8WPSSrA3nCxih+jOcSj9/J73g7Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Pa0orcc2; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54JHmmbW027166
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 05:50:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Km24dUIRiYW8aOGNbg1DsjspZziPv5hT8ihdXJjpuKI=; b=Pa0orcc2Ha5EfEbi
-	f/iYtzOr3XM0A1KpPbUB24rqCz3gAsFgWyZmdcpZT6cd/liO2Gv8te56Bw7bQNBv
-	2l4aUUVEUxr2PmqmH+Fsvlm7ohGu4u3iz6DZHdxCEEXWeGypY3t4ehMHZOeG1NRt
-	RtVaBlL7lDOjLI+CCUVDXm91nsAMI8hyatiRHI+8buvFcs6+zQNX55IXRj/KA+aF
-	ilZrxqeMdSHHEWtHAM7P24wEqAqquUovnXcQoRwDzwAJ8Z30/LPVP8kgVDW7vZDX
-	d5T9NPuNX7ISmOapXs2ohqtF/VmT1GxfC8nQfba7RbrA/gxYcSwN8+tvuwQrM3Jf
-	W6qTYA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pkr9xn40-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 05:50:34 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-30e896e116fso3026966a91.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 22:50:34 -0700 (PDT)
+	s=arc-20240116; t=1747721003; c=relaxed/simple;
+	bh=kzHaamZZFjKOYQvT00HR9118hSlIU006QwWA7TkYXTE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ljDKbFKy2J9rSjErnWBe76fPOFmlQZjTMG/Ba2LODwM2c883NRpudF+v6vKjqmJrdsx9gf+jUUHrIvXfJA/UyF+pwxI6dXiM+Ugq7ZJBNXcVVBUelDCw+6mff3tM+tDFENXHey52H0ZjJR6gz+ncQPpaRLy0yRPoFEf9LVvJhHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wMvhR67+; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6006cf5000aso711260a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 May 2025 23:03:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1747721000; x=1748325800; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=h+3L+5Wk0I29VJqzwPhcySS+DGDSqL1wf3tzyzbHFwE=;
+        b=wMvhR67+isk0Ux6wa9g8SDl5z0nxn/EkdQUTSVJbTe1RYgOjsNgA7OeVYGdn/oUcpG
+         c4eq+WHFi5y8lpk7S/t14gAXr9SVkdm2cwFts1lhfTZWKA0gEH0epUhfvZ5q0lKOWmIp
+         CKoItivgqG3wwJl6wjEUmGv+WNgQK2nulc57eDCZr2I2enpNkjNUOOJ9zSmKoL8iLwJy
+         PNptv/vJXS6UIUMESSl2WcXULBTzikrvGrnuKvRFO1tctpnbAArYyJWl6RNQMavAultW
+         Z/zp6IwRut04IQnWdpCafMFvpI7xKLshL9Bx5NfcUR/cBBibPhVK2hHYRgaxm04bgW22
+         4fXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747720234; x=1748325034;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Km24dUIRiYW8aOGNbg1DsjspZziPv5hT8ihdXJjpuKI=;
-        b=nyo4stKb77XsbtenTyEXoKSa+f5j18BZyFtFJv+IuqnNIbW5GWALqfuKvovIlGQzzz
-         T6s6Alq4iTMCZYjmV4qaMm3Q+RcRtUBrsUM/WvMUVsUxPP+QLRWqvUuHnXYbctFCnz2Y
-         VGrnWhiTbAYY/jjd5UpZ5VUiYovIHN40bevEXQH6XEKEyOlkxXOuOHXcoFm/Bf+kbJhV
-         MROo5+nOYkjL5CIJAMQrVQJbF88MtZSl3DB2SDcfdzEX6aIFKa3XsVsKkXDoATifJYFR
-         SOBbKmE32mXXsLGPo5ZSTWUbYM+QwB/yCyvBMorMVIWSU1GO3njiytf8wqvYD6v0/+en
-         Lv9A==
-X-Forwarded-Encrypted: i=1; AJvYcCVHi+sHl9FyT4WlJWcesJIorbXBT/jHTg5P1Y+H6dDFRGElDLrmrnqSNWeI/5T7Q3eHU2OBa+86fiTQ+ezP@vger.kernel.org
-X-Gm-Message-State: AOJu0YysQMjMfSvl+8fX0lyhyFuXMaZX2vn5Wq5RozxWgQJ7hZ0lqk2G
-	eCEbKRgc5hYRaLE08wW0SxokIShRL/NfhiLS9b0uVRjYBl642bA8DFVP9rJkFE+6dqNPtt4HJAd
-	EuqOiTuHuzIe7vJsFj8lsXNrrfSDwvrWm38SinJSMUEkPa2GUlkMTMXl3MUSEnVYgqPtN
-X-Gm-Gg: ASbGncsqWF2U59kagJjE+WQWlTIAGGQkMXT47eGvx92+8WMBrvoQRIz099RMF8fSN60
-	Vq7ICKEYKE6abOnB/YJ/CWZ3men4Vgc7D4JZgIiKpa42fU1XztG97yyLfqmFwedpCUVZekHLRko
-	7julKGbWp2hqNK0v0q7n3ltCkuSRckdFFnlLwcxyxT5YWlO5rh8S5YNL4T57ugGPFRo1DQ6VPcg
-	rLPAGiGSP85Vi3rHvXAzzpl5NNKB+r1y6K7egKIxi49qFhHZ1wrGa4YDFK0XYGvfcfISFeKJ2U1
-	62cHwWheEqAKMD1tsb3YNG2abWftiP06GUxeJw==
-X-Received: by 2002:a17:90b:3b8f:b0:2ee:f677:aa14 with SMTP id 98e67ed59e1d1-30e830ebf2cmr22720474a91.13.1747720233941;
-        Mon, 19 May 2025 22:50:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFBZXuHT9cFq7ul2z/CNCiWSV/jZQ/+36VmU/IwET4aSX4ZC+a5hPtAj6e+8aiVHHcONSHRaA==
-X-Received: by 2002:a17:90b:3b8f:b0:2ee:f677:aa14 with SMTP id 98e67ed59e1d1-30e830ebf2cmr22720448a91.13.1747720233503;
-        Mon, 19 May 2025 22:50:33 -0700 (PDT)
-Received: from [10.204.65.175] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30f365b2d80sm772308a91.4.2025.05.19.22.50.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 May 2025 22:50:33 -0700 (PDT)
-Message-ID: <af7d73b8-6907-4520-bf92-bff2065a5ac6@oss.qualcomm.com>
-Date: Tue, 20 May 2025 11:20:29 +0530
+        d=1e100.net; s=20230601; t=1747721000; x=1748325800;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=h+3L+5Wk0I29VJqzwPhcySS+DGDSqL1wf3tzyzbHFwE=;
+        b=Om1hGSpW5QyouKAhKL7dwRQ3QdLbtSLhBkdN1yKtG/DVMDnOkRtEoi5vIalEP5rgNA
+         sB0c5u+b9y0Ymxs2AoNm8uTCzNolMMyZOQfOmQvh+8DPvS8HwvZL4V59SEWBq2LYWwzZ
+         hspnwGx4Bh8U7FnCk1wdQlCi0y976I1tS3c635dbxYYTjO7TZuLVT2NF8050cQNH+abH
+         eazK5X+QbERw/Y8dCr57hUdEp6oM+a7SFdzLI8ruTzEHSpILP3wYJ+aMADeoE88KUx5R
+         X87kboAE6T+QdfI5Z8HlfEcAaGK1RJ4QhmsSwb8BfQEAOcuz0bfsxO/H58ulzwJvY3GK
+         D17g==
+X-Forwarded-Encrypted: i=1; AJvYcCWOmv+Hdf0eRAJ6uWGZ54GB2ZUmYuTGJh4DA0uViEShIw7TrdZj+S5IO2ABExyyi4lyuY5Wc37voG68v4B6@vger.kernel.org
+X-Gm-Message-State: AOJu0YxQSgR24uQD7+qVexLU5rleayQxZe6JbELWkf7ZIkGEGMz3VHvY
+	WgxELFQxaMQq2pJNUcThaOSUjDQSvRoHDf+KbvNekaamcfOgJmGVqCIMHal/SfYGrVA=
+X-Gm-Gg: ASbGncuu0g5R91clAPvxvo7hhJhLJcUIwkRWULh3PkG7yvNhBCxSt08Qohh3B6jGNKT
+	yn1SDwAePjAfA/pSiZHkF5Pl+Sz644QtOtzwkdLJ1UPJdtQInYaiqcb0Ca6+VhB26o2hsRGUQ7B
+	UOh4lI9Zlk++tgpL+9XEf11ce+oRNrvYhEBZLbT9vSUcFeZlMwhHoDanOS6DR+vBh/MsmWNcEs3
+	dMdlPM0aJzeoK1oZyX3MLrpzpJqIv9RSM1jaweoByTGcX+9jRXxkn5DSIyj2GNdcGzh0fnUn97C
+	Qo0tqLDEb1aj50yst6D1TyAfjx+cSt3vytLkFp2zP9rXXEwbJ20udyskwdiWBg==
+X-Google-Smtp-Source: AGHT+IFTQtDRhko0YqLPOd33vYaqapq33LlBdmjbtssnUwIAMa1VgmHJ3TaRN7JuOLNsHMIWUEATgA==
+X-Received: by 2002:a05:6402:134b:b0:601:acee:fd7c with SMTP id 4fb4d7f45d1cf-601acef0123mr2625931a12.10.1747720999462;
+        Mon, 19 May 2025 23:03:19 -0700 (PDT)
+Received: from kuoka.. ([178.197.223.125])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6005ac33a88sm6698710a12.51.2025.05.19.23.03.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 May 2025 23:03:18 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Robert Foss <rfoss@kernel.org>,
+	Todor Tomov <todor.too@gmail.com>,
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 1/3] media: qcom: camss: vfe: Stop spamming logs with version
+Date: Tue, 20 May 2025 08:03:11 +0200
+Message-ID: <20250520060310.7543-4-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] misc: fastrpc: Fix channel resource access in
- device_open
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: srinivas.kandagatla@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
-        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
-        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-        dri-devel@lists.freedesktop.org, arnd@arndb.de, stable@kernel.org
-References: <20250517072432.1331803-1-ekansh.gupta@oss.qualcomm.com>
- <cq3ib5nunqiuysyfezkrr5qkcqutwjxjmabpeihpsizbx5tmm4@rhhjhzaq5km4>
-Content-Language: en-US
-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-In-Reply-To: <cq3ib5nunqiuysyfezkrr5qkcqutwjxjmabpeihpsizbx5tmm4@rhhjhzaq5km4>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: MsPB0fZ66Gj5V8UrMFrXC2oA7u1ay7Yt
-X-Proofpoint-ORIG-GUID: MsPB0fZ66Gj5V8UrMFrXC2oA7u1ay7Yt
-X-Authority-Analysis: v=2.4 cv=DdAXqutW c=1 sm=1 tr=0 ts=682c182a cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=ormgAfd318N_yApGj20A:9 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDA0NiBTYWx0ZWRfXwwaah01S6FHi
- Miio34RrECMUxMQCoWUlaMcokIqP7l7dng63AoRg5hYCDJTRHpUThJARvPcl2Y8oNGmnpCkdvb4
- 3bHjwPxQpa1VZQWDr0RzSDrtWNh1HjAhKm34v+KJwzP6izy/AKY/y6/YJChztSUKW5YD9g6d41X
- Uu5QZ25G40RqjBhTibyXXkR2811/HGGHeNSM4wdpdTN3EaZITnr216358qDofog0H5V8i8ylcNu
- vInl6Cgu8l5qaQBuGWqi0FfqrtGgCLwMHT8vkB21BDqUu/Qo3c+b+eFulphmIjw1ZwAlDKx7FKh
- zDpIPhEP+kfpQ7tiV5UYXLaJYuKAVzN5v9dTyk5TixaGtNQYIEKlD2hETlymK+dSMaLILLa9EBV
- F/JcvgkFdsZiaHFnvdusajI8J9j3a32HtX2v5JgXSsxBuwDlhn6wtTFAH7GmCwUsJdiseQ10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-20_03,2025-05-16_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 clxscore=1015 phishscore=0 adultscore=0 mlxscore=0
- spamscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 bulkscore=0
- impostorscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505070000 definitions=main-2505200046
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7752; i=krzysztof.kozlowski@linaro.org;
+ h=from:subject; bh=kzHaamZZFjKOYQvT00HR9118hSlIU006QwWA7TkYXTE=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoLBseIePo2FAZyDudhFWmnw+pWByEYl/L26o59
+ FLopTYLESmJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaCwbHgAKCRDBN2bmhouD
+ 1/tnD/9k7aSGFPMl/PfpwSoAneaOE7E3061Om8hqrfT3lRkx8UA/wGi7qzgy1wRRgEGoGHJgA+/
+ I+j1t/G2W9kJlIP0H9TqigzzU9bkkhj4YwrHZ0KtQT3QCFRMmhfJwGcy6Zq+Brdc1l5QazeIfG+
+ eh//4cZlFHIHyHpWGlEIVoJ/pH5fYl7K+F0iZpMicFfY9apsveUe43U1cF3dn9qBwYjnnmclllE
+ JOn1v7I+6BZdvTOp5kTOm6Hh0pM5T1HuUxLX1S1pyue1infu3eeoxXKgss6bUs0BOu9lEmegETB
+ Ix9SZ005X4XJpLfQxsCv5n48ztKlavfIb6QnT/ebVkrYmTl4ec3OzZDxFKF+Ns5cHs+685Nles0
+ bnGMEUgBGBhg9CUgRkF5eSCLFgH0b+y9nb0Twhl33k+LEiVSfnVCjAQ70lv0+ejIPq+mdlTdY8i
+ joHnenKBlnXbYfXeNpWhzH13qVHRfKq/I+lELKBye4sPwy6dmXHHhqQsNM2dMVrTgRbVsGIKpTy
+ MCB2R4nfWUryT1g0NwjWlLokaicqZaB0wRyQT2QrCLLiJyV81DvEMNnD1021m2igom7CfwqGIsT
+ tD2Kns0g8+6Xb8uhWsk2oYHCmFEZHw906ZLwfInYtPYhhlmUINkusEY2Tr+wjZ0Xd12vtHauRoO SKsQvWst8GiOS8Q==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Transfer-Encoding: 8bit
 
+Camss drivers spam kernel dmesg with 64 useless messages during boot:
 
+  qcom-camss acb7000.isp: VFE:1 HW Version = 3.0.2
+  qcom-camss acb7000.isp: VFE:2 HW Version = 2.4.0
 
-On 5/18/2025 4:33 PM, Dmitry Baryshkov wrote:
-> On Sat, May 17, 2025 at 12:54:32PM +0530, Ekansh Gupta wrote:
->> During rpmsg_probe, fastrpc device nodes are created first, then
->> channel specific resources are initialized, followed by
->> of_platform_populate, which triggers context bank probing. This
->> sequence can cause issues as applications might open the device
->> node before channel resources are initialized or the session is
->> available, leading to problems. For example, spin_lock is initialized
->> after the device node creation, but it is used in device_open,
->> potentially before initialization. Add a check in device_open for
->> rpdev and update rpdev at the end of rpmsg_probe to resources are
->> available before applications allocate sessions.
-> Can we fix this by registering the device node after initializing
-> channel resources?
-Ack.
+All of these messages are the same, so it makes no sense to print same
+information 32 times.
 
-Thanks.
->
->> Fixes: f6f9279f2bf0e ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
->> Cc: stable@kernel.org
->> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
->> ---
->>  drivers/misc/fastrpc.c | 6 +++++-
->>  1 file changed, 5 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index 7b7a22c91fe4..40c7fa048ba7 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -1568,6 +1568,9 @@ static int fastrpc_device_open(struct inode *inode, struct file *filp)
->>  	fdevice = miscdev_to_fdevice(filp->private_data);
->>  	cctx = fdevice->cctx;
->>  
->> +	if (!cctx->rpdev)
->> +		return -ENODEV;
->> +
->>  	fl = kzalloc(sizeof(*fl), GFP_KERNEL);
->>  	if (!fl)
->>  		return -ENOMEM;
->> @@ -2363,12 +2366,13 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>  	spin_lock_init(&data->lock);
->>  	idr_init(&data->ctx_idr);
->>  	data->domain_id = domain_id;
->> -	data->rpdev = rpdev;
->>  
->>  	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
->>  	if (err)
->>  		goto populate_error;
->>  
->> +	data->rpdev = rpdev;
->> +
->>  	return 0;
->>  
->>  populate_error:
->> -- 
->> 2.34.1
->>
+The driver does not use read version at all, so if it was needed for any
+real debugging purpose it would be provided via debugfs interface.
+However even then printing this is pointless, because version of
+hardware block is deducible from the compatible.  Fix the code to adhere
+to Linux kernel coding style: being silent on success.  For the same
+reasons this should not be even dbg message (see driver development
+debug guide: "In almost all cases the debug statements shouldn't be
+upstreamed").
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+---
+
+Changes in v2:
+1. Extend commit msg, because apparently coding style and debug guide
+   has to be reminded in commit msg, otherwise rules don't apply.
+---
+ .../media/platform/qcom/camss/camss-vfe-17x.c |  1 -
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |  1 -
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |  1 -
+ .../media/platform/qcom/camss/camss-vfe-4-8.c |  1 -
+ .../media/platform/qcom/camss/camss-vfe-480.c |  1 -
+ .../media/platform/qcom/camss/camss-vfe-680.c |  1 -
+ .../media/platform/qcom/camss/camss-vfe-780.c |  1 -
+ drivers/media/platform/qcom/camss/camss-vfe.c | 22 -------------------
+ drivers/media/platform/qcom/camss/camss-vfe.h |  8 -------
+ 9 files changed, 37 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-17x.c b/drivers/media/platform/qcom/camss/camss-vfe-17x.c
+index e5ee7e717b3b..e0d12c3f6015 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-17x.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-17x.c
+@@ -577,7 +577,6 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+ 
+ const struct vfe_hw_ops vfe_ops_170 = {
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr_read = vfe_isr_read,
+ 	.isr = vfe_isr,
+ 	.pm_domain_off = vfe_pm_domain_off,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+index 901677293d97..7620ce42b49b 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+@@ -993,7 +993,6 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+ 
+ const struct vfe_hw_ops vfe_ops_4_1 = {
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr_read = vfe_isr_read,
+ 	.isr = vfe_isr,
+ 	.pm_domain_off = vfe_4_1_pm_domain_off,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+index 76729607db02..b3b6ccb4748e 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+@@ -1145,7 +1145,6 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+ 
+ const struct vfe_hw_ops vfe_ops_4_7 = {
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr_read = vfe_isr_read,
+ 	.isr = vfe_isr,
+ 	.pm_domain_off = vfe_pm_domain_off,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+index b2f7d855d8dd..5a4b4f486aca 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+@@ -1135,7 +1135,6 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+ 
+ const struct vfe_hw_ops vfe_ops_4_8 = {
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr_read = vfe_isr_read,
+ 	.isr = vfe_isr,
+ 	.pm_domain_off = vfe_pm_domain_off,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+index 4feea590a47b..edd92308af62 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+@@ -278,7 +278,6 @@ static void vfe_buf_done_480(struct vfe_device *vfe, int port_id)
+ const struct vfe_hw_ops vfe_ops_480 = {
+ 	.enable_irq = vfe_enable_irq,
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr = vfe_isr,
+ 	.isr_read = vfe_isr_read,
+ 	.reg_update = vfe_reg_update,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-680.c b/drivers/media/platform/qcom/camss/camss-vfe-680.c
+index 99036e7c1e76..96a927acc6bb 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-680.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-680.c
+@@ -227,7 +227,6 @@ static inline void vfe_reg_update_clear(struct vfe_device *vfe,
+ 
+ const struct vfe_hw_ops vfe_ops_680 = {
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr = vfe_isr,
+ 	.pm_domain_off = vfe_pm_domain_off,
+ 	.pm_domain_on = vfe_pm_domain_on,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-780.c b/drivers/media/platform/qcom/camss/camss-vfe-780.c
+index b9812d70f91b..e5023eb7ad60 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-780.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-780.c
+@@ -142,7 +142,6 @@ static int vfe_halt(struct vfe_device *vfe)
+ 
+ const struct vfe_hw_ops vfe_ops_780 = {
+ 	.global_reset = vfe_global_reset,
+-	.hw_version = vfe_hw_version,
+ 	.isr = vfe_isr,
+ 	.pm_domain_off = vfe_pm_domain_off,
+ 	.pm_domain_on = vfe_pm_domain_on,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index 4bca6c3abaff..1ae523219525 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -415,26 +415,6 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
+ 	return 0;
+ }
+ 
+-/*
+- * vfe_hw_version - Process write master done interrupt
+- * @vfe: VFE Device
+- *
+- * Return vfe hw version
+- */
+-u32 vfe_hw_version(struct vfe_device *vfe)
+-{
+-	u32 hw_version = readl_relaxed(vfe->base + VFE_HW_VERSION);
+-
+-	u32 gen = (hw_version >> HW_VERSION_GENERATION) & 0xF;
+-	u32 rev = (hw_version >> HW_VERSION_REVISION) & 0xFFF;
+-	u32 step = (hw_version >> HW_VERSION_STEPPING) & 0xFFFF;
+-
+-	dev_dbg(vfe->camss->dev, "VFE:%d HW Version = %u.%u.%u\n",
+-		vfe->id, gen, rev, step);
+-
+-	return hw_version;
+-}
+-
+ /*
+  * vfe_buf_done - Process write master done interrupt
+  * @vfe: VFE Device
+@@ -1088,8 +1068,6 @@ int vfe_get(struct vfe_device *vfe)
+ 		vfe_reset_output_maps(vfe);
+ 
+ 		vfe_init_outputs(vfe);
+-
+-		vfe->res->hw_ops->hw_version(vfe);
+ 	} else {
+ 		ret = vfe_check_clock_rates(vfe);
+ 		if (ret < 0)
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
+index a23f666be753..1553ca89bd86 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.h
++++ b/drivers/media/platform/qcom/camss/camss-vfe.h
+@@ -101,7 +101,6 @@ struct vfe_device;
+ struct vfe_hw_ops {
+ 	void (*enable_irq)(struct vfe_device *vfe);
+ 	void (*global_reset)(struct vfe_device *vfe);
+-	u32 (*hw_version)(struct vfe_device *vfe);
+ 	irqreturn_t (*isr)(int irq, void *dev);
+ 	void (*isr_read)(struct vfe_device *vfe, u32 *value0, u32 *value1);
+ 	void (*pm_domain_off)(struct vfe_device *vfe);
+@@ -259,13 +258,6 @@ void vfe_put(struct vfe_device *vfe);
+  */
+ bool vfe_is_lite(struct vfe_device *vfe);
+ 
+-/*
+- * vfe_hw_version - Process write master done interrupt
+- * @vfe: VFE Device
+- *
+- * Return vfe hw version
+- */
+-u32 vfe_hw_version(struct vfe_device *vfe);
+ /*
+  * vfe_enable - Enable streaming on VFE line
+  * @line: VFE line
+-- 
+2.45.2
 
 
