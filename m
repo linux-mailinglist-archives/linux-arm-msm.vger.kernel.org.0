@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-58610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBAC0ABD001
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 09:01:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 38434ABD006
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 09:02:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 31E4D3BE157
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 07:00:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A9C138A065B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 07:02:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02751259C80;
-	Tue, 20 May 2025 07:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 960DD25A34B;
+	Tue, 20 May 2025 07:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c/K02XIc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LmBq0jDS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E8420E6;
-	Tue, 20 May 2025 07:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54051D5CEA;
+	Tue, 20 May 2025 07:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747724473; cv=none; b=Jv9ukZUpAtIX/UNrfbRczstoYnONSQcO6AJtoPjqVuutxzIWbRCYmcvfzJEJQsU3cbBk5WEtiDMFcJbhc0TKHEPusfP0Ts55QAHAOQnAOz3xc+HfT8ezPAOt7zG/Ey0wceyy7TDtpv7Wn2BuRVPqvUn7w3ryWrucD4zYUE1EwR8=
+	t=1747724560; cv=none; b=H9uCFh67/DYHNKL2HEdhjqkNhwhRgznAt733EQ+5nBdyKRPLvwuO85JehWuiZPP9JPKyDoiHOV4tH3qfEi8xMm/0wIOXv3WzR+8wX3zod6z2rUa7CdBDmrLtMPJ8hjNVYeXpi5ChXdF78SBPiy0lpfkVEUjPaTg0C0/MXXH9dFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747724473; c=relaxed/simple;
-	bh=a/SfpzBwYB7MErbeYtg9cL5pgsnu/DA6Ti0CGB09MTI=;
+	s=arc-20240116; t=1747724560; c=relaxed/simple;
+	bh=GjF/1qi/aA+qb8e+Gm4togAvh4CMeT/zQwBPU0nkros=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=eN9EU8EkCcdf4YmxOQWAO/Aay7ZB0/Kpv2pG08I80zTLyRfpP1cHQwZkvBfqJSyKV8qhHOJNtgpa0xNyNOUmXZ0q5DkwIKqrG9J4sElAKmZ5TSqumOJlc7rOOwOUoaI9bNcXQoe73G/9bemeAw0gYVyENRnHWmDzek4RSsDkvZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c/K02XIc; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=Ewm4KPlcMbrh8t+YaQGN7oJ9qdAUosjd/h01xkX14N2F3GcnkMPurJXIjPxrXq4AQxRKVt8PnFPx3HWmxJXPE3d+BnM4GezGMLALJcYuGhBhARzVgR0aR/qX4FTSivGO17PqHQgGNCoFsoX+meGKZ3ND5kWKFJJakFohVdkGua4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LmBq0jDS; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54JKaRD9027386;
-	Tue, 20 May 2025 07:01:05 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54K70Fdi003036;
+	Tue, 20 May 2025 07:02:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9fWlnVTfRyW4RCCDFTAJQbk5AZguUtzmzGG/w1VqTP0=; b=c/K02XIcnqkiSFGf
-	5K2PrlI0ZyPWTfVCuqWOMMVlU+1grP77td27u6qgbZKxhj6wHpg1tyuJeButnGuO
-	byHchohv2w/ACxtC6j1A6MtGAzP/q2w+2nUFj3A8rmL9AjiZQz9WSjZBBplQLjNZ
-	MPkVG7U1DWJh58KeQfJVdytb1aKCDU5u9PooK43MHO62NMqkZ1+opvqV7qSImvV7
-	r4DRYA/NFnRz2VuP+xtyzWZS3C+p+kWqG9ua8WMO5ZNuMYEnFUPP/WdoBDUWjImW
-	LSaoMUIjZTmoD/5o/t/XBRH/VUpU9Yd0qtBdNjFCxcb71h3VMdjo7wfQQwlPLUfA
-	FMTkhQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46pjjsxr0s-1
+	5m5D9RAHx8tqb+LmoKZpi+P0zGli3IPIo/DZsFZCeE4=; b=LmBq0jDSY4UpAAwK
+	I6cnL9+dr91RlO/ufx+c2ERANdQKRk0QZzf6NytGH0s9dY2fXZSkMJncFhYtRSSC
+	ZttZpJxThOIGnsUq0nSVU4+sKzLVARiV7nX9LnLwTM7UyQ4JoyMS+7X+UO56A7Wl
+	eg6baC4mAbSNUMSZuxa/dnbMbXMzUQsBVJln0K8c2bqYQP3G+82cMTLU7evC/Zk6
+	ASoLsLTp9k995bUrLQU43gDW51xd8cUSpVhXshZc9AtAGwJ9VsCh6s3pcpg60Ih2
+	oWuh+ClTRmcD1CbXzUsMTSDFQy7Fsbu6NiB0BZirHu9RZU3W6C+gvwuD0vYsQqtW
+	uHGmYg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46r1atk522-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 May 2025 07:01:05 +0000 (GMT)
+	Tue, 20 May 2025 07:02:33 +0000 (GMT)
 Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54K713FD020573
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54K72WO6013585
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 May 2025 07:01:04 GMT
+	Tue, 20 May 2025 07:02:32 GMT
 Received: from [10.218.0.120] (10.80.80.8) by nasanex01a.na.qualcomm.com
  (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 20 May
- 2025 00:00:51 -0700
-Message-ID: <3d867490-0738-4baf-9fd0-e522aa8d2677@quicinc.com>
-Date: Tue, 20 May 2025 12:30:51 +0530
+ 2025 00:02:24 -0700
+Message-ID: <09b3f318-0599-445b-8587-ee8ab9d42cbd@quicinc.com>
+Date: Tue, 20 May 2025 12:32:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,8 +65,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 2/3] mmc: sdhci-msm: Enable tuning for SDR50 mode for
- SD card
+Subject: Re: [PATCH V1 3/3] mmc: sdhci-msm: Limit HS mode frequency to 37.5MHz
 Content-Language: en-US
 To: Adrian Hunter <adrian.hunter@intel.com>,
         Ulf Hansson
@@ -84,135 +83,116 @@ CC: <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <quic_sachgupt@quicinc.com>, <quic_bhaskarv@quicinc.com>,
         <quic_narepall@quicinc.com>, <kernel@quicinc.com>
 References: <20241107080505.29244-1-quic_sartgarg@quicinc.com>
- <20241107080505.29244-3-quic_sartgarg@quicinc.com>
- <4e4870b5-4491-4f65-9a41-1a5e9e1bdf68@intel.com>
+ <20241107080505.29244-4-quic_sartgarg@quicinc.com>
+ <8b415442-283a-4fc8-ad0d-fbd8892d2ba2@intel.com>
 From: Sarthak Garg <quic_sartgarg@quicinc.com>
-In-Reply-To: <4e4870b5-4491-4f65-9a41-1a5e9e1bdf68@intel.com>
+In-Reply-To: <8b415442-283a-4fc8-ad0d-fbd8892d2ba2@intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 37qx-J20nTHUsPh0m709gGf2T0dyfiIX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDA1NiBTYWx0ZWRfX0U/EKY/m/vMB
- vVj87rvMt2ZQ6+2PtlY7/HF+JxmAn/8z0hDIVQ2VtbRsHddmW/HJM2SrmM6VNTNLTWtqz927Fk7
- OoUbvEuQ+Nl3FZ1j3629KJloYvy/rxw+NIX7r4d1cxx2ny2ikFXxPOtwraHbffTVgdbGHghinIV
- ctOlGxPZr2bV5S+n6lAkLBVTgWGTw+1oTs1GZam+E5XoPFMXefT59ikD5t59wIePFXkdFhCzf+7
- DP+PROMhVUcQuKyIlLgikERYgp7VLSS7JiLXTnb0axprMC+dRbiQ48uTaUymEBGR0DTs8DW6eTD
- EwojAV9TWPxGD2y66dhsJnnVMqY3RVbtZoq7Lu9ENqAfRhJ5BNeGqEorzpfA38UHm+MrciKElzN
- es++NoDH1iBOtpLm/1+YrkAMJDdNKAB7RUZD7SiV3wFIZBs1CVNmziD/2saQB2DCCJ83IfU8
-X-Authority-Analysis: v=2.4 cv=K4giHzWI c=1 sm=1 tr=0 ts=682c28b1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=OfqYDgTY c=1 sm=1 tr=0 ts=682c2909 cx=c_pps
  a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
  a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
- a=05cVhv9CEcOWwgLMNlEA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: 37qx-J20nTHUsPh0m709gGf2T0dyfiIX
+ a=qYZ75QzxO1GUA97RLtUA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: HFMMDUcySGRzdloWm-j4NAEsXPrFh1p2
+X-Proofpoint-GUID: HFMMDUcySGRzdloWm-j4NAEsXPrFh1p2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDA1NiBTYWx0ZWRfX0miuvcUe9rBw
+ 07+sQzWMSflWb41Kk7t2P01KN9gXOlBpMGrZxKaW+u4xmt2mL82dxhl5jVkPLxDZ9JIpe5XDZ6D
+ 06xYHrfeZy+VedTM9MU/uNjoU1HuFUzNWrdDwDQEej/ab4+1T8ibtsn5V37oBxW4Ah9vWuvsO0H
+ 6WTpNK2rzMDtgg0oYuNbbX3+IO7LUAMzS2X5zjMXKdu1ml9TtZA/okQfvlih8r/hb6aeW98e13y
+ 0SkFYoyuUJuJsbaam+uHj7KLfJ3zCiV0KlDpZGP8wyUXveFiGbWLkxlbSDxTXkexx4EbZoNzaV0
+ WxFI7K1Mc2ndwr9iGm9EsbIuf8Kt3ej0ymmQeCszTzJIwqrRlo4zYJoFs7+Ir7U5RmL9ZG8/s5F
+ prFSVx770VUEdiWhznrhWzlbpg+X9lovUXOzoPTOnBQoiHhakdhS/M5iMSLzdEL9rDbz5Egj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-20_03,2025-05-16_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 mlxlogscore=999 suspectscore=0 phishscore=0
- clxscore=1011 malwarescore=0 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 mlxscore=0 adultscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505070000 definitions=main-2505200056
+ impostorscore=0 lowpriorityscore=0 phishscore=0 mlxscore=0 malwarescore=0
+ bulkscore=0 suspectscore=0 priorityscore=1501 spamscore=0 mlxlogscore=999
+ clxscore=1015 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505070000
+ definitions=main-2505200056
 
 
 
-On 11/11/2024 2:21 PM, Adrian Hunter wrote:
+On 11/11/2024 2:28 PM, Adrian Hunter wrote:
 > On 7/11/24 10:05, Sarthak Garg wrote:
->> For Qualcomm SoCs which needs level shifter for SD card, extra delay is
->> seen on receiver data path.
+>> For Qualcomm SoCs with level shifter delays are seen on receivers data
+>> path due to latency added by level shifter.
 >>
->> To compensate this delay enable tuning for SDR50 mode for targets which
->> has level shifter.
+>> To bring these delays in normal range and avoid CMD CRC errors
+>> reduce frequency for HS mode SD cards to 37.5MHz for targets which has
+>> level shifter.
 >>
 >> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
 >> ---
->>   drivers/mmc/host/sdhci-msm.c | 16 ++++++++++++++++
->>   1 file changed, 16 insertions(+)
+>>   drivers/mmc/host/sdhci-msm.c | 10 ++++++++++
+>>   1 file changed, 10 insertions(+)
 >>
 >> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
->> index e00208535bd1..16325c21de52 100644
+>> index 16325c21de52..5e1dc06c4707 100644
 >> --- a/drivers/mmc/host/sdhci-msm.c
 >> +++ b/drivers/mmc/host/sdhci-msm.c
->> @@ -81,6 +81,7 @@
->>   #define CORE_IO_PAD_PWR_SWITCH_EN	BIT(15)
->>   #define CORE_IO_PAD_PWR_SWITCH	BIT(16)
->>   #define CORE_HC_SELECT_IN_EN	BIT(18)
->> +#define CORE_HC_SELECT_IN_SDR50	(4 << 19)
->>   #define CORE_HC_SELECT_IN_HS400	(6 << 19)
->>   #define CORE_HC_SELECT_IN_MASK	(7 << 19)
+>> @@ -138,6 +138,8 @@
+>>   /* Max load for eMMC Vdd-io supply */
+>>   #define MMC_VQMMC_MAX_LOAD_UA	325000
 >>   
->> @@ -1124,6 +1125,10 @@ static bool sdhci_msm_is_tuning_needed(struct sdhci_host *host)
->>   {
->>   	struct mmc_ios *ios = &host->mmc->ios;
->>   
->> +	if (ios->timing == MMC_TIMING_UHS_SDR50 &&
->> +			host->flags & SDHCI_SDR50_NEEDS_TUNING)
-> 
-> Please do line up code as suggested by checkpatch:
-> 
-> CHECK: Alignment should match open parenthesis
-> #35: FILE: drivers/mmc/host/sdhci-msm.c:1129:
-> +       if (ios->timing == MMC_TIMING_UHS_SDR50 &&
-> +                       host->flags & SDHCI_SDR50_NEEDS_TUNING)
-> 
-> CHECK: Alignment should match open parenthesis
-> #55: FILE: drivers/mmc/host/sdhci-msm.c:1219:
-> +       if (ios.timing == MMC_TIMING_UHS_SDR50 &&
-> +                       host->flags & SDHCI_SDR50_NEEDS_TUNING) {
-> 
-> total: 0 errors, 0 warnings, 2 checks, 40 lines checked
-> 
-> 
-
-Sure will update in V2.
-
->> +		return true;
+>> +#define LEVEL_SHIFTER_HIGH_SPEED_FREQ	37500000
 >> +
->>   	/*
->>   	 * Tuning is required for SDR104, HS200 and HS400 cards and
->>   	 * if clock frequency is greater than 100MHz in these modes.
->> @@ -1192,6 +1197,8 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
->>   	struct mmc_ios ios = host->mmc->ios;
->>   	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
->>   	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
->> +	const struct sdhci_msm_offset *msm_offset = msm_host->offset;
->> +	u32 config;
+>>   #define msm_host_readl(msm_host, host, offset) \
+>>   	msm_host->var_ops->msm_readl_relaxed(host, offset)
 >>   
->>   	if (!sdhci_msm_is_tuning_needed(host)) {
->>   		msm_host->use_cdr = false;
->> @@ -1208,6 +1215,15 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
->>   	 */
->>   	msm_host->tuning_done = 0;
+>> @@ -287,6 +289,7 @@ struct sdhci_msm_host {
+>>   	bool use_cdr;
+>>   	u32 transfer_mode;
+>>   	bool updated_ddr_cfg;
+>> +	bool uses_level_shifter;
+>>   	bool uses_tassadar_dll;
+>>   	u32 dll_config;
+>>   	u32 ddr_config;
+>> @@ -366,6 +369,11 @@ static void msm_set_clock_rate_for_bus_mode(struct sdhci_host *host,
 >>   
->> +	if (ios.timing == MMC_TIMING_UHS_SDR50 &&
->> +			host->flags & SDHCI_SDR50_NEEDS_TUNING) {
-> 
-> Ditto alignment
-> 
-
-Sure will update in V2.
-
->> +		config = readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec);
->> +		config |= CORE_HC_SELECT_IN_EN;
->> +		config &= ~CORE_HC_SELECT_IN_MASK;
->> +		config |= CORE_HC_SELECT_IN_SDR50;
-> 
-> Perhaps clear bits first, then set bits e.g.
-> 
-> 		config &= ~CORE_HC_SELECT_IN_MASK;
-> 		config |= CORE_HC_SELECT_IN_EN | CORE_HC_SELECT_IN_SDR50;
-> 
-
-Sure will update in V2.
-
->> +		writel_relaxed(config, host->ioaddr + msm_offset->core_vendor_spec);
->> +	}
+>>   	mult = msm_get_clock_mult_for_bus_mode(host);
+>>   	desired_rate = clock * mult;
 >> +
->>   	/*
->>   	 * For HS400 tuning in HS200 timing requires:
->>   	 * - select MCLK/2 in VENDOR_SPEC
+>> +	if (curr_ios.timing == MMC_TIMING_SD_HS && desired_rate == 50000000
+> 
+> Wouldn't desired_rate > LEVEL_SHIFTER_HIGH_SPEED_FREQ make more sense?
+> 
+
+Sure will update in V2.
+
+>> +		&& msm_host->uses_level_shifter)
+>> +		desired_rate = LEVEL_SHIFTER_HIGH_SPEED_FREQ;
+> 
+> As checkpatch says:
+> 
+> CHECK: Logical continuations should be on the previous line
+> #46: FILE: drivers/mmc/host/sdhci-msm.c:374:
+> +       if (curr_ios.timing == MMC_TIMING_SD_HS && desired_rate == 50000000
+> +               && msm_host->uses_level_shifter)
+> 
+> total: 0 errors, 0 warnings, 1 checks, 34 lines checked
+> 
+> 
+
+Sure will fix this in V2.
+
+>> +
+>>   	rc = dev_pm_opp_set_rate(mmc_dev(host->mmc), desired_rate);
+>>   	if (rc) {
+>>   		pr_err("%s: Failed to set clock at rate %u at timing %d\n",
+>> @@ -2372,6 +2380,8 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
+>>   
+>>   	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
+>>   
+>> +	msm_host->uses_level_shifter = of_property_read_bool(node, "qcom,use-level-shifter");
+>> +
+>>   	if (of_device_is_compatible(node, "qcom,msm8916-sdhci"))
+>>   		host->quirks2 |= SDHCI_QUIRK2_BROKEN_64_BIT_DMA;
+>>   }
 > 
 
