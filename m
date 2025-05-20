@@ -1,168 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-58727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48F98ABDE34
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 17:05:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B212ABDD99
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 16:44:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A85E45024AB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 14:42:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96EF0189509D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 14:44:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A1DB24A07A;
-	Tue, 20 May 2025 14:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6D7B24A04A;
+	Tue, 20 May 2025 14:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FFryM423"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d0C0WhaH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA42024BBE1
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 14:41:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B8E24A043
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 14:43:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747752074; cv=none; b=VTjUPWJiKrIwnI5pCQz/fXtajqFBnnBKPCiuTx30wZOdFa5ljRJMJW3y2G3LTW4EQ8DTOqzfxWkG2DnEMWZTsxxcjgLCm+lQSYs4Ov4D6KBlaIlgNgrUlOBQy4wu3xFvAwJd5Nyts/LAGPrTNJV3EalUhflsP5XnNm0uPHy9ETY=
+	t=1747752183; cv=none; b=LfbwalaWIBdllVW2EZ4f87CSFSJFsS3ewODAffg7f20hV5rbFrZLxj7fZg3cGG6jYnssBFNCHJp18ssNa8FAtyarC/MfvKfMhuj4UooGmYi/VdkRgOvn7dJYlbOG0ps25kEVy0S65FjOLR65eUXelrdePhEha46pG/9CSTrFdkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747752074; c=relaxed/simple;
-	bh=qFi0PJjY/GA1ckQYhEy9BBKu3FmQYIbZut6fOgyE9AM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sK4UCfaTH6L/mTlrm6qV+97PAIgojXFGFIlbXbH0YU3rvl0LG1dA9b7Kk3kRRe4A4oVwbQAi7Es3aq+gYCBUVvx/FrCupysn71heuj/GqV4eTcGKg150+9lzJqgVkJNk+xK4sQBd2hLKu3jLzvVavMRDJ1PO6QTOnHyWt1f0DA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FFryM423; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54K7RoWF013451
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 14:41:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5mlNLJPj3keKy5AFMk6a+E68XXmDj4hPUVAPocc0XyY=; b=FFryM423ca3nRm9G
-	9EWVIkfKHYKFJf3qZI6nG6kJEqZwqnhOjG5ve7C+E3K9PEn2SjplGrhAtR883N0U
-	T9rh2oHx/HQSR3Cbg3yd6nd8QXRHfd6mT/4J7C0sribVshIsoKtvXGMLpKO8Xt5o
-	rhKZZuNM0xh7n8tdy5/T0T5/OhKIxJXIpUOAZCBt3Nshlv8/k9+TrIrh9ZuALrMF
-	rLLscKbHuSIy9jpqRkCsupsOolox2rbRg+i8if/rN237QEKxqMlAYmSNMEBEE0zr
-	op00AaGrC9jRtb28Z1w58E71RnP/K4nxHBaH+E7OiBdMHflSDKV9dNUjNU/uP98X
-	F9BBPQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rbt22gmy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 14:41:12 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c552802e9fso143965385a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 07:41:11 -0700 (PDT)
+	s=arc-20240116; t=1747752183; c=relaxed/simple;
+	bh=3M48Bi0RAMhbjAINU8Rj4l8VTLi4EPIWgknw+A4XTeQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=X2vMKZMvB04e+ItG8HME2qXVn8k2+bkhIBjzUjOyd1BNEXKOUWRsFOkjepfTOmdFH369k9jd8at69jmIXq0wFAonKw5WrXZtdk624MM6nb/e/Ba1/rqVwMcIdKfNxLU+jVkx0OBfRkchaqo/iuP86Rb5crXwzbrc6Sd/PlhYXMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d0C0WhaH; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-309f26c68b8so528154a91.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 07:43:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747752181; x=1748356981; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NL9VnS5cf/6NW/p94tIKHT/4gGzvfJ3RyyiZ0fUNEek=;
+        b=d0C0WhaHbEaIeTZJNm279NSRuNMuafgRatbIqfRMxBB5qD1MNdbP5oPEmLQVN4DSWk
+         E6uJljf0ipS3SUHGU7wNftXGyNvjD7p9Ry6vnLARnO9BvOKuhFlvpCPEBpGsQG2Jiuq6
+         h2GnB93vPxie/WPHE3V/azDmIf7aWoVsPONM6eA6KTlkOqG2qq36+WuAboo9fO1pVCbX
+         QIBZ6rMbTXSXid6E1KcfkuuZ+4voKFrEC1GM8s07TrdutdCfRsFdfsoSnlgDfwXYfDpe
+         8r0ZbswrZXwgd3ZhFiOu73beTh0+50SrsreRbBcu+WxvVz2ur8aCFzzMhVRcnnKYBiXr
+         ejLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747752071; x=1748356871;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5mlNLJPj3keKy5AFMk6a+E68XXmDj4hPUVAPocc0XyY=;
-        b=EuF/MzAJqt39+PfZSrm7vMRVU89GRNzoJ81tVTZkMCBndXhl1nqjmCHYtguR7U/Gpt
-         5uzNChyWM1ZnI6xM8Q5oQcLkFMia2a/1mYehog1qZi3E0Xgiwd8v8xfQgI9TvPeqPHaY
-         b7k2TqFwTxzPcGgsN9qxJSsRCY1pZzRrwjYmtdYykpA65N3W9rAE7LjAcrqXilrJyeJ5
-         IAyDBbf6XO1F3EyX+5UgKOcvudnYHBHgPKF3SyobCqnd0Q7GDCR6JbdwPuGir3/2weVi
-         wCc8hZx4bODKN2DPbySwt7b6SHMTOKiAeS+ii8qEf+t7VsIF/m3ki6ZlYVyNZ5Wf+Jaw
-         2aMw==
-X-Gm-Message-State: AOJu0YwjGX2KtWwu2ZD2KWz3y5+WLYCpy7vODW85x2k0/0nojo1rWYue
-	G8YHb/jtd7/N1V9vDgMl7VB22RIUMZSJ/ceMQ+wspiG7z7pvzflb+jtUJKUEEWN5TjCZHC5SGPq
-	RbL+tt5uW4WK9+UEwOwUIGlkWQfdbi2Sp+emdPcGgfd343uz3vIQ1K+s1VdJNywwpPzlA
-X-Gm-Gg: ASbGncsX1duxIOSPR35/wkeXdjWOjG9bVQHVVz1TzrZe6eUBZo62tRYmeExyaCMSD9e
-	xWh144S5fBbKKmvwyxpL2Q57AX7kMaQu0jv89v+p88wOcZxJr8TOPl+XxAfbQd6wilWYqZ8pznp
-	/uLMyRwXFpkWA2Zwf334V54RZWJe0CwTeEC6A8ary9mW37TC860TM67MAU6ocCUHVITV6OH/pf8
-	o4P0Vnt0iwv3/rpGk5L6BDG3Rfk+cNq36/ppzK34jZrUaIuVdLnDEGiir95L76Ki/5O1I/j3zD9
-	4y6nkoxd7CGrvjbYV5DNxkTP55fZThUny2Uu40qKzKKXA3op7nCLGEmqPz6jMrlQHw==
-X-Received: by 2002:a05:620a:240c:b0:7cd:4bd2:6d5a with SMTP id af79cd13be357-7cd4bd26e5cmr922855685a.5.1747752070704;
-        Tue, 20 May 2025 07:41:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFPo77pYRE2NGo3yezIOzCTbQgbl0QAy276sr1Zd5knvtytt7Q4ECIBHJ/yj8osKF+sAF/G1w==
-X-Received: by 2002:a05:620a:240c:b0:7cd:4bd2:6d5a with SMTP id af79cd13be357-7cd4bd26e5cmr922854185a.5.1747752070132;
-        Tue, 20 May 2025 07:41:10 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d04aed7sm742444866b.9.2025.05.20.07.41.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 May 2025 07:41:09 -0700 (PDT)
-Message-ID: <c9b1422d-46f4-467a-b6c4-27eecae95897@oss.qualcomm.com>
-Date: Tue, 20 May 2025 16:41:08 +0200
+        d=1e100.net; s=20230601; t=1747752181; x=1748356981;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NL9VnS5cf/6NW/p94tIKHT/4gGzvfJ3RyyiZ0fUNEek=;
+        b=kfxj4C8D3C+1mZ5xRjdkXiwYwCDkui9YTouBk0xdWgfYi6RkBTRQDS7blZAxMEHbU0
+         c2x/ROsY4lHEEpXL/Vo6C24b0/yXc1r3mn/hRu+rheLUs6VozkqOfklFwXP04ihul94N
+         dwRhG62YsmD22CTPuafWXlqo9DneaaxYzGPjyf/qKkSZ8HdBxYquJo5DWBzYJ6Vqm3i1
+         dJfs0u7PbDY2UxarKND0c2oKdKo17NpEF5s18OJYFYv4ZUZQU1kalNjdalMf/dm08Tsi
+         /bb8B9dGb0J1cGkSX3LURPNHO/Htzn/Kdxy2ji/pJtfpLaLyQVkHm583UiTD/Cxq+J5p
+         Q8AQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXMKs+TmVDGDvnYoaIZEs8S4/iLYLsX24xA3XgFh3JK/58oHTX1+DzZuDYLz3Sx9olon2x4W6fCYZd3HaX4@vger.kernel.org
+X-Gm-Message-State: AOJu0YyizyzGPHHNWKsXo5IJSdUDcGkNoyuvC5raPUiu6UQ/5W20cwyc
+	WnsQDB4odDyzlhvql/7lIYuTTadLc32fF2mbPOeCdIPCDrJY7UgWTm21suSAdQJTqrAZp78iFZJ
+	uu+FX4f85IQHJnij18r0kBNdCnKHm01I=
+X-Gm-Gg: ASbGncvu7mtwr4Y9XmplXvQk9z7hCPE/cr23cBT4+QXEeHKhy+ft4xeea/WacTDiV2K
+	WiO81MYJUhjTrHOoFXf9J6gvJwCAtxaDsTMZW0C0h0M3yXxyKOnyDC2rktcZVD//uqn8bMXnvJp
+	t6rsZrxgK7ti2QNhGlw9Nuj8wupCI5lBf2
+X-Google-Smtp-Source: AGHT+IF/aCn3KuIR/kknx0aBZr7IzoK3GvwOK/L+4l4anpA0Ks1VE8JmQjWR6x3bz5ayRXEdRHZ1M4ocBueOSYEkMnU=
+X-Received: by 2002:a17:90b:3b48:b0:30c:4b09:5f3d with SMTP id
+ 98e67ed59e1d1-30e7d61316bmr10052600a91.8.1747752181324; Tue, 20 May 2025
+ 07:43:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] soc: qcom: qcom_stats: Add support to read DDR
- statistic
-To: "Maulik Shah (mkshah)" <maulik.shah@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Doug Anderson <dianders@chromium.org>
-References: <20250429-ddr_stats_-v1-0-4fc818aab7bb@oss.qualcomm.com>
- <20250429-ddr_stats_-v1-1-4fc818aab7bb@oss.qualcomm.com>
- <b3119bef-d045-467b-91cf-37fe6832ff63@oss.qualcomm.com>
- <890b9e41-d5a2-4df3-bb21-71642b4e6410@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <890b9e41-d5a2-4df3-bb21-71642b4e6410@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDExOCBTYWx0ZWRfX7fL4zRPCoeSi
- UOxF7Kd4YSQXXiwLVX6gRZyordubQ8Ft0jld+3ercg2lc5AYNt8+YDyxIUVuz070vmCARMhZMgU
- Lq0ytyEvbhI5KZbHkLu3uR1wdeqALl/de7tKfQHQ64FSfO7lJ4LuW7Nzq4jYoDvc2lmaT1652RH
- W21tkK+zqehImSnKjxd10qeZT7c9WVwz/x93TdTg/Oe5UUuxa9xlhjdZcaj7Nf5eV9POtWmU3uM
- pJTYRuLpMGqeUqPe84SbmscqS+oSNaASlcQ43MMPXvgJ0FPVUXlfPj+S2J5IgY2fVnWOTkmY8b5
- Q/cRbkI0Wos9nikDcBK2L5eLbrEWP3Fmz/NMA4MrZKTSvVj49nqcOlaw2kSVqjAckZidnfvyF2I
- cqaRohUuA00Gk2e9s8kRQecP0AoEYownoeHMeOJY14UG33ji2GFOK46vpxJYf8TQ12y09Vjq
-X-Proofpoint-GUID: 8ioPmIE2plyyzWYGZ1n6tLP9ed9SRDwf
-X-Proofpoint-ORIG-GUID: 8ioPmIE2plyyzWYGZ1n6tLP9ed9SRDwf
-X-Authority-Analysis: v=2.4 cv=dISmmPZb c=1 sm=1 tr=0 ts=682c9488 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=1C6ALYQBLxPpYy_y2mUA:9
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-20_06,2025-05-16_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0 mlxscore=0
- spamscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999
- lowpriorityscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505070000 definitions=main-2505200118
+References: <20250515-msm-gpu-fault-fixes-next-v6-0-4fe2a583a878@gmail.com> <20250520141857.GC18711@willie-the-truck>
+In-Reply-To: <20250520141857.GC18711@willie-the-truck>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Tue, 20 May 2025 10:42:49 -0400
+X-Gm-Features: AX0GCFsH2VOZ8YMhHMV3BqM8wqyCOVzoUFywTVBwakEJMPVYAMwwsNIEoTGSpRU
+Message-ID: <CACu1E7HdJvbx_6L9KvX3n78_cbkrey8npo=O=AkEzg335wJC=g@mail.gmail.com>
+Subject: Re: [PATCH v6 0/7] iommu/arm-smmu, drm/msm: Fixes for stall-on-fault
+To: Will Deacon <will@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>, 
+	Joerg Roedel <joro@8bytes.org>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 5/20/25 11:59 AM, Maulik Shah (mkshah) wrote:
-> 
+On Tue, May 20, 2025 at 10:19=E2=80=AFAM Will Deacon <will@kernel.org> wrot=
+e:
+>
+> Hi Connor,
+>
+> On Thu, May 15, 2025 at 03:58:42PM -0400, Connor Abbott wrote:
+> > drm/msm uses the stall-on-fault model to record the GPU state on the
+> > first GPU page fault to help debugging. On systems where the GPU is
+> > paired with a MMU-500, there were two problems:
+> >
+> > 1. The MMU-500 doesn't de-assert its interrupt line until the fault is
+> >    resumed, which led to a storm of interrupts until the fault handler
+> >    was called. If we got unlucky and the fault handler was on the same
+> >    CPU as the interrupt, there was a deadlock.
+> > 2. The GPU is capable of generating page faults much faster than we can
+> >    resume them. GMU (GPU Management Unit) shares the same context bank
+> >    as the GPU, so if there was a sudden spurt of page faults it would b=
+e
+> >    effectively starved and would trigger a watchdog reset, made even
+> >    worse because the GPU cannot be reset while there's a pending
+> >    transaction leaving the GPU permanently wedged.
+> >
+> > Patches 1-2 and 4 fix the first problem by switching the IRQ to be a
+> > threaded IRQ and then making drm/msm do its devcoredump work
+> > synchronously in the threaded IRQ. Patch 4 is dependent on patches 1-2.
+> > Patch 6 fixes the second problem and is dependent on patch 3. Patch 5 i=
+s
+> > a cleanup for patch 4 and patch 7 is a subsequent further cleanup to ge=
+t
+> > rid of the resume_fault() callback once we switch resuming to being don=
+e
+> > by the SMMU's fault handler.
+>
+> Thanks for reworking this; I think it looks much better now from the
+> SMMU standpoint.
+>
+> > I've organized the series in the order that it should be picked up:
+> >
+> > - Patches 1-3 need to be applied to the iommu tree first.
+>
+> Which kernel version did you base these on? I can't see to apply the
+> second patch, as you seem to have a stale copy of arm-smmu-qcom.c?
+>
+> Will
 
-[...]
+Sorry about that, for the next version I'll rebase on linux-next. I
+was using an older version of msm-next for a while now.
 
->>> +static int qcom_ddr_stats_show(struct seq_file *s, void *d)
->>> +{
->>> +	struct ddr_stats_entry data[DDR_STATS_MAX_NUM_MODES];
->>> +	void __iomem *reg = (void __iomem *)s->private;
->>> +	u32 entry_count;
->>> +	int i;
->>> +
->>> +	entry_count = readl_relaxed(reg + DDR_STATS_NUM_MODES_ADDR);
->>> +	if (entry_count > DDR_STATS_MAX_NUM_MODES)
->>> +		return 0;
->>
->> -EINVAL
->>
->> Konrad
-> 
-> I kept this return as success from details given in commit message of [1] 
-> which made the qcom_subsystem_sleep_stats_show() function return 0
-> in order to run command like below to collect the stats without interspersed errors
-> grep ^ /sys/kernel/debug/qcom_stats/*
-> 
-> The same may break if return error from ddr stats too.
-
-Stephen mentioned that the errors may have appeared because the subsystems
-may only populate data after the probe of the stats driver.
-
-I would assume and hope the DDR stats aren't affected by this..
-
-Konrad
+Connor
 
