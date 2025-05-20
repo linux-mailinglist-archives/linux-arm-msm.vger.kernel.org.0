@@ -1,69 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-58579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A2E4ABCD13
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 04:17:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65388ABCD26
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 04:19:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 12DF17B0740
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 02:16:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CCF1A8A3FD0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 02:17:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C25725D8FC;
-	Tue, 20 May 2025 02:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BAB825DB1C;
+	Tue, 20 May 2025 02:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wa214EZq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CjKTqn2+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2F91519A6;
-	Tue, 20 May 2025 02:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32E425DB10;
+	Tue, 20 May 2025 02:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747707324; cv=none; b=PEmmHjEKM8P9LqZRn6uBP4orgCvS9TSxDEn01k06aDarq/8L6ESmaHz9iicp7TAzmsDsr6xWrN1bvMrIzB6wYlsrXIhvVo2zm0oSm22o+/nZ40OSYkeUPGAvd/HI0oVVdyy1K28jo+Py9qO77X2KQX+1GZhn/jfPasgwX0ElR2c=
+	t=1747707326; cv=none; b=VwRfQ1exzmwoaxhWJ15druWLjF7K7EqwrpXl3ocpyScwJBot496mpP461Gqx0IdcsFVBl0YL3RG9WmdW1PMzOVVVaxwwrbPW6TEjrdtW8gFmTduC1Yud7XVJnWPWwdozdLpy3Ht/Yxe5Ob5M1P63yDUXMQfCmjFnzhUoE12eWrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747707324; c=relaxed/simple;
-	bh=EPiQV0+RFQ6SbjXgsSYabKbALscwJInqg1lm97yoZBI=;
+	s=arc-20240116; t=1747707326; c=relaxed/simple;
+	bh=H3RNy1QopA8XBHXbgs1WFb57N7pwcUaae1WDDl+1nOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BWsQcAr9mlo3gkJVEASbrGrk+BPMJzf6ardGPFgHygHJs3IlBdw9PcCW5gvmUhW6b5p5Jec4KkNZYphCOohkR7QFKAQ3Ipg64jkwNGGG91yQDkka2SKcehLa0aPrJvOdb5TW0ajYNN2UtG+Z5ykGevcgTiKa/BfpQk0lqFw3B6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wa214EZq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0430AC4CEE4;
-	Tue, 20 May 2025 02:15:22 +0000 (UTC)
+	 MIME-Version:Content-Type; b=sqW3vb1l0qacqCf+5a2dbsLzSs9QgxJ4NLgp+gm443bcO5PpLHaSJSj6tl6jBD0KLaJHuhnE3YJoSTiiza5oOTAvMAuezLgvW5O+wt0ArOMwL4muvNltwRk2xl+KC1ZqVWd25j+GxiFU/aWVFw7arklMC9PEn4m1cCWDfMwA7fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CjKTqn2+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756EEC4CEED;
+	Tue, 20 May 2025 02:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747707324;
-	bh=EPiQV0+RFQ6SbjXgsSYabKbALscwJInqg1lm97yoZBI=;
+	s=k20201202; t=1747707325;
+	bh=H3RNy1QopA8XBHXbgs1WFb57N7pwcUaae1WDDl+1nOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wa214EZqr7yeyORFF/dO6socO/YzFt2sqs2SSaN+xPqZA/lO8wIo+3LoJiCcVpjXz
-	 dSClB5qk6rhS59EBXVhhpvg+ju/RT9GEMSa05OFHjMtCLJ/ZI5ZL1a71LZEnoDvvkk
-	 bQMFCG9UTPmaZ37NPv4ynUcplOKhuvl3v/XlrIP3kWVadN6SAshYepHOqKI1+L1KOH
-	 /Q6q6WpfpbAnlknhsw7RMJQ1sYA+sW/VjS6vRiImw9zgAC6zxeEhr9dY4L7rxGbbJt
-	 OETprUUxa8F70bshPdD7FV8loFeSbsq/iZu8S2S1ScPG9UPmct5yZwzhfqIHjNB1kP
-	 ZXpdQT9nOHogA==
+	b=CjKTqn2+EXKczcxbsqsoW31rFjT8KnlygR1/vW7JRnW7ZTFfn7anWDPAn0K6v64wt
+	 iYsKZJt6mtizjorRU7yzFXNGvSV0K0BT34QAf3qIgOhpQeFRnZH9QSbyb9I8VZSor/
+	 Orl45jGs9RuI+d5M/q1gKyao53YlSRois1DWntQuaQXB45P0j9y8OtWZH8DyjJe6zP
+	 PHNH1pqjfIsoYPdVv82vbj6d5d1oCTCNAyM8tbuMEAPwNpUi5yLq0df6Ricg9AGP6K
+	 Br+tvlzjoehl8LrLRz8prDBXsIA68VLN1+ip3G8h0YRXAMdg+8OD76LmJCz9pZbP+e
+	 PwOqn8wYMIksg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: vkoul@kernel.org,
+To: konradybcio@kernel.org,
 	robh@kernel.org,
 	krzk+dt@kernel.org,
 	conor+dt@kernel.org,
-	manivannan.sadhasivam@linaro.org,
-	miquel.raynal@bootlin.com,
-	richard@nod.at,
-	vigneshr@ti.com,
-	konradybcio@kernel.org,
-	agross@kernel.org,
-	Kaushal Kumar <quic_kaushalk@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	dmaengine@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-mtd@lists.infradead.org
-Subject: Re: (subset) [PATCH v2 0/5] Enable QPIC BAM and QPIC NAND support for SDX75
-Date: Mon, 19 May 2025 21:14:51 -0500
-Message-ID: <174770727729.36693.10794691902044161695.b4-ty@kernel.org>
+	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Cc: quic_srichara@quicinc.com,
+	quic_varada@quicinc.com
+Subject: Re: [PATCH v5 0/2] Add PCIe support for IPQ5424
+Date: Mon, 19 May 2025 21:14:52 -0500
+Message-ID: <174770727694.36693.11130217965966018978.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250415072756.20046-1-quic_kaushalk@quicinc.com>
-References: <20250415072756.20046-1-quic_kaushalk@quicinc.com>
+In-Reply-To: <20250306111610.3313495-1-quic_mmanikan@quicinc.com>
+References: <20250306111610.3313495-1-quic_mmanikan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,22 +68,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 15 Apr 2025 12:57:51 +0530, Kaushal Kumar wrote:
-> This series adds and enables devicetree nodes for QPIC BAM and QPIC NAND
-> for Qualcomm SDX75 platform.
+On Thu, 06 Mar 2025 16:46:08 +0530, Manikanta Mylavarapu wrote:
+> This series adds support for enabling the PCIe host devices (PCIe0,
+> PCIe1, PCIe2, PCIe3) found on IPQ5424 platform. The PCIe0 & PCIe1
+> are 1-lane Gen3 host and PCIe2 & PCIe3 are 2-lane Gen3 host.
 > 
-> This patch series depends on the below patches:
-> https://lore.kernel.org/linux-spi/20250310120906.1577292-5-quic_mdalam@quicinc.com/T/
+> Changes in V5:
+> 	- Dependent dt-bindings patches [1], [2] from series [3] have been merged
+> 	  in linux-next.
 > 
+> [...]
 
 Applied, thanks!
 
-[3/5] arm64: dts: qcom: sdx75: Add QPIC BAM support
-      commit: 5cf0ebd4800dc5b67a332c9f56d20882c41d6099
-[4/5] arm64: dts: qcom: sdx75: Add QPIC NAND support
-      commit: c25dcb4d42a9506d5270179bb32cf538a1a28423
-[5/5] arm64: dts: qcom: sdx75-idp: Enable QPIC BAM & QPIC NAND support
-      commit: d838ac6903eede0c2840bebd8788afa95a5aa0fb
+[1/2] arm64: dts: qcom: ipq5424: Add PCIe PHYs and controller nodes
+      commit: ab7f31a3830d7ab2cbc8e4be56c424e66adc5dbe
+[2/2] arm64: dts: qcom: ipq5424: Enable PCIe PHYs and controllers
+      commit: b970a4dddf7eddd48c21a3d49bd7a1708bfe3ea4
 
 Best regards,
 -- 
