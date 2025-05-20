@@ -1,708 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-58800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AA22ABE50A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 22:45:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05F59ABE53C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 22:56:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EC2777A2838
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 20:45:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 41FE17AEEFB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 20:55:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE5D01FF7C5;
-	Tue, 20 May 2025 20:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CB8B2135CB;
+	Tue, 20 May 2025 20:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SOAPUelp"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="U8gLY0Z8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749F52528E0
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 20:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826BB1AAA1E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 20:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747773906; cv=none; b=MFPu+thdLGdOIIWVSLfFmHDfOxDA5bEvjYBsxGnR5Rafy+6IkeX+nacUCBsJh2KbdEkMUR9yk5lkD8iBeIbGha2H2iB3i3dONPPmWM4Z79ZrK3x1JG2/vrWnj6c7tB8ziMJCE1WQztDlkwV6alyQgC9CaZfdAttBUqr0p6QOdpk=
+	t=1747774599; cv=none; b=g29TkaSmXuqANsdfVjyn6/mw7++wSyEwlf38nF2TVx+QmPUCdZwkBdwbJeY3jLuvVNqFac98xoT52OLgf9wK1e6r5MSwWx3mqAZ8H7K1t22mWNPbafHkwLKClLUExlsileIEgwIkCVGOSVL819GpRYST1MZk4+GOLPB0oZVYTFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747773906; c=relaxed/simple;
-	bh=2rkm+Wp7Nl4ACvy6m/jS4aFH9nSpfuEADUOy2QXan5E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=F5ugwyS8LsG0NgVVI/yfHR4M09Spfe/Xh4Hjpbp5Fcs4saHMrd9on0tBLjX8Lstki7IVC3nKw5z4/0N5ooZQDlAMuiME7OweB8Eus5ZeHLoqehHKvpXrHguNacZ+DEj0RShhCAk6sp0xYpqvfNkIl/Pbsoo9N1cbFo8dTXYhhmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SOAPUelp; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1747774599; c=relaxed/simple;
+	bh=aH0IejF+Zz7WEqLCyr8sG/+eKObXIHV+EL0wqjIpHMA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uyQruM8sNvx2E+WVF7xGJXFZalde3BpN+WSPe4TCNuQmmmJ1BQzper1IyDtyytupXTa/y5MNDPeKLYwHLJ0JaBmXaOYp4HC4BVBcEXICuh7+bLlSK2aL/+SOv+l7xXLHrVeMExItEtcMPMUqCogyfIgqV0XyfOmMCHLFu9IBMbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=U8gLY0Z8; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KGddlq032599
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 20:45:04 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54KGdnGZ000511
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 20:56:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Y/rh0R9tpWXVkxE39YDI+lWvwLBDn4zQLtiVh5brNaE=; b=SOAPUelpGbGtypJB
-	hPxO58k2OGOH+FEK4nk/NuyXQZySNnMMptQyMHZQRQSutNp/Az8yqf8cKCSxTCfl
-	Nw7C0sjhRLYswNc5K4wLpknUUwWCMwNYjexmqYuPi8GaWYQYrk1ERsQ4QQqUiJmN
-	+6Q1wEKc3OZ+0jso5a8cpwpJgTbW5gDjo64qEVffQyD3RnHIL7+50xR52CO8OIel
-	8TUyyX0ibxFcB6bT5q8EqXHe9woyW/cDceVTQEdz3qArQypIU3v4/rUm8Oi7LG/l
-	NkxCRbuQqu8MvZe1q9jcVkKKuRol2oHiCQjkXG6AAwh/8uIkKWgXd1aw6lOvJrby
-	oC4TZQ==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf0gk3s-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=CP4xwurVbbToqKBRo2zAIG/y
+	iqGnKWmP98PPEkImYEE=; b=U8gLY0Z8pR5SFnPRgOjKJG6Alyhq4VbwJO95rW7J
+	9EZUy95ri/k7bsd9dfcod+7FpQktOdUAklg4vu6RAJzeI1P9KU1OAdags0FkzuLi
+	pfPDWzJnIDUX9ke3CzgUii7CsDl9NyzJ/m4P7XF3roPeGYz1pTDYCm3TmjRQqeqf
+	wTdR7F5qXyHs9Q30cYICSgRFPjBHM8DDDOP+ZALi9kezflkhdeid5Kp3XjeVIiRT
+	kXamh1VaHWpa7KVbuarFOpuPeCKKUiAEGREH9iX28NXNwZ5sEkTfd4L7Zo1dcq1c
+	ZH08EhLR1iHY5kMrqQjOr4PeBLBllKR4t7aZ4T6m6hWn8g==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf18mfn-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 20:45:03 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6f8dbab898cso53399846d6.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 13:45:03 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 20:56:37 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6f8e23d6657so32866486d6.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 13:56:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747773902; x=1748378702;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y/rh0R9tpWXVkxE39YDI+lWvwLBDn4zQLtiVh5brNaE=;
-        b=CZam4PrPW6Sxyz+GvJbwaolXxSsT0q0Gn/AMRGeVb7rUoEvNyA8T+rJapcTl+htZXz
-         TUz3Mgz9NpkRWuBIBVn5Uq5PdDvgOLHvF3dkxfqzIlCNskcCAqgZAte/9EYiUfRqPF6r
-         mM8wILTNlvfPYUJG9PhUEYwdKZSWgRyqPCHetngPwdxHg2XhwxCS7m+5M5UxD3ApQ7CL
-         WfkJLi1cW7LSdYQQDhCVkIXiXWzDsjma0zWeS2MlEps5WokchHCy60mPcrGoKcpBEiuA
-         eX6mt/ESLcVqEOu3agstrVneT3BcBH8q9MFECU1p2luVp05extyyQgOa/qlWfsyEk13a
-         XUpA==
-X-Forwarded-Encrypted: i=1; AJvYcCV5ycf8P4JSKW1Sf240s0SNhCdQyinePQgUi1LCuBI4eyKM73ByRJkdGUJ85mZOTCbQRcR3GMFP94UIXyEN@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKGi9J4F5JEs8MlPj9tsUHpRRGCVUyzOv03Ebg5C98khtN1Oa/
-	rvb1NiILLCKdYH44lF4G3VesqzZS4/FQ7lts/QKgw5I//lw1YUKFB+jd4nHS95VKyDU6fSi8jW1
-	B5OOsUZReggRaEjOBER4xI01Z7axNsMlFCCdEkgq3BlwTfGIzGKdNy2wVNEaxYtU26NlB
-X-Gm-Gg: ASbGncvzt0+qQYo2ARyPPP63FXDKVjWMzSS/fQEgRzs+PehwVP+ZiblzMNHOLYV2rVF
-	vu8gHo8jDupdytyJgJZuHJksAceRImyrSmGudGT1FiDxPst/RNzh3MuLNroGreHWJmPAORxdWWi
-	/xMssd+L95tILsbpkZK4vRokrFewQE7WT5jTA6Zfdaos1y1JxpP2V4vetSNobowaMOthz8mKbTh
-	Z9MVWbsg7ddL+VZ3buykX0MW7pcyuJfZ2dOzg4Itoy0aUlqOzh/i4dfPLXa0APkpNhHGDBhSJAU
-	GrLuY80RMhr4WtWsGCJBKe7VReeEQK8yUpL4eL4MuHk/UOzxJmdJa6lgqFx7fP+kF4Z0qT70Y4R
-	5ROIiqnwgP5nBKXc4OfFRMmSq
-X-Received: by 2002:ad4:5aa3:0:b0:6f5:108b:d857 with SMTP id 6a1803df08f44-6f8b2d15707mr299977716d6.36.1747773902106;
-        Tue, 20 May 2025 13:45:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEkMvApU27Xi4DNOxe5crEMOlpgPH/pnPyGO4WWWAxbN7fBy9SXWfkDLDONqPA4GCt5J3jrnQ==
-X-Received: by 2002:ad4:5aa3:0:b0:6f5:108b:d857 with SMTP id 6a1803df08f44-6f8b2d15707mr299977326d6.36.1747773901654;
-        Tue, 20 May 2025 13:45:01 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-550e6f163ccsm2497950e87.39.2025.05.20.13.44.59
+        d=1e100.net; s=20230601; t=1747774596; x=1748379396;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CP4xwurVbbToqKBRo2zAIG/yiqGnKWmP98PPEkImYEE=;
+        b=D3rELeCEuDQJiRDKPFLNILhMrZZ4uQLXqS1vfQyzb8agcyekYZimJ7JOeZCa8Mgbd3
+         EyAs33S7WVIunWorahL7NFgDpcpfF07nA4K+Ncs8tWULWiBHvr6iiH4Olh2cVTudo3gf
+         E9Vm8YSC+H4LYbyUvo+HItBm/wAdOwInnd0urxra6GTlR+ViCvHxvA+f9pAZASPBj21V
+         uGRIABXx1pmW5RR/MUO+HVjvHfsLloRsi62UtpwbUDgMNH28DAuu7+z39/Pw1Pb2F2Qs
+         5NOhC5aZrXA4Y00thTjyIpWoJwRqYM/RsMldBmbmt7/QzhplNkYgJHyyEbRsQDBZbc8N
+         02Gw==
+X-Forwarded-Encrypted: i=1; AJvYcCVmFatmAkefYgFygT5z+hRZoO+OsECja/S2w9x1cx8ef1kuAKUzUxOfV5hgJJmohYikU8QZ/LIzpFAeuWYj@vger.kernel.org
+X-Gm-Message-State: AOJu0YzltSQOj3N+ruGZBLEMDW05NNRs4blM/uevsNYQPAGgmmZVgDFR
+	RuKjZ9PvHKSWrBU2soOzo5qSj+LJQ1CQm2tj2G8WQ8gWwgb0dDDlQd/p68jIsghXz7xcis7l2Fm
+	kD2pBGpzYu64fk9aNKK+NpvGfQkvjmXaBRU2jV7dXQdmXcWkX2eCQXH1ZPYFFV4ax33cn
+X-Gm-Gg: ASbGnctmBA/oiXkBMkf4OKeAX+Uem7Nvtq2kX0+f1vPYFc0AmqbQFlW60nUZV0HGYCH
+	ZmWlY9pVE4qaMIHvTgiP7hdMD3yy1zTeUjBEw52Gf2iQUqzykoYsNLRJhY8l+DPfbGRjww6r/+q
+	5sfQIDnFofAY+wxg4hNHQXGs62U8R+PFXWvl8vIsGUrJjP28kU/EOTwlTNw1tW5NnUJjCcmdPJa
+	5cBIXaKfgEpAei1YjS1pXeRThCryDzM/RP84FyWgH9XZRRUYswMLx7V1oaiJSkB5ETNcR0oI6g5
+	/1CEgGb9hxEnje0GnmnBpQGEn1YnedCy2jxB/86HaFJV3cW2n/DjZ3CDQlmHjo5AMZWYrqR/R40
+	=
+X-Received: by 2002:ad4:5f8e:0:b0:6f8:9b75:a62f with SMTP id 6a1803df08f44-6f8b086659cmr266190146d6.24.1747774596258;
+        Tue, 20 May 2025 13:56:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGFy83aHJuT/E6OBhfe1n52CIbQyDvRG65Dk2H4hxXroNmeP8X+zaXZZgMd9JBrOkilPmPJ4w==
+X-Received: by 2002:ad4:5f8e:0:b0:6f8:9b75:a62f with SMTP id 6a1803df08f44-6f8b086659cmr266189796d6.24.1747774595898;
+        Tue, 20 May 2025 13:56:35 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-550e702c0e6sm2479511e87.161.2025.05.20.13.56.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 13:45:00 -0700 (PDT)
+        Tue, 20 May 2025 13:56:35 -0700 (PDT)
+Date: Tue, 20 May 2025 23:56:33 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Tue, 20 May 2025 23:44:47 +0300
-Subject: [PATCH v4 5/5] drm/msm/registers: drop HDMI PHY register
- definitions
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH RFT v4 04/14] drm/msm/a6xx: Get a handle to the common
+ UBWC config
+Message-ID: <vfl5autirf6a7fg3ck55xh26rx3nbfkl7cq3kthwmffsfhdc5b@r6ibkyn2n6nq>
+References: <20250520-topic-ubwc_central-v4-0-2a461d32234a@oss.qualcomm.com>
+ <20250520-topic-ubwc_central-v4-4-2a461d32234a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250520-fd-hdmi-phy-v4-5-fcbaa652ad75@oss.qualcomm.com>
-References: <20250520-fd-hdmi-phy-v4-0-fcbaa652ad75@oss.qualcomm.com>
-In-Reply-To: <20250520-fd-hdmi-phy-v4-0-fcbaa652ad75@oss.qualcomm.com>
-To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-phy@lists.infradead.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=26257;
- i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=y0P+Hi9CyYTcC6PcuG/EtvjloSg7WanVzhX7D03Rjfg=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoLOnAQ7no4d2pdpxIEt/nWMMfhRF+26sn5U0kY
- son5RY97zuJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaCzpwAAKCRCLPIo+Aiko
- 1Y4YB/sEc+uBNhgUOOp+kWd4YLVj4tVbFb0zxXYOctedArsaUxwgqAjXDSsWbekceFYhLAZUR8l
- Ttp5El861o3iEIJg5Pfm3QEQ/8BvI/nZarP8qASI2rYEF2EsZiReiOIooatgL62GR5GTCceAqsV
- WySI0vtQEdDob3vN/ph+T889W0qH4Mz7v+7Yze/RxSp9lF27uMytauA6XoNSVxCmgpGD3hZEx/j
- mHysIV0jSgQ34P6iwl62rWdWBWFNQmbRiFuzf14DtCQrM2CFsIE+WdB8n4M/CQ5pUm7j8FAnMK3
- 5nqE/4V8y1MXizBp/7WYd7CBNMMxWWJiTMnZvAb2KakW6kEi
-X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-GUID: XZShfXZjtZZuPAD1uGsnScr238gmGA8v
-X-Authority-Analysis: v=2.4 cv=J/Sq7BnS c=1 sm=1 tr=0 ts=682ce9cf cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=dt9VzEwgFbYA:10 a=e5mUnYsNAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=BGUQ00EFi6mp_B5OqyUA:9 a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22
- a=Vxmtnl_E_bksehYqCbjh:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: XZShfXZjtZZuPAD1uGsnScr238gmGA8v
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDE2OCBTYWx0ZWRfX5MMzNk9THw7y
- ue+uMfJ9axS8/+B4s8QWQwxWUmlc6WBqj4JW7ASMK+ta2lqizyuPDJoE3ATGuLMAlayLuKDLjde
- ++IUMsF77Zz3BsckUUT1w0BOliWgvDSXgrvjtzjrDjkjiZZGVGH+Q0IfqCvhM2tDW2VhehfFt6s
- 9E3hBUhAzXbt4QmRs5nDRi66NLBs/FpyJ6H0nfNQcSj2tXmRy0D3qoONr27OW9dkyz9yMRGsnH/
- crUfYDCpW8wOjFU7W8rsG49501f0iIf8qvy72Fi0rapUP2dIcbTOPt2cZbces0bWqScXFg0aeei
- 6xVI91u5Cx3AGUKGLqH88tBhBo01wFVuP8VqSrkgt+ooACaCgxRuSUw3YKOu5oic0euj7PdbHPh
- +gc5U1VPY7280c1UzII9G8hNWR4VVviakDmfyL9115aUxoEAfpZTXEWNtMmUz+1lnfObd17T
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250520-topic-ubwc_central-v4-4-2a461d32234a@oss.qualcomm.com>
+X-Proofpoint-GUID: qAUefNE5KKUbGl7wxU_llYouLQzkUs-t
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIwMDE3MCBTYWx0ZWRfX+UV+Y9ntYlfe
+ FyWdM1rkwO1BCZYTWXymi/h7Nf7G7tws0CM1A6oLusa9VedBzXP+kqZ3S02GdhczBNsLunKI9kg
+ laPfkrn1vW4ZanTjTRE4g/LkeR3iTs/oW24zC2kG+ogZivsCT5DGqN1go4dEqK/YD8FNHVt7ZOz
+ 0P6Ajf7TmfrMNCtO29+r5iWLsOK1B9aR0u6ZBAdMeh9k5tnuBt1iwaCTBk+/rz8BUvr2LZHgjso
+ 0RSZQuKgu+kHnCx/wZLylzud6dCXaRKs5f2nYjGmPvI1HleYTdHGYmOfdADPkuZu7Xn0bDNwNPW
+ CJ+arvSLP0fiXodTKL758T3PY/ybfAvEidUFVRsmMBMsIc1MufeDZuMBOj7f+SSvNjgC5cd1sML
+ loe6ZHN8hM7SBCYFBamRaUr38RbPlMIqePuwo1ElEs20vJpPcDqewBVmhm+CpEcpOzmc+loH
+X-Authority-Analysis: v=2.4 cv=F6JXdrhN c=1 sm=1 tr=0 ts=682cec85 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=93Yf4Y-vqGi4v4eIoEMA:9 a=CjuIK1q_8ugA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-ORIG-GUID: qAUefNE5KKUbGl7wxU_llYouLQzkUs-t
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-20_09,2025-05-20_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015 mlxlogscore=999 suspectscore=0 spamscore=0
- priorityscore=1501 bulkscore=0 phishscore=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 classifier=spam authscore=0
+ impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 spamscore=0 phishscore=0 bulkscore=0
+ clxscore=1015 adultscore=0 mlxlogscore=786 classifier=spam authscore=0
  authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505200168
+ engine=8.19.0-2505160000 definitions=main-2505200170
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Tue, May 20, 2025 at 01:07:09PM +0200, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> Start the great despaghettification by getting a pointer to the common
+> UBWC configuration, which houses e.g. UBWC versions that we need to
+> make decisions.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 16 ++++++++++++++--
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  3 +++
+>  2 files changed, 17 insertions(+), 2 deletions(-)
+> 
 
-With the HDMI PHYs migrated to the generic PHY subsystem and to a
-separate drivers there is no point in keeping HDMI PHY registers in the
-drm/msm database, drop them.
-
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/registers/display/hdmi.xml | 537 -------------------------
- 1 file changed, 537 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/registers/display/hdmi.xml b/drivers/gpu/drm/msm/registers/display/hdmi.xml
-index 0ebb96297dae80940dc8a918d26cd58ff2e6f81a..1d44aa26c833708ee910e3bf4c29fd52ec5f6d0c 100644
---- a/drivers/gpu/drm/msm/registers/display/hdmi.xml
-+++ b/drivers/gpu/drm/msm/registers/display/hdmi.xml
-@@ -564,541 +564,4 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
- 
- </domain>
- 
--<domain name="HDMI_8x60" width="32">
--	<reg32 offset="0x00000" name="PHY_REG0">
--		<bitfield name="DESER_DEL_CTRL" low="2" high="4" type="uint"/>
--	</reg32>
--	<reg32 offset="0x00004" name="PHY_REG1">
--		<bitfield name="DTEST_MUX_SEL" low="4" high="7" type="uint"/>
--		<bitfield name="OUTVOL_SWING_CTRL" low="0" high="3" type="uint"/>
--	</reg32>
--	<reg32 offset="0x00008" name="PHY_REG2">
--		<bitfield name="PD_DESER" pos="0" type="boolean"/>
--		<bitfield name="PD_DRIVE_1" pos="1" type="boolean"/>
--		<bitfield name="PD_DRIVE_2" pos="2" type="boolean"/>
--		<bitfield name="PD_DRIVE_3" pos="3" type="boolean"/>
--		<bitfield name="PD_DRIVE_4" pos="4" type="boolean"/>
--		<bitfield name="PD_PLL" pos="5" type="boolean"/>
--		<bitfield name="PD_PWRGEN" pos="6" type="boolean"/>
--		<bitfield name="RCV_SENSE_EN" pos="7" type="boolean"/>
--	</reg32>
--	<reg32 offset="0x0000c" name="PHY_REG3">
--		<bitfield name="PLL_ENABLE" pos="0" type="boolean"/>
--	</reg32>
--	<reg32 offset="0x00010" name="PHY_REG4"/>
--	<reg32 offset="0x00014" name="PHY_REG5"/>
--	<reg32 offset="0x00018" name="PHY_REG6"/>
--	<reg32 offset="0x0001c" name="PHY_REG7"/>
--	<reg32 offset="0x00020" name="PHY_REG8"/>
--	<reg32 offset="0x00024" name="PHY_REG9"/>
--	<reg32 offset="0x00028" name="PHY_REG10"/>
--	<reg32 offset="0x0002c" name="PHY_REG11"/>
--	<reg32 offset="0x00030" name="PHY_REG12">
--		<bitfield name="RETIMING_EN" pos="0" type="boolean"/>
--		<bitfield name="PLL_LOCK_DETECT_EN" pos="1" type="boolean"/>
--		<bitfield name="FORCE_LOCK" pos="4" type="boolean"/>
--	</reg32>
--</domain>
--
--<domain name="HDMI_8960" width="32">
--	<!--
--		some of the bitfields may be same as 8x60.. but no helpful comments
--		in msm_dss_io_8960.c
--	 -->
--	<reg32 offset="0x00000" name="PHY_REG0"/>
--	<reg32 offset="0x00004" name="PHY_REG1"/>
--	<reg32 offset="0x00008" name="PHY_REG2"/>
--	<reg32 offset="0x0000c" name="PHY_REG3"/>
--	<reg32 offset="0x00010" name="PHY_REG4"/>
--	<reg32 offset="0x00014" name="PHY_REG5"/>
--	<reg32 offset="0x00018" name="PHY_REG6"/>
--	<reg32 offset="0x0001c" name="PHY_REG7"/>
--	<reg32 offset="0x00020" name="PHY_REG8"/>
--	<reg32 offset="0x00024" name="PHY_REG9"/>
--	<reg32 offset="0x00028" name="PHY_REG10"/>
--	<reg32 offset="0x0002c" name="PHY_REG11"/>
--	<reg32 offset="0x00030" name="PHY_REG12">
--		<bitfield name="SW_RESET" pos="5" type="boolean"/>
--		<bitfield name="PWRDN_B" pos="7" type="boolean"/>
--	</reg32>
--	<reg32 offset="0x00034" name="PHY_REG_BIST_CFG"/>
--	<reg32 offset="0x00038" name="PHY_DEBUG_BUS_SEL"/>
--	<reg32 offset="0x0003c" name="PHY_REG_MISC0"/>
--	<reg32 offset="0x00040" name="PHY_REG13"/>
--	<reg32 offset="0x00044" name="PHY_REG14"/>
--	<reg32 offset="0x00048" name="PHY_REG15"/>
--</domain>
--
--<domain name="HDMI_8960_PHY_PLL" width="32">
--	<reg32 offset="0x00000" name="REFCLK_CFG"/>
--	<reg32 offset="0x00004" name="CHRG_PUMP_CFG"/>
--	<reg32 offset="0x00008" name="LOOP_FLT_CFG0"/>
--	<reg32 offset="0x0000c" name="LOOP_FLT_CFG1"/>
--	<reg32 offset="0x00010" name="IDAC_ADJ_CFG"/>
--	<reg32 offset="0x00014" name="I_VI_KVCO_CFG"/>
--	<reg32 offset="0x00018" name="PWRDN_B">
--		<bitfield name="PD_PLL" pos="1" type="boolean"/>
--		<bitfield name="PLL_PWRDN_B" pos="3" type="boolean"/>
--	</reg32>
--	<reg32 offset="0x0001c" name="SDM_CFG0"/>
--	<reg32 offset="0x00020" name="SDM_CFG1"/>
--	<reg32 offset="0x00024" name="SDM_CFG2"/>
--	<reg32 offset="0x00028" name="SDM_CFG3"/>
--	<reg32 offset="0x0002c" name="SDM_CFG4"/>
--	<reg32 offset="0x00030" name="SSC_CFG0"/>
--	<reg32 offset="0x00034" name="SSC_CFG1"/>
--	<reg32 offset="0x00038" name="SSC_CFG2"/>
--	<reg32 offset="0x0003c" name="SSC_CFG3"/>
--	<reg32 offset="0x00040" name="LOCKDET_CFG0"/>
--	<reg32 offset="0x00044" name="LOCKDET_CFG1"/>
--	<reg32 offset="0x00048" name="LOCKDET_CFG2"/>
--	<reg32 offset="0x0004c" name="VCOCAL_CFG0"/>
--	<reg32 offset="0x00050" name="VCOCAL_CFG1"/>
--	<reg32 offset="0x00054" name="VCOCAL_CFG2"/>
--	<reg32 offset="0x00058" name="VCOCAL_CFG3"/>
--	<reg32 offset="0x0005c" name="VCOCAL_CFG4"/>
--	<reg32 offset="0x00060" name="VCOCAL_CFG5"/>
--	<reg32 offset="0x00064" name="VCOCAL_CFG6"/>
--	<reg32 offset="0x00068" name="VCOCAL_CFG7"/>
--	<reg32 offset="0x0006c" name="DEBUG_SEL"/>
--	<reg32 offset="0x00070" name="MISC0"/>
--	<reg32 offset="0x00074" name="MISC1"/>
--	<reg32 offset="0x00078" name="MISC2"/>
--	<reg32 offset="0x0007c" name="MISC3"/>
--	<reg32 offset="0x00080" name="MISC4"/>
--	<reg32 offset="0x00084" name="MISC5"/>
--	<reg32 offset="0x00088" name="MISC6"/>
--	<reg32 offset="0x0008c" name="DEBUG_BUS0"/>
--	<reg32 offset="0x00090" name="DEBUG_BUS1"/>
--	<reg32 offset="0x00094" name="DEBUG_BUS2"/>
--	<reg32 offset="0x00098" name="STATUS0">
--		<bitfield name="PLL_LOCK" pos="0" type="boolean"/>
--	</reg32>
--	<reg32 offset="0x0009c" name="STATUS1"/>
--</domain>
--
--<domain name="HDMI_8x74" width="32">
--	<!--
--		seems to be all mdp5+ have same?
--	 -->
--	<reg32 offset="0x00000" name="ANA_CFG0"/>
--	<reg32 offset="0x00004" name="ANA_CFG1"/>
--	<reg32 offset="0x00008" name="ANA_CFG2"/>
--	<reg32 offset="0x0000c" name="ANA_CFG3"/>
--	<reg32 offset="0x00010" name="PD_CTRL0"/>
--	<reg32 offset="0x00014" name="PD_CTRL1"/>
--	<reg32 offset="0x00018" name="GLB_CFG"/>
--	<reg32 offset="0x0001c" name="DCC_CFG0"/>
--	<reg32 offset="0x00020" name="DCC_CFG1"/>
--	<reg32 offset="0x00024" name="TXCAL_CFG0"/>
--	<reg32 offset="0x00028" name="TXCAL_CFG1"/>
--	<reg32 offset="0x0002c" name="TXCAL_CFG2"/>
--	<reg32 offset="0x00030" name="TXCAL_CFG3"/>
--	<reg32 offset="0x00034" name="BIST_CFG0"/>
--	<reg32 offset="0x0003c" name="BIST_PATN0"/>
--	<reg32 offset="0x00040" name="BIST_PATN1"/>
--	<reg32 offset="0x00044" name="BIST_PATN2"/>
--	<reg32 offset="0x00048" name="BIST_PATN3"/>
--	<reg32 offset="0x0005c" name="STATUS"/>
--</domain>
--
--<domain name="HDMI_28nm_PHY_PLL" width="32">
--	<reg32 offset="0x00000" name="REFCLK_CFG"/>
--	<reg32 offset="0x00004" name="POSTDIV1_CFG"/>
--	<reg32 offset="0x00008" name="CHGPUMP_CFG"/>
--	<reg32 offset="0x0000C" name="VCOLPF_CFG"/>
--	<reg32 offset="0x00010" name="VREG_CFG"/>
--	<reg32 offset="0x00014" name="PWRGEN_CFG"/>
--	<reg32 offset="0x00018" name="DMUX_CFG"/>
--	<reg32 offset="0x0001C" name="AMUX_CFG"/>
--	<reg32 offset="0x00020" name="GLB_CFG">
--		<bitfield name="PLL_PWRDN_B" pos="0" type="boolean"/>
--		<bitfield name="PLL_LDO_PWRDN_B" pos="1" type="boolean"/>
--		<bitfield name="PLL_PWRGEN_PWRDN_B" pos="2" type="boolean"/>
--		<bitfield name="PLL_ENABLE" pos="3" type="boolean"/>
--	</reg32>
--	<reg32 offset="0x00024" name="POSTDIV2_CFG"/>
--	<reg32 offset="0x00028" name="POSTDIV3_CFG"/>
--	<reg32 offset="0x0002C" name="LPFR_CFG"/>
--	<reg32 offset="0x00030" name="LPFC1_CFG"/>
--	<reg32 offset="0x00034" name="LPFC2_CFG"/>
--	<reg32 offset="0x00038" name="SDM_CFG0"/>
--	<reg32 offset="0x0003C" name="SDM_CFG1"/>
--	<reg32 offset="0x00040" name="SDM_CFG2"/>
--	<reg32 offset="0x00044" name="SDM_CFG3"/>
--	<reg32 offset="0x00048" name="SDM_CFG4"/>
--	<reg32 offset="0x0004C" name="SSC_CFG0"/>
--	<reg32 offset="0x00050" name="SSC_CFG1"/>
--	<reg32 offset="0x00054" name="SSC_CFG2"/>
--	<reg32 offset="0x00058" name="SSC_CFG3"/>
--	<reg32 offset="0x0005C" name="LKDET_CFG0"/>
--	<reg32 offset="0x00060" name="LKDET_CFG1"/>
--	<reg32 offset="0x00064" name="LKDET_CFG2"/>
--	<reg32 offset="0x00068" name="TEST_CFG">
--		<bitfield name="PLL_SW_RESET" pos="0" type="boolean"/>
--	</reg32>
--	<reg32 offset="0x0006C" name="CAL_CFG0"/>
--	<reg32 offset="0x00070" name="CAL_CFG1"/>
--	<reg32 offset="0x00074" name="CAL_CFG2"/>
--	<reg32 offset="0x00078" name="CAL_CFG3"/>
--	<reg32 offset="0x0007C" name="CAL_CFG4"/>
--	<reg32 offset="0x00080" name="CAL_CFG5"/>
--	<reg32 offset="0x00084" name="CAL_CFG6"/>
--	<reg32 offset="0x00088" name="CAL_CFG7"/>
--	<reg32 offset="0x0008C" name="CAL_CFG8"/>
--	<reg32 offset="0x00090" name="CAL_CFG9"/>
--	<reg32 offset="0x00094" name="CAL_CFG10"/>
--	<reg32 offset="0x00098" name="CAL_CFG11"/>
--	<reg32 offset="0x0009C" name="EFUSE_CFG"/>
--	<reg32 offset="0x000A0" name="DEBUG_BUS_SEL"/>
--	<reg32 offset="0x000C0" name="STATUS"/>
--</domain>
--
--<domain name="HDMI_8996_PHY" width="32">
--	<reg32 offset="0x00000" name="CFG"/>
--	<reg32 offset="0x00004" name="PD_CTL"/>
--	<reg32 offset="0x00008" name="MODE"/>
--	<reg32 offset="0x0000C" name="MISR_CLEAR"/>
--	<reg32 offset="0x00010" name="TX0_TX1_BIST_CFG0"/>
--	<reg32 offset="0x00014" name="TX0_TX1_BIST_CFG1"/>
--	<reg32 offset="0x00018" name="TX0_TX1_PRBS_SEED_BYTE0"/>
--	<reg32 offset="0x0001C" name="TX0_TX1_PRBS_SEED_BYTE1"/>
--	<reg32 offset="0x00020" name="TX0_TX1_BIST_PATTERN0"/>
--	<reg32 offset="0x00024" name="TX0_TX1_BIST_PATTERN1"/>
--	<reg32 offset="0x00028" name="TX2_TX3_BIST_CFG0"/>
--	<reg32 offset="0x0002C" name="TX2_TX3_BIST_CFG1"/>
--	<reg32 offset="0x00030" name="TX2_TX3_PRBS_SEED_BYTE0"/>
--	<reg32 offset="0x00034" name="TX2_TX3_PRBS_SEED_BYTE1"/>
--	<reg32 offset="0x00038" name="TX2_TX3_BIST_PATTERN0"/>
--	<reg32 offset="0x0003C" name="TX2_TX3_BIST_PATTERN1"/>
--	<reg32 offset="0x00040" name="DEBUG_BUS_SEL"/>
--	<reg32 offset="0x00044" name="TXCAL_CFG0"/>
--	<reg32 offset="0x00048" name="TXCAL_CFG1"/>
--	<reg32 offset="0x0004C" name="TX0_TX1_LANE_CTL"/>
--	<reg32 offset="0x00050" name="TX2_TX3_LANE_CTL"/>
--	<reg32 offset="0x00054" name="LANE_BIST_CONFIG"/>
--	<reg32 offset="0x00058" name="CLOCK"/>
--	<reg32 offset="0x0005C" name="MISC1"/>
--	<reg32 offset="0x00060" name="MISC2"/>
--	<reg32 offset="0x00064" name="TX0_TX1_BIST_STATUS0"/>
--	<reg32 offset="0x00068" name="TX0_TX1_BIST_STATUS1"/>
--	<reg32 offset="0x0006C" name="TX0_TX1_BIST_STATUS2"/>
--	<reg32 offset="0x00070" name="TX2_TX3_BIST_STATUS0"/>
--	<reg32 offset="0x00074" name="TX2_TX3_BIST_STATUS1"/>
--	<reg32 offset="0x00078" name="TX2_TX3_BIST_STATUS2"/>
--	<reg32 offset="0x0007C" name="PRE_MISR_STATUS0"/>
--	<reg32 offset="0x00080" name="PRE_MISR_STATUS1"/>
--	<reg32 offset="0x00084" name="PRE_MISR_STATUS2"/>
--	<reg32 offset="0x00088" name="PRE_MISR_STATUS3"/>
--	<reg32 offset="0x0008C" name="POST_MISR_STATUS0"/>
--	<reg32 offset="0x00090" name="POST_MISR_STATUS1"/>
--	<reg32 offset="0x00094" name="POST_MISR_STATUS2"/>
--	<reg32 offset="0x00098" name="POST_MISR_STATUS3"/>
--	<reg32 offset="0x0009C" name="STATUS"/>
--	<reg32 offset="0x000A0" name="MISC3_STATUS"/>
--	<reg32 offset="0x000A4" name="MISC4_STATUS"/>
--	<reg32 offset="0x000A8" name="DEBUG_BUS0"/>
--	<reg32 offset="0x000AC" name="DEBUG_BUS1"/>
--	<reg32 offset="0x000B0" name="DEBUG_BUS2"/>
--	<reg32 offset="0x000B4" name="DEBUG_BUS3"/>
--	<reg32 offset="0x000B8" name="PHY_REVISION_ID0"/>
--	<reg32 offset="0x000BC" name="PHY_REVISION_ID1"/>
--	<reg32 offset="0x000C0" name="PHY_REVISION_ID2"/>
--	<reg32 offset="0x000C4" name="PHY_REVISION_ID3"/>
--</domain>
--
--<domain name="HDMI_PHY_QSERDES_COM" width="32">
--	<reg32 offset="0x00000" name="ATB_SEL1"/>
--	<reg32 offset="0x00004" name="ATB_SEL2"/>
--	<reg32 offset="0x00008" name="FREQ_UPDATE"/>
--	<reg32 offset="0x0000C" name="BG_TIMER"/>
--	<reg32 offset="0x00010" name="SSC_EN_CENTER"/>
--	<reg32 offset="0x00014" name="SSC_ADJ_PER1"/>
--	<reg32 offset="0x00018" name="SSC_ADJ_PER2"/>
--	<reg32 offset="0x0001C" name="SSC_PER1"/>
--	<reg32 offset="0x00020" name="SSC_PER2"/>
--	<reg32 offset="0x00024" name="SSC_STEP_SIZE1"/>
--	<reg32 offset="0x00028" name="SSC_STEP_SIZE2"/>
--	<reg32 offset="0x0002C" name="POST_DIV"/>
--	<reg32 offset="0x00030" name="POST_DIV_MUX"/>
--	<reg32 offset="0x00034" name="BIAS_EN_CLKBUFLR_EN"/>
--	<reg32 offset="0x00038" name="CLK_ENABLE1"/>
--	<reg32 offset="0x0003C" name="SYS_CLK_CTRL"/>
--	<reg32 offset="0x00040" name="SYSCLK_BUF_ENABLE"/>
--	<reg32 offset="0x00044" name="PLL_EN"/>
--	<reg32 offset="0x00048" name="PLL_IVCO"/>
--	<reg32 offset="0x0004C" name="LOCK_CMP1_MODE0"/>
--	<reg32 offset="0x00050" name="LOCK_CMP2_MODE0"/>
--	<reg32 offset="0x00054" name="LOCK_CMP3_MODE0"/>
--	<reg32 offset="0x00058" name="LOCK_CMP1_MODE1"/>
--	<reg32 offset="0x0005C" name="LOCK_CMP2_MODE1"/>
--	<reg32 offset="0x00060" name="LOCK_CMP3_MODE1"/>
--	<reg32 offset="0x00064" name="LOCK_CMP1_MODE2"/>
--	<reg32 offset="0x00064" name="CMN_RSVD0"/>
--	<reg32 offset="0x00068" name="LOCK_CMP2_MODE2"/>
--	<reg32 offset="0x00068" name="EP_CLOCK_DETECT_CTRL"/>
--	<reg32 offset="0x0006C" name="LOCK_CMP3_MODE2"/>
--	<reg32 offset="0x0006C" name="SYSCLK_DET_COMP_STATUS"/>
--	<reg32 offset="0x00070" name="BG_TRIM"/>
--	<reg32 offset="0x00074" name="CLK_EP_DIV"/>
--	<reg32 offset="0x00078" name="CP_CTRL_MODE0"/>
--	<reg32 offset="0x0007C" name="CP_CTRL_MODE1"/>
--	<reg32 offset="0x00080" name="CP_CTRL_MODE2"/>
--	<reg32 offset="0x00080" name="CMN_RSVD1"/>
--	<reg32 offset="0x00084" name="PLL_RCTRL_MODE0"/>
--	<reg32 offset="0x00088" name="PLL_RCTRL_MODE1"/>
--	<reg32 offset="0x0008C" name="PLL_RCTRL_MODE2"/>
--	<reg32 offset="0x0008C" name="CMN_RSVD2"/>
--	<reg32 offset="0x00090" name="PLL_CCTRL_MODE0"/>
--	<reg32 offset="0x00094" name="PLL_CCTRL_MODE1"/>
--	<reg32 offset="0x00098" name="PLL_CCTRL_MODE2"/>
--	<reg32 offset="0x00098" name="CMN_RSVD3"/>
--	<reg32 offset="0x0009C" name="PLL_CNTRL"/>
--	<reg32 offset="0x000A0" name="PHASE_SEL_CTRL"/>
--	<reg32 offset="0x000A4" name="PHASE_SEL_DC"/>
--	<reg32 offset="0x000A8" name="CORE_CLK_IN_SYNC_SEL"/>
--	<reg32 offset="0x000A8" name="BIAS_EN_CTRL_BY_PSM"/>
--	<reg32 offset="0x000AC" name="SYSCLK_EN_SEL"/>
--	<reg32 offset="0x000B0" name="CML_SYSCLK_SEL"/>
--	<reg32 offset="0x000B4" name="RESETSM_CNTRL"/>
--	<reg32 offset="0x000B8" name="RESETSM_CNTRL2"/>
--	<reg32 offset="0x000BC" name="RESTRIM_CTRL"/>
--	<reg32 offset="0x000C0" name="RESTRIM_CTRL2"/>
--	<reg32 offset="0x000C4" name="RESCODE_DIV_NUM"/>
--	<reg32 offset="0x000C8" name="LOCK_CMP_EN"/>
--	<reg32 offset="0x000CC" name="LOCK_CMP_CFG"/>
--	<reg32 offset="0x000D0" name="DEC_START_MODE0"/>
--	<reg32 offset="0x000D4" name="DEC_START_MODE1"/>
--	<reg32 offset="0x000D8" name="DEC_START_MODE2"/>
--	<reg32 offset="0x000D8" name="VCOCAL_DEADMAN_CTRL"/>
--	<reg32 offset="0x000DC" name="DIV_FRAC_START1_MODE0"/>
--	<reg32 offset="0x000E0" name="DIV_FRAC_START2_MODE0"/>
--	<reg32 offset="0x000E4" name="DIV_FRAC_START3_MODE0"/>
--	<reg32 offset="0x000E8" name="DIV_FRAC_START1_MODE1"/>
--	<reg32 offset="0x000EC" name="DIV_FRAC_START2_MODE1"/>
--	<reg32 offset="0x000F0" name="DIV_FRAC_START3_MODE1"/>
--	<reg32 offset="0x000F4" name="DIV_FRAC_START1_MODE2"/>
--	<reg32 offset="0x000F4" name="VCO_TUNE_MINVAL1"/>
--	<reg32 offset="0x000F8" name="DIV_FRAC_START2_MODE2"/>
--	<reg32 offset="0x000F8" name="VCO_TUNE_MINVAL2"/>
--	<reg32 offset="0x000FC" name="DIV_FRAC_START3_MODE2"/>
--	<reg32 offset="0x000FC" name="CMN_RSVD4"/>
--	<reg32 offset="0x00100" name="INTEGLOOP_INITVAL"/>
--	<reg32 offset="0x00104" name="INTEGLOOP_EN"/>
--	<reg32 offset="0x00108" name="INTEGLOOP_GAIN0_MODE0"/>
--	<reg32 offset="0x0010C" name="INTEGLOOP_GAIN1_MODE0"/>
--	<reg32 offset="0x00110" name="INTEGLOOP_GAIN0_MODE1"/>
--	<reg32 offset="0x00114" name="INTEGLOOP_GAIN1_MODE1"/>
--	<reg32 offset="0x00118" name="INTEGLOOP_GAIN0_MODE2"/>
--	<reg32 offset="0x00118" name="VCO_TUNE_MAXVAL1"/>
--	<reg32 offset="0x0011C" name="INTEGLOOP_GAIN1_MODE2"/>
--	<reg32 offset="0x0011C" name="VCO_TUNE_MAXVAL2"/>
--	<reg32 offset="0x00120" name="RES_TRIM_CONTROL2"/>
--	<reg32 offset="0x00124" name="VCO_TUNE_CTRL"/>
--	<reg32 offset="0x00128" name="VCO_TUNE_MAP"/>
--	<reg32 offset="0x0012C" name="VCO_TUNE1_MODE0"/>
--	<reg32 offset="0x00130" name="VCO_TUNE2_MODE0"/>
--	<reg32 offset="0x00134" name="VCO_TUNE1_MODE1"/>
--	<reg32 offset="0x00138" name="VCO_TUNE2_MODE1"/>
--	<reg32 offset="0x0013C" name="VCO_TUNE1_MODE2"/>
--	<reg32 offset="0x0013C" name="VCO_TUNE_INITVAL1"/>
--	<reg32 offset="0x00140" name="VCO_TUNE2_MODE2"/>
--	<reg32 offset="0x00140" name="VCO_TUNE_INITVAL2"/>
--	<reg32 offset="0x00144" name="VCO_TUNE_TIMER1"/>
--	<reg32 offset="0x00148" name="VCO_TUNE_TIMER2"/>
--	<reg32 offset="0x0014C" name="SAR"/>
--	<reg32 offset="0x00150" name="SAR_CLK"/>
--	<reg32 offset="0x00154" name="SAR_CODE_OUT_STATUS"/>
--	<reg32 offset="0x00158" name="SAR_CODE_READY_STATUS"/>
--	<reg32 offset="0x0015C" name="CMN_STATUS"/>
--	<reg32 offset="0x00160" name="RESET_SM_STATUS"/>
--	<reg32 offset="0x00164" name="RESTRIM_CODE_STATUS"/>
--	<reg32 offset="0x00168" name="PLLCAL_CODE1_STATUS"/>
--	<reg32 offset="0x0016C" name="PLLCAL_CODE2_STATUS"/>
--	<reg32 offset="0x00170" name="BG_CTRL"/>
--	<reg32 offset="0x00174" name="CLK_SELECT"/>
--	<reg32 offset="0x00178" name="HSCLK_SEL"/>
--	<reg32 offset="0x0017C" name="INTEGLOOP_BINCODE_STATUS"/>
--	<reg32 offset="0x00180" name="PLL_ANALOG"/>
--	<reg32 offset="0x00184" name="CORECLK_DIV"/>
--	<reg32 offset="0x00188" name="SW_RESET"/>
--	<reg32 offset="0x0018C" name="CORE_CLK_EN"/>
--	<reg32 offset="0x00190" name="C_READY_STATUS"/>
--	<reg32 offset="0x00194" name="CMN_CONFIG"/>
--	<reg32 offset="0x00198" name="CMN_RATE_OVERRIDE"/>
--	<reg32 offset="0x0019C" name="SVS_MODE_CLK_SEL"/>
--	<reg32 offset="0x001A0" name="DEBUG_BUS0"/>
--	<reg32 offset="0x001A4" name="DEBUG_BUS1"/>
--	<reg32 offset="0x001A8" name="DEBUG_BUS2"/>
--	<reg32 offset="0x001AC" name="DEBUG_BUS3"/>
--	<reg32 offset="0x001B0" name="DEBUG_BUS_SEL"/>
--	<reg32 offset="0x001B4" name="CMN_MISC1"/>
--	<reg32 offset="0x001B8" name="CMN_MISC2"/>
--	<reg32 offset="0x001BC" name="CORECLK_DIV_MODE1"/>
--	<reg32 offset="0x001C0" name="CORECLK_DIV_MODE2"/>
--	<reg32 offset="0x001C4" name="CMN_RSVD5"/>
--</domain>
--
--
--<domain name="HDMI_PHY_QSERDES_TX_LX" width="32">
--		<reg32 offset="0x00000" name="BIST_MODE_LANENO"/>
--		<reg32 offset="0x00004" name="BIST_INVERT"/>
--		<reg32 offset="0x00008" name="CLKBUF_ENABLE"/>
--		<reg32 offset="0x0000C" name="CMN_CONTROL_ONE"/>
--		<reg32 offset="0x00010" name="CMN_CONTROL_TWO"/>
--		<reg32 offset="0x00014" name="CMN_CONTROL_THREE"/>
--		<reg32 offset="0x00018" name="TX_EMP_POST1_LVL"/>
--		<reg32 offset="0x0001C" name="TX_POST2_EMPH"/>
--		<reg32 offset="0x00020" name="TX_BOOST_LVL_UP_DN"/>
--		<reg32 offset="0x00024" name="HP_PD_ENABLES"/>
--		<reg32 offset="0x00028" name="TX_IDLE_LVL_LARGE_AMP"/>
--		<reg32 offset="0x0002C" name="TX_DRV_LVL"/>
--		<reg32 offset="0x00030" name="TX_DRV_LVL_OFFSET"/>
--		<reg32 offset="0x00034" name="RESET_TSYNC_EN"/>
--		<reg32 offset="0x00038" name="PRE_STALL_LDO_BOOST_EN"/>
--		<reg32 offset="0x0003C" name="TX_BAND"/>
--		<reg32 offset="0x00040" name="SLEW_CNTL"/>
--		<reg32 offset="0x00044" name="INTERFACE_SELECT"/>
--		<reg32 offset="0x00048" name="LPB_EN"/>
--		<reg32 offset="0x0004C" name="RES_CODE_LANE_TX"/>
--		<reg32 offset="0x00050" name="RES_CODE_LANE_RX"/>
--		<reg32 offset="0x00054" name="RES_CODE_LANE_OFFSET"/>
--		<reg32 offset="0x00058" name="PERL_LENGTH1"/>
--		<reg32 offset="0x0005C" name="PERL_LENGTH2"/>
--		<reg32 offset="0x00060" name="SERDES_BYP_EN_OUT"/>
--		<reg32 offset="0x00064" name="DEBUG_BUS_SEL"/>
--		<reg32 offset="0x00068" name="HIGHZ_TRANSCEIVEREN_BIAS_DRVR_EN"/>
--		<reg32 offset="0x0006C" name="TX_POL_INV"/>
--		<reg32 offset="0x00070" name="PARRATE_REC_DETECT_IDLE_EN"/>
--		<reg32 offset="0x00074" name="BIST_PATTERN1"/>
--		<reg32 offset="0x00078" name="BIST_PATTERN2"/>
--		<reg32 offset="0x0007C" name="BIST_PATTERN3"/>
--		<reg32 offset="0x00080" name="BIST_PATTERN4"/>
--		<reg32 offset="0x00084" name="BIST_PATTERN5"/>
--		<reg32 offset="0x00088" name="BIST_PATTERN6"/>
--		<reg32 offset="0x0008C" name="BIST_PATTERN7"/>
--		<reg32 offset="0x00090" name="BIST_PATTERN8"/>
--		<reg32 offset="0x00094" name="LANE_MODE"/>
--		<reg32 offset="0x00098" name="IDAC_CAL_LANE_MODE"/>
--		<reg32 offset="0x0009C" name="IDAC_CAL_LANE_MODE_CONFIGURATION"/>
--		<reg32 offset="0x000A0" name="ATB_SEL1"/>
--		<reg32 offset="0x000A4" name="ATB_SEL2"/>
--		<reg32 offset="0x000A8" name="RCV_DETECT_LVL"/>
--		<reg32 offset="0x000AC" name="RCV_DETECT_LVL_2"/>
--		<reg32 offset="0x000B0" name="PRBS_SEED1"/>
--		<reg32 offset="0x000B4" name="PRBS_SEED2"/>
--		<reg32 offset="0x000B8" name="PRBS_SEED3"/>
--		<reg32 offset="0x000BC" name="PRBS_SEED4"/>
--		<reg32 offset="0x000C0" name="RESET_GEN"/>
--		<reg32 offset="0x000C4" name="RESET_GEN_MUXES"/>
--		<reg32 offset="0x000C8" name="TRAN_DRVR_EMP_EN"/>
--		<reg32 offset="0x000CC" name="TX_INTERFACE_MODE"/>
--		<reg32 offset="0x000D0" name="PWM_CTRL"/>
--		<reg32 offset="0x000D4" name="PWM_ENCODED_OR_DATA"/>
--		<reg32 offset="0x000D8" name="PWM_GEAR_1_DIVIDER_BAND2"/>
--		<reg32 offset="0x000DC" name="PWM_GEAR_2_DIVIDER_BAND2"/>
--		<reg32 offset="0x000E0" name="PWM_GEAR_3_DIVIDER_BAND2"/>
--		<reg32 offset="0x000E4" name="PWM_GEAR_4_DIVIDER_BAND2"/>
--		<reg32 offset="0x000E8" name="PWM_GEAR_1_DIVIDER_BAND0_1"/>
--		<reg32 offset="0x000EC" name="PWM_GEAR_2_DIVIDER_BAND0_1"/>
--		<reg32 offset="0x000F0" name="PWM_GEAR_3_DIVIDER_BAND0_1"/>
--		<reg32 offset="0x000F4" name="PWM_GEAR_4_DIVIDER_BAND0_1"/>
--		<reg32 offset="0x000F8" name="VMODE_CTRL1"/>
--		<reg32 offset="0x000FC" name="VMODE_CTRL2"/>
--		<reg32 offset="0x00100" name="TX_ALOG_INTF_OBSV_CNTL"/>
--		<reg32 offset="0x00104" name="BIST_STATUS"/>
--		<reg32 offset="0x00108" name="BIST_ERROR_COUNT1"/>
--		<reg32 offset="0x0010C" name="BIST_ERROR_COUNT2"/>
--		<reg32 offset="0x00110" name="TX_ALOG_INTF_OBSV"/>
--</domain>
--
--<domain name="HDMI_8998_PHY" width="32">
--	<reg32 offset="0x00000" name="CFG"/>
--	<reg32 offset="0x00004" name="PD_CTL"/>
--	<reg32 offset="0x00010" name="MODE"/>
--	<reg32 offset="0x0005C" name="CLOCK"/>
--	<reg32 offset="0x00068" name="CMN_CTRL"/>
--	<reg32 offset="0x000B4" name="STATUS"/>
--</domain>
--
--<domain name="HDMI_8998_PHY_QSERDES_COM" width="32">
--	<reg32 offset="0x0000" name="ATB_SEL1"/>
--	<reg32 offset="0x0004" name="ATB_SEL2"/>
--	<reg32 offset="0x0008" name="FREQ_UPDATE"/>
--	<reg32 offset="0x000C" name="BG_TIMER"/>
--	<reg32 offset="0x0010" name="SSC_EN_CENTER"/>
--	<reg32 offset="0x0014" name="SSC_ADJ_PER1"/>
--	<reg32 offset="0x0018" name="SSC_ADJ_PER2"/>
--	<reg32 offset="0x001C" name="SSC_PER1"/>
--	<reg32 offset="0x0020" name="SSC_PER2"/>
--	<reg32 offset="0x0024" name="SSC_STEP_SIZE1"/>
--	<reg32 offset="0x0028" name="SSC_STEP_SIZE2"/>
--	<reg32 offset="0x002C" name="POST_DIV"/>
--	<reg32 offset="0x0030" name="POST_DIV_MUX"/>
--	<reg32 offset="0x0034" name="BIAS_EN_CLKBUFLR_EN"/>
--	<reg32 offset="0x0038" name="CLK_ENABLE1"/>
--	<reg32 offset="0x003C" name="SYS_CLK_CTRL"/>
--	<reg32 offset="0x0040" name="SYSCLK_BUF_ENABLE"/>
--	<reg32 offset="0x0044" name="PLL_EN"/>
--	<reg32 offset="0x0048" name="PLL_IVCO"/>
--	<reg32 offset="0x004C" name="CMN_IETRIM"/>
--	<reg32 offset="0x0050" name="CMN_IPTRIM"/>
--	<reg32 offset="0x0060" name="CP_CTRL_MODE0"/>
--	<reg32 offset="0x0064" name="CP_CTRL_MODE1"/>
--	<reg32 offset="0x0068" name="PLL_RCTRL_MODE0"/>
--	<reg32 offset="0x006C" name="PLL_RCTRL_MODE1"/>
--	<reg32 offset="0x0070" name="PLL_CCTRL_MODE0"/>
--	<reg32 offset="0x0074" name="PLL_CCTRL_MODE1"/>
--	<reg32 offset="0x0078" name="PLL_CNTRL"/>
--	<reg32 offset="0x007C" name="BIAS_EN_CTRL_BY_PSM"/>
--	<reg32 offset="0x0080" name="SYSCLK_EN_SEL"/>
--	<reg32 offset="0x0084" name="CML_SYSCLK_SEL"/>
--	<reg32 offset="0x0088" name="RESETSM_CNTRL"/>
--	<reg32 offset="0x008C" name="RESETSM_CNTRL2"/>
--	<reg32 offset="0x0090" name="LOCK_CMP_EN"/>
--	<reg32 offset="0x0094" name="LOCK_CMP_CFG"/>
--	<reg32 offset="0x0098" name="LOCK_CMP1_MODE0"/>
--	<reg32 offset="0x009C" name="LOCK_CMP2_MODE0"/>
--	<reg32 offset="0x00A0" name="LOCK_CMP3_MODE0"/>
--	<reg32 offset="0x00B0" name="DEC_START_MODE0"/>
--	<reg32 offset="0x00B4" name="DEC_START_MODE1"/>
--	<reg32 offset="0x00B8" name="DIV_FRAC_START1_MODE0"/>
--	<reg32 offset="0x00BC" name="DIV_FRAC_START2_MODE0"/>
--	<reg32 offset="0x00C0" name="DIV_FRAC_START3_MODE0"/>
--	<reg32 offset="0x00C4" name="DIV_FRAC_START1_MODE1"/>
--	<reg32 offset="0x00C8" name="DIV_FRAC_START2_MODE1"/>
--	<reg32 offset="0x00CC" name="DIV_FRAC_START3_MODE1"/>
--	<reg32 offset="0x00D0" name="INTEGLOOP_INITVAL"/>
--	<reg32 offset="0x00D4" name="INTEGLOOP_EN"/>
--	<reg32 offset="0x00D8" name="INTEGLOOP_GAIN0_MODE0"/>
--	<reg32 offset="0x00DC" name="INTEGLOOP_GAIN1_MODE0"/>
--	<reg32 offset="0x00E0" name="INTEGLOOP_GAIN0_MODE1"/>
--	<reg32 offset="0x00E4" name="INTEGLOOP_GAIN1_MODE1"/>
--	<reg32 offset="0x00E8" name="VCOCAL_DEADMAN_CTRL"/>
--	<reg32 offset="0x00EC" name="VCO_TUNE_CTRL"/>
--	<reg32 offset="0x00F0" name="VCO_TUNE_MAP"/>
--	<reg32 offset="0x0124" name="CMN_STATUS"/>
--	<reg32 offset="0x0128" name="RESET_SM_STATUS"/>
--	<reg32 offset="0x0138" name="CLK_SEL"/>
--	<reg32 offset="0x013C" name="HSCLK_SEL"/>
--	<reg32 offset="0x0148" name="CORECLK_DIV_MODE0"/>
--	<reg32 offset="0x0150" name="SW_RESET"/>
--	<reg32 offset="0x0154" name="CORE_CLK_EN"/>
--	<reg32 offset="0x0158" name="C_READY_STATUS"/>
--	<reg32 offset="0x015C" name="CMN_CONFIG"/>
--	<reg32 offset="0x0164" name="SVS_MODE_CLK_SEL"/>
--</domain>
--
--<domain name="HDMI_8998_PHY_TXn" width="32">
--	<reg32 offset="0x0000" name="EMP_POST1_LVL"/>
--	<reg32 offset="0x0008" name="INTERFACE_SELECT_TX_BAND"/>
--	<reg32 offset="0x000C" name="CLKBUF_TERM_ENABLE"/>
--	<reg32 offset="0x0014" name="DRV_LVL_RES_CODE_OFFSET"/>
--	<reg32 offset="0x0018" name="DRV_LVL"/>
--	<reg32 offset="0x001C" name="LANE_CONFIG"/>
--	<reg32 offset="0x0024" name="PRE_DRIVER_1"/>
--	<reg32 offset="0x0028" name="PRE_DRIVER_2"/>
--	<reg32 offset="0x002C" name="LANE_MODE"/>
--</domain>
--
- </database>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
 -- 
-2.39.5
-
+With best wishes
+Dmitry
 
