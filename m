@@ -1,81 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-58764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E54A2ABE20F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 19:45:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB0DAABE2CA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 20:39:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5AA318C6062
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 17:45:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C0C31BC0A77
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 May 2025 18:39:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B277F25C6FA;
-	Tue, 20 May 2025 17:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00AAA27FB08;
+	Tue, 20 May 2025 18:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cMRMIbQQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tydRZ7sm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB12025A2D9
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 17:45:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1710248896;
+	Tue, 20 May 2025 18:39:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747763111; cv=none; b=mxk9oFSjJxWhxFc7x2nxrMXiWGaDjbaBFvrkaFH26Yab9jwCslv3rUpbVIqxXNZB94ZMTJzslmkG5wPuIyX1BPT6YQs2kPi2kNPaauSFcp5erfO3RMfXPSCbCCA9A8H9Hw6jNbB72q/DNJw4w0U0XFfjsduTkmBuznXOYM0/0PE=
+	t=1747766353; cv=none; b=JoEqIsgdyX7EjE9nHIoOVHZsuyJ+k6qN917DZNtQMxCu1wDMIHJ2nHPNGtY6EHRGVRwHjuXbALT7mzk3m6xGwkR3iDca3b4QpfXf0iOuD/sJsKkh2olhAIpemKGAtQdaFiIS1SvxgyfCPQvfbgMgGjkthG+3dZoCBDpralF9nXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747763111; c=relaxed/simple;
-	bh=T92V8eX3Vz4beQQo+V6nyo4FyO6B+nwmyPWJT1oO+Pk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LFPxC7PbWBYNDq9cXtx9WLLdowJsZESBuByN97CxKatFTfMin+U/1DE+BLmXF2EYP/drBO2dLXKeYgjSLS8EQSD+Rsh1rBC/FROPc/bgfZ33IwFyHVPcC02dxsGRBSJhksgQL6vl0hphAP6Wielj0zOOeCkQo6Q9Gmbezynx0CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cMRMIbQQ; arc=none smtp.client-ip=209.85.219.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6f8a694d622so11895936d6.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 10:45:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747763108; x=1748367908; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=k/0lqXBgLimY0A+nlogIvRC91H4XJPyHb2uLAtGHc+4=;
-        b=cMRMIbQQ9q2f/RpAnvFt/uCRCoDJ+MAlOPjMXBiOVpM6PSdcPy+PTgemSDFgVWsZsy
-         IEX/+oCclFIApABAdo05qVrOP/xCuYl16fA3awcDNgyGFu1Rl92Kuh7U9Tvv61+pIXB/
-         e2jqt8Jf+xoVLh7zsEnriJaaP1GDC40l28a7IsYFKyQCnC6nMb318BvtcMQYRhadZuaN
-         h7ilJIyvrlfGQqUFWt2WF8VvUpfZOvTr+6N3JiekueMP2C59ErTNZC+mmrkc9zHSTnnn
-         DwRU+Sfqs6hxVbw+gbYg/zWFXS0XnCzyoS9XvkNsvE5BfD7AHg4vm8q1igjcPtprlhGh
-         Gp+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747763108; x=1748367908;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=k/0lqXBgLimY0A+nlogIvRC91H4XJPyHb2uLAtGHc+4=;
-        b=CtAs4QaPVVS5+O9kfW9LhFRcvsZE1Sd2/Aqa+hnaeclaut0XIbtpysp8QXkUxnjQbk
-         4dDX/gZcStx/vg59rwVTdBiUzqIpjd5KiEchM6CU0afQ6Ia4BYFsK9kVGPbkzq+qOLFX
-         oSI9NyiSLeId28dXT84jXjr2Xbea0+ZRa0Kg+KtZ0gxjw2DCChSoy/mzPNINuRyQfPFM
-         ayXRzUOZOZeSMYxhLpysj5EAV+dA2mkSgww6wdxKQ9JB0jiX3VEYXXBltFjeOW/xIO+S
-         dtAcHZL5L6qJWbuovnAVQJqpiWQbk6/kdKobAm2xy4qNQ0WB41ACML58RAe9itnNd2As
-         5vAA==
-X-Forwarded-Encrypted: i=1; AJvYcCWlG5xhysJs963z1DuEmwRv+cv8FEgKcXBqiWasubGKRz5HCAMpQvaXFDFT2qpMFKU5poX+8Dcb3yE1oRYe@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw3r7pVovtGGfF7K6OrnAmjdFFaFwxkAHoTFXPezTdDMFx+TUky
-	2tU4jkCEn1Kq+eRyNIU2+95ubSn7+cR+S9RAXfNWeeZ5z0QZgYJ/A2vzSjogakKE
-X-Gm-Gg: ASbGncu3JsURFNbJQcBbOArMmy4JNZF90yuS7J3HvOnPmiw5hmMEWVYb9YR1vXIgNr6
-	Swti2Os1WALwA18LLMor9/ARMok4M0ofnTLNpKfp7Dz/YWfe6RgYSQdNnVwbCKdQeRcLmPm7gNH
-	KjnKT9gxRz5zK4FWEBYmGHIpQumq351SGuODv5gn3NhSjr2Ik9sGxfsDHKmc3y+sBODjd4JOzqa
-	CeeCQ5ACY7ngL22jqFaxbLOqPHNvdVqYuVQGJ8omUS7y9sOpUndrM2z1viV5yBsR+uu4gDQGMqC
-	k6rp76KboS+yLvYfiO3FJP/DNPfywRZDClzsW8SV6JgCM/QvzNqY2wc0Y2L+MeX2sAdUU6itZ7w
-	oIsbKrzkdU0D/1qU6uLY=
-X-Google-Smtp-Source: AGHT+IFCdFtXD0ROOtYtBP0OI+hMuOVWsDmLO4ZEV9rDAumTtHnKdWFKDekI52EYfVxWEILyc/wwTA==
-X-Received: by 2002:ad4:5f8e:0:b0:6f5:3c5e:27fc with SMTP id 6a1803df08f44-6f8b089442dmr94348406d6.4.1747763108580;
-        Tue, 20 May 2025 10:45:08 -0700 (PDT)
-Received: from [192.168.124.1] (syn-067-243-142-039.res.spectrum.com. [67.243.142.39])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6f8b096ddb4sm74126586d6.78.2025.05.20.10.45.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 10:45:08 -0700 (PDT)
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Tue, 20 May 2025 13:44:56 -0400
-Subject: [PATCH v7 7/7] iommu/smmu-arm-qcom: Delete resume_translation()
+	s=arc-20240116; t=1747766353; c=relaxed/simple;
+	bh=xMPftx8ZL1Fdnrn6+/pTmp8ZHvl/LtV3wjYxJ7nWMjM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=qwK3dpAbAR48dV5HnlYG2V+pykPkgl4Ffwtt07RLlcXPpZT+t2t/ZPTTucfTMC0Vy4pnuxicFTEOWWyZ8c5bgsnWwWKCsZLK1OcGOmZkLFBslC9GOblyL1eaYkmoHZc3frnJDzEkeJ2C1GHRd8UIUuJUde4PLW4HSosnmUDqTMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tydRZ7sm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2D8C8C4CEEF;
+	Tue, 20 May 2025 18:39:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747766353;
+	bh=xMPftx8ZL1Fdnrn6+/pTmp8ZHvl/LtV3wjYxJ7nWMjM=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=tydRZ7sm3nBXy0taiRugMj87kfEB47X0T0LBh+HZBGG4ooB2LobHmxnBSTOmUDvfz
+	 4JqhPH0EF+ExORQGfSNa3DE0zQYCrDNyZfq0vA8x3eqQPpdBMuOQikBhawHUUeJ4vQ
+	 QZVkCsSJ+N9wTfT214wGcSmHAsh6s1Ta7Qlmm/VaC3qSQO0HaRy/zsvhdY/4LfVlWv
+	 Pai+YWZy3G6WpsIjGks9E0xLEVy0xk79lll+ZEKcTe1yebPxSNz7VmlAq8RPvlmLOG
+	 QrIHn5GwVW7ZNDxZ8Xe7KwrGiKgz897/Huw15+v4x6s5NbgxwOAY4ZG0q5I7i3TPi2
+	 O5tr26oYk/gRg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20B5DC54E71;
+	Tue, 20 May 2025 18:39:13 +0000 (UTC)
+From: Vincent Knecht via B4 Relay <devnull+vincent.knecht.mailoo.org@kernel.org>
+Subject: [PATCH 0/4] CAMSS support for MSM8939
+Date: Tue, 20 May 2025 20:39:05 +0200
+Message-Id: <20250520-camss-8x39-vbif-v1-0-a12cd6006af9@mailoo.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,60 +55,76 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250520-msm-gpu-fault-fixes-next-v7-7-96cd1cc9ae05@gmail.com>
-References: <20250520-msm-gpu-fault-fixes-next-v7-0-96cd1cc9ae05@gmail.com>
-In-Reply-To: <20250520-msm-gpu-fault-fixes-next-v7-0-96cd1cc9ae05@gmail.com>
-To: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>, 
- Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, 
- Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, freedreno@lists.freedesktop.org, 
- Connor Abbott <cwabbott0@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAEnMLGgC/x3MTQqAIBBA4avIrBvIQtKuEi3MxppFPzggQnT3p
+ OW3eO8BocQkMKoHEmUWvs4K3SgIuz83Ql6roWs70xo9YPCHCNrSO8wLR3SDidFY7bSzUKs7UeT
+ yH6f5fT90dfVBYQAAAA==
+X-Change-ID: 20250517-camss-8x39-vbif-975ff5819198
+To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>, 
+ phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
+ Vincent Knecht <vincent.knecht@mailoo.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1747763098; l=1671;
- i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
- bh=T92V8eX3Vz4beQQo+V6nyo4FyO6B+nwmyPWJT1oO+Pk=;
- b=vtKS5WA2jt4fvTdysRQedDxOh8WN7S66xhFGBrNMjcLIhRmubh69gcLR/NbqQtWPPrry50qfq
- lDnb+3B5orhDydZLJby6AbGaTMBEjlxIm7FW0NgjDlqGLt+O1uUASXR
-X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
- pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747766350; l=1864;
+ i=vincent.knecht@mailoo.org; s=20250414; h=from:subject:message-id;
+ bh=xMPftx8ZL1Fdnrn6+/pTmp8ZHvl/LtV3wjYxJ7nWMjM=;
+ b=5H7zBjpE6EwMk9Sh/1Pi/8cs5I+ouMQ1J7iMQUdhHso+sTYEs++vKgH9X8U3SGo33FuYp91mQ
+ GCar79nboIjBR4ZHi08sXW1mU4+lxCynxQF5Hmqv6ZK187DgriOJ8Wp
+X-Developer-Key: i=vincent.knecht@mailoo.org; a=ed25519;
+ pk=MFCVQkhL3+d3NHDzNPWpyZ4isxJvT+QTqValj5gSkm4=
+X-Endpoint-Received: by B4 Relay for vincent.knecht@mailoo.org/20250414
+ with auth_id=377
+X-Original-From: Vincent Knecht <vincent.knecht@mailoo.org>
+Reply-To: vincent.knecht@mailoo.org
 
-Unused since "drm/msm: Delete resume_translation()".
+This series adds CAMSS support for MSM8939.
+It's mostly identical to MSM8916, except for some clocks
+and an additional CSI.
 
-Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+To fix black stripes across sensor output, and garbage in
+CSID TPG output, 2 VFE VBIF register settings are needed.
+So the 1st patch adds helper functions to do just that.
+
+Patch 1: adds helper for VFE VBIF settings
+Patch 2: adds CAMSS_8x39 version in CAMSS driver
+Patch 3: documents qcom,msm8939-camss DT bindings
+Patch 4: adds camss and cci in msm8939.dtsi
+
+Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
 ---
- include/linux/adreno-smmu-priv.h | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+Vincent Knecht (4):
+      media: qcom: camss: vfe: Add VBIF setting support
+      media: qcom: camss: Add support for MSM8939
+      media: dt-bindings: Add qcom,msm8939-camss
+      arm64: dts: qcom: msm8939: Add camss and cci
 
-diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno-smmu-priv.h
-index d83c9175828f792f1f43bcc8056102a43d822c96..4106b6b372117119bbebe67896de18fc6286fb44 100644
---- a/include/linux/adreno-smmu-priv.h
-+++ b/include/linux/adreno-smmu-priv.h
-@@ -46,9 +46,8 @@ struct adreno_smmu_fault_info {
-  * @get_fault_info: Called by the GPU fault handler to get information about
-  *                  the fault
-  * @set_stall:     Configure whether stall on fault (CFCFG) is enabled. If
-- *                 stalling on fault is enabled, the GPU driver must call
-- *                 resume_translation()
-- * @resume_translation: Resume translation after a fault
-+ *                 stalling on fault is enabled, the GPU driver should return
-+ *                 -EAGAIN from the fault handler if retrying is required.
-  *
-  * @set_prr_bit:   [optional] Configure the GPU's Partially Resident
-  *                 Region (PRR) bit in the ACTLR register.
-@@ -71,7 +70,6 @@ struct adreno_smmu_priv {
-     int (*set_ttbr0_cfg)(const void *cookie, const struct io_pgtable_cfg *cfg);
-     void (*get_fault_info)(const void *cookie, struct adreno_smmu_fault_info *info);
-     void (*set_stall)(const void *cookie, bool enabled);
--    void (*resume_translation)(const void *cookie, bool terminate);
-     void (*set_prr_bit)(const void *cookie, bool set);
-     void (*set_prr_addr)(const void *cookie, phys_addr_t page_addr);
- };
+ .../bindings/media/qcom,msm8939-camss.yaml         | 269 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi       |   4 +
+ arch/arm64/boot/dts/qcom/msm8939.dtsi              | 152 ++++++++++++
+ drivers/media/platform/qcom/camss/Makefile         |   1 +
+ drivers/media/platform/qcom/camss/camss-csiphy.c   |   1 +
+ drivers/media/platform/qcom/camss/camss-ispif.c    |   8 +-
+ drivers/media/platform/qcom/camss/camss-vfe-4-1.c  |  11 +
+ drivers/media/platform/qcom/camss/camss-vfe-vbif.c |  37 +++
+ drivers/media/platform/qcom/camss/camss-vfe-vbif.h |  19 ++
+ drivers/media/platform/qcom/camss/camss-vfe.c      |  10 +
+ drivers/media/platform/qcom/camss/camss-vfe.h      |   3 +
+ drivers/media/platform/qcom/camss/camss.c          | 157 ++++++++++++
+ drivers/media/platform/qcom/camss/camss.h          |   1 +
+ 13 files changed, 671 insertions(+), 2 deletions(-)
+---
+base-commit: 8566fc3b96539e3235909d6bdda198e1282beaed
+change-id: 20250517-camss-8x39-vbif-975ff5819198
 
+Best regards,
 -- 
-2.47.1
+Vincent Knecht <vincent.knecht@mailoo.org>
+
 
 
