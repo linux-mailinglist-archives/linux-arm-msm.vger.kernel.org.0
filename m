@@ -1,158 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-58949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C392ABFB34
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 18:28:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A02CCABFB4B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 18:32:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D5AB87AD0F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 16:25:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8BA021890527
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 16:32:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52E30222565;
-	Wed, 21 May 2025 16:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53AE62153E7;
+	Wed, 21 May 2025 16:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="INlfdw+E"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UF885eCS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230EA19D06B;
-	Wed, 21 May 2025 16:26:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D93D16DC28;
+	Wed, 21 May 2025 16:32:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747844807; cv=none; b=qFUCjLs3H5MU8zuPYPncSCu8AqdJSvcc9sIzyUBall1XyTjOINPV2FqNOoI/3iKPP9s563ZOj6QEWKJp6RAj4qdnlfmYzTymRqqcKqd1o0EfbMN27xKuQmlUsegUCnL48uoW4vUD6HNh5yiaw00VSimfCMRNzGRZe/6IpEfvoDo=
+	t=1747845149; cv=none; b=DBrSNu1j+CrWYfo82SRnbreVZyZlxLx5chNakVA5L9dtWuNurRPXwhW0J0QarHIsOCz9p1ZkRxfaiOTAJ7gzSZ3gPDIa18CZn9IakVRLU06gOodUmOKSqZNrSyKaTFVZ1/bNGOoCukkLZIJ3j2XzxHtiAl7KFOmedMC/ramer1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747844807; c=relaxed/simple;
-	bh=e8B7QaaNHQIZrf/7IajtCOXeAnmNGd6fcL/DqQeHJkw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RCw8InjPJZD1gWjV2I5FILZ4c8Tb/+ucUNb7SwCV+YLT8h7To3JzhYvmIFOGpn7vNRn2KzFTbcCFYKl8y5N4stDc559DyBnhVdjdxcVAGw1mHYlnXuGpsgtx+Am8jnafrSKuDTcMXBMnaT1hnzayD96jfhRhe2kJOGDQ9u5LaZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=INlfdw+E; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E65C4CEE4;
-	Wed, 21 May 2025 16:26:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747844805;
-	bh=e8B7QaaNHQIZrf/7IajtCOXeAnmNGd6fcL/DqQeHJkw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=INlfdw+ECjfX5UG+Q2U4RmEQmWTks+4xs6WtL3jU/LjLUpa7WsKJCRMw7/Vi62w5U
-	 stiqXxXIX0Tu5zZj6myhqCmwwRbjtsSq1Z2QQN4GV+HO9wDkwDMIHkxvz4R7dcEFL+
-	 B2ZJSRhwRW6Jc33zwY/F4bVuOHXwFqETIk9OSe3M3GthBUHwFkfhr6jKcKsWr8ZEl9
-	 4UKSKr+KrQ1BKPiimXHRbgaxOmi1JiEn6iplpj1k495H4BO2nAp8yGHLNCSkMD1arM
-	 gKLXB5N9yeSQCbOAx5XNt4xllwwjIwvzkxDQxxP3ovIxNhAXV3o9wIL8vsDedKavv6
-	 8yJXJdw27nbKA==
-Message-ID: <9df2f9f3-289f-4916-a293-ad5d97d530fe@kernel.org>
-Date: Wed, 21 May 2025 18:26:40 +0200
+	s=arc-20240116; t=1747845149; c=relaxed/simple;
+	bh=cf1lBPR/+sEaoaDMivYSgjSCVGSU8Koitx5HilmzPoU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=kFrh3hJqYTIxELC9rr44RXnEJ8zQUAIJz2xbyVWY+VFCj6TlmRDc5bO74BYZWd1H5pQCBR10rx3Zq+dQdWZvqHWKhz5Z+d3nAG57AsWsJbHw/+KSboVo7zIgpUognK9YBuOtnYN5W7v4rVaKSwi+4bY/L63USE9gJHpZsmRSPCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UF885eCS; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54L9XNj7029159;
+	Wed, 21 May 2025 16:32:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=KGwc1ql+1jS9ZRvnpK1IPg
+	yP+fU4+jeRI9PbhjIUHPs=; b=UF885eCSTaisK1dKErrhDAGyT1tG68WPSRq6FS
+	GvNLiOdCNMe0tXWWj0aIXQ9GwNP9YPi0p6PkViPBra4uWCdREcu6+sRzdb8AOMXx
+	o4ZZKUJIsFRA5hGTtMyLT59IslQbFL8Z5ut+IuD1luBI2sQQYIQjnPOti3GbCWE3
+	xyO3+GZHAqPvgVJ55AYnNdKYZt6evof3imBu2ItFU8puZxwkDn3j0TR1Y3CQNGVh
+	y/notXTrbhiQ6d3AHozxSu6ofCFS98BqIg0JILQcyOX4FFMbEloHALR5lKsYqhNi
+	3vVDi1zpJT2xMQYugGq+LBmR5ePKV22it7UHHo4oD4gMcrPA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf43n47-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 May 2025 16:32:25 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54LGWODC020169
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 May 2025 16:32:24 GMT
+Received: from hu-yabdulra-ams.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 21 May 2025 09:32:23 -0700
+From: Youssef Samir <quic_yabdulra@quicinc.com>
+To: <manivannan.sadhasivam@linaro.org>, <jeff.hugo@oss.qualcomm.com>,
+        <quic_carlv@quicinc.com>, <quic_thanson@quicinc.com>
+CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH] bus: mhi: host: Detect events pointing to unexpected TREs
+Date: Wed, 21 May 2025 18:31:10 +0200
+Message-ID: <20250521163110.571893-1-quic_yabdulra@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/6] dt-bindings: arm: qcom: Add bindings for QCS9075
- SOC based board
-To: Wasim Nazir <quic_wasimn@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@quicinc.com, kernel@oss.qualcomm.com
-References: <20250521140807.3837019-1-quic_wasimn@quicinc.com>
- <20250521140807.3837019-2-quic_wasimn@quicinc.com>
- <79eb2b17-06ee-42d4-9954-a78ada1ced29@kernel.org>
- <aC3y0PPA8qrvmobw@hu-wasimn-hyd.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <aC3y0PPA8qrvmobw@hu-wasimn-hyd.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIxMDE2MiBTYWx0ZWRfX/kAtc0Ew7T3p
+ K4b7M0MlWD8v2z38LSZ7lpbwCtqgBwTqvvs/P7u/QNlvE2aZ2YCJkM6FoWQHUOJNf3XValZBplA
+ voHUYfEegf3Zb2zCd5cqvmxMfweczuLfE0XFPPHKBywA0u4p631zbfRY3D99o/CIPQi3eBUmUSy
+ F2EBOZW6g64X/jw/XDThdB4s6dxLv6bIwh9EoSu3QlU+MraIlqfcpVY41jYKL0ETpry828drYks
+ 5eVB3tRYSci/u5A0EWfoXW4virS5JMSMpvtldaCSuOj8Qb1jfQIW/a9upuX93PizAPjNhcAxE9k
+ yV9aC9cTxo4fcskvdlIYZT+iFf0a8dD4HU+sy4mq/DIO8gYz0ZGnH357e8qkwS4vm4A+FBEkffN
+ gcBwumzFytlCIDSDfkuYwdBdLnnQrCbliE2rWDlYvnTnSNPfvuK5Sv8VpdAFBfaZsUeILvrz
+X-Proofpoint-GUID: 75yyjb2B4tKcPnEa6lF3ZS6uzOofFvnj
+X-Authority-Analysis: v=2.4 cv=Ws8rMcfv c=1 sm=1 tr=0 ts=682e0019 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=w97xFAd__o3z-cDrnlAA:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 75yyjb2B4tKcPnEa6lF3ZS6uzOofFvnj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-21_05,2025-05-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 malwarescore=0 clxscore=1015 suspectscore=0 mlxscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 mlxlogscore=999 adultscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505160000 definitions=main-2505210162
 
-On 21/05/2025 17:35, Wasim Nazir wrote:
-> On Wed, May 21, 2025 at 04:20:53PM +0200, Krzysztof Kozlowski wrote:
->> On 21/05/2025 16:08, Wasim Nazir wrote:
->>> QCS9075 is compatible Industrial-IOT grade variant of SA8775p SOC.
->>> Unlike QCS9100, it doesn't have safety monitoring feature of
->>> Safety-Island(SAIL) subsystem, which affects thermal management.
->>>
->>> qcs9075-iq-9075-evk board is based on QCS9075 SOC.
->>>
->>> Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
->>> ---
->>>  Documentation/devicetree/bindings/arm/qcom.yaml | 7 +++++++
->>>  1 file changed, 7 insertions(+)
->>>
->>
->> This was already acked twice by two DT maintainers. Apparently we need
->> the third one.
-> 
-> The previous acknowledgment has been removed due to changes in the code.
-> Since, here I have removed the som compatible so though of getting it
-> reviewed again. Som compatible is removed to make it align with other
-> sa8775p & its derivative targets which we are trying to refactor along with
-> Ride changes in other series.
+When a remote device sends a completion event to the host, it contains a
+pointer to the consumed TRE. The host uses this pointer to process all of
+the TREs between it and the host's local copy of the ring's read pointer.
+This works when processing completion for chained transactions, but can
+lead to nasty results if the device sends an event for a single-element
+transaction with a read pointer that is multiple elements ahead of the
+host's read pointer.
 
-Nothing was explained in cover letter and dropping tags needs explicit
-mentioning. Nothing explained about first tag being dropped, either!
-Read really carefully submitting patches and your internal guideline
-before sending patches.
+For instance, if the host accesses an event ring while the device is
+updating it, the pointer inside of the event might still point to an old
+TRE. If the host uses the channel's xfer_cb() to directly free the buffer
+pointed to by the TRE, the buffer will be double-freed.
 
-But that was not about it. It was about us spending 1 or 5 minutes on
-your patch every time, because you send something not ready which your
-company decides to change thus we need to spend time again, and then you
-change it again, which we need to spend time again... do you get the point?
+Validate the pointer inside an event before processing it.
 
-That is not fair. Your marketing changes should not cause more effort on
-us. And this is not the first time.
+Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
+Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
 
-At least I do not agree on that. Anyway, I explained my point of view to
-Bjorn and Konrad. I am not going to review this. Maybe you will be lucky
-with the third DT maintainer.
+---
+ drivers/bus/mhi/host/main.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+index aa8a0ef697c7..57dc9c5c0d84 100644
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -602,7 +602,7 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+ 	{
+ 		dma_addr_t ptr = MHI_TRE_GET_EV_PTR(event);
+ 		struct mhi_ring_element *local_rp, *ev_tre;
+-		void *dev_rp;
++		void *dev_rp, *next_rp;
+ 		struct mhi_buf_info *buf_info;
+ 		u16 xfer_len;
+ 
+@@ -621,6 +621,16 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+ 		result.dir = mhi_chan->dir;
+ 
+ 		local_rp = tre_ring->rp;
++
++		next_rp = local_rp + 1;
++		if (next_rp >= tre_ring->base + tre_ring->len)
++			next_rp = tre_ring->base;
++		if (dev_rp != next_rp && !MHI_TRE_DATA_GET_CHAIN(local_rp)) {
++			dev_err(&mhi_cntrl->mhi_dev->dev,
++				"Event element points to an unexpected tre\n");
++			break;
++		}
++
+ 		while (local_rp != dev_rp) {
+ 			buf_info = buf_ring->rp;
+ 			/* If it's the last TRE, get length from the event */
+-- 
+2.25.1
+
 
