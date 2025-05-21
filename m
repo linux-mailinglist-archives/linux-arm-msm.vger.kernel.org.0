@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-58825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E747AABE9EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 04:27:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1539DABEA0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 04:47:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DDEC63AAE2B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 02:26:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2CF431B67263
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 02:47:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 373ED22B8C1;
-	Wed, 21 May 2025 02:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5BD720DD75;
+	Wed, 21 May 2025 02:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TUgPeHuT"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ZMHbAm9b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1E922B8B9
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 02:25:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C6C148827
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 02:47:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747794332; cv=none; b=PJwRBmAqGKExSMpMEylcnYXFmejBL/Dup+RkEQibggjwipgjZE9hKy1/rZ8n1W8MnYzEnQj7FPSRWxKV39y/L3ThLd02zAyqEgIdyjh6Vf5B0SNBYEz7zhcjggycK8Gqb5VQly31IrNkYOfvegk3eZBt2Usyuh1MV+HYx9NBRcY=
+	t=1747795648; cv=none; b=XTmGGpF4X8tR2j/Rd/hGlcT3HUPCoII59VTMvAw93FSX45FYFkV1ZnURvCAO930LX1dcOuLkYGKjFFpCvE4C6e5suI8JPSxNQzT6ABVRkqfvRwWrKW6hEUI3zc5ABmL2Chym0kwfS8DB8F8peZawAc5gA967ZmrionZY0TBdKxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747794332; c=relaxed/simple;
-	bh=tkPhK9LKALPm6nIelp3ZKXatSKhNAV0B1rYZZ8JKI28=;
+	s=arc-20240116; t=1747795648; c=relaxed/simple;
+	bh=vxbtc1EDqSXR3qS6Mh7hkJsbnUOQ20m1M8ob4WnjGJQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PqwLYCCLr15ngUv0FtJOs4CKRl6PqoPqn0AWtHxBnGj9C8aap3D5MAFIzdKzxMpG8OYzdcVbnTgWz+7AWoRszXM2/HakmWjJkkqwTRrY8HoubdMNjg58g25CP9OWNCzCGugsjMEAgu2PWhzKu+L3XU1RhVclye/xsg7p/v1ltvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TUgPeHuT; arc=none smtp.client-ip=170.10.129.124
+	 In-Reply-To:Content-Type; b=lcJ6XdF67XkWkfaLn+xYXSE+Fg1j964qQwE1th/ymNl6hwDzdvSQGFjDXNawKBYBPzCoXdKlaocEdb/TmJ9SngQm6oUzSkUyLwPEoM3vyHu+PjsEJ5oBCSYMKprJyAbDc2u9Aw8EqYq/vXHyAVsj4zk2UUthI5YOTwBszN5zZ6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ZMHbAm9b; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1747794329;
+	s=mimecast20190719; t=1747795642;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=hkRmm/Yp4BUDonwE4Xac96Ss8wcLW7noonhF13pZKss=;
-	b=TUgPeHuT3IiJtFm/UW0VNevVCqfjwxw7LMGp6oh9I/z5NR+EwYHyI8sGagI7IEhA/NJv/I
-	Kg7mHrEPaf3wnBafgTJD1oEcFL8hiE2hIVz6vfwLUFvi5PP1wXq9Ix36nQELAdwuahvWLa
-	W/Qbkv+7IyDXDy6FIdf5HnqdG3pVCVI=
+	bh=uu12XEh7AToGw+jGxDZjXo2gU6G0yYISDzb3cxuu9wE=;
+	b=ZMHbAm9bGNrmWwACSPAJkG1CIKMAH9ncz8VPUrBwVQfOa3I2sNXcnk0QucpurwrOCr2toN
+	mz7rvKF2+ScgUz32gwooFqMh4qDC5yIi/lkrC4dlyuvONdKUxE0i9kiNUMulOlolvokFS1
+	Nv947MdWCTMOoKFBlh1OL4x3YRvNoYE=
 Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
  [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-377-rgjrJ5E9N2GLRo8guIGIxQ-1; Tue, 20 May 2025 22:25:27 -0400
-X-MC-Unique: rgjrJ5E9N2GLRo8guIGIxQ-1
-X-Mimecast-MFC-AGG-ID: rgjrJ5E9N2GLRo8guIGIxQ_1747794326
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7370e73f690so7533304b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 19:25:26 -0700 (PDT)
+ us-mta-102-QRu6K7fxMoGTr0_uKAT_hg-1; Tue, 20 May 2025 22:47:18 -0400
+X-MC-Unique: QRu6K7fxMoGTr0_uKAT_hg-1
+X-Mimecast-MFC-AGG-ID: QRu6K7fxMoGTr0_uKAT_hg_1747795637
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-74299055c3dso8861499b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 19:47:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747794326; x=1748399126;
+        d=1e100.net; s=20230601; t=1747795637; x=1748400437;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hkRmm/Yp4BUDonwE4Xac96Ss8wcLW7noonhF13pZKss=;
-        b=FUWW1LZ0TG/hM3bDu30wNM8y/VGh7dcn4mujBlUi8zsmgL0ReNbmoQBuSQGBVEzT8W
-         Ji8xP7U1vDmWdiJ3N6+cVpwRCd3lV4ZSus1XTOvSfimJn9+nA8xmQxETxA2oZkYWhA7d
-         bmErXknLPKB2ym+vNnjxaeZygPAXgPMPKOse3AqXlv77OBX907jFsX0Rchm5PPMM+HOP
-         l9ikNb4gyhZr55MNixnrEBAG6kIXJxAbKxBx1H+R5WnhcR2nAHwso7sRrYwGm5P0ChAI
-         eim8J/yEbGPfU2XrPuX960Wvm9+xHfmF5w0/jZ895h3xQ6wa05b486GDmJcAaoG/jeTM
-         eCXQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWhcdwsZfSKeTE/omQcdqg5XmbG4UzfgWE+TtUibOT61ZM3GMWU/udPtRiWRyaHsDLiMV3a8J3Hi4iZjQiN@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyk22Y0spNP5zPcsDTgcSBJluFl/81lny7eh3+ijE7Cr+EsLvV5
-	A6eOk6wXVAIDd83BDfZ4UTmHHWozgUsmgV7bl/sR4dc23NMN9vQy6qR3JnmynVxnrVLMa/VTmUa
-	/jLNzLQYvZGYhofKhlnlUl6buyr5Kb6QDNYdzg4xE/PI76/nTQ9XC9sfXRLG1jwRGgk8=
-X-Gm-Gg: ASbGncs9O0FRJ8KPXyURm1uf30f/3uPsw5rxMpPk/dbNfnWoUyw+nFNTv74JUQSkaJV
-	a0ds0XbcR4ODLbIYXjE2MSkk8lss5uAqc2g2G7pUJ7Pu6LrAdlBSYZawU4zEzgeYpHzYWd9zhH9
-	eniwSOKlzupURGit2xkXXNepHkMHKCBTYpBuri2PzdfwsfjUTNHHBcpCRNyOoZf/3ERI6NWDm3S
-	wW3DPBqr7OET2keNL090j9qyfLWNV+ckZOJn2lzK54y6WBoMECpJ3Mrbi/AFWi3sVzT6CRedU96
-	VeX6vsarz509
-X-Received: by 2002:a05:6a20:7d9c:b0:1f5:8e39:9470 with SMTP id adf61e73a8af0-216219b2560mr32316782637.31.1747794325923;
-        Tue, 20 May 2025 19:25:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IELH1Nkj6QBFRo2UbjW4nbg/CMv3zHb63Laxsznz8iimJrWPxaDEgIYMLdZSM4BBQAJnQlmzw==
-X-Received: by 2002:a05:6a20:7d9c:b0:1f5:8e39:9470 with SMTP id adf61e73a8af0-216219b2560mr32316707637.31.1747794325507;
-        Tue, 20 May 2025 19:25:25 -0700 (PDT)
+        bh=uu12XEh7AToGw+jGxDZjXo2gU6G0yYISDzb3cxuu9wE=;
+        b=mthMAWZyakwJSV2hYLHvt2vgdxwtSZXe9eH01C4uZuZF8sus9ybUtq6T9BsnZoYZBX
+         GKbsz6FlVfpTP+n+X2dqNoZU7dDeuqGor0HELVkaSNNeUVI7/BJOZ9S0Oqrmhbm52503
+         f1oMpvW/Mh0BG6b/lsdJg5jgR9EXbca2fOMfuD8gnkV/XiuTnnMs04NTOOjcF8mgMx1q
+         FUrw0VXoLQ05WjB8gcfjxjnU3zPWpWV8aO8Bea+9harKm3avECrOnIHStfz4ODSvu1/A
+         Qiuj6eWES4lurJwgbRM70kXSs/NctFbL3b3zP9GHn+T4XhDiktiXKG6wc+W70VSBPP53
+         1osA==
+X-Forwarded-Encrypted: i=1; AJvYcCUVa2Uh0K06fIXm5O5K6ZGXvGY2bEaQ21xzUjpP7aWrvu3ngQsZ+CqKRKfv8V44/Y9bjZyluo61mtCqPBgk@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw8+roVP/Y5pxcfGiv4ud0cSWNMbw8v5OyWoG3nCmU8AfmNWIZd
+	HAvgW9HUQgsWvEtH1/RxIMBGPy++AFjBm92rE1XxRSkTZqADnbI5IYKA9Ud3EbtP/DL0T7wHWmh
+	drp1zwDUQ2KEu54BtMNEJZLY1OsLuWXIsLXmG1fUpbEOYUWeHMZ3JnuGgvmD5/O00QPg=
+X-Gm-Gg: ASbGncsuCbCWGWb5qVoTL/lnN3w8qAMpDzcnWcrJwIz80+lNstgdRqbtNNUJqtVzOiX
+	zKYdGHAWk/TNq6t+8BkikMoFQaACeKY45kuWluRXePIDlSO0OYG3zxE6f7TCizopXEqv3PuXnWL
+	oIFbfAQjpqKTg985Jcs9tdZPOd95m/RXpJJ0sBA40ladEpsp8+ifVa7M91L8t2ynzVD6YfgeEzk
+	jzHw0OZUW/UMTajmSP8ydkDNqlFvQ4Z8WVMfXd3LUIAJa3DH+EhvdDWZ8R3bBi/b3K06yrk7IRT
+	nBB5lrMCszsA
+X-Received: by 2002:aa7:8e8a:0:b0:742:b3a6:db09 with SMTP id d2e1a72fcca58-742b3a6dbdbmr19583166b3a.16.1747795637079;
+        Tue, 20 May 2025 19:47:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFzkHF4ER+v9r//dGWI45mzF35nZdjti9WpLsYuT60Xr9ICzKlggdIDgLPRs9dM7JzLT2yOBw==
+X-Received: by 2002:aa7:8e8a:0:b0:742:b3a6:db09 with SMTP id d2e1a72fcca58-742b3a6dbdbmr19583136b3a.16.1747795636622;
+        Tue, 20 May 2025 19:47:16 -0700 (PDT)
 Received: from [192.168.68.51] ([180.233.125.65])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b26eaf8e114sm8739609a12.44.2025.05.20.19.25.06
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a970d1b2sm8941786b3a.66.2025.05.20.19.46.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 May 2025 19:25:24 -0700 (PDT)
-Message-ID: <fd84d609-936f-4ff2-b495-22d31391181d@redhat.com>
-Date: Wed, 21 May 2025 12:25:04 +1000
+        Tue, 20 May 2025 19:47:15 -0700 (PDT)
+Message-ID: <498765f6-c20e-48f2-98e4-4134bfe150a3@redhat.com>
+Date: Wed, 21 May 2025 12:46:55 +1000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,7 +88,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 12/17] KVM: arm64: Rename variables in user_mem_abort()
+Subject: Re: [PATCH v9 15/17] KVM: Introduce the KVM capability
+ KVM_CAP_GMEM_SHARED_MEM
 To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
 Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
@@ -113,68 +114,67 @@ Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
  jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
  ira.weiny@intel.com
 References: <20250513163438.3942405-1-tabba@google.com>
- <20250513163438.3942405-13-tabba@google.com>
+ <20250513163438.3942405-16-tabba@google.com>
 Content-Language: en-US
 From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20250513163438.3942405-13-tabba@google.com>
+In-Reply-To: <20250513163438.3942405-16-tabba@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Fuad,
 
 On 5/14/25 2:34 AM, Fuad Tabba wrote:
-> Guest memory can be backed by guest_memfd or by anonymous memory. Rename
-> vma_shift to page_shift and vma_pagesize to page_size to ease
-> readability in subsequent patches.
+> This patch introduces the KVM capability KVM_CAP_GMEM_SHARED_MEM, which
+> indicates that guest_memfd supports shared memory (when enabled by the
+> flag). This support is limited to certain VM types, determined per
+> architecture.
 > 
-> Suggested-by: James Houghton <jthoughton@google.com>
+> This patch also updates the KVM documentation with details on the new
+> capability, flag, and other information about support for shared memory
+> in guest_memfd.
+> 
 > Signed-off-by: Fuad Tabba <tabba@google.com>
 > ---
->   arch/arm64/kvm/mmu.c | 54 ++++++++++++++++++++++----------------------
->   1 file changed, 27 insertions(+), 27 deletions(-)
+>   Documentation/virt/kvm/api.rst | 18 ++++++++++++++++++
+>   include/uapi/linux/kvm.h       |  1 +
+>   virt/kvm/kvm_main.c            |  4 ++++
+>   3 files changed, 23 insertions(+)
 > 
-> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> index 9865ada04a81..d756c2b5913f 100644
-> --- a/arch/arm64/kvm/mmu.c
-> +++ b/arch/arm64/kvm/mmu.c
-> @@ -1479,13 +1479,13 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->   	phys_addr_t ipa = fault_ipa;
->   	struct kvm *kvm = vcpu->kvm;
->   	struct vm_area_struct *vma;
-> -	short vma_shift;
-> +	short page_shift;
->   	void *memcache;
->   	gfn_t gfn;
->   	kvm_pfn_t pfn;
->   	bool logging_active = memslot_is_logging(memslot);
->   	bool force_pte = logging_active || is_protected_kvm_enabled();
-> -	long vma_pagesize, fault_granule;
-> +	long page_size, fault_granule;
->   	enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
->   	struct kvm_pgtable *pgt;
->   	struct page *page;
+> diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
+> index 47c7c3f92314..86f74ce7f12a 100644
+> --- a/Documentation/virt/kvm/api.rst
+> +++ b/Documentation/virt/kvm/api.rst
+> @@ -6390,6 +6390,24 @@ most one mapping per page, i.e. binding multiple memory regions to a single
+>   guest_memfd range is not allowed (any number of memory regions can be bound to
+>   a single guest_memfd file, but the bound ranges must not overlap).
+>   
+> +When the capability KVM_CAP_GMEM_SHARED_MEM is supported, the 'flags' field
+> +supports GUEST_MEMFD_FLAG_SUPPORT_SHARED.  Setting this flag on guest_memfd
+> +creation enables mmap() and faulting of guest_memfd memory to host userspace.
+> +
+> +When the KVM MMU performs a PFN lookup to service a guest fault and the backing
+> +guest_memfd has the GUEST_MEMFD_FLAG_SUPPORT_SHARED set, then the fault will
+> +always be consumed from guest_memfd, regardless of whether it is a shared or a
+> +private fault.
+> +
+> +For these memslots, userspace_addr is checked to be the mmap()-ed view of the
+> +same range specified using gmem.pgoff.  Other accesses by KVM, e.g., instruction
+> +emulation, go via slot->userspace_addr.  The slot->userspace_addr field can be
+> +set to 0 to skip this check, which indicates that KVM would not access memory
+> +belonging to the slot via its userspace_addr.
+> +
+
+This paragraph needs to be removed if PATCH[08/17] is going to be dropped.
+
+[PATCH v9 08/17] KVM: guest_memfd: Check that userspace_addr and fd+offset refer to same range
+
+> +The use of GUEST_MEMFD_FLAG_SUPPORT_SHARED will not be allowed for CoCo VMs.
+> +This is validated when the guest_memfd instance is bound to the VM.
+> +
+>   See KVM_SET_USER_MEMORY_REGION2 for additional details.
+>   
 
 [...]
-
->   
->   	/*
-> @@ -1600,9 +1600,9 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->   	 * ensure we find the right PFN and lay down the mapping in the right
->   	 * place.
->   	 */
-> -	if (vma_pagesize == PMD_SIZE || vma_pagesize == PUD_SIZE) {
-> -		fault_ipa &= ~(vma_pagesize - 1);
-> -		ipa &= ~(vma_pagesize - 1);
-> +	if (page_size == PMD_SIZE || page_size == PUD_SIZE) {
-> +		fault_ipa &= ~(page_size - 1);
-> +		ipa &= ~(page_size - 1);
->   	}
->   
-
-nit: since we're here for readability, ALIGN_DOWN() may be used:
-
-		fault_ipa = ALIGN_DOWN(fault_ipa, page_size);
-		ipa = ALIGN_DOWN(ipa, page_size);
 
 Thanks,
 Gavin
