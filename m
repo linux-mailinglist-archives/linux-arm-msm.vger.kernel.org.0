@@ -1,283 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-58850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7953ABED4B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 09:48:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED1E8ABED55
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 09:52:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 09F1B3AA7AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 07:48:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 41EA31BA3B0B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 07:52:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 393F5231857;
-	Wed, 21 May 2025 07:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A5EA23371E;
+	Wed, 21 May 2025 07:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="P8BWr8n/"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="kEtrPH98"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8E717BD3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 07:48:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B5117BD3;
+	Wed, 21 May 2025 07:52:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747813731; cv=none; b=I4RU93739aEeiJlLCutpQdb96JdreETppFWrK7UqpfnF6g7wwUWLvKS+KsgQQphFSyhJhReMSfTYtoVNZt+V9MMaiCjXJtCI+xIw7fsiFA7RMnhW3iQDWEbK59pFa9qnhkUzd+jSWF5+OoUPg+KeQM+IzSXkku7C8BVEtG+O27g=
+	t=1747813957; cv=none; b=g342wWcQgOune/y0hVcgMYi7Oll0oFZ7vmxLMw5UwuIOP3xf5Kni/ZCO5NrBwlLG/IkBdPMEylUmm3M0blhB8bnjLXLOy0AESnJwKkpJl0NaCNbcOYpTl5JcW8lGONG/JBn8BnmHnMQjNRa+u1uZNvyteQK+5xpRcL6oacHQ9Is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747813731; c=relaxed/simple;
-	bh=Dpy1obNg3DJawKTfV5amUEt0pWwh1Uj+CHxe44BgZGM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R3mB0zis8Ty2FWGyHfDxAHNWvB+wA3m87MtBg5klC6pjOCwMOHsu7EYxwPCo7aOAStqKRJPashFpSVLcbujMKuwDkJIf8tDE9FSQzMIQo4Xv50Dlk9lXsk9QYWkmM1DCvVpLqJA6aYHNc78irRygDXvr8m6ZR8OqMzu/4wBTTsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=P8BWr8n/; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1747813728;
+	s=arc-20240116; t=1747813957; c=relaxed/simple;
+	bh=rq+bsMJzZLsRFWFAZdDWQYndSV6J+iIZHa5Soo+xpDY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZpyPRVvr74nYc29QAhLGFmYidIJPIfAWKXNMNdyZHAtAMFoV7+F7VYypGethIR4S8rpIZhv2OW82UURrVnKxaOqvsb8BJRzOtLfpHkfpDKInfmH8CPGErADylBz6HDhBdV3xLCXMQcrEqJGqec/krCVd2ObKPwp8NizbDIvjPDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=kEtrPH98; arc=none smtp.client-ip=217.70.183.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id D7CB443E3A;
+	Wed, 21 May 2025 07:52:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1747813952;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=Ak0FpZpQGUq4r2jLBIWnnDK9APkUfaLBmd+ZS8A7nGU=;
-	b=P8BWr8n/Zteu97BGv6pW/LbORIjpOo6crHzpS66b/K6II4nUyanfaYf5YjyUqa4cIVvZF5
-	reApzSiUkPfahZm/NT7mxKicrO7NOGkx45K4ArjP4J0WoBTOvrAHrafm8lkpujM7uO15on
-	OGRsrSLPo4WbAY6gVbRxXCvq6CvVTrI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-MdbjJkHfOpWpForgS-UENQ-1; Wed, 21 May 2025 03:48:46 -0400
-X-MC-Unique: MdbjJkHfOpWpForgS-UENQ-1
-X-Mimecast-MFC-AGG-ID: MdbjJkHfOpWpForgS-UENQ_1747813726
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-3a36bbfbd96so1598032f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 00:48:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747813726; x=1748418526;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Ak0FpZpQGUq4r2jLBIWnnDK9APkUfaLBmd+ZS8A7nGU=;
-        b=MtBKNafI69TxC/JL4ibLwJUktafbL7s4dLhwPXZZ0UPbgbRe7wzj4trblp0ECZ3DWe
-         IvVxT6qsh3trYTPARbKGl9HM/f7MP2WziUcD2Gyh2LoAX2ZauZL3ZoNQy2ZNrtTHisYa
-         i73k6N6JB0/Np80gp90j01r6IwCX3uY5qUoIpYlUvkl0RnzE/aj1VxA5D+dcpHBgJCTB
-         pHn5wC1wI9TqgdZgdgDpwf28vPYZ/XNnAbCXhV4WLi/foc/Wbm+6WPca+Gtv/9CUTdQ3
-         NL7uyGZFBFSm2VQ66rT2AVCspaj6RQV2tkx8I2tcvBD+mmZr/Hqa+72XApdKracQ0JdY
-         Q00Q==
-X-Forwarded-Encrypted: i=1; AJvYcCU9smX3B/FFui4cVBPMt4JYKUiJjtdWOTVIBSI5+7eTFO/BBvWOwGcSGo19Lfx7FcLxGdlnZ0MeHF/geV/o@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxv8huH9g/5zDJR8IWnlqDFp35/pnZMdOBFy8+1OMXwYfSRWLqd
-	wJgcBDMNPjqyOD4njBWGsYORgy4eIhwaFCnuBx5r4NFyuiZKNk9qjz1UHGcQ/sFu2kSjqURIM25
-	gfvucM2yoYW3LXB6wxuN6IgDVeARDlvY7KSORL22yZkDUwTgBsHh/rwcuC4FI6PVlEEI=
-X-Gm-Gg: ASbGncuHZWKJaMtUWZD6fckxYdsci0/ubc+Z+AE/fvjHvHMyefqSCrLGY6Rg4dbmAnE
-	qsLQtHlwui4XRQj1/O2E/fFVB9Cv7xo4F33AaqkzrhFn/fa1gMknti5bY3aU/G6ASn0MnhhKXoT
-	Xg5vLs3NCfV8qZ8dOSaW00Ptv/6GhLKPAjdiY65uqrQv1zaXW+kzhBKbKilGMZgiQIcnxFUa+IM
-	ntoDL6s0/gZXIqEqVux2g0KuOE+aBAG4cSpjXLvOxJn6fl0iq5wuZL9LfOIOP3+FIq1aO/SPXo0
-	/qLQm5WXvPt4WtOvmqgVH1nXTMdoA3N70JFLFUxpKc3NpIvWu/qMseIHuCbJnntbsWV/sF4DY6K
-	tVLeM3SXdEDLUCd75E21AxvVc2stitJegNIqYzdc=
-X-Received: by 2002:a5d:5846:0:b0:3a3:77d7:b200 with SMTP id ffacd0b85a97d-3a377d7b217mr6057046f8f.17.1747813725528;
-        Wed, 21 May 2025 00:48:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEpTN9e/ZWesBOJXUvFSgL0EPyX/uv1m4Z6LW50+xiHAoT/yoWtj3ovu6uQ/k6pLY3iXDGoKQ==
-X-Received: by 2002:a5d:5846:0:b0:3a3:77d7:b200 with SMTP id ffacd0b85a97d-3a377d7b217mr6057003f8f.17.1747813725052;
-        Wed, 21 May 2025 00:48:45 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f25:9c00:e2c7:6eb5:8a51:1c60? (p200300d82f259c00e2c76eb58a511c60.dip0.t-ipconnect.de. [2003:d8:2f25:9c00:e2c7:6eb5:8a51:1c60])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca88735sm19296243f8f.69.2025.05.21.00.48.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 May 2025 00:48:44 -0700 (PDT)
-Message-ID: <fc7d0849-35ab-411a-be23-03520ca4b314@redhat.com>
-Date: Wed, 21 May 2025 09:48:41 +0200
+	 in-reply-to:in-reply-to:references:references;
+	bh=xTX81h9G8aXD+7JUezIJElO7ofVmpUIJ9dOvTE7EZYU=;
+	b=kEtrPH98gylBd4+JZ89TFaO4BcZthV9Wte4mp9eciEjpkdsnOFEF8MSv4ePIb8dfiQGS7H
+	qKQVtn1ytcQT64zRU7moFryKdbHsJTIJfmg1WoYBwB66fOWVquEW+y4Xe213lo/2gH+Kxr
+	NyBl7ZEpb2xzftcO9W7Me8ix1yX9tic+NUdZL0XWl16tQC4Cso9JSg1X+tdfMUDQN135LK
+	qOr/YuP5KTErCd+EeS7lx5tS6xF7eL6ogeVKumVPyXpUc6BB+FYEiX1BYCIT/pLkPpkvil
+	xZqE/cU4JyQnGJFuMsj07dRw9EfpQSTe7b9XABKFNrN1WcPt6FQJ1cdK5Ge7tg==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: Gabor Juhos <j4g8y7@gmail.com>,  Mark Brown <broonie@kernel.org>,
+  Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,  Richard
+ Weinberger <richard@nod.at>,  Vignesh Raghavendra <vigneshr@ti.com>,
+  "Varadarajan Narayanan" <quic_varada@quicinc.com>,  Sricharan Ramabadhran
+ <quic_srichara@quicinc.com>,  <linux-spi@vger.kernel.org>,
+  <linux-mtd@lists.infradead.org>,  <linux-arm-msm@vger.kernel.org>,
+  <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH next 2/2] spi: spi-qpic-snand: add support for 8 bits
+ ECC strength
+In-Reply-To: <e9f460c3-a575-1014-cca7-27f1d79024e2@quicinc.com> (Md Sadre
+	Alam's message of "Wed, 21 May 2025 11:08:02 +0530")
+References: <20250502-qpic-snand-8bit-ecc-v1-0-95f3cd08bbc5@gmail.com>
+	<20250502-qpic-snand-8bit-ecc-v1-2-95f3cd08bbc5@gmail.com>
+	<8aa3d4da-da3e-2af4-e0f9-cd56d6259d8f@quicinc.com>
+	<c1729d39-9f7f-4c6d-b8a4-72dfee4bfca5@gmail.com>
+	<878qn2nsa0.fsf@bootlin.com>
+	<16195524-1f31-4968-a3fd-f3d24f1c4223@gmail.com>
+	<87msbhezjf.fsf@bootlin.com>
+	<007881c9-e03c-1473-d8eb-53fbad8c6a8e@quicinc.com>
+	<87frh4ej87.fsf@bootlin.com>
+	<e9f460c3-a575-1014-cca7-27f1d79024e2@quicinc.com>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Wed, 21 May 2025 09:52:31 +0200
+Message-ID: <87h61e8kow.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 09/17] KVM: x86/mmu: Handle guest page faults for
- guest_memfd with shared memory
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
- vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250513163438.3942405-1-tabba@google.com>
- <20250513163438.3942405-10-tabba@google.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250513163438.3942405-10-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvhedvucdltddurdegfedvrddttddmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhgffffkgggtgfesthhqredttderjeenucfhrhhomhepofhiqhhuvghlucftrgihnhgrlhcuoehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeffgefhjedtfeeigeduudekudejkedtiefhleelueeiueevheekvdeludehiedvfeenucfkphepledtrdekledrudeifedruddvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeeltddrkeelrdduieefrdduvdejpdhhvghloheplhhotggrlhhhohhsthdpmhgrihhlfhhrohhmpehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeduvddprhgtphhtthhopehquhhitggpmhgurghlrghmsehquhhitghinhgtrdgtohhmpdhrtghpthhtohepjhegghekhiejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsghrohhonhhivgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrnhhivhgrnhhnrghnrdhsrgguhhgrshhivhgrmheslhhinhgrrhhordhorhhgpdhrtghpthhtoheprhhitghhrghrugesnhhou
+ gdrrghtpdhrtghpthhtohepvhhighhnvghshhhrsehtihdrtghomhdprhgtphhtthhopehquhhitggpvhgrrhgruggrsehquhhitghinhgtrdgtohhmpdhrtghpthhtohepqhhuihgtpghsrhhitghhrghrrgesqhhuihgtihhntgdrtghomh
+X-GND-Sasl: miquel.raynal@bootlin.com
 
-On 13.05.25 18:34, Fuad Tabba wrote:
-> From: Ackerley Tng <ackerleytng@google.com>
-> 
-> For memslots backed by guest_memfd with shared mem support, the KVM MMU
-> always faults-in pages from guest_memfd, and not from the userspace_addr.
-> Towards this end, this patch also introduces a new guest_memfd flag,
-> GUEST_MEMFD_FLAG_SUPPORT_SHARED, which indicates that the guest_memfd
-> instance supports in-place shared memory.
-> 
-> This flag is only supported if the VM creating the guest_memfd instance
-> belongs to certain types determined by architecture. Only non-CoCo VMs
-> are permitted to use guest_memfd with shared mem, for now.
-> 
-> Function names have also been updated for accuracy -
-> kvm_mem_is_private() returns true only when the current private/shared
-> state (in the CoCo sense) of the memory is private, and returns false if
-> the current state is shared explicitly or impicitly, e.g., belongs to a
-> non-CoCo VM.
-> 
-> kvm_mmu_faultin_pfn_gmem() is updated to indicate that it can be used
-> to fault in not just private memory, but more generally, from
-> guest_memfd.
-> 
-> Co-developed-by: Fuad Tabba <tabba@google.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> Co-developed-by: David Hildenbrand <david@redhat.com>
-> Signed-off-by: David Hildenbrand <david@redhat.com>
-> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> ---
+On 21/05/2025 at 11:08:02 +0530, Md Sadre Alam <quic_mdalam@quicinc.com> wr=
+ote:
 
+> Hi,
+>
+> On 5/16/2025 7:44 PM, Miquel Raynal wrote:
+>>=20
+>>>>> Interestingly enough, it reports the correct number of bit errors now.
+>>>>> For me it seems, that the hardware reports the number of the corrected
+>>>>> *bytes* instead of the corrected *bits*.
+>>>> I doubt that, nobody counts bytes of errors.
+>>>> You results are surprising. I initially though in favour of a software
+>>>> bug, but then it looks even weirder than that. Alam?
+>>> I have checked with HW team , the QPIC ECC HW engine reports the bit
+>>> error byte wise not bit wise.
+>>>
+>>> e.g
+>>>      Byte0 --> 2-bitflips --> QPIC ECC counts 1 only
+>>>      Byte1 --> 3-bitflips --> QPIC ECC counts 1 only
+>>>      Byte2 --> 1-bitflips --> QPIC ECC counts 1 only
+>>>      Byte3 --> 4-bitflips --> QPIC ECC counts 1 only (in 8-bit ecc)
+>>>      Byte4 --> 6-bitflips --> QPIC ECC counts 1 only (in 8-bit ecc)
+>>>
+>>> Hope this can clearify the things now.
+>> o_O ????
+>> How is that even useful? This basically means UBI will never refresh
+>> the
+>> data because we will constantly underestimate the number of bitflips! We
+>> need to know the actual number, this averaging does not make any sense
+>> for Linux. Is there another way to get the raw number of bitflips?
+> I have re-checked with HW team, unfortunately currently there is no
+> register fields available to get the raw number of bit flips. But
+> for newer chipset they have fixed this issue. But currently the QPIC
+> QPIC_NANDC_BUFFER_STATUS | 0x79B0018 register bit-8 will get set if
+> there is uncorrectable bitflips happened.
+>
+> For 4-bit ECC if 5-bit raw bit flips happened then bit-8 will get set in
+> QPIC_NANDC_BUFFER_STATUS.
+>
+> similar for 8-bit ECC if 9-bit raw bit flips happened then bit-8 will
+> get set in QPIC_NANDC_BUFFER_STATUS.
 
-[...]
+I believe the unrecoverable situation is handled correctly. What is not
+is the fact that we care about the number of bitflips before having a
+failure because if it reaches a certain threshold (typically 2/3 of the
+strength) the upper layer is responsible of moving the data around to
+avoid loosing it.
 
-> +
->   #ifdef CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES
->   static inline unsigned long kvm_get_memory_attributes(struct kvm *kvm, gfn_t gfn)
->   {
-> @@ -2515,10 +2524,30 @@ bool kvm_arch_pre_set_memory_attributes(struct kvm *kvm,
->   bool kvm_arch_post_set_memory_attributes(struct kvm *kvm,
->   					 struct kvm_gfn_range *range);
->   
-> +/*
-> + * Returns true if the given gfn's private/shared status (in the CoCo sense) is
-> + * private.
-> + *
-> + * A return value of false indicates that the gfn is explicitly or implicity
+You need to identify the hardware revision that fixed it and provide a
+warning otherwise, or at least a comment in the code...
 
-s/implicity/implicitly/
-
-> + * shared (i.e., non-CoCo VMs).
-> + */
->   static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
->   {
-> -	return IS_ENABLED(CONFIG_KVM_GMEM) &&
-> -	       kvm_get_memory_attributes(kvm, gfn) & KVM_MEMORY_ATTRIBUTE_PRIVATE;
-> +	struct kvm_memory_slot *slot;
-> +
-> +	if (!IS_ENABLED(CONFIG_KVM_GMEM))
-> +		return false;
-> +
-> +	slot = gfn_to_memslot(kvm, gfn);
-> +	if (kvm_slot_has_gmem(slot) && kvm_gmem_memslot_supports_shared(slot)) {
-> +		/*
-> +		 * For now, memslots only support in-place shared memory if the
-> +		 * host is allowed to mmap memory (i.e., non-Coco VMs).
-> +		 */
-
-Not accurate: there is no in-place conversion support in this series, 
-because there is no such itnerface. So the reason is that all memory is 
-shared for there VM types?
-
-> +		return false;
-> +	}
-> +
-> +	return kvm_get_memory_attributes(kvm, gfn) & KVM_MEMORY_ATTRIBUTE_PRIVATE;
->   }
->   #else
->   static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
-> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> index 2f499021df66..fe0245335c96 100644
-> --- a/virt/kvm/guest_memfd.c
-> +++ b/virt/kvm/guest_memfd.c
-> @@ -388,6 +388,23 @@ static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
->   
->   	return 0;
->   }
-> +
-> +bool kvm_gmem_memslot_supports_shared(const struct kvm_memory_slot *slot)
-> +{
-> +	struct file *file;
-> +	bool ret;
-> +
-> +	file = kvm_gmem_get_file((struct kvm_memory_slot *)slot);
-> +	if (!file)
-> +		return false;
-> +
-> +	ret = kvm_gmem_supports_shared(file_inode(file));
-> +
-> +	fput(file);
-> +	return ret;
-
-Would it make sense to cache that information in the memslot, to avoid 
-the get/put?
-
-We could simply cache when creating the memslot I guess.
-
-As an alternative ... could we simple get/put when managing the memslot?
-
--- 
-Cheers,
-
-David / dhildenb
-
+Thanks,
+Miqu=C3=A8l
 
