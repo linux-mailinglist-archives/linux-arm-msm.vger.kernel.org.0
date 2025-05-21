@@ -1,253 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-58907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D525ABF631
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 15:33:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6771DABF64A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 15:39:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 99D3B4E76AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 13:33:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A974C1BA6802
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 13:39:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B9F627C863;
-	Wed, 21 May 2025 13:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FA2027CCDF;
+	Wed, 21 May 2025 13:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CTkDo6Ru"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KqYCxOqL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520FA28032C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 13:33:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EDA27C875;
+	Wed, 21 May 2025 13:38:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747834404; cv=none; b=gZHG3Wxe2q3Uiu4vPSn5BtClMc0UOWl+hTM8N648cUjoDb38uZ+4RXLObcoru7oHINGx3VIw0U3+pLQ4Z99zrlnMKuzubGWXUR/wnW+qJE5rEFazlRC10olT8jS7fOXdyJpM45pT/Nas86GPJQo1M29zhEnKYO42+HypyBvHXvw=
+	t=1747834737; cv=none; b=Qkvzc/4OSONtzq1WuW3rvU83HC9KMhpHjuKAZjweaG4eCtd3CFON4APTv6jd3c+4/aILl7cDPwhE0u3aDFOS7BakkoJcyxhRZzmBsZDgThQ1UuidOilhVrSwWNEy6vfmqqotF5/ag/a/zuUv9lYXw5y5oSZYaAz/QkEuYRKCfMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747834404; c=relaxed/simple;
-	bh=R9qmpY3zzwA7xPrJDlHhu/yXtjD5ta8pSGwpUcrpE/M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EzJGqtdsZzBC2M/24j3IX29MWpVhpev8QiYX+30XGqOk19HlwgFUq9WEaMpKvmnZHE2ISOMaCDo3m/z++wi5u4F++883hOubXXZMIb4Nx6ika/Ck45QoN4me8pa82adt2G2omqm0+bPZfHe85zsDg2jyT/YSC2pwaKNchwVJ5g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CTkDo6Ru; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-47666573242so1433021cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 06:33:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747834401; x=1748439201; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7IElG8t6UQOCXlMao4ZOb1RJT5HCrLgm0tglQ9eav/M=;
-        b=CTkDo6RuQlPPn56FBdDJyh2eR/w4/jpAHP9xC7MR9koxYBoBRsHGyebV5jWDk3JX0r
-         Bm+ymDRt7NEQHlE7odkCduJF3ZPWJ2dstlZ1Aiq+fYhSGNlOTajcw0zG+Bx+wZKtI3eX
-         LmeTJPBr/hjHbvSyeg2DgXn7hjTk5knfskNVJON/sPUnjIjWRHTQ++RAWMV0TUw7+2ss
-         CFKBA7NSFhCMILvpG/JSNR27ZHy0y0mACu3fANypU+acXlkt5kLZDrYcSSwoEE9vJ9XT
-         2FcyfBowN3Bi5md66Tk5WAs1qSNSo3ZedaZ58LF3i4IzT8SnVYRYwurs/bHN9lZQTZtM
-         Coyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747834401; x=1748439201;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7IElG8t6UQOCXlMao4ZOb1RJT5HCrLgm0tglQ9eav/M=;
-        b=ODivxWY85XP+tvsE4uyufMnZ2Bk+oPVnvQizeQabH91O3+zI/k+gCELsxRkZQIG1c3
-         CIQSqnjeXT4k715PN6JS+PmyjZJyavQrO2rnILC/jNRlJ5z4PDt/8PCYAMvyqzx2Fx0H
-         XiejoxLDpDUBAq1nYDUTKUuuQxjOjPeJfOpEv7qXP743EQunIA9yspY7fmfw3HIbd8JW
-         9al9jKKCaiipB8fVrNKfHZTe3vw8ZaCr63zmkrKnqZfhlrGXpA9f2hP9W63gTDvfJb9O
-         8LiSK0MPb6FQHUeVLYlhabtbF7ETxzEJzXv2ipYVzkIU3NDCV9Osxod+UPzoT/v6rorO
-         jZvg==
-X-Forwarded-Encrypted: i=1; AJvYcCXwVq/x4FDcMTWGkYsPFsGjv8TcJwmlamy6EkcikEZBGLs09djuh2AkkQc5EUPvuFr778vep6bJ8VzmrUd9@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyd/ngh7Vn0P2d/TnUmMifbTliLTYJW8QPe77v2lDzn6qnGfXn3
-	TqFkJwI15WsiZjBt8QozTOIiFVZsusQqquiOYh1yN5N+45G0zes3o51UL3Bmds0xAYuE05UInRM
-	r1StHpQnV5IFPWUUV6A4iaRYKrqsr9EgmneRHWNBu
-X-Gm-Gg: ASbGncskhdIepjz4GqLEMP1wjhgOZy7biNSo0/kkIXUzcofDCe1Gphf3YgpDMjQcFZd
-	sVeq4ru7Ey1KeuVKR9U+HdidXpL3lLqI6npmWqB7DbIB6w3o0+2QwOZlDp97ejNlAU+pgsfaJlq
-	ViWw8vI7AAcdGele7NlPANf9J5xhXKR2ziHWhxZD+BXALde67yYTmbC5l1fOKyJlCpjKZSvQ+Q
-X-Google-Smtp-Source: AGHT+IGHrTdfeMb7jlXQw3K737a7s2UVgkzPNNbLnqAt7pGQ9skk0T2PnsNL8ybReruUQvJls1mTzXEvnmXLudYE3yo=
-X-Received: by 2002:a05:622a:14c:b0:466:8c23:823a with SMTP id
- d75a77b69052e-49600c876ddmr15160551cf.17.1747834400540; Wed, 21 May 2025
- 06:33:20 -0700 (PDT)
+	s=arc-20240116; t=1747834737; c=relaxed/simple;
+	bh=1+QzCuOqllZpR2M2g5vpAg8VG9l9Srm2BHPfriaKwPo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TjF4UYwvxCM0mFC/OTizMAni2np9AA5oZC4wjCwAUwB343dQFrZnRAV2gXFTZBuzMzgsE2d8YUiU8t5Ab9FdJzIWwYNAMwFChMGBLS6s72dbsVI4NVSOwBSTNtbtkfj5zqK1MI3t7UAMUXa6Zx+2413mlT+TPdyA7+erlUpt+8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KqYCxOqL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5E1C4CEE4;
+	Wed, 21 May 2025 13:38:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747834736;
+	bh=1+QzCuOqllZpR2M2g5vpAg8VG9l9Srm2BHPfriaKwPo=;
+	h=From:Subject:Date:To:Cc:From;
+	b=KqYCxOqL1FbYfzcLf3jIZ/E/gAkCYTWkWKFFiC0VihTejeFk8QvypqRkXbhtVDuYQ
+	 /oxS3Bbui7PUeCCe4bk5ELzrgo79N6FRMakaMjx9j/UqCdzoMBN8klYFVAxXy2rr+O
+	 iJfsSrqb7gQ64P8IPoblo6gR2NCXRmiTZk6K2CpaA+nwgvY14BWcl4kC5xiEIvZVN1
+	 07Y123NquizwGF2B71crsl1jAb+LeH1FgCSQ6HtX44M5DXrRaWil23/qmPy6geUIB5
+	 Rk0Vd8jpcEBFuz7lseNDpLhJtRIamHMg+ZZj4wt8ci3jNRozpj/8k6fvTerj58ncfb
+	 w0kndaOZ61Kvw==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Subject: [PATCH 0/4] Drop unrelated clocks from SM8150/SC8180X PCIe RCs
+Date: Wed, 21 May 2025 15:38:09 +0200
+Message-Id: <20250521-topic-8150_pcie_drop_clocks-v1-0-3d42e84f6453@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250513163438.3942405-1-tabba@google.com> <20250513163438.3942405-15-tabba@google.com>
- <2084504e-2a11-404a-bbe8-930384106f53@redhat.com> <CA+EHjTyz4M4wGCTBzFwHLB_0LUJHq6J135f=DVOhGKQE4thrtQ@mail.gmail.com>
- <d5983511-6de3-42cb-9c2f-4a0377ea5e2d@redhat.com> <CA+EHjTxhirJDCR4hdTt4-FJ+vo9986PE-CGwikN8zN_1H1q5jQ@mail.gmail.com>
- <f6005b96-d408-450c-ad80-6241e35c6d26@redhat.com> <CA+EHjTzaE_vGPsB20eJ99fG4_gck9Gb7iaVQ3ie5YUnNe5wHgw@mail.gmail.com>
- <5da72da7-b82c-4d70-ac86-3710a046b836@redhat.com>
-In-Reply-To: <5da72da7-b82c-4d70-ac86-3710a046b836@redhat.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Wed, 21 May 2025 14:32:43 +0100
-X-Gm-Features: AX0GCFusE07bvRo-Pqsi4ydaoFt5tlnl13zLKduQ18To8DRrmGMT_dqdB-JwRxU
-Message-ID: <CA+EHjTwmgZ3i2oaBcnhr1HjLtFeycJM49utO5VhtsOH6E9WcXQ@mail.gmail.com>
-Subject: Re: [PATCH v9 14/17] KVM: arm64: Enable mapping guest_memfd in arm64
-To: David Hildenbrand <david@redhat.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
-	pankaj.gupta@amd.com, ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEHXLWgC/x3MSwqAIBAA0KvErBPUkD5XiRAZpxqKFI0IorsnL
+ d/mPZApMWUYqgcSXZw5HAWqrgBXdywk2BeDltpIo5U4Q2QUnTLSRmSyPoVocQ+4ZTGb1vWyIex
+ 8A2WIiWa+/32c3vcDBuWns20AAAA=
+X-Change-ID: 20250521-topic-8150_pcie_drop_clocks-f57a903ec8d3
+To: Bjorn Helgaas <bhelgaas@google.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Qiang Yu <quic_qianyu@quicinc.com>, 
+ Ziyue Zhang <quic_ziyuzhan@quicinc.com>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747834731; l=983;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=1+QzCuOqllZpR2M2g5vpAg8VG9l9Srm2BHPfriaKwPo=;
+ b=sDuEZUlODpLMpvGWu7/L0wo/2AauzZd0u6bL2FdnUI+fi0wwEGUbKAJf90/De7eDIaA5CjuQ3
+ qqQw45HSFKCD2FIl8fkUsKvuiMRajGfMUdx9+xYSgROhtgh0UWcGDki
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Hi David,
+Smoke tested on both, but more is always welcome.
 
-On Wed, 21 May 2025 at 14:22, David Hildenbrand <david@redhat.com> wrote:
->
-> On 21.05.25 15:15, Fuad Tabba wrote:
-> > Hi David,
-> >
-> > On Wed, 21 May 2025 at 13:44, David Hildenbrand <david@redhat.com> wrote:
-> >>
-> >> On 21.05.25 12:29, Fuad Tabba wrote:
-> >>> On Wed, 21 May 2025 at 11:26, David Hildenbrand <david@redhat.com> wrote:
-> >>>>
-> >>>> On 21.05.25 12:12, Fuad Tabba wrote:
-> >>>>> Hi David,
-> >>>>>
-> >>>>> On Wed, 21 May 2025 at 09:05, David Hildenbrand <david@redhat.com> wrote:
-> >>>>>>
-> >>>>>> On 13.05.25 18:34, Fuad Tabba wrote:
-> >>>>>>> Enable mapping guest_memfd in arm64. For now, it applies to all
-> >>>>>>> VMs in arm64 that use guest_memfd. In the future, new VM types
-> >>>>>>> can restrict this via kvm_arch_gmem_supports_shared_mem().
-> >>>>>>>
-> >>>>>>> Signed-off-by: Fuad Tabba <tabba@google.com>
-> >>>>>>> ---
-> >>>>>>>      arch/arm64/include/asm/kvm_host.h | 10 ++++++++++
-> >>>>>>>      arch/arm64/kvm/Kconfig            |  1 +
-> >>>>>>>      2 files changed, 11 insertions(+)
-> >>>>>>>
-> >>>>>>> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> >>>>>>> index 08ba91e6fb03..2514779f5131 100644
-> >>>>>>> --- a/arch/arm64/include/asm/kvm_host.h
-> >>>>>>> +++ b/arch/arm64/include/asm/kvm_host.h
-> >>>>>>> @@ -1593,4 +1593,14 @@ static inline bool kvm_arch_has_irq_bypass(void)
-> >>>>>>>          return true;
-> >>>>>>>      }
-> >>>>>>>
-> >>>>>>> +static inline bool kvm_arch_supports_gmem(struct kvm *kvm)
-> >>>>>>> +{
-> >>>>>>> +     return IS_ENABLED(CONFIG_KVM_GMEM);
-> >>>>>>> +}
-> >>>>>>> +
-> >>>>>>> +static inline bool kvm_arch_vm_supports_gmem_shared_mem(struct kvm *kvm)
-> >>>>>>> +{
-> >>>>>>> +     return IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM);
-> >>>>>>> +}
-> >>>>>>> +
-> >>>>>>>      #endif /* __ARM64_KVM_HOST_H__ */
-> >>>>>>> diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
-> >>>>>>> index 096e45acadb2..8c1e1964b46a 100644
-> >>>>>>> --- a/arch/arm64/kvm/Kconfig
-> >>>>>>> +++ b/arch/arm64/kvm/Kconfig
-> >>>>>>> @@ -38,6 +38,7 @@ menuconfig KVM
-> >>>>>>>          select HAVE_KVM_VCPU_RUN_PID_CHANGE
-> >>>>>>>          select SCHED_INFO
-> >>>>>>>          select GUEST_PERF_EVENTS if PERF_EVENTS
-> >>>>>>> +     select KVM_GMEM_SHARED_MEM
-> >>>>>>>          help
-> >>>>>>>            Support hosting virtualized guest machines.
-> >>>>>>>
-> >>>>>>
-> >>>>>> Do we have to reject somewhere if we are given a guest_memfd that was
-> >>>>>> *not* created using the SHARED flag? Or will existing checks already
-> >>>>>> reject that?
-> >>>>>
-> >>>>> We don't reject, but I don't think we need to. A user can create a
-> >>>>> guest_memfd that's private in arm64, it would just be useless.
-> >>>>
-> >>>> But the arm64 fault routine would not be able to handle that properly, no?
-> >>>
-> >>> Actually it would. The function user_mem_abort() doesn't care whether
-> >>> it's private or shared. It would fault it into the guest correctly
-> >>> regardless.
-> >>
-> >>
-> >> I think what I meant is that: if it's !shared (private only), shared
-> >> accesses (IOW all access without CoCo) should be taken from the user
-> >> space mapping.
-> >>
-> >> But user_mem_abort() would blindly go to kvm_gmem_get_pfn() because
-> >> "is_gmem = kvm_slot_has_gmem(memslot) = true".
-> >
-> > Yes, since it is a gmem-backed slot.
-> >
-> >> In other words, arm64 would have to *ignore* guest_memfd that does not
-> >> support shared?
-> >>
-> >> That's why I was wondering whether we should just immediately refuse
-> >> such guest_memfds.
-> >
-> > My thinking is that if a user deliberately creates a
-> > guest_memfd-backed slot without designating it as being sharable, then
-> > either they would find out when they try to map that memory to the
-> > host userspace (mapping it would fail), or it could be that they
-> > deliberately want to set up a VM with memslots that not mappable at
-> > all by the host.
->
-> Hm. But that would meant that we interpret "private" memory as a concept
-> that is not understood by the VM. Because the VM does not know what
-> "private" memory is ...
->
-> > Perhaps to add some layer of security (although a
-> > very flimsy one, since it's not a confidential guest).
->
-> Exactly my point. If you don't want to mmap it then ... don't mmap it :)
->
-> >
-> > I'm happy to a check to prevent this. The question is, how to do it
-> > exactly (I assume it would be in kvm_gmem_create())? Would it be
-> > arch-specific, i.e., prevent arm64 from creating non-shared
-> > guest_memfd backed memslots? Or do it by VM type? Even if we do it by
-> > VM-type it would need to be arch-specific, since we allow private
-> > guest_memfd slots for the default VM in x86, but we wouldn't for
-> > arm64.
-> >
-> > We could add another function, along the lines of
-> > kvm_arch_supports_gmem_only_shared_mem(), but considering that it
-> > actually works, and (arguably) would behave as intended, I'm not sure
-> > if it's worth the complexity.
-> >
-> > What do you think?
->
-> My thinking was to either block this at slot creation time or at
-> guest_memfd creation time. And we should probably block that for other
-> VM types as well that do not support private memory?
->
-> I mean, creating guest_memfd for private memory when there is no concept
-> of private memory for the VM is ... weird, no? :)
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+Konrad Dybcio (4):
+      dt-bindings: PCI: qcom,pcie-sc8180x: Drop unrelated clocks from PCIe hosts
+      dt-bindings: PCI: qcom,pcie-sm8150: Drop unrelated clocks from PCIe hosts
+      arm64: dts: qcom: sc8180x: Drop unrelated clocks from PCIe hosts
+      arm64: dts: qcom: sm8150: Drop unrelated clocks from PCIe hosts
 
-Actually, I could add this as an arch-specific check in
-arch/arm64/kvm/mmu.c:kvm_arch_prepare_memory_region(). That way, core
-KVM/guest_memfd code doesn't need to handle this arm64-specific behavior.
+ .../devicetree/bindings/pci/qcom,pcie-sc8180x.yaml | 14 +++-------
+ .../devicetree/bindings/pci/qcom,pcie-sm8150.yaml  | 14 +++-------
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi              | 32 ++++++----------------
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               | 16 +++--------
+ 4 files changed, 20 insertions(+), 56 deletions(-)
+---
+base-commit: edef457004774e598fc4c1b7d1d4f0bcd9d0bb30
+change-id: 20250521-topic-8150_pcie_drop_clocks-f57a903ec8d3
 
-Does that sound good?
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Thanks,
-/fuad
-
-
-> --
-> Cheers,
->
-> David / dhildenb
->
 
