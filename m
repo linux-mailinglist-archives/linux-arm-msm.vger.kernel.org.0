@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-58836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06840ABEC74
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 08:52:53 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69F4DABEC7D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 08:53:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A426F7B4A7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 06:51:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 222E27A059B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 06:52:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91D7E2356B4;
-	Wed, 21 May 2025 06:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19790231A32;
+	Wed, 21 May 2025 06:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bZhjeY6M"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BT9AhCy1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57669231A32;
-	Wed, 21 May 2025 06:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA20623184A;
+	Wed, 21 May 2025 06:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747810268; cv=none; b=RIr1CyWVgkDH97B654tLJUtErwNLeus2Swl2ftFloqey30CHhUfIAeJwZ39FCCic3pTU/N9/wVG824RmnktopHwmaeEU7ApR3pJmlW5q5gmu4X5rJHhdNsx9LO627DTlHuFZhkzwxmosvlsus92S86sOptk9D1/RdwqH8zciwcc=
+	t=1747810413; cv=none; b=ahswjWoOpNJXJ1U4Md253FrytjbFC2LYqRfEcY+/tOgpf4dV9C5C/PQKBtytuuKP/4O+6x9mk87CowbdWYDn0uGErlXzCTCQc9d8M+hrxmx6jS0TxKE3gTbjPCK8UnSl9X6Cha9iNuebUij9Pc1+2ASPTym3xNOecSL413P6Rdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747810268; c=relaxed/simple;
-	bh=rbPuWRc2IlHAfuxihPZQnz6FEHLQy5ZB9NDxIJCBN3M=;
+	s=arc-20240116; t=1747810413; c=relaxed/simple;
+	bh=Q+Sd4eOk0jd48CvkzoRG923+qvQRtH20pp/6Vw0a1WY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZOqmjJm36gEP1MC9vOR7wQzMvomgbs06SGJYFSsdur4TZL0QikmOjsXtneGUjMaga2yPBn6vkl5xwH5/IWrvW7g5zAQEOPEqDdcNn0w1a6fHVRIC78HthYMD5xBSjjuPpv11m36ZKM7RuP5apPTfTcWWj/v7jbwtfHsxiFSnIKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bZhjeY6M; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93DDC4CEE4;
-	Wed, 21 May 2025 06:51:03 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=INQ+1mG3QfHakttcGnvR8C9mKA+ao1SPpW8or1VTTHKisbSfHzwvA3DKfTj0S8IT1F3N1pGtBpgw1VunBmCaA/x+QzrfwCm/CTZO+GGFVeP7Lvt8CJcunLLaXl2/n1Ox+lHaYPvU06OfeN5JBzDz55sG079OPkDfoKyxm3kMnK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BT9AhCy1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0AD0C4CEE4;
+	Wed, 21 May 2025 06:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747810267;
-	bh=rbPuWRc2IlHAfuxihPZQnz6FEHLQy5ZB9NDxIJCBN3M=;
+	s=k20201202; t=1747810412;
+	bh=Q+Sd4eOk0jd48CvkzoRG923+qvQRtH20pp/6Vw0a1WY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bZhjeY6M/3TadKT7EnBM6pZrIHDRGyts1x0gInFxLZxd0ORIORHemirY4lNZxcVOR
-	 cFasB/i5H98H7/BE+hi8SAJCxu34dskibUukpCVm+R0Rni4sm48STVMeYLnbziCGqC
-	 fz91yury0EXGYBHRpsoYTrDBjS1+XilQzEJ/SfUplchvDW31rw+w+1LIpC6FB+ixn5
-	 qe+y9lBPUHWF5TbO1s+m+lNfvvQfQxBlGtvN2B2MmVpG+UaJBShLHhBJ49J31nar96
-	 VvIrbm773nSWJ+tuYk83hFvuGWlbA/T8ESBlL3xt/Ly3qMmDOCfV1QN7zKGw7EWIYW
-	 zltK2UQzAxJQA==
-Message-ID: <4734853b-87fc-4625-a9ee-54339b7a1512@kernel.org>
-Date: Wed, 21 May 2025 08:51:01 +0200
+	b=BT9AhCy1ECmPOvr6cevMtyD7RcLB2vWDD4YfEixS0d7we08SdWPS4iMniDaA8V6Lb
+	 PK2R6maJWrdGCf1lDSr2lIM42Vvy/BdpfXoqxFIIaJ5fuBzhKhS4/Nd9Bx+sDwDVAv
+	 2V7l7buF1XlXYkmCddBOUltllqrbJGVJR5fsArteat0HR6ifyHd9wnCyCxFsGdJ1nJ
+	 nZm8eebbug+TbvHpvL4uBTUagXq0M7vn+L+EwFZGdpP8u91p/yln3gq0c4A6/vUfR7
+	 vW/dBcrZTVHXnz5E9lxUaoWuxH/oLo80rTMEjNhZzfpRCRSGiKQOwTpf3S4BMm2wsP
+	 dlQ/C33PlbquA==
+Message-ID: <b8003fdf-66a1-47e1-8c78-069f0739ea37@kernel.org>
+Date: Wed, 21 May 2025 08:53:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,24 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/3] scsi: ufs: dt-bindings: Document UFS Disable LPM
- property
-To: Nitin Rawat <quic_nitirawa@quicinc.com>,
- Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
-Cc: alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
- krzk+dt@kernel.org, robh@kernel.org, mani@kernel.org, conor+dt@kernel.org,
- James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com,
- beanhuo@micron.com, peter.wang@mediatek.com, linux-arm-msm@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250506163705.31518-1-quic_nitirawa@quicinc.com>
- <20250506163705.31518-2-quic_nitirawa@quicinc.com>
- <667e43a7-a33c-491b-83ca-fe06a2a5d9c3@kernel.org>
- <9974cf1d-6929-4c7f-8472-fd19c7a40b12@quicinc.com>
- <8ebe4439-eab8-456a-ac91-b53956eab633@quicinc.com>
- <852e3d10-5bf8-4b2e-9447-fe15c1aaf3ba@quicinc.com>
- <8aa09712-5543-4bda-bf9e-a29c61656445@kernel.org>
- <80d8888c-41d9-4650-8be7-11e71610a4b8@quicinc.com>
+Subject: Re: [PATCH v4 3/5] dt-bindings: watchdog: qcom-wdt: Document
+ qcom,imem property
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
+ <linux@roeck-us.net>, Rajendra Nayak <quic_rjendra@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
+References: <20250519-wdt_reset_reason-v4-0-d59d21275c75@oss.qualcomm.com>
+ <20250519-wdt_reset_reason-v4-3-d59d21275c75@oss.qualcomm.com>
+ <20250520-portable-anteater-of-respect-c7be5c@kuoka>
+ <37bd619d-242e-4488-8d45-c2c85612bee9@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,79 +110,51 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <80d8888c-41d9-4650-8be7-11e71610a4b8@quicinc.com>
+In-Reply-To: <37bd619d-242e-4488-8d45-c2c85612bee9@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20/05/2025 20:49, Nitin Rawat wrote:
-> 
-> 
-> On 5/20/2025 1:39 PM, Krzysztof Kozlowski wrote:
->> On 12/05/2025 09:41, Pavan Kondeti wrote:
->>> On Mon, May 12, 2025 at 09:45:49AM +0530, Nitin Rawat wrote:
->>>>
->>>>
->>>> On 5/7/2025 8:34 PM, Nitin Rawat wrote:
->>>>>
->>>>>
->>>>> On 5/6/2025 11:46 PM, Krzysztof Kozlowski wrote:
->>>>>> On 06/05/2025 18:37, Nitin Rawat wrote:
->>>>>>> Disable UFS low power mode on emulation FPGA platforms or other
->>>>>>> platforms
->>>>>>
->>>>>> Why wouldn't you like to test LPM also on FPGA designs? I do not see
->>>>>> here correlation.
->>>>>
->>>>> Hi Krzysztof,
->>>>>
->>>>> Since the FPGA platform doesn't support UFS Low Power Modes (such as the
->>>>> AutoHibern8 feature specified in the UFS specification), I have included
->>>>> this information in the hardware description (i.e dts).
->>>>
->>>>
->>>> Hi Krzysztof,
->>>>
->>>> Could you please share your thoughts on my above comment? If you still see
->>>> concerns, I may need to consider other options like modparam.
->>>>
+On 20/05/2025 18:00, Konrad Dybcio wrote:
+> On 5/20/25 9:25 AM, Krzysztof Kozlowski wrote:
+>> On Mon, May 19, 2025 at 02:04:03PM GMT, Kathiravan Thirumoorthy wrote:
+>>> Document the "qcom,imem" property for the watchdog device on Qualcomm
+>>> IPQ platforms. Use this property to extract the restart reason from
+>>> IMEM, which is updated by XBL. Populate the watchdog's bootstatus sysFS
+>>> entry with this information, when the system reboots due to a watchdog
+>>> timeout.
 >>>
->>> I understand why you are inclining towards the module param here. Before
->>> we take that route,
+>>> Describe this property for the IPQ5424 watchdog device and extend support
+>>> to other targets subsequently.
 >>>
->>> Is it possible to use a different compatible (for ex: qcom,sm8650-emu-ufshc) for UFS controller
->>> on the emulation platform and apply the quirk in the driver based on the device_get_match_data()
->>> based detection?
+>>> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+>>> ---
+>>> Changes in v4:
+>>> 	- New patch
+>>> ---
+>>>  .../devicetree/bindings/watchdog/qcom-wdt.yaml       | 20 ++++++++++++++++++++
+>>>  1 file changed, 20 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+>>> index 49e2b807db0bc9d3edfc93ec41ad0df0b74ed032..bbe9b68ff4c8b813744ffd86bb52303943366fa2 100644
+>>> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+>>> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+>>> @@ -81,6 +81,16 @@ properties:
+>>>      minItems: 1
+>>>      maxItems: 5
+>>>  
+>>> +  qcom,imem:
 >>
->> I do not get what are the benefits of upstreaming such patches. It feels
->> like you have some internal product, which will never be released, no
->> one will ever use it and eventually will be obsolete even internally. We
->> don't want patches for every broken feature or every broken hardware.
+>> Shoouldn't this be existing 'sram' property? If IMEM is something
+>> similar to OCMEM, then we already use sram for that.
 > 
-> Hi Krzysztof,
+> We specifically want a handle to a predefined byte in IMEM, something akin
+> to qcom,4ln-config-sel in
 > 
-> Thank you for your review and opinions. I would like to clarify that 
-> this is a platform requirement rather than a broken feature. 
-> Additionally, there are few automotive targets, in addition to the FPGA 
-> platform, where Low Power Mode (LPM) is not a requirement. For these 
-> platforms, the LPM disable changes are currently maintained downstream.
+> Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
 
-And these platforms do not have their own SoC compatible? When you say
-platforms, you mean SoC or boards? So many options... all this is so
-unspecific, I need to dig every answer, every specific bit.
-
-> 
-> My apology for not including the automotive requirements in my previous 
-> commit messages.
-> 
-> In my opinion, since these platforms do not support LPM, I requested 
-> that this be reflected in the hardware description (i.e. DTS)). However, 
-> I am open to suggestions and am willing to proceed with module 
-> parameters if you have concerns regarding the device tree.
-
-Module param will get other obstacles... We have lengthy discussion
-because your commit msg explains nothing. Even now I still don't know
-what do you mean by half of above statements. Use the wide upstream
-terms, instead of ambiguous like "automotive platform".
+Nothing stops that with sram. Above example is poor, because it mentions
+syscon. There is no hardware as syscon. Does not exist. What is IMEM
+here, what is this relationship?
 
 Best regards,
 Krzysztof
