@@ -1,164 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-58828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF832ABEB55
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 07:38:45 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BBFEABEB81
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 07:52:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9B2197A1755
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 05:37:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C720F172E65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 05:52:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2924E22F77B;
-	Wed, 21 May 2025 05:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E781230BEC;
+	Wed, 21 May 2025 05:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WoGqUnhT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vVI4FQgY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5828679CF;
-	Wed, 21 May 2025 05:38:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43DA1E51FE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 05:52:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747805919; cv=none; b=EfkiiPMHVs/sJCxf3i7eAtZ02kL5h3suZZuHORCIBIXbAGcTJvyxqzJ7rYX2YXsNcQ5F7M5w+APECNZGqgmnA6RGxe5tk7236stYnsJf+On3FRquC6mHYQ9dWjaQczSFum7Ixq8IxFjQYT0wDXeIsBkiDF1erWE2y08B3JTpmaQ=
+	t=1747806768; cv=none; b=FC4dWGNNOFh1CqoFsoEz8H+ztOOi2geGYDpvQleDCJQjt6qvFoUPSlXm7UP555qll7CA1ZFJ7vvN+c+ns0oIxbQO68PBYkc+gwbVgc/F9XPvEvMUEVqayYb30hqW06yJLqWK17inU2m/1kAhGDHYhz/B/yb17eyxlLH38XybBRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747805919; c=relaxed/simple;
-	bh=WNvqHXW/Xhth82LmBEiT1VEhzAKX6LRM8ItCgjIPwGE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=FVx9v9oTmKDzIkXkz6/fTGDPWibmwyZm9JqXuJ1tSCrukXETcijxJ7dHgWNaAtAQs/BKKe3XWMMn/ZvPSQnj09uTLNca3W5jMSlVqAi4eeqaOoov32RbnycndXkZCW82JABUM++W0LJdnJ+IE1L5tQl/Ifr2SVuaNaaNCG5qVLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WoGqUnhT; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54L5JAia019165;
-	Wed, 21 May 2025 05:38:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1rIXHTD4csw6kw4kJQD3SUf479s6VR/JxiTwReVlOHY=; b=WoGqUnhTryWGHLFf
-	7RC/X9H8XXL09zf+tY5lcWWfS5qEo2Jcj0fSPz+wbzryEc4yflTWeGXqCg5omNfm
-	B4S5Gni0I2vy4GtnaQU9n7+URF+Ae9Rep5/SP6aXsLKqc/QF+TpOGXs9leyuBY40
-	YfvDOTCPg5RQk8Vy9/HQMfZ4NyyLEC96A+2C+QyTLO2HNmkU5l1PrxRCU4Kz/M4M
-	dgkWK/G+70BIWq6zjMvD7/ybCRla3HLM2YDRbQFW6Ud4JAssdU0aw7A8/Bgz0B25
-	CZizA6dq4OD7RtZ5nposlOGOmi2pJVb/7JHfc3289JccKt2BMTjQbpba5ko40QNd
-	+i2WuQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwh59mj6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 May 2025 05:38:17 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54L5cGTs020104
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 May 2025 05:38:16 GMT
-Received: from [10.50.1.151] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 20 May
- 2025 22:38:13 -0700
-Message-ID: <e9f460c3-a575-1014-cca7-27f1d79024e2@quicinc.com>
-Date: Wed, 21 May 2025 11:08:02 +0530
+	s=arc-20240116; t=1747806768; c=relaxed/simple;
+	bh=XK36jMGVzHFAZgmjJ27ea0/5+ipW+lWL7+7Z1Xg4B7I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WM04eh+oIpHzfKJ4cMiKm0ZDbirHpWr1K4fYlgZhK1pN2dGCwvoM5uFeMqpZFKB1Ppla9WpCsg+I4KXSAw1nMfR9C3AhSEC3P57pevrbljVUyMLw+rAgyYaj5kifWQNKw66URTojQzX9/bFQozBM1eqIj0wD59FwJ1Ur2QdoS9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vVI4FQgY; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-551eb5d8815so476450e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 22:52:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1747806765; x=1748411565; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=y+6EfRxcF6nuSTzFfX95UFC3FA7d4vYOazasa3XUuf4=;
+        b=vVI4FQgYbHGS07oqkP+suv1E+Ur4SKl4SO1CHd2ajs0atL4HTpw7WSMFidMKTAnX6u
+         1ynFH3xt/CAsBca2Y2JcI8uk1LKt3wZIZ8I1NiZQFSyVgUSo2q4K2r6HquaPurhxRwY8
+         oQ1RU+ap6BXe0HOckvQkXkXaMvRHGD9CwF5JjatPBcePdGVVMWZ/Sz3bd9HoMa4FWEY0
+         TEdLFq7rptGj+u4j+79cwNvVgXsLlSryvGs0rat5vgtQZPHmUtKGva7XcmJnlcLzpmXs
+         JcfZaRtWTpmAG5yu/5fKGqXnpurp7QKinfMv3/WPEDQE8ZXypxVP1fwrzC8AaWIn0aAQ
+         qAXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747806765; x=1748411565;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=y+6EfRxcF6nuSTzFfX95UFC3FA7d4vYOazasa3XUuf4=;
+        b=qaWysD1VUSx89HUfTbYXNy/vMeq67QYHAl0dS+MTWLsS8Y+D1I+JUGnU5WxEhRAT/h
+         gUK8zOfUn+whyzIpNxGnPjPcFgUkYWasSazb6O9T//p1SPSAhSXQKeO/Mo+WjnIrTUI8
+         fBulhVRfUgTplkBmYwChdyFNn/UKo+1Pi1lJ59EqGVmi+LOvbCul1QheXE2TRolw5L5Q
+         Bb96w+FF3RT4ueLQRelYRE1LnpiJU4iJbM5GpEpSB3KLgAKlK1mKet864BlguebaR2ts
+         MB+w1EOcPQkCIfVxJWYbL91AxSwbjH8dqGuD8yoyI0vEYSd14yJaJVBSGnbj09u0VjDx
+         xoqg==
+X-Gm-Message-State: AOJu0YytU+bfMFZSrP7aaH/SFs5jmU+tkwXShEcMbPVsArkOULknFRZ7
+	MKQsbJQLsYdmrOXD1QEagTNRD5LuNTcw3VeLOz+Y2XdC28WoGehN7J3FzJYLSNMQuos=
+X-Gm-Gg: ASbGncuCYKX61oM1jS0FIlHeglxHxFU+4M2g2SjU6LnJoxcaSVPk4f17s2a2ISDCq/j
+	EwLAVvppWk3WCwQbX1ppex8JQfVvvslw6i9QtfaopIQ1pHSBZfZUaynvK1MdcdlfzpVWKa09ny3
+	L1xmgkp0Bup0LpffjoE4JpFw0mEG9siuPDqiXVbb+o1hQZ46B/cWzO5qQdD0p/rlsonKlrIREeE
+	PTH8cchrS18vTMDGo1+NhgqqBbtnw5xeKcei357Smx1RUOIimOlT2PMCrJdjWPGAips0QGKVC+p
+	XlZERn0Y3Ha28SzU/puhnF84kWYl1XUjKiTOJiUvqkrBEiT6FDuIaJslqhzWDxXltb8cR85oPdP
+	RP4EFS6vLGSYo+NBeLeKI7jGwafk8lQ==
+X-Google-Smtp-Source: AGHT+IFfkKSuF3lu5EAykJJmWP101sRAftrK7GAUTkyq+we+sis+bJZidTWqi/zTuN0t5a5RTdKujA==
+X-Received: by 2002:a05:6512:1382:b0:54f:bdfe:ece1 with SMTP id 2adb3069b0e04-550e7248054mr2031565e87.16.1747806764709;
+        Tue, 20 May 2025 22:52:44 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55206407368sm246913e87.212.2025.05.20.22.52.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 May 2025 22:52:44 -0700 (PDT)
+Message-ID: <76052af9-96c2-46d6-85c6-65998c389554@linaro.org>
+Date: Wed, 21 May 2025 08:52:43 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH next 2/2] spi: spi-qpic-snand: add support for 8 bits ECC
- strength
-To: Miquel Raynal <miquel.raynal@bootlin.com>
-CC: Gabor Juhos <j4g8y7@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Richard Weinberger
-	<richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        "Varadarajan
- Narayanan" <quic_varada@quicinc.com>,
-        Sricharan Ramabadhran
-	<quic_srichara@quicinc.com>,
-        <linux-spi@vger.kernel.org>, <linux-mtd@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250502-qpic-snand-8bit-ecc-v1-0-95f3cd08bbc5@gmail.com>
- <20250502-qpic-snand-8bit-ecc-v1-2-95f3cd08bbc5@gmail.com>
- <8aa3d4da-da3e-2af4-e0f9-cd56d6259d8f@quicinc.com>
- <c1729d39-9f7f-4c6d-b8a4-72dfee4bfca5@gmail.com> <878qn2nsa0.fsf@bootlin.com>
- <16195524-1f31-4968-a3fd-f3d24f1c4223@gmail.com> <87msbhezjf.fsf@bootlin.com>
- <007881c9-e03c-1473-d8eb-53fbad8c6a8e@quicinc.com>
- <87frh4ej87.fsf@bootlin.com>
-Content-Language: en-US
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <87frh4ej87.fsf@bootlin.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs615: Enable camss for
+ qcs615-adp-air
+Content-Language: ru-RU
+To: Wenmeng Liu <quic_wenmliu@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, bryan.odonoghue@linaro.org, todor.too@gmail.com,
+ rfoss@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
+References: <20250520-qcs615-adp-air-camss-v1-0-ac25ca137d34@quicinc.com>
+ <20250520-qcs615-adp-air-camss-v1-2-ac25ca137d34@quicinc.com>
+ <748f96f7-d690-4823-845f-67642db97a06@linaro.org>
+ <dabed183-6907-4483-8c79-616aafaf2851@quicinc.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <dabed183-6907-4483-8c79-616aafaf2851@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIxMDA1MyBTYWx0ZWRfX/2G/PLeDfvwU
- AKDm/VEWgRmm5Je2fSjPQEqzqALTfgMTpAntgbAb9Qil9EbPOZPB47MqPUfSBwIyjOw402nNeoC
- JN5/jJIMo0OI4Y2R5CS8FDIgk4pOf45DCzfaPbByPMQGQVKKaOte9lq8CuvaycC3XH0h7VFXMAX
- oKXiGtDnVtRGenKiI9wj1RyO7kOMfdQ7kEPsV89z2kmWv0upEbiNXjYoQty9iJeTgQVq6+J2Ggl
- w5M6FcozbEN8U1gEs7stzj3axjfhzbKd2E2Z51tIVtsIpWFy8r4IJErsCEowo5+XVp141BfEYvJ
- WaH0pWvY2nO70BQOEYEHfS0pszW30XjFQFh3M5GSs4DT6KbPJk1l0/tteABD1GCLXTDDnOwEHKZ
- XqJXCd8Z1RWT3zZ2Hf7YN4LupesNQC+y7VvsPNFvdIbT6SVaDA5C3naxxzqZXa2YIIDlL4MD
-X-Authority-Analysis: v=2.4 cv=XeWJzJ55 c=1 sm=1 tr=0 ts=682d66c9 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
- a=1P9lDc0nu8lX0kGsQioA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: lX6Lf87Bh5Z_R65mhOqeVWWz-ecQjf5h
-X-Proofpoint-ORIG-GUID: lX6Lf87Bh5Z_R65mhOqeVWWz-ecQjf5h
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-21_01,2025-05-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 mlxlogscore=831 mlxscore=0 bulkscore=0 spamscore=0
- suspectscore=0 impostorscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505210053
 
-Hi,
+Hi Wenmeng.
 
-On 5/16/2025 7:44 PM, Miquel Raynal wrote:
+On 5/21/25 04:32, Wenmeng Liu wrote:
 > 
->>>> Interestingly enough, it reports the correct number of bit errors now.
->>>> For me it seems, that the hardware reports the number of the corrected
->>>> *bytes* instead of the corrected *bits*.
->>> I doubt that, nobody counts bytes of errors.
->>> You results are surprising. I initially though in favour of a software
->>> bug, but then it looks even weirder than that. Alam?
->> I have checked with HW team , the QPIC ECC HW engine reports the bit
->> error byte wise not bit wise.
+> 
+> On 2025/5/20 20:19, Vladimir Zapolskiy wrote:
+>> Hello Wenmeng,
 >>
->> e.g
->>      Byte0 --> 2-bitflips --> QPIC ECC counts 1 only
->>      Byte1 --> 3-bitflips --> QPIC ECC counts 1 only
->>      Byte2 --> 1-bitflips --> QPIC ECC counts 1 only
->>      Byte3 --> 4-bitflips --> QPIC ECC counts 1 only (in 8-bit ecc)
->>      Byte4 --> 6-bitflips --> QPIC ECC counts 1 only (in 8-bit ecc)
+>> On 5/20/25 11:56, Wenmeng Liu wrote:
+>>> This change enables camera driver for QCS615 ADP AIR board.
 >>
->> Hope this can clearify the things now.
+>> what is the rationale of enabling CAMSS on the board without giving any
+>> description of any sensors connected to the SoC?
+>>
 > 
-> o_O ????
+> Hi Vladimir,
 > 
-> How is that even useful? This basically means UBI will never refresh the
-> data because we will constantly underestimate the number of bitflips! We
-> need to know the actual number, this averaging does not make any sense
-> for Linux. Is there another way to get the raw number of bitflips?
-I have re-checked with HW team, unfortunately currently there is no 
-register fields available to get the raw number of bit flips. But
-for newer chipset they have fixed this issue. But currently the QPIC
-QPIC_NANDC_BUFFER_STATUS | 0x79B0018 register bit-8 will get set if 
-there is uncorrectable bitflips happened.
+> We can perform validation through the CSID TPG(Test Pattern Generator),
+> so I enabled CAMSS.
+> 
 
-For 4-bit ECC if 5-bit raw bit flips happened then bit-8 will get set in
-QPIC_NANDC_BUFFER_STATUS.
+Since this is just a test of CAMSS without any sensors/CSIPHY, then
 
-similar for 8-bit ECC if 9-bit raw bit flips happened then bit-8 will 
-get set in QPIC_NANDC_BUFFER_STATUS.
+1. camss-csiphy-3ph-1-0.c changes from the series have never been tested
+    and added as dead code, it shall be removed from the series,
+2. adding voltage regulators to the board dts is void and shall be removed.
 
-Thanks,
-Alam.
+Not to substitute but in addition to the above it's still doubtful, if just
+a hardware/driver test configuration deserves to be added into the dts.
+
+--
+Best wishes,
+Vladimir
 
