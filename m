@@ -1,157 +1,313 @@
-Return-Path: <linux-arm-msm+bounces-58884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D40D5ABF278
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 13:11:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CF51FABF490
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 14:43:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 80B2D4E45BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 11:11:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2891316D848
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 12:43:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B0662609F7;
-	Wed, 21 May 2025 11:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6445A2638A3;
+	Wed, 21 May 2025 12:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4JBxJzie"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="grJL9NXA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4522609D0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 11:11:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF74236A8B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 12:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747825876; cv=none; b=guDYbGGbPMiDF7XGur+JJeTv9oGnMbtf+GBPygudNXDQoDWXQ79ESoT1yrbgzx3y39LrZ3tI3ty/Q9KCHvdwDte0Wf7vNQZAV+hRisRt76dLocpdK46SohXkSoqBY1nuIIibYcAl28KSH/xY0mhSGuGZs37xDpx8D9tVP1YTp0M=
+	t=1747831390; cv=none; b=EDujITDnY2CSUXtXwcxYv6yl5kWa8AkdlMfifeDGz14bEb0p8LKiedhQfFN0QE23YbMp7sPtwCtmflYOrqw0tbtKegBE0FXCjYbnaYyFeJnuA6YGhZamUHyMOqsaf5zdf2fyho62LVGgSfL2hlWZNQz4tGSMpc0S+hsTW6XUj1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747825876; c=relaxed/simple;
-	bh=tQ/q7iXtF5UPGh8+ohOv6KaZ9+fEVRStSIj96suCIB4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R9DaHsV9NIiPbAT90sBbmYGOqvrUO0GbSVIBvfX8JtCFt716h7kbupG1RXR0AYV/ZrBGzeBzXXl6P0brAxfgqt/uXC8TTZniWCU0xrI/470AV3cOn66wHJux1viOKc7idxUy/GthsRBBmbiP0T55CNeXPE2WNstARtvjhIAwmTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4JBxJzie; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-47e9fea29easo1646531cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 04:11:14 -0700 (PDT)
+	s=arc-20240116; t=1747831390; c=relaxed/simple;
+	bh=4Nfdjo7U/R1hnWKVkBbsT6n6NMMwY5GJ+8aptBW0JEw=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=YYHbMclEWS0A7q85pIBmvSIRiG0vdZ9YrI6w1St5pUnlBxQ67kMSVRXqc80Fmzlip8svFCaSYpcClyO5H4GCVKkA6Js5LDJej0yO2MVpF1NHeUrdLndmbHoggzJy3QAvvyGF4nsm3SfZSCT7InuqvwW6bk5L7BkB6ZiDj7PgXrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=grJL9NXA; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-442ccf0e1b3so83788785e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 05:43:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747825874; x=1748430674; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ctqvgl2a53wbdaZxWTIiQHG1DssGpGTbCqmvno6TQ2s=;
-        b=4JBxJzieXV4M+/XM1CzLtAPCSME2CcMGJZsxWzk2sHqB7d6VuoNX764w3qez8pln27
-         3atpkGykCF03eq88vqbRkPvZL35ytjfSJuJpJ9kjm5Q2d4J1zQYiBLEffXUtY5MK+TkW
-         fXXOLaVKkmLz5l1Ixaxh1WDwfBEFNKnntHMu0VXrP7QJr8TxO7QqmY1N1ftkqilWBUyQ
-         7cehPPOnlwd/4/daATpNIWG9Rh4WNNc4Frj4gmKvjgk9GwNrVtq30Ftjgaxfg7c+s5T3
-         FBqIIL9IhJIpeZf+oTy2lvbhd8BvoL3OlbgT3oAsjEhG6iXg4rqjlj8fsbobdDRtgB94
-         LCmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747825874; x=1748430674;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1747831385; x=1748436185; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Ctqvgl2a53wbdaZxWTIiQHG1DssGpGTbCqmvno6TQ2s=;
-        b=lNyQwoG4Pqcl7vvMrZ73/1AhxpQYCiKp3qwpuor32iHUFI44QuXz5i8r4eMRSRePOE
-         p2fhxtk3fwiBFm/ErcJPVyRr/wGm9FfSx9x+G8jj4TndzQhnO1P80X1W9dE+beOhjlNy
-         EkmvQS1VJPZYPiuiPkJUZ0hwsIG3bRdzVb1WCmnJEY6Y+CB6bZInwoXlGjkmpL7LxrJg
-         1gLH2Yx4tpGNpDS1C+5RiGmbVPLYF0vzzhd4ijABfQsI0/JRudkqM/Uj3iP6gQE6WR5w
-         30+RRnleEw+98HBMOVw1TxDwpj6OlD9aGC9HO4KD6AQJ+uAn8MMwqKyvvY05tPCmvWhY
-         03JQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVs845B+8yo36qVynZSNB8zGCfoM1YnZqePRuH9h6thEm8m4j/B2tDGHWTqng1/+Qiy8S8SH4HhXG90FJfV@vger.kernel.org
-X-Gm-Message-State: AOJu0YzX40r+0QkWjjL16ko5f4GK/SWpp4T/3HEClLf7ybnooR0Q4eps
-	qvlH0GiUQw9KwLRBsE2BxN8xg/R2K75FSTELSRSLNY+Jdqh5xosSLMmVhl6tCWSeGpzjBT2BslO
-	wQ32m9fEn344W9Ug8YG0JhyRYD+ROdChm6zG+Hzkd
-X-Gm-Gg: ASbGnctkFBb3pETk+q+f3+kCUv5SLhOzWFZN18Ji5YP6qh4qssOrE/vbWwV1DkPV03f
-	bMyR9rnGg9b9TjH7bi+NBYUmI+lWIJOeMixjhLdyBhNoUQdgIUUlntYAmd+f1ZtJpxpkJoTj/Cz
-	Pt2b3KKxYqme0FFE0hTG3/8LPO7NQMq53uxUxAzRusQQs7ZlCWoPD9RSuEaPyP78nf/BoQZWjU
-X-Google-Smtp-Source: AGHT+IG9JRLddwi7FWo7PGi8OFQqYZvIkWzFiMZ2eJyY+7GX2T8rNZIySJy/QKfkLbtNb5b9H6nducMJim1V/SX7ZEE=
-X-Received: by 2002:a05:622a:13cd:b0:47b:3a5:8380 with SMTP id
- d75a77b69052e-49595c5d9f6mr15353851cf.28.1747825873334; Wed, 21 May 2025
- 04:11:13 -0700 (PDT)
+        bh=WI5PoJxy96uWl5f75YFdyVxVfp6nrVQ06CpDL3zHu6Q=;
+        b=grJL9NXAsVLSEUZogZoo5fwrdPpH8Toe0JIRFicjkr7F5goSO/YId2GP+ax+P9E2Ax
+         KzZ9A2PMcM3e5csc3USuNPNjkJ/WbgVCF2i+ZBOhr6FrGVaBI7SOUwJpZJLsG54Y0weC
+         SxE/jto7D7Pjgh5wJVsId+RjRKDP0ffn6N2tvi+3ggv2DUamGQJXm+DnCMSXqjs5LVAc
+         Gpctt5UJoAm0SDlOGYNx3DOH9WY/nH0bBhVD00i/Td3sU4VotqOW3X5/UpCjFk18PI0S
+         Vq1CF2cRhwGfOjX4gtgS/N3H31bMhoGc3NuIKhIKbdc+h3geVuTZsf7CKVyna5ulxBpI
+         TfVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747831385; x=1748436185;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=WI5PoJxy96uWl5f75YFdyVxVfp6nrVQ06CpDL3zHu6Q=;
+        b=JLc9+rOzsgiJttFtSL8czrH8yezvJPg1Th5HXsPlVbTRPNvM+C4VjhiI3t8YpIgqrE
+         BIzB9Dk/g2X9HlFU/33nI6VIfRjWZJRey/ULqfhPznARyf86qrL0mUMrHPbR+X/YgE/2
+         KKj35ZBkbir30W4UgT+khbmR0HJn9j0AGi0MipLmS5cUVPXCFRhPFugnzgmN2T1zT8TZ
+         eMYMGHHo+MwAcCmcyXCrL/6+w1bE6GUk/WZ7HN9l2JcsjshRUOV9U9XXImOODjEllqLw
+         kBn+8QSxOVj2MQQrL/z8PuXvb2vWRaU88VrEcsJolE89jLtqBJ1knyVZRYXkHbyeM45I
+         7ASw==
+X-Forwarded-Encrypted: i=1; AJvYcCX6CF5pCQCKX+ra5CnBmokJ85pQosifQeX90NzqYpnz+alvm/qZJBrwyLDYeisdi4/xeLl3VA6U42zD0yZ3@vger.kernel.org
+X-Gm-Message-State: AOJu0YyuiWvtlVuRLUu7KMdQ4c0eeL+/iUf/K0uKDFs48EIo4EN09mUC
+	MtXOQMBvfxuOI+OT1rdJpcSWSQvy5dmgJS6BwHOzTc2hOheHNc/Fw8ceX90JpNG/Rqk=
+X-Gm-Gg: ASbGncseJcQ23afDdQWwdMjyijwIE7gZIOUuwqvQY3trh6VEwpV+iOmNBjpJLxIINxR
+	BfZ2yq8md75LrMIiWrG8gq2uTGeGXOY6OEsQ7Y3TbA8K2asI3CZF+uv6Rxqy+MxXZePIh/jZFbL
+	J/loJYF60Bbfv1+hZt9jMNh4HwoXL5MTghQz3mu7gv3kOnO5be41X6lu2wn+C1XunRhaIM57ZRC
+	Wvxl+w4tVLP3kDZRg4CMP7oeO6quoKHUfj7kNr0qxJZxwoKmQc9FtYjgm3Hz14CWLU1t24aI5ch
+	V6KF/0PpNdpTPFb+GuTa+Dx4fJ97ep2F081H1MUBWNmHi4te4no3rkIm0kcIqt5xQEjqIrYAjNc
+	2lB5E5ol9ey1NCvyJ4WsoaDLWCdNK
+X-Google-Smtp-Source: AGHT+IFQ18d8pZSDqB/VT7oEO/bp9Dn+8qAFnGv54kCnHZJEQfRsbBOpN6ws67q8Y7sy8IUfkW9k9Q==
+X-Received: by 2002:a05:600c:a016:b0:441:d2d8:bd8b with SMTP id 5b1f17b1804b1-442fd622c81mr209724965e9.8.1747831385316;
+        Wed, 21 May 2025 05:43:05 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:80b6:c1af:bc94:958d? ([2a01:e0a:3d9:2080:80b6:c1af:bc94:958d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f7bae847sm65925785e9.36.2025.05.21.05.43.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 May 2025 05:43:04 -0700 (PDT)
+Message-ID: <d455a8d0-0a43-4bb5-8592-f22f1835a3c6@linaro.org>
+Date: Wed, 21 May 2025 14:43:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250513163438.3942405-1-tabba@google.com> <20250513163438.3942405-14-tabba@google.com>
- <8d6eb79a-a68d-4116-bb42-ed18b0a0d37d@redhat.com>
-In-Reply-To: <8d6eb79a-a68d-4116-bb42-ed18b0a0d37d@redhat.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Wed, 21 May 2025 12:10:36 +0100
-X-Gm-Features: AX0GCFsGsg3FxndHSZGJf7TgUxTEca7xqtxeGk7gRA7wW8yw3Stt3ibiefTaF9w
-Message-ID: <CA+EHjTyPp0OzbvvwG6AB+GJ9nSXroeJ6M2EnmERqvQ+sO+4E+Q@mail.gmail.com>
-Subject: Re: [PATCH v9 13/17] KVM: arm64: Handle guest_memfd()-backed guest
- page faults
-To: David Hildenbrand <david@redhat.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
-	pankaj.gupta@amd.com, ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8650: Add support for Oneplus Pad
+ Pro (caihong)
+To: Pengyu Luo <mitltlatltl@gmail.com>, konrad.dybcio@oss.qualcomm.com
+Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+ konradybcio@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, robh@kernel.org
+References: <e4d65994-89dd-4068-a8db-050e698f9bb3@oss.qualcomm.com>
+ <20250521083746.666228-1-mitltlatltl@gmail.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250521083746.666228-1-mitltlatltl@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi David,
+On 21/05/2025 10:37, Pengyu Luo wrote:
+> On Wed, May 21, 2025 at 5:54 AM Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> wrote:
+>> On 5/20/25 6:42 PM, Pengyu Luo wrote:
+>>> The OnePlus Pad Pro is an Android tablet based on the Qualcomm SM8650
+>>> platform. Its device codename is "caihong". This patch adds an initial
+>>> devicetree for basic functionality.
+>>>
+>>> Currently working components include:
+>>> - Backlight
+>>> - Bluetooth
+>>> - Battery charging (up to 5v 0.5a) & reporting via pmic-glink (There
+>>> are many unknown notifications)
+>>> - Display panel ([1])
+>>> - Keyboard (via BT)
+>>> - Power key & volume keys
+>>> - Touchscreen & stylus ([2])
+>>> - USB Type-c port
+>>> - UFS storage
+>>> - Wi-Fi
+>>>
+>>> The following components are currently non-functional:
+>>> - Audio
+>>> - Cameras
+>>> - Charging pump (dual sc8547)
+>>> - Keyboard (via pogo pin)
+>>> - Stylus wireless charger (cps8601)
+>>> - UCSI over GLINK (PPM init fails)
+>>>
+>>> [1]: The panel is a dual-DSI, dual-DSC display that requires setting
+>>>       'slice_per_pkt = 2' in the DPU configuration. The panel driver
+>>>       will be submitted separately later.
+>>> [2]: Touchscreen/stylus driver available at:
+>>>       https://github.com/OnePlusOSS/android_kernel_modules_and_devicetree_oneplus_sm8650/blob/oneplus/sm8650_v_15.0.0_pad_pro/vendor/oplus/kernel/touchpanel/oplus_touchscreen_v2/Novatek/NT36532_noflash/nvt_drivers_nt36532_noflash.c
+>>>       The downstream driver has been ported and tested locally, but
+>>>       requires cleanup, it may be submitted separately later.
+>>
+>> I have a Lenovo Tab P11 with a nt36523w (-23, not -32) for which I have once
+>> poked at the driver for.. I see the driver you posted mentions -23 as well,
+>> please keep me in the loop if you're going to upstream it
+>>
+> 
+> I see. Actually, they share the most part of nt36xxx, but with
+> different memory maps. See
+> https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/elish-r-oss/drivers/input/touchscreen/nt36xxx/nt36xxx_mem_map.h
+> 
+>> [...]
+>>
+>>> +             /*
+>>> +              * This memory region is required to initialize the backlight
+>>> +              * and display for bootloader. Normally, this region is not
+>>> +              * needed. However, due to limitations in the current mainline
+>>> +              * KTZ8866 driver, dual backlight ICs cannot be properly
+>>> +              * initialized.
+>>> +              *
+>>> +              * A workaround involving secondary registration was proposed,
+>>> +              * but rejected by reviewers. This reserved region is kept as
+>>> +              * a temporary solution until a proper initialization method
+>>> +              * that satisfies upstream requirements is found.
+>>> +              */
+>>> +             splash_region {
+>>> +                     reg = <0 0xd5100000 0 0x2b00000>;
+>>> +                     no-map;
+>>> +             };
+>>
+>> I assume this means "if the bootloader sees /reserved-memory/splash_region,
+>> it keeps the display online" - let's not do that, as underscores are not
+>> allowed in node names (kernel coding style, not dt syntax)
+>>
+> 
+> Right, without it, BL won't initialize backlight and display. We need
+> it to initialize backlight here since mainline ktz8866 won't program
+> partial registers properly. If there is no other workaround, I will
+> remove it to keep kernel coding style.
 
-On Wed, 21 May 2025 at 09:04, David Hildenbrand <david@redhat.com> wrote:
->
-> On 13.05.25 18:34, Fuad Tabba wrote:
-> > Add arm64 support for handling guest page faults on guest_memfd
-> > backed memslots.
-> >
-> > For now, the fault granule is restricted to PAGE_SIZE.
-> >
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
->
-> [...]
->
-> > +     if (!is_gmem) {
->
-> Should we add a comment somewhere, stating that we don't support VMs
-> with private memory, so if we have a gmem, all faults are routed through
-> that?
+Can't you add a simple-framebuffer for v1 and drop all the DSI stuff until
+you figured out the backlight and upstreamed the panel driver ?
 
-I guess this is related to the other thread we had. This would handle
-private memory correctly. It's just that for arm64 as it is, having
-private memory isn't that useful.
+Neil
 
-There might be a use-case where a user would create a
-guest_memfd-backed slot that supports private memory, and one that
-doesn't, which only the guest would use. I doubt that that's actually
-useful, but it would work and behave as expected.
+> 
+>>> +     };
+>>> +
+>>> +     /* No Modem */
+>>> +     smp2p-modem {
+>>> +             status = "disabled";
+>>> +     };
+>>
+>> There shouldn't be any harm in keeping this node enabled
+>>
+> 
+> Ack
+> 
+>> [...]
+>>
+>>> +
+>>> +     vph_pwr: vph-pwr-regulator {
+>>> +             compatible = "regulator-fixed";
+>>> +
+>>> +             regulator-name = "vph_pwr";
+>>> +             regulator-min-microvolt = <3700000>;
+>>> +             regulator-max-microvolt = <3700000>;
+>>> +
+>>> +             regulator-always-on;
+>>> +             regulator-boot-on;
+>>> +     };
+>>> +
+>>> +     wcn7850-pmu {
+>>> +             compatible = "qcom,wcn7850-pmu";
+>>> +
+>>> +             pinctrl-names = "default";
+>>> +             pinctrl-0 = <&wlan_en>, <&bt_default>;
+>>
+>> property-n
+>> property-names
+>>
+>> please
+>>
+> 
+> Ack
+> 
+>> [...]
+>>
+>>> +&i2c_hub_0 {
+>>> +     clock-frequency = <400000>;
+>>> +
+>>> +     status = "okay";
+>>> +
+>>> +     /* sc8547-charger-secondary@6F */
+>>> +};
+>>> +
+>>> +&i2c_hub_2 {
+>>> +     clock-frequency = <400000>;
+>>> +
+>>> +     status = "okay";
+>>> +
+>>> +     /* sc8547-charger-primary@6F */
+>>> +};
+>>> +
+>>> +&i2c_hub_3 {
+>>> +     status = "okay";
+>>> +
+>>> +     /* pencil-wireless-charger-cps8601@41 */
+>>> +};
+>>> +
+>>> +&i2c_hub_4 {
+>>> +     clock-frequency = <400000>;
+>>> +
+>>> +     status = "okay";
+>>> +
+>>> +     /* awinic,aw88261_smartpa @34,35,37 */
+>>
+>> We have drivers for these!
+>>
+>> sound/soc/codecs/aw88261.c
+>>
+> 
+> I noticed that. But I have not looked into the sound yet. I may add
+> the nodes after test. BTW the mainline one is quite simple compared
+> to the downstream, doubting if it is really working
+> https://github.com/OnePlusOSS/android_kernel_modules_and_devicetree_oneplus_sm8650/tree/oneplus/sm8650_v_15.0.0_pad_pro/vendor/oplus/kernel/audio/codecs/aw882xx
+> 
+>>> +};
+>>> +
+>>> +&i2c_hub_7 {
+>>> +     clock-frequency = <400000>;
+>>> +
+>>> +     status = "okay";
+>>> +
+>>> +     /* awinic,aw88261_smartpa @34,35,37 */
+>>> +};
+>>> +
+>>> +&i2c2 {
+>>> +     status = "okay";
+>>> +
+>>> +     /* secondary kinetic,ktz8866@11 */
+>>
+>> You can describe it, the driver sets some nonzero default brightness
+>>
+> 
+> But the backlight framework won't index them, which causes sysfs
+> collision when the second instance is registering.
+> 
+> Best wishes,
+> Pengyu
+> 
 
-Cheers,
-/fuad
-
-> > +             mmap_read_lock(current->mm);
-> > +             vma = vma_lookup(current->mm, hva);
-> > +             if (unlikely(!vma)) {
-> > +                     kvm_err("Failed to find VMA for hva 0x%lx\n", hva);
-> > +                     mmap_read_unlock(current->mm);
-> > +                     return -EFAULT;
-> > +             }
-> > +
-> > +             vfio_allow_any_uc = vma->vm_flags & VM_ALLOW_ANY_UNCACHED;
-> > +             mte_allowed = kvm_vma_mte_allowed(vma);
->
-> --
-> Cheers,
->
-> David / dhildenb
->
 
