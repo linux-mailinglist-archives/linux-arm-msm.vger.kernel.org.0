@@ -1,48 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-58837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69F4DABEC7D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 08:53:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D20CABEC86
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 08:55:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 222E27A059B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 06:52:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A952A1724E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 06:54:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19790231A32;
-	Wed, 21 May 2025 06:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D35B23370F;
+	Wed, 21 May 2025 06:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BT9AhCy1"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="KUP0mGI3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA20623184A;
-	Wed, 21 May 2025 06:53:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0E822D7A5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 06:53:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747810413; cv=none; b=ahswjWoOpNJXJ1U4Md253FrytjbFC2LYqRfEcY+/tOgpf4dV9C5C/PQKBtytuuKP/4O+6x9mk87CowbdWYDn0uGErlXzCTCQc9d8M+hrxmx6jS0TxKE3gTbjPCK8UnSl9X6Cha9iNuebUij9Pc1+2ASPTym3xNOecSL413P6Rdc=
+	t=1747810435; cv=none; b=lys/8okWYG798iG0m6PHalMgl+qhtviaVktL2NlLvjWMrAy/c1nm3sTotuVmQ4VuoP3mkt8zfgX/kfV5MG0hxZPu9iN9pQKdPxi8bla/+cWz7U66xZvXbArhM8bEneKgfG6fAEUrRQu02LttwyrJIEF7m+KjH5YqqYcWvJ1KFno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747810413; c=relaxed/simple;
-	bh=Q+Sd4eOk0jd48CvkzoRG923+qvQRtH20pp/6Vw0a1WY=;
+	s=arc-20240116; t=1747810435; c=relaxed/simple;
+	bh=n7Ovsp2NLMYxswbpIYnDybpONQE6mgb5rHa2ZAGOppA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=INQ+1mG3QfHakttcGnvR8C9mKA+ao1SPpW8or1VTTHKisbSfHzwvA3DKfTj0S8IT1F3N1pGtBpgw1VunBmCaA/x+QzrfwCm/CTZO+GGFVeP7Lvt8CJcunLLaXl2/n1Ox+lHaYPvU06OfeN5JBzDz55sG079OPkDfoKyxm3kMnK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BT9AhCy1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0AD0C4CEE4;
-	Wed, 21 May 2025 06:53:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747810412;
-	bh=Q+Sd4eOk0jd48CvkzoRG923+qvQRtH20pp/6Vw0a1WY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=BT9AhCy1ECmPOvr6cevMtyD7RcLB2vWDD4YfEixS0d7we08SdWPS4iMniDaA8V6Lb
-	 PK2R6maJWrdGCf1lDSr2lIM42Vvy/BdpfXoqxFIIaJ5fuBzhKhS4/Nd9Bx+sDwDVAv
-	 2V7l7buF1XlXYkmCddBOUltllqrbJGVJR5fsArteat0HR6ifyHd9wnCyCxFsGdJ1nJ
-	 nZm8eebbug+TbvHpvL4uBTUagXq0M7vn+L+EwFZGdpP8u91p/yln3gq0c4A6/vUfR7
-	 vW/dBcrZTVHXnz5E9lxUaoWuxH/oLo80rTMEjNhZzfpRCRSGiKQOwTpf3S4BMm2wsP
-	 dlQ/C33PlbquA==
-Message-ID: <b8003fdf-66a1-47e1-8c78-069f0739ea37@kernel.org>
-Date: Wed, 21 May 2025 08:53:26 +0200
+	 In-Reply-To:Content-Type; b=aXQDDDGbny1gOiaOGW4koop1RBFLCu13w/Syla21NZtV8En+etCWkG2iMiYhPWMYA7j5F3HG6H+n3hb7w3lKa9il3dpT5X0sBACDrFgst3Z59YKD+RoktfgWKDwzhSTMnF+kEHs6xNhKhLfbmeD87GhrqSgHTW6gmxxEIDIpXsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=KUP0mGI3; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1747810431;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=JbErVy9IEKX7lpyD0YcZLOsPdHblgXbS97dB37YVVZM=;
+	b=KUP0mGI3H6NnYgMYwObW8pT1JPcVkHkhbbXc8APXvLE/ynt0m90RnPU7lqrPOzfaWfbEvZ
+	8+qy4vyGb4U1lDvVc2Ztp0pkYDRGNi7n8MsXmWOHXzh2/KDR76tb++P3EHYsy5k29lUzSR
+	0yolOKBfnLPGyH64jf4NQrxk46e8LaE=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-294-TRvw9C2lMnm3Zyg-uJdR4g-1; Wed, 21 May 2025 02:53:50 -0400
+X-MC-Unique: TRvw9C2lMnm3Zyg-uJdR4g-1
+X-Mimecast-MFC-AGG-ID: TRvw9C2lMnm3Zyg-uJdR4g_1747810429
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-231e3cfc144so44332135ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 23:53:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747810429; x=1748415229;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JbErVy9IEKX7lpyD0YcZLOsPdHblgXbS97dB37YVVZM=;
+        b=d7PjSdS/FedHtvc2EU8fLDiuX2UOxc2NIj9thzpD8O37mKKvIUw9HBv9OYe0ZJLeyB
+         QOf0+mqMukNzvA+lch5hIrw4p1AoPo9d1G6K8uKk59+CEo/DCNACiNiLB6q0qBLPtlQw
+         HqC8Ssm0qzv4/Lwzg08M2OjlvXTowHruSFlUzDNGEMXz1jQrKnOwfjbXBiAFUnvyCFHL
+         DvQw7JfWidLl1Y8Q9NmrHc5lhrQpkXEDcVJLS+fhxwpSf/uJYHr594ldgjFe+o77ahAr
+         t0RQv3mnnLTaNOwb5LA9uDO5M9C83nxanqsfMoJfnszeTXWbM2W8a75Fh87YexVFLSQS
+         keOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW4NSfF+4X+n94dcLcv56GFJ9/tv/NI5NdpPYif1Lr4uGgYpTFXqheghuPU4pTFwKAia6vmGWnTz7jZ3/P4@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKkWz9cLGgzXVnNl+mqp52f28MrSDGUwAfGW1e8h29TYc3T+Uf
+	336NAdiXlZ7u1tcnZAQibbFRaq8X0NwpidOk1ZFtgI6MZO9P0d21l3SX+QhKyvD7zNrkTFznts9
+	kHQu3NSsreUf2Sp7llVYVuAL3uW3qafTt9BOseqNoZuFKaycwn9ckB2YZEAYy0qgbNQo=
+X-Gm-Gg: ASbGnctbVhzYJNe3xzzVnkqa/QR1O/Aomrgt4tpbV1+eL9wuQbcKNJPI5R8mlcJcYev
+	rznRqiFZuiDGCwX0nR2qodMX4lArAxX5TkrWiFSI1v3A8Bbhx2KyoVZgNdkmCgvzKmafzxPbWV6
+	JurQGJxscyj7Ii7YGoGPzcZMxtldOjp28w3CFZtc8CpXpUziLSURkcJLaibZSYV5CtRcJFC5hlt
+	F+M1IS/r2R5xGgDUCdnp280kAioEfRtTDZBi6DNBrK2o8LClcuxyek/In6+vPBQoQuOJsf7ztx6
+	9YxvudNM3V82
+X-Received: by 2002:a17:902:ce8f:b0:224:1001:6787 with SMTP id d9443c01a7336-231d43d56e3mr276720745ad.4.1747810428829;
+        Tue, 20 May 2025 23:53:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEYlr0v4xN3raRRN0GaiffcawT6n84gcgurQeIRHyvaB+F+BPtLUhdx8zfTLDycN97zE3b3mw==
+X-Received: by 2002:a17:902:ce8f:b0:224:1001:6787 with SMTP id d9443c01a7336-231d43d56e3mr276720505ad.4.1747810428390;
+        Tue, 20 May 2025 23:53:48 -0700 (PDT)
+Received: from [192.168.68.51] ([180.233.125.65])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231e26d83basm83576515ad.6.2025.05.20.23.53.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 May 2025 23:53:47 -0700 (PDT)
+Message-ID: <7bbe7aea-3b17-444b-8cd3-c5941950307c@redhat.com>
+Date: Wed, 21 May 2025 16:53:27 +1000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,112 +88,298 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] dt-bindings: watchdog: qcom-wdt: Document
- qcom,imem property
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
- <linux@roeck-us.net>, Rajendra Nayak <quic_rjendra@quicinc.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
-References: <20250519-wdt_reset_reason-v4-0-d59d21275c75@oss.qualcomm.com>
- <20250519-wdt_reset_reason-v4-3-d59d21275c75@oss.qualcomm.com>
- <20250520-portable-anteater-of-respect-c7be5c@kuoka>
- <37bd619d-242e-4488-8d45-c2c85612bee9@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v9 16/17] KVM: selftests: guest_memfd mmap() test when
+ mapping is allowed
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
+ vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
+ david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com,
+ liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250513163438.3942405-1-tabba@google.com>
+ <20250513163438.3942405-17-tabba@google.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <37bd619d-242e-4488-8d45-c2c85612bee9@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20250513163438.3942405-17-tabba@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 20/05/2025 18:00, Konrad Dybcio wrote:
-> On 5/20/25 9:25 AM, Krzysztof Kozlowski wrote:
->> On Mon, May 19, 2025 at 02:04:03PM GMT, Kathiravan Thirumoorthy wrote:
->>> Document the "qcom,imem" property for the watchdog device on Qualcomm
->>> IPQ platforms. Use this property to extract the restart reason from
->>> IMEM, which is updated by XBL. Populate the watchdog's bootstatus sysFS
->>> entry with this information, when the system reboots due to a watchdog
->>> timeout.
->>>
->>> Describe this property for the IPQ5424 watchdog device and extend support
->>> to other targets subsequently.
->>>
->>> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
->>> ---
->>> Changes in v4:
->>> 	- New patch
->>> ---
->>>  .../devicetree/bindings/watchdog/qcom-wdt.yaml       | 20 ++++++++++++++++++++
->>>  1 file changed, 20 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
->>> index 49e2b807db0bc9d3edfc93ec41ad0df0b74ed032..bbe9b68ff4c8b813744ffd86bb52303943366fa2 100644
->>> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
->>> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
->>> @@ -81,6 +81,16 @@ properties:
->>>      minItems: 1
->>>      maxItems: 5
->>>  
->>> +  qcom,imem:
->>
->> Shoouldn't this be existing 'sram' property? If IMEM is something
->> similar to OCMEM, then we already use sram for that.
-> 
-> We specifically want a handle to a predefined byte in IMEM, something akin
-> to qcom,4ln-config-sel in
-> 
-> Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+Hi Fuad,
 
-Nothing stops that with sram. Above example is poor, because it mentions
-syscon. There is no hardware as syscon. Does not exist. What is IMEM
-here, what is this relationship?
+On 5/14/25 2:34 AM, Fuad Tabba wrote:
+> Expand the guest_memfd selftests to include testing mapping guest
+> memory for VM types that support it.
+> 
+> Also, build the guest_memfd selftest for arm64.
+> 
+> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
+> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>   tools/testing/selftests/kvm/Makefile.kvm      |   1 +
+>   .../testing/selftests/kvm/guest_memfd_test.c  | 145 +++++++++++++++---
+>   2 files changed, 126 insertions(+), 20 deletions(-)
+> 
+> diff --git a/tools/testing/selftests/kvm/Makefile.kvm b/tools/testing/selftests/kvm/Makefile.kvm
+> index f62b0a5aba35..ccf95ed037c3 100644
+> --- a/tools/testing/selftests/kvm/Makefile.kvm
+> +++ b/tools/testing/selftests/kvm/Makefile.kvm
+> @@ -163,6 +163,7 @@ TEST_GEN_PROGS_arm64 += access_tracking_perf_test
+>   TEST_GEN_PROGS_arm64 += arch_timer
+>   TEST_GEN_PROGS_arm64 += coalesced_io_test
+>   TEST_GEN_PROGS_arm64 += dirty_log_perf_test
+> +TEST_GEN_PROGS_arm64 += guest_memfd_test
+>   TEST_GEN_PROGS_arm64 += get-reg-list
+>   TEST_GEN_PROGS_arm64 += memslot_modification_stress_test
+>   TEST_GEN_PROGS_arm64 += memslot_perf_test
+> diff --git a/tools/testing/selftests/kvm/guest_memfd_test.c b/tools/testing/selftests/kvm/guest_memfd_test.c
+> index ce687f8d248f..443c49185543 100644
+> --- a/tools/testing/selftests/kvm/guest_memfd_test.c
+> +++ b/tools/testing/selftests/kvm/guest_memfd_test.c
+> @@ -34,12 +34,46 @@ static void test_file_read_write(int fd)
+>   		    "pwrite on a guest_mem fd should fail");
+>   }
+>   
+> -static void test_mmap(int fd, size_t page_size)
+> +static void test_mmap_allowed(int fd, size_t page_size, size_t total_size)
+> +{
+> +	const char val = 0xaa;
+> +	char *mem;
+> +	size_t i;
+> +	int ret;
+> +
+> +	mem = mmap(NULL, total_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+> +	TEST_ASSERT(mem != MAP_FAILED, "mmaping() guest memory should pass.");
+> +
+> +	memset(mem, val, total_size);
+> +	for (i = 0; i < total_size; i++)
+> +		TEST_ASSERT_EQ(mem[i], val);
+> +
+> +	ret = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE, 0,
+> +			page_size);
+> +	TEST_ASSERT(!ret, "fallocate the first page should succeed");
+> +
+> +	for (i = 0; i < page_size; i++)
+> +		TEST_ASSERT_EQ(mem[i], 0x00);
+> +	for (; i < total_size; i++)
+> +		TEST_ASSERT_EQ(mem[i], val);
+> +
+> +	memset(mem, val, total_size);
+> +	for (i = 0; i < total_size; i++)
+> +		TEST_ASSERT_EQ(mem[i], val);
+> +
 
-Best regards,
-Krzysztof
+The last memset() and check the resident values look redudant because same
+test has been covered by the first memset(). If we really want to double
+confirm that the page-cache is writabble, it would be enough to cover the
+first page. Otherwise, I guess this hunk of code can be removed :)
+
+	memset(mem, val, page_size);
+	for (i = 0; i < page_size; i++)
+		TEST_ASSERT_EQ(mem[i], val);
+
+> +	ret = munmap(mem, total_size);
+> +	TEST_ASSERT(!ret, "munmap should succeed");
+> +}
+> +
+> +static void test_mmap_denied(int fd, size_t page_size, size_t total_size)
+>   {
+>   	char *mem;
+>   
+>   	mem = mmap(NULL, page_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+>   	TEST_ASSERT_EQ(mem, MAP_FAILED);
+> +
+> +	mem = mmap(NULL, total_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+> +	TEST_ASSERT_EQ(mem, MAP_FAILED);
+>   }
+>   
+>   static void test_file_size(int fd, size_t page_size, size_t total_size)
+> @@ -120,26 +154,19 @@ static void test_invalid_punch_hole(int fd, size_t page_size, size_t total_size)
+>   	}
+>   }
+>   
+> -static void test_create_guest_memfd_invalid(struct kvm_vm *vm)
+> +static void test_create_guest_memfd_invalid_sizes(struct kvm_vm *vm,
+> +						  uint64_t guest_memfd_flags,
+> +						  size_t page_size)
+>   {
+> -	size_t page_size = getpagesize();
+> -	uint64_t flag;
+>   	size_t size;
+>   	int fd;
+>   
+>   	for (size = 1; size < page_size; size++) {
+> -		fd = __vm_create_guest_memfd(vm, size, 0);
+> +		fd = __vm_create_guest_memfd(vm, size, guest_memfd_flags);
+>   		TEST_ASSERT(fd == -1 && errno == EINVAL,
+>   			    "guest_memfd() with non-page-aligned page size '0x%lx' should fail with EINVAL",
+>   			    size);
+>   	}
+> -
+> -	for (flag = BIT(0); flag; flag <<= 1) {
+> -		fd = __vm_create_guest_memfd(vm, page_size, flag);
+> -		TEST_ASSERT(fd == -1 && errno == EINVAL,
+> -			    "guest_memfd() with flag '0x%lx' should fail with EINVAL",
+> -			    flag);
+> -	}
+>   }
+>   
+>   static void test_create_guest_memfd_multiple(struct kvm_vm *vm)
+> @@ -170,30 +197,108 @@ static void test_create_guest_memfd_multiple(struct kvm_vm *vm)
+>   	close(fd1);
+>   }
+>   
+> -int main(int argc, char *argv[])
+> +static void test_with_type(unsigned long vm_type, uint64_t guest_memfd_flags,
+> +			   bool expect_mmap_allowed)
+>   {
+> -	size_t page_size;
+> +	struct kvm_vm *vm;
+>   	size_t total_size;
+> +	size_t page_size;
+>   	int fd;
+> -	struct kvm_vm *vm;
+>   
+> -	TEST_REQUIRE(kvm_has_cap(KVM_CAP_GUEST_MEMFD));
+> +	if (!(kvm_check_cap(KVM_CAP_VM_TYPES) & BIT(vm_type)))
+> +		return;
+>   
+
+The check seems incorrect for aarch64 since 0 is always returned from
+kvm_check_cap() there. The test is skipped for VM_TYPE_DEFAULT on aarch64.
+So it would be something like below:
+
+	#define VM_TYPE_DEFAULT		0
+
+	if (vm_type != VM_TYPE_DEFAULT &&
+	    !(kvm_check_cap(KVM_CAP_VM_TYPES) & BIT(vm_type)))
+		return;
+
+>   	page_size = getpagesize();
+>   	total_size = page_size * 4;
+>   
+> -	vm = vm_create_barebones();
+> +	vm = vm_create_barebones_type(vm_type);
+>   
+> -	test_create_guest_memfd_invalid(vm);
+>   	test_create_guest_memfd_multiple(vm);
+> +	test_create_guest_memfd_invalid_sizes(vm, guest_memfd_flags, page_size);
+>   
+> -	fd = vm_create_guest_memfd(vm, total_size, 0);
+> +	fd = vm_create_guest_memfd(vm, total_size, guest_memfd_flags);
+>   
+>   	test_file_read_write(fd);
+> -	test_mmap(fd, page_size);
+> +
+> +	if (expect_mmap_allowed)
+> +		test_mmap_allowed(fd, page_size, total_size);
+> +	else
+> +		test_mmap_denied(fd, page_size, total_size);
+> +
+>   	test_file_size(fd, page_size, total_size);
+>   	test_fallocate(fd, page_size, total_size);
+>   	test_invalid_punch_hole(fd, page_size, total_size);
+>   
+>   	close(fd);
+> +	kvm_vm_release(vm);
+> +}
+> +
+> +static void test_vm_type_gmem_flag_validity(unsigned long vm_type,
+> +					    uint64_t expected_valid_flags)
+> +{
+> +	size_t page_size = getpagesize();
+> +	struct kvm_vm *vm;
+> +	uint64_t flag = 0;
+> +	int fd;
+> +
+> +	if (!(kvm_check_cap(KVM_CAP_VM_TYPES) & BIT(vm_type)))
+> +		return;
+
+Same as above
+
+> +
+> +	vm = vm_create_barebones_type(vm_type);
+> +
+> +	for (flag = BIT(0); flag; flag <<= 1) {
+> +		fd = __vm_create_guest_memfd(vm, page_size, flag);
+> +
+> +		if (flag & expected_valid_flags) {
+> +			TEST_ASSERT(fd > 0,
+> +				    "guest_memfd() with flag '0x%lx' should be valid",
+> +				    flag);
+> +			close(fd);
+> +		} else {
+> +			TEST_ASSERT(fd == -1 && errno == EINVAL,
+> +				    "guest_memfd() with flag '0x%lx' should fail with EINVAL",
+> +				    flag);
+
+It's more robust to have:
+
+			TEST_ASSERT(fd < 0 && errno == EINVAL, ...);
+
+> +		}
+> +	}
+> +
+> +	kvm_vm_release(vm);
+> +}
+> +
+> +static void test_gmem_flag_validity(void)
+> +{
+> +	uint64_t non_coco_vm_valid_flags = 0;
+> +
+> +	if (kvm_has_cap(KVM_CAP_GMEM_SHARED_MEM))
+> +		non_coco_vm_valid_flags = GUEST_MEMFD_FLAG_SUPPORT_SHARED;
+> +
+> +	test_vm_type_gmem_flag_validity(VM_TYPE_DEFAULT, non_coco_vm_valid_flags);
+> +
+> +#ifdef __x86_64__
+> +	test_vm_type_gmem_flag_validity(KVM_X86_SW_PROTECTED_VM, non_coco_vm_valid_flags);
+> +	test_vm_type_gmem_flag_validity(KVM_X86_SEV_VM, 0);
+> +	test_vm_type_gmem_flag_validity(KVM_X86_SEV_ES_VM, 0);
+> +	test_vm_type_gmem_flag_validity(KVM_X86_SNP_VM, 0);
+> +	test_vm_type_gmem_flag_validity(KVM_X86_TDX_VM, 0);
+> +#endif
+> +}
+> +
+> +int main(int argc, char *argv[])
+> +{
+> +	TEST_REQUIRE(kvm_has_cap(KVM_CAP_GUEST_MEMFD));
+> +
+> +	test_gmem_flag_validity();
+> +
+> +	test_with_type(VM_TYPE_DEFAULT, 0, false);
+> +	if (kvm_has_cap(KVM_CAP_GMEM_SHARED_MEM)) {
+> +		test_with_type(VM_TYPE_DEFAULT, GUEST_MEMFD_FLAG_SUPPORT_SHARED,
+> +			       true);
+> +	}
+> +
+> +#ifdef __x86_64__
+> +	test_with_type(KVM_X86_SW_PROTECTED_VM, 0, false);
+> +	if (kvm_has_cap(KVM_CAP_GMEM_SHARED_MEM)) {
+> +		test_with_type(KVM_X86_SW_PROTECTED_VM,
+> +			       GUEST_MEMFD_FLAG_SUPPORT_SHARED, true);
+> +	}
+> +#endif
+>   }
+
+Thanks,
+Gavin
+
 
