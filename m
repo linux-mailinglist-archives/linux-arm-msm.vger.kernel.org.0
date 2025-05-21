@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-58830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D2C6ABEB9B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 08:02:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EB52ABEBA4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 08:04:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EBCA63B622E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 06:02:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B89543B6D22
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 06:03:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9286622FDEE;
-	Wed, 21 May 2025 06:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CE41230BC8;
+	Wed, 21 May 2025 06:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s0OI18j/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZeAOzDai"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6100D635;
-	Wed, 21 May 2025 06:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2870D635;
+	Wed, 21 May 2025 06:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747807353; cv=none; b=ZkVrb8WG4a/NgPdOhZYs9Gi+/3ViG9CCJio7YRK4CnJjfBVnpD5ZPDctJOeuU884B8zIMwHt2m/Clvnm94a+JEPOvtlDW9tCr+c3lAmPID44438UeTmaLZvzzO5lipFSFuEtueeOKcms9tK94ZOOmCx39skLaxDCXGyc2Hk8LN0=
+	t=1747807456; cv=none; b=A/puuUNUzAZhJCtZrKHaDfE+/qbQsD4M9CwGU9DBOk30lWVv09/wQFYbmDUSP4DZt5bh0etk+Qq/hMjTB97HiWj7CSmIwXYzI6wcgSqOYsDigRQPZq5PbGB8PEPrCJboYKaA0Y8grkAWdAA/vciqn9LwuK1YpktwpTQlt1/6Jvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747807353; c=relaxed/simple;
-	bh=pwyPgH7Vk0fTRVGptxNxmlZlc5bvRjhQKwRUrdayjlk=;
+	s=arc-20240116; t=1747807456; c=relaxed/simple;
+	bh=flvqcAxzMRoNNTiMeqvW68bI78epNF1VuBs7EnVIWE4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EGufXcJ6dPaE/B1O/+1mJMnab4aXCjP3/IK+C3RY6PnYfQWrrAwZMK8iTpqWKxToeOTrTlRPf+2loIkT9aMpuCH2lIlM/2RttcOobQMa8uSv1YZcMsAysuHHZASx5wNSppbKGwGc0D/B+KCwTl34CboKq66ekJ2OG4tCZ0FZY6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s0OI18j/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D63C4CEE4;
-	Wed, 21 May 2025 06:02:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=YmROFCIjSd9tVU+Shmcf1NLg5U9Qmpd1dKsJFPn9a22UA17sB4lZ4G9wghWqCVZb/47qHs6u3yk0jWbMxX9gkrH9yU8IVI7FoM8QN1icHfHPmW9wuaspvaH3465RRqBtorWVPDvzz/f71qLssYnnw5yC9Oh8G9Hig5lq+ZgW9Gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZeAOzDai; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32100C4CEE4;
+	Wed, 21 May 2025 06:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747807352;
-	bh=pwyPgH7Vk0fTRVGptxNxmlZlc5bvRjhQKwRUrdayjlk=;
+	s=k20201202; t=1747807455;
+	bh=flvqcAxzMRoNNTiMeqvW68bI78epNF1VuBs7EnVIWE4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=s0OI18j/IbJIi/ZR3ZeYMnWoEc9hs0AobLvtrLw2sR1TiKwKZFMLs9NBox5i86Ij5
-	 be7JsXg+UWvL3XsAfhZo9ZrAoDU+jHaFrgYFndlEiRbUDA+nwdOwL2tKwd70U37VFC
-	 PIPYPXi8OJ1VoHKCx2iECY3gnrK3QjAzASlX43SFlRLeVa7q/JgIyDMJ9qgWS4JLCP
-	 XP8w2fiSWXFScMSPpOn+gNz0HOFxX0LZ8wETb+j4G6vhrsFvUVl3kaEiau6VUad0Ia
-	 +rBO1EOsNPpPD5eiGHL8xL+CcHP2c3TUrDZprz4PxKLn9hOa0m+v3s++MWGn5fzmyx
-	 Q1pifN0t6l4fQ==
-Message-ID: <e82c9860-29b9-4e21-b738-0a61880ce184@kernel.org>
-Date: Wed, 21 May 2025 08:02:28 +0200
+	b=ZeAOzDair8wYKp39A5N/pCaq8AUh4YR2GsWqo9Kb1PvEFhZ6MLfRAUcrg2Hzm8W94
+	 RVLFVlo9Of0dry2HGEmw3E34pWAMfwXTp3vRMvx/kuLyNxSC1Yb7JMwn/svegbA7X6
+	 eLgYnuhysfKJtBwU6wxdEI1kEHraDbpZQGLdbdGYnAI2Xc4O+i+U6HQTEaPvC5nFvj
+	 YqIVUsqiYZPaR2JzGruPBSGSK6lD8KQQUmFU+iIDWq2pZrj/4Hk/ncvteMkIwRUk53
+	 Nfd4ty9juQ36MHDGGrqLdaTefh0Lf3TvFQ51VUrhorAEtKF0so0xL7uEqlnIQyOuxY
+	 rTM/PmDs/bNDQ==
+Message-ID: <9babbddc-5c45-4ef4-8fbc-0da64ce99a42@kernel.org>
+Date: Wed, 21 May 2025 08:04:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] ASoC: qcom: Use helper function
- for_each_child_of_node_scoped()
-To: Ai Chao <aichao@kylinos.cn>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- srinivas.kandagatla@linaro.org, lgirdwood@gmail.com, broonie@kernel.org,
- perex@perex.cz, tiwai@suse.com
-Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250520091131.4150248-1-aichao@kylinos.cn>
- <20250520091131.4150248-7-aichao@kylinos.cn>
- <eca8721c-305f-4053-8df0-0347cc869325@linaro.org>
- <758b0ad2-e337-4be6-a7da-4d5af8b193d1@kylinos.cn>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs615: Enable camss for
+ qcs615-adp-air
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Wenmeng Liu <quic_wenmliu@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, bryan.odonoghue@linaro.org, todor.too@gmail.com,
+ rfoss@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
+References: <20250520-qcs615-adp-air-camss-v1-0-ac25ca137d34@quicinc.com>
+ <20250520-qcs615-adp-air-camss-v1-2-ac25ca137d34@quicinc.com>
+ <748f96f7-d690-4823-845f-67642db97a06@linaro.org>
+ <dabed183-6907-4483-8c79-616aafaf2851@quicinc.com>
+ <76052af9-96c2-46d6-85c6-65998c389554@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,35 +111,25 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <758b0ad2-e337-4be6-a7da-4d5af8b193d1@kylinos.cn>
+In-Reply-To: <76052af9-96c2-46d6-85c6-65998c389554@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 21/05/2025 03:58, Ai Chao wrote:
-> Hi Krzysztof :
+On 21/05/2025 07:52, Vladimir Zapolskiy wrote:
+>> We can perform validation through the CSID TPG(Test Pattern Generator),
+>> so I enabled CAMSS.
+>>
 > 
->      Thanks for your help.
+> Since this is just a test of CAMSS without any sensors/CSIPHY, then
 > 
->      The for_each_child_of_node() function is used to iterate over all 
-> child nodes of a device tree node. During each iteration, it retrieves a 
-> pointer to the child node via of_get_next_child() and automatically 
-> increments the node's reference count (of_node_get()). Each call to 
-> of_get_next_child() increases the reference count (refcount) of the 
-> returned child node, ensuring that the node is not freed while in use.
-
-Don't lecture us on the API, we know it.
-
+> 1. camss-csiphy-3ph-1-0.c changes from the series have never been tested
+>     and added as dead code, it shall be removed from the series,
+> 2. adding voltage regulators to the board dts is void and shall be removed.
 > 
->      The of_node_put() function is used to decrement the node's 
-> reference count. When the reference count drops to zero, the kernel 
-> releases the memory occupied by the node.for_each_child_of_node() 
-> increments the child node's reference count in each iteration but does 
-> not decrement it automatically. If of_node_put() is not called manually, 
-> the reference count will never reach zero, resulting in a memory leak of 
-> the node.
-
-Except top posting, you did not answer the comment at all. Explaining
-all this in view of existing code means you do not understand the code.
+> Not to substitute but in addition to the above it's still doubtful, if just
+> a hardware/driver test configuration deserves to be added into the dts.
+No, it does not deserve to be added. It's useless code in upstream. They
+just want to push whatever they had downstream and drop their patch count.
 
 Best regards,
 Krzysztof
