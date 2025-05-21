@@ -1,79 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-58875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 358CCABF092
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 11:58:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16C64ABF0AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 12:02:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE8704E3506
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 09:58:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 69B8C3B48D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 10:02:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 809C5259C8A;
-	Wed, 21 May 2025 09:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4287125A344;
+	Wed, 21 May 2025 10:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IYl+CXbT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WL/b4UT/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508532356A0;
-	Wed, 21 May 2025 09:58:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F8B22B59D;
+	Wed, 21 May 2025 10:02:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747821499; cv=none; b=SI/N/4UBbuI7ZNzlbjO7HjFjz0AyJZ8D2PwPVlEa3SxHHEOMw2+D8cxVYxbScxElayoN802MVUZzJieqDDXY8AgfN3B7H3FDsumP/8s73fiUd2D8+QN7hRWtIL/zYaCD51nMp4ffocqnVQq8QNvl1Amzk7ZGWLMgsOugLXs16kw=
+	t=1747821772; cv=none; b=eA6qm9cg3zYPmbNnWBBlLZQMHqP1Pi4A9VUejlEyCBvtJSCaK/9bZQVWgkV+9B6oXMTyydiDXvlNmqsATcWS6JhaNV46PHATWKtUdkcUJOSKPP/Zc6Aqq8RpbvoeqZkUC4KUaUf2tolSf7TTHd3qalfPoD/d8cHiJBaNLs60Ydw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747821499; c=relaxed/simple;
-	bh=KX1Q1Y4Y8vSvwhM8+I5oSWXY8lYvcqOE9KR8h6NqHss=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i2l5iCj8gILIKV9OpM7JUjiNPO4Z9PnVEWjdW32gCwd67PdCA133PxDU9yvYV/3nPzDfXlZbTi0ZoDTtvMVS45uz0x8UGXu+gwnlQ97OTCrJ3BzwJ8qvxbYiIH/RwF41fU8Px20XZs7/UWpKCrYZWxX/K6U6X7sUIii2n4250Gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IYl+CXbT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF90C4CEE4;
-	Wed, 21 May 2025 09:58:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747821496;
-	bh=KX1Q1Y4Y8vSvwhM8+I5oSWXY8lYvcqOE9KR8h6NqHss=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IYl+CXbTN7H7xUzQMlDqt/AnBUdpXOrV7wI8zQBE98vc61mkNcpZ4UPJ5nl+mjea+
-	 79ubIF8gGboudJDX60dXzepNAUPmO/wXaJSdeESLzN+ZyGL8c1Lk0FI2oftavIFW22
-	 KTy02njS2UC5jGOX+vWhUyAMgQtTnUcEY9ULoJgRb08L8gTCVT3iiC6qD7w85zPkOl
-	 oR7uSUWALtwIStYdbEDVt0Xa6Y5CBJqeJk1UYtvtjf1Y9NBnfX3BCclMElL+UIoVn9
-	 bH7Hdy4A8d/kpxjPKRVUZkN4nmxRB4amuUa6tq8TgE+2Zygfd5HA3wclLN4vUDMnOs
-	 XBFrt4gpAOtEw==
-Date: Wed, 21 May 2025 11:58:13 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Pengyu Luo <mitltlatltl@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Oneplus Pad Pro (caihong)
-Message-ID: <20250521-notorious-tuscan-chipmunk-aac30d@kuoka>
-References: <20250520164208.516675-1-mitltlatltl@gmail.com>
- <20250520164208.516675-2-mitltlatltl@gmail.com>
+	s=arc-20240116; t=1747821772; c=relaxed/simple;
+	bh=s5n+/vzAdQy/+BLtMYMB0dflYdmUHeprpP/7P/3ufBs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=owBvfSt8BsIiYbDGu5MZY1lyvHxpShp18tnCJhJkfqjtl1pSW42GJY7X1LfAYWD7k/1lkRTe6IrVX86QpH1iOc+mF4G+Kgs+XWP22+ZZ6tVb3/zl/YwD7xya4X6bzNFBo/+1qoUDjTlkrXn1lHBkgtOmuZNnaI0op/ynJhqtHYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WL/b4UT/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54L9XNAk027636;
+	Wed, 21 May 2025 10:02:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	aglXn5bbF2Mtfu9pUWzztj7c2/bF74z/9HclfhgJmw8=; b=WL/b4UT/rXDeE7nC
+	DXpdXIAdM8nilIPYkhMNcywzy23Ctnf+jCJ7z89GlQP51xWC482GGe4z9NQK2Wjz
+	4msxrAjGaw2raeszO8kdsmg0qB7a314hbGyR87/ONLxINku1aMG0WO1wuyPrtz2k
+	bjMMNBCi4yC3b7ELuxr+/BPld2s0slbc08Hx3gqyGphmjjH+XFFtdKwfC1aBKO5h
+	LA4dGy34DzHkjv3RvFQhRQZjZdLJ3YO4TqWnX7EKW8KAVilZcah2ymSnWMXkVJzS
+	qvjtbK6sfOdjsRba8RqE8iEpa2Iu0KZEa3CK+6+g6EGA+EPsRbCWeN+Wr1/geGMs
+	tGCQnw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf9afga-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 May 2025 10:02:44 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54LA2h8Y031585
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 May 2025 10:02:43 GMT
+Received: from [10.217.216.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 21 May
+ 2025 03:02:37 -0700
+Message-ID: <ec4ee2f5-162b-430d-aeb9-90ad4559707b@quicinc.com>
+Date: Wed, 21 May 2025 15:32:34 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250520164208.516675-2-mitltlatltl@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 02/18] dt-bindings: clock: qcom: Update sc8280xp camcc
+ bindings
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Vladimir
+ Zapolskiy" <vladimir.zapolskiy@linaro.org>,
+        Dmitry Baryshkov
+	<lumag@kernel.org>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        "Satya Priya
+ Kakitapalli" <quic_skakitap@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20250515-videocc-pll-multi-pd-voting-v4-0-571c63297d01@quicinc.com>
+ <20250515-videocc-pll-multi-pd-voting-v4-2-571c63297d01@quicinc.com>
+ <20250519-barnacle-of-beautiful-enthusiasm-4e6af0@kuoka>
+Content-Language: en-US
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+In-Reply-To: <20250519-barnacle-of-beautiful-enthusiasm-4e6af0@kuoka>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: F2cKs9OAE1xTReTfOzMV6iBsg0rAphRC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIxMDA5OCBTYWx0ZWRfX2wwsWNzVbQBb
+ NQSSzzRoUsAyB9Sff9ElOO+ZDrQZ6nqt2MQ/eFg1nUrt+pHqTP3/JX8JgPGSWPQOqu/qofBLuAm
+ L+Gy+2kiS/GGqhD13DtKWPQJjcGt2tZVNjKtkJO+TG9JFoMcdDtI1tivDTUSj28tdBPVraUMGMR
+ WZAgOn9SUcQbzaI248ils+fbIIp1Ubh4lRmzr8fWy9TG5ncON4jehgDSgn5gneKBDllXXxD8wHq
+ FJt+K7MoV0MH7AfMHCCnysa+ilFhOyiigkBMoYHLCdf0WZqqPd4e9SNRIVoJoxku9cfGwFa+9zQ
+ F98cL3pxHpFGSadhzcf5ylr8NH1vigDu9dNjDS+q+HA0H02+QAlQTYjKNVbY3pCpZ4UTDwbiJpf
+ k6rHXajZFlfRj0BESqsdh9bCuyhVUxbG+5psm82T92+pQSQQ6a4dKhZz+SuY0mMiI2M1X894
+X-Authority-Analysis: v=2.4 cv=GawXnRXL c=1 sm=1 tr=0 ts=682da4c4 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=P-IC7800AAAA:8
+ a=FCd5T-TvBLVYlDZUGUwA:9 a=QEXdDO2ut3YA:10 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-GUID: F2cKs9OAE1xTReTfOzMV6iBsg0rAphRC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-21_03,2025-05-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 mlxlogscore=999 lowpriorityscore=0 impostorscore=0
+ priorityscore=1501 clxscore=1015 malwarescore=0 phishscore=0 bulkscore=0
+ spamscore=0 suspectscore=0 adultscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505160000 definitions=main-2505210098
 
-On Wed, May 21, 2025 at 12:42:07AM GMT, Pengyu Luo wrote:
-> The OnePlus Pad Pro is an Android tablet based on the Qualcomm SM8650
-> platform. Its device codename is "caihong".
+
+
+On 5/19/2025 1:48 PM, Krzysztof Kozlowski wrote:
+> On Thu, May 15, 2025 at 12:38:47AM GMT, Jagadeesh Kona wrote:
+>> SC8280XP camcc only requires the MMCX power domain, unlike
+>> SM8450 camcc which will now support both MMCX and MXC power
 > 
-> Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> I do not see change to sm8450 here. This makes no sense on its own. You
+> do not move compatibles - what is the point of such change?
+>
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I did the SM8450 changes in next patch (3/18). But I agree with you, this needs to
+be more structured. So I am planning to drop this patch and instead take care of
+single power domain requirement for SC8280XP within SM8450 camcc bindings using
+minItems and maxItems properties based on if check for sc8280xp compatible similar
+to below snippet.
 
-Best regards,
-Krzysztof
+   power-domains:
+-    maxItems: 1
++    minItems: 1
+     description:
+-      A phandle and PM domain specifier for the MMCX power domain.
++      Power domains required for the clock controller to operate
++    items:
++      - description: MMCX power domain
++      - description: MXC power domain
 
+......
+
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sc8280xp-camcc
++    then:
++      properties:
++        power-domains:
++          maxItems: 1
++        required-opps:
++          maxItems: 1
++
+
+
+>> domains. Hence move SC8280XP camcc bindings from SM8450 to
+>> SA8775P camcc.
+> 
+> Subject: everything could be an update. Be specific.
+> 
+> A nit, subject: drop second/last, redundant "bindings". The
+> "dt-bindings" prefix is already stating that these are bindings.
+> See also:
+> https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
+> 
+
+Sure, I will take care of above in next series.
+
+Thanks,
+Jagadeesh
+
+>>
+>> SA8775P camcc doesn't support required-opps property currently
+>> but SC8280XP camcc need that property,  so add required-opps
+>> based on SC8280XP camcc conditional check in SA8775P camcc
+>> bindings.
+> 
+> Best regards,
+> Krzysztof
+> 
 
