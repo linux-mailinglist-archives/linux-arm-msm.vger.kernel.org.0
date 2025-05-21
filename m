@@ -1,148 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-58857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A200EABEDCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 10:24:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3998ABEDCE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 10:25:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04C7F3AC91F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 08:24:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C8B8F4A438F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 08:25:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EACE20D509;
-	Wed, 21 May 2025 08:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B38022367D3;
+	Wed, 21 May 2025 08:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ge8KF0V3"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QIugF1aa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B241E7C27;
-	Wed, 21 May 2025 08:24:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016A12367AE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 08:25:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747815867; cv=none; b=iU/6+k2/s9rLQqzzpi+CtqyWY8jCeLZvWfPnGNhTlbkCPjS+XFjjUf1aJnGxm9v8e6Bv6dkAdO99r0G8KvVjneMGhJ6uqhJ6/xRDXjsRLFB8v8ljXI9ucWeIrVsQ5pE7sg2otBTxS9wXVVgcDRm7oIEGLx6gKG7FgLgZidJeBYA=
+	t=1747815936; cv=none; b=P1TsS7wqF6z8AKEqwQ6lUgMBqCEJ9AQHGwYu/WfiZR65MS5uyDwgdXl7aVtY1D4mfaEVFjP+rs9fxM0D/vDQEN75aeQzD511T91DqCnG3VYNGjkxoB9RN79ZAG7QM/LmzSxYObfP/LUl3oZkZH28batwcdb/65yv6fTrPLY3oZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747815867; c=relaxed/simple;
-	bh=XiJxLeC24/pKHi9fOtdze4fw6C1A0nz5VfG+RetSoRY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=G7JXnd9cGuEybS0DjLG20k3A4i3e3DItr0gp+Vk7R4q6qmfd6zMgW6ZjOgY7XSnTYP++LcdFq1T4S3MmRaWy2P/1oFJzc5napyxPj5ipAsE2cXkNr+UhGzy7gw19JCRgrv98kifDLzJ1eEBZBn/dhmhK9JJ350mk77mocc070Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ge8KF0V3; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54L5qkhQ000753;
-	Wed, 21 May 2025 08:23:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BIBpob/UJr2FLrefJuVrS/wLOfDj1n6dK1C+cBL9UBA=; b=Ge8KF0V3wldfqWW9
-	2jsdcgn6DxLBEKK1rtVFUY9JQ1km/mFeGfjqdzGOvIJQancpEnO01jFzBzvBCWML
-	GGZ3O1viqJq2SvgEUBf3ObS4IGKi9eGxtQaBeZCbPaxHmTByh0PmvQ1OTgz2eNea
-	1ZLMGWUzVBOZH1bJN5xY8YEvcpIAK+C8rt2eXVjyVfntUsEMItqvZf/MTZh7llBh
-	KDxZxJbQC/fzHc65PV4z0Hw46dnYZapQymr8Z3ksuwBaUnCwM3JfRD4ZNh8ewIAT
-	czkT2qSo61fhFrV/HN0c5nvnA6XgU8evjmKyBEKCvfaj6yruwhi3k4geAFnMUan2
-	++5pmQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf4t4vv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 May 2025 08:23:57 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54L8Nulm025209
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 May 2025 08:23:56 GMT
-Received: from [10.239.155.136] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 21 May
- 2025 01:23:53 -0700
-Message-ID: <d7d85aa1-6f27-4557-a5e6-60bcfae32908@quicinc.com>
-Date: Wed, 21 May 2025 16:23:50 +0800
+	s=arc-20240116; t=1747815936; c=relaxed/simple;
+	bh=gkPxuc8IWsThKGRoMoIgd0Z0CzgLNCg9WoKdzqAkMWg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Y7unJztHK0MeHsHMZU9lRFBxVS14nb0EgyTzjXgp74jQm49An8aZyzYC6YiEGRWDhK8Lj9XDgSVVZAazhQnjItPMTACQfobzIvJpZRtLZ+JUW4AkiSZ4TaHnKU6Lev/e8dKNzhQ2okENcBrnLOwB1i91u2Wh6SBUS+U1yWszBnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QIugF1aa; arc=none smtp.client-ip=209.85.160.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-47666573242so1347341cf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 01:25:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1747815934; x=1748420734; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=q0EB3ECbJOPZow2xPGp/wd2YN15YtEgDGZvrmPbzrSM=;
+        b=QIugF1aaSvSZixMlJ+VB0rUDtUBtrKJA6J0xKO57YZPW75JBETQl+QrD1Ec3vzJiDl
+         cQazE0TSunRn7Ozjg0SChN98nnTKvNRw6V8Fwb19xHk0ZoxQt5i/GJ+fd0YBZ+4Xdvjz
+         dil7Y0J3oH7iT0IHaV478v1E/aYILlQoDTKwkoJng8f/RxSCAbUkbollfsiNaqW9CkJL
+         1IB1KDttPmgVGmIdahvkbQvkdgL5XRItLRP9PhpBwCq9ld+WDDbgSCBcL+PoNJ71BJXw
+         93B+HWT8muRBm1R7ll7CRdXYJVAWKgJFx8ypisKi7o7POZgmTlzbKUFYmTM60hKalJ1M
+         /D+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747815934; x=1748420734;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=q0EB3ECbJOPZow2xPGp/wd2YN15YtEgDGZvrmPbzrSM=;
+        b=RbzLvW14Yhrr9Z+Qjhic/7frdgrlK934myHXWS8JGKBcNoSyWBJEPB6NNR4pBJ1XNw
+         PgHKuq6JlIH8oS6quiv1AT5csTelCtC/7oltCAM5ng6W/uL/iyV0QT6BSNL1xZCZhXeB
+         jfp91DgpfwAUc3hAeXlMz3rCRY2PwCY6qZNJCRuQ3rSyP3favGdcswhuqXKUu4ghR3OT
+         KEsbX/urL4DYv/23hdB2cTGWamupczEiuSNosdnPp6ToKqEumob18FIlpnnPjyiKac0R
+         fexeFTyqAfr+67VKjB65jhdspBU77CbuE+K199D7cq+Wi09cV9UYoTT9pSdt5ME+G/t7
+         qqDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUxYXikn7O5OI6vQVkyZTu/kDMHEpINPkq30qNxHcNw8ALM/PG0pA7wil5qAkqm46uOekQ9ewUuFvkiv0A/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6dwjj8SuqZVwejbqi7+lXV7whwajLDd29TyLkoV2e2pVqGP2Q
+	Pmj48+AqG4EUGUdTMeun069/micIdX6+L70bAClt4vD6yY2HzCOYUZNfwfzFzIh+jVI2QbnzhmI
+	57l4MR/ZfPr4xyhaOIbyLh83/HaT1cRHPiZ243LMj
+X-Gm-Gg: ASbGncshYx1mE91NU4DBLS70Iiml5KJBZaxBTcOH2lKdMkHOytJ5n5W1cAEDvKZ7TK8
+	EyQ5xqpcSk/HVMFuKISuvAnj9impEbEFOKrKAFP9HrCF9uKN0Dho8C1q+8Y42CApoFCTzK4Pizr
+	D1j2+iE/24aQPxCpXEkdIZS7Boeqr9vpU6SzzW8L+NUHi64GqA2yBR9SGPQbiRxhVE8ea6T34qi
+	hp8mp/p5k4=
+X-Google-Smtp-Source: AGHT+IGAQdJ9rx7y7CxhzsHg4Xr7q2gSSor8M5gS3b2MfFzTlRji2bA/N+wytl7r35uThXcrXXRLnLMP6Iv+gWrOlTc=
+X-Received: by 2002:ac8:7d0a:0:b0:48d:8f6e:ece7 with SMTP id
+ d75a77b69052e-495ff7c853fmr13965871cf.3.1747815933516; Wed, 21 May 2025
+ 01:25:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] Bug fixes for UFS multi-frequency scaling on Qcom
- platform
-To: "Martin K. Petersen" <martin.petersen@oracle.com>
-CC: <quic_cang@quicinc.com>, <bvanassche@acm.org>, <mani@kernel.org>,
-        <beanhuo@micron.com>, <avri.altman@wdc.com>,
-        <junwoo80.lee@samsung.com>, <quic_nguyenb@quicinc.com>,
-        <quic_nitirawa@quicinc.com>, <quic_rampraka@quicinc.com>,
-        <neil.armstrong@linaro.org>, <luca.weiss@fairphone.com>,
-        <konrad.dybcio@oss.qualcomm.com>, <peter.wang@mediatek.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>
-References: <20250509075029.3776419-1-quic_ziqichen@quicinc.com>
- <yq1h61elobo.fsf@ca-mkp.ca.oracle.com>
-Content-Language: en-US
-From: Ziqi Chen <quic_ziqichen@quicinc.com>
-In-Reply-To: <yq1h61elobo.fsf@ca-mkp.ca.oracle.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: oSHkT2t1Q4h5FFEv_vtrxOBkW982KGXb
-X-Proofpoint-ORIG-GUID: oSHkT2t1Q4h5FFEv_vtrxOBkW982KGXb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIxMDA4MiBTYWx0ZWRfX3v9zHqsnvPay
- M0bxx6jJdtuj8HUP1HXdxBr5/Rv5lvIy3Kj1IXWhCwGco4sL5o3Mw99DTkEbiG2YNnvMFXoTvpE
- IlkFu6ESbVbmj4YA6gW56idQbBixq7USAe6dlGEdiFPHqyN2lrTl/pbj6NfGQpSK7CbSa5kGOxl
- F8AUcwOi6ozcJ9kuIXmXYpjDsmOI6u7pdDnA6TZ3WfJONEF0vSCBEUV5ARZYGO4LTgSPx5uEDqv
- PN7rKeAk11WRd1dkdGCDXflSLeEle5Q3s4PqeSXrC7wBhiOgJHVAF2ac5/vMnPfhlua/RXlFljy
- TUQYfpk9Ono+rauws6Fz2LnrUxtH1wEHr09yC+MDnRu9rHgbqage+MCL/5WsdI3G4nyXaQkPff0
- JvNRbJ3VHGLdLmquYMztMGb4g48nRW7kgoFP8nDCLNukuG0bkS76F2t1psVn9P5FABBLWLWe
-X-Authority-Analysis: v=2.4 cv=R7UDGcRX c=1 sm=1 tr=0 ts=682d8d9d cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8
- a=6H0WHjuAAAAA:8 a=KKAkSRfTAAAA:8 a=FzGy5eBrWT_g2xVYw_wA:9 a=QEXdDO2ut3YA:10
- a=Soq9LBFxuPC4vsCAQt-j:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-21_02,2025-05-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 mlxlogscore=999 priorityscore=1501 spamscore=0
- bulkscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0 mlxscore=0
- impostorscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505210082
+References: <20250513163438.3942405-1-tabba@google.com> <20250513163438.3942405-16-tabba@google.com>
+ <498765f6-c20e-48f2-98e4-4134bfe150a3@redhat.com>
+In-Reply-To: <498765f6-c20e-48f2-98e4-4134bfe150a3@redhat.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Wed, 21 May 2025 09:24:56 +0100
+X-Gm-Features: AX0GCFsFoNB1ieKR8Mpy2mR32AeGSlXaGdfHcg37_uYu8TA3HACi0fD0QWeAtgU
+Message-ID: <CA+EHjTya4pAFcJcVo3YNRuCv6=tkym-D1h9K8KD5EOch=ctPAQ@mail.gmail.com>
+Subject: Re: [PATCH v9 15/17] KVM: Introduce the KVM capability KVM_CAP_GMEM_SHARED_MEM
+To: Gavin Shan <gshan@redhat.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Martin,
+On Wed, 21 May 2025 at 03:47, Gavin Shan <gshan@redhat.com> wrote:
+>
+> Hi Fuad,
+>
+> On 5/14/25 2:34 AM, Fuad Tabba wrote:
+> > This patch introduces the KVM capability KVM_CAP_GMEM_SHARED_MEM, which
+> > indicates that guest_memfd supports shared memory (when enabled by the
+> > flag). This support is limited to certain VM types, determined per
+> > architecture.
+> >
+> > This patch also updates the KVM documentation with details on the new
+> > capability, flag, and other information about support for shared memory
+> > in guest_memfd.
+> >
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
+> > ---
+> >   Documentation/virt/kvm/api.rst | 18 ++++++++++++++++++
+> >   include/uapi/linux/kvm.h       |  1 +
+> >   virt/kvm/kvm_main.c            |  4 ++++
+> >   3 files changed, 23 insertions(+)
+> >
+> > diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
+> > index 47c7c3f92314..86f74ce7f12a 100644
+> > --- a/Documentation/virt/kvm/api.rst
+> > +++ b/Documentation/virt/kvm/api.rst
+> > @@ -6390,6 +6390,24 @@ most one mapping per page, i.e. binding multiple memory regions to a single
+> >   guest_memfd range is not allowed (any number of memory regions can be bound to
+> >   a single guest_memfd file, but the bound ranges must not overlap).
+> >
+> > +When the capability KVM_CAP_GMEM_SHARED_MEM is supported, the 'flags' field
+> > +supports GUEST_MEMFD_FLAG_SUPPORT_SHARED.  Setting this flag on guest_memfd
+> > +creation enables mmap() and faulting of guest_memfd memory to host userspace.
+> > +
+> > +When the KVM MMU performs a PFN lookup to service a guest fault and the backing
+> > +guest_memfd has the GUEST_MEMFD_FLAG_SUPPORT_SHARED set, then the fault will
+> > +always be consumed from guest_memfd, regardless of whether it is a shared or a
+> > +private fault.
+> > +
+> > +For these memslots, userspace_addr is checked to be the mmap()-ed view of the
+> > +same range specified using gmem.pgoff.  Other accesses by KVM, e.g., instruction
+> > +emulation, go via slot->userspace_addr.  The slot->userspace_addr field can be
+> > +set to 0 to skip this check, which indicates that KVM would not access memory
+> > +belonging to the slot via its userspace_addr.
+> > +
+>
+> This paragraph needs to be removed if PATCH[08/17] is going to be dropped.
 
-Thanks , this series need to be applied since 6.15/scsi-queue as the
-series UFS multi-frequency scaling was applied to 6.15/scsi-queue.
+Done.
 
-I will updated a new version to rebase it to 6.15/scsi-queue.
-
-On 5/21/2025 9:58 AM, Martin K. Petersen wrote:
-> 
-> Ziqi,
-> 
->> This series fixes a few corner cases introduced by multi-frequency
->> scaling feature on some old Qcom platforms design.
-> 
-> Which kernel is this series against? It does not apply to
-> 6.16/scsi-queue.
-> 
->> For change "scsi: ufs: qcom: Check gear against max gear in vop freq_to_gear()"
->> Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
->> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on RB3GEN2
-> 
-> These tags should be applied to the relevant patch.
-> 
->> For change "scsi: ufs: qcom: Map devfreq OPP freq to UniPro Core Clock freq"
->>             "scsi: ufs: qcom: Call ufs_qcom_cfg_timers() in clock scaling path"
->>
->> Reported-by: Luca Weiss <luca.weiss@fairphone.com>
->> Closes: https://lore.kernel.org/linux-arm-msm/D9FZ9U3AEXW4.1I12FX3YQ3JPW@fairphone.com/
->> Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sm7225-fairphone-fp4
-> 
-> Same here.
-> 
-> Thanks!
-> 
-
+Thanks,
+/fuad
+>
+> [PATCH v9 08/17] KVM: guest_memfd: Check that userspace_addr and fd+offset refer to same range
+>
+> > +The use of GUEST_MEMFD_FLAG_SUPPORT_SHARED will not be allowed for CoCo VMs.
+> > +This is validated when the guest_memfd instance is bound to the VM.
+> > +
+> >   See KVM_SET_USER_MEMORY_REGION2 for additional details.
+> >
+>
+> [...]
+>
+> Thanks,
+> Gavin
+>
 
