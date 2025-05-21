@@ -1,63 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-58846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A840ABECEE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 09:17:31 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E79E2ABECF4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 09:17:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5A9291600DB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 07:17:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CC1527AEE96
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 07:16:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99F39235341;
-	Wed, 21 May 2025 07:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08EBA23372E;
+	Wed, 21 May 2025 07:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E888eP/u"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ZQCiupCX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF54622D9E0;
-	Wed, 21 May 2025 07:17:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EC8235368
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 07:17:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747811826; cv=none; b=HbB1Dmgkc0IjE8xPmgX0Mabv9YnE6+68FbS7rdqXhNOpjhNHokkmGgzzwJ8oYRztioDosm4gdFV3pTEFPpkTf5ev+wIWBjpWUF5eJFY9oOeT9T01txa1huhszbuKYTAnWfAlYFpCv6n85SQPTRkwfidmA9M9tBngH+2JNJoptWg=
+	t=1747811837; cv=none; b=aux2n9kBSYc3fjUMtLReheAajq49gJ07cSrNF4A2+l+7Gwl4YupyFeBHMeCYEi3sW5yGb6pXqcvCPu4PBe8Xt4a6FMHEP7aAw4v+kpl0NXjYLiTEZUh9IkNSb2a9n/jMAEY+IV0a/KthmewzD77demo/1kz+ek4mR1lvx4u3FKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747811826; c=relaxed/simple;
-	bh=qNUa36tC4ehQNoYWpEZfCwtkUj3t4eJqZLJIdjq8iq4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=QHXJ/0C4atZH9PVCLZ3Ep76hiHEzFhc9JhMTWr+JEwOMRvmgjXDInz89/xoveDZxtvVLElJc4UiInDCuCGI5Xi2D9KgQOmZwz/y2lx6yS+1AjlejVxkP7NI8U0b6aVqzhx4vMJT/r2qNcR+Jo8L/6wF/iYKWq+rn6XZmBskg5tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E888eP/u; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54L5j8op007796;
-	Wed, 21 May 2025 07:17:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UL6Lrw4JjvW/AJkCzwZLDM4prXEfs7nKm8UqLCLzCPQ=; b=E888eP/uDZGt+3oF
-	Qcbqus3pxNgOsJTluMJbw1XWE09WwIuQtfu5pitBc4nxUaT0t+fToDh5QsjiC3yJ
-	ubcOABmtrvpozC+V7aN46Y9edD7wNIhNdr7eieHm3kOk1Xznmfaof3FVyG8WqV4t
-	7KyvOkx2L2jY2vEy/ZsN8XQv8X8+Ho/xJS8ubt4myDr3N/xRRk4dInCfVYdlKp/a
-	fuK0tbFQI4uKZojQKkI+7vi3clDkRRWturlIPoD5kgVkava05XGweYF/oMSF/Wir
-	uedYy04Fy4H+Z0KmCXAglR1JX+2/25e/5WATcHbI5h/mtTevS1fJu7Usr4gc+0Oo
-	LUJw1Q==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf6suxb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 May 2025 07:17:01 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54L7H0YX002993
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 May 2025 07:17:00 GMT
-Received: from [10.218.0.120] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 21 May
- 2025 00:16:53 -0700
-Message-ID: <064d3eed-c2ea-4b41-85b2-d2a5a922f8c7@quicinc.com>
-Date: Wed, 21 May 2025 12:46:49 +0530
+	s=arc-20240116; t=1747811837; c=relaxed/simple;
+	bh=Lkb4xfg43buJTPC241hb9jmkYbrpsqLjqwpy+oeHVjo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LqyrwG1wNe9GmJj/X95PTj8w9OV8rpSQLJ2HnesT070CLrJLHA+iqIHRGG1hWJuZYdUltVpZGZV7MwVyXXqE2AxAT6O1E+Yw0ihQMXC5dJTThg1zbXU7449GkyB9nOJCCnssuZRVZMVFK+YC3Xe9wVnmEt0RXCKNPotjXik3oB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ZQCiupCX; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1747811835;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=X2bYtpSD4eVttEZT2gQg7ORQmcIg0TegDdKXcW6Flfk=;
+	b=ZQCiupCXkRx1bo65HvB0HiG/11nAJ89Pmf8bnsJbs5GEOATZlRPeBeG/nUvmKy9ErFEL2g
+	CEWpH8DNOOif94QhpYOZ9yKXDcY12crECjPch8ZzPVmU3JH3sUFDpQkbi3bVqgkXt7A6Hj
+	QO4m424eVloIFgvHsoWImBm1GTZBuJU=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-187-VhvaLzvHPuSdAIgC9zvAhw-1; Wed, 21 May 2025 03:17:13 -0400
+X-MC-Unique: VhvaLzvHPuSdAIgC9zvAhw-1
+X-Mimecast-MFC-AGG-ID: VhvaLzvHPuSdAIgC9zvAhw_1747811832
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-22e3b03cd64so51006475ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 00:17:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747811832; x=1748416632;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=X2bYtpSD4eVttEZT2gQg7ORQmcIg0TegDdKXcW6Flfk=;
+        b=l2nRor8mbILxf4c1Y23ZOSZXotSM7vdSswlGU8an0AIlRRRIq8CjtsBBUtceZ6RP9m
+         u5ZrY0oY1IgByF1pQesbOawQ8oKUk1IIj5U0iUD2r4Hxaua7H+dSuQ6le8iQ4OIOzd9j
+         4IUOclYQuNKTk+2Hn0EWQE535qtmLCrZmEXHmkirSLylXMHPC0623y5JsXkznJ2wSKAL
+         09x/q641RZlX97qX7wibNmXdCiBEaVs3fFWEdGfbWp0GS1QXqvZKDHa6fMvpnUC/xlFu
+         i+PHY5iyEb5+damzxHPH8KcIZY/UYfoqFqBQvT9D448Vh+AIs2EoWLOa1EyAsLDtLMzn
+         dBXw==
+X-Forwarded-Encrypted: i=1; AJvYcCWsUFWji1DWKDq8frA3lPcutOEOHKRKhYl1uUV9xfzqTXyX5FCNuEPcoNyUevsrY5eVR3LAATU8KeZr1Exd@vger.kernel.org
+X-Gm-Message-State: AOJu0YzE3uSCtwtfQou4v2ChcTOyq9Cl1LhBvLViYa5mfYxFytz5Z84p
+	TIRUNnAe2PRIt0ygjK+Ib943tQPn2Tg7yBzrSG1HmPNJyICECOopcKBpiZnfhGxt9JlkgPiJEGO
+	eKnX9gLVMk/9i8TbLCuX4H8BMW3TlnYbxXFblQz1Q0U+36Jb64gFdT/RBRlQKaeDwtgc=
+X-Gm-Gg: ASbGnctWbvCBrTGRp5wPpwMpCmo/ijgWIxs23A+qI3bNvM8jk02N9XbfmuUgTTqlEDt
+	0nCSCsSId0mqXrv8DKzd03GiMB5VfB09VRGidI8tZFWHh6pfeILXiZIYGPyxuWMnrwOu/aFC8PM
+	Ynp/DB8slcbd/Gp8j58TNgowFLE4XiYSmmgYnqd0F0PfKLjEt8sHS2IR0g8t8wzYNh8dl90Xs9r
+	tHmYvdahqQHXvHorMNFh/VhN1ECYJLGADqiqOWHTQXq41z0cs830VjriwnxM7BFvUlhMGQ3UMTc
+	zJw8UXoX8FgQ
+X-Received: by 2002:a17:903:1a68:b0:216:393b:23d4 with SMTP id d9443c01a7336-231d43d9bd7mr296003025ad.11.1747811832153;
+        Wed, 21 May 2025 00:17:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8rqtT6WPv8GL/EVV2bl7K5zo3KsgvBOogfBIPsa3s/As1SOUpRDCkufJp02pYEJy1oaRVXg==
+X-Received: by 2002:a17:903:1a68:b0:216:393b:23d4 with SMTP id d9443c01a7336-231d43d9bd7mr296002565ad.11.1747811831703;
+        Wed, 21 May 2025 00:17:11 -0700 (PDT)
+Received: from [192.168.68.51] ([180.233.125.65])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4e97db8sm87525345ad.110.2025.05.21.00.16.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 May 2025 00:17:11 -0700 (PDT)
+Message-ID: <7407b8b5-3a08-42fe-b7ff-07f7edb5cc88@redhat.com>
+Date: Wed, 21 May 2025 17:16:52 +1000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,104 +88,51 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1] mmc: sdhci-msm: Enable MMC_CAP_AGGRESSIVE_PM for
- qualcomm controllers
+Subject: Re: [PATCH v9 06/17] KVM: Fix comments that refer to slots_lock
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
+ vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
+ david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com,
+ liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250513163438.3942405-1-tabba@google.com>
+ <20250513163438.3942405-7-tabba@google.com>
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson
-	<ulf.hansson@linaro.org>, <linux-mmc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <quic_nguyenb@quicinc.com>,
-        <quic_rampraka@quicinc.com>, <quic_pragalla@quicinc.com>,
-        <quic_sayalil@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_sachgupt@quicinc.com>, <quic_bhaskarv@quicinc.com>,
-        <quic_narepall@quicinc.com>, <kernel@quicinc.com>
-References: <20241104060722.10642-1-quic_sartgarg@quicinc.com>
- <konkbi4hvd7qc4rhokwrymzqntroy7gijk3ndwv5rluswdrykp@xsafrtrjzmuq>
- <10c90fee-ce7f-4034-9028-4252f19cb67f@quicinc.com>
- <CAA8EJpoLLDXFQk-ViuaioKrECzMV0aUrcOj4v+Ufs4oHY53mrw@mail.gmail.com>
-From: Sarthak Garg <quic_sartgarg@quicinc.com>
-In-Reply-To: <CAA8EJpoLLDXFQk-ViuaioKrECzMV0aUrcOj4v+Ufs4oHY53mrw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20250513163438.3942405-7-tabba@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: cjM1Luu2R9AZVJjFGw9_2rYHBcdON0P7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIxMDA2OSBTYWx0ZWRfX1g2iy1fXETtI
- mVLvwsw78XVgvzX7fl7pOknOq8lCsyMdu3hC6JrONrtBkQQt2YQhK2Ld5rtv/bY8AGBGmyS+7pw
- NztIrp5bLaWxiJgpKAN5l2thwwxed2LCFg7KTEiN+EN/u+hWZ2y2SzHbOz7PfngvDaMLMaoQqDe
- ZxDJsMwhQ5BPeJwN0Rl8V/hduDwib9jkgze/6dHua0m5hO6mVo/gg7LCaRWAV8ONZkbAc0yNbbp
- cWHYoZWpgofAs1pgm0T8bJ161JlwLL2M764E7j81JrZMx5nEDc7kpfhxK18sSLW9FrVV7cn8fW2
- 74TJbRi7HH4l+LoAh0g63CtJpW4xvJr+MSi/t6d7dNoHIsjPR1k6+8csNz726PKU6O+xsy1Oxhc
- VuzFHLFBE7dIitM/Ns4kV1s2aMeuLvt7mB/BqFYg5+IeSb+onSZdxToEhp8xLPB3b5gWx5Ox
-X-Authority-Analysis: v=2.4 cv=fZOty1QF c=1 sm=1 tr=0 ts=682d7ded cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
- a=ZDHle1W9ieu5siCmYmsA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: cjM1Luu2R9AZVJjFGw9_2rYHBcdON0P7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-21_01,2025-05-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 mlxscore=0 adultscore=0 spamscore=0 bulkscore=0 suspectscore=0
- malwarescore=0 priorityscore=1501 impostorscore=0 mlxlogscore=999
- lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505210069
 
-
-
-On 11/15/2024 6:53 PM, Dmitry Baryshkov wrote:
-> On Fri, 15 Nov 2024 at 12:23, Sarthak Garg <quic_sartgarg@quicinc.com> wrote:
->>
->>
->>
->> On 11/4/2024 4:19 PM, Dmitry Baryshkov wrote:
->>> On Mon, Nov 04, 2024 at 11:37:22AM +0530, Sarthak Garg wrote:
->>>> Enable MMC_CAP_AGGRESSIVE_PM for qualcomm controllers.
->>>> This enables runtime PM for eMMC/SD card.
->>>
->>> Could you please mention, which platforms were tested with this patch?
->>> Note, upstream kernel supports a lot of platforms, including MSM8974, I
->>> think the oldest one, which uses SDHCI.
->>>
->>
->> This was tested with qdu1000 platform.
+On 5/14/25 2:34 AM, Fuad Tabba wrote:
+> Fix comments so that they refer to slots_lock instead of slots_locks
+> (remove trailing s).
 > 
-> Are you sure that it won't break other platforms?
->
+> Reviewed-by: David Hildenbrand <david@redhat.com>
+> Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>   include/linux/kvm_host.h | 2 +-
+>   virt/kvm/kvm_main.c      | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+> 
 
-Thanks for your valuable comment.
-I am not sure about the older platforms so to avoid issues on older 
-platforms we can enable this for all SDCC version 5.0 targets ?
+Reviewed-by: Gavin Shan <gshan@redhat.com>
 
->>
->>>>
->>>> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
->>>> ---
->>>>    drivers/mmc/host/sdhci-msm.c | 1 +
->>>>    1 file changed, 1 insertion(+)
->>>>
->>>> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
->>>> index e00208535bd1..6657f7db1b8e 100644
->>>> --- a/drivers/mmc/host/sdhci-msm.c
->>>> +++ b/drivers/mmc/host/sdhci-msm.c
->>>> @@ -2626,6 +2626,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->>>>               goto clk_disable;
->>>>       }
->>>>
->>>> +    msm_host->mmc->caps |= MMC_CAP_AGGRESSIVE_PM;
->>>>       msm_host->mmc->caps |= MMC_CAP_WAIT_WHILE_BUSY | MMC_CAP_NEED_RSP_BUSY;
->>>>
->>>>       /* Set the timeout value to max possible */
->>>> --
->>>> 2.17.1
->>>>
->>>
-> 
-> 
-> 
 
