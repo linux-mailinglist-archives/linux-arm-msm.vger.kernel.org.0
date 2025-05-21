@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-58897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAB0AABF58F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 15:08:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BCE7ABF59A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 15:09:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 32A857B554F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 13:07:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A468A1BC4018
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 13:09:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27DBB270546;
-	Wed, 21 May 2025 13:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F73026B2D2;
+	Wed, 21 May 2025 13:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ACsfUy/d"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L58AkGGK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58422686A0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 13:08:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B729C2D613
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 13:09:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747832903; cv=none; b=MAu8MmC8dTr1xzs9Xe4EMVjEuB3ETwt6LsbQcaNfA1dyIoYwrEHElMtMGUgT9dHz6tiSct4PB1k7Q5NUtGfR/EW1qwEWrRCi3clCSbPXP3P7MSGgI5ZBGH1u/2av7xdKXrJq7npocLYgtwPgyFig7QpLSyI4wuLNlYL7Vp5J4Hg=
+	t=1747832960; cv=none; b=Ad3KQd5U1Avjwk2zWTpz2i/28d9zjlBwcvJ7YhZHKtf963lP72ecFiYFeUX1+TDdcH1t6DtW7DW7jv0IvKlitBWPDwThdiaw42xVpAMnIcJqjUL/rlT+g28ngoh0W5quApcAIiSlIUoiMkVw3cQzBPHix8eFR32SZr6roUIg/O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747832903; c=relaxed/simple;
-	bh=y667xlRjshHTCdOcA4582uYlKjS+bp6OLEVTjHaUkzw=;
+	s=arc-20240116; t=1747832960; c=relaxed/simple;
+	bh=GRe48+T4QOjmzhOAZmrIjCqByP8egxo3tKGqpm7CZoM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ep/+cHRz6x2Rn4s/Tt0MMtHJD0lUczikOkZ96NyUprjfHpFFYYa4Db3uqiSSVd4V4T/+m8mpSznU5A/rJb01piqaxMVIU/S1O3AaheV9v9uIMnTqTYiEVyNed9Ksuq5cjJbt3qTJCw0SXX6pXALmaOMcverht60m8Z6vUb3pAgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ACsfUy/d; arc=none smtp.client-ip=209.85.210.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=SDTEnSxMm7O7QivmMZSm/NKB8R+YuRRIszk9I+7kFF2XOZO8SNPpnCFAzVUzTa03AvUy1v+kEkytyxx+QJnCaQmcyL92VMhlImvEnSde/sZbEiViKHlQJx9OQPn2E8+qXXTyc50Je3gQpsdCtzQksHhUENohgHz+EtnlP5TiTHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L58AkGGK; arc=none smtp.client-ip=209.85.210.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-742c5f3456fso3011714b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 06:08:20 -0700 (PDT)
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-7399a2dc13fso8424424b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 06:09:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747832900; x=1748437700; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1747832957; x=1748437757; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=xt5u1NW+UKPTvEFieJrj+mDAWfwc6t4eZFA83UFoe+Y=;
-        b=ACsfUy/dVIhtCIa4i4sgWdTlmemyn4/Gh3xS2F+MJJEcEvsfT45SeINJE1Bvn7uXSK
-         iXfDX17syhq6H+KIlwADx2kTL6Tymjb5aZfJI5VRCiNwyurLb9mSJCQg7kCPVN+iJaNO
-         AMqXjmtXcwk6HSUBUzQaIIVtP2DQLW0be22TX0j7G9vOyQT6l9XKlKLcIY7U0fDEswB1
-         kJVtJLYEZZ4veeWtzF96a4GMU/5Fdy6C15rEkK9xLwq9jhK27jlAMOY/d+gbdAYuvHgQ
-         D0NRVViMFNX0x35suKzKtTsS6A+xZ+oC9PFdglTKTAvpTfRIxzZM8VCIj88ClTzyGwbu
-         Kn1w==
+        bh=1xxOxxblIZR/yGk+6+Lstv8BrYyIDhp3OhJhwb5LXrY=;
+        b=L58AkGGKPTUBdkXmDujPBF0WpBbhhZ9ZHSZZFf3rjNWT5y5kiFU4mTVIVBPtkBEYaM
+         MwqGhEzHQ2Zi4bHqOOSi33PaMpt8Urd1I5lc55gVDQ51Og/Cy82bKOkdmy92kTdh8cvE
+         Wgr47q13DVKEpgavHrtIOY0exRXr9Rmwcldeb2vVdfdlyV245obOBp6lBDwnC5X2KurL
+         DmGbqRrNGG5A8T2Ooze+G0WEXjw3bP199Pzs9aOvyHkBaV95uByxF+HDipJwXsWTSCuG
+         WPMJ0P5nGqZKMqnmzGQSgCVmZeOjLIK7MGPxbH8czcUO2GxGCceRKBNTfSdio/GspjpF
+         ItqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747832900; x=1748437700;
+        d=1e100.net; s=20230601; t=1747832957; x=1748437757;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xt5u1NW+UKPTvEFieJrj+mDAWfwc6t4eZFA83UFoe+Y=;
-        b=XZibDDHNp80pxWN8sruUzWWmHWD/tMxTRpUnCcloJ+GxWAgNSAjUKYRboNoKud1Pz3
-         mY9tKxNPq9bGOI6al+wSttDg1QhqGV1yrPggEXsYztB5u/KOJ8dyHOz+wFqnoQ84GIY4
-         cJ30+Ez71W+OPFfEbRY0A82MJXR166l7z1eWSTzr53lZLxBrKtiwPsltxWJxJ2IsP4JP
-         h6txLo66r7SE8IyxrA2gsIpTHMFv9C5wvEVSiNIeie872V0XnwOkY8hQ0oHw1b5E7BJG
-         b69iQPduwG+JFmCfwx0i7RS+8BhTWKVeMomdQtlRAy5msekDh/pVpbHKvvYRlAZJikrb
-         2RIA==
-X-Forwarded-Encrypted: i=1; AJvYcCXxb2u6/w0RPIsCi63EGR4slBqtgjdIyqgMtEsXusPsYYBUJ938KflRF3WryEgN/vHe9gMUCrQKU/UVXM6L@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCQ8+alFyzseVbng5kaBvu+9cR+KAq6ZlHWhkkMgOKr/kAqVE6
-	c4WdmZ4RNK7n/M1afWcP0Bbj7cs3s41MjDGE6t9WC9OK25o6+hXh4SocyQyEpdN7qw==
-X-Gm-Gg: ASbGncuI/4ibfvul02RRwBIL5k6fELQWFcztM0ETKFOKBdb/Ry7Vc/BfPAsuhtiH0RJ
-	fKPHCmptLfaEuPgLs33Oum+hgMON4TLIrc/qC/j9A3Kzn6VfyA+YhUCv3d6em5Bnrn0QCrQIhwz
-	CRfk8EGmPqoZaSW7T7M1pwA3H3lAfD1ZQXImx4nn8H5uMolgEPUF5prndzfRJg/E82YD9pCw6lo
-	DXiQnODc6BNONf36fW1a57I7cE6MTX6AsqcUZTc4gG3zBJPVXpZg+a8KLr/e+T2dmpJOfoiyXAL
-	mjEXKu1GjmjyYIaUSwans5XvdMwjdUin9Sb6X2SjmS8wkWeAkCQYCSdM9Tq+
-X-Google-Smtp-Source: AGHT+IHascvxCoFVkA31LZBdvW7jzau3iUVkHksoNUV8TEsEK7Xh8qeVnLYOu02jnBVSWphaqJ0viA==
-X-Received: by 2002:aa7:888e:0:b0:742:a02e:dd8d with SMTP id d2e1a72fcca58-742a98b4a84mr28669364b3a.20.1747832899901;
-        Wed, 21 May 2025 06:08:19 -0700 (PDT)
+        bh=1xxOxxblIZR/yGk+6+Lstv8BrYyIDhp3OhJhwb5LXrY=;
+        b=IBJ3wDDHPkrXmXsBJBvH771mSUDmRO5XBOEkA8kJuhZq6PD347rEQxsCGCavuUdDRq
+         lLReY9p7v36HKVaw/3OM05oepAH4H5md6qny5T7WlHmhC8XzKGQEmasY+306m9csEPg6
+         fRMf9LJQdTv9/m7RZ22akf8ki9elKnNwh/DzsHnUCPg6LD4m8EhdNxgnMv8Eer1B6Q6v
+         IE5BtvjDo5PB5NC7Y9rOF5pBNqkuuTy9wLe+VadxRB/wNn0ERD10olwkqYX8jyZBiXRl
+         hKTPpZlRJuiT/ZQ1XOHyLNiI4SG1W/A6kfE3lZ/t1OSs33XDceWcr3s1l7ADoLzDKie3
+         9e6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWf33dARj1xDuGxltk2xAcsCQ6z67woNaG3C4mTzXUTVgLDfDfkJL45xq8CeScJyPyQcAiJD/NIeFlJ/z3H@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy2KnkK00GlH09+as8BuTzqXxN4oF2ZkeeNEUuFdFShI+tzQvyO
+	QkC5jok+9k4MSQvPxg6epf0FfvC0UBpKvXUwRlXo8LbnVAaYhn80xld4xFF078ZOzA==
+X-Gm-Gg: ASbGnct8aZFvHEH4Vr3a3yoFmLps2rp05A4Qxgk8oGh47uhHQhivYJMErcbJv/2DVzG
+	zRu+lBz2FenZGN1nzGd0StrlZLqRZDjbP4Uq8EwiP+uxOmXaYMk+t25y6G3HqCQ0R+6DVEbal7m
+	aoIMPuywJl2/nPFaxMSyqOKd1jtsCsXlBAm1km7R52BMDLQ0SHMd/H0yhInNZJFiwTDpYwWrJap
+	X7CPRysDmk4gpXktRsJtxhqU5l2gum+lkqV7duyJZFjCnunHUYg23YsIg0MRYpB5X/7mLUgQn+s
+	tNa4gRz+TFWuha8h9BNNha7IUGaQc9m5kMooZZdP51pXbcCm9oERtsOEWsxK
+X-Google-Smtp-Source: AGHT+IFpFHFGRg8NqLbFFAyW6EgtIFf1xfDNczo/VyiKqRIj7rrnxNgs7EuDSZwWQLJYrHrtfNhQGw==
+X-Received: by 2002:a05:6a00:3e0b:b0:736:34a2:8a18 with SMTP id d2e1a72fcca58-742acd75e6amr31551655b3a.24.1747832956808;
+        Wed, 21 May 2025 06:09:16 -0700 (PDT)
 Received: from thinkpad ([120.60.52.42])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a970d5c4sm9842432b3a.65.2025.05.21.06.08.14
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a98a213bsm9505394b3a.159.2025.05.21.06.09.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 May 2025 06:08:19 -0700 (PDT)
-Date: Wed, 21 May 2025 14:08:06 +0100
+        Wed, 21 May 2025 06:09:16 -0700 (PDT)
+Date: Wed, 21 May 2025 14:09:09 +0100
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To: Nitin Rawat <quic_nitirawa@quicinc.com>
 Cc: vkoul@kernel.org, kishon@kernel.org, 
@@ -81,11 +81,11 @@ Cc: vkoul@kernel.org, kishon@kernel.org,
 	konrad.dybcio@oss.qualcomm.com, quic_rdwivedi@quicinc.com, quic_cang@quicinc.com, 
 	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
 	linux-scsi@vger.kernel.org
-Subject: Re: [PATCH V5 01/11] scsi: ufs: qcom: add a new phy calibrate API
- call
-Message-ID: <jnftkie5c5hi6nqhliktxqbj7gykj53lvm5gibt3fjdcq7dber@bh4fxrp3fezu>
+Subject: Re: [PATCH V5 02/11] phy: qcom-qmp-ufs: Rename qmp_ufs_enable and
+ qmp_ufs_power_on
+Message-ID: <drtwqawkyrtfxgw4gbegybzs2yt7sucvvmralppmjpptu7sdzu@5zu6gdzefz7e>
 References: <20250515162722.6933-1-quic_nitirawa@quicinc.com>
- <20250515162722.6933-2-quic_nitirawa@quicinc.com>
+ <20250515162722.6933-3-quic_nitirawa@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,18 +95,16 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250515162722.6933-2-quic_nitirawa@quicinc.com>
+In-Reply-To: <20250515162722.6933-3-quic_nitirawa@quicinc.com>
 
-On Thu, May 15, 2025 at 09:57:12PM +0530, Nitin Rawat wrote:
-> Introduce a new phy calibrate API call in the UFS Qualcomm driver to
-> separate phy calibration from phy power-on. This change is a precursor
-> to the next patchset in this series, which requires these two operations
-
-'next patchset in the series' wouldn't make sense once this patch gets merged.
-They all become commits. So you should mention 'successive commits'.
-
-> to be distinct.
+On Thu, May 15, 2025 at 09:57:13PM +0530, Nitin Rawat wrote:
+> Rename qmp_ufs_enable to qmp_ufs_power_on and qmp_ufs_power_on to
+> qmp_ufs_phy_calibrate to better reflect their functionality. Also
+> update function calls and structure assignments accordingly.
 > 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Co-developed-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 > Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
@@ -114,26 +112,49 @@ Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 - Mani
 
 > ---
->  drivers/ufs/host/ufs-qcom.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 37887ec68412..23b4fc84dc8c 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -531,6 +531,12 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
->  		goto out_disable_phy;
->  	}
->  
-> +	ret = phy_calibrate(phy);
-> +	if (ret) {
-> +		dev_err(hba->dev, "Failed to calibrate PHY: %d\n", ret);
-> +		goto out_disable_phy;
-> +	}
-> +
->  	ufs_qcom_select_unipro_mode(host);
->  
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> index b33e2e2b5014..a67cf0a64f74 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> @@ -1838,7 +1838,7 @@ static int qmp_ufs_init(struct phy *phy)
 >  	return 0;
+>  }
+>  
+> -static int qmp_ufs_power_on(struct phy *phy)
+> +static int qmp_ufs_phy_calibrate(struct phy *phy)
+>  {
+>  	struct qmp_ufs *qmp = phy_get_drvdata(phy);
+>  	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> @@ -1899,7 +1899,7 @@ static int qmp_ufs_exit(struct phy *phy)
+>  	return 0;
+>  }
+>  
+> -static int qmp_ufs_enable(struct phy *phy)
+> +static int qmp_ufs_power_on(struct phy *phy)
+>  {
+>  	int ret;
+>  
+> @@ -1907,7 +1907,7 @@ static int qmp_ufs_enable(struct phy *phy)
+>  	if (ret)
+>  		return ret;
+>  
+> -	ret = qmp_ufs_power_on(phy);
+> +	ret = qmp_ufs_phy_calibrate(phy);
+>  	if (ret)
+>  		qmp_ufs_exit(phy);
+>  
+> @@ -1941,7 +1941,7 @@ static int qmp_ufs_set_mode(struct phy *phy, enum phy_mode mode, int submode)
+>  }
+>  
+>  static const struct phy_ops qcom_qmp_ufs_phy_ops = {
+> -	.power_on	= qmp_ufs_enable,
+> +	.power_on	= qmp_ufs_power_on,
+>  	.power_off	= qmp_ufs_disable,
+>  	.set_mode	= qmp_ufs_set_mode,
+>  	.owner		= THIS_MODULE,
 > -- 
 > 2.48.1
 > 
