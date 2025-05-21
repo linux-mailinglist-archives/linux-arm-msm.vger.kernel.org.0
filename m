@@ -1,176 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-58967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50CAAAC00B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 01:41:39 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB2CCAC00BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 01:43:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 87BA23A6FD6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 23:41:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 423577A1E68
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 23:42:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E05323C8BE;
-	Wed, 21 May 2025 23:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2325A23C8CD;
+	Wed, 21 May 2025 23:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TV0aBVRS"
+	dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b="pBDVCEQH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11011011.outbound.protection.outlook.com [40.107.74.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2055A17A2EF;
-	Wed, 21 May 2025 23:41:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747870894; cv=none; b=sv5Mr5kk15PUfYzef/spfr0rg/AeYxaz2Td0uTRkj9R+cUDJ8KiGsoG3KdNExYzEw7mDHgRhxgks7VjT3JNTOr9YKOZYZu8dTGTYEkGlUoFEmnKcW61FHvwzuORGXbAQdbUds5IGEPs95V3OoP1n6ZCGpDVxxGbyVWfqU2lUa7A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747870894; c=relaxed/simple;
-	bh=C5lRt9o6oozpH1yv7cQ/1mE4W8MldKnxycR94t3ACls=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NP0jDmt8c5KoRNFlSsAi06aaMACbMO/du5pliBO6s6UVvnfuzwXw3Cmc40FPFioMGn/052rHjnc2ddKugqeVI1/nMxN207hMlJWUMwJC3EiOzk2FZVd+xBoP4hI8LnmWmm5mLiaCYR3zZ5GekyHQbCCIHSjOLbRtrxJBqs9f0s4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TV0aBVRS; arc=none smtp.client-ip=198.175.65.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1747870893; x=1779406893;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=C5lRt9o6oozpH1yv7cQ/1mE4W8MldKnxycR94t3ACls=;
-  b=TV0aBVRSG0PnvG0TjOkU0iphhmn+kcH3h5dReG5H7uQM+0gPvd6g8wNY
-   uyP5C/quWspSBymFhzVby4V5YRpLYBJNXknX4Go3ktUX+N4HGcbU2x04d
-   wmf5WFG8Yxf8LbcIkeUHfglW2l7W5c47inNjwMhrMnvnEvvbXb/ASyNlT
-   SulX+saCUR+fFB9V5BVJ47dDQsOOD166AufFxx9inpXiWVo/RzTfo+lMH
-   qDLurBok8tenGBpGXJoNx4v2Kk6b/isrvH2pUZsQQfq/ZnnO8ffH3Yse+
-   8AuoMHOC1teqczzmYg0zytID6edGiN5ST4aTg0ldM6WpBeK2nTqFL+Cd/
-   g==;
-X-CSE-ConnectionGUID: cHV1iZKtRvqxBb+3/prGqg==
-X-CSE-MsgGUID: W6xXV6gIRNGVj2BluJ1b0w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11440"; a="49864377"
-X-IronPort-AV: E=Sophos;i="6.15,304,1739865600"; 
-   d="scan'208";a="49864377"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2025 16:41:32 -0700
-X-CSE-ConnectionGUID: VZiSyD0eTIKD3pxH059vpQ==
-X-CSE-MsgGUID: lHPW0BhBRTiRyg/+OoZblA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,304,1739865600"; 
-   d="scan'208";a="144282397"
-Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
-  by fmviesa003.fm.intel.com with ESMTP; 21 May 2025 16:41:28 -0700
-Received: from kbuild by 1992f890471c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uHt3u-000Oji-1D;
-	Wed, 21 May 2025 23:41:26 +0000
-Date: Thu, 22 May 2025 07:40:28 +0800
-From: kernel test robot <lkp@intel.com>
-To: Maulik Shah <maulik.shah@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Doug Anderson <dianders@chromium.org>,
-	Maulik Shah <maulik.shah@oss.qualcomm.com>
-Subject: Re: [PATCH v2 1/3] soc: qcom: qcom_stats: Add support to read DDR
- statistic
-Message-ID: <202505220739.yseb9RQm-lkp@intel.com>
-References: <20250521-ddr_stats_-v2-1-2c54ea4fc071@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402E61CEEB2;
+	Wed, 21 May 2025 23:43:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.11
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747871023; cv=fail; b=RbMnUQG/xCF0ayWI/FzREc8ePvjXNyilCOyH9E9ivXOZ7nzZidkYFYgjsT4d9LK/R9BcHv+1uwdzluLGzZP4ff9bK4oOkugwZvGtdYXf+HfiYPMHNNI5eClXyDWuQZpI4LOmo33qgDZtRySmg9Z9GcfN2TMIEd7gSgxSsGpbxgQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747871023; c=relaxed/simple;
+	bh=9UwVHWkwopBenrZznLrsq0aqOXh9BeZN11+MOsE/Qn0=;
+	h=Message-ID:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 Date:MIME-Version; b=dY/epvhxmWoy2YQSKKcm/Liau4rL+B6rcWKjCGRJWOrbKGrcffS+shxC/9cn0cDFDWGPzNO5zbJ9ps9WOiNxEGB8pyUsz8BOyI3qHl+czGhrQue4nnW9VdZjdnQBfZbMkCEohVDL8LaftetWE0yauivWutgUxka2XxmHrytO5ZA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com; spf=pass smtp.mailfrom=renesas.com; dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b=pBDVCEQH; arc=fail smtp.client-ip=40.107.74.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZoQ8hYYm7i/Qsu9zu0PhOr3wheGqedyHLrNEgZciuvxDb+QQdNHwE5ykzFl3gm9835Pxj8si3NWAvWvFectOBRtOrNrugprXv3120UcueEbooiBemvD2+q6J+XuPHLSCvMmOQZA76gN/f2UlOpDI5vkI/LMDRlBvH4bYzZlZqKHraj7Yx2Krzj5sLlCK2q+abAKEnUde6eBgNsK1nstZnJ4wnNynqiwxBiDB4dfyarQWiGqfkyRAPT4CVrDsSs4uSym3netxBXQZmt9YtCdjrHJ04oSio0lELZau0ApyHGjjBN/gghnymIqIoQLsTAUuB/v0pNf/RXyALI/IhT1fHQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ONXpzbGBY9Gi6u+uI9TFzb0j8tUB+P2CZnn0mBEkYBg=;
+ b=BbvUlwJXTdMYsD57rCd4zXxetSeE5q6gaxgd7oVaUIkMTiMe+iobwSx4IRsCs6ZKpfiEcU4Xu7tAqsrUgPNzG6gbOHknKowKdGgx2S7mscursua0uA/GLeZKaKTSSGE1tuIJUcDZCn0hVnjX8V1JhoABK8CBo6oH57ejZrk7Y2cwe46Xs7kn678AXJJkTdQ0Ey5HMpyYV6SuBHPGbRcvglZmSn8VCRt5s+pc2LtmCpAQf6GNL2TMBt5q+y/HXe/4t77Oryg67U69YcGmJ81F9sdTX2LsOPOvfsgXlGdjizibkMc/2J5Fc9fb5R0nbiH+uXW+bYqrPFLf+TlWTauCIA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
+ dkim=pass header.d=renesas.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ONXpzbGBY9Gi6u+uI9TFzb0j8tUB+P2CZnn0mBEkYBg=;
+ b=pBDVCEQH9rBx+fp+BbGNcsjRfnMF0RkMakFlJxOK50lm+mdYbUtHrKVNlMFggmWR4cIGd4sSY910LpBM9KFZELd26o/ryuJXmyTwcobNq8RKHl2uLx8f8EeoAogrZO3Lm7hhSq1WqRjunlMDpR3QT1om/luv+t+OuJUI9qDCj5I=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=renesas.com;
+Received: from TYCPR01MB10914.jpnprd01.prod.outlook.com
+ (2603:1096:400:3a9::11) by TY4PR01MB15848.jpnprd01.prod.outlook.com
+ (2603:1096:405:2ad::7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.20; Wed, 21 May
+ 2025 23:43:35 +0000
+Received: from TYCPR01MB10914.jpnprd01.prod.outlook.com
+ ([fe80::c568:1028:2fd1:6e11]) by TYCPR01MB10914.jpnprd01.prod.outlook.com
+ ([fe80::c568:1028:2fd1:6e11%6]) with mapi id 15.20.8769.019; Wed, 21 May 2025
+ 23:43:35 +0000
+Message-ID: <87h61do7h5.wl-kuninori.morimoto.gx@renesas.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+To: Ai Chao <aichao@kylinos.cn>
+Cc: johannes@sipsolutions.net,
+	perex@perex.cz,
+	tiwai@suse.com,
+	shengjiu.wang@gmail.com,
+	Xiubo.Lee@gmail.com,
+	festevam@gmail.com,
+	nicoleotsuka@gmail.com,
+	lgirdwood@gmail.com,
+	broonie@kernel.org,
+	shawnguo@kernel.org,
+	s.hauer@pengutronix.de,
+	kernel@pengutronix.de,
+	jbrunet@baylibre.com,
+	neil.armstrong@linaro.org,
+	khilman@baylibre.com,
+	martin.blumenstingl@googlemail.com,
+	srinivas.kandagatla@linaro.org,
+	zhangzekun11@huawei.com,
+	krzysztof.kozlowski@linaro.org,
+	ckeepax@opensource.cirrus.com,
+	drhodes@opensource.cirrus.com,
+	alexey.klimov@linaro.org,
+	linuxppc-dev@lists.ozlabs.org,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	linux-amlogic@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org
+Subject: Re: [PATCH 3/6] ASoC: renesas: Use helper function for_each_child_of_node_scoped()
+In-Reply-To: <20250520091131.4150248-4-aichao@kylinos.cn>
+References: <20250520091131.4150248-1-aichao@kylinos.cn>
+	<20250520091131.4150248-4-aichao@kylinos.cn>
+User-Agent: Wanderlust/2.15.9 Emacs/29.3 Mule/6.0
+Content-Type: text/plain; charset=US-ASCII
+Date: Wed, 21 May 2025 23:43:34 +0000
+X-ClientProxiedBy: TY4P301CA0016.JPNP301.PROD.OUTLOOK.COM
+ (2603:1096:405:2b1::19) To TYCPR01MB10914.jpnprd01.prod.outlook.com
+ (2603:1096:400:3a9::11)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250521-ddr_stats_-v2-1-2c54ea4fc071@oss.qualcomm.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYCPR01MB10914:EE_|TY4PR01MB15848:EE_
+X-MS-Office365-Filtering-Correlation-Id: 687c26d3-bcff-46ff-7ca8-08dd98c14d5d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|7416014|52116014|1800799024|7053199007|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?+T7npJ4OnVuIHqC0goBlnJTCGto+uoD2by6LVCe7b0IWZio8zd8utqEsN1Fn?=
+ =?us-ascii?Q?OotPcODE5H/sOUd2RsuwAVds+GycRSH2UG8r4clcIRW5yC8VIkPyS5Fqui6q?=
+ =?us-ascii?Q?D4RPDqdpaf7AFROArRCz8Ux/uI6jnPJUYirm3ADg3jYyrjivKPX6qYihtyyE?=
+ =?us-ascii?Q?KufAJv6Hmb7+RlLZFDK1u620IE99fmyoldZDRs5/DnVNhzhtBhV4B8oaG0lg?=
+ =?us-ascii?Q?T1hZ/lO9U786NT+qJ3Hdc9VpFwq2bLdWM7Dw/0Mvx567FcpMe8iuVNeTy0mi?=
+ =?us-ascii?Q?S0h83h2Ky+Cidu+H9fwRP6IFj6a1E1hTSu7yibgNvMc7TfWiQrx8MIjNfkGQ?=
+ =?us-ascii?Q?5bMhd3yuhIko8qi091uezMh8zqubVgdwWbSIizd4iyevyMd36/62btox/Okw?=
+ =?us-ascii?Q?CVI6c6HEPhg3MJar4bC+BeF2fNtj+H3xnQnhG32u3y+4WSmFUbzY48jrBiqv?=
+ =?us-ascii?Q?IgVWnW09gq7qTwS5V67DJ/9jzqQ7g4sjVQXmNxaamiHdy4X6AweQ/YnRtoST?=
+ =?us-ascii?Q?zKTlmhe2VWjC7rgWa33U/QaKDqdQv4uFZH5WHabCqzzxpM07b6W8M6GBm2pL?=
+ =?us-ascii?Q?y4nQoaVlrT64BEWZXIj1kfRycH/VwaXtZlkUkeOWXeathJ829MN1y4g+GqL0?=
+ =?us-ascii?Q?wtddqV3A3LYCT83wXCGNhAGiW14LcFMOInnYxyc1AdbxBdAonRyjYR6hPb2W?=
+ =?us-ascii?Q?OspsI9W74SFUlmt0gKKrmnL97ORWEuTHNak5dtUHfBFi1oKPAwxvdTD+Wp3p?=
+ =?us-ascii?Q?a11eEpEhgX/E32st552NbmUIUhxUwHhhBWzqW0rn1LSnQy/rhvYKcbggOjkv?=
+ =?us-ascii?Q?Gsuz17beqvv4ruv+RxdJ1Vllu+YpgI5pXm4Cr5iy1biCTiubVwlWlQoMdoL6?=
+ =?us-ascii?Q?IXa3XvZJSUI0Hvxv9/m5acmgtQFFGtGUb+iJcA5vNRn+WLwcwSUO6iJHrRH7?=
+ =?us-ascii?Q?J91+uqIwYhRqEtPDjaoLcIL2wd/NugcmQHOIwRExrNlWqFDy0szT12TPPIdz?=
+ =?us-ascii?Q?7yax/flfSwEpZvQc1C7a0MH9gBvFKlVdE/H65N3oYGUHx8jtnDE95azwVWHM?=
+ =?us-ascii?Q?X5WN41GY+gsH7lQChd32YGaKmUsccrRE0+kaQ03zhiJ+s89MCX+GXOAVWUFq?=
+ =?us-ascii?Q?xtRZofMIllWelmv16mH8tSdHax3HsKU1fG0Dy8/ZRuIREyThbkSBpoDyHaRZ?=
+ =?us-ascii?Q?900gfJpVRyIsRmm/bcBoqFV5QTJK0hWGD8j4LBmgeyeWbC2MVtpsT75TMOdE?=
+ =?us-ascii?Q?vaIA+5OZW5hRK9MiucUwXf/BqdaEux4BfAc8QHzgXD24zbTExbYbfXy+bQDj?=
+ =?us-ascii?Q?di3bjSWZG0NCBFfonzScHTf9+FGzLkUHMTKCHuXGKxG5AJ8Y8cuytLtRlLrb?=
+ =?us-ascii?Q?PDupc82fO0EBJQ0iGD34IuPjUHJEhxkpBc3za8GzYownFOWRt5puQfO/MHRf?=
+ =?us-ascii?Q?cdYbTA954zzi23jWJwGn9g0JkCofI/WblEO7wvESlQ5IaYzPHZuiSg=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYCPR01MB10914.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(52116014)(1800799024)(7053199007)(38350700014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?vJSoiNzNLK2iO4HGJ9CPD/1qSXGu3I9S9l2PbpvZ2p5jE+11zIhk/Gs8VBx9?=
+ =?us-ascii?Q?7sXnSlLvU2Z9p/utvJLnzJWdtOi2o3saHPiW77zloA3uT5ODXspny+wK+Q2a?=
+ =?us-ascii?Q?oSV2UqdfuMiTOVIkEaORilY4peZ7ztJoJpEdqIo8VImMcOUgZlYpvV7hc5yi?=
+ =?us-ascii?Q?bo5qc+54X6D+xFsfpcY5NKWIf90iavg5Ie2eg2Mr+DgU9BDOAWNsNQEV9IBU?=
+ =?us-ascii?Q?a93MG8mgiWJFWA9MKpmXpf43ZdAh446v8AmUYxhhDyPc1/AIuNwNNBEzDIJm?=
+ =?us-ascii?Q?owGfJxrRVdUNyasdg4VI96LUyt7HiDJjSytDPBXhKzBo3WkkOjtfD59nofFu?=
+ =?us-ascii?Q?hjHGTV8l/Qk78TNdZLt6sIneKPCdHKj2N/bVrRxojHcG1nT1qZ63CWrIy2x2?=
+ =?us-ascii?Q?3wnFj6slIKplChDOys/02ctXcqofeVNpTXqL1pB+TRR4+YwVqCNJgNEjDK1H?=
+ =?us-ascii?Q?4pylqNTm50BI19ZrnISNuauqD6FCfeD4t4bvqRwUiPxcgT9iWSB74B5NPKu2?=
+ =?us-ascii?Q?LUNGct6+BUglwQtKkVzLYIpD9EohHmGBHzeVEquWXoBQ7AiruauyNDktS08y?=
+ =?us-ascii?Q?W+X9ASIP5tpBlNxCSXR0BrAxokBK+QXDIEpaN+oK2XJx01P/9kEzPS0d13g/?=
+ =?us-ascii?Q?/eE3tE0bgeF7xvliiM50iRtiy7wohGWZ403Vr4VYOMdoG5YHYVBMdrTSIvJA?=
+ =?us-ascii?Q?BtXy9fZSKe1LXpe5Yan2uNYmWjYAc5YaiGqlL8QCQDwD2Na1ZbfSBXyXpt1g?=
+ =?us-ascii?Q?yK5ewbd7S2jywQU4ecoaHtm6Jixuu6CEE1kJ+1eIegq5cBN0eUdb2JBHZRlL?=
+ =?us-ascii?Q?bJZ0wOu/EEaQgIzoZEBuJyZz2/f9bR3x12KfHrBVmbhrczKZWafSShqFZmNf?=
+ =?us-ascii?Q?qqlbq+TJ6pHOwbyGhQI5083nwWxg52XTPUHT5TTUfUBamlmC1b2Xa80XDcoA?=
+ =?us-ascii?Q?PuzeXM9P+f4BAhYR6wrkD8dDsl+4K+H5Kzt5XuZ9T2bZtBdpmYk/xkVKt8v+?=
+ =?us-ascii?Q?QF6t4QASiclmmGPstsEdn0xjWu5yCw30J3Wr06pkAfDqzEfog7zdFpc2ZShl?=
+ =?us-ascii?Q?mMTomTilVB/bZtM7itmsGpqj+WSkBAe3+2olCmYJNNI+3i4S8PXIzBxUUvVV?=
+ =?us-ascii?Q?pr657Te9/F1nJWiw0iVReNHOgAH8iH+n/IMXeSfODLGJ4GM4dhfWjiSMq0gn?=
+ =?us-ascii?Q?a+CgwTOns9JXa+Q/RxZjCvqVwGazIXKpMAeQkAf+NG8QK1KDDDa90garL0Jp?=
+ =?us-ascii?Q?VZC104bU9PG9Eb5wFKrLuWI4EPXDxri7KLeXOsDIkUdPza21SJCA2UGtbDaT?=
+ =?us-ascii?Q?MxVyzj0sJY+h3yTClGQTu6lFaBktviinTR6Gyfn8umkhcdHCwkGRzb3fMRLM?=
+ =?us-ascii?Q?/GoUXrcb+dDDrV7IQQ9A1gNsiIzqiSwY6rrbDxVpskVHNEAtjjx+GEXex9/k?=
+ =?us-ascii?Q?Vx0Y+pxuDeeVwPxsnCOq2i6z84Bi/z7YRZWYYnx/4qvaksn3CM0fi9CyHUBQ?=
+ =?us-ascii?Q?gKsIPVchxeT7CBX18WuCSdYC9/dndFV8AyRm77yiwBVsjr4bQk4CygBW1P3s?=
+ =?us-ascii?Q?9xiaWkLm9KxLkspqsW9IAim//NhI3HRFFeSNC7ljwOURv4xTJOihveR3+reQ?=
+ =?us-ascii?Q?36SQmwKTbLgdrsPGwQZ/bRY=3D?=
+X-OriginatorOrg: renesas.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 687c26d3-bcff-46ff-7ca8-08dd98c14d5d
+X-MS-Exchange-CrossTenant-AuthSource: TYCPR01MB10914.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2025 23:43:35.2835
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: jUozo0nshw0DYLot7+ii8LeStpGYjwq2GhCZZMLqhW40HjG910qwmbsZQ/gGg/cxPzUjQQZYMYWhSaJnG8lPhmeD7ME4Qol7VwdhWTwjvaeITCWRj3lUly6u+c0N8BOf
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4PR01MB15848
 
-Hi Maulik,
 
-kernel test robot noticed the following build warnings:
+Hi Ai
 
-[auto build test WARNING on 393d0c54cae31317deaa9043320c5fd9454deabc]
+Thank you for the patch
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Maulik-Shah/soc-qcom-qcom_stats-Add-support-to-read-DDR-statistic/20250521-163434
-base:   393d0c54cae31317deaa9043320c5fd9454deabc
-patch link:    https://lore.kernel.org/r/20250521-ddr_stats_-v2-1-2c54ea4fc071%40oss.qualcomm.com
-patch subject: [PATCH v2 1/3] soc: qcom: qcom_stats: Add support to read DDR statistic
-config: arc-randconfig-001-20250522 (https://download.01.org/0day-ci/archive/20250522/202505220739.yseb9RQm-lkp@intel.com/config)
-compiler: arc-linux-gcc (GCC) 15.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250522/202505220739.yseb9RQm-lkp@intel.com/reproduce)
+> The for_each_child_of_node_scoped() helper provides a scope-based
+> clean-up functionality to put the device_node automatically, and
+> as such, there is no need to call of_node_put() directly.
+> 
+> Thus, use this helper to simplify the code.
+> 
+> Signed-off-by: Ai Chao <aichao@kylinos.cn>
+> ---
+(snip)
+> @@ -1270,16 +1263,15 @@ static int rsnd_dai_of_node(struct rsnd_priv *priv, int *is_graph)
+>  
+>  	of_node_put(node);
+>  
+> -	for_each_child_of_node(np, node) {
+> -		if (!of_node_name_eq(node, RSND_NODE_DAI))
+> +	for_each_child_of_node_scoped(np, ports) {
+> +		if (!of_node_name_eq(ports, RSND_NODE_DAI))
+>  			continue;
+>  
+> -		priv->component_dais[i] = of_get_child_count(node);
+> +		priv->component_dais[i] = of_get_child_count(ports);
+>  		nr += priv->component_dais[i];
+>  		i++;
+>  		if (i >= RSND_MAX_COMPONENT) {
+>  			dev_info(dev, "reach to max component\n");
+> -			of_node_put(node);
+>  			break;
+>  		}
+>  	}
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202505220739.yseb9RQm-lkp@intel.com/
+Here changes "node" to "ports", but please keep "node".
+Here is checking "node" instead of "ports".
 
-All warnings (new ones prefixed by >>):
+Except this
 
-   drivers/soc/qcom/qcom_stats.c: In function 'qcom_ddr_stats_print':
->> drivers/soc/qcom/qcom_stats.c:172:53: warning: format '%x' expects argument of type 'unsigned int', but argument 3 has type 'long unsigned int' [-Wformat=]
-     172 |                 seq_printf(s, "DDR LPM Stat Name:0x%x\tcount:%u\tDuration (ticks):%llu\n",
-         |                                                    ~^
-         |                                                     |
-         |                                                     unsigned int
-         |                                                    %lx
->> drivers/soc/qcom/qcom_stats.c:180:42: warning: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'long unsigned int' [-Wformat=]
-     180 |                 seq_printf(s, "DDR Freq %uMhz:\tCP IDX:%u\tcount:%u\tDuration (ticks):%llu\n",
-         |                                         ~^
-         |                                          |
-         |                                          unsigned int
-         |                                         %lu
+Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
+Thank you for your help !!
 
-vim +172 drivers/soc/qcom/qcom_stats.c
-
-   144	
-   145	static void qcom_ddr_stats_print(struct seq_file *s, struct ddr_stats_entry *data)
-   146	{
-   147		u32 cp_idx;
-   148	
-   149		/*
-   150		 * DDR statistic have two different types of details encoded.
-   151		 * (1) DDR LPM Stats
-   152		 * (2) DDR Frequency Stats
-   153		 *
-   154		 * The name field have details like which type of DDR stat (bits 8:15)
-   155		 * along with other details as explained below
-   156		 *
-   157		 * In case of DDR LPM stat, name field will be encoded as,
-   158		 * Bits	 -  Meaning
-   159		 * 0:7	 -  DDR LPM name, can be of 0xd4, 0xd3, 0x11 and 0xd0.
-   160		 * 8:15	 -  0x0 (indicates its a LPM stat)
-   161		 * 16:31 -  Unused
-   162		 *
-   163		 * In case of DDR FREQ stats, name field will be encoded as,
-   164		 * Bits  -  Meaning
-   165		 * 0:4   -  DDR Clock plan index (CP IDX)
-   166		 * 5:7   -  Unused
-   167		 * 8:15  -  0x1 (indicates its Freq stat)
-   168		 * 16:31 -  Frequency value in Mhz
-   169		 */
-   170		switch (DDR_STATS_TYPE(data->name)) {
-   171		case 0:
- > 172			seq_printf(s, "DDR LPM Stat Name:0x%x\tcount:%u\tDuration (ticks):%llu\n",
-   173				   DDR_STATS_LPM_NAME(data->name), data->count, data->duration);
-   174			break;
-   175		case 1:
-   176			if (!data->count || !DDR_STATS_FREQ(data->name))
-   177				return;
-   178	
-   179			cp_idx = DDR_STATS_CP_IDX(data->name);
- > 180			seq_printf(s, "DDR Freq %uMhz:\tCP IDX:%u\tcount:%u\tDuration (ticks):%llu\n",
-   181				   DDR_STATS_FREQ(data->name), cp_idx, data->count, data->duration);
-   182			break;
-   183		}
-   184	}
-   185	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Best regards
+---
+Kuninori Morimoto
 
