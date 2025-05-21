@@ -1,178 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-58874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBD0DABF08F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 11:58:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 358CCABF092
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 11:58:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 853404E350E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 09:58:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE8704E3506
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 09:58:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1537253F3A;
-	Wed, 21 May 2025 09:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 809C5259C8A;
+	Wed, 21 May 2025 09:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Azip3qNP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IYl+CXbT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A5723815C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 09:58:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508532356A0;
+	Wed, 21 May 2025 09:58:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747821487; cv=none; b=BcYSDbrB0mcEdo+Yng1Eg/TRL9dysewr0aDz91CpWb56jbjoODw2HQy1ZJNuLeV/wHMbCfndl9RW/6Uiu0BnzjmWiSLaKNJ6fBqgWHvPcUpEdfh79najZWC7RDXT0I4eszLJzvpZxkLxRyRXIvOf6sGOOCZkM0nN1ilAd4ezeVI=
+	t=1747821499; cv=none; b=SI/N/4UBbuI7ZNzlbjO7HjFjz0AyJZ8D2PwPVlEa3SxHHEOMw2+D8cxVYxbScxElayoN802MVUZzJieqDDXY8AgfN3B7H3FDsumP/8s73fiUd2D8+QN7hRWtIL/zYaCD51nMp4ffocqnVQq8QNvl1Amzk7ZGWLMgsOugLXs16kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747821487; c=relaxed/simple;
-	bh=804um4pYrd2HSgN8dt45mOMK8q7gMzv6hk4VaVM5Lb4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Fgf951xxGgeqOWPb+5zVlM9ZyoF4WNfkBfgrwYr0Kwc+2bGlNA8Vn7cRlIdY1sYy7mzKPiC34s+XJjg7WhXgI2/ogU7zkLOec7sGBmw1DwMmwjx8NFOmiSaN8kF0XMhpVsoWV8ktf0ksDeYyWTpJVC93Kf7YItRcI8Vw4yQI/Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Azip3qNP; arc=none smtp.client-ip=209.85.160.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-47666573242so1369501cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 02:58:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747821485; x=1748426285; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ad5tTssSvvJSV/hIQ2/yoAH3fpDKHmC0VyQ1XWz8SsY=;
-        b=Azip3qNPDp8M/322CES1AWuvU9R+tm0Tc0W4zm8cFYrEMnKhNz8F3lFtfYkl3wnMDF
-         o15iZcI8+sYF1cNMYZVIyOYtiopBY2HAj660haJQSr2/2eVEpZNFumK7R44PPpqFN5D2
-         o2fHz9nqHVdhzVBlSqkc2XHHm7B2AQG9ihFwYb90JYgZHnq+PcHuL3FikOQV9SMNxjP9
-         KxWoufZIGR30U6FnpRuc11+I2RpzAzzbNdsWWZ1Yoi1NdvOyDo9/CaZHwbTurVP7DDt3
-         oTKjzMDIFObOJy+Vr9WrMV0FbJmoW8nbpo6IRHgtbl52esn8BVbW5oqfV5YKl58Zh+Kk
-         xuKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747821485; x=1748426285;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ad5tTssSvvJSV/hIQ2/yoAH3fpDKHmC0VyQ1XWz8SsY=;
-        b=oxKqPmO7Ma/EvyTXxt8UNJNYDP1jkCb6JOTrAPRFNAZ4XPBfQKIwrFeOfI65Hyqtrf
-         BH0TI3BDlSGsvsxJp/PIL26E4moBKmT9bWnfj0Tsq1ozMDo8wjTuAbWiZbXp+gE8MOZI
-         rp/+PNlmEopSIbmSNxXOxWmVlXw9nv1h1jiIyXpckr1wzwS7YQ2jOA4hMqlAETbcuIYW
-         YsWKnIPQ4ryBm76IkBawS+rHbMHIfVIfpE+WcjLY9+V10isvFmJ67qxx+dq5BXIEy9Rr
-         JFaECkXuVFRilvxZN/vSOQRdzANlZzg+LR0/Pk7EyMve108hb0AZiDoxmxozk6PZLSPH
-         tpYg==
-X-Forwarded-Encrypted: i=1; AJvYcCVsSGQ1lvVkfD2QAyE7diUKc2H5xd/m9wNE3rYosl7ugiac0SDNGaR5qdjJ3/cOz8ZJwLW6aqTByOsCwZhB@vger.kernel.org
-X-Gm-Message-State: AOJu0YzIR8+7+WjolnUvLPRgMb8Eyhf7sy0JwzUjRwYpIcGIvtLaG5uA
-	QuMJzadphm+JofHvVtnfs66OU3scrtCoQNvokM4PqjahELbs803k/poEIYc4Jf7dj4pfClQuCdc
-	zphIsi071HBsBqokMY6ln5oBqY46mllt3B23NaxGH
-X-Gm-Gg: ASbGncvgJ/BW05lyVPiZzrAoC15MbQB6ugtt8rFPS/hLAQ3zfWqYuqA/L39+Zf+17Gc
-	JZNPKHutrZ7NCgxT1k08CpApWMcaeh55p75PX+j4hKmkidk/zdugy3k/6m9CU8s7ORNdMhbiDuG
-	nG7UVi4D6UmRpFVtiVBiGdGH7A3fucmPYwEmwEl+w0CUF2faOEj/a0r3pWYHAPxfz5xbX6X61qA
-	Jgl7kdXeVc=
-X-Google-Smtp-Source: AGHT+IHYpY3Q9g3JOq11dLs1LUtNSXh9tz4zLNdyFUWuBFtv/7x94Am0WXGexcTYuCAAK3RlpzJYkCP2ifAlrCMkLPI=
-X-Received: by 2002:ac8:7f4c:0:b0:48a:5b89:473b with SMTP id
- d75a77b69052e-49600c85c06mr14582151cf.7.1747821484573; Wed, 21 May 2025
- 02:58:04 -0700 (PDT)
+	s=arc-20240116; t=1747821499; c=relaxed/simple;
+	bh=KX1Q1Y4Y8vSvwhM8+I5oSWXY8lYvcqOE9KR8h6NqHss=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=i2l5iCj8gILIKV9OpM7JUjiNPO4Z9PnVEWjdW32gCwd67PdCA133PxDU9yvYV/3nPzDfXlZbTi0ZoDTtvMVS45uz0x8UGXu+gwnlQ97OTCrJ3BzwJ8qvxbYiIH/RwF41fU8Px20XZs7/UWpKCrYZWxX/K6U6X7sUIii2n4250Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IYl+CXbT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF90C4CEE4;
+	Wed, 21 May 2025 09:58:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747821496;
+	bh=KX1Q1Y4Y8vSvwhM8+I5oSWXY8lYvcqOE9KR8h6NqHss=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IYl+CXbTN7H7xUzQMlDqt/AnBUdpXOrV7wI8zQBE98vc61mkNcpZ4UPJ5nl+mjea+
+	 79ubIF8gGboudJDX60dXzepNAUPmO/wXaJSdeESLzN+ZyGL8c1Lk0FI2oftavIFW22
+	 KTy02njS2UC5jGOX+vWhUyAMgQtTnUcEY9ULoJgRb08L8gTCVT3iiC6qD7w85zPkOl
+	 oR7uSUWALtwIStYdbEDVt0Xa6Y5CBJqeJk1UYtvtjf1Y9NBnfX3BCclMElL+UIoVn9
+	 bH7Hdy4A8d/kpxjPKRVUZkN4nmxRB4amuUa6tq8TgE+2Zygfd5HA3wclLN4vUDMnOs
+	 XBFrt4gpAOtEw==
+Date: Wed, 21 May 2025 11:58:13 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Pengyu Luo <mitltlatltl@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Oneplus Pad Pro (caihong)
+Message-ID: <20250521-notorious-tuscan-chipmunk-aac30d@kuoka>
+References: <20250520164208.516675-1-mitltlatltl@gmail.com>
+ <20250520164208.516675-2-mitltlatltl@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250513163438.3942405-1-tabba@google.com> <20250513163438.3942405-13-tabba@google.com>
- <fd84d609-936f-4ff2-b495-22d31391181d@redhat.com>
-In-Reply-To: <fd84d609-936f-4ff2-b495-22d31391181d@redhat.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Wed, 21 May 2025 10:57:28 +0100
-X-Gm-Features: AX0GCFuVxsTCj98Zq8bTXqyVrhdO3LELJGYKoRJOWR5nfIgy9REIGN4QCBpniz0
-Message-ID: <CA+EHjTyNyPFyGtnPMAdAwuGrFKifAaOjmSd9oDfgVi_EjKA17A@mail.gmail.com>
-Subject: Re: [PATCH v9 12/17] KVM: arm64: Rename variables in user_mem_abort()
-To: Gavin Shan <gshan@redhat.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250520164208.516675-2-mitltlatltl@gmail.com>
 
-Hi Gavin,
+On Wed, May 21, 2025 at 12:42:07AM GMT, Pengyu Luo wrote:
+> The OnePlus Pad Pro is an Android tablet based on the Qualcomm SM8650
+> platform. Its device codename is "caihong".
+> 
+> Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-On Wed, 21 May 2025 at 03:25, Gavin Shan <gshan@redhat.com> wrote:
->
-> Hi Fuad,
->
-> On 5/14/25 2:34 AM, Fuad Tabba wrote:
-> > Guest memory can be backed by guest_memfd or by anonymous memory. Rename
-> > vma_shift to page_shift and vma_pagesize to page_size to ease
-> > readability in subsequent patches.
-> >
-> > Suggested-by: James Houghton <jthoughton@google.com>
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >   arch/arm64/kvm/mmu.c | 54 ++++++++++++++++++++++----------------------
-> >   1 file changed, 27 insertions(+), 27 deletions(-)
-> >
-> > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> > index 9865ada04a81..d756c2b5913f 100644
-> > --- a/arch/arm64/kvm/mmu.c
-> > +++ b/arch/arm64/kvm/mmu.c
-> > @@ -1479,13 +1479,13 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> >       phys_addr_t ipa = fault_ipa;
-> >       struct kvm *kvm = vcpu->kvm;
-> >       struct vm_area_struct *vma;
-> > -     short vma_shift;
-> > +     short page_shift;
-> >       void *memcache;
-> >       gfn_t gfn;
-> >       kvm_pfn_t pfn;
-> >       bool logging_active = memslot_is_logging(memslot);
-> >       bool force_pte = logging_active || is_protected_kvm_enabled();
-> > -     long vma_pagesize, fault_granule;
-> > +     long page_size, fault_granule;
-> >       enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
-> >       struct kvm_pgtable *pgt;
-> >       struct page *page;
->
-> [...]
->
-> >
-> >       /*
-> > @@ -1600,9 +1600,9 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> >        * ensure we find the right PFN and lay down the mapping in the right
-> >        * place.
-> >        */
-> > -     if (vma_pagesize == PMD_SIZE || vma_pagesize == PUD_SIZE) {
-> > -             fault_ipa &= ~(vma_pagesize - 1);
-> > -             ipa &= ~(vma_pagesize - 1);
-> > +     if (page_size == PMD_SIZE || page_size == PUD_SIZE) {
-> > +             fault_ipa &= ~(page_size - 1);
-> > +             ipa &= ~(page_size - 1);
-> >       }
-> >
->
-> nit: since we're here for readability, ALIGN_DOWN() may be used:
->
->                 fault_ipa = ALIGN_DOWN(fault_ipa, page_size);
->                 ipa = ALIGN_DOWN(ipa, page_size);
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Yes, but that would be a change beyond just renaming. I could
-introduce another patch to do that.
+Best regards,
+Krzysztof
 
-Thanks,
-/fuad
-
-> Thanks,
-> Gavin
->
 
