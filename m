@@ -1,153 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-58924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55CBEABF736
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 16:08:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 155F1ABF74A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 16:10:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1725116BF8B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 14:08:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2BC454E7FBA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 14:10:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45C761922EE;
-	Wed, 21 May 2025 14:08:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IKit6WtK"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 589A519D897;
+	Wed, 21 May 2025 14:09:32 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9413418BC1D;
-	Wed, 21 May 2025 14:08:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5754D19D06B;
+	Wed, 21 May 2025 14:09:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747836502; cv=none; b=EEr1PRGYqOKp6U30PFX7thEV+wVUaYAmUFy90tdAzxz6tFgDSSFC8C6az4lHNObgocOwPW+0ZIfrsgxAVNpsgCHBqaTM/oSAuDz6EdDUY4HaDKfMjDt7P4RZSlZEl8U6bDmB2QZYSOoY9VonR3JnAc4uMWmHdWdxAV8ooUJTaAs=
+	t=1747836572; cv=none; b=mlqx/DTSPyBqj6B+9ZZyvvGByr9zXukrXklat2mnnQDujfgyEc6qzNOr5vVPKFnLzqhj2t+Qk/OOt+c6h7suY3Ndj9GDwiZW/l8RSZ+pJMYX+CEAn3CgJX4QFg0yqDt66m0yF6h2sye7eUhWKNoId5MCd6DyR9Dl8Cz3NU2ISmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747836502; c=relaxed/simple;
-	bh=IlwChhmhnVnArBXXCz+PVtUJxHZNoO8Om+O0dmOM3G0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MiMeEvrRUPEHE6IV+szdhKvxfF8aBBO5RCAwSRsgbwnal80t2QxuauQD0h/qk6K4oHHArPqyroNwuZD4qLMEyZv4jp4uSIf5tUUdBJm85dzhqAxR5W4e5jcCOXivPh3ZFU69ENlPhE9rh0zIzvSa6abEoY+FNqUAlTXle6VXERI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IKit6WtK; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54L9XMrV011357;
-	Wed, 21 May 2025 14:08:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=bV0GZrbvCZf
-	BMnm9NfulY5ST74ZJcNZFIczEyanYta4=; b=IKit6WtKA5jpRy2525xzVF21qps
-	LBNZ8XulfUu7Wp1/J51+NZV2zKN+pqmWz35ixIajK/EhjuGuHrgH+M+2yaIJqJwB
-	yQX6l1UT/qPo5Eur+rwhzXwAVUx2NbQVL9G6lYEf/1efdswyCZ181UNaNcpTByn4
-	ZmW6cHgGzbgN0T59+jq3lSFW0UFnEvTejRHZ5CSYaltqGqY1Bi8gkc5iuJ0hY/Ub
-	Vc3I2NG1CiWNn5MbnUYjRS7t5+IbqXLecUZveTHhhRWtCTLiS9MZk3KcNiOw9zo7
-	vINVrosNP9MIYO+sNYZkDaLqVe9m607eIPItGAM5cKe4yYfruE8pbGEfaRg==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwfb35cx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 May 2025 14:08:16 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 54LE8Csf005953;
-	Wed, 21 May 2025 14:08:12 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 46pkhmjbb1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 May 2025 14:08:12 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54LE8Cr6005942;
-	Wed, 21 May 2025 14:08:12 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-wasimn-hyd.qualcomm.com [10.147.246.180])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 54LE8CrP005932
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 May 2025 14:08:12 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 3944840)
-	id 1CFCC5C9; Wed, 21 May 2025 19:38:10 +0530 (+0530)
-From: Wasim Nazir <quic_wasimn@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel@quicinc.com,
-        kernel@oss.qualcomm.com, Sayali Lokhande <quic_sayalil@quicinc.com>,
-        Wasim Nazir <quic_wasimn@quicinc.com>
-Subject: [PATCH v7 6/6] arm64: dts: qcom: Add UFS support for qcs9075 IQ-9075-EVK
-Date: Wed, 21 May 2025 19:38:05 +0530
-Message-ID: <20250521140807.3837019-7-quic_wasimn@quicinc.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250521140807.3837019-1-quic_wasimn@quicinc.com>
-References: <20250521140807.3837019-1-quic_wasimn@quicinc.com>
+	s=arc-20240116; t=1747836572; c=relaxed/simple;
+	bh=NhjpZTkPhPhIrQ9k/incAERWtVY9D0LPB5ZiEn/hA6A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pFI4p+jdVtjiduj5x96kJTqxddQyhS7xushcKNB5WsSaT9QiOsS30IZn/vFqLl5TLv79QBk/tRbFm+tX9veGQidv+oxOgx3pgC4+glAj0APFzx/ocXxySr+eAqk6Ui9dYLcuyji5QGHO1m4IV6Bn4IKlYkjz4tKeVsGOtfAeNjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.254.200.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpgz5t1747836536td19ba15c
+X-QQ-Originating-IP: lMRuNaUER+yR3+yPL9cHT2Nx1jSAfpcXGKs3LlS4cbs=
+Received: from [127.0.0.1] ( [116.237.87.141])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 21 May 2025 22:08:54 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 8706304160307585850
+Message-ID: <DAC123579553F487+1871efee-51e7-4049-8a15-9cf8bd286f03@radxa.com>
+Date: Wed, 21 May 2025 22:08:54 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bTBBswIgwCosDZCxS7yCYMwjF6ZKlIHF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIxMDEzNyBTYWx0ZWRfX69RMe+5Ht6Rv
- fa4LSadkACbNzTUVFZptDxElMRXdtpzQrgku6eEXiVTgvkec5wrhoUMpKifYW3AvZm1MT4eq7Uq
- mL8K/zk9YQ8nes6lZComLNe+kjpr7sQ8ChXXQSh0VYdLeMfmrmKVMOUUmjDGP2Q6jGITF5k21YC
- WSxqSvHktDqkp13JPanwuUcqgVNjp1aIxLvqMXJdKYkHarxucgeNCFRha+StCVo5FIew9aAqGKt
- 8Oq0jDnZwr15WuUwAOFPwotIEe/y3JYOgGrDkC9iSolbl9RsO30MO1Pqu4b+ykimMKFvjI0YUwP
- +1lSgyd3RO1shc9eJPA5rfbGjstnnMQcS9K/gC6C0/hWl72vUHvvGwYRo6/mojjojPtOlCweV2X
- n42etvJU6+D7Unh8wQXlFFXGpvo+mebenGeNY8/u+LV3gopi1pOSUzRXIXKCZKdojkfF81DH
-X-Proofpoint-GUID: bTBBswIgwCosDZCxS7yCYMwjF6ZKlIHF
-X-Authority-Analysis: v=2.4 cv=dLCmmPZb c=1 sm=1 tr=0 ts=682dde50 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=7MGQwjJPvtapW6ep8QoA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-21_04,2025-05-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015 adultscore=0 bulkscore=0 phishscore=0 suspectscore=0
- impostorscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=999 spamscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505210137
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Mark FastRPC context banks as
+ dma-coherent
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: cros-qcom-dts-watchers@chromium.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250416-sc7280-fastrpc-dma-v1-1-60ca91116b1e@radxa.com>
+ <tqddtxx25bi6xb5jilpbgfccn7qz4qkonmstfbpz36rl3pnrwt@u4lv2tn46e5z>
+From: Xilin Wu <sophon@radxa.com>
+Content-Language: en-US
+In-Reply-To: <tqddtxx25bi6xb5jilpbgfccn7qz4qkonmstfbpz36rl3pnrwt@u4lv2tn46e5z>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:radxa.com:qybglogicsvrgz:qybglogicsvrgz8a-1
+X-QQ-XMAILINFO: MhifFtfDPy2z3Tec2qFMgP3gAf8KrJL5QfqN44xshzrYMgpXoHWL8AhJ
+	izKFZ/6jdshj0O8VcHhcFFo5OXwCsqsM97vPqAC3KE39zRXJVEt1ldew5TFNYdPBEZ3sdf6
+	H8UK+ECpnmJmLhw6UI7JbZNTwn7lVrkCpGb6tTTVuvKnmrTjWX6cQjnjXi/eVUkDqsP8lz/
+	6s67a/Jstloct3XGs+JFIrXczsSvu2N3wB/cs7Mo0+eFDXB+YU4Akfg9CfTna45QnJW4HVI
+	g/KdoEfBfGkr/hIN+jxlFPPvlixkfdiERCE+zQKaPY/5MhSfYrQnN32cfTACdCWELkz6aHS
+	/WiCAmwXHmjtFY6yENugls+IpLFR0QUybEhffiEiWwgrkFWP8ndDRAc94xJCilJiBeGJTBx
+	i+3PtPkXqAOJ5ZuRylaGK1ijsQIh3gytWibRo7FgN8kJ/djVH6XPSNn1CqsoQuew2Or/tAE
+	HHHOpsAvmTKd8B7vTkqtfRTWdcmYUxWz9V27efTZ7zg2P+c6+YdE8gqPXHoI9SwY/rPVTJk
+	uOfM1lvazn0qC7pD8JMb7n7W+nFwNxuyiZV3dprFDNqFIfg+kVge7sW8n8rW82/rM0/5/zc
+	czoC3tH8tx5bJREsMN9ahE+gEiPvrU+/cmfkDrLtJmLJb29idk8WxZf8w7BH1kNmK98p+TY
+	i1zt2xttg7fLlFGCej7eGlXCg4oO0zgwhH60uIDnfUuPUeXU/Icxjtb1knyo08MBn49xr/Z
+	E06JoFG1rv5viRG3QZV7Nz/HuHz8e79Ir91RdcdxEpvkEYWBfrOWHe9g6S4yV3A49H7bq/Z
+	gHFzCPuUnEFkvdgxjX+XAITjiOCT9wNqTLYmYXw/GZiqeO89uCWyZNOI3zCr5s1eZsLBHjk
+	kcyvW20O/UyeCOjm2/odTXSD9v7hFOF04S/QSujK5xYFqejN+dJ/OD+lGA4BqPU6AHnU9Er
+	fu9TGF2D3XGHUdR2X4uQw+zB4kkL3hGFOU5yvzBMmbw3xtQ==
+X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
+X-QQ-RECHKSPAM: 0
 
-From: Sayali Lokhande <quic_sayalil@quicinc.com>
+On 2025/5/21 05:34:08, Dmitry Baryshkov wrote:
+> On Wed, Apr 16, 2025 at 06:54:18PM +0800, Xilin Wu wrote:
+>> The FastRPC context banks are DMA-coherent on sc7280 platform. Mark them
+>> as such.
+>>
+>> This allows LLM inferencing on the CDSP using Qualcomm AI Engine Direct
+>> SDK on the qcs6490 platform.
+>>
+>> Signed-off-by: Xilin Wu <sophon@radxa.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 15 +++++++++++++++
+>>   1 file changed, 15 insertions(+)
+> 
+> Are context banks coherent on FP5? On Herobrine? Or Nothing Phone?
+> 
 
-Add UFS support for qcs9075 IQ-9075-EVK board.
+Hi,
 
-Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
-Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
----
- .../arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+This was tested on an upcoming SBC (Radxa Dragon Q6A) with the Qualcomm 
+Linux cdsp firmware. There would be an error in the LLM demo app without 
+this patch.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts b/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
-index 30a36ffa40be..ba8a359d8fee 100644
---- a/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
-@@ -276,3 +276,20 @@ &uart10 {
- &xo_board_clk {
- 	clock-frequency = <38400000>;
- };
-+
-+&ufs_mem_hc {
-+	reset-gpios = <&tlmm 149 GPIO_ACTIVE_LOW>;
-+	vcc-supply = <&vreg_l8a>;
-+	vcc-max-microamp = <1100000>;
-+	vccq-supply = <&vreg_l4c>;
-+	vccq-max-microamp = <1200000>;
-+
-+	status = "okay";
-+};
-+
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&vreg_l4a>;
-+	vdda-pll-supply = <&vreg_l1c>;
-+
-+	status = "okay";
-+};
---
-2.49.0
+I'm honestly not sure about the devices that you mentioned, since I 
+don't have any other sc7280 devices to test.
 
+-- 
+Best regards,
+Xilin Wu <sophon@radxa.com>
 
