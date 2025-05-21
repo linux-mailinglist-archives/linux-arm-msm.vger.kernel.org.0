@@ -1,219 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-58887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA7CBABF499
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 14:45:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C2DFABF4A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 14:47:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 197153B50C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 12:44:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0B736189D9A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 12:47:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DC5D2676C4;
-	Wed, 21 May 2025 12:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F08F2267B1F;
+	Wed, 21 May 2025 12:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IdLtfyzm"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pFdTEngw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53335239E91
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 12:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74132266584
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 12:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747831512; cv=none; b=GdEXnhOOJqTo97RnzxpymY5hF0sZptSa5DIEfQLbipuEuximPjm85bNIZx2Vayukw2T/94w2Oh8HhoRUi8eGGhJ78WmWEfxboWXxPs4g9qV3jweNjnXchdiS58+BsZlKfIb+oAA4eUQGaSdHmQCMd3lrAvO8o3Z55Fxe/v9DwOA=
+	t=1747831614; cv=none; b=fmnF8lqZQu0NqUCk2JdijMavOU5g3l/VhBtgFjot7QBpxFw3/SDmLJ8i2BH4bq/K8io0fIBXnxzsxkr5sf4tMlybZHNhotM5St+3pdcsK10wWYJ5cFXYzbNadVap4k4dZTCF7cM3o0XlXc2OowH7nFl6nQOqoLwtKpqaL8jV2ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747831512; c=relaxed/simple;
-	bh=zkGUkrSlpCDvrhHcI1g4oFe3ljg20Lkj9XiFeqwuju4=;
+	s=arc-20240116; t=1747831614; c=relaxed/simple;
+	bh=Xqeu1aJ9MItEqCaHvO4dZVDW/+gda4kJKzaek2qb/UU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B9JinmUKtouaUYRPBoE2o7HA9OnUlpKL5VGnELtAaE9dDB5NHy0+BeM4/DNiXvN9CHgxHo25GnTA4bUTqyPTt4ZzLvuD38imIxGj+mVTckyPszBCQbd4N64nwgYEmobB/5XIHwWqHkv6p0O8Jw25/Oo9FIdpbyde6/E+mNMxrAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IdLtfyzm; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=ljHPNAe7lNWw5fBKyC9COYlWPPggwVtPFSbGzytcjEuxAXRCzZ9qY0pSq0HUl8sAEXBE2Kjnav3B4m29bsHGRR0CGGf3VmNPMKLQI2kuCXBeY5gjwVqxYAWGqQwmr9AxN3SHUrdvo6zNtWdfKso3H6ZmWfy+BzF5qqWb42fPp7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pFdTEngw; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54L9XK5N020957
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 12:45:09 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54L9XRma029654
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 12:46:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ks52ly5XzSYN1dVT8m4NLznvkKylPvB/qklENFGmQ+s=; b=IdLtfyzmj4AkBBcd
-	pOsyTHt2WNba+cTJwRZHEVuXYR+0O+I1Sr5W/TCKfs9o6qFw2fvhKbTBZXvKtDag
-	/hNxDYBjGD2CPh4/KDEBmc0nbU4jf/su49/+iaSwa2VOO1BeyxQOQkwpPTKE1AN5
-	9JHzIPEd3XuQAzdZtvXAU7bXtHtamGCvjkmVr3jeI80PWOKSqX7lTFR0VyYLhL/c
-	NLMSoz7DNf7BCtISBaoJqunJ1pAVv3nz52kDXW0bP+GmbeWesLNRJ/MfLkNgdsyc
-	jsNK3TJ/J7oCI7uHeuz8aa2DWbNVeIaB2DM+vc8APWxbuWx9it9S+LXWyzgP0zTl
-	06WXEw==
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=sDTfHXY5P0IUFKShT7L/9f91
+	7VhrL5k2KweIDi5wmfs=; b=pFdTEngwWRO0CNSUUa02wThitfFtqjr336BgyA80
+	CTQ9jIeELHzB2Vjs4HosseT/LLzKbQ8EXjrr+IU0cZepeiYK51O+IginuP7ffyU+
+	jTWkC7yv1E27pZxpHYWNxy6Etoa1mnHoknH7m6VFIT2IzFkn4Itjqg5BekNhz6Jh
+	bhwxiZCjpUZldll7dOmJMZ2bTs+pCb6s8vP+JY9Sdfbr3TPOxWD2kNNWDzrHg9ts
+	QXrQd0ZL7B/SDWKRtcAGwRafT8aSa6LHK7iKijXh3z3UGz2q+c/eCmiy+jNwH8cB
+	M9HPqXCeFJBQbxv7XQAgRwqP7RFZIAYz860dKnJpCrfVvA==
 Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf031g2-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf430cb-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 12:45:09 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6f8d3f48f35so61171476d6.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 05:45:09 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 12:46:52 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6f8c8a36dddso79136326d6.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 05:46:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747831508; x=1748436308;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ks52ly5XzSYN1dVT8m4NLznvkKylPvB/qklENFGmQ+s=;
-        b=Wr91bppA2wn7EXSX/0QjZJK029V0h9LK3kDiuWA5trtnscuT9D9xpne1VTGF90sYna
-         uO1mBGXhhEiY7sRSVGAfMbFlqAmG5N/xO05ogErCqpsm2oLdKq3Rbs39kOcboB+yF5Dj
-         TVKEffA8aWQmygA8ZJc2maBOkdxH5iB3LwwKlVRCy1YYl3z0fG/roiPworOFed4/Jibt
-         dz5V2wkIVLH3GQn41+t/uBuC87zeEQuhLDYBqdNMY+WLlsXXkDNeyCP6MM4b+Hv3QPck
-         FFMbUv1SOgPMyJg9in+uLDEHVtXnTioXZD7thOh4+mdMWPwGB4xK8XjXhjHYy72t5qC9
-         mrdA==
-X-Forwarded-Encrypted: i=1; AJvYcCX7TJFSgv/3FLC4Sh2a9NNA4dtbzwzNO+4+q0KxrBI7SpfUOdaVaE7gA+clcS4kr+bq/YLg+7Cs+ZXtTwHF@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzh+PO4d02Uolk2UUsgpDxLFdeKPOsH6B8EyuF8xHabRNGCGJA9
-	qkV1f3d41JoQI/GA/zcooMNOHB48ZELfXTeQsv5zsGYPNutNpZVUY4+keob7wR4+4QZwSNJfoKM
-	3gZV6pN6EnFlPTqbosjfxng44eJJGuhnW4V0DqMuy0LElDuD8tJUm3jKvMwM+wofxGulP
-X-Gm-Gg: ASbGncsaGkyo4adk7g/WPCv+0laPbUzis2cVZLRbEbyWQkgu+j1mqFM7P/Ya7FgTFYD
-	j0EoXtc9V8LtixH6Rxgfcrj9ymVTxUG7SohCaQnKGsjQfOIQgxJ9HnpZEG/idH+HCB/Ns28vtwH
-	QF5/KvegJy6xDTQmK/2qfQSeNVlVKuX031sdDn6jxQONZuTFeTmGnIvwYPuxDvrzWMyOSRB1PzB
-	vHl1BJzS1RVZfrp79+zyWK7KWO5yLG/22SSzkXfdBqQ4fR+nUb0Lg+bj8LkVjibpnXCWY1qVqBV
-	fiQ5HIIqNYRH1R9NYkxSou2nZTbY42FjkpCxHdlnXjTDjKuJH4l9biIgq/fmY8WqarYJR2cwve8
+        d=1e100.net; s=20230601; t=1747831610; x=1748436410;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sDTfHXY5P0IUFKShT7L/9f917VhrL5k2KweIDi5wmfs=;
+        b=d1wKJ0AivLuUPRnoBYwd4LbNyHGkdS8+BoKV1DMvc74bMZBZzirlQ+D7BNls9MqNsF
+         +WkqbEq7lECgljQgZ40LMVvCEkVCfHiFenGRLS3CR+jgqH/EHwKBgyVPn9jE+6wKHkg5
+         cqGxXZnaQkKOGOwVxjhtXVmLgBPePA+Wd5DGWdC+Ud6h7p3niK6Y+9s7sd23H7A3MzKE
+         kGcYOT+vG0Wt7BxZhf4fP/LDnoLDCsNcMCR6QmBzxjKD8UZxXwI5/5rSLa/kx52JV/8Q
+         e5OKbE+XxvdR4/yzQdySZ2JN9fBMXzJDl6rZfGJjCRhVH+Gq4igxZS4Do0TrrCDcPLbR
+         xjEA==
+X-Forwarded-Encrypted: i=1; AJvYcCXZZRRTEanHnTSG6HcDNPLoQWglzn4QOR0jKFlYj4p7hx+1yYrETDkq9yquuzjo2+FJbmsgixOITH9KMRzC@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzgau+3Xzf3+Ul6Sck4fdnwsZDKejayIbGEFx4oX9S1iRNqROIC
+	wurYcElP5q7A4dOZskXFVbd0wrPNaDhuunCFmSRNJEX4aLeRzbWSjYY80IcMxC0veSOq0Rk7ad9
+	u1XtOysQ6HyCr2RrUscvtwEVRGxdIEAbCEU8mkjpSG1Dq/1KqJzAzMMj2GhxKyqTefG1GuY8dwV
+	jmY9s=
+X-Gm-Gg: ASbGncsa5Z9DNQrQ9bZQFxBzLRnRSu8zQnoCaz16MxldK7Nhp7hyD4E26uF9S5+fpNG
+	1RF0N58+MVd1/y3hmD0iuq4nBOgGhVb0yA5hWt05QCvKidjf4C9kMSiajqsi+bMQnizXPwAwJBi
+	DYajBDTgshi8Vj8arJO8rceE7YSncCIxjfmlXPo5bDEbh3nOPHgL78Kngoqu3eZ8Q0KFwjygxzs
+	1tiFjm90i9fpnFc1e6AQj7TUeTWfHQ/XD8+7RaPqGzfvBnRrU32L+v9YOOkONkXvCHx2vI/5sEC
+	Hd3TlBzwIu/ZngD2vspSKelNN80h2o632hZcPSUW/cfy352tSAsTzNTEk/QNbQvdYBA2ypw6y78
 	=
-X-Received: by 2002:a05:6214:14ec:b0:6f8:c23c:5257 with SMTP id 6a1803df08f44-6f8c23c82b2mr198868636d6.11.1747831507832;
-        Wed, 21 May 2025 05:45:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEShz+g9YiDU5OL+/RiZ6SU1Z6wT5YO4aHSX5TPMnkQqGJbcSQrWsL19HoCgqDtp3hVG17QAA==
-X-Received: by 2002:a05:6214:14ec:b0:6f8:c23c:5257 with SMTP id 6a1803df08f44-6f8c23c82b2mr198868336d6.11.1747831507432;
-        Wed, 21 May 2025 05:45:07 -0700 (PDT)
+X-Received: by 2002:a05:6214:2403:b0:6f6:33aa:258b with SMTP id 6a1803df08f44-6f8b2d44cb2mr310211856d6.45.1747831610306;
+        Wed, 21 May 2025 05:46:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKrrceDDu+GLUk9ALbLga29Hnv6Ac2h9d892IylQS5MNstSZj4gPJnCFx3NnyAWf0EeS1rWw==
+X-Received: by 2002:a05:6214:2403:b0:6f6:33aa:258b with SMTP id 6a1803df08f44-6f8b2d44cb2mr310211526d6.45.1747831609859;
+        Wed, 21 May 2025 05:46:49 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-550e7017e6esm2826955e87.136.2025.05.21.05.45.06
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-550e703c2f3sm2798700e87.214.2025.05.21.05.46.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 May 2025 05:45:06 -0700 (PDT)
-Date: Wed, 21 May 2025 15:45:04 +0300
+        Wed, 21 May 2025 05:46:48 -0700 (PDT)
+Date: Wed, 21 May 2025 15:46:47 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-        Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-        Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linaro-mm-sig@lists.linaro.org, quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v6 2/2] i2c: i2c-qcom-geni: Add Block event interrupt
- support
-Message-ID: <w6epbao7dwwx65crst6md4uxi3iivkcj55mhr2ko3z5olezhdl@ffam3xif6tmh>
-References: <20250506111844.1726-1-quic_jseerapu@quicinc.com>
- <20250506111844.1726-3-quic_jseerapu@quicinc.com>
- <qizkfszruwcny7f3g3i7cjst342s6ma62k5sgc6pg6yfoti7b3@fo2ssj7jvff2>
- <3aa92123-e43e-4bf5-917a-2db6f1516671@quicinc.com>
- <a98f0f1a-d814-4c6a-9235-918091399e4b@oss.qualcomm.com>
- <ba7559c8-36b6-4628-8fc4-26121f00abd5@quicinc.com>
+To: Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v4 02/18] dt-bindings: clock: qcom: Update sc8280xp camcc
+ bindings
+Message-ID: <the3rt4gwb766u5tmzzugoozkyt3qw7kxvy6mlemxcqb5ibs37@szcq2rzbukma>
+References: <20250515-videocc-pll-multi-pd-voting-v4-0-571c63297d01@quicinc.com>
+ <20250515-videocc-pll-multi-pd-voting-v4-2-571c63297d01@quicinc.com>
+ <20250519-barnacle-of-beautiful-enthusiasm-4e6af0@kuoka>
+ <ec4ee2f5-162b-430d-aeb9-90ad4559707b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ba7559c8-36b6-4628-8fc4-26121f00abd5@quicinc.com>
-X-Proofpoint-GUID: H5zga_vTT3GSKyPWZ_b4SyqULP2CxN5Y
-X-Proofpoint-ORIG-GUID: H5zga_vTT3GSKyPWZ_b4SyqULP2CxN5Y
-X-Authority-Analysis: v=2.4 cv=ZP3XmW7b c=1 sm=1 tr=0 ts=682dcad5 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
- a=dt9VzEwgFbYA:10 a=O67JBuyAYGrhvE3k4OkA:9 a=3ZKOabzyN94A:10
- a=wPNLvfGTeEIA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIxMDEyMyBTYWx0ZWRfXzURaxtRT+wmo
- qnTtP84my4oOxpjfQbWoM5Agp+Z0ab85+4HMpidW8cFubCkhbOBL3YDMqtDiZHDjVpFuvBkN4ly
- Uip6Kz1wmYH6BdyY9im695U4/gSVYyBVdVXSOqjR6K/cXqhD6tJzoVG5k2xcqQiJfkLM2Wgpd2A
- O6VVQ6mWmdrrzQGVdcx1Cy9R63kO2BckAT84HBWDjZH6MIEg3qePGefnqChpQYNETrIw8L3TA62
- tG6KJ0IJYBZ8mRTE7bAV159N9clT6Twx69Dptqhmst3kldIVqdWSlFdN5oCHKC6xjdteHLzOwk4
- nyPfj6jwko1t3Sjor7GIZpogKjUGXJHn3UOlXpM6o8C+XiEdUPJMRQi5Hvcld35NdKsTvr1MF90
- yupINZKBbsxEt9I9SX2UiDaIuDtmi1aMTrxCQwS8zYWvGNaPuJEDXLqiL+r0CNRbV+wn+t3b
+In-Reply-To: <ec4ee2f5-162b-430d-aeb9-90ad4559707b@quicinc.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIxMDEyMiBTYWx0ZWRfX3M1SqvVt4GjH
+ TJFdsFJnovkeq4q8BZTAK0KaDaKiATn8Wl+WTm4pbjC+cm+iQqgHm0/UQUqilLJEaYtT23xye+H
+ FV1v+1DI5DjIJbZ31/zYEt6pnfYavH6vgFA+SPOvThqlSvoUlsKIC3eQ70iluu7h+S29G+Vs5fY
+ Sjd2B4WrjwfHnIbj+AMtz8Nz8KSdH1lVLZ6MGmsp4xYjsQR+npl7BoHBKYFjUGWA76X3QzPjGHX
+ 4SQoEAQAHZZbf7ouwA4XNYdWOAaDHIaK0CQXFQavVAbCUJsK4yj+/80E6jz/4hxN0qcQsr5IS+O
+ 0I+5yFqxSULB/LLR+rVgXOoSah8bDMp8EOwiFMD55cP0Pz8FcfEbO81PrnhCHuMkvum+OZ4KMh2
+ vqchwVnnmSQrd01BMeGHPzQ+Yzt/NQYdsD2ypR4tR+FA/X962XY5lRjYi3WuuvuuMw4QHnwn
+X-Proofpoint-GUID: 0t73jHw-7iinV1QDeAg-BhV0Ezu1skIz
+X-Authority-Analysis: v=2.4 cv=Ws8rMcfv c=1 sm=1 tr=0 ts=682dcb3c cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=P-IC7800AAAA:8 a=mlDIMNG6S_g-ndTHxx4A:9 a=CjuIK1q_8ugA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-ORIG-GUID: 0t73jHw-7iinV1QDeAg-BhV0Ezu1skIz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-21_04,2025-05-20_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 mlxlogscore=999 suspectscore=0 bulkscore=0
- impostorscore=0 phishscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
- clxscore=1015 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505210123
+ spamscore=0 malwarescore=0 clxscore=1015 suspectscore=0 mlxscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 mlxlogscore=999 adultscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505160000 definitions=main-2505210122
 
-On Wed, May 21, 2025 at 03:58:48PM +0530, Jyothi Kumar Seerapu wrote:
+On Wed, May 21, 2025 at 03:32:34PM +0530, Jagadeesh Kona wrote:
 > 
 > 
-> On 5/9/2025 9:31 PM, Dmitry Baryshkov wrote:
-> > On 09/05/2025 09:18, Jyothi Kumar Seerapu wrote:
-> > > Hi Dimitry, Thanks for providing the review comments.
-> > > 
-> > > On 5/6/2025 5:16 PM, Dmitry Baryshkov wrote:
-> > > > On Tue, May 06, 2025 at 04:48:44PM +0530, Jyothi Kumar Seerapu wrote:
-> > > > > The I2C driver gets an interrupt upon transfer completion.
-> > > > > When handling multiple messages in a single transfer, this
-> > > > > results in N interrupts for N messages, leading to significant
-> > > > > software interrupt latency.
-> > > > > 
-> > > > > To mitigate this latency, utilize Block Event Interrupt (BEI)
-> > > > > mechanism. Enabling BEI instructs the hardware to prevent interrupt
-> > > > > generation and BEI is disabled when an interrupt is necessary.
-> > > > > 
-> > > > > Large I2C transfer can be divided into chunks of 8 messages internally.
-> > > > > Interrupts are not expected for the first 7 message completions, only
-> > > > > the last message triggers an interrupt, indicating the completion of
-> > > > > 8 messages. This BEI mechanism enhances overall transfer efficiency.
-> > > > 
-> > > > Why do you need this complexity? Is it possible to set the
-> > > > DMA_PREP_INTERRUPT flag on the last message in the transfer?
-> > > 
-> > > If i undertsand correctly, the suggestion is to get the single
-> > > intetrrupt for last i2c message only.
-> > > 
-> > > But With this approach, we can't handle large number of i2c messages
-> > > in the transfer.
-> > > 
-> > > In GPI driver, number of max TREs support is harcoded to 64 (#define
-> > > CHAN_TRES   64) and for I2C message, we need Config TRE, GO TRE and
-> > > DMA TREs. So, the avilable TREs are not sufficient to handle all the
-> > > N messages.
+> On 5/19/2025 1:48 PM, Krzysztof Kozlowski wrote:
+> > On Thu, May 15, 2025 at 12:38:47AM GMT, Jagadeesh Kona wrote:
+> >> SC8280XP camcc only requires the MMCX power domain, unlike
+> >> SM8450 camcc which will now support both MMCX and MXC power
 > > 
-> > It sounds like a DMA driver issue. In other words, the DMA driver can
-> > know that it must issue an interrupt before exausting 64 TREs in order
-> > to
-> > 
-> > > 
-> > > Here, the plan is to queue i2c messages (QCOM_I2C_GPI_MAX_NUM_MSGS
-> > > or 'num' incase for less messsages), process and unmap/free upon the
-> > > interrupt based on QCOM_I2C_GPI_NUM_MSGS_PER_IRQ.
-> > 
-> > Why? This is some random value which has no connection with CHAN_TREs.
-> > Also, what if one of the platforms get a 'liter' GPI which supports less
-> > TREs in a single run? Or a super-premium platform which can use 256
-> > TREs? Please don't workaround issues from one driver in another one.
+> > I do not see change to sm8450 here. This makes no sense on its own. You
+> > do not move compatibles - what is the point of such change?
+> >
 > 
-> We are trying to utilize the existing CHAN_TRES mentioned in the GPI driver.
-> With the following approach, the GPI hardware can process N number of I2C
-> messages, thereby improving throughput and transfer efficiency.
-> 
-> The main design consideration for using the block event interrupt is as
-> follows:
-> 
-> Allow the hardware to process the TREs (I2C messages), while the software
-> concurrently prepares the next set of TREs to be submitted to the hardware.
-> Once the TREs are processed, they can be freed, enabling the software to
-> queue new TREs. This approach enhances overall optimization.
-> 
-> Please let me know if you have any questions, concerns, or suggestions.
+> I did the SM8450 changes in next patch (3/18). But I agree with you, this needs to
+> be more structured. So I am planning to drop this patch and instead take care of
+> single power domain requirement for SC8280XP within SM8450 camcc bindings using
+> minItems and maxItems properties based on if check for sc8280xp compatible similar
+> to below snippet.
 
-The question was why do you limit that to QCOM_I2C_GPI_NUM_MSGS_PER_IRQ.
-What is the reason for that limit, etc. If you think about it, The GENI
-/ I2C doesn't impose any limit on the number of messages processed in
-one go (if I understand it correctly). Instead the limit comes from the
-GPI DMA driver. As such, please don't add extra 'handling' to the I2C
-driver. Make GPI DMA driver responsible for saying 'no more for now',
-then I2C driver can setup add an interrupt flag and proceed with
-submitting next messages, etc.
+I think it is a bad idea. I liked the split that you've implemented:
+separate bindings for platforms that require MMCX (and MX), separate
+bindings for platforms which require MMCX and MXC (and MXA).
 
-I really don't see a reason for additional complicated handling in the
-geni driver that you've implemented. Maybe I misunderstand something. In
-such a case it usually means that you have to explain the design in the
-commit message / in-code comments.
+It might be better to start by changing SM8450 binding to support MXC
+and then adding SC8280XP to those bindings.
+
+> 
+>    power-domains:
+> -    maxItems: 1
+> +    minItems: 1
+>      description:
+> -      A phandle and PM domain specifier for the MMCX power domain.
+> +      Power domains required for the clock controller to operate
+> +    items:
+> +      - description: MMCX power domain
+> +      - description: MXC power domain
+> 
+> ......
+> 
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sc8280xp-camcc
+> +    then:
+> +      properties:
+> +        power-domains:
+> +          maxItems: 1
+> +        required-opps:
+> +          maxItems: 1
+> +
+> 
+> 
+> >> domains. Hence move SC8280XP camcc bindings from SM8450 to
+> >> SA8775P camcc.
+> > 
+> > Subject: everything could be an update. Be specific.
+> > 
+> > A nit, subject: drop second/last, redundant "bindings". The
+> > "dt-bindings" prefix is already stating that these are bindings.
+> > See also:
+> > https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
+> > 
+> 
+> Sure, I will take care of above in next series.
+> 
+> Thanks,
+> Jagadeesh
+> 
+> >>
+> >> SA8775P camcc doesn't support required-opps property currently
+> >> but SC8280XP camcc need that property,  so add required-opps
+> >> based on SC8280XP camcc conditional check in SA8775P camcc
+> >> bindings.
+> > 
+> > Best regards,
+> > Krzysztof
+> > 
 
 -- 
 With best wishes
