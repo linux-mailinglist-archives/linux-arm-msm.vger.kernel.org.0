@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-58930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2E9AABF7A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 16:21:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 299C9ABF7A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 16:22:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8055F4E34B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 14:21:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A4F83B0548
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 14:21:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAB141A2380;
-	Wed, 21 May 2025 14:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4370C19A297;
+	Wed, 21 May 2025 14:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EA2k+w8l"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ere03Gzm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC1418D63A;
-	Wed, 21 May 2025 14:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FFC18B495;
+	Wed, 21 May 2025 14:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747837290; cv=none; b=njJkX2TJ/BaOkzWyqHSB1KRgkQAxrBHV+qFS2PWoGiCsF4cah/IxtMxSlO1TD+txAEIlOLuw3tJtsYpgiE0lmbZlPbzLYsbyQZoVCpbw+tHQs6uF7a9R7o2syIfx9r1yLtQMgkLbjlpPLX/u5jP/pp+nPkHc+6KHM9keHYtk270=
+	t=1747837320; cv=none; b=eyX8akT2O+FXPJ8+Su3bf2KtZO+vgPYmWWLI+Hd78YxbbgGNH/H1aLs2kqgyA/fWxPIm8jxqd5AsBCgO8G3G5jvfqqG6EKS0AIle0pZ+Tag9lR0M7JW1MPC6zNcGJ/WvtrZZB4bVx7wN0YWEalTxxmwyeBDygrRHXg0Oj7GmxlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747837290; c=relaxed/simple;
-	bh=ypLHH6cXrx9ZlGHk3VM2GPPcGYI3u6Mu5cYmNFpAuaM=;
+	s=arc-20240116; t=1747837320; c=relaxed/simple;
+	bh=oLbDPsjGUpXmI1lm4DUrFd0jUGYLf/dNE3S1fqfjBi0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NrUS+mJXjZhuTrhIIddkBVSx/nAKOoVyXwc+JQcIFHmYHXicLDP9qP4RH5N1jfZf9bmzJ/QHq1QnqL6KmO7qvMGjIg1t7HnxyX0sF/Y2rmQV3PNn+MwAzsJzf+EV/MAIGVQ7S6q7J/vsEJjH04ADzoB+w6BKB7SFN0hBJYtyp/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EA2k+w8l; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C6BC4CEE4;
-	Wed, 21 May 2025 14:21:26 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ThwG6ZJbKo6UOtYah5yTNqshpfNs+of8fYK2krVRJ35x32GCeLvbRlSKcrvyoXw4HujTC+iVtnS+IXcQEMdiT9zUfx3m2yAiMW6m+Y4d0N/D81Lm+QFm3OSDvG1WukeYMObpFHXbm3PKh5Zjz+bBXZW0y4b4uDqMNULCneYcsnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ere03Gzm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE44C4CEE4;
+	Wed, 21 May 2025 14:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747837290;
-	bh=ypLHH6cXrx9ZlGHk3VM2GPPcGYI3u6Mu5cYmNFpAuaM=;
+	s=k20201202; t=1747837319;
+	bh=oLbDPsjGUpXmI1lm4DUrFd0jUGYLf/dNE3S1fqfjBi0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EA2k+w8lnaxXWjpkgRvKbItlClCTbpvVDCY8AdtRzq4kVEUyK52XU9pkk9XRG4lN3
-	 Z2OsAYkNsK5JbrPZ08htfDvqGz3Qmtez6YCkiQsbmMiiPuVLJsivXBu6kEAlrnJHgr
-	 NGf1clFCIb6yJbmo3g5eo6JjjATRjxmhiHzLqCxia/cmyHaKJvQwM3b6PHNtFadyVm
-	 fStNyAfWLA122FlT7QxKtPKrrcXZ6BmCxFd2n3osTb8qxEtgcstak5SsoioxU869S6
-	 eIOrvm2cQzTm1fgkdhJw6UL1gpVYdGOb5GKjMfcEdeAph1fRVYs8sz2TKSvAkWh+Zm
-	 uCoobaZSjgc7g==
-Message-ID: <b9ecd0c9-c8fd-45e6-b2ff-6ccb72bdfd49@kernel.org>
-Date: Wed, 21 May 2025 16:21:25 +0200
+	b=Ere03Gzm3kM5wXDqIcNY9d/58JbrTN/jwoOFLRNqK0RWr/ZGRH4/YBEUDSLas0TQQ
+	 0YelKfYb6V3V+i0nz7e79QORZghpxgp9/FZ/oxN2+yO3ffcix/G65Y9jSnK3hFywYN
+	 daGdqYyxTzbweE3IeqbGlWMNwVOL3R36bN17MVYoorgDiRcY+QK10zyUGCAI0tLrdR
+	 ws0LelFl7+4TwVWshSbqhvnjiG3vYlUx5U5iOHaeqwYC4FNjR+W6kOshAd4uWAjAQh
+	 eX7QBu1JsLnY+chQGT7Wi4xoYTh9npBOqzXMMsaa6RKeekwZO/zXJJzDfkcu5CTRA+
+	 6Uk2RLVPKZbBw==
+Message-ID: <49b7964a-6471-4ee1-9c27-cb75e35983d6@kernel.org>
+Date: Wed, 21 May 2025 16:21:54 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 6/6] arm64: dts: qcom: Add UFS support for qcs9075
+Subject: Re: [PATCH v7 5/6] arm64: dts: qcom: Add support L4C LDO for qcs9075
  IQ-9075-EVK
 To: Wasim Nazir <quic_wasimn@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -58,9 +58,10 @@ To: Wasim Nazir <quic_wasimn@quicinc.com>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, kernel@quicinc.com, kernel@oss.qualcomm.com,
+ Rakesh Kota <quic_kotarake@quicinc.com>,
  Sayali Lokhande <quic_sayalil@quicinc.com>
 References: <20250521140807.3837019-1-quic_wasimn@quicinc.com>
- <20250521140807.3837019-7-quic_wasimn@quicinc.com>
+ <20250521140807.3837019-6-quic_wasimn@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,33 +107,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250521140807.3837019-7-quic_wasimn@quicinc.com>
+In-Reply-To: <20250521140807.3837019-6-quic_wasimn@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 21/05/2025 16:08, Wasim Nazir wrote:
-> From: Sayali Lokhande <quic_sayalil@quicinc.com>
+> From: Rakesh Kota <quic_kotarake@quicinc.com>
 > 
-> Add UFS support for qcs9075 IQ-9075-EVK board.
+> Add support L4C LDO for qcs9075 IQ-9075-EVK.
 > 
+> Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
 > Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
 > Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
 > ---
->  .../arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts b/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
-> index 30a36ffa40be..ba8a359d8fee 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
-> @@ -276,3 +276,20 @@ &uart10 {
->  &xo_board_clk {
->  	clock-frequency = <38400000>;
->  };
-> +
-> +&ufs_mem_hc {
+>  arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts | 10 ++++++++++
 
-Please follow DTS coding style.
+You just added this file. What is the point of doing changes node by node?
+
+
 
 Best regards,
 Krzysztof
