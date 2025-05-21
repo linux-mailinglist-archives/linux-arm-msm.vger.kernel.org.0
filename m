@@ -1,166 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-58835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7306CABEC03
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 08:35:06 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06840ABEC74
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 08:52:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D45D1B66A28
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 06:35:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A426F7B4A7E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 06:51:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEA17231A32;
-	Wed, 21 May 2025 06:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91D7E2356B4;
+	Wed, 21 May 2025 06:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="B+H/JhV3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bZhjeY6M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D8B230BC8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 06:35:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57669231A32;
+	Wed, 21 May 2025 06:51:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747809303; cv=none; b=Eb0SQeX2qfgz0IkDYuWNCUMy0lU7xmJmYB1uTp1i/K9BSH6drIox7JSadI7oeuz8XwnpazGE5P8WbipMgioQEJILRo9NlARsOS3ebyFm76OXlbL9ZJpyr62nxaqYEZxlCBLb511cZTjvVwN1YrcdE4kmLEXWf/+ZveKrPQ3X/jA=
+	t=1747810268; cv=none; b=RIr1CyWVgkDH97B654tLJUtErwNLeus2Swl2ftFloqey30CHhUfIAeJwZ39FCCic3pTU/N9/wVG824RmnktopHwmaeEU7ApR3pJmlW5q5gmu4X5rJHhdNsx9LO627DTlHuFZhkzwxmosvlsus92S86sOptk9D1/RdwqH8zciwcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747809303; c=relaxed/simple;
-	bh=yX5uXk8xZuF8KykN3btTAQn+eR1OpEbcKHd8ywumTVY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QrfVGOg3QOnrFFNoOjfwL38w/XTJM3VSdS9r7mlydq1G2PpCCTdDbWKDLBi/W7Y+uYU8nPQ67xOKczzBt4iSLgc8cBIbZMKD7EKJLSOjhGTWztjntxB8qFK3a0zqQlnR4u6qErNNfuSyeV8gsaAohI9M092B0glf05+la8QzTEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=B+H/JhV3; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54L5erBl027127
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 06:35:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sZ9hKputcd1338BrnRNmVIdwAO2+8E1/p45jvoCFYRE=; b=B+H/JhV3PLJpUBSs
-	ILfVntPasJvRg5MuEQm7m/GebKraXecKRXtAvjzKBr7HD3t+miPrGSQ0B52XA+s9
-	a4HnxK3IaPuR1r/2ZROJZvQy1lH+NvXJypDYDRxR3DQOpI5GLQ7UJyXbgYSMT0wn
-	FwSJTKzCdUlJj/xVlzjBV5u8Ltlob3RztSKOgfNbT90r9LDHXeOGyBpExc5iXO8P
-	khTyGgePcFVVNvEA19V8rFkRrUguEZtsU+0m1INgf/tH3M01ghw9xSJwruQvBdI9
-	uU8MzoPqLSJk4zggSBT/RGdm3k1BElqhMKpFLGiyHA+ruqUVgRXYn2+o7w1UwKo+
-	cDWRBg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf99r11-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 06:35:00 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4767e6b4596so110004411cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 May 2025 23:35:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747809300; x=1748414100;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sZ9hKputcd1338BrnRNmVIdwAO2+8E1/p45jvoCFYRE=;
-        b=bJxeourhKmZYq4zWRBcmWv7untiypKB3EIZ91l8YvzhgTe2/XDpA0Y5F4IBHwVzEs/
-         n8HZeBqmh+EVzJXHKpvkIHM5wcuVzX/CgLZi4uFqQ4W5fqCzoeSbqpLsuDF75FJha55W
-         LARKyovbosXswk28+CRsfY+SrhLeKxPDttMeeAgWJHP+8gNE1nBhi9/z1zOmbmAMbxE9
-         OBeBECrlc6lisXi3bAUaijz3NjusSE0wE+v5stgSI/j4PNgjg2oD7vFa5bO86M6v9Lke
-         gFOln0bx/57yCa/SMIyGwYNFgkjFb/KCvqVBktfI8th+yQCI+yTRg4wbgUzRHoYuE8vi
-         82UQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUoBJIQw9GYd616M/L3+6WerklHDoeiSrtitOB/GbaMr9+ej7PYkCNZyOJSuxVHiI0kJPw3HmMK6sQfnEN1@vger.kernel.org
-X-Gm-Message-State: AOJu0YxL6SLV1O6khg9EDX32LURPlLIbGAn4ik0Bg1du2jK5uRSYn9yT
-	7vft36W6tGpsKdUf3C0mKoDCS/gsZb9stQZnsMTRmoN4OIU8i3zm9QAVaouG5l4LhoIeqhgib4J
-	IZAN8m9nJjA5IfsLanZB8spzPVGoFOO0nqzmqdamiJdaNjIt4XmewzZBy3kvBxcGaWJLnWW3gSj
-	nI/BfVTQJTZFmD2yu/C5KKH8trYmzhsBuGh3EyXy+LHoo=
-X-Gm-Gg: ASbGncuBI4sQI6SJbAxv3vKkcOR7uGKGxVKrrCHkZzuidZEsspfBoq0XP92Zm2Uzv/y
-	5zRSlWgN7HD4qMhsqJ4LZKLhaAmD6orwFStlbfrDuVxT9ChLNMGnNa2lWKuWyPmJx+ntWxw==
-X-Received: by 2002:a05:622a:5c95:b0:494:b316:3c7e with SMTP id d75a77b69052e-494b31640afmr313606881cf.28.1747809299979;
-        Tue, 20 May 2025 23:34:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEhL/8XUvaTvdbPP3M/jAlhpC+jim7euSMn6JxVG7/tX7Zqm2OcngXdvkAaGGLBTeDl/gT4n33IPTAgb635QxE=
-X-Received: by 2002:a05:622a:5c95:b0:494:b316:3c7e with SMTP id
- d75a77b69052e-494b31640afmr313606551cf.28.1747809299623; Tue, 20 May 2025
- 23:34:59 -0700 (PDT)
+	s=arc-20240116; t=1747810268; c=relaxed/simple;
+	bh=rbPuWRc2IlHAfuxihPZQnz6FEHLQy5ZB9NDxIJCBN3M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZOqmjJm36gEP1MC9vOR7wQzMvomgbs06SGJYFSsdur4TZL0QikmOjsXtneGUjMaga2yPBn6vkl5xwH5/IWrvW7g5zAQEOPEqDdcNn0w1a6fHVRIC78HthYMD5xBSjjuPpv11m36ZKM7RuP5apPTfTcWWj/v7jbwtfHsxiFSnIKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bZhjeY6M; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93DDC4CEE4;
+	Wed, 21 May 2025 06:51:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747810267;
+	bh=rbPuWRc2IlHAfuxihPZQnz6FEHLQy5ZB9NDxIJCBN3M=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=bZhjeY6M/3TadKT7EnBM6pZrIHDRGyts1x0gInFxLZxd0ORIORHemirY4lNZxcVOR
+	 cFasB/i5H98H7/BE+hi8SAJCxu34dskibUukpCVm+R0Rni4sm48STVMeYLnbziCGqC
+	 fz91yury0EXGYBHRpsoYTrDBjS1+XilQzEJ/SfUplchvDW31rw+w+1LIpC6FB+ixn5
+	 qe+y9lBPUHWF5TbO1s+m+lNfvvQfQxBlGtvN2B2MmVpG+UaJBShLHhBJ49J31nar96
+	 VvIrbm773nSWJ+tuYk83hFvuGWlbA/T8ESBlL3xt/Ly3qMmDOCfV1QN7zKGw7EWIYW
+	 zltK2UQzAxJQA==
+Message-ID: <4734853b-87fc-4625-a9ee-54339b7a1512@kernel.org>
+Date: Wed, 21 May 2025 08:51:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250520-qcs8300-camss-v1-1-1dfcb2e3bf93@quicinc.com>
-In-Reply-To: <20250520-qcs8300-camss-v1-1-1dfcb2e3bf93@quicinc.com>
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Date: Wed, 21 May 2025 08:34:48 +0200
-X-Gm-Features: AX0GCFugv4ozE6oN7_Lq0Cwf2qtCI-Rj0snyB97U0vzVGF9Yp5a-qiJ_uQuP00w
-Message-ID: <CAFEp6-26HVokO-0+HEUf+cm1V7=OO5z1ndP7zVAk=Qk440Qviw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: qcs8300: Add support for camss
-To: Wenmeng Liu <quic_wenmliu@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, bryan.odonoghue@linaro.org,
-        todor.too@gmail.com, rfoss@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: OncwF6bxS43FqOwCbYXI97LXqQzhYQMz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIxMDA2MyBTYWx0ZWRfX11Cj/a5dTGsN
- t9rf7Aj0aw1In+KDfbSccBui9dKG/b3hOg9dlGo6xQ8G1bR8An7rbc/wsKJEn6zXRxv1bsxUJFz
- sNQOUbZW8piPEGcwwrSUHydPLIMhhsrVVBoaOy5jOoiTSbQlvDPiXcedAjjDHzTt+fEQu4nkf01
- RE/mXitxd8DQtwnqtBmHLLB0+mLe+3+PfBIPkyrkgkRejK6S08RzrIizs2o+dPx+ubX1lOd7VEp
- sWI0VjtIPqjY1jcrmnq73PREELi6Bd6CA5l0auxLu8PG7LpZREFT0Mmw6pMeHDLOr1gcw5jEMxG
- UjsZCSEENZjaAwPOQPC+XX4jROF22HP5uQZ6MRXk4mAqJh5LhlUsqnQOdCgcgT2urmLgUPza1PQ
- fPtMNA5crT5wHJcLAVNHugD+dpwCH8SrPWUNOuUC1gYrPE67YysUW+1akPZEjdAc5TOpGSZy
-X-Authority-Analysis: v=2.4 cv=GawXnRXL c=1 sm=1 tr=0 ts=682d7414 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
- a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=PPW_EwrsXE-T7dBlnmkA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: OncwF6bxS43FqOwCbYXI97LXqQzhYQMz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-21_01,2025-05-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 mlxlogscore=860 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 clxscore=1015 malwarescore=0 phishscore=0 bulkscore=0
- spamscore=0 suspectscore=0 adultscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505210063
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 1/3] scsi: ufs: dt-bindings: Document UFS Disable LPM
+ property
+To: Nitin Rawat <quic_nitirawa@quicinc.com>,
+ Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
+Cc: alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+ krzk+dt@kernel.org, robh@kernel.org, mani@kernel.org, conor+dt@kernel.org,
+ James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com,
+ beanhuo@micron.com, peter.wang@mediatek.com, linux-arm-msm@vger.kernel.org,
+ linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20250506163705.31518-1-quic_nitirawa@quicinc.com>
+ <20250506163705.31518-2-quic_nitirawa@quicinc.com>
+ <667e43a7-a33c-491b-83ca-fe06a2a5d9c3@kernel.org>
+ <9974cf1d-6929-4c7f-8472-fd19c7a40b12@quicinc.com>
+ <8ebe4439-eab8-456a-ac91-b53956eab633@quicinc.com>
+ <852e3d10-5bf8-4b2e-9447-fe15c1aaf3ba@quicinc.com>
+ <8aa09712-5543-4bda-bf9e-a29c61656445@kernel.org>
+ <80d8888c-41d9-4650-8be7-11e71610a4b8@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <80d8888c-41d9-4650-8be7-11e71610a4b8@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, May 20, 2025 at 11:40=E2=80=AFAM Wenmeng Liu <quic_wenmliu@quicinc.=
-com> wrote:
->
-> This change enables camera driver for QCS8300 RIDE board.
->
-> ---
-> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
-> ---
-> This patch series depends on patch series:
-> - https://lore.kernel.org/all/20250214095611.2498950-1-quic_vikramsa@quic=
-inc.com/
-> - https://lore.kernel.org/all/20250211-sa8775p_tpg-v1-1-3f76c5f8431f@quic=
-inc.com/
-> - https://lore.kernel.org/all/20250217-qcs8300_tpg-v1-1-6e0f4dd3ad1f@quic=
-inc.com/
-> - https://lore.kernel.org/all/20250214094747.2483058-1-quic_vikramsa@quic=
-inc.com/
-> ---
-> ---
->  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/=
-dts/qcom/qcs8300-ride.dts
-> index 3ff8f398cad31a36fa46060855b075c8c2020aa7..97281d6d7376a406e5c31466e=
-175358b10441256 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> @@ -207,6 +207,10 @@ vreg_l9c: ldo9 {
->         };
->  };
->
-> +&camss {
-> +       status =3D "ok";
-> +};
+On 20/05/2025 20:49, Nitin Rawat wrote:
+> 
+> 
+> On 5/20/2025 1:39 PM, Krzysztof Kozlowski wrote:
+>> On 12/05/2025 09:41, Pavan Kondeti wrote:
+>>> On Mon, May 12, 2025 at 09:45:49AM +0530, Nitin Rawat wrote:
+>>>>
+>>>>
+>>>> On 5/7/2025 8:34 PM, Nitin Rawat wrote:
+>>>>>
+>>>>>
+>>>>> On 5/6/2025 11:46 PM, Krzysztof Kozlowski wrote:
+>>>>>> On 06/05/2025 18:37, Nitin Rawat wrote:
+>>>>>>> Disable UFS low power mode on emulation FPGA platforms or other
+>>>>>>> platforms
+>>>>>>
+>>>>>> Why wouldn't you like to test LPM also on FPGA designs? I do not see
+>>>>>> here correlation.
+>>>>>
+>>>>> Hi Krzysztof,
+>>>>>
+>>>>> Since the FPGA platform doesn't support UFS Low Power Modes (such as the
+>>>>> AutoHibern8 feature specified in the UFS specification), I have included
+>>>>> this information in the hardware description (i.e dts).
+>>>>
+>>>>
+>>>> Hi Krzysztof,
+>>>>
+>>>> Could you please share your thoughts on my above comment? If you still see
+>>>> concerns, I may need to consider other options like modparam.
+>>>>
+>>>
+>>> I understand why you are inclining towards the module param here. Before
+>>> we take that route,
+>>>
+>>> Is it possible to use a different compatible (for ex: qcom,sm8650-emu-ufshc) for UFS controller
+>>> on the emulation platform and apply the quirk in the driver based on the device_get_match_data()
+>>> based detection?
+>>
+>> I do not get what are the benefits of upstreaming such patches. It feels
+>> like you have some internal product, which will never be released, no
+>> one will ever use it and eventually will be obsolete even internally. We
+>> don't want patches for every broken feature or every broken hardware.
+> 
+> Hi Krzysztof,
+> 
+> Thank you for your review and opinions. I would like to clarify that 
+> this is a platform requirement rather than a broken feature. 
+> Additionally, there are few automotive targets, in addition to the FPGA 
+> platform, where Low Power Mode (LPM) is not a requirement. For these 
+> platforms, the LPM disable changes are currently maintained downstream.
 
-Same comment as for qcs615, what is the reason for enabling camss
-without an actual sensor? If it's for testing via TPG, I'm not sure
-why it should be enabled on this specific board.
+And these platforms do not have their own SoC compatible? When you say
+platforms, you mean SoC or boards? So many options... all this is so
+unspecific, I need to dig every answer, every specific bit.
 
-Regards,
-Loic
+> 
+> My apology for not including the automotive requirements in my previous 
+> commit messages.
+> 
+> In my opinion, since these platforms do not support LPM, I requested 
+> that this be reflected in the hardware description (i.e. DTS)). However, 
+> I am open to suggestions and am willing to proceed with module 
+> parameters if you have concerns regarding the device tree.
+
+Module param will get other obstacles... We have lengthy discussion
+because your commit msg explains nothing. Even now I still don't know
+what do you mean by half of above statements. Use the wide upstream
+terms, instead of ambiguous like "automotive platform".
+
+Best regards,
+Krzysztof
 
