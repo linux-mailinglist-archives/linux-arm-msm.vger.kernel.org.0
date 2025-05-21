@@ -1,156 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-58906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3FCCABF61C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 15:31:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D525ABF631
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 15:33:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 885514A611D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 13:31:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 99D3B4E76AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 May 2025 13:33:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC924143C69;
-	Wed, 21 May 2025 13:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B9F627C863;
+	Wed, 21 May 2025 13:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ykx86oHR"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CTkDo6Ru"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DAC38F80
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 13:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520FA28032C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 13:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747834262; cv=none; b=TlJyIdLsHiPgAOh0EGR0e9Iqk2EbQ8R2iSEWHDAXcE6C14O6zKxDEaZb+3Mgsmg6SGiDGtCyNhp/QeO0JlLyXIpTx+sCJ5/xEhbVGsxXcL+yQSfo4m3wc6zImDrSB7FNF2X82FeX9mhfuLl41HTYHtGX4KlWu3geOWPslfelGIQ=
+	t=1747834404; cv=none; b=gZHG3Wxe2q3Uiu4vPSn5BtClMc0UOWl+hTM8N648cUjoDb38uZ+4RXLObcoru7oHINGx3VIw0U3+pLQ4Z99zrlnMKuzubGWXUR/wnW+qJE5rEFazlRC10olT8jS7fOXdyJpM45pT/Nas86GPJQo1M29zhEnKYO42+HypyBvHXvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747834262; c=relaxed/simple;
-	bh=dE8S8U/P80oKy7v+PkEG7Bznl75i8IVoc76G1GRGRf8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OygRCc3guDA5ADiDVp5c/IVomFo6XdMNJ7EsuBTZHEykaqnT+o3/0Do5erubeIGYFIQeAUbWn3hhhL1tHhsaPx6zXBlcsGnYn63jNPRl2B9ZKvl4yHzp5Gn3l+5Cxyv7fjyfuArgXaXrzE+GfF9V2UQhvnVmVNAdd44elSdri5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ykx86oHR; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-30ea8b7c5c2so4046389a91.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 06:31:00 -0700 (PDT)
+	s=arc-20240116; t=1747834404; c=relaxed/simple;
+	bh=R9qmpY3zzwA7xPrJDlHhu/yXtjD5ta8pSGwpUcrpE/M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EzJGqtdsZzBC2M/24j3IX29MWpVhpev8QiYX+30XGqOk19HlwgFUq9WEaMpKvmnZHE2ISOMaCDo3m/z++wi5u4F++883hOubXXZMIb4Nx6ika/Ck45QoN4me8pa82adt2G2omqm0+bPZfHe85zsDg2jyT/YSC2pwaKNchwVJ5g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CTkDo6Ru; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-47666573242so1433021cf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 May 2025 06:33:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747834260; x=1748439060; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=z1dbDjgMLEJrOwumrDgSLpVT4yaU17ZjFGTyjnMHOQ4=;
-        b=ykx86oHRpqzZLUu/PhAr12S1HWVP3F9SAavNqBFCef9dPiX7Amh+HvtTgtvoe1ghdL
-         4ZVunBabZhX8TKIHZ3+BZ0bEs1E4BEU97/2D/rmqHSr8tjKFOfPNVnsAgqrAYXdLca6V
-         4CYl0ihbhDn/ckt4ETo0KEkFVqvcfcmME3P4MvrIuwgQZl6AitENJTC9LzKlM48hiaET
-         0Ng5X1KqBAgkJGW9rO4J/jRpDvCJdPvEYskDlwpsRdq9UkIzzJmm6xXj+eF+YaQY7j/C
-         TiKmXpZ397Wa521vp2cqBqMgl3Abptd3GsDmYjLXJbpFVXJjmX5kcoxYxMLx9Ck8v6ku
-         Yk7g==
+        d=google.com; s=20230601; t=1747834401; x=1748439201; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7IElG8t6UQOCXlMao4ZOb1RJT5HCrLgm0tglQ9eav/M=;
+        b=CTkDo6RuQlPPn56FBdDJyh2eR/w4/jpAHP9xC7MR9koxYBoBRsHGyebV5jWDk3JX0r
+         Bm+ymDRt7NEQHlE7odkCduJF3ZPWJ2dstlZ1Aiq+fYhSGNlOTajcw0zG+Bx+wZKtI3eX
+         LmeTJPBr/hjHbvSyeg2DgXn7hjTk5knfskNVJON/sPUnjIjWRHTQ++RAWMV0TUw7+2ss
+         CFKBA7NSFhCMILvpG/JSNR27ZHy0y0mACu3fANypU+acXlkt5kLZDrYcSSwoEE9vJ9XT
+         2FcyfBowN3Bi5md66Tk5WAs1qSNSo3ZedaZ58LF3i4IzT8SnVYRYwurs/bHN9lZQTZtM
+         Coyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747834260; x=1748439060;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z1dbDjgMLEJrOwumrDgSLpVT4yaU17ZjFGTyjnMHOQ4=;
-        b=CIJi8GeblmkXelKHog83yMZ53AduLDw38h8HZ2GYBGN1ErugkA4Sae4hLzOgzPfw4K
-         po8HNn8DvXi+DxoC9+h7hmsWlHGjPTCkIYt2+sAfdt4OqrD8fUukoA6tjw0+S2mHE4wF
-         AWiwHAgpzFRqs7Qm14eMlWWlso/pOMc7owuJHSAKoKbaOfWX+MWW7lkCn7N1b2dFbcKp
-         B8d6njU9jmKcxA6jPMkeIWDJN0vGw6BJFb3mk6EI2VZyrvmwLnZ/68AXDTSla2E29QHU
-         80NK2/0u7f78II1rljgFQYwbCAcvVJN3Sc+daDfhcSYdR2vhx1yJUh2+ymyEUEOCi02l
-         vFIQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVciFTTEEwvRaMNvvw3jXDS4m5aQWsazUWGVtMNafDRhZO+Svxzq/OCtLU6shTMKj72j7WIIyuTaY/TS0/2@vger.kernel.org
-X-Gm-Message-State: AOJu0YymqU1B/m9MK85rCy6g4hzSXU+i8k1ymVzWCTJRlKs9wD+cPsQ8
-	riNudEggmooMrUbNMZOGJKH4w6XkaWgwHdREjRENheN5aLu7aDvtQAFGATISbegCvA==
-X-Gm-Gg: ASbGncsVUr8MJkM3EfIBz9GteTPajt2NQjP3kzcib9gzrkfesp74WOSN9Srfn3o3FIj
-	lIy9+eGHf2NIxkOkZJYoZNsU/+ch9ZxhWizV61OWMa27Ig74FrZrXTzs7odZYynHdILhuth49Uf
-	teVoIt1ipzynhm9iE/h3hHxkqpPmGp3JiT1cMHZ+qBol3/uWJAgwWIro3asdpZjaWnBdvVnNsqR
-	g/Up3YDn6ibQOhMCnf1ccIEujE4QENjQL9bkccM2amm+2JpNfd7ok1GooykGSnsnIrt+7icCQIl
-	qUzycCNLqDUogk9xoFWx+zbke89VDDTf7t5PXEBUsZ77nbsvq9/iKez9MMwR4O849QPpAHQ=
-X-Google-Smtp-Source: AGHT+IGPKkuMknbqbSMLVX+JBJd/UAyJcjpyOY/yvUsxjBau5eWt4Mkj+OEXtvgnfC9urBGO+cN+Qg==
-X-Received: by 2002:a17:90b:2f0d:b0:2fe:68a5:d84b with SMTP id 98e67ed59e1d1-30e7d4e7e1bmr29895277a91.1.1747834260260;
-        Wed, 21 May 2025 06:31:00 -0700 (PDT)
-Received: from thinkpad ([120.60.52.42])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30f364907dfsm3632884a91.23.2025.05.21.06.30.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 May 2025 06:30:59 -0700 (PDT)
-Date: Wed, 21 May 2025 14:30:53 +0100
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, 
-	James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, bvanassche@acm.org, 
-	andersson@kernel.org, neil.armstrong@linaro.org, dmitry.baryshkov@oss.qualcomm.com, 
-	konrad.dybcio@oss.qualcomm.com, quic_rdwivedi@quicinc.com, quic_cang@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-scsi@vger.kernel.org
-Subject: Re: [PATCH V5 05/11] phy: qcom-qmp-ufs: Remove qmp_ufs_com_init()
-Message-ID: <z3yfou4oolymsgb72dpakwcsmq6v3gnx64mdals7krnxdhpc2a@lsepak4kc2mg>
-References: <20250515162722.6933-1-quic_nitirawa@quicinc.com>
- <20250515162722.6933-6-quic_nitirawa@quicinc.com>
+        d=1e100.net; s=20230601; t=1747834401; x=1748439201;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7IElG8t6UQOCXlMao4ZOb1RJT5HCrLgm0tglQ9eav/M=;
+        b=ODivxWY85XP+tvsE4uyufMnZ2Bk+oPVnvQizeQabH91O3+zI/k+gCELsxRkZQIG1c3
+         CIQSqnjeXT4k715PN6JS+PmyjZJyavQrO2rnILC/jNRlJ5z4PDt/8PCYAMvyqzx2Fx0H
+         XiejoxLDpDUBAq1nYDUTKUuuQxjOjPeJfOpEv7qXP743EQunIA9yspY7fmfw3HIbd8JW
+         9al9jKKCaiipB8fVrNKfHZTe3vw8ZaCr63zmkrKnqZfhlrGXpA9f2hP9W63gTDvfJb9O
+         8LiSK0MPb6FQHUeVLYlhabtbF7ETxzEJzXv2ipYVzkIU3NDCV9Osxod+UPzoT/v6rorO
+         jZvg==
+X-Forwarded-Encrypted: i=1; AJvYcCXwVq/x4FDcMTWGkYsPFsGjv8TcJwmlamy6EkcikEZBGLs09djuh2AkkQc5EUPvuFr778vep6bJ8VzmrUd9@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyd/ngh7Vn0P2d/TnUmMifbTliLTYJW8QPe77v2lDzn6qnGfXn3
+	TqFkJwI15WsiZjBt8QozTOIiFVZsusQqquiOYh1yN5N+45G0zes3o51UL3Bmds0xAYuE05UInRM
+	r1StHpQnV5IFPWUUV6A4iaRYKrqsr9EgmneRHWNBu
+X-Gm-Gg: ASbGncskhdIepjz4GqLEMP1wjhgOZy7biNSo0/kkIXUzcofDCe1Gphf3YgpDMjQcFZd
+	sVeq4ru7Ey1KeuVKR9U+HdidXpL3lLqI6npmWqB7DbIB6w3o0+2QwOZlDp97ejNlAU+pgsfaJlq
+	ViWw8vI7AAcdGele7NlPANf9J5xhXKR2ziHWhxZD+BXALde67yYTmbC5l1fOKyJlCpjKZSvQ+Q
+X-Google-Smtp-Source: AGHT+IGHrTdfeMb7jlXQw3K737a7s2UVgkzPNNbLnqAt7pGQ9skk0T2PnsNL8ybReruUQvJls1mTzXEvnmXLudYE3yo=
+X-Received: by 2002:a05:622a:14c:b0:466:8c23:823a with SMTP id
+ d75a77b69052e-49600c876ddmr15160551cf.17.1747834400540; Wed, 21 May 2025
+ 06:33:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250515162722.6933-6-quic_nitirawa@quicinc.com>
+References: <20250513163438.3942405-1-tabba@google.com> <20250513163438.3942405-15-tabba@google.com>
+ <2084504e-2a11-404a-bbe8-930384106f53@redhat.com> <CA+EHjTyz4M4wGCTBzFwHLB_0LUJHq6J135f=DVOhGKQE4thrtQ@mail.gmail.com>
+ <d5983511-6de3-42cb-9c2f-4a0377ea5e2d@redhat.com> <CA+EHjTxhirJDCR4hdTt4-FJ+vo9986PE-CGwikN8zN_1H1q5jQ@mail.gmail.com>
+ <f6005b96-d408-450c-ad80-6241e35c6d26@redhat.com> <CA+EHjTzaE_vGPsB20eJ99fG4_gck9Gb7iaVQ3ie5YUnNe5wHgw@mail.gmail.com>
+ <5da72da7-b82c-4d70-ac86-3710a046b836@redhat.com>
+In-Reply-To: <5da72da7-b82c-4d70-ac86-3710a046b836@redhat.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Wed, 21 May 2025 14:32:43 +0100
+X-Gm-Features: AX0GCFusE07bvRo-Pqsi4ydaoFt5tlnl13zLKduQ18To8DRrmGMT_dqdB-JwRxU
+Message-ID: <CA+EHjTwmgZ3i2oaBcnhr1HjLtFeycJM49utO5VhtsOH6E9WcXQ@mail.gmail.com>
+Subject: Re: [PATCH v9 14/17] KVM: arm64: Enable mapping guest_memfd in arm64
+To: David Hildenbrand <david@redhat.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
+	pankaj.gupta@amd.com, ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, May 15, 2025 at 09:57:16PM +0530, Nitin Rawat wrote:
-> The qmp_ufs_power_on() function acts as a wrapper, solely invoking
-> qmp_ufs_com_init(). Additionally, the code within qmp_ufs_com_init()
-> does not correspond well with its name.
-> 
-> Therefore, to enhance the readability and eliminate unnecessary
-> function call inline qmp_ufs_com_init() into qmp_ufs_power_on().
-> 
-> There is no change to the functionality.
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 43 ++++++++++---------------
->  1 file changed, 17 insertions(+), 26 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> index 33d238cf49aa..d3f9ee490a32 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> @@ -1758,12 +1758,28 @@ static void qmp_ufs_init_registers(struct qmp_ufs *qmp, const struct qmp_phy_cfg
->  		qmp_ufs_init_all(qmp, &cfg->tbls_hs_b);
->  }
->  
-> -static int qmp_ufs_com_init(struct qmp_ufs *qmp)
-> +static int qmp_ufs_com_exit(struct qmp_ufs *qmp)
+Hi David,
 
-Since there is no qmp_ufs_com_init() now, qmp_ufs_com_exit() lacks symmetry.
-Maybe you should rename it too.
+On Wed, 21 May 2025 at 14:22, David Hildenbrand <david@redhat.com> wrote:
+>
+> On 21.05.25 15:15, Fuad Tabba wrote:
+> > Hi David,
+> >
+> > On Wed, 21 May 2025 at 13:44, David Hildenbrand <david@redhat.com> wrote:
+> >>
+> >> On 21.05.25 12:29, Fuad Tabba wrote:
+> >>> On Wed, 21 May 2025 at 11:26, David Hildenbrand <david@redhat.com> wrote:
+> >>>>
+> >>>> On 21.05.25 12:12, Fuad Tabba wrote:
+> >>>>> Hi David,
+> >>>>>
+> >>>>> On Wed, 21 May 2025 at 09:05, David Hildenbrand <david@redhat.com> wrote:
+> >>>>>>
+> >>>>>> On 13.05.25 18:34, Fuad Tabba wrote:
+> >>>>>>> Enable mapping guest_memfd in arm64. For now, it applies to all
+> >>>>>>> VMs in arm64 that use guest_memfd. In the future, new VM types
+> >>>>>>> can restrict this via kvm_arch_gmem_supports_shared_mem().
+> >>>>>>>
+> >>>>>>> Signed-off-by: Fuad Tabba <tabba@google.com>
+> >>>>>>> ---
+> >>>>>>>      arch/arm64/include/asm/kvm_host.h | 10 ++++++++++
+> >>>>>>>      arch/arm64/kvm/Kconfig            |  1 +
+> >>>>>>>      2 files changed, 11 insertions(+)
+> >>>>>>>
+> >>>>>>> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> >>>>>>> index 08ba91e6fb03..2514779f5131 100644
+> >>>>>>> --- a/arch/arm64/include/asm/kvm_host.h
+> >>>>>>> +++ b/arch/arm64/include/asm/kvm_host.h
+> >>>>>>> @@ -1593,4 +1593,14 @@ static inline bool kvm_arch_has_irq_bypass(void)
+> >>>>>>>          return true;
+> >>>>>>>      }
+> >>>>>>>
+> >>>>>>> +static inline bool kvm_arch_supports_gmem(struct kvm *kvm)
+> >>>>>>> +{
+> >>>>>>> +     return IS_ENABLED(CONFIG_KVM_GMEM);
+> >>>>>>> +}
+> >>>>>>> +
+> >>>>>>> +static inline bool kvm_arch_vm_supports_gmem_shared_mem(struct kvm *kvm)
+> >>>>>>> +{
+> >>>>>>> +     return IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM);
+> >>>>>>> +}
+> >>>>>>> +
+> >>>>>>>      #endif /* __ARM64_KVM_HOST_H__ */
+> >>>>>>> diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
+> >>>>>>> index 096e45acadb2..8c1e1964b46a 100644
+> >>>>>>> --- a/arch/arm64/kvm/Kconfig
+> >>>>>>> +++ b/arch/arm64/kvm/Kconfig
+> >>>>>>> @@ -38,6 +38,7 @@ menuconfig KVM
+> >>>>>>>          select HAVE_KVM_VCPU_RUN_PID_CHANGE
+> >>>>>>>          select SCHED_INFO
+> >>>>>>>          select GUEST_PERF_EVENTS if PERF_EVENTS
+> >>>>>>> +     select KVM_GMEM_SHARED_MEM
+> >>>>>>>          help
+> >>>>>>>            Support hosting virtualized guest machines.
+> >>>>>>>
+> >>>>>>
+> >>>>>> Do we have to reject somewhere if we are given a guest_memfd that was
+> >>>>>> *not* created using the SHARED flag? Or will existing checks already
+> >>>>>> reject that?
+> >>>>>
+> >>>>> We don't reject, but I don't think we need to. A user can create a
+> >>>>> guest_memfd that's private in arm64, it would just be useless.
+> >>>>
+> >>>> But the arm64 fault routine would not be able to handle that properly, no?
+> >>>
+> >>> Actually it would. The function user_mem_abort() doesn't care whether
+> >>> it's private or shared. It would fault it into the guest correctly
+> >>> regardless.
+> >>
+> >>
+> >> I think what I meant is that: if it's !shared (private only), shared
+> >> accesses (IOW all access without CoCo) should be taken from the user
+> >> space mapping.
+> >>
+> >> But user_mem_abort() would blindly go to kvm_gmem_get_pfn() because
+> >> "is_gmem = kvm_slot_has_gmem(memslot) = true".
+> >
+> > Yes, since it is a gmem-backed slot.
+> >
+> >> In other words, arm64 would have to *ignore* guest_memfd that does not
+> >> support shared?
+> >>
+> >> That's why I was wondering whether we should just immediately refuse
+> >> such guest_memfds.
+> >
+> > My thinking is that if a user deliberately creates a
+> > guest_memfd-backed slot without designating it as being sharable, then
+> > either they would find out when they try to map that memory to the
+> > host userspace (mapping it would fail), or it could be that they
+> > deliberately want to set up a VM with memslots that not mappable at
+> > all by the host.
+>
+> Hm. But that would meant that we interpret "private" memory as a concept
+> that is not understood by the VM. Because the VM does not know what
+> "private" memory is ...
+>
+> > Perhaps to add some layer of security (although a
+> > very flimsy one, since it's not a confidential guest).
+>
+> Exactly my point. If you don't want to mmap it then ... don't mmap it :)
+>
+> >
+> > I'm happy to a check to prevent this. The question is, how to do it
+> > exactly (I assume it would be in kvm_gmem_create())? Would it be
+> > arch-specific, i.e., prevent arm64 from creating non-shared
+> > guest_memfd backed memslots? Or do it by VM type? Even if we do it by
+> > VM-type it would need to be arch-specific, since we allow private
+> > guest_memfd slots for the default VM in x86, but we wouldn't for
+> > arm64.
+> >
+> > We could add another function, along the lines of
+> > kvm_arch_supports_gmem_only_shared_mem(), but considering that it
+> > actually works, and (arguably) would behave as intended, I'm not sure
+> > if it's worth the complexity.
+> >
+> > What do you think?
+>
+> My thinking was to either block this at slot creation time or at
+> guest_memfd creation time. And we should probably block that for other
+> VM types as well that do not support private memory?
+>
+> I mean, creating guest_memfd for private memory when there is no concept
+> of private memory for the VM is ... weird, no? :)
 
->  {
->  	const struct qmp_phy_cfg *cfg = qmp->cfg;
-> +
-> +	reset_control_assert(qmp->ufs_reset);
-> +
-> +	clk_bulk_disable_unprepare(qmp->num_clks, qmp->clks);
-> +
-> +	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
-> +
-> +	return 0;
-> +}
-> +
-> +static int qmp_ufs_power_on(struct phy *phy)
-> +{
-> +	struct qmp_ufs *qmp = phy_get_drvdata(phy);
-> +	const struct qmp_phy_cfg *cfg = qmp->cfg;
->  	void __iomem *pcs = qmp->pcs;
->  	int ret;
->  
-> +	dev_vdbg(qmp->dev, "Initializing QMP phy\n");
+Actually, I could add this as an arch-specific check in
+arch/arm64/kvm/mmu.c:kvm_arch_prepare_memory_region(). That way, core
+KVM/guest_memfd code doesn't need to handle this arm64-specific behavior.
 
-Now, this debug print doesn't make sense. You can drop it.
+Does that sound good?
 
-- Mani
+Thanks,
+/fuad
 
--- 
-மணிவண்ணன் சதாசிவம்
+
+> --
+> Cheers,
+>
+> David / dhildenb
+>
 
