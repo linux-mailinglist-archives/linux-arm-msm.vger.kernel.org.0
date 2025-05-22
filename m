@@ -1,204 +1,273 @@
-Return-Path: <linux-arm-msm+bounces-59104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC0B5AC13D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 20:59:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B8C0AC1433
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 21:06:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2CD751C00B4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 18:59:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3FCF01B67093
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 19:06:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45D0D20FA9C;
-	Thu, 22 May 2025 18:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6A5029CB5B;
+	Thu, 22 May 2025 19:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KZr6OBVV"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ICUZxNiF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD46220F078
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 18:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C924929B794
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 19:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747940369; cv=none; b=e2MgygoToPwf+tURkWg+4H2XA6AUc7NSu7/dvRr1/LuEyWK3qIMVeedBoROaxVrBqJCxkTewNNg892KOnTBgcVA8E8MqjIe97CXwK1s3Iv4ToNC4xBk7n4VZeWrddajWulPvmWT7z7RHSy+PjJKo3qMJ7PL5k7CYo+ZDH2VhwF0=
+	t=1747940635; cv=none; b=UZHm5nd48YQiQ2/eXtOU3DTVCml5wWD4GRw+hJPpyZQ3rSJUqQe3RDNanxBcnlKcCjuIY1VydMNHfdWeIHNk28TQ8DZT4NMr3QcryownSB2iFmKL7UB6w+VyPIVmtbTAH10ey9M4OKG7J8ZObYtoyQlzXOcApyhRotzEZbfgFSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747940369; c=relaxed/simple;
-	bh=ur7YbUqNfAfABg/WZQGZKIefNXNm7QwnkWAijkrsaMg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gF2jzX5IWOnl69PCwdRxF2NHPZhGTZi3fdaf5kFN71HBF1YluyInMzn+aTJPyUJ+KLlExAQTeUFl2qSUB/RXM7BWN68rI/TgcvNFOugzF6ljYt0d2fl3oz8f7S9DmfC6E584CNagEsptg2JMkl4vDjgFYxgtXVAUS6Cb4kPu5BY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KZr6OBVV; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1747940635; c=relaxed/simple;
+	bh=LvHpzkBXpQpS6a1CNyb0eHhKR06FkrHNFz2Vb8Rs+HI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=HCbwuMsdUXmD59Hjlyu+G2afk29ZP48FIUA3KX+CfSJWBditnoPMcibjjlw9wWxSv2/PRTESN1f0KerlGb9idG4yDlYvDHymbAhxdlrnu9ayNXIZiryQ2GJazFkNSDihdVxHWbvZBNUhHriEcZtr45oEt3SAgCMGNztK6fCcr4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ICUZxNiF; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54MGannQ016660
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 18:59:26 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54MIFPT7015209
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 19:03:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	D3hythJW7O3Ln+CjN8TBZmcFFx5xKO2LTaidnlRHNd4=; b=KZr6OBVVTRIRwofL
-	PF04cRXBMhOQiM1kMLiIsfCxis7pzSS7wV6Kkeocb3LgfWV1Wp27h1f32ZMBu+hn
-	m4rpH7rv4DW/yh9UHWqn5KVwqjL4VUtxK1v5F3Tzp4D79g9v1sKxK1Z+gfJ72QzK
-	6xTg/eM/k1mxpNvT7eI6l2jTWlAreYjKQxnQSb8XTRD2LiqERJyqDPchRWGuT3nb
-	6ipihpJhunUY2ln5sHf45qVJlvYhBpNEBiiMKaL1NGQ451Xfd1qdnZlaHmGRIt/v
-	vGb/ZvZSGM1q8tGHCupGQLAaLnKb45sEo9uFMIoq2Mnu7t+NJGJhHU8xapdCJWFR
-	ix5eMw==
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=UkdtLDWPWV86WMIXjh/84M
+	WseBY4yX2yXHBPJxMZ3kk=; b=ICUZxNiFZgYqtRmX8jYmbzvBUWf4j0U1zyTYei
+	Xr0unvWTNsM76pf6SWTw5P8OETXqmV2f6VS1eiwcumXNQ8F9YTKaVm2pUoLNWwFQ
+	bpnvs7H7zs2hLYBOI6Xl3XIegqYBJ4t1RtSfl2i7Dlu1nffl8+qv89ebNngVpuZp
+	hw+kipCWog8G2uNxBaXXYRzogqInOQ0fN5CGCQjyn+qy/q3U8Yb3ZZurRGfKoo+y
+	59heevnpSqxuXUsnuARs8y9RV0ew4vurOZ45q36d7eErdciYpCRv/lzDEImUWTtG
+	0hb1iyNrQeX15NAGRNC9fdBpv4oyCn2ocq/b0+vyfCecSvwQ==
 Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf9yevw-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf9fb1k-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 18:59:26 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c54be4b03aso202036485a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 11:59:26 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 19:03:51 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c760637fe5so1435083685a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 12:03:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747940365; x=1748545165;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=D3hythJW7O3Ln+CjN8TBZmcFFx5xKO2LTaidnlRHNd4=;
-        b=NQYvPFkM8bFlDkmKeClRPhOn0vJrb3TsGM2h+ff0kHKQrcZUzROQbI4zUVbOvfzEDf
-         9QyKyBHQkuXFsnj2TMuRYK5F3n5TpUSOnHyq+PnSoDXVzAuxMDDdPTga9gdNU+H+ieHL
-         RueDktO/p7gp4M9OIz5JpVBKK4jJGWVa8TpQNS1HZlVuJ2cI8Dj/b3p3g2N75LTrgGQ8
-         TB/BJ9Ng2qiFYnba7QdPUNA+nZEqsbQnRgUGuhuAuKrJzSs0p3gmALOGamPAZp/Wb1vj
-         x40AwgbCU7eHd+nCa/l1FY20d1/GX6bTLOQnpjQ0KaJipJj7CCBx1ZJl5L00Rplu9HlB
-         q0rQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU2jfKEHlloAQyqASj3yLA/bEQLetZiVSHJj0SMhFpVDgczI1Gy2dffhm0CjDELgT3aD4j1nIUOGqnx2hRY@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx+ER4NVlIXk3E3DPxmPDnqmLEpypoagdX7kJpzNcHiSzgyVJO/
-	hdFOw14I4MDcDjuIektYNsUb/YshButgFlWZgNSIHKINxklNLpW0WGsypDZXKDgAGKjB/PlxKbQ
-	06y7/Wtiy5lE8Ojgd0ajLOOSsAt6C1dBSNVX9IDKfZ5zF0ECniHv/b9l7KJ5LKeGR8QPp
-X-Gm-Gg: ASbGnctxYGVDrhdsnLpO5facDT00bOVsRe5N9GQq5s93hAXQ8G9PfakWNNiSSCV+ubJ
-	inWiiieha2KwkyPlGEI5uVpepkWjeAskGgoIDNL91Xb03ci/l/0B8rCuN8Pkoy1vhmc46Ie3LA2
-	iv2rgxSeJvfXYx6RaaXJ5acOp3fDRqYOwu92gEqDyz9bYmk6PIXVpRwy659edtUJ9pch247Eup0
-	ZyqjI0zY05wkH32LLoNTCpzldu6aYA9B2Fp5B/KOY/74AwkmcB8hP2EoKrmilpmH7MCsct5m2oU
-	cqhx293hb2xu6/kZYaocqtML+X8R9OAl56AVpsBUsxhLszSUfmUfZKvu3xNK+cTtNw==
-X-Received: by 2002:a05:620a:6202:b0:7cd:4a08:ea12 with SMTP id af79cd13be357-7cd4a08ee21mr1100096985a.0.1747940365559;
-        Thu, 22 May 2025 11:59:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQOAYGhe6K1LjGcBN6vbBiDnDIWsN+lmRlqcPeMkJaP1WJt5jFRdI44FsjYiPFQzGx3Bjnlw==
-X-Received: by 2002:a05:620a:6202:b0:7cd:4a08:ea12 with SMTP id af79cd13be357-7cd4a08ee21mr1100094885a.0.1747940365191;
-        Thu, 22 May 2025 11:59:25 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6005a6e746csm11208840a12.47.2025.05.22.11.59.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 May 2025 11:59:24 -0700 (PDT)
-Message-ID: <e3033f51-9837-44e6-904a-9fef6b108252@oss.qualcomm.com>
-Date: Thu, 22 May 2025 20:59:22 +0200
+        d=1e100.net; s=20230601; t=1747940613; x=1748545413;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UkdtLDWPWV86WMIXjh/84MWseBY4yX2yXHBPJxMZ3kk=;
+        b=mdNmb6XvwFD5MXKbxstchf6HtE7qSCgm3ght3lBLHCjcgX7BFYt4X9wcYtV84p6saK
+         U+64vnGewNGs9ioq2aRO0cDGLIw0ZUKXHqyGeo4n1zLnAh+NYUi7vFWY3u4bt1tYNIpo
+         507f4mJXgrhseV88IprMS3JD4xC1wj+gZJGVfmc5YTrJgm8xMZscE33RK5B4pXQDYAyw
+         cmX9DYBxCsH/l6AaOrFBQ8LPPM1sPyQSWHCe2xWxpU07XH92gDHmoPovu+UIfqmGKKqR
+         M7BMaprvyNhUKJ/EfrUxb83ivRuhnShmNCdUDkL4y4Wz3SzgILoQ0LmTNqKZt00/+VA+
+         zYVg==
+X-Forwarded-Encrypted: i=1; AJvYcCWewOFc8ztnCXJa/rOWNxSzlfsG4H4+uhAT0nwy/BLGB6NqWS07H+h3BogqIWcpyjx7yQGaow/7Fj5KkQu5@vger.kernel.org
+X-Gm-Message-State: AOJu0YzDJod9EutzuYX1KbbyaB52ri5WBtwT8rx4Max7TzlO/WH1B66s
+	CNW8aGlCtNekCePCV760VMzFo82LXRLO9OfdiQD+RXon0BnFy3U6DUVdz9FLwbB3I225DcoifrW
+	2yHv5Zlt7kJhrMLMMQEzXZHSdolLeQPQdsAikoF+QCgLieo+FOazok0FDybWTohrkb6V2
+X-Gm-Gg: ASbGncsfi6I4ibateHw9I4xoZh8WDDuVRL/L6GX7AsD4NfpI3Ip5bQIUQ9xI6CrPoAK
+	pIv1TgUjooGuy0wOh2Cd0L0RtVupdziFqQtqCGVv149r2xyl3FjUiDRKYLdfPqkZV5DvNhM4Txt
+	odbuUkohctOEvDLZV9KBPyhgWBEAOtH1IbbrUqLq44n3pvvKBO/AjpW6m5rCNc8msfJqHp3PQG7
+	fZ/lNOg1GwpwwZlkiWgTfdmY8e9GnXQ4+6DalErm4poLLg06CUR4bXrcWngNuYZ4CzPLjwW9I+F
+	vVxkEg0pse/BuqkKmOrbtULQi7RzXBoU9oHCrFxnE6W7s1DVpZZ4z7T+SEQvTX2pVpXeUgAYiz7
+	K9Wfr/galFvyHOz5dgnS53Uew
+X-Received: by 2002:a05:620a:2549:b0:7c7:93ae:fe56 with SMTP id af79cd13be357-7cd467a9b62mr3939271785a.51.1747940612577;
+        Thu, 22 May 2025 12:03:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEy/n5ztww6OKTyWk1l8kEgne9HO2Dpgd6If8J3vYhRa+Ry7rHzuHnJj7UGH+LV1945QHf4sw==
+X-Received: by 2002:a05:620a:2549:b0:7c7:93ae:fe56 with SMTP id af79cd13be357-7cd467a9b62mr3939266585a.51.1747940612101;
+        Thu, 22 May 2025 12:03:32 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-550e703c2f3sm3482506e87.214.2025.05.22.12.03.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 May 2025 12:03:30 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH v5 00/30] drm/msm/dpu: rework HW block feature handling
+Date: Thu, 22 May 2025 22:03:19 +0300
+Message-Id: <20250522-dpu-drop-features-v5-0-3b2085a07884@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: sc7280: Add memory region for
- audiopd
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Ling Xu <quic_lxu5@quicinc.com>, cros-qcom-dts-watchers@chromium.org,
-        andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ekansh.gupta@oss.qualcomm.com, Eugene Lepshy <fekz115@gmail.com>
-References: <20250516110029.1637270-1-quic_lxu5@quicinc.com>
- <20250516110029.1637270-2-quic_lxu5@quicinc.com>
- <uzyxagnmxz5tsjy32mfro2alwdpcq5kybwzcbsysul7u6adgdf@x7katw7eme6u>
- <b90ee18a-5e88-4c36-a623-ae9447c53a46@quicinc.com>
- <2mu3bncxoq57rxi22dyd6ys2wa5n3wmtadfvixozshxgenutai@dlkbqgplzrrd>
- <46caa88e-790b-4733-83bc-75ed6c7ca2d8@quicinc.com>
- <CAO9ioeVoqQhDhBW_fVU8kkt=3trV9YhEDUO0izdf8cuCDqU4Tw@mail.gmail.com>
- <76071cc9-b052-4628-9890-239b0acd260f@oss.qualcomm.com>
- <fd2vic3g5jjk22y7yv24mtwr27ies2my5lih3zfj6yw4zd2obo@artndh3vepbb>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <fd2vic3g5jjk22y7yv24mtwr27ies2my5lih3zfj6yw4zd2obo@artndh3vepbb>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=V9990fni c=1 sm=1 tr=0 ts=682f740e cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=WcJvuXKDj7ErHkShSZUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: C_glvJQ4BcEgahrFqZu8MusXFqvzwz-k
-X-Proofpoint-GUID: C_glvJQ4BcEgahrFqZu8MusXFqvzwz-k
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIyMDE5MSBTYWx0ZWRfXw6aqh5i3TeqV
- sQF77IrizezjkCsP1KfA4WpKzlnsnuobnm1Q80vCDQZ6buZXfg7F/GIg0Y3hzlyX4VfNYP6ZaSh
- O2TIU1eX4zv0mCHKuK5iahQkXhofwwbPcNWj5iPsCZTvO7+UD2xVec69bHv56qSKPjuiioVkvS+
- QVwWoojAoHZ+ngCo09GvorAilpMbep5mwbn1K2BHWLW+D5Jp6BG/FGPmPz9M4MmaK9pzcdcgyGk
- Fi0tdrIdwLHJ8F1z7pijhknSZR0kWBe17QhOhPgNtzCij+6MlN3t1haZovZJP9G525SgvfH1kWl
- wOucDwQ+H4i44KlunmUvzj6Xqu6Sy+XKI086fbtCvm80U4Dl26Hr2Jdbyk+j6nvmjseChkk3Dkj
- sDWdvKyYlzrrx/9Lk0xrc0O0IFH3LzkcKsbCAIXEmxjIcXn7f1uF0oT0vhT5q2WavsYQFXeq
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPd0L2gC/4XNwY7CIBCA4VcxnKUBBijdk++x2cMIUyXR0gXb7
+ Mb03UWN2Us3Xib5J5lvrqxQjlTYx+bKMs2xxDTUMNsN80ccDsRjqM2UUFoqCTyMEw85jbwnvEy
+ ZCm+tgOCBSLqO1bsxUx9/HubnV+1jLJeUfx8vZnnfvjS9os2SC9451wtrld+3tDvFAXNqUj6wO
+ zerF2GEVquEqoTADq3Fdg+odqmU5nvCk0/nc1PHE4K3EFTIB/ToZABj+38g/QcZ2a1BukLWG3K
+ OQIKDFWhZlhteW8P/jgEAAA==
+X-Change-ID: 20241213-dpu-drop-features-7603dc3ee189
+To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Vinod Koul <vkoul@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6762;
+ i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
+ bh=LvHpzkBXpQpS6a1CNyb0eHhKR06FkrHNFz2Vb8Rs+HI=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoL3T790+sMC1fTh8sf4v2cPnQ2YpE/MKGy7u7q
+ 8uc9hDMus6JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaC90+wAKCRCLPIo+Aiko
+ 1VgACAChGrC/R4NUQTnzHLFYbc0EkGkOD2LbpA7jOehjTtJ7O3jaWmQDFKiz4BMfqlRCptcBXb2
+ 0R6QpdXB3PZNG7SloFQYzZn0OI85ze6TBTQRMIprq2yFPCJWQdKHrJp/onLTwNl5IApkIo7jQRV
+ clcOz1/TFLuKKdHSn5LueLfFfHggD+c3U1Z5rhE6bZfIkomtBL/MUA1LKV4xdK8nDwunfeZPeNs
+ I1J4eWleTcXgDJZyPOCl1wir9p1ANy26kogPbIzCMCVR4noqttb1ZUTJUQaJnSUnatePYSE3mpE
+ r71VPk96fq/WR6b8YyJVzyS5aRhGd+coYI+KmO55iJ7LqWB0
+X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-Proofpoint-ORIG-GUID: B1v4YHrIYEE7MlxWComvyJq_h86E6kR_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIyMDE5MiBTYWx0ZWRfX3Kg544mZivSe
+ c0vhrwqZcGjXVFtjtLbE9y+MOFhm35dI5LqT5eI8sDvNghnfxzJ/WOpIjYS9GXkxtGwpaNqLXB/
+ rNsY3o0WWyA7hlJkRe+9MqmXfGBdx4VWIPNRdHQlGIBCPhrrA6jG4P/7WrSgy1jl4bfsl0JGa4O
+ paax5GrkjyJFpQA22WpBQAoaqy7srsKVYBITgWRNrRAITTbDIweHO9s8agcV8X/xU7r2oYHoNG7
+ N/26Go2B+j6OGTgp+y+92gD5hQ93kwdjaCH63PWB1NKoN9jNBDagJI6vAWD1SCGnbB5YPPgABJf
+ 4M4GZCyGJ5ncZU2KbZdwhlMLRSEq9IFiVp1772+FvCpGzhEwoiqxxn29qAnQ7uJXlEaYbUAl/Bx
+ nEmT64GjFsjR0TaRs2avPWGhCtsQHLUY9Q3AKNe5+Pjetob1I0A7yywCw/i00Fw8l/li7M9A
+X-Authority-Analysis: v=2.4 cv=GawXnRXL c=1 sm=1 tr=0 ts=682f7517 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
+ a=t8tNeZB39Io7CcBQPAcA:9 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: B1v4YHrIYEE7MlxWComvyJq_h86E6kR_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-22_09,2025-05-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=954 bulkscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
- lowpriorityscore=0 mlxscore=0 spamscore=0 phishscore=0 suspectscore=0
- adultscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505220191
+ mlxscore=0 mlxlogscore=999 lowpriorityscore=0 impostorscore=0
+ priorityscore=1501 clxscore=1015 malwarescore=0 phishscore=0 bulkscore=0
+ spamscore=0 suspectscore=0 adultscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505160000 definitions=main-2505220192
 
-On 5/22/25 8:51 PM, Dmitry Baryshkov wrote:
-> On Thu, May 22, 2025 at 08:27:40PM +0200, Konrad Dybcio wrote:
->> On 5/22/25 2:16 PM, Dmitry Baryshkov wrote:
->>> On Thu, 22 May 2025 at 13:44, Ling Xu <quic_lxu5@quicinc.com> wrote:
->>>>
->>>> 在 5/20/2025 9:53 PM, Dmitry Baryshkov 写道:
->>>>> On Tue, May 20, 2025 at 02:41:22PM +0800, Ling Xu wrote:
->>>>>> 在 5/17/2025 5:47 AM, Dmitry Baryshkov 写道:
->>>>>>> On Fri, May 16, 2025 at 04:30:27PM +0530, Ling Xu wrote:
->>>>>>>> Add reserved memory region and VMIDs for audio PD dynamic loading and
->>>>>>>> remote heap memory requirements.
->>>>>>>
->>>>>>> Why? Was it not working without this heap?
->>>>>>
->>>>>> yes, it will not working without this heap.
->>>>>> Memory region is required for audio PD for dynamic loading and remote heap memory
->>>>>> requirements. For more info, please refer below patches, it has provided a more
->>>>>> detailed explanation.
->>>>>> https://lore.kernel.org/all/bb68da04-ef52-4172-8b6e-f4027bcc2786@oss.qualcomm.com/
->>>>>> https://lore.kernel.org/all/effea02f-6ffb-42e9-87df-081caafab728@oss.qualcomm.com/
->>>>>
->>>>> This triggers a bunch of questions:
->>>>>
->>>>> - What is audio PD?
->>>>>
->>>> Audio PD is a protection domain which is running on DSP for audio
->>>> specific processing.
->>>>> - Is it a required component?
->>>> yes. it is needed wherever there is some audio use cases where
->>>> DSP audio PD dynamic loading is needed.
->>>
->>> Which use cases?
->>>
->>>>> - For which platforms ?
->>>>>
->>>> For platforms that require dynamic loading of DSP audio PD.
->>>
->>> Please be more specific, we are not playing a guessing game here.
->>>
->>>>> - What happens if there is a memory region, but it is not used by the
->>>>>   driver (SM8650, SM8550).
->>>>>
->>>> It won't be used.
->>>
->>> So, what happens? DSP crash? system reboot? blue smoke coming from the SoC?
->>>
->>> I'm asking all those questions to understand:
->>> - whether this is applicable to previous SC7280 platforms or just RB3Gen2 / IDP
->>> - whether this needs to be backported or not
->>> - whether a similar fix should be applied to other platforms.
->>
->> I wouldn't worry about FP5 too much (albeit it's apparently not easy
->> to test it out and even having spent some time trying to, I couldn't
->> figure out how these things connect), but the chromebooks may be
->> potentially problematic. That said, we can overwrite it in sc7280-chrome
->> if necessary
-> 
-> What about NothingPhone?
+Some time ago we started the process of converting HW blocks to use
+revision-based checks instead of having feature bits (which are easy to
+miss or to set incorrectly). Then the process of such a conversion was
+postponed. (Mostly) finish the conversion. The only blocks which still
+have feature bits are SSPP, WB and VBIF. In the rare cases where
+behaviour actually differs from platform to platform (or from block to
+block) use unsigned long bitfields, they have simpler syntax to be
+checked and don't involve test_bit() invocation.
 
-I got Nothing to say, we can ask +Eugene to test it
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+---
+Changes in v5:
+- Added version check in _dpu_encoder_phys_cmd_update_intf_cfg() (Neil)
+  Technically it's not necessary, but it makes it easier to follow the
+  code.
+- Fixed commit message for the DPU_MDP_AUDIO_SELECT patch (Neil)
+- Link to v4: https://lore.kernel.org/r/20250519-dpu-drop-features-v4-0-6c5e88e31383@oss.qualcomm.com
 
-But I suppose you should be able to check if 845/8150 needs it
-and we can probably assume the base-7280's config matches
+Changes in v4:
+- Rebased on top of linux-next
+- Dropped three controversial patches, will be submitted separately
+- Folded MIXER_SDM845_MASK into MIXER_MSM8998_MASK as they are equal
+  now.
+- Link to v3: https://lore.kernel.org/r/20250424-dpu-drop-features-v3-0-cdaca81d356f@oss.qualcomm.com
 
-Konrad
+Changes in v3:
+- Repost, fixing email/author issues caused by b4 / mailmap interaction
+- Link to v2: https://lore.kernel.org/r/20250424-dpu-drop-features-v2-0-0a9a66a7b3a2@oss.qualcomm.com
+
+Changes in v2:
+- Rebased on top of the current msm-next
+- Link to v1: https://lore.kernel.org/r/20241214-dpu-drop-features-v1-0-988f0662cb7e@linaro.org
+
+---
+Dmitry Baryshkov (30):
+      drm/msm/dpu: stop passing mdss_ver to setup_timing_gen()
+      drm/msm/dpu: drop INTF_SC7280_MASK
+      drm/msm/dpu: inline _setup_ctl_ops()
+      drm/msm/dpu: inline _setup_dsc_ops()
+      drm/msm/dpu: inline _setup_dspp_ops()
+      drm/msm/dpu: inline _setup_mixer_ops()
+      drm/msm/dpu: remove DSPP_SC7180_MASK
+      drm/msm/dpu: get rid of DPU_CTL_HAS_LAYER_EXT4
+      drm/msm/dpu: get rid of DPU_CTL_ACTIVE_CFG
+      drm/msm/dpu: get rid of DPU_CTL_FETCH_ACTIVE
+      drm/msm/dpu: get rid of DPU_CTL_DSPP_SUB_BLOCK_FLUSH
+      drm/msm/dpu: get rid of DPU_CTL_VM_CFG
+      drm/msm/dpu: get rid of DPU_DATA_HCTL_EN
+      drm/msm/dpu: get rid of DPU_INTF_STATUS_SUPPORTED
+      drm/msm/dpu: get rid of DPU_INTF_INPUT_CTRL
+      drm/msm/dpu: get rid of DPU_PINGPONG_DSC
+      drm/msm/dpu: get rid of DPU_PINGPONG_DITHER
+      drm/msm/dpu: get rid of DPU_MDP_VSYNC_SEL
+      drm/msm/dpu: get rid of DPU_MDP_PERIPH_0_REMOVED
+      drm/msm/dpu: get rid of DPU_MDP_AUDIO_SELECT
+      drm/msm/dpu: get rid of DPU_MIXER_COMBINED_ALPHA
+      drm/msm/dpu: get rid of DPU_DIM_LAYER
+      drm/msm/dpu: get rid of DPU_DSC_HW_REV_1_2
+      drm/msm/dpu: get rid of DPU_DSC_OUTPUT_CTRL
+      drm/msm/dpu: get rid of DPU_WB_INPUT_CTRL
+      drm/msm/dpu: get rid of DPU_SSPP_QOS_8LVL
+      drm/msm/dpu: drop unused MDP TOP features
+      drm/msm/dpu: drop ununused PINGPONG features
+      drm/msm/dpu: drop ununused MIXER features
+      drm/msm/dpu: move features out of the DPU_HW_BLK_INFO
+
+ .../drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h    |  49 +++-------
+ .../drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h   |   2 -
+ .../drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h   |   2 -
+ .../drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h   |   2 -
+ .../drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h    |   7 --
+ .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |   7 --
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h |   7 --
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h |   4 -
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h |  17 +---
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h |  11 +--
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h |  39 ++------
+ .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  43 ++-------
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h |  29 +-----
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h |  19 +---
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h |  16 +---
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h |  38 ++------
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |  14 +--
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |   5 -
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h |  16 +---
+ .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |   5 -
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h |   6 --
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  40 ++------
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |  22 +----
+ .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |  46 ++-------
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  43 ++-------
+ .../drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h    |  49 ++--------
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  43 ++-------
+ .../drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h   |  43 ++-------
+ .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   |  48 ++--------
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |   3 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   5 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |   7 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  42 +--------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     | 102 ++------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         | 105 ++++++++++-----------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |   4 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c         |  21 ++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c     |   5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c        |  10 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |  14 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |   5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c          |  28 +++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h          |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c     |   5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c        |   5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h        |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c         |  11 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c          |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |   8 +-
+ 52 files changed, 257 insertions(+), 813 deletions(-)
+---
+base-commit: de63bbeb5af60172f1dd4d45bdc897816753fa69
+change-id: 20241213-dpu-drop-features-7603dc3ee189
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
 
