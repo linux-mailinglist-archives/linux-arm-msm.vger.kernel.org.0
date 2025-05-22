@@ -1,150 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-59053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 488BDAC0CB6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 15:27:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54892AC0D45
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 15:51:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AEDEC1712F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 13:27:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 37BAB7B6807
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 13:48:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2246E28BAB1;
-	Thu, 22 May 2025 13:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4174D28B3F7;
+	Thu, 22 May 2025 13:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HX8/fEVn"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="akWnWdb5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF43828A721;
-	Thu, 22 May 2025 13:27:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873EB2882BC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 13:49:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747920438; cv=none; b=SjWDvh32rLfcwBWJhlXeHbGEiBJLFCmwqmvDcEct8t+IeogVHM0OoaZycKmtHRxWcD/LysSdDLvS8eXe5VFBOxbiOSPR2IivdZ4zQPdB5auZU3nvhD3auu0QMv2pUwmxZ1EXSMYIRV+o7dwlLp5/ciybgTpZBCQLpav9Clj4TOo=
+	t=1747921795; cv=none; b=jyGvX4+M8MLT7V3qTNVmklTUdV0VCZ6DZlXIN7J7NpaN9wj+uhLrRL2cz27vXswalYpotP5jNISESlgnqFbH3GcHpueu/UidKbwxt+/Lb2Pt4Xaw9hY41F63zgfeSZFWqlVwucH9p3TYOlc0629EtJ4pUK49JwTxtYemsxiWzC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747920438; c=relaxed/simple;
-	bh=HCEjzAxEoNpGh9RhZKRmEp/YfkDRMjOx87EArtdY46E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=egVBsucqZ4GmVl4mZO5YoJD8qcFia4mN4HRKHY8+hn+kxvg0+7XJyLkN8HMer/+pYKF2ltpWBPb2Jg5pz5G9yKO/4kCCVzVnEfQ9AypXEgdVZ59ZiVL810FvfV4x4R+ZuK0GtS61ColkfJVzpBtAOe/od/yd8jVFRLP1JwEpQFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HX8/fEVn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41359C4CEE4;
-	Thu, 22 May 2025 13:27:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747920437;
-	bh=HCEjzAxEoNpGh9RhZKRmEp/YfkDRMjOx87EArtdY46E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HX8/fEVnJvd/yp+XvMm6fuoT2Be58dmLXfJr8hgrabR73FFcNigPFKdn+c3GtPvVq
-	 6okjJznCebd8m4O8UJyXi0mht1LUzLR72gd8OH1y0nAmyd/xiRdMcA9XmFzf32q6tV
-	 jIO8+Kp5rGT0S4VgtqsRPW7Hv8I0SljmLnNh5oLnpbHkNsvBQ38Jbe0HXa9NAa1Qhl
-	 eHtLZtobi80OWuumLi4g3zf2jPDyKEVkacw+YhuM5AZEHlSGxToAC+qIdECIxH6+bY
-	 3uHtIFk8lKy3sIDLZmA5C4nOnaYjcrbWWWny0shY57JnjSnmb3za+qk148NsSsDTuH
-	 HY+tZN2kfneWQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1uI5x4-000000003QS-1Ibp;
-	Thu, 22 May 2025 15:27:14 +0200
-Date: Thu, 22 May 2025 15:27:14 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Melody Olvera <melody.olvera@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@linaro.org>, Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v5 06/10] phy: qcom: Add M31 based eUSB2 PHY driver
-Message-ID: <aC8mMiw2o3MRmBtm@hovoldconsulting.com>
-References: <20250421-sm8750_usb_master-v5-0-25c79ed01d02@oss.qualcomm.com>
- <20250421-sm8750_usb_master-v5-6-25c79ed01d02@oss.qualcomm.com>
+	s=arc-20240116; t=1747921795; c=relaxed/simple;
+	bh=leZavQ5av0yU4ztaqrk91pv3D6r37eWmGgWEV80j9rA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pirpr300x8/fVCPiPXvp0CKfwDomBEB1y/9HcAIw4aLg12wiqQ7aPNPk+zhQw+CoN6ynLQCKxRay4ugDNoHmlq1zowG/YPt10Jc+F3Z9166TKNA2erum+RBq0gJxvaZQiZjC8gaurd25jBbyWVR1J94MSf+J0sFGZha3OdPCtfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=akWnWdb5; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1747921792;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=L7ICUgElTJOvmuW/fRUrN0uPtBQoWoTMXBi3f1fVLcg=;
+	b=akWnWdb5RMaQIjzhuRYHGja1TyFKfpOyJfUbqvQi9HE5YJtCHhap/ifB/DdZQhijSCmAET
+	02EqjaHHqGluXdD+6hzOXfgjoPqGH27msmp9x/kwyabFzunIlIbW0DcYALd41n5rmN4PVZ
+	9TSaR/6HKymqTizb6ge/6mg7zOPcHfQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-127-9bJCscLYMMi3ZibaRJQqiw-1; Thu, 22 May 2025 09:49:51 -0400
+X-MC-Unique: 9bJCscLYMMi3ZibaRJQqiw-1
+X-Mimecast-MFC-AGG-ID: 9bJCscLYMMi3ZibaRJQqiw_1747921790
+Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-3a364d2d0efso3008461f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 06:49:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747921790; x=1748526590;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=L7ICUgElTJOvmuW/fRUrN0uPtBQoWoTMXBi3f1fVLcg=;
+        b=t71HEGfee4dwT1eArIBSUHrxiUwAFxZWW3tVyO8rEwRfm/kEp20zSbhdEgZeneQQNj
+         ps9lOGgNcxcNt6E36vke9xeu/YseElDCQ3+SKV8eeb/z2qWwEQFKTNczeQEuDH1Hgcnp
+         RuR8epYx5pyhZ9jl5jK+G1GSU78vGkqlY6fhiGa8wV/cThKziTwC21Ztrndould0j+Yg
+         e4i5g15cLGGC/aYpYTn6/ukZ9Mryjl17zMNJsEdzYUVOC/PgYVMXZ2g6QGKeJVKvMNoO
+         i5qWilNR+7w4GDJivTMsyv3+WBCVUM0HA5aQKRB4ClocpatzxPk762QvtNRdBvtChMCl
+         kVnw==
+X-Forwarded-Encrypted: i=1; AJvYcCWMfsUY5FG6IBZ4PMofYLehsUQusNhKJpg1Gi1X+Y+99oRcUmhUMlxkCpA2bE/4viqR33Vf3kfhhpTvCZ9W@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzw8gwpmLGYdz8k+1gdmKomAQZktPsMMl/51WNskeU1p79L2emj
+	5qBRkQDDb47e2HPQMUNxzOXe36ifs0hbrZ7F4L2M82euQ5zjmB69atnCkJfl2sUybFzpSmgeooh
+	bUOeVpdG24QIY5EVbUSf2HDLXLqbPCdF4Koancy06L4DylKJvheoGY4HVEcDSHildKEk=
+X-Gm-Gg: ASbGnct6gdItjSSVGjus6aq0YWtuRJRfFPaE7oQb+V1IrO5KyUUsyuVvmn5htxhcUQe
+	9NY8VrGgwvJ00wBAzLlnoNha4BrqmBJwwjA8oDb4mmptwWqe64f/MDZZ4iRGfGpB0rin5qkiFY1
+	lmui62T1ocRNefXWLKn/ktTKHjP88vgPK63QZHKmp8vqFfdvLlhyPikezWZofy7L1i2MRShFcGJ
+	GiHqXLdspv40bjVATAsWcWb3E1Y+QwzUNVlEeAoI1Bq0t5YqvxO+TEjJqY5s6gXbS620gVc9l/v
+	HlidpG5UNLtc6R22+Q+ayJF4wK3Vedu6ACXUo0CWEsadFHT4C74lNRpSrd8iNPsyfiy6H1OL0GL
+	NbPzYyWXsZyY1OFLRqins0XCwI+qpN0heJHSpTWQ=
+X-Received: by 2002:a5d:5f91:0:b0:3a4:bafb:adca with SMTP id ffacd0b85a97d-3a4bafbb475mr2578846f8f.0.1747921790063;
+        Thu, 22 May 2025 06:49:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEvJZUocjHElLOP1bw5y0rdD1xEFO66HMenoF7MDlcuX++b3x46AoXstbEElsVoZWIJv7r2/A==
+X-Received: by 2002:a5d:5f91:0:b0:3a4:bafb:adca with SMTP id ffacd0b85a97d-3a4bafbb475mr2578805f8f.0.1747921789601;
+        Thu, 22 May 2025 06:49:49 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f22:2e00:6e71:238a:de9f:e396? (p200300d82f222e006e71238ade9fe396.dip0.t-ipconnect.de. [2003:d8:2f22:2e00:6e71:238a:de9f:e396])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca888fcsm24405847f8f.78.2025.05.22.06.49.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 May 2025 06:49:49 -0700 (PDT)
+Message-ID: <37346f0f-8f99-4979-9a0b-7276be6f34b1@redhat.com>
+Date: Thu, 22 May 2025 15:49:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250421-sm8750_usb_master-v5-6-25c79ed01d02@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 10/17] KVM: x86: Compute max_mapping_level with input
+ from guest_memfd
+To: Sean Christopherson <seanjc@google.com>,
+ Ackerley Tng <ackerleytng@google.com>
+Cc: tabba@google.com, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-mm@kvack.org, pbonzini@redhat.com, chenhuacai@kernel.org,
+ mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com,
+ palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
+ vannapurve@google.com, mail@maciej.szmigiero.name, michael.roth@amd.com,
+ wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <5ace54d1-800b-4122-8c05-041aa0ee12a1@redhat.com>
+ <diqzcyc18odo.fsf@ackerleytng-ctop.c.googlers.com>
+ <aC8k-uJ1JV1wh8fZ@google.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <aC8k-uJ1JV1wh8fZ@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Apr 21, 2025 at 03:00:13PM -0700, Melody Olvera wrote:
-> From: Wesley Cheng <quic_wcheng@quicinc.com>
+On 22.05.25 15:22, Sean Christopherson wrote:
+> On Wed, May 21, 2025, Ackerley Tng wrote:
+>>>> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+>>>> index de7b46ee1762..f9bb025327c3 100644
+>>>> --- a/include/linux/kvm_host.h
+>>>> +++ b/include/linux/kvm_host.h
+>>>> @@ -2560,6 +2560,7 @@ static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+>>>>    int kvm_gmem_get_pfn(struct kvm *kvm, struct kvm_memory_slot *slot,
+>>>>    		     gfn_t gfn, kvm_pfn_t *pfn, struct page **page,
+>>>>    		     int *max_order);
+>>>> +int kvm_gmem_mapping_order(const struct kvm_memory_slot *slot, gfn_t gfn);
+>>>>    #else
+>>>>    static inline int kvm_gmem_get_pfn(struct kvm *kvm,
+>>>>    				   struct kvm_memory_slot *slot, gfn_t gfn,
+>>>> @@ -2569,6 +2570,12 @@ static inline int kvm_gmem_get_pfn(struct kvm *kvm,
+>>>>    	KVM_BUG_ON(1, kvm);
+>>>>    	return -EIO;
+>>>>    }
+>>>> +static inline int kvm_gmem_mapping_order(const struct kvm_memory_slot *slot,
+>>>> +					 gfn_t gfn)
+>>>
+>>> Probably should indent with two tabs here.
+>>
+>> Yup!
 > 
-> SM8750 utilizes an eUSB2 PHY from M31.  Add the initialization
-> sequences to bring it out of reset and into an operational state.  This
-> differs to the M31 USB driver, in that the M31 eUSB2 driver will
-> require a connection to an eUSB2 repeater.  This PHY driver will handle
-> the initialization of the associated eUSB2 repeater when required.
+> Nope!  :-)
+> 
+> In KVM, please align the indentation as you did.
+> 
+>   : Yeah, that way of indenting is rather bad practice. Especially for new
+>   : code we're adding or when we touch existing code, we should just use two
+>   : tabs.
+> 
+>   : That way, we can fit more stuff into a single line, and when doing
+>   : simple changes, such as renaming the function or changing the return
+>   : type, we won't have to touch all the parameters.
+> 
+> At the cost of readability, IMO.  The number of eyeballs that read the code is
+> orders of magnitude greater than the number of times a function's parameters end
+> up being shuffled around.  Sacrificing readability and consistenty to avoid a
+> small amount of rare churn isn't a good tradeoff.
 
-> +static int m31eusb2_phy_init(struct phy *uphy)
-> +{
-> +	struct m31eusb2_phy *phy = phy_get_drvdata(uphy);
-> +	const struct m31_eusb2_priv_data *data = phy->data;
-> +	int ret;
-> +
-> +	ret = regulator_bulk_enable(M31_EUSB_NUM_VREGS, phy->vregs);
-> +	if (ret) {
-> +		dev_err(&uphy->dev, "failed to enable regulator, %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	ret = phy_init(phy->repeater);
-> +	if (ret) {
-> +		dev_err(&uphy->dev, "repeater init failed. %d\n", ret);
-> +		goto disable_vreg;
-> +	}
+I new KVM wanted to be weird! :P
 
-> +static int m31eusb2_phy_probe(struct platform_device *pdev)
-> +{
-> +	struct phy_provider *phy_provider;
-> +	const struct m31_eusb2_priv_data *data;
-> +	struct device *dev = &pdev->dev;
-> +	struct m31eusb2_phy *phy;
-> +	int ret;
-> +
-> +	phy = devm_kzalloc(dev, sizeof(*phy), GFP_KERNEL);
-> +	if (!phy)
-> +		return -ENOMEM;
+-- 
+Cheers,
 
-> +	phy->phy = devm_phy_create(dev, NULL, &m31eusb2_phy_gen_ops);
-> +	if (IS_ERR(phy->phy))
-> +		return dev_err_probe(dev, PTR_ERR(phy->phy),
-> +				     "failed to create phy\n");
-> +
-> +	ret = devm_regulator_bulk_get_const(dev, M31_EUSB_NUM_VREGS,
-> +					    m31_eusb_phy_vregs, &phy->vregs);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret,
-> +				"failed to get regulator supplies\n");
-> +
-> +	phy_set_drvdata(phy->phy, phy);
-> +
-> +	phy->repeater = devm_of_phy_get_by_index(dev, dev->of_node, 0);
-> +	if (IS_ERR(phy->repeater))
-> +		return dev_err_probe(dev, PTR_ERR(phy->repeater),
-> +				     "failed to get repeater\n");
+David / dhildenb
 
-Requesting the repeater PHY like this and managing it from the PHY ops
-currently breaks lockdep as I've previously reported here:
-
-	https://lore.kernel.org/lkml/ZnpoAVGJMG4Zu-Jw@hovoldconsulting.com/
-
-I don't think we should merge this until that issue has been resolved as
-it leaves us with an increasing number of (Qualcomm) SoCs where lockdep
-cannot be used, which risks introducing further locking bugs without
-anyone noticing.
-
-Johan
 
