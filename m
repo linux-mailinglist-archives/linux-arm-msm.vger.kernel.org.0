@@ -1,167 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-59026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35747AC08C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 11:31:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95088AC08D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 11:35:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D60339E130F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 09:31:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C2AC3189954C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 09:35:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0C6F254873;
-	Thu, 22 May 2025 09:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0F0F2857C5;
+	Thu, 22 May 2025 09:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zXsFRHcC"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="L45BUgfx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C369267F5D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 09:31:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930CC254873
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 09:35:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747906290; cv=none; b=c0gJTKEz5OgV4bQZYQcR0bD5wDGHbrxQUGuVHywULz8g4YNKKHu0ZvWVAes/tdnfX9i3d26WB2Ko8vMqWVhx3423JK1V9rMJqbwiMujGPLXxPC9JuQ92aKFMph2DXseOCafHSHF9sZ7i3BjB35SYfsKIEuG4qIzTZeMRdm95w74=
+	t=1747906502; cv=none; b=IKymUWOiUsBcDYlC49ISIxaxSq5qdL8dPaUoBW1SyFcATNz8aqM4xwOrjBtIMOPz0ougoZiF/tayBEDRH7bhaa/L877bcDppARejXQxvh9yMiSFUxCcPYA4JNwvj/nto0U/ZcKvYADH0o+sXVnPO35IeklxmSK6tEI2wNhF5hsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747906290; c=relaxed/simple;
-	bh=eulIot54xrSLIqikEp7ew4q+RdW1x6YJs+wIAu8xBK0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S8WNnBTbW0+CTXwoUYRmmvCG5ohQMkiw2jng7O2uRsGgqn0bApDOee88L8goridEaYC4cRsBfpTKfHi3FRvJ7TRAG3OfhMJVQQsxJUOBIA90TncRzYHpvrboytsKnuFUOa/MEvhsYxdIvdJkNDh3hoUHG14KLbAIPpmdyD8ZG84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zXsFRHcC; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-310ce23a660so176382a91.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 02:31:28 -0700 (PDT)
+	s=arc-20240116; t=1747906502; c=relaxed/simple;
+	bh=58P1KmovK8E0jT7GX7NXpA6gJreewwgB0cFZyH3Y3/A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=epQuKx6bNWJEGZ9kiZtWjtkwHVimZtltYfK2cEFscZOhZkPTSOQMNpPg/7Ow0WQBCQNzst0INgFZeMwhZX8Zstr/KOucrVzrOvEJCPLnJN55A9/Sd7rxxwDREF+LuVtK5KwG5K3UClBUWQ046LgPOIbZckiiXxfUiTqIkI+Esvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=L45BUgfx; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-47e9fea29easo2093891cf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 02:35:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747906288; x=1748511088; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=McRA8GfhRgehXg8MYkY0+SUsda90hxI698ZskmPnmFw=;
-        b=zXsFRHcCTN91YSimgUsuDBURAJKbnwKu9DYAVegr07dLr59TIAtiHsvBGRIJ+VbQNt
-         5Qxcfp671rP7E3VLMDMS6f2pFUzsKkQ5MmHFTWeLi7hYXNHt/3F/3pOW8ZPn2OFvd0Oh
-         LILY4pb+JHoY6648SYca69EMV/ix9AgreV9ZsAZLYjOU7Ln0VzR3vyRCddTh8E+VbH7J
-         xB8R65pWuT614+oM3rvEk2pPsVXZHOshP24s31ogBuUakoS82HWgzzhc2Sv6eV6zaPjb
-         cmNb1BUJVFACjDMLkLlwEeBviHKqCDAAJhuH9lKLhkigzpwbtDQA8Xy4kKws+n3BZT9+
-         ryLQ==
+        d=google.com; s=20230601; t=1747906499; x=1748511299; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jy79b00HYU3PgVrvLmPpXmz4H8JXcASWwXNlNoTyvAg=;
+        b=L45BUgfxERcNkbDdEQ8k2mBUZMKnG5y+/R7owbqbaWXmJiOhMHPgvJzLUavv1aPLIu
+         JcfxVdaxerVczHYFDYtMV96zyIQ5F1Xf38LMJaTQ607amH4PdrdAuDAVOxdPFi3WINt6
+         uFKuToSsVZawYl5iwUSKBiBHCRewpRmEEslipVPVfsFTqlJxSC2kdU9NarL9T8eQht+D
+         r7N9VNWx2T6oA1LMoIBjnXNCwdt8F4o4A6klc7qCh3WYZsTCdb5YpRbumAJ+qMrKtNEp
+         HHT6sZypiZ9Q8khB09172MmXPvKJ2A/EaYnBaBx/HynSIFJawt5hG8RQOFfHw5wooyPK
+         mSxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747906288; x=1748511088;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=McRA8GfhRgehXg8MYkY0+SUsda90hxI698ZskmPnmFw=;
-        b=plOX5qt+WuHIPT5EKAtWHVGr66CXRykOS4Hxfiz8XxHFWHHSty1pN8vIZC/iPf35uC
-         WNxVJ2/0rSZQUuTMNQ+S101oMilqvgNymaFRKHf4Mt5resVRDNn8GHWlIXCalU6164r/
-         hPnCXqAB05LnzWLV0ArTSBcQ1GBCKZMSmxNkdkBL/v3kV/3EdHOJU/G03IFyAzmfBass
-         7jG/34kq5K6nxIcMZi8obJrPj7K4LHeB5Bpp5V13ilr83PAx7xehu6w/idnRSEl603Aj
-         BVMOB8eVdcoy/3TA4imnAT23JACTnbdbSyQgkZHZtO9WFGL0lG5XCFIO2Eib+FMVs8CB
-         DYTw==
-X-Forwarded-Encrypted: i=1; AJvYcCVdEPhviJf9NQHCCaXXKqeqGP5vGFzhunf/fSXSeViu+aUgFYZoxisYGqL4jd8wlRb//m+1+OzxAZXOCrK4@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2l5lwT7i6AV67qhI38vs1HEUpSfqYBtQZoeQdFO8ClyrId0jY
-	mEBqg/ipjv8FQd+TSVGA7HACbFmdcskqagQSOxgNmEqCs8qTNMNupRDskXjOYtgU3g==
-X-Gm-Gg: ASbGncuWXaWscXBgF/N08wESVtEGrG2FM+Dwmcg2R8v63c/e6QJBkipdNw5MVoB8LF9
-	9saY7REzvdSQ6/4G/waUEB7ozwERJxUyykhR+1nh4/gmCKJcKCDThVykkopU+uRaP3o8D8K26IP
-	GYmRIKq+si05axvScmode+fvLyG5cjbNJa6T/8NV3wxYX1VJNIvjFj5J3ujmTD3z6hxESa8xELG
-	RWogBIDkXSKZbXnvFM4gdqjlf1cYld1hNDiuwC8Y8juIGc0K1zJl6dv3j3l1gpZhwMuOqJIgQ14
-	w3h2KfSIszZoDrYtg4hZ21c9DvNBzYACfeZPfaVRR6lkejHh0vEEcNokgXmugw==
-X-Google-Smtp-Source: AGHT+IEfA9wKFCWLKzq6OJebXZtbQME9Px6iFLhEXecijsMacaFwVvyT0/nc82hwLeVlFppAYaMfXQ==
-X-Received: by 2002:a17:90a:fc4c:b0:310:8d9a:ede1 with SMTP id 98e67ed59e1d1-3108d9aee0fmr9234584a91.4.1747906288204;
-        Thu, 22 May 2025 02:31:28 -0700 (PDT)
-Received: from thinkpad ([120.60.130.60])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30e9338926esm6340266a91.2.2025.05.22.02.31.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 May 2025 02:31:27 -0700 (PDT)
-Date: Thu, 22 May 2025 15:01:20 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, 
-	James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, bvanassche@acm.org, 
-	andersson@kernel.org, neil.armstrong@linaro.org, dmitry.baryshkov@oss.qualcomm.com, 
-	konrad.dybcio@oss.qualcomm.com, quic_rdwivedi@quicinc.com, quic_cang@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-scsi@vger.kernel.org
-Subject: Re: [PATCH V5 10/11] scsi: ufs: qcom : Introduce phy_power_on/off
- wrapper function
-Message-ID: <zelvl7b5ov66lzbgay42ncdbkof3flv7g3gybqexth5hty6mvq@eemod4qy6gqs>
-References: <20250515162722.6933-1-quic_nitirawa@quicinc.com>
- <20250515162722.6933-11-quic_nitirawa@quicinc.com>
- <k37lk3poz6kzrgnby4sikwmz6rg4ysxsticn3opcil4j3njylp@cvmgwiw6nwy5>
- <9092ed42-ef8b-42cc-a423-c5a486d3b998@quicinc.com>
+        d=1e100.net; s=20230601; t=1747906499; x=1748511299;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jy79b00HYU3PgVrvLmPpXmz4H8JXcASWwXNlNoTyvAg=;
+        b=Xd9RRGOpu5WPAaACKwx8LAzcRoeRBBWceP9eGHiAr1s1sAmKjknBAAxPFhcS/6sx1V
+         1uU14gIfTige6/VUynVEynO3FXAonw4qa/ZjtHikdhbBUjA2Is01s1fpayGz/0saLeI9
+         DOJTdSH3ADR/ZOOij3LPgQWpEMJ0sTteZgXgy4fFsYnWpk27N4zvYcrtjjGA+icg6LQ5
+         y00dZ4xfcXHmiuVDyjEriln0zuc3WCEcwjMGCOYfJTwMlYYyW+rvL0saYcLauts2P4cY
+         EyoW850mi5i0avD73Faw9MjZjKoakaOuo5Ybc4UvI0eHsOe82XWHFHiC15iznDYvet9c
+         bOyA==
+X-Forwarded-Encrypted: i=1; AJvYcCXo+mqYFNZeO0j/DX/BId93nsnxMu0fYZ1ojCjKMRA7OYE/XLXKl3arT/9oBb17I3nao1LPjdvD9DuqKrfa@vger.kernel.org
+X-Gm-Message-State: AOJu0YwaxmwMtUiGza3pzJck9bJvZW0bkMV5n7L2kLsYldnNgp7a6evm
+	uatAGfIxB+XCAH/1xGN1lxZQuzWh2QL35+mc38y84TZeya/JGyDhFMhbiI8uqZax84XI837Ppe7
+	GkhH5K3y13wQ7EqiJeP5zuk85piBujQ5hJwJj9FfQ
+X-Gm-Gg: ASbGncsTYeevULj7gS6sOP9lHSuFEyBZcV3QnGHFqO+wPpc5ggzFH5wH8bZUfUMtiuJ
+	DELVTK3ogA9rOVXyM1QPYTPmqcbBbWUm0yWxchM9RNgDbE5Sis+iDIY1jiu44CqAY+3qec6xwZI
+	TiaY4A7nScAmaI3uOEo3PO6R7fQTd4b/Gco5orKoi/lrhGGH2Sg/yh9A==
+X-Google-Smtp-Source: AGHT+IHkrB0CTaEIuNQ7Dtb6ZGwkgF2U8LyJwoedpdOy6ZMdbF4DAs4s8wGA3z/M3baeoC2jvhF3ZXjjXGuLzYaFc0U=
+X-Received: by 2002:a05:622a:1491:b0:494:763e:d971 with SMTP id
+ d75a77b69052e-49cf199560emr2054371cf.23.1747906499041; Thu, 22 May 2025
+ 02:34:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9092ed42-ef8b-42cc-a423-c5a486d3b998@quicinc.com>
+References: <20250513163438.3942405-1-tabba@google.com> <20250513163438.3942405-11-tabba@google.com>
+ <5ace54d1-800b-4122-8c05-041aa0ee12a1@redhat.com> <CA+EHjTyiiA84spuKqr-2ioiVjEHrcksENLR5uGhY-Avke28-2w@mail.gmail.com>
+ <396dce13-dd72-4efc-9b8e-5b19c1b06386@redhat.com>
+In-Reply-To: <396dce13-dd72-4efc-9b8e-5b19c1b06386@redhat.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Thu, 22 May 2025 10:34:22 +0100
+X-Gm-Features: AX0GCFtiRA83JePbGS8oYvnrZc8qR-vDopez1aCFD727cyCPFwE77yoD1LOwOUo
+Message-ID: <CA+EHjTyT-5bhStuO_3UFdUTMNtA6_7eDd7zXQwdDR4PuwHC=8A@mail.gmail.com>
+Subject: Re: [PATCH v9 10/17] KVM: x86: Compute max_mapping_level with input
+ from guest_memfd
+To: David Hildenbrand <david@redhat.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
+	pankaj.gupta@amd.com, ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, May 22, 2025 at 03:48:29AM +0530, Nitin Rawat wrote:
-> 
-> 
-> On 5/21/2025 7:31 PM, Manivannan Sadhasivam wrote:
-> > On Thu, May 15, 2025 at 09:57:21PM +0530, Nitin Rawat wrote:
-> > 
-> > Subject should mention ufs_qcom_phy_power_{on/off} as phy_power_{on/off} are
-> > generic APIs.
-> > 
-> > > There can be scenarios where phy_power_on is called when PHY is
-> > > already on (phy_count=1). For instance, ufs_qcom_power_up_sequence
-> > > can be called multiple times from ufshcd_link_startup as part of
-> > > ufshcd_hba_enable call for each link startup retries(max retries =3),
-> > > causing the PHY reference count to increase and leading to inconsistent
-> > > phy behavior.
-> > > 
-> > > Similarly, there can be scenarios where phy_power_on or phy_power_off
-> > > might be called directly from the UFS controller driver when the PHY
-> > > is already powered on or off respectiely, causing similar issues.
-> > > 
-> > > To fix this, introduce ufs_qcom_phy_power_on and ufs_qcom_phy_power_off
-> > > wrappers for phy_power_on and phy_power_off. These wrappers will use an
-> > > is_phy_pwr_on flag to check if the PHY is already powered on or off,
-> > > avoiding redundant calls. Protect the is_phy_pwr_on flag with a mutex
-> > > to ensure safe usage and prevent race conditions.
-> > > 
-> > 
-> > This smells like the phy_power_{on/off} calls are not balanced and you are
-> > trying to workaround that in the UFS driver.
-> 
-> Hi Mani,
-> 
-> Yes, there can be scenarios that were not previously encountered because
-> phy_power_on and phy_power_off were only called during system suspend
-> (spm_lvl = 5). However, with phy_power_on now moved to
-> ufs_qcom_setup_clocks, there is a slightly more probability of phy_power_on
-> being called twice, i.e., phy_power_on being invoked when the PHY is already
-> on.
-> 
-> For instance, if the PHY power is already on and the UFS driver calls
-> ufs_qcom_setup_clocks from an error handling context, phy_power_on could be
-> called again which may increase phy_count and can cause inconsistent phy
-> bheaviour . Therefore, we need to have a flag, is_phy_pwr_on, in the
-> controller driver, protected by a mutex, to indicate the state of
-> phy_power_on and phy_power_off.
-> 
+On Thu, 22 May 2025 at 09:56, David Hildenbrand <david@redhat.com> wrote:
+>
+> On 22.05.25 09:22, Fuad Tabba wrote:
+> > Hi David,
+> >
+> > On Wed, 21 May 2025 at 09:01, David Hildenbrand <david@redhat.com> wrote:
+> >>
+> >> On 13.05.25 18:34, Fuad Tabba wrote:
+> >>> From: Ackerley Tng <ackerleytng@google.com>
+> >>>
+> >>> This patch adds kvm_gmem_max_mapping_level(), which always returns
+> >>> PG_LEVEL_4K since guest_memfd only supports 4K pages for now.
+> >>>
+> >>> When guest_memfd supports shared memory, max_mapping_level (especially
+> >>> when recovering huge pages - see call to __kvm_mmu_max_mapping_level()
+> >>> from recover_huge_pages_range()) should take input from
+> >>> guest_memfd.
+> >>>
+> >>> Input from guest_memfd should be taken in these cases:
+> >>>
+> >>> + if the memslot supports shared memory (guest_memfd is used for
+> >>>     shared memory, or in future both shared and private memory) or
+> >>> + if the memslot is only used for private memory and that gfn is
+> >>>     private.
+> >>>
+> >>> If the memslot doesn't use guest_memfd, figure out the
+> >>> max_mapping_level using the host page tables like before.
+> >>>
+> >>> This patch also refactors and inlines the other call to
+> >>> __kvm_mmu_max_mapping_level().
+> >>>
+> >>> In kvm_mmu_hugepage_adjust(), guest_memfd's input is already
+> >>> provided (if applicable) in fault->max_level. Hence, there is no need
+> >>> to query guest_memfd.
+> >>>
+> >>> lpage_info is queried like before, and then if the fault is not from
+> >>> guest_memfd, adjust fault->req_level based on input from host page
+> >>> tables.
+> >>>
+> >>> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> >>> Signed-off-by: Fuad Tabba <tabba@google.com>
+> >>> ---
+> >>>    arch/x86/kvm/mmu/mmu.c   | 92 ++++++++++++++++++++++++++--------------
+> >>>    include/linux/kvm_host.h |  7 +++
+> >>>    virt/kvm/guest_memfd.c   | 12 ++++++
+> >>>    3 files changed, 79 insertions(+), 32 deletions(-)
+> >>>
+> >>> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+> >>> index cfbb471f7c70..9e0bc8114859 100644
+> >>> --- a/arch/x86/kvm/mmu/mmu.c
+> >>> +++ b/arch/x86/kvm/mmu/mmu.c
+> >>> @@ -3256,12 +3256,11 @@ static int host_pfn_mapping_level(struct kvm *kvm, gfn_t gfn,
+> >>>        return level;
+> >>>    }
+> >> [...]
+> >>
+> >>>    static u8 kvm_max_level_for_fault_and_order(struct kvm *kvm,
+> >>>                                            struct kvm_page_fault *fault,
+> >>>                                            int order)
+> >>> @@ -4523,7 +4551,7 @@ static int __kvm_mmu_faultin_pfn(struct kvm_vcpu *vcpu,
+> >>>    {
+> >>>        unsigned int foll = fault->write ? FOLL_WRITE : 0;
+> >>>
+> >>> -     if (fault->is_private || kvm_gmem_memslot_supports_shared(fault->slot))
+> >>> +     if (fault_from_gmem(fault))
+> >>
+> >> Should this change rather have been done in the previous patch?
+> >>
+> >> (then only adjust fault_from_gmem() in this function as required)
+> >>
+> >>>                return kvm_mmu_faultin_pfn_gmem(vcpu, fault);
+> >>>
+> >>>        foll |= FOLL_NOWAIT;
+> >>> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> >>> index de7b46ee1762..f9bb025327c3 100644
+> >>> --- a/include/linux/kvm_host.h
+> >>> +++ b/include/linux/kvm_host.h
+> >>> @@ -2560,6 +2560,7 @@ static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+> >>>    int kvm_gmem_get_pfn(struct kvm *kvm, struct kvm_memory_slot *slot,
+> >>>                     gfn_t gfn, kvm_pfn_t *pfn, struct page **page,
+> >>>                     int *max_order);
+> >>> +int kvm_gmem_mapping_order(const struct kvm_memory_slot *slot, gfn_t gfn);
+> >>>    #else
+> >>>    static inline int kvm_gmem_get_pfn(struct kvm *kvm,
+> >>>                                   struct kvm_memory_slot *slot, gfn_t gfn,
+> >>> @@ -2569,6 +2570,12 @@ static inline int kvm_gmem_get_pfn(struct kvm *kvm,
+> >>>        KVM_BUG_ON(1, kvm);
+> >>>        return -EIO;
+> >>>    }
+> >>> +static inline int kvm_gmem_mapping_order(const struct kvm_memory_slot *slot,
+> >>> +                                      gfn_t gfn)
+> >>
+> >> Probably should indent with two tabs here.
+> >
+> > (I'm fixing the patch before respinning, hence it's me asking)
+> >
+> > Not sure I understand. Indentation here matches the same style as that
+> > for kvm_gmem_get_pfn() right above it in the alignment of the
+> > parameters, i.e., the parameter `gfn_t gfn` is aligned with the
+> > parameter `const struct kvm_memory_slot *slot` (four tabs and a
+> > space).
+>
+> Yeah, that way of indenting is rather bad practice. Especially for new
+> code we're adding or when we touch existing code, we should just use two
+> tabs.
+>
+> That way, we can fit more stuff into a single line, and when doing
+> simple changes, such as renaming the function or changing the return
+> type, we won't have to touch all the parameters.
+>
+> Maybe KVM has its own rules on that ... that's why I said "probably" :)
 
-If phy_power_on() is called twice without phy_power_off(), there can be only 2
-possibilities:
+:)
 
-1. phy_power_off() is not balanced
-2. phy_power_on() is called from a wrong place
+I see, although I agree with you, I'd rather that indentation be
+consistent within the same file.
 
-> This approach is also present in Qualcomm downstream UFS driver and similiar
-> solution in mtk ufs driver to have flag in controller indictring phy power
-> state in their upstream UFS drivers.
-> 
-
-No, having this check in the host driver is clearly a workaround for a broken
-behavior. I do not want to carry this mess all along.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks,
+/fuad
+> --
+> Cheers,
+>
+> David / dhildenb
+>
 
