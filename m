@@ -1,208 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-59062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78A4CAC0F4D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 17:02:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49802AC0F60
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 17:06:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D846C3A89C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 15:01:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 15DC3503295
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 15:05:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8280528C5C1;
-	Thu, 22 May 2025 15:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17B4028C865;
+	Thu, 22 May 2025 15:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oz+QvmtP"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cNhPhkN2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C06239E85;
-	Thu, 22 May 2025 15:01:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C70028C5CA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 15:05:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747926120; cv=none; b=RqYJF4QOpXn287SOYJnrGlzFYuq3cLSyxfSf9Nt6YCXmEmRjdXmV7Lj7hz02NEAAhBeklOH4s5G+Idh+JQZGFVm8YSyI7lHUfs+EyhEY8jhzgfVzvh0g/zgkhfqh+cpPOleaI89L7p9tYgTu1Kg/UNVGe4nunFdOorbNPYwh5cc=
+	t=1747926326; cv=none; b=SJh3UBXmYx/5tWkKCKhBtwb3xwOWqGKopbRKWyHYStBqTNXblm6VUlsxT26UxJ2sLd1RzaPOrDp8KEPX8HU2cp0WDbWfsotTG7+jjPbpbdIvjppyMo72HOff2E3SKsXu/8UfU3XYcvh1TAxId12xvpi0xiNmu60+DgDAt6fRSKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747926120; c=relaxed/simple;
-	bh=1AAQm9CHyytzF4+9O6MKBfp9oHP7mXu2dEOCXa+XQ60=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sW4c/mhavjHn5NEOQppOtTmnOGX/5+421DmxDSbUvWxgufoZ66skBMY3MhJz2Yp+mta6Flq84JEQfPPuZvYuCnz1rRTaLmtc/Tqnbgv7J6hGP6GInXSXGiv04joKxljsUKCPR8F82S+fcqy61UFbwuYlB54EbXae8/vALxJ6Smo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oz+QvmtP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A09C4CEE4;
-	Thu, 22 May 2025 15:01:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747926119;
-	bh=1AAQm9CHyytzF4+9O6MKBfp9oHP7mXu2dEOCXa+XQ60=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Oz+QvmtPcLQhIfHb7Dmv2r8M+WiSoRM5qPUWyn0k87l+wT8VAirzhjzTpBW0eGBlb
-	 UmHr0bWOMyDkznyYF5LwH3teEaFZ1uE9qr6HXEdA+j0uBq3hgFzQ6nt0ZspVQXE85T
-	 OIIkY81dtcbV0m2gziJg01/r6Y2SIPkamj7M1kl4Hwl0qo9CYgYZTmBxYNa7ftFs4G
-	 zPja9fq08Kq/yFwJiQQ67CJDZJ1PPEHri6tbgslerK1on4Zw3xOpk7dM39CBPgwm8x
-	 voI88BFxvrFhvQuMo4HtIGvK0M5a3QE0bAoKlVQx3xcpqnnkL1paG+vNMl/2NKstkd
-	 Ah2lYGSdfnOWQ==
-Date: Thu, 22 May 2025 17:01:57 +0200
-From: Maxime Ripard <mripard@kernel.org>
-To: Liu Ying <victor.liu@nxp.com>
-Cc: Luca Ceresoli <luca.ceresoli@bootlin.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Jagan Teki <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Douglas Anderson <dianders@chromium.org>, 
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Anusha Srivatsa <asrivats@redhat.com>, Paul Kocialkowski <paulk@sys-base.io>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Hui Pu <Hui.Pu@gehealthcare.com>, 
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>, dri-devel@lists.freedesktop.org, asahi@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
-	linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com, 
-	Louis Chauvet <louis.chauvet@bootlin.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Inki Dae <inki.dae@samsung.com>, Kyungmin Park <kyungmin.park@samsung.com>, 
-	Seung-Woo Kim <sw0312.kim@samsung.com>, Manikandan Muralidharan <manikandan.m@microchip.com>, 
-	Adam Ford <aford173@gmail.com>, Adrien Grassein <adrien.grassein@gmail.com>, 
-	Aleksandr Mishin <amishin@t-argos.ru>, Andy Yan <andy.yan@rock-chips.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Benson Leung <bleung@chromium.org>, 
-	Biju Das <biju.das.jz@bp.renesas.com>, Christoph Fritz <chf.fritz@googlemail.com>, 
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>, Detlev Casanova <detlev.casanova@collabora.com>, 
-	Dharma Balasubiramani <dharma.b@microchip.com>, Guenter Roeck <groeck@chromium.org>, 
-	Heiko Stuebner <heiko@sntech.de>, Jani Nikula <jani.nikula@intel.com>, Janne Grunau <j@jannau.net>, 
-	Jerome Brunet <jbrunet@baylibre.com>, Jesse Van Gavere <jesseevg@gmail.com>, 
-	Kevin Hilman <khilman@baylibre.com>, Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Phong LE <ple@baylibre.com>, 
-	Sasha Finkelstein <fnkl.kernel@gmail.com>, Sugar Zhang <sugar.zhang@rock-chips.com>, 
-	Sui Jingfeng <sui.jingfeng@linux.dev>, Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>, 
-	Vitalii Mordan <mordan@ispras.ru>, "Rob Herring (Arm)" <robh@kernel.org>, 
-	Hsin-Te Yuan <yuanhsinte@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
-	Xin Ji <xji@analogixsemi.com>, Aradhya Bhatia <a-bhatia1@ti.com>, 
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Ian Ray <ian.ray@gehealthcare.com>, 
-	Martyn Welch <martyn.welch@collabora.co.uk>, Peter Senna Tschudin <peter.senna@gmail.com>, 
-	Helge Deller <deller@gmx.de>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, 
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Philippe Cornu <philippe.cornu@foss.st.com>, 
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>, Yannick Fertre <yannick.fertre@foss.st.com>, 
-	Alain Volmat <alain.volmat@foss.st.com>, Raphael Gallais-Pou <rgallaispou@gmail.com>, 
-	Michal Simek <michal.simek@amd.com>, Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org
-Subject: Re: [PATCH v3 00/22] drm: convert all bridges to
- devm_drm_bridge_alloc()
-Message-ID: <20250522-eager-cautious-dragon-c09cbe@houat>
-References: <20250509-drm-bridge-convert-to-alloc-api-v3-0-b8bc1f16d7aa@bootlin.com>
- <20250521162216.79dd3290@booty>
- <36ade269-a590-4243-889c-006f37d9ae6e@nxp.com>
+	s=arc-20240116; t=1747926326; c=relaxed/simple;
+	bh=h1MN7X84z+I0Z9lmQjsQT6TsWHF9Kda5k56edkB+wTc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cds1GQhavDQkKnBrVBX2AtmcZ8CkEMUvbbFgsoFX0O0oGz7mOU0vwjr6lCzCe5TuIR7lytgfC+ZgdneagH3rkTt+m9OIYeS46d6CiIIEhZisDuazAwQjND3YdFrEQ0fVIvp6uGcyWVcNi4ULNvw7gWIif1ygPkxtA0MrtlgJ1XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cNhPhkN2; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54MEc9Yu031677
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 15:05:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	h0FXMVGYcKvYPtW8IpaaJtCZ0Z+caHLuXoWIxuTjPfU=; b=cNhPhkN28djh6A3s
+	hev+vBrs334t5fbREWPLgmtRExWNf1sSkj/TZ2uFx2ERyRla9w40aYzKmkOkpx4H
+	LKBJv4Cz4sd6lk3uqZGIWlkav+bP0wny1GdeMe+OIueSLZBgjzxANBnv5pap1Dn+
+	ispo85ejqCgJUv781eBkXy8dSwL5qiiJIyifPmEN8gQ/dlBVyU1pe0l3172lcRdt
+	wglbwf1/pxRjB4V9nMo80vtxcY+NvT1G4B8URTJrP007TOw9g+2w0p7B81VVJtr9
+	36ZLXiqWu+ufyouz2O5wlhOkjzbyZ6AhIutZGK8luAb0GlNEvfRSed9UQJjNm7DG
+	h8IoNw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46s8c25chk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 15:05:23 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c545ac340aso76695685a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 08:05:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747926322; x=1748531122;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=h0FXMVGYcKvYPtW8IpaaJtCZ0Z+caHLuXoWIxuTjPfU=;
+        b=R1GqQ3zcUvJXWIorPJEe6rdphINbsQSCekxNvrK3h46e3O6RkkxoXgyAkxm4aSMKgg
+         jb4HlGG4XPVqnitUzAWp/NbWvHuCVOQb18ve7zRdanSoYr0OOOS3kgClHLfVX5QeFOLL
+         6yLKAKQffv36Eekn4h8vUXQtHXM9PlxGI7QH2paNU4A/HMMv+r5fB/ARRLl6esGZhWBj
+         ujQwhPyzcO0nMV49EM+HY686WJv6kK4uhnkplh02Sj0IK4dRDRrK2q62lVKQO/oe9xLK
+         rlotRct0ASBJ3yvVZJ8CZ0I2gk8/xsPS+UhSihJcwk1ite3vpDhdbgfXvbt+Z1LHVmey
+         WfuA==
+X-Forwarded-Encrypted: i=1; AJvYcCXGTHbh4Q6tjOIt1J5rhijeW0feLHm8G8iQpz6Nq6chTvsO30XPZG8UQ6ZkUjYkKZzIRsi5eD16e6RqjnoU@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4dnsyPSI0PPhFBoADQo0M14pFGj5fso7JOCfRUm+j+JgPp1FG
+	8Oj0g3r0UxgH1HfIQxSzp5nR/WJQIOmm9X7o+S39IAu0CXIZjS9ybPJ4Smi55KL1tzskjZSKA4t
+	ItXfgE6dVhjPmiAO+/KPxHTib+bK5yhFS7sxAZ5by3ef0ka2Gu1cRF40zQSrvX5BhKnvj
+X-Gm-Gg: ASbGncvZrO0Ppm2iVVaGE+YbI4sdTM5E70lakPtaXPvCifVTSzVSZxAlbAV8gXuyJyq
+	7B7iA6rdghy9tqT2DRiZKZKFpvnQG2wEw9uwPebOuOqkUu0XCyHrH2aFCMl2ZoAaxuMb9eHfYZj
+	07vYXxwS8DCVangA/MNHs9MY3/i9O192FyHuczb3Gc2IV4tPoJeo/uuYQSEC9IzSchpP/cikHgx
+	dZCdNuEKrvPgJhpAox3Emj/yYTLVu37gw1YVf3D7t0NX5v8mZf2PSIaeZtncPF3bKBjHnsD3wOt
+	/HjcKWNxkwHgLcRbmZEOUvim3uDYvWhhoINRoPXTS12ox+6j2s+tZyN09jnVc4TCyA==
+X-Received: by 2002:a05:620a:6011:b0:7c7:a574:c0ac with SMTP id af79cd13be357-7cd467068d8mr1686219185a.3.1747926322075;
+        Thu, 22 May 2025 08:05:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH3db3rmTOKk1hXtFyyRXL3VA6Tyc42dGPU3KuPwTslgSfcNhG3bQxN2FLIoLZavERqIUis6w==
+X-Received: by 2002:a05:620a:6011:b0:7c7:a574:c0ac with SMTP id af79cd13be357-7cd467068d8mr1686217385a.3.1747926321731;
+        Thu, 22 May 2025 08:05:21 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad5b29fc7d0sm296353766b.94.2025.05.22.08.05.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 May 2025 08:05:21 -0700 (PDT)
+Message-ID: <53e1127d-77fb-4bb7-a125-18d7afc0d843@oss.qualcomm.com>
+Date: Thu, 22 May 2025 17:05:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="lkfsaolmoihne3h2"
-Content-Disposition: inline
-In-Reply-To: <36ade269-a590-4243-889c-006f37d9ae6e@nxp.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8650: Add support for Oneplus Pad
+ Pro (caihong)
+To: Pengyu Luo <mitltlatltl@gmail.com>, konrad.dybcio@oss.qualcomm.com
+Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+        konradybcio@kernel.org, krzk+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robh@kernel.org
+References: <e4d65994-89dd-4068-a8db-050e698f9bb3@oss.qualcomm.com>
+ <20250521083746.666228-1-mitltlatltl@gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250521083746.666228-1-mitltlatltl@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIyMDE1MyBTYWx0ZWRfX16MMGa35RALm
+ RLxaEfixnKYsSrKq7qPFDZkv9q9pOqjKlXJMoUl7K7TrhpTytvf1LdPrX1j2/EFo23WKaO9hk/Y
+ xav736MkDS6lrtqis9RYk/gfMF5JCYAeTB4ccFyParzshCCD+xjda5daaGfgSbUHvDzr+KoYo8A
+ yzVOaVSISMygY2t7zLyW2R0mr7wcTrLTnExw5Tsn/O17pNkRDI1Jl+aqixlGaLzS2OXYhAfbrdx
+ 6PxnWkdQt3B2kDh7zUCmAZ3zk6btpfj3wcSpfX0e6dgCwGEaMV7TgWXkq9roRvmAIGwHe0CfbUG
+ gAQ4po9K0jypV5V7Ad3eI5YzyhUH1dFooF7AJlDpcdqjW5l/FjgeZVPUyRVRT00/Ljj3B6Bbq0L
+ NyFmyRAOKhYcpj/EftAUMptuHuVhyzWo3Yq4Yeur944RGBRipXmVgzuLJl214gvVrOdJPVjd
+X-Authority-Analysis: v=2.4 cv=RIuzH5i+ c=1 sm=1 tr=0 ts=682f3d33 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=vD8jgx0PVHbVM3FOW20A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: _z4rtiQXs5Lz-7Gyc6ohPtKwkNmRYnNp
+X-Proofpoint-GUID: _z4rtiQXs5Lz-7Gyc6ohPtKwkNmRYnNp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-22_07,2025-05-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 suspectscore=0 malwarescore=0 bulkscore=0
+ mlxlogscore=999 spamscore=0 lowpriorityscore=0 mlxscore=0 priorityscore=1501
+ adultscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505220153
 
+On 5/21/25 10:37 AM, Pengyu Luo wrote:
+> On Wed, May 21, 2025 at 5:54 AM Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> wrote:
+>> On 5/20/25 6:42 PM, Pengyu Luo wrote:
+>>> The OnePlus Pad Pro is an Android tablet based on the Qualcomm SM8650
+>>> platform. Its device codename is "caihong". This patch adds an initial
+>>> devicetree for basic functionality.
 
---lkfsaolmoihne3h2
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v3 00/22] drm: convert all bridges to
- devm_drm_bridge_alloc()
-MIME-Version: 1.0
+[...]
 
-On Thu, May 22, 2025 at 11:20:17AM +0800, Liu Ying wrote:
-> >>       drm: convert many bridge drivers from devm_kzalloc() to devm_drm=
-_bridge_alloc() API
-> >=20
-> > This patch affects multiple drivers. Running get_maintainers.pl
-> > points at Shawn Guo's repository. After reviewing the MAINTAINERS file,
-> > this looks like due to the 'N:' line in:
-> >=20
-> > ARM/FREESCALE IMX / MXC ARM ARCHITECTURE
-> > M:	Shawn Guo <shawnguo@kernel.org>
-> > M:	Sascha Hauer <s.hauer@pengutronix.de>
-> > R:	Pengutronix Kernel Team <kernel@pengutronix.de>
-> > ...
-> > T:	git git://git.kernel.org/pub/scm/linux/kernel/git/shawnguo/linux.git
-> > N:	imx
-> > ...
-> >=20
-> > (https://gitlab.freedesktop.org/drm/misc/kernel/-/blob/drm-misc-next/MA=
-INTAINERS?ref_type=3Dheads#L2511-2528)
-> >=20
-> > Here 'imx' matches the 'drivers/gpu/drm/bridge/imx/imx-legacy-bridge.c'
-> > file that is touched by the patch. That regexp appears overly generic t=
-o me.
-> >=20
-> > Shawn, can it be fixed by making it less generic?
-> >=20
-> > If not, can we at least add a band-aid 'X:' entry for
-> > drivers/gpu/drm/bridge/imx?
-> >=20
-> > I think the other matching entry is the one to consider:
-> >=20
-> > DRM DRIVERS FOR FREESCALE IMX BRIDGE
-> > M:	Liu Ying <victor.liu@nxp.com>
-> > L:	dri-devel@lists.freedesktop.org
-> > S:	Maintained
-> > F:	Documentation/devicetree/bindings/display/bridge/fsl,imx8qxp-ldb.yaml
-> > F:	Documentation/devicetree/bindings/display/bridge/fsl,imx8qxp-pixel-c=
-ombiner.yaml
-> > F:	Documentation/devicetree/bindings/display/bridge/fsl,imx8qxp-pixel-l=
-ink.yaml
-> > F:	Documentation/devicetree/bindings/display/bridge/fsl,imx8qxp-pxl2dpi=
-=2Eyaml
-> > F:	drivers/gpu/drm/bridge/imx/
-> >=20
-> > (https://gitlab.freedesktop.org/drm/misc/kernel/-/blob/drm-misc-next/MA=
-INTAINERS?ref_type=3Dheads#L7940-7948)
-> >=20
-> > However it does not list any trees. I _guess_ drm-misc applies here as
-> > a fallback as well as common sense.
-> >=20
-> > Liu, should this entry have a 'T:' line for drm/misc?
->=20
-> These bridge drivers also don't have a 'T:' line:
->=20
-> DRM DRIVER FOR CHIPONE ICN6211 MIPI-DSI to RGB CONVERTER BRIDGE
-> DRM DRIVER FOR PARADE PS8640 BRIDGE CHIP
-> DRM DRIVER FOR TI DLPC3433 MIPI DSI TO DMD BRIDGE
-> DRM DRIVER FOR TI SN65DSI86 BRIDGE CHIP
-> LONTIUM LT8912B MIPI TO HDMI BRIDGE
-> MEGACHIPS STDPXXXX-GE-B850V3-FW LVDS/DP++ BRIDGES
-> MICROCHIP SAM9x7-COMPATIBLE LVDS CONTROLLER
->=20
-> I think that they fallback to drm-misc since "DRM DRIVERS FOR BRIDGE CHIP=
-S"
-> covers them.  I don't have strong opinion on adding a "T" line to them, at
-> least to "DRM DRIVERS FOR FREESCALE IMX BRIDGE".  Anyway, it would be good
-> to know comments from maintainers for "DRM DRIVERS FOR BRIDGE CHIPS" and
-> "DRM DRIVERS".
+>>> +&i2c2 {
+>>> +     status = "okay";
+>>> +
+>>> +     /* secondary kinetic,ktz8866@11 */
+>>
+>> You can describe it, the driver sets some nonzero default brightness
+>>
+> 
+> But the backlight framework won't index them, which causes sysfs
+> collision when the second instance is registering.
 
-That's good enough to me. drivers/gpu/drm/bridge is indeed under the
-maintenance of drm-misc and there's no exception afaik.
+Have you talked to the backlight maintainers? This shouldn't be too
+complex to figure out
 
-get_maintainers.pl also properly reports it, so I'm not sure we need to
-do anything there.
-
-Maxime
-
---lkfsaolmoihne3h2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaC88ZAAKCRAnX84Zoj2+
-djG+AX9azcCjWg3uajj8kpv9U5tIOYfiLFB/+gEceKcg1OKQ4lA85Sy7O401gsKA
-sHQZxUMBf0Vj0sOJiWj/u8nCjMwjpC+xsQThFbSdD/ITqF4PFVw2BCwG7J/5XsKx
-gWgLGdqwyQ==
-=0NYb
------END PGP SIGNATURE-----
-
---lkfsaolmoihne3h2--
+Konrad
 
