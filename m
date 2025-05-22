@@ -1,137 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-59037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98F98AC0A36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 13:00:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3483BAC0A48
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 13:05:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CF2903B9FAA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 11:00:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 634601BC4F79
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 11:05:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B31623371B;
-	Thu, 22 May 2025 11:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F007B286425;
+	Thu, 22 May 2025 11:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WcCEbIaQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PyMy9Cwk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250D31A23A6;
-	Thu, 22 May 2025 11:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA38F221FAA;
+	Thu, 22 May 2025 11:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747911637; cv=none; b=IJPmV9M3nOw5D7LwoPB8sTVJSkRYI2UMM+DvqeRuNvEoV5MKjHYj6KwFmjhxjPVuhtR8v4Vmj5zxFtJdDmU4PWodMGy5/s00g9ywl5afJ0Bw8nvCAjy1+lTzLesrDJhVNDB78YQAWODLBYNQFZQc0qm6aagAGmwcKpDlXACg2x0=
+	t=1747911939; cv=none; b=S39aMytlqwtKH2i+phKqwt58kJMKQHmvDH+GvmiYhK/oard465WivhiEpHOZ1JjQSFdrixrV7AX+AHSc/Zgcl/2st6X8ybJNC9ZTtyrvqytnuyizfsfCy0xMjsqE2pFcezi0EmADLoFDx10GGQ79Qj+XJdz6HwxjpeqdMjKeKlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747911637; c=relaxed/simple;
-	bh=PYI7vpOuR2UMtKq8PUt1Q1ak0/7zynD9AcO4jhKTgjs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Vg2iIjDnZw0ZAfxD0CcWidoiAj7eptDB8QogJgkFLObPZXN/h7aFgPmzBNJasZ1Pw1LznQ53GZaL+RlaAs9rKW8dW0uN9d5f/QTEtuevC3mP9tpup3Cjq9c9GfJMOMdToA3I61W8Db2o4eQEyfc0CCV+Yo9Own8kZDS7BX15Ic0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WcCEbIaQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5519CC4CEE4;
-	Thu, 22 May 2025 11:00:33 +0000 (UTC)
+	s=arc-20240116; t=1747911939; c=relaxed/simple;
+	bh=5px03ExXDydJ/MrO567tg0hKrlshFFteCf5a8XXEe0U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oUTT0gifa5bAxVUfq94bq1L0FAg779FAPMmvlEtv68tdQhRwxoE6Gu+utEkQNGv/xyg/NxqIWrqY7Afy8enof5bXLiNH2d05ncIhKhHcYG+eyxg4flxGUU/f9AvIEI6L3vkpcFlbItjHJJly+1/CXJ5fP3SWu/O4x8Fwh8UmSj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PyMy9Cwk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7978AC4CEE4;
+	Thu, 22 May 2025 11:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747911636;
-	bh=PYI7vpOuR2UMtKq8PUt1Q1ak0/7zynD9AcO4jhKTgjs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WcCEbIaQ91oyzISl3Wzab95PTIBy/iA/lM1T3q6iTGKzrT3syzSCSxiXzvYcdJ/mn
-	 cmxUq6w7K423sd+23FxVPceaEcuw0wYwsxJXWLVaeMC6+icHJNc28GWR9Hqlvsuj+9
-	 KN/MFsSqmOr+PKDVb7VJ5JkqKxV/sZKUPn+mT+Ulki+sUdmYNM15TlOe6HvP7/h33x
-	 PFW6ethFKy00GvxfQRDyZaqxLsPc4ZLuK2xDD8E9A590gG3P1IRIo02yLZkvFgtuzE
-	 rru4hr+bepkKB7Hv1BYwg/kPim4hNpIdm9gcHV3A9kmvjWQvfnYHdZ4/CwJ6ncPxF7
-	 LsCCDpMHrsgkg==
-Date: Thu, 22 May 2025 13:00:30 +0200
-From: Danilo Krummrich <dakr@kernel.org>
-To: Rob Clark <robdclark@gmail.com>
-Cc: Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>,
-	phasta@kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	Matthew Brost <matthew.brost@intel.com>,
-	Christian =?iso-8859-1?Q?K=F6nig?= <ckoenig.leichtzumerken@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	open list <linux-kernel@vger.kernel.org>,
-	Boris Brezillon <boris.brezillon@collabora.com>
-Subject: Re: [PATCH v4 04/40] drm/sched: Add enqueue credit limit
-Message-ID: <aC8Dzgufa9E2MD6t@pollux>
-References: <CAJs_Fx771FFVDVFMn8YJkR9f9Ad-UQspJ9KKQw4u6Cu4TA7YPA@mail.gmail.com>
- <CACu1E7EL+E-M0N-EAN9Bx7u9O6_pECQQdPE2ph575idhVb2Szg@mail.gmail.com>
- <aCYkk4Y7feltfp79@pollux>
- <CAF6AEGsoG_W3A3+BHV4n5EKZQazFubrCyfrtxVUH7+H4-j7i5A@mail.gmail.com>
- <aCY42rgJC4sQ4tp4@pollux>
- <CAF6AEGubHkdhfJz=bAZvctO1aTKDLwRsRyPzkoVrQ7tA6dRbKw@mail.gmail.com>
- <aCwqAGLLCC2ZLSBK@pollux>
- <CAF6AEGspvuTHU0t9z__p_HkdRNi=cXir3t453AbR6DFNzDpgvw@mail.gmail.com>
- <aCyzyAPbQ1SYbo4q@pollux>
- <CAF6AEGs+WmTO_624A3Pek-1-SD6B4PFu4sDv3htko0ABhfHFzw@mail.gmail.com>
+	s=k20201202; t=1747911939;
+	bh=5px03ExXDydJ/MrO567tg0hKrlshFFteCf5a8XXEe0U=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=PyMy9CwknfsJ5D8XJl/QKA114yTvjNyLGPMe45akHqicCZ9+q0lObrXzbMGEBcJwZ
+	 iRudyZAG/XhozbD4yzroYcP0oL0n/gBblUVS6qmNpvkGVWBdWfYSnEwtQDt+uPkX6g
+	 +pRgXdb9ICd8w+ZbZMpM6uxAbUH7BpqG4YvqZN3s6kiPKXyvV/vVthNuIY8CLbhRkO
+	 e+4yduGAG9BRsHFNIlZKZ6vsQacEvY0KJ/CV5fUmsuhPXxmyEeoDuVg3P6gadm0Sef
+	 YObttLC6NKWZYaI1zx5oeBXm5lStjUggbvU/qIfNVfA+VIyMvN16o948VHdVApTjt/
+	 J3EL5PMR10ENQ==
+Message-ID: <f7de2bbc-4925-430c-b263-226a633e4bfb@kernel.org>
+Date: Thu, 22 May 2025 13:05:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGs+WmTO_624A3Pek-1-SD6B4PFu4sDv3htko0ABhfHFzw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 06/10] phy: qcom: Add M31 based eUSB2 PHY driver
+To: Abel Vesa <abel.vesa@linaro.org>,
+ Melody Olvera <melody.olvera@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20250421-sm8750_usb_master-v5-0-25c79ed01d02@oss.qualcomm.com>
+ <20250421-sm8750_usb_master-v5-6-25c79ed01d02@oss.qualcomm.com>
+ <aAswZg9s41s/m/se@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <aAswZg9s41s/m/se@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, May 20, 2025 at 10:22:54AM -0700, Rob Clark wrote:
-> On Tue, May 20, 2025 at 9:54 AM Danilo Krummrich <dakr@kernel.org> wrote:
-> > On Tue, May 20, 2025 at 09:07:05AM -0700, Rob Clark wrote:
-> > > On Tue, May 20, 2025 at 12:06 AM Danilo Krummrich <dakr@kernel.org> wrote:
-> > > > But let's assume we agree that we want to avoid that userspace can ever OOM itself
-> > > > through async VM_BIND, then the proposed solution seems wrong:
-> > > >
-> > > > Do we really want the driver developer to set an arbitrary boundary of a number
-> > > > of jobs that can be submitted before *async* VM_BIND blocks and becomes
-> > > > semi-sync?
-> > > >
-> > > > How do we choose this number of jobs? A very small number to be safe, which
-> > > > scales badly on powerful machines? A large number that scales well on powerful
-> > > > machines, but OOMs on weaker ones?
-> > >
-> > > The way I am using it in msm, the credit amount and limit are in units
-> > > of pre-allocated pages in-flight.  I set the enqueue_credit_limit to
-> > > 1024 pages, once there are jobs queued up exceeding that limit, they
-> > > start blocking.
-> > >
-> > > The number of _jobs_ is irrelevant, it is # of pre-alloc'd pages in flight.
-> >
-> > That doesn't make a difference for my question. How do you know 1024 pages is a
-> > good value? How do we scale for different machines with different capabilities?
-> >
-> > If you have a powerful machine with lots of memory, we might throttle userspace
-> > for no reason, no?
-> >
-> > If the machine has very limited resources, it might already be too much?
+On 25/04/2025 08:49, Abel Vesa wrote:
+> On 25-04-21 15:00:13, Melody Olvera wrote:
+>> From: Wesley Cheng <quic_wcheng@quicinc.com>
+>>
+>> SM8750 utilizes an eUSB2 PHY from M31.  Add the initialization
 > 
-> It may be a bit arbitrary, but then again I'm not sure that userspace
-> is in any better position to pick an appropriate limit.
-> 
-> 4MB of in-flight pages isn't going to be too much for anything that is
-> capable enough to run vk, but still allows for a lot of in-flight
-> maps.
+> Nitpick: Drop the double space from the beginning of each phrase.
 
-Ok, but what about the other way around? What's the performance impact if the
-limit is chosen rather small, but we're running on a very powerful machine?
+Sorry, but why? That's a correct grammar.
 
-Since you already have the implementation for hardware you have access to, can
-you please check if and how performance degrades when you use a very small
-threshold?
-
-Also, I think we should probably put this throttle mechanism in a separate
-component, that just wraps a counter of bytes or rather pages that can be
-increased and decreased through an API and the increase just blocks at a certain
-threshold.
-
-This component can then be called by a driver from the job submit IOCTL and the
-corresponding place where the pre-allocated memory is actually used / freed.
-
-Depending on the driver, this might not necessarily be in the scheduler's
-run_job() callback.
-
-We could call the component something like drm_throttle or drm_submit_throttle.
+Best regards,
+Krzysztof
 
