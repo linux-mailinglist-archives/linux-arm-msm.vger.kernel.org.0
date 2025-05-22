@@ -1,143 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-59052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24267AC0C90
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 15:22:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 488BDAC0CB6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 15:27:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AB783189AF79
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 13:22:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AEDEC1712F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 13:27:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB39528BA98;
-	Thu, 22 May 2025 13:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2246E28BAB1;
+	Thu, 22 May 2025 13:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CH1euaTH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HX8/fEVn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFC71DC988
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 13:22:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF43828A721;
+	Thu, 22 May 2025 13:27:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747920126; cv=none; b=GukFUmTGSwmL6sfwbT/LE9+xJFE30I23mCs43H1rzPac8YhpS2rIW0tF+BzSyTd7bY1xVzXdlFDTwZwnI+7dFZfsTv4RMWwjprbBVI6aelEXY6yEOaVIsi4nE3zV3U7BsPxhnPd+OFMmht4e/4Ifzs85kkhpHwVWQIpZlXe9d3k=
+	t=1747920438; cv=none; b=SjWDvh32rLfcwBWJhlXeHbGEiBJLFCmwqmvDcEct8t+IeogVHM0OoaZycKmtHRxWcD/LysSdDLvS8eXe5VFBOxbiOSPR2IivdZ4zQPdB5auZU3nvhD3auu0QMv2pUwmxZ1EXSMYIRV+o7dwlLp5/ciybgTpZBCQLpav9Clj4TOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747920126; c=relaxed/simple;
-	bh=x/s5Tu+PGnUXA98VDqjtzL0ituy1J+k3bmvekwoIDsM=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=htMN4qNTdJ4EaymTemOz420YY0DLD1hXu/tjKtncMn1nxUryc2mgpmsJ7XEwPhQWqAd5Dbb+G8WN51HbQ4doan51Lx9S2Hg+E//C4dU3RJKxvQSeTUkLolL1tl9YZCQA+aDEvFgyr8c/lboGVymp8HsePPHp+dgM/BrIX5+80vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CH1euaTH; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-30a29af28d1so6359257a91.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 06:22:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747920124; x=1748524924; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QKBJvgUrVambsJ2yzaELSbkjwfKz5UacuDjs6ycUHMM=;
-        b=CH1euaTHvwWq6gPxnRV5vfXk+76htBcSYSxqYUE0THVZ7kjADztpjlrCJYqJoPJ7bT
-         qBg4bQIYkXXXs92tia6de+FKItpU3F1zLAua/hRW1e6p7gFtem0Pa7efttPzNcZRCh9N
-         7ZzyiaKLFZFPY3IPQWfO5S/3IVebFZiPaCqb8ZtORAkjydZZVSZxQP4/q0naxLzk1DlH
-         j1itKL7ZfyaGGzQ491XikTGMYgesTOS1fS+0+CUggJaX7ZaEBWwUl31aqqvijAXPZesO
-         xgVnlFZI1VnfTSpBugd1jLtpBUZ7J4oQ1fDgwspJ+1HHIewO09BPvIYylG3BsDey8e/d
-         A/Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747920124; x=1748524924;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QKBJvgUrVambsJ2yzaELSbkjwfKz5UacuDjs6ycUHMM=;
-        b=mF8rfim3J0vcVu0MiWtycrddhoAXauCNDDcU0e0p4lW4yl41SqNKoJjet0Sb2PKIsB
-         F27w/SuzAisXUc+IAs/fm+qv9DYhQkTwgv79pDr4fzdL3TSWQejM+MlIVxPmWdPz7u/j
-         evOEr7j1ZoQDWWz6y4Kn+6rHMgsfjfplKBQgyHAYoNcvshYW16QFzjtAb2nCY8wHAEbZ
-         Zq8FAni3Vdiey9eJhmimeIUku667ZlzgBbLkGQG9magIkcGr4MJ0qTiMsbtmlK+nrAFg
-         Z1inpnpZ4m/+zjwZlOnYW+CF8IvJyM9baNdhyp7Cg3T2ADgwF2oIPKRJlm4Ziu37nH/1
-         ZsUg==
-X-Forwarded-Encrypted: i=1; AJvYcCVSPY121iqZSAbNj1HLAzA5uv/bsGzeMCdN+8LdK5qlRxXszpVB0LZ3SU7CwULeGbhIn120zbweHs6nLmxP@vger.kernel.org
-X-Gm-Message-State: AOJu0YxfgIYC8xghoFQkvQePwpT9EgUGeIbK3icnt/V/+2SWSthT66IK
-	wGvuAN14oCgohwbQ/F+lqrgMiEEjiCLD1yISDpWJU6tW+Uen3X7TlXLK1ii7wrskVHhTiimvCmo
-	COfpQcg==
-X-Google-Smtp-Source: AGHT+IHBr96gW4/tfNbtVKC4wgxsh6Adq1N7ekH0d54ukQBy3Bjy1fOomuwXDQTE4PYbogSQYirL+L39Ifk=
-X-Received: from pjbee16.prod.google.com ([2002:a17:90a:fc50:b0:2fa:15aa:4d1e])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:6ce:b0:2ff:58e1:2bb4
- with SMTP id 98e67ed59e1d1-30e7d5a93aemr30697955a91.22.1747920124403; Thu, 22
- May 2025 06:22:04 -0700 (PDT)
-Date: Thu, 22 May 2025 06:22:02 -0700
-In-Reply-To: <diqzcyc18odo.fsf@ackerleytng-ctop.c.googlers.com>
+	s=arc-20240116; t=1747920438; c=relaxed/simple;
+	bh=HCEjzAxEoNpGh9RhZKRmEp/YfkDRMjOx87EArtdY46E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=egVBsucqZ4GmVl4mZO5YoJD8qcFia4mN4HRKHY8+hn+kxvg0+7XJyLkN8HMer/+pYKF2ltpWBPb2Jg5pz5G9yKO/4kCCVzVnEfQ9AypXEgdVZ59ZiVL810FvfV4x4R+ZuK0GtS61ColkfJVzpBtAOe/od/yd8jVFRLP1JwEpQFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HX8/fEVn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41359C4CEE4;
+	Thu, 22 May 2025 13:27:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747920437;
+	bh=HCEjzAxEoNpGh9RhZKRmEp/YfkDRMjOx87EArtdY46E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HX8/fEVnJvd/yp+XvMm6fuoT2Be58dmLXfJr8hgrabR73FFcNigPFKdn+c3GtPvVq
+	 6okjJznCebd8m4O8UJyXi0mht1LUzLR72gd8OH1y0nAmyd/xiRdMcA9XmFzf32q6tV
+	 jIO8+Kp5rGT0S4VgtqsRPW7Hv8I0SljmLnNh5oLnpbHkNsvBQ38Jbe0HXa9NAa1Qhl
+	 eHtLZtobi80OWuumLi4g3zf2jPDyKEVkacw+YhuM5AZEHlSGxToAC+qIdECIxH6+bY
+	 3uHtIFk8lKy3sIDLZmA5C4nOnaYjcrbWWWny0shY57JnjSnmb3za+qk148NsSsDTuH
+	 HY+tZN2kfneWQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1uI5x4-000000003QS-1Ibp;
+	Thu, 22 May 2025 15:27:14 +0200
+Date: Thu, 22 May 2025 15:27:14 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Melody Olvera <melody.olvera@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@linaro.org>, Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH v5 06/10] phy: qcom: Add M31 based eUSB2 PHY driver
+Message-ID: <aC8mMiw2o3MRmBtm@hovoldconsulting.com>
+References: <20250421-sm8750_usb_master-v5-0-25c79ed01d02@oss.qualcomm.com>
+ <20250421-sm8750_usb_master-v5-6-25c79ed01d02@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <5ace54d1-800b-4122-8c05-041aa0ee12a1@redhat.com> <diqzcyc18odo.fsf@ackerleytng-ctop.c.googlers.com>
-Message-ID: <aC8k-uJ1JV1wh8fZ@google.com>
-Subject: Re: [PATCH v9 10/17] KVM: x86: Compute max_mapping_level with input
- from guest_memfd
-From: Sean Christopherson <seanjc@google.com>
-To: Ackerley Tng <ackerleytng@google.com>
-Cc: David Hildenbrand <david@redhat.com>, tabba@google.com, kvm@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, pbonzini@redhat.com, 
-	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
-	pankaj.gupta@amd.com, ira.weiny@intel.com
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250421-sm8750_usb_master-v5-6-25c79ed01d02@oss.qualcomm.com>
 
-On Wed, May 21, 2025, Ackerley Tng wrote:
-> >> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> >> index de7b46ee1762..f9bb025327c3 100644
-> >> --- a/include/linux/kvm_host.h
-> >> +++ b/include/linux/kvm_host.h
-> >> @@ -2560,6 +2560,7 @@ static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
-> >>   int kvm_gmem_get_pfn(struct kvm *kvm, struct kvm_memory_slot *slot,
-> >>   		     gfn_t gfn, kvm_pfn_t *pfn, struct page **page,
-> >>   		     int *max_order);
-> >> +int kvm_gmem_mapping_order(const struct kvm_memory_slot *slot, gfn_t gfn);
-> >>   #else
-> >>   static inline int kvm_gmem_get_pfn(struct kvm *kvm,
-> >>   				   struct kvm_memory_slot *slot, gfn_t gfn,
-> >> @@ -2569,6 +2570,12 @@ static inline int kvm_gmem_get_pfn(struct kvm *kvm,
-> >>   	KVM_BUG_ON(1, kvm);
-> >>   	return -EIO;
-> >>   }
-> >> +static inline int kvm_gmem_mapping_order(const struct kvm_memory_slot *slot,
-> >> +					 gfn_t gfn)
-> >
-> > Probably should indent with two tabs here.
+On Mon, Apr 21, 2025 at 03:00:13PM -0700, Melody Olvera wrote:
+> From: Wesley Cheng <quic_wcheng@quicinc.com>
 > 
-> Yup!
+> SM8750 utilizes an eUSB2 PHY from M31.  Add the initialization
+> sequences to bring it out of reset and into an operational state.  This
+> differs to the M31 USB driver, in that the M31 eUSB2 driver will
+> require a connection to an eUSB2 repeater.  This PHY driver will handle
+> the initialization of the associated eUSB2 repeater when required.
 
-Nope!  :-)
+> +static int m31eusb2_phy_init(struct phy *uphy)
+> +{
+> +	struct m31eusb2_phy *phy = phy_get_drvdata(uphy);
+> +	const struct m31_eusb2_priv_data *data = phy->data;
+> +	int ret;
+> +
+> +	ret = regulator_bulk_enable(M31_EUSB_NUM_VREGS, phy->vregs);
+> +	if (ret) {
+> +		dev_err(&uphy->dev, "failed to enable regulator, %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	ret = phy_init(phy->repeater);
+> +	if (ret) {
+> +		dev_err(&uphy->dev, "repeater init failed. %d\n", ret);
+> +		goto disable_vreg;
+> +	}
 
-In KVM, please align the indentation as you did.
+> +static int m31eusb2_phy_probe(struct platform_device *pdev)
+> +{
+> +	struct phy_provider *phy_provider;
+> +	const struct m31_eusb2_priv_data *data;
+> +	struct device *dev = &pdev->dev;
+> +	struct m31eusb2_phy *phy;
+> +	int ret;
+> +
+> +	phy = devm_kzalloc(dev, sizeof(*phy), GFP_KERNEL);
+> +	if (!phy)
+> +		return -ENOMEM;
 
- : Yeah, that way of indenting is rather bad practice. Especially for new
- : code we're adding or when we touch existing code, we should just use two
- : tabs.
+> +	phy->phy = devm_phy_create(dev, NULL, &m31eusb2_phy_gen_ops);
+> +	if (IS_ERR(phy->phy))
+> +		return dev_err_probe(dev, PTR_ERR(phy->phy),
+> +				     "failed to create phy\n");
+> +
+> +	ret = devm_regulator_bulk_get_const(dev, M31_EUSB_NUM_VREGS,
+> +					    m31_eusb_phy_vregs, &phy->vregs);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret,
+> +				"failed to get regulator supplies\n");
+> +
+> +	phy_set_drvdata(phy->phy, phy);
+> +
+> +	phy->repeater = devm_of_phy_get_by_index(dev, dev->of_node, 0);
+> +	if (IS_ERR(phy->repeater))
+> +		return dev_err_probe(dev, PTR_ERR(phy->repeater),
+> +				     "failed to get repeater\n");
 
- : That way, we can fit more stuff into a single line, and when doing
- : simple changes, such as renaming the function or changing the return
- : type, we won't have to touch all the parameters.
+Requesting the repeater PHY like this and managing it from the PHY ops
+currently breaks lockdep as I've previously reported here:
 
-At the cost of readability, IMO.  The number of eyeballs that read the code is
-orders of magnitude greater than the number of times a function's parameters end
-up being shuffled around.  Sacrificing readability and consistenty to avoid a
-small amount of rare churn isn't a good tradeoff.
+	https://lore.kernel.org/lkml/ZnpoAVGJMG4Zu-Jw@hovoldconsulting.com/
+
+I don't think we should merge this until that issue has been resolved as
+it leaves us with an increasing number of (Qualcomm) SoCs where lockdep
+cannot be used, which risks introducing further locking bugs without
+anyone noticing.
+
+Johan
 
