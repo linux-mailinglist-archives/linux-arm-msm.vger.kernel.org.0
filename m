@@ -1,49 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-59146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEB78AC1778
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 01:18:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8093AC177B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 01:18:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 12F4D1C03000
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 23:18:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2558FA269AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 23:18:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C5D52D026A;
-	Thu, 22 May 2025 23:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0CAF2D028F;
+	Thu, 22 May 2025 23:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YP72t/cH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C8+Fp2bA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E121D2C376B;
-	Thu, 22 May 2025 23:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7604A2D028D;
+	Thu, 22 May 2025 23:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747955919; cv=none; b=GGoButRua//mCatbl7CJSRynI2dyjy9hGfs2Mi8q0LlzLOGjzXRm5yTh2kduoYxDZHsEis9ttf5aQBfQ1E2sHX4W3f36K6xDo42a4/uOtH2xbsVFQWbZYd2XCGtU/GuN/iZgubAd5fwLN8LpM+alcBj7X5pzdVpk116pv6loXGU=
+	t=1747955923; cv=none; b=dz+CXe3kFrtDY3/hjsxW6f44xpjgBKr43yg7pCfMBtMBE6aqCewlQfZrCyBb2g8D6f5oH0eVukQqD3D35LxXGU/zWI0KkpkaVjOJLfthGTdNUMDZyMKCsmAmP8klsMzSFvoJ6VBM6lJSu7DnNcHABgJEP/xczjeEFmu1NgA5Vp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747955919; c=relaxed/simple;
-	bh=5+7fAY6eR4MG9NgL+IBBN9GTAKyqw2wvO6TVHj4p1J0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=mRSNcqB/GR4sACRfpPjzMcHNehOTRaJIO/uDnITxfcJcudXcDc1Y5LgefQQGO47eURTLzGfnXMIGgNaUdhaftRU0LYAEG6WMDRjWO1dnIOmc6LL8ZBBT27oyxKI5gbzL7lPD8whnwxBkZiRNG2nXDcwonscLm5IUpY7cL3ERAEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YP72t/cH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8726C4CEE4;
-	Thu, 22 May 2025 23:18:35 +0000 (UTC)
+	s=arc-20240116; t=1747955923; c=relaxed/simple;
+	bh=i0PGLJXZvXil9JIWiSO+PGM51YENV2SmH69RJEF9VvQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=fd55M1iF2K7Q5C4vbAL+XnDHI4iDfC8iiPW6P/Cv5xYda+JQeszHHBK0Sp9+iyrCOmBWSI6Rn7UYtooDpBlBFNN/FENpDJZa/jQG53MZsupXiKUYpWSWqvoxaQQf8YQXzsn+lpjSUMQlTjT3fiG7GoiB3X2fSFT1YoXOfk4JWvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C8+Fp2bA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6413FC4CEF1;
+	Thu, 22 May 2025 23:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747955918;
-	bh=5+7fAY6eR4MG9NgL+IBBN9GTAKyqw2wvO6TVHj4p1J0=;
-	h=From:Subject:Date:To:Cc:From;
-	b=YP72t/cHrkt13dZbB0RmKH5rCh4yTHXqfKGg/1z1dmecZFNDvXALUFp+J+e1qKcW8
-	 2X4rqSsgSg3k9nub7aITAlbgxPTAXT37jX/jnOQFUy/hTD0VgJHJ6wprHMC2ipkVyf
-	 p9AbO2VzTg9akgS+Q9VQx+g5FjL8Sd0L7TLzqmXRoqQY3PS8vlHGhQ0MwiWJzZCqZP
-	 oOV7OqvrnTcHkGqGIDnqVUdU8ahnG8P6E9DUf2yIfXg8MIjflQfFb3+2H217sApjxm
-	 /p9JId4UCQdchTFWKLsywjEYUy8Ar0Zk9Y7T+jnz3yKZ5XW3WuuEyjdkS8h1vHlUN2
-	 KBBpeXlV83MxQ==
+	s=k20201202; t=1747955923;
+	bh=i0PGLJXZvXil9JIWiSO+PGM51YENV2SmH69RJEF9VvQ=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=C8+Fp2bAEVOB8NJIIEo2Gh59y+03C/7qP7/iWM9QFL0jpvoiEhRG+EzpbCkqe9nsi
+	 oRksxzalV3FGh+eAeFoOj/gvldPM+fiNJhxcfD/0dRyYYb/zAZRT7dQIdFylneOhVR
+	 fJXUK3Z3Qg/OaZI3FHL2dRvlsIjwbjJgCatYoaBfdUvhNQEXLVZhjWvPnPbyhrLPJ+
+	 VEQpxkcx3TBlDU3025M1/p5fAlgQdv+RE6Eq7RuFr4M04JIjoG1jsosjHcCuADJo8N
+	 CYW4C5A0+EUaxhcSXM/3y/7QEJ0rq0d1z3HloPaWtzNREfInTglZQMpS0MYMn/culW
+	 9cv01jlGJsCJg==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Subject: [PATCH 00/10] Grab IPA IMEM slice through DT, part 2
-Date: Fri, 23 May 2025 01:18:15 +0200
-Message-Id: <20250523-topic-ipa_mem_dts-v1-0-f7aa94fac1ab@oss.qualcomm.com>
+Date: Fri, 23 May 2025 01:18:16 +0200
+Subject: [PATCH 01/10] dt-bindings: sram: qcom,imem: Add a number of
+ missing compatibles
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,11 +53,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALewL2gC/23NTQqDMBAF4KtI1h0xkdRWSuk9ikjUsR1o/Jsog
- nj3Ru2ym4H34H2zCMaBkEUaLGLAiZjaxgd5CkT5Ns0LgSqfhYqUjrSKwbUdlUCdyS3avHIM+lL
- rKomNrJUUftcNWNO8m8/syAP2o6fdUQqLzGan0+D2RyZPwyQhgkJXOj6rqyyT+tEyh/1oPmVrb
- ejPfftWGEbYGnJp0ODs4Acqka3rF+uaAjHgAAAA
-X-Change-ID: 20250523-topic-ipa_mem_dts-58f5d73a1f21
+Message-Id: <20250523-topic-ipa_mem_dts-v1-1-f7aa94fac1ab@oss.qualcomm.com>
+References: <20250523-topic-ipa_mem_dts-v1-0-f7aa94fac1ab@oss.qualcomm.com>
+In-Reply-To: <20250523-topic-ipa_mem_dts-v1-0-f7aa94fac1ab@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -67,62 +66,58 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1747955915; l=2463;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747955915; l=1510;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=5+7fAY6eR4MG9NgL+IBBN9GTAKyqw2wvO6TVHj4p1J0=;
- b=/TJ7cmk/FJQ068DNpf4DiXwjXvvwoHB4aCxNMSQYG6EENJ8OeIgY6tdoB42SC3CMHcHCkab6t
- jV41lYN5NIMDd1hg6qfVsToAjyXPFWfjTvYN1hMN4ZZhRrwWD05AFKq
+ bh=TorWN4qo7AfSPzEc4fT3Ql4uoQ7mKdiBMbLE7+/VWKs=;
+ b=w4WxMQQki6M8pdgAhcmga8HEASw6ZQmcKoC5Xj4ZaXnS9D4E3B9IYRf3rnleTwi8yZdsB3MGG
+ SuiLkglnJxfD9wIDJmH3e4cvFhOuVKx212qx18FZk1cF0hx04dd4FvG
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-The IPA IMEM slice addresses/sizes are hardcoded in the driver. That's
-mucho no bueno, especially since the same versions of IPA are used
-across a number of vastly different platforms, which invalidates that
-approach completely.
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-This series wires up the IMEM slices in DT on almost all platforms
-(need some more time for SDX55/65) and fills in the necessary bindings
-holes.
-
-Tested on SC7280 only, FWIW.
-
-Patches 1-3 are good to go instantly, the rest must wait for the
-bindings changes that were submitted in the series marked as a
-dependency.
+Currently described or not, IMEM is present on *all* Qualcomm SoCs.
+Preemptively add a number of compatibles to ease integration.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
-Konrad Dybcio (10):
-      dt-bindings: sram: qcom,imem: Add a number of missing compatibles
-      arm64: dts: qcom: sdm845: Expand IMEM region
-      arm64: dts: qcom: sc7180: Expand IMEM region
-      arm64: dts: qcom: sc7180: Explicitly describe the IPA IMEM slice
-      arm64: dts: qcom: sc7280: Explicitly describe the IPA IMEM slice
-      arm64: dts: qcom: sdm845: Explicitly describe the IPA IMEM slice
-      arm64: dts: qcom: sm6350: Explicitly describe the IPA IMEM slice
-      arm64: dts: qcom: sm8350: Explicitly describe the IPA IMEM slice
-      arm64: dts: qcom: sm8550: Explicitly describe the IPA IMEM slice
-      arm64: dts: qcom: sm8650: Explicitly describe the IPA IMEM slice
-
  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 13 +++++++++++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi                  | 16 +++++++++++-----
- arch/arm64/boot/dts/qcom/sc7280.dtsi                  |  6 ++++++
- arch/arm64/boot/dts/qcom/sdm845.dtsi                  | 16 +++++++++++-----
- arch/arm64/boot/dts/qcom/sm6350.dtsi                  | 16 ++++++++++++++++
- arch/arm64/boot/dts/qcom/sm8350.dtsi                  | 16 ++++++++++++++++
- arch/arm64/boot/dts/qcom/sm8550.dtsi                  | 16 ++++++++++++++++
- arch/arm64/boot/dts/qcom/sm8650.dtsi                  | 16 ++++++++++++++++
- 8 files changed, 105 insertions(+), 10 deletions(-)
----
-base-commit: 6add743d2854d744c3037235b87c1c9d164fd132
-change-id: 20250523-topic-ipa_mem_dts-58f5d73a1f21
-prerequisite-message-id: <20250523-topic-ipa_imem-v1-0-b5d536291c7f@oss.qualcomm.com>
-prerequisite-patch-id: f6aa0c354d434ec11dd88b93528c05cb3a45bb07
-prerequisite-patch-id: 89f72ef0c3d3f29753b0cb9e290a4036ba380cc1
-prerequisite-patch-id: 330c94ac7c2b42dd86c5f763b133f0d2598fda40
+ 1 file changed, 13 insertions(+)
 
-Best regards,
+diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+index 2711f90d9664b70fcd1e2f7e2dfd3386ed5c1952..70f934e3569068c0781d9ebad16e7da2f7932d6f 100644
+--- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
++++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+@@ -25,14 +25,27 @@ properties:
+           - qcom,qcs8300-imem
+           - qcom,qdu1000-imem
+           - qcom,sa8775p-imem
++          - qcom,sar2130p-imem
+           - qcom,sc7180-imem
+           - qcom,sc7280-imem
++          - qcom,sc8280xp-imem
+           - qcom,sdm630-imem
+           - qcom,sdm845-imem
+           - qcom,sdx55-imem
+           - qcom,sdx65-imem
++          - qcom,sdx75-imem
++          - qcom,sm6115-imem
++          - qcom,sm6125-imem
++          - qcom,sm6350-imem
+           - qcom,sm6375-imem
++          - qcom,sm8150-imem
++          - qcom,sm8250-imem
++          - qcom,sm8350-imem
+           - qcom,sm8450-imem
++          - qcom,sm8550-imem
++          - qcom,sm8650-imem
++          - qcom,sm8750-imem
++          - qcom,x1e80100-imem
+       - const: syscon
+       - const: simple-mfd
+ 
+
 -- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+2.49.0
 
 
