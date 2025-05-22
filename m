@@ -1,205 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-59009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3ECEEAC0596
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 09:23:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA2E3AC05B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 09:28:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4CAC41695DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 07:23:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E44423AC7FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 07:28:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3110221FD5;
-	Thu, 22 May 2025 07:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C143221FD5;
+	Thu, 22 May 2025 07:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YHYQroET"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Ib3yNxEs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72685D8F0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 07:23:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07688202988;
+	Thu, 22 May 2025 07:28:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747898607; cv=none; b=IA6TZ7JlFS1Gz+xqhooWZT9PiOXC3VPQbu9+gNeUGzNstYqUYjCLc5l1iMrGNLnfvosbGxx9yq9Zu0jMpP5sDUsiugAj5oyFCT9lpyGXL1U/FcAHDSQ9xv3pyqu2SG7dPkDy5ZAITStm6mOq4L0+xkUC2XBr0nFLLdNwHHHnnpY=
+	t=1747898923; cv=none; b=dyaPhP40b84Y3ZmbYKRw9OEF50bwaW1289FyaqeI96VdaRasQiw94QbNd/VdhmpQOmK/lkC0FLO7elBLJe4LkPf2ixmSVSH5tx84ouLt/oTWlKBH2xhLlJ+ASSyH9Nxj9sG2LblVm+Ef6bBggC4T2wCLD5HfAjXqnUi/ce/ZQSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747898607; c=relaxed/simple;
-	bh=kfzQFTzqUXl3JoxfHKT9wyaYEVv5cnXsyzO9kmYi/w8=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=aDRVq0mqs3f7lO4zQ/2/U/d8G+WpKArq9DvijbxjORG4Bt00if8B/v1CyZjG/yn05sKrICF6S+4gjQJIbuPgtxWfmyrV4gOkJrMljwEpEmVlpwuw+XJl36GiaZdYAfrlYgV8zuYHaHh0Ld+7NKj40mSJ4cF18kO8VJkHH0k4his=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YHYQroET; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43ce71582e9so63445965e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 00:23:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747898603; x=1748503403; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QZR2UmwyvYbkG1MeoeRYmbzrVJKOcssJezkUQpLtb9g=;
-        b=YHYQroETd7PrtG6P4uu2vCDnb+6kjyRXoH95fy7fepbHmgIsr6eSClNxPHvxQCw6Vo
-         dbBQVe9Ux2+yjhaua+mAypUGrAem37x3+PyWZm0T8yqOz+5U5/QQDV6zCwnE0eATXoUS
-         WR16l/X3OKyB3JReRB3jGdklLeZKIClbBMyY3t3Yh7Xfr60X7O+6TlD2KhjmokW8Cc47
-         oOG/Dos6C2CTGe2dZDHa3McxlOmZM/0eBQcxM1KX7/40434VljMTGWVckSf6Ma+ZezVM
-         vSj+jCb/3Hei+4IZepGtx/EFU8QjRLdjiBEaQ+H+CMNG7pLqO55aQDfIQrsNfNCAkjjM
-         b9Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747898603; x=1748503403;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=QZR2UmwyvYbkG1MeoeRYmbzrVJKOcssJezkUQpLtb9g=;
-        b=jBM1+rF/Rk3j+Ojr2/qwJ4UMR8P4bruZqiz4hyc/NKG+yXCZ0QnIcp1aAurpTUtsCw
-         kQXTHJAoO+BwtGVTXxTXG/+KiGjo8DcXJXq9J1ebwP7e525Tg3OU5EN2IiPsJAqZkVUq
-         oKWbLERYRHmP2kuiHomb0iS2AvkPTwk9G8ShLh5WOVYEHM73HbVM1owW9YjIwGLYwy0p
-         PIEaIXt6X/mf+ocROECPjGPVFHpLgAs/c2JzJZ6pktUmD0Rb1u0wjO3ThqqKH6kAbAqh
-         npaNkksgPImw3yszd2Ftgnds25RB1eEx4Yg7E3PEsfFteKGw4Lz7FkBQXN6sL6Nf/U7b
-         iaHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWkEwd31iYXO7uWHuuZH/SYn99VwTYtDUKilrV3583UkUbkVEr2WWCkPQYzh0ZHwV2X9laGeKHKf0vVNMHm@vger.kernel.org
-X-Gm-Message-State: AOJu0YyzZgr5762SXu+79/0NA3nyXmUNnElBLnghCgfscg6eRp/SxHER
-	4Xup9jcNzcRMgGKt036l9W+lIiFL5VJOSLdiBsCsnFWIS8F3L2c+oj8KKznVMMofG1M=
-X-Gm-Gg: ASbGncvw0R0eixkOpUgU3Wvlj47bn+Fkwj+CdCyvEwxMJjXygJQxBVMYmFQyS/nBQmI
-	G5X90GUuJtUWzd6BD6tgy0dkQ4aj23VbtP6dQ1A+M2ESg9iV/sSa+fxchtHYnHKVpkR6x6Eljpz
-	HpPtFmnFaReoy1za7HrOQNl+n7MNLFT9TMjAEuF1v+4uzcq+Ixu3uDuUToeS9eQQazDzZhIuM+4
-	E0WoA4kwSBpVBPhcMy8IzWd4nvaaK0sTDUlwUzTQyjxt/96+R+NDCLy11/ls5HMQV2xYeRuiKso
-	d3z2VqxOyA4edKD56ubOUielenu7QAmO47Gc0XbIr0i56rqkO5zXbQYPsfQ0fwyOOblWQcCAkLv
-	MmG/xZoRbjwHaS7Rr9fMFjKAS4vuQTgTiu4fABEE=
-X-Google-Smtp-Source: AGHT+IHIvSY7+qwnZ/QQdNvPjKupe5qhn5r92x/K597uQ+Eo6bTe2yY6F9VCdwYcPSbvThPcoAaNew==
-X-Received: by 2002:a05:600c:3f07:b0:43d:77c5:9c1a with SMTP id 5b1f17b1804b1-442fd60b516mr239629295e9.4.1747898603150;
-        Thu, 22 May 2025 00:23:23 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:ca6a:4d93:cd32:83a5? ([2a01:e0a:3d9:2080:ca6a:4d93:cd32:83a5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f3dd94f1sm97180205e9.35.2025.05.22.00.23.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 May 2025 00:23:22 -0700 (PDT)
-Message-ID: <86f5b662-db35-4a2b-83bf-841977d183dd@linaro.org>
-Date: Thu, 22 May 2025 09:23:21 +0200
+	s=arc-20240116; t=1747898923; c=relaxed/simple;
+	bh=KZdv6Z0YK/lfcikuoIW7xyDZNHZ76Zlsa7Mknlwx1N0=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uBmBzH0lUyow58shdB3Cv53XSMJL+iP7lZvi5U6NenFJ7W6e6cmCxUvvdIAcd7xHfE3OIkw9D+nThFPQ1GdZmEgWcF/2kls0l9TiP/D41zz/PPfTarVuwuVttviSLg90/7jPB7UO0gKKzpIa9+SAx8PjFKCiLQp2AdX6x1c8eKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Ib3yNxEs; arc=none smtp.client-ip=217.70.183.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id A22DF43B77;
+	Thu, 22 May 2025 07:28:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1747898917;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4JY0tOi4vZjkrIAmVNhcdxDZ/2M98xTujKUJaASQzHI=;
+	b=Ib3yNxEs/5s44AFOE1RwGqaQ3/C/qZgn2d71AFEvZWt7k9cSiTL6woWNrw80/K+W6/Z/V7
+	kPpQoV2bzFWLRmpCywhJlPQUEg2FXlo+1nPIaf5l0cpBMiAzN9raixCTiTWtHG2MAT2dvw
+	sQ/zOcBmUvR5DU4gtyDa+MzbOlcDIse1XjwVI+yIroFSWP+dFmY21GxXL7/XktKyaWOIPe
+	yff37LPcs4+KyUCuNN9KOzfcxdlETTCBb1PO57HImPoi3YGPlPgcnozmejJeah9bwmPEng
+	p+dHgqDtnYmeAW4q5nFCbFmQTz/G7k6Pz/kBamcKo+eZpnfao0DUC72lv/PdQQ==
+Date: Thu, 22 May 2025 09:28:24 +0200
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+To: Liu Ying <victor.liu@nxp.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
+ <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie
+ <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Andrzej Hajda
+ <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Laurent Pinchart
+ <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>, Jagan Teki
+ <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
+ <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Douglas Anderson
+ <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, Krzysztof
+ Kozlowski <krzk@kernel.org>, Anusha Srivatsa <asrivats@redhat.com>, Paul
+ Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, Hui
+ Pu <Hui.Pu@gehealthcare.com>, Thomas Petazzoni
+ <thomas.petazzoni@bootlin.com>, dri-devel@lists.freedesktop.org,
+ asahi@lists.linux.dev, linux-kernel@vger.kernel.org,
+ chrome-platform@lists.linux.dev, imx@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ linux-stm32@st-md-mailman.stormreply.com, Louis Chauvet
+ <louis.chauvet@bootlin.com>, Alim Akhtar <alim.akhtar@samsung.com>, Inki
+ Dae <inki.dae@samsung.com>, Kyungmin Park <kyungmin.park@samsung.com>,
+ Seung-Woo Kim <sw0312.kim@samsung.com>, Manikandan Muralidharan
+ <manikandan.m@microchip.com>, Adam Ford <aford173@gmail.com>, Adrien
+ Grassein <adrien.grassein@gmail.com>, Aleksandr Mishin
+ <amishin@t-argos.ru>, Andy Yan <andy.yan@rock-chips.com>, AngeloGioacchino
+ Del Regno <angelogioacchino.delregno@collabora.com>, Benson Leung
+ <bleung@chromium.org>, Biju Das <biju.das.jz@bp.renesas.com>, Christoph
+ Fritz <chf.fritz@googlemail.com>, Cristian Ciocaltea
+ <cristian.ciocaltea@collabora.com>, Detlev Casanova
+ <detlev.casanova@collabora.com>, Dharma Balasubiramani
+ <dharma.b@microchip.com>, Guenter Roeck <groeck@chromium.org>, Heiko
+ Stuebner <heiko@sntech.de>, Jani Nikula <jani.nikula@intel.com>, Janne
+ Grunau <j@jannau.net>, Jerome Brunet <jbrunet@baylibre.com>, Jesse Van
+ Gavere <jesseevg@gmail.com>, Kevin Hilman <khilman@baylibre.com>, Kieran
+ Bingham <kieran.bingham+renesas@ideasonboard.com>, Martin Blumenstingl
+ <martin.blumenstingl@googlemail.com>, Matthias Brugger
+ <matthias.bgg@gmail.com>, Philipp Zabel <p.zabel@pengutronix.de>, Phong LE
+ <ple@baylibre.com>, Sasha Finkelstein <fnkl.kernel@gmail.com>, Sugar Zhang
+ <sugar.zhang@rock-chips.com>, Sui Jingfeng <sui.jingfeng@linux.dev>, Tomi
+ Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>, Vitalii Mordan
+ <mordan@ispras.ru>, "Rob Herring (Arm)" <robh@kernel.org>, Hsin-Te Yuan
+ <yuanhsinte@chromium.org>, Pin-yen Lin <treapking@chromium.org>, Xin Ji
+ <xji@analogixsemi.com>, Aradhya Bhatia <a-bhatia1@ti.com>, Tomi Valkeinen
+ <tomi.valkeinen@ideasonboard.com>, Ian Ray <ian.ray@gehealthcare.com>,
+ Martyn Welch <martyn.welch@collabora.co.uk>, Peter Senna Tschudin
+ <peter.senna@gmail.com>, Helge Deller <deller@gmx.de>, Kuninori Morimoto
+ <kuninori.morimoto.gx@renesas.com>, Laurent Pinchart
+ <laurent.pinchart+renesas@ideasonboard.com>, Alexandre Torgue
+ <alexandre.torgue@foss.st.com>, Maxime Coquelin
+ <mcoquelin.stm32@gmail.com>, Philippe Cornu <philippe.cornu@foss.st.com>,
+ Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>, Yannick Fertre
+ <yannick.fertre@foss.st.com>, Alain Volmat <alain.volmat@foss.st.com>,
+ Raphael Gallais-Pou <rgallaispou@gmail.com>, Michal Simek
+ <michal.simek@amd.com>, Jonathan Corbet <corbet@lwn.net>,
+ linux-doc@vger.kernel.org
+Subject: Re: [PATCH v3 00/22] drm: convert all bridges to
+ devm_drm_bridge_alloc()
+Message-ID: <20250522092824.421e766c@booty>
+In-Reply-To: <36ade269-a590-4243-889c-006f37d9ae6e@nxp.com>
+References: <20250509-drm-bridge-convert-to-alloc-api-v3-0-b8bc1f16d7aa@bootlin.com>
+	<20250521162216.79dd3290@booty>
+	<36ade269-a590-4243-889c-006f37d9ae6e@nxp.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 3/5] phy: qcom-uniphy: add more registers from display
- PHYs
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-phy@lists.infradead.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20250520-fd-hdmi-phy-v4-0-fcbaa652ad75@oss.qualcomm.com>
- <20250520-fd-hdmi-phy-v4-3-fcbaa652ad75@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250520-fd-hdmi-phy-v4-3-fcbaa652ad75@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdehfeeiucdltddurdegfedvrddttddmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeertdertddvnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepjeetffdtleehgefhffffudekhfdujeeuvdefhfetleeftefgffekjeetjedtvdevnecuffhomhgrihhnpehfrhgvvgguvghskhhtohhprdhorhhgpdgsohhothhlihhnrdgtohhmnecukfhppedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegsohhothihpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepleehpdhrtghpthhtohepvhhitghtohhrrdhlihhusehngihprdgtohhmpdhrtghpthhtohepmhgrrghrthgvnhdrlhgrnhhkhhhorhhstheslhhinhhugidri
+ hhnthgvlhdrtghomhdprhgtphhtthhopehmrhhiphgrrhgusehkvghrnhgvlhdrohhrghdprhgtphhtthhopehtiihimhhmvghrmhgrnhhnsehsuhhsvgdruggvpdhrtghpthhtoheprghirhhlihgvugesghhmrghilhdrtghomhdprhgtphhtthhopehsihhmohhnrgesfhhffihllhdrtghhpdhrtghpthhtoheprghnughriigvjhdrhhgrjhgurgesihhnthgvlhdrtghomhdprhgtphhtthhopehnvghilhdrrghrmhhsthhrohhngheslhhinhgrrhhordhorhhg
+X-GND-Sasl: luca.ceresoli@bootlin.com
 
-On 20/05/2025 22:44, Dmitry Baryshkov wrote:
-> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Import register definitions from 28nm DSI and HDMI PHYs, adding more UNI
-> PHY registers.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->   drivers/phy/qualcomm/phy-qcom-uniphy.h | 33 +++++++++++++++++++++++++++++++++
->   1 file changed, 33 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-uniphy.h b/drivers/phy/qualcomm/phy-qcom-uniphy.h
-> index e5b79a4dc270f25d8979f51bf4acd6c76998032e..ce782018124b5431ee647575289c963d8fd0de1f 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-uniphy.h
-> +++ b/drivers/phy/qualcomm/phy-qcom-uniphy.h
-> @@ -8,8 +8,19 @@
->   
->   /* PHY registers */
->   #define UNIPHY_PLL_REFCLK_CFG		0x000
-> +#define UNIPHY_PLL_POSTDIV1_CFG		0x004
-> +#define UNIPHY_PLL_CHGPUMP_CFG		0x008
-> +#define UNIPHY_PLL_VCOLPF_CFG		0x00c
-> +#define UNIPHY_PLL_VREG_CFG		0x010
->   #define UNIPHY_PLL_PWRGEN_CFG		0x014
-> +#define UNIPHY_PLL_DMUX_CFG		0x018
-> +#define UNIPHY_PLL_AMUX_CFG		0x01c
->   #define UNIPHY_PLL_GLB_CFG		0x020
-> +#define UNIPHY_PLL_POSTDIV2_CFG		0x024
-> +#define UNIPHY_PLL_POSTDIV3_CFG		0x028
-> +#define UNIPHY_PLL_LPFR_CFG		0x02c
-> +#define UNIPHY_PLL_LPFC1_CFG		0x030
-> +#define UNIPHY_PLL_LPFC2_CFG		0x034
->   #define UNIPHY_PLL_SDM_CFG0		0x038
->   #define UNIPHY_PLL_SDM_CFG1		0x03c
->   #define UNIPHY_PLL_SDM_CFG2		0x040
-> @@ -22,11 +33,33 @@
->   #define UNIPHY_PLL_LKDET_CFG0		0x05c
->   #define UNIPHY_PLL_LKDET_CFG1		0x060
->   #define UNIPHY_PLL_LKDET_CFG2		0x064
-> +#define UNIPHY_PLL_TEST_CFG		0x068
->   #define UNIPHY_PLL_CAL_CFG0		0x06c
-> +#define UNIPHY_PLL_CAL_CFG1		0x070
-> +#define UNIPHY_PLL_CAL_CFG2		0x074
-> +#define UNIPHY_PLL_CAL_CFG3		0x078
-> +#define UNIPHY_PLL_CAL_CFG4		0x07c
-> +#define UNIPHY_PLL_CAL_CFG5		0x080
-> +#define UNIPHY_PLL_CAL_CFG6		0x084
-> +#define UNIPHY_PLL_CAL_CFG7		0x088
->   #define UNIPHY_PLL_CAL_CFG8		0x08c
->   #define UNIPHY_PLL_CAL_CFG9		0x090
->   #define UNIPHY_PLL_CAL_CFG10		0x094
->   #define UNIPHY_PLL_CAL_CFG11		0x098
-> +#define UNIPHY_PLL_EFUSE_CFG		0x09c
-> +#define UNIPHY_PLL_DEBUG_BUS_SEL	0x0a0
-> +#define UNIPHY_PLL_CTRL_42		0x0a4
-> +#define UNIPHY_PLL_CTRL_43		0x0a8
-> +#define UNIPHY_PLL_CTRL_44		0x0ac
-> +#define UNIPHY_PLL_CTRL_45		0x0b0
-> +#define UNIPHY_PLL_CTRL_46		0x0b4
-> +#define UNIPHY_PLL_CTRL_47		0x0b8
-> +#define UNIPHY_PLL_CTRL_48		0x0bc
->   #define UNIPHY_PLL_STATUS		0x0c0
-> +#define UNIPHY_PLL_DEBUG_BUS0		0x0c4
-> +#define UNIPHY_PLL_DEBUG_BUS1		0x0c8
-> +#define UNIPHY_PLL_DEBUG_BUS2		0x0cc
-> +#define UNIPHY_PLL_DEBUG_BUS3		0x0d0
-> +#define UNIPHY_PLL_CTRL_54		0x0d4
->   
->   #endif
-> 
+Hello Liu,
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+On Thu, 22 May 2025 11:20:17 +0800
+Liu Ying <victor.liu@nxp.com> wrote:
+
+> > If not, can we at least add a band-aid 'X:' entry for
+> > drivers/gpu/drm/bridge/imx?
+> > 
+> > I think the other matching entry is the one to consider:
+> > 
+> > DRM DRIVERS FOR FREESCALE IMX BRIDGE
+> > M:	Liu Ying <victor.liu@nxp.com>
+> > L:	dri-devel@lists.freedesktop.org
+> > S:	Maintained
+> > F:	Documentation/devicetree/bindings/display/bridge/fsl,imx8qxp-ldb.yaml
+> > F:	Documentation/devicetree/bindings/display/bridge/fsl,imx8qxp-pixel-combiner.yaml
+> > F:	Documentation/devicetree/bindings/display/bridge/fsl,imx8qxp-pixel-link.yaml
+> > F:	Documentation/devicetree/bindings/display/bridge/fsl,imx8qxp-pxl2dpi.yaml
+> > F:	drivers/gpu/drm/bridge/imx/
+> > 
+> > (https://gitlab.freedesktop.org/drm/misc/kernel/-/blob/drm-misc-next/MAINTAINERS?ref_type=heads#L7940-7948)
+> > 
+> > However it does not list any trees. I _guess_ drm-misc applies here as
+> > a fallback as well as common sense.
+> > 
+> > Liu, should this entry have a 'T:' line for drm/misc?  
+> 
+> These bridge drivers also don't have a 'T:' line:
+> 
+> DRM DRIVER FOR CHIPONE ICN6211 MIPI-DSI to RGB CONVERTER BRIDGE
+> DRM DRIVER FOR PARADE PS8640 BRIDGE CHIP
+> DRM DRIVER FOR TI DLPC3433 MIPI DSI TO DMD BRIDGE
+> DRM DRIVER FOR TI SN65DSI86 BRIDGE CHIP
+> LONTIUM LT8912B MIPI TO HDMI BRIDGE
+> MEGACHIPS STDPXXXX-GE-B850V3-FW LVDS/DP++ BRIDGES
+> MICROCHIP SAM9x7-COMPATIBLE LVDS CONTROLLER
+> 
+> I think that they fallback to drm-misc since "DRM DRIVERS FOR BRIDGE CHIPS"
+> covers them.  I don't have strong opinion on adding a "T" line to them, at
+> least to "DRM DRIVERS FOR FREESCALE IMX BRIDGE".  Anyway, it would be good
+> to know comments from maintainers for "DRM DRIVERS FOR BRIDGE CHIPS" and
+> "DRM DRIVERS".
+
+I agree the fallback seems OK for this MAINTAINERS entry.
+
+The other entry (ARM/FREESCALE IMX / MXC ARM ARCHITECTURE) is another
+story.
+
+> >>       drm/bridge: imx8qxp-pixel-combiner: convert to devm_drm_bridge_alloc() API  
+> > 
+> > Not acked/reviewed, some discussion happened. I am resending it in v4,
+> > possibly with updates based on the discussion.  
+> 
+> I still think the main structures in imx8qxp-pixel-combiner.c and imx*-ldb.c
+> should have the same lifetime with the allocated bridges.  I added a new
+> comment on this driver in v2 just now.
+
+Thanks, let's continue the conversation there.
+
+Luca
+
+-- 
+Luca Ceresoli, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
