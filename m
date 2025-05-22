@@ -1,132 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-59004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C035AC0434
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 07:49:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7A13AC04F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 08:58:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FE349E7989
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 05:48:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC4B79E098D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 06:58:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB1121ACEB7;
-	Thu, 22 May 2025 05:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26C50221FAB;
+	Thu, 22 May 2025 06:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MEXhqQZq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n8Vi2Knm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2F91A8404;
-	Thu, 22 May 2025 05:49:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760BF3BBC9;
+	Thu, 22 May 2025 06:58:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747892940; cv=none; b=RDlZz2Zw5gtDUUmwOicobwZo7q1rUi6ItQQL90kUt80t6u2aC5h7jFOm3hi7xVUG4/T0Sv9Y9WYqiDhSGYS1TLdxj9gbKtvgTwJKwCv2D3AJ5izpuWUWYCJDieDRbf9tYfmNgntUmbMiP+/LcsgYiZ4PXw3t458oa4MQIABYqHY=
+	t=1747897103; cv=none; b=GDSsck4XUTf7Ghp23Pskaa7P519XVHkTSTFmNJBmcyG8J2GHV/frK3drKNWUGcXCdSSc8lM8dJkJ+DzQYU0SRzC+gB1+uJ8F18KWSNcRb2giFK9BAqD468Ef6lugz/mOnXQJDat9fEq6RQ6hoNvcogxfbwCWeTL9ZLO1v03Nosc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747892940; c=relaxed/simple;
-	bh=D5JokSP59ASe1HGXnYivFqbn/bmgi/lDHm1iFZZIxEw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=KUyxcCGgHGyrV3rLo7UQywPz/FvqeYHBZ/DHrzbT5z+45ItbzAowYMlUrdDiwRRo4P5zBz0MjfEilWzxUx0zppKT0sBKAOnic0Ge51PGhgENUrIysYlfpLmoxj1y7A5cJTLaRwuJbI8wwTX5UnqPyAKIHYZYMEth0jB2ZQyuzEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MEXhqQZq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0DB94C4CEE4;
-	Thu, 22 May 2025 05:49:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747892940;
-	bh=D5JokSP59ASe1HGXnYivFqbn/bmgi/lDHm1iFZZIxEw=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=MEXhqQZqwLTecIz+atOI7cO121aErPesCfbxoyhjhnGvjmLrCtryF/Aknp4MSZixq
-	 UJQJvuxxUeoWmwoPxIMj6gllAwHKa/y9i41rm2lCFsLSdymCxoMzWjvPXHE+9Z9Rre
-	 zMoj9Gha4QEP8b7QS1bPPeCOmxKz2PV2xsW58IOHGFgTc4s4mS+tg0R0FIGxbPVnvO
-	 CFtPWMA4st2SVaxDlgIXje9NE+xf+LS3jZRvqSCj6iKZVhZNdmYiDwBHB/PQUrsCfd
-	 CCGvv1Qgn2N1NbjtErfI4OKqRyOjbxwPe/hCpeUS64Rh9WIE6Ax5u6QjO9tUEtgNEx
-	 a/0VElIMZ4Pwg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9BBFC54756;
-	Thu, 22 May 2025 05:48:59 +0000 (UTC)
-From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Date: Thu, 22 May 2025 09:48:51 +0400
-Subject: [PATCH] thermal: qcom: ipq5018: make ops_ipq5018 struct static
+	s=arc-20240116; t=1747897103; c=relaxed/simple;
+	bh=/Lg3si8gVwOqnameydaJqJb5vxdiX8my8fGYMgU+abM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=OmuweK1HpUYSln2Dek3xZQUKJfWD9SG9ukQUhAkDAFJE8F+DfstZ0nirYzbu/dqadGdSkyNgFGD96NOBj+1IhUnPW+/sBlDbXyRqc47BloJKARD2F2tj2YPU06gE56ybs5AFvMLyhMO3FDOnUEx1k/1ADoi2P39y5HwNQ+/onB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n8Vi2Knm; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54LILvRm020952;
+	Thu, 22 May 2025 06:58:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	EF4kaG9PLnD3XpqPRg88hhQWtvSeHYMCzJ0iyi62kto=; b=n8Vi2KnmCa5kW/Pf
+	T3riJW+m7FD6mFaoxjzWqmCOs+KCtaXojKbKQs9i1eR9u+GJbIFiY9qUQPqaXUWf
+	3SRXscFcj60dtVkSCHOWOujCGPZiF6YkBBk616rWqu5GaAryJtChiqLcqSzw2GAc
+	G23p2LfnabqIyFi6Hlmcpj66pVNAUv9Q9m1t3NuFIusi0OkLI0jfEZzxtR2iNiTS
+	W3pCQsnwEKJLdotlSkqz/epHut3vVXAGdHRr0ez46NsNqu/95TGjSQNu4g8mvikt
+	NxbZplU7OXPTNjgSh2h0thF8+6xUjvC5X0NlONZYYmD3Ysb+yE1tJZRHbhzXezMa
+	GcEIVA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf05eus-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 May 2025 06:58:15 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54M6wFCC011711
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 May 2025 06:58:15 GMT
+Received: from [10.253.12.55] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 21 May
+ 2025 23:58:11 -0700
+Message-ID: <c7497f1e-96a3-43e1-b552-64b5811dfc5d@quicinc.com>
+Date: Thu, 22 May 2025 14:58:01 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250522-ipq5018-tsens-sparse-v1-1-97edaaaef27c@outlook.com>
-X-B4-Tracking: v=1; b=H4sIAMK6LmgC/y3MywqDMBCF4VeRWXcgCY23VykuTDPqbNI4o1IQ3
- 72h7fI7cP4TlIRJoa9OEDpY+ZUK7K2C5zKmmZBjMTjjvPHOIufVG9vippQUNY+ihPfQ1rFrYgi
- 2gXLNQhO/v9nH8LPQupf69h+v6wMO8VuHewAAAA==
-X-Change-ID: 20250521-ipq5018-tsens-sparse-4b86d97dbb17
-To: Amit Kucheria <amitk@kernel.org>, 
- Thara Gopinath <thara.gopinath@gmail.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
- Lukasz Luba <lukasz.luba@arm.com>
-Cc: linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>, 
- George Moussalem <george.moussalem@outlook.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1747892937; l=1603;
- i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=AQVbg0exLroJo2VR6NwKRBYnMgg5MIEpgmctdGB8598=;
- b=tpAJawEZhOFGF5BWQgBdrS2gQMZ2F7XTxy01rJUUbdTRqdR+Ohng0RJNl1KX+coo2+FtH90L8
- 1/07OjPaxg5BM/HleCtxKQ0u3x0v+afA//+C80QZ8jZBxJYAmSVL7R5
-X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
- pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
-X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
- with auth_id=364
-X-Original-From: George Moussalem <george.moussalem@outlook.com>
-Reply-To: george.moussalem@outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs615: Enable camss for
+ qcs615-adp-air
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <todor.too@gmail.com>,
+        <rfoss@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>
+References: <20250520-qcs615-adp-air-camss-v1-0-ac25ca137d34@quicinc.com>
+ <20250520-qcs615-adp-air-camss-v1-2-ac25ca137d34@quicinc.com>
+ <b2cf41af-756d-4e78-8df0-0350198d357d@linaro.org>
+Content-Language: en-US
+From: Wenmeng Liu <quic_wenmliu@quicinc.com>
+In-Reply-To: <b2cf41af-756d-4e78-8df0-0350198d357d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: x3W53ueNS4uAOt32x48xwF31_I7VWQgj
+X-Proofpoint-ORIG-GUID: x3W53ueNS4uAOt32x48xwF31_I7VWQgj
+X-Authority-Analysis: v=2.4 cv=ZP3XmW7b c=1 sm=1 tr=0 ts=682ecb07 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
+ a=enoOy_T-X7bchgmFXmcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIyMDA2NyBTYWx0ZWRfXxQfw2ho2BEKq
+ 80JZOPNrqWLzU4K/bd1OuXWJppT+ubHVsC9K2Q2PYkajPgvm7vkSPBCfiwqTc397GoGQ6VowQPb
+ +UsoApnZ3euhMQb7doQ3K6R/dGdL/IrJyDw4HzhpnW/x8mpukvdDeoY74B/Cr2HCjlR1DTAflsZ
+ EvBmDKrCKdiV0TJ1IoayxtXVwyyBw1oXw5gb4oVrNlgo0PheAMjxXDtIRebLdDUd/sPe0M+abYm
+ QhiIb41KZqRzipQfY9qeRiXS04x8qXA1rCzOO8AfVU5yOEXv+gGmvltQtzEfbb+/xaql+z8tIuQ
+ WLm+TiZBEJhmmJXtJj/tGSEEBXgWNXFemrji8Ex+vqkahfRrwxhGu3heE48mqJZsoEpdPv6DV80
+ vlanZha8CoKCMGhKQ4jsD92/f2vYMnZJz/fhFlbdlG2mbOfe/XaO7vH/cUo9qPtU/eOrLy1o
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-22_03,2025-05-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 mlxlogscore=961 suspectscore=0 bulkscore=0
+ impostorscore=0 phishscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
+ clxscore=1015 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505220067
 
-From: George Moussalem <george.moussalem@outlook.com>
 
-Fix a sparse warning by making the ops_ipq5018 struct static.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202505202356.S21Sc7bk-lkp@intel.com/
-Signed-off-by: George Moussalem <george.moussalem@outlook.com>
----
-Fix below sparse warning by making the ops_ipq5018 struct static.
+On 2025/5/21 21:07, Bryan O'Donoghue wrote:
+> On 20/05/2025 09:56, Wenmeng Liu wrote:
+>> This change enables camera driver for QCS615 ADP AIR board.
+>>
+>> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qcs615-ride.dts | 7 +++++++
+>>   1 file changed, 7 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/ 
+>> boot/dts/qcom/qcs615-ride.dts
+>> index 
+>> 2b5aa3c66867676bda59ff82b902b6e4974126f8..be8b829ec508d7de7a4cd6be6d1d4e83b09734bb 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>> @@ -211,6 +211,13 @@ vreg_l17a: ldo17 {
+>>       };
+>>   };
+>> +&camss {
+>> +    vdda-phy-supply = <&vreg_l5a>;
+>> +    vdda-pll-supply = <&vreg_l12a>;
+>> +
+>> +    status = "ok";
+>> +};
+>> +
+>>   &gcc {
+>>       clocks = <&rpmhcc RPMH_CXO_CLK>,
+>>            <&rpmhcc RPMH_CXO_CLK_A>,
+>>
+> 
+> I think there's some confusion.
+> 
+> I'm willing to accept CSID and VFE changes with the minimum proof of TPG 
+> driving it.
+> 
+> But - CSIPHY in CAMSS which is only proven by TPG is obviously not a 
+> proof and again I agree with the consensus here - there's little value 
+> to an end-user in just having the TPG for a camera.
+> 
+> No sensor:
+> CAMSS::CSID
+> CAMSS::VFE
+> 
+> Just about acceptable
+> 
+> No sensor:
+> CAMSS::CSIPHY
+> DTS::CAMSS enable
+> 
+> Is too much of an ask.
+> 
+> Just publish your sensor code ! We need more sensor enablement upstream 
+> anyway.
+> 
+> ---
+> bod
 
-sparse warnings: (new ones prefixed by >>)
->> drivers/thermal/qcom/tsens-v1.c:246:24: sparse: sparse: symbol 'ops_ipq5018' was not declared. Should it be static?
 
-vim +/ops_ipq5018 +246 drivers/thermal/qcom/tsens-v1.c
+Hi bryan,
 
-   245	
- > 246	const struct tsens_ops ops_ipq5018 = {
-   247		.init		= init_tsens_v1_no_rpm,
-   248		.calibrate	= tsens_calibrate_common,
-   249		.get_temp	= get_temp_tsens_valid,
-   250	};
-   251	
----
- drivers/thermal/qcom/tsens-v1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I will upload the sensor code together in the next version.
 
-diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-index 27360e70d62a94e52e67f5aaa45457be165bfeb3..faa5d00788ca6fb29b367857d27596578218358e 100644
---- a/drivers/thermal/qcom/tsens-v1.c
-+++ b/drivers/thermal/qcom/tsens-v1.c
-@@ -243,7 +243,7 @@ struct tsens_plat_data data_8976 = {
- 	.fields		= tsens_v1_regfields,
- };
- 
--const struct tsens_ops ops_ipq5018 = {
-+static const struct tsens_ops ops_ipq5018 = {
- 	.init		= init_tsens_v1_no_rpm,
- 	.calibrate	= tsens_calibrate_common,
- 	.get_temp	= get_temp_tsens_valid,
-
----
-base-commit: 54b982e44c486d604583efe8742557ab56c944e0
-change-id: 20250521-ipq5018-tsens-sparse-4b86d97dbb17
-
-Best regards,
--- 
-George Moussalem <george.moussalem@outlook.com>
-
+Thanks,
+Wenmeng
 
 
