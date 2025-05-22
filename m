@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-59089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 457E2AC12A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 19:49:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36BD9AC12A4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 19:49:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 726003A3DD8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 17:49:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C7D33A435C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 17:49:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AEF5194094;
-	Thu, 22 May 2025 17:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BEF018FC86;
+	Thu, 22 May 2025 17:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LPYIz4wA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jZL9UKNX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670A718CBFB
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 17:49:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C970BDDAD;
+	Thu, 22 May 2025 17:49:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747936161; cv=none; b=gX8lqITPpR9tGTLd4X20g0qWHpSN6Vxdms/Y1nTq/fYDOP05SUbrXxx4d14/6bkWcfusF/brHUWKuk2ubGh5H86W6hEbS74Uuu9DYNCGIpgaeQ640r0PPPZKfVDVHxIMYxG4HwxQGa42ER6zo5g3z51cMRieKt7sHkx99b1MrzM=
+	t=1747936169; cv=none; b=oLUHSzmqfu3H94nAJ6L3qEg+F2bKebAbyjjx0Gmz/EqVOrKjHy0Y3jiCPY43c5+FTSZ3aazm4qbrh6rCq1NKBWI7bIKkov1uECNuGECiHrl/vlZEpUMT8+2cDIVXb4+TbjgX0dmEfU8ir6b43oYn3THh9zchJTY50x6qjBRTViA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747936161; c=relaxed/simple;
-	bh=qWO9DMSfIG61mtWKoaewuFspZ8EMYaI4xLADpGdJvio=;
+	s=arc-20240116; t=1747936169; c=relaxed/simple;
+	bh=v7g1Ex2cXiw8By3eneFXol0Fe6RHlOeOIGko9KQUZ4E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kDWRW2Sp/crgwc48ducCVqoDw3/wg6RK51lpjG0bK22Pzx6q//6uvHvRG6Y4q4XDMqIlk/a2Xtjb29r1M6SBu7KuwvMZg+uDC/MhJLAYKwDdU95X0iTXzxIy2TsMrjmsm5Z8EESnHdJJJwFcRNjU8oVdOPRppzRCjCRd8khR34s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LPYIz4wA; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-442ea0f72f4so4140955e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 10:49:18 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=Cc0Z88RgjgOe/d1EQ0zE7QzRegcsWfYgPpv+evcQDvgMfvGXI5NRQwYydtAmRR/M1N3FBJamybtHi8ErCR/lCGMCHeQ1YVlcQ/2hcXzrpoWxrH5fLpaIU8FEdGRdkoJOsWr/9dEKygr3kimNRz5I3C8935jV3/4PwvXsgCngb9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jZL9UKNX; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-601f1914993so7890723a12.0;
+        Thu, 22 May 2025 10:49:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747936157; x=1748540957; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=epHtLezLMdJyHIaR21zANyD6mo2PDLHwUqkxzHQUEkM=;
-        b=LPYIz4wA4NjNbrRjtduUk74yRJ8DDHKxHWYZNrk769xynu46EEbgxnm3pHKwuKelSU
-         R2hPJLkvIZ8TRRwK3BxYhRgW8Tqaaf3QmNHQ7KmdUznn1pxtzZQGr40eMea30Qtf89dA
-         LOH5rZ9sF1yLVIL/ZDzrb3oAwEp5tK2ymZpxR8Cs+4H1ztqSTbCO5BowS30Shtf/EOT1
-         FIlQa3RC9zu3/ywik0Fddo1Z9ikeWEL/0zLjJQQuMPAYzHsd7qf9mLqpkkcuAEYshwCX
-         MTS6aPbRNaJh+c6ioRjC+F/iiJRoAL/wAhVTWqV7jH8zq6L0E+Fe6c/rpGRTK4j5Vd94
-         uM9g==
+        d=gmail.com; s=20230601; t=1747936166; x=1748540966; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UXlb98Jq8xguu+7ZKl/TCFGce1LzzWdMVuvQ7hjHTWY=;
+        b=jZL9UKNXfwsiKbbUcoFHOnEihhpGRJ9ZteH7Fzz1wA1OSmPEIeEK+iFnC1YKjWp9yd
+         gW/jdHi9DD9lSRnhECqnrCZHH2NFs0p48hfBUV16lOh2sGuZuHP5j+eXqcNiIlNvGlOa
+         qNRHfs/cgRPNunMxsSaitA2kvH/hLiMVcqsyivaHePck2k8+ux9xFSLYO0LqNJN1K21f
+         1I83vEfmuaaJVcRVNCgooUgc3LjcN58poaXn15ktg5d7Le+geLbiL51UYg5xoeBT3mhh
+         z+wX874NUM9FLkIbowF+Cax1KbB95poAp6tM7xMjgBJAXKUfw+TGqVkPdZ5F1Ap2R/6p
+         Iylg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747936157; x=1748540957;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=epHtLezLMdJyHIaR21zANyD6mo2PDLHwUqkxzHQUEkM=;
-        b=QzWQ2WICJ8OuYyD+xfC1e7OVlqIX0vR1KjsZz64lVuHsNWsCR5y2A8m+WQOcthhDQB
-         S0koLJo8AVwEF0DFUfhcCBdxui1c9IKpDvVKMAdkFtLZn5V+AIH+yz/9FTuGf4k+70t/
-         +T41Gu6bBAED/in8ff11beLn/+fiuQ9ooz10Q0ybAmOrv2w05okq8EuMtkr95gygKbra
-         CkSxogWRT2m2u0Z1QL1p6azsRQEpetQ8c4d1gYGFpbx5QRoY2IZCukQTGR5VCpA5nbXB
-         FsVBaYfLP1hnX/y28xGvaVEe18KJQ0OxNNMPbLAeswr4jzTVwJMRX/0y8RSt3OTcJseM
-         +OdA==
-X-Forwarded-Encrypted: i=1; AJvYcCUt3SplxB2G/WyYWhcEfQMCWsTEa/Vmx5qnDgKWEcwujhEk/G4oA4c9EHsYdtdJw7hmMlKaAHgPtCfQskcW@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx+i+HcCjP8S1C6T1clDyGlRQqvJ8QuggS9InRQvBkmiOppJbq2
-	DQf88Mgw+iA+lHB4lA3B9jAfDGhTnDenTpYc2SkBO+VLLi1eErd6fmihF0kPTDFm8Os=
-X-Gm-Gg: ASbGncteRRp+nPdmswheJ/sz4nIGUQu6W/rUpadGC+QmPUy103Ub3L08OK42P25JMA0
-	qO1n4xSuhmUgXn2OmO1PaGvXPlzTxxkbM3jpvMSyYJASqbYKb8oN4T2MdQp1kHi2f2b3Au/o4rA
-	k56I2tfWGkhtiHrz6iuoKSLsaLumYO0QwWZ+OGeZnBkhQVQCJmFa9lr8PH/H5gjW6RUTzcYxRta
-	bSf/WBfDw1TBsSQnZ1a0NysAeMX5Y8Cn1f0E6HxOFZH1/jDMzx9EZoCj01cLylOdI3JwF1S/8ou
-	FKc2NdmgRlTYptXk1ydF/GxF4zhvn963SVVakYKEF24TW54kwtHVAyj4mAtJh0cShikVzMI=
-X-Google-Smtp-Source: AGHT+IEJra81q33bwANLGYFPFrMy0Dodu4U4LuZogq/miQLd07qZyabsFZriokIHn7NTm38qgxxtHw==
-X-Received: by 2002:a05:600c:198d:b0:439:9a40:aa27 with SMTP id 5b1f17b1804b1-442fd66dea4mr97969985e9.5.1747936156703;
-        Thu, 22 May 2025 10:49:16 -0700 (PDT)
-Received: from [192.168.1.29] ([178.197.223.125])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f6f05581sm113164245e9.13.2025.05.22.10.49.14
+        d=1e100.net; s=20230601; t=1747936166; x=1748540966;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UXlb98Jq8xguu+7ZKl/TCFGce1LzzWdMVuvQ7hjHTWY=;
+        b=u2c+8ZCe29alzGKszyWKKAM/VNzS5TjLtwrm3Nj68wtMK5WfRBprdz3a9aG0qUSjQg
+         p9XnleURsYesFgqAvIbJU4nw5pNJay0SQ4gqIZQdbZ/CSP9YHMp3GEapOuXCvSt+fu0c
+         0/c62vTiVDQFpUJynREV+bujuN3h1Hc63Xu4lzHurpLqnc6GAzTQjh9yIyAaUzmJGamP
+         ydqHm4ZoAE3tyUNJM9IvWBnpkvnS1WglS15US3TtPiKk7rX110OLF2g/v01IcmpKJoHf
+         w0mzfQMDI/GXR8SLUh98fMZFmNyvSTpAKCFCJG4f8m4BBBVdU/ylLZsiE4LLr/lbKaly
+         0Hrg==
+X-Forwarded-Encrypted: i=1; AJvYcCUqENUIqVhHz7AwDZOADaAHYq+sbpj+T2AXMfqx02pEdMDQXWZRAMs8CHCf6Oj84P1TaoIa3Xkvlh52@vger.kernel.org, AJvYcCVabkzOQuCL3AWMEQMbkfwlPnJpG+00a2hjXBWMearOQqM/YHOvSrGqDP1TGHTYee5vZrN9Qr3drT2RJC7t@vger.kernel.org, AJvYcCWF7dkdpKMcVy6rOc2Hfm0nrKV9n/8S1bZB2kDtjhFV+GBel9QVHVPpEBA54B0QDzHA/1zAcnkBoD1cDZYC@vger.kernel.org
+X-Gm-Message-State: AOJu0YzklhJALih4pTVGTUSAnllQsM5FAHGEqMP/NpjDnjau8bewZSYP
+	PQOVkyvhSi/GsUInR59ugdvhT1luwHIX5q3j5PNGxUlF98ZKXZCFP5Gg
+X-Gm-Gg: ASbGncufOFEQhJlgiVe3fZyNEPx7Fy2SSt8QdB4Piuv9jcpCad8yb5eV1oEQ2VfrxcZ
+	Zkr4X+3U9ShYYX6KAFJLfk7uy3aXh9fgYNwxewUHrkej1PR5OLnRT23wd6oZaGcpXo5+HGr0jeR
+	XGd/KnsHZdA2zfD4TY3K6piiMaZ8jkYuv9v0Hyq/XNeENyA7v/72KbQhqvSr5ZcHY+0IQyKAfN6
+	aeqwj3DOqDQpUhSxWChehf1K/UYxjtQXso+Iq8Ze4l/RbToCapV8aT9t7lVllTUM+4FhF6O+ZTe
+	B9dD7wpAr10rgAlOWXiFR6DpscTUwjLgo5PG8XC584CJ6PVZOWVHVENBd6Rrj4zQcF7F8SIJnON
+	HM9ZU6C4j6novt1SL
+X-Google-Smtp-Source: AGHT+IEacT+OnQkIksGL3phaucP09y9PwnZSl4uyglfhmqkNpX/VieVElIyjZVOywJVl3/l2zAuGmw==
+X-Received: by 2002:a17:907:3ea4:b0:ad2:49b5:8e0d with SMTP id a640c23a62f3a-ad536b7f1c3mr2350148266b.15.1747936165504;
+        Thu, 22 May 2025 10:49:25 -0700 (PDT)
+Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d047c30sm1101122166b.6.2025.05.22.10.49.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 May 2025 10:49:15 -0700 (PDT)
-Message-ID: <ca732f89-d217-479b-a0ee-131b177dda20@linaro.org>
-Date: Thu, 22 May 2025 19:49:14 +0200
+        Thu, 22 May 2025 10:49:24 -0700 (PDT)
+Message-ID: <dec260e9-8874-4727-9211-de939991a344@gmail.com>
+Date: Thu, 22 May 2025 19:49:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,153 +82,98 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/12] ASoC: dt-bindings: qcom: Add SM6115 LPASS
- rxmacro and vamacro codecs
-To: Alexey Klimov <alexey.klimov@linaro.org>,
- Srinivas Kandagatla <srini@kernel.org>, Mark Brown <broonie@kernel.org>,
- linux-sound@vger.kernel.org
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Dmitry Baryshkov <lumag@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
-References: <20250522-rb2_audio_v3-v3-0-9eeb08cab9dc@linaro.org>
- <20250522-rb2_audio_v3-v3-1-9eeb08cab9dc@linaro.org>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- 2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <20250522-rb2_audio_v3-v3-1-9eeb08cab9dc@linaro.org>
+Subject: Re: [PATCH next 2/2] spi: spi-qpic-snand: add support for 8 bits ECC
+ strength
+Content-Language: hu
+To: Miquel Raynal <miquel.raynal@bootlin.com>,
+ Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: Mark Brown <broonie@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>,
+ Varadarajan Narayanan <quic_varada@quicinc.com>,
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+ linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250502-qpic-snand-8bit-ecc-v1-0-95f3cd08bbc5@gmail.com>
+ <20250502-qpic-snand-8bit-ecc-v1-2-95f3cd08bbc5@gmail.com>
+ <8aa3d4da-da3e-2af4-e0f9-cd56d6259d8f@quicinc.com>
+ <c1729d39-9f7f-4c6d-b8a4-72dfee4bfca5@gmail.com> <878qn2nsa0.fsf@bootlin.com>
+ <16195524-1f31-4968-a3fd-f3d24f1c4223@gmail.com> <87msbhezjf.fsf@bootlin.com>
+ <007881c9-e03c-1473-d8eb-53fbad8c6a8e@quicinc.com>
+ <87frh4ej87.fsf@bootlin.com>
+ <e9f460c3-a575-1014-cca7-27f1d79024e2@quicinc.com>
+ <87h61e8kow.fsf@bootlin.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
+In-Reply-To: <87h61e8kow.fsf@bootlin.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 22/05/2025 19:40, Alexey Klimov wrote:
-> Document compatibles for Qualcomm SM6115 SoC digital RX and
-> VA (voice activation) macro codecs and their clocks.
+2025. 05. 21. 9:52 keltezéssel, Miquel Raynal írta:
+> On 21/05/2025 at 11:08:02 +0530, Md Sadre Alam <quic_mdalam@quicinc.com> wrote:
 > 
-> Cc: Srinivas Kandagatla <srini@kernel.org>
-> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-> ---
->  .../bindings/sound/qcom,lpass-rx-macro.yaml        | 19 +++++++++++++++++++
->  .../bindings/sound/qcom,lpass-va-macro.yaml        | 22 ++++++++++++++++------
->  2 files changed, 35 insertions(+), 6 deletions(-)
+>> Hi,
+>>
+>> On 5/16/2025 7:44 PM, Miquel Raynal wrote:
+>>>
+>>>>>> Interestingly enough, it reports the correct number of bit errors now.
+>>>>>> For me it seems, that the hardware reports the number of the corrected
+>>>>>> *bytes* instead of the corrected *bits*.
+>>>>> I doubt that, nobody counts bytes of errors.
+>>>>> You results are surprising. I initially though in favour of a software
+>>>>> bug, but then it looks even weirder than that. Alam?
+>>>> I have checked with HW team , the QPIC ECC HW engine reports the bit
+>>>> error byte wise not bit wise.
+>>>>
+>>>> e.g
+>>>>      Byte0 --> 2-bitflips --> QPIC ECC counts 1 only
+>>>>      Byte1 --> 3-bitflips --> QPIC ECC counts 1 only
+>>>>      Byte2 --> 1-bitflips --> QPIC ECC counts 1 only
+>>>>      Byte3 --> 4-bitflips --> QPIC ECC counts 1 only (in 8-bit ecc)
+>>>>      Byte4 --> 6-bitflips --> QPIC ECC counts 1 only (in 8-bit ecc)
+>>>>
+>>>> Hope this can clearify the things now.
+>>> o_O ????
+>>> How is that even useful? This basically means UBI will never refresh
+>>> the
+>>> data because we will constantly underestimate the number of bitflips! We
+>>> need to know the actual number, this averaging does not make any sense
+>>> for Linux. Is there another way to get the raw number of bitflips?
+>> I have re-checked with HW team, unfortunately currently there is no
+>> register fields available to get the raw number of bit flips. But
+>> for newer chipset they have fixed this issue. But currently the QPIC
+>> QPIC_NANDC_BUFFER_STATUS | 0x79B0018 register bit-8 will get set if
+>> there is uncorrectable bitflips happened.
+>>
+>> For 4-bit ECC if 5-bit raw bit flips happened then bit-8 will get set in
+>> QPIC_NANDC_BUFFER_STATUS.
+>>
+>> similar for 8-bit ECC if 9-bit raw bit flips happened then bit-8 will
+>> get set in QPIC_NANDC_BUFFER_STATUS.
 > 
+> I believe the unrecoverable situation is handled correctly. What is not
+> is the fact that we care about the number of bitflips before having a
+> failure because if it reaches a certain threshold (typically 2/3 of the
+> strength) the upper layer is responsible of moving the data around to
+> avoid loosing it.
+> 
+> You need to identify the hardware revision that fixed it and provide a
+> warning otherwise, or at least a comment in the code...
 
-You did not respond to my comments, I don't see any changelog. I also do
-not understand the changes done later
+In itself, neither a comment, nor a warning will help as far as the upper layer
+is concerned. However the driver can be changed to overestimate the number of
+corrected bitflips.
 
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
-> index 92f95eb74b1928fde11ad86ab6344f274bdf7790..697c5591ae7cb82633ff0159fb31d08b57c11b97 100644
-> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
-> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
-> @@ -14,6 +14,7 @@ properties:
->      oneOf:
->        - enum:
->            - qcom,sc7280-lpass-rx-macro
-> +          - qcom,sm6115-lpass-rx-macro
->            - qcom,sm8250-lpass-rx-macro
->            - qcom,sm8450-lpass-rx-macro
->            - qcom,sm8550-lpass-rx-macro
-> @@ -80,6 +81,24 @@ allOf:
->                  - const: npl
->                  - const: fsgen
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sm6115-lpass-rx-macro
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 4
-> +          maxItems: 4
-> +        clock-names:
-> +          items:
-> +            - const: mclk
-> +            - const: npl
-> +            - const: dcodec
-> +            - const: fsgen
-> +
->    - if:
->        properties:
->          compatible:
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-> index f41deaa6f4df57c8186acf4cd7bb99e38dbf89f0..a70c0f36389269756b724889c335c1b0bae157d2 100644
-> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-> @@ -14,10 +14,15 @@ properties:
->      oneOf:
->        - enum:
->            - qcom,sc7280-lpass-va-macro
-> +          - qcom,sm6115-lpass-va-macro
->            - qcom,sm8250-lpass-va-macro
->            - qcom,sm8450-lpass-va-macro
->            - qcom,sm8550-lpass-va-macro
->            - qcom,sc8280xp-lpass-va-macro
-> +      - items:
-> +          - enum:
-> +              - qcom,sm6115-lpass-va-macro
-> +          - const: qcom,sm8450-lpass-va-macro
->        - items:
->            - enum:
->                - qcom,sm8650-lpass-va-macro
-> @@ -109,14 +114,19 @@ allOf:
->      then:
->        properties:
->          clocks:
-> -          minItems: 4
-> +          minItems: 3
+I just sent a patch [1] which tries to addresses this. I admit that it is not
+ideal, but in my opinion it is a reasonable tradeoff which can be used as a
+temporary solution.
 
-Why? Nothing in commit msg explains why existing devices changed.
+For a long term fix, probably it would be possible to change the driver to do
+the ECC correction in software.  Although I have no idea how that would impact
+the performance.
 
+[1]
+https://lore.kernel.org/r/20250522-qpic-snand-overestimate-bitflips-v1-1-35c65c05068e@gmail.com
 
-Best regards,
-Krzysztof
+Regards,
+Gabor
 
