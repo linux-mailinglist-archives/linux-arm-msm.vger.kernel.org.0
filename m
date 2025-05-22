@@ -1,218 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-59007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 363F2AC0591
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 09:23:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E47BAC0593
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 09:23:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 62D2F1BA6D82
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 07:23:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 68FBC9E2F16
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 07:23:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D77942A1B2;
-	Thu, 22 May 2025 07:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 585FC2222B8;
+	Thu, 22 May 2025 07:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bBYvWVjV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NEH4+g3D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6A1134D4
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 07:23:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697A7221D9B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 07:23:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747898588; cv=none; b=UB1+9aj037dhnTL3hHqwF9U0UGALtg6koiIxBMObLup1zh0/jU3zsupygu0xtb4Egkjx+sThkBo59AHdDUy8+M+hpQ55RyZvJk5m4n8tdZ/NwWygirjWgl7vwQMHEkmVYehgut0pHRCz6eg0SWl3a0+KUijH1vMwV8PviZ52p/Q=
+	t=1747898595; cv=none; b=VzsgP/afXnZLKIOEOiGXPbip5dEh+vnF0zyiQOipE5U+kMv/6uuyR0w6tiW7AipEOqeDIGk3kH4k4bLxiZzReq0WLBiDgD4zRZpb1oL4a8Z5PX4aDpAyp278mW31lI/xHp7sj6Ud05EIgGrTj8lHWmhHWwAJIqo50qCxnZbGggo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747898588; c=relaxed/simple;
-	bh=+T+GWyAo8i86XQKcDhUD1ze7DXCVuoV97N0vO9vwzyM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VEB2j3y8G/0YMXw7Uycx9o9+cg4C9Dk43M1kcH7z2KHzTN4WNNop4/INkds/PrnwlmpP1otKD9PDp8EcgDjT8dlaRlQjnrbWRj6ebBLtbc3Eh20p8MmrDqOjjMVohNRlZ5ePelp7wi+A7FE8KfS/nLlfWBSuzZfu1U3M9H3vT2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bBYvWVjV; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-47666573242so1731731cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 00:23:06 -0700 (PDT)
+	s=arc-20240116; t=1747898595; c=relaxed/simple;
+	bh=+W5ZcdVBC8wnQHb6cdslYN7V09ylGS82Z5oEceUSFN8=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=TdUbX55X5PjqYWkVyQFnMP8IJ3Mv4OwNArTLI2mHFDFB++ogV+aD+vPy/nhhGJsmPxnZz5Fp5uhw8cXq/2JayXKnjKQ3gusVIyu0goayi7DFCVCjo+Ei9lhbjG1fAoWx6CaaM4O5/vAYYFjC6ht9MBg0JNQEw2dpI4mrz5tPr88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NEH4+g3D; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-445b11306abso30608535e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 00:23:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747898586; x=1748503386; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mk2bLjyUEb287XK00LoxvtVw12EbKu/I8cWfAApuOuI=;
-        b=bBYvWVjV87wfxeyBDZm+chHqOI+lODa6euDhmljn+mMPNrsYaG8daeapeg74oHzrpQ
-         XYLCB97cgazPicNsB/RSynWXXqXUx0qyR12uKbbMrbZVuVttIyUbfg5m7Gh/bkD2YV5N
-         aQx5Z91NC6LP9vamGQcYP08bFXufa48i3GSYzQAgvqEZ1uzQ47VMwStz5Dz2DTQ1UpbF
-         +pLDvvb/4aZjQUe/3w3SeSiZYtBPr+hx3A1pK4h708JIx2z8qmxL2kSz4c+eumzPEzHX
-         8gD+vONHJhnLi8jDKewMGPHTrhIsdGyDlXSdefVZKdw9d57wHN+0Y7QEs5yUz1UXY+fR
-         EV1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747898586; x=1748503386;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1747898592; x=1748503392; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Mk2bLjyUEb287XK00LoxvtVw12EbKu/I8cWfAApuOuI=;
-        b=DuWM3fTnk2+ML1M7qWj1SbfF3DlwdWUnadAo/+JEuwAE8v5MHauPr/MyG5M/p4a6HI
-         gzriKuxz5rd/lveXalgaQdgp5CCwxR7DRBCOaUprMJ1L18R66WOBECKlHW3Kp2NJG0oJ
-         /3G5K1+vKSCVUiwqVi+87LkW9rzvy6jIZ2hLTaX9oK+dfoUpldyrA/B93PiNZ/Lknjty
-         3wxDlWlz1xdcFdX0B48YfzdyQ1oIeOPFUSGuGU38f7KFyszeat5P3Jvn5cS8Se1jWT6j
-         +HLYVrO7fFeZlIuIgcxB/NXZQcgg7VVoIZN1eWenWH3ucR7tpPiwW15jCC+TRR6qcZ2F
-         OtOw==
-X-Forwarded-Encrypted: i=1; AJvYcCW94JXZ7x1v2oev0RHJUJYy4OOw/olBN0l14IxSqMzpHrXUMgRE8DGN9pjfmjBaRqDbAoqJfIMQ46qXRtKL@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKoz38bwo4H3+0VFsLsetF8gw4pKG7qmhYQKQQec6zxzMRjlgV
-	+Xe3TIEKqyTSG28bRACPunCjhbKrtuIC9goEcpxw82DahBJhHxr+PrN+hX7rqEFUjItZoPCJG3Z
-	L8cTTkOuMMV5bMdWPkj8EGM/go3BHK2W9yIK5B8yd
-X-Gm-Gg: ASbGncub7bsLTfajFW0ScHQzmjYIzyJEB4KM+TO7wk7deXIGTw3E9yimkIysJE7g49y
-	aj0BcXP/dl9NCSfD6eTVqWCc3fMESNiGKCNQ+9e6IjBs56tmGZ4K21GJa41tJ4Cx+HkCWQzpuuw
-	5XxgqdYYdZq3acxDNioZ93yIVrqBAu97MoJtnXV4e6c3s=
-X-Google-Smtp-Source: AGHT+IEi6TeZEBQL7um7FKqCXxTH/kqET5/tP1WXTytlUTA+PhEPtgEimYOH7KJhSyxp6z55soK1OdIsMdoatnXAmqk=
-X-Received: by 2002:ac8:5d44:0:b0:477:8577:1532 with SMTP id
- d75a77b69052e-49cf1c95ae4mr1960781cf.28.1747898585469; Thu, 22 May 2025
- 00:23:05 -0700 (PDT)
+        bh=DKcV9YJnik1heDPbiDZhe+461Bkk9PUXYS1vSVg0MNo=;
+        b=NEH4+g3DT/oJJF+a/Q7qVqn4vRrUKsQPGWqZniHg2/HnEhjvEN/gcN4hROMF4jo5Kq
+         7LuZDD4CZS11qzdQqVnum2RwW4ytWihhcxXeSLmBO0F8k0EclUwc3vFhYS4CyBs3/eMx
+         Ddgb5b1fygzSMuTJ3zZ6x+DUBLjShSTWmcAj4JWHJAnfZtYBR6hB4h6lb7g938v7A+mW
+         ShM+AUPjh26+srM0gnUIVOWESamhLqKLLU1+665Nvc3HFVjs7/+NdK1JM5j+ypP4yfaF
+         PWfK5HFnb6KfrbWjrsTDEnylxb8v/T8K3oXeuhmxUQoqK8eWXp8t5P2A+8cO6iyetm+b
+         rXQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747898592; x=1748503392;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=DKcV9YJnik1heDPbiDZhe+461Bkk9PUXYS1vSVg0MNo=;
+        b=EIddSoEJDSe0XNzKfYpaCqhMJh/VwKITK4r83Tmq/4fEA4+9g2LegfWRJAOrv/aIqi
+         24IZqzZMf29nWsyrYDbJdSdFsQopxMDeemzM9wAaYrfOyabsSPe1KKKuqIwlFJf9R6d3
+         OuM/3KKVSLjQwIyyBWlY+pr6MtgE9lOSLJkdHuhXG7YdhGPKOD/NeDd2PQyAjSsHeLOy
+         bZkesHBH01/H5pIqmQeChPUP02Xai5MhfGPcjf+HxWScbbEzPGACm2fgWw8NFVGvfBO1
+         kt0I4lnIZ8f63WiNVi4J7LluWuqkXsKr8DC3BLya3hiVVTzwACcScRsl12Z7Nj1ik3Hl
+         /7zA==
+X-Forwarded-Encrypted: i=1; AJvYcCWYhVdErZ5459qy+IdZlMyjEsA5Bq45A9D3+KrkyC21gXhPPQ1ruah3NGQuruq0HUlYSPq4L7pD0PWpMMBB@vger.kernel.org
+X-Gm-Message-State: AOJu0YxYKcCmHcBT7DR5e5WC4w/QcNq2ZYn9GKxNvJWQSbz4LIXu439/
+	xq+bXx9DlyXAjzcSQoTgIpZWQ7o3v4Y/ysL0PYBKbV+OmUnc3iKF7Y4V+aBk8eEDsQI=
+X-Gm-Gg: ASbGncuXW9hWZPfvLQ9TRKzYu6augC4PhPbAk91Knit04sKOCe6z5DlfDhI2Vomfz/I
+	30s7zaq/mEANZqRDMECtbpWnH7LPfYCX+kY/kUG3QvN5+LYm0OGMlGYh1UY7KUX83lgESmE7RkZ
+	pJUDq8DRaVugOdLM3Cz1qwnVS6mAiWImsMeYSgpoTEQ21lAPvKXVpTDBs6J8F5nPL6+N6GlOwSF
+	8Tt0FI3HgNnKR/SjwUHxDAKn1o2yol3pG5ISHKXEswPFj58T9PpP4WbSJFuKzjJCdLGgRWNW3j5
+	FMc5fOek9W6mQ+Zpwu0BqhcbahgZzfi2WFUrzWvtLad1yHkUBJ21ptOcraD9QouzrSaRGzccmvo
+	IEKIiky3nIDoAgX3dAEY2hwh4jboI
+X-Google-Smtp-Source: AGHT+IHts0eteY4PlR1SQN/PyYMswWNwfgjzZcpYKjCK25ZDntVHx3kCGx8YLO7OAaDj+8ppdM5vmg==
+X-Received: by 2002:a05:600c:548d:b0:442:f44f:678 with SMTP id 5b1f17b1804b1-442ff03c63emr240517275e9.31.1747898591652;
+        Thu, 22 May 2025 00:23:11 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:ca6a:4d93:cd32:83a5? ([2a01:e0a:3d9:2080:ca6a:4d93:cd32:83a5])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f3dd94f1sm97174725e9.35.2025.05.22.00.23.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 May 2025 00:23:11 -0700 (PDT)
+Message-ID: <fa65b2bf-b76e-428a-8110-325a6191752e@linaro.org>
+Date: Thu, 22 May 2025 09:23:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250513163438.3942405-1-tabba@google.com> <20250513163438.3942405-11-tabba@google.com>
- <5ace54d1-800b-4122-8c05-041aa0ee12a1@redhat.com>
-In-Reply-To: <5ace54d1-800b-4122-8c05-041aa0ee12a1@redhat.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Thu, 22 May 2025 08:22:28 +0100
-X-Gm-Features: AX0GCFv4mD5QSYe80sAfF24snOg1C15DZpx2nFDhhQZIJov6N04QVy00YLzfTio
-Message-ID: <CA+EHjTyiiA84spuKqr-2ioiVjEHrcksENLR5uGhY-Avke28-2w@mail.gmail.com>
-Subject: Re: [PATCH v9 10/17] KVM: x86: Compute max_mapping_level with input
- from guest_memfd
-To: David Hildenbrand <david@redhat.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
-	pankaj.gupta@amd.com, ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 2/5] phy: qcom: apq8064-sata: extract UNI PLL register
+ defines
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-phy@lists.infradead.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20250520-fd-hdmi-phy-v4-0-fcbaa652ad75@oss.qualcomm.com>
+ <20250520-fd-hdmi-phy-v4-2-fcbaa652ad75@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250520-fd-hdmi-phy-v4-2-fcbaa652ad75@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi David,
+On 20/05/2025 22:44, Dmitry Baryshkov wrote:
+> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> The "uni" PLL is shared between several PHYS: APQ8064's SATA,
+> MSM8974/APQ8084 HDMI, MSM8916 DSI, MSM8974/APQ8084 DSI.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-apq8064-sata.c | 23 +-------------------
+>   drivers/phy/qualcomm/phy-qcom-uniphy.h       | 32 ++++++++++++++++++++++++++++
+>   2 files changed, 33 insertions(+), 22 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-apq8064-sata.c b/drivers/phy/qualcomm/phy-qcom-apq8064-sata.c
+> index cae290a6e19fcb7fd68fe6cd0229b9b00d47131c..dd9929429f9a0e2f265180e8d3f390451d91adde 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-apq8064-sata.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-apq8064-sata.c
+> @@ -15,28 +15,7 @@
+>   #include <linux/platform_device.h>
+>   #include <linux/phy/phy.h>
+>   
+> -/* PHY registers */
+> -#define UNIPHY_PLL_REFCLK_CFG		0x000
+> -#define UNIPHY_PLL_PWRGEN_CFG		0x014
+> -#define UNIPHY_PLL_GLB_CFG		0x020
+> -#define UNIPHY_PLL_SDM_CFG0		0x038
+> -#define UNIPHY_PLL_SDM_CFG1		0x03C
+> -#define UNIPHY_PLL_SDM_CFG2		0x040
+> -#define UNIPHY_PLL_SDM_CFG3		0x044
+> -#define UNIPHY_PLL_SDM_CFG4		0x048
+> -#define UNIPHY_PLL_SSC_CFG0		0x04C
+> -#define UNIPHY_PLL_SSC_CFG1		0x050
+> -#define UNIPHY_PLL_SSC_CFG2		0x054
+> -#define UNIPHY_PLL_SSC_CFG3		0x058
+> -#define UNIPHY_PLL_LKDET_CFG0		0x05C
+> -#define UNIPHY_PLL_LKDET_CFG1		0x060
+> -#define UNIPHY_PLL_LKDET_CFG2		0x064
+> -#define UNIPHY_PLL_CAL_CFG0		0x06C
+> -#define UNIPHY_PLL_CAL_CFG8		0x08C
+> -#define UNIPHY_PLL_CAL_CFG9		0x090
+> -#define UNIPHY_PLL_CAL_CFG10		0x094
+> -#define UNIPHY_PLL_CAL_CFG11		0x098
+> -#define UNIPHY_PLL_STATUS		0x0C0
+> +#include "phy-qcom-uniphy.h"
+>   
+>   #define SATA_PHY_SER_CTRL		0x100
+>   #define SATA_PHY_TX_DRIV_CTRL0		0x104
+> diff --git a/drivers/phy/qualcomm/phy-qcom-uniphy.h b/drivers/phy/qualcomm/phy-qcom-uniphy.h
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..e5b79a4dc270f25d8979f51bf4acd6c76998032e
+> --- /dev/null
+> +++ b/drivers/phy/qualcomm/phy-qcom-uniphy.h
+> @@ -0,0 +1,32 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2014, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef PHY_QCOM_UNIPHY_H
+> +#define PHY_QCOM_UNIPHY_H
+> +
+> +/* PHY registers */
+> +#define UNIPHY_PLL_REFCLK_CFG		0x000
+> +#define UNIPHY_PLL_PWRGEN_CFG		0x014
+> +#define UNIPHY_PLL_GLB_CFG		0x020
+> +#define UNIPHY_PLL_SDM_CFG0		0x038
+> +#define UNIPHY_PLL_SDM_CFG1		0x03c
+> +#define UNIPHY_PLL_SDM_CFG2		0x040
+> +#define UNIPHY_PLL_SDM_CFG3		0x044
+> +#define UNIPHY_PLL_SDM_CFG4		0x048
+> +#define UNIPHY_PLL_SSC_CFG0		0x04c
+> +#define UNIPHY_PLL_SSC_CFG1		0x050
+> +#define UNIPHY_PLL_SSC_CFG2		0x054
+> +#define UNIPHY_PLL_SSC_CFG3		0x058
+> +#define UNIPHY_PLL_LKDET_CFG0		0x05c
+> +#define UNIPHY_PLL_LKDET_CFG1		0x060
+> +#define UNIPHY_PLL_LKDET_CFG2		0x064
+> +#define UNIPHY_PLL_CAL_CFG0		0x06c
+> +#define UNIPHY_PLL_CAL_CFG8		0x08c
+> +#define UNIPHY_PLL_CAL_CFG9		0x090
+> +#define UNIPHY_PLL_CAL_CFG10		0x094
+> +#define UNIPHY_PLL_CAL_CFG11		0x098
+> +#define UNIPHY_PLL_STATUS		0x0c0
+> +
+> +#endif
+> 
 
-On Wed, 21 May 2025 at 09:01, David Hildenbrand <david@redhat.com> wrote:
->
-> On 13.05.25 18:34, Fuad Tabba wrote:
-> > From: Ackerley Tng <ackerleytng@google.com>
-> >
-> > This patch adds kvm_gmem_max_mapping_level(), which always returns
-> > PG_LEVEL_4K since guest_memfd only supports 4K pages for now.
-> >
-> > When guest_memfd supports shared memory, max_mapping_level (especially
-> > when recovering huge pages - see call to __kvm_mmu_max_mapping_level()
-> > from recover_huge_pages_range()) should take input from
-> > guest_memfd.
-> >
-> > Input from guest_memfd should be taken in these cases:
-> >
-> > + if the memslot supports shared memory (guest_memfd is used for
-> >    shared memory, or in future both shared and private memory) or
-> > + if the memslot is only used for private memory and that gfn is
-> >    private.
-> >
-> > If the memslot doesn't use guest_memfd, figure out the
-> > max_mapping_level using the host page tables like before.
-> >
-> > This patch also refactors and inlines the other call to
-> > __kvm_mmu_max_mapping_level().
-> >
-> > In kvm_mmu_hugepage_adjust(), guest_memfd's input is already
-> > provided (if applicable) in fault->max_level. Hence, there is no need
-> > to query guest_memfd.
-> >
-> > lpage_info is queried like before, and then if the fault is not from
-> > guest_memfd, adjust fault->req_level based on input from host page
-> > tables.
-> >
-> > Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >   arch/x86/kvm/mmu/mmu.c   | 92 ++++++++++++++++++++++++++--------------
-> >   include/linux/kvm_host.h |  7 +++
-> >   virt/kvm/guest_memfd.c   | 12 ++++++
-> >   3 files changed, 79 insertions(+), 32 deletions(-)
-> >
-> > diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-> > index cfbb471f7c70..9e0bc8114859 100644
-> > --- a/arch/x86/kvm/mmu/mmu.c
-> > +++ b/arch/x86/kvm/mmu/mmu.c
-> > @@ -3256,12 +3256,11 @@ static int host_pfn_mapping_level(struct kvm *kvm, gfn_t gfn,
-> >       return level;
-> >   }
-> [...]
->
-> >   static u8 kvm_max_level_for_fault_and_order(struct kvm *kvm,
-> >                                           struct kvm_page_fault *fault,
-> >                                           int order)
-> > @@ -4523,7 +4551,7 @@ static int __kvm_mmu_faultin_pfn(struct kvm_vcpu *vcpu,
-> >   {
-> >       unsigned int foll = fault->write ? FOLL_WRITE : 0;
-> >
-> > -     if (fault->is_private || kvm_gmem_memslot_supports_shared(fault->slot))
-> > +     if (fault_from_gmem(fault))
->
-> Should this change rather have been done in the previous patch?
->
-> (then only adjust fault_from_gmem() in this function as required)
->
-> >               return kvm_mmu_faultin_pfn_gmem(vcpu, fault);
-> >
-> >       foll |= FOLL_NOWAIT;
-> > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> > index de7b46ee1762..f9bb025327c3 100644
-> > --- a/include/linux/kvm_host.h
-> > +++ b/include/linux/kvm_host.h
-> > @@ -2560,6 +2560,7 @@ static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
-> >   int kvm_gmem_get_pfn(struct kvm *kvm, struct kvm_memory_slot *slot,
-> >                    gfn_t gfn, kvm_pfn_t *pfn, struct page **page,
-> >                    int *max_order);
-> > +int kvm_gmem_mapping_order(const struct kvm_memory_slot *slot, gfn_t gfn);
-> >   #else
-> >   static inline int kvm_gmem_get_pfn(struct kvm *kvm,
-> >                                  struct kvm_memory_slot *slot, gfn_t gfn,
-> > @@ -2569,6 +2570,12 @@ static inline int kvm_gmem_get_pfn(struct kvm *kvm,
-> >       KVM_BUG_ON(1, kvm);
-> >       return -EIO;
-> >   }
-> > +static inline int kvm_gmem_mapping_order(const struct kvm_memory_slot *slot,
-> > +                                      gfn_t gfn)
->
-> Probably should indent with two tabs here.
-
-(I'm fixing the patch before respinning, hence it's me asking)
-
-Not sure I understand. Indentation here matches the same style as that
-for kvm_gmem_get_pfn() right above it in the alignment of the
-parameters, i.e., the parameter `gfn_t gfn` is aligned with the
-parameter `const struct kvm_memory_slot *slot` (four tabs and a
-space).
-
-Thanks,
-/fuad
-
-
->
->
-> --
-> Cheers,
->
-> David / dhildenb
->
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
