@@ -1,181 +1,293 @@
-Return-Path: <linux-arm-msm+bounces-59016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B107FAC06C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 10:14:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53EBEAC06C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 10:15:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 114A47B6116
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 08:13:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 884798C83C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 08:14:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9CBB2620E8;
-	Thu, 22 May 2025 08:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 453A5262813;
+	Thu, 22 May 2025 08:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TqYCmQGU"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="fAk89KCg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CE72638BA;
-	Thu, 22 May 2025 08:14:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D229263F27
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 08:15:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747901645; cv=none; b=iMQ7vxpGwEcQuGJqewDDDoxxeWkT6yC7Gl5As8oz5luOSALfG0UqVHVybtUPS0yg0J89kbNhFb7hrJckaDV2zGO/LPEBLagEdgCkYjmB9940R2ewCJQEiA7WcKholDJZx+HUo6sSo+ZGC+65G61zf6WCeuT2kVsTmGEFIgDkmQk=
+	t=1747901706; cv=none; b=IJthdHMEOwKbI3M83EP8Eqy+dFj7qM4fDkxRcTlSRKUaMz/pv9yRg/W8ftTZovy9DvN+Ke+DulIxB/ZY2vrfBrpE2Pp7s1tr8O2q4e+3J16daRbzlZf+V1OQqd/rO2TiNHGAheEM+88TUxSMW3sOWuMMAR7zq3D/Lu6nMzKKL6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747901645; c=relaxed/simple;
-	bh=4mgw9km5mFpRuUTgNjBFlEkd7BF74iSHlGGWra4E0Iw=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=pB4wffo0v/XcQVyMUVkdgViTd5Y6Sz/SXz/9Mh2D46atlXbfDcFeEijLoaHGhxowfphgmfxqv4MU9UwGfrfRuH3wLixnPQhQa7Ej5zxLDR4QLpoBOeI7zs+MwyszJ2Y1IzwBqQSZtfaSPihHEmvHWktA/8c6nQwQFPfDKm7wOW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TqYCmQGU; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54LIk2ji027677;
-	Thu, 22 May 2025 08:13:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=NKZ+l3nSbHSSSKMUKXCppXpZH2g1/C9wrFG
-	L5jgW8Mg=; b=TqYCmQGURnW7LQ9Z9VK7VN0I/QXGSSq4HcWLNsqUFqHroRM5YR4
-	n/ddJ9gxlkUVQpo11MGTahvGpIOat9oS4yqMCxLU+1HpUH35uOAti+BNgyToSYAH
-	W3c062ZKosQX1T8YKqHY8CqFwfhsdc8XMzQH3SL8Hmk+e4v9DWZdlBsfd4mUOHAD
-	Tj8nxoCFTVxQDpSts+1sRn1G7a+Ayxiwe7K91G4m99HlXJmgZIAdK3yPIy+R6o5w
-	6v1odlte3VIICJNycZmwtqcK+VCnXhOYgau+Kolh5jBwXg0kInsIYRj8BkvT55wc
-	c6aD1nPOUF1i78L+gVQCBHEpzniecPC8kjw==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf9dgyw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 May 2025 08:13:01 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 54M8CwsH019012;
-	Thu, 22 May 2025 08:12:58 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 46pkhn78m1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 May 2025 08:12:58 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54M8CvFl018990;
-	Thu, 22 May 2025 08:12:58 GMT
-Received: from cbsp-sh-gv.ap.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 54M8Cv97018985
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 May 2025 08:12:57 +0000
-Received: by cbsp-sh-gv.ap.qualcomm.com (Postfix, from userid 393357)
-	id 0865140CAD; Thu, 22 May 2025 16:12:56 +0800 (CST)
-From: Ziqi Chen <quic_ziqichen@quicinc.com>
-To: quic_cang@quicinc.com, bvanassche@acm.org, mani@kernel.org,
-        beanhuo@micron.com, avri.altman@wdc.com, junwoo80.lee@samsung.com,
-        martin.petersen@oracle.com, quic_ziqichen@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
-        quic_rampraka@quicinc.com, neil.armstrong@linaro.org,
-        luca.weiss@fairphone.com, konrad.dybcio@oss.qualcomm.com,
-        peter.wang@mediatek.com
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4] scsi: ufs: core: Don't perform UFS clkscale if host asyn scan in progress
-Date: Thu, 22 May 2025 16:12:28 +0800
-Message-Id: <20250522081233.2358565-1-quic_ziqichen@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1747901706; c=relaxed/simple;
+	bh=VOc7LuCJqDys5fks45EyVHFUwbnOKkKjUFYpp5rs714=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q1xd/vX1CNyTCdUHUb2jN07Zjaxsl1zDTlfNgR583DdW+hHUbQbWzMFAQ9LLUoAiRHScAlSTQfJ0jf4Ie00H4F29Q4wTF46U4iuLUmiFJOCm2dt6RaO5wBqIn3H18PqVc63TVscvPZlIaFBjW06S0YcfQzzg0JWJc4zZ64u1dzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=fAk89KCg; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1747901703;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=OJk2RZEA0+Ge0I8NoZCL+FKPnnIh+cTR7ZXXXn+Uj3s=;
+	b=fAk89KCgHMOIExQvnzgKsH0KsmqAPx5tpFp1FMiKlDAkkMy5LiRpwpsw7GNe1vUe7+Gw4M
+	7Nbg0Ua8vopQJY7r0SFxo7lv8bcHk+EgTciB/CyGmlcu8Bia+wi+33YhKj5MfDOczaPwnR
+	TdxYZhj4pJvHOV3UM/jkkxTRZEPAzA4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-517-2ubdCNPfPuuGP4sYpna-Ug-1; Thu, 22 May 2025 04:15:01 -0400
+X-MC-Unique: 2ubdCNPfPuuGP4sYpna-Ug-1
+X-Mimecast-MFC-AGG-ID: 2ubdCNPfPuuGP4sYpna-Ug_1747901701
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-43e9a3d2977so57708335e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 01:15:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747901701; x=1748506501;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OJk2RZEA0+Ge0I8NoZCL+FKPnnIh+cTR7ZXXXn+Uj3s=;
+        b=sYRwgLIRJu2B5i5vNMHfgO6kWiDENDKzXwxarkgDZPeJpqLlI6ARWvR4stEP/jqc0m
+         2VIYDTg9Hq4Et4qJcFMhlYmn2pNw10dRQii8NJSRwnWYGmMhb3y1zs8Ryhrzy6V4OqYp
+         XBxX3fcjLB/S1mqr+wnLGs9kR+13GxYNqG2yps4gSiCgirQ/UfbSQJOfpL5Hawo6lqj+
+         mbBQqcDu7UBE7+HosQdXU+zREpY5KudUmmm6GB5YgXPeNg389AE0gThKhe+2B1RIiqJz
+         5xkk1sL39wQjfvwsQI4NKEwRfn4jVNXGAQRI09DoQ37f3SQpQzseyp7QcqP6g1FMtZPN
+         vt1A==
+X-Forwarded-Encrypted: i=1; AJvYcCW4jdubOYL3o/x+PD92jFiYg5HQYF8XvaMb7EGTLDWC7UaBu3oYE1HCRAFSeD43looRPHvqKvKpOMD8YFW+@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx/jjV/LoNwwmHpaNOnDBlZUeUWW9oWrg2Sn0RB/9sn0V2cz0QX
+	EC2T4GR8rDY/2scSeF0g+y7+WbohmHYTScyYv3rlkDWun5/vlRJ0fe4j+dm1qxqDNTM92O0ym8q
+	7scthD2ZE7xSUPY16LI+qgamnxE5+Mx+I/t1JzMXBJKtaYhP4jpMESOX7H7h/eFuWenk=
+X-Gm-Gg: ASbGncut97nxB/D1cY+qPiZkcSbQjRWMZ2cjToAMNn3EBwiCr6PCkUI6YC4iC9DEN9O
+	6tMZirXITQ4IzOHZcn73GGA5NxGNS530aDYCumUscPkuS2obaPPjvC2j7XY9aIuZHxdEDM04GT0
+	Vpf0CVfJEvsnm2pTJw2V9+T2pj2w2p6iYQbKjpNexglOurNka+H+eANBcC+6y6amtL+AHcTeJMt
+	pi1sytsdKuranqgac81chHeXCfaNLqIKtcFxIM/Csn+JIQeGnfnuUXXJEo3wlV6oz94JePJCQpo
+	EcZYtuK+Vu6gSqmFnJLJQw8Ml+huaQbX5okxLm3zlHRdQD70owI=
+X-Received: by 2002:a05:600c:524d:b0:442:e109:3027 with SMTP id 5b1f17b1804b1-442fd6649bdmr214853355e9.24.1747901700450;
+        Thu, 22 May 2025 01:15:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGoA+9K1d1QNyCZ0QFlparSNgc6WUYgpvNZy6+ivFAv4CeuF0kJ25Cx1UtI9lMMWPPhBKV0jw==
+X-Received: by 2002:a05:600c:524d:b0:442:e109:3027 with SMTP id 5b1f17b1804b1-442fd6649bdmr214852555e9.24.1747901699922;
+        Thu, 22 May 2025 01:14:59 -0700 (PDT)
+Received: from ?IPV6:2a01:599:916:16c6:54bd:1780:84bf:8f90? ([2a01:599:916:16c6:54bd:1780:84bf:8f90])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f1ef0b20sm99223265e9.14.2025.05.22.01.14.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 May 2025 01:14:59 -0700 (PDT)
+Message-ID: <a5e6abbf-76a9-4263-892f-3085b148b209@redhat.com>
+Date: Thu, 22 May 2025 10:14:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 9C0MC_UeV1nAxCF4HPh3PSWJnIC6D4b2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIyMDA4MSBTYWx0ZWRfXwFnff2lWvPTd
- cCtojmX6uUUXDu8ZIw3La3i58J7d643YzsBgZVAHfF1+xbE2zoPP03RDhjalGZ7XP4DCYCfSt63
- /lIACkdAYDrqUhLO0Wp2VXc8dgtuE713YuxXF2jr5Hxo3NconHJJ+5FTEng7vDZB06Y7+4cS/OS
- tb2x+lzq/BXwJPJtvFMFs2tmFc9Gt9IwllG6GnVldnZ0kU7vlqc7N7Yh+hWC9bxLwLRCIEKqRZB
- KAWxxAYSoLXZeKDbEShF8jp0pmenmw+i0dUXI35VrpXGB7T7B7I6BzpJfTUnd4o2CNuLWDHXsxF
- yRgc81RlO78slhqJeGif1nzV88YvlXC18l8dNqlsQrnYte1F01r2V1UFRjAfFTRE5HrCWyR0RiN
- eklM/A2itjjLHWooBVjbVWEcJmtU+rk2KGNUKVLhWGMgYs4UJqwHcLYiqTkK2A7fhdpWdBmA
-X-Authority-Analysis: v=2.4 cv=GawXnRXL c=1 sm=1 tr=0 ts=682edc8d cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=N54-gffFAAAA:8 a=2qWgUaWB3xuvrwrepqIA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: 9C0MC_UeV1nAxCF4HPh3PSWJnIC6D4b2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-22_04,2025-05-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 mlxlogscore=999 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 clxscore=1015 malwarescore=0 phishscore=0 bulkscore=0
- spamscore=0 suspectscore=0 adultscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505220081
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 09/17] KVM: x86/mmu: Handle guest page faults for
+ guest_memfd with shared memory
+To: Fuad Tabba <tabba@google.com>
+Cc: Ackerley Tng <ackerleytng@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, pbonzini@redhat.com,
+ chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org,
+ paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+ seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org,
+ willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com,
+ yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
+ amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
+ mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
+ mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com,
+ liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <diqzfrgx8olt.fsf@ackerleytng-ctop.c.googlers.com>
+ <56e17793-efa2-44ea-9491-3217a059d3f3@redhat.com>
+ <CA+EHjTwrXgLkwOsAehBsxsQ-ifM0QS_ub91xJQaAXNo75DSjzQ@mail.gmail.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CA+EHjTwrXgLkwOsAehBsxsQ-ifM0QS_ub91xJQaAXNo75DSjzQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-When preparing for UFS clock scaling, the UFS driver will quiesce all sdevs
-queues in the UFS SCSI host tagset list and then unquiesce them when UFS
-clock scaling unpreparing. If the UFS SCSI host async scan is in progress
-at this time, some LUs may be added to the tagset list between UFS clkscale
-prepare and unprepare. This can cause two issues:
+On 22.05.25 09:46, Fuad Tabba wrote:
+> Hi David,
+> 
+> On Thu, 22 May 2025 at 08:16, David Hildenbrand <david@redhat.com> wrote:
+>>
+>>
+>>>>> + * shared (i.e., non-CoCo VMs).
+>>>>> + */
+>>>>>     static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+>>>>>     {
+>>>>> -   return IS_ENABLED(CONFIG_KVM_GMEM) &&
+>>>>> -          kvm_get_memory_attributes(kvm, gfn) & KVM_MEMORY_ATTRIBUTE_PRIVATE;
+>>>>> +   struct kvm_memory_slot *slot;
+>>>>> +
+>>>>> +   if (!IS_ENABLED(CONFIG_KVM_GMEM))
+>>>>> +           return false;
+>>>>> +
+>>>>> +   slot = gfn_to_memslot(kvm, gfn);
+>>>>> +   if (kvm_slot_has_gmem(slot) && kvm_gmem_memslot_supports_shared(slot)) {
+>>>>> +           /*
+>>>>> +            * For now, memslots only support in-place shared memory if the
+>>>>> +            * host is allowed to mmap memory (i.e., non-Coco VMs).
+>>>>> +            */
+>>>>
+>>>> Not accurate: there is no in-place conversion support in this series,
+>>>> because there is no such itnerface. So the reason is that all memory is
+>>>> shared for there VM types?
+>>>>
+>>>
+>>> True that there's no in-place conversion yet.
+>>>
+>>> In this patch series, guest_memfd memslots support shared memory only
+>>> for specific VM types (on x86, that would be KVM_X86_DEFAULT_VM and
+>>> KVM_X86_SW_PROTECTED_VMs).
+>>>
+>>> How about this wording:
+>>>
+>>> Without conversion support, if the guest_memfd memslot supports shared
+>>> memory, all memory must be used as not private (implicitly shared).
+>>>
+>>
+>> LGTM
+>>
+>>>>> +           return false;
+>>>>> +   }
+>>>>> +
+>>>>> +   return kvm_get_memory_attributes(kvm, gfn) & KVM_MEMORY_ATTRIBUTE_PRIVATE;
+>>>>>     }
+>>>>>     #else
+>>>>>     static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+>>>>> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+>>>>> index 2f499021df66..fe0245335c96 100644
+>>>>> --- a/virt/kvm/guest_memfd.c
+>>>>> +++ b/virt/kvm/guest_memfd.c
+>>>>> @@ -388,6 +388,23 @@ static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
+>>>>>
+>>>>>      return 0;
+>>>>>     }
+>>>>> +
+>>>>> +bool kvm_gmem_memslot_supports_shared(const struct kvm_memory_slot *slot)
+>>>>> +{
+>>>>> +   struct file *file;
+>>>>> +   bool ret;
+>>>>> +
+>>>>> +   file = kvm_gmem_get_file((struct kvm_memory_slot *)slot);
+>>>>> +   if (!file)
+>>>>> +           return false;
+>>>>> +
+>>>>> +   ret = kvm_gmem_supports_shared(file_inode(file));
+>>>>> +
+>>>>> +   fput(file);
+>>>>> +   return ret;
+>>>>
+>>>> Would it make sense to cache that information in the memslot, to avoid
+>>>> the get/put?
+>>>>
+>>>> We could simply cache when creating the memslot I guess.
+>>>>
+>>>
+>>> When I wrote it I was assuming that to ensure correctness we should
+>>> check with guest memfd, like what if someone closed the gmem file in the
+>>> middle of the fault path?
+>>>
+>>> But I guess after the discussion at the last call, since the faulting
+>>> process is long and racy, if this check passed and we go to guest memfd
+>>> and the file was closed, it would just fail so I guess caching is fine.
+>>
+>> Yes, that would be my assumption. I mean, we also msut make sure that if
+>> the user does something stupid like that, that we won't trigger other
+>> undesired code paths (like, suddenly the guest_memfd being !shared).
+>>
+>>>
+>>>> As an alternative ... could we simple get/put when managing the memslot?
+>>>
+>>> What does a simple get/put mean here?
+>>
+>> s/simple/simply/
+>>
+>> So when we create the memslot, we'd perform the get, and when we destroy
+>> the memslot, we'd do the put.
+>>
+>> Just an idea.
+> 
+> I'm not sure we can do that. The comment in kvm_gmem_bind() on
+> dropping the reference to the file explains why:
+> https://elixir.bootlin.com/linux/v6.14.7/source/virt/kvm/guest_memfd.c#L526
 
-1. During clock scaling, there may be IO requests issued through new added
-queues that have not been quiesced, leading to task abort issue.
+Right, although it is rather suboptimal; we have to constantly get/put 
+the file, even in kvm_gmem_get_pfn() right now.
 
-2. These new added queues that have not been quiesced will be unquiesced as
-well when UFS clkscale is unprepared, resulting in warning prints.
+Repeatedly two atomics and a bunch of checks ... for something a sane 
+use case should never trigger.
 
-Therefore, use the mutex lock scan_mutex in ufshcd_clock_scaling_prepare()
-and ufshcd_clock_scaling_unprepare() to protect it.
+Anyhow, that's probably something to optimize also for 
+kvm_gmem_get_pfn() later on? Of course, the caching here is rather 
+straight forward.
 
-Co-developed-by: Can Guo <quic_cang@quicinc.com>
-Signed-off-by: Can Guo <quic_cang@quicinc.com>
-Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
-Suggested-by: Bart Van Assche <bvanassche@acm.org>
-
----
-v1 -> v2:
-Move whole clkscale Initialize process out of ufshcd_add_lus().
-
-v2 -> v3:
-Add check for the return value of ufshcd_add_lus().
-
-v3 -> v4:
-1. Using lock 'scan_mutex' instead of checking flag 'scan_mutex'.
-2. Update patch name and commit message.
----
- drivers/ufs/core/ufshcd.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index d7ff24b48de3..a7513f256057 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -1397,6 +1397,7 @@ static int ufshcd_clock_scaling_prepare(struct ufs_hba *hba, u64 timeout_us)
- 	 * make sure that there are no outstanding requests when
- 	 * clock scaling is in progress
- 	 */
-+	mutex_lock(&hba->host->scan_mutex);
- 	blk_mq_quiesce_tagset(&hba->host->tag_set);
- 	mutex_lock(&hba->wb_mutex);
- 	down_write(&hba->clk_scaling_lock);
-@@ -1407,6 +1408,7 @@ static int ufshcd_clock_scaling_prepare(struct ufs_hba *hba, u64 timeout_us)
- 		up_write(&hba->clk_scaling_lock);
- 		mutex_unlock(&hba->wb_mutex);
- 		blk_mq_unquiesce_tagset(&hba->host->tag_set);
-+		mutex_unlock(&hba->host->scan_mutex);
- 		goto out;
- 	}
- 
-@@ -1428,6 +1430,7 @@ static void ufshcd_clock_scaling_unprepare(struct ufs_hba *hba, int err)
- 	mutex_unlock(&hba->wb_mutex);
- 
- 	blk_mq_unquiesce_tagset(&hba->host->tag_set);
-+	mutex_unlock(&hba->host->scan_mutex);
- 	ufshcd_release(hba);
- }
- 
 -- 
-2.34.1
+Cheers,
+
+David / dhildenb
 
 
