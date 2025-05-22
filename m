@@ -1,163 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-59072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0627EAC1223
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 19:33:23 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D68F4AC1228
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 19:33:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A914317F1F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 17:33:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17F9A1B66702
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 17:33:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB196189F43;
-	Thu, 22 May 2025 17:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3313D18DF9D;
+	Thu, 22 May 2025 17:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TuQbo669"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aVH42dSq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CF3189F57;
-	Thu, 22 May 2025 17:33:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A93D18A953;
+	Thu, 22 May 2025 17:33:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747935200; cv=none; b=QZRIn69KVlXlKLA4i3kmqULhI3C5FitWFhzfeBiMtKLXexVmbX/SISqzah4MLybkiK87FRWJVOjbW0+buMZgFFc6SkfpqQhhN0uJxWKqJIo8NGhMmb+iT/pF5W1EuAf4F21ChPBTHXWvjd7lJan8CLQsemd2vTJvO6UuJrKaNwU=
+	t=1747935219; cv=none; b=uiOhRGjK8KEDT/6bu6CMIjHoYO8sEesvuZFBIYiJRBFWHmA3wGI+koPmU2Bp1tywIEt4cFv0+MK/z3qTgQ1CACIm0FojBhew16d0VaGTRkAF3Zcb6j8aADCkKiiUGY0GwpZmqJ5YQl3QrosHSY45s2NPp1MiJN2nvptpNSXEfMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747935200; c=relaxed/simple;
-	bh=yZCuz5KOY1Rb1fNXfa6wWyj8KY6lp+00rvWft2KvMXY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Mw0boUg/DlrUOShgVuWNIZ2Xrxx+CYN7ooq99PBPia8/BvADr75BrcsNZK7KTSOipSKXmzJv2L1hw/DIUMU+INmRPZSQtdZ2h/Fmp56ZS64sdTWvVkU6HVHB9QLhmakbCXzojjeJ75ZdwQTdau9NqWXOPBdI28eCkczLsvERPPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TuQbo669; arc=none smtp.client-ip=209.85.166.172
+	s=arc-20240116; t=1747935219; c=relaxed/simple;
+	bh=gj1msL7eLOyGrh9eIOQP6qwkpOLxlgsJFT9+Z4f5HGc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Ut1yQm4sOa79hU0ZqF0Mi5zeOcdLu6jqwOkknp5665uLKAZyJ8HXDPgeaRxAMc+8+hOTT6C3NVg2cbOmKwkq5FoS6Heq3t9P+8aEHJWyi4kUuWnGK+pC3aJyrc0SMwsLJMHXffkGaUwmXMneroUuBKmE3exAYdftTkcLw4PvkAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aVH42dSq; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3da73998419so23726315ab.0;
-        Thu, 22 May 2025 10:33:18 -0700 (PDT)
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ad5273c1fd7so1399178666b.1;
+        Thu, 22 May 2025 10:33:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747935198; x=1748539998; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yZCuz5KOY1Rb1fNXfa6wWyj8KY6lp+00rvWft2KvMXY=;
-        b=TuQbo6696CY8NBPB0hvjNLxtcWM2lWzsU3RdicaLITitPZyRukagfLeuV5gCOZltov
-         qQWYtl7UFVtaRWqMp+ygUKTfZ3W+nPr+Fq8nt4yKpEMOS2olz5Gdo9gss+qnWZ0aQuas
-         mGyXR5L6TFmLv+Hr4iUqpNUUC5NyDgYZoxmjS6948Ou/SYcSv26zPNVAPzFPsjsSs72R
-         QfrduBihio/Pd8WsMN62qTzu426rxkoRaT9q8KwUz/X7dDQeb2jrfSYGhG9TFog2fKYz
-         TynWu2QSpkibjKUyJuAyy2YxyzgszuyKQYfvZC8jpeMy1nbB71keycWXA6gc9Q9fLGVz
-         iNtw==
+        d=gmail.com; s=20230601; t=1747935216; x=1748540016; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MTeoN2ZNwpBqEf481xeP9DNeHeY17srYObiFUpBv5hM=;
+        b=aVH42dSqBZhCX14C5YBPBJLponiKaNMYGhETiYKuoIKn3A+QgV7dHihyGYrbRdTJHq
+         5W+fmaDqrmMC3F970+KU69S50VS72585sOl4J/gK/AxDv5jIjdMz+E06ONEUeAWdbI7G
+         5FFYvoMaZYgvjl45VLqZ3i+mO3gekEYGMtFKIpFHCkLmvkAIqsMLzkbhvzbEGZVUrufx
+         vF/zhl0+IzsFSSnSop7KEjRmOI3W85XVmzOtMp0TS0zmRSYrbWw2v14LTFKQksXp+6kc
+         96a4/dTD8Bzrunm1M+PS6yqg9CtE0VkMRVzH5Oz1ycqxhflGs66nzKI3MnRJ292rXEpF
+         aE3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747935198; x=1748539998;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yZCuz5KOY1Rb1fNXfa6wWyj8KY6lp+00rvWft2KvMXY=;
-        b=lePV30YmhrqJo8Dojf1IxH/vVWS8qCWYugqZXqtdxkVB/G1ZdLU0Qb+YQcboG+jHv5
-         df6nLWFwDw3madS/i2+S3U/tNsFgdzAaQLbP6CToBaQZLxr8SUckdI8dNHlq/3dB8ycG
-         BSzvqojhB4mnma8oGRRGcBzjYR2dJ6ffzkL9cWM62exA2R4LE/EV7w3xoO2Qt/m4PXIG
-         LIpR3MGJLW+lhyhAv2F2VQWdsnKv+1LFOIdPWwAD5thiw4fIK2Xmxo6zFDMhr98raq+C
-         LFr7U5CL/Mx6P7khXGLF51AlWy7F6DHo0NziNf4hn4kCgQxD6WBD0E9cfHwIN4mYJXxd
-         Y+Pw==
-X-Forwarded-Encrypted: i=1; AJvYcCV7F/DaxnuR3VOsxaP9sYET5qySe2D1SqzuojvGKL6qZG60iIbhAKZVt1nxGs7T7bK+QklWEdOS8y5yl9wPaw==@vger.kernel.org, AJvYcCVbbXjboI5l5akfqOemR9w0dn47ml8JBPswDp560bZCisp4TrNNUjOba6wymiMkk2YpaHA8rXW6qzPN@vger.kernel.org, AJvYcCWj7xAAGmBZtShjDBOuIpinL7karbLeEGfg0awwAOCiyiSFywUfE2XXYIjhKZVZJpIwdjpp983arLCV8MQe@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy0teSJWBxIKqjH71rogh0JLoRbXSe/qM9Ae7KuyQ7MeVwcRm1H
-	TJSI7SWNzsywp1uuIKFwSO9r4OgpSGH01BVU5KgdsVnLlKG74O863ekBGqCLLNyBnoc2onQd9H2
-	/koj3betF8g4oKyx+OxopC4fZ10AS07Y=
-X-Gm-Gg: ASbGncuXkgDW1Ddp8d86VpDnkBNgxdGWok39pEVVZE420WLbvtXkg0RW/6G0xxdY+f9
-	Ikpie3147tYgyeZu6pI78WxInMVbHze2zo/bcMi+cQf+m6ZYQIO71j64eekNzJbW0v3Rhb2eb8r
-	cCqeLThc+1BqV/O5dVSzMkBrIw0VSGneIymf9cHuuewujUyzgXx6a5MR/mN0IjXMs=
-X-Google-Smtp-Source: AGHT+IGLp6jF0fhMnnPkzroRSH4KvzmG+rg6/iwrv7HqLvxi39A0Z4DM4iu66szWb0Bixn5K8nL7y4V/mVjNTnq5TMk=
-X-Received: by 2002:a05:6e02:349c:b0:3da:7176:81bf with SMTP id
- e9e14a558f8ab-3db8434a2afmr267633515ab.21.1747935197989; Thu, 22 May 2025
- 10:33:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747935216; x=1748540016;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MTeoN2ZNwpBqEf481xeP9DNeHeY17srYObiFUpBv5hM=;
+        b=c3j6bfXlkhdUGBCYY1xdOEWt0CpPItNceTGCUMDdQkH7i8orDp2UXL3unzGmKM+Iw5
+         Wj8buGchBvClTZyUKMoVCT0BnLqfjBXIWowMNcWC3CFwTK8xVX6k/CHmUfyCl1X+TFp6
+         ZRSPxCBYEQXKUuERRC6i8qlSSrqGyzBKtrUS8DimW5KoHLTOdbU3pzubyxWtuw6oS0uf
+         E3NVqORGXExSWRvAdWkqRal62rTScIpKxbN71wyfuMDZp3O+uivBXuP4mVwbzGku/jJq
+         jk0vwf5TBqGdODoziKd4IaSqHw0x+eH9Kjktv9gCqQLqsUGbK9qAtQBRKIBbbeyH7WOD
+         KlfQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU12dOgmsB//6ftNdIiNJR3XQixNlf2q1AvxHon5PgIUGaTD5U+z9CG5mX3vB6mOE8SIle/k8bYZyeH@vger.kernel.org, AJvYcCV8yO6T0cOzwH86hVhjoir6scH/Av81HcEI5PfZ2roHm5yMvJCZ8Xi6XDXY/Z0n+82cVg6tgr7TCNZCGoKn@vger.kernel.org, AJvYcCVMIOo+YPvB0j822b/EVsyvrFMeLDMo4i6LZx9yrwThMgVSr5GMuWYelRtUtLCLDzrdkFbGZWzcmv9Sl84Q@vger.kernel.org
+X-Gm-Message-State: AOJu0YyPYsiUAXnVdpyKMa2hyami30+W79ou27e+7y1T071IqWkIEiaG
+	xBkQPdXb0jRAG7yZl1pCeO7bvbq2wV/47ehzf3U1gyQxlVGcWmglbpe5XePQzw==
+X-Gm-Gg: ASbGnctWtVoTvC18lUirrqPlM32m3KZmc3fiR0FjeSR55Tf8YxUgDkp3C/5OwfXl3+c
+	crXGRi+jb3jCnCtPaZakdfvjW0whvjNax2dyKL+NEEfawPxOy7TARsxffQEogMlXVZAJ3rr3WY8
+	QC41IC4Zrs8XmuXKFOTrNTGufSeQyrgIkxaWhLM3flTt0Wqt+MEN2kLtxa0nj1PLCKBIdsEojGZ
+	n5PM4fMJuJybUEL3/zLPF2nSgcIHsL0XEqZjLHKsw3iVRUbjZJcEP9b+/IQ+jm7TQmWoRIf+tYO
+	GWsSlyliKQmgmsppXGVV5wUNJYWV/VOjy5sF2ZSA7qI2SscpvxN82pcXRoKhqQFwQa8BuR+gM9w
+	x3Mej
+X-Google-Smtp-Source: AGHT+IEJfDL3Z6GwGYXoUDscFxORY7Y5IAtF5LadMRdJVetuBsgTokkfHqjuWjdkON4+K8+lf3vDlg==
+X-Received: by 2002:a17:907:3fa7:b0:ad5:a12d:6665 with SMTP id a640c23a62f3a-ad5a12d6948mr956070166b.33.1747935215255;
+        Thu, 22 May 2025 10:33:35 -0700 (PDT)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ad52d06b532sm1098506966b.43.2025.05.22.10.33.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 May 2025 10:33:34 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Thu, 22 May 2025 19:33:26 +0200
+Subject: [PATCH RFC] spi: spi-qpic-snand: overestimate corrected bitflips
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250430-topic-smem_speedbin_respin-v6-0-954ff66061cf@oss.qualcomm.com>
- <20250430-topic-smem_speedbin_respin-v6-2-954ff66061cf@oss.qualcomm.com>
- <13cd20c6-f758-45ff-82d1-4fd663d1698c@linaro.org> <886d979d-c513-4ab8-829e-4a885953079a@oss.qualcomm.com>
- <b838f9bd-0537-4f8d-b24b-d96700d566c8@linaro.org> <98a4ad20-c141-4280-801e-015dafd1fb39@oss.qualcomm.com>
- <a26213ec-808f-4edf-bb0d-ab469ee0a884@linaro.org> <281ab1b6-498e-4b29-9e15-19b5aae25342@oss.qualcomm.com>
- <63105bce-6b8e-4b99-bca1-3741f27ea25a@linaro.org> <892fc1eb-efd3-4fb6-9110-2df3349960a6@oss.qualcomm.com>
- <b989522d-bd41-4d76-91a9-3cf680214003@linaro.org> <f5734944-1ed2-4acc-a015-0c638c331bbe@quicinc.com>
- <d73c6151-91bb-4c96-ad2a-972ad392624b@oss.qualcomm.com> <1903ee8a-f819-4a4d-baee-90f35e0da290@quicinc.com>
- <584a9e49-5106-4053-9f42-e1e176618eea@oss.qualcomm.com>
-In-Reply-To: <584a9e49-5106-4053-9f42-e1e176618eea@oss.qualcomm.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Thu, 22 May 2025 10:33:04 -0700
-X-Gm-Features: AX0GCFu7DKioivEGx1jU548joNSO1hiW2h8Q7AIKCB6hRmaGrivAyhudL8VYukI
-Message-ID: <CAF6AEGs0sUfdER+GuygnupituPpVygms-Sc4hw1nYUFwCXC_=Q@mail.gmail.com>
-Subject: Re: [PATCH RFT v6 2/5] drm/msm/adreno: Add speedbin data for SM8550 / A740
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>, neil.armstrong@linaro.org, 
-	Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250522-qpic-snand-overestimate-bitflips-v1-1-35c65c05068e@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAOVfL2gC/x3NQQrCMBBA0auUWTvQiW2RbgUP4FZcxGRSB2qaZ
+ kIRSu9ucPk2/++gnIUVxmaHzJuoLLGCTg24t40To/hqMK3p294QrkkcarTR47JxZi3ysYXxJSX
+ MkhSHjsj40JE7X6BmUuYg3//iAffbFZ7H8QO4AwpVdwAAAA==
+X-Change-ID: 20250521-qpic-snand-overestimate-bitflips-64112df41c38
+To: Mark Brown <broonie@kernel.org>, 
+ Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 
-On Thu, May 22, 2025 at 9:03=E2=80=AFAM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 5/11/25 11:51 AM, Akhil P Oommen wrote:
-> > On 5/1/2025 9:23 PM, Konrad Dybcio wrote:
-> >> On 5/1/25 11:29 AM, Akhil P Oommen wrote:
-> >>> On 4/30/2025 10:26 PM, neil.armstrong@linaro.org wrote:
-> >>>> On 30/04/2025 18:39, Konrad Dybcio wrote:
-> >>>>> On 4/30/25 6:19 PM, neil.armstrong@linaro.org wrote:
-> >>>>>> On 30/04/2025 17:36, Konrad Dybcio wrote:
-> >>>>>>> On 4/30/25 4:49 PM, neil.armstrong@linaro.org wrote:
-> >>>>>>>> On 30/04/2025 15:09, Konrad Dybcio wrote:
-> >>>>>>>>> On 4/30/25 2:49 PM, neil.armstrong@linaro.org wrote:
-> >>>>>>>>>> On 30/04/2025 14:35, Konrad Dybcio wrote:
-> >>>>>>>>>>> On 4/30/25 2:26 PM, neil.armstrong@linaro.org wrote:
-> >>
-> >> [...]
-> >>
-> >>>> This behaves exactly as I said, so please fix it.
-> >>
-> >> Eh, I was so sure I tested things correctly..
-> >>
-> >>>
-> >>> Konrad,
-> >>>
-> >>> iirc, we discussed this in one of the earlier revision. There is a
-> >>> circular dependency between the driver change for SKU support and the=
- dt
-> >>> change that adds supported_hw bitmask in opp-table. Only scenario it
-> >>> works is when you add these to the initial patches series of a new GP=
-U.
-> >>>
-> >>> It will be very useful if we can break this circular dependency.
-> >>
-> >> Right. Let's start with getting that in order
-> >
-> > Another complication with the socinfo is that the value is unique for a
-> > chipset, not for a GPU. So, it won't work if we keep this data in GPU
-> > list in the driver.
-> >
-> > Downstream solved this problem by keeping the PCODE/FCODE mappings in
-> > the devicetree.
->
-> Hmm.. that actually does not sound very bad.. it would allow for e.g.
-> new bins to appear without having to replace the kernel.. great for
-> backwards/forwards compat
->
-> Rob, WDYT?
+The QPIC hardware is not capable of reporting the exact number of the
+corrected bitflips, it only reports the number of the corrected bytes.
+However the current code treats that as corrected bitflips which is
+quite inaccurate in most cases. For example, even if the hardware reports
+only one byte as corrected, that byte may have contained multiple bit
+errors from one up to the maximum number of correctable bits.
 
-Not against having it in dt if the dt maintainers can be convinced..
+Change the code to report the maximum of the possibly corrected bits,
+thus allowing upper layers to do certain actions before the data gets
+lost due to uncorrectable errors.
 
-Alternatively, there is the optional machine string in adreno_info.
-We've used that in a few other places where speedbin mappings are
-different for multiple SoCs using the same gpu.
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+The patch tries to address Miquel's concerns [1] about the corrected bit
+error reporting capabilities of the QPIC hardware.
 
-BR,
--R
+[1] https://lore.kernel.org/all/87h61e8kow.fsf@bootlin.com
+
+nanbiterrs test result after the change:
+
+  # insmod mtd_test; insmod mtd_nandbiterrs dev=4
+  [   40.685251]
+  [   40.685278] ==================================================
+  [   40.685803] mtd_nandbiterrs: MTD device: 4
+  [   40.691566] mtd_nandbiterrs: MTD device size 7602176, eraseblock=131072, page=2048, oob=128
+  [   40.695528] mtd_nandbiterrs: Device uses 1 subpages of 2048 bytes
+  [   40.703789] mtd_nandbiterrs: Using page=0, offset=0, eraseblock=0
+  [   40.713655] mtd_nandbiterrs: incremental biterrors test
+  [   40.716118] mtd_nandbiterrs: write_page
+  [   40.722126] mtd_nandbiterrs: rewrite page
+  [   40.725878] mtd_nandbiterrs: read_page
+  [   41.103196] mtd_nandbiterrs: verify_page
+  [   41.106915] mtd_nandbiterrs: Successfully corrected 0 bit errors per subpage
+  [   41.111001] mtd_nandbiterrs: Inserted biterror @ 1/7
+  [   41.118007] mtd_nandbiterrs: rewrite page
+  [   41.123850] mtd_nandbiterrs: read_page
+  [   41.127458] qcom_snand 79b0000.spi: the number of corrected bits may be inaccurate
+  [   41.130538] mtd_nandbiterrs: Read reported 4 corrected bit errors
+  [   41.138060] mtd_nandbiterrs: verify_page
+  [   41.144265] mtd_nandbiterrs: Successfully corrected 1 bit errors per subpage
+  [   41.148217] mtd_nandbiterrs: Inserted biterror @ 3/7
+  [   41.155260] mtd_nandbiterrs: rewrite page
+  [   41.161076] mtd_nandbiterrs: read_page
+  [   41.164687] qcom_snand 79b0000.spi: the number of corrected bits may be inaccurate
+  [   41.167750] mtd_nandbiterrs: Read reported 4 corrected bit errors
+  [   41.175324] mtd_nandbiterrs: verify_page
+  [   41.181511] mtd_nandbiterrs: Successfully corrected 2 bit errors per subpage
+  [   41.185456] mtd_nandbiterrs: Inserted biterror @ 5/7
+  [   41.192516] mtd_nandbiterrs: rewrite page
+  [   41.198301] mtd_nandbiterrs: read_page
+  [   41.201949] qcom_snand 79b0000.spi: the number of corrected bits may be inaccurate
+  [   41.204990] mtd_nandbiterrs: Read reported 4 corrected bit errors
+  [   41.212568] mtd_nandbiterrs: verify_page
+  [   41.218720] mtd_nandbiterrs: Successfully corrected 3 bit errors per subpage
+  [   41.222714] mtd_nandbiterrs: Inserted biterror @ 7/7
+  [   41.229739] mtd_nandbiterrs: rewrite page
+  [   41.235548] mtd_nandbiterrs: read_page
+  [   41.239168] mtd_nandbiterrs: Read reported 4 corrected bit errors
+  [   41.242252] mtd_nandbiterrs: verify_page
+  [   41.248407] mtd_nandbiterrs: Successfully corrected 4 bit errors per subpage
+  [   41.252406] mtd_nandbiterrs: Inserted biterror @ 8/7
+  [   41.259413] mtd_nandbiterrs: rewrite page
+  [   41.265238] mtd_nandbiterrs: read_page
+  [   41.268858] mtd_nandbiterrs: error: read failed at 0x0
+  [   41.271937] mtd_nandbiterrs: After 5 biterrors per subpage, read reported error -74
+  [   41.280512] mtd_nandbiterrs: finished successfully.
+  [   41.284587] ==================================================
+  failed to insert /lib/modules/6.15.0-rc5+/mtd_nandbiterrs.ko
+  #
+---
+ drivers/spi/spi-qpic-snand.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index 17bcd12f6cb932fdf2d968692359a0301ce4acdc..137d60081754db04ceb5db64e6f250f6477021db 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -638,6 +638,21 @@ static int qcom_spi_check_error(struct qcom_nand_controller *snandc)
+ 			unsigned int stat;
+ 
+ 			stat = buffer & BS_CORRECTABLE_ERR_MSK;
++
++			if (stat && stat != ecc_cfg->strength) {
++				/*
++				 * The exact number of the corrected bits is
++				 * unknown because the hardware only reports
++				 * the number of the corrected bytes.
++				 *
++				 * Assume the worst case scenario and use
++				 * the maximum.
++				 */
++				dev_warn(snandc->dev,
++					 "the number of corrected bits may be inaccurate\n");
++				stat = ecc_cfg->strength;
++			}
++
+ 			snandc->qspi->ecc_stats.corrected += stat;
+ 			max_bitflips = max(max_bitflips, stat);
+ 		}
+
+---
+base-commit: e7f3d11567c2c79c4342791ba91c500b434ce147
+change-id: 20250521-qpic-snand-overestimate-bitflips-64112df41c38
+
+Best regards,
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
+
 
