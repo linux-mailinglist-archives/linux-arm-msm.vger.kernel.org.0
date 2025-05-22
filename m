@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-59039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A88FAC0B5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 14:10:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B4A2AC0B64
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 14:12:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EAE661BC7319
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 12:10:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 084D31666E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 May 2025 12:12:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 586A828AAF6;
-	Thu, 22 May 2025 12:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E129289E2E;
+	Thu, 22 May 2025 12:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KhMa7NUv"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FgaVWke/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A731828A715
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 12:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF391EF387
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 12:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747915804; cv=none; b=Y1ijgGrfMsFtZSVLDCpw6VqEvypIdVyUAnMG3dfuZ+NlP/mKVGtjutssKeDlkP/ryCY1ev3TMFtzAwK5uHrdnJ1k5T8zzPoihxK7LNkDTRC3rDHC/6jSoM/lz4EoKj8rk0eR9lNM0QH4gOujovEAkkx0ihirgbmVxFrQQ+2fo3Q=
+	t=1747915919; cv=none; b=dOPu3zLKfnvUzVB0ku7QewPW1LR+51JWXpi1q1eoDwG8I27PVf2n7+DcyORmk52pFKMjGFkC20j69+9W42Zyh6kj/7LNkxpdy6i8bU/ARRDzIcc/vPW6hV3EBpIamDM0JUxD8mHzcmyUJipTofmA+BKifmQAfBF3mJ+qiu8BntQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747915804; c=relaxed/simple;
-	bh=lnm28Rpc5lq581XHErrZj8GDudLHSBmNCFWcJ2epunE=;
+	s=arc-20240116; t=1747915919; c=relaxed/simple;
+	bh=oqvrcC8YRASsnI6iNObCy8oJhW0KzispMcJhTnvLQ/0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DrGxSGs4hTJl0JmD6+L+jVLDIOeJNfSKrN+7lETHmunzFfB0N8O3ppnz9uMzJoDho4ZeFxBYmmjNoV8miegMd2KHK/z7yfyE0Td1B9EPmc+fIJsVs+V3i8yXyAtaxD1zcIlw0YmIXAZbCnT83gyZD/S5nVAjDHhU0EA7dGS9HMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KhMa7NUv; arc=none smtp.client-ip=205.220.168.131
+	 To:Cc:Content-Type; b=euaui3G5eg6DhCf3vwS/7lHXD1eJ4F/kBLK1EjQfLWuCm9/99ndQNOog6O6sPr4NnPw+qmZkED2BUFOcwv03hNRUkrLbDWBsA8nML42Rd1GJ1ukaXXEto9gDCIzu9zV6Q+osVztfd4K9a+msHycaRpAQzctr4VujYQPGXCAquIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FgaVWke/; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54M76obk020640
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 12:10:01 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54M7ZjEv020598
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 12:11:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=BvoQG4hxN3v9pTAKmz1SDn44
-	poE7d7zcfXIMZbDRh+w=; b=KhMa7NUvYXtiGvcQRGxQKGttbjFCq3st5bxBgLm9
-	bXv8sAxKKSzHr76mykyJWqpiFKwR/VcgtuzKMxzI7qP3CpdBU0OU0QStL++NH9HN
-	XB4OM9hRHXx66FgbsKSlT0TT6MimbnfEBs4GIw9D8F5wM4DC/PyUeRk/g0tnLmRK
-	9BxTDglpF+98INIs0WFy+6op3UjBtILbpVRcTv/3iKwKcT7lzFLNpoH7hqSyyFVz
-	VHJzTKy6KW8tMgiHeT+tZPZtmvlykCmjCwGEctb/evarY+gSEIAh/9bkECwNE2fm
-	Thvuc9VOHeqC4uYNSh1rpO6bH3mX9ogMVZk02ekXCA+bMg==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46s9pb4kgb-1
+	:references:subject:to; s=qcppdkim1; bh=1OvU4OaQPAAxsTJt9AcdgBDD
+	Dut4RQiRmCJONEEZXas=; b=FgaVWke/p5ieGS5LDE2P/OYFDZd72vFGr1CTI5Kc
+	+ZdfaaElguxJ0CEye1JaW7EY43hMvLmBbzZUdMh9LOowzK9qJw/+IbBXgXZhHyYi
+	yV3LQDPV/IUGaikhVzjJnsi/bKD+Ny5Ov4qUkUhbsKp8aF1HpQQ/dDqFfph9bAUq
+	yAgf8cduT0NC3AHJak9km52QXudDz24OlBlkPNveP9EG98qIjM8bkQMULtUdLjuQ
+	DXTUSOd+a4F9gTpL20tdX5NagUlE9DCLqAYbs2NRkdpqgx7JoE6Fvhlkb0YPKK0Z
+	2x8sKsIL7fcbILh+76tX0ZI2EOwIHoEeldX3Z5/Cx7NEpg==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46s9pb4kp9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 12:10:01 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-23209d8ba1bso50154615ad.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 05:10:01 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 12:11:56 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-231e8ec895bso48406715ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 May 2025 05:11:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747915799; x=1748520599;
+        d=1e100.net; s=20230601; t=1747915915; x=1748520715;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BvoQG4hxN3v9pTAKmz1SDn44poE7d7zcfXIMZbDRh+w=;
-        b=KMMsCI8S4jREit5L1hrgAr8EkzS1IBSfRjC0DnglSdjmOyjtW53O/1pVutZq70mpfn
-         Y+xFNgrmMShY2Tn4tY6eUIuzc6BtTrIM1W2s1UmBtrjAvoxA8OBeCnNvDZytQHQ17jaw
-         tZnD1cMeYCGb6CQOwkuf4ac+stiLA/yOQ9N5ogyA9M2d62jJd5syNTrWLfuXIaKckQ13
-         YSFf6XRQ5KJcF4Goz8zpsx/y3zDbsJPGkx7lvzCCjaa//mPqoKpbnclbxOJ69FDzY5GE
-         /69FH5sp5rz/8BJ2Px00F+lrMGv9OOW7VXWrw8yLemRiBRPmX+ThAKKzfprVigQpqs9h
-         f8cg==
-X-Forwarded-Encrypted: i=1; AJvYcCUS6wasIetjd9qIpvX6pnxC8ThTWkK78oXbv4p7p+blxV5kaVYRf5FA3LKPuVWfw+bD9jf+W9w4DK77Zo2g@vger.kernel.org
-X-Gm-Message-State: AOJu0YzuhKQA5BH+AXpxGQbqpJ03gD7/NzgjGyGXROGYup8DKzL66w14
-	CjR4tHSpN0iQBZwSkt2lWtXLEG3KAbTa0ECZML/KWhf9s9XhO7A5q7/pOFz0guTvdbgo/8rDcWe
-	lg4LCoOnkvvXNQMzEshrIkRm2sMxClvFKcCTGcLZvLXS2Xc2xKxc0U9D3cBa3rODytEk2S7uRx+
-	T/MdKBf3JZwH1o76m2uq2BWBWEqrOkRGVcaHUpg9l/KuqujxQtICw=
-X-Gm-Gg: ASbGnctSUVTP6qKnO44Kvw7HVjQZZnjwAgo7gK5hDF9lrXjVCHS7HOxB+7h5fX9pBeN
-	cpz7bhOdP3jXnLV77XGz+iW6VcQkrfT0OPmD+caNosDHNjZOYVBcGdNFTlKMhoh7fe1LpVAR8u+
-	GmGhgrmSc=
-X-Received: by 2002:a17:903:2ece:b0:21f:988d:5758 with SMTP id d9443c01a7336-231d4596fe8mr400738435ad.35.1747915799380;
-        Thu, 22 May 2025 05:09:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGdCEwriPVhJPw7aBmQjyQWGffLnnxmkS+nFx7YdAAALnEIq7gGUgxBOtu3WCTCH7z5TqwWGCJc6wYpPvnz8mw=
-X-Received: by 2002:a17:903:2ece:b0:21f:988d:5758 with SMTP id
- d9443c01a7336-231d4596fe8mr400738015ad.35.1747915798973; Thu, 22 May 2025
- 05:09:58 -0700 (PDT)
+        bh=1OvU4OaQPAAxsTJt9AcdgBDDDut4RQiRmCJONEEZXas=;
+        b=PnCM/tE0rpQWtG2dDTQ+6/TJBFNYmTFw6y9tliYapdot+wcvXu+0jSR+h1ddkiY/ep
+         UFDtp+YM2aDO9mU32Qjbor1TKUmmnV7NW+Jn8pehiTPqlsAAnYK3KpxotnqV2bOJHnF7
+         NujQUaDie2EM5+TGfMhPYWtYdRLWx6+29cCp5uV0JULfHq0D8YxlE30CcEc2NLIZoFhJ
+         X9ekm3yzr/XJJTwk+Z0Bl5UsZV+f5PIRFJhdT3CRb7IYM7Zz6AJ+JfPs0sUASunrTeqv
+         N76mMFkZ6IZUvMcm/PH4/Zje/24N5iz9MHsy2pjj6C9l5SxTfry0WOASnW85YkoE+cgh
+         PAmw==
+X-Forwarded-Encrypted: i=1; AJvYcCVFYWk+pZVpacUjLQuuAqdzXordxrW/HRUL4WC7aNNBYxuilIet853w6UgUQhAIiJAg7FioyEHhQ1iGLwLk@vger.kernel.org
+X-Gm-Message-State: AOJu0YysSKff2FUt+cTzrOreMvnf7lS53oOaIiTNZ6qjRCNuLX50bJbj
+	+w2dz5eWNZEF96+MZGhX6yFuh1w63gSuxClyGYpC+gRrEFSJlHT1fnn5f7OzwG3tV57QjZ2NA33
+	CqgO2nT7utgMD/kPj+kPKgJhTj8J2RREKHpqPG8x268DkmO2shOUhWsKnGZbj10HsoYjI+nvEw7
+	bYfbgkUlcWjSvRVRgs1cLQ9f4XnQarIl0DJavAiUVJF8I7DhAKEI8=
+X-Gm-Gg: ASbGncsi8ZbAjOocOajxeB3IQcyYI+Omn4+DsdP3QK4JVHRIrGRigYjFUc/mY9rwfsd
+	awlhUUSBPT8GC/PNQctBPppGt5ieMlHrNS/a7ekQ34u5LdsohZYEfSLA1jr76gBM5Bexw9JZEXn
+	gL5mOZ8M8=
+X-Received: by 2002:a17:902:d4d2:b0:231:faf5:c1d0 with SMTP id d9443c01a7336-231faf5c3ecmr354091975ad.24.1747915915329;
+        Thu, 22 May 2025 05:11:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESIl+YAA+LmGGozI0lWLtu1kBwk65N5SNlCdpiBMOASwRP9Ac6amhIibfmRF/Rk9s+GFOqroMlir5kClZwazo=
+X-Received: by 2002:a17:902:d4d2:b0:231:faf5:c1d0 with SMTP id
+ d9443c01a7336-231faf5c3ecmr354091545ad.24.1747915914913; Thu, 22 May 2025
+ 05:11:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,108 +82,130 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250513042825.2147985-1-ekansh.gupta@oss.qualcomm.com>
- <20250513042825.2147985-3-ekansh.gupta@oss.qualcomm.com> <sgfcaujjpbvirwx7cwebgj46uwlcvgr4cgcnav5fmwmjsf4uku@iytanuqqiwxo>
- <71eb4b35-51a3-411c-838d-4af19631325a@oss.qualcomm.com> <tdae3jb7zbkbzvk546j5jnxnfkeux2bwrbz3i5gsehecj65n7v@2hseuptlk2a2>
- <999d2ca0-b3d3-4fa2-b131-092bef4951c8@oss.qualcomm.com>
-In-Reply-To: <999d2ca0-b3d3-4fa2-b131-092bef4951c8@oss.qualcomm.com>
+ <20250513042825.2147985-4-ekansh.gupta@oss.qualcomm.com> <dgij4bftqzog6muu2tsaq7vxj2lpjh4ahwgrpt4ztsvch5juey@4ki5ly3pzuad>
+ <b1324d19-9a61-46d4-b7cd-5fffabf95685@oss.qualcomm.com> <cqwvytawzuczg3drgojfddifsqjaxtzs4dcae2rjw7dag7n7b7@pa2mkmrlvqjb>
+ <36327516-3db9-4bc7-ae2d-162135466e7e@oss.qualcomm.com>
+In-Reply-To: <36327516-3db9-4bc7-ae2d-162135466e7e@oss.qualcomm.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Thu, 22 May 2025 15:09:47 +0300
-X-Gm-Features: AX0GCFsNC0SwHmC2cAOj9-xXlmg4In_ViGMOryv4sEh8pgb9XcJxs6N1I7dggY4
-Message-ID: <CAO9ioeUW=v_CBUchJEt3PArbzBbUgznFO8TK-j=2yUkv8S1Baw@mail.gmail.com>
-Subject: Re: [PATCH v1 2/5] misc: fastrpc: Move all remote heap allocations to
- a new list
+Date: Thu, 22 May 2025 15:11:43 +0300
+X-Gm-Features: AX0GCFvYuxPUpH8myXBy6T_C47lECUFkSMBFRBtjqAqbhfjKJulCyzwdkmj7MpI
+Message-ID: <CAO9ioeVCU50YX8jYdCxTZ066GjpKW3kL+4mA=PMrOEROb1szuA@mail.gmail.com>
+Subject: Re: [PATCH v1 3/5] misc: fastrpc: Fix initial memory allocation for
+ Audio PD memory pool
 To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 Cc: srinivas.kandagatla@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
         gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
         linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-        dri-devel@lists.freedesktop.org, arnd@arndb.de, stable@kernel.org,
-        Alexey Klimov <alexey.klimov@linaro.org>
+        dri-devel@lists.freedesktop.org, arnd@arndb.de, stable@kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Authority-Analysis: v=2.4 cv=WJl/XmsR c=1 sm=1 tr=0 ts=682f1419 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
- a=EUspDBNiAAAA:8 a=mJARKV2re0eqfElz6OYA:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-ORIG-GUID: Wq6xpouAK0dYOoTOesPMSOyBnIxeDBK8
-X-Proofpoint-GUID: Wq6xpouAK0dYOoTOesPMSOyBnIxeDBK8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIyMDEyMyBTYWx0ZWRfX5FiMNLXK6+F2
- Lb4mSIeEFwqEvemaUoxDkfDmwSWhZ9c8+PRe1amXY1eDW/3+P7gIWc2X4Uw6+6IPG/Hw4VQGjAj
- OLdqaZhKFzcyB6mGy+NBPzZMsXzP17HMRWU9lUOQFZ1lxjgRaKhyLCd0aHszRsz6yGyRA9vcDcu
- UmCTfOTMW5p8YP0PI+N+GDImBvMwqOCiCnuQNXY84ulHvAlG446VBE1//2XxYZ0W0cmtDo+joYR
- HEE/ImMqee+t5GwzwqczwgYxXi7wpgjlvjnYKBbMPYsuFEIP95mMechgyF7MbGv9zoi0JPe/GZa
- vJC6/orhv6bmW6quMMGd3ldojRnoRs3QqrH8gaYntSSAaAT95pPShEvnhzJuFNfEMDCCxp48IU+
- yatJKnaR2vtS47QN9y3R2DpGE8UfyN9F+hnsmD+8Wt3ms02O8sUFaeaxmSamloSDVRk6URL8
+X-Authority-Analysis: v=2.4 cv=WJl/XmsR c=1 sm=1 tr=0 ts=682f148d cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
+ a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=vDpd8R7RqsPVAR_k8fEA:9 a=QEXdDO2ut3YA:10
+ a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-ORIG-GUID: F3sRi6BN5Zwv0Pno0CuAEXOFypIKMgkj
+X-Proofpoint-GUID: F3sRi6BN5Zwv0Pno0CuAEXOFypIKMgkj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIyMDEyMyBTYWx0ZWRfX0RxkSeSkW1O7
+ ed6/bo8Qf37vtM5ifus09nbomkOPz9qOm6BdEN/VfgqyQeO781VXNB61DZUTHjqX/ydrHYAqdN+
+ QOJjZ/3w5LsIE2ULyVLXEz9QNtEh6w3O5/7d7P73KaBSocLhTw+RS10E+WqvL/2Dj1HbuyqpqHx
+ 3Lyr1unj8CmYTKVc++k+BDOHFZKbB/qDKj7mCXMrZ9rfLP9tyuXCgcnFRCmdLFylwPO7w2ew5J0
+ veOD+NQB94KyF48XGNHG4sLYSVC56vQJ3SkiOAX+a1IjoKaDa2PJLTxpMEPrP2zk+SuoSFOeCnj
+ 2h5BDBU7ZJ24DccQa1PW3dsiCbmBX/qVH7wjOaIA+ZwHClo7pnHsJCPSIF85HwS6z9Moih8Rlpp
+ t2WrMRLQSvahGqkVmxl3iz6XrypGLj/onDNob+maYoGjBZsz/RdnRE5jVzncq71CWXz4PudA
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-22_06,2025-05-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  spamscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 bulkscore=0
  malwarescore=0 impostorscore=0 mlxscore=0 adultscore=0 phishscore=0
- mlxlogscore=922 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
+ mlxlogscore=999 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2505160000 definitions=main-2505220123
 
-On Thu, 22 May 2025 at 07:54, Ekansh Gupta
+On Thu, 22 May 2025 at 07:58, Ekansh Gupta
 <ekansh.gupta@oss.qualcomm.com> wrote:
 >
 >
 >
-> On 5/19/2025 6:59 PM, Dmitry Baryshkov wrote:
-> > On Mon, May 19, 2025 at 04:36:13PM +0530, Ekansh Gupta wrote:
+> On 5/19/2025 7:01 PM, Dmitry Baryshkov wrote:
+> > On Mon, May 19, 2025 at 04:23:28PM +0530, Ekansh Gupta wrote:
 > >>
-> >> On 5/19/2025 3:46 PM, Dmitry Baryshkov wrote:
-> >>> On Tue, May 13, 2025 at 09:58:22AM +0530, Ekansh Gupta wrote:
-> >>>> Remote heap allocations are not organized in a maintainable manner,
-> >>>> leading to potential issues with memory management. As the remote
-> >>> Which issues? I think I have been asking this question previously.
-> >>> Please expand the commit message here.
-> >> This is mostly related to the memory clean-up and the other patch where
-> >> unmap request was added, I'll try to pull more details about the issue
-> >> scenario.
-> > Thanks.
+> >> On 5/19/2025 3:47 PM, Dmitry Baryshkov wrote:
+> >>> On Tue, May 13, 2025 at 09:58:23AM +0530, Ekansh Gupta wrote:
+> >>>> The initially allocated memory is not properly included in the pool,
+> >>>> leading to potential issues with memory management. Set the number
+> >>> What is 'properly'? Which issues?
+> >> inbuf.pageslen is getting updated to 1 in case buffer is allocated,
+> > Is it a flag or some page count?
+>
+> This is page count,
+
+If it is page count, then why is it '1' instead of being calculated
+based on the init.memlen?
+
+> based on this count, DSP with add memory to audioPD
+> pool. If it is 0, the memory is not added.
+>
 > >
-> >>>> heap allocations are maintained in fl mmaps list, the allocations
-> >>>> will go away if the audio daemon process is killed but there are
-> >>> What is audio daemon process?
-> >> As audio PD on DSP is static, there is HLOS process(audio daemon) required to
-> >> attach to audio PD to fulfill it's memory and file operation requirements.
+> >> which only
+> >> happens if (!fl->cctx->audio_init_mem).
+> > You are describing patch behaviour.
+> >
+> >> Till now pageslen is always 0 irrespective of whether the memory is allocated
+> >> or not due to which audio PD is never able to use this memory.
+> > and the is current behaviour. So this answers the first question.
+> > 'properly'. Now, the second quesiton. 'Which issues?'
+>
+> The issues is actually memory leak as the initial memory is never
+> used by audio PD and it will immediately make a remote heap request
+> as no memory is added to the pool initially.
+>
+> I'll capture this also in the commit text.
+>
+> >
+> >> I'll update this to the commit in the next spin.
 > >>
-> >> This daemon can be thought of to be somewhat similar to rootPD(adsprpcd) or
-> >> sensorsPD(sscrpcd) daemons. Although, there is a slight difference in case of audio
-> >> daemon as it is required to take additional information and resources to audio PD
-> >> while attaching.
-> > I find it a little bit strange to see 'required' here, while we have
-> > working audio setup on all up platforms up to and including SM8750
-> > without any additional daemons. This is the primary reason for my
-> > question: what is it, why is it necessary, when is it necessary, etc.
+> >>>> of pages to one to ensure that the initially allocated memory is
+> >>>> correctly added to the Audio PD memory pool.
+> >>>>
+> >>>> Fixes: 0871561055e66 ("misc: fastrpc: Add support for audiopd")
+> >>>> Cc: stable@kernel.org
+> >>>> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+> >>>> ---
+> >>>>  drivers/misc/fastrpc.c | 7 ++++---
+> >>>>  1 file changed, 4 insertions(+), 3 deletions(-)
+> >>>>
+> >>>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> >>>> index d4e38b5e5e6c..b629e24f00bc 100644
+> >>>> --- a/drivers/misc/fastrpc.c
+> >>>> +++ b/drivers/misc/fastrpc.c
+> >>>> @@ -1311,6 +1311,9 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+> >>>>            goto err;
+> >>>>    }
+> >>>>
+> >>>> +  inbuf.client_id = fl->client_id;
+> >>>> +  inbuf.namelen = init.namelen;
+> >>>> +  inbuf.pageslen = 0;
+> >>>>    if (!fl->cctx->audio_init_mem) {
+> >>>>            err = fastrpc_remote_heap_alloc(fl, fl->sctx->dev, init.memlen,
+> >>>>                                            &buf);
+> >>>> @@ -1335,12 +1338,10 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+> >>>>                    list_add_tail(&buf->node, &fl->cctx->rhmaps);
+> >>>>                    spin_unlock_irqrestore(&fl->cctx->lock, flags);
+> >>>>                    fl->cctx->audio_init_mem = true;
+> >>>> +                  inbuf.pageslen = 1;
+> >>>>            }
+> >>>>    }
+> >>>>
+> >>>> -  inbuf.client_id = fl->client_id;
+> >>>> -  inbuf.namelen = init.namelen;
+> >>>> -  inbuf.pageslen = 0;
+> >>>>    fl->pd = USER_PD;
+> >>>>
+> >>>>    args[0].ptr = (u64)(uintptr_t)&inbuf;
+> >>>> --
+> >>>> 2.34.1
+> >>>>
 >
-> This daemon is critical to facilitate dynamic loading and memory
-> requirement for audio PD(running on DSP for audio processing). Even
-> for audio testing on SM8750, I believe Alexey was enabling this daemon.
-
-Could you please point out the daemon sources?
-
-As far as I remember, we didn't need it on any of the platforms up to
-and including SM8650, that's why I'm asking.
-
->
-> What is it?
-> - HLOS process to attached to audio PD to fulfill the requirements that
-> cannot be met by DSP alone(like file operations, memory etc.)
->
-> Why is it necessary?
-> - There are limitation on DSP for which the PD requirements needs to be
-> taken to HLOS. For example, DSP does not have it's own file system, so
-> any file operation request it PD(say for dynamic loading) needs to be
-> taken to HLOS(using listener/reverse calls) and is fulfilled there.
-> Similarly memory requirement is another example.
->
-> When is it necessary?
-> - When audio PD needs to perform any task that requires HLOS relying
-> operations like dynamic loading etc.
-
-This doesn't exactly answer the question. I can play and capture audio
-on most of the platforms that I tested without using extra daemon. So,
-when is it necessary?
 
 
 -- 
