@@ -1,311 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-59164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B46A7AC1A13
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 04:31:45 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28511AC1A40
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 04:52:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5FCCC4A2ED3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 02:31:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 79E7E7BA121
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 02:50:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DE172DCBFE;
-	Fri, 23 May 2025 02:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 872952770B;
+	Fri, 23 May 2025 02:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JTvqlR0y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iYUFyamI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D232DCBE7;
-	Fri, 23 May 2025 02:31:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD0C625;
+	Fri, 23 May 2025 02:52:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747967503; cv=none; b=WiUbwJBs0wBc8FoeLntESx/hv/1wzsZzn2TyO6hhXYjasm5xb2wqf6J9nm7OnoWq0kSW/ROC042hQha0vuLEkzJ6ffVo+DylTHa32LY4fNkkO8v0JOGxOlVhAOJzH/2K14jAL8LNgPYOdHa0N1OWSIr805W32dXz1QvzyC1ii0Q=
+	t=1747968724; cv=none; b=NrABINn2P6E/dBjGxzvshiVWv00Sk/Np48KKXHDpHsG42jNdN+oH/NIamM1VbSG3DRk9WWC+PG0wQh5yvu5xQcw+oZnH9I9fKV2L09iokd8LHKpEFHTRMMYnkKMVZiewmiWhlUvgAAMmPUYiWmKtrfCjfWc9xKklu3nvqNpWY/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747967503; c=relaxed/simple;
-	bh=9XFXmzgUB9cpxpVLkTmsmFEI6oIghNlCBWAFtcvFzWk=;
+	s=arc-20240116; t=1747968724; c=relaxed/simple;
+	bh=85tposCp5qIjog1xev8yR53k0au9MVEHGTMIGzRIr7Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SOtGf5NbY46VbC3nlqs/qVQr+7PrGs70tlO7j4KkHtucfCBOacliVrRDcsywGnkzQ2JxCA5gH1L/f9RSQ/l4vsuGy6AoKQZw5U1P0c1MObqdMJoSgFi0YHquXmp/93POxMHd8SIFZl+FNs56MBxT4bprzOVVrkSGASxCGOxl9B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JTvqlR0y; arc=none smtp.client-ip=209.85.166.43
+	 To:Cc:Content-Type; b=qAJ+cE8nQsr0vHQV6yX9f3N0tum3W0+YEF17Cwiy1Sx27XmwwoIOnvlLuklw/kjcf9A9MC9XKGUGJFR+nbjQrfW7tH41rJUpuSWaAsbwsxIfVZvIQR1q8QLuWaSyF5PwjBAzBuiMiy63P0jZ0cWRobecvRp4AbH0ZKLeneqo7zA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iYUFyamI; arc=none smtp.client-ip=209.85.166.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-85e46f5c50fso749668639f.3;
-        Thu, 22 May 2025 19:31:41 -0700 (PDT)
+Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-85dac9728cdso282571939f.0;
+        Thu, 22 May 2025 19:52:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747967500; x=1748572300; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747968722; x=1748573522; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=v50Axd90kyfqH9mwJmj3TPd2cL5HaAzM6IzM1l9YKSU=;
-        b=JTvqlR0y9NkkDrSdYBJjFf5Sjo/sTFjCsBoe3uKMK1xVl7a8zBFalxoPQSQ99Ln53d
-         00C3FVHzVfGN0npuasWV1/Smc1M+eatk1FDthXmbsav5Z6qHc1x5+rQjB25/PSOrj07Q
-         yoIuKEFPN1T1qBClokAv5a7BTBZ9351C2h4R2vh9zbAgDVGuemR5gXXbIhX0bcf33zgx
-         G6503K1hqC+pwS3efQ7ay/yCg4xMkFxZlxl39wrJsxK/Lyo8kyS8k5gYAC1KOX+EHFQq
-         SdzkG/CRAUqcYWHoiUOFLkt97iIW8FUFi1F+zDoDCX7BmDfHsK2m93v+EuliDpHYf8GI
-         nung==
+        bh=xTSB0zI8EV3WEUJwB1OwJBkD3PikZdbJJrajz68TKpU=;
+        b=iYUFyamII8RerW7DT3bq75XcbVu/Yd8caUQIrFXWUB0FdSIO4vUHsC9d6DqyJjUE3F
+         qwmwcKvUADWEuD7zPGJx6kuiTn+dLeMVMR09MM0ueVP7qN7mMI73iOZOtnBmPA+EfHh+
+         Y9R82XnbwvA6X8viEPsv6mhO0aN+uj7UR0BrGph+b6hI0xiKc/HqwHCZ3a3R3EG0wk5N
+         gvEP6nhpJCEWXLLHJghIuNuYTxFgW5Wd+ejFEN1VhrXweN2zhXGrDAx1zmnfhZw5aXzL
+         qQCCpwqslmVuW9krwUImtr4ogJUZEaHDOg5vzEeTOtZeTOgT0ASdmMtQz9IVcDdlYXzD
+         tbbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747967500; x=1748572300;
+        d=1e100.net; s=20230601; t=1747968722; x=1748573522;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=v50Axd90kyfqH9mwJmj3TPd2cL5HaAzM6IzM1l9YKSU=;
-        b=o4stKvZ1kCGqQxTYrBI6Gjgm2icm8gTUWs+P/dE0m7/+05Hkzscb9gmxcSPJoOtSlY
-         +dpvIgmjNcjsBaMJVeobTrMtZz+RwjOVWoogTiqMNuCkDHwEC6+a8W5FbO2lukjmf2DK
-         ThW7c8Rcz4GhKTYH39YqDtkGXdOYHOzx3o2sC8mKNsLmkEKCoO22LN3Wx0k1581G6+xW
-         BElxs7/82PwNx7+psvde7grKSzQ9LfpT5blPAO2MW2kGwPZvPUqu1ZRz2f1zzKfRWx1z
-         OLOo0TXiWPaUbMe/0OzOP3THUw6OCazfmE+1p21vv0d4mNFIKx5gp8D4RD51rxLUWTm/
-         +gDw==
-X-Forwarded-Encrypted: i=1; AJvYcCWJ8E4PmKvEwbFZnfPtqbZ2xBESLBfxRp9Y3aRPXmiEEgvA0O36Kws7YxCnj3n5TZXScXIzsOdjk0rUGqwL@vger.kernel.org, AJvYcCWRh6qNj8DeE1XyhWs4kxzk2QGeDAMwufnLimOkepKngLLzSTzT9pqTPyXHWC85Opi3YaO0VBuINQaKRgSo@vger.kernel.org
-X-Gm-Message-State: AOJu0YxyODb6mlVVxYU2H1Zvepw1i+7BVD1iAyVQ/o7H/bAS4h8b9ecJ
-	v9viMs0m8qVkPEWLhLgUsuGvuY0deKb+2qyXA5vcG6V89Z5qyUi0MhX7fgJBnoHHxprwajMcNkF
-	zTzfdb/iAUSCen1pFSbbeSnbqIxBS+Io=
-X-Gm-Gg: ASbGncvrTZETcM923sjUnYj+i+mdbgcpiQQm3MQT/qjKrkyjSmRNv943m/sXXceN1cv
-	yibgdewakIqZrhwYzMAKvY+bp9T/hCntlYmdCJD768PospXE1BFKyLMbnjIWHwvgXCdGbFoJUBC
-	ys+rvydsCLVWwCXEoFs6JA/5Ek6w4KSexQyX8JKHOdd6nUoOGjOfC+AnmktbDGFrCv
-X-Google-Smtp-Source: AGHT+IEaJK0kE9SEAYYnpJd6uzCGrAqsmkLSUrMUnq8m5hUhwbfMok+9DiOmcNxk+puC6/eGlHTtg9rkqjOTtXuzEd4=
-X-Received: by 2002:a05:6602:6a87:b0:86a:24fe:c51f with SMTP id
- ca18e2360f4ac-86caf092e03mr197060839f.7.1747967500384; Thu, 22 May 2025
- 19:31:40 -0700 (PDT)
+        bh=xTSB0zI8EV3WEUJwB1OwJBkD3PikZdbJJrajz68TKpU=;
+        b=VoyHl2Q9GKuMc6HwQrJ8MgbvgqVmSOhYzComga3KvsKsUBTOY1aYS2TM0C1VPQ+RtD
+         AZnDEsfhGbz2hyCOqHn5bZu19udBU0kMspOT2fDLLCKg4mrPq1oLyN1e58S3FKQ1h5bz
+         hM5BZZyc4cl6wPQvjHnnZDMmQBSJKFkxBvWX8yBW3ij/qiyZduywRFEDSMPee6UbFx6+
+         ff6oUPSxrdg0bSfSCZDvwS0tVJli+mLi50c7oDy+yDBjeuZYYhOjenkOB/IrXehRf3bt
+         mBGE8KtFiMTZt3FrFWepN6w4Hypi4tPjyIeb1F0tZQglIy+EVmAYzLF4zfWClXHcNSn3
+         zsng==
+X-Forwarded-Encrypted: i=1; AJvYcCUBmECB5ZJdZY3xYQoHjBGFwRFQ1I4+uU8IRCn8CyGtRo2vtZxZloJHl1pCfx0+pr0X8mgPKpRejciOm1jx@vger.kernel.org, AJvYcCWcgHcSZ0zDAE87jp926jUhOOk3v80D0o3ZlHPzlOFdFt5m/f60wtGQib0eqbnVc711X+7maYiIAE7rX/m1@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDhU7UUV1cG0wROqVmRruTrTCujRYEf/sXV9MzXu3uxAR4Xh1z
+	iAg3x6g3PJ6urI6H2BN9PEA75v9TJ4iVyiX851wJybBe3tIKcrDuwqgNkCwCYJmtnZaQhRdomHs
+	ng6wY8/ahQRjeRAc85QqCrvSE4xg6EIs=
+X-Gm-Gg: ASbGncuUIwf3aSp0sOlTZHrJq7GJtMqtSgZUajS5SBgZc6MGNtrokBBemN/yrsTKDFm
+	Ja0BCNq0yqCysWDPY5Neb8Sj1EFiKG7X3jPgFPhEV9DoLIdE7GIyxycvEFJeDOr88sQrhaSTtdI
+	90fggM/CXFrgnYEP8bjvWC8PhbFz+2M4zAWKANYptATiXpDlbfNH+cNCBXvUgJ3F69
+X-Google-Smtp-Source: AGHT+IGekz0rAdSPy6Esyn61QabmWg59bnZX7oGPMZFq1CRW47PXVM8Ji2t7L5VbUHV5PXKnuAfwbKUUuHc/BlAt9Z0=
+X-Received: by 2002:a05:6602:6cc6:b0:861:7237:9021 with SMTP id
+ ca18e2360f4ac-86caf0c1576mr176258739f.3.1747968721680; Thu, 22 May 2025
+ 19:52:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <aCYkk4Y7feltfp79@pollux> <CAF6AEGsoG_W3A3+BHV4n5EKZQazFubrCyfrtxVUH7+H4-j7i5A@mail.gmail.com>
- <aCY42rgJC4sQ4tp4@pollux> <CAF6AEGubHkdhfJz=bAZvctO1aTKDLwRsRyPzkoVrQ7tA6dRbKw@mail.gmail.com>
- <aCwqAGLLCC2ZLSBK@pollux> <CAF6AEGspvuTHU0t9z__p_HkdRNi=cXir3t453AbR6DFNzDpgvw@mail.gmail.com>
- <aCyzyAPbQ1SYbo4q@pollux> <CAF6AEGs+WmTO_624A3Pek-1-SD6B4PFu4sDv3htko0ABhfHFzw@mail.gmail.com>
- <aC8Dzgufa9E2MD6t@pollux> <CAF6AEGvkrN8H1ZPzrCQF+d_Y_Y5kRdeQjohDqcgpNd-uDKo9yQ@mail.gmail.com>
- <aC9Iih1KN6xb9LrK@cassiopeiae>
-In-Reply-To: <aC9Iih1KN6xb9LrK@cassiopeiae>
+References: <20250514175527.42488-1-robdclark@gmail.com> <20250514175527.42488-2-robdclark@gmail.com>
+ <aCWrwz2IF6VBUi4e@pollux> <aCWueFzx2QzF7LVg@pollux> <CAF6AEGu9MPxKnkHo45gSRxaCP+CTzqsKZjiLuy4Ne4GbrsStGA@mail.gmail.com>
+ <aCYqlvp_T77LyuMa@pollux> <CAF6AEGsOTNedZhuBzipSQgNpG0SyVObaeq+g5U1hGUFfRYjw8w@mail.gmail.com>
+ <aCb-72KH-NrzvGXy@pollux> <CAF6AEGu=KzCnkxuUsYvCHBGwo-e2W16u_cRT1NFAXLphty1_ig@mail.gmail.com>
+ <CAPM=9tzcvDVDOM88O8oqDHURR1nbR7KsFStavNnT1CN6C6kGgg@mail.gmail.com>
+ <CAF6AEGuv3GXTBcU99sBjAa5gPOSNoxwY+eiPy=Q--cLYHVn+cw@mail.gmail.com> <CAPM=9tykCXSKOH0BcMkNLKyCWfEN-kCjs0U7UA+C1pPqFr1jLA@mail.gmail.com>
+In-Reply-To: <CAPM=9tykCXSKOH0BcMkNLKyCWfEN-kCjs0U7UA+C1pPqFr1jLA@mail.gmail.com>
 From: Rob Clark <robdclark@gmail.com>
-Date: Thu, 22 May 2025 19:31:28 -0700
-X-Gm-Features: AX0GCFun40Rc8pO0Ej4MXUSPpbpJxcZFCAbQh8QNhOuG0dSQLURQ6RgXeZ6gFMg
-Message-ID: <CAF6AEGvp6BCN14_n+Ot5KQrPbnDprKXcHT0s0ZLC2-JDV7D3TQ@mail.gmail.com>
-Subject: Re: [PATCH v4 04/40] drm/sched: Add enqueue credit limit
-To: Danilo Krummrich <dakr@kernel.org>
-Cc: Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>, phasta@kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, Matthew Brost <matthew.brost@intel.com>, 
-	=?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>, 
+Date: Thu, 22 May 2025 19:51:50 -0700
+X-Gm-Features: AX0GCFv84KCQV61BbxGSWUJ9Yyr5yOTqzENnybuQuOJ009enSSfsiTbWai8yKfg
+Message-ID: <CAF6AEGuK+X4Q=Z-anjQuUBi952eYSs3u9HxVz0GSQM8fokdiiw@mail.gmail.com>
+Subject: Re: [PATCH v4 01/40] drm/gpuvm: Don't require obj lock in destructor path
+To: Dave Airlie <airlied@gmail.com>
+Cc: Danilo Krummrich <dakr@kernel.org>, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>, 
 	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	open list <linux-kernel@vger.kernel.org>, 
-	Boris Brezillon <boris.brezillon@collabora.com>
+	Thomas Zimmermann <tzimmermann@suse.de>, Simona Vetter <simona@ffwll.ch>, 
+	open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 22, 2025 at 8:53=E2=80=AFAM Danilo Krummrich <dakr@kernel.org> =
-wrote:
+On Tue, May 20, 2025 at 3:31=E2=80=AFPM Dave Airlie <airlied@gmail.com> wro=
+te:
 >
-> On Thu, May 22, 2025 at 07:47:17AM -0700, Rob Clark wrote:
-> > On Thu, May 22, 2025 at 4:00=E2=80=AFAM Danilo Krummrich <dakr@kernel.o=
-rg> wrote:
-> > > On Tue, May 20, 2025 at 10:22:54AM -0700, Rob Clark wrote:
-> > > > On Tue, May 20, 2025 at 9:54=E2=80=AFAM Danilo Krummrich <dakr@kern=
+> On Wed, 21 May 2025 at 07:53, Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > On Tue, May 20, 2025 at 2:25=E2=80=AFPM Dave Airlie <airlied@gmail.com>=
+ wrote:
+> > >
+> > > On Sat, 17 May 2025 at 02:20, Rob Clark <robdclark@gmail.com> wrote:
+> > > >
+> > > > On Fri, May 16, 2025 at 2:01=E2=80=AFAM Danilo Krummrich <dakr@kern=
 el.org> wrote:
-> > > > > On Tue, May 20, 2025 at 09:07:05AM -0700, Rob Clark wrote:
-> > > > > > On Tue, May 20, 2025 at 12:06=E2=80=AFAM Danilo Krummrich <dakr=
+> > > > >
+> > > > > On Thu, May 15, 2025 at 02:57:46PM -0700, Rob Clark wrote:
+> > > > > > On Thu, May 15, 2025 at 10:55=E2=80=AFAM Danilo Krummrich <dakr=
 @kernel.org> wrote:
-> > > > > > > But let's assume we agree that we want to avoid that userspac=
-e can ever OOM itself
-> > > > > > > through async VM_BIND, then the proposed solution seems wrong=
-:
+> > > > > > > Anyways, I don't agree with that. Even if you can tweak your =
+driver to not run
+> > > > > > > into trouble with this, we can't introduce a mode that violat=
+es GOUVM's internal
+> > > > > > > lifetimes and subsequently fix it up with WARN_ON() or BUG_ON=
+().
 > > > > > > >
-> > > > > > > Do we really want the driver developer to set an arbitrary bo=
-undary of a number
-> > > > > > > of jobs that can be submitted before *async* VM_BIND blocks a=
-nd becomes
-> > > > > > > semi-sync?
-> > > > > > >
-> > > > > > > How do we choose this number of jobs? A very small number to =
-be safe, which
-> > > > > > > scales badly on powerful machines? A large number that scales=
- well on powerful
-> > > > > > > machines, but OOMs on weaker ones?
+> > > > > > > I still don't see a real technical reason why msm can't be re=
+worked to follow
+> > > > > > > those lifetime rules.
 > > > > > >
-> > > > > > The way I am using it in msm, the credit amount and limit are i=
-n units
-> > > > > > of pre-allocated pages in-flight.  I set the enqueue_credit_lim=
-it to
-> > > > > > 1024 pages, once there are jobs queued up exceeding that limit,=
- they
-> > > > > > start blocking.
-> > > > > >
-> > > > > > The number of _jobs_ is irrelevant, it is # of pre-alloc'd page=
-s in flight.
+> > > > > > The basic issue is that (a) it would be really awkward to have =
+two
+> > > > > > side-by-side VM/VMA management/tracking systems.  But in legacy=
+ mode,
+> > > > > > we have the opposite direction of reference holding.  (But at t=
+he same
+> > > > > > time, don't need/use most of the features of gpuvm.)
 > > > > >
-> > > > > That doesn't make a difference for my question. How do you know 1=
-024 pages is a
-> > > > > good value? How do we scale for different machines with different=
- capabilities?
+> > > > > Ok, let's try to move this forward; I see three options (in order=
+ of descending
+> > > > > preference):
 > > > > >
-> > > > > If you have a powerful machine with lots of memory, we might thro=
-ttle userspace
-> > > > > for no reason, no?
+> > > > >   1) Rework the legacy code to properly work with GPUVM.
+> > > > >   2) Don't use GPUVM for the legacy mode.
+> > > > >   .
+> > > > >   .
+> > > > >   .
+> > > > >   3) Get an ACK from Dave / Sima to implement those workarounds f=
+or MSM in
+> > > > >      GPUVM.
 > > > > >
-> > > > > If the machine has very limited resources, it might already be to=
-o much?
+> > > > > If you go for 3), the code introduced by those two patches should=
+ be guarded
+> > > > > with a flag that makes it very clear that this is a workaround sp=
+ecifically
+> > > > > for MSM legacy mode and does not give any guarantees in terms of =
+correctness
+> > > > > regarding lifetimes etc., e.g. DRM_GPUVM_MSM_LEGACY_QUIRK.
 > > > >
-> > > > It may be a bit arbitrary, but then again I'm not sure that userspa=
-ce
-> > > > is in any better position to pick an appropriate limit.
+> > > > I'm not even sure how #2 would work, other than just copy/pasta all=
+ of
+> > > > drm_gpuvm into msm, which doesn't really seem great.
 > > > >
-> > > > 4MB of in-flight pages isn't going to be too much for anything that=
- is
-> > > > capable enough to run vk, but still allows for a lot of in-flight
-> > > > maps.
+> > > > As for #1, even if I could get it to work, it would still be a lot
+> > > > more mmu map/unmap (like on every pageflip, vs the current state th=
+at
+> > > > the vma is kept around until the object is freed).  For the
+> > > > non-VM_BIND world, there are advantages to the BO holding the ref t=
+o
+> > > > the VMA, rather than the other way around.  Even at just a modest
+> > > > single layer 1080p the map takes ~.2ms and unmap ~.3ms (plus the un=
+map
+> > > > costs a tlbinv).  So from that standpoint, #3 is the superior optio=
+n.
+> > > >
 > > >
-> > > Ok, but what about the other way around? What's the performance impac=
-t if the
-> > > limit is chosen rather small, but we're running on a very powerful ma=
-chine?
+> > > Before we get to #3, I'll need a bit more info here on why you have t=
+o
+> > > map/unmap the VMA on every pageflip.
+> >
+> > Previously we'd keep the VMA hanging around until the GEM obj is
+> > freed.  But that can't work if the VMA (via the VM_BO) is holding a
+> > reference to the GEM obj.
+> >
+> > I was kinda thinking about keeping the VMA around until the handle is
+> > closed.. but that doesn't cover the dma-buf case (ie. when you
+> > re-import the dma-buf fd each frame.. I know android does this, unsure
+> > about other wsi's).
+> >
+> > > But actually I think 2 is the best option, I think in nouveau this is
+> > > where we ended up, we didn't modify the old submission paths at all
+> > > and kept the old bo/vm lifetimes.
 > > >
-> > > Since you already have the implementation for hardware you have acces=
-s to, can
-> > > you please check if and how performance degrades when you use a very =
-small
-> > > threshold?
+> > > We just added completely new bind/exec ioctls and you can only use on=
+e
+> > > method once you've opened an fd.
 > >
-> > I mean, considering that some drivers (asahi, at least), _only_
-> > implement synchronous VM_BIND, I guess blocking in extreme cases isn't
-> > so bad.
+> > hmm, but that means tracking VMAs against a single BO differently..
+> > which.. at least seems ugly..
 >
-> Which is not even upstream yet and eventually will support async VM_BIND =
-too,
-> AFAIK.
+> I don't think it is if you already have the code to do that, and just
+> add gpuvm support in parallel.
+>
+> You also have to figure out that the world is moving towards Vulkan
+> for everything so any optimisations you've made for particular legacy
+> paths will need to be dealt with in the future picture anyways.
+>
+> But I'd rather not hack gpuvm into being something it isn't, if there
+> is a meaningful commonality in legacy bo/vm bindings across drivers,
+> we could create something new, but the ref counting and handling is
+> pretty fundamental to gpuvm architecture.
+>
+> There should only be two paths, legacy and gpuvm, and you shouldn't
+> ever be mixing them on a particular exec path, since you should only
+> have a vm per userspace fd, and can pick which way to use it the first
+> time someone calls it.
 
-the uapi is upstream
+It's not as much about the exec path, as it is about making all the
+non-exec paths (like shrinker/residency) have to deal with two
+completely different things..
 
-> > But I think you are overthinking this.  4MB of pagetables is
-> > enough to map ~8GB of buffers.
-> >
-> > Perhaps drivers would want to set their limit based on the amount of
-> > memory the GPU could map, which might land them on a # larger than
-> > 1024, but still not an order of magnitude more.
->
-> Nouveau currently supports an address space width of 128TiB.
->
-> In general, we have to cover the range of some small laptop or handheld d=
-evices
-> to huge datacenter machines.
+But I think I have figured out something workable.  I add an extra
+refcnt per BO for the vma, incremented by userspace holding a gem
+handle, userspace holding a dma-buf fd, or (ofc) actual pin for
+scanout.  When the refcount is above zero I defer teardown in the
+kms->vm until it drops to zero.  It isn't _exactly_ the same as lazy
+VMA teardown when the BO is freed, but it is effectively the same
+thing.  And whenever the vma_ref is greater than zero, the BO has
+something else holding a ref so the ref loop doesn't matter.  If there
+is no userspace process holding a reference to the BO via handle or
+dma-buf fd, then it isn't going to be used again in a swapchain, so
+the difference btwn tearing down the VMA when the vma_ref drops to
+zero vs when the BO is freed doesn't amount to anything.
 
-sure.. and?  It is still up to the user of sched to set their own
-limits, I'm not proposing that sched takes charge of that policy
-
-Maybe msm doesn't have to scale up quite as much (yet).. but it has to
-scale quite a bit further down (like watches).  In the end it is the
-same.  And also not really the point here.
-
-> > I don't really have a good setup for testing games that use this, atm,
-> > fex-emu isn't working for me atm.  But I think Connor has a setup with
-> > proton working?
->
-> I just want to be sure that an arbitrary small limit doing the job for a =
-small
-> device to not fail VK CTS can't regress the performance on large machines=
-.
-
-why are we debating the limit I set outside of sched.. even that might
-be subject to some tuning for devices that have more memory, but that
-really outside the scope of this patch
-
-> So, kindly try to prove that we're not prone to extreme performance regre=
-ssion
-> with a static value as you propose.
->
-> > > Also, I think we should probably put this throttle mechanism in a sep=
-arate
-> > > component, that just wraps a counter of bytes or rather pages that ca=
-n be
-> > > increased and decreased through an API and the increase just blocks a=
-t a certain
-> > > threshold.
-> >
-> > Maybe?  I don't see why we need to explicitly define the units for the
-> > credit.  This wasn't done for the existing credit mechanism.. which,
-> > seems like if you used some extra fences could also have been
-> > implemented externally.
->
-> If you are referring to the credit mechanism in the scheduler for ring bu=
-ffers,
-> that's a different case. Drivers know the size of their ring buffers exac=
-tly and
-> the scheduler has the responsibility of when to submit tasks to the ring =
-buffer.
-> So the scheduler kind of owns the resource.
->
-> However, the throttle mechanism you propose is independent from the sched=
-uler,
-> it depends on the available system memory, a resource the scheduler doesn=
-'t own.
-
-it is a distinction that is perhaps a matter of opinion.  I don't see
-such a big difference, it is all just a matter of managing physical
-resource usage in different stages of a scheduled job's lifetime.
-
-> I'm fine to make the unit credits as well, but in this case we really car=
-e about
-> the consumption of system memory, so we could just use an applicable unit=
-.
->
-> > > This component can then be called by a driver from the job submit IOC=
-TL and the
-> > > corresponding place where the pre-allocated memory is actually used /=
- freed.
-> > >
-> > > Depending on the driver, this might not necessarily be in the schedul=
-er's
-> > > run_job() callback.
-> > >
-> > > We could call the component something like drm_throttle or drm_submit=
-_throttle.
-> >
-> > Maybe?  This still has the same complaint I had about just
-> > implementing this in msm.. it would have to reach in and use the
-> > scheduler's job_scheduled wait-queue.  Which, to me at least, seems
-> > like more of an internal detail about how the scheduler works.
->
-> Why? The component should use its own waitqueue. Subsequently, from your =
-code
-> that releases the pre-allocated memory, you can decrement the counter thr=
-ough
-> the drm_throttle API, which automatically kicks its the waitqueue.
->
-> For instance from your VM_BIND IOCTL you can call
->
->         drm_throttle_inc(value)
->
-> which blocks if the increment goes above the threshold. And when you rele=
-ase the
-> pre-allocated memory you call
->
->         drm_throttle_dec(value)
->
-> which wakes the waitqueue and unblocks the drm_throttle_inc() call from y=
-our
-> VM_BIND IOCTL.
-
-ok, sure, we could introduce another waitqueue, but with my proposal
-that is not needed.  And like I said, the existing throttling could
-also be implemented externally to the scheduler..  so I'm not seeing
-any fundamental difference.
-
-> Another advantage is that, if necessary, we can make drm_throttle
-> (automatically) scale for the machines resources, which otherwise we'd ne=
-ed to
-> pollute the scheduler with.
-
-How is this different from drivers being more sophisticated about
-picking the limit we configure the scheduler with?
-
-Sure, maybe just setting a hard coded limit of 1024 might not be the
-final solution.. maybe we should take into consideration the size of
-the device.  But this is also entirely outside of the scheduler and I
-fail to understand why we are discussing this here?
+It's a bit weird adding some extra mechanism specifically for the
+scanout vm, and maybe a bit uglier (depending on eye-of-beholder) than
+making gpuvm work in either way (since the latter was a pretty
+straightforward patch), but less ugly than having to parallel
+mechanisms.  So if you _really_ don't like the WEAK_REF flag, I have a
+workable alternative that addresses the performance problems.
 
 BR,
 -R
