@@ -1,313 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-59265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 940C3AC2A4E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 21:17:13 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8297EAC2A82
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 21:39:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 941C33B6844
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 19:16:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7981E1B6822F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 19:39:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B454C19CC36;
-	Fri, 23 May 2025 19:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67E782BD01C;
+	Fri, 23 May 2025 19:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qJ0qWRGP"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZtyZr2yr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873B71754B;
-	Fri, 23 May 2025 19:17:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAA5297A4C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 19:39:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748027827; cv=none; b=MGNIZtlLK1hKNdPCxgt8fKiSLKbjF4cJ3VlFVMuFB75O6vPVXz9Jlyy4lgb4+9FgQSgPqYGrstMKPE6aTgh9LRoBfC8YLXnKOB0G9DzBVZpNOpfsicwGum8d3jjOZHBpFJdvnb69pyJ8sEiUecV+5xuYWsF2XgYGAvXonrSDtgI=
+	t=1748029158; cv=none; b=nQ8SuDzT9If17vsEiyU6Zq+r6q+nPmiZiDVcaYSWiKpVx1mumX9Il5oWNpN4umltFfLPyx8VA8Ng0dPgQlvbtfvO7G0X8HQ5YpPhzy4HkzpPikEm6+m93Cq94WmsXIANbj1P46pteacbPfNSdLv7hn4zpKXsxeroo85MQ+V4XtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748027827; c=relaxed/simple;
-	bh=gBfMLerdA5uGEJsXX7pnRE9TlsqxHi90e+Ifj4So1HM=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=ZbhjHYBN8slhoqLXwJMEhiTy5WTL4sFczeYq5mmbddYP2JVHVi26Rt24VE7rJCkrV/yJZZv0zhUBLKXzxGd5fR+KYHpxNZ7/Viv9I46wFJ6tziwif5LGC8NuP5YdrRzwntajcWzS3CXYQn9Anc3EtDySWjM6t7zFhz4PQ8usebk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qJ0qWRGP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27074C4CEE9;
-	Fri, 23 May 2025 19:17:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748027826;
-	bh=gBfMLerdA5uGEJsXX7pnRE9TlsqxHi90e+Ifj4So1HM=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=qJ0qWRGP8QYMj3VZ133JLVkPWemzvD+sP39PsfVw7VC1NYH7p9klArS0PbeeJSOwE
-	 G1sL3/6PVV68KWn4vICeEThcALx9gffx9eFZZq0zc0AM9/lEQBVsy/pyr37FRMjPJV
-	 iCFsLTzd1MxYfmHGfNXH+0Yw8d6Q1rTX53gm+Wndbln/fdaRbNPR9Pcx78YzjeNmii
-	 oJSRWEiqNDVxYxIEIqgGEaENnIPtNHCWahJvK3JCWureJLdTKSDqSjh8XHmw+Vsn9Y
-	 kpgdEpebxmZIQq+ih0m1VpmCA5Hqxd9yuhP9oFOThIINXLVIi9oO/tmzXnR6xRJ/vt
-	 plaQth2Nb5sDA==
-Date: Fri, 23 May 2025 14:16:55 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1748029158; c=relaxed/simple;
+	bh=UwjCwu+hoD5QvbENA5EagwHCA8S9dgr+/m5BQ31GkaQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=H6xdOluaarN+hEuPtQICmbuImyvgYW08eKsQ2A9fcOWVQ4/flet9rOlIJn8e4EI6bvweJRu+n5JASOp9waa4SXimof0RrJTEneoPX00Kd1Jaq3i/DlCzbNy9oO7re2GYbI01WMn1AzQI03yZZxhtgPUUIrek3AbnYFuVFcguUKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZtyZr2yr; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54NACJ6e020953
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 19:39:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Z9XB99CT/fAlMSiqksbkH8KqSrgQ0U0y6auihnvVBOU=; b=ZtyZr2yr5RVArOcm
+	8nBdyIX9wsKyw2R0Injxps3ytEooWWxhiMs9+O96j1MSkwXYFYzmkxuitdDjbfYq
+	vYu3FCMcwUipDcbyT8CSYuPHJIHyJLg13YeNNMxQQamR24N1DYo9yeXMgdVJ3Qbb
+	d2UejA9PSFktGRqVc5lf/3xNQxa9x/LwRd6xp8Rl21G6U4SXXNHyYJ0g38eI0VZN
+	6W8nSnQI14TnIubBbB0Zs2eSNyyc/WhvGyAXRduAG8iJoy8t9cEp5Cx+CfE3QYe6
+	DXT562RkCHduDgdsVBFPFZgkaZbpAUIwGj+Qk9JPXHftYKENlLd65Y1f8DU109SU
+	uvKusw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwf0b79v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 19:39:14 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-477608e8e4aso278731cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 12:39:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748029153; x=1748633953;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z9XB99CT/fAlMSiqksbkH8KqSrgQ0U0y6auihnvVBOU=;
+        b=LyIrdlgWlEgiXZcUO+2YDhZtiO6zEBdKolQ43OXRwo10CkieZaQJlKVIb+vT+gnqD/
+         4r6+X9bm4GW5nPA1Za8e/pOgV0wGjbVHzBYDllbmABJ/QbHm8rPOunfT1qRo0KcJMe5C
+         KUmfaKGIs9EnolLqIPq+vK1hlfawHYJOmiPnfv2vLMtH+pIoTyVSbmQy+f7+gbPMX1/s
+         NU+T+is08NAy+3Ic018AbkFzzWNp5pM+C7Kl032r1CcaV8pjbgjuyDn0f4wKdtUINI7g
+         ZAh6QeFiVY63rP1zjYcCi7hpio/g3oaOW8sDg0jFvschSz4ts5dABYsFDWVedphR/dOr
+         rNkg==
+X-Gm-Message-State: AOJu0YyWABesyqaoqD9mxWzFGGBLPwJGGYXSXmlBBdbbZECR6TZuxsAT
+	t0YANtaMD9qP0h8zaa8IhMxSdJrrRaR3+cP6gGlTivztdvuTrohiMiME3pfvdhb2hPo6dVrFJJI
+	z9q5o4VXWTaNRQD10yxCp4lMcfvFhZIe/igCfo1YN73H51KCtNMFLWoL1wQ+0KTCJ4692
+X-Gm-Gg: ASbGncuNjzMaJgUtjs37x9/5U084NtU3peaJPJm3G3SqtekY93zoZpNgp8LJ2VKT6Nd
+	IR7yG2SMcrEf6gxmwcuxZusMRk0Wp5vWTeyGjaMG8PokLQYOeIPmyM01fsdmrvuEiyFw6MyMea/
+	DbxU20Cc3zwH+TxlTP799WO00VIwE+2bcLDMJw0UcZZBj1cCxaOhuGPRmQcJxlkDQkGKOmLBMFV
+	Lp2RFMmQ4R9HEW29mah5Low90PCCShvfKQJ4BuLCvW2VqOhaDeL+kW64qBk1yuSAsKF2GVqTrL1
+	HZYYhJTqmgNuKrwnH/B0pvOLv0vfdYbCA+F83pPscTYcNzhviwCLwn6i3c1zQa4gjg==
+X-Received: by 2002:a05:622a:408:b0:472:58b:463f with SMTP id d75a77b69052e-49f4625a717mr2814041cf.3.1748029153119;
+        Fri, 23 May 2025 12:39:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFnPTlDiHsFRsc/53DfqBHHewY94m5nSrjK/NZWsZOAvwCTZUQy5z9CnHlIfIbegggC4dKHNQ==
+X-Received: by 2002:a05:622a:408:b0:472:58b:463f with SMTP id d75a77b69052e-49f4625a717mr2813871cf.3.1748029152757;
+        Fri, 23 May 2025 12:39:12 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d438c3csm1266798466b.88.2025.05.23.12.39.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 May 2025 12:39:12 -0700 (PDT)
+Message-ID: <76267be1-1ace-437f-9394-ee56d4e8ffb2@oss.qualcomm.com>
+Date: Fri, 23 May 2025 21:39:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: devicetree@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com, 
- Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, maud_spierings@hotmail.com, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>
-To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-In-Reply-To: <20250523131605.6624-1-alex.vinarskis@gmail.com>
-References: <20250523131605.6624-1-alex.vinarskis@gmail.com>
-Message-Id: <174802762673.2701077.451474042042716200.robh@kernel.org>
-Subject: Re: [PATCH v5 0/1] X1E Asus Zenbook A14 support
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcm2290: Add IPA nodes
+To: Wojciech Slenska <wojciech.slenska@gmail.com>,
+        Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S . Miller"
+ <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Alex Elder <elder@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+References: <20241220073540.37631-1-wojciech.slenska@gmail.com>
+ <20241220073540.37631-3-wojciech.slenska@gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241220073540.37631-3-wojciech.slenska@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: 3C_Sy94wDTRQWX7bMZ5uoROYu7Yjakd4
+X-Proofpoint-ORIG-GUID: 3C_Sy94wDTRQWX7bMZ5uoROYu7Yjakd4
+X-Authority-Analysis: v=2.4 cv=ZP3XmW7b c=1 sm=1 tr=0 ts=6830cee2 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=pGLkceISAAAA:8 a=wQ2JREbYfKbkpeN3qpUA:9
+ a=fFxRHlyTGdwQsMLX:21 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIzMDE4MCBTYWx0ZWRfX9rLoaJgjazdK
+ ppJvFdqAD3pK3gN4ccUM3OPWn7fEJH88iEklbPqGrtdLrDi+s86E+dYEo2LHvCyvBB/eQrER92g
+ sechBxmmpjm7iQtdFJw7sMIA3cSeSfomsYElFEf9/oi5WKdanEm79zpywOTBOA5gSw8EWSVe0/5
+ EiZkYHMfUlT8cP3240Ip5ptZYaMKzLAJ2hGuPzy13cFkN3sAezxP0yVWuSmJkinSI8Wl0DR2SZw
+ 4CKWJhh40ggxG7+bbmRlEiKlrWwAFZIR37pYtNyUNsFaFZvFcFpF2DP/JNA2l4BOcN92PgIQjcB
+ EToTNobuzP+PbKPXafa+KxuwtcWczmm4YCTXBlSuSsTjza/3f2hoorxvjW/8OeNqKsjC7mSZVOb
+ nbQZpXCFat/zJVeIU0nlZo/c6k6/Bv4CWv0o062A9DSbqfyA6NTtotTHBz6DAhOdo8qJBpqg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-23_06,2025-05-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 mlxlogscore=999 suspectscore=0 bulkscore=0
+ impostorscore=0 phishscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
+ clxscore=1015 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505230180
 
-
-On Fri, 23 May 2025 15:15:07 +0200, Aleksandrs Vinarskis wrote:
-> As requested, 1/4 was merged to linux-next by USB maintainers.
-> Resending 4/4 rebased on top of latest linux-next. 2/4, 3/4 already
-> landed.
+On 12/20/24 8:35 AM, Wojciech Slenska wrote:
+> Added IPA nodes and definitions.
 > 
+> Signed-off-by: Wojciech Slenska <wojciech.slenska@gmail.com>
 > ---
+>  arch/arm64/boot/dts/qcom/qcm2290.dtsi | 52 +++++++++++++++++++++++++++
+>  1 file changed, 52 insertions(+)
 > 
-> Introduce support for the mentioned laptop.
-> 
-> Particular device exists in two model numbers:
-> * UX3407QA: X1P-42-100 or X1-26-100 (as tested)
-> * UX3407RA: X1E-78-100
-> 
-> Mostly similar to other X1-based laptops. Notable differences are:
-> * Wifi/Bluetooth combo being Qualcomm FastConnect 6900 on UX3407QA
->   and Qualcomm FastConnect 7800 on UX3407RA
-> * USB Type-C retimers are Parade PS8833, appear to behave identical
->   to Parade PS8830
-> * gpio90 is TZ protected
-> 
-> When comparing device firmware between UX3407QA, UX3407RA, it seems
-> that only ADSP firmware is different, CDSP and GPU firmware appears to
-> be the same. (At least assuming the GPU firmware name in both cases is
-> `qcdxkmsuc8380.mbn`). Since at least some blobs are different betweeen
-> X1E and X1/X1P, define new firmware directory for `qcom/x1p42100`. This
-> also makes it easier for distros to automatically extract firmware from
-> Windows and place all blobs for the model under the same path. If/When
-> firmware blobs make it to linux-firmware, same blobs can be easily
-> symlinked between `qcom/x1e80100` and `qcom/x1p42100`.
-> 
-> NVMe SSD depends on [1]. USB Type-A over USB MP controller  depends on
-> [2], or equivalent proposed solution.
-> 
-> Qualcomm FastConnect 6900 on UX3407QA did not work out of the box, and
-> additionally required both newer firmware and patches to `board-2.bin`.
-> I added a short how-to [3], as it is not exactly trivial.
-> 
-> ACPI dumps can be found on aarch64-laptops' github [4]. HWids on
-> dtbloader's github [5].
-> 
-> [1] https://lore.kernel.org/linux-arm-msm/20250319094544.3980357-1-quic_wenbyao@quicinc.com/
-> [2] https://lore.kernel.org/all/20250318-xps13-fingerprint-v1-1-fbb02d5a34a7@oss.qualcomm.com/
-> [3] https://github.com/alexVinarskis/linux-x1e80100-zenbook-a14?tab=readme-ov-file#wcn688x-wifi
-> [4] https://github.com/aarch64-laptops/build/pull/134/files
-> [5] https://github.com/TravMurav/dtbloader/pull/4/files
-> [6] https://lore.kernel.org/all/20250429-x1e80100-dts-drop-useless-dp-compatible-override-v1-0-058847814d70@linaro.org/
-> 
-> Changes to v4:
-> * _Only sending 4/4 as other patches are already applied_
-> * Rebase 4/4 on `for-next` of qcom tree, adjust makefile to generate el2 dtbs
-> * Picked Konrad's R-by for 4/4
-> * Droped 'qcom,x1e80100-dp' as per [6]
-> Link to v4: https://lore.kernel.org/all/20250426130203.37659-1-alex.vinarskis@gmail.com/
-> 
-> Changes to v3:
-> * Drop redundant comments
-> * Drop incomplete wcn7850 as it is causing dt errors
-> * Picked a-by
-> Link to v3: https://lore.kernel.org/all/20250416232345.5240-1-alex.vinarskis@gmail.com/
-> 
-> Changes to v2:
-> * Fix/re-add PS8833 as fallback
-> * Add EC's i2c address
-> * Add pwrseq for wcn6855, placeholder for wcn7850 until its tested
-> * Rename x1-zenbook.dtsi to x1-asus-zenbook.dtsi
-> Link to v2: https://lore.kernel.org/all/20250402084646.10098-1-alex.vinarskis@gmail.com/
-> 
-> Changes to v1:
-> * Drop PS8833 variant, fallback to PS8830 as they behave the same
-> * Drop wrong pcie6a_phy compatible revert
-> * Drop redundant comments, fix order of properties in the device-tree
-> * Fix device name bindings, express in model names instead of the soc
-> * Fix GPU firmware name for UX3407QA
-> * Fix model string, enclose variant in parenthesis
-> * Added missing new lines before 'status = "okay";'
-> * Updated cover letter to reflect some of the above changes
-> * Left SPI10 disabled as it is unknown how/what for to use it as of now
-> Link to v1: https://lore.kernel.org/all/20250331215720.19692-1-alex.vinarskis@gmail.com/
-> 
-> Aleksandrs Vinarskis (1):
->   arm64: dts: qcom: Add support for X1-based Asus Zenbook A14
-> 
->  arch/arm64/boot/dts/qcom/Makefile             |    4 +
->  .../boot/dts/qcom/x1-asus-zenbook-a14.dtsi    | 1306 +++++++++++++++++
->  .../dts/qcom/x1e80100-asus-zenbook-a14.dts    |   33 +
->  .../dts/qcom/x1p42100-asus-zenbook-a14.dts    |  137 ++
->  4 files changed, 1480 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dts
-> 
-> --
-> 2.45.2
-> 
-> 
-> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> index 79bc42ffb6a1..0d39fd73888a 100644
+> --- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> @@ -428,6 +428,17 @@ wlan_smp2p_in: wlan-wpss-to-ap {
+>  			interrupt-controller;
+>  			#interrupt-cells = <2>;
+>  		};
+> +
+> +		ipa_smp2p_out: ipa-ap-to-modem {
+> +			qcom,entry-name = "ipa";
+> +			#qcom,smem-state-cells = <1>;
+> +		};
+> +
+> +		ipa_smp2p_in: ipa-modem-to-ap {
+> +			qcom,entry-name = "ipa";
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+>  	};
+>  
+>  	soc: soc@0 {
+> @@ -1431,6 +1442,47 @@ usb_dwc3_ss: endpoint {
+>  			};
+>  		};
+>  
+> +		ipa: ipa@5840000 {
+> +			compatible = "qcom,qcm2290-ipa", "qcom,sc7180-ipa";
+> +
+> +			iommus = <&apps_smmu 0x140 0x0>;
+> +			reg = <0x0 0x5840000 0x0 0x7000>,
+> +			      <0x0 0x5847000 0x0 0x2000>,
+> +			      <0x0 0x5804000 0x0 0x2c000>;
+
+Please pad the address parts to 8 hex digits with leading zeroes
+
+> +			reg-names = "ipa-reg",
+> +				    "ipa-shared",
+> +				    "gsi";
+> +
+> +			interrupts-extended = <&intc GIC_SPI 257 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 259 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> +					      <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "ipa",
+> +					  "gsi",
+> +					  "ipa-clock-query",
+> +					  "ipa-setup-ready";
+> +
+> +			clocks = <&rpmcc RPM_SMD_IPA_CLK>;
+> +			clock-names = "core";
+> +
+> +			interconnects = <&system_noc MASTER_IPA RPM_ALWAYS_TAG
+> +					 &bimc SLAVE_EBI1 RPM_ALWAYS_TAG>,
+> +					<&system_noc MASTER_IPA RPM_ALWAYS_TAG
+> +					 &system_noc SLAVE_IMEM RPM_ALWAYS_TAG>,
+> +					<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
+> +					 &config_noc SLAVE_IPA_CFG RPM_ALWAYS_TAG>;
+
+this last path should be RPM_ACTIVE_TAG - that makes paths involving the
+CPU automatically collapse (as per the power management uC's decision)
+whenever it's possible
 
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Base: attempting to guess base-commit...
- Base: tags/next-20250523 (exact match)
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250523131605.6624-1-alex.vinarskis@gmail.com:
-
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@0 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@0 (qcom,oryon): power-domains: [[4], [5, 0]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@0 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@100 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@100 (qcom,oryon): power-domains: [[7], [5, 0]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@100 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@200 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@200 (qcom,oryon): power-domains: [[8], [5, 0]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@200 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@300 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@300 (qcom,oryon): power-domains: [[9], [5, 0]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@300 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@10000 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@10000 (qcom,oryon): power-domains: [[11], [5, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@10000 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@10100 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@10100 (qcom,oryon): power-domains: [[12], [5, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@10100 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@10200 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@10200 (qcom,oryon): power-domains: [[13], [5, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@10200 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@10300 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@10300 (qcom,oryon): power-domains: [[14], [5, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@10300 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@20000 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@20000 (qcom,oryon): power-domains: [[16], [5, 2]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@20000 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@20100 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@20100 (qcom,oryon): power-domains: [[17], [5, 2]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@20100 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@20200 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@20200 (qcom,oryon): power-domains: [[18], [5, 2]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@20200 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@20300 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@20300 (qcom,oryon): power-domains: [[19], [5, 2]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dtb: cpu@20300 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@0 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@0 (qcom,oryon): power-domains: [[4], [5, 0]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@0 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@100 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@100 (qcom,oryon): power-domains: [[7], [5, 0]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@100 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@200 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@200 (qcom,oryon): power-domains: [[8], [5, 0]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@200 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@300 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@300 (qcom,oryon): power-domains: [[9], [5, 0]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@300 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@10000 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@10000 (qcom,oryon): power-domains: [[11], [5, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@10000 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@10100 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@10100 (qcom,oryon): power-domains: [[12], [5, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@10100 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@10200 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@10200 (qcom,oryon): power-domains: [[13], [5, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@10200 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@10300 (qcom,oryon): power-domain-names: ['psci', 'perf'] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@10300 (qcom,oryon): power-domains: [[14], [5, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtb: cpu@10300 (qcom,oryon): Unevaluated properties are not allowed ('power-domain-names', 'power-domains' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/cpus.yaml#
-
-
-
-
-
+Konrad
 
