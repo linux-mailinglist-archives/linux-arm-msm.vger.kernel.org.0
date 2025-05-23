@@ -1,97 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-59215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52FC7AC223F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 13:57:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02BE1AC2265
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 14:12:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 679CF3B96A8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 11:56:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BE94D4E754B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 12:12:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2F2D20CCD3;
-	Fri, 23 May 2025 11:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EA3F23644F;
+	Fri, 23 May 2025 12:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VK/qvHkx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rtkL/VPq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B2A1C8631
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 11:57:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D563D229B32;
+	Fri, 23 May 2025 12:11:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748001437; cv=none; b=oWp09WWgKeKnsv1tzqOa6kpq33v4dt9jscG9kG6NC/jnb8vVOS+IuDiB24paSp2auK2CbxZzSBTzyS7jO71CIaeamUXQHoZ/HHO7MU7oqrUtZlOXkrnZBcf80GwbFLfyMIirhMsYTau6YSL+gjsija76Id0wa5ALg8YFeHRBlAA=
+	t=1748002317; cv=none; b=CZP+3o4ebaGcMNdBpoTt7oMOkYbNBqlbTF5j7Av1uoed3DK+RlD4OUD+46CZmn50b6HYItpYB8LBIQbWWaJ4wF9H+WVVYTDQ4VpLOhk4ahI4HlifeFPjJMqPTk5GP4c6frVkzHK4AU8Q5xwQcplQVuMesn8uxkxXG58mQgtnNS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748001437; c=relaxed/simple;
-	bh=JOM6Fbx27n4PNGlHxnz1bx9VX7HuFXn+oZzHQ4T8tKM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FABH5RQqRz3uc2WHxibybpApgmHSP+K0JC1gk4RTPjdWMMVMeF7+oW81a0+uQYbSYKGxlJan9MXmh8xF/XNrdIoJCMU6EjYLC7DUqAl/gHC/Ma6d8zwV7gp+pJWuYhkwjpNprtEX94VQYoACOQILlfHtVdrWczNtzxpH+G+xsr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VK/qvHkx; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3a375888297so521618f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 04:57:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748001434; x=1748606234; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jHv3PmM//9SAbvQ/ymuXc7lSwPjHHcb/twyK5VurVoo=;
-        b=VK/qvHkxT041PWOpXF6aLgG1y8pQqc/K0QTFTwL8/aTIyi7IfCm1UUnx/i8fWzeBY+
-         cDGePsHps9HHW0T3e3C4NOQt/tdB0FiCiuI6VSLCqq9vSgPcxjIKLPDP4u17Ae9PAvOu
-         aBG9TnjdaYDkqE99+xSj2zOJ49qF/akcYZ5AzNwJWubrS677CK4WxrzmbkHCw0OvqaMN
-         xaGfkZeApuq4s1PWlzT5g5qtCkLuz89Q1TyfNgr1u9gw1kTSlUC8jx3uJR3zc64IPwNf
-         1zdYlwN49iY9Ws8GGJ/8wGnIeOPChlEcOVXCpSPFaz5MRqEJiRFDk7sz0g+HCZsTjBrk
-         HVlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748001434; x=1748606234;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jHv3PmM//9SAbvQ/ymuXc7lSwPjHHcb/twyK5VurVoo=;
-        b=YGYypxRSeOySuVj/Rpp3nW9L7j8bxvWpIO6oQgqEbohhEhKM0fytSdmr/ixqpD9Ka1
-         FnAq0DeA4hBve6urBoohUcHYUJltGO8ZhtCrOvlVjQs3ebefpBiFxTlTsFlwuqkd9Rmn
-         uXaknxfSBo7UvDOjIVBY5bYMkPz7nXKBvdgG95xkmAMipYeXUx5hnuXCZDRz54TCkGp1
-         JBXHeu5tSb2Rmds6jPGsuSciDyjCiuSnuE0ZtQ6gz00Lr5dGVIgnBO1Z8GtdZryRKC/0
-         JALdH5YhbuCLB58eenTipa/4Yk+w/LsqP6Y4r9iEyfoPWr7CmnVJuPMOJQo9xBbZ66k0
-         S9IQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVh/fRixgG5POv3C6VGVNX2HVZE3ylpd3CEKMNvjXHucHTpLZyohZ7P++yx4MgMtaO5amWTK12yiz3cpzwW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOUtHnWzlrYQO5WfWtDJ6F2VDAx+CNTwTgNZQkKmgFnoYSSVtq
-	mJEtx8Fn8lK6BVMwWb0qINcAUTlwpJ4rcdVrSaEA8evqsbs7g0Xi0r7CZA5V9qCHbBk=
-X-Gm-Gg: ASbGncvTejjvV6VMhhWn8L/D/RRV8yg24e1j9xqW1Of8W2//JpNe1oRpZmxiPkTUsGM
-	E5Wwv32/QG6fii7fjyTMUsS9YbiANCKs+SCzsjaK5OBujLFF5iS9SxKGg8HgxCLhJtb2GuYNTCG
-	0+H1zh5ZmrTBXDQoBujzoQfZ5wWByyVGULC6o4xTQiC3grRx6XQ1MDmeoTwRwX5wTvcidTkgiNi
-	fQemJCn6t9fUTxO7hjQGaqfasaNDYKgxHr9Hmo3XW5CWlWMyFYeXw+iFJ/+S7LkLFJEgCpQkN/8
-	ll4R79xiXGmPXTVxGjKHEqs6LaBvcEWSf3QyP5U6UgQnxegMvDaKvvdBbKq4hLIq879j6kSu8Qw
-	k+uJKaIYXVA7ZwWzZrqw=
-X-Google-Smtp-Source: AGHT+IFNrvccAlUMqw8s3fI0AfxthWK2WloBf38YsDtOvp9eZ2IIkUyBeD4AiDDkZoSs+CcivTfhrQ==
-X-Received: by 2002:a05:6000:2584:b0:3a3:7465:7e60 with SMTP id ffacd0b85a97d-3a4c15589c4mr3501435f8f.26.1748001434253;
-        Fri, 23 May 2025 04:57:14 -0700 (PDT)
-Received: from toyger.tail248178.ts.net (i5E863BE1.versanet.de. [94.134.59.225])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca88978sm26836364f8f.65.2025.05.23.04.57.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 May 2025 04:57:13 -0700 (PDT)
-From: Casey Connolly <casey.connolly@linaro.org>
-To: =?UTF-8?q?N=C3=ADcolas=20F=2E=20R=2E=20A=2E=20Prado?= <nfraprado@collabora.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Eric Biggers <ebiggers@google.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Nishanth Menon <nm@ti.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Will Deacon <will@kernel.org>
-Cc: Casey Connolly <casey.connolly@linaro.org>,
+	s=arc-20240116; t=1748002317; c=relaxed/simple;
+	bh=ftuK/yE8tXnPUIOstt702Du9VYV2lf8hxTtOkITIrZk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=jWLKmnEDNUCyQYYWhGe3Vr8+Y/ap95QMOx3krcf7nNRpudY6EQJ+wH7ljfHrFAbFoFJZdKo3Ps672mUsbxqd/9ceRrnbNEj/NenQENHa8UkjVvZFoQ06G1DdE2kCRr6dBcmXzCwkClKzqEcnatwSZ9P7bNzRyjBYhFqjrqVGfXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rtkL/VPq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38BFFC4CEE9;
+	Fri, 23 May 2025 12:11:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748002317;
+	bh=ftuK/yE8tXnPUIOstt702Du9VYV2lf8hxTtOkITIrZk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=rtkL/VPqe8ztxLswPkoiPynaxLOjwBkKHsHz4a6neL0dJ0mdek6gABpimfD1/sErb
+	 rwBttvDhzuDE5LSF3HTkvAYht2UThd5zlwl44yGVnHuLZ3nFCcRjMShT6H5/RBsD7o
+	 LVjH+tuBbcbzqGjm+4QoB9ZeJcxIPpLu0wji0LnAaqLcVefVoItiZi3bbQk8ERC2Gl
+	 881UO9do8CzJ5srT+cfaiW9/HTKSKGaN269Lk3tPi0F8Dr/4jWIm7VQbTdnvGz26fP
+	 P5SG4jZn3CyX0/6FUNJJoiErXXmPfZVX67Iq4TxukETNKOVuQl0X3KNM+1Qaqcx7df
+	 8t1wQXBzIn/Dg==
+From: Arnd Bergmann <arnd@kernel.org>
+To: Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	linux-sound@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH RESEND] arm64: defconfig: update renamed PHY_SNPS_EUSB2
-Date: Fri, 23 May 2025 13:55:34 +0200
-Message-ID: <20250523115630.459249-3-casey.connolly@linaro.org>
-X-Mailer: git-send-email 2.49.0
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] ASoC: qdsp6: fix compile-testing without CONFIG_OF
+Date: Fri, 23 May 2025 14:11:47 +0200
+Message-Id: <20250523121152.2292574-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,43 +66,36 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This config option was renamed, update the defconfig to match.
+From: Arnd Bergmann <arnd@arndb.de>
 
-Fixes: 8d3b5f637546 ("phy: move phy-qcom-snps-eusb2 out of its vendor sub-directory")
-Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
----
-Resend to correct Fixes tag
+The driver builds cleanly only when CONFIG_OF is enabled, otherwise the
+compiler notices an unused symbol:
 
-Cc: linux-arm-msm@vger.kernel.org
+sound/soc/qcom/qdsp6/q6usb.c:401:34: error: 'q6usb_dai_device_id' defined but not used [-Werror=unused-const-variable=]
+
+The driver does not support legacy board files, so the of_match_ptr()
+annotation has no use here and can be removed to avoid the warning.
+
+Fixes: e0dd9240f13a ("ASoC: qcom: qdsp6: Fetch USB offload mapped card and PCM device")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 ---
- arch/arm64/configs/defconfig | 2 +-
+ sound/soc/qcom/qdsp6/q6usb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 897fc686e6a9..7e04a2905ce4 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1572,8 +1572,9 @@ CONFIG_RESET_IMX7=y
- CONFIG_RESET_QCOM_AOSS=y
- CONFIG_RESET_QCOM_PDC=m
- CONFIG_RESET_RZG2L_USBPHY_CTRL=y
- CONFIG_RESET_TI_SCI=y
-+CONFIG_PHY_SNPS_EUSB2=m
- CONFIG_PHY_XGENE=y
- CONFIG_PHY_CAN_TRANSCEIVER=m
- CONFIG_PHY_NXP_PTN3222=m
- CONFIG_PHY_SUN4I_USB=y
-@@ -1596,9 +1597,8 @@ CONFIG_PHY_MTK_DP=m
- CONFIG_PHY_QCOM_EDP=m
- CONFIG_PHY_QCOM_PCIE2=m
- CONFIG_PHY_QCOM_QMP=m
- CONFIG_PHY_QCOM_QUSB2=m
--CONFIG_PHY_QCOM_SNPS_EUSB2=m
- CONFIG_PHY_QCOM_EUSB2_REPEATER=m
- CONFIG_PHY_QCOM_M31_USB=m
- CONFIG_PHY_QCOM_USB_HS=m
- CONFIG_PHY_QCOM_USB_SNPS_FEMTO_V2=m
+diff --git a/sound/soc/qcom/qdsp6/q6usb.c b/sound/soc/qcom/qdsp6/q6usb.c
+index adba0446f301..ebe0c2425927 100644
+--- a/sound/soc/qcom/qdsp6/q6usb.c
++++ b/sound/soc/qcom/qdsp6/q6usb.c
+@@ -407,7 +407,7 @@ MODULE_DEVICE_TABLE(of, q6usb_dai_device_id);
+ static struct platform_driver q6usb_dai_platform_driver = {
+ 	.driver = {
+ 		.name = "q6usb-dai",
+-		.of_match_table = of_match_ptr(q6usb_dai_device_id),
++		.of_match_table = q6usb_dai_device_id,
+ 	},
+ 	.probe = q6usb_dai_dev_probe,
+ 	/*
 -- 
-2.49.0
+2.39.5
 
 
