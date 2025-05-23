@@ -1,209 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-59259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B8EFAC2A23
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 21:00:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAEF8AC2A36
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 21:07:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 31CE2A42848
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 19:00:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 794EE17A416
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 19:07:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7F3A29B22A;
-	Fri, 23 May 2025 19:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A99C29A9E1;
+	Fri, 23 May 2025 19:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="C958QBAN"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iPso4De4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BE629AB0E;
-	Fri, 23 May 2025 19:00:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63892AD2D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 19:07:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748026834; cv=none; b=nLX0t38TLq0TivFHYfSNlWKaHZh/XlM22wOyqmE5LjJqmpYIf5U5DHvhCaxhPoEYXl97FsOPBEBwRsr6QhcVxq4g52huEAmqfG1/AS66MjkI8y/V40AJE6qHwRIub9a/L/3VgHsxgi51fliWBVLbUmad87O8ieumvpzECPc1mas=
+	t=1748027276; cv=none; b=M4QjieJGWOqf/PBGpvZEaYCtYFYfCkKVDzOArX1yN165dHWAANQDi3oJ2QhYUuahOKONDpH7zz6bgOyNKAY2b3I/s2Mow2QcEXvXseHG79BKAVn9zV7Sb0poDJHP1VjldJ3JPlnVghQXGxVy2I9hW/U/HZ8bOzVKGUucL3usfVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748026834; c=relaxed/simple;
-	bh=aPl01hl0HF/y+fjBiqpumEymlqEj6USzOz+MtuzBp60=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AVqcTBQ2bsh8cLHMLhfOhxlT7i4NkEBO/AcW1rYDRDNATbmeeYgdUiICAptm1Jycvjc5U31ZeQSEohbj/4uZBfyzwusLxNbeKqs8Btt/Db8vV5HCIhvF8Y1LDatRXYGUiyGQrQuX9U8CPlcSxEMR3UnQZK+pCWUbfGy5+HHmnlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=C958QBAN; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1748026833; x=1779562833;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=aPl01hl0HF/y+fjBiqpumEymlqEj6USzOz+MtuzBp60=;
-  b=C958QBAN42XDWls0C5GdhkQUUWBs1liEMEqankVbyiEuT956TfLBn6Sp
-   xgDQYvhDyF8EB1G05aa7QrAafBu6au6xaNLolNUBHcg5nX38xPi6DKUXT
-   KcKFqABR0vyOPsLxgimdIN86SkCApGL7HvqD6VS2yrBcpodXOI9k7QnNQ
-   Kk4C7N76YHEUV7eRe6iTt96sUluOn8OhtuP3dDPwNWsmyY5E2g8MjJr/U
-   hBeSFAjtQj6jkSSWg0Ce8oFu3Z1fIx8DFZjAnx+ihw94WMIJbejI7LmYA
-   R5O1tyU53OTvCjdwr/FExGsHk5uHTyV/uoIqI2B7wAjNyVxZWT/5/ELb6
-   g==;
-X-CSE-ConnectionGUID: f3nMVAuOSwC3jzkV1Zsegw==
-X-CSE-MsgGUID: Z5xHxySVRkWSdPveEdVZIA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11441"; a="53886858"
-X-IronPort-AV: E=Sophos;i="6.15,309,1739865600"; 
-   d="scan'208";a="53886858"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2025 12:00:27 -0700
-X-CSE-ConnectionGUID: IqaW5hpeRy+7lHFzMImncQ==
-X-CSE-MsgGUID: Bo8TqtGAQ/qeIkD7+pv8eg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,309,1739865600"; 
-   d="scan'208";a="141816157"
-Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
-  by orviesa007.jf.intel.com with ESMTP; 23 May 2025 12:00:23 -0700
-Received: from kbuild by 1992f890471c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uIXcy-000QfE-24;
-	Fri, 23 May 2025 19:00:20 +0000
-Date: Sat, 24 May 2025 02:59:48 +0800
-From: kernel test robot <lkp@intel.com>
-To: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Alex Elder <elder@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev, netdev@vger.kernel.org,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH 3/3] net: ipa: Grab IMEM slice base/size from DTS
-Message-ID: <202505240200.w0D4DdAY-lkp@intel.com>
-References: <20250523-topic-ipa_imem-v1-3-b5d536291c7f@oss.qualcomm.com>
+	s=arc-20240116; t=1748027276; c=relaxed/simple;
+	bh=RqWDddVKBVSB8DNsRcLRYLWSWKHisQV1n/qob9as+HQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=AohBBgUmtSW6hBxvMtLIRk5SkKN9JQxt11LGP3+ZMgAthXNZSv4qOyHWjLR6yo/duKnSeaNhlYdLlu93p9vHdLpS58YACeZML54jAtG5eM5A2gCAnuAYxn/SlqgtWdCYS3GeCwMjyDVP9ZXXLW9ameOpxchQQgi7MbHjdfXbFnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iPso4De4; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54NAYQmc013629
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 19:07:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=dC4YbS8t5qW39B4qR5dXMx
+	f2AprSAL4geh92MowQSv8=; b=iPso4De45aIOhUV87Q8QAiaa41u5YkhKG1Ez8Z
+	MlRGNyAztNkYbRZsS9WF037rN/mMBJkKmMw85l8vHX7drL3bhsqggx0BYzFw3x9o
+	h1IB8juJ0H6+s6s1UnUMWXPnUcqJ4px6fZhb72QxLSNoxtfO1VC0FGgEMst6B7iy
+	nnMbX8mxgghCuropgcx/tMTwTVbOz1POeutyfUBIRVbRdoAqPMLqKz+mrwMRgB1t
+	Afx+H5xm/RCiCr10vmfK6LytfPvCVhLUVcdi88bWhO0LkpZsuRwVNXvjaYyPEFZb
+	GD7Bzi5cBAR36+BS7ogELcKXmW8o+4XrP574roW55mChd4ag==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwh5k82b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 19:07:53 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2321215e4c1so12374035ad.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 12:07:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748027272; x=1748632072;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dC4YbS8t5qW39B4qR5dXMxf2AprSAL4geh92MowQSv8=;
+        b=G9CEtSyjU5RaG+vX2o1KdkQj8Y+FBTf/v1i7ACAwYUJ+O59236cL/3roWRd48NwMR2
+         Qoc8qOcu4/2qnkPA1yJ9XuX5TnIrRXXeLBwpYbg259BK0c5n36Knq2KNFaFTnMuW/Ixa
+         6YBT+E2VqfSmXl7npsgVZRSyqzpxIJdysODBSAMgKRNld5nSZF5TU6ibSOTjC4i/V1NA
+         eA4tpK0g3/SKSWYkEtttH3XHdDy1m9abJcOEc3/xX6l7hWnbvG8hzj8W1vIZq6sK+Psh
+         IRncq4zEr5h932IoAaX0cAUf3MlKnyGivVKjf1TeQWHI7Ot5tJ48Bpt5jyF38X2P0kJh
+         xf+Q==
+X-Gm-Message-State: AOJu0Yzw+os//u8/9cW9YNnDuKsaozzxzg80vMRBkBQgFH4iDgp+vzIY
+	/hsA1P9/9HUI5WhPLxxYKRtSWxvNlurTJ/iQ/fyv5WqRtX0DPyFFBBmRYTQWhUlFfaOc9ReCG2C
+	Kkzdle1gluCrrNHutLXWR4stjKg0u3rLUKbwRdlnI4+otAzYy/bMnZQLlmjidGlXPShr33RdqlA
+	fs
+X-Gm-Gg: ASbGncsxKmjmqM2CWEDeFNn6ghSSC3Vb/dWUfQCU9Uekx6qwISvvkDX/DyVX/P+LoG5
+	TEekH1wq+kdXZBpOw/0WX3s99nUQVjOQp4rTI0lyrsqK/6Cl/A4Lf/qYEhAzy30yONW6bJy4elF
+	XF+uRPThC+zPnhC71ccbjpFQsLecT6iTEt+KmeQ6urJWCBWExHsZ3c9mdDL2wmkgqLukCN5qdzd
+	EVoBkFrknS4eJoxDYBz4thrbm0kPBYKowhpQMr/UFwC2huZTHA8782B6dCgtLcPNlQVP9Zqh92N
+	HOch/NocdtWp4bgffA08T9VucFJhOHld7/qtm8Io1Kv/0zKTWwgRZACvkS3jvCfwupeKX7PVIUd
+	fa7c=
+X-Received: by 2002:a17:902:c94a:b0:22e:23c1:d711 with SMTP id d9443c01a7336-23414df58fbmr9738475ad.16.1748027272351;
+        Fri, 23 May 2025 12:07:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IErfBpxgHCnrnmCVLta1aBIxjn+lXfdRkgYEcuR/jezA+PI/Jn1guTSB+pd89aPktXoxSQk6A==
+X-Received: by 2002:a17:902:c94a:b0:22e:23c1:d711 with SMTP id d9443c01a7336-23414df58fbmr9738045ad.16.1748027271918;
+        Fri, 23 May 2025 12:07:51 -0700 (PDT)
+Received: from hu-uchalich-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4e97886sm126652165ad.146.2025.05.23.12.07.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 May 2025 12:07:51 -0700 (PDT)
+From: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
+Subject: [PATCH v7 0/3] SCM: Support latest version of waitq-aware firmware
+Date: Fri, 23 May 2025 12:07:39 -0700
+Message-Id: <20250523-multi_waitq_scm-v7-0-5b51b60ed396@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250523-topic-ipa_imem-v1-3-b5d536291c7f@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAHzHMGgC/2XOQQ6DIBCF4as0rIuhKGK68h6NMTiiTiJSAW0b4
+ 92Ldtnlv5hv3ka8dqg9uV824vSKHu0UQ14vBAY19ZpiG5twxgXjXFKzjAHrl8Iw1x4MFU3HRFa
+ wRjY3Eq+eTnf4PsVHFbtz1tAwOK1OB+yqXXKTKZMZz1OZ9BiSeUGol/hvRBjKo3CCBKw5wAF9s
+ O5zLlzzg/2Nybj4G7PmlFFoVAFKqLxlaWm9j7waI2ZOsdr3/QsvxGRN9gAAAA==
+X-Change-ID: 20250227-multi_waitq_scm-5bf05480b7b1
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel@oss.qualcomm.com,
+        Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1748027270; l=3585;
+ i=unnathi.chalicheemala@oss.qualcomm.com; s=20240514;
+ h=from:subject:message-id; bh=RqWDddVKBVSB8DNsRcLRYLWSWKHisQV1n/qob9as+HQ=;
+ b=+M9QJMeHC5wd796T6pVSmSUukfdwLH55HWHeze7LVHKf1eDXjUVs49HITzCMDF1BuWOzw3y2v
+ FKYy40qkmfaB+hOwYidRX70HE7soc+WFSdzEz/xczfT99dXGSfD7QSu
+X-Developer-Key: i=unnathi.chalicheemala@oss.qualcomm.com; a=ed25519;
+ pk=o+hVng49r5k2Gc/f9xiwzvR3y1q4kwLOASwo+cFowXI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIzMDE3MyBTYWx0ZWRfX5+6lKs0y+cvE
+ I+htlTtKlZnWtH3QmYdEzsM+6axHoq8oNEY9a9wXsAi4VA+bLJ0kt1RjNpGmTd+KtXdGF7h0o14
+ ARwabfozG1Vr5/yBdsqigEy9Fvz9GGfzHM55hKQSwZH9ApPFmzBUlk/Er4Nwx907XI/Ukp5vcIu
+ 1C5UySY5rDbBJ1CwbL581/2kCOYSUvECkVrBLPNtEHYv0kU+k+eO4kvgTDFSg8h3S9DYCq0QsVR
+ jaNWvr6bHqQCAA5YXqoZtFXPFqwYdC/wQ+IBN/lJslTxUfLSNNnkM+oIUwqYfLiNPa6u/0cbQ6R
+ yRBoXlfy3wlkfgfKKTb6ESlVPMLV6zj7Hm43N+CcuTrjijK7gkBXIli0O8qP7nXzL5LrobnaKhS
+ q/tt/giJRpcOM9tOkoI30i/GGAPNOCI62sV26cY0IQqnjLpo5bFCEi4sFvrkazc5JSSOZa4g
+X-Authority-Analysis: v=2.4 cv=XeWJzJ55 c=1 sm=1 tr=0 ts=6830c789 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=_3eEL7FArTPTRUMljOsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: KIZg1-6-W-8IoVICyFjRGT8XLp23_9Eu
+X-Proofpoint-ORIG-GUID: KIZg1-6-W-8IoVICyFjRGT8XLp23_9Eu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-23_06,2025-05-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1015 mlxlogscore=999 mlxscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 impostorscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505230173
 
-Hi Konrad,
+This series adds support for the latest improvements made in SCM
+firmware that allow for multiple wait-queues in firmware.
 
-kernel test robot noticed the following build warnings:
+To support multi VM synchronization when VMs make SMC calls on same CPU,
+waitqueue mechanism is added in firmware which runs at EL2 & EL3 exception
+levels.
 
-[auto build test WARNING on 460178e842c7a1e48a06df684c66eb5fd630bcf7]
+P.S. While at Qualcomm, Guru Das Srinagesh authored the initial version of
+these patches.
+Thanks Guru!
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Konrad-Dybcio/dt-bindings-sram-qcom-imem-Allow-modem-tables/20250523-071359
-base:   460178e842c7a1e48a06df684c66eb5fd630bcf7
-patch link:    https://lore.kernel.org/r/20250523-topic-ipa_imem-v1-3-b5d536291c7f%40oss.qualcomm.com
-patch subject: [PATCH 3/3] net: ipa: Grab IMEM slice base/size from DTS
-config: xtensa-randconfig-002-20250524 (https://download.01.org/0day-ci/archive/20250524/202505240200.w0D4DdAY-lkp@intel.com/config)
-compiler: xtensa-linux-gcc (GCC) 8.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250524/202505240200.w0D4DdAY-lkp@intel.com/reproduce)
+---
+Changes in v7:
+- Assume failing scm call to mean WAITQ_GET_INFO is not supported on target
+  as qcom_scm_is_call_available() is handled in Qualcomm firmware's TZ (EL3),
+  which doesn’t implement WAITQ_GET_INFO, and therefore always returns 0.
+- Link to v6: https://lore.kernel.org/r/20250425-multi_waitq_scm-v6-0-cba8ca5a6d03@oss.qualcomm.com
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202505240200.w0D4DdAY-lkp@intel.com/
+Changes in v6:
+- Added R-b tag from Bartosz for first patch.
+- Check if QCOM_SCM_WAITQ_GET_INFO is available before making scm call,
+instead of assuming failing scm call to mean WAITQ_GET_INFO is not
+supported on target.
+- Add a new patch to check for waitq idle state in wait_for_wq_completion(). 
+- Link to v5: https://lore.kernel.org/all/20250227-multi_waitq_scm-v5-0-16984ea97edf@oss.qualcomm.com/ 
 
-All warnings (new ones prefixed by >>):
+Changes in v5:
+- Use GIC_SPI and GIC_ESPI macros from dt-bindings instead of redefining
+- Modified qcom_scm_query_waitq_count to take struct qcom_scm as
+argument; scm is anyway stored to global struct __scm after
+smp_store_and_release().
+- Tested on SM8650 which has multi-waitq support and SM8550, which
+doesn't. No error logs are seen.
+-Link to v4: https://lore.kernel.org/all/cover.1730742637.git.quic_uchalich@quicinc.com/
 
-   drivers/net/ipa/ipa_mem.c: In function 'ipa_mem_init':
->> drivers/net/ipa/ipa_mem.c:623:17: warning: variable 'imem_size' set but not used [-Wunused-but-set-variable]
-     u32 imem_base, imem_size;
-                    ^~~~~~~~~
->> drivers/net/ipa/ipa_mem.c:623:6: warning: variable 'imem_base' set but not used [-Wunused-but-set-variable]
-     u32 imem_base, imem_size;
-         ^~~~~~~~~
+Changes in v4:
+- Moving back to redefining GIC_IRQ_TYPE_SPI and GIC_IRQ_TYPE_ESPI macros
+in qcom_scm as seeing compilation issues in linux/irq.h when including
+arm-gic header. Will send a fixes patch and move to dt-bindings in next patchset.
+- Fixed a few compilation errors.
+- Link to v3: https://lore.kernel.org/all/cover.1730735881.git.quic_uchalich@quicinc.com/
 
+Changes in v3:
+- Use GIC_SPI and GIC_ESPI macros from dt-bindings instead of redefining
+- Prettified qcom_scm_fill_irq_fwspec_params()
+- Moved waitq initialization before smp_store_release()
+- There is no Gunyah hypercall API that can be used to fetch IRQ information hence
+introducing new SCM call.
+- Link to v2: https://lore.kernel.org/all/cover.1724968351.git.quic_uchalich@quicinc.com/
 
-vim +/imem_size +623 drivers/net/ipa/ipa_mem.c
+Changes in v2:
+- Dropped "Initialize waitq before setting global __scm" as it was merged here:
+https://lore.kernel.org/r/1711034642-22860-4-git-send-email-quic_mojha@quicinc.com
+- Decoupled "Remove QCOM_SMC_WAITQ_FLAG_WAKE_ALL" from series
+- Converted xarray to a statically sized array
+- Initialize waitq array in probe function
+- Remove reinit of waitq completion struct in scm_get_completion()
+- Introduced new APIs to get no. of waitqueue contexts and waitqueue IRQ no.
+directly from firmware.
+- Link to v1: https://lore.kernel.org/all/20240228-multi_waitq-v1-0-ccb096419af0@quicinc.com/
 
-   616	
-   617	/* Perform memory region-related initialization */
-   618	int ipa_mem_init(struct ipa *ipa, struct platform_device *pdev,
-   619			 const struct ipa_mem_data *mem_data)
-   620	{
-   621		struct device_node *ipa_slice_np;
-   622		struct device *dev = &pdev->dev;
- > 623		u32 imem_base, imem_size;
-   624		struct resource *res;
-   625		int ret;
-   626	
-   627		/* Make sure the set of defined memory regions is valid */
-   628		if (!ipa_mem_valid(ipa, mem_data))
-   629			return -EINVAL;
-   630	
-   631		ipa->mem_count = mem_data->local_count;
-   632		ipa->mem = mem_data->local;
-   633	
-   634		/* Check the route and filter table memory regions */
-   635		if (!ipa_table_mem_valid(ipa, false))
-   636			return -EINVAL;
-   637		if (!ipa_table_mem_valid(ipa, true))
-   638			return -EINVAL;
-   639	
-   640		ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64));
-   641		if (ret) {
-   642			dev_err(dev, "error %d setting DMA mask\n", ret);
-   643			return ret;
-   644		}
-   645	
-   646		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "ipa-shared");
-   647		if (!res) {
-   648			dev_err(dev,
-   649				"DT error getting \"ipa-shared\" memory property\n");
-   650			return -ENODEV;
-   651		}
-   652	
-   653		ipa->mem_virt = memremap(res->start, resource_size(res), MEMREMAP_WC);
-   654		if (!ipa->mem_virt) {
-   655			dev_err(dev, "unable to remap \"ipa-shared\" memory\n");
-   656			return -ENOMEM;
-   657		}
-   658	
-   659		ipa->mem_addr = res->start;
-   660		ipa->mem_size = resource_size(res);
-   661	
-   662		ipa_slice_np = of_parse_phandle(dev->of_node, "sram", 0);
-   663		if (ipa_slice_np) {
-   664			ret = of_address_to_resource(ipa_slice_np, 0, res);
-   665			of_node_put(ipa_slice_np);
-   666			if (ret)
-   667				return ret;
-   668	
-   669			imem_base = res->start;
-   670			imem_size = resource_size(res);
-   671		} else {
-   672			/* Backwards compatibility for DTs lacking an explicit reference */
-   673			imem_base = mem_data->imem_addr;
-   674			imem_size = mem_data->imem_size;
-   675		}
-   676	
-   677		ret = ipa_imem_init(ipa, mem_data->imem_addr, mem_data->imem_size);
-   678		if (ret)
-   679			goto err_unmap;
-   680	
-   681		ret = ipa_smem_init(ipa, mem_data->smem_size);
-   682		if (ret)
-   683			goto err_imem_exit;
-   684	
-   685		return 0;
-   686	
-   687	err_imem_exit:
-   688		ipa_imem_exit(ipa);
-   689	err_unmap:
-   690		memunmap(ipa->mem_virt);
-   691	
-   692		return ret;
-   693	}
-   694	
+---
+Unnathi Chalicheemala (3):
+      firmware: qcom_scm: Add API to get waitqueue IRQ info
+      firmware: qcom_scm: Support multiple waitq contexts
+      firmware: qcom_scm: Check for waitq state in wait_for_wq_completion()
 
+ drivers/firmware/qcom/qcom_scm.c | 127 +++++++++++++++++++++++++++++++++------
+ drivers/firmware/qcom/qcom_scm.h |   1 +
+ 2 files changed, 109 insertions(+), 19 deletions(-)
+---
+base-commit: e85dea591fbf900330c796579314bfb7cc399d31
+change-id: 20250227-multi_waitq_scm-5bf05480b7b1
+
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
+
 
