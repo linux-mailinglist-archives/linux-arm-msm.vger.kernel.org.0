@@ -1,244 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-59221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04A08AC2324
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 14:55:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A145AC2349
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 15:00:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 421DA1C04D9B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 12:55:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5BC5D1BC08F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 13:00:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D228286334;
-	Fri, 23 May 2025 12:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9DCA140E30;
+	Fri, 23 May 2025 12:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="ZEcDaO+l"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EIk8o8b8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F74F17A31C;
-	Fri, 23 May 2025 12:55:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0EA049620;
+	Fri, 23 May 2025 12:59:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748004913; cv=none; b=Cs4gN+RRnVDObh8O5rB5a7r7IFdvpKMetdqeHznE3iLGF4zX3404rW1tmwpZtpri/8c8IG0RNtz8wBsOGDRvUfMsdpPaTy+afgg1uc1M7Yy4hURfwAGT5sYp9l7TrEu/NGXYSutgh85sRK5zNcD8ueZT0iY0zaXVhTanN8KrYko=
+	t=1748005198; cv=none; b=CMnXcvBPGDJz7xI+okvQrfndvSDir5qGU2/rxpaLmvfvTDAJ3qMr+qyYiqll2dYFYZwWeuOx4RCwjBhVfalgbHCySB+TaAOgK+3XJPjiYBheADc+cdHetlYNePxbXKb9GzyY8iCosMjaoIvgPu8S3qz9js9j4zWwzCyKbtWfnE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748004913; c=relaxed/simple;
-	bh=LkNcq2xuHhljWbucXm13VtjJMEsWvLHCeMjsNIOmY+E=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sQzL//3biu0jtFbVWRUYLUP0ZESDRULs6zIobcA560CUrlZGOVtlPX55h1gtLf3zqeyFgn7rgaYU6zdxZd8/VY09bzHSR65QIm4RPD14l3vWjrnYAnbOyZ42/fcghixyKdyRj0B5aonI/H26qwO9iXOjORUZxHA7faud/WxT8U0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=ZEcDaO+l; arc=none smtp.client-ip=217.70.183.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 066BA4399E;
-	Fri, 23 May 2025 12:54:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1748004903;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1kgxapgqpqXKaidI+dwQyPPRpZm75jne3m7YkATlzkI=;
-	b=ZEcDaO+l+3Vp/ktqUSPkwm5cuKaiXWUMMNrU2zxBnF0MSE8d5hkLY1smkK1u0miJXbuDwa
-	mdCfeF4zZ9bKTHeZ4VOY3VO6MtPSrAzF7JjRdaxLvwzcjObPrFS+BKXNTOOU17/ZPCx/cG
-	A8lSQNOuJSG11dP7Hbp5VbAlOCG+jEjOEdnEu8U5pVbjesJURt++hfQLazUlWQ+1bn4dPb
-	2kShAqi1PvUmemBXbrlwE7FwvmJySFnBUOuic74F4xH108Yo4rXhtBeEaC0V0pq83E71qG
-	A9bNjuApw8wGun0SuJpw9db90sBuSnwm1arA13qF3Q2sku6QK8AKeBe8NamGeQ==
-Date: Fri, 23 May 2025 14:54:57 +0200
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: Romain Gantois <romain.gantois@bootlin.com>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski
- <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
- <pabeni@redhat.com>, Russell King <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org, Christophe Leroy
- <christophe.leroy@csgroup.eu>, Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>, Heiner Kallweit
- <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>, Marek
- =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
- <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
- <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
- mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
- devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Daniel Golle
- <daniel@makrotopia.org>, Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: Re: [PATCH net-next v6 06/14] net: phy: Introduce generic SFP
- handling for PHY drivers
-Message-ID: <20250523145457.07b1e7db@2a02-8428-0f40-1901-f412-2f85-a503-26ba.rev.sfr.net>
-In-Reply-To: <23936783.6Emhk5qWAg@fw-rgant>
-References: <20250507135331.76021-1-maxime.chevallier@bootlin.com>
-	<20250507135331.76021-7-maxime.chevallier@bootlin.com>
-	<23936783.6Emhk5qWAg@fw-rgant>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1748005198; c=relaxed/simple;
+	bh=8Oii3f2EpE50r9YcogV8EDUUJwl4GHW6cOuBxkjjA80=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lB4H1qKkcuC34WAQrhftdPmT1a9yG66Or5/u+lC/QGp66chOJLDI9G2ME9h5M+BxF0D3fjZ9H2jqSpeEMtpGDCl6R1sWAcm7hIyzOXy4PmUoHdnCa/YpfYDN9vZNWgMOFU7g1/EsN+D7ChxYWQd440A2rNFNeTwlNEYIXOpqS+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EIk8o8b8; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1748005197; x=1779541197;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=8Oii3f2EpE50r9YcogV8EDUUJwl4GHW6cOuBxkjjA80=;
+  b=EIk8o8b8FbtsydVr9vD/xHIQQPqFybgbSaOKx23MnKP5Wkga6I88w6Pz
+   vbWDLeZfqBq1MF1ixQiVQC6kddmR5E4+stugg53SW7baO+bewOETq6zW6
+   8op++gavux3QgPL97i7bqarzI41+e/7iRxWsTOcsYHXZdV8VnexuSEiTM
+   nx3EgDeMR1QFrHU5XFmefjBfakiBnh+4POJqpSxhsr7eLayGSmOGkBLxF
+   6y0QmLkVimef/k0PaXCD+jEh8I9AIR6qBymfpvb05wmvX4qxP4tKRt7YN
+   BNQGMQRDavQVmuac2Rqjy6w+48avhsl2nOG18IfJPnZ67XvVRBFHJmTAd
+   Q==;
+X-CSE-ConnectionGUID: ReCGIyeaQMOMuqzyEei87g==
+X-CSE-MsgGUID: ReNfqDedRHqzmcoeyAExlw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11441"; a="50114861"
+X-IronPort-AV: E=Sophos;i="6.15,308,1739865600"; 
+   d="scan'208";a="50114861"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 May 2025 05:59:56 -0700
+X-CSE-ConnectionGUID: R0SfHCEYSQGGhBW06eSNNQ==
+X-CSE-MsgGUID: 4WRagGqCRoWo4F1rbnk8EQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,308,1739865600"; 
+   d="scan'208";a="146123824"
+Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
+  by orviesa004.jf.intel.com with ESMTP; 23 May 2025 05:59:51 -0700
+Received: from kbuild by 1992f890471c with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uIS05-000QOa-1H;
+	Fri, 23 May 2025 12:59:49 +0000
+Date: Fri, 23 May 2025 20:59:15 +0800
+From: kernel test robot <lkp@intel.com>
+To: Alexey Klimov <alexey.klimov@linaro.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Mark Brown <broonie@kernel.org>, linux-sound@vger.kernel.org
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v3 06/12] ASoC: codecs: add wsa881x-i2c amplifier codec
+ driver
+Message-ID: <202505232000.eTkDhRzd-lkp@intel.com>
+References: <20250522-rb2_audio_v3-v3-6-9eeb08cab9dc@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdekledtucdltddurdegfedvrddttddmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeertdertddvnecuhfhrohhmpeforgigihhmvgcuvehhvghvrghllhhivghruceomhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeevledtvdevueehhfevhfelhfekveeftdfgiedufeffieeltddtgfefuefhueeknecukfhppedvrgdtvdemkeegvdekmehfgedtmeduledtudemfheguddvmedvfhekheemrgehtdefmedviegsrgenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtvdemkeegvdekmehfgedtmeduledtudemfheguddvmedvfhekheemrgehtdefmedviegsrgdphhgvlhhopedvrgdtvddqkeegvdekqddtfhegtddqudeltdduqdhfgeduvddqvdhfkeehqdgrhedtfedqvdeisggrrdhrvghvrdhsfhhrrdhnvghtpdhmrghilhhfrhhomhepmhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfedtpdhrtghpthhtoheprhhomhgrihhnrdhgrghnthhoihhssegsohhothhlihhnrdgtohhmp
- dhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtphhtthhopehnvghtuggvvhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrgh
-X-GND-Sasl: maxime.chevallier@bootlin.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250522-rb2_audio_v3-v3-6-9eeb08cab9dc@linaro.org>
 
-Hi Romain,
+Hi Alexey,
 
-On Mon, 12 May 2025 10:38:52 +0200
-Romain Gantois <romain.gantois@bootlin.com> wrote:
+kernel test robot noticed the following build errors:
 
-> Hi Maxime,
-> 
-> On Wednesday, 7 May 2025 15:53:22 CEST Maxime Chevallier wrote:
-> > There are currently 4 PHY drivers that can drive downstream SFPs:
-> > marvell.c, marvell10g.c, at803x.c and marvell-88x2222.c. Most of the
-> > logic is boilerplate, either calling into generic phylib helpers (for
-> > SFP PHY attach, bus attach, etc.) or performing the same tasks with a
-> > bit of validation :
-> >  - Getting the module's expected interface mode
-> >  - Making sure the PHY supports it
-> >  - Optionnaly perform some configuration to make sure the PHY outputs
-> >    the right mode
-> > 
-> > This can be made more generic by leveraging the phy_port, and its
-> > configure_mii() callback which allows setting a port's interfaces when
-> > the port is a serdes.
-> > 
-> > Introduce a generic PHY SFP support. If a driver doesn't probe the SFP
-> > bus itself, but an SFP phandle is found in devicetree/firmware, then the
-> > generic PHY SFP support will be used, relying on port ops.
-> > 
-> > PHY driver need to :
-> >  - Register a .attach_port() callback
-> >  - When a serdes port is registered to the PHY, drivers must set
-> >    port->interfaces to the set of PHY_INTERFACE_MODE the port can output
-> >  - If the port has limitations regarding speed, duplex and aneg, the
-> >    port can also fine-tune the final linkmodes that can be supported
-> >  - The port may register a set of ops, including .configure_mii(), that
-> >    will be called at module_insert time to adjust the interface based on
-> >    the module detected.
-> > 
-> > Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-> > ---
-> >  drivers/net/phy/phy_device.c | 107 +++++++++++++++++++++++++++++++++++
-> >  include/linux/phy.h          |   2 +
-> >  2 files changed, 109 insertions(+)
-> > 
-> > diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-> > index aaf0eccbefba..aca3a47cbb66 100644
-> > --- a/drivers/net/phy/phy_device.c
-> > +++ b/drivers/net/phy/phy_device.c
-> > @@ -1450,6 +1450,87 @@ void phy_sfp_detach(void *upstream, struct sfp_bus
-> > *bus) }
-> >  EXPORT_SYMBOL(phy_sfp_detach);
-> > 
-> > +static int phy_sfp_module_insert(void *upstream, const struct sfp_eeprom_id
-> > *id) +{
-> > +	struct phy_device *phydev = upstream;
-> > +	struct phy_port *port = phy_get_sfp_port(phydev);
-> > +  
-> 
-> RCT
+[auto build test ERROR on 7bac2c97af4078d7a627500c9bcdd5b033f97718]
 
-Can't be done here, it won't build if in the other order...
+url:    https://github.com/intel-lab-lkp/linux/commits/Alexey-Klimov/ASoC-dt-bindings-qcom-Add-SM6115-LPASS-rxmacro-and-vamacro-codecs/20250523-014432
+base:   7bac2c97af4078d7a627500c9bcdd5b033f97718
+patch link:    https://lore.kernel.org/r/20250522-rb2_audio_v3-v3-6-9eeb08cab9dc%40linaro.org
+patch subject: [PATCH v3 06/12] ASoC: codecs: add wsa881x-i2c amplifier codec driver
+config: x86_64-buildonly-randconfig-004-20250523 (https://download.01.org/0day-ci/archive/20250523/202505232000.eTkDhRzd-lkp@intel.com/config)
+compiler: clang version 20.1.2 (https://github.com/llvm/llvm-project 58df0ef89dd64126512e4ee27b4ac3fd8ddf6247)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250523/202505232000.eTkDhRzd-lkp@intel.com/reproduce)
 
-> 
-> > +	__ETHTOOL_DECLARE_LINK_MODE_MASK(sfp_support);
-> > +	DECLARE_PHY_INTERFACE_MASK(interfaces);
-> > +	phy_interface_t iface;
-> > +
-> > +	linkmode_zero(sfp_support);
-> > +
-> > +	if (!port)
-> > +		return -EINVAL;
-> > +
-> > +	sfp_parse_support(phydev->sfp_bus, id, sfp_support, interfaces);
-> > +
-> > +	if (phydev->n_ports == 1)
-> > +		phydev->port = sfp_parse_port(phydev->sfp_bus, id,   
-> sfp_support);
-> 
-> As mentionned below, this check looks a bit strange to me. Why are we only 
-> parsing the SFP port if the PHY device only has one registered port?
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202505232000.eTkDhRzd-lkp@intel.com/
 
-Because phydev->port is global to the PHY. If we have another port,
-then phydev->port must be handled differently so that SFP insertion /
-removal doesn't overwrite what the other port is.
+All error/warnings (new ones prefixed by >>):
 
-Handling of phydev->port is still fragile in this state of the series,
-I'll try to improve on that for V7 and document it better.
+>> sound/soc/codecs/wsa881x-i2c.c:555:5: warning: variable 'reg_addr' set but not used [-Wunused-but-set-variable]
+     555 |         u8 reg_addr = 0;
+         |            ^
+>> sound/soc/codecs/wsa881x-i2c.c:1263:24: error: cannot assign to non-static data member 'driver' with const-qualified type 'const struct snd_soc_component_driver *'
+    1263 |         wsa881x->driver->name = devm_kasprintf(dev, GFP_KERNEL, "wsa-codec%d",
+         |         ~~~~~~~~~~~~~~~~~~~~~ ^
+   sound/soc/codecs/wsa881x-common.h:260:41: note: non-static data member 'driver' declared const here
+     260 |         const struct snd_soc_component_driver *driver;
+         |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+   1 warning and 1 error generated.
 
-> > +
-> > +	linkmode_and(sfp_support, port->supported, sfp_support);
-> > +
-> > +	if (linkmode_empty(sfp_support)) {
-> > +		dev_err(&phydev->mdio.dev, "incompatible SFP module   
-> inserted\n");
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	iface = sfp_select_interface(phydev->sfp_bus, sfp_support);
-> > +
-> > +	/* Check that this interface is supported */
-> > +	if (!test_bit(iface, port->interfaces)) {
-> > +		dev_err(&phydev->mdio.dev, "incompatible SFP module   
-> inserted\n");
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	if (port->ops && port->ops->configure_mii)
-> > +		return port->ops->configure_mii(port, true, iface);  
-> 
-> The name "configure_mii()" seems a bit narrow-scoped to me, as this callback 
-> might have to configure something else than a MII link. For example, if a DAC 
-> SFP module is inserted, the downstream side of the transciever will have to be 
-> configured to 1000Base-X or something similar.
 
-In that regard, you can consider 1000BaseX as a MII mode (we do have
-PHY_INTERFACE_MODE_1000BASEX).
+vim +1263 sound/soc/codecs/wsa881x-i2c.c
 
-> I'd suggest something like "post_sfp_insert()", please let me know what you 
-> think.
+  1171	
+  1172	static int wsa881x_i2c_probe(struct i2c_client *client)
+  1173	{
+  1174		struct device *dev = &client->dev;
+  1175		struct wsa881x_priv *wsa881x;
+  1176		int leftright;
+  1177		int ret;
+  1178	
+  1179		ret = wsa881x_probe_common(&wsa881x, dev);
+  1180		if (ret)
+  1181			return ret;
+  1182	
+  1183		wsa881x->mclk_pin = devm_gpiod_get(dev, "mclk",
+  1184						   GPIOD_FLAGS_BIT_NONEXCLUSIVE);
+  1185		if (IS_ERR(wsa881x->mclk_pin))
+  1186			dev_err_probe(dev, PTR_ERR(wsa881x->mclk_pin),
+  1187				      "MCLK GPIO not found\n");
+  1188	
+  1189		wsa881x->wsa_mclk = devm_clk_get_enabled(&client->dev, NULL);
+  1190		if (IS_ERR(wsa881x->wsa_mclk))
+  1191			return dev_err_probe(dev, PTR_ERR(wsa881x->wsa_mclk),
+  1192					     "failed to get mclk\n");
+  1193		gpiod_direction_output(wsa881x->mclk_pin, 1);
+  1194		clk_set_rate(wsa881x->wsa_mclk, 9600000);
+  1195	
+  1196		wsa881x->client[DIGITAL] = client;
+  1197		ret = check_wsa881x_presence(wsa881x);
+  1198		if (ret < 0) {
+  1199			dev_err(&client->dev,
+  1200				"failed to ping wsa with addr:%x, ret = %d\n",
+  1201				client->addr, ret);
+  1202			return -ENODEV;
+  1203		}
+  1204	
+  1205		wsa881x->regmap = devm_regmap_init_i2c(client,
+  1206						&wsa881x_ana_regmap_config[DIGITAL]);
+  1207		if (IS_ERR(wsa881x->regmap)) {
+  1208			dev_err(dev, "digital regmap init failed %d\n", ret);
+  1209			return PTR_ERR(wsa881x->regmap);
+  1210		}
+  1211		regcache_cache_bypass(wsa881x->regmap, true);
+  1212	
+  1213		wsa881x_init_common(wsa881x);
+  1214	
+  1215		wsa881x->version = wsa881x_i2c_read_device(wsa881x, WSA881X_CHIP_ID1);
+  1216		if (wsa881x->version == WSA881X_2_0) {
+  1217			wsa881x_update_reg_defaults_2_0();
+  1218			wsa881x_update_regmap_2_0(wsa881x->regmap, DIGITAL);
+  1219		}
+  1220	
+  1221		/*
+  1222		 * If we reached this point, then device is present and we're good to
+  1223		 * go to initialise analog part of the amplifier
+  1224		 */
+  1225		wsa881x->client[ANALOG] = devm_i2c_new_dummy_device(&client->dev,
+  1226								    client->adapter,
+  1227						client->addr + I2C_ANALOG_OFFSET);
+  1228		if (IS_ERR(wsa881x->client[ANALOG])) {
+  1229			dev_err(dev,
+  1230				"failed to register i2c device for analog part\n");
+  1231			return PTR_ERR(wsa881x->client[ANALOG]);
+  1232		}
+  1233	
+  1234		wsa881x->regmap_analog = devm_regmap_init_i2c(wsa881x->client[ANALOG],
+  1235						&wsa881x_ana_regmap_config[ANALOG]);
+  1236		if (IS_ERR(wsa881x->regmap_analog)) {
+  1237			dev_err(dev, "analog regmap init failed %d\n", ret);
+  1238			return PTR_ERR(wsa881x->regmap_analog);
+  1239		}
+  1240		regcache_cache_bypass(wsa881x->regmap_analog, true);
+  1241	
+  1242		wsa881x->client[ANALOG]->dev.platform_data = wsa881x;
+  1243		i2c_set_clientdata(wsa881x->client[ANALOG], wsa881x);
+  1244		wsa881x->regmap_flag = true;
+  1245	
+  1246		if (wsa881x->version == WSA881X_2_0)
+  1247			wsa881x_update_regmap_2_0(wsa881x->regmap_analog, ANALOG);
+  1248		/* finished initialising analog part */
+  1249	
+  1250		leftright = wsa881x_i2c_read_device(wsa881x, WSA881X_BUS_ID) & 0x1;
+  1251	
+  1252		wsa881x->driver = devm_kmemdup(dev, &soc_codec_dev_wsa881x,
+  1253					       sizeof(*wsa881x->driver), GFP_KERNEL);
+  1254		if (!wsa881x->driver)
+  1255			return -ENOMEM;
+  1256	
+  1257		wsa881x->dai_driver = devm_kmemdup(dev, wsa_dai,
+  1258						   sizeof(struct snd_soc_dai_driver),
+  1259						   GFP_KERNEL);
+  1260		if (!wsa881x->dai_driver)
+  1261			return -ENOMEM;
+  1262	
+> 1263		wsa881x->driver->name = devm_kasprintf(dev, GFP_KERNEL, "wsa-codec%d",
+  1264						       leftright);
+  1265		if (!wsa881x->driver->name)
+  1266			return -ENOMEM;
+  1267	
+  1268		wsa881x->dai_driver->name = devm_kasprintf(dev, GFP_KERNEL,
+  1269							   "wsa_rx%d", leftright);
+  1270		if (!wsa881x->dai_driver->name)
+  1271			return -ENOMEM;
+  1272	
+  1273		wsa881x->dai_driver->playback.stream_name = devm_kasprintf(dev,
+  1274						GFP_KERNEL, "WSA881X_AIF%d Playback",
+  1275						leftright);
+  1276		if (!wsa881x->dai_driver->playback.stream_name)
+  1277			return -ENOMEM;
+  1278	
+  1279		pm_runtime_set_autosuspend_delay(dev, 3000);
+  1280		pm_runtime_use_autosuspend(dev);
+  1281		pm_runtime_mark_last_busy(dev);
+  1282		pm_runtime_set_active(dev);
+  1283		pm_runtime_enable(dev);
+  1284	
+  1285		return devm_snd_soc_register_component(dev,
+  1286						       wsa881x->driver,
+  1287						       wsa881x->dai_driver,
+  1288						       ARRAY_SIZE(wsa_dai));
+  1289	}
+  1290	
 
-That's not intended to be SFP-specific though. post_sfp_insert() sounds
-lke the narrow-scoped name to me :) Here we are dealing with a PHy that
-has a media-side port that isn't a MDI port, but an MII interface like
-a MAC would usually export. There may be an SFP here, or something else
-entirely :)
-
-One thing though is that this series uses a mix of "is_serdes" and
-"configure_mii" to mean pretty-much the same thing, I'll make the names
-a bit more homogenous.
-
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static void phy_sfp_module_remove(void *upstream)
-> > +{
-> > +	struct phy_device *phydev = upstream;
-> > +	struct phy_port *port = phy_get_sfp_port(phydev);
-> > +
-> > +	if (port && port->ops && port->ops->configure_mii)
-> > +		port->ops->configure_mii(port, false, PHY_INTERFACE_MODE_NA);
-> > +
-> > +	if (phydev->n_ports == 1)
-> > +		phydev->port = PORT_NONE;  
-> 
-> This check is a bit confusing to me. Could you please explain why you're only 
-> setting the phydev's SFP port to PORT_NONE if the PHY device only has one 
-> registered port? Shouldn't this be done regardless?
-
-So that we don't overwrite what the other port would have set :) but,
-that's a bit fragile as I said and probably not correct anyways, let me
-double-check that.
-
-Maxime
-
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
