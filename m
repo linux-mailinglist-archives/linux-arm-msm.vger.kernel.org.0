@@ -1,105 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-59269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD4C1AC2B2E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 22:58:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2009AC2B5B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 23:30:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D5A6541085
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 20:58:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7E3583B72DA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 21:29:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C07D1EF375;
-	Fri, 23 May 2025 20:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19355207A32;
+	Fri, 23 May 2025 21:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MH/AkxiJ"
+	dkim=pass (1024-bit key) header.d=kuruczgy.com header.i=@kuruczgy.com header.b="h15mx+PW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F79B146D53;
-	Fri, 23 May 2025 20:58:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09241FDE19
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 21:30:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748033888; cv=none; b=KzvEMNtzuPu83UMyzZG1DVogGCB1X/Wp3nnUbgz5C94129zR74kgNRPWancWC3liBkgHqcjFfm8XxxguPRl4rMpnlR88Gui4nIrTxpbJfRf/DSOGFeZPtdcgjbTLUZytzZ65Acke8h1Km6BVD+ya8BvkA20uSpB5iRWCyNHuhN4=
+	t=1748035803; cv=none; b=j3h95UlRhndBPRipFTHLro/POl3LHEensIoBWGp8p/S9E8bSR+PrdjTJhlWNteOAqglQ+ocNN7bZ+fO+wGTAdSTwOZDBGmzLMVcTjdE56a/6OLYqcmvBUuncu4TNaViIJq6bx2Bifjm67uqtP4ttmUXKEBcHRf3qXqlYtLkPyQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748033888; c=relaxed/simple;
-	bh=EmbjA22m9ajw1HCI2ySGSC0gt0WZSqV+K2WSqww2qvY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=INWjI9ZOrEE0qRrpJdnWzz31XSwZtXZhqPcmMgEv4xQg5TJXzggQqpvYIfCucyO1Oyda4370llEB5N0tDy7LHgX3c4siFrpAIKTxPcCoyYDkNi7uIWU+4cJt8++bgBjjc09cdE+gksAnrH9DzoQ9EhA9bKmTo8tFlCfI7fmkZBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MH/AkxiJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15402C4CEE9;
-	Fri, 23 May 2025 20:58:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748033887;
-	bh=EmbjA22m9ajw1HCI2ySGSC0gt0WZSqV+K2WSqww2qvY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=MH/AkxiJ0ZhiXeKtn9XHoN/mnj7DteExbjIGhTzwLEACbzg1ihDTjT4u1QIT/eqzQ
-	 PFZKMvGRSTpIHc0XXyWa4aVFhiscPdWq490x7xjCPTg6+HlonrXKv9b3JzgVYHcat7
-	 WeIUSiVxGofUqSTRax+x2BDCgKqqzRoOucR+26QUdiPeS10jQHaVAwWDtrv3jL60q4
-	 kCYX1FictIk9OtkRITiKCYzbbJvQQSYJBVRC3kcxtgsEtym3QklkHL3+zwb6Z0w74J
-	 tJbZCcoil8HRsA///KZKWvSdoYD5h1QahFNAVP4vOKr3E12tKiuzd5q7/V0IN5LoyG
-	 OwZeJV1uzLmcA==
-From: Mark Brown <broonie@kernel.org>
-To: Gabor Juhos <j4g8y7@gmail.com>
-Cc: Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250515-qpic-snand-early-error-v1-1-681c87611213@gmail.com>
-References: <20250515-qpic-snand-early-error-v1-1-681c87611213@gmail.com>
-Subject: Re: [PATCH] spi: spi-qpic-snand: return early on error from
- qcom_spi_io_op()
-Message-Id: <174803388522.585305.16829284807234779965.b4-ty@kernel.org>
-Date: Fri, 23 May 2025 21:58:05 +0100
+	s=arc-20240116; t=1748035803; c=relaxed/simple;
+	bh=lJ5zSiF4j5yND5YdgyhzUPswF8T6nSe0Wmp93OX0+8c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=teZ/SW5IQXPPe4CNEEJwpVL5QmIKVvjhpqEgPiwoR3eHxmFLyNcLW0EXYp2eak86Hmk3lt/EboUXEnzlr1wpUmerbyQaUrZxiMUnzLodRWtSUaBI+KAUWIfKxl+zBdY7G6hKruHaX/PQsOvrayhfsyb0JLYrrNkcsWJr27G6R5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kuruczgy.com; spf=pass smtp.mailfrom=kuruczgy.com; dkim=pass (1024-bit key) header.d=kuruczgy.com header.i=@kuruczgy.com header.b=h15mx+PW; arc=none smtp.client-ip=95.215.58.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kuruczgy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kuruczgy.com
+Message-ID: <db0e40b6-22f3-46aa-b35d-7a8729370ddf@kuruczgy.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kuruczgy.com;
+	s=default; t=1748035788;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4PqGEGzZ/UWkkbwLFFz4q788oyBfBlkNqJFmpYxsCts=;
+	b=h15mx+PW2loABxmZdtwGKR+muslpE1BVAm8saqAqGA6Z1A9B3fcHmagAGsgW3ia3MmiDNW
+	gycCXK08S3kipGXZ1mSMi7lzWcUSyfihn7JxC0VcT3CpFNvo5I+OxWLcKv0Nu+pTCjAU9P
+	sK+l7Y3V4o3qIXhY0rnGwrcgMcajA9c=
+Date: Fri, 23 May 2025 23:29:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-c25d1
+Subject: Re: [PATCH 5/5] power: supply: qcom-battmgr: Add charge control
+ support
+To: fenglin.wu@oss.qualcomm.com, Sebastian Reichel <sre@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
+ David Collins <david.collins@oss.qualcomm.com>, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ kernel@oss.qualcomm.com
+References: <20250523-qcom_battmgr_update-v1-0-2bb6d4e0a56e@oss.qualcomm.com>
+ <20250523-qcom_battmgr_update-v1-5-2bb6d4e0a56e@oss.qualcomm.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: =?UTF-8?Q?Gy=C3=B6rgy_Kurucz?= <me@kuruczgy.com>
+In-Reply-To: <20250523-qcom_battmgr_update-v1-5-2bb6d4e0a56e@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, 15 May 2025 22:13:29 +0200, Gabor Juhos wrote:
-> When submitting of the descriptors fails, it is quite likely that
-> the register read buffer contains no valid data. Even if the data
-> is valid the function returns with an error code anyway.
-> 
-> Change the code to return early if qcom_submit_descs() fails to
-> avoid superfluously copying possibly invalid data.
-> 
-> [...]
+Hi!
 
-Applied to
+> +static int qcom_battmgr_set_charge_control(struct qcom_battmgr *battmgr,
+> +					   u32 target_soc, u32 delta_soc)
+> +{
+> +	struct qcom_battmgr_charge_ctrl_request request = {
+> +		.hdr.owner = cpu_to_le32(PMIC_GLINK_OWNER_BATTMGR),
+> +		.hdr.type = cpu_to_le32(PMIC_GLINK_REQ_RESP),
+> +		.hdr.opcode = cpu_to_le32(BATTMGR_CHG_CTRL_LIMIT_EN),
+> +		.enable = cpu_to_le32(1),
+> +		.target_soc = cpu_to_le32(target_soc),
+> +		.delta_soc = cpu_to_le32(delta_soc),
+> +	};
+> +
+> +	return qcom_battmgr_request(battmgr, &request, sizeof(request));
+> +}
+> +
+> +static int qcom_battmgr_set_charge_start_threshold(struct qcom_battmgr *battmgr, int soc)
+> +{
+> +	u32 target_soc, delta_soc;
+> +	int ret;
+> +
+> +	if (soc < CHARGE_CTRL_START_THR_MIN ||
+> +			soc > CHARGE_CTRL_START_THR_MAX) {
+> +		dev_err(battmgr->dev, "charge control start threshold exceed range: [%u - %u]\n",
+> +				CHARGE_CTRL_START_THR_MIN, CHARGE_CTRL_START_THR_MAX);
+> +		return -EINVAL;
+> +	}
+> +
+> +	/*
+> +	 * If the new start threshold is larger than the old end threshold,
+> +	 * move the end threshold one step (DELTA_SOC) after the new start
+> +	 * threshold.
+> +	 */
+> +	if (soc > battmgr->info.charge_ctrl_end) {
+> +		target_soc = soc + CHARGE_CTRL_DELTA_SOC;
+> +		target_soc = min_t(u32, target_soc, CHARGE_CTRL_END_THR_MAX);
+> +		delta_soc = target_soc - soc;
+> +		delta_soc = min_t(u32, delta_soc, CHARGE_CTRL_DELTA_SOC);
+> +	} else {
+> +		target_soc =  battmgr->info.charge_ctrl_end;
+> +		delta_soc = battmgr->info.charge_ctrl_end - soc;
+> +	}
+> +
+> +	mutex_lock(&battmgr->lock);
+> +	ret = qcom_battmgr_set_charge_control(battmgr, target_soc, delta_soc);
+> +	mutex_unlock(&battmgr->lock);
+> +	if (!ret) {
+> +		battmgr->info.charge_ctrl_start = soc;
+> +		battmgr->info.charge_ctrl_end = target_soc;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int qcom_battmgr_set_charge_end_threshold(struct qcom_battmgr *battmgr, int soc)
+> +{
+> +	u32 delta_soc = CHARGE_CTRL_DELTA_SOC;
+> +	int ret;
+> +
+> +	if (soc < CHARGE_CTRL_END_THR_MIN ||
+> +			soc > CHARGE_CTRL_END_THR_MAX) {
+> +		dev_err(battmgr->dev, "charge control end threshold exceed range: [%u - %u]\n",
+> +				CHARGE_CTRL_END_THR_MIN, CHARGE_CTRL_END_THR_MAX);
+> +		return -EINVAL;
+> +	}
+> +
+> +	if (battmgr->info.charge_ctrl_start && soc > battmgr->info.charge_ctrl_start)
+> +		delta_soc = soc - battmgr->info.charge_ctrl_start;
+> +
+> +	mutex_lock(&battmgr->lock);
+> +	ret = qcom_battmgr_set_charge_control(battmgr, soc, delta_soc);
+> +	mutex_unlock(&battmgr->lock);
+> +	if (!ret) {
+> +		battmgr->info.charge_ctrl_start = soc - delta_soc;
+> +		battmgr->info.charge_ctrl_end = soc;
+> +	}
+> +
+> +	return 0;
+> +}
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
-
-Thanks!
-
-[1/1] spi: spi-qpic-snand: return early on error from qcom_spi_io_op()
-      commit: 72b17676d3683040a0add8988ec051a2a5adafd7
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+These function names sound quite generic, but AFAIU this patch is only 
+adding charge control support for the SM8550. Is sc8280xp and x1e80100 
+also expected to be supported using the same 
+qcom_battmgr_charge_ctrl_request format?
 
 Thanks,
-Mark
-
+György
 
