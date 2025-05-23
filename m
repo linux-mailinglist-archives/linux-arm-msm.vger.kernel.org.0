@@ -1,145 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-59198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89541AC20B5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 12:14:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3D27AC20BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 12:15:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 251B17ADD21
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 10:13:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D0FE33ACAA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 10:15:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBCBD227E93;
-	Fri, 23 May 2025 10:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E35D228C92;
+	Fri, 23 May 2025 10:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uWwpApxw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XMPe1HBt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079C918A6C1
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 10:14:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1DC22A4E5;
+	Fri, 23 May 2025 10:15:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747995278; cv=none; b=QgzsfEX9DxO2UgECkTL8eySuPJBdvb66BGB8T2UoYuGmeEFW4hiRVVSTvHRRepotzZyPsXE1+ca+paGM7bKiiDEPhJNo4X813KYEvUMMfb52jQHO0H5t472LO03UbSo5/8AEzYBCwVrZPL0aONmNYT1E9o1upTHr54YpfpoU/Ec=
+	t=1747995309; cv=none; b=C2PPespXikCY944Th9HTNwxOgSqF/68HYXww7rBSDCVzRqQT3AnTPcg+9EA8sfSm9NdAzRlqTMSisonVrAEH4CJZm5D6K6fz2OoiCJIdqQ3blS9oayAngtG3X1BpcQUzgs6RX9CiDUAb1ppc5bi0jEHmRliZVPYziZP7d2rwOoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747995278; c=relaxed/simple;
-	bh=YXdLngDcBO0vJC/gQveHdfBkHJCl1Zxhg7Yjupm186U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=OUaCFs/ZbkH08ALXtooif0RjlI0cevOOAszxp1J3ju3raai8X1J4Bz91A26CTzY6+BFey8OZyV4mRYF2B49R1rhgGZWFzSAAAE+3vUxNvahbs5XKnjek1Mt06YxqXZ4PHtSTniKIuf2YRulqFgQ9FWXHAMzVLzaDrkFq0+WqYRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uWwpApxw; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-442f9043f56so52539805e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 03:14:36 -0700 (PDT)
+	s=arc-20240116; t=1747995309; c=relaxed/simple;
+	bh=9B8Qbuz0+HjwNMerJ1VV6FpRT6m7U/s0nPQnJsXESXk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=dvVAlljNI8Eo9/wsKngzM01SeR6kDt2VdWS5iyfgueMXWSrw9LWlG5fEmTXXNW8QnqYXL4rvUMDs2bK0YMZB8S4YQuP9vxpkU9koAk05GN/dfUK1yeI/lTTkpl30zQX1k3Mg1xbRvHDRPzV+nhu6RDMKTBwXM1SCWT3QnUF3Av0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XMPe1HBt; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ad563b69908so955424466b.3;
+        Fri, 23 May 2025 03:15:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747995275; x=1748600075; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+zKQCNztHs5vaJkSM9hQ4RIOUwHXJN4g4lZDHbYkUTE=;
-        b=uWwpApxw8cIlBK4Za3QWpp/TxifMmRA6fgvrWuj1p4XcVFQVM+gsPKQLe4ehVQazM7
-         FRDRY9FLeoQ07teM142zy+pizzYgbv7ea3j4K6TILwlgmR0J1hne6L1GFkna9OCralwC
-         lmhN/mSDCscFJLd6lwNaL7opgEIx1A0SO46s31aH2sVWOmkhLVRA2eJGsGgK9oCdRDtl
-         jrvdQ7kGvYK0WV1PTa4b6NVO2Ut0vyWYLHh1vzblAAFK10dHVpS29UKVQrHqYTPyMjuq
-         cn+V/T3QLgdBFtHXzxEzi/TEXgxHN9CBcc5nu6TH7EjvlIICXgfMnJGN2skWkCtMQ7Bx
-         tbJQ==
+        d=gmail.com; s=20230601; t=1747995306; x=1748600106; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=12Do9t9YpCf+Nz+IVlJd3oQSzsy39pOVxJJm3ENuKwc=;
+        b=XMPe1HBt5RET4bQMYSlP/oPTJKE24V6d5nMO20ZHhP6HKIXYwiAA63jnz0u1IVvivz
+         5is7g64k4N3qjdhIK/0PPeAt//xxk8XaevKPEyuQgJ/jhvWjXIyNbsebtqntaaCTAnWe
+         T56MgED/UsYQy30JqFqwYH+tugV/boU5PS3DFFEypBV9kNxCwQ0EvlGdpiuiCL5S0LYc
+         Q29QU81DuM4LT0TwwCtncnkGFEc6yOBonbtF+5y4JeVoLl9rFTr1/8EaMSX2gBFAm6PF
+         EHjOd6byVA15/Gi8SQ9AqhQJTbtKXfgN8mwuX3ARKgd9E8Ji5iVs/Vyhuarszwse6d2G
+         AQvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747995275; x=1748600075;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1747995306; x=1748600106;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+zKQCNztHs5vaJkSM9hQ4RIOUwHXJN4g4lZDHbYkUTE=;
-        b=vgwWeZSxASElACuO7AeAoQNX/kWP+dhsAb+7oLWQoa/5/oZmjZoVcJdb98I9ECsYYI
-         WSkgKWKrtfivIbngJfKQ/EOQp8G3G70l1WkmuE9dhjiqId6ESce5cHKAHA1lUZl5BlsO
-         F0T+19oo7zlwtK8ASPAwo0GYgY+BevtZsA8VB0MzjhJsWWrkC0uwFits8zpJ7Ko7REB9
-         nsfb36MNssVB+qszszjRFmTo/lVI0RvHpY6ewl8vMi/9fAOeNZRSqAviSrIdJnFfKSBV
-         sMtAy6bpVA8X+bT2fR53e0k9GrrS4GOZ329F8TA6FR7U3xrdjFwGSKvu4EjaP5LogyKv
-         ppLw==
-X-Gm-Message-State: AOJu0YxVCRqXOxgYYwqSYyuHhFrfsr0qQwgMj88QAy5NMffED9fKDxof
-	sVdwzHi2HzA0s+CfqmxTxh8uq1acsqhhcrRisCOKR0pOf1opSd0UsMYZeE8WlJbQuh4=
-X-Gm-Gg: ASbGncvn+3GdnqOYpEurMyLP/52fJzufsomf4BRwmwu4l3sB4E5T/hsJJIlHAkIK6Wz
-	pns2f2n11m69ROvKChQI5odFbA9hdGjBIcehY5wDhFWgcY/YYP4tmj55lJQFcQW7pJ2P6bhhYsH
-	3YkTR4d7I6KdycFNZvDLD+IlpQKE3+maJdFXV2mVByEkX8rdAqwzPvGrJwb7i1MBlf2F69+CGDi
-	QyDWpprWOCXfUbsUf9ojP36pUH6hlIkFI2oJOnKU9pgvg2k3GbGK1anrB9iZnxwib65ObpNgHFp
-	rWuKme0mRiK/G9V5mF8VYi5oWBREMrQFv/Hm+25L3ZHRZvDm+g==
-X-Google-Smtp-Source: AGHT+IEuf3bBObzgG57jYGNQDtRTTrbOqj54r9Cq5DQk2zMU3kmt458sE//vS5giTUD8U4YoKDV4cg==
-X-Received: by 2002:a05:600c:1f95:b0:442:e03b:589d with SMTP id 5b1f17b1804b1-44b6e85fae2mr26950875e9.24.1747995275216;
-        Fri, 23 May 2025 03:14:35 -0700 (PDT)
-Received: from [127.0.1.1] ([62.231.96.41])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f6f05581sm135208955e9.13.2025.05.23.03.14.33
+        bh=12Do9t9YpCf+Nz+IVlJd3oQSzsy39pOVxJJm3ENuKwc=;
+        b=udQgWqZLKu8nsnAXGs/lpa/nAvKoVrVoOwRzBPuQ3l9J27leEyFT1tLo0bQtrDgD3b
+         ElzsOAm+dVbHxI5D/tp6IeHA+2nf5cccd6gAAn8L91nW44kxvCWK2Kf4UzO6LBfQj5WJ
+         kHAXMXIge2UEMBoG9EEnhFrYm1qVhM8OWrWK++o9WKD5wzC/Lb5P5Fo9PAHbu8k4PpsK
+         e8EmYkG5RiPLn3pObGg6lR2nJLrT5/FYxU/4nOtpbR33FhyOeD9Opa20Ih7LMnWdplBa
+         9U987IM4mvyrbmSHwNpox1v3JQGzVhjbBUyzT4gB4o6LdUAY11fenc2WsBvW1i9v5eOb
+         1nDg==
+X-Forwarded-Encrypted: i=1; AJvYcCUOBFJLQsjlhnVy1oXOLE+PxnP8YSDYqDYsV4ziXT8l3iYDZ2mYI7oECwBygBHDTPMf41bVtsLb8EOuJPC4@vger.kernel.org, AJvYcCUuRNz5D6X7tGT677esOThRXwnJjKnLiCWkHrTXPV2fQF0xu49KxV+H6SDkeYbEhiR42erRnsuVLoqcew==@vger.kernel.org, AJvYcCW7UglxJXQ9S7/cIhQQ8nuborU55juT5SqjvZx/5E7+Jagoc9C70t5BCTeZYEHwZ5DqoDHRhpfZIQ3IRkvs@vger.kernel.org
+X-Gm-Message-State: AOJu0YzLxky2RqroJuBGcsE5bQ3J0WBvdMU7R26yrlVW5M4Y5k2OYKxo
+	JOAk+QU2wv8wMK8Mgo9jI3kO626RBgdQEn8kYH8e3585fM49KhyAum/f
+X-Gm-Gg: ASbGnctdCrOwHhOyF3wpzSX8sdKr1gKUewrqR1Yi3rmd8QfD1hQ7hVarZHJJl2vaf1Z
+	0TQ7qGJ1nGLisebt+3MbSyvRNuwGDcBYgepacybkttWmvc+/W+RjCIoMXWqYeXLVwGChJRNlzx+
+	/Vd+1PVRZ63MO+p73C/rpbzqSYyZWTiRbLAr7ynRJJuFeDVYoaX/etOXDbrWry9XRHNlvM5xRaw
+	eLjNZ9Hu9D+VKipGxOh0dv0T3Giwq+btsxLpNaJTa7SpobewHpW9EiMhQuZ4sXD5YqA7nB8kVS3
+	XKtTTl9P8P7Xq0RgnRQJwCi9SzUeCktm5qHUNNJ5tsNa6yhXz5+XmEBjAfO+3QU2aQ9imR9FjCU
+	oYdk84ml1
+X-Google-Smtp-Source: AGHT+IF9z/ZwcIGZ/MFGn3LzYKCuz4hF1lfNqCLb8lo4Mdq9Jp1Bno4R2tXKBU4ikKUFTPlMGPVwAQ==
+X-Received: by 2002:a17:906:230a:b0:ad4:f6d2:431b with SMTP id a640c23a62f3a-ad536dce6cfmr1912503166b.44.1747995305575;
+        Fri, 23 May 2025 03:15:05 -0700 (PDT)
+Received: from T15.. (wireless-nat-94.ip4.greenlan.pl. [185.56.211.94])
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ad52d06dfa4sm1212928966b.57.2025.05.23.03.15.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 May 2025 03:14:34 -0700 (PDT)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Fri, 23 May 2025 13:14:22 +0300
-Subject: [PATCH] power: supply: qcom_battmgr: Add lithium-polymer entry
+        Fri, 23 May 2025 03:15:05 -0700 (PDT)
+From: Wojciech Slenska <wojciech.slenska@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Cc: Wojciech Slenska <wojciech.slenska@gmail.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] pinctrl: qcom: pinctrl-qcm2290: Add missing pins
+Date: Fri, 23 May 2025 12:14:37 +0200
+Message-Id: <20250523101437.59092-1-wojciech.slenska@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250523-psy-qcom-battmgr-add-lipo-entry-v1-1-938c20a43a25@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAH1KMGgC/x3NQQqDMBBA0avIrB2ICbHQq0gXiRntQE3SSZCKe
- PcGl2/z/wmFhKnAsztBaOfCKTYMfQfz28WVkEMzaKWtstpgLgd+57Shd7Vuq6ALAT+cE1KsciA
- 9rDeejDJ+hFbJQgv/7sP0uq4/SGJidHEAAAA=
-X-Change-ID: 20250523-psy-qcom-battmgr-add-lipo-entry-e75b3be303b6
-To: Sebastian Reichel <sre@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1329; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=YXdLngDcBO0vJC/gQveHdfBkHJCl1Zxhg7Yjupm186U=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBoMEqEne0ttuK8zTJJgKWMRPGQweMwniKprXSkI
- ZvK4gMoRIOJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaDBKhAAKCRAbX0TJAJUV
- Vh9oD/4t/Ab4odV5IIvMkEp6oVEQR9VxC87MzrQEfmviZd69GIZYd4wR2MNejTEfmbChZaz5e54
- X6+ic+swqbVVzyp0pHjamdccJIRnpBT9C2pCx18KFONjY7bCMyvZ41MvrHLPkEljltER+4w/cly
- SSBhVDzpBZ5Lf+6HNH98ckFL1ZoFCroqDBQJrf10tCzcXHPQtRp3Zed2eDpwgFP+V06a7GOJJYj
- yVFS/gAvESmywT5U3NEVnOu4CE4zbuOG/vnMdaoLP4b2Ll4cn4wxS//Z8GpUEyr6Jq0/agqxqY6
- eiafwoU+eSxE96b7Dj8AxypUVxlCCkslg5xMs619u8UZ4FwWfWRtjF7ovuSQI7HIMZD85gEJTjK
- c2hGNBfXlsa4unReDCpfXgKw9OL3XA1iLwiX8qff1ojCsViBHwFVs1rJY1q0umqW7XxGvgTo/xl
- aGNwQKWCMWffpR0nxthiAQscEd28+vyvaQmHBqIh8AcpDtcAeAsi3W60skFRcV44s4LfXelzgOK
- SBeVfDA5cmHZbxQD9lntkUb+zFf0OVQUmiIhkB8pb/DGOo1zB8sV63iqGHRbxe9RXgrkFwo6h56
- b6M7fBKlo74u4q5lupA1biF8/9FcZVueB0yPUfJFmTMY4AONUGNf2nWwxrc0Ky6SCnt90KmgA0R
- CA94md15gdr02Ag==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+Content-Transfer-Encoding: 8bit
 
-On some Dell XPS 13 (9345) variants, the battery used is lithium-polymer
-based. Currently, this is reported as unknown technology due to the entry
-missing.
+Added the missing pins to the qcm2290_pins table.
 
-[ 4083.135325] Unknown battery technology 'LIP'
-
-Add another check for lithium-polymer in the technology parsing callback
-and return that instead of unknown.
-
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Wojciech Slenska <wojciech.slenska@gmail.com>
 ---
- drivers/power/supply/qcom_battmgr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pinctrl/qcom/pinctrl-qcm2290.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index fe27676fbc7cd12292caa6fb3b5b46a18c426e6d..32c85939b8973422ee417c3f1552f2355658cf06 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -981,6 +981,8 @@ static unsigned int qcom_battmgr_sc8280xp_parse_technology(const char *chemistry
- {
- 	if (!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN))
- 		return POWER_SUPPLY_TECHNOLOGY_LION;
-+	else if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
-+		return POWER_SUPPLY_TECHNOLOGY_LIPO;
- 
- 	pr_err("Unknown battery technology '%s'\n", chemistry);
- 	return POWER_SUPPLY_TECHNOLOGY_UNKNOWN;
-
----
-base-commit: 176e917e010cb7dcc605f11d2bc33f304292482b
-change-id: 20250523-psy-qcom-battmgr-add-lipo-entry-e75b3be303b6
-
-Best regards,
+diff --git a/drivers/pinctrl/qcom/pinctrl-qcm2290.c b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
+index 85c951305abd..eeeec6434f6a 100644
+--- a/drivers/pinctrl/qcom/pinctrl-qcm2290.c
++++ b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
+@@ -167,6 +167,10 @@ static const struct pinctrl_pin_desc qcm2290_pins[] = {
+ 	PINCTRL_PIN(62, "GPIO_62"),
+ 	PINCTRL_PIN(63, "GPIO_63"),
+ 	PINCTRL_PIN(64, "GPIO_64"),
++	PINCTRL_PIN(65, "GPIO_65"),
++	PINCTRL_PIN(66, "GPIO_66"),
++	PINCTRL_PIN(67, "GPIO_67"),
++	PINCTRL_PIN(68, "GPIO_68"),
+ 	PINCTRL_PIN(69, "GPIO_69"),
+ 	PINCTRL_PIN(70, "GPIO_70"),
+ 	PINCTRL_PIN(71, "GPIO_71"),
+@@ -181,12 +185,17 @@ static const struct pinctrl_pin_desc qcm2290_pins[] = {
+ 	PINCTRL_PIN(80, "GPIO_80"),
+ 	PINCTRL_PIN(81, "GPIO_81"),
+ 	PINCTRL_PIN(82, "GPIO_82"),
++	PINCTRL_PIN(83, "GPIO_83"),
++	PINCTRL_PIN(84, "GPIO_84"),
++	PINCTRL_PIN(85, "GPIO_85"),
+ 	PINCTRL_PIN(86, "GPIO_86"),
+ 	PINCTRL_PIN(87, "GPIO_87"),
+ 	PINCTRL_PIN(88, "GPIO_88"),
+ 	PINCTRL_PIN(89, "GPIO_89"),
+ 	PINCTRL_PIN(90, "GPIO_90"),
+ 	PINCTRL_PIN(91, "GPIO_91"),
++	PINCTRL_PIN(92, "GPIO_92"),
++	PINCTRL_PIN(93, "GPIO_93"),
+ 	PINCTRL_PIN(94, "GPIO_94"),
+ 	PINCTRL_PIN(95, "GPIO_95"),
+ 	PINCTRL_PIN(96, "GPIO_96"),
 -- 
-Abel Vesa <abel.vesa@linaro.org>
+2.34.1
 
 
