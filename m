@@ -1,192 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-59223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7218CAC2371
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 15:06:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E1A2AC238A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 15:16:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E22BB1BC7C67
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 13:06:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 94A66A44542
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 13:16:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB33B2260C;
-	Fri, 23 May 2025 13:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9C9828F937;
+	Fri, 23 May 2025 13:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Pshbatds"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XSdkdaAd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EBE17BBF
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 13:06:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB4128F520;
+	Fri, 23 May 2025 13:16:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748005587; cv=none; b=tu6j+XpR4Z6kKe/uyZgazCG+ym3XiBLeYJPcZCoxvE3U7OBwtl0W82g4o3ZMhUgRqmVNyYtAdEYBcvdVWWu2zXBmPJ3sV6uGXNlY1WaQyN4KsAclA5259wU9VjGeahdMJgQ8eOKnSfnrVD47dAyMYRfyAlDj4on5Iw5934rCkbw=
+	t=1748006179; cv=none; b=ewVdxBB0k9mRFnuQPxYy2BabmdgEaUr+ub3IGakJRKdLs4A7CZb7ORmD8J5r3963lYtDBnyH2/cEOGJpxybFZRqlM12c25oLYkpititgpUmCsp7KCoXS0m+xBR3Ds+2STUrLDscSwSGbNiJp6dxAnPImio2gxO7zIjMj5laOiQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748005587; c=relaxed/simple;
-	bh=NqsQKoyH5XwgFnrjy2QDwdy0aFDN0jlWu+yux8ynH4I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=pMKG2dmlLgeBW6GnzpNSVD//Od3vVPliMI6iGhuHWACbHySRFtuQTHIdaYE0qh+LzLhhRBD7eUnEEDybOdOo43Jpwn0qqaY83KtGzhmDCey62mDB4AVGA/Y4XygEkIrPSbgIj0mzOD+bKQnccq4LRXsmRMmKJTdW/+gZD3OmjPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Pshbatds; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54NBsckX016644
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 13:06:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=D2ZwAv3+/k8jq5bB/r8jN+
-	Yh3nUziGncMv3EzvPlvAA=; b=PshbatdsvJ3uQjQ8BnuYeX81N/+IFW0dRTLdX4
-	w5g6Dxn4NWdF4XqWbnxdlc/VHyirTbr/S3oyOIz7ywde21qp/YyPkzAYVdJHqj4+
-	+mjHQlYodHPgljgsECGsNEvV3+9qrl/rQsAv2gH+SNpE0a+HYzxsKHMqJkPPk7WB
-	0HMewcrb0W34cLzNsqLgNW/tdCkexABUbSnZvJB71XlMy7WqTZ2JRiqBEWspd8bq
-	cIwngnleKUIwVcKBvQnlQrPOcitClg9xSjoUS9tqaOYyrFKVR0i3EAizIhHToE3B
-	jUrvmuF7e4NNatwboAXN6J4ZE4p+ITESac/WQ8S5xDbyS/GQ==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwfa251q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 13:06:24 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-30ed0017688so5337673a91.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 06:06:24 -0700 (PDT)
+	s=arc-20240116; t=1748006179; c=relaxed/simple;
+	bh=nv3ji6GhM3232GWbKU0OV+YBbB2uBzaazpJM0DI4Vbk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=guV0xvC1KGxlpx27OCzyAJHO/Jmgb4WRM7QVY+4H46XAsjvnJKelEb2G3QWEI4pUz9tY2fIy0ISkXcdEdXSQAWwbuAU59znXjv78LXBuOlg8EIumyMdSSgQJ6N20jzvo3rUzySrSC9OxQ9Rt6Ha+Uz8E1lf8/D9zYJJZ9HDhKtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XSdkdaAd; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so95889225e9.1;
+        Fri, 23 May 2025 06:16:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748006176; x=1748610976; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=utqnLfDssfwdK24IQm7Ksa5DHrbNYTlQ4HwsK42xQtY=;
+        b=XSdkdaAdXUMv+QQsDxO6zRNoA1iA6Wye/59zlLKVewjEvaz4P3IiOsBHTmWjqLu0H5
+         q75lbvDM5VNCpYagfSEVA7ezl1fSco+QAmF7IyPgLMaLLnDMgRRkIiIOIfw20BWyqi7z
+         4hVTDR3KaPQSnSy9ZJRhDEND/Ttls1bFw6//U/XYh8Jyq0IoZcysjA74VMHg8OANzsBE
+         4mxV35et4Z9tirpB+zEm+hAiJDtMzCtuSv7k8zx2YC1QS7ojnV/z2AKfnnVra5wVcFlp
+         i2IUim2rklTOZTyJCetu7km7kfxy48mkVJJhzeu/4dlO+6Xp3I81W0OTvREIz/ZqA1Vl
+         j/8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748005583; x=1748610383;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1748006176; x=1748610976;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=D2ZwAv3+/k8jq5bB/r8jN+Yh3nUziGncMv3EzvPlvAA=;
-        b=INokR/a19K2aXeR69mamdccdApeSmWLVPjrwERlyCJ2pSaAwGaQcbRPB6vhR1+Sk3D
-         K+w+pGIWjSBTUlrRHQui/t8Ex5VtvbfD8NdVoj+E/Bheb45DfacaPZIYA7E9cyVwTs3l
-         hx94YUXO7XVArEXcgbLP4aR4RCgcuyFd8umdQa1AgeGwtJwICL2KTeJZgitZmzEngbw+
-         hJpOg/tVRz99P/vV24eJSzvz4JwQVjglVwvWsAG6MZZSyk5h9rPjVCTmgsd1mBW5TxRS
-         P9g4TRJcKEqGtneKSWX+TnPy5aGDrNVHorC/xno5kxi6igOuYNyhRiIuCcNt4fhclMlg
-         hHTA==
-X-Forwarded-Encrypted: i=1; AJvYcCUknfL9SL2pJZOLrVtw9+gDMEIdHuYS2awkuQydg7raa0fKy3R9sdX/AEzXDUGIUdbj3J7Tn38IRqo0UnRY@vger.kernel.org
-X-Gm-Message-State: AOJu0YzelpnfnJu5s9Z9kRHzFbQ0mL8Nm1nEs0KD1s4nNQtpLb9vtsxp
-	or1wYuKtVTI106gOtc2KdZtbkpa0JugbAMrGwfQ51k/vykGY1qhepnI/A5a6K27vzJRXO/OQixy
-	HeePw4iZnMGwmyDfvH/ujrxcKSkyoxO+0p0h6fc82NDjjPJjWIg+hKWZ6K1O4Gizbo98b
-X-Gm-Gg: ASbGncuH0H1NDqP89fHCRPW9LLBlUpF+dRZ1uX32s+v460XyxzqpKVfe7owtyfTuyUx
-	+vR+o4HRLxbRcRNRe2qR2GeEpGKCR2gagtjv9zRT2FstWE7CWruGGS/73EdwMI0ONT7pLQtstKg
-	2jl+tCknGx91SlJ0y0TmxhLeHnESUb0oqjH/0UH6Y/XFTbCuSlamPkUYb3DbgKgR0tzec89xw/t
-	w4NSbu1S+Lqem7IEXf/M0jFulk+3vVxU2P00wXJOdPwG4RzqaXrKXfW77L9g1C6eYUo2EiBCbUA
-	1JwnXbwCwt7kIJiwEjuX1szr5FadnWYs6Ml+x2E04/+Xh/j2/v8=
-X-Received: by 2002:a17:90b:1b03:b0:2ff:58e1:2bb4 with SMTP id 98e67ed59e1d1-310e972afd0mr4224635a91.22.1748005583123;
-        Fri, 23 May 2025 06:06:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGdJsIyMKqkXweP/UYp5yhqH8qznBRczsJ+cQdN4PhNXmYJdgeETzFaBLjNJrPAKxxcvN1ZUQ==
-X-Received: by 2002:a17:90b:1b03:b0:2ff:58e1:2bb4 with SMTP id 98e67ed59e1d1-310e972afd0mr4224601a91.22.1748005582662;
-        Fri, 23 May 2025 06:06:22 -0700 (PDT)
-Received: from hu-vkraleti-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-310f1544d30sm816165a91.15.2025.05.23.06.06.18
+        bh=utqnLfDssfwdK24IQm7Ksa5DHrbNYTlQ4HwsK42xQtY=;
+        b=k7Eng1xenBnerZD2JyU1o67CTjrPKTAhhNmt1oqVWkNYmZbD/xhKLG1JFoYm/JLvOY
+         pAvIOhhfXesjW2ndePRl8QgfjpYG2ZQCA6X12PC+ZPpVFdvD2R2bE6CHG/N8GVwqqldw
+         rAMvdHM5KtW6/+qUS1MGLJ2SAQ+p/nktJ959BaITqRpd/l0/0MXNMIPkWt164Lhkkz6n
+         Y5zFSgNNnBlwuHLcCAkZzqCYRj2hZoxqFt/zOmtsQ14ld2gRVy1alG66KFwYXlPKXNKi
+         /JTGfMURgjTUqk4IObITtae1EqMw5j49rY0RFuHpU11PtF5wTD3H0tkyc5H9ZzfZ5hGG
+         xHqg==
+X-Forwarded-Encrypted: i=1; AJvYcCVMojW7yZ9S+IOJ7vSnqJIz/v+JHaxAFRU6kmlKRTqzcqONznV7viJGpbAsMmwniYM+90+lADdn+JrktCntLw==@vger.kernel.org, AJvYcCXYwZrwfizVGsEzTWhGudlXKZKQxpC2yO3a2T+U8d7V16Vf4LebYqoC0DoKAXXv8IeVN0Jy6iU7SaNj@vger.kernel.org, AJvYcCXq+vRNhw/rcX4EqD1t34o00mvf8qByzRmJgdS7pX7ZbyFl2vmGr+LGWyfSkI7MsTf3Otsy+ko5SRduRxoK@vger.kernel.org
+X-Gm-Message-State: AOJu0YzKzGmpHk+UhZWPl8kbKlA8OSrLatw9wSsOyn9d4/uj8QbueDZA
+	5jehLtymN2OErwUo2uYfTTpW5Z3PU7ODKeHQ1Pzcqpta7MQq0tEXk8k=
+X-Gm-Gg: ASbGncs/Em71Bfg8hyZ8w5DPuMJF+mPLhqx6rOGCGMl+PmQ7Gu4lIPY5MRAhRXOPMfH
+	u5ztXXmJx+VIFjKYsVHaL3hVANf8Lr4PQNLhmqtaf7N8mKtDnOmIRuZTzufb1G1Uv6mCfLlb9qF
+	UhZq0puA7Q1NPxOVSIrEOy3Sal/qJU+AMWenf5LrcejazNPFOR+aDSWoPW27RxoZT6mBrl4Ffcm
+	0fzO3xtztd7DgakJ30s1SjZS84A1b1IW14f3zkpY3FIqpR0MiywUN8p/eaPXQ2Wsz+AvLYCWpra
+	YKwxgzJVJlWL1m3kOS6uDEFve3aSgB23jpX4otQTGqePDYskMdDQR3WLl+MYZOhVc6I6PNmA/jx
+	zxqzwHbBE2rJyCuKv
+X-Google-Smtp-Source: AGHT+IG4Az0AhnIzEpthrhva2c1DnQOSAYmSSilx7Ymuwyx3a5QJ/0FhgSunYo0+APRzSkeyCqp34g==
+X-Received: by 2002:a05:600d:19:b0:442:f97f:8174 with SMTP id 5b1f17b1804b1-442fd6313f4mr214830665e9.18.1748006175519;
+        Fri, 23 May 2025 06:16:15 -0700 (PDT)
+Received: from alex-x1.. (mob-194-230-148-12.cgn.sunrise.net. [194.230.148.12])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442eb85a8f8sm189177055e9.0.2025.05.23.06.16.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 May 2025 06:06:22 -0700 (PDT)
-From: Viswanath Kraleti <viswanath.kraleti@oss.qualcomm.com>
-Date: Fri, 23 May 2025 18:36:16 +0530
-Subject: [PATCH] drivers: gpu: drm: msm: registers: improve reproducibility
+        Fri, 23 May 2025 06:16:15 -0700 (PDT)
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Nikita Travkin <nikita@trvn.ru>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	dmitry.baryshkov@oss.qualcomm.com,
+	maud_spierings@hotmail.com
+Subject: [PATCH v5 0/1] X1E Asus Zenbook A14 support
+Date: Fri, 23 May 2025 15:15:07 +0200
+Message-ID: <20250523131605.6624-1-alex.vinarskis@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250523-binrep-v1-1-c3a446518847@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAMdyMGgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDUyNj3aTMvKLUAt00i2QLw7REgxRjwxQloOKCotS0zAqwQdGxtbUAkV5
- 3W1gAAAA=
-X-Change-ID: 20250523-binrep-f8c81fa0d31d
-To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: Ryan Eatmon <reatmon@ti.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org,
-        Bruce Ashfield <bruce.ashfield@gmail.com>,
-        Viswanath Kraleti <viswanath.kraleti@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Authority-Analysis: v=2.4 cv=V9990fni c=1 sm=1 tr=0 ts=683072d0 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=sozttTNsAAAA:8 a=pGLkceISAAAA:8
- a=EUspDBNiAAAA:8 a=k2a8_r_j4jiI5Xvw-VoA:9 a=QEXdDO2ut3YA:10
- a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-ORIG-GUID: lnzdpzJI9s_V5My5m2jMVH-NtK8JxznB
-X-Proofpoint-GUID: lnzdpzJI9s_V5My5m2jMVH-NtK8JxznB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIzMDExNiBTYWx0ZWRfX+A3nlAeloqkk
- uNX0kmoYx1gs3gYF59TYN2SCo5FED/qsSc2fkrZhi0Tb+k7blfMmPJ9ijBxsY2Pup3v78DFniuc
- jzRxo+esMq2C/XVeOHggyvvk1MCn2Q2slsdDfBgkSfc302CQw/EUozCc3rV3IUYhcF5HG61cwfg
- dWgkgKu+3CMDN0dQGUafrqGOtemv3lY4f56WQJ0kSmgOKMjQyDbDBRZufIRhLNoPGvB7Za5lnql
- ybAsakwcXLvv8N1VKFoyX2Ddi+HzrdCIYw2T0+e3vpdlplylUYUP1xD57lY0u8ZbBiV+zSCGyLy
- 2N+LEPBnfCga7DyvI/sh5sgfBiw8/tbZb+4dT55C7tFrsEfjhe6o3riGnSnar4FZjWF6R3EhUrg
- bvnLXuB66O9U8k/lj5c+vTMCoFy/zOgcBNfWPIlGcw7okbgfpHmyVCotxkuQ2JaEwpytbdy7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-23_04,2025-05-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=689 bulkscore=0 impostorscore=0 clxscore=1011 priorityscore=1501
- lowpriorityscore=0 mlxscore=0 spamscore=0 phishscore=0 suspectscore=0
- adultscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505230116
+Content-Transfer-Encoding: 8bit
 
-The files generated by gen_header.py capture the source path to the
-input files and the date.  While that can be informative, it varies
-based on where and when the kernel was built as the full path is
-captured.
-
-Since all of the files that this tool is run on is under the drivers
-directory, this modifies the application to strip all of the path before
-drivers.  Additionally it prints <stripped> instead of the date.
-
-Signed-off-by: Ryan Eatmon <reatmon@ti.com>
-Signed-off-by: Bruce Ashfield <bruce.ashfield@gmail.com>
-Signed-off-by: Viswanath Kraleti <viswanath.kraleti@oss.qualcomm.com>
----
-The files generated by gen_header.py include the source path to the
-input files and the build date. While this information can be useful,
-it inadvertently exposes build system configuration details in the
-binaries. This hinders binary reproducibility, as the output will
-vary if the build environment changes.
----
- drivers/gpu/drm/msm/registers/gen_header.py | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
-index 3926485bb197b0992232447cb71bf1c1ebd0968c..a409404627c7180d5b0626f0ce6255d7d0df5113 100644
---- a/drivers/gpu/drm/msm/registers/gen_header.py
-+++ b/drivers/gpu/drm/msm/registers/gen_header.py
-@@ -11,6 +11,7 @@ import collections
- import argparse
- import time
- import datetime
-+import re
- 
- class Error(Exception):
- 	def __init__(self, message):
-@@ -877,13 +878,14 @@ The rules-ng-ng source files this header was generated from are:
- """)
- 	maxlen = 0
- 	for filepath in p.xml_files:
--		maxlen = max(maxlen, len(filepath))
-+		new_filepath = re.sub("^.+drivers","drivers",filepath)
-+		maxlen = max(maxlen, len(new_filepath))
- 	for filepath in p.xml_files:
--		pad = " " * (maxlen - len(filepath))
-+		pad = " " * (maxlen - len(new_filepath))
- 		filesize = str(os.path.getsize(filepath))
- 		filesize = " " * (7 - len(filesize)) + filesize
- 		filetime = time.ctime(os.path.getmtime(filepath))
--		print("- " + filepath + pad + " (" + filesize + " bytes, from " + filetime + ")")
-+		print("- " + new_filepath + pad + " (" + filesize + " bytes, from <stripped>)")
- 	if p.copyright_year:
- 		current_year = str(datetime.date.today().year)
- 		print()
+As requested, 1/4 was merged to linux-next by USB maintainers.
+Resending 4/4 rebased on top of latest linux-next. 2/4, 3/4 already
+landed.
 
 ---
-base-commit: fc5c669c902c3039aa41731b6c58c0960d0b1bbf
-change-id: 20250523-binrep-f8c81fa0d31d
 
-Best regards,
+Introduce support for the mentioned laptop.
+
+Particular device exists in two model numbers:
+* UX3407QA: X1P-42-100 or X1-26-100 (as tested)
+* UX3407RA: X1E-78-100
+
+Mostly similar to other X1-based laptops. Notable differences are:
+* Wifi/Bluetooth combo being Qualcomm FastConnect 6900 on UX3407QA
+  and Qualcomm FastConnect 7800 on UX3407RA
+* USB Type-C retimers are Parade PS8833, appear to behave identical
+  to Parade PS8830
+* gpio90 is TZ protected
+
+When comparing device firmware between UX3407QA, UX3407RA, it seems
+that only ADSP firmware is different, CDSP and GPU firmware appears to
+be the same. (At least assuming the GPU firmware name in both cases is
+`qcdxkmsuc8380.mbn`). Since at least some blobs are different betweeen
+X1E and X1/X1P, define new firmware directory for `qcom/x1p42100`. This
+also makes it easier for distros to automatically extract firmware from
+Windows and place all blobs for the model under the same path. If/When
+firmware blobs make it to linux-firmware, same blobs can be easily
+symlinked between `qcom/x1e80100` and `qcom/x1p42100`.
+
+NVMe SSD depends on [1]. USB Type-A over USB MP controller  depends on
+[2], or equivalent proposed solution.
+
+Qualcomm FastConnect 6900 on UX3407QA did not work out of the box, and
+additionally required both newer firmware and patches to `board-2.bin`.
+I added a short how-to [3], as it is not exactly trivial.
+
+ACPI dumps can be found on aarch64-laptops' github [4]. HWids on
+dtbloader's github [5].
+
+[1] https://lore.kernel.org/linux-arm-msm/20250319094544.3980357-1-quic_wenbyao@quicinc.com/
+[2] https://lore.kernel.org/all/20250318-xps13-fingerprint-v1-1-fbb02d5a34a7@oss.qualcomm.com/
+[3] https://github.com/alexVinarskis/linux-x1e80100-zenbook-a14?tab=readme-ov-file#wcn688x-wifi
+[4] https://github.com/aarch64-laptops/build/pull/134/files
+[5] https://github.com/TravMurav/dtbloader/pull/4/files
+[6] https://lore.kernel.org/all/20250429-x1e80100-dts-drop-useless-dp-compatible-override-v1-0-058847814d70@linaro.org/
+
+Changes to v4:
+* _Only sending 4/4 as other patches are already applied_
+* Rebase 4/4 on `for-next` of qcom tree, adjust makefile to generate el2 dtbs
+* Picked Konrad's R-by for 4/4
+* Droped 'qcom,x1e80100-dp' as per [6]
+Link to v4: https://lore.kernel.org/all/20250426130203.37659-1-alex.vinarskis@gmail.com/
+
+Changes to v3:
+* Drop redundant comments
+* Drop incomplete wcn7850 as it is causing dt errors
+* Picked a-by
+Link to v3: https://lore.kernel.org/all/20250416232345.5240-1-alex.vinarskis@gmail.com/
+
+Changes to v2:
+* Fix/re-add PS8833 as fallback
+* Add EC's i2c address
+* Add pwrseq for wcn6855, placeholder for wcn7850 until its tested
+* Rename x1-zenbook.dtsi to x1-asus-zenbook.dtsi
+Link to v2: https://lore.kernel.org/all/20250402084646.10098-1-alex.vinarskis@gmail.com/
+
+Changes to v1:
+* Drop PS8833 variant, fallback to PS8830 as they behave the same
+* Drop wrong pcie6a_phy compatible revert
+* Drop redundant comments, fix order of properties in the device-tree
+* Fix device name bindings, express in model names instead of the soc
+* Fix GPU firmware name for UX3407QA
+* Fix model string, enclose variant in parenthesis
+* Added missing new lines before 'status = "okay";'
+* Updated cover letter to reflect some of the above changes
+* Left SPI10 disabled as it is unknown how/what for to use it as of now
+Link to v1: https://lore.kernel.org/all/20250331215720.19692-1-alex.vinarskis@gmail.com/
+
+Aleksandrs Vinarskis (1):
+  arm64: dts: qcom: Add support for X1-based Asus Zenbook A14
+
+ arch/arm64/boot/dts/qcom/Makefile             |    4 +
+ .../boot/dts/qcom/x1-asus-zenbook-a14.dtsi    | 1306 +++++++++++++++++
+ .../dts/qcom/x1e80100-asus-zenbook-a14.dts    |   33 +
+ .../dts/qcom/x1p42100-asus-zenbook-a14.dts    |  137 ++
+ 4 files changed, 1480 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dts
+
 -- 
-Viswanath Kraleti <viswanath.kraleti@oss.qualcomm.com>
+2.45.2
 
 
