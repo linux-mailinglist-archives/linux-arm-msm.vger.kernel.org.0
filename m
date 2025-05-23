@@ -1,239 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-59165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28511AC1A40
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 04:52:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 072C9AC1AEB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 06:21:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 79E7E7BA121
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 02:50:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 009E7A20139
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 May 2025 04:21:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 872952770B;
-	Fri, 23 May 2025 02:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34323215181;
+	Fri, 23 May 2025 04:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iYUFyamI"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fdeJuhA9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD0C625;
-	Fri, 23 May 2025 02:52:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779022DCBF2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 May 2025 04:21:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747968724; cv=none; b=NrABINn2P6E/dBjGxzvshiVWv00Sk/Np48KKXHDpHsG42jNdN+oH/NIamM1VbSG3DRk9WWC+PG0wQh5yvu5xQcw+oZnH9I9fKV2L09iokd8LHKpEFHTRMMYnkKMVZiewmiWhlUvgAAMmPUYiWmKtrfCjfWc9xKklu3nvqNpWY/Q=
+	t=1747974084; cv=none; b=ixj6AAQYVk94nTYA98+NifS7jELiWODoMgt8NsySwP+IOGpildtgvAs2J6TwHs6lxZTLwKWujcrEXl49LEWwRSnkzppvG6/4/sALKgObwdCMix0TUPX+xhlB3lJZnLbxGlEoyp1N1MOSuZwEGaRXN1SdJl2nOw/6B8ARhuqDQMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747968724; c=relaxed/simple;
-	bh=85tposCp5qIjog1xev8yR53k0au9MVEHGTMIGzRIr7Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qAJ+cE8nQsr0vHQV6yX9f3N0tum3W0+YEF17Cwiy1Sx27XmwwoIOnvlLuklw/kjcf9A9MC9XKGUGJFR+nbjQrfW7tH41rJUpuSWaAsbwsxIfVZvIQR1q8QLuWaSyF5PwjBAzBuiMiy63P0jZ0cWRobecvRp4AbH0ZKLeneqo7zA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iYUFyamI; arc=none smtp.client-ip=209.85.166.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-85dac9728cdso282571939f.0;
-        Thu, 22 May 2025 19:52:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747968722; x=1748573522; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xTSB0zI8EV3WEUJwB1OwJBkD3PikZdbJJrajz68TKpU=;
-        b=iYUFyamII8RerW7DT3bq75XcbVu/Yd8caUQIrFXWUB0FdSIO4vUHsC9d6DqyJjUE3F
-         qwmwcKvUADWEuD7zPGJx6kuiTn+dLeMVMR09MM0ueVP7qN7mMI73iOZOtnBmPA+EfHh+
-         Y9R82XnbwvA6X8viEPsv6mhO0aN+uj7UR0BrGph+b6hI0xiKc/HqwHCZ3a3R3EG0wk5N
-         gvEP6nhpJCEWXLLHJghIuNuYTxFgW5Wd+ejFEN1VhrXweN2zhXGrDAx1zmnfhZw5aXzL
-         qQCCpwqslmVuW9krwUImtr4ogJUZEaHDOg5vzEeTOtZeTOgT0ASdmMtQz9IVcDdlYXzD
-         tbbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747968722; x=1748573522;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xTSB0zI8EV3WEUJwB1OwJBkD3PikZdbJJrajz68TKpU=;
-        b=VoyHl2Q9GKuMc6HwQrJ8MgbvgqVmSOhYzComga3KvsKsUBTOY1aYS2TM0C1VPQ+RtD
-         AZnDEsfhGbz2hyCOqHn5bZu19udBU0kMspOT2fDLLCKg4mrPq1oLyN1e58S3FKQ1h5bz
-         hM5BZZyc4cl6wPQvjHnnZDMmQBSJKFkxBvWX8yBW3ij/qiyZduywRFEDSMPee6UbFx6+
-         ff6oUPSxrdg0bSfSCZDvwS0tVJli+mLi50c7oDy+yDBjeuZYYhOjenkOB/IrXehRf3bt
-         mBGE8KtFiMTZt3FrFWepN6w4Hypi4tPjyIeb1F0tZQglIy+EVmAYzLF4zfWClXHcNSn3
-         zsng==
-X-Forwarded-Encrypted: i=1; AJvYcCUBmECB5ZJdZY3xYQoHjBGFwRFQ1I4+uU8IRCn8CyGtRo2vtZxZloJHl1pCfx0+pr0X8mgPKpRejciOm1jx@vger.kernel.org, AJvYcCWcgHcSZ0zDAE87jp926jUhOOk3v80D0o3ZlHPzlOFdFt5m/f60wtGQib0eqbnVc711X+7maYiIAE7rX/m1@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDhU7UUV1cG0wROqVmRruTrTCujRYEf/sXV9MzXu3uxAR4Xh1z
-	iAg3x6g3PJ6urI6H2BN9PEA75v9TJ4iVyiX851wJybBe3tIKcrDuwqgNkCwCYJmtnZaQhRdomHs
-	ng6wY8/ahQRjeRAc85QqCrvSE4xg6EIs=
-X-Gm-Gg: ASbGncuUIwf3aSp0sOlTZHrJq7GJtMqtSgZUajS5SBgZc6MGNtrokBBemN/yrsTKDFm
-	Ja0BCNq0yqCysWDPY5Neb8Sj1EFiKG7X3jPgFPhEV9DoLIdE7GIyxycvEFJeDOr88sQrhaSTtdI
-	90fggM/CXFrgnYEP8bjvWC8PhbFz+2M4zAWKANYptATiXpDlbfNH+cNCBXvUgJ3F69
-X-Google-Smtp-Source: AGHT+IGekz0rAdSPy6Esyn61QabmWg59bnZX7oGPMZFq1CRW47PXVM8Ji2t7L5VbUHV5PXKnuAfwbKUUuHc/BlAt9Z0=
-X-Received: by 2002:a05:6602:6cc6:b0:861:7237:9021 with SMTP id
- ca18e2360f4ac-86caf0c1576mr176258739f.3.1747968721680; Thu, 22 May 2025
- 19:52:01 -0700 (PDT)
+	s=arc-20240116; t=1747974084; c=relaxed/simple;
+	bh=MGQ00cy3Ngi2Qc87ZXvtR2LngFPvNldBHOsKYMKPbI0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Dd1fZAPfQ8CXWn3k1q2DpjuTSfj/7k+qNsRfW1KQ1/sY6EtJCW817t+Td+TPtuOXYq9NmjuLhEKnIAhNclbnJh6ObQbBwrFdamCSDdGiEwdK9hnPByg96G0TCQAXaYM18KFwLgqdRw631rb2rI/epotwjHwpy2KwOSzm17Z9sug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fdeJuhA9; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54MGFAde016644;
+	Fri, 23 May 2025 04:21:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	IauCdNUbFTJc8v7kRKz4VkznfBabcu8n5DA9zQwh5jc=; b=fdeJuhA9R6/GwzDB
+	difn2tOyhDe+6g/VvPgMKnzIwSOPZZ8nA1ShvDf1Z6uJGV5yeq1WqeTRc2Q27nCH
+	gAqr2XHoGEnW23AeV6WFxH4EwuiZRLjHXUFzjIrA9zyQSSJjHuuUD4zIxZgmZ1Is
+	hgB71XIhK4hycQ1oJOaLyZ2Yb09OKfGXa+h/KngOBJBhTt2Ewj0qC9nuJT+OvofL
+	UoYZ8v4uD9YN0vTpYLn7v08c6wHBBCEfH4CICenh3RFj69L5RgQuSadMu5ilZyPd
+	+FzRzdUVqqLfFVoyf8qj7ZEyCbbFN62UEDvUC+mIoY+ERUW6sm01rvzHFG11cjIJ
+	Uvta4Q==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46rwfa0hxk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 23 May 2025 04:21:02 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54N4L1NM008181
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 23 May 2025 04:21:01 GMT
+Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 22 May
+ 2025 21:21:00 -0700
+Message-ID: <293d4298-7eb7-4e49-9334-f6024199ca7b@quicinc.com>
+Date: Thu, 22 May 2025 21:21:00 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250514175527.42488-1-robdclark@gmail.com> <20250514175527.42488-2-robdclark@gmail.com>
- <aCWrwz2IF6VBUi4e@pollux> <aCWueFzx2QzF7LVg@pollux> <CAF6AEGu9MPxKnkHo45gSRxaCP+CTzqsKZjiLuy4Ne4GbrsStGA@mail.gmail.com>
- <aCYqlvp_T77LyuMa@pollux> <CAF6AEGsOTNedZhuBzipSQgNpG0SyVObaeq+g5U1hGUFfRYjw8w@mail.gmail.com>
- <aCb-72KH-NrzvGXy@pollux> <CAF6AEGu=KzCnkxuUsYvCHBGwo-e2W16u_cRT1NFAXLphty1_ig@mail.gmail.com>
- <CAPM=9tzcvDVDOM88O8oqDHURR1nbR7KsFStavNnT1CN6C6kGgg@mail.gmail.com>
- <CAF6AEGuv3GXTBcU99sBjAa5gPOSNoxwY+eiPy=Q--cLYHVn+cw@mail.gmail.com> <CAPM=9tykCXSKOH0BcMkNLKyCWfEN-kCjs0U7UA+C1pPqFr1jLA@mail.gmail.com>
-In-Reply-To: <CAPM=9tykCXSKOH0BcMkNLKyCWfEN-kCjs0U7UA+C1pPqFr1jLA@mail.gmail.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Thu, 22 May 2025 19:51:50 -0700
-X-Gm-Features: AX0GCFv84KCQV61BbxGSWUJ9Yyr5yOTqzENnybuQuOJ009enSSfsiTbWai8yKfg
-Message-ID: <CAF6AEGuK+X4Q=Z-anjQuUBi952eYSs3u9HxVz0GSQM8fokdiiw@mail.gmail.com>
-Subject: Re: [PATCH v4 01/40] drm/gpuvm: Don't require obj lock in destructor path
-To: Dave Airlie <airlied@gmail.com>
-Cc: Danilo Krummrich <dakr@kernel.org>, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Simona Vetter <simona@ffwll.ch>, 
-	open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] drm/msm/dp: remove redundant ST_DISPLAY_OFF checks in
+ msm_dp_bridge_atomic_enable()
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Marijn
+ Suijten" <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        "Stephen Boyd" <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        "Johan Hovold" <johan@kernel.org>,
+        Bjorn Andersson
+	<quic_bjorande@quicinc.com>
+References: <20241202-hpd_display_off-v1-0-8d0551847753@quicinc.com>
+ <20241202-hpd_display_off-v1-2-8d0551847753@quicinc.com>
+ <f6oh3kid5dfiqe7jy7j3d4gcv4evbtztzpgiygvzfsu6qlim2j@2vsulwcau6tr>
+ <58d28874-0fcc-42f4-831d-1f304f7d9d4f@quicinc.com>
+ <orsov5jni37n7m3xm4qdiurnfzdubxy45itmrb5gwi243l2l5t@vz623b5c35n5>
+ <ldcydwcuwkwwng4d3b47pjz3ndhuhwerz6t3drwmifdzh7g3nl@3y6es72w74d7>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <ldcydwcuwkwwng4d3b47pjz3ndhuhwerz6t3drwmifdzh7g3nl@3y6es72w74d7>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=V9990fni c=1 sm=1 tr=0 ts=682ff7ae cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
+ a=11gi3WOw1yIBWezIQNUA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 8RclrfvDXoSJL3krLhWXTLVLNiAmgw0v
+X-Proofpoint-GUID: 8RclrfvDXoSJL3krLhWXTLVLNiAmgw0v
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTIzMDAzNiBTYWx0ZWRfXyWYVY9zyLrcZ
+ F91BO2s8TUrh+s1HWTHsVTsjYF8Adnn2GaMaCK0MppcE5AsR+CopggM2Eom4OrGoX1tiMLC3xuu
+ DeIYJj/1VlblOIpCLmfiU40K2voQEOrhLdQ43tdhPZawoQSI31K9xPE2L+eGLBbpvsYAnYXj08a
+ p51mghdtfvMR7K61uWcNspEgbyD4b8tIBbWIUYo7XlJJEBepwt1lpWi1gp2MTGLbXebrIgQBBbf
+ 6jaZQI90BC9w5O6aOXLTEcqowXjcXgINqJYx5upgRrjExsOoCU/S0+QQ05niDwkJFtvwKWYxk9g
+ pXIYgb5lUksFcynnQkFCvHZz++3jRvyJagykFC3r43vFWyA9S3UqGKzhgmcgomtohzx33e3n6ff
+ b89Kc1ef98wZiICRw0vawYMvqNr+KXWCOw2NptmMCUcMO+Y12zSfhop1uRG8E0Q/JKTATGUD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-23_02,2025-05-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 bulkscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 mlxscore=0 spamscore=0 phishscore=0 suspectscore=0
+ adultscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505230036
 
-On Tue, May 20, 2025 at 3:31=E2=80=AFPM Dave Airlie <airlied@gmail.com> wro=
-te:
->
-> On Wed, 21 May 2025 at 07:53, Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Tue, May 20, 2025 at 2:25=E2=80=AFPM Dave Airlie <airlied@gmail.com>=
- wrote:
-> > >
-> > > On Sat, 17 May 2025 at 02:20, Rob Clark <robdclark@gmail.com> wrote:
-> > > >
-> > > > On Fri, May 16, 2025 at 2:01=E2=80=AFAM Danilo Krummrich <dakr@kern=
-el.org> wrote:
-> > > > >
-> > > > > On Thu, May 15, 2025 at 02:57:46PM -0700, Rob Clark wrote:
-> > > > > > On Thu, May 15, 2025 at 10:55=E2=80=AFAM Danilo Krummrich <dakr=
-@kernel.org> wrote:
-> > > > > > > Anyways, I don't agree with that. Even if you can tweak your =
-driver to not run
-> > > > > > > into trouble with this, we can't introduce a mode that violat=
-es GOUVM's internal
-> > > > > > > lifetimes and subsequently fix it up with WARN_ON() or BUG_ON=
-().
-> > > > > > >
-> > > > > > > I still don't see a real technical reason why msm can't be re=
-worked to follow
-> > > > > > > those lifetime rules.
-> > > > > >
-> > > > > > The basic issue is that (a) it would be really awkward to have =
-two
-> > > > > > side-by-side VM/VMA management/tracking systems.  But in legacy=
- mode,
-> > > > > > we have the opposite direction of reference holding.  (But at t=
-he same
-> > > > > > time, don't need/use most of the features of gpuvm.)
-> > > > >
-> > > > > Ok, let's try to move this forward; I see three options (in order=
- of descending
-> > > > > preference):
-> > > > >
-> > > > >   1) Rework the legacy code to properly work with GPUVM.
-> > > > >   2) Don't use GPUVM for the legacy mode.
-> > > > >   .
-> > > > >   .
-> > > > >   .
-> > > > >   3) Get an ACK from Dave / Sima to implement those workarounds f=
-or MSM in
-> > > > >      GPUVM.
-> > > > >
-> > > > > If you go for 3), the code introduced by those two patches should=
- be guarded
-> > > > > with a flag that makes it very clear that this is a workaround sp=
-ecifically
-> > > > > for MSM legacy mode and does not give any guarantees in terms of =
-correctness
-> > > > > regarding lifetimes etc., e.g. DRM_GPUVM_MSM_LEGACY_QUIRK.
-> > > >
-> > > > I'm not even sure how #2 would work, other than just copy/pasta all=
- of
-> > > > drm_gpuvm into msm, which doesn't really seem great.
-> > > >
-> > > > As for #1, even if I could get it to work, it would still be a lot
-> > > > more mmu map/unmap (like on every pageflip, vs the current state th=
-at
-> > > > the vma is kept around until the object is freed).  For the
-> > > > non-VM_BIND world, there are advantages to the BO holding the ref t=
-o
-> > > > the VMA, rather than the other way around.  Even at just a modest
-> > > > single layer 1080p the map takes ~.2ms and unmap ~.3ms (plus the un=
-map
-> > > > costs a tlbinv).  So from that standpoint, #3 is the superior optio=
-n.
-> > > >
-> > >
-> > > Before we get to #3, I'll need a bit more info here on why you have t=
-o
-> > > map/unmap the VMA on every pageflip.
-> >
-> > Previously we'd keep the VMA hanging around until the GEM obj is
-> > freed.  But that can't work if the VMA (via the VM_BO) is holding a
-> > reference to the GEM obj.
-> >
-> > I was kinda thinking about keeping the VMA around until the handle is
-> > closed.. but that doesn't cover the dma-buf case (ie. when you
-> > re-import the dma-buf fd each frame.. I know android does this, unsure
-> > about other wsi's).
-> >
-> > > But actually I think 2 is the best option, I think in nouveau this is
-> > > where we ended up, we didn't modify the old submission paths at all
-> > > and kept the old bo/vm lifetimes.
-> > >
-> > > We just added completely new bind/exec ioctls and you can only use on=
-e
-> > > method once you've opened an fd.
-> >
-> > hmm, but that means tracking VMAs against a single BO differently..
-> > which.. at least seems ugly..
->
-> I don't think it is if you already have the code to do that, and just
-> add gpuvm support in parallel.
->
-> You also have to figure out that the world is moving towards Vulkan
-> for everything so any optimisations you've made for particular legacy
-> paths will need to be dealt with in the future picture anyways.
->
-> But I'd rather not hack gpuvm into being something it isn't, if there
-> is a meaningful commonality in legacy bo/vm bindings across drivers,
-> we could create something new, but the ref counting and handling is
-> pretty fundamental to gpuvm architecture.
->
-> There should only be two paths, legacy and gpuvm, and you shouldn't
-> ever be mixing them on a particular exec path, since you should only
-> have a vm per userspace fd, and can pick which way to use it the first
-> time someone calls it.
 
-It's not as much about the exec path, as it is about making all the
-non-exec paths (like shrinker/residency) have to deal with two
-completely different things..
 
-But I think I have figured out something workable.  I add an extra
-refcnt per BO for the vma, incremented by userspace holding a gem
-handle, userspace holding a dma-buf fd, or (ofc) actual pin for
-scanout.  When the refcount is above zero I defer teardown in the
-kms->vm until it drops to zero.  It isn't _exactly_ the same as lazy
-VMA teardown when the BO is freed, but it is effectively the same
-thing.  And whenever the vma_ref is greater than zero, the BO has
-something else holding a ref so the ref loop doesn't matter.  If there
-is no userspace process holding a reference to the BO via handle or
-dma-buf fd, then it isn't going to be used again in a swapchain, so
-the difference btwn tearing down the VMA when the vma_ref drops to
-zero vs when the BO is freed doesn't amount to anything.
+On 12/23/2024 10:32 PM, Dmitry Baryshkov wrote:
+> On Wed, Dec 04, 2024 at 12:32:55PM +0200, Dmitry Baryshkov wrote:
+>> On Tue, Dec 03, 2024 at 07:24:46PM -0800, Abhinav Kumar wrote:
+>>>
+>>>
+>>> On 12/3/2024 5:53 AM, Dmitry Baryshkov wrote:
+>>>> On Mon, Dec 02, 2024 at 04:39:01PM -0800, Abhinav Kumar wrote:
+>>>>> The checks in msm_dp_display_prepare() for making sure that we are in
+>>>>> ST_DISPLAY_OFF OR ST_MAINLINK_READY seem redundant.
+>>>>>
+>>>>> DRM fwk shall not issue any commits if state is not ST_MAINLINK_READY as
+>>>>> msm_dp's atomic_check callback returns a failure if state is not ST_MAINLINK_READY.
+>>>>
+>>>> Can the state change between atomic_check() and atomic_commit()?
+>>>>
+>>>
+>>> Good question.
+>>>
+>>> I cannot deny that such a possibility does exist.
+>>>
+>>>  From what I can see in the state machine today, the only possibility I can
+>>> think of here is if a user very quickly removes the cable as soon as they
+>>> connect the cable like so fast that the connect was not yet processed before
+>>> disconnect.
+>>
+>> If the cable has electrical issues, it is possible even w/o user
+>> intervention.
+> 
+> And the possible desynchronisation between DRM atomic states and HPD
+> state machine brings back the topic: can we get rid of the state
+> machine instead of trying to fix it? I'd rather see a patchset that
+> removes it completely. The link training should go to the atomic_enable,
+> etc, etc. Please? Pretty please? I'd rather see imperfect solution which
+> has possible issues with some of the dongles (as they can be fixed later
+> on) than having the imperfect HPD state machine which is known to break
+> DRM framework expectations.
+> 
 
-It's a bit weird adding some extra mechanism specifically for the
-scanout vm, and maybe a bit uglier (depending on eye-of-beholder) than
-making gpuvm work in either way (since the latter was a pretty
-straightforward patch), but less ugly than having to parallel
-mechanisms.  So if you _really_ don't like the WEAK_REF flag, I have a
-workable alternative that addresses the performance problems.
+Sorry for the delayed response.
 
-BR,
--R
+The activity to move the link training to atomic_enable and to get rid 
+of the state machine has started.
+
+But, it is being done on top of this change only because this series 
+actually gets rid of some states.
+
+I will address the remaining comment on this and repost the next 
+revision. I would suggest that if the state machine removal happens 
+smooth, we can squash this series that with that one and post it 
+together again and merge them together.
+
+But if it takes longer than expected,  I think we should be open to 
+merging this one and MST (with the comments addressed ofcourse) and the 
+state machine removal goes on top.
+
+Either way, this series is only helping the cause of getting rid of some 
+of the states.
+
+Thanks
+
+Abhinav
+>>
+>>>
+>>> Similarly, if an irq_hpd fires after atomic_check but before
+>>> atomic_enable(), and moreover if we hit the sink_count == 0 case in
+>>> msm_dp_display_handle_port_status_changed() during this irq_hpd,
+>>>
+>>> In both these cases, then we will transition to ST_DISCONNECT_PENDING state.
+>>>
+>>> Without this change, we would have bailed out in the ST_DISCONNECT_PENDING
+>>> case.
+>>>
+>>> But other than this, I cannot atleast think of a case where a different
+>>> state transition can happen between atomic_check() and atomic_commit()
+>>> because for other transitions, I think we should be still okay.
+>>>
+>>> But this is purely based on theoretical observation and hypothesis.
+>>>
+>>> Is it better to add a check to bail out in the DISCONNECT_PENDING case?
+>>
+>> I think so, please.
+>>
+>>>
+>>> OR document this as "To-do: Need to bail out if DISCONNECT_PENDING" because
+>>> even if I add this check, I dont know if can make sure this can be validated
+>>> as the check could never hit.
+>>>
+>>>
+>>>>>
+>>>>> For the ST_DISPLAY_OFF check, its mainly to guard against a scenario that
+>>>>> there is an atomic_enable() without a prior atomic_disable() which once again
+>>>>> should not really happen.
+>>>>>
+>>>>> To simplify the code, get rid of these checks.
+>>>>>
+>>>>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>>>> ---
+>>>>>    drivers/gpu/drm/msm/dp/dp_display.c | 6 ------
+>>>>>    1 file changed, 6 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>>>>> index 992184cc17e4..614fff09e5f2 100644
+>>>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>>>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>>>>> @@ -1513,12 +1513,6 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+>>>>>    		return;
+>>>>>    	}
+>>>>> -	state = msm_dp_display->hpd_state;
+>>>>> -	if (state != ST_DISPLAY_OFF && state != ST_MAINLINK_READY) {
+>>>>> -		mutex_unlock(&msm_dp_display->event_mutex);
+>>>>> -		return;
+>>>>> -	}
+>>>>> -
+>>>>>    	rc = msm_dp_display_set_mode(dp, &msm_dp_display->msm_dp_mode);
+>>>>>    	if (rc) {
+>>>>>    		DRM_ERROR("Failed to perform a mode set, rc=%d\n", rc);
+>>>>>
+>>>>> -- 
+>>>>> 2.34.1
+>>>>>
+>>>>
+>>
+>> -- 
+>> With best wishes
+>> Dmitry
+> 
+
 
