@@ -1,169 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-59282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F228AC2EC8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 May 2025 12:11:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AD35AC2ED4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 May 2025 12:18:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DCB2A1881CE0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 May 2025 10:12:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8CFF7189DF1A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 May 2025 10:18:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E271C18DF80;
-	Sat, 24 May 2025 10:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2985C1A2622;
+	Sat, 24 May 2025 10:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jopsFuCM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lZ6EYmOf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5F912CD96
-	for <linux-arm-msm@vger.kernel.org>; Sat, 24 May 2025 10:11:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB9C4A1D;
+	Sat, 24 May 2025 10:18:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748081504; cv=none; b=uyg0XmBavu+LzkxvnK6S4dM8G343DGDjqwqIiUGIhYIo6DCin9FPk/BpykVZztjwQxgib7LcbaX0WDkR54KMnq3iww51x74HBujlnwLzi16bQP+RJCsa5n1nUtIkevd9YF8q4bXXAUVs9wf0c8JFcQL9W9aN5V5Lc/GsDnWvS28=
+	t=1748081903; cv=none; b=KkVcdMQNPFd1Raljbaf+nTMZRPApGlSQKw9A92EskO5pXXhKotHg75SUVR3hoGX176GaYKfpoCcCmsvua+31zwruemvZGC9D+Wn/5SjZDit04CcmR7Zi2/MNniH4h/JnROGlkcV/EUQiUNy3oW8iICHDoMuxEQ2Unc4oSN1JUko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748081504; c=relaxed/simple;
-	bh=yi0nJZG9HpJprpjPC17cymVzwqzBeojV3kBquhceHpU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EpvXRkn+63UPFUdz5WS5qHEGbwnuy+fNA79qkfGfWsWQ9ITEdwFvtiKT4dd/mv/UkeQ7/meUH8Dtt6tzd+zv6qRbBPw8VHnfkdFCxKgnil4hFOvqNCljdUNSFCyE6v+K4EZTZYLARWGALu/EvwUFZQtSnC7IWLpPKIif8/5DPts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jopsFuCM; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54O9nisI000895
-	for <linux-arm-msm@vger.kernel.org>; Sat, 24 May 2025 10:11:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=Q5Ywd8CbRuq6nVjt49lYrhT3
-	U7K9EU94H7oOTbzR8PI=; b=jopsFuCM3uH7xTo+LmcRutvUrKk8LvTQ4RzCmBBT
-	Wz5jsSkBvvtseKSNOO6c0U9M6h4usQhgyFrm/nO1UGodVGOJewNzKra9ndhGIno5
-	CAffzgMWOo/aAFroUIbYMUgMbmHcekJ5RpylhFA+6h52rRgTDlK8mCzQwYJeuNOo
-	++Jo+R/Tl4eh+ypL45h/NOnWao13fq+N4phxwPUHWCTDqLOyf9gd6Lv76aHiSNkr
-	/1TLAuvwwNh102RQmDTPq0zmK0Vg/dSLSipkZYZqdBmEtePHcxIVqrwnsfIE0mBX
-	VCikBpu61ee2fhcSgW0Yl2xdirPWfnAUQm/KMw35xwgpXw==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u6b5gft7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 24 May 2025 10:11:42 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6f8e1d900e5so13055716d6.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 May 2025 03:11:42 -0700 (PDT)
+	s=arc-20240116; t=1748081903; c=relaxed/simple;
+	bh=fegzFpIcG+9An2adNTrrMdYqP95RFa3AIn0vE9liKsk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YKYdkASohZv81X73jXTTt69Dlwvf7/PR1XhKfNkXdsrEwI7RW9PYR3YVA3hWNT99LdeXS9+DTGP+B/8Eo3HadvHib78dIYW+Lm2FU++x3Ho+uMDR94BQ/JLx12i6apO8K14EuzgVXw+eqJWuLMOZz38eHumnU98TAXE+iye/FQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lZ6EYmOf; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-ad564b7aea9so329512466b.1;
+        Sat, 24 May 2025 03:18:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748081895; x=1748686695; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0Dzb3JHRMdpmADz7F31upHZIM2rweK1WRKvLmimqyeU=;
+        b=lZ6EYmOf2P7JnOJTN5us+pZ+W3lvBXwHOBjzcDgz0SI/vAPyH32zdJU1qbRSfo02sc
+         019j2AT3kOpEofkEwk4Lk6naYbhn93u9+sHliU/iXfyhW+FfGrQe3hfy+FdbqGl4Vpzy
+         n0c18bOaezWLprZ/N5cTuwpFweAhG4Fhs/KalScCkrQ5y4RqQZZVN8k/0ddnwX9nIYcf
+         wV5euxsi6OQzpdSMugWllnlmJHq8M4ngmgZshiUbiqSojMPnNM7NgNSw3sFz2KwBCGYL
+         hkEpaenvH/hGo751PR1IETMGMM16TELE6G5WcD1guUcbIvAWvNvdwfK9HT6Ck49V7tw1
+         x1nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748081501; x=1748686301;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Q5Ywd8CbRuq6nVjt49lYrhT3U7K9EU94H7oOTbzR8PI=;
-        b=as21yFfY4Fa57WeXjCSgV5jkyUHUd8mLi3fl2sGNxvQWmgtxJfOUqKnAmObJ7VpMC2
-         NOIKExEKWwvUPDI9sVAVY524+zkXURj9H4u+XUPsLs30AN83hhwyZkzeci0GTbMlVMrY
-         8oaJbwrNgK9HAV3uHhUwHv9oSFr+0ReI5v+qYWDIU3z0RQ8WuIzYhT/WZxkQu34rRgGd
-         vPyOiz4cAE3lo3pFyjTZB3f2u/KqrnMznqWB2EDVK/y2wyvScQq4qw/hbKt18hGajkE3
-         sWnkU+TO9XmV8MvVRc3Fk2vRBr+/G5xM2oNBR/9cyiI/QM7xRP+4BL3XEZDDL8okYe+0
-         9NgQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWLWQcjXbn068mZ9RiRLFeOKyaTSWsvoChNltALNHV6OzHFr7IFULgv44ny68xsio7cg0bYd7rZCiqnkqWU@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDY87qRD66N3vIzOvLXjOxHBiIQJ+w+kaNDvLP1cIZRkNR758g
-	+eBD35vVU6JcIIYP4tyg7nDfbm+dtd4Im1Hlykl9kG5M/9jDUeT9W7McULuaOoChy2ksC9nz+AD
-	8RAroDJLpSMh0vO1piuKCuLEflZtb3B4YzJbZysxzZszKOr2UM4S0yf7W3dNulH0QFthw
-X-Gm-Gg: ASbGnctVtYgGPspG4B+Ha7VH80YbtAlZBpQ7QdG70p0y3EedQE9yCauG0CK2/kmlrSp
-	4FHoSBGVtya9sk5736mQ1dYAG/SXkkjNjsEbFK3O+bU6pZpPpi9it/CRlaP3h9fC7LzDAJt5+/s
-	OLGfSCtIumLS+PugjCW1hjoRpAjiogXgu0RxtR0UZrPoO1lKDdfquykmj5YvnPNZHyuK8igwQVJ
-	LUnXIq5RXD3lljDXX4b50wf8SA3J3HQWwAfpHxck6NqNE5CM6T6OfDxKBelBPxF6cpn4l8SKARg
-	iIpolg8I9wqT6gvXSoNCfZLaFzgMYSN2cwOsLHqBKGmS140/gb3n219JT5WmGBWdmI3ervKE6CU
-	=
-X-Received: by 2002:a05:6214:240f:b0:6f8:c284:45c5 with SMTP id 6a1803df08f44-6fa9cfea4dcmr46563596d6.4.1748081501048;
-        Sat, 24 May 2025 03:11:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG3xlcfUJq8nA48ODJlNUBRaEf9+7/QJQDSqq3iA7gxZrJiVGayzAZZZ+Q6hrv/sh+JeoK21g==
-X-Received: by 2002:a05:6214:240f:b0:6f8:c284:45c5 with SMTP id 6a1803df08f44-6fa9cfea4dcmr46563106d6.4.1748081500681;
-        Sat, 24 May 2025 03:11:40 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-328084c8c78sm39724731fa.36.2025.05.24.03.11.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 May 2025 03:11:39 -0700 (PDT)
-Date: Sat, 24 May 2025 13:11:37 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: jens.glathe@oldschoolsolutions.biz
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>,
-        Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
-        linux-usb@vger.kernel.org, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH v3 5/6] arm64: dts: qcom: x1p42100: Add Lenovo ThinkBook
- 16 G7 QOY
-Message-ID: <6iuro54yed6tqfej6l2l2ky7dletbs73nwjnfufbuulkw3kl46@okoj2v3wvck3>
-References: <20250524-tb16-dt-v3-0-17e26d935e73@oldschoolsolutions.biz>
- <20250524-tb16-dt-v3-5-17e26d935e73@oldschoolsolutions.biz>
+        d=1e100.net; s=20230601; t=1748081895; x=1748686695;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0Dzb3JHRMdpmADz7F31upHZIM2rweK1WRKvLmimqyeU=;
+        b=vr1fj7liPes5tLfHRPhmmWtoy6dJc2FKZ6ectS2+Lzhjw0U2sGtYamSg591n3qLSsd
+         MnMpRXnWBKoEqSWM5VMRMgHo9RhNsduBumewNCFkq4jmk0YveuCAEDeLrBjYOZaaEyLT
+         4ppDusLoJw6K21FbjRwGDmIcaHrY/g67PA7qZ7PTPlaoQriEEsr5zNrF1o53QIVGl3cm
+         Vik+W/pK6BeA7sQaj98O4jxzTEWXuiiDftPhfpifgNmE1vW2D99S8e3V9k6urlbZGleu
+         Bdb5mgjbMlXSLuNAOZrFOfolT3lm2tzvApnCRGv5pVXUSF4NfLQrrqjxkMg3UE936YK/
+         7OUw==
+X-Forwarded-Encrypted: i=1; AJvYcCU2yG03Z47Wd5ZbQt7zNnBXRE9H1GGdMgSXGExAPUS+bK5Hx4rHqgyp6xrQC2euqtHwaURHr3u3FuF7NSmb@vger.kernel.org, AJvYcCX7dq8UxxZURYvHIcHjs7dJCEk8WDL5lGVZAdfxzkumEjcH4w7lo0lyc1DHESc/qBb/NF+AwGXQKMYVmSdQ@vger.kernel.org, AJvYcCXr7EXHLw4FbIJzb64/WrwpAHB13gUjVsddFXOdiDP7H89cpb6R5+WDRh5pYC9C9SCJo32NguhXO3Xz@vger.kernel.org
+X-Gm-Message-State: AOJu0YxpbwoVtN33fEbALPI3DTEapItQsBbt8TmNnR6+BoCYP47+qTwK
+	CaUpjgmICTUgjp0ph3dPUNmHO25kSr3YcEIZ28kkC01gnBEoSGrbyNId
+X-Gm-Gg: ASbGncuOaLnSwoPs1FGT6OLCz704hJV7Dsme69gbFDbtaXTDN+9+Fmrl3u5e/D6OjD3
+	z77xDeCLLDpaZGNzTj/Epm2bPCTaSQ9WnpD+1t1+EDx7ifL8QHEFwDSjdTQ6pT+NTk8gMr9VWm3
+	eLxkHhKpZq3ke7OG6F9ucigAKlGa97RWS13+j3mjUfAs5BFby57AmDvpNCWLh+JfB2cCbinXvnb
+	D0Pvn3/nftjBO/PN73X+bVUKWesVYBkH+tS2WTg1RBUUs9zXHOKRMw3oRB+mvhY0/guZHdYzrMe
+	0tmldA6k4g8oBqmb/BIKQN7LNNcTNrowqeBped6YDuC4KGRUSIErQ0kZcwqXp9kqjdUubU7r14g
+	jVUz11pURGwWZuYam
+X-Google-Smtp-Source: AGHT+IFNHwWIR8ptD43relRI1YmiVXvEBMPrnqyp9HLfaqyNlLeVc/aY4bDgRLRWImxYbuqH3dc5OA==
+X-Received: by 2002:a17:907:1b21:b0:ad5:7649:b3f5 with SMTP id a640c23a62f3a-ad63f98066bmr615214766b.3.1748081895304;
+        Sat, 24 May 2025 03:18:15 -0700 (PDT)
+Received: from [192.168.3.32] (cpe-188-129-45-176.dynamic.amis.hr. [188.129.45.176])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d06dcafsm1402536966b.54.2025.05.24.03.18.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 24 May 2025 03:18:14 -0700 (PDT)
+Message-ID: <35ec4b1e-9502-4d4f-96cd-531c176dc82d@gmail.com>
+Date: Sat, 24 May 2025 12:18:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250524-tb16-dt-v3-5-17e26d935e73@oldschoolsolutions.biz>
-X-Authority-Analysis: v=2.4 cv=ZcodNtVA c=1 sm=1 tr=0 ts=68319b5e cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=dt9VzEwgFbYA:10 a=gxl3bz0cAAAA:8 a=cusL2G7gvvxGUya2EAQA:9 a=CjuIK1q_8ugA:10
- a=iYH6xdkBrDN1Jqds4HTS:22 a=kiRiLd-pWN9FGgpmzFdl:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI0MDA5MiBTYWx0ZWRfXyLQkHOdt7j7H
- zOGOD3tXfOUxbr06wz8qy245ZcQ4VGnEOimp+LeEvoWNBQAa4/d+PnrIhlZU1VeGas9toYsUyLt
- b1tQBcLc7PlDmgwfnIGj1uDpkHcRouc7LdFsAQ16El7myEi+E+s0kzmijCAbKjAzaWfPkKeTO0n
- fI7o4+DF/DUTIhlPZfRd1PWL/m24AHt5yWAp1N/diztrqdnSXQQh6rBa+IFq2JeXNQnvbyJQ0sr
- SOVL2lxHZmaZm3VhIO7+OjcMizji38FQh8CtM0aDk40ZEK5vP9B/VN/C3Cy6kIPfusP49gekX73
- bhYwSbG7bRUVKe9+vm/OtTTkAa0Q/r7DFCOZXdpNy1hskWXeUiFiIlXj//1aKnKOJyjTSHoHahW
- G85Ga0dQpfNop/RItDVm+XA5ie8zQIhtc24YTTvhpCvMr5B3aN0jGwB0H0QtWFbLWFELP95P
-X-Proofpoint-GUID: DwJupni2P1gAsdoumPoI9q72c5Z7nQQk
-X-Proofpoint-ORIG-GUID: DwJupni2P1gAsdoumPoI9q72c5Z7nQQk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-24_05,2025-05-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 mlxlogscore=812 bulkscore=0 priorityscore=1501
- spamscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0 phishscore=0
- impostorscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505240092
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: gcc-ipq8074: fix broken freq table for
+ nss_port6_tx_clk_src
+To: Christian Marangi <ansuelsmth@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: stable@vger.kernel.org
+References: <20250522202600.4028-1-ansuelsmth@gmail.com>
+Content-Language: en-US
+From: Robert Marko <robimarko@gmail.com>
+In-Reply-To: <20250522202600.4028-1-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, May 24, 2025 at 11:19:12AM +0200, Jens Glathe via B4 Relay wrote:
-> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> 
-> The Thinkbook 16 appears to be an X1 / X1 Plus only design.
-> Add make targets for normal and -el2 variant.
-> 
-> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+
+On 22. 05. 2025. 22:25, Christian Marangi wrote:
+> With the conversion done by commit e88f03230dc0 ("clk: qcom: gcc-ipq8074:
+> rework nss_port5/6 clock to multiple conf") a Copy-Paste error was made
+> for the nss_port6_tx_clk_src frequency table.
+>
+> This was caused by the wrong setting of the parent in
+> ftbl_nss_port6_tx_clk_src that was wrongly set to P_UNIPHY1_RX instead
+> of P_UNIPHY2_TX.
+>
+> This cause the UNIPHY2 port to malfunction when it needs to be scaled to
+> higher clock. The malfunction was observed with the example scenario
+> with an Aquantia 10G PHY connected and a speed higher than 1G (example
+> 2.5G)
+>
+> Fix the broken frequency table to restore original functionality.
+>
+> Cc: stable@vger.kernel.org
+> Fixes: e88f03230dc0 ("clk: qcom: gcc-ipq8074: rework nss_port5/6 clock to multiple conf")
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+
+Tested-by: Robert Marko <robimarko@gmail.com>
+
 > ---
->  arch/arm64/boot/dts/qcom/Makefile | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 669b888b27a1daa93ac15f47e8b9a302bb0922c2..aff4fe3e81ec0d6f6d52e2aa0da327b7576632d8 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -327,3 +327,6 @@ x1e80100-qcp-el2-dtbs	:= x1e80100-qcp.dtb x1-el2.dtbo
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-qcp.dtb x1e80100-qcp-el2.dtb
->  x1p42100-crd-el2-dtbs	:= x1p42100-crd.dtb x1-el2.dtbo
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-crd.dtb x1p42100-crd-el2.dtb
-> +x1p42100-lenovo-thinkbook-16-el2-dtbs	:= x1p42100-lenovo-thinkbook-16.dtb x1-el2.dtbo
-> +dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-lenovo-thinkbook-16.dtb x1p42100-lenovo-thinkbook-16-el2.dtb
-> +
-
-This will break without the next patch. They need to be squashet into a
-single patch.
-
--- 
-With best wishes
-Dmitry
+>   drivers/clk/qcom/gcc-ipq8074.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
+> index 7258ba5c0900..1329ea28d703 100644
+> --- a/drivers/clk/qcom/gcc-ipq8074.c
+> +++ b/drivers/clk/qcom/gcc-ipq8074.c
+> @@ -1895,10 +1895,10 @@ static const struct freq_conf ftbl_nss_port6_tx_clk_src_125[] = {
+>   static const struct freq_multi_tbl ftbl_nss_port6_tx_clk_src[] = {
+>   	FMS(19200000, P_XO, 1, 0, 0),
+>   	FM(25000000, ftbl_nss_port6_tx_clk_src_25),
+> -	FMS(78125000, P_UNIPHY1_RX, 4, 0, 0),
+> +	FMS(78125000, P_UNIPHY2_TX, 4, 0, 0),
+>   	FM(125000000, ftbl_nss_port6_tx_clk_src_125),
+> -	FMS(156250000, P_UNIPHY1_RX, 2, 0, 0),
+> -	FMS(312500000, P_UNIPHY1_RX, 1, 0, 0),
+> +	FMS(156250000, P_UNIPHY2_TX, 2, 0, 0),
+> +	FMS(312500000, P_UNIPHY2_TX, 1, 0, 0),
+>   	{ }
+>   };
+>   
 
