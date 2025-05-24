@@ -1,80 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-59305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64C21AC318E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 May 2025 23:51:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF63BAC3195
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 May 2025 23:57:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D451D1884E5C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 May 2025 21:52:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 958953B9B4D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 May 2025 21:57:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEF801DF258;
-	Sat, 24 May 2025 21:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9ECC627E7D1;
+	Sat, 24 May 2025 21:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KHBjkDf7"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="E7QNb3Gk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531601E1DE2;
-	Sat, 24 May 2025 21:51:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFD138F91;
+	Sat, 24 May 2025 21:57:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748123504; cv=none; b=pg+IMCcpfp1oLYWiI+UKtiaRglGLEH6OZPa5lmrdpE0Ckj0JnSYJgoY/UW0VpCGRKFg5iV6WvCkAYYChjNdJx6Xc5swE2ATBgCtzNFUXphuKifrO/w7jCDcYukbBh0nE/WPj498xAuPVUKQYAoQMlpllpz2Gfzq9UTp98gliEe0=
+	t=1748123850; cv=none; b=kWqTfA6A631u791aQ8qXU7GnvbIDQLYkUSqHsPT5e6nCjMKV8nSotRa+vKhsN5/RJl+TbMtTWq9fibVUkKWa3QGLykgw0cGbw07HNRDoMkx3QhOGLJIN+gxhx9a6xye2Jk5YDZqE/CBbPzbIWng0jtqlCg6oTf6EMiNEzPGym/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748123504; c=relaxed/simple;
-	bh=g39d9JHRR+ysYFLAUlmlFCphyI2Zuyqr/nbGPJ/VLF8=;
+	s=arc-20240116; t=1748123850; c=relaxed/simple;
+	bh=2s94vUMS/9XHAP5DUAb1E/ZFWH5rFVSFdcejczrKv00=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CbEyMIcHPJesrLY4ga52JeyJ8I2ENoAzumBuFERyLYWzE/sNA+VyZkzReXr94lBfREReZKj30gfngOB0Row05yeuD/vrrpKcPT+TAV7zA8pLYbnHQ06nhOEs9rzIZDXpJMls6IsytLmHaIptNp13+bgTbY0t0QEwXYFh2HbVrUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KHBjkDf7; arc=none smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1748123503; x=1779659503;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=g39d9JHRR+ysYFLAUlmlFCphyI2Zuyqr/nbGPJ/VLF8=;
-  b=KHBjkDf79Ws9DW211uzG7uGDGDGyivgQSaNC72EGVFRwGQ4IUMoIkLlw
-   gftsBBaAdVJdhxyMJ45uZNMxgWyI/GOEX9c+W7rGAj/bSgcqqMQhjGcaU
-   fy6PjLApJhOmnUpH7GC1w+kqzzgR/Jfm2W5Vuob5TqlP/4Byxaw3Od55U
-   z6pc7rwV5SEntzWHFu++Imbp4K7riQNOB+B1FFa2zXuKxtdhAW9xsu3n9
-   KngDSL7qBJQ62xr6/NORJmc4BS2y8esi5QVxocZxjjX4do/x1c04jTbBr
-   pqbXIbYPhc5hDe1+qixBbECA4v4D2+6P4iotYGRblSWGiBhDkgnf4MqVQ
-   Q==;
-X-CSE-ConnectionGUID: tpx4xgFPReKyMHkt5yRKxQ==
-X-CSE-MsgGUID: oCaW8bnARAmks9ja5h4HvA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11443"; a="61496264"
-X-IronPort-AV: E=Sophos;i="6.15,311,1739865600"; 
-   d="scan'208";a="61496264"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 May 2025 14:51:42 -0700
-X-CSE-ConnectionGUID: fA/mF9yATwi4WsKTQNS57Q==
-X-CSE-MsgGUID: m1DNvvEMS/GIG0PRBODSXw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,311,1739865600"; 
-   d="scan'208";a="178837550"
-Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
-  by orviesa001.jf.intel.com with ESMTP; 24 May 2025 14:51:39 -0700
-Received: from kbuild by 1992f890471c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uIwmG-000RTc-1l;
-	Sat, 24 May 2025 21:51:36 +0000
-Date: Sun, 25 May 2025 05:51:12 +0800
-From: kernel test robot <lkp@intel.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com
-Cc: oe-kbuild-all@lists.linux.dev, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	cassel@kernel.org, wilfred.mallawa@wdc.com,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lukas Wunner <lukas@wunner.de>
-Subject: Re: [PATCH 2/2] PCI: Rename host_bridge::reset_slot() to
- host_bridge::reset_root_port()
-Message-ID: <202505250525.2csmeURe-lkp@intel.com>
-References: <20250524185304.26698-3-manivannan.sadhasivam@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=CnbJR02aBSw5VQ8j2liwKRwntMP+RoLom/ZADgWJWJJiWDFZADEe1C0FAQpujhC913lma+jG21GTU3qouqOwU1WQuJ3Z7QzOBOOfe4b1z1ezCDXyIAyKlKcymm8Sw01ysXtzpvZd9YBp3ic92jXc7bLxG3QX4xKTHuzRJtYNJP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=E7QNb3Gk; arc=none smtp.client-ip=217.70.183.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 49D5C4326A;
+	Sat, 24 May 2025 21:57:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1748123845;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=yuigfpZ+G27GeQmpj5dr8hu8Stajt3T05I3/E0ixUb8=;
+	b=E7QNb3Gkw0ePngT2ppObvuk80dlcpDteQnv1hoPavUpxPh1c5juFlWA50A354J9cfs4gAw
+	YXWf0Tb19HIq2IYBojQdlGJhaZQgWkmOznDW8Lr753WjgUaABntUbo/h6NFiqdPBV6aE3B
+	rJr9Flw+aMA6iGuRDiFjAIWBv8goQMF4KzlLM6Q3qfXf6c3kcdx2lTZTlJTTtfbd9olQgo
+	vF0MA2qG+BE1ZVEQH51awTuKB70uI5/U7TQo58fNS5XVZzwW2pDTm7xnYepJHmiHLB+g3E
+	RcAWkkW2fyS8Y3gksoClLzMmoiRJJRHzvON5/gnfeLfCF/y8jykcvbisMRP3sg==
+Date: Sat, 24 May 2025 23:57:24 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH 0/4] rtc: pm8xxx: fix uefi offset lookup
+Message-ID: <174812376653.1267678.1330291103918803458.b4-ty@bootlin.com>
+References: <20250423075143.11157-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,75 +64,37 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250524185304.26698-3-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20250423075143.11157-1-johan+linaro@kernel.org>
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdduvdekgeculddtuddrgeefvddrtddtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheptehlvgigrghnughrvgcuuegvlhhlohhnihcuoegrlhgvgigrnhgurhgvrdgsvghllhhonhhisegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeeijeefhfffkeejueehveeuveejvdelveejteduffehuedtffdufeejudffuedvtdenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdgsohhothhlihhnrdgtohhmnecukfhppedvrgdtudemvgdtrgemvdgumeeifeejtdemjeekvgdtmegttdgvkeemvdektdeimeekrggtieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgdtrgemvdgumeeifeejtdemjeekvgdtmegttdgvkeemvdektdeimeekrggtiedphhgvlhhopehlohgtrghlhhhoshhtpdhmrghilhhfrhhomheprghlvgigrghnughrvgdrsggvlhhlohhnihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepuddtpdhrtghpthhtoheprghnuggvrhhsshhonheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhdolhhinhgrrhhosehkv
+ ghrnhgvlhdrohhrghdprhgtphhtthhopehrohgshheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhriihkodgutheskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghonhhorhdoughtsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehkohhnrhgrugihsggtihhosehkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqrhhttgesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-Sasl: alexandre.belloni@bootlin.com
 
-Hi Manivannan,
+On Wed, 23 Apr 2025 09:51:39 +0200, Johan Hovold wrote:
+> On many Qualcomm platforms the PMIC RTC control and time registers are
+> read-only so that the RTC time can not be updated. Instead an offset
+> needs be stored in some machine-specific non-volatile memory, which a
+> driver can take into account.
+> 
+> On platforms where the offset is stored in a Qualcomm specific UEFI
+> variable the variables are also accessed in a non-standard way, which
+> means that the OS cannot assume that the variable service is available
+> by the time the driver probes.
+> 
+> [...]
 
-kernel test robot noticed the following build errors:
+Applied, thanks!
 
-[auto build test ERROR on pci/next]
-[also build test ERROR on next-20250523]
-[cannot apply to pci/for-linus linus/master v6.15-rc7]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+[1/4] dt-bindings: rtc: qcom-pm8xxx: add uefi-variable offset
+      https://git.kernel.org/abelloni/c/b23b91d56863
+[2/4] rtc: pm8xxx: fix uefi offset lookup
+      https://git.kernel.org/abelloni/c/ead453283279
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam/PCI-Save-and-restore-root-port-config-space-in-pcibios_reset_secondary_bus/20250525-025535
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-patch link:    https://lore.kernel.org/r/20250524185304.26698-3-manivannan.sadhasivam%40linaro.org
-patch subject: [PATCH 2/2] PCI: Rename host_bridge::reset_slot() to host_bridge::reset_root_port()
-config: csky-randconfig-002-20250525 (https://download.01.org/0day-ci/archive/20250525/202505250525.2csmeURe-lkp@intel.com/config)
-compiler: csky-linux-gcc (GCC) 10.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250525/202505250525.2csmeURe-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202505250525.2csmeURe-lkp@intel.com/
-
-All error/warnings (new ones prefixed by >>):
-
-   drivers/pci/controller/dwc/pcie-dw-rockchip.c: In function 'rockchip_pcie_host_init':
->> drivers/pci/controller/dwc/pcie-dw-rockchip.c:264:32: error: 'rockchip_pcie_rc_reset_slot' undeclared (first use in this function); did you mean 'rockchip_pcie_rc_reset_root_port'?
-     264 |  pp->bridge->reset_root_port = rockchip_pcie_rc_reset_slot;
-         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-         |                                rockchip_pcie_rc_reset_root_port
-   drivers/pci/controller/dwc/pcie-dw-rockchip.c:264:32: note: each undeclared identifier is reported only once for each function it appears in
-   At top level:
->> drivers/pci/controller/dwc/pcie-dw-rockchip.c:703:12: warning: 'rockchip_pcie_rc_reset_root_port' defined but not used [-Wunused-function]
-     703 | static int rockchip_pcie_rc_reset_root_port(struct pci_host_bridge *bridge,
-         |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-vim +264 drivers/pci/controller/dwc/pcie-dw-rockchip.c
-
-   244	
-   245	static int rockchip_pcie_host_init(struct dw_pcie_rp *pp)
-   246	{
-   247		struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-   248		struct rockchip_pcie *rockchip = to_rockchip_pcie(pci);
-   249		struct device *dev = rockchip->pci.dev;
-   250		int irq, ret;
-   251	
-   252		irq = of_irq_get_byname(dev->of_node, "legacy");
-   253		if (irq < 0)
-   254			return irq;
-   255	
-   256		ret = rockchip_pcie_init_irq_domain(rockchip);
-   257		if (ret < 0)
-   258			dev_err(dev, "failed to init irq domain\n");
-   259	
-   260		irq_set_chained_handler_and_data(irq, rockchip_pcie_intx_handler,
-   261						 rockchip);
-   262	
-   263		rockchip_pcie_enable_l0s(pci);
- > 264		pp->bridge->reset_root_port = rockchip_pcie_rc_reset_slot;
-   265	
-   266		return 0;
-   267	}
-   268	
+Best regards,
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
