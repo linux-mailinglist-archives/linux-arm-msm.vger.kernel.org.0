@@ -1,53 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-59343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93A4FAC360E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 19:56:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0245CAC3613
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 19:56:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 213EF3B4210
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 17:56:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0FE443B40C2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 17:56:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3E9225C837;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F23FA25DD09;
 	Sun, 25 May 2025 17:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lgX9reo1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oiW7+iro"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB11624A058;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC62C259CBE;
 	Sun, 25 May 2025 17:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748195768; cv=none; b=CWRQiyi7Fknk/TJ81gSDQSLJGZPGLdwxvyomAamCaMINAPo9eQhTWB9sayh5dkgTbSj1rdiliOwLquoDAiI12yzGPBubh5ezb7JBqAlEiTpABHeV77vW/Zdh4zp8ywMccWhq68aVI3Pxh2I1vO007g+XphIEjjxrPfDe7uK86Ik=
+	t=1748195768; cv=none; b=jMYl6mfmyZ0zhreuW7F71GbsbiLtiaUH4pAZ+Lf1oIlBCY/o0BbaFyDfBt2BW2gXnNbuTBveF4rK1uHWOuA3SMlPZBs2TVdZezG+P5hDeuht0j/lpK5GUcyZAv7Z+Cm19fc54XSVar5Z0pjoxssflvFvYV6OETMFSww7rY06tmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1748195768; c=relaxed/simple;
-	bh=PgQd1WmItZOq2615uJLVmRncCuiX7cIc+Tm0tdKHp2A=;
+	bh=PEvKO/wryGgjZziPiEVFS4XnMJm6SAdt0loKuMnLA9A=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bDMw2efctdJ2X8kM97hQFw+5RB1NcW1I9jhGnHOIWM+QDIZwQpTGaqS5l7CISGxPqfDQJuLc4sySXUy8UdCNwdpa6HIeysbBfWotwMFE14/My/6uHNR9f1HvWqXE5eSxbfertI6fCJUCE1E+uqGOMWqO6bKy5HjnhQlrJmSeK9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lgX9reo1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1CAE4C4CEEF;
+	 In-Reply-To:To:Cc; b=RSl2nlBV31PLa/NUUPOp2530IxGkcPR1ANCzrF4uyurxddW3FD8ARmK6F8iIAJdMS0w0IzuYVpUN3Q19YCvcE6jdX3jCNQC7fdNDQsklyHUZBpYq4vbOZ7hA4DOAgl4PglxMUEKt9qV80G7+Lww27unf7X7lP7twLXFhC78cmT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oiW7+iro; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 29996C4AF09;
 	Sun, 25 May 2025 17:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1748195768;
-	bh=PgQd1WmItZOq2615uJLVmRncCuiX7cIc+Tm0tdKHp2A=;
+	bh=PEvKO/wryGgjZziPiEVFS4XnMJm6SAdt0loKuMnLA9A=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=lgX9reo1HYSJFPN/qSxBu13wKB1wrVcpcqec2FRHKvZ3wn915OrwjGLGav6EgwEqV
-	 0BfDT0avqordh2DcrfG9yAAwjiICipUuqvleXe6OaNxWyocLZLP1iTAlSppQzZeoyW
-	 f6PJe9d9D9b7YVGzdrS5amAzRYzz4C+6m9ybccnUtLs+CHYaeassk40ahzzTjHJ6Df
-	 DHXpjQNPVktIFNK029SrV72hrM++4B/r8Ztx74q2mOOvz4dDmdFzGF99X24p4136+R
-	 a3EqmgyYYfEx5PCTd6utMOiV/EcLlEVAujAqRshAFTmsKwdlxSlCRtA7Fa2TU02gCB
-	 cegayybgv2Fmg==
+	b=oiW7+iroJjpTyWIjPq4AmdRXqkEnu5YcTzsXcYjzZnHw5EYGieoPGs7snQghgSYg2
+	 dr0l2qPeJoT1HAT3hQs/DJrwCK/PEYufqcUGMJRYsL7befgZPTVtnh7qG/8ytiZ3nF
+	 6VY4KWNw9/kGYFRo4cpLNgjRUpNBB1NWbzhPB5APwd1A/eoxCn1rQwH9EBc5pts0G3
+	 MNE2PUWH44UyMpeCRikBwz/u5T4QlR35MgK7+JAjv+5205+76MoOdtl2eV8TYSvNzm
+	 GLVi2h5SEbZdWjC/fV8UNGuETazrweY9LuiSzhnZzFbQUTU/cEBhAlc80BbvtZTmOc
+	 nqyUURDIrkLhQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BC8BC54FB3;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BBFBC5B541;
 	Sun, 25 May 2025 17:56:08 +0000 (UTC)
 From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Date: Sun, 25 May 2025 21:56:04 +0400
-Subject: [PATCH 1/5] dt-bindings: net: qca,ar803x: Add IPQ5018 Internal GE
- PHY support
+Date: Sun, 25 May 2025 21:56:05 +0400
+Subject: [PATCH 2/5] clk: qcom: gcc-ipq5018: fix GE PHY reset
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,7 +55,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250525-ipq5018-ge-phy-v1-1-ddab8854e253@outlook.com>
+Message-Id: <20250525-ipq5018-ge-phy-v1-2-ddab8854e253@outlook.com>
 References: <20250525-ipq5018-ge-phy-v1-0-ddab8854e253@outlook.com>
 In-Reply-To: <20250525-ipq5018-ge-phy-v1-0-ddab8854e253@outlook.com>
 To: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>, 
@@ -74,11 +73,11 @@ Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  linux-clk@vger.kernel.org, George Moussalem <george.moussalem@outlook.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1748195765; l=2331;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1748195765; l=1149;
  i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=ayUL3wYd9rvR/ur2nGKYm+iV8WIysnk8OxJFKcrz/ig=;
- b=Aekb7yvWZ5o9Vu+/YejmG2dcGjSGGiy0sUVTXRtXoAARJBX9e0Yh53Df5khsfiuiuTzfUWXMp
- 7UerUABr5A2AgqMJGulb8w/DKe1Rhx1gyp/R1pqYNddLikeBxoT0d9b
+ bh=oIkUIGsEO4IxSACM3i9ZzN1oSf3eDEKLwbaKL+SIoYs=;
+ b=02XFO8KJUlDf/GQd0oZSxvLXGTZYrGzhEljPdbdnmF3LQkWU+O1zbHOfU5UYGN6hY3jyv7wMk
+ IdbCEfGcfhPBaDz4Y5AKdRWodS3NgeHf5YGFoZkJgwCqcH0fCYGK81c
 X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
  pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
 X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
@@ -88,59 +87,31 @@ Reply-To: george.moussalem@outlook.com
 
 From: George Moussalem <george.moussalem@outlook.com>
 
-Document the IPQ5018 Internal Gigabit Ethernet PHY found in the IPQ5018
-SoC. Its output pins provide an MDI interface to either an external
-switch in a PHY to PHY link scenario or is directly attached to an RJ45
-connector.
+The MISC reset is supposed to trigger a resets across the MDC, DSP, and
+RX & TX clocks of the IPQ5018 internal GE PHY. So let's set the bitmask
+of the reset definition accordingly in the GCC as per the downstream
+driver.
 
-In a phy to phy architecture, DAC values need to be set to accommodate
-for the short cable length. As such, add an optional property to do so.
-
-In addition, the LDO controller found in the IPQ5018 SoC needs to be
-enabled to driver low voltages to the CMN Ethernet Block (CMN BLK) which
-the GE PHY depends on. The LDO must be enabled in TCSR by writing to a
-specific register. So, adding a property that takes a phandle to the
-TCSR node and the register offset.
+Link: https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/commit/00743c3e82fa87cba4460e7a2ba32f473a9ce932
 
 Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
- .../devicetree/bindings/net/qca,ar803x.yaml        | 23 ++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/clk/qcom/gcc-ipq5018.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/net/qca,ar803x.yaml b/Documentation/devicetree/bindings/net/qca,ar803x.yaml
-index 3acd09f0da863137f8a05e435a1fd28a536c2acd..a9e94666ff0af107db4f358b144bf8644c6597e8 100644
---- a/Documentation/devicetree/bindings/net/qca,ar803x.yaml
-+++ b/Documentation/devicetree/bindings/net/qca,ar803x.yaml
-@@ -60,6 +60,29 @@ properties:
-     minimum: 1
-     maximum: 255
+diff --git a/drivers/clk/qcom/gcc-ipq5018.c b/drivers/clk/qcom/gcc-ipq5018.c
+index 70f5dcb96700f55da1fb19fc893d22350a7e63bf..02d6f08f389f24eccc961b9a4271288c6b635bbc 100644
+--- a/drivers/clk/qcom/gcc-ipq5018.c
++++ b/drivers/clk/qcom/gcc-ipq5018.c
+@@ -3660,7 +3660,7 @@ static const struct qcom_reset_map gcc_ipq5018_resets[] = {
+ 	[GCC_WCSS_AXI_S_ARES] = { 0x59008, 6 },
+ 	[GCC_WCSS_Q6_BCR] = { 0x18004, 0 },
+ 	[GCC_WCSSAON_RESET] = { 0x59010, 0},
+-	[GCC_GEPHY_MISC_ARES] = { 0x56004, 0 },
++	[GCC_GEPHY_MISC_ARES] = { 0x56004, .bitmask = 0xf },
+ };
  
-+  qca,dac:
-+    description:
-+      Values for MDAC and EDAC to adjust amplitude, bias current settings,
-+      and error detection and correction algorithm. Only set in a PHY to PHY
-+      link architecture to accommodate for short cable length.
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    items:
-+      - items:
-+          - description: value for MDAC. Expected 0x10, if set
-+          - description: value for EDAC. Expected 0x10, if set
-+      - maxItems: 1
-+
-+  qca,eth-ldo-enable:
-+    description:
-+      Register in TCSR to enable the LDO controller to supply
-+      low voltages to the common ethernet block (CMN BLK).
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    items:
-+      - items:
-+          - description: phandle of TCSR syscon
-+          - description: offset of TCSR register to enable the LDO controller
-+      - maxItems: 1
-+
-   vddio-supply:
-     description: |
-       RGMII I/O voltage regulator (see regulator/regulator.yaml).
+ static const struct of_device_id gcc_ipq5018_match_table[] = {
 
 -- 
 2.49.0
