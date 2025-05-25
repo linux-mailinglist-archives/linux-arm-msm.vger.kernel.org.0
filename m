@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-59356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 613EAAC3680
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 21:27:24 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03932AC3687
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 21:28:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 20FEB173BD7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 19:27:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C51517ABB37
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 19:26:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 386F2269880;
-	Sun, 25 May 2025 19:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DF6326A09A;
+	Sun, 25 May 2025 19:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hz2NPo7V"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wrcDgDdl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DB6267B73
-	for <linux-arm-msm@vger.kernel.org>; Sun, 25 May 2025 19:26:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8973726A0BD
+	for <linux-arm-msm@vger.kernel.org>; Sun, 25 May 2025 19:26:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748201182; cv=none; b=DKigFi+/p5ohsxnw5paM4IERLBVCPgVRDNSaF1Di/HCSyIMbf/469cfbti3uh8IknqO2Y4ETXRHLUmNaWzq28zXrFr4QeAh/N69suR1ExvZviQUIsRxFN1UmK6Trz2eIyZKpwbluiBlrsEpag1JtFY48lQeC2bBuVsoNP/moUyw=
+	t=1748201185; cv=none; b=HyxFy3t6HmQUNmi5JDmiN9ca8zXu0RfvZChmjLC7vNR1weDydCbbZKZ9X/u89PeN38IspSrFDNoAofy4xaagzCvxypuHL5JJvDaGIWQaraNv5SQfOIs0s3FPcJn1BXY7NLdQVZeYeBQZC7RHoe1skt0/NYlpOQFi6H+adl8FOmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748201182; c=relaxed/simple;
-	bh=Sm3IbikRxGrXe/Gygal0RcvZGGE5Vm9xAe0Sy1mv/PU=;
+	s=arc-20240116; t=1748201185; c=relaxed/simple;
+	bh=wf9mMF4piwylWLERQD6eu/HVFRIY7xIhB8VCk+ieFdQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YsIfmYap+/DpK4h7ActVJ1NqaVLGAGCvE1I2BUPIvVadw7TiAXcIlxxpJjua5EhifSfBYeKDZ1M87i594yyAO7zzkCcL4KDg+Ke3805gOa25ZDZAMFHuU5fWz3ucW1D1kr0s58nuawnfJbYXQyTj1gCKqrkd/Voaf/cYs+LEZ44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hz2NPo7V; arc=none smtp.client-ip=209.85.218.53
+	 In-Reply-To:To:Cc; b=fukeTs7n44PFtYas4dQkm99CJSHQZ/jVkn88zwwnG1Bz70d5bHgTnUOZulrAoCHQ0RpeEmO9p1BjlIWIBsu3bgoN7xr1zaIaL1HAveWtNW7NehrofF90vbqvjcmQplqJjeIz3IinjK3MhZi3vE0I1NZDr3N0tF6JkZX/mebHrQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wrcDgDdl; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ad55ded6e84so50180266b.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 May 2025 12:26:19 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-60462e6f227so163389a12.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 May 2025 12:26:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748201177; x=1748805977; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1748201179; x=1748805979; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+KYB356hjRUGEK2kucuFd88ZkvKFuYQT9LdCpggTLBM=;
-        b=hz2NPo7VQc448cohplA+OqzluFFWBW7IRMe5yIzDEBHFDJTiUUZSX6Fm87UxX1iEzW
-         1jKqdcC+7js1CF8s6k0gIsz1BioBYITpkbYnpLql3NZTQoKIdwR9YLsCNRKGmyM4SwG6
-         /vTpdyRaXkpLWe5PxF+rRjM40VYW60RYBV0RMGddsSGvWtXBt4cy0Dpq/cARxsgVV0/z
-         4lSeT7FImVbFJnBZj8xZTr1I36yMugHYGxj5hZdgnJieszLYXRZSrMP6T7If4wYitkWL
-         VstyaIULchtp6mx1WiM0aPa74UINql+UkHKxFejp72dydgHZf3aIuCucoU/RzAk2Yo4+
-         MWUg==
+        bh=dB8Qgyau5a7VreD6df5S2eMKOiRWv79kx7XCROS4r/I=;
+        b=wrcDgDdlB77/8sVADWbFbOueNOJpY8qiY9wKfUIUQE9NoFavXjWdOUwgMoNiJBvPkO
+         z4h9OtgTl8ePEx26YoyUWKBz7o2+jSY0Uab/ZaQKF3ph1BoVatIHG6lMoI1s983uDVna
+         gMnNYvFGP4puFStd8Tpy6vNf3+YuGEW5MloIh8tX7Y08BMyZui4anXbaXe/oJlQsNfk6
+         MSqcEA9b4orMXeWaGEk2YLCRRWVhNk2GMNfN83gONhMThdzG2NzB+KXxwejg4t9LHwPT
+         aw2s2/pID65qzl/yXRZS+Y4cobkUsngQq3xn2x5xqlTPLGMJyBQovbq6Y3sGrqiMOxzZ
+         jpaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748201177; x=1748805977;
+        d=1e100.net; s=20230601; t=1748201179; x=1748805979;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+KYB356hjRUGEK2kucuFd88ZkvKFuYQT9LdCpggTLBM=;
-        b=kksddo0CEzO2kvFqznaxyK+hyBKgeuZCOBwn0uFsWZNmdBrvCoMw31ghp5MWeaxkIZ
-         cEfZcX9uCXG6cROVSWHstgg9KUwjAhTPNqsOscSos9WhfEeAdYYas6+tgMZNyzS8ZXs0
-         +m1WTK1Td1HkHMnIti2/GmhaX4V04KxYwkOh8CXmquv0pghMRSzJi3zn6ecRk9uWXr3H
-         dMWuHg2rtEv1qQoXlo8mI2WsvA0KNQsbvBRilE79GKzykspCMSRsqga3FK8aFk6N/uZm
-         6JsOWfpYLpZGNGLPRBoHnfkq8g6Z+8svHqbMTnJ44bTDn5bw2boVWPqC/eVlmqCbx/Lw
-         8KlA==
-X-Forwarded-Encrypted: i=1; AJvYcCVVIDEH2idNIypXhCyyX0kRI3Gga1kHblZsijrmENaux5mM8WUHY33+myEvRUKH6MEjhIi1TQBXr4D/VUXZ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy/fj43DNrgPhgyrqBHWcIBV7m/eHUL+RbZFdk0LQiWMsJzAx78
-	6B1CgaTkRYGsYTtA+ga+gPpAJS0SdtIsXf8rFBflm1JgQ/r5sY4lSvzgJBXsK8QYbSRdoeOxRR0
-	zfVrA
-X-Gm-Gg: ASbGncvkyN+wqdxrBJ/YB75i7hGLhmWCkYKnYP0xninZdrRz+T0K+/4xlhG4EL9NBvz
-	K4vaChEAl0kp4F6fkx5Vu77glxd9J7kUaxm3Ha71wOXiaKXTj6mLCgCf0Y/xylEs67P+RhGEIfX
-	afNi16wbZ2ptKqGrUojzPVPqaopmjcMOl0LCx8g02hEuqomf7UZFhUDLJRBOd8N/FsIEkylEK7u
-	mp24ru1UEIobEw9carKbB8l47EsS9qVAcehdrlEOuklBqNpyESp41jlfsvrJfjUABtwZkkO4a/X
-	BpyQvBXxLnkExsHJ5hKzVywSeP4DcnkwV/OQMbhorNwTMZlgFBDEU/Ir4zkkGofqWUo6mI8=
-X-Google-Smtp-Source: AGHT+IHkuoLwwomZCcsBErFL19H6yB+kPnlaQoi4fKoMrOde6G8mnghCGbbT8/M/SSHBkWuXUyowgA==
-X-Received: by 2002:a17:907:2cf8:b0:ad2:23d0:cde3 with SMTP id a640c23a62f3a-ad85b2178famr169938866b.15.1748201177180;
-        Sun, 25 May 2025 12:26:17 -0700 (PDT)
+        bh=dB8Qgyau5a7VreD6df5S2eMKOiRWv79kx7XCROS4r/I=;
+        b=awh7LgXUaMMgdhgSwzreWF1BtyQwTHqiK1zmQwEvRDXc+n6n64B7ucC9uxVw9R5chh
+         YIgo+S6Yb3icyRCo0rT0RAUmDTEoK3wg62PzdICBTxTHeZfkglS7uCgQMvRtFQa6OWwA
+         WsUC+6HpnxWzKUDVhKepzr2LH+ukaAZYEPz1J8UV1ii+gjyjtEJ7B104hvc9wE77a+hO
+         emSOSv+j94dy9HXv/iQZ6dzuioSo519J5upOL2IaTne4yJwI9J0Xie8DT/o3I5WWk61v
+         oYzvM99dV4QlDQj+Z4UpoSkXFGjrrGYcOAx7Wo1yMO1jgWiab9ndON1zi4aC0p+qIKPW
+         qIog==
+X-Forwarded-Encrypted: i=1; AJvYcCXRk6wDCcSQ+bH0t1Y1hpyO9zYb7Jg1mc5g5da0U0gDqeHJwX4rmQ2be6IXBj6xz7FECqzIofA+7Lf36JgT@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTGNj+hfb+DhkMyBsIzhmwBfliNksbNI+dQwJ5crCulWAoXVgB
+	LKOudezjO00Z6Mt9wuki1ypqX7LLj5tOoLSaYY5DD2ajiCMBlk3Fn681n+PjtuBXQcfI3CyR6K/
+	iY++K
+X-Gm-Gg: ASbGnctSQjpTkB3Nj+Zadu87v9VHBwqq5ZlWe1BjrVUqBAGYHzeALK22+RnGOrAWMy5
+	eKKh4kv4w2haRC6+5cI/ir+h+l16LnIGXNtoHDZtpHqB88+N09DfyF1enfBUpDarHz7uxkbl1Lp
+	tbDfBEzCB8bdtr9auKP/cMgBvC25PY75eWl2ElAa/4A1IQp8AAT/XSW1zez/ZNXQYAWFX2lvQl1
+	CmudZMnsZHXdQdh7tQupy/WpYIumeDcf9+6GjujSDOxhHruotwZfVNW7BCxFiQfI5aTUjU97h8B
+	1fVp7v8qrtyjieGNp9amheDYbOQcln/cmST6gUmyJz2qZUBjDcN/A+ENxKbAZQaoU3h1YSs=
+X-Google-Smtp-Source: AGHT+IFU6iw0nh+JfwxngddrMbaAdOgnyTVpsEnCYJPukcl1HAYkzxRla7dTLdaaFau0zKRt4TXHew==
+X-Received: by 2002:a17:906:8470:b0:ac7:4397:4345 with SMTP id a640c23a62f3a-ad85b11378bmr178652266b.6.1748201179389;
+        Sun, 25 May 2025 12:26:19 -0700 (PDT)
 Received: from [192.168.1.29] ([178.197.223.125])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d047738sm1578899866b.19.2025.05.25.12.26.15
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d047738sm1578899866b.19.2025.05.25.12.26.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 May 2025 12:26:15 -0700 (PDT)
+        Sun, 25 May 2025 12:26:17 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Sun, 25 May 2025 21:26:04 +0200
-Subject: [PATCH 4/5] dmaengine: fsl-qdma: Add missing fsl_qdma_format
- kerneldoc
+Date: Sun, 25 May 2025 21:26:05 +0200
+Subject: [PATCH 5/5] dmaengine: mmp: Fix again Wvoid-pointer-to-enum-cast
+ warning
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250525-dma-fixes-v1-4-89d06dac9bcb@linaro.org>
+Message-Id: <20250525-dma-fixes-v1-5-89d06dac9bcb@linaro.org>
 References: <20250525-dma-fixes-v1-0-89d06dac9bcb@linaro.org>
 In-Reply-To: <20250525-dma-fixes-v1-0-89d06dac9bcb@linaro.org>
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
@@ -96,49 +96,48 @@ Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1062;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1089;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=Sm3IbikRxGrXe/Gygal0RcvZGGE5Vm9xAe0Sy1mv/PU=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoM27QW6O28ENwDMIgLoVAwIdJvteqy1tPicytR
- BfWmJV0pSqJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaDNu0AAKCRDBN2bmhouD
- 17GRD/4v8X01UCwnBhEJ/X49zBCMCGI/MAbmL54jLi2/WSqphrmRNW0Y4KOAyfaP9EuJBniGf73
- bjAlg5nd0qIQrAtppNrjr+IKB6U9yrEKuSjCg8/BwmBWQdmHZ+TvsEXkYYr+SSvSo8bCSlS5p+Q
- UL897us4/f7Zsv3lu7YjLqd0OhGeAwbnncLzAHWoyLzqemX1aWGVSHjz1SBoi3LCWCGWhOGG+RY
- SSeFxSUJ/tEfpZAqJqsXIcJhjBiJ6pW3WQ/3ZJvbhSjyNwsLPZwOaYFJwmBA28D8EIplIHpMosU
- O376GQgalZqkfotPw1w8egRPis/R5P64XDrODtY6EEC7YdFCfYQSGO3/HSS68P17DtBGxw8Gc2S
- Jy40O38OT4v+KyKpMAMDGVud292G1lfseiHQ+yXSDPytfxjR0VC6w73RbwzlKf6GLoLrFCciYJk
- 6MZji3NotdKEFMeze0mFxCaBL7lg7PA4qFcCOMRGcpIyFF8b8HobyXdOeBt0ghbidlB3DlB9w4q
- XOhc6Zd9zfTlbtQCmhEFcot/vAVdQ7WOxrQFsVoW+Wqs4jEpOWxy+3VhvHwma/qH9/OieJDuRWF
- SvB7jB8N9pNR4k/tbBxHj1v1R4ttV8RkYRlx3e1ZhWoje3ylFkjogHxNuS7vcy8k+gXKywoEIaA
- MK7VdioVfAQsNBw==
+ bh=wf9mMF4piwylWLERQD6eu/HVFRIY7xIhB8VCk+ieFdQ=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoM27QVOIFby5xrQ2vikjmTQ7sy/m4A+Dgt9+tq
+ viv3z7R1WGJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaDNu0AAKCRDBN2bmhouD
+ 13XnEACJx5d0HBGfD5BYrQ/0oD8C7EAM3yTiKzycRx0rnOvdsj40fPEbcAEVzJWDBnzOojfNm6D
+ lnrDDw49hqQIGOukFQsiJv/gZDfBaUJw7+Dmtv57AjMZ585U2DErn1tA2ts/l8KZ4G2m23X/eFK
+ BBND/wfdmH4dlObFa99BwZ/25oozbvMPTm4vX/w99ss1IfuHu5ccWWTWWPRT7UhGKKEjaP0DKn9
+ 52jsFGQqXwGXeXQlOeOhVZ/sRVW8qTABHRgDoNS8jnUAZc1JyimVR16JQTQYc+FhBXPvT+HC4Ds
+ JTTxgv2cB8/KJSg3TD1yXecjPEC14rrhX9hLg7MwERfca5VtUOgATV/iRGO/6Yam/XNwHeCGm3a
+ HWsKhm5Jor2ZFKDzphxNICY4Hlfn05hfbPz8CictbHrcbLFLQhvujVChlYOA+yzUUDcU8ZHuHuL
+ wq9KcgowFM3M1pBICip1f6FPIIJ+1rvfFNIX+bWNvcsHECHzL7gStOswCNa/BGQS3OdLj9rTgOg
+ hCJxryLHK7x3BkTmWdJkqhVkc+p0/4jjmtrZeYLpMo10JtVV8ocEAFD4b4sGYK6HIsWpXH0LHrf
+ OD1yWyRuahfwIM4pACg81vcfiesVeEOYgsWaUrFbe34fn1tNlGZIA4rvem0fMjGYuiwCcc2wXaJ
+ 6MtXrUj2ocfKrEQ==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Document '__reserved2' and 'cmd' fields of 'struct fsl_qdma_format' to
-fix W=1 warnings:
+This was fixed and re-introduced.  'type' is an enum, thus cast of
+pointer on 64-bit compile test with W=1 causes:
 
-  fsl-qdma.c:169 struct member '__reserved2' not described in 'fsl_qdma_format'
-  fsl-qdma.c:169 struct member 'cmd' not described in 'fsl_qdma_format'
+  mmp_tdma.c:644:9: error: cast to smaller integer type 'enum mmp_tdma_type' from 'const void *' [-Werror,-Wvoid-pointer-to-enum-cast]
 
+Fixes: a67ba97dfb30 ("dmaengine: Use device_get_match_data()")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/dma/fsl-qdma.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/dma/mmp_tdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/fsl-qdma.c b/drivers/dma/fsl-qdma.c
-index 823f5c6bc2e1a5bc5e30ea7175bff31e53ff8744..21e13f1207cbe6e82a45c828b93edcadf88b52d1 100644
---- a/drivers/dma/fsl-qdma.c
-+++ b/drivers/dma/fsl-qdma.c
-@@ -148,6 +148,9 @@
-  * @__reserved1:	    Reserved field.
-  * @cfg8b_w1:		    Compound descriptor command queue origin produced
-  *			    by qDMA and dynamic debug field.
-+ * @__reserved2:	    Reserved field.
-+ * @cmd:		    Command for QDMA (see FSL_QDMA_CMD_RWTTYPE and
-+ *			     others).
-  * @data:		    Pointer to the memory 40-bit address, describes DMA
-  *			    source information and DMA destination information.
-  */
+diff --git a/drivers/dma/mmp_tdma.c b/drivers/dma/mmp_tdma.c
+index c8dc504510f1e325017ba4fa5e7aa72b019e3be4..b7fb843c67a6f247395296fc726f7b6cab7d223f 100644
+--- a/drivers/dma/mmp_tdma.c
++++ b/drivers/dma/mmp_tdma.c
+@@ -641,7 +641,7 @@ static int mmp_tdma_probe(struct platform_device *pdev)
+ 	int chan_num = TDMA_CHANNEL_NUM;
+ 	struct gen_pool *pool = NULL;
+ 
+-	type = (enum mmp_tdma_type)device_get_match_data(&pdev->dev);
++	type = (kernel_ulong_t)device_get_match_data(&pdev->dev);
+ 
+ 	/* always have couple channels */
+ 	tdev = devm_kzalloc(&pdev->dev, sizeof(*tdev), GFP_KERNEL);
 
 -- 
 2.45.2
