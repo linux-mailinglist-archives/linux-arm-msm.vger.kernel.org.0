@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-59355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0A9FAC367B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 21:26:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 613EAAC3680
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 21:27:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B1AF173B2A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 19:26:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 20FEB173BD7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 19:27:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAC14265CBD;
-	Sun, 25 May 2025 19:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 386F2269880;
+	Sun, 25 May 2025 19:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AZPkJZ5C"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hz2NPo7V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AC725C82C
-	for <linux-arm-msm@vger.kernel.org>; Sun, 25 May 2025 19:26:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DB6267B73
+	for <linux-arm-msm@vger.kernel.org>; Sun, 25 May 2025 19:26:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748201178; cv=none; b=lVnvAW78ikEKJ/Tqq0PnBmxLTtS02Ya10JLKppieAcab+IPjAvL+XRECG0XrE+1BYMYJtFXtG6hX1deqhXG5tepdCaGgQ68I40qMa/fWju5A2m5eD5nWLCuF6fY+gwmr8CHORorU+i2zd7IIiWyaSSKPNOR/312FsK+1Z93DMEs=
+	t=1748201182; cv=none; b=DKigFi+/p5ohsxnw5paM4IERLBVCPgVRDNSaF1Di/HCSyIMbf/469cfbti3uh8IknqO2Y4ETXRHLUmNaWzq28zXrFr4QeAh/N69suR1ExvZviQUIsRxFN1UmK6Trz2eIyZKpwbluiBlrsEpag1JtFY48lQeC2bBuVsoNP/moUyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748201178; c=relaxed/simple;
-	bh=DTGCxtKKBS1I1ezcV34L8Qi5iTSOukUz7ljm7yYIh1c=;
+	s=arc-20240116; t=1748201182; c=relaxed/simple;
+	bh=Sm3IbikRxGrXe/Gygal0RcvZGGE5Vm9xAe0Sy1mv/PU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WbjF1/Q7DoiK0IYo/atoXUchcLp0tXfPUOBzTYcnMS8lOCrnC1Mo4gyM9kjEdV4fJ2Huc7SIB5biiYC7ihqPj9FAzanR9WZ09tYoFIqwPcFhCUNBvkPkIDk975OWqUo79F0Iizf2I/Apo4gjL9kzU8xY/4S6qrK3+iL7aMA52c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AZPkJZ5C; arc=none smtp.client-ip=209.85.218.49
+	 In-Reply-To:To:Cc; b=YsIfmYap+/DpK4h7ActVJ1NqaVLGAGCvE1I2BUPIvVadw7TiAXcIlxxpJjua5EhifSfBYeKDZ1M87i594yyAO7zzkCcL4KDg+Ke3805gOa25ZDZAMFHuU5fWz3ucW1D1kr0s58nuawnfJbYXQyTj1gCKqrkd/Voaf/cYs+LEZ44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hz2NPo7V; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ad55ded6e84so50179666b.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 May 2025 12:26:16 -0700 (PDT)
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ad55ded6e84so50180266b.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 May 2025 12:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748201175; x=1748805975; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1748201177; x=1748805977; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NUGmk08kPRJlfJsZZ8kitsMWnHXcUPNuZWI1jkR5sn4=;
-        b=AZPkJZ5CcG2rmSD8B/UU97AK50+PYHBhkK+s4fCzOWdsBtEwpEClyjgHWDyUJVUh/i
-         AQf4Mi4A6GVtlhz+V26vTd3RGSaDpO5g/uN8LkqGpHM8X+nLFYutuuU2KmtN0g3SamZz
-         eqKYRpCApR6LpEE9s4QNwb4Ja+DLOYsd9eLn2tIhvk91uvHr23o5rAJnbtovYq95KXmV
-         fK1vk1zcRDEXe9P9UzxQTh7x/AwvbQRV76krQeMet1TtZCG6/H9XTUzL8785ieOX+gbz
-         h8GAzEFxILxz1//eKdcsnXtZBXfDYKBhmdycJmyOOetqcWAbIqTZEWIWZ2aI25R8Ag2m
-         XLCA==
+        bh=+KYB356hjRUGEK2kucuFd88ZkvKFuYQT9LdCpggTLBM=;
+        b=hz2NPo7VQc448cohplA+OqzluFFWBW7IRMe5yIzDEBHFDJTiUUZSX6Fm87UxX1iEzW
+         1jKqdcC+7js1CF8s6k0gIsz1BioBYITpkbYnpLql3NZTQoKIdwR9YLsCNRKGmyM4SwG6
+         /vTpdyRaXkpLWe5PxF+rRjM40VYW60RYBV0RMGddsSGvWtXBt4cy0Dpq/cARxsgVV0/z
+         4lSeT7FImVbFJnBZj8xZTr1I36yMugHYGxj5hZdgnJieszLYXRZSrMP6T7If4wYitkWL
+         VstyaIULchtp6mx1WiM0aPa74UINql+UkHKxFejp72dydgHZf3aIuCucoU/RzAk2Yo4+
+         MWUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748201175; x=1748805975;
+        d=1e100.net; s=20230601; t=1748201177; x=1748805977;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NUGmk08kPRJlfJsZZ8kitsMWnHXcUPNuZWI1jkR5sn4=;
-        b=dVKcsW8KjxlL7mBX7ByMXMJHgTbHST1htOTbmj0MqADIQxiDqR849vZ2Y2Nj23MABt
-         7b1D9CZipgXSH5YV4DXKnIvpvBPxJNsIZJKkSDKbXkyPKnUwUYSXZwgRD2aw32Idrv3x
-         aQf4pXwnXplJn4scJy2fGReE6o+RKQZvGhvUJfZ7KB4Oea+lvYcWtL6m+QsRUwBVC4Qk
-         foyR3lVD1/gqFN4Y4gCzN8+RYi0md3YJivDvBF9sk7Vvuj8fOSKRA1WmyjudHB9zULSG
-         OhM7crWJoETI0vk2x5wQnvAmCgarAH8zsTAHEtZyEykWQoYYXNe/d+h2Z96d9FixNEjl
-         ToeA==
-X-Forwarded-Encrypted: i=1; AJvYcCWEcs1Go7PYTpqVsk/cAD22jl44fA9qLG/+PzsRYGogS2P0jDcYTGQoXOdPgiLfVoJT4/hOoFq9mtYQNScO@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw24j0TS/NeM8iwqTo1/kG8lrzpGtmjdsdiLtFSR329dQJrv6ab
-	i5xUDdL5LdFZDj7gM+k5aKCKwpVEQbC4Uw7055gsbRqa4uu0+Qtg+cTIi7MmgpskNKXhJOcgxqB
-	3bID+
-X-Gm-Gg: ASbGncsZXskRhvTI4ApFYcZGwchAaREqYWqPe8034d98q0rfv3D5dHtNZP9+KX8q/A3
-	CztW2ApN55M2gbmCHTT008MA+GBPrPW+T8iMnHdrhZGAGS9emoYQjvsr5cxy4zVq8jqUecgnpyB
-	CGZsb+cNizf4cMKKktDwlMBsm3f6PR4bFDgiFv8tGI8VWkRXO0E55NX8tGsQ0ahVQeeH+5TQUnl
-	81YueWyfegk1y66EWgHg+2GkyAqkfFO1qf3OF92rtDVdtBqCbk2BQ7g9OtSF9gKAwvvEofYKkwz
-	IFFyV5OL0tO1SPa04Pw/yBQhXTGI5+mJd6aBWcUY5G+Zak5wOzQSZQG6yEFez8yqjLwWXMI=
-X-Google-Smtp-Source: AGHT+IGDspk3xRlZUcMOomJg+MJ6Cv8DfQb08HEeWxoIWLa0flvIj8xNaDHLS9Dogctf47fotRXlMg==
-X-Received: by 2002:a17:907:270d:b0:acb:1d24:a9e0 with SMTP id a640c23a62f3a-ad85b1e6fbdmr170962466b.11.1748201174891;
-        Sun, 25 May 2025 12:26:14 -0700 (PDT)
+        bh=+KYB356hjRUGEK2kucuFd88ZkvKFuYQT9LdCpggTLBM=;
+        b=kksddo0CEzO2kvFqznaxyK+hyBKgeuZCOBwn0uFsWZNmdBrvCoMw31ghp5MWeaxkIZ
+         cEfZcX9uCXG6cROVSWHstgg9KUwjAhTPNqsOscSos9WhfEeAdYYas6+tgMZNyzS8ZXs0
+         +m1WTK1Td1HkHMnIti2/GmhaX4V04KxYwkOh8CXmquv0pghMRSzJi3zn6ecRk9uWXr3H
+         dMWuHg2rtEv1qQoXlo8mI2WsvA0KNQsbvBRilE79GKzykspCMSRsqga3FK8aFk6N/uZm
+         6JsOWfpYLpZGNGLPRBoHnfkq8g6Z+8svHqbMTnJ44bTDn5bw2boVWPqC/eVlmqCbx/Lw
+         8KlA==
+X-Forwarded-Encrypted: i=1; AJvYcCVVIDEH2idNIypXhCyyX0kRI3Gga1kHblZsijrmENaux5mM8WUHY33+myEvRUKH6MEjhIi1TQBXr4D/VUXZ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy/fj43DNrgPhgyrqBHWcIBV7m/eHUL+RbZFdk0LQiWMsJzAx78
+	6B1CgaTkRYGsYTtA+ga+gPpAJS0SdtIsXf8rFBflm1JgQ/r5sY4lSvzgJBXsK8QYbSRdoeOxRR0
+	zfVrA
+X-Gm-Gg: ASbGncvkyN+wqdxrBJ/YB75i7hGLhmWCkYKnYP0xninZdrRz+T0K+/4xlhG4EL9NBvz
+	K4vaChEAl0kp4F6fkx5Vu77glxd9J7kUaxm3Ha71wOXiaKXTj6mLCgCf0Y/xylEs67P+RhGEIfX
+	afNi16wbZ2ptKqGrUojzPVPqaopmjcMOl0LCx8g02hEuqomf7UZFhUDLJRBOd8N/FsIEkylEK7u
+	mp24ru1UEIobEw9carKbB8l47EsS9qVAcehdrlEOuklBqNpyESp41jlfsvrJfjUABtwZkkO4a/X
+	BpyQvBXxLnkExsHJ5hKzVywSeP4DcnkwV/OQMbhorNwTMZlgFBDEU/Ir4zkkGofqWUo6mI8=
+X-Google-Smtp-Source: AGHT+IHkuoLwwomZCcsBErFL19H6yB+kPnlaQoi4fKoMrOde6G8mnghCGbbT8/M/SSHBkWuXUyowgA==
+X-Received: by 2002:a17:907:2cf8:b0:ad2:23d0:cde3 with SMTP id a640c23a62f3a-ad85b2178famr169938866b.15.1748201177180;
+        Sun, 25 May 2025 12:26:17 -0700 (PDT)
 Received: from [192.168.1.29] ([178.197.223.125])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d047738sm1578899866b.19.2025.05.25.12.26.13
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d047738sm1578899866b.19.2025.05.25.12.26.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 May 2025 12:26:14 -0700 (PDT)
+        Sun, 25 May 2025 12:26:15 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Sun, 25 May 2025 21:26:03 +0200
-Subject: [PATCH 3/5] dmaengine: qcom: gpi: Drop unused
- gpi_write_reg_field()
+Date: Sun, 25 May 2025 21:26:04 +0200
+Subject: [PATCH 4/5] dmaengine: fsl-qdma: Add missing fsl_qdma_format
+ kerneldoc
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250525-dma-fixes-v1-3-89d06dac9bcb@linaro.org>
+Message-Id: <20250525-dma-fixes-v1-4-89d06dac9bcb@linaro.org>
 References: <20250525-dma-fixes-v1-0-89d06dac9bcb@linaro.org>
 In-Reply-To: <20250525-dma-fixes-v1-0-89d06dac9bcb@linaro.org>
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
@@ -96,56 +96,49 @@ Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1171;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1062;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=DTGCxtKKBS1I1ezcV34L8Qi5iTSOukUz7ljm7yYIh1c=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoM27PgAKcZyUOvAe2Df5AqRmgIVPRCSQsc065v
- J0vXKIuBY+JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaDNuzwAKCRDBN2bmhouD
- 1/nYD/93SvlxVjCD1TglYASkqQ2qqr000Y89tUkwwl2SoG+YN6656cSxwO1ACez/CVB+6yR6bxt
- ga+T22HudMKUyp92eidyz10KGRV8qWPl6yv/DpSdOBtd/+3OAjhxX2QBRgeEWuJmSNlq9lSq0z7
- pa1ZX3JqZvoUP/pt+VnLuQed/qp0whCyPJ7KyYbnDYM8SC8mc1QBpoi8m63t6rY3kKEw1svY5U+
- Dua5jFWk76pkInqHzO5li6TwER5w0iCu7qcgOFKYGU4FGppxbjiIMk7zHWjXlQPinlpu4g6SiMX
- fQLfs+uluS5rS0jol1VEPfaOCG5h1GO2lXs1LDmajFgs1tgHQAT4C1Sm1U7s7akP6oZiAUH3dlW
- +FFGMF2udbtXJtzaqiQiBtGCPsE2iNBBE9V5oHZFMGrmSBBbO3Wlp8dHSEN4qaZzufboPLAUKu+
- 1CsRChawkry5babwEB60I5B4IwOXlskk8nP90OH3501BliTpnHfXaXQTJw7G9hmdlujsfUvSfky
- s9vTTuN2cag/K/saGkyswv/H5SegkF+RUQSKHg9zJdTTNqG9Q4NQUzmy7AM1pIdNJJE6kFdM6tu
- fbIfAm9Ip/NenXmCFi+sKeWGwr0C9kJvCFC/GQRI9Q+RArWGPnNrUl2CLN6eHZRQAQHuTLQupG+
- 1JAA+eGmozRwJFg==
+ bh=Sm3IbikRxGrXe/Gygal0RcvZGGE5Vm9xAe0Sy1mv/PU=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoM27QW6O28ENwDMIgLoVAwIdJvteqy1tPicytR
+ BfWmJV0pSqJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaDNu0AAKCRDBN2bmhouD
+ 17GRD/4v8X01UCwnBhEJ/X49zBCMCGI/MAbmL54jLi2/WSqphrmRNW0Y4KOAyfaP9EuJBniGf73
+ bjAlg5nd0qIQrAtppNrjr+IKB6U9yrEKuSjCg8/BwmBWQdmHZ+TvsEXkYYr+SSvSo8bCSlS5p+Q
+ UL897us4/f7Zsv3lu7YjLqd0OhGeAwbnncLzAHWoyLzqemX1aWGVSHjz1SBoi3LCWCGWhOGG+RY
+ SSeFxSUJ/tEfpZAqJqsXIcJhjBiJ6pW3WQ/3ZJvbhSjyNwsLPZwOaYFJwmBA28D8EIplIHpMosU
+ O376GQgalZqkfotPw1w8egRPis/R5P64XDrODtY6EEC7YdFCfYQSGO3/HSS68P17DtBGxw8Gc2S
+ Jy40O38OT4v+KyKpMAMDGVud292G1lfseiHQ+yXSDPytfxjR0VC6w73RbwzlKf6GLoLrFCciYJk
+ 6MZji3NotdKEFMeze0mFxCaBL7lg7PA4qFcCOMRGcpIyFF8b8HobyXdOeBt0ghbidlB3DlB9w4q
+ XOhc6Zd9zfTlbtQCmhEFcot/vAVdQ7WOxrQFsVoW+Wqs4jEpOWxy+3VhvHwma/qH9/OieJDuRWF
+ SvB7jB8N9pNR4k/tbBxHj1v1R4ttV8RkYRlx3e1ZhWoje3ylFkjogHxNuS7vcy8k+gXKywoEIaA
+ MK7VdioVfAQsNBw==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Static function gpi_write_reg_field() is not used, W=1 build:
+Document '__reserved2' and 'cmd' fields of 'struct fsl_qdma_format' to
+fix W=1 warnings:
 
-  gpi.c:573:20: error: unused function 'gpi_write_reg_field' [-Werror,-Wunused-function]
+  fsl-qdma.c:169 struct member '__reserved2' not described in 'fsl_qdma_format'
+  fsl-qdma.c:169 struct member 'cmd' not described in 'fsl_qdma_format'
 
-Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/dma/qcom/gpi.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ drivers/dma/fsl-qdma.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index b1f0001cc99c7066b6d08f53d9381d4fd22588ca..8e87738086b25ac37edbdcd5e237447f3e832e8e 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -569,17 +569,6 @@ static inline void gpi_write_reg(struct gpii *gpii, void __iomem *addr, u32 val)
- 	writel_relaxed(val, addr);
- }
- 
--/* gpi_write_reg_field - write to specific bit field */
--static inline void gpi_write_reg_field(struct gpii *gpii, void __iomem *addr,
--				       u32 mask, u32 shift, u32 val)
--{
--	u32 tmp = gpi_read_reg(gpii, addr);
--
--	tmp &= ~mask;
--	val = tmp | ((val << shift) & mask);
--	gpi_write_reg(gpii, addr, val);
--}
--
- static __always_inline void
- gpi_update_reg(struct gpii *gpii, u32 offset, u32 mask, u32 val)
- {
+diff --git a/drivers/dma/fsl-qdma.c b/drivers/dma/fsl-qdma.c
+index 823f5c6bc2e1a5bc5e30ea7175bff31e53ff8744..21e13f1207cbe6e82a45c828b93edcadf88b52d1 100644
+--- a/drivers/dma/fsl-qdma.c
++++ b/drivers/dma/fsl-qdma.c
+@@ -148,6 +148,9 @@
+  * @__reserved1:	    Reserved field.
+  * @cfg8b_w1:		    Compound descriptor command queue origin produced
+  *			    by qDMA and dynamic debug field.
++ * @__reserved2:	    Reserved field.
++ * @cmd:		    Command for QDMA (see FSL_QDMA_CMD_RWTTYPE and
++ *			     others).
+  * @data:		    Pointer to the memory 40-bit address, describes DMA
+  *			    source information and DMA destination information.
+  */
 
 -- 
 2.45.2
