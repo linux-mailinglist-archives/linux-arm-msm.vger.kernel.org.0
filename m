@@ -1,52 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-59351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03B17AC366A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 21:25:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EA68AC3675
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 21:26:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 715BD1894478
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 19:25:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C338B18947DF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 May 2025 19:26:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB445262FD7;
-	Sun, 25 May 2025 19:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18BC125D8FB;
+	Sun, 25 May 2025 19:26:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AvZPy+hL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r0gH0rhG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DAE25FA05;
-	Sun, 25 May 2025 19:25:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369F9154BF5
+	for <linux-arm-msm@vger.kernel.org>; Sun, 25 May 2025 19:26:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748201105; cv=none; b=Ois9/PhRKEvEeO8EF2QWRCQ4YIv2bhHSG75AvSmCcQAqpU50a1zQDZVB2+E+STX5280ArpU1nQamHESn0CnmJFFDB/s4O5hqR5PllUYz6IMQ1JaCOKJ0F8YsrvqyBF8t74bksJXXeQ7fqb5tsH5n6pHOI7qVlpsr6hohJ+v0rMA=
+	t=1748201174; cv=none; b=Iv7EPro7Kb9CGUq477MnelK9NzshucdP6LDm00BKUS369j4jt75fpJACEMK/fOiV0i1V6Y4PotVfgo/jIFLjBXTEYOGP+3MOJo0Ou054QboZjGvYFiurarf0Mi6tz3Eptd9cfN7WFTv33mN6USd5ymBORZcWOZIa/dbN9hkNV+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748201105; c=relaxed/simple;
-	bh=xfa1GFv94euoBmf+fvs/VYYsw3L+ReTgBg+jQpKo9H8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VzaHjPfHrSo8ihlyJ8Cav24XDCYMjVsp2lb0X7xunZrdIltWk0xf4emLE4P6KAVrLLWVkAo6S+pEx6Fxm6Y6EFzvE4gHo1NU4hg5muRENOyZUi7QWIeQbG5VCq8S4un8qSdhgUmVXXaN3JWp9Dfq50MiIWqkEnje+FwyYocqYXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AvZPy+hL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B8313C4CEF5;
-	Sun, 25 May 2025 19:25:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748201104;
-	bh=xfa1GFv94euoBmf+fvs/VYYsw3L+ReTgBg+jQpKo9H8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=AvZPy+hLwPFBZcxJRrQjCVCaTvYtNmtUMVa3paTeEhCCDtjRp5j5X8XiU3FNTQktZ
-	 hf8hEeguI+ula2/2elxeixWATjYnnA7RVGmXeE/saESdz3jnH/9eT7gVgj2yLGwmW3
-	 y8RzXjDX09wy7QOZw51QwoWbkSgnnsDtkGJoOyJH6SC9vkizyjwuTOSM/EUPsARl4a
-	 KzQ90UU/jCH/2YhZbEF/EptGBBwEjWWAs1kEb0xoY9bZ6wIyTV950MzzK9X1h6Vuf/
-	 Xm9gw9W3B3Y1QG0+TicHHiGvTIGBJArH0I/tsg+XREeUFtfAYx1Eze1qwuMMut86og
-	 MLcoOPomJeGaw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD464C5AE59;
-	Sun, 25 May 2025 19:25:04 +0000 (UTC)
-From: Vincent Knecht via B4 Relay <devnull+vincent.knecht.mailoo.org@kernel.org>
-Date: Sun, 25 May 2025 21:25:04 +0200
-Subject: [PATCH v2 4/4] arm64: dts: qcom: msm8939: Add camss and cci
+	s=arc-20240116; t=1748201174; c=relaxed/simple;
+	bh=jE7IlBQlM0F3rIIfVaJxXemnfRPX/+Oc/0OR0K58/Tw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TiG/pzyRa4KeQfav9wJV0PTfFoZJWb3fBhruXbFNk3ySq/lySdt8xQ+CCM3qemTJxSk86WTHPj4KnKnIrnvATInFW4O0HNMFRO63L7z47tZHXBgbJiqk4IGrf9JAshtkjjm7cEza4zRUlw6go4ngao6eyuiwXVkF0kMBV/zQfDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r0gH0rhG; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5f6f86580ecso347345a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 May 2025 12:26:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1748201171; x=1748805971; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eYX2VxTDW3I8LwPElWAPGFQp/0/pEA9CwguT2DQks9Y=;
+        b=r0gH0rhGMr+1FVNQ68Flvrf0W2kPz0akxB3UVMJtJbgWWQK8qP6SxMqKHVrmIwgj7k
+         HiOmPnUWK53GR5jy/wW1lp8BcMc1BOowSeWuRfB+7aOm+i0r6d2pfvia9DtYPnOp9Wfm
+         ciUiq86UBte0Ro19dtLG4AwNJ+Hwk5GDyDFqK+GB4ss/kOdtQIiqzxLpNP1SNy1FPluc
+         YytPbes7tpHvxpIxrh2Wq8NZCafk8RmvPToSWnqminbp+og5aiPJoPXI67D42Qz6HjkN
+         3JyJKPUmRrKULsOVp5xRUxSZU6s/jCvOpntd8wrw346lyGlyMvdpiSctkeAiq6zMI0ng
+         Cn4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748201171; x=1748805971;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eYX2VxTDW3I8LwPElWAPGFQp/0/pEA9CwguT2DQks9Y=;
+        b=EBfwbA6xeRJe6WAz3pA0kYYxAdgiVXWjowhx4/BLGxhpZzrhpCNfcJLbWyH1m/ukO+
+         n1xeTblgy1/sLXtFxpbSeWTe2+9ohfxzRq4CatnjrvBkoGF974XWCUmnc+Et7kgWGAti
+         4NnULKMJlPSSZmsBocNWK1kYAjbsp5CspHynkhGYGUWB8BIZqVbGVvV86QI4W8/3k3OB
+         SSKmLuM0hCp9qoQOjpY8YN1P1nMACtVwyLqmZ1aH7GUaVNYdKnN0L2ZcTfrExQqIbI9b
+         /TOHio9Acv8wjfoWXrLaoFR+uJppynTqc29B4KLbPRn8z7rJOzEHZXjYnCllWI5BzugV
+         FY7g==
+X-Forwarded-Encrypted: i=1; AJvYcCUmxWoelIHAO3luAx7WfSWbd5cFe8wBM8Pst9fGJYhiO3/aqx2pGFFm2FtW/r2gAZws2pfGsJoKrEExjJdT@vger.kernel.org
+X-Gm-Message-State: AOJu0YwveBIMMDiRCDooqbcmG9Jir23KE4VHlEFEz+KHGboNwTSpt2YW
+	UgP4VZWdm/82rHwlPwFH4v0nG0I3hZ1GLNKy+czdxv0b9tUI2E7dD8IAuhDkLKRk0OAdYZJ5FP4
+	zDxCM
+X-Gm-Gg: ASbGncsNfJM8lXgoTAu7+rvWR1iYEJsRNuJS/hnr55l2ZMiZ/9R8k/3n3X8KPPiwJMe
+	4s0/Cj1dC0oXMeOsRDj4PzQYN+Hwbfy/5nfieFOl7U+HPvVT+WEQzFi6pH2QftkuytujWGdjMvj
+	yEzVKgWe2X6fjAfgyEBd3Whv6I/eIjjHJufd1qKLBuaSbS3BYYoixaYM0qKQ91SCC4A7WV7tJPq
+	lMv27s4Lv2OYALMrao9btABdrs+rB/k5SNODWkdIY/+QnQPcWmQV3cXtklnF9QGCDZ9nLGHopDQ
+	g4+kOqDqMib85jcMGm9nFFX/F9Zl45SEpVKKdU464ADcNW8y/aMTp9K0ZR71uFPHIvmmd5o=
+X-Google-Smtp-Source: AGHT+IGY5IBd1z66/du4TlRG+M4D5MbhMOYD3sYEIBAG5BcmYK4WZDTuR9Zx90TCb9Ox6R+6iJuIjw==
+X-Received: by 2002:a17:907:1df1:b0:ad5:2b38:aa6d with SMTP id a640c23a62f3a-ad85b2ba866mr163136166b.13.1748201171003;
+        Sun, 25 May 2025 12:26:11 -0700 (PDT)
+Received: from [192.168.1.29] ([178.197.223.125])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d047738sm1578899866b.19.2025.05.25.12.26.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 May 2025 12:26:10 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 0/5] dmaengine: Minor fixes and cleanups
+Date: Sun, 25 May 2025 21:26:00 +0200
+Message-Id: <20250525-dma-fixes-v1-0-89d06dac9bcb@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,226 +83,62 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250525-camss-8x39-vbif-v2-4-6d3d5c5af456@mailoo.org>
-References: <20250525-camss-8x39-vbif-v2-0-6d3d5c5af456@mailoo.org>
-In-Reply-To: <20250525-camss-8x39-vbif-v2-0-6d3d5c5af456@mailoo.org>
-To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>, 
- phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- Vincent Knecht <vincent.knecht@mailoo.org>
+X-B4-Tracking: v=1; b=H4sIAMhuM2gC/y2MQQrCMBBFrxJm7UCMDEKvIl2k6URnkVQzUQqld
+ 3ewLt//j7eBchNWGNwGjT+islSD88lBesR6Z5TZGIIP5CkQziVilpUV/UTXnDhRDh7Mfzb+Hab
+ fxoMbv96W7McIU1TGtJQifXCV147/7AXGff8CnALkdIwAAAA=
+X-Change-ID: 20250525-dma-fixes-0b57fcec5f20
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Vinod Koul <vkoul@kernel.org>, 
+ Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>, 
+ Frank Li <Frank.Li@nxp.com>, Rob Herring <robh@kernel.org>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1748201103; l=5427;
- i=vincent.knecht@mailoo.org; s=20250414; h=from:subject:message-id;
- bh=3AXxGKiiFPkzccexXUftpqL5zw7vJ6WvoTGCbe02/GY=;
- b=lEUMBlrqSF9DTrOqEZFL0Xj98/mk/4TFd99iAWjxVqewLbbBy2YNxWFB1YYCX5hsMtpewaSKX
- 0FDo7Yqrf86CjKwR6D02deZAva87KmJpGiNNDs+gws7rXll4hl5m9Ms
-X-Developer-Key: i=vincent.knecht@mailoo.org; a=ed25519;
- pk=MFCVQkhL3+d3NHDzNPWpyZ4isxJvT+QTqValj5gSkm4=
-X-Endpoint-Received: by B4 Relay for vincent.knecht@mailoo.org/20250414
- with auth_id=377
-X-Original-From: Vincent Knecht <vincent.knecht@mailoo.org>
-Reply-To: vincent.knecht@mailoo.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=962;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=jE7IlBQlM0F3rIIfVaJxXemnfRPX/+Oc/0OR0K58/Tw=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoM27MQSnocEls/HhQypawyfu0BaUs0u0+VFH8/
+ /LERg9+uXGJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaDNuzAAKCRDBN2bmhouD
+ 1zf3EACNIKCh/Z6bW2K+8696jp9c86f5Qs4KVSWacPTu2cHmrNBJIn0WXa5/WYZcbiC2lr6sBaK
+ k+VkqgovuPRqo9KI+SX9nkZlYDV9k1qyFvTxznPWnfgkwYi8XK7Dn9+OBE6Arpc8PKM/AtHONXs
+ NWHz/Mtti04KKnhOfalOUfCtQDoHvlMhpzQlSczCdyWVLT4EJ8tjPkWkAkhjUI+bpKhafYzDq2X
+ IzefUKT8V0k2cALakyGpcCIwbPsMksym6/Iy8yr6Ie3hA/g6hktIK+AUrEOGZjUIPpikxeFSFtY
+ hyKyE6s7Bz5HqDqcy1d9NrVSeVZJaIwStYfPuHKy3c4E2o9ZqBPyftfQPwAhR93dkamRFWTLCKf
+ /DAVoPB7vI5ao0CtQCW3Sf7dCy5PBhlpK9TiPYtssm3isdrxuGMOzUyAfxYHfsNZT35G8hlUTlW
+ /tmKhhniJazrUly4qWvzW9WMUU3Xlu1e5VthTvRqYfxHnUHXpVGIwn8A87nqm3ZIiZS5RyaOjUd
+ U2BIg8e/2eiL/rf7oNg9iF3+hqTRpOQ9FSHz274Xf3GTE/Oz9Cq7nKxo3K6hnbuX6ZDgtWsB6of
+ W01lh05oTYSiFRn8fVKSnfx19Z2BX0INqDhjcCRr8KTuH7PyXHMqnhtS2fhH+cBeT+QseEBa6Gh
+ YNKMsau1w76OABw==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-From: Vincent Knecht <vincent.knecht@mailoo.org>
+Just few cleanups and fixes.  Funny thing that the reported cast error
+I fix the second time.
 
-Add the camera subsystem and CCI used to interface with cameras on the
-Snapdragon 615.
+Best regards,
+Krzysztof
 
-Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
 ---
- arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi |   4 +
- arch/arm64/boot/dts/qcom/msm8939.dtsi        | 146 +++++++++++++++++++++++++++
- 2 files changed, 150 insertions(+)
+Krzysztof Kozlowski (5):
+      dmaengine: dw-edma: Drop unused dchan2dev() and chan2dev()
+      dmaengine: fsl-dpaa2-qdma: Drop unused mc_enc()
+      dmaengine: qcom: gpi: Drop unused gpi_write_reg_field()
+      dmaengine: fsl-qdma: Add missing fsl_qdma_format kerneldoc
+      dmaengine: mmp: Fix again Wvoid-pointer-to-enum-cast warning
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi
-index adb96cd8d643e5fde1ac95c0fc3c9c3c3efb07e8..659d127b1bc3570d137ca986e4eacf600c183e5e 100644
---- a/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi
-@@ -11,6 +11,10 @@
- #include "msm8939.dtsi"
- #include "pm8916.dtsi"
- 
-+&camss {
-+	vdda-supply = <&pm8916_l2>;
-+};
-+
- &mdss_dsi0 {
- 	vdda-supply = <&pm8916_l2>;
- 	vddio-supply = <&pm8916_l6>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-index 68b92fdb996c26e7a1aadedf0f52e1afca85c4ab..082542b54d96adaed3e6b49bc3682005ea018a72 100644
---- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-@@ -1434,6 +1434,145 @@ mdss_dsi1_phy: phy@1aa0300 {
- 			};
- 		};
- 
-+		camss: isp@1b08000 {
-+			compatible = "qcom,msm8939-camss";
-+			reg = <0x01b08000 0x100>,
-+			      <0x01b08400 0x100>,
-+			      <0x01b08800 0x100>,
-+			      <0x01b0ac00 0x200>,
-+			      <0x01b00030 0x4>,
-+			      <0x01b0b000 0x200>,
-+			      <0x01b00038 0x4>,
-+			      <0x01b00020 0x10>,
-+			      <0x01b0a000 0x500>,
-+			      <0x01b10000 0x1000>,
-+			      <0x01b40000 0x200>;
-+			reg-names = "csid0",
-+				    "csid1",
-+				    "csid2",
-+				    "csiphy0",
-+				    "csiphy0_clk_mux",
-+				    "csiphy1",
-+				    "csiphy1_clk_mux",
-+				    "csi_clk_mux",
-+				    "ispif",
-+				    "vfe0",
-+				    "vfe0_vbif";
-+
-+			clocks = <&gcc GCC_CAMSS_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0PHY_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0PIX_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0RDI_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1PHY_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1PIX_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1RDI_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2PHY_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2PIX_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2RDI_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0PHYTIMER_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1PHYTIMER_CLK>,
-+				 <&gcc GCC_CAMSS_CSI_VFE0_CLK>,
-+				 <&gcc GCC_CAMSS_ISPIF_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_TOP_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_VFE0_CLK>,
-+				 <&gcc GCC_CAMSS_VFE_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_VFE_AXI_CLK>;
-+			clock-names = "ahb",
-+				      "csi0",
-+				      "csi0_ahb",
-+				      "csi0_phy",
-+				      "csi0_pix",
-+				      "csi0_rdi",
-+				      "csi1",
-+				      "csi1_ahb",
-+				      "csi1_phy",
-+				      "csi1_pix",
-+				      "csi1_rdi",
-+				      "csi2",
-+				      "csi2_ahb",
-+				      "csi2_phy",
-+				      "csi2_pix",
-+				      "csi2_rdi",
-+				      "csiphy0_timer",
-+				      "csiphy1_timer",
-+				      "csi_vfe0",
-+				      "ispif_ahb",
-+				      "top_ahb",
-+				      "vfe0",
-+				      "vfe_ahb",
-+				      "vfe_axi";
-+
-+			interrupts = <GIC_SPI 51 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 52 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 153 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 78 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 79 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 55 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 57 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "csid0",
-+					  "csid1",
-+					  "csid2",
-+					  "csiphy0",
-+					  "csiphy1",
-+					  "ispif",
-+					  "vfe0";
-+
-+			iommus = <&apps_iommu 3>;
-+
-+			power-domains = <&gcc VFE_GDSC>;
-+
-+			status = "disabled";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+				};
-+			};
-+		};
-+
-+		cci: cci@1b0c000 {
-+			compatible = "qcom,msm8916-cci", "qcom,msm8226-cci";
-+			reg = <0x01b0c000 0x1000>;
-+			interrupts = <GIC_SPI 50 IRQ_TYPE_EDGE_RISING>;
-+			clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CCI_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CCI_CLK>,
-+				 <&gcc GCC_CAMSS_AHB_CLK>;
-+			clock-names = "camss_top_ahb",
-+				      "cci_ahb",
-+				      "cci",
-+				      "camss_ahb";
-+			assigned-clocks = <&gcc GCC_CAMSS_CCI_AHB_CLK>,
-+					  <&gcc GCC_CAMSS_CCI_CLK>;
-+			assigned-clock-rates = <80000000>,
-+					       <19200000>;
-+			pinctrl-0 = <&cci0_default>;
-+			pinctrl-names = "default";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			status = "disabled";
-+
-+			cci_i2c0: i2c-bus@0 {
-+				reg = <0>;
-+				clock-frequency = <400000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
- 		gpu: gpu@1c00000 {
- 			compatible = "qcom,adreno-405.0", "qcom,adreno";
- 			reg = <0x01c00000 0x10000>;
-@@ -1498,6 +1637,13 @@ apps_iommu: iommu@1ef0000 {
- 			#iommu-cells = <1>;
- 			qcom,iommu-secure-id = <17>;
- 
-+			/* vfe */
-+			iommu-ctx@3000 {
-+				compatible = "qcom,msm-iommu-v1-sec";
-+				reg = <0x3000 0x1000>;
-+				interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
-+			};
-+
- 			/* mdp_0: */
- 			iommu-ctx@4000 {
- 				compatible = "qcom,msm-iommu-v1-ns";
+ drivers/dma/dw-edma/dw-edma-core.c  | 12 ------------
+ drivers/dma/fsl-dpaa2-qdma/dpdmai.c |  5 -----
+ drivers/dma/fsl-qdma.c              |  3 +++
+ drivers/dma/mmp_tdma.c              |  2 +-
+ drivers/dma/qcom/gpi.c              | 11 -----------
+ 5 files changed, 4 insertions(+), 29 deletions(-)
+---
+base-commit: 781af674a40df73239e8907d5862fd6fbcf01a9a
+change-id: 20250525-dma-fixes-0b57fcec5f20
 
+Best regards,
 -- 
-2.49.0
-
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
