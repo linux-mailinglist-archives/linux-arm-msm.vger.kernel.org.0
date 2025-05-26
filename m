@@ -1,102 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-59391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D7D9AC3B4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:14:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79AA7AC3B4F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:14:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 12EAC1895D4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:14:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 36AC51626D0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:13:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56E001E7C19;
-	Mon, 26 May 2025 08:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 935A63595E;
+	Mon, 26 May 2025 08:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="iCPb/AcH"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="GSXFkOTy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E121E5B72;
-	Mon, 26 May 2025 08:13:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB66126BFF;
+	Mon, 26 May 2025 08:13:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748247228; cv=none; b=GsKkEF95uNRQI4vSSx48WL0w5aaThrxg79L2GT0ptxAA+Qrzs3na9jXbE7o/9uMba/5T+gKQ7DdndQ4n+rs8jkVpufrU6Gfx6g6knDGvWF1cwqaMPAT8aDOq/jPEbQMwBZ+xKnZHkLpLZXUBC2QPyIp57h+lA7IIfNJOU0nfN1M=
+	t=1748247224; cv=none; b=kN0eASsWFs5GXYqlfscoffqADpY9QMBgvFF+gfZGDHsBKFA19GoPgsgltERHEo/kdF6DDjuuO20aXPPoxctshjK5SN8JLtiaQmaMZSTwy9SJnQvygApIjsuzvyvmKE+CChlDIhhf7Q3YKLs4omHk9oPO85Ymi+ZheByG3w3101o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748247228; c=relaxed/simple;
-	bh=+itlrWYzfhQ7YhSm6Rwr1H/9x36GVhI08lVyKj97jHk=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Ng9IbER/3EGYoS0yYpX4gy2rnEH+UOLO6IbrPGQwKj1DO5koSBNYGZEyi77vs+fymVvIbAbJP4G1rNwgkq0qATN4UcO8qf31Dz9TWZoa2wsEedh6pkuPa2mhDESuoL70olWlbk7PsOMn7e+taeehjV7yZLxdifev4hs112eL7QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net; spf=pass smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=iCPb/AcH; arc=none smtp.client-ip=168.119.38.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sipsolutions.net
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-	Resent-Cc:Resent-Message-ID; bh=+itlrWYzfhQ7YhSm6Rwr1H/9x36GVhI08lVyKj97jHk=;
-	t=1748247226; x=1749456826; b=iCPb/AcHDU6xG2x4fpv6MMjLVYp219VtBpAxWy4oXe75HWE
-	n3V4EhYUOqImhZx0CH9FVoqMBysskPOjz5H12PUByFqzmrd0mZQ7wI5mKG1uYL7MW5ylnHuoU16Q7
-	o/n8foKno8h0UK6qJ1PLN/AyJb+wRmw9TyyFLl/MD5Qh9mRT8qrxrcju7sEcUD2NOM973DbrJtKgu
-	AUUbYpVHxltjFXq+7RVjCj4HUxzOFA2A4pfDvML4Fjw2qvdu/u8l8XtoDvQ2qolb0xmt4lfGhwC1+
-	aq2c3uGUz+XPZ1zQH/7CNJPSYBQxA3WyBDOZmVHLgUSH1QJ31arq88CmDTqYksXA==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.98.2)
-	(envelope-from <johannes@sipsolutions.net>)
-	id 1uJSxj-0000000DOyV-1Dst;
-	Mon, 26 May 2025 10:13:35 +0200
-Message-ID: <23aadbd78d3585c900c579c26f360011cf1ca830.camel@sipsolutions.net>
-Subject: Re: [PATCH v2 2/6] ASoC: aoa: Use helper function
- for_each_child_of_node_scoped()
-From: Johannes Berg <johannes@sipsolutions.net>
-To: Ai Chao <aichao@kylinos.cn>, perex <perex@perex.cz>, tiwai
- <tiwai@suse.com>,  "kuninori.morimoto.gx"
- <kuninori.morimoto.gx@renesas.com>, lgirdwood <lgirdwood@gmail.com>,
- broonie <broonie@kernel.org>, jbrunet	 <jbrunet@baylibre.com>,
- "neil.armstrong" <neil.armstrong@linaro.org>, khilman	
- <khilman@baylibre.com>, "martin.blumenstingl"	
- <martin.blumenstingl@googlemail.com>, "shengjiu.wang"
- <shengjiu.wang@gmail.com>,  "Xiubo.Lee" <Xiubo.Lee@gmail.com>, festevam
- <festevam@gmail.com>, nicoleotsuka <nicoleotsuka@gmail.com>,  shawnguo
- <shawnguo@kernel.org>, "s.hauer" <s.hauer@pengutronix.de>,
- "srinivas.kandagatla"	 <srinivas.kandagatla@linaro.org>
-Cc: linux-sound <linux-sound@vger.kernel.org>, linux-kernel	
- <linux-kernel@vger.kernel.org>, linuxppc-dev
- <linuxppc-dev@lists.ozlabs.org>,  linux-renesas-soc
- <linux-renesas-soc@vger.kernel.org>, linux-arm-kernel
- <linux-arm-kernel@lists.infradead.org>,  linux-amlogic
- <linux-amlogic@lists.infradead.org>, imx <imx@lists.linux.dev>, kernel
- <kernel@pengutronix.de>,  linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Date: Mon, 26 May 2025 10:13:33 +0200
-In-Reply-To: <eb1ddeb3-06b6-4ac5-b20a-06b92c7f1363@kylinos.cn>
-References: <2aq0nyvyf7t-2aq4hsc7kp6@nsmail7.0.0--kylin--1>
-	 <7e708dcc98c6f0f615b1b87d190464cfe78be668.camel@sipsolutions.net>
-	 <eb1ddeb3-06b6-4ac5-b20a-06b92c7f1363@kylinos.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
+	s=arc-20240116; t=1748247224; c=relaxed/simple;
+	bh=uORZKIv+jWoyhEOoZVbHfLhvUmceHasoafLASmLyLB8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qYMX5XQJ5WGChzMANvMecg6r0DmM+V5isEZH8LNoBBt5WsDTMjT/jvQ5OihWII+VI2GI7ap8D09KEW1A+W5g1UzJEi1r1vRNL7vObzUfERLYK83sekcuGZGFfbkMcvnoBc5Beg8HRdhuDoxjmGyIlmVYaBUKhVt6LHBs7xEnw/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=GSXFkOTy; arc=none smtp.client-ip=217.70.183.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 49AB6432E9;
+	Mon, 26 May 2025 08:13:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1748247220;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=yPkgd48Z0fU+G9rkmci+M6NLNIeowZJAaBi38kKpI/4=;
+	b=GSXFkOTy/bPwBna80bRK3A7S6b3mQ+AVesQBtrPG37HgK95uhweCltEuc5zaZpIHH12Isz
+	bTaikgUSgYB7xMY42Wo2O4BAU+Zu8xP0qMDfcc8h+LdRx+0GH6LbbzschM/rBy404ZyYAI
+	U5ChMgTkEJS0H61LTNX6qGwf27MJDBLYmnBOzRN6BICHwvbZ1sHoLfxPGR472mtWBRrO8L
+	16UqoF4kUa4LJGebsY0yfkXQereAoynP34DDGInSKFivas4mTF1B/Hr/O8xcuVx/SqF2TP
+	xDFSa68fGAAneBXVz6uqRodG3rgs2DM0sbzUCXQx5vKDSpHa4b/UDa7AIYs2KA==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Gabor Juhos <j4g8y7@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>,  Md Sadre Alam
+ <quic_mdalam@quicinc.com>,  Varadarajan Narayanan
+ <quic_varada@quicinc.com>,  Sricharan Ramabadhran
+ <quic_srichara@quicinc.com>,  Richard Weinberger <richard@nod.at>,
+  Vignesh Raghavendra <vigneshr@ti.com>,  linux-spi@vger.kernel.org,
+  linux-mtd@lists.infradead.org,  linux-arm-msm@vger.kernel.org,
+  linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] spi: spi-qpic-snand: avoid memory corruption
+In-Reply-To: <20250525-qpic-snand-avoid-mem-corruption-v1-0-5fe528def7fb@gmail.com>
+	(Gabor Juhos's message of "Sun, 25 May 2025 19:05:34 +0200")
+References: <20250525-qpic-snand-avoid-mem-corruption-v1-0-5fe528def7fb@gmail.com>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Mon, 26 May 2025 10:13:39 +0200
+Message-ID: <87r00b23ik.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-malware-bazaar: not-scanned
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddujedtudculddtuddrgeefvddrtddtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffgffkfggtgfgsehtqhertddtreejnecuhfhrohhmpefoihhquhgvlhcutfgrhihnrghluceomhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepffeghfejtdefieeguddukedujeektdeihfelleeuieeuveehkedvleduheeivdefnecukfhppeeltddrkeelrdduieefrdduvdejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepledtrdekledrudeifedruddvjedphhgvlhhopehlohgtrghlhhhoshhtpdhmrghilhhfrhhomhepmhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepuddupdhrtghpthhtohepjhegghekhiejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsghrohhonhhivgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepqhhuihgtpghmuggrlhgrmhesqhhuihgtihhntgdrtghomhdprhgtphhtthhopehquhhitggpvhgrrhgruggrsehquhhitghinhgtrdgtohhmpdhrtghpthhtohepqhhuihgtpghsrhhitghhrghrrgesqhhuihgti
+ hhntgdrtghomhdprhgtphhtthhopehrihgthhgrrhgusehnohgurdgrthdprhgtphhtthhopehvihhgnhgvshhhrhesthhirdgtohhmpdhrtghpthhtoheplhhinhhugidqshhpihesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-Sasl: miquel.raynal@bootlin.com
 
-On Mon, 2025-05-26 at 16:12 +0800, Ai Chao wrote:
-> Hi Johannes:
->=20
-> > > "simplifies the code" is no need to callof_node_put() .
-> > Fair. Except that's not what you _actually_ changed here. Like I said,
-> > either it's buggy before or after.
-> >=20
-> In the function i2sbus_probe, it not return a struct device_node, so , I=
-=20
-> think function for_each_child_of_node_scoped is better than=20
-> for_each_child_of_node.
+Hi Gabor,
 
-You still haven't explained why it's even correct.
+On 25/05/2025 at 19:05:34 +02, Gabor Juhos <j4g8y7@gmail.com> wrote:
 
-johannes
+> The 'spi-qpic-nand' driver may cause memory corruption under some
+> circumstances. The first patch in the series changes the driver to
+> avoid that, whereas the second adds some sanity checks to the common
+> QPIC code in order to make detecting such errors easier in the future.
+>
+> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+> ---
+> Gabor Juhos (2):
+>       spi: spi-qpic-snand: reallocate BAM transactions
+>       mtd: nand: qpic_common: prevent out of bounds access of BAM
+> arrays
+
+Are these two paches related somehow? Or can we apply them in
+two different trees? If yes, please send the patches separately, which
+eases our work.
+
+Thanks,
+Miqu=C3=A8l
 
