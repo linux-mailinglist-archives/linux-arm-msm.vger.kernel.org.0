@@ -1,63 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-59396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09F7FAC3BA9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:27:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 030DDAC3BAE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:27:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B3FC316E501
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:27:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B801F165007
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:27:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E81C1DE3CB;
-	Mon, 26 May 2025 08:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD03E1A23A6;
+	Mon, 26 May 2025 08:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mV1/NZ4U"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IDkwSIT6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFA041C64;
-	Mon, 26 May 2025 08:26:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE02198E81
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 08:27:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748248018; cv=none; b=HwqLdfpewDUWcUrBAragVtf6x5fKehy6/tfvCR3FdQ6ZFLsbPKKRs01/jhVe4IzRrCUQ83rL9EiRfyBJFJX1Y5P1ecNDvitxwl/sVL7F6Aa1erSXw6QpNvZd+s9heCf8lSFAUxorRquwCe6bD2StUGmNY0032zBzhVxT28GQpe0=
+	t=1748248058; cv=none; b=DiWh3p7DbUonhq2v/uz3KqyGGZZD8IhGJeilrdjmd87my98YOrpjWRbeebN/LSvg5CpCz+KgHgk52KdZHi+kjRtqTjf7X4b3Fp61xDfVASacqZ3zNJSdV69LaBQgFHnpbLMfoX95Yp5pga4K99Nt4/jvAmW+oCwebXQAAmP2GMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748248018; c=relaxed/simple;
-	bh=0McZ0gQ9QSprE/u+YU+0FI5C9czsGBnBCLpeWD6/XJ0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WT6O0BnpnfGuEmTwJLA1kl6nSZpperKa02g8eFiWy4oc7II+VKyiMOmkY56Sn90mnMnuKG4H9Ij5dbv7WWywYXJjsVSparS+gWr7IFX7DtrSTVgv3B3r1X9fWLXE0Ev2bcnlwLAqbMbM+C96wK+CckmohyPEdFB6NQjhsZn455E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mV1/NZ4U; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54PNF1hs012378;
-	Mon, 26 May 2025 08:26:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	w5MkyRhBDoPh8kgsB2TQmnk0WBaUQ4YSc85Jvh7YWYo=; b=mV1/NZ4UZpX4+q33
-	9KqV07X3dr4q6/HLj8c0ENhP5HMEhXD9C+2l5r/izJWwdaaOytuIqYRa4djRbz1E
-	yBUMAgkR0rSTc/Lx0p6giOZxwGXpFI666UrmkvBFrsLZQFopzuAC6FTCrNHBiWs3
-	xCkx+bJdP9hxhwIjlm4Tap+WYCDVCJqv6Bl1JuFr7EIE1W2hM5D8CqW/LV+XtNSc
-	SrO38yRQroPCINVoFfjx/gbt7xX6cmaJrxx6f6JbvWH592lW5xvYheixbrqCO+zC
-	F6+j7VE1nGLQlf4t/nBKIArGF1KLBeA24bhkneRw+BBVGe1tk1O4Ty4wWkdIstM7
-	xbeQ7w==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u6b5khbf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 May 2025 08:26:50 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54Q8Qn1c002816
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 May 2025 08:26:49 GMT
-Received: from [10.231.216.119] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 26 May
- 2025 01:26:46 -0700
-Message-ID: <0b188dd2-c0c9-4125-83b4-86fb35b237f7@quicinc.com>
-Date: Mon, 26 May 2025 16:26:25 +0800
+	s=arc-20240116; t=1748248058; c=relaxed/simple;
+	bh=RQFxDDJX4sTV7Tlbw+d572ayFyLoBX+0/QWAEvVzFYQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=aA916yXvQ1zIDgQrYtVVtMRs8L2zkKrapNf7EgYq810VffOcRNDRp/0Ykp5KMzV4WotEyu2ylT36DAt6ZTQL9Pd0Bnh057qaBDxv/XSbdWPOlHXBj+rz4O461/vJFkVjRftWkH3vrPMCfIdY4jTRiV3khUrViG8nIZyKdj7EM8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IDkwSIT6; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43edecbfb94so27849665e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 01:27:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1748248055; x=1748852855; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=//l+SpZWLdaex2pzGku8nTnokra2GDwP8t/4Vkwd2wU=;
+        b=IDkwSIT6nLnZsCbmXPHm49A5Q9+1d5xw7MWq+QUIpyvRHNe8zFSCI3qeZnj9DOUpRF
+         olEr77sIHGvXq6S6ZvDYj8smH+DQA+neEN+8rR5cSp/kHov5j/akcE01V7FUYa1lJxso
+         qYS0mqU/pl+P8eOjSvA4jVsj3QZ7/SesBnalZGb+RvBQyUS2oy3ShltFC50BzUZQnwGT
+         8kgycay8QxbBzS1Z6MI4cZZqw6ZXIvIhMoWAThIv0PV9bp6TMUP59+kJmgq8Rw3R8eK9
+         /3zyH1ghLaXxqZNPCfE/rR6j+uYV8+WonRC9Wz78Xfet2rxK8T2aqxgR7+BgR2PowB9y
+         8CzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748248055; x=1748852855;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=//l+SpZWLdaex2pzGku8nTnokra2GDwP8t/4Vkwd2wU=;
+        b=mwhuLCCbMsYF2sONa8CPwYe9DhiapXkj2CVYN8+0Xh/2MfOJXPdFk1CW+CXoeAQ3iq
+         yUU0wMTCRgUCTpg8gfIDOMz5QsmrscOMNZ7NTt9XOrEggmmF0WF/DIDUeT7UaiqJZGaf
+         aUF60ngNEwY3KTpMLpLTBML0wgymm7FC+y6dJJMEnfgvUjEpyfMxz5f1uAh1V96z+nqO
+         u+2ExYpd55LDRI6UJhJ285hMRhZT40tFFMIAeKtYAh8+Y3Bf/vyQuVlaxu4QT40PUKkl
+         0fuJNhIzA5WWkgkD0nTmzTFrrU2ywT6Twj7QNpY2Fh6E28N9acKc3Du7xSqjpl2dngER
+         ibSA==
+X-Forwarded-Encrypted: i=1; AJvYcCX2Si/UO3ag5ol4r5tEOWObxjnKRpNgVAhBRhZ4DmTOZTXGT3aKcoaidvvbtIjxXF3v1qkadqiKF67guAHR@vger.kernel.org
+X-Gm-Message-State: AOJu0YwjgZOt4AUeNIHjVB7KBGPz0kW2tAU99ZL/eo0xot8Zf49kZUWq
+	QgAKO4fl5QTK0mJvUNCOhPBQLYMwFZuLClts8oy+CVggONWmhyCeDPZKhwie+DzmINY=
+X-Gm-Gg: ASbGnctPsoYLvP3f6wamvd91AEj9FxCvhpajx9BiJ83SHHqtnyzoIvfuhAgSzxFykL+
+	00kygK2qRpf7J390Ipq+zFW9QwRASAW3tEEn6y7A3DUyHfRkV+C8SnWvDEk2F2co7YCiL1hj5hF
+	gD8eNyduE8aW8GutwDH2hR/WeBGWCgpe76nRkXAxk2jZq1sLA8z17HACBlxqt+HnXpmvYS7rcZl
+	uwF/zKSIxUhGrz8pGDBJAd8SyQAdqZHMCYcoxZLRtLvW93P8sWYfOVRlwB0Lx9czOmjrguHeTw/
+	nKD2wfUyrlGkgIanHSAU/vWmGM2Fr3BwGz+grXJlRUbU5VEfyWaXJIqKQa1qmiBwzKvVGD11drt
+	lr2w0nRnYlIR6jOTCiIHwPdGf059m
+X-Google-Smtp-Source: AGHT+IFzu9DWaslxdEFSgpjGR3l4yPYyJktjmTZ/FF1vEJqTSXIz10xyxcwYQuLFRxS0fhlqWlfWhA==
+X-Received: by 2002:a05:600d:108:10b0:442:d9f2:c753 with SMTP id 5b1f17b1804b1-44d5bb93604mr27003115e9.26.1748248054978;
+        Mon, 26 May 2025 01:27:34 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:485c:38a6:3d01:f4a4? ([2a01:e0a:3d9:2080:485c:38a6:3d01:f4a4])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f3dd99edsm226889525e9.36.2025.05.26.01.27.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 May 2025 01:27:34 -0700 (PDT)
+Message-ID: <70b6d885-ca52-4731-9a78-80dd25248e2f@linaro.org>
+Date: Mon, 26 May 2025 10:27:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,199 +84,148 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] clk: qcom: videocc: Use HW_CTRL_TRIGGER flag for
- video GDSC's
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Stephen
- Boyd" <sboyd@kernel.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        Taniya Das
-	<quic_tdas@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20250218-switch_gdsc_mode-v4-0-546f6c925ae0@quicinc.com>
- <20250218-switch_gdsc_mode-v4-2-546f6c925ae0@quicinc.com>
- <cf244e11-96b3-49cd-8daa-df9c91435e6e@linaro.org>
-Content-Language: en-US
-From: Renjiang Han <quic_renjiang@quicinc.com>
-In-Reply-To: <cf244e11-96b3-49cd-8daa-df9c91435e6e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: neil.armstrong@linaro.org
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 5/5] power: supply: qcom-battmgr: Add charge control
+ support
+To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>, =?UTF-8?Q?Gy=C3=B6rgy_Kurucz?=
+ <me@kuruczgy.com>, Sebastian Reichel <sre@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
+ David Collins <david.collins@oss.qualcomm.com>, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ kernel@oss.qualcomm.com
+References: <20250523-qcom_battmgr_update-v1-0-2bb6d4e0a56e@oss.qualcomm.com>
+ <20250523-qcom_battmgr_update-v1-5-2bb6d4e0a56e@oss.qualcomm.com>
+ <db0e40b6-22f3-46aa-b35d-7a8729370ddf@kuruczgy.com>
+ <1b1c4617-0e5b-40c8-9a66-d243b48c0977@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <1b1c4617-0e5b-40c8-9a66-d243b48c0977@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=ZcodNtVA c=1 sm=1 tr=0 ts=683425ca cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8
- a=KKAkSRfTAAAA:8 a=yKG4cNEaDZQrYnTI7YEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI2MDA3MCBTYWx0ZWRfX/UxKCsHMYu9M
- trRY7zoYZ7VkRMDHUb2OBhObmhhxIu2GzaqMHPDPRAOJWD971ycRKCTp3xDNqneF9fiZ+Sso8vN
- aXSwGFDLYDMic8XA9zy5XMdCpZ/rAJZF7U4/QFgP1Vbt9Am+Me6ucX6A3xWvEY2llXE01U3GTlv
- +brDDFV351voum9ilgWMUqXq4NOj5wzlNHZqlhpMPY8YPjCG/qjsXaTueZ3ztC8fsNUj8GreWyP
- 49N1vcnTcnICewIr5kJ2SK6mRfBIQVtBQeQKvD5W/4oYlA32a+faMUrNIiWvDPvGquXZtu7KV9H
- shqhG2b6TMwN0pR888w1Uc3LJd177S1wXG4wjuw6BVtqK/NoSlBSzp5pCwkilJIFSYNi8a7/aoA
- z/DzO9/NApnB60Fn4ZZmIqAUs8/+qAtxVOSJXBJWdFKT32qucTOtn7ydDx6bHxkj6/XTr4t4
-X-Proofpoint-GUID: DTHybJFK3v-Kzyl27L32aODXXqN7V7My
-X-Proofpoint-ORIG-GUID: DTHybJFK3v-Kzyl27L32aODXXqN7V7My
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-26_04,2025-05-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0 priorityscore=1501
- spamscore=0 clxscore=1011 suspectscore=0 lowpriorityscore=0 phishscore=0
- impostorscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505260070
 
-
-On 3/19/2025 6:11 AM, Bryan O'Donoghue wrote:
-> On 18/02/2025 10:33, Renjiang Han wrote:
->> From: Taniya Das <quic_tdas@quicinc.com>
+On 26/05/2025 08:19, Fenglin Wu wrote:
+> 
+> On 5/24/2025 5:29 AM, György Kurucz wrote:
+>> Hi!
 >>
->> The video driver will be using the newly introduced
->> dev_pm_genpd_set_hwmode() API to switch the video GDSC to HW and SW
->> control modes at runtime.
->> Hence use HW_CTRL_TRIGGER flag instead of HW_CTRL for video GDSC's for
->> Qualcomm SoC SC7180, SDM845, SM7150, SM8150 and SM8450.
+>>> +static int qcom_battmgr_set_charge_control(struct qcom_battmgr *battmgr,
+>>> +                       u32 target_soc, u32 delta_soc)
+>>> +{
+>>> +    struct qcom_battmgr_charge_ctrl_request request = {
+>>> +        .hdr.owner = cpu_to_le32(PMIC_GLINK_OWNER_BATTMGR),
+>>> +        .hdr.type = cpu_to_le32(PMIC_GLINK_REQ_RESP),
+>>> +        .hdr.opcode = cpu_to_le32(BATTMGR_CHG_CTRL_LIMIT_EN),
+>>> +        .enable = cpu_to_le32(1),
+>>> +        .target_soc = cpu_to_le32(target_soc),
+>>> +        .delta_soc = cpu_to_le32(delta_soc),
+>>> +    };
+>>> +
+>>> +    return qcom_battmgr_request(battmgr, &request, sizeof(request));
+>>> +}
+>>> +
+>>> +static int qcom_battmgr_set_charge_start_threshold(struct qcom_battmgr *battmgr, int soc)
+>>> +{
+>>> +    u32 target_soc, delta_soc;
+>>> +    int ret;
+>>> +
+>>> +    if (soc < CHARGE_CTRL_START_THR_MIN ||
+>>> +            soc > CHARGE_CTRL_START_THR_MAX) {
+>>> +        dev_err(battmgr->dev, "charge control start threshold exceed range: [%u - %u]\n",
+>>> +                CHARGE_CTRL_START_THR_MIN, CHARGE_CTRL_START_THR_MAX);
+>>> +        return -EINVAL;
+>>> +    }
+>>> +
+>>> +    /*
+>>> +     * If the new start threshold is larger than the old end threshold,
+>>> +     * move the end threshold one step (DELTA_SOC) after the new start
+>>> +     * threshold.
+>>> +     */
+>>> +    if (soc > battmgr->info.charge_ctrl_end) {
+>>> +        target_soc = soc + CHARGE_CTRL_DELTA_SOC;
+>>> +        target_soc = min_t(u32, target_soc, CHARGE_CTRL_END_THR_MAX);
+>>> +        delta_soc = target_soc - soc;
+>>> +        delta_soc = min_t(u32, delta_soc, CHARGE_CTRL_DELTA_SOC);
+>>> +    } else {
+>>> +        target_soc =  battmgr->info.charge_ctrl_end;
+>>> +        delta_soc = battmgr->info.charge_ctrl_end - soc;
+>>> +    }
+>>> +
+>>> +    mutex_lock(&battmgr->lock);
+>>> +    ret = qcom_battmgr_set_charge_control(battmgr, target_soc, delta_soc);
+>>> +    mutex_unlock(&battmgr->lock);
+>>> +    if (!ret) {
+>>> +        battmgr->info.charge_ctrl_start = soc;
+>>> +        battmgr->info.charge_ctrl_end = target_soc;
+>>> +    }
+>>> +
+>>> +    return 0;
+>>> +}
+>>> +
+>>> +static int qcom_battmgr_set_charge_end_threshold(struct qcom_battmgr *battmgr, int soc)
+>>> +{
+>>> +    u32 delta_soc = CHARGE_CTRL_DELTA_SOC;
+>>> +    int ret;
+>>> +
+>>> +    if (soc < CHARGE_CTRL_END_THR_MIN ||
+>>> +            soc > CHARGE_CTRL_END_THR_MAX) {
+>>> +        dev_err(battmgr->dev, "charge control end threshold exceed range: [%u - %u]\n",
+>>> +                CHARGE_CTRL_END_THR_MIN, CHARGE_CTRL_END_THR_MAX);
+>>> +        return -EINVAL;
+>>> +    }
+>>> +
+>>> +    if (battmgr->info.charge_ctrl_start && soc > battmgr->info.charge_ctrl_start)
+>>> +        delta_soc = soc - battmgr->info.charge_ctrl_start;
+>>> +
+>>> +    mutex_lock(&battmgr->lock);
+>>> +    ret = qcom_battmgr_set_charge_control(battmgr, soc, delta_soc);
+>>> +    mutex_unlock(&battmgr->lock);
+>>> +    if (!ret) {
+>>> +        battmgr->info.charge_ctrl_start = soc - delta_soc;
+>>> +        battmgr->info.charge_ctrl_end = soc;
+>>> +    }
+>>> +
+>>> +    return 0;
+>>> +}
 >>
->> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
->> ---
->>   drivers/clk/qcom/videocc-sc7180.c | 2 +-
->>   drivers/clk/qcom/videocc-sdm845.c | 4 ++--
->>   drivers/clk/qcom/videocc-sm7150.c | 4 ++--
->>   drivers/clk/qcom/videocc-sm8150.c | 4 ++--
->>   drivers/clk/qcom/videocc-sm8450.c | 4 ++--
->>   5 files changed, 9 insertions(+), 9 deletions(-)
->>
->> diff --git a/drivers/clk/qcom/videocc-sc7180.c 
->> b/drivers/clk/qcom/videocc-sc7180.c
->> index 
->> d7f84548039699ce6fdd7c0f6675c168d5eaf4c1..dd2441d6aa83bd7cff17deeb42f5d011c1e9b134 
->> 100644
->> --- a/drivers/clk/qcom/videocc-sc7180.c
->> +++ b/drivers/clk/qcom/videocc-sc7180.c
->> @@ -166,7 +166,7 @@ static struct gdsc vcodec0_gdsc = {
->>       .pd = {
->>           .name = "vcodec0_gdsc",
->>       },
->> -    .flags = HW_CTRL,
->> +    .flags = HW_CTRL_TRIGGER,
->>       .pwrsts = PWRSTS_OFF_ON,
->>   };
->>   diff --git a/drivers/clk/qcom/videocc-sdm845.c 
->> b/drivers/clk/qcom/videocc-sdm845.c
->> index 
->> f77a0777947773dc8902c92098acff71b9b8f10f..6dedc80a8b3e18eca82c08a5bcd7e1fdc374d4b5 
->> 100644
->> --- a/drivers/clk/qcom/videocc-sdm845.c
->> +++ b/drivers/clk/qcom/videocc-sdm845.c
->> @@ -260,7 +260,7 @@ static struct gdsc vcodec0_gdsc = {
->>       },
->>       .cxcs = (unsigned int []){ 0x890, 0x930 },
->>       .cxc_count = 2,
->> -    .flags = HW_CTRL | POLL_CFG_GDSCR,
->> +    .flags = HW_CTRL_TRIGGER | POLL_CFG_GDSCR,
->>       .pwrsts = PWRSTS_OFF_ON,
->>   };
->>   @@ -271,7 +271,7 @@ static struct gdsc vcodec1_gdsc = {
->>       },
->>       .cxcs = (unsigned int []){ 0x8d0, 0x950 },
->>       .cxc_count = 2,
->> -    .flags = HW_CTRL | POLL_CFG_GDSCR,
->> +    .flags = HW_CTRL_TRIGGER | POLL_CFG_GDSCR,
->>       .pwrsts = PWRSTS_OFF_ON,
->>   };
->>   diff --git a/drivers/clk/qcom/videocc-sm7150.c 
->> b/drivers/clk/qcom/videocc-sm7150.c
->> index 
->> 14ef7f5617537363673662adc3910ddba8ea6a4f..b6912560ef9b7a84e7fd1d9924f5aac6967da780 
->> 100644
->> --- a/drivers/clk/qcom/videocc-sm7150.c
->> +++ b/drivers/clk/qcom/videocc-sm7150.c
->> @@ -271,7 +271,7 @@ static struct gdsc vcodec0_gdsc = {
->>       },
->>       .cxcs = (unsigned int []){ 0x890, 0x9ec },
->>       .cxc_count = 2,
->> -    .flags = HW_CTRL | POLL_CFG_GDSCR,
->> +    .flags = HW_CTRL_TRIGGER | POLL_CFG_GDSCR,
->>       .pwrsts = PWRSTS_OFF_ON,
->>   };
->>   @@ -282,7 +282,7 @@ static struct gdsc vcodec1_gdsc = {
->>       },
->>       .cxcs = (unsigned int []){ 0x8d0, 0xa0c },
->>       .cxc_count = 2,
->> -    .flags = HW_CTRL | POLL_CFG_GDSCR,
->> +    .flags = HW_CTRL_TRIGGER | POLL_CFG_GDSCR,
->>       .pwrsts = PWRSTS_OFF_ON,
->>   };
->>   diff --git a/drivers/clk/qcom/videocc-sm8150.c 
->> b/drivers/clk/qcom/videocc-sm8150.c
->> index 
->> daab3237eec19b727d34512d3a2ba1d7bd2743d6..3024f6fc89c8b374f2ef13debc283998cb136f6b 
->> 100644
->> --- a/drivers/clk/qcom/videocc-sm8150.c
->> +++ b/drivers/clk/qcom/videocc-sm8150.c
->> @@ -179,7 +179,7 @@ static struct gdsc vcodec0_gdsc = {
->>       .pd = {
->>           .name = "vcodec0_gdsc",
->>       },
->> -    .flags = HW_CTRL,
->> +    .flags = HW_CTRL_TRIGGER,
->>       .pwrsts = PWRSTS_OFF_ON,
->>   };
->>   @@ -188,7 +188,7 @@ static struct gdsc vcodec1_gdsc = {
->>       .pd = {
->>           .name = "vcodec1_gdsc",
->>       },
->> -    .flags = HW_CTRL,
->> +    .flags = HW_CTRL_TRIGGER,
->>       .pwrsts = PWRSTS_OFF_ON,
->>   };
->>   static struct clk_regmap *video_cc_sm8150_clocks[] = {
->> diff --git a/drivers/clk/qcom/videocc-sm8450.c 
->> b/drivers/clk/qcom/videocc-sm8450.c
->> index 
->> f26c7eccb62e7eb8dbd022e2f01fa496eb570b3f..4cefcbbc020f201f19c75c20229415e0bdea2963 
->> 100644
->> --- a/drivers/clk/qcom/videocc-sm8450.c
->> +++ b/drivers/clk/qcom/videocc-sm8450.c
->> @@ -347,7 +347,7 @@ static struct gdsc video_cc_mvs0_gdsc = {
->>       },
->>       .pwrsts = PWRSTS_OFF_ON,
->>       .parent = &video_cc_mvs0c_gdsc.pd,
->> -    .flags = RETAIN_FF_ENABLE | HW_CTRL,
->> +    .flags = HW_CTRL_TRIGGER | RETAIN_FF_ENABLE,
->>   };
->>     static struct gdsc video_cc_mvs1c_gdsc = {
->> @@ -372,7 +372,7 @@ static struct gdsc video_cc_mvs1_gdsc = {
->>       },
->>       .pwrsts = PWRSTS_OFF_ON,
->>       .parent = &video_cc_mvs1c_gdsc.pd,
->> -    .flags = RETAIN_FF_ENABLE | HW_CTRL,
->> +    .flags = HW_CTRL_TRIGGER | RETAIN_FF_ENABLE,
->>   };
->>     static struct clk_regmap *video_cc_sm8450_clocks[] = {
->>
->
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> These function names sound quite generic, but AFAIU this patch is only adding charge control support for the SM8550. Is sc8280xp and x1e80100 also expected to be supported using the same qcom_battmgr_charge_ctrl_request format?
+> 
+> No, sc8280xp and x1e80100 don't support it. So I didn't add the support for them.
 
-Hi @Bjorn
+And what about SM8650 and SM8750 ?
 
-Could you help pick this into videocc?
+Neil
 
--- 
-Best Regards,
-Renjiang
+> 
+> These are generic functions are similar to "qcom_battmgr_update_charge_time" and "qcom_battmgr_update_info" which are only used for sc8280xp platform. Even right now charge control is only supported in mobile platforms starting from SM8550, however, it could be potentially supported in battery management firmware of any future platforms and the same functions could be reused.
+> 
+>> Thanks,
+>> György
+> 
 
 
