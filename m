@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-59419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CED56AC3E0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 12:50:13 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1CDAAC3E12
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 12:50:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 50DEA189737C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:50:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 447DC7A62FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:49:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36A861F5838;
-	Mon, 26 May 2025 10:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB2C31F866B;
+	Mon, 26 May 2025 10:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rU0L5bMV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oFuxcXNc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FB51F4199
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 10:50:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12B51F5423
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 10:50:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748256606; cv=none; b=YQWbMjRurgnBlnNENIJCnfQw1d6wFL7EBw1B0mIrQdmnypnU+MqjEtH4HCykg36LgKJL9zV6IzGydiUpCG93pi9o8Khv7LfdGDPIyWrpx3HbA0siufusAxUBZB+viJRPd6WfzqptOIE8oS55XFrNXMTpkj3cRqM+c5qWHYjDRKw=
+	t=1748256607; cv=none; b=q2UUNCs4OXw+XC8yeRSIj56jyA+RVoATjJHZdfVCF7/vj0lK5hUvNzmPRc+6jo9RZ2r+bc4Ar31ATsn60TdasELgcpEwQxHxd6Msh2XWwJ4U8noAEqNT01irE0L3ytoSAuVkd99n3UtlhAmccTW3XhQ2OegdErpq38p5sSNrxMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748256606; c=relaxed/simple;
-	bh=WbpB9upkv3/HDk+JtSehQw0Ct5NABTO0UPSvKkYXBgE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=AAo1RkH3VvJCcVVrVnHTcQD97M/64nV2cqW3fmlg/XinzPloYGETXMm1btYBDPUW7FITO0XpoB0k/5QBoYDHNEkH6nvcA7BchYSwU/X7Y/q/HcU99tXipjoCWkUPaK29oiac8FGTP851fh5qDu4TNt+l+4rkAUaEvhWHyoH8g8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rU0L5bMV; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1748256607; c=relaxed/simple;
+	bh=XGChspJP5I3LQLqq5KcsHIKk69mbsIBA6WisBz3c/1c=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=LVQ5VgDGz70bMTyNxLnV+2qz2DxmUBwg+StnpgHDyhCYL4IinHxV+VHTF7AAsI76DArw9duyC/KD06r55sT/wYHEpcOtwhxb+gHTzAmxyNFjbTAtTCxTewukKfXweHJ3aBU/cK5IssJ6ELK0EKADGatVq3OL0fzF8NSKHpmIfMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oFuxcXNc; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43d72b749dcso3633165e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 03:50:03 -0700 (PDT)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43d72b749dcso3633255e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 03:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748256602; x=1748861402; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=r4lITYVXHPG+JFCrFUyQZsYC0j5Z3JlSEM4hag1CnWg=;
-        b=rU0L5bMVA/9qcPQVPhAiyuvTxnIQOYPgLYOEV9oZz+9qyrlsl8d3dhewne4+esXoGR
-         i5RGVGswwh2itHz0qgfTVuQrz6nr3I/itdBlrS3kmJpntZAmnNA3onl036GivDzqcEgF
-         xFz+aMf2QQNZqN7Mo8IzLPaefaHtvbxx6up3ymRCfgOsHxYn98hK6kwHtFfDojPe9HJL
-         yl7iODrfeaY4Ycqx5HTm5m89hg1QeLmrCE4mrufzdIVSrmb6FXLR5XHKJhO4YnkAzN7Q
-         jNmeUbh8XNG/8RaV+aivdGB2qFDuoiq0st2VVIfEV6oKKFobxnBGgBAxteOWbfE4Jj8q
-         bFRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748256602; x=1748861402;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1748256604; x=1748861404; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=r4lITYVXHPG+JFCrFUyQZsYC0j5Z3JlSEM4hag1CnWg=;
-        b=ZZkXy0FzDF6HRE+z8cerzb7UmA/i3hSpwOKJ3eX2171it9H0TRzdEo55TiWXnssGrl
-         Xh44duc0Qpo/aJVi+IigCnVPeSkxQ5NWiuNLE4KZ5meOe73HdU9LqSZp5HlWRDC4bNPt
-         vH7VQvWeMW1Uahd83X93rlbgMqLkLQteZXyXMBX2lOv+zbBnAt0NFoYLC0B0U2ANh2GL
-         DR/uE9OzB7mWB+RmXa1fsRg8hihrCXlip4PFhLONJektOFC+gvuxKqKfdPMFdUuZ+Q6M
-         FHhDHzMUl1kCSweIdX1jxgbYIo0Jq47tCUP3ZdxcEIGof6z7y7MD2WLx/yCwitnDdFwI
-         CA1A==
-X-Forwarded-Encrypted: i=1; AJvYcCWi+VAucXGTzSKc9e2hjwojE6r1GXkACCBlu7GlOInB7iOIcgEWygt8l5DtKbIti4Abnis31GSuMM2nJKHf@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy51s2TV901beraM00GtZf9/celrlYMeuXPYI+R7JmL2h+Y+Ukp
-	9FyxEI0gmflzjjnAtihlG3k2e9HNHHbv9dm3eTRajl6Me04EamwyAtUfSmPyym5aNoY=
-X-Gm-Gg: ASbGnct2nIG86i31mMlH6r/o30LamSgqkUVNw/MmMSFOqt8CgEI68VsqCX919juTbKe
-	wQ09DCvGmoUAWIKqZG+jGowWQQ94MkPtPc6RvmaCyqz8XDmiDim0qsm/CqOOngrweObP+t6daoZ
-	gWuYkPMm/HEkDuYdWJgfNmFheYz21bZecIHa9kWMvAkAgDzrcIKamuxk60BFD5DU1uOUAlyrbgZ
-	OtOOKyOj+QSYBm33+Z6mjkgTPED/R3eYCun4qAxZ+moluQ8nkP7iVfFKsl1aPuNHz0+vqS/WrfE
-	0Yb3CfZZUR3iDch3hpauxs/AFbDbSmmMG4NejZQVG7bYoSNCeOe9Dr/D9hVl4jbFc5LOi6g=
-X-Google-Smtp-Source: AGHT+IFTCow9aqRgGawC6WRupjB7jYfRrQO5KpOeG1VtSzVc+AOaepEj65qG+3tyNe2uLXjkg3HTig==
-X-Received: by 2002:a05:600c:314f:b0:43d:fa58:81d2 with SMTP id 5b1f17b1804b1-44c939c15b7mr24734825e9.9.1748256601649;
-        Mon, 26 May 2025 03:50:01 -0700 (PDT)
+        bh=qFXCm+Uh4tsObSJSuPLxOgv+0sGR9msvlsEdl0EYMLI=;
+        b=oFuxcXNcc/xdNE57fPwx+5yg/aFrR2NQLLRslgRt6M0ulVYPUPHySHyqOvMmWw4PRG
+         GTVcAz2luafG934MDWPjedSuhmHS6tCZExIOgo/7ZwuVLYRluv6wH8I3gAinhfPEhQgS
+         hgcpIioEYfLdTUunBvnUrAGUUbuloGhYGdGLyNUvO6rJeMq+k+vJiBvSaUthEbTVhwL3
+         JAPcMNKme9JXoWqxAExUx8OJ9EYb8lyYuvBkV+wfVmeSWNVzZJkIv8iV7nejvKQKfYUf
+         /ouSCb1TDWo/+IJzx70BDPJE/2qm4i7tBmuDLfEfQ7zRTrbrxYcorm4YYf53S6cAddNU
+         jInA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748256604; x=1748861404;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qFXCm+Uh4tsObSJSuPLxOgv+0sGR9msvlsEdl0EYMLI=;
+        b=pFOpiXadQ/9Fd8sMNg5lzElcS5c1Ro3QU2Y7EMdypxQ+lD+TVUZs96PFlVJCCQnsrP
+         rcES4S+I9i96yqStAQhQPEeT+a1Mf2as8zMGvf2w3deH5De2VGM5ujvKXVs3CD+nx46A
+         5Ags1IUhIZxJJR6/jdnkOeN9O3qq6RTY9uefQml3EegOehmpDIhSx+g+ewJy9ddZJ7qu
+         4L2ZiyJd4UACgAFIbqZsQ0BNXqhauVKfpHfPyhklFZuNV6Y9pZviz6pZKm/r8AzOThAm
+         +CBg/7pknjrrxe8pvzXAA6RYSRWlLg+SQ4dVB/BQK4lofbUra+RLuT0R5nWRYE9kL37n
+         94SQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWcoV7S8yZD4kZEhWm0KeM47kr8lP1NSrlURzBs6qkXOSiPw5zMX0/361/vt1f413PmxCc1HV22rPaQGoIR@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWsZd7XPOTDTIfC/83yhCQJws9wcdqbx7nF78yOUSdEuQMltgR
+	F6MUxR5YObFxiScVD234Zq6Pl/N3/M6WRb1W3HRI+kz8NuZ+8wWvCBqp9Qwo8abg8U8=
+X-Gm-Gg: ASbGnctWSglPtMPbzzubchNyN9scA6OGpGhZzb6CZLRL99wIEdFyDSyFSGgs+HPqned
+	kJggYnMamPIWGNq6ySby4u2kX//wDsQss4mxVSWQ92qV4habVxZtXQD7raCIBNBXr9uXwIFscCb
+	klxrT1oHbiUuROWiiYcT2Fjx5RKRpzI7VD55ZF8idcLe+iT2ITXS4PGcoDQFjcicWvCej2+51E+
+	N0Z54psEnETn312Qs91gScQ4lVUvGEF4AqT+jutT4tIJXGMfK6YM1tGLNCV55HX6tT9CDJMrO5V
+	dMWqKd57pQlubzJrQYucNe/uMRZXkPWrdjQzU+9unxneDehkXYeJc8IynZmn9UDkBdmatxc=
+X-Google-Smtp-Source: AGHT+IHYHftMvEfeiSKYWstcFFrN43xpqYIuFKIcRUyEfc0gwSeBaOs0vjH9Mu5CZOZZ/7pihewLcw==
+X-Received: by 2002:a05:600c:314f:b0:43d:fa58:81d2 with SMTP id 5b1f17b1804b1-44c939c15b7mr24735175e9.9.1748256604027;
+        Mon, 26 May 2025 03:50:04 -0700 (PDT)
 Received: from [192.168.1.29] ([178.197.223.125])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f73d4b68sm236337215e9.23.2025.05.26.03.50.00
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f73d4b68sm236337215e9.23.2025.05.26.03.50.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 May 2025 03:50:00 -0700 (PDT)
+        Mon, 26 May 2025 03:50:02 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 0/6] ASoC: codecs: wcd93xx: Few simplifications of code and
- extend wcd939x
-Date: Mon, 26 May 2025 12:49:49 +0200
-Message-Id: <20250526-b4-asoc-wcd9395-vdd-px-v1-0-64d3cb60313b@linaro.org>
+Date: Mon, 26 May 2025 12:49:50 +0200
+Subject: [PATCH 1/6] ASoC: codecs: wcd937x: Simplify with
+ devm_regulator_bulk_get_enable()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,10 +84,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAE1HNGgC/3XMyw6CMBCF4Vchs3aSXihSXsWwgOmg3QC2WEkI7
- 24DC924/E9yvg0iB88RmmKDwMlHP4055KUAenTjndG73KCEMsKoCvsSuzgRvslZbQ0m53BekUl
- eta5174SCfJ4DD3494Ft7duDnK/vLOX75pvjF//gHhoK4KrWtB0vUJAntvn8AYg3uasIAAAA=
-X-Change-ID: 20250526-b4-asoc-wcd9395-vdd-px-ec173383bd02
+Message-Id: <20250526-b4-asoc-wcd9395-vdd-px-v1-1-64d3cb60313b@linaro.org>
+References: <20250526-b4-asoc-wcd9395-vdd-px-v1-0-64d3cb60313b@linaro.org>
+In-Reply-To: <20250526-b4-asoc-wcd9395-vdd-px-v1-0-64d3cb60313b@linaro.org>
 To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
  Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
  Srinivas Kandagatla <srini@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -96,56 +96,135 @@ Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1586;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3852;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=WbpB9upkv3/HDk+JtSehQw0Ct5NABTO0UPSvKkYXBgE=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoNEdR7qFvr6UL1ZKTX3h/FDIAzezQEzI4GYoa2
- L4h6FAFDLuJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaDRHUQAKCRDBN2bmhouD
- 1w1ZD/9MVoUXjC9vO2SEnpFp8EXEhxpV1ONhPJ6ST2hcJMe1hbdgGCKoOaN64U9Yr9d0bAEVvxR
- FbiX2DxbctoAxw4NhIA5XumxqO2mQoE0RZPqNWVyZ1P+EJw73qjQOIK3AaSMcWom6Vprh+Om7Jl
- ccO3YbuMTwJacvJMz6UV4AEuC9zWp/pc52b0Kpb6TLR9xQwrsSwISF/9zJdzrL6Hz+mdtmKHGbN
- PreHzQAPbqJAXIcPvdr9YpsxGU3W3u0shKAnJiIAtYNHMDVjisj/8YsgRidBZ2FHbWQD0Zq0Sdz
- nSVxOWgUpgoeyAwCElaSZb7wsqDm5w7H5TctZXUTu5zAKb7IO0ZB1Y0rC+8vC+BWH/JqPAJdyiT
- MSjODoEyLNpEZW8CokmtSr5vMLriSCZUZ5E6L/L2LLtdm73VLEnw/CDEtuEOWv10E/9UN3StNB9
- UGtimW4YwJ3u/qqeuNjFclZbZBmYYosOv9GGxsBezyDHZ6cl1HZ/tvIPMAyl5SAfX8h+eWk4sCm
- Qg08A85sGt0lBCpPy+HuiKhnzMM4Oe35hn3XleMS5etsx+FRLUyaqHg4z6yclFLSc9WRdxxAPH3
- 3hGOoTL9nmLUVxXFq4TDwMS4DV6/vnwHP+8mTbnPv4ZMYYxEGUEyh8oD4G7ZQz9KWHFTYsk5Uag
- vUoAi/jyY1lo1fw==
+ bh=XGChspJP5I3LQLqq5KcsHIKk69mbsIBA6WisBz3c/1c=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoNEdSNq1JlnADTyFmOYOva9S2yE0qZLeRmm4Ke
+ fgfaCsJr2OJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaDRHUgAKCRDBN2bmhouD
+ 11J6D/9AQADKnL5YeUoI8wafKTT22RpydZbuOjd0qKPDS3tzMmFKm1DhAr6ZUeFLfGbusE3Y2wC
+ OC/4r9LWc7yKKAF2cZpQtQC9/s1FTB1g9rUrreSKKH+1X11uoJsfgJva2VN0rkUIm97G3MuguE4
+ U3GxzF/ExBW/ES5cCfThYZ8ABKxHrp2CdcLYu6ofFKKyd+epTFjI/196h+CVSdZVkFEHnxlUfz8
+ dHqpAz5wbGvwooH9fSME3CpZTqMxLzjYjfSJVet4lfLPR2Oyxps6KTUYnCiEAJeSZ9dMIywnNhF
+ s6B3uvNgPd1Cr36Rve/zTIuY8MlIqjAxLLt1+X5c5qtn8Kz+j7gAaUSoLiaDxu9H+bAVVKk0Svl
+ CkKVahcAvhU9RmDpmi9zYdaSkZSqoEuUd80vCw7PoM1F8321hBSdDK3rgH0gKMQu6rFbRSrhPP7
+ 4o3xlPkhL2yOS5UPmMXU/aCAMSpc+XTSk0otabTcgJFgbeZIVbcpuaFhM2/PlNb3l7QTzu9Dq+h
+ 7g6aWxVKofxbKpQsr4yqVJuGiXMhQEV5vCW1iGtqBfRXgkce8fdULzZ6nxXNN+5AfdJjiqa+1tH
+ WE4R+OgaBl2oNLDuku6bU5Y3UNJfIdV0pTO6z12Gk3rvYHIW5yhkbSXw4Vdu2fBkP28Ko6v5stA
+ vO5g48qsQ9i2FwA==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Make the WCD93xx codec drivers simpler using
-devm_regulator_bulk_get_enable() and obtain missing VDD_PX supply on
-wcd939x.
+Drop separate regulator get and enable in probe() path with
+devm_regulator_bulk_get_enable(), which simplifies cleanup paths and
+device remove().
 
-Context depends on fixes:
-https://lore.kernel.org/r/20250526-b4-b4-asoc-wcd9395-vdd-px-fixes-v1-0-0b8a2993b7d3@linaro.org
-
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
-Krzysztof Kozlowski (6):
-      ASoC: codecs: wcd937x: Simplify with devm_regulator_bulk_get_enable()
-      ASoC: codecs: wcd938x: Simplify with devm_regulator_bulk_get_enable()
-      ASoC: codecs: wcd939x: Simplify with devm_regulator_bulk_get_enable()
-      ASoC: codecs: wcd939x: Simplify return from devm_gpiod_get() error
-      ASoC: dt-bindings: qcom,wcd939x: Document missing VDD_PX supply
-      ASoC: codecs: wcd939x: Add VDD_PX supply
+ sound/soc/codecs/wcd937x.c | 31 +++++++++----------------------
+ sound/soc/codecs/wcd937x.h |  1 -
+ 2 files changed, 9 insertions(+), 23 deletions(-)
 
- .../devicetree/bindings/sound/qcom,wcd939x.yaml    |  3 ++
- sound/soc/codecs/wcd937x.c                         | 31 +++++----------
- sound/soc/codecs/wcd937x.h                         |  1 -
- sound/soc/codecs/wcd938x.c                         | 35 +++++------------
- sound/soc/codecs/wcd939x.c                         | 45 +++++++---------------
- 5 files changed, 34 insertions(+), 81 deletions(-)
----
-base-commit: 3717d2adda1ad07b4ecf3bef144ee489cc1563a1
-change-id: 20250526-b4-asoc-wcd9395-vdd-px-ec173383bd02
-prerequisite-change-id: 20250526-b4-b4-asoc-wcd9395-vdd-px-fixes-0ce64398f9cc:v1
-prerequisite-patch-id: 104000f7254b9cc81be49af9ca584544718e52f1
-prerequisite-patch-id: 230fcd1b712c5a3199e7c9d8250e98e5d55c0a40
-prerequisite-patch-id: ecdbe74955eb7b710f72af1e3cf32ccac52890d5
+diff --git a/sound/soc/codecs/wcd937x.c b/sound/soc/codecs/wcd937x.c
+index b9df58b86ce953427e01ffb8c7eb7e52f9c2392a..92765a8693fbf87e2ba53fef75657ffb1b5fdb8f 100644
+--- a/sound/soc/codecs/wcd937x.c
++++ b/sound/soc/codecs/wcd937x.c
+@@ -90,7 +90,6 @@ struct wcd937x_priv {
+ 	struct irq_domain *virq;
+ 	struct regmap_irq_chip *wcd_regmap_irq_chip;
+ 	struct regmap_irq_chip_data *irq_chip;
+-	struct regulator_bulk_data supplies[WCD937X_MAX_BULK_SUPPLY];
+ 	struct snd_soc_jack *jack;
+ 	unsigned long status_mask;
+ 	s32 micb_ref[WCD937X_MAX_MICBIAS];
+@@ -113,6 +112,10 @@ struct wcd937x_priv {
+ 	atomic_t ana_clk_count;
+ };
+ 
++static const char * const wcd937x_supplies[] = {
++	"vdd-rxtx", "vdd-px", "vdd-mic-bias", "vdd-buck",
++};
++
+ static const SNDRV_CTL_TLVD_DECLARE_DB_MINMAX(ear_pa_gain, 600, -1800);
+ static const DECLARE_TLV_DB_SCALE(line_gain, 0, 7, 1);
+ static const DECLARE_TLV_DB_SCALE(analog_gain, 0, 25, 1);
+@@ -2934,18 +2937,10 @@ static int wcd937x_probe(struct platform_device *pdev)
+ 	cfg = &wcd937x->mbhc_cfg;
+ 	cfg->swap_gnd_mic = wcd937x_swap_gnd_mic;
+ 
+-	wcd937x->supplies[0].supply = "vdd-rxtx";
+-	wcd937x->supplies[1].supply = "vdd-px";
+-	wcd937x->supplies[2].supply = "vdd-mic-bias";
+-	wcd937x->supplies[3].supply = "vdd-buck";
+-
+-	ret = devm_regulator_bulk_get(dev, WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
++	ret = devm_regulator_bulk_get_enable(dev, ARRAY_SIZE(wcd937x_supplies),
++					     wcd937x_supplies);
+ 	if (ret)
+-		return dev_err_probe(dev, ret, "Failed to get supplies\n");
+-
+-	ret = regulator_bulk_enable(WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "Failed to enable supplies\n");
++		return dev_err_probe(dev, ret, "Failed to get and enable supplies\n");
+ 
+ 	wcd937x_dt_parse_micbias_info(dev, wcd937x);
+ 
+@@ -2962,13 +2957,13 @@ static int wcd937x_probe(struct platform_device *pdev)
+ 
+ 	ret = wcd937x_add_slave_components(wcd937x, dev, &match);
+ 	if (ret)
+-		goto err_disable_regulators;
++		return ret;
+ 
+ 	wcd937x_reset(wcd937x);
+ 
+ 	ret = component_master_add_with_match(dev, &wcd937x_comp_ops, match);
+ 	if (ret)
+-		goto err_disable_regulators;
++		return ret;
+ 
+ 	pm_runtime_set_autosuspend_delay(dev, 1000);
+ 	pm_runtime_use_autosuspend(dev);
+@@ -2978,25 +2973,17 @@ static int wcd937x_probe(struct platform_device *pdev)
+ 	pm_runtime_idle(dev);
+ 
+ 	return 0;
+-
+-err_disable_regulators:
+-	regulator_bulk_disable(WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
+-
+-	return ret;
+ }
+ 
+ static void wcd937x_remove(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+-	struct wcd937x_priv *wcd937x = dev_get_drvdata(dev);
+ 
+ 	component_master_del(&pdev->dev, &wcd937x_comp_ops);
+ 
+ 	pm_runtime_disable(dev);
+ 	pm_runtime_set_suspended(dev);
+ 	pm_runtime_dont_use_autosuspend(dev);
+-
+-	regulator_bulk_disable(WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
+ }
+ 
+ #if defined(CONFIG_OF)
+diff --git a/sound/soc/codecs/wcd937x.h b/sound/soc/codecs/wcd937x.h
+index 4ef57c496c37c555c8684d65249c53f6a8b645a1..3ab21bb5846e2c85520d67e7dc248d4e7715dba5 100644
+--- a/sound/soc/codecs/wcd937x.h
++++ b/sound/soc/codecs/wcd937x.h
+@@ -487,7 +487,6 @@
+ #define WCD937X_MAX_REGISTER			(WCD937X_DIGITAL_EFUSE_REG_31)
+ 
+ #define WCD937X_MAX_MICBIAS			3
+-#define WCD937X_MAX_BULK_SUPPLY			4
+ #define WCD937X_MAX_SWR_CH_IDS			15
+ #define WCD937X_SWRM_CH_MASK(ch_idx)		BIT(ch_idx - 1)
+ 
 
-Best regards,
 -- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+2.45.2
 
 
