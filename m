@@ -1,146 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-59375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B8DEAC3950
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 07:36:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D0F6AC3961
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 07:43:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C6F613B3A3F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 05:35:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F8543AE4F4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 05:42:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C04F21C2DB2;
-	Mon, 26 May 2025 05:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E158B1C54A2;
+	Mon, 26 May 2025 05:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ir8d8f7c"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Pfds+7Om"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2211D19D880;
-	Mon, 26 May 2025 05:35:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F29919B5B1;
+	Mon, 26 May 2025 05:43:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748237751; cv=none; b=cYUpNy/wo+UwoiibqqimISieT4Rxc1wJ8VSsrhuRC+nFTnCK42Yz+HYRKfhWt0pNBZIITkhlgHZM8N4Y6J2vUj8LwPFomjInO25YSdc+Pkgc+zjMk5tyoVSp3ZtRo4ChP8BV74hVKSrs/BAZwhPbkx6q4e7Z1Gd/Cy1r96kgq8k=
+	t=1748238184; cv=none; b=j0aHS5h0P4pDrPox9VClKCB4AIJzY0gbuEzI0qoFq8HAmBAimZI0ZKxgTqIMHC0EAe67jO8IOnpeb0hHS67e9mu4BDmL9a11jrXiLkg8Rt4RALgVzT428xe2eBUHOGqMj3LzjTeaSukHGd+ZM6u8wHXk+EZ91iMbOimJFzsyhgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748237751; c=relaxed/simple;
-	bh=BuRWnb3cuhbj4vQVIyISoqjQkh79be9NQ73UrJ/GVfU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=DZ2XhJqnRHJq6wMCSz0rTuUwZQ3CojTZQ5puvtXow3qKOHScy9hQYN1DZpDWESNdY1Tey0ZSFQrEmjlhqTmORwHFuwDFD7XWHNMww0jHi9hTzYGB29qLL8BBlHHfRhxw3SEq3RdxUAy1j5eqpJi9lwfUOodyFcMb5Bn1+3YlUq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ir8d8f7c; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1748238184; c=relaxed/simple;
+	bh=XPVNF4i9clBR5CeNLdOBha/wncAQ8cozfftoZr4bljk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WoYqEbyoE8gBs8R6ofM+Z+A7GQyPPC5UHHWQeMH6+JLaKmCnEDL2+OcozAMTJQoq2Stsr/3NFUqAMZKYzOl9lU+N5bCaP+cnd3xaiL7GT0wPn7PrhVyN2AKtslRb2HUIiJEVU+/tVzbF0aOT/D6L3GtxVOIMxYPFL/rqqq3N+h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Pfds+7Om; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54PNFIiK004485;
-	Mon, 26 May 2025 05:35:46 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54PNgKtO027105;
+	Mon, 26 May 2025 05:43:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	uzLUVXXayimdmrDZtlg5c2L5SZ46QViuJixjKXrRq1M=; b=ir8d8f7cftwLovYX
-	+MikWJcfg820+33u4Vd5LVq6desP0ikI6B/1p1V7GjNxjaUUA6HdNv96selJx8n7
-	qzlHFzOVxBURlW8h5nVWXW4tYpn2rbsttBYIar9JaDaukWt9zFqVhotA6pyg1Lx1
-	Hw5Ajxf5kdn6c2BXiKvDaeaJSEQuf2x+bDDIOt1DnLKNrkAoN45ISXhtlFHdWbr3
-	AezROUzbdXOWXCpSVW9mNt1kBZT/+pjZJs7NIcPeuc7VTIeKleeNkDNkySwPpp5N
-	HNRu1s62WcCyMNGw4d574oy3PGzDt2r5F00jgL+U2iTpnUkLh/9fOAC7XROReXU4
-	BKKOcw==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u6g8u1uh-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=BEBZg8MlIJLrV0u6uphLCbW27wGjna4VB4z
+	ejoKbxk4=; b=Pfds+7OmhtY9qgqC1T6e+bLnEyJqZRq8rKRcgizWCHVegnqJib8
+	BAtYfL1UIrUHBHun1/bOO2IduYZ26qaWO6gq2wNjuzcaH+h/xcJ7Q8yZFqRsaSae
+	WQrp63yeWVnYc6mAXgDM60GH0qsC2d8J61klnL1paFco/L9Q83tPmc38rqNcICA8
+	jdcM3i7zznNa2lvxWJLt/0THvc6vYaOFP6IIhNRINd/Q/6ilayIOrxe/O2a+mJJ6
+	NAc0B4XQRkaDQzA4ecz7UCUSb7PrGKuZczBjygK2CeIF7/U1ZxTHMqVmleS/ZKAm
+	vGS86RuTC+v8nRQN0csosEmOtWda37ivfFw==
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u6b5k2qf-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 May 2025 05:35:46 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54Q5Zjmt006177
+	Mon, 26 May 2025 05:43:00 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 54Q5gw4k027444;
+	Mon, 26 May 2025 05:42:58 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 46u76kqmab-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 May 2025 05:35:45 GMT
-Received: from [10.151.36.184] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 25 May
- 2025 22:35:42 -0700
-Message-ID: <d859183f-d9dc-1db4-e6a6-7db1cbdbaab7@quicinc.com>
-Date: Mon, 26 May 2025 11:05:39 +0530
+	Mon, 26 May 2025 05:42:58 +0000
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54Q5gvmc027434;
+	Mon, 26 May 2025 05:42:58 GMT
+Received: from bt-iot-sh02-lnx.ap.qualcomm.com (bt-iot-sh02-lnx.qualcomm.com [10.253.144.65])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 54Q5gvVc027433
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 26 May 2025 05:42:57 +0000
+Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 37913)
+	id 9065722650; Mon, 26 May 2025 13:42:56 +0800 (CST)
+From: Cheng Jiang <quic_chejiang@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_chejiang@quicinc.com,
+        quic_jiaymao@quicinc.com, quic_zijuhu@quicinc.com,
+        quic_mohamull@quicinc.com
+Subject: [PATCH v1] arm64: dts: qcom: Add Bluetooth support for qcs9075 IQ-9075-EVK
+Date: Mon, 26 May 2025 13:42:28 +0800
+Message-Id: <20250526054228.221095-1-quic_chejiang@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH] spi: spi-qpic-snand: use NANDC_STEP_SIZE consistently
-Content-Language: en-US
-To: Gabor Juhos <j4g8y7@gmail.com>, Mark Brown <broonie@kernel.org>
-CC: Varadarajan Narayanan <quic_varada@quicinc.com>,
-        Sricharan Ramabadhran
-	<quic_srichara@quicinc.com>,
-        <linux-spi@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250525-qpic-snand-nandc_step_size-v1-1-6039e9bfe1c6@gmail.com>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <20250525-qpic-snand-nandc_step_size-v1-1-6039e9bfe1c6@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=d4b1yQjE c=1 sm=1 tr=0 ts=6833fdb2 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=pGLkceISAAAA:8
- a=COk6AnOGAAAA:8 a=YikZN-sOpGJawurdiwoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=ZcodNtVA c=1 sm=1 tr=0 ts=6833ff64 cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=WXduBcdBxNLdlasUCgQA:9
  a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: DyuXlRWRfyNK0KXyMH50zPgZ7eF8zNCw
-X-Proofpoint-GUID: DyuXlRWRfyNK0KXyMH50zPgZ7eF8zNCw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI2MDA0NCBTYWx0ZWRfX2vZOAhu5aaDm
- 9tk3CqQTSEPNXyOSfdfrp5VewhrnPg1riU231jy3k/tdSMBRrKvE0YdYJStl0dSL/UckTjFzN9T
- e/WHi4bVspEbOS/w2q1OGsDt/5qP+xivE/ebP+hHHUZeoQ2mHH9FvyzJxXXrPUBfpryMg9ZIiAn
- 7PhdjOCQv53OmWgyDaNx9jDHOxzEPn/647Se4rUKSVOAAeSFuKhUpMNS3v4L57QuzJm3vXQyKSZ
- hYWxX7KyPZUq3oiGNWPq8tPvVqeWlcuGsNh4yRn/HxXtmnjghBDfo+ilikMEKyNRiN90DX51ntH
- pf9A1u7Ke9mXHSXzRruNyDzVNeW1oAKmHf4BXMNoemDtuuiUTg4LdiGQT/AUKeMM47IrHoUPQ+m
- PXaH1rA+DR1/a6Kh50wsipWolmMULSE321hwNtLLvBfTFDibnv2HY2KG4bztA07v94ZdGKLi
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI2MDA0NSBTYWx0ZWRfXypCT2mScAcst
+ Emc8kH5MZMN5T6yRbDSkuHRG3bJUsaMLiJFrngnZXmHxT+rEczMPQ25lVFBYm0wBb4jqPl6MKDb
+ 9u+4FRoqrMVcOkOMjl9c81NjyOr7SSzFCTM+LOyXnbr8zq3Dx7AMcWbN2Hmc48VIVMLYdk8xvH8
+ 36XicASVS92z+ZLQvKiYLjXm7P5e6RpMKZxEIBkDq1dqVzdBMZtnyEffJnPudQYSs8/xb2Phhdu
+ IUoTh6L7IbXWYPFJXijOMg8rkZGOHCHuoJi1WIQbUNuG+E66yDQAMosLCuyCb1KitTO8h0UGhE3
+ 1dKnx5uPaT1b6rN9cv7jsBore4Y9DSZ3kqbdkl8WuMcQnsfrKcdz9lkLAdFAr3aPw50jy3nlWqf
+ w4UJX7JVlRNFY+X5EXDS95neFF6m8DoyT6GkJYPq/dMyz18q+JyqLYhPQ25H2Ho4UX18ir3+
+X-Proofpoint-GUID: ehaCpic6QNEYUzuwhqwH1gupFxqCvyUh
+X-Proofpoint-ORIG-GUID: ehaCpic6QNEYUzuwhqwH1gupFxqCvyUh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-26_03,2025-05-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0 malwarescore=0 phishscore=0 mlxlogscore=905
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0 clxscore=1015
+ adultscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0 priorityscore=1501
+ spamscore=0 clxscore=1011 suspectscore=0 lowpriorityscore=0 phishscore=0
  impostorscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505260044
+ definitions=main-2505260045
 
-Hi,
+Add Bluetooth support for qcs9075 IQ-9075-EVK
 
-On 5/25/2025 7:45 PM, Gabor Juhos wrote:
-> Change the qcom_spi_read_page_ecc() function to use NANDC_STEP_SIZE
-> instead of a magic number while calculating the data size to keep it
-> consistent with other functions like qcom_spi_program_{raw,ecc,oob}
-> and qcom_spi_read_cw_{raw,page_oob}.
-> 
-> No functional changes.
-> 
-> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-> ---
->   drivers/spi/spi-qpic-snand.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-> index fd129650434f0129e24d3bdac7e7c4d5542627e6..037178d6576e82c3f19c3cc2c6c78f056dc488af 100644
-> --- a/drivers/spi/spi-qpic-snand.c
-> +++ b/drivers/spi/spi-qpic-snand.c
-> @@ -821,7 +821,7 @@ static int qcom_spi_read_page_ecc(struct qcom_nand_controller *snandc,
->   		int data_size, oob_size;
->   
->   		if (i == (num_cw - 1)) {
-> -			data_size = 512 - ((num_cw - 1) << 2);
-> +			data_size = NANDC_STEP_SIZE - ((num_cw - 1) << 2);
->   			oob_size = (num_cw << 2) + ecc_cfg->ecc_bytes_hw +
->   				    ecc_cfg->spare_bytes;
->   		} else {
-> 
-> ---
-> base-commit: b00d6864a4c948529dc6ddd2df76bf175bf27c63
-> change-id: 20250525-qpic-snand-nandc_step_size-5606f4aaeda0
-> 
-> Best regards,
+Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
+---
+ .../boot/dts/qcom/qcs9075-iq-9075-evk.dts     | 42 +++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-Reviewed-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+diff --git a/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts b/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
+index ba8a359d8..d44f8f5eb 100644
+--- a/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
++++ b/arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
+@@ -15,6 +15,7 @@ / {
+ 
+ 	aliases {
+ 		serial0 = &uart10;
++		serial1 = &uart17;
+ 	};
+ 
+ 	chosen {
+@@ -264,6 +265,32 @@ qup_uart10_default: qup-uart10-state {
+ 		pins = "gpio46", "gpio47";
+ 		function = "qup1_se3";
+ 	};
++
++	qup_uart17_default: qup-uart17-state {
++		qup_uart17_cts: qup-uart17-cts-pins {
++			pins = "gpio91";
++			function = "qup2_se3";
++			bias-disable;
++		};
++
++		qup_uart17_rts: qup0-uart17-rts-pins {
++			pins = "gpio92";
++			function = "qup2_se3";
++			bias-pull-down;
++		};
++
++		qup_uart17_tx: qup0-uart17-tx-pins {
++			pins = "gpio93";
++			function = "qup2_se3";
++			bias-pull-up;
++		};
++
++		qup_uart17_rx: qup0-uart17-rx-pins {
++			pins = "gpio94";
++			function = "qup2_se3";
++			bias-pull-down;
++		};
++	};
+ };
+ 
+ &uart10 {
+@@ -273,6 +300,21 @@ &uart10 {
+ 	status = "okay";
+ };
+ 
++&uart17 {
++	pinctrl-0 = <&qup_uart17_default>;
++	pinctrl-names = "default";
++	qcom,load-firmware;
++	qcom,xfer-mode = <1>;
++	status = "okay";
++
++	/* HS UART Instance */
++	bluetooth: bluetooth {
++		compatible = "qcom,wcn6855-bt";
++		pinctrl-names = "default";
++		max-speed = <3200000>;
++	};
++};
++
+ &xo_board_clk {
+ 	clock-frequency = <38400000>;
+ };
+
+base-commit: 176e917e010cb7dcc605f11d2bc33f304292482b
+prerequisite-patch-id: 853eaf437b81f6fa9bd6d36e6ed5350acaf73017
+prerequisite-patch-id: 6d9fd3e0257f120cff342c287774454aad2be2e8
+prerequisite-patch-id: 736cbcd47d5e7cfcc53fcaa7da920eac757ce487
+prerequisite-patch-id: 4eddce6daeaa125f14380586c759f8cb8997c601
+prerequisite-patch-id: baac180e8715b5cf2922f79346440d92569704f6
+prerequisite-patch-id: 65730290d31f18e66e2ba0dfdeb1844d7442c272
+-- 
+2.34.1
+
 
