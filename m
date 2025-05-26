@@ -1,125 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-59400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C614CAC3C1E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:54:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C048AC3CAE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 11:27:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 90822170B5C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:54:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3939A18918BC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 09:28:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0AAC1E5729;
-	Mon, 26 May 2025 08:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 955FE1E1DEC;
+	Mon, 26 May 2025 09:27:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="EvXbi/X0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8F71EF397;
-	Mon, 26 May 2025 08:53:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31191953BB;
+	Mon, 26 May 2025 09:27:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748249635; cv=none; b=RR0K/oNKnq71iz8tdxpDmk+CsoDf9d/sDujbAnGJ372UhXiij+SSduzvvm6xdiWiyILc9RTXZlin7NMEFjb99NWh+cfLNvbtBJWPXazLvuW9C/jZdhs8/2LvwbaEKEI/vV+A/o1IEuf418QnghBiJiuLhqS77qZjoyMgvSM59mI=
+	t=1748251670; cv=none; b=tpcbrLmwG+Xq2P9WuNKbcaSVb5M+s4x940fCzPmUM/4hbCleWh0KsR3B2B/QYNXl7D5XZMIE9Ebj5z7MQRjIfMbnODmm0s13zfYPwEBgZ1ZGQ3Dc/qnZserr7EeLoa7LhONx6nXjN6uKKZLxOTUdo/kaV15wP+S0s2MbAtzrjnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748249635; c=relaxed/simple;
-	bh=FlCOtU9CCuR9lkUNWVYDcar0PqDo3voYYIIfoi97ZlQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dODZ2/FgIOQyXIUyi9ti2GW07yrhWX/LLPK99wdt1GzFZ4kUfkqG4usHOyDrcfIgXSpY25Q8gI9Yg2CAeUwti7EbY24cYQxMtV9gqOpPpHv3kZEPodqyr0hUMg8zDZD00sfvCendPzWzhPn1DmxbI1ei3Gr4hxJiyhZMmD5hjw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: ef5a1a7a3a0e11f0b29709d653e92f7d-20250526
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.45,REQID:2a582296-71b1-4427-aff1-0d66ba2e24a6,IP:10,
-	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:-3,FILE:0,BULK:30,RULE:Release_Ham,ACTI
-	ON:release,TS:37
-X-CID-INFO: VERSION:1.1.45,REQID:2a582296-71b1-4427-aff1-0d66ba2e24a6,IP:10,UR
-	L:0,TC:0,Content:0,EDM:0,RT:0,SF:-3,FILE:0,BULK:30,RULE:Release_Ham,ACTION
-	:release,TS:37
-X-CID-META: VersionHash:6493067,CLOUDID:01155e3f26d2f9f964f0833965c5c673,BulkI
-	D:250522180435BN613KC0,BulkQuantity:7,Recheck:0,SF:19|24|38|45|64|66|72|78
-	|80|81|82|83|102|841,TC:nil,Content:0|50,EDM:-3,IP:-2,URL:0,File:nil,RT:ni
-	l,Bulk:40|23,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:
-	0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 1,FCT
-X-CID-BAS: 1,FCT,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FSD,TF_CID_SPAM_FSI
-X-UUID: ef5a1a7a3a0e11f0b29709d653e92f7d-20250526
-X-User: aichao@kylinos.cn
-Received: from [172.25.120.86] [(112.64.161.44)] by mailgw.kylinos.cn
-	(envelope-from <aichao@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
-	with ESMTP id 2088584585; Mon, 26 May 2025 16:53:46 +0800
-Message-ID: <3869e6fc-1cbf-4113-9b34-0cbb5d4b5176@kylinos.cn>
-Date: Mon, 26 May 2025 16:53:42 +0800
+	s=arc-20240116; t=1748251670; c=relaxed/simple;
+	bh=1WCyRDCwiBHfV+0OnoDGBfWHBhe1h1gVlMDuYJge3RA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=D2P2DH5sCZVDQAj657UkD0Y65xvIB9LFdplq4Px30dSL4B1bZHHYL4UpVfJ9Hx/BI0KR1PuJhcCuFFAT/AzAKTJpaUwx9wlZSHmMUIUlq1VBo4ujcmPmtZDrVDR5XlBGAoM1+jnX0qASLO2afOZ64MYlx2p7iu/d1OPRAw28/jU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=EvXbi/X0; arc=none smtp.client-ip=217.70.183.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 6F01B43256;
+	Mon, 26 May 2025 09:27:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1748251666;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Opa0z6GUCpMMB0xKiw3CdjHTRvy78s9FU8V6fF56RAM=;
+	b=EvXbi/X0RcTrPnKhu5//sNlbalc0CuLlG1QBS8zessNsqCpGsPkHpFbHUkBXMSBTyuiKjF
+	nEbhvl7Sh9YORKhnBF3V5obwFFNFHQj0roo8LJN/Lk3Tt5JT/ARJiND67GqmYrZeScEeLn
+	PfjEE/asaLQGu/+O0F/q0a6z6tBEk1JyGfl76ycOi/s7sqfk/+a+hr+9b0Tap1mCqX00jc
+	2vsHMiNyOXQ4xtmXt7B0xeP4OvOZed7T+pPSvmI7EdEFYOgwnjYVlVejkeEz0Mj7P4CJ0H
+	QO8YQbjuquJEbRBwabvQKcOM4bOd6beg7K133wAjF0s2GACKHrhPkeX38yKZ4A==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Gabor Juhos <j4g8y7@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>,  Md Sadre Alam
+ <quic_mdalam@quicinc.com>,  Varadarajan Narayanan
+ <quic_varada@quicinc.com>,  Sricharan Ramabadhran
+ <quic_srichara@quicinc.com>,  Richard Weinberger <richard@nod.at>,
+  Vignesh Raghavendra <vigneshr@ti.com>,  linux-spi@vger.kernel.org,
+  linux-mtd@lists.infradead.org,  linux-arm-msm@vger.kernel.org,
+  linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] mtd: nand: qpic_common: prevent out of bounds
+ access of BAM arrays
+In-Reply-To: <20250525-qpic-snand-avoid-mem-corruption-v1-2-5fe528def7fb@gmail.com>
+	(Gabor Juhos's message of "Sun, 25 May 2025 19:05:36 +0200")
+References: <20250525-qpic-snand-avoid-mem-corruption-v1-0-5fe528def7fb@gmail.com>
+	<20250525-qpic-snand-avoid-mem-corruption-v1-2-5fe528def7fb@gmail.com>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Mon, 26 May 2025 11:27:45 +0200
+Message-ID: <87cybv2032.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] ASoC: aoa: Use helper function
- for_each_child_of_node_scoped()
-To: Christophe Leroy <christophe.leroy@csgroup.eu>, perex@perex.cz,
- tiwai@suse.com, johannes@sipsolutions.net, kuninori.morimoto.gx@renesas.com,
- lgirdwood@gmail.com, broonie@kernel.org, jbrunet@baylibre.com,
- neil.armstrong@linaro.org, khilman@baylibre.com,
- martin.blumenstingl@googlemail.com, shengjiu.wang@gmail.com,
- Xiubo.Lee@gmail.com, festevam@gmail.com, nicoleotsuka@gmail.com,
- shawnguo@kernel.org, s.hauer@pengutronix.de, srinivas.kandagatla@linaro.org
-Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org, linux-renesas-soc@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org,
- imx@lists.linux.dev, kernel@pengutronix.de, linux-arm-msm@vger.kernel.org
-References: <20250522050300.519244-1-aichao@kylinos.cn>
- <20250522050300.519244-3-aichao@kylinos.cn>
- <8ad901c3-3fcb-4643-ac5a-c1f30f93d07f@csgroup.eu>
-Content-Language: en-US
-From: Ai Chao <aichao@kylinos.cn>
-In-Reply-To: <8ad901c3-3fcb-4643-ac5a-c1f30f93d07f@csgroup.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddujeduieculddtuddrgeefvddrtddtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffgffkfggtgfgsehtqhertddtreejnecuhfhrohhmpefoihhquhgvlhcutfgrhihnrghluceomhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepffeghfejtdefieeguddukedujeektdeihfelleeuieeuveehkedvleduheeivdefnecukfhppeeltddrkeelrdduieefrdduvdejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepledtrdekledrudeifedruddvjedphhgvlhhopehlohgtrghlhhhoshhtpdhmrghilhhfrhhomhepmhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepuddupdhrtghpthhtohepjhegghekhiejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsghrohhonhhivgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepqhhuihgtpghmuggrlhgrmhesqhhuihgtihhntgdrtghomhdprhgtphhtthhopehquhhitggpvhgrrhgruggrsehquhhitghinhgtrdgtohhmpdhrtghpthhtohepqhhuihgtpghsrhhitghhrghrrgesqhhuihgti
+ hhntgdrtghomhdprhgtphhtthhopehrihgthhgrrhgusehnohgurdgrthdprhgtphhtthhopehvihhgnhgvshhhrhesthhirdgtohhmpdhrtghpthhtoheplhhinhhugidqshhpihesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-Sasl: miquel.raynal@bootlin.com
 
-Hi Christophe:
+Hi Gabor,
 
->> The for_each_child_of_node_scoped() helper provides a scope-based
->> clean-up functionality to put the device_node automatically, and
->> as such, there is no need to call of_node_put() directly.
+On 25/05/2025 at 19:05:36 +02, Gabor Juhos <j4g8y7@gmail.com> wrote:
+
+> The common QPIC code does not do any boundary checking when it handles
+> the command elements and scatter gater list arrays of a BAM transaction,
+> thus it allows to access out of bounds elements in those.
 >
-> I don't understand this explanation.
+> Although it is the responsibility of the given driver to allocate enough
+> space for all possible BAM transaction variations, however there can be
+> mistakes in the driver code which can lead to hidden memory corruption
+> issues which are hard to debug.
 >
-> You say "no need to call of_node_put()" and the only thing you do in 
-> addition to changing from for_each_child_of_node() to 
-> for_each_child_of_node_scoped() is to _add_ a new call to of_node_put().
+> This kind of problem has been observed during testing the 'spi-qpic-snand'
+> driver. Although the driver has been fixed with a preceding patch, but it
+> still makes sense to reduce the chance of having such errors again later.
 >
-> I would expect to see a _removal_ of some of_node_put() when I read 
-> your description.
+> In order to prevent such errors, change the qcom_alloc_bam_transaction()
+> function to store the number of elements of the arrays in the
+> 'bam_transaction' strucutre during allocation. Also, add sanity checks to
+> the qcom_prep_bam_dma_desc_{cmd,data}() functions to avoid using out of
+> bounds indices for the arrays.
 >
->>       }
->> +    of_node_put(sound);
->> +
+> Tested with the 'spi-qpic-snand' driver only.
+>
+> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+> ---
+> Preferably, this should go in via the SPI tree along with the previous
+> patch. It is not a strict requirement though, in the case it gets
+> included separately through the mtd tree it reveals the bug fixed in
+> the first patch.
 
-The for_each_child_of_node() function is used to iterate over all child 
-nodes of a device tree node.  During each iteration, it retrieves a 
-pointer to the child node via of_get_next_child() and automatically 
-increments the node's reference count (of_node_get()). Each call to 
-of_get_next_child() increases the reference count (refcount) of the 
-returned child node, ensuring that the node is not freed while in use.
-for_each_child_of_node() increments the child node's reference count in 
-each iteration but does not decrement it automatically.
-If of_node_put() is not called manually, the reference count will never 
-reach zero, resulting in a memory leak of the node.
+Sorry, didn't see that in the first place. Fine by me.
 
-In function i2sbus_add_dev, it used device_node out of 
-for_each_child_of_node(){},  it need to add a new call to 
-of_node_put(sound) to reference count.
+> ---
+>  drivers/mtd/nand/qpic_common.c       | 28 ++++++++++++++++++++++++----
+>  include/linux/mtd/nand-qpic-common.h |  8 ++++++++
+>  2 files changed, 32 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_commo=
+n.c
+> index e0ed25b5afea9b289b767cd3d9c2d7572ed52008..fb1f81e4bdacaa3e81660a20e=
+164926c64633513 100644
+> --- a/drivers/mtd/nand/qpic_common.c
+> +++ b/drivers/mtd/nand/qpic_common.c
+> @@ -15,6 +15,13 @@
+>  #include <linux/slab.h>
+>  #include <linux/mtd/nand-qpic-common.h>
+>=20=20
+> +static inline int qcom_err_bam_array_full(struct qcom_nand_controller *n=
+andc,
+> +					  const char *name)
+> +{
+> +	dev_err(nandc->dev, "BAM %s array is full\n", name);
+> +	return -EINVAL;
+> +}
 
-In function i2cbus_probe, it used device_node in 
-for_each_child_of_node(){}, used for_each_child_of_node_scoped() is 
-better than for_each_child_of_node().
+This is rather uncommon, I don't know if it's very relevant to do
+that. Please drop this static inline function.
 
-Best regards,
-Ai Chao
+Thanks,
+Miqu=C3=A8l
 
