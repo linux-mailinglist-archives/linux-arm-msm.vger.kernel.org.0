@@ -1,82 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-59386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0846BAC3AFA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 09:56:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF63AAC3B26
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:08:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9F497172A0E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 07:56:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 435AA3B6A72
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:08:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AEE21E1A20;
-	Mon, 26 May 2025 07:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 581011E3762;
+	Mon, 26 May 2025 08:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XI2kXR7t"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Vw0lfOGW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A22C1DED5B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 07:56:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAE31B0439
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 08:08:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748246185; cv=none; b=pYLoQF/G8z1suYYIrKs+HsXRqKAW1gNtmRvKgY5AN38uJOmoxlMM7+b3z7FHOKuKaL8yUqWTw29HZ0uH5oQ86xd/bNd6qMTidDxu9aPkjd0T1o4Qjsj45/1GDGs0tj+RzPRrlt6BGhKmpGqIBya4wmoC6ORgDBNhJ47Y7fxwClA=
+	t=1748246901; cv=none; b=oMng9lOOWJ4UFZ4tdb1K+G8+ipjGlasoTISiKhZdQylA/ihRdAM/VW/RABA4s37bTMOAehY/+PbRUbWyOj5fumlDC+vFI98cbOrb4Dg3UsvUCHMcMjtQ8mfP2qYz+QwiF/BBye2gCZZhTFpACk1YOdW5i0hrChjEEnQ+SRT/y4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748246185; c=relaxed/simple;
-	bh=rT96umT3UJo4od70CROtSfigxcGHz0gDRlhvpyiLUos=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=K/3VSC76oOhoKXMePNA11YH5xMXDJSHtCh+MRBMyt39hHa76GMWiAF6GHbAS8zCU0NfQMgls+dewspK9mbbRUu6xjqcY9QnEjDqNS7koxzYIwkzvlFIXA7oiHIMvlP6mCfFFnUalzpwIPVXZUGBVNsnQW8lNQWUEG/rgQff+oLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XI2kXR7t; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1748246901; c=relaxed/simple;
+	bh=qikYQ594dHPzQSHOybBoJ/egvS0Gkm2FJWnwnF9iYIw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=le2vDmEBAvcdnO2+O/86k/otI5lvjvtYs2GsnqDQSaAqUEIexOGr4K1wY7onBapquZjYxXF7REFL0ulQmJB8GHlIkeWWwUHjhMYGyAVh2asR918Ox6bOLaVr9AQHBUCW53WUjXsL3j3h/GKgIB1taIYiYae0lsUCgig7OLzJO6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Vw0lfOGW; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-44a57d08bbfso14552325e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 00:56:22 -0700 (PDT)
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-44a57d08bbfso14631705e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 01:08:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748246181; x=1748850981; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dduT01owytSsr5asNudJ/teBGGdc9J5ofCYmeklonuM=;
-        b=XI2kXR7thgJUBTuf8StZJGjQKxQsZu/gVl1IC8iYR+alXs439fT6HnqdR0p+xN4IQP
-         IGjNXQS5VDOlaeSNBq3iTA3dXMCSDksRSiIfX42VgdckzCHi9iHz62MYor4fRek+G1uo
-         e9HzTPssKPdp6ZpCVnIf4VG3AMS5+wnEyCV1BN7wododgg98LzwfCmFiKiHzFFnUMR0M
-         FzN0caGJ/srTheX7VbXenBslSp/RbRA5SdXdnFZ8jRfAzBgcSEKcTkk67BhMP0reX3NK
-         XE8JIEod4EyyGfChRgvqOOZhU6dDS9RF96YdPOf6xCw5YS1bXPZ3GHhBH5eS+AvIbXLl
-         z59w==
+        d=linaro.org; s=google; t=1748246897; x=1748851697; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PNtdNqosyMirRG+hBdGG1axM0lRFh93U59Adrxl0txw=;
+        b=Vw0lfOGWgzvwSI4uK896G9Z27CaRXl27MbQr9VEotgiWI1ImbleC8vhIlp2e3IXdgh
+         qy7T7G07VgqbRs496UH/szi1RDW5wbXG6UjPouHX4B/U0E6tGw+f1Dxb7rhCZhmoxJAa
+         83K7Rrxyami+nplaDVsDt4BqTjosWEYwx5LHYcLHeuzJ4YrK9SdVb6BzLYOo67SMjeHj
+         zoSW4xIqwxlIAxoFOlihrvw1Vrtpor3bTOFLqUMpVG2vq0popAVKEll9jktQwtW+t0Uu
+         saAyrSgJPba8HVV6xsMaDSOFIp2iJjvZT5v/X5zchkwLCNfHwyyxHzt7Mw364QAHYhW7
+         9uWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748246181; x=1748850981;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=dduT01owytSsr5asNudJ/teBGGdc9J5ofCYmeklonuM=;
-        b=PwyuVixy6/ai4txU1DMfRLMDIg0wnOVH9GNAgHU/A542biulOQZrFU5BBodzjsGPwB
-         AI6D2ZePjevu9rZLE3fX75TFIktVL9w9thVVi9dUp0zyzkIVGHOloPUk57GP5j/fEn9O
-         WqG263G///ayZ4YC7EzdwgYkHUqPbYBATapqVhYS9DW6R8nXh5gpQCx5wafCUhq8jANS
-         d8mS+/cI0EiM+dFkhSQWp98HkleR+jrKn6SnDnNxgs4q77lQWjdFzo/CPBOcjlCTjzPK
-         RNEf8LxJTBTuUKRuuFA8BzV3nmuuCVU0q6bzQ/QAjGFoiQfbjCEioHTJ514bMjp+L8T7
-         ccOw==
-X-Forwarded-Encrypted: i=1; AJvYcCVhfkpm+Wx3BrVjrRIzZ6lD6CKOUOjzB/T2Rx3mk/hAE9bFQp/CU9hUi3n3sdEvrcwxYf1MFRD8FgUB9+JF@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNcCCY1Z2zuAzzCsDgMZMy6F6/oaBWmtvir3zOM1B8IPtkDg3U
-	nUoGS7vU0Qg2YutdLExJvve1pbKwgZes2bfEzvMh2ml92b+LUdMJ4KMc01et3cY78rE=
-X-Gm-Gg: ASbGncsd9hk5O79KRoEHlqt+mfBfR7zczwXRK0UmfGqKruw0oR/xoH+kn0ugzOg2Ax/
-	58zpydETKZekwZpBYp9BhbfISvvPMgYirChAPqQNBJEkQ39lUArxKJ7TokZMzwcFSag81Rld8hi
-	6+yKIm6681rQJ7KWzR0ep/XY+l6FIJkQHElJS9siOCtwFVZxw/EX1MtYhLodvAGeouXmTeHKhQF
-	jBjjjIGzOr6d6ZRx2MgoXOD3so5ffHDdihD17FFcztKDyCaAEUaQuIdoEoogrGReunKPp5+09A/
-	Kt3UAvJfvSD0Gy54J0Gl4Lgt5Ahs9mzKCTFDuxUgHW15B7OP1eSzwxibu5tW3nGpRryDnul3JCX
-	SyZvnfVepmuXgXztwnMxETNdfzPiu
-X-Google-Smtp-Source: AGHT+IGie9E2mDHqhXLLVf8m3fc94zPihdmNh7y738oAz9CJSBp+23Ok6ePY58BDaNgOF19enHZEbg==
-X-Received: by 2002:a05:600c:3ca6:b0:44a:b478:1387 with SMTP id 5b1f17b1804b1-44c9465c97cmr70098395e9.17.1748246181376;
-        Mon, 26 May 2025 00:56:21 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:485c:38a6:3d01:f4a4? ([2a01:e0a:3d9:2080:485c:38a6:3d01:f4a4])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f38142aasm224596595e9.27.2025.05.26.00.56.20
+        d=1e100.net; s=20230601; t=1748246897; x=1748851697;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PNtdNqosyMirRG+hBdGG1axM0lRFh93U59Adrxl0txw=;
+        b=HN4bEg5I/uV8jScQYvFFl81TRq3fCJmsubZhtJo9ngfCCjVMILd7tpFXW18nPji3gs
+         osCHjeM0qQOEJitQxx/MDpOBTC9YxxAbDze6XYImCHDkEbYGD4tmfNOE34fhTEF/D5rK
+         xO9Ld6n2/QSgNpFbu2SD7MN+o1VPB3+A0pu3xbcl9MuZAGzTaiKDsk3w5OzUeJufqaZz
+         wfJjzP8fGbsO6LaHX81m7tOcIcSdc7+0diMNB+bvVAd3vYZst8LLuw7n2dEJzemQcJM2
+         /QarKBvCRxjBLr4iVgmiDrgvvV+5NX0C7je6w3gwXcnnAZt14lsK91gxqVhfTWMgTP/c
+         rhQA==
+X-Forwarded-Encrypted: i=1; AJvYcCV56e7eG8xAFDpkFnWbkEw1u3eDfH3/OndJOJZhVFoT7MQYQSntALsbvNQcuNkpMQGh7pDEBPCDsS5+vMlB@vger.kernel.org
+X-Gm-Message-State: AOJu0YwqOkQ5IqiSZfl6jDduFXdOpnAysWxVWN/Zmz/nTiHRvn3hVB1R
+	RBjCLyynG/flDn4cwIs9kLEDi3otkRT8lolb3CEYEr3/+g98DSUGhJC+tE+3z5B05gM=
+X-Gm-Gg: ASbGnctKktEmGLdXxqu+qCfVkfq+e+XK8V7PslG5yXOpzbsY3KPe9k7sLcql4/M/pWN
+	Fn4XMHhZQ8+YnAQQxfFM2ZIteoLLSkzJ4xFqbaBVrSycqqCzozBFApegWeMaRVdj43ebQ0oXHXd
+	MUgxf1UayAIqNkp0WOrgiIdTMr9IaaPQyur0kfI40vCzd043Wq6NxN1BTAUZ/Efcvaoh5DEmeJ4
+	XMYTUV+rHbzhPfCsmdMhu7o64QgSwY6p81LtbRFwMuceZGeI1hNwtceMANrvqZAHW7ihAnSR5Ze
+	BU8eOUaSff7e2E4VWaHJf5TASn0oRHlsopd9SG538sjSJ/A5rrZD8hHkN3Wx4JJKPfQMjNY02Ot
+	1BBeYVkIfUhUXHbtt
+X-Google-Smtp-Source: AGHT+IE+GT/k7iSve/MABXaWUg+ZYYfI2oijlh2cTs+Cmlin8FoBbD6JtFcM6qKiPeDGC3ExVb+yAQ==
+X-Received: by 2002:a05:600c:5294:b0:442:dc6f:7a20 with SMTP id 5b1f17b1804b1-44c93da7cdbmr59657575e9.7.1748246897252;
+        Mon, 26 May 2025 01:08:17 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f1ef0ac6sm230479385e9.15.2025.05.26.01.08.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 May 2025 00:56:21 -0700 (PDT)
-Message-ID: <80df7074-c5b8-4d3b-8265-51bb71e6e1c3@linaro.org>
-Date: Mon, 26 May 2025 09:56:20 +0200
+        Mon, 26 May 2025 01:08:16 -0700 (PDT)
+Message-ID: <f2162241-6423-43b3-a6b5-74e373cd8834@linaro.org>
+Date: Mon, 26 May 2025 09:08:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,296 +82,204 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8650: Add support for Oneplus Pad
- Pro (caihong)
-To: Pengyu Luo <mitltlatltl@gmail.com>
-Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
- konradybcio@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, robh@kernel.org
-References: <11329f37-e410-4912-84cc-d5bcc01e6715@linaro.org>
- <20250522100605.914443-1-mitltlatltl@gmail.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250522100605.914443-1-mitltlatltl@gmail.com>
+Subject: Re: [PATCH v2 1/4] media: qcom: camss: vfe: Add VBIF setting support
+To: vincent.knecht@mailoo.org, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+ phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20250525-camss-8x39-vbif-v2-0-6d3d5c5af456@mailoo.org>
+ <20250525-camss-8x39-vbif-v2-1-6d3d5c5af456@mailoo.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250525-camss-8x39-vbif-v2-1-6d3d5c5af456@mailoo.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 22/05/2025 12:05, Pengyu Luo wrote:
-> On Wed, May 21, 2025 at 8:49 PM <neil.armstrong@linaro.org> wrote:
->>
->> Hi,
->>
->> On 20/05/2025 18:42, Pengyu Luo wrote:
->>> The OnePlus Pad Pro is an Android tablet based on the Qualcomm SM8650
->>> platform. Its device codename is "caihong". This patch adds an initial
->>> devicetree for basic functionality.
->>>
->>> Currently working components include:
->>> - Backlight
->>> - Bluetooth
->>> - Battery charging (up to 5v 0.5a) & reporting via pmic-glink (There
->>> are many unknown notifications)
->>> - Display panel ([1])
->>> - Keyboard (via BT)
->>> - Power key & volume keys
->>> - Touchscreen & stylus ([2])
->>> - USB Type-c port
->>> - UFS storage
->>> - Wi-Fi
->>>
->>> The following components are currently non-functional:
->>> - Audio
->>> - Cameras
->>> - Charging pump (dual sc8547)
->>> - Keyboard (via pogo pin)
->>> - Stylus wireless charger (cps8601)
->>> - UCSI over GLINK (PPM init fails)
->>
->> Are you sure the QMP PHY and the dwc3 probes ? if one is missing, UCSI PPM init will timeout because it doesn't find the connectors muxes & otg devices.
->>
+On 25/05/2025 20:25, Vincent Knecht via B4 Relay wrote:
+> From: Vincent Knecht <vincent.knecht@mailoo.org>
 > 
-> I am pretty sure.
-> ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: PPM init failed, stop trying
+> Some devices need writing values to VFE VBIF registers.
+> Add helper functions to do this.
 > 
->>>
->>> [1]: The panel is a dual-DSI, dual-DSC display that requires setting
->>>        'slice_per_pkt = 2' in the DPU configuration. The panel driver
->>>        will be submitted separately later.
->>> [2]: Touchscreen/stylus driver available at:
->>>        https://github.com/OnePlusOSS/android_kernel_modules_and_devicetree_oneplus_sm8650/blob/oneplus/sm8650_v_15.0.0_pad_pro/vendor/oplus/kernel/touchpanel/oplus_touchscreen_v2/Novatek/NT36532_noflash/nvt_drivers_nt36532_noflash.c
->>>        The downstream driver has been ported and tested locally, but
->>>        requires cleanup, it may be submitted separately later.
->>>
->>> To test this device tree, follow these minimal steps:
->>>
->>> 1. Build the kernel. Ensure that all `compatible` strings used in
->>> this device tree (or any included dtsi files) have corresponding
->>> drivers enabled in the kernel configuration.
->>>
->>> 2. Creating boot image
->>>
->>> Merge the kernel and device tree blob:
->>>
->>> cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/sm8650-oneplus-\
->>> caihong.dtb > kernel-dtb
->>>
->>> Then create a boot.img:
->>>
->>> mkbootimg \
->>> --base 0x00000000 \
->>> --kernel_offset 0x00008000 \
->>> --ramdisk_offset 0x01000000 \
->>> --second_offset 0x00f00000 \
->>> --tags_offset 0x00000100 \
->>> --pagesize 4096 \
->>> --header_version 4 \
->>> --kernel kernel-dtb \
->>> --ramdisk some_ramdisk \
->>> --cmdline "some comeline" \
->>> -o mainline-boot.img
->>
->> Isn't image version 2 working ?
->>
+> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+> ---
+>   drivers/media/platform/qcom/camss/Makefile         |  1 +
+>   drivers/media/platform/qcom/camss/camss-vfe-4-1.c  | 11 ++++++++
+>   drivers/media/platform/qcom/camss/camss-vfe-vbif.c | 30 ++++++++++++++++++++++
+>   drivers/media/platform/qcom/camss/camss-vfe-vbif.h | 19 ++++++++++++++
+>   drivers/media/platform/qcom/camss/camss-vfe.c      |  9 +++++++
+>   drivers/media/platform/qcom/camss/camss-vfe.h      |  3 +++
+>   6 files changed, 73 insertions(+)
 > 
-> Yes, '--header_version 2' works, I followed the version of stock boot
-> image. If there is a rule to follow?
-> 
->>>
->>> 3. Flashing the boot image
->>>
->>> fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img
->>> fastboot erase dtbo
->>> fastboot flash boot mainline-boot.img
->>>
->>> See also https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=39c5963
->>>
->>> Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
->>> ---
->>>    .../boot/dts/qcom/sm8650-oneplus-caihong.dts  | 960 ++++++++++++++++++
->>>    1 file changed, 960 insertions(+)
->>>    create mode 100644 arch/arm64/boot/dts/qcom/sm8650-oneplus-caihong.dts
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8650-oneplus-caihong.dts b/arch/arm64/boot/dts/qcom/sm8650-oneplus-caihong.dts
->>> new file mode 100644
->>> index 0000000000..93aed47e10
->>> --- /dev/null
->>> +++ b/arch/arm64/boot/dts/qcom/sm8650-oneplus-caihong.dts
->>> @@ -0,0 +1,960 @@
->>> +// SPDX-License-Identifier: BSD-3-Clause
->>> +/*
->>> + * Based on Qualcomm Reference Device DeviceTree
->>> + *
->>> + * Copyright (c) 2023, Linaro Limited
->>> + * Copyright (c) 2025, Pengyu Luo <mitltlatltl@gmail.com>
->>> + */
->>> +
->>> +/dts-v1/;
->>> +
->>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->>> +#include "sm8650.dtsi"
->>> +#include "pm8550.dtsi"
->>> +#include "pm8550b.dtsi"
->>> +#define PMK8550VE_SID 8
->>> +#include "pm8550ve.dtsi"
->>> +#include "pm8550vs.dtsi"
->>> +#include "pmk8550.dtsi"
->>> +
->>> +/delete-node/ &adspslpi_mem;
->>> +/delete-node/ &hwfence_shbuf;
->>> +
->>> +/* No Modem */
->>> +/delete-node/ &mpss_mem;
->>> +/delete-node/ &q6_mpss_dtb_mem;
->>> +/delete-node/ &mpss_dsm_mem;
->>> +/delete-node/ &mpss_dsm_mem_2;
->>> +/delete-node/ &qlink_logging_mem;
->>> +/delete-node/ &remoteproc_mpss;
->>> +
->>> +/* Unused now, and reusable, taking 144 MiB back */
->>> +/delete-node/ &trust_ui_vm_mem;
->>> +/delete-node/ &oem_vm_mem;
->>> +/delete-node/ &qdss_mem;
->>
->> Are you sure QTEE won't use this ?
->>
-> 
-> I am not sure, but these two VM nodes are never referred by any device
-> in the downstream DT. QDSS and coresight things are unnecessary on the
-> retail devices.
-> 
->>> +
->>> +/ {
->>> +     model = "Oneplus Pad Pro";
->>> +     compatible = "oneplus,caihong", "qcom,sm8650";
->>> +     chassis-type = "tablet";
->>> +
->>> +     aliases {
->>> +             serial0 = &uart14;
->>> +     };
->>> +
->>> +     bl_avdd_5p9: bl-avdd-regulator {
->>> +             compatible = "regulator-fixed";
->>> +             regulator-name = "bl_avdd_5p9";
->>> +             regulator-min-microvolt = <5900000>;
->>> +             regulator-max-microvolt = <5900000>;
->>> +             gpio = <&tlmm 90 GPIO_ACTIVE_HIGH>;
->>> +             enable-active-high;
->>> +     };
->>> +
->>> +     bl_avee_5p9: bl-avee-regulator {
->>> +             compatible = "regulator-fixed";
->>> +             regulator-name = "bl_avee_5p9";
->>> +             regulator-min-microvolt = <5900000>;
->>> +             regulator-max-microvolt = <5900000>;
->>> +             gpio = <&tlmm 91 GPIO_ACTIVE_HIGH>;
->>> +             enable-active-high;
->>> +     };
->>> +
->>> +     gpio-keys {
->>> +             compatible = "gpio-keys";
->>> +
->>> +             pinctrl-0 = <&volume_up_n>;
->>> +             pinctrl-names = "default";
->>> +
->>> +             key-volume-up {
->>> +                     label = "Volume Up";
->>> +                     linux,code = <KEY_VOLUMEDOWN>;
->>> +                     gpios = <&pm8550_gpios 6 GPIO_ACTIVE_LOW>;
->>> +                     debounce-interval = <15>;
->>> +                     linux,can-disable;
->>> +                     wakeup-source;
->>> +             };
->>> +     };
->>> +
->>> +     pmic-glink {
->>> +             compatible = "qcom,sm8650-pmic-glink",
->>> +                          "qcom,sm8550-pmic-glink",
->>> +                          "qcom,pmic-glink";
->>> +             #address-cells = <1>;
->>> +             #size-cells = <0>;
->>> +             orientation-gpios = <&tlmm 29 GPIO_ACTIVE_HIGH>;
->>> +
->>> +             connector@0 {
->>> +                     compatible = "usb-c-connector";
->>> +                     reg = <0>;
->>> +
->>> +                     power-role = "dual";
->>> +                     data-role = "dual";
->>> +
->>> +                     ports {
->>> +                             #address-cells = <1>;
->>> +                             #size-cells = <0>;
->>> +
->>> +                             port@0 {
->>> +                                     reg = <0>;
->>> +
->>> +                                     pmic_glink_hs_in: endpoint {
->>> +                                             remote-endpoint = <&usb_1_dwc3_hs>;
->>> +                                     };
->>> +                             };
->>> +
->>> +                             port@1 {
->>> +                                     reg = <1>;
->>> +
->>> +                                     pmic_glink_ss_in: endpoint {
->>> +                                             remote-endpoint = <&usb_dp_qmpphy_out>;
->>> +                                     };
->>> +                             };
->>
->> No Altmode display ? no SBU mux nor redrivers ?
->>
-> 
-> There should be a wcd939x_i2c@e, it will be added after I figure out
-> sound things. Actually, I added it locally, it does not work. Since
-> its name is wcd939x, it made me feel it is for usb dac handling only.
-> I never checked it carefully. But you mentioned this, I just checked
-> downstream bindings, it says
-> 
-> QTI WCD9395 Device
-> 
-> This device is used for switching orientation of USB-C analog
-> and for display. It uses I2C communication to set the registers
-> to configure the switches inside the WCD9395 chip to change
-> orientation and also to set SBU1/SBU2 connections of USB-C.
+> diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
+> index d26a9c24a430a831e0d865db4d96142da5276653..4c66d29ae505ae5adc717ae98f77fb736a6e15b9 100644
+> --- a/drivers/media/platform/qcom/camss/Makefile
+> +++ b/drivers/media/platform/qcom/camss/Makefile
+> @@ -21,6 +21,7 @@ qcom-camss-objs += \
+>   		camss-vfe-680.o \
+>   		camss-vfe-780.o \
+>   		camss-vfe-gen1.o \
+> +		camss-vfe-vbif.o \
+>   		camss-vfe.o \
+>   		camss-video.o \
+>   		camss-format.o \
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+> index 901677293d971cf761944a660ef719af38203f22..520bc16f2a05e34f457a828ecdb1f9502a0470c1 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+> @@ -15,6 +15,7 @@
+>   #include "camss.h"
+>   #include "camss-vfe.h"
+>   #include "camss-vfe-gen1.h"
+> +#include "camss-vfe-vbif.h"
+>   
+>   #define VFE_0_HW_VERSION		0x000
+>   
+> @@ -733,6 +734,7 @@ static void vfe_set_qos(struct vfe_device *vfe)
+>   {
+>   	u32 val = VFE_0_BUS_BDG_QOS_CFG_0_CFG;
+>   	u32 val7 = VFE_0_BUS_BDG_QOS_CFG_7_CFG;
+> +	int ret;
+>   
+>   	writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_QOS_CFG_0);
+>   	writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_QOS_CFG_1);
+> @@ -742,6 +744,15 @@ static void vfe_set_qos(struct vfe_device *vfe)
+>   	writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_QOS_CFG_5);
+>   	writel_relaxed(val, vfe->base + VFE_0_BUS_BDG_QOS_CFG_6);
+>   	writel_relaxed(val7, vfe->base + VFE_0_BUS_BDG_QOS_CFG_7);
+> +
+> +	/* SoC-specific VBIF settings */
+> +	if (vfe->res->has_vbif) {
+> +		ret = vfe_vbif_apply_settings(vfe);
+> +		if (ret < 0)
+> +			dev_err_ratelimited(vfe->camss->dev,
+> +					    "VFE: VBIF error %d\n",
+> +					    ret);
 
-The WCD9395 has 2 independent functions on the same die, one
-as a codec and the other one as an SBU mux for Altmode and audio
-headset. They are representd as 2 devices since they have 2
-separate communication ports (one is i2c, and the other is via soundwire)
+Over multiple lines encapsulate with {}
 
-Neil
+> +	}
+>   }
+>   
+>   static void vfe_set_ds(struct vfe_device *vfe)
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-vbif.c b/drivers/media/platform/qcom/camss/camss-vfe-vbif.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..2ae61b7baa148f0ad63fe3b8751aeb7b8fc12d81
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-vbif.c
+> @@ -0,0 +1,30 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * camss-vfe-vbif.c
+> + *
+> + * Qualcomm MSM Camera Subsystem - VFE VBIF Module
+> + *
+> + * Copyright (c) 2025, The Linux Foundation. All rights reserved.
+> + *
+> + */
+> +
+> +#include <linux/io.h>
+> +
+> +#include "camss.h"
+> +#include "camss-vfe.h"
+> +#include "camss-vfe-vbif.h"
+> +
+> +void vfe_vbif_reg_write(struct vfe_device *vfe, u32 reg, u32 val)
+> +{
+> +	writel_relaxed(val, vfe->vbif_base + reg);
+> +}
+> +
+> +int vfe_vbif_apply_settings(struct vfe_device *vfe)
+> +{
+> +	switch (vfe->camss->res->version) {
+> +	default:
+> +		break;
+> +	}
 
-> 
-> Thanks. I will check it again.
-> 
-> Best wishes,
-> Pengyu
+You have both
+
+if (vfe->res->has_vbif) {
+
+and the above switch, there's no point in checking this twice in two 
+different ways.
+
+Choose one, suggest has_vbif is enough.
+
+> +
+> +	return 0;
+> +}
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-vbif.h b/drivers/media/platform/qcom/camss/camss-vfe-vbif.h
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..cef1e17dba1f2335a2c8de070bcb6afde98eef87
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-vbif.h
+> @@ -0,0 +1,19 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * camss-vfe-vbif.h
+> + *
+> + * Qualcomm MSM Camera Subsystem - VFE VBIF Module
+> + *
+> + * Copyright (c) 2025, The Linux Foundation. All rights reserved.
+> + *
+> + */
+> +#ifndef QC_MSM_CAMSS_VFE_VBIF_H
+> +#define QC_MSM_CAMSS_VFE_VBIF_H
+> +
+> +#include "camss-vfe.h"
+> +
+> +void vfe_vbif_reg_write(struct vfe_device *vfe, u32 reg, u32 val);
+> +
+> +int vfe_vbif_apply_settings(struct vfe_device *vfe);
+> +
+> +#endif /* QC_MSM_CAMSS_VFE_VBIF_H */
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index 4bca6c3abaff9b898ea879674a3ff8f3592d3139..3138562d399444c5cf2ae96bf16b75b85ff5c5ca 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -1807,6 +1807,15 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+>   		return PTR_ERR(vfe->base);
+>   	}
+>   
+> +	if (vfe->res->has_vbif) {
+> +		vfe->vbif_base = devm_platform_ioremap_resource_byname(pdev,
+> +					vfe->res->vbif_name);
+> +		if (IS_ERR(vfe->vbif_base)) {
+> +			dev_err(dev, "could not map vbif memory\n");
+> +			return PTR_ERR(vfe->vbif_base);
+> +		}
+> +	}
+> +
+>   	/* Interrupt */
+>   
+>   	ret = platform_get_irq_byname(pdev, res->interrupt[0]);
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
+> index a23f666be7531e0366c73faea44ed245e7a8e30f..614e932c33da78e02e0800ce6534af7b14822f83 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
+> @@ -136,6 +136,8 @@ struct vfe_subdev_resources {
+>   	u8 line_num;
+>   	bool has_pd;
+>   	char *pd_name;
+> +	bool has_vbif;
+> +	char *vbif_name;
+>   	const struct vfe_hw_ops *hw_ops;
+>   	const struct camss_formats *formats_rdi;
+>   	const struct camss_formats *formats_pix;
+> @@ -145,6 +147,7 @@ struct vfe_device {
+>   	struct camss *camss;
+>   	u8 id;
+>   	void __iomem *base;
+> +	void __iomem *vbif_base;
+>   	u32 irq;
+>   	char irq_name[30];
+>   	struct camss_clock *clock;
 > 
 
 
