@@ -1,87 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-59399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F363AC3BE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:43:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C614CAC3C1E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:54:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E2463A5426
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:42:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 90822170B5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:54:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E4C21E990E;
-	Mon, 26 May 2025 08:43:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Ca08TtmH"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0AAC1E5729;
+	Mon, 26 May 2025 08:53:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE35D1DE882
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 08:43:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8F71EF397;
+	Mon, 26 May 2025 08:53:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748248992; cv=none; b=I6RpMzsKdBwdXVQ73msGYVWQGOQKeCOUo2eNEJ32DsgHT1deREBjwenz2KLTzHb4J5vQN4PDPmE0pFKQZpOind0/Nk8zzYZeZ7aWsz59PzVkjTqBIgNs7sT3YcMQAFbL9Pf482Un0CDr+4uBLV4ujjcfxT3eCf5KAmedXQRw4mU=
+	t=1748249635; cv=none; b=RR0K/oNKnq71iz8tdxpDmk+CsoDf9d/sDujbAnGJ372UhXiij+SSduzvvm6xdiWiyILc9RTXZlin7NMEFjb99NWh+cfLNvbtBJWPXazLvuW9C/jZdhs8/2LvwbaEKEI/vV+A/o1IEuf418QnghBiJiuLhqS77qZjoyMgvSM59mI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748248992; c=relaxed/simple;
-	bh=wvtD7UOxWptjnLXoK3lgX+akul/om9cVgjZjaIgSqCI=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=RcoeH/5yd5ilNdTI1LbtKrB/eTGzsSKQ9VRpRIRyFuDii1P0mh4pSRura4cMJWbcyUeKw3PI0Qow6OQ5Eokci71sVTPCls/9xMgRIid+uus57+p5FGzrN9OqvJFk79QHn+QyoQ+QubBuwWMTZgjrdIKP2bqKnCr9osUrxFNkX9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Ca08TtmH; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54PNPAb2010880
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 08:43:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sinlLLdJcZNbmFp3xHrrm5fCnPkdkH7iM8nLujxdoeY=; b=Ca08TtmHn6xL1Kff
-	9TY+DrLlT5tBGf2HciqNM3pLFiHurugr8mbxD+kee1q+ZRVdVXwhy8+pqMo3o1u4
-	RHcv4lOz412qSamlE7WkpvGLTufVaR63UDAHpxqKPQVd1GtE4OPK8m93y4YZhW7E
-	lzF9vbNQNfGZlllJe/gPfkZtPuOBrgdXcYbRp9LOrhuR3VZjLlX4/6HEv1KhEHEJ
-	DjFyyhYfC6JakozqpmoPuQxEXaRqtn9w+HVMnSHmiKg7LKlN47EpHmsAtvkc2vNr
-	819CDeb5zqiXjx9XPebktV4TdnaKYf9+8fra5jkTH9aXh1J/zgCE/fHwzES0fRwe
-	xjcwdg==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u6vjkh9u-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 08:43:09 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-742aa6581caso1453132b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 01:43:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748248988; x=1748853788;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sinlLLdJcZNbmFp3xHrrm5fCnPkdkH7iM8nLujxdoeY=;
-        b=KRQ5yCxPjfDCvtN/Ta5AjIrDZ2LpMC7sAbN4NzGLHb3/su4RrV2o+eOTvb4hqgUFAt
-         apH7mK4BTABuJRHQ1FSpwSwFIE0HnxvPcymSabfg5bV29qSbBFxwun3s27hiTyKzTTqn
-         mmFfcqz7hkpJZWl8SFdQMd33XhD2qhGthuVSbiMdvu0LgnBu00u292XT/v1Ed75SLMV1
-         gncBM+C9rlqkK28mcg8MUoKTntz24YI4MqFG4oeV4T0fCKFpZu6npx/9wGgUygw1jOIb
-         /eCXWo3WbEOgqHj26XKVXXLZq6lmT0CFsy4u/JoCYWwxtx06oCGks9fzUT0faHI/baUj
-         4wng==
-X-Forwarded-Encrypted: i=1; AJvYcCUI6gDoLhnVRFBHx1w67ToSnmCKeau/t6QV3Plha6SYi698ukCdIrSnlrx7Q8l2oDTLyuGSqqig4knfUJwW@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzpp+tVZPDHKBsEkeZ6gwuiZDQ/NzJuq8OuYVX1kbwZQczFS8b+
-	ybame1RE7qd1lAhS+0t3B2FbTRJEb4TRiuA3zN7fjQx3VkHcLiA8ULkQfrWTnTRqGIYEg7Zz2KQ
-	e6kN0DM8O/ximAbXkWL3M8HAKSt0d3SebijmoqKc0dC5H2aEqMRFMZUuJPZQPAwiYA3yf
-X-Gm-Gg: ASbGnctCvVikQRU47JUwNcbjigewv2bkWp2M+b2yG/QXTnpGoe0OnlHo6nx3/a+YSSY
-	3EiAHR3xelFg1IrT1CsL9W6CA7whOrmgc6qdXF/5HqLvHJuWZqQhcWK4PPk+IVH4K+kV5eUkTyL
-	dPa6OIo4hCYM71QGbIUv7ZkM42kWgTeLrPWsPSA7vVpHT8uoZV4pAoNj/UueQVaLpNkTHT+f8ku
-	C4Nv4VPbv5mNiNma2CLAaPwwbKkXoX/2AS74C1lM/9doFslReTPUUug0lmg0DiXTw8Wk1tTxwEr
-	uFYF+h79vMFldevigfe0v+ZrzQ1fcxBEjg==
-X-Received: by 2002:a05:6a00:14c6:b0:736:5438:ccc with SMTP id d2e1a72fcca58-745fde87a75mr12107159b3a.9.1748248988325;
-        Mon, 26 May 2025 01:43:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFoizJR5p+a89MPZAfJfUO3m/tGSDp0byZESTr1wQfYRLYacqwKo8ENa6edgbqkfWqehnyKgg==
-X-Received: by 2002:a05:6a00:14c6:b0:736:5438:ccc with SMTP id d2e1a72fcca58-745fde87a75mr12107134b3a.9.1748248987935;
-        Mon, 26 May 2025 01:43:07 -0700 (PDT)
-Received: from [10.239.154.73] ([114.94.8.21])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a970c8a8sm17197718b3a.60.2025.05.26.01.43.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 May 2025 01:43:07 -0700 (PDT)
-Message-ID: <a6deee53-6106-4e50-8d53-f1a87e50e9f0@oss.qualcomm.com>
-Date: Mon, 26 May 2025 16:43:03 +0800
+	s=arc-20240116; t=1748249635; c=relaxed/simple;
+	bh=FlCOtU9CCuR9lkUNWVYDcar0PqDo3voYYIIfoi97ZlQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dODZ2/FgIOQyXIUyi9ti2GW07yrhWX/LLPK99wdt1GzFZ4kUfkqG4usHOyDrcfIgXSpY25Q8gI9Yg2CAeUwti7EbY24cYQxMtV9gqOpPpHv3kZEPodqyr0hUMg8zDZD00sfvCendPzWzhPn1DmxbI1ei3Gr4hxJiyhZMmD5hjw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: ef5a1a7a3a0e11f0b29709d653e92f7d-20250526
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.45,REQID:2a582296-71b1-4427-aff1-0d66ba2e24a6,IP:10,
+	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:-3,FILE:0,BULK:30,RULE:Release_Ham,ACTI
+	ON:release,TS:37
+X-CID-INFO: VERSION:1.1.45,REQID:2a582296-71b1-4427-aff1-0d66ba2e24a6,IP:10,UR
+	L:0,TC:0,Content:0,EDM:0,RT:0,SF:-3,FILE:0,BULK:30,RULE:Release_Ham,ACTION
+	:release,TS:37
+X-CID-META: VersionHash:6493067,CLOUDID:01155e3f26d2f9f964f0833965c5c673,BulkI
+	D:250522180435BN613KC0,BulkQuantity:7,Recheck:0,SF:19|24|38|45|64|66|72|78
+	|80|81|82|83|102|841,TC:nil,Content:0|50,EDM:-3,IP:-2,URL:0,File:nil,RT:ni
+	l,Bulk:40|23,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:
+	0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 1,FCT
+X-CID-BAS: 1,FCT,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FSD,TF_CID_SPAM_FSI
+X-UUID: ef5a1a7a3a0e11f0b29709d653e92f7d-20250526
+X-User: aichao@kylinos.cn
+Received: from [172.25.120.86] [(112.64.161.44)] by mailgw.kylinos.cn
+	(envelope-from <aichao@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
+	with ESMTP id 2088584585; Mon, 26 May 2025 16:53:46 +0800
+Message-ID: <3869e6fc-1cbf-4113-9b34-0cbb5d4b5176@kylinos.cn>
+Date: Mon, 26 May 2025 16:53:42 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,176 +60,66 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Subject: Re: [PATCH 5/5] power: supply: qcom-battmgr: Add charge control
- support
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        =?UTF-8?Q?Gy=C3=B6rgy_Kurucz?= <me@kuruczgy.com>,
-        Sebastian Reichel <sre@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
-        David Collins <david.collins@oss.qualcomm.com>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, kernel@oss.qualcomm.com
-References: <20250523-qcom_battmgr_update-v1-0-2bb6d4e0a56e@oss.qualcomm.com>
- <20250523-qcom_battmgr_update-v1-5-2bb6d4e0a56e@oss.qualcomm.com>
- <db0e40b6-22f3-46aa-b35d-7a8729370ddf@kuruczgy.com>
- <1b1c4617-0e5b-40c8-9a66-d243b48c0977@oss.qualcomm.com>
- <70b6d885-ca52-4731-9a78-80dd25248e2f@linaro.org>
+Subject: Re: [PATCH v2 2/6] ASoC: aoa: Use helper function
+ for_each_child_of_node_scoped()
+To: Christophe Leroy <christophe.leroy@csgroup.eu>, perex@perex.cz,
+ tiwai@suse.com, johannes@sipsolutions.net, kuninori.morimoto.gx@renesas.com,
+ lgirdwood@gmail.com, broonie@kernel.org, jbrunet@baylibre.com,
+ neil.armstrong@linaro.org, khilman@baylibre.com,
+ martin.blumenstingl@googlemail.com, shengjiu.wang@gmail.com,
+ Xiubo.Lee@gmail.com, festevam@gmail.com, nicoleotsuka@gmail.com,
+ shawnguo@kernel.org, s.hauer@pengutronix.de, srinivas.kandagatla@linaro.org
+Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, linux-renesas-soc@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ imx@lists.linux.dev, kernel@pengutronix.de, linux-arm-msm@vger.kernel.org
+References: <20250522050300.519244-1-aichao@kylinos.cn>
+ <20250522050300.519244-3-aichao@kylinos.cn>
+ <8ad901c3-3fcb-4643-ac5a-c1f30f93d07f@csgroup.eu>
 Content-Language: en-US
-In-Reply-To: <70b6d885-ca52-4731-9a78-80dd25248e2f@linaro.org>
+From: Ai Chao <aichao@kylinos.cn>
+In-Reply-To: <8ad901c3-3fcb-4643-ac5a-c1f30f93d07f@csgroup.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=UOXdHDfy c=1 sm=1 tr=0 ts=6834299d cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=Htw2NgF16vZQhe7wStQA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: eDwgu37eL_AIIYtEumJczwY17PI2r8Jx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI2MDA3MiBTYWx0ZWRfX1XFhcjcvIRWA
- HeTr/kPFlnqGN4WwneG93EQOHZh9QYBCjNgpvcmZwyTewVpidLYbe9u1IPLSY2hqd2IzFptQgAT
- l+8BgjjNOoHJBudE1cJT+thFWrpEqzSgNQzSaGJOPTLp/8OyAfzOd2N3FxdcQgepwwqaGWAM4DB
- UxruPPnFijNGT4jt5VLbIOfxhyQGbWPFwB/wVEI5uX3UKZEH33QPtPZIBRBD286opmW9/+cmnmA
- /gM8NvsNa9GJTaiXCfCd6uYa9JafZAQsxQ1hUUQFgGPodW4QzqZ0p7E3G70bZ5ldYGNX9IVFidx
- cm+kv9w8aDrbW9VKjX+4s21MXfXzMdAgtJjGOQ6gJjDyRSxr9JB45bD24OBDfJhKus9//PRumn6
- Q+DcDz0EiZpZQoQSl0Nlvbb+LNmHrE7Av6zwXRIGe4QYA78Q4FCW3M6PNF2vMutDErX2WqqJ
-X-Proofpoint-GUID: eDwgu37eL_AIIYtEumJczwY17PI2r8Jx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-26_04,2025-05-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 mlxscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 bulkscore=0 malwarescore=0 impostorscore=0 spamscore=0
- suspectscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505260072
 
+Hi Christophe:
 
-On 5/26/2025 4:27 PM, neil.armstrong@linaro.org wrote:
-> On 26/05/2025 08:19, Fenglin Wu wrote:
->>
->> On 5/24/2025 5:29 AM, György Kurucz wrote:
->>> Hi!
->>>
->>>> +static int qcom_battmgr_set_charge_control(struct qcom_battmgr 
->>>> *battmgr,
->>>> +                       u32 target_soc, u32 delta_soc)
->>>> +{
->>>> +    struct qcom_battmgr_charge_ctrl_request request = {
->>>> +        .hdr.owner = cpu_to_le32(PMIC_GLINK_OWNER_BATTMGR),
->>>> +        .hdr.type = cpu_to_le32(PMIC_GLINK_REQ_RESP),
->>>> +        .hdr.opcode = cpu_to_le32(BATTMGR_CHG_CTRL_LIMIT_EN),
->>>> +        .enable = cpu_to_le32(1),
->>>> +        .target_soc = cpu_to_le32(target_soc),
->>>> +        .delta_soc = cpu_to_le32(delta_soc),
->>>> +    };
->>>> +
->>>> +    return qcom_battmgr_request(battmgr, &request, sizeof(request));
->>>> +}
->>>> +
->>>> +static int qcom_battmgr_set_charge_start_threshold(struct 
->>>> qcom_battmgr *battmgr, int soc)
->>>> +{
->>>> +    u32 target_soc, delta_soc;
->>>> +    int ret;
->>>> +
->>>> +    if (soc < CHARGE_CTRL_START_THR_MIN ||
->>>> +            soc > CHARGE_CTRL_START_THR_MAX) {
->>>> +        dev_err(battmgr->dev, "charge control start threshold 
->>>> exceed range: [%u - %u]\n",
->>>> +                CHARGE_CTRL_START_THR_MIN, 
->>>> CHARGE_CTRL_START_THR_MAX);
->>>> +        return -EINVAL;
->>>> +    }
->>>> +
->>>> +    /*
->>>> +     * If the new start threshold is larger than the old end 
->>>> threshold,
->>>> +     * move the end threshold one step (DELTA_SOC) after the new 
->>>> start
->>>> +     * threshold.
->>>> +     */
->>>> +    if (soc > battmgr->info.charge_ctrl_end) {
->>>> +        target_soc = soc + CHARGE_CTRL_DELTA_SOC;
->>>> +        target_soc = min_t(u32, target_soc, CHARGE_CTRL_END_THR_MAX);
->>>> +        delta_soc = target_soc - soc;
->>>> +        delta_soc = min_t(u32, delta_soc, CHARGE_CTRL_DELTA_SOC);
->>>> +    } else {
->>>> +        target_soc =  battmgr->info.charge_ctrl_end;
->>>> +        delta_soc = battmgr->info.charge_ctrl_end - soc;
->>>> +    }
->>>> +
->>>> +    mutex_lock(&battmgr->lock);
->>>> +    ret = qcom_battmgr_set_charge_control(battmgr, target_soc, 
->>>> delta_soc);
->>>> +    mutex_unlock(&battmgr->lock);
->>>> +    if (!ret) {
->>>> +        battmgr->info.charge_ctrl_start = soc;
->>>> +        battmgr->info.charge_ctrl_end = target_soc;
->>>> +    }
->>>> +
->>>> +    return 0;
->>>> +}
->>>> +
->>>> +static int qcom_battmgr_set_charge_end_threshold(struct 
->>>> qcom_battmgr *battmgr, int soc)
->>>> +{
->>>> +    u32 delta_soc = CHARGE_CTRL_DELTA_SOC;
->>>> +    int ret;
->>>> +
->>>> +    if (soc < CHARGE_CTRL_END_THR_MIN ||
->>>> +            soc > CHARGE_CTRL_END_THR_MAX) {
->>>> +        dev_err(battmgr->dev, "charge control end threshold exceed 
->>>> range: [%u - %u]\n",
->>>> +                CHARGE_CTRL_END_THR_MIN, CHARGE_CTRL_END_THR_MAX);
->>>> +        return -EINVAL;
->>>> +    }
->>>> +
->>>> +    if (battmgr->info.charge_ctrl_start && soc > 
->>>> battmgr->info.charge_ctrl_start)
->>>> +        delta_soc = soc - battmgr->info.charge_ctrl_start;
->>>> +
->>>> +    mutex_lock(&battmgr->lock);
->>>> +    ret = qcom_battmgr_set_charge_control(battmgr, soc, delta_soc);
->>>> +    mutex_unlock(&battmgr->lock);
->>>> +    if (!ret) {
->>>> +        battmgr->info.charge_ctrl_start = soc - delta_soc;
->>>> +        battmgr->info.charge_ctrl_end = soc;
->>>> +    }
->>>> +
->>>> +    return 0;
->>>> +}
->>>
->>> These function names sound quite generic, but AFAIU this patch is 
->>> only adding charge control support for the SM8550. Is sc8280xp and 
->>> x1e80100 also expected to be supported using the same 
->>> qcom_battmgr_charge_ctrl_request format?
->>
->> No, sc8280xp and x1e80100 don't support it. So I didn't add the 
->> support for them.
+>> The for_each_child_of_node_scoped() helper provides a scope-based
+>> clean-up functionality to put the device_node automatically, and
+>> as such, there is no need to call of_node_put() directly.
 >
-> And what about SM8650 and SM8750 ?
+> I don't understand this explanation.
 >
-> Neil
+> You say "no need to call of_node_put()" and the only thing you do in 
+> addition to changing from for_each_child_of_node() to 
+> for_each_child_of_node_scoped() is to _add_ a new call to of_node_put().
 >
-Both SM8650 and SM8750 support charge control functionality. I saw 
-SM8650 has already used "qcom,sm8550-pmic-glink" as fallback compatible 
-string, so it will have it enabled by default when the change gets 
-accepted. SM8750 platform can also use "qcom,sm8550-pmic-glink" as 
-fallback to support it when uploading the DT change.
+> I would expect to see a _removal_ of some of_node_put() when I read 
+> your description.
+>
+>>       }
+>> +    of_node_put(sound);
+>> +
 
-Fenglin
+The for_each_child_of_node() function is used to iterate over all child 
+nodes of a device tree node.  During each iteration, it retrieves a 
+pointer to the child node via of_get_next_child() and automatically 
+increments the node's reference count (of_node_get()). Each call to 
+of_get_next_child() increases the reference count (refcount) of the 
+returned child node, ensuring that the node is not freed while in use.
+for_each_child_of_node() increments the child node's reference count in 
+each iteration but does not decrement it automatically.
+If of_node_put() is not called manually, the reference count will never 
+reach zero, resulting in a memory leak of the node.
 
->>
->> These are generic functions are similar to 
->> "qcom_battmgr_update_charge_time" and "qcom_battmgr_update_info" 
->> which are only used for sc8280xp platform. Even right now charge 
->> control is only supported in mobile platforms starting from SM8550, 
->> however, it could be potentially supported in battery management 
->> firmware of any future platforms and the same functions could be reused.
->>
->>> Thanks,
->>> György
->>
->
+In function i2sbus_add_dev, it used device_node out of 
+for_each_child_of_node(){},  it need to add a new call to 
+of_node_put(sound) to reference count.
+
+In function i2cbus_probe, it used device_node in 
+for_each_child_of_node(){}, used for_each_child_of_node_scoped() is 
+better than for_each_child_of_node().
+
+Best regards,
+Ai Chao
 
