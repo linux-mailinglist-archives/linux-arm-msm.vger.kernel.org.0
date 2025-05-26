@@ -1,144 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-59440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13470AC40A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 15:47:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 13613AC420A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 17:05:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EE68618996ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 13:47:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 554F1189BD43
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 15:05:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 099F120B813;
-	Mon, 26 May 2025 13:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9626D20C028;
+	Mon, 26 May 2025 15:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KFET7oiZ"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="px3wU1eR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DDE1F463B;
-	Mon, 26 May 2025 13:47:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EB01FCF41;
+	Mon, 26 May 2025 15:04:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748267226; cv=none; b=X06IvbQb3IWQRHplakdxBUL+tiqBwj0d+BACjpQQtvC+AWc9u6sk6racy01jWgwZbGW3BuTyn26Q+X0jW9l4S0FnZQO96t+BdsogQzg6vLuE4MwqqNydZq9Iwv9q758PwdnlDzXB8grFSnJGD5gqpBpabJsqLeTXu4YcB3SMJoA=
+	t=1748271896; cv=none; b=k7eFDn4Z+XFRqk/sE3JpxZSktpRRHvNgS046YdwwjhBY5SXGL+aQ5UrHtoQb4mQ/ekQMbl8D46tn2xj9K4Qp8eVvOkNrZExN8rr0qLJ/K7hWA7aGl2nYw3hdbKFC0HWe7iLkrUDQPUl01Vj++T4z4pO06cyYb70qlAWIi6RTjHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748267226; c=relaxed/simple;
-	bh=+uw55Nbvzmy9FIP+DbRI7fubC+YGBHVWZbVdo3cwGXk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=If/69Xe0ZR0HlRJnZGgmSj1PG1xt8vaLTvCAYL/sgVmrpfQm/75xGFe4VPS4x2Cerk3G0Gz8ZsxRb6QLCfKdLLUH3n4jwvXpRpoqp+gRdg8ym4UMoFIgN4I7zrhWovYXdhXcbFHYqrfGLC96CHMCOBYkT3gcVS/UpaFJZ955m4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KFET7oiZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E36C4CEE7;
-	Mon, 26 May 2025 13:47:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748267226;
-	bh=+uw55Nbvzmy9FIP+DbRI7fubC+YGBHVWZbVdo3cwGXk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KFET7oiZCv2S5pqcYt2OWuU+DnRfYohENWFHzO/Tcht2eH6zoID3fSUPZXwerY66r
-	 IUM0Zrglcad3bUC9ID2bRYC1Kspi/rN52PNt2eHMeH68jhDG/kJo3Wy+BXkiuImvUJ
-	 mikk9wzRVHk5/Z87IAVRaUejfFTPvp9nEGvKYRDk4UELKkYlvqYABUuzvHSiiEw2pM
-	 Kh93BTRBXrHg4AvarAYkvQTPPJ5hHC/MW5hn6TTW07f9l0w3g3wD5WEcoxcDzt/tcP
-	 vbp6fXV5PqQiBfN3lMe6Eh/HZNEm+n+IUChv2x1cc3ol4osNC6io0daB3dmVgA4Y6V
-	 5ZS5FKs+Fkw+A==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1uJYAU-000000006H8-3uM7;
-	Mon, 26 May 2025 15:47:07 +0200
-Date: Mon, 26 May 2025 15:47:06 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Qiang Yu <quic_qianyu@quicinc.com>,
-	Wenbin Yao <quic_wenbyao@quicinc.com>, catalin.marinas@arm.com,
-	will@kernel.org, linux-arm-kernel@lists.infradead.org,
-	andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, vkoul@kernel.org, kishon@kernel.org,
-	sfr@canb.auug.org.au, linux-phy@lists.infradead.org,
-	krishna.chundru@oss.qualcomm.com, quic_vbadigan@quicinc.com,
-	quic_mrana@quicinc.com, quic_cang@quicinc.com,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>
-Subject: Re: [PATCH v3 5/5] phy: qcom: qmp-pcie: add x1e80100 qref supplies
-Message-ID: <aDRw2rJ39t9W10YG@hovoldconsulting.com>
-References: <20250508081514.3227956-1-quic_wenbyao@quicinc.com>
- <20250508081514.3227956-6-quic_wenbyao@quicinc.com>
- <aBxpMuFGKgWrw1TV@hovoldconsulting.com>
- <5fd4abe7-3621-4119-9482-de823b247b0d@quicinc.com>
- <aBx9LB_qQIvA0bj8@hovoldconsulting.com>
- <55a85622-fe33-4b5f-81b2-4a4270fab680@oss.qualcomm.com>
+	s=arc-20240116; t=1748271896; c=relaxed/simple;
+	bh=tCbLRnD850Fw84D6O+/v5XHafNaaAGbfyOsK8To1nVE=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=gzquH82IuRecDcV7Kk2xD2bCI+kvyLYebmnXDJVDzZi0+Jjb7ncOKZxCaEbJJ2fMpP1gVStoAJtYnYpBM4p8XscEn2kdY4j1yYQzbKBTobrhKk6VKei8YxMKBcd6JpN7L5wTEvEHOKifHSOvB144lAxfh7wjq2GQN2jWuikzosE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=px3wU1eR; arc=none smtp.client-ip=217.70.183.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id AFB2444225;
+	Mon, 26 May 2025 15:04:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1748271892;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=tCbLRnD850Fw84D6O+/v5XHafNaaAGbfyOsK8To1nVE=;
+	b=px3wU1eRkJ/axr/5DuhnZySKrn823eNaAIJXbZcAmaqq4qeYcle/G8QC7ZsPXuBfqgUfA5
+	j9UtCvuxzUT5A1xXY1Po4PCIRoRj/UYUvff9JIXuTSFDpA7KBjR1wfOWeVD/7/YChB4k6k
+	OccO5Dc6ZOmBH1W60DJj3fdi7jALdeVeqR+U/9rbTTM1YBDMzgagRRa7zs6wL9Q2HF+Ggl
+	lZR8EQV0hFy/i3wUKXQGcb6+9G9tfBRSFOtl6/n8GoMSf0r2Iy6B5ejdMC9jPJn6kFCLCK
+	x5mkCnLV2MqtCm+ayiflRELaT0mOKkuuwcU+khwFj5kXsikeBoHem+BuFAnX/A==
+Date: Mon, 26 May 2025 17:04:46 +0200
+From: Kory Maincent <kory.maincent@bootlin.com>
+To: =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Miquel Raynal
+ <miquel.raynal@bootlin.com>, Richard Weinberger <richard@nod.at>, Vignesh
+ Raghavendra <vigneshr@ti.com>, Hector Martin <marcan@marcan.st>, Sven Peter
+ <sven@svenpeter.dev>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, Shawn Guo
+ <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix
+ Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>,
+ NXP Linux Team <linux-imx@nxp.com>, Neil Armstrong
+ <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, Jerome
+ Brunet <jbrunet@baylibre.com>, Martin Blumenstingl
+ <martin.blumenstingl@googlemail.com>, Claudiu Beznea
+ <claudiu.beznea@microchip.com>, Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno        
+ <angelogioacchino.delregno@collabora.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
+ <konrad.dybcio@linaro.org>, Heiko Stuebner <heiko@sntech.de>, Orson Zhai
+ <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan
+ Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, Vincent Shih
+ <vincent.sunplus@gmail.com>, Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec
+ <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, Kunihiko
+ Hayashi <hayashi.kunihiko@socionext.com>, Masami Hiramatsu
+ <mhiramat@kernel.org>, Michal Simek <michal.simek@xilinx.com>, Alessandro
+ Zummo <a.zummo@towertech.it>, Alexandre Belloni
+ <alexandre.belloni@bootlin.com>, Evgeniy Polyakov <zbr@ioremap.net>,
+ linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+ asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-amlogic@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev,
+ linux-rtc@vger.kernel.org, Michael Walle <michael@walle.cc>,
+ =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>, Romain Gantois
+ <romain.gantois@bootlin.com>
+Subject: Re: [PATCH V5] nvmem: add explicit config option to read old syntax
+ fixed OF cells
+Message-ID: <20250526170446.1190e046@kmaincent-XPS-13-7390>
+In-Reply-To: <20230927204446.4231-1-zajec5@gmail.com>
+References: <20230927204446.4231-1-zajec5@gmail.com>
+Organization: bootlin
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <55a85622-fe33-4b5f-81b2-4a4270fab680@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddujeekfeculddtuddrgeefvddrtddtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfohfogggtgfesthhqredtredtjeenucfhrhhomhepmfhorhihucforghinhgtvghnthcuoehkohhrhidrmhgrihhntggvnhhtsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpefguddtfeevtddugeevgfevtdfgvdfhtdeuleetffefffffhffgteekvdefudeiieenucffohhmrghinhepsghoohhtlhhinhdrtghomhenucfkphepledtrdekledrudeifedruddvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeeltddrkeelrdduieefrdduvdejpdhhvghlohepkhhmrghinhgtvghnthdqigfrufdqudefqdejfeeltddpmhgrihhlfhhrohhmpehkohhrhidrmhgrihhntggvnhhtsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeehgedprhgtphhtthhopeiirghjvggtheesghhmrghilhdrtghomhdprhgtphhtthhopehsrhhinhhivhgrshdrkhgrnhgurghgrghtlhgrsehlihhnrghrohdrohhrghdprhgtphhtthhopehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprhhit
+ ghhrghrugesnhhougdrrghtpdhrtghpthhtohepvhhighhnvghshhhrsehtihdrtghomhdprhgtphhtthhopehmrghrtggrnhesmhgrrhgtrghnrdhsthdprhgtphhtthhopehsvhgvnhesshhvvghnphgvthgvrhdruggvvhdprhgtphhtthhopegrlhihshhsrgesrhhoshgvnhiifigvihhgrdhioh
+X-GND-Sasl: kory.maincent@bootlin.com
 
-On Thu, May 22, 2025 at 10:03:18PM +0200, Konrad Dybcio wrote:
-> On 5/8/25 11:45 AM, Johan Hovold wrote:
-> > On Thu, May 08, 2025 at 04:50:30PM +0800, Qiang Yu wrote:
-> >> On 5/8/2025 4:20 PM, Johan Hovold wrote:
+Le Wed, 27 Sep 2023 22:44:46 +0200,
+Rafa=C5=82 Mi=C5=82ecki <zajec5@gmail.com> a =C3=A9crit :
 
-> >>> This still looks wrong and you never replied to why these supplies
-> >>> shouldn't be handled by the tcsr clock driver that supplies these
-> >>> clocks:
-> >>>
-> >>> 	https://lore.kernel.org/lkml/aBHUmXx6N72_sCH9@hovoldconsulting.com/
-> > 
-> >> Sorry, I thought Konrad had convinced you.
-> > 
-> > IIRC, he just said you guys were told to add the QREF supply to the PHY.
-> > That's not an argument.
-> > 
-> >> If the TCSR driver manages these supplies, would it be possible for tscr
-> >> driver to recognize when it needs to turn vdda-qref on or off for a
-> >> specific PCIe port?
-> > 
-> > Sure, just add a lookup table to the driver and enable the required
-> > supplies when a ref clock is enabled.
-> > 
-> > As I mentioned in the other thread, the T14s has the following QREF
-> > supplies:
-> > 
-> > 	
-> > 	VDD_A_QREFS_1P2_A
-> > 	VDD_A_QREFS_1P2_B
-> > 
-> > 	VDD_A_QREFS_0P875_A
-> > 	VDD_A_QREFS_0P875_B
-> > 	VDD_A_QREFS_0P875_0
-> > 	VDD_A_QREFS_0P875_2
-> > 	VDD_A_QREFS_0P875_3
-> > 
-> > and it's not clear how these maps to the various consumer ref clocks,
-> > including the PCIe ones:
-> > 
-> > 	#define TCSR_PCIE_2L_4_CLKREF_EN
-> > 	#define TCSR_PCIE_2L_5_CLKREF_EN
-> > 	#define TCSR_PCIE_8L_CLKREF_EN
-> > 	#define TCSR_PCIE_4L_CLKREF_EN
-> > 
-> > That mapping can be done by the TCSR clock driver (which would also take
-> > care of the 1.2 V supplies).
-> 
-> So we had an internal discussion about this and while it may work, it
-> would only do so for some SoCs, and maybe only on the surface, as the
-> wiring behind it is rather peculiar..
+> From: Rafa=C5=82 Mi=C5=82ecki <rafal@milecki.pl>
+>=20
+> Binding for fixed NVMEM cells defined directly as NVMEM device subnodes
+> has been deprecated. It has been replaced by the "fixed-layout" NVMEM
+> layout binding.
+>=20
+> New syntax is meant to be clearer and should help avoiding imprecise
+> bindings.
+>=20
+> NVMEM subsystem already supports the new binding. It should be a good
+> idea to limit support for old syntax to existing drivers that actually
+> support & use it (we can't break backward compatibility!). That way we
+> additionally encourage new bindings & drivers to ignore deprecated
+> binding.
+>=20
+> It wasn't clear (to me) if rtc and w1 code actually uses old syntax
+> fixed cells. I enabled them to don't risk any breakage.
 
-Care to expand on why it cannot be made to work generally?
+Hello,
 
-Also, what would the mapping of the above QREF supplies to PCIe PHYs
-even look like?
+Was there a reason to not add the legacy flag to all the drivers that was
+supporting nvmem at the time nvmem fixed layout was supported?
 
-> Plus, not all QREF consumers have a clock expressed in TCSR as of
-> right now.
+I just faced a nvmem layout regression on board with an at24 eeprom.
 
-Is that because there is no corresponding bit in the TCSR or simply
-because it has not been described yet?
+Commit: 27f699e578b1 nvmem: core: add support for fixed cells *layout*
+$ git grep nvmem_config drivers/ | cut -d ':' -f 1 | sort -u
+drivers/hwmon/pmbus/adm1266.c
+drivers/iio/pressure/bmp280-core.c
+drivers/media/i2c/ov2740.c
+drivers/media/i2c/video-i2c.c
+drivers/misc/eeprom/at24.c
+drivers/misc/eeprom/at25.c
+drivers/misc/eeprom/eeprom_93xx46.c
+drivers/mtd/mtdcore.c
+drivers/nvmem/apple-efuses.c
+drivers/nvmem/bcm-ocotp.c
+drivers/nvmem/brcm_nvram.c
+drivers/nvmem/core.c
+drivers/nvmem/imx-iim.c
+drivers/nvmem/imx-ocotp.c
+drivers/nvmem/imx-ocotp-ele.c
+drivers/nvmem/imx-ocotp-scu.c
+drivers/nvmem/jz4780-efuse.c
+drivers/nvmem/lan9662-otpc.c
+drivers/nvmem/layerscape-sfp.c
+drivers/nvmem/lpc18xx_eeprom.c
+drivers/nvmem/lpc18xx_otp.c
+drivers/nvmem/meson-efuse.c
+drivers/nvmem/meson-mx-efuse.c
+drivers/nvmem/microchip-otpc.c
+drivers/nvmem/mtk-efuse.c
+drivers/nvmem/mxs-ocotp.c
+drivers/nvmem/nintendo-otp.c
+drivers/nvmem/qcom-spmi-sdam.c
+drivers/nvmem/qfprom.c
+drivers/nvmem/rave-sp-eeprom.c
+drivers/nvmem/rmem.c
+drivers/nvmem/rockchip-efuse.c
+drivers/nvmem/rockchip-otp.c
+drivers/nvmem/sc27xx-efuse.c
+drivers/nvmem/snvs_lpgpr.c
+drivers/nvmem/sprd-efuse.c
+drivers/nvmem/stm32-romem.c
+drivers/nvmem/sunplus-ocotp.c
+drivers/nvmem/sunxi_sid.c
+drivers/nvmem/u-boot-env.c
+drivers/nvmem/uniphier-efuse.c
+drivers/nvmem/vf610-ocotp.c
+drivers/nvmem/zynqmp_nvmem.c
+drivers/rtc/nvmem.c
+drivers/rtc/rtc-abx80x.c
+drivers/rtc/rtc-cmos.c
+drivers/rtc/rtc-ds1305.c
+drivers/rtc/rtc-ds1307.c
+drivers/rtc/rtc-ds1343.c
+drivers/rtc/rtc-ds1511.c
+drivers/rtc/rtc-ds1553.c
+drivers/rtc/rtc-ds1685.c
+drivers/rtc/rtc-ds1742.c
+drivers/rtc/rtc-ds3232.c
+drivers/rtc/rtc-isl12026.c
+drivers/rtc/rtc-isl1208.c
+drivers/rtc/rtc-m48t59.c
+drivers/rtc/rtc-m48t86.c
+drivers/rtc/rtc-meson.c
+drivers/rtc/rtc-omap.c
+drivers/rtc/rtc-pcf2127.c
+drivers/rtc/rtc-pcf85063.c
+drivers/rtc/rtc-pcf85363.c
+drivers/rtc/rtc-rp5c01.c
+drivers/rtc/rtc-rv3028.c
+drivers/rtc/rtc-rv3029c2.c
+drivers/rtc/rtc-rv3032.c
+drivers/rtc/rtc-rv8803.c
+drivers/rtc/rtc-rx8581.c
+drivers/rtc/rtc-stk17ta8.c
+drivers/rtc/rtc-sun6i.c
+drivers/rtc/rtc-ti-k3.c
+drivers/soc/atmel/sfr.c
+drivers/soc/tegra/fuse/fuse-tegra.c
+drivers/thunderbolt/nvm.c
+drivers/w1/slaves/w1_ds250x.c
 
-Johan
+--=20
+K=C3=B6ry Maincent, Bootlin
+Embedded Linux and kernel engineering
+https://bootlin.com
 
