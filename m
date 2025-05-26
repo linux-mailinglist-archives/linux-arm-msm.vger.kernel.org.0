@@ -1,150 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-59455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53BF5AC4301
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 18:28:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3B1EAC43F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 21:00:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 04B24188BBF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 16:29:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F254179C86
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 19:00:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1580623D2BA;
-	Mon, 26 May 2025 16:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD1061BFE00;
+	Mon, 26 May 2025 19:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mailoo.org header.i=@mailoo.org header.b="Z19Do2EK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RJXBuOTX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailo.com (msg-3.mailo.com [213.182.54.8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7D7202C26;
-	Mon, 26 May 2025 16:28:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.182.54.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4921BF33F;
+	Mon, 26 May 2025 19:00:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748276926; cv=none; b=mNS4WgMLqAw1g8iVE6KcRbh1yEgA9P+9yOtXbvad2FXBdWnulXyWv6+L27RICZJDtN/Ss/+4YzROhI3eWFAAFFx2HHulADtbyar//UnAHOmZzWGlLeB0gtDIkxPaprtwFXNMAF7k50Alk1yDkKqICe7iJW7X5QJ5b3/9eOur18A=
+	t=1748286024; cv=none; b=j8hwwjT9LaotBYQ2T+uK2E6QBFqMXZplFIWpNQvMzK+wrO/mmkK/E4JnlUgkgTyUgRH7neeMO91m2xMpYYgWP1544yLM4K/+Oi4XS2pFmpOG6ZOyDEhHnljKBHnYxI36Ml/YarpKe/+hOucNcUDukp4FBZTtvHOJY6qO7U6JfMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748276926; c=relaxed/simple;
-	bh=WesYvToAs6WtM8/JvS/w8lPmZbCAauuQs9r0LMUFeFE=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=hhkbETGAzVDb6nb7b3An9f7PIZBuW5Mt31uEwM6I3CSblFzFor4ykdkPgpVdyYxssWfuxRc/in774rw7Xe8wf9kQ12bBQu0G/ONyQtwcJv3SqAAZmGR+TxPwqsWabF60H9Dcj59jp2oLvcs6F9jfFi8rTUsAUg2+T6y0+hjFax8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mailoo.org; spf=pass smtp.mailfrom=mailoo.org; dkim=pass (1024-bit key) header.d=mailoo.org header.i=@mailoo.org header.b=Z19Do2EK; arc=none smtp.client-ip=213.182.54.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mailoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailoo.org
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mailoo.org; s=mailo;
-	t=1748276913; bh=WesYvToAs6WtM8/JvS/w8lPmZbCAauuQs9r0LMUFeFE=;
-	h=X-EA-Auth:Message-ID:Subject:From:To:Cc:Date:In-Reply-To:
-	 References:Content-Type:Content-Transfer-Encoding:MIME-Version;
-	b=Z19Do2EKRVwFrJHxN1AoJcz9J3VcCpGqfS0gsNY0Nn9dsvxE8wC1GwQFRJQI5tvk0
-	 kQNNoZ13VhGNjRcgRrmwkXClnvzCaKD1GRO5Mb5Yo54me8ne+ZqYX43/VwQBY+1XtG
-	 H+r53OMlqUbJzdLHXCzLzDPgPJsAxxZIzf044/98=
-Received: by b221-5.in.mailobj.net [192.168.90.25] with ESMTP
-	via ip-22.mailoo.org [213.182.54.22]
-	Mon, 26 May 2025 18:28:31 +0200 (CEST)
-X-EA-Auth: thZI+eq+wJnB9pJ071hare+VCuHcapIAEi1zIKZM2k/VH4RxG/+cQFwy5X4Kg1nKahXEAeXZY5flnhMcupOr8OYi0eaUG8aXoIBwG0RcQos=
-Message-ID: <a1645a74b59c29a567477e4b3a42391f40ba0591.camel@mailoo.org>
-Subject: Re: [PATCH v2 2/4] media: qcom: camss: Add support for MSM8939
-From: Vincent Knecht <vincent.knecht@mailoo.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Robert Foss	
- <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, Mauro Carvalho
- Chehab	 <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
- Kozlowski	 <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn
- Andersson	 <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- =?ISO-8859-1?Q?Andr=E9?= Apitzsch
-	 <git@apitzsch.eu>, phone-devel@vger.kernel.org, 
-	~postmarketos/upstreaming@lists.sr.ht
-Date: Mon, 26 May 2025 18:28:30 +0200
-In-Reply-To: <cc43d9b7-13ba-44ea-9b37-fc54c0d1f2e0@linaro.org>
-References: <20250525-camss-8x39-vbif-v2-0-6d3d5c5af456@mailoo.org>
-	 <20250525-camss-8x39-vbif-v2-2-6d3d5c5af456@mailoo.org>
-	 <cc43d9b7-13ba-44ea-9b37-fc54c0d1f2e0@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.1 (3.56.1-1.fc42app2) 
+	s=arc-20240116; t=1748286024; c=relaxed/simple;
+	bh=ePOfC29++ESggGuGKz+Psuyc+GPSsmDJXwxn5BhMFlw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IlBUaPARzzf0P98lYlQxPQdqlOqaNa3FVjoq2XICY0qMUwiYY8iv6OxdwMbsj7KJUmpOQQ6szrnQPoHEbeqFVyr+LGnuMDpG5vLKPRwaIUjYH4jxm8Ny+NO0Y8SBNuA4Qd0d8B1j2pmrTeac3r1Ry0+MqrJ+z6U1NzBTUNyMoa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RJXBuOTX; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-601ab204085so6450465a12.1;
+        Mon, 26 May 2025 12:00:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748286021; x=1748890821; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=W7HLJjnq943t9tfBsG6nEO+BsP0zHoqnaSW8DhhOz60=;
+        b=RJXBuOTX8ytqW/bqxivucyO4rLM7mTNTsJc2iKICEfnTtp33BDPrWuqgTHzBSuIZgp
+         NOf66/xxJYrLobn1APukYi/f03QP8l1/XuxKvpkRwf25OLpdD9UotLSkgqomLHTBxjpq
+         qEWX29fPbBuZMvtr/zzay8T73VbLvrN4fp+4mXd5Yxqciwawks4XSsApT85vIsp0Nh0o
+         w8XcB9F+/t/VmO0AN2aW/uvEuAbbutzhiKnIjr8sxZQA6hIO441UaRs8ImfIgJkw2T/V
+         VxsfjCtVWQuRClMdor0zEeGk7PP4wCdJ7qWjjTLWGcJKqPudumTHw2UQD2d+h3bDxpMm
+         33/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748286021; x=1748890821;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=W7HLJjnq943t9tfBsG6nEO+BsP0zHoqnaSW8DhhOz60=;
+        b=O75kanv8l8l98SPbjQExe2zUWSpPq2JmKh5nH0Joo9FkSCtyTPN87Ctfn76F1Wz+Sj
+         4JKc+JLSic/0CckJJaUYswUQ8htsFCyZj9IB+KlGdLMa6nKenWMr4sgwU6BqOBpCybRx
+         zfOz331dLb6JW+rMJyoymO6jHib44hZ7ADsRHFTG24FJJBMgOgrahXWv++PiSdNC5tV2
+         qV6BjJu7OXfJatu3Bz4dmuspMlEYN5vWJFIO/P1wExiQKjaq97mxJ8gGo2y1mB523Axe
+         krWWYxjKqjniMRXr2D3qLZMANsSyM2L3x/Inj3u+6MuXx90rHGslKdz2f6bvIgU1+stx
+         7XLA==
+X-Forwarded-Encrypted: i=1; AJvYcCUTZA9o+n3O/6+PPRewEa4GJvyfllLWHubhNrulizth8VgUnSly2msiik5dnSi99aIX2sqJEGfp4iv6@vger.kernel.org, AJvYcCXOjBbVI1n8We8Sz5JApfj4PgKtOid6ekrjaHyqEhA/PcsDj499HsK5iHiMUn/QWWYAhp5S7yPzwLIZ7CeS@vger.kernel.org, AJvYcCXXH9NWdNHpukwO+OSmDE5dTYL/6KbkzE1B3/bt+5pVHbaK0Hu/qWjtb6CfPr5p/f4yAvpaZUizaF99Brk4@vger.kernel.org
+X-Gm-Message-State: AOJu0YyLlQLRh2ZYw+RhfIpN08+L6J5Ww/Ts3xJiS0zZCLLgvPiGv+MK
+	PxOznob5OP5qsH3gmQgMM4Wp5VX7V6zFhOFejmFE/PkhI5a9J9ypQCNu
+X-Gm-Gg: ASbGncsOY9OzJijOTvmH8TftzDNXL2TraAdtSTNMpdf6qGDCxvBQvjul4vIGAmmymP1
+	E4J/LDAYEgHd1nEhBJrZtQ120+bJg5YmKLQXeSlw9Nsuxs1ZoLIGqU9TKPbuFOpTizuACawJVB9
+	ZaCNu/h2r1rukfkOW/vQc7tJgl8o1baHpy1Ybwqcnqg6ttztG/qVZRxZkiNTCr4dK0tIzOFIgmS
+	06OeqkciF9miaOIxqe1vHsxKVyq56rfOKGEIqdY1Y2SSpZfef0sC6ITE/x+tSQ1cjR2XRXd8Hgl
+	sNTSTC5bh00GN0r5ZdsdQtuc22oS86uJYz/kB2wgeg5i8sJ1mktPVU2dnhcsPcmWdd4V6DpAzHJ
+	RVH4NybQW1rtbGJvY
+X-Google-Smtp-Source: AGHT+IGIry+aoCgx9x9cr71iQ7GQxeXVX+GF2ustchqL5GOThY2B0a+6W4khGGch4NApD0EjZ99GJQ==
+X-Received: by 2002:a17:907:3fa8:b0:ad5:6622:114e with SMTP id a640c23a62f3a-ad64e8e0ee1mr1213181666b.30.1748286021072;
+        Mon, 26 May 2025 12:00:21 -0700 (PDT)
+Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad8859d7411sm75220066b.80.2025.05.26.12.00.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 May 2025 12:00:20 -0700 (PDT)
+Message-ID: <acca434f-30f3-4992-bcf3-e389563b356c@gmail.com>
+Date: Mon, 26 May 2025 21:00:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC] spi: spi-qpic-snand: overestimate corrected bitflips
+Content-Language: hu
+To: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Mark Brown <broonie@kernel.org>, Md Sadre Alam <quic_mdalam@quicinc.com>,
+ Varadarajan Narayanan <quic_varada@quicinc.com>,
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+ linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250522-qpic-snand-overestimate-bitflips-v1-1-35c65c05068e@gmail.com>
+ <875xhr5r2y.fsf@bootlin.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
+In-Reply-To: <875xhr5r2y.fsf@bootlin.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Le lundi 26 mai 2025 =C3=A0 09:20 +0100, Bryan O'Donoghue a =C3=A9crit=C2=
-=A0:
-> On 25/05/2025 20:25, Vincent Knecht via B4 Relay wrote:
-> > From: Vincent Knecht <vincent.knecht@mailoo.org>
-> >=20
-> > The camera subsystem for the MSM8939 is the same as MSM8916 except with
-> > 3 CSID instead of 2, and some higher clock rates.
-> >=20
-> > As a quirk, this SoC needs writing values to 2 VFE VBIF registers
-> > (see downstream msm8939-camera.dtsi vbif-{regs,settings} properties).
-> > This fixes black stripes across sensor and garbage in CSID TPG outputs.
-> >=20
-> > Add support for the MSM8939 camera subsystem.
-> >=20
-> > Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
-> > ---
-> > =C2=A0 drivers/media/platform/qcom/camss/camss-csiphy.c=C2=A0=C2=A0 |=
-=C2=A0=C2=A0 1 +
-> > =C2=A0 drivers/media/platform/qcom/camss/camss-ispif.c=C2=A0=C2=A0=C2=
-=A0 |=C2=A0=C2=A0 8 +-
-> > =C2=A0 drivers/media/platform/qcom/camss/camss-vfe-vbif.c |=C2=A0=C2=A0=
- 7 +
-> > =C2=A0 drivers/media/platform/qcom/camss/camss-vfe.c=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
-> > =C2=A0 drivers/media/platform/qcom/camss/camss.c=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 157 +++++++++++++++++++++
-> > =C2=A0 drivers/media/platform/qcom/camss/camss.h=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
-> > =C2=A0 6 files changed, 173 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers=
-/media/platform/qcom/camss/camss-csiphy.c
-> > index c622efcc92ff3781d7fc3ace0253c2d64c91e847..6311fc2975aa1345e430a47=
-7c8a6476f1d7e5663 100644
-> > --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-> > +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> > @@ -605,6 +605,7 @@ int msm_csiphy_subdev_init(struct camss *camss,
-> > =C2=A0=C2=A0		return PTR_ERR(csiphy->base);
-> > =C2=A0=20
-> > =C2=A0=C2=A0	if (camss->res->version =3D=3D CAMSS_8x16 ||
-> > +	=C2=A0=C2=A0=C2=A0 camss->res->version =3D=3D CAMSS_8x39 ||
-> > =C2=A0=C2=A0	=C2=A0=C2=A0=C2=A0 camss->res->version =3D=3D CAMSS_8x53 |=
-|
-> > =C2=A0=C2=A0	=C2=A0=C2=A0=C2=A0 camss->res->version =3D=3D CAMSS_8x96) =
-{
-> > =C2=A0=C2=A0		csiphy->base_clk_mux =3D
-> > diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/=
-media/platform/qcom/camss/camss-ispif.c
-> > index 2dc585c6123dd248a5bacd9c7a88cb5375644311..aaf3caa42d33dcb641651e7=
-f5bc0c2a564d85bfa 100644
-> > --- a/drivers/media/platform/qcom/camss/camss-ispif.c
-> > +++ b/drivers/media/platform/qcom/camss/camss-ispif.c
-> > @@ -1112,6 +1112,8 @@ int msm_ispif_subdev_init(struct camss *camss,
-> > =C2=A0=C2=A0	/* Number of ISPIF lines - same as number of CSID hardware=
- modules */
-> > =C2=A0=C2=A0	if (camss->res->version =3D=3D CAMSS_8x16)
-> > =C2=A0=C2=A0		ispif->line_num =3D 2;
-> > +	else if (camss->res->version =3D=3D CAMSS_8x39)
-> > +		ispif->line_num =3D 3;
->=20
-> > +		.interrupt =3D { "vfe0" },
-> > +		.vfe =3D {
-> > +			.line_num =3D 3,
->=20
-> Hmm should we really be setting line_num inline in the code ?
->=20
-> I don't believe we should.
->=20
-> These parameters should be passed from the resources structures.
->=20
-> ---
-> bod
+2025. 05. 23. 16:39 keltezéssel, Miquel Raynal írta:
+> On 22/05/2025 at 19:33:26 +02, Gabor Juhos <j4g8y7@gmail.com> wrote:
+> 
+>> The QPIC hardware is not capable of reporting the exact number of the
+>> corrected bitflips, it only reports the number of the corrected bytes.
+>> However the current code treats that as corrected bitflips which is
+>> quite inaccurate in most cases. For example, even if the hardware reports
+>> only one byte as corrected, that byte may have contained multiple bit
+>> errors from one up to the maximum number of correctable bits.
+>>
+>> Change the code to report the maximum of the possibly corrected bits,
+>> thus allowing upper layers to do certain actions before the data gets
+>> lost due to uncorrectable errors.
+>>
+>> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+>> ---
+>> The patch tries to address Miquel's concerns [1] about the corrected bit
+>> error reporting capabilities of the QPIC hardware.
+>>
+>> [1] https://lore.kernel.org/all/87h61e8kow.fsf@bootlin.com
+> 
+> Thank you very much for attempting to improve the situation. Giving this
+> a second look, it will not work either and will be even worse, forcing
+> wear levelling after each read. So let's not change the returned value,
+> hopefully the real life is different as the test case and most bitflips
+> will be spread and not concentrated in a single byte. However I'd
+> welcome either a pr_warn_once() or at least a comment somewhere about
+> this.
 
-I've just followed suit, no strong opinion about it.
-Can we agree this could be changed in another series ?
+Ok, I will rework the patch. If it turns out that the current approach behaves
+badly in real life, we can still change it later.
 
-
+Thanks,
+Gabor
 
