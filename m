@@ -1,217 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-59383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58AF5AC3A84
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 09:20:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E5A47AC3A94
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 09:25:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CD7B21892B39
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 07:20:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6EB4A1892756
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 07:26:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C18EC1DE8B0;
-	Mon, 26 May 2025 07:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F3211DF270;
+	Mon, 26 May 2025 07:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="ERsZFnNG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FgwTR4Yv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E435BF9D9;
-	Mon, 26 May 2025 07:20:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF21318DB0D;
+	Mon, 26 May 2025 07:25:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748244041; cv=none; b=thq+XN7yLTFYgC428Kwkh6sAgQNV8izgH372vMlDoGf/8XSGbcCnhEcZ3E5XGNslPnOxIN3dJ74E1fWUBRDAritlZoZeGfmOQT1+79A+Dy4hps0omzEo3sen2yqHGeHhODTGS6xoo4W+vaaYjE8aop43m+ZrHj45kHnz6Vj2rE4=
+	t=1748244344; cv=none; b=TT8Im/Ms9gHbJ4CCYuUqVDOjM3Mai/q5kNkTr86P9mnyaYziFiHLGoXxWvuKsbZaKl5rkUCcl2EIMP3KmSB6iU2aZAsoJWP/mMpUr/gkAO0ch7w2FZdAV6pZd7+BxWAm68AJuNKNYvSSGRwURSjTfBsES+0+B9ixkvQjLLW27SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748244041; c=relaxed/simple;
-	bh=E7nsl7EWs55+/uUhfc7iqd4zyB1Z1lv1eOZEgqQ0ZBI=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eD154JLeQPwa+KzKGaJc94uFlLAYtljoMRo4Nduvf+4tGjcJKlvw90nT4VxMlMdSAXhYEcyBWBA5HZ6Eb/k5HjKwtQnyEPwg7bTN++3SkB6sLhAOwKNosaqwp8x/mDiUMbkQH0P9ofTsxYOL9QoCfiP5OytR954dMh2g3aLtV5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=ERsZFnNG; arc=none smtp.client-ip=217.70.183.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 16875442B5;
-	Mon, 26 May 2025 07:20:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1748244030;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QLkd7DkuwItmUeCsro4GRU7KY1n+af+fkKCtRJvc72M=;
-	b=ERsZFnNGGx1taTjFML/F7g48As15TWrVqpm7AQM6ITdhjMQXPkfTl1YTY624dt2A61ojKn
-	C4GrIy3LvMnZuQ3f48MHbrAItO9yt2FMHAqBFQBNWnAd4H+GlbFkLp+0Q5jpHR5ME8BtSC
-	rLb2TykZsJeBxh/2UPnUC+byagvOBWEHs+mzz5buaw+VAmwRzWbNg55alaA49c/WX7dEK/
-	fsh2zNr1ZhqaGyMrCEJNSdr/QBQDpvqqwK5PYQ+P4KU7TlWYdbGXAPWQsVfUnDZH7GHJxL
-	bRcPS+1N1hdPuMOBL2LrEIz8HJMPOUVPD7+c3bsfVFBouRX3auSsw6Kbri6nhA==
-Date: Mon, 26 May 2025 09:20:24 +0200
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-To: Liu Ying <victor.liu@nxp.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
- <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie
- <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Andrzej Hajda
- <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Laurent Pinchart
- <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>,
- Jernej Skrabec <jernej.skrabec@gmail.com>, Jagan Teki
- <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
- <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Douglas Anderson
- <dianders@chromium.org>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, Krzysztof
- Kozlowski <krzk@kernel.org>, Anusha Srivatsa <asrivats@redhat.com>, Paul
- Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, Hui
- Pu <Hui.Pu@gehealthcare.com>, Thomas Petazzoni
- <thomas.petazzoni@bootlin.com>, dri-devel@lists.freedesktop.org,
- asahi@lists.linux.dev, linux-kernel@vger.kernel.org,
- chrome-platform@lists.linux.dev, imx@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-amlogic@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH v2 30/34] drm/bridge: imx8qxp-pixel-combiner: convert to
- devm_drm_bridge_alloc() API
-Message-ID: <20250526092024.48cae4ae@booty>
-In-Reply-To: <67252c36-8b31-4c40-9d89-4f502da4a087@nxp.com>
-References: <20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com>
- <20250424-drm-bridge-convert-to-alloc-api-v2-30-8f91a404d86b@bootlin.com>
- <553d62ed-976a-4e17-9678-cdc3d40ce4a7@nxp.com>
- <20250430112944.1b39caab@booty>
- <f71d18d2-4271-4bb9-b54f-0e5a585778f3@nxp.com>
- <20250506224720.5cbcf3e1@booty>
- <67252c36-8b31-4c40-9d89-4f502da4a087@nxp.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1748244344; c=relaxed/simple;
+	bh=jI/6QrKDgQw+a5STQCUZbrlMyan64IJNwwcyUgaiJeI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ckG6ZT7gSblfiF4/TlHrRuQX21pZbst4ixZqxI9xxRtnlgNF+SgCPmeUBf8864bESEXeNPfGtZqClj3Ksdy5So4pMGzRVA0LNHzQBU6//ny3xItgeddyUu6AzFXhHyS0CysVamvrp+SftSmUWDKo3a/dCrOTd4AjFOkQE20HEXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FgwTR4Yv; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54PNetJ9018296;
+	Mon, 26 May 2025 07:25:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	sFsCV/DjNz5vL4f4te1C3iQo+A07KiQkSvGfgc9WuHI=; b=FgwTR4YvNw/iNQkX
+	xUTYDKebwmzqI726vHADr5Jtjsv29mpbvMbzoKngMYIUNu0XwW+f38AmMGSO9/ky
+	YBV94NMg0sGOurG47Xwv8QRjOn/M67MeS4dNLW6WxCiNFZt8/0U826He7htqrzmv
+	cWzoeJcWdpYjvsTJGzn1MWNs0PSWmy1WYxQZX4aTdBk+xsRuBSWcvxvVnDJFLm8Z
+	vEPcsO7c3yjFxpenXJyWED38oLsXRcZymsJjE8s/XrNtom4SJq5+gfjq8n1URn6M
+	g9F9dbIKlWe26lfZiY+xvVF4w+qAAQfwmOJVBlPLfqu74fCE4HrumohP990yKxBi
+	kFFE6Q==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u7dc38wk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 26 May 2025 07:25:25 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54Q7PPBK023669
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 26 May 2025 07:25:25 GMT
+Received: from [10.253.8.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 26 May
+ 2025 00:25:16 -0700
+Message-ID: <ce62bdda-b328-4be7-b9d7-1b4bffa039e6@quicinc.com>
+Date: Mon, 26 May 2025 15:25:14 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdduieeltdculddtuddrgeefvddrtddtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfohfogggtgfesthhqredtredtjeenucfhrhhomhepnfhutggrucevvghrvghsohhlihcuoehluhgtrgdrtggvrhgvshholhhisegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpefgfeetieeutdeifefggfegheelgeefiefgffeifeeujeehkeffgeehhfevfefhjeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhfrhgvvgguvghskhhtohhprdhorhhgpdgsohhothhlihhnrdgtohhmnecukfhppedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegsohhothihpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfeelpdhrtghpthhtohepvhhitghtohhrrdhlihhusehngihprdgtohhmpdhrtghpthhtohepmhgrrghrthgvnhdrlhgrnhhkh
- hhorhhstheslhhinhhugidrihhnthgvlhdrtghomhdprhgtphhtthhopehmrhhiphgrrhgusehkvghrnhgvlhdrohhrghdprhgtphhtthhopehtiihimhhmvghrmhgrnhhnsehsuhhsvgdruggvpdhrtghpthhtoheprghirhhlihgvugesghhmrghilhdrtghomhdprhgtphhtthhopehsihhmohhnrgesfhhffihllhdrtghhpdhrtghpthhtoheprghnughriigvjhdrhhgrjhgurgesihhnthgvlhdrtghomhdprhgtphhtthhopehnvghilhdrrghrmhhsthhrohhngheslhhinhgrrhhordhorhhg
-X-GND-Sasl: luca.ceresoli@bootlin.com
-
-Hello Liu,
-
-On Thu, 22 May 2025 11:01:13 +0800
-Liu Ying <victor.liu@nxp.com> wrote:
-
-> On 05/07/2025, Luca Ceresoli wrote:
->=20
-> [...]
->=20
-> >> After looking into this patch and patch 31(though I've already provide=
-d my A-b)
-> >> more closely, I think the imx8qxp_pc and imx8{qm,qxp}_ldb main structu=
-res
-> >> should have the same life time with the embedded DRM bridges, because =
-for
-> >> example the clk_apb clock in struct imx8qxp_pc would be accessed by the
-> >> imx8qxp_pc_bridge_mode_set DRM bridge callback.  But, IIUC, your patch=
-es extend
-> >> the life time for the embedded channel/bridge structures only, but not=
- for the
-> >> main structures.  What do you think ? =20
-> >=20
-> > I see you concern, but I'm sure the change I'm introducing is not
-> > creating the problem you are concerned about.
-> >=20
-> > The key aspect is that my patch is merely changing the lifetime of the
-> > _allocation_ of the drm_bridge, not its usage. On drm_bridge_remove()
-> > the bridge is removed from its encoder chain and it is completely not
-> > reachable, both before and after my patch. With my patch it is not =20
->=20
-> drm_bridge_remove() only removes a bridge from the global bridge_list def=
-ined
-> in drm_bridge.c.  drm_bridge_detach() is the one which removes a bridge f=
-rom
-> it's encoder chain.  It looks like you wrongly thought drm_bridge_remove()
-> is drm_bridge_detach().
-
-Indeed my sentence was inaccurate, sorry about that.
-
-> So, even if drm_bridge_remove() is called, the removed
-> bridge could still be in it's encoder chain, hence an atomic commit could=
- still
-> access the allocated bridge(with lifetime extended) and the clock_apb clo=
-ck
-> for example in struct imx8qxp_pc could also be accessed.  That's why I th=
-ink
-> the main structures should have the same lifetime with the allocated brid=
-ge.
-
-As the long-term goal is to allow bridges to be hot-removable,
-decoupling the lifetime of the various components is a necessary step.
-Definitely it will open other issues, and especially the removal during
-atomic updates. This has been discussed already, and there is a
-proposed plan to handle it.
-
-First, here is the grand plan (mentioned in the v3 cover letter):
-
- 1. =E2=9E=9C add refcounting to DRM bridges (struct drm_bridge)
- 2. handle gracefully atomic updates during bridge removal
- 3. avoid DSI host drivers to have dangling pointers to DSI devices
- 4. finally, let bridges be removable (depends on 1+2+3)
-
-We are now at step 1. Your concern, as I understand it, will be
-addressed at step 2. Bridges won't be removable until step 4, so the
-current changes are not introducing a misbehavior but rather preparing
-the ground with all the necessary infrastructure changes.
-
-Step 2 was discussed in the past [0], and the idea proposed by Maxime
-is to introduce a "gone" or "unplugged" flag and drm_bridge_enter() /
-drm_bridge_exit() functions. The principle is the same as struct
-drm_device.unplugged and drm_dev_enter/exit().
-
-In a nutshell the idea is:
-
- - drm_bridge.unplugged is initialized to false
- - drm_bridge_enter() returns false if drm_bridge.unplugged =3D=3D true
- - any code holding a pointer to the bridge (including the bridge driver
-   itself) and operating on the bridge (including removal) needs to do:
-     if (drm_bridge_enter()) {
-         do something;
-         drm_bridge_exit();
-     }
- - when the bridge is removed, the driver removal function sets
-   dev_bridge.unplugged =3D true
-
-The "do something" above includes any access to device resources,
-including clocks (and clk_apb).
-
-In other words, two pieces of code can not access the bridge structure
-at the same time. This includes bridge removal VS any atomic operations.
-
-Do you think this addresses your concern?
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v4 01/14] dt-bindings: net: Add PPE for Qualcomm
+ IPQ9574 SoC
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller"
+	<davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
+	<kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, Lei Wei <quic_leiwei@quicinc.com>,
+        Suruchi Agarwal
+	<quic_suruchia@quicinc.com>,
+        Pavithra R <quic_pavir@quicinc.com>,
+        "Simon
+ Horman" <horms@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        Kees Cook
+	<kees@kernel.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        "Philipp
+ Zabel" <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>,
+        <john@phrozen.org>
+References: <20250513-qcom_ipq_ppe-v4-0-4fbe40cbbb71@quicinc.com>
+ <20250513-qcom_ipq_ppe-v4-1-4fbe40cbbb71@quicinc.com>
+ <20250519-garrulous-monumental-shrimp-94ad70@kuoka>
+ <a182df27-5b0d-42d1-8f58-4e7a913bb12d@quicinc.com>
+ <e9dac160-f90a-48e2-9269-245b36c3aefe@kernel.org>
+Content-Language: en-US
+From: Luo Jie <quic_luoj@quicinc.com>
+In-Reply-To: <e9dac160-f90a-48e2-9269-245b36c3aefe@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ctFXOY6aZXB9Cba_WI4zxGky5WX3pqvO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI2MDA2MSBTYWx0ZWRfX9SoU85VKL4uu
+ BMRnvtaskkMUjU06iumRs8vuh7IPokcNOlBzWmuKhR4xpOUOBQWRC8P3dTWqQ7mUVvyAClrz6y5
+ OroKuJM9CdZ7po9NUnCnksMj+nQIucZUUv4n0EjkJf6m22rID+R0sSbqaczAo7ra6c8IIbYMHhq
+ m55VToirRUtsNGgtBGmIxRo90P+Vo8p29RNHhAe5Nf6XMo4jPMmBimFxqkemcxDN7/kmYvMqgq7
+ F+TTlrTT8mXeaSn9j0UMsnybGbCGs63Yd/uDdhwyLAPwEUqn5bwfYLFBQXGmBjugC6nJhtdSuyb
+ wiUYxYHlNvXt9mhIfclS8y95wJ44kVj3gYK97UIExMKmqTsv/hzQVlglskFNM7TFIESTHFauseH
+ 9DTBDbIItl67LyP2+SMwseThrSBmtqGWKIKqE4kPByixkq8lFnwVZf1FIOn+N0et8W1HxUKN
+X-Proofpoint-ORIG-GUID: ctFXOY6aZXB9Cba_WI4zxGky5WX3pqvO
+X-Authority-Analysis: v=2.4 cv=Mq5S63ae c=1 sm=1 tr=0 ts=68341765 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
+ a=TRFCqlRPH5gG6gXwlP4A:9 a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-26_04,2025-05-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 mlxscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0 mlxlogscore=861
+ bulkscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505260061
 
 
-For you to have a better picture of the path, here's an additional
-clarification about drm_bridge_attach/detach() and
-drm_bridge_add/remove(). As part of step 1 of the grand plan, both of
-them will drm_bridge_get/put() the bridge, so that no bridge is freed
-if it is either in the global bridge_list or in any encoder chain.
 
-Patches for this are already approved by Maxime [1][2]. They cannot be
-applied until all bridge drivers have been converted to the new
-devm_drm_bridge_alloc() API, so they depend on this series to be
-completely applied. We are getting pretty close: as of now the entire
-series has been applied except for this and another driver.
+On 5/24/2025 2:25 PM, Krzysztof Kozlowski wrote:
+> On 23/05/2025 12:28, Luo Jie wrote:
+>>>> +  interconnect-names:
+>>>> +    items:
+>>>> +      - const: ppe
+>>>> +      - const: ppe_cfg
+>>>> +      - const: qos_gen
+>>>> +      - const: timeout_ref
+>>>> +      - const: nssnoc_memnoc
+>>>> +      - const: memnoc_nssnoc
+>>>> +      - const: memnoc_nssnoc_1
+>>>> +
+>>>> +  ethernet-dma:
+>>>
+>>> I don't get why this is a separate node.
+>>>
+>>
+>> We used a separate node because the EDMA (Ethernet DMA)
+>> is a separate block within the PPE block, with specific
+>> functions like ports-to-host-CPU packet transfer and
+>> hardware packet steering. We felt that a separate node
+>> would depict the hierarchy more clearly. Could you please
+>> suggest if a single node is recommended instead?
+> Since it is a separate block and it has its own resources, it is fine.
 
-[0] https://lore.kernel.org/all/20250129125153.35d0487a@booty/t/#u
-[1] https://patchwork.freedesktop.org/patch/643095/
-[2] https://patchwork.freedesktop.org/patch/643096/
+OK, thanks for confirmation.
 
-Best regards,
-Luca
+> 
+> Best regards,
+> Krzysztof
 
---=20
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
 
