@@ -1,160 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-59458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C77D2AC4424
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 21:47:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 54209AC443A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 22:01:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6F0AE1783B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 19:47:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0ED2F16B742
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 20:01:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFA3D1D63C5;
-	Mon, 26 May 2025 19:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65272E55B;
+	Mon, 26 May 2025 20:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OplpTF+D"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A0NXfKpH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6932CCDE;
-	Mon, 26 May 2025 19:47:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9BA3FE7;
+	Mon, 26 May 2025 20:01:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748288868; cv=none; b=ofkqlmtOak2v/fjQ7J8/rUFxqoSZbAGIqYzaLCnyQjY3Wdfll6+DcR8JZVfu6olVSNK05emeqZkU60oG4SXREC4rQz3cf5UC7aDMMNP+JQuah6ULUGvUl1uBz1qaiU2kd1FsU50iBAr48Gy9/t2xGfoU+7+ZTtU2fCJdH2t/NB4=
+	t=1748289693; cv=none; b=IWuE11thGtWWPvbNM2vDhNlndrf1AdECewTts2OV59Rp46BPhMtNwrvwpxnFTVYNHbIPPJbSfB97sdjrZRA+BMDd/5RKpZ2iQmo5DltanJM1RgW11xvHZvPM6d22sL1eT16BxsfKh64zncY9pCuIVqrc+n35CqFA/ObN4/CNH6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748288868; c=relaxed/simple;
-	bh=4KqVkDJQJ7wmSaMRmXEyaIS0NkKBSX1F3vJIe8XNIxU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rqAOlANv38JiJwF9EEn3ggtZTZrdApUU5r5kXJzcZ4J4quKzLm4SofbBrbKaGDuWfSegwZJT///n6OOcZqnekVNLI6VRGLU/R6jW5c4A6JJ+X4AwEfMYKtcC7nB4oBQtNExvBm7duzdOXQL/1Jo8x/RPwa6bHAlaxHsa/PV3O1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OplpTF+D; arc=none smtp.client-ip=209.85.167.170
+	s=arc-20240116; t=1748289693; c=relaxed/simple;
+	bh=ZLJgam4FvhrtKoLyXGYOdu9eZXdCTgwzaZdbzfRj6+Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NgJ1IfXzCsFVqnLaZZh/5zdDYZ68aiT2hghtzAVICWgH24pme3oj1Cew8XWsKPg5vfTUertg99Bv0WjrTm/2S9e59ac2wK1MhbdkupFgGYimTYdJc80dkFsR9kWVC4AN9FOYnTmCtuYOyQ6IJDs/GijCGTlYGpXNzr5haBwgHE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A0NXfKpH; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-404a5f4cdedso456534b6e.0;
-        Mon, 26 May 2025 12:47:46 -0700 (PDT)
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-602039559d8so5244824a12.1;
+        Mon, 26 May 2025 13:01:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748288866; x=1748893666; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4lxG4RwYQ0CNvC7KfH6KqgSMfyW5/kygutUZd5gmeVM=;
-        b=OplpTF+DzfjQeSN+XSmU6YNRoycLlmWNkrYEzWD94ZC5E+uNUVMwKM+6hkhPUJ86oE
-         tCNPagqbmunS9OJ/k999wFkQ26BVEUkypxR/4rn3B2L9e3gaGxTw8LZKNpNCmjrVg2eW
-         UjhnsZxkQey+Lw8qGMM1ajyqC90HAnT/A2SRfkzyNAAUfUQFOKdo987AJkrdj0SrfbEw
-         Wi8v2+zkrz8qV6wm7gGvutilkJJ14ieHvxlDl5DofDqT8eTTgaBO++P71t/KdCRBhhq9
-         RZJ8Q/V005owun/sLdeulTO4s07rcHtjzjjVlIDtQNRhZIY+CyLnmDBf4j3VfRcG+ZRI
-         4IQQ==
+        d=gmail.com; s=20230601; t=1748289690; x=1748894490; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=b5UZXlK7jyoyEbPjk1xDvrCMNiZh+VKlzRkBAGqXQcY=;
+        b=A0NXfKpHBYuLum04lw10aor0FgzaCVv2p5+MCS5d3uhZUTm6Vrd/2oDtxX/7Fk5qGy
+         H9vMg1/PTYGASi379LQa571bxVsdi0o6KYpXzVWngRqqsutsRkHYsvMyCBahObSs4XhM
+         PUyHL+wj/g5Ky0Pm+F0KTquEHRS2vPwRII+d5NGuJ9qmJzwbYozyFpPCzFY8Q75RvoZU
+         XT/OSKN44QxeKsaTSixj41u4C/HPJkNk8oB/b9fVWWc4IxfjjNrin8PAaxVKNkuQk9YL
+         u+/sVgEAdNcUd/kPT4/TisPi4dYgfFzmFXFD7bKkk7kkgT1qICcZ6ZvEwd9PGiK03ma1
+         6gaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748288866; x=1748893666;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4lxG4RwYQ0CNvC7KfH6KqgSMfyW5/kygutUZd5gmeVM=;
-        b=sYJo01PksQ+HY1K4hsd8r9f48zyOZJ8OYjJpvTrzdAH91bUFEHppn296avopHI7QrY
-         85/Gnn5pcXsBVA7FeS2Aa9WC0FtD5xwpeQZW/6DAMeXwkrdwMvaQxkldk9/sFazQNBbR
-         FD2SSFZRZ7l6FKXdFP1qau6xhmMcATnygoceqt8YU5VbLVjZAeh7j7OqXUNHXb83ps2C
-         oNrAg5OORO81Bs8bDfbiPtVjexb30sOBpxEzgxtQM4FyUukh1CgWEl6YJCBlUm26cg9G
-         TpZzAiI9MwPAoXqrQlcMYuQbPhhRMATnorBWS0WfFEahevhEDhM4WBoBtL5Ty8LUwxjZ
-         8ybw==
-X-Forwarded-Encrypted: i=1; AJvYcCUCM8EGLon93RA4iPdqG8C3CyvU5do/YQtbsMkcms4amf58/L+XfYYKlt4YbNDoHuvpfOsx5clagBN7@vger.kernel.org, AJvYcCUWalmZYBLuRLLDzPKCDflaPSWSbWUcvvypXSn4zvtPkvIpTMaFLsJ04DRCkDOihJpV2i5wmivF5f72mL6gKg==@vger.kernel.org, AJvYcCVEx8E9wDE6/4fbp8TnGvoZK5dyyQqUpbzcChTwRm29TEIe5QjeKU1B2DCVdMTS7G9Ved7iF7e4GrUp94Zy@vger.kernel.org, AJvYcCVlsG0Dk7Sw0KGQduCz43WxvSstsxzak0pB5fVHrABaY9FnKV5PZX12YfmppnOCRODqhm8C7fFcVWLx@vger.kernel.org
-X-Gm-Message-State: AOJu0YwzRrkhcHiESszBre/ep0v5mgTbtQV1tVK7a23eAhTTOUzW9O0h
-	3yV6Gh4jSfLgvI/2SQXXnSWdo0iNgl5L4en/fFpTcRXso1t56B8sRUlywf433Bg3JZEd3uZu0v5
-	UXmo9yOyTXDSY3i+FXUrQnmMmLdLwWUQ=
-X-Gm-Gg: ASbGnctG//SM60kgSx0BObdyxOUr8asVAi50OiwRzSzU/YlgDsY0/YBtlKu2gecEma+
-	7hY/zVNQ2649RIg2CpsgXhV+P/ICSE+aZ+70P65C3p0XBDqdlA9on6DFO6SFKKMo4ThT+z+oyoS
-	lL7r76m8tJQM0ikvd+5z/aRQLQwd+cAW7LrA==
-X-Google-Smtp-Source: AGHT+IEJ0rmGDYHVgbL2oFttoN7DXxvLwFI/X2w1GedL73u0g6JyCd2425ooHw3cpjUX86RjEOmynFxzWpFNfqwPYeI=
-X-Received: by 2002:a05:6808:80c5:b0:3fb:2937:937c with SMTP id
- 5614622812f47-406467b8c4bmr5809894b6e.6.1748288866073; Mon, 26 May 2025
- 12:47:46 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1748289690; x=1748894490;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=b5UZXlK7jyoyEbPjk1xDvrCMNiZh+VKlzRkBAGqXQcY=;
+        b=OU2bTqNG7+2A4nkB0h3+mZ9cRA9hD8RjAvc4zJYU/TCkBC5EZvTHw6BKsIlrolMEZd
+         9UqtBmiFPjy/VbS4uXeEM8jg7WdV1JchYJsD6+mXKo3ktJ8IcOrJNTh8M8eNGv/tZSBx
+         J/j3jD6PObFPw9MtpYmVPEx3i6Z5cHK5f5PPDoPudonPifx6gPw89itHKPeopkzY32Lb
+         pFvQv+upThjX/7iBFEOLxyHtWj8A/w47T53RfMuN5QoopqG4rDzYl2PzbrQRCDXkv0lg
+         9PQVQTTd2a86UsbT7ha5n9ppUbjbhAkM+mmrOWi4m1UpUjAEuKCQ1L54c32B4hfPr8zR
+         bXmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWeXnjwtp9YBofFpUZ73K7VX2nJB0mba6cTbdBBp+p9tCiA9Xv7LM3ZePgtg8t/sVSiy0Akm6nS3GuwHoj8@vger.kernel.org, AJvYcCWnFXpjGpM5YJe5gZPF7fAwP6QfYr4lHXPk05sffH40a3r/tg6sTq2kgAXX3w7SEQHDkx4337CNYwXjXT86@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5PCdNJ/XThlpBONd1X4gHj/fL3l+fAZ5/vB62hWttOijT9A8Y
+	3AqKh8Dc2y1+3L5aKedSVHRH4+VjmTW3i4Ibq44PaQ88/rRxXBBi7VRt
+X-Gm-Gg: ASbGncthhRsZmrY3ByaHraPjCZRhcJW0/R9wrMtGoUrdN//fyjRUhAyUnPzYbTIf3of
+	VImjs7zw8bR9oSfBkyhovbwh/m7YHcJ4kUMCVxfxxz8iKGterCy3FCouq4fECjvPNmM0JsdbSG6
+	R3POSEt8w2ZRjdtpgMdKW3M6EvC2E1RbnrKxgS2U9GyhXzmfzu+JoMcJqCsajr1gWOTYbID+udb
+	frfrKo9rdLZCZgAxYKp5SQJT8BPvRNbCHc/WZbeYqRp0dBYk9VFz5vCDFdQF3PfDgdX52Up9LzY
+	RX8dAVEYeLo5cXxWZVDK+cYarZrx6N4Pi09rMPlUiuijoJzG61KuW0ckgmxlBTL12jfFO/xzP+m
+	W1D2EnTQX7VXDbMV0
+X-Google-Smtp-Source: AGHT+IG11zehgCzBXjbnF2eT+TAQneLA6ATYCudw9kas/3Q4I6BaiJNJpShUkGjOy5/EEURb6r1AaA==
+X-Received: by 2002:a17:907:6d0c:b0:acf:c:22ca with SMTP id a640c23a62f3a-ad85b00b7d1mr884949166b.1.1748289689706;
+        Mon, 26 May 2025 13:01:29 -0700 (PDT)
+Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d04e821sm1743988166b.17.2025.05.26.13.01.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 May 2025 13:01:29 -0700 (PDT)
+Message-ID: <b9134a1d-3dbc-4cd9-b22a-90b1c8934ce9@gmail.com>
+Date: Mon, 26 May 2025 22:01:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250506-qcom-apcs-mailbox-cc-v1-0-b54dddb150a5@linaro.org> <20250506-qcom-apcs-mailbox-cc-v1-2-b54dddb150a5@linaro.org>
-In-Reply-To: <20250506-qcom-apcs-mailbox-cc-v1-2-b54dddb150a5@linaro.org>
-From: Jassi Brar <jassisinghbrar@gmail.com>
-Date: Mon, 26 May 2025 14:47:34 -0500
-X-Gm-Features: AX0GCFteTgTgIIhEMNd3LV6B3AyZoLARNnuA73iJCsHKTCOp4z_ZcwMh59Zhjp0
-Message-ID: <CABb+yY2bSJ-dZ73DjZaNc+iEpXXU4bxbWBPaj0M_6qf+Zb=V_w@mail.gmail.com>
-Subject: Re: [PATCH 2/4] mailbox: qcom-apcs-ipc: Assign OF node to clock
- controller child device
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-clk@vger.kernel.org, 
-	Georgi Djakov <djakov@kernel.org>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] mtd: nand: qpic_common: prevent out of bounds access
+ of BAM arrays
+Content-Language: hu
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, Mark Brown <broonie@kernel.org>,
+ Varadarajan Narayanan <quic_varada@quicinc.com>,
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+ Miquel Raynal <miquel.raynal@bootlin.com>,
+ Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>
+Cc: linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Lakshmi Sowjanya D <quic_laksd@quicinc.com>
+References: <20250525-qpic-snand-avoid-mem-corruption-v1-0-5fe528def7fb@gmail.com>
+ <20250525-qpic-snand-avoid-mem-corruption-v1-2-5fe528def7fb@gmail.com>
+ <8ab1e48a-f698-9859-3992-6a26f63d62f1@quicinc.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
+In-Reply-To: <8ab1e48a-f698-9859-3992-6a26f63d62f1@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, May 6, 2025 at 8:10=E2=80=AFAM Stephan Gerhold
-<stephan.gerhold@linaro.org> wrote:
->
-> Currently, the child device for the clock controller inside the APCS bloc=
-k
-> is created without any OF node assigned, so the drivers need to rely on t=
-he
-> parent device for obtaining any resources.
->
-> Add support for defining the clock controller inside a "clock-controller"
-> subnode to break up circular dependencies between the mailbox and require=
-d
-> parent clocks of the clock controller. For backwards compatibility, if th=
-e
-> subnode is not defined, reuse the OF node from the parent device.
->
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> ---
->  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 16 ++++++++++++----
->  1 file changed, 12 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qc=
-om-apcs-ipc-mailbox.c
-> index 11c41e935a3619b74ad0f5e2d82699ca8aa05722..8b24ec0fa191efc975625d9b9=
-270140ad1fe7b9b 100644
-> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> @@ -116,10 +116,18 @@ static int qcom_apcs_ipc_probe(struct platform_devi=
-ce *pdev)
->         }
->
->         if (apcs_data->clk_name) {
-> -               apcs->clk =3D platform_device_register_data(&pdev->dev,
-> -                                                         apcs_data->clk_=
-name,
-> -                                                         PLATFORM_DEVID_=
-AUTO,
-> -                                                         NULL, 0);
-> +               struct device_node *np =3D of_get_child_by_name(pdev->dev=
-.of_node,
-> +                                                             "clock-cont=
-roller");
-> +               struct platform_device_info pdevinfo =3D {
-> +                       .parent =3D &pdev->dev,
-> +                       .name =3D apcs_data->clk_name,
-> +                       .id =3D PLATFORM_DEVID_AUTO,
-> +                       .fwnode =3D of_fwnode_handle(np) ?: pdev->dev.fwn=
-ode,
-> +                       .of_node_reused =3D !np,
-> +               };
-> +
-> +               apcs->clk =3D platform_device_register_full(&pdevinfo);
-> +               of_node_put(np);
->                 if (IS_ERR(apcs->clk))
->                         dev_err(&pdev->dev, "failed to register APCS clk\=
-n");
->         }
->
+2025. 05. 26. 8:53 keltezéssel, Md Sadre Alam írta:
+> Hi,
+> 
+> On 5/25/2025 10:35 PM, Gabor Juhos wrote:
+>> The common QPIC code does not do any boundary checking when it handles
+>> the command elements and scatter gater list arrays of a BAM transaction,
+>> thus it allows to access out of bounds elements in those.
+>>
+>> Although it is the responsibility of the given driver to allocate enough
+>> space for all possible BAM transaction variations, however there can be
+>> mistakes in the driver code which can lead to hidden memory corruption
+>> issues which are hard to debug.
+>>
+>> This kind of problem has been observed during testing the 'spi-qpic-snand'
+>> driver. Although the driver has been fixed with a preceding patch, but it
+>> still makes sense to reduce the chance of having such errors again later.
+>>
+>> In order to prevent such errors, change the qcom_alloc_bam_transaction()
+>> function to store the number of elements of the arrays in the
+>> 'bam_transaction' strucutre during allocation. Also, add sanity checks to
+>> the qcom_prep_bam_dma_desc_{cmd,data}() functions to avoid using out of
+>> bounds indices for the arrays.
+>>
+>> Tested with the 'spi-qpic-snand' driver only.
+> I recommend testing this patch on both the IPQ and SDX platforms,
+> as the QPIC raw NAND driver are utilized across both.
+> 
+> If you have access to IPQ and SDX devices with raw NAND, please proceed
+> with testing on both.
 
-I see the dt change is acked by the DT maintainer. I have no problem
-with this patch and can merge, but do you want to wait for ack from
-some Qcom dev?
+Sorry, I have no SDX devices at all, and unfortunately I can't access my older
+IPQ boards before next week.
 
-thanks
+> 
+> Otherwise, I can handle testing on the IPQ raw NAND device and coordinate with
+> Lakshmi Sowjanya D (quic_laksd@quicinc.com)
+> for testing on the SDX platform.
+
+If you could do some testing in the meantime, that would be superb.
+Thanks for that in advance!
+
+Regards,
+Gabor
 
