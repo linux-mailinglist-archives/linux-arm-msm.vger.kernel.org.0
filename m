@@ -1,161 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-59460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74C7BAC445D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 22:21:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E4D8AC4589
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 01:28:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3572417929E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 20:21:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 50153178B45
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 23:28:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB5DB23E354;
-	Mon, 26 May 2025 20:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C42E8241663;
+	Mon, 26 May 2025 23:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OzAd6JFm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d75IlXo9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7931A254C;
-	Mon, 26 May 2025 20:21:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13313192D87;
+	Mon, 26 May 2025 23:28:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748290881; cv=none; b=uXUz+Wi3/9d4t5oc8kZtT0dR1tjJeUwbUZD3jxg2tXZK2ot68/GXa/PUGYOWHtedcu5N8RFU44k9kVNfRMtCigPp+50q+B+1NJYibOFQH8PujiMxEmg0IvH1b5Udsw6S5LbPAftCQ9xtLroQXOrkYi5C2sv/qrkhaKQKZq22PPs=
+	t=1748302131; cv=none; b=MKOan+gXxf/Yey7hWw8Yjs3BTbrJZwo7SSn9CM1KdAPuPQLsLQdbi8h106UPBd8VLOV0+qwQFZOLZWHwCyUcmcCz4PiqMmRL313h6WPdTGvIeOXBr9XtbYJa+sZ3aDlEXce+Ic6TXHWTmfQB0ydjGR+sh25I576bpjvAiAAoQkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748290881; c=relaxed/simple;
-	bh=DiOBEVzKNYx/PQXlHnGjwbjjkHwfjQ25vTPBhozmAJg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b67EVXqWo5OUuMbO241VQzkzeIXMQNSQC0xVZdH6ZN+oCPZCqHpyURqvEX9Vd5U+H4+kYns5/zRNW1K9tweDCjYoWR2+KMS10FeyGWfjgcLlARnb9ExBZNM36qZa1ZNlJbfpnHklWnOpB5RJQqEALrHaI0cl+PhLqycbT8J2VEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OzAd6JFm; arc=none smtp.client-ip=209.85.208.45
+	s=arc-20240116; t=1748302131; c=relaxed/simple;
+	bh=kMfRolL74kpOFBhEIq2FKfObntff05SF/J/iabzF7mo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZhTEXH3Hz7+zwzLaqs3h53DcwcbjT8dKC0Ow+CKoSOoEr3S+4NedNfEwQPyXPKsuOz/PhdsaHC7rYsOTTRTqp1EE20jlEWDtB/gvxYRNuIxssCMzPGWHpfT4xwWBRs5CoRo4QxrcZA02LbPzMPbl/0a8nJesBD65wOngHsxuUXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d75IlXo9; arc=none smtp.client-ip=209.85.219.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-604e2a2f200so1411960a12.1;
-        Mon, 26 May 2025 13:21:19 -0700 (PDT)
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6faa28b9d71so18571636d6.2;
+        Mon, 26 May 2025 16:28:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748290878; x=1748895678; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZwGwL1R5+A9nxd4dy8PEerX4QLjdTorOtvO+bIuw+fc=;
-        b=OzAd6JFmY5fMnhZfnHuTQcpOMIYBUSTq3JNejdLdAAu+USx0Up7QXXq7NxS8g1lNJ4
-         GuNR5k43N3Va32CUMhc8r6rlvQq2snZOLPyWTCMfym/Q8DC1laZnI6Jt4eOh8tde/akb
-         DUucm2kZUKM9/m1ywPFT0UfLF3L2kqdBBQGJvKa9YnZN6aKB9hfIw1k5LPgSP1SBJjpP
-         kSORaR7myGO51lMMGV3gAcrhjNfSV64Ts4nt6HOrFmSWoC+cxJJ/LzGZ+dzO6u5nxoVb
-         fCpjddHL0uZaPUuzmW2iKqXorere+c4JonbDUSRlLxdi/xptrcsJ6PVMP24vv7k6DOgl
-         FPWg==
+        d=gmail.com; s=20230601; t=1748302129; x=1748906929; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hCF4mNARq4NJl092zAnTtpdU7n/cAiGStZNGX6Zjkzo=;
+        b=d75IlXo92mT31AyFFQOCTxfmPj2uCheS/SwZX5DzQXVB4CqoPAIOCDvDEQmLjHhj/L
+         1kXky4gEhaRJpJwvayS96TbcYXWQ+njCZfooNa5A+0OzP9CX/TFDppUNzF3uuZBmjA3m
+         xwI69Hwh+KvesFWo4kv3fQY/wesGk8sXMgP6Wv8Sr+Ht8yJgo2KOSnx+v1mntWpi2MUe
+         WD/N1a40gPTST3GG+oWmUG5G8KchZho4Ko8SjeAN+vBrlisXaSEazRfihKWy8WdH3KW+
+         lecP8NcEoDXPsTCAbmLbYzRypKXUDtYYWyRiKbDpEv1MpLUfzEfZnXYT98i+/yaWcwHy
+         KqgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748290878; x=1748895678;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZwGwL1R5+A9nxd4dy8PEerX4QLjdTorOtvO+bIuw+fc=;
-        b=l35zQhJpCXC/FLDgG2/YNZKpJzVvLZcZmJOJGvDT3F6SNY/eDAHmV552+0IqUGDLIx
-         pparQpDn6FTPZQWyFjmmi1S+CMDMYiYgNEaYo4WHr3LzcryAmf7H9/hB0N/VS6JmsrgU
-         9apn5nwe2ExT+MUPaVRDJK3tA1bg3mXujQaQdygcgbJX3NVtVMAG3gJ8qBY4lCF61xAQ
-         y+GvHWe6rqU/TLFHHGpQAolzWwrr+ZrybPvCmWxb4cJGxEJVJjUOsWMWgIk/kgOEqSdE
-         9j6SnlpI33FAbYQFGoqfsAPmOyClSLlgwhtZviXnHbccd1pmha8YBCvEnq9rJYZvJNCI
-         cf7w==
-X-Forwarded-Encrypted: i=1; AJvYcCUhysCSyxxMaU6BTqJ+UG8CTO/dXpn1xRv7aN5nl8BpRL5f5j6XhdhEG//lNiVNedeA702js2+L82L6@vger.kernel.org, AJvYcCVg4SfCsjRySVSqDZt1H//LMtpXnIRhcgRHEj4FFhkzkEoyvob0Il1iO2DzzcURO3t5aS2R5zFdF0meIVhO@vger.kernel.org, AJvYcCWntxR5r0fGwlJmWwFWaFYeUW2QKwRfzqypPidRJ8PWoF47KpJILt5y+gnymyumpV2voD2pyQ14p/L9obqt@vger.kernel.org
-X-Gm-Message-State: AOJu0YzLVyk5zy5G3+PljYonQANsQ+TdbLnv14hUrhkRvwW2RORIEYgt
-	yAcHkC31bSk9D6VzU+e6Bh6Y155j6c12Bc5ThiqpXW8gdPth1fk4PAyW
-X-Gm-Gg: ASbGncsO4C3rIKuw75mC+gR0DTF5qxgTVUd65vRwvZrT5/VCFzUp76kBF/9758YyYDv
-	9GrHQtAsfXqhqrsHKxLO1/DydHyqw2v+hooeBqJk7n6MwCA0EOjlw7pV3y8Q2hzgUGwyMUiLqGR
-	49A1HX8koKK9Vjradr1ffTqrdrGDDMbfgHBWOpSvEcKRO66/GoFoWn66vrtvxyY1lqc3+J4r2Tk
-	SoIVjdJBzANPwMnY1T23cC8VscUNzK8d5aBkaKmXhw/KTQm9zdbb7DVqCXHUKjgdeo6RhvjeHxr
-	bgDG5tb69G9k8VoBHoAq9vjoEcVPhalvZqqBbD5V/iWzMIOQSfldssX1fjkQvOTeRnZK73zFLN8
-	/ry0f+iiqgQHridLY
-X-Google-Smtp-Source: AGHT+IGe6juV60a5hMqsQdI23XueeHzJAlXhlZuR9Lhudg3mhmRAjYN4WPw3YGPkaSEDDtLe84BGSw==
-X-Received: by 2002:a17:907:3da8:b0:ad2:53fc:a876 with SMTP id a640c23a62f3a-ad85b1c3ae0mr983862366b.31.1748290878121;
-        Mon, 26 May 2025 13:21:18 -0700 (PDT)
-Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6045e3917d3sm3160590a12.71.2025.05.26.13.21.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 May 2025 13:21:17 -0700 (PDT)
-Message-ID: <c73a0d7d-5618-4e57-af70-1d25ab38a7ad@gmail.com>
-Date: Mon, 26 May 2025 22:21:17 +0200
+        d=1e100.net; s=20230601; t=1748302129; x=1748906929;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hCF4mNARq4NJl092zAnTtpdU7n/cAiGStZNGX6Zjkzo=;
+        b=w4dxh0gRKUWugMBrYCZQ+Ef3tccbnxmrCU3aJu1NFOznFG9xYxkOpUg29aRDNcaaBn
+         xmYPd4AtzPBzNQOn2226BPG7L5H/I2eMCfQAl4xXOyFh/PNpi6zKxOJzhxO7pbxxxhRY
+         C26E+yXNVeGQXhzmIMAKQn8qUEqrEFrRpJBW/AvvmgISjd6mxnQY4AKS/YqSZ0AJmcq+
+         TSw5GV8HRhrfGTLUyaOoXhZeIci+T5LvZkk5ESpRWav0qMszwOMnEMF7VQ+dfR5BG8ut
+         r2sMwkQY28dmZFSAP1sVKN9QXu6kVhjvj50SgCH+tKGcX0pALYlGuIZWn2zlo1QN0TYT
+         QWnA==
+X-Forwarded-Encrypted: i=1; AJvYcCX4fT8X7qM4ygdVyAYCj5m9IdVf8sauTL18+8qBWSaJRFCMUOunvL77nVD7cSOekRhgd2dfzjPH4DxXw734@vger.kernel.org, AJvYcCXGSl5emA1P+Hkr5BPo55FCgYDF3zCBbpuzDAiqssC3NE5zH/7D7G8rwJyBXxi64aZrtdbiOdtQSBpHf+c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQKQV0IfRg8nizzWGrkGRfe/A1S0QlVGRunpQ+p9eusrxMmzqJ
+	QYCO/rgseyAiH6cAro8Pr2wi209nTgxXA8FvB8StnJ+JxDp9T2SVnT5/
+X-Gm-Gg: ASbGncuWkuRYzFj4vlUvvzDY7H+grlgmjCSGcg1lZmZimRnMmIguCcEMm0MlFeoYbzN
+	ZAtWyGPg4gDyHMFD+XSepgGlvWsEc+jhngfH7/VwaKxyykiScq2S9XjOJBZ5vUjmtfSJ4tAMQ2b
+	sDTxKlZqJHq+9uIZOP1+ZRX+RwLssYg+00Q4BLklvmIel/LLN6xYlisfjzzJEvQxq1XBvz3VvZ0
+	IqbRc02K+76mMxsZuZjdYNzaTOc8jfGGv5gE7t/QB6hObuQB8nPSzuzr0p2UUhcP9UMukyz4bdp
+	qppo6PdMRaNkkADsT/5DiWJua7Br6cLUDfftzJ0=
+X-Google-Smtp-Source: AGHT+IE6u+B+X2ZVXd18PUXzDvaItaUtUo/QAo/LtW+vxeJ9dqi0Z6q+QfjGQgnjDvl7GyYv0jVF2Q==
+X-Received: by 2002:a05:6214:21c9:b0:6fa:8c15:75c1 with SMTP id 6a1803df08f44-6fa9cfe74cfmr195233256d6.2.1748302128796;
+        Mon, 26 May 2025 16:28:48 -0700 (PDT)
+Received: from localhost ([2607:fea8:3140:6800::419a])
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6faa2599adasm33888736d6.44.2025.05.26.16.28.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 May 2025 16:28:48 -0700 (PDT)
+From: Richard Acayan <mailingradian@gmail.com>
+To: Robert Foss <rfoss@kernel.org>,
+	Todor Tomov <todor.too@gmail.com>,
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Cc: Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH] media: qcom: camss: Power pipeline only when streaming
+Date: Mon, 26 May 2025 19:28:39 -0400
+Message-ID: <20250526232837.686822-3-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] mtd: nand: qpic_common: prevent out of bounds access
- of BAM arrays
-Content-Language: hu
-To: Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: Mark Brown <broonie@kernel.org>, Md Sadre Alam <quic_mdalam@quicinc.com>,
- Varadarajan Narayanan <quic_varada@quicinc.com>,
- Sricharan Ramabadhran <quic_srichara@quicinc.com>,
- Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>,
- linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250525-qpic-snand-avoid-mem-corruption-v1-0-5fe528def7fb@gmail.com>
- <20250525-qpic-snand-avoid-mem-corruption-v1-2-5fe528def7fb@gmail.com>
- <87cybv2032.fsf@bootlin.com>
-From: Gabor Juhos <j4g8y7@gmail.com>
-In-Reply-To: <87cybv2032.fsf@bootlin.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Miquel,
+The libcamera plugin for Pipewire may keep an open file descriptor to
+the video device, even while streaming. This simplifies its operation,
+as it only needs to keep track of a number instead of a file path. When
+the video device is open but not streaming, the pipeline can be powered
+off. Move the pipeline power management to the prepare_streaming and
+unprepare_streaming functions.
 
-[...]
->> ---
->> Preferably, this should go in via the SPI tree along with the previous
->> patch. It is not a strict requirement though, in the case it gets
->> included separately through the mtd tree it reveals the bug fixed in
->> the first patch.
-> 
-> Sorry, didn't see that in the first place. Fine by me.
+Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+---
+ .../media/platform/qcom/camss/camss-video.c   | 39 ++++++++++++-------
+ 1 file changed, 25 insertions(+), 14 deletions(-)
 
-Sorry for the inconvenience. Should I add these kind of notes into the cover
-letter next time?
+diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+index aa021fd5e123..8d05802d1735 100644
+--- a/drivers/media/platform/qcom/camss/camss-video.c
++++ b/drivers/media/platform/qcom/camss/camss-video.c
+@@ -225,6 +225,21 @@ static int video_check_format(struct camss_video *video)
+ 	return 0;
+ }
+ 
++static int video_prepare_streaming(struct vb2_queue *q)
++{
++	struct camss_video *video = vb2_get_drv_priv(q);
++	struct video_device *vdev = &video->vdev;
++	int ret;
++
++	ret = v4l2_pipeline_pm_get(&vdev->entity);
++	if (ret < 0) {
++		dev_err(video->camss->dev, "Failed to power up pipeline: %d\n",
++			ret);
++	}
++
++	return ret;
++}
++
+ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
+ {
+ 	struct camss_video *video = vb2_get_drv_priv(q);
+@@ -308,13 +323,23 @@ static void video_stop_streaming(struct vb2_queue *q)
+ 	video->ops->flush_buffers(video, VB2_BUF_STATE_ERROR);
+ }
+ 
++static void video_unprepare_streaming(struct vb2_queue *q)
++{
++	struct camss_video *video = vb2_get_drv_priv(q);
++	struct video_device *vdev = &video->vdev;
++
++	v4l2_pipeline_pm_put(&vdev->entity);
++}
++
+ static const struct vb2_ops msm_video_vb2_q_ops = {
+ 	.queue_setup     = video_queue_setup,
+ 	.buf_init        = video_buf_init,
+ 	.buf_prepare     = video_buf_prepare,
+ 	.buf_queue       = video_buf_queue,
++	.prepare_streaming = video_prepare_streaming,
+ 	.start_streaming = video_start_streaming,
+ 	.stop_streaming  = video_stop_streaming,
++	.unprepare_streaming = video_unprepare_streaming,
+ };
+ 
+ /* -----------------------------------------------------------------------------
+@@ -599,20 +624,10 @@ static int video_open(struct file *file)
+ 
+ 	file->private_data = vfh;
+ 
+-	ret = v4l2_pipeline_pm_get(&vdev->entity);
+-	if (ret < 0) {
+-		dev_err(video->camss->dev, "Failed to power up pipeline: %d\n",
+-			ret);
+-		goto error_pm_use;
+-	}
+-
+ 	mutex_unlock(&video->lock);
+ 
+ 	return 0;
+ 
+-error_pm_use:
+-	v4l2_fh_release(file);
+-
+ error_alloc:
+ 	mutex_unlock(&video->lock);
+ 
+@@ -621,12 +636,8 @@ static int video_open(struct file *file)
+ 
+ static int video_release(struct file *file)
+ {
+-	struct video_device *vdev = video_devdata(file);
+-
+ 	vb2_fop_release(file);
+ 
+-	v4l2_pipeline_pm_put(&vdev->entity);
+-
+ 	file->private_data = NULL;
+ 
+ 	return 0;
+-- 
+2.49.0
 
-> 
->> ---
->>  drivers/mtd/nand/qpic_common.c       | 28 ++++++++++++++++++++++++----
->>  include/linux/mtd/nand-qpic-common.h |  8 ++++++++
->>  2 files changed, 32 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_common.c
->> index e0ed25b5afea9b289b767cd3d9c2d7572ed52008..fb1f81e4bdacaa3e81660a20e164926c64633513 100644
->> --- a/drivers/mtd/nand/qpic_common.c
->> +++ b/drivers/mtd/nand/qpic_common.c
->> @@ -15,6 +15,13 @@
->>  #include <linux/slab.h>
->>  #include <linux/mtd/nand-qpic-common.h>
->>  
->> +static inline int qcom_err_bam_array_full(struct qcom_nand_controller *nandc,
->> +					  const char *name)
->> +{
->> +	dev_err(nandc->dev, "BAM %s array is full\n", name);
->> +	return -EINVAL;
->> +}
-> 
-> This is rather uncommon, I don't know if it's very relevant to do
-> that. Please drop this static inline function.
-
-The purpose of the inline function is a bit similar to dev_err_probe().
-It helps to standardize the error message, and it allows to print the message
-and return with a value in one go.
-
-So this kind of statement ...
-
-	if (bam_txn->bam_ce_pos + size > bam_txn->bam_ce_nitems) {
-		dev_err(nandc->dev, "BAM %s array is full\n", "CE");
-		return -EINVAL;
-	}
-
-... can be simplied like this:
-
-	if (bam_txn->bam_ce_pos + size > bam_txn->bam_ce_nitems)
-		return qcom_err_bam_array_full(nandc, "CE");
-
-The latter is cleaner for me, but no problem, I will remove that.
-
-Regards,
-Gabor
 
