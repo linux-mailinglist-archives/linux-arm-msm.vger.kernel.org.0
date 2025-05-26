@@ -1,239 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-59379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0020EAC39BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:20:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D49EEAC3A19
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:44:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B086B7A40F5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 06:18:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 40B2F3AE0BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 06:43:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 763C41D618C;
-	Mon, 26 May 2025 06:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19BB11DE8B0;
+	Mon, 26 May 2025 06:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KhrzV4+p"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="u+ioteaV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10olkn2015.outbound.protection.outlook.com [40.92.42.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A131FEEBA
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 06:19:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748240398; cv=none; b=FustckG8NBPo8/oqbU2VDp4faKSFG4s2w3+Tz5GXs0OfaRj1PyPdUGsnpzqpLBXlSYkv8shpRffYQoptOPoJkWiARP25L5CsGVHXA4FgnVl2ALANf0sATcoaCtZQWS8WiOcLFstS5pB7KOfV/7kHiyQ3KC5vAJ8tvobgX0BTA+s=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748240398; c=relaxed/simple;
-	bh=kfKqrjxj7SWq9xEU4Nr35KADHrm9QuM4zBWdzxTlRIU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=qoTx3k5Z/ylWcPu+xpqfGiAlk3LG9V/db6cxhkaaZK7pZ9yFeNAVRpiNo3DdFMOKG5oo93hpyGLK2YNrLNDiObfBbkuOSVw5iZK/3eziZpUdql6lLTAPKM5Av/YLSA0aw1L1RxiXfr4d/HrvTY+49EB3AGDXlOB8pn8r2NLHKmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KhrzV4+p; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54PMcYxs022296
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 06:19:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jrpH81vVpBiCOEXoQcJthbVv1fuikJmHn767rBuFXaY=; b=KhrzV4+pKtB3HxOM
-	uoWDa0wzmqu7cl5SPPw5PVsjzh8XrbdG5x5XTEtVAdlV24GaDnE8ilHcKbmiexEc
-	fuL8imxn0TGSlfLn5O7bR/0n0a2AJ0sotBii/PhKG/l/Pq5KykJb2l9shCGzaGSb
-	2QP4nPYWeSatrmbDvNOrM482BcTqcVYttDrGkln+NZwMt3F9dYZp1omaAJbZnMor
-	27I8g2UC1OQnRS6KBYCFCmF3Uk1IXHnJq+fJAHkimeydKkOjdw1viIyEedrOcooy
-	RPtc5bXp/rgH4bY1P8tMMsDOUcnu5BtGu2sCEKlo2Qy5czoR0T4XJwCsHAfezoWL
-	rdvuuw==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u3fq3b14-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 06:19:55 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b2706b51df9so2470416a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 May 2025 23:19:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748240394; x=1748845194;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jrpH81vVpBiCOEXoQcJthbVv1fuikJmHn767rBuFXaY=;
-        b=kbTcO8f21riAsu5q/wbwzBFa+q0V8DmGIitBudgJpjzSjwqyHgNpajdHDc7hXKj80E
-         4Dy9WOph0AEBa7HsTQotoajbZ/XXvzmjlhytbXKGeFrgDBmFiJx5ppT45/XYGm/1Dcz5
-         PGiStrNNFryDOIHmlZkXWAh5K/N6Y+tKBYJh8cTVVtZ5l/9ZzD11WfLOX1sJO3/TkfvY
-         wJDxbzQl+KcOOr4g46w512qvWVfF2NhE24ThdSZjtiygJ2PO32J/xnApu6yryngzS3Ls
-         GpxoMEORTVEmf5a9Khr7Rct/fC5s2A1YGspBPtoLXbR1TyonHCGhIPYVVCuX15NwxIrz
-         nt8A==
-X-Forwarded-Encrypted: i=1; AJvYcCVmeDc1MuuG7Nrf1+IihOSD+4zmu4Ir+1q/OjgQSOkSQhDZsxB6OBCobYkwCcwWfRPIm1khwhoCL+bD/Vzf@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJCH09poKs5VZZ7f5H6o2xEod5OzBFeZNIQFh3eMPODhve79iA
-	gsXlFWIuGDt0+7ctyrWLnmhEOlmyTJp7HqGwpqbW6nPfrWiDWbXfK2mwEsfJroPpyz6VbyAae7u
-	I+O6/Axsm2xeu+e+7Z+wTOHsRWlcDtoEiij/YNWEZXu+1Tb4z67uDFiWKD3EC/Y17ereZ
-X-Gm-Gg: ASbGncuFWfsDcd+pAs1WmzK9vVzQbugEQAED7tEZr6VNQWnkGVtKZ1ILc/pt0euVJIA
-	MygDGYZ+gkN2kPqLkKLZpnbckMiRo5bvaG0aKcLqW+ZeLH/p7IcdGLWmRASM+OM51ktJdMq/jjL
-	T9ZkW4Q+FeMafVi4oTc+7BE90vWeLmjVDHDW7E+0Anh2WdpzVoR44aLERnukf8vJWZD5o50gOIq
-	VS74VQtcr44ueLeqozPNLmCPfuKAjTos1Mo3cLbA0RwWq13qY4/gbIsSTPxDOKw37j0sAl3mV3k
-	wi6OhjIrHLAw5VGr2Ra9Nh7cEQjOBTSyoA==
-X-Received: by 2002:a05:6a21:9a01:b0:1f3:26ae:7792 with SMTP id adf61e73a8af0-2188b7186c6mr12136497637.18.1748240394037;
-        Sun, 25 May 2025 23:19:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFLnz0uckNYdWgaRUUv1Iy4mf9s2o5p3ZDDG1bu8ljveYmIuLe+S+fQSQXw8/Y/OCC+jguUEQ==
-X-Received: by 2002:a05:6a21:9a01:b0:1f3:26ae:7792 with SMTP id adf61e73a8af0-2188b7186c6mr12136477637.18.1748240393663;
-        Sun, 25 May 2025 23:19:53 -0700 (PDT)
-Received: from [10.239.154.73] ([114.94.8.21])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a97398f8sm16407814b3a.78.2025.05.25.23.19.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 25 May 2025 23:19:52 -0700 (PDT)
-Message-ID: <1b1c4617-0e5b-40c8-9a66-d243b48c0977@oss.qualcomm.com>
-Date: Mon, 26 May 2025 14:19:49 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B0C1DE3CA;
+	Mon, 26 May 2025 06:43:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.42.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748241825; cv=fail; b=j6lUOWj3ZDWxmds3XyI5rkH0IACpAXF9HOtwrwxjdA8sC/5DNGpCHLBiONDdFSnYEGyAfNkcm8r6/GB4GP7b4orxygZZCyikgCeQ7VmWKw5Urt7YpA9LMbYna9fLoR/n2NUHbK0NcVCbFDvbjPYBWVyk3yLY5exGc4sZttOzk/s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748241825; c=relaxed/simple;
+	bh=+NW8t3CC5uft5b56Fjc38KR6VqSUkvJJ18a97PJUP18=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=NvDYmY9IaC9RppIA3abGZMG+a5lux1rEvuBW5yXlFAoWxF/OBNfdT2gojZ4wteIokl1JIbOCEiRTruzn0SEnXRSs5I2lQyxbDWnhZWOx2lh+a2fNE9yLEucI1SAyserj0qha2rKNOuwz/7jDSBtSHcEa3BDy1JrcALar+I3M2Ko=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=u+ioteaV; arc=fail smtp.client-ip=40.92.42.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=I75XiKGsmeK12wpwlWa7VjXeQp/B/Ie8SqoTrJIEuTT0qWa+Wew5hc5Zn9FidlkSEeBrrQy43z32wtTj3//bvTTIsDVDzUq0ZrDEzv6sS+cvqgYQtlBuwbNYsRJcUq3y6qjnpoTuS1PQfLNRpxRBiY+t3KjRqTAolcPjoQFHd89eXNw+pdJCxuEGcwu4ayHBpaTS8LlqonokhSZ7QL2CP86R8Bwla4mgSszPt1/usrhj6/jdwjH30XwsPLEy7V823WcVxAOxPNESPh8x8mbKJ798uYmVWjf3QeSXZWF497RfA2C+9hg2Z3LKjrUewvFsxj9NSonvq9IGiEdyjcwnKQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=P41zjMhTMAsCzm5acKLAITZ0khZkuCSVukPhgYOCtJY=;
+ b=CJcQ8Jnk9GHNSVsE/TM7aaoKUE47FdOGH3eB0BX5mSxGzud+vO3IPBxuMBMBgm+Z2vuyg8UuLOVygUFI1ibxKGsvksqG8exN0QQaFGkWJZhWP8Pnp6sFN95H0t7HZ5vul3pIHGDJ5c8b4PF3NSw5VeShyNEjt6j7gyf1w0XSnYEEzSM0oaWmfPU3AKgJ1Nv6iNl77wEfSHG/DH34+MetZ+faLVJQTK8OQs9kufLD6l55NWTfPcVNQWKacHc5pxm/O+S4R21FBci5VF092LhWuy4gZP5JSAJsHJz8NmBCxIzeBHYJv1rMlxGVrIJdPxdV3TfW8cevrVCL3UcnGHUDDQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=P41zjMhTMAsCzm5acKLAITZ0khZkuCSVukPhgYOCtJY=;
+ b=u+ioteaV1JhSHoyPXPrNSG3XZQwURroPSbzKPpezEK5CjV+WGnv1lhmbdcRMwd+gHaL1lCFZhWF+G4BcY39XcVk6tVZGjzKFAUYIAkVVNO54kOLTJ+RiO2c2to1/vUgqMH/Gj7E4weeXzSPpx/rml4rUeLPGfhZDOMLyqSp88IUpAwFGvI5ihNWfcGo1HM5GWFFde1U90jTZ1II4qBd1B3ggXB1rOR3UZB5RZS0Yny3qR23Oy6szcPctAvN3llULfVETpVZL1gQeGO0SczFGtCHscEn74cNBYAM1dMg927IYzYXJjqYyHKDyt+qEp/lZXCNMqRQg2BfMk5RAtEDOOQ==
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com (2603:10b6:8:253::16)
+ by IA1PR19MB8866.namprd19.prod.outlook.com (2603:10b6:208:59b::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.24; Mon, 26 May
+ 2025 06:43:39 +0000
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305]) by DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305%4]) with mapi id 15.20.8769.025; Mon, 26 May 2025
+ 06:43:39 +0000
+Message-ID:
+ <DS7PR19MB888328937A1954DF856C150B9D65A@DS7PR19MB8883.namprd19.prod.outlook.com>
+Date: Mon, 26 May 2025 10:43:27 +0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] dt-bindings: net: qca,ar803x: Add IPQ5018 Internal GE
+ PHY support
+To: Krzysztof Kozlowski <krzk@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
+ Heiner Kallweit <hkallweit1@gmail.com>, Russell King
+ <linux@armlinux.org.uk>, "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Florian Fainelli <f.fainelli@gmail.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org
+References: <20250525-ipq5018-ge-phy-v1-0-ddab8854e253@outlook.com>
+ <20250525-ipq5018-ge-phy-v1-1-ddab8854e253@outlook.com>
+ <aa3b2d08-f2aa-4349-9d22-905bbe12f673@kernel.org>
+Content-Language: en-US
+From: George Moussalem <george.moussalem@outlook.com>
+In-Reply-To: <aa3b2d08-f2aa-4349-9d22-905bbe12f673@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MR1P264CA0199.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:501:57::10) To DS7PR19MB8883.namprd19.prod.outlook.com
+ (2603:10b6:8:253::16)
+X-Microsoft-Original-Message-ID:
+ <66fd4642-6415-4d2a-b6e0-de405d34b22a@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Subject: Re: [PATCH 5/5] power: supply: qcom-battmgr: Add charge control
- support
-To: =?UTF-8?Q?Gy=C3=B6rgy_Kurucz?= <me@kuruczgy.com>,
-        Sebastian Reichel <sre@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
-        David Collins <david.collins@oss.qualcomm.com>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, kernel@oss.qualcomm.com
-References: <20250523-qcom_battmgr_update-v1-0-2bb6d4e0a56e@oss.qualcomm.com>
- <20250523-qcom_battmgr_update-v1-5-2bb6d4e0a56e@oss.qualcomm.com>
- <db0e40b6-22f3-46aa-b35d-7a8729370ddf@kuruczgy.com>
-Content-Language: en-US
-In-Reply-To: <db0e40b6-22f3-46aa-b35d-7a8729370ddf@kuruczgy.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: HyOKjJ_JFKCjQuzNyRUIUFWXKH9gLR74
-X-Proofpoint-ORIG-GUID: HyOKjJ_JFKCjQuzNyRUIUFWXKH9gLR74
-X-Authority-Analysis: v=2.4 cv=X8FSKHTe c=1 sm=1 tr=0 ts=6834080b cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=t2JPyoOaPHs4AGm2U3oA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI2MDA1MSBTYWx0ZWRfXzSzJW0sRXYXh
- 0t3WQdoPbS2x2NIoU0NsIya4jd02sT2nHyeKMBdbutYQxSInU8gZOWIgw17Sh/Ty+wIco2/kdx3
- k3tIlukiQxWl+qVzpyixyiBlVc9iVPu60SaFd9COeixi+TNo/TeTokL2xwJaMCS/eS3ABvLyeAG
- q/QLVEfsULQYEShFrJVBCT28aNHtx5+cmTbC7ySttqeBj+pLnMyihIIllLTfs39uUXD2acQQmwB
- CRAuNdlssPoZhY/xbSTozmKByUu487IkzTEK0Yq3dNWDgSgDgGXEmEToopTBfpw9qyXaG8bpgm9
- lSMKZLg3dAKlrX+2fEz9O49ZwcryOMDT+WfxJizmD8P8F/p/lLbu4KqOn6PUNZpGnmI4fZL5uhV
- urSEBkkzeEj2VjUdofrXt5aPlpTAdesZQmL/28eDg6JwCx0i2rhAZR0fG3ogIDYMRQZBIf0d
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-26_03,2025-05-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 phishscore=0 bulkscore=0 mlxlogscore=999
- mlxscore=0 clxscore=1011 priorityscore=1501 spamscore=0 adultscore=0
- malwarescore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505260051
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR19MB8883:EE_|IA1PR19MB8866:EE_
+X-MS-Office365-Filtering-Correlation-Id: 318f5510-596e-4fee-3dc1-08dd9c20a58a
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|5072599009|6090799003|15080799009|19110799006|461199028|7092599006|8060799009|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?aURsL3phQjhTYncwSitvbDlQVEJDVWFMSDRabWljdXg5OGtJVmJoUGcyUzRZ?=
+ =?utf-8?B?QTl4bmdyRkdac3FsQ0haeC9WTnZTaVB3NWE0M1Jkclk1YXNybFpGb1B1Ums3?=
+ =?utf-8?B?MFd0Y0NkZGJMSXlSanNidjhScU5FbVFuSzluUUhKaG1qRURncXloNnJwYmcx?=
+ =?utf-8?B?amhyOUpyYzhxcEZaUm9Nblc2c1AzeXBWSG9FZWdvS3ZKNm5BMmF2M2xLZjZ1?=
+ =?utf-8?B?NmZucWU4VXdJdlRtOVE1UTdPOUFwSEJWVjBxUjdJOCtBK0xXTjdGbEIvZzE0?=
+ =?utf-8?B?OEc2YkcwS2tYL250OVZCSE4wM3Zqa0t1NGVyT2dYd1k5Y28vcnpUSTA3SFFJ?=
+ =?utf-8?B?azFhcDl4WkFIYUllUHQySnl1cHVWcHpUd3ZkZ3JTajgvYUdPcm1xYmgrUXpM?=
+ =?utf-8?B?a3AzWE1JZGJNTm1lQ1RsN2VnTlFUeXlmb1JVMjhzY2JCRjdKWnk5anZFeENk?=
+ =?utf-8?B?ZzNhWlJXZWZvYzF4L0lMZ20rc0ZmUUlyOW5BZ0hSYW5wQmlyMHJtN3J4N2dY?=
+ =?utf-8?B?M3JaTGx2a3VXbCsyTXNhY3AzZzF3cTVxVGVEWUJoOVE3RWZ6RnJIZTJDbGtt?=
+ =?utf-8?B?L0txVWRMbytzckQweVNzZ04xOWRuMktOL3dnYWorSGhoTUJaTSt1aHRzSWFi?=
+ =?utf-8?B?VUUzRTlHUmtGN0Y2b2xXd3RIWjJJUTVCMVc1YU5iUUpueUhKRXdXenhMREZH?=
+ =?utf-8?B?bWc0Wk1reE5KZG9MVzRNQzZKc2FUdVEyVDc1T2pzbWkwUGk2UkZubWlRSGwz?=
+ =?utf-8?B?M1FLaWtxK2t3SU1lbXloYk9uZjE0UGRJWlV0cWk4OWRySWQyTmRneXZwZ1Bw?=
+ =?utf-8?B?bnpjUlRLMWFIQ2ZhOGExQXRjU0Fuc3BsbjJUdUNaL2xOMG1QekY5aUNiNDFT?=
+ =?utf-8?B?S2xmeHZIa2lqeG5KcHpDMWs0dUJpcXN2bzB5QUJLdjFtb1lyT2hBdm1Wdlho?=
+ =?utf-8?B?azV0SmtRQmpmbFE1UFk4YmNoQStpTUEyeUVDV1hGaW02V0NmM2NRZjFvUTRj?=
+ =?utf-8?B?MW9SbVRmNEdocVNaaGU4blVGaDFkOWZtcEo5RVdxU3VOUDA2bGhYa2FjQ2x0?=
+ =?utf-8?B?cVJKVXA2VTdsNE1tOGFIU2Nld1JWdVlZNlFqbkY3cEgzRzhnUmpXNEdNRUJ1?=
+ =?utf-8?B?RXhKODJrU0dIOUhaTzBzL2c5Nzh5TUhHeCtVZXQySGthdlJHYmZmL25QRVNr?=
+ =?utf-8?B?ZGZiNDZqNml0UlN3UHNlTzRyUkFNYll1aUtrNzhmNWJTcFcyVGxYVmxhZSth?=
+ =?utf-8?B?a0N5UElmZ0lJU3dDV0NKdlgzMFdFQ1YrQlJCU2xiN2c1bFZCV3hmb0dXTE1V?=
+ =?utf-8?B?Kyt5ZDd6a3pHRnpiaXZFS291N05uY3dISXYzMWhVSUQzSkFOV0tIZnlud05t?=
+ =?utf-8?B?Q0QrR1p4OUUwMk9XWlNGZVFRdkFJZFZ1TWFEVXplNm96Q2xJOFZaWEVtSnlM?=
+ =?utf-8?B?cmJldmhNTVNHWG5nTU1UV0lQUys5bzc2cFZXUG16emNYYmxIMzNkbzFGaE41?=
+ =?utf-8?B?QWdKSThCY2QzbEcvMDBJVTZtNVc1OVJhZHpTMVFxVEdHbzBoT0szYkJ5TFMy?=
+ =?utf-8?B?dkd6QT09?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?dG00YjA5UGJMN1kyRjM2WUNlQkVPMllaQjMwUzBYSlM3L29xMUJOdGpQajNl?=
+ =?utf-8?B?eUxOQ3gxMmxJL1JzUW9QUVY0VGFJNjd2UkhmWGZkcWk1ZDhsWVptWlRRTDFL?=
+ =?utf-8?B?WVVPZVU2eGN2SkhkT2hJZzE2L0s2ZmVrd1owWmcwTk8xN2pLT1kxVWpiNElV?=
+ =?utf-8?B?NVJJaHkrUkRVS2o3T1E5NVBYYTlrTUQ3N2UrZ2JsM2ZpL2U1YjF3UG1vK1RT?=
+ =?utf-8?B?ZEl0M1hzcVpQVUxzeXI0RS9zNDdjUmVNSkx4ditMUjF2SG9aSHIzRk5aZ0hY?=
+ =?utf-8?B?TnRCRnJJSWRtUTErN0tYK2p5UTZ0eWtzZGZwM1RBbm1rRjJTLzhVWUxRY1JQ?=
+ =?utf-8?B?TFo0L29KcGNqVG1JamVOa0JmNTJtN0R3RWpwalROc0c5TzBHUVJoSlc2Q1p3?=
+ =?utf-8?B?bDdmNS8yVGZKbktpcklscmFzMHczR0tFZnpEZ3lCZnRsMzF1WmdIOHBoK252?=
+ =?utf-8?B?NUxzYkhGbTRNamN0TGpYalp1bVE5bmxvdVM1VzFjSGdCSUREdXlXcXNsaldr?=
+ =?utf-8?B?OG8rOEx4cjh1aEcyRnpNQlNTcnNwdDZ5QUh1dkVOMEdXa094THlQeUFWWDk3?=
+ =?utf-8?B?a3hpdVRLOWtHaWhtTmp3aDc3MnhFeGcxWkRxTFRuS0MwYmNYSThBbHZTdzdi?=
+ =?utf-8?B?b3M4aVo0dkh1eDlTcFBveGQ3MVkrMEpSdkNQcGdROWI1dytsanpnNFpYalZB?=
+ =?utf-8?B?cGRRQWVJYUpBN09WRC8vdmpaYjlTYi9kZ0lZN3p3cDV6ZFd5TCt1QVNQSis1?=
+ =?utf-8?B?VzJlMGo2enNNZkxFQURPZmx2SzhGSjFBZmplRVFwSkJubUdxQTdDWGtkLzU5?=
+ =?utf-8?B?bFI3Y3FnTmQ5RlN1RGhTaXh6MmozdU5JK2VIMklVUEJZMGtwMVZpdXdZdFdp?=
+ =?utf-8?B?TGtmTElpR1JuaFVHZ05RcE92M08xSkl6alNCYTF2NnNGT2NiM2k1K3VBVDJP?=
+ =?utf-8?B?emNZWU02S0N0aUprYWxPQ2ZlNm5FVkJIZ0ZSRkE2N3UyRWtkVExFdnpFUDZJ?=
+ =?utf-8?B?aXFTaXUzemgveUtLc25UTjJ4Z3VSdUJBaXVzaHRyMG81cmx0VFhCQStDOTQx?=
+ =?utf-8?B?dUlJcHVRV28zckp2SHlCclN4RC9KcEdTRGZhdUxRRW15RjdacENWc0J5eklw?=
+ =?utf-8?B?RlVEVUo2SmZkNDdhZjNrTW1acCtEam0xYVROYkxaNytSaXUxajlNa2c1Q2VK?=
+ =?utf-8?B?OFJqTXhpMW5wekprYXRtM0Q1eFNLUTlnQStkQVFycnpvSmxXZHZhR012VlB6?=
+ =?utf-8?B?MXZZK014VUZzMnBDbG56cnE0TFFYK3NIMitablltVVVZTG1WK1llNjJrWEly?=
+ =?utf-8?B?bEd0VGdHV0dva1R1TkFmYVN4ajlxaHFSak0vNDBlK053eFllUjhjN2VOVkEw?=
+ =?utf-8?B?NEh0RkQrS0xVdUJSUlI4WUhnUEt4Q0JKQ1A1Q1FjYm85NTVTY3IyYVFHZUxo?=
+ =?utf-8?B?SlByemQ2WktvYlFBSFNTSWRzQzczYWxka1RQaldhaVlJaHVlSGRaNmN4WGNT?=
+ =?utf-8?B?dFQ5MDEwdk5Xd2dGMFJNQ0orZ09rTmdOL3h5dVR5dnIvR3hmVmswcnZXL2Iv?=
+ =?utf-8?B?NFYzMkYrR0UzKzNvVkVsdFBmdkx2aDcxVE1EUzdMbGc3eUl0czFSSlpaV0lD?=
+ =?utf-8?B?bWFZYVJ6eE5SclpkU3l1czhaY3dKMjdJZ3NXN3hFanI3bnh5YkpMSUx0dXN0?=
+ =?utf-8?Q?1ReMnTH0e79d7S1z0noM?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 318f5510-596e-4fee-3dc1-08dd9c20a58a
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR19MB8883.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 May 2025 06:43:39.4143
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR19MB8866
 
 
-On 5/24/2025 5:29 AM, György Kurucz wrote:
-> Hi!
->
->> +static int qcom_battmgr_set_charge_control(struct qcom_battmgr 
->> *battmgr,
->> +                       u32 target_soc, u32 delta_soc)
->> +{
->> +    struct qcom_battmgr_charge_ctrl_request request = {
->> +        .hdr.owner = cpu_to_le32(PMIC_GLINK_OWNER_BATTMGR),
->> +        .hdr.type = cpu_to_le32(PMIC_GLINK_REQ_RESP),
->> +        .hdr.opcode = cpu_to_le32(BATTMGR_CHG_CTRL_LIMIT_EN),
->> +        .enable = cpu_to_le32(1),
->> +        .target_soc = cpu_to_le32(target_soc),
->> +        .delta_soc = cpu_to_le32(delta_soc),
->> +    };
->> +
->> +    return qcom_battmgr_request(battmgr, &request, sizeof(request));
->> +}
->> +
->> +static int qcom_battmgr_set_charge_start_threshold(struct 
->> qcom_battmgr *battmgr, int soc)
->> +{
->> +    u32 target_soc, delta_soc;
->> +    int ret;
->> +
->> +    if (soc < CHARGE_CTRL_START_THR_MIN ||
->> +            soc > CHARGE_CTRL_START_THR_MAX) {
->> +        dev_err(battmgr->dev, "charge control start threshold exceed 
->> range: [%u - %u]\n",
->> +                CHARGE_CTRL_START_THR_MIN, CHARGE_CTRL_START_THR_MAX);
->> +        return -EINVAL;
->> +    }
->> +
->> +    /*
->> +     * If the new start threshold is larger than the old end threshold,
->> +     * move the end threshold one step (DELTA_SOC) after the new start
->> +     * threshold.
->> +     */
->> +    if (soc > battmgr->info.charge_ctrl_end) {
->> +        target_soc = soc + CHARGE_CTRL_DELTA_SOC;
->> +        target_soc = min_t(u32, target_soc, CHARGE_CTRL_END_THR_MAX);
->> +        delta_soc = target_soc - soc;
->> +        delta_soc = min_t(u32, delta_soc, CHARGE_CTRL_DELTA_SOC);
->> +    } else {
->> +        target_soc =  battmgr->info.charge_ctrl_end;
->> +        delta_soc = battmgr->info.charge_ctrl_end - soc;
->> +    }
->> +
->> +    mutex_lock(&battmgr->lock);
->> +    ret = qcom_battmgr_set_charge_control(battmgr, target_soc, 
->> delta_soc);
->> +    mutex_unlock(&battmgr->lock);
->> +    if (!ret) {
->> +        battmgr->info.charge_ctrl_start = soc;
->> +        battmgr->info.charge_ctrl_end = target_soc;
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> +static int qcom_battmgr_set_charge_end_threshold(struct qcom_battmgr 
->> *battmgr, int soc)
->> +{
->> +    u32 delta_soc = CHARGE_CTRL_DELTA_SOC;
->> +    int ret;
->> +
->> +    if (soc < CHARGE_CTRL_END_THR_MIN ||
->> +            soc > CHARGE_CTRL_END_THR_MAX) {
->> +        dev_err(battmgr->dev, "charge control end threshold exceed 
->> range: [%u - %u]\n",
->> +                CHARGE_CTRL_END_THR_MIN, CHARGE_CTRL_END_THR_MAX);
->> +        return -EINVAL;
->> +    }
->> +
->> +    if (battmgr->info.charge_ctrl_start && soc > 
->> battmgr->info.charge_ctrl_start)
->> +        delta_soc = soc - battmgr->info.charge_ctrl_start;
->> +
->> +    mutex_lock(&battmgr->lock);
->> +    ret = qcom_battmgr_set_charge_control(battmgr, soc, delta_soc);
->> +    mutex_unlock(&battmgr->lock);
->> +    if (!ret) {
->> +        battmgr->info.charge_ctrl_start = soc - delta_soc;
->> +        battmgr->info.charge_ctrl_end = soc;
->> +    }
->> +
->> +    return 0;
->> +}
->
-> These function names sound quite generic, but AFAIU this patch is only 
-> adding charge control support for the SM8550. Is sc8280xp and x1e80100 
-> also expected to be supported using the same 
-> qcom_battmgr_charge_ctrl_request format?
 
-No, sc8280xp and x1e80100 don't support it. So I didn't add the support 
-for them.
+On 5/26/25 08:17, Krzysztof Kozlowski wrote:
+> On 25/05/2025 19:56, George Moussalem via B4 Relay wrote:
+>> diff --git a/Documentation/devicetree/bindings/net/qca,ar803x.yaml b/Documentation/devicetree/bindings/net/qca,ar803x.yaml
+>> index 3acd09f0da863137f8a05e435a1fd28a536c2acd..a9e94666ff0af107db4f358b144bf8644c6597e8 100644
+>> --- a/Documentation/devicetree/bindings/net/qca,ar803x.yaml
+>> +++ b/Documentation/devicetree/bindings/net/qca,ar803x.yaml
+>> @@ -60,6 +60,29 @@ properties:
+>>       minimum: 1
+>>       maximum: 255
+>>   
+>> +  qca,dac:
+>> +    description:
+>> +      Values for MDAC and EDAC to adjust amplitude, bias current settings,
+>> +      and error detection and correction algorithm. Only set in a PHY to PHY
+>> +      link architecture to accommodate for short cable length.
+>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +    items:
+>> +      - items:
+>> +          - description: value for MDAC. Expected 0x10, if set
+>> +          - description: value for EDAC. Expected 0x10, if set
+> 
+> If this is fixed to 0x10, then this is fully deducible from compatible.
+> Drop entire property.
 
-These are generic functions are similar to 
-"qcom_battmgr_update_charge_time" and "qcom_battmgr_update_info" which 
-are only used for sc8280xp platform. Even right now charge control is 
-only supported in mobile platforms starting from SM8550, however, it 
-could be potentially supported in battery management firmware of any 
-future platforms and the same functions could be reused.
+as mentioned to Andrew, I can move the required values to the driver 
+itself, but a property would still be required to indicate that this PHY 
+is connected to an external PHY (ex. qca8337 switch). In that case, the 
+values need to be set. Otherwise, not..
 
-> Thanks,
-> György
+Would qcom,phy-to-phy-dac (boolean) do?
+
+> 
+>> +      - maxItems: 1
+>> +
+>> +  qca,eth-ldo-enable:
+> 
+> qcom,tcsr-syscon to match property already used.
+
+to make sure I understand correctly, rename it to qcom,tcsr-syscon?
+
+> 
+>> +    description:
+>> +      Register in TCSR to enable the LDO controller to supply
+>> +      low voltages to the common ethernet block (CMN BLK).
+>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>> +    items:
+>> +      - items:
+>> +          - description: phandle of TCSR syscon
+>> +          - description: offset of TCSR register to enable the LDO controller
+>> +      - maxItems: 1
+> You listed two items, but second is just one item? Drop.
+
+What is expected is one item that has two values, in this case: <&tcsr 
+0x019475c4>
+
+I could move the offset to the driver itself as it's a fixed offset, so 
+ultimately the property would become:
+
+qcom,tcsr-syscon = <&tscr>;
+
+agreed?
+
+> 
+> Best regards,
+> Krzysztof
+> 
+
+Best regards,
+George
 
