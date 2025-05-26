@@ -1,231 +1,484 @@
-Return-Path: <linux-arm-msm+bounces-59397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 030DDAC3BAE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:27:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 96782AC3BC4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:36:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B801F165007
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:27:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 56A3E1744DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:36:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD03E1A23A6;
-	Mon, 26 May 2025 08:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36CBE1E5716;
+	Mon, 26 May 2025 08:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IDkwSIT6"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TYNAzWqF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE02198E81
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 08:27:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F78D1E1C02
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 08:36:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748248058; cv=none; b=DiWh3p7DbUonhq2v/uz3KqyGGZZD8IhGJeilrdjmd87my98YOrpjWRbeebN/LSvg5CpCz+KgHgk52KdZHi+kjRtqTjf7X4b3Fp61xDfVASacqZ3zNJSdV69LaBQgFHnpbLMfoX95Yp5pga4K99Nt4/jvAmW+oCwebXQAAmP2GMI=
+	t=1748248583; cv=none; b=qsXColUvHS7XbsTSIWY5+5sB8C12UHeDRpqMK7ua6MJnes9iivjrWr9nNTESfTGAabLXN83uE3CzVOaBBDysq1pMkwGRD7H31npTNm+gENGzLNk1VwQoESVKKO8pJSoFYc9MWFDk1kBUF4Ow1XT3LPhOaaFGFoQlXPwXUuhPGOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748248058; c=relaxed/simple;
-	bh=RQFxDDJX4sTV7Tlbw+d572ayFyLoBX+0/QWAEvVzFYQ=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=aA916yXvQ1zIDgQrYtVVtMRs8L2zkKrapNf7EgYq810VffOcRNDRp/0Ykp5KMzV4WotEyu2ylT36DAt6ZTQL9Pd0Bnh057qaBDxv/XSbdWPOlHXBj+rz4O461/vJFkVjRftWkH3vrPMCfIdY4jTRiV3khUrViG8nIZyKdj7EM8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IDkwSIT6; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43edecbfb94so27849665e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 01:27:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748248055; x=1748852855; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=//l+SpZWLdaex2pzGku8nTnokra2GDwP8t/4Vkwd2wU=;
-        b=IDkwSIT6nLnZsCbmXPHm49A5Q9+1d5xw7MWq+QUIpyvRHNe8zFSCI3qeZnj9DOUpRF
-         olEr77sIHGvXq6S6ZvDYj8smH+DQA+neEN+8rR5cSp/kHov5j/akcE01V7FUYa1lJxso
-         qYS0mqU/pl+P8eOjSvA4jVsj3QZ7/SesBnalZGb+RvBQyUS2oy3ShltFC50BzUZQnwGT
-         8kgycay8QxbBzS1Z6MI4cZZqw6ZXIvIhMoWAThIv0PV9bp6TMUP59+kJmgq8Rw3R8eK9
-         /3zyH1ghLaXxqZNPCfE/rR6j+uYV8+WonRC9Wz78Xfet2rxK8T2aqxgR7+BgR2PowB9y
-         8CzA==
+	s=arc-20240116; t=1748248583; c=relaxed/simple;
+	bh=ig8yGfuXTlheKDPzrYJSyRImZnbdM0WEfgOPP44WCxs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QBwiANTWbRDjWBdLOLunA7q7/oG+NxPEqjlCNtgmC6X8hA5ejHEN+GjcUjjdrItkBXAcO3V3VVzVn+DTN1kWYo/GKO2z25yi89C/HliwVVl5ZhwYiMUsSew0WQ6dNvYPSyaKMpV84wfX+T3v63Oil2ZcVpzfD5M0clvvI5ez4pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TYNAzWqF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54PNqU6H004755
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 08:36:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=fsJTi2rLjBcT2eg/nDlC+5C0
+	Ps00BAskkMQxjnDjx0s=; b=TYNAzWqFvHzxhm9fOcwNfJsU205NjlgROYCaCYFg
+	8sStda12YiS3bJ3eJsZiTVDwO+/0Kh7dvRGtrmn4I7pFdM0dPod6K5OHitzLXhnI
+	SsDY184SRWyD7bizAZg7bBPLiPtdz58GrdTiwGv6PLKivuievHrt+b830NPQnnH8
+	QR/6NEfzbyKO7fGVUWu7EzvQXAPubkWJS9h9iK46/Iht4Al+KNhqGrHHSw/+z4QO
+	HLG7nLO2mA6mOJKGZahW6Zi3cjdzWRjlmCZlinTH5PwH9eTVbgVXosw5NleR5LIS
+	jXOHCYcz0m93GFcWcpy05LOUyhdiocc8sgVCQw0vfUitKg==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u7dc3kb0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 08:36:19 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6f0e2d30ab4so36280116d6.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 01:36:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748248055; x=1748852855;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=//l+SpZWLdaex2pzGku8nTnokra2GDwP8t/4Vkwd2wU=;
-        b=mwhuLCCbMsYF2sONa8CPwYe9DhiapXkj2CVYN8+0Xh/2MfOJXPdFk1CW+CXoeAQ3iq
-         yUU0wMTCRgUCTpg8gfIDOMz5QsmrscOMNZ7NTt9XOrEggmmF0WF/DIDUeT7UaiqJZGaf
-         aUF60ngNEwY3KTpMLpLTBML0wgymm7FC+y6dJJMEnfgvUjEpyfMxz5f1uAh1V96z+nqO
-         u+2ExYpd55LDRI6UJhJ285hMRhZT40tFFMIAeKtYAh8+Y3Bf/vyQuVlaxu4QT40PUKkl
-         0fuJNhIzA5WWkgkD0nTmzTFrrU2ywT6Twj7QNpY2Fh6E28N9acKc3Du7xSqjpl2dngER
-         ibSA==
-X-Forwarded-Encrypted: i=1; AJvYcCX2Si/UO3ag5ol4r5tEOWObxjnKRpNgVAhBRhZ4DmTOZTXGT3aKcoaidvvbtIjxXF3v1qkadqiKF67guAHR@vger.kernel.org
-X-Gm-Message-State: AOJu0YwjgZOt4AUeNIHjVB7KBGPz0kW2tAU99ZL/eo0xot8Zf49kZUWq
-	QgAKO4fl5QTK0mJvUNCOhPBQLYMwFZuLClts8oy+CVggONWmhyCeDPZKhwie+DzmINY=
-X-Gm-Gg: ASbGnctPsoYLvP3f6wamvd91AEj9FxCvhpajx9BiJ83SHHqtnyzoIvfuhAgSzxFykL+
-	00kygK2qRpf7J390Ipq+zFW9QwRASAW3tEEn6y7A3DUyHfRkV+C8SnWvDEk2F2co7YCiL1hj5hF
-	gD8eNyduE8aW8GutwDH2hR/WeBGWCgpe76nRkXAxk2jZq1sLA8z17HACBlxqt+HnXpmvYS7rcZl
-	uwF/zKSIxUhGrz8pGDBJAd8SyQAdqZHMCYcoxZLRtLvW93P8sWYfOVRlwB0Lx9czOmjrguHeTw/
-	nKD2wfUyrlGkgIanHSAU/vWmGM2Fr3BwGz+grXJlRUbU5VEfyWaXJIqKQa1qmiBwzKvVGD11drt
-	lr2w0nRnYlIR6jOTCiIHwPdGf059m
-X-Google-Smtp-Source: AGHT+IFzu9DWaslxdEFSgpjGR3l4yPYyJktjmTZ/FF1vEJqTSXIz10xyxcwYQuLFRxS0fhlqWlfWhA==
-X-Received: by 2002:a05:600d:108:10b0:442:d9f2:c753 with SMTP id 5b1f17b1804b1-44d5bb93604mr27003115e9.26.1748248054978;
-        Mon, 26 May 2025 01:27:34 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:485c:38a6:3d01:f4a4? ([2a01:e0a:3d9:2080:485c:38a6:3d01:f4a4])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f3dd99edsm226889525e9.36.2025.05.26.01.27.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 May 2025 01:27:34 -0700 (PDT)
-Message-ID: <70b6d885-ca52-4731-9a78-80dd25248e2f@linaro.org>
-Date: Mon, 26 May 2025 10:27:33 +0200
+        d=1e100.net; s=20230601; t=1748248578; x=1748853378;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fsJTi2rLjBcT2eg/nDlC+5C0Ps00BAskkMQxjnDjx0s=;
+        b=t3fk3IZbLm36YuhWbWVDwo89KBy+pY3WhBvZLcNHbbxjJSSJGtFcEmkZzRfxAhuZ9x
+         VqnM2lUBKuUAW1MR7AsLn0LyRpmwCzcPetmzu2DaRDQwtQo7GAj3rfw0iT1Cmln+SyMs
+         xl21/JBTJ13e3Sp0lUDmCR0xhBpqsZQgy1Cac6DPrSubEbJyWvVSxc9dIiMzlWP5pVq0
+         pkXI1R+j6rC/9TBy+RLUQlF8Y3uldDr/uRRYRNhMnZEuwX3NEN3r/1py6SI2zdhWfKyD
+         D6rADUVMvuod7/q37EolN+3M/QjbFdYJ150/ZuK+7fFSkz1pY5DO+ljcnTCDJonMStMq
+         sraw==
+X-Forwarded-Encrypted: i=1; AJvYcCXX10iRM5bvSYG02A5FDoWvxFhvVK3agV2ve6voSdIDiWBx5LSBMTZohyb9oW5pKb/6106QF39JomWN+PKz@vger.kernel.org
+X-Gm-Message-State: AOJu0YwkzJss9+WNjpzrrkbs/DOWJyAQha9MqTcMLY6eyoQX+iaTpjDA
+	RqFaL4r04/foD2bFHth3fDnYjsbZPD0rhUekujUzkhRj2o2/D+mtwEwEUi4jKGKcar3j8f9Rhsf
+	X7o7DhPCBwltLvEmyh+ACyhLm6ci7MzJwZEMKjgQoblY95bcC8t025LrKceYvhjcTRvUX
+X-Gm-Gg: ASbGncsVRgRZ30rT5toFFUY+6pY7X2qBXSTYyhp3XO7aUQKVZQQNTtIDK0skULuqTVg
+	oo2xR0H8XOBy5hORCsDpSIgJIILWr652m3xFpeeiBKrAi5/dveApPpdDPmgB4QuAZmBuJqvBZ+z
+	rMtnnYfQGIhNyigu91YGpQf46Nn7w3sDmfSWqhKQ2vVxtJDZIJQ1wk2u1C0/9qp2vJC2N2SEevQ
+	wPkGha8H/AO4mdYT0XZ+As1gn7TXwVLHTo5+MDNVqAtD9tLXedrW5TzCZtDgP3qfBJu3d5F7PF7
+	VWkEFTF8a+njxeyweRNY/t5aTYlQYzcRLdgtTIbdrb+1onAxBDXTkQ31SWr4Z2RayppuP1mSLO8
+	=
+X-Received: by 2002:a05:6214:4115:b0:6e8:9dfa:d932 with SMTP id 6a1803df08f44-6fa9cff924emr124255856d6.15.1748248578350;
+        Mon, 26 May 2025 01:36:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH1qW3LJtbZrAui8aHC9A6IZ1BRb9kbSD2lOtIpI6gNj8xc7oFUG/Qx4hSZdB+Sy9YxMZqDpQ==
+X-Received: by 2002:a05:6214:4115:b0:6e8:9dfa:d932 with SMTP id 6a1803df08f44-6fa9cff924emr124255526d6.15.1748248577899;
+        Mon, 26 May 2025 01:36:17 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-550e702c9d8sm5055329e87.181.2025.05.26.01.36.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 May 2025 01:36:16 -0700 (PDT)
+Date: Mon, 26 May 2025 11:36:15 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Cc: jens.glathe@oldschoolsolutions.biz, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>,
+        linux-usb@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v4 5/5] arm64: dts: qcom: Add Lenovo ThinkBook 16 G7 QOY
+ device tree
+Message-ID: <rvyfkow43atquc64p6slck6lpfsot67v47ngvfnuhxqo222h6k@kdvbsmf3fwsr>
+References: <20250524-tb16-dt-v4-0-2c1e6018d3f0@oldschoolsolutions.biz>
+ <20250524-tb16-dt-v4-5-2c1e6018d3f0@oldschoolsolutions.biz>
+ <g7vlyqma6ow6tdsaqt2rfwvblxqwbqlwmoueio7i4vqvjy76kw@5bz4g33pq4t7>
+ <CAMcHhXoYkQru_0n5siMGGkTcHu8yWRZWfT4ByiD8D0ieZHF+wQ@mail.gmail.com>
+ <vwoixgdyjjzcjlv4muwrzv7wztnqyidtj7ghacgkjg6hgkkyl7@ji53bhiltaef>
+ <CAMcHhXqDFuo+x99KOK0pQFj-FyTdQoZS_JvehNE2AC_JSoQ2gQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 5/5] power: supply: qcom-battmgr: Add charge control
- support
-To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>, =?UTF-8?Q?Gy=C3=B6rgy_Kurucz?=
- <me@kuruczgy.com>, Sebastian Reichel <sre@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
- David Collins <david.collins@oss.qualcomm.com>, linux-pm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- kernel@oss.qualcomm.com
-References: <20250523-qcom_battmgr_update-v1-0-2bb6d4e0a56e@oss.qualcomm.com>
- <20250523-qcom_battmgr_update-v1-5-2bb6d4e0a56e@oss.qualcomm.com>
- <db0e40b6-22f3-46aa-b35d-7a8729370ddf@kuruczgy.com>
- <1b1c4617-0e5b-40c8-9a66-d243b48c0977@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <1b1c4617-0e5b-40c8-9a66-d243b48c0977@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMcHhXqDFuo+x99KOK0pQFj-FyTdQoZS_JvehNE2AC_JSoQ2gQ@mail.gmail.com>
+X-Proofpoint-GUID: ZQbJhf3YPjArJzL6dabBisn1LYhWaYca
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI2MDA3MiBTYWx0ZWRfX/fSjSxrq2rXm
+ /Vo0Iw8VATqVCpm2FC/nrZGVTGUsLjUcEraw6TWlKXNNLLwj1HNmcLJUka3Lp9Bs8WClhqqUP/g
+ hvtZy367FKDI7DA5yr3hlf7B6qGgu/NSnIE8N7ADYiIwm4Zanw2cjXecBBXP5hlENyAuAzSISM4
+ LJfm0jyI+9LOeqnB4SgfwN0OQbLmyMA6FaSbG4PRapW0vvcIGcp7t8c6bq/8oWNw8muZV0YMv9A
+ WLCaMHnNaevXlcAxybbnvIjnf1tpBwr/L3yBXcS/lklIKbA+1BlcfFeZxZ5UMBclbhqjyQkUqTc
+ r0zVhjPuYRxmC0ZvexBtdkV2g9iJ9+NC3cFJ2L0RPL1829j/6UBMp++mUqcCtGSZfpnO7CEmc2U
+ cfbf5nw74nib1GhfVBTwqUW/L61g55H5jPWkNo5eCrguonAZVLFe12DpIGvfGmEGegoQOOWn
+X-Proofpoint-ORIG-GUID: ZQbJhf3YPjArJzL6dabBisn1LYhWaYca
+X-Authority-Analysis: v=2.4 cv=Mq5S63ae c=1 sm=1 tr=0 ts=68342804 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=gxl3bz0cAAAA:8 a=pGLkceISAAAA:8
+ a=0TimfSER351lcrvkeT8A:9 a=CjuIK1q_8ugA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+ a=kiRiLd-pWN9FGgpmzFdl:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-26_04,2025-05-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 mlxscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0 mlxlogscore=999
+ bulkscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505260072
 
-On 26/05/2025 08:19, Fenglin Wu wrote:
+On Sun, May 25, 2025 at 09:43:36PM +0200, Aleksandrs Vinarskis wrote:
+> On Sun, 25 May 2025 at 15:33, Dmitry Baryshkov
+> <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> >
+> > On Sat, May 24, 2025 at 07:58:13PM +0200, Aleksandrs Vinarskis wrote:
+> > > On Sat, 24 May 2025 at 17:33, Dmitry Baryshkov
+> > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > > >
+> > > > On Sat, May 24, 2025 at 01:48:40PM +0200, Jens Glathe via B4 Relay wrote:
+> > > > > From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> > > > >
+> > > > > Device tree for the Lenovo Thinkbook 16 G7 QOY
+> > > > >
+> > > > > The Laptop is a Snapdragon X1 / X1 Plus (Purwa) based device [1].
+> > > > >
+> > > > > Supported features:
+> > > > >
+> > > > > - USB type-c and type-a ports
+> > > > > - Keyboard
+> > > > > - Touchpad (all that are described in the dsdt)
+> > > > > - Touchscreen (described in the dsdt, no known SKUss)
+> > > > > - Display including PWM backlight control
+> > > > > - PCIe devices
+> > > > > - nvme
+> > > > > - SDHC card reader
+> > > > > - ath12k WCN7850 Wifi and Bluetooth
+> > > > > - ADSP and CDSP
+> > > > > - GPIO keys (Lid switch)
+> > > > > - Sound via internal speakers / DMIC / USB / headphone jack
+> > > > > - DP Altmode with 2 lanes (as all of these still do)
+> > > > > - Integrated fingerprint reader (FPC)
+> > > > > - Integrated UVC camera
+> > > > >
+> > > > > Not supported yet:
+> > > > >
+> > > > > - HDMI port.
+> > > > > - EC and some fn hotkeys.
+> > > > >
+> > > > > Limited support yet:
+> > > > >
+> > > > > - SDHC card reader is based on the on-chip sdhc_2 controller, but the driver from
+> > > > > the Snapdragon Dev Kit is only a partial match. It can do normal slow sd cards,
+> > > > > but not UHS-I (SD104) and UHS-II.
+> > > > >
+> > > > > - The GPU is not yet supported. Graphics is only software rendered.
+> > > > >
+> > > > > This work was done without any schematics or non-public knowledge of the device.
+> > > > > So, it is based on the existing x1e device trees, dsdt analysis, using HWInfo
+> > > > > ARM64, and pure guesswork. It has been confirmed, however, that the device really
+> > > > > has 4 NXP PTN3222 eUSB2 repeaters, one of which doesn't have a reset GPIO (eusb5
+> > > > > @43).
+> > > > >
+> > > > > Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> > > > > Co-developed by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+> > > > > ---
+> > > > >  arch/arm64/boot/dts/qcom/Makefile                  |    3 +
+> > > > >  arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi       |    2 +-
+> > > > >  .../boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts | 1655 ++++++++++++++++++++
+> > > > >  3 files changed, 1659 insertions(+), 1 deletion(-)
+> > > > >
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > > > > index 669b888b27a1daa93ac15f47e8b9a302bb0922c2..aff4fe3e81ec0d6f6d52e2aa0da327b7576632d8 100644
+> > > > > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > > > > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > > > > @@ -327,3 +327,6 @@ x1e80100-qcp-el2-dtbs     := x1e80100-qcp.dtb x1-el2.dtbo
+> > > > >  dtb-$(CONFIG_ARCH_QCOM)      += x1e80100-qcp.dtb x1e80100-qcp-el2.dtb
+> > > > >  x1p42100-crd-el2-dtbs        := x1p42100-crd.dtb x1-el2.dtbo
+> > > > >  dtb-$(CONFIG_ARCH_QCOM)      += x1p42100-crd.dtb x1p42100-crd-el2.dtb
+> > > > > +x1p42100-lenovo-thinkbook-16-el2-dtbs        := x1p42100-lenovo-thinkbook-16.dtb x1-el2.dtbo
+> > > > > +dtb-$(CONFIG_ARCH_QCOM)      += x1p42100-lenovo-thinkbook-16.dtb x1p42100-lenovo-thinkbook-16-el2.dtb
+> > > > > +
+> > > >
+> > > > No need for an extra empty line.
+> > > >
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
+> > > > > index c02fd4d15c9649c222caaafa5ed2c777a10fb4f5..551b392eca4ef3b6041e03ad1385fef11cec1690 100644
+> > > > > --- a/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
+> > > > > +++ b/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
+> > > > > @@ -170,7 +170,7 @@ trip1 {
+> > > > >                       };
+> > > > >               };
+> > > > >
+> > > > > -             pm8010-thermal {
+> > > > > +             pm8010_thermal: pm8010-thermal {
+> > > > >                       polling-delay-passive = <100>;
+> > > > >
+> > > > >                       thermal-sensors = <&pm8010_temp_alarm>;
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts b/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
+> > > > > new file mode 100644
+> > > > > index 0000000000000000000000000000000000000000..7089219ed08c1c4a60cc007f9d043a34a8071b4f
+> > > > > --- /dev/null
+> > > > > +++ b/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
+> > > > > @@ -0,0 +1,1655 @@
+> > > > > +// SPDX-License-Identifier: BSD-3-Clause
+> > > > > +/*
+> > > > > + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> > > > > + * Copyright (c) 2024, Linaro Limited
+> > > > > + * Copyright (c) 2025, Jens Glathe
+> > > > > + */
+> > > > > +
+> > > > > +/dts-v1/;
+> > > > > +
+> > > > > +#include <dt-bindings/gpio/gpio.h>
+> > > > > +#include <dt-bindings/input/gpio-keys.h>
+> > > > > +#include <dt-bindings/input/input.h>
+> > > > > +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> > > > > +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> > > > > +
+> > > > > +#include "x1p42100.dtsi"
+> > > > > +#include "x1e80100-pmics.dtsi"
+> > > > > +
+> > > > > +/delete-node/ &pmc8380_6;
+> > > > > +/delete-node/ &pmc8380_6_thermal;
+> > > > > +/delete-node/ &pm8010;
+> > > > > +/delete-node/ &pm8010_thermal;
+> > > > > +
+> > > > > +/ {
+> > > > > +     model = "Lenovo ThinkBook 16 Gen 7 QOY";
+> > > > > +     compatible = "lenovo,thinkbook-16", "qcom,x1p42100";
+> > > > > +     chassis-type = "laptop";
+> > > > > +
+> > > > > +     aliases {
+> > > > > +             serial0 = &uart21;
+> > > > > +             serial1 = &uart14;
+> > > > > +     };
+> > > > > +
+> > > > > +     wcd938x: audio-codec {
+> > > > > +             compatible = "qcom,wcd9385-codec";
+> > > > > +
+> > > > > +             pinctrl-names = "default";
+> > > > > +             pinctrl-0 = <&wcd_default>;
+> > > > > +
+> > > > > +             qcom,micbias1-microvolt = <1800000>;
+> > > > > +             qcom,micbias2-microvolt = <1800000>;
+> > > > > +             qcom,micbias3-microvolt = <1800000>;
+> > > > > +             qcom,micbias4-microvolt = <1800000>;
+> > > > > +             qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
+> > > > > +             qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
+> > > > > +             qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
+> > > > > +             qcom,rx-device = <&wcd_rx>;
+> > > > > +             qcom,tx-device = <&wcd_tx>;
+> > > > > +
+> > > > > +             reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
+> > > > > +
+> > > > > +             vdd-buck-supply = <&vreg_l15b_1p8>;
+> > > > > +             vdd-rxtx-supply = <&vreg_l15b_1p8>;
+> > > > > +             vdd-io-supply = <&vreg_l15b_1p8>;
+> > > > > +             vdd-mic-bias-supply = <&vreg_bob1>;
+> > > > > +
+> > > > > +             #sound-dai-cells = <1>;
+> > > > > +     };
+> > > > > +
+> > > > > +     backlight: backlight {
+> > > > > +             compatible = "pwm-backlight";
+> > > > > +             pwms = <&pm8550_pwm 3 500000>;
+> > > > > +
+> > > > > +             power-supply = <&vreg_edp_bl>;
+> > > > > +     };
+> > > > > +
+> > > > > +     camera {
+> > > > > +             compatible = "usb5986,1198";
+> > > > > +
+> > > > > +             vdd-supply = <&vreg_cam_5p0>;
+> > > > > +
+> > > > > +             status = "okay";
+> > > >
+> > > > This is default, please drop.
+> > > >
+> > > > > +     };
+> > > >
+> > > > Camera isn't randomly wire to the board, it is on the USB bus. Please
+> > > > follow DT bindings and put it accordingly, describing topology of the
+> > > > bus.
+> > > >
+> > > > > +
+> > > > > +     gpio-keys {
+> > > > > +             compatible = "gpio-keys";
+> > > > > +
+> > > > > +             pinctrl-0 = <&hall_int_n_default>;
+> > > > > +             pinctrl-names = "default";
+> > > > > +
+> > > > > +             switch-lid {
+> > > > > +                     gpios = <&tlmm 92 GPIO_ACTIVE_LOW>;
+> > > > > +                     linux,input-type = <EV_SW>;
+> > > > > +                     linux,code = <SW_LID>;
+> > > > > +                     wakeup-source;
+> > > > > +                     wakeup-event-action = <EV_ACT_DEASSERTED>;
+> > > > > +             };
+> > > > > +     };
+> > > > > +
+> > > > > +     pmic-glink {
+> > > > > +             compatible = "qcom,x1e80100-pmic-glink",
+> > > > > +                             "qcom,sm8550-pmic-glink",
+> > > > > +                             "qcom,pmic-glink";
+> > > >
+> > > > Align vertically on the double-quote
+> > > >
+> > > > > +             #address-cells = <1>;
+> > > > > +             #size-cells = <0>;
+> > > > > +             orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
+> > > > > +                             <&tlmm 123 GPIO_ACTIVE_HIGH>;
+> > > >
+> > > > And such lists should be aligned on the opening angle bracket.
+> > > >
+> > > > > +
+> > > > > +             /* Display-adjacent port */
+> > > > > +             connector@0 {
+> > > > > +                     compatible = "usb-c-connector";
+> > > > > +                     reg = <0>;
+> > > > > +                     power-role = "dual";
+> > > > > +                     data-role = "dual";
+> > > >
+> > > > Is it actually dual-role? What does UCSI report for it?
+> > > >
+> > > > > +
+> > > > > +                     ports {
+> > > > > +                             #address-cells = <1>;
+> > > > > +                             #size-cells = <0>;
+> > > > > +
+> > > > > +                             port@0 {
+> > > > > +                                     reg = <0>;
+> > > > > +
+> > > > > +                                     pmic_glink_ss0_hs_in: endpoint {
+> > > > > +                                             remote-endpoint = <&usb_1_ss0_dwc3_hs>;
+> > > > > +                                     };
+> > > > > +                             };
+> > > > > +
+> > > > > +                             port@1 {
+> > > > > +                                     reg = <1>;
+> > > > > +
+> > > > > +                                     pmic_glink_ss0_ss_in: endpoint {
+> > > > > +                                             remote-endpoint = <&usb_1_ss0_qmpphy_out>;
+> > > > > +                                     };
+> > > > > +                             };
+> > > > > +
+> > > > > +                             port@2 {
+> > > > > +                                     reg = <2>;
+> > > > > +
+> > > > > +                                     pmic_glink_ss0_sbu: endpoint {
+> > > > > +                                             remote-endpoint = <&usb_1_ss0_sbu_mux>;
+> > > > > +                                     };
+> > > > > +                             };
+> > > > > +                     };
+> > > > > +             };
+> > > > > +
+> > > > > +             /* User-adjacent port */
+> > > > > +             connector@1 {
+> > > > > +                     compatible = "usb-c-connector";
+> > > > > +                     reg = <1>;
+> > > > > +                     power-role = "dual";
+> > > > > +                     data-role = "dual";
+> > > > > +
+> > > > > +                     ports {
+> > > > > +                             #address-cells = <1>;
+> > > > > +                             #size-cells = <0>;
+> > > > > +
+> > > > > +                             port@0 {
+> > > > > +                                     reg = <0>;
+> > > > > +
+> > > > > +                                     pmic_glink_ss1_hs_in: endpoint {
+> > > > > +                                             remote-endpoint = <&usb_1_ss1_dwc3_hs>;
+> > > > > +                                     };
+> > > > > +                             };
+> > > > > +
+> > > > > +                             port@1 {
+> > > > > +                                     reg = <1>;
+> > > > > +
+> > > > > +                                     pmic_glink_ss1_ss_in: endpoint {
+> > > > > +                                             remote-endpoint = <&usb_1_ss1_qmpphy_out>;
+> > > > > +                                     };
+> > > > > +                             };
+> > > > > +
+> > > > > +                             port@2 {
+> > > > > +                                     reg = <2>;
+> > > > > +
+> > > > > +                                     pmic_glink_ss1_sbu: endpoint {
+> > > > > +                                             remote-endpoint = <&usb_1_ss1_sbu_mux>;
+> > > > > +                                     };
+> > > > > +                             };
+> > > > > +                     };
+> > > > > +             };
+> > > > > +     };
+> > > > > +
+> > > > > +     reserved-memory {
+> > > > > +             linux,cma {
+> > > >
+> > > > What for?
+> > > >
+> > > > > +                     compatible = "shared-dma-pool";
+> > > > > +                     size = <0x0 0x8000000>;
+> > > > > +                     reusable;
+> > > > > +                     linux,cma-default;
+> > > > > +             };
+> > > > > +     };
+> > > > > +
+> > > >
+> > > > [...]
+> > > >
+> > > > > +
+> > > > > +&gpu {
+> > > > > +     status = "okay";
+> > > >
+> > > > I think that you wrote that GPU isn't supported (yet).
+> > >
+> > > GPU is not supported on SoC level (x1p42100/purwa), not device
+> > > specific. The idea I suggested to Jens was to mimic Asus Zenbook A14
+> > > as per discussion abou purwa GPU and purwa firmware in general [1]: to
+> > > already include correct filename and firmware path (since these are
+> > > known) such that once SoC lands the GPU support laptops with that SoC
+> > > will gain GPU support 'automatically'. As nothing consumes this
+> > > property (on purwa) just yet, adding it already does not cause any
+> > > harm.
+> >
+> >
+> > Not quite. A14 specified the firmware name, but didn't enable the GPU.
+> > This patch actually enables the GPU device. Which means, that we are
+> > going to probe a driver on an unsupported device, using invalid GPU ids.
+> >
 > 
-> On 5/24/2025 5:29 AM, György Kurucz wrote:
->> Hi!
->>
->>> +static int qcom_battmgr_set_charge_control(struct qcom_battmgr *battmgr,
->>> +                       u32 target_soc, u32 delta_soc)
->>> +{
->>> +    struct qcom_battmgr_charge_ctrl_request request = {
->>> +        .hdr.owner = cpu_to_le32(PMIC_GLINK_OWNER_BATTMGR),
->>> +        .hdr.type = cpu_to_le32(PMIC_GLINK_REQ_RESP),
->>> +        .hdr.opcode = cpu_to_le32(BATTMGR_CHG_CTRL_LIMIT_EN),
->>> +        .enable = cpu_to_le32(1),
->>> +        .target_soc = cpu_to_le32(target_soc),
->>> +        .delta_soc = cpu_to_le32(delta_soc),
->>> +    };
->>> +
->>> +    return qcom_battmgr_request(battmgr, &request, sizeof(request));
->>> +}
->>> +
->>> +static int qcom_battmgr_set_charge_start_threshold(struct qcom_battmgr *battmgr, int soc)
->>> +{
->>> +    u32 target_soc, delta_soc;
->>> +    int ret;
->>> +
->>> +    if (soc < CHARGE_CTRL_START_THR_MIN ||
->>> +            soc > CHARGE_CTRL_START_THR_MAX) {
->>> +        dev_err(battmgr->dev, "charge control start threshold exceed range: [%u - %u]\n",
->>> +                CHARGE_CTRL_START_THR_MIN, CHARGE_CTRL_START_THR_MAX);
->>> +        return -EINVAL;
->>> +    }
->>> +
->>> +    /*
->>> +     * If the new start threshold is larger than the old end threshold,
->>> +     * move the end threshold one step (DELTA_SOC) after the new start
->>> +     * threshold.
->>> +     */
->>> +    if (soc > battmgr->info.charge_ctrl_end) {
->>> +        target_soc = soc + CHARGE_CTRL_DELTA_SOC;
->>> +        target_soc = min_t(u32, target_soc, CHARGE_CTRL_END_THR_MAX);
->>> +        delta_soc = target_soc - soc;
->>> +        delta_soc = min_t(u32, delta_soc, CHARGE_CTRL_DELTA_SOC);
->>> +    } else {
->>> +        target_soc =  battmgr->info.charge_ctrl_end;
->>> +        delta_soc = battmgr->info.charge_ctrl_end - soc;
->>> +    }
->>> +
->>> +    mutex_lock(&battmgr->lock);
->>> +    ret = qcom_battmgr_set_charge_control(battmgr, target_soc, delta_soc);
->>> +    mutex_unlock(&battmgr->lock);
->>> +    if (!ret) {
->>> +        battmgr->info.charge_ctrl_start = soc;
->>> +        battmgr->info.charge_ctrl_end = target_soc;
->>> +    }
->>> +
->>> +    return 0;
->>> +}
->>> +
->>> +static int qcom_battmgr_set_charge_end_threshold(struct qcom_battmgr *battmgr, int soc)
->>> +{
->>> +    u32 delta_soc = CHARGE_CTRL_DELTA_SOC;
->>> +    int ret;
->>> +
->>> +    if (soc < CHARGE_CTRL_END_THR_MIN ||
->>> +            soc > CHARGE_CTRL_END_THR_MAX) {
->>> +        dev_err(battmgr->dev, "charge control end threshold exceed range: [%u - %u]\n",
->>> +                CHARGE_CTRL_END_THR_MIN, CHARGE_CTRL_END_THR_MAX);
->>> +        return -EINVAL;
->>> +    }
->>> +
->>> +    if (battmgr->info.charge_ctrl_start && soc > battmgr->info.charge_ctrl_start)
->>> +        delta_soc = soc - battmgr->info.charge_ctrl_start;
->>> +
->>> +    mutex_lock(&battmgr->lock);
->>> +    ret = qcom_battmgr_set_charge_control(battmgr, soc, delta_soc);
->>> +    mutex_unlock(&battmgr->lock);
->>> +    if (!ret) {
->>> +        battmgr->info.charge_ctrl_start = soc - delta_soc;
->>> +        battmgr->info.charge_ctrl_end = soc;
->>> +    }
->>> +
->>> +    return 0;
->>> +}
->>
->> These function names sound quite generic, but AFAIU this patch is only adding charge control support for the SM8550. Is sc8280xp and x1e80100 also expected to be supported using the same qcom_battmgr_charge_ctrl_request format?
-> 
-> No, sc8280xp and x1e80100 don't support it. So I didn't add the support for them.
+> A14 also enables the GPU, just in the .dsti, not in the purwa .dts.
+> Though now looking at it, perhaps it's a bit misleading.
 
-And what about SM8650 and SM8750 ?
+It should be enabled in the board.dts, not in the interim dtsi.
 
-Neil
+> Yes you are right, it does give GPU-related error in dmesg, which
+> appear to be otherwise harmless. Perhaps because `x1p42100.dtsi`
+> deletes the compatible of the GPU, hence no driver is probing it?
+> 
+> ```
+> [    3.085697] msm_dpu ae01000.display-controller: no GPU device was found
+> ```
+> 
+> Otherwise, if you still say GPU should be disabled regardless, shall I
+> also disable it on A14's purwa variant?
 
-> 
-> These are generic functions are similar to "qcom_battmgr_update_charge_time" and "qcom_battmgr_update_info" which are only used for sc8280xp platform. Even right now charge control is only supported in mobile platforms starting from SM8550, however, it could be potentially supported in battery management firmware of any future platforms and the same functions could be reused.
-> 
->> Thanks,
->> György
-> 
+Yes, please. Don't set okay status for the GPU until it gets enabled.
 
+-- 
+With best wishes
+Dmitry
 
