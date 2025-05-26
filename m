@@ -1,58 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-59388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2CBCAC3B3E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:12:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53DAEAC3B48
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 10:13:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 751CC7A3348
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:11:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C718416563D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 08:13:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 116DC1E32D7;
-	Mon, 26 May 2025 08:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 182F71EBFF7;
+	Mon, 26 May 2025 08:13:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sd/xVPxS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3371E2852;
-	Mon, 26 May 2025 08:12:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B23F1EB5C9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 08:13:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748247158; cv=none; b=Xu6B3zxJCBlHAoTEP2NDdsRhfKtMLFxY+d31P2ZNZMU7dSPpvX1uvXxCk6S76d+1PVATzl2dEZ41cFOZOVe5qkVItkPDNn/4DUncocPVD49SH6qXtcrsU9VOA3Sk/Dga4cUvF6YENkaI4iRZ/12A9X0Bm64buwm4i2MrF69zYaw=
+	t=1748247185; cv=none; b=fOJCtAfalE2zYTcfuAVvwrX/SdN9bJqaGurzQeBi9eyiYCQk5ktMcg4kxMlM3uaNy5ZDpMvzdjKzDQynBgVce08JxXnitDqn/5L+sjJ9GKcyfU2dFf7Dzc5ca6eesPAqhccedanuvi261kMZLhAyjr3pm0aWk+UU3oQzg62OCDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748247158; c=relaxed/simple;
-	bh=MAENNmNwrH3W/QEGRqPR4bnA+t7nJWBfnxxjoyBBWks=;
+	s=arc-20240116; t=1748247185; c=relaxed/simple;
+	bh=6dMenWW9G9+jrd7FF1PAJg9qND6VwFxBlkOpgHYc29k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GozPpLOmdl4AGynmvd0Na15+ZoptRNszhjGNq/RgrzlSBJchY849dicCltx8TDcfN9ut85zw/hascEKcJ1Pase4Ys4FWoIgDmA5iR1jd+beXTXNV++wRbvFYrEiIABSA0iL01/NpyE7KEOe5ckki2wUIh0guX7wpzWUiHpdrqm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 28f646603a0911f0b29709d653e92f7d-20250526
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.45,REQID:429e306a-3d2a-428c-8e5d-381513c7b4c8,IP:10,
-	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:-3,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
-	N:release,TS:7
-X-CID-INFO: VERSION:1.1.45,REQID:429e306a-3d2a-428c-8e5d-381513c7b4c8,IP:10,UR
-	L:0,TC:0,Content:0,EDM:0,RT:0,SF:-3,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:7
-X-CID-META: VersionHash:6493067,CLOUDID:556e8e9b46a75800489301288524277b,BulkI
-	D:250522180435BN613KC0,BulkQuantity:3,Recheck:0,SF:19|24|38|45|64|66|72|78
-	|80|81|82|83|102|841,TC:nil,Content:0|50,EDM:-3,IP:-2,URL:0,File:nil,RT:ni
-	l,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,B
-	RR:0,BRE:0,ARC:0
-X-CID-BVR: 1,FCT
-X-CID-BAS: 1,FCT,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FSD,TF_CID_SPAM_FSI
-X-UUID: 28f646603a0911f0b29709d653e92f7d-20250526
-X-User: aichao@kylinos.cn
-Received: from [172.25.120.86] [(112.64.161.44)] by mailgw.kylinos.cn
-	(envelope-from <aichao@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
-	with ESMTP id 2080723570; Mon, 26 May 2025 16:12:26 +0800
-Message-ID: <eb1ddeb3-06b6-4ac5-b20a-06b92c7f1363@kylinos.cn>
-Date: Mon, 26 May 2025 16:12:22 +0800
+	 In-Reply-To:Content-Type; b=mPQdPSXJFpTGf0dq03h0hOil4T+JFnNqnSAZ+Xyx5NCW7FNXtwNBjjzlstygeCS28Sj48+CAv5Et1I9G15TIM4daBZv1koti9a8ahGOkDnXo74LZIDErdtYuINr+Aw7b8DKoVGmnwebJzNVSqBO0qQWPSleZfe0ZqdtV1tC7pOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sd/xVPxS; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a375888297so1266885f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 May 2025 01:13:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1748247182; x=1748851982; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6dMenWW9G9+jrd7FF1PAJg9qND6VwFxBlkOpgHYc29k=;
+        b=sd/xVPxSFGLvyz7LKqDzLZhGNXqoFKu7+ucNEgIKbRH+1hyeArcNCT1OW9VoVAOgBs
+         N/xwIHI8Ch9pwVEFXW7ipYS2B6ri0EWCAw4eUNQCZGZQz809wf5ucyl3k0yJPnJ60uFo
+         t04t3MssAPXRXu35rdMAM0bEhCNAFcR6UEKyugHhiw1Moj/5ERABN5JpgQ5P/kBoqVje
+         kVfyYvo9hg+JBhpNO+WvIx2svOYPVRaVZHRrU2QL+WF3ThXMTxyPep05ZVx2jXT+CTjV
+         HwL3+eQ1LDI/KNT+390leRj+lzUY6oj7Q6JTALTzmUvoJAGe3uj1V1OxNq7Mirv0aHCc
+         fUKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748247182; x=1748851982;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6dMenWW9G9+jrd7FF1PAJg9qND6VwFxBlkOpgHYc29k=;
+        b=VV6i9XDiVM3YXYTHNxTaQJHr2IZaYdTftfNTiVgp6JavEbgbmy18iy1UqSvlVT8fzW
+         lO8ksjWTz29Tn+S3227HPbG2xHOzjp69NRdz81zAwcscwL+rV+6SjSnjS9HMSk0kTvO6
+         fOKoNntbjWTuMMXv9kMIZO8HmMymgQH6u3/pLKzzForHRlUs0P3XY1AFDE1CQfTHDfqj
+         FsY2zNp7RGxy3313e1cCgMTm7ODC99aSvS7IX7SJTa7m9dVZhkavov5VCOz0kEb22ofL
+         gzhGNGbfSvvEGZCcKZsuiI34L3GVoLNMZITzeWCN3WWuPMlTHzkNsX9XvB2hH1wHkGXL
+         PoRg==
+X-Forwarded-Encrypted: i=1; AJvYcCXY26ruY+m5kPWap5yOQZqXnGWieLGuYpDvfLPVjeO1tiAkyyHvtaDD2D/9g2CuPNKviZAWmaJOOuRC3qJ1@vger.kernel.org
+X-Gm-Message-State: AOJu0YwGDY/ecnxdFxOponhcm6TegwjBI3Noj+WYte/4gbjCk7PGoZA9
+	pvePk91bscfM/WfH11pLRf82IFAnPaDnyKHQUs/1IZB0S61jJpZEqvNzU3OZWctYH5Y=
+X-Gm-Gg: ASbGncuRcFTqb7pGy3YytkHFbTTkRRniMuOG0JB0aMo4817sL8zwaC8zk4fq3dvv9AU
+	APcUdHnyzoG2mYD0ot7RX4hvw5gvUnK+vGJvrrzr471W6lyvqLrJzg8tJsO+TOORTWE56RIxspK
+	D/CnQbxCpoBhr2QigTUvpYQTLX40p6kNWiZgagcR2tDq4KpWBVZiyFedwuwiO4Gss35uNVHMo0j
+	8GFWQgCF5UAwybTYNloiHdQlWuLxwoRwb8MkESARR5a1lhYT2WQDltyMehlKwW7CfIHiWbuQsUU
+	JkaOn8/oWD1qwI7ayJ7GsspwLdBCIV23RkwWNz00o5wjkc5LM9/UE2xwg6vRrZK6+0eo0YK4lmX
+	rJwHZzxoQ3pNCkoLE
+X-Google-Smtp-Source: AGHT+IHGSsVUmWj3Jah1vKvr6sQDWVSDBSGyOlSKcnIVvmpIKC/Y46McYZjwHULPKpThDtSFgrrx3Q==
+X-Received: by 2002:a05:6000:1acb:b0:3a3:6434:5d34 with SMTP id ffacd0b85a97d-3a4ca413eafmr6970418f8f.17.1748247182279;
+        Mon, 26 May 2025 01:13:02 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4d8ea9520sm2349448f8f.70.2025.05.26.01.13.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 May 2025 01:13:01 -0700 (PDT)
+Message-ID: <e8750bc1-11ab-480c-a0fb-262ff6a0dd22@linaro.org>
+Date: Mon, 26 May 2025 09:13:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,46 +82,30 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] ASoC: aoa: Use helper function
- for_each_child_of_node_scoped()
-To: Johannes Berg <johannes@sipsolutions.net>, perex <perex@perex.cz>,
- tiwai <tiwai@suse.com>,
- "kuninori.morimoto.gx" <kuninori.morimoto.gx@renesas.com>,
- lgirdwood <lgirdwood@gmail.com>, broonie <broonie@kernel.org>,
- jbrunet <jbrunet@baylibre.com>, "neil.armstrong"
- <neil.armstrong@linaro.org>, khilman <khilman@baylibre.com>,
- "martin.blumenstingl" <martin.blumenstingl@googlemail.com>,
- "shengjiu.wang" <shengjiu.wang@gmail.com>, "Xiubo.Lee"
- <Xiubo.Lee@gmail.com>, festevam <festevam@gmail.com>,
- nicoleotsuka <nicoleotsuka@gmail.com>, shawnguo <shawnguo@kernel.org>,
- "s.hauer" <s.hauer@pengutronix.de>,
- "srinivas.kandagatla" <srinivas.kandagatla@linaro.org>
-Cc: linux-sound <linux-sound@vger.kernel.org>,
- linux-kernel <linux-kernel@vger.kernel.org>,
- linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
- linux-renesas-soc <linux-renesas-soc@vger.kernel.org>,
- linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
- linux-amlogic <linux-amlogic@lists.infradead.org>, imx
- <imx@lists.linux.dev>, kernel <kernel@pengutronix.de>,
- linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <2aq0nyvyf7t-2aq4hsc7kp6@nsmail7.0.0--kylin--1>
- <7e708dcc98c6f0f615b1b87d190464cfe78be668.camel@sipsolutions.net>
+Subject: Re: [PATCH v2 1/4] media: qcom: camss: vfe: Add VBIF setting support
+To: vincent.knecht@mailoo.org, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+ phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20250525-camss-8x39-vbif-v2-0-6d3d5c5af456@mailoo.org>
+ <20250525-camss-8x39-vbif-v2-1-6d3d5c5af456@mailoo.org>
 Content-Language: en-US
-From: Ai Chao <aichao@kylinos.cn>
-In-Reply-To: <7e708dcc98c6f0f615b1b87d190464cfe78be668.camel@sipsolutions.net>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250525-camss-8x39-vbif-v2-1-6d3d5c5af456@mailoo.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Johannes:
+On 25/05/2025 20:25, Vincent Knecht via B4 Relay wrote:
+> +void vfe_vbif_reg_write(struct vfe_device *vfe, u32 reg, u32 val);
 
->> "simplifies the code" is no need to callof_node_put() .
-> Fair. Except that's not what you _actually_ changed here. Like I said,
-> either it's buggy before or after.
->
-In the function i2sbus_probe, it not return a struct device_node, so , I 
-think function for_each_child_of_node_scoped is better than 
-for_each_child_of_node.
+write_reg() / read_reg()
 
-Best regards,
-Ai Chao
+---
+bod
 
