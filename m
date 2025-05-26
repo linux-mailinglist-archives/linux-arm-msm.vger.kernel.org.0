@@ -1,227 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-59442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C847EAC4241
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 17:28:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E855AC4270
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 17:40:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1AB06178CDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 15:28:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ACB6017AA94
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 15:40:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 334962144C4;
-	Mon, 26 May 2025 15:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACBCB21A928;
+	Mon, 26 May 2025 15:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hNlgbMZA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KQfU6yq0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5828C21423F;
-	Mon, 26 May 2025 15:28:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1ED218858;
+	Mon, 26 May 2025 15:38:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748273298; cv=none; b=TMOOZ1jBctnbRlPbsbQqZg3dIEO0aVhEjToMJfhW3R0UA/kFQHZkzNJgTe5mDPJN2wTTEF+SD8ldfmTjZB1Qdxn9SS/5jXZkvzvrD6S08oVzi51dC1CPAOs6f2ALvfxnL/5jP6SQ6ktu5ZZ0ZUzP1Ot1u8PuPBJk0zKGRJiEpQc=
+	t=1748273938; cv=none; b=p4wqGeEP+8TOo41jcvOpTMZugUt0tFeiUSRAhetViWNhvBmaXxi/Dhbzw3RIG1K/rFODX9lqW8qZTzOfnJPD+GTZF+XBpctfu2lOieLeOhbGFJhr/jdTwPGROpK8KgOfpzD9e+ekQPENwxRobC2/WwGdcWktRCFglNW64LgtdcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748273298; c=relaxed/simple;
-	bh=XgpvUG9KykTN5yAtg1OwU7QbpXzVIwV1QV+ipNPAC7E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ikQaAR3D6yy70W/PsuJop0vkYkNJXUNuJ7DlkugEUqpuwYmCKqwWaGZ8khwXUDYeLup/bOwpSb8iIAr4p1Ki50mJvcOIhi5oo+z5TOeiJ/so+2FjgO08BgAnqxvSvKBClUe9FDYyCeGCBPZcaFfQK3Y9SBupdxkM8UIzspJdrS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hNlgbMZA; arc=none smtp.client-ip=209.85.166.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-8647e143f28so186955939f.1;
-        Mon, 26 May 2025 08:28:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748273295; x=1748878095; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ok85kvavAOBcumYOi4zTE1YwoECPNwKxwTVh7Dm7eVw=;
-        b=hNlgbMZAs1DDgZ3l8JaV7O9HkNHhLyWFK5UfCD34DLVSosnultiOimUSU+YO8z8qWk
-         AUYvPeorwT7XNIMoCUDoEjQAws54n0l2e/XCN/8nDP6sUf/rdk7XRct/hlEz/zc0mnF1
-         BTzQIGuNATJKQGYhxK7ronXS0NHFsVfowqtPSNe+V9FQd9f6V2T108htgTeQSXSAudlp
-         0j0mBYGSaDougpAC26CkWIPcTp+lkA4itlpMDl5hXYSTPEKLMaRAdZ5pR6ardMKJZSn6
-         klqzyZpaLzi1cjFFQ4Ac+3uRTuUO4V3utg6uVA/Ri69NcXvhgLYEAoXHwHpurp0fl9pL
-         1jkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748273295; x=1748878095;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ok85kvavAOBcumYOi4zTE1YwoECPNwKxwTVh7Dm7eVw=;
-        b=JepQQcLn2sxLIBlZPKOzgseq7yP5N7JeJPCSY/KhV0sAaPAJ8+COFc2WGZdYLKWnZ/
-         Hh7z/AtZpP2jWXbqCIdAc9XK1VZKJOgp7XfvD2XoCbdHzml2ti91hgIlesM3JGOVLd05
-         I7M5HTQtNVk3PYBUS6d8ap+wVUfpiWbfjqt6BK0wGRWXsWQG5Ctv7jhqY7G4itBig79/
-         FCfcsux8OQeFb5CaJf0XGhW4ktXF0TqbsjN0irMPCVbGfZsXobAD2ihYmEfmwj5VeYhz
-         eVC9F/Y82LtMjcWoXqdo4QPnbW6aicGv0tRX3GOq/+HpA11ZLpnRRl2T5vEXhDWB1a77
-         DR0A==
-X-Forwarded-Encrypted: i=1; AJvYcCUiyRrT2pn3QEqyfIevaMKEaLB4r7uZ776RQDYHwTQLvCwSCZPs2LY9RuVPdnFB0g5x/kMxc32G/7r2/a/5WQ==@vger.kernel.org, AJvYcCWSMDhUr/6+pMO4bwVPIlN8OKJjMlpMOdNJgcBjf+HKkxRqal/zxOwjY1RoHW7tGBlk+Vg8s9F+b2jhO+P4@vger.kernel.org, AJvYcCWV5K3dZprBlpKSX02lgfEMO/uqQOn6KiT3kF0OyfrbyifzrqjlWnhb0PunEinUUH6UYmCCU5dD7Fs5@vger.kernel.org, AJvYcCXl981C1isytE+cIppeKx/zTXspHnYgTPYyTpi7mMJJ/aWeSo4E9iaP7rM2J/w/i9f+acmHPXF7SwTc@vger.kernel.org
-X-Gm-Message-State: AOJu0YwtZH3IwkDImlyOEpGMBsLr/GtCcFXDnfadAwNd0Ak/13cnpWs3
-	LjaZSqq2NIL3PONbwTFSROyYo1M1Kpsz41xhAxHSqFys99CrfLnLAxM1Vki3jcb2PcVWm5eCM43
-	icclI3wPvmJKveWuCBeroy471vIvWW/o=
-X-Gm-Gg: ASbGncsN4r/a0V0zuMkxSZ3P/4caBvQUWna1QT+WSRYtaiL3sjvMtT0DK6znw8JkxkB
-	XI8oO/M2GV3HqQm8wnwV2LoyKZm9sH+tAiNtqlOeBslUecQp1ONTuGYH0SeE0QlGPP92kald/c9
-	nZeudgf9rMJXHh/3xAbEdM8wuU6eXE9xtdf6Xc84N7yHt4l2CBmUQQ5Skyrg32dB9U
-X-Google-Smtp-Source: AGHT+IHnjEOHDEa+vpbuy9fu6OzuQBLctXm8e94NFAA5PAxQ1vPEMihVba1OMwmRFrSVy6hhC0EPPpaB3XtabMoYhcY=
-X-Received: by 2002:a05:6e02:1a26:b0:3dc:8075:ccde with SMTP id
- e9e14a558f8ab-3dc9b68097amr86275465ab.4.1748273295224; Mon, 26 May 2025
- 08:28:15 -0700 (PDT)
+	s=arc-20240116; t=1748273938; c=relaxed/simple;
+	bh=5lAp4wbEyrKWdqiL1ZH+0TvdNsSNuxx0kGakE//b4JQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uWx89uCp7Lw0mbCfLGWxHF0gST6gWCyUhbIhBwoIxshBLd/ejnsYlO2euMgzCb81AO8MOuafQWBb0zv4xSqlhavvhy0u3KVFu3wDM2FWNGCX/aK9PEq+4j1EVnlwlmolI50M5unM1o+IGyAGxeLiGAyS1O5pq0+kJEvn+LjLfkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KQfU6yq0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54QAOMIM004744;
+	Mon, 26 May 2025 15:38:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=RKJ1uQGO53UeDW+tiWM3x0JDBVQ0sZZomwD
+	JKe6Mg3I=; b=KQfU6yq0qis7OnCrYwFtkK/cYrPN38Ir5Zz7kw0PEgPfGr7TPmT
+	YcWZZ+laZDuOJkvH3kCvmlO/sOAEQAjg4tH+xN9G3Z4QzJ2lkOK+KoWgfKgOW8LV
+	lzjMulUjPpJ6vl7EZjTies7V84TTjqRqSPBD7eUNV2Rl6A4E2GzuaNCwETme2JJC
+	Z8fUTa5YjwxzRUXiQHjGX0reQVTlw2yo9nMce2tnhV4KksEe8JuZPQCF/0vkQ2yy
+	W2ieKuRrBpV7l7+YDCTrgNWQq5O4aNMXyXoF2+IOeELS5TnrcNAjbOj/SxhYBUZa
+	9GBucSDxMemoejsq4JvVige+9wozUoAgLDg==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u5ejvhsk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 26 May 2025 15:38:27 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 54QFcOWe032411;
+	Mon, 26 May 2025 15:38:24 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 46u76m73fn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Mon, 26 May 2025 15:38:24 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54QFcOOZ032404;
+	Mon, 26 May 2025 15:38:24 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 54QFcNET032402;
+	Mon, 26 May 2025 15:38:24 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
+	id 135FD602733; Mon, 26 May 2025 21:08:23 +0530 (+0530)
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+To: vkoul@kernel.org, kishon@kernel.org, manivannan.sadhasivam@linaro.org,
+        James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com,
+        bvanassche@acm.org, andersson@kernel.org, neil.armstrong@linaro.org,
+        konrad.dybcio@oss.qualcomm.com, dmitry.baryshkov@oss.qualcomm.com
+Cc: quic_rdwivedi@quicinc.com, quic_cang@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
+        Nitin Rawat <quic_nitirawa@quicinc.com>
+Subject: [PATCH V6 00/10] Refactor ufs phy powerup sequence
+Date: Mon, 26 May 2025 21:08:11 +0530
+Message-ID: <20250526153821.7918-1-quic_nitirawa@quicinc.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250524-tb16-dt-v4-0-2c1e6018d3f0@oldschoolsolutions.biz>
- <20250524-tb16-dt-v4-5-2c1e6018d3f0@oldschoolsolutions.biz>
- <g7vlyqma6ow6tdsaqt2rfwvblxqwbqlwmoueio7i4vqvjy76kw@5bz4g33pq4t7>
- <CAMcHhXoYkQru_0n5siMGGkTcHu8yWRZWfT4ByiD8D0ieZHF+wQ@mail.gmail.com>
- <vwoixgdyjjzcjlv4muwrzv7wztnqyidtj7ghacgkjg6hgkkyl7@ji53bhiltaef>
- <CAMcHhXqDFuo+x99KOK0pQFj-FyTdQoZS_JvehNE2AC_JSoQ2gQ@mail.gmail.com> <rvyfkow43atquc64p6slck6lpfsot67v47ngvfnuhxqo222h6k@kdvbsmf3fwsr>
-In-Reply-To: <rvyfkow43atquc64p6slck6lpfsot67v47ngvfnuhxqo222h6k@kdvbsmf3fwsr>
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 26 May 2025 08:28:03 -0700
-X-Gm-Features: AX0GCFth23zIDl8jXgXc3hV3XSnIr7KUSlHYudJjPTsDM7Pwue023yHnh3K8dkQ
-Message-ID: <CAF6AEGvr_foMVwaE_VSVWLT50cbGi8i3UGwo2e=rORD-1JmTmA@mail.gmail.com>
-Subject: Re: [PATCH v4 5/5] arm64: dts: qcom: Add Lenovo ThinkBook 16 G7 QOY
- device tree
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>, jens.glathe@oldschoolsolutions.biz, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Matthias Kaehlcke <mka@chromium.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Douglas Anderson <dianders@chromium.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
-	linux-usb@vger.kernel.org, dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=GIgIEvNK c=1 sm=1 tr=0 ts=68348af4 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=dt9VzEwgFbYA:10 a=D06968NiBJqSOUjID_UA:9
+X-Proofpoint-ORIG-GUID: jpYMOcDrtfNcwjZQ09zfBSvQlnpQ8n0e
+X-Proofpoint-GUID: jpYMOcDrtfNcwjZQ09zfBSvQlnpQ8n0e
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI2MDEzMiBTYWx0ZWRfX7EvZQV+WS3oN
+ 6x1MZWI9gbvvHQJVDv/R8QpH7RyV/mGmF7zDclfbwGX9yDxiM7MnSzHn4qIdlUQdSvE8JRIUuHT
+ eXwysn6EG1ThDCUL1stUfsm1FZl8TxYRoI45ZiGKJrfsdZ44Q6MUPj8Ttn0j185y2MrQLl7N6RJ
+ D5MgcRmw3S1Ndsl99Re56lDCsERdr3DdPQyp/P/5pMjHiSphsMie73EF9t71q403RTpJlJDoeQE
+ Y8eYOCa3pOcdSlnMK/yDbYa+ZIFf4DuSWI4FjUivlxEs4BmtJMk2uccR35IP5Pi3IAcSTA/wuV4
+ JxjZDiNeJAz1Ygs7WHfqU4JqgoAwmci+YlV2KnfVhPtPAuNA8PolYsaCLtzPiupaJ/oPIF7FPJz
+ SgmNd+mxkJninY09Cvf/omxjS6DgHB59mwlgTAENDAwbjJKD8bRqMP7EsoNwOKMUlVHwq93x
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-26_08,2025-05-26_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
+ adultscore=0 priorityscore=1501 mlxscore=0 phishscore=0 spamscore=0
+ suspectscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505260132
 
-On Mon, May 26, 2025 at 1:36=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> On Sun, May 25, 2025 at 09:43:36PM +0200, Aleksandrs Vinarskis wrote:
-> > On Sun, 25 May 2025 at 15:33, Dmitry Baryshkov
-> > <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> > >
-> > > On Sat, May 24, 2025 at 07:58:13PM +0200, Aleksandrs Vinarskis wrote:
-> > > > On Sat, 24 May 2025 at 17:33, Dmitry Baryshkov
-> > > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> > > > >
-> > > > > On Sat, May 24, 2025 at 01:48:40PM +0200, Jens Glathe via B4 Rela=
-y wrote:
-> > > > > > From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> > > > > >
-> > > > > > Device tree for the Lenovo Thinkbook 16 G7 QOY
-> > > > > >
-> > > > > > The Laptop is a Snapdragon X1 / X1 Plus (Purwa) based device [1=
-].
-> > > > > >
-> > > > > > Supported features:
-> > > > > >
-> > > > > > - USB type-c and type-a ports
-> > > > > > - Keyboard
-> > > > > > - Touchpad (all that are described in the dsdt)
-> > > > > > - Touchscreen (described in the dsdt, no known SKUss)
-> > > > > > - Display including PWM backlight control
-> > > > > > - PCIe devices
-> > > > > > - nvme
-> > > > > > - SDHC card reader
-> > > > > > - ath12k WCN7850 Wifi and Bluetooth
-> > > > > > - ADSP and CDSP
-> > > > > > - GPIO keys (Lid switch)
-> > > > > > - Sound via internal speakers / DMIC / USB / headphone jack
-> > > > > > - DP Altmode with 2 lanes (as all of these still do)
-> > > > > > - Integrated fingerprint reader (FPC)
-> > > > > > - Integrated UVC camera
-> > > > > >
-> > > > > > Not supported yet:
-> > > > > >
-> > > > > > - HDMI port.
-> > > > > > - EC and some fn hotkeys.
-> > > > > >
-> > > > > > Limited support yet:
-> > > > > >
-> > > > > > - SDHC card reader is based on the on-chip sdhc_2 controller, b=
-ut the driver from
-> > > > > > the Snapdragon Dev Kit is only a partial match. It can do norma=
-l slow sd cards,
-> > > > > > but not UHS-I (SD104) and UHS-II.
-> > > > > >
-> > > > > > - The GPU is not yet supported. Graphics is only software rende=
-red.
-> > > > > >
-> > > > > > This work was done without any schematics or non-public knowled=
-ge of the device.
-> > > > > > So, it is based on the existing x1e device trees, dsdt analysis=
-, using HWInfo
-> > > > > > ARM64, and pure guesswork. It has been confirmed, however, that=
- the device really
-> > > > > > has 4 NXP PTN3222 eUSB2 repeaters, one of which doesn't have a =
-reset GPIO (eusb5
-> > > > > > @43).
-> > > > > >
-> > > > > > Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> > > > > > Co-developed by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com=
->
-> > > > > > ---
+In Current code regulators enable, clks enable, calibrating UFS PHY,
+start_serdes and polling PCS_ready_status are part of phy_power_on.
 
-[snip]
+UFS PHY registers are retained after power collapse, meaning calibrating
+UFS PHY, start_serdes and polling PCS_ready_status can be done only when
+hba is powered_on, and not needed every time when phy_power_on is called
+during resume. Hence keep the code which enables PHY's regulators & clks
+in phy_power_on and move the rest steps into phy_calibrate function.
 
-> > > > > I think that you wrote that GPU isn't supported (yet).
-> > > >
-> > > > GPU is not supported on SoC level (x1p42100/purwa), not device
-> > > > specific. The idea I suggested to Jens was to mimic Asus Zenbook A1=
-4
-> > > > as per discussion abou purwa GPU and purwa firmware in general [1]:=
- to
-> > > > already include correct filename and firmware path (since these are
-> > > > known) such that once SoC lands the GPU support laptops with that S=
-oC
-> > > > will gain GPU support 'automatically'. As nothing consumes this
-> > > > property (on purwa) just yet, adding it already does not cause any
-> > > > harm.
-> > >
-> > >
-> > > Not quite. A14 specified the firmware name, but didn't enable the GPU=
-.
-> > > This patch actually enables the GPU device. Which means, that we are
-> > > going to probe a driver on an unsupported device, using invalid GPU i=
-ds.
-> > >
-> >
-> > A14 also enables the GPU, just in the .dsti, not in the purwa .dts.
-> > Though now looking at it, perhaps it's a bit misleading.
->
-> It should be enabled in the board.dts, not in the interim dtsi.
->
-> > Yes you are right, it does give GPU-related error in dmesg, which
-> > appear to be otherwise harmless. Perhaps because `x1p42100.dtsi`
-> > deletes the compatible of the GPU, hence no driver is probing it?
-> >
-> > ```
-> > [    3.085697] msm_dpu ae01000.display-controller: no GPU device was fo=
-und
-> > ```
-> >
-> > Otherwise, if you still say GPU should be disabled regardless, shall I
-> > also disable it on A14's purwa variant?
->
-> Yes, please. Don't set okay status for the GPU until it gets enabled.
+Since phy_power_on is separated out from phy calibrate, make separate calls
+to phy_power_on and phy_calibrate calls from ufs qcom driver.
 
-Drive-by: Shouldn't the dtb describe the hw and not the state of the
-linux kernel's support for the hw?  Ie. if bad things happen if we
-describe hw which is missing driver support, shouldn't we fix that in
-the driver.
+Also for better power saving, remove the phy_power_on/off calls from
+resume/suspend path and put them to ufs_qcom_setup_clocks, so that
+PHY's regulators & clks can be turned on/off along with UFS's clocks.
 
-(In the case of the GPU there is the slight wrinkle that we don't have
-a gpu-id yet so there is no compatible in the dtb yet.)
+This patch series is tested on SM8550 QRD, SM8650 MTP , SM8750 MTP.
 
-BR,
--R
+Note: Patch 2 of this series is a requirement for the rest of the PHY
+      patches(patch 3 - patch 9) for the functional dependency and
+      Patch 1 is a fix for existing issues, which doesn't have any
+      dependencies on any other changes.
+
+Changes in v6:
+1. Addressed Konrad's and Manivannan's comments to move patch11
+   of v5 to start of the series so that it can be applied
+   separately if needed.
+2. Addessed manivannan's comment to improve commit text for few patch.
+   and remove few trivial comments and minor code improvement.
+3. Removed patch 10 (Introduce phy_power_on/off wrapper function)
+   of last patchset as it is not needed.
+
+Changes in v5:
+1. Addressed Dmitry's comment to inline qmp_ufs_exit into
+   qmp_ufs_power_off
+2. Addrsssed Konrad's comment to improve code identation and updating
+   kernel doc to update the info regarding controller and phy clocks
+   being managed together.
+3. Addrsssed Konrad's comment to update commit text for patch #10 to
+   improve explanation to maintain separate ref_count in ufs controller
+   driver.
+
+
+Changes in v4:
+1. Addressed Dmitry's comment to update cover letter to mention patch1
+   as a requirement for the rest of the PHY patches.
+2. Addressed Dmitry's comment to move parsing UFS PHY reset handle logic
+   to init from probe to avoid probe failure.
+3. Addressed Dmitry's comment to update commit text to reflect reason
+   to remove qmp_ufs_com_init() (Patch 7 of current series)
+4. Addrssed Konrad's comment to return failure from power up sequence when
+    phy_calibrate return failure and modify the debug print.
+
+Changes in v3:
+1. Addresed neil and bjorn comment to align the order of the patch to
+   maintain the bisectability compliance within the patch.
+2. Addressed neil comment to move qmp_ufs_get_phy_reset() in a separate
+   patch, inline qmp_ufs_com_init() inline.
+
+Changes in v2:
+1. Addressed vinod koul and manivannan comment to split the phy patch
+   into multiple patches.
+2. Addressed vinod's comment to reuse SW_PWRDN instead of creating
+   new macros SW_PWRUP in phy-qcom-qmp-ufs.c.
+3. Addressed Konrad's comment to optimize mutex lock in ufs-qcom.c
+4. Addressed konrad and Manivannan comment to clean debug print in
+   ufs-qcom.c
+
+Nitin Rawat (10):
+  scsi: ufs: qcom: Prevent calling phy_exit before phy_init
+  scsi: ufs: qcom: add a new phy calibrate API call
+  phy: qcom-qmp-ufs: Rename qmp_ufs_enable and qmp_ufs_power_on
+  phy: qcom-qmp-ufs: Refactor phy_power_on and phy_calibrate callbacks
+  phy: qcom-qmp-ufs: Refactor UFS PHY reset
+  phy: qcom-qmp-ufs: Remove qmp_ufs_com_init()
+  phy: qcom-qmp-ufs: Rename qmp_ufs_power_off
+  phy: qcom-qmp-ufs: Remove qmp_ufs_exit() and Inline qmp_ufs_com_exit()
+  phy: qcom-qmp-ufs: refactor qmp_ufs_power_off
+  scsi: ufs: qcom : Refactor phy_power_on/off calls
+
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 141 +++++++-----------------
+ drivers/ufs/host/ufs-qcom.c             |  69 ++++++------
+ 2 files changed, 77 insertions(+), 133 deletions(-)
+
+--
+2.48.1
+
 
