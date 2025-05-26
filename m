@@ -1,215 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-59441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13613AC420A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 17:05:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C847EAC4241
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 17:28:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 554F1189BD43
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 15:05:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1AB06178CDC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 May 2025 15:28:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9626D20C028;
-	Mon, 26 May 2025 15:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 334962144C4;
+	Mon, 26 May 2025 15:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="px3wU1eR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hNlgbMZA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EB01FCF41;
-	Mon, 26 May 2025 15:04:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5828C21423F;
+	Mon, 26 May 2025 15:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748271896; cv=none; b=k7eFDn4Z+XFRqk/sE3JpxZSktpRRHvNgS046YdwwjhBY5SXGL+aQ5UrHtoQb4mQ/ekQMbl8D46tn2xj9K4Qp8eVvOkNrZExN8rr0qLJ/K7hWA7aGl2nYw3hdbKFC0HWe7iLkrUDQPUl01Vj++T4z4pO06cyYb70qlAWIi6RTjHw=
+	t=1748273298; cv=none; b=TMOOZ1jBctnbRlPbsbQqZg3dIEO0aVhEjToMJfhW3R0UA/kFQHZkzNJgTe5mDPJN2wTTEF+SD8ldfmTjZB1Qdxn9SS/5jXZkvzvrD6S08oVzi51dC1CPAOs6f2ALvfxnL/5jP6SQ6ktu5ZZ0ZUzP1Ot1u8PuPBJk0zKGRJiEpQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748271896; c=relaxed/simple;
-	bh=tCbLRnD850Fw84D6O+/v5XHafNaaAGbfyOsK8To1nVE=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gzquH82IuRecDcV7Kk2xD2bCI+kvyLYebmnXDJVDzZi0+Jjb7ncOKZxCaEbJJ2fMpP1gVStoAJtYnYpBM4p8XscEn2kdY4j1yYQzbKBTobrhKk6VKei8YxMKBcd6JpN7L5wTEvEHOKifHSOvB144lAxfh7wjq2GQN2jWuikzosE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=px3wU1eR; arc=none smtp.client-ip=217.70.183.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id AFB2444225;
-	Mon, 26 May 2025 15:04:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1748271892;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tCbLRnD850Fw84D6O+/v5XHafNaaAGbfyOsK8To1nVE=;
-	b=px3wU1eRkJ/axr/5DuhnZySKrn823eNaAIJXbZcAmaqq4qeYcle/G8QC7ZsPXuBfqgUfA5
-	j9UtCvuxzUT5A1xXY1Po4PCIRoRj/UYUvff9JIXuTSFDpA7KBjR1wfOWeVD/7/YChB4k6k
-	OccO5Dc6ZOmBH1W60DJj3fdi7jALdeVeqR+U/9rbTTM1YBDMzgagRRa7zs6wL9Q2HF+Ggl
-	lZR8EQV0hFy/i3wUKXQGcb6+9G9tfBRSFOtl6/n8GoMSf0r2Iy6B5ejdMC9jPJn6kFCLCK
-	x5mkCnLV2MqtCm+ayiflRELaT0mOKkuuwcU+khwFj5kXsikeBoHem+BuFAnX/A==
-Date: Mon, 26 May 2025 17:04:46 +0200
-From: Kory Maincent <kory.maincent@bootlin.com>
-To: =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Miquel Raynal
- <miquel.raynal@bootlin.com>, Richard Weinberger <richard@nod.at>, Vignesh
- Raghavendra <vigneshr@ti.com>, Hector Martin <marcan@marcan.st>, Sven Peter
- <sven@svenpeter.dev>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, Shawn Guo
- <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix
- Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>,
- NXP Linux Team <linux-imx@nxp.com>, Neil Armstrong
- <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, Jerome
- Brunet <jbrunet@baylibre.com>, Martin Blumenstingl
- <martin.blumenstingl@googlemail.com>, Claudiu Beznea
- <claudiu.beznea@microchip.com>, Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno        
- <angelogioacchino.delregno@collabora.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
- <konrad.dybcio@linaro.org>, Heiko Stuebner <heiko@sntech.de>, Orson Zhai
- <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan
- Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>, Vincent Shih
- <vincent.sunplus@gmail.com>, Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec
- <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, Kunihiko
- Hayashi <hayashi.kunihiko@socionext.com>, Masami Hiramatsu
- <mhiramat@kernel.org>, Michal Simek <michal.simek@xilinx.com>, Alessandro
- Zummo <a.zummo@towertech.it>, Alexandre Belloni
- <alexandre.belloni@bootlin.com>, Evgeniy Polyakov <zbr@ioremap.net>,
- linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
- asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
- linux-amlogic@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev,
- linux-rtc@vger.kernel.org, Michael Walle <michael@walle.cc>,
- =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>, Romain Gantois
- <romain.gantois@bootlin.com>
-Subject: Re: [PATCH V5] nvmem: add explicit config option to read old syntax
- fixed OF cells
-Message-ID: <20250526170446.1190e046@kmaincent-XPS-13-7390>
-In-Reply-To: <20230927204446.4231-1-zajec5@gmail.com>
-References: <20230927204446.4231-1-zajec5@gmail.com>
-Organization: bootlin
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1748273298; c=relaxed/simple;
+	bh=XgpvUG9KykTN5yAtg1OwU7QbpXzVIwV1QV+ipNPAC7E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ikQaAR3D6yy70W/PsuJop0vkYkNJXUNuJ7DlkugEUqpuwYmCKqwWaGZ8khwXUDYeLup/bOwpSb8iIAr4p1Ki50mJvcOIhi5oo+z5TOeiJ/so+2FjgO08BgAnqxvSvKBClUe9FDYyCeGCBPZcaFfQK3Y9SBupdxkM8UIzspJdrS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hNlgbMZA; arc=none smtp.client-ip=209.85.166.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-8647e143f28so186955939f.1;
+        Mon, 26 May 2025 08:28:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748273295; x=1748878095; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ok85kvavAOBcumYOi4zTE1YwoECPNwKxwTVh7Dm7eVw=;
+        b=hNlgbMZAs1DDgZ3l8JaV7O9HkNHhLyWFK5UfCD34DLVSosnultiOimUSU+YO8z8qWk
+         AUYvPeorwT7XNIMoCUDoEjQAws54n0l2e/XCN/8nDP6sUf/rdk7XRct/hlEz/zc0mnF1
+         BTzQIGuNATJKQGYhxK7ronXS0NHFsVfowqtPSNe+V9FQd9f6V2T108htgTeQSXSAudlp
+         0j0mBYGSaDougpAC26CkWIPcTp+lkA4itlpMDl5hXYSTPEKLMaRAdZ5pR6ardMKJZSn6
+         klqzyZpaLzi1cjFFQ4Ac+3uRTuUO4V3utg6uVA/Ri69NcXvhgLYEAoXHwHpurp0fl9pL
+         1jkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748273295; x=1748878095;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ok85kvavAOBcumYOi4zTE1YwoECPNwKxwTVh7Dm7eVw=;
+        b=JepQQcLn2sxLIBlZPKOzgseq7yP5N7JeJPCSY/KhV0sAaPAJ8+COFc2WGZdYLKWnZ/
+         Hh7z/AtZpP2jWXbqCIdAc9XK1VZKJOgp7XfvD2XoCbdHzml2ti91hgIlesM3JGOVLd05
+         I7M5HTQtNVk3PYBUS6d8ap+wVUfpiWbfjqt6BK0wGRWXsWQG5Ctv7jhqY7G4itBig79/
+         FCfcsux8OQeFb5CaJf0XGhW4ktXF0TqbsjN0irMPCVbGfZsXobAD2ihYmEfmwj5VeYhz
+         eVC9F/Y82LtMjcWoXqdo4QPnbW6aicGv0tRX3GOq/+HpA11ZLpnRRl2T5vEXhDWB1a77
+         DR0A==
+X-Forwarded-Encrypted: i=1; AJvYcCUiyRrT2pn3QEqyfIevaMKEaLB4r7uZ776RQDYHwTQLvCwSCZPs2LY9RuVPdnFB0g5x/kMxc32G/7r2/a/5WQ==@vger.kernel.org, AJvYcCWSMDhUr/6+pMO4bwVPIlN8OKJjMlpMOdNJgcBjf+HKkxRqal/zxOwjY1RoHW7tGBlk+Vg8s9F+b2jhO+P4@vger.kernel.org, AJvYcCWV5K3dZprBlpKSX02lgfEMO/uqQOn6KiT3kF0OyfrbyifzrqjlWnhb0PunEinUUH6UYmCCU5dD7Fs5@vger.kernel.org, AJvYcCXl981C1isytE+cIppeKx/zTXspHnYgTPYyTpi7mMJJ/aWeSo4E9iaP7rM2J/w/i9f+acmHPXF7SwTc@vger.kernel.org
+X-Gm-Message-State: AOJu0YwtZH3IwkDImlyOEpGMBsLr/GtCcFXDnfadAwNd0Ak/13cnpWs3
+	LjaZSqq2NIL3PONbwTFSROyYo1M1Kpsz41xhAxHSqFys99CrfLnLAxM1Vki3jcb2PcVWm5eCM43
+	icclI3wPvmJKveWuCBeroy471vIvWW/o=
+X-Gm-Gg: ASbGncsN4r/a0V0zuMkxSZ3P/4caBvQUWna1QT+WSRYtaiL3sjvMtT0DK6znw8JkxkB
+	XI8oO/M2GV3HqQm8wnwV2LoyKZm9sH+tAiNtqlOeBslUecQp1ONTuGYH0SeE0QlGPP92kald/c9
+	nZeudgf9rMJXHh/3xAbEdM8wuU6eXE9xtdf6Xc84N7yHt4l2CBmUQQ5Skyrg32dB9U
+X-Google-Smtp-Source: AGHT+IHnjEOHDEa+vpbuy9fu6OzuQBLctXm8e94NFAA5PAxQ1vPEMihVba1OMwmRFrSVy6hhC0EPPpaB3XtabMoYhcY=
+X-Received: by 2002:a05:6e02:1a26:b0:3dc:8075:ccde with SMTP id
+ e9e14a558f8ab-3dc9b68097amr86275465ab.4.1748273295224; Mon, 26 May 2025
+ 08:28:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <20250524-tb16-dt-v4-0-2c1e6018d3f0@oldschoolsolutions.biz>
+ <20250524-tb16-dt-v4-5-2c1e6018d3f0@oldschoolsolutions.biz>
+ <g7vlyqma6ow6tdsaqt2rfwvblxqwbqlwmoueio7i4vqvjy76kw@5bz4g33pq4t7>
+ <CAMcHhXoYkQru_0n5siMGGkTcHu8yWRZWfT4ByiD8D0ieZHF+wQ@mail.gmail.com>
+ <vwoixgdyjjzcjlv4muwrzv7wztnqyidtj7ghacgkjg6hgkkyl7@ji53bhiltaef>
+ <CAMcHhXqDFuo+x99KOK0pQFj-FyTdQoZS_JvehNE2AC_JSoQ2gQ@mail.gmail.com> <rvyfkow43atquc64p6slck6lpfsot67v47ngvfnuhxqo222h6k@kdvbsmf3fwsr>
+In-Reply-To: <rvyfkow43atquc64p6slck6lpfsot67v47ngvfnuhxqo222h6k@kdvbsmf3fwsr>
+From: Rob Clark <robdclark@gmail.com>
+Date: Mon, 26 May 2025 08:28:03 -0700
+X-Gm-Features: AX0GCFth23zIDl8jXgXc3hV3XSnIr7KUSlHYudJjPTsDM7Pwue023yHnh3K8dkQ
+Message-ID: <CAF6AEGvr_foMVwaE_VSVWLT50cbGi8i3UGwo2e=rORD-1JmTmA@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] arm64: dts: qcom: Add Lenovo ThinkBook 16 G7 QOY
+ device tree
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>, jens.glathe@oldschoolsolutions.biz, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Matthias Kaehlcke <mka@chromium.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Douglas Anderson <dianders@chromium.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
+	linux-usb@vger.kernel.org, dri-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddujeekfeculddtuddrgeefvddrtddtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfohfogggtgfesthhqredtredtjeenucfhrhhomhepmfhorhihucforghinhgtvghnthcuoehkohhrhidrmhgrihhntggvnhhtsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpefguddtfeevtddugeevgfevtdfgvdfhtdeuleetffefffffhffgteekvdefudeiieenucffohhmrghinhepsghoohhtlhhinhdrtghomhenucfkphepledtrdekledrudeifedruddvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeeltddrkeelrdduieefrdduvdejpdhhvghlohepkhhmrghinhgtvghnthdqigfrufdqudefqdejfeeltddpmhgrihhlfhhrohhmpehkohhrhidrmhgrihhntggvnhhtsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeehgedprhgtphhtthhopeiirghjvggtheesghhmrghilhdrtghomhdprhgtphhtthhopehsrhhinhhivhgrshdrkhgrnhgurghgrghtlhgrsehlihhnrghrohdrohhrghdprhgtphhtthhopehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprhhit
- ghhrghrugesnhhougdrrghtpdhrtghpthhtohepvhhighhnvghshhhrsehtihdrtghomhdprhgtphhtthhopehmrghrtggrnhesmhgrrhgtrghnrdhsthdprhgtphhtthhopehsvhgvnhesshhvvghnphgvthgvrhdruggvvhdprhgtphhtthhopegrlhihshhsrgesrhhoshgvnhiifigvihhgrdhioh
-X-GND-Sasl: kory.maincent@bootlin.com
 
-Le Wed, 27 Sep 2023 22:44:46 +0200,
-Rafa=C5=82 Mi=C5=82ecki <zajec5@gmail.com> a =C3=A9crit :
+On Mon, May 26, 2025 at 1:36=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Sun, May 25, 2025 at 09:43:36PM +0200, Aleksandrs Vinarskis wrote:
+> > On Sun, 25 May 2025 at 15:33, Dmitry Baryshkov
+> > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > >
+> > > On Sat, May 24, 2025 at 07:58:13PM +0200, Aleksandrs Vinarskis wrote:
+> > > > On Sat, 24 May 2025 at 17:33, Dmitry Baryshkov
+> > > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > > > >
+> > > > > On Sat, May 24, 2025 at 01:48:40PM +0200, Jens Glathe via B4 Rela=
+y wrote:
+> > > > > > From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> > > > > >
+> > > > > > Device tree for the Lenovo Thinkbook 16 G7 QOY
+> > > > > >
+> > > > > > The Laptop is a Snapdragon X1 / X1 Plus (Purwa) based device [1=
+].
+> > > > > >
+> > > > > > Supported features:
+> > > > > >
+> > > > > > - USB type-c and type-a ports
+> > > > > > - Keyboard
+> > > > > > - Touchpad (all that are described in the dsdt)
+> > > > > > - Touchscreen (described in the dsdt, no known SKUss)
+> > > > > > - Display including PWM backlight control
+> > > > > > - PCIe devices
+> > > > > > - nvme
+> > > > > > - SDHC card reader
+> > > > > > - ath12k WCN7850 Wifi and Bluetooth
+> > > > > > - ADSP and CDSP
+> > > > > > - GPIO keys (Lid switch)
+> > > > > > - Sound via internal speakers / DMIC / USB / headphone jack
+> > > > > > - DP Altmode with 2 lanes (as all of these still do)
+> > > > > > - Integrated fingerprint reader (FPC)
+> > > > > > - Integrated UVC camera
+> > > > > >
+> > > > > > Not supported yet:
+> > > > > >
+> > > > > > - HDMI port.
+> > > > > > - EC and some fn hotkeys.
+> > > > > >
+> > > > > > Limited support yet:
+> > > > > >
+> > > > > > - SDHC card reader is based on the on-chip sdhc_2 controller, b=
+ut the driver from
+> > > > > > the Snapdragon Dev Kit is only a partial match. It can do norma=
+l slow sd cards,
+> > > > > > but not UHS-I (SD104) and UHS-II.
+> > > > > >
+> > > > > > - The GPU is not yet supported. Graphics is only software rende=
+red.
+> > > > > >
+> > > > > > This work was done without any schematics or non-public knowled=
+ge of the device.
+> > > > > > So, it is based on the existing x1e device trees, dsdt analysis=
+, using HWInfo
+> > > > > > ARM64, and pure guesswork. It has been confirmed, however, that=
+ the device really
+> > > > > > has 4 NXP PTN3222 eUSB2 repeaters, one of which doesn't have a =
+reset GPIO (eusb5
+> > > > > > @43).
+> > > > > >
+> > > > > > Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> > > > > > Co-developed by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com=
+>
+> > > > > > ---
 
-> From: Rafa=C5=82 Mi=C5=82ecki <rafal@milecki.pl>
->=20
-> Binding for fixed NVMEM cells defined directly as NVMEM device subnodes
-> has been deprecated. It has been replaced by the "fixed-layout" NVMEM
-> layout binding.
->=20
-> New syntax is meant to be clearer and should help avoiding imprecise
-> bindings.
->=20
-> NVMEM subsystem already supports the new binding. It should be a good
-> idea to limit support for old syntax to existing drivers that actually
-> support & use it (we can't break backward compatibility!). That way we
-> additionally encourage new bindings & drivers to ignore deprecated
-> binding.
->=20
-> It wasn't clear (to me) if rtc and w1 code actually uses old syntax
-> fixed cells. I enabled them to don't risk any breakage.
+[snip]
 
-Hello,
+> > > > > I think that you wrote that GPU isn't supported (yet).
+> > > >
+> > > > GPU is not supported on SoC level (x1p42100/purwa), not device
+> > > > specific. The idea I suggested to Jens was to mimic Asus Zenbook A1=
+4
+> > > > as per discussion abou purwa GPU and purwa firmware in general [1]:=
+ to
+> > > > already include correct filename and firmware path (since these are
+> > > > known) such that once SoC lands the GPU support laptops with that S=
+oC
+> > > > will gain GPU support 'automatically'. As nothing consumes this
+> > > > property (on purwa) just yet, adding it already does not cause any
+> > > > harm.
+> > >
+> > >
+> > > Not quite. A14 specified the firmware name, but didn't enable the GPU=
+.
+> > > This patch actually enables the GPU device. Which means, that we are
+> > > going to probe a driver on an unsupported device, using invalid GPU i=
+ds.
+> > >
+> >
+> > A14 also enables the GPU, just in the .dsti, not in the purwa .dts.
+> > Though now looking at it, perhaps it's a bit misleading.
+>
+> It should be enabled in the board.dts, not in the interim dtsi.
+>
+> > Yes you are right, it does give GPU-related error in dmesg, which
+> > appear to be otherwise harmless. Perhaps because `x1p42100.dtsi`
+> > deletes the compatible of the GPU, hence no driver is probing it?
+> >
+> > ```
+> > [    3.085697] msm_dpu ae01000.display-controller: no GPU device was fo=
+und
+> > ```
+> >
+> > Otherwise, if you still say GPU should be disabled regardless, shall I
+> > also disable it on A14's purwa variant?
+>
+> Yes, please. Don't set okay status for the GPU until it gets enabled.
 
-Was there a reason to not add the legacy flag to all the drivers that was
-supporting nvmem at the time nvmem fixed layout was supported?
+Drive-by: Shouldn't the dtb describe the hw and not the state of the
+linux kernel's support for the hw?  Ie. if bad things happen if we
+describe hw which is missing driver support, shouldn't we fix that in
+the driver.
 
-I just faced a nvmem layout regression on board with an at24 eeprom.
+(In the case of the GPU there is the slight wrinkle that we don't have
+a gpu-id yet so there is no compatible in the dtb yet.)
 
-Commit: 27f699e578b1 nvmem: core: add support for fixed cells *layout*
-$ git grep nvmem_config drivers/ | cut -d ':' -f 1 | sort -u
-drivers/hwmon/pmbus/adm1266.c
-drivers/iio/pressure/bmp280-core.c
-drivers/media/i2c/ov2740.c
-drivers/media/i2c/video-i2c.c
-drivers/misc/eeprom/at24.c
-drivers/misc/eeprom/at25.c
-drivers/misc/eeprom/eeprom_93xx46.c
-drivers/mtd/mtdcore.c
-drivers/nvmem/apple-efuses.c
-drivers/nvmem/bcm-ocotp.c
-drivers/nvmem/brcm_nvram.c
-drivers/nvmem/core.c
-drivers/nvmem/imx-iim.c
-drivers/nvmem/imx-ocotp.c
-drivers/nvmem/imx-ocotp-ele.c
-drivers/nvmem/imx-ocotp-scu.c
-drivers/nvmem/jz4780-efuse.c
-drivers/nvmem/lan9662-otpc.c
-drivers/nvmem/layerscape-sfp.c
-drivers/nvmem/lpc18xx_eeprom.c
-drivers/nvmem/lpc18xx_otp.c
-drivers/nvmem/meson-efuse.c
-drivers/nvmem/meson-mx-efuse.c
-drivers/nvmem/microchip-otpc.c
-drivers/nvmem/mtk-efuse.c
-drivers/nvmem/mxs-ocotp.c
-drivers/nvmem/nintendo-otp.c
-drivers/nvmem/qcom-spmi-sdam.c
-drivers/nvmem/qfprom.c
-drivers/nvmem/rave-sp-eeprom.c
-drivers/nvmem/rmem.c
-drivers/nvmem/rockchip-efuse.c
-drivers/nvmem/rockchip-otp.c
-drivers/nvmem/sc27xx-efuse.c
-drivers/nvmem/snvs_lpgpr.c
-drivers/nvmem/sprd-efuse.c
-drivers/nvmem/stm32-romem.c
-drivers/nvmem/sunplus-ocotp.c
-drivers/nvmem/sunxi_sid.c
-drivers/nvmem/u-boot-env.c
-drivers/nvmem/uniphier-efuse.c
-drivers/nvmem/vf610-ocotp.c
-drivers/nvmem/zynqmp_nvmem.c
-drivers/rtc/nvmem.c
-drivers/rtc/rtc-abx80x.c
-drivers/rtc/rtc-cmos.c
-drivers/rtc/rtc-ds1305.c
-drivers/rtc/rtc-ds1307.c
-drivers/rtc/rtc-ds1343.c
-drivers/rtc/rtc-ds1511.c
-drivers/rtc/rtc-ds1553.c
-drivers/rtc/rtc-ds1685.c
-drivers/rtc/rtc-ds1742.c
-drivers/rtc/rtc-ds3232.c
-drivers/rtc/rtc-isl12026.c
-drivers/rtc/rtc-isl1208.c
-drivers/rtc/rtc-m48t59.c
-drivers/rtc/rtc-m48t86.c
-drivers/rtc/rtc-meson.c
-drivers/rtc/rtc-omap.c
-drivers/rtc/rtc-pcf2127.c
-drivers/rtc/rtc-pcf85063.c
-drivers/rtc/rtc-pcf85363.c
-drivers/rtc/rtc-rp5c01.c
-drivers/rtc/rtc-rv3028.c
-drivers/rtc/rtc-rv3029c2.c
-drivers/rtc/rtc-rv3032.c
-drivers/rtc/rtc-rv8803.c
-drivers/rtc/rtc-rx8581.c
-drivers/rtc/rtc-stk17ta8.c
-drivers/rtc/rtc-sun6i.c
-drivers/rtc/rtc-ti-k3.c
-drivers/soc/atmel/sfr.c
-drivers/soc/tegra/fuse/fuse-tegra.c
-drivers/thunderbolt/nvm.c
-drivers/w1/slaves/w1_ds250x.c
-
---=20
-K=C3=B6ry Maincent, Bootlin
-Embedded Linux and kernel engineering
-https://bootlin.com
+BR,
+-R
 
