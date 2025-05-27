@@ -1,128 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-59490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19442AC4A06
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 10:19:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 010B7AC4A27
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 10:25:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 08C4A17AFC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 08:19:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 87F49189CE56
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 08:25:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF5CB248F4C;
-	Tue, 27 May 2025 08:19:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pVTYCAhX"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32558248F63;
+	Tue, 27 May 2025 08:25:15 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0801248F70
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 08:19:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1949E1C6FFE;
+	Tue, 27 May 2025 08:25:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748333974; cv=none; b=SfaovNWH8IByBRkUg/zfWAqah2ysZrhp1P7tj+mIoWvJQdU21L+j1Zz1t0DMM0Ao0v0h9u/MCIo3BqsdpY2UDX5Se3+63VnAizbsjgOskI0c/iBasq8dkcWlLXw4Nfn1xvd1Eh+VpJEAResgdq3EPWsxRtj/hMRVFG9WycPrRaI=
+	t=1748334315; cv=none; b=demPUzongfV197+aHNgyqa1y6TTClhRCmV6CD3e7MgDPBJ+YoyEdspoW4W0R1B0rHJYQYZRfXlPR2wt7SCmk6HSIMFNFuEbc/TrVEEuLHli0facnPeJtrBqCD1HrngrcOzVkeBFFoR8LCMJfN5nQwEOlidOaHkHAvjamAj+YnrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748333974; c=relaxed/simple;
-	bh=ia8kZdP0HFoJkRuqfb9xYK3PP1X9WFdfCow4Ewno8P0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iP6QtXdnHBoEPHzlexrampZaNF7/ldwE9V1YM2YRpKg2XvK0lPgg4y83OBsTGXNcGX1jKSV4WV3/7rFX71FmFbo3Zesf1LPOkAXBF4Z6r6esG3mGGRI9ivpXzj5yLy9OuhX2QJGE1ZTu98kA6s7wr29VvZtVGNnlyHepWxJpB2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pVTYCAhX; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so36295265e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 01:19:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748333971; x=1748938771; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dMOUzI+Rl9kCd96v3bJcE+T2pFM5Ij46/8q1c510Oug=;
-        b=pVTYCAhXK0P46qJjOhOoNjEwGWdy7Z6CbVLokeqZf5mbK9vDAB/ep6MskK6VIrTfQM
-         EcTNKvJs+jSB34M0oV7Na+ujMXdhffd4tDC/8qp063d2j4XOksNeFdgISMj/X30xiJty
-         gM+/hTM8P4rLkgm6gk2IOrhD/j7Ci+M7BfWzfv9DnF6kAqPTK2xRO1y0N6Ys3TGzHWo0
-         jvogReYJOQsXzrxW+qlqyBAHShL3nJ0lctCRC0DL2X8DM5+R6m5IQS9P03ZJenMhK1Zd
-         Uw4mVOIF5+8jAq/hpmbzULXJXPlhDQVhVoIvDYV/IacmYptdI0gtYpQbDqi5O1XyNlnJ
-         3w6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748333971; x=1748938771;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dMOUzI+Rl9kCd96v3bJcE+T2pFM5Ij46/8q1c510Oug=;
-        b=p3qwgR77yjg2b/CsEunE6q0cJ5lmMxBbke8HMGOocKfF95SfpOpO3Yvh2aLYC7SqYT
-         f22KQ0DwUJGK13OMcbr7FuIE+MW0zghRIxt3SH/jaii1TNpopDJBoyBMrGawE/IRw3St
-         wHGTx+wM9nXmhhzpbhgYj/rHhstS20UuHjET7vkElvYKnCJTtPN5R2m/90pa4Mc8CmyG
-         CmqyCULanyyQ0EMsI/sGVmkYEUjOBurjKbz/5OeSY7c+dgiOX1ixFD2RR0ty/iD1noz1
-         X9ztd/ZYY5mCVQpKRCKKAg2MBDG+xmI38TcFthBXc0BgZHQSv5r9ZK5aIyMAnBIhV7Jg
-         djTg==
-X-Forwarded-Encrypted: i=1; AJvYcCVs/wBkBWKsjbPHi+uKCOgGzLU+BvSiu4UzLH572GhvlHh8oU1KozsUbZOVbMuIf+xyUO0bgMDha9F69ObU@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywg3L7r2IcivldwfpL5WK/uNl4j6dBSXzfTGBM831Tq+NJ+fi/7
-	/2PQQ0EqBmQBT+CR7tm0BTUNuNY0J1mwatILfHVXYLWsqt8lvw8wuEOxVZ+LpLLfhOE=
-X-Gm-Gg: ASbGncvUKyIy7TN1pUC+FLHMYloCMHpT+YTr1IVoOQsAlsEJFwziUGBRTQ4ZJY2TQDq
-	87YTro/9DHsLqhdDG+kCkxdgEyRPq9DdCMefB/8GMvM4RuT2MWq45HRpB02hftqnsbZ1XcsYguj
-	+6u1zL5jVfOhbLh3qBaw6hlJIdpzcMBi+NELOUMlp21iQEthGvLCqXMUiKatfjzvBvAIx7gzGlS
-	KZINT4eL59ltLCADZIlG1Aw0AN0l1fAYbID1YNV4UI3viS/LngsqBPgAR5yRwVhSyRzvEDPanoG
-	dVY19vOXDFCGocWygmW3/bpAOGiyoZgDJMuylrbFIEPWdd5RuDBfPqkbJRarvR1N56imjcl1Tsp
-	G5nnR4S6lav6cmVSj
-X-Google-Smtp-Source: AGHT+IFjTsGVi2CK4OkLJrI3Smdv4M+APjpCmrgDiR1D6zlgPXvjVIxxpzIlokGl7A7BbOpPT/vmFw==
-X-Received: by 2002:a05:600c:a13:b0:440:6852:5b31 with SMTP id 5b1f17b1804b1-44c91dd151amr132439605e9.10.1748333971167;
-        Tue, 27 May 2025 01:19:31 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4d53ce0b4sm6807921f8f.37.2025.05.27.01.19.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 May 2025 01:19:30 -0700 (PDT)
-Message-ID: <b3d4b080-5a9e-4af0-bce7-41c06d1d27f0@linaro.org>
-Date: Tue, 27 May 2025 09:19:29 +0100
+	s=arc-20240116; t=1748334315; c=relaxed/simple;
+	bh=MNVQFRdgVR76J2FChLUD7YAoquGb8Y9eYaiMckwgG8g=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Adfbv9CM07dMVXJ/pFGTR+449o01TdLRfhuo9nYct7fapz7d0vi01gDcEvU0VXlC1F/xIapDBieAWqa/3q1UWv4qxQptLCCezQAXaf6+RxQYewLCwBTm8OjZVyWBSVtgChg57YwD0ZQ908bfO/GA0dbiaDJrR/Q6ymHxdmSUWN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 16b3a29c3ad411f0b29709d653e92f7d-20250527
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.45,REQID:52dbf973-d560-4d92-ab36-debd7af511ff,IP:0,U
+	RL:0,TC:0,Content:33,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:33
+X-CID-META: VersionHash:6493067,CLOUDID:76905b17bcdc2d36468f4541233e31d5,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:102,TC:nil,Content:4|50,EDM:-3,IP:nil,UR
+	L:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,S
+	PR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 0
+X-CID-BAS: 0,_,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-UUID: 16b3a29c3ad411f0b29709d653e92f7d-20250527
+Received: from node4.com.cn [(10.44.16.170)] by mailgw.kylinos.cn
+	(envelope-from <aichao@kylinos.cn>)
+	(Generic MTA)
+	with ESMTP id 756001150; Tue, 27 May 2025 16:25:03 +0800
+Received: from node4.com.cn (localhost [127.0.0.1])
+	by node4.com.cn (NSMail) with SMTP id F0C9D16001F49;
+	Tue, 27 May 2025 16:25:02 +0800 (CST)
+X-ns-mid: postfix-683576DD-9767322679
+Received: from kylin-pc.. (unknown [172.25.130.133])
+	by node4.com.cn (NSMail) with ESMTPA id F384916001F49;
+	Tue, 27 May 2025 08:24:57 +0000 (UTC)
+From: Ai Chao <aichao@kylinos.cn>
+To: perex@perex.cz,
+	tiwai@suse.com,
+	johannes@sipsolutions.net,
+	kuninori.morimoto.gx@renesas.com,
+	lgirdwood@gmail.com,
+	broonie@kernel.org,
+	jbrunet@baylibre.com,
+	neil.armstrong@linaro.org,
+	khilman@baylibre.com,
+	martin.blumenstingl@googlemail.com,
+	shengjiu.wang@gmail.com,
+	Xiubo.Lee@gmail.com,
+	festevam@gmail.com,
+	nicoleotsuka@gmail.com,
+	shawnguo@kernel.org,
+	s.hauer@pengutronix.de,
+	srinivas.kandagatla@linaro.org
+Cc: linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-amlogic@lists.infradead.org,
+	imx@lists.linux.dev,
+	kernel@pengutronix.de,
+	linux-arm-msm@vger.kernel.org,
+	Ai Chao <aichao@kylinos.cn>
+Subject: [PATCH v3 0/6] Use helper function for_each_child_of_node_scoped()
+Date: Tue, 27 May 2025 16:24:40 +0800
+Message-ID: <20250527082446.2265500-1-aichao@kylinos.cn>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] media: qcom: camss: vfe: Add VBIF setting support
-To: Vincent Knecht <vincent.knecht@mailoo.org>, Robert Foss
- <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
- phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20250525-camss-8x39-vbif-v2-0-6d3d5c5af456@mailoo.org>
- <20250525-camss-8x39-vbif-v2-1-6d3d5c5af456@mailoo.org>
- <f2162241-6423-43b3-a6b5-74e373cd8834@linaro.org>
- <10c45ae1d2453f7c81dadeb132b6c2911ab7d95c.camel@mailoo.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <10c45ae1d2453f7c81dadeb132b6c2911ab7d95c.camel@mailoo.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
-On 26/05/2025 17:20, Vincent Knecht wrote:
->> You have both
->>
->> if (vfe->res->has_vbif) {
->>
->> and the above switch, there's no point in checking this twice in two
->> different ways.
->>
->> Choose one, suggest has_vbif is enough.
-> I think the switch is still needed, so that distinct settings
-> can be applied for different SoCs.
-> 
-> Or should I just apply the 8939 settings unconditionally, and keep it
-> as an exercice for the next dev who need other settings for another SoC
-> to deal with ? 🙂
-> 
-> Thanks
+This patch series introduces wrapper functions for_each_child_of_node_sco=
+ped().
 
-The flag should be enough.
+The for_each_child_of_node_scoped() helper provides a scope-based clean-u=
+p
+functionality to put the device_node automatically, and as such, there is
+no need to call of_node_put() directly.
+
+Summary:
+
+ - Patch 1 ALSA: ppc: Use helper function for_each_child_of_node_scoped()
+
+ - Patch 2 ALSA: aoa: Use helper function for_each_child_of_node_scoped()
+
+ - Patch 3 ASoC: renesas: Use helper function for_each_child_of_node_scop=
+ed()
+
+ - Patch 4 ASoC: meson: Use helper function for_each_child_of_node_scoped=
+()
+
+ - Patch 5 ASoC: imx-card: Use helper function for_each_child_of_node_sco=
+ped()
+
+ - Patch 6 ASoC: qcom: Use helper function for_each_child_of_node_scoped(=
+)
 
 ---
-bod
+Changes in v3:
+ - Change Patch name ASoC to ALSA for patch 1,2.
+ - Change commit message information.
+ - for_each_child_of_node_scoped() instead of
+   for_each_child_of_node() in i2cbus_add_dev().
+
+Changes in v2:
+ - Fix error reported by kernel test rebot
+ - Keep "node"
+---
+
+ sound/aoa/soundbus/i2sbus/core.c   |  7 +++---
+ sound/ppc/tumbler.c                |  5 ++---
+ sound/soc/fsl/imx-card.c           | 13 +++++------
+ sound/soc/meson/axg-card.c         |  3 +--
+ sound/soc/meson/meson-card-utils.c | 16 +++++---------
+ sound/soc/qcom/lpass-cpu.c         |  3 +--
+ sound/soc/qcom/qdsp6/q6afe-dai.c   |  3 +--
+ sound/soc/qcom/qdsp6/q6asm-dai.c   |  4 +---
+ sound/soc/renesas/rcar/core.c      | 35 ++++++++++--------------------
+ sound/soc/renesas/rcar/ctu.c       |  8 ++-----
+ sound/soc/renesas/rcar/dma.c       |  4 +---
+ sound/soc/renesas/rcar/dvc.c       |  8 ++-----
+ sound/soc/renesas/rcar/mix.c       |  8 ++-----
+ sound/soc/renesas/rcar/src.c       | 10 ++-------
+ sound/soc/renesas/rcar/ssi.c       | 18 +++++----------
+ sound/soc/renesas/rcar/ssiu.c      |  7 ++----
+ 16 files changed, 46 insertions(+), 106 deletions(-)
+
+--=20
+2.47.1
+
 
