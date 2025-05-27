@@ -1,128 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-59566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E52CAC5107
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 16:37:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B6A4AC51B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 17:12:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 00027189D8F4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 14:37:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2EB0E3B763C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 15:12:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 190962741DA;
-	Tue, 27 May 2025 14:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9549E27A440;
+	Tue, 27 May 2025 15:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gRKkMsG/"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="XUDlofJk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8F77E0E8
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 14:37:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD86C27A115;
+	Tue, 27 May 2025 15:12:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748356659; cv=none; b=INw+JnOf4e4YiJq1sjIUUS9mCl6TNy/UkKpXbefkpIjTwIwISr8SJ9DubLEC3ksIgDgCmX2vyEwO6VA06vvby2dOiWzPIhGlzneYsr7mPHIY6tO98n5r71aHQqmhL2kCg1aM/l9QTIUtx6YLiLvGVUIRasPkPBaI2Rl3uB1pmmM=
+	t=1748358752; cv=none; b=kmUMos5gknE8HJxJXvGiu3eYGzS0VwgAsEJMFpFGp+qzYa7n+Njoufv2lLIh7yhw4BfiCyqT1jxfV5X4QpwwS6V/fyrnPrtQ8bz7NQy9XSRiMH0esaT5XZDda6QAsYFHUqXVEY9MRPy2/+1kx6fEGAipuy0uoWJzbMJ109KvVZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748356659; c=relaxed/simple;
-	bh=jvS1PbADz+Us91X2hWOLlEMb1Nws+URp8Zsi3PzRt1U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RNKXTqVc4paggqjWXrwLNZDbgsX4qTARwyJ+tnTkQ6oFLs6D5KCsL6UQYz/MFKEIzLauhR6yK2Fwl9//dDBRrQEdksIqnDWhq24q4Y9rOfcm/1aENpdR/I5kj7IMnqMWPO72OfwYFpfFA3sHb7nuxEO2eiRb7zN4RTqLLrsRcX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gRKkMsG/; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3a3758b122cso2201213f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 07:37:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748356655; x=1748961455; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VvXJBVqr2AtSIqf+uhP51ScRsxX090wAOja9HSyfRT0=;
-        b=gRKkMsG/Ra7r8iIVSImB/43nZCSi4IdNNNaz26J3LNRgSZdKASRzklJ1drk1TMUfTu
-         Y6Z0d+EyWKnDg20KBE52VJ83oonjQoh0VJ1gC8AwC061O0TGuPd2zPp/HUqtLoAtL0MG
-         aidoWwPfwBe701ZwrwK4qGuBQDxvp8FN4PNp1mrw0Q2PLCnI8+YLDH7FmChEqIhJ/0Z6
-         6Wf7ICdu73nW2f1mxjaK/ptIUvUoS+9/eY4ODi02xwv0S8pI1/yzMhL/1aewf6ZoZcNN
-         37Eq1kXM83ZGryZNcxKbYlEbQPFuoauoDfGLt8r53SZiSrJGwYEaPLbfP738jIbCEmvR
-         6SIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748356655; x=1748961455;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VvXJBVqr2AtSIqf+uhP51ScRsxX090wAOja9HSyfRT0=;
-        b=BAJc0DIWleTeqz1IGtTYj0qn/EbI1H47CmnNJBIAZgYONoMnSi3839GSQWgmZtIoyg
-         TI3PZmrHKXtSPwosDD4FBHYyx5f2usT/qFoeTfN1GUvncTc5jSJin87O0IPaiBRFvgEa
-         O64Vr8Zm4Nw6RQxpmfKiNCBPvlxRIpSgKnKHZNgfWsI9+nEQt4r6pm0wZYbAObHQOIlI
-         Js3G2o7Ohg5Zy7JSomFUP4hvCaolZdZA4VGYFBq0LOHXX7HxGWsSrS3Kk0FLIfzSN0BZ
-         ilrby24yo+1NvgopXnnvIU0MmGUEH2XKEzgHLeeEf26VuFu8OKL/alVnpJVRYh5TVom1
-         42Gg==
-X-Forwarded-Encrypted: i=1; AJvYcCVXevpa15GKybR1nRev1JoF9qOqP0Yqx+F7xHElfzczF/aqLJ4gbYtE0s3Jgjh/wrVH5OhaqxGbAd5bE1YS@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMAW0g0lVaVib5Is0eOOgRAw7ZZSll/dEm7Anbr1szpFh2MvMl
-	TV0Gydl+bjGh26FJoHQBU9PmpjSg8q0DWai3x9r59tAdzOagJ9QjK0Nlrr7KQG1sdsQ=
-X-Gm-Gg: ASbGncuFrxNTdDUAI6oHLXcDv7LDuNqQu9t5WXeAwxr2ShaDEAXlvS00yRAtx1Q6FEd
-	EvfZkeh5pANpkt4E2pozTlnXS/L7oKtA0dxsr27K/x6Pxcba1Xulukw5b3gq1wIXDSNqdZwIA8W
-	yFh20aEiEF42Gvof0Ijp/MJyTf+NAQhHwz5RZ9bvu8S+6eTvmZ7Cnlj933N8xiaJtZ/Eve+zzj0
-	WeJnjE3lGXkiFNnkrWTxgW0f+H5fq5d5w4GL8kj/WMMgoVFITLDwLhW7mdsVLZOmTxRJoZ3H0aA
-	PVJqK/R4LDlbKne3u/cvZ56r1YDprgpNFHNEc64vSsTshnwRj5buopKF8US+eLOC8fZCDIPCTKz
-	2tpi5sxINlzl9CN1u
-X-Google-Smtp-Source: AGHT+IHkWKsTTmphkcqPjmLfxusLGxXp8SFULw1PQIe5/AO75A5L3yTYl8KjtZzqIfX32dcuOV75+g==
-X-Received: by 2002:a05:6000:430a:b0:3a4:d1d0:6f97 with SMTP id ffacd0b85a97d-3a4d1d071acmr9279310f8f.36.1748356655614;
-        Tue, 27 May 2025 07:37:35 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4dc1172ecsm5285610f8f.48.2025.05.27.07.37.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 May 2025 07:37:35 -0700 (PDT)
-Message-ID: <5c326be6-816f-4417-a715-86fea92aadb3@linaro.org>
-Date: Tue, 27 May 2025 15:37:33 +0100
+	s=arc-20240116; t=1748358752; c=relaxed/simple;
+	bh=i1izgY4AdPBoA/aLpjd0mqVJLxQxVt8v1Sb/555Jx7I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lFB2H90qo9GrSVYPcqPvcP+IW6OVezAz8+Q6g6VQQ45eUmxzi4Sc+GbnO5fwJS2LJb/8kSBsSazDMAhWzLQwTTUQRTlc7BgarUW+STNZeKSV3gx1YvN7p6wlr8IUlZHyek6srnUvEi6QXWFJSe1RU1Rl/rKfXYCCpqiy67yEBMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=XUDlofJk; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=II+rQXL66g1YBKsr0ptDpu6PhCQVdvx2KUk/dBD6RzQ=; b=XUDlofJkY1O+4ZG5zB9Jbly2/d
+	0FmWWE1V14IDeX8wKhLcXZhzX4T8Kc1H4KWadvDaoqWgqR26GUXS4QnpPVrX24sqFgvnJYxsnPIta
+	Tg/Pkf0fHXMs3ouhyvAN5N5xraf/sWtU+HpUbSIczf8COW+YOFJtC6yhW5xI+Qpzx4Uc=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1uJvyT-00E5Ue-If; Tue, 27 May 2025 17:12:17 +0200
+Date: Tue, 27 May 2025 17:12:17 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: George Moussalem <george.moussalem@outlook.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH 1/5] dt-bindings: net: qca,ar803x: Add IPQ5018 Internal
+ GE PHY support
+Message-ID: <44988e1e-3ccb-4840-aa39-f28331d3c340@lunn.ch>
+References: <20250525-ipq5018-ge-phy-v1-1-ddab8854e253@outlook.com>
+ <aa3b2d08-f2aa-4349-9d22-905bbe12f673@kernel.org>
+ <DS7PR19MB888328937A1954DF856C150B9D65A@DS7PR19MB8883.namprd19.prod.outlook.com>
+ <9e00f85e-c000-40c8-b1b3-4ac085e5b9d1@kernel.org>
+ <df414979-bdd2-41dc-b78b-b76395d5aa35@oss.qualcomm.com>
+ <DS7PR19MB88834D9D5ADB9351E40EBE5A9D64A@DS7PR19MB8883.namprd19.prod.outlook.com>
+ <82484d59-df1c-4d0a-b626-2320d4f63c7e@oss.qualcomm.com>
+ <DS7PR19MB88838F05ADDD3BDF9B08076C9D64A@DS7PR19MB8883.namprd19.prod.outlook.com>
+ <0c57cff8-c730-49cd-b056-ce8fd17c5253@lunn.ch>
+ <061032a4-5774-482e-ba2e-96c3c81c0e3a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: qcom: camss: Power pipeline only when streaming
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
- Richard Acayan <mailingradian@gmail.com>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20250526232837.686822-3-mailingradian@gmail.com>
- <CAFEp6-2mhuLptwA4JYJm2cvftZxufoJGB0y94LAd5ZWGP1e-RA@mail.gmail.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <CAFEp6-2mhuLptwA4JYJm2cvftZxufoJGB0y94LAd5ZWGP1e-RA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <061032a4-5774-482e-ba2e-96c3c81c0e3a@oss.qualcomm.com>
 
-On 27/05/2025 09:03, Loic Poulain wrote:
-> On Tue, May 27, 2025 at 1:28 AM Richard Acayan<mailingradian@gmail.com> wrote:
->> The libcamera plugin for Pipewire may keep an open file descriptor to
->> the video device, even while streaming. This simplifies its operation,
->> as it only needs to keep track of a number instead of a file path. When
->> the video device is open but not streaming, the pipeline can be powered
->> off. Move the pipeline power management to the prepare_streaming and
->> unprepare_streaming functions.
-> It seems to affect more than just this specific driver then? According
-> to the documentation in v4l2-mc.h, v4l2_pipeline_pm_get() is intended
-> to be called during video node open. If we're changing that behavior,
-> we should also update the function's documentation accordingly so the
-> change can be properly discussed and understood by a broader audience.
+> does this sound like a generic enough problem to contemplate something
+> common, or should we go with something like qcom,dac-preset-short-cable
 
-True but then the patch that added that comment also contains
+I've seen a few other boards with back to back PHYs like this, and
+they did not need any properties.
 
-@@ -999,7 +996,7 @@ rkisp1_vb2_start_streaming(struct vb2_queue *queue, 
-unsigned int count)
-                 dev_err(cap->rkisp1->dev, "power up failed %d\n", ret);
-                 goto err_destroy_dummy;
-         }
--       ret = v4l2_pipeline_pm_use(entity, 1);
-+       ret = v4l2_pipeline_pm_get(entity);
+It could be this PHY does not conform to the standard, does not have
+the needed dynamic range, and is getting saturated.
 
-Seems to me like a perfectly valid use-case to have a persistent handle 
-but only want to power-up the pipeline when you have work to-do.
+What we do have is:
 
----
-bod
+  tx-amplitude-100base-tx-percent:
+    description:
+      Transmit amplitude gain applied for 100BASE-TX. 100% matches 2V
+      peak-to-peak specified in ANSI X3.263. When omitted, the PHYs default
+      will be left as is.
+
+This is intended for actually boosting the amplitude, to deal with
+losses between the PHY and the RJ-45 connector. So this is the
+opposite.
+
+The description of what the magic value does on this PHY suggests it
+does more, and it cannot be represented as a percent. So i think a
+vendor property is O.K.
+
+   Andrew
 
