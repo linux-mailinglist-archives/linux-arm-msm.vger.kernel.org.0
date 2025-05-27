@@ -1,87 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-59558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD568AC4FE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 15:34:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF438AC4FF5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 15:37:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F3831897FE1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 13:34:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C5491884BDA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 13:37:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB73C242D79;
-	Tue, 27 May 2025 13:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B406274FD9;
+	Tue, 27 May 2025 13:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oftfNIZy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l0KAE/fl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FA329A9
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 13:34:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E287C242D79;
+	Tue, 27 May 2025 13:36:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748352865; cv=none; b=lb12aOLD2MtcGDwmgft0bZ6uDDB8Q8tfWnxjiiJtxcYIHn27P3wWcE3Pe5OB3RC5dkV6RhOdbc0OshQRZSInFPKOmZtBrU/Pmw/6Qr/YyRjQthlfs0e4O1tgwAPJhorf7/A+ZF1UwgAillxPdx8HPvWsHQvwH3iFNxv0pl5bYh0=
+	t=1748353001; cv=none; b=jOUA37/wOwcRW/mfgmnKogQ4srZrVyoUOCmjf2QJFYDESzLjqS8BPZdQtVW3B3sT0yY2Orwxk/t1IRXMvcZgjd43kPXpWO5LeapltGzNMQLJCCNwN//HSu+n9NFkK6Lf1WQLjCq1P1TdhJybrj6nmArglDJUkASfiONn+Y5ZvLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748352865; c=relaxed/simple;
-	bh=d/P02J9qQY8iTl3rVzuh5p3XJF7As7wmADUufJt0/BY=;
+	s=arc-20240116; t=1748353001; c=relaxed/simple;
+	bh=geY5fLpTYU79OaR23hgE0Sr748gZPN+XjHAQh5QGQKk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Hy+fiuWGmIm/CjQSOJyP+PS/xuQS5uu+yDHMoahX6U2YMNVNeAlL7y6JoAh0CMs32cLGvQQyLbMyZ/bkdsAQ2bQHS4p3u6+Qw/FpagKZqOVRTyWy0ticY1WXjtn9re6q3vmDDZD6uEXShDEk4WoWNj9y7WXlmGi5ogGGRjr3CZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oftfNIZy; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54RAl3mA015467
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 13:34:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Zj3vrTg/vim0PVZvflmCqYbXIcZKAQ+i8s0YX2bmBXY=; b=oftfNIZy+HwWfIMr
-	iPJf78k5r2/5aEbnrGhi8KoGT3BZ3gDranc8kl0eM4fgGu4OuAb6eZCZ8d7w9eeo
-	qUNKsWhRZXYG4ftW0WWLkYO+ButPV6dw0JF5txNAbmGShK241YamnRydwsBZSFYE
-	K6rLjXNfWJRV96gr2VFZSd3ZVhrQDIRet/l1oo0ijtV4HF04H4utMnOz5NdNbk2A
-	ZO2J5CosmL+ay+/PTPH8aFmWtjPWxjwNIl3etmbTriqpOio/KsJjt9L4msLXwQAu
-	v3dXMYGAS7hbZ2nOvfLpBMfFcD7LULOwcvs17Yv0mConBHuAKeq5acKhQGQZFIIg
-	Lg4xrA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46vmgcufsc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 13:34:23 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c5560e0893so26404585a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 06:34:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748352862; x=1748957662;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zj3vrTg/vim0PVZvflmCqYbXIcZKAQ+i8s0YX2bmBXY=;
-        b=CXJ3Md6IxQiWDaS04ucVHzphWjLeC3PLEJKX2nIJk0Cmu1d5DTEAGKHQv/adwsHLfX
-         vyo6FT2Ue0Vj+G+OqU32IoTP8eH+fl9Z5S4iWK56052mRMFrGmnxpP5y/sduB5LfewOb
-         yYbXYM9EeJX9BOwKyc0W+KIaN7rJRnzpZyXLqz4QyDK4m/fnOHO5APPKJXcB69JzD0wG
-         wNck604P2S7bUqkZ8XOGlWkkgMNq2CtySZPIvnzb/eDkzQnolOO0tEwkRXU7M7skoHKb
-         OT3TnPNseecAeBW7UEwZlMjyMUSTi5XLXIoDDjH8c7loFVZtLHDk9ua0T6+9qjpyE6GE
-         7NSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUAC00yobTMJXbpK6vKWHXXk/WOXga/LW3qEekuiUmBunWxXQSE9OaJwY7BOJ4Zg/tYTVAJlHKZcv34DQ8X@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywl08eXwbfU3aX7g5HwK5HW2YJO0occE3JOXXYiXMgu/MZENJ8b
-	MyTjmjuoaULo59CZXsMWh1gfZMoxAilc/tgMk/lOfgbjplEnLktYEMCUkljYN5sK91VJ/f5iOF8
-	q1UfeB15dAvnUljUWyrppb0VqNf/eQ/mMdZh0eSvJ56ZvWN/JENC5B3BiCs2+8+lBk3MY
-X-Gm-Gg: ASbGncvRCAhBPNaXJbG5zK0mlmeBM32BFRzicC4Sf2a6ztGXv4I12Mpndyvlu8PTfyi
-	cGNzI32cp8zo1MYIdz1txRO8WepYc0q45GZUTlvospdzyAfoDH6+e1rv5pGiSCSK7HYMg9z5+pF
-	GqIkhtvmBi0yX8INBzfYU07W5UtHIiYdjWHoBOPUg7JyOLE5pfM0ZblnMtMIpRbXfI3tlfun+0G
-	uJ4iv7vbg4Oox2FxRXSnxAoOoRnMusZjtKTAjPyHtzcearyf9fLvZsgqwpUH8UEpZqxkJ6aDsK+
-	Ox/NLqV5lzo+AmoxgP0kM3nDYBHD5PFHdlDWzHB0Du++WP8gzBMmkU8Wm1v/r9XEYg==
-X-Received: by 2002:a05:620a:bcc:b0:7ca:d396:11af with SMTP id af79cd13be357-7ceecc33efamr674542185a.15.1748352862477;
-        Tue, 27 May 2025 06:34:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHjlX2yUH3BsOWQUseqYtk4hJzkMKzeOB9JG5Z8E4YKWevQ8VORYoyV+OSVUqExMtXpm87OVg==
-X-Received: by 2002:a05:620a:bcc:b0:7ca:d396:11af with SMTP id af79cd13be357-7ceecc33efamr674540585a.15.1748352862039;
-        Tue, 27 May 2025 06:34:22 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad888f734f5sm152162266b.84.2025.05.27.06.34.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 May 2025 06:34:21 -0700 (PDT)
-Message-ID: <f2732e5a-7ba9-4ed3-8d33-bd2b996f9a1d@oss.qualcomm.com>
-Date: Tue, 27 May 2025 15:34:18 +0200
+	 In-Reply-To:Content-Type; b=nJTXdxH0vNXR9cWvEQ2Lusr0VeU+1kjEL7IPsugkQKQp9lqYpm0/gqwSF+31OxxaioFjyXEpIAqn7W8Amn8208iTKaljpKa6pXOXNxGuIevfqgDyiFu++YiWXwsoji+igJ2gMb7t0/FYdnxpDivFVXLFe2W8oQxfwFONoZqdFwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l0KAE/fl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F79BC4CEEF;
+	Tue, 27 May 2025 13:36:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748353000;
+	bh=geY5fLpTYU79OaR23hgE0Sr748gZPN+XjHAQh5QGQKk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=l0KAE/flPvp6tOi5ekvXJWTp//6dkUtqPYQJ9XWDgSQ9M8t3IA6Gm6LwvSAX8v2s2
+	 sno6z3hA7Tlp28zGYh3FSxZzA5Ilg5jPdbqFj0s1+JUNNNzeYVQ8VDALP+/Z9TrCU0
+	 D6/goHyqMgRsswOxH0WoOMf5KmTi0+iM70ZXLO21z0+Lkekrd1d2PygnNb2XUjGn+u
+	 hrbmGw5K8RWBHIc4f8agbndljbhmrrstOSxribHVnPtyZBP/S40WCpBTfylD5LETHJ
+	 fAw54HVkfXS2RZTGzeTrAynQPzYJSrLTaUNWnZ2mHdL6sY5B0uJDZVQ07AyVk20mvM
+	 /X92I1EWxm9pw==
+Message-ID: <5e2eb2c8-b12a-45a1-9e30-1dd88f18a501@kernel.org>
+Date: Tue, 27 May 2025 15:36:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,105 +50,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: ipq5018: Add GE PHY to internal
- mdio bus
-To: george.moussalem@outlook.com, Andrew Lunn <andrew@lunn.ch>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King
- <linux@armlinux.org.uk>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20250525-ipq5018-ge-phy-v1-0-ddab8854e253@outlook.com>
- <20250525-ipq5018-ge-phy-v1-5-ddab8854e253@outlook.com>
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sm8750-mtp: Add sound (speakers,
+ headset codec, dmics)
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250526-sm8750-audio-part-2-v3-0-74429c686bb1@linaro.org>
+ <20250526-sm8750-audio-part-2-v3-2-74429c686bb1@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250525-ipq5018-ge-phy-v1-5-ddab8854e253@outlook.com>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
+ QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
+ +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
+ ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
+ 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
+ hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
+ tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
+ 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
+ naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
+ hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
+ whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
+ qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
+ RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
+ Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
+ H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
+ dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
+ AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
+ jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
+ zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
+ XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <20250526-sm8750-audio-part-2-v3-2-74429c686bb1@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: waFNoU3_3A8J4SA8S8whjdNCxf_rFlaa
-X-Proofpoint-GUID: waFNoU3_3A8J4SA8S8whjdNCxf_rFlaa
-X-Authority-Analysis: v=2.4 cv=Ws4rMcfv c=1 sm=1 tr=0 ts=6835bf5f cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=UqCG9HQmAAAA:8 a=EUspDBNiAAAA:8
- a=KVjQAK92ZotTnYaee5gA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI3MDExMCBTYWx0ZWRfXzj2F+7fbi/39
- HY7GtJHeuBB7tyZ2ME+Q23JSqiDXKb2gdqiXsKlgF7ZvH5euQXh/3N/jWGXtbyDTWUvJexIAwxC
- +pZRleHqeZs3yP7Zaimf1ivrk6uLFDjPH2Jw2Hg1Lwp8kfNsI+A+FOqepd51BSxL9tehcwCKWwl
- Af2lgQCxm3ewKeIH5A2znTPIA4Qmr78f1udCF8if5Onxv0AAEl1ycL+JgBxx5Ih9t0m+pKTSqpW
- ECdIayeQnGvTCFu2Hdm8JOj6/eM5H1FWt6WwODNrihXsMOIrUPAbvrEW1mt+5Ka4bM2ql+Vjppf
- 5A/w7fJBVous/4+Dyx3CyNvzqpTYIRTCf8wBymmznouA9L48Uf6ZULzcRA23xqI7oDT6q2iLB+f
- Fr6uRI0vN49VuIjDbDvWb9GZLlsk9tvOK62lyMh/GN8rzM/+IW430VbGvvmVZG4IpRilEeu6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-27_06,2025-05-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0 adultscore=0
- phishscore=0 mlxlogscore=999 priorityscore=1501 malwarescore=0
- lowpriorityscore=0 bulkscore=0 mlxscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505270110
 
-On 5/25/25 7:56 PM, George Moussalem via B4 Relay wrote:
-> From: George Moussalem <george.moussalem@outlook.com>
-> 
-> The IPQ5018 SoC contains an internal GE PHY, always at phy address 7.
-> As such, let's add the GE PHY node to the SoC dtsi.
-> 
-> In addition, the GE PHY outputs both the RX and TX clocks to the GCC
-> which gate controls them and routes them back to the PHY itself.
-> So let's create two DT fixed clocks and register them in the GCC node.
-> 
-> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 27 +++++++++++++++++++++++++--
->  1 file changed, 25 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> index 03ebc3e305b267c98a034c41ce47a39269afce75..ff2de44f9b85993fb2d426f85676f7d54c5cf637 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> @@ -16,6 +16,18 @@ / {
->  	#size-cells = <2>;
->  
->  	clocks {
-> +		gephy_rx_clk: gephy-rx-clk {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <125000000>;
-> +			#clock-cells = <0>;
-> +		};
+On 26/05/2025 13:46, Krzysztof Kozlowski wrote:
+> +		qcom,micbias1-microvolt = <1800000>;
+> +		qcom,micbias2-microvolt = <1800000>;
+> +		qcom,micbias3-microvolt = <1800000>;
+> +		qcom,micbias4-microvolt = <1800000>;
+> +		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
+> +		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
+> +		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
+> +		qcom,rx-device = <&wcd_rx>;
+> +		qcom,tx-device = <&wcd_tx>;
 > +
-> +		gephy_tx_clk: gephy-tx-clk {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <125000000>;
-> +			#clock-cells = <0>;
-> +		};
+> +		reset-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
 > +
->  		sleep_clk: sleep-clk {
->  			compatible = "fixed-clock";
->  			#clock-cells = <0>;
-> @@ -192,6 +204,17 @@ mdio0: mdio@88000 {
->  			clock-names = "gcc_mdio_ahb_clk";
->  
->  			status = "disabled";
-> +
-> +			ge_phy: ethernet-phy@7 {
+> +		vdd-buck-supply = <&vreg_l15b_1p8>;
+> +		vdd-rxtx-supply = <&vreg_l15b_1p8>;
+> +		vdd-io-supply = <&vreg_l15b_1p8>;
+> +		vdd-mic-bias-supply = <&vreg_bob1>;
+> +		vdd-px-supply = <&vreg_l2i_1p2>;
 
-drop the label unless it needs to be passed somewhere
+I forgot to mention: vdd-px is new and documented in binding change:
+https://lore.kernel.org/linux-devicetree/20250526-b4-asoc-wcd9395-vdd-px-v1-5-64d3cb60313b@linaro.org/
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+No dependencies, but till binding hits mainline this will be flagged by
+dtbs_check.
 
-Konrad
+Best regards,
+Krzysztof
 
