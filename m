@@ -1,129 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-59546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34FF6AC4E91
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 14:18:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 49F5BAC4E95
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 14:19:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 499513A3C5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 12:17:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8108C3ADBFF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 12:18:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99C9325E838;
-	Tue, 27 May 2025 12:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 768101A8412;
+	Tue, 27 May 2025 12:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dyP5NI3y"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xX7yzLVz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com [209.85.221.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03671DEFDA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 12:17:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629F9252900
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 12:18:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748348268; cv=none; b=nP3R0teynPSG/7UFsqbF9m1V+iZ4zdz/77vzUMM6N/Dh8jzoaMebeTSUdNz1TcN8HkIATu1f//bhGarvmTunEgiwleOEHfk+2WfAuYEqpRz5/NQA24qkaLHkWB+Sysinxcspw5acCZmg/k+vUk15j7PAB7h9+TuORt9UvM05FRI=
+	t=1748348339; cv=none; b=YgQBtjGkRw3mGheuy+Z5wODXhUzMhY5IJe6abAdky8DV4m9Y63eecpVMs7e3d4inGl6N4aea439roPhS4iyIxYgUlGNQV1hOghvvhyjP2HMInSP2JBKBij4s3qXu+zIICEhUqB79cQ09HZ5RR6Jf2IKX3CdXbJu59OS/NKI0Rbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748348268; c=relaxed/simple;
-	bh=Ylm9TZJ9JkndLpjMw52ERgTwWR226WeENwt4n1DE02o=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=P0BlmNgco6DTpA59N8DrHzTB9X4DVsucDbLtdk3PVmrBJJdHJYuJPBZZGU32XoC57bzJoc0wZFlPL+VSZM1kpFfxrmV6VTtgTEK12kA6zbr5THZhg1UpLRqqhrSEnpBYtQyRQyKE6WBcFAndYXjuomUbgAemSzkhDUaJELanIVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dyP5NI3y; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-553279c552cso118852e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 05:17:45 -0700 (PDT)
+	s=arc-20240116; t=1748348339; c=relaxed/simple;
+	bh=86zn2u46JYtNwZO5g1DsbWK8w+q5RR5pXL4APJoYNtE=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=a/p+Ncxu27xqpoE4giBiV9zDZjWI1ImRIM0V5FAxXHGxT5xCN4QjvsfF22YYeGOlfX03BofhSRNRqmwDHJP46pxEOjSA2sAEzrMGAuUOfMRIDDxSlRZEYOKXK7dwGNJfdysi+qX5w5uz5KFapLz6xBrE2RfuGZ4jRuMT8x9MabQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--korneld.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=xX7yzLVz; arc=none smtp.client-ip=209.85.221.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--korneld.bounces.google.com
+Received: by mail-wr1-f74.google.com with SMTP id ffacd0b85a97d-3a4cfda0ab8so1107803f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 05:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748348264; x=1748953064; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UU3gcdYYcPnZcFhSfcjGqd1s2zKjYa70cKw5uOmkCvo=;
-        b=dyP5NI3y3fcEvJaivVYiK6RFXsv0TC+rfMOGtJfiilGPObqL5j42PLrze7re5kj78I
-         SQP+lLqeYbq0xEPSgp3SHa4QTcvPblopDpR7b9L7eAZSHqy11uwKIdDHl1xwrtKZMPeK
-         5LdoUatKDT5lJKqaVQBoTve9wi+GwF6lkr9kiHaG1mc1+mq4hYPonyGDiV2aL+PTiSid
-         D9NnETvUgqWylTdW/T6SuEo29ixyRYqrrLr4g4vCwvH9dHcb8FaKAP/CIT2HOUQpVTPR
-         4G6F2YSJ/ZhIpRA9EW6Q+b+Qq95pcZFX3vtItYtZIIiE+QK3Q2+IgN9zhxmrs0FxmYWJ
-         lr8A==
+        d=google.com; s=20230601; t=1748348335; x=1748953135; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kVklkqDwNsJQ+fgi/kO5TdjSnCkSRE14ziGkMJqjasc=;
+        b=xX7yzLVzVtRJlK98hk6EN/EfSFIqWaGw2Z+VFBopCaC0DD/T4xcsn9dBIirfKAaL2S
+         Px21qQ34+hscOXUdGkS6L0nphE6CPgEcxwnh0Cd6azgblAJTBaVrorEBdKC91DFpl0iF
+         yMo81rRCbS7NmsEjj/9NwDtcvEDaRB8W/Q7oRf0VOwzpAle5dvB4VBsNWwu84884cWmZ
+         rmS2eeKgKHTbuyga4eoNHN5fLcxehcrG0vlRnvgbHh4MVntRtgC1AyOnSq5XT1Ffm8BS
+         e0Iek1X3Jf0YL8JpNLHa6dmWnx5/n1GzfYG+5LvmUz/DDiLCnJMUR8EplDKrL2ez78kx
+         70Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748348264; x=1748953064;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UU3gcdYYcPnZcFhSfcjGqd1s2zKjYa70cKw5uOmkCvo=;
-        b=QzNL+I0X/rNnBzTovk00/utcrLG3AxxcsS5Sk1F30CUheXwzuZ+1rpKYH2+fm8W+0L
-         WZkwSP0uB/UqRMDgQFzL4D8MNcaBS6esZTQT0Pls4/NM6fvZfAKOynp9QNoZSFcbsVxY
-         /LCoVV369d3RcUnUwGg/pS8Zz/gCLskPX1UmJygfpBGySdrdOqVTyifzA7WWln2uB+9U
-         GVT4zXK9v6bi3o3ivbokyXhQabCxCikTCif9wTFSBAcAB/IPnn0FqiOtC1bP5nIkLCzI
-         8K8I1SysNuhcJmA71OHFY22by5+uDWNWRO74Qtr037buoIzRIZAsoOPN4J5mEGU+iqF4
-         VL0Q==
-X-Gm-Message-State: AOJu0YzP9hWKX8FKO8oEjPTzc45Uiv5NyywdVpUByw04ud7Xxrx/DU/j
-	bmy3FOuqIcd/tKeYIGyXYbgaIdfuZTpvVoTK9HqtYaVpnkkh/eJeeDFSk6SinWV0krY=
-X-Gm-Gg: ASbGncvx9XLvC15U1djlFcNa5Hbd2Bw3OkAhUus1klH/iDXGKuFJGpyBeZBdE0DtXA8
-	tX7y7bZm1kAd7sh8A6AGhmPs/l4E/TiSHVMgkcFYxupo/KR9fDekayY9BzMNqecsenq73+sNkxS
-	8v55WyUC7Z0YvuZimH+71LvKURmNCg+UJ+2oa9K4N110zlQlyNtm/gmDfVhy8heWjC1pMUuDlZn
-	RQDo1wjyNLwSV1ycfYObG7SPb0r+YhNEQvzX1pz8jJ2X/6/yt4NsGgSd0YVDm9/baSUoxvQh6rJ
-	wIc2FMsXhWzI3QT2TAFZp4trw5UBB2DtgXUy/bX9IsaZI+fPzl3+/SnCMF+RJnEILhk=
-X-Google-Smtp-Source: AGHT+IF0yMInE3RYqpl2vNeTub6vt1aTbzbYIVRNV0IdfEePqEXTaxqSLxxOXpwZobi0Wf7bZQrPQQ==
-X-Received: by 2002:a05:6512:2c8c:b0:552:2081:bdc0 with SMTP id 2adb3069b0e04-5522081bf9cmr1050281e87.6.1748348263804;
-        Tue, 27 May 2025 05:17:43 -0700 (PDT)
-Received: from [192.168.1.106] ([91.247.148.4])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5532662f751sm461418e87.54.2025.05.27.05.17.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 May 2025 05:17:43 -0700 (PDT)
-Message-ID: <538a65e9-85ac-4ae7-a567-97343122c547@linaro.org>
-Date: Tue, 27 May 2025 15:17:35 +0300
+        d=1e100.net; s=20230601; t=1748348335; x=1748953135;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kVklkqDwNsJQ+fgi/kO5TdjSnCkSRE14ziGkMJqjasc=;
+        b=fdSz7RE89HovE89z2NX/K2V0eQUe+LNhQA2xJc9ar6t/80qRZISpKFCgtAVwJKVr6m
+         nWRr6h+Laoz/IeGn563Uk71Xo1rdX1WN17Ui3Z++XPhCnNaVQyfjMZI32tl8QAp2BCXn
+         wcNC0/XRNFbcUdFnDwWAUqJPZqE3c96cO9KAWgBTzmFpAZ/3AWRpSt50OaEcXbEXKUBZ
+         NfopfAo+EuaSsB01wMuKvvvQiRH+jamJwiUmxiQOLeXDdy0sns58CgD23vYlYYzPTwZf
+         jVx3zFSaBQgLmLjWyqtk2EiH/63vruMu0p989J3O03AolfVa8LUSHYDSqOXVMMy2NdIw
+         oFmQ==
+X-Gm-Message-State: AOJu0YxLjDwvtaQC730xkQFV7aqrUL+ExWZPQcP7FZTUjOFWVS+OwUkW
+	zsSO0sqAwhoI6ujrFj0hZ4npzAzezNrUBJXtr3ervnCIno4vnN9GoenpmXnRIlwTHIoGMrk8yPr
+	WhJeeQ4tUVg==
+X-Google-Smtp-Source: AGHT+IF+4dI2W1Tz8PmaqeJX0XTKtsVBTKm0orDfRvn6Ll06nNvBREgJXKng13K8rbJ9Xc7pKINOeCL2o2e+
+X-Received: from wmbev15.prod.google.com ([2002:a05:600c:800f:b0:442:faba:ccec])
+ (user=korneld job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6000:1885:b0:3a4:e5bc:9892
+ with SMTP id ffacd0b85a97d-3a4e5bc992fmr426611f8f.21.1748348334751; Tue, 27
+ May 2025 05:18:54 -0700 (PDT)
+Date: Tue, 27 May 2025 12:18:07 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: media: qcom,x1e80100-camss: Tighten the
- property regex pattern
-Content-Language: ru-RU
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250502204142.2064496-1-vladimir.zapolskiy@linaro.org>
- <20250502204142.2064496-2-vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20250502204142.2064496-2-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.49.0.1151.ga128411c76-goog
+Message-ID: <20250527121807.3597061-1-korneld@google.com>
+Subject: [PATCH] power: supply: qcom_battmgr: Report battery capacity
+From: "=?UTF-8?q?Kornel=20Dul=C4=99ba?=" <korneld@google.com>
+To: Sebastian Reichel <sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, chromeos-krk-upstreaming@google.com, 
+	"=?UTF-8?q?Kornel=20Dul=C4=99ba?=" <korneld@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Bryan.
+Battery charge can be reported in several different ways. One of them is
+is charge percentage referred to as POWER_SUPPLY_PROP_CAPACITY in the
+power supply API. Currently the driver reports the capacity in this way
+on SM8350, but not on the newer variants referred to as SC8280XP in the
+driver. Although this is not a bug in itself, not reporting the
+percentage can confuse some userspace consumers.
+Mimic what is done in the ACPI driver (drivers/acpi/battery.c) and
+calculate the percentage capacity by dividing the current charge value
+by the full charge. Both values are expressed in either uWh, or
+in uAh.
 
-On 5/2/25 23:41, Vladimir Zapolskiy wrote:
-> There are 4 CSIPHY ports on X1E80100, it'd be preferred to tinker a too
-> loose the regexp, which covers all these port names.
-> 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->   .../devicetree/bindings/media/qcom,x1e80100-camss.yaml          | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-> index 113565cf2a99..680f3f514132 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-> @@ -133,7 +133,7 @@ properties:
->         CSI input ports.
->   
->       patternProperties:
-> -      "^port@[0-3]+$":
-> +      "^port@[0-3]$":
->           $ref: /schemas/graph.yaml#/$defs/port-base
->           unevaluatedProperties: false
->   
+Signed-off-by: Kornel Dul=C4=99ba <korneld@google.com>
+---
+ drivers/power/supply/qcom_battmgr.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-I kindly ask to review this trivial change.
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qco=
+m_battmgr.c
+index fe27676fbc7c..5ed5452ab51c 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -577,6 +577,8 @@ static int qcom_battmgr_bat_get_property(struct power_s=
+upply *psy,
+ 		val->intval =3D battmgr->status.capacity;
+ 		break;
+ 	case POWER_SUPPLY_PROP_CAPACITY:
++		if (battmgr->status.percent =3D=3D (unsigned int)-1)
++			return -ENODATA;
+ 		val->intval =3D battmgr->status.percent;
+ 		break;
+ 	case POWER_SUPPLY_PROP_TEMP:
+@@ -617,6 +619,7 @@ static const enum power_supply_property sc8280xp_bat_pr=
+ops[] =3D {
+ 	POWER_SUPPLY_PROP_STATUS,
+ 	POWER_SUPPLY_PROP_PRESENT,
+ 	POWER_SUPPLY_PROP_TECHNOLOGY,
++	POWER_SUPPLY_PROP_CAPACITY,
+ 	POWER_SUPPLY_PROP_CYCLE_COUNT,
+ 	POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN,
+ 	POWER_SUPPLY_PROP_VOLTAGE_NOW,
+@@ -1063,6 +1066,21 @@ static void qcom_battmgr_sc8280xp_callback(struct qc=
+om_battmgr *battmgr,
+ 		battmgr->ac.online =3D source =3D=3D BATTMGR_CHARGING_SOURCE_AC;
+ 		battmgr->usb.online =3D source =3D=3D BATTMGR_CHARGING_SOURCE_USB;
+ 		battmgr->wireless.online =3D source =3D=3D BATTMGR_CHARGING_SOURCE_WIREL=
+ESS;
++		if (battmgr->info.last_full_capacity !=3D 0) {
++			/*
++			 * 100 * battmgr->status.capacity can overflow a 32bit
++			 * unsigned integer. Do a temporary cast to avoid that.
++			 */
++			battmgr->status.percent =3D
++				(uint64_t)100 * battmgr->status.capacity /
++				battmgr->info.last_full_capacity;
++		} else {
++			/*
++			 * Let the sysfs handler know no data is available at
++			 * this time.
++			 */
++			battmgr->status.percent =3D (unsigned int)-1;
++		}
+ 		break;
+ 	case BATTMGR_BAT_DISCHARGE_TIME:
+ 		battmgr->status.discharge_time =3D le32_to_cpu(resp->time);
+--=20
+2.49.0.1151.ga128411c76-goog
 
---
-Best wishes,
-Vladimir
 
