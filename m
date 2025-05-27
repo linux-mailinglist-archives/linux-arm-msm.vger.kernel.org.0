@@ -1,169 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-59576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F614AC5544
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 19:09:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38CFCAC57D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 19:38:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 65E743B7190
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 17:03:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DD9751890252
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 17:38:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BD4C271476;
-	Tue, 27 May 2025 17:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6815327FD49;
+	Tue, 27 May 2025 17:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pAX7QMoy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jKUZUmHw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14A027E1CA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 17:03:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B6D1A3159;
+	Tue, 27 May 2025 17:37:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365436; cv=none; b=Wj8ET9tLqVn+X2K9cstCYA82hIeYKolmemfRQfxBVw2ksIE4+ojwwbLpdtAgKV6BBvU1pumkgxro+ou2YIshE2hs4u5DXt0b58lVw+8bjZVO0HCXiOPwC564C6hg8L5LOY+P9KlGlUm4gf8KW4j5wBrNbzr7uLaCrmRlMcY1WQ0=
+	t=1748367465; cv=none; b=Y91+1cMcf98dtvwimxM1C8XOiNoWsrD632MX7xWC8C2Cj2n6sNOyXE94SuU4nundNSx6SD3KDyFptBqCa8EH0U56K7VCFKyE0yu2U6MsCh9mUYltu+QkxmzvgdZjEAH0kDughlQTZzs8IL2uZLOss+0q+kE0tWM22N++pSmVDys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365436; c=relaxed/simple;
-	bh=D/exj8D4Mdt6FJYvJh51f96SRZVSyPsguFJ4c+GikA8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pUnpNmk1I/8HhVWNyajhl98vOZ+xXuemEBZYto+552KwYMr4hw7Rq2PZkZyD+lILJ4PzGWPpJWrZxZpK1OpzzHlkNXU+fVWLAify7eIHVy0kEFsUcRvBHbUlNCEgilTXIIOQ/C0aRQZpGtDsBvMoeQVcijsDlU+94BpxssyhAN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pAX7QMoy; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54RAEtQ2032267
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 17:03:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fN5GCmNGnguuUfY6HIS616UzD+Rz36jMub2o4gFIJoQ=; b=pAX7QMoyiVE1rY9Z
-	+cKXPpiJ98pUzTz92OcGDPCydeOAXwvebWP7QHok+kDYdfdzki/19s9jOgDF556F
-	Y0sKH8EIvRhxDrtbrbnYwDxhmdtJY+wlI6wEAuWp2hpHj9cbU8iNmJU5v5nBK1eu
-	J34qCPZjcchBCurdEjc909jY4kpc1plvTBAZu0lb0wx7KOYTLhqVzDZZScp9n2VH
-	xrRs4rI2YRo0H0/+3RGD60ngh3+YcNwy1MXS6UDbwJlbjT6CbB9Mbl0Cr8Ao84Hk
-	JdkEmD5qE+OFOZ48YnC6lAN+/ZzLUUZbLgQ55BohYDY20fYtMNalhx+1mjWJoWfW
-	m7VuJg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u6b5qqfr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 17:03:53 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c53d5f85c9so107253985a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 10:03:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748365432; x=1748970232;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fN5GCmNGnguuUfY6HIS616UzD+Rz36jMub2o4gFIJoQ=;
-        b=cOCqrptLyfVIcFUow4c9d2lJ5peQfke9AJjoopBUAIMsMjZYwOujd1NWwOgczrPgtv
-         fs+HD8WNkCKJoRQp+74AqJEvVohMtngjgb6fVphkMipX8TTCTtH+LYtKv5hZowsjd3E9
-         w7vqhLMYv5dN7TCsuusmiHDGhshpq1TFDJQHlmqVp/3isFAT4oQABoq/SNuuvzJ7YpZC
-         RgVWSmSoSaZrW8E02ycRlcLEGhIUe+/i1dxpO9L8rte+dET0nDMr70AxkaxttaIdh5+l
-         /3uKHj61HqmXiJhU2NHKQ71ilT+CqItxJpwFIZ0xln5DoXNkKRnKhRLVk7hQiyEaspj7
-         1wkw==
-X-Forwarded-Encrypted: i=1; AJvYcCVDaAOP4Cy1bL0lHTFbJAVIZ0aCoW1JBrqfKxfpMnUN738mQWzztXtBAwV0DRWaM+lUOX4UcL2jFlePEQ/B@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx3IGKbc9RpRbJSBvqpuqy79mVsOywysKTSqwJedFILibmGCQfP
-	6okE3RH6U73AfYhTomMGF06KK0arRZ5/UcV3XmlRLRagsFG/3CDoYo9ZEd7CR6YPQvsXsTtn8fR
-	rZ+v+/xSB73mbLZavuHlDhoLpuOVaSXZTi/wow9pOVACnGHxniCn9IxkFEGeNX+K3j5DV
-X-Gm-Gg: ASbGncu+7KS8Wm3qJBGER1IBzJDr5pn9VXdD8dHXWubxFHFhwuEmdexCMO2lMDCYXM+
-	WdvGzGjbgpx0H2uLWV/BXsBdj8snWFDvBZxoX8brX1a+6qX30bkRH0u1pFtdXNSCcA8MeSJ2Rro
-	kLTAfGShbHOGwpRo6SRU7hKRnoljISy0VgPejiiWK8PMJnSbo8HrdX2F7if/PvF3beXmD2tQrzg
-	6zHKhejt84GA42c2mRXqiSl5zSjrZC6ftDjXlY+QeRWl9JbBsKVlcUELmskq08ouvOdk5AYvIUf
-	zaCXJa09epMXo4N+CLuXkhSTg7dfVPyjV7Byrz4WHBZXirB4z4JrWXxtjplB/MAaxg==
-X-Received: by 2002:a05:620a:49b:b0:7cf:85b:4b2d with SMTP id af79cd13be357-7cf085b4bd1mr14854585a.15.1748365432588;
-        Tue, 27 May 2025 10:03:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDevCtCl7OkxCN6/99TDwIJJTrAXaSCvcoslipOU+QfWt40Ux7PUXxxh0fu5f697QezV7y8w==
-X-Received: by 2002:a05:620a:49b:b0:7cf:85b:4b2d with SMTP id af79cd13be357-7cf085b4bd1mr14852585a.15.1748365432068;
-        Tue, 27 May 2025 10:03:52 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d04b059sm1900573466b.10.2025.05.27.10.03.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 May 2025 10:03:51 -0700 (PDT)
-Message-ID: <e40e3078-cfa7-4927-af6e-f66a5dc4861a@oss.qualcomm.com>
-Date: Tue, 27 May 2025 19:03:48 +0200
+	s=arc-20240116; t=1748367465; c=relaxed/simple;
+	bh=oFMSlH2PFmkCusbkqieGsqktuo1FhaqErSIsbBtSOLM=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Ch31IbeaQoYA88YFoJZ2FkpiszLlSDez1BOql1fC0uxZ5h4M03osuDj7ZVmW+Xldtu0eFVy+42+RInnAcBga4BUshdn7CKLcnTnvIJL+nl1oPCFm6EAZ4CKjQgyK/Je4Ab4aKck3wPwkKfz07TOFYU8FY3f/fm8wKEkd267+S9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jKUZUmHw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F7DC4CEED;
+	Tue, 27 May 2025 17:37:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748367464;
+	bh=oFMSlH2PFmkCusbkqieGsqktuo1FhaqErSIsbBtSOLM=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=jKUZUmHwQ1N6veEbDXf8tb70g5DO8THwojuX83ZSEuyEKUlq1um4EPkIIx1wMPQs/
+	 NUijS0LbMTQOEv0qNthfrpA8Kl85SxVgG9JJdnJs4RlW/30RyoZOPSvH4YgxL3kmcD
+	 Ey/5DFVRZzSvIm+ZVVw90+8p0/jEia2GfTCNSJ9CgojpCbOC/q7VMuNARYvx0+NPuS
+	 rb1d0X996eVEijBDh8VORTeVcbTO6fD/IxZT6nHKiQYmpgnc/ZMpEEJLUw4O8hUr6D
+	 /zF6SHbRxSJBaAplAfHbuOZKFL4j6ThEKxKh6+cWOYSJKet2s3mAQOt93Qn3TnV89g
+	 8L8kCv3P4PUGQ==
+From: Mark Brown <broonie@kernel.org>
+To: Srinivas Kandagatla <srini@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Vinod Koul <vkoul@kernel.org>, 
+ Mohammad Rafi Shaik <quic_mohs@quicinc.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+In-Reply-To: <20250526-b4-b4-asoc-wcd9395-vdd-px-fixes-v1-0-0b8a2993b7d3@linaro.org>
+References: <20250526-b4-b4-asoc-wcd9395-vdd-px-fixes-v1-0-0b8a2993b7d3@linaro.org>
+Subject: Re: [PATCH 0/3] ASoC: codecs: wcd93xx: Few regulator supplies
+ fixes
+Message-Id: <174836746184.125386.18177744621323108615.b4-ty@kernel.org>
+Date: Tue, 27 May 2025 18:37:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/12] arm64: dts: qcom: sm6115: add LPASS devices
-To: Alexey Klimov <alexey.klimov@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Srinivas Kandagatla <srini@kernel.org>, Mark Brown <broonie@kernel.org>,
-        linux-sound@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-gpio@vger.kernel.org
-References: <20250522-rb2_audio_v3-v3-0-9eeb08cab9dc@linaro.org>
- <20250522-rb2_audio_v3-v3-7-9eeb08cab9dc@linaro.org>
- <26afac49-2500-470b-a21a-d57e4ff14fa6@linaro.org>
- <DA735DM0N649.3NLLMFUW7ANNM@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <DA735DM0N649.3NLLMFUW7ANNM@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=ZcodNtVA c=1 sm=1 tr=0 ts=6835f079 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=KKAkSRfTAAAA:8 a=IU-kIAO4L2lcGG9yRekA:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI3MDE0MSBTYWx0ZWRfX14QDeruLtMxF
- ortBoKlTx4AEQb6VvvoUb/gG5SNTPUaZAGO9Qe9li7YWsSGvjmhT2ZNtmsM2Zl3uwSi92LCjV4D
- zeG1JcydDaF3mMBCd68GEXFiIMQzJSFh2ODaKPWmRV+ND4S91KgXOVjndsJK8IEbal1YEsstvRI
- YTNNQ20cjKVecYZQMyxl9E88zMbc+dkwfOAI6Kq2u/3GhSCUyzE8rjV3S92bvI4sAxwT3NW4DlT
- 06znwRZk/GzAmw9Sy3MrQxRsMXm9z5hSYCfVniPf+JS8kwawDJ98nIV+DF8h+Vuj18/vlU/IPtz
- 8+azbD1c3kD4X8Qw7LxjVa/g2dTopDAi2PFNUd8AtFUQCzjhAzdu41xQBspxmwm7QgyoSqqOO4Q
- M5bDe5f0i385dFG0/OpeehLNh2hhQGMRiPRp0S6TXnsnE3+3wKL7GlcI8hFpd8bSIad8iYBs
-X-Proofpoint-GUID: t0dtiQejuwko5TV39XHxSytTajNdIpCA
-X-Proofpoint-ORIG-GUID: t0dtiQejuwko5TV39XHxSytTajNdIpCA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-27_08,2025-05-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 mlxlogscore=856 bulkscore=0 priorityscore=1501
- spamscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0 phishscore=0
- impostorscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505270141
+X-Mailer: b4 0.15-dev-c25d1
 
-On 5/27/25 6:32 PM, Alexey Klimov wrote:
-> On Thu May 22, 2025 at 6:52 PM BST, Krzysztof Kozlowski wrote:
->> On 22/05/2025 19:40, Alexey Klimov wrote:
->>> The rxmacro, txmacro, vamacro, soundwire nodes, lpass clock controllers
->>> are required to support audio playback and audio capture on sm6115 and
->>> its derivatives.
->>>
->>> Cc: Konrad Dybcio <konradybcio@kernel.org>
->>> Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>
->> Just keep one CC.
+On Mon, 26 May 2025 11:47:00 +0200, Krzysztof Kozlowski wrote:
+> Fix cleanup paths in wcd9335 and wcd937x codec drivers.
 > 
-> Question is which one now. Konrad, is it fine to keep your oss.qualcomm.com
-> email here?
+> Best regards,
+> Krzysztof
 > 
->>> Cc: Srinivas Kandagatla <srini@kernel.org>
->>> Co-developed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>
->> Missing SoB.
-> 
-> IIRC I took Konrad's changes but at this point I don't remember how much was changed.
-> So I need to switch to Konrad's owned completely or somehow indicate using tags
-> that it is initial Konrad's work.
-> 
-> Konrad, what's your preference here?
 
-just loosely mention it in the commit message
+Applied to
 
-Konrad
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/3] ASoC: codecs: wcd9335: Fix missing free of regulator supplies
+      commit: 9079db287fc3e38e040b0edeb0a25770bb679c8e
+[2/3] ASoC: codecs: wcd937x: Drop unused buck_supply
+      commit: dc59189d32fc3dbddcf418fd4b418fb61f24ade6
+[3/3] ASoC: codecs: wcd9375: Fix double free of regulator supplies
+      commit: 63fe298652d4eda07d738bfcbbc59d1343a675ef
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
