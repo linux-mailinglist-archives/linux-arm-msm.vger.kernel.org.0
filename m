@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-59572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 422C8AC5290
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 18:00:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F9E0AC530F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 18:32:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D6008A19B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 15:59:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0170B3B0FF0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 16:32:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A11627EC73;
-	Tue, 27 May 2025 15:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8AAC27FB07;
+	Tue, 27 May 2025 16:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tju3Rccq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sslJajJC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734CE27CCC4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 15:59:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21DA274FE4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 16:32:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748361545; cv=none; b=K6mpki2Tfmv2qS8YN1ndabc0f0+Hb40nemOoOYL454NbbPR3gfRJPIvmAi08SJlyPc8xc0mSNAsGiy6fjdLF5415rWO/sQ2Y5U2T92wPg1syuTrnYZsrA/e5wEpKXXtL/bB0WJjwd2pEqWds7hAO362R56pysrqXqvPdj1yrxV0=
+	t=1748363543; cv=none; b=W85Nir+EKRLBov4pAdZZCmTz4RWCeyChGarSm3LoAI+wQiV2p+qnoLg+XFhr4hhmcV3eUQ4yIQjXX8V1g9jWyZChXXxNabNfzmsPNAOFG28sj5dcD8QZHOal7ORqvqHDcUUoFOc50MgPNX2baUeF9YU4lFnUgBvSg3RunMdZMGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748361545; c=relaxed/simple;
-	bh=yfN2uQGm7zbUd++gV/nEJsaDi3LFlJ4HhiGQBuIdi5Q=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=EvHEg3R8IxZIv8zpeHob9CnQPR2/NuHL8vXmDrVMnejX9tX+/hRK2cuzI3p4YuGNu6d4p9oiJpi9oDp6R/3vJckNGhci7kecRdbdlnZEozvQw8uf6D/Nc8e7qAy863SnoJAbtQP4wq+Su6LqxTDfg6XpSgJit82X4reBAauTDY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tju3Rccq; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1748363543; c=relaxed/simple;
+	bh=2sIt4equTxMf7zNksQU/+IeDziUhiC69Jled1PWpUQE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=AGz1piKnE7Z70D1up5Qa7F8gd4AX4i4dNgxY9Ee6WgF/SCl2uI+Ye1loEVZYttBQRMiKUJIeKgwT7/BKYPEq7owxIxLrjTPHVvfEEBuf0/UK4ZL6hxsMOFpjK/ldZ1nrDBTDT4l7D20IMezd1EqgUuODY5xW5DvO0A4IQcTclO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sslJajJC; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3a37ed01aa0so3522862f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 08:59:03 -0700 (PDT)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-441ab63a415so42822395e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 09:32:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748361542; x=1748966342; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
+        d=linaro.org; s=google; t=1748363540; x=1748968340; darn=vger.kernel.org;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uLKlrSM5FsamXha6aN6KEk+RGQKQsgUaENo7zbmfoNQ=;
-        b=tju3RccqZMoLfrpizNOg32ku6XPo2Vr5LDfbDsQ5IiUV870YoIJgS1H/ATswtw/U2t
-         Dh5Kb8+kkxc3Lp/LR5Mn8MRPEyA/GLTZxrzap6fiBTNVB2ELfET9yRox6X6GMLcRnXpZ
-         QUxF4hQqxSbyuyvzCLK/BbzoMajB0zzAuiyx5jJ1geCa3c78jbdrXxvGB5IntAjV89xC
-         IgO9Ppi5uTBbuW+C1qmZXriPhBNeXcFicHpkWcC3mSc+aK222HJlKzyQOijC8+/RsAce
-         lMUe1EMhtfkLo+lqMsCNeNAbARlh+gmidif8bOcepupq5qvm0tT7smVTF819Mq13x5Sn
-         nPPw==
+        bh=j4ceyXfpbHOb26b8XCYLDg0Adii9j8clPXP8isRHjuk=;
+        b=sslJajJCJsXGH1OU5imgef6CxF90BaOM9UBxOexziU1MFTfXryj133Ryw0898TK/oq
+         K6wy9zhUouFdvmTDuvYVs3NJx/QJS7ZfQI0IdEaaDZeScpKGI1bM84j5ooCO2Vgpy4jr
+         gqJQxDmUG/Ew2SszVOzFv+Y5pChEJxCbqj3YazYSgwpuJLjJlcjiaw++ZChkCRgFKXUR
+         HPpa4mxRLNRqm7jZNSaAZnXfAhDMmbPy5wkLniRNPyoYRDx7XBq+tX3e1HpOpn2vfUCh
+         RqjrTWNAJN6m70K8L5dKlHE3WbPgJknZJXL5/5RjI3Tmq4jXm+b4e5vqVVogvGQeGVcW
+         ppvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748361542; x=1748966342;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
+        d=1e100.net; s=20230601; t=1748363540; x=1748968340;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
          :content-transfer-encoding:mime-version:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=uLKlrSM5FsamXha6aN6KEk+RGQKQsgUaENo7zbmfoNQ=;
-        b=JwABKuZmBKFXCEdPO7uIqmdmgQ3/opu/zAlDgoI9D9k1AVdYp5T4BVQDZZHYgV3rp1
-         hU3jKtrKBmAANwzqne/TJSBPItj9TolYhH/8QSg+Xj9HQhwEL1n6NuJzHYAnXa0QFxFv
-         j8b65d65RybgVI3ey4tFOJRzphpuXwrlL/GOOU99MWY/2tJcZgJ5q7Q70vAczBWP21t9
-         Z0VHYsSZa83YmnK7wj4y0YKPVwOxYjl0lWkLJQfbpM1bRDziMFEFukhJS+uND/dseSKN
-         3obcw3yrd3U1+FMrDgQdl8WiG1okji6gIrDFbHbf3lWveUc47fwW++saCiTryfyD0efu
-         cPBw==
-X-Forwarded-Encrypted: i=1; AJvYcCWXmy9tNTnFnM+JR9TB3QNARdssPd5VpS8R0lh33xWBenLj/j73V+I66Tes3fWbTqQtiAqSTU53NLE3fjJz@vger.kernel.org
-X-Gm-Message-State: AOJu0YwsCxemQioPf/dj6EXhRMfWrjc7bXlNGfaqUNUYQxZr2MuUsOr7
-	wzsOwxuSVR7dzZ8PNpe/sxh13HDq5SOEINsG0qxOOgK0dLkXTyaHDAcHF2UFunxITyA=
-X-Gm-Gg: ASbGncuVdiyEbLpQore1FjSENPYrjAj7Mx91eVynwuBnH2HzB+4NJkEYCFv6Q39MowP
-	69tlpS/NaeJ2A2DEaBTxLqj8egioD95dGelgoe6Ll75vkR+0FA4AWtmBUSAoBuHpidvKdUEj51G
-	QVuUJGenssfsB4Zxnm64EbFxOAKgElSy2uS0oesG4oFRVCnSUGxHkspc3aqzQrcKIPwLgh9VpCm
-	sfIVLFWCcJ0MYFwCp9hsVMoKPMYWGE99UiD4gtlsl9eBFX0TLipDU2xc2GgeFwngo3awXJK5ozn
-	D+TTVRxLapuzuu/cpFbpowfrvzmVCeYJkUHsF2LcJhO2daXXhzb0I3CSgQ==
-X-Google-Smtp-Source: AGHT+IH8iNaWsyltjjn5hm92Mn0i+lKy9tqudHYWMWemBgptnZTFbGMbCShMorMXcJs0g8uoqovcGw==
-X-Received: by 2002:a05:6000:2087:b0:3a4:e706:5328 with SMTP id ffacd0b85a97d-3a4e70655cbmr52232f8f.48.1748361541676;
-        Tue, 27 May 2025 08:59:01 -0700 (PDT)
+        bh=j4ceyXfpbHOb26b8XCYLDg0Adii9j8clPXP8isRHjuk=;
+        b=AdB0QE/nGT5YMS7cw3MCLrohHbF8qpdW/H51lj19pDGv0ehfyn68Q2HG2C/5o3E9FU
+         tZFdbRogYdsXMoH081gs1AO7tga9LtdfMvaybQ8GcYZkJcsG91gHVejZSt1sWERiZl8a
+         /5c5YaHZY60JPqUkzbAjILuGuVd+grXwpPsX4ObtBKn3tyUlapyxcNow8jQ3gpxAJ6WM
+         Jua4caS2Kcrw8rpQwaD6AYI7/IgbqaUj1Nfgid0h8wgvUbloss4fQm7qo0yQwo9YU2Q4
+         IZOmqykB/hcI1pWk7qQRq9S1wwvdwXB2V5sJfPa1Gs1E+tgeFXnYefc6f/IIsCSNYywx
+         SWrA==
+X-Forwarded-Encrypted: i=1; AJvYcCWS11HY/0Zz1Iuc766zQwXBiEDhgXHCAVwfaWc8XGUqabRmS10qmr2WwP4z35GzV1M1J1ekIuakJz8W6znP@vger.kernel.org
+X-Gm-Message-State: AOJu0YyoMje10qXlX9a+Yv+mOnoe1/czcKI9fNdLWLTYcQTTWB9Dg57m
+	W7y2jxP5nmva+rVk0DZRAH/cFdEWdfME+vBzPq3WfcIaaojNDXRV8f4TbwS3Ey4D6Jw=
+X-Gm-Gg: ASbGncsTegDpJx7IAhXfIkbc4jyAJDzXW17Qv1FbCTGqUbeAzuSBhK97H5nNbT46HFb
+	YSW+hThe/XIAVJnb5raq+G8IABLU7iSqX1xeRaMjCAI7+0uTsSm1H+Ke4VqixcbvJOfM4D7edi7
+	gT7gtU6z+Np2JXXn26V4X37ja94wmEhm7BcOt5ASo/j3od17sXAc49Q7Ho6FUYAg9SQGYjha1ca
+	1s4dXGyq0Byl+NAlBO5LcXFrrjj5B4/tOfkovsR9eZ8EpHT9TQRdT+pzCoVdWPDk28NpCmw72l2
+	RLNGgvnrJisAH9PH3McM2cDw6F1t/DJy4PS5sYA/tC+vnkG+KsG7buCHsA==
+X-Google-Smtp-Source: AGHT+IEmErbjqw+229GOiiiNp1gk2yeXCVD0vFAogvu/2yFKvfiLTxs0BLJ5USyClF4cC7YxbXHYeQ==
+X-Received: by 2002:a05:600c:6286:b0:442:d9f2:c74e with SMTP id 5b1f17b1804b1-44c932f9428mr116536725e9.23.1748363540016;
+        Tue, 27 May 2025 09:32:20 -0700 (PDT)
 Received: from localhost ([2a02:c7c:7213:c700:f024:90b8:5947:4156])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4d4132534sm8134257f8f.21.2025.05.27.08.59.00
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f3dd94d1sm270586605e9.34.2025.05.27.09.32.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 May 2025 08:59:01 -0700 (PDT)
+        Tue, 27 May 2025 09:32:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,84 +80,123 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 27 May 2025 16:59:00 +0100
-Message-Id: <DA72FVL1VA1K.1MS0NMPR9PJ87@linaro.org>
-Subject: Re: [PATCH v3 08/12] arm64: dts: qcom: sm4250: add description of
- soundwire and dmic pins
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Srinivas Kandagatla"
- <srini@kernel.org>, "Mark Brown" <broonie@kernel.org>,
- <linux-sound@vger.kernel.org>
-Cc: "Liam Girdwood" <lgirdwood@gmail.com>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Krzysztof Kozlowski"
- <krzysztof.kozlowski@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
+Date: Tue, 27 May 2025 17:32:18 +0100
+Message-Id: <DA735DM0N649.3NLLMFUW7ANNM@linaro.org>
+To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>, "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>
+Cc: "Srinivas Kandagatla" <srini@kernel.org>, "Mark Brown"
+ <broonie@kernel.org>, <linux-sound@vger.kernel.org>, "Liam Girdwood"
+ <lgirdwood@gmail.com>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
  "Bjorn Andersson" <andersson@kernel.org>, "Dmitry Baryshkov"
- <lumag@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Jaroslav
- Kysela" <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>,
+ <lumag@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Konrad
+ Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Jaroslav Kysela"
+ <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>,
  <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
  <linux-kernel@vger.kernel.org>, <linux-gpio@vger.kernel.org>
+Subject: Re: [PATCH v3 07/12] arm64: dts: qcom: sm6115: add LPASS devices
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
 X-Mailer: aerc 0.20.0
 References: <20250522-rb2_audio_v3-v3-0-9eeb08cab9dc@linaro.org>
- <20250522-rb2_audio_v3-v3-8-9eeb08cab9dc@linaro.org>
- <a8b2f310-2b1b-454b-9977-f74d975e6e66@oss.qualcomm.com>
-In-Reply-To: <a8b2f310-2b1b-454b-9977-f74d975e6e66@oss.qualcomm.com>
+ <20250522-rb2_audio_v3-v3-7-9eeb08cab9dc@linaro.org>
+ <26afac49-2500-470b-a21a-d57e4ff14fa6@linaro.org>
+In-Reply-To: <26afac49-2500-470b-a21a-d57e4ff14fa6@linaro.org>
 
-On Thu May 22, 2025 at 7:12 PM BST, Konrad Dybcio wrote:
-> On 5/22/25 7:40 PM, Alexey Klimov wrote:
->> Adds data and clock pins description (their active state) of
->> soundwire masters and onboard DMIC.
+On Thu May 22, 2025 at 6:52 PM BST, Krzysztof Kozlowski wrote:
+> On 22/05/2025 19:40, Alexey Klimov wrote:
+>> The rxmacro, txmacro, vamacro, soundwire nodes, lpass clock controllers
+>> are required to support audio playback and audio capture on sm6115 and
+>> its derivatives.
 >>=20
->> Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> Cc: Konrad Dybcio <konradybcio@kernel.org>
+>> Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>
+> Just keep one CC.
+
+Question is which one now. Konrad, is it fine to keep your oss.qualcomm.com
+email here?
+
+>> Cc: Srinivas Kandagatla <srini@kernel.org>
+>> Co-developed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>
+> Missing SoB.
+
+IIRC I took Konrad's changes but at this point I don't remember how much wa=
+s changed.
+So I need to switch to Konrad's owned completely or somehow indicate using =
+tags
+that it is initial Konrad's work.
+
+Konrad, what's your preference here?
+
 >> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
 >> ---
->>  arch/arm64/boot/dts/qcom/sm4250.dtsi | 62 +++++++++++++++++++++++++++++=
+>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 132 ++++++++++++++++++++++++++++=
 +++++++
->>  1 file changed, 62 insertions(+)
+>>  1 file changed, 132 insertions(+)
 >>=20
->> diff --git a/arch/arm64/boot/dts/qcom/sm4250.dtsi b/arch/arm64/boot/dts/=
-qcom/sm4250.dtsi
->> index cd8c8e59976e5dc4b48d0e14566cf142895711d5..723391ba9aa21d84ba2dda23=
-932c20bd048fbe80 100644
->> --- a/arch/arm64/boot/dts/qcom/sm4250.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm4250.dtsi
->> @@ -37,10 +37,36 @@ &cpu7 {
->>  	compatible =3D "qcom,kryo240";
->>  };
->> =20
->> +&swr0 {
->> +	pinctrl-0 =3D <&lpass_tx_swr_active>;
->> +	pinctrl-names =3D "default";
->> +};
->> +
->> +&swr1 {
->> +	pinctrl-0 =3D <&lpass_rx_swr_active>;
->> +	pinctrl-names =3D "default";
->> +};
->> +
->>  &lpass_tlmm {
->>  	compatible =3D "qcom,sm4250-lpass-lpi-pinctrl";
->>  	gpio-ranges =3D <&lpass_tlmm 0 0 27>;
->> =20
->> +	lpass_dmic01_active: lpass-dmic01-active-state {
->> +		clk-pins {
->> +			pins =3D "gpio6";
->> +			function =3D "dmic01_clk";
->> +			drive-strength =3D <8>;
->> +			output-high;
->> +		};
->> +
->> +		data-pins {
->> +			pins =3D "gpio7";
->> +			function =3D "dmic01_data";
->> +			drive-strength =3D <8>;
->> +			input-enable;
->> +		};
+>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/=
+qcom/sm6115.dtsi
+>> index c8865779173eca65f9e94535b5339f590d4b1410..045887ae215b0965ffc098fd=
+31fd18ac1ad90b7b 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>> @@ -2689,6 +2689,138 @@ funnel_apss1_in: endpoint {
+>>  			};
+>>  		};
 >
-> Other SoCs put these in the common dtsi
+>
+>
+> ...
+>
+>> +		swr0: soundwire@a740000 {
+>> +			compatible =3D "qcom,soundwire-v1.6.0";
+>> +			reg =3D <0x0 0x0a740000 0x0 0x2000>;
+>> +			interrupts =3D <GIC_SPI 296 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 79 IRQ_TYPE_LEVEL_HIGH>;
+>> +			clocks =3D <&txmacro>;
+>> +			clock-names =3D "iface";
+>> +
+>> +			resets =3D <&lpasscc 0>;
+>> +			reset-names =3D "swr_audio_cgcr";
+>> +
+>> +			label =3D "VA_TX";
+>> +			qcom,din-ports =3D <3>;
+>> +			qcom,dout-ports =3D <0>;
+>> +
+>> +			qcom,ports-sinterval-low =3D	/bits/ 8 <0x03 0x03 0x03>;
+>> +			qcom,ports-offset1 =3D		/bits/ 8 <0x01 0x02 0x01>;
+>> +			qcom,ports-offset2 =3D		/bits/ 8 <0x00 0x00 0x00>;
+>> +			qcom,ports-hstart =3D		/bits/ 8 <0xff 0xff 0xff>;
+>> +			qcom,ports-hstop =3D		/bits/ 8 <0xff 0xff 0xff>;
+>> +			qcom,ports-word-length =3D	/bits/ 8 <0xff 0xff 0xff>;
+>> +			qcom,ports-block-pack-mode =3D	/bits/ 8 <0xff 0xff 0xff>;
+>> +			qcom,ports-block-group-count =3D	/bits/ 8 <0xff 0xff 0xff>;
+>> +			qcom,ports-lane-control =3D	/bits/ 8 <0x00 0x00 0x00>;
+>> +
+>> +			#sound-dai-cells =3D <1>;
+>> +			#address-cells =3D <2>;
+>> +			#size-cells =3D <0>;
+>
+> Why this not is not disabled? That's a bus. Each bus node makes no sense
+> on its own without the actual devices, thus it is always disabled in the
+> SoC file. Just take a look at other DTSI.
 
-which seems to be sm4250.dtsi in this case unless I am missing something.
+Because I didn't know that. Ok, I'll add disable status to these.
 
-Thanks,
-Alexey
+>> +		};
+>> +
+>> +		lpasscc: clock-controller@a7ec000 {
+>> +			compatible =3D "qcom,sm6115-lpasscc";
+>> +			reg =3D <0x0 0x0a7ec000 0x0 0x1000>;
+>> +			#reset-cells =3D <1>;
+>> +		};
+>> +
+>>  		remoteproc_adsp: remoteproc@a400000 {
+>
+> Looks like not ordered by unit address.
+
+Ok, I need to sort it then and check other parts to see if they are sorted =
+or not.
 
 
