@@ -1,50 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-59612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6081AC5B77
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 22:40:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C5E0AC5B7B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 22:41:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7E9F88A2FC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 20:40:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F2B721BC1AA8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 20:41:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 187AA20E034;
-	Tue, 27 May 2025 20:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8011020B801;
+	Tue, 27 May 2025 20:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="De3iS55A"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Owtdtunm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BF62F5E;
-	Tue, 27 May 2025 20:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D832F5E;
+	Tue, 27 May 2025 20:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748378426; cv=none; b=SQ1MN62m26kAIwzE2wJ/tZY/VT0s/q/8GJmEkde1PWzkhm6w0jcPGuFcIWV2Y8cun8Ud25UGD43xA3hfvYtNWYO6RIA4Crz1+Gc/Na+8noCTWroVOoMHiBDPgLbXENOVvMtZ+a3LTU+HrFpct22XO3zSPwrSIIWGpc8LzA72fTA=
+	t=1748378430; cv=none; b=ihZx0oAJFZiZklwKji952PFyqT8TLXiwSZyR6D4TMufS2YhQiMMapGPAiS0vPcY6r9dGXKg3FBhdczc0ookPUt7ckrdgps7bD/UkrLK1O4PaYXUd0D/qvIUazhEWTVo9MaDJ3ix17+xUh6Z6wMtclGYXfKIHU0f0o25Hj1u2hlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748378426; c=relaxed/simple;
-	bh=OZGSFzDt9WhrXPK5JCxiNfHA9Ym5WHvuiEgfK7Q0v1Q=;
+	s=arc-20240116; t=1748378430; c=relaxed/simple;
+	bh=80WshDR6zLihMIQ1Fuov3rKfCExcliWYG7gNxmXPk7c=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=p8MGNZZxMmv+4Zt9RiVrUyM0G9yF3eWcIc8aWH/40DpAf/zOdYgBfKGFO5wqUhaAnzFN1gRaxQBak+gwAn8j0xexyuZJDZ7p+77V3U3H0zyZATTqBEDOyJsJqL/4OikE3AJMmtI8MoKeaWNjcMLLee6VGAtgxfcGDz71FfIjlmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=De3iS55A; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA04C4CEF1;
-	Tue, 27 May 2025 20:40:20 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=Yk6yyPAc2hOWc4dIMKPayEWT9+x49tnMdUb41Y7MmqNBSGcBC2lJ0x6soYH6mjNRYVIB8GvcrO/KjOirYl2626W7rSyhMynWYJUW1jUqyEFrPtpt9QiUkNiTe30ts29q7wCPpfoRaYA16UOuNIbtyDWlbnnCz6tXdlV0Yk1TKIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Owtdtunm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DC6C4CEEB;
+	Tue, 27 May 2025 20:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748378425;
-	bh=OZGSFzDt9WhrXPK5JCxiNfHA9Ym5WHvuiEgfK7Q0v1Q=;
+	s=k20201202; t=1748378429;
+	bh=80WshDR6zLihMIQ1Fuov3rKfCExcliWYG7gNxmXPk7c=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=De3iS55AV1K33Z7Cg96RhvIjCBqBDiYJIWcyCg2URtg1A1i2rQGnd07mwMDSIyMFI
-	 VLlZ9AdMCQnIdGurR8wVvU4p+xLSuS0+rdSKMJEf+EyCYzTVeEWhSf+bURIiIKz3Sr
-	 5DswnYcOT+R8RCg13Gm65DrKULk4qrhd3m4jX8lib7Fi932Z3nadldn6B/knqCbLvk
-	 DaNdsnSXyzfdtFBBM406pPFeLQUNbPorhAcIpduQvWAobfbNtO/NN/0c3yx0M96OFx
-	 By6eseQ8QBe3Xcu3kUq0A20PvlMGSLYdZhyn1RsHmZXOXKZmwzyRDE64gE8tmOy2xh
-	 6CVkEaPgv/7/g==
+	b=OwtdtunmXPkzmcPo5Zvv90XBDCf3clkTZfEJ+lQkMvBnR6NGp1JWLo4YpnpQouhY5
+	 l91S4Y2z4hOLNvUIwbuO+zRT6T98CGMNGJV8Tm+jaIKhRJQa2KfTk5Ql5KtiL0ma76
+	 +b1N7UYQo+403snDupipODXZ2vQl5eDtfjiGRIWFGaf3uMKCxAoiHIndK927UDnR9A
+	 toNThqSZKsDQTMf81hXqIDAKZV96zls8uomnZ1fsH2fG6yCUTWVNBnsTocx/L2Gh0m
+	 r65qn+57Lbr3hkFzPvDP4gqKqcY810sai7xe9A1HmZc4ZW87RP0LwprblFFSq0L368
+	 jwY8oDt868zPw==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Tue, 27 May 2025 22:40:03 +0200
-Subject: [PATCH v3 1/6] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp:
- Reference usb-switch.yaml to allow mode-switch
+Date: Tue, 27 May 2025 22:40:04 +0200
+Subject: [PATCH v3 2/6] phy: qcom: qmp-combo: Rename 'mode' to 'phy_mode'
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +52,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250527-topic-4ln_dp_respin-v3-1-f9a0763ec289@oss.qualcomm.com>
+Message-Id: <20250527-topic-4ln_dp_respin-v3-2-f9a0763ec289@oss.qualcomm.com>
 References: <20250527-topic-4ln_dp_respin-v3-0-f9a0763ec289@oss.qualcomm.com>
 In-Reply-To: <20250527-topic-4ln_dp_respin-v3-0-f9a0763ec289@oss.qualcomm.com>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -64,64 +63,80 @@ To: Vinod Koul <vkoul@kernel.org>,
 Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
  linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Krzysztof Kozlowski <krzk@kernel.org>
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1748378414; l=1691;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1748378414; l=2335;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=PXkLGrcv3UJAZq8C/WK6VHbmWRh0H5KeqDACbLWooeY=;
- b=WcBiUfrusp5lQZsLehD4Bqyr+NkQempWA6f8W3GrAfmt9OhZOR6dvOeVMhOyG+80r3r2BVFyU
- lyxE3t6IvnHBfqNRqTT4TgbcPQJWKQq9XmfMkLWRH7iKt5bNr3a31I/
+ bh=8zsk6pY1mGQ9V2CSqJ6lVOkHlqYoE0Q7NoLJL4vEC8U=;
+ b=5MZe69aj4TYyDsj0Y9IbfBXXuhHnoYF7mfs5DjE0ElcTr5cxe9zX++shRcDvpWPbFqlYIvSs5
+ LxW3ZppyI3TDwJFWCZLKRQ4nHbjHj7FWOBJ8JnX3o1n6gqjn/nKG0y/
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-The QMP USB3/DP Combo PHY can work in 3 modes:
-- DisplayPort Only
-- USB3 Only
-- USB3 + DisplayPort Combo mode
+There are a numbers of ""modes"" involved: USB mode, Type-C mode (with
+its altmodes), phy_mode and QMP_PHY mode (DP/combo/USB/off).
 
-In order to switch between those modes, the PHY needs to receive
-Type-C events, allow marking to the phy with the mode-switch
-property in order to allow the PHY to Type-C events.
+Rename the generic sounding 'mode' to 'phy_mode' to hopefully make
+the code easier to follow.
 
-Reference usb-switch.yaml as a simpler way to allow the mode-switch
-property instead of duplicating the property definition.
-
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml     | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-index 358a6736a951ca5db7cff7385b3657976a667358..692dbfe26e84778fcabae45ac9fa87195f796adb 100644
---- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-@@ -72,10 +72,8 @@ properties:
-     description:
-       See include/dt-bindings/phy/phy-qcom-qmp.h
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index b09fa00e9fe7db8d97b7179ee15d3f07fe578b0c..d0396817f3a05c7e4baeef0de1332c3a83942a51 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -1687,7 +1687,7 @@ struct qmp_combo {
+ 	int init_count;
  
--  orientation-switch:
--    description:
--      Flag the PHY as possible handler of USB Type-C orientation switching
--    type: boolean
-+  mode-switch: true
-+  orientation-switch: true
+ 	struct phy *usb_phy;
+-	enum phy_mode mode;
++	enum phy_mode phy_mode;
+ 	unsigned int usb_init_count;
  
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
-@@ -105,6 +103,7 @@ required:
-   - "#phy-cells"
+ 	struct phy *dp_phy;
+@@ -3062,7 +3062,7 @@ static int qmp_combo_usb_set_mode(struct phy *phy, enum phy_mode mode, int submo
+ {
+ 	struct qmp_combo *qmp = phy_get_drvdata(phy);
  
- allOf:
-+  - $ref: /schemas/usb/usb-switch.yaml#
-   - if:
-       properties:
-         compatible:
+-	qmp->mode = mode;
++	qmp->phy_mode = mode;
+ 
+ 	return 0;
+ }
+@@ -3091,8 +3091,8 @@ static void qmp_combo_enable_autonomous_mode(struct qmp_combo *qmp)
+ 	void __iomem *pcs_misc = qmp->pcs_misc;
+ 	u32 intr_mask;
+ 
+-	if (qmp->mode == PHY_MODE_USB_HOST_SS ||
+-	    qmp->mode == PHY_MODE_USB_DEVICE_SS)
++	if (qmp->phy_mode == PHY_MODE_USB_HOST_SS ||
++	    qmp->phy_mode == PHY_MODE_USB_DEVICE_SS)
+ 		intr_mask = ARCVR_DTCT_EN | ALFPS_DTCT_EN;
+ 	else
+ 		intr_mask = ARCVR_DTCT_EN | ARCVR_DTCT_EVENT_SEL;
+@@ -3135,7 +3135,7 @@ static int __maybe_unused qmp_combo_runtime_suspend(struct device *dev)
+ {
+ 	struct qmp_combo *qmp = dev_get_drvdata(dev);
+ 
+-	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qmp->mode);
++	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qmp->phy_mode);
+ 
+ 	if (!qmp->init_count) {
+ 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
+@@ -3155,7 +3155,7 @@ static int __maybe_unused qmp_combo_runtime_resume(struct device *dev)
+ 	struct qmp_combo *qmp = dev_get_drvdata(dev);
+ 	int ret = 0;
+ 
+-	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qmp->mode);
++	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qmp->phy_mode);
+ 
+ 	if (!qmp->init_count) {
+ 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
 
 -- 
 2.49.0
