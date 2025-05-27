@@ -1,180 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-59513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27041AC4CB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 13:07:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63774AC4CC0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 13:09:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF76B189683A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 11:07:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F1113ACA0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 11:08:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EAB8255F26;
-	Tue, 27 May 2025 11:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6619254AF3;
+	Tue, 27 May 2025 11:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pZpL8r9p"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OZ5Spbjo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0345924BBFC
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 11:07:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F049824BBFC;
+	Tue, 27 May 2025 11:08:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748344061; cv=none; b=l8pX8Ju0zXmDLF9d0RTOY3ODNIsXR1BhyWQBFAF6mA741QZJrHmJOYSZdubaglnk68/E9du4d0d/fKrSeKEZ9t610MUHSIHGgNqvNfW1s10BN13xubLVCVUARUaCdrJhU0IdsfaSiHWqHIOlHxsMFA4NhpH+D8IMTQBsT2V4Xtw=
+	t=1748344121; cv=none; b=sYmQyCt48CEj5oPvJiLCeU9RMrwY+yrNxDTli/j8Z0FPBctqijGw7Z2S1YFka6CG0kDrQczcHBeuT+QRdJVywZqUglYUnVYpjA2gny/WwTQEU6fwohnhPMBdXk0/p2nP7NSgtLEZLsQ7bEB+Rel739NcdNiPyUC3L0nv6ctJaKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748344061; c=relaxed/simple;
-	bh=TNReqZJtGZrLCB/0a9vyiLrnegGFn1EY2RVuNpQQfr4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AOs6R6OXP9Rq52iXLNdN1HMHzq2N+fbV+8JDLPjCYJ0lS3Mi6/s0f0Xb2TBTy9XOONKVryMtuId2bPoS7KYTgR/vheBeXbcxIr7+hEiF4Ks0cwNwk/UJjmzNkYyAw0kvzPF46pMunLjTMoJvoKGGcpw0HkVAachDFGQMq4nbWes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pZpL8r9p; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54RAJfmo024734
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 11:07:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BfZwm7UuVCY1J5Eelkp5Sukme55QSpM1Z7PhgulTTQg=; b=pZpL8r9pC5UTxYBJ
-	xNNKVLvvDxBI8ddwAvlHO1ECGoDSOvxPywgH0EaeLByqPJNcM15bmjCUdDCg2efx
-	kNr4TFYJUyGeni3IQ1N1cYMtMzbaJWuNdhVcoL8960IWh7aVNEUUOFL6CJgUI2g8
-	uxYu8eV5NT02ZrGPoToPf3f48ybiRoMSm0kU2UVtGwobhDVyna6tmQlZyGeueKwL
-	xL/ocr/23Cheu/l5AbkyQR8iIdmTc1XEFvrlZU0S8Gc7F1WT7P+LzPHaEUNrIWiu
-	5zL/7DnQlLnxMr5RHFtoUlKz5x+U46gWsQdUuA6qW7xSQpSF6NbxWGkjLePd3W/H
-	kyhHIA==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u6b5pppm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 11:07:39 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6faa0435aa8so8653316d6.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 04:07:39 -0700 (PDT)
+	s=arc-20240116; t=1748344121; c=relaxed/simple;
+	bh=lOqrk1vJHm4pg/GFV/rSBJzV0BYL5W2LQEo9bDARkj0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=aitSVMFAlRNa0hVlLTsWOxIDxSVxBHE2xszJwTBNuMNGSirDXkm9KyxhCgn2b3r9fswXurvqdfMSn+Oa+wzcv2MfT39R4b0IlMOdgNaQHQ6F/9xq+3EcXKFqpfKGCRfB6gbMx7BBy3TWqJjG1lQbC5y416DSnNceYMwWuyrZef4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OZ5Spbjo; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ad564b7aea9so844751966b.1;
+        Tue, 27 May 2025 04:08:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748344118; x=1748948918; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VrzlUqZN0a5R+G7GF9tUab03ZGWFooFwFU0L4xjwtxM=;
+        b=OZ5SpbjouIm1pZKN3E2eah8Df8zTVyVn+zNNHyO4JL/9FvmfPJJ8SRnidFxa4Np10x
+         R0flgD5fBbBFMvdD59Hz9XN6zQKpChHP8bJC8X5m9vSlteccRfMfC3SN14rjkdTwmsPx
+         qy7zrOEJUGORrEHwSVR4o2Lo8TzWJlPnQJsPkpk2rgsmpn6Z88aKLvmL8fkDDorTx+fK
+         KuMPWgJU4ZwTwNUDqQAFi6d8OLg98fS68iF38A5RfZUsRO+07z2i/5vcY8ZxiMzyIxey
+         p/hT3/LcjBsCiUGMXG7IwC3y84uMwrSrM4urBVrpnQpzl+6oIkOc+Z8N4PFQz3Fbkjc5
+         L2mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748344058; x=1748948858;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BfZwm7UuVCY1J5Eelkp5Sukme55QSpM1Z7PhgulTTQg=;
-        b=YHvF7tXjhpky4HcDctzbUswDjxR2v4jMLwU+NlgiD9Bc37KWa+XB/pTtVVBOuDZBhv
-         F9AiCmi9RRfZk10nxMxjgL6wK7jEy8rYmkP7MewUInt3BK5ZW+ugkKOm1ZVeXe8AVFIm
-         xHt6VSz5uBHnsjaAHUlOVAmxvYHC133Fwk3AwVhiCaBz9jLqk3/jjyMSQOE9Ujc7JLwz
-         M6FCIZy/AMOMQJSVSvBiIXzCGpHIGPaJ/aB5BZvkYYXE7S4nRNroe1NAne4255A0U6oY
-         upXGZ0dQxljJ+guehpeohPNSl8av6PRFS153Hq/A1EVFpUR41lsqvA81wssldl13lC0d
-         WPSw==
-X-Forwarded-Encrypted: i=1; AJvYcCWDZZ9JMQWdoTF43KvbG0rOEugjNurRaMSFK59VrzOge3hohEjqYDeksMZjihNFkRy8UgQdlbFZ07sBEOqq@vger.kernel.org
-X-Gm-Message-State: AOJu0YzatzbFMdXZC870OBGlGQgzvBBbdULP2QaRUj8xpI0rGikvi2Ji
-	EV35IE/RCB+8+NPcJHE5DMEzZ3i0WJzaftDI8MG6uCIOmOgHJsATbxzSQjghhRP1dYe77wX+R4G
-	3RMrMERX9hwXH6ad+EcAxG/Wer1OpgSDccczWsxoLpLrbsWCggTFT7+bY0+kWhj9GhBRY
-X-Gm-Gg: ASbGncvW7BohsY0B4HoDyM3zvnFrxwVxFyHGiuA0/22JwM5L5yOp+mXRITpGeW9zve+
-	WETJeqZwTBtWepgo0Kz3yg0HVpcGcmwn4EFDsKLY1ECnZz6KkzOpsHD6TAyjd4IQa8D+pK9BTLf
-	1Z67kLndhJkoixUPww5LDBYyK+Qpvnf57LhD3SO6Y80nYyK3f/nhg/lndt6C4gWSH2PPWQM0Z1D
-	e3oy90ktqWgHqSXCc7HsiyK9V3oT4x9OM35ib0IAGDE7nBY8rNZy0tYURpE2XxJ1fqUs/yUfv5i
-	oFg4V3fg1JAd8OshU3f/aKIzZCIJkzOzkC4qrciFPH9TuFu/ZGspd38wY9g9gonMGQ==
-X-Received: by 2002:ad4:510f:0:b0:6fa:b77d:704 with SMTP id 6a1803df08f44-6fab77d1cffmr2652646d6.11.1748344057722;
-        Tue, 27 May 2025 04:07:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF2mKwizuWDXJ5NdWrLqc5LyJuz7xwEsnJFxxBO/LKm/++ub3xsNb3IaRFYXiD6DzRKNQZ0JA==
-X-Received: by 2002:ad4:510f:0:b0:6fa:b77d:704 with SMTP id 6a1803df08f44-6fab77d1cffmr2652406d6.11.1748344057291;
-        Tue, 27 May 2025 04:07:37 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d4ca5basm1813835766b.161.2025.05.27.04.07.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 May 2025 04:07:36 -0700 (PDT)
-Message-ID: <9e471d88-1ace-47ea-b1c0-cfb088626199@oss.qualcomm.com>
-Date: Tue, 27 May 2025 13:07:33 +0200
+        d=1e100.net; s=20230601; t=1748344118; x=1748948918;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VrzlUqZN0a5R+G7GF9tUab03ZGWFooFwFU0L4xjwtxM=;
+        b=ccXjg/FbTBQYBLhmMl8iDdlinTpXMZKZDy1VNDJm8XhqLUA12DqntMSK1n+UIim7BO
+         hXXTXF5XfLmzqhBt1MKI2R6Ep25xl9sTIg7ZAf4qgiqFllJc9qRzqyHWGRwKac6lhed8
+         CLArRXPkMTpYMBiU6nii40tf3XA/mvkQwr7r8LGEvLMhnJS08vbnpTTV4+uKM+jnYY5k
+         UdxpU+Nj7B0Xp9c7dqzPV5Ib5x55ZICoHfkJmmYO3t8yV+7F/vpqDUGtW2eeSddPzBcV
+         1XO5G9eeuPMDsjM0INE8zxgT9LYmBr25aBa1dq5dZpa2wQCJYLfTmC3TLWuhnsc6W7fj
+         iUvg==
+X-Forwarded-Encrypted: i=1; AJvYcCWXM0hFNbX6TEc9vcM1rp3FeA2O+YzoNZNDOz/oX7ypswFEKiro7n3/+oY8blc/KeHnyVrec5CHJnlM@vger.kernel.org, AJvYcCXKLfQw2dYZIlII9U9HfkyeQ/twt3C1IzARHsMSzHma1q2LXU9uq1Bhj9l/ou/1L/oekn2Y5MP8j4uNDWsJ@vger.kernel.org, AJvYcCXlODGlbbNFiQe5dRK4gjt73lrQYZw+t6GRbK0z+XRGZuqc9jQvUwcZBmAIcFLiAxNi1cQNaUgLwb7iizsR@vger.kernel.org
+X-Gm-Message-State: AOJu0YxezY/CM0fyCYPjYCb4e3NidxiYC0dtE73gHLYhQ3YSl7sQJlv5
+	MTIUeQMR7FVF8KgMv+6tXKfknnJB6nqv0yI19cOfYRB9vhLp210qXFE/
+X-Gm-Gg: ASbGnctip6eJW3aoO8Yhg41eJBuzyRKZIOYhk/7M38OsHpluDfhM8eXMGu4D+VFMlAd
+	DW2tGHB6Y+dH4p9EumBJZFROb41yn6aG6nlXbu9GsQIYwjpxcl/A3lqydvxCXdVoNRjXXvY8hvH
+	VrhdxK7atwPWPJ6wRABnid7THvx4V5Hn9532gIZ3AfCMfFfCBAOQyMFAPt+7mWf1smCNuYDGkmk
+	366iXgtxZ9ghwT5A7UD/ZdzjPJTfb7djGX3ACm/XTGYShcDr77EvkCtvmW4QwOo7DXzW5zBk7Yf
+	HRP90fw4hYZFUBf5sD5Lj/Mnwx3XI4KGGTBAAHGYnDyRXXUhlFhPxHgKZhCSuSqf8NiKl+MHtWM
+	3GU1p
+X-Google-Smtp-Source: AGHT+IGJFDt2RJQxu8Iu8q4jKRN0K1XcgwMH030e180iig8ad6QB0tPqnPyZqTiw7ph0nwENS67CkA==
+X-Received: by 2002:a17:907:9483:b0:ad8:6dae:11e6 with SMTP id a640c23a62f3a-ad8986f270emr21002766b.0.1748344116076;
+        Tue, 27 May 2025 04:08:36 -0700 (PDT)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ad52d4cbe90sm1819389666b.165.2025.05.27.04.08.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 May 2025 04:08:35 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Tue, 27 May 2025 13:08:16 +0200
+Subject: [PATCH] spi: spi-qpic-snand: document the limited bit error
+ reporting capability
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] arm64: dts: qcom: ipq5018: add MDIO buses
-To: george.moussalem@outlook.com, Andrew Lunn <andrew@lunn.ch>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King
- <linux@armlinux.org.uk>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20250525-ipq5018-ge-phy-v1-0-ddab8854e253@outlook.com>
- <20250525-ipq5018-ge-phy-v1-4-ddab8854e253@outlook.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250525-ipq5018-ge-phy-v1-4-ddab8854e253@outlook.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=ZcodNtVA c=1 sm=1 tr=0 ts=68359cfb cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=UqCG9HQmAAAA:8 a=0Nq9bldXOn-2tuYZYJwA:9
- a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI3MDA5MSBTYWx0ZWRfXxr3ALiuPcGqY
- dtKhbrV5FMGdrVAmvJnmmUMxfxAMD8TREfV+j5G4qcTvJfPxxSoqNjtFbQAvcSWQG6xgA2VjB3e
- rtmDuGqMRd6a7cc/Su0VuqWC2Ia9BK6wCpIybk9rIeT/BDdJ+Zra5HpjMYW4/nu0nJZ22rgve2x
- ewtCQneXZbxk82IhjczKcZOPB/vSPUGq4O6J3LZcUXLBg0+C1RhBKusrjvZgPGiNpVcysL+Lg9e
- P+xkKwicWZiUlA5w68Gdyq/+eDNH1SSduHx8rVT5fMD6CPGY24+FFj0urep6hdKj/CIfwE++fFV
- WtuXaVKjomQ2l7DuCQEwWpLiDgVT8U9ZH3gC5nfaYanHjn/UxhnXBClp8C2Cgq7JSVhGPbW1XHn
- Fr0vyo6ogebzgFOeO7Ai37RKl9ONcD6KkXrotV/sxwJcralWdeMOikdiOrwU/IlTkDHrqxPD
-X-Proofpoint-GUID: DZU2kmgVSXJ9fmDFQXvOgrw31trxVd06
-X-Proofpoint-ORIG-GUID: DZU2kmgVSXJ9fmDFQXvOgrw31trxVd06
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-27_05,2025-05-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0 priorityscore=1501
- spamscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0 phishscore=0
- impostorscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505270091
+Message-Id: <20250527-qpic-snand-limited-biterr-caps-v1-1-61f7cf87be1e@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAB+dNWgC/x2NQQqDMBAAvyJ7diEJiLZfEQ9rstqFNo27pQji3
+ w1eBuYyc4CxChs8mwOU/2LyzVV820B8UV4ZJVWH4ELnutDjViSiZcoJ3/KRHyecK1UxUjEk/xh
+ m56NfHEGNFOVF9nswTud5AUPqiVxwAAAA
+X-Change-ID: 20250527-qpic-snand-limited-biterr-caps-a198b01c1f0a
+To: Mark Brown <broonie@kernel.org>, 
+ Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 
-On 5/25/25 7:56 PM, George Moussalem via B4 Relay wrote:
-> From: George Moussalem <george.moussalem@outlook.com>
-> 
-> IPQ5018 contains two mdio buses of which one bus is used to control the
-> SoC's internal GE PHY, while the other bus is connected to external PHYs
-> or switches.
-> 
-> There's already support for IPQ5018 in the mdio-ipq4019 driver, so let's
-> simply add the mdio nodes for them.
-> 
-> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 24 ++++++++++++++++++++++++
->  1 file changed, 24 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> index 130360014c5e14c778e348d37e601f60325b0b14..03ebc3e305b267c98a034c41ce47a39269afce75 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> @@ -182,6 +182,30 @@ pcie0_phy: phy@86000 {
->  			status = "disabled";
->  		};
->  
-> +		mdio0: mdio@88000 {
-> +			compatible = "qcom,ipq5018-mdio";
-> +			reg = <0x00088000 0x64>;
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			clocks = <&gcc GCC_MDIO0_AHB_CLK>;
-> +			clock-names = "gcc_mdio_ahb_clk";
+The QPIC hardware is not capable of reporting the exact number of the
+corrected bit errors, it only reports the number of the corrected bytes.
 
-I see there's resets named GCC_MDIO[01]_BCR - are they related to
-these hosts?
+Document this behaviour in the code, and also issue a warning message
+to inform the user about it.
 
-fwiw the addressses look good
+No functional changes.
 
-Konrad
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+ drivers/spi/spi-qpic-snand.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index fd129650434f0129e24d3bdac7e7c4d5542627e6..c2f5ef899f6a60ad98b9d754b7cac1832d0500eb 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -639,6 +639,20 @@ static int qcom_spi_check_error(struct qcom_nand_controller *snandc)
+ 			unsigned int stat;
+ 
+ 			stat = buffer & BS_CORRECTABLE_ERR_MSK;
++
++			/*
++			 * The exact number of the corrected bits is
++			 * unknown because the hardware only reports the
++			 * number of the corrected bytes.
++			 *
++			 * Since we have no better solution at the moment,
++			 * report that value as the number of bit errors
++			 * despite that it is inaccurate in most cases.
++			 */
++			if (stat && stat != ecc_cfg->strength)
++				dev_warn_once(snandc->dev,
++					      "Warning: due to hw limitation, the reported number of the corrected bits may be inaccurate\n");
++
+ 			snandc->qspi->ecc_stats.corrected += stat;
+ 			max_bitflips = max(max_bitflips, stat);
+ 		}
+
+---
+base-commit: b00d6864a4c948529dc6ddd2df76bf175bf27c63
+change-id: 20250527-qpic-snand-limited-biterr-caps-a198b01c1f0a
+
+Best regards,
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
+
 
