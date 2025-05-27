@@ -1,198 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-59569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 612E6AC51DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 17:21:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 928EFAC51EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 17:24:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8C3173BEAC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 15:21:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5CE82162039
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 15:24:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D8AA27AC32;
-	Tue, 27 May 2025 15:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CA2C278772;
+	Tue, 27 May 2025 15:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="darZk/+w"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BvBC8bfP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E08027A477
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 15:21:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B2514AD2B;
+	Tue, 27 May 2025 15:23:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748359274; cv=none; b=YdW04dtM/wlTgC8HX9oIqypvSh/ENzbJRHm0r/HVs/vBaATQKyGSg76u7+7KSMHXGUa0dvl93K9znXZ5T2A5j01Psw5MXo7SNta+9U2gSaZyf9v92yBZ9gIeuIXznIpBt9Fd8MGL3bAtexA2+YbSbRlt/a39CP5seRZrSmwLm6s=
+	t=1748359439; cv=none; b=LE90aDqm4Bq3lx5v363ECiOimE2BduJ2osOjdddCbzOieJ9pRlpyPlr4NBo+jZ3EdaWSxkbg5VkYLl2Zride4W+Ymk77MAo+vS8geWGmQXM5ryUKHExDaazRaDgMZeg/Gw7QX9vt2Yy1Ih9KCDfKNTa21Txp/gE/B8ozWLEmbJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748359274; c=relaxed/simple;
-	bh=feIER1n2xpsKQNWpl7k2prOZxEPU3dBw7oweJY7flpQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QQn4eVg816LzD6uq4aqkfKEWlSgnLnJS3DKo6Sp2L6I9L/IY34XevIVt8CS8xfDQfjYVrM9XZxLk17tCSkhwJJXxpg+wKhUgpBKE+nAU0uoiKLFwm4UciE4iFlAgs4yhuDG3aFDek+q33mfhNzaBjuTyl8cwthFDgu/PQ6dqC6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=darZk/+w; arc=none smtp.client-ip=209.85.219.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e75668006b9so2798249276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 08:21:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748359269; x=1748964069; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=T26QWxsDYRdwe+jygmvaCGYR4lil1tNS/Sd5gdRh8Tw=;
-        b=darZk/+wewl644jbli4CtHccJ+9GocoWKZSJrDWbc5cF1+h48qxzTCdt7wjmS1ZHLq
-         d0p6T9FaLyvo3zZoR4E/qRtTG9e5CA0JKOMfxOstaI3eg1LIuIIOBMpKVxWx5YAO6g6j
-         eNEOIbTmGnK2RKngkHI8OtDogpx04I01BcPwWI0JHqdJqOHJrQ6Jolh00t9l2NJs19Oi
-         PiEkvmmup7Dp8Y/0z0Omsu6imgiEZ6xmsidbDfuSQ+jUW9hyJvkbfvveFOL0D/tBWdt4
-         M09+qnzmVnZYo1oztkmfs9hixO43fD1a+G5iiO9vCHzq1l9LCns+MBH4DL1fCx3a7clY
-         C4Fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748359269; x=1748964069;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=T26QWxsDYRdwe+jygmvaCGYR4lil1tNS/Sd5gdRh8Tw=;
-        b=db+Vn+itRydGBDGbLBt+++2cbPIbN/Wx+9R2ha0i363fkPzzN4qcobwMmOFrUSh5Qm
-         76DzRDB3dGYoFFMbMLaRv0J+umA7w7+uNnuDt6CMOdJBD9iq1RCd0VhJTP1NRuY2Hu+m
-         tfVxNslAGFh8A83D2MkwyWKrvQQYM6X9Gr2uEUSmvsvuH6qQRCweCxOgRe2BE9Ur1dsk
-         /d2qBSKb5FYdpDxN6t0FZApYyzGUwsQ7zcGU/1hgcntvBrS3qH+98SPMDExuPiCMbf1I
-         R7uoNVnusFpL6coFtOMriIpN6dLK7kHJYd0UCh5NwovWWIhDR05lTGgPK82jyEoAo3Hw
-         HdPg==
-X-Forwarded-Encrypted: i=1; AJvYcCVxI1D8eu8tWo2uIdjOkuag3o5Aa+qUOU7m3E+aC0EGp0CFrdeJh2yc9oFIvQKg9kv4KDS7NaUBWdS3JXj3@vger.kernel.org
-X-Gm-Message-State: AOJu0YysvQAjGqjCBCNcadX1YOUASWBEPeOvn19bE1DN1criFyzvkr94
-	vK8L0Oir6mfusBamusdKdoI/ZE7a2ZyBMgZ9FO8XgF55M62A23FVhVFKJ0gJt5nUpU0rHyWkBet
-	IfMFNQQmvUboujz2wuzP6zbwQKiT3L3A90ciKCi4/zg==
-X-Gm-Gg: ASbGnct9yEAMmR84QFCfCYm4W2oB7t2fm15YzGXsK+a7u/qCH6UBR+9jVGllAPrb2Nh
-	AmZTQ2BTPMo42HxyxHAmysZYmmuDJz2+VyvY2J8yH9Ebu3FgieLJHqqNhwBqPYdxpPqetILZjSD
-	F9pS/OLEOM4RSCQatrwaTyscsHsXgwM6Oyvw==
-X-Google-Smtp-Source: AGHT+IH/iWKlaJIOwwRRhHBUl6rn1YTO9wfSe6HoJ7K+FHwMi4NybUGi3rIIMKVONDR+tqmdCwj/bwwpq7pLo5d6Rg4=
-X-Received: by 2002:a05:6902:20c7:b0:e7d:d151:e556 with SMTP id
- 3f1490d57ef6-e7dd151e722mr592915276.32.1748359268966; Tue, 27 May 2025
- 08:21:08 -0700 (PDT)
+	s=arc-20240116; t=1748359439; c=relaxed/simple;
+	bh=uHawQKNWyX/cJedS815p5gSoBiadOAdhl0e7BQ3THks=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=mYR3qrCCKIaJl3KUGr/5ppKCobu27K9ASD7pPh352ElAtHm8fBZBO8af7DMcEqn0+sAT3maUnXVpa/4PSkm+q8Ht4O+bHF8Cv34NUtSt2lid3nX/bQnpuHuuIKmtVSJaBZFd94Gm93RsBZ8lYz3eZa93X/IK/Ze+APbFGt5OF08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BvBC8bfP; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54R7itaT028239;
+	Tue, 27 May 2025 15:22:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	WH41sOw46uGb0O/mCSIo69Vm7oio0sgM/j+ncmuu7NA=; b=BvBC8bfPOQEZR/j7
+	+XXj7hmFjS2txjVbALo40AmFpZ81tzVhBpnPiVFH1xPSVhfSwwUS9aDVJZhsp2/0
+	vXiMIqSsUXB88DDiulFauIY6PAhhmhDCGBJtalJ8dtl8cUkg88s/sm2/q6NFcElf
+	G4SQL9sb4H2DZH7ihlmZIM9phup2jLObnJNMLt9eBl7PhIme3Ku042VBXBvusYWw
+	AsidcLMrg2QAK49B6OiX5eiAZKPXXKECx/ubqf3FgkcElj+BFATjhGe1oiSKufOQ
+	PsBKTUXG5J9AtWcbWb2FlSD5cMxqqHfufgB50A74uJ26dAuSXupJDxT9QO1Ddb4j
+	JfQwfg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46w992hb1d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 May 2025 15:22:55 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54RFMsxm028681
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 May 2025 15:22:54 GMT
+Received: from [10.218.7.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 27 May
+ 2025 08:22:49 -0700
+Message-ID: <93869cf3-de84-4f3b-b120-7126928a5ea6@quicinc.com>
+Date: Tue, 27 May 2025 20:52:47 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241104060722.10642-1-quic_sartgarg@quicinc.com>
- <konkbi4hvd7qc4rhokwrymzqntroy7gijk3ndwv5rluswdrykp@xsafrtrjzmuq>
- <10c90fee-ce7f-4034-9028-4252f19cb67f@quicinc.com> <CAA8EJpoLLDXFQk-ViuaioKrECzMV0aUrcOj4v+Ufs4oHY53mrw@mail.gmail.com>
- <064d3eed-c2ea-4b41-85b2-d2a5a922f8c7@quicinc.com> <ehgjdszjr34xppmkrkicb4pnq326nor26tqu2ekop6ew2j3y3h@pm45aiipzuc5>
- <48c73675-a73f-46f1-81a9-f701a2cf00a5@quicinc.com> <c1ebdaf1-92bb-4f73-bca9-35246d7c10e1@oss.qualcomm.com>
- <ca83b841-aea0-4233-93fe-02a7b5985af4@quicinc.com> <1a0a5178-fcf0-49b6-8e4c-1393c0f4f229@oss.qualcomm.com>
-In-Reply-To: <1a0a5178-fcf0-49b6-8e4c-1393c0f4f229@oss.qualcomm.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 27 May 2025 17:20:31 +0200
-X-Gm-Features: AX0GCFtNeoZFAdW7ml0tNasl6TrIjJWlidTZH10tWfMXfVPVyLDdbwWdfrkKgJc
-Message-ID: <CAPDyKFo9gUOB0VhQn=zD0RDM0=8wO08=VmA6XkHv0EN7M89bjg@mail.gmail.com>
-Subject: Re: [PATCH V1] mmc: sdhci-msm: Enable MMC_CAP_AGGRESSIVE_PM for
- qualcomm controllers
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Sarthak Garg <quic_sartgarg@quicinc.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>, linux-mmc@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	quic_cang@quicinc.com, quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com, 
-	quic_pragalla@quicinc.com, quic_sayalil@quicinc.com, 
-	quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com, kernel@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V5 00/11] Refactor ufs phy powerup sequence
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        "Martin K. Petersen"
+	<martin.petersen@oracle.com>
+CC: <vkoul@kernel.org>, <kishon@kernel.org>,
+        <manivannan.sadhasivam@linaro.org>,
+        <James.Bottomley@hansenpartnership.com>, <bvanassche@acm.org>,
+        <andersson@kernel.org>, <neil.armstrong@linaro.org>,
+        <konrad.dybcio@oss.qualcomm.com>, <quic_rdwivedi@quicinc.com>,
+        <quic_cang@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <linux-scsi@vger.kernel.org>
+References: <20250515162722.6933-1-quic_nitirawa@quicinc.com>
+ <yq1msb6lowo.fsf@ca-mkp.ca.oracle.com>
+ <ni7kedpcz7vchztb5qrs5msdt37mfdoabtt4gdqsaiwmbxlb2a@im4wurr77z43>
+Content-Language: en-US
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <ni7kedpcz7vchztb5qrs5msdt37mfdoabtt4gdqsaiwmbxlb2a@im4wurr77z43>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI3MDEyNyBTYWx0ZWRfX5pCPrc1zpff0
+ ddINaK0caD+7H9oLrJq+xo1G13Cj9+QuLUJHQmSgyTHc/n4kwVEFi1/h+qVBCxNouy6ktD2sx2x
+ 6IbVaYZPgTE1HG7mH+SoHavsgMVNtFMnG4SZZCODBrENmr/TYs0XnjcRlyWjpC0dXoyfDPNUIPN
+ ZTGR2fAh69hDDhb51jn7p5K5q8MwDVNGyS0RFSnCV+CCv0jcrwzOUYhRaW2gBV6cfGq1K72o3l5
+ LI6O2vG+oGOPPzKIpc5qZk+TGprNOCGLzlavI0+5APsVw5uwG91cl/iek8/Zu0x654zE+z+gwXc
+ u/582/GAL5YzEr99/S9MaSTStcJ1q7eEKm6kqJGO+ij8Mk08oMsWs3ikSAI2Qote4FHJu4t7xf4
+ ffniZCHTl71+ZTxqckv6AWLUqz2+k/NRZvw2BnJxTjHuX/zCqiTyJMufiqbyFYTfUbz5Xbtq
+X-Authority-Analysis: v=2.4 cv=Fes3xI+6 c=1 sm=1 tr=0 ts=6835d8cf cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
+ a=HGgBVA14KErkiVD9HLEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: yiuvSsOzWlmG4o9TUWcDiMtnHK8qHTcw
+X-Proofpoint-ORIG-GUID: yiuvSsOzWlmG4o9TUWcDiMtnHK8qHTcw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-27_07,2025-05-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 malwarescore=0 impostorscore=0 phishscore=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=904 spamscore=0
+ adultscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505270127
 
-On Wed, 21 May 2025 at 17:41, Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> On 21/05/2025 18:36, Sarthak Garg wrote:
-> >
-> >
-> > On 5/21/2025 8:19 PM, Dmitry Baryshkov wrote:
-> >> On 21/05/2025 17:35, Sarthak Garg wrote:
-> >>>
-> >>>
-> >>> On 5/21/2025 6:25 PM, Dmitry Baryshkov wrote:
-> >>>> On Wed, May 21, 2025 at 12:46:49PM +0530, Sarthak Garg wrote:
-> >>>>>
-> >>>>>
-> >>>>> On 11/15/2024 6:53 PM, Dmitry Baryshkov wrote:
-> >>>>>> On Fri, 15 Nov 2024 at 12:23, Sarthak Garg
-> >>>>>> <quic_sartgarg@quicinc.com> wrote:
-> >>>>>>>
-> >>>>>>>
-> >>>>>>>
-> >>>>>>> On 11/4/2024 4:19 PM, Dmitry Baryshkov wrote:
-> >>>>>>>> On Mon, Nov 04, 2024 at 11:37:22AM +0530, Sarthak Garg wrote:
-> >>>>>>>>> Enable MMC_CAP_AGGRESSIVE_PM for qualcomm controllers.
-> >>>>>>>>> This enables runtime PM for eMMC/SD card.
-> >>>>>>>>
-> >>>>>>>> Could you please mention, which platforms were tested with this
-> >>>>>>>> patch?
-> >>>>>>>> Note, upstream kernel supports a lot of platforms, including
-> >>>>>>>> MSM8974, I
-> >>>>>>>> think the oldest one, which uses SDHCI.
-> >>>>>>>>
-> >>>>>>>
-> >>>>>>> This was tested with qdu1000 platform.
-> >>>>>>
-> >>>>>> Are you sure that it won't break other platforms?
-> >>>>>>
-> >>>>>
-> >>>>> Thanks for your valuable comment.
-> >>>>> I am not sure about the older platforms so to avoid issues on older
-> >>>>> platforms we can enable this for all SDCC version 5.0 targets ?
-> >>>>
-> >>>> No, there are still a lot of platforms. Either explain why this is
-> >>>> required for all v5 platforms (and won't break those) or find some
-> >>>> other
-> >>>> way, e.g. limit the change to QDU1000, explaining why it is _not_
-> >>>> applicable to other platforms.
-> >>>>
-> >>>
-> >>> Thanks for your comment.
-> >>
-> >> No need to.
-> >>  >> I agree with your concern but for me also its not possible to test on
-> >>> all the platforms.
-> >>
-> >> Sure.
-> >> >> Lets say if I want to enable this caps for QDU1000 for which it has
-> >>> been tested and on any other upcoming target after testing, then how
-> >>> can I proceed to enable?
-> >>
-> >> Let's start from the beginning: why do you want to enable it on QDU1000?
-> >>
-> >
-> > QDU1000 is one latest available target where we have enabled this and
-> > tested. This has been enabled to save power.
->
-> Isn't it a powered device? How much power is the save? Is it worth it?
 
-Just wanted to share my view around this, in a slightly more generic
-way. My answer to the above, would be, yes, for any battery driven
-platform, it should be worth it.
 
-Unfortunately, I don't have any fresh numbers to share for eMMC/SD,
-but just searching for some vendor specific information about their
-eMMC/SD cards, should tell us I think. In fact, this problem isn't
-even limited to eMMC/SD, but rather applies to most flash based
-storage (UFS/NVMe etc) that are used on these types of platforms.
+On 5/21/2025 6:40 PM, Dmitry Baryshkov wrote:
+> On Tue, May 20, 2025 at 09:45:40PM -0400, Martin K. Petersen wrote:
+>>
+>> Hi Nitin!
+>>
+>>> Nitin Rawat (11):
+>>>    scsi: ufs: qcom: add a new phy calibrate API call
+>>>    phy: qcom-qmp-ufs: Rename qmp_ufs_enable and qmp_ufs_power_on
+>>>    phy: qcom-qmp-ufs: Refactor phy_power_on and phy_calibrate callbacks
+>>>    phy: qcom-qmp-ufs: Refactor UFS PHY reset
+>>>    phy: qcom-qmp-ufs: Remove qmp_ufs_com_init()
+>>>    phy: qcom-qmp-ufs: Rename qmp_ufs_power_off
+>>>    phy: qcom-qmp-ufs: Remove qmp_ufs_exit() and Inline qmp_ufs_com_exit()
+>>>    phy: qcom-qmp-ufs: refactor qmp_ufs_power_off
+>>>    scsi: ufs: qcom : Refactor phy_power_on/off calls
+>>>    scsi: ufs: qcom : Introduce phy_power_on/off wrapper function
+>>>    scsi: ufs: qcom: Prevent calling phy_exit before phy_init
+>>
+>> What is your intent wrt. getting this series merged? Can the phy: and
+>> scsi: patches be merged independently?
+> 
+> Unfortunately PHY patches depend on the first scsi patch.
 
-How much there is to gain, obviously depends on the internal behaviour
-of the storage device. Of course, the number of cards being attached
-is important too.
+Thanks, Dmitry, for mentioning the dependency
 
-That said, enabling this feature (MMC_CAP_AGGRESSIVE_PM) needs to be
-done by taking into account that being *too* aggressive (too
-frequently) with turning off the power to the card, may cause a
-potential wear-out/brake of the card if we end up preventing it from
-doing internal house-keeping for too long.
+Hi Martin,
 
-The current default autosuspend timeout
-(pm_runtime_set_autosuspend_delay()) is set to 3s in mmc_blk_probe().
-That seems way too aggressive in my opinion, so perhaps increasing
-that value to ~180s could allow us to enable this, even if 180s is
-just a guesstimate from my side.
+After addressing the review comments for v5, there has been a change in 
+the patch order.
 
-Also note that, during system wide suspend we always turn off the
-power to the card - and we really don't know if that is too frequent
-too. It depends on how the platform is used, compare a laptop with a
-smartphone, the frequency greatly differs.
+In the latest patchset (v6), Patch 2 (SCSI patch) is now required for 
+the functional dependency of the subsequent PHY patches (Patch 3 to 
+Patch 9).
 
-Kind regards
-Uffe
+Patch 1 (SCSI patch) addresses an existing issue and does not depend on 
+any other changes.
+
+Regards,
+Nitin
+
+
+
+> 
+
 
