@@ -1,239 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-59489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDC99AC49D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 10:03:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19442AC4A06
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 10:19:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 82308169E30
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 08:03:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 08C4A17AFC7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 08:19:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 748942288FB;
-	Tue, 27 May 2025 08:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF5CB248F4C;
+	Tue, 27 May 2025 08:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="V2hc46ua"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pVTYCAhX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91B81E7C05
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 08:03:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0801248F70
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 08:19:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748333019; cv=none; b=usM2mut7x6iuLDIxxkn/IQqmrijGtM1ZcPpYCV/zQoihWIuGE7C9n87DjdQ2jkX2zJZSVHuXna1vbdsxhopWc6BELEthnV3mMlKNLvqoI5S2MVqjCI5Xgm+xtqKTqnlFWdFycb//H3PmXRK3TgVFtyMBhDcKyEbw51/vIVQ66/Y=
+	t=1748333974; cv=none; b=SfaovNWH8IByBRkUg/zfWAqah2ysZrhp1P7tj+mIoWvJQdU21L+j1Zz1t0DMM0Ao0v0h9u/MCIo3BqsdpY2UDX5Se3+63VnAizbsjgOskI0c/iBasq8dkcWlLXw4Nfn1xvd1Eh+VpJEAResgdq3EPWsxRtj/hMRVFG9WycPrRaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748333019; c=relaxed/simple;
-	bh=Tw9ffwQSUHNvyxxLxyULMg0IrOoGoCqTvETlYCaMMqs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EhTBuUrlgr4YASmZpCQZga5QkrSsr7nV3YEbAtzaoPFNopYTl+hPHeYBpqJdIkekHP9B5QEeeyQVV4cKHIn7tg/FlmsI0vUCafSPZLtwWSijKE8EEWI7BopzU3sDyukWrf57gr+Y4e0xo99RCN4Djig20UKTZvX6k7DtU1IN1ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=V2hc46ua; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54R4Je0o012264
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 08:03:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WszIx7VZPFdEt7VkNEWoJMRWvZp4/gfefKzR4VSfgHY=; b=V2hc46uaLxWmRLCm
-	EOnm+y8gaJHafeIsxrvwFpxmMOhI6SEKwkBc1QUy7z4lbYRDoJpNcHgD0u/rWQY4
-	2tpKX4p9oIsLTIBC95Rf3LiZdNaeBw3WSddSdHmaG/G3xw+3EKjGeoXgpbjU4Rpd
-	ROOT01JbrefJx0szPpNCDSuIYk0b13k4DIqrWJ97F+2rjpE4kdqUCelXkiQjmlwI
-	3qc183W6T2eY5EmQgP3TeeqSMla+1KnTJwfNafMiruldET2WU8lod0UceeDg5oFE
-	tFB7rN42EHpgXMP/MBQAs+2sLGHNM9VqTH/3PI+VWHT00OdVC8D6Eym3Q+eB5fd5
-	LnaupA==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46w6918g6n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 08:03:36 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4767e6b4596so52456471cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 01:03:36 -0700 (PDT)
+	s=arc-20240116; t=1748333974; c=relaxed/simple;
+	bh=ia8kZdP0HFoJkRuqfb9xYK3PP1X9WFdfCow4Ewno8P0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iP6QtXdnHBoEPHzlexrampZaNF7/ldwE9V1YM2YRpKg2XvK0lPgg4y83OBsTGXNcGX1jKSV4WV3/7rFX71FmFbo3Zesf1LPOkAXBF4Z6r6esG3mGGRI9ivpXzj5yLy9OuhX2QJGE1ZTu98kA6s7wr29VvZtVGNnlyHepWxJpB2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pVTYCAhX; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so36295265e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 01:19:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1748333971; x=1748938771; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dMOUzI+Rl9kCd96v3bJcE+T2pFM5Ij46/8q1c510Oug=;
+        b=pVTYCAhXK0P46qJjOhOoNjEwGWdy7Z6CbVLokeqZf5mbK9vDAB/ep6MskK6VIrTfQM
+         EcTNKvJs+jSB34M0oV7Na+ujMXdhffd4tDC/8qp063d2j4XOksNeFdgISMj/X30xiJty
+         gM+/hTM8P4rLkgm6gk2IOrhD/j7Ci+M7BfWzfv9DnF6kAqPTK2xRO1y0N6Ys3TGzHWo0
+         jvogReYJOQsXzrxW+qlqyBAHShL3nJ0lctCRC0DL2X8DM5+R6m5IQS9P03ZJenMhK1Zd
+         Uw4mVOIF5+8jAq/hpmbzULXJXPlhDQVhVoIvDYV/IacmYptdI0gtYpQbDqi5O1XyNlnJ
+         3w6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748333015; x=1748937815;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WszIx7VZPFdEt7VkNEWoJMRWvZp4/gfefKzR4VSfgHY=;
-        b=NZJnu5jAeYullffDTDBPWfS5++6O4ZX4GhkOEjjuThT/Vs77r8fkpc9lfrZsBtxjOO
-         AI9nswS2S0kews5ngOd+6x+olpmOmZmFGEWXmdoKwe3jxOy7PedRj0gT40T9Hd33YVZj
-         GvFqr8D76xr6p9dGPXnUnf8yOMpf9pWFtfsTMiKM0FNGw2ZM1yya8K6fM3dFpe1T10CN
-         jpKJWPxWagPGBJYdT1OFKmCiu1ObCujtgFSFywvEITYVOPTtSz4gab//3v2cmRFU/B3u
-         Yol6wJwj0mTWQ1dDAprzVb2QgqrIblqmrGjDLJ+d/pujxndMfaFxGxACdIqRSAvLNyzg
-         W7UA==
-X-Forwarded-Encrypted: i=1; AJvYcCUwLuJHZx2SIHH9+cevHwMXUTcreqk5waFkUcb1bhl87sPqjJ+uOM1EBosD3pR178mTeTQso5EmgVuoar20@vger.kernel.org
-X-Gm-Message-State: AOJu0YxZbDpS27YkmvdwuFX9xENRjo1yuvgP+aH3AYcugeDWjZNTMqsV
-	ZRFKnQDznZ0EDfxr35Vj+4NSwaok1y4pQp/YE6kuajVH7VWtSezZdJsP08xyaxhh/+VRwa1c11p
-	zX+QZFJsqzZ/jwjAkAkUIZuFpSx/Qk1MMRcON+yxWixLBGBGmKZt8Ng8mDokV722U1bOcs8d7yQ
-	EQ9j6Y47YW/1nUTQ4UkFHHtlTC9aUjO00yImldR7io+F4=
-X-Gm-Gg: ASbGncumeN6aTmjUlsufbT0SLT0dtHrwwohIQQPXZ0HHGTiXBzZXeH5pTjgRyIE0Bb/
-	WZE886WNrzWGraikaGHhiThR+MPMnbQ1wVovcqjoM+F9h5N5zG9RDw10SYnhTAc3UjECGDG0=
-X-Received: by 2002:a05:622a:4aca:b0:477:5d12:aac5 with SMTP id d75a77b69052e-49f47a0ca9emr227859981cf.35.1748333015240;
-        Tue, 27 May 2025 01:03:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH9K0UfrrHrFrugVr3HImed0MsIRNZ4y7HGt51ljMFTYLA0juwBYp8qblGlD4jS1tkmrbVirdWOBR46VvpqX3I=
-X-Received: by 2002:a05:622a:4aca:b0:477:5d12:aac5 with SMTP id
- d75a77b69052e-49f47a0ca9emr227859511cf.35.1748333014893; Tue, 27 May 2025
- 01:03:34 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1748333971; x=1748938771;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dMOUzI+Rl9kCd96v3bJcE+T2pFM5Ij46/8q1c510Oug=;
+        b=p3qwgR77yjg2b/CsEunE6q0cJ5lmMxBbke8HMGOocKfF95SfpOpO3Yvh2aLYC7SqYT
+         f22KQ0DwUJGK13OMcbr7FuIE+MW0zghRIxt3SH/jaii1TNpopDJBoyBMrGawE/IRw3St
+         wHGTx+wM9nXmhhzpbhgYj/rHhstS20UuHjET7vkElvYKnCJTtPN5R2m/90pa4Mc8CmyG
+         CmqyCULanyyQ0EMsI/sGVmkYEUjOBurjKbz/5OeSY7c+dgiOX1ixFD2RR0ty/iD1noz1
+         X9ztd/ZYY5mCVQpKRCKKAg2MBDG+xmI38TcFthBXc0BgZHQSv5r9ZK5aIyMAnBIhV7Jg
+         djTg==
+X-Forwarded-Encrypted: i=1; AJvYcCVs/wBkBWKsjbPHi+uKCOgGzLU+BvSiu4UzLH572GhvlHh8oU1KozsUbZOVbMuIf+xyUO0bgMDha9F69ObU@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywg3L7r2IcivldwfpL5WK/uNl4j6dBSXzfTGBM831Tq+NJ+fi/7
+	/2PQQ0EqBmQBT+CR7tm0BTUNuNY0J1mwatILfHVXYLWsqt8lvw8wuEOxVZ+LpLLfhOE=
+X-Gm-Gg: ASbGncvUKyIy7TN1pUC+FLHMYloCMHpT+YTr1IVoOQsAlsEJFwziUGBRTQ4ZJY2TQDq
+	87YTro/9DHsLqhdDG+kCkxdgEyRPq9DdCMefB/8GMvM4RuT2MWq45HRpB02hftqnsbZ1XcsYguj
+	+6u1zL5jVfOhbLh3qBaw6hlJIdpzcMBi+NELOUMlp21iQEthGvLCqXMUiKatfjzvBvAIx7gzGlS
+	KZINT4eL59ltLCADZIlG1Aw0AN0l1fAYbID1YNV4UI3viS/LngsqBPgAR5yRwVhSyRzvEDPanoG
+	dVY19vOXDFCGocWygmW3/bpAOGiyoZgDJMuylrbFIEPWdd5RuDBfPqkbJRarvR1N56imjcl1Tsp
+	G5nnR4S6lav6cmVSj
+X-Google-Smtp-Source: AGHT+IFjTsGVi2CK4OkLJrI3Smdv4M+APjpCmrgDiR1D6zlgPXvjVIxxpzIlokGl7A7BbOpPT/vmFw==
+X-Received: by 2002:a05:600c:a13:b0:440:6852:5b31 with SMTP id 5b1f17b1804b1-44c91dd151amr132439605e9.10.1748333971167;
+        Tue, 27 May 2025 01:19:31 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4d53ce0b4sm6807921f8f.37.2025.05.27.01.19.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 May 2025 01:19:30 -0700 (PDT)
+Message-ID: <b3d4b080-5a9e-4af0-bce7-41c06d1d27f0@linaro.org>
+Date: Tue, 27 May 2025 09:19:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250526232837.686822-3-mailingradian@gmail.com>
-In-Reply-To: <20250526232837.686822-3-mailingradian@gmail.com>
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Date: Tue, 27 May 2025 10:03:23 +0200
-X-Gm-Features: AX0GCFuEESA_UG-xuTSPOEsVzkLJoG02sDE_VKiTeY9dagCcyyVqht-Cyly0QJA
-Message-ID: <CAFEp6-2mhuLptwA4JYJm2cvftZxufoJGB0y94LAd5ZWGP1e-RA@mail.gmail.com>
-Subject: Re: [PATCH] media: qcom: camss: Power pipeline only when streaming
-To: Richard Acayan <mailingradian@gmail.com>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=WfoMa1hX c=1 sm=1 tr=0 ts=683571d8 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
- a=pGLkceISAAAA:8 a=rXl6UsPILG4lY9eO-DUA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-GUID: TLL9AQ5VPcZAuEJIe4zQXtfh2_X68PRk
-X-Proofpoint-ORIG-GUID: TLL9AQ5VPcZAuEJIe4zQXtfh2_X68PRk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI3MDA2NCBTYWx0ZWRfX7IPH4SKSPsYx
- MshA49zQvDa49E9FGA4RUTgR8OM4XOqSwGGM822DGgnRLUF8GGTu0z82TZASeyodNlhEZwI5FFa
- pG96LVcKCa/Wb9AFhg83zsvhLjnujHgh2YbtEKqkbai7rkncaR70MWnK7VoGiGkPv2GzkyQqQ/9
- 8iqoAamZ/WQqTQWxUBlVnzw5bLo3D2w4FtjzIxCATJfkok1bAdnVFhhB/jUxBcu5YHIRtvrBaDf
- PW2+j1GVqMo9zd/e3f5/ZzmBTnZfTBIRjo45zHogW4PpRuFzkfmGwGJAxqMb0+4MLb/fY1c+nyp
- 0R9xw1n2wDP2Ss1ySI4BHYBiuTbf4310+HLvgcMhvGLQE9/g8UgZcGTBR6kzJIo8kNc0/hqkZs4
- ChNPSSWRgBHJcYJ5bGXGDnAWcRU4y0T4fTIIrJcEcDZH2plOu9uGHwE02bBYxPWKuyrzOykG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-27_04,2025-05-26_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 phishscore=0 mlxlogscore=990 priorityscore=1501 mlxscore=0
- bulkscore=0 adultscore=0 spamscore=0 suspectscore=0 malwarescore=0
- clxscore=1015 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505270064
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] media: qcom: camss: vfe: Add VBIF setting support
+To: Vincent Knecht <vincent.knecht@mailoo.org>, Robert Foss
+ <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+ phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20250525-camss-8x39-vbif-v2-0-6d3d5c5af456@mailoo.org>
+ <20250525-camss-8x39-vbif-v2-1-6d3d5c5af456@mailoo.org>
+ <f2162241-6423-43b3-a6b5-74e373cd8834@linaro.org>
+ <10c45ae1d2453f7c81dadeb132b6c2911ab7d95c.camel@mailoo.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <10c45ae1d2453f7c81dadeb132b6c2911ab7d95c.camel@mailoo.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, May 27, 2025 at 1:28=E2=80=AFAM Richard Acayan <mailingradian@gmail=
-.com> wrote:
->
-> The libcamera plugin for Pipewire may keep an open file descriptor to
-> the video device, even while streaming. This simplifies its operation,
-> as it only needs to keep track of a number instead of a file path. When
-> the video device is open but not streaming, the pipeline can be powered
-> off. Move the pipeline power management to the prepare_streaming and
-> unprepare_streaming functions.
+On 26/05/2025 17:20, Vincent Knecht wrote:
+>> You have both
+>>
+>> if (vfe->res->has_vbif) {
+>>
+>> and the above switch, there's no point in checking this twice in two
+>> different ways.
+>>
+>> Choose one, suggest has_vbif is enough.
+> I think the switch is still needed, so that distinct settings
+> can be applied for different SoCs.
+> 
+> Or should I just apply the 8939 settings unconditionally, and keep it
+> as an exercice for the next dev who need other settings for another SoC
+> to deal with ? 🙂
+> 
+> Thanks
 
-It seems to affect more than just this specific driver then? According
-to the documentation in v4l2-mc.h, v4l2_pipeline_pm_get() is intended
-to be called during video node open. If we're changing that behavior,
-we should also update the function's documentation accordingly so the
-change can be properly discussed and understood by a broader audience.
+The flag should be enough.
 
-
->
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->  .../media/platform/qcom/camss/camss-video.c   | 39 ++++++++++++-------
->  1 file changed, 25 insertions(+), 14 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/me=
-dia/platform/qcom/camss/camss-video.c
-> index aa021fd5e123..8d05802d1735 100644
-> --- a/drivers/media/platform/qcom/camss/camss-video.c
-> +++ b/drivers/media/platform/qcom/camss/camss-video.c
-> @@ -225,6 +225,21 @@ static int video_check_format(struct camss_video *vi=
-deo)
->         return 0;
->  }
->
-> +static int video_prepare_streaming(struct vb2_queue *q)
-> +{
-> +       struct camss_video *video =3D vb2_get_drv_priv(q);
-> +       struct video_device *vdev =3D &video->vdev;
-> +       int ret;
-> +
-> +       ret =3D v4l2_pipeline_pm_get(&vdev->entity);
-> +       if (ret < 0) {
-> +               dev_err(video->camss->dev, "Failed to power up pipeline: =
-%d\n",
-> +                       ret);
-> +       }
-> +
-> +       return ret;
-> +}
-> +
->  static int video_start_streaming(struct vb2_queue *q, unsigned int count=
-)
->  {
->         struct camss_video *video =3D vb2_get_drv_priv(q);
-> @@ -308,13 +323,23 @@ static void video_stop_streaming(struct vb2_queue *=
-q)
->         video->ops->flush_buffers(video, VB2_BUF_STATE_ERROR);
->  }
->
-> +static void video_unprepare_streaming(struct vb2_queue *q)
-> +{
-> +       struct camss_video *video =3D vb2_get_drv_priv(q);
-> +       struct video_device *vdev =3D &video->vdev;
-> +
-> +       v4l2_pipeline_pm_put(&vdev->entity);
-> +}
-> +
->  static const struct vb2_ops msm_video_vb2_q_ops =3D {
->         .queue_setup     =3D video_queue_setup,
->         .buf_init        =3D video_buf_init,
->         .buf_prepare     =3D video_buf_prepare,
->         .buf_queue       =3D video_buf_queue,
-> +       .prepare_streaming =3D video_prepare_streaming,
->         .start_streaming =3D video_start_streaming,
->         .stop_streaming  =3D video_stop_streaming,
-> +       .unprepare_streaming =3D video_unprepare_streaming,
->  };
->
->  /* ---------------------------------------------------------------------=
---------
-> @@ -599,20 +624,10 @@ static int video_open(struct file *file)
->
->         file->private_data =3D vfh;
->
-> -       ret =3D v4l2_pipeline_pm_get(&vdev->entity);
-> -       if (ret < 0) {
-> -               dev_err(video->camss->dev, "Failed to power up pipeline: =
-%d\n",
-> -                       ret);
-> -               goto error_pm_use;
-> -       }
-> -
->         mutex_unlock(&video->lock);
->
->         return 0;
->
-> -error_pm_use:
-> -       v4l2_fh_release(file);
-> -
->  error_alloc:
->         mutex_unlock(&video->lock);
->
-> @@ -621,12 +636,8 @@ static int video_open(struct file *file)
->
->  static int video_release(struct file *file)
->  {
-> -       struct video_device *vdev =3D video_devdata(file);
-> -
->         vb2_fop_release(file);
->
-> -       v4l2_pipeline_pm_put(&vdev->entity);
-> -
->         file->private_data =3D NULL;
->
->         return 0;
-> --
-> 2.49.0
->
->
+---
+bod
 
