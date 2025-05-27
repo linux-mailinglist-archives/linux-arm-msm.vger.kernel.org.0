@@ -1,194 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-59607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B33AAAC5AC9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 21:34:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2B0CAC5B23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 22:00:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 496DB8A1F1B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 19:34:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7151C1BC01BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 20:00:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 909FB28A1ED;
-	Tue, 27 May 2025 19:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB2641F460B;
+	Tue, 27 May 2025 20:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="f7KOfxMG"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XPtrrEcz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1DD27E7C6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 19:34:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412E2199924
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 20:00:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748374458; cv=none; b=VlikQ3SOF39bArCXGNTWRudE4+KAfSuxmzIPm/bW6o8e+ZDeSXMNF+n2Sl6m0HSpxGeFbW9SDmgEBSn/tUNON8Nclq4mV6aZc4p0lTtWLHm4y0nyMjRiMms5qFc4+EZGfckal7MVJEZ0eWf4gqRecJLydz9VwWRop9J9Cd6wlms=
+	t=1748376022; cv=none; b=CnDPggG3WW/NE39I0OVhnyDhGc+8p7+e7YEqN82oeJn2Ayyi1eT6vi1rjWGRANDWyOxY/7MrfvAYQqV9yOmbPj9y94CCTOdj0/sZeYwo/8IxcvuRpTwwoKRELkk8Mkk9Z77lMERAIb/Rise7taq6skC+WfxDlOiehJSjqCEXWvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748374458; c=relaxed/simple;
-	bh=Gim1EvixO2KOD3fkcQcxzVOp9jQUWY6RRDvJDoEk5ek=;
+	s=arc-20240116; t=1748376022; c=relaxed/simple;
+	bh=r+r3Ev0TVh+OQFJHNFQ5imeQ6CgXND4LddHcuerf/BY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GDUqK7IGfFujboFiPK4gVOdp0Q7NrDNBTSOmOvFTnj7xt4y7e+GjNH9phpksh+aWdCokhuoJC43dw/mLL4TbvDhSJFbpOJmaA6H86q7HpsuTwysixZEDPHBCJdpY19FFRRkS75aTSn+G13wQ35f8hL2hjAVJQ+ZbaTe7vwHOT4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=f7KOfxMG; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=jdgGVsv9FNyggPg43biXiV/uI/Agn2GFMLGO+uXDMnEofU5xrUDvrEugKe2ZedSpwmlC6V05cW67Pgh1/P0KXIqeY/NauNXgnobX0J32E3lq8E6jU3XbMAFKpLjawYh3byGWmBu2tPFwjWd961Y+x0j8jXsfFgEW6wtkMQsDWsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XPtrrEcz; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54RC7sGx017822
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 19:34:14 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54RHTYpf028888
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 20:00:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YUJvkp2j6OioUYbp/N/L2xk2T6fTsVqGyrhvt5RQDrA=; b=f7KOfxMGfgVUsHGT
-	k2dwXfNH0XREBIwF7qzgvSVgAHFz67XTm2Mw1M634Zh258+1wRvsZfr9cDhJE8wz
-	erUPKCCCgqYcu20wCSiAjO9EztP6/zc073AU3XS3g3TKzIunrL81t7IOmnt6VkpX
-	izg0cisgcw4JW3arrcNzzM1AzyjU4Y9vIYOzaSf3qeWzm6bhajscxxGttiJU3+VR
-	P1Y9LgiNmThHUITWLY3bQnyjqcBXXtfBBE8gMRJLxbfwOulcZ8XntKditXw2WODY
-	KBR08kN0yTX02L37UsWP8U3aKqwUugU4rdqn5IrBToQnYruB5s5JPfspwx/x0Ahc
-	40fPFA==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u66wg7jq-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=/hQzHID9K/GQqrpL0xslyVn1
+	e1R+sKoEQ9p0RvNHIao=; b=XPtrrEczWNZc+3TmBNXkgqvIqvOKxVnS/0AQ3ZPH
+	XMgJRg1r34Z6DBtpxSM9Pz1pG8iLX9lNwPBHxK4BOfgh1Pb1w04JKx0oLQdwEotc
+	kWD7sGtWnQ1WkudY7SeN9WsXHG9XOQau2SYv4yL3b9HSIH5lU+x/pOgoYO8VFent
+	LVcZBxFQSwsNOPZnhr5TgDDl6ZEVW04G0EwWKG6ZPA8NsAW8ISOSUpOv+hdoqH41
+	hj6HH2g91BTQbljwJRK5mze89cqjsvsfHmheoztx/+CzAYhwzob+23tRw3v8AkUB
+	4cQiSf02XRlz3osHdJFit17gkaqfMeAOCFIWFOeW0bJUbw==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46whuf0ec9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 19:34:14 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6fab1bd8a71so25205926d6.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 12:34:14 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 20:00:20 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6faacebc952so41249886d6.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 13:00:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748374453; x=1748979253;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YUJvkp2j6OioUYbp/N/L2xk2T6fTsVqGyrhvt5RQDrA=;
-        b=wFVgUvMg1OJwZzErTyH0usU9AYDGckYPPilDfUOFOBh9cJXG6sL0qiPpCFzYUCABZb
-         J3QOkV6A68/6tUvpYQ75TvqsdEPiappqQtc+3Cj3V9SpqKjc9ZV/sWQJP7qCBSAC0sgh
-         wGeNNSS5WNgIc+KdO8rgyddeHw/lFQd3mu+Ph+CExxUQe3ejZX/g4BiHBehkY7Om/30W
-         rDK4qN9GLT9SBwfSs8C4kUKOaRNyaT6oW0YcM69aZrq7Q6DHVXZzRJXIjS+OqDy/W9rG
-         6gYauVOsN5SOHsruCG/d10dkMynIp0u08y9/conEIxU7LtsWUbHkLKSiMb8LqBBjVIZp
-         3RjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX60V0kbaWaPZf6+o92S81tqRXaGu06EraGRhtHzpPVwJPSE9oyHVuEZYe+dMad6KdfqcZgas5VKL8Adzb7@vger.kernel.org
-X-Gm-Message-State: AOJu0YxVSEyKKW7aVwgkdA6HPb1NRO9wBBE5kYQ9Racq7JCcDKkd9O44
-	aRj3sKuzoKv92Hrzd/RWRzobqtHUSHmlUa2SrFhFHtrHYdUfYqjgL2xqUzmxvq2x1vg5Vhby1f1
-	NbKV2Z4aKIUIfyfbyS3qNidq1hRgTlmES+03UobPcKVQXdh8CquuzK0sH4C36Zz2zjbnN
-X-Gm-Gg: ASbGncvNmtHVlLaBrr/sbfniTWWge2ddS4BUTXn2AsgkFnqulDrAQlIosWzdYZrz2H/
-	7sWJDkC3camri0aicDKd4AIvivFMLQZHF48Vzn4Y2BhH4zMoRWEy+ooBmNKmuDoJTUFNB7zWlzX
-	OQKnpwbtm0E0RksK0xnRhD0vEFmivzOf/aT+BrQ57FWQ93JoXsabt3uMkGNpYzFKY+G8bwxgDgU
-	MJbls83DvsnjmHnyhWdzt4w+BHThAWo1Za4XDsyEAvgjsFNJtFDTHBY99Y38DltkN6kXECWFk08
-	MaSScczNIJiGQ3qR9wLwAIwzGgfhyRhJKv9VF8HOeUmxhOemJrYQlobnSdvxAq+n2Z0vGurLJRo
+        d=1e100.net; s=20230601; t=1748376019; x=1748980819;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/hQzHID9K/GQqrpL0xslyVn1e1R+sKoEQ9p0RvNHIao=;
+        b=UhKe7JIWb6OAoU8PdpwusIhgMluwc66kGbw22ZiJn+qcp5pdp7b5axCHkDltEmItBO
+         VzgOZJxp9Ya8fWIDfec4fD/kPD1br1jqJR4LlYT8laqO1LNoueVIs8Fgz/ibsmONb8IH
+         dI4XBnmT11MtDfQsX+atC8IHkjSMUkGw4fnars5igwVZlxJP8738QrmtTUt1PZV1KwZ6
+         veU0hOySc1ClzxvedNMhQoyNmfBBxoSUlxX5bbdiZL9tnikwnP2V/Vm6tCYRKAAMqc+Q
+         3txxGxLotq8wWq9eqKNKx30MP4BWPd4kjlwHtOCjB5hNYUGBSQGW66FLiy+bLKQ0FrDN
+         Scog==
+X-Forwarded-Encrypted: i=1; AJvYcCW01EaXCpOf6A1XGXEQJWnxBnihLa0dBMLI3UUsVt11ftutUq2ogLzsLCy8v0OQLz9oTkLT1O3YQRNVU0Hn@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+RV4lzzoea08mB1q48q7wdqkqVX37RzFIyu4kpVT/bBOq0IW+
+	Q4rcu0/GHO6sZE/zR6PT/oi7EZUX5WOLFroT87BJ2+x/FesU+B3lLbxR6EfGTwIsU0lxsu0X4xP
+	d/feppdcQ9taAoq+qIzd0GzekgYOvqh7i+DlZCDQ9MDo5X8+Va++wtLIdGy3Fe++NV8XD
+X-Gm-Gg: ASbGncu4AF0ojodgmm9aMQUh9QsKlGx3ABs/XYwi4OcKyOmFRI9aZjyt7E1d4LyMfrk
+	+16Fb9OG07E7Cjtt7a/PC/2J2hLPRAnyaOAZq4vY6p0iIdPWhVj2IFuGhru52PuJWmoOavj/+TA
+	eushuCSxFBnNKxsZuwaDa7v6owKcLKZzTbG/qhKz9VysvAAgwtAleVuBVKWuaOapngqKaJMQee9
+	EJ3JnTgc/iy39laft2XvSqg6L0/sPsuW6KVi/ay/5b+wo+Mxh9Ue9c3ZFsGdUiq90nHg3Oq2SFP
+	A4VIh5cVEPogv7K/Oi+TFtTRLxXA7q1f1ghYr/AUMeWr+95Hr2oIfeB6SyDuHjrOl+h/OE0Blnw
 	=
-X-Received: by 2002:ad4:5f0c:0:b0:6fa:ba71:9851 with SMTP id 6a1803df08f44-6faba719f3cmr24651906d6.34.1748374453320;
-        Tue, 27 May 2025 12:34:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFVjlh7IJ1HPf8/Ye4KqMKhjhW+XesLiSZ6cwya1THWS+oCZUq91KslQK5TLzdgt+AXUqmiwA==
-X-Received: by 2002:ad4:5f0c:0:b0:6fa:ba71:9851 with SMTP id 6a1803df08f44-6faba719f3cmr24651516d6.34.1748374452953;
-        Tue, 27 May 2025 12:34:12 -0700 (PDT)
+X-Received: by 2002:a05:6214:764:b0:6e4:2dcb:33c8 with SMTP id 6a1803df08f44-6fa9d287827mr222638116d6.29.1748376018691;
+        Tue, 27 May 2025 13:00:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHIadGV3qXoRtlRWm4E/ppziPIKI08C68tushmJjy66kSMJ7emHgGlulrNCKBk7DuSuJ0hw0g==
+X-Received: by 2002:a05:6214:764:b0:6e4:2dcb:33c8 with SMTP id 6a1803df08f44-6fa9d287827mr222635146d6.29.1748376016581;
+        Tue, 27 May 2025 13:00:16 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-328085b8f21sm52046441fa.81.2025.05.27.12.34.10
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5532ee57cacsm5746e87.120.2025.05.27.13.00.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 May 2025 12:34:11 -0700 (PDT)
-Date: Tue, 27 May 2025 22:34:09 +0300
+        Tue, 27 May 2025 13:00:15 -0700 (PDT)
+Date: Tue, 27 May 2025 23:00:12 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Kornel =?utf-8?Q?Dul=C4=99ba?= <korneld@google.com>
-Cc: Sebastian Reichel <sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, chromeos-krk-upstreaming@google.com
-Subject: Re: [PATCH] power: supply: qcom_battmgr: Report battery capacity
-Message-ID: <oa5okg7i2s6s7pxm5tn6nnanazze5lnnre4vnwrhopn5s5hsil@vhh22j6b5cvq>
-References: <20250527121807.3597061-1-korneld@google.com>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Add interconnect to primary
+ USB3 controller
+Message-ID: <sgm2ya5h3dp2rnsowhjxzmdby4qxljnxq3eyalo4fieorkfnh2@u6ili3stvwjn>
+References: <20250527-topic-x1e_usb_icc-v1-1-43b604cb0609@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250527121807.3597061-1-korneld@google.com>
-X-Authority-Analysis: v=2.4 cv=aYJhnQot c=1 sm=1 tr=0 ts=683613b6 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=dt9VzEwgFbYA:10 a=1XWaLZrsAAAA:8 a=P46Q_Kkv9e1Fnqp5vpcA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-ORIG-GUID: IcfK2EtM_OYSNogFuZpok_kqVEhjpiZb
-X-Proofpoint-GUID: IcfK2EtM_OYSNogFuZpok_kqVEhjpiZb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI3MDE2MyBTYWx0ZWRfX20k1aA4yug+A
- AfHGGCXOBL6nNqV75ydH7CxMMs6vyq+kcGFrREg6j2RUcsCB4hAdBVaVre9jEq4Icobs63AjSpp
- CF4bj2P8uG3sKYHny6Ez+i1KRz1d96aJcjkPwHg3QS24u6VJvn30BN44ipx/bcy6NzmVPgpCQvq
- 8f2C4o4RH6PtSNgt6raG4mPmInOHKpvBa7JpQRh3MzruDPzUvVjE6GkSEjkusNLVIJ7OTIiLmo7
- nTDBBADucZT5scW6x/SODYeHiDP5rW9VLH7J+t0j11NsWhpNEHAh4AF6IMFamqHqaacdpwt13Tk
- SzUNnBgsgsQMmdFfF7uvVRmqN+iXT/VPOCGDDEysobKkb/9S98MQbI7JCUxuhZqK2iN+JtPPIjf
- Ez0iSjdKOR48AtAAJsNWy55GveZy6z36Gf5CIUQqlPAlibLjZE9LfFCtrluc2gflwJqxIKL7
+In-Reply-To: <20250527-topic-x1e_usb_icc-v1-1-43b604cb0609@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=OslPyz/t c=1 sm=1 tr=0 ts=683619d4 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=vqQ__KNFWrN3ZOIeZgIA:9
+ a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=CjuIK1q_8ugA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-ORIG-GUID: kbx2S_1hkNDI7D8p2sQS-Mdvw6msvOlt
+X-Proofpoint-GUID: kbx2S_1hkNDI7D8p2sQS-Mdvw6msvOlt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI3MDE2OCBTYWx0ZWRfX87SJaSfJRNen
+ o0btGJKlF6KyVb/KNeB9v/wxHKADwDjDT4+wYjkolV1ILIFSuAp6oPabyCCm4Zh4ETVq3iluJcr
+ YwTcdBrD9heLAFZa1YFOPUD4fcWuNnZ1RTh7GzeRC8J+OrxCkXSystGfX/7q7r2ld42kJvosPjC
+ m9HY16m9u+6cNr4nwQLFQQSARMerN06MXaZ1uJmmyJkEFtSGePOAH2JSvutEbUr+grfp7N1B8tS
+ Y/4Ku8ywqOUkwWzHOOCNcR2pmOIYFbF1m/bdpm+WKfB+KjZCTzZ2EYL0vfkgoiS1BG+zbc8Kj+9
+ bdER4a8F3ocFu87nw/kU1CstiYivSYVXB4xsu/UvgDOu3Jnknb/tquDdL4m0INiSSJoHTffEnpo
+ acOZmg93aKjQ2zbCzxBBtD+3Q0wWLZFrRGxbHDIdx7AaMW7BLrWfvZtQy2EjzUFgQR4NCOfs
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-27_09,2025-05-27_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 impostorscore=0 adultscore=0
- mlxlogscore=999 lowpriorityscore=0 malwarescore=0 mlxscore=0 spamscore=0
- clxscore=1015 bulkscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505270163
+ impostorscore=0 phishscore=0 mlxlogscore=726 adultscore=0 malwarescore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 mlxscore=0 lowpriorityscore=0
+ spamscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505270168
 
-On Tue, May 27, 2025 at 12:18:07PM +0000, Kornel Dulęba wrote:
-> Battery charge can be reported in several different ways. One of them is
-> is charge percentage referred to as POWER_SUPPLY_PROP_CAPACITY in the
-> power supply API. Currently the driver reports the capacity in this way
-> on SM8350, but not on the newer variants referred to as SC8280XP in the
-> driver. Although this is not a bug in itself, not reporting the
-> percentage can confuse some userspace consumers.
-> Mimic what is done in the ACPI driver (drivers/acpi/battery.c) and
-> calculate the percentage capacity by dividing the current charge value
-> by the full charge. Both values are expressed in either uWh, or
-> in uAh.
+On Tue, May 27, 2025 at 09:26:17PM +0200, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> Signed-off-by: Kornel Dulęba <korneld@google.com>
+> This seems to have been omitted during the initial bringup.
+> 
+> Fixes: 4af46b7bd66f ("arm64: dts: qcom: x1e80100: Add USB nodes")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > ---
->  drivers/power/supply/qcom_battmgr.c | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 7 +++++++
+>  1 file changed, 7 insertions(+)
 > 
-> diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-> index fe27676fbc7c..5ed5452ab51c 100644
-> --- a/drivers/power/supply/qcom_battmgr.c
-> +++ b/drivers/power/supply/qcom_battmgr.c
-> @@ -577,6 +577,8 @@ static int qcom_battmgr_bat_get_property(struct power_supply *psy,
->  		val->intval = battmgr->status.capacity;
->  		break;
->  	case POWER_SUPPLY_PROP_CAPACITY:
-> +		if (battmgr->status.percent == (unsigned int)-1)
-> +			return -ENODATA;
->  		val->intval = battmgr->status.percent;
->  		break;
->  	case POWER_SUPPLY_PROP_TEMP:
-> @@ -617,6 +619,7 @@ static const enum power_supply_property sc8280xp_bat_props[] = {
->  	POWER_SUPPLY_PROP_STATUS,
->  	POWER_SUPPLY_PROP_PRESENT,
->  	POWER_SUPPLY_PROP_TECHNOLOGY,
-> +	POWER_SUPPLY_PROP_CAPACITY,
->  	POWER_SUPPLY_PROP_CYCLE_COUNT,
->  	POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN,
->  	POWER_SUPPLY_PROP_VOLTAGE_NOW,
-> @@ -1063,6 +1066,21 @@ static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
->  		battmgr->ac.online = source == BATTMGR_CHARGING_SOURCE_AC;
->  		battmgr->usb.online = source == BATTMGR_CHARGING_SOURCE_USB;
->  		battmgr->wireless.online = source == BATTMGR_CHARGING_SOURCE_WIRELESS;
-> +		if (battmgr->info.last_full_capacity != 0) {
-> +			/*
-> +			 * 100 * battmgr->status.capacity can overflow a 32bit
-> +			 * unsigned integer. Do a temporary cast to avoid that.
-> +			 */
-> +			battmgr->status.percent =
-> +				(uint64_t)100 * battmgr->status.capacity /
-> +				battmgr->info.last_full_capacity;
 
-Can you use mult_frac(), preventing the overflow?
-
-> +		} else {
-> +			/*
-> +			 * Let the sysfs handler know no data is available at
-> +			 * this time.
-> +			 */
-> +			battmgr->status.percent = (unsigned int)-1;
-> +		}
->  		break;
->  	case BATTMGR_BAT_DISCHARGE_TIME:
->  		battmgr->status.discharge_time = le32_to_cpu(resp->time);
-> -- 
-> 2.49.0.1151.ga128411c76-goog
-> 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
 -- 
 With best wishes
