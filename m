@@ -1,148 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-59514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63774AC4CC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 13:09:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A741AAC4CC4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 13:11:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F1113ACA0A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 11:08:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4B4D93BF1FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 May 2025 11:11:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6619254AF3;
-	Tue, 27 May 2025 11:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EF13253F3C;
+	Tue, 27 May 2025 11:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OZ5Spbjo"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Xhac2tSD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F049824BBFC;
-	Tue, 27 May 2025 11:08:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C9223E35E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 11:11:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748344121; cv=none; b=sYmQyCt48CEj5oPvJiLCeU9RMrwY+yrNxDTli/j8Z0FPBctqijGw7Z2S1YFka6CG0kDrQczcHBeuT+QRdJVywZqUglYUnVYpjA2gny/WwTQEU6fwohnhPMBdXk0/p2nP7NSgtLEZLsQ7bEB+Rel739NcdNiPyUC3L0nv6ctJaKc=
+	t=1748344278; cv=none; b=kuvJIHFrHJBC+Swei2MekFoJPlMzb6bdD7pVTGlCCTO+3eyh8hY/7xNDvrisMSyP9lV/r9u18Yx/Z/5CFyqEPET4x4+OUTimuwwpSAL+/73W0da5xMYE+++8dTgem++kQNlyrOHZw8+mU5QtTq+JX4g/uWo/h+osWFhJfKS3H9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748344121; c=relaxed/simple;
-	bh=lOqrk1vJHm4pg/GFV/rSBJzV0BYL5W2LQEo9bDARkj0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=aitSVMFAlRNa0hVlLTsWOxIDxSVxBHE2xszJwTBNuMNGSirDXkm9KyxhCgn2b3r9fswXurvqdfMSn+Oa+wzcv2MfT39R4b0IlMOdgNaQHQ6F/9xq+3EcXKFqpfKGCRfB6gbMx7BBy3TWqJjG1lQbC5y416DSnNceYMwWuyrZef4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OZ5Spbjo; arc=none smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ad564b7aea9so844751966b.1;
-        Tue, 27 May 2025 04:08:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748344118; x=1748948918; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VrzlUqZN0a5R+G7GF9tUab03ZGWFooFwFU0L4xjwtxM=;
-        b=OZ5SpbjouIm1pZKN3E2eah8Df8zTVyVn+zNNHyO4JL/9FvmfPJJ8SRnidFxa4Np10x
-         R0flgD5fBbBFMvdD59Hz9XN6zQKpChHP8bJC8X5m9vSlteccRfMfC3SN14rjkdTwmsPx
-         qy7zrOEJUGORrEHwSVR4o2Lo8TzWJlPnQJsPkpk2rgsmpn6Z88aKLvmL8fkDDorTx+fK
-         KuMPWgJU4ZwTwNUDqQAFi6d8OLg98fS68iF38A5RfZUsRO+07z2i/5vcY8ZxiMzyIxey
-         p/hT3/LcjBsCiUGMXG7IwC3y84uMwrSrM4urBVrpnQpzl+6oIkOc+Z8N4PFQz3Fbkjc5
-         L2mQ==
+	s=arc-20240116; t=1748344278; c=relaxed/simple;
+	bh=FpczGp8RbMHvucMtA6eVbMd4JpRzTIshwjXMkvAmexc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ptcLGtoYmswUwg011osxIyIWMWQOfkav35oAlkdpgAhAWw2w53ilN5sYVz6xbMFsCgoKXYmYq9DBhf5y9EAltL0b/nrFGK0r+UjDgm+dZZcf5/LVloI0eQMi0XKBA6ZNlrVHHRTTGxSs6m9bTwLS625hW9i2vFHg7bvDOs+HxmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Xhac2tSD; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54R9YxP8002206
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 11:11:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Wxu/TiS7w60udZYPhI7bm5MyIilaLqI8XYTNdOjf2qs=; b=Xhac2tSDdUdKr0PB
+	qZnQYKuWSW0x5pQQGDnKPX38EFLIJWCECi/SbSe/GtCbdbpp9NC3PfHkWfefklDs
+	6E5igb2dP6NqLhswcfL3wflGyA7koo0wgbm+4rcTSOGLKwMaf5Y2N3nH524LM6MJ
+	oV2+wl6clU6CRkPtHhnfNKbu9ikl0M170r0yPaBpHwQfLdEjyi9d169uYhZuL70q
+	hgyegrcFwvectaLJJ92n5rFfZJ+UvZ+Rdi6uDTfkdT/62Es3L+N6tVIiBCslVYe4
+	7oNYqUhnor4NTcAjPI6XfpZKNe7gab4GqmnaQMfl9TnIC5inxv7QPnXrjAA6orBV
+	j8iu4Q==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46wavkr946-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 11:11:14 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6faa016252bso11311306d6.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 04:11:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748344118; x=1748948918;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VrzlUqZN0a5R+G7GF9tUab03ZGWFooFwFU0L4xjwtxM=;
-        b=ccXjg/FbTBQYBLhmMl8iDdlinTpXMZKZDy1VNDJm8XhqLUA12DqntMSK1n+UIim7BO
-         hXXTXF5XfLmzqhBt1MKI2R6Ep25xl9sTIg7ZAf4qgiqFllJc9qRzqyHWGRwKac6lhed8
-         CLArRXPkMTpYMBiU6nii40tf3XA/mvkQwr7r8LGEvLMhnJS08vbnpTTV4+uKM+jnYY5k
-         UdxpU+Nj7B0Xp9c7dqzPV5Ib5x55ZICoHfkJmmYO3t8yV+7F/vpqDUGtW2eeSddPzBcV
-         1XO5G9eeuPMDsjM0INE8zxgT9LYmBr25aBa1dq5dZpa2wQCJYLfTmC3TLWuhnsc6W7fj
-         iUvg==
-X-Forwarded-Encrypted: i=1; AJvYcCWXM0hFNbX6TEc9vcM1rp3FeA2O+YzoNZNDOz/oX7ypswFEKiro7n3/+oY8blc/KeHnyVrec5CHJnlM@vger.kernel.org, AJvYcCXKLfQw2dYZIlII9U9HfkyeQ/twt3C1IzARHsMSzHma1q2LXU9uq1Bhj9l/ou/1L/oekn2Y5MP8j4uNDWsJ@vger.kernel.org, AJvYcCXlODGlbbNFiQe5dRK4gjt73lrQYZw+t6GRbK0z+XRGZuqc9jQvUwcZBmAIcFLiAxNi1cQNaUgLwb7iizsR@vger.kernel.org
-X-Gm-Message-State: AOJu0YxezY/CM0fyCYPjYCb4e3NidxiYC0dtE73gHLYhQ3YSl7sQJlv5
-	MTIUeQMR7FVF8KgMv+6tXKfknnJB6nqv0yI19cOfYRB9vhLp210qXFE/
-X-Gm-Gg: ASbGnctip6eJW3aoO8Yhg41eJBuzyRKZIOYhk/7M38OsHpluDfhM8eXMGu4D+VFMlAd
-	DW2tGHB6Y+dH4p9EumBJZFROb41yn6aG6nlXbu9GsQIYwjpxcl/A3lqydvxCXdVoNRjXXvY8hvH
-	VrhdxK7atwPWPJ6wRABnid7THvx4V5Hn9532gIZ3AfCMfFfCBAOQyMFAPt+7mWf1smCNuYDGkmk
-	366iXgtxZ9ghwT5A7UD/ZdzjPJTfb7djGX3ACm/XTGYShcDr77EvkCtvmW4QwOo7DXzW5zBk7Yf
-	HRP90fw4hYZFUBf5sD5Lj/Mnwx3XI4KGGTBAAHGYnDyRXXUhlFhPxHgKZhCSuSqf8NiKl+MHtWM
-	3GU1p
-X-Google-Smtp-Source: AGHT+IGJFDt2RJQxu8Iu8q4jKRN0K1XcgwMH030e180iig8ad6QB0tPqnPyZqTiw7ph0nwENS67CkA==
-X-Received: by 2002:a17:907:9483:b0:ad8:6dae:11e6 with SMTP id a640c23a62f3a-ad8986f270emr21002766b.0.1748344116076;
-        Tue, 27 May 2025 04:08:36 -0700 (PDT)
-Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ad52d4cbe90sm1819389666b.165.2025.05.27.04.08.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 May 2025 04:08:35 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Tue, 27 May 2025 13:08:16 +0200
-Subject: [PATCH] spi: spi-qpic-snand: document the limited bit error
- reporting capability
+        d=1e100.net; s=20230601; t=1748344273; x=1748949073;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wxu/TiS7w60udZYPhI7bm5MyIilaLqI8XYTNdOjf2qs=;
+        b=BJGFtfv50mNyQFMVqw45bSx7b4D03GU5ctReqXlJ4nPm2hb5vJq3mRTcf8GGqq/UAB
+         T4yGOWVzXWgUEuB1gzgQmpF59FlOFE6G4m4BDw3Z/UglnXx5uoZ+/EPCgVpSvajy4eQh
+         jz/NhDx+hSEN/OVVWRvSKG44eY0Mr4rgLFwBm683g8FdC3vlsju00Hzpoal54AKLSvp3
+         1n6vuDxDNtcBKAY3IizPo+3jXG3begy0tPXY3UmoEyASF2t0OqZgqgaXR3BPxR/HlAv6
+         dq0AIugbZ0S+DkKN2w4x0GomoUO0hcfnHeHSwNVX4mkw68OsrS//SndGtVDk9JmYUDjv
+         ruIw==
+X-Forwarded-Encrypted: i=1; AJvYcCU/sfCplvB/ZbwPPLx8xf11nvm10BjfVUuKoC/FXTs+gMP1ctruwpmxDlK4UdbJPDO/X4h0y8UB/HSXooJ3@vger.kernel.org
+X-Gm-Message-State: AOJu0YzyWQ/ISM8Z86gy8SQKdwU09Si9GmOWcs5ybIpexpHqdK0OwTyp
+	KzMkhAlWxSSIDP9Zng4HYoyrEJ3t/NwPIzJIRPYUQfJxadxfq3PjT27b8xVOXuJ6a4je7HCiueS
+	r34accUhKuUJAgOtWNtwc92T0hY26k3kuc5Ol0bMVJZOuwv2g+s+9B44NQ3MBiXnpePBk
+X-Gm-Gg: ASbGnctSSUixvhJwICc1Cpa6mYgVsDF57+cMnbdffJbeb4HMdVj2WbGQ6M1p3baEYia
+	uNHxo9SV08x23ZiRkrNyU4uMhsGH0zKqWJ1AJbhND4vuYuyGY/ZLszOFKo5P4FwgTZ9ojlow6ET
+	dARgaRYXpRm28zOkH+P0y9pQLhKL11UnbcDanYG47c/JR3rAPdjzcbdNIQ2tRvhAsF+pUSHEPFw
+	es6j6zQPOAB/JiUpC+DNHmXDOKBXFjB+K6bfrI08kl/1wWdBSU7+AXelyL4EAemZu3qGgXDoJi2
+	AamcVCl/ZbwW55xNvcpiEUosgWT/R5X8NkQUOLoOdMPhEOViGGAA/BNrHTpUmCTseg==
+X-Received: by 2002:a05:6214:529d:b0:6f8:471a:9fd8 with SMTP id 6a1803df08f44-6fa9d28fd01mr73647676d6.8.1748344273490;
+        Tue, 27 May 2025 04:11:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFm0tLT/ILRYm9vnaH4+VaVshgcILjv9/Iad9lY7Qmlvc5zr6pF2bh9UDD8e2ltnacri2Wluw==
+X-Received: by 2002:a05:6214:529d:b0:6f8:471a:9fd8 with SMTP id 6a1803df08f44-6fa9d28fd01mr73647486d6.8.1748344273142;
+        Tue, 27 May 2025 04:11:13 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6048f06d915sm3382500a12.70.2025.05.27.04.11.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 May 2025 04:11:12 -0700 (PDT)
+Message-ID: <2e052c11-f22c-4d95-841e-cb4665d02451@oss.qualcomm.com>
+Date: Tue, 27 May 2025 13:11:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250527-qpic-snand-limited-biterr-caps-v1-1-61f7cf87be1e@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAB+dNWgC/x2NQQqDMBAAvyJ7diEJiLZfEQ9rstqFNo27pQji3
- w1eBuYyc4CxChs8mwOU/2LyzVV820B8UV4ZJVWH4ELnutDjViSiZcoJ3/KRHyecK1UxUjEk/xh
- m56NfHEGNFOVF9nswTud5AUPqiVxwAAAA
-X-Change-ID: 20250527-qpic-snand-limited-biterr-caps-a198b01c1f0a
-To: Mark Brown <broonie@kernel.org>, 
- Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8650: Add support for Oneplus Pad
+ Pro (caihong)
+To: Pengyu Luo <mitltlatltl@gmail.com>, konrad.dybcio@oss.qualcomm.com
+Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+        konradybcio@kernel.org, krzk+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robh@kernel.org
+References: <53e1127d-77fb-4bb7-a125-18d7afc0d843@oss.qualcomm.com>
+ <20250525105144.1328104-1-mitltlatltl@gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250525105144.1328104-1-mitltlatltl@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: mtZJiSnfIX_2JJXFt0SHDkGBlYc8cn70
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI3MDA5MiBTYWx0ZWRfX6KfoGAx5j5mn
+ mVrQ2jj7Xl8g5HhKY2iEjM/uykgs6fID5BCDRTDOpvmTKO0SsqAf1knVOBfUkPmRAIIHOkyIVFS
+ BC3lrbmCQEoeq56WCHKLHgZ0v1R2DDWEu6wcREYJUG4LnG/UevCv3qaGDmqKYxDYkLMEGgtUsVn
+ XCxis3/FHuzD1K53BsiqClyGajFH/RPgB/S1+UfAFUpH7HBhewoTYGGwoFGSthlKfrQuVdUX3wp
+ ZtfLpCWdSfQ04Qrp+Kd1Dz5m/U6Cnwhyr0dKanSPDoCnMISi49GA6yCe853kDSQaIFEqTZwwO5g
+ HRRCAbOkhNZbi71mjaLHV+PvSO2vmPkgJRxZgOANOpxjI622zLgR0nILLmrARoL2abfqBJEeJi0
+ 6Q+aNlTPF5jqsNH3JzR7Qpt5k4vrxUcs7OQntSW1hyhYKF2ZEczkWHWYnsDQBOAoUJdmMuyC
+X-Authority-Analysis: v=2.4 cv=fMk53Yae c=1 sm=1 tr=0 ts=68359dd2 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8
+ a=EUspDBNiAAAA:8 a=jYZJvsQXSSxwn8BSTVsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-ORIG-GUID: mtZJiSnfIX_2JJXFt0SHDkGBlYc8cn70
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-27_05,2025-05-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 impostorscore=0 phishscore=0 suspectscore=0
+ spamscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015 mlxscore=0
+ mlxlogscore=999 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505270092
 
-The QPIC hardware is not capable of reporting the exact number of the
-corrected bit errors, it only reports the number of the corrected bytes.
+On 5/25/25 12:51 PM, Pengyu Luo wrote:
+> On Thu, May 22, 2025 at 11:05 PM Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> wrote:
+>> On 5/21/25 10:37 AM, Pengyu Luo wrote:
+>>> On Wed, May 21, 2025 at 5:54 AM Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> wrote:
+>>>> On 5/20/25 6:42 PM, Pengyu Luo wrote:
+>>>>> The OnePlus Pad Pro is an Android tablet based on the Qualcomm SM8650
+>>>>> platform. Its device codename is "caihong". This patch adds an initial
+>>>>> devicetree for basic functionality.
+>>
+>> [...]
+>>
+>>>>> +&i2c2 {
+>>>>> +     status = "okay";
+>>>>> +
+>>>>> +     /* secondary kinetic,ktz8866@11 */
+>>>>
+>>>> You can describe it, the driver sets some nonzero default brightness
+>>>>
+>>>
+>>> But the backlight framework won't index them, which causes sysfs
+>>> collision when the second instance is registering.
+>>
+>> Have you talked to the backlight maintainers? This shouldn't be too
+>> complex to figure out
+> 
+> Last time I tried to touch ktz8866 source, the reviewer advised me to
+> add an backlight API to register the secondary devie. Since I am still
+> working on the other parts when I am free, it remains unresolved. Now
+> that you reminded me, then I tried to do it.
+> 
+> https://lore.kernel.org/linux-fbdev/20250525104022.1326997-1-mitltlatltl@gmail.com/
 
-Document this behaviour in the code, and also issue a warning message
-to inform the user about it.
+I think this should be made more generic, so that devices with e.g.
+quad backlight can be easily accommodated for too.. Perhaps you could
+do something like PLATFORM_DEVID_AUTO with incrementing suffixes and
+make `backlight = <&foo>;` on the panel accept an array of devices
+that would be controlled together
 
-No functional changes.
-
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
- drivers/spi/spi-qpic-snand.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index fd129650434f0129e24d3bdac7e7c4d5542627e6..c2f5ef899f6a60ad98b9d754b7cac1832d0500eb 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -639,6 +639,20 @@ static int qcom_spi_check_error(struct qcom_nand_controller *snandc)
- 			unsigned int stat;
- 
- 			stat = buffer & BS_CORRECTABLE_ERR_MSK;
-+
-+			/*
-+			 * The exact number of the corrected bits is
-+			 * unknown because the hardware only reports the
-+			 * number of the corrected bytes.
-+			 *
-+			 * Since we have no better solution at the moment,
-+			 * report that value as the number of bit errors
-+			 * despite that it is inaccurate in most cases.
-+			 */
-+			if (stat && stat != ecc_cfg->strength)
-+				dev_warn_once(snandc->dev,
-+					      "Warning: due to hw limitation, the reported number of the corrected bits may be inaccurate\n");
-+
- 			snandc->qspi->ecc_stats.corrected += stat;
- 			max_bitflips = max(max_bitflips, stat);
- 		}
-
----
-base-commit: b00d6864a4c948529dc6ddd2df76bf175bf27c63
-change-id: 20250527-qpic-snand-limited-biterr-caps-a198b01c1f0a
-
-Best regards,
--- 
-Gabor Juhos <j4g8y7@gmail.com>
-
+Konrad
 
