@@ -1,223 +1,443 @@
-Return-Path: <linux-arm-msm+bounces-59730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E43DFAC709E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 20:01:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EC32AC70A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 20:03:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 81E54A25981
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 18:00:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D223E16CDCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 18:02:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 436D328E566;
-	Wed, 28 May 2025 17:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 311FF288C19;
+	Wed, 28 May 2025 18:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=semtech.com header.i=@semtech.com header.b="OQuijwmK";
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=SemtechCorp.onmicrosoft.com header.i=@SemtechCorp.onmicrosoft.com header.b="BdopeI+h"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MaeStp27"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail1.bemta44.messagelabs.com (mail1.bemta44.messagelabs.com [67.219.246.114])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F023284B37;
-	Wed, 28 May 2025 17:59:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=67.219.246.114
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748455198; cv=fail; b=lUIaarXsJz1W09jWFfKbqjwe0on2ty4ARdH5q3lT97jWZG5nDKv8iHTkyL4WUEorJ/G8qmBF7t/nz3lNYTtTg+aDYLvPLG4O6pc1UplLCfuVJEQvaR6wFffx4IQi1pQSYyTJo01ANxYkWxNUCTdrqxKiSWC0WKnNvptoG6papmQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748455198; c=relaxed/simple;
-	bh=cdfwOby0l3/9746vq3GHpu0O+eJeMlwBMYIPSd5sspw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=TRaZ8PX+D1p4ivLW4ffxugvoE1tFlEVJBsXD06hTAozgTL8BPRelqN4P55sA6LzGAlkfXaGyk2ShFN+//MRjxZ9Lssq2PXYo9HC/L63YamcTA8k1ujisGtCGmk2DuZrMQzCScK7SZVv52ZLERnudHU+YHeG16VlGwWrwZuS42cQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=semtech.com; spf=pass smtp.mailfrom=semtech.com; dkim=pass (2048-bit key) header.d=semtech.com header.i=@semtech.com header.b=OQuijwmK; dkim=fail (1024-bit key) header.d=SemtechCorp.onmicrosoft.com header.i=@SemtechCorp.onmicrosoft.com header.b=BdopeI+h reason="signature verification failed"; arc=fail smtp.client-ip=67.219.246.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=semtech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=semtech.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=semtech.com; s=k1;
-	t=1748455195; i=@semtech.com;
-	bh=NiWm2qQOyJMNR7Xp+qeVrOO8SyuhU/0vuFW4UpU6r2Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
-	 Content-Transfer-Encoding:Content-Type;
-	b=OQuijwmKsPfn/xDu6HBx4H1tuSzTv0dpKFHzBqoUDmNKm1it2Zkza495rrGbnOTwt
-	 khmWrulT2EzeIDmSnXN8QsjqHpb6BssjZGefmkJ4dhTfOzw8xxdvGTNbYdydJwGt98
-	 fXC9UTBeA4kfv9AYHkiFmbyriutQMHegZ7WZlby1w2TYhYFUieH5G+YcSgWyTEka2u
-	 BIsUrJKfYfRSrF+9AsjKP4+rCzHfF+Oi4ZcfrXKCmqRBLBtsAo8UpqITdvc47R9bmM
-	 F05HGkCMieJ008sV+WXy4aXsjoTYl/+Tbms6eU/sA3wa3In0e9YVSToteRVcLKUzUJ
-	 +7pD+JmHD+wOg==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprHJsWRWlGSWpSXmKPExsWikX0/XVfK3zz
-  D4FWnicXE/WfZLS7vmsPmwOTxeZNcAGMUa2ZeUn5FAmvGiwOTWQpWcVec+rOcpYHxOWcXIxcH
-  o8AyZonuNcvZIJzFrBKfF39hgnCmMUk8bjoL5rAIbGeWmN59gx3EERJYxiRx4OlhZghnDZNE2
-  8ofYAMkBI4ySlz6PJEFInOWUeJW83+ontuMEi+/TwWaxgnkTGaUOHq4EsRmE1CUaP1yGmyLiE
-  A/k0TnxKmMIAlmAS2Jn49vgtnCAiUSW3fvBrNZBFQlHnUfAJrKwcErYCpxaJUTSFhCQF5i8Y7
-  lzCA2r4CgxMmZT1ggxshLNG+dzQyxV1ZixYReNoj6YIk5p39A2ZIS125eYIewZSWOnp3DAjJe
-  QsBZ4vauQIgxEhIHX7xghgj7Six9GQRRLSdxqvccE8wFOzfeZoGwoyV6+34yQQKlU0Di7MJGq
-  MQ7Romt0zIhbBmJ9ssLWCcwasxCcvUsJFfPQrJ6ASPzKkaL4tSistQiXWMTvaSizPSMktzEzB
-  y9xCrdRL3SYt3k1LySosQcQ7305AK91OJiveLK3OScFL281JJNjMCkwvWhYsIOxlNTmvUPMUp
-  yMCmJ8rL+NcsQ4kvKT6nMSCzOiC8qzUktPsQow8GhJMFb62OeISRYlJqeWpGWmQNMcDBpCQ4e
-  JRFeHSGgNG9xQWJucWY6ROoUoy7H94Mn9zILseTl56VKifOe9QUqEgApyijNgxsBS7aXGGWlh
-  HkZGRgYhHgKUotyM0tQ5V8xinMwKgnzavgBTeHJzCuB2/QK6AgmoCPEI0xBjihJREhJNTD5BU
-  Y2SW0X+X19aZB4oPuq1vB/Zxnt7V+brZNUT5x1ak214cXYuSKMwf2BTtMV5skFvtZx0ebg/em
-  aqV2y1juiRtVcUkz4sdZhM8tbJcU+8+571vut6w6eVveFiXXWhL4pUi4Bf7SYpW2Mmrj3P5EJ
-  2PnzQqXaxqVPrrBfuN7SqiW8/IL964wPE73WMbS0rLAOvFQdeVg0ZJpy6qL/0Uwy1TvsU8IyP
-  L7uaTK5p3cuYULkTId5gSxeB9NdpWdfsLomm3tI6a79sQO29xa1nMs577Gz9a+xzvMHEnf29+
-  xIf7lx/etpr20fnirTuy7x6MvPfObpu68mvXjad7alQtHkE/s2OWuHbwGHVtx68VuJpTgj0VC
-  Luag4EQATnTdUMQQAAA==
-X-Env-Sender: zxue@semtech.com
-X-Msg-Ref: server-12.tower-904.messagelabs.com!1748455194!181576!1
-X-SYMC-ESS-Client-Auth: mailfrom-relay-check=pass
-X-StarScan-Received:
-X-StarScan-Version: 9.117.2; banners=semtech.com,-,-
-X-VirusChecked: Checked
-Received: (qmail 3107 invoked from network); 28 May 2025 17:59:54 -0000
-Received: from mail-dm6nam11on2103.outbound.protection.outlook.com (HELO NAM11-DM6-obe.outbound.protection.outlook.com) (40.107.223.103)
-  by server-12.tower-904.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP; 28 May 2025 17:59:54 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=q3AbiVnBxhfgWeye7sKTxPEKm2W38n0hhkSvOoCfSZctAAaPbfGF3kVySySr+8fH+vyivHSHeX6Q1aDgqJkjlsjLjZAD+0zzFOlSx78jY/X3g2Pq53hXAAd8IzQGulNRGUFmyVjxTeyWUfsAvRMQDLD0WATs/QzzhdzeMfQEwWp0IO3PkcIaLuDVOQTzhxFs/M9gkvooOMXBNQYYtqnaeWk/I893wz/8VD8pi+TGdEpCEVMJpDSDOIKRe0A/6XJTA6AVCClslVMbIsDdzWke9uePBMnzs+lTlbIAw3fwzPNziXlWaBwkzYaTkGluViE3HP9wvtenGFg+eKhnX46k/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tgfXmplSujZqKAN+4qyFq4IDDhrFttOHqvoQ4is65oI=;
- b=OXYStTveWMMFLlE7QmrklzEW4lHUJS0LgiRU3zC0JmAHCM1aoV4LfvmJn0aPBXTaUyG9kUG1QaRXBdDQN8citOsLwcT9/iPs/TLWGskF55es5BM3zmpf5yupCE9F9fp/xS+RM+AM9qqRRQmeIYYvuN7r6NZeQ9Uc4DzTYcTKSteuePhTZBRjk9+qsxrkRb115eZt/gdoB9HTs7sCy20Up+Oe+UEXqU0SmI9VJ7qBpmKFullrATIdU3YRNMMSf1ctBICZluZIL2Nr+ADczlfU6qJbatDqEw5VxS/8W6EsZxnrd9jvGEeuUL8urOLhp+737Q2a/tVcUwl96/OCdKaXrg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 38.104.251.66) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=semtech.com;
- dmarc=pass (p=quarantine sp=none pct=100) action=none
- header.from=semtech.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=SemtechCorp.onmicrosoft.com; s=selector1-SemtechCorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tgfXmplSujZqKAN+4qyFq4IDDhrFttOHqvoQ4is65oI=;
- b=BdopeI+h6XH858UP4vaSGwPEPvElxif8BOpDM1IcczVFYMCGYK6djTzRsfKRnjvolNbFFP/7g8o8KzGXiwsX36p+TfMFaIGlNPH+5sI9nNyjIa7R0r7GbR7VAaWynOXdhWkZdBipP3wLu+/Jdw83SBhJ7NSV/d8H/RpWntyeEtw=
-Received: from SN4PR0501CA0125.namprd05.prod.outlook.com
- (2603:10b6:803:42::42) by SJ5PPF4CF2DDE10.namprd20.prod.outlook.com
- (2603:10b6:a0f:fc02::a91) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.38; Wed, 28 May
- 2025 17:59:52 +0000
-Received: from SA2PEPF0000150B.namprd04.prod.outlook.com
- (2603:10b6:803:42:cafe::2d) by SN4PR0501CA0125.outlook.office365.com
- (2603:10b6:803:42::42) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8769.16 via Frontend Transport; Wed,
- 28 May 2025 17:59:52 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 38.104.251.66)
- smtp.mailfrom=semtech.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=semtech.com;
-Received-SPF: Pass (protection.outlook.com: domain of semtech.com designates
- 38.104.251.66 as permitted sender) receiver=protection.outlook.com;
- client-ip=38.104.251.66; helo=CA07RELAY1.semtech.com; pr=C
-Received: from CA07RELAY1.semtech.com (38.104.251.66) by
- SA2PEPF0000150B.mail.protection.outlook.com (10.167.242.43) with Microsoft
- SMTP Server id 15.20.8769.18 via Frontend Transport; Wed, 28 May 2025
- 17:59:50 +0000
-Received: from ca08gitmail.local ([10.23.50.249]) by CA07RELAY1.semtech.com with Microsoft SMTPSVC(10.0.20348.1);
-	 Wed, 28 May 2025 13:59:50 -0400
-From: Adam Xue <zxue@semtech.com>
-To: manivannan.sadhasivam@linaro.org,
-	slark_xiao@163.com,
-	johan+linaro@kernel.org,
-	quic_vpernami@quicinc.com,
-	tglx@linutronix.de,
-	fabio.porcedda@gmail.com,
-	quic_msarkar@quicinc.com,
-	mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: zxue@semtech.com,
-	imocanu@semtech.com
-Subject: [PATCH v1] bus: mhi: host: pci_generic: Add support for EM929x and set MRU to 32768 for better performance.
-Date: Wed, 28 May 2025 10:59:43 -0700
-Message-ID: <20250528175943.12739-1-zxue@semtech.com>
-X-Mailer: git-send-email 2.43.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1C6111AD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 18:02:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748455365; cv=none; b=Z25jLTtnoCcizOhoUxcevesUZGfgqa85LjNgZvEzjsvO2pUvxjJ4luB4LxTYCls5/jL9pNpyigy3CSuc15xZsMWXfIyV9HTzt7MIDTDfBxgFaBzqQTz4dfe2NG4SXz0YuaG44pRlDbe8fo9RTF1/mwe8oxJJ57m90wT903SyiPc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748455365; c=relaxed/simple;
+	bh=gxUDH75Bxi5SvxKp09Z5LhGrAVF3n2fLET8soCrnXhE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pqpobAbvSBG4v5GHjVaQqqOweU4iNfnpe8f8rJwX/qbQlhotPkgnzcj5pEoOIHESvCyQUlUHWvzPqEzl+V3yxF0xZ46FMB68UYK5vW7JIWV3j5QW/EZiFN5OrIcEkZSrmpaHiL0zCeBZpcXvtMQx2WrsZYOLFvYt53a1BVcV+gI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MaeStp27; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SEtPQY002206
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 18:02:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	mt94scoMpGBlHkRfDjr/0ZaH4cqB4nVNpigo9K1BPzI=; b=MaeStp27orB5w35D
+	QO0Llp38kkYe1PnLLuvWzuBuw66WDoKqFgD55Yq/aekHqZHhYWfzcRQ6lYA9X2cg
+	AxRvFj12qWO8JB0OpQgqkjemz3G1CA3UUmn7g0juiro4iGYjy9Q3l+snjC3avDUW
+	9dPLzjqaiYu1nIMS43JD+YhbKTHIa4DYlta/S2f2vp2SA6XLK5TYQeFSkcuisWnL
+	6XLBHR5V98f6WW29lGtZLQ7zdfPshXgnsYco86XnAtO+kYhGBUzR775ofwpz3rA0
+	NBsr/wFAA/FP6ltO8JhyJgGAAprGF2r/EVg5YP+eixt1vU0U2CINetYK+CfQeGA7
+	R/w9Hg==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46wavkvxgg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 18:02:42 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6faaa900d82so2357756d6.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 11:02:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748455359; x=1749060159;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mt94scoMpGBlHkRfDjr/0ZaH4cqB4nVNpigo9K1BPzI=;
+        b=XYJ14cBOL5uMx0uTKA7TFSGcsZiasOgoPkjNcSxYTB8xKLQ3+Rhx3W48WQEVHBP0vG
+         kF0eD2jKMKDe8uPuGqDAhc3/MH5xzj6xpq0nV6JlK/DeA5P6NmIoBcP0SjpI9uJbofbR
+         BMBrIVxcn5Y8QR2P/Xh33/FBBTz/0sZ+hdI6N2Zraj3DfVC98bcD874GIkLcYiTV28Qe
+         nffuWXDsotmVdlECY6wlRwrCYdzCI09BDR4l2x3+ORY68i1x816J6eK/crIpGEz1i6Hv
+         lO/uAMpBffu2KgB53XTGFVyOS+sTcl/98gelYFjgMAUEioCQngFl2jKiLrJt5Ee64w+N
+         WDBw==
+X-Forwarded-Encrypted: i=1; AJvYcCV1XZeMR15K7T6Vd1kAff34iCtLnmSPbSqekBrzUITCYKGkEQYmGbeT9JfjIpplEdWXdSdNeMfFeG2NMFro@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzd43yVTqk+ZKn2vLvPVn4BeeKU8wmrGcNic7oyxAFmIhGceuuW
+	VF2hdjcRBAzWUH13Wuq/YT/6S/HJzQHl2+H87qkyH5zsIWsETzojKluyUunLRcDSECCKOSo9jvU
+	hDeJX3PNX3R7kFkR+vOLitesghwBi+83kSL88GwS4dF3gkG0HHmwrqAITsCx2Yvl10jC5xEKsQk
+	kG
+X-Gm-Gg: ASbGncv5K/P4bmenxRuWF1CED8SycUwJJbu84W93tQ4V2u9OXWupDfNPSeWBkgZesM7
+	ENO8yJp1agtRwx7iWB7mcn/x7pV5q+jAZLElNR00wm6GHsMZ4FMGpLnamzMMJE+/AxLgLGmWjc8
+	gB7JxxOmo206ryQRN6aN0SAklJtifUc/Ate10NDmATofzDWGnPDOEyv+7BnnmNmiK0dtR089B/+
+	sRtT9PZJcTfrp8Vb3AsNkxS2rGtdj63+yLz/jlHmTL6YOCx92qoI7OdSQqqpZ+wb2S+ogFWIa5c
+	dm0WLhFdCNE8U3hgIPpfBJhJmNVmLFzIc0NKp7FuQQ1mKcQvTV5QaA6BWG8bNLg0WtA0EVGvsck
+	=
+X-Received: by 2002:ad4:5f86:0:b0:6e2:3761:71b0 with SMTP id 6a1803df08f44-6fac5d12be7mr8392526d6.5.1748455358624;
+        Wed, 28 May 2025 11:02:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IELc/vRTL5HOf4+VrKbUzHnWp0OBTAbQJHqlFy1eblVpmeIMAnJvUcYCEHijRPc3YXDAGhdqg==
+X-Received: by 2002:a9d:6c98:0:b0:735:a98d:a4c9 with SMTP id 46e09a7af769-735acea2225mr244432a34.7.1748455347211;
+        Wed, 28 May 2025 11:02:27 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5532f61ca28sm379055e87.50.2025.05.28.11.02.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 May 2025 11:02:25 -0700 (PDT)
+Date: Wed, 28 May 2025 21:02:22 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <quic_yongmou@quicinc.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Vara Reddy <quic_varar@quicinc.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Tanmay Shah <tanmay@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Subject: Re: [PATCH 31/45] drm/msm/dp: add dp_mst_drm to manage DP MST bridge
+ operations
+Message-ID: <n5g44odmls5yg4vwb6rfvdxeyy43d4ba4cahanwxe7f5scw7dv@btvb2crhjlbp>
+References: <20241205-dp_mst-v1-0-f8618d42a99a@quicinc.com>
+ <20241205-dp_mst-v1-31-f8618d42a99a@quicinc.com>
+ <4unizv5vi7ve7qdpzmcxj6vvxwxrpcppg3y72csi7ga2jqwhrm@5eu74nuopyqf>
+ <318ee4bc-b39a-43d3-abcb-22588a9a765c@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-OriginalArrivalTime: 28 May 2025 17:59:50.0142 (UTC) FILETIME=[4E6299E0:01DBCFFA]
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF0000150B:EE_|SJ5PPF4CF2DDE10:EE_
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: b992184c-ff87-4533-96d8-08dd9e117139
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|82310400026|1800799024|376014|921020;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?dWVnRe7dF7DHPDQetDtp0UX0JHNpiB6ui2Tchx5JT2yPIkuQOSUMjxiXzwIs?=
- =?us-ascii?Q?7NYBGUgpoveGI6McfMHmtDM+wPiMy4yl18t6fIc8tbXUj8LBELmYBOxD80UQ?=
- =?us-ascii?Q?ePtFsbjq6RSg6KuAwPb4vZbqzNF6a8JE2wVJXEXKZWdA0i0toGWTc7pMBlkW?=
- =?us-ascii?Q?OUwl5D0NeIWjgz95K0s1Vq3uDnQ6DMeetHVHaIHPrzNPDmtSyqwxk6DC+vgL?=
- =?us-ascii?Q?ovoNkSSV9fvon5VUANAC+u5k10PfB9wwHWdD6bLLsplMrOyv3s8CAc1D6H1i?=
- =?us-ascii?Q?47jfEtQhk87QDZ+y1GAxmaWqftgaSIxbARx3JiRSTAAwXwTiM7e/KzBiN05e?=
- =?us-ascii?Q?ZSdD6gmREIcRReEqZh3YX/3wlJV8FpK2PfAJ0IDR1TCZTQ23PbKZc/MLFBOy?=
- =?us-ascii?Q?SQETIcobXQcHCiIrMHltD89SgLzpNsoRq5FZmZb8aLZiRGFRNIKxeIK6lMfv?=
- =?us-ascii?Q?XuSLhrXA6acaYFEQ0hQ+LGSiECR+cbBRD4VtdEbxzgUvhwH15p/oAj+QDgdv?=
- =?us-ascii?Q?t2zRZ6quHiL1Uqw9EOXuD/1yhHTz3VX4gcjd06C4mftj6C/Jjg1qFTJVMDqn?=
- =?us-ascii?Q?exuza3tlSZaW/jLDLGG5GPTdLziJzBme0RuIneB7/AjzXH67jYiTUxwpOcrY?=
- =?us-ascii?Q?duArmp5avWzpABpK8a4YBYRLpCZymjt0cU+aB5N3R5EGGj+jvExBRTyM/sL1?=
- =?us-ascii?Q?QQx1ID1tnp8zcJUTzMZx17D2wqosgAyNTwaDA7EpNgTaGqdJPRL2YQwfUVr9?=
- =?us-ascii?Q?M8q+e8FQRYNMSBkTpM93prRo6rYdke+r7j9/9U6vAMPTfBwVqMgOFvckNwDM?=
- =?us-ascii?Q?9EYgmEO82WV+XYEvACgUZ/XznECAPlsBVHKMYmSQL9x46En5T3snQ9tCtn65?=
- =?us-ascii?Q?gxNHvx2KyTUGkas5BT/9OyNby2jxfOjfwqhnvw65tiuAFjisWGdxttQ7Ynmf?=
- =?us-ascii?Q?THnY8mZaqQV6gU2C90QyvEXab+ya9yOHJF87jRRR/rwZwLUEnscf5VBjky0/?=
- =?us-ascii?Q?FeZ9zc54C3Pygdv5EbTkNM4esYpPVsLrKKp/nE5D9hsLwYEbErba5DRAoswC?=
- =?us-ascii?Q?7C21/DW8Z5PnGQMWUsir8ERdS/XDRhvDMOhNiQ5QFykur8wmNo8BdwKXbTXl?=
- =?us-ascii?Q?/0VYNN1Tw5tOIoVct8HlBWVsQXOtBPuZXvpeM0Lljk9l2o3Lc1UrxFwG8+4q?=
- =?us-ascii?Q?YpZZkbOmC0V3JxYtHECA5HoMY9MqMT5A4feBtVpbatSY2JvVUocr50S4R7ZE?=
- =?us-ascii?Q?kNyq7xQLRK0yeSiovw+uOLoU21Tcm7PbqUNW96l0W2xT60CTOm7Iif/WrwJl?=
- =?us-ascii?Q?5TgMQVQGT91eJ519ErhXFYUiLyvPSQ7z157AAfGkykDYecC2IwjEfhA2t5pq?=
- =?us-ascii?Q?h65iq4wARwWhxIcNvGQRPNXGkY/r7hZ2DNPXsj65Q9y9G0ZHdh35ySG3VQTA?=
- =?us-ascii?Q?IWvwsX8o0i4pvvVJeED6e9g7M6iW3c9Z8IF3JlmTBM0z3xr/v6t1eathInhH?=
- =?us-ascii?Q?6sUxix0lNqH7Zbgb6bCyOV0QC2iAc45cHCHi7PTx79NAXGqddsu/RwAqAQ?=
- =?us-ascii?Q?=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:38.104.251.66;CTRY:CA;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CA07RELAY1.semtech.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700013)(82310400026)(1800799024)(376014)(921020);DIR:OUT;SFP:1102;
-X-OriginatorOrg: semtech.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2025 17:59:50.5711
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b992184c-ff87-4533-96d8-08dd9e117139
-X-MS-Exchange-CrossTenant-Id: b105310d-dc1a-4d6e-bf0d-b11c10c47b0f
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=b105310d-dc1a-4d6e-bf0d-b11c10c47b0f;Ip=[38.104.251.66];Helo=[CA07RELAY1.semtech.com]
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TreatMessagesAsInternal-SA2PEPF0000150B.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF4CF2DDE10
+In-Reply-To: <318ee4bc-b39a-43d3-abcb-22588a9a765c@quicinc.com>
+X-Proofpoint-GUID: smXHl-PcEETM4flMVJnw2IKEyK3DML1P
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDE1NyBTYWx0ZWRfX/VjjZaMTr49R
+ WzP8wy/TmotjXk7s9IjY0IU3pf9wbEEMCrKe1hzqmviZRxq+K+gM9kMpVY8cTkpAnRfBohcVIjo
+ fwmpZch6PgOEiz7F2hzWjklQ59NjqX8Uhk4D6qsiQMeIfjSBBNV5F24AjgHnY1PldMVbAIP4qMD
+ WMtT5CMazZ5J4F+Ck0Z+eMGxuEshUNg00GD2a2Pm5qQX41hyhQSJEXriCNXSZdAS+T7QyD6CDuO
+ UWWgmXLayK8JJ29kI5Xs48y2yZiZBdW2xsB8QCSd+fpPleqebztghaQ4mEUZnz9QxhJzuFy1s7m
+ Do1HTQlrGt6V9YDJttLql4Z7PosHDB8u0nzOjQ5HX9OiHeJQ3wCnwVgWSv71rbTSnaf4WMXhDwe
+ yeiuJ3cut3cPFZ4pwAfcq80ula07Nb0sT5neON8J9EvWdUJEGVTts1KwESwgjKaBtigGNbcl
+X-Authority-Analysis: v=2.4 cv=fMk53Yae c=1 sm=1 tr=0 ts=68374fc2 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
+ a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=AkxkYSyKjySzLiMMLVoA:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10 a=iYH6xdkBrDN1Jqds4HTS:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: smXHl-PcEETM4flMVJnw2IKEyK3DML1P
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-28_09,2025-05-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 impostorscore=0 phishscore=0 suspectscore=0
+ spamscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015 mlxscore=0
+ mlxlogscore=999 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505280157
 
-Add MHI controller config for EM929x. It uses the same configuration
-as EM919x. Also set the MRU to 32768 to improve downlink throughput.
+On Tue, May 27, 2025 at 06:29:49PM +0800, Yongxing Mou wrote:
+> 
+> 
+> On 2024/12/6 18:12, Dmitry Baryshkov wrote:
+> > On Thu, Dec 05, 2024 at 08:32:02PM -0800, Abhinav Kumar wrote:
+> > > Add a new file dp_mst_drm to manage the DP MST bridge operations
+> > > similar to the dp_drm file which manages the SST bridge operations.
+> > > Each MST encoder creates one bridge and each bridge is bound to its
+> > > own dp_panel abstraction to manage the operations of its pipeline.
+> > > 
+> > > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > ---
+> > >   drivers/gpu/drm/msm/Makefile        |   3 +-
+> > >   drivers/gpu/drm/msm/dp/dp_display.h |   2 +
+> > >   drivers/gpu/drm/msm/dp/dp_mst_drm.c | 490 ++++++++++++++++++++++++++++++++++++
+> > >   drivers/gpu/drm/msm/dp/dp_mst_drm.h | 102 ++++++++
+> > >   4 files changed, 596 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+> > > index f274d9430cc311405f890074c1466ffe2ec45ac9..b1e01b3123d9afc4818f059c5d4e7ca70dca3754 100644
+> > > --- a/drivers/gpu/drm/msm/Makefile
+> > > +++ b/drivers/gpu/drm/msm/Makefile
+> > > @@ -142,7 +142,8 @@ msm-display-$(CONFIG_DRM_MSM_DP)+= dp/dp_aux.o \
+> > >   	dp/dp_link.o \
+> > >   	dp/dp_panel.o \
+> > >   	dp/dp_audio.o \
+> > > -	dp/dp_utils.o
+> > > +	dp/dp_utils.o \
+> > > +	dp/dp_mst_drm.o
+> > >   msm-display-$(CONFIG_DRM_MSM_HDMI_HDCP) += hdmi/hdmi_hdcp.o
+> > > diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+> > > index 6ab14e969bce0fd07b3a550bae17e99652479232..a5d4893f689c6afbbe622c9b7dfa98d23d754831 100644
+> > > --- a/drivers/gpu/drm/msm/dp/dp_display.h
+> > > +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+> > > @@ -7,6 +7,7 @@
+> > >   #define _DP_DISPLAY_H_
+> > >   #include "dp_panel.h"
+> > > +#include "dp_mst_drm.h"
+> > >   #include <sound/hdmi-codec.h>
+> > >   #include "disp/msm_disp_snapshot.h"
+> > > @@ -26,6 +27,7 @@ struct msm_dp {
+> > >   	bool is_edp;
+> > >   	bool internal_hpd;
+> > > +	struct msm_dp_mst *msm_dp_mst;
+> > >   	hdmi_codec_plugged_cb plugged_cb;
+> > >   	struct msm_dp_audio *msm_dp_audio;
+> > > diff --git a/drivers/gpu/drm/msm/dp/dp_mst_drm.c b/drivers/gpu/drm/msm/dp/dp_mst_drm.c
+> > > new file mode 100644
+> > > index 0000000000000000000000000000000000000000..e66bd1e565aeb4da3d636eb5f4aa75504d60fd40
+> > > --- /dev/null
+> > > +++ b/drivers/gpu/drm/msm/dp/dp_mst_drm.c
+> > > @@ -0,0 +1,490 @@
+> > > +// SPDX-License-Identifier: GPL-2.0-only
+> > > +/*
+> > > + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> > > + * Copyright (c) 2018-2021, The Linux Foundation. All rights reserved.
+> > > + */
+> > > +
+> > > +/*
+> > > + * Copyright © 2014 Red Hat.
+> > > + *
+> > > + * Permission to use, copy, modify, distribute, and sell this software and its
+> > > + * documentation for any purpose is hereby granted without fee, provided that
+> > > + * the above copyright notice appear in all copies and that both that copyright
+> > > + * notice and this permission notice appear in supporting documentation, and
+> > > + * that the name of the copyright holders not be used in advertising or
+> > > + * publicity pertaining to distribution of the software without specific,
+> > > + * written prior permission.  The copyright holders make no representations
+> > > + * about the suitability of this software for any purpose.  It is provided "as
+> > > + * is" without express or implied warranty.
+> > > + *
+> > > + * THE COPYRIGHT HOLDERS DISCLAIM ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+> > > + * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO
+> > > + * EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+> > > + * CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+> > > + * DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+> > > + * TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
+> > > + * OF THIS SOFTWARE.
+> > > + */
+> > > +
+> > > +#include "dp_mst_drm.h"
+> > > +
+> > > +static struct drm_private_state *msm_dp_mst_duplicate_bridge_state(struct drm_private_obj *obj)
+> > > +{
+> > > +	struct msm_dp_mst_bridge_state *state;
+> > > +
+> > > +	state = kmemdup(obj->state, sizeof(*state), GFP_KERNEL);
+> > > +	if (!state)
+> > > +		return NULL;
+> > > +
+> > > +	__drm_atomic_helper_private_obj_duplicate_state(obj, &state->base);
+> > > +
+> > > +	return &state->base;
+> > > +}
+> > > +
+> > > +static void msm_dp_mst_destroy_bridge_state(struct drm_private_obj *obj,
+> > > +					    struct drm_private_state *state)
+> > > +{
+> > > +	struct msm_dp_mst_bridge_state *priv_state =
+> > > +		to_msm_dp_mst_bridge_priv_state(state);
+> > > +
+> > > +	kfree(priv_state);
+> > > +}
+> > > +
+> > > +static const struct drm_private_state_funcs msm_dp_mst_bridge_state_funcs = {
+> > > +	.atomic_duplicate_state = msm_dp_mst_duplicate_bridge_state,
+> > > +	.atomic_destroy_state = msm_dp_mst_destroy_bridge_state,
+> > > +};
+> > > +
+> > > +/**
+> > > + * dp_mst_find_vcpi_slots() - Find VCPI slots for this PBN value
+> > > + * @mgr: manager to use
+> > > + * @pbn: payload bandwidth to convert into slots.
+> > > + *
+> > > + * Calculate the number of VCPI slots that will be required for the given PBN
+> > > + * value.
+> > > + *
+> > > + * RETURNS:
+> > > + * The total slots required for this port, or error.
+> > > + */
+> > > +static int msm_dp_mst_find_vcpi_slots(struct drm_dp_mst_topology_mgr *mgr, int pbn)
+> > > +{
+> > > +	int num_slots;
+> > > +	struct drm_dp_mst_topology_state *state;
+> > > +
+> > > +	state = to_drm_dp_mst_topology_state(mgr->base.state);
+> > > +	num_slots = DIV_ROUND_UP(pbn, dfixed_trunc(state->pbn_div));
+> > 
+> > drm_dp_atomic_find_time_slots() uses slightly different maths here, with
+> > the different precision. Can we use the data that is set by that function
+> > instead (payload->time_slots)?
+> > 
+> Note that drm_dp_atomic_find_time_slots all call in atomic_check func, not
+> in other place.So can we call this func in atomic_pre_enable? Also, amg
+> driver also have similar usage pattern.
 
-02:00.0 Unassigned class [ff00]: Qualcomm Technologies, Inc Device 0308
-	Subsystem: Device 18d7:0301
+Well, granted that this function can return ENOSPC, it is an error to
+call it in atomic_pre_enable(). Nothing in atomic_pre_enable() /
+atomic_enable() is allowed to fail.
 
-Signed-off-by: Adam Xue <zxue@semtech.com>
----
- drivers/bus/mhi/host/pci_generic.c | 4 ++++
- 1 file changed, 4 insertions(+)
+I think this answers my question: drm_dp_atomic_find_time_slots()
+should be called from atomic_check(), this function must be dropped.
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 03aa88795209..9bf8e7991745 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -695,6 +695,7 @@ static const struct mhi_pci_dev_info mhi_sierra_em919x_info = {
- 	.config = &modem_sierra_em919x_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
-+	.mru_default = 32768,
- 	.sideband_wake = false,
- };
- 
-@@ -813,6 +814,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 	/* EM919x (sdx55), use the same vid:pid as qcom-sdx55m */
- 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, 0x18d7, 0x0200),
- 		.driver_data = (kernel_ulong_t) &mhi_sierra_em919x_info },
-+	/* EM929x (sdx65), use the same configuration as EM919x */
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x18d7, 0x0301),
-+		.driver_data = (kernel_ulong_t) &mhi_sierra_em919x_info },
- 	/* Telit FN980 hardware revision v1 */
- 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, 0x1C5D, 0x2000),
- 		.driver_data = (kernel_ulong_t) &mhi_telit_fn980_hw_v1_info },
+> > > +
+> > > +	/* max. time slots - one slot for MTP header */
+> > > +	if (num_slots > 63)
+> > > +		return -ENOSPC;
+> > > +	return num_slots;
+> > > +}
+> > > +
+> > > +static void _msm_dp_mst_update_timeslots(struct msm_dp_mst *mst,
+> > > +					 struct msm_dp_mst_bridge *mst_bridge,
+> > > +					 struct drm_dp_mst_port *port)
+> > > +{
+> > > +	int i;
+> > > +	struct msm_dp_mst_bridge *msm_dp_bridge;
+> > > +	struct drm_dp_mst_topology_state *mst_state;
+> > > +	struct drm_dp_mst_atomic_payload *payload;
+> > > +	int prev_start = 0;
+> > > +	int prev_slots = 0;
+> > > +
+> > > +	mst_state = to_drm_dp_mst_topology_state(mst->mst_mgr.base.state);
+> > > +	payload = drm_atomic_get_mst_payload_state(mst_state, port);
+> > > +
+> > > +	if (!payload) {
+> > > +		DRM_ERROR("mst bridge [%d] update_timeslots failed, null payload\n",
+> > > +			  mst_bridge->id);
+> > > +		return;
+> > > +	}
+> > > +
+> > > +	for (i = 0; i < mst->max_streams; i++) {
+> > > +		msm_dp_bridge = &mst->mst_bridge[i];
+> > > +		if (mst_bridge == msm_dp_bridge) {
+> > > +			/*
+> > > +			 * When a payload was removed make sure to move any payloads after it
+> > > +			 * to the left so all payloads are aligned to the left.
+> > > +			 */
+> > 
+> > Please don't. drm_dp_remove_payload_part2() should take care of that for
+> > us. What is the reason for caching the data if we have to manually
+> > handle the cache?
+> > 
+> MST framework is managing the port's bandwidth, but we have a bridhge for
+> each stream, so we need to keep track of the payload allcation status for
+> each bridge, how much we used and how much we left. So maybe they are manage
+> two different part.
+
+Well, still no. MST topology master should handle all payload
+allocation. If you need any data, enhance its API instead of duplicating
+its functionality.
+
+> > > +			if (payload->vc_start_slot < 0) {
+> > > +				// cache the payload
+> > > +				prev_start = msm_dp_bridge->start_slot;
+> > > +				prev_slots = msm_dp_bridge->num_slots;
+> > > +				msm_dp_bridge->pbn = 0;
+> > > +				msm_dp_bridge->start_slot = 1;
+> > > +				msm_dp_bridge->num_slots = 0;
+> > > +				msm_dp_bridge->vcpi = 0;
+> > > +			} else { //add payload
+> > > +				msm_dp_bridge->pbn = payload->pbn;
+> > > +				msm_dp_bridge->start_slot = payload->vc_start_slot;
+> > > +				msm_dp_bridge->num_slots = payload->time_slots;
+> > > +				msm_dp_bridge->vcpi = payload->vcpi;
+> > > +			}
+> > > +		}
+> > > +	}
+> > > +
+> > > +	// Now commit all the updated payloads
+> > > +	for (i = 0; i < mst->max_streams; i++) {
+> > > +		msm_dp_bridge = &mst->mst_bridge[i];
+> > > +
+> > > +		//Shift payloads to the left if there was a removed payload.
+> > > +		if (payload->vc_start_slot < 0 && msm_dp_bridge->start_slot > prev_start)
+> > > +			msm_dp_bridge->start_slot -= prev_slots;
+> > > +
+> > > +		msm_dp_display_set_stream_info(mst->msm_dp, msm_dp_bridge->msm_dp_panel,
+> > > +					       msm_dp_bridge->id, msm_dp_bridge->start_slot,
+> > > +					       msm_dp_bridge->num_slots,
+> > > +					       msm_dp_bridge->pbn, msm_dp_bridge->vcpi);
+> > > +		drm_dbg_dp(mst->msm_dp->drm_dev,
+> > > +			   "conn:%d vcpi:%d start_slot:%d num_slots:%d, pbn:%d\n",
+> > > +			   DP_MST_CONN_ID(msm_dp_bridge), msm_dp_bridge->vcpi,
+> > > +			   msm_dp_bridge->start_slot,
+> > > +			   msm_dp_bridge->num_slots, msm_dp_bridge->pbn);
+> > > +	}
+> > > +}
+> > > +
+
+[...]
+
+> > > +	struct msm_dp_panel *msm_dp_panel;
+> > > +
+> > > +	int vcpi;
+> > > +	int pbn;
+> > > +	int num_slots;
+> > > +	int start_slot;
+> > 
+> > Which of the fields (including in_use) are long-lived and which are a
+> > part of the current state? Can we move all state ones to bridge's state?
+> > 
+> in_use only used in bridge_init, so it is long-lived. Looking at it together
+> with the next patch, only num_slots changes during atomic_check, so it is in
+> bridge_state. pbn/vcpi/start_slots only change during bridge enable/disable,
+> so they are placed in the bridge.
+
+Let's look how it will look after refactoring. I'd still push all
+changing fields to state. It make a lot of things much easier.
+
+> > > +};
+> > > +
+> > > +struct msm_dp_mst_bridge_state {
+> > > +	struct drm_private_state base;
+> > > +	struct drm_connector *connector;
+> > > +	struct msm_dp_panel *msm_dp_panel;
+> > > +	int num_slots;
+> > > +};
+> > > +
+> > > +struct msm_dp_mst {
+> > > +	bool mst_initialized;
+> > > +	struct drm_dp_mst_topology_mgr mst_mgr;
+> > > +	struct msm_dp_mst_bridge *mst_bridge;
+> > > +	struct msm_dp *msm_dp;
+> > > +	bool mst_session_hpd_state;
+> > > +	u32 max_streams;
+> > > +};
+> > > +
+> > > +struct msm_dp_mst_connector {
+> > > +	struct drm_connector connector;
+> > > +	struct drm_dp_mst_port *mst_port;
+> > > +	struct msm_dp *msm_dp;
+> > > +	struct msm_dp_panel *dp_panel;
+> > > +};
+> > > +
+> > > +#define to_msm_dp_mst_bridge(x)     container_of((x), struct msm_dp_mst_bridge, base)
+> > > +#define to_msm_dp_mst_bridge_priv(x) \
+> > > +		container_of((x), struct msm_dp_mst_bridge, obj)
+> > > +#define to_msm_dp_mst_bridge_priv_state(x) \
+> > > +		container_of((x), struct msm_dp_mst_bridge_state, base)
+> > > +#define to_msm_dp_mst_bridge_state(x) \
+> > > +		to_msm_dp_mst_bridge_priv_state((x)->obj.state)
+> > > +#define to_msm_dp_mst_connector(x) \
+> > > +		container_of((x), struct msm_dp_mst_connector, connector)
+> > > +int msm_dp_mst_drm_bridge_init(struct msm_dp *dp, struct drm_encoder *encoder);
+> > > +
+> > > +#endif /* _DP_MST_DRM_H_ */
+> > > 
+> > > -- 
+> > > 2.34.1
+> > > 
+> > 
+> 
+
 -- 
-2.45.2
-
-
-To view our privacy policy, including the types of personal information we collect, process and share, and the rights and options you have in this respect, see www.semtech.com/legal.
+With best wishes
+Dmitry
 
