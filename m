@@ -1,237 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-59704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6458EAC6B93
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 16:19:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 655AAAC6BF7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 16:40:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B828C3A41B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 14:18:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 227B5A255A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 14:37:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09B032882AB;
-	Wed, 28 May 2025 14:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03C0828935C;
+	Wed, 28 May 2025 14:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="TJnJr1yD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="erkqbxt8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C4413AF2;
-	Wed, 28 May 2025 14:18:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7EF28850D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 14:37:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748441937; cv=none; b=uiJ+Ir9u1lvau6hkwg+8uhE19adYBCq13UtttWlTqmPdxO8sFP79c0vxi8LNv+6xRSAFhhiEQERLCP8E+KghptFHkn5I3IgC5ftDiPhCLVweAlAJZG1AXbVyO59poD9pZJJ6g/8W7mCQi+dH8hBlrWMICvgRW1nexL8MH2mbInA=
+	t=1748443072; cv=none; b=abq7vs++5fBM6qk6HYK9lPKrbOd25fqcN+BlqmAYp32fe1twAccz6sJOZMS13TCIgSqI69Sp20QKpw5WPMEK/fnQxfDKI8go2mYk0QP/7qlrpsfZ4TIKP+UojV+8VqdRHNYnCZ69yXSgUYQVAOaWKZLZGL0vIggKJz3P1O74t6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748441937; c=relaxed/simple;
-	bh=zJx6vFfwz0MYTEHthiU61dRG76ot+J1AonqUVhsuUz0=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=evvXz9IVJOAQwf6nNXsbCSpa+V4ZasYurtbf3PymtNeOLR3sROJtf3rAHjytJXLyYiVzMosHd+JQsxE9ovrzKWswigpM55NoxmcpueNIeBe04UCPGfw6e+TCbxyanGCGUHvLg8kdbr4MEAHK9zsycdRpJOXqPfSwWwyvm7YtPZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=TJnJr1yD; arc=none smtp.client-ip=80.241.56.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4b6s792zx3z9swD;
-	Wed, 28 May 2025 16:18:45 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1748441925; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zJx6vFfwz0MYTEHthiU61dRG76ot+J1AonqUVhsuUz0=;
-	b=TJnJr1yDLKr7T7cAmicStZcRlA8JXH9j13Oh8esWSeeepjouJBcnEQdg5nD8+CN6fFcVRD
-	nyrSXhLPlMvsOWb5dmXyV57DQWLs4lCg8h21dj0UV1gLhSQ+PqoHzrs0MktM3kcTQOv3Tz
-	VBqJRrdR/oGhIs7WY3mzAjxbRQUhpSTKVqH+6d5h7HpRjGCQIeCsy3PugkdN2ZlS2D8x5G
-	Ft+kRUI2xzuE9c13mTzMYRXoC4wd517ZaJxnNNCcHX1K9j00VDmjGPj748+hdBLFjt/1kN
-	JiF1Ken79t+9APOBjhHOqbJPNBQOCon9xR24tXyu9T4k9QG4wIkinlKw8bWbog==
-Message-ID: <f46f73db6594c7cd40149e35da9f188baa5961a2.camel@mailbox.org>
-Subject: Re: [PATCH v11 00/10] Improve gpu_scheduler trace events + UAPI
-From: Philipp Stanner <phasta@mailbox.org>
-Reply-To: phasta@kernel.org
-To: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Cc: Christian =?ISO-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>, 
- =?ISO-8859-1?Q?Ma=EDra?= Canal <mcanal@igalia.com>, Thomas
- =?ISO-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>, Abhinav
- Kumar <quic_abhinavk@quicinc.com>,  Alex Deucher
- <alexander.deucher@amd.com>, Boris Brezillon
- <boris.brezillon@collabora.com>, Danilo Krummrich <dakr@kernel.org>, David
- Airlie <airlied@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>, Felix
- Kuehling <Felix.Kuehling@amd.com>, Frank Binns <frank.binns@imgtec.com>,
- Jonathan Corbet <corbet@lwn.net>, Liviu Dudau <liviu.dudau@arm.com>, Lizhi
- Hou <lizhi.hou@amd.com>, Lucas De Marchi <lucas.demarchi@intel.com>, Lucas
- Stach <l.stach@pengutronix.de>, Lyude Paul <lyude@redhat.com>, Maarten
- Lankhorst <maarten.lankhorst@linux.intel.com>,  Matt Coster
- <matt.coster@imgtec.com>, Matthew Brost <matthew.brost@intel.com>, Maxime
- Ripard <mripard@kernel.org>, Melissa Wen <mwen@igalia.com>, Min Ma
- <min.ma@amd.com>,  Oded Gabbay <ogabbay@kernel.org>, Philipp Stanner
- <phasta@kernel.org>, Qiang Yu <yuq825@gmail.com>, Rob Clark
- <robdclark@gmail.com>, Rob Herring <robh@kernel.org>, Rodrigo Vivi
- <rodrigo.vivi@intel.com>, Simona Vetter <simona@ffwll.ch>, Steven Price
- <steven.price@arm.com>, Sumit Semwal <sumit.semwal@linaro.org>, Thomas
- Zimmermann <tzimmermann@suse.de>, amd-gfx@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org,  etnaviv@lists.freedesktop.org,
- freedreno@lists.freedesktop.org,  intel-xe@lists.freedesktop.org,
- lima@lists.freedesktop.org,  linaro-mm-sig@lists.linaro.org,
- linux-arm-msm@vger.kernel.org,  linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org,  linux-media@vger.kernel.org,
- nouveau@lists.freedesktop.org
-Date: Wed, 28 May 2025 16:18:30 +0200
-In-Reply-To: <20250526125505.2360-1-pierre-eric.pelloux-prayer@amd.com>
-References: <20250526125505.2360-1-pierre-eric.pelloux-prayer@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1748443072; c=relaxed/simple;
+	bh=E/d0r6OOpns+M1s/P1Grzi0S5pY57VyTC8g4426MF4A=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=Upnm7tMgiZeK8jFcXWQYs1pxIBOUIQvmK34uD0v1eSnbNn+Nk75FQl/91fVTqXx8bcKSak/Sw9lNzDvDPKjGL5WQbe+zUbpNu6ar0FXE2rbWWZwzpstC1uW+CZSURYQbPK0Pe3l7tUoO4T5uS+yiHStTP3uUss+mKfA0Q7K60ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=erkqbxt8; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43d2d952eb1so36614835e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 07:37:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1748443068; x=1749047868; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8e/FVNVV68OMZMjntDEe+D+IU61dqOd3DPdYBN+2WAg=;
+        b=erkqbxt8Z1K4KelvFp4KBetLfSTi7qibcWWSbW+liggles7H3+h63gj9e1GpVyRDeM
+         1vIf/sIiVKj5E7gQo4Lvtc6F4a84YfMcW7ln2HwqFrP+cetnIoeEZDbFlVFA7xytmAFk
+         rwSpK/RWeIkyfj0HDn1NTLSJlEvwN4eyJmKO6jei2b1Cn2dxlpeKXOa0PWtAEgSqp+a8
+         ba8ngUVlKeG4wvmkozZigPdqn+YP1lLYXMYWAxjTOIvCyEAdxlVRyJf184woEILNa2gV
+         3bMnxsSkmq/wNunhPVxfyXhEk91yVFGogEiJD4a3u0vwqZQcIVlFF3TbxvAK0YRbifE1
+         efuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748443068; x=1749047868;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8e/FVNVV68OMZMjntDEe+D+IU61dqOd3DPdYBN+2WAg=;
+        b=we7wZIMeY8bwaRlrnPLoQ8X1JeIQbDpl1qT4v7Fs1L6SvHGLdDzc9AoLHda74rlvzR
+         BSBHP47C7cNRaPZEo89UP8W7jSYEcgLvXNhq4A9K5kXSdOyKpC1FZy3hQ5aUC9o2Owf2
+         8brgn/YOAanuMUJVV5LpHZKxoG/LHimq0JRsQHMSs7R7lyeKgtnRozIx0qOh3VQQ5oyA
+         x0BQayl33oC8useUqIP1WgI+sYb3i2yWtTAjZtGbWfZbcaoZB3m5oB/t70QClnLaF7Nc
+         adt4iUIgv0F5KIBOqixwgfhHW6l10OeQE/vscJMdfUlBMJQTfMlKR4yo8s0VmHaUoSXr
+         7Jdw==
+X-Forwarded-Encrypted: i=1; AJvYcCVDP+IFtnLVGl+peoKkGzGy5oEx6PuyK6GhZSwiTjtVJLLDBSM7E7+hvTKqeTvtRik5ZFNLJzNke5H63166@vger.kernel.org
+X-Gm-Message-State: AOJu0YzU1z9dw3MuiaSfk6fNjaae56mKPxZyzFn5xtvx2gKDTJmHUN59
+	ZtC/5rY+dQjvsUyeW+F7cTMQ/fN34AJd2rTihaDUsQymUGZqCAzgn1umolEE3Siiz9g=
+X-Gm-Gg: ASbGncu1J7JJwSQ8NyXDWsVgYesO51P4o7VSvL5TUqGnRbs+Sq03ALLS+c8bdzB+Hz4
+	5AIu4MuCuF3EfRYNsa6eQTJc9ZqCD5/P3F7RNPogD4k1nmfC3ifEaJ/Z71dMXoFJMYjuaZVzh1E
+	3VUSIPSRsp9dRB0pbsRlWRcWIufqoPbL+zaPTdNnz3zcuNYGcKXTnwZpEpFeImZy6Nkh9/G4VjB
+	y4qcGxUKPB91wvd4knNCgSqGLij7YPJLfHzEI7ygS0APQ6qpOfFFL2yvSPGOY2Rv2qiROixvQmr
+	Z+UnHdFO0i5PppZRhK/YToj4NTq5GBoj6JtxPIGZrJ4IgliZM2oubN/7
+X-Google-Smtp-Source: AGHT+IHIM9BVzOCXjIDgxXeOl1dIOtdnPxWp/iK5O/TdB3YnpE+mVV2tCG/RghqPvH2Xw5hFmwSDyA==
+X-Received: by 2002:a05:600c:1d0d:b0:43c:f0ae:da7 with SMTP id 5b1f17b1804b1-44c9141d90emr133062395e9.7.1748443068029;
+        Wed, 28 May 2025 07:37:48 -0700 (PDT)
+Received: from localhost ([2a00:2381:fd67:101:6c39:59e6:b76d:825])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450064a133csm24375355e9.11.2025.05.28.07.37.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 May 2025 07:37:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-MBO-RS-ID: 71bbfe2918ed815d7c0
-X-MBO-RS-META: 1d87cwrtfwt5qgx3mzet88gb4nq4xi15
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 28 May 2025 15:37:46 +0100
+Message-Id: <DA7VC87A0OMF.1X5XEWVCHFLE5@linaro.org>
+Cc: "Srinivas Kandagatla" <srini@kernel.org>, "Mark Brown"
+ <broonie@kernel.org>, <linux-sound@vger.kernel.org>, "Liam Girdwood"
+ <lgirdwood@gmail.com>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Bjorn Andersson" <andersson@kernel.org>, "Dmitry Baryshkov"
+ <lumag@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Konrad
+ Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Jaroslav Kysela"
+ <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>,
+ <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-gpio@vger.kernel.org>
+Subject: Re: [PATCH v3 02/12] dt-bindings: arm: qcom-soc: ignore "wsa" from
+ being selected as SoC component
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>
+X-Mailer: aerc 0.20.0
+References: <20250522-rb2_audio_v3-v3-0-9eeb08cab9dc@linaro.org>
+ <20250522-rb2_audio_v3-v3-2-9eeb08cab9dc@linaro.org>
+ <20250523-fancy-upbeat-stoat-e9ecbd@kuoka>
+In-Reply-To: <20250523-fancy-upbeat-stoat-e9ecbd@kuoka>
 
-On Mon, 2025-05-26 at 14:54 +0200, Pierre-Eric Pelloux-Prayer wrote:
-> Hi,
->=20
-> The initial goal of this series was to improve the drm and amdgpu
-> trace events to be able to expose more of the inner workings of
-> the scheduler and drivers to developers via tools.
->=20
-> Then, the series evolved to become focused only on gpu_scheduler.
-> The changes around vblank events will be part of a different
-> series, as well as the amdgpu ones.
->=20
-> Moreover Sima suggested to make some trace events stable uAPI,
-> so tools can rely on them long term.
->=20
-> The first patches extend and cleanup the gpu scheduler events,
-> then add a documentation entry in drm-uapi.rst.
->=20
-> The last 2 patches are new in v8. One is based on a suggestion
-> from Tvrtko and gets rid of drm_sched_job::id. The other is a
-> cleanup of amdgpu trace events to use the fence=3D%llu:%llu format.
->=20
-> The drm_sched_job patches don't affect gpuvis which has code to parse
-> the gpu_scheduler events but these events are not enabled.
->=20
-> Changes since v10:
-> * fixed 2 errors reported by kernel test robot
-> * rebased on drm-misc-next
->=20
-> Changes since v9:
-> * fixed documentation link syntax
-> * fixed typos in commit messages
-> * spelled out that these events cannot be used before
-> =C2=A0 drm_sched_job_arm has been called
->=20
-> Changes since v8:
-> * swapped patches 8 & 9
-> * rebased on drm-next
->=20
-> Changes since v7:
-> * uint64_t -> u64
-> * reworked dependencies tracing (Tvrtko)
-> * use common name prefix for all events (Tvrtko)
-> * dropped drm_sched_job::id (Tvrtko)
->=20
-> Useful links:
-> - userspace tool using the updated events:
-> https://gitlab.freedesktop.org/tomstdenis/umr/-/merge_requests/37
-> - v8:
-> https://lists.freedesktop.org/archives/dri-devel/2025-March/496781.html
->=20
-> Pierre-Eric Pelloux-Prayer (10):
-> =C2=A0 drm/debugfs: Output client_id in in drm_clients_info
-> =C2=A0 drm/sched: Store the drm client_id in drm_sched_fence
-> =C2=A0 drm/sched: Add device name to the drm_sched_process_job event
-> =C2=A0 drm/sched: Cleanup gpu_scheduler trace events
-> =C2=A0 drm/sched: Trace dependencies for GPU jobs
-> =C2=A0 drm/sched: Add the drm_client_id to the drm_sched_run/exec_job
-> events
-> =C2=A0 drm/sched: Cleanup event names
-> =C2=A0 drm: Get rid of drm_sched_job.id
-> =C2=A0 drm/doc: Document some tracepoints as uAPI
-> =C2=A0 drm/amdgpu: update trace format to match gpu_scheduler_trace
+On Fri May 23, 2025 at 9:12 AM BST, Krzysztof Kozlowski wrote:
+> On Thu, May 22, 2025 at 06:40:52PM GMT, Alexey Klimov wrote:
+>> The pattern matching incorrectly selects "wsa" because of "sa" substring
+>> and evaluates it as a SoC component or block.
+>>=20
+>> Wsa88xx are family of amplifiers and should not be evaluated here.
+>>=20
+>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+>> ---
+>>  Documentation/devicetree/bindings/arm/qcom-soc.yaml | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>=20
+>> diff --git a/Documentation/devicetree/bindings/arm/qcom-soc.yaml b/Docum=
+entation/devicetree/bindings/arm/qcom-soc.yaml
+>> index a77d68dcad4e52e4fee43729ac8dc1caf957262e..99521813a04ca416fe90454a=
+811c4a13143efce3 100644
+>> --- a/Documentation/devicetree/bindings/arm/qcom-soc.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
+>> @@ -23,7 +23,7 @@ description: |
+>>  select:
+>>    properties:
+>>      compatible:
+>> -      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sar|sc|sd[am=
+x]|sm|x1[ep])[0-9]+.*$"
+>> +      pattern: "^qcom,(?!.*wsa)(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sar|s=
+c|sd[amx]|smx1[ep])[0-9]+.*$"
+>
+> Why dropping front .*? Are you sure this matches what we want - so
+> incorrect compatibles? To me it breaks the entire point of this select,
+> so I am sure you did not test whether it still works. To remind: this is
+> to select incorrect compatibles.
+
+Thanks, great point. I tested it with regular dtbs checks with different
+dtb files but I didn't check if it selects incorrect compatibles.
 
 
-Applied to drm-misc-next
+> (?!wsa)
+> Because qcom,x-wsa8845 should be matched and cause warnings.
 
+This is now confusing. I thought that the main job for the pattern above
+is to avoid selecting wsa88xx amplifiers in the first place. Or, if I can
+quote yourself: "What is WSA8815 that it should be here?"
 
-Thanks
-P.
+If said wsa8845 with incorrect or correct should be selected by that patter=
+n
+then why not just leave that pattern as it is then? I am lost.
 
->=20
-> =C2=A0Documentation/gpu/drm-uapi.rst=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 19 ++++
-> =C2=A0drivers/accel/amdxdna/aie2_ctx.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 3 +-
-> =C2=A0drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c=C2=A0=C2=A0=C2=A0 |=C2=
-=A0=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 3 +-
-> =C2=A0drivers/gpu/drm/amd/amdgpu/amdgpu_job.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0=C2=A0 8 +-
-> =C2=A0drivers/gpu/drm/amd/amdgpu/amdgpu_job.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0=C2=A0 3 +-
-> =C2=A0drivers/gpu/drm/amd/amdgpu/amdgpu_trace.h=C2=A0=C2=A0=C2=A0=C2=A0 |=
-=C2=A0 32 ++----
-> =C2=A0drivers/gpu/drm/drm_debugfs.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 10 +-
-> =C2=A0drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c=C2=A0 |=C2=A0=C2=A0 2 =
-+-
-> =C2=A0drivers/gpu/drm/imagination/pvr_job.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/imagination/pvr_queue.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0=C2=A0 5 +-
-> =C2=A0drivers/gpu/drm/imagination/pvr_queue.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/lima/lima_gem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/lima/lima_sched.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 6 +-
-> =C2=A0drivers/gpu/drm/lima/lima_sched.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 3 +-
-> =C2=A0drivers/gpu/drm/lima/lima_trace.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 6 +-
-> =C2=A0drivers/gpu/drm/msm/msm_gem_submit.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 8 +-
-> =C2=A0drivers/gpu/drm/nouveau/nouveau_sched.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0=C2=A0 3 +-
-> =C2=A0drivers/gpu/drm/panfrost/panfrost_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/panthor/panthor_drv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 3 +-
-> =C2=A0drivers/gpu/drm/panthor/panthor_mmu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/panthor/panthor_sched.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0=C2=A0 5 +-
-> =C2=A0drivers/gpu/drm/panthor/panthor_sched.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0=C2=A0 3 +-
-> =C2=A0.../gpu/drm/scheduler/gpu_scheduler_trace.h=C2=A0=C2=A0 | 103 +++++=
-++++++++---
-> --
-> =C2=A0drivers/gpu/drm/scheduler/sched_entity.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 |=C2=A0 16 ++-
-> =C2=A0drivers/gpu/drm/scheduler/sched_fence.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0=C2=A0 4 +-
-> =C2=A0drivers/gpu/drm/scheduler/sched_internal.h=C2=A0=C2=A0=C2=A0 |=C2=
-=A0=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/scheduler/sched_main.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 |=C2=A0 12 +-
-> =C2=A0.../gpu/drm/scheduler/tests/mock_scheduler.c=C2=A0 |=C2=A0=C2=A0 3 =
-+-
-> =C2=A0drivers/gpu/drm/v3d/v3d_submit.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +-
-> =C2=A0drivers/gpu/drm/xe/xe_sched_job.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 3 +-
-> =C2=A0include/drm/gpu_scheduler.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=
-=A0 13 ++-
-> =C2=A032 files changed, 191 insertions(+), 101 deletions(-)
->=20
+> And probably we are getting past the point of readability, so could you
+> try:
+>
+> compatible:
+>   anyOf:
+>     - pattern: "^qcom,.*(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sar|sc|sd[amx]|sm=
+|x1[ep])[0-9]+.*$"
+>     - pattern: "^qcom,.*(?!wsa)sa[0-9]+.*$"
 
+Thanks, that one is much better for readability. I'll test that one then.
+
+Best regards,
+Alexey
 
