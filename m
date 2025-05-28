@@ -1,199 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-59671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 481DBAC65B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 11:22:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58888AC65C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 11:23:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A1E291BC435D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 09:22:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 05B4AA238F7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 09:23:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7248278768;
-	Wed, 28 May 2025 09:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5C5F277807;
+	Wed, 28 May 2025 09:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SLawmlCP"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="Stkx4be7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A33B276020
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 09:21:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22728152E02;
+	Wed, 28 May 2025 09:23:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748424112; cv=none; b=iFYRuxDzlRQCRntL6reaKlrYOsEoG6hv4NyII7HjbLvfbJy8mtBeY09VI2tgLcytgjnVCIAj/v9Kg0q3fC/kRBt7V0N4r8SGNGc8aPzG2kTWN1Xv/K9723bcrYCg3jCM/cn5mVa4bisJcNwJ/XxSmIq5o+ADgFN8VXWhYDUUcRs=
+	t=1748424184; cv=none; b=T445n1joH1iGjSfsQxzWurA98ZkE4ss1Fp7Dv6s9loxGjO5IBFNyrlpOIb/H5z/iUpJLJiY//2hzErlJ1mdbGFTM9RxJeVLLC6igTqxJ5ypYJvSb74VrtKriz6xMOUCx//t5zvzKF6TpEdPHJcR6Vx4Vx03Ek8Qh6imaJWBm04I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748424112; c=relaxed/simple;
-	bh=vNy7Hg/TiGtEZictJW89jX/dHyDjn42M2TrCGJb8CAM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iwKABhJ0+z0Fv/3q94Si0MPca6Ls3A1dXSHaLkNlYzw6uqs/rP35m6UvXpMfRKECpJJYTBRPwXYjYNEzZA7HMkgpceGXVlPlQx0zFYXHQYw7sT5oGgg4IvefG4AmwWM/M9NVJdm1ScwwL8QOca7tfyrZ+0+DPuTuk2Rjf2l92D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SLawmlCP; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54RMFRFp023008
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 09:21:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5YbBsH4zeCrmK/Ek4rH6YPASrY2/sAhfKu9QU9dC1zs=; b=SLawmlCPUdvWI+tZ
-	o6QRN/0BbsAv6qG8FrX7W881ZHZqUgVvqGH42PiKfYe80K8uOKwW1x8aM6+GdKEx
-	lUOyrzR+47CLTc7PIIPKOGIBa8ut5IACGuvMJ5ZJB6+1QTIkXXTwJB16qb70tw0Q
-	KyqJHvbBfTEXL4uyGaTztlvftb2kZdCrLG2hGax1ezUP0N69JmR04XP9wVrmMeYO
-	R8xtHq6RmLS6PblTJswR59AofWbKM8qtasYsVgZOXikUbuCzYBYmOiPIe/U8UYA0
-	po9WPfhtHDvfIKVrz2xIH7JXU3dV0J7u8TQ/VsNMLsWXIJxl8mSLmfw0ZQyXLeAK
-	kcXPtQ==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u6vjss1h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 09:21:50 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-742d077bdfaso5205293b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 02:21:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748424109; x=1749028909;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5YbBsH4zeCrmK/Ek4rH6YPASrY2/sAhfKu9QU9dC1zs=;
-        b=wkhCRhVkbxjwsKT8xVvQk88blDy/0hABjei5RsHNsop3vmfDBBUdy05PFfO07k54sI
-         vJkebMfdor7e3GqTo8wi4Iv6ieOUepvlw8xmCwLlPHjZDxAiNbAofHea2tZsNzejyu04
-         /RkudShRdOMHe4U3Mx8qBz52xF/d8YrCEvBQTea7eGdjibEZPBtG6AxfkRH8nflmSNqZ
-         mVX2FNV7sCtlOLfWHHoLxiUcS/lhAQ85B4IJahFFQMoaM7Aw4WCnMw1LcL3W9VzZuSPq
-         TobN4aZIb140ptA+23QCvxV2OeeI+Ts8kSkprb6u7QPjIaFKN/9LYoDHEKdu7Lots1Ba
-         66Uw==
-X-Gm-Message-State: AOJu0YwKe3QuA4tQ1ezItWrDNM3TrfPl+BCU33yk8DcZR2WfLglGJBZI
-	uWPvwfCs8jW44MgaLATtA8DaY+aR2TBkpPGO9pNmXHt24cNvMiPNmiyj200EiPUDshq7u28fx3q
-	+0KxM81TeNrqPfHmvgp9L3A/2Q2UJEcl9F+qlZhmvPOpiJPLrU6dySJhv5MI3JNI5IjeD
-X-Gm-Gg: ASbGncvx5groTMcHNKCjfvgTrJyl3o5z3CrFXICErBCUTRV2y1yjfPMPpIDUG6yBgLz
-	TuePnvrEJnG38hSXf74nJGcfQV0FeNuVK7VUN866UgMtTZZSFLTPzO4Yi6LROPlFGvgnB/0xW8m
-	BjMj7f8EMc+LgBQe6n+bTXddtxmfPEhjOZe1a0JgCAw1PEMOYEkOhSImTmQsooeZskMPnha7uyX
-	KgQfRFhvIWISye5Qn4bS6zBCPNbKpLtmL4cvIMZQS7RirCYzldwh8lNuIuWS5vQjFUKbXKIgqQy
-	eSiDiC0Lye+9Hp3IYMd7mjjWuQ==
-X-Received: by 2002:a05:6a00:140f:b0:742:da7c:3f30 with SMTP id d2e1a72fcca58-745fe035e87mr23787268b3a.19.1748424109371;
-        Wed, 28 May 2025 02:21:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH8F1Leeb8hvqWanbPhFDRIXbSQk+YihOTKHY3m3CJ7M+ZPDA0t/uCx0hLnU+pvOhLg+qqIGg==
-X-Received: by 2002:a05:6a00:140f:b0:742:da7c:3f30 with SMTP id d2e1a72fcca58-745fe035e87mr23787223b3a.19.1748424108964;
-        Wed, 28 May 2025 02:21:48 -0700 (PDT)
-Received: from [10.213.103.17] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-746e343c2c6sm833456b3a.134.2025.05.28.02.21.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 May 2025 02:21:48 -0700 (PDT)
-From: Maulik Shah <maulik.shah@oss.qualcomm.com>
-Date: Wed, 28 May 2025 14:51:33 +0530
-Subject: [PATCH v4 3/3] arm64: dts: qcom: Add QMP handle for qcom_stats
+	s=arc-20240116; t=1748424184; c=relaxed/simple;
+	bh=xkNiKYgODlSY9yyRlPkx7iULzopxvQVIpmtbhyv/rTA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=msDDlPNC0r6X/BslLLZ0OK0JHoBfaLBZaFFX9m79u8Gt/615dEWiz1iAQ5QBjKlhV5HC5kEQHtkS2wRvFPUtaW8HLthh0fdF6X6iMt2vs3ro4wuDKK6XV6eOomMtjx7EJZq22jSvonkVOfbfVQ1rhwJk1VwTvqI4y6H9/yhoXRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=Stkx4be7; arc=none smtp.client-ip=117.135.210.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=3j
+	2smcIYQQg9AX7JiG4sdGXoPpomEDE53IFAHBoEZdQ=; b=Stkx4be72PteeZ5DEC
+	pUc8I/3Ny1Yl2Ef5+6aAVkKppN+yqCG5TG6caQ2p7uA/oUqzqjwmuMS7DFVxwglL
+	rmo9+rpG4dx5KbEvBF0DmIUmbcNGSO9fE5bg+M2Nwmwu1eqnpJ6vyTL44TV3MRWp
+	g7zTe2TeU2Fs6Z8Ouf/lTCsqw=
+Received: from localhost.localdomain (unknown [])
+	by gzga-smtp-mtada-g1-1 (Coremail) with SMTP id _____wCnjVLa1TZoOyU7Eg--.4046S2;
+	Wed, 28 May 2025 17:22:35 +0800 (CST)
+From: Slark Xiao <slark_xiao@163.com>
+To: manivannan.sadhasivam@linaro.org,
+	johan+linaro@kernel.org,
+	mhi@lists.linux.dev
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Slark Xiao <slark_xiao@163.com>
+Subject: [PATCH v2] bus: mhi: host: pci_generic: Add Foxconn T99W696
+Date: Wed, 28 May 2025 17:22:32 +0800
+Message-Id: <20250528092232.16111-1-slark_xiao@163.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250528-ddr_stats_-v4-3-b4b7dae072dc@oss.qualcomm.com>
-References: <20250528-ddr_stats_-v4-0-b4b7dae072dc@oss.qualcomm.com>
-In-Reply-To: <20250528-ddr_stats_-v4-0-b4b7dae072dc@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Maulik Shah <maulik.shah@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1748424095; l=2423;
- i=maulik.shah@oss.qualcomm.com; s=20240109; h=from:subject:message-id;
- bh=vNy7Hg/TiGtEZictJW89jX/dHyDjn42M2TrCGJb8CAM=;
- b=RVhu3aYygw1jl79Ka7vUZ/MHVDs5AnJ/SXP1NxKfVCri/JIKo0YFwrKfUNK45qGAa8Ez9gbqa
- 9fhVIsnDbnxDxUyyrlmeXQXK7TH1j97wTIakKGHennXv6lV72Sr1BKb
-X-Developer-Key: i=maulik.shah@oss.qualcomm.com; a=ed25519;
- pk=bd9h5FIIliUddIk8p3BlQWBlzKEQ/YW5V+fe759hTWQ=
-X-Authority-Analysis: v=2.4 cv=UOXdHDfy c=1 sm=1 tr=0 ts=6836d5ae cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=GL-xn7CBy2CN3rfaf34A:9
- a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
-X-Proofpoint-ORIG-GUID: 1F3rGzOJmy0jNNHhgSTvnolf1o_pPZlP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDA3OSBTYWx0ZWRfX3lIPnn80Zaif
- kDasQ0hPLQmaHM6YLz9eyCmfbD+jb0pPw6eBB4n67q7xKAbHR5zwQEPE2HmBSJ45VpNqMILEgn6
- mG9hxPsbcNtucEWyOQF4HUXYhAMQJG64NiQLM6w2SN4P3ppZct2VqQvbZHs0tC5QDKqcs2PviGb
- H5y7r+pgkssdCy0qVlMK1e8S1i6uSAy0He42JJIhzQMlSoBcXbfToRaodW0TX2KHpHRaGjZujx8
- lxf7ghHUL5zd0XbVSaKtF1ZgdNknGOnmqEdwFzRWre3EkhuSf8bj47lA4vckj9ypiyEzujkOenr
- jYRg5K1R6Oo4lqUOFcZipZefhSWe7erAbr8VNBQVxAOvt1nb4XGDCJVxFHXIxGfo8IfqYQxweto
- hfQCpTLDSdEsPlmQeBbuvDv2yIxUd8bwfCo08igIIkbD3sC/rV5WeGq05Y5PBwKmzYLi5vrx
-X-Proofpoint-GUID: 1F3rGzOJmy0jNNHhgSTvnolf1o_pPZlP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-28_04,2025-05-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 mlxscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=686 bulkscore=0 malwarescore=0 impostorscore=0 spamscore=0
- suspectscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505280079
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wCnjVLa1TZoOyU7Eg--.4046S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxWF13Cw15Kr4kZw4kWF43GFg_yoWrurWkpF
+	WIv3y5KrWkJa1Fg3y0y34kKas5Zan3Xr93Krnrtw10g3WYk3y5XrWkt342qFWYv34qqrWI
+	vFykuFy7uanrJr7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRqsUtUUUUU=
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1S2mRxpbZGg2zteGcAABsS
 
-Add QMP handle which is used to send QMP command to always on processor
-to populate DDR stats. Add QMP handle for SM8450/SM8550/SM8650/SM8750.
+T99W696 is designed based on Qualcomm SDX61 chip which is a cost
+down chip refer to previous SDX62/SDX65. Though we have a support
+on SDX62/SDX65, we create a new channel config for SDX61 since
+we add a NMEA channel support from this product.
+For new products we are allowed to customize the subVID and
+subPID only.
 
-Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 1 +
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 1 +
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 1 +
- arch/arm64/boot/dts/qcom/sm8750.dtsi | 1 +
- 4 files changed, 4 insertions(+)
+v2: Correct the ch_cfg as sdx61 channels
+---
+ drivers/bus/mhi/host/pci_generic.c | 52 ++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 54c6d0fdb2afa51084c510eddc341d6087189611..33574ad706b915136546c7f92c7cd0b8a0d62b7e 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -3739,6 +3739,7 @@ aoss_qmp: power-management@c300000 {
- 		sram@c3f0000 {
- 			compatible = "qcom,rpmh-stats";
- 			reg = <0 0x0c3f0000 0 0x400>;
-+			qcom,qmp = <&aoss_qmp>;
- 		};
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index a4a62429c784..a90ab31c46a9 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -490,6 +490,23 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+ 	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+ };
  
- 		spmi_bus: spmi@c400000 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 82cabf777cd2c1dc87457aeede913873e7322ec2..e8371a90b9b98fbc12a429def8f6246c6418540a 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -3943,6 +3943,7 @@ aoss_qmp: power-management@c300000 {
- 		sram@c3f0000 {
- 			compatible = "qcom,rpmh-stats";
- 			reg = <0 0x0c3f0000 0 0x400>;
-+			qcom,qmp = <&aoss_qmp>;
- 		};
++static const struct mhi_channel_config mhi_foxconn_sdx61_channels[] = {
++	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 0),
++	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 0),
++	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 1),
++	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
++	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
++	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
++	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
++	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
++	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
++	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
++	MHI_CHANNEL_CONFIG_UL(50, "NMEA", 32, 0),
++	MHI_CHANNEL_CONFIG_DL(51, "NMEA", 32, 0),
++	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
++	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
++};
++
+ static struct mhi_event_config mhi_foxconn_sdx55_events[] = {
+ 	MHI_EVENT_CONFIG_CTRL(0, 128),
+ 	MHI_EVENT_CONFIG_DATA(1, 128),
+@@ -506,6 +523,15 @@ static const struct mhi_controller_config modem_foxconn_sdx55_config = {
+ 	.event_cfg = mhi_foxconn_sdx55_events,
+ };
  
- 		spmi_bus: spmi@c400000 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index c2937f7217943c4ca91a91eadc8259b2d6a01372..875b5a89d2555f258665c881ee3d96965b6d7a6a 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -5725,6 +5725,7 @@ aoss_qmp: power-management@c300000 {
- 		sram@c3f0000 {
- 			compatible = "qcom,rpmh-stats";
- 			reg = <0 0x0c3f0000 0 0x400>;
-+			qcom,qmp = <&aoss_qmp>;
- 		};
++static const struct mhi_controller_config modem_foxconn_sdx61_config = {
++	.max_channels = 128,
++	.timeout_ms = 20000,
++	.num_channels = ARRAY_SIZE(mhi_foxconn_sdx61_channels),
++	.ch_cfg = mhi_foxconn_sdx61_channels,
++	.num_events = ARRAY_SIZE(mhi_foxconn_sdx55_events),
++	.event_cfg = mhi_foxconn_sdx55_events,
++};
++
+ static const struct mhi_controller_config modem_foxconn_sdx72_config = {
+ 	.max_channels = 128,
+ 	.timeout_ms = 20000,
+@@ -615,6 +641,17 @@ static const struct mhi_pci_dev_info mhi_foxconn_dw5934e_info = {
+ 	.sideband_wake = false,
+ };
  
- 		spmi_bus: spmi@c400000 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-index 149d2ed17641a085d510f3a8eab5a96304787f0c..4c54ed84e2d1ec836438448e2a02b6fe028f4c24 100644
---- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-@@ -2490,6 +2490,7 @@ aoss_qmp: power-management@c300000 {
- 		sram@c3f0000 {
- 			compatible = "qcom,rpmh-stats";
- 			reg = <0x0 0x0c3f0000 0x0 0x400>;
-+			qcom,qmp = <&aoss_qmp>;
- 		};
- 
- 		spmi_bus: spmi@c400000 {
-
++static const struct mhi_pci_dev_info mhi_foxconn_t99w696_info = {
++	.name = "foxconn-t99w696",
++	.edl = "qcom/sdx61/foxconn/prog_firehose_lite.elf",
++	.edl_trigger = true,
++	.config = &modem_foxconn_sdx61_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.mru_default = 32768,
++	.sideband_wake = false,
++};
++
+ static const struct mhi_channel_config mhi_mv3x_channels[] = {
+ 	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 64, 0),
+ 	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 64, 0),
+@@ -863,6 +900,21 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* Telit FE990A */
+ 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2015),
+ 		.driver_data = (kernel_ulong_t) &mhi_telit_fe990a_info },
++	/* Foxconn T99W696.01, Lenovo Generic SKU */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe142),
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
++	/* Foxconn T99W696.02, Lenovo X1 Carbon SKU */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe143),
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
++	/* Foxconn T99W696.03, Lenovo X1 2in1 SKU */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe144),
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
++	/* Foxconn T99W696.04, Lenovo PRC SKU */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe145),
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
++	/* Foxconn T99W696.00, Foxconn SKU */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe146),
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
 -- 
-2.34.1
+2.25.1
 
 
