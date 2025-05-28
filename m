@@ -1,218 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-59674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22104AC6646
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 11:51:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0621AC666D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 11:57:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BC16E1888904
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 09:52:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B23BF16C5A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 09:57:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89FD227877B;
-	Wed, 28 May 2025 09:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AAA9278E6F;
+	Wed, 28 May 2025 09:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I4rKlkkc"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pjZnWZtC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2569278152;
-	Wed, 28 May 2025 09:51:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7852676CD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 09:57:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748425911; cv=none; b=MJVj3+edQJ7BWHPsUPOtQ5JHXdykJTZi64LM2RAczzw70LmQvcWOBCkkyxlfxDaq37Bm0cWf0ufICjfyHRL5Okdm8nN+0wKyn9EA1pn9BVjcEdMUlOJ+/F1llXPMrYl5EWYpax+T1577SGjLScj8DBeDyAMMHxa7n8Z71k41QyY=
+	t=1748426267; cv=none; b=oGKZNBnC6buE9/Vs4CavOxNiF8RcCVHQEoMnyEsCBqDvCEmjlyysT5ae0wHpYk0L5Fedaw24CezNrdtjdBodiKn3apTaE51AMof61Wxy2FtsKoHV1Rf3GDhwPK9lAlGLyDNJIEEBc4Mr2DLkCEpBeOE0reZNF5z712d5laQZIwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748425911; c=relaxed/simple;
-	bh=tcQArO/ilw7koTVs+1Wqs9sPMLBSpYyfkvbgmUzFeXM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Ua6T/+skBZNZfg1i5Wl5/JZ8KtleE4SyDAnGnrvFgCdIFUdT2SnMxydzpqFwJ/X50iqnJu0mZkIfbzELG1rXChUFm5moG3pwtNnBz3qhi3o0nh9dzrxV+GIhZR0OgbjEdEg2FKeKqrD72p8Mbi0s7RLFzBwH9T4SShPmMRxAMs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I4rKlkkc; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54S8gG2x022962;
-	Wed, 28 May 2025 09:51:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Wp2KgjjSZKhPsd4HV/S8Rh5q5fv+5sUwsR45Qw85m0w=; b=I4rKlkkcmQDiKk/W
-	roAjtfpLaewNNA49eTHjQZweV9TBXnAGfsa+eVlHNq+VgWL5HP+Jwf/Ow/u8ZNQu
-	AnVjgDRDfQ7S2paykfKWtLtFQRrEb1o8aWgY1vO2ZDw3QDY3TZ5MqZz2RFdfMy8c
-	Vkrq8weiTgHvfJAvSB1rLa3VL0+SWx/LnPuGeU3chfAaeOvcvKMcNcwyzU1FPinC
-	ZY8nRQWAXNWntttSBD+IDFvfe1ZTsibauS9ljHPTXM2zhfoQCAxrxcHzIt+1vaik
-	TfurmsZosej3S/gVr2QHQLN3oRPzBNmZIv8IGhgcA4oVSUdCzYg5LN1u4vqXcRBb
-	COZkMA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46vmgcx8x3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 May 2025 09:51:44 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54S9phOf020897
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 May 2025 09:51:43 GMT
-Received: from [10.218.22.7] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 28 May
- 2025 02:51:36 -0700
-Message-ID: <bb9f9498-5b24-4df8-923a-a54bc528799d@quicinc.com>
-Date: Wed, 28 May 2025 15:21:32 +0530
+	s=arc-20240116; t=1748426267; c=relaxed/simple;
+	bh=NY4ppF8WDLnUEHIz0ojqjJm6a5YSQxyU166J9C6MAD8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eDf6ozHzLmVudjSd5lfEqkI1skQ1m7w6LMIdBSzI+wS/+XAeHLxGbQtCWM2qgG1xKBdYQamLJ8WFA1uDK7N8Yondsjf0XqYSdsxRF8RJ9//cvnT59gMAFgkQR81PS3PdvRpN91BsPnEaPUmlyp5F+r/+D/XPNDuVffairDjv02k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pjZnWZtC; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-602039559d8so8520727a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 02:57:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1748426264; x=1749031064; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ks3rhmD/IHlVoyz8JuxtGnWPe59bWGftTPLGTy/S1P8=;
+        b=pjZnWZtC2h3kOjEe9LEGzuZHtEOwTYCuV6JqcoGywkjnl2A9RQ7ANO3XQmyThu10io
+         U+FOKZKzkLRZYpBgjGiSI0QCBu0lAXRY3dBVERiK/4Kw+WyHaye37A4RnGd0fLPKCgUX
+         IYMjz17DW+mx/JycEAW83UGudA9ayJe8f1Jtk67NjEgN7HS1S88olgpsKT7uA6IRdCyG
+         79K7ZSXQK1ACe7yMiIeT9Bmcd0E4GI/SpGMnoHayK3P05NC06Z9Ged1l2RcHbJ/5NQUL
+         esEB+IvPl/CauWKZX7yyWHg53uFvgEP2rmvix4vTvBQlGx4DzOEuS+OrG+XSF5CP/jv1
+         dUlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748426264; x=1749031064;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ks3rhmD/IHlVoyz8JuxtGnWPe59bWGftTPLGTy/S1P8=;
+        b=VPE2abHwFKubeIRZp2QkG1mgL3P+26xAxlhIQDA8g2pWrwuh/HI1dFYwxuQPIiC+Kw
+         rR7n4LYBdVOa1zLb0Y3+0Hizi3V0/4yM6AjjIYmcSr3fZXP/mFmqIKTMLxxlN96azMFC
+         enw3T14rCaEyidbbnXdnsaqcn9FQdJ9QjpiyyuqCWeSj49zNRU3RL2tjVC6EMuTdRfVl
+         sz3GVa0juN9MTC0NVqE3FaEXz0NrRX1fYYoFIbzUnlUdXEdfl7sUGZkHzRFI2lK+XlNI
+         ZWMVLecTScoCP/Y3LsHIBBEMU4QZOIkaSvwrmzpZzxtN5xExyMxxlNIKAVPnh+OGtHL3
+         0QWw==
+X-Forwarded-Encrypted: i=1; AJvYcCU+h6VfJPUI5Bgdc49BeTW9az5v5bSs/jT4PqVQEBb7LnI9TKVR4SszBqiBW14ESy9P3rk4fTrKn7HyfgML@vger.kernel.org
+X-Gm-Message-State: AOJu0YzluQOa8kQ7bwC+CXL7DGZZYfXxktuvHW5RRLjLKxD9lsJss3z3
+	XkKd1p9C4wtpfNjnT4kouAsDs+x+HC6bzlQqbi3ljJTj8trDmYKlJvUB/3BupMJoARd1+8XV+tZ
+	uH/u7C8MQPdXPgsGhol55HERe7Bz7DTxQbJSXD8p3
+X-Gm-Gg: ASbGnctAaBvabdcCsbbIcf3ohQ3pmWOsaw9rwnWh0LDGKSE1dU7zCe6Qd98qQLtYG6v
+	zbyHd9xO8RQ0yiCWLLqHcJNdLjwbZt8IFeyUqjLn7Pnkb/8C+jiuVSdF/98Sqx7rssWEvFKHdlU
+	OA6cBvJOXQNNIYh1qh/2tRe1QF1Oep0XezU/6uC79zypzumsk3aSjGSZCvzJy1j+FHu6WfAQ==
+X-Google-Smtp-Source: AGHT+IFFD/y5HtmSNrKzHhwfxF7XDgkk5kJYkfCwOSf/luOnKSQmxuN22Xn2tS6vv4V5KENmsK82jP6Xvsq5rx1uJ+c=
+X-Received: by 2002:a05:6402:5112:b0:604:e74d:3615 with SMTP id
+ 4fb4d7f45d1cf-604e74d367bmr6357406a12.26.1748426264183; Wed, 28 May 2025
+ 02:57:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/18] dt-bindings: clock: qcom: Update sc8280xp camcc
- bindings
+References: <20250527121807.3597061-1-korneld@google.com> <oa5okg7i2s6s7pxm5tn6nnanazze5lnnre4vnwrhopn5s5hsil@vhh22j6b5cvq>
+In-Reply-To: <oa5okg7i2s6s7pxm5tn6nnanazze5lnnre4vnwrhopn5s5hsil@vhh22j6b5cvq>
+From: =?UTF-8?Q?Kornel_Dul=C4=99ba?= <korneld@google.com>
+Date: Wed, 28 May 2025 11:57:32 +0200
+X-Gm-Features: AX0GCFvK9nh_ZQOQ8q-wzxVPyhyMhhVBescCioACvy1eSbZRd2cZXohjA9FPaQ4
+Message-ID: <CACF_fqksF+whYbGEdSvJ=87FQH03EzO+hSSf8eRc8MitR2hzxA@mail.gmail.com>
+Subject: Re: [PATCH] power: supply: qcom_battmgr: Report battery capacity
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Stephen
- Boyd" <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Satya Priya
- Kakitapalli" <quic_skakitap@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20250515-videocc-pll-multi-pd-voting-v4-0-571c63297d01@quicinc.com>
- <20250515-videocc-pll-multi-pd-voting-v4-2-571c63297d01@quicinc.com>
- <20250519-barnacle-of-beautiful-enthusiasm-4e6af0@kuoka>
- <ec4ee2f5-162b-430d-aeb9-90ad4559707b@quicinc.com>
- <the3rt4gwb766u5tmzzugoozkyt3qw7kxvy6mlemxcqb5ibs37@szcq2rzbukma>
-Content-Language: en-US
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <the3rt4gwb766u5tmzzugoozkyt3qw7kxvy6mlemxcqb5ibs37@szcq2rzbukma>
+Cc: Sebastian Reichel <sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	chromeos-krk-upstreaming@google.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _I-QgFM5UlQRHwcQjaVShaytowtLaBq5
-X-Proofpoint-GUID: _I-QgFM5UlQRHwcQjaVShaytowtLaBq5
-X-Authority-Analysis: v=2.4 cv=Ws4rMcfv c=1 sm=1 tr=0 ts=6836dcb0 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=P-IC7800AAAA:8
- a=qU0-ABsse5SAqXbbjgwA:9 a=QEXdDO2ut3YA:10 a=d3PnA9EDa4IxuAV0gXij:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDA4NSBTYWx0ZWRfX6UqsCeu+7/XO
- hkIKzHjiwbyPlYFVq8PwHgLZeBCOLcBfipX+yOLQakUw/F1sa1ICq1ftdhmn9Wxv1UhSiIzutps
- 1i7OlNj3wxSsSTFo8IZyttP+A2Kr3ZiR3V/czOuASdomQ90VCkoPNNbEaW1XYKqA/5VihAERdrm
- zh7GI/vuZ0I1QOW8P+tR7ccRvhpuS0hdosPX8fcNHXelN/zXQS4t/RIJZvtnkXm3OTz5tAZzvyi
- vvQo/7ct/niem6TjHnLRwZW/5eaTiPaXzrXjJw1icxDdyGjUTzazVBu/uMS9kmAE3lJIgyDAoQR
- wsq+emi5P+yQd71vtDe+B/1VhGhjaF8UbtYomM9BuSkjPNgsgQa+blORcx1VseXjqsIQs3F5+NN
- k4IaiIocl5HT3t/KcdOkHb8BFVCktFHXxvsu31tGoUIgGZcVMg3vJm2jiYMTdazGBftWYGz+
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-28_05,2025-05-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0 adultscore=0
- phishscore=0 mlxlogscore=999 priorityscore=1501 malwarescore=0
- lowpriorityscore=0 bulkscore=0 mlxscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505280085
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, May 27, 2025 at 9:34=E2=80=AFPM 'Dmitry Baryshkov' via
+chromeos-krk-upstreaming <chromeos-krk-upstreaming@google.com> wrote:
+>
+> On Tue, May 27, 2025 at 12:18:07PM +0000, Kornel Dul=C4=99ba wrote:
+> > Battery charge can be reported in several different ways. One of them i=
+s
+> > is charge percentage referred to as POWER_SUPPLY_PROP_CAPACITY in the
+> > power supply API. Currently the driver reports the capacity in this way
+> > on SM8350, but not on the newer variants referred to as SC8280XP in the
+> > driver. Although this is not a bug in itself, not reporting the
+> > percentage can confuse some userspace consumers.
+> > Mimic what is done in the ACPI driver (drivers/acpi/battery.c) and
+> > calculate the percentage capacity by dividing the current charge value
+> > by the full charge. Both values are expressed in either uWh, or
+> > in uAh.
+> >
+> > Signed-off-by: Kornel Dul=C4=99ba <korneld@google.com>
+> > ---
+> >  drivers/power/supply/qcom_battmgr.c | 18 ++++++++++++++++++
+> >  1 file changed, 18 insertions(+)
+> >
+> > diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply=
+/qcom_battmgr.c
+> > index fe27676fbc7c..5ed5452ab51c 100644
+> > --- a/drivers/power/supply/qcom_battmgr.c
+> > +++ b/drivers/power/supply/qcom_battmgr.c
+> > @@ -577,6 +577,8 @@ static int qcom_battmgr_bat_get_property(struct pow=
+er_supply *psy,
+> >               val->intval =3D battmgr->status.capacity;
+> >               break;
+> >       case POWER_SUPPLY_PROP_CAPACITY:
+> > +             if (battmgr->status.percent =3D=3D (unsigned int)-1)
+> > +                     return -ENODATA;
+> >               val->intval =3D battmgr->status.percent;
+> >               break;
+> >       case POWER_SUPPLY_PROP_TEMP:
+> > @@ -617,6 +619,7 @@ static const enum power_supply_property sc8280xp_ba=
+t_props[] =3D {
+> >       POWER_SUPPLY_PROP_STATUS,
+> >       POWER_SUPPLY_PROP_PRESENT,
+> >       POWER_SUPPLY_PROP_TECHNOLOGY,
+> > +     POWER_SUPPLY_PROP_CAPACITY,
+> >       POWER_SUPPLY_PROP_CYCLE_COUNT,
+> >       POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN,
+> >       POWER_SUPPLY_PROP_VOLTAGE_NOW,
+> > @@ -1063,6 +1066,21 @@ static void qcom_battmgr_sc8280xp_callback(struc=
+t qcom_battmgr *battmgr,
+> >               battmgr->ac.online =3D source =3D=3D BATTMGR_CHARGING_SOU=
+RCE_AC;
+> >               battmgr->usb.online =3D source =3D=3D BATTMGR_CHARGING_SO=
+URCE_USB;
+> >               battmgr->wireless.online =3D source =3D=3D BATTMGR_CHARGI=
+NG_SOURCE_WIRELESS;
+> > +             if (battmgr->info.last_full_capacity !=3D 0) {
+> > +                     /*
+> > +                      * 100 * battmgr->status.capacity can overflow a =
+32bit
+> > +                      * unsigned integer. Do a temporary cast to avoid=
+ that.
+> > +                      */
+> > +                     battmgr->status.percent =3D
+> > +                             (uint64_t)100 * battmgr->status.capacity =
+/
+> > +                             battmgr->info.last_full_capacity;
+>
+> Can you use mult_frac(), preventing the overflow?
 
+Good idea, but I don't think mult_frac() helps in cases where the
+dividend is smaller than the divider. Let's look at the sources:
+#define mult_frac(x, n, d)      \
+(...)
+        typeof(x_) q =3D x_ / d_; \
+        typeof(x_) r =3D x_ % d_; \
+        q * n_ + r * n_ / d_;   \
 
-On 5/21/2025 6:16 PM, Dmitry Baryshkov wrote:
-> On Wed, May 21, 2025 at 03:32:34PM +0530, Jagadeesh Kona wrote:
->>
->>
->> On 5/19/2025 1:48 PM, Krzysztof Kozlowski wrote:
->>> On Thu, May 15, 2025 at 12:38:47AM GMT, Jagadeesh Kona wrote:
->>>> SC8280XP camcc only requires the MMCX power domain, unlike
->>>> SM8450 camcc which will now support both MMCX and MXC power
->>>
->>> I do not see change to sm8450 here. This makes no sense on its own. You
->>> do not move compatibles - what is the point of such change?
->>>
->>
->> I did the SM8450 changes in next patch (3/18). But I agree with you, this needs to
->> be more structured. So I am planning to drop this patch and instead take care of
->> single power domain requirement for SC8280XP within SM8450 camcc bindings using
->> minItems and maxItems properties based on if check for sc8280xp compatible similar
->> to below snippet.
-> 
-> I think it is a bad idea. I liked the split that you've implemented:
-> separate bindings for platforms that require MMCX (and MX), separate
-> bindings for platforms which require MMCX and MXC (and MXA).
-> 
-> It might be better to start by changing SM8450 binding to support MXC
-> and then adding SC8280XP to those bindings.
-> 
+Since in our case x_ < d_, q =3D 0 and r =3D x_ then r * n_ will still
+result in an overflow.
 
-Okay, I will reverse the order of patches 2 and 3 to support MXC for SM8450 camcc
-bindings first and then move SC8280XP to have single power domain support. 
+Unfortunately, the cast-and-divide approach won't work either. I
+received an email from a kernel test robot saying that this patch
+breaks a 32-bit only build. (">> ERROR: modpost: "__udivdi3"
+[drivers/power/supply/qcom_battmgr.ko] undefined!") See
+https://lore.kernel.org/oe-kbuild-all/202505280344.GjzOItSS-lkp@intel.com/
+for details.
 
-Thanks,
-Jagadeesh
+I suppose I could just use a do_div with a temporary variable to work
+around that. I noticed that all data read from FW is multiplied by
+1000, so I leveraged that instead:
+battmgr->status.percent =3D
+    (100 * le32_to_cpu(resp->status.capacity)) /
+      (battmgr->info.last_full_capacity / 1000);
 
->>
->>    power-domains:
->> -    maxItems: 1
->> +    minItems: 1
->>      description:
->> -      A phandle and PM domain specifier for the MMCX power domain.
->> +      Power domains required for the clock controller to operate
->> +    items:
->> +      - description: MMCX power domain
->> +      - description: MXC power domain
->>
->> ......
->>
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,sc8280xp-camcc
->> +    then:
->> +      properties:
->> +        power-domains:
->> +          maxItems: 1
->> +        required-opps:
->> +          maxItems: 1
->> +
->>
->>
->>>> domains. Hence move SC8280XP camcc bindings from SM8450 to
->>>> SA8775P camcc.
->>>
->>> Subject: everything could be an update. Be specific.
->>>
->>> A nit, subject: drop second/last, redundant "bindings". The
->>> "dt-bindings" prefix is already stating that these are bindings.
->>> See also:
->>> https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
->>>
->>
->> Sure, I will take care of above in next series.
->>
->> Thanks,
->> Jagadeesh
->>
->>>>
->>>> SA8775P camcc doesn't support required-opps property currently
->>>> but SC8280XP camcc need that property,  so add required-opps
->>>> based on SC8280XP camcc conditional check in SA8775P camcc
->>>> bindings.
->>>
->>> Best regards,
->>> Krzysztof
->>>
-> 
+Any thoughts?
+
+>
+> > +             } else {
+> > +                     /*
+> > +                      * Let the sysfs handler know no data is availabl=
+e at
+> > +                      * this time.
+> > +                      */
+> > +                     battmgr->status.percent =3D (unsigned int)-1;
+> > +             }
+> >               break;
+> >       case BATTMGR_BAT_DISCHARGE_TIME:
+> >               battmgr->status.discharge_time =3D le32_to_cpu(resp->time=
+);
+> > --
+> > 2.49.0.1151.ga128411c76-goog
+> >
+>
+> --
+> With best wishes
+> Dmitry
+>
+> --
+> You received this message because you are subscribed to the Google Groups=
+ "chromeos-krk-upstreaming" group.
+> To unsubscribe from this group and stop receiving emails from it, send an=
+ email to chromeos-krk-upstreaming+unsubscribe@google.com.
+> To view this discussion visit https://groups.google.com/a/google.com/d/ms=
+gid/chromeos-krk-upstreaming/oa5okg7i2s6s7pxm5tn6nnanazze5lnnre4vnwrhopn5s5=
+hsil%40vhh22j6b5cvq.
+> For more options, visit https://groups.google.com/a/google.com/d/optout.
 
