@@ -1,203 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-59728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A741DAC6F07
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 19:19:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B414EAC6F91
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 19:43:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E2A511883EFF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 17:17:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B3ACC9E771F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 17:42:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9232E28BA8B;
-	Wed, 28 May 2025 17:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08DB328E560;
+	Wed, 28 May 2025 17:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dVoCgbHj"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LwSquHgZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C967528C851
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 17:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B3328DEE2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 17:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748452608; cv=none; b=gUP7o5BNW5oaVnkf+nfcGNRwSCx4IRw+9+4bhqdKmsgPlnOxiLmv8RXV+RjTs/ZR8Ve8ojQw1QT91fsAbTBRsmXe9ivhtyNkfqdxfG7SUI9bXxmzfsBI9HJN5bKynkk40mzXKaNAS41JO+/hq32SoYdSkxhgzZa9mKafydk0fzw=
+	t=1748454171; cv=none; b=U6KKBq4RHdg5aZvo3PVe3E/ymRJbvOlqmqHSxklI5yViL+Y0DoLFiQSD4rMyV5BPApB6mQgbLcFSkFmwy0foTpWBZ+4Le+K8sHL0EYngcu43tTO8lgeebarqwgcLUAGH3zee00ojcDf2OEWSH24ygUOJdNrwYZBGpO0a/i7jggw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748452608; c=relaxed/simple;
-	bh=aL3+xlCaNJSD026jdhb5AxVZ23NA04y0Q8DxSMNwrhA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M53flsZkduFaxG8z2gHjAKWqD2jtMD+rZVgw8OIHGbt29LiT+UtA5qnXPwJvcM0ZPuMDcRRVs78ZEsNuEkM3F+JBrPn92NAzk6AZ+lDKsSFbeGX6VEdgKYas1nFcr1T5zmP0dveC+p6jws/Cjz/IOsvODWs89OBGxYPMrSwPit4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dVoCgbHj; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1748454171; c=relaxed/simple;
+	bh=xHB11S55vbBCSjXZFfgzt/20X/DoOIfaYi1A/IhnDBI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NeFoWhhy2IsnsVWzJdbEMCAfTLYK84boVHMSn5jGa1secfCwKNg38IuHJQ1jjwuMJZRJrJ/KF7xO9qRGCTkLgJMSO/oZG1UDhE4mkdCB6jQWgMvC6SzLqpr3IsbfLTqQpf1albmIsMhN4s4NawZwSQ29OZYATLUhDWwLcialCbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LwSquHgZ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SCfCPB007169
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 17:16:44 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SHbvsZ028121
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 17:42:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Rl3rxy3XyRO/W+KpEldHk5plTWWoNP6INHawG9aWMTc=; b=dVoCgbHji7KO6yES
-	Xerfk1nZgXs/dLs+1fyNs6iReFjNzzVn9q36T7JxR1m+3PsGIy8A1prbaFKneImP
-	DW8pzsVR6mSyDvoFqDkSl8L6GxCS1zThIYKIQrbId0MfqDUrrgayoyMRhFZv43fX
-	U3IsLdk/NYeM/9gtZc29+0cGavLZ6FFY7f9ysM/OEIRaaaJq/YikYZTyqoeLI2Rb
-	1yBm8f113XNclxNgeRSlCjxqTh2j+u9xPHrC4a3Oi8WRGXRlHiCYhK31Ps8XjUOR
-	ABCCW6tw/roJDqoygFC89e+0381i6DJuVK2FQ1vYkhhqpYuXQuWp+N+OtiwopV01
-	Poq7LQ==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u549jxnj-1
+	gkJ+K1owqVTCltsNXWWOly4cngF2CqphP5rA+v7Jo/A=; b=LwSquHgZC2/RHb/4
+	f1cy9txM9mcVsCwWdlKRR3CVQVmYcuqpJORPRS6oAUI4QXntAruTqmzUW7vqCYna
+	MQqPv5mUk6eFQh5d3o27J+rxHU/dYR5B/Hu5QY5ntkcfYKLMd0QCHqkX3MmNpjeo
+	HygR5ajbfWZp3jot5dmydi+9TPKqPkc89HgeoigAhrMrMn4gR1bHpMj/R9OqWc3Z
+	u8bODXgnDX3eWj6UfO3hlSPZ7W6VNR3LPlC991gdInW8ReJmMutagn5GNGUvxkxw
+	lyXCQ+RdfEqSRFsB/JLK0iTWevxXZwdLGe7qQjjSaCdSwyQu6UaNVEtIzEi/9ZSf
+	CEaQcA==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u3fqb8t9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 17:16:44 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c5ad42d6bcso152722485a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 10:16:44 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 17:42:49 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-311c5d9307eso16698a91.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 10:42:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748452603; x=1749057403;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rl3rxy3XyRO/W+KpEldHk5plTWWoNP6INHawG9aWMTc=;
-        b=b4+JwN55/XvDgCSa/P+1dZEKR+VblbAJ6n+4szLz/T6jUBui0KkNlkLUn6UOOho0Hg
-         +78eoq/w9rq6a79IzRXjMH4WTR1GgdlmWnigtYKfSdS2OORurj0dqZfCMoFGT/DVQLS4
-         UyXS4qO35Nq5oQQERD6ubE3Ed5MlFKRwdsgqmKCzTNq+iZWc8OJtY/4u3JtNqBhTXdvx
-         ex4LPa5fwMjtufCZcHzRf/5u78ICLHU7Zww1WJ13z+BWJ1tUunHxeR5SWF/wHwv4Z89f
-         +xIeINPogaWpP83abD/r5E/TxKL6IEFSa8VrrPTd/PXosSOB9vjyuvbqz4xYzGsFIUdt
-         7U5w==
-X-Forwarded-Encrypted: i=1; AJvYcCWJhPUOmxJwFz7OzsjoY5+bpxumWWwteIn+v12k77/GsdW/IB5hiA+1bg93l/K0qKCdvHqufVhyhuJJKlby@vger.kernel.org
-X-Gm-Message-State: AOJu0YwN5Yl9I0lLQBfDNoQvJq5Ob41ig6szD2FIi8mS7HDLzaciGGq7
-	LflVkEmDHY0spPlj7RMWbU6GPAJz7GxfXPKm9N6BvPUycYMSJvqjmXPjf4DSe5dwfnQjeSeGTZf
-	tWJDZOBfBjncXNdw5QYjXlYchhPESDa73dnSf063E8sYS5nCnmd1I6OgHvcP3ViRe32ER
-X-Gm-Gg: ASbGncvFNgyvGI7+edz7QwwC+CiHGVkqQOEmPpZ9SxIiVRtzspleUtZWWom1fgF/XHU
-	IRAjkb0L/2ytmF4niQt+vjm8jMSAaQ8hbMZ9GcNmMoQUz74iK+yF9/FxnElOYA5JUQe7DS9ThWm
-	kwvVmijdufPne9xg5aF0SGqcf+XlWAWJ/tQU9MjNERukvxY+DbHGQVnIZBQH73OJsntmdOC4q6j
-	eq2pEu3JRMvydzdT2FIZgp5zK/FKLYkWtysdB0xUkp70UJFSp9o+R4lswMUQPVQ4B3SsvWcfYYu
-	arkc5/RxBkx3pVFKzGk3b4YK613QA9g4q+aWzQr5Qc8RHqfD7LYceB/WHYQUzuANXw==
-X-Received: by 2002:a05:620a:410e:b0:7c5:75ad:5c3a with SMTP id af79cd13be357-7cf535240abmr166200185a.8.1748452603480;
-        Wed, 28 May 2025 10:16:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2lnLLqcEflYr54m8J13/Eqky3HDBtiGQN/lG4ZbKrr1DA3OuSD2/oz15zp4Lpg0pBXwGAig==
-X-Received: by 2002:a05:620a:410e:b0:7c5:75ad:5c3a with SMTP id af79cd13be357-7cf535240abmr166198185a.8.1748452603001;
-        Wed, 28 May 2025 10:16:43 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6051d7941fcsm1035588a12.57.2025.05.28.10.16.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 May 2025 10:16:42 -0700 (PDT)
-Message-ID: <41ee75df-2244-45ad-956c-e17ea5804dbe@oss.qualcomm.com>
-Date: Wed, 28 May 2025 19:16:40 +0200
+        d=1e100.net; s=20230601; t=1748454168; x=1749058968;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gkJ+K1owqVTCltsNXWWOly4cngF2CqphP5rA+v7Jo/A=;
+        b=uKIv+gdFEQbX+FRqbaJ2BLILfn2kaKuXuyErfG2XEe+gyEq1NDFt4OCafKowWJdTxV
+         V/oXJJIiEf8GcI/PJb35OpYelOJV+X3FWg18lZ7w30gVUibAx+MInx+TZHhyhTccVI9p
+         EGH+S71M2B4Af9rq1+ssSHNqK7FB6DXewHWfOg1bDRj4X+NM+xnkkrcFP89kuqHbHjkX
+         9IbYdLDODblkvSgDf960zMMiPwDUY5o1gPbXL65/rQm6+eQAW6e5IMukjA3ioDsrvKEH
+         gBirT3sqi6QfomcV5ibuxSBe0gWQsuhJ/aBAwbwoWvZZs7zGdTdwzBo97yntiQyP6lYA
+         JZ6g==
+X-Forwarded-Encrypted: i=1; AJvYcCW9CaB6DtVLFtoUZE9ot7dhWDDz/7vXSjNvU/MJBAkiRhRr6H/8yC6y19dITC1aG1hxwKFgTyvHH6XOYwIx@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhC1lMv9MYwi+Ya8cPNcNi6dMXFbmgI2A2kme93cq0SOwYSHyy
+	0Vp0iyU9lm9WwNN/0fZZRvHZyFqgBYGmROmkrqlt5t7udP0BnN/oq3MSEAfJaZXVNhofnBAlWGW
+	ui+qyka1+0mA+9z4mQtHdG9nmtKWGt0W4tAc9aAPE4hpah5fYgnZSxno4+m3gG8Nj3fx4dyWdol
+	JBiDi5BZ0+t8DurUDYDP7JobBXehWzxr/gcoJIvT8dJ+E=
+X-Gm-Gg: ASbGncsDM+wyEQW52dmNXKglQKhAOZL3SHHso+r7E592cJLdjVrG7/iemwYRq4UqO++
+	2FqI3SgM8Sxhn6GFGLOOGBegqv45c0Ayj6DxUm943HiWDyyBKqJIU3NwOQnTM0t50eFc8tQhZgp
+	t0ipM05csm/vZldfUrmLrKDGby
+X-Received: by 2002:a17:90b:1b0f:b0:30c:52c5:3dc4 with SMTP id 98e67ed59e1d1-31111c49d25mr29158190a91.24.1748454167818;
+        Wed, 28 May 2025 10:42:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IElJOznSIDBxQNtBqnZZvLZ0mXq7SapcvIwfl9dqbmTLqAGbsjluuJN1LIxWmG/4IMkLD9QesITMfYmRatftoQ=
+X-Received: by 2002:a17:90b:1b0f:b0:30c:52c5:3dc4 with SMTP id
+ 98e67ed59e1d1-31111c49d25mr29158130a91.24.1748454167347; Wed, 28 May 2025
+ 10:42:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] dt-bindings: watchdog: qcom-wdt: Document
- qcom,imem property
-To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
+References: <20250524-tb16-dt-v4-0-2c1e6018d3f0@oldschoolsolutions.biz>
+ <20250524-tb16-dt-v4-5-2c1e6018d3f0@oldschoolsolutions.biz>
+ <g7vlyqma6ow6tdsaqt2rfwvblxqwbqlwmoueio7i4vqvjy76kw@5bz4g33pq4t7>
+ <CAMcHhXoYkQru_0n5siMGGkTcHu8yWRZWfT4ByiD8D0ieZHF+wQ@mail.gmail.com>
+ <vwoixgdyjjzcjlv4muwrzv7wztnqyidtj7ghacgkjg6hgkkyl7@ji53bhiltaef>
+ <CAMcHhXqDFuo+x99KOK0pQFj-FyTdQoZS_JvehNE2AC_JSoQ2gQ@mail.gmail.com>
+ <rvyfkow43atquc64p6slck6lpfsot67v47ngvfnuhxqo222h6k@kdvbsmf3fwsr>
+ <CAF6AEGvr_foMVwaE_VSVWLT50cbGi8i3UGwo2e=rORD-1JmTmA@mail.gmail.com>
+ <152f5150-30b0-400c-9816-13e4710a4156@oss.qualcomm.com> <kbmqr7gjkd72hgorbhbwb7ttvmecfbb6pg72st7zwt5ogxju6p@itycxk6vriy5>
+ <CAF6AEGsTtEA=So1CDhvg8H5+Z-RJ9OnhgSzDoa+zkWSPO3cvnA@mail.gmail.com>
+In-Reply-To: <CAF6AEGsTtEA=So1CDhvg8H5+Z-RJ9OnhgSzDoa+zkWSPO3cvnA@mail.gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Wed, 28 May 2025 20:42:36 +0300
+X-Gm-Features: AX0GCFvWYL_b4RjTkVuHpDMO4jnqnz8wYBbed_Z--BZyI6lmIjmBVVwjVONW_Uc
+Message-ID: <CAO9ioeWk1-dUQYDS1oQNc-QaRu5MG_C=JRx6RPiFE-OQjB7g3g@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] arm64: dts: qcom: Add Lenovo ThinkBook 16 G7 QOY
+ device tree
+To: Rob Clark <robdclark@gmail.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+        jens.glathe@oldschoolsolutions.biz,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck
- <linux@roeck-us.net>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org
-References: <20250519-wdt_reset_reason-v4-0-d59d21275c75@oss.qualcomm.com>
- <20250519-wdt_reset_reason-v4-3-d59d21275c75@oss.qualcomm.com>
- <20250520-portable-anteater-of-respect-c7be5c@kuoka>
- <37bd619d-242e-4488-8d45-c2c85612bee9@oss.qualcomm.com>
- <b8003fdf-66a1-47e1-8c78-069f0739ea37@kernel.org>
- <85e30c0c-ea77-47da-9fd9-4293c7a78c75@oss.qualcomm.com>
- <8efa9abd-bf7d-4f9d-969b-70c0452fc2b5@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <8efa9abd-bf7d-4f9d-969b-70c0452fc2b5@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: o0evIb-1iIJt_Q6yQwbVtRhPSFYcPnV2
-X-Authority-Analysis: v=2.4 cv=E9nNpbdl c=1 sm=1 tr=0 ts=683744fc cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=DivZRyEUkxVDCtRtIxkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDE1MCBTYWx0ZWRfXwH/uaVN8HMoC
- UI6/U0mKC3Zi2DOtBs9qYa01+EmGRTf2SREfU4+8WnYw9+Ybev0INX+n0su6KOwHlZNPURdA/i+
- v6Rx4ISheu1QFRTJmpGxpFOe8plyST/hcPpBMGC8eFLaDsFG+MUt9kyc5S0ppDOXJw5TAuZUq5Y
- hmAnIwZTSVlMLoIr6ng0A8NjDTtPBfwoHAfcZachH6e0ItZKNDUHAxpsq7wJ8XB5bERzLLXtPdE
- +e0ALOCev94UAmx+Qy44qLx8PzhQwSFt7xRqNIsjbQYzA/GANmTqr02KtRS+zYoIyyxRrl3B21j
- RunrGfQwxN5OaASpvjm1Pm8gTAlgfVD6xhOL+bdkkreMk411n2vkX9vjPxfqf6rm/ADBLGlEW+y
- b4nOlk+QintnDr3o/20IJ59qFl6MU50eP2mDMcCgvI+iDAJgTTbVF2p2Eehdw/2so8mMQTWk
-X-Proofpoint-ORIG-GUID: o0evIb-1iIJt_Q6yQwbVtRhPSFYcPnV2
+        linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>,
+        linux-usb@vger.kernel.org, dri-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-GUID: WT6IvA2fEwza_LH1PQSONK306hVV4ME6
+X-Proofpoint-ORIG-GUID: WT6IvA2fEwza_LH1PQSONK306hVV4ME6
+X-Authority-Analysis: v=2.4 cv=X8FSKHTe c=1 sm=1 tr=0 ts=68374b19 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=yeHvZfB8xrJCexBfAjMA:9 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDE1MyBTYWx0ZWRfXy4P8eoSNGQ5+
+ srxSIQ24VMLw9ETG8mfXgOi5cAzEnVvsJSve1IfOU1Md4aQhnM8/coWR2vJQ1JqhgNzb3KnA+SO
+ dsV5DfPU8La5SmYtvKs2preeM8K7zahdGYcH2hQa3ICUkVs7ou5sgDtBHexhF/g1HFnPwn21FNo
+ giJkCsIJeq/cStPX3fjkflriUqo02PCxodiuliPtoY3EG16Hx5wm8jseiOjXtw9e6hAF9MbLr0+
+ AT0YUye6EYRhY6nt+Rw4CuY27i8psGJ5hRzi8cLj78PHxjeL6nGY9tZtZwA3vqyx4bbVB/yyI1O
+ Cz1WUY+NhGJQs4kIxHf1jhZPjtt54qQtI0JcVqpzYAEnpYJz1iX7UFkh7o2Mlcuaq83G0NFlrBk
+ +nuX6ePdqsWR9EChdYCyA/uLwW5T72oSeOh0MpsVqLxZX0Bp/SyAF52hiIxip0TXmQC1m8e2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-28_08,2025-05-27_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 priorityscore=1501
- adultscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0
- clxscore=1015 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505280150
+ impostorscore=0 suspectscore=0 phishscore=0 bulkscore=0 mlxlogscore=888
+ mlxscore=0 clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0
+ malwarescore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505160000 definitions=main-2505280153
 
-On 5/23/25 4:35 PM, Kathiravan Thirumoorthy wrote:
-> 
-> On 5/22/2025 9:15 PM, Konrad Dybcio wrote:
->> On 5/21/25 8:53 AM, Krzysztof Kozlowski wrote:
->>> On 20/05/2025 18:00, Konrad Dybcio wrote:
->>>> On 5/20/25 9:25 AM, Krzysztof Kozlowski wrote:
->>>>> On Mon, May 19, 2025 at 02:04:03PM GMT, Kathiravan Thirumoorthy wrote:
->>>>>> Document the "qcom,imem" property for the watchdog device on Qualcomm
->>>>>> IPQ platforms. Use this property to extract the restart reason from
->>>>>> IMEM, which is updated by XBL. Populate the watchdog's bootstatus sysFS
->>>>>> entry with this information, when the system reboots due to a watchdog
->>>>>> timeout.
->>>>>>
->>>>>> Describe this property for the IPQ5424 watchdog device and extend support
->>>>>> to other targets subsequently.
->>>>>>
->>>>>> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
->>>>>> ---
->>>>>> Changes in v4:
->>>>>>     - New patch
->>>>>> ---
->>>>>>   .../devicetree/bindings/watchdog/qcom-wdt.yaml       | 20 ++++++++++++++++++++
->>>>>>   1 file changed, 20 insertions(+)
->>>>>>
->>>>>> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
->>>>>> index 49e2b807db0bc9d3edfc93ec41ad0df0b74ed032..bbe9b68ff4c8b813744ffd86bb52303943366fa2 100644
->>>>>> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
->>>>>> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
->>>>>> @@ -81,6 +81,16 @@ properties:
->>>>>>       minItems: 1
->>>>>>       maxItems: 5
->>>>>>   +  qcom,imem:
->>>>> Shoouldn't this be existing 'sram' property? If IMEM is something
->>>>> similar to OCMEM, then we already use sram for that.
->>>> We specifically want a handle to a predefined byte in IMEM, something akin
->>>> to qcom,4ln-config-sel in
->>>>
->>>> Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
->>> Nothing stops that with sram. Above example is poor, because it mentions
->>> syscon. There is no hardware as syscon. Does not exist. What is IMEM
->>> here, what is this relationship?
->> IMEM is indeed a small block of on-die SRAM. In this context, another subsystem
->> may write a magic value at a known offset that would correspond to the platform
->> having been rebooted by the watchdog. Now why the wdt register is cleared in the
->> first place, I have no clue.
-> 
-> 
-> Thanks, Konrad for chiming in and providing the background information. With respect to the WDT register, when the interrupt is triggered, I see the expire bit is set in the watchdog register. The bite interrupt is handled by TZ and TZ does the system reboot. After the system reboots, bit is cleared. I have cross checked with the design team and they confirmed that the behavior is expected one.
-> 
-> Krzysztof, Based on the discussions from the previous versions, I have made the changes. Can you help to guide me on how to handle this? Should I just name the property as "sram" and point to the sub block in the IMEM region like how it is done at [1][2], which is more or like similar to what I have submitted in V1 of this series[3] Or is the current approach acceptable? Or some other way to handle this?
-> 
-> [1] https://lore.kernel.org/linux-arm-msm/20250523-topic-ipa_imem-v1-1-b5d536291c7f@oss.qualcomm.com/T/#u
-> 
-> [2] https://lore.kernel.org/linux-arm-msm/20250523-topic-ipa_imem-v1-2-b5d536291c7f@oss.qualcomm.com/T/#u
-> 
-> [3] https://lore.kernel.org/linux-arm-msm/20250408-wdt_reset_reason-v1-0-e6ec30c2c926@oss.qualcomm.com/
+On Wed, 28 May 2025 at 19:50, Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Tue, May 27, 2025 at 11:18=E2=80=AFAM Dmitry Baryshkov
+> <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> >
+> > On Tue, May 27, 2025 at 12:55:06PM +0200, Konrad Dybcio wrote:
+> > > On 5/26/25 5:28 PM, Rob Clark wrote:
+> > > > On Mon, May 26, 2025 at 1:36=E2=80=AFAM Dmitry Baryshkov
+> > > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > > >>
+> > > >> On Sun, May 25, 2025 at 09:43:36PM +0200, Aleksandrs Vinarskis wro=
+te:
+> > > >>> On Sun, 25 May 2025 at 15:33, Dmitry Baryshkov
+> > > >>> <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > > >>>>
+> > >
+> > > [...]
+> > >
+> > > >> Yes, please. Don't set okay status for the GPU until it gets enabl=
+ed.
+> > > >
+> > > > Drive-by: Shouldn't the dtb describe the hw and not the state of th=
+e
+> > > > linux kernel's support for the hw?  Ie. if bad things happen if we
+> > > > describe hw which is missing driver support, shouldn't we fix that =
+in
+> > > > the driver.
+> > > >
+> > > > (In the case of the GPU there is the slight wrinkle that we don't h=
+ave
+> > > > a gpu-id yet so there is no compatible in the dtb yet.)
+> > >
+> > > My two cents are that it's okay to enable it, at least in this case..
+> >
+> > That would most likely make display unavailable as DPU driver uses GPU
+> > as one of the components.
+>
+> Hmm, perhaps we should allow the gpu to probe, but just fail to create
+> priv->gpu, similarly to how we handle missing firmware?
 
-Let's go with desired-value-in-dt here.. I don't trust the firmware
-to never change. `sram` is prooobably fine, let's hear from Krzysztof
+Ack from my side. I'd also like to remind you about my split-GPU-from
+display series.
 
-Konrad
+>
+> BR,
+> -R
+
+
+
+--=20
+With best wishes
+Dmitry
 
