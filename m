@@ -1,274 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-59733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA920AC7149
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 21:07:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 769CEAC716F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 21:21:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7534116A613
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 19:07:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 389C64A6130
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 19:21:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CE3421ABB1;
-	Wed, 28 May 2025 19:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F5D021CC55;
+	Wed, 28 May 2025 19:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JiSlmzCT"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eai61nNI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB66213E78;
-	Wed, 28 May 2025 19:07:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748459266; cv=fail; b=YEGX+GyJTAoMitu69UGl5qcCjsBF4g/7IEZ17EDTrwgUE8XnlKm4X1BZg9bDKAyZDdQSVGqVw2ajZelusM0BPv8NAtvk/eaumAMVB/RWZYbo/FzeGY9Er45WH2Bj7AEfQvNJBCIK7hePTRrjCxA1UxDFZpK8CeS3m28kcQoUcjg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748459266; c=relaxed/simple;
-	bh=O5XWh+gJMUd7tA88qYJNDWtvGCD86ewIesBcFWu7zc8=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=rOEkw03t91zTx2bOW5P6Z5RJHjMJu9ky91JViUxk4Cb5fOgTVhezubLH46a+Ye5/YH3bozLI49GM2Hl4TSNirjRRLYWkCbZhLeU8E6mV3TPaBvhJrLdQSe7q8dJRFkKri92UU076rAiWbR0INVJETXGRc2fuS8gFW4piKDIYxE0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JiSlmzCT; arc=fail smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1748459265; x=1779995265;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=O5XWh+gJMUd7tA88qYJNDWtvGCD86ewIesBcFWu7zc8=;
-  b=JiSlmzCTjFZNO7OhhfSgjZ0ZRfg8rcZbMvwAvIA5Suw6sxRUw7TQhTh5
-   kDZKUJwl0Noovi1D8B3mdyYeg+JK3k7XehlYOyp5IH5+AIG85P3xy9LM3
-   vB8kfCXiEaI0vCXmoMWx0giB81NEd0ICZf5UPhZ89ig7w+4JkRV4LqQZP
-   Ky8PnDkvEooFSDwvF/TM8HEJHgpNkS+xkYtGFks+4Mn/RzzwbXaWzAnm0
-   BA4W/a5BLGY8pLyId0/u0M79S1m5zyRsEwTSdSo+lsIdlbVubQrxBfWD5
-   g89LLCtSvak7jZPLXb+zzVNXdT+lT/p2b1DHA31LFzStfPr3uE1Yx0I2h
-   g==;
-X-CSE-ConnectionGUID: GZBQQyV7RqOmyT23D8hnPQ==
-X-CSE-MsgGUID: caecX2rJT2yBuh+iHFT2ZA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="61556999"
-X-IronPort-AV: E=Sophos;i="6.15,322,1739865600"; 
-   d="scan'208";a="61556999"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 12:07:44 -0700
-X-CSE-ConnectionGUID: klS8+gx7R/mZcLU9XfuvTw==
-X-CSE-MsgGUID: QN2bxNgBRv64Tvn5MFqZCA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,322,1739865600"; 
-   d="scan'208";a="148190915"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
-  by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 12:07:42 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Wed, 28 May 2025 12:07:42 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Wed, 28 May 2025 12:07:42 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (40.107.94.60) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.55; Wed, 28 May 2025 12:07:41 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qF2IR6e42epCDRKbysno2ZlfqA68NnWyJNPxYXuJHsZuCftpD987qUgexz0bi3GYKmKKt7BWcWo6W/qd4ceqcLW8wgVhqkb4ujC27GurfF9tnwjqNfG28vwCuI3Ih2iVa86ktzNHy/Fo7JxXMqpwnlANtkDHBR6Ok6sqkjxe23lbQvP+5cfshoUueX1Og2BSaa6FN01wQjZHZr0qg0ioXUe5RUOtUsK46kHhgij2HBcttSlqK/Q23p8mQbtARay0384VPgJKNs00PetcE9t/59a+H2c4P4Me9W00PutPCWCATfIBZcnzE0rNeRLXhXUVYfDHVx1iQ4GFqgAJasHPuQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Cks2IbmT19oybuvLMq6OrsyC5QlmBX3OrlIf3Zoh3Kw=;
- b=iGpLSJ3jtLA++W0dFS+0dpJ7KOEds29jpE8vfaqz5jQiNMt2/gAE9WcT8fmy4eKc+cayd20afRFLIEqRO6gUpFdMuipV5stcnksL1OVRWtNtSGkfaxtxZoU38UOiqR8TjSIpCcTSOTsHlwF3zPPzLX+Ln+OUiXt2XvvXJDOpMwoNth0bky5IcBA8qAllrMKRTJ3uiLZg4Zxf/+YbB2ioQ4k9ANbP3mAdD+UineQxQU4m8yZFPMVGBjIkxFiAcC8wFXpYlHu/z9O1mlr3ceU9VzfCjrXsjTa+qego0PINt4W/Ei5mvmavhUGJGERgPjHK/BKeUA9u/HjkGc7Cv0hz2Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CY5PR11MB6139.namprd11.prod.outlook.com (2603:10b6:930:29::17)
- by IA0PR11MB7882.namprd11.prod.outlook.com (2603:10b6:208:40f::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.22; Wed, 28 May
- 2025 19:07:40 +0000
-Received: from CY5PR11MB6139.namprd11.prod.outlook.com
- ([fe80::7141:316f:77a0:9c44]) by CY5PR11MB6139.namprd11.prod.outlook.com
- ([fe80::7141:316f:77a0:9c44%5]) with mapi id 15.20.8769.025; Wed, 28 May 2025
- 19:07:39 +0000
-Date: Wed, 28 May 2025 14:07:34 -0500
-From: Lucas De Marchi <lucas.demarchi@intel.com>
-To: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-CC: Min Ma <min.ma@amd.com>, Lizhi Hou <lizhi.hou@amd.com>, Oded Gabbay
-	<ogabbay@kernel.org>, Felix Kuehling <Felix.Kuehling@amd.com>, Alex Deucher
-	<alexander.deucher@amd.com>, Christian =?utf-8?B?S8O2bmln?=
-	<christian.koenig@amd.com>, David Airlie <airlied@gmail.com>, Simona Vetter
-	<simona@ffwll.ch>, Lucas Stach <l.stach@pengutronix.de>, Russell King
-	<linux+etnaviv@armlinux.org.uk>, Christian Gmeiner
-	<christian.gmeiner@gmail.com>, Frank Binns <frank.binns@imgtec.com>, "Matt
- Coster" <matt.coster@imgtec.com>, Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>, Qiang Yu <yuq825@gmail.com>, "Rob
- Clark" <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>, "Marijn
- Suijten" <marijn.suijten@somainline.org>, Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>, Boris Brezillon
-	<boris.brezillon@collabora.com>, Rob Herring <robh@kernel.org>, Steven Price
-	<steven.price@arm.com>, Liviu Dudau <liviu.dudau@arm.com>, Matthew Brost
-	<matthew.brost@intel.com>, Philipp Stanner <phasta@kernel.org>, Melissa Wen
-	<mwen@igalia.com>, =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Thomas
- =?utf-8?Q?Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>, Rodrigo Vivi
-	<rodrigo.vivi@intel.com>, Christian =?utf-8?B?S8O2bmln?=
-	<ckoenig.leichtzumerken@gmail.com>, <dri-devel@lists.freedesktop.org>,
-	<linux-kernel@vger.kernel.org>, <amd-gfx@lists.freedesktop.org>,
-	<etnaviv@lists.freedesktop.org>, <lima@lists.freedesktop.org>,
-	<linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-	<nouveau@lists.freedesktop.org>, <intel-xe@lists.freedesktop.org>
-Subject: Re: [PATCH v11 02/10] drm/sched: Store the drm client_id in
- drm_sched_fence
-Message-ID: <5jnpsmjef5ibegbsbelkfmudv4wagpcfb25nptqs5z4ccitq4c@3bdtrbrrmtil>
-References: <20250526125505.2360-1-pierre-eric.pelloux-prayer@amd.com>
- <20250526125505.2360-3-pierre-eric.pelloux-prayer@amd.com>
-Content-Type: text/plain; charset="us-ascii"; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20250526125505.2360-3-pierre-eric.pelloux-prayer@amd.com>
-X-ClientProxiedBy: BYAPR01CA0019.prod.exchangelabs.com (2603:10b6:a02:80::32)
- To CY5PR11MB6139.namprd11.prod.outlook.com (2603:10b6:930:29::17)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0791E8332
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 19:21:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748460103; cv=none; b=k95mpLFKWx9rIz9TFUFEfqcqXkyhsv+1pmD5aPINZ+P4NGfVLxhhaig/8br9PNWaVY9uT4T0+397++hAx2+mtPBWD6Stx+urIG2fFVwCNNtfKrvFArLL68GGgX3x3EdebSC7NumBoLUQHNrzVrSUMcoQBShRtX2o3Czb5xAjcec=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748460103; c=relaxed/simple;
+	bh=5YkGN7qiUJaRl3Nx6l2MDDYu/ZprV3VXMY9hifYOnPo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hEyAul817tue62n1eBx9jpdvdhY8DK3Nr5sVpru2ampmZZR3Cai1P9RAzLmWTtAaF7o4nSqLb41c2mYV+9xfyBiZOLbsSsuTAb77y3x86C+FEb/6bukYzi77XYI7LGgGfjNDYqXoQY1XR2EuWQU5CXWYDQMg1rh1BR77ovj3ils=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eai61nNI; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SElCYW028920
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 19:21:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=0gLgWYRWzCLunD/qHvyEBxK0
+	5YkGBQTqBuXAxV9jh+0=; b=eai61nNIZrFCYT4XHda5r/y0e/6wLWlVa8+GpSR5
+	bnjyvI/XotbJuO1zMciMfrq5n6WPGwC8T2FVPQalr0tpiuKUbz/1JF7nn86sImix
+	cxZpwD2P0s/HWQ8cpGxY9nBk55IRPv2khHTxN3UHwWOAaEfmn508RtPtpnuexz9r
+	qjM3Bkw+DwnzeTXAjUHTtUOihxFVXg9XJkddSXoEyTQBUvs+p++aXVUfJDZh28+E
+	/DlAKUKq3s2/zbzN1fjktNtbcE6bnwnhqfi0JQis+yDNfHyY1LAgECkHZK8bZY2y
+	SNHiRxFPfQheoUMZY5o4OTiuSugRbMtKOu/JvFqzb6EIgA==
+Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com [209.85.222.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46whuf3qhb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 19:21:38 +0000 (GMT)
+Received: by mail-ua1-f71.google.com with SMTP id a1e0cc1a2514c-87dffd5e015so24329241.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 12:21:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748460097; x=1749064897;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0gLgWYRWzCLunD/qHvyEBxK05YkGBQTqBuXAxV9jh+0=;
+        b=Gz77DoNCLc01aeKc5xIq2KbGxGn/x/dB90gnGR9FN2eTKBXTOEuUltX95JhTpv2dtc
+         APFoPucIOP4oPSTxPFmyndU9C73E1jsYvYWo4/QNYFPAdvpSzz1hc3iMec35noIRLN5F
+         c4X0rjbCrAX0S8E3iyS/Jhavl1pItA4Ii7HPPHIzMIcu2A6OkM4JL5T1aD3+XVTwzjnw
+         kEXU48ZIZwqoBVN7Ayn5MpGK9No/QG+kEVNmiFBaF4bysj6FGrE/OfjWO7ZBCXZ3Ts9z
+         PSFayHiWBUS5MFvLAYd7faqSBMYrOxihlGnvyXoJOJJ9XOrVF8spKIOM7FdCKAIOr/0q
+         m4sA==
+X-Forwarded-Encrypted: i=1; AJvYcCW+urbgXwMfcr/9qt8NeGRNePBPlFWqBwO9Rpj7WuYYE93P95yz8DG0YtI6RiXAfirTU6zZtTp1j0M9b0zP@vger.kernel.org
+X-Gm-Message-State: AOJu0YxI8pq2EBs1jIh3xm2+Rt/ZTReQhhMte2Ot8mO++75SVO+DxcAB
+	Ssxs/FOze8U48aklSvd6tPuTnwe5n8PIbly4qbuaDcWykWn228WcQx/4bZfzqm374JGMyezUcyC
+	u+ZC6roBC8i2ZmBPRgNs86YyZTDiCDGEOJEKWmHgFQx87rKgGQM7sTGcoUzYxZh7+rv+e
+X-Gm-Gg: ASbGnct1d+isoY6mvQUKOgo2yTZhzh7BJrehbSOms2VH4+1WBBV54KzR8fEZtG9J5qX
+	BPUhK1Nm3/0Z5raeo6UFrrbMn0t2Od+52Z6gjkaAHl5jr+H0Xvu90GfPYNfPYD6bOxLwooS03z4
+	awgYdrtVpBdlc48+wRENOu8d1MMyEA+5lCoza3hYz+2S5yInPmmfE8GQYL6U2wZXbfwZwnjkSWM
+	LjnTcD0NJKTaUUe+RXaq+JOeE7IlD3nR3xOv6Eyd1Qtfap7eCwt/KdaYwG36FQh4IID5o+LL4db
+	cuEzUqunQ0Nd8sn0VSo+99JTLVqzddqWJygLquyicn2AFJL/Tt5jXAj8oevuw2bfYK8tlXubR8M
+	=
+X-Received: by 2002:a05:6102:3c83:b0:4e2:bac8:75dc with SMTP id ada2fe7eead31-4e424107ac5mr16096197137.15.1748460097046;
+        Wed, 28 May 2025 12:21:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERFOoB32HSD5K8ZYFJWnW5A8/+hLXTTrO7fhdopo43CCwU6vsapvR8yzcxq2z2wgo+mX8xeA==
+X-Received: by 2002:a05:6102:3c83:b0:4e2:bac8:75dc with SMTP id ada2fe7eead31-4e424107ac5mr16096164137.15.1748460096733;
+        Wed, 28 May 2025 12:21:36 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5532f6a6276sm404321e87.207.2025.05.28.12.21.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 May 2025 12:21:35 -0700 (PDT)
+Date: Wed, 28 May 2025 22:21:34 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Jassi Brar <jassisinghbrar@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org, Georgi Djakov <djakov@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH 2/4] mailbox: qcom-apcs-ipc: Assign OF node to clock
+ controller child device
+Message-ID: <m6nprxug75aifcw6scqpnlx5664zk44neo7v6w6trxfmoe76b7@kt6v5vrdeadm>
+References: <20250506-qcom-apcs-mailbox-cc-v1-0-b54dddb150a5@linaro.org>
+ <20250506-qcom-apcs-mailbox-cc-v1-2-b54dddb150a5@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY5PR11MB6139:EE_|IA0PR11MB7882:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0267c96c-eb01-4127-2eaa-08dd9e1aea7a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?IVLfLNw7R6hG7kLM+X+tTxzxs7C1YYlLkHxLLEnbWNwIkL2IDLZ7ki8oIPUN?=
- =?us-ascii?Q?dlDbeDkfepS6yPAQWELfZNJh0YNq0AVXvNW+CmMluki2sIOG8kCA0Df3qRwm?=
- =?us-ascii?Q?eIUWMUnrQc/VEjAy1vSKcQUTGIXGvkS8tKv33FjyXzfGOeYSzQGf3FBkXLoJ?=
- =?us-ascii?Q?BXXT0CQ3TRs7ax3hpIGnH/eMIDQCcjByM1zEvUeWm0mOH3mcwD1IsmFH1G2Y?=
- =?us-ascii?Q?kdOCkct9JLsuckHm7KNsztCCB82a88XSbMFD5em7xX8rOoLQEzA2f/fekLN2?=
- =?us-ascii?Q?VUfmhoHDA+L659jePLXKuUV4bVh8zaFVMCivt060xRk4ItIPJgmZidjjDsvq?=
- =?us-ascii?Q?zRXTVzrR70oEvaC+Ni11ccreBWKRt5F0tqBXz+NG79VPAsKsSnSnwIrYF6hZ?=
- =?us-ascii?Q?qiCXuuIwFA0NlWlQUgAVu+t/U64vMWjWABudMgWcxwuxHG8JLjJRcbI/Eo1p?=
- =?us-ascii?Q?Gp1f08tuJrEotvwNAZRHkAC9i+eGQSJRjK0Ga2blk3gtQDWhZui40F0WoRFc?=
- =?us-ascii?Q?8REPlWw9t9kijhPS5OiYGx/maFRrcxPNsCxy9W+lq17rxJEdZNlzwt3Bw37M?=
- =?us-ascii?Q?DtSW6xR41KOhwOp0Xt4N+Epwp9iKGmuimjeqY177K/S1/LicGZ4b+gs4ixhA?=
- =?us-ascii?Q?4vqHsxAlFOg/z0VTEeV3LNLv/A8sKygCtLZsUP8cIHiy25C9nVRoAWxrnOM6?=
- =?us-ascii?Q?No6whhDOmaWcep59bd0NzJxZcAalIP3cNLbflp1Czf+xF7Dx2vggKcV9kOFc?=
- =?us-ascii?Q?NEdwRoZvNYQ1X54IKgzQVEngJIHOtSJD+pVwFYmYjE+Hh3FrrtF2YOXo51p+?=
- =?us-ascii?Q?S8JYFH0tPfCvP2gvIjI7l0viGMq25HvJALbzfBZHRZqoq9Bj5K7O/QMSfEyO?=
- =?us-ascii?Q?drno72X5lpYGWYcuGzqp0YbIdDF9QnrI9U8vbZDOQGYUC4C6GRLN8k9wyKK8?=
- =?us-ascii?Q?SwbdcLWUvaLgd0KVNcZ6zYxmcqhpleBYGGak45JU30kYyGuc5rh6FFrdBo+G?=
- =?us-ascii?Q?2Vv6JPnP72pn0wJDPg/2BThvM9JQGpZpUkIbRYefTx9PHOQALTCC8OHsTYL2?=
- =?us-ascii?Q?sABU7/S/s05dw0o0HP+7FE31fkbuLY8iWhgpaORSx+gVnfj7yqIAjHb5cvT1?=
- =?us-ascii?Q?vUCPxHO6ADIuLIy3i3b6lQ+srCnmg74QKYpWCp62W86xpQJG30GUb8lEjbK+?=
- =?us-ascii?Q?OuHS2YQpy7GTauQoiZqKlihMdvRlVI2CaetabXXa9eL3sLlUGKfVqH5N9NW+?=
- =?us-ascii?Q?/mfh7lQWpA3d02q7CIagLxYcWiKntbYKKuxoNlUKv0ofO9aSvJvaZZ3pDGw6?=
- =?us-ascii?Q?GKToFVXBPbI8dhHoZDZbuatqJg2aoctReLKxbXhRPYi6Wx8I8vKFe/xJHZY2?=
- =?us-ascii?Q?bHCIg5o=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR11MB6139.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?wa+0Rvn0Qr/bjKWly5oDUFUzXhAHLrVnjETPfqyl33C7ulTZzs4ByRJUIS/J?=
- =?us-ascii?Q?5eLuN5FbEjJqhE4x8hZj9zMSYA1ARdG3LatOzLgMszuNwv43FcgjPyzq+e1T?=
- =?us-ascii?Q?XamqJnyjpzIsuG9NqEiXApjR8GcMeJDubUroeyqSJU6vpXPCXvpoYyQiqYAq?=
- =?us-ascii?Q?CR2pJcMHWO1GpkqF7GJ6AH4pxSUNtdW4Kvjzj9dpUjhWwnyONrgdXafgG4yu?=
- =?us-ascii?Q?PAPBURKL6Vfo0sTwqRdgTSGkX2pgJiuGmbMqsmNjlBdG8S2pLub2+du1N4lF?=
- =?us-ascii?Q?m7Fw7TBJ/+jwiVvvY6Zsr+NrcTQ/vo2t9sqD3HECQxoF0TIEuv0tleY+xfjk?=
- =?us-ascii?Q?SnsIXrW7piZJqVi/5EvyhAiL9+Rdbh4BBRzcfWLxlRXfdnNA+lT24H639rWn?=
- =?us-ascii?Q?08ewE5PVGC12+vP8ZUrwLAQdmjqRptCILYvnO7wPvDqtewP0ZkYCuO0QS/HQ?=
- =?us-ascii?Q?SK/353+Kph9R/sf/a0GZA0xGCdSAbbVM1BJJd+IjdfBGCI1kao9p4STg21rc?=
- =?us-ascii?Q?x9Mt/O/5s7yaV7+n71OEYdJm8WChocM17xhHl4U8PDCckXlfOqufbp908GIP?=
- =?us-ascii?Q?Ox4E5GncbqRBJd2pEZLUACBSg+oyKPVRmDRGdlzG/6/t+nN8k8HCAf+H59FO?=
- =?us-ascii?Q?jXmBUfaA1D/Ue/SqCRsxksau7RadWFfAvllP4f0jZxZIO3oDgXruH3VC8NgG?=
- =?us-ascii?Q?RYOQNOq8wWBQmvKoNLt9cCyyDfcy0IzicRkm+jhgT5yboUcKSstJ6i++dxcA?=
- =?us-ascii?Q?j3xZczhQVQywausdNcWoUuU4y4k2G81oSlabU8FSXdsLoIvkrE3bkI5WZfWz?=
- =?us-ascii?Q?bt8tNrez56Jxu8dOcOtUEU6/ZLO8i8Y0QVYhiDtAEtHDjpWS2B5fp3xqMnLc?=
- =?us-ascii?Q?JZfNkLFreiPlzXpt4LfppiyjnSWDL3xvGxDqPYqxtndFnb2EvYM/OiyTL7Tt?=
- =?us-ascii?Q?tFmX+B0ogPIrSAgHdbHWP/LoGwEUNNZrmAKfzcBFCEYAkNyuTgm34l0RL2sL?=
- =?us-ascii?Q?5VUUYyLLxq+deBlfvS0GyKTOpL8Bku8L42IZd1YyYShAN62P05I4aE2sAQ2r?=
- =?us-ascii?Q?kc7/Pl9CPXBlKxM4UhYyY1PaSTtMrskRDirFxUsSSlysS1M4Fplji2ZA5v/n?=
- =?us-ascii?Q?a88Y/4H33TN5tP87h26+QgVJYkMz3Au/hHB/RrB5/8Tah/d9KHgWw134vtI9?=
- =?us-ascii?Q?0K/LnCsDoxs9I3dDf8RuR8wymP6He232cpTMMF30r78RC3T1Fwccz4R219Aj?=
- =?us-ascii?Q?GK9qS1VouVm1dyRHLE7V3vuTgswomMOVDazUwYEnT8s8X7mWY9OgDzB9eAm4?=
- =?us-ascii?Q?3/496RZ2kg7bWxBbQL17OMZA9VSta6VPe4k0HusLRhB2K8tW5Z9AYuRVN+3i?=
- =?us-ascii?Q?KXfCd8B5HwSO5qfzb5eBF/3anbvysPCiQOOSDDRCValaMnvicqIQjPEhfHw+?=
- =?us-ascii?Q?2CbZ3muUP97gV2bPIGuGJXL6pN8wLvwNgkkdh2giQ+WQdQ207h/VZxVto2UJ?=
- =?us-ascii?Q?MwneqK9tkYYCaxJthRcwJno3UVL2RbSodfW0q0mag5NV/lCiiYVcHIa+tbWs?=
- =?us-ascii?Q?kRvQ0xuMp1KPDYCsjVopvkGIWO2E+M8lbX4aUiucwyy41IKpmFIctSTEiUFa?=
- =?us-ascii?Q?PQ=3D=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0267c96c-eb01-4127-2eaa-08dd9e1aea7a
-X-MS-Exchange-CrossTenant-AuthSource: CY5PR11MB6139.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2025 19:07:39.8918
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: aWGsR+lKXTHnXAuZ+Dq6j4ZKKVeAZqz409DS8n73+vReT5YA8Gnc5iRDOuRieWY0T928ACwAN0vOIMvrgmbkL7+8zodA1wtWBLNf9T6J9Xw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR11MB7882
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250506-qcom-apcs-mailbox-cc-v1-2-b54dddb150a5@linaro.org>
+X-Authority-Analysis: v=2.4 cv=OslPyz/t c=1 sm=1 tr=0 ts=68376242 cx=c_pps
+ a=KB4UBwrhAZV1kjiGHFQexw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=dt9VzEwgFbYA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=oeMlsxxNoTt8-AEUPKgA:9
+ a=CjuIK1q_8ugA:10 a=o1xkdb1NAhiiM49bd1HK:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: o0YgNdW92hmQQP5QN6mONxyQeFxBE97W
+X-Proofpoint-GUID: o0YgNdW92hmQQP5QN6mONxyQeFxBE97W
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDE2OSBTYWx0ZWRfX5tf6GDo7ObKG
+ HaugA6+9psBrb6VKjhgCTI0OaFYoFI/57oZg1G9+C+mOzOfyY2kY7ZmbMQVpnxUAJdkX8sS7BFH
+ kxlHpmm/7gZBJrGaiEa+DSNbhSaFuoBRXu+agsX+lD9wIrZ89flrzqFwDXG+MKet3fSFlRYEMl2
+ EPEgef9spELFg8SdqwhfWPk55zoIDPb4Hzf5IuzMA3WDO1IdEANlohJ7VWkl7nAcJRsquaSRfAG
+ kNtfHhRymR7UGvlsg0ePCneJ32EXg9b0umBVkmW2+7xB9oAsHh7SDqBxGEr98R+KNdrN3/XjxRS
+ Ou1YIpeEnBZX8AjuvHN/CSSXdUC5qWc9UQ23OZiBCojDAekI0BNVpmwZ4+JzSHee6C2PNXRXfm5
+ P63WiKXOyrtwjXq4q3IhN23/YYNHKyIg88ImIqAYg4GmLj0aonxjYoncX9Nbu1c3N4m1HJIq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-28_10,2025-05-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 mlxlogscore=996 adultscore=0 malwarescore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 mlxscore=0 lowpriorityscore=0
+ spamscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505280169
 
-On Mon, May 26, 2025 at 02:54:44PM +0200, Pierre-Eric Pelloux-Prayer wrote:
-> drivers/gpu/drm/xe/xe_sched_job.c                |  3 ++-
->diff --git a/drivers/gpu/drm/xe/xe_sched_job.c b/drivers/gpu/drm/xe/xe_sched_job.c
->index f0a6ce610948..5921293b25db 100644
->--- a/drivers/gpu/drm/xe/xe_sched_job.c
->+++ b/drivers/gpu/drm/xe/xe_sched_job.c
->@@ -113,7 +113,8 @@ struct xe_sched_job *xe_sched_job_create(struct xe_exec_queue *q,
-> 	kref_init(&job->refcount);
-> 	xe_exec_queue_get(job->q);
->
->-	err = drm_sched_job_init(&job->drm, q->entity, 1, NULL);
->+	err = drm_sched_job_init(&job->drm, q->entity, 1, NULL,
->+				 q->xef->drm->client_id);
+On Tue, May 06, 2025 at 03:10:09PM +0200, Stephan Gerhold wrote:
+> Currently, the child device for the clock controller inside the APCS block
+> is created without any OF node assigned, so the drivers need to rely on the
+> parent device for obtaining any resources.
+> 
+> Add support for defining the clock controller inside a "clock-controller"
+> subnode to break up circular dependencies between the mailbox and required
+> parent clocks of the clock controller. For backwards compatibility, if the
+> subnode is not defined, reuse the OF node from the parent device.
+> 
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> ---
+>  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 16 ++++++++++++----
+>  1 file changed, 12 insertions(+), 4 deletions(-)
+> 
 
-you can't do this here. xef is only !NULL if it's a job from userspace.
-For in-kernel jobs, xef is NULL and this explodes. Right now this
-completely breaks xe since one of the very first things we do is
-to submit a job to save the default context. Example:
-https://intel-gfx-ci.01.org/tree/intel-xe/xe-3151-56d2b14961751a677ff1f7ff8b93a6c814ce2be3/bat-bmg-1/igt@xe_module_load@load.html
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-	<4> [] RIP: 0010:xe_sched_job_create+0xbd/0x390 [xe]
-	<4> [] Code: c1 43 18 85 c0 0f 84 6f 02 00 00 8d 50 01 09 c2 0f 88 3e 02 00 00 48 8b 03 48 8b b3 d8 00 00 00 31 c9 4c 89 ef ba 01 00 00 00 <48> 8b 40 08 4c 8b 40 60 e8 86 64 7c ff 41 89 c4 85 c0 0f 85 9b 01
-	<4> [] RSP: 0018:ffffc900031972d8 EFLAGS: 00010246
-	<4> [] RAX: 0000000000000000 RBX: ffff88815fc40d00 RCX: 0000000000000000
-	<4> [] RDX: 0000000000000001 RSI: ffff88812e6552a8 RDI: ffff88815f939c40
-	<4> [] RBP: ffffc90003197318 R08: 0000000000000000 R09: 0000000000000000
-	<4> [] R10: 0000000000000000 R11: 0000000000000000 R12: ffffc90003197428
-	<4> [] R13: ffff88815f939c40 R14: ffff88811f054000 R15: ffff88815fc40d00
-	<4> [] FS:  00007681f2948940(0000) GS:ffff8888daf14000(0000) knlGS:0000000000000000
-	<4> [] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-	<4> [] CR2: 0000000000000008 CR3: 0000000118315004 CR4: 0000000000f72ef0
-	<4> [] PKRU: 55555554
-	<4> [] Call Trace:
-	<4> []  <TASK>
-	<4> []  __xe_bb_create_job+0xa2/0x240 [xe]
-	<4> []  ? find_held_lock+0x31/0x90
-	<4> []  ? xa_find_after+0x12c/0x250
-	<4> []  xe_bb_create_job+0x6e/0x380 [xe]
-	<4> []  ? xa_find_after+0x136/0x250
-	<4> []  ? __drm_dev_dbg+0x7d/0xb0
-	<4> []  xe_gt_record_default_lrcs+0x542/0xb00 [xe]
-
-Can we use 0 for in-kernel client since drm_file starts them from 1?
-Like this:
-
-| diff --git a/drivers/gpu/drm/xe/xe_sched_job.c b/drivers/gpu/drm/xe/xe_sched_job.c
-| index 5921293b25db3..d21bf8f269640 100644
-| --- a/drivers/gpu/drm/xe/xe_sched_job.c
-| +++ b/drivers/gpu/drm/xe/xe_sched_job.c
-| @@ -114,7 +114,7 @@ struct xe_sched_job *xe_sched_job_create(struct xe_exec_queue *q,
-|         xe_exec_queue_get(job->q);
-|  
-|         err = drm_sched_job_init(&job->drm, q->entity, 1, NULL,
-| -                                q->xef->drm->client_id);
-| +                                q->xef ? q->xef->drm->client_id : 0);
-|         if (err)
-|                 goto err_free;
-
-I tested with the above diff and it at least loads...
-
-Also, I see this in intel-xe mailing list, but I'm not sure why we
-didn't have any CI results... I will check that.
-
-Lucas De Marchi
+-- 
+With best wishes
+Dmitry
 
