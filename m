@@ -1,139 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-59655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59656-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11676AC632D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 09:38:16 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A12EAC6341
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 09:44:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 013EF1BA2ECF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 07:38:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D8BDD167C59
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 07:44:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A8DB24500E;
-	Wed, 28 May 2025 07:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B9C524503C;
+	Wed, 28 May 2025 07:44:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="R3CA8d9E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8916F44C94;
-	Wed, 28 May 2025 07:38:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B31205AA8
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 07:44:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748417884; cv=none; b=Lo862uFWy+o8iGNx3g/+Rncv/uhrbBErbig92i6z9blM+eyGhAWuVu00TBgJ0gtK8LOOlfKI1HONvmqujJcwBsBOoN7ATifk2nNzFCmTRmXh6Z9GSe0FsfPMM3xKs3jgLFfCYhBX7C/I+2AADKy97Q21QN2/PZpf8OWnGAUGplc=
+	t=1748418285; cv=none; b=oO0wBH1S2nb8yYIqBdiV/qkLtoinMqqV4UiQuGyW5reZ0/eyrazYpKcQsyPb3GhWSqZ9aFQDDCVamOWqyEZ7nbq3ZykhkY74aJTRKFTd9XH6LBc0V9XiGnmG7iWB434cYwaVlv3zENMJzQvsasfVZim1m0gVlJNdHjAiSdj3IPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748417884; c=relaxed/simple;
-	bh=dC6/r+XL94KrBaJDEg8ysPYbOiXiNK3lHLZP0ifcAGY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kTxAf7rV/xP0/J4YaEMyJZMJUO9RGlOUySWFTruLZyS8OrTLQZ8zBuEZvUtw6vhu/24Wqsh+8NDjeSzMoP+rqoftN6aZq1nM4DNUkfgUIQ3uvH4YKj9ADEekxaAZk1hoPd6aP+LPi8afzCbzU+QjqB5GTZXvBNPoztLb9GSGAZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-52413efd0d3so1395947e0c.2;
-        Wed, 28 May 2025 00:38:02 -0700 (PDT)
+	s=arc-20240116; t=1748418285; c=relaxed/simple;
+	bh=9n0cPJV+g+yarXV9zmLs6fR1CGDsXbBKFs5PKVOvzX8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sBwtnNUfM67UeR4jGT0sE/kl7TjX8vT25DqcxGVju/tG8QeEZhSjEXcSVnKI6C9KlxlKkBN4v34kmuNT8y1ya8hF7M3CjR/Bt6DXKARBh4zt21M4NNnrwTgZRqDtgHx4sRcoarSoIh01D2QTCHvgTM2FW1FxbBosZ9A8aNecq/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=R3CA8d9E; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-442eb5d143eso44612985e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 00:44:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1748418281; x=1749023081; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NCAzjCL4Bl6CH02UvykJmrP16J+tWlFWZGvoCIzzt7U=;
+        b=R3CA8d9EK0zyietaYcN++gt5HGPpzFv1JD5ABNjJk3oHFpjslnQXmxjpQQS6GjvHTW
+         81H2MVjfNiXXZpZa4gMXwFxxPO3jCUr1QdNJIFWfNfGf5+AX7pd7XOWtAG2MSjfmCbvq
+         lownUMvsWFu8h2NtbnVke4leOTgrlt/7RkB1QwdIO468S1xdz83OL6i5TKiHaCZH5MVT
+         slTbFLsFDZSup7Tlp0tk6SQRwoRMqXXp/Yx3b4z1r+Aoa5m3kLGECKyf1TthW+MzF6JU
+         G7knqzShOf4js/1jXwLWDF/hHfuWlf5Ij2wcZUq4PQnNqUUJqAWTpPMpzuKSMHvtsD57
+         neyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748417881; x=1749022681;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=q0FIvnATmtkNNdXQbt1Fz7I3kCcVI6Dqou2JsI1LDaQ=;
-        b=A9bhradSkN8DWqfBk3rvVrpiTtQl65UtOoPNI4pulVn4A/Hv32aGMExEdMtpBezzuC
-         ZJXob/1rOEf3VSQo1PuP/wCiPZFln09UBCjGMIBZreyhzqz7E1IQ9huF+lZl40ufFdX2
-         sICx5RQkEuOJ/LPmvuia/PajdePAZM5HXFsi/bjnYcDlO4Hq/QNW2ULMi/U9zlWXw7UQ
-         mT/Wmb7j8eF+oncTR/O9CxUPMaWUIiYjfPU2baw48echfXQFFFKiwuAYFZa476vCRsDC
-         Yu52foPtOWA/K4JT5u1YqqzlXzv9D4lJKTPuBV/V8tKDAKzYG470V0cjJuy4Fen3sk2A
-         Jksg==
-X-Forwarded-Encrypted: i=1; AJvYcCUEYeFh8j9rwwPAz1uEQXUZ4lVvjAdwZL+ezGGXBBN1IoNhsSNAXZdKo1NnQs/qsDJ11PNQbD5aLNTV2v9Y@vger.kernel.org, AJvYcCUnM+XU6UpQXTyqOouCBKVscaelBJZTKj/U5d9QjIlBFqc0vuaeXfthsjnZr09ftY3H7CnNubIOIFxw+zfCdhrY5h8=@vger.kernel.org, AJvYcCV5zdEC3VdrrOUS/tgFrlJY/uh1tAKVbHCaIuCEYBtbAvHXVeRhALr1gBbptiVWzkdw5QKhw5Dzbx3qHJ8=@vger.kernel.org, AJvYcCVXHifsSyyJilK+CKodWu6mvewV26NEiRHUzsPIUSSOYXO8WlHRGuvftN3yIYw8smdTv4oNlayLU/qxCDSO@vger.kernel.org
-X-Gm-Message-State: AOJu0YxIUucXOAyU7uv2XEXViTG2bkg4gok9OW5XaMOm0GG+D27albWV
-	nlbsY3n0laGy+F8v7zeYFipbaajQhffy8qIp5+S/cQDJb+G0Oa3NwNfWU/ayb8Xh
-X-Gm-Gg: ASbGncvosmqhEra7BQ7lKL8qpJhmqbhMiGSnUwy8yc8CcOjn+71oz0zaWQsRsp00KfG
-	KIh+pfAnzFVeI4VkgUlzvOoYPpjiyjHY00vp2s6GqOUL1F8vCDbRqE3pvvf7kmbGHSdvblnmdWr
-	Oz+DQVrHplgx5ypMEuqdmu1rAB95ljNFpHg5AtmNwhDUpqAQj3ssIn/r5mVlSQiGgM1wn2U4GIx
-	tlAj8wEii8uQY8x1HyGCje/2HOj2PvZTLoidaeByZStjW21lvCcApAM50VA9dIbWpPmyMipgJTn
-	JIy5bhR4HtKqfXhMm9C4XKqfTNvfDYFxHaBljoNa6FwBRy4s0k6NWc4GYfOoWww9KMF1ypU91eW
-	p5sQYRcsYIRVQtw==
-X-Google-Smtp-Source: AGHT+IHispFt8IBDadtOKw22E5PPSlK7FrOJnlZ6MHJgJfUuzrpL8uTku28GgfXu+2wGW9Q/rkVwQg==
-X-Received: by 2002:a05:6122:2986:b0:530:6bcb:c97f with SMTP id 71dfb90a1353d-5306bcbcb83mr91593e0c.8.1748417880716;
-        Wed, 28 May 2025 00:38:00 -0700 (PDT)
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com. [209.85.217.50])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-53066979b54sm500426e0c.47.2025.05.28.00.38.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 May 2025 00:38:00 -0700 (PDT)
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-4e5a1a4e4aaso51509137.0;
-        Wed, 28 May 2025 00:38:00 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVDZTB8ablys595TS9S9OnRgPpBY6bjjKNMugyGypR3fhN0i/Q39ycwczYEvVaow7PvAmWRr4Q3ZVLJGprXh6le5CA=@vger.kernel.org, AJvYcCVStZOEDp/IllMB/lm283bw//VTOrhXbbRh9Ii13zHVXVBQ61w37f5P4jO9SngvB3xPtoq4RUstL/hjoY7/@vger.kernel.org, AJvYcCWKlpDEaEZCdH4pHZes2TdL/ko2IYBVRjjW1FfTrmZM3T76t6BWkrxVRWIFMzcPgLL6xizbUtdMi/oDKuM=@vger.kernel.org, AJvYcCXgDU4RzsChkkcfW+3K/qDh6U8l4qHuK6mUfb/LW0xrueGwddvzgvkZDWA1Bn+SS+WIWonl2vrBJwm5P4BT@vger.kernel.org
-X-Received: by 2002:a05:6102:d87:b0:4e5:9731:6ded with SMTP id
- ada2fe7eead31-4e597316ebfmr3313200137.6.1748417879962; Wed, 28 May 2025
- 00:37:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1748418281; x=1749023081;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NCAzjCL4Bl6CH02UvykJmrP16J+tWlFWZGvoCIzzt7U=;
+        b=X6P/XhCFzBdJmqzQKSdqUbdQp3ldLHW3Ntyu8FFwoC/0/mPmLUieUE2ol1YwNJclFL
+         eUnnM+y8cnq1vR3gQ+pp7WM6hymDtlyuiAqYBb3RpMy8M2VXV1Zic/zwaq4kDlm7kowR
+         vxnkMo2Q46D6zf8LyNQykKHe3JfdFgKBAkwpa8vH816/ZcAfl5unxz2kMlURraIB2VaF
+         9K+5hc6GA29TgVRkHIaEFcM2W9gH5yOJ921x8h+5WkBoh/o29MekJTtYGf/XvysThzJA
+         fDS6aoNTNuqrRC2d8uTgd7VwVLTpYnh9gc8ny/BzHkah2ZXIzaGSWtprWs43vLmljiOS
+         X08Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVf48ppeoeg9lJvPfl4h8E5s/RkitlyOd2sIIa8C1IksRiU0p2TEtDFd8rITG3Mr4JHH05AD2GXyZ7tdBaf@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz9zzf9wuHXmMLRKzswN9ioKQhhHa0EtdYUfYxAyJ2qvVsLpGCA
+	Q93+49rXG/ztaO/z9jkCsoYH29ngReMn0GI6g63UvK+PJa6Brni53DAZXi+kdaSkOKw=
+X-Gm-Gg: ASbGncu5N6G9lA4jd7T4w10i7rRuyd98aBphFFYq5Dy3PryjCFXb4CJIGMQsMAM/QPn
+	yCbOcvr0df0JBi46AClRjQvzIUx9x30rzmYO3zHjHacZt5d6rDqu50o0DP55sfyoa/gjCcfJJsg
+	rCA5zDomRj/4TXn+UMil+mEjLaBmJtjaHWPtDkOhEM2aazajIKQPKBJ1D7y2AYWQ0OOHYlmhdzb
+	elZNemU4dgrAa3kVnhepqIAGtrcdafvmF/KIjTbD4E/jZFxE32xQO4mkQ+jmfrgDn3Y/xd9RDyI
+	3qXVa6e4wyGxtIi7Cb1mMy0H4+bPvvY/Gp00MUneDEd0fnkS
+X-Google-Smtp-Source: AGHT+IE/iUqPKQrG7bwzgJBp3KKnYuDmJ/JAmKt65e94C4RB9c06whWy8YwNSu/XTnIj1izcf15HNw==
+X-Received: by 2002:a05:600c:4e0a:b0:43c:f895:cb4e with SMTP id 5b1f17b1804b1-44c91dd158bmr145314685e9.17.1748418281526;
+        Wed, 28 May 2025 00:44:41 -0700 (PDT)
+Received: from linaro.org ([62.231.96.41])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450064a1246sm12549605e9.10.2025.05.28.00.44.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 May 2025 00:44:40 -0700 (PDT)
+Date: Wed, 28 May 2025 10:44:39 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Add interconnect to primary
+ USB3 controller
+Message-ID: <aDa+57zCFSOXyYY7@linaro.org>
+References: <20250527-topic-x1e_usb_icc-v1-1-43b604cb0609@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250527082446.2265500-1-aichao@kylinos.cn> <20250527082446.2265500-3-aichao@kylinos.cn>
-In-Reply-To: <20250527082446.2265500-3-aichao@kylinos.cn>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Wed, 28 May 2025 09:37:48 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdV5ZhJrRiuEWLbU_gFcv40+izLpR0HN0EZU415s3QAkVg@mail.gmail.com>
-X-Gm-Features: AX0GCFve4Aj5WArc9KkplJVctpVO9pqz2wSMOeJzSTUgarGo2ZgOa2T8YLQGOCU
-Message-ID: <CAMuHMdV5ZhJrRiuEWLbU_gFcv40+izLpR0HN0EZU415s3QAkVg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/6] ALSA: aoa: Use helper function for_each_child_of_node_scoped()
-To: Ai Chao <aichao@kylinos.cn>
-Cc: perex@perex.cz, tiwai@suse.com, johannes@sipsolutions.net, 
-	kuninori.morimoto.gx@renesas.com, lgirdwood@gmail.com, broonie@kernel.org, 
-	jbrunet@baylibre.com, neil.armstrong@linaro.org, khilman@baylibre.com, 
-	martin.blumenstingl@googlemail.com, shengjiu.wang@gmail.com, 
-	Xiubo.Lee@gmail.com, festevam@gmail.com, nicoleotsuka@gmail.com, 
-	shawnguo@kernel.org, s.hauer@pengutronix.de, srinivas.kandagatla@linaro.org, 
-	linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linuxppc-dev@lists.ozlabs.org, linux-renesas-soc@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org, 
-	imx@lists.linux.dev, kernel@pengutronix.de, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250527-topic-x1e_usb_icc-v1-1-43b604cb0609@oss.qualcomm.com>
 
-Hi Ai,
+On 25-05-27 21:26:17, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> This seems to have been omitted during the initial bringup.
+> 
+> Fixes: 4af46b7bd66f ("arm64: dts: qcom: x1e80100: Add USB nodes")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-On Tue, 27 May 2025 at 12:52, Ai Chao <aichao@kylinos.cn> wrote:
-> The for_each_child_of_node_scoped() helper provides a scope-based
-> clean-up functionality to put the device_node automatically.
->
-> Signed-off-by: Ai Chao <aichao@kylinos.cn>
-
-Thanks for your patch!
-
-> --- a/sound/aoa/soundbus/i2sbus/core.c
-> +++ b/sound/aoa/soundbus/i2sbus/core.c
-> @@ -155,7 +155,7 @@ static int i2sbus_add_dev(struct macio_dev *macio,
->                           struct device_node *np)
->  {
->         struct i2sbus_dev *dev;
-> -       struct device_node *child, *sound = NULL;
-> +       struct device_node *sound = NULL;
->         struct resource *r;
->         int i, layout = 0, rlen, ok = force;
->         char node_name[8];
-> @@ -178,7 +178,7 @@ static int i2sbus_add_dev(struct macio_dev *macio,
->                 return 0;
->
->         i = 0;
-> -       for_each_child_of_node(np, child) {
-> +       for_each_child_of_node_scoped(np, child) {
->                 if (of_node_name_eq(child, "sound")) {
->                         i++;
->                         sound = child;
-
-As people pointed out before, the original (and new) code is buggy,
-as child is saved to sound, and the latter is used after this loop.
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
