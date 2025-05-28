@@ -1,122 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-59714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54CB0AC6C8C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 17:09:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AA561AC6C94
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 17:09:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EF0F54E4F38
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 15:08:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B8C7B4A3463
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 15:09:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 327C228B7F9;
-	Wed, 28 May 2025 15:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0490B28C025;
+	Wed, 28 May 2025 15:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qRjgWdwq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tOJA9MQp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDABE28B4FC;
-	Wed, 28 May 2025 15:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE05283683;
+	Wed, 28 May 2025 15:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748444933; cv=none; b=lEWMqj7JwvRrhgSHf5zR8kn18nxDt5dh1t+fpebJIjqnzj/TYjulOg4RQezGoHmaeGYo2mcyRNr+mSGV/zgizUJpAzm2fRDNA7LnD0yYKX4+fNQtSTPnX3G9pO0yRU0Rpn/3jDBIwagFigBWboxaGnBD/0idJAN0mnG8/GYXRNQ=
+	t=1748444980; cv=none; b=td9QaBsmnghCuZPTvHoNm4Y82GiNzpRuxE/RZFKpRN7SSlHNWHpI3vMVi9SB9e8Vz8X1RUgyLJtse+VQRoaseb3Ooif/TRTV/pmIZSx1KHJufWT9Td3X6l5/j2qDxVmTJxrVcpVGxXgAQVmVKQG978FZZ5lKD/zbPAEZxC3zXRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748444933; c=relaxed/simple;
-	bh=40UkgulLHp10KrkQG30f0FbnrUk5jZkaCVdd/+FO+ik=;
+	s=arc-20240116; t=1748444980; c=relaxed/simple;
+	bh=OHgErOC2T87wT7U4nv7ZvSNfiXesXTEy0off6Qrka8U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=msdHwIDiDAGkUkjEtWoNxGSw1ic4QasHEtDQOF+zf2nTMsJwaW9OSbllS+9klv1hHXp4C4USw5F+1Srz7DtwVCQMP+e13CEb1Y2esIiljj4/gkTV4gPR2GvDMckmWCff0epZe3itwV7ILZMl7nh0MpcV28sUeXMEqKfo99pvEA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qRjgWdwq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE668C4CEE3;
-	Wed, 28 May 2025 15:08:47 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=fJOT98GNaH7jlNMWDlf/vwYmDBfLgr1zWlOsNrAY3qKQA2BBE8iPr1O82Lm8D9pSfrvmCczxXtJpTt94ODTochO1IqO2BveZlkjuBoKvEvbap4CshMuJ+Ewvh9GUFVg/EJoh/er287zqHsO8/LzqbcJ6qfRq83kPPWBhdm6xXlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tOJA9MQp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6690AC4CEEE;
+	Wed, 28 May 2025 15:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748444932;
-	bh=40UkgulLHp10KrkQG30f0FbnrUk5jZkaCVdd/+FO+ik=;
+	s=k20201202; t=1748444980;
+	bh=OHgErOC2T87wT7U4nv7ZvSNfiXesXTEy0off6Qrka8U=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qRjgWdwqYvPjV98TTccLqsGfJyo55EH+l97/A0dyCPqZZw+fbX+pf9HcpNEC8Jtem
-	 TPGSeay92lbEB58m4uBijF4vCTWImjZ5pzd4QP7z3qpS5R9QCJKmZvp1qUwt+XQ+RA
-	 oUEeY+rw42FhD0vyBQmOJ62JlIHnt0pemRznLH8jKpbu+WDIWExx6w9QhtBRgnB79M
-	 uJcr7sg3IwQg5zKmmR6ro53e8Je1Urihu9NSosZD/3NXYE1WUQeVoWYp6RITZV4tyD
-	 L2nGNJo+N2RZ9OVp4mk3N6KgtdjH5bwRgnkk5uud71J6n4bp03m9IdxiD8lgpjOEKX
-	 ctxnsJFFgTNww==
-Date: Wed, 28 May 2025 16:08:45 +0100
-From: Simon Horman <horms@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Alex Elder <elder@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Alex Elder <elder@riscstar.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH net-next v2 3/3] net: ipa: Grab IMEM slice base/size from
- DTS
-Message-ID: <20250528150845.GC1484967@horms.kernel.org>
-References: <20250527-topic-ipa_imem-v2-0-6d1aad91b841@oss.qualcomm.com>
- <20250527-topic-ipa_imem-v2-3-6d1aad91b841@oss.qualcomm.com>
+	b=tOJA9MQpq7xBq2cXfdjW9VQRwG92p6y13vY2KLQNsznfEGa9ElM8ioQbH8r0FNx08
+	 x/h42gsneLyDLLzbfPdAeE+w+Dppj5J0aRgQlR86I5mP8n7iaFDH0a/xfIKFg4HlPR
+	 AH6Udv/j5AFQG+VwBplGNanSYMLBGZWxc/8gW7IkuBUWlQs27tFue+1hJyMb5PkMpl
+	 s5SNg43N8LCulam2deS+2pm6vIlErfIbbbsTSD9TIdHyCKp+gRzagVQvwGyu5EdrDX
+	 jX0+7FBxetsOZnZkaOW/F9Goj47IEZO9WPBJR8YnXViN4NEmw7WkubeSDt6GuuPuy3
+	 q9mmjQTpCT6QQ==
+Date: Wed, 28 May 2025 16:09:35 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com
+Subject: Re: [PATCH v1 0/1] ASoC: qcom: sc8280xp: Assign backend ops for
+ multi codec dai links
+Message-ID: <a1b7cea8-403f-4289-a42a-541426576de7@sirena.org.uk>
+References: <20250528150716.2011707-1-mohammad.rafi.shaik@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="e09OCX0shRhgRHcI"
+Content-Disposition: inline
+In-Reply-To: <20250528150716.2011707-1-mohammad.rafi.shaik@oss.qualcomm.com>
+X-Cookie: Keep away from edge.
+
+
+--e09OCX0shRhgRHcI
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250527-topic-ipa_imem-v2-3-6d1aad91b841@oss.qualcomm.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 27, 2025 at 01:26:43PM +0200, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> 
-> This is a detail that differ per chip, and not per IPA version (and
-> there are cases of the same IPA versions being implemented across very
-> very very different SoCs).
-> 
-> This region isn't actually used by the driver, but we most definitely
-> want to iommu-map it, so that IPA can poke at the data within.
-> 
-> Reviewed-by: Alex Elder <elder@riscstar.com>
-> Acked-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On Wed, May 28, 2025 at 08:37:15PM +0530, Mohammad Rafi Shaik wrote:
+> In the existing implementation, the link->ops assignment is
+> conditioned on link->no_pcm being set, which generally happens
+> when a platform entry is present. However, in scenarios where
+> there is no platform but multiple codecs in the DAI link,
+> backend operations (link->ops) must still be assigned to ensure
+> correct codec settings.
 
-...
+Please don't send cover letters for single patches, if there is anything
+that needs saying put it in the changelog of the patch or after the ---
+if it's administrative stuff.  This reduces mail volume and ensures that=20
+any important information is recorded in the changelog rather than being
+lost.=20
 
-> diff --git a/drivers/net/ipa/ipa_mem.c b/drivers/net/ipa/ipa_mem.c
+--e09OCX0shRhgRHcI
+Content-Type: application/pgp-signature; name="signature.asc"
 
-...
+-----BEGIN PGP SIGNATURE-----
 
-> @@ -656,7 +659,23 @@ int ipa_mem_init(struct ipa *ipa, struct platform_device *pdev,
->  	ipa->mem_addr = res->start;
->  	ipa->mem_size = resource_size(res);
->  
-> -	ret = ipa_imem_init(ipa, mem_data->imem_addr, mem_data->imem_size);
-> +	ipa_slice_np = of_parse_phandle(dev->of_node, "sram", 0);
-> +	if (ipa_slice_np) {
-> +		ret = of_address_to_resource(ipa_slice_np, 0, res);
-> +		of_node_put(ipa_slice_np);
-> +		if (ret)
-> +			return ret;
-> +
-> +		imem_base = res->start;
-> +		imem_size = resource_size(res);
-> +	} else {
-> +		/* Backwards compatibility for DTs lacking
-> +		 * an explicit reference */
-> +		imem_base = mem_data->imem_addr;
-> +		imem_size = mem_data->imem_size;
-> +	}
-> +
-> +	ret = ipa_imem_init(ipa, imem_base, imem_size);
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmg3Jy4ACgkQJNaLcl1U
+h9D9Mgf/TclVauXqxhIwsuHxnQMdM1OlfjFsQmbGlAwi3j4TX/26ttBQhGtBb0dr
+n0VjN403LtF9imyqJ9wiXw17XD6uJiPjSRSS9CPlNgyXAww+xBxguV8D3zvtF6Fb
+s0+0bnpjMEQqoGW0kW6YSoKz9IG4CfGbTDn99hXgbLSDnikgMkNxcNzA5AD9W5UP
+dCtaXgBezIfmwkLAJWnla07FZ7oWzjTyGkieak2OIZI98WHzM8bKPkzjAf2JEv62
+2QObWaZenZ+dYF3sjVq3B8h2D2SzQ+AfvrWPC2iTE0hA8XxSVn3nr3SCVBA5aArL
+6KJ5N75Ou7keQ2i9pUqqMVowcHKQZQ==
+=FFEa
+-----END PGP SIGNATURE-----
 
-Thanks for the update to use imem_base and imem_size on the line above.
-
-Reviewed-by: Simon Horman <horms@kernel.org>
+--e09OCX0shRhgRHcI--
 
