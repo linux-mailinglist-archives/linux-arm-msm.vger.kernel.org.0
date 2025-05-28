@@ -1,389 +1,274 @@
-Return-Path: <linux-arm-msm+bounces-59732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B81DAC70D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 20:22:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA920AC7149
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 21:07:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8432A9E2F75
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 18:22:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7534116A613
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 19:07:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1410F28CF61;
-	Wed, 28 May 2025 18:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CE3421ABB1;
+	Wed, 28 May 2025 19:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SR0X2GWM"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JiSlmzCT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D075428DF21
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 18:22:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748456556; cv=none; b=thux5AywwOmfDcV4dWxsSLFsAI3oM3/m6+tUxNWnmv+zCx29RMNJIRs7tv2frinLREoJRDEOYnqVwKq2xq6RMVcdlJ/LB4o2crjPtlvu99mN7wq07yI1iPqLNJjRUYg4m3PNjlIBFVpU+W2YZAtQvRGdmly4P+k2vY3A2YVRobY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748456556; c=relaxed/simple;
-	bh=m2bWizstM8R2IyWJ5UZGzimLBXaHf+NXg+15yOIEsvY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uAUS4zfU0W2YxDITRjaFA+zvdZBtEtyyE4VyuDpYFDa+0Tw1jntXVaTXSoY36iBkVtvzzSb+TtgGAPEsEjHZ/ipbHGNCUbYdI+GudBpqoq1V0tmyxoglJR73tfDwB2vUw+G338Fu7R6moV75QGG0/ARB2A6pkJ/sUvztjGV+JWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SR0X2GWM; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SHuA7Y002083
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 18:22:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=VSqQFgb0vNsBP9uzJZGqkiym
-	8JmNyD9K1JA4p69RyL4=; b=SR0X2GWMZdeo5YIMfu1V5VWPXhm5fizEiLOyztxn
-	Z31tpRZ5q6jNRWmaYP+x8IHw0ufMx5363oFhVUhFnrTxk/zjJSVSuVK8PnZFR5gC
-	bE6BeHJJii2czVgO5uOnjNSdNYYzEjsPtxzE/32hPxmLoj4VYG44PYcu8s5p+elY
-	zgT2AtngHJT+lduDoIt+ig4bjYQ1aPEZXmgHNLWTZM7Z6hBrMT0lmR45xlg6Brjd
-	7uqgILGSKM7p14GZDFhBQx9fPQsMH0NfhpV6K+MQzR9m534ylmFFbY8mJVgeF1ua
-	SA8D7ZH8KXzbFEpvb8Tisqc0VasR+SX0gANBDJKCvyj70A==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u6g935p3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 18:22:32 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4769273691dso1031851cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 11:22:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748456550; x=1749061350;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VSqQFgb0vNsBP9uzJZGqkiym8JmNyD9K1JA4p69RyL4=;
-        b=GlkfpFnECuEAx1aN6JyQjwDjnpBO/m5HeTuZlYVOQrwGEt6A3QgBY6dz8pViwIxGA0
-         aPPTci79dMW+WWEwCP0FmqlXptOkbOYTdWXgG+Ywzk5OS6y6EqxdWxvf02FaHNXq90c0
-         9Avyer9VcUjBSw0b93OsyCqoOvGs7jgLYIJb2Gw0/Vbi1Q5JGxwNITurcL+RnbgEYhyG
-         M9IAL47Cxw9LMF0Xsl4PCy8+9D4ezR7j8z4wUrEEyOxEuGMuY6rMa9/IYofVFu0d9iBZ
-         dXZ7xqrQHLQ9HEgquCzuJVgB5Fa5wsx6aZ12tutbHBHVI5lz2U7AoodBdpMwRArC2xgx
-         6+JQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUMIhkc4JMCSYZ6Ju1DK3upeaYW2LJRC9AkBPOFwBRKP1DXlwv10UV4L5R2n6fW+XLrB1zfrl224WMvTmJE@vger.kernel.org
-X-Gm-Message-State: AOJu0YwvgthBKlMgEQpqWthDWpjjdN3/Ny3bpZvdJDBKNw53LsyNm/CD
-	I0rh8oN7amdts60ATTDAxe8+hM/i9G2fatASQpJLRWJUFn/99T4ZzYdxZbZ2thZ4qcxFEdlPrqh
-	Y5j2G6p1weY1k1bvKgn2kBNHnSTWbMTS3EC2pS+uj9Yjkc+Mv3KjzC0mCRcasBly5Foy0GU/O/C
-	3t
-X-Gm-Gg: ASbGncsTQAQ6wgrJ7JV4qXSxUkcK/2vacjDadv1j05tYY8hH/nuzyzsv7hCsXgB7fJj
-	uDqRqIyVf4J8wqvMvBLqO/I15E+b5nYlDt5969Ag77IPdKu9wtV4+R3WcsTWa8ZMaZLChXN8cG9
-	nJKcFLcKQAagqsPZ4O04u4Wkc4cKRI24sXMj5qH9fgBno+ujCpi4aEbLNQrzOxipXrss2OCDG2v
-	9Ky3w+bKJyiLlSWVxyG+U/78Ot0yNcoQCXkbDG5Z76qhQu3kej8botEfYTSYmw+BYf0mT/pnF0r
-	5aPuBkiDV63HZz9OFHJ0BMAWDJNkyw2E/yfgccewbxzXp+5+Im9vZYIn0eseh3dBqN+CiKRcGJ8
-	=
-X-Received: by 2002:a05:622a:2591:b0:4a4:2c75:aa57 with SMTP id d75a77b69052e-4a42c75abf4mr42554491cf.44.1748456550325;
-        Wed, 28 May 2025 11:22:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHBgHDOWO+XsRhKCVgZVBb0vNNcV9Fn1O7FSP1azZt5CGQL4wmPuRN66m2zfRg/m3rWXeXP6g==
-X-Received: by 2002:a05:620a:4587:b0:7c5:61b2:b95 with SMTP id af79cd13be357-7ceecc33813mr2659680885a.30.1748456539153;
-        Wed, 28 May 2025 11:22:19 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5532f69a484sm378762e87.116.2025.05.28.11.22.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 May 2025 11:22:16 -0700 (PDT)
-Date: Wed, 28 May 2025 21:22:15 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v10 10/12] drm/msm/dpu: support SSPP assignment for
- quad-pipe case
-Message-ID: <45hk22fdghaqnilukvqayjcbnf3btntknqrwf5ivx346vrgag3@aebzt76tkjzw>
-References: <20250526-v6-15-quad-pipe-upstream-v10-0-5fed4f8897c4@linaro.org>
- <20250526-v6-15-quad-pipe-upstream-v10-10-5fed4f8897c4@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB66213E78;
+	Wed, 28 May 2025 19:07:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.13
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748459266; cv=fail; b=YEGX+GyJTAoMitu69UGl5qcCjsBF4g/7IEZ17EDTrwgUE8XnlKm4X1BZg9bDKAyZDdQSVGqVw2ajZelusM0BPv8NAtvk/eaumAMVB/RWZYbo/FzeGY9Er45WH2Bj7AEfQvNJBCIK7hePTRrjCxA1UxDFZpK8CeS3m28kcQoUcjg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748459266; c=relaxed/simple;
+	bh=O5XWh+gJMUd7tA88qYJNDWtvGCD86ewIesBcFWu7zc8=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=rOEkw03t91zTx2bOW5P6Z5RJHjMJu9ky91JViUxk4Cb5fOgTVhezubLH46a+Ye5/YH3bozLI49GM2Hl4TSNirjRRLYWkCbZhLeU8E6mV3TPaBvhJrLdQSe7q8dJRFkKri92UU076rAiWbR0INVJETXGRc2fuS8gFW4piKDIYxE0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JiSlmzCT; arc=fail smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1748459265; x=1779995265;
+  h=date:from:to:cc:subject:message-id:references:
+   in-reply-to:mime-version;
+  bh=O5XWh+gJMUd7tA88qYJNDWtvGCD86ewIesBcFWu7zc8=;
+  b=JiSlmzCTjFZNO7OhhfSgjZ0ZRfg8rcZbMvwAvIA5Suw6sxRUw7TQhTh5
+   kDZKUJwl0Noovi1D8B3mdyYeg+JK3k7XehlYOyp5IH5+AIG85P3xy9LM3
+   vB8kfCXiEaI0vCXmoMWx0giB81NEd0ICZf5UPhZ89ig7w+4JkRV4LqQZP
+   Ky8PnDkvEooFSDwvF/TM8HEJHgpNkS+xkYtGFks+4Mn/RzzwbXaWzAnm0
+   BA4W/a5BLGY8pLyId0/u0M79S1m5zyRsEwTSdSo+lsIdlbVubQrxBfWD5
+   g89LLCtSvak7jZPLXb+zzVNXdT+lT/p2b1DHA31LFzStfPr3uE1Yx0I2h
+   g==;
+X-CSE-ConnectionGUID: GZBQQyV7RqOmyT23D8hnPQ==
+X-CSE-MsgGUID: caecX2rJT2yBuh+iHFT2ZA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="61556999"
+X-IronPort-AV: E=Sophos;i="6.15,322,1739865600"; 
+   d="scan'208";a="61556999"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 12:07:44 -0700
+X-CSE-ConnectionGUID: klS8+gx7R/mZcLU9XfuvTw==
+X-CSE-MsgGUID: QN2bxNgBRv64Tvn5MFqZCA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,322,1739865600"; 
+   d="scan'208";a="148190915"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 12:07:42 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Wed, 28 May 2025 12:07:42 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Wed, 28 May 2025 12:07:42 -0700
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (40.107.94.60) by
+ edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.55; Wed, 28 May 2025 12:07:41 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qF2IR6e42epCDRKbysno2ZlfqA68NnWyJNPxYXuJHsZuCftpD987qUgexz0bi3GYKmKKt7BWcWo6W/qd4ceqcLW8wgVhqkb4ujC27GurfF9tnwjqNfG28vwCuI3Ih2iVa86ktzNHy/Fo7JxXMqpwnlANtkDHBR6Ok6sqkjxe23lbQvP+5cfshoUueX1Og2BSaa6FN01wQjZHZr0qg0ioXUe5RUOtUsK46kHhgij2HBcttSlqK/Q23p8mQbtARay0384VPgJKNs00PetcE9t/59a+H2c4P4Me9W00PutPCWCATfIBZcnzE0rNeRLXhXUVYfDHVx1iQ4GFqgAJasHPuQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Cks2IbmT19oybuvLMq6OrsyC5QlmBX3OrlIf3Zoh3Kw=;
+ b=iGpLSJ3jtLA++W0dFS+0dpJ7KOEds29jpE8vfaqz5jQiNMt2/gAE9WcT8fmy4eKc+cayd20afRFLIEqRO6gUpFdMuipV5stcnksL1OVRWtNtSGkfaxtxZoU38UOiqR8TjSIpCcTSOTsHlwF3zPPzLX+Ln+OUiXt2XvvXJDOpMwoNth0bky5IcBA8qAllrMKRTJ3uiLZg4Zxf/+YbB2ioQ4k9ANbP3mAdD+UineQxQU4m8yZFPMVGBjIkxFiAcC8wFXpYlHu/z9O1mlr3ceU9VzfCjrXsjTa+qego0PINt4W/Ei5mvmavhUGJGERgPjHK/BKeUA9u/HjkGc7Cv0hz2Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CY5PR11MB6139.namprd11.prod.outlook.com (2603:10b6:930:29::17)
+ by IA0PR11MB7882.namprd11.prod.outlook.com (2603:10b6:208:40f::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.22; Wed, 28 May
+ 2025 19:07:40 +0000
+Received: from CY5PR11MB6139.namprd11.prod.outlook.com
+ ([fe80::7141:316f:77a0:9c44]) by CY5PR11MB6139.namprd11.prod.outlook.com
+ ([fe80::7141:316f:77a0:9c44%5]) with mapi id 15.20.8769.025; Wed, 28 May 2025
+ 19:07:39 +0000
+Date: Wed, 28 May 2025 14:07:34 -0500
+From: Lucas De Marchi <lucas.demarchi@intel.com>
+To: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+CC: Min Ma <min.ma@amd.com>, Lizhi Hou <lizhi.hou@amd.com>, Oded Gabbay
+	<ogabbay@kernel.org>, Felix Kuehling <Felix.Kuehling@amd.com>, Alex Deucher
+	<alexander.deucher@amd.com>, Christian =?utf-8?B?S8O2bmln?=
+	<christian.koenig@amd.com>, David Airlie <airlied@gmail.com>, Simona Vetter
+	<simona@ffwll.ch>, Lucas Stach <l.stach@pengutronix.de>, Russell King
+	<linux+etnaviv@armlinux.org.uk>, Christian Gmeiner
+	<christian.gmeiner@gmail.com>, Frank Binns <frank.binns@imgtec.com>, "Matt
+ Coster" <matt.coster@imgtec.com>, Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>, Qiang Yu <yuq825@gmail.com>, "Rob
+ Clark" <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>, "Marijn
+ Suijten" <marijn.suijten@somainline.org>, Lyude Paul <lyude@redhat.com>,
+	Danilo Krummrich <dakr@kernel.org>, Boris Brezillon
+	<boris.brezillon@collabora.com>, Rob Herring <robh@kernel.org>, Steven Price
+	<steven.price@arm.com>, Liviu Dudau <liviu.dudau@arm.com>, Matthew Brost
+	<matthew.brost@intel.com>, Philipp Stanner <phasta@kernel.org>, Melissa Wen
+	<mwen@igalia.com>, =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Thomas
+ =?utf-8?Q?Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>, Rodrigo Vivi
+	<rodrigo.vivi@intel.com>, Christian =?utf-8?B?S8O2bmln?=
+	<ckoenig.leichtzumerken@gmail.com>, <dri-devel@lists.freedesktop.org>,
+	<linux-kernel@vger.kernel.org>, <amd-gfx@lists.freedesktop.org>,
+	<etnaviv@lists.freedesktop.org>, <lima@lists.freedesktop.org>,
+	<linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+	<nouveau@lists.freedesktop.org>, <intel-xe@lists.freedesktop.org>
+Subject: Re: [PATCH v11 02/10] drm/sched: Store the drm client_id in
+ drm_sched_fence
+Message-ID: <5jnpsmjef5ibegbsbelkfmudv4wagpcfb25nptqs5z4ccitq4c@3bdtrbrrmtil>
+References: <20250526125505.2360-1-pierre-eric.pelloux-prayer@amd.com>
+ <20250526125505.2360-3-pierre-eric.pelloux-prayer@amd.com>
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20250526125505.2360-3-pierre-eric.pelloux-prayer@amd.com>
+X-ClientProxiedBy: BYAPR01CA0019.prod.exchangelabs.com (2603:10b6:a02:80::32)
+ To CY5PR11MB6139.namprd11.prod.outlook.com (2603:10b6:930:29::17)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250526-v6-15-quad-pipe-upstream-v10-10-5fed4f8897c4@linaro.org>
-X-Authority-Analysis: v=2.4 cv=d4b1yQjE c=1 sm=1 tr=0 ts=68375468 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=dt9VzEwgFbYA:10 a=sWKEhP36mHoA:10 a=KKAkSRfTAAAA:8 a=giFwS8THduiqBY6JDEUA:9
- a=CjuIK1q_8ugA:10 a=uxP6HrT_eTzRwkO_Te1X:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: MyRVo0RX5qYg-5eSeRsR0Qcoo4BeaX_6
-X-Proofpoint-GUID: MyRVo0RX5qYg-5eSeRsR0Qcoo4BeaX_6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDE2MCBTYWx0ZWRfX2UlO0ijgvhJQ
- uBJBYJWYZuINcWHNDxDhS1OSQeike47Y/vQBQNEFuMDzU0G07HlfPNrs+5bge1FtRLyXXMtKi9R
- wVEfOCwCohVVI7LSMGgidsY6Vp2JHmsi96bJ+1kQhtIEt8f4CboIvuWcZ0rh/tFYg/XDJ5AdcsN
- 1V6G66A7l/NDj0mEG9W0HRdi3nwZ+rvUXe/2eYGd5bsKtgPOHagFJYMWZZCdW2DRGJe3MwOdAm+
- A0QPkR7tsVetMbHWGnQiZ73rQXxr/MWoutESRTuttrvHG713DEIryaXxl8ZKQKK3waGmYrXNxQm
- JeoO7aUO7RTSZV82JXVfYVhH4JHYeOakVEYKmdYoNkzZ1r3mTxQCQLgQbtZHmjLorhuHDk8ewZw
- olXV9UcaAGE+oXFaPzQdlqp1t+V48C8TRpT2NAaQ6MsKqZyB+Ntope6pYCvoLyXtm/20cEBP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-28_09,2025-05-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0 malwarescore=0 phishscore=0 mlxlogscore=999
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0 clxscore=1015
- impostorscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505280160
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY5PR11MB6139:EE_|IA0PR11MB7882:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0267c96c-eb01-4127-2eaa-08dd9e1aea7a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?IVLfLNw7R6hG7kLM+X+tTxzxs7C1YYlLkHxLLEnbWNwIkL2IDLZ7ki8oIPUN?=
+ =?us-ascii?Q?dlDbeDkfepS6yPAQWELfZNJh0YNq0AVXvNW+CmMluki2sIOG8kCA0Df3qRwm?=
+ =?us-ascii?Q?eIUWMUnrQc/VEjAy1vSKcQUTGIXGvkS8tKv33FjyXzfGOeYSzQGf3FBkXLoJ?=
+ =?us-ascii?Q?BXXT0CQ3TRs7ax3hpIGnH/eMIDQCcjByM1zEvUeWm0mOH3mcwD1IsmFH1G2Y?=
+ =?us-ascii?Q?kdOCkct9JLsuckHm7KNsztCCB82a88XSbMFD5em7xX8rOoLQEzA2f/fekLN2?=
+ =?us-ascii?Q?VUfmhoHDA+L659jePLXKuUV4bVh8zaFVMCivt060xRk4ItIPJgmZidjjDsvq?=
+ =?us-ascii?Q?zRXTVzrR70oEvaC+Ni11ccreBWKRt5F0tqBXz+NG79VPAsKsSnSnwIrYF6hZ?=
+ =?us-ascii?Q?qiCXuuIwFA0NlWlQUgAVu+t/U64vMWjWABudMgWcxwuxHG8JLjJRcbI/Eo1p?=
+ =?us-ascii?Q?Gp1f08tuJrEotvwNAZRHkAC9i+eGQSJRjK0Ga2blk3gtQDWhZui40F0WoRFc?=
+ =?us-ascii?Q?8REPlWw9t9kijhPS5OiYGx/maFRrcxPNsCxy9W+lq17rxJEdZNlzwt3Bw37M?=
+ =?us-ascii?Q?DtSW6xR41KOhwOp0Xt4N+Epwp9iKGmuimjeqY177K/S1/LicGZ4b+gs4ixhA?=
+ =?us-ascii?Q?4vqHsxAlFOg/z0VTEeV3LNLv/A8sKygCtLZsUP8cIHiy25C9nVRoAWxrnOM6?=
+ =?us-ascii?Q?No6whhDOmaWcep59bd0NzJxZcAalIP3cNLbflp1Czf+xF7Dx2vggKcV9kOFc?=
+ =?us-ascii?Q?NEdwRoZvNYQ1X54IKgzQVEngJIHOtSJD+pVwFYmYjE+Hh3FrrtF2YOXo51p+?=
+ =?us-ascii?Q?S8JYFH0tPfCvP2gvIjI7l0viGMq25HvJALbzfBZHRZqoq9Bj5K7O/QMSfEyO?=
+ =?us-ascii?Q?drno72X5lpYGWYcuGzqp0YbIdDF9QnrI9U8vbZDOQGYUC4C6GRLN8k9wyKK8?=
+ =?us-ascii?Q?SwbdcLWUvaLgd0KVNcZ6zYxmcqhpleBYGGak45JU30kYyGuc5rh6FFrdBo+G?=
+ =?us-ascii?Q?2Vv6JPnP72pn0wJDPg/2BThvM9JQGpZpUkIbRYefTx9PHOQALTCC8OHsTYL2?=
+ =?us-ascii?Q?sABU7/S/s05dw0o0HP+7FE31fkbuLY8iWhgpaORSx+gVnfj7yqIAjHb5cvT1?=
+ =?us-ascii?Q?vUCPxHO6ADIuLIy3i3b6lQ+srCnmg74QKYpWCp62W86xpQJG30GUb8lEjbK+?=
+ =?us-ascii?Q?OuHS2YQpy7GTauQoiZqKlihMdvRlVI2CaetabXXa9eL3sLlUGKfVqH5N9NW+?=
+ =?us-ascii?Q?/mfh7lQWpA3d02q7CIagLxYcWiKntbYKKuxoNlUKv0ofO9aSvJvaZZ3pDGw6?=
+ =?us-ascii?Q?GKToFVXBPbI8dhHoZDZbuatqJg2aoctReLKxbXhRPYi6Wx8I8vKFe/xJHZY2?=
+ =?us-ascii?Q?bHCIg5o=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR11MB6139.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?wa+0Rvn0Qr/bjKWly5oDUFUzXhAHLrVnjETPfqyl33C7ulTZzs4ByRJUIS/J?=
+ =?us-ascii?Q?5eLuN5FbEjJqhE4x8hZj9zMSYA1ARdG3LatOzLgMszuNwv43FcgjPyzq+e1T?=
+ =?us-ascii?Q?XamqJnyjpzIsuG9NqEiXApjR8GcMeJDubUroeyqSJU6vpXPCXvpoYyQiqYAq?=
+ =?us-ascii?Q?CR2pJcMHWO1GpkqF7GJ6AH4pxSUNtdW4Kvjzj9dpUjhWwnyONrgdXafgG4yu?=
+ =?us-ascii?Q?PAPBURKL6Vfo0sTwqRdgTSGkX2pgJiuGmbMqsmNjlBdG8S2pLub2+du1N4lF?=
+ =?us-ascii?Q?m7Fw7TBJ/+jwiVvvY6Zsr+NrcTQ/vo2t9sqD3HECQxoF0TIEuv0tleY+xfjk?=
+ =?us-ascii?Q?SnsIXrW7piZJqVi/5EvyhAiL9+Rdbh4BBRzcfWLxlRXfdnNA+lT24H639rWn?=
+ =?us-ascii?Q?08ewE5PVGC12+vP8ZUrwLAQdmjqRptCILYvnO7wPvDqtewP0ZkYCuO0QS/HQ?=
+ =?us-ascii?Q?SK/353+Kph9R/sf/a0GZA0xGCdSAbbVM1BJJd+IjdfBGCI1kao9p4STg21rc?=
+ =?us-ascii?Q?x9Mt/O/5s7yaV7+n71OEYdJm8WChocM17xhHl4U8PDCckXlfOqufbp908GIP?=
+ =?us-ascii?Q?Ox4E5GncbqRBJd2pEZLUACBSg+oyKPVRmDRGdlzG/6/t+nN8k8HCAf+H59FO?=
+ =?us-ascii?Q?jXmBUfaA1D/Ue/SqCRsxksau7RadWFfAvllP4f0jZxZIO3oDgXruH3VC8NgG?=
+ =?us-ascii?Q?RYOQNOq8wWBQmvKoNLt9cCyyDfcy0IzicRkm+jhgT5yboUcKSstJ6i++dxcA?=
+ =?us-ascii?Q?j3xZczhQVQywausdNcWoUuU4y4k2G81oSlabU8FSXdsLoIvkrE3bkI5WZfWz?=
+ =?us-ascii?Q?bt8tNrez56Jxu8dOcOtUEU6/ZLO8i8Y0QVYhiDtAEtHDjpWS2B5fp3xqMnLc?=
+ =?us-ascii?Q?JZfNkLFreiPlzXpt4LfppiyjnSWDL3xvGxDqPYqxtndFnb2EvYM/OiyTL7Tt?=
+ =?us-ascii?Q?tFmX+B0ogPIrSAgHdbHWP/LoGwEUNNZrmAKfzcBFCEYAkNyuTgm34l0RL2sL?=
+ =?us-ascii?Q?5VUUYyLLxq+deBlfvS0GyKTOpL8Bku8L42IZd1YyYShAN62P05I4aE2sAQ2r?=
+ =?us-ascii?Q?kc7/Pl9CPXBlKxM4UhYyY1PaSTtMrskRDirFxUsSSlysS1M4Fplji2ZA5v/n?=
+ =?us-ascii?Q?a88Y/4H33TN5tP87h26+QgVJYkMz3Au/hHB/RrB5/8Tah/d9KHgWw134vtI9?=
+ =?us-ascii?Q?0K/LnCsDoxs9I3dDf8RuR8wymP6He232cpTMMF30r78RC3T1Fwccz4R219Aj?=
+ =?us-ascii?Q?GK9qS1VouVm1dyRHLE7V3vuTgswomMOVDazUwYEnT8s8X7mWY9OgDzB9eAm4?=
+ =?us-ascii?Q?3/496RZ2kg7bWxBbQL17OMZA9VSta6VPe4k0HusLRhB2K8tW5Z9AYuRVN+3i?=
+ =?us-ascii?Q?KXfCd8B5HwSO5qfzb5eBF/3anbvysPCiQOOSDDRCValaMnvicqIQjPEhfHw+?=
+ =?us-ascii?Q?2CbZ3muUP97gV2bPIGuGJXL6pN8wLvwNgkkdh2giQ+WQdQ207h/VZxVto2UJ?=
+ =?us-ascii?Q?MwneqK9tkYYCaxJthRcwJno3UVL2RbSodfW0q0mag5NV/lCiiYVcHIa+tbWs?=
+ =?us-ascii?Q?kRvQ0xuMp1KPDYCsjVopvkGIWO2E+M8lbX4aUiucwyy41IKpmFIctSTEiUFa?=
+ =?us-ascii?Q?PQ=3D=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0267c96c-eb01-4127-2eaa-08dd9e1aea7a
+X-MS-Exchange-CrossTenant-AuthSource: CY5PR11MB6139.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2025 19:07:39.8918
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: aWGsR+lKXTHnXAuZ+Dq6j4ZKKVeAZqz409DS8n73+vReT5YA8Gnc5iRDOuRieWY0T928ACwAN0vOIMvrgmbkL7+8zodA1wtWBLNf9T6J9Xw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR11MB7882
+X-OriginatorOrg: intel.com
 
-On Mon, May 26, 2025 at 05:28:28PM +0800, Jun Nie wrote:
-> Currently, SSPPs are assigned to a maximum of two pipes. However,
-> quad-pipe usage scenarios require four pipes and involve configuring
-> two stages. In quad-pipe case, the first two pipes share a set of
-> mixer configurations and enable multi-rect mode when certain
-> conditions are met. The same applies to the subsequent two pipes.
-> 
-> Assign SSPPs to the pipes in each stage using a unified method and
-> to loop the stages accordingly.
-> 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  11 +++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h  |   2 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 126 ++++++++++++++++++------------
->  3 files changed, 88 insertions(+), 51 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 85f585206218f4578e18b00452762dbada060e9c..47ab43dfec76acc058fb275d1928603e8e8e7fc6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -1562,6 +1562,17 @@ int dpu_crtc_vblank(struct drm_crtc *crtc, bool en)
->  	return 0;
->  }
->  
-> +/**
-> + * dpu_crtc_get_num_lm - Get mixer number in this CRTC pipeline
-> + * @state: Pointer to drm crtc state object
-> + */
-> +unsigned int dpu_crtc_get_num_lm(const struct drm_crtc_state *state)
-> +{
-> +	struct dpu_crtc_state *cstate = to_dpu_crtc_state(state);
-> +
-> +	return cstate->num_mixers;
-> +}
-> +
->  #ifdef CONFIG_DEBUG_FS
->  static int _dpu_debugfs_status_show(struct seq_file *s, void *data)
->  {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> index 94392b9b924546f96e738ae20920cf9afd568e6b..6eaba5696e8e6bd1246a9895c4c8714ca6589b10 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> @@ -267,4 +267,6 @@ static inline enum dpu_crtc_client_type dpu_crtc_get_client_type(
->  
->  void dpu_crtc_frame_event_cb(struct drm_crtc *crtc, u32 event);
->  
-> +unsigned int dpu_crtc_get_num_lm(const struct drm_crtc_state *state);
-> +
->  #endif /* _DPU_CRTC_H_ */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 0bb153a71353ca9eaca138ebbee4cd699414771d..f721dc504bbbe3a49986239adee113bfb6790f70 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -961,6 +961,33 @@ static int dpu_plane_is_multirect_parallel_capable(struct dpu_hw_sspp *sspp,
->  		dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth);
->  }
->  
-> +static bool dpu_plane_check_single_pipe(struct dpu_plane_state *pstate,
-> +					struct dpu_sw_pipe **single_pipe,
-> +					struct dpu_sw_pipe_cfg **single_pipe_cfg,
-> +					bool config_pipe)
-> +{
-> +	int i, valid_pipe = 0;
-> +	struct dpu_sw_pipe *pipe;
-> +
-> +	for (i = 0; i < PIPES_PER_PLANE; i++) {
-> +		if (drm_rect_width(&pstate->pipe_cfg[i].src_rect) != 0) {
-> +			valid_pipe++;
-> +			if (valid_pipe > 1)
-> +				return false;
-> +			*single_pipe = &pstate->pipe[i];
-> +			*single_pipe_cfg = &pstate->pipe_cfg[i];
-> +		} else {
-> +			if (!config_pipe)
-> +				continue;
-> +			pipe = &pstate->pipe[i];
-> +			pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> +			pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +			pipe->sspp = NULL;
+On Mon, May 26, 2025 at 02:54:44PM +0200, Pierre-Eric Pelloux-Prayer wrote:
+> drivers/gpu/drm/xe/xe_sched_job.c                |  3 ++-
+>diff --git a/drivers/gpu/drm/xe/xe_sched_job.c b/drivers/gpu/drm/xe/xe_sched_job.c
+>index f0a6ce610948..5921293b25db 100644
+>--- a/drivers/gpu/drm/xe/xe_sched_job.c
+>+++ b/drivers/gpu/drm/xe/xe_sched_job.c
+>@@ -113,7 +113,8 @@ struct xe_sched_job *xe_sched_job_create(struct xe_exec_queue *q,
+> 	kref_init(&job->refcount);
+> 	xe_exec_queue_get(job->q);
+>
+>-	err = drm_sched_job_init(&job->drm, q->entity, 1, NULL);
+>+	err = drm_sched_job_init(&job->drm, q->entity, 1, NULL,
+>+				 q->xef->drm->client_id);
 
-If this function is 'check', then why does it change something in the
-pipe configuration?
+you can't do this here. xef is only !NULL if it's a job from userspace.
+For in-kernel jobs, xef is NULL and this explodes. Right now this
+completely breaks xe since one of the very first things we do is
+to submit a job to save the default context. Example:
+https://intel-gfx-ci.01.org/tree/intel-xe/xe-3151-56d2b14961751a677ff1f7ff8b93a6c814ce2be3/bat-bmg-1/igt@xe_module_load@load.html
 
-> +		}
-> +	}
-> +
-> +	return true;
-> +}
->  
->  static int dpu_plane_atomic_check_sspp(struct drm_plane *plane,
->  				       struct drm_atomic_state *state,
-> @@ -1028,15 +1055,15 @@ static int dpu_plane_try_multirect_shared(struct dpu_plane_state *pstate,
->  					  const struct msm_format *fmt,
->  					  uint32_t max_linewidth)
->  {
-> -	struct dpu_sw_pipe *pipe = &pstate->pipe[0];
-> -	struct dpu_sw_pipe *r_pipe = &pstate->pipe[1];
-> -	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg[0];
-> -	struct dpu_sw_pipe *prev_pipe = &prev_adjacent_pstate->pipe[0];
-> -	struct dpu_sw_pipe_cfg *prev_pipe_cfg = &prev_adjacent_pstate->pipe_cfg[0];
-> +	struct dpu_sw_pipe *pipe, *prev_pipe;
-> +	struct dpu_sw_pipe_cfg *pipe_cfg, *prev_pipe_cfg;
->  	const struct msm_format *prev_fmt = msm_framebuffer_format(prev_adjacent_pstate->base.fb);
->  	u16 max_tile_height = 1;
->  
-> -	if (prev_adjacent_pstate->pipe[1].sspp != NULL ||
-> +	if (!dpu_plane_check_single_pipe(pstate, &pipe, &pipe_cfg, true))
-> +		return false;
-> +
-> +	if (!dpu_plane_check_single_pipe(prev_adjacent_pstate, &prev_pipe, &prev_pipe_cfg, false) ||
->  	    prev_pipe->multirect_mode != DPU_SSPP_MULTIRECT_NONE)
->  		return false;
->  
-> @@ -1050,11 +1077,6 @@ static int dpu_plane_try_multirect_shared(struct dpu_plane_state *pstate,
->  	if (MSM_FORMAT_IS_UBWC(prev_fmt))
->  		max_tile_height = max(max_tile_height, prev_fmt->tile_height);
->  
-> -	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -
-> -	r_pipe->sspp = NULL;
-> -
->  	if (dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth) &&
->  	    dpu_plane_is_parallel_capable(prev_pipe_cfg, prev_fmt, max_linewidth) &&
->  	    (pipe_cfg->dst_rect.x1 >= prev_pipe_cfg->dst_rect.x2 ||
-> @@ -1194,12 +1216,11 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
->  	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
->  	struct dpu_rm_sspp_requirements reqs;
->  	struct dpu_plane_state *pstate, *prev_adjacent_pstate;
-> -	struct dpu_sw_pipe *pipe;
-> -	struct dpu_sw_pipe *r_pipe;
-> -	struct dpu_sw_pipe_cfg *pipe_cfg;
-> -	struct dpu_sw_pipe_cfg *r_pipe_cfg;
-> +	struct dpu_sw_pipe *pipe, *r_pipe;
-> +	struct dpu_sw_pipe_cfg *pipe_cfg, *r_pipe_cfg;
-> +	struct dpu_plane *pdpu = to_dpu_plane(plane);
->  	const struct msm_format *fmt;
-> -	int i;
-> +	int i, num_lm, stage_id, num_stages;
->  
->  	if (plane_state->crtc)
->  		crtc_state = drm_atomic_get_new_crtc_state(state,
-> @@ -1209,11 +1230,6 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
->  	prev_adjacent_pstate = prev_adjacent_plane_state ?
->  		to_dpu_plane_state(prev_adjacent_plane_state) : NULL;
->  
-> -	pipe = &pstate->pipe[0];
-> -	r_pipe = &pstate->pipe[1];
-> -	pipe_cfg = &pstate->pipe_cfg[0];
-> -	r_pipe_cfg = &pstate->pipe_cfg[1];
-> -
->  	for (i = 0; i < PIPES_PER_PLANE; i++)
->  		pstate->pipe[i].sspp = NULL;
->  
-> @@ -1227,44 +1243,52 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
->  
->  	reqs.rot90 = drm_rotation_90_or_270(plane_state->rotation);
->  
-> -	if (drm_rect_width(&r_pipe_cfg->src_rect) == 0) {
-> -		if (!prev_adjacent_pstate ||
-> -		    !dpu_plane_try_multirect_shared(pstate, prev_adjacent_pstate, fmt,
-> -						    dpu_kms->catalog->caps->max_linewidth)) {
-> -			pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> -			if (!pipe->sspp)
-> -				return -ENODEV;
-> +	if (prev_adjacent_pstate &&
-> +	    dpu_plane_try_multirect_shared(pstate, prev_adjacent_pstate, fmt,
-> +					    dpu_kms->catalog->caps->max_linewidth)) {
-> +		goto assigned;
-> +	}
->  
-> -			r_pipe->sspp = NULL;
-> +	num_lm = dpu_crtc_get_num_lm(crtc_state);
-> +	num_stages = (num_lm + 1) / 2;
-> +	for (stage_id = 0; stage_id < num_stages; stage_id++) {
+	<4> [] RIP: 0010:xe_sched_job_create+0xbd/0x390 [xe]
+	<4> [] Code: c1 43 18 85 c0 0f 84 6f 02 00 00 8d 50 01 09 c2 0f 88 3e 02 00 00 48 8b 03 48 8b b3 d8 00 00 00 31 c9 4c 89 ef ba 01 00 00 00 <48> 8b 40 08 4c 8b 40 60 e8 86 64 7c ff 41 89 c4 85 c0 0f 85 9b 01
+	<4> [] RSP: 0018:ffffc900031972d8 EFLAGS: 00010246
+	<4> [] RAX: 0000000000000000 RBX: ffff88815fc40d00 RCX: 0000000000000000
+	<4> [] RDX: 0000000000000001 RSI: ffff88812e6552a8 RDI: ffff88815f939c40
+	<4> [] RBP: ffffc90003197318 R08: 0000000000000000 R09: 0000000000000000
+	<4> [] R10: 0000000000000000 R11: 0000000000000000 R12: ffffc90003197428
+	<4> [] R13: ffff88815f939c40 R14: ffff88811f054000 R15: ffff88815fc40d00
+	<4> [] FS:  00007681f2948940(0000) GS:ffff8888daf14000(0000) knlGS:0000000000000000
+	<4> [] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+	<4> [] CR2: 0000000000000008 CR3: 0000000118315004 CR4: 0000000000f72ef0
+	<4> [] PKRU: 55555554
+	<4> [] Call Trace:
+	<4> []  <TASK>
+	<4> []  __xe_bb_create_job+0xa2/0x240 [xe]
+	<4> []  ? find_held_lock+0x31/0x90
+	<4> []  ? xa_find_after+0x12c/0x250
+	<4> []  xe_bb_create_job+0x6e/0x380 [xe]
+	<4> []  ? xa_find_after+0x136/0x250
+	<4> []  ? __drm_dev_dbg+0x7d/0xb0
+	<4> []  xe_gt_record_default_lrcs+0x542/0xb00 [xe]
 
-Can't we just loop through all possible stages? Same result, but makes
-the logic somewhat easier.
+Can we use 0 for in-kernel client since drm_file starts them from 1?
+Like this:
 
-> +		for (i = stage_id * PIPES_PER_STAGE; i < (stage_id + 1) * PIPES_PER_STAGE; i++) {
+| diff --git a/drivers/gpu/drm/xe/xe_sched_job.c b/drivers/gpu/drm/xe/xe_sched_job.c
+| index 5921293b25db3..d21bf8f269640 100644
+| --- a/drivers/gpu/drm/xe/xe_sched_job.c
+| +++ b/drivers/gpu/drm/xe/xe_sched_job.c
+| @@ -114,7 +114,7 @@ struct xe_sched_job *xe_sched_job_create(struct xe_exec_queue *q,
+|         xe_exec_queue_get(job->q);
+|  
+|         err = drm_sched_job_init(&job->drm, q->entity, 1, NULL,
+| -                                q->xef->drm->client_id);
+| +                                q->xef ? q->xef->drm->client_id : 0);
+|         if (err)
+|                 goto err_free;
 
-I still really don't like this idea (and especially the part with
-(i % PIPES_PER_STAGE == 0) condition). Extract current code which deals
-with two planes and a single stage. Call it for each stage. That's it.
+I tested with the above diff and it at least loads...
 
-> +			pipe = &pstate->pipe[i];
-> +			pipe_cfg = &pstate->pipe_cfg[i];
->  
-> -			pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -			pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +			if (drm_rect_width(&pipe_cfg->src_rect) == 0)
-> +				break;
->  
-> -			r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -			r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -		}
-> -	} else {
-> -		pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> -		if (!pipe->sspp)
-> -			return -ENODEV;
-> -
-> -		if (!dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_pipe_cfg,
-> -						      pipe->sspp,
-> -						      msm_framebuffer_format(plane_state->fb),
-> -						      dpu_kms->catalog->caps->max_linewidth)) {
-> -			/* multirect is not possible, use two SSPP blocks */
-> -			r_pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> -			if (!r_pipe->sspp)
-> +			pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> +			if (!pipe->sspp)
->  				return -ENODEV;
->  
-> -			pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -			pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -
-> -			r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -			r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +			r_pipe = &pstate->pipe[i + 1];
-> +			r_pipe_cfg = &pstate->pipe_cfg[i + 1];
-> +
-> +			/*
-> +			 * If current pipe is the first pipe in pipe pair, check
-> +			 * multi-rect opportunity for the 2nd pipe in the pair.
-> +			 * SSPP multi-rect mode cross mixer pairs is not supported.
-> +			 */
-> +			if ((i % PIPES_PER_STAGE == 0) &&
-> +			    drm_rect_width(&r_pipe_cfg->src_rect) != 0 &&
-> +			    dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_pipe_cfg,
-> +							      pipe->sspp,
-> +							      msm_framebuffer_format(plane_state->fb),
-> +							      dpu_kms->catalog->caps->max_linewidth)) {
-> +				i++;
-> +			} else {
-> +				/* multirect is not possible, use two SSPP blocks */
-> +				pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> +				pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +				DPU_DEBUG_PLANE(pdpu, "allocating sspp_%d for pipe %d.\n",
-> +						pipe->sspp->idx - SSPP_NONE, i);
-> +			}
->  		}
->  	}
->  
-> +assigned:
->  	return dpu_plane_atomic_check_sspp(plane, state, crtc_state);
->  }
->  
-> 
-> -- 
-> 2.34.1
-> 
+Also, I see this in intel-xe mailing list, but I'm not sure why we
+didn't have any CI results... I will check that.
 
--- 
-With best wishes
-Dmitry
+Lucas De Marchi
 
