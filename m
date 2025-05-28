@@ -1,165 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-59705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 655AAAC6BF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 16:40:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF6D1AC6C18
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 16:45:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 227B5A255A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 14:37:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF3231BA37F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 14:46:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03C0828935C;
-	Wed, 28 May 2025 14:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A6C028B4E3;
+	Wed, 28 May 2025 14:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="erkqbxt8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cNxar7ja"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7EF28850D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 14:37:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBB91CD21C;
+	Wed, 28 May 2025 14:45:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748443072; cv=none; b=abq7vs++5fBM6qk6HYK9lPKrbOd25fqcN+BlqmAYp32fe1twAccz6sJOZMS13TCIgSqI69Sp20QKpw5WPMEK/fnQxfDKI8go2mYk0QP/7qlrpsfZ4TIKP+UojV+8VqdRHNYnCZ69yXSgUYQVAOaWKZLZGL0vIggKJz3P1O74t6s=
+	t=1748443552; cv=none; b=fom9FDxeIyz+GpB+Kid5+EJM5NOYx/oSH5eBJGrVIjjrC4JRC+4rkxcAp8LC+WLVKgkcRReUoeVxr6yg4Z9jWx5qe0h4Bm39NRkzCP70lrYYMcbXh5ZvBy6aUvpBUzJol2NM89U+x6ZRobaVKo8pyMes7Ab7BolvxlSJJx9sfH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748443072; c=relaxed/simple;
-	bh=E/d0r6OOpns+M1s/P1Grzi0S5pY57VyTC8g4426MF4A=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Upnm7tMgiZeK8jFcXWQYs1pxIBOUIQvmK34uD0v1eSnbNn+Nk75FQl/91fVTqXx8bcKSak/Sw9lNzDvDPKjGL5WQbe+zUbpNu6ar0FXE2rbWWZwzpstC1uW+CZSURYQbPK0Pe3l7tUoO4T5uS+yiHStTP3uUss+mKfA0Q7K60ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=erkqbxt8; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43d2d952eb1so36614835e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 07:37:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748443068; x=1749047868; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8e/FVNVV68OMZMjntDEe+D+IU61dqOd3DPdYBN+2WAg=;
-        b=erkqbxt8Z1K4KelvFp4KBetLfSTi7qibcWWSbW+liggles7H3+h63gj9e1GpVyRDeM
-         1vIf/sIiVKj5E7gQo4Lvtc6F4a84YfMcW7ln2HwqFrP+cetnIoeEZDbFlVFA7xytmAFk
-         rwSpK/RWeIkyfj0HDn1NTLSJlEvwN4eyJmKO6jei2b1Cn2dxlpeKXOa0PWtAEgSqp+a8
-         ba8ngUVlKeG4wvmkozZigPdqn+YP1lLYXMYWAxjTOIvCyEAdxlVRyJf184woEILNa2gV
-         3bMnxsSkmq/wNunhPVxfyXhEk91yVFGogEiJD4a3u0vwqZQcIVlFF3TbxvAK0YRbifE1
-         efuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748443068; x=1749047868;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=8e/FVNVV68OMZMjntDEe+D+IU61dqOd3DPdYBN+2WAg=;
-        b=we7wZIMeY8bwaRlrnPLoQ8X1JeIQbDpl1qT4v7Fs1L6SvHGLdDzc9AoLHda74rlvzR
-         BSBHP47C7cNRaPZEo89UP8W7jSYEcgLvXNhq4A9K5kXSdOyKpC1FZy3hQ5aUC9o2Owf2
-         8brgn/YOAanuMUJVV5LpHZKxoG/LHimq0JRsQHMSs7R7lyeKgtnRozIx0qOh3VQQ5oyA
-         x0BQayl33oC8useUqIP1WgI+sYb3i2yWtTAjZtGbWfZbcaoZB3m5oB/t70QClnLaF7Nc
-         adt4iUIgv0F5KIBOqixwgfhHW6l10OeQE/vscJMdfUlBMJQTfMlKR4yo8s0VmHaUoSXr
-         7Jdw==
-X-Forwarded-Encrypted: i=1; AJvYcCVDP+IFtnLVGl+peoKkGzGy5oEx6PuyK6GhZSwiTjtVJLLDBSM7E7+hvTKqeTvtRik5ZFNLJzNke5H63166@vger.kernel.org
-X-Gm-Message-State: AOJu0YzU1z9dw3MuiaSfk6fNjaae56mKPxZyzFn5xtvx2gKDTJmHUN59
-	ZtC/5rY+dQjvsUyeW+F7cTMQ/fN34AJd2rTihaDUsQymUGZqCAzgn1umolEE3Siiz9g=
-X-Gm-Gg: ASbGncu1J7JJwSQ8NyXDWsVgYesO51P4o7VSvL5TUqGnRbs+Sq03ALLS+c8bdzB+Hz4
-	5AIu4MuCuF3EfRYNsa6eQTJc9ZqCD5/P3F7RNPogD4k1nmfC3ifEaJ/Z71dMXoFJMYjuaZVzh1E
-	3VUSIPSRsp9dRB0pbsRlWRcWIufqoPbL+zaPTdNnz3zcuNYGcKXTnwZpEpFeImZy6Nkh9/G4VjB
-	y4qcGxUKPB91wvd4knNCgSqGLij7YPJLfHzEI7ygS0APQ6qpOfFFL2yvSPGOY2Rv2qiROixvQmr
-	Z+UnHdFO0i5PppZRhK/YToj4NTq5GBoj6JtxPIGZrJ4IgliZM2oubN/7
-X-Google-Smtp-Source: AGHT+IHIM9BVzOCXjIDgxXeOl1dIOtdnPxWp/iK5O/TdB3YnpE+mVV2tCG/RghqPvH2Xw5hFmwSDyA==
-X-Received: by 2002:a05:600c:1d0d:b0:43c:f0ae:da7 with SMTP id 5b1f17b1804b1-44c9141d90emr133062395e9.7.1748443068029;
-        Wed, 28 May 2025 07:37:48 -0700 (PDT)
-Received: from localhost ([2a00:2381:fd67:101:6c39:59e6:b76d:825])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450064a133csm24375355e9.11.2025.05.28.07.37.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 May 2025 07:37:47 -0700 (PDT)
+	s=arc-20240116; t=1748443552; c=relaxed/simple;
+	bh=mcxHScRRpkp4Uu2d9/8fUpUC++QWS+mrt+7i0BGybRw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NaF5m1uO8/YhKKShnXQ2A671L8tArPeZoKOmQVF4inxpnNUCxf39L3bJHyJW+Ga87EN7MA7kXf0e9Zx75DVl7RBoW9cr++m9zg/S3BRd5QaKs/fQ0y8La32nclzl3JW78kgS+c6+29XQ2HspQ2X3JtqAOpx4OFsyFVOzjEHTwuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cNxar7ja; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 7D5E1C4CEE3;
+	Wed, 28 May 2025 14:45:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748443551;
+	bh=mcxHScRRpkp4Uu2d9/8fUpUC++QWS+mrt+7i0BGybRw=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=cNxar7jauXnukzP9wHTPQvY9aZbUDCBDtwkvaqzNAZV978+r2bTUKV+EivkasdSJc
+	 Skc3x5nJJZUVFM9yoSfs/9QHCTN9WSFOOAsE7fDrX8LPDxWMMThvlsmAH+hm0+eD2v
+	 h3i5Y8Z7RQ3glWMoMRHirmg6PM8u95vTVYf4SPQBbIntom+ZHUbNMx6L69qtvEyYiy
+	 PsKwSiue9aIXJD4Zr/JIr1Q87ENu8N4CfbVmpl+PAFGHvR/hhsuG3oThLaSv3/Lain
+	 ColKAKoZNelWuolMdgaXvCIgcaTzVmekXDhbnaYwmWq+DEk+AC32VhGRdnTe0cISot
+	 DXnYLfrjvSYIA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68289C3ABB2;
+	Wed, 28 May 2025 14:45:51 +0000 (UTC)
+From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
+Subject: [PATCH v2 0/5] Add support for the IPQ5018 Internal GE PHY
+Date: Wed, 28 May 2025 18:45:46 +0400
+Message-Id: <20250528-ipq5018-ge-phy-v2-0-dd063674c71c@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 28 May 2025 15:37:46 +0100
-Message-Id: <DA7VC87A0OMF.1X5XEWVCHFLE5@linaro.org>
-Cc: "Srinivas Kandagatla" <srini@kernel.org>, "Mark Brown"
- <broonie@kernel.org>, <linux-sound@vger.kernel.org>, "Liam Girdwood"
- <lgirdwood@gmail.com>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Bjorn Andersson" <andersson@kernel.org>, "Dmitry Baryshkov"
- <lumag@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Konrad
- Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Jaroslav Kysela"
- <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>,
- <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-gpio@vger.kernel.org>
-Subject: Re: [PATCH v3 02/12] dt-bindings: arm: qcom-soc: ignore "wsa" from
- being selected as SoC component
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>
-X-Mailer: aerc 0.20.0
-References: <20250522-rb2_audio_v3-v3-0-9eeb08cab9dc@linaro.org>
- <20250522-rb2_audio_v3-v3-2-9eeb08cab9dc@linaro.org>
- <20250523-fancy-upbeat-stoat-e9ecbd@kuoka>
-In-Reply-To: <20250523-fancy-upbeat-stoat-e9ecbd@kuoka>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJohN2gC/13MQQ6CMBCF4auQWVtTSscQV97DsCh0sBOVQouNh
+ HB3K+5c/jN53wqRAlOEc7FCoMSR/ZBDHQronBluJNjmBiUVSl1JweOEsqxF/oxuEbY9oTa90R1
+ ZyKMxUM/vHbw2uR3H2Ydl91P5vf4oVPhPpVJIYa1p6xo1Kawu/jU/vL8fO/+EZtu2D0swIkSuA
+ AAA
+X-Change-ID: 20250430-ipq5018-ge-phy-db654afa4ced
+To: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>, 
+ Russell King <linux@armlinux.org.uk>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Florian Fainelli <f.fainelli@gmail.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>
+Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-clk@vger.kernel.org, George Moussalem <george.moussalem@outlook.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1748443549; l=2668;
+ i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
+ bh=mcxHScRRpkp4Uu2d9/8fUpUC++QWS+mrt+7i0BGybRw=;
+ b=6y1+mzVRoK34jBTmE2aoRxLBA16LvQBIi3RENJ/8xDnL4keYU/GcoKnpIA+UdpJPgWJyYlRlE
+ Qb7IoK10bvVBmW1HkRfAgHHcx9uQPPwmzvUx/ftcpq56uxRbl0/XvF6
+X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
+ pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
+X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
+ with auth_id=364
+X-Original-From: George Moussalem <george.moussalem@outlook.com>
+Reply-To: george.moussalem@outlook.com
 
-On Fri May 23, 2025 at 9:12 AM BST, Krzysztof Kozlowski wrote:
-> On Thu, May 22, 2025 at 06:40:52PM GMT, Alexey Klimov wrote:
->> The pattern matching incorrectly selects "wsa" because of "sa" substring
->> and evaluates it as a SoC component or block.
->>=20
->> Wsa88xx are family of amplifiers and should not be evaluated here.
->>=20
->> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
->> ---
->>  Documentation/devicetree/bindings/arm/qcom-soc.yaml | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>=20
->> diff --git a/Documentation/devicetree/bindings/arm/qcom-soc.yaml b/Docum=
-entation/devicetree/bindings/arm/qcom-soc.yaml
->> index a77d68dcad4e52e4fee43729ac8dc1caf957262e..99521813a04ca416fe90454a=
-811c4a13143efce3 100644
->> --- a/Documentation/devicetree/bindings/arm/qcom-soc.yaml
->> +++ b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
->> @@ -23,7 +23,7 @@ description: |
->>  select:
->>    properties:
->>      compatible:
->> -      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sar|sc|sd[am=
-x]|sm|x1[ep])[0-9]+.*$"
->> +      pattern: "^qcom,(?!.*wsa)(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sar|s=
-c|sd[amx]|smx1[ep])[0-9]+.*$"
->
-> Why dropping front .*? Are you sure this matches what we want - so
-> incorrect compatibles? To me it breaks the entire point of this select,
-> so I am sure you did not test whether it still works. To remind: this is
-> to select incorrect compatibles.
+The IPQ5018 SoC contains an internal Gigabit Ethernet PHY with its
+output pins that provide an MDI interface to either an external switch
+in a PHY to PHY link architecture or directly to an attached RJ45
+connector.
 
-Thanks, great point. I tested it with regular dtbs checks with different
-dtb files but I didn't check if it selects incorrect compatibles.
+The PHY supports 10/100/1000 mbps link modes, CDT, auto-negotiation and
+802.3az EEE.
 
+The LDO controller found in the IPQ5018 SoC needs to be enabled to drive
+power to the CMN Ethernet Block (CMN BLK) which the GE PHY depends on.
+The LDO must be enabled in TCSR by writing to a specific register.
 
-> (?!wsa)
-> Because qcom,x-wsa8845 should be matched and cause warnings.
+In a phy to phy architecture, DAC values need to be set to accommodate
+for the short cable length.
 
-This is now confusing. I thought that the main job for the pattern above
-is to avoid selecting wsa88xx amplifiers in the first place. Or, if I can
-quote yourself: "What is WSA8815 that it should be here?"
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+Changes in v2:
+- Moved values for MDAC and EDAC into the driver and converted DT
+  property qca,dac to a new boolean: qcom,dac-preset-short-cable as per
+  discussion.
+- Added compatible string along with a condition with a description of
+  properties including clocks, resets, and qcom,dac-preset-short-cable
+  in the bindings to address bindings issues reported by Rob and to
+  bypass restrictions on nr of clocks and resets in ethernet-phy.yaml
+- Added example to bindings file
+- Renamed all instances of IPQ5018_PHY_MMD3* macros to IPQ5018_PHY_PCS*
+- Removed qca,eth-ldo-ready property and moved the TCSR register to the
+  mdio bus the phy is on as there's already support for setting this reg
+  property in the mdio-ipq4019 driver as per commit:
+  23a890d493e3ec1e957bc925fabb120962ae90a7
+- Explicitly probe on PHY ID as otherwise the PHY wouldn't come up and
+  initialize as found during further testing when the kernel is flashed
+  to NAND
+- Link to v1: https://lore.kernel.org/r/20250525-ipq5018-ge-phy-v1-0-ddab8854e253@outlook.com
 
-If said wsa8845 with incorrect or correct should be selected by that patter=
-n
-then why not just leave that pattern as it is then? I am lost.
+---
+George Moussalem (5):
+      clk: qcom: gcc-ipq5018: fix GE PHY reset
+      dt-bindings: net: qca,ar803x: Add IPQ5018 Internal GE PHY support
+      net: phy: qcom: at803x: Add Qualcomm IPQ5018 Internal PHY support
+      arm64: dts: qcom: ipq5018: Add MDIO buses
+      arm64: dts: qcom: ipq5018: Add GE PHY to internal mdio bus
 
-> And probably we are getting past the point of readability, so could you
-> try:
->
-> compatible:
->   anyOf:
->     - pattern: "^qcom,.*(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sar|sc|sd[amx]|sm=
-|x1[ep])[0-9]+.*$"
->     - pattern: "^qcom,.*(?!wsa)sa[0-9]+.*$"
-
-Thanks, that one is much better for readability. I'll test that one then.
+ .../devicetree/bindings/net/qca,ar803x.yaml        |  52 +++++-
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi              |  51 +++++-
+ drivers/clk/qcom/gcc-ipq5018.c                     |   2 +-
+ drivers/net/phy/qcom/Kconfig                       |   2 +-
+ drivers/net/phy/qcom/at803x.c                      | 197 ++++++++++++++++++++-
+ 5 files changed, 291 insertions(+), 13 deletions(-)
+---
+base-commit: ebfff09f63e3efb6b75b0328b3536d3ce0e26565
+change-id: 20250430-ipq5018-ge-phy-db654afa4ced
 
 Best regards,
-Alexey
+-- 
+George Moussalem <george.moussalem@outlook.com>
+
+
 
