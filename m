@@ -1,191 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-59701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EBEFAC6A76
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 15:31:18 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5421AAC6B2C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 16:01:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DF0684E2D1B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 13:31:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6E3E97AD13F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 13:59:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C7BF257440;
-	Wed, 28 May 2025 13:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E5FA1ADFE4;
+	Wed, 28 May 2025 14:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QDm/OLtB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RFSEQJLT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1669284B58
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 13:31:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF9D288527
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 14:00:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748439073; cv=none; b=shAB+LwS2ylF60er0rwiUxeUPlJpX/wv/NXVRWKUNGPSN6B21YQdHNg3aW3HTS6sHnIf5+viG842oi+jpgxxs+S1LjFWUZlDEKBt3GJCUagkcj0bdDpUjx6ovhLQGDKjFQCI8dGd6BsKdzrXzV5GQvl01YWC8eGOqDuOHUsNxJs=
+	t=1748440826; cv=none; b=Tp35MVQ8gfOUflSBGe+9dTBV7PtnIgXHxYjBH2/fRdT3+/dv0q5OTXD29/LNe6YGkvADlkC5qW1xA+bwh3Q5Q/1d23J3GZSjhBrIGMjfjALtR1MOZyGZAuzXStkmLVxgZUKLMEAwY5wESpBCVS+Dqs9Qejqos+A/t2/YQcnNwhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748439073; c=relaxed/simple;
-	bh=Vg+FrRbGTeA8f3PlM/x8Z6doWF3ojO83xJlLB1B3f6M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Tcaa9Ph/tx7mWv1XTZToXww6sHGsp8XKTJr99UqFkLXHC5IIYVgfWgPZOJ9CyjfaVa2F4HfrCNbNCwjo5I+K/2gdug+GaLo9RNHz5646o2t3PkWYm3KIWgvx7jTLaKo6B1VqKp1/hz/TFNB8uH+aDeXUjJodXtHQKTosxAMGhhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QDm/OLtB; arc=none smtp.client-ip=209.85.210.177
+	s=arc-20240116; t=1748440826; c=relaxed/simple;
+	bh=HqmXzcz1Fhb5aWwjj60lQbn31SSuMbIoGTI7rS/zLpk=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=KNRCmvPFXk2sOcaNoLFc0wwhVyYjpFNSAK0XSgp8XWFOMhoI2fX7tmKSluOLRzygFQ3Urtj29N/x4z/DxV9mv+bP2EqnUqc5U4r9aBCHBOqW8Mkk6Gj3RPUyZt/xuhpnOoOkVr9f7At+eJ05riTKqwqfkk0izwzL4EFdCpNLxoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RFSEQJLT; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-7406c6dd2b1so700655b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 06:31:10 -0700 (PDT)
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43cfe574976so36120655e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 07:00:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748439070; x=1749043870; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8UdvRNXq8aAecD2U0dxQ0wWai5QzfjmCr8Z4Xq1f1YE=;
-        b=QDm/OLtBHw+gGCXuqIxydGAHuyck0tTiBNtReqL/f1zP5YQUuIjSEdSFEPbgONw9vj
-         sgAumuToC4b1b3Jxs22ce1/+CQaBhVby+GVjXwH0ymAWwlKwWiaJBNiz++gEJQG0rH5B
-         Gwa2h5BB+WnC/rg2Ih6eCELqxAN+3tt3IGhLKIape1vYGECzDWKKsGtf5UtWTxZ/mw+2
-         +OTdRRN0holGgrR866/8OgZ4tkY8kYG+KVrpPHDdoe0wN47ZGESs/oytgfVP4Esfd3FT
-         hB8WLgpBkWV1xxbxUAwtHXdvPxeyA9jFQ6haXjuEigHwjb8Nd8d/+ngfgGbyJfjn5PlG
-         YSaw==
+        d=linaro.org; s=google; t=1748440823; x=1749045623; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uLCejufrq+qP3M9mNyL+ruMGCziYJYfpyzwNMPCLUy4=;
+        b=RFSEQJLTchsvDKMOoRbUNsmbJ6wUxuxW4ZORdFRMio+qgL96Xq2QoeIHjIl9FE9pqJ
+         ACzfpHfFpN7SDblZtnPfJ0dy7YmaG7haut4dAd6nZdtTf6zWOpagMkdkrjRE6F1Z6w91
+         Mmg0jsUZ07xy3h3aUWAVl8pEVkd2CgXTqZURm/x7bfEDaxbpy5Kc6N8gq+opZVA22dAC
+         TWsh/8h7vpZFzdkgKr1hQ5j3q66M8H9BE7l7c/FVMbZM0HnO7vL/MLisCCTkWYnm3783
+         tJtVy4ERTTcD5FDOv5TfrFbR7mSIRfEwBTDXdG+h7Nna0EeksZ0493/kbQ4bDCAE6JXs
+         w9yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748439070; x=1749043870;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8UdvRNXq8aAecD2U0dxQ0wWai5QzfjmCr8Z4Xq1f1YE=;
-        b=ZjAkL5cbIEdkQwhdmGJqwT0eymsnOYOw+y8yxV/+7vxzglBvq55xl99TKhUjK1m/rb
-         azevULm8HxqINe9vpeZKus65I0eEQKDx1yJCTUzAjHj04UI4mJBhA9s/Oncarha3YmqD
-         Jt15w/QLNvDdkYDO/UradDfG24TSycWPHnzXwqwQC99QZR7+gI5hAT2kUZjOw1buv7VK
-         M/IsgkBH8eMHqWufSO0YC00nVVZc8rHr0GfPh5I0hSLumFrhfRraEbINFKE31qo6aS9N
-         rvyDncbI72lZqo3DJm1qbRYdGT8CEoMo+wAfo/eoAwUGxeBFzpSFvsU9bc5ajHD27AKi
-         mN4w==
-X-Forwarded-Encrypted: i=1; AJvYcCWbOs4pVlJhdULE2Wyn15V1HSiVXBsQ2JPvGQOGPqLDl/nGDglL2cNWcP9YxNFgyYFEJi/qCo9+0qhDhWSx@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYW2L2RKpE8mT9hYABKXLIZ0OYTjP/TGE/S+55Nt1R3ZlWKHT3
-	8VeqosoHHlmHUglbLquDnB1Tt52Ns3/HDA5dIMPDWmF1NaTNNdF1+yH02kY9YoZ0xyyBLyLQUVz
-	CWyY3boT5kmo7LFNpdqtJbu8JASL3Z4hqqGYO+2mdjQ==
-X-Gm-Gg: ASbGncug9QybNVUp7bz3s1ciiGMoOt8Kaj4VQmVlEjgkVOifPowO6z+FUCK/95tHQB0
-	VO6q02SSqiAUxWjoUlyvvOj34XVuKgXEvziohVm7XJqx3dpAW6Eo0H7rd0NjV5JkPY0RNTEnUu2
-	gr+a5RoobaY8SFlIT1nyXoQh+W9W7Terj0q5aMMNrpvrQUCq0ANhhol9lCyrA2iYDpuw==
-X-Google-Smtp-Source: AGHT+IG9j6POnBtn5e0Q2pGrtNN2Sbh3sgqFrqPfg1VSh05XHmn/iVMWNJ6bEEiFKPdnKFJUg0aWvLMjuZxJtWY11l8=
-X-Received: by 2002:a05:6a20:cfa9:b0:218:574e:830d with SMTP id
- adf61e73a8af0-218ccd94689mr6594968637.21.1748439069932; Wed, 28 May 2025
- 06:31:09 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1748440823; x=1749045623;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=uLCejufrq+qP3M9mNyL+ruMGCziYJYfpyzwNMPCLUy4=;
+        b=G4tkeAyGz2Fs7F8sOYhxtZsCj5vY6ys/x2u/CPQk8pXIXm9YnJj2asN99gpAKolF+k
+         DFQdrZzwLGW031BxHqq9/3k3bp/EeEz4APgxWQOj5ovfXd99Ti/NTGGZnqnbIuTehbp1
+         ig+og0791xHuyeuROxR+SB473r/c1mEg/6UBrVrTjV7bijMTCM1dEJbz1IhmaxiM5JYx
+         p5a2uX6RHfyPeTmYRk/BFElj6SkhJiVa/UbSqk9NaqrtzcTs8sI3NXjomZbRRjxlczlf
+         rKouYHrgK/mD+S8pSBlqhOTF0agP0jJO8peUlpmT2vdGo1TZBgBJ3FlFnaQvMLK+JSUu
+         Z0pA==
+X-Forwarded-Encrypted: i=1; AJvYcCXsdFGIF/UUHmF4P+ChD2/I2ZDPDQQKg7PStC/R4scDUlRUwwpVr6phcMbo7mfTqodnFnU37aZNwgkXcA89@vger.kernel.org
+X-Gm-Message-State: AOJu0YxCUOGRNlZQ5EIntOQboP27+xw/728yOdjImsqdUSICvsGttqwD
+	HLVkae8922/Ay+lNAD1vJMV9RMZJSagaSfz3qs9gHQ7JX19Kt9GJdj3qrzZ9RC7zrnQ=
+X-Gm-Gg: ASbGncvIli3lsmIBJLIfdMj2zsOwD8GPNLAWYrBdyy0vnuM/YeAHspqhNwgUj2ERtfS
+	XF+/kJ4xwR3reKawQ0sI3Fr7sditfOcIMygE9g+PSFzSG9MUxB+mJf3bXY97diNkWL6ysqGpoVw
+	onSd53XFAx12PrwkBR9pNJANJMXKS/7u8Y+y06I0iA9fQ0cPt/Ag70AHs4G40Z4YZQ/SWRk5Pam
+	ALZkqnaeSRVwwhMcQMB39esQRHU0bsa81Hjmaf1wCAd1onTno4887VqVY1XuYt6ydVqBMQVcOVp
+	sU5HwiSXG8KvhHHL7Hibov7htjyENDXd++rkidd33xBlJ3LvGCsPHaNVfH8qI3qsjaKcIRNaV1z
+	MUg==
+X-Google-Smtp-Source: AGHT+IG4/Cne7nqOIsE/PY37ws2Wr1tDPTEMkErYoJ1bGl8pKJEeVcseVqH5nyS1AL3VO3u2TuUQQA==
+X-Received: by 2002:a05:600c:6386:b0:442:f4a3:b5f2 with SMTP id 5b1f17b1804b1-45072545b44mr22307925e9.6.1748440822669;
+        Wed, 28 May 2025 07:00:22 -0700 (PDT)
+Received: from localhost ([2a00:2381:fd67:101:6c39:59e6:b76d:825])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450064aeb6csm23449655e9.24.2025.05.28.07.00.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 May 2025 07:00:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20250522005016.2148-1-jie.gan@oss.qualcomm.com>
- <757925b7-3795-409a-9419-b33767c49e2e@oss.qualcomm.com> <2f010e28-121e-4e60-bf48-5ee5bcd0cbea@oss.qualcomm.com>
-In-Reply-To: <2f010e28-121e-4e60-bf48-5ee5bcd0cbea@oss.qualcomm.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Wed, 28 May 2025 14:30:58 +0100
-X-Gm-Features: AX0GCFs8sPqVEo-rRNs0GPnAqg3ldJr20mhUWNavfYnn9A10EucMPhXNzc1P-NU
-Message-ID: <CAJ9a7Vg7MtLaud715JYEo5JD6x4WmHq9TsSSor1-TYq5M5u+cw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: qcs615: fix a crash issue caused by
- infinite loop for Coresight
-To: Jie Gan <jie.gan@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 28 May 2025 15:00:21 +0100
+Message-Id: <DA7UJKPSD154.2FRUF06DRZO7K@linaro.org>
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
+Cc: <robdclark@gmail.com>, <will@kernel.org>, <robin.murphy@arm.com>,
+ <linux-arm-msm@vger.kernel.org>, <joro@8bytes.org>,
+ <iommu@lists.linux.dev>, <linux-arm-kernel@lists.infradead.org>,
+ <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>,
+ <andersson@kernel.org>
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: Add SM6115 MDSS compatible
+X-Mailer: aerc 0.20.0
+References: <20250528003118.214093-1-alexey.klimov@linaro.org>
+ <ehriorde5zbfoo6b7rzemnzegnwqfdobzwyjra755ynk2me2g6@om6g57n26zbp>
+In-Reply-To: <ehriorde5zbfoo6b7rzemnzegnwqfdobzwyjra755ynk2me2g6@om6g57n26zbp>
 
-Hi,
+On Wed May 28, 2025 at 9:52 AM BST, Dmitry Baryshkov wrote:
+> On Wed, May 28, 2025 at 01:31:18AM +0100, Alexey Klimov wrote:
+>> Add the SM6115 MDSS compatible to clients compatible list, as it also
+>> needs that workaround.
+>> Without this workaround, for example, QRB4210 RB2 which is based on
+>> SM4250/SM6115 generates a lot of smmu unhandled context faults during
+>> boot:
+>>=20
+>> arm_smmu_context_fault: 116854 callbacks suppressed
+>> arm-smmu c600000.iommu: Unhandled context fault: fsr=3D0x402,
+>> iova=3D0x5c0ec600, fsynr=3D0x320021, cbfrsynra=3D0x420, cb=3D5
+>> arm-smmu c600000.iommu: FSR    =3D 00000402 [Format=3D2 TF], SID=3D0x420
+>> arm-smmu c600000.iommu: FSYNR0 =3D 00320021 [S1CBNDX=3D50 PNU PLVL=3D1]
+>> arm-smmu c600000.iommu: Unhandled context fault: fsr=3D0x402,
+>> iova=3D0x5c0d7800, fsynr=3D0x320021, cbfrsynra=3D0x420, cb=3D5
+>> arm-smmu c600000.iommu: FSR    =3D 00000402 [Format=3D2 TF], SID=3D0x420
+>>=20
+>> and also leads to failed initialisation of lontium lt9611uxc driver
+>> and gpu afterwards:
+>
+> Nit: there is nothing failing the lt9611uxc on its own. binding all MDSS
+> components (triggered by lt9611uxc attaching to the DSI bus) produces
+> the failure.
 
-This is clearly a platform issue - loops as you describe are not
-permitted by the CoreSight architecture specification.
+Oh, I didn't mean to express that something failed in lt9611uxc itself, I
+was just trying to list observed problems.
+Apart from hdmi bridge and gpu the failed component will be soundcard drive=
+r
+since it depends on lt9611uxc.. So, if you have rewording in mind feel free
+to suggest it.
 
-We should not be trying to fix issues that are out of specification in
-the drivers.
+Or maybe something like this will look better:
+and also failed initialisation of lontium lt9611uxc, gpu and dpu is observe=
+d:
+  (kernel trace as in the original email)
 
-Regards
+[..]
 
-Mike
+>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>
+> I'd also propose:
+>
+> Fixes: 3581b7062cec ("drm/msm/disp/dpu1: add support for display on SM611=
+5")
+>
+> This way this is going to be fixed for all platforms using display on
+> SM6115.
 
-On Mon, 26 May 2025 at 01:40, Jie Gan <jie.gan@oss.qualcomm.com> wrote:
->
->
->
-> On 5/22/2025 11:06 PM, Konrad Dybcio wrote:
-> > On 5/22/25 2:50 AM, Jie Gan wrote:
-> >> An infinite loop has been created by the Coresight devices. When only a
-> >> source device is enabled, the coresight_find_activated_sysfs_sink function
-> >> is recursively invoked in an attempt to locate an active sink device,
-> >> ultimately leading to a stack overflow and system crash. Therefore, disable
-> >> the replicator1 to break the infinite loop and prevent a potential stack
-> >> overflow.
-> >
-> > Is it something we can fix the driver not to do instead?
-> >
->
-> As Suzuki mentioned in other mail thread, it is very difficult to
-> observe the scenario that there is a loop in the path by current driver.
->
-> I tried fix the issue in driver before send this DT fix patch.
-> I will continue to seek an option of fixing in driver.
->
-> Thanks,
-> Jie
->
-> > Konrad
-> >
-> >>
-> >> replicator1_out   ->   funnel_swao_in6   ->   tmc_etf_swao_in   ->  tmc_etf_swao_out
-> >>       |                                                                     |
-> >> replicator1_in                                                     replicator_swao_in
-> >>       |                                                                     |
-> >> replicator0_out1                                                   replicator_swao_out0
-> >>       |                                                                     |
-> >> replicator0_in                                                     funnel_in1_in3
-> >>       |                                                                     |
-> >> tmc_etf_out <- tmc_etf_in <- funnel_merg_out <- funnel_merg_in1 <- funnel_in1_out
-> >>
-> >> [call trace]
-> >>     dump_backtrace+0x9c/0x128
-> >>     show_stack+0x20/0x38
-> >>     dump_stack_lvl+0x48/0x60
-> >>     dump_stack+0x18/0x28
-> >>     panic+0x340/0x3b0
-> >>     nmi_panic+0x94/0xa0
-> >>     panic_bad_stack+0x114/0x138
-> >>     handle_bad_stack+0x34/0xb8
-> >>     __bad_stack+0x78/0x80
-> >>     coresight_find_activated_sysfs_sink+0x28/0xa0 [coresight]
-> >>     coresight_find_activated_sysfs_sink+0x5c/0xa0 [coresight]
-> >>     coresight_find_activated_sysfs_sink+0x5c/0xa0 [coresight]
-> >>     coresight_find_activated_sysfs_sink+0x5c/0xa0 [coresight]
-> >>     coresight_find_activated_sysfs_sink+0x5c/0xa0 [coresight]
-> >>     ...
-> >>     coresight_find_activated_sysfs_sink+0x5c/0xa0 [coresight]
-> >>     coresight_enable_sysfs+0x80/0x2a0 [coresight]
-> >>
-> >> side effect after the change:
-> >> Only trace data originating from AOSS can reach the ETF_SWAO and EUD sinks.
-> >>
-> >> Fixes: bf469630552a ("arm64: dts: qcom: qcs615: Add coresight nodes")
-> >> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
-> >> ---
-> >>   arch/arm64/boot/dts/qcom/qcs615.dtsi | 1 +
-> >>   1 file changed, 1 insertion(+)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> >> index f08ba09772f3..b67c1f8a1118 100644
-> >> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> >> @@ -1902,6 +1902,7 @@ replicator@604a000 {
-> >>
-> >>                      clocks = <&aoss_qmp>;
-> >>                      clock-names = "apb_pclk";
-> >> +                    status = "disabled";
-> >>
-> >>                      in-ports {
-> >>                              port {
->
+Yes. Thanks. Checkpatch suggested "Fixes" tag but it was unclear when it
+started to horribly fail during boot -- sometime around 6.14 or 6.15 cycle.
 
-
--- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+Best regards,
+Alexey
 
