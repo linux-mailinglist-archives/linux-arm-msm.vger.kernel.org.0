@@ -1,161 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-59692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5D43AC6920
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 14:20:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7492AC6948
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 14:28:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1AA4C7B1894
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 12:19:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1295A3AAF4D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 12:28:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A25D920125F;
-	Wed, 28 May 2025 12:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D09128641F;
+	Wed, 28 May 2025 12:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Up9MwRuH"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LEMILHrV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC5428466E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 12:20:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA4F284B42;
+	Wed, 28 May 2025 12:28:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748434821; cv=none; b=OM/i8Fqt2e7WTRa6CoiFX6AQhhyVhqyccTkM8kSgQD3b8//6AifN02rWF0W/Jk+7mvizpbX9AHe0VIT6BG/VtXEG3Olwi8deL2saRgpYBrB6cZ9xBVM88KHUL3YPUDIMKEck5pyXhqvVm+l76p4DrYTPxygOM2sL592zYlRgSr4=
+	t=1748435285; cv=none; b=Sq1vtTbFZ1qi+Okb+2QmCJkgpLwzpm34zoLAdSudGTiQfwQcCj+1PN+lkCKPd5JJSBuSXtZADFd1wz2r4vql08rE0CPeYEjYZB0N7o/HJI6uDIi/2pFnViBDCyZMXsjSu81EeydlOfAb7pMtn7EZGqe0sWzPCmQilary0F/NRrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748434821; c=relaxed/simple;
-	bh=LgluqXTAQPOxJPKju8Bo8ViAFRC7s0F2a9tFXlqvtIo=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=lEJjmDC4cvpt2q/C/z//0E1oiKlnECJ2n8Prck3UiAjpZtdTfqBvkxYE1nrZ5N/vMYJ7mAYLaIzG/EXZ6HmcF3ckNsV2htMFsAYd0wmY0i68d00DckvcukHwBD49zjAZQZQFi/+2zKBCtwghli1ce0c3fqBu0FbFuwpUDoFxXQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Up9MwRuH; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-442d146a1aaso50958565e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 05:20:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748434818; x=1749039618; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nUiSIyBK9bnL6y5jkIEyCSHfBFQ4eE1Z0A1Z3a6M0aM=;
-        b=Up9MwRuHNjPw1rlRQzUew66x7qEPzJiY9UVqJhwvtqIf0Eyo8lBQCHqtWdrA5m9oYE
-         cQuPLlhoGUjI1pgVqE+wE/s544dc0VOLMRzLVEmaDPWy9BpuDGjDTlWu7NHnXkeqYYDi
-         LS/N2aq0Q5HHtM26h+IwOruFH3o0lEwdzLbpOu8LTAoMEIQUmLpzyomxAMNSLuLFe+l+
-         hN1kFmpyq4xM5UYNtEbrl0NZjqmb8dCbT0mXGc0ahpMwuiHfCCMu3MdqvNnqbNRXfM5M
-         tx3XGeVV7oXENS2jWvJto04TScoaNtoDRPUeSBNGT2V7MU+bmGc+wOKiTULLKBme1g96
-         wzOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748434818; x=1749039618;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=nUiSIyBK9bnL6y5jkIEyCSHfBFQ4eE1Z0A1Z3a6M0aM=;
-        b=GMUXiIa2PWJnxnjxxQVyxwGBcl972nX9FZ+JT100+DRytBfasNcwaB28rKhRBDom6r
-         mhMlLX3uW4maTnwg/Cl7QdNBvSLpG1zf/uggF82gWqCLYdya+qPrS1zjFgVmLiW9K4oZ
-         UGhqM217hcT0VJIRVPAQNGN6x7JA05eJG/sXcGUCncVo2AP9mHnC3jTD2kHW2HU3idtU
-         ATHjS+Id13pcLv1FFr6GSsUUmFToRierXXrdKUIjJXkYVgox5hry7HCXGLA2GMYtwN0E
-         i3wi51BMEFuAA5W+9noYcu5g3FTzMQx8HkNug09N2wUrk8Vs7bDK503Vu/rxQeMUpbQz
-         MZ1A==
-X-Forwarded-Encrypted: i=1; AJvYcCVU7y7ELfVWsv9nolVv6tGwyxUvxV0AWsRy9+gl3qncipvciTnXguJxY6Cu+Fzgn0p05IBiGnYnI9/LvvKo@vger.kernel.org
-X-Gm-Message-State: AOJu0YxEmNIh2KNxiDafGon3aNy6t3tVdw1S3Pcyv0qKc6pOxOdcyR0W
-	uBWBq4w0pCSPdmz8tRc3Kcss4nPZWa6+5Cfebfy7Wj3TuFASzKlBVrB69ZHrHJ+lPV4=
-X-Gm-Gg: ASbGncsetMzijik1LOQbL5DfvU0ED6GqMvozCMNl+x1pIsqdEzmIxGD6lfll0KoyfZ7
-	gyrJLEUu2VTj7k7RE4PrNoIjqfWHkizvtlbONcuTJO+nQ6+mUgEVYJ0Km2isGGdgwOmV2iFw/0+
-	B8Hud+LYwCzL8JdmfVQ9liLMAbuikYskchoXbdoh+0Ei/Y3HNzCqd5ZUYNTjkTUC0LPZjl2Z4rr
-	4RhJgw6wAw2nmtiyej1Y+AXJrV2NOimFJOYISeHfylZFtrVah+9PqtMzQjiCXPlXtCMFMjVwJeh
-	GPzm6D1Q8SPBpysJeV/LY2BnAXNgk5YamCpQEIEzYaR1wLu6Yw6LKTeuZHJtX/rYFqA=
-X-Google-Smtp-Source: AGHT+IGZexNRqILydRhcO4IU4n98EZEdu0fFVjtfd4sxx1IIeEAtAXBTC1Us7iU6PxbqQgpjB0cAjw==
-X-Received: by 2002:a05:600c:3109:b0:43d:1b74:e89a with SMTP id 5b1f17b1804b1-44c941884eamr149032045e9.9.1748434817966;
-        Wed, 28 May 2025 05:20:17 -0700 (PDT)
-Received: from localhost ([2a00:2381:fd67:101:6c39:59e6:b76d:825])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4507255b619sm15992525e9.22.2025.05.28.05.20.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 May 2025 05:20:17 -0700 (PDT)
+	s=arc-20240116; t=1748435285; c=relaxed/simple;
+	bh=1SccqE+9BX0fANM+exjNH/3hOFGHMYAaS5gFivtJWGk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BBr/87yJQA0grzt5KBuGERXhNMuuB9BUnM+xJFY8JvxFyVcf0msrgc/ooa2yJRwN8POLjsZ9VY69H+SDd0LkmAZ7CeceENy4378Q7vChiWCjVUNYcORbSym73eARAcCM8jdiccQFCy/YFv/NGFI7x284aVHjWjM7u6Cd9doLNtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LEMILHrV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SBBXxL022698;
+	Wed, 28 May 2025 12:28:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=+JENbwl/gu1n814nWNwrxR
+	lRfAq3RS5W+s34BCA5xRw=; b=LEMILHrVE8nbRALbSDjlq/g99mVnZmS4EcWOAE
+	z9gqOrNKheU05uYxVf1E6uz5tUbwy3NUxe1p5OTR2stLPumUUtVCZG6REBulIRih
+	KT9sXB72TZ3yokpKgcwFWbRz1Kn13HCpiHrFZlWdQocFLP2t70YGvlAJXcPNH6lv
+	AjTm8R0VUS9MGhkgYYGV45HL/ogdC+Ak9RVZvnPL6wOquWEV9T8aE4NLm3mXBTLs
+	nSGUYTwE2LJg8ysZDgIe+Ql/+HujJOUaFElhT+RNtpwCWyGP4QpwlhV763HsGBIK
+	lZSFOoqm0+iJgkOQ+QhNQOB3h46v4+L4OquC1GD9cgjUzXbg==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u6vjt7gy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 May 2025 12:27:59 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 54SCRue0011485;
+	Wed, 28 May 2025 12:27:56 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 46u76mxk34-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 May 2025 12:27:56 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54SCRtQW011460;
+	Wed, 28 May 2025 12:27:56 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-wasimn-hyd.qualcomm.com [10.147.246.180])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 54SCRtRM011454
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 May 2025 12:27:55 +0000
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 3944840)
+	id DD7485A7; Wed, 28 May 2025 17:57:54 +0530 (+0530)
+From: Wasim Nazir <quic_wasimn@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@quicinc.com,
+        kernel@oss.qualcomm.com, Wasim Nazir <quic_wasimn@quicinc.com>
+Subject: [PATCH v8 0/4] qcom: Add support for IQ-9075-evk board
+Date: Wed, 28 May 2025 17:57:47 +0530
+Message-ID: <20250528122753.3623570-1-quic_wasimn@quicinc.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 28 May 2025 13:20:16 +0100
-Message-Id: <DA7SEY5S1F1Z.1LZE7191BKBFM@linaro.org>
-Cc: "Bjorn Andersson" <andersson@kernel.org>, "Linus Walleij"
- <linus.walleij@linaro.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Srinivas Kandagatla" <srini@kernel.org>, "Liam Girdwood"
- <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>, "Konrad Dybcio"
- <konradybcio@kernel.org>, <cros-qcom-dts-watchers@chromium.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-sound@vger.kernel.org>, <kernel@oss.qualcomm.com>
-Subject: Re: [PATCH v4 7/8] arm64: dts: qcom: qcm6490-idp: Add WSA8830
- speakers and WCD9370 headset codec
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Prasad Kumpatla" <quic_pkumpatl@quicinc.com>, "Mohammad Rafi Shaik"
- <quic_mohs@quicinc.com>
-X-Mailer: aerc 0.20.0
-References: <20250527111227.2318021-1-quic_pkumpatl@quicinc.com>
- <20250527111227.2318021-8-quic_pkumpatl@quicinc.com>
-In-Reply-To: <20250527111227.2318021-8-quic_pkumpatl@quicinc.com>
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=UOXdHDfy c=1 sm=1 tr=0 ts=68370150 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=u6Jdqvu1gAsBJA_3vmsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: JxI-zCkmZGXduQcCguaCMgC4O1INe56G
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDEwOCBTYWx0ZWRfX8pg9u0HkDQGa
+ cBDmFtUzck7B4i05eG1LD266gOlXMNLYgihuV1olfkwxUHMK+xukZSJbhiAcyO9kQmakifHvqZl
+ 7dBPzOY2iE8XKupI1otGiZMOjdWR7ypQ2+wJI4zEjeTEM5BXurbdJLTPBjS4znZJyJFbGw9A3I2
+ PAjfhU4Y2SeaYNpcaNDN47SR+pfgVG3QQUYBPbu/H3A79hpitFkC5nrO5ojnAh3sbPL0K3vqNbF
+ Lwv5n1ZEp8UKzGTVDG9BWZ4xhKpau6/aluDDGy0Oa1Tx2E5jLGlEAII48xzH6CYdiJ7VPlh6x4G
+ dOSIWEJbgs3ie5YvcwJvJECyF6g2381+sadgEDLJUbXm9dpLBUgXTZKpNr0kcMI/1geOOFJso+O
+ Gc1YjA39BQw1YdcUa+taLCxDk/HunHzFc9rpNjBOhOVego7GBqG59mJNvroiI3YFl34q4KO5
+X-Proofpoint-GUID: JxI-zCkmZGXduQcCguaCMgC4O1INe56G
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-28_06,2025-05-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 mlxscore=0 adultscore=0 priorityscore=1501
+ mlxlogscore=999 bulkscore=0 malwarescore=0 impostorscore=0 spamscore=0
+ suspectscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505160000 definitions=main-2505280108
 
-On Tue May 27, 2025 at 12:12 PM BST, Prasad Kumpatla wrote:
-> From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->
-> Add nodes for WSA8830 speakers and WCD9370 headset codec
-> on qcm6490-idp board.
->
-> Enable lpass macros along with audio support pin controls.
->
-> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-> Co-developed-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts      | 96 +++++++++++++++++++
->  .../boot/dts/qcom/qcs6490-audioreach.dtsi     | 24 +++++
->  2 files changed, 120 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/d=
-ts/qcom/qcm6490-idp.dts
-> index 7a155ef6492e..884abbda74fd 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> @@ -18,6 +18,7 @@
->  #include "pm7325.dtsi"
+This series:
 
-[..]
+Add support for Qualcomm's iq9-evk board using QCS9075 SOC.
 
-> +&swr0 {
-> +	status =3D "okay";
-> +
-> +	wcd937x_rx: codec@0,4 {
-> +		compatible =3D "sdw20217010a00";
-> +		reg =3D <0 4>;
-> +		qcom,rx-port-mapping =3D <1 2 3 4 5>;
-> +		qcom,rx-channel-mapping =3D /bits/ 8 <1 2 1 1 2 1 1 2>;
-> +	};
-> +};
-> +
-> +&swr1 {
-> +	status =3D "okay";
-> +
-> +	wcd937x_tx: codec@0,3 {
-> +		compatible =3D "sdw20217010a00";
-> +		reg =3D <0 3>;
-> +		qcom,tx-port-mapping =3D <1 1 2 3>;
-> +		qcom,tx-channel-mapping =3D /bits/ 8 <1 2 1 1 2 3 3 4 1 2 3 4>;
+QCS9075 is compatible IoT-industrial grade variant of SA8775p SOC.
+Unlike QCS9100, it doesn't have safety monitoring feature of
+Safety-Island(SAIL) subsystem, which affects thermal management.
 
-It will be tremendously useful to add comments that elaborate the {rx,tx}-c=
-hannel-mapping
-(and port mapping for what it's worth) here like it is done in other dt fil=
-es.
-For example in the same way as it is done in sm8650-qrd.dts
-or like here:
-https://lore.kernel.org/linux-arm-msm/20250526-sm8750-audio-part-2-v3-3-744=
-29c686bb1@linaro.org/
+In QCS9100 SOC, the safety subsystem monitors all thermal sensors and
+does corrective action for each subsystem based on sensor violation
+to comply safety standards. But as QCS9075 is non-safe SOC it requires
+conventional thermal mitigation for thermal management.
+In this series thermal mitigation changes are not included as it needs
+more discussion whether to include the change in DT or in drivers.
 
-Best regards,
-Alexey
+Below are detailed informations on IQ-9075-evk HW:
+------------------------------------------------------
+QCS9075 SOM is stacked on top of IQ-9075-evk board.
+On top of IQ-9075-evk board additional mezzanine boards can be stacked
+in future.
+IQ-9075-evk is single board supporting these peripherals:
+  - Storage: 2 × 128 GB UFS, micro-SD card, EEPROMs for MACs,
+    eMMC on mezzanine card
+  - Audio/Video, Camera & Display ports
+  - Connectivity: RJ45 2.5GbE, WLAN/Bluetooth, CAN/CAN-FD
+  - Sensors: IMU
+  - PCIe ports
+  - USB & UART ports
+
+Currently basic features are enabled to support 'boot to shell'.
+
+---
+Changelog:
+
+v8:
+  - Squash UFS support[1] into initial board support patch.
+  - Remove uart10 pinctrl settings from board, it is moved to sa8775p.dtsi.
+  - Arrange ufs nodes in alphabetical order.
+  - v7-link: [2]
+
+[1] https://lore.kernel.org/all/20250513084309.10275-1-quic_sayalil@quicinc.com/
+[2] https://lore.kernel.org/all/20250521140807.3837019-1-quic_wasimn@quicinc.com/
+
+Pratyush Brahma (1):
+  arm64: dts: qcom: iq9: Introduce new memory map for qcs9100/qcs9075
+
+Wasim Nazir (3):
+  dt-bindings: arm: qcom: Add bindings for QCS9075 SOC based board
+  arm64: dts: qcom: qcs9075: Introduce QCS9075 SOM
+  arm64: dts: qcom: Add support for qcs9075 IQ-9075-EVK
+
+ .../devicetree/bindings/arm/qcom.yaml         |   7 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/iq9-reserved-memory.dtsi    | 113 +++++++
+ .../boot/dts/qcom/qcs9075-iq-9075-evk.dts     | 289 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs9075-som.dtsi     |  10 +
+ 5 files changed, 420 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/iq9-reserved-memory.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-som.dtsi
+
+
+base-commit: 3be1a7a31fbda82f3604b6c31e4f390110de1b46
+--
+2.49.0
+
 
