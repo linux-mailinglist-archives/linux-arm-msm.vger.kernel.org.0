@@ -1,330 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-59673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94B8CAC6603
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 11:30:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22104AC6646
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 11:51:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A61EF3B969C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 09:29:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BC16E1888904
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 09:52:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73FDC27780B;
-	Wed, 28 May 2025 09:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89FD227877B;
+	Wed, 28 May 2025 09:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="COYg7XrY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I4rKlkkc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6004B1C3F36;
-	Wed, 28 May 2025 09:29:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2569278152;
+	Wed, 28 May 2025 09:51:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748424601; cv=none; b=RqJAIOHtN3OZY34jlYab5u38ZpyJg2OCSRNOJozKxnk2/dvNv399HuJKfNfAzqiIinKvGIyaQsIyy0goJ0H2UyY2G47bjm4+15apDWY1GGkxZHLp93189ixILnHQRnKKSwHWrq2c+mMqF/vgTw7rYj5j+rYfo2+jtDHP3P6XO0g=
+	t=1748425911; cv=none; b=MJVj3+edQJ7BWHPsUPOtQ5JHXdykJTZi64LM2RAczzw70LmQvcWOBCkkyxlfxDaq37Bm0cWf0ufICjfyHRL5Okdm8nN+0wKyn9EA1pn9BVjcEdMUlOJ+/F1llXPMrYl5EWYpax+T1577SGjLScj8DBeDyAMMHxa7n8Z71k41QyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748424601; c=relaxed/simple;
-	bh=j00G/dwW97kfCExu0r+usuJ50t2BSRgmX+trGWNWHTk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=llIPy45L8WXBKNIiMvpPZoP6f29XsB6vAIWvhyJnQOUEHPfvvA8b1Fj9Gcvve/mcGzWdYAcOISpR6KUFubFxSUVLxsLDz0GAa5RlEWnEFkLi/77iYkEpSILVtmLvmD2/GHj4HjYX2h1g5pZR4Nrsixs42wrMFOs1MFLDg4XlN4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=COYg7XrY; arc=none smtp.client-ip=217.70.183.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id BB4C44341E;
-	Wed, 28 May 2025 09:29:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1748424590;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=tcp+3qiZKrZ/yFS9++J4sy6UEvxx9WuKX4FnkxkfHz0=;
-	b=COYg7XrYSHalG4owcEpWOBAsjunxlDmdWc1VFAql1a5dnt3Eq4iRRkHe8TdRFLaIUq/lE3
-	BTjSw2u8n6EW5pI60SAdQE4OEAU2xDNFEYZ/ZXVOZQaEq/evnqR4GQQoLp+stts5l4Xzyh
-	9NxJ5SJLHMAM26XYxsE1dojYL0J8BIYSQmtkEzJac/3nCK8CkQ9z38zM4bvUqdq7jeKKPF
-	L+WvN5GVjQ+BsVjsVYFYgX2Buqlxrda9UW8piAoXYcs47WqLi42eXnFG3tT+UbeakSLn8t
-	pUSmxs5n/Rvf//Npg+HsS3oq5Cw33wds1WdawIaZGSjII/9sfUTORa7Zu0NSYw==
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Date: Wed, 28 May 2025 11:29:36 +0200
-Subject: [PATCH v4] drm/bridge: tc358767: convert to
- devm_drm_bridge_alloc() API
+	s=arc-20240116; t=1748425911; c=relaxed/simple;
+	bh=tcQArO/ilw7koTVs+1Wqs9sPMLBSpYyfkvbgmUzFeXM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Ua6T/+skBZNZfg1i5Wl5/JZ8KtleE4SyDAnGnrvFgCdIFUdT2SnMxydzpqFwJ/X50iqnJu0mZkIfbzELG1rXChUFm5moG3pwtNnBz3qhi3o0nh9dzrxV+GIhZR0OgbjEdEg2FKeKqrD72p8Mbi0s7RLFzBwH9T4SShPmMRxAMs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I4rKlkkc; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54S8gG2x022962;
+	Wed, 28 May 2025 09:51:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Wp2KgjjSZKhPsd4HV/S8Rh5q5fv+5sUwsR45Qw85m0w=; b=I4rKlkkcmQDiKk/W
+	roAjtfpLaewNNA49eTHjQZweV9TBXnAGfsa+eVlHNq+VgWL5HP+Jwf/Ow/u8ZNQu
+	AnVjgDRDfQ7S2paykfKWtLtFQRrEb1o8aWgY1vO2ZDw3QDY3TZ5MqZz2RFdfMy8c
+	Vkrq8weiTgHvfJAvSB1rLa3VL0+SWx/LnPuGeU3chfAaeOvcvKMcNcwyzU1FPinC
+	ZY8nRQWAXNWntttSBD+IDFvfe1ZTsibauS9ljHPTXM2zhfoQCAxrxcHzIt+1vaik
+	TfurmsZosej3S/gVr2QHQLN3oRPzBNmZIv8IGhgcA4oVSUdCzYg5LN1u4vqXcRBb
+	COZkMA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46vmgcx8x3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 May 2025 09:51:44 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54S9phOf020897
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 May 2025 09:51:43 GMT
+Received: from [10.218.22.7] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 28 May
+ 2025 02:51:36 -0700
+Message-ID: <bb9f9498-5b24-4df8-923a-a54bc528799d@quicinc.com>
+Date: Wed, 28 May 2025 15:21:32 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250528-drm-bridge-convert-to-alloc-api-v4-1-f04e698c9a77@bootlin.com>
-X-B4-Tracking: v=1; b=H4sIAH/XNmgC/4WNywrCMBBFf6Vk7UgSY7Wu/A/pos3DDrSZkoSgl
- Py7seDa5bkXztlYtAFtZLdmY8FmjEi+gjo0TE+Df1pAU5lJLs9ccQUmLDAGNPXR5LMNCRLBMM+
- kYVgRWqFGq10rZadYtazBOnzthUdfecKYKLz3YBbf9ee+/HVnARyUFOLk3NV0mt9HojSjP2paW
- F9K+QA4RBdR0AAAAA==
-X-Change-ID: 20250404-drm-bridge-convert-to-alloc-api-614becf62294
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Andrzej Hajda <andrzej.hajda@intel.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Jagan Teki <jagan@amarulasolutions.com>, Shawn Guo <shawnguo@kernel.org>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, 
- Douglas Anderson <dianders@chromium.org>, 
- Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
- Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Anusha Srivatsa <asrivats@redhat.com>, 
- Paul Kocialkowski <paulk@sys-base.io>, Dmitry Baryshkov <lumag@kernel.org>, 
- Hui Pu <Hui.Pu@gehealthcare.com>, 
- Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
- dri-devel@lists.freedesktop.org, asahi@lists.linux.dev, 
- linux-kernel@vger.kernel.org, chrome-platform@lists.linux.dev, 
- imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
- linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org, 
- linux-renesas-soc@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
- linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- freedreno@lists.freedesktop.org, linux-stm32@st-md-mailman.stormreply.com, 
- Luca Ceresoli <luca.ceresoli@bootlin.com>
-X-Mailer: b4 0.14.2
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvvdeludculddtuddrgeefvddrtddtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkffvvefosehtkeertdertdejnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepfeeitedtfeefjeeijeejveevleeijefgkefhjeeuffelveelieetleduveetieetnecuffhomhgrihhnpehfrhgvvgguvghskhhtohhprdhorhhgpdhkvghrnhgvlhdrohhrghenucfkphepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvpdhhvghloheplgduledvrdduieekrddujeekrdejhegnpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfeelpdhrtghpthhtohepjhhonhgrsheskhifihgsohhordhsvgdprhgtphhtthhopehkvghrnhgvlhesphgvnhhguhhtrhhonhhigidru
- ggvpdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhsmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjrghgrghnsegrmhgrrhhulhgrshholhhuthhiohhnshdrtghomhdprhgtphhtthhopehrfhhoshhssehkvghrnhgvlhdrohhrghdprhgtphhtthhopehluhgtrgdrtggvrhgvshholhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtohepphgruhhlkhesshihshdqsggrshgvrdhiohdprhgtphhtthhopefnrghurhgvnhhtrdhpihhntghhrghrthesihguvggrshhonhgsohgrrhgurdgtohhm
-X-GND-Sasl: luca.ceresoli@bootlin.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 02/18] dt-bindings: clock: qcom: Update sc8280xp camcc
+ bindings
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        "Satya Priya
+ Kakitapalli" <quic_skakitap@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20250515-videocc-pll-multi-pd-voting-v4-0-571c63297d01@quicinc.com>
+ <20250515-videocc-pll-multi-pd-voting-v4-2-571c63297d01@quicinc.com>
+ <20250519-barnacle-of-beautiful-enthusiasm-4e6af0@kuoka>
+ <ec4ee2f5-162b-430d-aeb9-90ad4559707b@quicinc.com>
+ <the3rt4gwb766u5tmzzugoozkyt3qw7kxvy6mlemxcqb5ibs37@szcq2rzbukma>
+Content-Language: en-US
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+In-Reply-To: <the3rt4gwb766u5tmzzugoozkyt3qw7kxvy6mlemxcqb5ibs37@szcq2rzbukma>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: _I-QgFM5UlQRHwcQjaVShaytowtLaBq5
+X-Proofpoint-GUID: _I-QgFM5UlQRHwcQjaVShaytowtLaBq5
+X-Authority-Analysis: v=2.4 cv=Ws4rMcfv c=1 sm=1 tr=0 ts=6836dcb0 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=P-IC7800AAAA:8
+ a=qU0-ABsse5SAqXbbjgwA:9 a=QEXdDO2ut3YA:10 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDA4NSBTYWx0ZWRfX6UqsCeu+7/XO
+ hkIKzHjiwbyPlYFVq8PwHgLZeBCOLcBfipX+yOLQakUw/F1sa1ICq1ftdhmn9Wxv1UhSiIzutps
+ 1i7OlNj3wxSsSTFo8IZyttP+A2Kr3ZiR3V/czOuASdomQ90VCkoPNNbEaW1XYKqA/5VihAERdrm
+ zh7GI/vuZ0I1QOW8P+tR7ccRvhpuS0hdosPX8fcNHXelN/zXQS4t/RIJZvtnkXm3OTz5tAZzvyi
+ vvQo/7ct/niem6TjHnLRwZW/5eaTiPaXzrXjJw1icxDdyGjUTzazVBu/uMS9kmAE3lJIgyDAoQR
+ wsq+emi5P+yQd71vtDe+B/1VhGhjaF8UbtYomM9BuSkjPNgsgQa+blORcx1VseXjqsIQs3F5+NN
+ k4IaiIocl5HT3t/KcdOkHb8BFVCktFHXxvsu31tGoUIgGZcVMg3vJm2jiYMTdazGBftWYGz+
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-28_05,2025-05-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0 adultscore=0
+ phishscore=0 mlxlogscore=999 priorityscore=1501 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 mlxscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505160000 definitions=main-2505280085
 
-This is the new API for allocating DRM bridges.
 
-Converting this driver is a bit complex because the drm_bridge funcs
-pointer differs based on the bridge mode. So the current code does:
 
- * tc_probe()
-   * devm_kzalloc() private struct embedding drm_bridge
-   * call tc_probe_bridge_endpoint() which
-     * parses DT description into struct fields
-     * computes the mode
-     * calls different bridge init functions based on the mode
-       * each sets a different bridge.funcs pointer
+On 5/21/2025 6:16 PM, Dmitry Baryshkov wrote:
+> On Wed, May 21, 2025 at 03:32:34PM +0530, Jagadeesh Kona wrote:
+>>
+>>
+>> On 5/19/2025 1:48 PM, Krzysztof Kozlowski wrote:
+>>> On Thu, May 15, 2025 at 12:38:47AM GMT, Jagadeesh Kona wrote:
+>>>> SC8280XP camcc only requires the MMCX power domain, unlike
+>>>> SM8450 camcc which will now support both MMCX and MXC power
+>>>
+>>> I do not see change to sm8450 here. This makes no sense on its own. You
+>>> do not move compatibles - what is the point of such change?
+>>>
+>>
+>> I did the SM8450 changes in next patch (3/18). But I agree with you, this needs to
+>> be more structured. So I am planning to drop this patch and instead take care of
+>> single power domain requirement for SC8280XP within SM8450 camcc bindings using
+>> minItems and maxItems properties based on if check for sc8280xp compatible similar
+>> to below snippet.
+> 
+> I think it is a bad idea. I liked the split that you've implemented:
+> separate bindings for platforms that require MMCX (and MX), separate
+> bindings for platforms which require MMCX and MXC (and MXA).
+> 
+> It might be better to start by changing SM8450 binding to support MXC
+> and then adding SC8280XP to those bindings.
+> 
 
-The new API expects the funcs pointer to be known at alloc time, which does
-not fit in the current code structure.
+Okay, I will reverse the order of patches 2 and 3 to support MXC for SM8450 camcc
+bindings first and then move SC8280XP to have single power domain support. 
 
-Solve this by splitting tc_probe_bridge_endpoint() in two functions:
+Thanks,
+Jagadeesh
 
- * tc_probe_get_mode(), computing the mode without needing the private
-   driver structure
- * tc_probe_bridge_endpoint(), only initializing the endpoints
-
-So now the mode is known before allocation and so
-is the funcs pointer, while all other operations are still happening after
-allocation, directly into the private struct data, as they used to.
-
-The new code flow is:
-
- * tc_probe()
-   * tc_probe_get_mode()
-     * parses DT description
-     * computes and returns the mode
-   * based onf the mode, pick the funcs pointer
-   * devm_drm_bridfge_alloc(..., funcs)
-   * call tc_probe_bridge_endpoint() which
-     * calls different bridge init functions based on the mode
-       * these don't set the funcs pointer, it was done by _alloc
-
-This solution is chosen to minimize the changes in the driver logical code
-flow. The drawback is we now iterate twice over the endpoints during probe.
-
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
----
-devm_drm_bridge_alloc() [0] is the new API to allocate and initialize a DRM
-bridge, and the only one supported from now on. It is the first milestone
-towards removal of bridges from a still existing DRM pipeline without
-use-after-free.
-
-The steps in the grand plan [1] are:
-
- 1. ➜ add refcounting to DRM bridges (struct drm_bridge)
- 2. handle gracefully atomic updates during bridge removal
- 3. avoid DSI host drivers to have dangling pointers to DSI devices
- 4. finish the hotplug bridge work, removing the "always-disconnected"
-    connector, moving code to the core and potentially removing the
-    hotplug-bridge itself (this needs to be clarified as points 1-3 are
-    developed)
-
-This series is part of step 1 of the grand plan.
-
-Current tasks in step 1 of the grand plan:
-
- A. ✔ add new alloc API and refcounting -> (now in drm-misc-next)
- B. ➜ convert all bridge drivers to new API (this series)
- C. … documentation, kunit tests (v1 under discussion)
- D. after (B), add get/put to drm_bridge_add/remove() + attach/detech()
- E. after (B), convert accessors; this is a large work and can be done
-    in chunks
- F. debugfs improvements
-
-More info about this series in the v2 cover [2].
-
-Luca
-
-[0] https://gitlab.freedesktop.org/drm/misc/kernel/-/commit/0cc6aadd7fc1e629b715ea3d1ba537ef2da95eec
-[1] https://lore.kernel.org/lkml/20250206-hotplug-drm-bridge-v6-0-9d6f2c9c3058@bootlin.com/t/#u
-[2] https://lore.kernel.org/lkml/20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com/
----
-Changes in v4:
-- Removed patches already in drm-misc-next -> only 1 left
-- Improve commit message of patch 1
-- Link to v3: https://lore.kernel.org/all/20250509-drm-bridge-convert-to-alloc-api-v3-0-b8bc1f16d7aa@bootlin.com/
-
-Changes in v3:
-- Fixed issues reported for some patches
-- Added review tags
-- Removed patches that have been applied
-- Added revert for the exynos patch, applied by mistake
-- Update cover with grand plan info and trim some of it
-- Updated bouncing e-mail address in Cc list
-- Link to v2: https://lore.kernel.org/lkml/20250424-drm-bridge-convert-to-alloc-api-v2-0-8f91a404d86b@bootlin.com/
-
-Changes in v2:
-- Improved cover letter with link to commit adding devm_drm_bridge_alloc()
-- add review tags
-- fix bugs in zynqmp, vc4 patches
-- fix patch 1 error code checking
-- Link to v1: https://lore.kernel.org/r/20250407-drm-bridge-convert-to-alloc-api-v1-0-42113ff8d9c0@bootlin.com
----
-
-changes in v4:
-- improved commit message
----
- drivers/gpu/drm/bridge/tc358767.c | 56 ++++++++++++++++++++++++++++-----------
- 1 file changed, 40 insertions(+), 16 deletions(-)
-
-diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
-index 7e5449fb86a3fcdae8255bc490d12c543ef3f8ae..61559467e2d22b4b1b4223c97766ca3bf58908fd 100644
---- a/drivers/gpu/drm/bridge/tc358767.c
-+++ b/drivers/gpu/drm/bridge/tc358767.c
-@@ -344,6 +344,14 @@
- #define COLOR_BAR_MODE_BARS	2
- #define PLL_DBG			0x0a04
- 
-+enum tc_mode {
-+	mode_dpi_to_edp = BIT(1) | BIT(2),
-+	mode_dpi_to_dp  = BIT(1),
-+	mode_dsi_to_edp = BIT(0) | BIT(2),
-+	mode_dsi_to_dp  = BIT(0),
-+	mode_dsi_to_dpi = BIT(0) | BIT(1),
-+};
-+
- static bool tc_test_pattern;
- module_param_named(test, tc_test_pattern, bool, 0644);
- 
-@@ -2327,7 +2335,6 @@ static int tc_probe_dpi_bridge_endpoint(struct tc_data *tc)
- 	if (bridge) {
- 		tc->panel_bridge = bridge;
- 		tc->bridge.type = DRM_MODE_CONNECTOR_DPI;
--		tc->bridge.funcs = &tc_dpi_bridge_funcs;
- 
- 		return 0;
- 	}
-@@ -2360,7 +2367,6 @@ static int tc_probe_edp_bridge_endpoint(struct tc_data *tc)
- 		tc->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
- 	}
- 
--	tc->bridge.funcs = &tc_edp_bridge_funcs;
- 	if (tc->hpd_pin >= 0)
- 		tc->bridge.ops |= DRM_BRIDGE_OP_DETECT;
- 	tc->bridge.ops |= DRM_BRIDGE_OP_EDID;
-@@ -2368,17 +2374,11 @@ static int tc_probe_edp_bridge_endpoint(struct tc_data *tc)
- 	return 0;
- }
- 
--static int tc_probe_bridge_endpoint(struct tc_data *tc)
-+static enum tc_mode tc_probe_get_mode(struct device *dev)
- {
--	struct device *dev = tc->dev;
- 	struct of_endpoint endpoint;
- 	struct device_node *node = NULL;
--	const u8 mode_dpi_to_edp = BIT(1) | BIT(2);
--	const u8 mode_dpi_to_dp = BIT(1);
--	const u8 mode_dsi_to_edp = BIT(0) | BIT(2);
--	const u8 mode_dsi_to_dp = BIT(0);
--	const u8 mode_dsi_to_dpi = BIT(0) | BIT(1);
--	u8 mode = 0;
-+	enum tc_mode mode = 0;
- 
- 	/*
- 	 * Determine bridge configuration.
-@@ -2401,7 +2401,27 @@ static int tc_probe_bridge_endpoint(struct tc_data *tc)
- 			return -EINVAL;
- 		}
- 		mode |= BIT(endpoint.port);
-+	}
-+
-+	if (mode != mode_dpi_to_edp &&
-+	    mode != mode_dpi_to_dp  &&
-+	    mode != mode_dsi_to_dpi &&
-+	    mode != mode_dsi_to_edp &&
-+	    mode != mode_dsi_to_dp) {
-+		dev_warn(dev, "Invalid mode (0x%x) is not supported!\n", mode);
-+		return -EINVAL;
-+	}
-+
-+	return mode;
-+}
- 
-+static int tc_probe_bridge_endpoint(struct tc_data *tc, enum tc_mode mode)
-+{
-+	struct device *dev = tc->dev;
-+	struct of_endpoint endpoint;
-+	struct device_node *node = NULL;
-+
-+	for_each_endpoint_of_node(dev->of_node, node) {
- 		if (endpoint.port == 2) {
- 			of_property_read_u8_array(node, "toshiba,pre-emphasis",
- 						  tc->pre_emphasis,
-@@ -2427,24 +2447,28 @@ static int tc_probe_bridge_endpoint(struct tc_data *tc)
- 		return tc_probe_edp_bridge_endpoint(tc);
- 	}
- 
--	dev_warn(dev, "Invalid mode (0x%x) is not supported!\n", mode);
--
-+	/* Should never happen, mode was validated by tc_probe_get_mode() */
- 	return -EINVAL;
- }
- 
- static int tc_probe(struct i2c_client *client)
- {
- 	struct device *dev = &client->dev;
-+	const struct drm_bridge_funcs *funcs;
- 	struct tc_data *tc;
-+	int mode;
- 	int ret;
- 
--	tc = devm_kzalloc(dev, sizeof(*tc), GFP_KERNEL);
--	if (!tc)
--		return -ENOMEM;
-+	mode = tc_probe_get_mode(dev);
-+	funcs = (mode == mode_dsi_to_dpi) ? &tc_dpi_bridge_funcs : &tc_edp_bridge_funcs;
-+
-+	tc = devm_drm_bridge_alloc(dev, struct tc_data, bridge, funcs);
-+	if (IS_ERR(tc))
-+		return PTR_ERR(tc);
- 
- 	tc->dev = dev;
- 
--	ret = tc_probe_bridge_endpoint(tc);
-+	ret = tc_probe_bridge_endpoint(tc, mode);
- 	if (ret)
- 		return ret;
- 
-
----
-base-commit: 18fb864d3afccf7ecdf13d0435464465d31ccf1d
-change-id: 20250404-drm-bridge-convert-to-alloc-api-614becf62294
-
-Best regards,
--- 
-Luca Ceresoli <luca.ceresoli@bootlin.com>
-
+>>
+>>    power-domains:
+>> -    maxItems: 1
+>> +    minItems: 1
+>>      description:
+>> -      A phandle and PM domain specifier for the MMCX power domain.
+>> +      Power domains required for the clock controller to operate
+>> +    items:
+>> +      - description: MMCX power domain
+>> +      - description: MXC power domain
+>>
+>> ......
+>>
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,sc8280xp-camcc
+>> +    then:
+>> +      properties:
+>> +        power-domains:
+>> +          maxItems: 1
+>> +        required-opps:
+>> +          maxItems: 1
+>> +
+>>
+>>
+>>>> domains. Hence move SC8280XP camcc bindings from SM8450 to
+>>>> SA8775P camcc.
+>>>
+>>> Subject: everything could be an update. Be specific.
+>>>
+>>> A nit, subject: drop second/last, redundant "bindings". The
+>>> "dt-bindings" prefix is already stating that these are bindings.
+>>> See also:
+>>> https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
+>>>
+>>
+>> Sure, I will take care of above in next series.
+>>
+>> Thanks,
+>> Jagadeesh
+>>
+>>>>
+>>>> SA8775P camcc doesn't support required-opps property currently
+>>>> but SC8280XP camcc need that property,  so add required-opps
+>>>> based on SC8280XP camcc conditional check in SA8775P camcc
+>>>> bindings.
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
+> 
 
