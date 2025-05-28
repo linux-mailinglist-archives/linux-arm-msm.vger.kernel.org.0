@@ -1,58 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-59650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7173CAC613B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 07:27:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E9C60AC617A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 07:58:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2C50E4A693B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 05:27:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A631417C965
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 05:58:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37266200110;
-	Wed, 28 May 2025 05:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C74E420DD47;
+	Wed, 28 May 2025 05:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="Oedzqhe1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HeCs3UQT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B301FFC5C;
-	Wed, 28 May 2025 05:26:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748410022; cv=pass; b=lmIPy/VVvExrM0H0jad0grnFm48znBvkGxlfCnizZsZ1sysJX0X4TjRFfoVlGWYl7+tWzJcTrRjBYgZxYHue1B9GI0iScJbNcGsl/CK7EsAlyJNfvUMFaNXIbfrQwkjdOnv4ngsEbpzN5EJvu45PaSJ78+i0Q+x1WMdOLzKZ9to=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748410022; c=relaxed/simple;
-	bh=BNNA0KlFqvK9JBZs3xUD+sBgeZhwZnPFvPtQtjsYQyk=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=hzaYv+kvsNhvZAZEc+NTIFWyfvcVwZHpwrsXDr8+yBcmZWLFeiKy6fKb9IChMuyemBqeqQCDIUZhDCanY5JwEYXg48B4E0vRSa97N8lXCMm2vK3lEQko5gjOityjsRAumaN/2v4Tb7H/B3d3Vi4vL0Vy/zM5zwLBM60P+CYHgZo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=Oedzqhe1; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1748409973; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=kISV225uerBQYDxJGvC2gFdYWteZbXRg2Jih6RVyio+dCh4o3wZDBBI1eZVzXlMXE9xFgVXuXHPMBMVGYrXLePZzzCq3NZp3s590sT1SuOnCqk/SYj8gZWc7TPOBT56BxsZzDLT9jkX8/MU6vnZhYA4loAZ4k/31O4dBMGZUvjg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1748409973; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=nXpnKLzemS+hWAH6rg60RoGOFsXGoeHL9S1e6MhsnzM=; 
-	b=XoWIK8QiF+HJJj5WdU+wKEPofQgxp1WkYgZj+LZr24A5c9g7QAZK7m7PrdpImgTUCAgXT9qkYnEYk4veH3Dph1Q1m9sbNbhVRHFlCTD6+u+ZRb2ctx4cWK2LFu1Wp6ZtlQVF+a+brVMS18aLxaFGuXz3/bHz0W+wAdGDt7w48Es=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
-	dmarc=pass header.from=<usama.anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1748409973;
-	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
-	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=nXpnKLzemS+hWAH6rg60RoGOFsXGoeHL9S1e6MhsnzM=;
-	b=Oedzqhe1ruZM/1R1BmC264P0HchB2wBTwN3tN4kWAQAfntpTwKkz+A7lShNYCqvF
-	yi/egGpqak6zM5Lv8UdASGH9Q7x3Q3u9k/jHHo0WFk9voWOVsCenKn0RCYAkCaBNght
-	80vsuyuQLgfZQeqyIe9kCbT0cj7NOywBfA8Tw3Z0=
-Received: by mx.zohomail.com with SMTPS id 1748409971508258.3869752597926;
-	Tue, 27 May 2025 22:26:11 -0700 (PDT)
-Message-ID: <819f15f9-1b16-4b96-8273-3f95c1e071bb@collabora.com>
-Date: Wed, 28 May 2025 10:25:59 +0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E2E20CCCA;
+	Wed, 28 May 2025 05:58:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748411919; cv=none; b=f14bO0suCgkqGHrG7xKlHgdq+w1IMEIv87AabHs1+1Igbh8TemUCLpnNrx7UsddykIa0k97PNKaNXgv3SSPsG0I6IxNvINrXLD2DN334HTv29by78G+F9rGVUTUh+F5OtTyAp7jwZOtzudinLvy5nNSmwOXfcmxeRn/U6rd9PYk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748411919; c=relaxed/simple;
+	bh=s30BvmonDO22/VURRrlZYKuo5RtdHEqne6gVx66GPCg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BBEq0GCgQQzv5JiFMswS2tVUXl7OL3hKvGagaIcFDyxE9Wy8jJ2ncrZ23eu2lMEQUXser++2WdUqCHlby1XJ1GBnMtacYtax822JKExkTudonSr/Cjif9FkG20zvr3+aXv7vQXI41c+zl3hMfHrhMUrnhQiKRZs9KsK/azA73DE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HeCs3UQT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8793C4CEE7;
+	Wed, 28 May 2025 05:58:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748411919;
+	bh=s30BvmonDO22/VURRrlZYKuo5RtdHEqne6gVx66GPCg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=HeCs3UQTv3j9qlYfMkDrFP/j139VPVsEQUVuxTebtdDHJ2JeaHz3/vf9F9YLVogbw
+	 NVfy6LlLJ00uF2CJMvAallTbWcLYKUg0H8phDOoA6MyDg5E8oKRvcgABfS3dOlBRJ6
+	 orydg9ofJ2MBy/cc2PTfHx+UAeY525p6K57IelFiu4EFLIbMNLv/2N+wQbfJODMIpA
+	 bHUCI6MVe3DVrJyZvGVqbyCGy7HEAiiO3yaZmmqy5thoSmP+KPy44kJ8JwIgXwuXLw
+	 B8Kn47GfnuoocVwO5N0d9fhHnQEaDar45uLh12675Nd6Z/nIAbbVI3fLfSLoJLyjng
+	 pIp134ioTJ4fQ==
+Message-ID: <8609abe9-8aac-42a2-a2a1-2ccd6eafb171@kernel.org>
+Date: Wed, 28 May 2025 07:58:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,281 +50,150 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: usama.anjum@collabora.com, kernel@collabora.com,
- sebastian.reichel@collabora.com, Jeff Johnson
- <jeff.johnson@oss.qualcomm.com>, Baochen Qiang <quic_bqiang@quicinc.com>,
- Sumit Garg <sumit.garg@kernel.org>, mhi@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
- ath12k@lists.infradead.org, Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
- Jeff Johnson <jjohnson@kernel.org>,
- Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
- Youssef Samir <quic_yabdulra@quicinc.com>,
- Matthew Leung <quic_mattleun@quicinc.com>,
- Carl Vanderlip <quic_carlv@quicinc.com>,
- "Dr. David Alan Gilbert" <linux@treblig.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Troy Hanson <quic_thanson@quicinc.com>, Alex Elder <elder@kernel.org>,
- Yan Zhen <yanzhen@vivo.com>, Kunwu Chan <chentao@kylinos.cn>
-Subject: Re: [PATCH v6] bus: mhi: host: don't free bhie tables during
- suspend/hibernation
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-References: <20250516184952.878726-1-usama.anjum@collabora.com>
+Subject: Re: [PATCH v3 03/12] ASoC: dt-bindings: qcom,wsa881x: extend
+ description to analog mode
+To: Alexey Klimov <alexey.klimov@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>, Mark Brown <broonie@kernel.org>,
+ linux-sound@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Dmitry Baryshkov <lumag@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+References: <20250522-rb2_audio_v3-v3-0-9eeb08cab9dc@linaro.org>
+ <20250522-rb2_audio_v3-v3-3-9eeb08cab9dc@linaro.org>
+ <b0f472af-6a0f-493f-aca3-65321931bebe@linaro.org>
+ <DA78AT6VV956.3FZVIIIM3ZTFZ@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
-In-Reply-To: <20250516184952.878726-1-usama.anjum@collabora.com>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <DA78AT6VV956.3FZVIIIM3ZTFZ@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
 
-Soft reminder
+On 27/05/2025 22:34, Alexey Klimov wrote:
+> On Thu May 22, 2025 at 6:45 PM BST, Krzysztof Kozlowski wrote:
+>> On 22/05/2025 19:40, Alexey Klimov wrote:
+>>> WSA881X also supports analog mode when device is configured via i2c
+>>> only. Document it, add properties, new compatibles and example.
+>>>
+>>> Cc: Srinivas Kandagatla <srini@kernel.org>
+>>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+>>> ---
+>>>  .../devicetree/bindings/sound/qcom,wsa881x.yaml    | 66 +++++++++++++++++++---
+>>>  1 file changed, 58 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml b/Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml
+>>> index ac03672ebf6de1df862ce282f955ac91bdd9167d..a33e2754ec6159dbcaf5b6fcacf89eb2a6056899 100644
+>>> --- a/Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml
+>>> +++ b/Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml
+>>> @@ -12,15 +12,17 @@ maintainers:
+>>>  description: |
+>>>    WSA8810 is a class-D smart speaker amplifier and WSA8815
+>>>    is a high-output power class-D smart speaker amplifier.
+>>> -  Their primary operating mode uses a SoundWire digital audio
+>>> -  interface. This binding is for SoundWire interface.
+>>> -
+>>> -allOf:
+>>> -  - $ref: dai-common.yaml#
+>>> +  This family of amplifiers support two operating modes:
+>>> +  SoundWire digital audio interface which is a primary mode
+>>> +  and analog mode when device is configured via i2c only.
+>>> +  This binding describes both modes.
+>>>  
+>>>  properties:
+>>>    compatible:
+>>> -    const: sdw10217201000
+>>> +    enum:
+>>> +      - qcom,wsa8810
+>>> +      - qcom,wsa8815
+>>> +      - sdw10217201000
+>>
+>> You never responded to my comments, never implemented them. Same problem
+>> as before.
+> 
+> You don't respond to emails sometimes and, while I want to move this forward,
+> I am not taking any chances replying to few months old thread, so if it okay
+> I'll respond here. Sorry for doing this.
+> 
+> Previous comment:
+> 
+>> You implement only one compatible, so does it mean they are compatible?
+>> If so, make them compatible.
+> 
+> There are two compatibles in wsa881x-i2c.c.
+> By looking at downstream sources and current code I think there is no diff
+> between wsa8810 and wsa8815 and it is handled by reading hw registers if
+> needed. So I am thinking that maybe it makes sense to reduce it to
+> "qcom,wsa881x".
 
-On 5/16/25 11:49 PM, Muhammad Usama Anjum wrote:
-> Fix dma_direct_alloc() failure at resume time during bhie_table
-> allocation because of memory pressure. There is a report where at
-> resume time, the memory from the dma doesn't get allocated and MHI
-> fails to re-initialize.
+No, you need specific compatibles. That's the standard DT rule.
+Compatibility is expressed with list and fallback (see example-schema or
+any other qcom binding, really 95% of them have fallbacks).
+
+WSA usually have version registers so even if there are differences,
+they are fully detectable, thus one more argument for compatibility.
+
 > 
-> To fix it, don't free the memory at power down during suspend /
-> hibernation. Instead, use the same allocated memory again after every
-> resume / hibernation. This patch has been tested with resume and
-> hibernation both.
+> Previous comment:
+>> Do not repeat property name as description. Say something useful. "GPIO
+>> spec for" is redundant, it cannot be anything else, so basically your
+>> description saod "mclk" which is the same as in property name.
 > 
-> Optimize the rddm and fbc bhie allocations. The rddm is of constant
-> size for a given hardware. While the fbc_image size depends on the
-> firmware. If the firmware changes, we'll free and allocate new memory
-> for it. This patch is motivated from the ath12k [1] and ath11k [2]
-> patches. They don't free the memory and reuse the same memory if new
-> size is same. The firmware caching hasn't been implemented for the
-> drivers other than in the nouveau. (The changing of firmware isn't
-> tested/supported for wireless drivers. But let's follow the example
-> patches here.)
+>> Usually clocks are not GPIOs, so description could explain that.
 > 
-> [1] https://lore.kernel.org/all/20240419034034.2842-1-quic_bqiang@quicinc.com/
-> [2] https://lore.kernel.org/all/20220506141448.10340-1-quic_akolli@quicinc.com/
-> 
-> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
-> Tested-on: WCN7850 hw2.0 WLAN.HMT.1.1.c5-00284-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-> 
-> Acked-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-> Tested-by: Baochen Qiang <quic_bqiang@quicinc.com>
-> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-> ---
-> Changes since v1:
-> - Don't free bhie tables during suspend/hibernation only
-> - Handle fbc_image changed size correctly
-> - Remove fbc_image getting set to NULL in *free_bhie_table()
-> 
-> Changes since v2:
-> - Remove the new mhi_partial_unprepare_after_power_down() and instead
->   update mhi_power_down_keep_dev() to use
->   mhi_power_down_unprepare_keep_dev() as suggested by Mani
-> - Update all users of this API such as ath12k (previously only ath11k
->   was updated)
-> - Define prev_fw_sz in docs
-> - Do better alignment of comments
-> 
-> Changes since v3:
-> - Fix state machine of ath12k by setting ATH12K_MHI_DEINIT with
->   ATH12K_MHI_POWER_OFF_KEEP_DEV state (Thanks Sebastian for testing and
->   finding the problem)
-> - Use static with mhi_power_down_unprepare_keep_dev()
-> - Remove crash log as it was showing that kworker wasn't able to
->   allocate memory.
-> 
-> Changes since v4:
-> - Update description
-> - Use __mhi_power_down_unprepare_keep_dev() in
->   mhi_unprepare_after_power_down()
-> 
-> Changes since v5:
-> - Update description to don't give an impression that all bhie
->   allocations are being fixed. mhi_load_image_bhie() doesn't require
->   this optimization.
-> 
-> This patch doesn't have fixes tag as we are avoiding error in case of
-> memory pressure. We are just making this driver more robust by not
-> freeing the memory and using the same after resuming.
-> ---
->  drivers/bus/mhi/host/boot.c           | 15 +++++++++++----
->  drivers/bus/mhi/host/init.c           | 18 ++++++++++++------
->  drivers/bus/mhi/host/internal.h       |  2 ++
->  drivers/bus/mhi/host/pm.c             |  1 +
->  drivers/net/wireless/ath/ath11k/mhi.c |  8 ++++----
->  drivers/net/wireless/ath/ath12k/mhi.c | 14 ++++++++++----
->  include/linux/mhi.h                   |  2 ++
->  7 files changed, 42 insertions(+), 18 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-> index efa3b6dddf4d2..bc8459798bbee 100644
-> --- a/drivers/bus/mhi/host/boot.c
-> +++ b/drivers/bus/mhi/host/boot.c
-> @@ -584,10 +584,17 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->  	 * device transitioning into MHI READY state
->  	 */
->  	if (fw_load_type == MHI_FW_LOAD_FBC) {
-> -		ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
-> -		if (ret) {
-> -			release_firmware(firmware);
-> -			goto error_fw_load;
-> +		if (mhi_cntrl->fbc_image && fw_sz != mhi_cntrl->prev_fw_sz) {
-> +			mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
-> +			mhi_cntrl->fbc_image = NULL;
-> +		}
-> +		if (!mhi_cntrl->fbc_image) {
-> +			ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
-> +			if (ret) {
-> +				release_firmware(firmware);
-> +				goto error_fw_load;
-> +			}
-> +			mhi_cntrl->prev_fw_sz = fw_sz;
->  		}
->  
->  		/* Load the firmware into BHIE vec table */
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index 13e7a55f54ff4..8419ea8a5419b 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -1173,8 +1173,9 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
->  		/*
->  		 * Allocate RDDM table for debugging purpose if specified
->  		 */
-> -		mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
-> -				     mhi_cntrl->rddm_size);
-> +		if (!mhi_cntrl->rddm_image)
-> +			mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
-> +					     mhi_cntrl->rddm_size);
->  		if (mhi_cntrl->rddm_image) {
->  			ret = mhi_rddm_prepare(mhi_cntrl,
->  					       mhi_cntrl->rddm_image);
-> @@ -1200,6 +1201,14 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
->  }
->  EXPORT_SYMBOL_GPL(mhi_prepare_for_power_up);
->  
-> +void __mhi_unprepare_keep_dev(struct mhi_controller *mhi_cntrl)
-> +{
-> +	mhi_cntrl->bhi = NULL;
-> +	mhi_cntrl->bhie = NULL;
-> +
-> +	mhi_deinit_dev_ctxt(mhi_cntrl);
-> +}
-> +
->  void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
->  {
->  	if (mhi_cntrl->fbc_image) {
-> @@ -1212,10 +1221,7 @@ void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
->  		mhi_cntrl->rddm_image = NULL;
->  	}
->  
-> -	mhi_cntrl->bhi = NULL;
-> -	mhi_cntrl->bhie = NULL;
-> -
-> -	mhi_deinit_dev_ctxt(mhi_cntrl);
-> +	__mhi_unprepare_keep_dev(mhi_cntrl);
->  }
->  EXPORT_SYMBOL_GPL(mhi_unprepare_after_power_down);
->  
-> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-> index ce566f7d2e924..41b3fb835880b 100644
-> --- a/drivers/bus/mhi/host/internal.h
-> +++ b/drivers/bus/mhi/host/internal.h
-> @@ -427,4 +427,6 @@ void mhi_unmap_single_no_bb(struct mhi_controller *mhi_cntrl,
->  void mhi_unmap_single_use_bb(struct mhi_controller *mhi_cntrl,
->  			     struct mhi_buf_info *buf_info);
->  
-> +void __mhi_unprepare_keep_dev(struct mhi_controller *mhi_cntrl);
-> +
->  #endif /* _MHI_INT_H */
-> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> index e6c3ff62bab1d..c2c09c308b9b7 100644
-> --- a/drivers/bus/mhi/host/pm.c
-> +++ b/drivers/bus/mhi/host/pm.c
-> @@ -1263,6 +1263,7 @@ void mhi_power_down_keep_dev(struct mhi_controller *mhi_cntrl,
->  			       bool graceful)
->  {
->  	__mhi_power_down(mhi_cntrl, graceful, false);
-> +	__mhi_unprepare_keep_dev(mhi_cntrl);
->  }
->  EXPORT_SYMBOL_GPL(mhi_power_down_keep_dev);
->  
-> diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
-> index acd76e9392d31..c5dc776b23643 100644
-> --- a/drivers/net/wireless/ath/ath11k/mhi.c
-> +++ b/drivers/net/wireless/ath/ath11k/mhi.c
-> @@ -460,12 +460,12 @@ void ath11k_mhi_stop(struct ath11k_pci *ab_pci, bool is_suspend)
->  	 * workaround, otherwise ath11k_core_resume() will timeout
->  	 * during resume.
->  	 */
-> -	if (is_suspend)
-> +	if (is_suspend) {
->  		mhi_power_down_keep_dev(ab_pci->mhi_ctrl, true);
-> -	else
-> +	} else {
->  		mhi_power_down(ab_pci->mhi_ctrl, true);
-> -
-> -	mhi_unprepare_after_power_down(ab_pci->mhi_ctrl);
-> +		mhi_unprepare_after_power_down(ab_pci->mhi_ctrl);
-> +	}
->  }
->  
->  int ath11k_mhi_suspend(struct ath11k_pci *ab_pci)
-> diff --git a/drivers/net/wireless/ath/ath12k/mhi.c b/drivers/net/wireless/ath/ath12k/mhi.c
-> index 08f44baf182a5..3af524ccf4a5a 100644
-> --- a/drivers/net/wireless/ath/ath12k/mhi.c
-> +++ b/drivers/net/wireless/ath/ath12k/mhi.c
-> @@ -601,6 +601,12 @@ static int ath12k_mhi_set_state(struct ath12k_pci *ab_pci,
->  
->  	ath12k_mhi_set_state_bit(ab_pci, mhi_state);
->  
-> +	/* mhi_power_down_keep_dev() has been updated to DEINIT without
-> +	 * freeing bhie tables
-> +	 */
-> +	if (mhi_state == ATH12K_MHI_POWER_OFF_KEEP_DEV)
-> +		ath12k_mhi_set_state_bit(ab_pci, ATH12K_MHI_DEINIT);
-> +
->  	return 0;
->  
->  out:
-> @@ -635,12 +641,12 @@ void ath12k_mhi_stop(struct ath12k_pci *ab_pci, bool is_suspend)
->  	 * workaround, otherwise ath12k_core_resume() will timeout
->  	 * during resume.
->  	 */
-> -	if (is_suspend)
-> +	if (is_suspend) {
->  		ath12k_mhi_set_state(ab_pci, ATH12K_MHI_POWER_OFF_KEEP_DEV);
-> -	else
-> +	} else {
->  		ath12k_mhi_set_state(ab_pci, ATH12K_MHI_POWER_OFF);
-> -
-> -	ath12k_mhi_set_state(ab_pci, ATH12K_MHI_DEINIT);
-> +		ath12k_mhi_set_state(ab_pci, ATH12K_MHI_DEINIT);
-> +	}
->  }
->  
->  void ath12k_mhi_suspend(struct ath12k_pci *ab_pci)
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index dd372b0123a6d..6fd218a877855 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -306,6 +306,7 @@ struct mhi_controller_config {
->   *           if fw_image is NULL and fbc_download is true (optional)
->   * @fw_sz: Firmware image data size for normal booting, used only if fw_image
->   *         is NULL and fbc_download is true (optional)
-> + * @prev_fw_sz: Previous firmware image data size, when fbc_download is true
->   * @edl_image: Firmware image name for emergency download mode (optional)
->   * @rddm_size: RAM dump size that host should allocate for debugging purpose
->   * @sbl_size: SBL image size downloaded through BHIe (optional)
-> @@ -382,6 +383,7 @@ struct mhi_controller {
->  	const char *fw_image;
->  	const u8 *fw_data;
->  	size_t fw_sz;
-> +	size_t prev_fw_sz;
->  	const char *edl_image;
->  	size_t rddm_size;
->  	size_t sbl_size;
+> Should the "GPIO spec for control signal to the clock gating circuit" be
+> changed to "control signal to the clock gating circuit"?
+
+I don't see previous code, cannot even reference it via reply-to
+link/header. That way of communication is not effective.
 
 
--- 
-Regards,
-Usama
+Best regards,
+Krzysztof
 
