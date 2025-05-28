@@ -1,53 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-59665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E106AC6547
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 11:11:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CC196AC656F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 11:14:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 990F418951EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 09:11:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 335EA18893AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 09:14:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A755274FF0;
-	Wed, 28 May 2025 09:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 385052777E3;
+	Wed, 28 May 2025 09:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="en0U7mBt"
+	dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b="hRTybPp9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3030F244685;
-	Wed, 28 May 2025 09:10:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F5827605C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 09:13:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748423435; cv=none; b=NeLukC9IeoAv48FNA55QjOyNo0Kg8nsIiEaaiI7j6QbqUwTY2FdNRKwe8x39FoqkQirHyzviiQ6nDa3R8twy5dYB8bdV8yw/MUtST3Gktpdm38iM19laUcB7sQp6HwtJqaHpnQYGBcWhEw2NF03rn3+JnLBq0oaojWpGiru1KM4=
+	t=1748423607; cv=none; b=LkZJAkzHnsa88Uu4hTqfx8hV3gErOrA1AXjyia0FUQcoC+BnfMAh8sj2CY52sszRvAl480Mjs5X0tpnvfvtop2Y4XFj+Q1pLEAKoE6Pv1sbhjqZVAKf40LHnMfwW+l4cUm6ZzgeQ/TI93TvfXMTpXINNnosBu2Ai9BC/3d0vWlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748423435; c=relaxed/simple;
-	bh=xnBGQ1NYx0IsAE60uuB1ItLCFPl3GMZu0ylD6d1tDG8=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=f0PYWQr/QKdNuQqigPna2GCK4uWVvOZnVLG9+yJ8UpkwujQTVZlqd/js4OzFg8W9eedjeljMRldqdi6wXKdP8hWE4+pATEHdjRkEccjSwCovA3hCUk7iuF2awxRZtUbhx87VWt4QcD4PJbK4cG+klLx3uQEZziHhTSjnShmOwII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=en0U7mBt; arc=none smtp.client-ip=117.135.210.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=ni
-	kVQyuarkXhnQNNlek1hxJpso9eYFJCBOWiuY4s74k=; b=en0U7mBtvi3u1awudd
-	GC9FwvK6uwPFwoRpXIWnz0v2rVCTOovIN3Ec7Jk8JiVF0y0vAMYNq7oW2elboBYS
-	+n66m1RTGwBdxPzacmSGdxbb8Z5iM/cbvCoasLZQiPfGfA0AAwB/IUYIZ4kVus3J
-	cDeO+2aK4f/bCkmhZXpupPVcI=
-Received: from localhost.localdomain (unknown [])
-	by gzsmtp1 (Coremail) with SMTP id PCgvCgBHSJDj0jZoWsqECA--.56162S2;
-	Wed, 28 May 2025 17:09:57 +0800 (CST)
-From: Slark Xiao <slark_xiao@163.com>
-To: manivannan.sadhasivam@linaro.org,
-	johan+linaro@kernel.org,
-	mhi@lists.linux.dev
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Slark Xiao <slark_xiao@163.com>
-Subject: [PATCH] bus: mhi: host: pci_generic: Add Foxconn T99W696
-Date: Wed, 28 May 2025 17:09:50 +0800
-Message-Id: <20250528090950.14868-1-slark_xiao@163.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1748423607; c=relaxed/simple;
+	bh=QuxGTqqothVZH2FAvFReMIkwuLRVVEuwxWMwdi8wepo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Ly18fIJYtAwXZqAmjip0yqzcAX1BHQVWSnnB20imZaFAmvST9+cWDOotOw+iQuBtODKePaX2IlBCIm+MwC3I7YiOFXzYbsqmtUM7kvMLtDYP1iV0jGbcrYwa6gs8rbL51GO/BPKxotgi4bP8yiXo7noYGPgCpc9p86rlGJ36Xww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch; spf=none smtp.mailfrom=ffwll.ch; dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b=hRTybPp9; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ffwll.ch
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-441d1ed82faso33287035e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 02:13:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google; t=1748423604; x=1749028404; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qE1J46FoBAJitXj1m8vWSPEGkQ+jGKiXPyegG+/SpTI=;
+        b=hRTybPp941osT43T+25TpvGocYru36wo07MXWgVB3GjtLbwGp4oOCkPrs3AqumjUMB
+         YZyBZW4ynuPle8RAtYRg8c1ptdYc0CoM6529o9+J14X7AFJnAydU+0z8GR8e2Td1i0QU
+         1dOO9fDTyoUIfv9S0F8zc/QB+Hbuyv6XTHE14=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748423604; x=1749028404;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qE1J46FoBAJitXj1m8vWSPEGkQ+jGKiXPyegG+/SpTI=;
+        b=VRpY/02Q1IwgD18ZDdaOzLTOtacbPwd9/xMUuRCsj9tgCXK8F66JsV/Lv85QUf1gie
+         eCJ9G7KYgTZlt/QxGki+wXmNjy9T0dpG2U+P6HFNWMcUb68k9y/fCsKOQndF5ptbBUYw
+         ETxRkhFucYat8VH25b6mRCmLSESBxCWAV6f12DIs9a2z+wGw6eH6YtPwTloL6sCxqt3S
+         tUAHaTSX07GqLv6KtxCiFauIOzCA+7o1L8guDDTuiXf7ITTgaj72xPHY2Bn9eM7vlWvZ
+         5GMD86DJox216NL+8U+dlvWLyT6SHe20L8KHhZPKxusHlkNNRRjqKSFj/9ACtxgGU3lZ
+         4Tqw==
+X-Forwarded-Encrypted: i=1; AJvYcCXPLruivVAq7VaZl/btU5Mjmf0sA+cZkgvaPh1INHJ1cH1qnvp6MomYwm393/DJMR/w1Elto73lSW1jF9Aw@vger.kernel.org
+X-Gm-Message-State: AOJu0YxgXlu+uFEbJT4INDBWplz5BgaHU9qB8gzgGU7bqgYbm5eG1gZB
+	2VaPL9A+tCQoV3Kk/ZLFbSDYivKIHTNV9Oww34gl7XBWZnekl8i5it8rUc29N0X/Qw4=
+X-Gm-Gg: ASbGncudI0RqPB8Vqno6Fx3ZOXKgvnnMKjQM8YLWWv5gwi7Q87RETKEvgL6kgiZno7/
+	s8RecBzeaXSJKKi62j5dZ9MC1M6qVcWuag0dxmkym9VK0NeYUrBSrBMQnZVidSuQkmokvrG04S6
+	VW2l7+1e3snvSOD9D+Z4vN7Tc/VTD5vcMwPW8xvsPHct/ovxdIQOcUwVRY5w+Dxzw+lqlmF996i
+	RXvDBqgT6hfEwk+2Zhq4Lu12DYoyE34HJocByI7v7vcvXz2Iaa9TdWHsAEvpqNmwBykBP7kh4N6
+	8pgLmq6z+izjHNeBaLgvRBjRYyslsUu0YjiRZiEi8jn+MqnVynYPqFiPZkPt8+Y=
+X-Google-Smtp-Source: AGHT+IEl4ra8RUOaI+5/H5P2jSSuex3Nu8eBIcc9Q+A1x9PSyFfWR4vZKMKNUZELTXvYj6FyAPzHSA==
+X-Received: by 2002:a05:600c:35d3:b0:442:f4a3:b5ec with SMTP id 5b1f17b1804b1-44c9301650cmr163046715e9.4.1748423603663;
+        Wed, 28 May 2025 02:13:23 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:5485:d4b2:c087:b497])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4500e1d85b5sm14811715e9.32.2025.05.28.02.13.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 May 2025 02:13:23 -0700 (PDT)
+From: Simona Vetter <simona.vetter@ffwll.ch>
+To: DRI Development <dri-devel@lists.freedesktop.org>
+Cc: intel-xe@lists.freedesktop.org,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Carl Vanderlip <quic_carlv@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	Simona Vetter <simona.vetter@intel.com>
+Subject: [PATCH 4/8] accel/qaic: delete qaic_bo.handle
+Date: Wed, 28 May 2025 11:13:02 +0200
+Message-ID: <20250528091307.1894940-5-simona.vetter@ffwll.ch>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250528091307.1894940-1-simona.vetter@ffwll.ch>
+References: <20250528091307.1894940-1-simona.vetter@ffwll.ch>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,110 +90,54 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:PCgvCgBHSJDj0jZoWsqECA--.56162S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxWF13Cw15KF1UCr1rGr17Jrb_yoWrur15pF
-	WIv3y5trWkJw4Fg3y0y34kKas5Zan3Xr93Krnrtw10g3WYk3y5XrWkt342qFWYv34qqrWI
-	yFykWFy7uanrJr7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRhNVhUUUUU=
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/xtbBDQpbZGg20dYi6gAAsp
 
-T99W696 is designed based on Qualcomm SDX61 chip which is a cost
-down chip refer to previous SDX62/SDX65. Though we have a support
-on SDX62/SDX65, we create a new channel config for SDX61 since
-we add a NMEA channel support from this product.
-For new products we are allowed to customize the subVID and
-subPID only.
+Handles are per-file, not global, so this makes no sense. Plus it's
+set only after calling drm_gem_handle_create(), and drivers are not
+allowed to further intialize a bo after that function has published it
+already.
 
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
+It is also entirely unused, which helps enormously with removing it
+:-)
+
+Since we're still holding a reference to the bo nothing bad can
+happen, hence not cc: stable material.
+
+Cc: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Cc: Carl Vanderlip <quic_carlv@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: Simona Vetter <simona.vetter@ffwll.ch>
+Signed-off-by: Simona Vetter <simona.vetter@intel.com>
 ---
- drivers/bus/mhi/host/pci_generic.c | 52 ++++++++++++++++++++++++++++++
- 1 file changed, 52 insertions(+)
+ drivers/accel/qaic/qaic.h      | 2 --
+ drivers/accel/qaic/qaic_data.c | 1 -
+ 2 files changed, 3 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index a4a62429c784..76a927ef4e00 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -490,6 +490,23 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
- 	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
- };
+diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
+index 0dbb8e32e4b9..7817ce18b8f2 100644
+--- a/drivers/accel/qaic/qaic.h
++++ b/drivers/accel/qaic/qaic.h
+@@ -213,8 +213,6 @@ struct qaic_bo {
+ 	bool			sliced;
+ 	/* Request ID of this BO if it is queued for execution */
+ 	u16			req_id;
+-	/* Handle assigned to this BO */
+-	u32			handle;
+ 	/* Wait on this for completion of DMA transfer of this BO */
+ 	struct completion	xfer_done;
+ 	/*
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index 1bce1af7c72c..797289e9d780 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -731,7 +731,6 @@ int qaic_create_bo_ioctl(struct drm_device *dev, void *data, struct drm_file *fi
+ 	if (ret)
+ 		goto free_bo;
  
-+static const struct mhi_channel_config mhi_foxconn_sdx61_channels[] = {
-+	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 0),
-+	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 0),
-+	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 1),
-+	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
-+	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
-+	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
-+	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
-+	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
-+	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
-+	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
-+	MHI_CHANNEL_CONFIG_UL(50, "NMEA", 32, 0),
-+	MHI_CHANNEL_CONFIG_DL(51, "NMEA", 32, 0),
-+	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
-+	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
-+};
-+
- static struct mhi_event_config mhi_foxconn_sdx55_events[] = {
- 	MHI_EVENT_CONFIG_CTRL(0, 128),
- 	MHI_EVENT_CONFIG_DATA(1, 128),
-@@ -506,6 +523,15 @@ static const struct mhi_controller_config modem_foxconn_sdx55_config = {
- 	.event_cfg = mhi_foxconn_sdx55_events,
- };
- 
-+static const struct mhi_controller_config modem_foxconn_sdx61_config = {
-+	.max_channels = 128,
-+	.timeout_ms = 20000,
-+	.num_channels = ARRAY_SIZE(mhi_foxconn_sdx61_channels),
-+	.ch_cfg = mhi_foxconn_sdx55_channels,
-+	.num_events = ARRAY_SIZE(mhi_foxconn_sdx55_events),
-+	.event_cfg = mhi_foxconn_sdx55_events,
-+};
-+
- static const struct mhi_controller_config modem_foxconn_sdx72_config = {
- 	.max_channels = 128,
- 	.timeout_ms = 20000,
-@@ -615,6 +641,17 @@ static const struct mhi_pci_dev_info mhi_foxconn_dw5934e_info = {
- 	.sideband_wake = false,
- };
- 
-+static const struct mhi_pci_dev_info mhi_foxconn_t99w696_info = {
-+	.name = "foxconn-t99w696",
-+	.edl = "qcom/sdx61/foxconn/prog_firehose_lite.elf",
-+	.edl_trigger = true,
-+	.config = &modem_foxconn_sdx61_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.mru_default = 32768,
-+	.sideband_wake = false,
-+};
-+
- static const struct mhi_channel_config mhi_mv3x_channels[] = {
- 	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 64, 0),
- 	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 64, 0),
-@@ -863,6 +900,21 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 	/* Telit FE990A */
- 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2015),
- 		.driver_data = (kernel_ulong_t) &mhi_telit_fe990a_info },
-+	/* Foxconn T99W696.01, Lenovo Generic SKU */
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe142),
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
-+	/* Foxconn T99W696.02, Lenovo X1 Carbon SKU */
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe143),
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
-+	/* Foxconn T99W696.03, Lenovo X1 2in1 SKU */
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe144),
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
-+	/* Foxconn T99W696.04, Lenovo PRC SKU */
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe145),
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
-+	/* Foxconn T99W696.00, Foxconn SKU */
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe146),
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
+-	bo->handle = args->handle;
+ 	drm_gem_object_put(obj);
+ 	srcu_read_unlock(&qdev->dev_lock, qdev_rcu_id);
+ 	srcu_read_unlock(&usr->qddev_lock, usr_rcu_id);
 -- 
-2.25.1
+2.49.0
 
 
