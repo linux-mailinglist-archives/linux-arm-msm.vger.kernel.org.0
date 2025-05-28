@@ -1,178 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-59747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CC37AC7276
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 22:56:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B9A9AC73BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 00:13:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F323B4E76E0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 20:56:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 567F89E776A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 22:13:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1FD1217F56;
-	Wed, 28 May 2025 20:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 487A521CA1C;
+	Wed, 28 May 2025 22:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=damsy.net header.i=@damsy.net header.b="PrCl445E";
-	dkim=permerror (0-bit key) header.d=damsy.net header.i=@damsy.net header.b="2c90E6kF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C3PMepjo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from jeth.damsy.net (jeth.damsy.net [51.159.152.102])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16071E8326;
-	Wed, 28 May 2025 20:56:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.159.152.102
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD881DFFC;
+	Wed, 28 May 2025 22:13:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748465766; cv=none; b=SQrR3CTZZomf6BuatMXi/GsdLQ3exkmw7RlW8+F5KqSWM3/z9MJH77fdTA9AJQAzIOQu8HGa/ANjvTcf46tj9EIWYRpWqvVrGxNn8WKuZdXuy47h9cxTuRXW8bPaMgnc6zYom6hakUCCOQCp5I/n1Mtth4P4pv24iKqWm73CC60=
+	t=1748470415; cv=none; b=FpU4Tb5x1PXtGV/IgAZyq/rhJF1a3sBQm+feBhZ+YBZfnFVV9FqGiYsUIpuHHl7by3Jz5Yu6qMQTcDvibnQ/Mdw2TZ2QSWyfoqHGoDhUhgeoMrtcW2V9CG5KElbG1r+tKhDrh8W8XJJAGGW9lB5e6cWHQs/rdeAUm14FxxErEtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748465766; c=relaxed/simple;
-	bh=/pw2IeZhAu/zfoxxmWbkMLnmxFjDEPWX7diFVk1Bj8U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jVtCyz+Z3JFuW9RfaX2lw7GBK2GjJaEp74InngwwqA9W6XfAp2emWPtGTea5DQu71hwOFAPVFSHTQ5yWwcYxeTek+VlWJlRK4oaAIXPIDCKP+jwiCjJJNnEr4u6E/2VZfBxQjEj4pAXtbcXzw1HIgVeg2WqK0Y+q3cDqh5QfA+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=damsy.net; spf=pass smtp.mailfrom=damsy.net; dkim=pass (2048-bit key) header.d=damsy.net header.i=@damsy.net header.b=PrCl445E; dkim=permerror (0-bit key) header.d=damsy.net header.i=@damsy.net header.b=2c90E6kF; arc=none smtp.client-ip=51.159.152.102
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=damsy.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=damsy.net
-DKIM-Signature: v=1; a=rsa-sha256; s=202408r; d=damsy.net; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1748465181; bh=svuVRpYD101PQQjEIYeBfNI
-	7EzQ94IYrrQSyKqrxUdI=; b=PrCl445EpWjPcP+iU8eHEQ/MN+ibguAM/a2ZyXB2QDjmClntHE
-	6iDCnWkc9FcSdu3maFPCzI319Jm9VxI+bCzzEDxuFtToBG9kFjsF7sJ34Q5oXkTVBkjwOs/2VcO
-	QqMD1n/lWtgGlL5R0bIcYhwK7LrKzbTJEZtchodSfo7trin8o9s1M3o1YP77FZ4PVl4jAiw4Hi+
-	hL1fAGqsDYlQFnSms1AaWiLyYIx9G+TzXZPeJds8AeQBWMOa7IN3NaCTrzT84YcQexcR5pulh1x
-	RFRfqQPkf0bORnk1NTGb3LESfmtvLuaCYmA2rt5gQKifiAzocVn0uW7vMJPrNxWQEFg==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202408e; d=damsy.net; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1748465181; bh=svuVRpYD101PQQjEIYeBfNI
-	7EzQ94IYrrQSyKqrxUdI=; b=2c90E6kFhoO7N+OQYfMSedjyoygwYF40Dn3Zf92fw/vkK4L1Do
-	DioSoq6rPw+duTfwZ2sDwRNglm4uwj0U4yAQ==;
-Message-ID: <5e312895-27ed-4ad4-b1c6-55035cdcd112@damsy.net>
-Date: Wed, 28 May 2025 22:46:19 +0200
+	s=arc-20240116; t=1748470415; c=relaxed/simple;
+	bh=FFixiD6CWexuWWAc/vkRspwDcAhH5LtSZ12dUKV7hE0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C9IK6VhGjMKg7y4rwT27ZBQZN5QGglDB7JnyrSdRFMFke9QtF+LfLAD4IG5O40GMNOq8JCvC92h/g1juwGrLe2P30XYNvAN3VD68ADhkiAqn+IXAtlZYNosygbUe77+18+3RIO9ExHwEkTvlSeV0p5nDVK9mL9j4c+ewp5Td7LQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C3PMepjo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40082C4CEE3;
+	Wed, 28 May 2025 22:13:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748470414;
+	bh=FFixiD6CWexuWWAc/vkRspwDcAhH5LtSZ12dUKV7hE0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=C3PMepjoQrqneKfB199dlEwGYYOL3JdVq6BLsQ/5Y08O/Jmg4zN8NeJg8BmlLYmZs
+	 ZNWdGjuw/Dl4Y4llpRj9y26stNCk2oy5PsdsHiq5PY0ztWOBjto63ZcYb5+gQKut0e
+	 dDd5+gaGzbTlE/Y0H3sGi+cdnV1WzUs2jkniTxR28HOLRfT241BeDs8YPFhG7Iyyt+
+	 rcdH0yE9cpm61u6A7TsFsXaJF14n8sh5BxGfdoHsmEg/Du7VVTsxjgAe+QTF3fovuJ
+	 Hj69WkFIZIhP8c0E3g4jZ9lo+EeZYKSzGCGGCko9bBU/gJMZIg7HmJD/i4KZfrfV7W
+	 WVZrtUd6ulZ0A==
+Date: Wed, 28 May 2025 17:13:32 -0500
+From: Rob Herring <robh@kernel.org>
+To: George Moussalem <george.moussalem@outlook.com>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	"David S. Miller" <davem@davemloft.net>,
+	Paolo Abeni <pabeni@redhat.com>, Jakub Kicinski <kuba@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, linux-clk@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Stephen Boyd <sboyd@kernel.org>, Eric Dumazet <edumazet@google.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>
+Subject: Re: [PATCH v2 2/5] dt-bindings: net: qca,ar803x: Add IPQ5018
+ Internal GE PHY support
+Message-ID: <20250528221332.GA865966-robh@kernel.org>
+References: <20250528-ipq5018-ge-phy-v2-0-dd063674c71c@outlook.com>
+ <20250528-ipq5018-ge-phy-v2-2-dd063674c71c@outlook.com>
+ <174844980913.122039.6315970844779589359.robh@kernel.org>
+ <DS7PR19MB8883581EF8CD829910D3C1C29D67A@DS7PR19MB8883.namprd19.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 02/10] drm/sched: Store the drm client_id in
- drm_sched_fence
-To: Lucas De Marchi <lucas.demarchi@intel.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Cc: Min Ma <min.ma@amd.com>, Lizhi Hou <lizhi.hou@amd.com>,
- Oded Gabbay <ogabbay@kernel.org>, Felix Kuehling <Felix.Kuehling@amd.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Lucas Stach <l.stach@pengutronix.de>,
- Russell King <linux+etnaviv@armlinux.org.uk>,
- Christian Gmeiner <christian.gmeiner@gmail.com>,
- Frank Binns <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Qiang Yu <yuq825@gmail.com>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>, Lyude Paul
- <lyude@redhat.com>, Danilo Krummrich <dakr@kernel.org>,
- Boris Brezillon <boris.brezillon@collabora.com>,
- Rob Herring <robh@kernel.org>, Steven Price <steven.price@arm.com>,
- Liviu Dudau <liviu.dudau@arm.com>, Matthew Brost <matthew.brost@intel.com>,
- Philipp Stanner <phasta@kernel.org>, Melissa Wen <mwen@igalia.com>,
- =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>,
- =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>,
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- amd-gfx@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
- lima@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org
-References: <20250526125505.2360-1-pierre-eric.pelloux-prayer@amd.com>
- <20250526125505.2360-3-pierre-eric.pelloux-prayer@amd.com>
- <5jnpsmjef5ibegbsbelkfmudv4wagpcfb25nptqs5z4ccitq4c@3bdtrbrrmtil>
-Content-Language: en-US
-From: Pierre-Eric Pelloux-Prayer <pierre-eric@damsy.net>
-In-Reply-To: <5jnpsmjef5ibegbsbelkfmudv4wagpcfb25nptqs5z4ccitq4c@3bdtrbrrmtil>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DS7PR19MB8883581EF8CD829910D3C1C29D67A@DS7PR19MB8883.namprd19.prod.outlook.com>
 
-Hi,
-
-Le 28/05/2025 à 21:07, Lucas De Marchi a écrit :
-> On Mon, May 26, 2025 at 02:54:44PM +0200, Pierre-Eric Pelloux-Prayer wrote:
->> drivers/gpu/drm/xe/xe_sched_job.c                |  3 ++-
->> diff --git a/drivers/gpu/drm/xe/xe_sched_job.c b/drivers/gpu/drm/xe/xe_sched_job.c
->> index f0a6ce610948..5921293b25db 100644
->> --- a/drivers/gpu/drm/xe/xe_sched_job.c
->> +++ b/drivers/gpu/drm/xe/xe_sched_job.c
->> @@ -113,7 +113,8 @@ struct xe_sched_job *xe_sched_job_create(struct xe_exec_queue *q,
->>     kref_init(&job->refcount);
->>     xe_exec_queue_get(job->q);
->>
->> -    err = drm_sched_job_init(&job->drm, q->entity, 1, NULL);
->> +    err = drm_sched_job_init(&job->drm, q->entity, 1, NULL,
->> +                 q->xef->drm->client_id);
+On Wed, May 28, 2025 at 08:59:45PM +0400, George Moussalem wrote:
+> Hi Rob,
 > 
-> you can't do this here. xef is only !NULL if it's a job from userspace.
-
-sorry about that.
-
-> For in-kernel jobs, xef is NULL and this explodes. Right now this
-> completely breaks xe since one of the very first things we do is
-> to submit a job to save the default context. Example:
-> https://intel-gfx-ci.01.org/tree/intel-xe/xe-3151-56d2b14961751a677ff1f7ff8b93a6c814ce2be3/bat- 
-> bmg-1/igt@xe_module_load@load.html
+> On 5/28/25 20:30, Rob Herring (Arm) wrote:
+> > 
+> > On Wed, 28 May 2025 18:45:48 +0400, George Moussalem wrote:
+> > > Document the IPQ5018 Internal Gigabit Ethernet PHY found in the IPQ5018
+> > > SoC. Its output pins provide an MDI interface to either an external
+> > > switch in a PHY to PHY link scenario or is directly attached to an RJ45
+> > > connector.
+> > > 
+> > > The PHY supports 10/100/1000 mbps link modes, CDT, auto-negotiation and
+> > > 802.3az EEE.
+> > > 
+> > > For operation, the LDO controller found in the IPQ5018 SoC for which
+> > > there is provision in the mdio-4019 driver. In addition, the PHY needs
+> > > to take itself out of reset and enable the RX and TX clocks.
+> > > 
+> > > Two common archictures across IPQ5018 boards are:
+> > > 1. IPQ5018 PHY --> MDI --> RJ45 connector
+> > > 2. IPQ5018 PHY --> MDI --> External PHY
+> > > In a phy to phy architecture, DAC values need to be set to accommodate
+> > > for the short cable length. As such, add an optional boolean property so
+> > > the driver sets the correct register values for the DAC accordingly.
+> > > 
+> > > Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+> > > ---
+> > >   .../devicetree/bindings/net/qca,ar803x.yaml        | 52 +++++++++++++++++++++-
+> > >   1 file changed, 51 insertions(+), 1 deletion(-)
+> > > 
+> > 
+> > My bot found errors running 'make dt_binding_check' on your patch:
+> > 
+> > yamllint warnings/errors:
+> > 
+> > dtschema/dtc warnings/errors:
+> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/qca,ar803x.example.dtb: ethernet-phy@7 (ethernet-phy-id004d.d0c0): clocks: [[4294967295, 36], [4294967295, 37]] is too long
+> > 	from schema $id: http://devicetree.org/schemas/net/ethernet-phy.yaml#
+> > 
+> > doc reference errors (make refcheckdocs):
+> > 
+> > See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250528-ipq5018-ge-phy-v2-2-dd063674c71c@outlook.com
+> > 
+> > The base for the series is generally the latest rc1. A different dependency
+> > should be noted in *this* patch.
+> > 
+> > If you already ran 'make dt_binding_check' and didn't see the above
+> > error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> > date:
+> > 
+> > pip3 install dtschema --upgrade
+> > 
+> > Please check and re-submit after running the above command yourself. Note
+> > that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+> > your schema. However, it must be unset to test all examples with your schema.
+> > 
 > 
->      <4> [] RIP: 0010:xe_sched_job_create+0xbd/0x390 [xe]
->      <4> [] Code: c1 43 18 85 c0 0f 84 6f 02 00 00 8d 50 01 09 c2 0f 88 3e 02 00 00 48 8b 03 48 8b 
-> b3 d8 00 00 00 31 c9 4c 89 ef ba 01 00 00 00 <48> 8b 40 08 4c 8b 40 60 e8 86 64 7c ff 41 89 c4 85 c0 
-> 0f 85 9b 01
->      <4> [] RSP: 0018:ffffc900031972d8 EFLAGS: 00010246
->      <4> [] RAX: 0000000000000000 RBX: ffff88815fc40d00 RCX: 0000000000000000
->      <4> [] RDX: 0000000000000001 RSI: ffff88812e6552a8 RDI: ffff88815f939c40
->      <4> [] RBP: ffffc90003197318 R08: 0000000000000000 R09: 0000000000000000
->      <4> [] R10: 0000000000000000 R11: 0000000000000000 R12: ffffc90003197428
->      <4> [] R13: ffff88815f939c40 R14: ffff88811f054000 R15: ffff88815fc40d00
->      <4> [] FS:  00007681f2948940(0000) GS:ffff8888daf14000(0000) knlGS:0000000000000000
->      <4> [] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
->      <4> [] CR2: 0000000000000008 CR3: 0000000118315004 CR4: 0000000000f72ef0
->      <4> [] PKRU: 55555554
->      <4> [] Call Trace:
->      <4> []  <TASK>
->      <4> []  __xe_bb_create_job+0xa2/0x240 [xe]
->      <4> []  ? find_held_lock+0x31/0x90
->      <4> []  ? xa_find_after+0x12c/0x250
->      <4> []  xe_bb_create_job+0x6e/0x380 [xe]
->      <4> []  ? xa_find_after+0x136/0x250
->      <4> []  ? __drm_dev_dbg+0x7d/0xb0
->      <4> []  xe_gt_record_default_lrcs+0x542/0xb00 [xe]
 > 
-> Can we use 0 for in-kernel client since drm_file starts them from 1?
-
-Yes, this is what amdgpu does.
-
-> Like this:
+> Really weird, I've checked this numerous times:
 > 
-> | diff --git a/drivers/gpu/drm/xe/xe_sched_job.c b/drivers/gpu/drm/xe/xe_sched_job.c
-> | index 5921293b25db3..d21bf8f269640 100644
-> | --- a/drivers/gpu/drm/xe/xe_sched_job.c
-> | +++ b/drivers/gpu/drm/xe/xe_sched_job.c
-> | @@ -114,7 +114,7 @@ struct xe_sched_job *xe_sched_job_create(struct xe_exec_queue *q,
-> |         xe_exec_queue_get(job->q);
-> | |         err = drm_sched_job_init(&job->drm, q->entity, 1, NULL,
-> | -                                q->xef->drm->client_id);
-> | +                                q->xef ? q->xef->drm->client_id : 0);
-> |         if (err)
-> |                 goto err_free;
+> (myenv) george@sl2-ubuntu:~/src/linux-next$ make dt_binding_check
+> DT_SCHEMA_FILES=qca,ar803x.yaml
+>   SCHEMA  Documentation/devicetree/bindings/processed-schema.json
+>   CHKDT   ./Documentation/devicetree/bindings
+>   LINT    ./Documentation/devicetree/bindings
+>   DTEX    Documentation/devicetree/bindings/net/qca,ar803x.example.dts
+>   DTC [C] Documentation/devicetree/bindings/net/qca,ar803x.example.dtb
+> (myenv) george@sl2-ubuntu:~/src/linux-next$ pip3 install dtschema --upgrade
+> Requirement already satisfied: dtschema in
+> /home/george/myenv/lib/python3.12/site-packages (2025.2)
+> Requirement already satisfied: ruamel.yaml>0.15.69 in
+> /home/george/myenv/lib/python3.12/site-packages (from dtschema) (0.18.10)
+> Requirement already satisfied: jsonschema<4.18,>=4.1.2 in
+> /home/george/myenv/lib/python3.12/site-packages (from dtschema) (4.17.3)
+> Requirement already satisfied: rfc3987 in
+> /home/george/myenv/lib/python3.12/site-packages (from dtschema) (1.3.8)
+> Requirement already satisfied: pylibfdt in
+> /home/george/myenv/lib/python3.12/site-packages (from dtschema) (1.7.2)
+> Requirement already satisfied: attrs>=17.4.0 in
+> /home/george/myenv/lib/python3.12/site-packages (from
+> jsonschema<4.18,>=4.1.2->dtschema) (25.3.0)
+> Requirement already satisfied: pyrsistent!=0.17.0,!=0.17.1,!=0.17.2,>=0.14.0
+> in /home/george/myenv/lib/python3.12/site-packages (from
+> jsonschema<4.18,>=4.1.2->dtschema) (0.20.0)
+> Requirement already satisfied: ruamel.yaml.clib>=0.2.7 in
+> /home/george/myenv/lib/python3.12/site-packages (from
+> ruamel.yaml>0.15.69->dtschema) (0.2.12)
+> (myenv) george@sl2-ubuntu:~/src/linux-next$ make dt_binding_check
+> DT_SCHEMA_FILES=qca,ar803x.yaml
+>   SCHEMA  Documentation/devicetree/bindings/processed-schema.json
+>   CHKDT   ./Documentation/devicetree/bindings
+>   LINT    ./Documentation/devicetree/bindings
+>   DTEX    Documentation/devicetree/bindings/net/qca,ar803x.example.dts
+>   DTC [C] Documentation/devicetree/bindings/net/qca,ar803x.example.dtb
 > 
-> I tested with the above diff and it at least loads...
+> I only found the same errors when removing the DT_SCHEMA_FILES property.
 
-Thanks for looking into this, the change looks fine to me.
+Correct.
 
-Pierre-Eric
+> Is that because ethernet-phy.yaml is a catch-all based on the pattern on the
+> compatible property (assuming my understanding is correct)? How would we get
+> around that without modifying ethernet-phy.yaml only for this particular PHY
+> (with a condition)? This PHY needs to enable two clocks and the restriction
+> is on 1.
 
-> 
-> Also, I see this in intel-xe mailing list, but I'm not sure why we
-> didn't have any CI results... I will check that.
-> 
-> Lucas De Marchi
+It's kind of a mess since ethernet phys didn't have compatibles 
+frequently and then there was resistance to adding compatibles. You know 
+we don't need compatibles because phys are discoverable and all. Well, 
+except for everything we keep adding for them in DT like clocks...
 
+We probably need to split out common phy properties to its own schema. 
+And then add a schema just for phys with no compatible string (so 
+'select' needs to match on $nodename with ethernet-phy as now, but also 
+have 'not: { required: [compatible] }'. And then a schema for the 
+'generic' phys with just ethernet-phy-ieee802.3-c22 or 
+ethernet-phy-ieee802.3-c45. Then we'll have to look at what to do with 
+ones with "^ethernet-phy-id[a-f0-9]{4}\\.[a-f0-9]{4}$" compatibles. 
+Probably, we need to add specific id's to the generic schema or in their 
+own schemas.
+
+Or we can just change clocks in ethernet-phys.yaml to:
+
+minItems: 1
+maxItems: 2
+
+And kick that can down the road...
+
+Rob
 
