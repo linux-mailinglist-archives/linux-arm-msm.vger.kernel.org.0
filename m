@@ -1,170 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-59751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E2AAAC7472
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 01:20:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 750D8AC749B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 01:50:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7EE1E17ECA7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 23:19:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 242CB1C01433
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 23:50:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1ECCD22371A;
-	Wed, 28 May 2025 23:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AF6420FA98;
+	Wed, 28 May 2025 23:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="f8eOGPjS"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UdUalJcx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D732236EB;
-	Wed, 28 May 2025 23:18:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E704C188006
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 23:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748474292; cv=none; b=m4XuyGpvJ6kYQcUMIjsxprBOKARiG0YdP54v2gkbMr9qOs5uZUojvpcZauDuQbXkwCxTJQjYuVcvAWFBoyijOdMfkXOrtg4nWjyamWgFBYrVIveY4LH/L07jrXcCfUbLbptoDK+iMSYdo0/bQcvKN05py4CPCuH/1MrA3X1Bgwc=
+	t=1748476233; cv=none; b=ZHLrjRXa2ULzu5vUv6qmToQz0kKEU19i+RgUtJcOSPj52jU/ROBv1TxOEFOT25EX8pa8zxYMdK7rGlUhbA/s7P6qXHHPuOFvgtIJLTj7AHv8qTOUU1TcRZNSh7VBBagg6P8ikpeGU0nXaDAWkiMrne1v+zlcVpJf5wcsx4+A1A8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748474292; c=relaxed/simple;
-	bh=jTXbawS0IX96rFwszkT9kCM9dGjFANXvjb9fYEZEKIQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gtwsH9imMGnuBYdm2+qAwf05fYEzQ4XVJFCcuD9bIKufUKb1zUmAF3BQDPqfDg5oBbmYPh+uWv7n6/V2pmSOyk0ut4q4GodBE5cjdhPJEO+r+9GneB9SX0dD7jLUyU5T2QueeKOC7W4FVUrIRNbGDTVqaAw773iEPKSbIebtjxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=f8eOGPjS; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1748474291; x=1780010291;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=jTXbawS0IX96rFwszkT9kCM9dGjFANXvjb9fYEZEKIQ=;
-  b=f8eOGPjSPTxQsZcYW+2cSt1VC9rX8gQbewPAl3VE0eu4wK/a4Hw32b3e
-   mkdinDiPykmpZ2jzBI+NyqUVs89VwH5VCoLr6MEPyKgD4w1SjsOjrGPS2
-   Ihx1I2gpH6ZVWAwCxBFSXu/T7+HZc3yYCDeGRasYXn49RnJXxm/sbnVB0
-   jP6YLGCLQ1DCg6ZA0RE27RwZ/p7eI1BX3ZmkfxbbEVZKKfqTbOS6jdp06
-   dUF4jaM7uNoEg4I5DAa9bGeQuCItzHyz/r4008OXik13At0hQWbV1lONY
-   s8FNlonTWrfJfaC8dXG+PzjBhkNStEJwg9ZeAdbqh/Pv1/9ts+EipulL9
-   Q==;
-X-CSE-ConnectionGUID: vZhFyn+RTyav2PIAa9rb7w==
-X-CSE-MsgGUID: jo+/F0D8SGasLRiwktzsIQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="53145989"
-X-IronPort-AV: E=Sophos;i="6.15,322,1739865600"; 
-   d="scan'208";a="53145989"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 16:18:09 -0700
-X-CSE-ConnectionGUID: iwficSJmT/qS3pdcAJGGYg==
-X-CSE-MsgGUID: N7yDre9XSIaIrg+kwGzUcQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,322,1739865600"; 
-   d="scan'208";a="148155222"
-Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
-  by orviesa003.jf.intel.com with ESMTP; 28 May 2025 16:18:01 -0700
-Received: from kbuild by 1992f890471c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uKQ23-000W9E-17;
-	Wed, 28 May 2025 23:17:59 +0000
-Date: Thu, 29 May 2025 07:17:02 +0800
-From: kernel test robot <lkp@intel.com>
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: oe-kbuild-all@lists.linux.dev, pbonzini@redhat.com,
-	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org,
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	seanjc@google.com, viro@zeniv.linux.org.uk, brauner@kernel.org,
-	willy@infradead.org, akpm@linux-foundation.org,
-	xiaoyao.li@intel.com, yilun.xu@intel.com,
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com,
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net,
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com,
-	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com,
-	wei.w.wang@intel.com
-Subject: Re: [PATCH v10 08/16] KVM: guest_memfd: Allow host to map
- guest_memfd pages
-Message-ID: <202505290736.HR4GYiOF-lkp@intel.com>
-References: <20250527180245.1413463-9-tabba@google.com>
+	s=arc-20240116; t=1748476233; c=relaxed/simple;
+	bh=DbeySvr/sM6ieT7r42V6BOeJE6c/w1wzpJwxDwDaH50=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=fjdfL2ujthSKSIeT3xZElO6ckObQWZGrEQXw9YNYSYiiE1+yIO3x0JOrKO9B+pGrBFVcc55CQlyEBD2bKfcW+JXRsbOtKmXxqktg/eJv5z0wYhuXNxLoTakVjH8VdZb9X39yzgQP/2KJmTIgKaS39PceRAxZl5Fh/ZBmBumtyvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UdUalJcx; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SF3dCa002310
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 23:50:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=NEJfu7w/sAhMqmfIv8hz+5wbco5lcwAIRcg
+	/3MPS5pw=; b=UdUalJcx6cttlqUDYoTe3PgN8R3hO5kcvBMx5l1TmsJUhDhrP5q
+	kuKzrnTAoLYbwZTIRsAyPhpgBhWGzcsexFOEk2cI8t0aIbbcIRm797rEjDdAg8yk
+	wciQtIo0cPV61iV60EN1OS+iv3vDPGG6FNnNleBqsUJVOC8veiSmB3VKhsIjMARj
+	58H5V6uqdiDdk53mmau+dt5vrNGk/2QuWop33X7qWagkHJYQade3jRWSGwXJVnUx
+	uf3fdjc0MpKm0iIZDi74dmaOKNnw4m7eFygEZOWamRtiRX7nGvT0/f0Vxgnpqlfz
+	crEDSekNA2B6LqGT8J4z0TYYCZnTnHf0Nww==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46wavkwpe7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 23:50:29 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7429fc0bfc8so1196398b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 16:50:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748476229; x=1749081029;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NEJfu7w/sAhMqmfIv8hz+5wbco5lcwAIRcg/3MPS5pw=;
+        b=gbMOlvoDRp7fR1SLNrDPnlmmvPxYzi73q0vPejsHm7oBmvWDV65yKbyT4PGVzgxCcT
+         4VjK4AA2n5ske/tAxxxDZaHnLZFYfCFzYJXkJSdR2cWu8gPK+0GcHDTFmRsIGgUV511y
+         3Siktlur1SAKuAi0get/Pxl5txMMgbYlOu0JPY9+ZSNm3HXrMesYcoIBo2QN9mu5eumQ
+         u+Z+04PTxa+syW6mqLRinTz3rzVl2iWTMkj1dxQ3rwrv/RPlSyPaVGYfESWPFaYwBVia
+         rWSIG6eZabQI9xCWTxGs7voZWJ0y8Symebq6QReXXAwuzDJLJL+gnUb9VOaBiHfuebAj
+         OiAg==
+X-Forwarded-Encrypted: i=1; AJvYcCXsLA3zbeUC6eUXCiCtTnE52SVP50m8L1Zr60qvOQepGHkaW/thbXitIEyxNZi0BxTyLnfJdp9Rt3tP2DWd@vger.kernel.org
+X-Gm-Message-State: AOJu0YxVT5Yzl8wop+WmwhqRQDUWDlxWmlfrDonC+jgRP/Ies4eZhMik
+	SQnJ0feSV6+dZkk+1Ezu1q9Rzf868TiK/Y5wdgs58vAP7qEBAIxg0zksZZCCyXEHQ/PeWxWZoLu
+	n+xAB6TEwzzBcxvZr/6eL2MJ9uePiI8CgiJVrx3KhfvPVskkYfM/C/fJi5+PkIRQS80SK
+X-Gm-Gg: ASbGnctn2ifILQyonLL8/R20/pJQBKeSu/OtvmiBI5DnEeMQXduXJIo/GHnhsH6p7r4
+	oNX7qSbO8biV1YiRirGr1FK5SI773A7JhOHd+zlOOctCtsOPfR3/Oneq1BZCFKLv/VZFnLuJuWq
+	MhNb0cnkV8fdfvLUnI9iv4oBEuBYNUazPSKksTOvTQaUgVpbINj5YDDVFRE1AuzaKPf5+B4yVmm
+	tmVv9Lrdp0YWdPdpaRPPu4plKmlssn2p1fvkcDQvKa+cpBKt/oTF2F60V6Kj8oQQ41F+lDtdkw0
+	m3OOfSovKT3dGH2hyIBHIe+ubRGPPIIn7QFXaaWHy/inaeF/dmNXfUc5Pa8JIMNZFGHOI6GMJzk
+	=
+X-Received: by 2002:a17:902:f608:b0:234:325:500b with SMTP id d9443c01a7336-234f6a00996mr20513535ad.22.1748476229048;
+        Wed, 28 May 2025 16:50:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKbW1/kLYzGQbIQ/o5WdKXwB0TpfoIo+PFYWnoYFwlzs+U0mDAJrZ5d1L/i0+BsVrOUOkC4Q==
+X-Received: by 2002:a17:902:f608:b0:234:325:500b with SMTP id d9443c01a7336-234f6a00996mr20513255ad.22.1748476228683;
+        Wed, 28 May 2025 16:50:28 -0700 (PDT)
+Received: from hu-amelende-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23506cd3506sm1403445ad.156.2025.05.28.16.50.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 May 2025 16:50:28 -0700 (PDT)
+From: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+To: amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org
+Cc: rui.zhang@intel.com, lukasz.luba@arm.com, david.collins@oss.qualcomm.com,
+        srinivas.kandagatla@linaro.org, stefan.schmidt@linaro.org,
+        quic_tsoni@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dmitry.baryshkov@linaro.org, dmitry.baryshkov@oss.qualcomm.com
+Subject: [PATCH v4 0/5] thermal: qcom-spmi-temp-alarm: Add support for new TEMP_ALARM subtypes
+Date: Wed, 28 May 2025 16:50:21 -0700
+Message-Id: <20250528235026.4171109-1-anjelique.melendez@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250527180245.1413463-9-tabba@google.com>
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: z3MyZQ4hkmKFvSY-hm1TY3N0PQzW1fy0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDIxMCBTYWx0ZWRfXwNN6YtkJmKL4
+ I1bkaoZ0j7P+CnNGfOyNrPe3TP7Qj05UWocP94NbE7fIZvCwAqnQpvkqAfXsu8ESG2ry7SGcwmi
+ 5EmUb+4hj19O/g9mALIoU4vw5CMBm0yutf42jKtWlUN51AxFvVWC8wTk3F8YIEhcTIq87tU8wnS
+ 8CB/U3osJHWrTDhZcPhFCD8Ot/hSI9zC2YQukkBJr4qVxApG6RmwtQoqeJr4b6kbQCdxgW20baw
+ m12+Vqk80p/BCg42ODR7OAOyMNP2MfoPfUj/VgwWfh99/SenHGstVizfTqLkHJlcABXsSSoOS2k
+ ikT8z4T+0vXGJ3tNaXDRM9nnMnZVIYeOZKWAuQTVFsajIPyUFPvMkkiJ4QQWD/rABfggE6UKlSx
+ z1HTsxDjT7XpbWkrSOa+9K13L/vfny+W79dLg5gEIQQq2AhscTsT2PFyLfr6+GRDtS1Gtyij
+X-Authority-Analysis: v=2.4 cv=fMk53Yae c=1 sm=1 tr=0 ts=6837a145 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=p-nOP-kxAAAA:8
+ a=EUspDBNiAAAA:8 a=R1SgPpZEabuFLtygwqQA:9 a=zc0IvFSfCIW2DFIPzwfm:22
+ a=TjNXssC_j7lpFel5tvFf:22 a=XN2wCei03jY4uMu7D0Wg:22
+X-Proofpoint-ORIG-GUID: z3MyZQ4hkmKFvSY-hm1TY3N0PQzW1fy0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-28_11,2025-05-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 impostorscore=0 phishscore=0 suspectscore=0
+ spamscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015 mlxscore=0
+ mlxlogscore=999 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505280210
 
-Hi Fuad,
+Add support in the qcom-spmi-temp-alarm driver for the new PMIC
+TEMP_ALARM peripheral subtypes: GEN2 rev 2 and LITE. The GEN2 rev 2
+subtype provides greater flexibility in temperature threshold
+specification by using an independent register value to configure
+each of the three thresholds. The LITE subtype utilizes a simplified
+set of control registers to configure two thresholds: warning and
+shutdown. While at it refactor the qcom-spmi-temp-alarm driver to limit
+code reuse and if/else statements when deciphering between TEMP_ALARM 
+peripheral subtypes. 
 
-kernel test robot noticed the following build errors:
+Also add support to avoid a potential issue on certain versions of
+the TEMP_ALARM GEN2 subtype when automatic stage 2 partial shutdown
+is disabled.
 
-[auto build test ERROR on 0ff41df1cb268fc69e703a08a57ee14ae967d0ca]
+This patch series is a continuation of older series from 7/2024
+(https://lore.kernel.org/all/20240729231259.2122976-1-quic_amelende@quicinc.com/)
+but current series has been reworked to address the change in thermal framework to
+update .set_trip_temp() callback function variables
+(https://lore.kernel.org/all/8392906.T7Z3S40VBb@rjwysocki.net/)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Fuad-Tabba/KVM-Rename-CONFIG_KVM_PRIVATE_MEM-to-CONFIG_KVM_GMEM/20250528-020608
-base:   0ff41df1cb268fc69e703a08a57ee14ae967d0ca
-patch link:    https://lore.kernel.org/r/20250527180245.1413463-9-tabba%40google.com
-patch subject: [PATCH v10 08/16] KVM: guest_memfd: Allow host to map guest_memfd pages
-config: powerpc-allmodconfig (https://download.01.org/0day-ci/archive/20250529/202505290736.HR4GYiOF-lkp@intel.com/config)
-compiler: powerpc64-linux-gcc (GCC) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250529/202505290736.HR4GYiOF-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202505290736.HR4GYiOF-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   arch/powerpc/kvm/../../../virt/kvm/guest_memfd.c: In function '__kvm_gmem_create':
-   arch/powerpc/kvm/../../../virt/kvm/guest_memfd.c:487:14: error: implicit declaration of function 'get_unused_fd_flags' [-Wimplicit-function-declaration]
-     487 |         fd = get_unused_fd_flags(0);
-         |              ^~~~~~~~~~~~~~~~~~~
-   arch/powerpc/kvm/../../../virt/kvm/guest_memfd.c:524:9: error: implicit declaration of function 'fd_install'; did you mean 'fs_initcall'? [-Wimplicit-function-declaration]
-     524 |         fd_install(fd, file);
-         |         ^~~~~~~~~~
-         |         fs_initcall
-   arch/powerpc/kvm/../../../virt/kvm/guest_memfd.c:530:9: error: implicit declaration of function 'put_unused_fd'; did you mean 'put_user_ns'? [-Wimplicit-function-declaration]
-     530 |         put_unused_fd(fd);
-         |         ^~~~~~~~~~~~~
-         |         put_user_ns
-   arch/powerpc/kvm/../../../virt/kvm/guest_memfd.c: In function 'kvm_gmem_create':
->> arch/powerpc/kvm/../../../virt/kvm/guest_memfd.c:540:13: error: implicit declaration of function 'kvm_arch_supports_gmem_shared_mem' [-Wimplicit-function-declaration]
-     540 |         if (kvm_arch_supports_gmem_shared_mem(kvm))
-         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   arch/powerpc/kvm/../../../virt/kvm/guest_memfd.c: In function 'kvm_gmem_bind':
-   arch/powerpc/kvm/../../../virt/kvm/guest_memfd.c:564:16: error: implicit declaration of function 'fget'; did you mean 'sget'? [-Wimplicit-function-declaration]
-     564 |         file = fget(fd);
-         |                ^~~~
-         |                sget
-   arch/powerpc/kvm/../../../virt/kvm/guest_memfd.c:564:14: error: assignment to 'struct file *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
-     564 |         file = fget(fd);
-         |              ^
-   arch/powerpc/kvm/../../../virt/kvm/guest_memfd.c:614:9: error: implicit declaration of function 'fput'; did you mean 'iput'? [-Wimplicit-function-declaration]
-     614 |         fput(file);
-         |         ^~~~
-         |         iput
+Changes since v3:
+  - Updated order of logic and made dig revision a local variable 
+    in patch 1/5
+  - Updated Locking Logic in patches 3/5, 4/5, 5/5
+  - link: https://lore.kernel.org/all/20250320202408.3940777-1-anjelique.melendez@oss.qualcomm.com/
+Changes since v2:
+  - Updated function name to include "gen1" in patch 2/5
+  - Added Dmitry's reviewed-by tag in patch 2/5
+  - link: https://lore.kernel.org/all/20250225192429.2328092-1-anjelique.melendez@oss.qualcomm.com/
+Changes since v1:
+  - Remove unnecessary moving of code
+  - Added new v2 patch 3/5 add a preparation patch to v1 patch 2/5
+  - Updated temp alarm data function names to be consistently named
+  - link: https://lore.kernel.org/all/20250213210403.3396392-1-anjelique.melendez@oss.qualcomm.com/
 
 
-vim +/kvm_arch_supports_gmem_shared_mem +540 arch/powerpc/kvm/../../../virt/kvm/guest_memfd.c
+Anjelique Melendez (4):
+  thermal: qcom-spmi-temp-alarm: Add temp alarm data struct based on HW
+    subtype
+  thermal: qcom-spmi-temp-alarm: Prepare to support additional Temp
+    Alarm subtypes
+  thermal: qcom-spmi-temp-alarm: add support for GEN2 rev 2 PMIC
+    peripherals
+  thermal: qcom-spmi-temp-alarm: add support for LITE PMIC peripherals
 
-   533	
-   534	int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args)
-   535	{
-   536		loff_t size = args->size;
-   537		u64 flags = args->flags;
-   538		u64 valid_flags = 0;
-   539	
- > 540		if (kvm_arch_supports_gmem_shared_mem(kvm))
-   541			valid_flags |= GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-   542	
-   543		if (flags & ~valid_flags)
-   544			return -EINVAL;
-   545	
-   546		if (size <= 0 || !PAGE_ALIGNED(size))
-   547			return -EINVAL;
-   548	
-   549		return __kvm_gmem_create(kvm, size, flags);
-   550	}
-   551	
+David Collins (1):
+  thermal: qcom-spmi-temp-alarm: enable stage 2 shutdown when required
+
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 522 ++++++++++++++++++--
+ 1 file changed, 472 insertions(+), 50 deletions(-)
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.34.1
+
 
