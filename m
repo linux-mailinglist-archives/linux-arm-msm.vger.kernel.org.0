@@ -1,192 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-59648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 240A8AC610E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 07:10:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 31B04AC612B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 07:22:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BB33D1BC25D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 05:10:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 12A183BC008
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 05:22:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4627F1F582E;
-	Wed, 28 May 2025 05:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 192E51FE461;
+	Wed, 28 May 2025 05:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SiUG03Wj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rtJ1njK3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1931311AC;
-	Wed, 28 May 2025 05:10:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D7A1531E3
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 05:22:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748409034; cv=none; b=AihNlYPDE0zCPlTGLdo2WSllJ4BPnB9nxxI4NasVK+lC76nQ+Ss2nEPWYUFLMjj7j/EqBX0U0k2i7m+sYPsjQCeEXS4sC0gxz6uejTJaQ2hsp2M0ec+uxLzZfLRpOrImWjmTGzB+pAJTq8mGfTo5F7eAwFsXPHhN5EQpRGnIDBA=
+	t=1748409735; cv=none; b=dV4Zz0rAp2R/X0u0DQTLMOHdDta1sYq59DoSUJBBdp6BC0UsxtUVt7DhpL/oUFSq/SPJBVz6bd227NmIUzmmFiJX5XW5JAOWex5OGSkl5FAjlJEQPYfgCoLeBGs4dXjsD3HXdimcG9ObPYp7qt5eoLF5dj3V3L17H7H/iTe4Vok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748409034; c=relaxed/simple;
-	bh=ouTR8OMSlzgRcCFldOeftgpUh1qdqQW/Oq/iU4E+u5Y=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=tUQY053088Evmm8Epszah9sVRX8qxDjS+OvCcJs23l5EvR8hWAzjr7/8ZN2E8AqIieceO956ehEYs54RopGA0InMD3xwoY/X7LP5hPBnvXrV5UJFBxgRwtV9mACc8xgpFVd7j1whOS+SsU/j5hqnuK05q32EGQ+d2lccdEe3T8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SiUG03Wj; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54RJnYOe027383;
-	Wed, 28 May 2025 05:10:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XJdDHVkAnG0QT0R+tJQOwTJayaRqYiOsuAxnnKUq950=; b=SiUG03Wj/Ra0DXFc
-	zPXRAbPSt4njBxFPwKbfCHAqL2TYT2ryB7kWYxXbwWMf9va6Ihv4srhl5Kj2+x7C
-	zW3d6Gw10L0wRYxm9A+9jlj5Sb6Gyh1+d8u/UoTN1sKhDEn29TGitP26SRX5NKIY
-	z6kDIKMA4CEZxHl4+NTLfgMgkrHgmvrPco/J28xGTEOnAVUdHi2otUVMN67G53sO
-	qZo3wdlwDUaSwg6/ozaEqfk11FNSA0D4+sXEkyOscut3RtP2P7wJ3tW87x/mm1Xb
-	1fcTdVeNnukCt4QvXA/E3EKasMDurMSO9RZVwvta8V6REfw3ClMoebT5nD7F3Oni
-	frM0CQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u79p94vt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 May 2025 05:10:27 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54S5AQkw027223
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 May 2025 05:10:26 GMT
-Received: from [10.218.32.171] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 27 May
- 2025 22:10:21 -0700
-Message-ID: <1bde9d17-4e99-435d-952f-efeea0dd6761@quicinc.com>
-Date: Wed, 28 May 2025 10:40:18 +0530
+	s=arc-20240116; t=1748409735; c=relaxed/simple;
+	bh=yXGgj+mtxns8PhzMgNMh2VawII6kvgVSZTxvTe6x10Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=TQPy/lBqTeQYV6ekAa0MQYdF8WOcKtwh09/10fLunuOGrzruyzOHSEqlcRkljYMVx4LEkUdjIL3pfZ5Rynx6uwo2ANYRGOHA7IHdTsGQyoaDDkwBxL9xkhsWL6G3Ehr+ArX0Ok2aZCHe5Fxsm+uCbPGDDdoAGJDQ/i6MoiewqB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rtJ1njK3; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43ce71582e9so37733085e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 May 2025 22:22:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1748409730; x=1749014530; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hQoa0JY92XB83bF0hiIU1JdZJVH9XdUX6CbZ3gHnktA=;
+        b=rtJ1njK38bjbmRTgcx5Q8nv58SVXSFssmZneBw3MIEIAIvKqXK5OvwIugucZYZGrIQ
+         VslXBssJUKpAC49zdn5f+KAMq2ZBWMBw3EKzm76/1lP9b1MIoPoLysqaJGnJSUoWhq3G
+         2wMLXZr8oiqPvFnICw71nYb+64a2ZgbXn7MFMOaLJz9b4LHcX9E+zNRTbCj0+8j/AO2s
+         L3pJodMkWjsy07LlhIamkxyhZ1V0YNK+MovDBdWzqDWjsFlXEJFibB7lsFhT0DMEI6QI
+         AqaxqCu2i0cm+uFiX4PMo0bfO5k4G8kpzdDv5UJ3EnuhPTsKi7DsiXv3nULgs5HqS/ZP
+         vPRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748409730; x=1749014530;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hQoa0JY92XB83bF0hiIU1JdZJVH9XdUX6CbZ3gHnktA=;
+        b=ZHg/AEkvu3MinZ1UjfSGkak7ew1ZGQ3l+dKjJZWsK0lUqYBY5w5ejhq+FQgCs91XzZ
+         UsqbREUuLTYoIjW5gvvudaAffZV3wJz6p+eqvlBd2MppTywUU2omh/Fni9e7IHAPH4ny
+         HDm1NHIrfsKPrIESq2GF23l4Wg+66HPEEKl0V70bWMZl1l6M7lOExorztv4k27qe6kcZ
+         5/c0cOH9TNBi4nxCUoPoyz4ITzyxhfvz880+SkZcMcJJeT4ICUkDwa1ynbznkJ4I3yrs
+         M9U5MCbhmtg95BXlk/jjdm1wyyUlTQB3iliqQ/7gfRTOzjcoOnprwrAPNAkk+V0xA+GK
+         4g7A==
+X-Forwarded-Encrypted: i=1; AJvYcCXa8ktJ2GJZNq/f2Q2uvlhChvAZVH3gEv6S1f5KgTWHSZG8+ML/HnyuAHzdfE04b9iHyNbSbJ01/MInoe3e@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfVE2Y9M/mrlptxLNtKOHgXSLWhihyuLCkRLM33zaO00+baPr9
+	Fal9FCVtdwVBDd+07GNCQg4qyBdp7bM2NoAiKbfMmBUqjovkPc3Mf0waxBZY0M5TEuM=
+X-Gm-Gg: ASbGncvCTWAx45OzG1koxKzB4XVGwhLNtqlfsgpgZNoBABHfpcUiuz8HAfs7NkbxL1X
+	idNOaFj5Lu4AaRr98sNXY0hev/QW+xCFKwwpC5gXh/2UPy9VOWBS5HFToa7wOjqr60+yQqBdRcl
+	+EXS0lLJJKU8hLAjE3OVcBEJxJeZCxIaa+4YqIng/HT+sPYmLRKn+4pCsNwKdHjWyD3lk8ysVk4
+	JHzEvIZ2Ti1otvZKnCCz0U6vLTwL7o1PJG7JraKvWRGHMHM0o0+fRPnDlxYDM65dlgQVltoEMhi
+	Gcvqoe2GO3etoa5OkYkwjRkZt7NmYAnSng6p/HIkEFaTQ3vzho1oi3ZI
+X-Google-Smtp-Source: AGHT+IFRt79F9Nml3doFVgCAm1e3lBsDWSa75/5HWtnFCBSWr87OHZCH/XypCJ2QyEheeH/6O/16gw==
+X-Received: by 2002:a05:600c:621b:b0:43c:fffc:786c with SMTP id 5b1f17b1804b1-44fafbf883dmr53519405e9.19.1748409729976;
+        Tue, 27 May 2025 22:22:09 -0700 (PDT)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-45072559736sm5617525e9.19.2025.05.27.22.22.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 May 2025 22:22:09 -0700 (PDT)
+Date: Wed, 28 May 2025 08:22:06 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: oe-kbuild@lists.linux.dev,
+	Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
+	Sumit Garg <sumit.garg@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Apurupa Pattapu <quic_apurupa@quicinc.com>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
+Cc: lkp@intel.com, oe-kbuild-all@lists.linux.dev,
+	Harshal Dev <quic_hdev@quicinc.com>, linux-arm-msm@vger.kernel.org,
+	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org, linux-doc@vger.kernel.org,
+	Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v5 09/12] tee: add Qualcomm TEE driver
+Message-ID: <202505280653.Y79JKqDd-lkp@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/8] dt-bindings: serial: describe SA8255p
-From: Praveen Talari <quic_ptalari@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>, <devicetree@vger.kernel.org>
-CC: <psodagud@quicinc.com>, <djaggi@quicinc.com>, <quic_msavaliy@quicinc.com>,
-        <quic_vtanuku@quicinc.com>, <quic_arandive@quicinc.com>,
-        <quic_mnaresh@quicinc.com>, <quic_shazhuss@quicinc.com>,
-        Nikunj Kela
-	<quic_nkela@quicinc.com>
-References: <20250506180232.1299-1-quic_ptalari@quicinc.com>
- <20250506180232.1299-2-quic_ptalari@quicinc.com>
- <35659475-862a-4678-a2a5-173c2254ae60@kernel.org>
- <2f3e608b-5536-4c6d-b7ca-c8cf4c9d0b1b@quicinc.com>
- <4b2c24e4-d515-481d-a00b-d50ae57304dd@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <4b2c24e4-d515-481d-a00b-d50ae57304dd@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5JhaxWHAcCKc9OISxS8eJ0izZzKaulAb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI4MDA0NCBTYWx0ZWRfXyv+pUT4K+iWb
- +1W/Hljcw5rdTgpTX5F28zx2/svS8p9+BZwB7ogT6amXh5dv6pzuNW7PeT0ZKKOl9O8+E+4IfHt
- 9SI3NEMsnszeElBCUsTreWm/J8JWXeoTzyH9xA9wCN3yuUu3who8D6Yr1pB1rh+4vjKVLuQQNjt
- hdg7WPU6KB54QkyWDDqfqvtJb/nMBEw7bFmlDtzJQDBr0ynQVFTVWc3/0OjuFB9pcUMZ795zezh
- PhMLHcKLCXEkCSvybtZphfQ12jX9uYCM1cD7Vtnz5d7P5tx0fXMqglcjaYRhGHt6G8xKToEnSgA
- AlW3FrWFEC+0cnC70V7sedC/KQebgEF10cJoCLCIAEsB+hMCZFHulExx5p+UKdv2Xd75g/8gjIe
- g2vi6HIX8NDRAhv2QCkkXKeF30XhLnlTwCWcHbUdPn5w8uZRjH8NgvQMFimBCHjup5RhEGby
-X-Authority-Analysis: v=2.4 cv=HNnDFptv c=1 sm=1 tr=0 ts=68369ac3 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
- a=Am187KbwW9CzcosyEMcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 5JhaxWHAcCKc9OISxS8eJ0izZzKaulAb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-28_02,2025-05-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
- priorityscore=1501 mlxlogscore=952 phishscore=0 mlxscore=0 spamscore=0
- bulkscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505280044
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250526-qcom-tee-using-tee-ss-without-mem-obj-v5-9-024e3221b0b9@oss.qualcomm.com>
 
-Hi Krzysztof,
+Hi Amirreza,
 
-Gentle reminder!!
+kernel test robot noticed the following build warnings:
 
-On 5/9/2025 10:02 AM, Praveen Talari wrote:
-> Hi Krzysztof,
->
-> Thank for you review and valuable inputs.
->
-> On 5/8/2025 11:15 AM, Praveen Talari wrote:
->> Hi Krzysztof
->>
->> Thank you for your patience. I consider your inputs as valuable 
->> learning.
->>
->> On 5/6/2025 11:53 PM, Krzysztof Kozlowski wrote:
->>> On 06/05/2025 20:02, Praveen Talari wrote:
->>>> +
->>>> +properties:
->>>> +  compatible:
->>>> +    enum:
->>>> +      - qcom,sa8255p-geni-uart
->>>> +      - qcom,sa8255p-geni-debug-uart
->>>> +
->>>> +  reg:
->>>> +    maxItems: 1
->>>> +
->>>> +  interrupts:
->>>> +    minItems: 1
->>> Nothing changed here, this should be dropped based on previous 
->>> discussion.
->>>
->>> You sent this v5 on 8:02 PM of my time. *THEN* you responded to my
->>> comment at v4 at 8:05 PM. That's the way to waste everyone's time.
->>>
->>> I do not understand why interrupt is optional for a new, complete 
->>> device
->>> description.
->
-> To put it simply, because we are using the RX GPIO line as wake up IRQ 
-> and not all SE related pins are mapped in the PDC,
->
-> there is no specific wake-up pin to define. Therefore, the wake-up IRQ 
-> should be considered optional.
+url:    https://github.com/intel-lab-lkp/linux/commits/Amirreza-Zarrabi/tee-allow-a-driver-to-allocate-a-tee_device-without-a-pool/20250527-151020
+base:   3be1a7a31fbda82f3604b6c31e4f390110de1b46
+patch link:    https://lore.kernel.org/r/20250526-qcom-tee-using-tee-ss-without-mem-obj-v5-9-024e3221b0b9%40oss.qualcomm.com
+patch subject: [PATCH v5 09/12] tee: add Qualcomm TEE driver
+config: x86_64-randconfig-161-20250528 (https://download.01.org/0day-ci/archive/20250528/202505280653.Y79JKqDd-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
 
-I hope this response has addressed your query.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+| Closes: https://lore.kernel.org/r/202505280653.Y79JKqDd-lkp@intel.com/
 
-Thanks,
+smatch warnings:
+drivers/tee/qcomtee/call.c:748 qcomtee_probe() warn: missing error code 'err'
 
-Praveen Talari
+vim +/err +748 drivers/tee/qcomtee/call.c
 
->
->
-> Thanks,
->
-> Praveen
->
->>
->> On this platform, there is no use case of waking up UART, so we 
->> consider the  wake up IRQ as optional.
->>
->> Thanks,
->>
->> Praveen
->>
->>>
->>> Best regards,
->>> Krzysztof
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  711  static int qcomtee_probe(struct platform_device *pdev)
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  712  {
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  713  	struct workqueue_struct *async_wq;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  714  	struct tee_device *teedev;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  715  	struct tee_shm_pool *pool;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  716  	struct tee_context *ctx;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  717  	struct qcomtee *qcomtee;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  718  	int err;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  719  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  720  	qcomtee = kzalloc(sizeof(*qcomtee), GFP_KERNEL);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  721  	if (!qcomtee)
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  722  		return -ENOMEM;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  723  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  724  	pool = qcomtee_shm_pool_alloc();
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  725  	if (IS_ERR(pool)) {
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  726  		err = PTR_ERR(pool);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  727  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  728  		goto err_free_qcomtee;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  729  	}
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  730  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  731  	teedev = tee_device_alloc(&qcomtee_desc, NULL, pool, qcomtee);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  732  	if (IS_ERR(teedev)) {
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  733  		err = PTR_ERR(teedev);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  734  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  735  		goto err_pool_destroy;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  736  	}
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  737  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  738  	qcomtee->teedev = teedev;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  739  	qcomtee->pool = pool;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  740  	err = tee_device_register(qcomtee->teedev);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  741  	if (err)
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  742  		goto err_unreg_teedev;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  743  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  744  	platform_set_drvdata(pdev, qcomtee);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  745  	/* Start async wq. */
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  746  	async_wq = alloc_ordered_workqueue("qcomtee_wq", 0);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  747  	if (!async_wq)
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26 @748  		goto err_unreg_teedev;
+
+err = -ENOMEM;
+
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  749  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  750  	qcomtee->wq = async_wq;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  751  	/* Driver context used for async operations of teedev. */
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  752  	ctx = teedev_open(qcomtee->teedev);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  753  	if (IS_ERR(ctx)) {
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  754  		err = PTR_ERR(ctx);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  755  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  756  		goto err_dest_wq;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  757  	}
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  758  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  759  	qcomtee->ctx = ctx;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  760  	/* Init Object table. */
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  761  	qcomtee->xa_last_id = 0;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  762  	xa_init_flags(&qcomtee->xa_local_objects, XA_FLAGS_ALLOC);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  763  	/* Get QTEE verion. */
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  764  	qcomtee_get_qtee_feature_list(qcomtee->ctx,
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  765  				      QCOMTEE_FEATURE_VER_OP_GET_QTEE_ID,
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  766  				      &qtee_version);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  767  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  768  	pr_info("QTEE version %u.%u.%u\n",
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  769  		QTEE_VERSION_GET_MAJOR(qtee_version),
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  770  		QTEE_VERSION_GET_MINOR(qtee_version),
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  771  		QTEE_VERSION_GET_PATCH(qtee_version));
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  772  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  773  	return 0;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  774  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  775  err_dest_wq:
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  776  	destroy_workqueue(qcomtee->wq);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  777  err_unreg_teedev:
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  778  	tee_device_unregister(qcomtee->teedev);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  779  err_pool_destroy:
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  780  	tee_shm_pool_free(pool);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  781  err_free_qcomtee:
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  782  	kfree(qcomtee);
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  783  
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  784  	return err;
+accd33ce59c3367 Amirreza Zarrabi 2025-05-26  785  }
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
+
 
