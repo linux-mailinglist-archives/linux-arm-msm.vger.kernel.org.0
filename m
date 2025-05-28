@@ -1,126 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-59722-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B5CEAC6E07
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 18:30:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20055AC6E65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 18:51:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DBA9D7A757C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 16:29:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AD1471885669
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 May 2025 16:51:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24D8328D8EA;
-	Wed, 28 May 2025 16:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA1B228DEEF;
+	Wed, 28 May 2025 16:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qM2hQoUQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H2FfohYO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE86B28D84D;
-	Wed, 28 May 2025 16:30:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0AE28DEE7;
+	Wed, 28 May 2025 16:50:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748449814; cv=none; b=TUDbZEfRBCrhA/ZL3BqfUKQ+B86PD2n/0T2sg4COXSMeeu9shroJmFX3SJDlpp5lR9Sl1Pm+9RMTsj09yXHOOBaNHV1OrnGMtONVOtmSfZJbSxXJtfnLwYEctUgsfS7Z2iS7XvurfzEFh8eH1SN9xxeEU7nsUrPgABwWbgvgIgo=
+	t=1748451051; cv=none; b=i7XjpUJcHHVWODxy7hCpIH589KHsI4s1JTshFmxDK3N56qArNy7raGGsLbtU+uiy3FWrJn7Ux6UV3x7xPQXIIp32yDfKi+gk/ByFx37FObsictlPzqBqP9R9/1oiZzez02mrNrtWt3gU3b3qkbdb8Hve0g0Y6t4GgRh6nnY378A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748449814; c=relaxed/simple;
-	bh=7Ddco8Bs8XoPP7Sgox9+6gs/ynZ2ONDg+RF4XTZ26x8=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=EDSZ1TC0qx4X4gUb5CYV61y4l2buIUet7B2xUkkmQmp2W1si3JhyiFJIkyzXWUSJYrLS2BjrhZvTFtMBOVVphpVYl3uR5Z49VJn7tHvv30rM3oD1ys7uuN2jkwAeCNRpbB6Md92Yf1zp9CIIgJs5JiwJmGWjVNtfVOshRkFGfjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qM2hQoUQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124ACC4CEED;
-	Wed, 28 May 2025 16:30:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748449813;
-	bh=7Ddco8Bs8XoPP7Sgox9+6gs/ynZ2ONDg+RF4XTZ26x8=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=qM2hQoUQRoa+sjl+Pd34UZ8gWk9fmaucPWGcXjz2hhNVtu0jQ7cosdxFBtew2i8mg
-	 eijOPXuC37GVroVoy8qFYJdRZ3aDCMTDZklItaIlYhJ8t5NEmf1qVm2ilGq6R7toz/
-	 C6PA5DLY5uu04KrGsgJ0TlP+fw+XBsxB+4MNt1njgkdHntLx2xQKKoQkTmnB3XbZ/x
-	 zxQovxJHQ43ngRcCqoHp9z/4bxJJANwnF06U/+W7dnH6ZEuG0HU09oE6Fk9VecnkMG
-	 XsKkKFXd9WxKXjMLxbuU/yVPLZUPXBDfDkckVDfPv81s9KyUBh7whN0nhQaq4IBR0H
-	 f2dGfD0xkFkjg==
-Date: Wed, 28 May 2025 11:30:11 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1748451051; c=relaxed/simple;
+	bh=RbkjYOsYWlR722Gz7CEkkX1aONv3ZqPZKrwis+AcOYQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XF8QmjH+oPbMXWwdY++dyEakRH/Hkj6N8UcB7v3am1Ldv2LWRySVBHGz7IRU5zzQ9+1xsPU1ZJlZcdzgF75fh4/PC+EGUh3SfczUmCNTCkQcT+SEnPxF0oHycGl/USoQ6OdigATzQaRWY4Sp3bGvu5DR0YmTwEx/xLE6xi4/OYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H2FfohYO; arc=none smtp.client-ip=209.85.166.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3dc6b2a8647so162285ab.2;
+        Wed, 28 May 2025 09:50:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748451049; x=1749055849; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/mLSfvvzNdOkPMdQtfbrJhi5GREToG8+aqY66T7Y+nY=;
+        b=H2FfohYOYG62EyXVhmW8z4gx4PwgWa27NdrVtq+0s7Hmau1bqfqfnejb4C73Xk0qQc
+         psOwOKazzkdFF5qDrdtNLGUW8jBuahTYsRS+RBWgochhIlqMUQx/HN/XrTjL0X5+pC4g
+         unPT2NgfneNnFL3Lj/5NQLFF8mzABYbr54221B7tm68VgZjnIzLscsq6n7PFe21Ss2Ck
+         fgJLD4g8CSWY5oJU5/vV1psCfqwXW9X6ZQd6jdpMWUulhA2ymBzljpS+z3m7y9njz3b3
+         NoYiff7z9RfmTXVfENoSPPzeX321uKUhLzNefzRSUQoPk2QvuVOZNqrbZP6iP8l0GZcg
+         pusA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748451049; x=1749055849;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/mLSfvvzNdOkPMdQtfbrJhi5GREToG8+aqY66T7Y+nY=;
+        b=u0Bz6hYW43S6Eb9o/sKDzH6/tn9yoSDXosLDR+jTtxIGeR8exAO2Yh+iq9x7levWo7
+         QK1s8rEnCbrdSs26Um3adEtU+F7O8Wqe3KV0d8aImGuL+xRtjh7qHbLyGPSIzlDUra4h
+         IOpv43zsrfZDuxFcNURwNX5/1fjccGSRS8NCcthEM99de/ZcrE/REDM4K5xyeCo8qja/
+         C7YdGfrzdE4x5iogWTLSQY5loz0tlzcp8vvYfZa8dE/SHM9wii+bkspC4otkRZ6H3XTZ
+         b68uwRY6DqVtbSlslJLdgJdlSeRJyOxsabBKY507v4wQ5eadf1/aN5ndqGfFLBCRZEXJ
+         LOfA==
+X-Forwarded-Encrypted: i=1; AJvYcCUrt+hQ75EJMrAiJuEPrTGaJbCbnu9Fd4ofUPzfWBSRS4TfCBi+4uNa4reOUfRxoha9XOWpkLwNQsnF@vger.kernel.org, AJvYcCV2PU3acarpew7doHzuuQfMWUckCm3y98o6bykoc6DEPY+fip3PvqewqzEvv16vDjNJz3VvfXXQcBse1BYP@vger.kernel.org, AJvYcCVi3g4luj9CpbR3R5CfszfQ7Qf1q2ZSbCcZzLBpF4YTrD50rfrXnuj+6F/bzIm/wnvNu9aaPmbrl+2E@vger.kernel.org, AJvYcCXu4s6zScGFt+OoONlA+OPo1od9bl3WRWvbLmabzICWS3RjOsm2qbDtBre2UKaDZShT/7zbCy4soKX1bXTaGQ==@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBRhtimIRqKegdvzU0bWo89jmwRHXFxV6n7/CPLUUxgnCZk6S3
+	M6N8aQxTa6fAp1swnSc5ehZMmwD/Z4HK1xEVFEcKgDkMl6RqdMswDlD2KYjdDKVZcfmWf3HfrPy
+	EwJZLCmJbzIrILociNxXQ2gAh4UsQyUk=
+X-Gm-Gg: ASbGncvn27SMKaXOkR35ashwzg90h6wVfi2pE/QoRhhS4dsqj/wODEKN3pj00/DufqQ
+	TAQBWflQjaK6u/6UxekxF8V0USiMxc96MgKUj7vZsa9M0kyyQVjtAq34OBkW5Qp7KTWIN3+rFq7
+	cDPjE0NeV1SEDTQp0ZzDjUtJhdgDbhtw9Mqoqml6ApOsvQKIc7OgwWfjlYiPPMqLa2
+X-Google-Smtp-Source: AGHT+IElCD9X0MUXc0KEJ35rGa0B2HBelp6NlkIwYIdR4AR+DIEjxBH8j0THx1Zrl04nM1P9nG1x7zntR3Atn44k4xE=
+X-Received: by 2002:a05:6e02:2193:b0:3dc:8667:3425 with SMTP id
+ e9e14a558f8ab-3dc9b70f000mr157653325ab.11.1748451049219; Wed, 28 May 2025
+ 09:50:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, 
- Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- "David S. Miller" <davem@davemloft.net>, Paolo Abeni <pabeni@redhat.com>, 
- Jakub Kicinski <kuba@kernel.org>, Andrew Lunn <andrew@lunn.ch>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, linux-clk@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Florian Fainelli <f.fainelli@gmail.com>, 
- Stephen Boyd <sboyd@kernel.org>, Eric Dumazet <edumazet@google.com>, 
- Heiner Kallweit <hkallweit1@gmail.com>, Conor Dooley <conor+dt@kernel.org>, 
- Philipp Zabel <p.zabel@pengutronix.de>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-To: George Moussalem <george.moussalem@outlook.com>
-In-Reply-To: <20250528-ipq5018-ge-phy-v2-2-dd063674c71c@outlook.com>
-References: <20250528-ipq5018-ge-phy-v2-0-dd063674c71c@outlook.com>
- <20250528-ipq5018-ge-phy-v2-2-dd063674c71c@outlook.com>
-Message-Id: <174844980913.122039.6315970844779589359.robh@kernel.org>
-Subject: Re: [PATCH v2 2/5] dt-bindings: net: qca,ar803x: Add IPQ5018
- Internal GE PHY support
+References: <20250524-tb16-dt-v4-0-2c1e6018d3f0@oldschoolsolutions.biz>
+ <20250524-tb16-dt-v4-5-2c1e6018d3f0@oldschoolsolutions.biz>
+ <g7vlyqma6ow6tdsaqt2rfwvblxqwbqlwmoueio7i4vqvjy76kw@5bz4g33pq4t7>
+ <CAMcHhXoYkQru_0n5siMGGkTcHu8yWRZWfT4ByiD8D0ieZHF+wQ@mail.gmail.com>
+ <vwoixgdyjjzcjlv4muwrzv7wztnqyidtj7ghacgkjg6hgkkyl7@ji53bhiltaef>
+ <CAMcHhXqDFuo+x99KOK0pQFj-FyTdQoZS_JvehNE2AC_JSoQ2gQ@mail.gmail.com>
+ <rvyfkow43atquc64p6slck6lpfsot67v47ngvfnuhxqo222h6k@kdvbsmf3fwsr>
+ <CAF6AEGvr_foMVwaE_VSVWLT50cbGi8i3UGwo2e=rORD-1JmTmA@mail.gmail.com>
+ <152f5150-30b0-400c-9816-13e4710a4156@oss.qualcomm.com> <kbmqr7gjkd72hgorbhbwb7ttvmecfbb6pg72st7zwt5ogxju6p@itycxk6vriy5>
+In-Reply-To: <kbmqr7gjkd72hgorbhbwb7ttvmecfbb6pg72st7zwt5ogxju6p@itycxk6vriy5>
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 28 May 2025 09:50:37 -0700
+X-Gm-Features: AX0GCFtYvoKOHGtMqf1X52z4CG5iI44YIX8TXD4Lf5SvSxvLMNmudG51MafUAOQ
+Message-ID: <CAF6AEGsTtEA=So1CDhvg8H5+Z-RJ9OnhgSzDoa+zkWSPO3cvnA@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] arm64: dts: qcom: Add Lenovo ThinkBook 16 G7 QOY
+ device tree
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>, jens.glathe@oldschoolsolutions.biz, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Matthias Kaehlcke <mka@chromium.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Douglas Anderson <dianders@chromium.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
+	linux-usb@vger.kernel.org, dri-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, May 27, 2025 at 11:18=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Tue, May 27, 2025 at 12:55:06PM +0200, Konrad Dybcio wrote:
+> > On 5/26/25 5:28 PM, Rob Clark wrote:
+> > > On Mon, May 26, 2025 at 1:36=E2=80=AFAM Dmitry Baryshkov
+> > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > >>
+> > >> On Sun, May 25, 2025 at 09:43:36PM +0200, Aleksandrs Vinarskis wrote=
+:
+> > >>> On Sun, 25 May 2025 at 15:33, Dmitry Baryshkov
+> > >>> <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > >>>>
+> >
+> > [...]
+> >
+> > >> Yes, please. Don't set okay status for the GPU until it gets enabled=
+.
+> > >
+> > > Drive-by: Shouldn't the dtb describe the hw and not the state of the
+> > > linux kernel's support for the hw?  Ie. if bad things happen if we
+> > > describe hw which is missing driver support, shouldn't we fix that in
+> > > the driver.
+> > >
+> > > (In the case of the GPU there is the slight wrinkle that we don't hav=
+e
+> > > a gpu-id yet so there is no compatible in the dtb yet.)
+> >
+> > My two cents are that it's okay to enable it, at least in this case..
+>
+> That would most likely make display unavailable as DPU driver uses GPU
+> as one of the components.
 
-On Wed, 28 May 2025 18:45:48 +0400, George Moussalem wrote:
-> Document the IPQ5018 Internal Gigabit Ethernet PHY found in the IPQ5018
-> SoC. Its output pins provide an MDI interface to either an external
-> switch in a PHY to PHY link scenario or is directly attached to an RJ45
-> connector.
-> 
-> The PHY supports 10/100/1000 mbps link modes, CDT, auto-negotiation and
-> 802.3az EEE.
-> 
-> For operation, the LDO controller found in the IPQ5018 SoC for which
-> there is provision in the mdio-4019 driver. In addition, the PHY needs
-> to take itself out of reset and enable the RX and TX clocks.
-> 
-> Two common archictures across IPQ5018 boards are:
-> 1. IPQ5018 PHY --> MDI --> RJ45 connector
-> 2. IPQ5018 PHY --> MDI --> External PHY
-> In a phy to phy architecture, DAC values need to be set to accommodate
-> for the short cable length. As such, add an optional boolean property so
-> the driver sets the correct register values for the DAC accordingly.
-> 
-> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
-> ---
->  .../devicetree/bindings/net/qca,ar803x.yaml        | 52 +++++++++++++++++++++-
->  1 file changed, 51 insertions(+), 1 deletion(-)
-> 
+Hmm, perhaps we should allow the gpu to probe, but just fail to create
+priv->gpu, similarly to how we handle missing firmware?
 
-My bot found errors running 'make dt_binding_check' on your patch:
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/qca,ar803x.example.dtb: ethernet-phy@7 (ethernet-phy-id004d.d0c0): clocks: [[4294967295, 36], [4294967295, 37]] is too long
-	from schema $id: http://devicetree.org/schemas/net/ethernet-phy.yaml#
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250528-ipq5018-ge-phy-v2-2-dd063674c71c@outlook.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+BR,
+-R
 
