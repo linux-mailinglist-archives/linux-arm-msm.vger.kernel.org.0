@@ -1,48 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-59795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28B3BAC7AAA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 11:06:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77D48AC7AEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 11:21:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3FC117A9780
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 09:04:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 34D1A4E7343
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 09:21:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 932D621B19E;
-	Thu, 29 May 2025 09:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9488621C188;
+	Thu, 29 May 2025 09:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mdJJLyB0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gOWJ42jS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648CB19E968;
-	Thu, 29 May 2025 09:06:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E5521B9FE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 May 2025 09:21:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748509563; cv=none; b=NGUTY9rdlG8BBRBum5bjqrmCr+BpmfwQ4W/sIkN8buMI9wezIpqjGb18QUUT864WR+ZCGBqoNLP7CL0itaaOp+F3IjfRxIS3kxCzzmbE/+q/Iw4s5plvXe/qbFGXXYt9ZSNYWa7qk5Q4Cmed/JZW1sE5EtiXJHZaGqUxfqkiMLE=
+	t=1748510462; cv=none; b=C7tmMFJ03v6WWsVYNARwYWJmbob0/iZmqvqT6nhnhwGlvxyVNNivKf88Y/TGoF1MLfFrmowRKdMuDd4agOxN12BCMSHa/F0RfzLR0MPV4WWxRb//tAcHmTwe8utmQZ4OkVtR9xIJZrkzPjQmhlFyB9raCusuFyF72+JYCHiuhaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748509563; c=relaxed/simple;
-	bh=TnBdwfMU35dwvTgOcU49mAwWEmcwsZg4PtscRxp7BZE=;
+	s=arc-20240116; t=1748510462; c=relaxed/simple;
+	bh=L4s52w8/kLW8XlEfsikn2Ky0fab9wuw9vsM2KIVpWIs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AeGXocx7h/UA9uAT7BcUjhYlFKFLWwrfzWhDd2OZUDJPNVWwYEjR1GNLe3/aYajNkLjISzQh1OzAlPbN7zZ5PXsNqLbutMmlqa21pIFCegWDmgPNLDg8kOPW/kbpyR/FzyHSfSTwZutRpOSImsPQdDWsvsa/U/jleqiapxezOk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mdJJLyB0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4EBDC4CEED;
-	Thu, 29 May 2025 09:06:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748509562;
-	bh=TnBdwfMU35dwvTgOcU49mAwWEmcwsZg4PtscRxp7BZE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=mdJJLyB0mNoFoew7xh7nQyQ6kwRPijxdlCpPPwYGaK8qIx0V7cCop/SZXbcEFoguo
-	 tF5U355g7C+ele+r70WEO/ROVKjJBt/T0It2xcY//Z6xVeI/eqqj9uph1MzVZZ3zxz
-	 Y/Y1s0FTk4EvxunfLRtLCOV5wpTFg4b2p9bYuu0S423/w2r3iPKoNMmFLl6/QLIW0K
-	 mBuKl6d4+EtrXUSvnMRB0UtGAxFiHfwQ8IKPtPIiDvNYcBQjqpE+pVz+vs2oRkugeg
-	 Lq69O9hDxfP56ujzTXxVYlCzfC3BMqm0/xK3hIczy0s9Bnw2JKHLLksJ5SdLa2h6Rk
-	 bhA5KTURX1MIQ==
-Message-ID: <0c87223d-4b4e-4e82-b7ed-3c694393b1b0@kernel.org>
-Date: Thu, 29 May 2025 11:05:59 +0200
+	 In-Reply-To:Content-Type; b=KrHP/p6PKOzzwIGWdgC+o/BSkJbXtQHJgJLCpn601lcMgeEwZ3/HsL1r6lC+/yGsIGS7H1com26JTE6mjx8gOVUokPLLKZn8xzhIC9tFXMdjB3n5K+pGJ4wBo2FoNn6ZrqqtL3g4PJ12c6c0ywJwyYDJm/rN/ybmympk2uaf4eI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gOWJ42jS; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54T6WoVc023876
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 May 2025 09:20:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	fK2aLxCi/pD0NxBchLLM+RpJQItFN6CcDN585z6c3/M=; b=gOWJ42jSinOMwcFO
+	Mruay/q3M9GdMi2t4wCd/qHJDA4TIewJYssc7M9dOMZaCKCiB3AMN4tGQH9dYYDT
+	NDvleWuF5SX9fXGdxvzegGcjJ49u8dWMNbiPOwViVVNMzEbhAPZyGvi2y/KRjz+Q
+	NaXYpKzG7/9iWQk7Dr/lybMk8vXwYknxJHFYasFaJxrWWgkAbnpHFK1O3LJMp97P
+	Mg6Xq0oWFZeYW5+4zCOGLTDw3E4/pzGITJmZeEfd3Y1Ikwv7dMdUu1QJws2ZvImH
+	aCA3fSoKsXFgk7UXCI351Ew3pP4wamTRPs0AgSOTpZkcI7iQYHz7DA9WRZs2zOIA
+	9E++Ew==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u6vjw7px-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 May 2025 09:20:59 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7d097fd7b32so134413085a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 May 2025 02:20:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748510458; x=1749115258;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fK2aLxCi/pD0NxBchLLM+RpJQItFN6CcDN585z6c3/M=;
+        b=KSfKnRDywq/SLYjIsjbCFUqNioHyeGckC4e6+Ge6I0xWr06u09azEk72vYTIlpjqwa
+         QSSs35aUuTLwGW8OXedoo0egVS5QmfIJyOHC3s+3/IJox0DoHSF0O1pYDV9sFpPQLv2e
+         tee2O6Jlz89Dzbl2dx0CqcynSoV7z2NDS1zS3ET8ViQJ0Z6Lq6JXixI/yAXcUSyepyI2
+         2M/P8TxSvSeRhQHtj6bNpUliuWoNFXQlie528Lc0uIDZ+K5fEk1UXOA7D9uNEDO5l1DI
+         PlFDGLeYL/eabpVjP29eCnOQt6sCGD22QdAtsgr4j6SoPP4tZItacen8LUtEu7CJL6Fw
+         cNyg==
+X-Forwarded-Encrypted: i=1; AJvYcCVFhQCcp7brGOOJ6ttpNWrdqoP+91dqByEjPQTxBw3tTbuXW5j1ymcJr0InU8hv09bYCzY7s2bRJw4WUQW0@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3MX7QoB5SmaEAqVrQ2lrp3rC67BzWU6MSrYQ3cvKGP4MW+7R9
+	WV/JMW9Zl73t4u2QqnFGFNCJJpWOLEl3rGuoF5jcondaf4JMVe7BoKedHqHGHli54pgSXtxO56w
+	9WQc/wwLVFU/Mkf2j3M3YyqAwEx3tigsG3xV+um1m9yN+y/Rn5gWaXvA20tHtW/bGHZ8z
+X-Gm-Gg: ASbGnctZPB81GnUp6xjdXt66V14TtJ+4QSmnKBnFxiddBaH2euEUwe0f87oxr/uKdtR
+	5p35N6jPwl309nEG4tUyxt7b7ZZPTzOisNkJVB0T9lueI1ZQO1mLKNUbJsqeDVfrwZWDwn0faW2
+	ZUI+RPmncEC2OyM9YkHxqrX+8cYEl6ESWFN7pOUyTcF6ZoxMtLwgCWi6A6a9CaUIeOhDAWtMJyf
+	o7TleXUzPTvY3KVBS4P776aSxGcTuCnFdJR+Xn1z4VgalGwhb26gRiIZZ9VzbODkuHQ7lFUCzmi
+	WXyfmULSd0V+c84n6UR8b88DnzuIFIy99UQWew==
+X-Received: by 2002:a05:620a:29cf:b0:7ce:e89c:7034 with SMTP id af79cd13be357-7ceecc47330mr3414854485a.54.1748510458182;
+        Thu, 29 May 2025 02:20:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFARviQoTt32XuVus+Hg1NVtxvnQWat2/gBG0kwZldF4ALlWhMfHSvxPfbQYwCTS8VMYZNGFQ==
+X-Received: by 2002:a05:620a:29cf:b0:7ce:e89c:7034 with SMTP id af79cd13be357-7ceecc47330mr3414852185a.54.1748510457805;
+        Thu, 29 May 2025 02:20:57 -0700 (PDT)
+Received: from [192.168.68.109] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3a4efe73ee0sm1390768f8f.46.2025.05.29.02.20.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 May 2025 02:20:57 -0700 (PDT)
+Message-ID: <81e34c57-d2ed-466a-9ab0-8ea9e7ee437f@oss.qualcomm.com>
+Date: Thu, 29 May 2025 10:20:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,287 +89,87 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: Add coresight node for SM8650
-To: Yingchao Deng <quic_yingdeng@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250529085650.3594253-1-quic_yingdeng@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH 0/6] ASoC: codecs: wcd93xx: Few simplifications of code
+ and extend wcd939x
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+        Srinivas Kandagatla <srini@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20250526-b4-asoc-wcd9395-vdd-px-v1-0-64d3cb60313b@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250529085650.3594253-1-quic_yingdeng@quicinc.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20250526-b4-asoc-wcd9395-vdd-px-v1-0-64d3cb60313b@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=UOXdHDfy c=1 sm=1 tr=0 ts=683826fb cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8
+ a=EUspDBNiAAAA:8 a=PGxqiohRGJHFK62Qb5wA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: 7Obi6LZlK1ZksD8YYV9TTd9mOxmGnlQx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDA4OSBTYWx0ZWRfX1VeuVDgPVOIH
+ Uw1U0icaRjZYxNk+6bSG1qzuLKLxIVdPCltduaKqFr/WICRm5HEeuDAajiZBlOMwxnFX+dhnvNJ
+ dGWXzsJznYTSu38Ly74SZ4wxCqoLxnf+8B83MH8o8Xjrc8XfG/8cXjY7ktkNVFKSkBE8vHxR2cT
+ 7Jp52WhINLrn23rnAANKGdne25ckKceYyeqd1q1YEoi6KtJR2wr+ndtzjVdkoSXQU6suhQZX/D7
+ /QheQCC9mAs24eN+d65YeBOcyDl/fZ6vZN1+wRmaV4xVnD3VqYdb+zV52wLrMC4EBm7uCM0Q1hK
+ K+b7bm39k1HYcHtYqRGVu7ljo3W9v/27KtnwhyNvMlS0w6aeze+V46qQDjy/AmuhNv5bHKco55h
+ zafo8IpctB/Iee5VOVQQqubAQUsOokylTKzvlqrAp3jdUxNZV2/cl4EtGo4S97suXeQmGCiq
+X-Proofpoint-GUID: 7Obi6LZlK1ZksD8YYV9TTd9mOxmGnlQx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-29_04,2025-05-29_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 mlxscore=0 adultscore=0 priorityscore=1501
+ mlxlogscore=722 bulkscore=0 malwarescore=0 impostorscore=0 spamscore=0
+ suspectscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505160000 definitions=main-2505290089
 
-On 29/05/2025 10:56, Yingchao Deng wrote:
-> Add coresight components on the path from stm to etr.
+
+
+On 5/26/25 11:49 AM, Krzysztof Kozlowski wrote:
+> Make the WCD93xx codec drivers simpler using
+> devm_regulator_bulk_get_enable() and obtain missing VDD_PX supply on
+> wcd939x.
 > 
-> Signed-off-by: Yingchao Deng <quic_yingdeng@quicinc.com>
+> Context depends on fixes:
+> https://lore.kernel.org/r/20250526-b4-b4-asoc-wcd9395-vdd-px-fixes-v1-0-0b8a2993b7d3@linaro.org
+> 
+
+LGTM, thanks for the cleanup.
+
+
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+
+
+-Srini
 > ---
->  arch/arm64/boot/dts/qcom/sm8650.dtsi | 250 +++++++++++++++++++++++++++
->  1 file changed, 250 insertions(+)
+> Krzysztof Kozlowski (6):
+>       ASoC: codecs: wcd937x: Simplify with devm_regulator_bulk_get_enable()
+>       ASoC: codecs: wcd938x: Simplify with devm_regulator_bulk_get_enable()
+>       ASoC: codecs: wcd939x: Simplify with devm_regulator_bulk_get_enable()
+>       ASoC: codecs: wcd939x: Simplify return from devm_gpiod_get() error
+>       ASoC: dt-bindings: qcom,wcd939x: Document missing VDD_PX supply
+>       ASoC: codecs: wcd939x: Add VDD_PX supply
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index 86684cb9a932..5e1854a0e15f 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -5052,6 +5052,82 @@ data-pins {
->  			};
->  		};
->  
-> +		ctcu@10001000 {
-> +			compatible = "qcom,sa8775p-ctcu";
+>  .../devicetree/bindings/sound/qcom,wcd939x.yaml    |  3 ++
+>  sound/soc/codecs/wcd937x.c                         | 31 +++++----------
+>  sound/soc/codecs/wcd937x.h                         |  1 -
+>  sound/soc/codecs/wcd938x.c                         | 35 +++++------------
+>  sound/soc/codecs/wcd939x.c                         | 45 +++++++---------------
+>  5 files changed, 34 insertions(+), 81 deletions(-)
+> ---
+> base-commit: 3717d2adda1ad07b4ecf3bef144ee489cc1563a1
+> change-id: 20250526-b4-asoc-wcd9395-vdd-px-ec173383bd02
+> prerequisite-change-id: 20250526-b4-b4-asoc-wcd9395-vdd-px-fixes-0ce64398f9cc:v1
+> prerequisite-patch-id: 104000f7254b9cc81be49af9ca584544718e52f1
+> prerequisite-patch-id: 230fcd1b712c5a3199e7c9d8250e98e5d55c0a40
+> prerequisite-patch-id: ecdbe74955eb7b710f72af1e3cf32ccac52890d5
+> 
+> Best regards,
 
-Wrong compatible.
-
-> +			reg = <0x0 0x10001000 0x0 0x1000>;
-> +
-> +			clocks = <&aoss_qmp>;
-> +			clock-names = "apb";
-> +
-> +			in-ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					reg = <0>;
-> +					ctcu_in0: endpoint {
-> +					remote-endpoint = <&etr0_out>;
-
-Fix indentation.
-
-> +					};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +					ctcu_in1: endpoint {
-> +					remote-endpoint = <&etr1_out>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		stm@10002000 {
-> +			compatible = "arm,coresight-stm", "arm,primecell";
-> +			reg = <0x0 0x10002000 0x0 0x1000>,
-> +				<0x0 0x16280000 0x0 0x180000>;
-> +			reg-names = "stm-base", "stm-stimulus-base";
-> +
-> +			clocks = <&aoss_qmp>;
-> +			clock-names = "apb_pclk";
-> +
-> +			out-ports {
-> +				port {
-> +					stm_out_funnel_in0: endpoint {
-> +						remote-endpoint =
-> +						<&funnel_in0_in_stm>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		funnel@10041000 {
-> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-> +			reg = <0x0 0x10041000 0x0 0x1000>;
-> +
-> +			clocks = <&aoss_qmp>;
-> +			clock-names = "apb_pclk";
-> +
-> +			in-ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@7 {
-> +					reg = <7>;
-> +					funnel_in0_in_stm: endpoint {
-> +						remote-endpoint =
-> +						<&stm_out_funnel_in0>;
-> +					};
-> +				};
-> +			};
-> +
-> +			out-ports {
-> +				port {
-> +					funnel_in0_out_funnel_qdss: endpoint {
-> +						remote-endpoint =
-> +						<&funnel_qdss_in_funnel_in0>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
->  		funnel@10042000 {
->  			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
->  
-> @@ -5094,6 +5170,14 @@ in-ports {
->  				#address-cells = <1>;
->  				#size-cells = <0>;
->  
-> +				port@0 {
-> +					reg = <0>;
-> +
-> +					funnel_qdss_in_funnel_in0: endpoint {
-> +						remote-endpoint = <&funnel_in0_out_funnel_qdss>;
-> +					};
-> +				};
-> +
->  				port@1 {
->  					reg = <1>;
->  
-> @@ -5112,6 +5196,133 @@ funnel_qdss_out_funnel_aoss: endpoint {
->  			};
->  		};
->  
-> +		replicator@10046000 {
-> +			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-> +			reg = <0x0 0x10046000 0x0 0x1000>;
-> +
-> +			clocks = <&aoss_qmp>;
-> +			clock-names = "apb_pclk";
-> +
-> +			in-ports {
-> +				port {
-> +					replicator_qdss_in_replicator_swao: endpoint {
-> +						remote-endpoint =
-> +						<&replicator_swao_out_replicator_qdss>;
-> +					};
-> +				};
-> +			};
-> +
-> +			out-ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					replicator_qdss_out_replicator_etr: endpoint {
-> +						remote-endpoint =
-> +						<&replicator_etr_in_replicator_qdss>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		tmc@10048000 {
-> +			compatible = "arm,coresight-tmc", "arm,primecell";
-> +			reg = <0x0 0x10048000 0x0 0x1000>;
-> +
-> +			iommus = <&apps_smmu 0x04e0 0>,
-> +				<&apps_smmu 0x04c0 0>;
-> +			dma-coherent;
-> +			arm,scatter-gather;
-> +
-> +			clocks = <&aoss_qmp>;
-> +			clock-names = "apb_pclk";
-> +
-> +			in-ports {
-> +				port {
-> +					tmc_etr_in_replicator_etr: endpoint {
-> +						remote-endpoint =
-> +						<&replicator_etr_out_tmc_etr>;
-> +					};
-> +				};
-> +			};
-> +
-> +			out-ports {
-> +				port {
-> +					etr0_out: endpoint {
-> +						remote-endpoint =
-> +						<&ctcu_in0>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		replicator@1004e000 {
-> +			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-> +			reg = <0x0 0x1004e000 0x0 0x1000>;
-> +
-> +			clocks = <&aoss_qmp>;
-> +			clock-names = "apb_pclk";
-> +
-> +			in-ports {
-> +				port {
-> +					replicator_etr_in_replicator_qdss: endpoint {
-> +						remote-endpoint =
-> +						<&replicator_qdss_out_replicator_etr>;
-> +					};
-> +				};
-> +			};
-> +
-> +			out-ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					reg = <0>;
-> +					replicator_etr_out_tmc_etr: endpoint {
-> +						remote-endpoint =
-> +						<&tmc_etr_in_replicator_etr>;
-> +					};
-> +				};
-> +				port@1 {
-> +					reg = <1>;
-> +					replicator_etr_out_tmc_etr1: endpoint {
-> +						remote-endpoint =
-> +						<&tmc_etr1_in_replicator_etr>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		tmc@1004f000 {
-> +			compatible = "arm,primecell";
-
-That's also wrong.
-
-Plus I suspect this was not tested against bindings.
-
-Best regards,
-Krzysztof
 
