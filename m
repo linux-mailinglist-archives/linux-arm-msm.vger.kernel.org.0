@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-59794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 497D5AC7AA2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 11:04:24 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28B3BAC7AAA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 11:06:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 01EEE17195E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 09:04:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3FC117A9780
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 09:04:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A025921B19E;
-	Thu, 29 May 2025 09:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 932D621B19E;
+	Thu, 29 May 2025 09:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gyvykenZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mdJJLyB0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB8D215F53;
-	Thu, 29 May 2025 09:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648CB19E968;
+	Thu, 29 May 2025 09:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748509459; cv=none; b=God/qLJ3evJTTwdLS7BF+y0iW/KfuSiAGDPqSM4Kme0kWauyzFTLJ2dYRsgJoXboAB6RVFJkO2d7O3xobqwF0QoSOmxWh8Ic+VdkOrMx8QjgLPaiC+AefCQ9YNFf5aDK85FsPmefnG74F52TCoTy8RuClA/drJ9nGorB0fzbsHE=
+	t=1748509563; cv=none; b=NGUTY9rdlG8BBRBum5bjqrmCr+BpmfwQ4W/sIkN8buMI9wezIpqjGb18QUUT864WR+ZCGBqoNLP7CL0itaaOp+F3IjfRxIS3kxCzzmbE/+q/Iw4s5plvXe/qbFGXXYt9ZSNYWa7qk5Q4Cmed/JZW1sE5EtiXJHZaGqUxfqkiMLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748509459; c=relaxed/simple;
-	bh=m8JIOAJjyQG/OknuJGeN0vkewi5sVDBo1PFDvRss9Oc=;
+	s=arc-20240116; t=1748509563; c=relaxed/simple;
+	bh=TnBdwfMU35dwvTgOcU49mAwWEmcwsZg4PtscRxp7BZE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SlQCG4J4jLGuf4Krdi4ezgcYl6L0sAR7h4rBrhFxciJCaRvbt5RoGLNi5Co2lr5BvM6SLXnnL1PFEcGHE8Om3nk1M14zAN3AjC6T+TeewnWRP3ZlQSb2cSx+Fow34ZYV2q1NVvR8fzcYVTSS5ZZNBnsCWpv05I+p2Iajn17BBAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gyvykenZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990BDC4CEE7;
-	Thu, 29 May 2025 09:04:12 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=AeGXocx7h/UA9uAT7BcUjhYlFKFLWwrfzWhDd2OZUDJPNVWwYEjR1GNLe3/aYajNkLjISzQh1OzAlPbN7zZ5PXsNqLbutMmlqa21pIFCegWDmgPNLDg8kOPW/kbpyR/FzyHSfSTwZutRpOSImsPQdDWsvsa/U/jleqiapxezOk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mdJJLyB0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4EBDC4CEED;
+	Thu, 29 May 2025 09:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748509456;
-	bh=m8JIOAJjyQG/OknuJGeN0vkewi5sVDBo1PFDvRss9Oc=;
+	s=k20201202; t=1748509562;
+	bh=TnBdwfMU35dwvTgOcU49mAwWEmcwsZg4PtscRxp7BZE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gyvykenZ2FwGcV/On66Cc7zvjQu/DhxfM8lfpQXhgXcW4RqZmfF4PSNibMWqcBM4v
-	 W7L7FbCJyUjOhBgfQNH0/kOeulHipWGOtC1jCbSdZ6BscHt25sVroLhM2rjbvn28u3
-	 N9Vu5koOtG5WwFp5a8C671spWHlfrnECc+oXmOJ4uYm6XrXy3J2Frc7z5IfnfLW3SP
-	 rYE3h8XK5sxuxBZ73zZm+FNvpND3TOU5olKtev+VIOvF7FJhcmWS88CJbk2eAx83Tl
-	 lY5lp+NpN7xasXNs1ap9lKMZRG0sZp5z5zzF6VagV0RdmQgmf0MCydwi3Rj8qJVRvm
-	 IAzeSQ6ZYtGzg==
-Message-ID: <0e10b7d2-b917-48b7-a3c0-eb265c82a974@kernel.org>
-Date: Thu, 29 May 2025 11:04:10 +0200
+	b=mdJJLyB0mNoFoew7xh7nQyQ6kwRPijxdlCpPPwYGaK8qIx0V7cCop/SZXbcEFoguo
+	 tF5U355g7C+ele+r70WEO/ROVKjJBt/T0It2xcY//Z6xVeI/eqqj9uph1MzVZZ3zxz
+	 Y/Y1s0FTk4EvxunfLRtLCOV5wpTFg4b2p9bYuu0S423/w2r3iPKoNMmFLl6/QLIW0K
+	 mBuKl6d4+EtrXUSvnMRB0UtGAxFiHfwQ8IKPtPIiDvNYcBQjqpE+pVz+vs2oRkugeg
+	 Lq69O9hDxfP56ujzTXxVYlCzfC3BMqm0/xK3hIczy0s9Bnw2JKHLLksJ5SdLa2h6Rk
+	 bhA5KTURX1MIQ==
+Message-ID: <0c87223d-4b4e-4e82-b7ed-3c694393b1b0@kernel.org>
+Date: Thu, 29 May 2025 11:05:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] dt-bindings: display: panel: Add Himax HX83112B
-To: Luca Weiss <luca@lucaweiss.eu>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20250225-fp3-display-v2-0-0b1f05915fae@lucaweiss.eu>
- <20250225-fp3-display-v2-2-0b1f05915fae@lucaweiss.eu>
- <20250226-speedy-dark-mushroom-5d7c4b@krzk-bin>
- <932d5cc223f8d1ff1bb09c68990e4a82@lucaweiss.eu>
+Subject: Re: [PATCH] arm64: dts: qcom: Add coresight node for SM8650
+To: Yingchao Deng <quic_yingdeng@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250529085650.3594253-1-quic_yingdeng@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,39 +103,233 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <932d5cc223f8d1ff1bb09c68990e4a82@lucaweiss.eu>
+In-Reply-To: <20250529085650.3594253-1-quic_yingdeng@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14/05/2025 16:31, Luca Weiss wrote:
-> Hi Krzysztof,
+On 29/05/2025 10:56, Yingchao Deng wrote:
+> Add coresight components on the path from stm to etr.
 > 
-> On 2025-02-26 07:46, Krzysztof Kozlowski wrote:
->> On Tue, Feb 25, 2025 at 10:14:30PM +0100, Luca Weiss wrote:
->>> Himax HX83112B is a display driver IC used to drive LCD DSI panels.
->>> Describe it and the Fairphone 3 panel (98-03057-6598B-I) from DJN 
->>> using
->>> it.
->>>
->>> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
->>> ---
->>>  .../bindings/display/panel/himax,hx83112b.yaml     | 75 
->>> ++++++++++++++++++++++
->>>  1 file changed, 75 insertions(+)
->>>
->>
->> Discussion is still going. Sending v2 after two days is hiding that
->> previous talk, so that makes me sad.
->>
->> I am still at v1 and I am not going to review this one here.
+> Signed-off-by: Yingchao Deng <quic_yingdeng@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 250 +++++++++++++++++++++++++++
+>  1 file changed, 250 insertions(+)
 > 
-> Apart from [0] there was also no other activity in v1, could you take 
-> another look now?
-> 
-Keep only one compatible, so no himax fallback. This patchset rolled out
-of my inbox, so please send v3 or resend with short explanation in
-commit msg (no init sequence for generic himax, like you described in v1
-discussion).
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> index 86684cb9a932..5e1854a0e15f 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> @@ -5052,6 +5052,82 @@ data-pins {
+>  			};
+>  		};
+>  
+> +		ctcu@10001000 {
+> +			compatible = "qcom,sa8775p-ctcu";
+
+Wrong compatible.
+
+> +			reg = <0x0 0x10001000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb";
+> +
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+> +					ctcu_in0: endpoint {
+> +					remote-endpoint = <&etr0_out>;
+
+Fix indentation.
+
+> +					};
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +					ctcu_in1: endpoint {
+> +					remote-endpoint = <&etr1_out>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		stm@10002000 {
+> +			compatible = "arm,coresight-stm", "arm,primecell";
+> +			reg = <0x0 0x10002000 0x0 0x1000>,
+> +				<0x0 0x16280000 0x0 0x180000>;
+> +			reg-names = "stm-base", "stm-stimulus-base";
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			out-ports {
+> +				port {
+> +					stm_out_funnel_in0: endpoint {
+> +						remote-endpoint =
+> +						<&funnel_in0_in_stm>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		funnel@10041000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +			reg = <0x0 0x10041000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@7 {
+> +					reg = <7>;
+> +					funnel_in0_in_stm: endpoint {
+> +						remote-endpoint =
+> +						<&stm_out_funnel_in0>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +				port {
+> +					funnel_in0_out_funnel_qdss: endpoint {
+> +						remote-endpoint =
+> +						<&funnel_qdss_in_funnel_in0>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+>  		funnel@10042000 {
+>  			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+>  
+> @@ -5094,6 +5170,14 @@ in-ports {
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+>  
+> +				port@0 {
+> +					reg = <0>;
+> +
+> +					funnel_qdss_in_funnel_in0: endpoint {
+> +						remote-endpoint = <&funnel_in0_out_funnel_qdss>;
+> +					};
+> +				};
+> +
+>  				port@1 {
+>  					reg = <1>;
+>  
+> @@ -5112,6 +5196,133 @@ funnel_qdss_out_funnel_aoss: endpoint {
+>  			};
+>  		};
+>  
+> +		replicator@10046000 {
+> +			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
+> +			reg = <0x0 0x10046000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +				port {
+> +					replicator_qdss_in_replicator_swao: endpoint {
+> +						remote-endpoint =
+> +						<&replicator_swao_out_replicator_qdss>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					replicator_qdss_out_replicator_etr: endpoint {
+> +						remote-endpoint =
+> +						<&replicator_etr_in_replicator_qdss>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		tmc@10048000 {
+> +			compatible = "arm,coresight-tmc", "arm,primecell";
+> +			reg = <0x0 0x10048000 0x0 0x1000>;
+> +
+> +			iommus = <&apps_smmu 0x04e0 0>,
+> +				<&apps_smmu 0x04c0 0>;
+> +			dma-coherent;
+> +			arm,scatter-gather;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +				port {
+> +					tmc_etr_in_replicator_etr: endpoint {
+> +						remote-endpoint =
+> +						<&replicator_etr_out_tmc_etr>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +				port {
+> +					etr0_out: endpoint {
+> +						remote-endpoint =
+> +						<&ctcu_in0>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		replicator@1004e000 {
+> +			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
+> +			reg = <0x0 0x1004e000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +				port {
+> +					replicator_etr_in_replicator_qdss: endpoint {
+> +						remote-endpoint =
+> +						<&replicator_qdss_out_replicator_etr>;
+> +					};
+> +				};
+> +			};
+> +
+> +			out-ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+> +					replicator_etr_out_tmc_etr: endpoint {
+> +						remote-endpoint =
+> +						<&tmc_etr_in_replicator_etr>;
+> +					};
+> +				};
+> +				port@1 {
+> +					reg = <1>;
+> +					replicator_etr_out_tmc_etr1: endpoint {
+> +						remote-endpoint =
+> +						<&tmc_etr1_in_replicator_etr>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		tmc@1004f000 {
+> +			compatible = "arm,primecell";
+
+That's also wrong.
+
+Plus I suspect this was not tested against bindings.
 
 Best regards,
 Krzysztof
