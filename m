@@ -1,182 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-59763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD9B3AC76B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 05:48:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD18AAC76C3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 05:55:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8EC1F1BA6C81
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 03:48:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A5ECF9E19C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 03:54:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F9C5248F57;
-	Thu, 29 May 2025 03:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F2772522BE;
+	Thu, 29 May 2025 03:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RS6vDWsl"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BkALzi+B"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF80247DEA
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 May 2025 03:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA051248F57;
+	Thu, 29 May 2025 03:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748490474; cv=none; b=mSwaoHTjYPrpCa02UWOX3EceixSq5lNktd2V1w4pLi9QpBj6bSwH+yGxO3LDfnHECCs/+M3k6lfzgpfVV62VUMfHcgf/O0MX6n1gM+6NHL716JQ0ZtwjQgIrP4cnHIP/R0mTLNYBKq+hXOzXoPvSdia5S+gea/3Yjo2lKCf1pxU=
+	t=1748490876; cv=none; b=L2svgzwkx96AthpfvXLkBVFcuXg/QmlWHZc4p+MCh2H6A3c85aR3sYEE4jn/vmWm3ZqqsHCr6aWoqgcQkDohBubimD2IJJau5SZe3C/pQ1e1ALlZplT6eHJb5qlTDYN+9SeMaLpmFbnSSHZvST0PLMGVitUFrPNRQcghnqqvcWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748490474; c=relaxed/simple;
-	bh=EgXB3x/pd9k4/RXeT23731nZtfayd43VqrfynvLlfVg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=mCgixlx3SQBTP0tZaIgDm3eY6IySOIYJDT9HqQwvjzKjpHDdlewYOzKk73t+JSEQW+mFRaM79bjFMOArd43h5WvEZ+WY+UINUtUQlM3Fr6yxn5WStNEdxENnt8IlCvXNWhZlBFO5rUmZnbF5zkp1eGUAIyCEFIOi41NusfFfVfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RS6vDWsl; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54T0Vfug001212
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 May 2025 03:47:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=Ce54/ONkL+nmxbxtqQrOZ2
-	laFkM+mMh52ESoUpvVOik=; b=RS6vDWsl7BCUF5i6JdsXWaR0WmGP4iAthLFI9w
-	GNWV9db+UUmTUKYFMoT0CB8PcQGEqrF0FuXGZVUls5whqP8U8YLkecS24fwumO8y
-	WGpVWTOAtCh8pxbJyGQ6lWcjy2580/IQ/h3mTg1C/w92ZujbjMZx6AAIQbLYd7Wj
-	HIbbZhRkLoQ1cqr8cUcNYGXEwRHfMfRFVj8MiikXcIWehlik/fvgGQxXY9rvIDIt
-	+wGgbgHyCrvw7yIpIsLtxIAo4e6t3KzBWm/ic9KX1j1sEsTElA9KjhpVDtumpsvo
-	xorTyLBMjSDaNskzSUfpioqKhI4/FOFtvdmz0UXw1oPOHHmA==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u3fqchf1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 May 2025 03:47:51 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3111a593ba9so751744a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 May 2025 20:47:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748490470; x=1749095270;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ce54/ONkL+nmxbxtqQrOZ2laFkM+mMh52ESoUpvVOik=;
-        b=bXgs3hqXJMzAx3BlOiPeqiYimhecWxo6YsL/e+HQAxHyE/Db/PtYzrilcjEGCyEswv
-         BAiHPk4bM2FdVl0CRAES24YVYwOX0PiYXo7N3hw/PX3VScwKtJb+ng8hwkRP/zB3JN6d
-         lmvXjGUwLKGdyXWw/loNEedPMmFqaY3UAhS48BSJBizij0sXM10ruQV31oalmjZVS1Uz
-         DT+2GpfdgIOTAgkUm6omjBkGUEl8ZJp2rrOp8ws6dy12nvn9/+68XXUnUuyl/XTlWuKY
-         g21fuYdxgDy3j0ZMeW6MDlUXKjsic1Jp2ocV1D3XK2RqMizanuN/SqqyvNWedJuCtnhf
-         T+kA==
-X-Forwarded-Encrypted: i=1; AJvYcCVHh6qxwYC2yNide88NonQxdC/n01oWj5kHzZYlaSnEpdAjtKYdYM2oFl1UIVfsu4QrM//aLJrEVf6H5zwB@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzqc0OoaoqJ4Bj6DNBzxWLN9uQX9Ny1mTD/i8zky0UGYCQmgF4G
-	wdhDCMP2ZWioO1Wd0mOq0mZQq7QJ0XB+1X3//wyJFyJ2bP/vNgccgCJphKalI//A8dIkACZrjGb
-	tPkTIhlYwljdX1kXOnVl9E+IKLKwQ8kFpaC0dWlniSuagG9LPowchqu34Yfx+qfzMcVb+jaNFsF
-	+F4etfR1Ed
-X-Gm-Gg: ASbGncsiukHspvTgMHwRueX7hzm2EzF/1IiEM5qCHESuyYWyEdy8PF3U3UizfsVTZlF
-	WEE53fmIZXKT65Ua2zndPq180mhvuR8QrKefir24KwJljqjLy/GnnG7EK4g4p/kzqwp1Hp5weZw
-	Ls8WOFoYU6QKop6ILgatAyvKh5NIJrh9+RXd4lzsYmz0UaRLl395hzQGoNB/cxzqZezMkS2ax9O
-	IvYmJVfHaTd2cXrYXuXXaBKuU/7YqZzlGV9LnMJz32cd2a8/2s8MAdE3Ojhgl3R3Z3N/O0Hy2/0
-	bn3C4Ns9o9VNx9ELO2L3x020HJgLNbR5zpOE3KrI76QE
-X-Received: by 2002:a17:90b:2e83:b0:312:1d2d:18e2 with SMTP id 98e67ed59e1d1-3121d2d197emr1271627a91.20.1748490469793;
-        Wed, 28 May 2025 20:47:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHoNb37NFxXvc5+hVGbX8/Z9d57NjtMj+UMiz4MmRKaNVbzHDw9efdCTcOWzb70HNYIIiX4ZQ==
-X-Received: by 2002:a17:90b:2e83:b0:312:1d2d:18e2 with SMTP id 98e67ed59e1d1-3121d2d197emr1271586a91.20.1748490469405;
-        Wed, 28 May 2025 20:47:49 -0700 (PDT)
-Received: from cse-cd02-lnx.ap.qualcomm.com ([114.94.8.21])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3121b6fb2a4sm417949a91.9.2025.05.28.20.47.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 May 2025 20:47:49 -0700 (PDT)
-From: Tingguo Cheng <tingguo.cheng@oss.qualcomm.com>
-Date: Thu, 29 May 2025 11:47:08 +0800
-Subject: [PATCH v2] arm64: dts: qcom: sa8775p: pmic: enable rtc
+	s=arc-20240116; t=1748490876; c=relaxed/simple;
+	bh=P51RspfzGpdHpBrfvugI3IiiMtsKcraElLsLNaeJz80=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=t3UP5zLIPEZqzQRE7YqlKb8k3cteBF1JyInomIShhc4mECu9sga1tsmW7Li92rBx4uo2ECMBtfuFMhpV4JyupI3l+yCIvmgiCbnrepm9RzTfzys6KfWVuQbDZJ7gyiLKNvd9VpgJx64ah7pzdRli7b9YM6UbuecO9ifPioOoVME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BkALzi+B; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54SJAJQl005112;
+	Thu, 29 May 2025 03:54:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=1G2vijzDb6ASBTZNBwxt3G7LThp+7H8Yhyj
+	ZoGVmMpg=; b=BkALzi+BrUtJaA9Q0qee+6ZSX8Q4Ki3E2kuDjbp5tuDpjVuVdtT
+	5q0vaWG9TAOqZC9DSTT+qxCDyjw49Ap5l55zNQn1fLjAb2Ug2emHiquR5yYt7OOI
+	3/Yj1OlY4vHIzOBTUt4F897fZAWlnPliUxtRCABnYFNJib3uiX4PnNegsJDcccID
+	VCbs2AmLAt6o1r51O9NJJ9X6rwo8ONRfUug50g9rUJF8VJQLMmSHqgIMgKg1omvc
+	luvOp6T1p/BdAGzyjF2zaXPJpKTOH2YhxA9T0Rr148AZA9FlCH9fz+2mY3jxkfYB
+	MNSbxKS2e3cWNTHvX8swHVMtfoSAdOZnHkA==
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46x8d7920m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 May 2025 03:54:23 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 54T3sKRf011609;
+	Thu, 29 May 2025 03:54:20 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 46u76mdp1x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 May 2025 03:54:20 +0000
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54T3sK29011592;
+	Thu, 29 May 2025 03:54:20 GMT
+Received: from cse-cd02-lnx.ap.qualcomm.com (cse-cd02-lnx.qualcomm.com [10.64.75.246])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 54T3sJjV011587
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 May 2025 03:54:20 +0000
+Received: by cse-cd02-lnx.ap.qualcomm.com (Postfix, from userid 4438065)
+	id 5F6C83151; Thu, 29 May 2025 11:54:18 +0800 (CST)
+From: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+To: lpieralisi@kernel.org, kwilczynski@kernel.org,
+        manivannan.sadhasivam@linaro.org, robh@kernel.org, bhelgaas@google.com,
+        krzk+dt@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
+        kw@linux.com, conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+        andersson@kernel.org, konradybcio@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_qianyu@quicinc.com,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Subject: [PATCH v1 0/4] pci: qcom: drop unrelated clock and add link_down reset for sa8775p
+Date: Thu, 29 May 2025 11:54:12 +0800
+Message-Id: <20250529035416.4159963-1-quic_ziyuzhan@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250529-add-rtc-for-sa8775p-v2-1-f06fd212c0e5@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIALzYN2gC/y2O3Q6CMAxGX4Xs2pIyGD9e+R6GGBwFeuGm2yAY4
- 7s7wLuer/lO+xGeHJMX5+QjHC3s2ZoI8pQIPXVmJOA+spAoFSrZQNf34IKGwTrwXV1V6gmVLHs
- qKc6IIjafjgZed+u1jTyxD9a99yNLtqWbr8AGZYZFjjLNG9WUFUIGr5n1LbAZx9nqy0ZsdKrtQ
- 7TfQ+0opp7D4Rf3zhPE/YPDOTG0Bvj/WsfG9wc1JWKi4QAAAA==
-X-Change-ID: 20250529-add-rtc-for-sa8775p-726de6e77500
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: Rakesh Kota <quic_kotarake@quicinc.com>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>, kernel@quicinc.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Tingguo Cheng <tingguo.cheng@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1748490465; l=1478;
- i=tingguo.cheng@oss.qualcomm.com; s=20240917; h=from:subject:message-id;
- bh=EgXB3x/pd9k4/RXeT23731nZtfayd43VqrfynvLlfVg=;
- b=QIDFTBtYRn3d7gb4BWVaIG841OnWDXNL9eUoqXnKeMxtJ83WETc4MTH/qU7OA8cbVxBBmtXOc
- 3WeRrzESWuQD1UBTRLietoNVAB/WbftstnIPNfiQbGjQzGHvSRjt/QO
-X-Developer-Key: i=tingguo.cheng@oss.qualcomm.com; a=ed25519;
- pk=PiFYQPN5GCP7O6SA43tuKfHAbl9DewSKOuQA/GiHQrI=
-X-Proofpoint-GUID: vjDxNJObZlG25-X0kUKetcSLlr8GAb4W
-X-Proofpoint-ORIG-GUID: vjDxNJObZlG25-X0kUKetcSLlr8GAb4W
-X-Authority-Analysis: v=2.4 cv=X8FSKHTe c=1 sm=1 tr=0 ts=6837d8e7 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=jWSs3TtdNv8aAmf1mZ0A:9 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDAzMyBTYWx0ZWRfXzHy7iTkxHGEm
- ZGI571aRiV26RT8WO5QaSpvFwWxeiEwJnx85K782pbyrtqOm1OYHKZ9+B96TiYXc5Bacl2vigAt
- Sl+gy83JGS3ywDWzL/M65MKk6PpwwXHY4CSc0tWiBowyc13jgyPenda7TqZhFjBbB5kVkHbsmtU
- bPDyWEwOyWyiNvOpS4ZDiF/xSwNjkNujgxh9Vln0RZD67fr1P7Bsep6zKDubZadcBz45vXIkOYM
- 0zVaWv3MMMwtnnoLYcl52RMMqIYgkhvhz5iP81WrpAstY0bQowQ5p5+qdXH13EX0YQaowBFQJYB
- ZHkVmEvn6jgSBob6YE69OjQZ9iNffX31bs1t3F5JdpPJJZ+p2F75SH2sIHxUxJKwe5EedaYF/4J
- MSCvydztDLDiOgDLLxRKjXxeopfpptmMAFWI6uAB+ugrqTolKEvHw8+NafW6ufhPHHxaI985
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: w3Wy0xEt0JrtV_tt5G3n9cJWMJg4-yDg
+X-Proofpoint-ORIG-GUID: w3Wy0xEt0JrtV_tt5G3n9cJWMJg4-yDg
+X-Authority-Analysis: v=2.4 cv=X8pSKHTe c=1 sm=1 tr=0 ts=6837da6f cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=MwwM2Iz_yP08XZX32zwA:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDAzNSBTYWx0ZWRfX8rkUVQ1/IPvw
+ vg5KGfckWU1Bus4jiCNegTL7B9W2GvQZswXl8R9aOP2hmhJMLVqiX4JLkVOfir4bBuTjYKKdQUQ
+ xrnrk3d71gb3AwoHinG7JIMK6MyMoNxTufNmW4vMDzpSTfMZ8G985p+/xtyORPjapINI3TwleKN
+ FHsVRYwCCmc1GdKP/1ZguNI2Iqzr8a1C/kvF8BiS2YXEI4MBE5fgA/+D1w2NmdnrB44Zh6/amOJ
+ QTlXb1YfLna1zSKIKopjWrsahXCqY9agoxy7yaVyRKCkaDeLmSSYk6remrI4/OjpPjPn1h3mQaN
+ 9BLiYeEi8NnPV1ZIpeCWy6Lo8oYUZAU+9nExlcr6Q5mmNyulwsBCeK8gL6M4vQ/U+rcHAwelT/B
+ VVkbuI0FbMeAnF7C1G3ZFvhgnTmxO95VPyFDH2V20rRZW9MOdLyQ6FpWq+y43dYEKf2S289m
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-29_01,2025-05-27_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 phishscore=0 bulkscore=0 mlxlogscore=918
- mlxscore=0 clxscore=1011 priorityscore=1501 spamscore=0 adultscore=0
- malwarescore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505290033
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 phishscore=0 spamscore=0
+ adultscore=0 impostorscore=0 bulkscore=0 mlxlogscore=862 suspectscore=0
+ clxscore=1015 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505290035
 
-Add RTC node, the RTC is controlled by PMIC device via spmi bus.
+This series drop gcc_aux_clock in pcie phy, the pcie aux clock should 
+be gcc_phy_aux_clock. And sa8775p platform support link_down reset in
+hardware, so add it for both pcie0 and pcie1 to provide a better user
+experience.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Tingguo Cheng <tingguo.cheng@oss.qualcomm.com>
+Have follwing changes:
+  - Update pcie phy bindings for sa8775p.
+  - Document link_down reset.
+  - Remove aux clock from pcie phy.
+  - Add link_down reset for pcie.
+
+Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
 ---
-Changes in v2:
-- Changed the Email address from quicinc.com to oss.qualcomm.com.
-- Removed the 'allow-set-time' property because APPS is prohibited from setting the hardware RTC time.
-- Rebased on next-20250528.
-- Link to v1: https://lore.kernel.org/r/20240902104302.3959670-1-quic_tingguoc@quicinc.com
----
- arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-index 1369c3d43f866de9d8cd5cd4985241b99c0a0454..9e0d05c1b39ce229d5d4310ea1df1bf02e689178 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-@@ -132,6 +132,13 @@ pmm8654au_0_pon_resin: resin {
- 			};
- 		};
- 
-+		pmm8654au_0_rtc: rtc@6100 {
-+			compatible = "qcom,pmk8350-rtc";
-+			reg = <0x6100>, <0x6200>;
-+			reg-names = "rtc", "alarm";
-+			interrupts = <0x0 0x62 0x1 IRQ_TYPE_EDGE_RISING>;
-+		};
-+
- 		pmm8654au_0_gpios: gpio@8800 {
- 			compatible = "qcom,pmm8654au-gpio", "qcom,spmi-gpio";
- 			reg = <0x8800>;
+Ziyue Zhang (4):
+  dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Update pcie phy bindings
+    for sa8775p
+  dt-bindings: PCI: qcom,pcie-sa8775p: document link_down reset
+  arm64: dts: qcom: sa8775p: remove aux clock from pcie phy
+  arm64: dts: qcom: sa8775p: add link_down reset for pcie
 
----
-base-commit: 4788e5176e2ae85ec6d2022a5a79aae0da083154
-change-id: 20250529-add-rtc-for-sa8775p-726de6e77500
+ .../bindings/pci/qcom,pcie-sa8775p.yaml       | 13 ++++--
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |  4 +-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 42 ++++++++++++-------
+ 3 files changed, 37 insertions(+), 22 deletions(-)
 
-Best regards,
+
+base-commit: 3be1a7a31fbda82f3604b6c31e4f390110de1b46
 -- 
-Tingguo Cheng <tingguo.cheng@oss.qualcomm.com>
+2.34.1
 
 
