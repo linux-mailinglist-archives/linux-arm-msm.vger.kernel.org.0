@@ -1,139 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-59820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85D2FAC7D97
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 14:16:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E535AC7EA4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 15:23:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D7D153B6178
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 12:16:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 11AB51BC4CEF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 13:24:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF3282153CE;
-	Thu, 29 May 2025 12:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0771D225A3B;
+	Thu, 29 May 2025 13:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Emin7nZm"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="HV2UtNB2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06212AE6F;
-	Thu, 29 May 2025 12:16:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D4B647;
+	Thu, 29 May 2025 13:23:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748521013; cv=none; b=A36oercaefDLbiUcp6s8gk9NeINb9onvEF+uGomKfBCJdy8+xPSm28rGUZhRjO7PuiTUvQRqqPL5d+9JFYkuU+HYf+sa/aCCm9JNyGgZLp/pMAJZZATu1GxMw5k35xcAzRkCYgud8peoIP9tOghw95Tcov9XAEUQWTy+VXLyj/E=
+	t=1748525020; cv=none; b=nhNSyTGLnihuDhh1xwTQ8o4ShJMN6KMpToTsYhd3AWikJngSCqeByj+Td8VBfWweYs1QPOiuWBDcBRn7wJrCfvkDS8taUbbUqArcLNDT6l96x6ZwyK9VOeBHuTLZ95nUGBhPDf2414Y9aCJNlPAFK5Y8Dsn2xiQvCMDwEzf6Lnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748521013; c=relaxed/simple;
-	bh=3vBQXvVhwm+l42vUA7VErf/HtjbvkBPtjkIUBpaX6aE=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=OHXCdq6QeWUlGWvpAZYh5o5A2Yaaze0047TRTicyWv8GfJhhSavO43b9bB60iASUTos8QGBnV7g4yIqt3yO7dPRvg8D2DBHL6yffUAm38IjQgLXVquz1dp962LeZB1FvGkAslaSyhhGgAmd+rvWOe1lDyxQRxvJfpo9snxOad/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Emin7nZm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0182C4CEE7;
-	Thu, 29 May 2025 12:16:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748521013;
-	bh=3vBQXvVhwm+l42vUA7VErf/HtjbvkBPtjkIUBpaX6aE=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=Emin7nZmG1MBDyfGk5b0zVeX60SaUJ8si00zytLt3P/W9vpaZXN+a+MxJQ+eDIYpM
-	 Fbqnw6PFolCPGnxq2OWzCoTS5VTZYDL0CDo9pBBCftQ4AJIwqYATHtL0WZQPQUgKSp
-	 aosK5cJXZjbhvoV0SIzgbttjzR0MksnMgpAh7qpSkB9rYiJ48GbI6J33PM/vSB+vjY
-	 XxmXXlg5Zefo01qtT19kk5B1gDNLV74/edrI2/J6hOWzkXDlc2xkiNGLajaUol2m9q
-	 lgUgmhNPnKGBvphEAwu0EKYxgGNHLvW6G6cIU8fNyFaWs2olHYDk8cYHkV+Rr3+qEl
-	 qSLHLEjV+4X/w==
-Date: Thu, 29 May 2025 07:16:51 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1748525020; c=relaxed/simple;
+	bh=dDGVAlh58IXITtv4zoQJHm8V6+hjmVhqg6ZkAI+a+ks=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qxQZ9cLFgEdM5EM7COzIy4G7tcf2x52b4i/w0+b1LZEK64Bb0YqTSQbjgiMYVJiCSkYGxOkZIct5rQKqpUkd7fiqpKSW3WjPBG+pFPb7e2lIVlKOJYeVoSs71D/Xt0AxKwf9dUuOc2ArSswwPXSAihDM+2x/JN1fMzTuyWbTEpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=HV2UtNB2; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=zBTL/STJmtvp2VqDgiDgK4iklSQ0paUUUgoWg/0K4tc=; b=HV2UtNB2S1YdQPm65D3plaVeJJ
+	rS8dbZCmEBE8hNa2SKqutR8/LSMMDcPJCzrBeKp7x9VeDvjUE8kZAiefsXQgFAYOyPLvpbJLscpb7
+	hsUlRtD+mvZ7xh5a58YHxqMIL0Edd26bJ513M5L6iHeoHzpJdmLiktSVODuAfOXtH6Yoj7aKBP9rf
+	bpFmXHijHgT4dfAYYFX+T1wiE+fxLo12DRGJOZJFDCAt//iquqt3pEiLLE4JnuwQkNeVIS1tJRC+K
+	ZaGnGtO/q++vAZWrS88u3tU0udE6CGIc+ctokgqA56J/0xF3HrI3DYNHi8u4kDZzY/9jIx5DhK9l5
+	UxuuEzjg==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:43512)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1uKdEG-0001Qi-0z;
+	Thu, 29 May 2025 14:23:28 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1uKdEA-0003Ti-1O;
+	Thu, 29 May 2025 14:23:22 +0100
+Date: Thu, 29 May 2025 14:23:22 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Romain Gantois <romain.gantois@bootlin.com>
+Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>, davem@davemloft.net,
+	netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com,
+	Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	linux-arm-kernel@lists.infradead.org,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?iso-8859-1?Q?K=F6ry?= Maincent <kory.maincent@bootlin.com>,
+	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	=?iso-8859-1?Q?Nicol=F2?= Veronese <nicveronese@gmail.com>,
+	Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
+	Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>, Daniel Golle <daniel@makrotopia.org>,
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Subject: Re: [PATCH net-next v6 06/14] net: phy: Introduce generic SFP
+ handling for PHY drivers
+Message-ID: <aDhfyiSOnyA709oX@shell.armlinux.org.uk>
+References: <20250507135331.76021-1-maxime.chevallier@bootlin.com>
+ <23936783.6Emhk5qWAg@fw-rgant>
+ <20250523145457.07b1e7db@2a02-8428-0f40-1901-f412-2f85-a503-26ba.rev.sfr.net>
+ <13770694.uLZWGnKmhe@fw-rgant>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, devicetree@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, linux-kernel@vger.kernel.org, 
- Conor Dooley <conor+dt@kernel.org>
-To: Yingchao Deng <quic_yingdeng@quicinc.com>
-In-Reply-To: <20250529085650.3594253-1-quic_yingdeng@quicinc.com>
-References: <20250529085650.3594253-1-quic_yingdeng@quicinc.com>
-Message-Id: <174852097693.2714455.3894207129970011283.robh@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: Add coresight node for SM8650
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <13770694.uLZWGnKmhe@fw-rgant>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-
-On Thu, 29 May 2025 16:56:41 +0800, Yingchao Deng wrote:
-> Add coresight components on the path from stm to etr.
+On Wed, May 28, 2025 at 09:35:35AM +0200, Romain Gantois wrote:
+> > In that regard, you can consider 1000BaseX as a MII mode (we do have
+> > PHY_INTERFACE_MODE_1000BASEX).
+> > 
 > 
-> Signed-off-by: Yingchao Deng <quic_yingdeng@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm8650.dtsi | 250 +++++++++++++++++++++++++++
->  1 file changed, 250 insertions(+)
-> 
+> Ugh, the "1000BaseX" terminology never ceases to confuse me, but yes you're 
+> right.
 
+1000BASE-X is exactly what is described in IEEE 802.3. It's a PHY
+interface mode because PHYs that use SerDes can connect to the host
+using SGMII or 1000BASE-X over the serial link.
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+1000BASE-X's purpose in IEEE 802.3 is as a protocol for use over
+fibre links, as the basis for 1000BASE-SX, 1000BASE-LX, 1000BASE-EX
+etc where the S, L, E etc are all to do with the properties of the
+medium that the electrical 1000BASE-X is sent over. It even includes
+1000BASE-CX which is over copper cable.
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Base: attempting to guess base-commit...
- Base: failed to guess base
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250529085650.3594253-1-quic_yingdeng@quicinc.com:
-
-arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: replicator@10046000 (arm,coresight-dynamic-replicator): out-ports:port@0: 'reg' is a required property
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-dynamic-replicator.yaml#
-arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: replicator@10046000 (arm,coresight-dynamic-replicator): Unevaluated properties are not allowed ('out-ports' was unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-dynamic-replicator.yaml#
-arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: tmc@10048000 (arm,coresight-tmc): iommus: [[75, 1248, 0], [75, 1216, 0]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-tmc.yaml#
-arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: tmc@10048000 (arm,coresight-tmc): Unevaluated properties are not allowed ('dma-coherent', 'iommus' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-tmc.yaml#
-arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: replicator@10046000 (arm,coresight-dynamic-replicator): out-ports:port@0: 'reg' is a required property
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-dynamic-replicator.yaml#
-arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: replicator@10046000 (arm,coresight-dynamic-replicator): Unevaluated properties are not allowed ('out-ports' was unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-dynamic-replicator.yaml#
-arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: tmc@10048000 (arm,coresight-tmc): iommus: [[75, 1248, 0], [75, 1216, 0]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-tmc.yaml#
-arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: tmc@10048000 (arm,coresight-tmc): Unevaluated properties are not allowed ('dma-coherent', 'iommus' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-tmc.yaml#
-arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: replicator@10b06000 (arm,coresight-dynamic-replicator): out-ports:port@0: 'reg' is a required property
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-dynamic-replicator.yaml#
-arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: replicator@10b06000 (arm,coresight-dynamic-replicator): Unevaluated properties are not allowed ('out-ports' was unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-dynamic-replicator.yaml#
-arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: replicator@10b06000 (arm,coresight-dynamic-replicator): out-ports:port@0: 'reg' is a required property
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-dynamic-replicator.yaml#
-arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: replicator@10b06000 (arm,coresight-dynamic-replicator): Unevaluated properties are not allowed ('out-ports' was unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-dynamic-replicator.yaml#
-arch/arm64/boot/dts/qcom/sm8650-qrd.dtb: replicator@10046000 (arm,coresight-dynamic-replicator): out-ports:port@0: 'reg' is a required property
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-dynamic-replicator.yaml#
-arch/arm64/boot/dts/qcom/sm8650-qrd.dtb: replicator@10046000 (arm,coresight-dynamic-replicator): Unevaluated properties are not allowed ('out-ports' was unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-dynamic-replicator.yaml#
-arch/arm64/boot/dts/qcom/sm8650-qrd.dtb: tmc@10048000 (arm,coresight-tmc): iommus: [[75, 1248, 0], [75, 1216, 0]] is too long
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-tmc.yaml#
-arch/arm64/boot/dts/qcom/sm8650-qrd.dtb: tmc@10048000 (arm,coresight-tmc): Unevaluated properties are not allowed ('dma-coherent', 'iommus' were unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-tmc.yaml#
-arch/arm64/boot/dts/qcom/sm8650-qrd.dtb: replicator@10b06000 (arm,coresight-dynamic-replicator): out-ports:port@0: 'reg' is a required property
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-dynamic-replicator.yaml#
-arch/arm64/boot/dts/qcom/sm8650-qrd.dtb: replicator@10b06000 (arm,coresight-dynamic-replicator): Unevaluated properties are not allowed ('out-ports' was unexpected)
-	from schema $id: http://devicetree.org/schemas/arm/arm,coresight-dynamic-replicator.yaml#
-
-
-
-
-
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
