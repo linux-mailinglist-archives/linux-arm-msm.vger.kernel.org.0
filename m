@@ -1,206 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-59815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF18FAC7C6E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 13:13:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42DADAC7CE9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 13:26:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 932C01BC1896
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 11:14:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 77C84A4093A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 11:26:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FBF128DF49;
-	Thu, 29 May 2025 11:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF75928E5F8;
+	Thu, 29 May 2025 11:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="axDttq9T"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="luI5Snan"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from lelvem-ot01.ext.ti.com (lelvem-ot01.ext.ti.com [198.47.23.234])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3699D207A0B;
-	Thu, 29 May 2025 11:13:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E0C28E5E5;
+	Thu, 29 May 2025 11:25:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.23.234
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748517229; cv=none; b=MWuKBexXpjd+3PrmYb2ljcoRBOXtbgx5zk76VV0bvjBosRa5ES6tyG6opRX08ncFaMGpupnJD/CcanYa2xJMJEA+RCSuyyrZ/rhmrdqJwdyTWC6M1bdP3APGPYdz7YmNe/hs5/625OXepwMsE6NuZQ7shXW0s4ANHdgEcsYNQhs=
+	t=1748517908; cv=none; b=bYO6CP5pBhKCkFHFGx658Z40GYxFwEIUIH4nM0y1vVQPk8uaBW1rStjxvcK9TINRP9klQ+BYOXf17KZzYpwxhdA92gE6ZKXASy8c2PUz3hcNQ5AMmqIFyfvQMx3qz1pxNvljMYLZttVO8gcwNytqLuRknpkgMRnrM7CipXrVo8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748517229; c=relaxed/simple;
-	bh=zVRog1dgEdzJSKrjtDJMVJkHH7+/67hn+GXt1AhFJjw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TklVU2ahuxbmmovQ2a3VsnrlhtmSuRjAxqMPys60qOVGLdGMj5NnasmenfHU+dbBMDc5zKXgzDFmsbDVM3esl6Lpyv7V32AszL5E6yg8X0nrux6EEGoLt9PaG6y/m7T+OwJ0snbr/T2xeAJEDRUvZWReY42QTO1TjZMIWXC10/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=axDttq9T; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3a375d758a0so685796f8f.0;
-        Thu, 29 May 2025 04:13:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748517225; x=1749122025; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yK9qxpphezwGnQuF+KskqWcGIK9SoXYFqqQnXtln7Y0=;
-        b=axDttq9TIKJbEp0JH5btXFjWTTP2gNCr4WCQIdFSkWSQ6qeyr6gEAlcDH1kLs5LNk0
-         3ToU0iVu2YDjma44CuXFxeoI4Rr4YwMhEAWy19lAMyLbD6T1tahIc3Xgnerzlp69zCwW
-         qhdxYjaKQ18Gt6+7eonDOQVre/yI5BsfbED4K+yrYcnUEpoulC45m5WIRA/SpJ/xHuX6
-         0tL1wBW3sHr1qttHZFLvaEqNGUE3sOvMyitvsEwdXB4oQDOmQBmc5rwzvGpiuk4Ho32L
-         JvB1WuJPNMwjX8IuwyUJ9ZtAkgRpBL4sgN1UitTJ8X7vwqfCxg/H7KA1Xh3gJ6Rz6GDh
-         OqcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748517225; x=1749122025;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yK9qxpphezwGnQuF+KskqWcGIK9SoXYFqqQnXtln7Y0=;
-        b=p6ByZdzksjPNVXaWA//b5aNq9sASTl8odVXKphzK1XbdCvYdZIlvojD+/IWoZSiNvP
-         VeY9164RW+7JqmlhoIfomf+qcbu01XGrioX6hVKV8IsBmuDs3mgDeNDe+8/HsPECHZ7F
-         WhnvEUTahS6Vt8pkIdzD+U2CttfwVPYyWNPZBJPQ0pTwllH+BdSlK0d+8UhbLutjhQu/
-         OHoI96nD5G4X6hPVQV75MXi3J+iwiRx24jhn6awUmWARKqqlND9VgwbGt2Cgp+NBe5jC
-         +hmbzMMcZCJdQi02gexO0YASpteGPHZbyq/NQArKD8Lk9lDyNWmtgRPm7r1TQfPe+QVy
-         RN1A==
-X-Forwarded-Encrypted: i=1; AJvYcCVHW/wwfrsp1XJeWg+xBN/ogVbO7gJruNdgbZsPaKodYWr3a4mLk+vWKTwEj9iDgXUkDZp+/NCpQrhk@vger.kernel.org, AJvYcCW4EmdntBMNCz/5ukqucF7gQEKjKFiLoGCgKvoKIweBrkRMkc18qZjChqdyytrHhQkQ9hRyDjvAZ8frRv7A@vger.kernel.org, AJvYcCXUMdB6RN3Xb9ZBJwk4mW19otalvSv1rIS1FBXBY0yKvWGuJU5E6DbgjUzGAupthzKSjnEgLYiZ0lA7u8jBNQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz+KZysIifoUYxOAqy66LYm5xlGIP1Jt3QagyaZu/8rg3IQOL+i
-	M7tYkxezKWRR42HH6uL5in39pDFrelL1wksyRmjCiNIBr8LJBgt2sxY=
-X-Gm-Gg: ASbGnct9kW2iTTBmMwFtPyYYkp1sI9RJLDO1jHCQXnQlQ8PA4F1doevnuc74CtVPgH0
-	VHTJhZbA0OwRUBtU54GpKjA3uwNoXIOHEUtWuzWNdtDxEnXdePgsmcdnEuUK+qLcfHRzb+/Rl8o
-	8+fykGMBRVaVZ+mDinrOYMW0Q+1c646TtBB6J47VwVfN7T0jSWfk/+Pxz5CTzPkATTXA1J7j3dC
-	LRb7Y/qem9p7FlCG1XacSF1I+7r3vvWadhzMmPRxU1JvLBUdnCuKgs1NAuw3DjXPHF/M3GNoKGE
-	ydVY7Z84r0WufvRncPvfGD+0ZnZBg/TFxm0+5NqSpQ6BTIvEH5mRYVhe57NrQA==
-X-Google-Smtp-Source: AGHT+IFtVOAYLaqimD0CxC6hc1kQSyzh4mu6P4w2Hy3B/G1NI/FXQGzDsNSqYq4Rk9kil0/t65js7A==
-X-Received: by 2002:a05:6000:4027:b0:39c:1f02:5409 with SMTP id ffacd0b85a97d-3a4cb4619camr15584768f8f.9.1748517225032;
-        Thu, 29 May 2025 04:13:45 -0700 (PDT)
-Received: from [192.168.2.104] ([66.205.92.118])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450cfc02cf0sm17219285e9.11.2025.05.29.04.13.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 May 2025 04:13:44 -0700 (PDT)
-Message-ID: <2df66542-90b7-487e-88bb-5433b500c518@gmail.com>
-Date: Thu, 29 May 2025 13:13:42 +0200
+	s=arc-20240116; t=1748517908; c=relaxed/simple;
+	bh=rpsm8eRyeXGMHwqH0z4/V4yOz4McjMeLdc1aaKfmJAM=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hv25DDDS0Z42QRqC0JAcoBc0JgDNReNC7vr2AnV14K6hVle7uy+qapNkuKf65vOCiyvv+x5ESOLWNry45exVxNVbg1rIV0lOIYPA8zWkkum/5r1kOolq4ff3O8JUjlRk0LhaA5COz2hd+79PGMdfOhmBy6ufb8VSV+J03TRAcNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=luI5Snan; arc=none smtp.client-ip=198.47.23.234
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
+Received: from fllvem-sh03.itg.ti.com ([10.64.41.86])
+	by lelvem-ot01.ext.ti.com (8.15.2/8.15.2) with ESMTP id 54TBOPh03504642;
+	Thu, 29 May 2025 06:24:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+	s=ti-com-17Q1; t=1748517865;
+	bh=56qRrAtL/a6koU+ClmQ0T5MnkBdpWG/sJANgtbap56g=;
+	h=From:To:CC:Subject:Date;
+	b=luI5Snan38kNQ+vphh1lKji9/YO3x7//X4p4oebHZ8lkEjIF2yvQsciBH8yUkuK9k
+	 AMLL08bddYOX598TBZijLKU8dGX1Ixll7VZVftQHBWHRij2nORFQbFkhkLBTXk31NU
+	 siM9pFG3dXuCOKZx68YdFvsYdlscM/r5n1TufYYc=
+Received: from DFLE107.ent.ti.com (dfle107.ent.ti.com [10.64.6.28])
+	by fllvem-sh03.itg.ti.com (8.18.1/8.18.1) with ESMTPS id 54TBOPT2061510
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA256 bits=128 verify=FAIL);
+	Thu, 29 May 2025 06:24:25 -0500
+Received: from DFLE111.ent.ti.com (10.64.6.32) by DFLE107.ent.ti.com
+ (10.64.6.28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Thu, 29
+ May 2025 06:24:24 -0500
+Received: from lelvem-mr05.itg.ti.com (10.180.75.9) by DFLE111.ent.ti.com
+ (10.64.6.32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
+ Frontend Transport; Thu, 29 May 2025 06:24:24 -0500
+Received: from localhost (jayesh-hp-z2-tower-g5-workstation.dhcp.ti.com [172.24.227.14])
+	by lelvem-mr05.itg.ti.com (8.18.1/8.18.1) with ESMTP id 54TBONkn1516428;
+	Thu, 29 May 2025 06:24:24 -0500
+From: Jayesh Choudhary <j-choudhary@ti.com>
+To: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <neil.armstrong@linaro.org>, <khilman@baylibre.com>,
+        <devicetree@vger.kernel.org>
+CC: <jbrunet@baylibre.com>, <martin.blumenstingl@googlemail.com>,
+        <shawnguo@kernel.org>, <s.hauer@pengutronix.de>,
+        <kernel@pengutronix.de>, <festevam@gmail.com>,
+        <cros-qcom-dts-watchers@chromium.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <geert+renesas@glider.be>,
+        <magnus.damm@gmail.com>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-amlogic@lists.infradead.org>, <imx@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <linux-renesas-soc@vger.kernel.org>,
+        <dianders@chromium.org>, <linux-kernel@vger.kernel.org>,
+        <max.krummenacher@toradex.com>, <j-choudhary@ti.com>,
+        <ernestvanhoecke@gmail.com>
+Subject: [PATCH] arm64: dts: Add no-hpd property for all ti-sn65dsi86 bridge consumers
+Date: Thu, 29 May 2025 16:54:23 +0530
+Message-ID: <20250529112423.484232-1-j-choudhary@ti.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/6] arm64: qcom: allow up to 4 lanes for the Type-C
- DisplayPort Altmode
-To: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Krzysztof Kozlowski <krzk@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>
-References: <20250527-topic-4ln_dp_respin-v3-0-f9a0763ec289@oss.qualcomm.com>
-Content-Language: en-US
-From: Alex <alex.vinarskis@gmail.com>
-In-Reply-To: <20250527-topic-4ln_dp_respin-v3-0-f9a0763ec289@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-C2ProcessedOrg: 333ef613-75bf-4e12-a4b1-8e3623f5dcea
 
+In the SN65DSI86 DSI-2-eDP bridge, HPD is not supported as of now.
+But DisplayPort connector_type usecases does need hpd to be enabled.
+In order not to break any platform from those driver changes, add
+"no-hpd" property to all the existing sn65dsi86 nodes (that don't
+have it already) as hpd is not being used there anyways.
 
-On 5/27/25 22:40, Konrad Dybcio wrote:
-> Register a typec mux in order to change the PHY mode on the Type-C
-> mux events depending on the mode and the svid when in Altmode setup.
->
-> The DisplayPort phy should be left enabled if is still powered on
-> by the DRM DisplayPort controller, so bail out until the DisplayPort
-> PHY is not powered off.
->
-> The Type-C Mode/SVID only changes on plug/unplug, and USB SAFE states
-> will be set in between of USB-Only, Combo and DisplayPort Only so
-> this will leave enough time to the DRM DisplayPort controller to
-> turn of the DisplayPort PHY.
->
-> The patchset also includes bindings changes and DT changes.
->
-> This has been successfully tested on an SM8550 board, but the
-> Thinkpad X13s deserved testing between non-PD USB, non-PD DisplayPort,
-> PD USB Hubs and PD Altmode Dongles to make sure the switch works
-> as expected.
->
-> The DisplayPort 4 lanes setup can be check with:
-> $ cat /sys/kernel/debug/dri/ae01000.display-controller/DP-1/dp_debug
-> 	name = msm_dp
-> 	drm_dp_link
-> 		rate = 540000
-> 		num_lanes = 4
-> ...
+Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
+---
 
+Upcoming driver changes that will break platforms if we do not have this
+property in all the existing sn65dsi86 nodes that assumes hpd is disabled:
+<https://lore.kernel.org/all/20250529110418.481756-1-j-choudhary@ti.com/>
 
-Hi,
+(sc7180-trogdor-ti-sn65dsi86.dtsi, sdm850-lenovo-yoga-c630.dts and
+sdm845-cheza.dtsi already have this property.)
 
+NOTE: Grouping the logical changes together in a single patch even though
+we have multiple vendor dts. I hope that is not an issue.
 
-Thanks for the respin. Together with `mode-switch;` for x1e80100.dtsi 
-and 4 lane DP change in respective .dts, successfully tested on Asus 
-Zenbook A14 (Parade PS8833 on both Type-C ports).
+ .../boot/dts/amlogic/meson-g12b-bananapi-cm4-mnt-reform2.dts     | 1 +
+ arch/arm64/boot/dts/freescale/imx8mq-mnt-reform2.dts             | 1 +
+ arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts                 | 1 +
+ arch/arm64/boot/dts/renesas/r8a779a0-falcon-cpu.dtsi             | 1 +
+ arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts            | 1 +
+ arch/arm64/boot/dts/renesas/r8a779h0-gray-hawk-single.dts        | 1 +
+ arch/arm64/boot/dts/renesas/white-hawk-cpu-common.dtsi           | 1 +
+ 7 files changed, 7 insertions(+)
 
-Tested with:
+diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b-bananapi-cm4-mnt-reform2.dts b/arch/arm64/boot/dts/amlogic/meson-g12b-bananapi-cm4-mnt-reform2.dts
+index 0f48c32bec97..6a7d7db3ef8f 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-g12b-bananapi-cm4-mnt-reform2.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-g12b-bananapi-cm4-mnt-reform2.dts
+@@ -292,6 +292,7 @@ edp_bridge: bridge@2c {
+ 		vpll-supply = <&reg_main_1v8>;
+ 		vcca-supply = <&reg_main_1v2>;
+ 		vcc-supply = <&reg_main_1v2>;
++		no-hpd;
+ 
+ 		ports {
+ 			#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq-mnt-reform2.dts b/arch/arm64/boot/dts/freescale/imx8mq-mnt-reform2.dts
+index 3ae3824be027..599a53969326 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mq-mnt-reform2.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mq-mnt-reform2.dts
+@@ -147,6 +147,7 @@ edp_bridge: bridge@2c {
+ 		vpll-supply = <&reg_main_1v8>;
+ 		vcca-supply = <&reg_main_1v2>;
+ 		vcc-supply = <&reg_main_1v2>;
++		no-hpd;
+ 
+ 		ports {
+ 			#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+index 672ac4c3afa3..8fa18273684f 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+@@ -384,6 +384,7 @@ sn65dsi86_bridge: bridge@2c {
+ 
+ 		clocks = <&rpmhcc RPMH_LN_BB_CLK3>;
+ 		clock-names = "refclk";
++		no-hpd;
+ 
+ 		ports {
+ 			#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/renesas/r8a779a0-falcon-cpu.dtsi b/arch/arm64/boot/dts/renesas/r8a779a0-falcon-cpu.dtsi
+index 0916fd57d1f1..a115e3fc4cb9 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779a0-falcon-cpu.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a779a0-falcon-cpu.dtsi
+@@ -214,6 +214,7 @@ bridge@2c {
+ 		vpll-supply = <&reg_1p8v>;
+ 		vcca-supply = <&reg_1p2v>;
+ 		vcc-supply = <&reg_1p2v>;
++		no-hpd;
+ 
+ 		ports {
+ 			#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts b/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts
+index 6955eafd8d6a..fcc2d8edd464 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts
++++ b/arch/arm64/boot/dts/renesas/r8a779g3-sparrow-hawk.dts
+@@ -349,6 +349,7 @@ bridge@2c {
+ 				vpll-supply = <&reg_1p8v>;
+ 				vcca-supply = <&reg_1p2v>;
+ 				vcc-supply = <&reg_1p2v>;
++				no-hpd;
+ 
+ 				ports {
+ 					#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/renesas/r8a779h0-gray-hawk-single.dts b/arch/arm64/boot/dts/renesas/r8a779h0-gray-hawk-single.dts
+index 4d890e0617af..8b9592b87366 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779h0-gray-hawk-single.dts
++++ b/arch/arm64/boot/dts/renesas/r8a779h0-gray-hawk-single.dts
+@@ -460,6 +460,7 @@ bridge@2c {
+ 		vpll-supply = <&reg_1p8v>;
+ 		vcca-supply = <&reg_1p2v>;
+ 		vcc-supply = <&reg_1p2v>;
++		no-hpd;
+ 
+ 		ports {
+ 			#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/renesas/white-hawk-cpu-common.dtsi b/arch/arm64/boot/dts/renesas/white-hawk-cpu-common.dtsi
+index b4024e85ae5a..686a37a8680f 100644
+--- a/arch/arm64/boot/dts/renesas/white-hawk-cpu-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/white-hawk-cpu-common.dtsi
+@@ -256,6 +256,7 @@ bridge@2c {
+ 		vpll-supply = <&reg_1p8v>;
+ 		vcca-supply = <&reg_1p2v>;
+ 		vcc-supply = <&reg_1p2v>;
++		no-hpd;
+ 
+ 		ports {
+ 			#address-cells = <1>;
+-- 
+2.34.1
 
-- Type-C USB3.0 pendrive
-
-- Type-C to DP cable (x4 DP lanes)
-
-- Type-C to HDMI/USB/... dongle (x2 USB3, x2 DP)
-
-All three variants work, in both orientations, on both ports. When 
-switching from x4 DP lanes cable to USB3 pendrive no re-plug was needed, 
-it works right away. Suspend and resume (to my surprise) also works.
-
-
-Tested-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com> # x1e80100, 
-ps8833
-
-
-Regards,
-
-Alex
-
-
->
-> This patchset depends on [1] to allow broadcasting the type-c mode
-> to the PHY, otherwise the PHY will keep the combo state while the
-> retimer would setup the 4 lanes in DP mode.
->
-> [1] https://lore.kernel.org/all/20240527-topic-sm8x50-upstream-retimer-broadcast-mode-v1-0-79ec91381aba@linaro.org/
-> Changes in v3:
-> - Take the series from Neil
-> - Rebase
-> - Rename many variables
-> - Test on X1E & X13s
-> - Apply a number of small cosmetic/codestyle changes
-> - Remove some unused variables
-> - Some smaller bugfixes
-> - Link to v2: https://lore.kernel.org/lkml/20240527-topic-sm8x50-upstream-phy-combo-typec-mux-v2-0-a03e68d7b8fc@linaro.org/
-> Changes in v2:
-> - Reference usb-switch.yaml in bindings patch
-> - Fix switch/case indenting
-> - Check svid for USB_TYPEC_DP_SID
-> - Fix X13s patch subject
-> - Update SM8650 patch to enable 4 lanes on HDK aswell
-> - Link to v1: https://lore.kernel.org/r/20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-0-07e24a231840@linaro.org
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
-> Konrad Dybcio (1):
->        phy: qcom: qmp-combo: Rename 'mode' to 'phy_mode'
->
-> Neil Armstrong (5):
->        dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: Reference usb-switch.yaml to allow mode-switch
->        phy: qcom: qmp-combo: store DP phy power state
->        phy: qcom: qmp-combo: introduce QMPPHY_MODE
->        phy: qcom: qmp-combo: register a typec mux to change the QMPPHY_MODE
->        arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13: Set up 4-lane DP
->
->   .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml         |   7 +-
->   .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |   6 +-
->   drivers/phy/qualcomm/phy-qcom-qmp-combo.c          | 182 +++++++++++++++++++--
->   3 files changed, 173 insertions(+), 22 deletions(-)
-> ---
-> base-commit: 460178e842c7a1e48a06df684c66eb5fd630bcf7
-> change-id: 20250527-topic-4ln_dp_respin-c6924a8825ce
->
-> Best regards,
 
