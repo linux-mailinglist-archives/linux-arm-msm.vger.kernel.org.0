@@ -1,398 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-59793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03B1EAC7A81
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 10:57:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 497D5AC7AA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 11:04:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA3A01BA0315
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 08:58:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 01EEE17195E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 09:04:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D95621A459;
-	Thu, 29 May 2025 08:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A025921B19E;
+	Thu, 29 May 2025 09:04:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TRi+P/zG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gyvykenZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1FA218EBE;
-	Thu, 29 May 2025 08:57:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB8D215F53;
+	Thu, 29 May 2025 09:04:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748509067; cv=none; b=GMNcZk2qB8ASFtZoSiL/d1eaJ+bisIZ9m+t0dOfqStYSfncU0bxESvpEL5azz40hHEGZChD1Y8ZmcZ4s7Fto4M1n416z8GnKJfRJwr2fpC8oLVo+PwnubcyFeqUH9WHgmQbopUvBkMQphVlYhLheIuP8ZUKdU36X1p3lrWZ4vPA=
+	t=1748509459; cv=none; b=God/qLJ3evJTTwdLS7BF+y0iW/KfuSiAGDPqSM4Kme0kWauyzFTLJ2dYRsgJoXboAB6RVFJkO2d7O3xobqwF0QoSOmxWh8Ic+VdkOrMx8QjgLPaiC+AefCQ9YNFf5aDK85FsPmefnG74F52TCoTy8RuClA/drJ9nGorB0fzbsHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748509067; c=relaxed/simple;
-	bh=gwhVLbZF099eROMkEC8XE0b2klcexfLcuN96AHPbblo=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=c2qOLDoQMCsX9se35HYtbX7Llno0nUQDssrxHra9jMSU81/G9tC/ArRVpigg3N3EdXhm5C+iHH56C36AEkKu1H9hkUTGXbQHQieaJjTjGKFPx8AEJi4bnTC+tulCCwqhiK1JVqJbbR8I0jB64JpBfTy2RQiI1x29K9go5B6zgd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TRi+P/zG; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54T7RWnX005124;
-	Thu, 29 May 2025 08:57:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=yVVUvl6WX+u50QYLWwyjaK
-	t8OPieUs6wFPOv8ArJM+8=; b=TRi+P/zGvZMr7W3aoBW/iprJsBXgo+qb1RBgaI
-	pruu4aQ7goG1KXGTj0Wqj9FMew6F8hEy4x4gLiZu8skDTllzPODvH9aFXMtekBYb
-	spxL+11V6dtNZb82PU44WBWK1HC836+GAryxKlc6X8Rxnf5RYUkLe8aVqih1Iwag
-	KLA145WQFFXvR7kAhGX4J8SxnV3i2wKlLXqbXsmcQaxGW/RLb1nqfvA+4PFV2plb
-	uPoYdzUxZzts34Q+X6JEFzSL1+AoaCaO4AJp16V57ZBVBXD8XldqIWS5j7w/J5Jy
-	ilxICOPK/Aw4YeT9NUVjBcIJQ2E8vIVgEOkOJ96/nsmClmWw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46x8d79sff-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 May 2025 08:57:41 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54T8veag014358
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 May 2025 08:57:40 GMT
-Received: from yingdeng-gv.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 29 May 2025 01:57:37 -0700
-From: Yingchao Deng <quic_yingdeng@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: Yingchao Deng <quic_yingdeng@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] arm64: dts: qcom: Add coresight node for SM8650
-Date: Thu, 29 May 2025 16:56:41 +0800
-Message-ID: <20250529085650.3594253-1-quic_yingdeng@quicinc.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1748509459; c=relaxed/simple;
+	bh=m8JIOAJjyQG/OknuJGeN0vkewi5sVDBo1PFDvRss9Oc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SlQCG4J4jLGuf4Krdi4ezgcYl6L0sAR7h4rBrhFxciJCaRvbt5RoGLNi5Co2lr5BvM6SLXnnL1PFEcGHE8Om3nk1M14zAN3AjC6T+TeewnWRP3ZlQSb2cSx+Fow34ZYV2q1NVvR8fzcYVTSS5ZZNBnsCWpv05I+p2Iajn17BBAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gyvykenZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990BDC4CEE7;
+	Thu, 29 May 2025 09:04:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748509456;
+	bh=m8JIOAJjyQG/OknuJGeN0vkewi5sVDBo1PFDvRss9Oc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=gyvykenZ2FwGcV/On66Cc7zvjQu/DhxfM8lfpQXhgXcW4RqZmfF4PSNibMWqcBM4v
+	 W7L7FbCJyUjOhBgfQNH0/kOeulHipWGOtC1jCbSdZ6BscHt25sVroLhM2rjbvn28u3
+	 N9Vu5koOtG5WwFp5a8C671spWHlfrnECc+oXmOJ4uYm6XrXy3J2Frc7z5IfnfLW3SP
+	 rYE3h8XK5sxuxBZ73zZm+FNvpND3TOU5olKtev+VIOvF7FJhcmWS88CJbk2eAx83Tl
+	 lY5lp+NpN7xasXNs1ap9lKMZRG0sZp5z5zzF6VagV0RdmQgmf0MCydwi3Rj8qJVRvm
+	 IAzeSQ6ZYtGzg==
+Message-ID: <0e10b7d2-b917-48b7-a3c0-eb265c82a974@kernel.org>
+Date: Thu, 29 May 2025 11:04:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: igMDbegCjo3uoejD20p-5fltLfXokkrU
-X-Proofpoint-ORIG-GUID: igMDbegCjo3uoejD20p-5fltLfXokkrU
-X-Authority-Analysis: v=2.4 cv=X8pSKHTe c=1 sm=1 tr=0 ts=68382185 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=dt9VzEwgFbYA:10 a=COk6AnOGAAAA:8 a=Ha4kKTd9ViBVhOXr9W0A:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDA4NiBTYWx0ZWRfXyMBQ/vNRTDe7
- FkZRv/WRMqG5s2tGmkNcp5rmRQILKYFRaZOmdotNaIxK9zAF66h9CvG9q4GdNVa1y3V1asO2m18
- LoXKiJsBLirC+TGT8tD78AD5mTki9qH7cgayJSZQlXBI8UAFd0quIglWp5S3ilcR0ap6pgzWsln
- Wzw0KzGuSOX2TD3xzY5egGKmRQbkPD5wHLKUqUdw4HI0MmBln7CN8auwBoNPil3aNn+dP3gIkMp
- qerl1xjCVotvGmcxWFYA2lbaf2d73cChZy6EsRvy5PriihBp0dWNb2LreTGT/2mWGuNmQRyitWD
- bVXfH9YO+sm+v58J6T4mVtdA9k1JImxR5O1ld6BKyrbliJgzEpxfScGW82DOWAwvuSyyAnk8EkZ
- PgkxUTmHzWYd9it93CLFoxOc2Zh2bNxV23zUBdo862FPTUXpMRkx/5bs50FFM3oW8CIEcDlO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-29_04,2025-05-29_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 mlxscore=0 lowpriorityscore=0 phishscore=0 spamscore=0
- adultscore=0 impostorscore=0 bulkscore=0 mlxlogscore=676 suspectscore=0
- clxscore=1011 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505290086
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] dt-bindings: display: panel: Add Himax HX83112B
+To: Luca Weiss <luca@lucaweiss.eu>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20250225-fp3-display-v2-0-0b1f05915fae@lucaweiss.eu>
+ <20250225-fp3-display-v2-2-0b1f05915fae@lucaweiss.eu>
+ <20250226-speedy-dark-mushroom-5d7c4b@krzk-bin>
+ <932d5cc223f8d1ff1bb09c68990e4a82@lucaweiss.eu>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <932d5cc223f8d1ff1bb09c68990e4a82@lucaweiss.eu>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add coresight components on the path from stm to etr.
+On 14/05/2025 16:31, Luca Weiss wrote:
+> Hi Krzysztof,
+> 
+> On 2025-02-26 07:46, Krzysztof Kozlowski wrote:
+>> On Tue, Feb 25, 2025 at 10:14:30PM +0100, Luca Weiss wrote:
+>>> Himax HX83112B is a display driver IC used to drive LCD DSI panels.
+>>> Describe it and the Fairphone 3 panel (98-03057-6598B-I) from DJN 
+>>> using
+>>> it.
+>>>
+>>> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+>>> ---
+>>>  .../bindings/display/panel/himax,hx83112b.yaml     | 75 
+>>> ++++++++++++++++++++++
+>>>  1 file changed, 75 insertions(+)
+>>>
+>>
+>> Discussion is still going. Sending v2 after two days is hiding that
+>> previous talk, so that makes me sad.
+>>
+>> I am still at v1 and I am not going to review this one here.
+> 
+> Apart from [0] there was also no other activity in v1, could you take 
+> another look now?
+> 
+Keep only one compatible, so no himax fallback. This patchset rolled out
+of my inbox, so please send v3 or resend with short explanation in
+commit msg (no init sequence for generic himax, like you described in v1
+discussion).
 
-Signed-off-by: Yingchao Deng <quic_yingdeng@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 250 +++++++++++++++++++++++++++
- 1 file changed, 250 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 86684cb9a932..5e1854a0e15f 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -5052,6 +5052,82 @@ data-pins {
- 			};
- 		};
- 
-+		ctcu@10001000 {
-+			compatible = "qcom,sa8775p-ctcu";
-+			reg = <0x0 0x10001000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb";
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					ctcu_in0: endpoint {
-+					remote-endpoint = <&etr0_out>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+					ctcu_in1: endpoint {
-+					remote-endpoint = <&etr1_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		stm@10002000 {
-+			compatible = "arm,coresight-stm", "arm,primecell";
-+			reg = <0x0 0x10002000 0x0 0x1000>,
-+				<0x0 0x16280000 0x0 0x180000>;
-+			reg-names = "stm-base", "stm-stimulus-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					stm_out_funnel_in0: endpoint {
-+						remote-endpoint =
-+						<&funnel_in0_in_stm>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@10041000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0x0 0x10041000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@7 {
-+					reg = <7>;
-+					funnel_in0_in_stm: endpoint {
-+						remote-endpoint =
-+						<&stm_out_funnel_in0>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+				port {
-+					funnel_in0_out_funnel_qdss: endpoint {
-+						remote-endpoint =
-+						<&funnel_qdss_in_funnel_in0>;
-+					};
-+				};
-+			};
-+		};
-+
- 		funnel@10042000 {
- 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 
-@@ -5094,6 +5170,14 @@ in-ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 
-+				port@0 {
-+					reg = <0>;
-+
-+					funnel_qdss_in_funnel_in0: endpoint {
-+						remote-endpoint = <&funnel_in0_out_funnel_qdss>;
-+					};
-+				};
-+
- 				port@1 {
- 					reg = <1>;
- 
-@@ -5112,6 +5196,133 @@ funnel_qdss_out_funnel_aoss: endpoint {
- 			};
- 		};
- 
-+		replicator@10046000 {
-+			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0x0 0x10046000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				port {
-+					replicator_qdss_in_replicator_swao: endpoint {
-+						remote-endpoint =
-+						<&replicator_swao_out_replicator_qdss>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					replicator_qdss_out_replicator_etr: endpoint {
-+						remote-endpoint =
-+						<&replicator_etr_in_replicator_qdss>;
-+					};
-+				};
-+			};
-+		};
-+
-+		tmc@10048000 {
-+			compatible = "arm,coresight-tmc", "arm,primecell";
-+			reg = <0x0 0x10048000 0x0 0x1000>;
-+
-+			iommus = <&apps_smmu 0x04e0 0>,
-+				<&apps_smmu 0x04c0 0>;
-+			dma-coherent;
-+			arm,scatter-gather;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				port {
-+					tmc_etr_in_replicator_etr: endpoint {
-+						remote-endpoint =
-+						<&replicator_etr_out_tmc_etr>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+				port {
-+					etr0_out: endpoint {
-+						remote-endpoint =
-+						<&ctcu_in0>;
-+					};
-+				};
-+			};
-+		};
-+
-+		replicator@1004e000 {
-+			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0x0 0x1004e000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				port {
-+					replicator_etr_in_replicator_qdss: endpoint {
-+						remote-endpoint =
-+						<&replicator_qdss_out_replicator_etr>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					replicator_etr_out_tmc_etr: endpoint {
-+						remote-endpoint =
-+						<&tmc_etr_in_replicator_etr>;
-+					};
-+				};
-+				port@1 {
-+					reg = <1>;
-+					replicator_etr_out_tmc_etr1: endpoint {
-+						remote-endpoint =
-+						<&tmc_etr1_in_replicator_etr>;
-+					};
-+				};
-+			};
-+		};
-+
-+		tmc@1004f000 {
-+			compatible = "arm,primecell";
-+			reg = <0x0 0x1004f000 0x0 0x1000>;
-+
-+			iommus = <&apps_smmu 0x0500 0x0>;
-+			dma-coherent;
-+			arm,scatter-gather;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				port {
-+					tmc_etr1_in_replicator_etr: endpoint {
-+						remote-endpoint =
-+						<&replicator_etr_out_tmc_etr1>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+				port {
-+					etr1_out: endpoint {
-+						remote-endpoint =
-+						<&ctcu_in1>;
-+					};
-+				};
-+			};
-+		};
-+
- 		funnel@10b04000 {
- 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 
-@@ -5157,6 +5368,45 @@ tmc_etf_in_funnel_aoss: endpoint {
- 					};
- 				};
- 			};
-+
-+			out-ports {
-+				port {
-+					tmc_etf_out_replicator_swao: endpoint {
-+						remote-endpoint =
-+						<&replicator_swao_in_tmc_etf>;
-+					};
-+				};
-+			};
-+		};
-+
-+		replicator@10b06000 {
-+			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0x0 0x10b06000 0x0 0x1000>;
-+
-+			qcom,replicator-loses-context;
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				port {
-+					replicator_swao_in_tmc_etf: endpoint {
-+						remote-endpoint =
-+						<&tmc_etf_out_replicator_swao>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					replicator_swao_out_replicator_qdss: endpoint {
-+						remote-endpoint =
-+						<&replicator_qdss_in_replicator_swao>;
-+					};
-+				};
-+			};
- 		};
- 
- 		funnel@13810000 {
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Best regards,
+Krzysztof
 
