@@ -1,204 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-59829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5883AC81B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 19:36:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB327AC8275
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 21:08:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 739AE1BC467A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 17:36:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 38F709E332B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 19:07:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA27B22DA1A;
-	Thu, 29 May 2025 17:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89895230270;
+	Thu, 29 May 2025 19:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cefTW+Lw"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JnvFzhDv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FED3B67F;
-	Thu, 29 May 2025 17:36:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8929D1F874C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 May 2025 19:07:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748540165; cv=none; b=P3uK/RCtzNnytKZ+Naf1z1wvnI5yfSfxQ9bjxJcYBsqndLpQZtsVFMjBD3gunc/vSpWQgvLEkeHPg3Lar3osHYkXtUrHGOE2GXVTkf9wikPh2lBzVpUnrHra8Ot/w5PzU8HtRsx+d4V9EP/XxMqEVZStPP39xPoiG5Jy/pX7kBk=
+	t=1748545678; cv=none; b=YKY8Cxk7FBYpxQgHDMqdrAWznVmc7SBlwE55WLksAopHsXb21Ydsp8zrE73iSymsAt1/YFGVRPBno0jEtoCUgrwh6pcfvu41roRchSXLOrezYgJLgFYl2jmuZIP8VVk0481Op4ZP0X/RZ9EIWvZxeflhs2i3XU97vl6/A835ubk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748540165; c=relaxed/simple;
-	bh=ZAKNyWxhkVqG4oVpkuVC80WBXm3Gp/KiDD+hs3noY5U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=dJfaCi6NmVSdXijhvZFylEYa6bKSiADiTeE9ckcWv60K/59myB8OV2OBpOQLcPYDWrMzeC6JoKbHXrkzO+xE8IbThOo21/OOKr2K2AgauCP0WzjDBR95BEwxSWfZOfTq/bfnp4QRa4FqBNZ7nLtBdXGkZiBp3X4vdY9Zd1fLjaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cefTW+Lw; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ad572ba1347so174975966b.1;
-        Thu, 29 May 2025 10:36:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748540162; x=1749144962; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+A71to2hM6tQB6kJBFVVEwobIWwE5T+2BzX0UTpMXkU=;
-        b=cefTW+LwZKYlkZCr5kdB6RZ2edGQ9k/YCkpyRhVFbywbXE+JVGZFqq82xZvNh3LdR2
-         h4MerqVnh9cufl+d1p49IJIkCXfqE2Gks+yeK1a75IYKrzTEdQ8V4ZUhiPeT6fF7XPQT
-         Fv4fgBO84dd7yisaT8vp7bonltptGuqvIBZJPW0T/PKQmxcfstYNte0XmU6wZP6ac5sL
-         B+pDowjYeVAuvOa9QWOVwi/z7sgbYkV9kZN+YXQUZx/6I9aES1Ua/5ys5J6AqxC1WE0Y
-         /cQmaVxUJ2PkVdUhTQoyhU30yY8abt7xrR4xqq8I3PtcG8xHOe/bE/fJvR8Z4wuGv87t
-         WSCw==
+	s=arc-20240116; t=1748545678; c=relaxed/simple;
+	bh=Y9/wIvTPGPbaia/ygwyG7lu/okfgCYkuhDeI142REbk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lwbFzLzjrqhpDonBdw+dSTUipU5dk/+099J7Ref5hwSdOB5xzJi6wApVuOW6+EiyELL2GJa/NKhsWK1zp+yafW5wRkj9nDE5cmCMfl5d3BMGZJx1ZAvLDsMZ+iLNpT7xmkcA1K5/s484OjfoCGCI6xpWRcNBxI+zHO4STENISHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JnvFzhDv; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TC1PlR008039
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 May 2025 19:07:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	CqWWxEjhd9byE+G7iHgmKGApOto/HY6xBgh2ceMrgG0=; b=JnvFzhDvNSVhh506
+	DnLGaLR6MyrI55KfSidvRDKiORP+KT4yT5MP4qcb3EsAb7gZd4mfl9Uwz0NiS7ls
+	CH5g3emwLWQEMkWC2+gKgzQL4hL4sJfC+VOnAouLtW4zp0p7QRAYKWmIKrd4/knp
+	AWE3vmGydSWNj0Fg+nidjYv9QDMaKVTBuQUNBB+O3OfRjlNFwn+gpEn721ASk5Uc
+	435TyvylKbWponiMGAAABWB9CQc2MEDme/KtJN/7Q6gLLvPCFF5U3ZTE6IkMiJBC
+	9d2MP37ImIHvjjYTpq3a6Hw9vI7M1Zql4F+gJJQ+H78LN4ahKBHc1K4j8xUlbR02
+	XmWBKw==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46whuf73j6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 May 2025 19:07:54 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6faaa088820so2955886d6.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 May 2025 12:07:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748540162; x=1749144962;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+A71to2hM6tQB6kJBFVVEwobIWwE5T+2BzX0UTpMXkU=;
-        b=cejYH0hzMZv4DGXiPGGwUxaoaUmZJaxYQfycgB6JJznIrm69rA9lxZU/8rovGHCW+D
-         /QJWY9ETl865eu/VHW4dKNdTzTmXcEKE32E10CiUn6pwS3YR7FeP0T1r4qoDr3yMDugT
-         FkcJrDR9GCA6ssQEig/08I1vqnWknETR6VIg3gGX08QvE7NL9a/7z3b9TAvaEdy4lWRw
-         vDjN2QI/Z4wrSaL5uXmAVxlMPAz0IRYCYJsrh/W58KzeNzP9Rpuxx73aBug4oJt8xfuj
-         kFXLZAJTrbE84e01O63fpdBt0al4aetcA6S1c9FA629If7hveIZKcHURVScZr2SV3m35
-         wh8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCV9yleQ1C0qpNvXwwywGw67watXNrD4hwAdpXDSGdGPTCYIqWDtvXE+jDNwM68uE9wz0e6lhmcq3c+5ghR7@vger.kernel.org, AJvYcCWTEjZ4IRWnxvg+UfN6Z0AGVOxi+u7ecwH2KC5spRprEMAw3nnTKqBCczGuqorVwHQUc+y8wV8PAIrc@vger.kernel.org, AJvYcCXnqVxFHiloyj9/ZDOO0BEGeCdmm8mWiwCfiKiSXY+rEnJChFSXn7I5SsWzuw6Ot20y8k6Nb+BUKjqCOLn+@vger.kernel.org
-X-Gm-Message-State: AOJu0YzArSkXeiuUXLO/V4C05TZ7YePrqV9Oa7WvoGx7iiDIjy8OlWjl
-	nJDF27jB/10s/H32yR3vAx5rNoCsa9msiW93YoDG1i0ghJoCrqlSYbrM
-X-Gm-Gg: ASbGncslcSa9TtAGT7RugrImf3otWNFZ4EK0rqVlbAguA51RGdiKD7PCDDKTesxIorq
-	31IFQh8EdE+cOuF9shofWMOmJNHBGJr9CSFnurXh+1tVXan+eC3n8mO/tjd3EC6xORbnc94llsQ
-	VUjdcWgQcnx5LqlivbIbNRUtzhrcsRQ0tHkPTxOtxRdQZMaU0puWfHtz4pvIGGvHJZZ/EFIU8ZI
-	TdjH28JlYrIyVSK56VtDzBw01V5IB5VOcTXSW6WrYZ9z8yA7lznsT0xIjN2270yCXuNpKz0V8l+
-	O1FNx4VyXVHIBy753dw5kVKNpyp6SqKymFv1Jhu5xZchG5gN4FGqATD201d5RAajJxKBryq5Tpu
-	GlEl4+zETYC3/+Mw=
-X-Google-Smtp-Source: AGHT+IH//RBmm/8B7tXeJxyKxnZbF4nmP5r2kdAJ1HrNz2e0Po4vQ+YILnUKQo3DQtFXYndTTNZ3dA==
-X-Received: by 2002:a17:907:3d90:b0:ad8:9b24:9d16 with SMTP id a640c23a62f3a-adb32245bd9mr34324366b.6.1748540162157;
-        Thu, 29 May 2025 10:36:02 -0700 (PDT)
-Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ada6ad6ab2csm173992866b.184.2025.05.29.10.36.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 May 2025 10:36:01 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Thu, 29 May 2025 19:35:44 +0200
-Subject: [PATCH] spi: spi-qpic-snand: remove 'qpic_snand_op' structure
+        d=1e100.net; s=20230601; t=1748545673; x=1749150473;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CqWWxEjhd9byE+G7iHgmKGApOto/HY6xBgh2ceMrgG0=;
+        b=KNEx5n6t8fV1F2l3UujKaeSU4xo+b+lTGkRbySZmKG7JMlmUVd4uEUkzBn1S58QZC6
+         Wt459qwXgL3/4XLDpRFjujwEPtKGs+AJUVDt9+OIgGh7B6YPvE2uRxVwOYDrY0sUOIAO
+         uRNikL+4vzv0mWFeddj3XXVttSgTNJYoT46kd0ExB9b/jsDT59z3dcroRJcSEKOdbEZ/
+         TphZQtDlDHx3tR4T7IZI7Qhb+iT/8j+pUx0WoqskgqOewHGVOx1Mj6t9HqhTKi2W9uBj
+         nNrDfZMQaEYjvDEtFTubr2QMOTqUxfhW0+gaXBBHeP1y4S1+ZASln7O3fCgo5qlZ4WVz
+         42lg==
+X-Forwarded-Encrypted: i=1; AJvYcCV5R+jnze182X+PG/8f5QNJpcDUeM0WfnV6lQK4odAZgQR9bgJYs8m8XGMQKZNxQd+soYxs7RG9txeZgHMn@vger.kernel.org
+X-Gm-Message-State: AOJu0YzVwEji8lBhsgPvq/JA+DsofhEh8LLDi2eom5B+ukBXNe8C0wlZ
+	nlydzlEzgMHeFmdEfr6fZN6dCroCcRIDX0iwy3xxFjv0MtXCJosxXeGnDz/DRlHzKFe2frtIgc0
+	7FNldKV8VD6NhvzZXAkJT6bi0MxzoG5m608J1FqmC5tbGkDKb0Y+9w056roXQnfqStdUa
+X-Gm-Gg: ASbGnctcHL+36dnHfhbvTpiSQzQZ+WAg7iskwnDkGrbLvX1hkyfLO4t0ky+K3OkQbwL
+	hnaEjSG4/YhsHF9Rh5C6r0t5rQR0kyO1YKZe9FC/NBcu4F2d3eU9a4yibWyhOVJDOTx2/wFNxDy
+	0eL0CFc26KciTW4BAIqByLlNar4irVi08GCkOziklbj8V+i0CQc8TgNJ44JCia4ysn1wPvNI88h
+	wll6BpWu+TR6tmR7NVIyq+4bxQEXnXYX9X4Nm+uAiMserGvpYEjL5B1nUz03ig6Xs7rHF1sY3jV
+	TZ/h5ApZ7Quqao+Bw94ddv5szn37bo5V1FYLjShhiy9Vqk1Mdv1Gm7YE1iuMO1ycOw==
+X-Received: by 2002:a05:620a:40c3:b0:7c3:e399:3289 with SMTP id af79cd13be357-7d0a1fab4c9mr34134585a.4.1748545673112;
+        Thu, 29 May 2025 12:07:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+6fTbto8Ers/c4bHlYLggztbwikg2RvRjJ2GbWmBPA2RfY7pGoWtgPCowFqHPfhtiiq2N/g==
+X-Received: by 2002:a05:620a:40c3:b0:7c3:e399:3289 with SMTP id af79cd13be357-7d0a1fab4c9mr34133385a.4.1748545672597;
+        Thu, 29 May 2025 12:07:52 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ada6ad3948csm186704066b.128.2025.05.29.12.07.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 May 2025 12:07:52 -0700 (PDT)
+Message-ID: <4f7168d9-8d8e-4fdf-8917-47c1cc71cf82@oss.qualcomm.com>
+Date: Thu, 29 May 2025 21:07:49 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/3] soc: qcom: qcom_stats: Add QMP support for syncing
+ ddr stats
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Maulik Shah <maulik.shah@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Doug Anderson <dianders@chromium.org>
+References: <20250528-ddr_stats_-v4-0-b4b7dae072dc@oss.qualcomm.com>
+ <20250528-ddr_stats_-v4-2-b4b7dae072dc@oss.qualcomm.com>
+ <6ldwvqqhk4lndesk7oac4ly2vhdxyd57f5hhijvutik5gm2czu@vmkasgeg2tmm>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <6ldwvqqhk4lndesk7oac4ly2vhdxyd57f5hhijvutik5gm2czu@vmkasgeg2tmm>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250529-qpic-snand-remove-qpic_snand_op-v1-1-6e42b772d748@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAO+aOGgC/x2NQQqAIBAAvxJ7bqEsi/pKRJRutYfUFCSI/p54n
- DnMvBDIMwUYixc8RQ5sTYK6LECdqzkIWScGUQlZSdHi7VhhMKvR6OmykbJZslmsw37YNO1S6a6
- RkCrO085PPkzz9/09eksLcQAAAA==
-X-Change-ID: 20250524-qpic-snand-remove-qpic_snand_op-79bdef5cd635
-To: Mark Brown <broonie@kernel.org>
-Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
+X-Authority-Analysis: v=2.4 cv=OslPyz/t c=1 sm=1 tr=0 ts=6838b08a cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=o6kQi37HjthQItwaaD8A:9
+ a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-ORIG-GUID: kaGIAIP1ZQWJGXL9JNuCod3YScZ5LPfT
+X-Proofpoint-GUID: kaGIAIP1ZQWJGXL9JNuCod3YScZ5LPfT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4NiBTYWx0ZWRfX8bJg64cGxIrM
+ DZuvGSWHe0lXE7AG921LRTxpdIt6GCWqhIVY/j+aYyFJJVzURlVn2y3I9cMDyDvAiXTFq6RkkdU
+ aYpvawg4MTQZ/Vdifygg4WwdqKybakcdJe3KSow42bmf4o3f+YhExod0TfynXbRKOPZJlvMhJN0
+ w4yC5I86ARHltfoHKeceTGHs4GdWZ8K0vZIQ3OfKLT7qeSbpF3o29ks/Kr4lT+WJIbrg/Uu/ma+
+ L4Rh5nyndVd7sLDd64BYqnugd9E6cuoPsOL/zjHA2B5omqZDP5QByimmnNdtO6sOAYGDxNS4PFs
+ Wivh4Ppck0uJEDNCpfECbl7eawWBKQCZFQmU7KwWGv+zk3MTSexvSsBc1R8GhBbuIM8EH7uGgf5
+ CShvImP3EZHpJcR11s2BOUpXDPtRvjYOCDwJBYdOyeNJ7s8WiVQ5+nZZB+guOjj/lomASut/
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-29_08,2025-05-29_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 mlxlogscore=999 adultscore=0 malwarescore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 mlxscore=0 lowpriorityscore=0
+ spamscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505290186
 
-The 'qpic_snand_op' structure is used only in the qcom_spi_send_cmdaddr()
-function as a type of a local variable. Additionally, the sole purpose of
-that variable is to keep some interim values before those gets passed as
-arguments for cpu_to_le32() calls.
+On 5/28/25 1:02 PM, Dmitry Baryshkov wrote:
+> On Wed, May 28, 2025 at 02:51:32PM +0530, Maulik Shah wrote:
+>> Recent SoCs (SM8450 onwards) require QMP command to be sent before reading
+>> ddr stats. The duration field of ddr stats will get populated only if QMP
+>> command is sent.
+>>
+>> Add support to send ddr stats freqsync QMP command.
+>>
+>> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+>> ---
+>>  drivers/soc/qcom/qcom_stats.c | 34 +++++++++++++++++++++++++++++++++-
+>>  1 file changed, 33 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
+>> index 33fd2a1574464768bd07289e743fbb79ba415e84..0545c8cbefb8f18758d4eb51638e4ecb94e05422 100644
+>> --- a/drivers/soc/qcom/qcom_stats.c
+>> +++ b/drivers/soc/qcom/qcom_stats.c
+>> @@ -13,6 +13,7 @@
+>>  #include <linux/platform_device.h>
+>>  #include <linux/seq_file.h>
+>>  
+>> +#include <linux/soc/qcom/qcom_aoss.h>
+>>  #include <linux/soc/qcom/smem.h>
+>>  #include <clocksource/arm_arch_timer.h>
+>>  
+>> @@ -37,6 +38,8 @@
+>>  #define DDR_STATS_TYPE(data)		FIELD_GET(GENMASK(15, 8), data)
+>>  #define DDR_STATS_FREQ(data)		FIELD_GET(GENMASK(31, 16), data)
+>>  
+>> +static struct qmp *qcom_stats_qmp;
+>> +
+>>  struct subsystem_data {
+>>  	const char *name;
+>>  	u32 smem_item;
+>> @@ -188,12 +191,28 @@ static int qcom_ddr_stats_show(struct seq_file *s, void *d)
+>>  	struct ddr_stats_entry data[DDR_STATS_MAX_NUM_MODES];
+>>  	void __iomem *reg = (void __iomem *)s->private;
+>>  	u32 entry_count;
+>> -	int i;
+>> +	int i, ret;
+>>  
+>>  	entry_count = readl_relaxed(reg + DDR_STATS_NUM_MODES_ADDR);
+>>  	if (entry_count > DDR_STATS_MAX_NUM_MODES)
+>>  		return -EINVAL;
+>>  
+>> +	if (qcom_stats_qmp) {
+>> +		/*
+>> +		 * Recent SoCs (SM8450 onwards) do not have duration field
+>> +		 * populated from boot up onwards for both DDR LPM Stats
+>> +		 * and DDR Frequency Stats.
+>> +		 *
+>> +		 * Send QMP message to Always on processor which will
+>> +		 * populate duration field into MSG RAM area.
+>> +		 *
+>> +		 * Sent every time to read latest data.
+>> +		 */
+>> +		ret = qmp_send(qcom_stats_qmp, "{class: ddr, action: freqsync}");
+>> +		if (ret)
+>> +			return ret;
+>> +	}
+>> +
+>>  	reg += DDR_STATS_ENTRY_START_ADDR;
+>>  	memcpy_fromio(data, reg, sizeof(struct ddr_stats_entry) * entry_count);
+>>  
+>> @@ -304,6 +323,19 @@ static int qcom_stats_probe(struct platform_device *pdev)
+>>  
+>>  	for (i = 0; i < config->num_records; i++)
+>>  		d[i].appended_stats_avail = config->appended_stats_avail;
+>> +	/*
+>> +	 * QMP is used for DDR stats syncing to MSG RAM for recent SoCs (SM8450 onwards).
+>> +	 * The prior SoCs do not need QMP handle as the required stats are already present
+>> +	 * in MSG RAM, provided the DDR_STATS_MAGIC_KEY matches.
+>> +	 */
+>> +	qcom_stats_qmp = qmp_get(&pdev->dev);
+>> +	if (IS_ERR(qcom_stats_qmp)) {
+>> +		if (PTR_ERR(qcom_stats_qmp) == -EPROBE_DEFER)
+>> +			return -EPROBE_DEFER;
+>> +
+>> +		/* We assume any other error means it's not defined/needed */
+>> +		qcom_stats_qmp = NULL;
+> 
+> I still think that we shouldn't be ignoring actual errors here. I'd say,
+> check for of_property_present(dev->of_node, "qcom,qmp") before.
 
-In order to simplify the code, remove the definition of the structure
-along with the local variable, and use the corresponding values directly
-as parameters for cpu_to_le32() calls.
+/**
+ * qmp_get() - get a qmp handle from a device
+ * @dev: client device pointer
+ *
+ * Return: handle to qmp device on success, ERR_PTR() on failure
+ */
+struct qmp *qmp_get(struct device *dev)
+{
+        struct platform_device *pdev;
+        struct device_node *np;
+        struct qmp *qmp;
 
-No functional changes intended.
+        if (!dev || !dev->of_node)
+                return ERR_PTR(-EINVAL);
 
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
- drivers/spi/spi-qpic-snand.c | 35 +++++++++--------------------------
- 1 file changed, 9 insertions(+), 26 deletions(-)
+        np = of_parse_phandle(dev->of_node, "qcom,qmp", 0);
+        if (!np)
+                return ERR_PTR(-ENODEV);
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index fd129650434f0129e24d3bdac7e7c4d5542627e6..7b6ad846829d1f2d86883f53faacb7a433a7107c 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -59,12 +59,6 @@
- #define OOB_BUF_SIZE			128
- #define ecceng_to_qspi(eng)		container_of(eng, struct qpic_spi_nand, ecc_eng)
- 
--struct qpic_snand_op {
--	u32 cmd_reg;
--	u32 addr1_reg;
--	u32 addr2_reg;
--};
--
- struct snandc_read_status {
- 	__le32 snandc_flash;
- 	__le32 snandc_buffer;
-@@ -1280,7 +1274,6 @@ static int qcom_spi_write_page(struct qcom_nand_controller *snandc,
- static int qcom_spi_send_cmdaddr(struct qcom_nand_controller *snandc,
- 				 const struct spi_mem_op *op)
- {
--	struct qpic_snand_op s_op = {};
- 	u32 cmd;
- 	int ret, opcode;
- 
-@@ -1288,34 +1281,24 @@ static int qcom_spi_send_cmdaddr(struct qcom_nand_controller *snandc,
- 	if (ret < 0)
- 		return ret;
- 
--	s_op.cmd_reg = cmd;
--	s_op.addr1_reg = op->addr.val;
--	s_op.addr2_reg = 0;
--
- 	opcode = op->cmd.opcode;
- 
- 	switch (opcode) {
- 	case SPINAND_WRITE_EN:
- 		return 0;
- 	case SPINAND_PROGRAM_EXECUTE:
--		s_op.addr1_reg = op->addr.val << 16;
--		s_op.addr2_reg = op->addr.val >> 16 & 0xff;
--		snandc->qspi->addr1 = cpu_to_le32(s_op.addr1_reg);
--		snandc->qspi->addr2 = cpu_to_le32(s_op.addr2_reg);
-+		snandc->qspi->addr1 = cpu_to_le32(op->addr.val << 16);
-+		snandc->qspi->addr2 = cpu_to_le32(op->addr.val >> 16 & 0xff);
- 		snandc->qspi->cmd = cpu_to_le32(cmd);
- 		return qcom_spi_program_execute(snandc, op);
- 	case SPINAND_READ:
--		s_op.addr1_reg = (op->addr.val << 16);
--		s_op.addr2_reg = op->addr.val >> 16 & 0xff;
--		snandc->qspi->addr1 = cpu_to_le32(s_op.addr1_reg);
--		snandc->qspi->addr2 = cpu_to_le32(s_op.addr2_reg);
-+		snandc->qspi->addr1 = cpu_to_le32(op->addr.val << 16);
-+		snandc->qspi->addr2 = cpu_to_le32(op->addr.val >> 16 & 0xff);
- 		snandc->qspi->cmd = cpu_to_le32(cmd);
- 		return 0;
- 	case SPINAND_ERASE:
--		s_op.addr2_reg = (op->addr.val >> 16) & 0xffff;
--		s_op.addr1_reg = op->addr.val;
--		snandc->qspi->addr1 = cpu_to_le32(s_op.addr1_reg << 16);
--		snandc->qspi->addr2 = cpu_to_le32(s_op.addr2_reg);
-+		snandc->qspi->addr1 = cpu_to_le32(op->addr.val << 16);
-+		snandc->qspi->addr2 = cpu_to_le32(op->addr.val >> 16 & 0xffff);
- 		snandc->qspi->cmd = cpu_to_le32(cmd);
- 		return qcom_spi_block_erase(snandc);
- 	default:
-@@ -1327,10 +1310,10 @@ static int qcom_spi_send_cmdaddr(struct qcom_nand_controller *snandc,
- 	qcom_clear_read_regs(snandc);
- 	qcom_clear_bam_transaction(snandc);
- 
--	snandc->regs->cmd = cpu_to_le32(s_op.cmd_reg);
-+	snandc->regs->cmd = cpu_to_le32(cmd);
- 	snandc->regs->exec = cpu_to_le32(1);
--	snandc->regs->addr0 = cpu_to_le32(s_op.addr1_reg);
--	snandc->regs->addr1 = cpu_to_le32(s_op.addr2_reg);
-+	snandc->regs->addr0 = cpu_to_le32(op->addr.val);
-+	snandc->regs->addr1 = cpu_to_le32(0);
- 
- 	qcom_write_reg_dma(snandc, &snandc->regs->cmd, NAND_FLASH_CMD, 3, NAND_BAM_NEXT_SGL);
- 	qcom_write_reg_dma(snandc, &snandc->regs->exec, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
+        pdev = of_find_device_by_node(np);
+        of_node_put(np);
+        if (!pdev)
+                return ERR_PTR(-EINVAL);
 
----
-base-commit: 589561cb455189154a7110a39d9fcc39965f3104
-change-id: 20250524-qpic-snand-remove-qpic_snand_op-79bdef5cd635
+        qmp = platform_get_drvdata(pdev);
 
-Best regards,
--- 
-Gabor Juhos <j4g8y7@gmail.com>
+        if (!qmp) {
+                put_device(&pdev->dev);
+                return ERR_PTR(-EPROBE_DEFER);
+        }
+        return qmp;
+}
+EXPORT_SYMBOL_GPL(qmp_get);
 
+
+Konrad
 
