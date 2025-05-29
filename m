@@ -1,80 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-59807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59808-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D1AEAC7B34
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 11:38:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B6E7AC7B88
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 12:06:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 857F4502AEC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 09:38:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4BB453AB3CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 May 2025 10:05:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E37AD25DAF9;
-	Thu, 29 May 2025 09:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA5472797AD;
+	Thu, 29 May 2025 10:05:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NXDg9ThE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MNGhbORb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED26C25CC49
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 May 2025 09:38:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F95111AD;
+	Thu, 29 May 2025 10:05:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748511488; cv=none; b=pcnHKd/VBFfKbX1nSrRoCRZLbypWCsLE+w0CDLYgJB8MykaVcyFl9gDtT8xcLFrZ0kMHAebN+ZFqxz9Xfr48Rtogqbhs7Qv5rsjXVmiXpqEnPS+Wm+gPkpYuLu7cDnYf2YjG7AQ5/WOuWcsvbjLMgYw27xywwsCWB80ifp4o8xM=
+	t=1748513154; cv=none; b=IIpOyRd7Uj27CBfoZ0t2hN3NYWKrtp4qPGaRSIlyUMwPiyfQlUf1HIpFsyl08imGh/hCA2afM7o90if4Lg6KZA4aQZTNRIZwKsRJfTfVPx/j/3+35InV/RBCxh+50EMoqDBVnWJ2SqpI55Fv1dqNKKTMa5+8Q4NlOhwGwiVcjrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748511488; c=relaxed/simple;
-	bh=nidXm6RjwTc3HEwY2WsuPfUBUD+8TIDBoLfPZzX1Ho4=;
+	s=arc-20240116; t=1748513154; c=relaxed/simple;
+	bh=xCI4dgxGrYK/KjstwW7relkFU8eX2Dee8+LdUuenLP4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ni6THsmSGmBrS8/5zhsucFkBYxZ2zAZH3Ua21w6XdEvQVg+tKXy9T6KNp/GAKOVpIxAOPtOVMPB6rRknIqWl3I+PL4lYgLN9z4p+A3z5PwqTiBS2+CFX1A1YOUU1nehipx+LOCK3wlfzKZVWhB16SdA3jT1AD1GkGITVSSh8JX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NXDg9ThE; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3a4e57d018cso127229f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 May 2025 02:38:06 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=BICsg0W2r9wNu8QNVkr9W5oBcmc1Y19Bf1qKZz6tuCBLsnE3mSpJnrKke8SwLc3EMeRU8ega9Z+QV0tp7TqxOZVoXy3dU05mNxxaScBHxZDPQLSAqARmmTiHW0onTvRI7UoMD7c0LS+6azwggGJjnPc1scwECt918+8jiVIw+jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MNGhbORb; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3a4ef2c2ef3so428532f8f.2;
+        Thu, 29 May 2025 03:05:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748511485; x=1749116285; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=gQA3tchOGlR5qDPRloAnwGTrIDQ4bOFY7MUhX29PeuI=;
-        b=NXDg9ThEsnN0M37p7RNXKCXJa5JIerSKPnSYyRkmPCxJuwD/EzirFQu8p43taTdAgz
-         mcQzqSphZ84TO2auSVof7ChewaogKVC/qSYxYz6Gs1nHNd+UdZ7xi6H/T4ZAzlwgmXrg
-         D3npIUarxb45d/u2jbhyA2H82rUWOafs+bWLf12ykYqV9xTy7drcK0aGSTZIPx7qPMux
-         YlDNOHUYR+nZETMjrbq33In7os1oSMSEpotbkFZmqKIuCtqn6zygkCGjkMr/iwoBTgSb
-         rXQnQosEwNN85e6F1TLeMqfJyDhBcIe18zDIffwQrA2Xn+66BS2+qFIMoMskLz/BERXg
-         ATog==
+        d=gmail.com; s=20230601; t=1748513146; x=1749117946; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3aMl2lLMjnQGGprfBGwi9nQjEbSeeqApQxCFfii9kXM=;
+        b=MNGhbORbFx3koFZw1WCXI7/usEqLeP5J4i7Rb57FOJQe+dovQIpsy6L2yZEyyyIkBN
+         KGyXkRS788RuuLgQSLkao1lFc0yIVl6nLyAu+yl7uGqFmFvqemyopJtHvj3bPwyk5lUR
+         vNa+lyTqyRmgpIKmCnpjSp0D+Pc8XxOUgu/AklXUkMqKz+B8nURiTsN9xc4dodELwYmL
+         WQzUw/uGxsBIBCm+jweK1IHL430Cf78iVntGomwuy2emIzFOe7FnpZKyXSszShX2iqS3
+         A46dHwhSCQxrx9nDR2ntUDBASOEF9wZLtFc4R1tnlQIVhk+Qpn9ocWi4E0ykecvvGg/C
+         3puA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748511485; x=1749116285;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gQA3tchOGlR5qDPRloAnwGTrIDQ4bOFY7MUhX29PeuI=;
-        b=WeUdQvt+O4hqTYuVIGi8aXq1mhGLht7OdkoI0yQEO3qLtUoKabcjmWRDJJXVht/YJb
-         XLd/gQOPeqdXyazeR3kcwWvDFdnzAipOLM+/jNRShD3Afc3+5N9GQQV0iqnzff5NMUIP
-         RnMWDucBPHBcld3e1sYz6l5ZpYJsxMaOwNtcNmPZfD7HP/aYJwBmnjLURD9v/hJztanN
-         Y5Tp5QcXHMKgndYcobYrzLYRDdEa/S1i8lYw9x0ARS3L/BJr5xPF5uWNine4G7/Nljti
-         ZHI6uEIH+o2A70pSRmsC7KFJoF/ZXLbHjOVYlRnpT4beh/DrJ3hrZ1339s/QJATO0mQp
-         9efg==
-X-Forwarded-Encrypted: i=1; AJvYcCUcAZVZcKDwHbOckg0RRbXcD+mRcZOxTkqWGeWg77Cvmyr/v3WNl4UnBzzhDWIrWHBoOJpYI849mkUqtmJU@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyi+M1fT5GqA9ndpSG/RXvifjPUQDQTO98Ds59av4xMBGc3Cq2y
-	JceUlr3aagKZ7XrxaCOveuBvs28uofbNqZRSV80DJUMDS99RpNlAeIMkSznc+96rRw4=
-X-Gm-Gg: ASbGncsbf70YURBfmTTBDhQyMeXbo66Rw7g+BJ5CfvKljQ3MdCMsfOYA0soFmig6jqu
-	vP5jBhOCBXKL4/1muw086xg1BQxFm9CO+Z7SyFJ4LQAnsYIlBaRF0W38bhscziX3LeKH28jLYQT
-	VpxgnlHZ2UPJmmGz9qoeqMx9DforSNBufSxPsanTp99JdA6aHrArQuUWDf2TNRMSsb7gLpRzz9b
-	YPYDDIjyELSER2jfjPP58bUf/zEpgSjYfAsuHZYko6/94Li+Ep0vhxkarguTSLqdlFVEouQxj8A
-	q/5MsbbqiZh0KDyJHMPxJRr48tF2MoNCCKXLQAZMD32lJGUPLA/xyh7/KoctaatY7RpIrjc=
-X-Google-Smtp-Source: AGHT+IG2KHg1RZohAGcF8Ql9GO6udEqYKqOIjzHEygo2NxgJdK/utVnegk1sAe3vpwYFfGdGIM1yBw==
-X-Received: by 2002:a05:6000:2dc4:b0:3a4:e8c8:fb89 with SMTP id ffacd0b85a97d-3a4e8c8fcc2mr1629165f8f.0.1748511485114;
-        Thu, 29 May 2025 02:38:05 -0700 (PDT)
-Received: from [192.168.1.29] ([178.197.223.125])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4f009f865sm1405197f8f.81.2025.05.29.02.38.03
+        d=1e100.net; s=20230601; t=1748513146; x=1749117946;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3aMl2lLMjnQGGprfBGwi9nQjEbSeeqApQxCFfii9kXM=;
+        b=Z/qscP/ppK+Vsb+rav+VfYYs0/yhWtpR2PsRjbY7cxemH62Iis6PqPDdiVfLQeuY5y
+         OkmJJ8HP+fJivPnI13roe13QxtqkmAwUdQMeh51ssQRsyopFztMrb+0Bq7kt6HSd98Kd
+         IUpdOfB02Z7GB8dlhQb84cfiS/DIagUYR2zHaDjnG5r2o8HvmeG+He2wXbCdV/nzBvVw
+         oYzbpon4qEZjJcAIw0pc24Sn3XzjwrB/fNo93ko0yuTDyj82H5EGwBBx+5bG+/moGpqQ
+         zjlupSq3LafsOYCTu0EkKNfGuVnI5Zz9n8FKH7F9RVov/LeYU84YvyNd06Jnryc4iK8e
+         5koQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUdRZ0c/NwRZsJfGEDimN55jiG+HAdfYrxkVy7X13ShSN2jKztDw6XwvvIbfBFM1KbbAQMIGmQUUIjePDzJ@vger.kernel.org, AJvYcCVzdFoKclwmuXQnxCtQaQTjeU7K1qYAOp1bpETPb4dkoq6rJtsPGs3eRSaJNMHU1+B0W42eu9aTYvuD@vger.kernel.org, AJvYcCW1yNzZuls9RQTJXe2sEE4fL0x94xVCger0ExObNwrNxXT1Z8apwq17PrbLrmM3VdEkd1/J2Pi0YkGJwNCBhw==@vger.kernel.org, AJvYcCW6qp6gnya6+74Vv76EXEuwBU/fLVFUpuFe9pY5AD4gt/T76UeFxbSu6TyIsyutwyAex6QpGmcsFdZ+Rw==@vger.kernel.org, AJvYcCWpJ0Qbm4/fPd8ghmeZp+JjiXcZgdag3cuc+ZJcg0zqNIA0HrmegSmvkP9Z5aryvk8BuqykIGNVwe/3QJY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzY9LyQ1USyAcfSwJp1mT94G7nKvPZwDv1Zvt32SJCRBa8i1vWs
+	pkSSGZYZSpt96ucMSeTVowREHOxOgK/1cHtqAydP0PHpmdNgfdz9qF3/
+X-Gm-Gg: ASbGnct3giXZSuwu2s3cofgYfjlTb9PGSSOp84lUSMYoaSJBzzOraefbHAuaVJnulTM
+	YpygG2u+OiI0Hd2/KCPKUzb1BSx7mCFFNUns5EJtAQml612GQoX++cmA4qcfJq/Jpc/UZkvOsMs
+	UMO9Kjwz7Vz84wwueb2i2XXuW0jOuCS2KP3akQ6mnwJk4X7gL8dP4NRf5XOpG0z6MBX627w5HUR
+	99KDYlf4RCsB6FTv8d8BeXpW3BmdFCv8Pu7Wa6Ijm2nTVj/6s0ISrTOy+X5jZcjxYpiM5NrvwKG
+	9GBJ5MGo2scNDSpZVu6QFTNoPsVg1oshXFYG7KsUluJfnOrLV8eXDLZNRIA=
+X-Google-Smtp-Source: AGHT+IG8PKkYv6I68L83oUss0/oqozvfiWkx71ISbciHQl9Y0/1HPUx3OPj0QVegJkElTZWjnCCEog==
+X-Received: by 2002:a05:6000:2407:b0:3a4:f661:c3e0 with SMTP id ffacd0b85a97d-3a4f661c532mr293965f8f.45.1748513146037;
+        Thu, 29 May 2025 03:05:46 -0700 (PDT)
+Received: from [192.168.68.109] ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4efe73f01sm1496880f8f.45.2025.05.29.03.05.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 May 2025 02:38:04 -0700 (PDT)
-Message-ID: <60c39c91-4ef7-4a14-8317-da0e2c3aa962@linaro.org>
-Date: Thu, 29 May 2025 11:38:02 +0200
+        Thu, 29 May 2025 03:05:45 -0700 (PDT)
+Message-ID: <1c7d62f5-1816-4ecf-9376-2751ec06830b@gmail.com>
+Date: Thu, 29 May 2025 11:05:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,105 +81,1505 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] ASoC: codecs: More const and unused member cleanups
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
- David Rhodes <david.rhodes@cirrus.com>,
- Richard Fitzgerald <rf@opensource.cirrus.com>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+Subject: Re: [PATCH v3 06/12] ASoC: codecs: add wsa881x-i2c amplifier codec
+ driver
+To: Alexey Klimov <alexey.klimov@linaro.org>,
+ Srinivas Kandagatla <srini@kernel.org>, Mark Brown <broonie@kernel.org>,
+ linux-sound@vger.kernel.org
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Dmitry Baryshkov <lumag@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
  Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- Support Opensource <support.opensource@diasemi.com>,
- Oder Chiou <oder_chiou@realtek.com>, Srinivas Kandagatla <srini@kernel.org>,
- Shengjiu Wang <shengjiu.wang@gmail.com>, Xiubo Li <Xiubo.Lee@gmail.com>,
- Fabio Estevam <festevam@gmail.com>, Nicolin Chen <nicoleotsuka@gmail.com>
-Cc: linux-sound@vger.kernel.org, patches@opensource.cirrus.com,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org
-References: <20250528-asoc-const-unused-v1-0-19a5d07b9d5c@linaro.org>
- <a4c0d421-9062-4424-a750-ee74e2f0407f@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+References: <20250522-rb2_audio_v3-v3-0-9eeb08cab9dc@linaro.org>
+ <20250522-rb2_audio_v3-v3-6-9eeb08cab9dc@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- 2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <a4c0d421-9062-4424-a750-ee74e2f0407f@oss.qualcomm.com>
+From: Srinivas Kandagatla <srini.kernel@gmail.com>
+In-Reply-To: <20250522-rb2_audio_v3-v3-6-9eeb08cab9dc@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/05/2025 11:33, Srinivas Kandagatla wrote:
-> 
-> 
-> On 5/28/25 8:59 PM, Krzysztof Kozlowski wrote:
->> Make static data const for code safety and drop some unused fields in
->> structs.
->>
->> This is based on for-v6.16 branch in ASoC tree for context in wcd938x
->> driver.
->>
->> Best regards,
->> Krzysztof
->>
->> ---
->> Krzysztof Kozlowski (8):
->>       ASoC: codecs: Constify regmap configuration static variables
->>       ASoC: fsl: Constify reg_default array
->>       ASoC: codecs: wcd9335: Drop unused sido_input_src field
->>       ASoC: codecs: wcd934x: Drop unused num_rx_port/num_tx_port fields
->>       ASoC: codecs: wcd937x: Drop unused 'struct wcd937x_priv' fields
->>       ASoC: codecs: wcd938x: Drop unused 'struct wcd938x_priv' fields
->>       ASoC: codecs: wcd938x: Drop unused variant field
->>       ASoC: codecs: wcd939x: Drop unused 'struct wcd939x_priv' fields
-> 
-> 
-> Thanks Krzysztof for the cleanups, its surprising to see so many unused
-> stuct members in qcom codecs. Did you use any static analysis tool to do
-> this or was this manually done?
 
-No, only the tool between seat and keyboard. I should find something
-better (more automated), because every 3 months I discover a new unused
-field. :) I think now I cleaned them for good, but some new cases are
-added when some code is dropped or simplified.
 
-Best regards,
-Krzysztof
+On 5/22/25 6:40 PM, Alexey Klimov wrote:
+> Add support to analog mode of WSA8810/WSA8815 Class-D Smart Speaker
+> family of amplifiers. Such amplifiers are primarily interfaced with
+> SoundWire but they also support analog mode which is configurable by
+> setting one of the pins to high/low. In such case the WSA881X amplifier
+> is configurable only using i2c.
+> 
+> To have stereo two WSA881X amplifiers are required but mono
+> configurations are also possible.
+> 
+> Cc: Srinivas Kandagatla <srini@kernel.org>
+> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+> ---
+>  sound/soc/codecs/Kconfig          |   11 +
+>  sound/soc/codecs/Makefile         |    2 +
+>  sound/soc/codecs/wsa881x-common.h |   20 +
+>  sound/soc/codecs/wsa881x-i2c.c    | 1353 +++++++++++++++++++++++++++++++++++++
+>  4 files changed, 1386 insertions(+)
+> 
+> diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+> index ba6e4504b5e9951203bd61fae894e86e9d40048e..9fef16003e2b7bb650c9a6bbcfd5d2f58626a5ae 100644
+> --- a/sound/soc/codecs/Kconfig
+> +++ b/sound/soc/codecs/Kconfig
+> @@ -357,6 +357,7 @@ config SND_SOC_ALL_CODECS
+>  	imply SND_SOC_WM9712
+>  	imply SND_SOC_WM9713
+>  	imply SND_SOC_WSA881X
+> +	imply SND_SOC_WSA881X_I2C
+>  	imply SND_SOC_WSA883X
+>  	imply SND_SOC_WSA884X
+>  	imply SND_SOC_ZL38060
+> @@ -2555,6 +2556,16 @@ config SND_SOC_WSA881X
+>  	  This enables support for Qualcomm WSA8810/WSA8815 Class-D
+>  	  Smart Speaker Amplifier.
+>  
+> +config SND_SOC_WSA881X_I2C
+> +	tristate "WSA881X Codec - Analog mode"
+> +	depends on I2C
+> +	select REGMAP_I2C
+> +	select SND_SOC_WSA881X_COMMON
+> +	help
+> +	  This enables support for Qualcomm WSA8810/WSA8815 Class-D Smart
+> +	  Speaker Amplifier that works in analog mode and configurable
+> +	  via I2C.
+> +
+>  config SND_SOC_WSA883X
+>  	tristate "WSA883X Codec"
+>  	depends on SOUNDWIRE
+> diff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile
+> index 212d419cfe3c0fbd5d4e475e5d81c69ef930b3e1..7f2ec25a279087078d9480c1b14506e70c80d552 100644
+> --- a/sound/soc/codecs/Makefile
+> +++ b/sound/soc/codecs/Makefile
+> @@ -407,6 +407,7 @@ snd-soc-wm9713-y := wm9713.o
+>  snd-soc-wm-hubs-y := wm_hubs.o
+>  snd-soc-wsa881x-y := wsa881x.o
+>  snd-soc-wsa881x-common-y := wsa881x-common.o
+> +snd-soc-wsa881x-i2c-y := wsa881x-i2c.o
+>  snd-soc-wsa883x-y := wsa883x.o
+>  snd-soc-wsa884x-y := wsa884x.o
+>  snd-soc-zl38060-y := zl38060.o
+> @@ -837,6 +838,7 @@ obj-$(CONFIG_SND_SOC_WM_ADSP)	+= snd-soc-wm-adsp.o
+>  obj-$(CONFIG_SND_SOC_WM_HUBS)	+= snd-soc-wm-hubs.o
+>  obj-$(CONFIG_SND_SOC_WSA881X)	+= snd-soc-wsa881x.o
+>  obj-$(CONFIG_SND_SOC_WSA881X_COMMON)	+= snd-soc-wsa881x-common.o
+> +obj-$(CONFIG_SND_SOC_WSA881X_I2C)	+= snd-soc-wsa881x-i2c.o
+>  obj-$(CONFIG_SND_SOC_WSA883X)	+= snd-soc-wsa883x.o
+>  obj-$(CONFIG_SND_SOC_WSA884X)	+= snd-soc-wsa884x.o
+>  obj-$(CONFIG_SND_SOC_ZL38060)	+= snd-soc-zl38060.o
+> diff --git a/sound/soc/codecs/wsa881x-common.h b/sound/soc/codecs/wsa881x-common.h
+> index ab4ee5848b10fe6ca4160b7ff634e7e06b6e41e6..a3322ad1a6eac220244a29c0540ea5dbe3118106 100644
+> --- a/sound/soc/codecs/wsa881x-common.h
+> +++ b/sound/soc/codecs/wsa881x-common.h
+> @@ -2,6 +2,7 @@
+>  #ifndef __WSA881x_COMMON_H__
+>  #define __WSA881x_COMMON_H__
+>  
+> +#include <linux/i2c.h>
+>  #include <linux/soundwire/sdw.h>
+>  #include <sound/soc.h>
+>  
+> @@ -245,6 +246,25 @@ struct wsa881x_priv {
+>  	bool port_enable[WSA881X_MAX_SWR_PORTS];
+>  #endif
+>  
+> +#if IS_ENABLED(CONFIG_SND_SOC_WSA881X_I2C)
+> +	/* i2c interace for analog mode */
+> +	struct regmap *regmap_analog;
+> +	/*
+> +	 * First client is for the digital part,
+> +	 * the second one is for analog part
+> +	 */
+> +	struct i2c_client *client[2];
+> +	struct i2c_msg xfer_msg[2];
+> +	struct snd_soc_component *component;
+> +	struct snd_soc_dai_driver *dai_driver;
+> +	const struct snd_soc_component_driver *driver;
+> +	struct gpio_desc *mclk_pin;
+> +	struct clk *wsa_mclk;
+> +	bool regmap_flag;
+> +	bool boost_enable;
+> +	int spk_pa_gain;
+> +	int version;
+> +#endif
+>  	struct gpio_desc *sd_n;
+>  	/*
+>  	 * Logical state for SD_N GPIO: high for shutdown, low for enable.
+> diff --git a/sound/soc/codecs/wsa881x-i2c.c b/sound/soc/codecs/wsa881x-i2c.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..5fa3940c65877e480aecb53acdfad5fd6ff905bd
+> --- /dev/null
+> +++ b/sound/soc/codecs/wsa881x-i2c.c
+> @@ -0,0 +1,1353 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2015-2016, 2018-2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2025, Linaro Limited
+> + */
+> +
+> +#include <linux/clk.h>
+> +#include <linux/delay.h>
+> +#include <linux/device.h>
+> +#include <linux/gpio.h>
+> +#include <linux/i2c.h>
+> +#include <linux/init.h>
+> +#include <linux/kernel.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/printk.h>
+> +#include <linux/pm_runtime.h>
+> +#include <linux/regmap.h>
+> +#include <linux/slab.h>
+> +#include <sound/pcm.h>
+> +#include <sound/pcm_params.h>
+> +#include <sound/soc.h>
+> +#include <sound/soc-dapm.h>
+> +#include "wsa881x-common.h"
+> +
+> +#define I2C_ANALOG_OFFSET		0x36
+> +#define SPK_GAIN_12DB			4
+> +
+> +#define WSA881X_RATES (SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000 |\
+> +			SNDRV_PCM_RATE_32000 | SNDRV_PCM_RATE_48000 |\
+> +			SNDRV_PCM_RATE_96000 | SNDRV_PCM_RATE_192000 |\
+> +			SNDRV_PCM_RATE_384000)
+> +/* Fractional Rates */
+> +#define WSA881X_FRAC_RATES (SNDRV_PCM_RATE_44100 | SNDRV_PCM_RATE_88200 |\
+> +				SNDRV_PCM_RATE_176400 | SNDRV_PCM_RATE_352800)
+> +
+> +#define WSA881X_FORMATS (SNDRV_PCM_FMTBIT_S16_LE |\
+> +			SNDRV_PCM_FMTBIT_S24_LE |\
+> +			SNDRV_PCM_FMTBIT_S24_3LE | SNDRV_PCM_FMTBIT_S32_LE)
+> +
+> +#define WSA881X_I2C_DRV_NAME	"wsa881x_i2c_codec"
+> +
+> +#define DIGITAL		0
+> +#define ANALOG		1
+> +
+> +enum {
+> +	WSA881X_1_X = 0,
+> +	WSA881X_2_0,
+> +};
+> +
+> +#define WSA881X_IS_2_0(ver)		((ver == WSA881X_2_0) ? 1 : 0)
+> +
+> +struct reg_default wsa881x_ana_reg_defaults[] = {
+
+This does not make sense.
+
+All the regmaps should be same, it should not change with the change in
+interface from SWD to I2C.
+
+Could you calrify this before we start reviewing rest of the driver.
+
+--srini
+
+> +	{WSA881X_CHIP_ID0, 0x00},
+> +	{WSA881X_CHIP_ID1, 0x00},
+> +	{WSA881X_CHIP_ID2, 0x00},
+> +	{WSA881X_CHIP_ID3, 0x02},
+> +	{WSA881X_BUS_ID, 0x00},
+> +	{WSA881X_CDC_RST_CTL, 0x00},
+> +	{WSA881X_CDC_TOP_CLK_CTL, 0x03},
+> +	{WSA881X_CDC_ANA_CLK_CTL, 0x00},
+> +	{WSA881X_CDC_DIG_CLK_CTL, 0x00},
+> +	{WSA881X_CLOCK_CONFIG, 0x00},
+> +	{WSA881X_ANA_CTL, 0x08},
+> +	{WSA881X_SWR_RESET_EN, 0x00},
+> +	{WSA881X_TEMP_DETECT_CTL, 0x01},
+> +	{WSA881X_TEMP_MSB, 0x00},
+> +	{WSA881X_TEMP_LSB, 0x00},
+> +	{WSA881X_TEMP_CONFIG0, 0x00},
+> +	{WSA881X_TEMP_CONFIG1, 0x00},
+> +	{WSA881X_CDC_CLIP_CTL, 0x03},
+> +	{WSA881X_SDM_PDM9_LSB, 0x00},
+> +	{WSA881X_SDM_PDM9_MSB, 0x00},
+> +	{WSA881X_CDC_RX_CTL, 0x7E},
+> +	{WSA881X_DEM_BYPASS_DATA0, 0x00},
+> +	{WSA881X_DEM_BYPASS_DATA1, 0x00},
+> +	{WSA881X_DEM_BYPASS_DATA2, 0x00},
+> +	{WSA881X_DEM_BYPASS_DATA3, 0x00},
+> +	{WSA881X_OTP_CTRL0, 0x00},
+> +	{WSA881X_OTP_CTRL1, 0x00},
+> +	{WSA881X_HDRIVE_CTL_GROUP1, 0x00},
+> +	{WSA881X_INTR_MODE, 0x00},
+> +	{WSA881X_INTR_MASK, 0x1F},
+> +	{WSA881X_INTR_STATUS, 0x00},
+> +	{WSA881X_INTR_CLEAR, 0x00},
+> +	{WSA881X_INTR_LEVEL, 0x00},
+> +	{WSA881X_INTR_SET, 0x00},
+> +	{WSA881X_INTR_TEST, 0x00},
+> +	{WSA881X_PDM_TEST_MODE, 0x00},
+> +	{WSA881X_ATE_TEST_MODE, 0x00},
+> +	{WSA881X_PIN_CTL_MODE, 0x00},
+> +	{WSA881X_PIN_CTL_OE, 0x00},
+> +	{WSA881X_PIN_WDATA_IOPAD, 0x00},
+> +	{WSA881X_PIN_STATUS, 0x00},
+> +	{WSA881X_DIG_DEBUG_MODE, 0x00},
+> +	{WSA881X_DIG_DEBUG_SEL, 0x00},
+> +	{WSA881X_DIG_DEBUG_EN, 0x00},
+> +	{WSA881X_SWR_HM_TEST1, 0x08},
+> +	{WSA881X_SWR_HM_TEST2, 0x00},
+> +	{WSA881X_TEMP_DETECT_DBG_CTL, 0x00},
+> +	{WSA881X_TEMP_DEBUG_MSB, 0x00},
+> +	{WSA881X_TEMP_DEBUG_LSB, 0x00},
+> +	{WSA881X_SAMPLE_EDGE_SEL, 0x0C},
+> +	{WSA881X_SPARE_0, 0x00},
+> +	{WSA881X_SPARE_1, 0x00},
+> +	{WSA881X_SPARE_2, 0x00},
+> +	{WSA881X_OTP_REG_0, 0x01},
+> +	{WSA881X_OTP_REG_1, 0xFF},
+> +	{WSA881X_OTP_REG_2, 0xC0},
+> +	{WSA881X_OTP_REG_3, 0xFF},
+> +	{WSA881X_OTP_REG_4, 0xC0},
+> +	{WSA881X_OTP_REG_5, 0xFF},
+> +	{WSA881X_OTP_REG_6, 0xFF},
+> +	{WSA881X_OTP_REG_7, 0xFF},
+> +	{WSA881X_OTP_REG_8, 0xFF},
+> +	{WSA881X_OTP_REG_9, 0xFF},
+> +	{WSA881X_OTP_REG_10, 0xFF},
+> +	{WSA881X_OTP_REG_11, 0xFF},
+> +	{WSA881X_OTP_REG_12, 0xFF},
+> +	{WSA881X_OTP_REG_13, 0xFF},
+> +	{WSA881X_OTP_REG_14, 0xFF},
+> +	{WSA881X_OTP_REG_15, 0xFF},
+> +	{WSA881X_OTP_REG_16, 0xFF},
+> +	{WSA881X_OTP_REG_17, 0xFF},
+> +	{WSA881X_OTP_REG_18, 0xFF},
+> +	{WSA881X_OTP_REG_19, 0xFF},
+> +	{WSA881X_OTP_REG_20, 0xFF},
+> +	{WSA881X_OTP_REG_21, 0xFF},
+> +	{WSA881X_OTP_REG_22, 0xFF},
+> +	{WSA881X_OTP_REG_23, 0xFF},
+> +	{WSA881X_OTP_REG_24, 0x03},
+> +	{WSA881X_OTP_REG_25, 0x01},
+> +	{WSA881X_OTP_REG_26, 0x03},
+> +	{WSA881X_OTP_REG_27, 0x11},
+> +	{WSA881X_OTP_REG_28, 0xFF},
+> +	{WSA881X_OTP_REG_29, 0xFF},
+> +	{WSA881X_OTP_REG_30, 0xFF},
+> +	{WSA881X_OTP_REG_31, 0xFF},
+> +	{WSA881X_OTP_REG_63, 0x40},
+> +	/* WSA881x Analog registers */
+> +	{WSA881X_BIAS_REF_CTRL, 0x6C},
+> +	{WSA881X_BIAS_TEST, 0x16},
+> +	{WSA881X_BIAS_BIAS, 0xF0},
+> +	{WSA881X_TEMP_OP, 0x00},
+> +	{WSA881X_TEMP_IREF_CTRL, 0x56},
+> +	{WSA881X_TEMP_ISENS_CTRL, 0x47},
+> +	{WSA881X_TEMP_CLK_CTRL, 0x87},
+> +	{WSA881X_TEMP_TEST, 0x00},
+> +	{WSA881X_TEMP_BIAS, 0x51},
+> +	{WSA881X_TEMP_ADC_CTRL, 0x00},
+> +	{WSA881X_TEMP_DOUT_MSB, 0x00},
+> +	{WSA881X_TEMP_DOUT_LSB, 0x00},
+> +	{WSA881X_ADC_EN_MODU_V, 0x00},
+> +	{WSA881X_ADC_EN_MODU_I, 0x00},
+> +	{WSA881X_ADC_EN_DET_TEST_V, 0x00},
+> +	{WSA881X_ADC_EN_DET_TEST_I, 0x00},
+> +	{WSA881X_ADC_SEL_IBIAS, 0x25},
+> +	{WSA881X_ADC_EN_SEL_IBIAS, 0x10},
+> +	{WSA881X_SPKR_DRV_EN, 0x74},
+> +	{WSA881X_SPKR_DRV_GAIN, 0x01},
+> +	{WSA881X_SPKR_DAC_CTL, 0x40},
+> +	{WSA881X_SPKR_DRV_DBG, 0x15},
+> +	{WSA881X_SPKR_PWRSTG_DBG, 0x00},
+> +	{WSA881X_SPKR_OCP_CTL, 0xD4},
+> +	{WSA881X_SPKR_CLIP_CTL, 0x90},
+> +	{WSA881X_SPKR_BBM_CTL, 0x00},
+> +	{WSA881X_SPKR_MISC_CTL1, 0x80},
+> +	{WSA881X_SPKR_MISC_CTL2, 0x00},
+> +	{WSA881X_SPKR_BIAS_INT, 0x56},
+> +	{WSA881X_SPKR_PA_INT, 0x54},
+> +	{WSA881X_SPKR_BIAS_CAL, 0xAC},
+> +	{WSA881X_SPKR_BIAS_PSRR, 0x54},
+> +	{WSA881X_SPKR_STATUS1, 0x00},
+> +	{WSA881X_SPKR_STATUS2, 0x00},
+> +	{WSA881X_BOOST_EN_CTL, 0x18},
+> +	{WSA881X_BOOST_CURRENT_LIMIT, 0x7A},
+> +	{WSA881X_BOOST_PS_CTL, 0xC0},
+> +	{WSA881X_BOOST_PRESET_OUT1, 0x77},
+> +	{WSA881X_BOOST_PRESET_OUT2, 0x70},
+> +	{WSA881X_BOOST_FORCE_OUT, 0x0E},
+> +	{WSA881X_BOOST_LDO_PROG, 0x16},
+> +	{WSA881X_BOOST_SLOPE_COMP_ISENSE_FB, 0x71},
+> +	{WSA881X_BOOST_RON_CTL, 0x0F},
+> +	{WSA881X_BOOST_LOOP_STABILITY, 0xAD},
+> +	{WSA881X_BOOST_ZX_CTL, 0x34},
+> +	{WSA881X_BOOST_START_CTL, 0x23},
+> +	{WSA881X_BOOST_MISC1_CTL, 0x80},
+> +	{WSA881X_BOOST_MISC2_CTL, 0x00},
+> +	{WSA881X_BOOST_MISC3_CTL, 0x00},
+> +	{WSA881X_BOOST_ATEST_CTL, 0x00},
+> +	{WSA881X_SPKR_PROT_FE_GAIN, 0x46},
+> +	{WSA881X_SPKR_PROT_FE_CM_LDO_SET, 0x3B},
+> +	{WSA881X_SPKR_PROT_FE_ISENSE_BIAS_SET1, 0x8D},
+> +	{WSA881X_SPKR_PROT_FE_ISENSE_BIAS_SET2, 0x8D},
+> +	{WSA881X_SPKR_PROT_ATEST1, 0x01},
+> +	{WSA881X_SPKR_PROT_ATEST2, 0x00},
+> +	{WSA881X_SPKR_PROT_FE_VSENSE_VCM, 0x8D},
+> +	{WSA881X_SPKR_PROT_FE_VSENSE_BIAS_SET1, 0x4D},
+> +	{WSA881X_BONGO_RESRV_REG1, 0x00},
+> +	{WSA881X_BONGO_RESRV_REG2, 0x00},
+> +	{WSA881X_SPKR_PROT_SAR, 0x00},
+> +	{WSA881X_SPKR_STATUS3, 0x00},
+> +};
+> +
+> +const struct reg_default wsa881x_ana_reg_defaults_0[] = {
+> +	{WSA881X_CHIP_ID0, 0x00},
+> +	{WSA881X_CHIP_ID1, 0x00},
+> +	{WSA881X_CHIP_ID2, 0x00},
+> +	{WSA881X_CHIP_ID3, 0x02},
+> +	{WSA881X_BUS_ID, 0x00},
+> +	{WSA881X_CDC_RST_CTL, 0x00},
+> +	{WSA881X_CDC_TOP_CLK_CTL, 0x03},
+> +	{WSA881X_CDC_ANA_CLK_CTL, 0x00},
+> +	{WSA881X_CDC_DIG_CLK_CTL, 0x00},
+> +	{WSA881X_CLOCK_CONFIG, 0x00},
+> +	{WSA881X_ANA_CTL, 0x08},
+> +	{WSA881X_SWR_RESET_EN, 0x00},
+> +	{WSA881X_TEMP_DETECT_CTL, 0x01},
+> +	{WSA881X_TEMP_MSB, 0x00},
+> +	{WSA881X_TEMP_LSB, 0x00},
+> +	{WSA881X_TEMP_CONFIG0, 0x00},
+> +	{WSA881X_TEMP_CONFIG1, 0x00},
+> +	{WSA881X_CDC_CLIP_CTL, 0x03},
+> +	{WSA881X_SDM_PDM9_LSB, 0x00},
+> +	{WSA881X_SDM_PDM9_MSB, 0x00},
+> +	{WSA881X_CDC_RX_CTL, 0x7E},
+> +	{WSA881X_DEM_BYPASS_DATA0, 0x00},
+> +	{WSA881X_DEM_BYPASS_DATA1, 0x00},
+> +	{WSA881X_DEM_BYPASS_DATA2, 0x00},
+> +	{WSA881X_DEM_BYPASS_DATA3, 0x00},
+> +	{WSA881X_OTP_CTRL0, 0x00},
+> +	{WSA881X_OTP_CTRL1, 0x00},
+> +	{WSA881X_HDRIVE_CTL_GROUP1, 0x00},
+> +	{WSA881X_INTR_MODE, 0x00},
+> +	{WSA881X_INTR_MASK, 0x1F},
+> +	{WSA881X_INTR_STATUS, 0x00},
+> +	{WSA881X_INTR_CLEAR, 0x00},
+> +	{WSA881X_INTR_LEVEL, 0x00},
+> +	{WSA881X_INTR_SET, 0x00},
+> +	{WSA881X_INTR_TEST, 0x00},
+> +	{WSA881X_PDM_TEST_MODE, 0x00},
+> +	{WSA881X_ATE_TEST_MODE, 0x00},
+> +	{WSA881X_PIN_CTL_MODE, 0x00},
+> +	{WSA881X_PIN_CTL_OE, 0x00},
+> +	{WSA881X_PIN_WDATA_IOPAD, 0x00},
+> +	{WSA881X_PIN_STATUS, 0x00},
+> +	{WSA881X_DIG_DEBUG_MODE, 0x00},
+> +	{WSA881X_DIG_DEBUG_SEL, 0x00},
+> +	{WSA881X_DIG_DEBUG_EN, 0x00},
+> +	{WSA881X_SWR_HM_TEST1, 0x08},
+> +	{WSA881X_SWR_HM_TEST2, 0x00},
+> +	{WSA881X_TEMP_DETECT_DBG_CTL, 0x00},
+> +	{WSA881X_TEMP_DEBUG_MSB, 0x00},
+> +	{WSA881X_TEMP_DEBUG_LSB, 0x00},
+> +	{WSA881X_SAMPLE_EDGE_SEL, 0x0C},
+> +	{WSA881X_SPARE_0, 0x00},
+> +	{WSA881X_SPARE_1, 0x00},
+> +	{WSA881X_SPARE_2, 0x00},
+> +	{WSA881X_OTP_REG_0, 0x01},
+> +	{WSA881X_OTP_REG_1, 0xFF},
+> +	{WSA881X_OTP_REG_2, 0xC0},
+> +	{WSA881X_OTP_REG_3, 0xFF},
+> +	{WSA881X_OTP_REG_4, 0xC0},
+> +	{WSA881X_OTP_REG_5, 0xFF},
+> +	{WSA881X_OTP_REG_6, 0xFF},
+> +	{WSA881X_OTP_REG_7, 0xFF},
+> +	{WSA881X_OTP_REG_8, 0xFF},
+> +	{WSA881X_OTP_REG_9, 0xFF},
+> +	{WSA881X_OTP_REG_10, 0xFF},
+> +	{WSA881X_OTP_REG_11, 0xFF},
+> +	{WSA881X_OTP_REG_12, 0xFF},
+> +	{WSA881X_OTP_REG_13, 0xFF},
+> +	{WSA881X_OTP_REG_14, 0xFF},
+> +	{WSA881X_OTP_REG_15, 0xFF},
+> +	{WSA881X_OTP_REG_16, 0xFF},
+> +	{WSA881X_OTP_REG_17, 0xFF},
+> +	{WSA881X_OTP_REG_18, 0xFF},
+> +	{WSA881X_OTP_REG_19, 0xFF},
+> +	{WSA881X_OTP_REG_20, 0xFF},
+> +	{WSA881X_OTP_REG_21, 0xFF},
+> +	{WSA881X_OTP_REG_22, 0xFF},
+> +	{WSA881X_OTP_REG_23, 0xFF},
+> +	{WSA881X_OTP_REG_24, 0x03},
+> +	{WSA881X_OTP_REG_25, 0x01},
+> +	{WSA881X_OTP_REG_26, 0x03},
+> +	{WSA881X_OTP_REG_27, 0x11},
+> +	{WSA881X_OTP_REG_28, 0xFF},
+> +	{WSA881X_OTP_REG_29, 0xFF},
+> +	{WSA881X_OTP_REG_30, 0xFF},
+> +	{WSA881X_OTP_REG_31, 0xFF},
+> +	{WSA881X_OTP_REG_63, 0x40},
+> +};
+> +
+> +const struct reg_default wsa881x_ana_reg_defaults_1[] = {
+> +	{WSA881X_BIAS_REF_CTRL - WSA881X_ANALOG_BASE, 0x6C},
+> +	{WSA881X_BIAS_TEST - WSA881X_ANALOG_BASE, 0x16},
+> +	{WSA881X_BIAS_BIAS - WSA881X_ANALOG_BASE, 0xF0},
+> +	{WSA881X_TEMP_OP - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_TEMP_IREF_CTRL - WSA881X_ANALOG_BASE, 0x56},
+> +	{WSA881X_TEMP_ISENS_CTRL - WSA881X_ANALOG_BASE, 0x47},
+> +	{WSA881X_TEMP_CLK_CTRL - WSA881X_ANALOG_BASE, 0x87},
+> +	{WSA881X_TEMP_TEST - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_TEMP_BIAS - WSA881X_ANALOG_BASE, 0x51},
+> +	{WSA881X_TEMP_ADC_CTRL - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_TEMP_DOUT_MSB - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_TEMP_DOUT_LSB - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_ADC_EN_MODU_V - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_ADC_EN_MODU_I - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_ADC_EN_DET_TEST_V - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_ADC_EN_DET_TEST_I - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_ADC_SEL_IBIAS - WSA881X_ANALOG_BASE, 0x25},
+> +	{WSA881X_ADC_EN_SEL_IBIAS - WSA881X_ANALOG_BASE, 0x10},
+> +	{WSA881X_SPKR_DRV_EN - WSA881X_ANALOG_BASE, 0x74},
+> +	{WSA881X_SPKR_DRV_GAIN - WSA881X_ANALOG_BASE, 0x01},
+> +	{WSA881X_SPKR_DAC_CTL - WSA881X_ANALOG_BASE, 0x40},
+> +	{WSA881X_SPKR_DRV_DBG - WSA881X_ANALOG_BASE, 0x15},
+> +	{WSA881X_SPKR_PWRSTG_DBG - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_SPKR_OCP_CTL - WSA881X_ANALOG_BASE, 0xD4},
+> +	{WSA881X_SPKR_CLIP_CTL - WSA881X_ANALOG_BASE, 0x90},
+> +	{WSA881X_SPKR_BBM_CTL - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_SPKR_MISC_CTL1 - WSA881X_ANALOG_BASE, 0x80},
+> +	{WSA881X_SPKR_MISC_CTL2 - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_SPKR_BIAS_INT - WSA881X_ANALOG_BASE, 0x56},
+> +	{WSA881X_SPKR_PA_INT - WSA881X_ANALOG_BASE, 0x54},
+> +	{WSA881X_SPKR_BIAS_CAL - WSA881X_ANALOG_BASE, 0xAC},
+> +	{WSA881X_SPKR_BIAS_PSRR - WSA881X_ANALOG_BASE, 0x54},
+> +	{WSA881X_SPKR_STATUS1 - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_SPKR_STATUS2 - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_BOOST_EN_CTL - WSA881X_ANALOG_BASE, 0x18},
+> +	{WSA881X_BOOST_CURRENT_LIMIT - WSA881X_ANALOG_BASE, 0x7A},
+> +	{WSA881X_BOOST_PS_CTL - WSA881X_ANALOG_BASE, 0xC0},
+> +	{WSA881X_BOOST_PRESET_OUT1 - WSA881X_ANALOG_BASE, 0x77},
+> +	{WSA881X_BOOST_PRESET_OUT2 - WSA881X_ANALOG_BASE, 0x70},
+> +	{WSA881X_BOOST_FORCE_OUT - WSA881X_ANALOG_BASE, 0x0E},
+> +	{WSA881X_BOOST_LDO_PROG - WSA881X_ANALOG_BASE, 0x16},
+> +	{WSA881X_BOOST_SLOPE_COMP_ISENSE_FB - WSA881X_ANALOG_BASE, 0x71},
+> +	{WSA881X_BOOST_RON_CTL - WSA881X_ANALOG_BASE, 0x0F},
+> +	{WSA881X_BOOST_LOOP_STABILITY - WSA881X_ANALOG_BASE, 0xAD},
+> +	{WSA881X_BOOST_ZX_CTL - WSA881X_ANALOG_BASE, 0x34},
+> +	{WSA881X_BOOST_START_CTL - WSA881X_ANALOG_BASE, 0x23},
+> +	{WSA881X_BOOST_MISC1_CTL - WSA881X_ANALOG_BASE, 0x80},
+> +	{WSA881X_BOOST_MISC2_CTL - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_BOOST_MISC3_CTL - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_BOOST_ATEST_CTL - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_SPKR_PROT_FE_GAIN - WSA881X_ANALOG_BASE, 0x46},
+> +	{WSA881X_SPKR_PROT_FE_CM_LDO_SET - WSA881X_ANALOG_BASE, 0x3B},
+> +	{WSA881X_SPKR_PROT_FE_ISENSE_BIAS_SET1 - WSA881X_ANALOG_BASE, 0x8D},
+> +	{WSA881X_SPKR_PROT_FE_ISENSE_BIAS_SET2 - WSA881X_ANALOG_BASE, 0x8D},
+> +	{WSA881X_SPKR_PROT_ATEST1 - WSA881X_ANALOG_BASE, 0x01},
+> +	{WSA881X_SPKR_PROT_ATEST2 - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_SPKR_PROT_FE_VSENSE_VCM - WSA881X_ANALOG_BASE, 0x8D},
+> +	{WSA881X_SPKR_PROT_FE_VSENSE_BIAS_SET1 - WSA881X_ANALOG_BASE, 0x4D},
+> +	{WSA881X_BONGO_RESRV_REG1 - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_BONGO_RESRV_REG2 - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_SPKR_PROT_SAR - WSA881X_ANALOG_BASE, 0x00},
+> +	{WSA881X_SPKR_STATUS3 - WSA881X_ANALOG_BASE, 0x00},
+> +};
+> +
+> +static const struct reg_sequence wsa881x_rev_2_0_dig[] = {
+> +	{WSA881X_RESET_CTL, 0x00},
+> +	{WSA881X_TADC_VALUE_CTL, 0x01},
+> +	{WSA881X_INTR_MASK, 0x1B},
+> +	{WSA881X_IOPAD_CTL, 0x00},
+> +	{WSA881X_OTP_REG_28, 0x3F},
+> +	{WSA881X_OTP_REG_29, 0x3F},
+> +	{WSA881X_OTP_REG_30, 0x01},
+> +	{WSA881X_OTP_REG_31, 0x01},
+> +};
+> +
+> +static const struct reg_sequence wsa881x_rev_2_0_ana[] = {
+> +	{WSA881X_TEMP_ADC_CTRL, 0x03},
+> +	{WSA881X_ADC_SEL_IBIAS, 0x45},
+> +	{WSA881X_SPKR_DRV_GAIN, 0xC1},
+> +	{WSA881X_SPKR_DAC_CTL, 0x42},
+> +	{WSA881X_SPKR_BBM_CTL, 0x02},
+> +	{WSA881X_SPKR_MISC_CTL1, 0x40},
+> +	{WSA881X_SPKR_MISC_CTL2, 0x07},
+> +	{WSA881X_SPKR_BIAS_INT, 0x5F},
+> +	{WSA881X_SPKR_BIAS_PSRR, 0x44},
+> +	{WSA881X_BOOST_PS_CTL, 0xA0},
+> +	{WSA881X_BOOST_PRESET_OUT1, 0xB7},
+> +	{WSA881X_BOOST_LOOP_STABILITY, 0x8D},
+> +	{WSA881X_SPKR_PROT_ATEST2, 0x02},
+> +	{WSA881X_BONGO_RESRV_REG1, 0x5E},
+> +	{WSA881X_BONGO_RESRV_REG2, 0x07},
+> +};
+> +
+> +static const struct reg_default wsa881x_rev_2_0_regmap_ana[] = {
+> +	{WSA881X_TEMP_ADC_CTRL - WSA881X_ANALOG_BASE, 0x03},
+> +	{WSA881X_ADC_SEL_IBIAS - WSA881X_ANALOG_BASE, 0x45},
+> +	{WSA881X_SPKR_DRV_GAIN - WSA881X_ANALOG_BASE, 0xC1},
+> +	{WSA881X_SPKR_DAC_CTL - WSA881X_ANALOG_BASE, 0x42},
+> +	{WSA881X_SPKR_BBM_CTL - WSA881X_ANALOG_BASE, 0x02},
+> +	{WSA881X_SPKR_MISC_CTL1 - WSA881X_ANALOG_BASE, 0x40},
+> +	{WSA881X_SPKR_MISC_CTL2 - WSA881X_ANALOG_BASE, 0x07},
+> +	{WSA881X_SPKR_BIAS_INT - WSA881X_ANALOG_BASE, 0x5F},
+> +	{WSA881X_SPKR_BIAS_PSRR - WSA881X_ANALOG_BASE, 0x44},
+> +	{WSA881X_BOOST_PS_CTL - WSA881X_ANALOG_BASE, 0xA0},
+> +	{WSA881X_BOOST_PRESET_OUT1 - WSA881X_ANALOG_BASE, 0xB7},
+> +	{WSA881X_BOOST_LOOP_STABILITY - WSA881X_ANALOG_BASE, 0x8D},
+> +	{WSA881X_SPKR_PROT_ATEST2 - WSA881X_ANALOG_BASE, 0x02},
+> +	{WSA881X_BONGO_RESRV_REG1 - WSA881X_ANALOG_BASE, 0x5E},
+> +	{WSA881X_BONGO_RESRV_REG2 - WSA881X_ANALOG_BASE, 0x07},
+> +};
+> +
+> +/**
+> + * wsa881x_update_reg_defaults_2_0 - update default values of regs for v2.0
+> + *
+> + * wsa881x v2.0 has different default values for certain analog and digital
+> + * registers compared to v1.x. Therefore, update the values of these registers
+> + * with the values from tables defined above for v2.0.
+> + */
+> +static void wsa881x_update_reg_defaults_2_0(void)
+> +{
+> +	int i, j;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(wsa881x_rev_2_0_dig); i++) {
+> +		for (j = 0; j < ARRAY_SIZE(wsa881x_ana_reg_defaults); j++)
+> +			if (wsa881x_ana_reg_defaults[j].reg ==
+> +						wsa881x_rev_2_0_dig[i].reg)
+> +				wsa881x_ana_reg_defaults[j].def =
+> +						wsa881x_rev_2_0_dig[i].def;
+> +	}
+> +	for (i = 0; i < ARRAY_SIZE(wsa881x_rev_2_0_ana); i++) {
+> +		for (j = 0; j < ARRAY_SIZE(wsa881x_ana_reg_defaults); j++)
+> +			if (wsa881x_ana_reg_defaults[j].reg ==
+> +						wsa881x_rev_2_0_ana[i].reg)
+> +				wsa881x_ana_reg_defaults[j].def =
+> +						wsa881x_rev_2_0_ana[i].def;
+> +	}
+> +}
+> +
+> +/**
+> + * wsa881x_update_regmap_2_0 - update regmap framework with new tables
+> + * @regmap: pointer to wsa881x regmap structure
+> + * @flag: indicates digital or analog wsa881x slave
+> + *
+> + * wsa881x v2.0 has some new registers for both analog and digital slaves.
+> + * Update the regmap framework with all the new registers.
+> + */
+> +static void wsa881x_update_regmap_2_0(struct regmap *regmap, int flag)
+> +{
+> +	u16 ret;
+> +
+> +	switch (flag) {
+> +	case DIGITAL:
+> +		ret = regmap_register_patch(regmap, wsa881x_rev_2_0_dig,
+> +					ARRAY_SIZE(wsa881x_rev_2_0_dig));
+> +		break;
+> +	case ANALOG:
+> +		ret = regmap_register_patch(regmap, wsa881x_rev_2_0_ana,
+> +					ARRAY_SIZE(wsa881x_rev_2_0_ana));
+> +		break;
+> +	default:
+> +		pr_debug("%s: unknown version", __func__);
+> +		ret = -EINVAL;
+> +		break;
+> +	}
+> +	if (ret)
+> +		pr_err("%s: failed to update regmap defaults ret=%d\n",
+> +			__func__, ret);
+> +}
+> +
+> +const struct regmap_config wsa881x_ana_regmap_config[] = {
+> +	{
+> +		.reg_bits = 8,
+> +		.val_bits = 8,
+> +		.cache_type = REGCACHE_NONE,
+> +		.reg_defaults = wsa881x_ana_reg_defaults_0,
+> +		.num_reg_defaults = ARRAY_SIZE(wsa881x_ana_reg_defaults_0),
+> +		.max_register = WSA881X_SPKR_STATUS3,
+> +		.volatile_reg = wsa881x_volatile_register,
+> +		.readable_reg = wsa881x_readable_register,
+> +		.reg_format_endian = REGMAP_ENDIAN_NATIVE,
+> +		.val_format_endian = REGMAP_ENDIAN_NATIVE,
+> +	},
+> +	{
+> +		.reg_bits = 8,
+> +		.val_bits = 8,
+> +		.cache_type = REGCACHE_NONE,
+> +		.reg_defaults = wsa881x_ana_reg_defaults_1,
+> +		.num_reg_defaults = ARRAY_SIZE(wsa881x_ana_reg_defaults_1),
+> +		.max_register = WSA881X_SPKR_STATUS3,
+> +		.volatile_reg = wsa881x_volatile_register,
+> +		.readable_reg = wsa881x_readable_register,
+> +		.reg_format_endian = REGMAP_ENDIAN_NATIVE,
+> +		.val_format_endian = REGMAP_ENDIAN_NATIVE,
+> +	}
+> +};
+> +
+> +static const struct i2c_device_id wsa881x_i2c_id[];
+> +
+> +static const int delay_array_msec[] = {10, 20, 30, 40, 50};
+> +
+> +static const char * const wsa881x_spk_pa_gain_text[] = {
+> +"POS_13P5_DB", "POS_12_DB", "POS_10P5_DB", "POS_9_DB", "POS_7P5_DB",
+> +"POS_6_DB", "POS_4P5_DB", "POS_3_DB", "POS_1P5_DB", "POS_0_DB"};
+> +
+> +static const struct soc_enum wsa881x_spk_pa_gain_enum[] = {
+> +		SOC_ENUM_SINGLE_EXT(ARRAY_SIZE(wsa881x_spk_pa_gain_text),
+> +				    wsa881x_spk_pa_gain_text),
+> +};
+> +
+> +static int wsa881x_spk_pa_gain_get(struct snd_kcontrol *kcontrol,
+> +				   struct snd_ctl_elem_value *ucontrol)
+> +{
+> +	struct snd_soc_component *component =
+> +			snd_soc_kcontrol_component(kcontrol);
+> +	struct wsa881x_priv *wsa881x =
+> +			snd_soc_component_get_drvdata(component);
+> +
+> +	ucontrol->value.integer.value[0] = wsa881x->spk_pa_gain;
+> +	return 0;
+> +}
+> +
+> +static int wsa881x_spk_pa_gain_put(struct snd_kcontrol *kcontrol,
+> +				   struct snd_ctl_elem_value *ucontrol)
+> +{
+> +	struct snd_soc_component *component =
+> +			snd_soc_kcontrol_component(kcontrol);
+> +	struct wsa881x_priv *wsa881x =
+> +			snd_soc_component_get_drvdata(component);
+> +
+> +	if (ucontrol->value.integer.value[0] < 0 ||
+> +		ucontrol->value.integer.value[0] > 0xC) {
+> +		dev_err(component->dev, "unsupported gain val %ld\n",
+> +			ucontrol->value.integer.value[0]);
+> +		return -EINVAL;
+> +	}
+> +	wsa881x->spk_pa_gain = ucontrol->value.integer.value[0];
+> +	return 0;
+> +}
+> +
+> +/* Helpers to figure out which regmap or client contains the register */
+> +static struct regmap *find_regmap(struct wsa881x_priv *wsa881x, u16 reg)
+> +{
+> +	if (reg >= WSA881X_ANALOG_BASE)
+> +		return wsa881x->regmap_analog;
+> +	else
+> +		return wsa881x->regmap;
+> +}
+> +
+> +static int find_client_index(u16 reg)
+> +{
+> +	return reg >= WSA881X_ANALOG_BASE ? ANALOG : DIGITAL;
+> +}
+> +
+> +static int wsa881x_i2c_write_device(struct wsa881x_priv *wsa881x,
+> +				    unsigned int reg, unsigned int val)
+> +{
+> +	struct regmap *wsa881x_regmap;
+> +	struct i2c_msg *msg;
+> +	int bytes = 1;
+> +	int ret, i, index;
+> +	u8 reg_addr = 0;
+> +	u8 data[2];
+> +
+> +	if (wsa881x->regmap_flag) {
+> +		wsa881x_regmap = find_regmap(wsa881x, reg);
+> +		ret = regmap_write(wsa881x_regmap, reg, val);
+> +		for (i = 0; ret && i < ARRAY_SIZE(delay_array_msec); i++) {
+> +			dev_err_ratelimited(wsa881x->dev,
+> +					    "failed writing reg=%x-retry(%d)\n",
+> +					    reg, i);
+> +			/* retry after delay of increasing order */
+> +			msleep(delay_array_msec[i]);
+> +			ret = regmap_write(wsa881x_regmap, reg, val);
+> +		}
+> +		if (ret)
+> +			dev_err_ratelimited(wsa881x->dev,
+> +					    "failed writing reg=%x ret=%d\n",
+> +					    reg, ret);
+> +		else
+> +			dev_dbg(wsa881x->dev, "wrote reg=%x val=%x\n",
+> +				reg, val);
+> +	} else {
+> +		index = find_client_index(reg);
+> +		reg_addr = (u8)reg;
+> +		msg = &wsa881x->xfer_msg[0];
+> +		msg->addr = wsa881x->client[index]->addr;
+> +		msg->len = bytes + 1;
+> +		msg->flags = 0;
+> +		data[0] = reg;
+> +		data[1] = (u8)val;
+> +		msg->buf = data;
+> +
+> +		ret = i2c_transfer(wsa881x->client[index]->adapter,
+> +				   wsa881x->xfer_msg, 1);
+> +		/* Try again if the write fails */
+> +		if (ret != 1) {
+> +			pr_err("write failed\n");
+> +			ret = i2c_transfer(wsa881x->client[index]->adapter,
+> +					   wsa881x->xfer_msg, 1);
+> +			if (ret != 1) {
+> +				dev_err_ratelimited(wsa881x->dev,
+> +						    "failed i2c transfer\n");
+> +				return ret;
+> +			}
+> +		}
+> +		dev_dbg(wsa881x->dev, "wrote reg=%x val=%x\n", reg, data[1]);
+> +	}
+> +	return ret;
+> +}
+> +
+> +static int wsa881x_i2c_read_device(struct wsa881x_priv *wsa881x,
+> +					    unsigned int reg)
+> +{
+> +	struct regmap *wsa881x_regmap;
+> +	struct i2c_msg *msg;
+> +	unsigned int val;
+> +	int ret, i, index;
+> +	u8 reg_addr = 0;
+> +	u8 dest[5] = {0};
+> +
+> +	if (wsa881x->regmap_flag) {
+> +		wsa881x_regmap = find_regmap(wsa881x, reg);
+> +		if (!wsa881x_regmap) {
+> +			dev_err_ratelimited(wsa881x->dev,
+> +					    "invalid register to read\n");
+> +			return -EINVAL;
+> +		}
+> +		ret = regmap_read(wsa881x_regmap, reg, &val);
+> +		for (i = 0; ret && i < ARRAY_SIZE(delay_array_msec); i++) {
+> +			dev_err_ratelimited(wsa881x->dev,
+> +					    "failed to read reg=%x-retry(%d)\n",
+> +					    reg, i);
+> +			/* retry after delay of increasing order */
+> +			msleep(delay_array_msec[i]);
+> +			ret = regmap_read(wsa881x_regmap, reg, &val);
+> +		}
+> +		if (ret) {
+> +			dev_err_ratelimited(wsa881x->dev,
+> +					    "failed to read reg=%x ret=%d\n",
+> +					    reg, ret);
+> +			return ret;
+> +		}
+> +		dev_dbg(wsa881x->dev, "read success, reg=%x val=%x\n",
+> +			reg, val);
+> +	} else {
+> +		index = find_client_index(reg);
+> +		reg_addr = (u8)reg;
+> +		msg = &wsa881x->xfer_msg[0];
+> +		msg->addr = wsa881x->client[index]->addr;
+> +		msg->len = 1;
+> +		msg->flags = 0;
+> +		msg->buf = &reg_addr;
+> +
+> +		msg = &wsa881x->xfer_msg[1];
+> +		msg->addr = wsa881x->client[index]->addr;
+> +		msg->len = 1;
+> +		msg->flags = I2C_M_RD;
+> +		msg->buf = dest;
+> +
+> +		ret = i2c_transfer(wsa881x->client[index]->adapter,
+> +				   wsa881x->xfer_msg, 2);
+> +		/* Try again if read fails first time */
+> +		if (ret != 2) {
+> +			ret = i2c_transfer(wsa881x->client[index]->adapter,
+> +					   wsa881x->xfer_msg, 2);
+> +			if (ret != 2) {
+> +				dev_err_ratelimited(wsa881x->dev,
+> +						    "failed to read reg=%d\n",
+> +						    reg);
+> +				return ret;
+> +			}
+> +		}
+> +		val = dest[0];
+> +	}
+> +	return val;
+> +}
+> +
+> +static unsigned int wsa881x_i2c_read(struct snd_soc_component *component,
+> +				     unsigned int reg)
+> +{
+> +	struct wsa881x_priv *wsa881x;
+> +	int retval;
+> +
+> +	wsa881x = snd_soc_component_get_drvdata(component);
+> +
+> +	retval = wsa881x_i2c_read_device(wsa881x, reg);
+> +
+> +	return retval >= 0 ? retval : 0;
+> +}
+> +
+> +static int wsa881x_i2c_write(struct snd_soc_component *component,
+> +			     unsigned int reg, unsigned int val)
+> +{
+> +	struct wsa881x_priv *wsa881x;
+> +
+> +	wsa881x = snd_soc_component_get_drvdata(component);
+> +
+> +	return wsa881x_i2c_write_device(wsa881x, reg, val);
+> +}
+> +
+> +static int wsa881x_boost_ctrl(struct snd_soc_component *component, bool enable)
+> +{
+> +	struct wsa881x_priv *wsa881x =
+> +			snd_soc_component_get_drvdata(component);
+> +
+> +	if (enable) {
+> +		if (!WSA881X_IS_2_0(wsa881x->version)) {
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_ANA_CTL, 0x01, 0x01);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_ANA_CTL, 0x04, 0x04);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_BOOST_PS_CTL,
+> +						0x40, 0x00);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_BOOST_PRESET_OUT1,
+> +						0xF0, 0xB0);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_BOOST_ZX_CTL,
+> +						0x20, 0x00);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_BOOST_EN_CTL,
+> +						0x80, 0x80);
+> +		} else {
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_BOOST_LOOP_STABILITY,
+> +						0x03, 0x03);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_BOOST_MISC2_CTL,
+> +						0xFF, 0x14);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_BOOST_START_CTL,
+> +						0x80, 0x80);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_BOOST_START_CTL,
+> +						0x03, 0x00);
+> +			snd_soc_component_update_bits(component,
+> +					WSA881X_BOOST_SLOPE_COMP_ISENSE_FB,
+> +					0x0C, 0x04);
+> +			snd_soc_component_update_bits(component,
+> +					WSA881X_BOOST_SLOPE_COMP_ISENSE_FB,
+> +					0x03, 0x00);
+> +			if (snd_soc_component_read(component, WSA881X_OTP_REG_0))
+> +				snd_soc_component_update_bits(component,
+> +					WSA881X_BOOST_PRESET_OUT1,
+> +					0xF0, 0x70);
+> +			else
+> +				snd_soc_component_update_bits(component,
+> +					WSA881X_BOOST_PRESET_OUT1,
+> +					0xF0, 0xB0);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_ANA_CTL, 0x03, 0x01);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_SPKR_DRV_EN,
+> +						0x08, 0x08);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_ANA_CTL, 0x04, 0x04);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_BOOST_CURRENT_LIMIT,
+> +						0x0F, 0x08);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_BOOST_EN_CTL,
+> +						0x80, 0x80);
+> +		}
+> +		/* For WSA8810, start-up time is 1500us as per qcrg sequence */
+> +		usleep_range(1500, 1510);
+> +	} else {
+> +		/* ENSURE: Class-D amp is shutdown. CLK is still on */
+> +		snd_soc_component_update_bits(component, WSA881X_BOOST_EN_CTL,
+> +					      0x80, 0x00);
+> +		/* boost settle time is 1500us as per qcrg sequence */
+> +		usleep_range(1500, 1510);
+> +	}
+> +	return 0;
+> +}
+> +
+> +static void wsa881x_bandgap_ctrl(struct snd_soc_component *component,
+> +				 bool enable)
+> +{
+> +	if (enable) {
+> +		snd_soc_component_update_bits(component, WSA881X_TEMP_OP,
+> +					      0x08, 0x08);
+> +		/* 400usec sleep is needed as per HW requirement */
+> +		usleep_range(400, 410);
+> +		snd_soc_component_update_bits(component, WSA881X_TEMP_OP,
+> +					      0x04, 0x04);
+> +	} else {
+> +		snd_soc_component_update_bits(component, WSA881X_TEMP_OP,
+> +					      0x04, 0x00);
+> +		snd_soc_component_update_bits(component, WSA881X_TEMP_OP,
+> +					      0x08, 0x00);
+> +	}
+> +}
+> +
+> +static void wsa881x_clk_ctrl(struct snd_soc_component *component, bool enable)
+> +{
+> +	struct wsa881x_priv *wsa881x =
+> +				snd_soc_component_get_drvdata(component);
+> +
+> +	if (enable) {
+> +		snd_soc_component_write(component,
+> +					WSA881X_CDC_RST_CTL, 0x02);
+> +		snd_soc_component_write(component,
+> +					WSA881X_CDC_RST_CTL, 0x03);
+> +		snd_soc_component_write(component,
+> +					WSA881X_CLOCK_CONFIG, 0x01);
+> +
+> +		snd_soc_component_write(component,
+> +					WSA881X_CDC_DIG_CLK_CTL, 0x01);
+> +		snd_soc_component_write(component,
+> +					WSA881X_CDC_ANA_CLK_CTL, 0x01);
+> +	} else {
+> +		snd_soc_component_write(component,
+> +					WSA881X_CDC_ANA_CLK_CTL, 0x00);
+> +		snd_soc_component_write(component,
+> +					WSA881X_CDC_DIG_CLK_CTL, 0x00);
+> +		if (WSA881X_IS_2_0(wsa881x->version))
+> +			snd_soc_component_update_bits(component,
+> +					WSA881X_CDC_TOP_CLK_CTL, 0x01, 0x00);
+> +	}
+> +}
+> +
+> +static int wsa881x_rdac_ctrl(struct snd_soc_component *component, bool enable)
+> +{
+> +	struct wsa881x_priv *wsa881x =
+> +				snd_soc_component_get_drvdata(component);
+> +
+> +	if (enable) {
+> +		snd_soc_component_update_bits(component,
+> +					WSA881X_ANA_CTL, 0x08, 0x00);
+> +		snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_DRV_GAIN, 0x08, 0x08);
+> +		snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_DAC_CTL, 0x20, 0x20);
+> +		snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_DAC_CTL, 0x20, 0x00);
+> +		snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_DAC_CTL, 0x40, 0x40);
+> +		snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_DAC_CTL, 0x80, 0x80);
+> +		if (WSA881X_IS_2_0(wsa881x->version)) {
+> +			snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_BIAS_CAL, 0x01, 0x01);
+> +			snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_OCP_CTL, 0x30, 0x30);
+> +			snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_OCP_CTL, 0x0C, 0x00);
+> +		}
+> +		snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_DRV_GAIN, 0xF0, 0x40);
+> +		snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_MISC_CTL1, 0x01, 0x01);
+> +	} else {
+> +		/* Ensure class-D amp is off */
+> +		snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_DAC_CTL, 0x80, 0x00);
+> +	}
+> +	return 0;
+> +}
+> +
+> +static int wsa881x_spkr_pa_ctrl(struct snd_soc_component *component,
+> +				bool enable)
+> +{
+> +	struct wsa881x_priv *wsa881x =
+> +				snd_soc_component_get_drvdata(component);
+> +
+> +	if (enable) {
+> +		/*
+> +		 * Ensure: Boost is enabled and stable, Analog input is up
+> +		 * and outputting silence
+> +		 */
+> +		if (!WSA881X_IS_2_0(wsa881x->version)) {
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_ADC_EN_DET_TEST_I,
+> +						0xFF, 0x01);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_ADC_EN_MODU_V,
+> +						0x02, 0x02);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_ADC_EN_DET_TEST_V,
+> +						0xFF, 0x10);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_SPKR_PWRSTG_DBG,
+> +						0xA0, 0xA0);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_SPKR_DRV_EN,
+> +						0x80, 0x80);
+> +			usleep_range(700, 710);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_SPKR_PWRSTG_DBG,
+> +						0x00, 0x00);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_ADC_EN_DET_TEST_V,
+> +						0xFF, 0x00);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_ADC_EN_MODU_V,
+> +						0x02, 0x00);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_ADC_EN_DET_TEST_I,
+> +						0xFF, 0x00);
+> +		} else
+> +			snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_DRV_EN, 0x80, 0x80);
+> +		/* add 1000us delay as per qcrg */
+> +		usleep_range(1000, 1010);
+> +		snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_DRV_EN, 0x01, 0x01);
+> +		if (WSA881X_IS_2_0(wsa881x->version))
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_SPKR_BIAS_CAL,
+> +						0x01, 0x00);
+> +		usleep_range(1000, 1010);
+> +		snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_DRV_GAIN,
+> +					0xF0, (wsa881x->spk_pa_gain << 4));
+> +	} else {
+> +		/*
+> +		 * Ensure: Boost is still on, Stream from Analog input and
+> +		 * Speaker Protection has been stopped and input is at 0V
+> +		 */
+> +		if (WSA881X_IS_2_0(wsa881x->version)) {
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_SPKR_BIAS_CAL,
+> +						0x01, 0x01);
+> +			usleep_range(1000, 1010);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_SPKR_BIAS_CAL,
+> +						0x01, 0x00);
+> +			msleep(20);
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_ANA_CTL, 0x03, 0x00);
+> +			usleep_range(200, 210);
+> +		}
+> +		snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_DRV_EN, 0x80, 0x00);
+> +	}
+> +	return 0;
+> +}
+> +
+> +static int wsa881x_get_boost(struct snd_kcontrol *kcontrol,
+> +			       struct snd_ctl_elem_value *ucontrol)
+> +{
+> +
+> +	struct snd_soc_component *component =
+> +					snd_soc_kcontrol_component(kcontrol);
+> +	struct wsa881x_priv *wsa881x =
+> +				snd_soc_component_get_drvdata(component);
+> +
+> +	ucontrol->value.integer.value[0] = wsa881x->boost_enable;
+> +	return 0;
+> +}
+> +
+> +static int wsa881x_set_boost(struct snd_kcontrol *kcontrol,
+> +			       struct snd_ctl_elem_value *ucontrol)
+> +{
+> +	struct snd_soc_component *component =
+> +					snd_soc_kcontrol_component(kcontrol);
+> +	struct wsa881x_priv *wsa881x =
+> +				snd_soc_component_get_drvdata(component);
+> +	int value = ucontrol->value.integer.value[0];
+> +
+> +	wsa881x->boost_enable = value;
+> +	return 0;
+> +}
+> +
+> +static const struct snd_kcontrol_new wsa881x_snd_controls[] = {
+> +	SOC_SINGLE_EXT("BOOST Switch", SND_SOC_NOPM, 0, 1, 0,
+> +		wsa881x_get_boost, wsa881x_set_boost),
+> +
+> +	SOC_ENUM_EXT("WSA_SPK PA Gain", wsa881x_spk_pa_gain_enum[0],
+> +		wsa881x_spk_pa_gain_get, wsa881x_spk_pa_gain_put),
+> +};
+> +
+> +static const char * const rdac_text[] = {
+> +	"ZERO", "Switch",
+> +};
+> +
+> +static const struct soc_enum rdac_enum =
+> +	SOC_ENUM_SINGLE(SND_SOC_NOPM, 0, ARRAY_SIZE(rdac_text), rdac_text);
+> +
+> +static const struct snd_kcontrol_new rdac_mux[] = {
+> +	SOC_DAPM_ENUM("RDAC", rdac_enum)
+> +};
+> +
+> +static int wsa881x_rdac_event(struct snd_soc_dapm_widget *w,
+> +			      struct snd_kcontrol *kcontrol, int event)
+> +{
+> +	struct snd_soc_component *component =
+> +					snd_soc_dapm_to_component(w->dapm);
+> +	struct wsa881x_priv *wsa881x =
+> +				snd_soc_component_get_drvdata(component);
+> +
+> +	switch (event) {
+> +	case SND_SOC_DAPM_PRE_PMU:
+> +		wsa881x_clk_ctrl(component, true);
+> +		snd_soc_component_update_bits(component, WSA881X_SPKR_DAC_CTL,
+> +					      0x02, 0x02);
+> +		if (!WSA881X_IS_2_0(wsa881x->version))
+> +			snd_soc_component_update_bits(component,
+> +						WSA881X_BIAS_REF_CTRL,
+> +						0x0F, 0x08);
+> +		wsa881x_bandgap_ctrl(component, true);
+> +		if (!WSA881X_IS_2_0(wsa881x->version))
+> +			snd_soc_component_update_bits(component,
+> +						      WSA881X_SPKR_BBM_CTL,
+> +						      0x02, 0x02);
+> +		snd_soc_component_update_bits(component, WSA881X_SPKR_MISC_CTL1,
+> +					      0xC0, 0x80);
+> +		snd_soc_component_update_bits(component, WSA881X_SPKR_MISC_CTL1,
+> +					      0x06, 0x06);
+> +		if (!WSA881X_IS_2_0(wsa881x->version)) {
+> +			snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_MISC_CTL2,
+> +					0x04, 0x04);
+> +			snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_BIAS_INT,
+> +					0x09, 0x09);
+> +		}
+> +		snd_soc_component_update_bits(component, WSA881X_SPKR_PA_INT,
+> +					      0xF0, 0x20);
+> +		if (WSA881X_IS_2_0(wsa881x->version))
+> +			snd_soc_component_update_bits(component,
+> +					WSA881X_SPKR_PA_INT,
+> +					0x0E, 0x0E);
+> +		if (wsa881x->boost_enable)
+> +			wsa881x_boost_ctrl(component, true);
+> +		break;
+> +	case SND_SOC_DAPM_POST_PMU:
+> +		wsa881x_rdac_ctrl(component, true);
+> +		break;
+> +	case SND_SOC_DAPM_PRE_PMD:
+> +		wsa881x_rdac_ctrl(component, false);
+> +		break;
+> +	case SND_SOC_DAPM_POST_PMD:
+> +		if (wsa881x->boost_enable)
+> +			wsa881x_boost_ctrl(component, false);
+> +		wsa881x_clk_ctrl(component, false);
+> +		wsa881x_bandgap_ctrl(component, false);
+> +
+> +		break;
+> +	default:
+> +		dev_err(component->dev, "invalid event:%d\n", event);
+> +		return -EINVAL;
+> +	}
+> +	return 0;
+> +}
+> +
+> +static int wsa881x_spkr_pa_event(struct snd_soc_dapm_widget *w,
+> +			struct snd_kcontrol *kcontrol, int event)
+> +{
+> +	struct snd_soc_component *component =
+> +					snd_soc_dapm_to_component(w->dapm);
+> +
+> +	switch (event) {
+> +	case SND_SOC_DAPM_PRE_PMU:
+> +		snd_soc_component_update_bits(component, WSA881X_SPKR_OCP_CTL,
+> +					      0xC0, 0x80);
+> +		break;
+> +	case SND_SOC_DAPM_POST_PMU:
+> +		wsa881x_spkr_pa_ctrl(component, true);
+> +		break;
+> +	case SND_SOC_DAPM_PRE_PMD:
+> +		wsa881x_spkr_pa_ctrl(component, false);
+> +		break;
+> +	case SND_SOC_DAPM_POST_PMD:
+> +		snd_soc_component_update_bits(component, WSA881X_SPKR_OCP_CTL,
+> +					      0xC0, 0xC0);
+> +		break;
+> +	default:
+> +		dev_err(component->dev, "invalid event:%d\n", event);
+> +		return -EINVAL;
+> +	}
+> +	return 0;
+> +}
+> +
+> +static const struct snd_soc_dapm_widget wsa881x_dapm_widgets[] = {
+> +	SND_SOC_DAPM_INPUT("WSA_IN"),
+> +
+> +	SND_SOC_DAPM_DAC_E("RDAC Analog", NULL, SND_SOC_NOPM, 0, 0,
+> +		wsa881x_rdac_event,
+> +		SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU |
+> +		SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD),
+> +
+> +	SND_SOC_DAPM_MUX("WSA_RDAC", SND_SOC_NOPM, 0, 0,
+> +		rdac_mux),
+> +
+> +	SND_SOC_DAPM_PGA_S("WSA_SPKR PGA", 1, SND_SOC_NOPM, 0, 0,
+> +			wsa881x_spkr_pa_event,
+> +			SND_SOC_DAPM_PRE_PMU |
+> +			SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD |
+> +			SND_SOC_DAPM_POST_PMD),
+> +
+> +	SND_SOC_DAPM_OUTPUT("WSA_SPKR"),
+> +};
+> +
+> +static const struct snd_soc_dapm_route wsa881x_audio_map[] = {
+> +	{"WSA_RDAC", "Switch", "WSA_IN"},
+> +	{"RDAC Analog", NULL, "WSA_RDAC"},
+> +	{"WSA_SPKR PGA", NULL, "RDAC Analog"},
+> +	{"WSA_SPKR", NULL, "WSA_SPKR PGA"},
+> +};
+> +
+> +static int wsa881x_probe(struct snd_soc_component *component)
+> +{
+> +	struct wsa881x_priv *wsa881x = snd_soc_component_get_drvdata(component);
+> +
+> +	wsa881x->component = component;
+> +	wsa881x->spk_pa_gain = SPK_GAIN_12DB;
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct snd_soc_dai_ops wsa881x_dai_ops = {
+> +	.set_stream = wsa881x_set_stream,
+> +	.mute_stream = wsa881x_digital_mute,
+> +	.mute_unmute_on_trigger = false,
+> +};
+> +
+> +static const struct snd_soc_component_driver soc_codec_dev_wsa881x = {
+> +	.probe = wsa881x_probe,
+> +	.read = wsa881x_i2c_read,
+> +	.write = wsa881x_i2c_write,
+> +	.controls = wsa881x_snd_controls,
+> +	.num_controls = ARRAY_SIZE(wsa881x_snd_controls),
+> +	.dapm_widgets = wsa881x_dapm_widgets,
+> +	.num_dapm_widgets = ARRAY_SIZE(wsa881x_dapm_widgets),
+> +	.dapm_routes = wsa881x_audio_map,
+> +	.num_dapm_routes = ARRAY_SIZE(wsa881x_audio_map),
+> +};
+> +
+> +static const struct snd_soc_dai_driver wsa_dai[] = {
+> +	{
+> +		.name = "wsa_rx0",
+> +		.id = 0,
+> +		.playback = {
+> +			.stream_name = "",
+> +			.rates = WSA881X_RATES | WSA881X_FRAC_RATES,
+> +			.formats = WSA881X_FORMATS,
+> +			.rate_max = 384000,
+> +			.rate_min = 8000,
+> +			.channels_min = 1,
+> +			.channels_max = 1,
+> +		},
+> +		.ops = &wsa881x_dai_ops,
+> +	},
+> +};
+> +
+> +static int check_wsa881x_presence(struct wsa881x_priv *wsa881x)
+> +{
+> +	struct i2c_client *client = wsa881x->client[DIGITAL];
+> +	int ret;
+> +
+> +	ret = wsa881x_i2c_read_device(wsa881x, WSA881X_CDC_RST_CTL);
+> +	if (ret < 0) {
+> +		dev_err(&client->dev, "failed to read from addr=%x\n",
+> +			client->addr);
+> +		return ret;
+> +	}
+> +
+> +	ret = wsa881x_i2c_write_device(wsa881x, WSA881X_CDC_RST_CTL, 0x01);
+> +	if (ret < 0) {
+> +		dev_err(&client->dev, "failed write addr=%x reg:0x5 val:0x1\n",
+> +			client->addr);
+> +		return ret;
+> +	}
+> +
+> +	/* allow 20ms before trigger next write to verify wsa881x presence */
+> +	msleep(20);
+> +	ret = wsa881x_i2c_write_device(wsa881x, WSA881X_CDC_RST_CTL, 0x00);
+> +	if (ret < 0) {
+> +		dev_err(&client->dev, "failed write addr=%x reg:0x5 val:0x0\n",
+> +			client->addr);
+> +		return ret;
+> +	}
+> +	return ret;
+> +}
+> +
+> +static int wsa881x_i2c_probe(struct i2c_client *client)
+> +{
+> +	struct device *dev = &client->dev;
+> +	struct wsa881x_priv *wsa881x;
+> +	int leftright;
+> +	int ret;
+> +
+> +	ret = wsa881x_probe_common(&wsa881x, dev);
+> +	if (ret)
+> +		return ret;
+> +
+> +	wsa881x->mclk_pin = devm_gpiod_get(dev, "mclk",
+> +					   GPIOD_FLAGS_BIT_NONEXCLUSIVE);
+> +	if (IS_ERR(wsa881x->mclk_pin))
+> +		dev_err_probe(dev, PTR_ERR(wsa881x->mclk_pin),
+> +			      "MCLK GPIO not found\n");
+> +
+> +	wsa881x->wsa_mclk = devm_clk_get_enabled(&client->dev, NULL);
+> +	if (IS_ERR(wsa881x->wsa_mclk))
+> +		return dev_err_probe(dev, PTR_ERR(wsa881x->wsa_mclk),
+> +				     "failed to get mclk\n");
+> +	gpiod_direction_output(wsa881x->mclk_pin, 1);
+> +	clk_set_rate(wsa881x->wsa_mclk, 9600000);
+> +
+> +	wsa881x->client[DIGITAL] = client;
+> +	ret = check_wsa881x_presence(wsa881x);
+> +	if (ret < 0) {
+> +		dev_err(&client->dev,
+> +			"failed to ping wsa with addr:%x, ret = %d\n",
+> +			client->addr, ret);
+> +		return -ENODEV;
+> +	}
+> +
+> +	wsa881x->regmap = devm_regmap_init_i2c(client,
+> +					&wsa881x_ana_regmap_config[DIGITAL]);
+> +	if (IS_ERR(wsa881x->regmap)) {
+> +		dev_err(dev, "digital regmap init failed %d\n", ret);
+> +		return PTR_ERR(wsa881x->regmap);
+> +	}
+> +	regcache_cache_bypass(wsa881x->regmap, true);
+> +
+> +	wsa881x_init_common(wsa881x);
+> +
+> +	wsa881x->version = wsa881x_i2c_read_device(wsa881x, WSA881X_CHIP_ID1);
+> +	if (wsa881x->version == WSA881X_2_0) {
+> +		wsa881x_update_reg_defaults_2_0();
+> +		wsa881x_update_regmap_2_0(wsa881x->regmap, DIGITAL);
+> +	}
+> +
+> +	/*
+> +	 * If we reached this point, then device is present and we're good to
+> +	 * go to initialise analog part of the amplifier
+> +	 */
+> +	wsa881x->client[ANALOG] = devm_i2c_new_dummy_device(&client->dev,
+> +							    client->adapter,
+> +					client->addr + I2C_ANALOG_OFFSET);
+> +	if (IS_ERR(wsa881x->client[ANALOG])) {
+> +		dev_err(dev,
+> +			"failed to register i2c device for analog part\n");
+> +		return PTR_ERR(wsa881x->client[ANALOG]);
+> +	}
+> +
+> +	wsa881x->regmap_analog = devm_regmap_init_i2c(wsa881x->client[ANALOG],
+> +					&wsa881x_ana_regmap_config[ANALOG]);
+> +	if (IS_ERR(wsa881x->regmap_analog)) {
+> +		dev_err(dev, "analog regmap init failed %d\n", ret);
+> +		return PTR_ERR(wsa881x->regmap_analog);
+> +	}
+> +	regcache_cache_bypass(wsa881x->regmap_analog, true);
+> +
+> +	wsa881x->client[ANALOG]->dev.platform_data = wsa881x;
+> +	i2c_set_clientdata(wsa881x->client[ANALOG], wsa881x);
+> +	wsa881x->regmap_flag = true;
+> +
+> +	if (wsa881x->version == WSA881X_2_0)
+> +		wsa881x_update_regmap_2_0(wsa881x->regmap_analog, ANALOG);
+> +	/* finished initialising analog part */
+> +
+> +	leftright = wsa881x_i2c_read_device(wsa881x, WSA881X_BUS_ID) & 0x1;
+> +
+> +	wsa881x->driver = devm_kmemdup(dev, &soc_codec_dev_wsa881x,
+> +				       sizeof(*wsa881x->driver), GFP_KERNEL);
+> +	if (!wsa881x->driver)
+> +		return -ENOMEM;
+> +
+> +	wsa881x->dai_driver = devm_kmemdup(dev, wsa_dai,
+> +					   sizeof(struct snd_soc_dai_driver),
+> +					   GFP_KERNEL);
+> +	if (!wsa881x->dai_driver)
+> +		return -ENOMEM;
+> +
+> +	wsa881x->driver->name = devm_kasprintf(dev, GFP_KERNEL, "wsa-codec%d",
+> +					       leftright);
+> +	if (!wsa881x->driver->name)
+> +		return -ENOMEM;
+> +
+> +	wsa881x->dai_driver->name = devm_kasprintf(dev, GFP_KERNEL,
+> +						   "wsa_rx%d", leftright);
+> +	if (!wsa881x->dai_driver->name)
+> +		return -ENOMEM;
+> +
+> +	wsa881x->dai_driver->playback.stream_name = devm_kasprintf(dev,
+> +					GFP_KERNEL, "WSA881X_AIF%d Playback",
+> +					leftright);
+> +	if (!wsa881x->dai_driver->playback.stream_name)
+> +		return -ENOMEM;
+> +
+> +	pm_runtime_set_autosuspend_delay(dev, 3000);
+> +	pm_runtime_use_autosuspend(dev);
+> +	pm_runtime_mark_last_busy(dev);
+> +	pm_runtime_set_active(dev);
+> +	pm_runtime_enable(dev);
+> +
+> +	return devm_snd_soc_register_component(dev,
+> +					       wsa881x->driver,
+> +					       wsa881x->dai_driver,
+> +					       ARRAY_SIZE(wsa_dai));
+> +}
+> +
+> +static int __maybe_unused wsa881x_i2c_suspend(struct device *dev)
+> +{
+> +	struct wsa881x_priv *wsa881x = dev_get_drvdata(dev);
+> +
+> +	clk_disable_unprepare(wsa881x->wsa_mclk);
+> +
+> +	gpiod_direction_output(wsa881x->sd_n, wsa881x->sd_n_val);
+> +
+> +	return 0;
+> +}
+> +
+> +static int __maybe_unused wsa881x_i2c_resume(struct device *dev)
+> +{
+> +	struct wsa881x_priv *wsa881x = dev_get_drvdata(dev);
+> +	int ret;
+> +
+> +	gpiod_direction_output(wsa881x->sd_n, !wsa881x->sd_n_val);
+> +
+> +	gpiod_direction_output(wsa881x->mclk_pin, 1);
+> +	ret = clk_prepare_enable(wsa881x->wsa_mclk);
+> +	if (ret) {
+> +		dev_err(wsa881x->dev, "mclk enable failed\n");
+> +		return ret;
+> +	}
+> +
+> +	wsa881x_init_common(wsa881x);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct dev_pm_ops wsa881x_i2c_pm_ops = {
+> +	SET_RUNTIME_PM_OPS(wsa881x_i2c_suspend, wsa881x_i2c_resume, NULL)
+> +	SET_SYSTEM_SLEEP_PM_OPS(wsa881x_i2c_suspend, wsa881x_i2c_resume)
+> +};
+> +
+> +static const struct i2c_device_id wsa881x_i2c_id[] = {
+> +	{"qcom,wsa8810"},
+> +	{"qcom,wsa8815"},
+> +	{}
+> +};
+> +
+> +MODULE_DEVICE_TABLE(i2c, wsa881x_i2c_id);
+> +
+> +static const struct of_device_id wsa881x_i2c_driver_table[] = {
+> +	{.compatible = "qcom,wsa8810"},
+> +	{.compatible = "qcom,wsa8815"},
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(of, wsa881x_i2c_driver_table);
+> +
+> +static struct i2c_driver wsa881x_i2c_driver = {
+> +	.driver = {
+> +		.name = "wsa881x-i2c-codec",
+> +		.pm = &wsa881x_i2c_pm_ops,
+> +		.of_match_table = wsa881x_i2c_driver_table,
+> +	},
+> +	.id_table = wsa881x_i2c_id,
+> +	.probe = wsa881x_i2c_probe,
+> +};
+> +
+> +module_i2c_driver(wsa881x_i2c_driver);
+> +MODULE_DESCRIPTION("WSA881x Codec driver for Analog mode");
+> +MODULE_LICENSE("GPL");
+> 
+
 
