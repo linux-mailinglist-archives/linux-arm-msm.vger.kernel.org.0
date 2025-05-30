@@ -1,219 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-59852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B3E4AC8919
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 09:37:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCB1AAC895F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 09:49:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 47EA04A38E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 07:37:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7FBCD17C7D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 07:48:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BBCE21FF54;
-	Fri, 30 May 2025 07:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71EA921423C;
+	Fri, 30 May 2025 07:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ELiztn5I"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="O/mKfuQB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4742521E08B;
-	Fri, 30 May 2025 07:35:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6254A213E6D;
+	Fri, 30 May 2025 07:46:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748590542; cv=none; b=Wf5P9WqaRDv/0j4laYNmM9JYxaDFlsQG22DK5/JFFNsnlTgZAsbeojbzywnFeBxe9wH9xwSX/deknJxIEORljLE9tj1o6YH3veNZ54n0H4ruSjzqp8yPMJLbX1E31ub2iARV1ewqaSu36fcc0pAhdhwt8Drc2rUTunQYBofb3o8=
+	t=1748591198; cv=none; b=fzrDYBiLR4e5ewANl9mGxdmXXWkLgRtj1ImtVKNuhxgAoP2RE08pVDtJiM/w3tmeekmbMOIiKU0eNKyzr/pv/Y1TgDty/LSHDm5aHZTYuwyhdv0wrOUmxAerjR4zEM/cbzrl0pEASCmRDu0xLoURAdlWvUlP5gcDpGhH0FI1eOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748590542; c=relaxed/simple;
-	bh=c1Kgnkn3omq/NMFoaeT8ErRn6AuQRpmtsAZYiwa2iKM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KcTQ3Nvrh0RCovwgoQG60UCbiM09SXZAQs9A4REl3OAanhzLnLDFM0iGqsFBlr2N6TVmo/MCFSDX3Dkcm0WIXDM22z0c+21ponZB14jkpZpQwrBSjPpeMDSJVzA7IU+ievBlKl92K7s3Hxw/TeSKt1d91HXPLmdCCEfQCiqIBcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ELiztn5I; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id A6230C113D0;
-	Fri, 30 May 2025 07:35:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748590540;
-	bh=c1Kgnkn3omq/NMFoaeT8ErRn6AuQRpmtsAZYiwa2iKM=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=ELiztn5I6YBBIJgkTstguPjTwdUmQjDdevydGpBAtpSManoJHjWQ5IL19kA/UZORl
-	 1gpQb2u2BjZFluXfgur0mGQYbIGcP0m9Gf7jGpbtf0BX9UvDQBy5G0RS7P9OeIrfjq
-	 6mvZ5r5lUDjx4V56g2INCbVoV1JKd66DOdtJRLf6kxGo3t18FC462EdFnEqqqyBvb8
-	 wBhvYP1QmeDnh4Fv+Isq2NbJ/L9Jcni8q8esFBQ1yClpZb0eDcTZZpGBCYRuuAotpQ
-	 QvAY/1Ic1thvZ2TmIvO6IWLp70QGmmq7h6zdlU5lgWJ9zrO7R9kqJAHZA6J8d3IXGQ
-	 EgHctsOCHThSg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CE8AC5B553;
-	Fri, 30 May 2025 07:35:40 +0000 (UTC)
-From: Fenglin Wu via B4 Relay <devnull+fenglin.wu.oss.qualcomm.com@kernel.org>
-Date: Fri, 30 May 2025 15:35:13 +0800
-Subject: [PATCH v2 8/8] arm64: dts: qcom: x1*: Remove
- qcom,sm8550-pmic-glink fallback
+	s=arc-20240116; t=1748591198; c=relaxed/simple;
+	bh=C/gy27BDlYkIDsDi2lK2NXljjmhG5IvM8N89F5XHS3M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=REoS21j7QnCTXl/QT9aZ6FjkyYngocj/tHd9G3l+rtvjx27sj1oQyE7lp2FUE/TcYTXPh/lN2gUxuEK64rH+1bPsY3wfammLAwclYL2r0Paz6Mxvw41IWs7Qz1bQV1wrEWPen0uqtnKHy1l3M/6ziQo4bP95ZeR7Io1wNEsEZGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=O/mKfuQB; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Ut2tpuuqRAyjo9B+qNNd6yMUFNVjo/29ecFKGIED0ig=; b=O/mKfuQB0BUcNmKRdmWHnd9iSG
+	YG+hJVA3Yn5K2Cyf7t9KIzf9KxAnua8o59fak2AfljqKfB8sgaL/fJtW/VJHi+0FT0XD14AO/yh0h
+	WBYb4GNg8RPO6rM8zhtWY1VqZe77B8ZTC6DS34hH2Lje4+TY59ss4FN9jqBaXeyHrHMS089dZy7IO
+	v6tIHTswLxoPoyt4C75BFzlOtlJqTBYYKJ+BuahW0po4IZOKX596tYectV7YVC0scKjOZXFK9o3uM
+	Du8yGWMTEI5Wq0NzmCH2n21bMfmg6tTQ/LbkC/7mjUgqnyIKNEpS0AlTSXjs1pNNCiYYZTfoCFKxs
+	d4ZMt7sg==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:40490)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1uKuRe-00027t-2K;
+	Fri, 30 May 2025 08:46:26 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1uKuRX-0004Rl-1d;
+	Fri, 30 May 2025 08:46:19 +0100
+Date: Fri, 30 May 2025 08:46:19 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Romain Gantois <romain.gantois@bootlin.com>
+Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>, davem@davemloft.net,
+	netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com,
+	Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	linux-arm-kernel@lists.infradead.org,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?iso-8859-1?Q?K=F6ry?= Maincent <kory.maincent@bootlin.com>,
+	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	=?iso-8859-1?Q?Nicol=F2?= Veronese <nicveronese@gmail.com>,
+	Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
+	Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>, Daniel Golle <daniel@makrotopia.org>,
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Subject: Re: [PATCH net-next v6 06/14] net: phy: Introduce generic SFP
+ handling for PHY drivers
+Message-ID: <aDliS9uMFaLf2lCV@shell.armlinux.org.uk>
+References: <20250507135331.76021-1-maxime.chevallier@bootlin.com>
+ <13770694.uLZWGnKmhe@fw-rgant>
+ <aDhfyiSOnyA709oX@shell.armlinux.org.uk>
+ <6159237.lOV4Wx5bFT@fw-rgant>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250530-qcom_battmgr_update-v2-8-9e377193a656@oss.qualcomm.com>
-References: <20250530-qcom_battmgr_update-v2-0-9e377193a656@oss.qualcomm.com>
-In-Reply-To: <20250530-qcom_battmgr_update-v2-0-9e377193a656@oss.qualcomm.com>
-To: Sebastian Reichel <sre@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, 
- David Collins <david.collins@oss.qualcomm.com>, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- kernel@oss.qualcomm.com, devicetree@vger.kernel.org, 
- linux-usb@vger.kernel.org, Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1748590538; l=5982;
- i=fenglin.wu@oss.qualcomm.com; s=20240327; h=from:subject:message-id;
- bh=X+TxGqrGeFrGC5fjW0b/Inx80/aw7X040xs1XjnqxDs=;
- b=qHgEdC5OU8ylreHSrnO+egnVmDr9kOZjDds1IVuJodwglo7n4ia5wFKiddXxdkBJOd4TRLVh9
- 8/brQverAAhBj5C76rTsuAtOsC+J8ctUGyATyP0MA/vPbEcj5D+ja17
-X-Developer-Key: i=fenglin.wu@oss.qualcomm.com; a=ed25519;
- pk=BF8SA4IVDk8/EBCwlBehKtn2hp6kipuuAuDAHh9s+K4=
-X-Endpoint-Received: by B4 Relay for fenglin.wu@oss.qualcomm.com/20240327
- with auth_id=406
-X-Original-From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Reply-To: fenglin.wu@oss.qualcomm.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6159237.lOV4Wx5bFT@fw-rgant>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+On Fri, May 30, 2025 at 09:28:11AM +0200, Romain Gantois wrote:
+> On Thursday, 29 May 2025 15:23:22 CEST Russell King (Oracle) wrote:
+> > On Wed, May 28, 2025 at 09:35:35AM +0200, Romain Gantois wrote:
+> > > > In that regard, you can consider 1000BaseX as a MII mode (we do have
+> > > > PHY_INTERFACE_MODE_1000BASEX).
+> > > 
+> > > Ugh, the "1000BaseX" terminology never ceases to confuse me, but yes
+> > > you're
+> > > right.
+> > 
+> > 1000BASE-X is exactly what is described in IEEE 802.3. It's a PHY
+> > interface mode because PHYs that use SerDes can connect to the host
+> > using SGMII or 1000BASE-X over the serial link.
+> > 
+> > 1000BASE-X's purpose in IEEE 802.3 is as a protocol for use over
+> > fibre links, as the basis for 1000BASE-SX, 1000BASE-LX, 1000BASE-EX
+> > etc where the S, L, E etc are all to do with the properties of the
+> > medium that the electrical 1000BASE-X is sent over. It even includes
+> > 1000BASE-CX which is over copper cable.
+> 
+> Ah makes sense, thanks for the explanation. I guess my mistake was assuming 
+> that MAC/PHY interface modes were necessarily strictly at the reconciliation 
+> sublayer level, and didn't include PCS/PMA functions.
 
-The "qcom,x1e80100-pmic-glink" is not longer a fallback compatible
-string of "qcom,sm8550-pmic-glink", so remove "qcom,sm8550-pmic-glink"
-in x1* platform pmic-glink device nodes.
+When a serdes protocol such as SGMII, 1000BASE-X, or 10GBASE-R is being
+used with a PHY, the IEEE 802.3 setup isn't followed exactly - in
+effect there are more layers.
 
-Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/x1-crd.dtsi                        | 1 -
- arch/arm64/boot/dts/qcom/x1e001de-devkit.dts                | 1 -
- arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi | 1 -
- arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts     | 1 -
- arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts       | 1 -
- arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts       | 1 -
- arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts    | 1 -
- arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi    | 1 -
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts                   | 1 -
- 9 files changed, 9 deletions(-)
+On the SoC:
 
-diff --git a/arch/arm64/boot/dts/qcom/x1-crd.dtsi b/arch/arm64/boot/dts/qcom/x1-crd.dtsi
-index c9f0d505267081af66b0973fe6c1e33832a2c86b..33d908c8011abe7bbbaca539bb9724f12c679c68 100644
---- a/arch/arm64/boot/dts/qcom/x1-crd.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1-crd.dtsi
-@@ -74,7 +74,6 @@ switch-lid {
- 
- 	pmic-glink {
- 		compatible = "qcom,x1e80100-pmic-glink",
--			     "qcom,sm8550-pmic-glink",
- 			     "qcom,pmic-glink";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
-diff --git a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-index 2d9627e6c7983daedba87619ba01074ee22b43c9..d6ad762b8f30cc586761fc75ba95608301b3f599 100644
---- a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-@@ -51,7 +51,6 @@ chosen {
- 
- 	pmic-glink {
- 		compatible = "qcom,x1e80100-pmic-glink",
--			     "qcom,sm8550-pmic-glink",
- 			     "qcom,pmic-glink";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
-diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-index ac1dddf27da30e6a9f7e1d1ecbd5192bf2d0671e..00e6009e3e4e89e4ca45c2d1b1f20e8caaa85bbf 100644
---- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-@@ -64,7 +64,6 @@ switch-lid {
- 
- 	pmic-glink {
- 		compatible = "qcom,x1e80100-pmic-glink",
--			     "qcom,sm8550-pmic-glink",
- 			     "qcom,pmic-glink";
- 		orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
- 				    <&tlmm 123 GPIO_ACTIVE_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-index 71b2cc6c392fef9edd19477e4aab6e28699e1eb7..e278997c98e99b1791eb2e0a9dd25ec01b40563b 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -39,7 +39,6 @@ switch-lid {
- 
- 	pmic-glink {
- 		compatible = "qcom,x1e80100-pmic-glink",
--			     "qcom,sm8550-pmic-glink",
- 			     "qcom,pmic-glink";
- 		orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
- 				    <&tlmm 123 GPIO_ACTIVE_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-index 967f6dba0878b51a985fd7c9570b8c4e71afe57d..e6f1f72505a8dff5b1ffed5f93614973f649e275 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-@@ -59,7 +59,6 @@ led-camera-indicator {
- 
- 	pmic-glink {
- 		compatible = "qcom,x1e80100-pmic-glink",
--			     "qcom,sm8550-pmic-glink",
- 			     "qcom,pmic-glink";
- 		orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
- 				    <&tlmm 123 GPIO_ACTIVE_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts b/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
-index 10b3af5e79fb6493cd6b6c661de6a801e40092f7..8057a5dadabcbf16426ba0088a13eb9c35ffff61 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
-@@ -83,7 +83,6 @@ switch-lid {
- 
- 	pmic-glink {
- 		compatible = "qcom,x1e80100-pmic-glink",
--			     "qcom,sm8550-pmic-glink",
- 			     "qcom,pmic-glink";
- 		orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
- 				    <&tlmm 123 GPIO_ACTIVE_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-index dad0f11e8e8583df6fd8aeec5be2af86739d85fb..aee38ead38a94ddca525b55004d8b8655e8484df 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-@@ -41,7 +41,6 @@ switch-lid {
- 
- 	pmic-glink {
- 		compatible = "qcom,x1e80100-pmic-glink",
--			     "qcom,sm8550-pmic-glink",
- 			     "qcom,pmic-glink";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-index 0fd8516580b2679ee425438cb73fd4078cb20581..d2bce79c4a4146c57602cf48fbb42446004f48e2 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-@@ -94,7 +94,6 @@ led-camera-indicator {
- 
- 	pmic-glink {
- 		compatible = "qcom,x1e80100-pmic-glink",
--			     "qcom,sm8550-pmic-glink",
- 			     "qcom,pmic-glink";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-index 4dfba835af6a064dbc5ad65671cb8a6e4df79758..2845a8929f80f9f9921568fb76cba79e60ebcd42 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-@@ -52,7 +52,6 @@ chosen {
- 
- 	pmic-glink {
- 		compatible = "qcom,x1e80100-pmic-glink",
--			     "qcom,sm8550-pmic-glink",
- 			     "qcom,pmic-glink";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
+	MAC
+	Reconciliation (RS)
+	PCS
+	SerDes (part of the PMA layer)
+
+On the PHY side of the SerDes host-to-phy link:
+
+	SerDes
+	PCS (which may or may not be exposed in the PHY register set,
+	     and is normally managed by the PHY itself)
+	(maybe other layers, could include MACs	back-to-back)
+	PCS
+	PMA
+	PMD
+
+Hope that helps explain what's going on a little more.
+
+Another way to look at it is that with SGMII, 1000BASE-X etc between
+the PHY and host, the PHY is a media converter.
 
 -- 
-2.34.1
-
-
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
