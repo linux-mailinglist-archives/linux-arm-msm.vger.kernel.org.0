@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-59856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94D16AC8A28
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 10:48:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D928AAC8A60
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 11:04:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D514EA22BA1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 08:48:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A8AC4A7613
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 09:04:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E835821ABC1;
-	Fri, 30 May 2025 08:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCB991EA7C8;
+	Fri, 30 May 2025 09:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lZoPuwpa"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ngLD0vVH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B5720E32B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 08:48:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C931DF72C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 09:03:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748594909; cv=none; b=fIjJ0OqEwV7Mpw77jlxi5p1usnI9OS68EiVsIPo43RGOXSBlXpgo1yYElSfRF72wY+qLu9wvKWLCZuSM6ysYBIIFfnnoIT/FMiX7ykS9HsS4V2G0AZXs0RAQrk9k6sw4sZ9Z4mbdj7DhXSm3z7sIBRqAD5ajMH1KCZJJGojM+HM=
+	t=1748595839; cv=none; b=dkR8OCkk+JM8PbEu4AvKeBdGxSE/RfXCuchOWDQft9KV4RcWtdEMSAFtRUx1z39ih6KJa011mbDBM/wdLJcqAJ5qNKE3nCyVDy3oSiZpVla2Uoon1iDd+EHI/LIOj2LnRKSb2i4CFcOn92Wjmpbfm/TOjuWy7hruh3p6liJxYhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748594909; c=relaxed/simple;
-	bh=D46erJa1hDlfl78bbCvumBIwf11Orw9oayL8XK4PtbE=;
+	s=arc-20240116; t=1748595839; c=relaxed/simple;
+	bh=UWE2jdlEzI9YD+Dg6NIoCE8U1hSoBC3xQFtAghveJv4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nA1cWIUy1eonM2GhH6MNji36Yv8YAdSipxzQnwL8+s7s2rpEQmRUABwjH1Juzp6o2M+17ymOMq37w9ARDghy+bOzTIDN2/N6TPJcn7yy3OKIkYchzWkDEZpeBPd34BJ+YTdZcTXWrxLR1R+HLQ1buBSsI8Lc6SMLZOWpfWjilRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lZoPuwpa; arc=none smtp.client-ip=209.85.128.54
+	 In-Reply-To:Content-Type; b=OX/w4Ws2BTjUWWrq4fhpUFV3DZI23PNVB//JbiNBS4ixORUThKbCCjP5opbYE2mKdr8czdNKkg74tE7lglPpGS1RGjoNPOAQ0nC/n2mhOKavBRjAXTNxDN4Oqcz2yR33+wK6bcyjIDAayryI+OHeFbeZ4GY7TeYUsSDTw1ZqkG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ngLD0vVH; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-442f5b3c710so14608775e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 01:48:26 -0700 (PDT)
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-ad883afdf0cso333820866b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 02:03:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748594905; x=1749199705; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1748595835; x=1749200635; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2FF94acC02KXHXPQmhhdghAhcPWaDPTPL3VB4RqaEg0=;
-        b=lZoPuwpa4FPdECB3pj8VahVJpHd51iI/J6kX5AnqeSXSp0TwEk8ZtFc/F2BG0V5+IT
-         VAJ8kg12sRJznDE8W9vPsnv6k68PTekChWyTmm3iI0GIc76ob6nilJ5VUPcB1YyJZ5+R
-         7DK9i2pBWylUm7zIfWcJwaT8d8f/oUkasNb7CU6GYn5MMqtLPOnDnnWd/h2ZFqdjrkgN
-         HdY9fPYIujQXMuprPTLbrzlLBly3oWVVWI2VszG0zi/dTaCWZeSnzQP0BidvCgltRriy
-         ZRR0hMrkBO3oSMt6qT7LuHIJh3PNyBd20oehfKjakhaRSv6v+cGj2GFbH6YWVdO0MO9W
-         d8Jg==
+        bh=sSnECUFkt1/JvJRDNh/81S1RiOSnxf9TGj9i5tAOdx8=;
+        b=ngLD0vVH5Hhw4bjiHCdPZVRuyuivNX7i7FrmCeimc5bkEflN2v/Vh7HiVVpY7rT8GJ
+         EopD/uUlI/vdm6JsD4WG1WNUK+Whq/boUnPq+fCa5saC/Dr6fsMgNDoynheb9N190Gyl
+         RzF9jMtGHfgMilAEwWX1xD9G8FPfHncDz6Va+3zlxsxWoQDq0B5Sz5ODcPhNLwQfJZ4p
+         D2pmp1qpiaqmq5mdWwvImVM69lUbHGAsabE3gXmT7MXIwrTlnHqGyDTt6t8NwSzo3FEs
+         IpTBPQkibdtNqK0QgmfpsmJ7zM4T91CMLvz/CtUcfYgwGApsXNABrC3F4CG3Uzw92eoh
+         bqOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748594905; x=1749199705;
+        d=1e100.net; s=20230601; t=1748595835; x=1749200635;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2FF94acC02KXHXPQmhhdghAhcPWaDPTPL3VB4RqaEg0=;
-        b=vkjTGOjdV8isTy4Ql/GuKfdSyEggJF+29kyCNVORFkb4eYSWlQ/tYXcGg8tauHYggw
-         2tTuR3XM4YbXIuh1e9h80YgbGsJojOKLkL62Uj8DmooEPXstXh8Shg//CCBhq8+q0cUf
-         4BZ8XnvvAJglIlNBUIYpKCAKcEgWwmabMyLxfwafz4VFz5Hl3/nnkYq1EhXTivXmCQug
-         p4iPAemuNeay96+azN0UNtSkzyWjh1saAMf3J1sbwLRaxm1QL8umKVRW8sWO8lWJ6/Sq
-         PW4fhTkOZ0hs5T1mxuEQR8UzaFr4vzwmpIcreABjJSx+qBfFk1rcm17X588pNRUbPGyw
-         VAeA==
-X-Forwarded-Encrypted: i=1; AJvYcCXBf7E1kpx16DtuWV+d3L7zhCUmXgHy/GQtfBRGfPaYthKziK/ELmEfYvsu7pryEpJnLkzRumANdkYKw+UC@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKjuIvVQ7F1hc/dyoolU+TXvrpZv45tGa19cgOYjxlN5McTB9v
-	INrHId2YVpkS/Xw2N4q0MhJszpXMpWSzpA9VAImms+m4/q7YrdLjM0ttd07KwoH9paI=
-X-Gm-Gg: ASbGncu/KbPrQMpgb9pZefBTcsZ5QWejojDZu3sMM0Pv/xg1Xu1oepAUk+4uFpiycIH
-	tgFe5yWfAHkFLYVCRrCiyF/AkD0vsVp9MUJIvP7YtMRMazPVJU4G5+dWXPopHbnRlbLgYJqd+w9
-	gkr5QChcktHUsAGzt1xFafo1W8EaRj9RaUcezZ2ukdRp8/GjqtG/s8nNuDarBu9KKoiXFIRJQ9c
-	gcd9btvdio6Nx6twppnEzKOTYlGg1qrORVYyipoTGEUDM4PiS2Q1Aj8bRA0S9i/D+ChBw1vyRW7
-	yAKrFi0zTV2ba1YR8zjw1rZ+wxFsI4WD3aj4umUkaIzOLz+PltJMu3f4SBDSuhbHCQVWbH3waU5
-	ELq0ZrSanOe/8z7o4v+MWwhRwlAk=
-X-Google-Smtp-Source: AGHT+IFvcFNB62OxE7MIDiidAN2Mv/BdtuQ0G91swbi4nnUSB4ekkNNovaQmQRzoZEkSDncgY+MwZw==
-X-Received: by 2002:a05:6000:4009:b0:3a4:dfa5:325e with SMTP id ffacd0b85a97d-3a4f7a438e5mr1975523f8f.10.1748594904489;
-        Fri, 30 May 2025 01:48:24 -0700 (PDT)
+        bh=sSnECUFkt1/JvJRDNh/81S1RiOSnxf9TGj9i5tAOdx8=;
+        b=kK3xhD6mbsT2I91zY9xjgEdCc9HwhYi4Pu/oP8FMD1N768xNSkdoUgHKUWS8t4FRQS
+         CkBSctJNcJWcWrzgisGCvtj7WSBnxIY+qoF8zsSOblk+ckekFwyln/fhYnNGsHh6B9J2
+         Z4G+OuLlJU7KEhcgF1Ig1kkhwFdzWsUGN6JDLhsgqxlWTLHHoMaDpZhipIKerpksw7B/
+         QdmWzOU+xGlWXss0deWfc2EWOmmCnFeoRkdsKnnDuaS29L68uZhYkAKJGhGztpA9NgZn
+         xDCJUK0cMkmwUBVcY+R+dgeqHUc/sccyeeHe1ZsnKmnH6aASCnFor6TdMUoeMgYu0I2S
+         k4UA==
+X-Forwarded-Encrypted: i=1; AJvYcCXYX32EoDK/XCcf3IatSKLv2IbLEZ4zbpOV7nhPJKKc1CifIeciEzcpw2Mw+uXPf84kqDLPLmj+wCGRnhfx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy/wFVY78x8Hw00SkUKEkq2BzAO7wVskcs1REqG47r175ppjdMs
+	oBSjg0fyjsoPYBnqA8YQ+6ZvudxSdG4hUAtdMAiELe+YxRPpmfseMwqU9qrelJRgIzuK6Q59NPB
+	gxHXFHbA=
+X-Gm-Gg: ASbGncsHWIl7IDJJ/qvjZMGNtGSiYsR5yewJru/53Jhss/bR72cjRsBZW98QlbS7RAw
+	wnKfRdg7CPlpRUYbhhuGevYyDWPOL1I0vtA+SSS2e42IDqJMEapwrwbGdH2Qg6o3m1ieyoUWOk5
+	bkxnERjnhT8KDfMUDlt53l+jLhIreld//9opWAtNod0+2LI6QWqRFUe11mW4lzhGoNTZnYz8SVs
+	06nmWXwQFaZezlpJJNKwhTX3nJCOUBGpsHo02TvluRi4eHZ8MGm0Rf4X2LegKfQwR0+Zpf3GMm6
+	+IUNI2Y6qRZpA2gqjumFGDU51CEeZMdzEc8DG3saAmyOELHBJgL+iuuRQuult0ncc6sXNPnlbEE
+	+ZvYCjNeDKEuw3ddbwl/WegWgrss=
+X-Google-Smtp-Source: AGHT+IEdTEPwz3I3fiIOCvTUuIwyDXev7/ivsylgXDu6Xsiav4J6EpqE94XmbzdMFCw668axV924fg==
+X-Received: by 2002:a05:6000:1a8a:b0:3a4:dfc2:b9e1 with SMTP id ffacd0b85a97d-3a4f89a7e71mr1193613f8f.2.1748595375484;
+        Fri, 30 May 2025 01:56:15 -0700 (PDT)
 Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4efe7440asm4317227f8f.58.2025.05.30.01.48.23
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4f00a0a96sm4271388f8f.96.2025.05.30.01.56.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 May 2025 01:48:23 -0700 (PDT)
-Message-ID: <8b396edf-e344-47e9-b497-3f7fb35783ed@linaro.org>
-Date: Fri, 30 May 2025 09:48:22 +0100
+        Fri, 30 May 2025 01:56:15 -0700 (PDT)
+Message-ID: <68c54d56-3e44-4f43-8bd6-f6b7fa1f379b@linaro.org>
+Date: Fri, 30 May 2025 09:56:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,533 +83,202 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] power: supply: qcom_battmgr: Add charge control
- support
-To: fenglin.wu@oss.qualcomm.com, Sebastian Reichel <sre@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
- David Collins <david.collins@oss.qualcomm.com>, linux-pm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- kernel@oss.qualcomm.com, devicetree@vger.kernel.org,
- linux-usb@vger.kernel.org
-References: <20250530-qcom_battmgr_update-v2-0-9e377193a656@oss.qualcomm.com>
- <497BF3hThnrmYe-YHKmdOyZwdjP3ivm1hFYDDy3-HkSOvkCOMVSkokyhb859mcTarGb55Go5nJLfgsc553u7ZA==@protonmail.internalid>
- <20250530-qcom_battmgr_update-v2-5-9e377193a656@oss.qualcomm.com>
+Subject: Re: [PATCH v2 2/2] mtd: nand: qpic_common: prevent out of bounds
+ access of BAM arrays
+To: Gabor Juhos <j4g8y7@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Md Sadre Alam <quic_mdalam@quicinc.com>,
+ Varadarajan Narayanan <quic_varada@quicinc.com>,
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+ Miquel Raynal <miquel.raynal@bootlin.com>,
+ Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>
+Cc: linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Lakshmi Sowjanya D <quic_laksd@quicinc.com>
+References: <20250529-qpic-snand-avoid-mem-corruption-v2-0-2f0d13afc7d2@gmail.com>
+ <KuueBg3qliXMt9QN9kV_5_on2xJV-BEWZAsktO_Ce-Fq1iBAPCFypbYUVZxlV4LjF0AUZG57KqiXZZ3uefQrXw==@protonmail.internalid>
+ <20250529-qpic-snand-avoid-mem-corruption-v2-2-2f0d13afc7d2@gmail.com>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250530-qcom_battmgr_update-v2-5-9e377193a656@oss.qualcomm.com>
+In-Reply-To: <20250529-qpic-snand-avoid-mem-corruption-v2-2-2f0d13afc7d2@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 30/05/2025 08:35, Fenglin Wu via B4 Relay wrote:
-> From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+On 29/05/2025 18:25, Gabor Juhos wrote:
+> The common QPIC code does not do any boundary checking when it handles
+> the command elements and scatter gater list arrays of a BAM transaction,
+> thus it allows to access out of bounds elements in those.
 > 
-> Add charge control support for SM8550 and X1E80100. It's supported
-> with below two power supply properties:
+> Although it is the responsibility of the given driver to allocate enough
+> space for all possible BAM transaction variations, however there can be
+> mistakes in the driver code which can lead to hidden memory corruption
+> issues which are hard to debug.
 > 
-> charge_control_end_threshold: SOC threshold at which the charging
-> should be terminated.
+> This kind of problem has been observed during testing the 'spi-qpic-snand'
+> driver. Although the driver has been fixed with a preceding patch, but it
+> still makes sense to reduce the chance of having such errors again later.
 > 
-> charge_control_start_threshold: SOC threshold at which the charging
-> should be resumed.
-
-Maybe this is very obvious to battery charger experts but what does SOC 
-mean here ?
-
-Reading your patch you pass a "int soc" and compare it to a threshold 
-value, without 'soc' having an obvious meaning.
-
-Its a threshold right ? Why not just call it threshold ?
-
+> In order to prevent such errors, change the qcom_alloc_bam_transaction()
+> function to store the number of elements of the arrays in the
+> 'bam_transaction' strucutre during allocation. Also, add sanity checks to
+> the qcom_prep_bam_dma_desc_{cmd,data}() functions to avoid using out of
+> bounds indices for the arrays.
 > 
-> Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+> Tested-by: Lakshmi Sowjanya D <quic_laksd@quicinc.com>     # on SDX75
+> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 > ---
->   drivers/power/supply/qcom_battmgr.c | 256 ++++++++++++++++++++++++++++++++++--
->   1 file changed, 248 insertions(+), 8 deletions(-)
+> Changes in v2:
+>    - remove the inline qcom_err_bam_array_full() function and print the error
+>      messages directly from the respective functions instead
+>    - add 'Tested-by' tag from Lakshmi Sowjanya D, and remove the
+>      "Tested with the 'spi-qpic-snand' driver only." line from the
+>      commit message as SDX75 uses the qcom_nandc driver
+>    - move the note about of the preferred merging order into the cover letter
+> ---
+>   drivers/mtd/nand/qpic_common.c       | 30 ++++++++++++++++++++++++++----
+>   include/linux/mtd/nand-qpic-common.h |  8 ++++++++
+>   2 files changed, 34 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-> index d5d0200b92bdc3d9a22f44159ad45b152efe8be0..39009415f4bfcd76b010305179d3c8fb847254a6 100644
-> --- a/drivers/power/supply/qcom_battmgr.c
-> +++ b/drivers/power/supply/qcom_battmgr.c
-> @@ -21,6 +21,8 @@
->   enum qcom_battmgr_variant {
->   	QCOM_BATTMGR_SM8350,
->   	QCOM_BATTMGR_SC8280XP,
-> +	QCOM_BATTMGR_X1E80100,
-> +	QCOM_BATTMGR_SM8550,
-You're breaking ordering here.
-
-Well the ordering is already broken but, please sort this list 
-alphanumerically.
-
->   };
+> diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_common.c
+> index e0ed25b5afea9b289b767cd3d9c2d7572ed52008..30f17d959300cc7448d0c2e9e2516c52655494f0 100644
+> --- a/drivers/mtd/nand/qpic_common.c
+> +++ b/drivers/mtd/nand/qpic_common.c
+> @@ -57,14 +57,15 @@ qcom_alloc_bam_transaction(struct qcom_nand_controller *nandc)
+>   	bam_txn_buf += sizeof(*bam_txn);
 > 
->   #define BATTMGR_BAT_STATUS		0x1
-> @@ -66,6 +68,9 @@ enum qcom_battmgr_variant {
->   #define BATT_RESISTANCE			21
->   #define BATT_POWER_NOW			22
->   #define BATT_POWER_AVG			23
-> +#define BATT_CHG_CTRL_EN		24
-> +#define BATT_CHG_CTRL_START_THR		25
-> +#define BATT_CHG_CTRL_END_THR		26
+>   	bam_txn->bam_ce = bam_txn_buf;
+> -	bam_txn_buf +=
+> -		sizeof(*bam_txn->bam_ce) * QPIC_PER_CW_CMD_ELEMENTS * num_cw;
+> +	bam_txn->bam_ce_nitems = QPIC_PER_CW_CMD_ELEMENTS * num_cw;
+> +	bam_txn_buf += sizeof(*bam_txn->bam_ce) * bam_txn->bam_ce_nitems;
 > 
->   #define BATTMGR_USB_PROPERTY_GET	0x32
->   #define BATTMGR_USB_PROPERTY_SET	0x33
-> @@ -90,6 +95,13 @@ enum qcom_battmgr_variant {
->   #define WLS_TYPE			5
->   #define WLS_BOOST_EN			6
+>   	bam_txn->cmd_sgl = bam_txn_buf;
+> -	bam_txn_buf +=
+> -		sizeof(*bam_txn->cmd_sgl) * QPIC_PER_CW_CMD_SGL * num_cw;
+> +	bam_txn->cmd_sgl_nitems = QPIC_PER_CW_CMD_SGL * num_cw;
+> +	bam_txn_buf += sizeof(*bam_txn->cmd_sgl) * bam_txn->cmd_sgl_nitems;
 > 
-> +#define BATTMGR_CHG_CTRL_LIMIT_EN	0x48
-> +#define CHARGE_CTRL_START_THR_MIN	50
-> +#define CHARGE_CTRL_START_THR_MAX	95
-> +#define CHARGE_CTRL_END_THR_MIN		55
-> +#define CHARGE_CTRL_END_THR_MAX		100
-> +#define CHARGE_CTRL_DELTA_SOC		5
-> +
->   struct qcom_battmgr_enable_request {
->   	struct pmic_glink_hdr hdr;
->   	__le32 battery_id;
-> @@ -124,6 +136,13 @@ struct qcom_battmgr_discharge_time_request {
->   	__le32 reserved;
->   };
+>   	bam_txn->data_sgl = bam_txn_buf;
+> +	bam_txn->data_sgl_nitems = QPIC_PER_CW_DATA_SGL * num_cw;
 > 
-> +struct qcom_battmgr_charge_ctrl_request {
-> +	struct pmic_glink_hdr hdr;
-> +	__le32 enable;
-> +	__le32 target_soc;
-> +	__le32 delta_soc;
-> +};
-> +
->   struct qcom_battmgr_message {
->   	struct pmic_glink_hdr hdr;
->   	union {
-> @@ -236,6 +255,8 @@ struct qcom_battmgr_info {
->   	unsigned int capacity_warning;
->   	unsigned int cycle_count;
->   	unsigned int charge_count;
-> +	unsigned int charge_ctrl_start;
-> +	unsigned int charge_ctrl_end;
->   	char model_number[BATTMGR_STRING_LEN];
->   	char serial_number[BATTMGR_STRING_LEN];
->   	char oem_info[BATTMGR_STRING_LEN];
-> @@ -424,6 +445,8 @@ static const u8 sm8350_bat_prop_map[] = {
->   	[POWER_SUPPLY_PROP_RESISTANCE] = BATT_RESISTANCE,
->   	[POWER_SUPPLY_PROP_STATE_OF_HEALTH] = BATT_SOH,
->   	[POWER_SUPPLY_PROP_POWER_NOW] = BATT_POWER_NOW,
-> +	[POWER_SUPPLY_PROP_CHARGE_CONTROL_START_THRESHOLD] = BATT_CHG_CTRL_START_THR,
-> +	[POWER_SUPPLY_PROP_CHARGE_CONTROL_END_THRESHOLD] = BATT_CHG_CTRL_END_THR,
->   };
+>   	init_completion(&bam_txn->txn_done);
 > 
->   static int qcom_battmgr_bat_sm8350_update(struct qcom_battmgr *battmgr,
-> @@ -494,7 +517,8 @@ static int qcom_battmgr_bat_get_property(struct power_supply *psy,
->   	if (!battmgr->service_up)
->   		return -EAGAIN;
+> @@ -237,6 +238,11 @@ int qcom_prep_bam_dma_desc_cmd(struct qcom_nand_controller *nandc, bool read,
+>   	struct bam_cmd_element *bam_ce_buffer;
+>   	struct bam_transaction *bam_txn = nandc->bam_txn;
 > 
-> -	if (battmgr->variant == QCOM_BATTMGR_SC8280XP)
-> +	if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
-> +			battmgr->variant == QCOM_BATTMGR_X1E80100)
-
-Please run your series through checkpatch
-
-0004-power-supply-qcom_battmgr-Add-state_of_health-proper.patch has no 
-obvious style problems and is ready for submission.
-CHECK: Alignment should match open parenthesis
-#95: FILE: drivers/power/supply/qcom_battmgr.c:521:
-+	if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
-+			battmgr->variant == QCOM_BATTMGR_X1E80100)
-
-CHECK: Alignment should match open parenthesis
-#137: FILE: drivers/power/supply/qcom_battmgr.c:678:
-+	if (soc < CHARGE_CTRL_START_THR_MIN ||
-+			soc > CHARGE_CTRL_START_THR_MAX) {
-
-CHECK: Alignment should match open parenthesis
-#139: FILE: drivers/power/supply/qcom_battmgr.c:680:
-+		dev_err(battmgr->dev, "charge control start threshold exceed range: 
-[%u - %u]\n",
-+				CHARGE_CTRL_START_THR_MIN, CHARGE_CTRL_START_THR_MAX);
-
-CHECK: Alignment should match open parenthesis
-#175: FILE: drivers/power/supply/qcom_battmgr.c:716:
-+	if (soc < CHARGE_CTRL_END_THR_MIN ||
-+			soc > CHARGE_CTRL_END_THR_MAX) {
-
-CHECK: Alignment should match open parenthesis
-#177: FILE: drivers/power/supply/qcom_battmgr.c:718:
-+		dev_err(battmgr->dev, "charge control end threshold exceed range: [%u 
-- %u]\n",
-+				CHARGE_CTRL_END_THR_MIN, CHARGE_CTRL_END_THR_MAX);
-
-CHECK: Alignment should match open parenthesis
-#196: FILE: drivers/power/supply/qcom_battmgr.c:737:
-+static int qcom_battmgr_bat_is_writeable(struct power_supply *psy,
-+				enum power_supply_property psp)
-
-CHECK: Alignment should match open parenthesis
-#210: FILE: drivers/power/supply/qcom_battmgr.c:751:
-+static int qcom_battmgr_bat_set_property(struct power_supply *psy,
-+			enum power_supply_property psp,
-
-CHECK: Alignment should match open parenthesis
-#326: FILE: drivers/power/supply/qcom_battmgr.c:985:
-+	if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
-+			battmgr->variant == QCOM_BATTMGR_X1E80100)
-
-CHECK: Alignment should match open parenthesis
-#336: FILE: drivers/power/supply/qcom_battmgr.c:1108:
-+	if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
-+			battmgr->variant == QCOM_BATTMGR_X1E80100)
-
-CHECK: Alignment should match open parenthesis
-#367: FILE: drivers/power/supply/qcom_battmgr.c:1527:
-+	else if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
-+			battmgr->variant == QCOM_BATTMGR_X1E80100)
-
-CHECK: Alignment should match open parenthesis
-#396: FILE: drivers/power/supply/qcom_battmgr.c:1606:
-+	if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
-+			battmgr->variant == QCOM_BATTMGR_X1E80100) {
-
-
->   		ret = qcom_battmgr_bat_sc8280xp_update(battmgr, psp);
->   	else
->   		ret = qcom_battmgr_bat_sm8350_update(battmgr, psp);
-> @@ -599,6 +623,12 @@ static int qcom_battmgr_bat_get_property(struct power_supply *psy,
->   	case POWER_SUPPLY_PROP_TIME_TO_FULL_AVG:
->   		val->intval = battmgr->status.charge_time;
->   		break;
-> +	case POWER_SUPPLY_PROP_CHARGE_CONTROL_START_THRESHOLD:
-> +		val->intval = battmgr->info.charge_ctrl_start;
-> +		break;
-> +	case POWER_SUPPLY_PROP_CHARGE_CONTROL_END_THRESHOLD:
-> +		val->intval = battmgr->info.charge_ctrl_end;
-> +		break;
->   	case POWER_SUPPLY_PROP_MANUFACTURE_YEAR:
->   		val->intval = battmgr->info.year;
->   		break;
-> @@ -624,6 +654,120 @@ static int qcom_battmgr_bat_get_property(struct power_supply *psy,
->   	return 0;
->   }
-> 
-> +static int qcom_battmgr_set_charge_control(struct qcom_battmgr *battmgr,
-> +					   u32 target_soc, u32 delta_soc)
-> +{
-> +	struct qcom_battmgr_charge_ctrl_request request = {
-> +		.hdr.owner = cpu_to_le32(PMIC_GLINK_OWNER_BATTMGR),
-> +		.hdr.type = cpu_to_le32(PMIC_GLINK_REQ_RESP),
-> +		.hdr.opcode = cpu_to_le32(BATTMGR_CHG_CTRL_LIMIT_EN),
-> +		.enable = cpu_to_le32(1),
-> +		.target_soc = cpu_to_le32(target_soc),
-> +		.delta_soc = cpu_to_le32(delta_soc),
-> +	};
-> +
-> +	return qcom_battmgr_request(battmgr, &request, sizeof(request));
-> +}
-> +
-> +static int qcom_battmgr_set_charge_start_threshold(struct qcom_battmgr *battmgr, int soc)
-> +{
-> +	u32 target_soc, delta_soc;
-> +	int ret;
-> +
-> +	if (soc < CHARGE_CTRL_START_THR_MIN ||
-> +			soc > CHARGE_CTRL_START_THR_MAX) {
-> +		dev_err(battmgr->dev, "charge control start threshold exceed range: [%u - %u]\n",
-> +				CHARGE_CTRL_START_THR_MIN, CHARGE_CTRL_START_THR_MAX);
-> +		return -EINVAL;
-> +	}
-
-'soc' is what - a threshold as far as I can tell.
-
-> +
-> +	/*
-> +	 * If the new start threshold is larger than the old end threshold,
-> +	 * move the end threshold one step (DELTA_SOC) after the new start
-> +	 * threshold.
-> +	 */
-> +	if (soc > battmgr->info.charge_ctrl_end) {
-> +		target_soc = soc + CHARGE_CTRL_DELTA_SOC;
-> +		target_soc = min_t(u32, target_soc, CHARGE_CTRL_END_THR_MAX);
-> +		delta_soc = target_soc - soc;
-> +		delta_soc = min_t(u32, delta_soc, CHARGE_CTRL_DELTA_SOC);
-> +	} else {
-> +		target_soc =  battmgr->info.charge_ctrl_end;
-> +		delta_soc = battmgr->info.charge_ctrl_end - soc;
-> +	}
-> +
-> +	mutex_lock(&battmgr->lock);
-> +	ret = qcom_battmgr_set_charge_control(battmgr, target_soc, delta_soc);
-> +	mutex_unlock(&battmgr->lock);
-> +	if (!ret) {
-> +		battmgr->info.charge_ctrl_start = soc;
-> +		battmgr->info.charge_ctrl_end = target_soc;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_battmgr_set_charge_end_threshold(struct qcom_battmgr *battmgr, int soc)
-> +{
-> +	u32 delta_soc = CHARGE_CTRL_DELTA_SOC;
-> +	int ret;
-> +
-> +	if (soc < CHARGE_CTRL_END_THR_MIN ||
-> +			soc > CHARGE_CTRL_END_THR_MAX) {
-> +		dev_err(battmgr->dev, "charge control end threshold exceed range: [%u - %u]\n",
-> +				CHARGE_CTRL_END_THR_MIN, CHARGE_CTRL_END_THR_MAX);
+> +	if (bam_txn->bam_ce_pos + size > bam_txn->bam_ce_nitems) {
+> +		dev_err(nandc->dev, "BAM %s array is full\n", "CE");
 > +		return -EINVAL;
 > +	}
 > +
-> +	if (battmgr->info.charge_ctrl_start && soc > battmgr->info.charge_ctrl_start)
-> +		delta_soc = soc - battmgr->info.charge_ctrl_start;
-> +
-> +	mutex_lock(&battmgr->lock);
-> +	ret = qcom_battmgr_set_charge_control(battmgr, soc, delta_soc);
-> +	mutex_unlock(&battmgr->lock);
-> +	if (!ret) {
-> +		battmgr->info.charge_ctrl_start = soc - delta_soc;
-> +		battmgr->info.charge_ctrl_end = soc;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_battmgr_bat_is_writeable(struct power_supply *psy,
-> +				enum power_supply_property psp)
-> +{
-> +	switch (psp) {
-> +	case POWER_SUPPLY_PROP_CHARGE_CONTROL_START_THRESHOLD:
-> +	case POWER_SUPPLY_PROP_CHARGE_CONTROL_END_THRESHOLD:
-> +		return 1;
-> +	default:
-> +		return 0;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_battmgr_bat_set_property(struct power_supply *psy,
-> +			enum power_supply_property psp,
-> +			const union power_supply_propval *pval)
-> +{
-> +	struct qcom_battmgr *battmgr = power_supply_get_drvdata(psy);
-> +
-> +	if (!battmgr->service_up)
-> +		return -EAGAIN;
-> +
-> +	switch (psp) {
-> +	case POWER_SUPPLY_PROP_CHARGE_CONTROL_START_THRESHOLD:
-> +		return qcom_battmgr_set_charge_start_threshold(battmgr, pval->intval);
-> +	case POWER_SUPPLY_PROP_CHARGE_CONTROL_END_THRESHOLD:
-> +		return qcom_battmgr_set_charge_end_threshold(battmgr, pval->intval);
-> +	default:
-> +		return -EINVAL;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->   static const enum power_supply_property sc8280xp_bat_props[] = {
->   	POWER_SUPPLY_PROP_STATUS,
->   	POWER_SUPPLY_PROP_PRESENT,
-> @@ -657,6 +801,43 @@ static const struct power_supply_desc sc8280xp_bat_psy_desc = {
->   	.get_property = qcom_battmgr_bat_get_property,
->   };
+>   	bam_ce_buffer = &bam_txn->bam_ce[bam_txn->bam_ce_pos];
 > 
-> +static const enum power_supply_property x1e80100_bat_props[] = {
-> +	POWER_SUPPLY_PROP_STATUS,
-> +	POWER_SUPPLY_PROP_PRESENT,
-> +	POWER_SUPPLY_PROP_TECHNOLOGY,
-> +	POWER_SUPPLY_PROP_CYCLE_COUNT,
-> +	POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN,
-> +	POWER_SUPPLY_PROP_VOLTAGE_NOW,
-> +	POWER_SUPPLY_PROP_POWER_NOW,
-> +	POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN,
-> +	POWER_SUPPLY_PROP_CHARGE_FULL,
-> +	POWER_SUPPLY_PROP_CHARGE_EMPTY,
-> +	POWER_SUPPLY_PROP_CHARGE_NOW,
-> +	POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN,
-> +	POWER_SUPPLY_PROP_ENERGY_FULL,
-> +	POWER_SUPPLY_PROP_ENERGY_EMPTY,
-> +	POWER_SUPPLY_PROP_ENERGY_NOW,
-> +	POWER_SUPPLY_PROP_TEMP,
-> +	POWER_SUPPLY_PROP_MANUFACTURE_YEAR,
-> +	POWER_SUPPLY_PROP_MANUFACTURE_MONTH,
-> +	POWER_SUPPLY_PROP_MANUFACTURE_DAY,
-> +	POWER_SUPPLY_PROP_MODEL_NAME,
-> +	POWER_SUPPLY_PROP_MANUFACTURER,
-> +	POWER_SUPPLY_PROP_SERIAL_NUMBER,
-> +	POWER_SUPPLY_PROP_CHARGE_CONTROL_START_THRESHOLD,
-> +	POWER_SUPPLY_PROP_CHARGE_CONTROL_END_THRESHOLD,
-> +};
-> +
-> +static const struct power_supply_desc x1e80100_bat_psy_desc = {
-> +	.name = "qcom-battmgr-bat",
-> +	.type = POWER_SUPPLY_TYPE_BATTERY,
-> +	.properties = x1e80100_bat_props,
-> +	.num_properties = ARRAY_SIZE(x1e80100_bat_props),
-> +	.get_property = qcom_battmgr_bat_get_property,
-> +	.set_property = qcom_battmgr_bat_set_property,
-> +	.property_is_writeable = qcom_battmgr_bat_is_writeable,
-> +};
-> +
->   static const enum power_supply_property sm8350_bat_props[] = {
->   	POWER_SUPPLY_PROP_STATUS,
->   	POWER_SUPPLY_PROP_HEALTH,
-> @@ -689,6 +870,42 @@ static const struct power_supply_desc sm8350_bat_psy_desc = {
->   	.get_property = qcom_battmgr_bat_get_property,
->   };
+>   	/* fill the command desc */
+> @@ -258,6 +264,12 @@ int qcom_prep_bam_dma_desc_cmd(struct qcom_nand_controller *nandc, bool read,
 > 
-> +static const enum power_supply_property sm8550_bat_props[] = {
-> +	POWER_SUPPLY_PROP_STATUS,
-> +	POWER_SUPPLY_PROP_HEALTH,
-> +	POWER_SUPPLY_PROP_PRESENT,
-> +	POWER_SUPPLY_PROP_CHARGE_TYPE,
-> +	POWER_SUPPLY_PROP_CAPACITY,
-> +	POWER_SUPPLY_PROP_VOLTAGE_OCV,
-> +	POWER_SUPPLY_PROP_VOLTAGE_NOW,
-> +	POWER_SUPPLY_PROP_VOLTAGE_MAX,
-> +	POWER_SUPPLY_PROP_CURRENT_NOW,
-> +	POWER_SUPPLY_PROP_TEMP,
-> +	POWER_SUPPLY_PROP_TECHNOLOGY,
-> +	POWER_SUPPLY_PROP_CHARGE_COUNTER,
-> +	POWER_SUPPLY_PROP_CYCLE_COUNT,
-> +	POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN,
-> +	POWER_SUPPLY_PROP_CHARGE_FULL,
-> +	POWER_SUPPLY_PROP_MODEL_NAME,
-> +	POWER_SUPPLY_PROP_TIME_TO_FULL_AVG,
-> +	POWER_SUPPLY_PROP_TIME_TO_EMPTY_AVG,
-> +	POWER_SUPPLY_PROP_RESISTANCE,
-> +	POWER_SUPPLY_PROP_STATE_OF_HEALTH,
-> +	POWER_SUPPLY_PROP_POWER_NOW,
-> +	POWER_SUPPLY_PROP_CHARGE_CONTROL_START_THRESHOLD,
-> +	POWER_SUPPLY_PROP_CHARGE_CONTROL_END_THRESHOLD,
-> +};
+>   	/* use the separate sgl after this command */
+>   	if (flags & NAND_BAM_NEXT_SGL) {
+> +		if (bam_txn->cmd_sgl_pos >= bam_txn->cmd_sgl_nitems) {
+> +			dev_err(nandc->dev, "BAM %s array is full\n",
+> +				"CMD sgl");
+> +			return -EINVAL;
+> +		}
 > +
-> +static const struct power_supply_desc sm8550_bat_psy_desc = {
-> +	.name = "qcom-battmgr-bat",
-> +	.type = POWER_SUPPLY_TYPE_BATTERY,
-> +	.properties = sm8550_bat_props,
-> +	.num_properties = ARRAY_SIZE(sm8550_bat_props),
-> +	.get_property = qcom_battmgr_bat_get_property,
-> +	.set_property = qcom_battmgr_bat_set_property,
-> +	.property_is_writeable = qcom_battmgr_bat_is_writeable,
-> +};
+>   		bam_ce_buffer = &bam_txn->bam_ce[bam_txn->bam_ce_start];
+>   		bam_ce_size = (bam_txn->bam_ce_pos -
+>   				bam_txn->bam_ce_start) *
+> @@ -297,10 +309,20 @@ int qcom_prep_bam_dma_desc_data(struct qcom_nand_controller *nandc, bool read,
+>   	struct bam_transaction *bam_txn = nandc->bam_txn;
+> 
+>   	if (read) {
+> +		if (bam_txn->rx_sgl_pos >= bam_txn->data_sgl_nitems) {
+> +			dev_err(nandc->dev, "BAM %s array is full\n", "RX sgl");
+> +			return -EINVAL;
+> +		}
 > +
->   static int qcom_battmgr_ac_get_property(struct power_supply *psy,
->   					enum power_supply_property psp,
->   					union power_supply_propval *val)
-> @@ -764,7 +981,8 @@ static int qcom_battmgr_usb_get_property(struct power_supply *psy,
->   	if (!battmgr->service_up)
->   		return -EAGAIN;
-> 
-> -	if (battmgr->variant == QCOM_BATTMGR_SC8280XP)
-> +	if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
-> +			battmgr->variant == QCOM_BATTMGR_X1E80100)
->   		ret = qcom_battmgr_bat_sc8280xp_update(battmgr, psp);
->   	else
->   		ret = qcom_battmgr_usb_sm8350_update(battmgr, psp);
-> @@ -886,7 +1104,8 @@ static int qcom_battmgr_wls_get_property(struct power_supply *psy,
->   	if (!battmgr->service_up)
->   		return -EAGAIN;
-> 
-> -	if (battmgr->variant == QCOM_BATTMGR_SC8280XP)
-> +	if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
-> +			battmgr->variant == QCOM_BATTMGR_X1E80100)
->   		ret = qcom_battmgr_bat_sc8280xp_update(battmgr, psp);
->   	else
->   		ret = qcom_battmgr_wls_sm8350_update(battmgr, psp);
-> @@ -1196,6 +1415,12 @@ static void qcom_battmgr_sm8350_callback(struct qcom_battmgr *battmgr,
->   		case BATT_POWER_NOW:
->   			battmgr->status.power_now = le32_to_cpu(resp->intval.value);
->   			break;
-> +		case BATT_CHG_CTRL_START_THR:
-> +			battmgr->info.charge_ctrl_start = le32_to_cpu(resp->intval.value);
-> +			break;
-> +		case BATT_CHG_CTRL_END_THR:
-> +			battmgr->info.charge_ctrl_end = le32_to_cpu(resp->intval.value);
-> +			break;
->   		default:
->   			dev_warn(battmgr->dev, "unknown property %#x\n", property);
->   			break;
-> @@ -1278,6 +1503,7 @@ static void qcom_battmgr_sm8350_callback(struct qcom_battmgr *battmgr,
->   		}
->   		break;
->   	case BATTMGR_REQUEST_NOTIFICATION:
-> +	case BATTMGR_CHG_CTRL_LIMIT_EN:
->   		battmgr->error = 0;
->   		break;
->   	default:
-> @@ -1297,7 +1523,8 @@ static void qcom_battmgr_callback(const void *data, size_t len, void *priv)
-> 
->   	if (opcode == BATTMGR_NOTIFICATION)
->   		qcom_battmgr_notification(battmgr, data, len);
-> -	else if (battmgr->variant == QCOM_BATTMGR_SC8280XP)
-> +	else if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
-> +			battmgr->variant == QCOM_BATTMGR_X1E80100)
->   		qcom_battmgr_sc8280xp_callback(battmgr, data, len);
->   	else
->   		qcom_battmgr_sm8350_callback(battmgr, data, len);
-> @@ -1333,7 +1560,8 @@ static void qcom_battmgr_pdr_notify(void *priv, int state)
->   static const struct of_device_id qcom_battmgr_of_variants[] = {
->   	{ .compatible = "qcom,sc8180x-pmic-glink", .data = (void *)QCOM_BATTMGR_SC8280XP },
->   	{ .compatible = "qcom,sc8280xp-pmic-glink", .data = (void *)QCOM_BATTMGR_SC8280XP },
-> -	{ .compatible = "qcom,x1e80100-pmic-glink", .data = (void *)QCOM_BATTMGR_SC8280XP },
-> +	{ .compatible = "qcom,x1e80100-pmic-glink", .data = (void *)QCOM_BATTMGR_X1E80100 },
-> +	{ .compatible = "qcom,sm8550-pmic-glink", .data = (void *)QCOM_BATTMGR_SM8550 },
-
-Please separate compat string addition from functional changes.
-
->   	/* Unmatched devices falls back to QCOM_BATTMGR_SM8350 */
->   	{}
->   };
-> @@ -1343,6 +1571,7 @@ static char *qcom_battmgr_battery[] = { "battery" };
->   static int qcom_battmgr_probe(struct auxiliary_device *adev,
->   			      const struct auxiliary_device_id *id)
->   {
-> +	const struct power_supply_desc *psy_desc;
->   	struct power_supply_config psy_cfg_supply = {};
->   	struct power_supply_config psy_cfg = {};
->   	const struct of_device_id *match;
-> @@ -1373,8 +1602,14 @@ static int qcom_battmgr_probe(struct auxiliary_device *adev,
->   	else
->   		battmgr->variant = QCOM_BATTMGR_SM8350;
-> 
-> -	if (battmgr->variant == QCOM_BATTMGR_SC8280XP) {
-> -		battmgr->bat_psy = devm_power_supply_register(dev, &sc8280xp_bat_psy_desc, &psy_cfg);
-> +	if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
-> +			battmgr->variant == QCOM_BATTMGR_X1E80100) {
-> +		if (battmgr->variant == QCOM_BATTMGR_X1E80100)
-> +			psy_desc = &x1e80100_bat_psy_desc;
-> +		else
-> +			psy_desc = &sc8280xp_bat_psy_desc;
-> +
-> +		battmgr->bat_psy = devm_power_supply_register(dev, psy_desc, &psy_cfg);
->   		if (IS_ERR(battmgr->bat_psy))
->   			return dev_err_probe(dev, PTR_ERR(battmgr->bat_psy),
->   					     "failed to register battery power supply\n");
-> @@ -1394,7 +1629,12 @@ static int qcom_battmgr_probe(struct auxiliary_device *adev,
->   			return dev_err_probe(dev, PTR_ERR(battmgr->wls_psy),
->   					     "failed to register wireless charing power supply\n");
+>   		sg_set_buf(&bam_txn->data_sgl[bam_txn->rx_sgl_pos],
+>   			   vaddr, size);
+>   		bam_txn->rx_sgl_pos++;
 >   	} else {
-> -		battmgr->bat_psy = devm_power_supply_register(dev, &sm8350_bat_psy_desc, &psy_cfg);
-> +		if (battmgr->variant == QCOM_BATTMGR_SM8550)
-> +			psy_desc = &sm8550_bat_psy_desc;
-> +		else
-> +			psy_desc = &sm8350_bat_psy_desc;
+> +		if (bam_txn->tx_sgl_pos >= bam_txn->data_sgl_nitems) {
+> +			dev_err(nandc->dev, "BAM %s array is full\n", "TX sgl");
+> +			return -EINVAL;
+> +		}
 > +
-> +		battmgr->bat_psy = devm_power_supply_register(dev, psy_desc, &psy_cfg);
->   		if (IS_ERR(battmgr->bat_psy))
->   			return dev_err_probe(dev, PTR_ERR(battmgr->bat_psy),
->   					     "failed to register battery power supply\n");
+>   		sg_set_buf(&bam_txn->data_sgl[bam_txn->tx_sgl_pos],
+>   			   vaddr, size);
+>   		bam_txn->tx_sgl_pos++;
+> diff --git a/include/linux/mtd/nand-qpic-common.h b/include/linux/mtd/nand-qpic-common.h
+> index cd7172e6c1bbffeee0363a14044980a72ea17723..3ca4073a496b8fd2a99112a9caefd3f110260568 100644
+> --- a/include/linux/mtd/nand-qpic-common.h
+> +++ b/include/linux/mtd/nand-qpic-common.h
+> @@ -240,6 +240,9 @@
+>    * @last_data_desc - last DMA desc in data channel (tx/rx).
+>    * @last_cmd_desc - last DMA desc in command channel.
+>    * @txn_done - completion for NAND transfer.
+> + * @bam_ce_nitems - the number of elements in the @bam_ce array
+> + * @cmd_sgl_nitems - the number of elements in the @cmd_sgl array
+> + * @data_sgl_nitems - the number of elements in the @data_sgl array
+>    * @bam_ce_pos - the index in bam_ce which is available for next sgl
+>    * @bam_ce_start - the index in bam_ce which marks the start position ce
+>    *		   for current sgl. It will be used for size calculation
+> @@ -258,6 +261,11 @@ struct bam_transaction {
+>   	struct dma_async_tx_descriptor *last_data_desc;
+>   	struct dma_async_tx_descriptor *last_cmd_desc;
+>   	struct completion txn_done;
+> +
+> +	unsigned int bam_ce_nitems;
+> +	unsigned int cmd_sgl_nitems;
+> +	unsigned int data_sgl_nitems;
+> +
+>   	struct_group(bam_positions,
+>   		u32 bam_ce_pos;
+>   		u32 bam_ce_start;
 > 
 > --
-> 2.34.1
+> 2.49.0
 > 
 > 
-> 
+
+This one doesn't apply to -next
+
+deckard 
+{~/Development/worktree/reviews/linux-next-25-05-30-daily-reviews}±(linux-next-25-05-30-daily-reviews); 
+greetings, earthling [1.052Mb]$ ☞ b4 shazam 
+20250529-qpic-snand-avoid-mem-corruption-v2-0-2f0d13afc7d2@gm
+Grabbing thread from 
+lore.kernel.org/all/20250529-qpic-snand-avoid-mem-corruption-v2-0-2f0d13afc7d2@gmail.com/t.mbox.gz
+Checking for newer revisions
+Grabbing search results from lore.kernel.org
+Analyzing 3 messages in the thread
+Analyzing 12 code-review messages
+Checking attestation on all messages, may take a moment...
+---
+   ✓ [PATCH v2 1/2] spi: spi-qpic-snand: reallocate BAM transactions
+   ✓ [PATCH v2 2/2] mtd: nand: qpic_common: prevent out of bounds access 
+of BAM arrays
+   ---
+   ✓ Signed: DKIM/gmail.com
+---
+Total patches: 2
+---
+  Base: using specified base-commit b00d6864a4c948529dc6ddd2df76bf175bf27c63
+Applying: spi: spi-qpic-snand: reallocate BAM transactions
+Applying: mtd: nand: qpic_common: prevent out of bounds access of BAM arrays
+Patch failed at 0002 mtd: nand: qpic_common: prevent out of bounds 
+access of BAM arrays
+error: patch failed: drivers/mtd/nand/qpic_common.c:237
+error: drivers/mtd/nand/qpic_common.c: patch does not apply
+hint: Use 'git am --show-current-patch=diff' to see the failed patch
+hint: When you have resolved this problem, run "git am --continue".
+hint: If you prefer to skip this patch, run "git am --skip" instead.
+hint: To restore the original branch and stop patching, run "git am 
+--abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+deckard 
+{~/Development/worktree/reviews/linux-next-25-05-30-daily-reviews}±(linux-next-25-05-30-daily-reviews); 
+greetings, earthling [1.052Mb]$ ☞ git-log-graph
+* 4ae57ce867d8f - (HEAD -> linux-next-25-05-30-daily-reviews) spi: 
+spi-qpic-snand: reallocate BAM transactions (8 seconds ago)
 
 
