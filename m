@@ -1,138 +1,281 @@
-Return-Path: <linux-arm-msm+bounces-59911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF408AC926E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 17:19:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A528AC92BD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 17:53:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E4407A44EF8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 15:19:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 415BB3B8E40
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 15:53:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B332188A0E;
-	Fri, 30 May 2025 15:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46B7D22F169;
+	Fri, 30 May 2025 15:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="N1oLCBMt"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dzBgQQMJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5294F2DCBE6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 15:19:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE1B22DF9D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 15:53:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748618368; cv=none; b=PSFp8u2/P32WwX2JXGmtpQnnP79KRJlWGj09TCdsTKfp6vJPeoskRdk79s2/hFW3m/c+e/ZwG+nDcMbf8jR1T/k+sI8t4dO+NWrjMYwfJn05EF9A25EM44PCr6ZLEm9DOhCuhXUbplUK1TtW00zco2aKbP6m/3W+boF8mC1gTR4=
+	t=1748620407; cv=none; b=jRJKQvTqfzH541U4aI+zm7UgUWrwQQf6idGYHodVhRjwnXJpCHD7rsc9Vl67mMbYLPgY0Yc00lskYPlxW8nRAsZVBodAKBDH07qBcwt5DHzP7uBNNSO465WnVUsyOHLq8BasYp+zvCtaZx37apgieSrmJWYS2RhVomzSWuyYUiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748618368; c=relaxed/simple;
-	bh=Gqbpw1mtR/wk2FY9+6mpcrJfQIuZ/fVzc1hR907YXdE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ikW+oUxAgN6s3idasZ/kOeJSVzTfS0jek/J4hYf2NdBLj7qTMS1QLul23dn63slqrxHRk/xBiUPPbfjzUggt6iheB3wAUx0mE+ryq7xvcFp20bd4ID+1ZNQPuPR80e1f9riBhBiaDAFz1jm5yd8n2l2WFXboL4FczgEeG/eOOdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N1oLCBMt; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1748620407; c=relaxed/simple;
+	bh=LrxK0cAiXOd6k3y7xsFLNaG3CkgMGLXiV0FageijA/k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IOb9WeFYiWrp/EohGz4eRElUfR4RRTkbqEQwqo23h1WD77D8ZR2h/maKsyUD7qcdLDuVItVQcWyt57Fgw8G5Ilf1wabf/25okiBzlkfHvu9IASBmsgurw9eZj2FmNlLiV9D88UryMjBlBvAMZP9FWb6BSDnVSeovZtzHgLvZUOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dzBgQQMJ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54UBXuVK032767
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 15:19:25 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54UBDRR5023945
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 15:53:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/q+YvqYtbRXmX9ePmBvjG6ebJPt80BkopHr/TbJPGwI=; b=N1oLCBMtcPxcYP2t
-	kAKFZvZOWcG2YFmX910uA4wtk7ZNKO4QLsANZZJvdDrDLuLB99nuuz10dc49naR9
-	i1T1Ajs46/uxGtn1AfXsxnywWxJTD0mFgpgdVYqNLWOsO3zVr4UE9XLra6un6EO9
-	vK8JLNJ3jQ8e7RWFOKUneNIBPD3G+erh0motHSX2wmD5sg+lckfE6pNzCVToNkZr
-	ySqFKUzuZThT+tY+3vTemB+f1ELohGuxNuxX1eFVk8Nlr1d2hCE0MxWFyO8YHP+I
-	AxbXLcqIb+K0/CsLlV3rm92sLp8DSRv5dzjCvhUis2jl0ruwZfP4SEWAxt8u7N3G
-	SiSWJw==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u6vk1kx8-1
+	ocOy+iZ89dtnyBaWmC5MMBRHZ5mWFLMjUsmdth3Z8GQ=; b=dzBgQQMJcDYDo0LK
+	6yPAzdvLQ2Nq+0MD/gsuqA9Uss3k+D3+NaFHTO1C3/ZXvC7/MXzq/otbMXCyXOxi
+	L922xEIey+YB5mukNZhJYq4dZxe2i7bbzOz5oAJoS2nGV6iwd0MYaQEZpFO/xJCl
+	1CLky+oH5RGBrOc9xUAg6TWPnn+sQ0CoYYXRBnPTIpjyo4lJvCIP+RUq/E0OAUIG
+	dELuuU1Or3wdqr6jhEr4jIUm1NXl39tsa82UibKB2uoZaK/wmDc1/6MnByMJhLyi
+	K26kcC0TzFaB5NXIw9Fxkf2hMVYOSGeseonnY0SUvujMSlB/cN/lm/+aESk28UNs
+	joql/Q==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46x8d7ea15-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 15:19:25 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7377139d8b1so1865008b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 08:19:25 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 15:53:22 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-235089528a0so14913865ad.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 08:53:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748618364; x=1749223164;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/q+YvqYtbRXmX9ePmBvjG6ebJPt80BkopHr/TbJPGwI=;
-        b=ooJ7C7rWdczpCgQh8nNUgr15wFGDFThU8kn/RhgYJqDfJJaEocjHtX/itxvzpCaTOQ
-         6ohPWbgHoYB8BZ5NZddXwZXV8TMcYon8Ag1z5n3g3k2wWrg1YvlGriWhopKtuusImeTR
-         Qc8LWzeVuHQdUHgKrxau61ZrCbcK0tRxi8qm2/Ypd68uOGZakTz4Xgxo2geuc3ZySyOw
-         HM8XtVTQBZQf3u+ii7aq5o2uqXdPusC72HqA1C4hLeNFeufDzmpaAGLuNfgUotfmVUTd
-         /2yuzRGcBDXppQt3S2piUbE2G8jWVg5ung1Odx+h8TWMkdtE1gQeLD+8Vci/jsr56gHn
-         iWPg==
-X-Gm-Message-State: AOJu0YxJuSwsoFnI/zCB/odA6cjpLrTIynCnYWy9Yw4EQy5eBhom7EE+
-	vNwQ25d7tKRYPrxt5xZHLGw+GipUonM4lw+eodkj454L7mm/x7eY9MWb2MVta9xv9s1lGm8OHXS
-	v8lKK92wIjRNIfsaaEBlOnHdlx0yJFh6GSmWSXCz5a8w0bvig2Vq3Kj7gx2Epsq87CFIB
-X-Gm-Gg: ASbGncvV5fGNACw+jYCzA581Vk5EoVLOhyLDWSQS9rnwWrYBHt9E9EpEyeGYpisdCKb
-	gGQUBP0EgKgjPZNKnqQJBASpjDdFt7zfCTqdcJNl4pmCUl9TEiVeh5XLSy/tw0OvDJKzqqtf3fZ
-	gMr1zsd+fMwHl/IXDBKxd9VsMw3rm037/czv3rMUz+VVZ34N00VE3EKrl2qoSvWAPRZKGTjw/dv
-	coiGiO2e2Q2Mq5MLJNmVc52RBMPMe8YBvxjI6t9jcZudmOtcCJhicLpZL8OoPnisfb22sK73ZUN
-	G4fb9u5wG7+/7ap7+nPu1c1gUfD+RvwZOBr7RlUQp4ybOcgweh8K2M0auH86fw==
-X-Received: by 2002:a05:6a00:139f:b0:740:b3d9:c889 with SMTP id d2e1a72fcca58-747bda1a211mr4588216b3a.22.1748618364467;
-        Fri, 30 May 2025 08:19:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEIsnc65zftF5H9opwbtI65RK9LSqmvQ1w8r/w2RETrAKhTxutQiW9vpS3JmGLmqXeNZ+QMOQ==
-X-Received: by 2002:a05:6a00:139f:b0:740:b3d9:c889 with SMTP id d2e1a72fcca58-747bda1a211mr4588191b3a.22.1748618364068;
-        Fri, 30 May 2025 08:19:24 -0700 (PDT)
-Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-747affd41d7sm3167879b3a.123.2025.05.30.08.19.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 May 2025 08:19:23 -0700 (PDT)
-Message-ID: <ff02633c-e57f-44c0-a3ef-4eb6e044578e@oss.qualcomm.com>
-Date: Fri, 30 May 2025 09:19:22 -0600
+        d=1e100.net; s=20230601; t=1748620401; x=1749225201;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ocOy+iZ89dtnyBaWmC5MMBRHZ5mWFLMjUsmdth3Z8GQ=;
+        b=ntNm8MJ2vc7ZOGNIGiFdzVenRuyvMQV2gWYYWmlWDEdPUPr8e2D9MvXBBgD4ISpe5l
+         tj6Z5E/GBPjbrfyNGO/ErRS8DPGvHlb9eLfAxRpJrxybiYY4qY/ub4PHxc3UBV6o+Czu
+         sUzbh9sNzq37cXrqbso6m0HCOso+K/h/AcUO00axf0vDLGAsaO86cJk2sJ3Ng/MNf+mH
+         +zd09xfYJOHyjYGk87J5I0PE0AeCfM34N5a8usul/0FJaXOHI8o4VZP3LW9sBPqhrx35
+         Ie/6ntXJUb5SZgbDRX2wIlDHwpY+cmi0lNT+I4W3mrWvu3qHOJfhP2D9ZjDNZ1l6BzpG
+         /N3g==
+X-Forwarded-Encrypted: i=1; AJvYcCUUfsX3z/HDEaLXR3nbO2mgQUUTPeEwgRpk4A6FdhL5nagruPHIHvRk2wBDxXAe6RLk6HP8z0XY6Sr3dasB@vger.kernel.org
+X-Gm-Message-State: AOJu0YyrhzeOSzTt2smUytR8AYMYivRdI/kQ0S+5UF4XRdyLSp3F/yyT
+	GC61Xamrm7XYT1lnVIrr632ZHdIU0vD/o/WrMmj62EIWvRkD7+vTQjQ+Doko4TelTmrU5SE2XSi
+	Njja4NnMoSqALZhYKS5LBWIxGLhDJG4kdcuoOYdC/fXJsrLS8Dwvpi3rCeUuuSAZjhHRlzhZJUF
+	BqWtzkM8/snHauQbFs08L219AaF6zi7GzUt5/Qpn70LUY=
+X-Gm-Gg: ASbGncv9khKfoP5LwmI/yFQy7gjsvH+zi8KZCOddwcK9AMKfupZI9//vwIZEkvJFuTR
+	8CmZ9YlXUWsRrBLMufPwTw7MkeDNbPP3uqDyCzd8gIrjkgsV7JPaKx2n9pMNkmy+2jXn/vof1qm
+	NkN+utE+gwZfootpDcVX8XIe78ZQ==
+X-Received: by 2002:a17:90b:2f03:b0:30a:9feb:1e15 with SMTP id 98e67ed59e1d1-31214e2efabmr13566568a91.8.1748620401274;
+        Fri, 30 May 2025 08:53:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHI8DQTJOy6Ygl/JjuDr7iVO/pS/KdYmD4s/dC0D+LEaOkPASzhJTKviMamfZXKSwSf5rgo3UuFLaa45v1W+Tk=
+X-Received: by 2002:a17:90b:2f03:b0:30a:9feb:1e15 with SMTP id
+ 98e67ed59e1d1-31214e2efabmr13566509a91.8.1748620400596; Fri, 30 May 2025
+ 08:53:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] accel/qaic: Add Reliability, Accessibility,
- Serviceability (RAS)
-To: quic_carlv@quicinc.com, quic_thanson@quicinc.com, lizhi.hou@amd.com,
-        jacek.lawrynowicz@linux.intel.com, quic_yabdulra@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
-References: <20250516160634.1408309-1-jeff.hugo@oss.qualcomm.com>
-Content-Language: en-US
-From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-In-Reply-To: <20250516160634.1408309-1-jeff.hugo@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=UOXdHDfy c=1 sm=1 tr=0 ts=6839cc7d cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=53wffJMIMOjkZiTugjoA:9
- a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-ORIG-GUID: MW89SEJCzSSw74HQe9Bw6vQfbrSrIGkZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTMwMDEzNSBTYWx0ZWRfXxBnUZZu+MDOt
- ERh7HQBd40JlxUpW+LYkyWbek0E032/HjDx38z+5/xtGPt/wUcL6ldp6Gbqytm/2ZfyyTSqqNq5
- S30Iw6HUy54SP0aw64SJN67Gmvbqwdg7dO/jHsh1jQK9i7WDZqdSgJaKrGXSEzbtwGyTSwPwc93
- 99GOzSXxKkkD14GKcRWK1rqfcBlf9hO0X7i/36dJY985iAOXFO69rBa6Pbxos0NP3jd8Sx66F0E
- IntMBs7lw2JACnZvfqFWAIE4otUicpVgRdA3BQ0N8s+I6gCWd4uOIVouYfxQ3ZzoX7WtdSavej7
- RSS9gB7qh3norEdbOSVWETjQRdQ3naNZVH+btFT0Aypy7B9tH4WtWclqLtRYB3ZhCdzkUMXs17K
- VPXKM3kVIVHqS/R1IKTpqc0IUd6bvd+b6pM9ny3/AfQm6w7B198F9aNE59vv/z4prDJSEfA8
-X-Proofpoint-GUID: MW89SEJCzSSw74HQe9Bw6vQfbrSrIGkZ
+References: <20250506111844.1726-1-quic_jseerapu@quicinc.com>
+ <20250506111844.1726-2-quic_jseerapu@quicinc.com> <ze5y6llgo2qx4nvilaqcmkam5ywqa76d6uetn34iblz4nefpeu@ozbgzwbyd54u>
+ <4456d0e2-3451-4749-acda-3b75ae99e89b@quicinc.com> <de00809a-2775-4417-b987-5f557962ec31@quicinc.com>
+In-Reply-To: <de00809a-2775-4417-b987-5f557962ec31@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Fri, 30 May 2025 18:53:09 +0300
+X-Gm-Features: AX0GCFsEgcxsXpdIFfOsAqXa1UzndXO-yjeJj8vejz0KsNKmM_D-7yinEUW3MbU
+Message-ID: <CAO9ioeUW9-7N2Ptu_p=XKzeb02RsXx8V3CzarPOD4EWy4QrnsA@mail.gmail.com>
+Subject: Re: [PATCH v6 1/2] dmaengine: qcom: gpi: Add GPI Block event
+ interrupt support
+To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>,
+        Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linaro-mm-sig@lists.linaro.org, quic_vtanuku@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-GUID: W6RLfsnYapJk_yMO8UMfUKNbsoaSWcLr
+X-Proofpoint-ORIG-GUID: W6RLfsnYapJk_yMO8UMfUKNbsoaSWcLr
+X-Authority-Analysis: v=2.4 cv=X8pSKHTe c=1 sm=1 tr=0 ts=6839d472 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
+ a=COk6AnOGAAAA:8 a=mdKvkispvZj9PeQf9s4A:9 a=QEXdDO2ut3YA:10
+ a=324X-CrmTo6CU4MGRt3R:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTMwMDEzOSBTYWx0ZWRfX2X+4yMOfSX8G
+ Ibhj2oNOogsyzlOut62SFOI0olNATWVdLkbUxWQkdBSXJV0KhD5jElE3Vusz7BivgG/sZ7dDRwU
+ EJ/HzkLfrj8VnkGQqgiUt1w98nSkw/nYerZ3lGTA1YC1I1gr5Oq5QRC5TutgAquPXbqiAdQOygH
+ PZ+DditnLsb+74+nHNpNOIXy+hmRZgQb2KCFq8w5GY+TNTTqp8KXcrhcIJpXiEnsVtFxukWImWl
+ eehVVghGy1qp23io/9gnAWaQrZuiUQPRytJ8BX0lLfKA6L9JmXyhHWvhyf/fiacYxeEjm/fVpvv
+ nHNrKONaFCJ3YChwwUsqPeOCSJ4DC/ARxRwajab+Z6Mz+kjR7uQ1WU/rkYCkK8hUTUkFIzdlrpL
+ x5y1V0lvoo8lEAEJ4qoe6oziD/GqPhS2xX2/DB2/MSUWXeeUG9jTJctJLYbfglaPkm8xo1XV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-30_07,2025-05-30_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 mlxscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 bulkscore=0 malwarescore=0 impostorscore=0 spamscore=0
- suspectscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505300135
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 phishscore=0 spamscore=0
+ adultscore=0 impostorscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0
+ clxscore=1015 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505300139
 
-On 5/16/2025 10:06 AM, Jeff Hugo wrote:
-> AIC100 devices generates Reliability, Availability, Serviceability events
-> via MHI QAIC_STATUS channel. Support such events and print a structured
-> log with details of the events, and if the event describes an uncorrected
-> error, reset the device to put it back into service. As these events may
-> not all be reported via other mechanisms like AER, maintain counts of
-> the number of errors observed for each type.
-> 
-> Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+On Fri, 30 May 2025 at 17:05, Jyothi Kumar Seerapu
+<quic_jseerapu@quicinc.com> wrote:
+>
+>
+>
+> On 5/9/2025 11:48 AM, Jyothi Kumar Seerapu wrote:
+> >
+> >
+> > On 5/6/2025 5:02 PM, Dmitry Baryshkov wrote:
+> >> On Tue, May 06, 2025 at 04:48:43PM +0530, Jyothi Kumar Seerapu wrote:
+> >>> GSI hardware generates an interrupt for each transfer completion.
+> >>> For multiple messages within a single transfer, this results in
+> >>> N interrupts for N messages, leading to significant software
+> >>> interrupt latency.
+> >>>
+> >>> To mitigate this latency, utilize Block Event Interrupt (BEI) mechani=
+sm.
+> >>> Enabling BEI instructs the GSI hardware to prevent interrupt generati=
+on
+> >>> and BEI is disabled when an interrupt is necessary.
+> >>>
+> >>> When using BEI, consider splitting a single multi-message transfer in=
+to
+> >>> chunks of 8 messages internally and so interrupts are not expected fo=
+r
+> >>> the first 7 message completions, only the last message triggers
+> >>> an interrupt, indicating the completion of 8 messages.
+> >>>
+> >>> This BEI mechanism enhances overall transfer efficiency.
+> >>>
+> >>> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+> >>> ---
+> >>> v5 ->v6:
+> >>>    - For updating the block event interrupt bit, instead of relying o=
+n
+> >>>      bei_flag, decision check is moved with DMA_PREP_INTERRUPT flag.
+> >>> v4 -> v5:
+> >>>    - BEI flag naming changed from flags to bei_flag.
+> >>>    - QCOM_GPI_BLOCK_EVENT_IRQ macro is removed from qcom-gpi-dma.h
+> >>>      file, and Block event interrupt support is checked with bei_flag=
+.
+> >>>
+> >>> v3 -> v4:
+> >>>    - API's added for Block event interrupt with multi descriptor
+> >>> support for
+> >>>      I2C is moved from qcom-gpi-dma.h file to I2C geni qcom driver fi=
+le.
+> >>>    - gpi_multi_xfer_timeout_handler function is moved from GPI driver=
+ to
+> >>>      I2C driver.
+> >>>
+> >>> v2-> v3:
+> >>>     - Renamed gpi_multi_desc_process to gpi_multi_xfer_timeout_handle=
+r
+> >>>     - MIN_NUM_OF_MSGS_MULTI_DESC changed from 4 to 2
+> >>>     - Added documentation for newly added changes in "qcom-gpi-dma.h"
+> >>> file
+> >>>     - Updated commit description.
+> >>>
+> >>> v1 -> v2:
+> >>>     - Changed dma_addr type from array of pointers to array.
+> >>>     - To support BEI functionality with the TRE size of 64 defined in
+> >>> GPI driver,
+> >>>       updated QCOM_GPI_MAX_NUM_MSGS to 16 and NUM_MSGS_PER_IRQ to 4.
+> >>>
+> >>>   drivers/dma/qcom/gpi.c           | 3 +++
+> >>>   include/linux/dma/qcom-gpi-dma.h | 2 ++
+> >>>   2 files changed, 5 insertions(+)
+> >>>
+> >>> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> >>> index b1f0001cc99c..7e511f54166a 100644
+> >>> --- a/drivers/dma/qcom/gpi.c
+> >>> +++ b/drivers/dma/qcom/gpi.c
+> >>> @@ -1695,6 +1695,9 @@ static int gpi_create_i2c_tre(struct gchan
+> >>> *chan, struct gpi_desc *desc,
+> >>>           tre->dword[3] =3D u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_T=
+YPE);
+> >>>           tre->dword[3] |=3D u32_encode_bits(1, TRE_FLAGS_IEOT);
+> >>> +
+> >>> +        if (!(i2c->dma_flags & DMA_PREP_INTERRUPT))
+> >>> +            tre->dword[3] |=3D u32_encode_bits(1, TRE_FLAGS_BEI);
+> >>>       }
+> >>>       for (i =3D 0; i < tre_idx; i++)
+> >>> diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/
+> >>> qcom-gpi-dma.h
+> >>> index 6680dd1a43c6..ebac0d3edff2 100644
+> >>> --- a/include/linux/dma/qcom-gpi-dma.h
+> >>> +++ b/include/linux/dma/qcom-gpi-dma.h
+> >>> @@ -65,6 +65,7 @@ enum i2c_op {
+> >>>    * @rx_len: receive length for buffer
+> >>>    * @op: i2c cmd
+> >>>    * @muli-msg: is part of multi i2c r-w msgs
+> >>> + * @dma_flags: Flags indicating DMA capabilities
+> >>>    */
+> >>>   struct gpi_i2c_config {
+> >>>       u8 set_config;
+> >>> @@ -78,6 +79,7 @@ struct gpi_i2c_config {
+> >>>       u32 rx_len;
+> >>>       enum i2c_op op;
+> >>>       bool multi_msg;
+> >>> +    unsigned int dma_flags;
+> >>
+> >> Why do you need extra field instead of using
+> >> dma_async_tx_descriptor.flags?
+> >
+> > In the original I2C QCOM GENI driver, using the local variable (unsigne=
+d
+> > in flags) and updating the "DMA_PREP_INTERRUPT" flag.
+> >
+> > Sure, i will review if "dma_async_tx_descriptor.flags" can be retrieved
+> > in GPI driver for DMA_PREP_INTERRUPT flag status.
+>
+> Hi Dmitry,
+>
+> In the I2C Geni driver, the dma flags are primarily used in the
+> dmaengine_prep_slave_single() function, which expects the argument type
+> to be unsigned int. Therefore, the flags should be defined either as
+> enum dma_ctrl_flags, or unsigned int.
+>
+> In the GPI driver, specifically within the gpi_prep_slave_sg() function,
+> the flags are correctly received from the I2C driver. However, these
+> flags are not currently passed to the gpi_create_i2c_tre() function.
+>
+> If we pass the existing flags variable to the gpi_create_i2c_tre()
+> function, we can retrieve the DMA flags information without introducing
+> any additional or external variables.
+>
+> Please confirm if this approach=E2=80=94reusing the existing flags argume=
+nt in
+> the GPI driver=E2=80=94is acceptable and good to proceed with.
 
-Pushed to drm-misc-next
+Could you please check how other drivers use the DMA_PREP_INTERRUPT
+flag? That will answer your question.
 
--Jeff
+>
+> >>
+> >>>   };
+> >>>   #endif /* QCOM_GPI_DMA_H */
+> >>> --
+> >>> 2.17.1
+> >>>
+> >>
+> >
+> >
+>
+
+
+--=20
+With best wishes
+Dmitry
 
