@@ -1,236 +1,419 @@
-Return-Path: <linux-arm-msm+bounces-59909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A90FAC9132
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 16:09:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96978AC91E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 16:59:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2AFF3A4683E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 14:08:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0CE624E0E55
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 14:59:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AED9B233739;
-	Fri, 30 May 2025 14:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B6F1235040;
+	Fri, 30 May 2025 14:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oop1juP3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bF3818Ku"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D8523236D;
-	Fri, 30 May 2025 14:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E03917A2F5
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 14:59:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748613983; cv=none; b=WADkq17Nzk+FRM1FcJEj4ClkpCUPKE+jLiUWNn0hpfOl4iRarlIfNR7dMf8NTZyVS5JG4kQPWhjLO84/TNNuaYoBR4znlhAjAEbVcZDrE+6sVF79nMV3X++uYRU9viIbCxDAVZAemvUJ3SVbiAW06spiLUIotYfoMHi5WFjsL0Y=
+	t=1748617148; cv=none; b=c8bieL17BHRE4l0T9iF5gTPhi+s3E++ZepKWSX8ZZiLLiQoDrxBCw0zXm0WpZ3uXtn3/hzzAg1PSKrAkn6aVFDqv9qXrn4paGpZKFnXllzj9MTUesFCpMikPymAWOP7+Fws4nGGo4KoNHsr5CKfNf+sauZMmjWOmmTgAcRqIH5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748613983; c=relaxed/simple;
-	bh=nIXwFdbhG2IyCNiR3RRFnNCHLHylK7UGPpD0ZSR2JuM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TN9fSfZA6mCw5I3j2Cnj7lB9MVXXRykdl+oWWgI9q7PGZbxmIn7jhwEpWc2yUnBsgyrRK9IqwMUPxbaUdsZjQmYL6OFy+B++LLgjCE7FpWZHEyNWo8xsbYBbftSTIbJ2fERP4m19SjmM6Ozld5y5hcbna0hRnN7uYM+B1tMaMIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oop1juP3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54UBnW5N016093;
-	Fri, 30 May 2025 14:06:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lQYZWeIIBAE+eqH1hYBy5QCANHbuBmJ+jiTF7okFXSE=; b=oop1juP3iK/oJMeT
-	yZI611vr+vehd8NrFHXAgGMxWiw7jVRk4iFZcIemacZjLW6/WYx2CvScPJVEp5/d
-	Q/etZMBwCqG7LjmNJwtAvaTTs/r9OVcNIT+LlPG9TTqoCyuamj+SLbQl4TpyZMrF
-	MGAL/esxqxNUvmquAg8SsrkqlY123VqBe6DPh4CFkIrElh4j24Im8hv3eGfLx3eG
-	SVoDvYuAN8pdX/e0+dfd9yvwXr0BD+RjihJIeEcv9AQ9Y2w3DWeDSPzzdo3RbLr3
-	MD1UWvAb+YOyvlnLhHVTw30XxEucbtJuygDqcvQVJ8Q1SSjFXvlRh2nPUMv6kfbk
-	aKrAPA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46yc4yrcx8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 30 May 2025 14:06:13 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54UE6CZA003098
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 30 May 2025 14:06:12 GMT
-Received: from [10.217.219.62] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 30 May
- 2025 07:06:08 -0700
-Message-ID: <5ed77f6d-14d7-4b62-9505-ab988fa43bf2@quicinc.com>
-Date: Fri, 30 May 2025 19:36:05 +0530
+	s=arc-20240116; t=1748617148; c=relaxed/simple;
+	bh=PRnBjKq3Vs55NWdoCQ0z/ak6ycROnhYhMqCmI83qiUE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=M/HiWQNTR04pZF7eDSyyDgu92EIdTnGufUrs0ta/TePEXRODwA9aXECc0WYyhyAAILr6dOCqCxnQZkzYQxUyif+miA8vVFevKP5K0p4UwUmgOfDJRongWfxDhhERevp5btXzKGdScwQ/28drqp30WZizAU3xljSnPjj5OvX9YUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bF3818Ku; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-7080dd5fe92so20645127b3.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 07:59:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1748617144; x=1749221944; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F40ejr5VtTWUVu2ZmI0k1V/v4j0cLgLE4WaZnAIPVrw=;
+        b=bF3818KuoN05LiOm1Fvq+LHKvVpOCeOqoRVevndaS6sAVcbgIbWfb0lgnQEBRqDoi+
+         t7pj3dtcWXdyQJ0Zhn7qk8gg/xLFv01GsyO9t9y9aK2jx29JGq7P64YKz3QN5pczlMox
+         I3DcV4UC6k4vqdVlTnulZaToNmhWfLHH0VqkZJhBQbirAuhTqa1nkuuQte2LtDfrlagU
+         gFO0HGxzlVR2pJQdq0qI1GvmJQSVIzqQ06u54ucBdiWQhqtn/JipOPJg1tjXHZ/TPbto
+         Fcqp2t0F2hnxUlgxjvdUUDNvB5PG+cybQEeSR4Vfq+3rKwGxBkAtnI8y0VqQ/8virX6r
+         HB3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748617144; x=1749221944;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=F40ejr5VtTWUVu2ZmI0k1V/v4j0cLgLE4WaZnAIPVrw=;
+        b=WUo/V/dKHf+MeCezoyUaplXLp+A3ppCFfVKMxTCLwaoO78etKFUQz8tmSP9N+BIa5x
+         gKtgsAYIU5xT3AsE301EEy7A2I0cBqboDIFYMJmxNFwQadghQ7q4sdMvfO174MySSGLJ
+         n9ixFPOPsWOHmItTOEJ3Phw1SbAQfG7n1y01DDz66eb07rOhb9iAl7D3kyrDJCtVIkVW
+         /aeNIgB5xsgG88JhOKZ4CEiSnxVpXA8l+tJ9uy8W7Gw/JmeVOSfsvBHJPju/TycZQ5E+
+         WQcC057xPToWbqUw26JEBSDMKon0QxKNJrgbddzQb1ny9pwLVn62LoC+xdxw5vZoY1q3
+         UewA==
+X-Forwarded-Encrypted: i=1; AJvYcCXdTG0JDDSIcvED9+fJRiz8nREC4QxsRhY+m7P8WqFrmOcx+zG42hSoH2AMfEHF2O8liDXwmEgtgz0iUtLW@vger.kernel.org
+X-Gm-Message-State: AOJu0YzbViNuuG1eUnrcUJLURzj1pho44cEwZMsgeikQuPZfZuFEjrPn
+	VmskQvuyNNmStIFlNz0Mpf81r6Ql7Lt0pBDLl2uC8rVO+M7v0yqJ8qXgeiHXcJGOw2L+KCeO1aN
+	b7Wi8779b8f/q19M+QQr40wpSizk+jjCdGimf4N2tzg==
+X-Gm-Gg: ASbGncuEERizK3vtNoFW3NXn+JguEpmSagAh+gG5K2Op19m2BXNiIlN9fCJovABmp+s
+	XefaJ3F9p/CBeR8TcG9s8+JL08WDDLNSyY5gqRWXZxdu/9rl6E7UG/8PRlc615s3efbZY3/Xwiy
+	H9uQ+1kzxk+3+usBoiRXe0lw5tEVlNfZ6zRecUpMceqku+Dn7/C9LAYQ89MhWFZqC6Vrtmy+9Pf
+	NgFkA==
+X-Google-Smtp-Source: AGHT+IGgNAVjj4IxjNpEQj0RCxPeO78NwasppbZVwvKX/SoxUnWbNk0DiJf246mwv4t676hAuZm20jwM2OLFfiitHIc=
+X-Received: by 2002:a05:690c:dd6:b0:70d:ecdd:9bd3 with SMTP id
+ 00721157ae682-70f97effb18mr60432017b3.27.1748617144185; Fri, 30 May 2025
+ 07:59:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/2] i2c: i2c-qcom-geni: Add Block event interrupt
- support
+References: <20250526-v6-15-quad-pipe-upstream-v10-0-5fed4f8897c4@linaro.org>
+ <20250526-v6-15-quad-pipe-upstream-v10-10-5fed4f8897c4@linaro.org> <45hk22fdghaqnilukvqayjcbnf3btntknqrwf5ivx346vrgag3@aebzt76tkjzw>
+In-Reply-To: <45hk22fdghaqnilukvqayjcbnf3btntknqrwf5ivx346vrgag3@aebzt76tkjzw>
+From: Jun Nie <jun.nie@linaro.org>
+Date: Fri, 30 May 2025 22:58:51 +0800
+X-Gm-Features: AX0GCFslvbFYpcTCVRsoPzq1BK9-uq6X4fVoG8uX4cmCA6kcXjeno6A7befYAHg
+Message-ID: <CABymUCNuYDjmytbb+HLg1KF5eOyQVNczcq_wqFdo51cr0Y6BdQ@mail.gmail.com>
+Subject: Re: [PATCH v10 10/12] drm/msm/dpu: support SSPP assignment for
+ quad-pipe case
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Vinod Koul <vkoul@kernel.org>,
-        Mukesh Kumar Savaliya
-	<quic_msavaliy@quicinc.com>,
-        Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <linux-media@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <linaro-mm-sig@lists.linaro.org>, <quic_vtanuku@quicinc.com>
-References: <20250506111844.1726-1-quic_jseerapu@quicinc.com>
- <20250506111844.1726-3-quic_jseerapu@quicinc.com>
- <qizkfszruwcny7f3g3i7cjst342s6ma62k5sgc6pg6yfoti7b3@fo2ssj7jvff2>
- <3aa92123-e43e-4bf5-917a-2db6f1516671@quicinc.com>
- <a98f0f1a-d814-4c6a-9235-918091399e4b@oss.qualcomm.com>
- <ba7559c8-36b6-4628-8fc4-26121f00abd5@quicinc.com>
- <w6epbao7dwwx65crst6md4uxi3iivkcj55mhr2ko3z5olezhdl@ffam3xif6tmh>
-Content-Language: en-US
-From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-In-Reply-To: <w6epbao7dwwx65crst6md4uxi3iivkcj55mhr2ko3z5olezhdl@ffam3xif6tmh>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTMwMDEyNCBTYWx0ZWRfX6mopTBZ3SY4n
- jtwe3BYDMpVyxvij4opEuklIBJtAzZKLSXCDpYv5WXeGt4mcikaz5eYWTEtbofIwk/ovaRhr7kv
- ZgVzQPwL/LwP6E+VJsOXFR5B2kiaMinhaO/wdk5an077ZJdSJDjThp+QnW0rvLRSyMCinLQ9idF
- jOIRALQDHoO0fOd2+p5/3w1DueJT9jijYlqg1joxrlVobrrrc8S5f/4yLSI0tNonaSe0wXdWQJv
- BMsMBcDc10cX8aZY0VEaRGAkuMIQa45lQWvOXq0kYCE3RrR+fayKjnYBzwGDBjP0dFXK7wAI9Hw
- CEj4utklAcbmax3nJUKtOGvaRLHsVewhDHpqNwg9YGeGhelS3cFScwZK23jZh4bKhvP8A4fTiMk
- y8bWmkV+zsOB7/iIie8d1k7x0hv0YLhur77eLXv89QAVsXFceD6ErVoBZWBAK6sDzc8+94eA
-X-Authority-Analysis: v=2.4 cv=Ybe95xRf c=1 sm=1 tr=0 ts=6839bb55 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10
- a=0dzRBygV2XmgNQc9eD4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 9WWcgn3h1dr3-M0fnf9FJwiT8I77t4n1
-X-Proofpoint-ORIG-GUID: 9WWcgn3h1dr3-M0fnf9FJwiT8I77t4n1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-30_06,2025-05-30_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 priorityscore=1501 mlxlogscore=999 malwarescore=0
- lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 mlxscore=0
- adultscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505300124
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2025=E5=B9=B4=
+5=E6=9C=8829=E6=97=A5=E5=91=A8=E5=9B=9B 02:22=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Mon, May 26, 2025 at 05:28:28PM +0800, Jun Nie wrote:
+> > Currently, SSPPs are assigned to a maximum of two pipes. However,
+> > quad-pipe usage scenarios require four pipes and involve configuring
+> > two stages. In quad-pipe case, the first two pipes share a set of
+> > mixer configurations and enable multi-rect mode when certain
+> > conditions are met. The same applies to the subsequent two pipes.
+> >
+> > Assign SSPPs to the pipes in each stage using a unified method and
+> > to loop the stages accordingly.
+> >
+> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  11 +++
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h  |   2 +
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 126 ++++++++++++++++++----=
+--------
+> >  3 files changed, 88 insertions(+), 51 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm=
+/msm/disp/dpu1/dpu_crtc.c
+> > index 85f585206218f4578e18b00452762dbada060e9c..47ab43dfec76acc058fb275=
+d1928603e8e8e7fc6 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > @@ -1562,6 +1562,17 @@ int dpu_crtc_vblank(struct drm_crtc *crtc, bool =
+en)
+> >       return 0;
+> >  }
+> >
+> > +/**
+> > + * dpu_crtc_get_num_lm - Get mixer number in this CRTC pipeline
+> > + * @state: Pointer to drm crtc state object
+> > + */
+> > +unsigned int dpu_crtc_get_num_lm(const struct drm_crtc_state *state)
+> > +{
+> > +     struct dpu_crtc_state *cstate =3D to_dpu_crtc_state(state);
+> > +
+> > +     return cstate->num_mixers;
+> > +}
+> > +
+> >  #ifdef CONFIG_DEBUG_FS
+> >  static int _dpu_debugfs_status_show(struct seq_file *s, void *data)
+> >  {
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm=
+/msm/disp/dpu1/dpu_crtc.h
+> > index 94392b9b924546f96e738ae20920cf9afd568e6b..6eaba5696e8e6bd1246a989=
+5c4c8714ca6589b10 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> > @@ -267,4 +267,6 @@ static inline enum dpu_crtc_client_type dpu_crtc_ge=
+t_client_type(
+> >
+> >  void dpu_crtc_frame_event_cb(struct drm_crtc *crtc, u32 event);
+> >
+> > +unsigned int dpu_crtc_get_num_lm(const struct drm_crtc_state *state);
+> > +
+> >  #endif /* _DPU_CRTC_H_ */
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/dr=
+m/msm/disp/dpu1/dpu_plane.c
+> > index 0bb153a71353ca9eaca138ebbee4cd699414771d..f721dc504bbbe3a49986239=
+adee113bfb6790f70 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > @@ -961,6 +961,33 @@ static int dpu_plane_is_multirect_parallel_capable=
+(struct dpu_hw_sspp *sspp,
+> >               dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidt=
+h);
+> >  }
+> >
+> > +static bool dpu_plane_check_single_pipe(struct dpu_plane_state *pstate=
+,
+> > +                                     struct dpu_sw_pipe **single_pipe,
+> > +                                     struct dpu_sw_pipe_cfg **single_p=
+ipe_cfg,
+> > +                                     bool config_pipe)
+> > +{
+> > +     int i, valid_pipe =3D 0;
+> > +     struct dpu_sw_pipe *pipe;
+> > +
+> > +     for (i =3D 0; i < PIPES_PER_PLANE; i++) {
+> > +             if (drm_rect_width(&pstate->pipe_cfg[i].src_rect) !=3D 0)=
+ {
+> > +                     valid_pipe++;
+> > +                     if (valid_pipe > 1)
+> > +                             return false;
+> > +                     *single_pipe =3D &pstate->pipe[i];
+> > +                     *single_pipe_cfg =3D &pstate->pipe_cfg[i];
+> > +             } else {
+> > +                     if (!config_pipe)
+> > +                             continue;
+> > +                     pipe =3D &pstate->pipe[i];
+> > +                     pipe->multirect_index =3D DPU_SSPP_RECT_SOLO;
+> > +                     pipe->multirect_mode =3D DPU_SSPP_MULTIRECT_NONE;
+> > +                     pipe->sspp =3D NULL;
+>
+> If this function is 'check', then why does it change something in the
+> pipe configuration?
 
+I see modification is made in other check functions, like
+dpu_plane_atomic_check_nosspp(). So
+the name is referenced. Do you think dpu_plane_get_single_pipe() is OK here=
+?
+>
+> > +             }
+> > +     }
+> > +
+> > +     return true;
+> > +}
+> >
+> >  static int dpu_plane_atomic_check_sspp(struct drm_plane *plane,
+> >                                      struct drm_atomic_state *state,
+> > @@ -1028,15 +1055,15 @@ static int dpu_plane_try_multirect_shared(struc=
+t dpu_plane_state *pstate,
+> >                                         const struct msm_format *fmt,
+> >                                         uint32_t max_linewidth)
+> >  {
+> > -     struct dpu_sw_pipe *pipe =3D &pstate->pipe[0];
+> > -     struct dpu_sw_pipe *r_pipe =3D &pstate->pipe[1];
+> > -     struct dpu_sw_pipe_cfg *pipe_cfg =3D &pstate->pipe_cfg[0];
+> > -     struct dpu_sw_pipe *prev_pipe =3D &prev_adjacent_pstate->pipe[0];
+> > -     struct dpu_sw_pipe_cfg *prev_pipe_cfg =3D &prev_adjacent_pstate->=
+pipe_cfg[0];
+> > +     struct dpu_sw_pipe *pipe, *prev_pipe;
+> > +     struct dpu_sw_pipe_cfg *pipe_cfg, *prev_pipe_cfg;
+> >       const struct msm_format *prev_fmt =3D msm_framebuffer_format(prev=
+_adjacent_pstate->base.fb);
+> >       u16 max_tile_height =3D 1;
+> >
+> > -     if (prev_adjacent_pstate->pipe[1].sspp !=3D NULL ||
+> > +     if (!dpu_plane_check_single_pipe(pstate, &pipe, &pipe_cfg, true))
+> > +             return false;
+> > +
+> > +     if (!dpu_plane_check_single_pipe(prev_adjacent_pstate, &prev_pipe=
+, &prev_pipe_cfg, false) ||
+> >           prev_pipe->multirect_mode !=3D DPU_SSPP_MULTIRECT_NONE)
+> >               return false;
+> >
+> > @@ -1050,11 +1077,6 @@ static int dpu_plane_try_multirect_shared(struct=
+ dpu_plane_state *pstate,
+> >       if (MSM_FORMAT_IS_UBWC(prev_fmt))
+> >               max_tile_height =3D max(max_tile_height, prev_fmt->tile_h=
+eight);
+> >
+> > -     r_pipe->multirect_index =3D DPU_SSPP_RECT_SOLO;
+> > -     r_pipe->multirect_mode =3D DPU_SSPP_MULTIRECT_NONE;
+> > -
+> > -     r_pipe->sspp =3D NULL;
+> > -
+> >       if (dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth) &=
+&
+> >           dpu_plane_is_parallel_capable(prev_pipe_cfg, prev_fmt, max_li=
+newidth) &&
+> >           (pipe_cfg->dst_rect.x1 >=3D prev_pipe_cfg->dst_rect.x2 ||
+> > @@ -1194,12 +1216,11 @@ static int dpu_plane_virtual_assign_resources(s=
+truct drm_crtc *crtc,
+> >       struct dpu_kms *dpu_kms =3D _dpu_plane_get_kms(plane);
+> >       struct dpu_rm_sspp_requirements reqs;
+> >       struct dpu_plane_state *pstate, *prev_adjacent_pstate;
+> > -     struct dpu_sw_pipe *pipe;
+> > -     struct dpu_sw_pipe *r_pipe;
+> > -     struct dpu_sw_pipe_cfg *pipe_cfg;
+> > -     struct dpu_sw_pipe_cfg *r_pipe_cfg;
+> > +     struct dpu_sw_pipe *pipe, *r_pipe;
+> > +     struct dpu_sw_pipe_cfg *pipe_cfg, *r_pipe_cfg;
+> > +     struct dpu_plane *pdpu =3D to_dpu_plane(plane);
+> >       const struct msm_format *fmt;
+> > -     int i;
+> > +     int i, num_lm, stage_id, num_stages;
+> >
+> >       if (plane_state->crtc)
+> >               crtc_state =3D drm_atomic_get_new_crtc_state(state,
+> > @@ -1209,11 +1230,6 @@ static int dpu_plane_virtual_assign_resources(st=
+ruct drm_crtc *crtc,
+> >       prev_adjacent_pstate =3D prev_adjacent_plane_state ?
+> >               to_dpu_plane_state(prev_adjacent_plane_state) : NULL;
+> >
+> > -     pipe =3D &pstate->pipe[0];
+> > -     r_pipe =3D &pstate->pipe[1];
+> > -     pipe_cfg =3D &pstate->pipe_cfg[0];
+> > -     r_pipe_cfg =3D &pstate->pipe_cfg[1];
+> > -
+> >       for (i =3D 0; i < PIPES_PER_PLANE; i++)
+> >               pstate->pipe[i].sspp =3D NULL;
+> >
+> > @@ -1227,44 +1243,52 @@ static int dpu_plane_virtual_assign_resources(s=
+truct drm_crtc *crtc,
+> >
+> >       reqs.rot90 =3D drm_rotation_90_or_270(plane_state->rotation);
+> >
+> > -     if (drm_rect_width(&r_pipe_cfg->src_rect) =3D=3D 0) {
+> > -             if (!prev_adjacent_pstate ||
+> > -                 !dpu_plane_try_multirect_shared(pstate, prev_adjacent=
+_pstate, fmt,
+> > -                                                 dpu_kms->catalog->cap=
+s->max_linewidth)) {
+> > -                     pipe->sspp =3D dpu_rm_reserve_sspp(&dpu_kms->rm, =
+global_state, crtc, &reqs);
+> > -                     if (!pipe->sspp)
+> > -                             return -ENODEV;
+> > +     if (prev_adjacent_pstate &&
+> > +         dpu_plane_try_multirect_shared(pstate, prev_adjacent_pstate, =
+fmt,
+> > +                                         dpu_kms->catalog->caps->max_l=
+inewidth)) {
+> > +             goto assigned;
+> > +     }
+> >
+> > -                     r_pipe->sspp =3D NULL;
+> > +     num_lm =3D dpu_crtc_get_num_lm(crtc_state);
+> > +     num_stages =3D (num_lm + 1) / 2;
+> > +     for (stage_id =3D 0; stage_id < num_stages; stage_id++) {
+>
+> Can't we just loop through all possible stages? Same result, but makes
+> the logic somewhat easier.
 
-On 5/21/2025 6:15 PM, Dmitry Baryshkov wrote:
-> On Wed, May 21, 2025 at 03:58:48PM +0530, Jyothi Kumar Seerapu wrote:
->>
->>
->> On 5/9/2025 9:31 PM, Dmitry Baryshkov wrote:
->>> On 09/05/2025 09:18, Jyothi Kumar Seerapu wrote:
->>>> Hi Dimitry, Thanks for providing the review comments.
->>>>
->>>> On 5/6/2025 5:16 PM, Dmitry Baryshkov wrote:
->>>>> On Tue, May 06, 2025 at 04:48:44PM +0530, Jyothi Kumar Seerapu wrote:
->>>>>> The I2C driver gets an interrupt upon transfer completion.
->>>>>> When handling multiple messages in a single transfer, this
->>>>>> results in N interrupts for N messages, leading to significant
->>>>>> software interrupt latency.
->>>>>>
->>>>>> To mitigate this latency, utilize Block Event Interrupt (BEI)
->>>>>> mechanism. Enabling BEI instructs the hardware to prevent interrupt
->>>>>> generation and BEI is disabled when an interrupt is necessary.
->>>>>>
->>>>>> Large I2C transfer can be divided into chunks of 8 messages internally.
->>>>>> Interrupts are not expected for the first 7 message completions, only
->>>>>> the last message triggers an interrupt, indicating the completion of
->>>>>> 8 messages. This BEI mechanism enhances overall transfer efficiency.
->>>>>
->>>>> Why do you need this complexity? Is it possible to set the
->>>>> DMA_PREP_INTERRUPT flag on the last message in the transfer?
->>>>
->>>> If i undertsand correctly, the suggestion is to get the single
->>>> intetrrupt for last i2c message only.
->>>>
->>>> But With this approach, we can't handle large number of i2c messages
->>>> in the transfer.
->>>>
->>>> In GPI driver, number of max TREs support is harcoded to 64 (#define
->>>> CHAN_TRES   64) and for I2C message, we need Config TRE, GO TRE and
->>>> DMA TREs. So, the avilable TREs are not sufficient to handle all the
->>>> N messages.
->>>
->>> It sounds like a DMA driver issue. In other words, the DMA driver can
->>> know that it must issue an interrupt before exausting 64 TREs in order
->>> to
->>>
->>>>
->>>> Here, the plan is to queue i2c messages (QCOM_I2C_GPI_MAX_NUM_MSGS
->>>> or 'num' incase for less messsages), process and unmap/free upon the
->>>> interrupt based on QCOM_I2C_GPI_NUM_MSGS_PER_IRQ.
->>>
->>> Why? This is some random value which has no connection with CHAN_TREs.
->>> Also, what if one of the platforms get a 'liter' GPI which supports less
->>> TREs in a single run? Or a super-premium platform which can use 256
->>> TREs? Please don't workaround issues from one driver in another one.
->>
->> We are trying to utilize the existing CHAN_TRES mentioned in the GPI driver.
->> With the following approach, the GPI hardware can process N number of I2C
->> messages, thereby improving throughput and transfer efficiency.
->>
->> The main design consideration for using the block event interrupt is as
->> follows:
->>
->> Allow the hardware to process the TREs (I2C messages), while the software
->> concurrently prepares the next set of TREs to be submitted to the hardware.
->> Once the TREs are processed, they can be freed, enabling the software to
->> queue new TREs. This approach enhances overall optimization.
->>
->> Please let me know if you have any questions, concerns, or suggestions.
-> 
-> The question was why do you limit that to QCOM_I2C_GPI_NUM_MSGS_PER_IRQ.
-> What is the reason for that limit, etc. If you think about it, The GENI
-> / I2C doesn't impose any limit on the number of messages processed in
-> one go (if I understand it correctly). Instead the limit comes from the
-> GPI DMA driver. As such, please don't add extra 'handling' to the I2C
-> driver. Make GPI DMA driver responsible for saying 'no more for now',
-> then I2C driver can setup add an interrupt flag and proceed with
-> submitting next messages, etc.
-> 
+Yeah, that's doable. Will revise it in next version.
+>
+> > +             for (i =3D stage_id * PIPES_PER_STAGE; i < (stage_id + 1)=
+ * PIPES_PER_STAGE; i++) {
+>
+> I still really don't like this idea (and especially the part with
+> (i % PIPES_PER_STAGE =3D=3D 0) condition). Extract current code which dea=
+ls
+> with two planes and a single stage. Call it for each stage. That's it.
 
-For I2C messages, we need to prepare TREs for Config, Go and DMAs. 
-However, if a large number of I2C messages are submitted then may may 
-run out of memory for serving the TREs. The GPI channel supports a 
-maximum of 64 TREs, which is insufficient to serve 32 or even 16 I2C 
-messages concurrently, given the multiple TREs required per message.
-
-To address this limitation, a strategy has been implemented to manage 
-how many messages can be queued and how memory is recycled. The constant 
-QCOM_I2C_GPI_MAX_NUM_MSGS is set to 16, defining the upper limit of
-messages that can be queued at once. Additionally, 
-QCOM_I2C_GPI_NUM_MSGS_PER_IRQ is set to 8, meaning that
-half of the queued messages are expected to be freed or deallocated per 
-interrupt.
-This approach ensures that the driver can efficiently manage TRE 
-resources and continue queuing new I2C messages without exhausting memory.
-> I really don't see a reason for additional complicated handling in the
-> geni driver that you've implemented. Maybe I misunderstand something. In
-> such a case it usually means that you have to explain the design in the
-> commit message / in-code comments.
-> 
-
-
-The I2C Geni driver is designed to prepare and submit descriptors to the 
-GPI driver one message at a time.
-As a result, the GPI driver does not have visibility into the current 
-message index or the total number of I2C messages in a transfer. This 
-lack of context makes it challenging to determine when to set the block 
-event interrupt, which is typically used to signal the completion of a 
-batch of messages.
-
-So, the responsibility for deciding when to set the BEI should lie with 
-the I2C driver.
-
-If this approach is acceptable, I will proceed with updating the 
-relevant details in the commit message.
-
-Please let me know if you have any concerns or suggestions.
+Will do.
+>
+> > +                     pipe =3D &pstate->pipe[i];
+> > +                     pipe_cfg =3D &pstate->pipe_cfg[i];
+> >
+> > -                     pipe->multirect_index =3D DPU_SSPP_RECT_SOLO;
+> > -                     pipe->multirect_mode =3D DPU_SSPP_MULTIRECT_NONE;
+> > +                     if (drm_rect_width(&pipe_cfg->src_rect) =3D=3D 0)
+> > +                             break;
+> >
+> > -                     r_pipe->multirect_index =3D DPU_SSPP_RECT_SOLO;
+> > -                     r_pipe->multirect_mode =3D DPU_SSPP_MULTIRECT_NON=
+E;
+> > -             }
+> > -     } else {
+> > -             pipe->sspp =3D dpu_rm_reserve_sspp(&dpu_kms->rm, global_s=
+tate, crtc, &reqs);
+> > -             if (!pipe->sspp)
+> > -                     return -ENODEV;
+> > -
+> > -             if (!dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_p=
+ipe, r_pipe_cfg,
+> > -                                                   pipe->sspp,
+> > -                                                   msm_framebuffer_for=
+mat(plane_state->fb),
+> > -                                                   dpu_kms->catalog->c=
+aps->max_linewidth)) {
+> > -                     /* multirect is not possible, use two SSPP blocks=
+ */
+> > -                     r_pipe->sspp =3D dpu_rm_reserve_sspp(&dpu_kms->rm=
+, global_state, crtc, &reqs);
+> > -                     if (!r_pipe->sspp)
+> > +                     pipe->sspp =3D dpu_rm_reserve_sspp(&dpu_kms->rm, =
+global_state, crtc, &reqs);
+> > +                     if (!pipe->sspp)
+> >                               return -ENODEV;
+> >
+> > -                     pipe->multirect_index =3D DPU_SSPP_RECT_SOLO;
+> > -                     pipe->multirect_mode =3D DPU_SSPP_MULTIRECT_NONE;
+> > -
+> > -                     r_pipe->multirect_index =3D DPU_SSPP_RECT_SOLO;
+> > -                     r_pipe->multirect_mode =3D DPU_SSPP_MULTIRECT_NON=
+E;
+> > +                     r_pipe =3D &pstate->pipe[i + 1];
+> > +                     r_pipe_cfg =3D &pstate->pipe_cfg[i + 1];
+> > +
+> > +                     /*
+> > +                      * If current pipe is the first pipe in pipe pair=
+, check
+> > +                      * multi-rect opportunity for the 2nd pipe in the=
+ pair.
+> > +                      * SSPP multi-rect mode cross mixer pairs is not =
+supported.
+> > +                      */
+> > +                     if ((i % PIPES_PER_STAGE =3D=3D 0) &&
+> > +                         drm_rect_width(&r_pipe_cfg->src_rect) !=3D 0 =
+&&
+> > +                         dpu_plane_try_multirect_parallel(pipe, pipe_c=
+fg, r_pipe, r_pipe_cfg,
+> > +                                                           pipe->sspp,
+> > +                                                           msm_framebu=
+ffer_format(plane_state->fb),
+> > +                                                           dpu_kms->ca=
+talog->caps->max_linewidth)) {
+> > +                             i++;
+> > +                     } else {
+> > +                             /* multirect is not possible, use two SSP=
+P blocks */
+> > +                             pipe->multirect_index =3D DPU_SSPP_RECT_S=
+OLO;
+> > +                             pipe->multirect_mode =3D DPU_SSPP_MULTIRE=
+CT_NONE;
+> > +                             DPU_DEBUG_PLANE(pdpu, "allocating sspp_%d=
+ for pipe %d.\n",
+> > +                                             pipe->sspp->idx - SSPP_NO=
+NE, i);
+> > +                     }
+> >               }
+> >       }
+> >
+> > +assigned:
+> >       return dpu_plane_atomic_check_sspp(plane, state, crtc_state);
+> >  }
+> >
+> >
+> > --
+> > 2.34.1
+> >
+>
+> --
+> With best wishes
+> Dmitry
 
