@@ -1,263 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-59864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57C64AC8A8F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 11:16:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38420AC8ACB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 11:30:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8FDD33B5A21
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 09:15:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6E6A61BA78E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 09:30:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E489721767D;
-	Fri, 30 May 2025 09:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85F9C229B3D;
+	Fri, 30 May 2025 09:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w+x4MLul"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gRDjdDlg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81B81E2607
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 09:16:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0434227E8F;
+	Fri, 30 May 2025 09:29:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748596569; cv=none; b=JAudMIDXKjS5gP7HCzByOXSxbCvgODBg0QpcADvb+VV7+omXr5AphXS0w0PnqzK4xhboCUUnZlCwwPlrsbWSKOwo4BlqZu8t4PGKT7DiRr4eKiA2A1kJTsz9L9RBk9kNYBOxiENxKj2koIiDAVgwMYAvqjDpiUo7OhBJAD5Ac6k=
+	t=1748597354; cv=none; b=Ul3X2DFWF9+3MT1rGAJ+M0GEPy13ALECoBvwNscrJfx0J8LmOZ3wlwvwMsWLtn4uoMSVqxB5Y9H4B/JaC9K9QQEYMsYoWmIUa+JWIDQ/mm+CPFmd042uRdzKOZaU1kxhuvK8ey85x4u/rndARzmkb8mHox0nWMuNAPpJkfMCJTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748596569; c=relaxed/simple;
-	bh=owr2CtBbxpsrcTH/9aunq/TI9QRa09vxoY6sSA98HoA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bs3Sd7yfdRvx+YcHzCVAKuSzV3vLSxFZBKo18FcKW0FGOSAyfJ6U12emlKlTnS+BuHta4P1BH9pbja8NthQnoLxzaa3sJIyrDvdk8AAtu0mQEVlPhm7aDnI1taF1zHDfj+Jw2yMo53S2m4kZBH0H/QlII6ivTRev40CnKkHyj/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w+x4MLul; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-450ce3a2dd5so14904235e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 02:16:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748596566; x=1749201366; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=N+8n16Dgs+TLt7SXuEAKpeYWp0+QUtR4WGU4q9KQr8k=;
-        b=w+x4MLulxFg0dtUx1jwEFAYwRH6etcoWfr4+Qx73kVHpt/b/2OiTkGjRT/J7f7jfcp
-         yrHyUYj1zuPScIzJTqbBkDIPO795iAuC3j7EP34tTUBBA+VfLmyc5dgK0PLPoyCtNrqc
-         QFTQOwxn7r7Ufe5IGyRzre9IjeYnmk3z+OXh4LHZaJVwJORzErhR4C9Y8U/XkmaHvttl
-         D2YBDvCzSpwnWYeEDOUOSVDO/473AC7TYvISjqkPXfZtg+YJEtrFA/e4uoGMAn3MVCXd
-         2iiGg7if21rM3HV28iU6deFLkMd9fRnIYjeevh1kwtxT7T9M4cmcl5/5/jJi8r0eJsoM
-         45Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748596566; x=1749201366;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N+8n16Dgs+TLt7SXuEAKpeYWp0+QUtR4WGU4q9KQr8k=;
-        b=HEGVg0FPUon/Sv9oELIy8HXMJQEd3rafTlKiqbvXYUZw5O9/1KT93zsLmSCZBv5MJc
-         dYRB4n43qz+ludbRYk0ZkqSBhLOiRUSttqFx9WNGiT3wS1zI3EFBKIRQAwnznL7sVkx/
-         ytBLEJXWfv9EO6Fa1+Vnz0IZkxD7HTKspPr+I8A2nRfEYHOyu2RoqKDGLyGvCz9aOS0i
-         y1KdV9Pf56omaIjtxvMceVC8UpPweT1MHnGPJopt8QwGxfwGc6i7dsGD4G18l8Y/2x1G
-         sYsBBxt30v5hXYWP9OuSv0E5rex4eKb0cAf3NW30YfIPqoNrkkTvvgHNsF9XaMKBGYve
-         VOpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVs6U7aWvx3gBR9rwoE2GFApN+IgUcOI43x57iRIA4WEsIedxnfeDLC4QziI/rTEyaQqmBiqUpTnLb0oeGw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+SZyN60R2ZZyEpMIRa6da+we0QGE563aSQQrwhwcIKJkeIfIG
-	rXESmgui2cjMZL11YSmW0bkqxOXw4kMMPKScKD2jDkmNSFWFxnwKZxGtPooLBukVT0Q=
-X-Gm-Gg: ASbGncu/Oi/o6lLWbsJ2RJ9LRYk1T61TEiJ2bhqDUuFKFuCrXRPo+3SeDcOoSFimw4V
-	NZ6DiSf6lFVSO/34Xt/11LEnZbyAFu6RmfhU6U+Rlji/mlF9I2+xnRWeWx2vHBE/sUUmRdMCvXU
-	o5KOLyK61jjk4lgVc2FZW8KMsCI8YXsvGo5+NuInESPeIRF5AXOt3vmiOKo5YkrsBvs8sxMq7p1
-	RMbs1q2eVvnZfTqknyeR4JcrcHE/pIBntbbDanLoyxAlXaAHfLpSLvjVxGps7iQiXJF/QESvtO5
-	25Box3omySvAbHIaV7uGfilAyMLzqCgWGRYYejE1vS4HH20V1ZBm1l+AWrlFu3xwABsnOS06N7b
-	p4oHWZdiVvfvv6bt7
-X-Google-Smtp-Source: AGHT+IEbdS/TpOHmYnUw9uKw+VAaKchZFgRWMcMXvl9FMyzTyiK33jqXfpDzaSbVjh0F091zKNKyZA==
-X-Received: by 2002:a05:600c:3551:b0:450:d01e:78e1 with SMTP id 5b1f17b1804b1-450d64dfffbmr27589655e9.9.1748596566095;
-        Fri, 30 May 2025 02:16:06 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450d7fa2541sm12493885e9.15.2025.05.30.02.16.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 May 2025 02:16:05 -0700 (PDT)
-Message-ID: <ca9f7308-4b92-4d23-bfe7-f8d18d20de10@linaro.org>
-Date: Fri, 30 May 2025 10:16:04 +0100
+	s=arc-20240116; t=1748597354; c=relaxed/simple;
+	bh=ZEybsHDXyPCaqq5mNJW+mpZvnSf4f7JjB5O+755MU3k=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=X691093w6eExPcHX2ZQDig66/ZysXyTfgwUhu8kdEDhAE3LxL5MEm5gGkwyxrcPQV+WnDokfooJJL+Kw40jSd8CtAZ4amzzA9+uVJj6H9I3lIvNrY8ru742A/hAGdgWTBp2RIVm9RiwPCUgs4YnoMMjfKA2zQHE/HNqNVU2IjoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gRDjdDlg; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54U0T53G008030;
+	Fri, 30 May 2025 09:28:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=tzmvSRrblqgZgKJaCs+zrv
+	qpz5Rlg71VuyXyzdUPXeM=; b=gRDjdDlgopV3yajHmhLV/TvaqgRArmvhCFeiIG
+	xhfQg3TSpo34Tc4I7EK3s+84a/PcKpnAKXIcLH0rrMYTvGVOIA8mQ3nOz31zoatv
+	nPy68UGt//IYiktcVo6XvmDuL6sM7dl2kXixPRyFxXJVR6EicM7tnM1f+vsnX95o
+	W+4HNI7cjvMVBOLfmYzZdw+CgCs4eVuOZV8S91nbK5uphQdlwkN4iQ2n22dzf1RK
+	8XnpzE8L+FBZw0K6D9Ivyq4AEScQGtvtKi8gGHGnOLs8WvS8hDc6lx9WCIawvK5n
+	BUqMkIZuY+HaHS4a9qEZ73qZB0Mwm0ajeRag1dC81sBAY+Mw==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46whuf8x28-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 May 2025 09:28:57 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 54U9Sq8u008752;
+	Fri, 30 May 2025 09:28:52 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 46u76my9gn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 May 2025 09:28:52 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54U9Sqf8008720;
+	Fri, 30 May 2025 09:28:52 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-wasimn-hyd.qualcomm.com [10.147.246.180])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 54U9SqqA008719
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 May 2025 09:28:52 +0000
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 3944840)
+	id 27DF259B; Fri, 30 May 2025 14:58:51 +0530 (+0530)
+From: Wasim Nazir <quic_wasimn@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@quicinc.com,
+        kernel@oss.qualcomm.com, Wasim Nazir <quic_wasimn@quicinc.com>
+Subject: [PATCH v9 0/4] qcom: Add support for IQ-9075-evk board
+Date: Fri, 30 May 2025 14:58:43 +0530
+Message-ID: <20250530092850.631831-1-quic_wasimn@quicinc.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] interconnect: avoid memory allocation when 'icc_bw_lock'
- is held
-To: Gabor Juhos <j4g8y7@gmail.com>, Georgi Djakov <djakov@kernel.org>,
- Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-Cc: linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <TIkPOGVjPeCjPzjVtlSb6V5CIcpaXf2-6WG6HjAyaOW59Hj01-9VK7Z8DKadakOKr6fJeQICi6h0Z8mft9DQyg==@protonmail.internalid>
- <20250529-icc-bw-lockdep-v1-1-3d714b6a9374@gmail.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250529-icc-bw-lockdep-v1-1-3d714b6a9374@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=OslPyz/t c=1 sm=1 tr=0 ts=68397a59 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=u6Jdqvu1gAsBJA_3vmsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: bCPyZCNHn_0psLFWJTWRehzF6fSOhSb1
+X-Proofpoint-GUID: bCPyZCNHn_0psLFWJTWRehzF6fSOhSb1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTMwMDA4MSBTYWx0ZWRfX87BzHTAyUUvr
+ KevXIY5/L7DHZolCNjsZ3qC3XXmBIWOkVuGGYxaZ/pV4w/UxQNtKzHx4Qywc810h7iE814COeUy
+ gqYkZhsxWiZspIO6w7FFT69DogvnVURVxGiJF6ilB2m0hQ8QxoMHO7wl0k8f7C5ESK+ZuwHbFjL
+ 74A9ToIgUSF+32GeRiV31Vsvgf3Ncs9snqpjz7UbA1j1UrOLmnhScwCQeZp7vOr2merdUXicucL
+ PW8JubjEjCUN48fjvaKIH/SU2W9PcvfZeoRZzOZe1rgXyx4ArnmRINFs/U1w3x85Y4S5hv39ejz
+ zRYN9VJ3AFY8QhVy51Zds9Dz4gJQqFueT1DBGVowq72k8FSW2Bv2UV5MKVoQm/i4d73VXdHUOgP
+ +LFiVaW6D4aLIrMmv+vyJy9BavlOkPElol07yPnxonBTKCem0d1Gg5jfAUPHO/p9vgIeXXOZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-30_04,2025-05-29_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 mlxlogscore=999 adultscore=0 malwarescore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 mlxscore=0 lowpriorityscore=0
+ spamscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2505300081
 
-On 29/05/2025 15:46, Gabor Juhos wrote:
-> The 'icc_bw_lock' mutex is introduced in commit af42269c3523
-> ("interconnect: Fix locking for runpm vs reclaim") in order
-> to decouple serialization of bw aggregation from codepaths
-> that require memory allocation.
-> 
-> However commit d30f83d278a9 ("interconnect: core: Add dynamic
-> id allocation support") added a devm_kasprintf() call into a
-> path protected by the 'icc_bw_lock' which causes this lockdep
-> warning (at least on the IPQ9574 platform):
+This series:
 
-Missing a Fixes tag.
+Add support for Qualcomm's iq9-evk board using QCS9075 SOC.
 
-> 
->      ======================================================
->      WARNING: possible circular locking dependency detected
->      6.15.0-next-20250529 #0 Not tainted
->      ------------------------------------------------------
->      swapper/0/1 is trying to acquire lock:
->      ffffffc081df57d8 (icc_bw_lock){+.+.}-{4:4}, at: icc_init+0x8/0x108
-> 
->      but task is already holding lock:
->      ffffffc081d7db10 (fs_reclaim){+.+.}-{0:0}, at: icc_init+0x28/0x108
-> 
->      which lock already depends on the new lock.
-> 
->      the existing dependency chain (in reverse order) is:
-> 
->      -> #1 (fs_reclaim){+.+.}-{0:0}:
->             fs_reclaim_acquire+0x7c/0xb8
->             slab_alloc_node.isra.0+0x48/0x188
->             __kmalloc_node_track_caller_noprof+0xa4/0x2b8
->             devm_kmalloc+0x5c/0x138
->             devm_kvasprintf+0x6c/0xb8
->             devm_kasprintf+0x50/0x68
->             icc_node_add+0xbc/0x160
->             icc_clk_register+0x15c/0x230
->             devm_icc_clk_register+0x20/0x90
->             qcom_cc_really_probe+0x320/0x338
->             nss_cc_ipq9574_probe+0xac/0x1e8
->             platform_probe+0x70/0xd0
->             really_probe+0xdc/0x3b8
->             __driver_probe_device+0x94/0x178
->             driver_probe_device+0x48/0xf0
->             __driver_attach+0x13c/0x208
->             bus_for_each_dev+0x6c/0xb8
->             driver_attach+0x2c/0x40
->             bus_add_driver+0x100/0x250
->             driver_register+0x68/0x138
->             __platform_driver_register+0x2c/0x40
->             nss_cc_ipq9574_driver_init+0x24/0x38
->             do_one_initcall+0x88/0x340
->             kernel_init_freeable+0x2ac/0x4f8
->             kernel_init+0x28/0x1e8
->             ret_from_fork+0x10/0x20
-> 
->      -> #0 (icc_bw_lock){+.+.}-{4:4}:
->             __lock_acquire+0x1348/0x2090
->             lock_acquire+0x108/0x2d8
->             icc_init+0x50/0x108
->             do_one_initcall+0x88/0x340
->             kernel_init_freeable+0x2ac/0x4f8
->             kernel_init+0x28/0x1e8
->             ret_from_fork+0x10/0x20
-> 
->      other info that might help us debug this:
-> 
->       Possible unsafe locking scenario:
-> 
->             CPU0                    CPU1
->             ----                    ----
->        lock(fs_reclaim);
->                                     lock(icc_bw_lock);
->                                     lock(fs_reclaim);
->        lock(icc_bw_lock);
-> 
->       *** DEADLOCK ***
-> 
->      1 lock held by swapper/0/1:
->       #0: ffffffc081d7db10 (fs_reclaim){+.+.}-{0:0}, at: icc_init+0x28/0x108
-> 
->      stack backtrace:
->      CPU: 3 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.15.0-next-20250529 #0 NONE
->      Hardware name: Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C7 (DT)
->      Call trace:
->       show_stack+0x20/0x38 (C)
->       dump_stack_lvl+0x90/0xd0
->       dump_stack+0x18/0x28
->       print_circular_bug+0x334/0x448
->       check_noncircular+0x12c/0x140
->       __lock_acquire+0x1348/0x2090
->       lock_acquire+0x108/0x2d8
->       icc_init+0x50/0x108
->       do_one_initcall+0x88/0x340
->       kernel_init_freeable+0x2ac/0x4f8
->       kernel_init+0x28/0x1e8
->       ret_from_fork+0x10/0x20
-> 
-> Move the memory allocation part of the code outside of the protected
-> path to eliminate the warning. Also add a note about why it is moved
-> to there,
-> 
-> Fixes: d30f83d278a9 ("interconnect: core: Add dynamic id allocation support")
-> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-> ---
->   drivers/interconnect/core.c | 14 ++++++++++----
->   1 file changed, 10 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-> index 1a41e59c77f85a811f78986e98401625f4cadfa3..acdb3b8f1e54942dbb1b71ec2b170b08ad709e6b 100644
-> --- a/drivers/interconnect/core.c
-> +++ b/drivers/interconnect/core.c
-> @@ -1023,6 +1023,16 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
->   		return;
-> 
->   	mutex_lock(&icc_lock);
-> +
-> +	if (node->id >= ICC_DYN_ID_START) {
-> +		/*
-> +		 * Memory allocation must be done outside of codepaths
-> +		 * protected by icc_bw_lock.
-> +		 */
-> +		node->name = devm_kasprintf(provider->dev, GFP_KERNEL, "%s@%s",
-> +					    node->name, dev_name(provider->dev));
-> +	}
-> +
->   	mutex_lock(&icc_bw_lock);
-> 
->   	node->provider = provider;
-> @@ -1038,10 +1048,6 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
->   	node->avg_bw = node->init_avg;
->   	node->peak_bw = node->init_peak;
-> 
-> -	if (node->id >= ICC_DYN_ID_START)
-> -		node->name = devm_kasprintf(provider->dev, GFP_KERNEL, "%s@%s",
-> -					    node->name, dev_name(provider->dev));
-> -
->   	if (node->avg_bw || node->peak_bw) {
->   		if (provider->pre_aggregate)
->   			provider->pre_aggregate(node);
-> 
-> ---
-> base-commit: 5fed7fe33c2cd7104fc87b7bc699a7be892befa2
-> change-id: 20250529-icc-bw-lockdep-ed030d892a19
-> 
-> Best regards,
-> --
-> Gabor Juhos <j4g8y7@gmail.com>
-> 
-> 
+QCS9075 is compatible IoT-industrial grade variant of SA8775p SOC.
+Unlike QCS9100, it doesn't have safety monitoring feature of
+Safety-Island(SAIL) subsystem, which affects thermal management.
 
-The locking in this code is a mess.
+In QCS9100 SOC, the safety subsystem monitors all thermal sensors and
+does corrective action for each subsystem based on sensor violation
+to comply safety standards. But as QCS9075 is non-safe SOC it requires
+conventional thermal mitigation for thermal management.
+In this series thermal mitigation changes are not included as it needs
+more discussion whether to include the change in DT or in drivers.
 
-Which data-structures does icc_lock protect node* pointers I think and 
-which data-structures does icc_bw_lock protect - "bw" data structures ?
+Below are detailed informations on IQ-9075-evk HW:
+------------------------------------------------------
+QCS9075 SOM is stacked on top of IQ-9075-evk board.
+On top of IQ-9075-evk board additional mezzanine boards can be stacked
+in future.
+IQ-9075-evk is single board supporting these peripherals:
+  - Storage: 2 × 128 GB UFS, micro-SD card, EEPROMs for MACs,
+    eMMC on mezzanine card
+  - Audio/Video, Camera & Display ports
+  - Connectivity: RJ45 2.5GbE, WLAN/Bluetooth, CAN/CAN-FD
+  - Sensors: IMU
+  - PCIe ports
+  - USB & UART ports
 
-Hmm.
-
-Looking at this code I'm not sure at all what icc_lock was introduced to do.
-
-Can we not just drop it entirely ?
+Currently basic features are enabled to support 'boot to shell'.
 
 ---
-bod
+Changelog:
+
+v9:
+  - Retain earlier tags from Rob Herring [1] & Krzysztof Kozlowski [2]
+  - v8-link: [3]
+
+v8:
+  - Squash UFS support [4] into initial board support patch.
+  - Remove uart10 pinctrl settings from board, it is moved to sa8775p.dtsi.
+  - Arrange ufs nodes in alphabetical order.
+  - v7-link: [5]
+
+[1] https://lore.kernel.org/all/173142574295.951085.7523517676553074543.robh@kernel.org/
+[2] https://lore.kernel.org/all/20250430-enlightened-enchanted-jellyfish-7049d0@kuoka/
+[3] https://lore.kernel.org/all/20250528122753.3623570-1-quic_wasimn@quicinc.com/
+[4] https://lore.kernel.org/all/20250513084309.10275-1-quic_sayalil@quicinc.com/
+[5] https://lore.kernel.org/all/20250521140807.3837019-1-quic_wasimn@quicinc.com/
+
+
+Pratyush Brahma (1):
+  arm64: dts: qcom: iq9: Introduce new memory map for qcs9100/qcs9075
+
+Wasim Nazir (3):
+  dt-bindings: arm: qcom: Add bindings for QCS9075 SOC based board
+  arm64: dts: qcom: qcs9075: Introduce QCS9075 SOM
+  arm64: dts: qcom: Add support for qcs9075 IQ-9075-EVK
+
+ .../devicetree/bindings/arm/qcom.yaml         |   7 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/iq9-reserved-memory.dtsi    | 113 +++++++
+ .../boot/dts/qcom/qcs9075-iq-9075-evk.dts     | 289 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs9075-som.dtsi     |  10 +
+ 5 files changed, 420 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/iq9-reserved-memory.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-iq-9075-evk.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-som.dtsi
+
+
+base-commit: 3be1a7a31fbda82f3604b6c31e4f390110de1b46
+--
+2.49.0
+
 
