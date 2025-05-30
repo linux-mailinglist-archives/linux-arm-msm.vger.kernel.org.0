@@ -1,280 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-59861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91A4BAC8A4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 11:00:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE367AC8A75
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 11:08:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 53A454E2DE7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 09:00:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C81141BC29F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 09:09:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FF24220F4B;
-	Fri, 30 May 2025 09:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4ED3821C19B;
+	Fri, 30 May 2025 09:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rCBDujFw"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="ZB1U/Pdf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C6821D5AA;
-	Fri, 30 May 2025 09:00:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420D91EB5D8;
+	Fri, 30 May 2025 09:08:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748595609; cv=none; b=Qiv/hv6vdtAAMSF8HgeUO1+GrJ1Trss6yJf2Z4MCibbjTSSqR86HYiEtPBTuJ+JxMjtS9uvmSx+BCEC07LQOvfj3E7CQWO+L2k8e+TwPWH07pXSXBeMO4Q/aWDgsLbbxIVl0zztymqIURrmZf4VLPhEK7dpaYBt0kFDo8aDopU4=
+	t=1748596134; cv=none; b=U9XQdV9YYkAgBBWSWwV/f25KFGrKgMHyo3oZQF5oA7HVrTEFS79SW2swJKSYGbaCV0rI3ADubUsaN+lrSa23dNNgEAaVFPntMEfFmp2wQM6z7kxCtLpwaGFHIRpZjzzS5su5S7eMpJ+M7LDzU1/VdGL/olGBTBOC0B9ElRYiRUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748595609; c=relaxed/simple;
-	bh=xfa1GFv94euoBmf+fvs/VYYsw3L+ReTgBg+jQpKo9H8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SJYZhLaL+ya0GCLLQo5Hl1GccSinQxPAsBGI6uY9ZPTzkzrmJ/NkoJogoMuPAg3X8Ys+8YhMVoyonihILe073xyyekkak6EDdVZotBJcur++BX9gES2JXaQFew/4zVoECVIRVCyPUuF2xgg7snQJydMiZDuwd9juqYxXgCKbTpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rCBDujFw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3BC21C4CEFC;
-	Fri, 30 May 2025 09:00:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748595609;
-	bh=xfa1GFv94euoBmf+fvs/VYYsw3L+ReTgBg+jQpKo9H8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=rCBDujFw8z6RsUNapzwhReR04ccB53DOGbnmQVKQiAsQanTQt/GBPQ/+wIyDObB2u
-	 jfuzk5sz/iLT7gKe4Olfbs7daSqmVrF0vYBb1kNN5zu4fVUyk6wuuc3jjntIWnRW18
-	 gPXHFBkCCeKaNAeGpKH8nqcQtGKVrpRJSyk7LNIe2qbaQWeCKBvB8mxTm0tJboVA3w
-	 I8t8mRfpJI7RsKopRFI1agMwypV0VBKRXe1njQkWbt5B79vegK4YJQxEithh1HZDQK
-	 2Hiedp1nEgPwBu3RzCl/ArAb4C7DMZt2ap74rc2vGiY5jR2/Rbh/mMx8n6rwfTMxR0
-	 br5RoY/6MWwEQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CB16C5B549;
-	Fri, 30 May 2025 09:00:09 +0000 (UTC)
-From: Vincent Knecht via B4 Relay <devnull+vincent.knecht.mailoo.org@kernel.org>
-Date: Fri, 30 May 2025 11:00:07 +0200
-Subject: [PATCH v3 4/4] arm64: dts: qcom: msm8939: Add camss and cci
+	s=arc-20240116; t=1748596134; c=relaxed/simple;
+	bh=kyXdt8s0xKz4LjroE2u3gSZ0qK9QnI9kcAdnHQnzJj8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UpT09/elycHJ4rE5KgttTEhX+isDEivw5H1K+MZFqg7K+ISSIKJVGQdu/DHdZfqhgCcHaLxXM8mbkqCYo94qYBHZGnuLnVOWshCk1PWgXRNzF831Xbfh9HaNrsSR9RK5ds3gJrmi5WrUf9OQuZVXOQl8WFNF6e+ZemD9w2yWsBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=ZB1U/Pdf; arc=none smtp.client-ip=217.70.183.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id D06D643349;
+	Fri, 30 May 2025 09:08:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1748596129;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=YDcQoFFC4NqCXcyobvRRuP1Ua4ytiuIE7XjIkD34fbk=;
+	b=ZB1U/Pdfi7HtDnqYB1OWNlxulO3P8Fzu1T1afPYQ754WfHDNuOCqhr37hUY6ZczMdot6mN
+	iKfgB57p8ne86qqiVAZL4T0zsuD2oXjkNi9Lx3+FRbgiijwLmb9ZSxZ3KK2eC8Xqd9CioZ
+	yzOYPApcG7YNnNy58ZNYVwhc7L78+lx/W8BrCXo2NEU35lMAFE1SSpZx26hyQJVZ3Nrnmb
+	w6+mG5x8R8W7GNQ2s81ezwluiyStYudEhpPnKiYruUKX3GhapRbICKk4/l3DWhZDNjo9ME
+	QUFFW58toUQT05s34GNXa92rPdx7Bu+JwK3kC06Yh9cWmK4T9/7lyc5QvFJqLA==
+From: Romain Gantois <romain.gantois@bootlin.com>
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>, davem@davemloft.net,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com,
+ Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ linux-arm-kernel@lists.infradead.org,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Herve Codina <herve.codina@bootlin.com>,
+ Florian Fainelli <f.fainelli@gmail.com>,
+ Heiner Kallweit <hkallweit1@gmail.com>,
+ Vladimir Oltean <vladimir.oltean@nxp.com>,
+ =?UTF-8?B?S8O2cnk=?= Maincent <kory.maincent@bootlin.com>,
+ Marek =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>,
+ =?UTF-8?B?Tmljb2zDsg==?= Veronese <nicveronese@gmail.com>,
+ Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
+ Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Rob Herring <robh@kernel.org>, Daniel Golle <daniel@makrotopia.org>,
+ Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Subject:
+ Re: [PATCH net-next v6 06/14] net: phy: Introduce generic SFP handling for
+ PHY drivers
+Date: Fri, 30 May 2025 11:08:41 +0200
+Message-ID: <12687918.O9o76ZdvQC@fw-rgant>
+In-Reply-To: <aDliS9uMFaLf2lCV@shell.armlinux.org.uk>
+References:
+ <20250507135331.76021-1-maxime.chevallier@bootlin.com>
+ <6159237.lOV4Wx5bFT@fw-rgant> <aDliS9uMFaLf2lCV@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250530-camss-8x39-vbif-v3-4-fc91d15bb5d6@mailoo.org>
-References: <20250530-camss-8x39-vbif-v3-0-fc91d15bb5d6@mailoo.org>
-In-Reply-To: <20250530-camss-8x39-vbif-v3-0-fc91d15bb5d6@mailoo.org>
-To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>, 
- phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- Vincent Knecht <vincent.knecht@mailoo.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1748595607; l=5427;
- i=vincent.knecht@mailoo.org; s=20250414; h=from:subject:message-id;
- bh=3AXxGKiiFPkzccexXUftpqL5zw7vJ6WvoTGCbe02/GY=;
- b=Sp/sG4/rr4ZLXVlrpVisinb+PnxHYy9BY/0/GWSRVE1dIA+2mVKzBGJUB8gYsKkOa6qeYBnUR
- 1J8kKnT9idCDM14y1N4WCg6yFCl2sqcsejpq3CnD8krLRDns7tlhhJz
-X-Developer-Key: i=vincent.knecht@mailoo.org; a=ed25519;
- pk=MFCVQkhL3+d3NHDzNPWpyZ4isxJvT+QTqValj5gSkm4=
-X-Endpoint-Received: by B4 Relay for vincent.knecht@mailoo.org/20250414
- with auth_id=377
-X-Original-From: Vincent Knecht <vincent.knecht@mailoo.org>
-Reply-To: vincent.knecht@mailoo.org
+Content-Type: multipart/signed; boundary="nextPart5904461.DvuYhMxLoT";
+ micalg="pgp-sha512"; protocol="application/pgp-signature"
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvkeeiudculddtuddrgeefvddrtddtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefufffkjghfgggtsehgtderredttdejnecuhfhrohhmpeftohhmrghinhcuifgrnhhtohhishcuoehrohhmrghinhdrghgrnhhtohhishessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhephfdvleekvefgieejtdduieehfeffjefhleegudeuhfelteduiedukedtieehlefgnecuffhomhgrihhnpegsohhothhlihhnrdgtohhmnecukfhppeeltddrkeelrdduieefrdduvdejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepledtrdekledrudeifedruddvjedphhgvlhhopehffidqrhhgrghnthdrlhhotggrlhhnvghtpdhmrghilhhfrhhomheprhhomhgrihhnrdhgrghnthhoihhssegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeeftddprhgtphhtthhopehlihhnuhigsegrrhhmlhhinhhugidrohhrghdruhhkpdhrtghpthhtohepmhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomhdprhgtphhtthhopegurghvvghmsegurghvvghmlhhofhhtrdhnvghtpdhrtghpthhtohepnhgvthguvghvsehvg
+ hgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhsmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehthhhomhgrshdrphgvthgriiiiohhnihessghoohhtlhhinhdrtghomhdprhgtphhtthhopegrnhgurhgvfieslhhunhhnrdgthh
+X-GND-Sasl: romain.gantois@bootlin.com
 
-From: Vincent Knecht <vincent.knecht@mailoo.org>
+--nextPart5904461.DvuYhMxLoT
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
+From: Romain Gantois <romain.gantois@bootlin.com>
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+Date: Fri, 30 May 2025 11:08:41 +0200
+Message-ID: <12687918.O9o76ZdvQC@fw-rgant>
+In-Reply-To: <aDliS9uMFaLf2lCV@shell.armlinux.org.uk>
+MIME-Version: 1.0
 
-Add the camera subsystem and CCI used to interface with cameras on the
-Snapdragon 615.
+On Friday, 30 May 2025 09:46:19 CEST Russell King (Oracle) wrote:
+> On Fri, May 30, 2025 at 09:28:11AM +0200, Romain Gantois wrote:
+> > On Thursday, 29 May 2025 15:23:22 CEST Russell King (Oracle) wrote:
+> > > On Wed, May 28, 2025 at 09:35:35AM +0200, Romain Gantois wrote:
+> > > > > In that regard, you can consider 1000BaseX as a MII mode (we do have
+> > > > > PHY_INTERFACE_MODE_1000BASEX).
+> > > > 
+> > > > Ugh, the "1000BaseX" terminology never ceases to confuse me, but yes
+> > > > you're
+> > > > right.
+> > > 
+> > > 1000BASE-X is exactly what is described in IEEE 802.3. It's a PHY
+> > > interface mode because PHYs that use SerDes can connect to the host
+> > > using SGMII or 1000BASE-X over the serial link.
+> > > 
+> > > 1000BASE-X's purpose in IEEE 802.3 is as a protocol for use over
+> > > fibre links, as the basis for 1000BASE-SX, 1000BASE-LX, 1000BASE-EX
+> > > etc where the S, L, E etc are all to do with the properties of the
+> > > medium that the electrical 1000BASE-X is sent over. It even includes
+> > > 1000BASE-CX which is over copper cable.
+> > 
+> > Ah makes sense, thanks for the explanation. I guess my mistake was
+> > assuming
+> > that MAC/PHY interface modes were necessarily strictly at the
+> > reconciliation sublayer level, and didn't include PCS/PMA functions.
+> 
+> When a serdes protocol such as SGMII, 1000BASE-X, or 10GBASE-R is being
+> used with a PHY, the IEEE 802.3 setup isn't followed exactly - in
+> effect there are more layers.
+> 
+> On the SoC:
+> 
+> 	MAC
+> 	Reconciliation (RS)
+> 	PCS
+> 	SerDes (part of the PMA layer)
+> 
+> On the PHY side of the SerDes host-to-phy link:
+> 
+> 	SerDes
+> 	PCS (which may or may not be exposed in the PHY register set,
+> 	     and is normally managed by the PHY itself)
+> 	(maybe other layers, could include MACs	back-to-back)
+> 	PCS
+> 	PMA
+> 	PMD
+> 
+> Hope that helps explain what's going on a little more.
 
-Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
----
- arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi |   4 +
- arch/arm64/boot/dts/qcom/msm8939.dtsi        | 146 +++++++++++++++++++++++++++
- 2 files changed, 150 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi
-index adb96cd8d643e5fde1ac95c0fc3c9c3c3efb07e8..659d127b1bc3570d137ca986e4eacf600c183e5e 100644
---- a/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi
-@@ -11,6 +11,10 @@
- #include "msm8939.dtsi"
- #include "pm8916.dtsi"
- 
-+&camss {
-+	vdda-supply = <&pm8916_l2>;
-+};
-+
- &mdss_dsi0 {
- 	vdda-supply = <&pm8916_l2>;
- 	vddio-supply = <&pm8916_l6>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-index 68b92fdb996c26e7a1aadedf0f52e1afca85c4ab..082542b54d96adaed3e6b49bc3682005ea018a72 100644
---- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-@@ -1434,6 +1434,145 @@ mdss_dsi1_phy: phy@1aa0300 {
- 			};
- 		};
- 
-+		camss: isp@1b08000 {
-+			compatible = "qcom,msm8939-camss";
-+			reg = <0x01b08000 0x100>,
-+			      <0x01b08400 0x100>,
-+			      <0x01b08800 0x100>,
-+			      <0x01b0ac00 0x200>,
-+			      <0x01b00030 0x4>,
-+			      <0x01b0b000 0x200>,
-+			      <0x01b00038 0x4>,
-+			      <0x01b00020 0x10>,
-+			      <0x01b0a000 0x500>,
-+			      <0x01b10000 0x1000>,
-+			      <0x01b40000 0x200>;
-+			reg-names = "csid0",
-+				    "csid1",
-+				    "csid2",
-+				    "csiphy0",
-+				    "csiphy0_clk_mux",
-+				    "csiphy1",
-+				    "csiphy1_clk_mux",
-+				    "csi_clk_mux",
-+				    "ispif",
-+				    "vfe0",
-+				    "vfe0_vbif";
-+
-+			clocks = <&gcc GCC_CAMSS_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0PHY_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0PIX_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0RDI_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1PHY_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1PIX_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1RDI_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2PHY_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2PIX_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2RDI_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0PHYTIMER_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1PHYTIMER_CLK>,
-+				 <&gcc GCC_CAMSS_CSI_VFE0_CLK>,
-+				 <&gcc GCC_CAMSS_ISPIF_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_TOP_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_VFE0_CLK>,
-+				 <&gcc GCC_CAMSS_VFE_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_VFE_AXI_CLK>;
-+			clock-names = "ahb",
-+				      "csi0",
-+				      "csi0_ahb",
-+				      "csi0_phy",
-+				      "csi0_pix",
-+				      "csi0_rdi",
-+				      "csi1",
-+				      "csi1_ahb",
-+				      "csi1_phy",
-+				      "csi1_pix",
-+				      "csi1_rdi",
-+				      "csi2",
-+				      "csi2_ahb",
-+				      "csi2_phy",
-+				      "csi2_pix",
-+				      "csi2_rdi",
-+				      "csiphy0_timer",
-+				      "csiphy1_timer",
-+				      "csi_vfe0",
-+				      "ispif_ahb",
-+				      "top_ahb",
-+				      "vfe0",
-+				      "vfe_ahb",
-+				      "vfe_axi";
-+
-+			interrupts = <GIC_SPI 51 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 52 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 153 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 78 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 79 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 55 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 57 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "csid0",
-+					  "csid1",
-+					  "csid2",
-+					  "csiphy0",
-+					  "csiphy1",
-+					  "ispif",
-+					  "vfe0";
-+
-+			iommus = <&apps_iommu 3>;
-+
-+			power-domains = <&gcc VFE_GDSC>;
-+
-+			status = "disabled";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+				};
-+			};
-+		};
-+
-+		cci: cci@1b0c000 {
-+			compatible = "qcom,msm8916-cci", "qcom,msm8226-cci";
-+			reg = <0x01b0c000 0x1000>;
-+			interrupts = <GIC_SPI 50 IRQ_TYPE_EDGE_RISING>;
-+			clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CCI_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CCI_CLK>,
-+				 <&gcc GCC_CAMSS_AHB_CLK>;
-+			clock-names = "camss_top_ahb",
-+				      "cci_ahb",
-+				      "cci",
-+				      "camss_ahb";
-+			assigned-clocks = <&gcc GCC_CAMSS_CCI_AHB_CLK>,
-+					  <&gcc GCC_CAMSS_CCI_CLK>;
-+			assigned-clock-rates = <80000000>,
-+					       <19200000>;
-+			pinctrl-0 = <&cci0_default>;
-+			pinctrl-names = "default";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			status = "disabled";
-+
-+			cci_i2c0: i2c-bus@0 {
-+				reg = <0>;
-+				clock-frequency = <400000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
- 		gpu: gpu@1c00000 {
- 			compatible = "qcom,adreno-405.0", "qcom,adreno";
- 			reg = <0x01c00000 0x10000>;
-@@ -1498,6 +1637,13 @@ apps_iommu: iommu@1ef0000 {
- 			#iommu-cells = <1>;
- 			qcom,iommu-secure-id = <17>;
- 
-+			/* vfe */
-+			iommu-ctx@3000 {
-+				compatible = "qcom,msm-iommu-v1-sec";
-+				reg = <0x3000 0x1000>;
-+				interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
-+			};
-+
- 			/* mdp_0: */
- 			iommu-ctx@4000 {
- 				compatible = "qcom,msm-iommu-v1-ns";
+Definitely helps a lot, thanks.
 
 -- 
-2.49.0
+Romain Gantois, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
+
+--nextPart5904461.DvuYhMxLoT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEYFZBShRwOvLlRRy+3R9U/FLj284FAmg5dZkACgkQ3R9U/FLj
+285M0g/+Nz1A6obdeKee0RLc6MA2gBvM/EmqYPQ6ZduN6VFL2D6J4NATyQRqu/VW
+u4d0pjD2ZOe44w6eAeRcWHsC0LJYfnHPPMhxekF2l+qqggkvZDGp9BmWJZd5UUe0
+dDxur4qI6XF2WlWDXyf9auZ3iGvqOUnWYK7VsLu/1hMYeC8M0Q+5dwy72//aAGnH
+9lyBU77a7sd3Qhlnd5Flg5f9ZuQmfqcD7Hyjp0OXdSJr7TlXLPJ+4FffNTivOQMK
+WonmDnfUOSPfxukMd0ozR7Z2BdvUeKPrlQq6yvcC5aS+9WZvVWCZzLOLrlBylu50
+wtEnYLpXd8QVehLsZGfE8mB4u+IuJICnEKhhrQ7YSLdjmXkj4VHCZHjl28WrI5rP
+wMCczhfYk4tDM83L2TBDVX5DTvcIcBawWlGxwzOdZ8WbipSVt5LZMtAkICE9TZzz
+j0oJ6+4xxi8mXGVduWD7kztOgXFl+UAx9GG8RsWoSPE0+t1f2nO0YV55UTW5RhEA
+/hNR+P1Z8pB9SHjHM9TskW6LC4Z/NEIBnI0N98BacAdjSc/KX4uHSH01ANVHRyEs
+wD5PJQKAj705h81tvNA4RzUkqC+UAa9bjtE3gtqj0KnusZhSiPBtIRe55sJ3W9aU
+uYNbFO3CW8dD+WMqYm9fQrWtbqX/tOWRCOzdM5KMSNpbVyBWNDs=
+=r0Tf
+-----END PGP SIGNATURE-----
+
+--nextPart5904461.DvuYhMxLoT--
+
 
 
 
