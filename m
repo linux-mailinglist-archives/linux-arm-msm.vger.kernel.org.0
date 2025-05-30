@@ -1,274 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-59918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D36DAC93C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 18:42:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01AEBAC950B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 19:48:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F290F7A6809
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 16:40:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EDA0816D5B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 17:47:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C8A91D7E26;
-	Fri, 30 May 2025 16:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EB8627511B;
+	Fri, 30 May 2025 17:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SYDzNE7+"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mpWsG+t3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBD21CAA85
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 16:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE44326D4EB
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 17:47:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748623329; cv=none; b=BtLrnf/K0c/4azmhO6RB5qgh3tFRpm0AY00WfzKRo2okQCh9WnF8lVcUBPXcg31Xxuo5/t4IUcftsgheH0hfSpHbFtBR4hJPhGfQq/FhhwyT9XVjGniX6K8IzsWEfWpA9qzNLsp8otsbdZAeVhGVXmMAzgg1YhlYnpFOGwNpZ7s=
+	t=1748627267; cv=none; b=rCMqoE5pNqeF+wvgF8vYinebYlvZik3+UxnwUF3cwx9kBwt0kJAY8nJcnB88bQtHqbvnU/b/TuiOYBlvnP9MsLpfChvPjD28hqcZLjt4ND5w+mG8zkp/0twnVATyLDeekXXCGF22UHc/aCuRGWvwWQCebm4PCuqVXK8PxowNjwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748623329; c=relaxed/simple;
-	bh=k0r3jAdN0yq9usoh2WWpT1HcqWj23B9/RTpZqizK8xg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ViNOvELIsxs+gijW+8HjjCyUu5xP5MgJ1iHC8/5sax5Ig1jhX1Z5QONj4Z2lWbP3nVzXtbmgG3sJd5WOuJd0+lMCJDv5466fnuK5ldQKZrLGTWI/j7XPiK56eZ3g2/4oxYJkIAqmHEsge9HVFNHnmxKNK62ieMtXRRbXECh9rNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SYDzNE7+; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1748627267; c=relaxed/simple;
+	bh=6uc2UGeYDKojb28VLnUtXsaqjBTpOdr4JI5m+IvoZFs=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GwZ0ZXxdWQGZQYFTdmRTMzmEMYcYvkVVw5KVYTgyjHs3Jr3oPfG0IE2nA72nNFAkhNOQWdiYM2FHKsjALayq9j9e389wwxja7uY6zC+UKc/4viZzMmMw4AjuveIDZwpY3f+T919atxx3Jv5LcX4aKGk9eExrhsqp/Bq9R+xUb58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mpWsG+t3; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54UArLoH013717
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 16:42:07 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54UBA6je008179
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 17:47:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dR7iDYHwxHQyVpZ0FR3nn7vovmsedDiyUz4cLKOAiXY=; b=SYDzNE7+O0bygCAE
-	rlaLgorWaRZG5WEOWvfqnQUOYdEJO1GuvfPt9Hb91QRcE3DT1eUSvfAKAhSqNES1
-	Qoou5l0Ji/ilQW4ccGpSqXFA8cGDsT6KmPwILCDbgVSyNI+skgZKvdR3f7BT+U+Q
-	2+VaRzZ9qp9aEA7/KDG6fFisGYzyorWjZ0RGb1IhbRIehf+lcRAwvkcvSHYfF2cv
-	8cikVvzVsf/LRiAAGUs9y7E/eVcdWe6fRAiPA8kPM3d+luxFOsY5BtFKBwz5QZZP
-	BcV/lZKLJY9TqZW9q0WSVsvk7HqkrjdNiy3XVuAW3ADhOoWe/MBq8Afw0irEnyFx
-	r/hmCQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46wavm3qsq-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=B+2KkEfWLodMGyIjftnj/+
+	LVncTbtgVzzVqk00GViSE=; b=mpWsG+t3plv5e6+19mI7H1/k9Xc2PbY3Srvl80
+	D5zBneLrIWg0mnVpuUI8G4tf0+fyNEHsnMfY7WCElXGVHSQa1nG4/d+g7nqbI1ox
+	CjUb4JN8+XQHmKJqVYNTSXFcmFnwBHOmLh3vvDEZmffrsbUR9M0VUtt2axHK9FK9
+	mti9+nRt3jDtJXxXgwueMG8obGlA91fe/dpbrqram7qw9Hf7C5lRVSn99cKAjR8Z
+	68WrbUQYL7ZFIPEd8dcdRU5WZtwAZ66pGDRdyZMNajqdsDddAo7dcgghHMnqwyJP
+	tR58ycXdv0YICv8dfMgLyRrmO7RZSDjhrQAjoc1y899xcv3g==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46w992v624-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 16:42:06 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c5d608e703so390012385a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 09:42:06 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 17:47:43 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-312436c2224so1635356a91.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 10:47:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748623325; x=1749228125;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dR7iDYHwxHQyVpZ0FR3nn7vovmsedDiyUz4cLKOAiXY=;
-        b=ZehpcykI4h7ocqTR92IPzwfTGseB05LaWXvutbH6b1ani+MSsQxBB49FBd/gGF+ZNs
-         r/4ERM0jZ7xp0A42c+2GCyPDtD/3PjdkEmaJ6WxBc9ych2T1Ypy2iDzBvV6j0OBtTrV9
-         qnyoQwOwD7DcOR9C4vq1qC1XQeYNFl3DrPCxJZX0EgvdrMvAh3F0JHm3eFrdpP84Li8l
-         EcC/n/yRldjJrxiCI0s0sNYZnbNNUbet8SYjEU5uZ5AxxtkK9+SiTDr6g/JSyWj03hFk
-         3FwMOoCNVUhQwLRLdIakUwJG6T5+PBR689LQUreAuYn2RjIxK6XnSXjCM6HQsbvqBwe+
-         pLSw==
-X-Forwarded-Encrypted: i=1; AJvYcCXHPJ/rOjWbrsYU5yqKHlyxNW/Vu9l68O8hihCGbMn6lDKPioYzkfQRCp1sOTozs0yhu2LICW7T5OMwy8mp@vger.kernel.org
-X-Gm-Message-State: AOJu0YyFupcswiIfdGRl3yX3I2s6731MPgqNQertNHYVLfn8Zx/J0Q5/
-	jTI4hxnBw8Rh4E16zvC73j7UH7oObVjJnvWqQweMjtWRo0M9CMgNGiW2Rhb9oWH9q3IW7A09CDC
-	R8o1MWVvmya0FYk6gHeTeGDDVeEWW2TuXlhUhloZ1rK7Y+9srA8zs1H4cg9aKP8eN1VeL
-X-Gm-Gg: ASbGncvbvo9Yoo9dvP1qkRoPDOWl8vhIm39UP5duCYbvHYNSm4raZC3UYgFbOuMWPHR
-	oFG6dRW/f3B10iQecn4arW+PJePr5ysQn56sIBmJYY647nugar4A7xeLtem1Sm6QcncWP7SwtS1
-	sGZNkwL1CUIoxMbL7N6LWJpRqausrGXCFvzK2hmKCQdNDx2E7Z4wzOwNLAjqeoP5YwER/RXodcx
-	23w1T3pU+sbw9Y5yRLSbBXcWPaiX0eppjCqyqbQbXB9aAOEvkRuXo7DHSNw2seC1YipOng2cfKV
-	6JPRn/z7sAE7TuN8zn6NajuNMyMD1Ey/MxIwnqRZguT8MoUrzQAKBr6bmKQke28N3h05B8kHr3U
-	=
-X-Received: by 2002:a05:620a:40d4:b0:7c0:b523:e1b6 with SMTP id af79cd13be357-7d0a49e7ba2mr373935585a.11.1748623325395;
-        Fri, 30 May 2025 09:42:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHmLJH2eYXh48Y1EMT6w54qghRK+Ixc8oH91zfHpViI5rEh5CCU1ZanUtnkUIi0JSYuzlqzYg==
-X-Received: by 2002:a05:620a:40d4:b0:7c0:b523:e1b6 with SMTP id af79cd13be357-7d0a49e7ba2mr373932285a.11.1748623324980;
-        Fri, 30 May 2025 09:42:04 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32a85bd2e1dsm6556581fa.100.2025.05.30.09.42.03
+        d=1e100.net; s=20230601; t=1748627263; x=1749232063;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B+2KkEfWLodMGyIjftnj/+LVncTbtgVzzVqk00GViSE=;
+        b=w2/2ljRfT0azY8+lDeUt/Wf/mgSsXyuwLNxi/b0HJ/5M1bujIOtNhrGFfKTJ7KOE+d
+         kH9MNnLYcHQDfPeKxiE3/SONj3hGQEHy0XwTdUJk/N5u8FB/X1IyRw4ywahyKjbVguWL
+         CsEBEsPLQE0Z2kYw9UJKmdYKiJTnmGfMAONNNFb97PxysncRRDziNpfJD+WTWbL4TJcz
+         bTkgvHv0D8bUhNDmNERlS1Jea4CwfxB6Z0IPDw+TKA2rbccp2XG7pSzhRcgscQ0/eCD+
+         27PCODuKNek+zIJa1yVxXlAe0cfHOW+5wMrJXAofB9p564+GX7y07/8s2eDac8hfPi3R
+         TEww==
+X-Gm-Message-State: AOJu0YzYZ8ZX4HcfjKBMlJYT/3j1ndQo/1MItVxotDKRyXLVtga5XX52
+	hkOGdCcC7/Y44P9OOpUOlg4Z6f0VCXe32DLEmN16R9R8uSkVJNF2slm476D6afoUDNW/nkep9G7
+	SKvc4oXqMtxwjrii19vd5krosCI9sXhghbLQwwRov1jBktYPo1n0dOl1fuu1HS5nC+2sW
+X-Gm-Gg: ASbGncvZRDQ21aX3+S+SCd6Y/eVRVDomakqoxRejCZfxEhwWpGm8PsWfPATTtk5LZs9
+	LGd75I/zIKIyuzQ3NGVKVlTHv0kIQ3kIkLyHtJg+Qi2kJYVEoEIRmzCZMUg+hBjQRMAcgRJNZcX
+	yZHU15IQ4pvHpwM8RtsAR3w2rPWspQoEDjE4NznC5EIdg99xPV8d+mi4aTgveTOaGRPPvCdKA4U
+	imN5IfIu2GGImfZS+bpFfta/hAPtqfR1rOX7e7PZss5Grf6bFhnuH664mw2DI2PBRUPh8DSTdt5
+	eSGW9YMDPeZonnjqfJamw4cdXbzzIfiMPBTC6MhwIaOc3C2eKBs0ZVzERNgMc9TqR3Ix/l40PBv
+	8I5nAJoY=
+X-Received: by 2002:a17:90b:4a08:b0:312:db8:dbdc with SMTP id 98e67ed59e1d1-31241528e77mr6199215a91.20.1748627262826;
+        Fri, 30 May 2025 10:47:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGIPUUx78SralXxw5BzFba2DK55mhWLzeD99fXJp8xlfnHba499BNeIUSlq76/cXvpfZXgfQg==
+X-Received: by 2002:a17:90b:4a08:b0:312:db8:dbdc with SMTP id 98e67ed59e1d1-31241528e77mr6199174a91.20.1748627262304;
+        Fri, 30 May 2025 10:47:42 -0700 (PDT)
+Received: from jesszhan-linux.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3124e399b0fsm1615381a91.30.2025.05.30.10.47.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 May 2025 09:42:04 -0700 (PDT)
-Date: Fri, 30 May 2025 19:42:02 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-        Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-        Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linaro-mm-sig@lists.linaro.org, quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v6 2/2] i2c: i2c-qcom-geni: Add Block event interrupt
- support
-Message-ID: <644oygj43z2um42tmmldp3feemgzrdoirzfw7pu27k4zi76bwg@wfxbtgqqgh4p>
-References: <20250506111844.1726-1-quic_jseerapu@quicinc.com>
- <20250506111844.1726-3-quic_jseerapu@quicinc.com>
- <qizkfszruwcny7f3g3i7cjst342s6ma62k5sgc6pg6yfoti7b3@fo2ssj7jvff2>
- <3aa92123-e43e-4bf5-917a-2db6f1516671@quicinc.com>
- <a98f0f1a-d814-4c6a-9235-918091399e4b@oss.qualcomm.com>
- <ba7559c8-36b6-4628-8fc4-26121f00abd5@quicinc.com>
- <w6epbao7dwwx65crst6md4uxi3iivkcj55mhr2ko3z5olezhdl@ffam3xif6tmh>
- <5ed77f6d-14d7-4b62-9505-ab988fa43bf2@quicinc.com>
+        Fri, 30 May 2025 10:47:41 -0700 (PDT)
+From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Subject: [PATCH v2 0/5] dt-bindings: msm/dp: add support for pixel clock to
+ driver another stream
+Date: Fri, 30 May 2025 10:47:23 -0700
+Message-Id: <20250530-dp_mst_bindings-v2-0-f925464d32a8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5ed77f6d-14d7-4b62-9505-ab988fa43bf2@quicinc.com>
-X-Proofpoint-GUID: Q9xXKSXcmUiJj8y8Amylx2gUjxhBDbiK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTMwMDE0NyBTYWx0ZWRfX1TxTdMzsKZTd
- dLPuqS/uHeh0Jog5m8oBf6OANMAB6BD+MRpztSsa7tkJtrZHojSdQYK8XOH1ftovC8KF1W/H7+4
- Sv6cWgTI+Mm3HWIB092Y4cWENVJxC/9sMiXvDWcJNe7KkrsCFzmG3KPe5bMTjB7w0G6DqGxzdYX
- xhKeK4ku2slt1yzUwOc/L5AlZ2pHrEIfU3wFLFCSc0uXvzztyF4KloN1utivMgGSjpOl63gIonk
- 7aO+6GE8EyRucygYSQBCb66rU7gVdtaARR6rEL5B0pdORJA3+2cdKgkx9VAxcNcX8m6MV203l/d
- FaP2fZ2qKq5wBOAiq+Ex95/PKMbP/+m5txFodjVAVcof1LSezyeGYWAh0TY8v5xEh3g2Hz353Ai
- kuyvRnMxKXPJyrnlJRGfLYJQqXgMBIb/KfQRznusQ6E0qHpX+86fThWLG1NEdlwlGU702LLM
-X-Authority-Analysis: v=2.4 cv=fMk53Yae c=1 sm=1 tr=0 ts=6839dfde cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
- a=dt9VzEwgFbYA:10 a=hMb-uB02kSkghMJ30ZAA:9 a=3ZKOabzyN94A:10
- a=wPNLvfGTeEIA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: Q9xXKSXcmUiJj8y8Amylx2gUjxhBDbiK
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACvvOWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHQUlJIzE
+ vPSU3UzU4B8JSMDIxNDIKGbUhCfW1wSn5SZl5KZl16sa25qbJaWlmyZmGqUpgTUVVCUmpZZATY
+ xOra2FgDlnKS/YQAAAA==
+X-Change-ID: 20241202-dp_mst_bindings-7536ffc9ae2f
+To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Mahadevan <quic_mahap@quicinc.com>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Danila Tikhonov <danila@jiaxyga.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        Yongxing Mou <quic_yongmou@quicinc.com>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-64971
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1748627260; l=2624;
+ i=jessica.zhang@oss.qualcomm.com; s=20230329; h=from:subject:message-id;
+ bh=6uc2UGeYDKojb28VLnUtXsaqjBTpOdr4JI5m+IvoZFs=;
+ b=B4JARvTLryhXsb9dR+6G59wuZvScg2Y7mSDEApXdzmOtc2rUFkH0me1aDfAEfkCSfEPjF2sfe
+ TCooErK5xB4Bc/Yi3hAq/l+BrCIKAkTYbHRNCwluTVfQot2e0Z9hwj7
+X-Developer-Key: i=jessica.zhang@oss.qualcomm.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTMwMDE1NiBTYWx0ZWRfXxmqmVKl/jDA4
+ UfRxjCJkfCHKW3lPBqfoeSap5bJ0ZvZceCFMqy3wr2epUIN4h+C2qr6hvdBWwN7eoUmX6JJ13hM
+ ZYlD2FrFQO4rCHBMBevY0yVg449wODUcZjaamtUYk1JYob8drIq8ZVQ5hb8EWdFLRpLkIz7ljCc
+ txgkKHqGD80WsIIJ+T5ISOPUY7KiHWjDQdX2Ca3WqRQHu81Zl/xXz5f2IdxOkvlSd394EWR9ZKH
+ UvJHvvCNgqpi1BwleNVgCceI1q81V6XMrUyXkUWo+BP9W27DPRYCIiBH0GhmCcqlfWL6BJ3etZs
+ F5X616GfU8gNhzCqSFSeY9vVBGojJUNVa2gCRF+un5W2PtQCr8yh8Z/2EN5IYlzHEKoVrlHNtmE
+ ZvN2BqigTs4u9pf/IDHz3jZlyc0weO2eCkKmoDdUnAZL0WAMLjrBsavf2pmlgKrqdnGTKd8u
+X-Authority-Analysis: v=2.4 cv=Fes3xI+6 c=1 sm=1 tr=0 ts=6839ef3f cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=EUspDBNiAAAA:8 a=BHNpFwMvo4D9IzoZi8gA:9
+ a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-GUID: 5qsMEJDdZHNv3lkhsJIk7IghBFEO0msa
+X-Proofpoint-ORIG-GUID: 5qsMEJDdZHNv3lkhsJIk7IghBFEO0msa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-30_07,2025-05-30_01,2025-03-28_01
+ definitions=2025-05-30_08,2025-05-30_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 impostorscore=0 phishscore=0 suspectscore=0
- spamscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015 mlxscore=0
- mlxlogscore=999 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ mlxscore=0 malwarescore=0 impostorscore=0 phishscore=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=891 spamscore=0
+ adultscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505300147
+ definitions=main-2505300156
 
-On Fri, May 30, 2025 at 07:36:05PM +0530, Jyothi Kumar Seerapu wrote:
-> 
-> 
-> On 5/21/2025 6:15 PM, Dmitry Baryshkov wrote:
-> > On Wed, May 21, 2025 at 03:58:48PM +0530, Jyothi Kumar Seerapu wrote:
-> > > 
-> > > 
-> > > On 5/9/2025 9:31 PM, Dmitry Baryshkov wrote:
-> > > > On 09/05/2025 09:18, Jyothi Kumar Seerapu wrote:
-> > > > > Hi Dimitry, Thanks for providing the review comments.
-> > > > > 
-> > > > > On 5/6/2025 5:16 PM, Dmitry Baryshkov wrote:
-> > > > > > On Tue, May 06, 2025 at 04:48:44PM +0530, Jyothi Kumar Seerapu wrote:
-> > > > > > > The I2C driver gets an interrupt upon transfer completion.
-> > > > > > > When handling multiple messages in a single transfer, this
-> > > > > > > results in N interrupts for N messages, leading to significant
-> > > > > > > software interrupt latency.
-> > > > > > > 
-> > > > > > > To mitigate this latency, utilize Block Event Interrupt (BEI)
-> > > > > > > mechanism. Enabling BEI instructs the hardware to prevent interrupt
-> > > > > > > generation and BEI is disabled when an interrupt is necessary.
-> > > > > > > 
-> > > > > > > Large I2C transfer can be divided into chunks of 8 messages internally.
-> > > > > > > Interrupts are not expected for the first 7 message completions, only
-> > > > > > > the last message triggers an interrupt, indicating the completion of
-> > > > > > > 8 messages. This BEI mechanism enhances overall transfer efficiency.
-> > > > > > 
-> > > > > > Why do you need this complexity? Is it possible to set the
-> > > > > > DMA_PREP_INTERRUPT flag on the last message in the transfer?
-> > > > > 
-> > > > > If i undertsand correctly, the suggestion is to get the single
-> > > > > intetrrupt for last i2c message only.
-> > > > > 
-> > > > > But With this approach, we can't handle large number of i2c messages
-> > > > > in the transfer.
-> > > > > 
-> > > > > In GPI driver, number of max TREs support is harcoded to 64 (#define
-> > > > > CHAN_TRES   64) and for I2C message, we need Config TRE, GO TRE and
-> > > > > DMA TREs. So, the avilable TREs are not sufficient to handle all the
-> > > > > N messages.
-> > > > 
-> > > > It sounds like a DMA driver issue. In other words, the DMA driver can
-> > > > know that it must issue an interrupt before exausting 64 TREs in order
-> > > > to
-> > > > 
-> > > > > 
-> > > > > Here, the plan is to queue i2c messages (QCOM_I2C_GPI_MAX_NUM_MSGS
-> > > > > or 'num' incase for less messsages), process and unmap/free upon the
-> > > > > interrupt based on QCOM_I2C_GPI_NUM_MSGS_PER_IRQ.
-> > > > 
-> > > > Why? This is some random value which has no connection with CHAN_TREs.
-> > > > Also, what if one of the platforms get a 'liter' GPI which supports less
-> > > > TREs in a single run? Or a super-premium platform which can use 256
-> > > > TREs? Please don't workaround issues from one driver in another one.
-> > > 
-> > > We are trying to utilize the existing CHAN_TRES mentioned in the GPI driver.
-> > > With the following approach, the GPI hardware can process N number of I2C
-> > > messages, thereby improving throughput and transfer efficiency.
-> > > 
-> > > The main design consideration for using the block event interrupt is as
-> > > follows:
-> > > 
-> > > Allow the hardware to process the TREs (I2C messages), while the software
-> > > concurrently prepares the next set of TREs to be submitted to the hardware.
-> > > Once the TREs are processed, they can be freed, enabling the software to
-> > > queue new TREs. This approach enhances overall optimization.
-> > > 
-> > > Please let me know if you have any questions, concerns, or suggestions.
-> > 
-> > The question was why do you limit that to QCOM_I2C_GPI_NUM_MSGS_PER_IRQ.
-> > What is the reason for that limit, etc. If you think about it, The GENI
-> > / I2C doesn't impose any limit on the number of messages processed in
-> > one go (if I understand it correctly). Instead the limit comes from the
-> > GPI DMA driver. As such, please don't add extra 'handling' to the I2C
-> > driver. Make GPI DMA driver responsible for saying 'no more for now',
-> > then I2C driver can setup add an interrupt flag and proceed with
-> > submitting next messages, etc.
-> > 
-> 
-> For I2C messages, we need to prepare TREs for Config, Go and DMAs. However,
-> if a large number of I2C messages are submitted then may may run out of
-> memory for serving the TREs. The GPI channel supports a maximum of 64 TREs,
-> which is insufficient to serve 32 or even 16 I2C messages concurrently,
-> given the multiple TREs required per message.
-> 
-> To address this limitation, a strategy has been implemented to manage how
-> many messages can be queued and how memory is recycled. The constant
-> QCOM_I2C_GPI_MAX_NUM_MSGS is set to 16, defining the upper limit of
-> messages that can be queued at once. Additionally,
-> QCOM_I2C_GPI_NUM_MSGS_PER_IRQ is set to 8, meaning that
-> half of the queued messages are expected to be freed or deallocated per
-> interrupt.
-> This approach ensures that the driver can efficiently manage TRE resources
-> and continue queuing new I2C messages without exhausting memory.
-> > I really don't see a reason for additional complicated handling in the
-> > geni driver that you've implemented. Maybe I misunderstand something. In
-> > such a case it usually means that you have to explain the design in the
-> > commit message / in-code comments.
-> > 
-> 
-> 
-> The I2C Geni driver is designed to prepare and submit descriptors to the GPI
-> driver one message at a time.
-> As a result, the GPI driver does not have visibility into the current
-> message index or the total number of I2C messages in a transfer. This lack
-> of context makes it challenging to determine when to set the block event
-> interrupt, which is typically used to signal the completion of a batch of
-> messages.
-> 
-> So, the responsibility for deciding when to set the BEI should lie with the
-> I2C driver.
-> 
-> If this approach is acceptable, I will proceed with updating the relevant
-> details in the commit message.
-> 
-> Please let me know if you have any concerns or suggestions.
+On some MSM chipsets, the display port controller is capable of supporting
+two streams. To drive the second stream, the pixel clock for the
+corresponding stream needs to be enabled. In order to add the bindings for
+the pixel clock for the second stream, fixup the documentation of some of
+the bindings to clarify exactly which stream they correspond to, then add
+the new bindings and make corresponding changes to the relevant device
+trees.
 
-- Make gpi_prep_slave_sg() return NULL if flags don't have
-  DMA_PREP_INTERRUPT flag and there are no 3 empty TREs for the
-  interrupt-enabled transfer.
+---
+Changes in v2:
+- Rebased on top of next-20250523
+- Dropped merged maintainer patch
+- Remove assigned-clock-parents from sm7150-mdss.yaml
+- Added a patch to make the corresponding dts change to add pixel 1
+  stream
+- Squashed pixel 0 and pixel 1 stream binding patches (Krzysztof)
+- Drop assigned-clock-parents bindings for dp-controller (Krzysztof)
+- Updated dp-controller.yaml to include all chipsets that support stream
+  1 pixel clock (Krzysztof)
+- Added missing minItems and if statement (Krzysztof)
 
-- If I2C driver gets NULL from dmaengine_prep_slave_single(), retry
-  again, adding DMA_PREP_INTERRUPT. Make sure that the last one always
-  gets DMA_PREP_INTERRUPT.
+---
+Abhinav Kumar (4):
+      dt-bindings: Fixup x1e80100 to add DP MST support
+      dt-bindings: clock: Add SC7280 DISPCC DP pixel 1 clock binding
+      dt-bindings: display/msm: drop assigned-clock-parents for dp controller
+      dt-bindings: display/msm: add stream 1 pixel clock binding
 
-- In geni_i2c_gpi_xfer() split the loop to submit messages until you
-  can, then call wait_for_completion_timeout() and then
-  geni_i2c_gpi_unmap() for submitted messages, then continue with a new
-  portion of messages.
+Jessica Zhang (1):
+      arm64: dts: qcom: Add pixel 1 stream for displayport
 
+ .../bindings/display/msm/dp-controller.yaml        | 45 +++++++++++---
+ .../bindings/display/msm/qcom,sa8775p-mdss.yaml    | 10 +--
+ .../bindings/display/msm/qcom,sar2130p-mdss.yaml   | 11 ++--
+ .../bindings/display/msm/qcom,sc7180-mdss.yaml     |  1 -
+ .../bindings/display/msm/qcom,sc7280-mdss.yaml     | 11 ++--
+ .../bindings/display/msm/qcom,sm7150-mdss.yaml     |  2 -
+ .../bindings/display/msm/qcom,x1e80100-mdss.yaml   | 18 +++---
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              | 26 +++++---
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi              | 20 ++++--
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi             | 72 +++++++++++++++-------
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               | 10 ++-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               | 10 ++-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               | 10 ++-
+ arch/arm64/boot/dts/qcom/sm8650.dtsi               | 10 ++-
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 31 +++++++---
+ include/dt-bindings/clock/qcom,dispcc-sc7280.h     |  2 +
+ 16 files changed, 197 insertions(+), 92 deletions(-)
+---
+base-commit: daf70030586cf0279a57b58a94c32cfe901df23d
+change-id: 20241202-dp_mst_bindings-7536ffc9ae2f
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+
 
