@@ -1,80 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-59880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D5FCAC8C99
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 13:07:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BCFCAC8CF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 13:32:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 47591166358
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 11:07:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1609A17F022
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 11:32:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2134622126E;
-	Fri, 30 May 2025 11:07:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lLF12D8F"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD4AE21CA1F;
+	Fri, 30 May 2025 11:32:29 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552A422154A;
-	Fri, 30 May 2025 11:07:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86B70207DFE;
+	Fri, 30 May 2025 11:32:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748603260; cv=none; b=nOoCmbln/uEk4Jj7PikGS6/iNYaNBYvvTkiYHEDJfalDjbuvD6rboAOGoZEVcZP0vmydKRBuoIpNQpsitciVXVNkakOXrsw5LopYrHpL91j2o8rW1SrAyCtTiQ+eR+v/uQ05ZGuLtKQTReEboilX8Afg29cBqcEk52rCrU1aPtc=
+	t=1748604749; cv=none; b=VHE11aIqxHTAgcWpp5rZXdJU6JyNRBKQOJP7SF2f1cIl80mmX+Cgt86xXVy++M2f2JIz5cl1i6RhdoPZAOJWUMP64efJ/ez9FhJJYdiA8+qJskdr1NBgDTyQgcd9FK4ffPYRN6lpkzm8YXkVACNEH10QF2tPbc2JBdR6bq3/LYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748603260; c=relaxed/simple;
-	bh=FCW4DfUTseZWdlQKBXoT3iPxIReGVkSGs1EtU70fb9M=;
+	s=arc-20240116; t=1748604749; c=relaxed/simple;
+	bh=IZRoatKPztqnNabIL/RjXl6LMAJuzxeTdCveg1nxxjg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dXAVfSxZ2eDRFmH49xbKOALRyr7JNPHgEuQ2pdFq3aFz3PG8m4yjygT7kZenXLhu5ht01oX3eDu5dEjT1H8ytC8mvNHxhUANkDuY5eRLxBdjbw6rIJCsDouHjK8MKQ+HRUDD6HSm8AKj2D3CULRepHfBy2p2AtF7OEba7RshumM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lLF12D8F; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-adb2bd27c7bso230235266b.2;
-        Fri, 30 May 2025 04:07:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748603256; x=1749208056; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=i4ZdmHPp5u88c677hlTmVdlU6RsFYWCDgNeLS1e4+ps=;
-        b=lLF12D8FOyrmViMFcaGThomW+Ar9CrKDFVztYXskrGuosvQ+4jtpMv0r3oSJGGV+8g
-         XSWYboDqJKNmBTbAO7jH4d/mKaJ6l/voIJ3GbWidlWfExIEgrV/7pttthVrRxFzONXmN
-         tokRSgSAa5Snml79+Pc+m8TRanj4twior7o+yv3aER/ZsKE7mVYyQpq2Hm9CRSqhoNXj
-         xM6pii6AhGAU6Txt4clF7722+FylaWPd8XNEZVtTQVrBc2Q0nhYvVybgNcEhPXt2WzuS
-         5+XbbVgJrb1liRrYANv8T4AEYIy9m6iaGqUIwKHlQZo5tY3WP1ymF5UBYWcVz/jRx0I8
-         J4bA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748603256; x=1749208056;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i4ZdmHPp5u88c677hlTmVdlU6RsFYWCDgNeLS1e4+ps=;
-        b=bp3OWCQeie2+ChhlrHk0SXW205EuDTRaTwDZtBMgDimTaEiDiGA1UaTTJXlxWEMPgZ
-         teC3lmZ8aryeYxE9aKEqfuoQmX3EPghlFl24oIRFuDwEaMT11nwF2+Ol7GLj3C9Vj88d
-         rjsTYWieeNKZRAMJuktwNn8nTKj/pj4XDbjKI1LRopN7kyp5WrID62IlKbrYuSjtk2VJ
-         evQXr04o+kuFseRoQCibhgOw/K5RMy+Bxvk3h92U8knMWOHk2AWKlci7CtQkjQ+KL0hF
-         A1IQYyzKGaz/4Lb9wwkxqqU74emZfRUqQdRK9nq/LxktHapXliACU22GIyON/TEx6+pA
-         6zhA==
-X-Forwarded-Encrypted: i=1; AJvYcCUFDKwOXUlDfVadRkPIR+dsL18L34k9H4NdjfrDU/bQNbwPQc6UD+tELpU0HOdGa37ZvXF+/WJkbgmj6+nc@vger.kernel.org, AJvYcCXhw7HU+TRuBErxn29nIfAJKuzgoHqp5VJZ3xbeUmTRNO+RzSTIvV3uSq9L8InykQQSOcPPJBzHVOwlm4tx@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx+2p30/4fe/bp2Uo9s75i5EVvEHReX2GdgEaM3oma3w/spDwXI
-	beMr93udfGPanHFSo2cW94vsAPZMcTi7aicMFfTwJf7K3xc0AxTkmzNNiPNGRg==
-X-Gm-Gg: ASbGncuyc8rAK0hO+F8uyQHkeJOHI01W58+vPOHEeTFYQ7aUo8FMj6QDRNDUvm8nYvY
-	A6BZnQDv2gJODNX+Wj3SZJFCDFF4OtCq8ZDgY6PoTiSb/REN9mhDtYK+YrUwogfW0eF7DmFXS+f
-	oVgyCLASxaivjYiz4Dbwal/DpSxwFGKOQBXKpI1TTE/zUBZfKXB7yP6yzDpuFYZRphZJCldn9Vp
-	7WwwU61pmwjnpZTcdXR3lkWLaQMOUXYIE2rANpmvcHphoay0eFymhz7I4tUNl3hcgUfIhxodlbj
-	pab+bkUxzECYXVrn1nQz1Oh3qw2LBZcv+dKrx9H0K88BA8aDdkKOfQHJWlolEmXVfkBULk5jqbT
-	uMsC3+QBM9g7SdEPxMLYPaB+NJYE=
-X-Google-Smtp-Source: AGHT+IEJEZ0HZGATsOA3e1o6i0DTK+hWUEQ2zJOHWGQcm9LQPtIAr5i0sQqhE620G4EgLJF6VkfVkg==
-X-Received: by 2002:a17:907:3f09:b0:ad8:8d3c:8a73 with SMTP id a640c23a62f3a-adb3228d6aemr265848566b.17.1748603256265;
-        Fri, 30 May 2025 04:07:36 -0700 (PDT)
-Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ada6ad3952esm306355166b.126.2025.05.30.04.07.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 May 2025 04:07:35 -0700 (PDT)
-Message-ID: <28db650d-a911-4df9-9ad4-f926ea0683e6@gmail.com>
-Date: Fri, 30 May 2025 13:07:35 +0200
+	 In-Reply-To:Content-Type; b=NDLsjCiwrHiTOrL6toemIHuH8OT2pqIQsT+oq0ATnzoT4QipdM/7iWf5sWfzLthnaixF6vEOm0kS0mc38JRVjH7N6EVyvamxyVr5aI2k8BlCsIfiuFK/tyKtyGHtdQt7xVjdhFrXYHk6hdRcv7sV0q5I7MNDzCDHBvc5OOjlFVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 342DC16F2;
+	Fri, 30 May 2025 04:32:10 -0700 (PDT)
+Received: from [10.57.48.160] (unknown [10.57.48.160])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 9E1363F5A1;
+	Fri, 30 May 2025 04:32:24 -0700 (PDT)
+Message-ID: <17abf8b5-8a2e-4573-a870-e2f98ad866a6@arm.com>
+Date: Fri, 30 May 2025 12:32:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,73 +42,108 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] mtd: nand: qpic_common: prevent out of bounds
- access of BAM arrays
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mark Brown <broonie@kernel.org>, Md Sadre Alam <quic_mdalam@quicinc.com>,
- Varadarajan Narayanan <quic_varada@quicinc.com>,
- Sricharan Ramabadhran <quic_srichara@quicinc.com>,
- Miquel Raynal <miquel.raynal@bootlin.com>,
- Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>
-Cc: linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- Lakshmi Sowjanya D <quic_laksd@quicinc.com>
-References: <20250529-qpic-snand-avoid-mem-corruption-v2-0-2f0d13afc7d2@gmail.com>
- <KuueBg3qliXMt9QN9kV_5_on2xJV-BEWZAsktO_Ce-Fq1iBAPCFypbYUVZxlV4LjF0AUZG57KqiXZZ3uefQrXw==@protonmail.internalid>
- <20250529-qpic-snand-avoid-mem-corruption-v2-2-2f0d13afc7d2@gmail.com>
- <68c54d56-3e44-4f43-8bd6-f6b7fa1f379b@linaro.org>
-Content-Language: hu
-From: Gabor Juhos <j4g8y7@gmail.com>
-In-Reply-To: <68c54d56-3e44-4f43-8bd6-f6b7fa1f379b@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v6 2/2] coresight: add coresight Trace Network On Chip
+ driver
+To: Yuanfang Zhang <quic_yuanfang@quicinc.com>, Leo Yan <leo.yan@arm.com>
+Cc: Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ kernel@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+ coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250522-trace-noc-v6-0-f5a9bcae90ee@quicinc.com>
+ <20250522-trace-noc-v6-2-f5a9bcae90ee@quicinc.com>
+ <3a19197d-b534-458c-b4d7-51fd9d2c954d@arm.com>
+ <40599afc-4342-467c-87d8-3f53cbcfd242@quicinc.com>
+ <20250523085655.GD2566836@e132581.arm.com>
+ <4d54e620-abb9-4a36-bab0-3970c7e30a5f@arm.com>
+ <62d1e4cb-cc13-4333-a160-66a280dca5f6@quicinc.com>
+Content-Language: en-GB
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <62d1e4cb-cc13-4333-a160-66a280dca5f6@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-2025. 05. 30. 10:56 keltezéssel, Bryan O'Donoghue írta:
+On 30/05/2025 11:28, Yuanfang Zhang wrote:
+> 
+> 
+> On 5/27/2025 6:19 PM, Suzuki K Poulose wrote:
+>> On 23/05/2025 09:56, Leo Yan wrote:
+>>> On Fri, May 23, 2025 at 04:08:58PM +0800, Yuanfang Zhang wrote:
+>>>
+>>> [...]
+>>>
+>>>>>> +static int trace_noc_init_default_data(struct trace_noc_drvdata *drvdata)
+>>>>>> +{
+>>>>>> +    int atid;
+>>>>>> +
+>>>>>> +    atid = coresight_trace_id_get_system_id();
+>>>>>> +    if (atid < 0)
+>>>>>> +        return atid;
+>>>>>> +
+>>>>>> +    drvdata->atid = atid;
+>>>>>
+>>>>> Do you need to expose this via sysfs ? Otherwise, how can you map
+>>>>> a trace to a TNOC at decoding ?
+>>>>
+>>>> yes, need to expose the atid via sysfs, but it better to expose it on source driver which connect with
+>>>> this TNOC. so dont expose it on this driver.
+>>
+>> But why ? How does that work ? The packets that come via TNOC (irrespective of the source(s)) will have the same ATID as that of the TNOC. So :
+>>
+>> 1) How does it help if the source exports the ID that was allocated in the TNOC driver ?
+>>
+> The sources connecting to TNOC will have the same ATID which allocate in TNOC.
+> This is convenient as users do not need to know which source is connected to this TNOC,
+> to get ID can through reading the trace_id sysfs node in the source directory.
+> 
+>> 2) How does the source driver know the TraceID for exposing via sysfs ?
+>> Does it expose its own traceid ?
+> No, sources connecting to TNOC don't have their own traceid, it expose the ATID which allocated in TNOC.
+> TNOC will maintain the ID in coresight_path:: trace_id, when enable source, the source can get it from path.
+> 
+> Here is the patch to expose id in source:
+> https://patchwork.kernel.org/project/linux-arm-kernel/patch/20250530-showtraceid-v1-1-2761352cf7b4@quicinc.com/
 
-...
+Please don't do that. We don't have to fake a traceid for all sources.
+It is only of use to the decoder, with manual input from the user. So,
+someone using the TNOC based system must be aware of how to collect the
+traceid and as such expose it from the TNOC and not all the other
+sources connected to it.
 
-> This one doesn't apply to -next
-
-It is because the series is based on the SPI tree, and -next contains another
-change for 'drivers/mtd/nand/qpic_common.c' which comes from the MTD tree.
-
-It can be applied by specifying the 'M' switch for b4 shazam.
+Simply expose it on the TNOC device node
 
 
-$ git reset --hard next-20250530
-HEAD is now at 3a83b350b5be Add linux-next specific files for 20250530
-$ b4 shazam -M 20250529-qpic-snand-avoid-mem-corruption-v2-0-2f0d13afc7d2@gmail.com
-Grabbing thread from lore.kernel.org/all/20250529-qpic-snand-avoid-mem-corruption-v2-0-2f0d13afc7d2@gmail.com/t.mbox.gz
-Checking for newer revisions
-Grabbing search results from lore.kernel.org
-Analyzing 4 messages in the thread
-Analyzing 12 code-review messages
-Checking attestation on all messages, may take a moment...
----
-  ? [PATCH v2 1/2] spi: spi-qpic-snand: reallocate BAM transactions
-  ? [PATCH v2 2/2] mtd: nand: qpic_common: prevent out of bounds access of BAM arrays
-  ---
-  ? Signed: DKIM/gmail.com
----
-Total patches: 2
----
- Base: using specified base-commit b00d6864a4c948529dc6ddd2df76bf175bf27c63
-Magic: Preparing a sparse worktree
----
-Applying: spi: spi-qpic-snand: reallocate BAM transactions
-Applying: mtd: nand: qpic_common: prevent out of bounds access of BAM arrays
----
-Fetching into FETCH_HEAD
-Will exec: git merge --no-ff -F /home/juhosg/devel/linux-ipq95xx/.git/b4-cover --edit FETCH_HEAD --signoff
-Press Enter to continue or Ctrl-C to abort
-Auto-merging drivers/mtd/nand/qpic_common.c
-Auto-merging drivers/spi/spi-qpic-snand.c
-Auto-merging include/linux/mtd/nand-qpic-common.h
-Merge made by the 'ort' strategy.
- drivers/mtd/nand/qpic_common.c       | 30 ++++++++++++++++++++++++++----
- drivers/spi/spi-qpic-snand.c         | 16 ++++++++++++++++
- include/linux/mtd/nand-qpic-common.h |  8 ++++++++
- 3 files changed, 50 insertions(+), 4 deletions(-)
-$
+Suzuki
+
+
+>>
+>>>
+>>> If so, why the ID is not maintained in coresight_path::trace_id?
+>>>
+>>> A source device allocates ID and maintains in coresight path, then
+>>> this ID is passed (when enabling the link) to TNOC driver to consume it.
+>>
+> This is because there can be multiple sources connected to one TNOC, and these sources share one Trace ID, so the ID is allocated in TNOC.
+> 
+>> Good question, since we have the "path" maintaining the TraceID, we
+>> should use that here for the TNOC. But the other question is, can there be multiple sources connected to a single TNOC ? (I am guessing, yes!. And thus it may not work with what you are proposing.
+>>
+>   
+> yes, there can be multiple sources connected to one TNOC, and these sources share one Trace ID which allocate in TNOC.
+> To decode the scenario relay on TraceID + Inport number, TraceID identifies the TNOC, the decoder maintains a table that maps each TNOC inport to its corresponding source.
+> 
+>> Cheers
+>> Suzuki
+>>
+>>
+>>>
+>>> Thanks,
+>>> Leo
+>>
+>>
+>>
+> 
 
 
