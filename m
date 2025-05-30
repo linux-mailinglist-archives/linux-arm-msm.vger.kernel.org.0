@@ -1,214 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-59925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0E2BAC9547
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 19:53:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9528EAC95E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 21:03:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0B7461C22B7E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 17:51:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C1E9FA42D3C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 May 2025 19:03:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB53F1A0B08;
-	Fri, 30 May 2025 17:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EABD720E330;
+	Fri, 30 May 2025 19:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="W7lEtrD/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NkPsHNvm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2153F275869
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 17:51:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577D4BE5E;
+	Fri, 30 May 2025 19:03:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748627465; cv=none; b=hCPBDqEkSiTWrnw24fbplZs0HW2V39ZVw1oGiZm/2b9M6FMmxKLgedy82XRSCBWZcwldnawvHfXKIVmGsswlGXLsn8CdPePYogRois1ZDIemw/9gTXUzFxS0AJ442Ka5MtHAWwj8FLIXZIuNKn4Wy9GPZt4MPxe5QQpixvV+9nA=
+	t=1748631812; cv=none; b=O8M/8j9+NEh8YhCWw6W7dW5pPCqJinXQZ5J9QX6gEBoQyYrIYNR2AW2yFi4mwmDunzpEFQDIk7pG6d1Igw2ySdzTK/DDZ3/0p8EHchBXT22UjOjKdeX+fmJJOLpQyLeUsi9y1QIYHUXMUYu9tDubJKJz2rTjAVu3/BLV/nn7BJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748627465; c=relaxed/simple;
-	bh=qKEHTJmkgISJ+di64Xg84D1hR6RLj2RPWKKSH2rcvPA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TVvNhO2iBoQLD0ySj5hEK/oQTVQBHVTU0iyIWuacWfYfL5Mo+dZenNZDDhWHJZB1SQ4/4ZlIWqyVY3I0WwtaMNl2fdNU+S6YBxRSEbjx1ihzvvcmJcMJLgMYeOM92H46nQWDCzuNVuenvoLC6COweVjZhGA0IUMjE9vInFTCgDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=W7lEtrD/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54UBKTfN006941
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 17:51:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	iQNFg2RO+LuLXzx8pk9NGhNaS/HpbKAbCtu9O+9m2sY=; b=W7lEtrD/CG96Vxv3
-	GiGPxu0NcoUR+0qAucrXHsDZLUtNGOWZI5hvunacTBqazvCX6E7EZ3qZFyl9FgFh
-	nIr7efHmJKJU0Yz3ZxlofhBdxURc/wCcyEL74ST+mY7qQLAFm50RGfzsf43gqZJQ
-	QgCLTo8SXpOxjARtnRrEYSd4LJO3dxVm2yIK8A0lrC3aa6WvVE59F0PNVprr4ZTi
-	MHhaXpz7lRNni9UXYOUngJW05NddlRJxe8J31JLv0x5+QfGgjSaLbr5++SmzWLVw
-	aujBuH69n+w/zjOOqv9PWxXwTtXQGVl3uO2tngANh4NUW/U5zzD07TX3tQbIObPg
-	NlaejA==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u3fqj5uu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 17:51:02 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-742c7227d7dso1815107b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 May 2025 10:51:02 -0700 (PDT)
+	s=arc-20240116; t=1748631812; c=relaxed/simple;
+	bh=4vbQ5jCAW+jtK9mrlFfnJQg4whCgQlT1OkkWoaglvgY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=P4XNxSpohyvBk+uPwpmKzrzNkg3uvzPwfUQTfAjJ3KVhPbRA3/usOm8Zp4v8NLzFbAM48uJ84s2CK3YP+UUwwm6hEK5YnLWazNbOhavJwYFfsEhNLmbkc2uXkps9itQLRn0c3Q4Ad06kfenJtDU4bsO5xhAFSETwPzYNTGb2YXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NkPsHNvm; arc=none smtp.client-ip=209.85.166.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3dd7553c7e3so7592995ab.3;
+        Fri, 30 May 2025 12:03:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748631810; x=1749236610; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LWbYSIdO62OOJiQnecBL9sTo7G5vpYkrti7/TBlHzU8=;
+        b=NkPsHNvmx6/16LPpfho26rTeaOI55PbRkTxfxtNI5hLji1i+3dLpW5TkIimanlY9aY
+         XeXeYcUmFPN2oukMV2pslYe9x0KF8iQ33NA5rscQM7ePHifCCPry4M1cQjh0ynRoJmPQ
+         /pw4+3tzzudMrjbNiZWnkU515YrfIklCz9pv9frDpL4XZCUznrh2ZxgRE0xsHBnsFr9E
+         pGFh70DVxO7KZIuRArkpM42kljoiT701qQZzfZ/3GphG2jaM/r29G6LWSYOINKc6unA1
+         A0QcLNo9jM/Lsic3jqCq9Hw9CR/iheJGVTUmm3K3VoxTlxOvwUhSRr6ljww4E8j8d8Vj
+         W0RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748627461; x=1749232261;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iQNFg2RO+LuLXzx8pk9NGhNaS/HpbKAbCtu9O+9m2sY=;
-        b=qCFbJk/8Gxj8vPCuvbDlY0CqTZhK8T4GJExfDvbbld6/NetcnVHCoGd6f6lIr7bDzI
-         Zb+nvjz+5ziqUgPptloc7iqm0vCu29JGCq5Jqm+gxyVFJkaq/d+yi8RYfJdc/U7QXZRP
-         J2//ZUw5ohnXw21WuIlqhZINDdhjjCw3byiVqztVYYoigB/wLrSo0fOCsjXZD4rEYa5c
-         Yjrb98KxszIVMLjrVL3Mpx019MUar/YEo/edEhxtX0UQDMzTUXRI9xpjlhC7bj/KahIg
-         CishHjC+0XLRHmZdPcophpj30HCvgD7LnjvQQEaJ+tQw9i+/c7/7nyIlLJfBggqvWGZU
-         HvNA==
-X-Forwarded-Encrypted: i=1; AJvYcCXUTDE8AWCjn9Q37iVN43cIJjQm2zZx+ovT34yfE1W6Y1TSMcGSczTCf5QNwsCKAe4kaNFeVhp4eVU0JSOE@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxz7dkermf1oo2tZEw/KYcaD0Zst8i2vwFctx3We1/uLtHsYTDY
-	O1u6j21deBj8xLga4plJRO7BXVOdM06aLqZG5tNjVs9mVfFxaUby64hI/vqYTrCEbHyLuQm0lRK
-	8e98lUcv35qL8xqcinrtL7tcJC7qpIChnsyaaqNaFqde6ER+V/xTS6roeIi20wmSTfkRF
-X-Gm-Gg: ASbGncsT4F4lfQ9v2RNYF/Momhh5sJd6xpdO3NcFY/+jm6AKr7qAubqp/VhfQUBJbFN
-	CISAL9563gY/BqIPfp+hGp7Lyz1MLpC/BO2BFjsAnF7ThwDSV5vVeMpkHlJWAdb/6lyFpgh8RQI
-	yLB8dNa1wp7XZ5M+2dLOkJeN+0WP/u2LbVNXypCXvYt1w5KL2ngJN8wTEkl01H6/hGvTs1oqHmC
-	mY9Od4iN43FYx63SJI0DWx/lAZMvb1vcRxVLGzCsC9fkGciCYgsH+K//BxZQ+us5LuPlD/VJiEG
-	WICmFMGgVqzCOIRFPYq4ny88wNPHMdFsCYwvuF4Cp0v1ou0S1CI2biyMRqje0PcXIX7X2A==
-X-Received: by 2002:a05:6a00:2e04:b0:73f:e8c:1aac with SMTP id d2e1a72fcca58-747c1a48890mr4146208b3a.2.1748627461441;
-        Fri, 30 May 2025 10:51:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH0/DxhVchUsP3GUuQR+rz8hEa1EHtonG4n9LVY8g10f4TVSCbT7ApT+IY723JWbTdA27KRXA==
-X-Received: by 2002:a05:6a00:2e04:b0:73f:e8c:1aac with SMTP id d2e1a72fcca58-747c1a48890mr4146178b3a.2.1748627461002;
-        Fri, 30 May 2025 10:51:01 -0700 (PDT)
-Received: from [10.134.71.99] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-747affafbedsm3439014b3a.102.2025.05.30.10.50.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 May 2025 10:51:00 -0700 (PDT)
-Message-ID: <3b5fa433-e3a3-4c77-b502-096576ecc2e3@oss.qualcomm.com>
-Date: Fri, 30 May 2025 10:50:58 -0700
+        d=1e100.net; s=20230601; t=1748631810; x=1749236610;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LWbYSIdO62OOJiQnecBL9sTo7G5vpYkrti7/TBlHzU8=;
+        b=NM3k29u+YgDkBs0XsXG8PUGLwnPp9iQK1RQKXlrJidQ0dJNXMhS/CRdAlM6wW0gy0o
+         S9hHiW//f1Jt/uC5MtmSAjC8RS2oy9Zh0ZvRzZC6IHja5trEkxazPWkMcpFwb/5S2E6c
+         aYWSZeqztB4hsCxb+agPaKmaT9/xnlpdvT3+5RBitTrqpAaVdAD7WgLoItsRCWN3zwdo
+         kLfk8OA1To9Iu0g+lMPSGE7I4TOy6WfEOQHrx+UPlXDkI6CHiwSSKM1oKvPNylXXZYPH
+         CxRzddNEbyFYB7l40D5bBsxHqbAao6qKqWVIm/Yr/OQep9RECQ7Fw6xTAE2OtXR/8nuQ
+         psEg==
+X-Forwarded-Encrypted: i=1; AJvYcCULuoZJQ+AZj8AumO0sVWgj5llKdZV6hbluLpx2Gv4R17l50gZk1Wrfk1h7ydfwIEAA2MNKpHLaXe7Rqm44jA==@vger.kernel.org, AJvYcCUiJYa7XV8ipKrnWlJEczTqoZZHcSsSg6d62HgKxTv1ZDRzRFjQwiA3UJvJaLG40XXiasaGOLldEWIwSjy2@vger.kernel.org, AJvYcCXCfWJ+81JURWNLhMT9Hd90iysBfvhckaXeOOo9x/pf30tCYyt2dgWomZ0fZxqKmsyTBmJhJDwsMaUa@vger.kernel.org, AJvYcCXQmvp4jH3Hvde8GYjkM7JvCaj0yosGlopqwZVuXjxn6GAt5KRx2BJrq6Dswp4XwW5lLtdn4t+IG50f@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZN++owd11BqJeUx39+Pt+/CDGNTh9OrlqVAWLwLIYs1Ar7+vh
+	axyjnXIOGg809dkwBUyfMesVlbUvfujtL+n5pdFkilmcQsC8ZCnucpw+dtWmCMNBOTi08Nrtvyj
+	5qOsCGzysLL5L4nPQqLp/GhUqw0YR+9I=
+X-Gm-Gg: ASbGncts2ul4tsR6ZMZ4X1uHU1F7V9bGHs8UfRaJ9UKKPyVEOW0kRBKeRSiqky3r/ti
+	0uAcaf5lpMBLbf1CcR+aX9x137OyeYJjr0zpdcbwe4iMdaW38HpMLPuDIayyrgXazaydt9y2qZj
+	OKHCICYMfLUsGfcKPJMOhwhqg25jXcKBGt3HzR4ET0EJQMeVpDgRdJLSlAos/V9TmTV8Zw1RXjJ
+	rM=
+X-Google-Smtp-Source: AGHT+IH2zORH2vRySz0CN9TNdgBEf5yVzy1SECE5QTG2S2acXnAdLOUPR0LiQ0ef8xzgUUWbKZrn52sT/HqDiLS85eE=
+X-Received: by 2002:a05:6e02:184e:b0:3dc:7c5d:6372 with SMTP id
+ e9e14a558f8ab-3dd9c9ae2abmr31711735ab.7.1748631810172; Fri, 30 May 2025
+ 12:03:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] drm/msm/dp: ST_DISPLAY_OFF hpd cleanup
+References: <20250524-tb16-dt-v4-0-2c1e6018d3f0@oldschoolsolutions.biz>
+ <20250524-tb16-dt-v4-5-2c1e6018d3f0@oldschoolsolutions.biz>
+ <g7vlyqma6ow6tdsaqt2rfwvblxqwbqlwmoueio7i4vqvjy76kw@5bz4g33pq4t7>
+ <CAMcHhXoYkQru_0n5siMGGkTcHu8yWRZWfT4ByiD8D0ieZHF+wQ@mail.gmail.com>
+ <vwoixgdyjjzcjlv4muwrzv7wztnqyidtj7ghacgkjg6hgkkyl7@ji53bhiltaef>
+ <CAMcHhXqDFuo+x99KOK0pQFj-FyTdQoZS_JvehNE2AC_JSoQ2gQ@mail.gmail.com>
+ <rvyfkow43atquc64p6slck6lpfsot67v47ngvfnuhxqo222h6k@kdvbsmf3fwsr>
+ <CAF6AEGvr_foMVwaE_VSVWLT50cbGi8i3UGwo2e=rORD-1JmTmA@mail.gmail.com>
+ <152f5150-30b0-400c-9816-13e4710a4156@oss.qualcomm.com> <kbmqr7gjkd72hgorbhbwb7ttvmecfbb6pg72st7zwt5ogxju6p@itycxk6vriy5>
+ <CAF6AEGsTtEA=So1CDhvg8H5+Z-RJ9OnhgSzDoa+zkWSPO3cvnA@mail.gmail.com> <CAO9ioeWk1-dUQYDS1oQNc-QaRu5MG_C=JRx6RPiFE-OQjB7g3g@mail.gmail.com>
+In-Reply-To: <CAO9ioeWk1-dUQYDS1oQNc-QaRu5MG_C=JRx6RPiFE-OQjB7g3g@mail.gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Fri, 30 May 2025 12:03:18 -0700
+X-Gm-Features: AX0GCFuyrh8MEvD6KG3oIYX8kJg14cADV2Gw-IJWO2LGxnsfrU4hztAz5uwEVuA
+Message-ID: <CAF6AEGtvvu=cBqtYUm1k6+N0L26sRz6nehOmC=5OxxZMvTngog@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] arm64: dts: qcom: Add Lenovo ThinkBook 16 G7 QOY
+ device tree
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>, Johan Hovold <johan@kernel.org>,
-        Bjorn Andersson
- <quic_bjorande@quicinc.com>,
-        Abhinav Kumar <abhinav.kumar@oss.qualcomm.com>,
-        linux-kernel@vger.kernel.org, Yongxing Mou <quic_yongmou@quicinc.com>
-References: <20250529-hpd_display_off-v1-0-ce33bac2987c@oss.qualcomm.com>
- <CAO9ioeUi59PNmRSYzyVbxcifhPKxYbtW9EuouOVXkT84SPOuwQ@mail.gmail.com>
-Content-Language: en-US
-From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-In-Reply-To: <CAO9ioeUi59PNmRSYzyVbxcifhPKxYbtW9EuouOVXkT84SPOuwQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: yzFK35K5PMeI0i0lV2FcVNl0ddplBB6m
-X-Proofpoint-ORIG-GUID: yzFK35K5PMeI0i0lV2FcVNl0ddplBB6m
-X-Authority-Analysis: v=2.4 cv=X8FSKHTe c=1 sm=1 tr=0 ts=6839f006 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=e5mUnYsNAAAA:8 a=EUspDBNiAAAA:8
- a=ryANHwUXtzQLBLkujfsA:9 a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
- a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTMwMDE1NyBTYWx0ZWRfXyejiWqU6gL4F
- Ma+MHVp5Iah9GuxOI/FFeC5CIgiEa4UtBjQwG6F4Mpl2IbqLyOnUvf4pdZWzKh0yOetetH9ag1Z
- 92miMZ5d12YjrycGGZahDXNqGDVtbtUQHBQ5uIe41BLfG0I5zExfN1QIfZ4W3coj3IluTCwqToR
- /S51CsHW6Y0NZPvEAkd67FndQdlmTeIiYjBuTlcPKDqTJ5tt+HdxhHRu3nJO4baMjH7KdWQh4Ls
- lHccwF82GjzgfyuHZLTDaVGTs4Ge67ERkRiIJFu9BSvFdn10J1SkgKSURpnd0y/0+M4JaMVaDbP
- MX1A6fmOc6Wi5U7Bif1Y+fdji9fa5o0gnO0q1+eRkDPBQXY3kb9AQVJassj3OAZ3MHn6TeSKdrg
- bvwDf+zlgrbJoY1hkOLZpTg1s3VURkEyHm6Cd1UwJBG0YHheP8OWrhlD9GPu6t6ZaWGYGfqP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-30_08,2025-05-30_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 phishscore=0 bulkscore=0 mlxlogscore=999
- mlxscore=0 clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0
- malwarescore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505300157
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>, jens.glathe@oldschoolsolutions.biz, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Matthias Kaehlcke <mka@chromium.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Douglas Anderson <dianders@chromium.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
+	linux-usb@vger.kernel.org, dri-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, May 28, 2025 at 10:42=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Wed, 28 May 2025 at 19:50, Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > On Tue, May 27, 2025 at 11:18=E2=80=AFAM Dmitry Baryshkov
+> > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > >
+> > > On Tue, May 27, 2025 at 12:55:06PM +0200, Konrad Dybcio wrote:
+> > > > On 5/26/25 5:28 PM, Rob Clark wrote:
+> > > > > On Mon, May 26, 2025 at 1:36=E2=80=AFAM Dmitry Baryshkov
+> > > > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > > > >>
+> > > > >> On Sun, May 25, 2025 at 09:43:36PM +0200, Aleksandrs Vinarskis w=
+rote:
+> > > > >>> On Sun, 25 May 2025 at 15:33, Dmitry Baryshkov
+> > > > >>> <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > > > >>>>
+> > > >
+> > > > [...]
+> > > >
+> > > > >> Yes, please. Don't set okay status for the GPU until it gets ena=
+bled.
+> > > > >
+> > > > > Drive-by: Shouldn't the dtb describe the hw and not the state of =
+the
+> > > > > linux kernel's support for the hw?  Ie. if bad things happen if w=
+e
+> > > > > describe hw which is missing driver support, shouldn't we fix tha=
+t in
+> > > > > the driver.
+> > > > >
+> > > > > (In the case of the GPU there is the slight wrinkle that we don't=
+ have
+> > > > > a gpu-id yet so there is no compatible in the dtb yet.)
+> > > >
+> > > > My two cents are that it's okay to enable it, at least in this case=
+..
+> > >
+> > > That would most likely make display unavailable as DPU driver uses GP=
+U
+> > > as one of the components.
+> >
+> > Hmm, perhaps we should allow the gpu to probe, but just fail to create
+> > priv->gpu, similarly to how we handle missing firmware?
+>
+> Ack from my side. I'd also like to remind you about my split-GPU-from
+> display series.
 
+True.. although if possible it would be nice to not depend on extra
+non-default config for this scenario.  So I'd prefer to fix it in
+addition to your series, but have been a bit short on time for the
+last few days ;-)
 
-On 5/30/2025 9:05 AM, Dmitry Baryshkov wrote:
-> On Fri, 30 May 2025 at 02:15, Jessica Zhang
-> <jessica.zhang@oss.qualcomm.com> wrote:
->>
->> HPD state machine in msm dp display driver manages the state transitions
->> between various HPD events and the expected state of driver to make sure
->> both match up.
->>
->> Although originally done with the intent of managing userspace interactions
->> and interactions with compliance equipment, over period of time,
->> changes to this piece of code has become quite difficult to manage.
->>
->> Although, unwinding this logic will take some time and will be spread over
->> various changes, to start things, this series tries to get rid of the
->> ST_DISPLAY_OFF state as firstly, its really not an hpd state but a state
->> of the display overall. Coupled with this, there are quite a few checks
->> in the current code, the origins of which need to be re-visited OR are unclear
->> which seem unlikely or redundant. With DP controller on newer chipsets supporting
->> multiple streams, this has become increasingly difficult to work with.
->>
->> This series removes the redundant state checks and simplifies the logic as an
->> attempt to get rid of this ST_DISPLAY_OFF state.
->>
->> Note: This series has been tested with sa8775p and sc7180 devices with multiple
->> monitors and also multiple dongles with no noticeable regressions.
->> Both of these devices use native DP PHY though. Hence, if this series can
->> be verified on some devices with USBC-DP combo PHY with the help of the other
->> developers, that will be great.
->>
->> ---
->> Changes in v2:
-> 
-> The series is not marked as v2 though.
-
-Hi Dmitry,
-
-Sorry for the confusion -- had pulled the v1 [1] using `b4 prep -F` but 
-forgot to force the revision number to v2.
-
-[1] https://patchwork.freedesktop.org/series/142010/#rev1
-
-Thanks,
-
-Jessica Zhang
-
-> 
->> - Rebased on top of next-20250523
->> - Change atomic_enable() to return early if ST_DISCONENCT_PENDING
->>    instead of completely dropping the
->>    if (state != ST_DISPLAY_OFF && state != ST_MAINLINK_READY) check (Dmitry)
->>
->> ---
->> Abhinav Kumar (4):
->>        drm/msm/dp: remove redundant checks related to ST_DISPLAY_OFF in plug/irq_ipd handlers
->>        drm/msm/dp: Return early from atomic_enable() if ST_DISCONNECT_PENDING
->>        drm/msm/dp: replace ST_DISPLAY_OFF with power_on in msm_dp_hpd_unplug_handle()
->>        drm/msm/dp: remove ST_DISPLAY_OFF as a hpd_state
->>
->>   drivers/gpu/drm/msm/dp/dp_display.c | 19 +++----------------
->>   1 file changed, 3 insertions(+), 16 deletions(-)
->> ---
->> base-commit: daf70030586cf0279a57b58a94c32cfe901df23d
->> change-id: 20241202-hpd_display_off-6051aa510f23
->>
->> Best regards,
->> --
->> Jessica Zhang <jessica.zhang@oss.qualcomm.com>
->>
-> 
-> 
-> --
-> With best wishes
-> 
-> Dmitry
-
+BR,
+-R
 
