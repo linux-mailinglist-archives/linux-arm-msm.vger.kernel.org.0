@@ -1,162 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-59939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE5CBAC9895
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 May 2025 02:07:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7046AC9A93
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 May 2025 12:36:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E8E7D3AE865
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 May 2025 00:07:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2E8C3A661F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 May 2025 10:36:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05AD9380;
-	Sat, 31 May 2025 00:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22E56238D2B;
+	Sat, 31 May 2025 10:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SZ3WEEmu"
+	dkim=pass (1024-bit key) header.d=kuruczgy.com header.i=@kuruczgy.com header.b="R1LY447n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF1520EB;
-	Sat, 31 May 2025 00:07:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3306C1F03D4;
+	Sat, 31 May 2025 10:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748650039; cv=none; b=H1LXE46e8/lzCE1KzbGf4I5P1/Os/9Qt96fSkMQcVZtMACA2KaIF7SP8CBastOZOE9LNSD3I6uasjmvMbeA+EEpg5+J7QTSrlk06UXNMdL0U8g7+79e7O+zsGVqdwrwXX1yOAMn0tPdxbwjIZldbspnUyIa8LlHKfxdTxte3kSM=
+	t=1748687796; cv=none; b=YPV59PH7yTxspAj5yKdWZF1Uf9SECtyWQXBhHUnBqQwDZZxKm4Oke1ut28hSOOni4Cz8BZWWASAbNdeKzAKd/c/wTTxHrqY4Hy6uUxwyqZaLfGv5wa3WvvNHm14RtL2J7UiK7uKJeyBRfezFr8ZjgUFoAmFSk2hD1zFar2PmC04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748650039; c=relaxed/simple;
-	bh=6P2BOfkmq6SK+1DJGmrhFE0FP889wpKT8Pb6lR+FzAM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nlouQPGwOYNVq8LooOd/ZGqZ6JiCmDgzzmgKh/CrQciIhpdSlykMhgqRErFOkm1bsMXh6i7zjdFSfezDxl+MCtXGaqLrCReTETfkCatKaLQ7OUFBi5yp/UbT0byIPBnJjrGLFqOkPgd2gefdr3OrNuUc6nt/ubhvOnncphLYcFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SZ3WEEmu; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54UK5P9x031636;
-	Sat, 31 May 2025 00:07:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	R1DxtKSUm4YO/O6cfYrBMX3tv7BN7U6IHTFgw0lhgAw=; b=SZ3WEEmuu0uAC0t+
-	KHiDZfwsAagFasols/zHyQ82gitS+AAd7pSmHHMfGTfSjW5/vp1j3dAC5I9zblrh
-	7pFQAHAEPxHCEpKfB+8dn16okKdYTBguWT8rE/Ze4FFJB4V9TREo8WXSZKzrkKU+
-	As0YWK869gUjQ+iD8MqnBR6Uw27KqAWV0NuIwLilwMebBF2bvYA5dH+of3bcxE7d
-	pzQtc9PSJOkuoeCL+YDSLbK5XAIZtT3Sc/AB4DybOI2POcNfniwlOlwSGKqyFjF4
-	EvXa3F5GWD338ZuzQhu1BVctHPXy7KWoeoKbUM5nnd6B7ODHCUFGWpjk68FCK5hN
-	IVxeDQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46u6vk2srm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 31 May 2025 00:07:13 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 54V07DdG017063
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 31 May 2025 00:07:13 GMT
-Received: from [10.253.36.123] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 30 May
- 2025 17:07:08 -0700
-Message-ID: <05ccb3ce-1954-4a6c-8cfc-edc8313e9875@quicinc.com>
-Date: Sat, 31 May 2025 08:07:06 +0800
+	s=arc-20240116; t=1748687796; c=relaxed/simple;
+	bh=LCCWL2kDcC71cBm4psAu8hEsXTmwFcOHqF7dcs3bdUA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KQh+LonepRcEsaEUt2ephL5cT9Py2Lbn9zVgmmo+qwJX0RLEaJWTP/zLWdwH/ET4uG9/CtY9TrNb6y9WXMIMCrQKmaUu47R2FblHC5/xGuLrPJmC+2HS77ys9z+aCMy/UX+8uBEyOM3P49FDgOF5dfx3S1Q8bPyFZ2aWmAxaLuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kuruczgy.com; spf=pass smtp.mailfrom=kuruczgy.com; dkim=pass (1024-bit key) header.d=kuruczgy.com header.i=@kuruczgy.com header.b=R1LY447n; arc=none smtp.client-ip=91.218.175.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kuruczgy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kuruczgy.com
+Message-ID: <f2e0f1da-c626-4cf0-8158-8a5805138871@kuruczgy.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kuruczgy.com;
+	s=default; t=1748687790;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=UxENrXFiNdrr2zkChFJJEF8ySg4LaGGh/I5I68/5WaI=;
+	b=R1LY447nICiWNxc1AeI717EBaqxuqxidlYGclnrwaFfXxxy7JHZSSb2HkdRUZnj0JNGeki
+	IjULbd61t+yeNxq9FSjgiQQSpKC8tjQqFgA0ngZyh8MRSXM5EiZO8rew8BIWgjKtwm7pak
+	7/w5e9hGRvi2wEVhnEYpcty4ey9N0pk=
+Date: Sat, 31 May 2025 12:36:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 3/3] arm64: dts: qcom: qcs615-ride: enable venus node
- to initialize video codec
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal
-	<quic_dikshita@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        Nicolas Dufresne
-	<nicolas.dufresne@collabora.com>
-References: <20250530-add-venus-for-qcs615-v8-0-c0092ac616d0@quicinc.com>
- <20250530-add-venus-for-qcs615-v8-3-c0092ac616d0@quicinc.com>
- <qeuxv2mpnnsieygdwvsb63k4n53tnc6yekiv2wels4jjwwpxf3@wutnfkefi7yj>
+Subject: Re: [PATCH v2 5/8] power: supply: qcom_battmgr: Add charge control
+ support
+To: fenglin.wu@oss.qualcomm.com, Sebastian Reichel <sre@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
+ David Collins <david.collins@oss.qualcomm.com>, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ kernel@oss.qualcomm.com, devicetree@vger.kernel.org,
+ linux-usb@vger.kernel.org
+References: <20250530-qcom_battmgr_update-v2-0-9e377193a656@oss.qualcomm.com>
+ <20250530-qcom_battmgr_update-v2-5-9e377193a656@oss.qualcomm.com>
 Content-Language: en-US
-From: Renjiang Han <quic_renjiang@quicinc.com>
-In-Reply-To: <qeuxv2mpnnsieygdwvsb63k4n53tnc6yekiv2wels4jjwwpxf3@wutnfkefi7yj>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=UOXdHDfy c=1 sm=1 tr=0 ts=683a4831 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=QX4gbG5DAAAA:8
- a=COk6AnOGAAAA:8 a=fn3D7n7na-j4QsXFkkQA:9 a=QEXdDO2ut3YA:10
- a=AbAUZ8qAyYyZVLSsDulk:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: Fd3sYspjoHUdzUYZmKFbQ5lhkuufbabZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTMwMDIxNyBTYWx0ZWRfXyNmtBR/E8z1Z
- 99cleeQHqNMgjr2vYGvbHh3oIAvGTlTXETUtNm6MxJ385B8rXljs8azfJot52xB1rB/mUXH6+F5
- a7LWKKuO5nGJhfPUBnTRq88iYeLxj0CWh4WvGuMBr1T6VFFEIF/XuNrurvGzSvDEkGx/bmhVsX0
- DincYf8jMp+Ah6MR59VxRLzB/pGVNqOnDJYELgx2HHeH2w3B8yPEL8BFXsvQ2v5abMc22E/CtrC
- ACRDcIJqDqJSp8tU0x8scGKDFID5Ix5Z9rGxezLtr+lx8oHEAe7BvOIOfCg9apB8eGC0322NDXi
- 4v/DANsWvhl/YFneUYkXARToPmJmResG92reND60H+Ve97CqlTKIUpN2ltIIU4qLYF8YkCWEFw+
- RaparYTTX5lYOxgisdqJ7G8iCUVKnWQQN7RLaKWPxYD9PP8XAlZbBlDj29mEOccVTJXLsltN
-X-Proofpoint-GUID: Fd3sYspjoHUdzUYZmKFbQ5lhkuufbabZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-30_10,2025-05-30_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 mlxscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=919 bulkscore=0 malwarescore=0 impostorscore=0 spamscore=0
- suspectscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505160000 definitions=main-2505300217
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: =?UTF-8?Q?Gy=C3=B6rgy_Kurucz?= <me@kuruczgy.com>
+In-Reply-To: <20250530-qcom_battmgr_update-v2-5-9e377193a656@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
+> Add charge control support for SM8550 and X1E80100.
 
-On 5/31/2025 4:31 AM, Dmitry Baryshkov wrote:
-> On Fri, May 30, 2025 at 09:32:15AM +0530, Renjiang Han wrote:
->> Enable the venus node to allow the video codec to start working properly
->> by setting its status to "okay".
->>
->> Acked-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
->> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qcs615-ride.dts | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
->> index 2b5aa3c66867676bda59ff82b902b6e4974126f8..0686f5c10bdaf7ba3f522e16acd2107d25742dd9 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
->> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
->> @@ -338,6 +338,10 @@ &ufs_mem_phy {
->>   	status = "okay";
->>   };
->>   
->> +&venus {
->> +	status = "okay";
-> Does QCS615 work with existing qcom/venus-5.4/venus.mbn or does it need
-> another VPU firmware?
-yes, QCS615 works with existing qcom/venus-5.4/venus.mbn.
->
->> +};
->> +
->>   &watchdog {
->>   	clocks = <&sleep_clk>;
->>   };
->>
->> -- 
->> 2.34.1
->>
--- 
-Best Regards,
-Renjiang
+Thank you for this, tested on my Lenovo Yoga Slim 7x, the limiting works 
+well, I finally don't have to worry about leaving my laptop plugged in 
+for too long.
 
+One small thing I noticed is that after setting the sysfs values and 
+rebooting, they report 0 again. The limiting appears to stay in effect 
+though, so it seems that the firmware does keep the values, but Linux 
+does not read them back. Indeed, looking at the code, it seems that 
+actually reading back the values is only implemented for the SM8550.
+
+Anyway, this is just a small nitpick, this does not really affect the 
+functionality, and I would support merging this series regardless of 
+whether the read back values are always correct.
+
+György
 
