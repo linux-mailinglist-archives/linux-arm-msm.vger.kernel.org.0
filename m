@@ -1,80 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-59972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2792DAC9E1F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 10:55:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3D5DAC9E6E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 13:11:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 141AF3B8D5F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 08:55:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B03E51893653
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 11:11:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E89A1A23B7;
-	Sun,  1 Jun 2025 08:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB30D1B0411;
+	Sun,  1 Jun 2025 11:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O5rFh/D+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="exiX0NUf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2BC19F111
-	for <linux-arm-msm@vger.kernel.org>; Sun,  1 Jun 2025 08:55:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2E717BD9;
+	Sun,  1 Jun 2025 11:11:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748768128; cv=none; b=K3idRWu97nzA6xi73VC6MITVIacuZn8x43PdgMe/6hmh6Ji8MYh+Y9+khbkqk1qbNoo21bVmL7tPkq6ANo6z2gUWBJXPvb0iUh4D4SAClWhRN7znm71UJwrxgaHA23+XgLPZMpLsGUeXBlrRXFBqMUqbZE40M3K9lF3gBrVwUhg=
+	t=1748776284; cv=none; b=XB94iNwHrHBsM0WF/F6/HSsGZpjeU8/9Q0YpuXKJ5nwF8OurKmkEz0yFsvV3dOtq19P+mIN391wLZxuA8ze+S5/gn4eLkvuqgg7SrJTIbfzZq9mT0WIzjY8YR6JoV/xEcIpB0GMFklKd/+L2p9q8fjrkLPr5eBYbH1aCsFYGfL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748768128; c=relaxed/simple;
-	bh=ELjgw5x2DtWerFcTQqXF907NgsZU6jvJyml2IQA8WY4=;
+	s=arc-20240116; t=1748776284; c=relaxed/simple;
+	bh=CsKtKjy2VZl4a3WGzF4q9MTCWACsbPMydfnfJN381Jg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ISVPwFbWHCU0RIPWd8nyUmqc5SVluddw/uDwhHk1a77tJRu2eLbIm3XNxAdAcT2Y3atM4HqRZjz7V4jHn8Qlsk1vUqG1mnl+CTeBftaN59DumA/pOAfG32SecqbIZrfsLA5RlSuY1aMW6IIr9zoWKen6YHb4ae9J+5laylSrHYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O5rFh/D+; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a375888197so1721466f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Jun 2025 01:55:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748768125; x=1749372925; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=urRzCl5tjeEVqvqsmB0ZFW27RtQHVlLkSlE30TVPg+w=;
-        b=O5rFh/D+rALG98ZbdZ6oRPBTAFooRdoCdwRcchaRbDzfu7HGCB+uAZAisXZxAAJ8GP
-         x/KdzxEm3w7r3rMbiwnCGnUdV23d1KHBGNA7JSwYd7+OAvqWlAPsu2/PwXDPGIvmXRz5
-         jex4LfMuQM646zwYb/QE4sFCVh5NGn6n/lFOOOvR6SmKE4j0tavYpNi8GtzIy5QydFzd
-         n9/WxkkmMePcRmaY+nJkw7sXXoXNfFmoKN3f9SHiGGJlLLrDSPpHnmt8VC/PIDCn4UEK
-         ZceuJt8Cx8rwvZkOAzDYDVKd4xipQZWKsJMOFXyGFKXinlzhe3T+zWEf1LM/4LYkOW7s
-         ZWQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748768125; x=1749372925;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=urRzCl5tjeEVqvqsmB0ZFW27RtQHVlLkSlE30TVPg+w=;
-        b=DzkF4kzdH4u7h7aKmhAO+0cB8yj2gUPWY3iBXgI4lzWFECnyLhe6CQnTQtMQisjw4e
-         nwnYA677IKylaVCbsK3/+t3tCSUo3pYquxU4CGWSjsKdD1WuTZi9EhsmAYiz2FlhPIaQ
-         uCg0W5rY3+397oSODPU5l6mPBhdYpmhgBsIwQXvjXrHcZEyvLa8JQdFg80E8uLD/wslo
-         dpjGFtpeXIJXm1W2DyxXvB4M6RxMQPTZumPKas42UMHPcwn3E61SrJgpBW5sudVWmPXX
-         9641xqLjFoY1VvgiH40w4ds4v+DYs9uCStQtnce2mSCNcuWMprwXd6s+E7uzpXiZifvZ
-         YTSw==
-X-Forwarded-Encrypted: i=1; AJvYcCVyyY1/5WPr/0H6fPhRL6fhypqDkezZXUQKHRF0hgl18VuraiJMGZbgKay0xXrq+5RczAIjmeJWF22r5VA1@vger.kernel.org
-X-Gm-Message-State: AOJu0YyeGsKla7/geNEiiopqHEpJV6L843nwMA/J+dQE3ECOy2iyyb7d
-	gr2wpPx4+CfNoPK3VG+U5oFbg23Wq00ZsunDZWcqgfkuvTkIViePbEMuD+iQoe1sjkY=
-X-Gm-Gg: ASbGncu2MINMdIB+Pn2as5rvjghqOVQsWq4OQtmWNukvqDzmoszYsk5BfMhvlcQ3cIM
-	GfJI2MJwr+x4RDP4L8tWVSAAhVi1s4cCFe+OoBC37+BMlYlTlWAjsfJl/uJ+uVoarcTt0/sdiYi
-	KuHgleHx5l6ACW5hdd+HDW5rasUbxKZjxmNk5KzoQGkaLwoVTbmWER2kF+g0ndtaBUHulB3txfb
-	y2Mqk+qGCrPpRkiS4rI0pFP4/H5osWA5uCwBL8QCiSR1kRa+a1CKoWST53vD3JLH8nxPXK1GZG0
-	pEIKoEVpyFp8ZtAoEVhglSSxlfXvLDe3AB1sShTmcKrMvhRA+VZiX/bu/BKzlGGxJudQIbl4rHG
-	JbNPWaCyzMgGI88IZ
-X-Google-Smtp-Source: AGHT+IHahLhAnxPmN4IhWgL434b77IHsNGngm83xj+pJjR8Vtxj5id3EpkncLZTwOFGIjcU0Fi9cNA==
-X-Received: by 2002:a5d:64ed:0:b0:3a4:e54c:adf2 with SMTP id ffacd0b85a97d-3a4fe161874mr3719813f8f.5.1748768124669;
-        Sun, 01 Jun 2025 01:55:24 -0700 (PDT)
-Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4f00972aasm11064413f8f.66.2025.06.01.01.55.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 01 Jun 2025 01:55:24 -0700 (PDT)
-Message-ID: <cd1e456d-82e3-48b5-9387-6d407ed7b051@linaro.org>
-Date: Sun, 1 Jun 2025 09:55:22 +0100
+	 In-Reply-To:Content-Type; b=kSrCo9PsbJ1VdXiumf/KH7fiDWH1I1FhfJiKHpafPxoIGtukR4YDDzEKSTyad2oL5l83adb+uGOf8JZgTELHcLK2U0IdBef/R/f5ZGvGpatCQW4tjeSm4/2I5ZIJJsbWJGv+AyhrXRQPbNuVUyHzLaugXIZUOf9kLtU4jSpcnCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=exiX0NUf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C55C4CEE7;
+	Sun,  1 Jun 2025 11:11:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748776284;
+	bh=CsKtKjy2VZl4a3WGzF4q9MTCWACsbPMydfnfJN381Jg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=exiX0NUfbT98F+74O8RgoZot8C82b303RQi9/qaMViBipaZThB/p+D8OWds9ojYaP
+	 oJ7boDG25sXqP9tZBvsS9RVw17hfOg7ExuqgTpJT40BWYpCLFRvpeZTqSZmL7JjJ04
+	 2YoVdguThQ55B+mVCU/j0Ipiab5gaVckai+ipl2HEo68qXcSFoco619nR1M1JUZPtp
+	 pBamJW/TZRjd/10zbbW9D6fGNdkxH8RSVRa2eybhrQ+dbk3CxAvASybXgfo4hBffCr
+	 ODpw0ukfR69VEZD30dHZCej+9a8QOwVwTNCs2FW6qUQs9jtWQMaSvREU7wpMorenIZ
+	 1/TkAPTHaUJoA==
+Message-ID: <f4d38bb8-f17f-464c-b406-b1fb908a975b@kernel.org>
+Date: Sun, 1 Jun 2025 13:11:16 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,62 +50,86 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: venus: Fix MSM8998 frequency table
-To: Konrad Dybcio <konradybcio@kernel.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Marc Gonzalez <mgonzalez@freebox.fr>,
- Pierre-Hugues Husson <phhusson@freebox.fr>, Hans Verkuil <hverkuil@xs4all.nl>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250531-topic-venus_98_tbl-v1-1-68e5523a39dc@oss.qualcomm.com>
+Subject: Re: [PATCH] arm64: dts: Add no-hpd property for all ti-sn65dsi86
+ bridge consumers
+To: Jayesh Choudhary <j-choudhary@ti.com>, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, neil.armstrong@linaro.org,
+ khilman@baylibre.com, devicetree@vger.kernel.org
+Cc: jbrunet@baylibre.com, martin.blumenstingl@googlemail.com,
+ shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+ festevam@gmail.com, cros-qcom-dts-watchers@chromium.org,
+ andersson@kernel.org, konradybcio@kernel.org, geert+renesas@glider.be,
+ magnus.damm@gmail.com, linux-arm-kernel@lists.infradead.org,
+ linux-amlogic@lists.infradead.org, imx@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+ dianders@chromium.org, linux-kernel@vger.kernel.org,
+ max.krummenacher@toradex.com, ernestvanhoecke@gmail.com
+References: <20250529112423.484232-1-j-choudhary@ti.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250531-topic-venus_98_tbl-v1-1-68e5523a39dc@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250529112423.484232-1-j-choudhary@ti.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 31/05/2025 13:22, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On 29/05/2025 13:24, Jayesh Choudhary wrote:
+> In the SN65DSI86 DSI-2-eDP bridge, HPD is not supported as of now.
+> But DisplayPort connector_type usecases does need hpd to be enabled.
+> In order not to break any platform from those driver changes, add
+> "no-hpd" property to all the existing sn65dsi86 nodes (that don't
+> have it already) as hpd is not being used there anyways.
 > 
-> Fill in the correct data for the production SKU.
-> 
-> Fixes: 193b3dac29a4 ("media: venus: add msm8998 support")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
 > ---
->   drivers/media/platform/qcom/venus/core.c | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> index d305d74bb152d21133c4dfa23805b17274426a5c..2bb514c322692475ed58198e17f906f894d81cf4 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -709,11 +709,11 @@ static const struct venus_resources msm8996_res = {
->   };
->   
->   static const struct freq_tbl msm8998_freq_table[] = {
-> -	{ 1944000, 465000000 },	/* 4k UHD @ 60 (decode only) */
-> -	{  972000, 465000000 },	/* 4k UHD @ 30 */
-> -	{  489600, 360000000 },	/* 1080p @ 60 */
-> -	{  244800, 186000000 },	/* 1080p @ 30 */
-> -	{  108000, 100000000 },	/* 720p @ 30 */
-> +	{ 1728000, 533000000 },	/* 4k UHD @ 60 (decode only) */
-> +	{ 1036800, 444000000 },	/* 2k @ 120 */
-> +	{  829440, 355200000 },	/* 4k @ 44 */
-> +	{  489600, 269330000 },/* 4k @ 30 */
-> +	{  108000, 200000000 },	/* 1080p @ 60 */
->   };
->   
->   static const struct reg_val msm8998_reg_preset[] = {
-> 
-> ---
-> base-commit: 2a628f951ed54c30a232230b5b58349d2a8dbb11
-> change-id: 20250531-topic-venus_98_tbl-5765675a4ce5
-> 
-> Best regards,
+> Upcoming driver changes that will break platforms if we do not have this
+> property in all the existing sn65dsi86 nodes that assumes hpd is disabled:
+> <https://lore.kernel.org/all/20250529110418.481756-1-j-choudhary@ti.com/>
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+That's obviously a NAK.
+
+Best regards,
+Krzysztof
 
