@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-59973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3D5DAC9E6E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 13:11:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 11B37AC9E82
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 14:46:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B03E51893653
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 11:11:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C42C31895664
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 12:46:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB30D1B0411;
-	Sun,  1 Jun 2025 11:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A4681C549F;
+	Sun,  1 Jun 2025 12:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="exiX0NUf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C+xpPOMJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2E717BD9;
-	Sun,  1 Jun 2025 11:11:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC172DCC17;
+	Sun,  1 Jun 2025 12:46:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748776284; cv=none; b=XB94iNwHrHBsM0WF/F6/HSsGZpjeU8/9Q0YpuXKJ5nwF8OurKmkEz0yFsvV3dOtq19P+mIN391wLZxuA8ze+S5/gn4eLkvuqgg7SrJTIbfzZq9mT0WIzjY8YR6JoV/xEcIpB0GMFklKd/+L2p9q8fjrkLPr5eBYbH1aCsFYGfL4=
+	t=1748781999; cv=none; b=YU0C1TqVaNs78Bp4/SgriEiWm1zP4zg3NOuohYQPLni2mV+EEjJENC7bwB5iEdHPKgx7DOSawcHU05wy/wrDscP98hdvUFcqR9EKpuEzEsllt1C32apC3hnSpn++zcHonUFR9QBD0QQAyzLF5EZhmfFUPvhXPCX5XS7BcAJWH2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748776284; c=relaxed/simple;
-	bh=CsKtKjy2VZl4a3WGzF4q9MTCWACsbPMydfnfJN381Jg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kSrCo9PsbJ1VdXiumf/KH7fiDWH1I1FhfJiKHpafPxoIGtukR4YDDzEKSTyad2oL5l83adb+uGOf8JZgTELHcLK2U0IdBef/R/f5ZGvGpatCQW4tjeSm4/2I5ZIJJsbWJGv+AyhrXRQPbNuVUyHzLaugXIZUOf9kLtU4jSpcnCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=exiX0NUf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C55C4CEE7;
-	Sun,  1 Jun 2025 11:11:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748776284;
-	bh=CsKtKjy2VZl4a3WGzF4q9MTCWACsbPMydfnfJN381Jg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=exiX0NUfbT98F+74O8RgoZot8C82b303RQi9/qaMViBipaZThB/p+D8OWds9ojYaP
-	 oJ7boDG25sXqP9tZBvsS9RVw17hfOg7ExuqgTpJT40BWYpCLFRvpeZTqSZmL7JjJ04
-	 2YoVdguThQ55B+mVCU/j0Ipiab5gaVckai+ipl2HEo68qXcSFoco619nR1M1JUZPtp
-	 pBamJW/TZRjd/10zbbW9D6fGNdkxH8RSVRa2eybhrQ+dbk3CxAvASybXgfo4hBffCr
-	 ODpw0ukfR69VEZD30dHZCej+9a8QOwVwTNCs2FW6qUQs9jtWQMaSvREU7wpMorenIZ
-	 1/TkAPTHaUJoA==
-Message-ID: <f4d38bb8-f17f-464c-b406-b1fb908a975b@kernel.org>
-Date: Sun, 1 Jun 2025 13:11:16 +0200
+	s=arc-20240116; t=1748781999; c=relaxed/simple;
+	bh=oxt0dRpZoMWY7/9yuEvcQFHFjOWxNYhOV7EHQiD0OjY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=bdilpViwJBt8Rs83fwfMVbZq4kX4eYf5H4ZVy4kT6o1imFafDs5B1ZkeMI/hqHZ/wM/2qNuuVoKmn0BOl3OEcSdNK/xRwjmBkYIhxOalJjhwAiVJXpTgvISCuuAOZSnveoMgWfYKvYSyFk0+2xL9Bgn+9I3t9OLOyAHlpkik2vU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C+xpPOMJ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5519icj9004887;
+	Sun, 1 Jun 2025 12:46:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vcUqOKL0vTuVkKBL/yc5p8RWXtlaMRnNnlV2XcmtCoM=; b=C+xpPOMJ8CqUcMn8
+	+d1Sr9jokRUYtZZe7HbRq07bkqd1yLG4pDlrbm7kEJ+ZKvTtkiGzdbq9qDQw1rE0
+	Oh/dnM6pjWTEiZget/X8GVfJGv4w7LWHZux5HKkmUhCg6dLHqri7IxbHKhEyub+l
+	Jybv5Btg8CETzXS6CVKUT8rrmiw20JJCb2dKgXPYG2TgKgi8KZT48O1GO4zjdspC
+	4jhzNO4AChQJ02VuQp3M24O0yP3soj2YhfO+YPkRzkBMnjUCjkxVtTdtFxInBBci
+	l2rcejLhOag0HAW/+xh64M+jAGLKQQAKT7zvHTrsq4I2t8NZtBt3mAvEMTzulJVK
+	OWN4Bg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 46ytkr2b7x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 01 Jun 2025 12:46:20 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 551CkJkR005405
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 1 Jun 2025 12:46:19 GMT
+Received: from [10.216.12.79] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 1 Jun 2025
+ 05:46:14 -0700
+Message-ID: <13b9cbec-3d7a-4deb-b356-685e73fdf2f1@quicinc.com>
+Date: Sun, 1 Jun 2025 18:15:07 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,86 +65,196 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: Add no-hpd property for all ti-sn65dsi86
- bridge consumers
-To: Jayesh Choudhary <j-choudhary@ti.com>, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, neil.armstrong@linaro.org,
- khilman@baylibre.com, devicetree@vger.kernel.org
-Cc: jbrunet@baylibre.com, martin.blumenstingl@googlemail.com,
- shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
- festevam@gmail.com, cros-qcom-dts-watchers@chromium.org,
- andersson@kernel.org, konradybcio@kernel.org, geert+renesas@glider.be,
- magnus.damm@gmail.com, linux-arm-kernel@lists.infradead.org,
- linux-amlogic@lists.infradead.org, imx@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- dianders@chromium.org, linux-kernel@vger.kernel.org,
- max.krummenacher@toradex.com, ernestvanhoecke@gmail.com
-References: <20250529112423.484232-1-j-choudhary@ti.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v4 2/8] ASoC: dt-bindings: qcom: Manage clock settings for
+ ADSP solution
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Liam Girdwood
+	<lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>
+CC: <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-sound@vger.kernel.org>,
+        <kernel@oss.qualcomm.com>, Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+References: <20250527111227.2318021-1-quic_pkumpatl@quicinc.com>
+ <20250527111227.2318021-3-quic_pkumpatl@quicinc.com>
+ <171b980d-9c50-4891-86dc-e30d712f5384@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250529112423.484232-1-j-choudhary@ti.com>
-Content-Type: text/plain; charset=UTF-8
+From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+In-Reply-To: <171b980d-9c50-4891-86dc-e30d712f5384@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Y1H1mF8QSNj4b_7P1l_KZtn-MGRCmcmz
+X-Authority-Analysis: v=2.4 cv=OMMn3TaB c=1 sm=1 tr=0 ts=683c4b9c cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8
+ a=DgfXYgLvbwjhQd-2fTUA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: Y1H1mF8QSNj4b_7P1l_KZtn-MGRCmcmz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjAxMDEwOCBTYWx0ZWRfX3xmqOMQJ+l4k
+ kxI9d7HiplJmVFkBwmrtYCPB/Ug1UIwBQcxZOvc+IhSAs9jLwXXzDyMRyVF2vJkJqiwlFWqHzo0
+ XZbpiw4aBIYTVy40MbP9KJX+kBMZK7WTAzHF0xyk2GIrpT1rwMkUMECuMmHU9idrUM/8+9jZiLk
+ rWsGsBEtu9qbp34wagjnAZ24jsZ0qIHuBKmDOGosqQny1aBJYVbt9sCtc/oSltd8w6Hx7CYjCWG
+ 9S0PnmPBVu0m76iIfjlxAteUUpnQGPAkHEDi+4GBTdi2Levrdx4HNqgzVMXaSCrYrIkAg1xOf2a
+ yZLmGNXWx0V6QA+HEewrEQ59B9phLt8ckCkmUtBCVzj6M8nV7cOLfy8RGl1sym9mKwif+RKQhKW
+ 15gAF5z/kj125WQ8xP6KdKwQnHTkzozx0QbHuakYasHvrUiQMJ72CG5VAsd5lqZKwu0kIr4z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-01_05,2025-05-30_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=999
+ malwarescore=0 adultscore=0 clxscore=1011 priorityscore=1501 mlxscore=0
+ bulkscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505160000
+ definitions=main-2506010108
 
-On 29/05/2025 13:24, Jayesh Choudhary wrote:
-> In the SN65DSI86 DSI-2-eDP bridge, HPD is not supported as of now.
-> But DisplayPort connector_type usecases does need hpd to be enabled.
-> In order not to break any platform from those driver changes, add
-> "no-hpd" property to all the existing sn65dsi86 nodes (that don't
-> have it already) as hpd is not being used there anyways.
+
+
+On 5/27/2025 5:28 PM, Krzysztof Kozlowski wrote:
+> On 27/05/2025 13:12, Prasad Kumpatla wrote:
+>> From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>>
+>> Manage clock settings for ADSP solution and document the clock properties
+>> on sc7280 lpass pincontrol node which is required for ADSP based
+>> solution.
+>>
+>> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>> Co-developed-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+>> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+>> ---
 > 
-> Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
-> ---
+> Nothing in cover letter explained what was happening with this patch.
+> Provide changelog under --- in such case.
+
+Ack, Will provide more info on commit text.
+
 > 
-> Upcoming driver changes that will break platforms if we do not have this
-> property in all the existing sn65dsi86 nodes that assumes hpd is disabled:
-> <https://lore.kernel.org/all/20250529110418.481756-1-j-choudhary@ti.com/>
+>>   .../qcom,sc7280-lpass-lpi-pinctrl.yaml        | 10 ++++++++
+>>   .../bindings/sound/qcom,lpass-va-macro.yaml   | 12 +++++++---
+>>   .../bindings/sound/qcom,lpass-wsa-macro.yaml  | 24 ++++++++++++++++---
+> 
+> Split patches per subsystem. Pinctrl is not ASoC.
 
-That's obviously a NAK.
+Ack
 
-Best regards,
-Krzysztof
+> 
+>>   3 files changed, 40 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+>> index 08801cc4e476..b1270124bfe3 100644
+>> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+>> @@ -20,6 +20,16 @@ properties:
+>>     reg:
+>>       maxItems: 2
+>>   
+>> +  clocks:
+>> +    items:
+>> +      - description: LPASS Core voting clock
+>> +      - description: LPASS Audio voting clock
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: core
+>> +      - const: audio
+>> +
+>>   patternProperties:
+>>     "-state$":
+>>       oneOf:
+>> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+>> index f41deaa6f4df..92b97c214060 100644
+>> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+>> @@ -78,10 +78,16 @@ allOf:
+>>       then:
+>>         properties:
+>>           clocks:
+>> -          maxItems: 1
+>> +          minItems: 1
+>> +          maxItems: 3
+>>           clock-names:
+>> -          items:
+>> -            - const: mclk
+>> +          oneOf:
+>> +            - items:   # for ADSP based platforms
+>> +                - const: mclk
+>> +                - const: macro
+>> +                - const: dcodec
+>> +            - items:   # for ADSP bypass based platforms
+>> +                - const: mclk
+> 
+> This device always receives same amount of clocks. Hardware is not
+> different if you decide to not use ADSP.
+for sc7280 clock handling only supports non-DSP based solution, macro
+and dcodec votes are placed using CPU-Powerdomains. Which are not under
+clocking properties. In ADSP based platforms macro and dcodec votes 
+should be placed from ADSP.>
+>>   
+>>     - if:
+>>         properties:
+>> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml
+>> index 9082e363c709..6a999ed484e7 100644
+>> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml
+>> @@ -35,11 +35,11 @@ properties:
+>>       const: 0
+>>   
+>>     clocks:
+>> -    minItems: 4
+>> +    minItems: 3
+>>       maxItems: 6
+>>   
+>>     clock-names:
+>> -    minItems: 4
+>> +    minItems: 3
+>>       maxItems: 6
+>>   
+>>     clock-output-names:
+>> @@ -59,12 +59,30 @@ required:
+>>   
+>>   allOf:
+>>     - $ref: dai-common.yaml#
+>> -
+>>     - if:
+>>         properties:
+>>           compatible:
+>>             enum:
+>>               - qcom,sc7280-lpass-wsa-macro
+>> +    then:
+>> +      properties:
+>> +        clock-names:
+>> +          oneOf:
+>> +            - items:   # for ADSP based platforms
+>> +                - const: mclk
+>> +                - const: npl
+>> +                - const: macro
+>> +                - const: dcodec
+>> +                - const: fsgen
+>> +            - items:   # for ADSP bypass based platforms
+>> +                - const: mclk
+>> +                - const: npl
+>> +                - const: fsgen
+> 
+> This silently breaks ABI. Third clock is macro.
+
+Ack, will check and update.
+
+Thanks,
+Prasad>
+> 
+> Best regards,
+> Krzysztof
+
 
