@@ -1,68 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-60000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13432ACA520
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 02:24:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 08D8BACA532
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 02:25:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4E6F2178A1A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 00:23:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C935917797F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 00:25:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02D093000AF;
-	Sun,  1 Jun 2025 23:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4032301CAA;
+	Sun,  1 Jun 2025 23:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fchr7UIQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SO0iHmTl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84C23000AC;
-	Sun,  1 Jun 2025 23:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962D9301CA1;
+	Sun,  1 Jun 2025 23:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820995; cv=none; b=CP5vP4eidZXsJ1MC1t0h2RMC56xK5xYv2cvIkPMLiiRTi6PwBrPe/F95YpRa1l34zHktLijC6lsnsVhzobF1++GAW0ejgd17x+vU2XRivmEnk/UDC9YMhhOUoO+Mz496UWHBlMznIBH9WmaOs2bVo1OHeXSHiXp2X5/+rWDLv9w=
+	t=1748821009; cv=none; b=jXxk/AUqtqLOuwCQJk47I9lSL4mLoO5YNwc68bTGCRVU8H94gcBRubaxaZqdLqPIBqyZVKOklEO2WkQX08ERBEZm+IV2FR2J/BlHwN/o18N4MJ9xQKh2NaAib7+oW5kgXCC0hDrY75V6BVTFmUQibFReEOJLombMAI0YPdLz65o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820995; c=relaxed/simple;
-	bh=1bmLc9Qyey5Ex46UhpEx/JLmp70NC+hph8v61Ea+hRQ=;
+	s=arc-20240116; t=1748821009; c=relaxed/simple;
+	bh=KbpjC7W+x7j7ZSi2UqKwT88V4htHhwJQ9LImURUUmbY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Pm6ggp7VBQQA9lyv4q2XkhMP4H2aUSS6EBm9k2Rb1hYk8fdb9So+5a4o52gMdnrPvdev/tN1sb/42ofapL12oCkseZLC04DBu4P5JJLl8oqcvyDJqNNbhVFz12p2DM8I4UFfGntiUoqjYwps887G4j/qhvw3IARSwOgEw96KiFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fchr7UIQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC52BC4CEE7;
-	Sun,  1 Jun 2025 23:36:33 +0000 (UTC)
+	 MIME-Version; b=QQlBP5Io8cuQPLrX1hnTWXXLSbx/VNwZZ1XsZWlvLpmEABQN9ouqdAhpA9G/aMMygi1CqAHQmy5Rh+ojCwWIx+RvvJ6VZ4MktP1VpB+skQgPLMG0maSA1sUSc2c2ZVhtNkjt34bcYQ436BEggHAwGX6cg1b/zUHqLadhaKFWV/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SO0iHmTl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BA5C4CEF2;
+	Sun,  1 Jun 2025 23:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820995;
-	bh=1bmLc9Qyey5Ex46UhpEx/JLmp70NC+hph8v61Ea+hRQ=;
+	s=k20201202; t=1748821009;
+	bh=KbpjC7W+x7j7ZSi2UqKwT88V4htHhwJQ9LImURUUmbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fchr7UIQz3g2hgQkVpnFMFZXy2coqMo784sou4/Biwdd7OMrkLc0tD6xm5o4gc4Xb
-	 DTvuF78FCxm8KdiK7y4evtgVkvbjwM2J7b27dMMTAfmeolsJUSf1Vj8ocd2WgR+LFk
-	 K/NLzXlpOPj9+rUEbb5JYywEa4yTQ8EcZP0c2yd2/YAqsjg0Jw6s9mVrydyCtjPaRs
-	 igQyBkRlZC1bGJHztsT6ar+MIbqhbpsz9IxsrWcVWfGlhg3mRuSf/vqGAu2W5k0InA
-	 pPk0h8WHaPtuZ7TGnmh1D0ehwFDshn02lDtIWzQKtezy1F5aB8hPw8Cdi03uOFVZoJ
-	 xe/YW64oVWHOg==
+	b=SO0iHmTleAkUtcFX4g2I9I7BDREalarBRJGobN06iPSPav+d6dhsDrid8OndFctOt
+	 Bx6EM/zU+Shs+JoXk0bf7/ozyOqS3qgleBYQvSna00/izB6riMc9ZjeEnbB+QwDY3f
+	 fFPWGjOre7/Gketc7t9zNQ2St3AIhSs86UBg9+ljjth0lqQNwr/sO9JjNV4TxckcOy
+	 i0gu+VvHBZOv6xn9f+YzNq2cl2YbzCrLMBN/iIm9SvrAnIGuE7BKGKUqIulZDVFJ1G
+	 Vb5g1Xxs1vETCAPWLYzkS7MozXBILfxk3iZQ1fjYvLPPDDtTD6QVOt7GYoAd7zpORS
+	 peJt0tTjlbmag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+Cc: Nas Chung <nas.chung@chipsnmedia.com>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	robdclark@gmail.com,
-	quic_abhinavk@quicinc.com,
-	lumag@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	quic_jesszhan@quicinc.com,
-	jun.nie@linaro.org,
-	jonathan@marek.ca,
+	quic_vgarodia@quicinc.com,
+	quic_dikshita@quicinc.com,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 57/93] drm/msm/dpu: don't select single flush for active CTL blocks
-Date: Sun,  1 Jun 2025 19:33:24 -0400
-Message-Id: <20250601233402.3512823-57-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 65/93] media: qcom: venus: Fix uninitialized variable warning
+Date: Sun,  1 Jun 2025 19:33:32 -0400
+Message-Id: <20250601233402.3512823-65-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233402.3512823-1-sashal@kernel.org>
 References: <20250601233402.3512823-1-sashal@kernel.org>
@@ -77,72 +71,75 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Nas Chung <nas.chung@chipsnmedia.com>
 
-[ Upstream commit e93eee524bb78f3ee4b78654d0083382f98b3d23 ]
+[ Upstream commit 8e172e38a623ce284baf2514f963b29e4d47c62e ]
 
-In case of ACTIVE CTLs, a single CTL is being used for flushing all INTF
-blocks. Don't skip programming the CTL on those targets.
+Avoid uninitialized variable when both V4L2_TYPE_IS_OUTPUT() and
+V4L2_TYPE_IS_CAPTURE() return false.
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/641585/
-Link: https://lore.kernel.org/r/20250307-dpu-active-ctl-v3-5-5d20655f10ca@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. ##
-Analysis: **1. Clear Bug Fix Nature:** The commit fixes a functional bug
-where CTL programming was being incorrectly skipped on ACTIVE CTL
-configurations. The commit message explicitly states "Don't skip
-programming the CTL on those targets" indicating incorrect behavior was
-occurring. **2. Small and Contained Change:** The change is minimal - it
-modifies only the `dpu_encoder_phys_vid_needs_single_flush()` function
-by adding a single condition check: ```c - return phys_enc->split_role
-!= ENC_ROLE_SOLO; + return !(phys_enc->hw_ctl->caps->features &
-BIT(DPU_CTL_ACTIVE_CFG)) && + phys_enc->split_role != ENC_ROLE_SOLO; ```
-**3. Hardware-Specific Fix:** The fix addresses a specific hardware
-configuration issue for devices with `DPU_CTL_ACTIVE_CFG` feature. From
-examining the kernel code, this affects multiple SoCs including SM8150,
-SM8250, SM6150, SC7180, and others - making it a widely impacting fix.
-**4. Clear Functional Impact:** - **Before**: On ACTIVE CTL targets, the
-function incorrectly returned true for split configurations, causing CTL
-programming to be skipped - **After**: On ACTIVE CTL targets, it returns
-false, ensuring proper CTL programming occurs - **Effect**: Ensures
-display pipeline functions correctly on affected hardware **5. Tested
-Change:** The commit includes "Tested-by: Neil Armstrong
-<neil.armstrong@linaro.org> # on SM8550-QRD" indicating real hardware
-testing was performed. **6. Matches Successful Backport Pattern:** This
-commit closely matches the pattern of Similar Commits #1, #2, and #4
-(all marked YES): - Small, targeted fix (line 377 in
-`dpu_encoder_phys_vid.c:377`) - Addresses incorrect hardware behavior -
-Has clear before/after functional difference - Affects critical graphics
-subsystem functionality **7. Risk Assessment:** - **Low regression
-risk**: The change only affects the specific condition logic -
-**Targeted scope**: Only impacts ACTIVE CTL configurations -
-**Conservative fix**: Makes the logic more restrictive (requires both
-conditions to skip programming) This is a clear hardware bug fix that
-prevents display issues on affected SoCs and follows the stable tree
-criteria for important bugfixes with minimal regression risk.
+**YES** This commit should be backported to stable kernel trees.
+**Analysis:** This commit fixes a legitimate uninitialized variable bug
+in the `find_format_by_index()` function in
+`drivers/media/platform/qcom/venus/vdec.c`. Here's why it meets the
+criteria for stable backporting: 1. **Bug Fix Nature**: The commit
+addresses a clear code defect where the `valid` variable could be used
+uninitialized. In the original code at line 157, `bool valid;` is
+declared but not initialized. The logic then uses an `if-else if`
+construct: - `if (V4L2_TYPE_IS_OUTPUT(type))` - sets `valid` - `else if
+(V4L2_TYPE_IS_CAPTURE(type))` - sets `valid` - But if neither condition
+is true, `valid` remains uninitialized 2. **Potential Impact**: Based on
+the V4L2 macro definitions, `V4L2_TYPE_IS_CAPTURE(type)` is defined as
+`(!V4L2_TYPE_IS_OUTPUT(type))`, which means these should be mutually
+exclusive and cover all cases. However, the bug exists because the
+original code used `else if` instead of just `else`, creating a
+theoretical path where neither executes. 3. **Minimal Risk Fix**: The
+fix is extremely simple and safe - changing `bool valid;` to `bool valid
+= false;` and replacing `else if` with `else`. This ensures the variable
+is always initialized and the logic covers all possible cases. 4.
+**Consistency with Similar Commits**: This fix is very similar to
+"Similar Commit #1" which was marked as "Backport Status: YES". That
+commit also fixed an uninitialized variable in the venus driver with a
+simple initialization. The pattern and impact are nearly identical. 5.
+**No Side Effects**: The change is purely defensive programming - it
+doesn't alter the intended behavior but prevents undefined behavior in
+edge cases. 6. **Compiler/Static Analysis Issue**: This type of
+uninitialized variable warning is commonly flagged by static analysis
+tools and newer compiler versions, indicating it's a legitimate code
+quality issue that should be fixed. The commit follows stable tree rules
+perfectly: it's a small, contained bugfix with minimal regression risk
+that addresses a potential runtime issue in the venus media driver.
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/vdec.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index d8a2edebfe8c3..d1d270dd88547 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -372,7 +372,8 @@ static void dpu_encoder_phys_vid_underrun_irq(void *arg)
- static bool dpu_encoder_phys_vid_needs_single_flush(
- 		struct dpu_encoder_phys *phys_enc)
- {
--	return phys_enc->split_role != ENC_ROLE_SOLO;
-+	return !(phys_enc->hw_ctl->caps->features & BIT(DPU_CTL_ACTIVE_CFG)) &&
-+		phys_enc->split_role != ENC_ROLE_SOLO;
- }
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index d12089370d91e..cb252a3e2a351 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -154,14 +154,14 @@ find_format_by_index(struct venus_inst *inst, unsigned int index, u32 type)
+ 		return NULL;
  
- static void dpu_encoder_phys_vid_atomic_mode_set(
+ 	for (i = 0; i < size; i++) {
+-		bool valid;
++		bool valid = false;
+ 
+ 		if (fmt[i].type != type)
+ 			continue;
+ 
+ 		if (V4L2_TYPE_IS_OUTPUT(type)) {
+ 			valid = venus_helper_check_codec(inst, fmt[i].pixfmt);
+-		} else if (V4L2_TYPE_IS_CAPTURE(type)) {
++		} else {
+ 			valid = venus_helper_check_format(inst, fmt[i].pixfmt);
+ 
+ 			if (fmt[i].pixfmt == V4L2_PIX_FMT_QC10C &&
 -- 
 2.39.5
 
