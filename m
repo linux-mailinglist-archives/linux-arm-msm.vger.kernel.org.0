@@ -1,155 +1,250 @@
-Return-Path: <linux-arm-msm+bounces-59981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21940AC9EEB
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 16:54:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 29E69AC9EF8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 17:22:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4E9A17A4E08
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 14:53:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 33A757A6C26
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 15:20:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 040041EB18E;
-	Sun,  1 Jun 2025 14:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE8B41E0DE3;
+	Sun,  1 Jun 2025 15:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FI1JHH6N"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DoMgpcIr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C289B1E7C06;
-	Sun,  1 Jun 2025 14:54:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1C91CEAA3
+	for <linux-arm-msm@vger.kernel.org>; Sun,  1 Jun 2025 15:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748789661; cv=none; b=DkVNZBg1p44vTHJMBkg19Yl+3dAcSKRK/ROiqKILERGrqw8Mm8Kh5gXvUX96e+7ADxTI+S6sE+BpfEWJMMt2aqrneeR3mncCtGOFVZlSauwIBa5lsTC6nXDYDU4OF7vitOciM7cD+UqfMK8/jgqQx0ugHb8Yu6knh8CX4YSUhzg=
+	t=1748791327; cv=none; b=Zi5WLRgTP8GCPvLCqUXI7RSkJs3blpd56Y/GhgBLCKtvh5QAKi4HvihJzMoXpZdrRnum8y71YatEI1ZYbVdWpUwABXawiUrQcGn6DRfymoVrs/GVNFBOmpbHnva8s85eEUR9MN2fjs/QIVSdKeH0lRsSI2f4sp9BRNYqFSnj1j4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748789661; c=relaxed/simple;
-	bh=0SVKNrwkWkmDrti3CG+Fax+U+qa5BJbvmazUGLksUNM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oCJgkZWpxdFnjpitc6jA2Qxc7ymcUqcwSoPFWHX7lBKZhgPuKyz09KTHyl09YFlq3pQ4etXRkEZ5Fa1GlVc9dxL84XLQIPv+srlntzNheIM2jcISd+BHFPTbrGedULWKA/A/r0upyC/9A/Kg49SMN9auV8zLrnhw4tap2jr58b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FI1JHH6N; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378DDC4CEED;
-	Sun,  1 Jun 2025 14:54:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748789661;
-	bh=0SVKNrwkWkmDrti3CG+Fax+U+qa5BJbvmazUGLksUNM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=FI1JHH6NleFOj/v0947iOZX0VyFgOkg7O+8MaNazxedSro5C4MGFmWSxjPF6cbh2c
-	 mto29fsiGl6ALQU/DoB7TMCOdCPC6ttY/MSY4GgH1x3NWGXDEVieUnEQ58Pv2gCwD8
-	 JBa2pSZgFy+b1HXWjrRXh/pBQJrcrFhqnpYFmMadpy2WA/8irDh7YnkVbfpU4UG4YR
-	 2O9gIOjXFNlsrqY0u1TzT3JfwSufSrGpm9isKNhHG+vaq04XJD3mdJ8hCChSQs7SxS
-	 xGYIEoOPBlqI5xYLpadWGDyVErNSUuEcFoll18C8ID4bNmIutWGsJxjfUdcJWvfQ3Q
-	 6ORocWZa/Rxlg==
-Message-ID: <6d6a7643-fad3-4d3f-b410-3eb6e033c29b@kernel.org>
-Date: Sun, 1 Jun 2025 16:54:15 +0200
+	s=arc-20240116; t=1748791327; c=relaxed/simple;
+	bh=ZWlsEbLLjAaCv4BuA8/UppFHgvPukzjx4SMXwLnm5Zs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XnmtxuskCC2+TZmP532zYrdmUjV8gsjNo0eYf5Wa6vlC0DfvNjMBrmdjXCtXq89JpPcYDHx9Rxyn8XMw4o0fTZLpqCqAbisJSAZrIfLRo2j+OSrnfor6BVvvZRzvPdyfyN7VS4f+UbKNWWRSQNIVSOL55UVm84OL5t/9VqwLCfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DoMgpcIr; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-23526264386so23420205ad.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Jun 2025 08:22:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1748791325; x=1749396125; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=eXW1/YM5zz+CF3xJy+mpJXWMMDbrJMLFqUUrCR702J4=;
+        b=DoMgpcIr3+j9jveptIHnnmhjxXlkroqXJsX5WHePW9RilVbjMJXQzeZq9W6MmNURQT
+         bHN8OBFkR5IZvBHHQHPp/8GHUllsV1xnG9jx84vBntsyRA2KUgJenoFQswm/JolTCIQe
+         8s/6T0PMBiqrsR1Hh7yc4mgQf67HRvW0pYu5m54Q4RB/9XlqUaWxUFQNeZ4HDqnmQhyr
+         lSFZfbLCOlpAOzcGG0Ydis21FhvGjcUuBQ0g09cTKGyyq22spNX1TZT3/5cVxpioZ8hP
+         ZoBXeGlu2XNNBKWiwYgrmRgH34s3eWeygnHbbTOSoQ3TRfDG5WTHrM1GJlCcJZe1ETLy
+         79oA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748791325; x=1749396125;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eXW1/YM5zz+CF3xJy+mpJXWMMDbrJMLFqUUrCR702J4=;
+        b=lLFheY/4BEJDep+1K23YawPIXKsm9Pc95JHtBS/FhPVU9H5aeLpQbA7bamur+HJjyV
+         ljUI7/FUtujraPTIKwj0l8RgO+z63jndCt2OA7MTZ25glXsaCjAbAepFxj+rMyrFqOQZ
+         fZEgwTSHVpgP593vo3FOnIt28QtjmKD/0toXKRYc5xBw8ff+KnoqOTgUsOFcWFSxQoxr
+         Nq38HpZ827o3b0jJKOKP6/5UkF0UZ7xVGbpf8if5NZ1mmtl+yVBTPu7PPjCuq7Zec71I
+         ucDXsQo01SZjqCeknXGKV0QYe9KXLaXNkROIaMiHa5QctEXVr2YKmgccBXqH3Tb26Jsq
+         pPfQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXwKne+dEeHn0kCGwhvm1Rko+xGmW/gWwhF3gKLFV5Ueii5BmNTxCNKOYN4elMt8S9qhtpgimFL4yVtUYjf@vger.kernel.org
+X-Gm-Message-State: AOJu0YygewcuKSvSwplPCApZ9R4+z6FznAydBF9aUxX1TWhW5JzSIoV5
+	GoRh7q3Tj2mvZL9OczOccZhVdwY63q0ufCOZ3iA5tLqpx8kOgX7E0Fi+ygoMOLjOEA==
+X-Gm-Gg: ASbGncsMLZW3vvO+SCFeNz9LxN3uezEaYqHI6DxF8MTWdCGAEJusL8Qd4ePcup8cowz
+	Ugx18xFay/VUGfD36Ker6sn+u+1cutSAezSdwg+SgYGgU5FqXobF8rlDqbgh+2ih1F1F0o/X5/Z
+	cNMljqXTt1KHBPgSRBMH0ylJGQfjY0V8g5PnPnhPvim+8f5eOuf4iaeQ1JzKhvinW9qT36kx3oL
+	vbuui8qVbS7K4HJvsdZ6DP2vWHZg9gBkDRo/Jr9rrcTrqj2ktkJyWIUs4I2aTNFNiLYNsiZh2Ug
+	YhAikknmZr4nGm14DJ/gDFlmSH2xpWBGqdqAPR3o2N8W9UqDaO4z0TD5xuSgSuI=
+X-Google-Smtp-Source: AGHT+IEJfc8pHNvgATHLpZnaIzj8JyRGFCc9pjej88kFaniJEBRrgyJVFmdFH5e4bqy8CSn/z6tt1w==
+X-Received: by 2002:a17:902:ec90:b0:234:be9b:539a with SMTP id d9443c01a7336-2355f9ef410mr75898605ad.40.1748791325354;
+        Sun, 01 Jun 2025 08:22:05 -0700 (PDT)
+Received: from thinkpad ([120.56.205.120])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23506d21f4bsm56574435ad.250.2025.06.01.08.22.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Jun 2025 08:22:04 -0700 (PDT)
+Date: Sun, 1 Jun 2025 20:51:59 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, Bjorn Helgaas <bhelgaas@google.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pci@vger.kernel.org, quic_vbadigan@quicinc.com, quic_mrana@quicinc.com
+Subject: Re: [PATCH v2 2/2] PCI: Add support for PCIe wake interrupt
+Message-ID: <543ocn4vecyjej26ynjggm6zwj7bmn27rd6c4foo36gvxeltma@6d5dfdoscxwm>
+References: <20250419-wake_irq_support-v2-0-06baed9a87a1@oss.qualcomm.com>
+ <20250419-wake_irq_support-v2-2-06baed9a87a1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/8] arm64: dts: qcom: qcs6490-rb3gen2: Add WSA8830
- speakers amplifier
-To: Prasad Kumpatla <quic_pkumpatl@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Srinivas Kandagatla <srini@kernel.org>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
- linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org,
- kernel@oss.qualcomm.com, Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-References: <20250527111227.2318021-1-quic_pkumpatl@quicinc.com>
- <20250527111227.2318021-6-quic_pkumpatl@quicinc.com>
- <c54b2243-fa0b-4de9-a780-e0fab795da25@kernel.org>
- <319ab5a4-6e01-4d57-8df1-73af1d48eb93@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <319ab5a4-6e01-4d57-8df1-73af1d48eb93@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250419-wake_irq_support-v2-2-06baed9a87a1@oss.qualcomm.com>
 
-On 01/06/2025 14:52, Prasad Kumpatla wrote:
-> 
-> 
-> On 5/27/2025 5:29 PM, Krzysztof Kozlowski wrote:
->> On 27/05/2025 13:12, Prasad Kumpatla wrote:
->>> +	left_spkr: speaker@0,1 {
->>> +		compatible = "sdw10217020200";
->>> +		reg = <0 1>;
->>> +		powerdown-gpios = <&tlmm 158 GPIO_ACTIVE_LOW>;
->>> +		#sound-dai-cells = <0>;
->>> +		sound-name-prefix = "SpkrLeft";
->>> +		#thermal-sensor-cells = <0>;
->>> +		vdd-supply = <&vreg_l18b_1p8>;
->>> +		qcom,port-mapping = <1 2 3 7>;
->>> +	};
->>> +
->>> +	right_spkr: speaker@0,2 {
->>> +		compatible = "sdw10217020200";
->>> +		reg = <0 2>;
->>> +		powerdown-gpios = <&tlmm 158 GPIO_ACTIVE_LOW>;
->>
->>
->> This will fail during runtime. You never booted your DTS.
-> 
-> No, its working fine, didn't seen any issues for far. Please help to 
-> provide at which point of line seen issue or provide more context to 
-> understand for me?
-Okay, so the driver uses non-exclusive GPIO. Well, this should be really
-fixed now. There is no excuse now "cannot work", because I fixed WSA884x
-so new DTS using this method should not be allowed. Non-exclusive in
-this driver is buggy and works by pure coincidence. You should see clear
-warnings and issues during probe, because working device WILL be reset
-by the other device.
+On Sat, Apr 19, 2025 at 11:13:04AM +0530, Krishna Chaitanya Chundru wrote:
 
-Best regards,
-Krzysztof
+Subject prefix should be 'PCI/portdrv'
+
+> PCIe wake interrupt is needed for bringing back PCIe device state
+> from D3cold to D0.
+> 
+> Implement new functions, of_pci_setup_wake_irq() and
+> of_pci_teardown_wake_irq(), to manage wake interrupts for PCI devices
+> using the Device Tree.
+> 
+> From the port bus driver call these functions to enable wake support
+> for bridges.
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/of.c           | 60 ++++++++++++++++++++++++++++++++++++++++++++++
+>  drivers/pci/pci.h          |  6 +++++
+>  drivers/pci/pcie/portdrv.c | 12 +++++++++-
+>  3 files changed, 77 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pci/of.c b/drivers/pci/of.c
+> index ab7a8252bf4137a17971c3eb8ab70ce78ca70969..13623797c88a03dfb9d9079518d87a5e1e68df38 100644
+> --- a/drivers/pci/of.c
+> +++ b/drivers/pci/of.c
+> @@ -7,6 +7,7 @@
+>  #define pr_fmt(fmt)	"PCI: OF: " fmt
+>  
+>  #include <linux/cleanup.h>
+> +#include <linux/gpio/consumer.h>
+>  #include <linux/irqdomain.h>
+>  #include <linux/kernel.h>
+>  #include <linux/pci.h>
+> @@ -15,6 +16,7 @@
+>  #include <linux/of_address.h>
+>  #include <linux/of_pci.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/pm_wakeirq.h>
+>  #include "pci.h"
+>  
+>  #ifdef CONFIG_PCI
+> @@ -966,3 +968,61 @@ u32 of_pci_get_slot_power_limit(struct device_node *node,
+>  	return slot_power_limit_mw;
+>  }
+>  EXPORT_SYMBOL_GPL(of_pci_get_slot_power_limit);
+> +
+> +/**
+> + * of_pci_setup_wake_irq - Set up wake interrupt for PCI device
+
+This function is for setting up the wake interrupt for slot, not for endpoint
+devices, isn't it? Then it should be named as such:
+
+	of_pci_slot_setup_wake_irq()
+
+> + * @pdev: The PCI device structure
+> + *
+> + * This function sets up the wake interrupt for a PCI device by getting the
+> + * corresponding GPIO pin from the device tree, and configuring it as a
+
+s/GPIO pin/WAKE# GPIO
+
+> + * dedicated wake interrupt.
+> + *
+> + * Return: 0 if the wake gpio is not available or successfully parsed else
+
+s/wake gpio/WAKE# GPIO
+
+> + * errno otherwise.
+> + */
+> +int of_pci_setup_wake_irq(struct pci_dev *pdev)
+> +{
+> +	struct gpio_desc *wake;
+> +	struct device_node *dn;
+> +	int ret, wake_irq;
+> +
+> +	dn = pci_device_to_OF_node(pdev);
+> +	if (!dn)
+> +		return 0;
+> +
+> +	wake = devm_fwnode_gpiod_get(&pdev->dev, of_fwnode_handle(dn),
+> +				     "wake", GPIOD_IN, NULL);
+> +	if (IS_ERR(wake)) {
+> +		dev_warn(&pdev->dev, "Cannot get wake GPIO\n");
+
+WAKE# is an optional GPIO. So the driver should not warn users if it is not
+defined in the root port node. It should however print the error log and return
+errno, if the API returns other than -ENOENT.
+
+> +		return 0;
+> +	}
+> +
+> +	wake_irq = gpiod_to_irq(wake);
+> +	device_init_wakeup(&pdev->dev, true);
+> +
+> +	ret = dev_pm_set_dedicated_wake_irq(&pdev->dev, wake_irq);
+> +	if (ret < 0) {
+> +		dev_err(&pdev->dev, "Failed to set wake IRQ: %d\n", ret);
+> +		device_init_wakeup(&pdev->dev, false);
+> +		return ret;
+> +	}
+> +	irq_set_irq_type(wake_irq, IRQ_TYPE_EDGE_FALLING);
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(of_pci_setup_wake_irq);
+> +
+> +/**
+> + * of_pci_teardown_wake_irq - Teardown wake interrupt setup for PCI device
+
+Same comment as above.
+
+> + *
+> + * @pdev: The PCI device structure
+> + *
+> + * This function tears down the wake interrupt setup for a PCI device,
+> + * clearing the dedicated wake interrupt and disabling device wake-up.
+> + */
+> +void of_pci_teardown_wake_irq(struct pci_dev *pdev)
+> +{
+> +	dev_pm_clear_wake_irq(&pdev->dev);
+> +	device_init_wakeup(&pdev->dev, false);
+> +}
+> +EXPORT_SYMBOL_GPL(of_pci_teardown_wake_irq);
+> diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+> index b81e99cd4b62a3022c8b07a09f212f6888674487..b2f65289f4156fa1851c2d2f20c4ca948f36258f 100644
+> --- a/drivers/pci/pci.h
+> +++ b/drivers/pci/pci.h
+> @@ -888,6 +888,9 @@ void pci_release_of_node(struct pci_dev *dev);
+>  void pci_set_bus_of_node(struct pci_bus *bus);
+>  void pci_release_bus_of_node(struct pci_bus *bus);
+>  
+> +int of_pci_setup_wake_irq(struct pci_dev *pdev);
+> +void of_pci_teardown_wake_irq(struct pci_dev *pdev);
+> +
+>  int devm_of_pci_bridge_init(struct device *dev, struct pci_host_bridge *bridge);
+>  bool of_pci_supply_present(struct device_node *np);
+>  
+> @@ -931,6 +934,9 @@ static inline int devm_of_pci_bridge_init(struct device *dev, struct pci_host_br
+>  	return 0;
+>  }
+>  
+> +static int of_pci_setup_wake_irq(struct pci_dev *pdev) { return 0; }
+> +static void of_pci_teardown_wake_irq(struct pci_dev *pdev) { }
+> +
+
+Provide stub for these APIs if CONFIG_OF is not enabled.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
