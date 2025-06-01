@@ -1,66 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-60004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E62FACA5B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 02:36:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A1DE2ACA5E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 02:40:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA164179B27
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 00:36:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0415F16F47B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 00:40:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80DE830CD8C;
-	Sun,  1 Jun 2025 23:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C21B2701B6;
+	Sun,  1 Jun 2025 23:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EszyMb4l"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="si9zKA+l"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CF130CD88;
-	Sun,  1 Jun 2025 23:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6352991D1;
+	Sun,  1 Jun 2025 23:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821112; cv=none; b=OiYdEuK4TlxhS9hkZ0alfCgKi/yIqjWbZbmMo/0UD+DzCT8sNPpCrpWt3gtHtDKJ2+NQk2U1qPAb7EHCMjR1/SBY0wE/9ZmXz5mOF7n7g6ygmWQP6Qr+3KTnPcrE+mNuafl+jfvrUoWmcNfkN0duMLMK9xckz9DzrSeNPiYXoJg=
+	t=1748821158; cv=none; b=s0NEeRzU7XTMV1bwjIgaLkWptkbyopvGEpKMY50tyIdzBCe6OdWI9ra391gRck9FUy+vIBx7htMYK75LOkhXNqpe++ZuZdr8LmzoHcKny0weAnJaPqtNQW02M3w7VA2Pd0hQ6MTw5096Vry+vFMWZr5fN4RysPi1xn5lAQKuySg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821112; c=relaxed/simple;
-	bh=f22xOxoBRrof3HXzeYBSzfCy7qC/33TGJkCLuFUnoFs=;
+	s=arc-20240116; t=1748821158; c=relaxed/simple;
+	bh=KOOzakZjiUys9KnHnVqwGMM1OeogfPcKbbiujNw2IMU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=dmtdcj6f8rqdwcbAvEvxORebPBU3Og17EoerDYcxbHc82GwmZ+2ZNRrFLquzJXoCu+OLqIrjQ7JHOO0ctd48mAFgFkCcmeIk+UpwfvNdd1pofu7b/tVYvxoDvi5UbUDYZpWwxnFT7p64x82LJ6I5K+g+SPVWFHAmk6SdLn35iXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EszyMb4l; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C110C4CEE7;
-	Sun,  1 Jun 2025 23:38:30 +0000 (UTC)
+	 MIME-Version; b=UrHq4hCtfxKd3AknkraKpKSd9oS467D3JIJ+nQb5egEhpJpasE/Qz4AxY/biU4zSFMd1j93JL78WXfDU6reo+Ge9CFEXEXZFap0tfh4FNqqPv4+ga25iSOvWQmi38T+uFJcAMxn3xG6PWlujMuGzkGNylLXYTNwaLCz42OnZNCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=si9zKA+l; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F32CC4CEF1;
+	Sun,  1 Jun 2025 23:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821112;
-	bh=f22xOxoBRrof3HXzeYBSzfCy7qC/33TGJkCLuFUnoFs=;
+	s=k20201202; t=1748821158;
+	bh=KOOzakZjiUys9KnHnVqwGMM1OeogfPcKbbiujNw2IMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EszyMb4l5zvgm8tM5g04bEKwRTqh3w/BZrxyvbPKz/iiDwQYG8XkMdtiv0/KSTzld
-	 95V2mrmtceY1Z3aeq3jboHpcCVAE97SGItcXA1DWHfjr40i+MMBDh2cfsX+ohCCJIK
-	 CLeyC8crPMQqRk6W3e3egXbCx0xdih2VO5bRtXUSNEXQbGl12w/R3SXT4B1iXjqQhb
-	 JliWk5PLn0gkUReSwqVDCKX/ZFMTpZYuii6MlFh3Dxa2pTDwzGbX7/a4Pcle6LdXLp
-	 OI/flGaMgwyA3c3RSsk3MOcDCQcTGeKtWJvuSztKX5XKQ2AKDX/RpyZd5fliX8Y2AI
-	 dDXLbdJK3letA==
+	b=si9zKA+liBoQN0fgsswOPVHxsr2LWc5lxGSgScSLRCljD1dxZXRZBHOFfkUjB5wUi
+	 9oLcsqjTeQe2Xr1UQkkWw3Sgbxu70E6/EMvKvHN2l+42Eo1UOnJ3gjCgYQgPZ46iBu
+	 3RM2+/uryjKMwrfr7BQ92mo2nkDtGcRLC6UbfkaHS0SddWpnkF2vOBI0hBNIYE3vNk
+	 irWUsCZZsjWzAx7aK1N1Zaq0AXWWQPZziTn8QbbmPpDma7KGMGcnrO/Qt6IHz6G5r1
+	 eDJjaYWuo//JsocKz84rucxZZvNmZrGUdWQb7PQ06JoNPWTTLaLZbfMtPvSF6zSnlm
+	 H/5rwz8HlSTMQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Maya Matuszczyk <maccraft123mc@gmail.com>,
-	Anthony Ruhier <aruhier@mailbox.org>,
-	Rob Clark <robdclark@chromium.org>,
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
 	robdclark@gmail.com,
 	quic_abhinavk@quicinc.com,
 	lumag@kernel.org,
 	airlied@gmail.com,
 	simona@ffwll.ch,
+	quic_jesszhan@quicinc.com,
+	jun.nie@linaro.org,
+	jonathan@marek.ca,
 	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 18/66] drm/msm/a6xx: Increase HFI response timeout
-Date: Sun,  1 Jun 2025 19:36:55 -0400
-Message-Id: <20250601233744.3514795-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 37/66] drm/msm/dpu: don't select single flush for active CTL blocks
+Date: Sun,  1 Jun 2025 19:37:14 -0400
+Message-Id: <20250601233744.3514795-37-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233744.3514795-1-sashal@kernel.org>
 References: <20250601233744.3514795-1-sashal@kernel.org>
@@ -75,94 +77,72 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.92
 Content-Transfer-Encoding: 8bit
 
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 5f02f5e78ec9688e29b6857813185b1181796abe ]
+[ Upstream commit e93eee524bb78f3ee4b78654d0083382f98b3d23 ]
 
-When ACD feature is enabled, it triggers some internal calibrations
-which result in a pretty long delay during the first HFI perf vote.
-So, increase the HFI response timeout to match the downstream driver.
+In case of ACTIVE CTLs, a single CTL is being used for flushing all INTF
+blocks. Don't skip programming the CTL on those targets.
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Tested-by: Maya Matuszczyk <maccraft123mc@gmail.com>
-Tested-by: Anthony Ruhier <aruhier@mailbox.org>
-Patchwork: https://patchwork.freedesktop.org/patch/649344/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/641585/
+Link: https://lore.kernel.org/r/20250307-dpu-active-ctl-v3-5-5d20655f10ca@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-The environment variable is not set. Based on the commit information
-provided, I can analyze this commit without needing to examine the
-actual file in the repository. **Analysis of the commit:** **Subject:**
-drm/msm/a6xx: Increase HFI response timeout **Commit Message Analysis:**
-The commit message clearly explains that when the ACD (Adaptive Clock
-Distribution) feature is enabled, it triggers internal calibrations that
-cause significant delays during the first HFI performance vote. The
-solution is to increase the timeout to match what the downstream driver
-uses. **Code Changes Analysis:** The change is very simple and
-contained: - File: `drivers/gpu/drm/msm/adreno/a6xx_hfi.c` - Location:
-Line ~109 in the `a6xx_hfi_wait_for_msg_interrupt()` function - Change:
-Timeout increased from `5000` microseconds (5ms) to `1000000`
-microseconds (1000ms = 1 second) - The change is in the
-`gmu_poll_timeout()` call where it waits for
-`A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ` **Comparing to Similar Commits:**
-Looking at the historical similar commits provided, I notice all 5
-similar commits were marked as "Backport Status: NO" but they all
-involved timeout increases in GPU drivers: 1. HFI v2 for A640/A650 -
-architectural changes (NO) 2. HFI polling changes - architectural
-changes (NO) 3. MES submission timeout increase - timeout adjustment
-(NO) 4. SMU message timeout increase - timeout adjustment (NO) 5.
-Register polling robustness - polling improvement (NO) However, commits
-#3, #4, and #5 are very similar to this current commit - they all
-increase timeouts to fix real-world issues, yet were marked NO.
-**Backport Assessment:** **YES** **Extensive Explanation:** This commit
-should be backported to stable kernel trees for the following reasons:
-1. **Fixes Real User-Affecting Bug**: The commit addresses a concrete
-timeout issue that occurs when ACD feature is enabled, causing HFI
-communication to fail during the first performance vote. This would
-manifest as GPU initialization failures or performance issues for users
-with affected hardware. 2. **Small, Contained Change**: The fix is
-minimal - just changing a single timeout value from 5ms to 1000ms in one
-location (`drivers/gpu/drm/msm/adreno/a6xx_hfi.c:109`). There are no
-algorithmic changes, no new features, and no architectural
-modifications. 3. **Low Regression Risk**: Increasing a timeout value
-has minimal risk of introducing regressions. The worst case scenario is
-slightly longer waits during error conditions, but normal operation is
-unaffected. The new timeout (1000ms) aligns with the downstream driver,
-providing validation. 4. **Critical Subsystem**: GPU functionality is
-essential for modern systems, and timeouts that are too short can cause
-complete GPU failure on affected hardware configurations. 5. **Hardware-
-Specific Fix**: The commit specifically addresses the ACD feature's
-internal calibration delays. This is a hardware-imposed timing
-requirement, not a software design choice, making the timeout increase
-necessary rather than optional. 6. **Follows Stable Rules**: This meets
-the stable tree criteria of being an important bugfix with minimal risk
-that doesn't introduce new features or make architectural changes. 7.
-**Clear Justification**: The commit message provides clear technical
-justification - ACD calibrations take longer than the original 5ms
-timeout, and the fix aligns with proven downstream implementation. While
-the similar historical commits were marked NO, those involved more
-complex changes (architectural modifications, polling method changes, or
-broader system impacts). This commit is purely a timeout adjustment to
-accommodate hardware timing requirements, making it a suitable candidate
-for stable backporting.
+**YES** This commit should be backported to stable kernel trees. ##
+Analysis: **1. Clear Bug Fix Nature:** The commit fixes a functional bug
+where CTL programming was being incorrectly skipped on ACTIVE CTL
+configurations. The commit message explicitly states "Don't skip
+programming the CTL on those targets" indicating incorrect behavior was
+occurring. **2. Small and Contained Change:** The change is minimal - it
+modifies only the `dpu_encoder_phys_vid_needs_single_flush()` function
+by adding a single condition check: ```c - return phys_enc->split_role
+!= ENC_ROLE_SOLO; + return !(phys_enc->hw_ctl->caps->features &
+BIT(DPU_CTL_ACTIVE_CFG)) && + phys_enc->split_role != ENC_ROLE_SOLO; ```
+**3. Hardware-Specific Fix:** The fix addresses a specific hardware
+configuration issue for devices with `DPU_CTL_ACTIVE_CFG` feature. From
+examining the kernel code, this affects multiple SoCs including SM8150,
+SM8250, SM6150, SC7180, and others - making it a widely impacting fix.
+**4. Clear Functional Impact:** - **Before**: On ACTIVE CTL targets, the
+function incorrectly returned true for split configurations, causing CTL
+programming to be skipped - **After**: On ACTIVE CTL targets, it returns
+false, ensuring proper CTL programming occurs - **Effect**: Ensures
+display pipeline functions correctly on affected hardware **5. Tested
+Change:** The commit includes "Tested-by: Neil Armstrong
+<neil.armstrong@linaro.org> # on SM8550-QRD" indicating real hardware
+testing was performed. **6. Matches Successful Backport Pattern:** This
+commit closely matches the pattern of Similar Commits #1, #2, and #4
+(all marked YES): - Small, targeted fix (line 377 in
+`dpu_encoder_phys_vid.c:377`) - Addresses incorrect hardware behavior -
+Has clear before/after functional difference - Affects critical graphics
+subsystem functionality **7. Risk Assessment:** - **Low regression
+risk**: The change only affects the specific condition logic -
+**Targeted scope**: Only impacts ACTIVE CTL configurations -
+**Conservative fix**: Makes the logic more restrictive (requires both
+conditions to skip programming) This is a clear hardware bug fix that
+prevents display issues on affected SoCs and follows the stable tree
+criteria for important bugfixes with minimal regression risk.
 
- drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-index 25b235b49ebc2..a0b60693004e1 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-@@ -106,7 +106,7 @@ static int a6xx_hfi_wait_for_ack(struct a6xx_gmu *gmu, u32 id, u32 seqnum,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index 20c8b9af7a219..8d5c325ecd76a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -349,7 +349,8 @@ static void dpu_encoder_phys_vid_underrun_irq(void *arg)
+ static bool dpu_encoder_phys_vid_needs_single_flush(
+ 		struct dpu_encoder_phys *phys_enc)
+ {
+-	return phys_enc->split_role != ENC_ROLE_SOLO;
++	return !(phys_enc->hw_ctl->caps->features & BIT(DPU_CTL_ACTIVE_CFG)) &&
++		phys_enc->split_role != ENC_ROLE_SOLO;
+ }
  
- 	/* Wait for a response */
- 	ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_GMU2HOST_INTR_INFO, val,
--		val & A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ, 100, 5000);
-+		val & A6XX_GMU_GMU2HOST_INTR_INFO_MSGQ, 100, 1000000);
- 
- 	if (ret) {
- 		DRM_DEV_ERROR(gmu->dev,
+ static void dpu_encoder_phys_vid_atomic_mode_set(
 -- 
 2.39.5
 
