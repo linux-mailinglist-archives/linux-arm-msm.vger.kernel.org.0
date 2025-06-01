@@ -1,126 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-59987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A435EACA0A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 00:43:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C83EDACA1C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 01:30:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8BFB63B2995
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 22:42:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E93EA3B5180
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Jun 2025 23:29:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3315E23AE60;
-	Sun,  1 Jun 2025 22:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFFDC25A2B1;
+	Sun,  1 Jun 2025 23:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H7asz3lM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bOcjzZtc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3C95674E;
-	Sun,  1 Jun 2025 22:43:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29FA2609CD;
+	Sun,  1 Jun 2025 23:25:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748817782; cv=none; b=BNDrysYXep1gW1I8uWTTt+/28EEqbTwm49DZ+jEHVrJ7B9pX7l+wyTHaLZoRavTwXneqoIzZH/0jX9BOpVLrxhlFdJO/Qj7lU/DyhrxLEP4c13ew+OiFKfJl5Yppw3UydX3cbaGDa2wmYKukziaAxwXOhmK/ENFUmncwOxn00XM=
+	t=1748820347; cv=none; b=FkkcUlZkmNfKEF0FMr5UnUDcUkN/Bcsv/4avPgo9eIL7aUjETH4lhYf9D3/+8n+iE4L+SoNTa0S6IAQvqZWN6xa4US3vrf0zLDaAJl8GAbCCZ+Vt8jwU3LYxlaBALbSSe+z0MJnSQ9Zml/RpYsnJtPhqpI4Cw0vXXWCA/3QYtS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748817782; c=relaxed/simple;
-	bh=Qh+NNgy2Htt9SRQ9f/fplZWpWNIBbv9cYrP6I+711Dk=;
+	s=arc-20240116; t=1748820347; c=relaxed/simple;
+	bh=VCcvcps+8wA1B2/uwnP2l3Lg12YiaCgutRuD3eJxutQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=UofXSl1jZpRrr+ilwSkxQbwyUuhsFbTqdfi9Iy4cVnW0d01tWj3I4Ew6+gTML65HOZs/fvyACz5ITFf4sK4isswFkhsVR54OcvPKZGNEqBXQOw0C8c9gLrOPz4OZsUE/TU4OVVfBez9Cor4ALQ0yEzeEdq1bo806r1QcNAQPy2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H7asz3lM; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a50956e5d3so397349f8f.1;
-        Sun, 01 Jun 2025 15:43:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748817779; x=1749422579; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4kWWXJ7FZ3GSQ1AVSLuDSr03mU7wdwc2Hu2NuHuHCJ0=;
-        b=H7asz3lMqKXTk3of/ndMcZWJW7/a+dK3Z0XB4fKikLsIEZmsu1d+G69ikfn+xgSzNj
-         3nzUMtsk2A7MNB4UKbN9843aoOwJxtxpST5WsdQasag5ycgTCs6Dpmk/hhshiE/gQyXQ
-         ght7EgRsPuwp4rF334qWKcd11rVPMDlLQcG8r5nhufJhLITRSUBc1iMSLxBAmFAww89M
-         h9HVbWZv8Z8Ie4RNw9A5XA7RWB1zF9DvLvvu9Q26tGWWhVJTOWHcI75vNuMHZrateXp+
-         rOZIKc3OXjVzxb4eZ9APU9FSE98QnZp10XYs5OPOIe4HkLn6haCZC/pUimqdO9IkoCr5
-         2oJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748817779; x=1749422579;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4kWWXJ7FZ3GSQ1AVSLuDSr03mU7wdwc2Hu2NuHuHCJ0=;
-        b=G+5fGmY/DvGTYBtMpukzmWsv9njIUSBJFBPC0+CY8RA/IkE+pVvwGeTEN+TAVuKIj1
-         60Z95ggZrUJy0aklgcWnqASAfBWm5ZfzUIadoN2a2Fmb3OvLYefa7WLB7RrHW/Rt8EAN
-         3vi4pFpWmfEED5mFrjDeeAFyld8AHI/OaPEzi75g5LUpQKF2RWqDYe2/Oh1c+CXs5oT5
-         p4PZeKUXTr4//ezdAyAPVgKDr+vdugHVrleJaMyVIBeYcvQaTvkeEfw5R8edBpsyBGaI
-         O35vkKybfcifO/JzayeoQvJA7eG8dgrFCfeQK3oCp5Ts7Oa3y2NkDYLZuaNLdmRi6m+y
-         GhBA==
-X-Forwarded-Encrypted: i=1; AJvYcCWdgyqO+JN8j0NdT59zVB5rD9IBAXLPPv9ZteCTaeZ+ZkuisJBSv+XDXSRkhzl7+FMmKdPEhJd0QWw=@vger.kernel.org, AJvYcCXKZgsCTBp+JMNT0gtLcfnAHMM8QjMMl25hy77qZrWGqAsuuj4eTp4U9qt+B6kWHPOeTJ3LtQzNYE6ED0Ojow==@vger.kernel.org, AJvYcCXPuy8g+v0ThPmqJV+/9rhb1l2Ho9HYBAxVCDKxcXrDCMXz54Ad0g6d716hJFfjKVfa8P4WDkoAOMEB7/Gm@vger.kernel.org, AJvYcCXlq0fyJm5noHt+Tx2Ab6GWc33oT0YToZtvbCmSpQR87WC4Y9dVfeGjFGQmDLce2v1GF0IGaPWk@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7VW4zgu9EUVtZ+AbXjikfFotjNUsGGNWstjAGs6bJhO5LmUDT
-	lDoPK6AXX7dFVF10WiQFOj2iZ3iJB42lyhy9GHHOMMZfws0U91dmDl0/OwwY5Q==
-X-Gm-Gg: ASbGncuMWsGbXoZ8VJRpBj4cglIFuP0uYCnNZcMRJ2Zf38MK6qsueNvFJ5uNGmV87ZS
-	mwM08DIZJ3/U58FY9zUIfS5Ji9O5EymFVafLcR+D/LY3YKS3oUnk8Fo2LfJ1mvP3/QgdSEkHx5D
-	bew0PCCAvhzmDln1pqrn3hNYQmWAwq4APS2h5GDGDz99Ss1lY2vr5WqPLId27Ony61jS9As7GdT
-	blAxcSkUQl3VSvIJQgR1jzOPMYzXUqR+W74Zp5I7eIR1JwjGUXlfaiFkxminzuK5/OFNoTwV0TM
-	/aeWuQX8xeYY9XgxA/4zVGuRLb+TKpyoUobxqqdeRGPqWx32Nr+pHDYuMLxQfcQ=
-X-Google-Smtp-Source: AGHT+IFVzpxyXLCtBRbAQTyeYAjleNHnDwVMGvtUL11IWaYeITMphSowW190mBTSVIH8CGVCZ/soCg==
-X-Received: by 2002:a05:6000:220b:b0:3a4:d53d:be23 with SMTP id ffacd0b85a97d-3a4f7a816edmr8112878f8f.30.1748817778595;
-        Sun, 01 Jun 2025 15:42:58 -0700 (PDT)
-Received: from qasdev.Home ([2a02:c7c:6696:8300:4518:757b:6751:290f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4efe74165sm12916554f8f.53.2025.06.01.15.42.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Jun 2025 15:42:57 -0700 (PDT)
-From: Qasim Ijaz <qasdev00@gmail.com>
-To: Sinan Kaya <okaya@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Qasim Ijaz <qasdev00@gmail.com>,
+	 MIME-Version; b=GI4m4wVWdspW7jXd4/IyLf1v60HrSQfUIjWFODVGM2QViasIQP/ykvbj0Gm1lpai4JIDmXsoY83749L9Jt+6mmR39cTeOabTi9OO2Cn2jnPdfK6AlSC3ln+Qvr1g78LAo/fkS9tzEOwC7U/vHeat2seN10hNfHC/sIr6JGyCPmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bOcjzZtc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82561C4CEF1;
+	Sun,  1 Jun 2025 23:25:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748820347;
+	bh=VCcvcps+8wA1B2/uwnP2l3Lg12YiaCgutRuD3eJxutQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bOcjzZtcVTMHSAEAzMbr1WXGT3qmE9l7EqQi3D41FE2NgNvDpfiN3Os8invWB/JOD
+	 gbQL7dJ23Knr57wh7S+p4E9+4jjqBtOOivC7Nuobyo4yX8Rq9JmbORunkc251I7Dot
+	 wIJfuXKNajpeph6pjvcOpVenMViPuW5MEd2XGhbGz8mMEYE+Y8xK4bVbm344fC73/A
+	 nIEGntRtI28vhrzUHrC3I5kMlHFGY/k/04HzN1kfdB0IvwwTXg3o0iHF1JwsikO8uJ
+	 HI5p7LOf58fhvVYLpfoknHTFa5wdAWgDCVptqNFRnHaDRUXMEV2FO9iifNtL32q22s
+	 xftwJQ50AO08A==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Subject: [PATCH 2/2] dmaengine: qcom_hidma: fix handoff FIFO memory leak on driver removal
-Date: Sun,  1 Jun 2025 23:42:31 +0100
-Message-Id: <20250601224231.24317-3-qasdev00@gmail.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	robdclark@gmail.com,
+	quic_abhinavk@quicinc.com,
+	lumag@kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 027/110] drm/msm/hdmi: add runtime PM calls to DDC transfer function
+Date: Sun,  1 Jun 2025 19:23:09 -0400
+Message-Id: <20250601232435.3507697-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250601224231.24317-1-qasdev00@gmail.com>
-References: <20250601224231.24317-1-qasdev00@gmail.com>
+In-Reply-To: <20250601232435.3507697-1-sashal@kernel.org>
+References: <20250601232435.3507697-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.15
 Content-Transfer-Encoding: 8bit
 
-hidma_ll_init() allocates a handoff FIFO, but the matching 
-hidma_ll_uninit() function (which is invoked in remove()) 
-never releases it, leaking memory.
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-To fix this call kfifo_free in hidma_ll_uninit().
+[ Upstream commit 531b4e2c206e5f7dead04d9da84dfa693ac57481 ]
 
-Fixes: d1615ca2e085 ("dmaengine: qcom_hidma: implement lower level hardware interface")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+We must be sure that the HDMI controller is powered on, while performing
+the DDC transfer. Add corresponding runtime PM calls to
+msm_hdmi_i2c_xfer().
 
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/651727/
+Link: https://lore.kernel.org/r/20250505-fd-hdmi-hpd-v5-8-48541f76318c@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/qcom/hidma_ll.c | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/qcom/hidma_ll.c b/drivers/dma/qcom/hidma_ll.c
-index fee448499777..0c2bae46746c 100644
---- a/drivers/dma/qcom/hidma_ll.c
-+++ b/drivers/dma/qcom/hidma_ll.c
-@@ -816,6 +816,7 @@ int hidma_ll_uninit(struct hidma_lldev *lldev)
+**YES** This commit should be backported to stable kernel trees. Here's
+my detailed analysis: ## Bug Fix Analysis This commit addresses a
+**critical power management bug** in the MSM HDMI DDC (Display Data
+Channel) implementation. The issue is that DDC transfers can occur when
+the HDMI controller is not properly powered, leading to potential
+hardware access failures or system instability. ## Code Changes Analysis
+The changes in `drivers/gpu/drm/msm/hdmi/hdmi_i2c.c` are **minimal and
+well-contained**: 1. **Added runtime PM calls around DDC operations**: -
+`pm_runtime_resume_and_get()` at function start (line ~110) -
+`pm_runtime_put()` in success path (line ~206) - `pm_runtime_put()` in
+error path (line ~224) 2. **Fixed error handling flow**: - Changed
+direct returns to proper `goto fail` to ensure PM put operations - Lines
+113-114 and 172 now use `goto fail` instead of direct returns ## Risk
+Assessment - LOW RISK **Minimal scope**: Only affects the
+`msm_hdmi_i2c_xfer()` function, which is the DDC transfer entry point.
+**Consistent with existing patterns**: The kernel tree analysis shows
+runtime PM is already used extensively in this driver: -
+`hdmi_bridge.c`: Uses `pm_runtime_get_sync()` and `pm_runtime_put()` -
+`hdmi_hpd.c`: Uses runtime PM in 4 locations for HPD operations **No
+architectural changes**: This follows the existing runtime PM pattern
+established in commit 6ed9ed484d04 from 2017. ## Comparison with Similar
+Commits This matches the characteristics of **Similar Commit #1**
+(marked YES for backport): - Fixes a resource management bug (runtime PM
+vs devres helper) - Small, contained change - Improves driver robustness
+- Follows existing patterns The commit is **unlike** the rejected
+commits (#2-#5) which were: - Code cleanups/refactoring - API
+modernization - Feature additions - Non-critical improvements ##
+Critical System Impact DDC is essential for HDMI functionality - it's
+used for: - Reading display EDID data - Monitor detection - Display
+capability negotiation Without proper power management, DDC operations
+could fail intermittently, causing display detection issues or system
+hangs when accessing unpowered hardware. ## Conclusion This is a **low-
+risk, high-value bugfix** that ensures hardware is properly powered
+during DDC operations. It follows established driver patterns, has
+minimal scope, and fixes a potentially serious power management issue
+that could affect display functionality.
+
+ drivers/gpu/drm/msm/hdmi/hdmi_i2c.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
+index 7aa500d24240f..ebefea4fb4085 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
+@@ -107,11 +107,15 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
+ 	if (num == 0)
+ 		return num;
  
- 	required_bytes = sizeof(struct hidma_tre) * lldev->nr_tres;
- 	tasklet_kill(&lldev->task);
-+	kfifo_free(&lldev->handoff_fifo);
- 	memset(lldev->trepool, 0, required_bytes);
- 	lldev->trepool = NULL;
- 	atomic_set(&lldev->pending_tre_count, 0);
++	ret = pm_runtime_resume_and_get(&hdmi->pdev->dev);
++	if (ret)
++		return ret;
++
+ 	init_ddc(hdmi_i2c);
+ 
+ 	ret = ddc_clear_irq(hdmi_i2c);
+ 	if (ret)
+-		return ret;
++		goto fail;
+ 
+ 	for (i = 0; i < num; i++) {
+ 		struct i2c_msg *p = &msgs[i];
+@@ -169,7 +173,7 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
+ 				hdmi_read(hdmi, REG_HDMI_DDC_SW_STATUS),
+ 				hdmi_read(hdmi, REG_HDMI_DDC_HW_STATUS),
+ 				hdmi_read(hdmi, REG_HDMI_DDC_INT_CTRL));
+-		return ret;
++		goto fail;
+ 	}
+ 
+ 	ddc_status = hdmi_read(hdmi, REG_HDMI_DDC_SW_STATUS);
+@@ -202,7 +206,13 @@ static int msm_hdmi_i2c_xfer(struct i2c_adapter *i2c,
+ 		}
+ 	}
+ 
++	pm_runtime_put(&hdmi->pdev->dev);
++
+ 	return i;
++
++fail:
++	pm_runtime_put(&hdmi->pdev->dev);
++	return ret;
+ }
+ 
+ static u32 msm_hdmi_i2c_func(struct i2c_adapter *adapter)
 -- 
 2.39.5
 
