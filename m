@@ -1,421 +1,876 @@
-Return-Path: <linux-arm-msm+bounces-60056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1CC0ACAD0D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 13:13:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0066BACAE0C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 14:26:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DA02B7A1D43
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 11:12:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BBABD1892CD8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 12:27:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A7FE20B806;
-	Mon,  2 Jun 2025 11:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A85D0218EA2;
+	Mon,  2 Jun 2025 12:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="iFH9H9eC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RzquBAEz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959EB1D6DB4
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jun 2025 11:13:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4737485;
+	Mon,  2 Jun 2025 12:26:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748862827; cv=none; b=BOvSSnqoAF4rZD22/sbHi6z4oUA2svGjoowSKKdLlJzokwTcZEgtCaN7BMOUTXQPub+VWchhcOEZFnY7CkAlmmxTor2hj7evUI2OaKWXuaaZn56s9P/L+eO3RnU+N1kUIH0UZHCTrGnQ8MeCJyj6WuGBn5phTySQ3xWpeptg/bo=
+	t=1748867210; cv=none; b=TAi32qaK4bkMcK3LVfKNluLc8l7xYo9rD0qV+vUA4yYpnizeNQqHbBl7V1vPtXpNrFQPd646WahRgeI+BgdW3YfUluipz1oHMu9nnXbQ8i974VLz1Zm8rmuneO0eEutD9MEqtmcFFTAz9f2zcocwt9Ou/I4EeEtjOs4IIEWrMQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748862827; c=relaxed/simple;
-	bh=BrD1RN8OYX6YKizEKzHZA2X5I9JMq00lX1qfL1ynoAI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dF2GZa3JP309zsDcwR/RHAXZRBwmyIEeWkwpz9jvCjotPulq1W1qD/1hiBGRYdoxUi/rtZgC/7R3AeZaxMXkpw1TJ+1Ofy3GiVNxhvjJf7lqr0O2lFof7hv/Bqo5hgAq0uoEaXAjFRkHkVB0XVZfMLxKN8I/SX0czTtsk44EZSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=iFH9H9eC; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4a58197794eso345941cf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jun 2025 04:13:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1748862823; x=1749467623; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=f8dEAF79E3N+09IzcVzt0JByl2jpxQuRRlI6WwFJD5s=;
-        b=iFH9H9eCUy33jibGacOQokFzK2OqPrXZ3cDCFmTvF6gQHnQDu0ye6w7FVWYNowX7VO
-         fF11Or1sgjAurDiAAihQQ8EtwTtwvnCe3iUHoFUWgA+JKNFnwvApu7rUxebp7q8DgBQY
-         PHas19OUQZmK7WYANxf/CJkjiTjCk5CuGq8Rl+g261On4O0XQAmRSZXIcHAV+KTgyA7l
-         vwX8eU3Xym0vp8wW7RDi7QuxU0TsJjysouxMzek3ayggPB08euwX14UJjkrqW5/bn5Sk
-         nAMfBhHsBKNxCJ9aHbw8ugjAJ2iNfbGtbyxGfXHHEZiCdRcWe+LVLuSnlVEkqGXrC6aw
-         OnTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748862823; x=1749467623;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f8dEAF79E3N+09IzcVzt0JByl2jpxQuRRlI6WwFJD5s=;
-        b=oqxOwULxR5nbzcWmXUOaGXcTHKUK4HskhcDsWK8Zi4l/cZ+VFJEvDrZLtdm9HdF132
-         P3cG/UqfMkCqkGi8+p4Z3cusGzoo8bAPqVEmEcBtBxq2Ix+Y9iC9IYmT63zQuAsGSGEN
-         NBXrzwQoKlqG5ejq0p4h8fOdFrH+13gmxEXE2upgJ2pytqW9OKzrqpzuus0z6Oyw0NSZ
-         nzobwhGauim+O2LmWJ3J6FLomCXrORY3UR+TtQ0n4bEywP3eHQ2WocmYtu/LDRZXaN/X
-         7YZ4Bt13/l0nJ/luU6cL/YMt6vrufsF6LTJptinqHcZPaXFujWHQ1jI6nQaIAHAPGlMv
-         zgyA==
-X-Forwarded-Encrypted: i=1; AJvYcCWe3cXWFtYgNo0O9eXsSltxBGdnQ3QFJEI10SG6hYyejqbqJwGTi4g0xgVUxM3sdxMAd5HQVYyC8fPgsiar@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxqpV3mX8buAA6/ac8iIBZ2BOimkljiv/r1MMnyOTR09BNjzFi
-	omhbIzPeUzm0DBzBySEIUoDNe8XcCY5mGQg8/2Fc2esErOeRvnNO+DFTjTwajFjFKp+GWcyrXeT
-	38h5rHnIzkDsoWF0GTvUswrea3htl4R0sMUzHfq2w
-X-Gm-Gg: ASbGnctPBZ/gcBNmVbdYX1gcSuNwfHAfPwBDwFnhgztkbcVWVK2+l8n/xCkJXFjfY+h
-	n6jetUkoc4WhysP/WDiioD0W+qj+nfUw3aYP4GuZV96f5cM8N30zCEmLXb20iuQVjgwQEDgvy4S
-	U2JrkuZGjJQsVC6Il9epHEOBK3BfL2vfYq6TFfxkTX1P0=
-X-Google-Smtp-Source: AGHT+IGwYjwwlPRO5odjKdIKbJHHZStw9OOAS6neCRvXXMHEHJTRLzURMRF6KmmQqeBeJGexACUuNAzOIaw2KTUsLGI=
-X-Received: by 2002:a05:622a:1c0b:b0:48d:8f6e:ece7 with SMTP id
- d75a77b69052e-4a458161417mr5165681cf.3.1748862822877; Mon, 02 Jun 2025
- 04:13:42 -0700 (PDT)
+	s=arc-20240116; t=1748867210; c=relaxed/simple;
+	bh=BU1DO3UgGine08a8FZzXzI0sAWgluBet8Brwqo+5w08=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=fYXCWNe+u0wtURqj/Z5PFnzyTBIwWtAQDxLEAPMKEEgvMVH+HJTo9oFHkX0/K3rbonCh7VMqrklWJViQWd1BkMmqWPvU4XRomStbIh3hr5pG6htaFMfarVlzEdN5NNrk3MNuKYGmtRJFY+p0YgtFYJNKBhgzN7y9t8E3siNutEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RzquBAEz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65868C4CEEB;
+	Mon,  2 Jun 2025 12:26:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748867209;
+	bh=BU1DO3UgGine08a8FZzXzI0sAWgluBet8Brwqo+5w08=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=RzquBAEzALR5zIF3IKm4Qs2ubTUn05wHI7xuUHAN/u+mWYAIE1yp6xBw1M/RSbSkr
+	 GgNfjy3HtXmV+j2kioxdN9Iq/tau5qMXTP3Jskcl/cTBO9bpZ0cxKJWlsd29hhvhxV
+	 JvgjCOApRg8uxy/GP3OT6JH51Yf3+TjRSyR1CprWzqpY0nJiQ1Pg/zZPAJ1XlJxs+K
+	 zN9Sv6zNnEqF6keTL4HJvYMtD0FfQzCIwSoksoTBAq1VacWyAIHcGWzQVCNLP4WzhI
+	 zn8C+v/UiUhXuZBuUnr/6nAEHV2Hc61CLNrscwqAHZVpqqCPLowc6uYkjjZfMU6oO+
+	 VKUII/KLy9JKw==
+Date: Mon, 02 Jun 2025 07:26:47 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250527180245.1413463-1-tabba@google.com> <20250527180245.1413463-9-tabba@google.com>
- <8f85fcf7-3593-46e8-b257-d0da2b7337b9@amd.com>
-In-Reply-To: <8f85fcf7-3593-46e8-b257-d0da2b7337b9@amd.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Mon, 2 Jun 2025 12:13:06 +0100
-X-Gm-Features: AX0GCFvtbu_WgsBEElVSF2IfOuSPM9sWX6IdM_pHws-fhAfFTMXPKjL4cYGIGz8
-Message-ID: <CA+EHjTx98wjg5UBRO9c-A8CZ7tc7yHrku+AKWY6G5pu2pE=ELQ@mail.gmail.com>
-Subject: Re: [PATCH v10 08/16] KVM: guest_memfd: Allow host to map guest_memfd pages
-To: Shivank Garg <shivankg@amd.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com, qemu-devel@nongnu.org, qemu-discuss@nongnu.org, 
-	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>, nikunj@amd.com, 
-	Bharata B Rao <bharata@amd.com>
-Content-Type: text/plain; charset="UTF-8"
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, 
+ Michael Turquette <mturquette@baylibre.com>, linux-clk@vger.kernel.org, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Kuogee Hsieh <quic_khsieh@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Thomas Zimmermann <tzimmermann@suse.de>, devicetree@vger.kernel.org, 
+ Conor Dooley <conor+dt@kernel.org>, Simona Vetter <simona@ffwll.ch>, 
+ Maxime Ripard <mripard@kernel.org>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Mahadevan <quic_mahap@quicinc.com>, Danila Tikhonov <danila@jiaxyga.com>, 
+ David Airlie <airlied@gmail.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
+ linux-kernel@vger.kernel.org, Yongxing Mou <quic_yongmou@quicinc.com>, 
+ freedreno@lists.freedesktop.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org, 
+ Konrad Dybcio <konradybcio@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
+ Krishna Manikandan <quic_mkrishn@quicinc.com>
+To: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+In-Reply-To: <20250530-dp_mst_bindings-v2-0-f925464d32a8@oss.qualcomm.com>
+References: <20250530-dp_mst_bindings-v2-0-f925464d32a8@oss.qualcomm.com>
+Message-Id: <174886710440.952745.7947404650778942462.robh@kernel.org>
+Subject: Re: [PATCH v2 0/5] dt-bindings: msm/dp: add support for pixel
+ clock to driver another stream
 
-Hi Shivank,
 
-On Mon, 2 Jun 2025 at 11:44, Shivank Garg <shivankg@amd.com> wrote:
->
->
->
-> On 5/27/2025 11:32 PM, Fuad Tabba wrote:
-> > This patch enables support for shared memory in guest_memfd, including
-> > mapping that memory at the host userspace. This support is gated by the
-> > configuration option KVM_GMEM_SHARED_MEM, and toggled by the guest_memfd
-> > flag GUEST_MEMFD_FLAG_SUPPORT_SHARED, which can be set when creating a
-> > guest_memfd instance.
-> >
-> > Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-> > Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >  arch/x86/include/asm/kvm_host.h | 10 ++++
-> >  arch/x86/kvm/x86.c              |  3 +-
-> >  include/linux/kvm_host.h        | 13 ++++++
-> >  include/uapi/linux/kvm.h        |  1 +
-> >  virt/kvm/Kconfig                |  5 ++
-> >  virt/kvm/guest_memfd.c          | 81 +++++++++++++++++++++++++++++++++
-> >  6 files changed, 112 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-> > index 709cc2a7ba66..ce9ad4cd93c5 100644
-> > --- a/arch/x86/include/asm/kvm_host.h
-> > +++ b/arch/x86/include/asm/kvm_host.h
-> > @@ -2255,8 +2255,18 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_forced_root_level,
-> >
-> >  #ifdef CONFIG_KVM_GMEM
-> >  #define kvm_arch_supports_gmem(kvm) ((kvm)->arch.supports_gmem)
-> > +
-> > +/*
-> > + * CoCo VMs with hardware support that use guest_memfd only for backing private
-> > + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enabled.
-> > + */
-> > +#define kvm_arch_supports_gmem_shared_mem(kvm)                       \
-> > +     (IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM) &&                      \
-> > +      ((kvm)->arch.vm_type == KVM_X86_SW_PROTECTED_VM ||             \
-> > +       (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM))
-> >  #else
-> >  #define kvm_arch_supports_gmem(kvm) false
-> > +#define kvm_arch_supports_gmem_shared_mem(kvm) false
-> >  #endif
-> >
-> >  #define kvm_arch_has_readonly_mem(kvm) (!(kvm)->arch.has_protected_state)
-> > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-> > index 035ced06b2dd..2a02f2457c42 100644
-> > --- a/arch/x86/kvm/x86.c
-> > +++ b/arch/x86/kvm/x86.c
-> > @@ -12718,7 +12718,8 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned long type)
-> >               return -EINVAL;
-> >
-> >       kvm->arch.vm_type = type;
-> > -     kvm->arch.supports_gmem = (type == KVM_X86_SW_PROTECTED_VM);
-> > +     kvm->arch.supports_gmem =
-> > +             type == KVM_X86_DEFAULT_VM || type == KVM_X86_SW_PROTECTED_VM;
->
->
-> I've been testing this patch-series. I did not saw failure with guest_memfd selftests but encountered a regression on my system with KVM_X86_DEFAULT_VM.
->
-> I'm getting below error in QEMU:
-> Issue #1 - QEMU fails to start with KVM_X86_DEFAULT_VM, showing:
->
-> qemu-system-x86_64: kvm_set_user_memory_region: KVM_SET_USER_MEMORY_REGION2 failed, slot=65536, start=0x0, size=0x80000000, flags=0x0, guest_memfd=-1, guest_memfd_offset=0x0: Invalid argument
-> kvm_set_phys_mem: error registering slot: Invalid argument
->
-> I did some digging to find out,
-> In kvm_set_memory_region as_id >= kvm_arch_nr_memslot_as_ids(kvm) now returns true.
-> (as_id:1 kvm_arch_nr_memslot_as_ids(kvm):1 id:0 KVM_MEM_SLOTS_NUM:32767)
->
-> /* SMM is currently unsupported for guests with guest_memfd (esp private) memory. */
-> # define kvm_arch_nr_memslot_as_ids(kvm) (kvm_arch_supports_gmem(kvm) ? 1 : 2)
-> evaluates to be 1
->
-> I'm still debugging to find answer to these question
-> Why slot=65536 and (as_id = mem->slot >> 16 = 1) is requested for KVM_X86_DEFAULT_VM case
-> which is making it fail for above check.
-> Was this change intentional for KVM_X86_DEFAULT_VM? Should this be considered as KVM regression or QEMU[1] compatibility issue?
-
-Yes, this was intentional. We talked about this during the guest_memfd
-biweekly sync on May 15 [*]. We came to the conclusion that we cannot
-support SMM with private memory. KVM_X86_DEFAULT_VM cannot have
-private memory, but guest_memfd with shared memory.
-
-[*] https://docs.google.com/document/d/1M6766BzdY1Lhk7LiR5IqVR8B8mG3cr-cxTxOrAosPOk/edit?tab=t.0#heading=h.b4x45fcfgzvo
-
+On Fri, 30 May 2025 10:47:23 -0700, Jessica Zhang wrote:
+> On some MSM chipsets, the display port controller is capable of supporting
+> two streams. To drive the second stream, the pixel clock for the
+> corresponding stream needs to be enabled. In order to add the bindings for
+> the pixel clock for the second stream, fixup the documentation of some of
+> the bindings to clarify exactly which stream they correspond to, then add
+> the new bindings and make corresponding changes to the relevant device
+> trees.
+> 
 > ---
-> Issue #2: Testing challenges with QEMU changes[2] and mmap Implementation:
-> Currently, QEMU only enables guest_memfd for SEV_SNP_GUEST (KVM_X86_SNP_VM) by setting require_guest_memfd=true. However, the new mmap implementation doesn't support SNP guests per kvm_arch_supports_gmem_shared_mem().
->
-> static void
-> sev_snp_guest_instance_init(Object *obj)
-> {
->     ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
->     SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(obj);
->
->     cgs->require_guest_memfd = true;
->
->
-> To bypass this, I did two things and failed:
-> 1. Enabling guest_memfd for KVM_X86_DEFAULT_VM in QEMU: Hits Issue #1 above
-> 2. Adding KVM_X86_SNP_VM to kvm_arch_supports_gmem_shared_mem(): mmap() succeeds but QEMU stuck during boot.
->
->
->
-> My NUMA policy support for guest-memfd patch[3] depends on mmap() support and extends
-> kvm_gmem_vm_ops with get_policy/set_policy operations.
-> Since NUMA policy applies to both shared and private memory scenarios, what checks should
-> be included in the mmap() implementation, and what's the recommended approach for
-> integrating with your shared memory restrictions?
+> Changes in v2:
+> - Rebased on top of next-20250523
+> - Dropped merged maintainer patch
+> - Remove assigned-clock-parents from sm7150-mdss.yaml
+> - Added a patch to make the corresponding dts change to add pixel 1
+>   stream
+> - Squashed pixel 0 and pixel 1 stream binding patches (Krzysztof)
+> - Drop assigned-clock-parents bindings for dp-controller (Krzysztof)
+> - Updated dp-controller.yaml to include all chipsets that support stream
+>   1 pixel clock (Krzysztof)
+> - Added missing minItems and if statement (Krzysztof)
+> 
+> ---
+> Abhinav Kumar (4):
+>       dt-bindings: Fixup x1e80100 to add DP MST support
+>       dt-bindings: clock: Add SC7280 DISPCC DP pixel 1 clock binding
+>       dt-bindings: display/msm: drop assigned-clock-parents for dp controller
+>       dt-bindings: display/msm: add stream 1 pixel clock binding
+> 
+> Jessica Zhang (1):
+>       arm64: dts: qcom: Add pixel 1 stream for displayport
+> 
+>  .../bindings/display/msm/dp-controller.yaml        | 45 +++++++++++---
+>  .../bindings/display/msm/qcom,sa8775p-mdss.yaml    | 10 +--
+>  .../bindings/display/msm/qcom,sar2130p-mdss.yaml   | 11 ++--
+>  .../bindings/display/msm/qcom,sc7180-mdss.yaml     |  1 -
+>  .../bindings/display/msm/qcom,sc7280-mdss.yaml     | 11 ++--
+>  .../bindings/display/msm/qcom,sm7150-mdss.yaml     |  2 -
+>  .../bindings/display/msm/qcom,x1e80100-mdss.yaml   | 18 +++---
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi              | 26 +++++---
+>  arch/arm64/boot/dts/qcom/sc8180x.dtsi              | 20 ++++--
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi             | 72 +++++++++++++++-------
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi               | 10 ++-
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi               | 10 ++-
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi               | 10 ++-
+>  arch/arm64/boot/dts/qcom/sm8650.dtsi               | 10 ++-
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 31 +++++++---
+>  include/dt-bindings/clock/qcom,dispcc-sc7280.h     |  2 +
+>  16 files changed, 197 insertions(+), 92 deletions(-)
+> ---
+> base-commit: daf70030586cf0279a57b58a94c32cfe901df23d
+> change-id: 20241202-dp_mst_bindings-7536ffc9ae2f
+> 
+> Best regards,
+> --
+> Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+> 
+> 
+> 
 
-KVM_X86_SNP_VM doesn't support in-place shared memory yet, so I think
-this is to be expected for now.
 
-Thanks,
-/fuad
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
 
->
-> [1] https://github.com/qemu/qemu
-> [2] Snippet to QEMU changes to add mmap
->
-> +                new_block->guest_memfd = kvm_create_guest_memfd(
-> +                                           new_block->max_length, /*0 */GUEST_MEMFD_FLAG_SUPPORT_SHARED, errp);
-> +                if (new_block->guest_memfd < 0) {
-> +                        qemu_mutex_unlock_ramlist();
-> +                        goto out_free;
-> +                }
-> +                new_block->ptr_memfd = mmap(NULL, new_block->max_length,
-> +                                            PROT_READ | PROT_WRITE,
-> +                                            MAP_SHARED,
-> +                                            new_block->guest_memfd, 0);
-> +                if (new_block->ptr_memfd == MAP_FAILED) {
-> +                    error_report("Failed to mmap guest_memfd");
-> +                    qemu_mutex_unlock_ramlist();
-> +                    goto out_free;
-> +                }
-> +                printf("mmap successful\n");
-> +            }
-> [3] https://lore.kernel.org/linux-mm/20250408112402.181574-1-shivankg@amd.com
->
->
->
-> >       /* Decided by the vendor code for other VM types.  */
-> >       kvm->arch.pre_fault_allowed =
-> >               type == KVM_X86_DEFAULT_VM || type == KVM_X86_SW_PROTECTED_VM;
-> > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> > index 80371475818f..ba83547e62b0 100644
-> > --- a/include/linux/kvm_host.h
-> > +++ b/include/linux/kvm_host.h
-> > @@ -729,6 +729,19 @@ static inline bool kvm_arch_supports_gmem(struct kvm *kvm)
-> >  }
-> >  #endif
-> >
-> > +/*
-> > + * Returns true if this VM supports shared mem in guest_memfd.
-> > + *
-> > + * Arch code must define kvm_arch_supports_gmem_shared_mem if support for
-> > + * guest_memfd is enabled.
-> > + */
-> > +#if !defined(kvm_arch_supports_gmem_shared_mem) && !IS_ENABLED(CONFIG_KVM_GMEM)
-> > +static inline bool kvm_arch_supports_gmem_shared_mem(struct kvm *kvm)
-> > +{
-> > +     return false;
-> > +}
-> > +#endif
-> > +
-> >  #ifndef kvm_arch_has_readonly_mem
-> >  static inline bool kvm_arch_has_readonly_mem(struct kvm *kvm)
-> >  {
-> > diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
-> > index b6ae8ad8934b..c2714c9d1a0e 100644
-> > --- a/include/uapi/linux/kvm.h
-> > +++ b/include/uapi/linux/kvm.h
-> > @@ -1566,6 +1566,7 @@ struct kvm_memory_attributes {
-> >  #define KVM_MEMORY_ATTRIBUTE_PRIVATE           (1ULL << 3)
-> >
-> >  #define KVM_CREATE_GUEST_MEMFD       _IOWR(KVMIO,  0xd4, struct kvm_create_guest_memfd)
-> > +#define GUEST_MEMFD_FLAG_SUPPORT_SHARED      (1ULL << 0)
-> >
-> >  struct kvm_create_guest_memfd {
-> >       __u64 size;
-> > diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
-> > index 559c93ad90be..df225298ab10 100644
-> > --- a/virt/kvm/Kconfig
-> > +++ b/virt/kvm/Kconfig
-> > @@ -128,3 +128,8 @@ config HAVE_KVM_ARCH_GMEM_PREPARE
-> >  config HAVE_KVM_ARCH_GMEM_INVALIDATE
-> >         bool
-> >         depends on KVM_GMEM
-> > +
-> > +config KVM_GMEM_SHARED_MEM
-> > +       select KVM_GMEM
-> > +       bool
-> > +       prompt "Enable support for non-private (shared) memory in guest_memfd"
-> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> > index 6db515833f61..5d34712f64fc 100644
-> > --- a/virt/kvm/guest_memfd.c
-> > +++ b/virt/kvm/guest_memfd.c
-> > @@ -312,7 +312,81 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
-> >       return gfn - slot->base_gfn + slot->gmem.pgoff;
-> >  }
-> >
-> > +static bool kvm_gmem_supports_shared(struct inode *inode)
-> > +{
-> > +     u64 flags;
-> > +
-> > +     if (!IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM))
-> > +             return false;
-> > +
-> > +     flags = (u64)inode->i_private;
-> > +
-> > +     return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> > +}
-> > +
-> > +
-> > +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
-> > +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
-> > +{
-> > +     struct inode *inode = file_inode(vmf->vma->vm_file);
-> > +     struct folio *folio;
-> > +     vm_fault_t ret = VM_FAULT_LOCKED;
-> > +
-> > +     folio = kvm_gmem_get_folio(inode, vmf->pgoff);
-> > +     if (IS_ERR(folio)) {
-> > +             int err = PTR_ERR(folio);
-> > +
-> > +             if (err == -EAGAIN)
-> > +                     return VM_FAULT_RETRY;
-> > +
-> > +             return vmf_error(err);
-> > +     }
-> > +
-> > +     if (WARN_ON_ONCE(folio_test_large(folio))) {
-> > +             ret = VM_FAULT_SIGBUS;
-> > +             goto out_folio;
-> > +     }
-> > +
-> > +     if (!folio_test_uptodate(folio)) {
-> > +             clear_highpage(folio_page(folio, 0));
-> > +             kvm_gmem_mark_prepared(folio);
-> > +     }
-> > +
-> > +     vmf->page = folio_file_page(folio, vmf->pgoff);
-> > +
-> > +out_folio:
-> > +     if (ret != VM_FAULT_LOCKED) {
-> > +             folio_unlock(folio);
-> > +             folio_put(folio);
-> > +     }
-> > +
-> > +     return ret;
-> > +}
-> > +
-> > +static const struct vm_operations_struct kvm_gmem_vm_ops = {
-> > +     .fault = kvm_gmem_fault_shared,
-> > +};
-> > +
-> > +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
-> > +{
-> > +     if (!kvm_gmem_supports_shared(file_inode(file)))
-> > +             return -ENODEV;
-> > +
-> > +     if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
-> > +         (VM_SHARED | VM_MAYSHARE)) {
-> > +             return -EINVAL;
-> > +     }
-> > +
-> > +     vma->vm_ops = &kvm_gmem_vm_ops;
-> > +
-> > +     return 0;
-> > +}
-> > +#else
-> > +#define kvm_gmem_mmap NULL
-> > +#endif /* CONFIG_KVM_GMEM_SHARED_MEM */
-> > +
-> >  static struct file_operations kvm_gmem_fops = {
-> > +     .mmap           = kvm_gmem_mmap,
-> >       .open           = generic_file_open,
-> >       .release        = kvm_gmem_release,
-> >       .fallocate      = kvm_gmem_fallocate,
-> > @@ -463,6 +537,9 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args)
-> >       u64 flags = args->flags;
-> >       u64 valid_flags = 0;
-> >
-> > +     if (kvm_arch_supports_gmem_shared_mem(kvm))
-> > +             valid_flags |= GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> > +
-> >       if (flags & ~valid_flags)
-> >               return -EINVAL;
-> >
-> > @@ -501,6 +578,10 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
-> >           offset + size > i_size_read(inode))
-> >               goto err;
-> >
-> > +     if (kvm_gmem_supports_shared(inode) &&
-> > +         !kvm_arch_supports_gmem_shared_mem(kvm))
-> > +             goto err;
-> > +
-> >       filemap_invalidate_lock(inode->i_mapping);
-> >
-> >       start = offset >> PAGE_SHIFT;
->
->
->
->
->
->
->
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+This patch series was applied (using b4) to base:
+ Base: base-commit daf70030586cf0279a57b58a94c32cfe901df23d not known, ignoring
+ Base: attempting to guess base-commit...
+ Base: tags/next-20250530 (exact match)
+
+If this is not the correct base, please add 'base-commit' tag
+(or use b4 which does this automatically)
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250530-dp_mst_bindings-v2-0-f925464d32a8@oss.qualcomm.com:
+
+arch/arm64/boot/dts/qcom/sm7125-xiaomi-curtana.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: displayport-controller@ae90000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: displayport-controller@ae90000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: displayport-controller@ae98000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: displayport-controller@ae98000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: displayport-controller@ae9a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: displayport-controller@ae9a000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: displayport-controller@aea0000 (qcom,sc8280xp-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): aux-bus: False schema does not allow {'panel': {'compatible': ['edp-panel'], 'enable-gpios': [[71, 74, 0]], 'power-supply': [[258]], 'pinctrl-0': [[259]], 'pinctrl-names': ['default'], 'port': {'endpoint': {'remote-endpoint': [[260]], 'phandle': 257}}}}
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): '#sound-dai-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): clocks: [[236, 2], [236, 45], [236, 47], [236, 50], [236, 51]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[3, 1], [3, 7], [3, 11], [3, 14], [3, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: displayport-controller@22090000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: displayport-controller@22098000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: displayport-controller@2209a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): clocks: [[147, 5], [147, 47], [147, 49], [147, 52], [147, 53]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-crd-pro.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[356, 1], [356, 7], [356, 11], [356, 14], [356, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[334, 1], [334, 7], [334, 11], [334, 14], [334, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360-wifi.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dtb: displayport-controller@ae90000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dtb: displayport-controller@ae98000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dtb: displayport-controller@ae9a000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): aux-bus: False schema does not allow {'panel': {'compatible': ['edp-panel'], 'power-supply': [[276]], 'phandle': 597, 'port': {'endpoint': {'remote-endpoint': [[277]], 'phandle': 275}}}}
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): '#sound-dai-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): clocks: [[254, 2], [254, 45], [254, 47], [254, 50], [254, 51]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-lg-judyp.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qrb5165-rb5.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qrb5165-rb5.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): clocks: [[227, 0], [227, 12], [227, 18], [227, 21], [227, 26]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dtb: displayport-controller@ae90000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dtb: displayport-controller@ae98000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dtb: displayport-controller@ae9a000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dtb: displayport-controller@ae90000 (qcom,sm8550-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dtb: displayport-controller@ae90000 (qcom,sm8550-dp): clocks: [[189, 2], [189, 12], [189, 15], [189, 18], [189, 19]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): aux-bus: False schema does not allow {'panel': {'compatible': ['samsung,atna45dc02', 'samsung,atna33xc20'], 'enable-gpios': [[275, 4, 0]], 'power-supply': [[276]], 'pinctrl-0': [[277]], 'pinctrl-names': ['default'], 'port': {'endpoint': {'remote-endpoint': [[278]], 'phandle': 274}}}}
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): '#sound-dai-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): clocks: [[253, 2], [253, 45], [253, 47], [253, 50], [253, 51]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8550-qrd.dtb: displayport-controller@ae90000 (qcom,sm8550-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8550-qrd.dtb: displayport-controller@ae90000 (qcom,sm8550-dp): clocks: [[205, 2], [205, 12], [205, 15], [205, 18], [205, 19]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[354, 1], [354, 7], [354, 11], [354, 14], [354, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dtb: displayport-controller@ae90000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dtb: displayport-controller@ae98000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dtb: displayport-controller@ae9a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dtb: displayport-controller@aea0000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dtb: displayport-controller@aea0000 (qcom,sc8280xp-dp): clocks: [[149, 5], [149, 47], [149, 49], [149, 52], [149, 53]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dtb: displayport-controller@22090000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dtb: displayport-controller@22098000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dtb: displayport-controller@2209a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): clocks: [[124, 5], [124, 47], [124, 49], [124, 52], [124, 53]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8550-mtp.dtb: displayport-controller@ae90000 (qcom,sm8550-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8550-mtp.dtb: displayport-controller@ae90000 (qcom,sm8550-dp): clocks: [[198, 2], [198, 12], [198, 15], [198, 18], [198, 19]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dtb: displayport-controller@ae90000 (qcom,sm8350-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[311, 1], [311, 7], [311, 11], [311, 14], [311, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1p42100-crd.dtb: displayport-controller@ae90000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1p42100-crd.dtb: displayport-controller@ae98000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1p42100-crd.dtb: displayport-controller@ae9a000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1p42100-crd.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1p42100-crd.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): aux-bus: False schema does not allow {'panel': {'compatible': ['samsung,atna45af01', 'samsung,atna33xc20'], 'enable-gpios': [[268, 4, 0]], 'power-supply': [[269]], 'pinctrl-0': [[270]], 'pinctrl-names': ['default'], 'port': {'endpoint': {'remote-endpoint': [[271]], 'phandle': 267}}}}
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1p42100-crd.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): '#sound-dai-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1p42100-crd.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): clocks: [[246, 2], [246, 45], [246, 47], [246, 50], [246, 51]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-mtp.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-mtp.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): clocks: [[195, 0], [195, 12], [195, 18], [195, 21], [195, 26]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-csot.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-csot.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): clocks: [[208, 0], [208, 12], [208, 18], [208, 21], [208, 26]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dtb: displayport-controller@ae90000 (qcom,sm8550-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dtb: displayport-controller@ae90000 (qcom,sm8550-dp): clocks: [[192, 2], [192, 12], [192, 15], [192, 18], [192, 19]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akari.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): clocks: [[208, 0], [208, 12], [208, 18], [208, 21], [208, 26]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-griffin.dtb: displayport-controller@ae90000 (qcom,sm8150-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: displayport-controller@ae90000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: displayport-controller@ae98000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: displayport-controller@ae9a000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e001de-devkit.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): clocks: [[258, 2], [258, 45], [258, 47], [258, 50], [258, 51]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[356, 1], [356, 7], [356, 11], [356, 14], [356, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dtb: displayport-controller@ae90000 (qcom,sc8180x-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dtb: displayport-controller@ae98000 (qcom,sc8180x-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dtb: displayport-controller@ae9a000 (qcom,sc8180x-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-xiaomi-pipa.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): clocks: [[199, 0], [199, 12], [199, 18], [199, 21], [199, 26]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-idp.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-idp.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-idp.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[337, 1], [337, 7], [337, 11], [337, 14], [337, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r4.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker-lte.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[366, 1], [366, 7], [366, 11], [366, 14], [366, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-idp2.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-idp2.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-idp2.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[342, 1], [342, 7], [342, 11], [342, 14], [342, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8150-mtp.dtb: displayport-controller@ae90000 (qcom,sm8150-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-apollo.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-evoker.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[361, 1], [361, 7], [361, 11], [361, 14], [361, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dtb: displayport-controller@ae90000 (qcom,sm8350-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-mtp.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dtb: displayport-controller@ae90000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dtb: displayport-controller@ae98000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dtb: displayport-controller@ae9a000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): aux-bus: False schema does not allow {'panel': {'compatible': ['edp-panel'], 'power-supply': [[272]], 'backlight': [[273]], 'port': {'endpoint': {'remote-endpoint': [[274]], 'phandle': 271}}}}
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): '#sound-dai-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): clocks: [[250, 2], [250, 45], [250, 47], [250, 50], [250, 51]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360-lte.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sar2130p-qar2130p.dtb: displayport-controller@ae90000 (qcom,sar2130p-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sar2130p-qar2130p.dtb: displayport-controller@ae90000 (qcom,sar2130p-dp): clocks: [[120, 2], [120, 12], [120, 15], [120, 18], [120, 19]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-lte.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[359, 1], [359, 7], [359, 11], [359, 14], [359, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: displayport-controller@af54000 (qcom,sm8650-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8450-hdk.dtb: displayport-controller@ae90000 (qcom,sm8450-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8350-hdk.dtb: displayport-controller@ae90000 (qcom,sm8350-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[362, 1], [362, 7], [362, 11], [362, 14], [362, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): clocks: [[2, 0], [2, 12], [2, 18], [2, 21], [2, 26]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8450-qrd.dtb: displayport-controller@ae90000 (qcom,sm8450-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dtb: displayport-controller@ae90000 (qcom,sm6350-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dtb: displayport-controller@ae90000 (qcom,sm6350-dp): clocks: [[141, 1], [141, 7], [141, 11], [141, 14], [141, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): clocks: [[2, 0], [2, 12], [2, 18], [2, 21], [2, 26]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8155p-adp.dtb: displayport-controller@ae90000 (qcom,sm8150-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: displayport-controller@ae90000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: displayport-controller@ae98000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: displayport-controller@ae9a000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): aux-bus: False schema does not allow {'panel': {'compatible': ['edp-panel'], 'power-supply': [[268]], 'port': {'endpoint': {'remote-endpoint': [[269]], 'phandle': 267}}}}
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): '#sound-dai-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): clocks: [[246, 2], [246, 45], [246, 47], [246, 50], [246, 51]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme-lte.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme-lte.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme-lte.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[359, 1], [359, 7], [359, 11], [359, 14], [359, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: displayport-controller@ae90000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: displayport-controller@ae98000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: displayport-controller@ae9a000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): aux-bus: False schema does not allow {'panel': {'compatible': ['samsung,atna56ac03', 'samsung,atna33xc20'], 'enable-gpios': [[261, 4, 0]], 'power-supply': [[262]], 'pinctrl-0': [[263]], 'pinctrl-names': ['default'], 'port': {'endpoint': {'remote-endpoint': [[264]], 'phandle': 260}}}}
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): '#sound-dai-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): clocks: [[239, 2], [239, 45], [239, 47], [239, 50], [239, 51]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dtb: displayport-controller@ae90000 (qcom,sm8150-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8150-hdk.dtb: displayport-controller@ae90000 (qcom,sm8150-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8180x-primus.dtb: displayport-controller@ae90000 (qcom,sc8180x-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8180x-primus.dtb: displayport-controller@ae98000 (qcom,sc8180x-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtb: displayport-controller@ae90000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8180x-primus.dtb: displayport-controller@ae9a000 (qcom,sc8180x-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtb: displayport-controller@ae98000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtb: displayport-controller@ae9a000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): aux-bus: False schema does not allow {'panel': {'compatible': ['edp-panel'], 'power-supply': [[276]], 'backlight': [[277]], 'phandle': 603, 'port': {'endpoint': {'remote-endpoint': [[278]], 'phandle': 275}}}}
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): '#sound-dai-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): clocks: [[254, 2], [254, 45], [254, 47], [254, 50], [254, 51]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dtb: displayport-controller@ae90000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dtb: displayport-controller@ae98000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dtb: displayport-controller@ae9a000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): aux-bus: False schema does not allow {'panel': {'compatible': ['edp-panel'], 'power-supply': [[272]], 'backlight': [[273]], 'port': {'endpoint': {'remote-endpoint': [[274]], 'phandle': 271}}}}
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): '#sound-dai-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-hp-elitebook-ultra-g1q.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): clocks: [[250, 2], [250, 45], [250, 47], [250, 50], [250, 51]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-idp.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r10.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: displayport-controller@ae90000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: displayport-controller@ae98000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: displayport-controller@ae9a000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): aux-bus: False schema does not allow {'panel': {'compatible': ['edp-panel'], 'backlight': [[266]], 'power-supply': [[267]], 'port': {'endpoint': {'remote-endpoint': [[268]], 'phandle': 265}}}}
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): '#sound-dai-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): clocks: [[244, 2], [244, 45], [244, 47], [244, 50], [244, 51]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-parade.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie-nvme.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[354, 1], [354, 7], [354, 11], [354, 14], [354, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[345, 1], [345, 7], [345, 11], [345, 14], [345, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[352, 1], [352, 7], [352, 11], [352, 14], [352, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-ti.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[327, 1], [327, 7], [327, 11], [327, 14], [327, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-crd.dtb: displayport-controller@ae90000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-crd.dtb: displayport-controller@ae98000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-crd.dtb: displayport-controller@ae9a000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-crd.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-crd.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): aux-bus: False schema does not allow {'panel': {'compatible': ['samsung,atna45af01', 'samsung,atna33xc20'], 'enable-gpios': [[278, 4, 0]], 'power-supply': [[279]], 'pinctrl-0': [[280]], 'pinctrl-names': ['default'], 'port': {'endpoint': {'remote-endpoint': [[281]], 'phandle': 277}}}}
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-crd.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): '#sound-dai-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-crd.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): clocks: [[256, 2], [256, 45], [256, 47], [256, 50], [256, 51]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama-akatsuki.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-ti.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8295p-adp.dtb: displayport-controller@ae90000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8295p-adp.dtb: displayport-controller@ae98000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8295p-adp.dtb: displayport-controller@ae9a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8295p-adp.dtb: displayport-controller@aea0000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8295p-adp.dtb: displayport-controller@aea0000 (qcom,sc8280xp-dp): clocks: [[145, 5], [145, 47], [145, 49], [145, 52], [145, 53]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8295p-adp.dtb: displayport-controller@22090000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8295p-adp.dtb: displayport-controller@22098000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8295p-adp.dtb: displayport-controller@2209a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8295p-adp.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8295p-adp.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): clocks: [[121, 5], [121, 47], [121, 49], [121, 52], [121, 53]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8550-hdk.dtb: displayport-controller@ae90000 (qcom,sm8550-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8550-hdk.dtb: displayport-controller@ae90000 (qcom,sm8550-dp): clocks: [[214, 2], [214, 12], [214, 15], [214, 18], [214, 19]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: displayport-controller@ae90000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: displayport-controller@ae98000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: displayport-controller@ae9a000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): aux-bus: False schema does not allow {'panel': {'compatible': ['edp-panel'], 'backlight': [[266]], 'power-supply': [[267]], 'port': {'endpoint': {'remote-endpoint': [[268]], 'phandle': 265}}}}
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): '#sound-dai-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: displayport-controller@aea0000 (qcom,x1e80100-dp): clocks: [[244, 2], [244, 45], [244, 47], [244, 50], [244, 51]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: displayport-controller@af54000 (qcom,sm8650-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dtb: displayport-controller@ae90000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dtb: displayport-controller@ae98000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dtb: displayport-controller@ae9a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dtb: displayport-controller@aea0000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dtb: displayport-controller@aea0000 (qcom,sc8280xp-dp): clocks: [[169, 5], [169, 47], [169, 49], [169, 52], [169, 53]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[337, 1], [337, 7], [337, 11], [337, 14], [337, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dtb: displayport-controller@22090000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dtb: displayport-controller@22098000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dtb: displayport-controller@2209a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): clocks: [[144, 5], [144, 47], [144, 49], [144, 52], [144, 53]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm6350-sony-xperia-lena-pdx213.dtb: displayport-controller@ae90000 (qcom,sm6350-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm6350-sony-xperia-lena-pdx213.dtb: displayport-controller@ae90000 (qcom,sm6350-dp): clocks: [[127, 1], [127, 7], [127, 11], [127, 14], [127, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel-lte-parade.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-bahamut.dtb: displayport-controller@ae90000 (qcom,sm8150-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-hdk.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8250-hdk.dtb: displayport-controller@ae90000 (qcom,sm8250-dp): clocks: [[195, 0], [195, 12], [195, 18], [195, 21], [195, 26]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8650-qrd.dtb: displayport-controller@af54000 (qcom,sm8650-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: displayport-controller@ae90000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: displayport-controller@ae98000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: displayport-controller@ae9a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: displayport-controller@aea0000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: displayport-controller@aea0000 (qcom,sc8280xp-dp): clocks: [[150, 5], [150, 47], [150, 49], [150, 52], [150, 53]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: displayport-controller@22090000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: displayport-controller@22098000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: displayport-controller@2209a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): clocks: [[128, 5], [128, 47], [128, 49], [128, 52], [128, 53]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb: displayport-controller@ae90000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb: displayport-controller@ae98000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb: displayport-controller@ae9a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb: displayport-controller@aea0000 (qcom,sc8280xp-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb: displayport-controller@22090000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb: displayport-controller@22098000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb: displayport-controller@2209a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): clocks: [[139, 5], [139, 47], [139, 49], [139, 52], [139, 53]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r1-lte.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[357, 1], [357, 7], [357, 11], [357, 14], [357, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dtb: displayport-controller@ae90000 (qcom,sm8350-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: displayport-controller@ae90000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: displayport-controller@ae98000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: displayport-controller@ae9a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: displayport-controller@aea0000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: displayport-controller@aea0000 (qcom,sc8280xp-dp): clocks: [[141, 5], [141, 47], [141, 49], [141, 52], [141, 53]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: displayport-controller@22090000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: displayport-controller@22098000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: displayport-controller@2209a000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: displayport-controller@220a0000 (qcom,sc8280xp-dp): clocks: [[118, 5], [118, 47], [118, 49], [118, 52], [118, 53]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dtb: displayport-controller@ae90000 (qcom,sm8550-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dtb: displayport-controller@ae90000 (qcom,sm8550-dp): clocks: [[185, 2], [185, 12], [185, 15], [185, 18], [185, 19]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-db845c.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8350-mtp.dtb: displayport-controller@ae90000 (qcom,sm8350-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dtb: edp@aea0000 (qcom,sc7280-edp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7280-herobrine-villager-r0.dtb: displayport-controller@ae90000 (qcom,sc7280-dp): clocks: [[352, 1], [352, 7], [352, 11], [352, 14], [352, 15]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx223.dtb: displayport-controller@ae90000 (qcom,sm8450-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara-pdx224.dtb: displayport-controller@ae90000 (qcom,sm8450-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sm7125-xiaomi-joyeuse.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r10.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0-lte.dtb: displayport-controller@ae90000 (qcom,sc7180-dp): 'assigned-clock-parents' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+
+
+
+
+
 
