@@ -1,83 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-60043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4870CACAAE3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 10:51:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BA50ACAAEF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 10:56:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0854F175532
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 08:51:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 99696189B82A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 08:56:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A21ED1DD0C7;
-	Mon,  2 Jun 2025 08:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAA781DDC2C;
+	Mon,  2 Jun 2025 08:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SK9RzsCT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T7ooV9LD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61BA1DB366
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jun 2025 08:51:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001CF19DFA7
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jun 2025 08:56:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748854307; cv=none; b=frPYWGEQtIJe1k+sBAL5ZAd3h9ga3hG3+xtRur/+2AvAMfNWI4F3TrDsnfkjsDgVqAQN4gMzVM67Ukjbv/vtAZB5pbUGJUWCqjDPi48i8ck0LrBKLvcK1vJk1ZBtt7+Zh3wdAxKQuBIShqDV5ofHUzWOtyUMhZK1zQhRZ5tXaeU=
+	t=1748854562; cv=none; b=jYa5QYamfrv5okmpe/cV7PUh+uooSxZlGMI7VzwMrKvWZOdHNpYej0oW0oxtj55DRGMhcINB5pVqfWHxzf3mLLhcVzWexYKHpcrtcTnIlRAgFV1wyR+rWTyuOSgVr4udfsRn/JZmrrDFzqEpwit8+pdK+2n09O7zjNBK7kZcXdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748854307; c=relaxed/simple;
-	bh=S1ZoQX8VLLa/Yp+NlWT4GL2uz7nxiDybAElFK9ejljE=;
+	s=arc-20240116; t=1748854562; c=relaxed/simple;
+	bh=oTbng+godhHg8e/ijVxCjzCR8UfcEq5jqExNxTsgaw0=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Fl3Fq7vbz9q62EuwD0+8kIXWQvpxznPp12WZTJgaUtL1vCuEx01lwu5aCSOdx2CnOtF62T4y2iPO7IN/BkJojLbFjLwVP6bYK/F6UatDtQIFS9TICz8dgEZfBoHxx6dIpVrImrc4IEfbtdE5JHFE2yFt3yEGdGIstf4+xBxx2EQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SK9RzsCT; arc=none smtp.client-ip=209.85.128.43
+	 In-Reply-To:Content-Type; b=HMnh487eW/8fGSufCnsyEeH4BQea3iuZTc8FJZUndCyCFSmfktRVYv/0NMvBpE1CPH5J/xg1xo/jjleGlMSslxF5TzYYua1B7/MLEY9Kfua1WVdyGeIGMQaNCKWAR+tdZdMTvjoApVQHojJSIi5RHDFdWB5jX70dHNfMgGuEmb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T7ooV9LD; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-451d3f72391so17361405e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jun 2025 01:51:45 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4508287895dso29342705e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jun 2025 01:56:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748854304; x=1749459104; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1748854559; x=1749459359; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=RFJh+DuLiwxEu1n2YgqypgEN6GoFc9By/45N27OkGW0=;
-        b=SK9RzsCTzhICFVLNtu3H2ZJ/AHxsl/rYD4Dsi9AYBtB1bPnVBJiksHXuTpWYzqzMlp
-         xycT8HG5F3kVV49r2UpZt5eIuuXhVz1pRjVd/oh63CJXUy/0mL5tPrIARW++QVvvzeA8
-         c5dCkclo3kWZVWQiLBbmAY5MiJAXH/lBxoD0jNe0bJ6vCTD/SAkqHipUUWUP/+e7i1B5
-         x8I8LTU/bT0MnQ61BqTPsbL3aI8R1NVlkxc2N5sbt1SVciWUGs+TC4V0Vvi2IwMMneB/
-         LEyNx9JrcPVof2ivaTEQTyZO4VJU750Zj+LNYMwoybJ86QYL9Naz5YJUMaxTr674ePO2
-         BYeg==
+        bh=7QYD6lw/8riHbGeOafpIw3lxHQ0yDfZV96sQp+2PqGY=;
+        b=T7ooV9LDEVXpqtiJNqPbW3ZJw0MKhz+yGDQqqPTScxrkYiigunDfx2XmGT+DM4s6i+
+         whEdONWixsxje45opmCXf3uaEjEQyT0ACsp38ki9JRBiuwlv2vJZEdJ9oRlh2pzuBTGj
+         UpDLjVpIEkYfgpAfBgNozmacdlU/Nf0PEYWXzKVz8jmelZQu8wYVe1pyubZirwXlAtKm
+         cEVzYkOHjXM0CdZJv+QQmK1Pgikuap4ULZtfMQEm2w59NBW+5kL2cjUzBZRTZUV3ORcv
+         kFyze5gl12g5AD6dKqumV/BqrQ2KSBpF+7YKAIYFY17M4IOvdfFT3BfBwuUSDHIDXRJT
+         JpUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748854304; x=1749459104;
+        d=1e100.net; s=20230601; t=1748854559; x=1749459359;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=RFJh+DuLiwxEu1n2YgqypgEN6GoFc9By/45N27OkGW0=;
-        b=lqIKCg7Dzh6p8jRVNcP7Dk4pZMOCi1fFYvlpx5WJI9QXPJ67I6rVplgwhvnCyyYlxt
-         HsaXit+kSAZBEJlmCfGrcn21jGM9yXM+gGKwk1/FTabfRh01/5Wi55DBsLFsMS4c7gS0
-         vdttRj7gWCIdbpSCy/WwdALhq8qReupUzbXOT+LsiAWMqAA/0f9GhfJ9uyvUBDYKZ9l8
-         9JqVdm00cf9wsb8oUpv+ZMlO0/Uqv648Ohs/n+R6Tp0M3PNWNnXu3YD2an8WuVXX36Gt
-         IcC9r0PPbDTnDshZjf86jjw380M+uVozg0RRNjo+u+sNDpcw0AGxIi/JIfJ1ip1P02+R
-         kcLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU76xau3eGSkkbYNu49TJsA8rK/PmuIgcSVqRUKBxzKtRNjyPCnXQgwaUUm+oV67EzdE77Ur3UDKxGqJSVm@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQcJjLe3m2IZxBZxa53b3ni68mrEabF4a9BYjhySSlMdZ+a8Ne
-	A1T2lq1neCAM8CI1HQHhpwE11EiKbRF2yzULdZLPzAFv/zNxFLr+YPVbX9hP6bmsXqpJ2tPbBYz
-	5lm/d
-X-Gm-Gg: ASbGncvsTMA1VF05c4nTZYvdx/dEFx7vIDbl5twOYcbvqbEKt6UTSQ49/wkbWBa6Hfp
-	/cDjR/jqK/Q7oTo3JTppD+cMsCgPVIBnSNRDBc0X/VC6rT6NreQN9pZ14RtqZjhPt74CRIxkgGc
-	F8ItwbtIdOCqw+3KH3e4/6IkQQUB9VdQvkfJcnY3SKBduYxPBedVLiTyhFB0OlZdu5OQXblTw9W
-	Xs+C7uxMs6ll6aZGCrPrB6yy6ViXN4ZeehX0D/K+TO/5uD+3vfddOYS4augHJTn8oyjv+ek1NVA
-	Q1+nPWU8JWPC0SdT0msrD1UU8cHYlnaFD0So5+FOBbWFX8iTj+Ncus41Hzv/JudgxjOfzvBIlzS
-	BISwjc+yBjQV6zRvHCU4eTNdddw==
-X-Google-Smtp-Source: AGHT+IEpZ4uYY0OxpZRgywYsVbDjtZe7g9aPxe4qMbr12yKzPvbkxYVNJIXxVCur5zyKIsg1pF8akA==
-X-Received: by 2002:a05:600c:1d0b:b0:450:d01f:de6f with SMTP id 5b1f17b1804b1-450d881dae9mr102185795e9.15.1748854303883;
-        Mon, 02 Jun 2025 01:51:43 -0700 (PDT)
+        bh=7QYD6lw/8riHbGeOafpIw3lxHQ0yDfZV96sQp+2PqGY=;
+        b=VJCnTwU95RJgX7Ec8jX8dISlF2uJ1HKLG3cjiPM1YotLYFrjnhsKkp8Yt5xZ3OaXKt
+         gZHR7DWojR9JTY43v4tfZEgg0LFcCdcyyOVGrVeL+9ls1LJgQAQ6aTTuMpznHrInrvUT
+         MKhKsYv5vH902F5nYP+vyd7Nvzz32uVm//XptLpLFbmj94jDUzO+lVZYaOuU6Rh1yvov
+         f5JLch4+EfizYVvwRgoeRZ0zh2q6QpopCAqG8T45Ict66ZTAOdy6sMHXYYRdUyNm2Y5D
+         U6xmTT9a2nl+oF4BzmDxDMFN1HEYIno9C+vIvWQVkI5cjdwZZ4Jn7N2/3llQXWnDIgfL
+         iOhw==
+X-Forwarded-Encrypted: i=1; AJvYcCW8L2hPO4Zbiv19RmHuKuclaVulwEILzpuz1ht/m60/48qA3Qk3ro/FlefsxxocThX1uHsWU9/8JO3N0uoI@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPhs6Oj9MXTbWRH+UGsbUoKDT9EHUECtGOifIxffJy4oOinQb9
+	6orxrg3NcmMyvTzJwon9FtadFmK6GCSH6lCYnUooyGApkqe8YWiNCqHvxSFzmti3SvM=
+X-Gm-Gg: ASbGncvmsEPjF+i4GBFuxy9gPNzFCL0JOx/IiNHtzTEdiQjPXSw/opQB4exflWs6jbZ
+	HKL0r//cmKcdldBQ0bw403M9NKcLDAvgvPKb0ojo0+FwfG/aKJyVXGIE0BJOOW/UmdR/ZWRLkGS
+	oL8tbKfCZBhr8pnMB28gxSF5YT2pHRmgdmsGNGydW440aI///hGhEFP3ZrxJJTNB2c2tztZ1r9R
+	23NHgOJDpfjdNGU76Rn2fDdnjUfrA1R4HSzoosJdQPeG+tLxpTzRqhHOPzNhRLFHlth49Kw9DVn
+	IYmGVPag0c16T3ZWt1SR5tJ9YS9Yv0BGF7TWKnvMBqDgtz3syf1qDx1ke6Q4fRuULRuS/2a/ilI
+	8+U+Pe7ahCnECu/XgQjMnr96yZg==
+X-Google-Smtp-Source: AGHT+IERLKrJn1bEwrp3LKtii6LGu0HD8bbK3tSawKryKIi92EyAnI21DVniaXqIS0xT91UU9mDP+Q==
+X-Received: by 2002:adf:f604:0:b0:3a4:f7ae:77c9 with SMTP id ffacd0b85a97d-3a4f7ae783bmr8182583f8f.5.1748854559244;
+        Mon, 02 Jun 2025 01:55:59 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:3d9:2080:cb6:30c6:d7ab:d145? ([2a01:e0a:3d9:2080:cb6:30c6:d7ab:d145])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4efe5b79asm13831459f8f.2.2025.06.02.01.51.43
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4f00972c1sm14297282f8f.68.2025.06.02.01.55.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jun 2025 01:51:43 -0700 (PDT)
-Message-ID: <ac476285-9ba0-48ba-87d5-416bed395948@linaro.org>
-Date: Mon, 2 Jun 2025 10:51:42 +0200
+        Mon, 02 Jun 2025 01:55:58 -0700 (PDT)
+Message-ID: <75dde9a2-3c0d-481b-bc73-089ba89a77e0@linaro.org>
+Date: Mon, 2 Jun 2025 10:55:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,22 +86,25 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v3 5/6] phy: qcom: qmp-combo: register a typec mux to
- change the QMPPHY_MODE
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/6] arm64: qcom: allow up to 4 lanes for the Type-C
+ DisplayPort Altmode
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Cc: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
  Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
  Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzk@kernel.org>
 References: <20250527-topic-4ln_dp_respin-v3-0-f9a0763ec289@oss.qualcomm.com>
- <20250527-topic-4ln_dp_respin-v3-5-f9a0763ec289@oss.qualcomm.com>
- <itmvwhcf37bmnpadcyc7kdt7wx3eljyjwyv64s24zwhbr2e45g@76uzcpjqzx22>
- <7f464eb7-469c-4350-a43a-3b99394ad689@oss.qualcomm.com>
- <7icpna4l7z63gs52oa5lqf35puib66wxxmqqul6ezdkhuziaqi@mvkf73zz2iyj>
+ <styd5gjksbsqt7efylpfn6bgwgyvt6zexxiooihjsnmp25yigp@unq7dor6gso2>
+ <447c3b13-8d6d-4bcb-83c1-9456b915a77e@oss.qualcomm.com>
+ <inpfuxskvmrebxitqtqwzvpnpicibo6zakgk4ujpcrqrpef2vw@nhclj5rg7axr>
+ <9037fefe-aa40-4884-97ee-b81ff8346944@oss.qualcomm.com>
+ <htufwjvfgdtav2gtgrytc356py6xqhrffbwjg42sgo7k4zzxof@z4xaf35qz7kq>
+ <aa17d7d4-b77d-4a0a-88c3-86255dfbc29d@oss.qualcomm.com>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -129,92 +131,83 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <7icpna4l7z63gs52oa5lqf35puib66wxxmqqul6ezdkhuziaqi@mvkf73zz2iyj>
+In-Reply-To: <aa17d7d4-b77d-4a0a-88c3-86255dfbc29d@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 28/05/2025 10:58, Dmitry Baryshkov wrote:
-> On Wed, May 28, 2025 at 12:22:01AM +0200, Konrad Dybcio wrote:
->> On 5/27/25 11:55 PM, Dmitry Baryshkov wrote:
->>> On Tue, May 27, 2025 at 10:40:07PM +0200, Konrad Dybcio wrote:
->>>> From: Neil Armstrong <neil.armstrong@linaro.org>
+On 28/05/2025 18:56, Konrad Dybcio wrote:
+> On 5/28/25 1:22 PM, Dmitry Baryshkov wrote:
+>> On Wed, May 28, 2025 at 01:13:26PM +0200, Konrad Dybcio wrote:
+>>> On 5/28/25 11:00 AM, Dmitry Baryshkov wrote:
+>>>> On Wed, May 28, 2025 at 12:24:02AM +0200, Konrad Dybcio wrote:
+>>>>> On 5/27/25 11:10 PM, Dmitry Baryshkov wrote:
+>>>>>> On Tue, May 27, 2025 at 10:40:02PM +0200, Konrad Dybcio wrote:
+>>>>>>> Register a typec mux in order to change the PHY mode on the Type-C
+>>>>>>> mux events depending on the mode and the svid when in Altmode setup.
+>>>>>>>
+>>>>>>> The DisplayPort phy should be left enabled if is still powered on
+>>>>>>> by the DRM DisplayPort controller, so bail out until the DisplayPort
+>>>>>>> PHY is not powered off.
+>>>>>>
+>>>>>> This series doesn't seem to solve the USB side of a problem. When the
+>>>>>> PHY is being switch to the 4-lane mode, USB controller looses PIPE
+>>>>>> clock, so it needs to be switched to the USB-2 mode.
+>>>>>
+>>>>> I didn't find issues with that on X13s.. Not sure if it's related, but
+>>>>> on the SL7, after plugging in a 4ln DP connection, I need to plug in
+>>>>> the USB thumb drive twice for the first time (only in that sequence)
 >>>>
->>>> Register a typec mux in order to change the PHY mode on the Type-C
->>>> mux events depending on the mode and the svid when in Altmode setup.
+>>>> Might be.
 >>>>
->>>> The DisplayPort phy should be left enabled if is still powered on
->>>> by the DRM DisplayPort controller, so bail out until the DisplayPort
->>>> PHY is not powered off.
+>>>>> But there's nothing interesting in dmesg and the phy seems to be
+>>>>> programmed with the same values on both the initial and the subsequent
+>>>>> working plug-in
 >>>>
->>>> The Type-C Mode/SVID only changes on plug/unplug, and USB SAFE states
->>>> will be set in between of USB-Only, Combo and DisplayPort Only so
->>>> this will leave enough time to the DRM DisplayPort controller to
->>>> turn of the DisplayPort PHY.
->>>>
->>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>>> [konrad: renaming, rewording, bug fixes]
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>>> ---
->>
->> [...]
->>
->>>> +	} else {
->>>> +		/* Fall back to USB3+DP mode if we're not sure it's strictly USB3-only */
+>>>> Please try using a DP dongle with USB 2 passthrough (there are some).
+>>>> Or just emulate this by enabling DP PHY / DP chain for plugged in USB3
+>>>> devices. Would you be able to see the USB device on a bus?
 >>>
->>> Why? if the SID is not DP, then there can't be a DP stream.
+>>> I only have a dongle with both display and usb that does 2ln dp
+>>> (I tested 4ln dp on a type-c display that I don't think has a hub)
 >>>
->>>> +		if (state->mode == TYPEC_MODE_USB3 || state->mode == TYPEC_STATE_USB)
->>>> +			new_mode = QMPPHY_MODE_USB3_ONLY;
->>>> +		else
->>>> +			new_mode = QMPPHY_MODE_USB3DP;
->>
->> To be honest I don't really know.. Neil chose to do that, but I don't
->> think there's a strict requirement.. Should we default to 4ln-USB3?
-> 
-> Yes, QMPPHY_MODE_USB3_ONLY. Nit: there is no 4ln-USB3 (it is a special
-> mode). We handle 2ln-USB3 only.
-> 
->>
->> [...]
->>
->>> Consider the following scenario: connect DP dongle, use modetest to
->>> setup DP stream, disconnect dongle, connect USB3 device. What would be
->>> the actual state of the PHY? Modetest is still running, so DP stream is
->>> not going to be shut down from the driver.
+>>> USB3 - yes, USB2 - no (but it works after a replug)
 >>>
->>> I think we might need a generic notifier from the PHY to the user,
->>> telling that the PHY is going away (or just that the PHY is changing the
->>> state). Then it would be usable by both the DP and USB drivers to let
->>> them know that they should toggle the state.
+>>> Are you talking about essentially doing qcom,select-utmi-as-pipe-clk
+>>> at runtime?
 >>
->>
->> If modetest won't stop running even though there was a DP unplug
->> (and therefore presumably a destruction of the display), I don't
->> think things are designed very well
+>> I think so.
 > 
-> They are, but differently. Display settings are always controlled by
-> DRM clients (typically, a userspace compositor). They can decide to
-> send data to unconnected display, they can decide to ignore HPD events,
-> etc. Even if userspace responds to the event, there always will be some
-> delay. I choose modetest, because it's a particularly good example of a
-> delay going to the infinity.
+> So after quite some time playing with that, I noticed that the USB2
+> device was never actually kicked off the bus.. and works totally fine
+> after connecting the display output (2ln DP)
 > 
+> I was looking at dmesg, checking for discovery/disconnect messages,
+> but the device was simply never disconnected (which makes sense given
+> repurposing USB3 TX/RX lanes doesn't affect the D+/D- of USB2)
+> 
+> I also read some docs and learnt that what we call
+> qcom,select-utmi-as-pipe-clk is suppossed to be a debug feature
+> and is unnecessary to set on USB2.0-only controllers
+> 
+> The USB controller programming guide though doesn't talk about DP,
+> but I'd expect that we may need to set that override for 4lnDP+USB2
+> use cases (which I don't have a dongle for)
 
-DP link state is handled separately from the DRM state, if you look at the
-MSM/DP, you get the following calls on an hdp event:
-dp_bridge_hpd_notify
-hpd_event_thread
-dp_hpd_unplug_handle
-dp_ctrl_off_link
-phy_power_off
-dp_display_host_phy_exit
-phy_exit
+Yeah basically we need to:
+1) power-off the USB3 PHY
+2) switch to UTMI clock
 
-independently of any DRM state change, DRM will be notified at the end of
-a disconnect with dp_display_notify_disconnect().
+In the following states:
+- USB safe mode (USB2 lanes may still be connected)
+- 4lanes DP mode
+- DP-only mode
 
-So even with a modeset running, phy will disabled following an UCSI disconnect
-event.
+But for this, the dwc3 should also get USB-C events with an addition mode-switch property.
+The flatten DWC3 node now allows that !
 
 Neil
+
+> 
+> Konrad
+
 
