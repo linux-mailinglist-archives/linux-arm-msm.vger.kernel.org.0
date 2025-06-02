@@ -1,140 +1,374 @@
-Return-Path: <linux-arm-msm+bounces-60037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77E0BACAA67
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 10:10:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46432ACAA7C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 10:20:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D0993A88F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 08:09:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4C368189A623
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 08:20:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 304851CAA96;
-	Mon,  2 Jun 2025 08:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C78481B85C5;
+	Mon,  2 Jun 2025 08:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gvP28q/W"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HLACAx3u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421A119CC29
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jun 2025 08:09:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D892C3240;
+	Mon,  2 Jun 2025 08:20:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748851801; cv=none; b=WAi9tDpXwS8zlum/Qhk1pwKh+UrgPmxWiFOUrXajWkGAHppK/6aPgVCHblCDeCRoLDOcq31usxu0qTbDmx3T+OG7kDPe1loS3I+d+rgNpa7cKg6Wvy6gnm0IjJAUVBauqWf4HFOg6ojePv1b+T+yhDdVCHvC2F0qZ+y5Dyb1EBQ=
+	t=1748852408; cv=none; b=fUQn4aR//3OQRtQiH5s/d4yfOGy3wBHEGn5xkSTGWhuLu7ttQZTLXp0TTqrIBx9KxwYP3NqcMQphCxj/GghJYFIAlWj9ONrWfWVEJC6rC0jLi8hKkZ0RS/0VpWhcNbMDxgKIhF8FmCQKlySQ+u4M3EAAld2UiR3x/m4GTET90X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748851801; c=relaxed/simple;
-	bh=UxuN13PmIdB/x/BlClqWyqnfkQfE0IdtSqDqp9f4HX8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jjg7w/Mvs35ePdogpkcA4G30NqK79rN7dfNQ53uYDud9JN6u+954s5/yGcCQD7BJXdN9QNTsKpmEWHUKr9Wq3ZihD3+6oOv30NKWRZ4t1PlflHdg8sDovSoRWHmLXLX0PPZPYgWN5WEYy6caaei7A1hKFgUSfeSA+2hRmkcxcN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gvP28q/W; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-604bf67b515so7413294a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jun 2025 01:09:57 -0700 (PDT)
+	s=arc-20240116; t=1748852408; c=relaxed/simple;
+	bh=wQmdVQzhmACE/iLA+CILuPts2LFooLyztYYbLPdIp3I=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jqAyJloMFaqLclZPF43EqL4aMma9vwEAES5FAbCwLANHF2utDsefyQfv7g+JzcOXh3VwslVdJk1TGEfnSwAT1/7A52S2Qz8xcWbP09comPAtyEKde6yO+w9+8jn8isbEU+tTyA+SI8azOGSt7IBOLixrQIl2LBZ9aOzh2urJXiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HLACAx3u; arc=none smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-735a9e65471so2509004a34.1;
+        Mon, 02 Jun 2025 01:20:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748851796; x=1749456596; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WM86YJxMluttKbsSnclJLccOcH+h2GT9X8ahniFV+r0=;
-        b=gvP28q/WinmLrQfEaPCqypmquUgw+vWqJ0uy4+BhlX7mdZSC8yEhHPd+dLDrfMyZXg
-         PCfjLW6bCJUuQl+WaU/uKX+DS29v8PC7U6BUWZKjumh9qbR8aphCpgN4Jow4KetG3dfB
-         ainwyxsvCLmZMtSLb63QrQqvs6DQYBNOIQAqNJgUp+UdfNhNSQC9WQWnF5s7cc52mHVL
-         09ENqn1kLr+I/Tbrua9h0iZVzGiR3L2iPjf9eZjV3kjmJiILv2gSIyZdo/ohVhBQb4PM
-         omnDlQeqHVEI/ef6WF2qNE8QFJd0hqWyEKUh1P79L9RasABs9ECbWYIAdCe2930SUkvX
-         6/Jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748851796; x=1749456596;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1748852406; x=1749457206; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WM86YJxMluttKbsSnclJLccOcH+h2GT9X8ahniFV+r0=;
-        b=iY9i94Uf4aDSwJ7PSKuuggWYhTP82VXCcwaDMNlqommswILNKdORYJnlXqtRcUXT/w
-         v9W5oM49+VVKDzlCdcKHaQodl8ukmH0M0DkHv+Z+3ay+Rqqs1UZrSS3qpuniaN5TEkqR
-         SUXDefHHGzaC+hBEjT9IJ/wP6gIrLL8fM381raah6AUT6Ut9zUx+D95vrCxlPfMOD0/w
-         hpqHHt7y8KR8km0TFGRgd9NH5EZm1YYEOG9Rlv02mCPflZg2o956XqzgH1B4szYxEP9u
-         Xv3mAJLgB5/9DS8NRvMugZet7tJNEfVCftJAOox7UqHarFjPlx+0YTrsYIs60gpYzhpn
-         ZTAg==
-X-Forwarded-Encrypted: i=1; AJvYcCXA/ptaP1wk9rDk/yjCX5p7eovPBGSDY7M3N3jvijXx3K63AfKZYonzJDe+Sqj1ndkjAJ3oDeivOL8i1jwr@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8ufoc0fS04fR2NMa3NYK2LWcAe58x5CJmc+XHrD1Zuqn6YC8X
-	PjD3SBePnKnVLKB8siNs/UZqg6sI01U+RvsRADJwxGDprCyS1DuXaL7Cva7kQPdN5Vk=
-X-Gm-Gg: ASbGncuE5SjMFq/JkZR5VnZdTYWHsdqnGDxd08npixYCCP2Izt44beuN+2jANQYK1gZ
-	O6HrgTHFK9JewAWvQSK/RnVjirJsPrrIAQyqgCG1Ogko41UjKQIfuFRvZnfX0KfQDEo43A9GeOw
-	N+9SdqTWIOJgYLs+DCZ6wKCAiaril4iG7+JZBs/V4niqyb1EXTeh0GdUhBi+PppO/KWXqM8jGei
-	2D/PjHqoS2FcvPZ/WgH/WVloDA0i6/Nhm8iqhHgdvCExG0D+dD99azd4QQucLi/dZIJk9p/bonq
-	KMUW/fIMuT3nEgkCY3xW7G04RY5ZCgxzpP6VWOpfS67y/NGxIeAwhoPN613ytpM=
-X-Google-Smtp-Source: AGHT+IFeKHggw4Jv/SBl+EY7f7TWu4S/aefMDT8Wy8nBVqk5RywZ+kVMfbcR7IM0tMLybaVfbxltWg==
-X-Received: by 2002:a17:907:724b:b0:adb:2bb2:50a8 with SMTP id a640c23a62f3a-adb36b316e0mr998861666b.21.1748851796351;
-        Mon, 02 Jun 2025 01:09:56 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:ef30:ab8c:6d23:1cdc:f4f8])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ada5e2befaesm767977166b.104.2025.06.02.01.09.55
+        bh=Q4AIXpAJK6Qh4J225/GkriMkqC1GAmPuK8nWyY+CVyU=;
+        b=HLACAx3uE4Ijcv0DzSM0mFL+AEWZG/6njkrp6f1uj8AJHEyV3Ggq9loMQ8DFci7Bsy
+         Oya6RcLQybRy6PU+1BdO1Sybx29+cwe9J6BtV6K4IwdqgzZpZU3FgxDOPDqUh1xBatJj
+         NsQSnN1cW+TYIwSLkERJroj5fgJwnyuIeI8VPc2M/GH7KgFLRDM8tK4llXr33VVb7LcL
+         CajQrz+mLE1oGigFwBuVG4vX8hFrN/TjjQs+Y1vZNTjXLLL4qip73Er6Y6QbrXiNlugI
+         Yh1x6EcfuIQ9tGWzEhEKYp//4e2HEKOAPbDHT30+tyO5kNl1JLYsqW4WeZuGtvQI/mdE
+         sXbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748852406; x=1749457206;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Q4AIXpAJK6Qh4J225/GkriMkqC1GAmPuK8nWyY+CVyU=;
+        b=Z0HgGx0QtqKw9p0EdroZ0XTXitIGR9+n+PaSq3ZlCo7NisMZL0yeggJ1geYoCwstnB
+         GwGqaoCFR/G8gd1nFdGLsEeTfycgFUFvxmZGiQeHy2aNPQuzd2M5AIgWterEZNtnmoxL
+         5Mpit+XZCFzDjmfapV/pOF/6/kbIDOBQtWz1QdIcMROTj5FgC6nC/R2l5GBUg0aanSK+
+         eNOoLRc0b1vf2B4hWyBtj+vOEVNz6qPVht2YaamwMHn/GgsJaNCHi2XGMKqcQDFMol4e
+         1BErbLaSAivC9guwONFinE1gYm4CIeucH00E+4CZBop2KlsY2PHK0Fx99AH2OZYhLHUt
+         JSWg==
+X-Forwarded-Encrypted: i=1; AJvYcCWWQiX8DMEXkwESyTNOYc0M0DOnjkrw5oxVVvdYytwhvwWIBR2X+0la+1E+mARP5knG3sPvmEDBQRRm@vger.kernel.org, AJvYcCXJH78G5lFTaX8ikF1eIkS3YD/uEz6MP6oQ8nMY85QTIsgH6bXou/2TOZ+T181m9L7SoLlqEyiMUf5qZpQdWA==@vger.kernel.org, AJvYcCXkanib/KNqcKyBTYceFyzGZ6/MZ+kzxTwrw/+pBVyWFp4Y+MJI+VYfeXFTCfdG/+TvdH+hSEl69DJfn9iH@vger.kernel.org
+X-Gm-Message-State: AOJu0YxOS4B90LnQN3HZj1DXLxpNjK5TmOK7LTVP/VK8E+1PBekCjORx
+	GBVFs3wBPCxYr8nLX1g4D5Rt9rBY64h63zn/gf5y6kwR+ZLoeng1jT53UpujjOv+
+X-Gm-Gg: ASbGncvsr2pIjEhFJU3sd+r2dELr0okOdbFgZU0TKwi8FQuy26cDdyRGJkeGz6dxiWZ
+	5Rzbki2et8fYA36bx3eOosMyy5wD0+4+VHGqIqgCihDNBDg/Eekow9Qu4EOIv7cmT2/OMRSo92K
+	Vbw6/cRpQUQuhNkcihGS/BSVKWd6A5RXpaanga5O4GscCBtpRce4n5/Jpb6tYd7bEfADjhTShtP
+	ppFlESfsReDRZlGMLipacV40d3mWfK5mCgzQJgL7epojhLIXaK4BJP4DIDVfRRWIpPJh0ymtOqQ
+	WN4FrbeF2I8yQQO5oQHcb6H2G0Ho/30RuxHbl6IZxsgbxCezG26ofUNvWYKm1e3k+9F7my3w6HA
+	ipPlg+Bmy6FRG+9IdbrdWypxfo3SHYAo8cfFiNKQgmrxe+0CbPCXIX/oyGws1Efi6+Q==
+X-Google-Smtp-Source: AGHT+IHclKPqTOEZunbGOPTiEBJQffpUA66wP9SE4O0rQUc1IFZNJvvRVQISZwHrq/VB+kDIa3fxPA==
+X-Received: by 2002:a05:6a00:124b:b0:736:5822:74b4 with SMTP id d2e1a72fcca58-747bda09fb4mr16568976b3a.21.1748852395128;
+        Mon, 02 Jun 2025 01:19:55 -0700 (PDT)
+Received: from localhost.localdomain (ec2-13-229-131-224.ap-southeast-1.compute.amazonaws.com. [13.229.131.224])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-747affcf2f9sm7101372b3a.127.2025.06.02.01.19.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jun 2025 01:09:55 -0700 (PDT)
-Date: Mon, 2 Jun 2025 10:09:52 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Mon, 02 Jun 2025 01:19:54 -0700 (PDT)
+From: binarycraft007 <elliot.huang.signed@gmail.com>
+To: andersson@kernel.org
+Cc: conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	johan@kernel.org,
+	konrad.dybcio@oss.qualcomm.com,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH 0/5] Add missing OPP tables for Venus on qcom/arm64
-Message-ID: <aD1cUF56-IX_tSpp@linaro.org>
-References: <20250531-topic-venus_opp_arm64-v1-0-54c6c417839f@oss.qualcomm.com>
+	lumag@kernel.org,
+	maud_spierings@hotmail.com,
+	robh@kernel.org,
+	Elliot Huang <elliot.huang.signed@gmail.com>
+Subject: [PATCH 1/1] arm64: dts: qcom: support sound on Asus Vivobook S15
+Date: Mon,  2 Jun 2025 16:16:38 +0800
+Message-ID: <20250602081638.51724-1-elliot.huang.signed@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <174770727723.36693.13352978360096773573.b4-ty@kernel.org>
+References: <174770727723.36693.13352978360096773573.b4-ty@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250531-topic-venus_opp_arm64-v1-0-54c6c417839f@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
 
-On Sat, May 31, 2025 at 02:27:18PM +0200, Konrad Dybcio wrote:
-> Sparked by <20250530-add-venus-for-qcs615-v8-0-c0092ac616d0@quicinc.com>
-> 
-> No external dependencies
-> 
+From: Elliot Huang <elliot.huang.signed@gmail.com>
 
-Are you sure?
+This adds sound support for vivobook s15, tested:
+- 2 speakers.
+- 2 dmics
+- headset with mic(distorted).
 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
-> Konrad Dybcio (5):
->       arm64: dts: qcom: msm8916: Add Venus OPP table
->       arm64: dts: qcom: msm8996: Add Venus OPP table
->       arm64: dts: qcom: msm8998: Add Venus OPP table
->       arm64: dts: qcom: sdm630: Add Venus OPP table
+Signed-off-by: Elliot Huang <elliot.huang.signed@gmail.com>
+---
+ .../dts/qcom/x1e80100-asus-vivobook-s15.dts   | 202 ++++++++++++++++++
+ 1 file changed, 202 insertions(+)
 
-None of these platforms has a power domain that supports performance
-states specified in the venus node of the DT, and the venus GDSC does
-not have any parent either. I think you will need to update the venus
-bindings and add
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+index 71b2cc6..cce2460 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+@@ -23,6 +23,32 @@ aliases {
+ 		serial1 = &uart14;
+ 	};
+ 
++	wcd938x: audio-codec {
++		compatible = "qcom,wcd9385-codec";
++
++		pinctrl-0 = <&wcd_default>;
++		pinctrl-names = "default";
++
++		qcom,micbias1-microvolt = <1800000>;
++		qcom,micbias2-microvolt = <1800000>;
++		qcom,micbias3-microvolt = <1800000>;
++		qcom,micbias4-microvolt = <1800000>;
++		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
++		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
++		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
++		qcom,rx-device = <&wcd_rx>;
++		qcom,tx-device = <&wcd_tx>;
++
++		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
++
++		vdd-buck-supply = <&vreg_l15b_1p8>;
++		vdd-rxtx-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l15b_1p8>;
++		vdd-mic-bias-supply = <&vreg_bob1>;
++
++		#sound-dai-cells = <1>;
++	};
++
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+ 		pinctrl-0 = <&hall_int_n_default>;
+@@ -105,6 +131,88 @@ pmic_glink_ss1_ss_in: endpoint {
+ 		};
+ 	};
+ 
++	sound {
++		compatible = "qcom,x1e80100-sndcard";
++		model = "X1E80100-ASUS-Vivobook-S15";
++		audio-routing = "SpkrLeft IN", "WSA WSA_SPK1 OUT",
++				"SpkrRight IN", "WSA WSA_SPK2 OUT",
++				"IN1_HPHL", "HPHL_OUT",
++				"IN2_HPHR", "HPHR_OUT",
++				"AMIC2", "MIC BIAS2",
++				"VA DMIC0", "MIC BIAS3",
++				"VA DMIC1", "MIC BIAS3",
++				"VA DMIC0", "VA MIC BIAS3",
++				"VA DMIC1", "VA MIC BIAS3",
++				"TX SWR_INPUT1", "ADC2_OUTPUT";
++
++		va-dai-link {
++			link-name = "VA Capture";
++
++			cpu {
++				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
++			};
++
++			codec {
++				sound-dai = <&lpass_vamacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		wcd-capture-dai-link {
++			link-name = "WCD Capture";
++
++			cpu {
++				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
++			};
++
++			codec {
++				sound-dai = <&wcd938x 1>, <&swr2 1>,
++					    <&lpass_txmacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		wcd-playback-dai-link {
++			link-name = "WCD Playback";
++
++			cpu {
++				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
++			};
++
++			codec {
++				sound-dai = <&wcd938x 0>, <&swr1 0>,
++					    <&lpass_rxmacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		wsa-dai-link {
++			link-name = "WSA Playback";
++
++			cpu {
++				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
++			};
++
++			codec {
++				sound-dai = <&left_spkr>, <&right_spkr>,
++					    <&swr0 0>, <&lpass_wsamacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++	};
++
+ 	reserved-memory {
+ 		linux,cma {
+ 			compatible = "shared-dma-pool";
+@@ -290,6 +398,13 @@ vreg_bob2: bob2 {
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
++		vreg_l1b_1p8: ldo1 {
++			regulator-name = "vreg_l1b_1p8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
+ 		vreg_l2b_3p0: ldo2 {
+ 			regulator-name = "vreg_l2b_3p0";
+ 			regulator-min-microvolt = <3072000>;
+@@ -304,6 +419,14 @@ vreg_l4b_1p8: ldo4 {
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
++		vreg_l12b_1p2: ldo12 {
++			regulator-name = "vreg_l12b_1p2";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
++		};
++
+ 		vreg_l13b_3p0: ldo13 {
+ 			regulator-name = "vreg_l13b_3p0";
+ 			regulator-min-microvolt = <3072000>;
+@@ -586,6 +709,24 @@ &i2c7 {
+ 	/* PS8830 USB4 Retimer? @ 0x8 */
+ };
+ 
++&lpass_tlmm {
++	spkr_01_sd_n_active: spkr-01-sd-n-active-state {
++		pins = "gpio12";
++		function = "gpio";
++		drive-strength = <16>;
++		bias-disable;
++		output-low;
++	};
++};
++
++&lpass_vamacro {
++	pinctrl-0 = <&dmic01_default>;
++	pinctrl-names = "default";
++
++	vdd-micb-supply = <&vreg_l1b_1p8>;
++	qcom,dmic-sample-rate = <4800000>;
++};
++
+ &mdss {
+ 	status = "okay";
+ };
+@@ -742,6 +883,59 @@ &smb2360_1_eusb2_repeater {
+ 	vdd3-supply = <&vreg_l14b_3p0>;
+ };
+ 
++&swr0 {
++	status = "okay";
++
++	pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
++	pinctrl-names = "default";
++
++	/* WSA8845, Left Speaker */
++	left_spkr: speaker@0,0 {
++		compatible = "sdw20217020400";
++		reg = <0 0>;
++		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
++		#sound-dai-cells = <0>;
++		sound-name-prefix = "SpkrLeft";
++		vdd-1p8-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l12b_1p2>;
++		qcom,port-mapping = <1 2 3 7 10 13>;
++	};
++
++	/* WSA8845, Right Speaker */
++	right_spkr: speaker@0,1 {
++		compatible = "sdw20217020400";
++		reg = <0 1>;
++		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
++		#sound-dai-cells = <0>;
++		sound-name-prefix = "SpkrRight";
++		vdd-1p8-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l12b_1p2>;
++		qcom,port-mapping = <4 5 6 7 11 13>;
++	};
++};
++
++&swr1 {
++	status = "okay";
++
++	/* WCD9385 RX */
++	wcd_rx: codec@0,4 {
++		compatible = "sdw20217010d00";
++		reg = <0 4>;
++		qcom,rx-port-mapping = <1 2 3 4 5>;
++	};
++};
++
++&swr2 {
++	status = "okay";
++
++	/* WCD9385 TX */
++	wcd_tx: codec@0,3 {
++		compatible = "sdw20217010d00";
++		reg = <0 3>;
++		qcom,tx-port-mapping = <2 2 3 4>;
++	};
++};
++
+ &tlmm {
+ 	gpio-reserved-ranges = <34 2>, /* Unused */
+ 			       <44 4>, /* SPI (TPM) */
+@@ -849,6 +1043,14 @@ tpad_default: tpad-default-state {
+ 		bias-disable;
+ 	};
+ 
++	wcd_default: wcd-reset-n-active-state {
++		pins = "gpio191";
++		function = "gpio";
++		drive-strength = <16>;
++		bias-disable;
++		output-low;
++	};
++
+ 	wcn_bt_en: wcn-bt-en-state {
+ 		pins = "gpio116";
+ 		function = "gpio";
+-- 
+2.49.0
 
-	.opp_pmdomain = (const char *[]) { "cx" /*???*/ },
-
-for all these in the venus driver (plus backwards compat if not already
-there). And then add that power domain additionally in the DT.
-
-This series is also introducing new dtbs_check failures :/
-
-qcom/apq8016-sbc.dtb: video-codec@1d00000: Unevaluated properties are not allowed ('operating-points-v2', 'opp-table' were unexpected)                                               
-        from schema $id: http://devicetree.org/schemas/media/qcom,msm8916-venus.yaml#         
-qcom/apq8096-db820c.dtb: video-codec@c00000: Unevaluated properties are not allowed ('operating-points-v2', 'opp-table' were unexpected)                                             
-        from schema $id: http://devicetree.org/schemas/media/qcom,msm8996-venus.yaml#     
-qcom/msm8998-lenovo-miix-630.dtb: video-codec@cc00000: Unevaluated properties are not allowed ('operating-points-v2', 'opp-table' were unexpected)                                   
-        from schema $id: http://devicetree.org/schemas/media/qcom,msm8996-venus.yaml#       
-
->       arm64: dts: qcom: sdm845: Fix Venus OPP entries
-
-This one has .opp_pmdomain and "cx" in the bindings, so it's probably
-fine (didn't check if the current OPPs are really wrong).
-
-Thanks,
-Stephan
 
