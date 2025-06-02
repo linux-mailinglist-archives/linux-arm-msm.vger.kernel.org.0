@@ -1,282 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-60073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20FC8ACBA3F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 19:28:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CEEEACBA81
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 19:54:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CFD47176AB3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 17:28:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4AE7D3BD3E3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Jun 2025 17:54:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B39B2288CB;
-	Mon,  2 Jun 2025 17:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38C121E9915;
+	Mon,  2 Jun 2025 17:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k+jggxlM"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GqAM8tVu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0297226D08;
-	Mon,  2 Jun 2025 17:27:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B06617B421
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Jun 2025 17:54:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748885257; cv=none; b=caNetKnWCf4vWccDmLzTUfi0Tv4bZ/m/a2t8S3Y7AR0rsqbe8zhKrBjGXEa42KVG+VeN/FeKRgVr5DdqwJPdWvWNtP4Z9/khBEWEa+mDn/SWcOqdTmGTggHtSc9S0FHRJOo52lgPHFlHJOhKZ7W5WZP2JDoOsU4wtSaD34wQdhY=
+	t=1748886860; cv=none; b=MuZ08FY2O3Xbrv0Qaae03vhOfW11GeN8svATD9nEMLFZ5TXRXXLH0/w3teAzmMz2fWpaMkdyQrEPb8o3TRBZzKkruFNPrnxLI3LG4PJZKVBCXkzr/GwKW/vZZpqJtxWIzSPvefDS842b6KgQcIDQDF8O21/IXAwFdBqejojsmD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748885257; c=relaxed/simple;
-	bh=BgMMUvS9Q9Xa000ALf5gCFzat6wStt2pvjoAG90wYeU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=a2fUCLdqDx5Cpvt9Jdi0vX3CgXgx5vEmeUpMcDOVwBaV85bPpAh3Eaois9dUy6FSDZ+bMH74mgUioUBFeCbxMrpwToUpxebe2AH3yYetjzvcigifODYqKiVN1YXPPk9/tq59t+TyLpMzxJCjEA2YzCg0WI+rkd6fxETy4LoljVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k+jggxlM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 494CBC113CF;
-	Mon,  2 Jun 2025 17:27:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748885256;
-	bh=BgMMUvS9Q9Xa000ALf5gCFzat6wStt2pvjoAG90wYeU=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=k+jggxlMudWxTw4p5llZqF1m2NQ7Oew32RYWrHLPbCaWHLkQ2CCdRlN3IeABl0qFY
-	 JIsSisDHnQmwRpfGCDOQ7jllriLHgg7Uq2iaxAioq5OnNMFr09Ao9A693Qop0+fhCn
-	 Xsym8WAl+OL70VZAzKfNBqoFdxAMvdkoW6o8tIZZcW8SLC+zVA6WIS88QxFRy8lmA5
-	 Dn/L+eNNevqUV7dNzEPbaTLH5IWh3QxNL9cnecQKUbUHg0Tr3FwaebxaPdzGfmURWe
-	 PIf0ivmztl3UUBttAieEf1wdrZBvkdvuPvJcLaeh2qduagPNQ6142jQ5rKTFZQsLh4
-	 c2pCvJ+Z0PCWA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E34DC5B559;
-	Mon,  2 Jun 2025 17:27:36 +0000 (UTC)
-From: Vincent Knecht via B4 Relay <devnull+vincent.knecht.mailoo.org@kernel.org>
-Date: Mon, 02 Jun 2025 19:27:30 +0200
-Subject: [PATCH v4 4/4] arm64: dts: qcom: msm8939: Add camss and cci
+	s=arc-20240116; t=1748886860; c=relaxed/simple;
+	bh=rQaFfjBFw2cNf12AuPRlV+vlVTZ+cZahtbK7eGhXkZQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=b0Kk8wFFd94lfuZ+l84YJ8GNJkdHe3t4mGecDNEAfSPLrGpk/NbFYSafZ+94kyTA4MAOKJ9It1Da12nsPJKCkFbUv6GA5zOWoujcXwMkHAAa227CzuScsTSPskZWzMQHltgtwN/JTZxzcSS9qQhf9CZKcVgbNBx8zpSwi4jzcl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GqAM8tVu; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 552HJvgW019012
+	for <linux-arm-msm@vger.kernel.org>; Mon, 2 Jun 2025 17:54:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	u9XvunIrclrT7hjhuIP9HfHbDT2S/9yYDl5lq8q+7mo=; b=GqAM8tVufg5aWU3o
+	Zmu0odxQY1VNvlCf+uN7AKQEugEbd9BIpuad2THHcb7yvWnSxFPzI3kQF+qXNr+w
+	YnHlHl3D+4JJLYYIbRe27U3EpVQr9l8YYZzA+8aU/PeaI1TGmdPAZmCcQIZt8qGD
+	xKD1w+vMDs8BpCD0OzvnMrmc+Es2BMt1gAo5Nwp6X/7l10VHrLYcdrnUOoSKUlVp
+	o6mTyJLFQEGuhuArQ+0llqFUQvDjPI34JOPMdRI9RIxcLwzzQeQPGwpDHMfFdzvC
+	TgSjunoWGpVLzrEi2uBAoho4FY6naTF2EzeoTkEuZSc92FD/ZPf3tiIdHvg6zNVh
+	HSoddw==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 471g8u82f6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jun 2025 17:54:15 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2349629fc34so29953735ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Jun 2025 10:54:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748886855; x=1749491655;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=u9XvunIrclrT7hjhuIP9HfHbDT2S/9yYDl5lq8q+7mo=;
+        b=uQjhoi1nIJIq444/GAOQPp7YZ6j+u30WXgXnHrhPy2DIFnpAQ0VHW9GLyhVPC+aCqd
+         3oqkcerOtffV9+KDzHTVchdYuELY7jZtoQK4I+NFNrqwGCKIlIetqBtcxgZBI+/XURpL
+         LXwObQTDXeuw5jbrAlSr01aU4wnQ9o4GXgRYAyxPndwevDGKkJGc8ucA+W/6Sm1VGLaR
+         e22xxy42giHP0wAxz3yTGnSJdqJP4bfZRnHODNouxxa9CNeZlyB1JOdzG2BmJwNcOX49
+         I7/1gfioiI/T6vlQSj6hjHzCjx0wsYLQM4m+Lq/0m0L2xlngCvBHcQxKxDwtdCOvOg7I
+         RTlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUM+xUdB4Yf895IYHfXRxL9kjlhYnz4Wv/zz+0d9743yK3CK7yjzXXyiEktOPJ7J80wLj0N4HGEEI7a7CYn@vger.kernel.org
+X-Gm-Message-State: AOJu0YwOCB/CgQJFNNZ4FDk29FfhJb/0GygtLB69rDqkEa1KePVxeHiA
+	YtR3utWCiHAe1cg38a820g6scLiOzQ99ClDNA3m1OYhb5lINfNqPgJkkLu1Evm4m6+xycY2c07Y
+	KO38+R9cYYR50wvVUlXYVpo6cw2fPCAkeu85e1EAdw1AzVzaHnMyrg9vURomXaxZHX/oV
+X-Gm-Gg: ASbGncvA2ght6dTkt1SzsEh0DfEygfsPUUAcLwlJBUJGyfHjMjvqBNxHe50qFcflTsZ
+	6FilJmuQLaRrXPincQFAbf3VFDlzST7bNn/Xb6vi1iLvi0GBmFdrhrqhx++NWmmU5yFDhvYQu7C
+	3o+n6TEK2fYyvSL+L7QGAW2Oj5AbTLv+31FacnlD0ZFAzX9teQ5ILnnOSoPpkV2vCHkLyeWWpbz
+	edx3aVv+hXnDxUzCg9ntTstDXEzVkrP2mxgsNjRVRneQobxNEZx2aCr3rU3GkCrPBLD2YTzLjly
+	D7S3tG/ngu8R0Ps2wh6GrMltv8TWm/Z/fnaUpn18lemHL1kba4utV5CFTo4EJdFdkHMSwg==
+X-Received: by 2002:a17:902:ea11:b0:234:9068:ed99 with SMTP id d9443c01a7336-235395b1df0mr187796105ad.24.1748886854611;
+        Mon, 02 Jun 2025 10:54:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEnVKXZ0LTtvyZS3lGmVIwCTIOA+EO1ClF4BKT3ba4Q6ILhNwe3yQldHpOCpjXK3ErOrV831A==
+X-Received: by 2002:a17:902:ea11:b0:234:9068:ed99 with SMTP id d9443c01a7336-235395b1df0mr187795645ad.24.1748886854172;
+        Mon, 02 Jun 2025 10:54:14 -0700 (PDT)
+Received: from [10.134.71.99] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23506bc8a40sm74072675ad.2.2025.06.02.10.54.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Jun 2025 10:54:13 -0700 (PDT)
+Message-ID: <3f386e7f-5e22-4c67-bb3c-202f13c94d56@oss.qualcomm.com>
+Date: Mon, 2 Jun 2025 10:54:12 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] drm/msm/dp: Return early from atomic_enable() if
+ ST_DISCONNECT_PENDING
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>, Johan Hovold <johan@kernel.org>,
+        Bjorn Andersson
+ <quic_bjorande@quicinc.com>,
+        Abhinav Kumar <abhinav.kumar@oss.qualcomm.com>,
+        linux-kernel@vger.kernel.org, Yongxing Mou <quic_yongmou@quicinc.com>
+References: <20250529-hpd_display_off-v1-0-ce33bac2987c@oss.qualcomm.com>
+ <20250529-hpd_display_off-v1-2-ce33bac2987c@oss.qualcomm.com>
+ <CAO9ioeUPJm1MbqAVJfcQSTAmvY3-TmvtZ+=Js1mZ53JFYHoUhw@mail.gmail.com>
+Content-Language: en-US
+From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+In-Reply-To: <CAO9ioeUPJm1MbqAVJfcQSTAmvY3-TmvtZ+=Js1mZ53JFYHoUhw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250602-camss-8x39-vbif-v4-4-32c277d8f9bf@mailoo.org>
-References: <20250602-camss-8x39-vbif-v4-0-32c277d8f9bf@mailoo.org>
-In-Reply-To: <20250602-camss-8x39-vbif-v4-0-32c277d8f9bf@mailoo.org>
-To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>, 
- phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- Vincent Knecht <vincent.knecht@mailoo.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1748885254; l=5488;
- i=vincent.knecht@mailoo.org; s=20250414; h=from:subject:message-id;
- bh=5p1p0R/aaMrHpxB3z9krUa7Xk1pgghKa87CxjRkiJx4=;
- b=BGxkyb2SRP93XuRtoMHCjEVHnriU8nZ34ThRCTUrRAbq4CjNugtgaKi7uMEC+F6cq140J1Shp
- la6APvz4nwHDQkJjxo9hVlY7M4PdJ3dJNMEYl72G6hHtx8D9dzbeU6h
-X-Developer-Key: i=vincent.knecht@mailoo.org; a=ed25519;
- pk=MFCVQkhL3+d3NHDzNPWpyZ4isxJvT+QTqValj5gSkm4=
-X-Endpoint-Received: by B4 Relay for vincent.knecht@mailoo.org/20250414
- with auth_id=377
-X-Original-From: Vincent Knecht <vincent.knecht@mailoo.org>
-Reply-To: vincent.knecht@mailoo.org
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjAyMDE0NiBTYWx0ZWRfXyLCPDNM1pEHF
+ lQp9b4oaICn+KdFBBcPw6jY1HkzJgKhsAd7E8jtTPqZfd/bsln523g6kKxymxf+KhfhAR7Q8H3y
+ A5rU1XshbxnUtxOgaIKQuxbwv3o5RUDU5bXeJhb61uVbdn+85l9jIwNig8esth4j57JjU+DyRYw
+ GlIra3QNXCxntS/jxN5xXd6FR/S3pfdTCWucjq+JAwaPCtT3p0rez7QEwKBuxIh9aoj0McD1rsJ
+ nQed8G3nRsKa9nN+ZSS9DK3n8a1Q8naF3oO+tKGfp/jNnZu0bmMAGaQvoUvcJGoZ4cIJXL5Kuny
+ m0sN/+bq6T5r6ySWvjGq7cixvCFNPkHEfV8a6ONIqAkCoI03lOY477WSi59y/ct4kDPMT7IhzHp
+ D7P6el3bqWQA6RLvS19YWuDSwVldLKgV5qxFCgfjFZ+ILyNP8MbDUq2BLve2zbQJs5DNFWv/
+X-Proofpoint-GUID: ZHqPv9uGpJPJ4hNKtMwjMmruTJvHfRsT
+X-Authority-Analysis: v=2.4 cv=EpjSrTcA c=1 sm=1 tr=0 ts=683de547 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=WDWld9wBFKh9IeGoHG4A:9 a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: ZHqPv9uGpJPJ4hNKtMwjMmruTJvHfRsT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-02_07,2025-06-02_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 mlxscore=0 phishscore=0 priorityscore=1501 adultscore=0
+ impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0 bulkscore=0
+ clxscore=1015 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506020146
 
-From: Vincent Knecht <vincent.knecht@mailoo.org>
 
-Add the camera subsystem and CCI used to interface with cameras on the
-Snapdragon 615.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
----
- arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi |   4 +
- arch/arm64/boot/dts/qcom/msm8939.dtsi        | 146 +++++++++++++++++++++++++++
- 2 files changed, 150 insertions(+)
+On 5/30/2025 9:04 AM, Dmitry Baryshkov wrote:
+> On Fri, 30 May 2025 at 02:15, Jessica Zhang
+> <jessica.zhang@oss.qualcomm.com> wrote:
+>>
+>> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>
+>> The checks in msm_dp_bridge_atomic_enable() for making sure that we are in
+>> ST_DISPLAY_OFF OR ST_MAINLINK_READY seem redundant.
+>>
+>> DRM fwk shall not issue any commits if state is not ST_MAINLINK_READY as
+>> msm_dp's atomic_check callback returns a failure if state is not
+>> ST_MAINLINK_READY.
+> 
+> What if the state changes between atomic_check() and atomic_enable()?
+> There are no locks, cable unplugging is async, so it's perfectly
+> possible.
+> 
+>>
+>> For the ST_DISPLAY_OFF check, its mainly to guard against a scenario that
+>> there is an atomic_enable() without a prior atomic_disable() which once
+>> again should not really happen.
+>>
+>> Since it's still possible for the state machine to transition to
+>> ST_DISCONNECT_PENDING between atomic_check() and atomic_commit(), change
+>> this check to return early if hpd_state is ST_DISCONNECT_PENDING.
+> 
+> Can we really, please, drop the state machine? I had other plans for
+> the next week, but maybe I should just do it, so that by the end of
+> 6.17 cycle we can have a merged, stable and working solution? This
+> topic has been lingering for months without any actual change.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi
-index adb96cd8d643e5fde1ac95c0fc3c9c3c3efb07e8..659d127b1bc3570d137ca986e4eacf600c183e5e 100644
---- a/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi
-@@ -11,6 +11,10 @@
- #include "msm8939.dtsi"
- #include "pm8916.dtsi"
- 
-+&camss {
-+	vdda-supply = <&pm8916_l2>;
-+};
-+
- &mdss_dsi0 {
- 	vdda-supply = <&pm8916_l2>;
- 	vddio-supply = <&pm8916_l6>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-index 68b92fdb996c26e7a1aadedf0f52e1afca85c4ab..082542b54d96adaed3e6b49bc3682005ea018a72 100644
---- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-@@ -1434,6 +1434,145 @@ mdss_dsi1_phy: phy@1aa0300 {
- 			};
- 		};
- 
-+		camss: isp@1b08000 {
-+			compatible = "qcom,msm8939-camss";
-+			reg = <0x01b08000 0x100>,
-+			      <0x01b08400 0x100>,
-+			      <0x01b08800 0x100>,
-+			      <0x01b0ac00 0x200>,
-+			      <0x01b00030 0x4>,
-+			      <0x01b0b000 0x200>,
-+			      <0x01b00038 0x4>,
-+			      <0x01b00020 0x10>,
-+			      <0x01b0a000 0x500>,
-+			      <0x01b10000 0x1000>,
-+			      <0x01b40000 0x200>;
-+			reg-names = "csid0",
-+				    "csid1",
-+				    "csid2",
-+				    "csiphy0",
-+				    "csiphy0_clk_mux",
-+				    "csiphy1",
-+				    "csiphy1_clk_mux",
-+				    "csi_clk_mux",
-+				    "ispif",
-+				    "vfe0",
-+				    "vfe0_vbif";
-+
-+			clocks = <&gcc GCC_CAMSS_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0PHY_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0PIX_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0RDI_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1PHY_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1PIX_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1RDI_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2PHY_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2PIX_CLK>,
-+				 <&gcc GCC_CAMSS_CSI2RDI_CLK>,
-+				 <&gcc GCC_CAMSS_CSI0PHYTIMER_CLK>,
-+				 <&gcc GCC_CAMSS_CSI1PHYTIMER_CLK>,
-+				 <&gcc GCC_CAMSS_CSI_VFE0_CLK>,
-+				 <&gcc GCC_CAMSS_ISPIF_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_TOP_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_VFE0_CLK>,
-+				 <&gcc GCC_CAMSS_VFE_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_VFE_AXI_CLK>;
-+			clock-names = "ahb",
-+				      "csi0",
-+				      "csi0_ahb",
-+				      "csi0_phy",
-+				      "csi0_pix",
-+				      "csi0_rdi",
-+				      "csi1",
-+				      "csi1_ahb",
-+				      "csi1_phy",
-+				      "csi1_pix",
-+				      "csi1_rdi",
-+				      "csi2",
-+				      "csi2_ahb",
-+				      "csi2_phy",
-+				      "csi2_pix",
-+				      "csi2_rdi",
-+				      "csiphy0_timer",
-+				      "csiphy1_timer",
-+				      "csi_vfe0",
-+				      "ispif_ahb",
-+				      "top_ahb",
-+				      "vfe0",
-+				      "vfe_ahb",
-+				      "vfe_axi";
-+
-+			interrupts = <GIC_SPI 51 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 52 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 153 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 78 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 79 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 55 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 57 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "csid0",
-+					  "csid1",
-+					  "csid2",
-+					  "csiphy0",
-+					  "csiphy1",
-+					  "ispif",
-+					  "vfe0";
-+
-+			iommus = <&apps_iommu 3>;
-+
-+			power-domains = <&gcc VFE_GDSC>;
-+
-+			status = "disabled";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+				};
-+			};
-+		};
-+
-+		cci: cci@1b0c000 {
-+			compatible = "qcom,msm8916-cci", "qcom,msm8226-cci";
-+			reg = <0x01b0c000 0x1000>;
-+			interrupts = <GIC_SPI 50 IRQ_TYPE_EDGE_RISING>;
-+			clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CCI_AHB_CLK>,
-+				 <&gcc GCC_CAMSS_CCI_CLK>,
-+				 <&gcc GCC_CAMSS_AHB_CLK>;
-+			clock-names = "camss_top_ahb",
-+				      "cci_ahb",
-+				      "cci",
-+				      "camss_ahb";
-+			assigned-clocks = <&gcc GCC_CAMSS_CCI_AHB_CLK>,
-+					  <&gcc GCC_CAMSS_CCI_CLK>;
-+			assigned-clock-rates = <80000000>,
-+					       <19200000>;
-+			pinctrl-0 = <&cci0_default>;
-+			pinctrl-names = "default";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			status = "disabled";
-+
-+			cci_i2c0: i2c-bus@0 {
-+				reg = <0>;
-+				clock-frequency = <400000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
- 		gpu: gpu@1c00000 {
- 			compatible = "qcom,adreno-405.0", "qcom,adreno";
- 			reg = <0x01c00000 0x10000>;
-@@ -1498,6 +1637,13 @@ apps_iommu: iommu@1ef0000 {
- 			#iommu-cells = <1>;
- 			qcom,iommu-secure-id = <17>;
- 
-+			/* vfe */
-+			iommu-ctx@3000 {
-+				compatible = "qcom,msm-iommu-v1-sec";
-+				reg = <0x3000 0x1000>;
-+				interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
-+			};
-+
- 			/* mdp_0: */
- 			iommu-ctx@4000 {
- 				compatible = "qcom,msm-iommu-v1-ns";
+FWIW, I'm currently working on the state machine rework by the middle of 
+next week.
 
--- 
-2.49.0
+I'm anticipating that the rework itself will take some time to get 
+merged, so didn't want MST to get delayed more by this series.
 
+Thanks,
+
+Jessica Zhang
+
+> 
+>>
+>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 1d7cda62d5fb..f2820f06f5dc 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -1512,7 +1512,7 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+>>          }
+>>
+>>          hpd_state = msm_dp_display->hpd_state;
+>> -       if (hpd_state != ST_DISPLAY_OFF && hpd_state != ST_MAINLINK_READY) {
+>> +       if (hpd_state == ST_DISCONNECT_PENDING) {
+> 
+> 
+> 
+>>                  mutex_unlock(&msm_dp_display->event_mutex);
+>>                  return;
+>>          }
+>>
+>> --
+>> 2.49.0
+>>
+> 
+> 
 
 
