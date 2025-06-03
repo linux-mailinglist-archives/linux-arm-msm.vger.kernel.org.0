@@ -1,102 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-60144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B40DACC765
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 15:11:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E2BEACC782
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 15:18:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C3432189448A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 13:12:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B7A8818944D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 13:18:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E603422A1D5;
-	Tue,  3 Jun 2025 13:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A03A22D9ED;
+	Tue,  3 Jun 2025 13:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Rufqe/D8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BQMBemuQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614FA1F582F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jun 2025 13:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B6D130A73
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jun 2025 13:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748956302; cv=none; b=CkWEOyuhdbHrbGDJfvQ/APWfKuEWvg/acQuBYL151i+qQvy+KsO1gN+16iq/kg9t7hznotVQP5ruGsmiJhe2LgxXZ+r6Dox4mFibyB6f5G9bQxPsUkgnj0yPTokeDhUB/xk/QIN9TKvCJIIbsdDbhc72HgSDnTkytMCPldmXxag=
+	t=1748956678; cv=none; b=jC0zsGGa/fZT0UhfRfv+I/Qo25xUw/5j/JKEpXfzblMsmaOvG5v+ueh3+HgmH6ewXjeaI0bYnSKuD5J5czBeNVSUUsKKPDMbhS4i5aZKIs2PseCVpcUNDoa53JNzKyYoxsxvZz8plGLPHIbrBDb4GvKjG9otx1AsCCDFXZZ+fSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748956302; c=relaxed/simple;
-	bh=DSxHBEJTE3+uuOMUX4IXmCl9C9IKgdtq7Yhg2vjoBWQ=;
+	s=arc-20240116; t=1748956678; c=relaxed/simple;
+	bh=6iBvI7K6Ap7MSOEGbalH5RS+2DAx3UXzxMrsuLUjNuE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PfsL3uqXyrcWThU7MXQ/RCHcUWwOMLUKoGSIwjDWMww4V3Zk9qh+HaGGgvH2u42mhYRBfPyB2vkUBrMllpIwQDXrw6VqAigZyIjkxYo7oQaU+bHopeWBp13zA75eLTLmKM4HPbK8JXNsZd6vBqEtZD9SAiRrWHRaL0US5baAy/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Rufqe/D8; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=b3Z8SiKkFAMv3Xn2yqVjrOvqpRahCzmtK9yBTbjYLEDwyWX2nhbu4ByvgQCnZCnIvIdx8YeZePmRJHqOnkPWv8BxXxhpTX8M2hNmZ3S3K85AQGmUj0rtrRuFeFN36VQbRIOwtuwtizYR4SFC7ddwT49eALFgtHwZQsf1a7y3gp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BQMBemuQ; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5539JI3Y004261
-	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Jun 2025 13:11:40 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5539JI3x004261
+	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Jun 2025 13:17:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=hkowjwQkIBoerXsoTVXb43GI
-	N60uMuMxhmK0iRDbVQQ=; b=Rufqe/D8kes8A+oWpf1AyhIj2j2I3Ay5OjESE69n
-	aNjJpAklteOXnWpFTb4qravFc2D9X4A8JTG+kvPtG4Vx3XYwWDDCNX3lskS90cVU
-	nWa3tuQPkQIq6gMLFJUIMTIFYyK8+r3Oz/GoaTJtKx/K8+8Se2IKn9nvVXX/sc89
-	Wx9Vt0Zr/Of7fB7JOg1rDHi9mYE6d2/YeJoQSQqE++R7lSfW58iUcjT52QBX8ZjK
-	p47geWL1PLqV4T9pSSOizefyYhOIHeqHjDh2JOy3tCJNGMNRdNJRNsyKpOjhnZno
-	kO1gPlrEuIGAzKEG7aIkBlOydGNo5+I4i2mAd3peXdNhyg==
-Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com [209.85.210.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 471g8rtnck-1
+	:references:subject:to; s=qcppdkim1; bh=JXGMMgDR2GMRgvSQcH/bx3rG
+	d4l8acpfk7Qd16JoTBg=; b=BQMBemuQF4dBmNLN6f4xYX27LftVRJZ4ntFZVPvT
+	FbR2s6NAnc8ID8m0sOJ5xURsYPiBILlb9WHsjdzq3coeOQp/SLA5Lprd3bVXteeD
+	1fYThUZZzomTy2IgV9mCX41/02ggPVuj87Bqn0QapEhA3SDoX/Pl+UDVjgWCIvI/
+	D9nAyj03JwQLf6olY1tNuu7RtGbLZgL0LUbM87RNsWDo3U9IVrdyqiLp7hREtFnh
+	0fh+zL4Z2F5NOkWSH5+XPm9ECZq3vEte8cYtKXEUOCXMF1usrkX3VT2R5vqfCJJ/
+	hHuvmNB+sYBaLDdcSyfcU0b4RkT74D1xF7OaeM/b2G1JiQ==
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com [209.85.210.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 471g8rtp32-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jun 2025 13:11:40 +0000 (GMT)
-Received: by mail-ot1-f71.google.com with SMTP id 46e09a7af769-72c3169fa24so1381148a34.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jun 2025 06:11:40 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jun 2025 13:17:54 +0000 (GMT)
+Received: by mail-ot1-f72.google.com with SMTP id 46e09a7af769-72ecb622e02so1542513a34.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jun 2025 06:17:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748956299; x=1749561099;
+        d=1e100.net; s=20230601; t=1748956673; x=1749561473;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hkowjwQkIBoerXsoTVXb43GIN60uMuMxhmK0iRDbVQQ=;
-        b=c9P4hiSKqQlhb0qOzdBhv7ZbeOfpk8viJJ+wGwY/4k6LCgFTVMtUdYgKZoW+SWYDll
-         v1UGsNwmLa2gEDtBReYmhcfNsbFO30Q9sDPj/0Lca+RElJYOnV65tJk7Gms9CdKmSRlC
-         +R5JuXlo1Lag+jWbQE1lchXxEu2eK4z98WDw9gJGUt72l27oOsVekWK3XKsKvEU3DQmo
-         g+knrQ6kcMToXbhW8tb1oVA2GM4sMbr0VAYuUhRmQZKCrhdB7sflnO5PpD3obaa8CGvN
-         GEbWciaVf+90Ay8SLURgY+Mm6g5EjT6QSymir70C+NCXmyfxvwMDhS20SuQed80u7F1C
-         6ukQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVk++U5fOs0ab8AShbYlGzvjF85bFZ3MzAS4OhovyRXpaaBvnxMkTVDfZ6yTA6bkTdL6XOMUQIzCL6Jf7+j@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx0IyOtulDMiT18OO2QooAlBnm2xjri2LPlB1dtPOpbtgXmFF9T
-	ZNMMnDUJrk5GWEAgcojnEEOVcTO8rZ4QXMA2kNp+Lv5tlF1oLi/b1LNZaqkygZ0EqFw33sPu5eE
-	r1IzpFd5uKozHSm3a5OC6g7i4lCTTmUbV2M+hVHuPSk/k+IEnvpVzQr6zSLxUjKvuvxm3
-X-Gm-Gg: ASbGncu6v1khjs22Mt6HENt4mehAGg2GuurVw6PQBwe+1H5MGYsBBMaxxfGSUQoQWok
-	vBr0FAYl3R+KmOsuELIZ23D1OKxi1Pr3Q8aHEZlXItf4ymCsY44HpOytLwZLzUvsnZdteJCYvI8
-	5GHaxViwbzBNdGhbnQav2yFuPZI6I36rLxkXg0wvTz6J+XEkd/CwhCyQ2BV2y6rCxec5Lk8/DRX
-	NUeR1y57DnwT76YxS2ekrlZBS1pGWxSR3dqYbIso77oBMvc4a3L4RWNZzfgCWKJh5tUg/tr4yi4
-	IINbr6SqBIZ3aBNl+s0m4inHisAc5nXT3220Kw0mj9kiByY2riHwgDb53pP4h8RbRzgdNDvq+Ak
+        bh=JXGMMgDR2GMRgvSQcH/bx3rGd4l8acpfk7Qd16JoTBg=;
+        b=et4rf4pzVqY8ePGQCzcS00+vCPT6z+jm57p/Y5bCJTTiBqepN3v6M3JaQtj3ahtkpx
+         MjrFR82HoU9Yr8H18wWBaoCCRGa4KQC2dPfa4ejfDu5pj+9kewrmmYR8ikIsco9VOFP8
+         jmQtZWYxjQN80A6bV8Y745bQYX+AFby9vVRrAEm0DJ7a1B3aI285fqWMJvfi/1di2bB2
+         2Wiy9lcfoH1Vo3ActCq2a3x02cIOrM/kL42ufnspq7IOtj9nld1YbDATHEbm/fW6jWo4
+         p6F2yFAxyq5+v5t5nWal3hYVKjDl84Tw2wYdGC+1AJQ2cUZZ1h2gOhahE0eAf1gfocUX
+         SK7w==
+X-Forwarded-Encrypted: i=1; AJvYcCXLMeWPYLiyf4T2p43F1s1kw8Ecvc9SSpB8/apKRzn3OpD5Ytb9h2nH5MU1olNCWi5bnzlkkzouiLrdIHGi@vger.kernel.org
+X-Gm-Message-State: AOJu0YxB/+7y3Sms8pPE00+Smqs7djD6hN6U4YPTJlETD8RTQ7eDoyb6
+	Lvq7sBZWCO4sdFKY/t/NbUKDULKZ3n/YzYGaEtybgHwTJuRIAXX9Q31uj0Wc/X6g6AhuuK8/ibl
+	qMYoEHqtTQXs9paTkxJ1052qR1Voa88Naj4AsB04xKCB0uc2XG31KI2nn2YnvpoYX20jK
+X-Gm-Gg: ASbGncvLiVvXSWnFb19Hinm7ZjPhy3vALQTLxgn97JiXUSdFCzFsLsaCOzhZ0sptzI+
+	Cuta990ErvpTkrek/i+haGRNIcVbxTihNiQ/cUpXCHy80yEZ7eJAxHJbg5Lgu1Vcr5RFZqy6xvV
+	mL255f/2aXoONYP6zLeAnuBq4OEpuVqgW8bB8TCZKgySlTk4bEt+fk36KaxbihXLbRMtIFB12V3
+	eAOYiDCRGzqa857K5zBdpTLOwVPk0WIDkcpDlmRk4p6juRj0pBQ8SObkRY0sfDpO1H6UPCjPN+Z
+	HBToJ+dO1cNqO9uVGa5P77sVLIMG/i/ZEVsxiXApFVXHUkJE88TcYVZec1Atdy/GNfrbZTYFNPk
 	=
-X-Received: by 2002:a05:6830:3c8c:b0:72b:8297:e988 with SMTP id 46e09a7af769-736ecf38198mr9861976a34.25.1748956299406;
-        Tue, 03 Jun 2025 06:11:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFrv6xy9Z9gKos6U7bwZdGI8uQ9F+7hgkYBjMqaT3/DoXyQAJAhoI0Awytxg6+zEQ8YdBqDPw==
-X-Received: by 2002:a05:6830:3c8c:b0:72b:8297:e988 with SMTP id 46e09a7af769-736ecf38198mr9861924a34.25.1748956298927;
-        Tue, 03 Jun 2025 06:11:38 -0700 (PDT)
+X-Received: by 2002:a05:6830:6484:b0:72a:449e:2b69 with SMTP id 46e09a7af769-736ecef9188mr9330702a34.28.1748956673460;
+        Tue, 03 Jun 2025 06:17:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJzNn7xzYSZpmDzRz5bR4WkPRFG/MM1S0QGnUE/tMoDRu36FwucQVvMhTGP/O7jMEzHNHQUQ==
+X-Received: by 2002:a05:6830:6484:b0:72a:449e:2b69 with SMTP id 46e09a7af769-736ecef9188mr9330676a34.28.1748956673048;
+        Tue, 03 Jun 2025 06:17:53 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55337910f91sm1920796e87.157.2025.06.03.06.11.37
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5533791d105sm1905969e87.209.2025.06.03.06.17.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jun 2025 06:11:38 -0700 (PDT)
-Date: Tue, 3 Jun 2025 16:11:36 +0300
+        Tue, 03 Jun 2025 06:17:52 -0700 (PDT)
+Date: Tue, 3 Jun 2025 16:17:50 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Cc: lpieralisi@kernel.org, kwilczynski@kernel.org,
-        manivannan.sadhasivam@linaro.org, robh@kernel.org, bhelgaas@google.com,
-        krzk+dt@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
-        kw@linux.com, conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
-        andersson@kernel.org, konradybcio@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_qianyu@quicinc.com,
-        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v1 2/4] dt-bindings: PCI: qcom,pcie-sa8775p: document
- link_down reset
-Message-ID: <drr7cngryldptgzbmac7l2xpryugbrnydke3alq5da2mfvmgm5@nwjsqkef7ypc>
-References: <20250529035416.4159963-1-quic_ziyuzhan@quicinc.com>
- <20250529035416.4159963-3-quic_ziyuzhan@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v3 0/6] arm64: qcom: allow up to 4 lanes for the Type-C
+ DisplayPort Altmode
+Message-ID: <fhzdhzxdwcoiuhx2eogpshwt5cxagjkrygrefqikmfbx3cfcov@awmhgrvurnfi>
+References: <20250527-topic-4ln_dp_respin-v3-0-f9a0763ec289@oss.qualcomm.com>
+ <styd5gjksbsqt7efylpfn6bgwgyvt6zexxiooihjsnmp25yigp@unq7dor6gso2>
+ <447c3b13-8d6d-4bcb-83c1-9456b915a77e@oss.qualcomm.com>
+ <inpfuxskvmrebxitqtqwzvpnpicibo6zakgk4ujpcrqrpef2vw@nhclj5rg7axr>
+ <9037fefe-aa40-4884-97ee-b81ff8346944@oss.qualcomm.com>
+ <htufwjvfgdtav2gtgrytc356py6xqhrffbwjg42sgo7k4zzxof@z4xaf35qz7kq>
+ <aa17d7d4-b77d-4a0a-88c3-86255dfbc29d@oss.qualcomm.com>
+ <75dde9a2-3c0d-481b-bc73-089ba89a77e0@linaro.org>
+ <71196aad-6d80-4356-bbe5-3070f6b74bfe@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,21 +114,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250529035416.4159963-3-quic_ziyuzhan@quicinc.com>
-X-Proofpoint-ORIG-GUID: 14MRxEKzw459aMnkiAL3rKeATL45MfU8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjAzMDExNCBTYWx0ZWRfXwkUq+/UZH3PS
- mb8rFTO9Zn93dOYhAdts2FAb4WFD0YdfaMF4TAXE16ZhDBgyzxa0m6vVor8DCYWG2jel6LCBq5v
- TQFJp6mCUFWa+lss8yF40ZrtJa66roE6kvR1wXqSil8YYeN182+5X0YecicY3M4SU7eADEYz/m1
- Hd14X9nXuDdQQmSylEhFAJnVN5VQguQv+9opMRUaQAzbvzKIwc1SdagtH2pPVZiGa/13s/n8OgV
- g6kCjMaqI2vyg5vOCiRKd3k91d9s59VxC4H1JS8D/CVNbiW/4V3V4ng0MevHNa+7SRnKVfYu24T
- y+9dH4GjC7nM6eHO9UtBgL898oeA/liA7jTF/IEws3oMMZeOEcmwD6CfuBKuNy57L1kwfEy5jLK
- OEckm+RKSgEiKdAL5eZst7HyehTnGZcfQ3fObOfxA9YPQKgmOsTRf0YPs9PjTKmvoPJIOJuX
-X-Authority-Analysis: v=2.4 cv=RdWQC0tv c=1 sm=1 tr=0 ts=683ef48c cx=c_pps
- a=OI0sxtj7PyCX9F1bxD/puw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6IFa9wvqVegA:10 a=JfrnYn6hAAAA:8 a=COk6AnOGAAAA:8 a=MMspel2jwrA65jTUX34A:9
- a=CjuIK1q_8ugA:10 a=Z1Yy7GAxqfX1iEi80vsk:22 a=1CNFftbPRP8L7MoqJWF3:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: 14MRxEKzw459aMnkiAL3rKeATL45MfU8
+In-Reply-To: <71196aad-6d80-4356-bbe5-3070f6b74bfe@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: xysRdrD4BBsBkf30bb6ggLzeakHvJYKc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjAzMDExNSBTYWx0ZWRfXwl2dhtuhBltp
+ ztEQv319fFUk0yPvpn11fz3Jgu0WY7WD1nnMi/HT0IBQzBc28kDQfz+FrJeenzraarPBEOkQaWR
+ 8fIGcoYMOAEJOvh41eGbBSc+MhccV8cxT7iAWQIgNQYhHEgt6jQvFO+R4/+bhAefLEQEivhpHVL
+ MFrd4sxgQ/FabfRlA/ldRg2WSp61XzYgeBSLWuuPh2dAo5WZl0UkowxVBvdx4aXfvL7V8G0wVxt
+ RqXP+ovtFZn/50ZNbSy5MbjBj5EU5XuWhcWDsZPNT4tuae6nIfuCXABpHVm7dokr3XBGqlpSaSa
+ ScbWcRUbWRkihI86h4w8GtStUYMJRChFfkD2keKI2ZmjRh8RpcmnprnP3zC3VgvaEuKMG3LIeRf
+ tM5qW/y77MxujBbFDTXbSDFRelBTm9ZHPGX2W8Q+13I4dDOh70prD2WuHjkiMRpIEUOSM3Dn
+X-Authority-Analysis: v=2.4 cv=RdWQC0tv c=1 sm=1 tr=0 ts=683ef602 cx=c_pps
+ a=+3WqYijBVYhDct2f5Fivkw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=6IFa9wvqVegA:10 a=G_5p7y9kmCDjZpQMCqIA:9 a=CjuIK1q_8ugA:10
+ a=eYe2g0i6gJ5uXG_o6N4q:22
+X-Proofpoint-GUID: xysRdrD4BBsBkf30bb6ggLzeakHvJYKc
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-03_01,2025-06-02_01,2025-03-28_01
@@ -128,67 +136,124 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  clxscore=1015 lowpriorityscore=0 malwarescore=0 suspectscore=0
  impostorscore=0 spamscore=0 mlxlogscore=999 classifier=spam authscore=0
  authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506030114
+ engine=8.19.0-2505280000 definitions=main-2506030115
 
-On Thu, May 29, 2025 at 11:54:14AM +0800, Ziyue Zhang wrote:
-> Each PCIe controller on sa8775p supports 'link_down'reset on hardware,
-> document it.
+On Tue, Jun 03, 2025 at 01:03:11PM +0200, Konrad Dybcio wrote:
+> On 6/2/25 10:55 AM, Neil Armstrong wrote:
+> > On 28/05/2025 18:56, Konrad Dybcio wrote:
+> >> On 5/28/25 1:22 PM, Dmitry Baryshkov wrote:
+> >>> On Wed, May 28, 2025 at 01:13:26PM +0200, Konrad Dybcio wrote:
+> >>>> On 5/28/25 11:00 AM, Dmitry Baryshkov wrote:
+> >>>>> On Wed, May 28, 2025 at 12:24:02AM +0200, Konrad Dybcio wrote:
+> >>>>>> On 5/27/25 11:10 PM, Dmitry Baryshkov wrote:
+> >>>>>>> On Tue, May 27, 2025 at 10:40:02PM +0200, Konrad Dybcio wrote:
+> >>>>>>>> Register a typec mux in order to change the PHY mode on the Type-C
+> >>>>>>>> mux events depending on the mode and the svid when in Altmode setup.
+> >>>>>>>>
+> >>>>>>>> The DisplayPort phy should be left enabled if is still powered on
+> >>>>>>>> by the DRM DisplayPort controller, so bail out until the DisplayPort
+> >>>>>>>> PHY is not powered off.
+> >>>>>>>
+> >>>>>>> This series doesn't seem to solve the USB side of a problem. When the
+> >>>>>>> PHY is being switch to the 4-lane mode, USB controller looses PIPE
+> >>>>>>> clock, so it needs to be switched to the USB-2 mode.
+> >>>>>>
+> >>>>>> I didn't find issues with that on X13s.. Not sure if it's related, but
+> >>>>>> on the SL7, after plugging in a 4ln DP connection, I need to plug in
+> >>>>>> the USB thumb drive twice for the first time (only in that sequence)
+> >>>>>
+> >>>>> Might be.
+> >>>>>
+> >>>>>> But there's nothing interesting in dmesg and the phy seems to be
+> >>>>>> programmed with the same values on both the initial and the subsequent
+> >>>>>> working plug-in
+> >>>>>
+> >>>>> Please try using a DP dongle with USB 2 passthrough (there are some).
+> >>>>> Or just emulate this by enabling DP PHY / DP chain for plugged in USB3
+> >>>>> devices. Would you be able to see the USB device on a bus?
+> >>>>
+> >>>> I only have a dongle with both display and usb that does 2ln dp
+> >>>> (I tested 4ln dp on a type-c display that I don't think has a hub)
+> >>>>
+> >>>> USB3 - yes, USB2 - no (but it works after a replug)
+> >>>>
+> >>>> Are you talking about essentially doing qcom,select-utmi-as-pipe-clk
+> >>>> at runtime?
+> >>>
+> >>> I think so.
+> >>
+> >> So after quite some time playing with that, I noticed that the USB2
+> >> device was never actually kicked off the bus.. and works totally fine
+> >> after connecting the display output (2ln DP)
+> >>
+> >> I was looking at dmesg, checking for discovery/disconnect messages,
+> >> but the device was simply never disconnected (which makes sense given
+> >> repurposing USB3 TX/RX lanes doesn't affect the D+/D- of USB2)
+> >>
+> >> I also read some docs and learnt that what we call
+> >> qcom,select-utmi-as-pipe-clk is suppossed to be a debug feature
+> >> and is unnecessary to set on USB2.0-only controllers
+> >>
+> >> The USB controller programming guide though doesn't talk about DP,
+> >> but I'd expect that we may need to set that override for 4lnDP+USB2
+> >> use cases (which I don't have a dongle for)
+> > 
+> > Yeah basically we need to:
+> > 1) power-off the USB3 PHY
+> > 2) switch to UTMI clock
+> > 
+> > In the following states:
+> > - USB safe mode (USB2 lanes may still be connected)
+> > - 4lanes DP mode
+> > - DP-only mode
+> > 
+> > But for this, the dwc3 should also get USB-C events with an addition mode-switch property.
+> > The flatten DWC3 node now allows that !
+> 
+> Yeah, I got even more confirmation this is intended..
+> 
+> I hacked up something that boils down to:
+> 
+> diff --git a/drivers/usb/dwc3/drd.c b/drivers/usb/dwc3/drd.c
+> index 7977860932b1..e5a0a8ec624d 100644
+> --- a/drivers/usb/dwc3/drd.c
+> +++ b/drivers/usb/dwc3/drd.c
+> @@ -464,6 +464,11 @@ static int dwc3_usb_role_switch_set(struct usb_role_switch *sw,
+>  		break;
+>  	}
+>  
+> +	if (dwc->mode_fn)
+> +		dwc->mode_fn(dwc, mode);
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 7334de85ad10..ea56f5087ecb 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> +static void mode_fn(struct dwc3 *dwc, enum usb_role role)
+> +{
+> +	struct dwc3_qcom *qcom = to_dwc3_qcom(dwc);
+> +
+> +	if (dwc->usb3_generic_phy[0])
+> +		dwc3_qcom_select_utmi_clk(qcom, role == USB_ROLE_NONE);
 
-I don't think it's possible to "support" reset in hardware. Either it
-exists and is routed, or it is not.
+This part is a hack for devices with no USB-2 passthrough, isn't it?
+
+>  }
+> 
+> 
+> It was easy to tap into because there's already mode switch handling..
+> But obviously it's a hack - should I register a typec_mux in there?
+
+I think so, we should listen to mode changes, instead of host/device
+changes.
+
+> Should it go to dwc3-common or dwc3-qcom?
+
+I'd say, dwc3-qcom. Not all dwc3 controllers are USB 3 capable, not
+talking about the USB-C.
 
 > 
-> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-> ---
->  .../devicetree/bindings/pci/qcom,pcie-sa8775p.yaml  | 13 +++++++++----
->  1 file changed, 9 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml
-> index e3fa232da2ca..805258cbcf2f 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml
-> @@ -61,11 +61,14 @@ properties:
->        - const: global
->  
->    resets:
-> -    maxItems: 1
-> +    minItems: 1
-> +    maxItems: 2
-
-Shouldn't we just update this to maxItems:2 / minItems:2 and drop
-minItems:1 from the next clause?
-
->  
->    reset-names:
-> +    minItems: 1
->      items:
-> -      - const: pci
-> +      - const: pci # PCIe core reset
-> +      - const: link_down # PCIe link down reset
->  
->  required:
->    - interconnects
-> @@ -161,8 +164,10 @@ examples:
->  
->              power-domains = <&gcc PCIE_0_GDSC>;
->  
-> -            resets = <&gcc GCC_PCIE_0_BCR>;
-> -            reset-names = "pci";
-> +            resets = <&gcc GCC_PCIE_0_BCR>,
-> +                     <&gcc GCC_PCIE_0_LINK_DOWN_BCR>;
-> +            reset-names = "pci",
-> +                          "link_down";
->  
->              perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
->              wake-gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;
-> -- 
-> 2.34.1
-> 
-> 
-> -- 
-> linux-phy mailing list
-> linux-phy@lists.infradead.org
-> https://lists.infradead.org/mailman/listinfo/linux-phy
+> Konrad
 
 -- 
 With best wishes
