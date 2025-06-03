@@ -1,44 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-60149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10DB6ACC8E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 16:16:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BE0FACC8F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 16:21:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BEEC03A2227
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 14:16:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC84D16BC01
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 14:21:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFEA72745E;
-	Tue,  3 Jun 2025 14:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3754A238C10;
+	Tue,  3 Jun 2025 14:21:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pwGIzinz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8242C3246
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jun 2025 14:16:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBEFE555
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jun 2025 14:21:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748960200; cv=none; b=L1Kb7oxEITmgkyjkERC83l1iEz1UxpsYmnIrxGrXI2GDLIV8FipPZNbACRc1p+fOKYWc1z9R4kHi+aKA4Jbp89BMu+Asf59PaXl/kMI+S+7YqHPUv8BZM+LONKhtPXYR1gQQfNi/QjlSvhL1IrdOKHyOFdiiB3bZ7y1ZG4PDoA8=
+	t=1748960491; cv=none; b=s00fqTFu593nxh9rbNVd8WqVHuFcQMoH0JRP8TPoCMnaC85352rm2hp9bfQAm5Pe0ZXoqLP35nDwdrQoemn2jqWRRlu/kmmu6I2x4xLlG2/nU1mlXcG/5SoQEbJ5AkDwO/iOfqoov73lpSB/1f2x/s0vwT2IWJlpa8gP00BT47Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748960200; c=relaxed/simple;
-	bh=uAJnlpBlMCdXn0vm2cHRpNjIqhUUX2fHSjbXL6VPAN0=;
+	s=arc-20240116; t=1748960491; c=relaxed/simple;
+	bh=e6WAD+Q9fgYgM9twIfuBVafvCYc3m9ocAUhLVKu4J3A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NekKVpIU6444OWrRDv1JH+ZcdKCCyvly+GJs9tTsMujdeMPqJZxvrRR260vWIheWR51ixg29QiCcI+YfJ9ywrkuvaNHy0HbrZD2IAdfZKopsNCSuxQQMrbOQMqRQCKMoEhZ0BIz231hJA+oD4U3qtmffdJDz0fyWTN83lzkh6ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.204.34.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: esmtpsz17t1748960179t92f8d0ba
-X-QQ-Originating-IP: 7Unthp6zRkf2GCBo0PISOzyxqfWe8p0qMqpIANg83dk=
-Received: from [127.0.0.1] ( [45.8.186.102])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 03 Jun 2025 22:16:14 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 5516064207330598275
-Message-ID: <712A2410D11E9A7E+27a43d64-1116-41ba-addc-83aa5f761a28@radxa.com>
-Date: Tue, 3 Jun 2025 22:16:14 +0800
+	 In-Reply-To:Content-Type; b=WcK1HRi4BRd9Jh0Mca6fyUdBaTmJb7oL+y15bLUwz2hdVw0HgBRzaCq3ftuPC7Ws3PVQHpHJACXYUuHCwiZ1an9GYbykYaOHFnsHDtJhh+tZJ9JKkhdQ5YGQOcJBTtIj+i8LSIUoKzduXfqNE31ksaUfszonTJ+kiFAuphABgAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pwGIzinz; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a361b8a664so5466662f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jun 2025 07:21:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1748960487; x=1749565287; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7NVC+W/4cnhRBLtqaKDb7hylurSPoDltgbkfNZRJlpg=;
+        b=pwGIzinzyHpjd2i7PTy94N6MbdR4RJNprabCnaZLZ0WTGZD+iu80tSp+MHNfK8jcOc
+         tfye4Xk9SqjSqegoTraQGOK1757y46rK5nfR/5n7BhaZ+geyJr2sZHb6vXYLLtI/zplq
+         vXWukLGClWoSSy4ubVF7JvWky/XYijIvbNoqvT74WDEeIKu55tYwtGYF4JfdzDo6tmAo
+         LEGWafHo7G6ZXnJNuqf0WLWBiOzQ3tnQYLyjphMON5bdtJ0oEU+R81BioWsLCYfWopV8
+         RgrS7VOpdNfZAnlI2Mndyt/3SjKcAmr4G+r673rlol+xFaiMw+YsfY/Gv0qb3eqi/f7I
+         NsAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748960487; x=1749565287;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7NVC+W/4cnhRBLtqaKDb7hylurSPoDltgbkfNZRJlpg=;
+        b=O9x9PptPySyVjpf2GlRsDoX4bMQO77TPhTHQCKxVBKsuHflMscANEn6VPG6dWY0k7e
+         shMrz5fgy1A+hshG6ILTpLKCvBYLKksEiuOxFV4SsHtrvDNvr5y/gJuZ3mB09Yo7E63/
+         k6pqlRI48VIJTzfTAAFbMLeFHqZCiG8z1ZYQCJgwVDz9n/UcIHRNH5up5CW3iq1hG8fF
+         hmaMnuWpEd4W/ZaB6yvB/zYCcAPuGKIfxbLI1Y0oDReIW9igYXE9y4ymiDiG2y2MK31v
+         t1gLXZgrgm4NyGDzL8HlpHid/crGw7+I6rmKCKVo7bzN6gb2oifDgV/Ujf6dg+S71RtB
+         rTYw==
+X-Forwarded-Encrypted: i=1; AJvYcCXVriwcn3HKLe3JRaemDh5y8f6EiB9sZ0CrvDRgCbicEW2/6eOj/tAKGjbTY/8JI+nbElxYa4DVV6cikLwF@vger.kernel.org
+X-Gm-Message-State: AOJu0YwOvMOKUfY+Uz3ncv21jktJ5nGjQnBbeYWoxK1DQdONRulHRuFQ
+	PnAy6QHI9SvfQptGO8saXslEb1rbUezyh6+nXxTWO5i4Ca50XALaeBFyI3owQQTpSwU=
+X-Gm-Gg: ASbGnctywNdH5KfLKjjP3EcClhXxF0gXsD9+wZtTclhgEjfcIWrt4GP+RgShXUKe6xO
+	hBc6dabFT3NtfhPYIydWzrnFWWh7hRDU8RVrAg+JHlfd45KjJSw23aWXapcal656aUqsmbKO3Bq
+	+DAZfHXYOEkHgXa6vBDOGW1QGjqbr2Oybxl5Lx4wnXDLNR2i/iBWpsdR1rffF+KFVYLr2lnEGdh
+	ZGetmroCMEcr63QGI5b9ZqO6TYYa/D/6pOUGcrJgCnflHflf2AkgrPACkAvPP3G0FGsf4WqUel+
+	pRQG/WAqcEI57XC/xGI8//d432venquTdsuEEbKaw9x1JM/CnlRFKqmuDy9qaT+RsGth7dQ7tSG
+	BdtF2rBkWGu+gqQYq
+X-Google-Smtp-Source: AGHT+IEKFABCfqGZPw1pdZkAPW/9jkRTXt6KG5zOR1VmibYZx2XavidfNIWW2YTZrnfCCg3BT43GEw==
+X-Received: by 2002:a5d:65c7:0:b0:3a4:f7af:db9c with SMTP id ffacd0b85a97d-3a4f7afdbd9mr11191637f8f.59.1748960486164;
+        Tue, 03 Jun 2025 07:21:26 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a5005aa64esm11349954f8f.70.2025.06.03.07.21.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Jun 2025 07:21:25 -0700 (PDT)
+Message-ID: <e6517c54-9163-48d1-80c2-4fd964dac349@linaro.org>
+Date: Tue, 3 Jun 2025 15:21:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -46,154 +82,195 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7] drm/msm/dp: reuse generic HDMI codec implementation
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- Hermes Wu <Hermes.wu@ite.com.tw>, dri-devel@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org
-References: <20250423-dp-hdmi-audio-v7-1-8407a23e55b2@oss.qualcomm.com>
- <4E62D52FC6135E5B+a6b1634e-5c66-4db5-bb1e-bf64e2e8d8a2@radxa.com>
- <os3cmusf2nrdf3zq45s52a72x4osnd4thlgcgykcalyiuitcha@tnb576gj4m27>
-From: Xilin Wu <sophon@radxa.com>
+Subject: Re: [PATCH v5 3/8] soc: qcom: geni-se: Enable QUPs on SA8255p
+ Qualcomm platforms
+To: Praveen Talari <quic_ptalari@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+ devicetree@vger.kernel.org
+Cc: psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
+ quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
+ quic_mnaresh@quicinc.com, quic_shazhuss@quicinc.com
+References: <20250506180232.1299-1-quic_ptalari@quicinc.com>
+ <VgXAbpS__r4C24FLFz5nqCPgygil3nr3-oNHbL7bQxE0X1GnDStFaWlnts8iSxCeG6TCqa8mzIFqOysqIlWeJg==@protonmail.internalid>
+ <20250506180232.1299-4-quic_ptalari@quicinc.com>
 Content-Language: en-US
-In-Reply-To: <os3cmusf2nrdf3zq45s52a72x4osnd4thlgcgykcalyiuitcha@tnb576gj4m27>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250506180232.1299-4-quic_ptalari@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:radxa.com:qybglogicsvrgz:qybglogicsvrgz8a-1
-X-QQ-XMAILINFO: MLbAtvpy5B1PeHK71kV94xou0uKS2oc3m7vgCYKylFAZQJz7iZ1ElifZ
-	pRq4sBJsShnDpFyOM4gHOEhG3zw+/5d7kR66Oy96rMoFMe+kc6PMwdt5+CoVMhOGAYYHOJP
-	hS3OnWNlE5/CF8VsVlkWekR84oKwrVK+75hGa6446Kf8DnJyJ9Ti6DCwdRGYVrM29uwbX96
-	W7PDMiEqCu06I5qiN4ZYqgD04iadTg4WyaArzGLccoiGMWMf7r8cAO4P+dSFQagwfFcjz24
-	op4iZqDb4i898YAvkRryN9mSxvnwt5QnK0MggS1O/D+TWA7osoBoGvkX6Ohga3RSFELHom0
-	vYT/9NsEmbLA5F4hSyPMvsDQoAFnlSpw3tAsqWYmnu2Pl9UBT919VyByAIuFUnFkr1AoOIM
-	7PWVw3dz0Vm2asflMJgxR3LOZVDy4LliQlfQHgxSYlgMR0dgMotdNVc42DMZtLvrkzdXSl5
-	UgNM5mTbWXHxymwcSbF591We+96jls2S55r3NxNd/xCDhDar7J6gC29d1+6utB8XBxwr9VX
-	7NMzu7eIcospvrqU6l3NW8Kl7dLR9C2keXXh86V9+MYVuePgCuuoK77ypDTkfNzr5gQZxm+
-	XntMkjRfpMMoy0fOPC30Ozj17WbNhaVezE8rnPtOZlLxvZiK2he3FoS4p1+EAGdC//MkAdf
-	u8y0uyCArdX7ygcYEO7vz79d4rXyy2NRrSnkgPrYixiPxuNdP9LOSbUU5BDf7HDHOuzexjW
-	4XVeIW4KkNC2q+UhJWvd4cfzMJHlLaUknYS43OWMw+e1Uxwe6LnaG1oiuMEu+of+ScsWR+M
-	fdz7uq/xZfbiTB131mVTURbH8AZx76B090IxNFq7RgQ9xYTHHScA+gmfKzbNcsK4dWkfnU2
-	VQTRBaIwdce/TXE+qvcQrEZdtnvAD5jLrMGwWMXneVNChJYy4zuS8KZZe+ZgPnhMd7e7aQc
-	fX1XNJr+7c0aOMy8JauRNovNoMFZGwM20ECz+yYIxbwslaOnd3Rg5p+2mv3vwHygu4CZCNE
-	7qk8g8fUMUpCmeEk1dc1M5v4qi9q06iNzLXWgOIg==
-X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
-X-QQ-RECHKSPAM: 0
 
-On 2025/6/3 22:06:36, Dmitry Baryshkov wrote:
-> On Thu, May 29, 2025 at 10:40:12AM +0800, Xilin Wu wrote:
->> On 2025/4/24 01:52:45, Dmitry Baryshkov wrote:
->>> From: Dmitry Baryshkov <lumag@kernel.org>
->>>
->>> The MSM DisplayPort driver implements several HDMI codec functions
->>> in the driver, e.g. it manually manages HDMI codec device registration,
->>> returning ELD and plugged_cb support. In order to reduce code
->>> duplication reuse drm_hdmi_audio_* helpers and drm_bridge_connector
->>> integration.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>> ---
->>> A lot of DisplayPort bridges use HDMI Codec in order to provide audio
->>> support. Present DRM HDMI Audio support has been written with the HDMI
->>> and in particular DRM HDMI Connector framework support, however those
->>> audio helpers can be easily reused for DisplayPort drivers too.
->>>
->>> Patches by Hermes Wu that targeted implementing HDMI Audio support in
->>> the iTE IT6506 driver pointed out the necessity of allowing one to use
->>> generic audio helpers for DisplayPort drivers, as otherwise each driver
->>> has to manually (and correctly) implement the get_eld() and plugged_cb
->>> support.
->>>
->>> Implement necessary integration in drm_bridge_connector and provide an
->>> example implementation in the msm/dp driver.
->>> ---
->>> Changes in v7:
->>> - Dropped applied patches
->>> - Link to v6: https://lore.kernel.org/r/20250314-dp-hdmi-audio-v6-0-dbd228fa73d7@oss.qualcomm.com
->>>
->>> Changes in v6:
->>> - Added DRM_BRIDGE_OP_DP_AUDIO and separate set of DisplayPort audio
->>>     callbacks to the drm_bridge interface (Maxime)
->>> - Link to v5: https://lore.kernel.org/r/20250307-dp-hdmi-audio-v5-0-f3be215fdb78@linaro.org
->>>
->>> Changes in v5:
->>> - Rebased on top of linux-next, also handling HDMI audio piece of the
->>>     MSM HDMI driver.
->>> - Link to v4: https://lore.kernel.org/r/20250301-dp-hdmi-audio-v4-0-82739daf28cc@linaro.org
->>>
->>> Changes in v4:
->>> - Rebased on linux-next, adding DRM_BRIDGE_OP_HDMI_AUDIO to Synopsys QP
->>>     HDMI driver.
->>> - Drop outdated comment regarding subconnector from the commit message.
->>> - Link to v3: https://lore.kernel.org/r/20250219-dp-hdmi-audio-v3-0-42900f034b40@linaro.org
->>>
->>> Changes in v3:
->>> - Dropped DRM_BRIDGE_OP_DisplayPort, added DRM_BRIDGE_OP_HDMI_AUDIO
->>>     (Laurent, Maxime)
->>> - Dropped the subconnector patch (again)
->>> - Link to v2: https://lore.kernel.org/r/20250209-dp-hdmi-audio-v2-0-16db6ebf22ff@linaro.org
->>>
->>> Changes in v2:
->>> - Added drm_connector_attach_dp_subconnector_property() patches
->>> - Link to v1: https://lore.kernel.org/r/20250206-dp-hdmi-audio-v1-0-8aa14a8c0d4d@linaro.org
->>> ---
->>>    drivers/gpu/drm/msm/Kconfig         |   1 +
->>>    drivers/gpu/drm/msm/dp/dp_audio.c   | 131 ++++--------------------------------
->>>    drivers/gpu/drm/msm/dp/dp_audio.h   |  27 ++------
->>>    drivers/gpu/drm/msm/dp/dp_display.c |  28 ++------
->>>    drivers/gpu/drm/msm/dp/dp_display.h |   6 --
->>>    drivers/gpu/drm/msm/dp/dp_drm.c     |   8 +++
->>>    6 files changed, 31 insertions(+), 170 deletions(-)
->>>
->>
->> This change breaks DP audio on the qcs6490 platform, tested on kernel
->> next-20250528.
+On 06/05/2025 19:02, Praveen Talari wrote:
+> On the sa8255p platform, resources such as clocks,interconnects
+> and TLMM (GPIO) configurations are managed by firmware.
 > 
-> I can not confirm this issue here (though I tested it on a different
-> hardware). Do you have any patches on top of linux-next?
+> Introduce a platform data function callback to distinguish whether
+> resource control is performed by firmware or directly by the driver
+> in linux.
 > 
-
-I have this patch series applied, but I don't think it could be relevant:
-
-[PATCH v4 0/8] Enable audio on qcs6490-RB3Gen2 and qcm6490-idp boards
-https://lore.kernel.org/all/20250527111227.2318021-1-quic_pkumpatl@quicinc.com/
-
->>
->> [    0.368035] [drm:dpu_kms_hw_init:1173] dpu hardware revision:0x70020000
->> [    0.369359] hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_probe:
->> dai_count 0
->> [    0.369362] hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_probe:
->> Missing hw_params
->> [    0.369364] hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_probe:
->> Invalid parameters
->> [    0.369366] hdmi-audio-codec hdmi-audio-codec.0.auto: probe with driver
->> hdmi-audio-codec failed with error -22
->> [    0.370536] [drm] Initialized msm 1.12.0 for ae01000.display-controller
->> on minor 0
->>
->> Manually reverting this change solves the problem.
+> The refactor ensures clear differentiation of resource
+> management mechanisms, improving maintainability and flexibility
+> in handling platform-specific configurations.
 > 
-> It is suspicious, since dai_count can not be 0. We set
-> hdmi_audio_max_i2s_playback_channels to 8, which in turn should set the
-> hdmi_codec_pdata.i2s to 1.
+> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+> ---
+> v3 -> v4
+> - declared an empty struct for sa8255p and added check as num clks.
+> - Added version log after ---
 > 
+> v1 -> v2
+> - changed datatype of i from int to unsigned int as per comment.
+> ---
+>   drivers/soc/qcom/qcom-geni-se.c | 73 ++++++++++++++++++++-------------
+>   1 file changed, 45 insertions(+), 28 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+> index 4cb959106efa..b6e90bac55fe 100644
+> --- a/drivers/soc/qcom/qcom-geni-se.c
+> +++ b/drivers/soc/qcom/qcom-geni-se.c
+> @@ -105,6 +105,8 @@ struct geni_wrapper {
+>   struct geni_se_desc {
+>   	unsigned int num_clks;
+>   	const char * const *clks;
+> +	int (*geni_se_rsc_init)(struct geni_wrapper *wrapper,
+> +				const struct geni_se_desc *desc);
+>   };
+> 
+>   static const char * const icc_path_names[] = {"qup-core", "qup-config",
+> @@ -891,10 +893,44 @@ int geni_icc_disable(struct geni_se *se)
+>   }
+>   EXPORT_SYMBOL_GPL(geni_icc_disable);
+> 
+> +static int geni_se_resource_init(struct geni_wrapper *wrapper,
+> +				 const struct geni_se_desc *desc)
+> +{
+> +	struct device *dev = wrapper->dev;
+> +	int ret;
+> +	unsigned int i;
+> +
+> +	wrapper->num_clks = min_t(unsigned int, desc->num_clks, MAX_CLKS);
 
-It suddenly comes to my mind that I'm using a kernel with everything 
-compiled as builtin. Could that be a possible issue?
+It should be an error to depend on more clocks - which are specified in 
+a descriptor down the bottom of this file than MAX_CLKS allows.
 
+> +
+> +	for (i = 0; i < wrapper->num_clks; ++i)
+> +		wrapper->clks[i].id = desc->clks[i];
+> +
+> +	ret = of_count_phandle_with_args(dev->of_node, "clocks", "#clock-cells");
+> +	if (ret < 0) {
+> +		dev_err(dev, "invalid clocks property at %pOF\n", dev->of_node);
+> +		return ret;
 
--- 
-Best regards,
-Xilin Wu <sophon@radxa.com>
+return dev_err_probe();
+
+> +	}
+> +
+> +	if (ret < wrapper->num_clks) {
+> +		dev_err(dev, "invalid clocks count at %pOF, expected %d entries\n",
+> +			dev->of_node, wrapper->num_clks);
+> +		return -EINVAL;
+> +	}
+> +
+> +	ret = devm_clk_bulk_get(dev, wrapper->num_clks, wrapper->clks);
+> +	if (ret) {
+> +		dev_err(dev, "Err getting clks %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+>   static int geni_se_probe(struct platform_device *pdev)
+>   {
+>   	struct device *dev = &pdev->dev;
+>   	struct geni_wrapper *wrapper;
+> +	const struct geni_se_desc *desc;
+>   	int ret;
+> 
+>   	wrapper = devm_kzalloc(dev, sizeof(*wrapper), GFP_KERNEL);
+> @@ -906,36 +942,12 @@ static int geni_se_probe(struct platform_device *pdev)
+>   	if (IS_ERR(wrapper->base))
+>   		return PTR_ERR(wrapper->base);
+> 
+> -	if (!has_acpi_companion(&pdev->dev)) {
+> -		const struct geni_se_desc *desc;
+> -		int i;
+> +	desc = device_get_match_data(&pdev->dev);
+> 
+> -		desc = device_get_match_data(&pdev->dev);
+> -		if (!desc)
+> +	if (!has_acpi_companion(&pdev->dev) && desc->num_clks) {
+
+There is no desc in this file that has !num_clks I don't think the 
+conjunction is justified.
+
+> +		ret = desc->geni_se_rsc_init(wrapper, desc);
+> +		if (ret)
+>   			return -EINVAL;
+> -
+> -		wrapper->num_clks = min_t(unsigned int, desc->num_clks, MAX_CLKS);
+> -
+> -		for (i = 0; i < wrapper->num_clks; ++i)
+> -			wrapper->clks[i].id = desc->clks[i];
+> -
+> -		ret = of_count_phandle_with_args(dev->of_node, "clocks", "#clock-cells");
+> -		if (ret < 0) {
+> -			dev_err(dev, "invalid clocks property at %pOF\n", dev->of_node);
+> -			return ret;
+> -		}
+> -
+> -		if (ret < wrapper->num_clks) {
+> -			dev_err(dev, "invalid clocks count at %pOF, expected %d entries\n",
+> -				dev->of_node, wrapper->num_clks);
+> -			return -EINVAL;
+> -		}
+> -
+> -		ret = devm_clk_bulk_get(dev, wrapper->num_clks, wrapper->clks);
+> -		if (ret) {
+> -			dev_err(dev, "Err getting clks %d\n", ret);
+> -			return ret;
+> -		}
+>   	}
+> 
+>   	dev_set_drvdata(dev, wrapper);
+> @@ -951,8 +963,11 @@ static const char * const qup_clks[] = {
+>   static const struct geni_se_desc qup_desc = {
+>   	.clks = qup_clks,
+>   	.num_clks = ARRAY_SIZE(qup_clks),
+> +	.geni_se_rsc_init = geni_se_resource_init,
+>   };
+> 
+> +static const struct geni_se_desc sa8255p_qup_desc;
+> +
+>   static const char * const i2c_master_hub_clks[] = {
+>   	"s-ahb",
+>   };
+> @@ -960,11 +975,13 @@ static const char * const i2c_master_hub_clks[] = {
+>   static const struct geni_se_desc i2c_master_hub_desc = {
+>   	.clks = i2c_master_hub_clks,
+>   	.num_clks = ARRAY_SIZE(i2c_master_hub_clks),
+> +	.geni_se_rsc_init = geni_se_resource_init,
+>   };
+> 
+>   static const struct of_device_id geni_se_dt_match[] = {
+>   	{ .compatible = "qcom,geni-se-qup", .data = &qup_desc },
+>   	{ .compatible = "qcom,geni-se-i2c-master-hub", .data = &i2c_master_hub_desc },
+> +	{ .compatible = "qcom,sa8255p-geni-se-qup", .data = &sa8255p_qup_desc },
+>   	{}
+>   };
+>   MODULE_DEVICE_TABLE(of, geni_se_dt_match);
+> --
+> 2.17.1
+> 
+> 
+Other than those minor details looks pretty good.
+Please include me in v6 and I will review further.
+---
+bod
 
 
