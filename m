@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-60092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60093-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D824CACC0B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 09:04:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 247FEACC0BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 09:06:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 745D03A5107
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 07:04:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D996E166BA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 07:06:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C298267F70;
-	Tue,  3 Jun 2025 07:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D30152686B7;
+	Tue,  3 Jun 2025 07:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BZ85++bw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y2x5OP0V"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547CF1F63D9;
-	Tue,  3 Jun 2025 07:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94264267F75;
+	Tue,  3 Jun 2025 07:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748934283; cv=none; b=Zs/C+waRU4NQPhV2WtEQmy9H+eZCKPe/yWv15ZZNtMTNsnvXLQcU2QHN5U3XvmxNNSInKxLEEnZfSOQdMMLGeydRqhwE4sVn5SNAPjsUwUIlFnZjvHrWXYVjbj+MVA/rWSQFpMis3RNoLTxh7oKUargpgJGyoL/UoLJbPZ3ME14=
+	t=1748934386; cv=none; b=FQzlQ+mFLsYQIqyjRvtyY3gTbmYruVMqfBzuDLOEPX6a5ssELyEHls2z/jIZ6roxYL3sC1xEWAAlDyQGQgdlOTO37xZmInFyAekDvUIegQN5cQ4W/9s1CPKZ/O9y6ryOYpGP/j3Mv0m60hLP5TwPM2+LAKcul4jVWAE4g3s+urk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748934283; c=relaxed/simple;
-	bh=tDULJVvapD3GbaUPZBh6QoAWo7a/Aq/65kFs9l2booE=;
+	s=arc-20240116; t=1748934386; c=relaxed/simple;
+	bh=Sfe2o5YTqfaeOEsvn93+GtVo0/OjSJdAikbEZ0PmGGc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kKJ8612VI54dtat9proQuXzcjMQbZwEvg65Hv558FGQ1Eq2O98gKfZilD2njYkynpePhCCnINbKHOggQIB+DmGZRTfnN3+25m3TambNFH+kqbzmT9TIbmF0dNcgFFAOigtt6mSaAA3WzXbhZ8dG+RQpHA4NC+CYyUeypGAzAYek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BZ85++bw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5AB4C4CEEF;
-	Tue,  3 Jun 2025 07:04:36 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=UEnTefN9HdM/FWnkkGTPlOjwBL5v5sc4fcMMb8WNJvpRTto6mLDa31RkCRiPoFKFVCDdYYThoNk7roKqfY9kHsrWJbmaq+m1fL8LsE3/XWtkKVk+Fe56Iwp5HfbitaVmc5m4rwNJRcg5WMDG99t4j5MZQf33o9hcyA27zpkdMyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y2x5OP0V; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF8DC4CEED;
+	Tue,  3 Jun 2025 07:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748934283;
-	bh=tDULJVvapD3GbaUPZBh6QoAWo7a/Aq/65kFs9l2booE=;
+	s=k20201202; t=1748934386;
+	bh=Sfe2o5YTqfaeOEsvn93+GtVo0/OjSJdAikbEZ0PmGGc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=BZ85++bwlHn5oXkn7WjtuKV/ghFie3VmaxFXemAABdrXXTtuRoHAkBON+t4xeI5IA
-	 mt2JvBHRv71/TmH/qTfh2zMPW3QBdqYV4pJ/5RulMfsNjWTai1SiTERfPSdJnY7nnf
-	 +RKtddSHwws3cdHB5dHbg2Flt0AOO0JOA2y0wZu/ytJJyPqftwgkWjDwIUl+2pstAi
-	 Tqrb9NIVKvOkT5z2Su+4wmGaAcc2DYvD8Z815RUvTJ9pkV77xib2WDyZ/mNc+Ah8BD
-	 fv90/STO+OFkXrgbLCLkF9vvhujuP2g+m/8pfanYTF6uUO3FlSD2m0oGmtAqv2+F/m
-	 8OEAKuSrOnoew==
-Message-ID: <8bcc4fb7-b477-4478-a61c-0d7aa37a7f6e@kernel.org>
-Date: Tue, 3 Jun 2025 09:04:35 +0200
+	b=Y2x5OP0V931RhxgwZW3nkL7koE0B84xeNwa1MUx5QaUZRfhr3xgrtMIvbP2ihFXQG
+	 IkA//iGctlnNZto+XysiilDFyLDlYluqw9rT2hHWn50muaIu+O5KCb8xPtSQ+zVzJR
+	 1mKiZ6qYIZaZEpaTYAFTUl827rqbj11aQMTHspY/7CCemcr9JRxMO1edn4ZCeGUYOZ
+	 wf1EbdYxMOxCQ6xih5aqRm4TS49QhM/AU3/ILY6WctfT9LgvqAFTl6f7XDt/uX6nX6
+	 epg2ZVqIjSv62OF+OjUOuPiFADEVo1UsxPqdlleudZ3udxLnnRznTvj9+saqrV7MGY
+	 ACs+8yO2hhf8w==
+Message-ID: <bcf487c9-e522-44a3-b094-daf98823a195@kernel.org>
+Date: Tue, 3 Jun 2025 09:06:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,26 +50,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 03/18] dt-bindings: clock: qcom,sm8450-camcc: Move
- sc8280xp camcc to sa8775p camcc
-To: Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v2 6/8] dt-bindings: soc: qcom: pmic-glink: Move X1E80100
+ out of fallbacks
+To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>,
+ Sebastian Reichel <sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Dmitry Baryshkov <lumag@kernel.org>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20250530-videocc-pll-multi-pd-voting-v5-0-02303b3a582d@quicinc.com>
- <20250530-videocc-pll-multi-pd-voting-v5-3-02303b3a582d@quicinc.com>
+ <conor+dt@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
+ David Collins <david.collins@oss.qualcomm.com>, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ kernel@oss.qualcomm.com, devicetree@vger.kernel.org,
+ linux-usb@vger.kernel.org
+References: <20250530-qcom_battmgr_update-v2-0-9e377193a656@oss.qualcomm.com>
+ <20250530-qcom_battmgr_update-v2-6-9e377193a656@oss.qualcomm.com>
+ <4e093835-af3b-4a84-b42f-fa7d3a6f60a1@kernel.org>
+ <14cba9ae-e3bb-46e8-a800-be5d979b2e06@oss.qualcomm.com>
+ <b07200a2-4e7b-480e-a683-d116e7da8de8@kernel.org>
+ <c4be4b97-6104-45e3-b555-6691e369c3a4@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,25 +114,61 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250530-videocc-pll-multi-pd-voting-v5-3-02303b3a582d@quicinc.com>
+In-Reply-To: <c4be4b97-6104-45e3-b555-6691e369c3a4@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 30/05/2025 15:20, Jagadeesh Kona wrote:
-> SC8280XP camcc only requires the MMCX power domain, unlike SM8450 camcc
-> which now supports both MMCX and MXC power domains. Hence move SC8280XP
-> camcc from SM8450 to SA8775P camcc, to have single power domain support.
+On 03/06/2025 08:59, Fenglin Wu wrote:
 > 
-> SA8775P camcc doesn't support required-opps property currently but SC8280XP
-> camcc need that property,  so add required-opps based on SC8280XP camcc
-> conditional check in SA8775P camcc bindings.
+> On 6/3/2025 2:47 PM, Krzysztof Kozlowski wrote:
+>> On 03/06/2025 08:42, Fenglin Wu wrote:
+>>> On 6/2/2025 3:40 PM, Krzysztof Kozlowski wrote:
+>>>> On 30/05/2025 09:35, Fenglin Wu via B4 Relay wrote:
+>>>>> From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+>>>>>
+>>>>> Move X1E80100 out of the fallbacks of SM8550 in pmic-glink support.
+>>>> Why?
+>>>>
+>>>> Do not describe what you do here, it's obvious. We see it from the diff.
+>>>>
+>>>>
+>>>> Best regards,
+>>>> Krzysztof
+>>> Previously, in qcom_battmgr driver, x1e80100 was specified with a match
+>>> data the same as sc8280xp, also sm8550 was treated a fallback of sm8350
+>>> without the need of a match data.
+>>>
+>>> In ucsi_glink driver, sm8550 had a match data and x1e80100 was treated
+>>> as a fallback of sm8550. There was no issues to make x1e80100 as a
+>>> fallback of sm8550 from both qcom_battmgr and ucsi_glink driver perspective.
+>>>
+>>> In patch [5/8] in this series, in qcom_battmgr driver, it added charge
+>>> control functionality for sm8550 and x1e80100 differently hence
+>>> different match data was specified for them, and it makes x1e80100 ad
+>>> sm8550 incompatible and they need to be treated differently.
+>> So you break ABI and that's your problem to fix. You cannot make devices
+>> incompatible without good justification.
 > 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> ---
+> I would say x1e80100 and sm8550 are different and incompatible from a 
+> battery management firmware support perspective. The x1e80100 follows 
+> the sc8280xp as a compute platform, whereas the sm8550 follows the 
+> sm8350 as a mobile platform.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Not correct arguments for compatibility.
+
+> 
+> The difference between them was initially ignored because the sm8550 
+> could use everything that the sm8350 has, and no match data needed to be 
+> specified for it. However, now the sm8550 has new features that the 
+> sm8350 doesn't have, requiring us to treat it differently, thus the 
+> incompatibility was acknowledged.
+
+So they are perfectly compatible.
+
+I really do not understand what we are discussing here. Explain in
+simple terms of DT spec: what is incompatible that SW cannot use one
+interface to handle the other?
+
 
 Best regards,
 Krzysztof
