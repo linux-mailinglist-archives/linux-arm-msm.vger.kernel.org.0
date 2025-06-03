@@ -1,305 +1,235 @@
-Return-Path: <linux-arm-msm+bounces-60109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70E76ACC157
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 09:42:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6D84ACC1A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 10:03:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 746487A6B8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 07:41:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 90F5E3A4073
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 08:02:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34A84269AEE;
-	Tue,  3 Jun 2025 07:42:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FDD2280006;
+	Tue,  3 Jun 2025 08:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p79ikCPb"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=nxsw.ie header.i=@nxsw.ie header.b="dJZL/ubb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-24420.protonmail.ch (mail-24420.protonmail.ch [109.224.244.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB5C1F63D9
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jun 2025 07:42:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8680A27F728
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jun 2025 08:03:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748936551; cv=none; b=bIn/meWk+P+AeNJ69iginY2j2EZHiBgkVTw2bP/nhzXL8oWo8tDlqAmEGZYHNvIBUttaXbPw85cXuKeqiIcPeiHWwO5KUxwxBXK52gDqFHIk43nbQamhUNt1+5sb/1pKb9haJFiq5thRjE+/W9CsRkwPKTtO30pZhUeedTA65TA=
+	t=1748937789; cv=none; b=XUv/N5X2K1+1LS76G6EiA7+OPF0Z2IMBrQH7+Eby8sQOnpdMkUHNnANB6MGttc6YWiMxjgbymDeRdCzkQXGJ8Isx/lDCGG4WJpfOgpd6hEJ/Qu70ZKGeLM7YQmjapdAQElbIRx9DJzQE+OpBfLm7tJN1OXVU+VtaS+4+8nbjBXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748936551; c=relaxed/simple;
-	bh=2dvWRKZZrQey3wZqJDyjNQQ4hGx7IVjOgbiHAsmgOtY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=O0jLRodzQdS/+LTQlEIuCSzSiXvpoKzINapSqatMPl69ziU5wkDoieoDemJdCipynI9L/IrrDHcWgd9rk/PRey4ByrXxp57QPdYzvHrmtYTtXmVgpsZm6KUqLi8KM/FwqbF7NRPGN1rx/Acz5R4PUcmBHUlnkuHBrLo5DSw0dTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p79ikCPb; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43edecbfb94so57382075e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jun 2025 00:42:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748936547; x=1749541347; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Cb47QCgFSmdRyeAGFN4QKhqLDtCkq6VLJti9g1N+NPs=;
-        b=p79ikCPbwHntuusxphWsOpBeIW4TwBge2CgP1lx7cfAWqhMr6cl89vkpuebpDXTKC/
-         FTpUWC45gBpJYbrrRAqNRsYKTUqCEP9Lb5SYkAudX0ilW5T3DoJmr82Iu45saLOOs3Pp
-         9CZDbV3awjq25vofyd5gFl3whuJw3BKFpIr9Q8OMVFAb8BkLg7h9bBpwhxQL9ukRs2AS
-         bysBbKlWcF530ZhxUOFM4dpkTCdMSv+Bvg7B1H//Je31NvqghKApXeiHNYV6zrnUmYzg
-         Ga72AJYl2JljXBFo+Dfh18qUA8bac6xNH3yFNBPL3e831Y3WBcher4YWytJ/yCUO2E+G
-         10Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748936547; x=1749541347;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Cb47QCgFSmdRyeAGFN4QKhqLDtCkq6VLJti9g1N+NPs=;
-        b=i0TTQWwL8QY/XRxRmG0Ckxfecgbore45X4hPYZfyv6nENdwM0Fgi75/4+huW54MIeu
-         ZcJIpRMT0xAxBQ493tg6WhVs/Ql8gxUfWqUsD6wY6H0p88cyJ0wo2A1Lzfykq3RushJI
-         OUejl+A6vGwh3P1/HHzPRM02WT71vjWYhCe4pb43zuOMQ0WelW+5YvX380iflX3NI0pn
-         mcJB9rEuVr1bkTdSv5bGiOhNJ908zv/B8DK0iMz2bAvjwrVt+QAbmxvALsIqtUPTD0yQ
-         9FbLyJl6bjcfEoWz5xOE10KYEes0AaVRbI/dE3hrEeplFVnO0SUYqII8icM4ePOknaTA
-         cuRA==
-X-Gm-Message-State: AOJu0YyC8LPshDr62xvSgxk9wBykmdZPhcA14Y4vw9pMAbbgpxNuFZnQ
-	6/DV7Bn8LPx3zQmWCNscAWSOn3K1Qjtxsc2TnLQR8VG+35nCNvhAN8Xz1sbfYwQwMjk=
-X-Gm-Gg: ASbGncvqwmRtsrTSS+xny16FvN5uoGQYyubV4gIkOBlZVfmV9jz+byO7sE+s4sYtuS/
-	PZzAY1TVDgIc9HBJRjPPVN2+yFYv/heqhxBO0Va5mD+cYBRdVEy0HXa2qTFbPV/dDHfTbygvQjU
-	VwLH7uVjPRV3JFTMle9J3uQJHePlwwwF33t+BYr7RKdgriiGAg90fDNIQTLMTY6SkI7HaWy0U40
-	5Yd804PYFLJsiN/4xLqzmIzOACgYBmps4NbVrrvpVdNHCS8Eo5Von+7DgYtNwXhJrRMXUcRkqDQ
-	/SSrjtlGRsstlHh7yJdw1AvPLcU5YuYPc6H+VkpizO/IE/rDbk+86tEmynbEWWexFe54rvT6RoC
-	GcfBlWic/55wxRa2t4hjM6buQ6A==
-X-Google-Smtp-Source: AGHT+IFgs/wnBMyLVzJs4f/jhidJqFAhtWJBG1BD1kwIGtC+QIyCVpZuheLeLj6NzfakVT5/Ca65mg==
-X-Received: by 2002:a05:600c:8b71:b0:43d:2230:300f with SMTP id 5b1f17b1804b1-4511721244cmr114327805e9.0.1748936546594;
-        Tue, 03 Jun 2025 00:42:26 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:563:3654:17de:c930? ([2a01:e0a:3d9:2080:563:3654:17de:c930])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450d8013e0esm149441085e9.39.2025.06.03.00.42.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Jun 2025 00:42:26 -0700 (PDT)
-Message-ID: <7e5926f0-fc81-4514-8eaa-3445d4e8729e@linaro.org>
-Date: Tue, 3 Jun 2025 09:42:25 +0200
+	s=arc-20240116; t=1748937789; c=relaxed/simple;
+	bh=V1RuypRc8wpmKJy9fD2ps+Jjaz1BIeVwW+uLlISu6G8=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=j/gez+LY0TtUKMStfI4FQFSXATt30la/LdWwWZX48IebBOdMQfu8eO0X13mx1Mb+/cIXiWbjQYr304Ab6MD/e7KA6dCWR0WDWX+8GiMcbWP82ROQnJxJA3NH9suYB1bF/yMaROEH01BD/3P2hVM3fnaGLbVig+VLiM9uK0didl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nxsw.ie; spf=pass smtp.mailfrom=nxsw.ie; dkim=pass (2048-bit key) header.d=nxsw.ie header.i=@nxsw.ie header.b=dJZL/ubb; arc=none smtp.client-ip=109.224.244.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nxsw.ie
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxsw.ie
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxsw.ie;
+	s=protonmail2; t=1748937776; x=1749196976;
+	bh=wvT9a/zTe4Ix1oUXKhYeqP9LCyzR2z2SG/ZmYqZaYAI=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=dJZL/ubbSvZqRw+eG0O87cu/CrzJZqet9UEp3gHkwp68TMyKt4ZneT7IJQoJl236r
+	 EGAoMCjFhpp5iEK5kN6W4IIKIQVhszYOcbU5hfxII4b5WyW0lpHsZ3O3uWH1MqAQIe
+	 o/sHIjbNAnuSPeeDMaWrwu6VJfQL+DeS+2GNhD+LwUg8buK8ChYC2CAomVf57nxJHX
+	 KN1TFowIN1erm54hzwyG94Q8kk1RfPvd3IBOvByNIzhbgWf0DXtid5PjzIeJdAAa9g
+	 a0tWMKVQpDkkN/HpXe5xMKB3xV7hYx4RiM+ROA2aEj3pTtNR8vncKbt3jxngnzNzNw
+	 tE73fRxe3RL8g==
+Date: Tue, 03 Jun 2025 08:02:51 +0000
+To: Jagadeesh Kona <quic_jkona@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Dmitry Baryshkov <lumag@kernel.org>
+From: Bryan O'Donoghue <bod.linux@nxsw.ie>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v5 08/18] clk: qcom: videocc-sm8550: Move PLL & clk configuration to really probe
+Message-ID: <dc8d4ca9-93bf-4aed-a744-d8b799e01606@nxsw.ie>
+In-Reply-To: <20250530-videocc-pll-multi-pd-voting-v5-8-02303b3a582d@quicinc.com>
+References: <20250530-videocc-pll-multi-pd-voting-v5-0-02303b3a582d@quicinc.com> <20250530-videocc-pll-multi-pd-voting-v5-8-02303b3a582d@quicinc.com>
+Feedback-ID: 136405006:user:proton
+X-Pm-Message-ID: cb9fd4fa3ad6bfa0b16cc759d8a825477ae58d2d
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 2/2] PCI: Add support for PCIe wake interrupt
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
- Bjorn Helgaas <bhelgaas@google.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
- quic_vbadigan@quicinc.com, quic_mrana@quicinc.com
-References: <20250419-wake_irq_support-v2-0-06baed9a87a1@oss.qualcomm.com>
- <20250419-wake_irq_support-v2-2-06baed9a87a1@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250419-wake_irq_support-v2-2-06baed9a87a1@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 19/04/2025 07:43, Krishna Chaitanya Chundru wrote:
-> PCIe wake interrupt is needed for bringing back PCIe device state
-> from D3cold to D0.
-> 
-> Implement new functions, of_pci_setup_wake_irq() and
-> of_pci_teardown_wake_irq(), to manage wake interrupts for PCI devices
-> using the Device Tree.
-> 
->  From the port bus driver call these functions to enable wake support
-> for bridges.
-> 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+On 30/05/2025 14:20, Jagadeesh Kona wrote:
+> Video PLLs on SM8550/SM8650 require both MMCX and MXC rails to be kept ON
+> to configure the PLLs properly. Hence move runtime power management, PLL
+> configuration and enable critical clocks to qcom_cc_really_probe() which
+> ensures all required power domains are in enabled state before configurin=
+g
+> the PLLs or enabling the clocks.
+>=20
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
 > ---
->   drivers/pci/of.c           | 60 ++++++++++++++++++++++++++++++++++++++++++++++
->   drivers/pci/pci.h          |  6 +++++
->   drivers/pci/pcie/portdrv.c | 12 +++++++++-
->   3 files changed, 77 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/pci/of.c b/drivers/pci/of.c
-> index ab7a8252bf4137a17971c3eb8ab70ce78ca70969..13623797c88a03dfb9d9079518d87a5e1e68df38 100644
-> --- a/drivers/pci/of.c
-> +++ b/drivers/pci/of.c
-> @@ -7,6 +7,7 @@
->   #define pr_fmt(fmt)	"PCI: OF: " fmt
->   
->   #include <linux/cleanup.h>
-> +#include <linux/gpio/consumer.h>
->   #include <linux/irqdomain.h>
->   #include <linux/kernel.h>
->   #include <linux/pci.h>
-> @@ -15,6 +16,7 @@
->   #include <linux/of_address.h>
->   #include <linux/of_pci.h>
+>   drivers/clk/qcom/videocc-sm8550.c | 66 +++++++++++++++++++-------------=
+-------
+>   1 file changed, 33 insertions(+), 33 deletions(-)
+>=20
+> diff --git a/drivers/clk/qcom/videocc-sm8550.c b/drivers/clk/qcom/videocc=
+-sm8550.c
+> index fcfe0cade6d0a95e749aabbc2af1174e5a70f0db..3e5891b43ee404edc6c99bbf8=
+f2583cb44df9e37 100644
+> --- a/drivers/clk/qcom/videocc-sm8550.c
+> +++ b/drivers/clk/qcom/videocc-sm8550.c
+> @@ -7,7 +7,6 @@
+>   #include <linux/mod_devicetable.h>
+>   #include <linux/module.h>
 >   #include <linux/platform_device.h>
-> +#include <linux/pm_wakeirq.h>
->   #include "pci.h"
->   
->   #ifdef CONFIG_PCI
-> @@ -966,3 +968,61 @@ u32 of_pci_get_slot_power_limit(struct device_node *node,
->   	return slot_power_limit_mw;
->   }
->   EXPORT_SYMBOL_GPL(of_pci_get_slot_power_limit);
+> -#include <linux/pm_runtime.h>
+>   #include <linux/regmap.h>
+>=20
+>   #include <dt-bindings/clock/qcom,sm8650-videocc.h>
+> @@ -51,6 +50,7 @@ static struct alpha_pll_config video_cc_pll0_config =3D=
+ {
+>=20
+>   static struct clk_alpha_pll video_cc_pll0 =3D {
+>   =09.offset =3D 0x0,
+> +=09.config =3D &video_cc_pll0_config,
+>   =09.vco_table =3D lucid_ole_vco,
+>   =09.num_vco =3D ARRAY_SIZE(lucid_ole_vco),
+>   =09.regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
+> @@ -82,6 +82,7 @@ static struct alpha_pll_config video_cc_pll1_config =3D=
+ {
+>=20
+>   static struct clk_alpha_pll video_cc_pll1 =3D {
+>   =09.offset =3D 0x1000,
+> +=09.config =3D &video_cc_pll1_config,
+>   =09.vco_table =3D lucid_ole_vco,
+>   =09.num_vco =3D ARRAY_SIZE(lucid_ole_vco),
+>   =09.regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
+> @@ -511,6 +512,23 @@ static const struct qcom_reset_map video_cc_sm8550_r=
+esets[] =3D {
+>   =09[VIDEO_CC_XO_CLK_ARES] =3D { .reg =3D 0x8124, .bit =3D 2, .udelay =
+=3D 100 },
+>   };
+>=20
+> +static struct clk_alpha_pll *video_cc_sm8550_plls[] =3D {
+> +=09&video_cc_pll0,
+> +=09&video_cc_pll1,
+> +};
 > +
-> +/**
-> + * of_pci_setup_wake_irq - Set up wake interrupt for PCI device
-> + * @pdev: The PCI device structure
-> + *
-> + * This function sets up the wake interrupt for a PCI device by getting the
-> + * corresponding GPIO pin from the device tree, and configuring it as a
-> + * dedicated wake interrupt.
-> + *
-> + * Return: 0 if the wake gpio is not available or successfully parsed else
-> + * errno otherwise.
-> + */
-> +int of_pci_setup_wake_irq(struct pci_dev *pdev)
-> +{
-> +	struct gpio_desc *wake;
-> +	struct device_node *dn;
-> +	int ret, wake_irq;
+> +static u32 video_cc_sm8550_critical_cbcrs[] =3D {
+> +=090x80f4, /* VIDEO_CC_AHB_CLK */
+> +=090x8124, /* VIDEO_CC_XO_CLK */
+> +=090x8140, /* VIDEO_CC_SLEEP_CLK */
+> +};
 > +
-> +	dn = pci_device_to_OF_node(pdev);
-> +	if (!dn)
-> +		return 0;
+> +static u32 video_cc_sm8650_critical_cbcrs[] =3D {
+> +=090x80f4, /* VIDEO_CC_AHB_CLK */
+> +=090x8124, /* VIDEO_CC_XO_CLK */
+> +=090x8150, /* VIDEO_CC_SLEEP_CLK */
+> +};
 > +
-> +	wake = devm_fwnode_gpiod_get(&pdev->dev, of_fwnode_handle(dn),
-> +				     "wake", GPIOD_IN, NULL);
-> +	if (IS_ERR(wake)) {
-> +		dev_warn(&pdev->dev, "Cannot get wake GPIO\n");
-> +		return 0;
-> +	}
+>   static const struct regmap_config video_cc_sm8550_regmap_config =3D {
+>   =09.reg_bits =3D 32,
+>   =09.reg_stride =3D 4,
+> @@ -519,6 +537,13 @@ static const struct regmap_config video_cc_sm8550_re=
+gmap_config =3D {
+>   =09.fast_io =3D true,
+>   };
+>=20
+> +static struct qcom_cc_driver_data video_cc_sm8550_driver_data =3D {
+> +=09.alpha_plls =3D video_cc_sm8550_plls,
+> +=09.num_alpha_plls =3D ARRAY_SIZE(video_cc_sm8550_plls),
+> +=09.clk_cbcrs =3D video_cc_sm8550_critical_cbcrs,
+> +=09.num_clk_cbcrs =3D ARRAY_SIZE(video_cc_sm8550_critical_cbcrs),
+> +};
 > +
-> +	wake_irq = gpiod_to_irq(wake);
-
-gpiod_to_irq can fail, not all gpio driver can provide an irq number
-for a gpio, check the error and to not fail on error.
-
-Thanks,
-Neil
-
-> +	device_init_wakeup(&pdev->dev, true);
-> +
-> +	ret = dev_pm_set_dedicated_wake_irq(&pdev->dev, wake_irq);
-> +	if (ret < 0) {
-> +		dev_err(&pdev->dev, "Failed to set wake IRQ: %d\n", ret);
-> +		device_init_wakeup(&pdev->dev, false);
-> +		return ret;
-> +	}
-> +	irq_set_irq_type(wake_irq, IRQ_TYPE_EDGE_FALLING);
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(of_pci_setup_wake_irq);
-> +
-> +/**
-> + * of_pci_teardown_wake_irq - Teardown wake interrupt setup for PCI device
-> + *
-> + * @pdev: The PCI device structure
-> + *
-> + * This function tears down the wake interrupt setup for a PCI device,
-> + * clearing the dedicated wake interrupt and disabling device wake-up.
-> + */
-> +void of_pci_teardown_wake_irq(struct pci_dev *pdev)
-> +{
-> +	dev_pm_clear_wake_irq(&pdev->dev);
-> +	device_init_wakeup(&pdev->dev, false);
-> +}
-> +EXPORT_SYMBOL_GPL(of_pci_teardown_wake_irq);
-> diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-> index b81e99cd4b62a3022c8b07a09f212f6888674487..b2f65289f4156fa1851c2d2f20c4ca948f36258f 100644
-> --- a/drivers/pci/pci.h
-> +++ b/drivers/pci/pci.h
-> @@ -888,6 +888,9 @@ void pci_release_of_node(struct pci_dev *dev);
->   void pci_set_bus_of_node(struct pci_bus *bus);
->   void pci_release_bus_of_node(struct pci_bus *bus);
->   
-> +int of_pci_setup_wake_irq(struct pci_dev *pdev);
-> +void of_pci_teardown_wake_irq(struct pci_dev *pdev);
-> +
->   int devm_of_pci_bridge_init(struct device *dev, struct pci_host_bridge *bridge);
->   bool of_pci_supply_present(struct device_node *np);
->   
-> @@ -931,6 +934,9 @@ static inline int devm_of_pci_bridge_init(struct device *dev, struct pci_host_br
->   	return 0;
->   }
->   
-> +static int of_pci_setup_wake_irq(struct pci_dev *pdev) { return 0; }
-> +static void of_pci_teardown_wake_irq(struct pci_dev *pdev) { }
-> +
->   static inline bool of_pci_supply_present(struct device_node *np)
+>   static const struct qcom_cc_desc video_cc_sm8550_desc =3D {
+>   =09.config =3D &video_cc_sm8550_regmap_config,
+>   =09.clks =3D video_cc_sm8550_clocks,
+> @@ -527,6 +552,8 @@ static const struct qcom_cc_desc video_cc_sm8550_desc=
+ =3D {
+>   =09.num_resets =3D ARRAY_SIZE(video_cc_sm8550_resets),
+>   =09.gdscs =3D video_cc_sm8550_gdscs,
+>   =09.num_gdscs =3D ARRAY_SIZE(video_cc_sm8550_gdscs),
+> +=09.use_rpm =3D true,
+> +=09.driver_data =3D &video_cc_sm8550_driver_data,
+>   };
+>=20
+>   static const struct of_device_id video_cc_sm8550_match_table[] =3D {
+> @@ -538,26 +565,7 @@ MODULE_DEVICE_TABLE(of, video_cc_sm8550_match_table)=
+;
+>=20
+>   static int video_cc_sm8550_probe(struct platform_device *pdev)
 >   {
->   	return false;
-> diff --git a/drivers/pci/pcie/portdrv.c b/drivers/pci/pcie/portdrv.c
-> index e8318fd5f6ed537a1b236a3a0f054161d5710abd..33220ecf821c348d49782855eb5aa3f2fe5c335e 100644
-> --- a/drivers/pci/pcie/portdrv.c
-> +++ b/drivers/pci/pcie/portdrv.c
-> @@ -694,12 +694,18 @@ static int pcie_portdrv_probe(struct pci_dev *dev,
->   	     (type != PCI_EXP_TYPE_RC_EC)))
->   		return -ENODEV;
->   
-> +	status = of_pci_setup_wake_irq(dev);
-> +	if (status)
-> +		return status;
-> +
->   	if (type == PCI_EXP_TYPE_RC_EC)
->   		pcie_link_rcec(dev);
->   
->   	status = pcie_port_device_register(dev);
-> -	if (status)
-> +	if (status) {
-> +		of_pci_teardown_wake_irq(dev);
->   		return status;
-> +	}
->   
->   	pci_save_state(dev);
->   
-> @@ -732,6 +738,8 @@ static void pcie_portdrv_remove(struct pci_dev *dev)
->   
->   	pcie_port_device_remove(dev);
->   
-> +	of_pci_teardown_wake_irq(dev);
-> +
->   	pci_disable_device(dev);
+> -=09struct regmap *regmap;
+> -=09int ret;
+> -=09u32 sleep_clk_offset =3D 0x8140;
+> -
+> -=09ret =3D devm_pm_runtime_enable(&pdev->dev);
+> -=09if (ret)
+> -=09=09return ret;
+> -
+> -=09ret =3D pm_runtime_resume_and_get(&pdev->dev);
+> -=09if (ret)
+> -=09=09return ret;
+> -
+> -=09regmap =3D qcom_cc_map(pdev, &video_cc_sm8550_desc);
+> -=09if (IS_ERR(regmap)) {
+> -=09=09pm_runtime_put(&pdev->dev);
+> -=09=09return PTR_ERR(regmap);
+> -=09}
+> -
+>   =09if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8650-videocc"=
+)) {
+> -=09=09sleep_clk_offset =3D 0x8150;
+>   =09=09video_cc_pll0_config.l =3D 0x1e;
+>   =09=09video_cc_pll0_config.alpha =3D 0xa000;
+>   =09=09video_cc_pll1_config.l =3D 0x2b;
+> @@ -569,21 +577,13 @@ static int video_cc_sm8550_probe(struct platform_de=
+vice *pdev)
+>   =09=09video_cc_sm8550_clocks[VIDEO_CC_MVS1_SHIFT_CLK] =3D &video_cc_mvs=
+1_shift_clk.clkr;
+>   =09=09video_cc_sm8550_clocks[VIDEO_CC_MVS1C_SHIFT_CLK] =3D &video_cc_mv=
+s1c_shift_clk.clkr;
+>   =09=09video_cc_sm8550_clocks[VIDEO_CC_XO_CLK_SRC] =3D &video_cc_xo_clk_=
+src.clkr;
+> -=09}
+> -
+> -=09clk_lucid_ole_pll_configure(&video_cc_pll0, regmap, &video_cc_pll0_co=
+nfig);
+> -=09clk_lucid_ole_pll_configure(&video_cc_pll1, regmap, &video_cc_pll1_co=
+nfig);
+>=20
+> -=09/* Keep some clocks always-on */
+> -=09qcom_branch_set_clk_en(regmap, 0x80f4); /* VIDEO_CC_AHB_CLK */
+> -=09qcom_branch_set_clk_en(regmap, sleep_clk_offset); /* VIDEO_CC_SLEEP_C=
+LK */
+> -=09qcom_branch_set_clk_en(regmap, 0x8124); /* VIDEO_CC_XO_CLK */
+> -
+> -=09ret =3D qcom_cc_really_probe(&pdev->dev, &video_cc_sm8550_desc, regma=
+p);
+> -
+> -=09pm_runtime_put(&pdev->dev);
+> +=09=09video_cc_sm8550_driver_data.clk_cbcrs =3D video_cc_sm8650_critical=
+_cbcrs;
+> +=09=09video_cc_sm8550_driver_data.num_clk_cbcrs =3D
+> +=09=09=09=09=09=09=09ARRAY_SIZE(video_cc_sm8650_critical_cbcrs);
+> +=09}
+>=20
+> -=09return ret;
+> +=09return qcom_cc_probe(pdev, &video_cc_sm8550_desc);
 >   }
->   
-> @@ -744,6 +752,8 @@ static void pcie_portdrv_shutdown(struct pci_dev *dev)
->   	}
->   
->   	pcie_port_device_remove(dev);
-> +
-> +	of_pci_teardown_wake_irq(dev);
->   }
->   
->   static pci_ers_result_t pcie_portdrv_error_detected(struct pci_dev *dev,
-> 
+>=20
+>   static struct platform_driver video_cc_sm8550_driver =3D {
+>=20
+> --
+> 2.34.1
+>=20
+>=20
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
