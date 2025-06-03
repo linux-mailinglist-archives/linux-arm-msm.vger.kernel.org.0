@@ -1,97 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-60113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A81BDACC1BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 10:07:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CF15ACC1C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 10:08:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6C2C03A3FB4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 08:07:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7281D1890AC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Jun 2025 08:08:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E5F6280336;
-	Tue,  3 Jun 2025 08:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D184B2690C8;
+	Tue,  3 Jun 2025 08:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e+VD3fU5"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=nxsw.ie header.i=@nxsw.ie header.b="blezYOTK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-10624.protonmail.ch (mail-10624.protonmail.ch [79.135.106.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23B928030E
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jun 2025 08:07:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24F328031A
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Jun 2025 08:07:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748938061; cv=none; b=BYa+RFl+0EQBtqIvRuj44LPrVZI5qz0de0OQTDiCzShGuEB3z8FxlHoIqaNLrxT8vqr2KSQYlf1iMdoj759oz4G0SA7SpD/X84C8p6YOcUKh3Z8BkAH9hP/oMFA56XYR1gCy0AP82mn7zjsKNd1MsLMdqsdQg1X4eCnLQmMi1Xc=
+	t=1748938076; cv=none; b=RAhXt7C6onNZFX3dcs1TJCsKdSBDF9wRF6dOC0donSANzG9JTCfKGy3du/iMtvEOXBBh9VJJMRLXwPWXFZXYTaqektAMvqxorM/tv8m+fkuFnxYmJ1GT9YCfAKoK+k+7zOYwwj9ufTy9wsjtI5L3SZSDeSAbEosBV3qJYbf3EHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748938061; c=relaxed/simple;
-	bh=FUWBKradpds5Eq8Ee5H4q/ArrYDMcD+S9L8vK8skA4c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SSEtDclEIvdqfckLWH4BLvwYQyEMGLgRUDdJGV2AFZddIJ0iFPPLZF1a6e8FVLsZiIGLuRd4cXq6bcsRrqECwRq5bJJPpRZULaMlCgDpkr454bBajJaNyk3tSxm54e3RGtn1by2QBgmJ6E1WbKn5Ow9qWg5sLZsKo1bBgStjfR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e+VD3fU5; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-73972a54919so4638961b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jun 2025 01:07:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1748938058; x=1749542858; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=RgRK11s6JB+JjyTicXAF2ZwBxFCvxZL8yavFM8SLLjA=;
-        b=e+VD3fU5ECdDr/658fUZ7tcnwaduT0d6KnRS+JxgtaBo0w07fGEhyGYpkoEfBX9eKL
-         Rlw1O3f0yobVRjv8p+zT1MdYeikftZB7d0kTQSGS8UkVxZ2jE7quyv6cC7achGISOSWP
-         z90qAAtwD+4Ju1a1SSJxcSfrXcYfO+uiRrJ1rpMFlwYrzDGm4rLDTf98xfL2zQTp1GkC
-         7plsFVzliiE5ILvOzPPeaw9L8mHet8oKOEq03pejhcopK2XqfR09MpQgtvPtsYN/NhjO
-         MLFcFMqGgDIsW4PYgDe8JVKGOlzDnquvgSwNDBgfQc764kzZfCWCDIGAMpgPzImsRhRw
-         Mn7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748938058; x=1749542858;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RgRK11s6JB+JjyTicXAF2ZwBxFCvxZL8yavFM8SLLjA=;
-        b=BACxwYQXwTc1JaSlb3XPJdbDyrCh73kUagSuab6tDOmO3TBGhellJoO92yFe2BhgYS
-         aPvThFKsYMQgjKZGJUwqh0Ec5KT9wAp+h5tdGijRi0DerMNeVV5F/uSMx18xVWE+gc4v
-         C37QxG36IPRTM/YxpFEcSedIji2GbzRhU+s8vRTFVgAi24L9v9IcMNg+LFjZAH5lBfK8
-         q+SULMzrsZ2LPUzD3sdr+VB9hbnDGnRdsEQbgK+Gh8X3UxeCUg9KSzdlIg8CgOH0buWZ
-         +rylzxRNS2bVqhOlWO8dwp+Xts0wq5V7MZsAnCmebNGeJh0OmKgyLoFer4pzmEUjnU5K
-         X+Eg==
-X-Forwarded-Encrypted: i=1; AJvYcCXNdNu4kOzZBOBJcXGmBiqaXP8TTBX5sbNbGNVliGEHSx/jjcIztLIaxkQn0VGmJPskJ3LoRi8hA+C++TSg@vger.kernel.org
-X-Gm-Message-State: AOJu0YzBVnVBai65gvsh4PUMkKNAdxociBFeNJZ+6Uhb9Fw6YygGcpX9
-	Bvj/dlFtMjQ0RcLp+MOyeImlWfbuNK6wCz62GujMOSDYnixHQlXa/V6dTzzZioGhDxVcyqGwR/i
-	L6vU=
-X-Gm-Gg: ASbGncs76aT3KLXn4Q5HfL04ZMMwdgdK0EPRPPRp0KVcSc2ElKEWqCQYY6I5LXypl/4
-	Ot9+wml+Ul2KlzDf+VGZ8zpq3frUxhMz4na5x3Dr9dRCXKahjVAA2AlJeBDVLgA/mADlfCebKwP
-	yuLtGVfH1EgAmkLzEzW0Al0z+zbsNqDMFnALnrEe0CrFgPK9i10klsTy2UzW6jRqNDkPDjfDFuX
-	5nEwkjSSIFvg2fPHbRdZt1UQTiWihpUG/KTxWR0Hec5/cMRvA8VHwi45bhAoWaMLO4IZLr4Vrd3
-	nLgn1DLPy0Gaxj71Bw7Yu+aM2MxuS+yW/LtlbC4zhLnLe1+qfyLeC28j56qXQxr7
-X-Google-Smtp-Source: AGHT+IHCOslACAtsUuopTlmOMx0XidS3UtDrBqXgyJnxMB7I6vxxOXPErDBVm2jpZjtzNKVMFePkTQ==
-X-Received: by 2002:a05:6a00:cc9:b0:742:aecc:c472 with SMTP id d2e1a72fcca58-747d181cd0emr14550507b3a.2.1748938058081;
-        Tue, 03 Jun 2025 01:07:38 -0700 (PDT)
-Received: from thinkpad ([220.158.156.133])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-747afe9680bsm9087026b3a.18.2025.06.03.01.07.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jun 2025 01:07:37 -0700 (PDT)
-Date: Tue, 3 Jun 2025 13:37:30 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com, quic_mrana@quicinc.com
-Subject: Re: [PATCH v3 3/3] arm64: qcom: sc7280: Move phy, perst to root port
- node
-Message-ID: <uz4muqjo3mhso3wlzfl6hmo3c6nns2ekfin76y2443tt5nzfcs@5j66ihrw2nvc>
-References: <20250419-perst-v3-0-1afec3c4ea62@oss.qualcomm.com>
- <20250419-perst-v3-3-1afec3c4ea62@oss.qualcomm.com>
- <r4mtndc6tww6eqfumensnsrnk6j6dw5nljgmiz2azzg2evuoy6@hog3twb22euq>
- <0e1d8b8e-9dd3-a377-d7e0-93ec77cf397f@oss.qualcomm.com>
- <pb7rsvlslvyqlheyhwwjgje6iiolgkj6cqfsi6jmvetritc7lr@jxndd5rfzbfy>
- <fb1cee63-ec97-d5c7-7a9b-bda503a91875@oss.qualcomm.com>
+	s=arc-20240116; t=1748938076; c=relaxed/simple;
+	bh=79ensgQMDs8gAqWuBoTz2KkIZPHPCh1UJKBvHwByF9k=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uFmGjcdBcHAR+KqvaM37IF6Iq/caFMZ3sm6ItWB0knSJW6Y65mmtohUiJKDg362Au3H6q5Nc6XKc0g54iT++Giv/Wtd/3I7aMAQBvgCtQbu1+idht+yOoEuDkwAYGTxM/+ROjwSwxGG7uFGSVEGY89bvee8n45Al45oepketG+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nxsw.ie; spf=pass smtp.mailfrom=nxsw.ie; dkim=pass (2048-bit key) header.d=nxsw.ie header.i=@nxsw.ie header.b=blezYOTK; arc=none smtp.client-ip=79.135.106.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nxsw.ie
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxsw.ie
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxsw.ie;
+	s=protonmail2; t=1748938072; x=1749197272;
+	bh=6hVwFeNMuCJf5pVp1IHICi8nSZ6JldWap9i+NAindh4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=blezYOTK0aQ58rJKWfN3NllLwQLUAqXjgABdeT9OZDOBPkJEPnx4Tq3NaIaAGmhcv
+	 fxi/ZPMG7laaQLN75rtX+W71eveE/BIqsxCPodzuGFkcxfGouHUlHeQ96/SCWXFFVY
+	 gBtSvTRft+bZF9M+qdcMgu9vj4FfIrbCyLrl/D12tjClh3bvC2LAnipOB2dL8xYrE5
+	 LJMLVO4HLl/7xAxrCuGdeKJcX1FnN3B4jiPNLh/Z5c72r0aKlojRjIW0jbmvc3ZVNo
+	 1x9lGfLRkcyPWTO9/6+5xzZwScR4G3pGbu6WRClneeNgAPq7BxdcLrtncV57OV9Qwp
+	 +aBIJu+ZdbJOg==
+Date: Tue, 03 Jun 2025 08:07:47 +0000
+To: Jagadeesh Kona <quic_jkona@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Dmitry Baryshkov <lumag@kernel.org>
+From: Bryan O'Donoghue <bod.linux@nxsw.ie>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v5 11/18] clk: qcom: camcc-sm8650: Move PLL & clk configuration to really probe
+Message-ID: <fd52c848-3d43-429f-b346-12befa5bcd82@nxsw.ie>
+In-Reply-To: <20250530-videocc-pll-multi-pd-voting-v5-11-02303b3a582d@quicinc.com>
+References: <20250530-videocc-pll-multi-pd-voting-v5-0-02303b3a582d@quicinc.com> <20250530-videocc-pll-multi-pd-voting-v5-11-02303b3a582d@quicinc.com>
+Feedback-ID: 136405006:user:proton
+X-Pm-Message-ID: 59cab46fef0e224000c7436a30489e4049c2e3c5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -99,80 +60,256 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <fb1cee63-ec97-d5c7-7a9b-bda503a91875@oss.qualcomm.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 03, 2025 at 01:05:17PM +0530, Krishna Chaitanya Chundru wrote:
-> 
-> 
-> On 6/3/2025 12:22 PM, Manivannan Sadhasivam wrote:
-> > On Tue, Jun 03, 2025 at 12:03:01PM +0530, Krishna Chaitanya Chundru wrote:
-> > > 
-> > > 
-> > > On 6/1/2025 12:35 PM, Manivannan Sadhasivam wrote:
-> > > > On Sat, Apr 19, 2025 at 10:49:26AM +0530, Krishna Chaitanya Chundru wrote:
-> > > > > There are many places we agreed to move the wake and perst gpio's
-> > > > > and phy etc to the pcie root port node instead of bridge node[1].
-> > > > 
-> > > > Same comment as binding patch applies here.
-> > > > 
-> > > > > 
-> > > > > So move the phy, phy-names, wake-gpio's in the root port.
-> > > > 
-> > > > You are not moving any 'wake-gpios' property.
-> > > > 
-> > > ack I will remove it.
-> > > > > There is already reset-gpio defined for PERST# in pci-bus-common.yaml,
-> > > > > start using that property instead of perst-gpio.
-> > > > > 
-> > > > > [1] https://lore.kernel.org/linux-pci/20241211192014.GA3302752@bhelgaas/
-> > > > > 
-> > > > > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> > > > > ---
-> > > > >    arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts   | 5 ++++-
-> > > > >    arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 5 ++++-
-> > > > >    arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       | 5 ++++-
-> > > > >    arch/arm64/boot/dts/qcom/sc7280.dtsi           | 6 ++----
-> > > > >    4 files changed, 14 insertions(+), 7 deletions(-)
-> > > > > 
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > > > > index 7a36c90ad4ec8b52f30b22b1621404857d6ef336..3dd58986ad5da0f898537a51715bb5d0fecbe100 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > > > > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > > > > @@ -709,8 +709,11 @@ &mdss_edp_phy {
-> > > > >    	status = "okay";
-> > > > >    };
-> > > > > +&pcie1_port0 {
-> > > > > +	reset-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
-> > > > > +};
-> > > > > +
-> > > > >    &pcie1 {
-> > > > > -	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
-> > > > >    	pinctrl-0 = <&pcie1_reset_n>, <&pcie1_wake_n>;
-> > > > >    	pinctrl-names = "default";
-> > > > 
-> > > > What about the pinctrl properties? They should also be moved.
-> > > > 
-> > > pinctrl can still reside in the host bridge node, which has
-> > > all the gpio's for all the root ports. If we move them to the
-> > > root ports we need to explicitly apply pinctrl settings as these
-> > > not tied with the driver yet.
-> > > 
-> > 
-> > If the DT node is associated with a device, then the driver core should bind the
-> > pinctrl pins and configure them. Is that not happening here?
-> The root node will not be associated with the driver until enumeration,
-> the controller drivers needs these to be configured before enumeration.
-> 
+On 30/05/2025 14:20, Jagadeesh Kona wrote:
+> Camera PLLs on SM8650 require both MMCX and MXC rails to be kept ON
+> to configure the PLLs properly. Hence move runtime power management,
+> PLL configuration and enabling critical clocks to qcom_cc_really_probe()
+> which ensures all required power domains are in enabled state before
+> configuring the PLLs or enabling the clocks.
+>=20
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> ---
+>   drivers/clk/qcom/camcc-sm8650.c | 83 +++++++++++++++++++++-------------=
+-------
+>   1 file changed, 42 insertions(+), 41 deletions(-)
+>=20
+> diff --git a/drivers/clk/qcom/camcc-sm8650.c b/drivers/clk/qcom/camcc-sm8=
+650.c
+> index 0ccd6de8ba78a3493f8f853a4330d2676b5743d4..8b388904f56fc3b3f77a43a09=
+f735ace24b9fcf7 100644
+> --- a/drivers/clk/qcom/camcc-sm8650.c
+> +++ b/drivers/clk/qcom/camcc-sm8650.c
+> @@ -7,7 +7,6 @@
+>   #include <linux/mod_devicetable.h>
+>   #include <linux/module.h>
+>   #include <linux/platform_device.h>
+> -#include <linux/pm_runtime.h>
+>   #include <linux/regmap.h>
+>=20
+>   #include <dt-bindings/clock/qcom,sm8650-camcc.h>
+> @@ -72,6 +71,7 @@ static const struct alpha_pll_config cam_cc_pll0_config=
+ =3D {
+>=20
+>   static struct clk_alpha_pll cam_cc_pll0 =3D {
+>   =09.offset =3D 0x0,
+> +=09.config =3D &cam_cc_pll0_config,
+>   =09.vco_table =3D lucid_ole_vco,
+>   =09.num_vco =3D ARRAY_SIZE(lucid_ole_vco),
+>   =09.regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
+> @@ -149,6 +149,7 @@ static const struct alpha_pll_config cam_cc_pll1_conf=
+ig =3D {
+>=20
+>   static struct clk_alpha_pll cam_cc_pll1 =3D {
+>   =09.offset =3D 0x1000,
+> +=09.config =3D &cam_cc_pll1_config,
+>   =09.vco_table =3D lucid_ole_vco,
+>   =09.num_vco =3D ARRAY_SIZE(lucid_ole_vco),
+>   =09.regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
+> @@ -199,6 +200,7 @@ static const struct alpha_pll_config cam_cc_pll2_conf=
+ig =3D {
+>=20
+>   static struct clk_alpha_pll cam_cc_pll2 =3D {
+>   =09.offset =3D 0x2000,
+> +=09.config =3D &cam_cc_pll2_config,
+>   =09.vco_table =3D rivian_ole_vco,
+>   =09.num_vco =3D ARRAY_SIZE(rivian_ole_vco),
+>   =09.regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_RIVIAN_EVO],
+> @@ -230,6 +232,7 @@ static const struct alpha_pll_config cam_cc_pll3_conf=
+ig =3D {
+>=20
+>   static struct clk_alpha_pll cam_cc_pll3 =3D {
+>   =09.offset =3D 0x3000,
+> +=09.config =3D &cam_cc_pll3_config,
+>   =09.vco_table =3D lucid_ole_vco,
+>   =09.num_vco =3D ARRAY_SIZE(lucid_ole_vco),
+>   =09.regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
+> @@ -284,6 +287,7 @@ static const struct alpha_pll_config cam_cc_pll4_conf=
+ig =3D {
+>=20
+>   static struct clk_alpha_pll cam_cc_pll4 =3D {
+>   =09.offset =3D 0x4000,
+> +=09.config =3D &cam_cc_pll4_config,
+>   =09.vco_table =3D lucid_ole_vco,
+>   =09.num_vco =3D ARRAY_SIZE(lucid_ole_vco),
+>   =09.regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
+> @@ -338,6 +342,7 @@ static const struct alpha_pll_config cam_cc_pll5_conf=
+ig =3D {
+>=20
+>   static struct clk_alpha_pll cam_cc_pll5 =3D {
+>   =09.offset =3D 0x5000,
+> +=09.config =3D &cam_cc_pll5_config,
+>   =09.vco_table =3D lucid_ole_vco,
+>   =09.num_vco =3D ARRAY_SIZE(lucid_ole_vco),
+>   =09.regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
+> @@ -392,6 +397,7 @@ static const struct alpha_pll_config cam_cc_pll6_conf=
+ig =3D {
+>=20
+>   static struct clk_alpha_pll cam_cc_pll6 =3D {
+>   =09.offset =3D 0x6000,
+> +=09.config =3D &cam_cc_pll6_config,
+>   =09.vco_table =3D lucid_ole_vco,
+>   =09.num_vco =3D ARRAY_SIZE(lucid_ole_vco),
+>   =09.regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
+> @@ -446,6 +452,7 @@ static const struct alpha_pll_config cam_cc_pll7_conf=
+ig =3D {
+>=20
+>   static struct clk_alpha_pll cam_cc_pll7 =3D {
+>   =09.offset =3D 0x7000,
+> +=09.config =3D &cam_cc_pll7_config,
+>   =09.vco_table =3D lucid_ole_vco,
+>   =09.num_vco =3D ARRAY_SIZE(lucid_ole_vco),
+>   =09.regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
+> @@ -500,6 +507,7 @@ static const struct alpha_pll_config cam_cc_pll8_conf=
+ig =3D {
+>=20
+>   static struct clk_alpha_pll cam_cc_pll8 =3D {
+>   =09.offset =3D 0x8000,
+> +=09.config =3D &cam_cc_pll8_config,
+>   =09.vco_table =3D lucid_ole_vco,
+>   =09.num_vco =3D ARRAY_SIZE(lucid_ole_vco),
+>   =09.regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
+> @@ -554,6 +562,7 @@ static const struct alpha_pll_config cam_cc_pll9_conf=
+ig =3D {
+>=20
+>   static struct clk_alpha_pll cam_cc_pll9 =3D {
+>   =09.offset =3D 0x9000,
+> +=09.config =3D &cam_cc_pll9_config,
+>   =09.vco_table =3D lucid_ole_vco,
+>   =09.num_vco =3D ARRAY_SIZE(lucid_ole_vco),
+>   =09.regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
+> @@ -631,6 +640,7 @@ static const struct alpha_pll_config cam_cc_pll10_con=
+fig =3D {
+>=20
+>   static struct clk_alpha_pll cam_cc_pll10 =3D {
+>   =09.offset =3D 0xa000,
+> +=09.config =3D &cam_cc_pll10_config,
+>   =09.vco_table =3D lucid_ole_vco,
+>   =09.num_vco =3D ARRAY_SIZE(lucid_ole_vco),
+>   =09.regs =3D clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE],
+> @@ -3509,6 +3519,27 @@ static const struct qcom_reset_map cam_cc_sm8650_r=
+esets[] =3D {
+>   =09[CAM_CC_SFE_2_BCR] =3D { 0x130f4 },
+>   };
+>=20
+> +static struct clk_alpha_pll *cam_cc_sm8650_plls[] =3D {
+> +=09&cam_cc_pll0,
+> +=09&cam_cc_pll1,
+> +=09&cam_cc_pll2,
+> +=09&cam_cc_pll3,
+> +=09&cam_cc_pll4,
+> +=09&cam_cc_pll5,
+> +=09&cam_cc_pll6,
+> +=09&cam_cc_pll7,
+> +=09&cam_cc_pll8,
+> +=09&cam_cc_pll9,
+> +=09&cam_cc_pll10,
+> +};
+> +
+> +static u32 cam_cc_sm8650_critical_cbcrs[] =3D {
+> +=090x132ec, /* CAM_CC_GDSC_CLK */
+> +=090x13308, /* CAM_CC_SLEEP_CLK */
+> +=090x13314, /* CAM_CC_DRV_XO_CLK */
+> +=090x13318, /* CAM_CC_DRV_AHB_CLK */
+> +};
+> +
+>   static const struct regmap_config cam_cc_sm8650_regmap_config =3D {
+>   =09.reg_bits =3D 32,
+>   =09.reg_stride =3D 4,
+> @@ -3517,6 +3548,13 @@ static const struct regmap_config cam_cc_sm8650_re=
+gmap_config =3D {
+>   =09.fast_io =3D true,
+>   };
+>=20
+> +static struct qcom_cc_driver_data cam_cc_sm8650_driver_data =3D {
+> +=09.alpha_plls =3D cam_cc_sm8650_plls,
+> +=09.num_alpha_plls =3D ARRAY_SIZE(cam_cc_sm8650_plls),
+> +=09.clk_cbcrs =3D cam_cc_sm8650_critical_cbcrs,
+> +=09.num_clk_cbcrs =3D ARRAY_SIZE(cam_cc_sm8650_critical_cbcrs),
+> +};
+> +
+>   static const struct qcom_cc_desc cam_cc_sm8650_desc =3D {
+>   =09.config =3D &cam_cc_sm8650_regmap_config,
+>   =09.clks =3D cam_cc_sm8650_clocks,
+> @@ -3525,6 +3563,8 @@ static const struct qcom_cc_desc cam_cc_sm8650_desc=
+ =3D {
+>   =09.num_resets =3D ARRAY_SIZE(cam_cc_sm8650_resets),
+>   =09.gdscs =3D cam_cc_sm8650_gdscs,
+>   =09.num_gdscs =3D ARRAY_SIZE(cam_cc_sm8650_gdscs),
+> +=09.use_rpm =3D true,
+> +=09.driver_data =3D &cam_cc_sm8650_driver_data,
+>   };
+>=20
+>   static const struct of_device_id cam_cc_sm8650_match_table[] =3D {
+> @@ -3535,46 +3575,7 @@ MODULE_DEVICE_TABLE(of, cam_cc_sm8650_match_table)=
+;
+>=20
+>   static int cam_cc_sm8650_probe(struct platform_device *pdev)
+>   {
+> -=09struct regmap *regmap;
+> -=09int ret;
+> -
+> -=09ret =3D devm_pm_runtime_enable(&pdev->dev);
+> -=09if (ret)
+> -=09=09return ret;
+> -
+> -=09ret =3D pm_runtime_resume_and_get(&pdev->dev);
+> -=09if (ret)
+> -=09=09return ret;
+> -
+> -=09regmap =3D qcom_cc_map(pdev, &cam_cc_sm8650_desc);
+> -=09if (IS_ERR(regmap)) {
+> -=09=09pm_runtime_put(&pdev->dev);
+> -=09=09return PTR_ERR(regmap);
+> -=09}
+> -
+> -=09clk_lucid_ole_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config=
+);
+> -=09clk_lucid_ole_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config=
+);
+> -=09clk_rivian_evo_pll_configure(&cam_cc_pll2, regmap, &cam_cc_pll2_confi=
+g);
+> -=09clk_lucid_ole_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config=
+);
+> -=09clk_lucid_ole_pll_configure(&cam_cc_pll4, regmap, &cam_cc_pll4_config=
+);
+> -=09clk_lucid_ole_pll_configure(&cam_cc_pll5, regmap, &cam_cc_pll5_config=
+);
+> -=09clk_lucid_ole_pll_configure(&cam_cc_pll6, regmap, &cam_cc_pll6_config=
+);
+> -=09clk_lucid_ole_pll_configure(&cam_cc_pll7, regmap, &cam_cc_pll7_config=
+);
+> -=09clk_lucid_ole_pll_configure(&cam_cc_pll8, regmap, &cam_cc_pll8_config=
+);
+> -=09clk_lucid_ole_pll_configure(&cam_cc_pll9, regmap, &cam_cc_pll9_config=
+);
+> -=09clk_lucid_ole_pll_configure(&cam_cc_pll10, regmap, &cam_cc_pll10_conf=
+ig);
+> -
+> -=09/* Keep clocks always enabled */
+> -=09qcom_branch_set_clk_en(regmap, 0x13318); /* CAM_CC_DRV_AHB_CLK */
+> -=09qcom_branch_set_clk_en(regmap, 0x13314); /* CAM_CC_DRV_XO_CLK */
+> -=09qcom_branch_set_clk_en(regmap, 0x132ec); /* CAM_CC_GDSC_CLK */
+> -=09qcom_branch_set_clk_en(regmap, 0x13308); /* CAM_CC_SLEEP_CLK */
+> -
+> -=09ret =3D qcom_cc_really_probe(&pdev->dev, &cam_cc_sm8650_desc, regmap)=
+;
+> -
+> -=09pm_runtime_put(&pdev->dev);
+> -
+> -=09return ret;
+> +=09return qcom_cc_probe(pdev, &cam_cc_sm8650_desc);
+>   }
+>=20
+>   static struct platform_driver cam_cc_sm8650_driver =3D {
+>=20
+> --
+> 2.34.1
+>=20
+>=20
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-Hmm. I'm working on moving the PERST# deassert to pwrctrl drivers, but even then
-the PERST# assert needs to happen in the controller driver for initialization.
-And moving them to root port node would cause the pin state to be changed
-in-between. So I agree, let's leave them in controller node itself.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
