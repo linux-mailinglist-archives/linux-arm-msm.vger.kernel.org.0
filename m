@@ -1,89 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-60229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CFF1ACDE6B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 15:00:13 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7377ACDE70
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 15:03:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0DFA73A2E55
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 12:59:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 68468172A0E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 13:03:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCD1F28F921;
-	Wed,  4 Jun 2025 13:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CE1326AC3;
+	Wed,  4 Jun 2025 13:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MRCsfPn2"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="YWx7TKSd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC7E28F92B
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jun 2025 13:00:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA75F28D82F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jun 2025 13:03:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749042010; cv=none; b=RruE3hfBZqz+HnvTS7gotsn1CKwqMjZpr55FItrHXy8G3xiNpWmS/BUJPo0JMM+sjoNSJyIk3BknHflv/NkLp+5pnubUDgmrJDybAb4C+vpiJJ32h/+FoYfJ7EAXEEHwHxVfr1p3DgAN1JNc/HHKSQYx0qODJ6ZzudU6svLM5Co=
+	t=1749042210; cv=none; b=Fi4h89/S7CZCmO61SyxAb1esmxkx9S3lB22U8lMslZzjSV+Sa1YavMmugpgOz7CWhWijs4xd0CPzxhZVUQmHglR7X0qrr9Bdf4NFxkCLTPCMBEozgzzW1CKdfGai4bxG8z0ZQt7XjaDcyE8jWGi5nd3CnjA1k9YsWVINYbOgspY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749042010; c=relaxed/simple;
-	bh=8XVhguz1+Ed3YcXtVsOgIGoJBaQuam99SMuhMvkOoBQ=;
+	s=arc-20240116; t=1749042210; c=relaxed/simple;
+	bh=jyLvapr0hV2SctsERDcqY80zrR4IU3ObDKc5L5NSjYM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jX5zZjwE+YdtZPzyfWuX+TEGHfZet2yXdhvWTJoViYCION/ZGC7nbddvkBbTHu5krf6Y3CFVk0l3j6EnwOy9wzxDX60AjEMo0vKVeUShXJENe2A3xiGJRwVqbwd6kFFqmGrrpMyGGtogRUmqTwNEIG/9vLVkvevHRmoE43D8UYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MRCsfPn2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 554AhXaI022158
-	for <linux-arm-msm@vger.kernel.org>; Wed, 4 Jun 2025 13:00:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3yULVZvEmG9t/23IJG8ShwjnKhSSSSZCNlyggUkvwyY=; b=MRCsfPn2CoGwnkir
-	1jg+wgvLYQIX+E5BbJ2vWKbYgwI8Pht+dg9r7oCoajhFwawI0OZLZETd5UfJWhSw
-	Y8dqZUa7egZgknY0YPGyLK59vJHQaEGuewv7+b+xO+dj0jzLwh9U+k+oKowz1nhg
-	kWESiOHHBv1sLh8vYynXyumbrfnQj+vriomqFb9IBjV8FPZyddN6Cud4RpfFv/5y
-	Nn5gsVXg1n6Ttq7xasYEyYMQxxWcw27pcUL3s5qEomxD9LAHXGQZscElxovZYcy1
-	EL8m0oDyLMfGJpmHl7v/1j0vdjPzgi7bWDCxtYoGwF9IbTMVZrF6WsSYRFSw8Wpg
-	fTA4NA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 472mn00arm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jun 2025 13:00:07 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d09a3b806aso143081585a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jun 2025 06:00:07 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=rOc4W9wjKRgfMIptt1nGnuHY3dFYLcUInJ03rudGalEwGUk/WbIMYKxqHS758yPii3zTiWG4PHI/CwLFTPjGGIa1t+w0OC2CSGcKaTg9sF7cTnwEfZkp4eZc/4++ZtENB0lQL93MD1QmtIaz65cC6rivJe8/eNemPovQVQcwMnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=YWx7TKSd; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1749042207;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=1W70xJxVbnQWAt2S0XsNaY8S+LMWijC2aByv8x2rpkw=;
+	b=YWx7TKSd4NdqQCYUrp257EgqGEiQmel274+QQYiUX0QWiF6MtIP3quCNm/0j7e/R+ktQVe
+	CM+VIRqux8UKEZzPjGCW2F5sTKmXjOyT9dci4mc2NCUvo52UE9VxALt25j0zPCTBIGpVXu
+	9N/O4ZwrnumHsDLKgEExxRzimJAwvTk=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-686-MvL9lQyyOVK-jjLyBZtpjw-1; Wed, 04 Jun 2025 09:03:26 -0400
+X-MC-Unique: MvL9lQyyOVK-jjLyBZtpjw-1
+X-Mimecast-MFC-AGG-ID: MvL9lQyyOVK-jjLyBZtpjw_1749042202
+Received: by mail-lf1-f70.google.com with SMTP id 2adb3069b0e04-55342bc1dc8so2412279e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jun 2025 06:03:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749042007; x=1749646807;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3yULVZvEmG9t/23IJG8ShwjnKhSSSSZCNlyggUkvwyY=;
-        b=ZA3EbFdoa6lBhh79HMHJuzX4dm0Cqp/6dEaz4dRWyZzQz8sfOSR/j+xeW3SwcK8Pv6
-         j8w5i7BSjrSoW92WWOXMdGATvOeI6rYX6ataw7su5C/sZkeVANmitvtqrIqeJW/kpV/R
-         VY6iDR0KDUjQEO9VSnPlQTAsjGRZhkH8/4FkWS1fO5fzVX6lHwcqD5NY0mjuU/3C2Khl
-         2enedwzk+AKVEoxTYn/ocuzYZvHJthOkO07spis9tlgyuVTqzc3sLpukJCSEoX5SVkA4
-         NrRZ3EP2VNEwVVaOkzrRuiOpwX6J/yiw5JW7ZlF3VR8iFjVzFenhkZ1AybVgBEsROBJB
-         eEcA==
-X-Forwarded-Encrypted: i=1; AJvYcCWYJITtHyp2x7u2n0EgQBcDgmFZLJiZfp3y9Zm6Cghs4j65UeIEbRpMOZeuM8I4WH6P+z2r+5z1+pYDffLh@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxq1/CIVfLnVP2WEed4C7PYZhbzAj8pYN3Rp98OTPPCZtAW9XL7
-	BwIz0Sfzv461laDyA08xFOwBhN4wTLmGt7b55OheuUDaCvwpCpYVPf3KkUwHVZO63TZ8Ke9Wq4e
-	e9PParGXWOWU/WYaskQGAlrmYsPlzcmScVBcT9wHqYb4YTuvmxcXbdcQC1P5Rz1UKxdhXhozOU7
-	RR
-X-Gm-Gg: ASbGncuZDoUacn/WJDOdDjsO+lMIXlZQU9ebRsMHFPvXGltupELdsnQwaniTafDII1H
-	v7zu+9cSjuMhPZDGT/sulVNBiiHgQk5RtwYCoctWgDZYI9WqkvMvTe7hu25ygc7Ayx/OxpdoiRM
-	M23Qt3wk1jiDOzjTLQzSv7z9rvZaiUhSl8uxxZIxEKpJH8hyW9tR+ppyToCACWtEf0Xz1GOyw1E
-	bJWHVeT+061BCZHH8h16tt/QJ81BSCyFHZ+19k00ZB/TA/cXfWVj+NYAtDgVmcJ+mDYOwFRud9y
-	fcSAK54gbgTxPl+EnN3f0ld3LqKVMDbHqskvfMMO1Ph9PoVApVf/s6hu0OFUlavFeNPYQnGLknT
-	9
-X-Received: by 2002:a05:620a:191b:b0:7c9:23d7:6dd6 with SMTP id af79cd13be357-7d2199090a7mr174140885a.13.1749042006681;
-        Wed, 04 Jun 2025 06:00:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEn4xJuvGOLTe7ZTBVF2ik8xPdkhjFGFOvWwDjwbyfQtIsf2eqrG3bthpaWtCLfw7+RR9Tkxg==
-X-Received: by 2002:a05:620a:191b:b0:7c9:23d7:6dd6 with SMTP id af79cd13be357-7d2199090a7mr174136985a.13.1749042006140;
-        Wed, 04 Jun 2025 06:00:06 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ada6ad39565sm1094145666b.134.2025.06.04.06.00.04
+        d=1e100.net; s=20230601; t=1749042202; x=1749647002;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=1W70xJxVbnQWAt2S0XsNaY8S+LMWijC2aByv8x2rpkw=;
+        b=htsUbt/T6FlFTWqOJ8XjnEEhQQu+JBlIiRfS+uj2y04nXx5twD5PkwyH7a21cdvJVH
+         pb8KR9bUSJyemf8qR5aFf546gJlRCTBmbMeiOl2QK+BBaMKG08aw8HunytIYYck5Pa+u
+         aJqJ0jCWykJZxZ8Fa8bQH2W8v/ByNWVurZLWyYX/eSs7AEtceISFuOfkxbZSfvzYTZF1
+         iNyMlbFpOrg+KtyRGzyumsjujaCdOC7ciWynsXXZAs09LvpF/Qpxp67Svm7rOxBZzF9W
+         AevNUcEG8nDR+eLfX/QOZ6UK9lE3AMWPDGvXcWjCmut/rxVCr9DYMJeWmKzNPPOPz36r
+         ttWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV7MEWZ53J5YH1eiOhlF1jWz8BOKlKRxC0N8RA0iDsBwGa5cAJJzgG5XHxoZjLHj7NocUKGsrDzokuNARHD@vger.kernel.org
+X-Gm-Message-State: AOJu0YwOxYgpmwu2dOdjgLYcsngwBSliAGDTi7SGZ74XoQi6Mv40ZhX9
+	t68rlruxskQl8ZlGe+EhrdgS849jrEpCfTvD54nMl2XidkYUCBJshspBVyxKGlVGQDFYNy6s+qw
+	iT2xGF2CQOsh3aRCC9oboYyGGpsZhVz9xc2FG4Qhd2jPh6zv5eBMCiLru0yzldEVENAPQZt4Y3G
+	cxSA==
+X-Gm-Gg: ASbGncvIq9K4++X7UQ016ZY40uUTFPWtp5tEchqYBec1FYRCHYgS1e/APF5Er4xfmJJ
+	drNwEqrSKupFQuBsH9ERYyoUdvJQcpDu1Fzd4TWGCQz1XqR1cgFbiUSJsy6v43QPE6s3vNnLTgm
+	Ku5vTZdXG3lm/t0HrBiNv8inqdbuFa2SXXi+4KJkj7kiGXdfadlRCYijUR5whu4ZK8I8XDewINU
+	wzq36xRCd+WQAGs9xc3cFZKqB3NFLwidyRUEbJ72lA+A0QT2IuLuN0+TG8Xx+mtwsHNQ5EHeRoz
+	hirR9XJPpYMR/Gp8fL3AJV8BPU5YcAqL1SRHTK+l8RHBVVtX5yi8VwnnVJEWRHKb86vRHUKxKY0
+	37PrWphxhafk0iMBcr3XL9oJTqUnDZ5OQ/AD7l6o=
+X-Received: by 2002:a05:6512:3b98:b0:553:2c01:ff44 with SMTP id 2adb3069b0e04-55356ae0db9mr640744e87.2.1749042201512;
+        Wed, 04 Jun 2025 06:03:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFzmsqBq7oHf/7NA5WXbYa0JLoQ/4AyvuDodtvFK/3Rr1JPiuMMFb2vKM8OCBKgoi64wfEu1Q==
+X-Received: by 2002:a05:6000:430c:b0:3a4:e5ea:1ac0 with SMTP id ffacd0b85a97d-3a51d8f6ee1mr2387438f8f.5.1749042173270;
+        Wed, 04 Jun 2025 06:02:53 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f1b:b800:6fdb:1af2:4fbd:1fdf? (p200300d82f1bb8006fdb1af24fbd1fdf.dip0.t-ipconnect.de. [2003:d8:2f1b:b800:6fdb:1af2:4fbd:1fdf])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4efe73eebsm21436129f8f.44.2025.06.04.06.02.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Jun 2025 06:00:05 -0700 (PDT)
-Message-ID: <aeda0cf4-fd8a-4f3f-a3ea-922d5b0ceec0@oss.qualcomm.com>
-Date: Wed, 4 Jun 2025 15:00:02 +0200
+        Wed, 04 Jun 2025 06:02:52 -0700 (PDT)
+Message-ID: <0835025c-a799-4ffc-9dea-52b64ffcb96a@redhat.com>
+Date: Wed, 4 Jun 2025 15:02:49 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,86 +91,115 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: venus: Fix MSM8998 frequency table
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Marc Gonzalez <mgonzalez@freebox.fr>,
-        Pierre-Hugues Husson <phhusson@freebox.fr>,
-        Hans Verkuil <hverkuil@xs4all.nl>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250531-topic-venus_98_tbl-v1-1-68e5523a39dc@oss.qualcomm.com>
- <4504e16a-f4c4-1f68-fa91-d3641a3decbe@quicinc.com>
+Subject: Re: [PATCH v10 08/16] KVM: guest_memfd: Allow host to map guest_memfd
+ pages
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
+ pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
+ vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250527180245.1413463-1-tabba@google.com>
+ <20250527180245.1413463-9-tabba@google.com>
+ <b497b0aa-a8bc-45b9-9059-71dbbe551ebb@redhat.com>
+ <CA+EHjTztT_MhXpAZvmv53vDOO89fW4fq86gZqgip97T05YTE3w@mail.gmail.com>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <4504e16a-f4c4-1f68-fa91-d3641a3decbe@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CA+EHjTztT_MhXpAZvmv53vDOO89fW4fq86gZqgip97T05YTE3w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: eckd-F9eBww0AsjrrzBAMAVVI7ixGfzS
-X-Proofpoint-GUID: eckd-F9eBww0AsjrrzBAMAVVI7ixGfzS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA0MDA5OCBTYWx0ZWRfX/F2O6Nz6cUzo
- G+ZlN0z9PsER0d7kE7hxyn9XjXCfx/B2oGcmddnG+Bv28AdCBEg8IGtRGqb1zdZB5Om15iDwDk1
- RY7m2ViT2fNMYZgW48xOcqtFsPB7td8ISA+aCVB3pu3ADsnn3DJKTAUQNB96XRVt7lvtAbKiW/1
- 0xOia6vKLuG6bgDgGKO1/fSIqFJUGOEk/ndIn3xKEQuAxL/WjU/AhQ6nNrH5DDSt2ZGbmPre26J
- WWy+ZDe0w6dMM/sQC4LJHKN3CJlPMwE6fVpco+WdO2kmlFoAP0fIs0Ozhm18k67P9B3Z6zy33vF
- VdOhzrqp/AakO79MPeJfcOn2DTo2Zl65+btEWuZckvQzMFae5PGvm3+iWEbXAk/BaAZUJPqJd15
- dyiaPfVFkC5gC9O7ZZlAYBbuUXvJYFOrFCBBgAszUtl6ag2QNn8uvQZcFzCRX2fAyS3lbAtF
-X-Authority-Analysis: v=2.4 cv=Y8/4sgeN c=1 sm=1 tr=0 ts=68404357 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=beIa89I-peMrsPrHJCYA:9
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-04_03,2025-06-03_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 lowpriorityscore=0 mlxlogscore=999 spamscore=0 phishscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
- malwarescore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506040098
 
-On 6/4/25 2:35 PM, Vikash Garodia wrote:
+On 04.06.25 14:32, Fuad Tabba wrote:
+> Hi David,
 > 
-> On 5/31/2025 5:52 PM, Konrad Dybcio wrote:
->> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> On Wed, 4 Jun 2025 at 13:26, David Hildenbrand <david@redhat.com> wrote:
 >>
->> Fill in the correct data for the production SKU.
+>> On 27.05.25 20:02, Fuad Tabba wrote:
+>>> This patch enables support for shared memory in guest_memfd, including
+>>> mapping that memory at the host userspace. This support is gated by the
+>>> configuration option KVM_GMEM_SHARED_MEM, and toggled by the guest_memfd
+>>> flag GUEST_MEMFD_FLAG_SUPPORT_SHARED, which can be set when creating a
+>>> guest_memfd instance.
+>>>
+>>> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
+>>> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+>>> Signed-off-by: Fuad Tabba <tabba@google.com>
+>>> ---
+>>>    arch/x86/include/asm/kvm_host.h | 10 ++++
+>>>    arch/x86/kvm/x86.c              |  3 +-
 >>
->> Fixes: 193b3dac29a4 ("media: venus: add msm8998 support")
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->> ---
->>  drivers/media/platform/qcom/venus/core.c | 10 +++++-----
->>  1 file changed, 5 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->> index d305d74bb152d21133c4dfa23805b17274426a5c..2bb514c322692475ed58198e17f906f894d81cf4 100644
->> --- a/drivers/media/platform/qcom/venus/core.c
->> +++ b/drivers/media/platform/qcom/venus/core.c
->> @@ -709,11 +709,11 @@ static const struct venus_resources msm8996_res = {
->>  };
->>  
->>  static const struct freq_tbl msm8998_freq_table[] = {
->> -	{ 1944000, 465000000 },	/* 4k UHD @ 60 (decode only) */
->> -	{  972000, 465000000 },	/* 4k UHD @ 30 */
->> -	{  489600, 360000000 },	/* 1080p @ 60 */
->> -	{  244800, 186000000 },	/* 1080p @ 30 */
->> -	{  108000, 100000000 },	/* 720p @ 30 */
->> +	{ 1728000, 533000000 },	/* 4k UHD @ 60 (decode only) */
->> +	{ 1036800, 444000000 },	/* 2k @ 120 */
->> +	{  829440, 355200000 },	/* 4k @ 44 */
->> +	{  489600, 269330000 },/* 4k @ 30 */
->> +	{  108000, 200000000 },	/* 1080p @ 60 */
-> What has ideally changed in production SKU which led to this change. Pls add
-> this info.
+>> Nit: I would split off the x86 bits. Meaning, this patch would only
+>> introduce the infrastructure and a x86 KVM patch would enable it for
+>> selected x86 VMs.
+> 
+> Will do.
 
-I have no clue what's the root reason for the clock plan change, probably
-some hw bugs were ironed out and higher clocks were deemed stable
+And probably that patch should come after/with the x86 mmu bits.
 
-Konrad
+-- 
+Cheers,
+
+David / dhildenb
+
 
