@@ -1,405 +1,323 @@
-Return-Path: <linux-arm-msm+bounces-60181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17010ACD865
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 09:19:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F26F4ACD88E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 09:29:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4FD0F188CEBC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 07:19:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AEBD1165A58
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 07:29:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 114C61D5CC4;
-	Wed,  4 Jun 2025 07:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0EBA1EEA40;
+	Wed,  4 Jun 2025 07:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PPbgIrN9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dj8WsLub"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575ADA937;
-	Wed,  4 Jun 2025 07:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FF92C3246;
+	Wed,  4 Jun 2025 07:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749021561; cv=none; b=o6bDE5NLJyZ4bi0bgGkrJJVQqCU9wKH5qsbkpKj9Z3PLgK27UJal3fXfRWGjOaBpNfFtl76abuLhJz0WzF4IjZDqxbVGRUeKYmsPT0xD+60t71aSsYeTKwGL6ary+bwiURXtMWPSOc92dZrt1+Rf7JRHh0fe8h2zkWrZ0FWsLDE=
+	t=1749022137; cv=none; b=jF1uSl4O8twE62pppmzRDLntXRrUOcSfVn58whkyS5QJGjvZW2OrKB1wZ7bb5WSs5+/alLqP/prPJiodX34TsoSirAs96BhoHagOnYwj+GzwmnebaMka2QmKWCISNn5+15zlrSWrbUF92wCMxWl1wiTF2WCtmnSPMRJ8rnsXf58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749021561; c=relaxed/simple;
-	bh=NqEjpzBwTm8b4UUIRUDEJpIggvzSdLRiaf3fq+uToi8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=b6ggJUCFnuZlOvVNafLTTEbqIPHOXPMpZxlJLO4ccSzjKzDMf/KQ6wXpUf6wENUijELRNGtoCsIrsUQp1D0oTLtM+Iiq8wbzgkLIxr0E5HwUh6A8m9s+IWtdpr6MIYWhXJdOFGMIwb6+JAEVxp1wuE+pK8UDHPBMEA3sthIIohE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PPbgIrN9; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1749022137; c=relaxed/simple;
+	bh=OLcyeaK0QaFwX/QD+b6vr3goVzhNT5ae0rF/7cGv6DU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=CVi4yPLbQUKzDbP2J2rpFn+gnzqyqVGkR2hwB6BQM+yD7O0w1SIQ4RD7q4jMQ5mkaDqdk7WWG19WzOnMgkzGFGflhbijQwnQBj+7VOeobofN3hWnQAGZViicI/j61xfTOZ+CepOTkWp0nl6SgXF7OeJvNogoppM49mIGBW1ZVg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dj8WsLub; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 553NFgu0013814;
-	Wed, 4 Jun 2025 07:19:03 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 553Jrjql027289;
+	Wed, 4 Jun 2025 07:28:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=ne/DRGIyKNE
-	VWK8VpatIEjAtrIvy+aNgd7lx7Ccrnyo=; b=PPbgIrN9BYJguQFX4CXBemKWYVW
-	7DqYlea0829Ih5knlshmgOz0CfLxjkaWRiabnC7lFUj21kjwD1gp65RQ3OMB56mb
-	7jB4ATetZbpxvqgZU42JY2txjHjWDs11ERqke6v/GvqewRyA7amkWLc2nYiy5cjM
-	3mqT0r177wWXnjTGBvwIlXdffcaN6CdmJGSBF9c9QL6aePlcSzgCff3R2aHZ6SxL
-	NisE/ltICnp0OgyQcrwPxk97sFKMn0S966r86khTSUsfvGyPGz5alN/QrR4+PUZf
-	ULyJZC6YjiSOY7Co6EVr0XZO4df7HS1F6yEO1FByB4am6T8VfwHdG8CKWIw==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 471g8sw5gt-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	u488RfVb+B5wzmvfwRwAr9mI64t5M7PCEZ6lB41OcjA=; b=dj8WsLubuC7c18AM
+	MbU7EWxwaup6ZgzF3NzJH5l7EeDICqeKR+9JlpYeUXWd6i5Qh5oozdbz8AVxeYEt
+	X/pVkPNfsB7B7jyfrww6UYjzDeWetd4LfiB/SEszTva5ZbQaYvTYyyPPiQpeoNli
+	qe4vpWjHT6+2gZ2oDE6pGaBpEDgqYeoSLOtCApnepiHgJngZ4JbeYd0CO2jsBY3m
+	3V+L+S0AvUx1qcUuH4IX+4I6RzHAoku+H4cYnYHfwuHb3vyuid7mUu8U5IT2PV+Q
+	8XEIp6rmh+VvnbJHuy27iQzu8F/JTzDUnjFTQfTHRMnYy0EEWKxehztdoDYISEMW
+	rV3HGA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 471g8sw674-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Jun 2025 07:19:02 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5547IwAM017260;
-	Wed, 4 Jun 2025 07:18:58 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 46ytum3903-1
+	Wed, 04 Jun 2025 07:28:49 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5547Snn7030313
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Jun 2025 07:18:58 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5547Iwop017245;
-	Wed, 4 Jun 2025 07:18:58 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-amakhija-hyd.qualcomm.com [10.213.99.91])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 5547Iwgo017238
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Jun 2025 07:18:58 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4090850)
-	id A5CB0592; Wed,  4 Jun 2025 12:48:57 +0530 (+0530)
-From: Ayushi Makhija <quic_amakhija@quicinc.com>
-To: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc: Ayushi Makhija <quic_amakhija@quicinc.com>, robdclark@gmail.com,
-        dmitry.baryshkov@oss.qualcomm.com, sean@poorly.run,
-        marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
-        conor+dt@kernel.org, andrzej.hajda@intel.com,
-        neil.armstrong@linaro.org, rfoss@kernel.org,
-        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
-        jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com,
-        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
-        quic_jesszhan@quicinc.com,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v8 RESEND 2/2] arm64: dts: qcom: sa8775p-ride: add anx7625 DSI to DP bridge nodes
-Date: Wed,  4 Jun 2025 12:48:51 +0530
-Message-Id: <20250604071851.1438612-3-quic_amakhija@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250604071851.1438612-1-quic_amakhija@quicinc.com>
-References: <20250604071851.1438612-1-quic_amakhija@quicinc.com>
+	Wed, 4 Jun 2025 07:28:49 GMT
+Received: from [10.218.32.171] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Jun 2025
+ 00:28:43 -0700
+Message-ID: <85ba8e7b-a1a5-4f70-9660-bb78e7169acc@quicinc.com>
+Date: Wed, 4 Jun 2025 12:58:40 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/8] soc: qcom: geni-se: Enable QUPs on SA8255p
+ Qualcomm platforms
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>, <devicetree@vger.kernel.org>
+CC: <psodagud@quicinc.com>, <djaggi@quicinc.com>, <quic_msavaliy@quicinc.com>,
+        <quic_vtanuku@quicinc.com>, <quic_arandive@quicinc.com>,
+        <quic_mnaresh@quicinc.com>, <quic_shazhuss@quicinc.com>
+References: <20250506180232.1299-1-quic_ptalari@quicinc.com>
+ <VgXAbpS__r4C24FLFz5nqCPgygil3nr3-oNHbL7bQxE0X1GnDStFaWlnts8iSxCeG6TCqa8mzIFqOysqIlWeJg==@protonmail.internalid>
+ <20250506180232.1299-4-quic_ptalari@quicinc.com>
+ <e6517c54-9163-48d1-80c2-4fd964dac349@linaro.org>
+Content-Language: en-US
+From: Praveen Talari <quic_ptalari@quicinc.com>
+In-Reply-To: <e6517c54-9163-48d1-80c2-4fd964dac349@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=RMizH5i+ c=1 sm=1 tr=0 ts=683ff367 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=LchG5PTgKyYevX63dD8A:9
+X-Authority-Analysis: v=2.4 cv=RMizH5i+ c=1 sm=1 tr=0 ts=683ff5b1 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8
+ a=A-9vhQJTosZNU69VUx0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
  a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA0MDA2MCBTYWx0ZWRfX7gdzZzK8w2W0
- Rr4GuE9VtCGPJqkJKC3G8S8r908HO86xyB5VmzHK/QyyYzUtxm+Bx2Gpj2hzF41s1rHDZF/lctX
- QS/yeD+XintjkrTJ1wR2Y9PbontoXlTL95wvAt7iYw+yk6WX5xArx2bW6JDdqt6RncG69tjAZGo
- 37/PR/mw0Cw8X+1U8BK0uUIUKXaOgCG+exYTeZCjXa1HaZAPPBjzgFKWvgLfNxr5yzj1uzGoulg
- yAAx4SbUUmrBUXQbQ5q8AH2X+O0UzgZjQG0DkYxZM6fVC7REcHnRJ8ITqb/EOhufyhBWXx6ovYO
- dL9Fylmlo19x1ShJoo/kG06qF4vv5kJgMPiT2Cqd5UYzAUlHnQ5eTo4I036RelDRiGBU2SHG8Nd
- EqCMc+d6pYgt6f3ehY9kfYp6IPDKUm0b7pyf7DINt1B97K2l2Akk9F4yniwbyitcUiDloA6S
-X-Proofpoint-GUID: aLgg1b2S9ZYdlLrqrAfnxomoH4n-huoV
-X-Proofpoint-ORIG-GUID: aLgg1b2S9ZYdlLrqrAfnxomoH4n-huoV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA0MDA2MCBTYWx0ZWRfX+H6QsDyPIo7Y
+ dSyNjfZAiaeQz9Ycve8F55B7SnHZ6lejl/cW2hFZ/WPnspPBEckuWqQBwlCzyuIqUqXKDOF0YOO
+ OiE2n5tMp32PZnwh3/PGN7RW8ejwT/szXvkM/Xqo7A0bTwCFOdoGamqfTmhAeJQbh6rT7iYNRIz
+ +xrMtDY7AjdfybCCqX+Qc3gGTvlctsQZ8ynsQkHNVvu2KNA7wgeLdqdXB3jyw0fAzHDb9anbCj4
+ rI7E4nezFjoRlIxgD/lR8G9uC2EdreagjBgzSMDXSrUAJyNDjcCTTEfHpiD5GSpLBvAf2NuAelb
+ oCR7nsjcb1QrBDjQo93MBPcRHMrMgpwN+RT0HlRxtZ8QRSmeoIidVR8z+iJ0DC+kjXIOOn6+s+H
+ 7s0+xGAs2Bh/1S1hazU/mSi99X78e+zRx/RcHY0JLVGsSJ2f+Qhkw7WX32Ciyx4XENob006a
+X-Proofpoint-GUID: b1JSqOmHQJWpaQnaLH6hGB6qWUK8yNxG
+X-Proofpoint-ORIG-GUID: b1JSqOmHQJWpaQnaLH6hGB6qWUK8yNxG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-04_02,2025-06-03_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  impostorscore=0 phishscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
  bulkscore=0 suspectscore=0 adultscore=0 mlxlogscore=999 mlxscore=0
- clxscore=1015 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
+ clxscore=1011 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2505280000 definitions=main-2506040060
 
-Add anx7625 DSI to DP bridge device nodes.
+Hi Bryan,
 
-Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 232 +++++++++++++++++++++
- 1 file changed, 232 insertions(+)
+Thank you for review.
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index 3ae416ab66e8..6af7d1db81a1 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-@@ -28,6 +28,64 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	vreg_12p0: vreg-12p0-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_12P0";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <12000000>;
-+		regulator-max-microvolt = <12000000>;
-+	};
-+
-+	vreg_5p0: vreg-5p0-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_5P0";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+
-+		vin-supply = <&vreg_12p0>;
-+	};
-+
-+	vreg_1p8: vreg-1p8-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_1P8";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		vin-supply = <&vreg_5p0>;
-+	};
-+
-+	vreg_1p0: vreg-1p0-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_1P0";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <1000000>;
-+		regulator-max-microvolt = <1000000>;
-+
-+		vin-supply = <&vreg_1p8>;
-+	};
-+
-+	vreg_3p0: vreg-3p0-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_3P0";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <3000000>;
-+		regulator-max-microvolt = <3000000>;
-+
-+		vin-supply = <&vreg_12p0>;
-+	};
-+
- 	vreg_conn_1p8: vreg_conn_1p8 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vreg_conn_1p8";
-@@ -128,6 +186,30 @@ dp1_connector_in: endpoint {
- 			};
- 		};
- 	};
-+
-+	dp-dsi0-connector {
-+		compatible = "dp-connector";
-+		label = "DSI0";
-+		type = "full-size";
-+
-+		port {
-+			dp_dsi0_connector_in: endpoint {
-+				remote-endpoint = <&dsi2dp_bridge0_out>;
-+			};
-+		};
-+	};
-+
-+	dp-dsi1-connector {
-+		compatible = "dp-connector";
-+		label = "DSI1";
-+		type = "full-size";
-+
-+		port {
-+			dp_dsi1_connector_in: endpoint {
-+				remote-endpoint = <&dsi2dp_bridge1_out>;
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -513,7 +595,108 @@ &i2c11 {
- 
- &i2c18 {
- 	clock-frequency = <400000>;
-+
- 	status = "okay";
-+
-+	io_expander: gpio@74 {
-+		compatible = "ti,tca9539";
-+		reg = <0x74>;
-+		interrupts-extended = <&tlmm 98 IRQ_TYPE_EDGE_BOTH>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		reset-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&io_expander_intr_active>,
-+			    <&io_expander_reset_active>;
-+		pinctrl-names = "default";
-+	};
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9543";
-+		#address-cells = <1>;
-+
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+
-+		i2c@0 {
-+			reg = <0>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			bridge@58 {
-+				compatible = "analogix,anx7625";
-+				reg = <0x58>;
-+				interrupts-extended = <&io_expander 2 IRQ_TYPE_EDGE_FALLING>;
-+				enable-gpios = <&io_expander 1 GPIO_ACTIVE_HIGH>;
-+				reset-gpios = <&io_expander 0 GPIO_ACTIVE_HIGH>;
-+				vdd10-supply = <&vreg_1p0>;
-+				vdd18-supply = <&vreg_1p8>;
-+				vdd33-supply = <&vreg_3p0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+
-+						dsi2dp_bridge0_in: endpoint {
-+							remote-endpoint = <&mdss0_dsi0_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+
-+						dsi2dp_bridge0_out: endpoint {
-+							remote-endpoint = <&dp_dsi0_connector_in>;
-+						};
-+					};
-+				};
-+			};
-+		};
-+
-+		i2c@1 {
-+			reg = <1>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			bridge@58 {
-+				compatible = "analogix,anx7625";
-+				reg = <0x58>;
-+				interrupts-extended = <&io_expander 10 IRQ_TYPE_EDGE_FALLING>;
-+				enable-gpios = <&io_expander 9 GPIO_ACTIVE_HIGH>;
-+				reset-gpios = <&io_expander 8 GPIO_ACTIVE_HIGH>;
-+				vdd10-supply = <&vreg_1p0>;
-+				vdd18-supply = <&vreg_1p8>;
-+				vdd33-supply = <&vreg_3p0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+
-+						dsi2dp_bridge1_in: endpoint {
-+							remote-endpoint = <&mdss0_dsi1_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+
-+						dsi2dp_bridge1_out: endpoint {
-+							remote-endpoint = <&dp_dsi1_connector_in>;
-+						};
-+					};
-+				};
-+			};
-+		};
-+	};
-+
- };
- 
- &mdss0 {
-@@ -560,6 +743,40 @@ &mdss0_dp1_phy {
- 	status = "okay";
- };
- 
-+&mdss0_dsi0 {
-+	vdda-supply = <&vreg_l1c>;
-+
-+	status = "okay";
-+};
-+
-+&mdss0_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&dsi2dp_bridge0_in>;
-+};
-+
-+&mdss0_dsi0_phy {
-+	vdds-supply = <&vreg_l4a>;
-+
-+	status = "okay";
-+};
-+
-+&mdss0_dsi1 {
-+	vdda-supply = <&vreg_l1c>;
-+
-+	status = "okay";
-+};
-+
-+&mdss0_dsi1_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&dsi2dp_bridge1_in>;
-+};
-+
-+&mdss0_dsi1_phy {
-+	vdds-supply = <&vreg_l4a>;
-+
-+	status = "okay";
-+};
-+
- &pmm8654au_0_gpios {
- 	gpio-line-names = "DS_EN",
- 			  "POFF_COMPLETE",
-@@ -753,6 +970,21 @@ ethernet0_mdio: ethernet0-mdio-pins {
- 		};
- 	};
- 
-+	io_expander_intr_active: io-expander-intr-active-state {
-+		pins = "gpio98";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	io_expander_reset_active: io-expander-reset-active-state {
-+		pins = "gpio97";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-high;
-+	};
-+
- 	pcie0_default_state: pcie0-default-state {
- 		perst-pins {
- 			pins = "gpio2";
--- 
-2.34.1
+On 6/3/2025 7:51 PM, Bryan O'Donoghue wrote:
+> On 06/05/2025 19:02, Praveen Talari wrote:
+>> On the sa8255p platform, resources such as clocks,interconnects
+>> and TLMM (GPIO) configurations are managed by firmware.
+>>
+>> Introduce a platform data function callback to distinguish whether
+>> resource control is performed by firmware or directly by the driver
+>> in linux.
+>>
+>> The refactor ensures clear differentiation of resource
+>> management mechanisms, improving maintainability and flexibility
+>> in handling platform-specific configurations.
+>>
+>> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+>> ---
+>> v3 -> v4
+>> - declared an empty struct for sa8255p and added check as num clks.
+>> - Added version log after ---
+>>
+>> v1 -> v2
+>> - changed datatype of i from int to unsigned int as per comment.
+>> ---
+>>   drivers/soc/qcom/qcom-geni-se.c | 73 ++++++++++++++++++++-------------
+>>   1 file changed, 45 insertions(+), 28 deletions(-)
+>>
+>> diff --git a/drivers/soc/qcom/qcom-geni-se.c 
+>> b/drivers/soc/qcom/qcom-geni-se.c
+>> index 4cb959106efa..b6e90bac55fe 100644
+>> --- a/drivers/soc/qcom/qcom-geni-se.c
+>> +++ b/drivers/soc/qcom/qcom-geni-se.c
+>> @@ -105,6 +105,8 @@ struct geni_wrapper {
+>>   struct geni_se_desc {
+>>       unsigned int num_clks;
+>>       const char * const *clks;
+>> +    int (*geni_se_rsc_init)(struct geni_wrapper *wrapper,
+>> +                const struct geni_se_desc *desc);
+>>   };
+>>
+>>   static const char * const icc_path_names[] = {"qup-core", "qup-config",
+>> @@ -891,10 +893,44 @@ int geni_icc_disable(struct geni_se *se)
+>>   }
+>>   EXPORT_SYMBOL_GPL(geni_icc_disable);
+>>
+>> +static int geni_se_resource_init(struct geni_wrapper *wrapper,
+>> +                 const struct geni_se_desc *desc)
+>> +{
+>> +    struct device *dev = wrapper->dev;
+>> +    int ret;
+>> +    unsigned int i;
+>> +
+>> +    wrapper->num_clks = min_t(unsigned int, desc->num_clks, MAX_CLKS);
+> 
+> It should be an error to depend on more clocks - which are specified in 
+> a descriptor down the bottom of this file than MAX_CLKS allows.
+should i keep condition before assign num_clks to wrapper->num_clks as 
+below right?
 
+if(desc->num_clks > MAX_CLKS){
+{
+  	return dev_err_probe(dev, " to many clocks defined in descriptor:%u 
+(max allowed: %u)\n", desc->num_clks, MAX_CLKS);
+}
+
+Please correct me if i am wrong.
+
+Thanks,
+Praveen Talari
+> 
+>> +
+>> +    for (i = 0; i < wrapper->num_clks; ++i)
+>> +        wrapper->clks[i].id = desc->clks[i];
+>> +
+>> +    ret = of_count_phandle_with_args(dev->of_node, "clocks", 
+>> "#clock-cells");
+>> +    if (ret < 0) {
+>> +        dev_err(dev, "invalid clocks property at %pOF\n", dev->of_node);
+>> +        return ret;
+> 
+> return dev_err_probe();
+> 
+>> +    }
+>> +
+>> +    if (ret < wrapper->num_clks) {
+>> +        dev_err(dev, "invalid clocks count at %pOF, expected %d 
+>> entries\n",
+>> +            dev->of_node, wrapper->num_clks);
+>> +        return -EINVAL;
+>> +    }
+>> +
+>> +    ret = devm_clk_bulk_get(dev, wrapper->num_clks, wrapper->clks);
+>> +    if (ret) {
+>> +        dev_err(dev, "Err getting clks %d\n", ret);
+>> +        return ret;
+>> +    }
+>> +
+>> +    return ret;
+>> +}
+>> +
+>>   static int geni_se_probe(struct platform_device *pdev)
+>>   {
+>>       struct device *dev = &pdev->dev;
+>>       struct geni_wrapper *wrapper;
+>> +    const struct geni_se_desc *desc;
+>>       int ret;
+>>
+>>       wrapper = devm_kzalloc(dev, sizeof(*wrapper), GFP_KERNEL);
+>> @@ -906,36 +942,12 @@ static int geni_se_probe(struct platform_device 
+>> *pdev)
+>>       if (IS_ERR(wrapper->base))
+>>           return PTR_ERR(wrapper->base);
+>>
+>> -    if (!has_acpi_companion(&pdev->dev)) {
+>> -        const struct geni_se_desc *desc;
+>> -        int i;
+>> +    desc = device_get_match_data(&pdev->dev);
+>>
+>> -        desc = device_get_match_data(&pdev->dev);
+>> -        if (!desc)
+>> +    if (!has_acpi_companion(&pdev->dev) && desc->num_clks) {
+> 
+> There is no desc in this file that has !num_clks I don't think the 
+> conjunction is justified.
+
+there is empty struct defined below sa8255p_qup_desc.
+
+> 
+>> +        ret = desc->geni_se_rsc_init(wrapper, desc);
+>> +        if (ret)
+>>               return -EINVAL;
+>> -
+>> -        wrapper->num_clks = min_t(unsigned int, desc->num_clks, 
+>> MAX_CLKS);
+>> -
+>> -        for (i = 0; i < wrapper->num_clks; ++i)
+>> -            wrapper->clks[i].id = desc->clks[i];
+>> -
+>> -        ret = of_count_phandle_with_args(dev->of_node, "clocks", 
+>> "#clock-cells");
+>> -        if (ret < 0) {
+>> -            dev_err(dev, "invalid clocks property at %pOF\n", 
+>> dev->of_node);
+>> -            return ret;
+>> -        }
+>> -
+>> -        if (ret < wrapper->num_clks) {
+>> -            dev_err(dev, "invalid clocks count at %pOF, expected %d 
+>> entries\n",
+>> -                dev->of_node, wrapper->num_clks);
+>> -            return -EINVAL;
+>> -        }
+>> -
+>> -        ret = devm_clk_bulk_get(dev, wrapper->num_clks, wrapper->clks);
+>> -        if (ret) {
+>> -            dev_err(dev, "Err getting clks %d\n", ret);
+>> -            return ret;
+>> -        }
+>>       }
+>>
+>>       dev_set_drvdata(dev, wrapper);
+>> @@ -951,8 +963,11 @@ static const char * const qup_clks[] = {
+>>   static const struct geni_se_desc qup_desc = {
+>>       .clks = qup_clks,
+>>       .num_clks = ARRAY_SIZE(qup_clks),
+>> +    .geni_se_rsc_init = geni_se_resource_init,
+>>   };
+>>
+>> +static const struct geni_se_desc sa8255p_qup_desc;
+>> +
+>>   static const char * const i2c_master_hub_clks[] = {
+>>       "s-ahb",
+>>   };
+>> @@ -960,11 +975,13 @@ static const char * const i2c_master_hub_clks[] = {
+>>   static const struct geni_se_desc i2c_master_hub_desc = {
+>>       .clks = i2c_master_hub_clks,
+>>       .num_clks = ARRAY_SIZE(i2c_master_hub_clks),
+>> +    .geni_se_rsc_init = geni_se_resource_init,
+>>   };
+>>
+>>   static const struct of_device_id geni_se_dt_match[] = {
+>>       { .compatible = "qcom,geni-se-qup", .data = &qup_desc },
+>>       { .compatible = "qcom,geni-se-i2c-master-hub", .data = 
+>> &i2c_master_hub_desc },
+>> +    { .compatible = "qcom,sa8255p-geni-se-qup", .data = 
+>> &sa8255p_qup_desc },
+>>       {}
+>>   };
+>>   MODULE_DEVICE_TABLE(of, geni_se_dt_match);
+>> -- 
+>> 2.17.1
+>>
+>>
+> Other than those minor details looks pretty good.
+> Please include me in v6 and I will review further.
+> ---
+> bod
+> 
 
