@@ -1,202 +1,270 @@
-Return-Path: <linux-arm-msm+bounces-60237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D516ACDEF8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 15:24:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 81A4BACDF1C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 15:31:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 323D93A6DD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 13:24:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 172AE3A51DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 13:30:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C43E28FA9F;
-	Wed,  4 Jun 2025 13:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E58228ECEB;
+	Wed,  4 Jun 2025 13:30:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="E46Kh+a0"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MHGM8hFL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118F9175A5
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jun 2025 13:24:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A95242A87
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jun 2025 13:30:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749043472; cv=none; b=eybDRY0wyJqRPQCD0Dqws0All9d+B6ZlmQF5piYqv2Q3pWvjGYi8mEWVONuZ2tSEtUrW8Wjt1f2ODU2UxHGkOujIwWPxyn6Fzbie+LmY1GdUrhMHho+tQAtnF6EWm9yWyq8JoLQZAZjPLnA+ywAzD/uOuAdpuOJjFKLW+EPznmI=
+	t=1749043858; cv=none; b=Z2i1mid7lkry/6UAcaCh6I3UBfTMbDRtOvfXQSPJeHCjBWA6NO5kgJTnU7p/7i2b636otM76QOM9p1oxCq2rJg3N2KuRy/ALqiaSumdBWD1nqHm0dR0m8mzPvB/HgJBuCKUPwQ2+EJ7clpiK4r/CeIEXKjxXup/vGWpGzZnFp48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749043472; c=relaxed/simple;
-	bh=iKG8NBG/TNLTXbVo9TYujPcytItCDWMbZmRywdSOHNs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fVLY92hUj5c03ucVJapLYQ3y40LvFpQVgKvvoCaycrXP4YEc0wRZc0nNv1lI5y6DHMCzorCAgWPAhVcEAbimL8wD/8Vu4tmT3SGZkY9OWfWLNy1pD46LKOJlAOIcXZ5m42n41bpzMt/gcbu3u7cHXJdj4nnlz4ajPHLHTO7c9TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=E46Kh+a0; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5548kAnP013495
-	for <linux-arm-msm@vger.kernel.org>; Wed, 4 Jun 2025 13:24:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5tDhYT9ynoVsxUKkv2VPgtETqP2fOpfi938Os934qGQ=; b=E46Kh+a0iBI+mq5x
-	F9GIx+ku+J5hK5LZhXVE/j0vWkDSaFM8G0VUdsbo57L3+o8ZLmWK3mQY71qm3IZM
-	GjAgC+XizzFsQdqrlCcvvM+VoAlGE3cIPdLk0yi2wlX5mMORGQ9CjOpozZ62LOPU
-	I6mIRpIemXqyH9JSpYn7xsg6MESeitvAlP5guTwq/NkEYDOnyObT9H0cY7cUX84V
-	4ko1gkks84Eu+SFnINepU4kEC1pdxzc3VINaXVixIMcE8ZJdPAC6tQmavMy7iG0R
-	yu0/8Q/95mcoYDMN10GiNmz020Vx5SZeFdH99NhC2M+XFdwNEWfNPVGfAM6A6TUG
-	vPgc3w==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 471g8np4u6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jun 2025 13:24:29 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d0979c176eso162836685a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jun 2025 06:24:29 -0700 (PDT)
+	s=arc-20240116; t=1749043858; c=relaxed/simple;
+	bh=5wQmJXpUr/6SMSakI0kV7bhw9n9N32bovusSx1FI01s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cOjSD5KmBkw3jTyPPTXDtCMujyliaB798l3QbVEmuMkTI6rHFpXWSbtLF02wIShgGI+GYkXAsIZkx7U3vCx6XutfI3UA2hYmLdS5C9bYHJ9PjZpq31uiWEimZpHo3kFYz5WCIDPTFSxIk4R4waEtZgsxt8r3RtBIeQe7xHyyu+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MHGM8hFL; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-47e9fea29easo415111cf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jun 2025 06:30:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1749043855; x=1749648655; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=uyiMafDC7E5cgno21MzsLK+8XJjpRNZsbhEY5eHo9Pc=;
+        b=MHGM8hFLgsLEdas4l7xET/s7GlWsFx+PvJCnSyrVSA8w+QhPmb2Qno9N7KCjw77V2N
+         EhMixQuDv7LhnRDkfDU2YmkG+cQDO35pJt0CRQuqgxSmvMfdsOliIRBaDKOdZQFhU4Or
+         Dw3rmJkc2eK0ebAp+ahkVGLBdqPNML4nuqlLHVikXaYijFBbWTMpXQKJA1bAt4touLpy
+         J2F8yNBTqjK7lwMri08ts3wwiPdqg8KIg4UiqYshpgFtwa+pN+egpDE2QGwUo5x7ctj6
+         tAkiF9zpFvwwnT84/+Alqdp0/Ca52QRNkFk1+0vZGmYHlMQUTbz2GOJYXpki1KzDKMxm
+         JtDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749043468; x=1749648268;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5tDhYT9ynoVsxUKkv2VPgtETqP2fOpfi938Os934qGQ=;
-        b=SzgAgeg2fWY0UJmJWgwFc4ntFm8G8+OGFC+Zc4re6ols5i+hwXvtONEUT+vQUlC+K2
-         oSKN7R018QtGz87QIXEN13cAldPwTbBVsJme7sTMj4A3XfqVxbwF6HARZhllRSj1GvH7
-         tTpTt8tzO/9yrGZQZdD1VWE7sJPIqcAlERDSruXSXe3fhirPMCEvV7JtmvplUc5U7jpd
-         4mDhMm/hNZG5s9FHUhz3kcM+ehq5UjftMJtrlxWMbzub95An/MQifpe3PfNjjDgBovX0
-         0UXncH4Fd980pwlx25aDFREqOjfykxlxaupcHU0zVaTk+npAbMTEKHO3xmp9c0px6Loh
-         rbMg==
-X-Forwarded-Encrypted: i=1; AJvYcCV26gAbqsq7HFHYot5X+ukqfahkJs4CSvxON8pw9P9zhq/PTLfYxZU5jBKQ7hay5VfgnUSKwXTLNdaO1ZHS@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDQkflwNGGIpWRHdN8FF3vYdFi3w3rN4AOyoYb+v+SqYRSkbac
-	L0HaXcOBQtAlN0xKhvR1mlel7vzH+C/fX4nhUfwttM5zB2OnLcsKWubCRIRrmSjHlhPRI5EBzsR
-	Zt9WbFQdRlHubdrESUSZvatLY8rE8hFEEusOsBl1uSCnJZCDnDJQq4b4+fgN45BbYLvyA
-X-Gm-Gg: ASbGncvfIG5LsgPrPPwOo328r76EQUwEMibAV+4ASLM1Ry2lVjAau7/+XKcBJgsGqz8
-	ChngFgT2QPBasp6hvkmXIl0MtPf2CazPGbEDfe6r936WH/ADhfHTnOOp/2GbPPNn2WGVaLL3bFf
-	B58FZe3JAInTGko7AGY1f0GK2+XGQb1hlsCY4OAvdYSGnhke8uqIPoBwuCRdpdOfmfzM4xVvqSl
-	1wjAAs2fR3StHtlso9z4FyhxNpFNyRsvemn274NzT46uitnJMJL4FbLujM2d3N/y/06Cnv9K9/E
-	yQMOp17iCK8bqTLYW9cvOaCSOd7gq+aCmwUtHU1OY9GSo7YuO79a7HUOTL1XYVVM3A==
-X-Received: by 2002:a05:620a:284f:b0:7c0:c024:d5 with SMTP id af79cd13be357-7d2198a4bcamr182102685a.8.1749043468656;
-        Wed, 04 Jun 2025 06:24:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHp4FAWQb08lT7tzFsZcGvaXN1AR/3mpBEQNehhZ0tFk6Uq8YusaA5kooOfzLi9N2bN1wu3MA==
-X-Received: by 2002:a05:620a:284f:b0:7c0:c024:d5 with SMTP id af79cd13be357-7d2198a4bcamr182101485a.8.1749043468299;
-        Wed, 04 Jun 2025 06:24:28 -0700 (PDT)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-adb390f09c8sm845637866b.45.2025.06.04.06.24.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Jun 2025 06:24:27 -0700 (PDT)
-Message-ID: <77ea49c3-f042-4ba9-a0da-1d0e4e4088d3@oss.qualcomm.com>
-Date: Wed, 4 Jun 2025 15:24:25 +0200
+        d=1e100.net; s=20230601; t=1749043855; x=1749648655;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uyiMafDC7E5cgno21MzsLK+8XJjpRNZsbhEY5eHo9Pc=;
+        b=iJkgP7mlgQFS97xLEGjQm95ICsKppk3jdU45fExCncH2aYE/wMK0QjHxgbkaqnh/Ew
+         I8F3w1tO36JkWLN15Yu4gJbjI3HFbCnIlC8GiwihHo2/70vgBCKuRDWIgHJEOga/oZ66
+         YUzLDhV12cPFi1/k0mjWff/j0oQYzmPokz6ncODsxY5ZnNIsEr0dXNXOu2AVB1xkmRk9
+         Fx8DyyY+iAUrJr2eqyu00Z+lhyFqNwBjD/kkwiIZRC8+Nt5w97t89l+7If+0xmlz+KE/
+         fC4WJKlS038lPFir0qHgJK1jEr0Zs7RlWB/Q8FulSINd2dohvTte87eaZ9mbOE6jK1f1
+         5xJg==
+X-Forwarded-Encrypted: i=1; AJvYcCVEC3+1w6MYNRfz3FTKiY/Q0ve7oM/aawlwbnPRPn8IfsoK7/rHAEWWceATa+5rqDUs8WC8LTNU0VvRdf/k@vger.kernel.org
+X-Gm-Message-State: AOJu0YyISPwDHxv8EzeDdTBGvP9jTpdFI5DNryZaafAF9mgaRvaXTfXa
+	Z7OlOeP0IAxF+5cAF0oSnAUo+AdBYCBM+P8Pnh41XsLOk/eyTs99np1wUy3I01f8duDiDx9LJBr
+	qTciYE0uOt4VRjkT7GaMWZcVo1/48ol6mNBy3qwxA
+X-Gm-Gg: ASbGnctt6840oet85VPWSWwDnmfhL3vbNDhhwcc9dMZVgTGlzQLIt2EgRPqKtJLOjyz
+	tDUh56FLUcuhcLjVfD0oOmdhaS2N68wXEC7mGH4bAcXe2gwD7Lng99vkKrERZAf7CerMOPN5+9b
+	W3MfKJzdbAdYWILj9QX78snCSIjOHpR6cs0h3eBoxmm11Clo/Tw1fgZhmGGiKPGqx+e+kiV5w=
+X-Google-Smtp-Source: AGHT+IEiuOpRnWtYTRS3CT4V5jSIDwFYPZj4Nr5CsijT8Vf1ZuM39wYXhn6/p3Kb+QYfA9lohdSrdihp1xz3e/hQW6I=
+X-Received: by 2002:a05:622a:1e0a:b0:476:f1a6:d8e8 with SMTP id
+ d75a77b69052e-4a5a60d6234mr3305471cf.11.1749043854897; Wed, 04 Jun 2025
+ 06:30:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/3] arm64: dts: qcom: qcs615: add venus node to
- devicetree
-To: Renjiang Han <quic_renjiang@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20250527-add-venus-for-qcs615-v7-0-cca26e2768e3@quicinc.com>
- <20250527-add-venus-for-qcs615-v7-2-cca26e2768e3@quicinc.com>
- <429b4c99-b312-4015-8678-0371eac86de4@oss.qualcomm.com>
- <6a9e7daf-c0df-42db-b02d-96d9893afcde@quicinc.com>
- <idc4476ibh4geraklzpas5536jnwvbp6xhjjaajcdcwxicorrf@myh7kyz77rxy>
- <43e1f8db-5ab1-44ce-97c8-50910704788f@quicinc.com>
- <d6udpwmocodvlsm5ljqz7zbyonj2yahtlzmm2jjjveqrm2hmkz@andh5j4jgixr>
- <9faff664-9717-4259-8b23-bc44e64f6947@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <9faff664-9717-4259-8b23-bc44e64f6947@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: KGGwgFSk1_8j0psIj0ynzPkz4BtK0atn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA0MDEwMiBTYWx0ZWRfXzQ6xKvsJXesU
- Kgu742isyo0nfZKy7B7eaOOFXdAE98ywFTzvtuXVif97dz47YA+ID78Vl7k5nBBLslGzn6E6PcH
- kWIgVFlSoRrkY5iihD1HQ0AFwLave4Wq7Xtlil40SoCl2P0GZ6dYw6uOI6G/e2FlPA2G4lgTSTZ
- nXkyboTlFxmyLPgwQk/8tsDe/Brs1zBA7zWFHlZ4BAnupNp9J11oLoNj2C/V0Vc2rIcG8OoMfTf
- 4UAVIfGEaDuvY4Uai0mbf6t13OfCdI1at3VlQnP9sP+LDfYhNBCRLl1eild8PjX2G74ysetC/Oz
- +Gd++Itg5Tw3xwIWtDYOkyjVJ9m6fIfGQgILi+8g7IAilp6AoLdBiFVWasKCvHExptRDn6e3jNh
- Z491buLXLQpiH76/JE9izxje6XtUI3m/Hta9BMfozDvwFyYLaL1Qv6svOf6q0q9m//W6KhIv
-X-Proofpoint-ORIG-GUID: KGGwgFSk1_8j0psIj0ynzPkz4BtK0atn
-X-Authority-Analysis: v=2.4 cv=UphjN/wB c=1 sm=1 tr=0 ts=6840490e cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8 a=ONiuQb8ssYXyuzXnhScA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-04_03,2025-06-03_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 impostorscore=0 lowpriorityscore=0
- phishscore=0 mlxlogscore=999 clxscore=1015 malwarescore=0 adultscore=0
- bulkscore=0 mlxscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506040102
+References: <20250527180245.1413463-1-tabba@google.com> <20250527180245.1413463-14-tabba@google.com>
+ <ed1928ce-fc6f-4aaa-9f54-126a8af12240@redhat.com>
+In-Reply-To: <ed1928ce-fc6f-4aaa-9f54-126a8af12240@redhat.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Wed, 4 Jun 2025 14:30:18 +0100
+X-Gm-Features: AX0GCFuVOmlbK_esYDoThzEqDgolE3P28B7qZ2y18EcGIsthsmM6eEmDwV6HU4g
+Message-ID: <CA+EHjTz9TSYmssizwtvb6Nixshh1u7n1oj0GpKPQb-rDPs2c1g@mail.gmail.com>
+Subject: Re: [PATCH v10 13/16] KVM: arm64: Handle guest_memfd-backed guest
+ page faults
+To: David Hildenbrand <david@redhat.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
+	pankaj.gupta@amd.com, ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 6/4/25 2:05 PM, Renjiang Han wrote:
-> 
-> On 6/3/2025 9:21 PM, Dmitry Baryshkov wrote:
->> On Thu, May 29, 2025 at 10:29:46AM +0800, Renjiang Han wrote:
->>> On 5/28/2025 7:04 PM, Dmitry Baryshkov wrote:
->>>> On Wed, May 28, 2025 at 05:13:06PM +0800, Renjiang Han wrote:
->>>>> On 5/27/2025 9:57 PM, Konrad Dybcio wrote:
->>>>>> On 5/27/25 5:32 AM, Renjiang Han wrote:
->>>>>>> Add the venus node to the devicetree for the qcs615 platform to enable
->>>>>>> video functionality. The qcs615 platform currently lacks video
->>>>>>> functionality due to the absence of the venus node. Fallback to sc7180 due
->>>>>>> to the same video core.
->>>>>>>
->>>>>>> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
->>>>>>> ---
->>>>>> [...]
->>>>>>
->>>>>>> +            interconnect-names = "video-mem",
->>>>>>> +                         "cpu-cfg";
->>>>>>> +
->>>>>>> +            iommus = <&apps_smmu 0xe40 0x20>;
->>>>>> fwiw docs mention 0xe60 0x20 (which result in the exact same resulting sid)
->>>>> OK. Will update it with next version.
->>>> How would you update this?
->>> Thanks for your comments. I'll update it like this.
->>> iommus = <&apps_smmu 0xe60 0x20>;
->>>
->>> This 0xe40 SID was based on a previous project. However, after rechecking
->>> the documentation yesterday and confirming with colleagues, the correct
->>> SID value should be 0xe60. I’ve also validated it on local device, it
->>> works as expected. The reason 0xe40 seemed to work earlier is due to the
->>> mask value being 0x20, which causes the effective SID derived from 0xe40
->>> to be the same as 0xe60.
->> Using 0xe60 would be counterintuitive, as we have a non-zero masked bits
->> in the base value. It should be either <0xe60 0x0> or <0xe40 0x20>.
-> 
-> Hi Dmitry
-> 
-> Thank you for your comment.
-> 
-> I’ve followed up on this sid with a colleague from the kernel team,
-> and based on our discussion, it seems that the sid in this case should
-> be the result sid. The actual sid is 0xe60, and with a mask of 0x20,
-> the resulting sid would be 0xe40. Therefore, it should be <0xe40 0x20>.
-> 
-> @Konrad, I’d appreciate any thoughts or suggestions you might have on it.
+Hi David
 
-What our docs describe as 'result sid' is literally 'base ~& mask', so if
-we used that, setting the mask would be useless..
+On Wed, 4 Jun 2025 at 14:17, David Hildenbrand <david@redhat.com> wrote:
+>
+> On 27.05.25 20:02, Fuad Tabba wrote:
+> > Add arm64 support for handling guest page faults on guest_memfd backed
+> > memslots. Until guest_memfd supports huge pages, the fault granule is
+> > restricted to PAGE_SIZE.
+> >
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
+> >
+> > ---
+> >
+> > Note: This patch introduces a new function, gmem_abort() rather than
+> > previous attempts at trying to expand user_mem_abort(). This is because
+> > there are many differences in how faults are handled when backed by
+> > guest_memfd vs regular memslots with anonymous memory, e.g., lack of
+> > VMA, and for now, lack of huge page support for guest_memfd. The
+> > function user_mem_abort() is already big and unwieldly, adding more
+> > complexity to it made things more difficult to understand.
+> >
+> > Once larger page size support is added to guest_memfd, we could factor
+> > out the common code between these two functions.
+> >
+> > ---
+> >   arch/arm64/kvm/mmu.c | 89 +++++++++++++++++++++++++++++++++++++++++++-
+> >   1 file changed, 87 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> > index 9865ada04a81..896c56683d88 100644
+> > --- a/arch/arm64/kvm/mmu.c
+> > +++ b/arch/arm64/kvm/mmu.c
+> > @@ -1466,6 +1466,87 @@ static bool kvm_vma_mte_allowed(struct vm_area_struct *vma)
+> >       return vma->vm_flags & VM_MTE_ALLOWED;
+> >   }
+> >
+> > +static int gmem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+> > +                       struct kvm_memory_slot *memslot, bool is_perm)
+>
+> TBH, I have no idea why the existing function is called "_abort". I am
+> sure there is a good reason :)
+>
 
-Now, some old NHLOS builds are known to cause issues if the values aren't
-exactly what they expect (some whitelisting must be going on there).
+The reason is ARM. They're called "memory aborts", see D8.15 Memory
+aborts in the ARM ARM:
 
-I don't think this should be an issue on this platform, but let's just
-use 0xe60 0x20 here to reflect the real values
+https://developer.arm.com/documentation/ddi0487/latest/
 
-Konrad
+Warning: PDF is 100mb+ with almost 15k pages :)
+
+> > +{
+> > +     enum kvm_pgtable_walk_flags flags = KVM_PGTABLE_WALK_HANDLE_FAULT | KVM_PGTABLE_WALK_SHARED;
+> > +     enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
+> > +     bool logging, write_fault, exec_fault, writable;
+> > +     struct kvm_pgtable *pgt;
+> > +     struct page *page;
+> > +     struct kvm *kvm;
+> > +     void *memcache;
+> > +     kvm_pfn_t pfn;
+> > +     gfn_t gfn;
+> > +     int ret;
+> > +
+> > +     if (!is_perm) {
+> > +             int min_pages = kvm_mmu_cache_min_pages(vcpu->arch.hw_mmu);
+> > +
+> > +             if (!is_protected_kvm_enabled()) {
+> > +                     memcache = &vcpu->arch.mmu_page_cache;
+> > +                     ret = kvm_mmu_topup_memory_cache(memcache, min_pages);
+> > +             } else {
+> > +                     memcache = &vcpu->arch.pkvm_memcache;
+> > +                     ret = topup_hyp_memcache(memcache, min_pages);
+> > +             }
+> > +             if (ret)
+> > +                     return ret;
+> > +     }
+> > +
+> > +     kvm = vcpu->kvm;
+> > +     gfn = fault_ipa >> PAGE_SHIFT;
+>
+> These two can be initialized directly above.
+>
+
+I was trying to go with reverse christmas tree order of declarations,
+but I'll do that.
+
+> > +
+> > +     logging = memslot_is_logging(memslot);
+> > +     write_fault = kvm_is_write_fault(vcpu);
+> > +     exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
+>  > +    VM_BUG_ON(write_fault && exec_fault);
+>
+> No VM_BUG_ON please.
+>
+> VM_WARN_ON_ONCE() maybe. Or just handle it along the "Unexpected L2 read
+> permission error" below cleanly.
+
+I'm following the same pattern as the existing user_mem_abort(), but
+I'll change it.
+
+> > +
+> > +     if (is_perm && !write_fault && !exec_fault) {
+> > +             kvm_err("Unexpected L2 read permission error\n");
+> > +             return -EFAULT;
+> > +     }
+> > +
+> > +     ret = kvm_gmem_get_pfn(vcpu->kvm, memslot, gfn, &pfn, &page, NULL);
+> > +     if (ret) {
+> > +             kvm_prepare_memory_fault_exit(vcpu, fault_ipa, PAGE_SIZE,
+> > +                                           write_fault, exec_fault, false);
+> > +             return ret;
+> > +     }
+> > +
+> > +     writable = !(memslot->flags & KVM_MEM_READONLY) &&
+> > +                (!logging || write_fault);
+> > +
+> > +     if (writable)
+> > +             prot |= KVM_PGTABLE_PROT_W;
+> > +
+> > +     if (exec_fault || cpus_have_final_cap(ARM64_HAS_CACHE_DIC))
+> > +             prot |= KVM_PGTABLE_PROT_X;
+> > +
+> > +     pgt = vcpu->arch.hw_mmu->pgt;
+>
+> Can probably also initialize directly above.
+
+Ack.
+
+> > +
+> > +     kvm_fault_lock(kvm);
+> > +     if (is_perm) {
+> > +             /*
+> > +              * Drop the SW bits in favour of those stored in the
+> > +              * PTE, which will be preserved.
+> > +              */
+> > +             prot &= ~KVM_NV_GUEST_MAP_SZ;
+> > +             ret = KVM_PGT_FN(kvm_pgtable_stage2_relax_perms)(pgt, fault_ipa, prot, flags);
+> > +     } else {
+> > +             ret = KVM_PGT_FN(kvm_pgtable_stage2_map)(pgt, fault_ipa, PAGE_SIZE,
+> > +                                          __pfn_to_phys(pfn), prot,
+> > +                                          memcache, flags);
+> > +     }
+> > +     kvm_release_faultin_page(kvm, page, !!ret, writable);
+> > +     kvm_fault_unlock(kvm);
+> > +
+> > +     if (writable && !ret)
+> > +             mark_page_dirty_in_slot(kvm, memslot, gfn);
+> > +
+> > +     return ret != -EAGAIN ? ret : 0;
+> > +}
+> > +
+>
+> Nothing else jumped at me. But just like on the x86 code, I think we
+> need some arch experts take a look at this one ...
+
+Thanks!
+/fuad
+
+> --
+> Cheers,
+>
+> David / dhildenb
+>
 
