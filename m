@@ -1,176 +1,284 @@
-Return-Path: <linux-arm-msm+bounces-60239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29848ACDF23
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 15:32:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD205ACDF2F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 15:34:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A51593A32C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 13:31:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EE725188EDE3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 13:34:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A3D028ECF3;
-	Wed,  4 Jun 2025 13:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17E8228FAB3;
+	Wed,  4 Jun 2025 13:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="M6TjxX+2"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Z1Wj6AWN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC5F1D540
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jun 2025 13:31:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683BC28E610
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jun 2025 13:34:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749043912; cv=none; b=MtvwE/1sKigTDa7K4uZObQH4LUlrvtAb0p4dFeGJwkTmw379unXoLdPHOEen0SFjMx9KDRIgfzXHGA469VgVNTl8zY4Tk0pNIojywH0VB6Cpf8+KkJ8oc0Qi9lY1/WOpDeUf/teMGMsu3BdVN2yr+5Nix4eKO6TwvsUF0hxgPdM=
+	t=1749044043; cv=none; b=QdEURWqP8cafIaDPcJWKXEjoffe/l+xHLICA2qPXsSk7C6L8sDzkzc63sU0X5o0V1Pny5ciMIcDuLrVzmcRsdy6cy7P0vUdam4XssQzbCIEOd/GaKmCQl3Ho86Jv6znNb2IQ/MgVJz7sFg8JQeE9JIxeoAOKzYuyq4oCEVQGXBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749043912; c=relaxed/simple;
-	bh=O+3qYBkuZvOYKdQmd+lqFDADiWY3hm2oALBY8YyGjRA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mBWEfx3p8F3mfmyu9VQNZJHQpTLZjSvQ6UqngknUvEOxl9HiHUt3DBRiiUEjszkMvy3DHH3Do+mq9bcUFgrd3+LjqA/XYt7eQaTgbvp8vLynh6dFnsrKjDk1o3F1l4RpHDM9G/dbwG0UlGx6kf2jzhy7MAY99q5NMrBvjBhz8yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=M6TjxX+2; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4a5ac8fae12so77521cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jun 2025 06:31:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1749043909; x=1749648709; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=U64ULQY366JHJ6Sx1aslM0i3znI6AoNF+AhIqQiQaNw=;
-        b=M6TjxX+2mKoMXbSK37pkS0oYYSa+u5VD8AxDLuxkiT2xn2AZwDEpVZv0pwbW3RcOcg
-         HmtqbxIyW8aFWU0vUSugUEeHvouiJMDwuNnzWaHlbJicSxpcQ7s9J+kDFpFwSUj6A8TH
-         /JyzDqt5C9udJWvewUiSSQIfcVoyLYbcm+LA9cGOrWRwNBqyqcFQYl1LsDX2FLmP12Es
-         Mfu8kQccJZiXUcBCmz16uwbV+ARj9xEL3awk2j5eMN6vE0uSgNXPF3KT7HC40U4wEt1/
-         GI2TUj5Eg7GsrybHVm3QSYkMGbyjrF2F4jO9gHxeuSmDcDtE4QAm9OBuQL7o3kg/qO3Q
-         R6GA==
+	s=arc-20240116; t=1749044043; c=relaxed/simple;
+	bh=OhmOoetKVZIUsUz1F/XVRUPA2bBQBpqIc6z0+iQGLE8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RI4HdaYiCm29fwuR9i8tLzfbYU2FAYCTffDfceMUS5Zgsu/T4JULBdz3JrY1kqPmamBmn+j4UJtoNEiMg4mTG/31E4ZnkJrIb1t3wxucK6Du2s2DsH0WJExZzQxfaQb+aopyXYExXPsqDSd7zcmbFNsnNOdLF6Sb4/aue2bkkSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Z1Wj6AWN; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1749044040;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=400pLR7sGtY1MX0d40R9pVg91ODX78Y5o3a7UpInxi8=;
+	b=Z1Wj6AWNxtqs+VhAEzfywv8jqih8kGkeb9WCBgT7M0xu1endnr9D8R1h3IcgQil3dAtl+y
+	O9AxA/GvGVkrcA6Av8eW1YkBAwegEWU0bQw6rFZIV5z7Ym2xA4hwbxdlBmmga1Depmo88V
+	0HePmAyOV/a/64Cb6iU/nDuj+3+Kd/U=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-261-GzY0e-O6MpuP3MXWMJQSpg-1; Wed, 04 Jun 2025 09:33:57 -0400
+X-MC-Unique: GzY0e-O6MpuP3MXWMJQSpg-1
+X-Mimecast-MFC-AGG-ID: GzY0e-O6MpuP3MXWMJQSpg_1749044037
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-450d64026baso30317865e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jun 2025 06:33:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749043909; x=1749648709;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=U64ULQY366JHJ6Sx1aslM0i3znI6AoNF+AhIqQiQaNw=;
-        b=Ma4zpOok6V0O2XHaks8XBOlxiVK6pNKsZ/VobCDgnaU/s2ZyWf8J2SHLKnj0HLHdbK
-         2JFtKvVFeIEhMcV/gGuCkgIvBD/58ezUntweCV3RfhUHp4T4hFPVRpArO5SzHx7uJayY
-         oVBtNAI5rhBg4bnnIhXSAe3l29QPzoN5M3UcMv9dOXmII7UhNJZZhMBeVf8y2y5iA+jg
-         jALVOtUA84JiIc82jgWAx6g8MjXUuaoNLOS9L+aKHPC97h9h6pnxZQkoaNiocg3LkA4C
-         1lnDXOYNGXXVxdcBtHrqhxIrl9074wpWxyeLxpnZETEYmlEv+/r/mn27HnvK5lFpvtph
-         b60g==
-X-Forwarded-Encrypted: i=1; AJvYcCXEBhWL5tG/duY5aRFnBS1fm6+1mLdM4SG0hP5JWCgCUm3PKOyIMdXRqSsYk17AFPZKRUiiuchW70j//5eE@vger.kernel.org
-X-Gm-Message-State: AOJu0YxRjHPFNANWQN0cimSiqawUuh18vEkQA1YWObb/KTSAcLLRWCcb
-	0dAiajfaIJ5G1VjrnnBocuDRfm6u7vS5GVZ09X0qzDPcEMewNVUCKZfPDSrorUhG1QxG9VJrEzP
-	g73Axk64UTMCRLUs8PN8qycXoP8oJW/8mVEZ8JIx3
-X-Gm-Gg: ASbGncvJ3E4LPYwCuV9EDSjzGvKLFLZajkYRaMZgtaTF4N2+BrR/i1NI0UiXu2yp/Zg
-	uD72diVYKiqML2fMHl2xFhPS7xDdSunS8lA0Q8XHhf4zuFCt+95gTn7QGS7nyNTyZiNVzrc8Lx/
-	eeyja6Jlykt8GrFwDgnyVzDq2pXJWUMjnUs362rSDgbGDbeN4F47BZReLtTv+pP4GBpT1E+74=
-X-Google-Smtp-Source: AGHT+IHFxNyfeCkrmPB39UOxojEdJAvr9WP0K1kR8JJNwFVpZqhXOBdLWxdCHfxLQMAur6bywA3oSFCMPjvNqDTSLOA=
-X-Received: by 2002:a05:622a:5912:b0:48a:5b89:473b with SMTP id
- d75a77b69052e-4a5a60dcaf0mr3295721cf.7.1749043908478; Wed, 04 Jun 2025
- 06:31:48 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749044037; x=1749648837;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=400pLR7sGtY1MX0d40R9pVg91ODX78Y5o3a7UpInxi8=;
+        b=NZkYNfDi+yR7UdvvRfB2hEGDEnfOI2I1osldBIzV0nbI4UBUODgi306tKaTNxNtrOy
+         JJTWw4BieUdYwLFs8zrwWKjTRDq5lMdO/orA2k8oeHXRSAjWnyjlRA3DmW72nlkTEWqh
+         8VF7O/a6jqEqUa0SeV7paASuIQ/NFL0JcEMrCZjfYwCdk63eDKB2SYNVBUcCFVs6eRzX
+         nonIZLuLn0/OcjhCtSMdtbtwtSMAsGkiyTU3WmP76SieReh23/63FkN5LC16ELEuMcNL
+         QSqaZsrVTTv72yz5Q7FoYW6slO5qCFBcc8WbGzrCh3v3zriAKCBW/kSIoXpO+Vn0jQfw
+         u0xg==
+X-Forwarded-Encrypted: i=1; AJvYcCWje4c7A2gdqPx1uE4stWxUp0L+qvn9UDg3g/IDlHfvO2JVlt/tUudLDH2UhZnadDF6cd8g4ymWlbLNeDUk@vger.kernel.org
+X-Gm-Message-State: AOJu0YxqdHiNsiJYNK1AaMhCV+zvx19ykHWcBImTFCLQ7kL75z+ZHLby
+	eb2DKr1pgA0m1M8DviE7rwLywhdxHcYWyrZUdFGgpSSGuws5gO34HZhiWpe6FkXmwOQNZHR4Qyf
+	p8X4hee1m2s+gq4tiBWXyDOYFFsjW0nqcB6m5IEbjEweCUcCR+pCsJtaxbhd6tBrZoD0hhgofbK
+	jhoQ==
+X-Gm-Gg: ASbGncvgae9zOLDnbkTHQfIjEWLeedALn+tAfSI8m/ziexmC4ZSoXZuJHxNy+Wz4wT/
+	ymBEAJ+gUzxbHLPRsVx8If58UjgfkfwvWJK43WyPJ13fU53uij5fPMNf5C4kjpf3sWgoelxHXEW
+	3KJm7FOieaHmbvTh3rYIGgtZY7XkYaRbVygdupEgIJ8wOiZCU9vKxPot18SwdVKW8qhGmU2DecP
+	6wLuXoc06V/XJcgX8tdC8py5FnIhluqruu+ECPIIkTWl3eblTM/sTgSDNGxAm8nPVFheZwVd9QO
+	b5L26tdrBVPk82uh4cJRB5j0oTrPy/BDCSAsVDINGTyskch3xMHPktxsiPjtCOmdN7QQIQcirja
+	Thp71DBS1FxsPjT7Gy+2/gsPsVcmop8E0WAIQ88w=
+X-Received: by 2002:a05:6000:2903:b0:3a5:42:b17b with SMTP id ffacd0b85a97d-3a51d9581d4mr2362980f8f.29.1749044036608;
+        Wed, 04 Jun 2025 06:33:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFINzTGjEn+KLVLmOlHfn5DZd0VArTwO1Fk+EQL/M6YEeApuu3Yl+w27J2Vk3WzoGqQXJWtxQ==
+X-Received: by 2002:a05:6000:2903:b0:3a5:42:b17b with SMTP id ffacd0b85a97d-3a51d9581d4mr2362954f8f.29.1749044036127;
+        Wed, 04 Jun 2025 06:33:56 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f1b:b800:6fdb:1af2:4fbd:1fdf? (p200300d82f1bb8006fdb1af24fbd1fdf.dip0.t-ipconnect.de. [2003:d8:2f1b:b800:6fdb:1af2:4fbd:1fdf])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4efe6cd15sm22130665f8f.39.2025.06.04.06.33.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Jun 2025 06:33:55 -0700 (PDT)
+Message-ID: <61511663-ec0f-4f08-b918-9676661a8c4f@redhat.com>
+Date: Wed, 4 Jun 2025 15:33:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250527180245.1413463-1-tabba@google.com> <20250527180245.1413463-15-tabba@google.com>
- <2195c01b-3a17-46c5-a013-66922e8509bd@redhat.com>
-In-Reply-To: <2195c01b-3a17-46c5-a013-66922e8509bd@redhat.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Wed, 4 Jun 2025 14:31:11 +0100
-X-Gm-Features: AX0GCFtqukMxO0pis2hyEa-S596-RXzEqFLluLmu-N319w02tyWHzt3chjxqO1k
-Message-ID: <CA+EHjTxgQyOO-C=pNCY=QTfWOq0EF58RvaN_oAh6hgMPjPVQkw@mail.gmail.com>
-Subject: Re: [PATCH v10 14/16] KVM: arm64: Enable mapping guest_memfd in arm64
-To: David Hildenbrand <david@redhat.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
-	pankaj.gupta@amd.com, ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 13/16] KVM: arm64: Handle guest_memfd-backed guest
+ page faults
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
+ pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
+ vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250527180245.1413463-1-tabba@google.com>
+ <20250527180245.1413463-14-tabba@google.com>
+ <ed1928ce-fc6f-4aaa-9f54-126a8af12240@redhat.com>
+ <CA+EHjTz9TSYmssizwtvb6Nixshh1u7n1oj0GpKPQb-rDPs2c1g@mail.gmail.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CA+EHjTz9TSYmssizwtvb6Nixshh1u7n1oj0GpKPQb-rDPs2c1g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, 4 Jun 2025 at 14:17, David Hildenbrand <david@redhat.com> wrote:
->
-> On 27.05.25 20:02, Fuad Tabba wrote:
-> > Enable mapping guest_memfd backed memory at the host in arm64. For now,
-> > it applies to all arm64 VM types in arm64 that use guest_memfd. In the
-> > future, new VM types can restrict this via
-> > kvm_arch_gmem_supports_shared_mem().
-> >
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >   arch/arm64/include/asm/kvm_host.h | 5 +++++
-> >   arch/arm64/kvm/Kconfig            | 1 +
-> >   arch/arm64/kvm/mmu.c              | 7 +++++++
-> >   3 files changed, 13 insertions(+)
-> >
-> > diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> > index 08ba91e6fb03..8add94929711 100644
-> > --- a/arch/arm64/include/asm/kvm_host.h
-> > +++ b/arch/arm64/include/asm/kvm_host.h
-> > @@ -1593,4 +1593,9 @@ static inline bool kvm_arch_has_irq_bypass(void)
-> >       return true;
-> >   }
-> >
-> > +#ifdef CONFIG_KVM_GMEM
-> > +#define kvm_arch_supports_gmem(kvm) true
-> > +#define kvm_arch_supports_gmem_shared_mem(kvm) IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM)
-> > +#endif
-> > +
-> >   #endif /* __ARM64_KVM_HOST_H__ */
-> > diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
-> > index 096e45acadb2..8c1e1964b46a 100644
-> > --- a/arch/arm64/kvm/Kconfig
-> > +++ b/arch/arm64/kvm/Kconfig
-> > @@ -38,6 +38,7 @@ menuconfig KVM
-> >       select HAVE_KVM_VCPU_RUN_PID_CHANGE
-> >       select SCHED_INFO
-> >       select GUEST_PERF_EVENTS if PERF_EVENTS
-> > +     select KVM_GMEM_SHARED_MEM
-> >       help
-> >         Support hosting virtualized guest machines.
-> >
-> > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> > index 896c56683d88..03da08390bf0 100644
-> > --- a/arch/arm64/kvm/mmu.c
-> > +++ b/arch/arm64/kvm/mmu.c
-> > @@ -2264,6 +2264,13 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
-> >       if ((new->base_gfn + new->npages) > (kvm_phys_size(&kvm->arch.mmu) >> PAGE_SHIFT))
-> >               return -EFAULT;
-> >
-> > +     /*
-> > +      * Only support guest_memfd backed memslots with shared memory, since
-> > +      * there aren't any CoCo VMs that support only private memory on arm64.
-> > +      */
-> > +     if (kvm_slot_has_gmem(new) && !kvm_gmem_memslot_supports_shared(new))
-> > +             return -EINVAL;
-> > +
->
-> Right, that can get lifted once we have such VMs.
->
-> Acked-by: David Hildenbrand <david@redhat.com>
+On 04.06.25 15:30, Fuad Tabba wrote:
+> Hi David
+> 
+> On Wed, 4 Jun 2025 at 14:17, David Hildenbrand <david@redhat.com> wrote:
+>>
+>> On 27.05.25 20:02, Fuad Tabba wrote:
+>>> Add arm64 support for handling guest page faults on guest_memfd backed
+>>> memslots. Until guest_memfd supports huge pages, the fault granule is
+>>> restricted to PAGE_SIZE.
+>>>
+>>> Signed-off-by: Fuad Tabba <tabba@google.com>
+>>>
+>>> ---
+>>>
+>>> Note: This patch introduces a new function, gmem_abort() rather than
+>>> previous attempts at trying to expand user_mem_abort(). This is because
+>>> there are many differences in how faults are handled when backed by
+>>> guest_memfd vs regular memslots with anonymous memory, e.g., lack of
+>>> VMA, and for now, lack of huge page support for guest_memfd. The
+>>> function user_mem_abort() is already big and unwieldly, adding more
+>>> complexity to it made things more difficult to understand.
+>>>
+>>> Once larger page size support is added to guest_memfd, we could factor
+>>> out the common code between these two functions.
+>>>
+>>> ---
+>>>    arch/arm64/kvm/mmu.c | 89 +++++++++++++++++++++++++++++++++++++++++++-
+>>>    1 file changed, 87 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+>>> index 9865ada04a81..896c56683d88 100644
+>>> --- a/arch/arm64/kvm/mmu.c
+>>> +++ b/arch/arm64/kvm/mmu.c
+>>> @@ -1466,6 +1466,87 @@ static bool kvm_vma_mte_allowed(struct vm_area_struct *vma)
+>>>        return vma->vm_flags & VM_MTE_ALLOWED;
+>>>    }
+>>>
+>>> +static int gmem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+>>> +                       struct kvm_memory_slot *memslot, bool is_perm)
+>>
+>> TBH, I have no idea why the existing function is called "_abort". I am
+>> sure there is a good reason :)
+>>
+> 
+> The reason is ARM. They're called "memory aborts", see D8.15 Memory
+> aborts in the ARM ARM:
+> 
+> https://developer.arm.com/documentation/ddi0487/latest/
+> 
+> Warning: PDF is 100mb+ with almost 15k pages :)
+> 
+>>> +{
+>>> +     enum kvm_pgtable_walk_flags flags = KVM_PGTABLE_WALK_HANDLE_FAULT | KVM_PGTABLE_WALK_SHARED;
+>>> +     enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
+>>> +     bool logging, write_fault, exec_fault, writable;
+>>> +     struct kvm_pgtable *pgt;
+>>> +     struct page *page;
+>>> +     struct kvm *kvm;
+>>> +     void *memcache;
+>>> +     kvm_pfn_t pfn;
+>>> +     gfn_t gfn;
+>>> +     int ret;
+>>> +
+>>> +     if (!is_perm) {
+>>> +             int min_pages = kvm_mmu_cache_min_pages(vcpu->arch.hw_mmu);
+>>> +
+>>> +             if (!is_protected_kvm_enabled()) {
+>>> +                     memcache = &vcpu->arch.mmu_page_cache;
+>>> +                     ret = kvm_mmu_topup_memory_cache(memcache, min_pages);
+>>> +             } else {
+>>> +                     memcache = &vcpu->arch.pkvm_memcache;
+>>> +                     ret = topup_hyp_memcache(memcache, min_pages);
+>>> +             }
+>>> +             if (ret)
+>>> +                     return ret;
+>>> +     }
+>>> +
+>>> +     kvm = vcpu->kvm;
+>>> +     gfn = fault_ipa >> PAGE_SHIFT;
+>>
+>> These two can be initialized directly above.
+>>
+> 
+> I was trying to go with reverse christmas tree order of declarations,
+> but I'll do that.
 
-Thanks!
-/fuad
+Can still do that, no? vcpu and fault_ipa are input parameters, so no 
+dependency between them.
 
-> --
-> Cheers,
->
-> David / dhildenb
->
+> 
+>>> +
+>>> +     logging = memslot_is_logging(memslot);
+>>> +     write_fault = kvm_is_write_fault(vcpu);
+>>> +     exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
+>>   > +    VM_BUG_ON(write_fault && exec_fault);
+>>
+>> No VM_BUG_ON please.
+>>
+>> VM_WARN_ON_ONCE() maybe. Or just handle it along the "Unexpected L2 read
+>> permission error" below cleanly.
+> 
+> I'm following the same pattern as the existing user_mem_abort(), but
+> I'll change it.
+
+Yeah, there are a lot of BUG_ON thingies that should be reworked.
+
+-- 
+Cheers,
+
+David / dhildenb
+
 
