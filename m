@@ -1,178 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-60180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68264ACD7EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 08:36:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A850ACD86A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 09:19:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 20928178536
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 06:36:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B1FC73A41EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Jun 2025 07:19:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A34C22A819;
-	Wed,  4 Jun 2025 06:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1845238D2B;
+	Wed,  4 Jun 2025 07:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="A+DW+7Nf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="boNl7EMo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC041F4CB3
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Jun 2025 06:36:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B49221F11;
+	Wed,  4 Jun 2025 07:19:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749018980; cv=none; b=VFAz8uIi9duHvt+hmjiXtUXPRIWFYmDBqAtGPj9TsYZ54KNnxhzMMU+K/J3jRl7l4aiCcQIFy6+ljwbFTYApME2TsUHcvHloPZqr5TtTJG7YOsMhMihUnqa9faUi1NQNmi/I6ij7ppg2aGjma0y6LvrSgcd6Zq2gJbWubwDJ/S8=
+	t=1749021563; cv=none; b=jAK4cynBitha819uJf0rvSnhmV/2ArT//l/FPKvuwYhu8l7DUyIhLVwr3+NvOhzFj80+9+BcGOe1nLirAp9dv8xk1E3DM1h7vpe56UTLZFkwssxspH48MYZ+pDe/PRpvfYWbBUK7JcWtWHdmwoOgTfKeMZfiPA/jPeybcHVIF78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749018980; c=relaxed/simple;
-	bh=E1iCTcsS77v3G62P/uVyBrWR5kONQvXzXySre5an/lQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kdc9CZZuzEof2/tQAXj/e5mqYiKcLew+EPQfTELUVAKiLEZA4Cp1kTJjEFUdpsjZRuBc23a6/zHWpwqQpD6AuRuOcvqy5+sQsm1SZi1mGO4Mg/utd/rcEhhSzrUwQevoZMUHZYxosjjSEjwKZ//y2qfxcU4qdPRSpC7bePDXKF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=A+DW+7Nf; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5540b1o4024322
-	for <linux-arm-msm@vger.kernel.org>; Wed, 4 Jun 2025 06:36:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cMz4Fnkw42dvFNGDnmgQxE1WfqY819g/Fp920zyfuTA=; b=A+DW+7NfbnOVrecX
-	Q/3y9hyWuoVEq1tSMIwYUgtRV83bZz7TCEntCV4GgO/zu6ko+wofK1f80tw8SBQF
-	H28UK8Xoi78nzTw6yyJxLddZTrTneDGDFcR6EIZy/JMgl8seqQaFVLYY1isgBiFH
-	hDaPqNOCoh4OefL4k77lmszkc3qdTVfIVBXCXqAPVzeYjwpw5AV9vWJv7sULrakO
-	ftFiufoRx6clDrHMSFQvY8AlC6y9yLBmqaO/qr9wdsyTQ/oAwOu6zmqXztsnla0D
-	1n1uXsySqxkjzluwvUJXq+zsWXFAHKomv+IrOsbezlrZWITO0WhCUo0icglZtiM+
-	2Z6iMg==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47202wapu2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 04 Jun 2025 06:36:17 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-311d670ad35so5950877a91.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Jun 2025 23:36:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749018976; x=1749623776;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cMz4Fnkw42dvFNGDnmgQxE1WfqY819g/Fp920zyfuTA=;
-        b=D/+XXc/cPFVzuy/Xs3T78hgjuIGuGuABzBTqgNEYDnlAveQ+yjnPm2vmKqUVCEI/P5
-         SAnZzKj5a45GTKSKWPTqeENaheBfevg0eaQiUqIJxnYFMGTBx1q8IjUImxs2He8JOU5A
-         iQXp8NKdkniILXI3UilSWTE0nyiEKCXp58gwkxraqbSuinM5hfioSw0NQno3ZtDSH2Pr
-         2B73K6FgiNwxQznhIsqNVzrAnXp/+5mbUxSYdlCXbhrLNg6aHLmcKMbN8hvE0w+97tzS
-         iKbYLotsxUP2u4mnH2i9xQWn1duceMqGmAIPpm7XqdygT3pRx8HohjEWPbRhoKQj6CLY
-         qpYA==
-X-Forwarded-Encrypted: i=1; AJvYcCU2ygqg5Nk8X0jkYoN2b3kInR1dE1djEv9qUSdYk567YbzvGlGOeAEiCkagDSkPCh0yIs9rNc1KSSZY+BCm@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZA6WKenICAHeFvEVi1VICfz1eUlhJSKeSjDtrNaAgIZjwY1qz
-	P0/66jF2WHK47rlcvgOc876xipYizedCEKMvVyKSgzh/iUNaqrFP/NXYEbaYjFBrLTHdelqYMKR
-	QDaI3nHgL6Ki0Q2pTBIW2R5GJsYy0xygTw52iAZOGhhxGOwP4CToYzANDkbx17gZuSRnv
-X-Gm-Gg: ASbGnct1HTOdDKEn4nxTO/bpNgNQDRTqIuiE/+SJ1hRu1HXLelU3FvazUupRPq1aah3
-	gdEpLbdz0aqUNcohWVhjGHF7D5X6eWKCxuNH1uk33tKyws6Z7p3xKoeI/hulo/2q2SDkngaPT6V
-	iG3XIBa8O1XmqNvBG3vKNIAZyURZLaOt1nQc1hBIXuRl/8Kiuo/I6NuNkK7rI6wTwAE837W7V+v
-	bRm+lSJALFRLuIfYHmLIe+GxuDG+94wits77q3E6/hQHl49F+Hf51Ubbet6AF/XoG5DQQ5g6gZ3
-	yu/Ral9tLml8xXA612XWaRMCsfNAgFnyprp2
-X-Received: by 2002:a17:90b:3d90:b0:311:d670:a10d with SMTP id 98e67ed59e1d1-3130cdad83fmr2116092a91.26.1749018976297;
-        Tue, 03 Jun 2025 23:36:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IErugzH1I0kOV1ZKQianUQa1udSChg3Br+Vd6Gcvz1HCaUItCnG3yPgl2RgODUZkyEd/0WlHw==
-X-Received: by 2002:a17:90b:3d90:b0:311:d670:a10d with SMTP id 98e67ed59e1d1-3130cdad83fmr2116074a91.26.1749018975912;
-        Tue, 03 Jun 2025 23:36:15 -0700 (PDT)
-Received: from hu-msarkar-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3124e2c298esm8286693a91.15.2025.06.03.23.36.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jun 2025 23:36:15 -0700 (PDT)
-From: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
-X-Google-Original-From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Date: Wed, 04 Jun 2025 12:05:58 +0530
-Subject: [PATCH v4 2/2] arm64: dts: qcom: sa8775p: Remove max link speed
- property for PCIe EP
+	s=arc-20240116; t=1749021563; c=relaxed/simple;
+	bh=QEgZRKrwkiMH7tgSfW27cvm8oXOw9eJwFjKqyqchYic=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=QkaicSHJHA7siJRG/OUcGSNepgau7dwNnmX/4+9o1PXpYbhbG5Rib30T6v2uw6Oh5uJgvn3cqLzsACzdcJYjhWdmRjrnWuq73gMg1x0A1kaamGITenUeQ3WkTcFcGkXR/AyLl3JwIla2wf7vFXBNE4S9IqMBvzaDhgLGkGbfCks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=boNl7EMo; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 553Jrs8j024416;
+	Wed, 4 Jun 2025 07:19:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=godeQjSfZ3mm7u5AuFZu4jej25Ii63iNVRL
+	q0zaKXwg=; b=boNl7EMoSwyb0wc3PiCBBjZ5ToxAZQo+umgpb1Y5vmg9fOgMnHj
+	CFVhTTHaW3ePapvqMvXr7+TLWjRh0m+XOb6b9ZHHwCik/PYkGmwqAmig/wKWRew1
+	cJk1W+111l5tUF9JHuewnHWqRJMiWl+Htb9wUnQV2OChnjkXwa4YYPGZMLOIykpg
+	TAPUguFXJMJApjA1BLOeZr6AjnKDe9+p8jZxAu10QPy+IQbd5DfgUpNBNii5CrdK
+	upBWqT4Kjxu4fBdSTWSiwBCV1vmKx57Joah3k8VIb07i+wyjqAAdstGkZyD33k/F
+	H6HRgoaelk3l+MacsFkbUlEfraVYEFvwmuQ==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 471g8rw755-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 04 Jun 2025 07:19:02 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5547Ix6J017262;
+	Wed, 4 Jun 2025 07:18:59 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 46ytum3902-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 04 Jun 2025 07:18:59 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5547IwZN017244;
+	Wed, 4 Jun 2025 07:18:58 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-amakhija-hyd.qualcomm.com [10.213.99.91])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 5547IwGM017237
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 04 Jun 2025 07:18:58 +0000
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4090850)
+	id 9CD52515; Wed,  4 Jun 2025 12:48:57 +0530 (+0530)
+From: Ayushi Makhija <quic_amakhija@quicinc.com>
+To: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc: Ayushi Makhija <quic_amakhija@quicinc.com>, robdclark@gmail.com,
+        dmitry.baryshkov@oss.qualcomm.com, sean@poorly.run,
+        marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org,
+        robh+dt@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
+        conor+dt@kernel.org, andrzej.hajda@intel.com,
+        neil.armstrong@linaro.org, rfoss@kernel.org,
+        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+        jernej.skrabec@gmail.com, quic_abhinavk@quicinc.com,
+        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
+        quic_jesszhan@quicinc.com
+Subject: [PATCH v8 RESEND 0/2] Add DSI display support for SA8775P target
+Date: Wed,  4 Jun 2025 12:48:49 +0530
+Message-Id: <20250604071851.1438612-1-quic_amakhija@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250604-update_phy-v4-2-d04b12bb89f2@quicinc.com>
-References: <20250604-update_phy-v4-0-d04b12bb89f2@quicinc.com>
-In-Reply-To: <20250604-update_phy-v4-0-d04b12bb89f2@quicinc.com>
-To: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        krishna.chundru@oss.qualcomm.com, quic_vbadigan@quicinc.com,
-        quic_nayiluri@quicinc.com, quic_ramkri@quicinc.com,
-        quic_nitegupt@quicinc.com, Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-        Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749018959; l=1245;
- i=quic_msarkar@quicinc.com; s=20250423; h=from:subject:message-id;
- bh=LUKDegSuWnJr6hX0g+GfZVrGfuVOoWm4/cMbstjOQQ4=;
- b=ga9wKHPtEQhKKr1XnSo5DF/fyNhWYMWOOB+cY7IY7PY9EAcbVbRqkScCf9ZdnY/CTgyarhQyN
- Ou4mVQc4FvhB+agnjJWbXJump6NS+JbgDG+AzaahV89xnBb5zvNioYF
-X-Developer-Key: i=quic_msarkar@quicinc.com; a=ed25519;
- pk=5D8s0BEkJAotPyAnJ6/qmJBFhCjti/zUi2OMYoferv4=
-X-Proofpoint-ORIG-GUID: QNjdmlBDItBWbrszfroYZVsAd0Kjflxs
-X-Proofpoint-GUID: QNjdmlBDItBWbrszfroYZVsAd0Kjflxs
-X-Authority-Analysis: v=2.4 cv=Y/D4sgeN c=1 sm=1 tr=0 ts=683fe961 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=A2jF9ndpTPISZJbatkMA:9
- a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA0MDA1NSBTYWx0ZWRfX9fL/1CkCojyZ
- C+heDdtKFFW6EEKhlk0PWLwimcaCd/f1p7HaBO6nrNYSDYeSE67RDVQwBVVLt5POhV5Ohu5zeQg
- ZgJSkkg3wFXOVvTdHLPdv6YumGEM18VWnqwLOeyTBpihua0IWS+GDRk73olWnjq1cL4yhkAFOP8
- eQ229uEXO0W2sufQkSQBPDLsxCPIydnTWxQK3L0lbamhvoKfYKEaSMuvIzVoTGrZ9GmNkqWTleh
- 3lr0MjX5JvbRehBd48u2aIg/fbmnQcSu5MmXOBsr17mMZ0l7nopVl1r06S1Hg56hxqxmbY444zd
- wn24jVn1YJ5CkZ9onmbRBb4hzdJhq4EFTQiIYqpZTPgIyQ+Kr4SniLtgQtGRmDKi+yfV79Ri1tE
- t654qJUJR3HQIFrhUDqG0IyuSYDjozlP/rXnUvoGCLCooskXmuY1JwOMOGprM7duS2al/1EE
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Gdzg4kuak1e3iopW_JgC5QvGfG8CHMw5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA0MDA2MCBTYWx0ZWRfXyO4De0jAyO9o
+ /9QAIXqrHnDxF+Nz92dMgOdH9k0olQs6Ko3Fh3WrizWhRjkksGcHBdrM5TihArTyeagDuqah/cr
+ urIbn8FA1LGJwMS7VW1JkzLbZ0Q4TYJEJqJiKlnXRToqba5/uNFV9HMdifpiYF7FSx4zutjV37A
+ SzL8CXJ4MW8XIK/jgvFQvNg/HXzBJ29NbFZrP3g6WqqfyLU8qzbrMdYaG/WBzq2U46g3Ehbvt0y
+ 6ZGhQxLa78OrakmGpObyMw6b/2M9zYsQOF3w5jQUbC5k9eGszulHe/imaXZll2oW3m4i1KzT453
+ g2EsR2xTcK1OY2hbEOI8yun7ChOUZNFpwkpQj7okSjAqS+mu+IddgckXRe3Q3CGUWGpV9xPqHdD
+ +ir1By2WYeWwR+xrMbI6cN5d/9C6mLK1mDjNcFh5tUX+NpLS8G4GrKDgPKuASOio0H5TABk/
+X-Authority-Analysis: v=2.4 cv=RdWQC0tv c=1 sm=1 tr=0 ts=683ff367 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=QlWjpmH-yOSsLRRY6RUA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: Gdzg4kuak1e3iopW_JgC5QvGfG8CHMw5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-04_01,2025-06-03_02,2025-03-28_01
+ definitions=2025-06-04_02,2025-06-03_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0 impostorscore=0
- lowpriorityscore=0 phishscore=0 mlxscore=0 mlxlogscore=891 malwarescore=0
- bulkscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506040055
+ bulkscore=0 adultscore=0 mlxscore=0 priorityscore=1501 phishscore=0
+ clxscore=1015 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ impostorscore=0 spamscore=0 mlxlogscore=999 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506040060
 
-From: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+This series enables the support for DSI to DP bridge ports
+(labled as DSI0 and DSI1) of the Qualcomm's SA8775P Ride platform.
 
-The maximum link speed was previously restricted to Gen3 due to the
-absence of Gen4 equalization support in the driver.
+SA8775P SoC has DSI controller v2.5.1 and DSI PHY v4.2.
+The Ride platform is having ANX7625 DSI to DP bridge chip from Analogix.
 
-As Gen4 equalization is already supported by the PCIe controller
-driver, remove the max-link-speed property.
-
-Signed-off-by: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+Changes in  v8: Fixed the review comments from Dmirty
+    - Renamed the opp table from dsi0_opp_table to mdss_dsi_opp_table in patch 1. [Dmitry]
+    - Referred the same mdss_dsi_opp_table opp table in mdss0_dsi1 node in patch 1. [Dmitry]
+    - Link to v7 : https://lore.kernel.org/all/20250513102611.1456868-1-amakhija@qti.qualcomm.com/ 
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 5bd0c03476b143444543c68cd1c1d475c3302555..b001e9a30e863d8964219c8bd61bc328be71b256 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -6462,7 +6462,6 @@ pcie0_ep: pcie-ep@1c00000 {
- 		power-domains = <&gcc PCIE_0_GDSC>;
- 		phys = <&pcie0_phy>;
- 		phy-names = "pciephy";
--		max-link-speed = <3>; /* FIXME: Limiting the Gen speed due to stability issues */
- 		num-lanes = <2>;
- 		linux,pci-domain = <0>;
- 
-@@ -6620,7 +6619,6 @@ pcie1_ep: pcie-ep@1c10000 {
- 		power-domains = <&gcc PCIE_1_GDSC>;
- 		phys = <&pcie1_phy>;
- 		phy-names = "pciephy";
--		max-link-speed = <3>; /* FIXME: Limiting the Gen speed due to stability issues */
- 		num-lanes = <4>;
- 		linux,pci-domain = <1>;
- 
+Changes in v7: Rebased and fixed the review comments from Dmitry
+    - Below four patches of v6 are merged. Removed them from this version.
+        - [08/11] drm/bridge: anx7625: enable HPD interrupts
+        - [09/11] drm/bridge: anx7625: fix drm_bridge ops flags to
+          support hot-plugging
+        - [10/11] drm/bridge: anx7625: fix anx7625_sink_detect() to
+          return correct hpd status
+        - [11/11] drm/bridge: anx7625: change the gpiod_set_value API
+    - Rebased the remaining two patches of the series. 
+    - Added anx7625 bridge supplies as fixed reulators, according to the power grid. [Dmitry]
+    - Link to v6 : https://lore.kernel.org/all/20250505094245.2660750-1-quic_amakhija@quicinc.com/
+
+Changes in v6: Fixed the review comments from konard.
+    - Added the reference voltage in patch 7 for vph-pwr. [Konard]
+    - Patches from 1 to 5 of version 5 of the series are accepted.
+      So removed from here.
+    - Link to v5 : https://lore.kernel.org/all/20250424062431.2040692-1-quic_amakhija@quicinc.com/ 
+
+Changes in v5: Fixed review comments from Dmitry
+    - Added reset gpio for io_expander(tca9539) in patch 7. [Dmitry]
+    - Updated the commit text of patch 10 for eDP configuration. [Dmitry]
+    - Link to v4 : https://lore.kernel.org/all/20250417053909.1051416-1-amakhija@qti.qualcomm.com/
+
+Changes in v4: Fixed review comments from Dmirty, Krzysztof and konard
+    - Add only single compatible string in dsi ctrl pattern properties
+      in patch 3. [Krzysztof/Dmitry]
+    - Move the io_expander RESET and INTR pinctrls from i2c18 node to
+      io_expander node in patch 7. [Dmitry]
+    - Remove the gpio-hogs from io_expander node, as we are already
+      configuring them under anx7625 bridge nodes. [Dmitry/Konard]
+    - Updated the commit message based on hpd_enable() and
+      hpd_disabled() recommendation in patch 8. [Dmitry]
+    - Split the patch 9 of vesrion 3 into two separate patches. [Dmirty]
+    - Updated the commit message and commit text in patch 9 and 
+      patch 10.
+    - Link to v3 : https://lore.kernel.org/all/20250404115539.1151201-1-quic_amakhija@quicinc.com/
+
+Changes in v3: Fixed review comments from Dmitry and Krzysztof
+    - Added qcom,sa8775p-dsi-ctrl compatible based on the set of clocks
+      which are associated with it in patch 2. [Krzysztof]
+    - Drop the blank line and add contains instead of items in pattern
+      properties of dsi ctrl and phy in patch 3. [Krzysztof]
+    - Updated the node name from anx7625@58 to bridge@58 for anx7625
+      dsi-dp bridge in patch 7. [Dmitry/Krzysztof]
+    - Updated endpoint label name for input output ports of analogix bridge chip in patch 7. 
+    - Check the DP or eDP confiuration based on the aux node in patch 9. [Dmitry]
+    - Link to v2 : https://lore.kernel.org/all/20250311122445.3597100-1-quic_amakhija@quicinc.com/
+
+Changes in v2: Fixed review comments from Rob, konard, Dmitry and Krzysztof
+    - Added additionalProperities in dsi and phy patternProperties in patch 3. [Rob's bot]
+    - Updated example in qcom,sa8775p-mdss.yaml of patch 3:
+        - Added port1 and port2 inside mdss0 ports.
+        - Renamed dsi ports from mdss_dsi0_in to mdss0_dsi0_in and mdss_dsi1_in to mdss0_dsi1_in.
+    - Updated the init load value for vdds supply of DSI PHY from
+      150000uA to 48000uA as per chipset power grid in patch 4. [Dmitry]
+    - Updated the init load value for vdda supply for DSI ctrl
+      from 30100uA to 8300uA as per chipset power grid in patch 5.[Dmitry]
+    - Rebase the series to use the header with DSI phy clock IDs to make code more
+      readable in patch 6. [konard]
+    - Added the interrupts-extended in patch 7. [konard]
+    - Fixed the warning from DT checker against DT binding in patch 7. [Krzysztof]
+    - Changed the connector node name from dsi0-connector to dp-dsi0-connector and dsi1-connector to dp-dsi1-connector
+      respectively in patch 7. [Dmitry]
+    - Added the vph_pwr for anx7625 vdda10, vdds18 and vdda33 supply to fix the warnings from DT checker in
+      patch 7. [Rob's bot]
+    - Addressed device tree comments in patch 7. [Konard]
+    - Squash the DT patch 8 into DT patch 7. [Dmitry]
+    - Added hpd_enable() and hpd_disable() bridge funcs in patch 9. [Dmitry]
+    - Update hpd detection bridge op flags logic based on eDP connector in patch 10. [Dmitry]
+    - Link to v1 : https://lore.kernel.org/linux-arm-msm/20250225121824.3869719-1-quic_amakhija@quicinc.com/
+
+Ayushi Makhija (2):
+  arm64: dts: qcom: sa8775p: add Display Serial Interface device nodes
+  arm64: dts: qcom: sa8775p-ride: add anx7625 DSI to DP bridge nodes
+
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 232 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi      | 177 +++++++++++++++-
+ 2 files changed, 408 insertions(+), 1 deletion(-)
 
 -- 
-2.25.1
+2.34.1
 
 
