@@ -1,197 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-60372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEACFACF694
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 20:30:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF8D7ACF800
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 21:31:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9982D16A4C5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 18:30:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B13783B0838
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 19:30:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D93C32AF19;
-	Thu,  5 Jun 2025 18:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA80227CCDB;
+	Thu,  5 Jun 2025 19:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="af2SaE7h"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U0By54sI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295CE19F115
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jun 2025 18:30:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A9827CCCD;
+	Thu,  5 Jun 2025 19:29:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749148234; cv=none; b=ZiyKcFOwUQu0d8xj/WDnItjf+tQ0gtXqL+AiY3USeIqjh/GZJB1xK4ApCw9oQfLcWQMb6MntCJO7rBdOn1WeBnNVQcFRD8Mn1fUzXvcoHyDNoQXuWTx1stu3RVB113vvl3JlBPtxqUz4Zjxzgh5qnmzlGsJPHY5n4/dHr8PFC3o=
+	t=1749151796; cv=none; b=Rnyt8cEIfE3jAMwEX2n91wIcwUzAixYfLUEWqCh1xy8EU+/18blJD2ptStaa+nY9Xq9NvDM5jcIbKGcbOAeeB71Otx+3l5qL/zJGQGr5JNKm6vXl1SvUDAlnFVRQ/mkqjDx7vXyQWz54+JOja/2/WRjPr8zz6waQwpfHqMgbW0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749148234; c=relaxed/simple;
-	bh=LnyQlmsP5i9Gpf9tYX7BjcukxJuRTi2gzqGvRKTWTn0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OlyjLdElE+wbHhKUuAXLns3DV1wBtDpWzikbeyqP4sCCoHtur0h2Kq16hGcLkyqAswSwbQ3WUgpbpEqiq2R1sLGm7ZSKhhVf5tMmkjgGTlFSihqMqtfem6Q+Ev8Dtod/0DaZvZtm3n6zRI5cZPNvarflKd21z51N0yYXYXZT3g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=af2SaE7h; arc=none smtp.client-ip=209.85.160.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4a5ac8fae12so64761cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jun 2025 11:30:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1749148231; x=1749753031; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4HrdqA/k41LxSYTdKh0OWWXzlPloxAg6qTNcrag1JWY=;
-        b=af2SaE7hIFovqmOCgjMSqeULLS/l9OZP0jRIDDJeEUtNMvkYIHgfAMZrR39g/KFqHG
-         YJZRzgjVB1FN4e4EZYlNYFrZkoxdiHJjbkxTjwjNhRL7KkZ+Wrip7/ffwl324z6dIrPR
-         Fn97Kk2QWCVQVeQCaHec6ci8PFVo8RPX21qXWALnq/c0cv3lhe0GPvZgy37o38AZ8aie
-         AJwCvlCqr3AAulquP+wucKoptTJ4UkmY6eUpamWMA7AwDtg5hoSjcX1nUCxn+mySnXFP
-         qoVA2P7+03q85YE/p23qPayJtse6GNtA5OnJzamqzlP45TTvVZFMgKAXnJ7ZvC8yzQBf
-         UXcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749148231; x=1749753031;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4HrdqA/k41LxSYTdKh0OWWXzlPloxAg6qTNcrag1JWY=;
-        b=hI2dLKOPz859V+NGRFWGmgBL8nNSykyG5Mgkqnv9KVYATjbtVaSPwLbnkekCujpyMt
-         XroQrHmQYBjWQEZS8zyBWuvUN1K9GoP7RdjzVgubeZhsQDzf4vktnVebE6+HaCRf29ea
-         FhX+BicUjaF02MoZHqG41eXEYimxK3tt5MTjJSqHYvJ2+zR/HrhtEu456mRNHUIKvdgU
-         KHF5oOUQshjpMyzQ6lksJAfiIALnRwsrH8Hgp2m81UsMNnwGIVY2wEZ5ofABwgKOecTI
-         N7SlwOY/x3EtSVzJ0iHI7wHVPibjSSQAkUUKXc5mQq+w2vMrMouNf0v4Mnz5ra3aGtt7
-         U8Kg==
-X-Forwarded-Encrypted: i=1; AJvYcCVBbd0kS1hOLgonqUJXLGS3HpOyaJHSQ5rLWNuMocjQevqIbq82UM0TD2gFM5upqVl6XVeHPi9K/TODqTfn@vger.kernel.org
-X-Gm-Message-State: AOJu0YxkamfeWjS+5Kk+jaTjDCPVxBAzwmMTUNzLz8XnY2OunzCviWf2
-	TnWTPIjWWWs9rfTDWoqyA4arpF2V2S+8bwc/Ww1qh6qADN8SEHRKeRgUWtldKemI+FNnhxdmjcz
-	51jj0ZpJsCKBfupfqi1CjPHVQgaFdA9tKzRjEub3m
-X-Gm-Gg: ASbGncuHf3ELflVREryw0BacMiNGxPPh9vkUOW2HA6+rV38sdt2n8qU9yiWo6XQbiz+
-	SISRGPe+gtumRDvsjrZqkDtwKa+FwLQ2KtM+MKQM1zau5s0NauqgSAHyN+q627VNMuEfJaO/yzF
-	GwWi7a3KHez8PBJZXW6+hZjH7/bRbxUIks1IV+ujB9PY4=
-X-Google-Smtp-Source: AGHT+IH7FgESvCVozX/CiDB6ulbbev2isNZ+Soh9txr1mG6fDd4w52Z5DJcOcfE45agVq/Nr3QCWQsAjORWdDsJL18w=
-X-Received: by 2002:ac8:41c4:0:b0:48a:ba32:370 with SMTP id
- d75a77b69052e-4a5baa649ccmr283761cf.10.1749148230605; Thu, 05 Jun 2025
- 11:30:30 -0700 (PDT)
+	s=arc-20240116; t=1749151796; c=relaxed/simple;
+	bh=KXHyUh+OtRsl2pelaAJoE/6mIIAsOHMnaVL2nVOHDwc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pe4s8u5CutbTK2MJecWdISAW6P8yNoZWEf9aL4041GlErlR7nNMiP6M/1D95eWBXgoH35dPiShcHIJnmoCnF8i7jlq8AnPq6GVZflhi0gq4wEUwKy8NQrxT1VrOHIUoe7mq4pgUDcEUu5CGlr2hbSr5SvDxgQANW7pvGoRlkHVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U0By54sI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBDCC4CEE7;
+	Thu,  5 Jun 2025 19:29:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749151796;
+	bh=KXHyUh+OtRsl2pelaAJoE/6mIIAsOHMnaVL2nVOHDwc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=U0By54sIwEk2LjzqgjimW1UX3NrTsZhnPrhqgr01hNZDIuTeq0Aon61FK9FBZyUE6
+	 fgfi5zwRkms+MsvEtKLTJ80poWuOCg6kHKvBnu0EVIYx9MzQZIT73ir5gI/MNKoda8
+	 s0ZeYqNN2l3oQQnHd9yv3GyeN/FL0XBrEDcxX8jM0im2DyDKardPTXHuQQDE4XjWIw
+	 blmDxRLmFy0dVZMnF5j4o0tCMURfHhVgWTxOdySfYdRaLOqOkNgce8qQ0UrePD7sVn
+	 WGscio8Yn10xwdVY4nNggx/jW65L5qJayHK5BPNfocWIThynJrhpuUXH9qydFxSi+g
+	 0po1MX+htDcIg==
+Date: Thu, 5 Jun 2025 14:29:53 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@foundries.io>
+Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, 
+	Doug Anderson <dianders@chromium.org>, stable@vger.kernel.org
+Subject: Re: [PATCH 1/3] soc: qcom: mdt_loader: Ensure we don't read past the
+ ELF header
+Message-ID: <4ruhapzeti5hiufdkws27w2q3h4psfcpmcfsqrhsnyr2u4sktp@5itmiqxydwrj>
+References: <20250605-mdt-loader-validation-and-fixes-v1-0-29e22e7a82f4@oss.qualcomm.com>
+ <20250605-mdt-loader-validation-and-fixes-v1-1-29e22e7a82f4@oss.qualcomm.com>
+ <bsnn6xpkubifuwxz4kccvves3ifq4ocp53qmbobv6ilmnfuh7x@eejawp7thorm>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250605153800.557144-1-tabba@google.com> <20250605153800.557144-13-tabba@google.com>
- <4909d6dc-09f5-4960-b8be-5150b2a03e45@redhat.com> <CA+EHjTwnAV=tu1eUjixyKAhE4bpNc3XV7EhnMME3+WJ-cu6PNA@mail.gmail.com>
- <8782284c-0ffc-489d-adfe-b25d5ccb77b3@redhat.com> <CA+EHjTw-dgn+QbHd5aCxjLXCGamx7eTr75qcFm+o16qyVydnBQ@mail.gmail.com>
- <637ffae1-a61e-4d68-8332-9ec11a3a78d4@redhat.com>
-In-Reply-To: <637ffae1-a61e-4d68-8332-9ec11a3a78d4@redhat.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Thu, 5 Jun 2025 19:29:53 +0100
-X-Gm-Features: AX0GCFsQbfhZC_FlYPxk85rO768zb9vVPjsu-8YXphOrtD0BhntZritMMuHZreE
-Message-ID: <CA+EHjTyxJ3VKqPF_9oswYAcbrJM3_MiYoExe6-Dx8A+0bZa+nQ@mail.gmail.com>
-Subject: Re: [PATCH v11 12/18] KVM: x86: Enable guest_memfd shared memory for
- SW-protected VMs
-To: David Hildenbrand <david@redhat.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bsnn6xpkubifuwxz4kccvves3ifq4ocp53qmbobv6ilmnfuh7x@eejawp7thorm>
 
-On Thu, 5 Jun 2025 at 18:45, David Hildenbrand <david@redhat.com> wrote:
->
-> On 05.06.25 19:43, Fuad Tabba wrote:
-> > On Thu, 5 Jun 2025 at 18:35, David Hildenbrand <david@redhat.com> wrote:
-> >>
-> >> On 05.06.25 18:11, Fuad Tabba wrote:
-> >>> On Thu, 5 Jun 2025 at 16:49, David Hildenbrand <david@redhat.com> wrote:
-> >>>>
-> >>>> On 05.06.25 17:37, Fuad Tabba wrote:
-> >>>>> Define the architecture-specific macro to enable shared memory support
-> >>>>> in guest_memfd for relevant software-only VM types, specifically
-> >>>>> KVM_X86_DEFAULT_VM and KVM_X86_SW_PROTECTED_VM.
-> >>>>>
-> >>>>> Enable the KVM_GMEM_SHARED_MEM Kconfig option if KVM_SW_PROTECTED_VM is
-> >>>>> enabled.
-> >>>>>
-> >>>>> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-> >>>>> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> >>>>> Signed-off-by: Fuad Tabba <tabba@google.com>
-> >>>>> ---
-> >>>>>     arch/x86/include/asm/kvm_host.h | 10 ++++++++++
-> >>>>>     arch/x86/kvm/Kconfig            |  1 +
-> >>>>>     arch/x86/kvm/x86.c              |  3 ++-
-> >>>>>     3 files changed, 13 insertions(+), 1 deletion(-)
-> >>>>>
-> >>>>> diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-> >>>>> index 709cc2a7ba66..ce9ad4cd93c5 100644
-> >>>>> --- a/arch/x86/include/asm/kvm_host.h
-> >>>>> +++ b/arch/x86/include/asm/kvm_host.h
-> >>>>> @@ -2255,8 +2255,18 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_forced_root_level,
-> >>>>>
-> >>>>>     #ifdef CONFIG_KVM_GMEM
-> >>>>>     #define kvm_arch_supports_gmem(kvm) ((kvm)->arch.supports_gmem)
-> >>>>> +
-> >>>>> +/*
-> >>>>> + * CoCo VMs with hardware support that use guest_memfd only for backing private
-> >>>>> + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enabled.
-> >>>>> + */
-> >>>>> +#define kvm_arch_supports_gmem_shared_mem(kvm)                       \
-> >>>>> +     (IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM) &&                      \
-> >>>>> +      ((kvm)->arch.vm_type == KVM_X86_SW_PROTECTED_VM ||             \
-> >>>>> +       (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM))
-> >>>>>     #else
-> >>>>>     #define kvm_arch_supports_gmem(kvm) false
-> >>>>> +#define kvm_arch_supports_gmem_shared_mem(kvm) false
-> >>>>>     #endif
-> >>>>>
-> >>>>>     #define kvm_arch_has_readonly_mem(kvm) (!(kvm)->arch.has_protected_state)
-> >>>>> diff --git a/arch/x86/kvm/Kconfig b/arch/x86/kvm/Kconfig
-> >>>>> index b37258253543..fdf24b50af9d 100644
-> >>>>> --- a/arch/x86/kvm/Kconfig
-> >>>>> +++ b/arch/x86/kvm/Kconfig
-> >>>>> @@ -47,6 +47,7 @@ config KVM_X86
-> >>>>>         select KVM_GENERIC_HARDWARE_ENABLING
-> >>>>>         select KVM_GENERIC_PRE_FAULT_MEMORY
-> >>>>>         select KVM_GENERIC_GMEM_POPULATE if KVM_SW_PROTECTED_VM
-> >>>>> +     select KVM_GMEM_SHARED_MEM if KVM_SW_PROTECTED_VM
-> >>>>>         select KVM_WERROR if WERROR
-> >>>>
-> >>>> Is $subject and this still true, given that it's now also supported for
-> >>>> KVM_X86_DEFAULT_VM?
-> >>>
-> >>> True, just not the whole truth :)
-> >>>
-> >>> I guess a better one would be, for Software VMs (remove protected)?
-> >>
-> >> Now I am curious, what is a Hardware VM? :)
-> >
-> > The opposite of a software one! ;) i.e., hardware-supported CoCo,
-> > e.g., TDX, CCA...
->
-> So, you mean a sofware VM is ... just an ordinary VM? :P
->
-> "KVM: x86: Enable guest_memfd shared memory for ordinary (non-CoCo) VMs" ?
->
-> But, whatever you prefer :)
+On Thu, Jun 05, 2025 at 06:57:41PM +0300, Dmitry Baryshkov wrote:
+> On Thu, Jun 05, 2025 at 08:43:00AM -0500, Bjorn Andersson wrote:
+> > When the MDT loader is used in remoteproc, the ELF header is sanitized
+> > beforehand, but that's not necessary the case for other clients.
+> > 
+> > Validate the size of the firmware buffer to ensure that we don't read
+> > past the end as we iterate over the header.
+> > 
+> > Fixes: 2aad40d911ee ("remoteproc: Move qcom_mdt_loader into drivers/soc/qcom")
+> > Cc: <stable@vger.kernel.org>
+> > Reported-by: Doug Anderson <dianders@chromium.org>
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> > ---
+> >  drivers/soc/qcom/mdt_loader.c | 37 +++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 37 insertions(+)
+> > 
+> > diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+> > index b2c0fb55d4ae678ee333f0d6b8b586de319f53b1..1da22b23d19d28678ec78cccdf8c328b50d3ffda 100644
+> > --- a/drivers/soc/qcom/mdt_loader.c
+> > +++ b/drivers/soc/qcom/mdt_loader.c
+> > @@ -18,6 +18,31 @@
+> >  #include <linux/slab.h>
+> >  #include <linux/soc/qcom/mdt_loader.h>
+> >  
+> > +static bool mdt_header_valid(const struct firmware *fw)
+> > +{
+> > +	const struct elf32_hdr *ehdr;
+> > +	size_t phend;
+> > +	size_t shend;
+> > +
+> > +	if (fw->size < sizeof(*ehdr))
+> > +		return false;
+> > +
+> > +	ehdr = (struct elf32_hdr *)fw->data;
+> > +
+> > +	if (memcmp(ehdr->e_ident, ELFMAG, SELFMAG))
+> > +		return false;
+> > +
+> > +	phend = size_add(size_mul(sizeof(struct elf32_phdr), ehdr->e_phnum), ehdr->e_phoff);
+> 
+> Nit, this should be a max(sizeof() and ehdr->e_phentsize.
+> 
 
-This sounds better. I was thrown off by the KVM_SW_PROTECTED_VM type :)
+Hmm, I forgot about e_phentsize.
 
-/fuad
+But the fact is that the check matches what we do below and validates
+that we won't reach outside the provided buffer.
+If e_phentsize != sizeof(struct elf32_phdr) we're not going to be able
+to parse the header.
 
-> --
-> Cheers,
->
-> David / dhildenb
->
+Not sure if it's worth it, but that would make sense to change
+separately. In which case ehdr->e_phentsize * ehdr->e_phnum would be the
+correct thing to check (no max()). Or perhaps just a check to ensure
+that e_phentsize == sizeof(struct elf32_phdr)?
+
+Regards,
+Bjorn
 
