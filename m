@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-60416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 063C2ACF8C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 22:27:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC5FDACF8DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 22:37:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C91271765C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 20:27:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E765189157F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 20:38:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F6A727CCF5;
-	Thu,  5 Jun 2025 20:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30E3E27CCCD;
+	Thu,  5 Jun 2025 20:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UFOyFEi8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JP0l33FF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74851A5B8A;
-	Thu,  5 Jun 2025 20:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0042D204F93;
+	Thu,  5 Jun 2025 20:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749155242; cv=none; b=QtnWjvKESi6rDc6XUAkJ1WO4M61zOOaveYleGR0/qEaxPxsEjJ6qIO6gIdhb6fkPZ2MXOCK1mb4dK9GozbW5lFKPdm0ZPpYHE0EhJD0Ap0Ik3Cpet7XfWiKGSa+P/BDjyIJzOJtsBRJbK7iBc1x9uFaNeZY6kBskNoAwzbyi6OY=
+	t=1749155875; cv=none; b=kooOQvZw2dnZbo1+BeLKsQbGQ02D8FBsxp9FxaeSI6d+9foBZZjK8GWlB6qHU65nfvb2AQnhAKjwU+TTqU5z6gcFoQhQKEgTgHvT7MKqe5513mhkl2YiPTB9f/sP0cSiBz+R8XNdDnb4IxrG0VlNjicELuzEDIL3uvyH1IpgVmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749155242; c=relaxed/simple;
-	bh=UD0f2aiYkLmpekoEpWZj548Tflm0OEq08J6LaazoEuY=;
+	s=arc-20240116; t=1749155875; c=relaxed/simple;
+	bh=/EO1QHiyOJtBSf3NdtfcrnrpbEQOPFXMtGZoBdUrDlg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KRSO+Ef4HqaedpDevOL7uAKB9TkG73pvJokT8pCI7Nv6h8PpCiG9UzmXfCj0mTmii+9nN9iv8FxYAFJKf3Wy5/vttPJIclGW5ZYnRD3eWH1H9xmok+YonRvjvA6Q7/rijsStH9c8wA1sekFdE6PoaPnzH647sWJBInYZZu1sItU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UFOyFEi8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84EAC4CEE7;
-	Thu,  5 Jun 2025 20:27:20 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=IYsJXOvSMWc+E/ohQ5GkCjePv/ippSfBhAd/PTe6aZWZJhMfAw2v9IpqSaDrhsJtnzh9KnLuXIEc6vrKL9W5SymBcj0s/szr1qhBpIzfWz7SrAAKfI9mhmqg9ZrMsKpocbqF7iTCH2vqy4ugLMtEwgXa4BTdcGyW2nL4yEgtKvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JP0l33FF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDAEC4CEE7;
+	Thu,  5 Jun 2025 20:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749155241;
-	bh=UD0f2aiYkLmpekoEpWZj548Tflm0OEq08J6LaazoEuY=;
+	s=k20201202; t=1749155873;
+	bh=/EO1QHiyOJtBSf3NdtfcrnrpbEQOPFXMtGZoBdUrDlg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UFOyFEi8RUmDkPJ26jNDEhgwb1NHCWc7X7Vk0NG19/CZA9aMfp0RRGY6rhrQ7PCWO
-	 9Cb8+sPNf1kqrod3Yhvidyx/mslDAeEbGt7U5ffWQ9zMut1oqdB2FFUJM0K7Q+wfSa
-	 BXlRvmYcTzcLx26o1Am275U24L4PW1gSR1dojNSHa5HsY25oyWxSo2w/6efJXfIOOf
-	 K440hYuT1iGLOPBYwR1+fc7TvtW1Ebm3gkWh9JVb+dbZKU91DQflbfRq3xUITP3gpP
-	 NZ/JMWv6X73GSKwCW1E5Elqxg0iAZoDnkjIe3RTyg4QMa1r38P2uCvbaFWYKkpS/5i
-	 G0lLUQVrvRHEw==
-Date: Thu, 5 Jun 2025 15:27:19 -0500
+	b=JP0l33FFvErl28FgPd5Q65rS8HuiKt+YgJcIIfu710ztGjdqLFjoodEBhhWwYncx5
+	 wo6tjduEB0DkUYjozNY3WfXBhhqI40ngSLoDr67Ts3TPdCfRVKGW6CrwniPB9lBPXw
+	 iB0ytNe0k9St3tCi1QFUHFiQgIkoQ+aLPllxtkcHoFu6fTsTGZTMXMTe9bJf978916
+	 fnVIEYST5Ma2nUv67EH6cijZDmdgM4+Ye8EehbXCQJyRiJDTMBQPDD2YdANVlJzfgn
+	 Z0saDOBhTP5MMzrQz85CR/go/H/fJQ02oio5d5WJ5WaKWlqBSW47X1noJkuMiHEn9E
+	 w7g6SICGC7UYw==
+Date: Thu, 5 Jun 2025 15:37:50 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Luca Weiss <luca@lucaweiss.eu>
+To: Wasim Nazir <quic_wasimn@quicinc.com>
 Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
 	Mathieu Poirier <mathieu.poirier@linaro.org>, linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
 Subject: Re: [PATCH] remoteproc: qcom: pas: Conclude the rename from adsp
-Message-ID: <v765tixx2jqqx5rxylqmtulhotxbld5xvjrvo376hyzelmgrop@mqr4fcqdcrfj>
+Message-ID: <xbwizyrcst5jdpxfrsx7ghbph6ctf2il6yc2d7aveptifiydzs@mpniighbwanu>
 References: <20250605-pas-rename-v1-1-900b770d666c@oss.qualcomm.com>
- <9f6652c9-d0c2-405c-bdf0-fc4daa017a4d@lucaweiss.eu>
+ <aEHAztFldxeu8Pnu@hu-wasimn-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,14 +59,10 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9f6652c9-d0c2-405c-bdf0-fc4daa017a4d@lucaweiss.eu>
+In-Reply-To: <aEHAztFldxeu8Pnu@hu-wasimn-hyd.qualcomm.com>
 
-On Thu, Jun 05, 2025 at 06:01:07PM +0200, Luca Weiss wrote:
-> Hi Bjorn,
-> 
-> Awesome to see this being cleaned up!
-> 
-> On 05-06-2025 5:23 p.m., Bjorn Andersson wrote:
+On Thu, Jun 05, 2025 at 09:37:42PM +0530, Wasim Nazir wrote:
+> On Thu, Jun 05, 2025 at 10:23:51AM -0500, Bjorn Andersson wrote:
 > > The change that renamed the driver from "adsp" to "pas" didn't change
 > > any of the implementation. The result is an aesthetic eyesore, and
 > > confusing to many.
@@ -80,77 +76,231 @@ On Thu, Jun 05, 2025 at 06:01:07PM +0200, Luca Weiss wrote:
 > > Fixes: 9e004f97161d ("remoteproc: qcom: Rename Hexagon v5 PAS driver")
 > > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 > > ---
-> >   drivers/remoteproc/Kconfig          |  11 +-
-> >   drivers/remoteproc/qcom_q6v5_adsp.c |  46 +--
+> >  drivers/remoteproc/Kconfig          |  11 +-
+> >  drivers/remoteproc/qcom_q6v5_adsp.c |  46 +--
+> >  drivers/remoteproc/qcom_q6v5_pas.c  | 617 ++++++++++++++++++------------------
+> >  3 files changed, 334 insertions(+), 340 deletions(-)
+> > 
+> > diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
+> > index 83962a114dc9fdb3260e6e922602f2da53106265..4a1e469acaf139334686af1eb962ce9420c6ddb1 100644
+> > --- a/drivers/remoteproc/Kconfig
+> > +++ b/drivers/remoteproc/Kconfig
+> > @@ -214,7 +214,7 @@ config QCOM_Q6V5_MSS
+> >  	  handled by QCOM_Q6V5_PAS driver.
+> >  
+> >  config QCOM_Q6V5_PAS
+> > -	tristate "Qualcomm Hexagon v5 Peripheral Authentication Service support"
+> > +	tristate "Qualcomm Peripheral Authentication Service support"
+> >  	depends on OF && ARCH_QCOM
+> >  	depends on QCOM_SMEM
+> >  	depends on RPMSG_QCOM_SMD || RPMSG_QCOM_SMD=n
+> > @@ -229,11 +229,10 @@ config QCOM_Q6V5_PAS
+> >  	select QCOM_RPROC_COMMON
+> >  	select QCOM_SCM
+> >  	help
+> > -	  Say y here to support the TrustZone based Peripheral Image Loader
+> > -	  for the Qualcomm Hexagon v5 based remote processors. This is commonly
+> > -	  used to control subsystems such as ADSP (Audio DSP),
+> > -	  CDSP (Compute DSP), MPSS (Modem Peripheral SubSystem), and
+> > -	  SLPI (Sensor Low Power Island).
+> > +	  Say y here to support the TrustZone based Peripheral Image Loader for
+> > +	  the Qualcomm based remote processors. This is commonly used to
 > 
-> Actually looking through that driver, it's not just adsp-pil but also
-> supports cdsp-pil and wpss-pil, so long-term that should probably be renamed
-> to qcom_q6v5_pil.c? Not for this patch though obviously.
+> Maybe "Qualcomm remote processors"?
 > 
 
-There's another "convention" at play here, the "pas" refers to the
-secure service doing authentication. The alternative to this is to do
-everything in Linux, which we conveniently refer to (here) as "pil".
+That sounds better, thanks.
 
-Also, per the commit text the "q6v5" isn't accurate anymore, so perhaps
-this should just be the qcom_pas driver - or the qcom_pil driver.
-
-I think the change as proposed is a good middle ground, we get things
-cleaned up and aligned without affecting anything outside the
-implementation.
-
-> >   drivers/remoteproc/qcom_q6v5_pas.c  | 617 ++++++++++++++++++------------------
-> >   3 files changed, 334 insertions(+), 340 deletions(-)
+> > +	  control subsystems such as ADSP (Audio DSP), CDSP (Compute DSP), MPSS
+> > +	  (Modem Peripheral SubSystem), and SLPI (Sensor Low Power Island).
+> >  
+> >  config QCOM_Q6V5_WCSS
+> >  	tristate "Qualcomm Hexagon based WCSS Peripheral Image Loader"
+> > diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+> > index 94af77baa7a1c5096f0663260c07a297c6bedd17..613826e0d7eff1712ca31ea102adef4f62d10f38 100644
+> > --- a/drivers/remoteproc/qcom_q6v5_adsp.c
+> > +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+> > @@ -77,7 +77,7 @@ struct adsp_pil_data {
+> >  	const char *load_state;
+> >  };
+> >  
+> > -struct qcom_adsp {
+> > +struct qcom_pas {
 > 
-> <snip>
+> Any reason to change in this file?
 > 
+
+Wow, no of course not. I asked my editor to rename the symbols and
+missed the fact that it changed the names of the symbols in both files,
+that's weird.
+
+Thank you for spotting that.
+
+[..]
 > > diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
 > > index b306f223127c452f8f2d85aa0fc98db2d684feae..b0fc372ff0a9e032d784b1a4403ffeea5d0f9a00 100644
 > > --- a/drivers/remoteproc/qcom_q6v5_pas.c
 > > +++ b/drivers/remoteproc/qcom_q6v5_pas.c
 > > @@ -1,6 +1,6 @@
-> >   // SPDX-License-Identifier: GPL-2.0-only
-> >   /*
+> >  // SPDX-License-Identifier: GPL-2.0-only
+> >  /*
 > > - * Qualcomm ADSP/SLPI Peripheral Image Loader for MSM8974 and MSM8996
 > > + * Qualcomm Peripahal Authentication Service remoteproc driver
-> 
-> typo Peripahal
-> 
-
-Thank you
-
-> >    *
-> >    * Copyright (C) 2016 Linaro Ltd
-> >    * Copyright (C) 2014 Sony Mobile Communications AB
-[..]
-> > -static int adsp_unprepare(struct rproc *rproc)
-> > +static int qcom_pas_unprepare(struct rproc *rproc)
-> >   {
+> >   *
+> >   * Copyright (C) 2016 Linaro Ltd
+> >   * Copyright (C) 2014 Sony Mobile Communications AB
+> > @@ -35,7 +35,7 @@
+> >  
+> >  #define MAX_ASSIGN_COUNT 3
+> >  
+> > -struct adsp_data {
+> > +struct qcom_pas_data {
+> >  	int crash_reason_smem;
+> >  	const char *firmware_name;
+> >  	const char *dtb_firmware_name;
+> > @@ -60,7 +60,7 @@ struct adsp_data {
+> >  	int region_assign_vmid;
+> >  };
+> >  
+> > -struct qcom_adsp {
+> > +struct qcom_pas {
+> >  	struct device *dev;
+> >  	struct rproc *rproc;
+> >  
+> > @@ -119,36 +119,37 @@ struct qcom_adsp {
+> >  	struct qcom_scm_pas_metadata dtb_pas_metadata;
+> >  };
+> >  
+> > -static void adsp_segment_dump(struct rproc *rproc, struct rproc_dump_segment *segment,
+> > -		       void *dest, size_t offset, size_t size)
+> > +static void qcom_pas_segment_dump(struct rproc *rproc,
+> > +				  struct rproc_dump_segment *segment,
+> > +				  void *dest, size_t offset, size_t size)
+> >  {
 > > -	struct qcom_adsp *adsp = rproc->priv;
 > > +	struct qcom_pas *pas = rproc->priv;
-> >   	/*
+> >  	int total_offset;
+> >  
+> > -	total_offset = segment->da + segment->offset + offset - adsp->mem_phys;
+> > -	if (total_offset < 0 || total_offset + size > adsp->mem_size) {
+> > -		dev_err(adsp->dev,
+> > +	total_offset = segment->da + segment->offset + offset - pas->mem_phys;
+> > +	if (total_offset < 0 || total_offset + size > pas->mem_size) {
+> > +		dev_err(pas->dev,
+> >  			"invalid copy request for segment %pad with offset %zu and size %zu)\n",
+> >  			&segment->da, offset, size);
+> >  		memset(dest, 0xff, size);
+> >  		return;
+> >  	}
+> >  
+> > -	memcpy_fromio(dest, adsp->mem_region + total_offset, size);
+> > +	memcpy_fromio(dest, pas->mem_region + total_offset, size);
+> >  }
+> >  
+> > -static void adsp_minidump(struct rproc *rproc)
+> > +static void qcom_pas_minidump(struct rproc *rproc)
+> >  {
+> > -	struct qcom_adsp *adsp = rproc->priv;
+> > +	struct qcom_pas *pas = rproc->priv;
+> >  
+> >  	if (rproc->dump_conf == RPROC_COREDUMP_DISABLED)
+> >  		return;
+> >  
+> > -	qcom_minidump(rproc, adsp->minidump_id, adsp_segment_dump);
+> > +	qcom_minidump(rproc, pas->minidump_id, qcom_pas_segment_dump);
+> >  }
+> >  
+> > -static int adsp_pds_enable(struct qcom_adsp *adsp, struct device **pds,
+> > -			   size_t pd_count)
+> > +static int qcom_pas_pds_enable(struct qcom_pas *pas, struct device **pds,
+> > +			       size_t pd_count)
+> >  {
+> >  	int ret;
+> >  	int i;
+> > @@ -174,8 +175,8 @@ static int adsp_pds_enable(struct qcom_adsp *adsp, struct device **pds,
+> >  	return ret;
+> >  };
+> >  
+> > -static void adsp_pds_disable(struct qcom_adsp *adsp, struct device **pds,
+> > -			     size_t pd_count)
+> > +static void qcom_pas_pds_disable(struct qcom_pas *pas, struct device **pds,
+> > +				 size_t pd_count)
+> >  {
+> >  	int i;
+> >  
+> > @@ -185,65 +186,65 @@ static void adsp_pds_disable(struct qcom_adsp *adsp, struct device **pds,
+> >  	}
+> >  }
+> >  
+> > -static int adsp_shutdown_poll_decrypt(struct qcom_adsp *adsp)
+> > +static int qcom_pas_shutdown_poll_decrypt(struct qcom_pas *pas)
+> >  {
+> >  	unsigned int retry_num = 50;
+> >  	int ret;
+> >  
+> >  	do {
+> >  		msleep(ADSP_DECRYPT_SHUTDOWN_DELAY_MS);
+> 
+> Do you want to change the macro too?
+> 
+
+That would make sense, thanks for spotting that!
+
+> > -		ret = qcom_scm_pas_shutdown(adsp->pas_id);
+> > +		ret = qcom_scm_pas_shutdown(pas->pas_id);
+> >  	} while (ret == -EINVAL && --retry_num);
+> >  
+> >  	return ret;
+> >  }
+> >  
+> > -static int adsp_unprepare(struct rproc *rproc)
+> > +static int qcom_pas_unprepare(struct rproc *rproc)
+> >  {
+> > -	struct qcom_adsp *adsp = rproc->priv;
+> > +	struct qcom_pas *pas = rproc->priv;
+> >  
+> >  	/*
 > > -	 * adsp_load() did pass pas_metadata to the SCM driver for storing
 > > +	 * pas_load() did pass pas_metadata to the SCM driver for storing
 > 
-> qcom_pas_load?
+> Don't see pas_load() API in this file. Please check if you are referring to
+> qcom_pas_load().
 > 
 
-Of course, thanks for spotting those.
+Yes, I refer to the qcom_pas_load().
 
 [..]
-> > -static const struct of_device_id adsp_of_match[] = {
-> > +static const struct of_device_id qcom_pas_of_match[] = {
-> >   	{ .compatible = "qcom,msm8226-adsp-pil", .data = &msm8996_adsp_resource},
-> >   	{ .compatible = "qcom,msm8953-adsp-pil", .data = &msm8996_adsp_resource},
-> >   	{ .compatible = "qcom,msm8974-adsp-pil", .data = &adsp_resource_init},
+> > -static int adsp_pds_attach(struct device *dev, struct device **devs,
+> > -			   char **pd_names)
+> > +static int qcom_pas_pds_attach(struct device *dev, struct device **devs, char **pd_names)
 > 
-> Not really for this patch but shouldn't those compatibles also be -pas?
+> Can you check the indentation to 80 characters?
 > 
 
-Per the naming convention later adopted, they should have been "-pas".
-But changing that would break backwards compatibility with exiting DT,
-so we'll leave that as is.
+We prefer 80 characters, but we allow up to 100 if it makes the code
+cleaner. So not breaking this line was intentional...
 
-Thanks,
+> >  {
+> >  	size_t num_pds = 0;
+> >  	int ret;
+> > @@ -528,10 +527,9 @@ static int adsp_pds_attach(struct device *dev, struct device **devs,
+> >  	return ret;
+> >  };
+> >  
+> > -static void adsp_pds_detach(struct qcom_adsp *adsp, struct device **pds,
+> > -			    size_t pd_count)
+> > +static void qcom_pas_pds_detach(struct qcom_pas *pas, struct device **pds, size_t pd_count)
+> 
+> Same indentation needed here.
+> 
+
+91 characters here, and I find it looks better given the "logical"
+relation between pds and pd_count otherwise being split across two
+lines.
+
+
+Many thanks for the review, Wasim!
+
+Regards,
 Bjorn
 
