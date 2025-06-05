@@ -1,79 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-60311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97148ACEFED
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 15:04:45 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F6D3ACEFF6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 15:06:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DB6433ADBDD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 13:03:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F13C57A35FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 13:05:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 359BF22A4D8;
-	Thu,  5 Jun 2025 13:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A3CB22578C;
+	Thu,  5 Jun 2025 13:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mulHPlET"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hE37ZiDG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524A322759B
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jun 2025 13:04:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22530221F00
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jun 2025 13:06:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749128652; cv=none; b=UTrh8bYxAWEoJvq3uyfSyp9fgLPeqbtGX5XhMTUoDsYDTyApiUS/j08mKcB+NQf4+oSQhBqos4wsnmTSCjTRM+/ZQih7sqvBut3iFrLz6Azh5y0rdF6d2kfWW1VbNA6sa4lGLPAk+M3ELhKAnhtJyR7oNbFjApcH7arxt1xTuGM=
+	t=1749128789; cv=none; b=jqj4Sk1aZUTCEztXrt/VgtW1BGNM/hiW+B4fHnXxfZTXd224UH6uoeAw5FcZclqzGzXHtSPxtzN3BuC+cblq5tO4D1JhiyuufYuMfLgSeVAaVREMSbKEyC04VdVWikx1MUS1p/JH3aQKI1BjzZwYJthuvKrBBa+7sZjJ9EzV9UM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749128652; c=relaxed/simple;
-	bh=t4faCEII9JXsy8bQ1teoJQwe81rcZnPfPN7AzMQqsho=;
+	s=arc-20240116; t=1749128789; c=relaxed/simple;
+	bh=zS8ecJYvpJitQ3UMbVXIWGqUkE6qbecokkfr7msuPkc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZuUl9c9uUpFLLc5FMalsfAkKiXDkDw9U3MgeA7SQIye8PmUoub/wBI1+48o0DDKZcAR8p8mf6EEayd8bkzVh/tG82HZIo7hu/6A9SRXfBEgHgQeYvxqWONtaFyc94rfDOyAEeW0TMppuD2rIF+SZ4jEIk0WLXkoJEz+9xx0ymMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mulHPlET; arc=none smtp.client-ip=209.85.221.50
+	 In-Reply-To:Content-Type; b=fseTn0V1PjVzlePoBbmMkoiLziVeKIh6m0werAolU0ca2w+ncPROVQ21cIsaFc+zFwCx9JP5bUvtPpi4/+J14C6V7cYUhVrXc+tbtkJegpvzIWvsQRa2i8Ae498cx7y3Dcb/Og6m7Zbuy5oqbuXSnJ4g7BVPMvGZ2Se1qinIgAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hE37ZiDG; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3a3673e12c4so578864f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jun 2025 06:04:10 -0700 (PDT)
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a36efcadb8so819306f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jun 2025 06:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749128648; x=1749733448; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1749128786; x=1749733586; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Q9thax7IB2ssxJhFBCOKiLh16kICG5rEU7Rz9YHU3JE=;
-        b=mulHPlETvc4CWLowZXAx5uUDZhvngCJrGFk/p/Cet1lOuVmoi+EAvSmzw2gNd4yvu+
-         6mhcwzKBqWNKF3r6jtQVlGUWKI+wCEFNPFQfI3BL+5DjPTHsDun50c5K99Xtni1G+/Al
-         GT+/L3vzl9BwYO9jI70XqAu22Pa+2VQR3C6oiS0d+/EvS0Bj1roCL2mjcSHOAFDdtoAK
-         SyqkpcD8wHWuRcA/HoyM12OMUKbm2PmdhZYIMB6sQrCJ3Ue0GU/RqsFMrrrZkgZxbjs6
-         CrIafZBZLKUt/+93GgV43C8p2S8A/HJKaTY39iSCtcLldaitux4nxKD4ij4hG6+SPibT
-         6YTA==
+        bh=ALKVA2fW4irMbGXjAfGWZNtggykUGJCgahiUtNxuSd8=;
+        b=hE37ZiDGu7jX1TYfxpGeiiSGeyzR99Jeoii3ivurbeE99fHaO2Y8MtfLhAOunRy0yx
+         8zhitREKYvNICRpKf5pBIXnSKK/uMZv8A86Fug9mOZr75VM+FMqwfnTTlIzg+sv+Y0DY
+         l2iLsqKB6Ks/IpgoBpYHuAlC69QZ4sstmmeev89FMW9EXtNNqLR/b6js1POkgY8PqBL5
+         mFHXIlrHZTVmbPrOaF7aFKFRDCkGdav8diIUirYvUMSNBjD8gQYF4nZeNbNU//gtjHHy
+         6XLZabXNJgO1HWCLmX1laGZZoQEZZp0ZYSJg95TsAOzjlzIj8DVidL/ePleu3M1iDJ1i
+         pL8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749128648; x=1749733448;
+        d=1e100.net; s=20230601; t=1749128786; x=1749733586;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q9thax7IB2ssxJhFBCOKiLh16kICG5rEU7Rz9YHU3JE=;
-        b=Gf5KRQmq4c1R6wJsOclVIDL186/hnVYtpsQ7IQCVFJ+4eqqCyXbxQQ3Eydxi5m/eBB
-         TAZJ5Cp4rbWHHXylEnJDDThmqlu4I9Lpq8v4s4NZOPkRq5yhnRtfdUIoVFNqgI1q4hiX
-         2GwidVxxpihx8S7P6zDckkcSxdwQjwYsTSklnRCRzkTk0mRuOZv6JtI6TU2NYYhyCMfQ
-         FK59pI0AijkKDdOcC1UrZnlZ7IU7Atc++IcrzOVCBxsAyOENvNwjkhonaSuCaNm1Y9yj
-         Jt/NR+BDayYqcHaU5Ttg1jhpdLIH85gsyO1aqEBcbbEKjjGR06FkFPUPlgRkmI9B+OpH
-         oypA==
-X-Forwarded-Encrypted: i=1; AJvYcCV6H1Gyp+d0OgDIKAas1nlWosnn47zQ/0LA8A2an13NzW3KSgQ/2kOYLOxUT1WkY6cUa7pbx2AucJ1Z5Y3g@vger.kernel.org
-X-Gm-Message-State: AOJu0YzEkPI7fGLemdE0x31Axz8ehRCX65VsU4QCO8VUwkK3x0tUfflI
-	B+oCBnUz9FgS4UZsFjtMVVdbU4nj4j1Px07TMlOXSZyZO/lWQnegCnY9lguysZtmTok=
-X-Gm-Gg: ASbGncuOvSQfw4mQQfgSZ+yQVb4OjYTyrI+AtjGPvkGMq3T8Fvc5Vi3btWXodQMWtuz
-	PK7OMGw0aaWEMTtMuL/tnC8LOWiD4D1ahLXr0cjROKNEezbEyRWC0UB7KCstrtFbpe3NbH7vOWZ
-	6QJO5TwZtx4rEVE3UG8+X8f9AhLAj8bN7tHtvMZbZFHWumdB1zdRUuWe7yiqTZ0920d7h1w301g
-	hxvfcJaKd0BqRwS1G3kT5tBRqvmrFtqSrQcQzkeEZzuD97wsQ+gyoU56fdSJ4zPonbqskDrXgPF
-	tQVCdTyyJXTtFxfzEUmGlMINsrfXWOgFrQSRPMCIGWdhlcTW2DQNsoKDT0o=
-X-Google-Smtp-Source: AGHT+IE/BmSVdL4tbFWwRI8QdSGrFvhSPvFKD3SoCTJ/6Nr+n1FoiYUpOSD1J4F7Wnuta6OWoz81dA==
-X-Received: by 2002:a05:6000:40e0:b0:3a4:ea40:4d3f with SMTP id ffacd0b85a97d-3a51d973c93mr6275072f8f.53.1749128648387;
-        Thu, 05 Jun 2025 06:04:08 -0700 (PDT)
+        bh=ALKVA2fW4irMbGXjAfGWZNtggykUGJCgahiUtNxuSd8=;
+        b=vJtI7aN08G92Vd6oydO+nCoSkzNlqyCg9gB3IeR/OgqCbYomVvhII8R+yY6qUCG0Uz
+         /zUbXzQH9s4y8a0mQjgMFk5k6Blz8A2cCJL5Xa8pvs167yEX6DookTMYYaFnIZGmV+IG
+         7qoaFih0fR+flXhwdO0i2nXYZGBmHWv0sISYV80pQo6VTO7uzIhOsf3H277dztX1m9WP
+         fNS/eoo8n7d9XZB6jViR/PkPwfb2P7kviQXxkcC9O6rzQSNXNwnP/dYBMWQbl8jC5g+u
+         YS9UE9QHl2TPtmfnuVUe4x76mfhFrc79zeH5DJDPY/gFexcH11nHLRr1e46spmHOTdxJ
+         vwpw==
+X-Forwarded-Encrypted: i=1; AJvYcCWnw5mWaeJiMyKAwJS0mMUVbCc/XioqlV5E4FbNFU42B7lAoiQWwXpNOrD5nVqB+S8A05oqAMWSZvBThSR8@vger.kernel.org
+X-Gm-Message-State: AOJu0YzsoLpUzH0OcH08bNpUBsTsDoB65a65qp5vArQH+8naueaQD4vE
+	PHWkGlXwIoVNLhynjKUpCqFbVA1++936JubG05iooarSbwid8nnr4QhG8R/5IOzN8mcq+7Rszh1
+	piKJdwe0=
+X-Gm-Gg: ASbGncsxrsXh1CKEN4S0iLNFR40RsNldwYt+nL2uadJ4VbfITxHnMs9QwZkrzDxnNLP
+	LfIBU+gJv+QG89TBNLJCw728gUsqK7QYEOUz2Q30RQKu3FQ19lfvpf70X+HNSdQIxDdxD+ytuPV
+	qn12MsufqTsn6lfxV5axHjNiymQpYXo+p8SVI2HwvCkr1Uqyd1RX/xR3e/hqw6X1qRm10zN4GEf
+	YCkVit8wt2S59EZTfm0PtfRWp22yeo+GgQXKNf2DG79mCl8orI5dIfrUm0dQxACBmsFD3I8hbGw
+	0GOVMAwLIdmA/z6Nszdcflr+yY1mns/gvskkIuh8a7qqv5KaVR0//YKaFcj7q+Rzf4nnzQ==
+X-Google-Smtp-Source: AGHT+IFlFSrl3XSTZnrLX3liutqht/hIRQLoBNZPN0qE0WMgTCPvfiUO9lKb3LhAK0eALpw01RUcqg==
+X-Received: by 2002:a05:6000:1a87:b0:3a4:f7f3:2840 with SMTP id ffacd0b85a97d-3a51d8f60c3mr6177072f8f.1.1749128786358;
+        Thu, 05 Jun 2025 06:06:26 -0700 (PDT)
 Received: from [192.168.1.221] ([5.30.189.74])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a525da8e66sm2814969f8f.38.2025.06.05.06.04.06
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-451f99248a7sm23764615e9.36.2025.06.05.06.06.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Jun 2025 06:04:07 -0700 (PDT)
-Message-ID: <3c6513fe-83b3-4117-8df6-6f8c7eb07303@linaro.org>
-Date: Thu, 5 Jun 2025 16:04:04 +0300
+        Thu, 05 Jun 2025 06:06:25 -0700 (PDT)
+Message-ID: <99d180ad-7e64-41fc-b470-62300a064bbf@linaro.org>
+Date: Thu, 5 Jun 2025 16:06:22 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,58 +82,32 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] dmaengine: qcom_hidma: fix handoff FIFO memory leak
- on driver removal
+Subject: Re: [PATCH 1/2] dmaengine: qcom_hidma: fix memory leak on probe
+ failure
 To: Qasim Ijaz <qasdev00@gmail.com>, Sinan Kaya <okaya@kernel.org>,
  Vinod Koul <vkoul@kernel.org>, linux-arm-kernel@lists.infradead.org,
  linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
  linux-kernel@vger.kernel.org
 Cc: stable@vger.kernel.org
 References: <20250601224231.24317-1-qasdev00@gmail.com>
- <20250601224231.24317-3-qasdev00@gmail.com>
+ <20250601224231.24317-2-qasdev00@gmail.com>
 Content-Language: en-US
 From: Eugen Hristev <eugen.hristev@linaro.org>
-In-Reply-To: <20250601224231.24317-3-qasdev00@gmail.com>
+In-Reply-To: <20250601224231.24317-2-qasdev00@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
 
 On 6/2/25 01:42, Qasim Ijaz wrote:
-> hidma_ll_init() allocates a handoff FIFO, but the matching 
-> hidma_ll_uninit() function (which is invoked in remove()) 
-> never releases it, leaking memory.
-> 
-> To fix this call kfifo_free in hidma_ll_uninit().
+> hidma_ll_init() is invoked to create and initialise a struct hidma_lldev
+> object during hidma probe. During this a FIFO buffer is allocated, but
+> if some failure occurs after (like hidma_ll_setup failure) we should
+> clean up the FIFO.
 > 
 > Fixes: d1615ca2e085 ("dmaengine: qcom_hidma: implement lower level hardware interface")
 > Cc: stable@vger.kernel.org
 > Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
-> 
-> ---
->  drivers/dma/qcom/hidma_ll.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/dma/qcom/hidma_ll.c b/drivers/dma/qcom/hidma_ll.c
-> index fee448499777..0c2bae46746c 100644
-> --- a/drivers/dma/qcom/hidma_ll.c
-> +++ b/drivers/dma/qcom/hidma_ll.c
-> @@ -816,6 +816,7 @@ int hidma_ll_uninit(struct hidma_lldev *lldev)
->  
->  	required_bytes = sizeof(struct hidma_tre) * lldev->nr_tres;
->  	tasklet_kill(&lldev->task);
-> +	kfifo_free(&lldev->handoff_fifo);
->  	memset(lldev->trepool, 0, required_bytes);
->  	lldev->trepool = NULL;
->  	atomic_set(&lldev->pending_tre_count, 0);
 
-Is it possible that the handoff_fifo is freed, then we could observe
-reset complete interrupts before they are being cleared in
-hidma_ll_uninit later on, which would lead to the following call chain
-
- hidma_ll_inthandler - hidma_ll_int_handler_internal -
-hidma_handle_tre_completion - hidma_post_completed -
-tasklet_schedule(&lldev->task); - hidma_ll_tre_complete - kfifo_out
-
-?
+Reviewed-by: Eugen Hristev <eugen.hristev@linaro.org>
 
