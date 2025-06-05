@@ -1,159 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-60355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7150ACF4EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 19:05:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79D64ACF50E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 19:12:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 540143AEBD6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 17:04:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 31CA117900E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 17:12:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60871274FEB;
-	Thu,  5 Jun 2025 17:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D7CE276048;
+	Thu,  5 Jun 2025 17:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="URpV1ayP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UkV2cuYJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB8327703C
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jun 2025 17:04:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C4F2750E3;
+	Thu,  5 Jun 2025 17:12:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749143100; cv=none; b=mhTyGvSmQ81j24O/7dsPUZgo5jQfgksw48C5HXoVf/EHs85uOrkjawOWIXOxtpFef2xhpt0X+Wz2NZyVYVlbI4VG6tr80pJLDOo7mXJQxBQFi6zjUGAkfJE8xR6JCNGNJvEG0gxypyIZc2aDXm3SfHl5m1wK6ZtJAkUO94xRkaI=
+	t=1749143557; cv=none; b=AJI1eyzW1dDi1Bx5lfgcy0LoqMSi7ZfqYzHgOZO1jT3c3H2wIe+wQn6MZ/KQ2pNI1qUBvfPn6K0n6gCU3WsFLIHgZPAenRa307ifrIvUFBSPXIa0LyVICdL9Zqb6wjoMxy9zLGTRBrqnqIOGivePcVchN7LbYdK+np+i3DX7zAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749143100; c=relaxed/simple;
-	bh=+ztx+saxdpo8WjLXWjfvlFkWk9/y7B6T3vhKNHZol2w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SswNaKtoe2TiaUacFiBIDpZYUvYrBmS/kRWRCv6Dzly7nG+IzY0ZcMpaxQRg1bNxKkvDOBRns5iaYZ8STpvzpG24vLH3Zg4yp1d0pu7ygm+DxmUHWN6z7eD0TnbThe/s3H/+Eg8kHBlmkZnEtNW+ZaqqtFHbzTdfwv/MtknsZXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=URpV1ayP; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-747e41d5469so1441289b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jun 2025 10:04:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749143098; x=1749747898; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=SbbUkUUtWYP7VuElEDtlyDh5ofC9gH6hUBqQUj6UZLM=;
-        b=URpV1ayPErWQO4AF2LZ/LMXXoUF5JhO0+TwoJmfzp4hbzHfTxjB1QUFgVk4TYWbLzd
-         P2G3OViWygb88QfAXSN87owVHrJ+BVMpIAvK4yESvRlgCs7a1Wgdcx8jKSwhhC8uTy2O
-         wK/XM4ZhQ4tXsja+RAhGMgtAAUpLhMj9oQz4fBomath34Q4s+Cc9V23KRthVblm6WBql
-         AqEG+hkTCJU0nXmBqGiJw2XT2MjbuLCnC1bOiACpptqHbQMk07n1ZaK1u4GEoscNlodH
-         gyzqCNnmaL7MilahS0SUwSDhLWSAXDyhQ75Aa106kHDr/MjRp2vTYCl4XW4i1u9wM5tC
-         527Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749143098; x=1749747898;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SbbUkUUtWYP7VuElEDtlyDh5ofC9gH6hUBqQUj6UZLM=;
-        b=D6ITLDor7B5FCMbYgK4KwTkEx4nQlsXgP9Q3GzvMnNgm1L1xLSWWLiwsDA5UIlf8a+
-         +ZsfiHhthKQxwvixZ4x3cS5i5y/r6O8aZNnt6IfUxlL8smFSTvmXR0c4OD1dOTkCRWjS
-         798CzMH7k7Wu4ilzs3vQWNG7LBUcDeFfARLwCcBjrl+xiAN5sI3EVRITirU84w26TWep
-         Ac22y/vuU8G/Y643EympT6JvhBV+O+Y7wuOBuulp4v7A9sBwSjTYDsG6E8LKOfsCdMbP
-         sGPiH2IL5WUos5RIbVAkfYw6a4yykdZd6Dg89/UNUe3JXlwr+0Cpne4Nu+Borv2vqKtk
-         RSpg==
-X-Forwarded-Encrypted: i=1; AJvYcCVqz+YddPgyl5Thkz3g3EJLMpvF7aRT/+X4AeMl4Z67kwbMgKHHEAcvq4leRyowadQG3h8qtoxr1foHo/2u@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxjx2iQKRz8LIO6ReGD4YchUAbQcgFPXMCEaNv91va79zzjDpqo
-	2/ek6BmObHdJ9dNnkAAAMPUc/dMTyeCqv1g8Zms+9OFfWT6BTxtX2EtHIeVzAqHkyA==
-X-Gm-Gg: ASbGncvu3zblOgElKb8CAfJ3Va0zfDZri4VsPwLizHRzY/T6CbrZAB5Yx2T3pbWRwkE
-	ZvnhHs+9gR24ND61ch1BzRl8yesdfIizqYJGuzDChDRcklVwHg1BYEGehIAN0NEksGkwBrRNlh4
-	AKKqtVh9y1KyF6exhtht2eNbXB9Sv862DIyFwXfTYIKJCoyfRHvO/gagrPjFf8F9yRfaIAhcHGC
-	29CH7SLAPzx5b9HVoRhQIeHWuM6HRFpkhEzPFMcN/ZfT6qgnZi5oQnN+tc3KNiH1LYgOGdlKly+
-	AqRSmb8rzEBKm9LI5ehl/t7cGj5yOH+9FqQntZ3vWzoByn6ykLTtCiTUbHh4
-X-Google-Smtp-Source: AGHT+IGUk6E7tZs4jvxQ/2qMmPkdZRrWLxZE7gyBNwvHo8bKeonXU/fKOmrVEc9T6w5FAgWfrpOsnw==
-X-Received: by 2002:a05:6a00:2e24:b0:740:aa33:c6f8 with SMTP id d2e1a72fcca58-74827e73bb6mr648718b3a.7.1749143097742;
-        Thu, 05 Jun 2025 10:04:57 -0700 (PDT)
-Received: from thinkpad ([120.60.50.55])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-747afed4bafsm13054775b3a.79.2025.06.05.10.04.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Jun 2025 10:04:57 -0700 (PDT)
-Date: Thu, 5 Jun 2025 22:34:50 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Qiang Yu <qiang.yu@oss.qualcomm.com>
-Cc: jeff.hugo@oss.qualcomm.com, mhi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, quic_bqiang@quicinc.com, 
-	can.guo@oss.qualcomm.com, Mayank Rana <mayank.rana@oss.qualcomm.com>
-Subject: Re: [PATCH v2] mhi: host: Add standard elf image download
- functionality
-Message-ID: <sdhop6vyvt4y63tbbtorqfd5xa4ckbiwxdad5g6zzwlljqvd6q@eoaqmairdeey>
-References: <20250603-standard_elf_image_load_support-v2-1-cce97644e99e@oss.qualcomm.com>
+	s=arc-20240116; t=1749143557; c=relaxed/simple;
+	bh=i/TRS9HoQ348xjedCJxL7IFxMWS+ebPKcpauxP9YIlQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=I9dpQR5IwfrGAncQE0Fz9oep6gIa0t2uIyNFJVKyFwNTYz8+n+at1hX7l4ZZNpA4AznDuEypgobzSO+zVhmNf5rFg0Wiw6Qzt9yOMXyR6JFdk5ugYGXUtzKUgjMIgd1GUY4qNpCWWMDiEiqRsMKBhCiJFdHv2f1ggMxTdfSnuhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UkV2cuYJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C0AC4CEE7;
+	Thu,  5 Jun 2025 17:12:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749143556;
+	bh=i/TRS9HoQ348xjedCJxL7IFxMWS+ebPKcpauxP9YIlQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=UkV2cuYJZVJGQLBsRdQ/vwtqtzA1m3P13V/CdGYmDBDpOW1W/H/biFSFqJ4H9tGVF
+	 c+na8BR4mq6E46+UU1haum/hLYbiImzDLwe8YlNT07WaxfJUN/BIYYvF1S+hQR/Mli
+	 ghBiUcin9rNsoOiA4+g6wTQwvabqAXgds6T9oWq3dAGrBrk0osZGBUvcLp11tRVE46
+	 kJvJScSXAzX9GOZ+tzAm5YSoUueknzgtNn37HQD57tbbFl86dv6Fg8B9RP/XxDISml
+	 uCwKKNSsvD3ZxWA0QiyztyRbdC9j/i6KM+Z4IC0cXj0nYHRDsmNZauhNJ7aiWynh3B
+	 3ytl4Sj74HF4w==
+Message-ID: <0a17dc61-a8eb-443c-9f4a-4f7851e07c5a@kernel.org>
+Date: Thu, 5 Jun 2025 19:12:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250603-standard_elf_image_load_support-v2-1-cce97644e99e@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 0/3] media: venus: enable venus on qcs615
+To: Dmitry Baryshkov <dmitry.baryshkov@foundries.io>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Renjiang Han <quic_renjiang@quicinc.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Nicolas Dufresne <nicolas.dufresne@collabora.com>
+References: <20250530-add-venus-for-qcs615-v8-0-c0092ac616d0@quicinc.com>
+ <wmri66tkksq6i3hfyoveedq5slghnnpozjzx6gck5r3zsiwsg6@xevgh54rnlqd>
+ <285cae4a-219c-4514-818f-34c8225529de@quicinc.com>
+ <t6niql4jfotjnbducypwxkdjqt3or7k3rwmltvbhifmpphsiwy@er56ey4v2pzo>
+ <a3bf69f3-6500-4e45-ba34-8ba24312938a@kernel.org>
+ <CAO9ioeWkLu+ne18kjEST7YU7b1aBzcMBBeyfpagzis99BAeOHg@mail.gmail.com>
+ <b710e357-09e3-460e-b097-28cf0c856aeb@kernel.org>
+ <44b3779b-702c-4e8b-8ccd-c9c3314a511f@linaro.org>
+ <nr2je5ssn22npl2dqu5aj2xcwinnjmhvl3tvuz5smr4dd2rxaj@dfkk6aktkafy>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <nr2je5ssn22npl2dqu5aj2xcwinnjmhvl3tvuz5smr4dd2rxaj@dfkk6aktkafy>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jun 03, 2025 at 02:05:44AM -0700, Qiang Yu wrote:
-> From: Mayank Rana <mayank.rana@oss.qualcomm.com>
+On 05/06/2025 18:02, Dmitry Baryshkov wrote:
+> On Thu, Jun 05, 2025 at 01:40:03PM +0100, Bryan O'Donoghue wrote:
+>> On 05/06/2025 13:33, Krzysztof Kozlowski wrote:
+>>> On 05/06/2025 14:30, Dmitry Baryshkov wrote:
+>>>> On Thu, 5 Jun 2025 at 13:13, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>>>>
+>>>>> On 02/06/2025 08:16, Dmitry Baryshkov wrote:
+>>>>>> On Sat, May 31, 2025 at 08:05:24AM +0800, Renjiang Han wrote:
+>>>>>>>
+>>>>>>> On 5/31/2025 4:27 AM, Dmitry Baryshkov wrote:
+>>>>>>>> On Fri, May 30, 2025 at 09:32:12AM +0530, Renjiang Han wrote:
+>>>>>>>>> QCS615 uses the same video core as SC7180, so reuse the same resource
+>>>>>>>>> data of SC7180 for QCS615 to enable video functionality.
+>>>>>>>>>
+>>>>>>>>> There are no resources for the video-decoder and video-encoder nodes
+>>>>>>>>> in the device tree, so remove these two nodes from the device tree. In
+>>>>>>>>> addition, to ensure that the video codec functions properly, use [3]
+>>>>>>>>> to add encoder and decoder node entries in the venus driver.
+>>>>>>>>>
+>>>>>>>>> Validated this series on QCS615 and SC7180.
+>>>>>>>>>
+>>>>>>>>> Note:
+>>>>>>>>> This series consist of DT patches and a venus driver patch. The patch
+>>>>>>>>> 1/3, which is venus driver patch, can be picked independently without
+>>>>>>>>> having any functional dependency. But patch 2/3 & patch 3/3, which are
+>>>>>>>>> DT patches, still depend on [1].
+>>>>>>>> I'd say 2/3 and 3/3 still depend on 1/3, otherwise we can get video core
+>>>>>>>> on QCS615 over(?)clocked.
+>>>>>>> Agree, so we need to make sure that the driver patch is not picked after the
+>>>>>>> DT patch.
+>>>>>>
+>>>>>> Worse: we need to make sure that the driver patch is present in the
+>>>>>> branch which picks up DT patches. Otherwise building & testing that
+>>>>>
+>>>>>
+>>>>> Well, that's a NAK then (although depends what you mean by DT).
+>>>>
+>>>> I mean qcs615.dtsi. I'd suggest an immutable branch for the driver
+>>>
+>>> Sorry, but no, DTS cannot depend on drivers. You CANNOT merge them into
+>>> one branch.
 > 
-> Currently, the FBC image is a non-standard ELF file that contains a single
-> ELF header, followed by segments for SBL, RDDM, and AMSS. Some devices are
-> unable to process this non-standard ELF format and therefore require
-> special handling during image loading.
-> 
+> Surely it can... Like any other cross-subsystem dependency.
 
-What are those "some devices"? Why are they not able to process this format
-which is used across the rest of the Qcom devices?
+Sure it cannot, because this breaks the basic rule of not mixing drivers
+into DTS. Arm soc maintainers are not merging drivers back to DTS and
+the DTS must not go via drivers tree. These are basic assumptions around
+DTS, see subsystem profile for more explanations.
 
-> Add standard_elf_image flag to determine whether the device can process
-> the non-standard ELF format. If this flag is set, a standard ELF image
-> must be loaded, meaning the first 512 KB of the FBC image should be
-> skipped when loading the AMSS image over the BHIe interface.
 
-Please explain what is present in the first 512KiB and why skipping that is
-required.
-
-> Note that
-> this flag does not affect the SBL image download process.
-> 
-> Signed-off-by: Mayank Rana <mayank.rana@oss.qualcomm.com>
-> Co-developed-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> ---
-> Changes in v2:
-> - V1 patch is paused because of no user. WLAN team plan to add support for
->   new WLAN chip that requires this patch, so send v2.
-> - Change author and SOB with new mail address.
-> - Reword commit message.
-> - Place standard_elf_image flag after wake_set in struct mhi_controller
-> - Link to v1: https://lore.kernel.org/mhi/1689907189-21844-1-git-send-email-quic_qianyu@quicinc.com/
-> ---
->  drivers/bus/mhi/host/boot.c | 7 +++++++
->  include/linux/mhi.h         | 4 ++++
->  2 files changed, 11 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-> index efa3b6dddf4d2f937535243bd8e8ed32109150a4..f1686a8e0681d49f778838820b44f4c845ddbd1f 100644
-> --- a/drivers/bus/mhi/host/boot.c
-> +++ b/drivers/bus/mhi/host/boot.c
-> @@ -584,6 +584,13 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->  	 * device transitioning into MHI READY state
->  	 */
->  	if (fw_load_type == MHI_FW_LOAD_FBC) {
-> +		dev_dbg(dev, "standard_elf_image:%s\n",
-> +			(mhi_cntrl->standard_elf_image ? "True" : "False"));
-
-This print is just a noise even for debug.
-
-> +		if (mhi_cntrl->standard_elf_image) {
-> +			fw_data += mhi_cntrl->sbl_size;
-> +			fw_sz -= mhi_cntrl->sbl_size;
-
-Is it possible to detect the image type during runtime instead of using a flag?
-Also, the flag is currently unused. So it should come along an user.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Best regards,
+Krzysztof
 
