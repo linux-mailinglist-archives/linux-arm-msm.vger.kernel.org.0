@@ -1,179 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-60280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06BB9ACEB6B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 10:03:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5E80ACEBAA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 10:19:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BAD4E168EFB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 08:03:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F121189BFC5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 08:19:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80D3A28E3F;
-	Thu,  5 Jun 2025 08:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A7F1202C50;
+	Thu,  5 Jun 2025 08:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BoJZTW4T"
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="NGxBXcmd";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="ZC02Fj6c";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="NGxBXcmd";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="ZC02Fj6c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2EA2F5B;
-	Thu,  5 Jun 2025 08:03:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783581DF982
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jun 2025 08:19:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749110601; cv=none; b=nG8jKt5CJ4QeQbuPfiIfP7WhSK/kTHe1KwgS2UX6wghrqETbbATYl7I77mm6UFyxvnJmDONqsNrT6/q44eAJ5OzoAerxeO461E8SnyVMS8C0qxTM9r2wXhfQqtYzhLsQwiKwXLr1irHTyETcbEYB+gO9hjxcy/te6anNaRege+A=
+	t=1749111561; cv=none; b=P85fGzMTRi5LKV/noBXVrPuQzoBzGdFxsVZfWxiFG+mopojh8SiGWP3YUKJqUsONP67npAlCSmbJqR6BW/yIn/crUD6QR82KkeOdWTMU/b8pHHWwErxFxWVO5myfi3tIbgFKCHsS0IuUk/+D2uPbNsZT8gOsqwcLC2cP0HOYZXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749110601; c=relaxed/simple;
-	bh=vIck/aI7o/j2TdP1WtctZ4n5LTFEe86IRscOn0Amryk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TZ4KSYyw1qstS9gkd2fOy9mfYBX7kuW63WGxzWL8+w6QW236+vNcdvNOW2dETddRqB26mcK+sV+pZPLa5K2mDoZ4+q6wnTvv4XdbxY2V7Y6cj+YXkzOswhSkDCpa8i+f7Fl5VH0QLse3GUlctWThYEBWeQEIcbZCiuiYZig+T+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BoJZTW4T; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5BEAC4CEE7;
-	Thu,  5 Jun 2025 08:03:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749110600;
-	bh=vIck/aI7o/j2TdP1WtctZ4n5LTFEe86IRscOn0Amryk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BoJZTW4T2E5gIxRD0FE9cTQGT9qwAExYR+Nruj6oEtUQeDxwaleDwG8jSoE3sjtPe
-	 pS2JNOUGEs2uZ498STCliar9BO/5ElrVUmjzzDxN6/oWIS/AiWCpc+LTFpYJQXk/Hk
-	 tDEM1Vz2F83zX7jdkN9doP4zrOQ+N4WaVCA8x4sv5/zIm97gqISfxBKqFh7oFfZ5Bj
-	 cqIAnxPS4W/cIZfUwApopUVdkaPKu+fBl+06POSwlDzyAETbV9MtWZyGxM2aHoDkrf
-	 eTW9rm3tNnqJwsl27UOMUvb5l4Bf6zmii/rIYZb3PqnHwQfwhR0Ft1Xt6OWUk9qVmc
-	 RPuinMl0UbKfg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1uN5ZF-000000005bD-3s24;
-	Thu, 05 Jun 2025 10:03:17 +0200
-Date: Thu, 5 Jun 2025 10:03:17 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] phy: use per-PHY lockdep keys
-Message-ID: <aEFPRWErB4QkbMkt@hovoldconsulting.com>
-References: <20250530-phy-subinit-v2-1-09dfe80e82a8@oss.qualcomm.com>
+	s=arc-20240116; t=1749111561; c=relaxed/simple;
+	bh=yCMP8Lum90d9CGiLF0R/riTplp4Nx6De8j9jjW5EJew=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lFvDdKekiWQbUHrca5dPyDpp+aNhMUaqdrCdyoxP0ToeCI1FYMIjhpuL66nj0Y41zDaTV6WQW8Dg9B2pQUIFWaesEz/BVPToJXHpcW2hBTbxLeRIBBUb7GcW5+EZtOsJRgW7eYg5bJkBzrWsLrVgixQJui/PVeJwEgVf0h7onU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=NGxBXcmd; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=ZC02Fj6c; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=NGxBXcmd; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=ZC02Fj6c; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 900EF346EC;
+	Thu,  5 Jun 2025 08:19:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1749111557; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=fj9Szv0LbVFJcOMgxSguKHfNqbe7TRsRQyGeRO1yt/4=;
+	b=NGxBXcmd0kYWGA7SU/uZZAcK7ea7EpM/5EBGVxvDzrtrJSNjci7yVr3EA9l3Lpvc0GHqtw
+	ibmTeVp5uoei4gFF4RnqpSwYnK0R/jbkkMzM6VJ3CRigjXdjgVgaAhOJkm2xNi5YJV0qRU
+	vNCH43qmecYDAICNPxcgQLt83wUeV6s=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1749111557;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=fj9Szv0LbVFJcOMgxSguKHfNqbe7TRsRQyGeRO1yt/4=;
+	b=ZC02Fj6cnPN6VL2Gx3Hs+aVMTV1y1ahrXU234pzXZVBffXq+R5iav79Daxhwr0HOGHU7So
+	SgUkOi7jc9BMOxBQ==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=NGxBXcmd;
+	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=ZC02Fj6c
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1749111557; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=fj9Szv0LbVFJcOMgxSguKHfNqbe7TRsRQyGeRO1yt/4=;
+	b=NGxBXcmd0kYWGA7SU/uZZAcK7ea7EpM/5EBGVxvDzrtrJSNjci7yVr3EA9l3Lpvc0GHqtw
+	ibmTeVp5uoei4gFF4RnqpSwYnK0R/jbkkMzM6VJ3CRigjXdjgVgaAhOJkm2xNi5YJV0qRU
+	vNCH43qmecYDAICNPxcgQLt83wUeV6s=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1749111557;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=fj9Szv0LbVFJcOMgxSguKHfNqbe7TRsRQyGeRO1yt/4=;
+	b=ZC02Fj6cnPN6VL2Gx3Hs+aVMTV1y1ahrXU234pzXZVBffXq+R5iav79Daxhwr0HOGHU7So
+	SgUkOi7jc9BMOxBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 345AC137FE;
+	Thu,  5 Jun 2025 08:19:17 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id HPhlDAVTQWjVQAAAD6G6ig
+	(envelope-from <vbabka@suse.cz>); Thu, 05 Jun 2025 08:19:17 +0000
+Message-ID: <dfdc4fc3-0145-4296-a236-14423f9b29b3@suse.cz>
+Date: Thu, 5 Jun 2025 10:19:16 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250530-phy-subinit-v2-1-09dfe80e82a8@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 01/16] KVM: Rename CONFIG_KVM_PRIVATE_MEM to
+ CONFIG_KVM_GMEM
+Content-Language: en-US
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vannapurve@google.com,
+ ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com,
+ michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
+ isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
+ suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
+ quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
+ quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
+ quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
+ james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
+ maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
+ roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
+ rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com
+References: <20250527180245.1413463-1-tabba@google.com>
+ <20250527180245.1413463-2-tabba@google.com>
+From: Vlastimil Babka <vbabka@suse.cz>
+Autocrypt: addr=vbabka@suse.cz; keydata=
+ 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
+ m6M14QORSWTLRg==
+In-Reply-To: <20250527180245.1413463-2-tabba@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-3.01 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	FROM_HAS_DN(0.00)[];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	ARC_NA(0.00)[];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[redhat.com,kernel.org,ellerman.id.au,brainfault.org,sifive.com,dabbelt.com,eecs.berkeley.edu,google.com,zeniv.linux.org.uk,infradead.org,linux-foundation.org,intel.com,linux.intel.com,digikod.net,maciej.szmigiero.name,amd.com,oracle.com,gmail.com,arm.com,quicinc.com,huawei.com,linux.dev,amazon.co.uk,nvidia.com];
+	DKIM_TRACE(0.00)[suse.cz:+];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	TO_MATCH_ENVRCPT_SOME(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[62];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.cz:dkim,suse.cz:mid,suse.cz:email]
+X-Spam-Level: 
+X-Spam-Flag: NO
+X-Rspamd-Queue-Id: 900EF346EC
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spam-Score: -3.01
 
-On Fri, May 30, 2025 at 07:08:28PM +0300, Dmitry Baryshkov wrote:
-> If the PHY driver uses another PHY internally (e.g. in case of eUSB2,
-> repeaters are represented as PHYs), then it would trigger the following
-> lockdep splat because all PHYs use a single static lockdep key and thus
-> lockdep can not identify whether there is a dependency or not and
-> reports a false positive.
+On 5/27/25 20:02, Fuad Tabba wrote:
+> The option KVM_PRIVATE_MEM enables guest_memfd in general. Subsequent
+> patches add shared memory support to guest_memfd. Therefore, rename it
+> to KVM_GMEM to make its purpose clearer.
 > 
-> Make PHY subsystem use dynamic lockdep keys, assigning each driver a
-> separate key. This way lockdep can correctly identify dependency graph
-> between mutexes.
-> 
->  ============================================
->  WARNING: possible recursive locking detected
->  6.15.0-rc7-next-20250522-12896-g3932f283970c #3455 Not tainted
->  --------------------------------------------
->  kworker/u51:0/78 is trying to acquire lock:
->  ffff0008116554f0 (&phy->mutex){+.+.}-{4:4}, at: phy_init+0x4c/0x12c
-> 
->  but task is already holding lock:
->  ffff000813c10cf0 (&phy->mutex){+.+.}-{4:4}, at: phy_init+0x4c/0x12c
-> 
->  other info that might help us debug this:
->   Possible unsafe locking scenario:
-> 
->         CPU0
->         ----
->    lock(&phy->mutex);
->    lock(&phy->mutex);
-> 
->   *** DEADLOCK ***
-> 
->   May be due to missing lock nesting notation
-> 
->  4 locks held by kworker/u51:0/78:
->   #0: ffff000800010948 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work+0x18c/0x5ec
->   #1: ffff80008036bdb0 (deferred_probe_work){+.+.}-{0:0}, at: process_one_work+0x1b4/0x5ec
->   #2: ffff0008094ac8f8 (&dev->mutex){....}-{4:4}, at: __device_attach+0x38/0x188
->   #3: ffff000813c10cf0 (&phy->mutex){+.+.}-{4:4}, at: phy_init+0x4c/0x12c
-> 
->  stack backtrace:
->  CPU: 0 UID: 0 PID: 78 Comm: kworker/u51:0 Not tainted 6.15.0-rc7-next-20250522-12896-g3932f283970c #3455 PREEMPT
->  Hardware name: Qualcomm CRD, BIOS 6.0.240904.BOOT.MXF.2.4-00528.1-HAMOA-1 09/ 4/2024
->  Workqueue: events_unbound deferred_probe_work_func
->  Call trace:
->   show_stack+0x18/0x24 (C)
->   dump_stack_lvl+0x90/0xd0
->   dump_stack+0x18/0x24
->   print_deadlock_bug+0x258/0x348
->   __lock_acquire+0x10fc/0x1f84
->   lock_acquire+0x1c8/0x338
->   __mutex_lock+0xb8/0x59c
->   mutex_lock_nested+0x24/0x30
->   phy_init+0x4c/0x12c
->   snps_eusb2_hsphy_init+0x54/0x1a0
->   phy_init+0xe0/0x12c
->   dwc3_core_init+0x450/0x10b4
->   dwc3_core_probe+0xce4/0x15fc
->   dwc3_probe+0x64/0xb0
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+> Co-developed-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
 
->   platform_probe+0x68/0xc4
->   really_probe+0xbc/0x298
->   __driver_probe_device+0x78/0x12c
->   driver_probe_device+0x3c/0x160
->   __device_attach_driver+0xb8/0x138
->   bus_for_each_drv+0x84/0xe0
->   __device_attach+0x9c/0x188
->   device_initial_probe+0x14/0x20
->   bus_probe_device+0xac/0xb0
->   deferred_probe_work_func+0x8c/0xc8
->   process_one_work+0x208/0x5ec
->   worker_thread+0x1c0/0x368
->   kthread+0x14c/0x20c
->   ret_from_fork+0x10/0x20
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
 
-Nit: This last bit of the stack trace adds little value and can be
-dropped.
- 
-> Fixes: 3584f6392f09 ("phy: qcom: phy-qcom-snps-eusb2: Add support for eUSB2 repeater")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
-> Note: I've used a Fixes tag pointing to the commit which actually
-> started using nested PHYs. If you think that it's incorrect, I'm fine
-> with dropping it.
-
-I think it's warranted. And if there were further users before this one
-as Neil suggested you could just list them all as each has been
-introducing a new splat.
-
-> Note2: I've tried using mutex_lock_nested, however that didn't play
-> well. We can not store nest level in the struct phy (as it can be used
-> by different drivers), so using mutex_lock_nested() would require us to
-> change and wrap all PHY APIs which take a lock internally. Using dynamic
-> lockdep keys looks like a more ellegant solution, especially granted
-> that there is no extra impact if lockdep is disabled.
-
-Thanks for fixing this. I've been using a local hack based on
-mutex_lock_nested() too but dynamic keys looks like the right way to go.
-
-Perhaps you can add:
-
-Reported-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/lkml/ZnpoAVGJMG4Zu-Jw@hovoldconsulting.com/
-
-Works fine on the T14s:
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-
-Johan
 
