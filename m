@@ -1,204 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-60287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E80AACEBBC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 10:23:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56BA9ACEBC1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 10:25:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E58A03A9CDA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 08:22:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 121FC167533
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 08:25:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ABFB202969;
-	Thu,  5 Jun 2025 08:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19DBA13AD05;
+	Thu,  5 Jun 2025 08:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="BVvTCP7w";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="52AJfBUL";
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="BVvTCP7w";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="52AJfBUL"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="esmUzvm3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A302D20012C
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jun 2025 08:22:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1051D2B9BC
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jun 2025 08:25:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749111781; cv=none; b=pAh3m4KA+T0bL/H7G4mUhUPW8i8RMZps1vUGJ8nDf8ZicMcwYLgqOp5KnFY80DSHl66BDlLG5TGGEs6w9DmPdMpn9OVvGO4jFXFeoEzXcTIZkyXnUD+W5Q8mISGTWwae9o88qdtTryaJ2ptNDxoagul07/HUI1IdHNQUx+D/G1Q=
+	t=1749111904; cv=none; b=GoP+ZXGkzFYintzHrQPGy5x3VMnRUcWVTxaZe7VFIsQ3n5QWV9NtbicfEvGV74s6acaL9fOUIu6OYn3LPpK0xNURkP1lrAKEfshn4lfKCWxWWyGlg7R4eKfcGKPOtykE3lhVV4XjjfD6YxVIuzL2mOSuXI9grhh1NDr52WzJIrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749111781; c=relaxed/simple;
-	bh=uHSslpVvpbNutVNL531HipxRZqVqWFE1P7BJubSreqs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rnQ0qF+aCYk9dycvy2H3oJvnks5dn5zGP+KdJ339NWMm/CwLp20g2YNYYpOID7EElE/GTMBz64mI8cKZsdqH2xSL0Num+C76aw6N2Oaf+svYEvrLD0mSLBpbL+OcR9+lZd2ox/SEdX4t6bMGLGqUTqb1ZV8krFYsCEF17OkLVsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=BVvTCP7w; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=52AJfBUL; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=BVvTCP7w; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=52AJfBUL; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id D344820712;
-	Thu,  5 Jun 2025 08:22:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1749111777; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=RNOOMt6gVtSsjgMnNOu4mFpT2MiC9j469wwimvASn88=;
-	b=BVvTCP7wZyxg/btVTnAfysRj+e4G58vB1bCk93JSfqeOMsvAIOWyIzqcNi3lIhrW6+424z
-	AtCm8Sb23eFJR0orAJt2217qV41HyJg867mdeuct5XWP6EVd0YUqaZqAAtRFDDdZ1k6YcD
-	fB6UBzunCzZn0x0oUnXVCTuIPbN4lFc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1749111777;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=RNOOMt6gVtSsjgMnNOu4mFpT2MiC9j469wwimvASn88=;
-	b=52AJfBULLmeaGlod/t0S/qTiTzYsuJcsW41f/IIuC/cdGalPKzJ+WjWmynfq3u0HN2tvoK
-	GgzWG/uzoCUsVQAw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1749111777; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=RNOOMt6gVtSsjgMnNOu4mFpT2MiC9j469wwimvASn88=;
-	b=BVvTCP7wZyxg/btVTnAfysRj+e4G58vB1bCk93JSfqeOMsvAIOWyIzqcNi3lIhrW6+424z
-	AtCm8Sb23eFJR0orAJt2217qV41HyJg867mdeuct5XWP6EVd0YUqaZqAAtRFDDdZ1k6YcD
-	fB6UBzunCzZn0x0oUnXVCTuIPbN4lFc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1749111777;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=RNOOMt6gVtSsjgMnNOu4mFpT2MiC9j469wwimvASn88=;
-	b=52AJfBULLmeaGlod/t0S/qTiTzYsuJcsW41f/IIuC/cdGalPKzJ+WjWmynfq3u0HN2tvoK
-	GgzWG/uzoCUsVQAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 74B94137FE;
-	Thu,  5 Jun 2025 08:22:57 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id i4ArHOFTQWg9QgAAD6G6ig
-	(envelope-from <vbabka@suse.cz>); Thu, 05 Jun 2025 08:22:57 +0000
-Message-ID: <c4a80b88-71b5-4ed3-9e8f-75ef2c2b3c64@suse.cz>
-Date: Thu, 5 Jun 2025 10:22:57 +0200
+	s=arc-20240116; t=1749111904; c=relaxed/simple;
+	bh=xZaBeZfytCrJKOrjxBjzXhmtknBq7xCcBctElbMsMBY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Wv1ArIUjJ4zo8kHId+0YeG30hbDvp0KUQ4F6vB9ZktFt8G9UZCcPgX0LFYCZb9W/yRHynnWwDAik0sdAJCClSNeG71UrNvH9hRtU/euMFWlIpP6Ub/UUMy44McqcANHXakx5JqLBbNw3lNvmn76MWRScmitUgODW2cPhttT6Ii4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=esmUzvm3; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55581VIp032409
+	for <linux-arm-msm@vger.kernel.org>; Thu, 5 Jun 2025 08:25:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	UtqcVj6Ok3Dj6NeRpJglAQeZgn6trv34Ds7Go5yrpew=; b=esmUzvm3cW8H23iF
+	rVcEDPGn6EbXYZArK0XDbOxU4YfnOkb4uRSWRZB31Pd0Fqs7eY+W8x3hf/HuB8EY
+	XZkF83spB64HgrCeV7RN3tH74FuPPxsPMZTWM92FmxfCr8wnhIius+VXM1sBn2y4
+	K69otmMDrJpc41dOJHQLoHGxZmFLeC2PHc7nvP/x+8V98jm2lE+rO1NtivJgSm08
+	Ja2V50M7QgtvZOYjiw81JaaNKHW/Kq6M2jM4nNGp3wcSV2g3lCTvnnDte2Vf8t1J
+	DFId6dEvTCq/41xJCwJZa2oK7QvI7h7gRojzmKtJPdqylamXZXMoiegzh9SaxN+a
+	b/erxQ==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 471sfuyg3s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jun 2025 08:24:59 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c5e2872e57so142123585a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jun 2025 01:24:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749111898; x=1749716698;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UtqcVj6Ok3Dj6NeRpJglAQeZgn6trv34Ds7Go5yrpew=;
+        b=L7sZVUNkWFHymVDCnzR+7rmLPH1SCs8lRCJaI4iXSIYTFUPfcYoULyN7uJy1SKSpXy
+         WEHY0EtJJW0tMDIZQy4ZxTMBHwuoL3JrgnB8Ou6widXvF3QwnIzkLclVD9QX3IaJYI/a
+         bQpRQnmOITE5crl2sx3lXVCvq/Jrl0iEeWyahL7n0/dga9GG3VAfQ+R0DIUKYlE4a/21
+         StIbRUm4vOJEGAkCkRN70ArMgI2XyQd6to9t79+ZdYk3jScwj3sz4yeXJBDwm+Sza5ae
+         II/z6yJBNBHAfyr1ezxM3bwetwSQ58mwiH5Zl9H5VJOh2aFMNke1lXgXBpJbS5Y1wI7s
+         hDkg==
+X-Forwarded-Encrypted: i=1; AJvYcCW8ObJM0tnqKtmxRzxDV+23T//g9Ictayuaye+zhEkSJFW+5tam3IbxYa8RXci8VjOaNS8C2Ah5I9H60zvN@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6/1dFDGT3g0Wve3emHf1gUD1ckTL6dmTHFeozLJoUIS4uZ7FE
+	iBpvNdRFKLcperbQnj4NBg14eeX32NplCTlL6qvLEjUPICdmaJ3mFxT53s8Jm9l8b59PL2ncse+
+	/cOMgzTHy5VuY3QH3PR16chveR68jzdu1HTL2EX91AMNpPx5CIsYmlwzzQuLF9m11qKNS2A4X/b
+	y+JsEXwq+YIBonmFqimORL4E6EpsBgMzHqcsSQYQ5+xo8=
+X-Gm-Gg: ASbGncvizIj/wB7IUAOH28wfiQl9NgJXKN5AnVJ9RdQXKZjoUQ4edpzCOxze8oTIxb0
+	EJNOIcGlquOXflhWMnc/MdnX1MT64SurSZQkfJzuEG5ohm2P71thAcjpRLQ8sV6xdY4KYcQ==
+X-Received: by 2002:ad4:5ecd:0:b0:6fa:cdc9:8b02 with SMTP id 6a1803df08f44-6faf6f9e8f2mr86670296d6.16.1749111897901;
+        Thu, 05 Jun 2025 01:24:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwCWJddjYrv66EpklTX8+EcEihxS3i6p2Y/uBi1wSP3SPDwA7FauNdbdHLl/D99kI5j790nOP61NBUmgl1UqE=
+X-Received: by 2002:ad4:5ecd:0:b0:6fa:cdc9:8b02 with SMTP id
+ 6a1803df08f44-6faf6f9e8f2mr86670066d6.16.1749111897530; Thu, 05 Jun 2025
+ 01:24:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 07/16] KVM: Fix comment that refers to kvm uapi header
- path
-Content-Language: en-US
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- isaku.yamahata@intel.com, mic@digikod.net, vannapurve@google.com,
- ackerleytng@google.com, mail@maciej.szmigiero.name, david@redhat.com,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250527180245.1413463-1-tabba@google.com>
- <20250527180245.1413463-8-tabba@google.com>
-From: Vlastimil Babka <vbabka@suse.cz>
-Autocrypt: addr=vbabka@suse.cz; keydata=
- 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
- m6M14QORSWTLRg==
-In-Reply-To: <20250527180245.1413463-8-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Flag: NO
-X-Spam-Score: -2.80
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	FREEMAIL_CC(0.00)[redhat.com,kernel.org,ellerman.id.au,brainfault.org,sifive.com,dabbelt.com,eecs.berkeley.edu,google.com,zeniv.linux.org.uk,infradead.org,linux-foundation.org,intel.com,linux.intel.com,digikod.net,maciej.szmigiero.name,amd.com,oracle.com,gmail.com,arm.com,quicinc.com,huawei.com,linux.dev,amazon.co.uk,nvidia.com];
-	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	ARC_NA(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_MATCH_ENVRCPT_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[62];
-	TO_DN_SOME(0.00)[]
-X-Spam-Level: 
+References: <20250604-qrtr_mhi_auto-v2-1-a143433ddaad@oss.qualcomm.com>
+In-Reply-To: <20250604-qrtr_mhi_auto-v2-1-a143433ddaad@oss.qualcomm.com>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Date: Thu, 5 Jun 2025 10:24:46 +0200
+X-Gm-Features: AX0GCFu6xWPgyNFI69TOSuHK6IF_kGY0Cv_eMSlpv6YDKdLvYpYbd911sy_xsb8
+Message-ID: <CAFEp6-1h01SScjbv_m8rU9DxhEgAFOBT_7U2mQegFZQq_O0y4A@mail.gmail.com>
+Subject: Re: [PATCH v2] net: qrtr: mhi: synchronize qrtr and mhi preparation
+To: Chris Lew <chris.lew@oss.qualcomm.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>,
+        Hemant Kumar <quic_hemantk@quicinc.com>,
+        Maxim Kochetkov <fido_max@inbox.ru>,
+        Manivannan Sadhasivam <mani@kernel.org>, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=CY8I5Krl c=1 sm=1 tr=0 ts=6841545b cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10
+ a=VwQbUJbxAAAA:8 a=zitRP-D0AAAA:8 a=EUspDBNiAAAA:8 a=us5iPAVF1rjgtYe1CekA:9
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=xwnAI6pc5liRhupp6brZ:22
+X-Proofpoint-ORIG-GUID: gisCrMANkXf0bdlVrXQmFSKEHAERHL9E
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA1MDA3MyBTYWx0ZWRfX5NdRccG/3Nhz
+ mbM/BD9miPpIIwVga8/WoBdxf694QUAXgYEDbfXQKSmRcNz6rest2q9XwADKUi943zH3FYG/q3B
+ Pl3OoPM/Ed81cL6v1Pn5j2+Rm50FxRnM2x+ZL86Oy7FZso+ECs1dzirr0zK50s7wEIj9TVsufop
+ agSiMvj5CllNJItTSB0Es9elofvWFcp/c6Mm1z7OMzUuPjtorcikwUz1BWJb1WL9RSPuCDq0DC1
+ 3laVu2DpNg6s8pC8pgZj40059qtYTBTBYJ11NnWXxxQJMYcsbjaBvPMtZB3jRVgTa0uhtmAIxej
+ 1oxwmFsBA7bT/DbtEM3SUiXFtI1CpgG8lbqR3KQmj6HG10udhrOsiJrFpA1bqVv80VWnH72CNUA
+ cAJSckq53Dp+iPhzIzBCam0sv2jlxrgsOAYnNZ9sLhTyz0343+IIK4tgxswMUxdIt1WwFLbj
+X-Proofpoint-GUID: gisCrMANkXf0bdlVrXQmFSKEHAERHL9E
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-05_02,2025-06-03_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 mlxscore=0 adultscore=0 bulkscore=0 suspectscore=0
+ malwarescore=0 clxscore=1015 lowpriorityscore=0 spamscore=0 impostorscore=0
+ phishscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506050073
 
-On 5/27/25 20:02, Fuad Tabba wrote:
-> The comment that refers to the path where the user-visible memslot flags
-> are refers to an outdated path and has a typo. Make it refer to the
-> correct path.
-> 
-> Signed-off-by: Fuad Tabba <tabba@google.com>
+On Wed, Jun 4, 2025 at 11:05=E2=80=AFPM Chris Lew <chris.lew@oss.qualcomm.c=
+om> wrote:
+>
+> The call to qrtr_endpoint_register() was moved before
+> mhi_prepare_for_transfer_autoqueue() to prevent a case where a dl
+> callback can occur before the qrtr endpoint is registered.
+>
+> Now the reverse can happen where qrtr will try to send a packet
+> before the channels are prepared. The correct sequence needs to be
+> prepare the mhi channel, register the qrtr endpoint, queue buffers for
+> receiving dl transfers.
+>
+> Since qrtr will not use mhi_prepare_for_transfer_autoqueue(), qrtr must
+> do the buffer management and requeue the buffers in the dl_callback.
+> Sizing of the buffers will be inherited from the mhi controller
+> settings.
+>
+> Fixes: 68a838b84eff ("net: qrtr: start MHI channel after endpoit creation=
+")
+> Reported-by: Johan Hovold <johan@kernel.org>
+> Closes: https://lore.kernel.org/linux-arm-msm/ZyTtVdkCCES0lkl4@hovoldcons=
+ulting.com/
+> Signed-off-by: Chris Lew <chris.lew@oss.qualcomm.com>
+> ---
+>  net/qrtr/mhi.c | 52 +++++++++++++++++++++++++++++++++++++++++++++++-----
+>  1 file changed, 47 insertions(+), 5 deletions(-)
+>
+> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
+> index 69f53625a049..5e7476afb6b4 100644
+> --- a/net/qrtr/mhi.c
+> +++ b/net/qrtr/mhi.c
+> @@ -15,6 +15,8 @@ struct qrtr_mhi_dev {
+>         struct qrtr_endpoint ep;
+>         struct mhi_device *mhi_dev;
+>         struct device *dev;
+> +
+> +       size_t dl_buf_len;
+>  };
+>
+>  /* From MHI to QRTR */
+> @@ -24,13 +26,22 @@ static void qcom_mhi_qrtr_dl_callback(struct mhi_devi=
+ce *mhi_dev,
+>         struct qrtr_mhi_dev *qdev =3D dev_get_drvdata(&mhi_dev->dev);
+>         int rc;
+>
+> -       if (!qdev || mhi_res->transaction_status)
+> +       if (!qdev)
+> +               return;
+> +
+> +       if (mhi_res->transaction_status =3D=3D -ENOTCONN) {
+> +               devm_kfree(qdev->dev, mhi_res->buf_addr);
+> +               return;
+> +       } else if (mhi_res->transaction_status) {
+>                 return;
+> +       }
+>
+>         rc =3D qrtr_endpoint_post(&qdev->ep, mhi_res->buf_addr,
+>                                 mhi_res->bytes_xferd);
+>         if (rc =3D=3D -EINVAL)
+>                 dev_err(qdev->dev, "invalid ipcrouter packet\n");
+> +
+> +       rc =3D mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, mhi_res->buf_addr,=
+ qdev->dl_buf_len, MHI_EOT);
+>  }
+>
+>  /* From QRTR to MHI */
+> @@ -72,6 +83,30 @@ static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep=
+, struct sk_buff *skb)
+>         return rc;
+>  }
+>
+> +static int qrtr_mhi_queue_rx(struct qrtr_mhi_dev *qdev)
+> +{
+> +       struct mhi_device *mhi_dev =3D qdev->mhi_dev;
+> +       struct mhi_controller *mhi_cntrl =3D mhi_dev->mhi_cntrl;
+> +       int rc =3D 0;
+> +       int nr_el;
+> +
+> +       qdev->dl_buf_len =3D mhi_cntrl->buffer_len;
+> +       nr_el =3D mhi_get_free_desc_count(mhi_dev, DMA_FROM_DEVICE);
+> +       while (nr_el--) {
+> +               void *buf;
+> +
+> +               buf =3D devm_kzalloc(qdev->dev, qdev->dl_buf_len, GFP_KER=
+NEL);
+> +               if (!buf) {
+> +                       rc =3D -ENOMEM;
+> +                       break;
+> +               }
+> +               rc =3D mhi_queue_buf(mhi_dev, DMA_FROM_DEVICE, buf, qdev-=
+>dl_buf_len, MHI_EOT);
+> +               if (rc)
+> +                       break;
+> +       }
+> +       return rc;
+> +}
+> +
+>  static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
+>                                const struct mhi_device_id *id)
+>  {
+> @@ -87,17 +122,24 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mh=
+i_dev,
+>         qdev->ep.xmit =3D qcom_mhi_qrtr_send;
+>
+>         dev_set_drvdata(&mhi_dev->dev, qdev);
+> -       rc =3D qrtr_endpoint_register(&qdev->ep, QRTR_EP_NID_AUTO);
+> +
+> +       /* start channels */
+> +       rc =3D mhi_prepare_for_transfer(mhi_dev);
+>         if (rc)
+>                 return rc;
+>
+> -       /* start channels */
+> -       rc =3D mhi_prepare_for_transfer_autoqueue(mhi_dev);
 
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+The autoqueue has been introduced to simplify drivers, but if it
+becomes unused, should we simply remove that interface from MHI? Or
+improve it with a autoqueue_prepare() and autoqueue_start()?
 
+Regards,
+Loic
 
