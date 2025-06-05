@@ -1,229 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-60341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40F3CACF35E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 17:49:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F7ABACF387
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 17:57:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0120B16F9F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 15:49:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C3592189905C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 15:58:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EBD71E1E04;
-	Thu,  5 Jun 2025 15:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 956B51E25E3;
+	Thu,  5 Jun 2025 15:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TMsfx9df"
+	dkim=pass (2048-bit key) header.d=foundries.io header.i=@foundries.io header.b="apTrcIVq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63671139D1B
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jun 2025 15:49:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15921E25E1
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Jun 2025 15:57:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749138550; cv=none; b=LfHsc5tpFLSOFMHJ3J3k5/BqwVIBWxACsMDhrlY5GvuTHsJOSUWTgHEmMRImFz4/hau545UQfLNYRUAylcaL8jHN1dqqrXgR1wAi8b4zy3NVEzRNgP+JsWrjSe2D++lr5MGD9wAFooz7JSZeyHuxAj7yFz5PrVSuVaXGkBI9GG8=
+	t=1749139067; cv=none; b=JZogrezYU5S23vz9H91uBXaoHhnkBU5h//MQpSwdMRDzFKWCYsLnjpUSpglXQWBRjvUQVxpDkc5JhB8x86CaVNhUzuZme8aFZC4Kh5cta+4ySsYPbhwv4CwHxgfXPWxJEL8+iqy09OeOjAz37gMb5muCHClio1vUN8GJ6Pmydh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749138550; c=relaxed/simple;
-	bh=HUXNdqbdKq5LkD3zx1yQGiiQEB63iZz9SD3lYOvjfiQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TOoLH4S3ocIivAn7fxJoU3UBL08yPZ+9glLJiuYCwq3Ehoc3Nif4zwUq6VBpBwTZljQ28kkEh9paV1NrMnKiR3T4QfMxpCQVR03CUJ11lMr8Yb/46eHN1FOZT+MISmDHgCvI2JhN4L5b9we8AaJYyaKv+rVe84+jiKx1mwDXbQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TMsfx9df; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1749138546;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=ysJoE7XfT1A5tdrysWCWchWteLaSJ+QmQ6w3ErFhmQs=;
-	b=TMsfx9dfZQIoxDhBh4ukEoMHXJzGxTJ42wExD+SkpoljUNU73aeULdjVc4urKh5gNk4WYA
-	fqq0e0ch/11uxknRsQ87dQyNTymbHS69B15vkCEPfgBkFJoYFzKgQ6fQHg0TXpDjZZnBRL
-	fKBfNi9rLMNytiaJjED60QeGGNZEhyw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-8g_PhVHxMBytMKSVO1y4xw-1; Thu, 05 Jun 2025 11:49:05 -0400
-X-MC-Unique: 8g_PhVHxMBytMKSVO1y4xw-1
-X-Mimecast-MFC-AGG-ID: 8g_PhVHxMBytMKSVO1y4xw_1749138544
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-3a4f3796779so824874f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jun 2025 08:49:04 -0700 (PDT)
+	s=arc-20240116; t=1749139067; c=relaxed/simple;
+	bh=WgMGgdMd38oyIPbik/hGQ40Tix6e4NF6Yzsh7po2Fqw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AIpZYjyTx6Ut6cWWkBMSb5kXJqku7RvsgEeausYAQSP7U0Fy+79kOLcoDLi5m5yLk4qzec//+dEYIE2Yiz+AOeBR+PyaO7voci8CJYWrBLOuX/pQjy9LiM+42BcuSuPtPkyaFqvmkpMjvY3VXjN48kzw0fahPFq3vvG4rPJSi5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=foundries.io; spf=pass smtp.mailfrom=foundries.io; dkim=pass (2048-bit key) header.d=foundries.io header.i=@foundries.io header.b=apTrcIVq; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=foundries.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foundries.io
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-55324062ea8so1514301e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Jun 2025 08:57:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=foundries.io; s=google; t=1749139064; x=1749743864; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IL2rqOYu8VKVkpdUoK8lFHqW1MNjlNlFCTBMUdbtw5I=;
+        b=apTrcIVq+XRT0VliWIz7SMUMW2qyhhk+nRIOtZCUdAyTbY3Hd0o14nIjAy529f1DwZ
+         JKqMfdXUcr5L7Odf0Qqs4dq44baXJd4OsS8V8eX2jVj2IZRmAkQxcRZviLsLa3FpbaRy
+         //YNr2+yW1U8RLlFeN5pS9R+Ctlqng3NSMpUMCI6IyuIdysXr1sJrkITFIw1f5auTOpD
+         5Xl+GgYKs9uy8J/i1JLX2dtDyObYNSb9nZP5pp9TjgMQdR11ABUZBW7Yd5rZg02sW1qO
+         we5hNTBCtaKBADrqF3BE9n24DZYB+03L6WDKf5IttMgjRLx0vuD3ElQkLEOWGdvyt/vr
+         ucXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749138544; x=1749743344;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ysJoE7XfT1A5tdrysWCWchWteLaSJ+QmQ6w3ErFhmQs=;
-        b=lcsHQma0YBpN+wsllhNw6TppxhopaX6mB4fdszj13Z8LfLjuCfF4RXPZ7QF8IMk9Cb
-         2WK6qlMWNG1gabKOvlWt5oAlTMM/hyAMRVdvKqVyNahb8GwKhufXP7gR+5MLxIpgkfro
-         6oZ3S6vrUA9BueTkcBMTY/HslKNxU3hEcZ4egPOBtAE3b+J/DDouvIjvqrXlWPsRgwQv
-         1rQXCOalROExcqP6OwvSEAuibTBrufieofVk2iazfx2SAkrQo1L0gebsq1yi9c1Ib4if
-         PrnLLP5xyK7dGIuDPnmW7D21H/8/bax9bHUuCXC1o9qHnisig6g8AiXnntDiOfCFtXQj
-         hAZw==
-X-Forwarded-Encrypted: i=1; AJvYcCXuJWsVsNZVc3YfBObeJFkoGOs0vrNfogMiSgBfLBJEVXxkA9bxnsmBRzim+BF1MMpX5t3DiXfYdyT7cJc7@vger.kernel.org
-X-Gm-Message-State: AOJu0YyFZqf7UCcAbP8/Za63t06U+0hqMS11nW8o9csX4wnB7zQCgq31
-	2WeWv8M7PvF/TQH3ZkU+uj0IlUS6B+DkEzPI8uU6Co6x+xbx0jat3kIdZdQ/oYAf2Audy1CXngI
-	5PRsfdMIkUauCDT49e8xJT4sSLelMaMsHDADa5e5TLsMopmEfQ5f++YLamh0hp8FqOzk=
-X-Gm-Gg: ASbGncv/IEoSB7QNbbGEWD8Jy6k6ASDUwEk2vUJv695qz4w9RE050qBDcnnuKNn4Cqu
-	3wYJBpZsOZQBY6hsypA4FkCRf1LADZOJOx5jMq285S63JYf/ExhRiwBbi0hwU+SEWbHTre16ZFQ
-	a6UEIbZ7soFUuLyCQDmj775zAneJNHm5nRcFIlC+jQEAP/8RpT+yGo+xU9vgN0eOUUVOI6MA2PL
-	GBHofzwFkLio1s2PYbqwN85BwWtf8jFvV6Cb61BbquAAft/gyeZXmlXNkK2Z/aPuZESJ9ADxQ9I
-	DPzWncexv2RReJOQJrXKENaFPrvZvun7wPbKrvBT/hX41ZmYgFkowUYp/81/CLaV/jhWHS6vrpJ
-	W1V7YR3o3eOmHjz0hMV6k43aV3X7o/1Y8bng4su4x67pIc08=
-X-Received: by 2002:a05:6000:401e:b0:3a4:fe9d:1b10 with SMTP id ffacd0b85a97d-3a51d976f74mr6676919f8f.45.1749138543834;
-        Thu, 05 Jun 2025 08:49:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGRFPGBK7zFkICtEVikQ7T+tn2BS+pM+SiEyoCb6szDDevFRYWd/PLHjWJsZvRYrIl0D18/Vw==
-X-Received: by 2002:a05:6000:401e:b0:3a4:fe9d:1b10 with SMTP id ffacd0b85a97d-3a51d976f74mr6676893f8f.45.1749138543387;
-        Thu, 05 Jun 2025 08:49:03 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f27:ec00:4f4d:d38:ba97:9aa2? (p200300d82f27ec004f4d0d38ba979aa2.dip0.t-ipconnect.de. [2003:d8:2f27:ec00:4f4d:d38:ba97:9aa2])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-451fb169412sm22609415e9.5.2025.06.05.08.49.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Jun 2025 08:49:02 -0700 (PDT)
-Message-ID: <4909d6dc-09f5-4960-b8be-5150b2a03e45@redhat.com>
-Date: Thu, 5 Jun 2025 17:49:00 +0200
+        d=1e100.net; s=20230601; t=1749139064; x=1749743864;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IL2rqOYu8VKVkpdUoK8lFHqW1MNjlNlFCTBMUdbtw5I=;
+        b=TXLxOLPcquy03qIfpoyM3O5Tgw7MBhnQlnMMTkR8H7LwEI4ahYSOY9gKaZKz/4tAbN
+         dFz/dotpLVj07BzLGa98fz1OyHlyUWeJISLWptN/mo12LiGqnMxIbbujWYUX77pmZygF
+         f/rUoyTTHWi6Z+8YSENQN/1sWA5iDNSvLDigGOr2Az62URtB9VGjDJV5eEhRrTFk5xwg
+         zT36hgLDr7s2a004uPo123bJ9Ov3oD+/SnKEqkJoDKmkQj7t44LLPFk1YA3Jk/M0RMFO
+         XWC1bcHECbb6SsjwYR469GPuJnM/GPfkwSvaiXMXqi9KncsVPLoDyIvfLkLddsC+ZxoT
+         DN3g==
+X-Forwarded-Encrypted: i=1; AJvYcCWEtp0aWNzKrt++WNQKEL2TUa6PI/SZwNKl2VBt39ZWXtCg8JSNg88rAoAsevYz5JD1q8a4/0A+R/Nto/oI@vger.kernel.org
+X-Gm-Message-State: AOJu0YwV49ouctC2zRBdlxjMPJVhOqBIlFDKXpBj+Q81ebrSRFNmqlEo
+	GL5euBG9GkJmxrqceWc9EnF06SOQNWcT+K3wp6NdVMYHBrCGVdPYYcgEkFXa52Q2BwU=
+X-Gm-Gg: ASbGncsIcj1pishqpgKbaT+xZ/Mae00rDxTbm9kJhMjmfkqkXun5Mk8UQc5vBK8Qbpb
+	O0h1tMDNy1OlS/1F40oqmYf91ou8kq2w3d88klotMlnOg1cGjxF911GjXDqY5DAP9SIbIY+FPoH
+	Lphj32BR+4NoBhQGfNk3WriZVpSfF803zThJgCPrkSkxeyjgSF6X//aSd7Lkqk+L0OiU0Ti+9yf
+	NDvKqHXOFwNhdZZ//ULeNwOJN4F3lo93KrOWNMnrQAbWcy6PqLgVtq0JuFgLOi2UdhRIVnjVUQo
+	MkQfHO8AZrHYCi+PD11kHXXMHjLaULW04KoPoGgCaqQ7fIFL+ZiI/id9AEQopsaMZDRpWodSQ77
+	pCk+yv3471YWbeMrnsLTSh6q129deKbI9VO3GrsV/OU90Exn3smbs78I=
+X-Google-Smtp-Source: AGHT+IEB3YEeO6zjpPzz4GmREpxraxHTzP68+ARHxZnojSSC5uKraBhg6PJus5tZV4YR+AghTaJ4SQ==
+X-Received: by 2002:ac2:4c45:0:b0:553:510d:f46b with SMTP id 2adb3069b0e04-55356df49e0mr2781393e87.32.1749139063513;
+        Thu, 05 Jun 2025 08:57:43 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553379374ffsm2647976e87.216.2025.06.05.08.57.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Jun 2025 08:57:43 -0700 (PDT)
+Date: Thu, 5 Jun 2025 18:57:41 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@foundries.io>
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, 
+	Doug Anderson <dianders@chromium.org>, stable@vger.kernel.org
+Subject: Re: [PATCH 1/3] soc: qcom: mdt_loader: Ensure we don't read past the
+ ELF header
+Message-ID: <bsnn6xpkubifuwxz4kccvves3ifq4ocp53qmbobv6ilmnfuh7x@eejawp7thorm>
+References: <20250605-mdt-loader-validation-and-fixes-v1-0-29e22e7a82f4@oss.qualcomm.com>
+ <20250605-mdt-loader-validation-and-fixes-v1-1-29e22e7a82f4@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 12/18] KVM: x86: Enable guest_memfd shared memory for
- SW-protected VMs
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
- vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250605153800.557144-1-tabba@google.com>
- <20250605153800.557144-13-tabba@google.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250605153800.557144-13-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250605-mdt-loader-validation-and-fixes-v1-1-29e22e7a82f4@oss.qualcomm.com>
 
-On 05.06.25 17:37, Fuad Tabba wrote:
-> Define the architecture-specific macro to enable shared memory support
-> in guest_memfd for relevant software-only VM types, specifically
-> KVM_X86_DEFAULT_VM and KVM_X86_SW_PROTECTED_VM.
+On Thu, Jun 05, 2025 at 08:43:00AM -0500, Bjorn Andersson wrote:
+> When the MDT loader is used in remoteproc, the ELF header is sanitized
+> beforehand, but that's not necessary the case for other clients.
 > 
-> Enable the KVM_GMEM_SHARED_MEM Kconfig option if KVM_SW_PROTECTED_VM is
-> enabled.
+> Validate the size of the firmware buffer to ensure that we don't read
+> past the end as we iterate over the header.
 > 
-> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
+> Fixes: 2aad40d911ee ("remoteproc: Move qcom_mdt_loader into drivers/soc/qcom")
+> Cc: <stable@vger.kernel.org>
+> Reported-by: Doug Anderson <dianders@chromium.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 > ---
->   arch/x86/include/asm/kvm_host.h | 10 ++++++++++
->   arch/x86/kvm/Kconfig            |  1 +
->   arch/x86/kvm/x86.c              |  3 ++-
->   3 files changed, 13 insertions(+), 1 deletion(-)
+>  drivers/soc/qcom/mdt_loader.c | 37 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 37 insertions(+)
 > 
-> diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-> index 709cc2a7ba66..ce9ad4cd93c5 100644
-> --- a/arch/x86/include/asm/kvm_host.h
-> +++ b/arch/x86/include/asm/kvm_host.h
-> @@ -2255,8 +2255,18 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_forced_root_level,
->   
->   #ifdef CONFIG_KVM_GMEM
->   #define kvm_arch_supports_gmem(kvm) ((kvm)->arch.supports_gmem)
+> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+> index b2c0fb55d4ae678ee333f0d6b8b586de319f53b1..1da22b23d19d28678ec78cccdf8c328b50d3ffda 100644
+> --- a/drivers/soc/qcom/mdt_loader.c
+> +++ b/drivers/soc/qcom/mdt_loader.c
+> @@ -18,6 +18,31 @@
+>  #include <linux/slab.h>
+>  #include <linux/soc/qcom/mdt_loader.h>
+>  
+> +static bool mdt_header_valid(const struct firmware *fw)
+> +{
+> +	const struct elf32_hdr *ehdr;
+> +	size_t phend;
+> +	size_t shend;
 > +
-> +/*
-> + * CoCo VMs with hardware support that use guest_memfd only for backing private
-> + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enabled.
-> + */
-> +#define kvm_arch_supports_gmem_shared_mem(kvm)			\
-> +	(IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM) &&			\
-> +	 ((kvm)->arch.vm_type == KVM_X86_SW_PROTECTED_VM ||		\
-> +	  (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM))
->   #else
->   #define kvm_arch_supports_gmem(kvm) false
-> +#define kvm_arch_supports_gmem_shared_mem(kvm) false
->   #endif
->   
->   #define kvm_arch_has_readonly_mem(kvm) (!(kvm)->arch.has_protected_state)
-> diff --git a/arch/x86/kvm/Kconfig b/arch/x86/kvm/Kconfig
-> index b37258253543..fdf24b50af9d 100644
-> --- a/arch/x86/kvm/Kconfig
-> +++ b/arch/x86/kvm/Kconfig
-> @@ -47,6 +47,7 @@ config KVM_X86
->   	select KVM_GENERIC_HARDWARE_ENABLING
->   	select KVM_GENERIC_PRE_FAULT_MEMORY
->   	select KVM_GENERIC_GMEM_POPULATE if KVM_SW_PROTECTED_VM
-> +	select KVM_GMEM_SHARED_MEM if KVM_SW_PROTECTED_VM
->   	select KVM_WERROR if WERROR
+> +	if (fw->size < sizeof(*ehdr))
+> +		return false;
+> +
+> +	ehdr = (struct elf32_hdr *)fw->data;
+> +
+> +	if (memcmp(ehdr->e_ident, ELFMAG, SELFMAG))
+> +		return false;
+> +
+> +	phend = size_add(size_mul(sizeof(struct elf32_phdr), ehdr->e_phnum), ehdr->e_phoff);
 
-Is $subject and this still true, given that it's now also supported for 
-KVM_X86_DEFAULT_VM?
+Nit, this should be a max(sizeof() and ehdr->e_phentsize.
+
+> +	if (phend > fw->size)
+> +		return false;
+> +
+> +	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
+> +	if (shend > fw->size)
+
+Same for e_shentsize
+
+> +		return false;
+> +
+> +	return true;
+> +}
+> +
+>  static bool mdt_phdr_valid(const struct elf32_phdr *phdr)
+>  {
+>  	if (phdr->p_type != PT_LOAD)
+> @@ -82,6 +107,9 @@ ssize_t qcom_mdt_get_size(const struct firmware *fw)
+>  	phys_addr_t max_addr = 0;
+>  	int i;
+>  
+> +	if (!mdt_header_valid(fw))
+> +		return -EINVAL;
+> +
+>  	ehdr = (struct elf32_hdr *)fw->data;
+>  	phdrs = (struct elf32_phdr *)(ehdr + 1);
+>  
+> @@ -134,6 +162,9 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
+>  	ssize_t ret;
+>  	void *data;
+>  
+> +	if (!mdt_header_valid(fw))
+> +		return ERR_PTR(-EINVAL);
+> +
+>  	ehdr = (struct elf32_hdr *)fw->data;
+>  	phdrs = (struct elf32_phdr *)(ehdr + 1);
+>  
+> @@ -214,6 +245,9 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
+>  	int ret;
+>  	int i;
+>  
+> +	if (!mdt_header_valid(fw))
+> +		return -EINVAL;
+> +
+>  	ehdr = (struct elf32_hdr *)fw->data;
+>  	phdrs = (struct elf32_phdr *)(ehdr + 1);
+>  
+> @@ -310,6 +344,9 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+>  	if (!fw || !mem_region || !mem_phys || !mem_size)
+>  		return -EINVAL;
+>  
+> +	if (!mdt_header_valid(fw))
+> +		return -EINVAL;
+> +
+>  	is_split = qcom_mdt_bins_are_split(fw, fw_name);
+>  	ehdr = (struct elf32_hdr *)fw->data;
+>  	phdrs = (struct elf32_phdr *)(ehdr + 1);
+> 
+> -- 
+> 2.49.0
+> 
 
 -- 
-Cheers,
-
-David / dhildenb
-
+With best wishes
+Dmitry
 
