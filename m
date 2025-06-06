@@ -1,242 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-60458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6761AACFF52
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 11:30:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23830ACFF55
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 11:32:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B3DBA1898EF0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 09:31:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A7523AE958
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 09:32:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98FDC1E521D;
-	Fri,  6 Jun 2025 09:30:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="M0snuBBf"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE7121D416E;
+	Fri,  6 Jun 2025 09:32:26 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954B627468
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jun 2025 09:30:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11BCA27468;
+	Fri,  6 Jun 2025 09:32:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749202241; cv=none; b=IoHabybaqaeCE72KrpLfNRGYa35j4MXQ68SEJmytiWa0m010ZJs0oZ/C9vqcexsqkD5GgrMwf8UnFQ/bULYH+oM8ccXVQo0ZvWvHglZ+orl2wdYdZQHY79trssCSYcp7r1Ak1zt0yFwO5wD+CytU1RtMJQYKN/mAT5JB59wxDd4=
+	t=1749202346; cv=none; b=IYklOYotOyHDubiz8vvkTfqrkaPE1jpJVj3VmBWGyxVfVzSTRx4IROjgDDQxNwamKV4ltlijQ5tyHzfB4tJfQw8CO26ilt+2WrwsQDkOVjP6Wd2DpzOVTPtDtadIb+L/CrsbfI+oSlyK7J5RRmmKqSEv31PjsxaU5UF5anD2PU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749202241; c=relaxed/simple;
-	bh=v6mtyaeZM2QKhdUgEvpmUFi+oe/kFqqUWq+ydSdmob0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PzXd0gISSYQ0LePxPtbgogl3w6p+bBwlkbVr9+yI3Nzu92nRXzgY8dbcUOYaTavriX6jlvGLmJMJ0R6TcaL/uSgRha0ZuwrKCS5K/FnZhGd83VIWIjUW0MQgkUBJPRFeifS0IM/W4H5Qt8rK1Z04RkcO+jFJELbX2dcn5NkL8l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=M0snuBBf; arc=none smtp.client-ip=209.85.160.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-47e9fea29easo292121cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jun 2025 02:30:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1749202237; x=1749807037; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=AHMke6C+g7YRY9qvjK/py0IA+evmz7x9/AgLeMPLZq4=;
-        b=M0snuBBfDuWHzdCEek8u2KZR5IFg01Vr9EBJ/ig2a96xiAAy5F/7e3Eu3TrSSlgUzr
-         bL24Ln0FVqHtvbTc4KjUt/XvyeTndUKh7koOGWb9YWesSXhdDJRLEoOvPUSCe9d36nXK
-         Mnd5ZEb5BCmkhvG9e4jEbPVp3D+/9Guxm/NlMWYw26qY+hYhb6Yvg8imRzel1ht71Sil
-         +NfjLuRX/iwtuDfi16DNBXXaiAhY4n5K1LGfk8UZIJhGrsOH8RXsO2TRtU36Ub5tBN0H
-         XyEkfvMr6zQmOt918neAiS3Cv481JMkt5W4nIIBVe2Qzlp3lCWawgF0svt6wBFfm3hih
-         M+lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749202237; x=1749807037;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AHMke6C+g7YRY9qvjK/py0IA+evmz7x9/AgLeMPLZq4=;
-        b=twsnZHD18U7HOGiv8gup5cASIfYPJ/qnGLey1F7qVIp/Gi7Jq4YprGxPa5yf5NXQwm
-         9yYwf+aiB4gpGwHnx0nvNyoLIQafdM1RQqIAgU+/K51zHlnAhDF4FkqNESGQ7N4mqUUs
-         ogk5PyK40/lg7Kzicz1engXF989CHD55lHXIGvx34SdZcQZiRh4aQTg8kVoZYAqm79bk
-         IlEee0Y8Po5UrNNuptdRak/yRcHnZsNZLOPIzjqiIniSu9i2xLECb7ghDD7eIbp4kBq1
-         RIsad7r5IV/ue9AwWtOmYzWOZgfIVF/il0i1F6resu3jE1kNlTVEDHNcfhILFcCHrvAQ
-         Rjrw==
-X-Forwarded-Encrypted: i=1; AJvYcCWLcSyR4UlYkpMv31b71dtQPNDFk5ONxbHW6X1/DEwo1O+uHjDVpIN54efZQkEwmMonQCOzlt7q4TLP+iP9@vger.kernel.org
-X-Gm-Message-State: AOJu0YzmkukyXHsd641KO5VnTk/EgH4NCrtZcJ0UOfpuQ1SADAu28Im5
-	FqECk4KPMsWZurbsHiW6y33wQI5buCWH7U9Jp1KfLsRj349RCnJGgGm+vMaauQm61tI9ElAjgR0
-	FR1C/zeIN4eA/ZW3qjl01B+Ig8YjUHoLciAUib1rH
-X-Gm-Gg: ASbGnctqProc6uM9ayQDWrwFx98yOfLoP49AWeS23L12CN77gKE9UFKlNwPhD+tdte/
-	WySbHYXHUjPNDaVN9EQiT4hys4FCayJcrDKEDOKko6Rp2xnWSYodl/SkI1HHbELc/W7QMPKf+j/
-	ja04OoCDj7K0BOtjovTt6JJC5mfHOlPKExmk3wwC5hwoU=
-X-Google-Smtp-Source: AGHT+IH0ZdQDgWYn0D1IxBbNogXfkYZpSsJPMcWn3ZIbTJ/pAnpfxFEKuRL8D1abQDg1x7njp8cRUPduA0bIkHHCnys=
-X-Received: by 2002:ac8:580b:0:b0:476:f1a6:d8e8 with SMTP id
- d75a77b69052e-4a643bafe10mr2073391cf.11.1749202237028; Fri, 06 Jun 2025
- 02:30:37 -0700 (PDT)
+	s=arc-20240116; t=1749202346; c=relaxed/simple;
+	bh=g81aEbYwteZ3V3OWzvKzvIPAPWgs84217Y0lm1MM9SA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VZFEGuWT30NXGaXRxqLv/8BQiRw95BnSjQNEgwddOn5B+TFgNHVdCtkGrxv31jyMqkS0+G12Hv5AmAJ1Xq9/U9kHgRowdCgprft4pOYWrRfS+qys7/t1ptoBEL0J2fpEn/MdhTlACXu65AlKCzSUpo/HNNPwcMmCQmWqBOuvqxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 830E3153B;
+	Fri,  6 Jun 2025 02:32:06 -0700 (PDT)
+Received: from [10.57.49.177] (unknown [10.57.49.177])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 4A98B3F59E;
+	Fri,  6 Jun 2025 02:32:22 -0700 (PDT)
+Message-ID: <11ea6009-72d2-4306-a068-a828d4af429d@arm.com>
+Date: Fri, 6 Jun 2025 10:32:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250605153800.557144-1-tabba@google.com> <20250605153800.557144-9-tabba@google.com>
- <ad4157a1-6e38-46df-ae24-76d036972fbc@redhat.com>
-In-Reply-To: <ad4157a1-6e38-46df-ae24-76d036972fbc@redhat.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Fri, 6 Jun 2025 10:30:00 +0100
-X-Gm-Features: AX0GCFuvjlKB2JP904W-jAiPrFFo9C41E95GRy92kulxqRvrv_hy1VMtB0oS2WQ
-Message-ID: <CA+EHjTziHb5kbY-aA1HPKYpg6iAPcQ19=51pLQ05JRJKeOZ8=A@mail.gmail.com>
-Subject: Re: [PATCH v11 08/18] KVM: guest_memfd: Allow host to map guest_memfd pages
-To: David Hildenbrand <david@redhat.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 1/2] dt-bindings: arm: Add device Trace Network On Chip
+ definition
+Content-Language: en-GB
+To: Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: kernel@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+ coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20250606-trace-noc-v8-0-833f94712c57@quicinc.com>
+ <20250606-trace-noc-v8-1-833f94712c57@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20250606-trace-noc-v8-1-833f94712c57@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi David,
+On 06/06/2025 10:18, Yuanfang Zhang wrote:
+> Add a new coresight-tnoc.yaml file to describe the bindings required to
+> define Trace Network On Chip (TNOC) in device trees. TNOC is an
+> integration hierarchy which is a hardware component that integrates the
+> functionalities of TPDA and funnels. It collects trace form subsystems
+> and transfers to coresight sink.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+> ---
+>   .../bindings/arm/qcom,coresight-tnoc.yaml          | 111 +++++++++++++++++++++
+>   1 file changed, 111 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..d07c6f2d7b949f69f9d8dd8de8664382eb39fac1
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.yaml
+> @@ -0,0 +1,111 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/qcom,coresight-tnoc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Trace Network On Chip - TNOC
+> +
+> +maintainers:
+> +  - Yuanfang Zhang <quic_yuanfang@quicinc.com>
+> +
+> +description: >
+> +  The Trace Network On Chip (TNOC) is an integration hierarchy hardware
+> +  component that integrates the functionalities of TPDA and funnels.
+> +
+> +  It sits in the different subsystem of SOC and aggregates the trace and
+> +  transports it to Aggregation TNOC or to coresight trace sink eventually.
+> +  TNOC embeds bridges for all the interfaces APB, ATB, TPDA and NTS (Narrow
+> +  Time Stamp).
+> +
+> +  TNOC can take inputs from different trace sources i.e. ATB, TPDM.
 
-On Fri, 6 Jun 2025 at 10:12, David Hildenbrand <david@redhat.com> wrote:
->
-> On 05.06.25 17:37, Fuad Tabba wrote:
-> > This patch enables support for shared memory in guest_memfd, including
-> > mapping that memory from host userspace.
-> >
-> > This functionality is gated by the KVM_GMEM_SHARED_MEM Kconfig option,
-> > and enabled for a given instance by the GUEST_MEMFD_FLAG_SUPPORT_SHARED
-> > flag at creation time.
-> >
-> > Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-> > Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
->
-> [...]
->
-> > +static bool kvm_gmem_supports_shared(struct inode *inode)
-> > +{
-> > +     u64 flags;
-> > +
-> > +     if (!IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM))
-> > +             return false;
-> > +
-> > +     flags = (u64)inode->i_private;
->
-> Can probably do above
->
-> const u64 flags = (u64)inode->i_private;
->
+This looks like the generic description of TNOC. But please could you
+also mention this binding is only for Aggregator TNOC ? Or make the
+binding as such explicit ?
 
-Ack.
+- qcom,coresight-aggregator-tnoc
 
-> > +
-> > +     return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> > +}
-> > +
-> > +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
-> > +{
-> > +     struct inode *inode = file_inode(vmf->vma->vm_file);
-> > +     struct folio *folio;
-> > +     vm_fault_t ret = VM_FAULT_LOCKED;
-> > +
-> > +     if (((loff_t)vmf->pgoff << PAGE_SHIFT) >= i_size_read(inode))
-> > +             return VM_FAULT_SIGBUS;
-> > +
-> > +     folio = kvm_gmem_get_folio(inode, vmf->pgoff);
-> > +     if (IS_ERR(folio)) {
-> > +             int err = PTR_ERR(folio);
-> > +
-> > +             if (err == -EAGAIN)
-> > +                     return VM_FAULT_RETRY;
-> > +
-> > +             return vmf_error(err);
-> > +     }
-> > +
-> > +     if (WARN_ON_ONCE(folio_test_large(folio))) {
-> > +             ret = VM_FAULT_SIGBUS;
-> > +             goto out_folio;
-> > +     }
-> > +
-> > +     if (!folio_test_uptodate(folio)) {
-> > +             clear_highpage(folio_page(folio, 0));
-> > +             kvm_gmem_mark_prepared(folio);
-> > +     }
-> > +
-> > +     vmf->page = folio_file_page(folio, vmf->pgoff);
-> > +
-> > +out_folio:
-> > +     if (ret != VM_FAULT_LOCKED) {
-> > +             folio_unlock(folio);
-> > +             folio_put(folio);
-> > +     }
-> > +
-> > +     return ret;
-> > +}
-> > +
-> > +static const struct vm_operations_struct kvm_gmem_vm_ops = {
-> > +     .fault = kvm_gmem_fault_shared,
-> > +};
-> > +
-> > +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
-> > +{
-> > +     if (!kvm_gmem_supports_shared(file_inode(file)))
-> > +             return -ENODEV;
-> > +
-> > +     if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
-> > +         (VM_SHARED | VM_MAYSHARE)) {
-> > +             return -EINVAL;
-> > +     }
-> > +
-> > +     vma->vm_ops = &kvm_gmem_vm_ops;
-> > +
-> > +     return 0;
-> > +}
-> > +
-> >   static struct file_operations kvm_gmem_fops = {
-> > +     .mmap           = kvm_gmem_mmap,
-> >       .open           = generic_file_open,
-> >       .release        = kvm_gmem_release,
-> >       .fallocate      = kvm_gmem_fallocate,
-> > @@ -428,6 +500,7 @@ static int __kvm_gmem_create(struct kvm *kvm, loff_t size, u64 flags)
-> >       }
-> >
-> >       file->f_flags |= O_LARGEFILE;
-> > +     allow_write_access(file);
->
-> Why is that required?
->
-> As the docs mention, it must be paired with a previous deny_write_access().
->
-> ... and I don't find similar usage anywhere else.
-
-This is to address Gavin's concern [*] regarding MADV_COLLAPSE, which
-isn't an issue until hugepage support is enabled. Should we wait until
-we have hugepage support?
-
-[*] https://lore.kernel.org/all/a3d6ff25-236b-4dfd-8a04-6df437ecb4bb@redhat.com/
+Suzuki
 
 
-> Apart from that here
->
-> Acked-by: David Hildenbrand <david@redhat.com>
+> +
+> +# Need a custom select here or 'arm,primecell' will match on lots of nodes
+> +select:
+> +  properties:
+> +    compatible:
+> +      contains:
+> +        enum:
+> +          - qcom,coresight-tnoc
+> +  required:
+> +    - compatible
+> +
+> +properties:
+> +  $nodename:
+> +    pattern: "^tn(@[0-9a-f]+)$"
+> +
+> +  compatible:
+> +    items:
+> +      - const: qcom,coresight-tnoc
+> +      - const: arm,primecell
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    items:
+> +      - const: apb_pclk
+> +
+> +  clocks:
+> +    items:
+> +      - description: APB register access clock
+> +
+> +  in-ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    patternProperties:
+> +      '^port(@[0-9a-f]{1,2})?$':
+> +        description: Input connections from CoreSight Trace Bus
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +
+> +  out-ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +    additionalProperties: false
+> +
+> +    properties:
+> +      port:
+> +        description:
+> +          Output connection to CoreSight Trace Bus
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - in-ports
+> +  - out-ports
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    tn@109ab000  {
+> +      compatible = "qcom,coresight-tnoc", "arm,primecell";
+> +      reg = <0x109ab000 0x4200>;
+> +
+> +      clocks = <&aoss_qmp>;
+> +      clock-names = "apb_pclk";
+> +
+> +      in-ports {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        port@0 {
+> +          reg = <0>;
+> +
+> +          tn_ag_in_tpdm_gcc: endpoint {
+> +            remote-endpoint = <&tpdm_gcc_out_tn_ag>;
+> +          };
+> +        };
+> +      };
+> +
+> +      out-ports {
+> +        port {
+> +          tn_ag_out_funnel_in1: endpoint {
+> +            remote-endpoint = <&funnel_in1_in_tn_ag>;
+> +          };
+> +        };
+> +      };
+> +    };
+> +...
+> 
 
-Thanks!
-/fuad
-
-> --
-> Cheers,
->
-> David / dhildenb
->
 
