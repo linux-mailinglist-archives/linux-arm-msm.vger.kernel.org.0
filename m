@@ -1,403 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-60466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24958AD00BD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 12:47:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E4ECAD00BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 12:47:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4ECA33B2320
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 10:46:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 98DB81896716
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 10:48:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D10C4287500;
-	Fri,  6 Jun 2025 10:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ED7C286887;
+	Fri,  6 Jun 2025 10:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tPyoyjUi"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="neHZTkBR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129892857CF
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jun 2025 10:47:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CA327FB35;
+	Fri,  6 Jun 2025 10:47:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749206831; cv=none; b=lX+f6elb2nUfac+jtbu8/6wKnoXi4u5dBAiLvU+tlgQtIkM/T5jotAFlrX87wPitz0B/5LfznXAYW9cZCS7dKD2axjr8GJldrROuKcUeWjqLxovtUrOkt6kJXID7ahyukLHKeAK6+/SGd+11lTsjczzaX7Hg95AswXysIVXL9pI=
+	t=1749206873; cv=none; b=TEN0P7P86Yj8l3lI3GaTPcLFsDAcE+Fqzx8jlbgh0SictIGE4zXN4UWhu9yMPfz147gyDC85LqlxYKEw+OfUhvcMT0LlVQ6KCO575MGyCmZ4/nUhJEnIMsFWqO+wGTzMBprj1OsRMILY7LDlaYqeMTnHBuruXvFXvW4unB9XcvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749206831; c=relaxed/simple;
-	bh=f+/j1GlnG7yRbwOXO1wHIG7cgcq9EW09L+j7P/rKe1k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GAn4MtvvN9QqaWQCm40dxu1EbdJHuCH7MWpncwjsQ9p6c/ZdpJx1JXW3l2xI/4iEUJ7Qo6GraWvxkT06ZS8JAAzbkNPMOSCAr3VJiJKTrHoIR5GMmaMrd1ewTCgASn1QeTxqY50E0m+bJJaxfJjPQTivP4Q/8FFmoZEzSjIDtKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tPyoyjUi; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-32a6c473e28so1739781fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jun 2025 03:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749206827; x=1749811627; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Sdh3DYrunzvdU87ptIswN2gqeFyihiWuxRVoLIp7jeA=;
-        b=tPyoyjUiWWXQlWbmAywAoEgb95uFXimp9DGWTF9bnPOfoetyO9LhY5eRf1B3l4NS42
-         p8QMipdHZ4eJ0sT9yloT19TE9BX6ywU2RNJLDrbVuryl5yDWtueOBrRxzT0qFhEwfE9H
-         q+Fmg7fhwjfLzJNL9DxAG1NzmB/KjlT4zQTEAR3SWQfbE0xA9flHNZ1B5U/XRJGCnetP
-         DFjo/ifQNB98y1ziAz/I2QvDGXZ5nxHRoN9RIC5ZEeLjZdktjIsorjgr9DihoDFGwt8p
-         MX14o1o8bD8LnpwLu6RulESjXrste7fGpUKPLX/EMEHn1/gcPm4vdXRUgxmISnpfWPak
-         h/eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749206827; x=1749811627;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sdh3DYrunzvdU87ptIswN2gqeFyihiWuxRVoLIp7jeA=;
-        b=bEUUBm9no3fIwwY+7J2gZGhnBCxJpXWhuCXY7oewxJ3+0IEH6NjYYvRzpha30n7rTM
-         bYPQn6Q56q6fxXmKTCnWu9Cj64MzpaDwmAnbr4Qc7/D5R1wsF+noWjzIpqIYSDhOnTbh
-         JTvWrql7w/R9Hdc6/YVut/AIgMfjMa76fD/oHnsWfz2SVAVGhuCD8JFjo96yw8WaUWQd
-         wQbh4Dqzg1p4LeNJcQQaq0//rcM67sA/mfF2wxUahaHqNlmftleVpWKSY5mME/vjyiUP
-         c/VQ0a7RkzYKzrlfPB8WvlBjnbzMf/16Ih7ziNorpbH1oD3G96+ZjyfLF2QgcvrBpbd8
-         2Ibg==
-X-Forwarded-Encrypted: i=1; AJvYcCW9yHDaiS5ol+Uh4PiSYb3LTaGYlAJi8KWo+qg25op3vrqt/l232WyocxZjWR6OKN3vP6tT8rGP0UJOElTO@vger.kernel.org
-X-Gm-Message-State: AOJu0YwowDhsm1dp1ZxI/Wq64Q9fT14eHa6qGx7v559DF3PJeio/dVXO
-	+dkkX9YZYCyp1lTWTNXRGfy9KdDSGkIs6TAc6FtYCcoBaN34yzT3Lh/42jPOhqaIJKQ=
-X-Gm-Gg: ASbGncsdQ1arXq7mj64wwRWVSmtOlBjhEnMvPDcbZArqS2KtAa4DpklMDSCC4lwADPw
-	2k5K57UOupHXbZon6ooqatzNSSafh7ECbfQ+rtp8hMH0VVadUQRBoQNEudbd/GuwKFny2ogUknG
-	pAuHwwjxj+uFacluM2z9gvXHcB2AdNyfzn8B/x/gCkrCxpVKYhbTcrLTPjC1B6yjosX1TTvvGJ5
-	Djpc+Yj1jzsG9sMdggync1AUfWr2suTlsDQCdrLSChrpRtF09GWF6Ot0S0/7yqEFxUe2Pszs6e9
-	/ngLWf3PILZRxWgn5vTQmVTVuM6JV/78QvqNT/gL4XJd5m7l4gN3U94ozu21Ujo6s2iYt4V3yp9
-	f4omOiGCjBYcZLw4TVkfcJiVaEpWq7rA+/79c8o2x
-X-Google-Smtp-Source: AGHT+IGxjhoxsgVGEZoQ3YemtpUiJRV1bf+P3EhChyczWjkpXHPpDvcvXiPRpgWGAH6vjpJO+8TgQw==
-X-Received: by 2002:ac2:4e0d:0:b0:553:2e82:162e with SMTP id 2adb3069b0e04-553685e5a0dmr156612e87.2.1749206827030;
-        Fri, 06 Jun 2025 03:47:07 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32ae1b33b48sm1379641fa.30.2025.06.06.03.47.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Jun 2025 03:47:06 -0700 (PDT)
-Message-ID: <2884f55c-6b80-406a-ba21-aaa26297b1bf@linaro.org>
-Date: Fri, 6 Jun 2025 13:46:59 +0300
+	s=arc-20240116; t=1749206873; c=relaxed/simple;
+	bh=QskOF1fBwiApH4/AwXD144gfb0R5kxegs360iIkwX4A=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cs0EoqcDChiEeES+uQG2O2lYLn7hWAhQwE5KRMq9HqVYmlOtobqqbhfVaZAu4CdnCDLBjcc6+5rD/ZOTbbTC37xF8jkcZKHohP+fCR6dNNPEyLFqaeOafsCkObEpawFUEI9BeZG56X8mU2RnJp76mStxwY+leOLILKAec/mp5FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=neHZTkBR; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5565pR89006326;
+	Fri, 6 Jun 2025 10:47:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=hAPSsiUdvJ416pcpm4p/aT
+	AD3Uul2pKU2G/WCD7xAW4=; b=neHZTkBR04EjSx8zUJeogduVY9E1GMt4xf7fDx
+	b0IBRXIF/cfpRO7RoQKutkBh4Q/NeMuZVNDD5VMw6PYHyhCghNoQdfs4219bvTMt
+	ubXNhtwA9hYvQhDrmCOMkU4MhwHWhDbtrLKb6aeVl4PnRG1C1IMjDpV2YEE4Rh8w
+	wqPGyPRq0ERfaBDT89JPkkfalZ7FudRN219clT+W+z43UUeMEFRWyo0TJS5IBBVn
+	Cr5iuRUJKRXEYH2Zqz1XT2ngUSRIYqM3+lFmgWIu/5dBDvNdUM4uGUhHur7mxQaG
+	grQMnZUme6Yt3xFA11++0bWZ9Axfa06p0NxNyQEBpsjT4kOA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 471g8t4bud-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 06 Jun 2025 10:47:46 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 556AlkAK001122
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 6 Jun 2025 10:47:46 GMT
+Received: from hu-dmukhopa-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 6 Jun 2025 03:47:38 -0700
+From: Debraj Mukhopadhyay <quic_dmukhopa@quicinc.com>
+To: Ulf Hansson <ulf.hansson@linaro.org>,
+        Adrian Hunter
+	<adrian.hunter@intel.com>
+CC: <linux-mmc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
+        Eric Biggers
+	<ebiggers@kernel.org>,
+        Neeraj Soni <quic_neersoni@quicinc.com>,
+        "Debraj
+ Mukhopadhyay" <quic_dmukhopa@quicinc.com>,
+        Ram Prakash Gupta
+	<quic_rampraka@quicinc.com>,
+        Nitin Rawat <quic_nitirawa@quicinc.com>,
+        "Sachin
+ Gupta" <quic_sachgupt@quicinc.com>,
+        Bhaskar Valaboju
+	<quic_bhaskarv@quicinc.com>,
+        Gaurav Kashyap <quic_gaurkash@quicinc.com>,
+        Sarthak Garg <quic_sartgarg@quicinc.com>,
+        Seshu Madhavi Puppala
+	<quic_spuppala@quicinc.com>
+Subject: [PATCH v2] mmc: Avoid reprogram all keys to Inline Crypto Engine for MMC runtime suspend resume
+Date: Fri, 6 Jun 2025 16:17:14 +0530
+Message-ID: <20250606104714.1501297-1-quic_dmukhopa@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/4] media: dt-bindings: Add qcom,msm8939-camss
-Content-Language: ru-RU
-To: vincent.knecht@mailoo.org, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
- phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20250602-camss-8x39-vbif-v4-0-32c277d8f9bf@mailoo.org>
- <20250602-camss-8x39-vbif-v4-3-32c277d8f9bf@mailoo.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20250602-camss-8x39-vbif-v4-3-32c277d8f9bf@mailoo.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: LrZwEgCPuoX7sMsO1t2kE6T5iZhrp6zt
+X-Authority-Analysis: v=2.4 cv=EPcG00ZC c=1 sm=1 tr=0 ts=6842c752 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=1QBs8BvCmvQ6mH5QngwA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: LrZwEgCPuoX7sMsO1t2kE6T5iZhrp6zt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDA5NyBTYWx0ZWRfX/ryXZDAnRGlG
+ OjiKXRUYxye73XvmkJr3Ne9b5DaMrdDswdbF4fOr6goipqfAw2wG/Kf9U2/nx3JS+qwyGJyN5/8
+ U8qg0hzGLNIbY9SfKn5KxEQ+ySI+RM7loyrSDjTv4PgsFmRFzv5dY6McaBh6ZSOy/6+dKXJBOrn
+ enRtDZF8vNj/71Gacq6ElUDiWN1WCwJFzq0wvEU8loaQXJETHjrjeSCOgWHE257GHJQPmTjDNrB
+ lmy5in2ui9nxzsK70ft0rHOwJfceZ0I/mKo0xVHw1WLtKH3uWCtRDnxvgStDI7B1BUa/Bn8dygV
+ k12BkOanWeXpaFSntQ/5NPN+T9JNdvFYDMaluJwhH4Qgb4BDgo7nym/aWdsbvUlZsG7AfC7l8ey
+ pjmAwKwxsx8ZVNpZXOHOHzwYkG9pgCpzCGiZj9Uf5xRRBHfjwIBF4wclFzsB2WNGyR5iJQ3M
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-06_03,2025-06-05_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 mlxscore=0
+ clxscore=1011 mlxlogscore=946 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506060097
 
-Hello Vincent.
+Crypto reprogram all keys is called for each MMC runtime
+suspend/resume in current upstream design. If this is implemented
+as a non-interruptible call to TEE for security, the cpu core is
+blocked for execution while this call executes although the crypto
+engine already has the keys. For example, glitches in audio/video
+streaming applications have been observed due to this. Add the flag
+MMC_CAP2_DONT_REPROGRAM as part of host->caps2 to control reprogramming
+keys to crypto engine for socs which dont require this feature.
 
-On 6/2/25 20:27, Vincent Knecht via B4 Relay wrote:
-> From: Vincent Knecht <vincent.knecht@mailoo.org>
-> 
-> Add bindings for qcom,msm8939-camss in order to support the camera
-> subsystem for MSM8939.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
-> ---
->   .../bindings/media/qcom,msm8939-camss.yaml         | 254 +++++++++++++++++++++
->   1 file changed, 254 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8939-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8939-camss.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..59bf16888a8235495a2080e512ce179583bcd25d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/media/qcom,msm8939-camss.yaml
-> @@ -0,0 +1,254 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/media/qcom,msm8939-camss.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm MSM8939 Camera Subsystem (CAMSS)
-> +
-> +maintainers:
-> +  - Vincent Knecht <vincent.knecht@mailoo.org>
-> +
-> +description:
-> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,msm8939-camss
-> +
-> +  reg:
-> +    maxItems: 11
-> +
-> +  reg-names:
-> +    items:
-> +      - const: csid0
-> +      - const: csid1
-> +      - const: csid2
-> +      - const: csiphy0
-> +      - const: csiphy0_clk_mux
-> +      - const: csiphy1
-> +      - const: csiphy1_clk_mux
-> +      - const: csi_clk_mux
-> +      - const: ispif
-> +      - const: vfe0
-> +      - const: vfe0_vbif
+Signed-off-by: Seshu Madhavi Puppala <quic_spuppala@quicinc.com>
+Co-developed-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+Co-developed-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+Signed-off-by: Debraj Mukhopadhyay <quic_dmukhopa@quicinc.com>
 
-Please sort the list alphanumerically, accorting to the ASCII character set
-the underscore symbol precedes lower case letters.
+---
 
-> +
-> +  clocks:
-> +    maxItems: 24
-> +
-> +  clock-names:
-> +    items:
-> +      - const: ahb
-> +      - const: csi0
-> +      - const: csi0_ahb
-> +      - const: csi0_phy
-> +      - const: csi0_pix
-> +      - const: csi0_rdi
-> +      - const: csi1
-> +      - const: csi1_ahb
-> +      - const: csi1_phy
-> +      - const: csi1_pix
-> +      - const: csi1_rdi
-> +      - const: csi2
-> +      - const: csi2_ahb
-> +      - const: csi2_phy
-> +      - const: csi2_pix
-> +      - const: csi2_rdi
-> +      - const: csiphy0_timer
-> +      - const: csiphy1_timer
-> +      - const: csi_vfe0
-> +      - const: ispif_ahb
-> +      - const: top_ahb
-> +      - const: vfe0
-> +      - const: vfe_ahb
-> +      - const: vfe_axi
+Changes in v2:
+- Renamed MMC_CAP2_DONT_REPROGRAM to MMC_CAP2_CRYPTO_NO_REPROG for
+  improved clarity.
+- Defined MMC_CAP2_CRYPTO_NO_REPROG for MMC targets that do not support
+  a Crypto Engine.
+- Restricted the usage of struct crypto_profile to MMC devices that
+  support a Crypto Engine.
 
-Same comment as above.
+Changes in v1:
+- Addressed the comments from:
+  https://lore.kernel.org/lkml/20241006135530.17363-3-
+  quic_spuppala@quicinc.com/T/#m69c9ab538bd9efd54515646952d0d7d1d7c17690
+- Avoided reprogram of keys for Qualcomm SOCs only.
+- Ensured reprogram of all keys on host controller reset.
 
-> +
-> +  interrupts:
-> +    maxItems: 7
-> +
-> +  interrupt-names:
-> +    items:
-> +      - const: csid0
-> +      - const: csid1
-> +      - const: csid2
-> +      - const: csiphy0
-> +      - const: csiphy1
-> +      - const: ispif
-> +      - const: vfe0
-> +
-> +  iommus:
-> +    maxItems: 1
-> +
-> +  power-domains:
-> +    items:
-> +      - description: VFE GDSC - Video Front End, Global Distributed Switch
-> +          Controller.
-> +
-> +  vdda-supply:
-> +    description:
-> +      Definition of the regulator used as analog power supply.
+---
 
-Please specify the wanted voltage level in the description, due to
-the example below I would expect it's 2.8V.
+ drivers/mmc/core/crypto.c    | 2 +-
+ drivers/mmc/host/sdhci-msm.c | 6 ++++++
+ include/linux/mmc/host.h     | 5 +++++
+ 3 files changed, 12 insertions(+), 1 deletion(-)
 
-> +
-> +  ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +
-> +    description:
-> +      CSI input ports.
-> +
-> +    patternProperties:
-> +      "^port@[0-1]$":
-> +        $ref: /schemas/graph.yaml#/$defs/port-base
-> +        unevaluatedProperties: false
-> +
-> +        description:
-> +          Input port for receiving CSI data.
-> +
-> +        properties:
-> +          endpoint:
-> +            $ref: video-interfaces.yaml#
-> +            unevaluatedProperties: false
-> +
-> +            properties:
-> +              data-lanes:
-> +                minItems: 1
-> +                maxItems: 4
-> +
-> +              bus-type:
-> +                enum:
-> +                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
-> +
-> +            required:
-> +              - data-lanes
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - clocks
-> +  - clock-names
-> +  - interrupts
-> +  - interrupt-names
-> +  - iommus
-> +  - power-domains
-> +  - vdda-supply
-> +  - ports
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/clock/qcom,gcc-msm8939.h>
-> +
-> +    isp@1b08000 {
-> +        compatible = "qcom,msm8939-camss";
-> +
-> +        reg = <0x01b08000 0x100>,
-> +              <0x01b08400 0x100>,
-> +              <0x01b08800 0x100>,
-> +              <0x01b0ac00 0x200>,
-> +              <0x01b00030 0x4>,
-> +              <0x01b0b000 0x200>,
-> +              <0x01b00038 0x4>,
-> +              <0x01b00020 0x10>,
-> +              <0x01b0a000 0x500>,
-> +              <0x01b10000 0x1000>,
-> +              <0x01b40000 0x200>;
-> +
-> +        reg-names = "csid0",
-> +                    "csid1",
-> +                    "csid2",
-> +                    "csiphy0",
-> +                    "csiphy0_clk_mux",
-> +                    "csiphy1",
-> +                    "csiphy1_clk_mux",
-> +                    "csi_clk_mux",
-> +                    "ispif",
-> +                    "vfe0",
-> +                    "vfe0_vbif";
-> +
-> +        clocks = <&gcc GCC_CAMSS_AHB_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI0_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI0_AHB_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI0PHY_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI0PIX_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI0RDI_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI1_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI1_AHB_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI1PHY_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI1PIX_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI1RDI_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI2_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI2_AHB_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI2PHY_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI2PIX_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI2RDI_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI0PHYTIMER_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI1PHYTIMER_CLK>,
-> +                 <&gcc GCC_CAMSS_CSI_VFE0_CLK>,
-> +                 <&gcc GCC_CAMSS_ISPIF_AHB_CLK>,
-> +                 <&gcc GCC_CAMSS_TOP_AHB_CLK>,
-> +                 <&gcc GCC_CAMSS_VFE0_CLK>,
-> +                 <&gcc GCC_CAMSS_VFE_AHB_CLK>,
-> +                 <&gcc GCC_CAMSS_VFE_AXI_CLK>;
-> +
-> +        clock-names = "ahb",
-> +                      "csi0",
-> +                      "csi0_ahb",
-> +                      "csi0_phy",
-> +                      "csi0_pix",
-> +                      "csi0_rdi",
-> +                      "csi1",
-> +                      "csi1_ahb",
-> +                      "csi1_phy",
-> +                      "csi1_pix",
-> +                      "csi1_rdi",
-> +                      "csi2",
-> +                      "csi2_ahb",
-> +                      "csi2_phy",
-> +                      "csi2_pix",
-> +                      "csi2_rdi",
-> +                      "csiphy0_timer",
-> +                      "csiphy1_timer",
-> +                      "csi_vfe0",
-> +                      "ispif_ahb",
-> +                      "top_ahb",
-> +                      "vfe0",
-> +                      "vfe_ahb",
-> +                      "vfe_axi";
-> +
-> +        interrupts = <GIC_SPI 51 IRQ_TYPE_EDGE_RISING>,
-> +                     <GIC_SPI 52 IRQ_TYPE_EDGE_RISING>,
-> +                     <GIC_SPI 153 IRQ_TYPE_EDGE_RISING>,
-> +                     <GIC_SPI 78 IRQ_TYPE_EDGE_RISING>,
-> +                     <GIC_SPI 79 IRQ_TYPE_EDGE_RISING>,
-> +                     <GIC_SPI 55 IRQ_TYPE_EDGE_RISING>,
-> +                     <GIC_SPI 57 IRQ_TYPE_EDGE_RISING>;
-> +
-> +        interrupt-names = "csid0",
-> +                          "csid1",
-> +                          "csid2",
-> +                          "csiphy0",
-> +                          "csiphy1",
-> +                          "ispif",
-> +                          "vfe0";
-> +
-> +        iommus = <&apps_iommu 3>;
-> +
-> +        power-domains = <&gcc VFE_GDSC>;
-> +
-> +        vdda-supply = <&reg_2v8>;
-> +
-> +        ports {
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +
-> +            port@1 {
-> +                reg = <1>;
-> +                csiphy1_ep: endpoint {
+diff --git a/drivers/mmc/core/crypto.c b/drivers/mmc/core/crypto.c
+index fec4fbf16a5b..d41672e2856e 100644
+--- a/drivers/mmc/core/crypto.c
++++ b/drivers/mmc/core/crypto.c
+@@ -15,7 +15,7 @@
+ void mmc_crypto_set_initial_state(struct mmc_host *host)
+ {
+ 	/* Reset might clear all keys, so reprogram all the keys. */
+-	if (host->caps2 & MMC_CAP2_CRYPTO)
++	if (host->caps2 & MMC_CAP2_CRYPTO && !(host->caps2 & MMC_CAP2_CRYPTO_NO_REPROG))
+ 		blk_crypto_reprogram_all_keys(&host->crypto_profile);
+ }
+ 
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 66c0d1ba2a33..ee6783555f2e 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -1920,6 +1920,7 @@ static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
+ 	}
+ 
+ 	mmc->caps2 |= MMC_CAP2_CRYPTO;
++	mmc->caps2 |= MMC_CAP2_CRYPTO_NO_REPROG;
+ 	return 0;
+ }
+ 
+@@ -2497,6 +2498,11 @@ static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
+ 	usleep_range(200, 210);
+ 	reset_control_put(reset);
+ 
++#ifdef CONFIG_MMC_CRYPTO
++	if (host->mmc->caps2 & MMC_CAP2_CRYPTO)
++		blk_crypto_reprogram_all_keys(&host->mmc->crypto_profile);
++#endif
++
+ 	return ret;
+ }
+ 
+diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
+index 68f09a955a90..af3b3720aa9c 100644
+--- a/include/linux/mmc/host.h
++++ b/include/linux/mmc/host.h
+@@ -459,6 +459,11 @@ struct mmc_host {
+ #define MMC_CAP2_CRYPTO		0
+ #endif
+ #define MMC_CAP2_ALT_GPT_TEGRA	(1 << 28)	/* Host with eMMC that has GPT entry at a non-standard location */
++#ifdef CONFIG_MMC_CRYPTO
++#define MMC_CAP2_CRYPTO_NO_REPROG	(1 << 29)	/* Host does not support inline crypto key reprogramming */
++#else
++#define MMC_CAP2_CRYPTO_NO_REPROG	0
++#endif
+ 
+ 	bool			uhs2_sd_tran;	/* UHS-II flag for SD_TRAN state */
+ 	bool			uhs2_app_cmd;	/* UHS-II flag for APP command */
+-- 
+2.34.1
 
-There should be an empty line between the end of the list of properties
-and the beginning of the list of children device tree nodes.
-
-> +                    clock-lanes = <1>;
-
-Please remove 'clock-lanes' propoerty from here.
-
-> +                    data-lanes = <0 2>;
-> +                    remote-endpoint = <&sensor_ep>;
-> +                };
-> +            };
-> +        };
-> +    };
-> 
-
---
-Best wishes,
-Vladimir
 
