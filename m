@@ -1,214 +1,254 @@
-Return-Path: <linux-arm-msm+bounces-60464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9F91AD003F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 12:18:01 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C5EDAD0072
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 12:34:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D71716FE9A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 10:18:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AC1A97A23D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 10:32:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 505DF27F75A;
-	Fri,  6 Jun 2025 10:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B60B82868A4;
+	Fri,  6 Jun 2025 10:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="W/8NzpW0"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XaEmbdan"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A33538FB9
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jun 2025 10:17:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A19207A3A
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jun 2025 10:33:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749205077; cv=none; b=jERR9mpFeKS+xgjoKJ8X49v4BuhU1TPSCj/yoVBYAhLXZkagqUJJcQXc4L/uz/Nv46R7qmcMRnSybW5zQFaJvYbsw6BW6msySFcC09LUKPuwl1lpUEHMjyq+/S9u8LY0+q+0oA0E9k8LWHxFRI3UDtJ1Mpcob0pFfwkkZT2DzAo=
+	t=1749206042; cv=none; b=JEpJ+J+AuQd4D4tkZmI2/aKjUNEuM4E1OO8mSwnwP0U7ZhfNiDImi+om6W4fEr9dfyTTr4NHB0RWyIY1uGR9msE82hPK76w0F7srSD11rj9NwMm9BM6O5eFcrOS8bpSu0TeDe43CP1H/72IDILp45IvYTuBGqn7xeRwTMP5Ut+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749205077; c=relaxed/simple;
-	bh=SVMCfylbwM5vuiB3Wx+PhHek76Iz+RwCcFIRJVgYp/s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HdXeSQs80JGqZ4/4QXM/U8eoqg+2SE9Glhyj0IxoGr68ji0ARI5WP2UwWvdUTugaYS/oFKIzZ7HxaS0A3ivzTSFJcwqHH6yNPcQr8xA0wc4qzKpNXbb+kBZ/FjIOAh7+TywzXvjMAylxaNmLKdCe3pdA2T9Ik653V1Oe/jts+S8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=W/8NzpW0; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5569iqLJ030292
-	for <linux-arm-msm@vger.kernel.org>; Fri, 6 Jun 2025 10:17:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=MUm770nsjTk7RKaqGJXS/UXM
-	bcC3CLIfXaIBHht8qoo=; b=W/8NzpW0F9AfIenOSQKcaHAtJd6pwGHnLQ78YdyZ
-	VRa0/MQkCsHkOd05mCswdst64V2qpJjZbOf0Hqh3w1gjcq4siRG8fCEIn3blroMS
-	AkU6oTlRt+c8EZI67XOllofobWQ7GAizeV2l0rhhTYLVFLBgoR9AeS+wYaGtjIZs
-	GKv7HFBC3/J0UBIqyRIUkIwcTf9VnkN80hEc31kIUThXYYeJaXqWN7oUSgKMSGQG
-	V0VvQfcTJUMkssvLnMV5MO337dGkbpNd8wFQom6S+aZeqHf/JYdAaNeTDY8zq3mM
-	rofkJBm+IznBjcgn34id9RcF4n79GuZ8Thl6QmmicpyZaA==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 472be87yyg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jun 2025 10:17:54 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-23505adcac8so18249115ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jun 2025 03:17:54 -0700 (PDT)
+	s=arc-20240116; t=1749206042; c=relaxed/simple;
+	bh=P8BWQX0eac2EiocmBjT+eabK9bdjkAT+CvP9MQzx+nA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dLwQX6Vr222qBK9s6832B81v16YaHEjfzL0qQ1TWIKpTQ8DNlI11Ckz8YlnE5Yb4HtLChczm+wBa5nEhj2zYRychBAdZ/YkRmNRSGx8csy7CvP4DwEVqYkX19LGIwxxiaFijmQk1gcyYMczSJzwPqs+Hr1YmLr+bAGZHbxGB3gE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=XaEmbdan; arc=none smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-47e9fea29easo312271cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jun 2025 03:33:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1749206038; x=1749810838; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fAw4qUBOEhITQZ6BbLDNViptraoja2RZKd2zTaQIUtM=;
+        b=XaEmbdantMLYb/mbSBplpwL68NlYu8hEhpCuYCo6Lo3sdQ6Swhf1el4KZA60aaq4EH
+         QMXEXKQ4AhXfIsRIHWNHZ8OOx4hcI9Pw4cADJTjw9s95pdl9NvG/pdZvEKwWXJZqLffr
+         c4hokDZ1sB4c/tWbQS6mELSXldnef3o+//ybilAEpp19aadOZv1bcYVb0UqdWUkEz3Yd
+         MTL+bazGvpvV4b2cQS4JQPLxlFhwmc6Pi9F5sLBIe8vS/Bi9u1vlHp1vBvI0movJOnXG
+         QuUIQ6Z+B2N9H3GJPLao/UZ1LxvaSs2gGP3dYWBh87AFIOG2RY4r0+r+Op9ntk8wTGn2
+         vNbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749205073; x=1749809873;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MUm770nsjTk7RKaqGJXS/UXMbcC3CLIfXaIBHht8qoo=;
-        b=Y/iyznVCFLOrHxvS575ketPVrt3P06xubb6Y2Zuln9bjCFOav6uToaYmMquqHQqLz4
-         cFYpTBGbk5gs8FQW/8D3EZphCBxqIQRrANjWgBHJhgD9nkYFjVswLfmhpVtwG9L54HSn
-         wEh/koq4wA3t0hNwmps7eqnJjZauf8U5/zM5XRYYalOdsKXmVCGxSETKN1uyPnKVnTfD
-         ku2RwX4Z4I1Qgz0hZ3xflAWG01UtB9qYssrF0t3AzJ2agq2tQSwCy6jfvAexlTV2cvEX
-         3kbYdP4k1w5sVDcFwUvrglvmQAC4uLaZUGKOt3ylFZvGBSR6s59XZSOAnPzYldTY1VG2
-         CtFw==
-X-Forwarded-Encrypted: i=1; AJvYcCXoiAeF0M+EhlbTjFcEwvj467XXs9O72l+dav2MnIJoIaxAwoA2t9U7XKtW3wtIurPADql0VpV9zOyML7pY@vger.kernel.org
-X-Gm-Message-State: AOJu0YxawNv6Cfv7Lv12g/MdA0705Gis23pady/SRVuXZXS2GXDEKXQj
-	r+kL1iadqvSdQyvNVIWEI7W9un/YSBqLdduczUo2qDwEpRnmGTT3yezMUMvDbRIfV5i5Q231SGe
-	3jLQPMOo54K5iKfg2H1FhaFz2PX4svbgkIfL4Nk6DF0Qo1+ZF95dv41O4crB10WQYmDyD
-X-Gm-Gg: ASbGncuGsoHqjBcXK83T18R+5+YYyBJCa9hNhuWgserUnmVYD0fY8baJ0cDjQA8PyLd
-	/fon5J5t8TMc05Ufv+HA2MdnS/xsa8/bA9/JsqjIJP42gBrKjBbFz7Bnz0UYAy/ZgpLpJT2mag7
-	fZ41sb9VA5nSnuVYrvmB9QYSOCuRjnVKgQPWHr7Uau7G3kZMMoL0uxA7zDPjDdISix2CLeUAjfT
-	C2oUcpJxtK0lwmj59dr/52ZVx9pTokQjb+Cz3R6TMwqTpz0qv7I/9H7vXvHPfcz6lPB2NHfuF/T
-	eNvKGf7+6Iq6GroF+1X0abMkpdJqyIbNb8mt90fql/+mxmThQpWsUFhcJ6yluSncM8RXEw==
-X-Received: by 2002:a17:902:e5cf:b0:234:d7b2:2ab4 with SMTP id d9443c01a7336-23601d038c2mr38586495ad.17.1749205073610;
-        Fri, 06 Jun 2025 03:17:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHWEq5utuN+xciTxdEM9oY6Q/JAcry9JQaMjmy2DyusLiUkQ5pFcrFEA1HGQcbYN9+4KF154A==
-X-Received: by 2002:a17:902:e5cf:b0:234:d7b2:2ab4 with SMTP id d9443c01a7336-23601d038c2mr38586135ad.17.1749205073233;
-        Fri, 06 Jun 2025 03:17:53 -0700 (PDT)
-Received: from hu-qianyu-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23603077e9dsm9466565ad.1.2025.06.06.03.17.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Jun 2025 03:17:52 -0700 (PDT)
-Date: Fri, 6 Jun 2025 03:17:50 -0700
-From: Qiang Yu <qiang.yu@oss.qualcomm.com>
-To: Johan Hovold <johan@kernel.org>
-Cc: Wenbin Yao <quic_wenbyao@quicinc.com>, catalin.marinas@arm.com,
-        will@kernel.org, linux-arm-kernel@lists.infradead.org,
-        andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        vkoul@kernel.org, kishon@kernel.org, sfr@canb.auug.org.au,
-        linux-phy@lists.infradead.org, krishna.chundru@oss.qualcomm.com,
-        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com,
-        quic_cang@quicinc.com, Johan Hovold <johan+linaro@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-Subject: Re: [PATCH v4 5/5] phy: qcom: qmp-pcie: add x1e80100 qref supplies
-Message-ID: <aELATuLue/Vs8lHz@hu-qianyu-lv.qualcomm.com>
-References: <20250604080237.494014-1-quic_wenbyao@quicinc.com>
- <20250604080237.494014-6-quic_wenbyao@quicinc.com>
- <aEBh2xHu3QDtUrxe@hovoldconsulting.com>
+        d=1e100.net; s=20230601; t=1749206038; x=1749810838;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fAw4qUBOEhITQZ6BbLDNViptraoja2RZKd2zTaQIUtM=;
+        b=lupfOTcuBb2TmRQq60RvQ42nKjjTTy8LoEUUQ3m2pl1YvmFP64mpVWj3nOmD4Srxra
+         kSi8YAkJFSCJlWQSMK0uWo165M3OlRC5yVXQ3t1m5sc6KnPyE+fKg7u+nB3LoFqMgHSV
+         065MjJAdWKqX3FQ9hGe2ueYlHyzwc3qHtZrO04Tixa5+tKhlgVNqiyeRlYI3SQkfD7yb
+         hWF4wMp8rfnjvrANxKXb3dJSXu5THgt7TwbEqRumD0QSN5OszkmlzzBoXMYLtMDRKHD6
+         SVaXERkdEsjArVbtwWaRhn3sApBax/IuOy2g6g3ZKc3oxI9RWrhTFAGqmxLCabU1FwIs
+         +BeQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXu44wGiHg6IuFxzixtm/vuRfrIaS+yjajO7H6aeejUYXlZpHSko4kiWDAv10tDYID1YojqtkB69fRkwBtR@vger.kernel.org
+X-Gm-Message-State: AOJu0YwrELKRo7YcyfZgMk/5yzOeMqlCn+OGdIp3X85RpAy3K+x5RFdb
+	ciT3lEHO69kfwlLX4/ipAVtzC+YcV7e26ZhWO/cOpMwm3/XCWRsfsKwNxnxCE1Hs1HwYHyHBSlm
+	mtABmUqsLs6lpsVb9qHa0gnw69Utc1w2n4nwbtGQc
+X-Gm-Gg: ASbGncu6M1hA+3DO80tc02ovv3zc5OD1yFDKXMF2qwW7CL+M0a97BT17ntngIGJ9U+a
+	gI/Id1Vopg5PsulNSOafP+rddTPf75zeYRyPFfO5udtVf2v/L7FIM3pTCfYPEn4mFQZY15Pr9LN
+	7tB5T/FLpcwFfbTReBFvcc3wL1EJMT2R0EIrKb7RlNeW0=
+X-Google-Smtp-Source: AGHT+IEybTYvddL3yeh6SARztEENsK1RXfYm9brRfTxtTO2Kl9vo26csUL8xa8F7wu3xTgkSSmdtK6BhfPfymu5hxfQ=
+X-Received: by 2002:a05:622a:1a14:b0:477:9a4:d7ea with SMTP id
+ d75a77b69052e-4a643bafd8emr2595461cf.13.1749206037998; Fri, 06 Jun 2025
+ 03:33:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aEBh2xHu3QDtUrxe@hovoldconsulting.com>
-X-Authority-Analysis: v=2.4 cv=bNYWIO+Z c=1 sm=1 tr=0 ts=6842c052 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=kj9zAlcOel0A:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=zitRP-D0AAAA:8
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=Kn45tV52aVggcf7Ks3EA:9
- a=CjuIK1q_8ugA:10 a=1OuFwYUASf3TG4hYMiVC:22 a=xwnAI6pc5liRhupp6brZ:22
- a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: ia7xHNMbWK6Ju_8IRZ1yzECdqNq9umat
-X-Proofpoint-ORIG-GUID: ia7xHNMbWK6Ju_8IRZ1yzECdqNq9umat
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDA5MyBTYWx0ZWRfXyBcbazjyI7+Y
- 7oHQRogEBJloyfsdJXkc5mKPnIGAi46+cDi5BQBDFKpiGukujE96xZj7TUPSREbDlEP4B4EuZWb
- fBGLNA7xtKM7z6vZzzhasW2/EYij8wkP17vd4dRFnfx3owHR3c2/Po9sMTy4IOsDyx4Ttp6yMVx
- EU0pfBmdhs10PEqdhatpObTx6be5oGicYv97trQMxUydjVCqX1xWYAtFQ6SJUpuQbtpof6Yl5zK
- pweA/41Yxo7X6QM87GUffjYxmeLV1hnye0ekEOxT1f5GRWRS5mpdHLboYHMQMLv8ZdXRlYW+pKI
- oGuAoCH9CrHBUDQO/v+Nioqkp0JeSWSUjwNREuQUOzDyi+oal2HP5vUKrTCVgUM+NcZ8WKS0xGU
- nBv/Di2y/0rXzZfNW6AqdvgwwAF+yXyVhq7jP5RTBfG+HM/nRNs+IKm4aCpmUCKjsah5xJva
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-06_03,2025-06-05_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 phishscore=0 priorityscore=1501
- suspectscore=0 mlxscore=0 impostorscore=0 spamscore=0 clxscore=1015
- mlxlogscore=997 adultscore=0 bulkscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506060093
+References: <20250605153800.557144-1-tabba@google.com> <20250605153800.557144-9-tabba@google.com>
+ <ad4157a1-6e38-46df-ae24-76d036972fbc@redhat.com> <CA+EHjTziHb5kbY-aA1HPKYpg6iAPcQ19=51pLQ05JRJKeOZ8=A@mail.gmail.com>
+ <6cf86edb-1e7e-4b44-93d0-f03f9523c24a@redhat.com>
+In-Reply-To: <6cf86edb-1e7e-4b44-93d0-f03f9523c24a@redhat.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Fri, 6 Jun 2025 11:33:21 +0100
+X-Gm-Features: AX0GCFuEdbWcKuv4eOpkPUf0dGJeJL5f_PxO8xkAnzeoLueKsdz0dynDzzOLB0Q
+Message-ID: <CA+EHjTz8Q+X5==ym-WCSveNkfHd0id03nY1OYtoMchc5AUWDqQ@mail.gmail.com>
+Subject: Re: [PATCH v11 08/18] KVM: guest_memfd: Allow host to map guest_memfd pages
+To: David Hildenbrand <david@redhat.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
+	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
+	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jun 04, 2025 at 05:10:19PM +0200, Johan Hovold wrote:
-> On Wed, Jun 04, 2025 at 04:02:37PM +0800, Wenbin Yao wrote:
-> > From: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> > 
-> > All PCIe PHYs on the X1E80100 SOC require the vdda-qref, which feeds QREF
-> > clocks provided by the TCSR device.
-> 
-> As I just mentioned in the thread where this is still being discussed:
-> 
-> 	https://lore.kernel.org/all/aEBfV2M-ZqDF7aRz@hovoldconsulting.com
-> 
-> you need to provide a lot more detail on why you think modelling these
-> supplies as PHY supplies (which they are not) is the right thing to do.
-> 
-
-TCSR_PCIE_xx_CLKREF_EN is not always in TCSR, they're custom
-bits to enable pieces of the distribution network. We always classify them
-as "TCSR" even though they're not always in that module.
-
-So even if we put the QREF supplies in tscr device tree node, it still
-doesn't describe the hardware correctly as the hardware itself does't have
-a unified structure.
-
-Since the TCSR_PCIE_xx_CLKREF_EN is only required by PCIe, why can't we
-model these supplies consumed by TCSR_PCIE_xx_CLKREF_EN as PHY supplies,
-treating PCIe PHY and TCSR_PCIE_xx_CLKREF_EN as a whole.
-
-> Also please answer the question I've asked three times now on how the
-> QREF supplies map to PHY supplies on X1E as no one will be able to use
-> this binding unless this is documented somewhere (and similar for other
-> SoCs).
+On Fri, 6 Jun 2025 at 10:55, David Hildenbrand <david@redhat.com> wrote:
 >
+> On 06.06.25 11:30, Fuad Tabba wrote:
+> > Hi David,
+> >
+> > On Fri, 6 Jun 2025 at 10:12, David Hildenbrand <david@redhat.com> wrote:
+> >>
+> >> On 05.06.25 17:37, Fuad Tabba wrote:
+> >>> This patch enables support for shared memory in guest_memfd, including
+> >>> mapping that memory from host userspace.
+> >>>
+> >>> This functionality is gated by the KVM_GMEM_SHARED_MEM Kconfig option,
+> >>> and enabled for a given instance by the GUEST_MEMFD_FLAG_SUPPORT_SHARED
+> >>> flag at creation time.
+> >>>
+> >>> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
+> >>> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> >>> Signed-off-by: Fuad Tabba <tabba@google.com>
+> >>> ---
+> >>
+> >> [...]
+> >>
+> >>> +static bool kvm_gmem_supports_shared(struct inode *inode)
+> >>> +{
+> >>> +     u64 flags;
+> >>> +
+> >>> +     if (!IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM))
+> >>> +             return false;
+> >>> +
+> >>> +     flags = (u64)inode->i_private;
+> >>
+> >> Can probably do above
+> >>
+> >> const u64 flags = (u64)inode->i_private;
+> >>
+> >
+> > Ack.
+> >
+> >>> +
+> >>> +     return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
+> >>> +}
+> >>> +
+> >>> +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
+> >>> +{
+> >>> +     struct inode *inode = file_inode(vmf->vma->vm_file);
+> >>> +     struct folio *folio;
+> >>> +     vm_fault_t ret = VM_FAULT_LOCKED;
+> >>> +
+> >>> +     if (((loff_t)vmf->pgoff << PAGE_SHIFT) >= i_size_read(inode))
+> >>> +             return VM_FAULT_SIGBUS;
+> >>> +
+> >>> +     folio = kvm_gmem_get_folio(inode, vmf->pgoff);
+> >>> +     if (IS_ERR(folio)) {
+> >>> +             int err = PTR_ERR(folio);
+> >>> +
+> >>> +             if (err == -EAGAIN)
+> >>> +                     return VM_FAULT_RETRY;
+> >>> +
+> >>> +             return vmf_error(err);
+> >>> +     }
+> >>> +
+> >>> +     if (WARN_ON_ONCE(folio_test_large(folio))) {
+> >>> +             ret = VM_FAULT_SIGBUS;
+> >>> +             goto out_folio;
+> >>> +     }
+> >>> +
+> >>> +     if (!folio_test_uptodate(folio)) {
+> >>> +             clear_highpage(folio_page(folio, 0));
+> >>> +             kvm_gmem_mark_prepared(folio);
+> >>> +     }
+> >>> +
+> >>> +     vmf->page = folio_file_page(folio, vmf->pgoff);
+> >>> +
+> >>> +out_folio:
+> >>> +     if (ret != VM_FAULT_LOCKED) {
+> >>> +             folio_unlock(folio);
+> >>> +             folio_put(folio);
+> >>> +     }
+> >>> +
+> >>> +     return ret;
+> >>> +}
+> >>> +
+> >>> +static const struct vm_operations_struct kvm_gmem_vm_ops = {
+> >>> +     .fault = kvm_gmem_fault_shared,
+> >>> +};
+> >>> +
+> >>> +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
+> >>> +{
+> >>> +     if (!kvm_gmem_supports_shared(file_inode(file)))
+> >>> +             return -ENODEV;
+> >>> +
+> >>> +     if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
+> >>> +         (VM_SHARED | VM_MAYSHARE)) {
+> >>> +             return -EINVAL;
+> >>> +     }
+> >>> +
+> >>> +     vma->vm_ops = &kvm_gmem_vm_ops;
+> >>> +
+> >>> +     return 0;
+> >>> +}
+> >>> +
+> >>>    static struct file_operations kvm_gmem_fops = {
+> >>> +     .mmap           = kvm_gmem_mmap,
+> >>>        .open           = generic_file_open,
+> >>>        .release        = kvm_gmem_release,
+> >>>        .fallocate      = kvm_gmem_fallocate,
+> >>> @@ -428,6 +500,7 @@ static int __kvm_gmem_create(struct kvm *kvm, loff_t size, u64 flags)
+> >>>        }
+> >>>
+> >>>        file->f_flags |= O_LARGEFILE;
+> >>> +     allow_write_access(file);
+> >>
+> >> Why is that required?
+> >>
+> >> As the docs mention, it must be paired with a previous deny_write_access().
+> >>
+> >> ... and I don't find similar usage anywhere else.
+> >
+> > This is to address Gavin's concern [*] regarding MADV_COLLAPSE, which
+> > isn't an issue until hugepage support is enabled. Should we wait until
+> > we have hugepage support?
+>
+> If we keep this, we *definitely* need a comment why we do something
+> nobody else does.
+>
+> But I don't think allow_write_access() would ever be the way we want to
+> fence off MADV_COLLAPSE. :) Maybe AS_INACCESSIBLE or sth. like that
+> could fence it off in file_thp_enabled().
+>
+> Fortunately, CONFIG_READ_ONLY_THP_FOR_FS might vanish at some point ...
+> so I've been told.
+>
+> So if it's not done for secretmem for now or others, we also shouldn't
+> be doing it for now I think.
 
-PCIe3,
-VDD_A_QREFS_0P875_0,
-VDD_A_QREFS_0P875_B,
-VDD_A_QREFS_1P2_B,
+I'll remove it.
 
-PCIe4,
-VDD_A_QREFS_0P875_B,
-VDD_A_QREFS_1P2_B
+Thanks!
+/fuad
 
-PCIe5,
-VDD_A_QREFS_0P875_2,
-VDD_A_QREFS_0P875_B,
-VDD_A_QREFS_1P2_B,
-
-PCIe6
-VDD_A_QREFS_0P875_A,
-VDD_A_QREFS_1P2_A
-
-> The fact that you so far have not been able to provide an answer
-> seems to suggest that these supplies need to be managed by the TCSR
-> clock driver which can handle the mapping.
-> 
-> > Hence, restore the vdda-qref request for the 6th and the 3th PCIe instance
-> > by reverting commit 031b46b4729b ("phy: qcom: qmp-pcie: drop bogus x1e80100
-> > qref supplies") and commit eb7a22f830f6("phy: qcom: qmp-pcie: drop bogus
-> > x1e80100 qref supply"). For the 4th PCIe instance (Gen3 x2), add a new
-> > driver data entry, namely x1e80100_qmp_gen3x2_pciephy_cfg, which is a copy
-> > of sm8550_qmp_gen3x2_pciephy_cfg but uses sm8550_qmp_phy_vreg_l instead.
-> > 
-> > Fixes: eb7a22f830f6 ("phy: qcom: qmp-pcie: drop bogus x1e80100 qref supplies")
-> > Fixes: 031b46b4729b ("phy: qcom: qmp-pcie: drop bogus x1e80100 qref supplies")
-> > Fixes: 606060ce8fd0 ("phy: qcom-qmp-pcie: Add support for X1E80100 g3x2 and g4x2 PCIE")
-> > Cc: Johan Hovold <johan+linaro@kernel.org>
-> > Cc: Abel Vesa <abel.vesa@linaro.org>
-> > Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> > Signed-off-by: Wenbin Yao <quic_wenbyao@quicinc.com>
-> 
-> NAK, for now, and please don't post any new revisions of this patch
-> until this has been resolved.
-
-OK, I will remove this patch from the series if other patches require
-updates and submit it separately when it is required.
-
-- Qiang Yu
-
-> 
-> Johan
+> --
+> Cheers,
+>
+> David / dhildenb
+>
 
