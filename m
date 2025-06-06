@@ -1,52 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-60425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C4BFACFA06
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 01:39:27 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F38BACFA45
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 02:06:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E41E47A49D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Jun 2025 23:38:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EE8A37AA169
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 00:05:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07A92218E96;
-	Thu,  5 Jun 2025 23:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0B0D748D;
+	Fri,  6 Jun 2025 00:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kkKbWZw0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nJFctsbU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AFF1A0BF1;
-	Thu,  5 Jun 2025 23:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B799A5234;
+	Fri,  6 Jun 2025 00:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749166759; cv=none; b=rIfv8VvMbBtiIYvvUFvSKgeXxqETwizt28VdD/wqi99IUdpY/V/0gqlIjG+ORNhO4CZGgRUSSsOlBGBIgF70gNMSa5l4rxR41/oDHGRO+VPNbE53kexPOQBPTl/EHQmgbcgTXfy077yMvKSHMuuOCfUhNarFHRqCNJAMoVW45TM=
+	t=1749168370; cv=none; b=ghX5v/81nCFqiIkZzIAc3PNCkLF9i6/6EalaHZgjmSxwyqwxUu8Y+wSV5wjSYl7/MShpAX6KNGmFyDiKr3s2LDIffpgK+9PtjmdHkTDGir0kEmkkD4hzIZHx7RaFJHcI833/0pQG/cvtDVVMx70U+OJArG2/GYTI1oh7ugp/f0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749166759; c=relaxed/simple;
-	bh=pwrAY09O/aAtNTkahD7MpCJKuzILXIsGsMhzQcXLruo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=diXB966hCUU7vHhq41WKWcwPGi4w9vgypQg6sjLjk0Tmca3zQd12e+1ytq2aygbT+vRkmvP5Vs/K++ZbRIPoS13OcNA19iYS01lpfo3jGVUC/KVzMqGhrIjnwCRBmUGt0GbaI/w6Wp13739t7bUzdEeno2LXMxYQ97lA4Bm+e+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kkKbWZw0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3D790C4CEE7;
-	Thu,  5 Jun 2025 23:39:19 +0000 (UTC)
+	s=arc-20240116; t=1749168370; c=relaxed/simple;
+	bh=kOeEXWQNRy2OTULbzXmLA/yVFQzsao71agZKirZ35u8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Wpi+FNz9m8CD8PirSce89DdTDSRV/ZueVuV7A6c616+gYFQgCDGXQEyzgWyW5FObTmpV5bMt+imzRzwhXl5L+8g1PDxF7BiAUz1M7VtO6ck1NvWhbCSP/n7A7m/YyrGNp/guSh4sjGvcZSQbzuX/AftmXVvLgYt3gXYkWlaEtPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nJFctsbU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2CBE6C4CEE7;
+	Fri,  6 Jun 2025 00:06:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749166759;
-	bh=pwrAY09O/aAtNTkahD7MpCJKuzILXIsGsMhzQcXLruo=;
+	s=k20201202; t=1749168370;
+	bh=kOeEXWQNRy2OTULbzXmLA/yVFQzsao71agZKirZ35u8=;
 	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=kkKbWZw0zfsKAoC3VkQJNp+kaitbKbsuYKo+BZcm32nQ2irytZBvIyy/MVJPs0dAZ
-	 glu9rZVmKeuad6WZDV4gX86agMvBw5Lvsyd6B4DQsom2gJbVdJQxKOpl4n41ZsPdLE
-	 S+i5RFbH+ffyUcCPGZfGM/xY/cAaswuA8DINtJ0KXcdUFVEymCnCrDFQ0HA4K/26C2
-	 qtnSFVwcP+iyWOLjp8q9AgWTojKcToN0No4cNZ7Og2VB4aubja1Wd5u26wGzxhrlov
-	 ZwdtXTxBwpvSyZx0VO/hSNLIQdOeyT+nrHbsK4UYuXUHH6FNGEkE6EYPk3xLLTLKic
-	 Bk4gaU5ds8JMA==
+	b=nJFctsbUoQa5qk+VChv8Sz/jIrNNMapriCXS+1rgwt/pRbUA6jdgJaltLQ9Q0GGXu
+	 SpUE7buCTNRKRolFrV0iL5lJ97nzR6fBamyzlpOYnFSoJKomEUOQex/CNrkV3jhs63
+	 yir9JRDb1KMO6X8MYOChZwH27mM6Ks/+n7ARyuF6YFTiYVgF2yx4eiQmFQ392jsMRr
+	 f8GyzKlZBCwirffmaIBdNdbSTBxKw7/kgypTnU7+cxcAW4Qg5n15NcRggWawJdDAK4
+	 b2BYsCPoRC0uuCAjFui6r7HeZWEYHUYV4894/ihDY/aTu+901w4SkYZwGjERPDLO0H
+	 nsuNMrMP2lsrQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C103C5AE59;
-	Thu,  5 Jun 2025 23:39:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B829C5B555;
+	Fri,  6 Jun 2025 00:06:10 +0000 (UTC)
 From: Bjorn Andersson via B4 Relay <devnull+bjorn.andersson.oss.qualcomm.com@kernel.org>
-Date: Thu, 05 Jun 2025 18:39:15 -0500
-Subject: [PATCH v2] arm64: dts: qcom: x1e80100-dell-xps13-9345: Enable
- fingerprint sensor
+Date: Thu, 05 Jun 2025 19:06:06 -0500
+Subject: [PATCH] arm64: defconfig: Enable Qualcomm CPUCP mailbox driver
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,26 +54,23 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250605-xps13-fingerprint-v2-1-eebf84c172f2@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAKIqQmgC/32NQQ6CMBREr0L+2pL2A0FdeQ/DokArPxFa+7HBk
- N7dygHcTPJmMjM7sAlkGK7FDsFEYnJLBjwVMEx6eRhBY2ZAiY2s1FlsnlUlLOUo+EDLKnRre4P
- tBQesIfd8MJa2Y/PeZZ6IVxc+x0VUP/ffWlRCCtv3EsdGV7Vub465fL31c3DzXGaBLqX0BeDbS
- dW5AAAA
-X-Change-ID: 20250318-xps13-fingerprint-a7fbe2792c24
+Message-Id: <20250605-enable-cpucp-v1-1-111ecef7e4c9@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAO0wQmgC/x3MQQqAIBBA0avIrBNGw6CuEi3UxhoIE6UIpLsnL
+ d/i/wqFMlOBSVTIdHPhMzaoToDfbdxI8toMGrXBAY2kaN1B0qfLJzkqa9D0AV1Q0JKUKfDz7+b
+ lfT8Vhg+VXgAAAA==
+X-Change-ID: 20250605-enable-cpucp-91a5053f0bf1
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Stefan Schmidt <stefan.schmidt@linaro.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Aleksandrs Vinarskis <alex.vinarskis@gmail.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+Cc: Catalin Marinas <catalin.marinas@arm.com>, 
+ Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
  Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749166756; l=2975;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1749168367; l=931;
  i=bjorn.andersson@oss.qualcomm.com; s=20250318; h=from:subject:message-id;
- bh=cXvpolOc6keIT4UycbiSGZLQJu7kB1ZjcH77QsH5mFo=;
- b=aXdAhx3x9FYmYnIuafyUUIhxpHuHRyAlSog73sFZChFlEKf6oUHwhTrIVg34SFuPBBzzIufMF
- Q6mljzBzU6hBX/o+pZs5vdJGcG4wLLzvaEBmJ4RV+lFU7iGAAYXomdV
+ bh=mwZCvU5SjPvj2kO7B5ZfonxzycfZ+NOz+VGaDsi0ueE=;
+ b=L05l4pr3UPZUZ5Tco/EHocmMvBvnHuoV/CG26hOOlmpoGvi0y/J50xiVyWHqBhKDtLGRRVJKx
+ 4BWrg4OWuZ6ByYUBCzvI5YNd+uPCN6J6cirhNYCrvDjo7wT9Z4C8hnI
 X-Developer-Key: i=bjorn.andersson@oss.qualcomm.com; a=ed25519;
  pk=rD3O9C9Erg+mUPBRBNw91AGaIaDVqquHZbnn6N6xh6s=
 X-Endpoint-Received: by B4 Relay for
@@ -84,111 +80,30 @@ Reply-To: bjorn.andersson@oss.qualcomm.com
 
 From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-The fingerprint sensor, hidden in the power button, is connected to one
-of the USB multiport ports; while the other port is unused.
+The Qualcomm CPUCP mailbox driver needs to be enabled for CPU frequency
+scaling to work on the X Elite platform, so enable this driver.
 
-Describe the USB controller, the four phys and the repeater involved to
-make the fingerprint sensor operational.
-
-Tested-by: Stefan Schmidt <stefan.schmidt@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Tested-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 ---
-Changes in v2:
-- Dropped patch 1, as an equivalent patch was merged separately
-- Moved repeater to other multiport port (per review suggestion)
-- Link to v1: https://lore.kernel.org/r/20250318-xps13-fingerprint-v1-0-fbb02d5a34a7@oss.qualcomm.com
----
- .../boot/dts/qcom/x1e80100-dell-xps13-9345.dts     | 59 +++++++++++++++++++++-
- 1 file changed, 57 insertions(+), 2 deletions(-)
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-index 967f6dba0878b51a985fd7c9570b8c4e71afe57d..a98254e486dbc7aef1aced34690382950cb3e231 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-@@ -744,8 +744,21 @@ touchscreen@10 {
- 
- &i2c9 {
- 	clock-frequency = <400000>;
--	status = "disabled";
--	/* USB3 retimer device @0x4f */
-+	status = "okay";
-+
-+	eusb6_repeater: redriver@4f {
-+		compatible = "nxp,ptn3222";
-+		reg = <0x4f>;
-+		#phy-cells = <0>;
-+
-+		vdd3v3-supply = <&vreg_l13b_3p0>;
-+		vdd1v8-supply = <&vreg_l4b_1p8>;
-+
-+		reset-gpios = <&tlmm 184 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&eusb6_reset_n>;
-+		pinctrl-names = "default";
-+	};
- };
- 
- &i2c17 {
-@@ -967,6 +980,14 @@ edp_reg_en: edp-reg-en-state {
- 		bias-disable;
- 	};
- 
-+	eusb6_reset_n: eusb6-reset-n-state {
-+		pins = "gpio184";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+
- 	hall_int_n_default: hall-int-n-state {
- 		pins = "gpio92";
- 		function = "gpio";
-@@ -1172,3 +1193,37 @@ &usb_1_ss1_dwc3_hs {
- &usb_1_ss1_qmpphy_out {
- 	remote-endpoint = <&retimer_ss1_ss_in>;
- };
-+
-+&usb_mp {
-+	status = "okay";
-+};
-+
-+&usb_mp_hsphy0 {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&usb_mp_hsphy1 {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+
-+	phys = <&eusb6_repeater>;
-+
-+	status = "okay";
-+};
-+
-+&usb_mp_qmpphy0 {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l3c_0p9>;
-+
-+	status = "okay";
-+};
-+
-+&usb_mp_qmpphy1 {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l3c_0p9>;
-+
-+	status = "okay";
-+};
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 62d3c87858e1817bac291780dff3823dacd72510..d3ef95df7b2770ac1c7a6022a9ec22d1fb4c25da 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1447,6 +1447,7 @@ CONFIG_PLATFORM_MHU=y
+ CONFIG_BCM2835_MBOX=y
+ CONFIG_QCOM_APCS_IPC=y
+ CONFIG_MTK_ADSP_MBOX=m
++CONFIG_QCOM_CPUCP_MBOX=m
+ CONFIG_QCOM_IPCC=y
+ CONFIG_ROCKCHIP_IOMMU=y
+ CONFIG_TEGRA_IOMMU_SMMU=y
 
 ---
 base-commit: 4f27f06ec12190c7c62c722e99ab6243dea81a94
-change-id: 20250318-xps13-fingerprint-a7fbe2792c24
+change-id: 20250605-enable-cpucp-91a5053f0bf1
 
 Best regards,
 -- 
