@@ -1,189 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-60460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE3DAACFFA3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 11:49:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AB931ACFFAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 11:51:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 41C573A36A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 09:48:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F251D3A44A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 09:51:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C50C286423;
-	Fri,  6 Jun 2025 09:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40950286430;
+	Fri,  6 Jun 2025 09:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="t6U3bP52"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="nReW8NZX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1CE286404
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jun 2025 09:48:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C5EA13B2A4;
+	Fri,  6 Jun 2025 09:51:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749203338; cv=none; b=ji2Y8Y95/NEnpOzPsbw50g96Xb8tCBnQh1dhx/NVWjnLw53pospdb86cibfehJbqYFNHCbZcxPXcnPB+JYvzUL/oO7uCyMOBxNCHHanJoRQeRUjJi/1HDUn0xk/Hfchp5QgFc4bgrCLPJOA1iWf7Q3mTIWcMHOQAEnxdpNM/TvU=
+	t=1749203481; cv=none; b=tnEDBOlv9BfIe+FilXsEEojwYYBqr0XqQmr2NCQpUiPHhqLPZyze/G0poO3+axlE9alI+oibcxAloo4MK8OItZLX0hX/xEdHo0iqjRCk6QUxGp6cgz4MpfWJxHCV/3x6Felb6+MflR3DS/wmf3dQgQys15S6BqnU0gUM6eradgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749203338; c=relaxed/simple;
-	bh=YKrpoWufmzB3xu8DloFpS79I3uBwj1qNWUgY+1KOZtg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=By9v05LNGe2u7PH5GXqxjJv5Cb4H+B5NO5FfYew+HlY4cp++5kcx5g5QEygh0A5jeva+5wpDcWGtpfJOzhL4Tr2ZLNvw+nj2gEYO1Lg5FK/FBZtZ20OFNGGkOvs2+IzBY7SO9YqECvpNW8dGq69nLwHKTeXhgHkWRsrq1xovslc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=t6U3bP52; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4a5ac8fae12so349541cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jun 2025 02:48:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1749203335; x=1749808135; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=LCDKfsXlZzurcM1ezkFJ6H0HklmVMiMXd+AkoFUM1Qc=;
-        b=t6U3bP52vl9qtwgl7O1QnXLMSzjbzltQoK1PlCJUtzTmz71f6aH3nuiv5N3+tyyK7M
-         E+jC5YIpFPrhm/L5qAkaPbGCBJsd9s5HgDqXm9SMNgQ4EQrwrk0TkfMAizlatlb+js87
-         BG1lM2KemAh48S5DLgel0UPuiuHAgv5f03ta7oy9EYCjhPnIEV6JLs6Lb0yIkiW8y0ti
-         /HkOl1stmQuSabtpj3pJKWBBW6FIC+XhfxmNY1l3rRsySgFXJu8H3Jivv1Sqy+zZdqTp
-         3M/b/Eett6VY1yK7qw2HZhx9GHVWcfk/R7/q8mgyO3pFh4RWynB7yeYCOkBJLETCwyDI
-         F+hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749203335; x=1749808135;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LCDKfsXlZzurcM1ezkFJ6H0HklmVMiMXd+AkoFUM1Qc=;
-        b=XZCFf1ae37enWqJa0EgxBzLfVrRineBa+dNBS3WQtVo3lo5UVzJsWkqCqQEHZW6VFi
-         8TjBmtLkbBAUMReeXshd0PNpVTxMvIKalKh1wq3HjcbJ4EMCl/pcKjcUEciIYhelewox
-         C/K8IrGdabU6EWsqVAAxTu7ombyuRtpNDOl3bzoBb0c5wsrmmQUgH1OzX2AoAwj78GM+
-         nKC8Vd8wA0aiS6q00GaxnVyFUmqDFqnk/TxC8IRriafNaiyMvZ/eArCuUiFOImE/63c6
-         Cxn+/kSDHeTYyzft2qdx83R67EiiCt9XlWAsZb0lI5UKIsusm12fUqYXx9rIGZ9ytD2R
-         N/+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUTQuPBerVD4M1hQWdO25TAiO+gKjImsFlXibX/hIWbwR9P2blei1krpCU79yVCXitdBZm8QHxhhoXEOAPK@vger.kernel.org
-X-Gm-Message-State: AOJu0YxokS0ToLRehcGbWJ7j6GMUBecQ6MPma3GRjfRnRUW1tpJDJj68
-	Eri0Rh1DNdMSZmVRl0j7uz3IfGZHTpEs8GmmJTsd4lIZdHhOggUiXO3IqsLT7tbVhqHWq3uoeGR
-	Ij38lhfBItX9gQSDCFw+Ow8KBy4E0dpRgW91LrtKeE1FZ/AV9+Ipq8yD53HfACUFC
-X-Gm-Gg: ASbGncs3OARze6xsj5MxvjSks5ynTG3L08jOBbi6INhpM41A+Xun7ltAbcebs1Z9Uw6
-	To2yqhd0XkxqF6VJUy0My2cS3Rnp3QG4HyrpqKFh4xziSbIpupYflzRTdaLHlZonVpe5wZUA+m1
-	S/l2kAPS4ysqQyD8q/feTmZgTdF9VnJk/H2ODXNF9mIUc=
-X-Google-Smtp-Source: AGHT+IG6E/J9MfX2i8oW0aNRitzNLiDBnW8BoUvZFi+PsgUTsFLCcluC/1qihGgfccxw0D/xPEa7YdyrZSgObmD9Gpk=
-X-Received: by 2002:a05:622a:3d2:b0:4a4:ead0:92c4 with SMTP id
- d75a77b69052e-4a643a2d4camr2437051cf.5.1749203334828; Fri, 06 Jun 2025
- 02:48:54 -0700 (PDT)
+	s=arc-20240116; t=1749203481; c=relaxed/simple;
+	bh=Liqzz+y3Xpct0YUxn1hcdqAN16lyEo7U507Jr8n4RDA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=OJmU3fhiHj9XXF4Shy4aIoev+Lny+1dHr6Kd0pBN/oaMOREwQSmjMCom/WBJgRpR7cqtiN42U1si+SLvPFBU9hw3Bmp4iLoZRdYBSB6+J115IFxjOdH1VoQxTTMwMOrByOaGJ2sNSGDJvs0Uw6mWmr8K7np25CTC8HHloVyfRMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=nReW8NZX; arc=none smtp.client-ip=117.135.210.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=gV
+	Q67dkOWrUUbsyOUp1tkuG+EhYQ5alDpGFSmm71tg0=; b=nReW8NZX2u/A3csB07
+	Ts+bguMylNdkNqrnf2D7GisAbTZQPVObt7IMiGHnmC3FjnIYaPNxMCeqYdoEIzXV
+	g0/PK6f8LG4kREf6iUK8GT/fdCm3UepINupCu7ENZFeBc3rCmnhZI1fVV2YlPaeQ
+	fDMQ39Hj0tOJv0Rx48mth5tS4=
+Received: from localhost.localdomain (unknown [])
+	by gzga-smtp-mtada-g0-3 (Coremail) with SMTP id _____wDnS1LduUJoDSSKGQ--.2037S2;
+	Fri, 06 Jun 2025 17:50:23 +0800 (CST)
+From: Slark Xiao <slark_xiao@163.com>
+To: manivannan.sadhasivam@linaro.org,
+	johan+linaro@kernel.org,
+	mhi@lists.linux.dev
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Slark Xiao <slark_xiao@163.com>
+Subject: [PATCH] bus: mhi: host: pci_generic: Change T99W515 to T99W640
+Date: Fri,  6 Jun 2025 17:50:19 +0800
+Message-Id: <20250606095019.383992-1-slark_xiao@163.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250605153800.557144-1-tabba@google.com> <20250605153800.557144-12-tabba@google.com>
- <aa9701b7-a550-46bf-bb2f-b73462671c7d@redhat.com>
-In-Reply-To: <aa9701b7-a550-46bf-bb2f-b73462671c7d@redhat.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Fri, 6 Jun 2025 10:48:18 +0100
-X-Gm-Features: AX0GCFsIRwALL9qxco1UxN6YH4tCXZf-K_YUSzqBvF-siNiwfomILhB3vusRSbI
-Message-ID: <CA+EHjTwVHg=-uPwDuQ+UF-XbwTR87WtvCWcbwb9HdQJwcDY86Q@mail.gmail.com>
-Subject: Re: [PATCH v11 11/18] KVM: x86: Consult guest_memfd when computing max_mapping_level
-To: David Hildenbrand <david@redhat.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wDnS1LduUJoDSSKGQ--.2037S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7AFy7GFWfArW8Zr18Wr1UAwb_yoW8WF48pF
+	4fur1UtaykXr45Ka1kAryDuas8GrsxCryxK3WxG34Igr1qyrWYgFZ7Gr1a9w1Yqa93tF1S
+	vFWUuFyUX3WDKF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRhNVhUUUUU=
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbibgZkZGhCsRPxxQAAsU
 
-On Fri, 6 Jun 2025 at 10:14, David Hildenbrand <david@redhat.com> wrote:
->
-> On 05.06.25 17:37, Fuad Tabba wrote:
-> > From: Ackerley Tng <ackerleytng@google.com>
-> >
-> > This patch adds kvm_gmem_max_mapping_level(), which always returns
-> > PG_LEVEL_4K since guest_memfd only supports 4K pages for now.
-> >
-> > When guest_memfd supports shared memory, max_mapping_level (especially
-> > when recovering huge pages - see call to __kvm_mmu_max_mapping_level()
-> > from recover_huge_pages_range()) should take input from
-> > guest_memfd.
-> >
-> > Input from guest_memfd should be taken in these cases:
-> >
-> > + if the memslot supports shared memory (guest_memfd is used for
-> >    shared memory, or in future both shared and private memory) or
-> > + if the memslot is only used for private memory and that gfn is
-> >    private.
-> >
-> > If the memslot doesn't use guest_memfd, figure out the
-> > max_mapping_level using the host page tables like before.
-> >
-> > This patch also refactors and inlines the other call to
-> > __kvm_mmu_max_mapping_level().
-> >
-> > In kvm_mmu_hugepage_adjust(), guest_memfd's input is already
-> > provided (if applicable) in fault->max_level. Hence, there is no need
-> > to query guest_memfd.
-> >
-> > lpage_info is queried like before, and then if the fault is not from
-> > guest_memfd, adjust fault->req_level based on input from host page
-> > tables.
-> >
-> > Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> > Co-developed-by: Fuad Tabba <tabba@google.com>
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
->
-> [...]
->
-> >   static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
-> >   {
-> >       return false;
-> > @@ -2561,6 +2565,7 @@ static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
-> >   int kvm_gmem_get_pfn(struct kvm *kvm, struct kvm_memory_slot *slot,
-> >                    gfn_t gfn, kvm_pfn_t *pfn, struct page **page,
-> >                    int *max_order);
-> > +int kvm_gmem_mapping_order(const struct kvm_memory_slot *slot, gfn_t gfn);
-> >   #else
-> >   static inline int kvm_gmem_get_pfn(struct kvm *kvm,
-> >                                  struct kvm_memory_slot *slot, gfn_t gfn,
-> > @@ -2570,6 +2575,12 @@ static inline int kvm_gmem_get_pfn(struct kvm *kvm,
-> >       KVM_BUG_ON(1, kvm);
-> >       return -EIO;
-> >   }
-> > +static inline int kvm_gmem_mapping_order(const struct kvm_memory_slot *slot,
-> > +                                      gfn_t gfn)
-> > +{
-> > +     BUG();
-> > +     return 0;
->
-> As raised, no BUG(). If this is unreachable for these configs,
->
-> BUILD_BUG() might do.
->
+T99W515 is a LGA device but not a M.2 modem device.
+So correct this name in case a name mismatch issue.
 
-Ack.
+Fixes: bf30a75e6e00("bus: mhi: host: Add support for Foxconn SDX72 modems")
+Signed-off-by: Slark Xiao<slark_xiao@163.com>
+---
+ drivers/bus/mhi/host/pci_generic.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-> Apart from that
->
-> Acked-by: David Hildenbrand <david@redhat.com>
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index a4a62429c784..9c2d10327ce5 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -593,8 +593,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_dw5932e_info = {
+ 	.sideband_wake = false,
+ };
+ 
+-static const struct mhi_pci_dev_info mhi_foxconn_t99w515_info = {
+-	.name = "foxconn-t99w515",
++static const struct mhi_pci_dev_info mhi_foxconn_t99w640_info = {
++	.name = "foxconn-t99w640",
+ 	.edl = "qcom/sdx72m/foxconn/edl.mbn",
+ 	.edl_trigger = true,
+ 	.config = &modem_foxconn_sdx72_config,
+@@ -920,9 +920,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* DW5932e (sdx62), Non-eSIM */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f9),
+ 		.driver_data = (kernel_ulong_t) &mhi_foxconn_dw5932e_info },
+-	/* T99W515 (sdx72) */
++	/* T99W640 (sdx72) */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe118),
+-		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w515_info },
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w640_info },
+ 	/* DW5934e(sdx72), With eSIM */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe11d),
+ 		.driver_data = (kernel_ulong_t) &mhi_foxconn_dw5934e_info },
+-- 
+2.25.1
 
-Thanks!
-/fuad
-
-> --
-> Cheers,
->
-> David / dhildenb
->
 
