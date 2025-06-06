@@ -1,63 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-60483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC460AD0340
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 15:33:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EE44AD034B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 15:35:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 399C77AA1DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 13:31:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D78317A7118
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 13:34:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6863328852B;
-	Fri,  6 Jun 2025 13:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7A7F288C21;
+	Fri,  6 Jun 2025 13:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HeKgCYiq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GT5XxhiH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960AF2F2E;
-	Fri,  6 Jun 2025 13:32:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0622874F9;
+	Fri,  6 Jun 2025 13:35:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749216780; cv=none; b=XB83UyI+TMyFmpfZfAgYz1FDdfzsc5cLZ87yiAL9Rhd5SPs48O5XWxh6JLZXEXiGi/Jowpi0RgssKI2Uk+w0HfOIZabEBP7r1ZDeE5EkBcKb20eyKu9m7tfZNzGSueItm22OMaguSF1EW+2378zIyy+efdpX49Dd1FcbXkK5DCs=
+	t=1749216947; cv=none; b=EqgSEP87M5Xb/18bUfcbmNfpU4bDG6TFSS3CXB0zky1CsJaFV2+2w4NRQAykZDFAiLF/S6LCROSLOoPvGTwMV3wV60YH4ujwney95RQFtQe2L2/xinuOR7YQRIB9BW/W/rs18dw2WEzWd80p/cciv7u8fyc+39qU0pwCZR2fqUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749216780; c=relaxed/simple;
-	bh=6RuF3Znt+tzQ+CHuQwvoPvsyYVJVvXA7G1mYnBcSznQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bsX64u8Y+bEZR6x/gALOv5YCrOY1yzRRTd2J0AbfPw9ZWFvH7ft9AuKoNIylfTHI+46/kuNFQieiQHSS9eCIYUAe3j4jZDrgPaurAMQF2kE+xnltU4FEFoNMvv83PvsR8xAcH98DMW0YjTzCk71dwcCSIR+qPuxGJ7/M6jMAO6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HeKgCYiq; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 556AZi9a012803;
-	Fri, 6 Jun 2025 13:32:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Es2qJC6PPNbgqcXhrSCL+dvAJQdmrGgRvfxTwABm56k=; b=HeKgCYiqFouGAnKU
-	dQFUmPzWEWl7MX4kY7/Sq99hHU+VUllGwwM7zpGsAW4578gNyc1Op9Ih+8sFUnxj
-	LxrMRqZy2bf5iTQPZhYiWu6rOtCQUoBSlNs9u2r3j19063VjToV1U4iKdsoBURSx
-	bgzEF/RT9E1on64TMEGL7c2gRoFe8DloR+X2q3gpD85X5BMvbIkm6n9sPStNFocK
-	DyIDZHRDtqCMtkOabQSmXOpxgqrNvMAwMreoJgalT9iyiywfIVj3h0azmmcPROO1
-	OmctL6hfC3o+uxtmFoiimGFhnXah09+7Dubj0bOgA2xLqeKjC5WmAVxAEgGKCHa7
-	DKNJig==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 473nphsqxq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 06 Jun 2025 13:32:51 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 556DWoRD025923
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 6 Jun 2025 13:32:50 GMT
-Received: from [10.253.79.143] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 6 Jun 2025
- 06:32:46 -0700
-Message-ID: <d5aee491-3ba2-4beb-8b8f-4ba8372e6d16@quicinc.com>
-Date: Fri, 6 Jun 2025 21:32:44 +0800
+	s=arc-20240116; t=1749216947; c=relaxed/simple;
+	bh=0ml/MHinxxJm56VhkaRsfFKv/4fFXloCq1LTKaQ+fVo=;
+	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=RAx1wTinZ5tvR/bt9WhgJh6N32uVJVD4e/60KzAWmrM+b7IP0uk83WGci+lfUpG+x5+9/l15cV+YG3HcDjE0jKPKz/a2wA/xuRaG/t7dcYmLt5Ohxis9+DSDtErKsJ/eqzU1C9x5oTGHjpu1MCZkseYYjeDEqChUoTkIUrFNUks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GT5XxhiH; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-747fc7506d4so2183256b3a.0;
+        Fri, 06 Jun 2025 06:35:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749216945; x=1749821745; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:from:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=J6k/v7MmiVZncaG0gAng2Qdjjf1NhngohmIKq82nZVQ=;
+        b=GT5XxhiHCoSUsdV7qar9bw1g7K85HwCbcaDD/kTLmmbup8cvpONPW69i9ml0Bxkktc
+         Ilu9u0OEkpvNT6PwA+8fRJif8c2HM+3+4yT37aidA816CdkO6R1PUJNsDsT2OE2QqaVo
+         yZRx/Q70AvvtGTjVv+2xg3B+48L64He5k4rpP+u4Xtmgvpx9mpeS2t9149T2kf0e55Ab
+         eSoh2qumwB40okN1X+zharKzakASXA4bjNM1CXkIfcrioVcFX4wgY8knmvQ9Rz6w6XsC
+         WK5kjHsNMz4bxWhbqoNZ2AY0b79EVK3wbpGWnq1rzomppMxLGS7RsN5bmaGgg173GeNJ
+         9zMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749216945; x=1749821745;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=J6k/v7MmiVZncaG0gAng2Qdjjf1NhngohmIKq82nZVQ=;
+        b=pZ2OSTE4TUs0CvubQTP/y/ayogEF7WnlXV4TqsHl3jVdAnNbcZjDY4tPz6pNcoIgY+
+         k8xqtoD06yoURVgWYOODIym6u2RRzm0a80yYK2X/XxBOuAs+oPQN4NFYJCDjRCF7eLub
+         OO3LqG4dpRK5zq2MuM1+AjtmE+0AgfR/57l4hxUIy2QflLOLunxGZnSBRvOtpP9rI6PS
+         ExWWwv62ipLJHWgD7cTAbJV2cytIADhWu9N0sV0Njz2pDFiu3yxCxuRAmWzQlD06be9C
+         Bbig1vu0ccjyE/zo3+8roJzND2w1ZA/VHyGk0or8Ucs8SvPhgSBDE5xWKUqfIkYFtakl
+         j+hw==
+X-Forwarded-Encrypted: i=1; AJvYcCVSfIU36+gAXxL1VPGbuZxmThF+OkRvS4bkp7non+NdohBOrYvnbHcLMihP/s30lA0RwIr1sPTpgJJuxJFrkA==@vger.kernel.org, AJvYcCW4g2YriXPn35ETz5zIl5HQV6WWZdpSQqBiACIEx6NZhJnnc4r+NgkjHhirUEO7JCEUFSflv3UEkLMvYnqz@vger.kernel.org, AJvYcCWD6NdZqHQIVkmFpPZm77mAWNJd19/xfjzl3u3eNmtPUdDFmLNsgF4PCDFnfsDe9Qqiu8HZXxDZ95U=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzq6zatOG9cxxA3xXeVOmHnDMHbHK4dS4QVV0S3Gws0MKovvqkc
+	vQ5uVjsl3xdpzoVCFr72g3ECnw2SCi6DXxnoO8gDbQii/xBoqeoffq3s
+X-Gm-Gg: ASbGnctI7PKCGMQ/G5PGYrD0WKyrQeCUmwZ+Z3AjecIdAqItAseLxAlrAGp5UN3c2Vk
+	QLHA5ZPkTXdhaUqnzvRwZnz/6lsEmF4SYgweX6kC6kMCvHP3LjQTQ+PN68KmcJyc4AKxuQjO11L
+	kqkt9uKrBmcvduVT8BqOBEJ39lLrDGlHWYBh+xue2Gn1OZixdBYkA3oRxxizhIP9bUKarKhnAwe
+	vue+zenkrlGMhas5Kc5mgNPAJYAX+cLeZnB0dR1xhzwudmRF8hFPwyvWRAtd0K/Dp7YqGSk3xiP
+	fLmJqp1rc6pVkqsvk/J9xpCEIfzMkBBUIcwREokrSgZit/OZB+gCPlQ=
+X-Google-Smtp-Source: AGHT+IGVAVfaCO3WJmW8EZtwdSKaSpA2gT2x6UkvCUzMZbUmgdcLsdnbM0vABNk8ZcknIZtO7DrmhA==
+X-Received: by 2002:a05:6a00:188e:b0:742:da7c:3f28 with SMTP id d2e1a72fcca58-74827f37c17mr4990489b3a.21.1749216945558;
+        Fri, 06 Jun 2025 06:35:45 -0700 (PDT)
+Received: from [10.0.2.172] ([70.37.26.38])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7482b0842d3sm1299017b3a.98.2025.06.06.06.35.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Jun 2025 06:35:45 -0700 (PDT)
+Sender: Sinan Kaya <franksinankaya@gmail.com>
+From: Sinan Kaya <Okaya@kernel.org>
+X-Google-Original-From: Sinan Kaya <okaya@kernel.org>
+Message-ID: <7649f016-87f1-475d-8ff7-7608b14c5654@kernel.org>
+Date: Fri, 6 Jun 2025 09:35:44 -0400
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,136 +84,58 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 0/3] media: venus: enable venus on qcs615
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@oss.qualcomm.com>
-CC: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal
-	<quic_dikshita@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        "Nicolas
- Dufresne" <nicolas.dufresne@collabora.com>
-References: <20250530-add-venus-for-qcs615-v8-0-c0092ac616d0@quicinc.com>
- <wmri66tkksq6i3hfyoveedq5slghnnpozjzx6gck5r3zsiwsg6@xevgh54rnlqd>
- <285cae4a-219c-4514-818f-34c8225529de@quicinc.com>
- <5854a587-aba7-4e71-87f8-249ba00cbc59@linaro.org>
- <996c9a39-5520-4b43-adfa-06ce29223ba0@quicinc.com>
- <713b87cb-0003-4ee3-a599-9cd41629bb42@kernel.org>
- <7aa36a0f-6741-40c2-93f4-036823d245fd@quicinc.com>
- <247002c0-ee68-4d0d-857a-768bf68bce75@kernel.org>
+Subject: Re: [PATCH 2/2] dmaengine: qcom_hidma: fix handoff FIFO memory leak
+ on driver removal
+To: Eugen Hristev <eugen.hristev@linaro.org>, Qasim Ijaz
+ <qasdev00@gmail.com>, Vinod Koul <vkoul@kernel.org>,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: stable@vger.kernel.org
+References: <20250601224231.24317-1-qasdev00@gmail.com>
+ <20250601224231.24317-3-qasdev00@gmail.com>
+ <3c6513fe-83b3-4117-8df6-6f8c7eb07303@linaro.org>
 Content-Language: en-US
-From: Renjiang Han <quic_renjiang@quicinc.com>
-In-Reply-To: <247002c0-ee68-4d0d-857a-768bf68bce75@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ELZWQvtfk4vMVcc4do65dkOWUgD4OYgl
-X-Authority-Analysis: v=2.4 cv=N8QpF39B c=1 sm=1 tr=0 ts=6842ee03 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10
- a=scSONbXNw8eJHw9vBkAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDEyMiBTYWx0ZWRfX2O+JbySA59j7
- E0P/k6LOqIR/dbtYJ0JEMQP8zzqj6m6s4Lrr6rmI+VRtnFLdBKQ4NNt8i+wOknpDc0zwUqf4skv
- tXUoXMQFHiJ98F2FRKPWobE4PT8JIqnzgk4ZEwZJ/3yxxc3g4+HZanwlmjGCBtIZ+LRIV5hwZij
- sMdb9+VfSvUv78qt8QEW5enhVUWiWQ8ApgEepdms32vG8vWfiRH9A8CiJGwWTInMUZ6f3bQm1kL
- x76Qe6z8wyxM73+YbxIsxlZ7U8I+95xJYR0b7K8WM8IJzBVkp2s8BXncNlH7i0fHwnkTxWPnTem
- e5DaAcy9I8/ILFGv+vVD3cQa8KNWMFon2VHTcwzk3N+8kWUFDaQp2yyTmsE7IokRqfHO4KNQZIH
- E4ELfFKSkFLsM0gm+ryeJdSBDM98vqHtLk5Zdk6J4CE7CIm+nrs7BMBopAIVSNmOYfdc0V+u
-X-Proofpoint-GUID: ELZWQvtfk4vMVcc4do65dkOWUgD4OYgl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-06_04,2025-06-05_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 malwarescore=0 suspectscore=0 bulkscore=0
- mlxscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015
- impostorscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506060122
+In-Reply-To: <3c6513fe-83b3-4117-8df6-6f8c7eb07303@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
-On 6/6/2025 8:56 PM, Krzysztof Kozlowski wrote:
-> On 06/06/2025 14:51, Renjiang Han wrote:
->> On 6/6/2025 8:44 PM, Krzysztof Kozlowski wrote:
->>> On 06/06/2025 14:37, Renjiang Han wrote:
->>>> On 6/5/2025 8:34 PM, Bryan O'Donoghue wrote:
->>>>> On 31/05/2025 01:05, Renjiang Han wrote:
->>>>>>>> Note:
->>>>>>>> This series consist of DT patches and a venus driver patch. The patch
->>>>>>>> 1/3, which is venus driver patch, can be picked independently without
->>>>>>>> having any functional dependency. But patch 2/3 & patch 3/3, which are
->>>>>>>> DT patches, still depend on [1].
->>>>>>> I'd say 2/3 and 3/3 still depend on 1/3, otherwise we can get video
->>>>>>> core
->>>>>>> on QCS615 over(?)clocked.
->>>>>> Agree, so we need to make sure that the driver patch is not picked
->>>>>> after the DT patch.
->>>>> This statement is confusing.
->>>>>
->>>>> 1/3 states that there will be a fallback if there is no OPP table
->>>>> present.
->>>>>
->>>>> Giving the code a glance, I believe that is so, freq_table should be
->>>>> used if there is no OPP specified in the DT.
->>>>>
->>>>> I think we are having a hard time here understanding what you are saying.
->>>>>
->>>>> My understanding:
->>>>>
->>>>> - venus modification is standalone 1/3
->>>>>     Qcs615 will fallback if no OPP is present
->>>>>
->>>>> - dt modification 2/3 3/3 is therefore also independent of driver
->>>>>
->>>>> ---
->>>>> bod
->>>> yes, let me re-spin this with driver patch alone. Once that gets in,
->>>> will bring in the DT patches.
->>> Did you read my feedback? There is no "once that gets in". DTS is an
->>> independent hardware description and your patchset claiming there is
->>> dependency is just broken.
->>>
->>> I am repeating this since few emails, so shall I NAK it that you will
->>> address the main issue you have?
->>>
->>> Best regards,
->>> Krzysztof
->> Hi Krzysztof
->>
->> SC7180 and QCS615 use the same video core. Only difference lies in the
->> freq_table for the video. Freq_table is generally determined at SOC level.
->> The Venus driver does not currently handle freq_table compatibility well
->> across platforms. This patch enables the driver to use the OPP-table from
->> the DT, addressing the frequency compatibility issue.
-> This does not resolve the main problem at all. If SW cannot use the
-> fallback alone, your fallback has no meaning and is not only confusing
-> but actually incorrect. And based on previous statements like
-> "overclocking" it is not only incorrect, but even harmful.
+On 6/5/2025 9:04 AM, Eugen Hristev wrote:
+>> diff --git a/drivers/dma/qcom/hidma_ll.c b/drivers/dma/qcom/hidma_ll.c
+>> index fee448499777..0c2bae46746c 100644
+>> --- a/drivers/dma/qcom/hidma_ll.c
+>> +++ b/drivers/dma/qcom/hidma_ll.c
+>> @@ -816,6 +816,7 @@ int hidma_ll_uninit(struct hidma_lldev *lldev)
+>>   
+>>   	required_bytes = sizeof(struct hidma_tre) * lldev->nr_tres;
+>>   	tasklet_kill(&lldev->task);
+>> +	kfifo_free(&lldev->handoff_fifo);
+>>   	memset(lldev->trepool, 0, required_bytes);
+>>   	lldev->trepool = NULL;
+>>   	atomic_set(&lldev->pending_tre_count, 0);
+> Is it possible that the handoff_fifo is freed, then we could observe
+> reset complete interrupts before they are being cleared in
+> hidma_ll_uninit later on, which would lead to the following call chain
 >
-> Best regards,
-> Krzysztof
-The fallback is only triggered when there is no OPP table in the DT.
-Since the QCS615 DT will include an OPP table, the fallback logic will
-not be used.
+>   hidma_ll_inthandler - hidma_ll_int_handler_internal -
+> hidma_handle_tre_completion - hidma_post_completed -
+> tasklet_schedule(&lldev->task); - hidma_ll_tre_complete - kfifo_out
 
-Also, if the freq from the freq_table and the OPP table are the same,
-would it be acceptable to drop the freq_table from the driver?
+According to the documentation, the way to guarantee this from not happening
 
--- 
-Best Regards,
-Renjiang
+is to call tasklet_disable() to ensure that tasklet completes execution. 
+Only after that
+
+data structures used by the tasklet can be freed.
+
+I think proper order is:
+
+1. tasklet_disable
+
+2. tasklet_kill
+
+3. kfifo_free
+
+
 
 
