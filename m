@@ -1,139 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-60473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E2B8AD0101
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 13:05:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 980CDAD013C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 13:33:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 069C616BE66
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 11:05:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B205171FC3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 11:33:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 950692045AD;
-	Fri,  6 Jun 2025 11:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60D612874E3;
+	Fri,  6 Jun 2025 11:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D0XLWXkv"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AvRMOeek"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539C217E4;
-	Fri,  6 Jun 2025 11:05:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AE61E412A
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jun 2025 11:33:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749207933; cv=none; b=Px6L+jbpRTPeY+c8+Xa2ehHbkh0TdPeTMPT4vacPhXRdOj+OccheNfcOwUZx9G2t4FfG0mrxMG9ha1FSPddxzkoybGxNXrgEMLTYMvunTVfGnBbMgX7WH3KW37s65Gh8A9ikwpoE5ob9vwPyLMSTPIKOy3GzlDxy01N4WpeJ+HA=
+	t=1749209588; cv=none; b=m+ZiFMgtdZto+LZpH66xyWb0V25SXGyHLrdEB9GbEsbJ4YbZ+VgqM9VWew0t9/G4SeKxbpsKbQxAfPK1QSl8bhmADh5cKz/PJ9j0lAh9ywPdOpDy2pBTY7/A3fykvj7y69MbZuomDkX2/wrvlYqOXFoVofIOHRu6UsKbBYmf5Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749207933; c=relaxed/simple;
-	bh=hZBSXY9Vfts7VOCEcp7eKY+x8Ag3TrY9gexhqvO72E4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=L2h0bbqbJlGyeYKKZZLU62xfXnyNGN5d/22U9UpWmuXdPdwqEtMyN1DY+QsPgkXexR+KF8qwObbDCp+iusQZ/vYK+flFXm8mvJtgODN9MQHyWyVS3C5bCHx7dIQke0M1BsQ7An7v6TGxjGsSeyCuox2JLwG97M5cktXUewGPqpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D0XLWXkv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B2A2BC4CEEB;
-	Fri,  6 Jun 2025 11:05:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749207932;
-	bh=hZBSXY9Vfts7VOCEcp7eKY+x8Ag3TrY9gexhqvO72E4=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=D0XLWXkv5j8Ur8ZWqDST4zOCU0ME19lj286d89dSz2jrO6PtapqMJ7MF8IR52wMGB
-	 PzMEM7btO1gvNqTOhdNJvf+VaVXUwikHnn5Q2HDTMsjmS2AU236MyFTCgrMz0owxxI
-	 QmwnuK0xYXqbrnMRHSNhdRWqjagddIKqhOyiXE8Bq7xzcedw9z4YqdhvAARrrVMjz5
-	 ioXWICmHiuci89rmImYvv80nmzrFRr7c5ylUCBYuGg/+8ZWdoXxjHwbqEWyVoiS0Nj
-	 iw361LGk2oITDR+P1L00SCfNHP5t70JVikd15dS7U4zB8cVkqAJsipzqZpvjrXDfoI
-	 MnlJ7Y4Cfwxhg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1CAAC61CE8;
-	Fri,  6 Jun 2025 11:05:32 +0000 (UTC)
-From: Max Shevchenko via B4 Relay <devnull+wctrl.proton.me@kernel.org>
-Date: Fri, 06 Jun 2025 14:03:51 +0300
-Subject: [PATCH] ARM: dts: qcom: msm8960: use macros for interrupts
+	s=arc-20240116; t=1749209588; c=relaxed/simple;
+	bh=rjq1RfB16uNwsEaeeDKPTE1D7mp2xB4/K2KeD5ubBp0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DkyScBCtbAqpxypNYnXbZQBADuJKXjxpqeVI4mPqsi89SjNzo1SGwfLkYFOXyQtbJcQsb77BxVqj7JoRSpEzckWnG8ACtv1qwsdUhcqDMhMvCCEqD01+lX9cLwy8tjEdTckot6lJbCl445htTVytPVki1lPriWjO+5/ym9pb+Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AvRMOeek; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5569ae64031915
+	for <linux-arm-msm@vger.kernel.org>; Fri, 6 Jun 2025 11:33:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	hBsVUSV4bS/Pj8To1O6ismeXm6A04KaflnyzIZ+5dok=; b=AvRMOeek5EwJU2YB
+	0fyP/4clx+tIreBlfo30vhV6WzpoZEFXv0O5iVcSwLbb78v+srVl0kMSKf1kGmY5
+	zvXTpd/B0JpsKkLWBcuq+Ah2ZxATf4rVEunFlzhjHHgBDW91jTUS7wY1KSNcjAMq
+	5FloY9SaMTjP5qiomrJIuXu2w0RiFdHGXd+UASM6TtntCY20EWrL5VaUmUDERLDf
+	oHHbDlhZuPDulg+ljh9dHBx4Cq4XZepbv0+qAnQ7jUYFm7ywrun+pAzm+z1RAvmI
+	gxyWfYPFS71srhJlh7iIbYWO+EbQ06TLejh54jKqGJCiU0aTt34QwFpaZEAnw2o+
+	y30SYA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 472be885f9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jun 2025 11:33:05 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d0976a24ceso45089885a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jun 2025 04:33:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749209584; x=1749814384;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hBsVUSV4bS/Pj8To1O6ismeXm6A04KaflnyzIZ+5dok=;
+        b=cMWLiW2NEsPLkn1759WFrJWeGIYG7JL8ouEMIzx+DemZ96fGoJo4jDCKeLXWOYWzgy
+         6LVvDe+juC2N0YZqHiCSmrFuZOgnn0GK0OPU60dRa6hdWbk2MoEmvwhivjfscFQWoAHp
+         p9qjEUl1Rmkyt1ZpLy4edf7vx8m2z7v3i6c11g/yx7dhXVlUEos1riHq9iU19pqpBqrZ
+         qvY4QgTc6ht66NuadZP2QaJOWAZ5GcwPcNHDT369sETLgKw35QB2PZKsHf8mSkyzb3rA
+         q4nAhmrhBdv1A4F8IyFfnifqmpbWNIjdfLfRA7eLkO7ZJ53Xf6SEf8NZeT7B4f63cj1g
+         /0kw==
+X-Gm-Message-State: AOJu0YzRzosNZBjVVas5tVWs8d89uxXSqm82ZGoI4Di5Bor8LU+eWPcB
+	AWPFEsf9t88P+iaVg/Y94d7JjSsGWZHoO3dJEpVv1scPG/Q8ysuIKqUGzxKiFxLmaSCjK38owuw
+	9AP85+9Jyl/aYnnyCFqXSi0uMyiSTejhlyRA4N1FDkMhOXEyVrBZroQISmtXTKva7sy8J
+X-Gm-Gg: ASbGncui9rvaOhfWXyfrQq9EFF9C5AT8Jukh6yu3StrbSFSeKUz5fSyH6HE/9/XuaQf
+	nidM6bXPBQYymvRXygz2eW45r6SY+7bXrkXBplTwF+l0lTlKp2maZ4iSddE/NxRwa8wS5RkgZIm
+	ZArx3bz/hIYZxRmT7NL5WyzkwDA4LhlBmPuo4tvqxbPDRjXSV5s6u8oM8FojHL9ueVuOaxwyqd5
+	K43JSOjhYxekLN0nAKVYVoy/CMb5UsboHTEkbLierInhyDxqXxNI1fIrDRqcAlhJklkglZYoiev
+	54rXRg64lhoYMKED93vRDX0+vpJTZxTDeAJYe1BZQ8T72uNdY+FaToLEjb7TDTnXbw==
+X-Received: by 2002:a05:620a:410e:b0:7c0:add8:1736 with SMTP id af79cd13be357-7d33df1fe47mr93551285a.13.1749209584473;
+        Fri, 06 Jun 2025 04:33:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkuxkZEdiQyqedab+Vm7k2HP8tSudyEGg5/Rxa0+D0cherRON5LyZpShuOvPOo20kuyO7SzA==
+X-Received: by 2002:a05:620a:410e:b0:7c0:add8:1736 with SMTP id af79cd13be357-7d33df1fe47mr93549685a.13.1749209584031;
+        Fri, 06 Jun 2025 04:33:04 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-607783de2bcsm873720a12.68.2025.06.06.04.33.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Jun 2025 04:33:03 -0700 (PDT)
+Message-ID: <05534fa7-9479-4fe0-85bd-0dca5541f739@oss.qualcomm.com>
+Date: Fri, 6 Jun 2025 13:33:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ARM: dts: qcom: msm8960: use macros for interrupts
+To: wctrl@proton.me, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Rudraksha Gupta <guptarud@gmail.com>
+References: <20250606-msm8960-irq-macros-v1-1-03e573ba26d6@proton.me>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250606-msm8960-irq-macros-v1-1-03e573ba26d6@proton.me>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250606-msm8960-irq-macros-v1-1-03e573ba26d6@proton.me>
-X-B4-Tracking: v=1; b=H4sIABbLQmgC/x3MOQqAQAxA0atIagOj4rhcRSyGGDXFuCQggnh3B
- 8tX/P+AsQob9NkDypeY7FtCkWdAa9gWRpmSoXRl7byrMFpsO+9Q9MQYSHdDP4U5NFVNTAQpPJR
- nuf/pML7vB7fCB+pkAAAA
-X-Change-ID: 20250603-msm8960-irq-macros-6dafa735cecc
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Rudraksha Gupta <guptarud@gmail.com>, 
- Max Shevchenko <wctrl@proton.me>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749207931; l=1869;
- i=wctrl@proton.me; s=20250603; h=from:subject:message-id;
- bh=l1evEWFE+2Uf0Gr0r6+BEZUpSHC16rDD8Dp6L4gRpfc=;
- b=iXp2CCnLaRMORs4EWNbaiKAzYZqjClpnHL9udO16ISe6xbWYOTjTHMcvkK0RQ7eu2tV5lZumC
- AxH6g0l/f/sCI9FB0bbAtIGTHQDFnd44Kpt1E8qadSy7WMFfoM73DdJ
-X-Developer-Key: i=wctrl@proton.me; a=ed25519;
- pk=JXUx3mL/OrnRvbK57HXgugBjEBKq4QgDKJqp7BALm74=
-X-Endpoint-Received: by B4 Relay for wctrl@proton.me/20250603 with
- auth_id=421
-X-Original-From: Max Shevchenko <wctrl@proton.me>
-Reply-To: wctrl@proton.me
+X-Authority-Analysis: v=2.4 cv=bNYWIO+Z c=1 sm=1 tr=0 ts=6842d1f1 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=MzN8uu8svZ0T6_zCNRoA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+ a=lZGKyyPKw46fRox7ShMU:22
+X-Proofpoint-GUID: d4N4ITMg2BbKEuSewCa7oQhNV0dtq4Kd
+X-Proofpoint-ORIG-GUID: d4N4ITMg2BbKEuSewCa7oQhNV0dtq4Kd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDEwNCBTYWx0ZWRfX9ckYyyl8co0V
+ +vJ+NysrO2g6FCQMHjmoBs/jtqPKBH/wUPuscPc2C2CbZPG3VvSGhHpkUZUN7/hfHOzHLqnWiQa
+ Snz4zBXO/ueNWzMz+ZBadauh/of8eGvETCRzXmxgPT/SRAadFchW7UduGrnm903XQKDiZV8Msiv
+ OPcy5KkBFMzT8f9y9ZR41TJDM0xF5P/0tj1yxfpT+EuRlYypxZQp9Pvf2Uig9yZc4r95W0IcrcR
+ 7o6SXWZ9gv0gmWDd5GYzP3KVNWvCFXEDQaQY3yBILGrRFVEqd8zpy56ZK6wvMI+6o/AWZ+vmX8q
+ fvHwvI88ASUmqNVuhS9svcPqhcimm7djjdH+diMtze5WFxa7YHIMm9BxLRhLr+Uk6FVWsn47qAV
+ FsxXR93tVc/ydqa60wiBXZ5cXnh8YHXnR50A4qNIgo8f25lSj/sZLJijY41kdmhZY/ICnEJG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-06_03,2025-06-05_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 malwarescore=0 phishscore=0 priorityscore=1501
+ suspectscore=0 mlxscore=0 impostorscore=0 spamscore=0 clxscore=1015
+ mlxlogscore=686 adultscore=0 bulkscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506060104
 
-From: Max Shevchenko <wctrl@proton.me>
+On 6/6/25 1:03 PM, Max Shevchenko via B4 Relay wrote:
+> From: Max Shevchenko <wctrl@proton.me>
+> 
+> Replace the raw values with macros. No changes to the output
+> 
+> Tested-by: Rudraksha Gupta <guptarud@gmail.com>
+> Signed-off-by: Max Shevchenko <wctrl@proton.me>
+> ---
 
-Replace the raw values with macros. No changes to the output
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Tested-by: Rudraksha Gupta <guptarud@gmail.com>
-Signed-off-by: Max Shevchenko <wctrl@proton.me>
----
-Replace the raw values with macros. No changes to the output
----
- arch/arm/boot/dts/qcom/qcom-msm8960.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
-index 865fe7cc39511d7cb9ec5c4b12100404f77e2989..13572d0b1d5572cc5b9c3a136a6ea6267b8625da 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
-@@ -18,7 +18,7 @@ / {
- 	cpus {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
--		interrupts = <GIC_PPI 14 0x304>;
-+		interrupts = <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_LEVEL_HIGH)>;
- 
- 		cpu@0 {
- 			compatible = "qcom,krait";
-@@ -54,7 +54,7 @@ memory@80000000 {
- 
- 	cpu-pmu {
- 		compatible = "qcom,krait-pmu";
--		interrupts = <GIC_PPI 10 0x304>;
-+		interrupts = <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_LEVEL_HIGH)>;
- 		qcom,no-pc-write;
- 	};
- 
-@@ -107,9 +107,9 @@ intc: interrupt-controller@2000000 {
- 		timer@200a000 {
- 			compatible = "qcom,kpss-wdt-msm8960", "qcom,kpss-timer",
- 				     "qcom,msm-timer";
--			interrupts = <GIC_PPI 1 0x301>,
--				     <GIC_PPI 2 0x301>,
--				     <GIC_PPI 3 0x301>;
-+			interrupts = <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_EDGE_RISING)>,
-+				     <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_EDGE_RISING)>,
-+				     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_EDGE_RISING)>;
- 			reg = <0x0200a000 0x100>;
- 			clock-frequency = <27000000>;
- 			cpu-offset = <0x80000>;
-
----
-base-commit: 0ff41df1cb268fc69e703a08a57ee14ae967d0ca
-change-id: 20250603-msm8960-irq-macros-6dafa735cecc
-
-Best regards,
--- 
-Max Shevchenko <wctrl@proton.me>
-
-
+Konrad
 
