@@ -1,134 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-60435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 761C3ACFC36
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 07:31:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D31DDACFC3F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 07:34:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EC137189251C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 05:32:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3B5EF7A60D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 05:33:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0DAD1DD9AD;
-	Fri,  6 Jun 2025 05:31:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lzqb1Dwi"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADC441DD9AD;
+	Fri,  6 Jun 2025 05:34:31 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3140D1C9EB1;
-	Fri,  6 Jun 2025 05:31:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565C34683;
+	Fri,  6 Jun 2025 05:34:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749187903; cv=none; b=ZECOGaMeo9fWPwkHqAk6FvTftn+VHsXix+zpmzYINWhsmY3komn2eSe9HaSwqZCQleV+qEcYfyUheOuGiS61Qew7D8xVR7uhmkceTO4p0SfhG1/SMGO2YEAy0reHZRXXnxWHDDcbaumB72DXQg6+mhtw9iDBEBJN1283Dhm9TUM=
+	t=1749188071; cv=none; b=RGXgH4kbDdMSyrqaYGbmihtqpsLn9443ctjwDIUY2emFnahDkPTZlUCEYjs24M4MCL4+oMB6GLoroyKzEzuPCwe3CcUKxcwZwmzjUPY7jGf+JMoOX4gWvLNN73aa1zHLLA9tLHGKAZH4qsexv9F1UPrlJsZNMuCOl+WVbSdmwLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749187903; c=relaxed/simple;
-	bh=Rs6u/8uV0wNpRku8tHaJX2RzEPsFk0Z6vIX0IKDE7zc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X9gtwDv8vLKlASeaPE6PuRNzF3/HbxuJXh2EL92nQeGmuUcaatbC7M6cMGKgMQBkK/rt5QV441zWaqRGyPIMcDy4Jd/qkbENHf1G/NuHA9g0rs2AvGykTWGrr3Tam8POoj9yoqddQn/+r4QCI1WUZwBw6p8rcttrxqb3EI0B8X0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lzqb1Dwi; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-235e1d4cba0so14721495ad.2;
-        Thu, 05 Jun 2025 22:31:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749187901; x=1749792701; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dzlXgy5IGuV11bydpJNOntnZHJEgtC/+n57kSppntuY=;
-        b=lzqb1DwiXX2TDtpOBglmP4b1h73BvzA0VR4pA1B8daKEFAdJgZaLdh5UrvZahxNZMR
-         dPI0ZIhJmAmsmmyECp5dkBtHZtBNNE5BOFtiSsgmPVhHvP1bBr+AZqRh7nxsm6QUqP+/
-         nl5iMgQeyWpl1ZYhbBJgl69hPVURy3FzLxpcWX90kbETLOIAr2LOr+Atpt+qHgZsiu0a
-         6a8STCnTuUljPXBPbV1DVJD6+YLpkYKm685iNLObMZe+2BQTRMAkoutCyRbq4sq9mEhc
-         R4Ck8p4nWi5Ty1NV0R5CLNFA6g51kDr0T6vSh0JIanwPJGwJVRLRk/sAB4BPKFze7mKj
-         YQeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749187901; x=1749792701;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dzlXgy5IGuV11bydpJNOntnZHJEgtC/+n57kSppntuY=;
-        b=e4+vigx5lUx1l7B0+xm7bbywVEwwh6F3FcQTv9B6b2SYpKN+Us/1O9BRBmwqe27Zne
-         HjPNNT/8X5/fUCxAAf3gCiC/hhY5K7ZFw1UApPZqelycJyEtadk6Tnztc/0pa1vG0uWq
-         SfrjhOkNEdLEVG+Ay6anWfmsE8UZzt2AOxkgHfUChLX62hI8Dzx1Kp6oHrwMvACO23Pu
-         2bUi9jtJ/R8JP+LyCZDCbIQTGUkOk1zhYmGvdXWGTr3vHfeRsk/7VEKRqkL0chG93hdc
-         VFGTQaPjjh5QlqJAjzff3cH63ojmzSZTRAAGmaf+h6CdFuT5B+nXH2LJKP4RIcI2HJ3/
-         9ZGg==
-X-Forwarded-Encrypted: i=1; AJvYcCUDSkZgoS0wj1WJrIRwMDuxVLopThJDH6pU03SqFaZCLEpBnFobMUzHqjny6DMnMW9ISw/J4RvZfFjS@vger.kernel.org, AJvYcCV3OeGONHmJqNlVI2nmGFgEvVQlgqGTzBegr7Lx67shhfkB+EBHd9VhJZ7VDGb0wEw5NVOEfvm4zLJa8yFo@vger.kernel.org, AJvYcCVJ4MU+4/aH0CV8P4hnLs0IdmRdOwKEW0zxYeFdmzWxwE79q/e3iVnZFVyKbS9N/kdTOlpPEMaMmK+5846o4Q==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTBLo4JAiQdTYqWlHqg1IpNFdvqBc6zUWNy6WRS/C70gqpUlm+
-	8LIN2Fvs0WGpcYyzk0pQLBhjdYxxFSthzz+24yECUbla5ELJ3FfVsD3F
-X-Gm-Gg: ASbGncv688yijoxgygOeK82dBTuknwYPuePWPxZhJJcRRmYj3CZ+BabWU/VrHWZmyEe
-	wYyoBFBCADg1g270fIwtW4QXZD2ZfGvdclrgEILGQiidjRF7KR9WdyZHbl3jdzwu0rBgRMlxI1N
-	Se2PEwkJSXeIkMcI5y3MfIuF8fXajvo4KLFBFL7leh24ky0K+mRGQo9ZtseYni5R/wlyMEF8Zih
-	jG3vwFQeWEbicZBVX86uBoRsQZUP3JF9WIM7kdvqPA6/DNbEywcttcpJLLufWxnS1GAEtAki9VM
-	2xWPa4R3Sr6SG0AKKNTvW+oGJVNk4CJcF1bzuQYYa1N9HkIB+vJJpm1D0xDS
-X-Google-Smtp-Source: AGHT+IHm9V8MInY7eid9ZjIu/qmANGOMoaeiN5kAiiPpPU+C0cJpEdUtkuzqSwl6yjJEnE728bmZPg==
-X-Received: by 2002:a17:903:41c9:b0:235:6e7:8df2 with SMTP id d9443c01a7336-23601d975acmr29530675ad.41.1749187901230;
-        Thu, 05 Jun 2025 22:31:41 -0700 (PDT)
-Received: from nuvole.. ([144.202.86.13])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-236034109cfsm4765675ad.200.2025.06.05.22.31.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Jun 2025 22:31:40 -0700 (PDT)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: quic_amakhija@quicinc.com
-Cc: Laurent.pinchart@ideasonboard.com,
-	andersson@kernel.org,
-	andrzej.hajda@intel.com,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	dmitry.baryshkov@oss.qualcomm.com,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	jernej.skrabec@gmail.com,
-	jonas@kwiboo.se,
-	konradybcio@kernel.org,
-	krzk+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	marijn.suijten@somainline.org,
-	neil.armstrong@linaro.org,
-	quic_abhinavk@quicinc.com,
-	quic_jesszhan@quicinc.com,
-	quic_rajeevny@quicinc.com,
-	quic_vproddut@quicinc.com,
-	rfoss@kernel.org,
-	robdclark@gmail.com,
-	robh+dt@kernel.org,
-	robh@kernel.org,
-	sean@poorly.run
-Subject: Re: [PATCH v8 RESEND 0/2] Add DSI display support for SA8775P target
-Date: Fri,  6 Jun 2025 13:31:22 +0800
-Message-ID: <20250606053122.523651-1-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250604071851.1438612-1-quic_amakhija@quicinc.com>
-References: <20250604071851.1438612-1-quic_amakhija@quicinc.com>
+	s=arc-20240116; t=1749188071; c=relaxed/simple;
+	bh=riEMFiK8zdrNN4Yj3Qo3hW9QXjZmq1fPdfZytpr7bbE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lO7q4uy44gRnY6YFLPIwoD6ifHmuYKQKe15E+zx6i5VCxi5o8/wUHH07JjWbsKrktQ8GKxJbRpiRebUUz033Dt6eenIN8OnYOcSGQS+lrS5QGLq6sXaS3iL8IxIK7b9BNnQrKOWR7BoDh+mP5jFB6laxpa9bqLxkZgE8I938bHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.204.34.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpgz4t1749188049t95d02e75
+X-QQ-Originating-IP: 8itqSUwG57Xz1wRjpsBQU4erKIvz2MIRDy9i7XkRA/k=
+Received: from [127.0.0.1] ( [116.237.87.75])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 06 Jun 2025 13:34:07 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 5191052925718409957
+Message-ID: <EF0467E1FD371A7E+f68ef9be-76d3-4e6a-8c8c-48f07c4228b8@radxa.com>
+Date: Fri, 6 Jun 2025 13:34:06 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFT] drm/msm/dpu: enable virtual planes by default
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20250514-dpu-enable-virt-planes-v1-1-bf5ba0088007@oss.qualcomm.com>
+From: Xilin Wu <sophon@radxa.com>
+Content-Language: en-US
+In-Reply-To: <20250514-dpu-enable-virt-planes-v1-1-bf5ba0088007@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:radxa.com:qybglogicsvrgz:qybglogicsvrgz8a-1
+X-QQ-XMAILINFO: MdlxueOE7DMoTyrg0J8D2o2wsBZyn2dQ/t3NuPhnpdUVYKTNdVDwzV/c
+	00iD/TbRmgQ16hOhg25pQfGvlZhwnw5bR8hIkmBmB/c3i7oUAJNqhHVJb8U0aMlAIT3gcKx
+	cCuhydtns2Dp0TxaxGQajeDvU/GMAz28UnB6YzqUtDInuHa3oR4RNDAl5mi0UcvvkmZqNmh
+	GmEffs5XY829Q9X6zU5Zqp4KGZWLLlkHhtUXgsvxx6YCVU4ILJjnmq39+JPaiX6swbCZlzG
+	DSEvrrG6WQ2NXaLAjWnaaoN0xNH+bWo0KUppeHwUN11KHzhwtS8JlRyJCLdq6frwLNukIFY
+	LBPdNBt1i6JIr7HzCwsyQKVTkzDu6L6vclgYQUn4ZsGcbVcnABlaXFNzBCxOb9HPWIaq3+C
+	ytHfzJFEjhiGs0ND/sh4fw/ObLMxIsEkfxzg8Rw4yxY/mEJxutjTXZfqgh8RNyF6S5LXcvq
+	kMKKIsnzU+9zfF4Ny8pmgG2qF6PVgOx8O3V+Pdsdy/GKFRwKpbeOJy62MiPUGT1eunpZw7i
+	hvKdo1wov4QeTmYl3/MWei+/QXvQMR7OZkHgfnSVXXq+TuM9zhVlSY09HZFJ4sCZ3b2OoOO
+	CVXXdh9A483GS2XTV/pBWrSnZ+2pxnIYjHbG6WCH/GWEW/E3/FKlaVpyD9WA5Ry/H9LUdTA
+	O6phTof0eBsoTD1NMU39Wl4kIkdJGXKkBNXV4KN6tU8G3ovLaBnHNcGR4fkQMXC/lrXEdWh
+	nbWGb1WnxteF9ICoL9Kh09E/XGD5bQRZ5pBjj1gh3z9Roi35DhBizZSdz6KggUW00NMNlCb
+	WS7NUDUMPGyOtDSxfo8U1vl0pBgBagyQsZcG6FqTU+crs0YiihPW7y09KE1ZuIuNrnw7Bzs
+	THKhBuuW+5soXoTgOBk4PWtYn4DggqIriaJp4aGnjOXoHbmnY1eheruf/FqBjptEK2KVebP
+	ySbfHSMVvVRFd6g==
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+X-QQ-RECHKSPAM: 0
 
-On Wed,  4 Jun 2025 12:48:49 +0530 Ayushi Makhija <quic_amakhija@quicinc.com> wrote:
-> This series enables the support for DSI to DP bridge ports
-> (labled as DSI0 and DSI1) of the Qualcomm's SA8775P Ride platform.
->
-> SA8775P SoC has DSI controller v2.5.1 and DSI PHY v4.2.
-> The Ride platform is having ANX7625 DSI to DP bridge chip from Analogix.
-> Since I am just an amateur, so I followed some applied examples, like [1]
-> If you mind this, I will describe in next version.
+On 2025/5/14 07:30:00, Dmitry Baryshkov wrote:
+> Turn on the switch and use virtual planes by default, enhancing
+> utilisation of the display pipelines. It is still possible to use legacy
+> implementation by using `msm.dpu_use_virtual_planes=false` kernel boot
+> parameter.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+> This is being sent as an RFT for now. Please give it a test with your
+> compositor of choice. X11. Weston. Sway. Wlroot. CrOS. I plan to turn
+> the switch for 6.17.
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-Hi, Ayushi. I think this series had been verified to work. Do you have
-any idea in my case? According to the public information, SA8775P is
-equipped with Adreno DPU1199, SA8295P(almost identical to SC8280XP) too.
-And SC8280XP has the same dsi version and dsi phy. And my device tree
-nodes for the DSI0 and DSI1 are almost same as yours. I got
-`dsi_err_worker: status=4` only with a blanking screen.
+With virtual planes enabled on qcs6490, I get a kernel Oops every time I 
+plug in a mouse.
 
-Best wishes,
-Pengyu
+Steps to reproduce:
+
+1. Set DisplayPort resolution to 1920x1080 (does not happen with 2560x1440)
+2. Boot into plasma wayland desktop (v6.3.5) without usb mouse plugged in
+3. Plug in the usb mouse
+
+[   53.594217] hid-generic 0003:3554:F55D.0003: input: USB HID v1.11 
+Mouse [Compx 2.4G Wireless Receiver] on usb-xhci-hcd.1.auto-1.3/input2
+[   53.737874] Unable to handle kernel NULL pointer dereference at 
+virtual address 0000000000000020
+[   53.746931] Mem abort info:
+[   53.749827]   ESR = 0x0000000096000004
+[   53.753690]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   53.759159]   SET = 0, FnV = 0
+[   53.762309]   EA = 0, S1PTW = 0
+[   53.765556]   FSC = 0x04: level 0 translation fault
+[   53.770584] Data abort info:
+[   53.773564]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[   53.779205]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[   53.784411]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   53.789880] user pgtable: 4k pages, 48-bit VAs, pgdp=000000010f4fd000
+[   53.796511] [0000000000000020] pgd=0000000000000000, p4d=0000000000000000
+[   53.803493] Internal error: Oops: 0000000096000004 [#1]  SMP
+[   53.809309] Modules linked in:
+[   53.812465] CPU: 6 UID: 1000 PID: 677 Comm: kwin_wayland Tainted: G 
+      W           6.15.0-next-20250528-00020-gc20b5cd31b70-dirty #16 
+PREEMPTLAZY
+[   53.826292] Tainted: [W]=WARN
+[   53.829356] Hardware name: Radxa Dragon Q6A (DT)
+[   53.834108] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS 
+BTYPE=--)
+[   53.841261] pc : dpu_plane_is_multirect_capable+0x60/0x80
+[   53.846818] lr : dpu_assign_plane_resources+0x26c/0x3d0
+[   53.852192] sp : ffff800085bf3880
+[   53.855610] x29: ffff800085bf38b0 x28: 0000000000000960 x27: 
+ffff000090878800
+[   53.862946] x26: ffff0000c407d948 x25: ffff00009087a200 x24: 
+ffff0000b9a79a80
+[   53.870284] x23: ffff0000c407d960 x22: ffff00008006a080 x21: 
+ffff000084153880
+[   53.877623] x20: ffff800085bf38a5 x19: ffff00009087a000 x18: 
+0000000000000000
+[   53.884960] x17: 0000000000000000 x16: 0000000000000000 x15: 
+0000004200000000
+[   53.892297] x14: ffff00009087a400 x13: ffff00008006a718 x12: 
+ffff000080dca080
+[   53.899632] x11: ffff800085bf38a5 x10: ffff00009087a4b8 x9 : 
+0000000000000000
+[   53.906970] x8 : ffffd8d2d59a09c0 x7 : 0000000000000000 x6 : 
+0000000000000217
+[   53.914301] x5 : 0000000000000000 x4 : 0000000000000200 x3 : 
+0000000000000200
+[   53.921639] x2 : ffffd8d2d59a03c0 x1 : 000000000000000a x0 : 
+0000000000000000
+[   53.928977] Call trace:
+[   53.931505]  dpu_plane_is_multirect_capable+0x60/0x80 (P)
+[   53.937055]  dpu_crtc_atomic_check+0x5d0/0x680
+[   53.941639]  drm_atomic_helper_check_planes+0x144/0x224
+[   53.947014]  drm_atomic_helper_check+0x50/0xa4
+[   53.951594]  msm_atomic_check+0xd0/0xe0
+[   53.955554]  drm_atomic_check_only+0x4d0/0x910
+[   53.960134]  drm_mode_atomic_ioctl+0xa14/0xdf8
+[   53.964712]  drm_ioctl_kernel+0xc0/0x130
+[   53.968750]  drm_ioctl+0x360/0x4e0
+[   53.972259]  __arm64_sys_ioctl+0xac/0x104
+[   53.976390]  invoke_syscall+0x48/0x104
+[   53.980261]  el0_svc_common.constprop.0+0x40/0xe0
+[   53.985109]  do_el0_svc+0x1c/0x28
+[   53.988533]  el0_svc+0x34/0x104
+[   53.991780]  el0t_64_sync_handler+0x10c/0x138
+[   53.996265]  el0t_64_sync+0x198/0x19c
+[   54.000038] Code: b9402021 370fffc1 f9401441 3707ff81 (f94010a1)
+[   54.006301] ---[ end trace 0000000000000000 ]---
+
+$ aarch64-linux-gnu-addr2line -e ~/build_cache/kernel/dragon-q6a/vmlinux 
+dpu_plane_is_multirect_capable+0x60/0x80
+/home/strongtz/git/linux-super/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c:932
+
+
+-- 
+Best regards,
+Xilin Wu <sophon@radxa.com>
 
