@@ -1,254 +1,403 @@
-Return-Path: <linux-arm-msm+bounces-60465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C5EDAD0072
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 12:34:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24958AD00BD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 12:47:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AC1A97A23D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 10:32:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4ECA33B2320
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Jun 2025 10:46:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B60B82868A4;
-	Fri,  6 Jun 2025 10:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D10C4287500;
+	Fri,  6 Jun 2025 10:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XaEmbdan"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tPyoyjUi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A19207A3A
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jun 2025 10:33:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129892857CF
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Jun 2025 10:47:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749206042; cv=none; b=JEpJ+J+AuQd4D4tkZmI2/aKjUNEuM4E1OO8mSwnwP0U7ZhfNiDImi+om6W4fEr9dfyTTr4NHB0RWyIY1uGR9msE82hPK76w0F7srSD11rj9NwMm9BM6O5eFcrOS8bpSu0TeDe43CP1H/72IDILp45IvYTuBGqn7xeRwTMP5Ut+M=
+	t=1749206831; cv=none; b=lX+f6elb2nUfac+jtbu8/6wKnoXi4u5dBAiLvU+tlgQtIkM/T5jotAFlrX87wPitz0B/5LfznXAYW9cZCS7dKD2axjr8GJldrROuKcUeWjqLxovtUrOkt6kJXID7ahyukLHKeAK6+/SGd+11lTsjczzaX7Hg95AswXysIVXL9pI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749206042; c=relaxed/simple;
-	bh=P8BWQX0eac2EiocmBjT+eabK9bdjkAT+CvP9MQzx+nA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dLwQX6Vr222qBK9s6832B81v16YaHEjfzL0qQ1TWIKpTQ8DNlI11Ckz8YlnE5Yb4HtLChczm+wBa5nEhj2zYRychBAdZ/YkRmNRSGx8csy7CvP4DwEVqYkX19LGIwxxiaFijmQk1gcyYMczSJzwPqs+Hr1YmLr+bAGZHbxGB3gE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=XaEmbdan; arc=none smtp.client-ip=209.85.160.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-47e9fea29easo312271cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jun 2025 03:33:59 -0700 (PDT)
+	s=arc-20240116; t=1749206831; c=relaxed/simple;
+	bh=f+/j1GlnG7yRbwOXO1wHIG7cgcq9EW09L+j7P/rKe1k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GAn4MtvvN9QqaWQCm40dxu1EbdJHuCH7MWpncwjsQ9p6c/ZdpJx1JXW3l2xI/4iEUJ7Qo6GraWvxkT06ZS8JAAzbkNPMOSCAr3VJiJKTrHoIR5GMmaMrd1ewTCgASn1QeTxqY50E0m+bJJaxfJjPQTivP4Q/8FFmoZEzSjIDtKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tPyoyjUi; arc=none smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-32a6c473e28so1739781fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Jun 2025 03:47:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1749206038; x=1749810838; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fAw4qUBOEhITQZ6BbLDNViptraoja2RZKd2zTaQIUtM=;
-        b=XaEmbdantMLYb/mbSBplpwL68NlYu8hEhpCuYCo6Lo3sdQ6Swhf1el4KZA60aaq4EH
-         QMXEXKQ4AhXfIsRIHWNHZ8OOx4hcI9Pw4cADJTjw9s95pdl9NvG/pdZvEKwWXJZqLffr
-         c4hokDZ1sB4c/tWbQS6mELSXldnef3o+//ybilAEpp19aadOZv1bcYVb0UqdWUkEz3Yd
-         MTL+bazGvpvV4b2cQS4JQPLxlFhwmc6Pi9F5sLBIe8vS/Bi9u1vlHp1vBvI0movJOnXG
-         QuUIQ6Z+B2N9H3GJPLao/UZ1LxvaSs2gGP3dYWBh87AFIOG2RY4r0+r+Op9ntk8wTGn2
-         vNbQ==
+        d=linaro.org; s=google; t=1749206827; x=1749811627; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Sdh3DYrunzvdU87ptIswN2gqeFyihiWuxRVoLIp7jeA=;
+        b=tPyoyjUiWWXQlWbmAywAoEgb95uFXimp9DGWTF9bnPOfoetyO9LhY5eRf1B3l4NS42
+         p8QMipdHZ4eJ0sT9yloT19TE9BX6ywU2RNJLDrbVuryl5yDWtueOBrRxzT0qFhEwfE9H
+         q+Fmg7fhwjfLzJNL9DxAG1NzmB/KjlT4zQTEAR3SWQfbE0xA9flHNZ1B5U/XRJGCnetP
+         DFjo/ifQNB98y1ziAz/I2QvDGXZ5nxHRoN9RIC5ZEeLjZdktjIsorjgr9DihoDFGwt8p
+         MX14o1o8bD8LnpwLu6RulESjXrste7fGpUKPLX/EMEHn1/gcPm4vdXRUgxmISnpfWPak
+         h/eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749206038; x=1749810838;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fAw4qUBOEhITQZ6BbLDNViptraoja2RZKd2zTaQIUtM=;
-        b=lupfOTcuBb2TmRQq60RvQ42nKjjTTy8LoEUUQ3m2pl1YvmFP64mpVWj3nOmD4Srxra
-         kSi8YAkJFSCJlWQSMK0uWo165M3OlRC5yVXQ3t1m5sc6KnPyE+fKg7u+nB3LoFqMgHSV
-         065MjJAdWKqX3FQ9hGe2ueYlHyzwc3qHtZrO04Tixa5+tKhlgVNqiyeRlYI3SQkfD7yb
-         hWF4wMp8rfnjvrANxKXb3dJSXu5THgt7TwbEqRumD0QSN5OszkmlzzBoXMYLtMDRKHD6
-         SVaXERkdEsjArVbtwWaRhn3sApBax/IuOy2g6g3ZKc3oxI9RWrhTFAGqmxLCabU1FwIs
-         +BeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXu44wGiHg6IuFxzixtm/vuRfrIaS+yjajO7H6aeejUYXlZpHSko4kiWDAv10tDYID1YojqtkB69fRkwBtR@vger.kernel.org
-X-Gm-Message-State: AOJu0YwrELKRo7YcyfZgMk/5yzOeMqlCn+OGdIp3X85RpAy3K+x5RFdb
-	ciT3lEHO69kfwlLX4/ipAVtzC+YcV7e26ZhWO/cOpMwm3/XCWRsfsKwNxnxCE1Hs1HwYHyHBSlm
-	mtABmUqsLs6lpsVb9qHa0gnw69Utc1w2n4nwbtGQc
-X-Gm-Gg: ASbGncu6M1hA+3DO80tc02ovv3zc5OD1yFDKXMF2qwW7CL+M0a97BT17ntngIGJ9U+a
-	gI/Id1Vopg5PsulNSOafP+rddTPf75zeYRyPFfO5udtVf2v/L7FIM3pTCfYPEn4mFQZY15Pr9LN
-	7tB5T/FLpcwFfbTReBFvcc3wL1EJMT2R0EIrKb7RlNeW0=
-X-Google-Smtp-Source: AGHT+IEybTYvddL3yeh6SARztEENsK1RXfYm9brRfTxtTO2Kl9vo26csUL8xa8F7wu3xTgkSSmdtK6BhfPfymu5hxfQ=
-X-Received: by 2002:a05:622a:1a14:b0:477:9a4:d7ea with SMTP id
- d75a77b69052e-4a643bafd8emr2595461cf.13.1749206037998; Fri, 06 Jun 2025
- 03:33:57 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749206827; x=1749811627;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sdh3DYrunzvdU87ptIswN2gqeFyihiWuxRVoLIp7jeA=;
+        b=bEUUBm9no3fIwwY+7J2gZGhnBCxJpXWhuCXY7oewxJ3+0IEH6NjYYvRzpha30n7rTM
+         bYPQn6Q56q6fxXmKTCnWu9Cj64MzpaDwmAnbr4Qc7/D5R1wsF+noWjzIpqIYSDhOnTbh
+         JTvWrql7w/R9Hdc6/YVut/AIgMfjMa76fD/oHnsWfz2SVAVGhuCD8JFjo96yw8WaUWQd
+         wQbh4Dqzg1p4LeNJcQQaq0//rcM67sA/mfF2wxUahaHqNlmftleVpWKSY5mME/vjyiUP
+         c/VQ0a7RkzYKzrlfPB8WvlBjnbzMf/16Ih7ziNorpbH1oD3G96+ZjyfLF2QgcvrBpbd8
+         2Ibg==
+X-Forwarded-Encrypted: i=1; AJvYcCW9yHDaiS5ol+Uh4PiSYb3LTaGYlAJi8KWo+qg25op3vrqt/l232WyocxZjWR6OKN3vP6tT8rGP0UJOElTO@vger.kernel.org
+X-Gm-Message-State: AOJu0YwowDhsm1dp1ZxI/Wq64Q9fT14eHa6qGx7v559DF3PJeio/dVXO
+	+dkkX9YZYCyp1lTWTNXRGfy9KdDSGkIs6TAc6FtYCcoBaN34yzT3Lh/42jPOhqaIJKQ=
+X-Gm-Gg: ASbGncsdQ1arXq7mj64wwRWVSmtOlBjhEnMvPDcbZArqS2KtAa4DpklMDSCC4lwADPw
+	2k5K57UOupHXbZon6ooqatzNSSafh7ECbfQ+rtp8hMH0VVadUQRBoQNEudbd/GuwKFny2ogUknG
+	pAuHwwjxj+uFacluM2z9gvXHcB2AdNyfzn8B/x/gCkrCxpVKYhbTcrLTPjC1B6yjosX1TTvvGJ5
+	Djpc+Yj1jzsG9sMdggync1AUfWr2suTlsDQCdrLSChrpRtF09GWF6Ot0S0/7yqEFxUe2Pszs6e9
+	/ngLWf3PILZRxWgn5vTQmVTVuM6JV/78QvqNT/gL4XJd5m7l4gN3U94ozu21Ujo6s2iYt4V3yp9
+	f4omOiGCjBYcZLw4TVkfcJiVaEpWq7rA+/79c8o2x
+X-Google-Smtp-Source: AGHT+IGxjhoxsgVGEZoQ3YemtpUiJRV1bf+P3EhChyczWjkpXHPpDvcvXiPRpgWGAH6vjpJO+8TgQw==
+X-Received: by 2002:ac2:4e0d:0:b0:553:2e82:162e with SMTP id 2adb3069b0e04-553685e5a0dmr156612e87.2.1749206827030;
+        Fri, 06 Jun 2025 03:47:07 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32ae1b33b48sm1379641fa.30.2025.06.06.03.47.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Jun 2025 03:47:06 -0700 (PDT)
+Message-ID: <2884f55c-6b80-406a-ba21-aaa26297b1bf@linaro.org>
+Date: Fri, 6 Jun 2025 13:46:59 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250605153800.557144-1-tabba@google.com> <20250605153800.557144-9-tabba@google.com>
- <ad4157a1-6e38-46df-ae24-76d036972fbc@redhat.com> <CA+EHjTziHb5kbY-aA1HPKYpg6iAPcQ19=51pLQ05JRJKeOZ8=A@mail.gmail.com>
- <6cf86edb-1e7e-4b44-93d0-f03f9523c24a@redhat.com>
-In-Reply-To: <6cf86edb-1e7e-4b44-93d0-f03f9523c24a@redhat.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Fri, 6 Jun 2025 11:33:21 +0100
-X-Gm-Features: AX0GCFuEdbWcKuv4eOpkPUf0dGJeJL5f_PxO8xkAnzeoLueKsdz0dynDzzOLB0Q
-Message-ID: <CA+EHjTz8Q+X5==ym-WCSveNkfHd0id03nY1OYtoMchc5AUWDqQ@mail.gmail.com>
-Subject: Re: [PATCH v11 08/18] KVM: guest_memfd: Allow host to map guest_memfd pages
-To: David Hildenbrand <david@redhat.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/4] media: dt-bindings: Add qcom,msm8939-camss
+Content-Language: ru-RU
+To: vincent.knecht@mailoo.org, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+ phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20250602-camss-8x39-vbif-v4-0-32c277d8f9bf@mailoo.org>
+ <20250602-camss-8x39-vbif-v4-3-32c277d8f9bf@mailoo.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20250602-camss-8x39-vbif-v4-3-32c277d8f9bf@mailoo.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, 6 Jun 2025 at 10:55, David Hildenbrand <david@redhat.com> wrote:
->
-> On 06.06.25 11:30, Fuad Tabba wrote:
-> > Hi David,
-> >
-> > On Fri, 6 Jun 2025 at 10:12, David Hildenbrand <david@redhat.com> wrote:
-> >>
-> >> On 05.06.25 17:37, Fuad Tabba wrote:
-> >>> This patch enables support for shared memory in guest_memfd, including
-> >>> mapping that memory from host userspace.
-> >>>
-> >>> This functionality is gated by the KVM_GMEM_SHARED_MEM Kconfig option,
-> >>> and enabled for a given instance by the GUEST_MEMFD_FLAG_SUPPORT_SHARED
-> >>> flag at creation time.
-> >>>
-> >>> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-> >>> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> >>> Signed-off-by: Fuad Tabba <tabba@google.com>
-> >>> ---
-> >>
-> >> [...]
-> >>
-> >>> +static bool kvm_gmem_supports_shared(struct inode *inode)
-> >>> +{
-> >>> +     u64 flags;
-> >>> +
-> >>> +     if (!IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM))
-> >>> +             return false;
-> >>> +
-> >>> +     flags = (u64)inode->i_private;
-> >>
-> >> Can probably do above
-> >>
-> >> const u64 flags = (u64)inode->i_private;
-> >>
-> >
-> > Ack.
-> >
-> >>> +
-> >>> +     return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> >>> +}
-> >>> +
-> >>> +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
-> >>> +{
-> >>> +     struct inode *inode = file_inode(vmf->vma->vm_file);
-> >>> +     struct folio *folio;
-> >>> +     vm_fault_t ret = VM_FAULT_LOCKED;
-> >>> +
-> >>> +     if (((loff_t)vmf->pgoff << PAGE_SHIFT) >= i_size_read(inode))
-> >>> +             return VM_FAULT_SIGBUS;
-> >>> +
-> >>> +     folio = kvm_gmem_get_folio(inode, vmf->pgoff);
-> >>> +     if (IS_ERR(folio)) {
-> >>> +             int err = PTR_ERR(folio);
-> >>> +
-> >>> +             if (err == -EAGAIN)
-> >>> +                     return VM_FAULT_RETRY;
-> >>> +
-> >>> +             return vmf_error(err);
-> >>> +     }
-> >>> +
-> >>> +     if (WARN_ON_ONCE(folio_test_large(folio))) {
-> >>> +             ret = VM_FAULT_SIGBUS;
-> >>> +             goto out_folio;
-> >>> +     }
-> >>> +
-> >>> +     if (!folio_test_uptodate(folio)) {
-> >>> +             clear_highpage(folio_page(folio, 0));
-> >>> +             kvm_gmem_mark_prepared(folio);
-> >>> +     }
-> >>> +
-> >>> +     vmf->page = folio_file_page(folio, vmf->pgoff);
-> >>> +
-> >>> +out_folio:
-> >>> +     if (ret != VM_FAULT_LOCKED) {
-> >>> +             folio_unlock(folio);
-> >>> +             folio_put(folio);
-> >>> +     }
-> >>> +
-> >>> +     return ret;
-> >>> +}
-> >>> +
-> >>> +static const struct vm_operations_struct kvm_gmem_vm_ops = {
-> >>> +     .fault = kvm_gmem_fault_shared,
-> >>> +};
-> >>> +
-> >>> +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
-> >>> +{
-> >>> +     if (!kvm_gmem_supports_shared(file_inode(file)))
-> >>> +             return -ENODEV;
-> >>> +
-> >>> +     if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
-> >>> +         (VM_SHARED | VM_MAYSHARE)) {
-> >>> +             return -EINVAL;
-> >>> +     }
-> >>> +
-> >>> +     vma->vm_ops = &kvm_gmem_vm_ops;
-> >>> +
-> >>> +     return 0;
-> >>> +}
-> >>> +
-> >>>    static struct file_operations kvm_gmem_fops = {
-> >>> +     .mmap           = kvm_gmem_mmap,
-> >>>        .open           = generic_file_open,
-> >>>        .release        = kvm_gmem_release,
-> >>>        .fallocate      = kvm_gmem_fallocate,
-> >>> @@ -428,6 +500,7 @@ static int __kvm_gmem_create(struct kvm *kvm, loff_t size, u64 flags)
-> >>>        }
-> >>>
-> >>>        file->f_flags |= O_LARGEFILE;
-> >>> +     allow_write_access(file);
-> >>
-> >> Why is that required?
-> >>
-> >> As the docs mention, it must be paired with a previous deny_write_access().
-> >>
-> >> ... and I don't find similar usage anywhere else.
-> >
-> > This is to address Gavin's concern [*] regarding MADV_COLLAPSE, which
-> > isn't an issue until hugepage support is enabled. Should we wait until
-> > we have hugepage support?
->
-> If we keep this, we *definitely* need a comment why we do something
-> nobody else does.
->
-> But I don't think allow_write_access() would ever be the way we want to
-> fence off MADV_COLLAPSE. :) Maybe AS_INACCESSIBLE or sth. like that
-> could fence it off in file_thp_enabled().
->
-> Fortunately, CONFIG_READ_ONLY_THP_FOR_FS might vanish at some point ...
-> so I've been told.
->
-> So if it's not done for secretmem for now or others, we also shouldn't
-> be doing it for now I think.
+Hello Vincent.
 
-I'll remove it.
+On 6/2/25 20:27, Vincent Knecht via B4 Relay wrote:
+> From: Vincent Knecht <vincent.knecht@mailoo.org>
+> 
+> Add bindings for qcom,msm8939-camss in order to support the camera
+> subsystem for MSM8939.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+> ---
+>   .../bindings/media/qcom,msm8939-camss.yaml         | 254 +++++++++++++++++++++
+>   1 file changed, 254 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8939-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8939-camss.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..59bf16888a8235495a2080e512ce179583bcd25d
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,msm8939-camss.yaml
+> @@ -0,0 +1,254 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/media/qcom,msm8939-camss.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm MSM8939 Camera Subsystem (CAMSS)
+> +
+> +maintainers:
+> +  - Vincent Knecht <vincent.knecht@mailoo.org>
+> +
+> +description:
+> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,msm8939-camss
+> +
+> +  reg:
+> +    maxItems: 11
+> +
+> +  reg-names:
+> +    items:
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: csiphy0
+> +      - const: csiphy0_clk_mux
+> +      - const: csiphy1
+> +      - const: csiphy1_clk_mux
+> +      - const: csi_clk_mux
+> +      - const: ispif
+> +      - const: vfe0
+> +      - const: vfe0_vbif
 
-Thanks!
-/fuad
+Please sort the list alphanumerically, accorting to the ASCII character set
+the underscore symbol precedes lower case letters.
 
-> --
-> Cheers,
->
-> David / dhildenb
->
+> +
+> +  clocks:
+> +    maxItems: 24
+> +
+> +  clock-names:
+> +    items:
+> +      - const: ahb
+> +      - const: csi0
+> +      - const: csi0_ahb
+> +      - const: csi0_phy
+> +      - const: csi0_pix
+> +      - const: csi0_rdi
+> +      - const: csi1
+> +      - const: csi1_ahb
+> +      - const: csi1_phy
+> +      - const: csi1_pix
+> +      - const: csi1_rdi
+> +      - const: csi2
+> +      - const: csi2_ahb
+> +      - const: csi2_phy
+> +      - const: csi2_pix
+> +      - const: csi2_rdi
+> +      - const: csiphy0_timer
+> +      - const: csiphy1_timer
+> +      - const: csi_vfe0
+> +      - const: ispif_ahb
+> +      - const: top_ahb
+> +      - const: vfe0
+> +      - const: vfe_ahb
+> +      - const: vfe_axi
+
+Same comment as above.
+
+> +
+> +  interrupts:
+> +    maxItems: 7
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: csiphy0
+> +      - const: csiphy1
+> +      - const: ispif
+> +      - const: vfe0
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    items:
+> +      - description: VFE GDSC - Video Front End, Global Distributed Switch
+> +          Controller.
+> +
+> +  vdda-supply:
+> +    description:
+> +      Definition of the regulator used as analog power supply.
+
+Please specify the wanted voltage level in the description, due to
+the example below I would expect it's 2.8V.
+
+> +
+> +  ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    description:
+> +      CSI input ports.
+> +
+> +    patternProperties:
+> +      "^port@[0-1]$":
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +
+> +        description:
+> +          Input port for receiving CSI data.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +              bus-type:
+> +                enum:
+> +                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
+> +
+> +            required:
+> +              - data-lanes
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - clocks
+> +  - clock-names
+> +  - interrupts
+> +  - interrupt-names
+> +  - iommus
+> +  - power-domains
+> +  - vdda-supply
+> +  - ports
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/clock/qcom,gcc-msm8939.h>
+> +
+> +    isp@1b08000 {
+> +        compatible = "qcom,msm8939-camss";
+> +
+> +        reg = <0x01b08000 0x100>,
+> +              <0x01b08400 0x100>,
+> +              <0x01b08800 0x100>,
+> +              <0x01b0ac00 0x200>,
+> +              <0x01b00030 0x4>,
+> +              <0x01b0b000 0x200>,
+> +              <0x01b00038 0x4>,
+> +              <0x01b00020 0x10>,
+> +              <0x01b0a000 0x500>,
+> +              <0x01b10000 0x1000>,
+> +              <0x01b40000 0x200>;
+> +
+> +        reg-names = "csid0",
+> +                    "csid1",
+> +                    "csid2",
+> +                    "csiphy0",
+> +                    "csiphy0_clk_mux",
+> +                    "csiphy1",
+> +                    "csiphy1_clk_mux",
+> +                    "csi_clk_mux",
+> +                    "ispif",
+> +                    "vfe0",
+> +                    "vfe0_vbif";
+> +
+> +        clocks = <&gcc GCC_CAMSS_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI0_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI0_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI0PHY_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI0PIX_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI0RDI_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI1_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI1_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI1PHY_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI1PIX_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI1RDI_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI2_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI2_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI2PHY_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI2PIX_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI2RDI_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI0PHYTIMER_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI1PHYTIMER_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI_VFE0_CLK>,
+> +                 <&gcc GCC_CAMSS_ISPIF_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_TOP_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_VFE0_CLK>,
+> +                 <&gcc GCC_CAMSS_VFE_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_VFE_AXI_CLK>;
+> +
+> +        clock-names = "ahb",
+> +                      "csi0",
+> +                      "csi0_ahb",
+> +                      "csi0_phy",
+> +                      "csi0_pix",
+> +                      "csi0_rdi",
+> +                      "csi1",
+> +                      "csi1_ahb",
+> +                      "csi1_phy",
+> +                      "csi1_pix",
+> +                      "csi1_rdi",
+> +                      "csi2",
+> +                      "csi2_ahb",
+> +                      "csi2_phy",
+> +                      "csi2_pix",
+> +                      "csi2_rdi",
+> +                      "csiphy0_timer",
+> +                      "csiphy1_timer",
+> +                      "csi_vfe0",
+> +                      "ispif_ahb",
+> +                      "top_ahb",
+> +                      "vfe0",
+> +                      "vfe_ahb",
+> +                      "vfe_axi";
+> +
+> +        interrupts = <GIC_SPI 51 IRQ_TYPE_EDGE_RISING>,
+> +                     <GIC_SPI 52 IRQ_TYPE_EDGE_RISING>,
+> +                     <GIC_SPI 153 IRQ_TYPE_EDGE_RISING>,
+> +                     <GIC_SPI 78 IRQ_TYPE_EDGE_RISING>,
+> +                     <GIC_SPI 79 IRQ_TYPE_EDGE_RISING>,
+> +                     <GIC_SPI 55 IRQ_TYPE_EDGE_RISING>,
+> +                     <GIC_SPI 57 IRQ_TYPE_EDGE_RISING>;
+> +
+> +        interrupt-names = "csid0",
+> +                          "csid1",
+> +                          "csid2",
+> +                          "csiphy0",
+> +                          "csiphy1",
+> +                          "ispif",
+> +                          "vfe0";
+> +
+> +        iommus = <&apps_iommu 3>;
+> +
+> +        power-domains = <&gcc VFE_GDSC>;
+> +
+> +        vdda-supply = <&reg_2v8>;
+> +
+> +        ports {
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +
+> +            port@1 {
+> +                reg = <1>;
+> +                csiphy1_ep: endpoint {
+
+There should be an empty line between the end of the list of properties
+and the beginning of the list of children device tree nodes.
+
+> +                    clock-lanes = <1>;
+
+Please remove 'clock-lanes' propoerty from here.
+
+> +                    data-lanes = <0 2>;
+> +                    remote-endpoint = <&sensor_ep>;
+> +                };
+> +            };
+> +        };
+> +    };
+> 
+
+--
+Best wishes,
+Vladimir
 
