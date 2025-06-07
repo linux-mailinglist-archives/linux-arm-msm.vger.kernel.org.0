@@ -1,58 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-60504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 906FAAD0B15
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 04:55:50 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 540F8AD0B9C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 09:33:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 588E0173EF2
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 02:55:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ACE437A627A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 07:31:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AE0B2580F3;
-	Sat,  7 Jun 2025 02:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36E3D1D6193;
+	Sat,  7 Jun 2025 07:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cnodktz0"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="nmQnTRQz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A85811713;
-	Sat,  7 Jun 2025 02:55:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1B32746A;
+	Sat,  7 Jun 2025 07:33:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749264926; cv=none; b=cA81xJhjO8tqVxGpQ5d5VOL6IYPcOa+5oVPzVPCxxrc06HR7T7z302lf7ccb8ZFEdNj3XXlV4zasf4tQkxePvdzbvbfvhs7JFOGdwNSXkmYvpA7R8rKqFt2VOakoXd94NgRD7aMz/3seMIhoer+HwRHH0JG9Zq1U/h8a/eJ/H3s=
+	t=1749281586; cv=none; b=pm/bDOlaqzM0iFJNiy5zYLyiO3u5lHqojSwSAG1gi0AGzZTs/MQjGov7GlhNIr5xnaNj6Hsxfa3VeFr9AC4JhfpJVn3nfqnZAWcoYkKl73bf0CWnU+u3A8Ougm65jXr1ufRZaa+HREHNBYwVCx/cameOPrjX/S74DihGGVG1zhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749264926; c=relaxed/simple;
-	bh=J3kuwWx/dgZ9Iw6XWWRu56SG6jETIxQCXj2BzNl0DMI=;
+	s=arc-20240116; t=1749281586; c=relaxed/simple;
+	bh=4ojtFF5ydY7GePXSuRDH+3gG5quKRHpnhQew3pMwLiM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ma0i0QaHgPziu0r6CGqg28f1uXg1JDjihPxzU9ZCqZvfwvDj64ia6tiMnnjZ14BvdOEpt++aee3MCpKRloBtwAi1GBRIy19+dwHJ3/kIo1dXQLTSqaM5dQQvrKAX9UIapBna0qYzg7Ngjx5Ja2Ussrs01hwQ4BmgW714n//eKRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cnodktz0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63065C4CEEF;
-	Sat,  7 Jun 2025 02:55:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749264925;
-	bh=J3kuwWx/dgZ9Iw6XWWRu56SG6jETIxQCXj2BzNl0DMI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Cnodktz0uzAJM2o7owR6yp9p+LNAC7r9QimMGzii9uJSKBt4owpPRUwGDUyc+Cgxk
-	 at2WEiAVc0ucuIZIkwGb6fLyGZbnVg5rR+UTtr6urvmyDoKeXG9mDI3Gdnyu6OuVhC
-	 iLCnhJjsWUNgAFka96vStqahsac5wg3Pg+L4ZzULDG97MGKxZuYsMfl0DEop/4cj8k
-	 faoxojozGg5FJxVq6ugNvkOXXEzDd/wHNJHALtQI1Vhu2AY4ao+wSiCV+2jmsUkIFf
-	 UrkwjhhIAToWGRhhGRXl6+m3NB8XagFkhOruwzstR2Ki7GYwNkDyNgSb4zlgfF/Ifa
-	 FBiTrTock7O2w==
-Date: Fri, 6 Jun 2025 19:55:06 -0700
-From: Eric Biggers <ebiggers@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 1/4] PCI: Add debugfs support for exposing PTM context
-Message-ID: <20250607025506.GA16607@sol>
-References: <20250505-pcie-ptm-v4-0-02d26d51400b@linaro.org>
- <20250505-pcie-ptm-v4-1-02d26d51400b@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=s07dTSsw6t5JOVdJ6cut8sSVu0noJTF23qtwNymQGOTfDXyBsldbSvuIJrclFUyhgBjKIlBnccjvSi1d2DxHa3wpYxd0DDma31Qvy5kLg3+quooyy/Ysgti/nAGf7O8XwDPScPlkY4OB4HPzOsa5FlCMOgDGVgFkWmyRLKgM6VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=nmQnTRQz; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=lLaVWBfYr4bHWWchHu2peBzXsqMla/2LK31cTUrka3I=; b=nmQnTRQzji183HY/+GPjhjlzFn
+	9fiVPBsdleUBYnSr8Yc98Ep2NfLx3XKwriLPpfGlh2InipZPc70aLx93IF+h7pJyynSPh5s9EGlCy
+	96beVdPqHkUyXesh9e/l+KpM+6uAPU36C9FgwPbo1ZJMBhv14kyGira47OId50E9CbqFgs+W/h6yr
+	UhSv29CFKzyTx9ra5IGfKp5HwqBaJ8UhweT05yNKq3Ms99/69mXlHXDYC0qaUHLUh+RjQXRcUMrWE
+	zQfyj0KJL6G/neGgNhag/39KZfZ6Ijz4jF5G6o+Ez1kJTnnJDh77zQ2P0cqRluZK16oLeTmcrcybc
+	/A8gLIzg==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:43464)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1uNo2p-0001YP-2I;
+	Sat, 07 Jun 2025 08:32:47 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1uNo2m-00045f-14;
+	Sat, 07 Jun 2025 08:32:44 +0100
+Date: Sat, 7 Jun 2025 08:32:44 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: George Moussalem <george.moussalem@outlook.com>,
+	Rob Herring <robh@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v3 2/5] dt-bindings: net: qca,ar803x: Add IPQ5018
+ Internal GE PHY support
+Message-ID: <aEPrHCf55eMwJXiL@shell.armlinux.org.uk>
+References: <20250602-ipq5018-ge-phy-v3-0-421337a031b2@outlook.com>
+ <20250602-ipq5018-ge-phy-v3-2-421337a031b2@outlook.com>
+ <20250605181453.GA2946252-robh@kernel.org>
+ <DS7PR19MB8883E074E64AC6FCAB1B1DE69D6EA@DS7PR19MB8883.namprd19.prod.outlook.com>
+ <23b92ed3-7788-4675-8f80-590e4337025c@lunn.ch>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,68 +88,40 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250505-pcie-ptm-v4-1-02d26d51400b@linaro.org>
+In-Reply-To: <23b92ed3-7788-4675-8f80-590e4337025c@lunn.ch>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Mon, May 05, 2025 at 07:54:39PM +0530, Manivannan Sadhasivam wrote:
-> Precision Time Management (PTM) mechanism defined in PCIe spec r6.0,
-> sec 6.21 allows precise coordination of timing information across multiple
-> components in a PCIe hierarchy with independent local time clocks.
+On Fri, Jun 06, 2025 at 03:01:26PM +0200, Andrew Lunn wrote:
+> > Under 'properties' node:
+> >   compatible:
+> >     enum:
+> >       - ethernet-phy-id004d.d0c0
+> > 
+> > Q: do I need to add the PHY IDs of all PHYs that the qca803x driver covers
+> > or will this one suffice?
 > 
-> PCI core already supports enabling PTM in the root port and endpoint
-> devices through PTM Extended Capability registers. But the PTM context
-> supported by the PTM capable components such as Root Complex (RC) and
-> Endpoint (EP) controllers were not exposed as of now.
-> 
-> Hence, add the debugfs support to expose the PTM context to userspace from
-> both PCIe RC and EP controllers. Controller drivers are expected to call
-> pcie_ptm_create_debugfs() to create the debugfs attributes for the PTM
-> context and call pcie_ptm_destroy_debugfs() to destroy them. The drivers
-> should also populate the relevant callbacks in the 'struct pcie_ptm_ops'
-> structure based on the controller implementation.
-> 
-> Below PTM context are exposed through debugfs:
-> 
-> PCIe RC
-> =======
-> 
-> 1. PTM Local clock
-> 2. PTM T2 timestamp
-> 3. PTM T3 timestamp
-> 4. PTM Context valid
-> 
-> PCIe EP
-> =======
-> 
-> 1. PTM Local clock
-> 2. PTM T1 timestamp
-> 3. PTM T4 timestamp
-> 4. PTM Master clock
-> 5. PTM Context update
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  Documentation/ABI/testing/debugfs-pcie-ptm |  70 +++++++
->  MAINTAINERS                                |   1 +
->  drivers/pci/pcie/ptm.c                     | 300 +++++++++++++++++++++++++++++
->  include/linux/pci.h                        |  45 +++++
->  4 files changed, 416 insertions(+)
+> The history is complicated, because PHYs can be enumerated
 
-There's a build error on mainline from this commit:
+... provided one doesn't wire up the reset pin to a GPIO and then
+declare that in DT as a reset pin for the PHY, thus holding the PHY
+in reset while we try to probe what's on the bus, making the ID
+unreadable.
 
-    drivers/pci/pcie/ptm.c:498:25: error: redefinition of 'pcie_ptm_create_debugfs'
-      498 | struct pci_ptm_debugfs *pcie_ptm_create_debugfs(struct device *dev, void *pdata,
-          |                         ^
-    ./include/linux/pci.h:1915:2: note: previous definition is here
-     1915 | *pcie_ptm_create_debugfs(struct device *dev, void *pdata,
-          |  ^
-    drivers/pci/pcie/ptm.c:546:6: error: redefinition of 'pcie_ptm_destroy_debugfs'
-      546 | void pcie_ptm_destroy_debugfs(struct pci_ptm_debugfs *ptm_debugfs)
-          |      ^
-    ./include/linux/pci.h:1918:1: note: previous definition is here
-     1918 | pcie_ptm_destroy_debugfs(struct pci_ptm_debugfs *ptm_debugfs) { }
-          | ^
+The down-side to providing the ID in the compatible is we lose the
+revision, so if a new revision of the PHY ends up being fitted
+part way through production, the kernel has no way to know.
 
-This is with CONFIG_DEBUG_FS=n && CONFIG_PCIE_PTM=y.
+Sadly, we can't just read the PHY ID when we've released reset
+because the ID may be provided in DT because the one in the device
+is not reliable / wrong.
 
-- Eric
+What's done on SolidRun platforms is that the PHY reset is connected
+to a GPIO, but that is controlled by the boot loader and not by the
+kernel. All PHY resets are deasserted before the kernel is entered,
+and the reset GPIOs are in DT as "hogged" GPIOs. This allows phylib
+to operate normally without any of this faff.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
