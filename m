@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-60524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86A19AD0F06
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 21:19:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 636C6AD0F09
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 21:19:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 956393AE48F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 19:19:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8CBE33AE389
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 19:19:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2DEC215043;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFCBD215798;
 	Sat,  7 Jun 2025 19:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pWFzioDf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="udAigpdn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63710156C40;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671301E2853;
 	Sat,  7 Jun 2025 19:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749323980; cv=none; b=s2mprmD3R6NZxjuk2QiKRQdbwsoSayYc2luhoFTVssd3uKYGMMWjD3Jum05XkIOzG/VPYiTqV/tSGdaKGm7Gr1sIMzJyTRsE4HabGjjV5JcWSEKxhWjP5kaLjzatckIqx5vzGpy47BlL94APcKOOmmndDxjLrZKBo641Gi4qeUE=
+	t=1749323980; cv=none; b=buOFEo4EkGV5spvMkKBP5f2YAiSifwSQ6Y12YEOywOhm/p5jhRj1MlBXkMf+tQoDL2FNl9weCZadMY9sqHF+qh14zSLkgGHn9Wq7qnAnMjmIi0YRBDixATGPlftTUYL4LwaQI+376+RVV8Fpuz3aCQH7TGMsA+XINT8HlWcOUR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1749323980; c=relaxed/simple;
-	bh=pZ40dvcgy1Iojqw1+7qpiys0ZFgdHWgMOfcvPB2SjqY=;
+	bh=Kt22/lukqS2+HqkdwTHgDv3CcrBaoQEscBdWrxhlPhs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=usXhIr6tHMSDkcYjCxwNhsFTyubEiV1HN7FW4rGUcB803AhoO43F2aS+Ql5jbd2HopLQF3QERZUN3YXjHEgqaPlwO7C+f5aUyPJA1A+stRrk8DdsqCPMJcymYzaVE0+24AHFrmpf2KVPxWvYOG8a/P0B8AX76mlXk3e4jOof8PM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pWFzioDf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id EC560C4CEF0;
+	 In-Reply-To:To:Cc; b=fAt5+PjdHJjU0/IQOvR+7j6YkE4dTrKrR7kqvRZr8YA5G7oM6QAaV+c1prziXfLG9QjIWqUm6WrncLFOlvURwfdtvVTAyDjFU+QhvIWPWK9+atY4bwhwM+KtnlukEftzyFXPguXDHBn2MyrwI8Kz66XQQOD4hHh4nQElULA6Ya8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=udAigpdn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0291DC4CEF2;
 	Sat,  7 Jun 2025 19:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1749323980;
-	bh=pZ40dvcgy1Iojqw1+7qpiys0ZFgdHWgMOfcvPB2SjqY=;
+	bh=Kt22/lukqS2+HqkdwTHgDv3CcrBaoQEscBdWrxhlPhs=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=pWFzioDf9SYey1QSEkOz6HVjgikK8izN8bXFxqZj96zXVWK05Bwmw0I5Nz8wWvIQf
-	 uAfCqsbUBJniHZH+o0RpVCZbk8QH2QcAPghDNWZT6pW9pC4BuPjwIv8Sv6p9JE0owm
-	 mHNHj018hJ1N2ABYmci9tAcLtVq6PLpbaHXW0+PvnXV9O+/5DvTBGWv8VpPCrceWFj
-	 IzgrENWAKlvBuVo6dIbjX2KyW2WPL8A8ipPYJmHfsNt+XU4wTfyGP7ea6Vb22jcj4N
-	 LIAUDp/H8yp2ZeLItsHhinJ0EE8q7zf+CpH3EGs3WivbZKD2PBGLKvFqoE3r7qMSqJ
-	 0nMWl4shVULTQ==
+	b=udAigpdngMunKKUvWTqNUFzLa5xT47meJK1D07/qqln8VWjpY6hqmD/Dbi5TFswJq
+	 tDhdETuhjdbZZ/ReCQl1YnRW0FH2MWRV5Q4mIetQ4OOe9hOb99VEpt8qXQGOchuFq/
+	 JeJPtiXO9jhswWRcvTBerahf1SOTpkoRtysRwBhCvmZOeo1kokpg/RHF8EoC2egajk
+	 dcLKUzly6d0LCVOY61GWWs0AMp2fknJnJ0QY6cNCtVUalvvN5krPLkGPfuTVYOaNNV
+	 0aXQlPol+6ACEeypS15ATFuEr6/ottktL206MVXvGopbcXOh7YjBaYSve/4oLpTvHs
+	 vOcUi8Myygu6w==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCC19C677C4;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8A93C61CE8;
 	Sat,  7 Jun 2025 19:19:39 +0000 (UTC)
 From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
-Date: Sat, 07 Jun 2025 21:19:37 +0200
-Subject: [PATCH v6 2/4] usb: misc: onboard_usb_dev: Add Bison Electronics
- Inc. Integrated Camera
+Date: Sat, 07 Jun 2025 21:19:38 +0200
+Subject: [PATCH v6 3/4] firmware: qcom: scm: Allow QSEECOM on Lenovo
+ Thinkbook 16
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,7 +56,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250607-tb16-dt-v6-2-61a31914ee72@oldschoolsolutions.biz>
+Message-Id: <20250607-tb16-dt-v6-3-61a31914ee72@oldschoolsolutions.biz>
 References: <20250607-tb16-dt-v6-0-61a31914ee72@oldschoolsolutions.biz>
 In-Reply-To: <20250607-tb16-dt-v6-0-61a31914ee72@oldschoolsolutions.biz>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -67,14 +67,15 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>, 
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749323978; l=2669;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1749323978; l=938;
  i=jens.glathe@oldschoolsolutions.biz; s=20240919;
  h=from:subject:message-id;
- bh=SV/p7KDSyWL9rkQIFy/TOjIl8HBAh1upgaaKIpkGrwc=;
- b=dvNFU3rgMtgqVKBf8Q0zDyYaEkN58mDHbPCAcmt4ixQawSTSoelflsucHRtH1NIwRR3oluu82
- vRXopo1dkjJDgWF1BaW2yHSceyqCuUOg7TsIxb1xrAdTHC2OJdNFN3s
+ bh=slRI2ekwNMu7Wtu7d7VJFMn+7WTFlY44tFMAJ5L6BoA=;
+ b=Gwpbta7IF9nMrQHMt4pBxCZjwuyNvDa9pqc7ajsStH7B3+zaaId0aY/kX75iXpnnQ4NzkuA68
+ CkPHZcqLnvmAFqKrFbdFdQU4HH1vVGamX895YrnR8YiPpD9LPxjRwSc
 X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
  pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
 X-Endpoint-Received: by B4 Relay for
@@ -84,64 +85,26 @@ Reply-To: jens.glathe@oldschoolsolutions.biz
 
 From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
-The Camera is built into the Thinkbook 16 G7 QOY and directly attached on the
-usb_2 controller (dwc3 USB2 only). It has a separate power supply that needs
-to be controlled for PM.
+Allow particular machine accessing eg. efivars.
 
-Add the support for this device for the power supply.
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 ---
- drivers/usb/misc/onboard_usb_dev.c | 2 ++
- drivers/usb/misc/onboard_usb_dev.h | 8 ++++++++
- 2 files changed, 10 insertions(+)
+ drivers/firmware/qcom/qcom_scm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/misc/onboard_usb_dev.c b/drivers/usb/misc/onboard_usb_dev.c
-index 5b481876af1b2c10ce625fcf0fb8bfbe8905aa8c..41360a7591e56b2b1fe973ff1c42e68707fff54d 100644
---- a/drivers/usb/misc/onboard_usb_dev.c
-+++ b/drivers/usb/misc/onboard_usb_dev.c
-@@ -564,6 +564,7 @@ static struct platform_driver onboard_dev_driver = {
- 
- /************************** USB driver **************************/
- 
-+#define VENDOR_ID_BISON		0x5986
- #define VENDOR_ID_CYPRESS	0x04b4
- #define VENDOR_ID_GENESYS	0x05e3
- #define VENDOR_ID_MICROCHIP	0x0424
-@@ -647,6 +648,7 @@ static void onboard_dev_usbdev_disconnect(struct usb_device *udev)
- }
- 
- static const struct usb_device_id onboard_dev_id_table[] = {
-+	{ USB_DEVICE(VENDOR_ID_BISON, 0x1198) }, /* Bison Electronics Inc. Integrated Camera */
- 	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6500) }, /* CYUSB330x 3.0 HUB */
- 	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6502) }, /* CYUSB330x 2.0 HUB */
- 	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6503) }, /* CYUSB33{0,1}x 2.0 HUB, Vendor Mode */
-diff --git a/drivers/usb/misc/onboard_usb_dev.h b/drivers/usb/misc/onboard_usb_dev.h
-index e017b8e22f936be66da73789abb4f620e6af4d6a..b95ac757868e7cd3f23eb4b80eb595a2c18e9613 100644
---- a/drivers/usb/misc/onboard_usb_dev.h
-+++ b/drivers/usb/misc/onboard_usb_dev.h
-@@ -73,6 +73,13 @@ static const struct onboard_dev_pdata ti_tusb8041_data = {
- 	.is_hub = true,
- };
- 
-+static const struct onboard_dev_pdata bison_intcamera_data = {
-+	.reset_us = 1000,
-+	.num_supplies = 1,
-+	.supply_names = { "vdd" },
-+	.is_hub = false,
-+};
-+
- static const struct onboard_dev_pdata cypress_hx3_data = {
- 	.reset_us = 10000,
- 	.num_supplies = 2,
-@@ -127,6 +134,7 @@ static const struct of_device_id onboard_dev_match[] = {
- 	{ .compatible = "usb451,8142", .data = &ti_tusb8041_data, },
- 	{ .compatible = "usb451,8440", .data = &ti_tusb8041_data, },
- 	{ .compatible = "usb451,8442", .data = &ti_tusb8041_data, },
-+	{ .compatible = "usb5986,1198", .data = &bison_intcamera_data, },
- 	{ .compatible = "usb4b4,6504", .data = &cypress_hx3_data, },
- 	{ .compatible = "usb4b4,6506", .data = &cypress_hx3_data, },
- 	{ .compatible = "usb4b4,6570", .data = &cypress_hx2vl_data, },
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index f63b716be5b027550ae3a987e784f0814ea6d678..171cc2a6502463e3445919ef77a129563ea233a4 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -1993,6 +1993,7 @@ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
+ 	{ .compatible = "hp,omnibook-x14" },
+ 	{ .compatible = "huawei,gaokun3" },
+ 	{ .compatible = "lenovo,flex-5g" },
++	{ .compatible = "lenovo,thinkbook-16" },
+ 	{ .compatible = "lenovo,thinkpad-t14s" },
+ 	{ .compatible = "lenovo,thinkpad-x13s", },
+ 	{ .compatible = "lenovo,yoga-slim7x" },
 
 -- 
 2.48.1
