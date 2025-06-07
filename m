@@ -1,52 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-60523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0023AD0F04
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 21:19:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86A19AD0F06
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 21:19:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 063413AE1FD
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 19:19:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 956393AE48F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 19:19:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9641C20B803;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2DEC215043;
 	Sat,  7 Jun 2025 19:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qk/be2Ko"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pWFzioDf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636C21E50B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63710156C40;
 	Sat,  7 Jun 2025 19:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749323980; cv=none; b=adAcOLH0L3eJi8Mc9MD4106JYsuydITr/Hvo8Zq8VAg+w2JDsB/erxEIc5Qtmr89mbxjOnEMrc8XlpnNo1HIBJLQRO6vpSbqHRASOAv9Xxp1CNhb8sIZ2/E/JlJo1bsMS2/WmfZthOtc73khQPEgcMIhkbeS/K7m9IjyJtf1Xyk=
+	t=1749323980; cv=none; b=s2mprmD3R6NZxjuk2QiKRQdbwsoSayYc2luhoFTVssd3uKYGMMWjD3Jum05XkIOzG/VPYiTqV/tSGdaKGm7Gr1sIMzJyTRsE4HabGjjV5JcWSEKxhWjP5kaLjzatckIqx5vzGpy47BlL94APcKOOmmndDxjLrZKBo641Gi4qeUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1749323980; c=relaxed/simple;
-	bh=IboFBVpYRKzDKkQX/pnk4Sd42YAjQ3wt5KqonA5Th0E=;
+	bh=pZ40dvcgy1Iojqw1+7qpiys0ZFgdHWgMOfcvPB2SjqY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=avud0rH0Kr8JMadCiCZX1AL2sAPuan1ojqtuN7GW3V9fFkIxTtYB5K4LWk1M0FRT9yBIQZK9jWIxyOe092pCrsUBh6s4CxDltP+YyhmQUbPT1NuWomOXxmJWe/FjekLwEruE4YN1EK5lLJ8uIHsTUyvdJBXczY9qKkSLo7zNymc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qk/be2Ko; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E0992C4CEF1;
+	 In-Reply-To:To:Cc; b=usXhIr6tHMSDkcYjCxwNhsFTyubEiV1HN7FW4rGUcB803AhoO43F2aS+Ql5jbd2HopLQF3QERZUN3YXjHEgqaPlwO7C+f5aUyPJA1A+stRrk8DdsqCPMJcymYzaVE0+24AHFrmpf2KVPxWvYOG8a/P0B8AX76mlXk3e4jOof8PM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pWFzioDf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id EC560C4CEF0;
 	Sat,  7 Jun 2025 19:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749323979;
-	bh=IboFBVpYRKzDKkQX/pnk4Sd42YAjQ3wt5KqonA5Th0E=;
+	s=k20201202; t=1749323980;
+	bh=pZ40dvcgy1Iojqw1+7qpiys0ZFgdHWgMOfcvPB2SjqY=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=qk/be2KoitxyrpfwALYNqLyqv53EJw+1dA3BsTWiyY6sU8/V/eKjE5MgWRfjwiRCt
-	 ekYgwwRLoLgb9dxfiEYhaB9WFniCS+nT0zYK6w0VjqaI0XwrBJCQyKXTyjDRpzZMa/
-	 +p0j9Vx71LKdXq2ozt1k5hHsYC2Um4lcO/Q4P/tOwH+LMXVLF+XmtJTeGHYiF16fyR
-	 IyEjmcD7cK8nC0P20+lxhkpAl7m8PrrGPCcAy4Z/EkgNcT8CoblsH/kzXCEHTJ8fAM
-	 BDnbuShFNXZ50bHfjFyin8jrpI4f/cbwu0VOAFnZ8Ex1Lanm+GpUUCjEsyhZjcQPR8
-	 yG5z/N4pTzZrw==
+	b=pWFzioDf9SYey1QSEkOz6HVjgikK8izN8bXFxqZj96zXVWK05Bwmw0I5Nz8wWvIQf
+	 uAfCqsbUBJniHZH+o0RpVCZbk8QH2QcAPghDNWZT6pW9pC4BuPjwIv8Sv6p9JE0owm
+	 mHNHj018hJ1N2ABYmci9tAcLtVq6PLpbaHXW0+PvnXV9O+/5DvTBGWv8VpPCrceWFj
+	 IzgrENWAKlvBuVo6dIbjX2KyW2WPL8A8ipPYJmHfsNt+XU4wTfyGP7ea6Vb22jcj4N
+	 LIAUDp/H8yp2ZeLItsHhinJ0EE8q7zf+CpH3EGs3WivbZKD2PBGLKvFqoE3r7qMSqJ
+	 0nMWl4shVULTQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D056BC61DB2;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCC19C677C4;
 	Sat,  7 Jun 2025 19:19:39 +0000 (UTC)
 From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
-Date: Sat, 07 Jun 2025 21:19:36 +0200
-Subject: [PATCH v6 1/4] dt-bindings: arm: qcom: Add Lenovo TB16 support
+Date: Sat, 07 Jun 2025 21:19:37 +0200
+Subject: [PATCH v6 2/4] usb: misc: onboard_usb_dev: Add Bison Electronics
+ Inc. Integrated Camera
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,7 +56,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250607-tb16-dt-v6-1-61a31914ee72@oldschoolsolutions.biz>
+Message-Id: <20250607-tb16-dt-v6-2-61a31914ee72@oldschoolsolutions.biz>
 References: <20250607-tb16-dt-v6-0-61a31914ee72@oldschoolsolutions.biz>
 In-Reply-To: <20250607-tb16-dt-v6-0-61a31914ee72@oldschoolsolutions.biz>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -68,12 +69,12 @@ Cc: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
  linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
  Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749323978; l=952;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1749323978; l=2669;
  i=jens.glathe@oldschoolsolutions.biz; s=20240919;
  h=from:subject:message-id;
- bh=VKlEav++gGoAnz7EjFckGLGHa5HU8TeXviODgz9PWIM=;
- b=kAJd3RbuP8xQ7M68f5oz3MPuVYG/7doYhxl+F/DfkqHP2Ct5epQu4qkpB+IAqX7LOFz/1DRQp
- 5aiYA+yBPDaAUxcEQgtq3/x5hwHKIVP+IkW414I7pVbsg/+J7Y0ClVx
+ bh=SV/p7KDSyWL9rkQIFy/TOjIl8HBAh1upgaaKIpkGrwc=;
+ b=dvNFU3rgMtgqVKBf8Q0zDyYaEkN58mDHbPCAcmt4ixQawSTSoelflsucHRtH1NIwRR3oluu82
+ vRXopo1dkjJDgWF1BaW2yHSceyqCuUOg7TsIxb1xrAdTHC2OJdNFN3s
 X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
  pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
 X-Endpoint-Received: by B4 Relay for
@@ -83,28 +84,64 @@ Reply-To: jens.glathe@oldschoolsolutions.biz
 
 From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
-Document the x1p-42-100/x1-26-100 variants of the Thinkbook 16 G7 QOY.
+The Camera is built into the Thinkbook 16 G7 QOY and directly attached on the
+usb_2 controller (dwc3 USB2 only). It has a separate power supply that needs
+to be controlled for PM.
 
-[1]: https://psref.lenovo.com/syspool/Sys/PDF/ThinkBook/ThinkBook_16_G7_QOY/ThinkBook_16_G7_QOY_Spec.pdf
+Add the support for this device for the power supply.
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/misc/onboard_usb_dev.c | 2 ++
+ drivers/usb/misc/onboard_usb_dev.h | 8 ++++++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 56f78f0f3803fedcb6422efd6adec3bbc81c2e03..5654aaf825955f8000355600c0ae35b74676273e 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -1153,6 +1153,7 @@ properties:
-       - items:
-           - enum:
-               - asus,zenbook-a14-ux3407qa
-+              - lenovo,thinkbook-16
-               - qcom,x1p42100-crd
-           - const: qcom,x1p42100
+diff --git a/drivers/usb/misc/onboard_usb_dev.c b/drivers/usb/misc/onboard_usb_dev.c
+index 5b481876af1b2c10ce625fcf0fb8bfbe8905aa8c..41360a7591e56b2b1fe973ff1c42e68707fff54d 100644
+--- a/drivers/usb/misc/onboard_usb_dev.c
++++ b/drivers/usb/misc/onboard_usb_dev.c
+@@ -564,6 +564,7 @@ static struct platform_driver onboard_dev_driver = {
  
+ /************************** USB driver **************************/
+ 
++#define VENDOR_ID_BISON		0x5986
+ #define VENDOR_ID_CYPRESS	0x04b4
+ #define VENDOR_ID_GENESYS	0x05e3
+ #define VENDOR_ID_MICROCHIP	0x0424
+@@ -647,6 +648,7 @@ static void onboard_dev_usbdev_disconnect(struct usb_device *udev)
+ }
+ 
+ static const struct usb_device_id onboard_dev_id_table[] = {
++	{ USB_DEVICE(VENDOR_ID_BISON, 0x1198) }, /* Bison Electronics Inc. Integrated Camera */
+ 	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6500) }, /* CYUSB330x 3.0 HUB */
+ 	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6502) }, /* CYUSB330x 2.0 HUB */
+ 	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6503) }, /* CYUSB33{0,1}x 2.0 HUB, Vendor Mode */
+diff --git a/drivers/usb/misc/onboard_usb_dev.h b/drivers/usb/misc/onboard_usb_dev.h
+index e017b8e22f936be66da73789abb4f620e6af4d6a..b95ac757868e7cd3f23eb4b80eb595a2c18e9613 100644
+--- a/drivers/usb/misc/onboard_usb_dev.h
++++ b/drivers/usb/misc/onboard_usb_dev.h
+@@ -73,6 +73,13 @@ static const struct onboard_dev_pdata ti_tusb8041_data = {
+ 	.is_hub = true,
+ };
+ 
++static const struct onboard_dev_pdata bison_intcamera_data = {
++	.reset_us = 1000,
++	.num_supplies = 1,
++	.supply_names = { "vdd" },
++	.is_hub = false,
++};
++
+ static const struct onboard_dev_pdata cypress_hx3_data = {
+ 	.reset_us = 10000,
+ 	.num_supplies = 2,
+@@ -127,6 +134,7 @@ static const struct of_device_id onboard_dev_match[] = {
+ 	{ .compatible = "usb451,8142", .data = &ti_tusb8041_data, },
+ 	{ .compatible = "usb451,8440", .data = &ti_tusb8041_data, },
+ 	{ .compatible = "usb451,8442", .data = &ti_tusb8041_data, },
++	{ .compatible = "usb5986,1198", .data = &bison_intcamera_data, },
+ 	{ .compatible = "usb4b4,6504", .data = &cypress_hx3_data, },
+ 	{ .compatible = "usb4b4,6506", .data = &cypress_hx3_data, },
+ 	{ .compatible = "usb4b4,6570", .data = &cypress_hx2vl_data, },
 
 -- 
 2.48.1
