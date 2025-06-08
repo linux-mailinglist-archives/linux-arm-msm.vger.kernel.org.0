@@ -1,107 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-60536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D95A3AD1028
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 23:43:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E2B6AD1087
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jun 2025 02:14:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A3EE516CD56
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Jun 2025 21:43:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 645583AC4A7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Jun 2025 00:13:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92A2C214232;
-	Sat,  7 Jun 2025 21:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0173AA59;
+	Sun,  8 Jun 2025 00:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mailoo.org header.i=@mailoo.org header.b="aEbKIoQO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eBqnfaCO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailo.com (msg-2.mailo.com [213.182.54.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9401C84B6;
-	Sat,  7 Jun 2025 21:43:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.182.54.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A82382;
+	Sun,  8 Jun 2025 00:13:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749332621; cv=none; b=T7J2mxZCVuj4xKFU+JJtUQjqBrfccVPGFKITWpO9TLcVp4BYfLZGeFNfmFwvAKTdAtoWZIrWjpVyFezDM14ccL3iHJ/cr8XWoTUwu/wFLs3X88fP4FnZm+jezi8Dv0d3HnAUWLgMsCSwMDUGOc3QcDwI/tnnKs6A9ICOGaELPK8=
+	t=1749341639; cv=none; b=era6L9XdoTEx2uzalTjSPj+t5bPrTeP/drAV72I4J9u8MiJN18uYWZGY24ecWktFJ31PxMK7bsUYQoO8fOBthGGqppjNgn5XvCe9lHPBsM7mTCTCIJKtBU1Z6ovu9huBbuTEl77nbEA/bjDr8MGLJXLgHtXRESLGcnBE9OzbrFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749332621; c=relaxed/simple;
-	bh=xI/OvOkoISAXRncaDWVm0qhOdTlzYGDe6owbkI0AdPE=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ZJ2CwC1l/3TJHn4NbeDBnpSdzhp0HkYNwE8ieBjtwYs1MamLmmLnfetozEJhiRriGb2uVMslWdlEohTARPJEAFJ/4XKo4mCsyaWJ5RSHtxMzWppas2u1J929fTZ1aH442yMUS92XwvV/ZH7M7HzbsQIJpVfXdEQrBv8G4GFgq0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mailoo.org; spf=pass smtp.mailfrom=mailoo.org; dkim=pass (1024-bit key) header.d=mailoo.org header.i=@mailoo.org header.b=aEbKIoQO; arc=none smtp.client-ip=213.182.54.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mailoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailoo.org
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mailoo.org; s=mailo;
-	t=1749332607; bh=xI/OvOkoISAXRncaDWVm0qhOdTlzYGDe6owbkI0AdPE=;
-	h=X-EA-Auth:Message-ID:Subject:From:To:Cc:Date:In-Reply-To:
-	 References:Content-Type:Content-Transfer-Encoding:MIME-Version;
-	b=aEbKIoQO+l7C7MLt9a6SuB590DT46JFza4bQskV6NSOnACnFw81MauRawk2w4VwmZ
-	 /edbHScs3xZ106G02Pys8xBJEg6kcYH92+wTl3/JqKRRxTSb6Z6AEfmIDXNL4ghWJk
-	 ovF8eARkJWcLrWHhH0aAjYqG/4KCPWffCDVPRvqY=
-Received: by b221-6.in.mailobj.net [192.168.90.26] with ESMTP
-	via ip-22.mailoo.org [213.182.54.22]
-	Sat,  7 Jun 2025 23:43:26 +0200 (CEST)
-X-EA-Auth: tcnuv6EiHZjbchC6kmH0/Ii7nnvOoLM4TEin+CbKNq8wrSTgu1rvm6JumEmT79Enp2m+k7dPzaxOaWT47optlAuYenc93FDrPejq6nJgMP8=
-Message-ID: <e73d676ba1901437d471a2a633e94a07b19a3e05.camel@mailoo.org>
-Subject: Re: [PATCH v4 2/4] media: qcom: camss: Add support for MSM8939
-From: Vincent Knecht <vincent.knecht@mailoo.org>
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Robert Foss	
- <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, Bryan O'Donoghue	
- <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,  Bjorn Andersson
- <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- =?ISO-8859-1?Q?Andr=E9?= Apitzsch
-	 <git@apitzsch.eu>, phone-devel@vger.kernel.org, 
-	~postmarketos/upstreaming@lists.sr.ht
-Date: Sat, 07 Jun 2025 23:43:26 +0200
-In-Reply-To: <877a72fa-cdae-4a66-9991-5ea86ef76aac@linaro.org>
-References: <20250602-camss-8x39-vbif-v4-0-32c277d8f9bf@mailoo.org>
-	 <20250602-camss-8x39-vbif-v4-2-32c277d8f9bf@mailoo.org>
-	 <877a72fa-cdae-4a66-9991-5ea86ef76aac@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-1.fc42app2) 
+	s=arc-20240116; t=1749341639; c=relaxed/simple;
+	bh=quZdiXcvNr3IBppY0g+Z1c7C/jdGgRtoRWBt5ZrMY5g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BYCBSknRhxenbFKIFweeou6ebBMCvPo1+CFiMX8lyOr4AAw1ABNiDmzqMePjCev7s1m58jbPGBzFrX1rqulL32iaUkcIAnqM9R/oTt4pK2xozQytOYCIf41q5TIAT7lCnYkhfO0kqXfJM7OarJR/SYkMJca5l8NUDYHBR4i7KFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eBqnfaCO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94DFCC4CEE4;
+	Sun,  8 Jun 2025 00:13:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749341639;
+	bh=quZdiXcvNr3IBppY0g+Z1c7C/jdGgRtoRWBt5ZrMY5g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eBqnfaCO76quaRDAFJ/zY7KJKPGHXyxXmPOzQ917mWwC4jLmFf7+u7y2WRaoCpems
+	 B9dT5/bv24LPrb+M8C7tXXqa4bLmCZp7x63KtU51b54wQWLRo3ZFTALPCMfuGTMdM4
+	 WszzWfXZql6dFuelmbo8SErtO2zOTmRDT6HQZ5oBIRuS3bNk7055Sm1zIe+PxA7WJP
+	 YErLjTVlrT7+KbXx3SfLW+1NHHSfzgG6yTyadcClVxvNCNYNhX6be/hA/VaIwWYjCe
+	 WVtotFAzRo6g4PdrR5ZWcLt27ckdzfIfF6xv2uEqCg2r1hf4Ph60oxtNbGovQToqMu
+	 ADgR88FmyYQ9A==
+Date: Sat, 7 Jun 2025 19:13:56 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: quic_utiwari@quicinc.com
+Cc: Thara Gopinath <thara.gopinath@gmail.com>, 
+	Herbert Xu <herbert@gondor.apana.org.au>, "David S . Miller" <davem@davemloft.net>, 
+	linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	bartosz.golaszewski@linaro.org, quic_neersoni@quicinc.com
+Subject: Re: [PATCH] crypto: qce - Add suspend and resume support
+Message-ID: <6dfweyi65aoly24nhrq3dc5u3dpaqv4fhdwerc6axu63dkgltx@i5y7lptwnuwu>
+References: <20250606105808.2119280-1-quic_utiwari@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250606105808.2119280-1-quic_utiwari@quicinc.com>
 
-Le vendredi 06 juin 2025 =C3=A0 13:59 +0300, Vladimir Zapolskiy a =C3=A9cri=
-t=C2=A0:
-> Hello Vincent.
->=20
-> On 6/2/25 20:27, Vincent Knecht via B4 Relay wrote:
-> > From: Vincent Knecht <vincent.knecht@mailoo.org>
-> >=20
-> > The camera subsystem for the MSM8939 is the same as MSM8916 except with
-> > 3 CSID instead of 2, and some higher clock rates.
-> >=20
-> > As a quirk, this SoC needs writing values to 2 VFE VBIF registers
-> > (see downstream msm8939-camera.dtsi vbif-{regs,settings} properties).
-> > This fixes black stripes across sensor and garbage in CSID TPG outputs.
-> >=20
-> > Add support for the MSM8939 camera subsystem.
-> >=20
-> > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> > Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
->=20
-> There was a preceding and partially reviewed changeset published on
-> linux-media [1] before v1 of the MSM8939 platform support in CAMSS,
-> due to a merge conflict this platform changeset should be rebased IMHO.
->=20
-> [1] https://lore.kernel.org/all/20250513142353.2572563-4-vladimir.zapolsk=
-iy@linaro.org/
->=20
-> --
-> Best wishes,
-> Vladimir
+On Fri, Jun 06, 2025 at 04:28:08PM +0530, quic_utiwari@quicinc.com wrote:
+> From: Udit Tiwari <quic_utiwari@quicinc.com>
+> 
+> Add basic suspend and resume callbacks to the QCE platform driver to
+> manage interconnect bandwidth during system sleep and wake-up cycles.
 
-Thank you, I'll look into it
+Please follow
+https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+and start your commit message with a problem description. Why do we want
+to "manage interconnect bandwidth"?
+
+> 
+> Signed-off-by: Udit Tiwari <quic_utiwari@quicinc.com>
+> ---
+>  drivers/crypto/qce/core.c | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+> 
+> diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
+> index e95e84486d9a..2566bdad5d4a 100644
+> --- a/drivers/crypto/qce/core.c
+> +++ b/drivers/crypto/qce/core.c
+> @@ -249,6 +249,21 @@ static int qce_crypto_probe(struct platform_device *pdev)
+>  	return devm_qce_register_algs(qce);
+>  }
+>  
+> +static int qce_crypto_suspend(struct platform_device *pdev, pm_message_t state)
+> +{
+> +	struct qce_device *qce = platform_get_drvdata(pdev);
+> +
+> +	return icc_set_bw(qce->mem_path, 0, 0);
+
+Couldn't you be using icc_disable(); here?
+
+> +}
+> +
+> +static int qce_crypto_resume(struct platform_device *pdev)
+> +{
+> +	struct qce_device *qce = platform_get_drvdata(pdev);
+> +
+> +	return icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH,
+> +		QCE_DEFAULT_MEM_BANDWIDTH);
+
+icc_enable();
 
 
+That said, as already requested, please also drop these votes at runtime
+when the block is unused.
+
+> +}
+> +
+>  static const struct of_device_id qce_crypto_of_match[] = {
+>  	{ .compatible = "qcom,crypto-v5.1", },
+>  	{ .compatible = "qcom,crypto-v5.4", },
+> @@ -259,6 +274,8 @@ MODULE_DEVICE_TABLE(of, qce_crypto_of_match);
+>  
+>  static struct platform_driver qce_crypto_driver = {
+>  	.probe = qce_crypto_probe,
+> +	.suspend = qce_crypto_suspend,
+> +	.resume = qce_crypto_resume,
+
+Please implement .driver.pm instead.
+
+Regards,
+Bjorn
+
+>  	.driver = {
+>  		.name = KBUILD_MODNAME,
+>  		.of_match_table = qce_crypto_of_match,
+> -- 
+> 2.34.1
+> 
 
