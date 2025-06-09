@@ -1,382 +1,261 @@
-Return-Path: <linux-arm-msm+bounces-60640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B32EAD1E4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 15:01:13 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4A25AD1E73
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 15:05:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 18D26188D506
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 13:01:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 814D41616D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 13:05:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 585AC1EA7C4;
-	Mon,  9 Jun 2025 13:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BA4B13CF9C;
+	Mon,  9 Jun 2025 13:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="POgJ9GQt"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lB9G+JBK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AFD25392B
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jun 2025 13:00:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B612EC148
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jun 2025 13:05:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749474060; cv=none; b=qB6BpHwDBJ/YOYO8Us1I58hXvXJKlksaCVKJGmgOIFYNtab/Hs3f7iGauBg6eI+7mkor5GzumZXoXU6OTGZyM64+V4iRQHdLscWzsXndnMhHBbwPkFcoZ3jEAa9KBm3a30e7NfRG68mgBU71Lmvs6bgsbEtbEPr0gMrpXHHtLeY=
+	t=1749474328; cv=none; b=Edoxhdz9zT+TbPWRQPfYFofr2tADB5HglduMpWsjgoMFhkIcg6FQ0OZ3zFeZt3zBbeSZEExtrnS1xmhRN3jJvNKwyNin/fQOSdNXHPtmD8c35njFqy5vEs38+3RDpU2F2ckFms6zxuIQO0xq0Mhyhe97R8C7/PD9refD/GwHKUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749474060; c=relaxed/simple;
-	bh=+URPo4JGBj7DndEyMo5gm2wIJ46h7HcTeGl1dr40vvI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IUsj/9zdg1MyItWUC9svuwwbMakLkqZ0ZgqTDvbjWgTaX3XxIjuiv1oQquo7Y2PyBI7Z1We5irR9KO3n9K9mN1B7GWpiUcvI0wtIEHpUI6aRcGMC04Vfh1UVDQVIsfLzV2BG5Pj2+DqutOIqrn/Wrt1j2um5nK2A57dJbknSaOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=POgJ9GQt; arc=none smtp.client-ip=209.85.167.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-404e580bf09so919387b6e.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jun 2025 06:00:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749474057; x=1750078857; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mYtTd8X3ioZoP4ZqCiRHyNkyAopif3v2teL9bFi+ppk=;
-        b=POgJ9GQtiCyJg1MeCIdhKRsxIJQUedNqxfcn+K8n9tUOgoV5bfDj1GjFUE7RSKIAi2
-         0PnK3CGURLMXrOHvSi8TA+q1i+TuK9JgtBiwq9XTsk65ggABs/z9CrBPn4nsWLd8LTcQ
-         nEPXUF5Co/51VGXMqxFGBqE7FEGwlMK6geDB/DXh/zVkA4pf8uBOKqQ2ArfvxYFyheTZ
-         gSHSmZkzxiKeXPgYUoMXjLdp225PEC44bqgPk6HsPYA3TXfogO8Vrc96wrREG3LLv9Dy
-         Xa8re29o6cb6Z2R4g6IdJ+w4n+8wXStw5x55v74RhhNG+z4BOmiWydi8xxm5L7zRdHuJ
-         AtfA==
+	s=arc-20240116; t=1749474328; c=relaxed/simple;
+	bh=CyTywWegk+0yor0slgZnZWbPyKHGyckBx4eKm0eWBMM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KN0GXRnxEMCs89YISiii9lQ1p/BALzNETR8vl0G9C+KSPwM+AuoHp9QFo58IY2as/Ua+6cLoRmJY8y4nHFTau9IakFE9jVyJp0CTW+KIupTzXJLiSX+O0RI3LJoL2ODtshes1SqcxEEbJ3tA2OuwtUX6ecaNii3uaN9C7ofrT64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lB9G+JBK; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5598P07o003426
+	for <linux-arm-msm@vger.kernel.org>; Mon, 9 Jun 2025 13:05:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=7xkCVUQwqf7RIq+KwaSJ+GbN
+	K/6py51WB61ukwc4n9A=; b=lB9G+JBKRDqQx8/SLtb4+Vz7y3LWXBALFUokCXRv
+	xS/ojDQormalUxO0F4XVKuNJmUoq9rvSs+FWv9pyvi9HGOqWsxGRwV88uBLUrU7/
+	sxQMHQAXnpd3mxwX/dhFDvbXsqIBqhBGyUwFIvZa/NG0sbfwlKoRqAuecZrsN1gI
+	fwndSjbJ6dB8Z8ki2f8eCrq5w43xkD169DvvNa7UNELhvIKTJB5X8AXQtxmlvY1e
+	rY62E8pYP9TPwZhNjrcb8eQCMO4dy87P5NbpBCK+IoOXlgWPSp4xyagneNSt/wmL
+	Rn3H8BeM2S7uPpPByEbd3424okOCtiWwwrIVw/28PjrPqw==
+Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com [209.85.222.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 475v2y0ty5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jun 2025 13:05:25 +0000 (GMT)
+Received: by mail-ua1-f69.google.com with SMTP id a1e0cc1a2514c-87ee2573c92so566371241.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jun 2025 06:05:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749474057; x=1750078857;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mYtTd8X3ioZoP4ZqCiRHyNkyAopif3v2teL9bFi+ppk=;
-        b=JUM6d6GOfNUz4sAfd8hvjS11uMfup67Ew+S7ARaIk9X7Epw1P/vQCiA1roxWNDlX2D
-         xsy+zSX6yR7wGHtl7l+2Ncc0flyL8XjEcy2s6UYLhv5lSUu3WtSjWSTkaZQjQaeR4+m+
-         F7vsSisbEVraQPux3DcqKrs9hZ02j9EpbOHh79W6RI/k49EbVNr2fCOZ9S19SQPeQ333
-         CjmtE7E5BZgqaU29fjEMqJNb4qeO7DY7cBgGaqZeOzuMEVC1tHs13e+KpYPEG84xP53N
-         rTDAOZHyO1V3lRz67GIbzlxeSdmcU1kwf3M+CLb+DI44kKDx2q2q+vxPC+5cQdpvM42/
-         +eQw==
-X-Forwarded-Encrypted: i=1; AJvYcCXIiUx8jonkcPEiFtyTSZtuAuvUGl10IIBXmW2fHWrjKEERysCSQ2wNa7sBtFIWxrYZRDMMNtmRwVODMaic@vger.kernel.org
-X-Gm-Message-State: AOJu0YxKvYGbaoqH3PPASYWjTIY0YJUMPOSr/X3i1kowlZdLeqNs/Xa2
-	l+gn4JOtH5wEJadfz1IPexiySwJBz+evYhJUxyt4EPIIxCL8noKjg665LMHGS7HGNhRQkP8My0E
-	8r2kFCmeIEMxOgHgskip3EotMRu0OncQvt3dIXH1SIg==
-X-Gm-Gg: ASbGnctjS9bth+wk3rsphM3hJ9Zxe+gPmEd/YN0OzZpxqw7wwOPG8t/aMgJzcWKu+ZP
-	XST7ir/ehumdWWJ2oPffW+YLp8foJYf4D3d5ObKqsx/BPn153HnI2EL9QCEHPr6sQ/w8jhtj2eJ
-	BNGjkUMUq3VzZRZPp8CUbbQrtJ//cCLUV0S4F2fE/zoP9T
-X-Google-Smtp-Source: AGHT+IEx5dBBYalreZpgcAi7SiMqb9bdO3lo6yhdnudOtUBVFZ+AX4nRBzDMZ/8OpWtkY6MrxyYR2ncP1ceSLRn0V4Q=
-X-Received: by 2002:a05:6808:5086:b0:409:f8e:727f with SMTP id
- 5614622812f47-4090f8e7a1cmr6634453b6e.3.1749474057017; Mon, 09 Jun 2025
- 06:00:57 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749474324; x=1750079124;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7xkCVUQwqf7RIq+KwaSJ+GbNK/6py51WB61ukwc4n9A=;
+        b=od9ex+m8hip9DmsGKaY/UEG+nLN/CVG4xBsAq2sqoVras9FvzuvXsrhF+BTVYBUfob
+         I0qWuoidd68YdGBwwpINePArJRmzRolPsPHSZ/wBfJPxIDWPp0X6+n2ns8Z0FrKDhNCV
+         KvcU9pNOhMVQ0+01/isHc7w9Tt8RKawpzUWj5Z/lL9lCsHhYTxiZME7AH9ILJshm8X2U
+         5mDzjXw89DMQeDFtv+tlQSG7yUfJMXDWhr+sHdz3mTJT+T1XGR17y9UhIE+GlJyqouN9
+         b4FgLp9WNiAW4OrR1rZgFG8p/CL6WF5c4dy+9XDt60xTBESb0gAKiDaprMPB/D0TUP9O
+         wsog==
+X-Forwarded-Encrypted: i=1; AJvYcCUGgZN3PARG0H0gkleGYsBy59plCI09yax+5xnMaiL3ab2lHv9Mwox4u60quCoDy8O3GPkKsxByZ8eCTiHr@vger.kernel.org
+X-Gm-Message-State: AOJu0YzK5D+LVAw02L7332taVJe3BZUCyahkDm/EROaEMzeJezc1Xq/P
+	oZ/orB+lUg5bXwMZV6C90jyLfxOQhZmf04gtWQTAPyQRbeCT7rHtGu8GedlHsWa3l+Zuq65eyO+
+	/nmAbY3ujoA/IPmuBNKIakhAQhJGixaW+uJt+CVFYLcjBdbyBvdh9V9sdK8a0PlemaBT93bTPrT
+	Um
+X-Gm-Gg: ASbGncshmJytnsTK652qZr/QDV7beaPfcwRb1cuYP2v7+tEE3OuRdTP0MOMK2IYhcaq
+	7HzfFIqp/MjBQ8ncenDuHXSTp03f8x6L9jkKnNk9ZboWoRQbXII7z9vuw8o243u86Rkb3Jmtups
+	s35w6eIlBczzT0wsGgUddoCHF/ZKJRJtT+LRzKpxGPTNLS9rapO/KX+soCKjMaRX+p126L7ED9L
+	l1g1234XL6TJ6NzZFJb0TKIAVoy0dki1Z3CQzIJFKhVvsEQkllSVUemTAjvymoLuZ2O05WniJev
+	bIy2v2FBjgaRVKP2kFD1aoNxAFQZ7sY6eA2wdKfFs+De5RLuE5R3/Q18kOz1xi6vHCcSU3G9oXu
+	5uR9Mah6XDw==
+X-Received: by 2002:a05:6102:5f07:b0:4e7:3e76:cd21 with SMTP id ada2fe7eead31-4e772967fb4mr12013498137.9.1749474323729;
+        Mon, 09 Jun 2025 06:05:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEanFjvz+Pab/BnSn6wIWlNME2jCR2jQzVdPVbp6lEZBUiSoLG6wPdevQH+wVkpMZKGh9CrVw==
+X-Received: by 2002:a05:6e02:1a2d:b0:3dc:7c44:cff9 with SMTP id e9e14a558f8ab-3ddce494e22mr142829055ab.8.1749474310150;
+        Mon, 09 Jun 2025 06:05:10 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5536772a429sm1139330e87.147.2025.06.09.06.05.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Jun 2025 06:05:07 -0700 (PDT)
+Date: Mon, 9 Jun 2025 16:05:06 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <quic_yongmou@quicinc.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: Re: [PATCH v2 04/38] drm/msm/dp: re-arrange dp_display_disable()
+ into functional parts
+Message-ID: <ikvsacoatahnmjff4c762cpq6lvmr6cavlbjw6z7oyrvuno5hp@mykq3ts2hhbw>
+References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
+ <20250609-msm-dp-mst-v2-4-a54d8902a23d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250605-fix-use-after-free-v1-1-a70d23bff248@oss.qualcomm.com>
-In-Reply-To: <20250605-fix-use-after-free-v1-1-a70d23bff248@oss.qualcomm.com>
-From: Jens Wiklander <jens.wiklander@linaro.org>
-Date: Mon, 9 Jun 2025 15:00:45 +0200
-X-Gm-Features: AX0GCFs0onTtmhC4kVNMBNJ2gfnQX-I7Oo5EtaFJz3aIdTdjQHDdvJiA4KNJJYM
-Message-ID: <CAHUa44EyGXswbYLgdrfH_cMSyadgVUAJDGAMdsPXQVN7V7Nhsw@mail.gmail.com>
-Subject: Re: [PATCH] tee: optee: prevent use-after-free when the client exits
- before the supplicant
-To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-Cc: Sumit Garg <sumit.garg@kernel.org>, Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, 
-	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250609-msm-dp-mst-v2-4-a54d8902a23d@quicinc.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA5MDA5NSBTYWx0ZWRfX8gYaLnDAhCBI
+ ckbhlms50mWPO6jQm+MYMYBrR/1vHRDGX/sp+8sOu6snKrD5D2GTsJjMX5iBExcnwo6dZ8LT+Op
+ ZmW2uTE6wvAUdc6Nv9xgzcvyx1oDMo5D8Pl5kBdWE/dRyJ/qc6KfVOjU2PaGOw8KIxsDxIYeTOQ
+ M4ob864a82FVaejr15zgqzd49B3XW4e99aO8e4cSZNqYHmDtc+4uB089HFkhXog2c9YEV4jWp4O
+ a9XVheVQR3D/gwOtHPAV74gGthe1925+kNnsV4jgqhVQI6PcviguMj6TLK+tD635ZaDyhEadJTo
+ vIb01Y2Fbti2yUAGMMUUJ4JQSGo7RqnHQxhQL7V6T0KIjqmACQCvFRzfTwzjsyg0Vxw3g109zWQ
+ S+0mnI/UY3ipQRcAKeHpLST8IT3Re+6MLhb/pJlwaV1IGalPow3fy9FXYMbR4gB3frAjNzVT
+X-Proofpoint-GUID: VBVaw27aHhdl3_vR1zbuWUZH3F9bcr0q
+X-Proofpoint-ORIG-GUID: VBVaw27aHhdl3_vR1zbuWUZH3F9bcr0q
+X-Authority-Analysis: v=2.4 cv=f+BIBPyM c=1 sm=1 tr=0 ts=6846dc15 cx=c_pps
+ a=UbhLPJ621ZpgOD2l3yZY1w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8 a=yxpq3E9kyWjuSYLohSwA:9 a=CjuIK1q_8ugA:10
+ a=TOPH6uDL9cOC6tEoww4z:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-09_05,2025-06-05_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 priorityscore=1501 adultscore=0 phishscore=0 mlxscore=0
+ malwarescore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506090095
 
-Hi Amir,
-
-On Fri, Jun 6, 2025 at 4:01=E2=80=AFAM Amirreza Zarrabi
-<amirreza.zarrabi@oss.qualcomm.com> wrote:
->
-> Commit 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop") made the
-> client wait as killable so it can be interrupted during shutdown or
-> after a supplicant crash. This changes the original lifetime expectations=
-:
-> the client task can now terminate while the supplicant is still processin=
-g
-> its request.
->
-> If the client exits first it removes the request from its queue and
-> kfree()s it, while the request ID remains in supp->idr. A subsequent
-> lookup on the supplicant path then dereferences freed memory, leading to
-> a use-after-free.
->
-> Serialise access to the request with supp->mutex:
->
->   * Hold supp->mutex in optee_supp_recv() and optee_supp_send() while
->     looking up and touching the request.
->   * Let optee_supp_thrd_req() notice that the client has terminated and
->     signal optee_supp_send() accordingly.
->
-> With these changes the request cannot be freed while the supplicant still
-> has a reference, eliminating the race.
->
-> Fixes: 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop")
-> Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+On Mon, Jun 09, 2025 at 08:21:23PM +0800, Yongxing Mou wrote:
+> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
+> dp_display_disable() handles special case of when monitor is
+> disconnected from the dongle while the dongle stays connected
+> thereby needing a separate function dp_ctrl_off_link_stream()
+> for this. However with a slight rework this can still be handled
+> by keeping common paths same for regular and special case.
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
 > ---
->  drivers/tee/optee/supp.c | 114 ++++++++++++++++++++++++++++++++---------=
-------
->  1 file changed, 77 insertions(+), 37 deletions(-)
->
-> diff --git a/drivers/tee/optee/supp.c b/drivers/tee/optee/supp.c
-> index d0f397c90242..62c9c75f48a6 100644
-> --- a/drivers/tee/optee/supp.c
-> +++ b/drivers/tee/optee/supp.c
-> @@ -9,6 +9,7 @@
->
->  struct optee_supp_req {
->         struct list_head link;
-> +       int id;
->
->         bool in_queue;
->         u32 func;
-> @@ -19,6 +20,9 @@ struct optee_supp_req {
->         struct completion c;
->  };
->
-> +/* It is temporary request used for invalid pending request in supp->idr=
-. */
-> +static struct optee_supp_req invalid_req;
-
-Prefer avoiding global variables where possible.
-
-> +
->  void optee_supp_init(struct optee_supp *supp)
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c    | 29 +++++++++++++++--------------
+>  drivers/gpu/drm/msm/dp/dp_ctrl.h    |  5 ++++-
+>  drivers/gpu/drm/msm/dp/dp_display.c | 16 +++++++---------
+>  3 files changed, 26 insertions(+), 24 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index 1e13ca81b0155a37a4ed7a2e83c918293d703a37..1ce3cca121d0c56b493e282c76eb9202371564cf 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -2081,30 +2081,31 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl)
+>  	return ret;
+>  }
+>  
+> -void msm_dp_ctrl_off_link_stream(struct msm_dp_ctrl *msm_dp_ctrl)
+> +void msm_dp_ctrl_clear_vsc_sdp_pkt(struct msm_dp_ctrl *msm_dp_ctrl)
 >  {
->         memset(supp, 0, sizeof(*supp));
-> @@ -102,6 +106,7 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u32 =
-func, size_t num_params,
->         mutex_lock(&supp->mutex);
->         list_add_tail(&req->link, &supp->reqs);
->         req->in_queue =3D true;
-> +       req->id =3D -1;
->         mutex_unlock(&supp->mutex);
->
->         /* Tell an eventual waiter there's a new request */
-> @@ -117,21 +122,40 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u3=
-2 func, size_t num_params,
->         if (wait_for_completion_killable(&req->c)) {
->                 mutex_lock(&supp->mutex);
->                 if (req->in_queue) {
-> +                       /* Supplicant has not seen this request yet. */
->                         list_del(&req->link);
->                         req->in_queue =3D false;
-> +
-> +                       ret =3D TEEC_ERROR_COMMUNICATION;
-> +               } else if (req->id  =3D=3D -1) {
-> +                       /*
-> +                        * Supplicant has processed this request. Ignore =
-the
-> +                        * kill signal for now and submit the result.
-> +                        */
-> +                       ret =3D req->ret;
-> +               } else {
-> +                       /*
-> +                        * Supplicant is in the middle of processing this
-> +                        * request. Replace req with invalid_req so that =
-the ID
-> +                        * remains busy, causing optee_supp_send() to fai=
-l on
-> +                        * the next call to supp_pop_req() with this ID.
-> +                        */
-> +                       idr_replace(&supp->idr, &invalid_req, req->id);
-> +                       ret =3D TEEC_ERROR_COMMUNICATION;
->                 }
-> +
-> +               kfree(req);
->                 mutex_unlock(&supp->mutex);
-> -               req->ret =3D TEEC_ERROR_COMMUNICATION;
-> +       } else {
-> +               ret =3D req->ret;
-> +               kfree(req);
->         }
->
-> -       ret =3D req->ret;
-> -       kfree(req);
+>  	struct msm_dp_ctrl_private *ctrl;
+> -	struct phy *phy;
+>  
+>  	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
+> -	phy = ctrl->phy;
 > -
->         return ret;
->  }
->
->  static struct optee_supp_req  *supp_pop_entry(struct optee_supp *supp,
-> -                                             int num_params, int *id)
-> +                                             int num_params)
->  {
->         struct optee_supp_req *req;
->
-> @@ -153,8 +177,8 @@ static struct optee_supp_req  *supp_pop_entry(struct =
-optee_supp *supp,
->                 return ERR_PTR(-EINVAL);
->         }
->
-> -       *id =3D idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
-> -       if (*id < 0)
-> +       req->id =3D idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
-> +       if (req->id < 0)
->                 return ERR_PTR(-ENOMEM);
->
->         list_del(&req->link);
-> @@ -214,7 +238,6 @@ int optee_supp_recv(struct tee_context *ctx, u32 *fun=
-c, u32 *num_params,
->         struct optee *optee =3D tee_get_drvdata(teedev);
->         struct optee_supp *supp =3D &optee->supp;
->         struct optee_supp_req *req =3D NULL;
-> -       int id;
->         size_t num_meta;
->         int rc;
->
-> @@ -223,16 +246,45 @@ int optee_supp_recv(struct tee_context *ctx, u32 *f=
-unc, u32 *num_params,
->                 return rc;
->
->         while (true) {
-> -               mutex_lock(&supp->mutex);
-> -               req =3D supp_pop_entry(supp, *num_params - num_meta, &id)=
-;
-> -               mutex_unlock(&supp->mutex);
-> +               scoped_guard(mutex, &supp->mutex) {
-> +                       req =3D supp_pop_entry(supp, *num_params - num_me=
-ta);
-> +                       if (!req)
-> +                               goto wait_for_request;
->
-> -               if (req) {
->                         if (IS_ERR(req))
->                                 return PTR_ERR(req);
-> -                       break;
-> +
-> +                       /*
-> +                        * Popped a request: process it while holding the=
- lock,
-> +                        * so that optee_supp_thrd_req() doesn't pull the
-> +                        * request out from under us.
-> +                        */
-> +
-> +                       if (num_meta) {
-> +                               /*
-> +                                * tee-supplicant support meta parameters=
- ->
-> +                                * requests can be processed asynchronous=
-ly.
-> +                                */
-> +                               param->attr =3D
-> +                                       TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_I=
-NOUT |
-> +                                       TEE_IOCTL_PARAM_ATTR_META;
-> +                               param->u.value.a =3D req->id;
-> +                               param->u.value.b =3D 0;
-> +                               param->u.value.c =3D 0;
-> +                       } else {
-> +                               supp->req_id =3D req->id;
-> +                       }
-> +
-> +                       *func =3D req->func;
-> +                       *num_params =3D req->num_params + num_meta;
-> +                       memcpy(param + num_meta, req->param,
-> +                              sizeof(struct tee_param) * req->num_params=
-);
+>  	msm_dp_catalog_panel_disable_vsc_sdp(ctrl->catalog);
+> +}
+>  
+> -	/* set dongle to D3 (power off) mode */
+> -	msm_dp_link_psm_config(ctrl->link, &ctrl->panel->link_info, true);
+> +void msm_dp_ctrl_psm_config(struct msm_dp_ctrl *msm_dp_ctrl)
 
-This is the point at which this function must break out of the loop
-and return the request, or it will be lost.
+I'm not a fan of (almost) one-line wrappers.
 
-Cheers,
-Jens
+> +{
+> +	struct msm_dp_ctrl_private *ctrl;
+>  
+> -	msm_dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
+> +	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
+>  
+> -	if (ctrl->stream_clks_on) {
+> -		clk_disable_unprepare(ctrl->pixel_clk);
+> -		ctrl->stream_clks_on = false;
+> -	}
+> +	/* set dongle to D3 (power off) mode */
+> +	msm_dp_link_psm_config(ctrl->link, &ctrl->panel->link_info, true);
+> +}
+>  
+> -	dev_pm_opp_set_rate(ctrl->dev, 0);
+> -	msm_dp_ctrl_link_clk_disable(&ctrl->msm_dp_ctrl);
+> +void msm_dp_ctrl_reinit_phy(struct msm_dp_ctrl *msm_dp_ctrl)
+> +{
+> +	struct msm_dp_ctrl_private *ctrl;
+> +	struct phy *phy;
+>  
+> -	phy_power_off(phy);
+> +	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
+> +	phy = ctrl->phy;
+>  
+>  	/* aux channel down, reinit phy */
+>  	phy_exit(phy);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> index 42745c912adbad7221c78f5cecefa730bfda1e75..edbe5766db74c4e4179141d895f9cb85e514f29b 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> @@ -20,7 +20,6 @@ struct phy;
+>  int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl);
+>  int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl);
+>  int msm_dp_ctrl_prepare_stream_on(struct msm_dp_ctrl *dp_ctrl, bool force_link_train);
+> -void msm_dp_ctrl_off_link_stream(struct msm_dp_ctrl *msm_dp_ctrl);
+>  void msm_dp_ctrl_off_link(struct msm_dp_ctrl *msm_dp_ctrl);
+>  void msm_dp_ctrl_off(struct msm_dp_ctrl *msm_dp_ctrl);
+>  void msm_dp_ctrl_push_idle(struct msm_dp_ctrl *msm_dp_ctrl);
+> @@ -42,4 +41,8 @@ void msm_dp_ctrl_config_psr(struct msm_dp_ctrl *msm_dp_ctrl);
+>  int msm_dp_ctrl_core_clk_enable(struct msm_dp_ctrl *msm_dp_ctrl);
+>  void msm_dp_ctrl_core_clk_disable(struct msm_dp_ctrl *msm_dp_ctrl);
+>  
+> +void msm_dp_ctrl_clear_vsc_sdp_pkt(struct msm_dp_ctrl *msm_dp_ctrl);
+> +void msm_dp_ctrl_psm_config(struct msm_dp_ctrl *msm_dp_ctrl);
+> +void msm_dp_ctrl_reinit_phy(struct msm_dp_ctrl *msm_dp_ctrl);
+> +
+>  #endif /* _DP_CTRL_H_ */
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 5ac5dcf35b789f2bda052a2c17aae20aa48d8e18..a5ca498cb970d0c6a4095b0b7fc6269c2dc3ad31 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -925,17 +925,15 @@ static int msm_dp_display_disable(struct msm_dp_display_private *dp)
+>  	if (!msm_dp_display->power_on)
+>  		return 0;
+>  
+> +	msm_dp_ctrl_clear_vsc_sdp_pkt(dp->ctrl);
+> +
+> +	/* dongle is still connected but sinks are disconnected */
+>  	if (dp->link->sink_count == 0) {
+> -		/*
+> -		 * irq_hpd with sink_count = 0
+> -		 * hdmi unplugged out of dongle
+> -		 */
+> -		msm_dp_ctrl_off_link_stream(dp->ctrl);
+> +		msm_dp_ctrl_psm_config(dp->ctrl);
+> +		msm_dp_ctrl_off(dp->ctrl);
+> +		/* re-init the PHY so that we can listen to Dongle disconnect */
+> +		msm_dp_ctrl_reinit_phy(dp->ctrl);
+>  	} else {
+> -		/*
+> -		 * unplugged interrupt
+> -		 * dongle unplugged out of DUT
+> -		 */
+>  		msm_dp_ctrl_off(dp->ctrl);
+>  		msm_dp_display_host_phy_exit(dp);
+>  	}
+> 
+> -- 
+> 2.34.1
+> 
 
->                 }
->
-> +               /* Check for the next request in the queue. */
-> +               continue;
-> +
-> +wait_for_request:
->                 /*
->                  * If we didn't get a request we'll block in
->                  * wait_for_completion() to avoid needless spinning.
-> @@ -245,27 +297,6 @@ int optee_supp_recv(struct tee_context *ctx, u32 *fu=
-nc, u32 *num_params,
->                         return -ERESTARTSYS;
->         }
->
-> -       if (num_meta) {
-> -               /*
-> -                * tee-supplicant support meta parameters -> requsts can =
-be
-> -                * processed asynchronously.
-> -                */
-> -               param->attr =3D TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INOUT |
-> -                             TEE_IOCTL_PARAM_ATTR_META;
-> -               param->u.value.a =3D id;
-> -               param->u.value.b =3D 0;
-> -               param->u.value.c =3D 0;
-> -       } else {
-> -               mutex_lock(&supp->mutex);
-> -               supp->req_id =3D id;
-> -               mutex_unlock(&supp->mutex);
-> -       }
-> -
-> -       *func =3D req->func;
-> -       *num_params =3D req->num_params + num_meta;
-> -       memcpy(param + num_meta, req->param,
-> -              sizeof(struct tee_param) * req->num_params);
-> -
->         return 0;
->  }
->
-> @@ -297,12 +328,21 @@ static struct optee_supp_req *supp_pop_req(struct o=
-ptee_supp *supp,
->         if (!req)
->                 return ERR_PTR(-ENOENT);
->
-> +       /* optee_supp_thrd_req() already returned to optee. */
-> +       if (req =3D=3D &invalid_req) {
-> +               req =3D ERR_PTR(-ENOENT);
-> +               goto failed_req;
-> +       }
-> +
->         if ((num_params - nm) !=3D req->num_params)
->                 return ERR_PTR(-EINVAL);
->
-> +       req->id =3D -1;
-> +       *num_meta =3D nm;
-> +failed_req:
->         idr_remove(&supp->idr, id);
->         supp->req_id =3D -1;
-> -       *num_meta =3D nm;
-> +
->
->         return req;
->  }
-> @@ -328,9 +368,8 @@ int optee_supp_send(struct tee_context *ctx, u32 ret,=
- u32 num_params,
->
->         mutex_lock(&supp->mutex);
->         req =3D supp_pop_req(supp, num_params, param, &num_meta);
-> -       mutex_unlock(&supp->mutex);
-> -
->         if (IS_ERR(req)) {
-> +               mutex_unlock(&supp->mutex);
->                 /* Something is wrong, let supplicant restart. */
->                 return PTR_ERR(req);
->         }
-> @@ -358,6 +397,7 @@ int optee_supp_send(struct tee_context *ctx, u32 ret,=
- u32 num_params,
->
->         /* Let the requesting thread continue */
->         complete(&req->c);
-> +       mutex_unlock(&supp->mutex);
->
->         return 0;
->  }
->
-> ---
-> base-commit: 3be1a7a31fbda82f3604b6c31e4f390110de1b46
-> change-id: 20250604-fix-use-after-free-8ff1b5d5d774
->
-> Best regards,
-> --
-> Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
->
+-- 
+With best wishes
+Dmitry
 
