@@ -1,284 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-60567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6147AD1A45
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 11:06:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DED3AD1B18
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 11:54:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CE2887A193B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 09:05:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1AA4916144E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 09:54:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60E5524DCFB;
-	Mon,  9 Jun 2025 09:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA91224C09E;
+	Mon,  9 Jun 2025 09:54:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="PZo0CoPC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YtLz+01m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0E638F80
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jun 2025 09:06:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2408541C63;
+	Mon,  9 Jun 2025 09:54:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749460000; cv=none; b=nsdE7iH1t2z2rwiGdWILGnYyPrDHi1qGUuaSnv6aySVRL5XvDx/IkOKzKvnWTxQ3k8/MX3kDpa3eF00aNdIhRTFwYrX/JUAqXJcegShmlFQluLJvQorIgMbS2Q9do6vBbQMfN/0mfn1s1tbRuZ+YpXmBEDjuu8N0q6qncB8DWOw=
+	t=1749462881; cv=none; b=fk/KmBPluhl4Qpd1NAElENee6Upr7LL5JTC1c+K/4nP+WjVnNdo89snIv3iCysK7pSRAUT852V8OLYcWstdTUlcEP+Xumj16wN/yDtSOU1V7Wsgofcj0Y810fz/S4I16mxgEFFNdcPQ/k60Rk9KjWWGMyml5Lv+lF3zMQbis2s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749460000; c=relaxed/simple;
-	bh=M4cXpZ2Wr6E3SWaPSRYtog3F0WkfKTFjCP1vUA3TrVw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mjGaVav/hV80qAvIur1YbXRjRtPGIpIxy4Qt3YDbBfsh9I7i8UmyseFTGBNYO8De390ixLyppbx1LcDjElicYtwRX9PXy+bSbkcxfBKWZtUji5TuUQsK1MXO1KhWJvYr2lNAFtvJZPODX0cHBwEOLziiAY1Ua0bmVERikwcRgmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=PZo0CoPC; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1749459997;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MEEHwqpkGXwZV2216XAk2Y9KxNh7e2DRzC+1fZlQs/w=;
-	b=PZo0CoPCPZ9ASdvOAzG71Pw3OM3cCAT/UV6tBjPxYVAVWNrwNeaUPixPukhpRKTe3XzqtY
-	uenT20rxtk2CihnoKvFkGlqF6i+6dYQ/DEV+m4IRm2137sw1zzq9MZ2aRE9RJUqxaBRRzg
-	egD0hZklOPpYAJhqTTmqHxbTCFQgm1w=
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
- [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-139-jPcA567MP4qIcBIGxwKiMA-1; Mon, 09 Jun 2025 05:06:36 -0400
-X-MC-Unique: jPcA567MP4qIcBIGxwKiMA-1
-X-Mimecast-MFC-AGG-ID: jPcA567MP4qIcBIGxwKiMA_1749459995
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-747d29e90b4so3104074b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jun 2025 02:06:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749459995; x=1750064795;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MEEHwqpkGXwZV2216XAk2Y9KxNh7e2DRzC+1fZlQs/w=;
-        b=YtfTX8NUUUonU7snO+tBSi88w19/cSxjdhShxwiM2V1XSlaHRMxzRgYCzyz8lFlTwN
-         9rjCMoPnpGru/f4hdzsVbAnmMjMLBElTBO1W57ZLZKgkkAqxul2k9DwEJqzc5nTA7Vtj
-         zQS71BSAQ3Ht8bWJ1Csa8xGZDYGZYKIdeYQ4q4Bp0BAtoDtANLIjB8HLClhgyWRJSLo0
-         44KmUMmX9EGoHjQ5dTqfIIKlDyovu8dy4by0Tf/ayYXG+mwuJ2ETzpUCIXQHthxdH/08
-         bQJFS3fpXrzWXGaV1CSpWafVF0fBzR1rzlGjPQHC5pg9uR24nsRRhz86ZDKE74brc2YC
-         tHiA==
-X-Forwarded-Encrypted: i=1; AJvYcCUwH8Se1Im/bG2IAfod7Sl5A7cvtqzPI5dK69jZdActz+xM9oM3hAlkOtLU8hHsqTD8jp7H5ho2S0vhcVXf@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/CGUj/Udy5HAOwqFptYlzs1pCM3+96+bLJdcW1XlCapi2oFEb
-	4SH+F7MTAph5PXV5YnyCdHOPN/M3XWjQNCAM73sdFH+xIDOkr9EGt9gx8TOEuZSTfquIqekrhUA
-	ABb5EYNjTCPdrnZgyqAOSLgz8laCZP1dVoqHtYTGDFuhcgwBnkBQ43t7cBFvz4rQqdPw=
-X-Gm-Gg: ASbGncu8/5nTqg6rDMY8kgvPPZSRmPP6/VEQAcBndK8HljkQ48rwObKd/3ryiG7Z3VZ
-	a3KZcjasR/chHOH/vJrdFmTeqloeSwQTiJ1P7LxrrAHD95Efodm45dLG1AE28BNrvQusWBrgtGy
-	D7su5KA3nmBVRULovsachkGD6W0vARlVKrL12VuUX1C4y0g5h8Ax0r3HRWzWLnppXeIguUXEme8
-	qpDj1iWhC2MZTvbDBDboj1Ca8zh16C6C+FfXrrNCcgXW43IW0H3jByZqdi5EUv64cdUr+04DLJ0
-	sN6rQRa27CpvfFvnpSVf8GSfaCqpWMxnV8bIwaQIHN9v6dtPtGE=
-X-Received: by 2002:a05:6a00:855:b0:736:5c8e:baaa with SMTP id d2e1a72fcca58-74827e52592mr16210630b3a.2.1749459994980;
-        Mon, 09 Jun 2025 02:06:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFKGPBkTgOwJbD6LOShmxspDJzxpRw6rpArgiEpKcpdDBfYG0pvKVKOm0Fv+3YXAjw3oq1wkw==
-X-Received: by 2002:a05:6a00:855:b0:736:5c8e:baaa with SMTP id d2e1a72fcca58-74827e52592mr16210573b3a.2.1749459994498;
-        Mon, 09 Jun 2025 02:06:34 -0700 (PDT)
-Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au. [175.34.62.5])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7482af7b606sm5481711b3a.67.2025.06.09.02.06.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jun 2025 02:06:33 -0700 (PDT)
-Message-ID: <b3607092-df66-471b-b736-142ab65d35b2@redhat.com>
-Date: Mon, 9 Jun 2025 19:06:13 +1000
+	s=arc-20240116; t=1749462881; c=relaxed/simple;
+	bh=eOgMCR2qJQTO7OxJCrTlsFRVzvCtziaqjcV0SI0FU0M=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=epuBwlpIcb2xAYrRiSiDL2uagemXyibAiTdaYqtfwDuyuHKGv5cuFhrVWq0h9hYvoTE/6px42dek2uvYKELN83iV9CkfZOT8lbMH+uPuovqMyfUgxr6pd5IfxKXSMAsdGKeKJERvy0iJdvK9cdP8DjYm4Y58PkDq+NMugAYV9XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YtLz+01m; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55934vfI020014;
+	Mon, 9 Jun 2025 09:54:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=7lcrrRHKoLWZrxnSLwacatN1
+	dshNcspmS+DeJ5CdxmU=; b=YtLz+01mJAtSV+KbxJaClOR1nfa5V3+URhX0AuUN
+	YUiTxY95ws4RIBy0Tdwh5hMrOKm+bf2VsSn61okD/ougoLvtnGOD6lffaUm0JfDB
+	fT5ux8/L1dCipbSYBbUoONV2nsFZEBLt7dV3jwvq9wzzIaVxvvs0zvvlMpnUxyQx
+	f7sYMUkan3QPjHRI6o4CbxV9zhOcnUYcy+WNJR9+MXc0OOLvv+J4N4RmCcrExjft
+	HeleiOghl6FuWfSdWKShqgOUrJ0GyXKjb/NNyP9tg17jn5qpp3Z+hP5xW0pdV6e/
+	C4nwFXWp0wh/g6GuHksLm6Am5fSqfyoQpzPHKsdefn1L7g==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 475qcts1ay-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 09 Jun 2025 09:54:36 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5599sZhX014112
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 9 Jun 2025 09:54:35 GMT
+Received: from hu-wasimn-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 9 Jun 2025 02:54:27 -0700
+Date: Mon, 9 Jun 2025 15:24:18 +0530
+From: Wasim Nazir <quic_wasimn@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, <kernel@oss.qualcomm.com>,
+        Pratyush Brahma <quic_pbrahma@quicinc.com>,
+        Prakash Gupta <quic_guptap@quicinc.com>
+Subject: Re: [PATCH v9 2/4] arm64: dts: qcom: iq9: Introduce new memory map
+ for qcs9100/qcs9075
+Message-ID: <aEavSv3VWuMvzyBw@hu-wasimn-hyd.qualcomm.com>
+References: <20250530092850.631831-1-quic_wasimn@quicinc.com>
+ <20250530092850.631831-3-quic_wasimn@quicinc.com>
+ <ss3xhat6v3s4ivcypw6fqcmblqait56pqhzwuhzyfhevp4kzlr@5e3f5nwb6lhb>
+ <aEATe3pi1SsfZVI3@hu-wasimn-hyd.qualcomm.com>
+ <q3hzryk4s7jd4kyavcg7s6d3oyzfpnjy4jhpeluvnikiglbeng@r4ydugwidgv7>
+ <aEBzNnnyqt/aZ35r@hu-wasimn-hyd.qualcomm.com>
+ <aEKnstzguH7f0A92@hu-wasimn-hyd.qualcomm.com>
+ <n3et5jemuiin5c5pwi3r5gycnicxdhrwbmxapnsg2arlwabxcv@7b734qnxwaof>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 14/18] KVM: arm64: Handle guest_memfd-backed guest
- page faults
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
- kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org,
- mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com,
- palmer@dabbelt.com, aou@eecs.berkeley.edu, seanjc@google.com,
- viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org,
- akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com,
- chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com,
- dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net,
- vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com,
- mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com,
- wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com,
- kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
- steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
- quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
- quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
- quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
- yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
- will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
- shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
- jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250605153800.557144-1-tabba@google.com>
- <20250605153800.557144-15-tabba@google.com>
- <3d9a15ff-fbb2-4e9a-b97b-c0e40eb23043@redhat.com>
- <CA+EHjTzSWbw=Vrc+_4rEs_QsQ=6w44H4pGrJPtZeY8n=s4qZRw@mail.gmail.com>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <CA+EHjTzSWbw=Vrc+_4rEs_QsQ=6w44H4pGrJPtZeY8n=s4qZRw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <n3et5jemuiin5c5pwi3r5gycnicxdhrwbmxapnsg2arlwabxcv@7b734qnxwaof>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: c_0WZxpIbSWgC6ad4N2cE_taKB_l5Edt
+X-Authority-Analysis: v=2.4 cv=Lco86ifi c=1 sm=1 tr=0 ts=6846af5c cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=kj9zAlcOel0A:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=-YevBJ-UrPJtX6aMaiwA:9 a=CjuIK1q_8ugA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA5MDA3NiBTYWx0ZWRfX/3veLVIKMeWb
+ 1oA+c09Zd51VTBy1dOH+WlRF1BdlnCfAMVHHfzXh1LJ/pxPBtwae4Tw6ccCRlBDX/8b1Yq05z7C
+ 7xx0m9N3KFEnStkhGrBh4QUT4CN0MvDH/L2CKw/ArsTkm1IeKT0quaBDe3w9TZyGobf7yTSQXpF
+ NliCY23H4DKH3m6FAGgS4s3CjNJOpl1YdSplDIk2N4f0GIl7OUHzFbmmbi2d4jOhOObZ5jCh+Gp
+ DL+NLVriGP9Sa1pFcPaeCWDsQQL9tlgYg/HMupOnxXF3lpa7Zj+/dgnUZ2j4nrodxdrWtEbORuG
+ MmqLLkdMHZJ2/2lT7Lhx0xrQiuyuOoQJBsGyHyzoNd9Qm0WOUvhYO0wUx7MvpT4+mNw06RbYxxN
+ Y3+Km0GRoko6CChLdu+fHFcpEff3GOTe3b7N1vXV+VL4M6GKFp/ZGNjiX2IB68wQ/y4g0FkN
+X-Proofpoint-ORIG-GUID: c_0WZxpIbSWgC6ad4N2cE_taKB_l5Edt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-09_04,2025-06-05_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 priorityscore=1501 suspectscore=0 clxscore=1015
+ impostorscore=0 spamscore=0 phishscore=0 mlxlogscore=999 mlxscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506090076
 
-Hi Fuad,
-
-On 6/9/25 5:04 PM, Fuad Tabba wrote: 
-> On Mon, 9 Jun 2025 at 05:08, Gavin Shan <gshan@redhat.com> wrote:
->>
->> On 6/6/25 1:37 AM, Fuad Tabba wrote:
->>> Add arm64 support for handling guest page faults on guest_memfd backed
->>> memslots. Until guest_memfd supports huge pages, the fault granule is
->>> restricted to PAGE_SIZE.
->>>
->>> Signed-off-by: Fuad Tabba <tabba@google.com>
->>> ---
->>>    arch/arm64/kvm/mmu.c | 93 ++++++++++++++++++++++++++++++++++++++++++--
->>>    1 file changed, 90 insertions(+), 3 deletions(-)
->>>
->>
->> One comment below. Otherwise, it looks good to me.
->>
->> Reviewed-by: Gavin Shan <gshan@redhat.com>
->>
->>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
->>> index ce80be116a30..f14925fe6144 100644
->>> --- a/arch/arm64/kvm/mmu.c
->>> +++ b/arch/arm64/kvm/mmu.c
->>> @@ -1508,6 +1508,89 @@ static void adjust_nested_fault_perms(struct kvm_s2_trans *nested,
->>>        *prot |= kvm_encode_nested_level(nested);
->>>    }
->>>
->>> +#define KVM_PGTABLE_WALK_MEMABORT_FLAGS (KVM_PGTABLE_WALK_HANDLE_FAULT | KVM_PGTABLE_WALK_SHARED)
->>> +
->>> +static int gmem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->>> +                   struct kvm_s2_trans *nested,
->>> +                   struct kvm_memory_slot *memslot, bool is_perm)
->>> +{
->>> +     bool logging, write_fault, exec_fault, writable;
->>> +     enum kvm_pgtable_walk_flags flags = KVM_PGTABLE_WALK_MEMABORT_FLAGS;
->>> +     enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
->>> +     struct kvm_pgtable *pgt = vcpu->arch.hw_mmu->pgt;
->>> +     struct page *page;
->>> +     struct kvm *kvm = vcpu->kvm;
->>> +     void *memcache;
->>> +     kvm_pfn_t pfn;
->>> +     gfn_t gfn;
->>> +     int ret;
->>> +
->>> +     ret = prepare_mmu_memcache(vcpu, !is_perm, &memcache);
->>> +     if (ret)
->>> +             return ret;
->>> +
->>> +     if (nested)
->>> +             gfn = kvm_s2_trans_output(nested) >> PAGE_SHIFT;
->>> +     else
->>> +             gfn = fault_ipa >> PAGE_SHIFT;
->>> +
->>> +     logging = memslot_is_logging(memslot);
->>> +     write_fault = kvm_is_write_fault(vcpu);
->>> +     exec_fault = kvm_vcpu_trap_is_exec_fault(vcpu);
->>> +
->>> +     if (write_fault && exec_fault) {
->>> +             kvm_err("Simultaneous write and execution fault\n");
->>> +             return -EFAULT;
->>> +     }
->>> +
->>> +     if (is_perm && !write_fault && !exec_fault) {
->>> +             kvm_err("Unexpected L2 read permission error\n");
->>> +             return -EFAULT;
->>> +     }
->>> +
->>> +     ret = kvm_gmem_get_pfn(kvm, memslot, gfn, &pfn, &page, NULL);
->>> +     if (ret) {
->>> +             kvm_prepare_memory_fault_exit(vcpu, fault_ipa, PAGE_SIZE,
->>> +                                           write_fault, exec_fault, false);
->>> +             return ret;
->>> +     }
->>> +
->>
->> -EFAULT or -EHWPOISON shall be returned, as documented in virt/kvm/api.rst. Besides,
->> kvm_send_hwpoison_signal() should be executed when -EHWPOISON is returned from
->> kvm_gmem_get_pfn()? :-)
+On Sat, Jun 07, 2025 at 11:22:39PM +0300, Dmitry Baryshkov wrote:
+> On Fri, Jun 06, 2025 at 02:02:50PM +0530, Wasim Nazir wrote:
+> > On Wed, Jun 04, 2025 at 09:54:38PM +0530, Wasim Nazir wrote:
+> > > On Wed, Jun 04, 2025 at 04:21:46PM +0300, Dmitry Baryshkov wrote:
+> > > > On Wed, Jun 04, 2025 at 03:05:55PM +0530, Wasim Nazir wrote:
+> > > > > On Mon, Jun 02, 2025 at 10:41:39AM -0500, Bjorn Andersson wrote:
+> > > > > > On Fri, May 30, 2025 at 02:58:45PM +0530, Wasim Nazir wrote:
+> > > > > > > From: Pratyush Brahma <quic_pbrahma@quicinc.com>
+> > > > > > > 
+> > > > > > > SA8775P has a memory map which caters to the auto specific requirements.
+> > > > > > 
+> > > > > > I thought SA8775P was the IoT platform and SA8255P was the automotive
+> > > > > > one. Has this changed?
+> > > > > 
+> > > > > Both SA8775P & SA8255P is for auto but former one is non-SCMI based while
+> > > > > the later one is SCMI based chip.
+> > > > > 
+> > > > > Only IQ9 series of chips (QCS9100 & QCS9075) are for IOT.
+> > > > > 
+> > > > > > 
+> > > > > > > QCS9100 & QCS9075 are its IOT variants (with marketing name as IQ9) which
+> > > > > > > inherit the memory map of SA8775P require a slightly different memory
+> > > > > > > map as compared to SA8775P auto parts.
+> > > > > > > This new memory map is applicable for all the IoT boards which inherit
+> > > > > > > the initial SA8775P memory map. This is not applicable for non-IoT
+> > > > > > 
+> > > > > > Is there are platform out there that actually uses the "initial SA8775P
+> > > > > > memory map"?
+> > > > > 
+> > > > > Yes currently sa8775p-ride and sa8775p-ride-r3 are using initial memory
+> > > > > map.
+> > > > > 
+> > > > > > 
+> > > > > > > boards.
+> > > > > > > 
+> > > > > > > Some new carveouts (viz. gunyah_md and a few pil dtb carveouts) have been
+> > > > > > > introduced as part of firmware updates for IoT. The size and base address
+> > > > > > > have been updated for video PIL carveout compared to SA8775P since it is
+> > > > > > > being brought up for the first time on IoT boards. The base addresses
+> > > > > > > of the rest of the PIL carveouts have been updated to accommodate the
+> > > > > > > change in size of video since PIL regions are relocatable and their
+> > > > > > > functionality is not impacted due to this change. The size of camera
+> > > > > > > pil has also been increased without breaking any feature.
+> > > > > > > 
+> > > > > > > The size of trusted apps carveout has also been reduced since it is
+> > > > > > > sufficient to meet IoT requirements. Also, audio_mdf_mem & tz_ffi_mem
+> > > > > > > carveout and its corresponding scm reference has been removed as these
+> > > > > > > are not required for IoT parts.
+> > > > > > > 
+> > > > > > > Incorporate these changes in the updated memory map.
+> > > > > > > 
+> > > > > > > Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
+> > > > > > > Signed-off-by: Prakash Gupta <quic_guptap@quicinc.com>
+> > > > > > > Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
+> > > > > > > ---
+> > > > > > >  .../boot/dts/qcom/iq9-reserved-memory.dtsi    | 113 ++++++++++++++++++
+> > > > > > >  1 file changed, 113 insertions(+)
+> > > > > > >  create mode 100644 arch/arm64/boot/dts/qcom/iq9-reserved-memory.dtsi
+> > > > > > > 
+> > > > > > > diff --git a/arch/arm64/boot/dts/qcom/iq9-reserved-memory.dtsi b/arch/arm64/boot/dts/qcom/iq9-reserved-memory.dtsi
+> > > > > > > new file mode 100644
+> > > > > > > index 000000000000..ff2600eb5e3d
+> > > > > > > --- /dev/null
+> > > > > > > +++ b/arch/arm64/boot/dts/qcom/iq9-reserved-memory.dtsi
+> > > > > > 
+> > > > > > The naming convention is <soc>-<something>.dtsi and I don't see any
+> > > > > > other uses of the "iq9" naming.
+> > > > > 
+> > > > > As this new memory map is common for IQ9 series of SoC (QCS9100 &
+> > > > > QCS9075), so we have used its common name.
+> > > > 
+> > > > IQ9 name is not known or visible outside of this commit.
+> > > 
+> > > Are you referring to add the same in cover-letter?
+> > > 
+> > > > 
+> > > > > Once the DT structure for QCS9100 is refactored, we would update this
+> > > > > common file there.
+> > > > 
+> > > > Can you refactor it first?
+> > > 
+> > > This refactoring involves changes in all the ride/ride-r3 boards which
+> > > are based on sa8775p & qcs9100. Even though we had sent v0[1] but we still
+> > > need to conclude on the final structure. Since, ethernet is broken in upstream,
+> > > we are working on its fix before sending another series.
+> > > 
+> > > Hence, we want to proceed for iq9075-evk for now and once qcs9100 is
+> > > finalized, we can use the memory-map there.
+> > > 
+> > > But to avoid this dependency and to proceed with iq9075-evk alone,
+> > > I can rename it to qcs9075-reserved-memory.dtsi.
+> > > 
+> > > Let me know if that works here.
+> > > 
+> > > [1] https://lore.kernel.org/all/20250507065116.353114-1-quic_wasimn@quicinc.com/
+> > 
+> > Hi Dmitry,
+> > 
+> > Shall I proceed with qcs9075-reserved-memory.dtsi or do you have any
+> > other suggestion that we should discuss?
+> > 
+> > Aparently, this series is for qcs9075 only so using exact (not common)
+> > name also aligns the naming format.
 > 
-> This is a bit different since we don't have a VMA. Refer to the discussion here:
+> Squash it into qcs9075.dtsi.
+
+We don't have qcs9075.dtsi.
+Is it ok to squash it into qcs9075-som.dtsi ?
+
 > 
-> https://lore.kernel.org/all/20250514212653.1011484-1-jthoughton@google.com/
+> > 
+> > > 
+> > > > 
+> > > > > 
+> > > > > > 
+> > > > 
+> > > > -- 
+> > > > With best wishes
+> > > > Dmitry
+> > > 
+> > > Regards,
+> > > Wasim
+> > 
+> > -- 
+> > Regards,
+> > Wasim
 > 
+> -- 
+> With best wishes
+> Dmitry
 
-Thanks for the pointer. You're right that we don't have VMA here. To return the
-'ret' to userspace seems the practical way to have here.
-
-Thanks,
-Gavin
-
->>
->>> +     writable = !(memslot->flags & KVM_MEM_READONLY) &&
->>> +                (!logging || write_fault);
->>> +
->>> +     if (nested)
->>> +             adjust_nested_fault_perms(nested, &prot, &writable);
->>> +
->>> +     if (writable)
->>> +             prot |= KVM_PGTABLE_PROT_W;
->>> +
->>> +     if (exec_fault ||
->>> +         (cpus_have_final_cap(ARM64_HAS_CACHE_DIC) &&
->>> +          (!nested || kvm_s2_trans_executable(nested))))
->>> +             prot |= KVM_PGTABLE_PROT_X;
->>> +
->>> +     kvm_fault_lock(kvm);
->>> +     if (is_perm) {
->>> +             /*
->>> +              * Drop the SW bits in favour of those stored in the
->>> +              * PTE, which will be preserved.
->>> +              */
->>> +             prot &= ~KVM_NV_GUEST_MAP_SZ;
->>> +             ret = KVM_PGT_FN(kvm_pgtable_stage2_relax_perms)(pgt, fault_ipa, prot, flags);
->>> +     } else {
->>> +             ret = KVM_PGT_FN(kvm_pgtable_stage2_map)(pgt, fault_ipa, PAGE_SIZE,
->>> +                                          __pfn_to_phys(pfn), prot,
->>> +                                          memcache, flags);
->>> +     }
->>> +     kvm_release_faultin_page(kvm, page, !!ret, writable);
->>> +     kvm_fault_unlock(kvm);
->>> +
->>> +     if (writable && !ret)
->>> +             mark_page_dirty_in_slot(kvm, memslot, gfn);
->>> +
->>> +     return ret != -EAGAIN ? ret : 0;
->>> +}
->>> +
->>>    static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->>>                          struct kvm_s2_trans *nested,
->>>                          struct kvm_memory_slot *memslot, unsigned long hva,
->>> @@ -1532,7 +1615,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->>>        enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
->>>        struct kvm_pgtable *pgt;
->>>        struct page *page;
->>> -     enum kvm_pgtable_walk_flags flags = KVM_PGTABLE_WALK_HANDLE_FAULT | KVM_PGTABLE_WALK_SHARED;
->>> +     enum kvm_pgtable_walk_flags flags = KVM_PGTABLE_WALK_MEMABORT_FLAGS;
->>>
->>>        if (fault_is_perm)
->>>                fault_granule = kvm_vcpu_trap_get_perm_fault_granule(vcpu);
->>> @@ -1959,8 +2042,12 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu)
->>>                goto out_unlock;
->>>        }
->>>
->>> -     ret = user_mem_abort(vcpu, fault_ipa, nested, memslot, hva,
->>> -                          esr_fsc_is_permission_fault(esr));
->>> +     if (kvm_slot_has_gmem(memslot))
->>> +             ret = gmem_abort(vcpu, fault_ipa, nested, memslot,
->>> +                              esr_fsc_is_permission_fault(esr));
->>> +     else
->>> +             ret = user_mem_abort(vcpu, fault_ipa, nested, memslot, hva,
->>> +                                  esr_fsc_is_permission_fault(esr));
->>>        if (ret == 0)
->>>                ret = 1;
->>>    out:
->>
-> 
-
+-- 
+Regards,
+Wasim
 
