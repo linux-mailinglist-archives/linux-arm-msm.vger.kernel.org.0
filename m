@@ -1,81 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-60673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9867AD24FC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 19:33:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A77CAD2511
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 19:37:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1EDD716CDFD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 17:32:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 573F3167588
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 17:37:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE6C621A931;
-	Mon,  9 Jun 2025 17:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACA5021ABC2;
+	Mon,  9 Jun 2025 17:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wxCSKI9O"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="e65QfGjf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93CE21A45A
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jun 2025 17:32:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04440194137
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jun 2025 17:37:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749490371; cv=none; b=fqZd6EXgVu67Kv3Yszol4kBR3rktNi0IR3tIcucHbtd807Wiysny2fBMDzQAtHxaiLwifrYx0tOjTQAvt7GZQMzuye46bNWpz96KaI8wO2sA5Y4bVwDG/aBGXWWcSEyWFnkywoX2qn4gUcTgljInSlvdgLrl/H5+kw85cBZbKnQ=
+	t=1749490671; cv=none; b=D6o7ewudhoksmHNIZZAoWzY5qX3Gg+bPx/kKGyYf7WzDC62HguZDps2Ihi3zQE+RoyG507SCLNMHDV5s7sW/HmHeFEjHaO1c+VAtGjt8F0K/kwXR5WiQ2S3L84quUbla43RM8N2ZzllEsHAZ3oY3WyuJFmqvA7mLdvVTm3jIaRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749490371; c=relaxed/simple;
-	bh=iPUN+2MWcAibV/IGuTagW72ERAA5MSRFKTTrVNl4eyA=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=oZcZ9pfPCCOKTdTnsowdPBgod9KQCDhs4bpPifPjvXV7DRfuk5ZEhhvazCr1WrdlkVgxsLAQ0utO7WZHNwt2DXd4r3R+ih13G4gTOUMUWudkQ++IFMRh7LhgQL+NkmnBprNONQnqJFZEayOR2obQ3Xyta9PXrEDdNdjpMW5FMhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wxCSKI9O; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a548a73ff2so1285354f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jun 2025 10:32:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749490368; x=1750095168; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4BbCIdJzZyZ85FWpyBI56Lx/NGpTnhQVTUu7xBDJfi0=;
-        b=wxCSKI9OWouKZa+dGDlDOw6yNKg1tBq3W/Z+NMYHDCuZPL7HwjWqGs9JK6K5rUhk65
-         ymMzXKWNkL8tZx2XM0ZLcHpR+UMRPaI//rXnfq2BPSSVCiJV7xV3sqy0uYHdWJSfvtQ0
-         YWOTAu3khLv4LWPyAE8J6boz1YSkYbnnwzx7xSJz/VXvl6bIobyBbxolTFpfpDvPzG8J
-         vhAnlkC/S/R8lCKRGLv9iXwSqQboCy7eHXDE0uPdqmb+MGXr4ow01CKhWxaMqE0NmXfH
-         +6hD4MocnpL9FjD/UOaQBLlnCgdcPAaM3KUF73IRWVarE86hPU7bP7jpgocc3rWkbveY
-         LM4A==
+	s=arc-20240116; t=1749490671; c=relaxed/simple;
+	bh=NLe94yPt4q2EEiFA0+JfFwaP7sn2Zq/pZsMRfkjjFbw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uNiJWnHsJFq6FtTB2FQAuYBQvSbygl1+7s1GU8NW9nHrHUK9qxKa+U1+N/SrnXobBqwGhDGI5FYlILST6TX+50nr5h5vjNhvFn/Lyu3HnGr+Ga7pyvxqVG1+JEPX3vpSynwdthR1Qy55twYd+7/e0iQE3fMqEglH6ALBjUAx5mE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=e65QfGjf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5599bqbO008107
+	for <linux-arm-msm@vger.kernel.org>; Mon, 9 Jun 2025 17:37:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0mD1/0CoskR/YlijKuKFXQSB2LX4lWU/ihQ9C+M2R1A=; b=e65QfGjfmnEbu4p3
+	UihaUlZiORk3Gozu9dLSaMSP9mF34+aiX4WazCx72GGLHI/OpvsWfbzMTiyI8CJ7
+	mLLawg5hHG4k6Y9ElBnt/LhzrUX3PFK6kg0ClvFNa2HHuhvKvyZdKST+ve7kkN5C
+	t5fxlPVuJXdK3KSDbmG2Agn7iX++l5ruXwifbVXyKLSFpyHuvOhjHdqTUSuYTTRb
+	0Vd5vWEbDBJHOr9XFJxjsL1END05UxhmjxlBVCA+w5wE6Wb5C6RRhAni4d15POmL
+	wnqBFAOEkKtRCz23tHkxlX7dA320UncHJ7y//sisuXdb/j/lF4azs/8Ky3nkMHkv
+	VhFB8A==
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com [209.85.167.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474d11xyjc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jun 2025 17:37:48 +0000 (GMT)
+Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-4067b33c9a6so2850953b6e.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jun 2025 10:37:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749490368; x=1750095168;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=4BbCIdJzZyZ85FWpyBI56Lx/NGpTnhQVTUu7xBDJfi0=;
-        b=LPrsev7VwCdQ1M97mLsNZvlPyCFmoH47zqrBshY/ANFaVaLrtjXctwHR+hJpZxti2p
-         Ui4hOxoDXJ95AwbTY4Z5dtHwOE+n6iVtAALIfNzpRUhjVIubpFZqJBlf5PRRvoI749Tl
-         CC8awgxbAFrprF4tS19vA9DfXSMnwf4xWDNKq38vtL9lS4OGrHfb0B0Fkjwb3A9Txpzh
-         2vmWM4LQxLPNzdrjn4EnaE5MrHilnevdxaWzsyoyDR847ZEqnX+XVwBn1pIVQm/BEBpd
-         jIcpm2JHCj7JqaDb/z6J0a3eGgm+lC+dK6DJ77y78LYd1DHmfXoehErZ4x6bBD6gz9VA
-         BFvA==
-X-Gm-Message-State: AOJu0Yz8leO0zKhKBQL8DMCSyWPBt3lqaFql6GWz9mSiNWysVxYWNmKh
-	Mb5/vwFr3BlGNhpGXLYlGYZpFpyF1GRiGudi8ThsaXdBX67qf5nS/ufCRbKcvMVEbo0=
-X-Gm-Gg: ASbGncv7OtJc0ffL5KyDsGzQ+hqXCu63NlCwMe3xh6FaCgHgH90zF3MhgNP4HuAQEEG
-	MIGm/FB9y5Iv8BKmQQB/DH1FJ63CN28B0VyY7PqRdey+TzDoLsuQlA/g8J04IqScqtqlVDDnMvc
-	0km1kC33L2D77bLc0VGTgAQH55Fg9X/zFCjZI+6B0+u1j/F79UqPRsJctl9Y3PeJLZT+UMJxaR+
-	iZRR66k/Xd9knTZGrWJpM8j9dRaw2791FL9jw8EfIASLDwkpz3k7ZIb3M23kvyos8SSjhjLmC8T
-	l/NAvDNBo2+QbMiu/gaB9PBKEO2qAz8eyq+hTxKbISt93PhDGAq7lj1BdziKc4z7RdtGY+KTjPv
-	sTgGsE2oJR7dk/EYtZlWRsN/sXzd0BfkA7Y9ovrI=
-X-Google-Smtp-Source: AGHT+IFlc0NG2n981cyFCrz4MgVSGR17PfNowtJ5i79S8sXK9Fb6iKZwzfBlNb9fkVYZvsAslQTPhw==
-X-Received: by 2002:a05:6000:2dc7:b0:3a5:243c:6042 with SMTP id ffacd0b85a97d-3a53188d3eemr11058980f8f.2.1749490367903;
-        Mon, 09 Jun 2025 10:32:47 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:d049:de0c:efef:b94d? ([2a01:e0a:3d9:2080:d049:de0c:efef:b94d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a532461211sm9876669f8f.86.2025.06.09.10.32.47
+        d=1e100.net; s=20230601; t=1749490667; x=1750095467;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0mD1/0CoskR/YlijKuKFXQSB2LX4lWU/ihQ9C+M2R1A=;
+        b=m6mYAo2e1VGPQX0OpTonjpMdIOLOSpa1nWjyQuJOYfRze7eSD4U5uaXCw9sto9cCfm
+         yal3MjrvCIBCEX6vtFeLuJVnxj6EuLqwkl+qfo08MbH3NYm91j/c7U3xgOx8epNd8sm/
+         KQSB29cLKqsB29+YPw/EU9xm0QZdZ3iUJdxDIpuxJmXa9bSWrtuBknd+pTEgtBM0TMDh
+         XiwOdLvMKHVj+W1aiTA6sVTUJOOjy5vkpi/Q7IHzG5qeTKXlBORXSWcNwWv/kwoSxSaO
+         CJfZHiuf0LvGhkAP11Du3OAV3kqnmJhQzxa3Uh1ugkNwTWfgzZIicsXAUWZrInpH1guJ
+         /0UA==
+X-Gm-Message-State: AOJu0Yy4/22oMm5WUnHRi/m8j50Nsc0eVXZsOvQr9SimMmfSB3RYuaIN
+	KrGFkO/e0UDjYV7uvYgbIL0xUNKrglYpwKw4mTHRCLKFC9AEAeA11D+OgGq2N3CqGTCVL9OOET/
+	2F/nFEM6s84OoTyf2eWoXPRT/xoo8WTXewuF3wTSiRRczNGDTgFQ1CqImIrl+0AomIU63uiAEeP
+	kN
+X-Gm-Gg: ASbGncuZKT7Cy2czxR/zrbu5kiMam9OFXl4LKlLjWQt8J5m3wJRdqDxOi9ajBT2TVwp
+	My6VuPutkSnj/U5x1uoidyUp7brNTXr9B+kYXK8AERsFOxIq9hxUeBrUaXOih40/8qc0biQ1Hq4
+	GfJl3bdhfgU+bNCeoyOkfDQMELHE3O27xbY5jXTUJAN+jsDJLEiQWE4Vi5UGSdDrAyH/aD/JONZ
+	W0j3ZRmdz1xPw354kZ2kqQOfHBtAYuiscwSTCPWkjEl2efbp6Np614pPQw9TRu8OFw2R173KPOG
+	pc5Y9q1MJK10Vvo0HYBw2GwDT5x1jLZxebWol7NDqQg7TxJdafhyNLsLQXdUbskADmZhZxBQ00R
+	SQ0VoiVpJ6v4wovp69wNpfBME
+X-Received: by 2002:a05:6808:1386:b0:407:a0ea:a233 with SMTP id 5614622812f47-40a548ec3acmr318295b6e.10.1749490666569;
+        Mon, 09 Jun 2025 10:37:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEDybc/cT1a1uzm8usYYLOngzIkeYWJ3oezh6aMZj11iyv41ICeZDa+085dK1+g2POh2T0oFw==
+X-Received: by 2002:a05:6214:1c8b:b0:6fa:9ca0:c67e with SMTP id 6a1803df08f44-6fb238dc2e9mr7311616d6.5.1749490654418;
+        Mon, 09 Jun 2025 10:37:34 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0c3:3a00::4c9? (2001-14ba-a0c3-3a00--4c9.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::4c9])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32ae1b347afsm11373071fa.34.2025.06.09.10.37.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jun 2025 10:32:47 -0700 (PDT)
-Message-ID: <d05fa933-51b4-41c7-b590-77e94955f45e@linaro.org>
-Date: Mon, 9 Jun 2025 19:32:46 +0200
+        Mon, 09 Jun 2025 10:37:32 -0700 (PDT)
+Message-ID: <951f781a-d823-4240-a1c8-b9ea85ba64e0@oss.qualcomm.com>
+Date: Mon, 9 Jun 2025 20:37:31 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,155 +90,146 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v5 20/30] drm/msm/dpu: get rid of DPU_MDP_AUDIO_SELECT
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Vinod Koul <vkoul@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20250522-dpu-drop-features-v5-0-3b2085a07884@oss.qualcomm.com>
- <20250522-dpu-drop-features-v5-20-3b2085a07884@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250522-dpu-drop-features-v5-20-3b2085a07884@oss.qualcomm.com>
+Subject: Re: [PATCH 3/3] drm/msm/adreno: Check for recognized GPU before bind
+To: Rob Clark <robin.clark@oss.qualcomm.com>, dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20250609170438.20793-1-robin.clark@oss.qualcomm.com>
+ <20250609170438.20793-4-robin.clark@oss.qualcomm.com>
+Content-Language: en-US
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+In-Reply-To: <20250609170438.20793-4-robin.clark@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: zfrI3383KppVljnJVaW4MrebiUVvz2zg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA5MDEzMyBTYWx0ZWRfX+9CNRkALhSG1
+ 07NXHuU8Aw6HFTIGxVXh4YLOQFzNFIx1JX7LyjSecxGtrF/BfHXdXH3qNEk7kUu0j0qjvh+lNfO
+ PAMDyh/I6PkazoHFimcRyCPvfSNwr4SThOrhF5ZOwXRGPV/+F9pLzL67pNkAYntqZS1ZmnTrVCK
+ nU/0ks528FYRHCypYJIIoKHrLcg4ROaZt2wH9py20ya2u9iYO4LiLRYfMh/jwDLe97XDSRIut8P
+ 2Eggg0F6vq/zVo7ctnC0ZBovpD1QhQMBNzjhkwsER2DJjh2kcNXAvwRPKT8EH0ZvmSkLYfDEaIM
+ 3TZBn3hHHvJwuL2AerJfoI+nj5KfnEGKGW0d9hUxLCW1Ptp/ZALqJvhhPHWx/+oNhOJzpeFr4GK
+ 3U1fUdIqwXoKm///CSaNEgr1PBFGp0BUu40qO36duxbjWKxsl2us2XvRYrqvaROP/mcMpo48
+X-Authority-Analysis: v=2.4 cv=GYkXnRXL c=1 sm=1 tr=0 ts=68471bec cx=c_pps
+ a=AKZTfHrQPB8q3CcvmcIuDA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=4MAclHcQAAAA:8 a=ciEtJq1xeetoClZ_GcsA:9
+ a=QEXdDO2ut3YA:10 a=pF_qn-MSjDawc0seGVz6:22 a=6vtlOZhwcO7ZS_iRoh4Z:22
+X-Proofpoint-ORIG-GUID: zfrI3383KppVljnJVaW4MrebiUVvz2zg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-09_07,2025-06-09_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 spamscore=0 mlxlogscore=999 bulkscore=0
+ impostorscore=0 clxscore=1015 malwarescore=0 priorityscore=1501 mlxscore=0
+ adultscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506090133
 
-On 22/05/2025 21:03, Dmitry Baryshkov wrote:
-> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 09/06/2025 20:04, Rob Clark wrote:
+> If we have a newer dtb than kernel, we could end up in a situation where
+> the GPU device is present in the dtb, but not in the drivers device
+> table.  We don't want this to prevent the display from probing.  So
+> check that we recognize the GPU before adding the GPU component.
 > 
-> Continue migration to the MDSS-revision based checks and replace
-> DPU_MDP_AUDIO_SELECT feature bit with the core_major_ver == 4 ||
-> core_major_ver == 5 check.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h  | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h  | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h  | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h  | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h          | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c              | 3 ++-
->   7 files changed, 2 insertions(+), 7 deletions(-)
+>   drivers/gpu/drm/msm/adreno/adreno_device.c | 29 ++++++++++++++++++----
+>   drivers/gpu/drm/msm/msm_drv.c              |  2 +-
+>   drivers/gpu/drm/msm/msm_gpu.h              |  1 +
+>   3 files changed, 26 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-> index 3e66feb3e18dcc1d9ed5403a42989d97f84a8edc..72a7257b4d7ba5bfe89ec76bac19550e023a2b50 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-> @@ -23,7 +23,6 @@ static const struct dpu_caps sdm845_dpu_caps = {
->   static const struct dpu_mdp_cfg sdm845_mdp = {
->   	.name = "top_0",
->   	.base = 0x0, .len = 0x45c,
-> -	.features = BIT(DPU_MDP_AUDIO_SELECT),
->   	.clk_ctrls = {
->   		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
->   		[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0 },
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
-> index 3a60432a758a942eb1541f143018bd466b2bdf20..ce169a610e195cbb6f0fee1362bcaaf05df777cb 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
-> @@ -11,7 +11,6 @@
->   static const struct dpu_mdp_cfg sdm670_mdp = {
->   	.name = "top_0",
->   	.base = 0x0, .len = 0x45c,
-> -	.features = BIT(DPU_MDP_AUDIO_SELECT),
->   	.clk_ctrls = {
->   		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
->   		[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0 },
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> index e07c2cc4188bb12e2253068ca8666ce9364c69c1..23a3a458dd5c260399a42e5f4d4361b3c4e82c4f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> @@ -23,7 +23,6 @@ static const struct dpu_caps sm8150_dpu_caps = {
->   static const struct dpu_mdp_cfg sm8150_mdp = {
->   	.name = "top_0",
->   	.base = 0x0, .len = 0x45c,
-> -	.features = BIT(DPU_MDP_AUDIO_SELECT),
->   	.clk_ctrls = {
->   		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
->   		[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0 },
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> index b350dba28caed77e542d6a41ceac191a93e165a7..75f8f69123a4a6afe8234a9de21ce68b23c11605 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> @@ -23,7 +23,6 @@ static const struct dpu_caps sc8180x_dpu_caps = {
->   static const struct dpu_mdp_cfg sc8180x_mdp = {
->   	.name = "top_0",
->   	.base = 0x0, .len = 0x45c,
-> -	.features = BIT(DPU_MDP_AUDIO_SELECT),
->   	.clk_ctrls = {
->   		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
->   		[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0 },
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h
-> index 27c71a8a1f31921e5e1f4b6b15e0efc25fb63537..6b895eca2fac53505f7a1d857d30bb8a5d23d4c8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h
-> @@ -23,7 +23,6 @@ static const struct dpu_caps sm7150_dpu_caps = {
->   static const struct dpu_mdp_cfg sm7150_mdp = {
->   	.name = "top_0",
->   	.base = 0x0, .len = 0x45c,
-> -	.features = BIT(DPU_MDP_AUDIO_SELECT),
->   	.clk_ctrls = {
->   		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
->   		[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0 },
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index d3a7f46488a21e81a24a9af5071a9a7f5f48cdac..9ba9e273f81ab1966db1865b4ce28f8c18f750b8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -38,7 +38,6 @@
->   enum {
->   	DPU_MDP_PANIC_PER_PIPE = 0x1,
->   	DPU_MDP_10BIT_SUPPORT,
-> -	DPU_MDP_AUDIO_SELECT,
->   	DPU_MDP_MAX
->   };
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> index c49a67da86b0d46d12c32466981be7f00519974c..5c811f0142d5e2a012d7e9b3a918818f22ec11cf 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> @@ -280,7 +280,8 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
->   	if (mdss_rev->core_major_ver >= 5)
->   		ops->dp_phy_intf_sel = dpu_hw_dp_phy_intf_sel;
->   
-> -	if (cap & BIT(DPU_MDP_AUDIO_SELECT))
-> +	if (mdss_rev->core_major_ver == 4 ||
-> +	    mdss_rev->core_major_ver == 5)
->   		ops->intf_audio_select = dpu_hw_intf_audio_select;
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index 504174dbe6d6..002aaf365322 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -178,6 +178,26 @@ static int find_chipid(struct device_node *node, uint32_t *chipid)
+>   	return 0;
 >   }
 >   
-> 
+> +bool adreno_has_gpu(struct device_node *node)
+> +{
+> +	const struct adreno_info *info;
+> +	uint32_t chip_id;
+> +	int ret;
+> +
+> +	ret = find_chipid(node, &chip_id);
+> +	if (ret)
+> +		return false;
+> +
+> +	info = adreno_info(chip_id);
+> +	if (!info) {
+> +		pr_warn("%s: Unknown GPU revision: %"ADRENO_CHIPID_FMT"\n",
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Please use %pOFf instead of %s (and node instead of node->full_name).
+
+Other than that, LGTM.
+
+> +			node->full_name, ADRENO_CHIPID_ARGS(chip_id));
+> +		return false;
+> +	}
+> +
+> +	return true;
+> +}
+> +
+>   static int adreno_bind(struct device *dev, struct device *master, void *data)
+>   {
+>   	static struct adreno_platform_config config = {};
+> @@ -188,18 +208,17 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
+>   	int ret;
+>   
+>   	ret = find_chipid(dev->of_node, &config.chip_id);
+> -	if (ret)
+> +	/* We shouldn't have gotten this far if we can't parse the chip_id */
+> +	if (WARN_ON(ret))
+>   		return ret;
+>   
+>   	dev->platform_data = &config;
+>   	priv->gpu_pdev = to_platform_device(dev);
+>   
+>   	info = adreno_info(config.chip_id);
+> -	if (!info) {
+> -		dev_warn(drm->dev, "Unknown GPU revision: %"ADRENO_CHIPID_FMT"\n",
+> -			ADRENO_CHIPID_ARGS(config.chip_id));
+> +	/* We shouldn't have gotten this far if we don't recognize the GPU: */
+> +	if (!WARN_ON(info))
+>   		return -ENXIO;
+> -	}
+>   
+>   	config.info = info;
+>   
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 87ee9839ca4a..40eb04bab35e 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -956,7 +956,7 @@ static int add_gpu_components(struct device *dev,
+>   	if (!np)
+>   		return 0;
+>   
+> -	if (of_device_is_available(np))
+> +	if (of_device_is_available(np) && adreno_has_gpu(np))
+>   		drm_of_component_match_add(dev, matchptr, component_compare_of, np);
+>   
+>   	of_node_put(np);
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+> index 5508885d865f..56bd1a646b83 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.h
+> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+> @@ -729,6 +729,7 @@ msm_gpu_create_private_vm(struct msm_gpu *gpu, struct task_struct *task,
+>   void msm_gpu_cleanup(struct msm_gpu *gpu);
+>   
+>   struct msm_gpu *adreno_load_gpu(struct drm_device *dev);
+> +bool adreno_has_gpu(struct device_node *node);
+>   void __init adreno_register(void);
+>   void __exit adreno_unregister(void);
+>   
+
+
+-- 
+With best wishes
+Dmitry
 
