@@ -1,52 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-60690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90CBCAD2828
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 22:54:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B02BAD2842
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 23:00:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5B55F1631E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 20:54:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 68DF116E0E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 21:00:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D002B1ADC98;
-	Mon,  9 Jun 2025 20:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3609B1DF738;
+	Mon,  9 Jun 2025 21:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RklBcIKR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mzdhq/p/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A1018DB34;
-	Mon,  9 Jun 2025 20:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE6D41C69;
+	Mon,  9 Jun 2025 21:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749502447; cv=none; b=KskIAca3DJAQ378Ed+d3E6QTsEvJrNSmc/Ddzhll0ZZVGKvpX9NZQSMzM+b+Rg0BtsPpVfYwcAKOiGtSTtRQfdwFKFj5FlmPtJFLv1noDKHkPD8TSvNKn47CIbvWGP+fEsKQMunI84CbtuzZ46L6CNOKf+cEJsuOzDiljUfXsp0=
+	t=1749502830; cv=none; b=UqbfmDmDJH0LVI98xeZwsTeAFTZpqyguzB/KZzJNuz2UwkWXkbl3t66aHREYyWGYRQgipmc9jhjeeA1DDd8MypqPdmJMQAulSWnZTic/ARvY2ycmJlIbObn35o29AJDQ29UMgP8nQNYkb0nC83iGJL90GQG10gKoBySTeJBHqzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749502447; c=relaxed/simple;
-	bh=P+msmKRqtD0R3+trbW8WYXnfkRFUir/DVlfAO/CXGEc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=FyXqvTGeOq00c8tFzV1jdGjkG6IPgI6AT2n5nnNoXn7HHZ1bpmcCIKRgWXSXgH6Xbu1LRkElayUNVfYGUJxNUwj+9ueirCQuk7eUyY+uhAnBa5hZBgLIug2t8h+wCteTK/V31o3ZVcn17isMSq6enr3bfpq00abMA4HoyNaeBL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RklBcIKR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 23FFFC4CEEB;
-	Mon,  9 Jun 2025 20:54:07 +0000 (UTC)
+	s=arc-20240116; t=1749502830; c=relaxed/simple;
+	bh=rb09KVoRgPYdj7QLHoMRO84NfQkj5PkMlvENQEQzbWI=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=J9ecIQYA9CziRZmKvXryrhgjd8d+yDPsCzgIkwWmX9zOnIPM02d5aIsqarFhHimuktvoCh3ifIQ6UsGfK82aTYi3EmAAHDI6U0qJa5Kl0KG7LEixqcMK7/rn2ubVDQ4hzrU8myEWmPtqeknjSPfHK7eiKX9XWwDlQx6YnIX+lLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mzdhq/p/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E586FC4CEEB;
+	Mon,  9 Jun 2025 21:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749502447;
-	bh=P+msmKRqtD0R3+trbW8WYXnfkRFUir/DVlfAO/CXGEc=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=RklBcIKR9PdrTrFZ06c+8JQKtcmJVc1yT0+PKTkLNYiO12b7QtduICDR9m+16cAkW
-	 rGmtY/knsK9VHe8Nsxf+F8vwAr4IhwXDJlkcKp2fU8FtupyU2WjUwXXlk0TY1i/afb
-	 EXPQUa7p9CftEAj867APl5cYLVsnLSunhZKGanwcdWSz3vdj2yKfjFeLYBgZBnox9R
-	 cM8kdC8fhqY8evQI+ahm96/kMWX8wuNtMEY5P4C5ODcXv324Wh1BzufGMIDLm/E4Fy
-	 KKbVtPeQigy+x0PyTYT3Talrig837+khNl3vs3QO+Y54BjkRLnvYUn/ldy+I2wgoX/
-	 YF76zbtbdrzLw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 116ABC5B552;
-	Mon,  9 Jun 2025 20:54:07 +0000 (UTC)
-From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
-Date: Mon, 09 Jun 2025 22:53:56 +0200
-Subject: [PATCH] dt: arm64: qcom: sc8280xp-blackrock: amend usb0-sbu-mux
- enable gpio
+	s=k20201202; t=1749502829;
+	bh=rb09KVoRgPYdj7QLHoMRO84NfQkj5PkMlvENQEQzbWI=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=mzdhq/p/RMyPKICk+fpJ9eilkpF/nrEslcUp1ALKCKkfXoYpS6KLl907F41xBMv6f
+	 N1QepH13c/7A+qaST6XX9eekxghPv4vWMw8KJswYcBTDDxitumeFJdefSSzCgJJx6a
+	 R0wPVE8vRsyekCgxSmbJbzB5qPVSMpyIDMLkH6hpVB1MhXoKKtv6sn+AFQ1od4ZrDQ
+	 6j4Vc0fmoAGObXjw+fNvDfIKiYKAfSOJygYtBFw6mmGAijghElyqg6dd4yHrK4RXym
+	 XkS3JdPCSx/g/gjmR72DVYyk4Sj80QQrDwACFymmg1RU12n03tDOFpL0oLOXYzCgx7
+	 cg9vZIB5qRJxw==
+From: Mark Brown <broonie@kernel.org>
+To: Srinivas Kandagatla <srini@kernel.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Luca Weiss <luca.weiss@fairphone.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org, 
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+In-Reply-To: <20250425-fp5-dp-sound-v3-0-7cb45180091b@fairphone.com>
+References: <20250425-fp5-dp-sound-v3-0-7cb45180091b@fairphone.com>
+Subject: Re: (subset) [PATCH v3 0/5] Add DisplayPort sound support for
+ Fairphone 5 smartphone
+Message-Id: <174950282564.277844.4634804513095204160.b4-ty@kernel.org>
+Date: Mon, 09 Jun 2025 22:00:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,88 +69,54 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250609-blackrock-usb0-mux-v1-1-7903c3b071e4@oldschoolsolutions.biz>
-X-B4-Tracking: v=1; b=H4sIAONJR2gC/x3MSQqAMAxA0atI1gZicUCvIi5sjBocaakI4t0tL
- t/i/we8OBUPTfKAk0u9HntElibAc79PgjpEgyFTUEk12rXnxR28YPCWcAs3mqEiZku1zXKI4el
- k1Puftt37fj0IVTVkAAAA
-X-Change-ID: 20250609-blackrock-usb0-mux-2d70ccb09b14
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Aleksandrs Vinarskis <alex.vinarskis@gmail.com>, 
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749502444; l=2173;
- i=jens.glathe@oldschoolsolutions.biz; s=20240919;
- h=from:subject:message-id;
- bh=0U1VNm6UEDUZ5+luOdhF4fqviPgQfWkNGEy/dPW1eC4=;
- b=e9Byf0rEru5w6V5DwJCO6BifuGo/PjwSHJviqRtqjj9xTZOSR/IGL6aRyqrFXKqTdZgHCDBps
- 6T/ZEP8N0TyBVghdGNSqevtKq0CuNJykE7Y9SecA+ZBTchfkzNvFIQd
-X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
- pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
-X-Endpoint-Received: by B4 Relay for
- jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
-X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Reply-To: jens.glathe@oldschoolsolutions.biz
+X-Mailer: b4 0.15-dev-c25d1
 
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+On Fri, 25 Apr 2025 10:07:24 +0200, Luca Weiss wrote:
+> Add the necessary sound card bits and some dts additions to enable sound
+> over DisplayPort-over-USB-C, e.g. to a connected TV or monitor.
+> 
+> The UCM files can be found here:
+> https://gitlab.postmarketos.org/postmarketOS/pmaports/-/tree/master/device/testing/device-fairphone-fp5/ucm
+> 
+> This series - in spirit - depends on the series enabling DisplayPort in
+> the first place, but can land pretty independently, especially the ASoC
+> bits:
+> https://lore.kernel.org/linux-arm-msm/20250312-fp5-pmic-glink-dp-v2-0-a55927749d77@fairphone.com/
+> 
+> [...]
 
-The usb0 port didn't switch to dp altmode, investigation into DSDT
-UCS0 device resulted into GPIO 100.
+Applied to
 
-Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
----
-This patch amends the enable gpio for the usb0-sbu-mux to the one
-found in the DSDT file for this box. It shows a list of GPIOs in 
-a certain order, and it has 2 buffers with conflicting values. 
-The one deviating is in the second buffer, at the place where one 
-would expect the GPIO for the select pin of USB0 (by pattern 
-application from USB1). The GPIO previously used is also there, but 
-at the end of the UCS0 buffer structure). Changing it resulted in 
-a working dp altmode functionality on usb0.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-This debug effort is a result of work / testing of the 4-lanes patch
-[1] on all available devices. Independent of it, it enables dp 
-altmode on usb0, and with it, also 4 lanes, making it even more useful.
+Thanks!
 
-[1]: https://lore.kernel.org/all/20250527-topic-4ln_dp_respin-v3-0-f9a0763ec289@oss.qualcomm.com/
----
- arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+[1/5] ASoC: dt-bindings: qcom,sm8250: Add Fairphone 5 sound card
+      (no commit info)
+[2/5] ASoC: qcom: sm8250: set card driver name from match data
+      commit: c4b79a2fbfb28308e958e4ffdd988f3cf678fe2a
+[3/5] ASoC: qcom: sm8250: add DisplayPort Jack support
+      commit: ed82808c6a0f333e51fee4e97cbe8e0189b7f354
+[4/5] ASoC: qcom: sm8250: Add Fairphone 5 soundcard compatible
+      commit: e6e8897995a9e6028563ce36c27877e5478c8571
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
-index 812251324002b50f3b48845b6c244f692d42b9b2..b8cbef0ebce76acf9d1e841e613646119dc400ff 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
-@@ -243,7 +243,7 @@ linux,cma {
- 	usb0-sbu-mux {
- 		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
- 
--		enable-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
-+		enable-gpios = <&tlmm 100 GPIO_ACTIVE_LOW>;
- 		select-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
- 
- 		pinctrl-0 = <&usb0_sbu_default>;
-@@ -1267,7 +1267,7 @@ tx-pins {
- 
- 	usb0_sbu_default: usb0-sbu-state {
- 		oe-n-pins {
--			pins = "gpio101";
-+			pins = "gpio100";
- 			function = "gpio";
- 			bias-disable;
- 			drive-strength = <16>;
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
----
-base-commit: 475c850a7fdd0915b856173186d5922899d65686
-change-id: 20250609-blackrock-usb0-mux-2d70ccb09b14
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-Best regards,
--- 
-Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
 
