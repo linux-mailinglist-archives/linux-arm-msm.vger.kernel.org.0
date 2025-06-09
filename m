@@ -1,471 +1,382 @@
-Return-Path: <linux-arm-msm+bounces-60639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6544DAD1E3D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 15:00:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B32EAD1E4A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 15:01:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1B88916A668
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 13:00:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 18D26188D506
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 13:01:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5698E257AF0;
-	Mon,  9 Jun 2025 13:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 585AC1EA7C4;
+	Mon,  9 Jun 2025 13:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dYzfyYYg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="POgJ9GQt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D478251793
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jun 2025 13:00:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AFD25392B
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jun 2025 13:00:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749474004; cv=none; b=QyxvCgAkuS2qkqmLYGjWdl8NpbSWhdlsIKU0HaFladpUI4R7DJbPqUwrSCblH0SC47WFIDO1mPt4GE71tsEBufXpdIS+cf4KctoMe4raAC7sRry6ArAH/JsU0rPUeaQf0JJL1iyyIM1ZJhYT2sndJerV9b1ByOHDf1ir2QNYEOs=
+	t=1749474060; cv=none; b=qB6BpHwDBJ/YOYO8Us1I58hXvXJKlksaCVKJGmgOIFYNtab/Hs3f7iGauBg6eI+7mkor5GzumZXoXU6OTGZyM64+V4iRQHdLscWzsXndnMhHBbwPkFcoZ3jEAa9KBm3a30e7NfRG68mgBU71Lmvs6bgsbEtbEPr0gMrpXHHtLeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749474004; c=relaxed/simple;
-	bh=IOxbquketRPZYcOdbwyuZVHrQ7TC3aistuXFVJzWzWw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uA8yW7+fSq7AFfkOhXX3bF71ml9fh1PnOE47Aht+xd5ktL6skJPaKJ8h6mEUVJhilERTYilFuY6JvhdQwfwK0+z4kzOWcvDp58xFzFzhlpb3HbGUfJqHIfzKBOj1oM+bCtgFIWhzveVR3+Ig0JXCJonPshSUPX5NXTcCZRsAVwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dYzfyYYg; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5598PQZ3001322
-	for <linux-arm-msm@vger.kernel.org>; Mon, 9 Jun 2025 13:00:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=di6vHrGN6TNqeaLXUN/IIJgI
-	V03heHngu198qZhXzWE=; b=dYzfyYYgctOPIR3H62+DzNEqfYagCsfLmj1SMOKe
-	Gh6hweShrDPRyRD5QwBs9ywCy+J45YGcdB//BFgBswyjMyKrYEqCkp3x7+B1woee
-	z+E5Nc2OwosXQGeh3peN/fZUb8Fm2OfUbHtbHlJkF3/a9Z56q3mj2kxPfZyEPVnT
-	u04j+mp3g+f38h8z9lU/HuHQ1JeO4+W8JLFbrQiPGk2Aae0zcv8FVFrCadXGi4O9
-	XFu+zxSGdOF+ZQfi1wx45Wpt8QdYvAgWiV+8VPmeqUd72RULmwMb7PAMfenwFoMw
-	4KqszTsyUbT5RmXNCFAbcD3YrlvTRaG1lAwANvBdyd6sKg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 475v2t8t6k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jun 2025 13:00:00 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-47b36edcdb1so142135761cf.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jun 2025 06:00:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749473999; x=1750078799;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+	s=arc-20240116; t=1749474060; c=relaxed/simple;
+	bh=+URPo4JGBj7DndEyMo5gm2wIJ46h7HcTeGl1dr40vvI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IUsj/9zdg1MyItWUC9svuwwbMakLkqZ0ZgqTDvbjWgTaX3XxIjuiv1oQquo7Y2PyBI7Z1We5irR9KO3n9K9mN1B7GWpiUcvI0wtIEHpUI6aRcGMC04Vfh1UVDQVIsfLzV2BG5Pj2+DqutOIqrn/Wrt1j2um5nK2A57dJbknSaOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=POgJ9GQt; arc=none smtp.client-ip=209.85.167.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-404e580bf09so919387b6e.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jun 2025 06:00:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1749474057; x=1750078857; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=di6vHrGN6TNqeaLXUN/IIJgIV03heHngu198qZhXzWE=;
-        b=dVsIE0d6eQLBDRGcvZToDGfHXX3Mzd5zyTMVO6Mv6vgUEvy9a942WaMr2TkRwHDaeQ
-         QB9kHXHD2fu5sUik3TRBKCjKAIi8sPsgVEbwVYrfixtfTB1wRU43guEP67nY/1Clqaum
-         qSZYpm8j2XWR/S6ykCNjThT4wOdFUXbdRKlliinDiAD7+rLr6ax5DZZ9ClKq2+p39BRT
-         WTMdnkAbdgJyA0vyHdEHpFalTwz6ClB2qZT50ZmxeGjJuaED42+zowmRrg3nmyRMABfB
-         zVJ8Ht+nMBlNv6iBNkK4Z6oApKWbFVOsNVfBQS2XIU5dSlSZkBy51DHXGx/aNJRFltAl
-         On6g==
-X-Forwarded-Encrypted: i=1; AJvYcCVwZ+6fk8uWsg1aVxI6t5fq0qe9J/MqgN+OVQa5rQhwaUvgCGNLm43dKxMZo3TkNZCmH5Jr5keEp2ZX09rX@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywvwe6YxCFzZ6H0Ipc7xrua9KBGENxJyk1OeYczL7CdRqfXlmne
-	u/Gmnc4nFzRWPEH9RyhAFR3PGEawnABJGra3AMpUxzlNJQS3H8/PFF88Fhi9xpfE8X3WSi4D3AV
-	+07rbdcyoPhBPwNj9N3e16xsjJpx3x+0XWDIGZotYUMizb8Er10KtTAkpGvKaak8/+8psnz0AMw
-	VB
-X-Gm-Gg: ASbGncuc1CuyPQTPlB7DeYFZduMY0ybIUD3HBz3d+oQmKkedQnSmnDdzRZKf8A9RJPw
-	fACKJNxQENZt1YwLVFbuNuS9f0YLptqA2ap6VkN7Z+Bbf2iFp2EH4cv3G2/zYyPZ5MDa/osmpVf
-	kGyGAUYeFEDGG9b4mJ4YnkdbDmKd0ihK+MwhbjAUZFVTTazdkniGQlkrAFpJRqiBQwTzzN+vNrk
-	V4QM9C/UNOlompZtGYoibHS9AtyM8fnFgWsx4uxFBztB/wrxCPrlyjMOwJ/O6bq2YztqCMYTAtt
-	2LKQizGEop//HdxZq1Tg4OoANby7LOsRfBByLiGwc3KjImnkBp244sOClO4bFq+B5T7jvbcplDu
-	pW/XsLCbt/g==
-X-Received: by 2002:a05:6214:29ef:b0:6fa:fea5:4d7c with SMTP id 6a1803df08f44-6fb09057dbcmr173493536d6.40.1749473987793;
-        Mon, 09 Jun 2025 05:59:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGr5yuu5mauyWCNTwmDa/j65qV8oygF697meHKN70F4r4H3UBpOaJwgybMfv2NYe55o4bgsQg==
-X-Received: by 2002:a05:620a:40d0:b0:7cf:159:9aea with SMTP id af79cd13be357-7d2298615a4mr2047449885a.2.1749473976281;
-        Mon, 09 Jun 2025 05:59:36 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5536773896dsm1142872e87.254.2025.06.09.05.59.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jun 2025 05:59:35 -0700 (PDT)
-Date: Mon, 9 Jun 2025 15:59:33 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Yongxing Mou <quic_yongmou@quicinc.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: Re: [PATCH v2 03/38] drm/msm/dp: break up dp_display_enable into two
- parts
-Message-ID: <gwib6zcvkxsxcz222cno5jbvsnt2abdoqfnymlxq7e6c6wdfvn@nlplodnco2sw>
-References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
- <20250609-msm-dp-mst-v2-3-a54d8902a23d@quicinc.com>
+        bh=mYtTd8X3ioZoP4ZqCiRHyNkyAopif3v2teL9bFi+ppk=;
+        b=POgJ9GQtiCyJg1MeCIdhKRsxIJQUedNqxfcn+K8n9tUOgoV5bfDj1GjFUE7RSKIAi2
+         0PnK3CGURLMXrOHvSi8TA+q1i+TuK9JgtBiwq9XTsk65ggABs/z9CrBPn4nsWLd8LTcQ
+         nEPXUF5Co/51VGXMqxFGBqE7FEGwlMK6geDB/DXh/zVkA4pf8uBOKqQ2ArfvxYFyheTZ
+         gSHSmZkzxiKeXPgYUoMXjLdp225PEC44bqgPk6HsPYA3TXfogO8Vrc96wrREG3LLv9Dy
+         Xa8re29o6cb6Z2R4g6IdJ+w4n+8wXStw5x55v74RhhNG+z4BOmiWydi8xxm5L7zRdHuJ
+         AtfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749474057; x=1750078857;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mYtTd8X3ioZoP4ZqCiRHyNkyAopif3v2teL9bFi+ppk=;
+        b=JUM6d6GOfNUz4sAfd8hvjS11uMfup67Ew+S7ARaIk9X7Epw1P/vQCiA1roxWNDlX2D
+         xsy+zSX6yR7wGHtl7l+2Ncc0flyL8XjEcy2s6UYLhv5lSUu3WtSjWSTkaZQjQaeR4+m+
+         F7vsSisbEVraQPux3DcqKrs9hZ02j9EpbOHh79W6RI/k49EbVNr2fCOZ9S19SQPeQ333
+         CjmtE7E5BZgqaU29fjEMqJNb4qeO7DY7cBgGaqZeOzuMEVC1tHs13e+KpYPEG84xP53N
+         rTDAOZHyO1V3lRz67GIbzlxeSdmcU1kwf3M+CLb+DI44kKDx2q2q+vxPC+5cQdpvM42/
+         +eQw==
+X-Forwarded-Encrypted: i=1; AJvYcCXIiUx8jonkcPEiFtyTSZtuAuvUGl10IIBXmW2fHWrjKEERysCSQ2wNa7sBtFIWxrYZRDMMNtmRwVODMaic@vger.kernel.org
+X-Gm-Message-State: AOJu0YxKvYGbaoqH3PPASYWjTIY0YJUMPOSr/X3i1kowlZdLeqNs/Xa2
+	l+gn4JOtH5wEJadfz1IPexiySwJBz+evYhJUxyt4EPIIxCL8noKjg665LMHGS7HGNhRQkP8My0E
+	8r2kFCmeIEMxOgHgskip3EotMRu0OncQvt3dIXH1SIg==
+X-Gm-Gg: ASbGnctjS9bth+wk3rsphM3hJ9Zxe+gPmEd/YN0OzZpxqw7wwOPG8t/aMgJzcWKu+ZP
+	XST7ir/ehumdWWJ2oPffW+YLp8foJYf4D3d5ObKqsx/BPn153HnI2EL9QCEHPr6sQ/w8jhtj2eJ
+	BNGjkUMUq3VzZRZPp8CUbbQrtJ//cCLUV0S4F2fE/zoP9T
+X-Google-Smtp-Source: AGHT+IEx5dBBYalreZpgcAi7SiMqb9bdO3lo6yhdnudOtUBVFZ+AX4nRBzDMZ/8OpWtkY6MrxyYR2ncP1ceSLRn0V4Q=
+X-Received: by 2002:a05:6808:5086:b0:409:f8e:727f with SMTP id
+ 5614622812f47-4090f8e7a1cmr6634453b6e.3.1749474057017; Mon, 09 Jun 2025
+ 06:00:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250609-msm-dp-mst-v2-3-a54d8902a23d@quicinc.com>
-X-Proofpoint-GUID: lR3xSHNdU4vWR1TB_N27B_NHR20DAKdk
-X-Authority-Analysis: v=2.4 cv=GoxC+l1C c=1 sm=1 tr=0 ts=6846dad0 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8 a=873dXA8KE1yyv6hqAaMA:9 a=CjuIK1q_8ugA:10
- a=a_PwQJl-kcHnX1M80qC6:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: lR3xSHNdU4vWR1TB_N27B_NHR20DAKdk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA5MDA5NSBTYWx0ZWRfX/kFpBMqGMcUE
- MKKoPViBCv50lxQtx3c2Gj+yMYtFS7vsKB2Jt76PHMGHI6VbNQErSJ2tFQWh4ERaUfQNz4STS1F
- tApG7Ys50j12lMaDaQUnbMIAhg4s3+gMwiyzyD50bAFXs7Y+toABuZGKuHSqLa6Lo0TYZzXGf49
- SbnL6i7yi3+4qGQgkmo9aoMLECgzzmTL9J0XVJfaB6mvjJTORgKbKea9IsRO6PPPGciS55HWsle
- /GsAEFfOxLk+ybJtH+EOrVfIjOr1WkTfoflfPYyE7NIt3mn/RdOUpeQMLlBBRCJoVRj7/Y+9rtx
- 1qVfTP257qz/Gb8pQoQkPkjtTGMVXwfT+lUQC0tGPR0c91RpdeMLygZUd1dONIwyJZA6B7929Gc
- sxEW5/9vD1Vz5h0EnrgYTmQzmHeSp/sx7fYQSeTlci9F6PAtgBrqOkfrH01hwH8UokB6LmDJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-09_05,2025-06-05_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 adultscore=0 impostorscore=0 malwarescore=0 mlxscore=0
- suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506090095
+References: <20250605-fix-use-after-free-v1-1-a70d23bff248@oss.qualcomm.com>
+In-Reply-To: <20250605-fix-use-after-free-v1-1-a70d23bff248@oss.qualcomm.com>
+From: Jens Wiklander <jens.wiklander@linaro.org>
+Date: Mon, 9 Jun 2025 15:00:45 +0200
+X-Gm-Features: AX0GCFs0onTtmhC4kVNMBNJ2gfnQX-I7Oo5EtaFJz3aIdTdjQHDdvJiA4KNJJYM
+Message-ID: <CAHUa44EyGXswbYLgdrfH_cMSyadgVUAJDGAMdsPXQVN7V7Nhsw@mail.gmail.com>
+Subject: Re: [PATCH] tee: optee: prevent use-after-free when the client exits
+ before the supplicant
+To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+Cc: Sumit Garg <sumit.garg@kernel.org>, Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, 
+	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 09, 2025 at 08:21:22PM +0800, Yongxing Mou wrote:
-> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> 
-> dp_display_enable() currently re-trains the link if needed
-> and then enables the pixel clock, programs the controller to
-> start sending the pixel stream. Splite these two parts into
-> prepare/enable APIs, to support MST bridges_enable inserte
+Hi Amir,
 
-typos
-
-> the MST payloads funcs between enable stream_clks and programe
-> register.
-> 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+On Fri, Jun 6, 2025 at 4:01=E2=80=AFAM Amirreza Zarrabi
+<amirreza.zarrabi@oss.qualcomm.com> wrote:
+>
+> Commit 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop") made the
+> client wait as killable so it can be interrupted during shutdown or
+> after a supplicant crash. This changes the original lifetime expectations=
+:
+> the client task can now terminate while the supplicant is still processin=
+g
+> its request.
+>
+> If the client exits first it removes the request from its queue and
+> kfree()s it, while the request ID remains in supp->idr. A subsequent
+> lookup on the supplicant path then dereferences freed memory, leading to
+> a use-after-free.
+>
+> Serialise access to the request with supp->mutex:
+>
+>   * Hold supp->mutex in optee_supp_recv() and optee_supp_send() while
+>     looking up and touching the request.
+>   * Let optee_supp_thrd_req() notice that the client has terminated and
+>     signal optee_supp_send() accordingly.
+>
+> With these changes the request cannot be freed while the supplicant still
+> has a reference, eliminating the race.
+>
+> Fixes: 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop")
+> Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
 > ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c    | 57 +++++++++++++--------
->  drivers/gpu/drm/msm/dp/dp_ctrl.h    |  3 +-
->  drivers/gpu/drm/msm/dp/dp_display.c | 99 +++++++++++++++++++++++++++----------
->  drivers/gpu/drm/msm/dp/dp_display.h |  1 +
->  4 files changed, 111 insertions(+), 49 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index a50bfafbb4ea85c114c958ea0ed24362a1f23136..1e13ca81b0155a37a4ed7a2e83c918293d703a37 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1980,40 +1980,61 @@ static int msm_dp_ctrl_link_retrain(struct msm_dp_ctrl_private *ctrl)
->  	return msm_dp_ctrl_setup_main_link(ctrl, &training_step);
->  }
->  
-> -int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train)
-> +int msm_dp_ctrl_prepare_stream_on(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train)
+>  drivers/tee/optee/supp.c | 114 ++++++++++++++++++++++++++++++++---------=
+------
+>  1 file changed, 77 insertions(+), 37 deletions(-)
+>
+> diff --git a/drivers/tee/optee/supp.c b/drivers/tee/optee/supp.c
+> index d0f397c90242..62c9c75f48a6 100644
+> --- a/drivers/tee/optee/supp.c
+> +++ b/drivers/tee/optee/supp.c
+> @@ -9,6 +9,7 @@
+>
+>  struct optee_supp_req {
+>         struct list_head link;
+> +       int id;
+>
+>         bool in_queue;
+>         u32 func;
+> @@ -19,6 +20,9 @@ struct optee_supp_req {
+>         struct completion c;
+>  };
+>
+> +/* It is temporary request used for invalid pending request in supp->idr=
+. */
+> +static struct optee_supp_req invalid_req;
+
+Prefer avoiding global variables where possible.
+
+> +
+>  void optee_supp_init(struct optee_supp *supp)
 >  {
->  	int ret = 0;
-> -	bool mainlink_ready = false;
->  	struct msm_dp_ctrl_private *ctrl;
-> -	unsigned long pixel_rate;
-> -	unsigned long pixel_rate_orig;
->  
->  	if (!msm_dp_ctrl)
->  		return -EINVAL;
->  
->  	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
->  
-> -	pixel_rate = pixel_rate_orig = ctrl->panel->msm_dp_mode.drm_mode.clock;
+>         memset(supp, 0, sizeof(*supp));
+> @@ -102,6 +106,7 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u32 =
+func, size_t num_params,
+>         mutex_lock(&supp->mutex);
+>         list_add_tail(&req->link, &supp->reqs);
+>         req->in_queue =3D true;
+> +       req->id =3D -1;
+>         mutex_unlock(&supp->mutex);
+>
+>         /* Tell an eventual waiter there's a new request */
+> @@ -117,21 +122,40 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u3=
+2 func, size_t num_params,
+>         if (wait_for_completion_killable(&req->c)) {
+>                 mutex_lock(&supp->mutex);
+>                 if (req->in_queue) {
+> +                       /* Supplicant has not seen this request yet. */
+>                         list_del(&req->link);
+>                         req->in_queue =3D false;
+> +
+> +                       ret =3D TEEC_ERROR_COMMUNICATION;
+> +               } else if (req->id  =3D=3D -1) {
+> +                       /*
+> +                        * Supplicant has processed this request. Ignore =
+the
+> +                        * kill signal for now and submit the result.
+> +                        */
+> +                       ret =3D req->ret;
+> +               } else {
+> +                       /*
+> +                        * Supplicant is in the middle of processing this
+> +                        * request. Replace req with invalid_req so that =
+the ID
+> +                        * remains busy, causing optee_supp_send() to fai=
+l on
+> +                        * the next call to supp_pop_req() with this ID.
+> +                        */
+> +                       idr_replace(&supp->idr, &invalid_req, req->id);
+> +                       ret =3D TEEC_ERROR_COMMUNICATION;
+>                 }
+> +
+> +               kfree(req);
+>                 mutex_unlock(&supp->mutex);
+> -               req->ret =3D TEEC_ERROR_COMMUNICATION;
+> +       } else {
+> +               ret =3D req->ret;
+> +               kfree(req);
+>         }
+>
+> -       ret =3D req->ret;
+> -       kfree(req);
 > -
-> -	if (msm_dp_ctrl->wide_bus_en || ctrl->panel->msm_dp_mode.out_fmt_is_yuv_420)
-> -		pixel_rate >>= 1;
-> -
-> -	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%lu\n",
-> -		ctrl->link->link_params.rate,
-> -		ctrl->link->link_params.num_lanes, pixel_rate);
-> +	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d\n",
-> +		   ctrl->link->link_params.rate,
-> +		   ctrl->link->link_params.num_lanes);
-
-Please don't mix whitespace changes with the actual code changes. It
-makes reviewing the patch much harder.
-
->  
->  	drm_dbg_dp(ctrl->drm_dev,
-> -		"core_clk_on=%d link_clk_on=%d stream_clk_on=%d\n",
-> -		ctrl->core_clks_on, ctrl->link_clks_on, ctrl->stream_clks_on);
-> +		   "core_clk_on=%d link_clk_on=%d stream_clk_on=%d\n",
-> +		   ctrl->core_clks_on, ctrl->link_clks_on, ctrl->stream_clks_on);
->  
->  	if (!ctrl->link_clks_on) { /* link clk is off */
->  		ret = msm_dp_ctrl_enable_mainlink_clocks(ctrl);
->  		if (ret) {
->  			DRM_ERROR("Failed to start link clocks. ret=%d\n", ret);
-> -			goto end;
-> +			return ret;
->  		}
->  	}
->  
-> +	if (force_link_train || !msm_dp_ctrl_channel_eq_ok(ctrl))
-> +		msm_dp_ctrl_link_retrain(ctrl);
-> +
-> +	/* stop txing train pattern to end link training */
-> +	msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
-> +
-> +	return ret;
-> +}
-> +
-> +int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl)
-> +{
-> +	int ret = 0;
-> +	bool mainlink_ready = false;
-> +	struct msm_dp_ctrl_private *ctrl;
-> +	unsigned long pixel_rate;
-> +	unsigned long pixel_rate_orig;
-> +
-> +	if (!msm_dp_ctrl)
-> +		return -EINVAL;
-> +
-> +	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
-> +
-> +	pixel_rate = pixel_rate_orig = ctrl->panel->msm_dp_mode.drm_mode.clock;
-> +
-> +	if (msm_dp_ctrl->wide_bus_en || ctrl->panel->msm_dp_mode.out_fmt_is_yuv_420)
-> +		pixel_rate >>= 1;
-> +
-> +	drm_dbg_dp(ctrl->drm_dev, "pixel_rate=%lu\n", pixel_rate);
-> +
->  	ret = clk_set_rate(ctrl->pixel_clk, pixel_rate * 1000);
->  	if (ret) {
->  		DRM_ERROR("Failed to set pixel clock rate. ret=%d\n", ret);
-> @@ -2031,12 +2052,6 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train
->  		ctrl->stream_clks_on = true;
->  	}
->  
-> -	if (force_link_train || !msm_dp_ctrl_channel_eq_ok(ctrl))
-> -		msm_dp_ctrl_link_retrain(ctrl);
-> -
-> -	/* stop txing train pattern to end link training */
-> -	msm_dp_ctrl_clear_training_pattern(ctrl, DP_PHY_DPRX);
-> -
->  	/*
->  	 * Set up transfer unit values and set controller state to send
->  	 * video.
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> index b7abfedbf5749c25877a0b8ba3af3d8ed4b23d67..42745c912adbad7221c78f5cecefa730bfda1e75 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> @@ -18,7 +18,8 @@ struct msm_dp_ctrl {
->  struct phy;
->  
->  int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl);
-> -int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train);
-> +int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl);
-> +int msm_dp_ctrl_prepare_stream_on(struct msm_dp_ctrl *dp_ctrl, bool force_link_train);
->  void msm_dp_ctrl_off_link_stream(struct msm_dp_ctrl *msm_dp_ctrl);
->  void msm_dp_ctrl_off_link(struct msm_dp_ctrl *msm_dp_ctrl);
->  void msm_dp_ctrl_off(struct msm_dp_ctrl *msm_dp_ctrl);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 9d2db9cbd2552470a36a63f70f517c35436f7280..5ac5dcf35b789f2bda052a2c17aae20aa48d8e18 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -831,7 +831,37 @@ static int msm_dp_display_set_mode(struct msm_dp *msm_dp_display,
->  	return 0;
+>         return ret;
 >  }
->  
-> -static int msm_dp_display_enable(struct msm_dp_display_private *dp, bool force_link_train)
-> +static int msm_dp_display_prepare(struct msm_dp_display_private *dp)
-> +{
-> +	int rc = 0;
-> +	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
-> +	bool force_link_train = false;
-> +
-> +	drm_dbg_dp(dp->drm_dev, "sink_count=%d\n", dp->link->sink_count);
-> +	if (msm_dp_display->prepared) {
-> +		drm_dbg_dp(dp->drm_dev, "Link already setup, return\n");
-> +		return 0;
-> +	}
-
-How can it be prepared here? It is called at the beginning of the
-.atomic_enable() only, so there is no way this can be true.
-
-> +
-> +	rc = pm_runtime_resume_and_get(&msm_dp_display->pdev->dev);
-> +	if (rc) {
-> +		DRM_ERROR("failed to pm_runtime_resume\n");
-> +		return rc;
-> +	}
-> +
-> +	if (dp->hpd_state == ST_CONNECTED && !msm_dp_display->power_on) {
-> +		msm_dp_display_host_phy_init(dp);
-> +		force_link_train = true;
-> +	}
-> +
-> +	rc = msm_dp_ctrl_prepare_stream_on(dp->ctrl, force_link_train);
-> +	if (!rc)
-> +		msm_dp_display->prepared = true;
-> +
-> +	return rc;
-> +}
-> +
-> +static int msm_dp_display_enable(struct msm_dp_display_private *dp)
+>
+>  static struct optee_supp_req  *supp_pop_entry(struct optee_supp *supp,
+> -                                             int num_params, int *id)
+> +                                             int num_params)
 >  {
->  	int rc = 0;
->  	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
-> @@ -842,7 +872,7 @@ static int msm_dp_display_enable(struct msm_dp_display_private *dp, bool force_l
->  		return 0;
->  	}
->  
-> -	rc = msm_dp_ctrl_on_stream(dp->ctrl, force_link_train);
-> +	rc = msm_dp_ctrl_on_stream(dp->ctrl);
->  	if (!rc)
->  		msm_dp_display->power_on = true;
->  
-> @@ -872,13 +902,10 @@ static int msm_dp_display_post_enable(struct msm_dp *msm_dp_display)
->  	return 0;
->  }
->  
-> -static int msm_dp_display_disable(struct msm_dp_display_private *dp)
-> +static void msm_dp_display_audio_notify_disable(struct msm_dp_display_private *dp)
->  {
->  	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
->  
-> -	if (!msm_dp_display->power_on)
-> -		return 0;
-> -
->  	/* wait only if audio was enabled */
->  	if (msm_dp_display->audio_enabled) {
->  		/* signal the disconnect event */
-> @@ -889,6 +916,14 @@ static int msm_dp_display_disable(struct msm_dp_display_private *dp)
->  	}
->  
->  	msm_dp_display->audio_enabled = false;
-> +}
+>         struct optee_supp_req *req;
+>
+> @@ -153,8 +177,8 @@ static struct optee_supp_req  *supp_pop_entry(struct =
+optee_supp *supp,
+>                 return ERR_PTR(-EINVAL);
+>         }
+>
+> -       *id =3D idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
+> -       if (*id < 0)
+> +       req->id =3D idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
+> +       if (req->id < 0)
+>                 return ERR_PTR(-ENOMEM);
+>
+>         list_del(&req->link);
+> @@ -214,7 +238,6 @@ int optee_supp_recv(struct tee_context *ctx, u32 *fun=
+c, u32 *num_params,
+>         struct optee *optee =3D tee_get_drvdata(teedev);
+>         struct optee_supp *supp =3D &optee->supp;
+>         struct optee_supp_req *req =3D NULL;
+> -       int id;
+>         size_t num_meta;
+>         int rc;
+>
+> @@ -223,16 +246,45 @@ int optee_supp_recv(struct tee_context *ctx, u32 *f=
+unc, u32 *num_params,
+>                 return rc;
+>
+>         while (true) {
+> -               mutex_lock(&supp->mutex);
+> -               req =3D supp_pop_entry(supp, *num_params - num_meta, &id)=
+;
+> -               mutex_unlock(&supp->mutex);
+> +               scoped_guard(mutex, &supp->mutex) {
+> +                       req =3D supp_pop_entry(supp, *num_params - num_me=
+ta);
+> +                       if (!req)
+> +                               goto wait_for_request;
+>
+> -               if (req) {
+>                         if (IS_ERR(req))
+>                                 return PTR_ERR(req);
+> -                       break;
 > +
-> +static int msm_dp_display_disable(struct msm_dp_display_private *dp)
-> +{
-> +	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
+> +                       /*
+> +                        * Popped a request: process it while holding the=
+ lock,
+> +                        * so that optee_supp_thrd_req() doesn't pull the
+> +                        * request out from under us.
+> +                        */
 > +
-> +	if (!msm_dp_display->power_on)
-> +		return 0;
->  
->  	if (dp->link->sink_count == 0) {
->  		/*
-> @@ -1506,9 +1541,8 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
->  	struct msm_dp_bridge *msm_dp_bridge = to_dp_bridge(drm_bridge);
->  	struct msm_dp *dp = msm_dp_bridge->msm_dp_display;
->  	int rc = 0;
+> +                       if (num_meta) {
+> +                               /*
+> +                                * tee-supplicant support meta parameters=
+ ->
+> +                                * requests can be processed asynchronous=
+ly.
+> +                                */
+> +                               param->attr =3D
+> +                                       TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_I=
+NOUT |
+> +                                       TEE_IOCTL_PARAM_ATTR_META;
+> +                               param->u.value.a =3D req->id;
+> +                               param->u.value.b =3D 0;
+> +                               param->u.value.c =3D 0;
+> +                       } else {
+> +                               supp->req_id =3D req->id;
+> +                       }
 > +
->  	struct msm_dp_display_private *msm_dp_display;
-> -	u32 hpd_state;
-> -	bool force_link_train = false;
->  
->  	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
->  
-> @@ -1516,29 +1550,23 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
->  		msm_dp_hpd_plug_handle(msm_dp_display, 0);
->  
->  	mutex_lock(&msm_dp_display->event_mutex);
-> -	if (pm_runtime_resume_and_get(&dp->pdev->dev)) {
-> -		DRM_ERROR("failed to pm_runtime_resume\n");
-> -		mutex_unlock(&msm_dp_display->event_mutex);
-> -		return;
-> -	}
->  
-> -	hpd_state = msm_dp_display->hpd_state;
-> -	if (hpd_state == ST_DISCONNECT_PENDING) {
-> +	rc = msm_dp_display_prepare(msm_dp_display);
-> +	if (rc) {
-> +		DRM_ERROR("DP display prepare failed, rc=%d\n", rc);
->  		mutex_unlock(&msm_dp_display->event_mutex);
->  		return;
->  	}
->  
-> -	if (hpd_state == ST_CONNECTED && !dp->power_on) {
-> -		msm_dp_display_host_phy_init(msm_dp_display);
-> -		force_link_train = true;
-> -	}
-> -
-> -	msm_dp_display_enable(msm_dp_display, force_link_train);
-> -
-> -	rc = msm_dp_display_post_enable(dp);
-> -	if (rc) {
-> -		DRM_ERROR("DP display post enable failed, rc=%d\n", rc);
-> -		msm_dp_display_disable(msm_dp_display);
-> +	if (dp->prepared) {
-> +		rc = msm_dp_display_enable(msm_dp_display);
-> +		if (rc)
-> +			DRM_ERROR("DP display enable failed, rc=%d\n", rc);
-> +		rc = msm_dp_display_post_enable(dp);
-> +		if (rc) {
-> +			DRM_ERROR("DP display post enable failed, rc=%d\n", rc);
-> +			msm_dp_display_disable(msm_dp_display);
-> +		}
->  	}
->  
->  	/* completed connection */
-> @@ -1560,6 +1588,20 @@ void msm_dp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
->  	msm_dp_ctrl_push_idle(msm_dp_display->ctrl);
->  }
->  
-> +static void msm_dp_display_unprepare(struct msm_dp_display_private *dp)
-> +{
-> +	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
-> +
-> +	if (!msm_dp_display->prepared) {
-> +		drm_dbg_dp(dp->drm_dev, "Link already setup, return\n");
-> +		return;
-> +	}
+> +                       *func =3D req->func;
+> +                       *num_params =3D req->num_params + num_meta;
+> +                       memcpy(param + num_meta, req->param,
+> +                              sizeof(struct tee_param) * req->num_params=
+);
 
-Why/ how is it possible?
+This is the point at which this function must break out of the loop
+and return the request, or it will be lost.
 
+Cheers,
+Jens
+
+>                 }
+>
+> +               /* Check for the next request in the queue. */
+> +               continue;
 > +
-> +	pm_runtime_put_sync(&msm_dp_display->pdev->dev);
-> +
-> +	msm_dp_display->prepared = false;
-> +}
-> +
->  void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
->  				       struct drm_atomic_state *state)
->  {
-> @@ -1580,6 +1622,8 @@ void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
->  		drm_dbg_dp(dp->drm_dev, "type=%d wrong hpd_state=%d\n",
->  			   dp->connector_type, hpd_state);
->  
-> +	msm_dp_display_audio_notify_disable(msm_dp_display);
-> +
->  	msm_dp_display_disable(msm_dp_display);
->  
->  	hpd_state =  msm_dp_display->hpd_state;
-> @@ -1588,9 +1632,10 @@ void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
->  		msm_dp_display->hpd_state = ST_DISCONNECTED;
->  	}
->  
-> +	msm_dp_display_unprepare(msm_dp_display);
-> +
->  	drm_dbg_dp(dp->drm_dev, "type=%d Done\n", dp->connector_type);
->  
-> -	pm_runtime_put_sync(&dp->pdev->dev);
->  	mutex_unlock(&msm_dp_display->event_mutex);
+> +wait_for_request:
+>                 /*
+>                  * If we didn't get a request we'll block in
+>                  * wait_for_completion() to avoid needless spinning.
+> @@ -245,27 +297,6 @@ int optee_supp_recv(struct tee_context *ctx, u32 *fu=
+nc, u32 *num_params,
+>                         return -ERESTARTSYS;
+>         }
+>
+> -       if (num_meta) {
+> -               /*
+> -                * tee-supplicant support meta parameters -> requsts can =
+be
+> -                * processed asynchronously.
+> -                */
+> -               param->attr =3D TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INOUT |
+> -                             TEE_IOCTL_PARAM_ATTR_META;
+> -               param->u.value.a =3D id;
+> -               param->u.value.b =3D 0;
+> -               param->u.value.c =3D 0;
+> -       } else {
+> -               mutex_lock(&supp->mutex);
+> -               supp->req_id =3D id;
+> -               mutex_unlock(&supp->mutex);
+> -       }
+> -
+> -       *func =3D req->func;
+> -       *num_params =3D req->num_params + num_meta;
+> -       memcpy(param + num_meta, req->param,
+> -              sizeof(struct tee_param) * req->num_params);
+> -
+>         return 0;
 >  }
->  
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> index cc6e2cab36e9c0b1527ff292e547cbb4d69fd95c..2394840e9f28e136705004c3e6af93fbe13c33c5 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-> @@ -19,6 +19,7 @@ struct msm_dp {
->  	bool link_ready;
->  	bool audio_enabled;
->  	bool power_on;
-> +	bool prepared;
->  	unsigned int connector_type;
->  	bool is_edp;
->  	bool internal_hpd;
-> 
-> -- 
-> 2.34.1
-> 
-
--- 
-With best wishes
-Dmitry
+>
+> @@ -297,12 +328,21 @@ static struct optee_supp_req *supp_pop_req(struct o=
+ptee_supp *supp,
+>         if (!req)
+>                 return ERR_PTR(-ENOENT);
+>
+> +       /* optee_supp_thrd_req() already returned to optee. */
+> +       if (req =3D=3D &invalid_req) {
+> +               req =3D ERR_PTR(-ENOENT);
+> +               goto failed_req;
+> +       }
+> +
+>         if ((num_params - nm) !=3D req->num_params)
+>                 return ERR_PTR(-EINVAL);
+>
+> +       req->id =3D -1;
+> +       *num_meta =3D nm;
+> +failed_req:
+>         idr_remove(&supp->idr, id);
+>         supp->req_id =3D -1;
+> -       *num_meta =3D nm;
+> +
+>
+>         return req;
+>  }
+> @@ -328,9 +368,8 @@ int optee_supp_send(struct tee_context *ctx, u32 ret,=
+ u32 num_params,
+>
+>         mutex_lock(&supp->mutex);
+>         req =3D supp_pop_req(supp, num_params, param, &num_meta);
+> -       mutex_unlock(&supp->mutex);
+> -
+>         if (IS_ERR(req)) {
+> +               mutex_unlock(&supp->mutex);
+>                 /* Something is wrong, let supplicant restart. */
+>                 return PTR_ERR(req);
+>         }
+> @@ -358,6 +397,7 @@ int optee_supp_send(struct tee_context *ctx, u32 ret,=
+ u32 num_params,
+>
+>         /* Let the requesting thread continue */
+>         complete(&req->c);
+> +       mutex_unlock(&supp->mutex);
+>
+>         return 0;
+>  }
+>
+> ---
+> base-commit: 3be1a7a31fbda82f3604b6c31e4f390110de1b46
+> change-id: 20250604-fix-use-after-free-8ff1b5d5d774
+>
+> Best regards,
+> --
+> Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+>
 
