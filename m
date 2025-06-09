@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-60647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D86AAD1F18
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 15:42:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FE33AD1F1A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 15:42:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C581C16AF7C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 13:42:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CEE9E16AE96
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 13:42:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A23025CC44;
-	Mon,  9 Jun 2025 13:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B62B525D1EF;
+	Mon,  9 Jun 2025 13:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FXy51+m8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lUFx4Ao9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24AA25A631;
-	Mon,  9 Jun 2025 13:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAB425A65A;
+	Mon,  9 Jun 2025 13:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476444; cv=none; b=nY83lLxWURxtA6ppaYilos64LyR3IjPXoZrhUTPKsdbi/gK+RoptKMryC9RKhHR2NnzMGEF8xDA1Q909Y+5ZRgwvwd42u4v2i6P1wueNU4gYSnGZqU0HkST97tTQzikctqf4l5+v74Pu/hforJEOZ0dQT2+q9Ye5SGrLiuPxtJI=
+	t=1749476448; cv=none; b=AwNm2jpGCmiJw3GlLJYAYrdPh6QMMTL/b9pj63ovNz66KaO7zJoUOI27kCCrQXssujr6itsPy0VQ9KNTgGDXVS/Pmat0t8UadZ2XObsM3fFLGlFH5o5LKVQgp1+GDU88F9Q+U7B7KlDAItmuQj4PDLCKuU6xwp3Qcd2WaP0Y0/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476444; c=relaxed/simple;
-	bh=kDyUA8mgFEs1qSG6t7cqKN865VNbzZWG01Qzykv2IOw=;
+	s=arc-20240116; t=1749476448; c=relaxed/simple;
+	bh=PWNpIUfACgNMqjyCpMvNLYXJP3ujq/QCOWwkCMkHvLk=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=QJ8D+aK7RVHO0XZTfDewKTL/u0zjOQO42MoWVYOFkGlr0sw7j4IWx4x0udzHFkwmFZ/YXUM5WFq4ic9veHMRTr4OfJGmOTJ8jEvqBg4xe+gsplYumkmMRGnpe9nuYShK/GrEnHLrhh+7s56TV6C8ajKR1qKgRAb8HXKK3//78aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FXy51+m8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E1BC4CEEB;
-	Mon,  9 Jun 2025 13:40:41 +0000 (UTC)
+	 MIME-Version:Content-Type; b=VRhS0vLuxjhjWioxHccum+1Q1I8X+WFK75cyc5ZjV1ISQlO6kQoyBBlSMuC7e1hlT/vshDhsw6PJyoj6yCesw0jyiFR4ooFSv5rwF+DSGNhRfRUVz2xsWZQQnOvwGHojM6OeSE2Fv+AbdaD9GqlIhiRGSuxAoAWKnY++vWuSgsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lUFx4Ao9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9F3C4CEEB;
+	Mon,  9 Jun 2025 13:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476443;
-	bh=kDyUA8mgFEs1qSG6t7cqKN865VNbzZWG01Qzykv2IOw=;
+	s=k20201202; t=1749476448;
+	bh=PWNpIUfACgNMqjyCpMvNLYXJP3ujq/QCOWwkCMkHvLk=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=FXy51+m8pZt4w89BebUTcP9U19ZzKxvCdhb1w2p14AnbMYOMEOxbUvVGzQUkvq8HM
-	 ggyLoTdZpiCNtvJ8qG1UOaXYqd4cYldoWw3KK12EqnySp5mEp9PKZUJlp1tiMOWK5H
-	 NTTkZkDpdHBb2WdQKDsc5n2gtJUuHjNpQB4vJZcPi11ayoUXuH5Vy8mce3P9D4W62E
-	 2Nz9KOdXGerPIuZAB6BQbE3d5p7NlWqu78RBbjbYX1jzgRqNVe0Snrn5T6/IrTGJF0
-	 6s9BGQYlaxV9aZ2eVdVddEKZozebP6kljK87oHo1zaAp3MUUaKEO1vPe61r+IEE4a4
-	 6UngyMWeqzICQ==
+	b=lUFx4Ao9NaOycYVdbGZ5Xy1c+6vjqNNzhdDlEg1Il1qHQFlEDgX8pe+2yoOR2Y4od
+	 gVo6zDq7jHZm0HA7RkmYHAQ2bXAfRYAsaNqax36uhk923N580AubfL+h5sOhUUAKJw
+	 YcJmK93tYas3qBgq4l0j6sK1sG7kVg22nIMvMnZwaUXMInoc1E0XucmLt2m82Lg+68
+	 SNQaaa5moGyE8OqRbGlUcBaHv9JpiNDegJB2R6wW1CtVzTUHn3/sFMoQLIQWpCpAgt
+	 EB0Iko69IC+vPMHRMkTCaf7qzR+uCKD3FgFt1+7GSYkOb5cSCJ81aiE8u6A4JFSf2J
+	 eP9XHH0D0sHlA==
 From: Mark Brown <broonie@kernel.org>
 To: Gabor Juhos <j4g8y7@gmail.com>
-Cc: Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Md Sadre Alam <quic_mdalam@quicinc.com>, 
+Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
  Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- linux-spi@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20250525-qpic-snand-nandc_step_size-v1-1-6039e9bfe1c6@gmail.com>
-References: <20250525-qpic-snand-nandc_step_size-v1-1-6039e9bfe1c6@gmail.com>
-Subject: Re: [PATCH] spi: spi-qpic-snand: use NANDC_STEP_SIZE consistently
-Message-Id: <174947644168.127013.16924191452084129544.b4-ty@kernel.org>
-Date: Mon, 09 Jun 2025 14:40:41 +0100
+ linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20250529-qpic-snand-remove-qpic_snand_op-v1-1-6e42b772d748@gmail.com>
+References: <20250529-qpic-snand-remove-qpic_snand_op-v1-1-6e42b772d748@gmail.com>
+Subject: Re: [PATCH] spi: spi-qpic-snand: remove 'qpic_snand_op' structure
+Message-Id: <174947644664.127013.16116071467167037102.b4-ty@kernel.org>
+Date: Mon, 09 Jun 2025 14:40:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,13 +63,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.15-dev-c25d1
 
-On Sun, 25 May 2025 16:15:25 +0200, Gabor Juhos wrote:
-> Change the qcom_spi_read_page_ecc() function to use NANDC_STEP_SIZE
-> instead of a magic number while calculating the data size to keep it
-> consistent with other functions like qcom_spi_program_{raw,ecc,oob}
-> and qcom_spi_read_cw_{raw,page_oob}.
+On Thu, 29 May 2025 19:35:44 +0200, Gabor Juhos wrote:
+> The 'qpic_snand_op' structure is used only in the qcom_spi_send_cmdaddr()
+> function as a type of a local variable. Additionally, the sole purpose of
+> that variable is to keep some interim values before those gets passed as
+> arguments for cpu_to_le32() calls.
 > 
-> No functional changes.
+> In order to simplify the code, remove the definition of the structure
+> along with the local variable, and use the corresponding values directly
+> as parameters for cpu_to_le32() calls.
 > 
 > [...]
 
@@ -79,8 +81,8 @@ Applied to
 
 Thanks!
 
-[1/1] spi: spi-qpic-snand: use NANDC_STEP_SIZE consistently
-      commit: 6c1ca9928ed48499f75101057079b92072077d44
+[1/1] spi: spi-qpic-snand: remove 'qpic_snand_op' structure
+      commit: f73dc37ebf45573349aee0aae168e8dc3d13ecee
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
