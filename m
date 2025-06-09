@@ -1,188 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-60589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B5A9AD1CC2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 14:00:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3052AD1CE1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 14:12:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 434353ABA75
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 11:59:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8185A188BD90
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 12:13:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C8C52566F5;
-	Mon,  9 Jun 2025 12:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B9DB2561DD;
+	Mon,  9 Jun 2025 12:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BGDxMeRS"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nx/UDdDg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16ACC2561DD;
-	Mon,  9 Jun 2025 12:00:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CAE2550B3
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jun 2025 12:12:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749470404; cv=none; b=cM6/oXrZFvXB66lU/5NLksI2XQzjBp5wFNyPrqIW5kyLL/sxIQaD9sZQh9NrJ+Vr4BnyN1Vpoyj4Xtv1d3EaJoBB6oO56ijK/tlyYEM2Tew1FrL/cwtY5Qtzv0a1DOv5VIo35MkfwIRS+kVp7rltj7E/X4FFePZ17uKJ/vFOqk8=
+	t=1749471175; cv=none; b=jiWrwfpeBFdO5bLqowvyrrUO26EgcmNXdMfj7zGG6x2OU3yvVuflJmnEZshjql6Vm7jFSMiEpIgYso2CoqIQtN7uEWsN9zQXedZ3LfEOtExAo2KSghafTHaWV2Jkiau8bmcIS4hkMFktimZ3SnbUD8m0CuxSglBhS8kjaPYKOa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749470404; c=relaxed/simple;
-	bh=VNK7VVJAP9oDuurE8SbOZP1RRIA6lunMWbNPz7CoQK0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UCqnySx6Fia2lMssna9NSvTOzTCjZVEPjqQknu+P9GOUa6XPWxzoxO7lTmYQq3nMKCP/kgebsngvz7Tr+FXojxAfkigQCzPze3VYjYnjT3PiHdsnBVqCZvqYrAGrJvK36SfC9VcSseNFGt8g1rGDkls+ISOWyUMF3oxVq0K5Ug8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BGDxMeRS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC77EC4CEEB;
-	Mon,  9 Jun 2025 11:59:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749470403;
-	bh=VNK7VVJAP9oDuurE8SbOZP1RRIA6lunMWbNPz7CoQK0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BGDxMeRSJQgWr64RvYpWptgDuS+BnnL2RArQjG8mPIQz/xCBtEL5LNYHhp7XYpy7J
-	 32imV7as7Kp9xPH3K5fSdcbQTPbO4Y3GSCIHI22pDlECEBOXuZyYIUAWrXmmyTT3hd
-	 qo19bfTzFdwIGfFTzhmCdKdRJY9NDJiHUV0C5xBnchSoMYe02XEddCeFLWIg/IOJvq
-	 Y03cIJEzI/Ncqg3WolDtVL48R1vm+1h8PJLnCa1lMuLtkBkNgY3+2XVsGrOJCHy7bj
-	 I+plPPDx4TJpwrbbE1gxc2oDCa9dm9Ee+8b4SxOX/AjOOfT9HyRBd6YAtybrGb8pgE
-	 DD3HtH4RaFopA==
-Date: Mon, 9 Jun 2025 17:29:49 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Brian Norris <briannorris@chromium.org>, 
-	"Rafael J. Wysocki" <rjw@rjwysocki.net>, Tony Lindgren <tony@atomide.com>, 
-	JeffyChen <jeffy.chen@rock-chips.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, Bjorn Helgaas <bhelgaas@google.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pci@vger.kernel.org, quic_vbadigan@quicinc.com, quic_mrana@quicinc.com, 
-	Sherry Sun <sherry.sun@nxp.com>
-Subject: Re: [PATCH v3 2/2] PCI/portdrv: Add support for PCIe wake interrupt
-Message-ID: <pl262pfxe5mjtxzvr4qcsxwt4cyrdjzncd3ztsqpb6zuc7gi5b@hu6njospevgk>
-References: <20250605202630.GA622231@bhelgaas>
- <7b91b725-6b47-bf8f-e6e5-e4584f274ec4@oss.qualcomm.com>
+	s=arc-20240116; t=1749471175; c=relaxed/simple;
+	bh=SkYNBp2tGs+KkKatm/7UabgqugkSjHvT8/wNzK4u0vE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=I/20VIOeLes0QxnwRaD3n394fKIkbeYHYzqqlgpysPi7k9RVxWlBQ5oBcPHWt6nlBmo4xcR/AnGAI9oP8gBQ0zyeXveqL1C6X0TaeTgW1NpYTVBCHdSNa1Mbyxm2aW0dXCyxGRaRGe6GMTJN2YGeJF4R8Qv1NoZ96cNm3MKPybc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nx/UDdDg; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5599Ljn4029862
+	for <linux-arm-msm@vger.kernel.org>; Mon, 9 Jun 2025 12:12:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ozx1cNx6vaQiGhztUqHI8rPbCJVrrhmKdjb2oMY9jXM=; b=nx/UDdDgQ4IIJ//p
+	ECPmR5ls+/cK7p0h5ysYtB8+Ah5eFY1k1VKyBkyOGn+cidcMPDMH3BB7lhedvKdI
+	MA4+c7SBa5GRI/ct4Cz9/BT0FoYwFZozhKz3LbKs7uYc6TSiQh5HNhoUybwY7dP9
+	BbMWHZ4ayW3vdaFw8BXUPkpKfCekGssxB+ntEhkvhQg3MsrrmzYNMKb7L2fA3Ra0
+	q1Npl1g+pd/5OP5EgQjgTt0DKKwv5ocajGSh5bS0UVscLA3rKPLfPZwWzOUKE73Q
+	LAFK6Rmf3MDH9EDQMiQ0MjpYhFSv3OouLKcp0IJhLY8ju04G7D2SPiUWhcc/GsFy
+	cKX6ng==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474eqcdqw8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jun 2025 12:12:48 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7c5e28d0cc0so662397285a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Jun 2025 05:12:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749471166; x=1750075966;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ozx1cNx6vaQiGhztUqHI8rPbCJVrrhmKdjb2oMY9jXM=;
+        b=a4cDs5syvUy4ZPZU0rmZbcRQsfb3sBQYqSF0O/C8zafzYnT6OLes4mWByvgFJ4nldM
+         wqKzxT9JygBllNVSyenu28U3ariKsXgQayPeZCHpn7hndVAdhbzz6EMmNfRhzSiZK9Hj
+         t9XhJmD9isJfeIx3PTJd3i1S6dFYjij3R7MRNzU1C7vuvUU8PTUytuySvzjZGICIFBlC
+         dmN1s3RM4Vpeb+gXyDiSpJB4vHCTQ/trZiUYe/UDkP3geMiruafYZzhG+H6EsUCXIokl
+         OMYrnjBBoiVc5OVAjoPd66hruZMFiq4Kff7Nj9p3UMWaklGr02FeRGFc+/cSrqkreXYn
+         3BHw==
+X-Forwarded-Encrypted: i=1; AJvYcCWnCtaFBYBj1P72jfoOWcVdcmaXoGlEgZ1ADHIWRcTlQcU/6NuNBow8kEB6RUUyrYsqL/G8EY5dAI7lcZnP@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLj0+Px3/sW7sKa/8yYki79l8bicQ/bH6/UUqIYuFVRjKRLxT9
+	Psqe2JWvboLQr8j+Jn+ZZKjnxor5nINjzisjn6fTF+FXYycF0D3F0IrTzR1ddpHHz0DQ2EYT7Mq
+	VtFmddloRmM5HU9z297xWK5XIns9gUzebKjq4tO3W0Zsq4kQQRgeylWYdSS69zKVXqlvk
+X-Gm-Gg: ASbGncsl9rdTLHEhMFdSxIaKTtQDHFTQL7gnhktkCZvKz0XgnjNagPnGNCBM4FkSzof
+	qZePtm7GgqLriG26dqamNdQbjaOr5cSeLG0TZlVFjOVwrIYrKzJECyGvkv+unzK7VU7Nh7+Ig1R
+	9Uf+qxR1pBI96+bCATN5rmIwRyAWUD/AUj0KlEi2qZeRet5EdtLGoOBVVYUNrAxONcM+hmTm3f6
+	fqh1PWHtdQKQDHuVEMM9WwCSW9J87u5u8zLN01lGWQtUz5nNu2Ilq4wvLTf6EGXzxss4fOHYp0o
+	/vF5a9ZlTf2HgIGlNHFZ6TErTQJe6072QDrnxEV9zkMYljtp
+X-Received: by 2002:a05:620a:45a1:b0:7d3:914b:abe6 with SMTP id af79cd13be357-7d3914baf06mr669830285a.23.1749471166661;
+        Mon, 09 Jun 2025 05:12:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGWvU3u5w14J+qlrmR9XemVZPLaY5kePeOwYsaLUltPqBZJ+np6mmxSmQWTrNQY2VReY/jN3A==
+X-Received: by 2002:a05:620a:45a1:b0:7d3:914b:abe6 with SMTP id af79cd13be357-7d3914baf06mr669827185a.23.1749471166299;
+        Mon, 09 Jun 2025 05:12:46 -0700 (PDT)
+Received: from [192.168.68.118] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4521375bca3sm110438475e9.39.2025.06.09.05.12.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Jun 2025 05:12:45 -0700 (PDT)
+Message-ID: <fb03dd8d-8caf-4861-b56a-2c10b070e2dc@oss.qualcomm.com>
+Date: Mon, 9 Jun 2025 13:12:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7b91b725-6b47-bf8f-e6e5-e4584f274ec4@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soundwire: qcom: demote probe registration printk
+To: Johan Hovold <johan+linaro@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>
+Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+        Sanyog Kale <sanyog.r.kale@intel.com>, linux-arm-msm@vger.kernel.org,
+        linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250523085317.11439-1-johan+linaro@kernel.org>
+Content-Language: en-US
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20250523085317.11439-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA5MDA5MSBTYWx0ZWRfX9gocSu0l885j
+ 6fvIBpPYim/hoiSVQYRY473FNYLeVGePnRJUEzdplpO519RYq1jYX2s/8D7f22OfFkKaUF2qsPc
+ ozhaUuQGFIFLHc4J9//ECvr859QsEzdSgCJXAKDvT9IeIK9MjjGJ/DKDI5PQ/FjJEm0/AW2iOro
+ ss2d59a0qBbH7J8lRZtydF+Q56rMO77MLqupopnNxqCZaH09A/DUn3hlk3ibImnXFpQPhffzGGd
+ iJOOWnedjVW8bqADmkpCRozUtambeTi3XyszrlN24v0GSteqvLJTiG237X1WvflIKSSYEKwbYv9
+ hZiLE7bV8OcP5sKmqhfTQDzG1jPO37IJfw9ZLOeHckScuhPoIhVXnMzWv3QQxneFQF64Jqs4B1H
+ qKeFPQaFX6rFa5ziEGraOw8hvMGY1WTlU09KgDktr41RLOcxebWl+yG6Tlus+hAnTI4Chn8H
+X-Authority-Analysis: v=2.4 cv=Q7TS452a c=1 sm=1 tr=0 ts=6846cfc0 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=kt4YovZ3MTeTNe02vhkA:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-GUID: Ai_mAkgDKPQeBzN6z7jGAv94vMefsOM6
+X-Proofpoint-ORIG-GUID: Ai_mAkgDKPQeBzN6z7jGAv94vMefsOM6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-09_05,2025-06-05_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 mlxscore=0 spamscore=0 mlxlogscore=999
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0 impostorscore=0
+ priorityscore=1501 malwarescore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506090091
 
-+ Brian, Rafael, Tony, Jeffy (who were part of the previous attempt to add WAKE#
-GPIO/interrupt support:
-https://lore.kernel.org/linux-pci/20171225114742.18920-1-jeffy.chen@rock-chips.com
-
-On Mon, Jun 09, 2025 at 11:27:49AM +0530, Krishna Chaitanya Chundru wrote:
+On 5/23/25 9:53 AM, Johan Hovold wrote:
+> Driver should generally by quiet on successful probe.
 > 
+> Demote the Qualcomm controller registration info message to debug level
+> to make boot logs a little less noisy:
 > 
-> On 6/6/2025 1:56 AM, Bjorn Helgaas wrote:
-> > On Thu, Jun 05, 2025 at 10:54:45AM +0530, Krishna Chaitanya Chundru wrote:
-> > > PCIe wake interrupt is needed for bringing back PCIe device state
-> > > from D3cold to D0.
-> > 
-> > Does this refer to the WAKE# signal or Beacon or both?  I guess the
-> > comments in the patch suggest WAKE#.  Is there any spec section we can
-> > cite here?
-> > 
-> we are referring only WAKE# signal, I will add the PCIe spec r6.0, sec
-> 5.3.3.2 in next patch version.
-> > > Implement new functions, of_pci_setup_wake_irq() and
-> > > of_pci_teardown_wake_irq(), to manage wake interrupts for PCI devices
-> > > using the Device Tree.
-> > > 
-> > >  From the port bus driver call these functions to enable wake support
-> > > for bridges.
-> > 
-> > What is the connection to bridges and portdrv?  WAKE# is described in
-> > PCIe r6.0, sec 5.3.3.2, and PCIe CEM r6.0, sec 2.3, but AFAICS neither
-> > restricts it to bridges.
-> > 
+> qcom-soundwire 6ab0000.soundwire: Qualcomm Soundwire controller v2.0.0 Registered
+> qcom-soundwire 6ad0000.soundwire: Qualcomm Soundwire controller v2.0.0 Registered
+> qcom-soundwire 6b10000.soundwire: Qualcomm Soundwire controller v2.0.0 Registered
+> qcom-soundwire 6d30000.soundwire: Qualcomm Soundwire controller v2.0.0 Registered
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
 
-You are right. WAKE# is really a PCIe slot/Endpoint property and doesn't
-necessarily belong to a Root Port/Bridge. But the problem is with handling the
-Wake interrupt in the host. For instance, below is the DT representation of the
-PCIe hierarchy:
 
-	PCIe Host Bridge
-		|
-		v
-	PCIe Root Port/Bridge
-		|
-		|
-		v
-PCIe Slot <-------------> PCIe Endpoint
+Acked-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-DTs usually define both the WAKE# and PERST# GPIOs ({wake/reset}-gpios property)
-in the PCIe Host Bridge node. But we have decided to move atleast the PERST# to
-the Root Port node since the PERST# lines are per slot and not per host bridge.
+--srini
+>  drivers/soundwire/qcom.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+> index 295a46dc2be7..3265c39e6b51 100644
+> --- a/drivers/soundwire/qcom.c
+> +++ b/drivers/soundwire/qcom.c
+> @@ -1648,9 +1648,9 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto err_master_add;
+>  
+> -	dev_info(dev, "Qualcomm Soundwire controller v%x.%x.%x Registered\n",
+> -		 (ctrl->version >> 24) & 0xff, (ctrl->version >> 16) & 0xff,
+> -		 ctrl->version & 0xffff);
+> +	dev_dbg(dev, "Qualcomm Soundwire controller v%x.%x.%x registered\n",
+> +		(ctrl->version >> 24) & 0xff, (ctrl->version >> 16) & 0xff,
+> +		ctrl->version & 0xffff);
+>  
+>  	pm_runtime_set_autosuspend_delay(dev, 3000);
+>  	pm_runtime_use_autosuspend(dev);
 
-Similar interpretation applies to WAKE# as well, but the major difference is
-that it is controlled by the endpoints, not by the host (RC/Host Bridge/Root
-Port). The host only cares about the interrupt that rises from the WAKE# GPIO.
-The PCIe spec, r6.0, Figure 5-4, tells us that the WAKE# is routed to the PM
-controller on the host. In most of the systems that tends to be true as the
-WAKE# is not tied to the PCIe IP itself, but to a GPIO controller in the host.
-
-In this case, the PCI core somehow needs to know the IRQ number corresponding to
-the WAKE# GPIO, so that it can register an IRQ handler for it to wakeup the
-endpoint when an interrupt happens. Previous attempts [1], tried to add a new DT
-property for the interrupts:
-https://lore.kernel.org/linux-pci/20171225114742.18920-2-jeffy.chen@rock-chips.com
-
-But that doesn't seem to fly. So Krishna came with the proposal to reuse the
-WAKE# GPIO defined in the Root Port node (for DTs that have moved the properties
-out of the Host Bridge node) and extract the IRQ number from it using
-gpiod_to_irq() API.
-
-And he used portdrv as the placeholder for the irq setup code, because the WAKE#
-GPIO is going to be defined in the Root Port node irrespective of a PCIe Slot or
-an endpoint is connected to the Root Port. And the portdrv driver is the one
-controlling the Root Port. Though, this placeholder part can be subject to
-discussion.
-
-But from the previous discussions, I could infer that the PCIe Root Port/Bridge
-DT node is going to be the placeholder for the WAKE# GPIOs:
-https://lore.kernel.org/linux-pci/2806186.IK6EZBC0cX@aspire.rjw.lan
-
-It also sounds sensible to me since we do not want to define the wake-gpios
-property in the endpoint node as that would mean that for each device connected,
-a separate DT endpoint node needs to be created just for defining the WAKE#
-GPIO. Also, if there is only a PCIe slot in the board, then the property has to
-be defined in the PCIe Root Port node itself as there is no separate DT node for
-PCIe slot.
-
-> The wake# is used by the endpoints to wake host to bring PCIe device
-> state to D0 again, in direct attach root port wake# will be connected
-> to the root port and in switch cases the wake# will connected to the
-> switch Downstream ports and switch will consolidate wake# from different
-> downstream ports and sends to the root port. The wake# will be used by
-> root port bridges only. portdrv is the driver for root port.
-
-This is not correct. Root Port doesn't have anything to do with the WAKE#
-interrupt. We are just merely trying to reuse the Root Port driver because of
-how the WAKE# GPIO is wired up in the DT. It might not be applicable for ACPI as
-the FW raises GPE for the Wake interrupt and kernel doesn't parse WAKE#, afaik.
-
-> > Unless there's some related functionality in a Root Port, RCEC, or
-> > Switch Port, maybe this code should be elsewhere, like
-> > set_pcie_port_type(), so we could set this up for any PCIe device that
-> > has a WAKE# description?
-> > 
-
-I think it should work if we tie the Wake interrupt to the PCI device instead of
-the Root Port/Bridge in the kernel, even though the DT representation is
-different. In that case, PCI core should parse the Root Port node for each
-device to get the WAKE# GPIO and setup an IRQ handler for it. When the Wake
-interrupt happens, the PCI core should power ON the PCI hierarchy starting from
-the host bridge, till the endpoint (top down approach).
-
-I think we all agree that the WAKE# GPIO should be handled by the PCI core
-instead of the PCI controller or client drivers. We should agree on the best
-possible place though.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
