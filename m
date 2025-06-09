@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-60601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD080AD1D86
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 14:25:39 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30F56AD1D82
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 14:25:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0EF34188E48A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 12:25:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB3297A26F2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 12:24:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A83625A651;
-	Mon,  9 Jun 2025 12:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E80B25744D;
+	Mon,  9 Jun 2025 12:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BMlEj6TM"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gIIJ5jtl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938A425A35E;
-	Mon,  9 Jun 2025 12:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6F7257430;
+	Mon,  9 Jun 2025 12:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749471812; cv=none; b=l3XaGJKhg5FbgLPheNO+h2cUiOOrs8zHAX9tHbGRat33Rv9/+IN+gozYTZJihg6FyloILWW8orRPdPtrb77KJ1zHm4JeVssJsHM4xPOQyGyW3dJXMthyA5dPy3NFks6y5FiFJMZMgvMYIwJHKMtRY2R1IQb6C2AFZ7G55Dk7vms=
+	t=1749471820; cv=none; b=ggJJu199NJqKG5t2we3nOxKbkp8A+GwTMRviRAIrhoet0ntOqFD4+k1ufjBAGKB2RVTLLUaKqXnl6EbpYZ/kjMulshgk+/aJRB06A2+dUvBkpWRVGUL58qiQgEFFML/W/N/1vCyLnJ+mlwhTNJgnaXvETcpK92iQXN3vkSl7J3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749471812; c=relaxed/simple;
-	bh=s2u3hc9AWXAwbYZC9HMolBif5VQ5im4wN/HDTaKoaFs=;
+	s=arc-20240116; t=1749471820; c=relaxed/simple;
+	bh=zsCqTsElJLd+dWBzG6PdLvzXXp9wxeOoKP2/1JFTlz4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=J/oTgAUxqGdQ4DVq0Uvf4gIsbXSn0E9LmxYsUdFJAoioT5ebJC6EO6F8PN9gg9OK2cxDyez0q2hNASm2krQUunY4z0QWXPd1tLGq01QtPTZLmfFOwR875jxn5+0O/9egg714oYbjhTrTKHVtC/J+at41pSRBgdkxDKsTx+hJFeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BMlEj6TM; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:CC; b=dnkZYxLE7wBBE+GiNke/Wly/iEW1G7jI/Joe2qCelx35lA5Tf+EiXWmRJfa36gUaqMyA+8Lae0RToDV5t9m53zuDhcCI5ANfI0mH7YcY3Su6wUDHGqCanbmjxdStZHl74PDI8IxAh6tisfv1q7ri+owU2vrmCnSNCJto1tk+3/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gIIJ5jtl; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5598P1r2000923;
-	Mon, 9 Jun 2025 12:23:21 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5599MYf9006545;
+	Mon, 9 Jun 2025 12:23:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	N7WwAkd2P8I9Vd2UHNjdTOGLaw0VsG4HbkaP/HbRNlI=; b=BMlEj6TM7j4YdjNx
-	I4SKkRL8JRR0tCwgd+K1I922vBdZXDNBlr0g1sYKL5WCn8qgepM8cw/eh8DHSyeM
-	31hHzjYQvtNVAMyIEl6nJMDEhtnBnZulm6Ky1HDciZ2YnClHZD5NSgyGlWeTvcHK
-	pFTsGJdOp5BkkbG5AImtr2gNFNY07/aYBulNz0ALOHZ/9ZgNs/iJIqYGtcpfrG+Y
-	8nz1bC8wXOeHQBNjnsWWvgyGcC0x/two8FLdeQT71a18ZyFH1F9vI2YQIR4BuRgs
-	LuD+8AYxwcuYnEg5fSgPWs6dCJ42f5ZZUG73Dv906HR3aCma7/3WvVfQN0zVnUOp
-	49+/+g==
+	8SaAqE6lcVWEna9RrPmDtL+zh+iXmjmVtsvp9gUPbbk=; b=gIIJ5jtlT8CtiKAt
+	dpks/38NEmwYyt2hM1E4WZeWEjMd/+dfRUS/t62BVsuU0hOYANvEb89SGZrFvVyt
+	8NlT8bfvUTvGbbv2LU34yFXx1mT1G4SOXlOolmuOdSp5amnDuvZFXLUl2etztscp
+	SXlTY1oj6S/sORbCOimZJD0JTn9s+HF8p9RqaMELrBFwvH/uaNDfbyBQnAUE/1K/
+	UaBTfSqxlnDD0fD2GDQ1UHHPKIZPDEqiKmL6SBfcIYRXHcX5lgKOal1yBldcir+C
+	UO2qjSdAdknMC5V1SvMYqgKeSYeC9nLhl45tkBBQ+VXR1MjuUXfo8t1rGf0fyTeb
+	6OjoEQ==
 Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 475v2t8pxs-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474ce9p4p0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 09 Jun 2025 12:23:21 +0000 (GMT)
+	Mon, 09 Jun 2025 12:23:25 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 559CNK9h003342
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 559CNOVm003412
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 9 Jun 2025 12:23:20 GMT
+	Mon, 9 Jun 2025 12:23:24 GMT
 Received: from cse-cd01-lnx.ap.qualcomm.com (10.80.80.8) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 9 Jun 2025 05:23:16 -0700
+ 15.2.1544.9; Mon, 9 Jun 2025 05:23:20 -0700
 From: Yongxing Mou <quic_yongmou@quicinc.com>
-Date: Mon, 9 Jun 2025 20:21:27 +0800
-Subject: [PATCH v2 08/38] drm/msm/dp: make bridge helpers use dp_display to
- allow re-use
+Date: Mon, 9 Jun 2025 20:21:28 +0800
+Subject: [PATCH v2 09/38] drm/msm/dp: separate dp_display_prepare() into
+ its own API
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250609-msm-dp-mst-v2-8-a54d8902a23d@quicinc.com>
+Message-ID: <20250609-msm-dp-mst-v2-9-a54d8902a23d@quicinc.com>
 References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
 In-Reply-To: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
 To: Rob Clark <robin.clark@oss.qualcomm.com>,
@@ -88,253 +88,126 @@ CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
  Mou" <quic_yongmou@quicinc.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749471754; l=9190;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1749471755; l=3370;
  i=quic_yongmou@quicinc.com; s=20241121; h=from:subject:message-id;
- bh=4xOZjShR6Dw5YneXgY9S4HPsAv5ogfvoR+xEc9dvZ30=;
- b=gFwrkRh+I+2wEIOcjy9hlNIhNRMEmcWxj5DXLiErVROBmRsBdEcMV/YT7f+X8ZaqHn1E+1Q79
- VuhAKx35S4PD2dzPWR+HQfRFPkdW7xxaTqHyeWVQ87CSdetWKTNmbZ4
+ bh=ZSvGbpVfhM4Yc0g2uXs7BDdn0a7JpLkBwL3VYBUNEcA=;
+ b=K+zN1vRW7R6R8GMIEgwmg8SSkGu3a5/FDP0fT6Hh02eC3OWorPkZf9e8J1nMc3svW1Ryqo1Gq
+ WgizVLHQoifCnnH1m85nQxiSrv8mTBxDtjVDouRnHlRgZpe4wJ412Iw
 X-Developer-Key: i=quic_yongmou@quicinc.com; a=ed25519;
  pk=zeCnFRUqtOQMeFvdwex2M5o0Yf67UHYfwCyBRQ3kFbU=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: DJa03fuQZYMTWDU5jCweYXWKqAYlRZ56
-X-Authority-Analysis: v=2.4 cv=GoxC+l1C c=1 sm=1 tr=0 ts=6846d239 cx=c_pps
+X-Proofpoint-GUID: rvC-gBT6SEi80CPep56DSLdcM8ABXej3
+X-Authority-Analysis: v=2.4 cv=drjbC0g4 c=1 sm=1 tr=0 ts=6846d23d cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8
- a=iEZZ7kfMCVqEHj8YyOgA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: DJa03fuQZYMTWDU5jCweYXWKqAYlRZ56
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA5MDA5MiBTYWx0ZWRfXyDYHMPcVfOTF
- hsOIINEBx1mu+pxSC2Ol8iyW2oxCwKvrD9iyC9uSbx8ExfI8tKN6OpqxVL6OFKmPHUzM8oKu5R1
- S6Wd6E7nsSK74ehUB+uWcaXOv4P+Sk6kdNMcZOSVXqnvqpnZcAqI8nm+KpdWdRCjhi2tWe0/a52
- vlESMdZarpaFW3gIqwZTASuImVzZCuSWnOTFpnO3qziHkQ25fm/z6l7+cqmVRtt0jiZevULDsRf
- 72Kra2mmF8Uz3EK+nbb4bEppfGBvhRQVXsVwBt+I95bA4m+vZpefnxMvfTXKVde4BkvU0qN0tYe
- wSdA3LxYZ1lCR2zUbLPZwYMmmg1nGS16OsXBJC8uLc6JVr3QNZWmEutYUO4EhJHe+zN9KbblBWh
- YLz37AOBnPMbFFymApHsLynzoYATD5Zoztnli4muOzD1jrVY8xv896KincFH6DjmvvH651h1
+ a=rHTcTV9uYuKpyGuOXCsA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: rvC-gBT6SEi80CPep56DSLdcM8ABXej3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA5MDA5MiBTYWx0ZWRfX4NlnJNV0jmv9
+ NpX9q12uFtd9trzkrYsnPhH5qQeXklu+VfENCfnwTV7WR94RqWmasC0yEf+dygraklbOD8MI2YB
+ AtNk1W968Gdv6d88jf+1ONPshOoAoEc7o8gt1Z8cxxj7hy1caEZ7vrL2U1w7hENmkJy4EVd/x6v
+ 0NlIzGW5BcHDIGKMy/azfJiX68Xd/Zzo4IaBWgwXcJMnvNmDkG7CzYm085WD+3XsqsyKeXO7vlR
+ 7gkk/nfE5KVURlDraSy0xmaI61TTm0zxTpX2BSNEPx36mblBRkr5lxIXRQlEownRCaUKAB90JFn
+ IPq6qkdO9gaGGeU9ZuE/FuJUFuqqtoRkBnc+SW6JphOO/KxNgvTsuPoycG624E9L4/xaH2kYn31
+ XP5Dq3kXzlPVug3m2A+/HsEUkkhnng2ceG6MaLNkTZPbJMCmt+Pe82YPj1rHt0MUvUYpp8Ci
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-09_05,2025-06-05_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 adultscore=0 impostorscore=0 malwarescore=0 mlxscore=0
- suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506090092
+ spamscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015
+ priorityscore=1501 suspectscore=0 bulkscore=0 mlxlogscore=959 adultscore=0
+ phishscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506090092
 
 From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-dp_bridge helpers take drm_bridge as an input and extract the
-dp_display object to be used in the dp_display module. Rather than
-doing it in a roundabout way, directly pass the dp_display object
-to these helpers so that the MST bridge can also re-use the same
-helpers.
+dp_display_prepare() only prepares the link in case its not
+already ready before dp_display_enable(). Hence separate it into
+its own API.
 
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 34 ++++++++-----------------
- drivers/gpu/drm/msm/dp/dp_display.h |  9 +++++++
- drivers/gpu/drm/msm/dp/dp_drm.c     | 49 ++++++++++++++++++++++++++++++++++++-
- drivers/gpu/drm/msm/dp/dp_drm.h     | 12 ---------
- 4 files changed, 67 insertions(+), 37 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 18 ++++++++++++++----
+ drivers/gpu/drm/msm/dp/dp_display.h |  1 +
+ drivers/gpu/drm/msm/dp/dp_drm.c     |  2 ++
+ 3 files changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 4076db4cac9cb889a12505159f4e710a92ffa8a6..c29ee79b4ef355e9d40ff41f8fff37e2136abb39 100644
+index c29ee79b4ef355e9d40ff41f8fff37e2136abb39..7ed4034c89605596c874a6bf9a5a19586d6c13fb 100644
 --- a/drivers/gpu/drm/msm/dp/dp_display.c
 +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -948,24 +948,21 @@ static int msm_dp_display_disable(struct msm_dp_display_private *dp)
- 
- /**
-  * msm_dp_bridge_mode_valid - callback to determine if specified mode is valid
-- * @bridge: Pointer to drm bridge structure
-+ * @dp: Pointer to dp display structure
-  * @info: display info
-  * @mode: Pointer to drm mode structure
-  * Returns: Validity status for specified mode
-  */
--enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
--					  const struct drm_display_info *info,
--					  const struct drm_display_mode *mode)
-+enum drm_mode_status msm_dp_display_mode_valid(struct msm_dp *dp,
-+					       const struct drm_display_info *info,
-+					       const struct drm_display_mode *mode)
- {
- 	const u32 num_components = 3, default_bpp = 24;
- 	struct msm_dp_display_private *msm_dp_display;
- 	struct msm_dp_link_info *link_info;
- 	u32 mode_rate_khz = 0, supported_rate_khz = 0, mode_bpp = 0;
--	struct msm_dp *dp;
- 	int mode_pclk_khz = mode->clock;
- 
--	dp = to_dp_bridge(bridge)->msm_dp_display;
--
- 	if (!dp || !mode_pclk_khz || !dp->connector) {
- 		DRM_ERROR("invalid params\n");
- 		return -EINVAL;
-@@ -1535,11 +1532,8 @@ int msm_dp_modeset_init(struct msm_dp *msm_dp_display, struct drm_device *dev,
+@@ -1532,10 +1532,9 @@ int msm_dp_modeset_init(struct msm_dp *msm_dp_display, struct drm_device *dev,
  	return 0;
  }
  
--void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
--				 struct drm_atomic_state *state)
-+void msm_dp_display_atomic_enable(struct msm_dp *dp)
+-void msm_dp_display_atomic_enable(struct msm_dp *dp)
++void msm_dp_display_atomic_prepare(struct msm_dp *dp)
  {
--	struct msm_dp_bridge *msm_dp_bridge = to_dp_bridge(drm_bridge);
--	struct msm_dp *dp = msm_dp_bridge->msm_dp_display;
  	int rc = 0;
- 
- 	struct msm_dp_display_private *msm_dp_display;
-@@ -1576,11 +1570,8 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
- 	mutex_unlock(&msm_dp_display->event_mutex);
- }
- 
--void msm_dp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
--				  struct drm_atomic_state *state)
-+void msm_dp_display_atomic_disable(struct msm_dp *dp)
- {
--	struct msm_dp_bridge *msm_dp_bridge = to_dp_bridge(drm_bridge);
--	struct msm_dp *dp = msm_dp_bridge->msm_dp_display;
+-
  	struct msm_dp_display_private *msm_dp_display;
  
  	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
-@@ -1602,11 +1593,8 @@ static void msm_dp_display_unprepare(struct msm_dp_display_private *dp)
- 	msm_dp_display->prepared = false;
- }
+@@ -1548,10 +1547,21 @@ void msm_dp_display_atomic_enable(struct msm_dp *dp)
+ 	rc = msm_dp_display_prepare(msm_dp_display);
+ 	if (rc) {
+ 		DRM_ERROR("DP display prepare failed, rc=%d\n", rc);
+-		mutex_unlock(&msm_dp_display->event_mutex);
+-		return;
+ 	}
  
--void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
--				       struct drm_atomic_state *state)
-+void msm_dp_display_atomic_post_disable(struct msm_dp *dp)
- {
--	struct msm_dp_bridge *msm_dp_bridge = to_dp_bridge(drm_bridge);
--	struct msm_dp *dp = msm_dp_bridge->msm_dp_display;
- 	u32 hpd_state;
- 	struct msm_dp_display_private *msm_dp_display;
- 
-@@ -1639,12 +1627,10 @@ void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
- 	mutex_unlock(&msm_dp_display->event_mutex);
- }
- 
--void msm_dp_bridge_mode_set(struct drm_bridge *drm_bridge,
--			const struct drm_display_mode *mode,
--			const struct drm_display_mode *adjusted_mode)
-+void msm_dp_display_mode_set(struct msm_dp *dp,
-+			     const struct drm_display_mode *mode,
-+			     const struct drm_display_mode *adjusted_mode)
- {
--	struct msm_dp_bridge *msm_dp_bridge = to_dp_bridge(drm_bridge);
--	struct msm_dp *dp = msm_dp_bridge->msm_dp_display;
- 	struct msm_dp_display_private *msm_dp_display;
- 	struct msm_dp_panel *msm_dp_panel;
- 
++	mutex_unlock(&msm_dp_display->event_mutex);
++}
++
++void msm_dp_display_atomic_enable(struct msm_dp *dp)
++{
++	int rc = 0;
++
++	struct msm_dp_display_private *msm_dp_display;
++
++	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
++
++	mutex_lock(&msm_dp_display->event_mutex);
++
+ 	if (dp->prepared) {
+ 		rc = msm_dp_display_enable(msm_dp_display);
+ 		if (rc)
 diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-index 2394840e9f28e136705004c3e6af93fbe13c33c5..8e3176e6a8af923110f414d1af5def909ef1e2c6 100644
+index 8e3176e6a8af923110f414d1af5def909ef1e2c6..4e3540f2eb21afb14583b0d521dd9817fefd2f70 100644
 --- a/drivers/gpu/drm/msm/dp/dp_display.h
 +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-@@ -35,5 +35,14 @@ void msm_dp_display_signal_audio_start(struct msm_dp *msm_dp_display);
- void msm_dp_display_signal_audio_complete(struct msm_dp *msm_dp_display);
- void msm_dp_display_set_psr(struct msm_dp *dp, bool enter);
+@@ -37,6 +37,7 @@ void msm_dp_display_set_psr(struct msm_dp *dp, bool enter);
  void msm_dp_display_debugfs_init(struct msm_dp *msm_dp_display, struct dentry *dentry, bool is_edp);
-+void msm_dp_display_atomic_post_disable(struct msm_dp *dp_display);
-+void msm_dp_display_atomic_disable(struct msm_dp *dp_display);
-+void msm_dp_display_atomic_enable(struct msm_dp *dp_display);
-+void msm_dp_display_mode_set(struct msm_dp *dp,
-+			     const struct drm_display_mode *mode,
-+			     const struct drm_display_mode *adjusted_mode);
-+enum drm_mode_status msm_dp_display_mode_valid(struct msm_dp *dp,
-+					       const struct drm_display_info *info,
-+					       const struct drm_display_mode *mode);
- 
- #endif /* _DP_DISPLAY_H_ */
+ void msm_dp_display_atomic_post_disable(struct msm_dp *dp_display);
+ void msm_dp_display_atomic_disable(struct msm_dp *dp_display);
++void msm_dp_display_atomic_prepare(struct msm_dp *dp_display);
+ void msm_dp_display_atomic_enable(struct msm_dp *dp_display);
+ void msm_dp_display_mode_set(struct msm_dp *dp,
+ 			     const struct drm_display_mode *mode,
 diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-index f222d7ccaa88b7d0a2365bdd11842ef88535f663..c8ca8ba470cfe4fed618a3da05c1eb662257ad95 100644
+index c8ca8ba470cfe4fed618a3da05c1eb662257ad95..f0144cf3c5876d94c44a44adad766f242609113e 100644
 --- a/drivers/gpu/drm/msm/dp/dp_drm.c
 +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-@@ -99,6 +99,53 @@ static void msm_dp_bridge_debugfs_init(struct drm_bridge *bridge, struct dentry
- 	msm_dp_display_debugfs_init(dp, root, false);
+@@ -105,6 +105,7 @@ static void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+ 	struct msm_dp_bridge *dp_bridge = to_dp_bridge(drm_bridge);
+ 	struct msm_dp *dp = dp_bridge->msm_dp_display;
+ 
++	msm_dp_display_atomic_prepare(dp);
+ 	msm_dp_display_atomic_enable(dp);
  }
  
-+static void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
-+					struct drm_atomic_state *state)
-+{
-+	struct msm_dp_bridge *dp_bridge = to_dp_bridge(drm_bridge);
-+	struct msm_dp *dp = dp_bridge->msm_dp_display;
-+
-+	msm_dp_display_atomic_enable(dp);
-+}
-+
-+static void msm_dp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
-+					 struct drm_atomic_state *state)
-+{
-+	struct msm_dp_bridge *dp_bridge = to_dp_bridge(drm_bridge);
-+	struct msm_dp *dp = dp_bridge->msm_dp_display;
-+
-+	msm_dp_display_atomic_disable(dp);
-+}
-+
-+static void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
-+					      struct drm_atomic_state *state)
-+{
-+	struct msm_dp_bridge *dp_bridge = to_dp_bridge(drm_bridge);
-+	struct msm_dp *dp = dp_bridge->msm_dp_display;
-+
-+	msm_dp_display_atomic_post_disable(dp);
-+}
-+
-+static void msm_dp_bridge_mode_set(struct drm_bridge *drm_bridge,
-+				   const struct drm_display_mode *mode,
-+				   const struct drm_display_mode *adjusted_mode)
-+{
-+	struct msm_dp_bridge *dp_bridge = to_dp_bridge(drm_bridge);
-+	struct msm_dp *dp = dp_bridge->msm_dp_display;
-+
-+	msm_dp_display_mode_set(dp, mode, adjusted_mode);
-+}
-+
-+static enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *drm_bridge,
-+						     const struct drm_display_info *info,
-+						     const struct drm_display_mode *mode)
-+{
-+	struct msm_dp_bridge *dp_bridge = to_dp_bridge(drm_bridge);
-+	struct msm_dp *dp = dp_bridge->msm_dp_display;
-+
-+	return msm_dp_display_mode_valid(dp, info, mode);
-+}
-+
- static const struct drm_bridge_funcs msm_dp_bridge_ops = {
- 	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
- 	.atomic_destroy_state   = drm_atomic_helper_bridge_destroy_state,
-@@ -167,7 +214,7 @@ static void msm_edp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+@@ -214,6 +215,7 @@ static void msm_edp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
  		return;
  	}
  
--	msm_dp_bridge_atomic_enable(drm_bridge, state);
-+	msm_dp_display_atomic_enable(dp);
++	msm_dp_display_atomic_prepare(dp);
+ 	msm_dp_display_atomic_enable(dp);
  }
  
- static void msm_edp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
-diff --git a/drivers/gpu/drm/msm/dp/dp_drm.h b/drivers/gpu/drm/msm/dp/dp_drm.h
-index d8c9b905f8bfb5abe47c1cb26d17bc605e3e1ba6..81e628c32279210f6e09f2fc68b2aeafd76fd1fe 100644
---- a/drivers/gpu/drm/msm/dp/dp_drm.h
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.h
-@@ -25,18 +25,6 @@ int msm_dp_bridge_init(struct msm_dp *msm_dp_display, struct drm_device *dev,
- 		   struct drm_encoder *encoder,
- 		   bool yuv_supported);
- 
--void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
--				 struct drm_atomic_state *state);
--void msm_dp_bridge_atomic_disable(struct drm_bridge *drm_bridge,
--				  struct drm_atomic_state *state);
--void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
--				       struct drm_atomic_state *state);
--enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
--					  const struct drm_display_info *info,
--					  const struct drm_display_mode *mode);
--void msm_dp_bridge_mode_set(struct drm_bridge *drm_bridge,
--			const struct drm_display_mode *mode,
--			const struct drm_display_mode *adjusted_mode);
- void msm_dp_bridge_hpd_enable(struct drm_bridge *bridge);
- void msm_dp_bridge_hpd_disable(struct drm_bridge *bridge);
- void msm_dp_bridge_hpd_notify(struct drm_bridge *bridge,
 
 -- 
 2.34.1
