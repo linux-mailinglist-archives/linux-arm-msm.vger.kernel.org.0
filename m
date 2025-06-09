@@ -1,106 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-60648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FE33AD1F1A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 15:42:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B824AD2090
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 16:07:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CEE9E16AE96
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 13:42:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BE7DC3A3AE3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Jun 2025 14:06:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B62B525D1EF;
-	Mon,  9 Jun 2025 13:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E27FD25A2B4;
+	Mon,  9 Jun 2025 14:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lUFx4Ao9"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="q1n9aZFJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAB425A65A;
-	Mon,  9 Jun 2025 13:40:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5276513C918;
+	Mon,  9 Jun 2025 14:06:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749476448; cv=none; b=AwNm2jpGCmiJw3GlLJYAYrdPh6QMMTL/b9pj63ovNz66KaO7zJoUOI27kCCrQXssujr6itsPy0VQ9KNTgGDXVS/Pmat0t8UadZ2XObsM3fFLGlFH5o5LKVQgp1+GDU88F9Q+U7B7KlDAItmuQj4PDLCKuU6xwp3Qcd2WaP0Y0/w=
+	t=1749477978; cv=none; b=rmiL75+pBOMdj27MS6hqYdatqQOyojnhA+aFo+i+nZGyZ9Kzzi8GOpG1ggcGN3Ks9JiJlAca7r+JhpKfyAxfdfFWY2Y0iO+7rVQYrucT+PEsVSJrrQ3nJ0ynHidEWKHabMl8SMDlnjtKU+EpRXRCg5CHwwu6EXcTJS7IaR1OpdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749476448; c=relaxed/simple;
-	bh=PWNpIUfACgNMqjyCpMvNLYXJP3ujq/QCOWwkCMkHvLk=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=VRhS0vLuxjhjWioxHccum+1Q1I8X+WFK75cyc5ZjV1ISQlO6kQoyBBlSMuC7e1hlT/vshDhsw6PJyoj6yCesw0jyiFR4ooFSv5rwF+DSGNhRfRUVz2xsWZQQnOvwGHojM6OeSE2Fv+AbdaD9GqlIhiRGSuxAoAWKnY++vWuSgsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lUFx4Ao9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9F3C4CEEB;
-	Mon,  9 Jun 2025 13:40:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749476448;
-	bh=PWNpIUfACgNMqjyCpMvNLYXJP3ujq/QCOWwkCMkHvLk=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=lUFx4Ao9NaOycYVdbGZ5Xy1c+6vjqNNzhdDlEg1Il1qHQFlEDgX8pe+2yoOR2Y4od
-	 gVo6zDq7jHZm0HA7RkmYHAQ2bXAfRYAsaNqax36uhk923N580AubfL+h5sOhUUAKJw
-	 YcJmK93tYas3qBgq4l0j6sK1sG7kVg22nIMvMnZwaUXMInoc1E0XucmLt2m82Lg+68
-	 SNQaaa5moGyE8OqRbGlUcBaHv9JpiNDegJB2R6wW1CtVzTUHn3/sFMoQLIQWpCpAgt
-	 EB0Iko69IC+vPMHRMkTCaf7qzR+uCKD3FgFt1+7GSYkOb5cSCJ81aiE8u6A4JFSf2J
-	 eP9XHH0D0sHlA==
-From: Mark Brown <broonie@kernel.org>
-To: Gabor Juhos <j4g8y7@gmail.com>
-Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250529-qpic-snand-remove-qpic_snand_op-v1-1-6e42b772d748@gmail.com>
-References: <20250529-qpic-snand-remove-qpic_snand_op-v1-1-6e42b772d748@gmail.com>
-Subject: Re: [PATCH] spi: spi-qpic-snand: remove 'qpic_snand_op' structure
-Message-Id: <174947644664.127013.16116071467167037102.b4-ty@kernel.org>
-Date: Mon, 09 Jun 2025 14:40:46 +0100
+	s=arc-20240116; t=1749477978; c=relaxed/simple;
+	bh=Lqz2IXP0f71+stZWZq3nQhJN56DepDBP0MfIkkLnz0k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=a1kjUrqxLHctnrGxN6WMzn9X8NUaVigHqt73AhQUpXiJX9+qEG4tKghrymhEiyNfgPL1bdZtpZWO9s8nBl0MQzB8DYoRDz58CW31nFq6NI6DpwyE3X/nKFek4eLJF7UR6nXUvaY0IJRWCdp/bzGcMdKb2Ipkrprd23L2pYO8RpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=q1n9aZFJ; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=PIMYK36uvIqcecnw+wsNtJNA1jDZ1QoKID40Lzud8WI=; b=q1n9aZFJiH/t5KyVNuHn1TrEwy
+	oCdSvsEB67ZQ+fBQYTl7YItoe4V1LjF2GFhMIcpHV1Gr9pqNaQpxbeej2rDqF3+aqf34zBDgbJ1j2
+	xb6ZkIKNsbW5RWoQA9rZCvLvK6n4Z3emYvGqDFCvPgCc+DhE3KeHLDshhRE8nmpKmtJPbu8HH/J+j
+	RcaCU63UOyGiPTqCqPkftCEO+/IQNqFhlJGOhMUFqjG2fMB+u0cfXkdO/W41ak2IaANdaLhODp4gZ
+	A6QaH3W885a42EplVCctRTJsxWHX2JKjq1MwBPI3najMRLQ/iXZ2p5Cnj1tghQmCs1d7gZPhF8CEM
+	J46tkLtw==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:49642)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1uOd8P-0003M3-14;
+	Mon, 09 Jun 2025 15:05:57 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1uOd8M-0006HU-09;
+	Mon, 09 Jun 2025 15:05:54 +0100
+Date: Mon, 9 Jun 2025 15:05:53 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: george.moussalem@outlook.com
+Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v4 3/5] net: phy: qcom: at803x: Add Qualcomm IPQ5018
+ Internal PHY support
+Message-ID: <aEbqQYDi8_LN7lDj@shell.armlinux.org.uk>
+References: <20250609-ipq5018-ge-phy-v4-0-1d3a125282c3@outlook.com>
+ <20250609-ipq5018-ge-phy-v4-3-1d3a125282c3@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-c25d1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250609-ipq5018-ge-phy-v4-3-1d3a125282c3@outlook.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Thu, 29 May 2025 19:35:44 +0200, Gabor Juhos wrote:
-> The 'qpic_snand_op' structure is used only in the qcom_spi_send_cmdaddr()
-> function as a type of a local variable. Additionally, the sole purpose of
-> that variable is to keep some interim values before those gets passed as
-> arguments for cpu_to_le32() calls.
-> 
-> In order to simplify the code, remove the definition of the structure
-> along with the local variable, and use the corresponding values directly
-> as parameters for cpu_to_le32() calls.
-> 
-> [...]
+On Mon, Jun 09, 2025 at 03:44:36PM +0400, George Moussalem via B4 Relay wrote:
+> +static int ipq5018_config_init(struct phy_device *phydev)
+> +{
+> +	struct ipq5018_priv *priv = phydev->priv;
+> +	u16 val = 0;
 
-Applied to
+Useless initialisation. See the first statement below which immediately
+assigns a value to val. I've no idea why people think local variables
+need initialising in cases like this, but it seems to have become a
+common pattern. I can only guess that someone is teaching this IMHO bad
+practice.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+> +
+> +	/*
+> +	 * set LDO efuse: first temporarily store ANA_DAC_FILTER value from
+> +	 * debug register as it will be reset once the ANA_LDO_EFUSE register
+> +	 * is written to
+> +	 */
+> +	val = at803x_debug_reg_read(phydev, IPQ5018_PHY_DEBUG_ANA_DAC_FILTER);
+> +	at803x_debug_reg_mask(phydev, IPQ5018_PHY_DEBUG_ANA_LDO_EFUSE,
+> +			      IPQ5018_PHY_DEBUG_ANA_LDO_EFUSE_MASK,
+> +			      IPQ5018_PHY_DEBUG_ANA_LDO_EFUSE_DEFAULT);
+> +	at803x_debug_reg_write(phydev, IPQ5018_PHY_DEBUG_ANA_DAC_FILTER, val);
+> +
+> +	/* set 8023AZ CTRL values */
+> +	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_AZ_CTRL1,
+> +		      IPQ5018_PHY_PCS_AZ_CTRL1_VAL);
+> +	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_AZ_CTRL2,
+> +		      IPQ5018_PHY_PCS_AZ_CTRL2_VAL);
 
-Thanks!
+The comment doesn't help understand what's going on here, neither do the
+register definition names.
 
-[1/1] spi: spi-qpic-snand: remove 'qpic_snand_op' structure
-      commit: f73dc37ebf45573349aee0aae168e8dc3d13ecee
+Also, what interface modes on the host side does this PHY actually
+support?
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+> +	priv->rst = devm_reset_control_array_get_exclusive(dev);
+> +	if (IS_ERR_OR_NULL(priv->rst))
+> +		return dev_err_probe(dev, PTR_ERR(priv->rst),
+> +				     "failed to acquire reset\n");
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+Why IS_ERR_OR_NULL() ? What error do you think will be returned by this
+if priv->rst is NULL? (Hint: PTR_ERR(NULL) is 0.)
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
