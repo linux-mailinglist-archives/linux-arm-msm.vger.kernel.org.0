@@ -1,79 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-60747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A3EBAD32A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 11:51:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87783AD32B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 11:52:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B06753B7AFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 09:50:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BCBE71886251
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 09:52:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49FEA28CF4B;
-	Tue, 10 Jun 2025 09:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 288E328B7F0;
+	Tue, 10 Jun 2025 09:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="scAx+Ssr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p8Kh8YV+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6DB28B7F6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 09:48:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9C2288C34
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 09:50:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749548897; cv=none; b=K3Y66yNhXtsUrMaETR+08SNpiSj0y+9sINKEEgEHdSWajX2WszE9KKWgxoEmSM53CIR98FdNgRWV/u0HbEvVlVXK1dHYaExnmMqwapOihjWBbLCujWhxk1GWuU8xSikIy+egnGjh1QjriRvajOa6oKmwCpe4nXPYbWbnsGppSBw=
+	t=1749549046; cv=none; b=KLV5wniUVjBqhVJ3lC791h9owUBOYwKf1ElZ6KXZEaXmBzTmHPEJWmPd2rwz99QhWvqnRnF+ESdcA/JGPiQGfxuFgJBcA5nE7DOl4NDcq6hB7ttOjADWVMCFuscC0cOo5XP6FKmjK0b76WoFPy0YFuLWHIlcldk/M9jOIP36h2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749548897; c=relaxed/simple;
-	bh=drtc7gbE8EVnagG9aoANO0Qzm9NCLkeYbn19VDrN7lk=;
+	s=arc-20240116; t=1749549046; c=relaxed/simple;
+	bh=8Ll2kob0wSYtYqhFir3rxUwGEptHOBJiRRepu1pCBG0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EKDle8YJSu8XBGNoEANU+y56rZVCB9Nrpu+uJ8tYAE6UYaiUVwC0qFgzjMUKbGsXRxnJz4rjIYWHkRJmWnQSGU2Sa2YT3sBqwCMnhACgWfVcYh0d8nH6i5dd5jD84CeEWMfoNm5GQG8zbY9l0YApBI5Hl5EOuXl9Pv3rCLxc1TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=scAx+Ssr; arc=none smtp.client-ip=209.85.208.174
+	 In-Reply-To:Content-Type; b=ngDFukXi3sB+2LJZ5BdkWSXtTi9xdjCydaDZXXBOlUwtPOIM1aBOAG+hVt4o7tFvlRQXPgLSzxhrzXZrp7avVWDX2+om3WtLWwiYfROdXgavzmwpbsH0coSp5d+OHYv2U0FbyCWmxOtTZTRYlXmwEA1vzboufxMZT2H7qTPrMdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p8Kh8YV+; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-32aad2ab31eso2109901fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 02:48:15 -0700 (PDT)
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3a50956e5d3so4337634f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 02:50:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749548893; x=1750153693; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1749549042; x=1750153842; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=sgWX/fDU4kZifwwXOkRhcJUMm2OkuAYm3wpAj+nwwK8=;
-        b=scAx+SsrlfVuPuqcaMtTXapNGGrTB5aQau5mq50//ivDM8yO1CJcmReZzhMlsMy6vK
-         ftl3ZMclXD6FVwN2c2ZGJQsTnruNK4EW3kv/EpiG0zu1bkTqUlBS92VD/yNG41MXeWmz
-         WX/UgUkfMjGMwI/kMWg4sGaKLlH3tdlhLGy1XoWAArjwUFiAkPFyHugg6xZJcVA+raPK
-         W0Pa0P4WCdvQ9CIuj5B7RxYW0GLJ1Ahbz7SqMc7opdXZEp40LqCJ+sEkTyO/5jmLoOgp
-         mr1xPKawAjKUcs0DoTFx+5W/JNP/2+wtBzbpydrdVTbfTDDx0qk3+vVf9QeCNXwmpWEi
-         LP+A==
+        bh=s8TznzlpknrW4G6RXb6OY8061/Q2TUa7Ep05qd1XEIo=;
+        b=p8Kh8YV+1h0Mtfja6dRk9SorulJQLx5zlkXLR4MhDw7Mzhwf3dam/zWzfjekXS5ElO
+         TmDj8LqG0qOcGo1VeUPBJZQtltFAC7UpeFbsVy7u2lCE4aYnMfBsjpz7Vwa0IJJ4O1V3
+         qxvd49C1MtYbOazkrUhv+gzXq5y+yN8cbZ31ajzKji7Ge9d36QoWQl8lpSW5Y2bT49/U
+         cPmVYFU/8/xQ9q3oRRKDKCHOHUhZkP4DlcCrnjika9XKGb8/Y0htUZQ7Ikm6FjpD1aw3
+         T+G6elY0pcY1WqjyRh8yfR0L8tIJ8sYsftNpxK3k4EX2lvNnprRkMIuiBFqfq+RpZBwv
+         e5RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749548893; x=1750153693;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1749549042; x=1750153842;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sgWX/fDU4kZifwwXOkRhcJUMm2OkuAYm3wpAj+nwwK8=;
-        b=aDIynQeG+G7REVPE9HzBjm/GKhlh5K3zXDqRiT3YFbVSQ+kKV5mag2FYDEFOQXi60H
-         Om9ZDkSRMQ7mUzXCY3pR5zKSH3XmH3O94wI8XksGbdVJ6zwYwtGyp/oPJvTyhH3U0e/A
-         fYRzejF8hM41pbhv/+zjOvpF0kpaBX12L1LmANH/VyMuBl6/Hbcv83QvAMyeBXrHGUO6
-         Uhd5NPwrc9vx68aONEY8Z4G6IUKCnGWZC1KNh1rPN96KvtR1VEECbyrwEDjvd0Rk7DSl
-         ujSqmJQFgrc/5jv/fWSD5g6XgZnpgZxKzVz6C0DJ6/Jqad8ek59g8gf6xeoD6gL/HCl9
-         N1dw==
-X-Gm-Message-State: AOJu0YyO6dtJkDH39hJgSRXiX4EoCEYxBkCCA/1vRvSbbDbLd6aXtje1
-	UCfSbpFcayJ8p9TeMR+DuccUDhuVT0w9S6+EN82y08sw4mKhU25G5X1NL4brbZQ9TiI=
-X-Gm-Gg: ASbGncs2Ams+vjqbqC5J+KV/NecoPyO2JOypXZ3IYrbPFyMR5DRrWJ9oqQWJ6ezfRSv
-	q5EOsYTST6hLszW2nkcMT4b5J02eivNCzbsq86k1jc2VjCU8w4iL0PhWFeRfvr8HIyBBef/ponv
-	RMMP19FBkVhIPe/noXD4+nxviBtIVgiUKlxh9ayJX8YZ71R6oCYHxrBFL5FI0d3e+w188GdO3wv
-	xI/l2vcTw7/hCiFPmOQ4JEOtTKAf7Xf7p2KeTynp/rbFi/jkXuAcgIsji7OYK8cZUq31Hn3Wqt7
-	XrW8paFVrGhbEis0N1+t8Fot9m1WDMTxWMOBt6qJgiYl1xJPHwVA8/q/zzZw+hzESrAhHFUPsVy
-	7FAtIlWMn+QhkDj4t1+FGW7JFINwUCsHDNNY8sdKN
-X-Google-Smtp-Source: AGHT+IGe42fvbz6UNMq3WeYyozKULgQbXzEyVJQNlI32jNbCy2BtIg4bwXtTOyqOT4GzCdoEQ38Mew==
-X-Received: by 2002:a05:6512:3b96:b0:553:2e90:98c6 with SMTP id 2adb3069b0e04-553687982cemr1368395e87.11.1749548892235;
-        Tue, 10 Jun 2025 02:48:12 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55367722392sm1471777e87.127.2025.06.10.02.48.11
+        bh=s8TznzlpknrW4G6RXb6OY8061/Q2TUa7Ep05qd1XEIo=;
+        b=uXIdWGGPaZGM46WJJCnJHAPbTV72RjwTs9Cdt3lRpNc6UNEg3kDetHk4fkiJOTbapD
+         pjFXphAsdYqB1HiPR4sDBfYqVPCaQZzU9pDFFKoEQeRc87gOSrwwwUpVRO8YJAi4fb4V
+         2y9xOISO9IXJW1HD9fp04kzBo/ErCPvLMaqeEtkMSKBS2CPTIdmV831s/H5FWFnfCYWw
+         Yvv0mQU1uBil3uFxfuIGyHaJ00J7nzsB2ATugZYBH5mfDmHRA/bHqilWHnZDPaEd6Y0p
+         VkrWUJUMO6Om65r2s1FiSOJYHASYleFF0SBeq0NQaN/pWbCd99AqzXIp/oHLkxqdqFG3
+         2NDg==
+X-Gm-Message-State: AOJu0YyOkM8r8uPoJALFXQUnKfUDTiMg8itohMz+hb8XGsQA0LqMuYfI
+	RepjCWhs5D/fIBMhlbw9qJvvz8w+Rc0+KC3rq7nZVm8DiXUnIRbIuP0Awlz0dddl4+TSv6fUB3f
+	XmX7S8Gw=
+X-Gm-Gg: ASbGncsiL/pQzOVdaSBdQaZ1u/WP/5V1OA+9NxIUKYtH6dFGy1Q8zcTtYm5ws7ihdrO
+	60pPrR4PKPjUaMlhpNa4oezcrBUvwV9EM2vsHWGUdGOCSSJ8OTkNs7YTOuQ8biNEiSuuBU/jMEh
+	DNKKoSPsgDWmpnB0X2C7LjG7FjlrODTvtvpi5t69c6ywk+ahb/jLd24oQkhnevecb7mluOvX4J2
+	2QIiDVE9poJyU4KoflKtmFBze7FpGyQFxWgMAvILjEKFhAMYNx4ATGuQqmdSWbq0IFRn5hCzYN5
+	gvimicKSOKMGva1WdmJfuhuS1B5nm+gSjStSD6kOesh0m5eKnRjXc+pSdBkGONoQrsL8JdWPceY
+	WP/d6LkOYdnmYyTn9ALEqyxi4rog=
+X-Google-Smtp-Source: AGHT+IFusBXxkEoy5ESx9MfQVNtq1yC/GkKu9UVFSbJCvfrUmjZpjS8AwFM+vB8gJqBUqNEpqvdK3g==
+X-Received: by 2002:a05:6000:288b:b0:3a4:fc3f:b7fd with SMTP id ffacd0b85a97d-3a552275450mr1444778f8f.19.1749549041672;
+        Tue, 10 Jun 2025 02:50:41 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a53244fceasm11618998f8f.82.2025.06.10.02.50.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jun 2025 02:48:11 -0700 (PDT)
-Message-ID: <0367d5bd-a42e-4b6c-b841-ba20190b3127@linaro.org>
-Date: Tue, 10 Jun 2025 12:48:10 +0300
+        Tue, 10 Jun 2025 02:50:41 -0700 (PDT)
+Message-ID: <dc4720a8-2f15-44aa-9a52-8440c7518328@linaro.org>
+Date: Tue, 10 Jun 2025 10:50:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,60 +83,69 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH RESEND] arm64: dts: qcom: sm8550: Add support for camss
-Content-Language: ru-RU
-To: Wenmeng Liu <quic_wenmliu@quicinc.com>, rfoss@kernel.org,
- bryan.odonoghue@linaro.org, todor.too@gmail.com, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Wenmeng Liu <quic_wenmliu@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, andersson@kernel.org, konradybcio@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
  quic_depengs@quicinc.com
 References: <20250516072707.388332-1-quic_wenmliu@quicinc.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20250516072707.388332-1-quic_wenmliu@quicinc.com>
+ <0367d5bd-a42e-4b6c-b841-ba20190b3127@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <0367d5bd-a42e-4b6c-b841-ba20190b3127@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hello Wenmeng.
-
-On 5/16/25 10:27, Wenmeng Liu wrote:
-> Add support for the camera subsystem on the SM8550 Qualcomm SoC. This
-> includes bringing up the CSIPHY, CSID, VFE/RDI interfaces.
+On 10/06/2025 10:48, Vladimir Zapolskiy wrote:
+> Hello Wenmeng.
 > 
-> SM8550 provides
-> - 3 x VFE, 3 RDI per VFE
-> - 2 x VFE Lite, 4 RDI per VFE
-> - 3 x CSID
-> - 2 x CSID Lite
-> - 8 x CSI PHY
+> On 5/16/25 10:27, Wenmeng Liu wrote:
+>> Add support for the camera subsystem on the SM8550 Qualcomm SoC. This
+>> includes bringing up the CSIPHY, CSID, VFE/RDI interfaces.
+>>
+>> SM8550 provides
+>> - 3 x VFE, 3 RDI per VFE
+>> - 2 x VFE Lite, 4 RDI per VFE
+>> - 3 x CSID
+>> - 2 x CSID Lite
+>> - 8 x CSI PHY
+>>
+>> Co-developed-by: Depeng Shao <quic_depengs@quicinc.com>
+>> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+>> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 210 +++++++++++++++++++++++++++
+>>   1 file changed, 210 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/ 
+>> dts/qcom/sm8550.dtsi
+>> index e9bb077aa9f0..722521496a2d 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> @@ -3326,6 +3326,216 @@ cci2_i2c1: i2c-bus@1 {
+>>               };
+>>           };
+>> +        isp: isp@acb7000 {
+>> +            compatible = "qcom,sm8550-camss";
+>> +
 > 
-> Co-developed-by: Depeng Shao <quic_depengs@quicinc.com>
-> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
-> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/sm8550.dtsi | 210 +++++++++++++++++++++++++++
->   1 file changed, 210 insertions(+)
+> This is the first time, when 'isp' label is used instead of 'camss', it 
+> might
+> be I missed the context, is there any particular reason to do such a 
+> change?
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index e9bb077aa9f0..722521496a2d 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -3326,6 +3326,216 @@ cci2_i2c1: i2c-bus@1 {
->   			};
->   		};
->   
-> +		isp: isp@acb7000 {
-> +			compatible = "qcom,sm8550-camss";
-> +
+> If the label name is changed to the regular 'camss', then
+> 
+> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> 
+> -- 
+> Best wishes,
+> Vladimir
 
-This is the first time, when 'isp' label is used instead of 'camss', it might
-be I missed the context, is there any particular reason to do such a change?
+List feedback from DT people is isp@ is the correct prefix.
 
-If the label name is changed to the regular 'camss', then
-
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-
---
-Best wishes,
-Vladimir
+---
+bod
 
