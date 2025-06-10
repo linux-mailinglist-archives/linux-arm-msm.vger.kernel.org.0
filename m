@@ -1,80 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-60832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91E68AD3C6C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 17:14:53 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB07BAD3DDB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 17:48:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 772593A53B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 15:10:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B77387A32FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 15:47:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3D1F23536B;
-	Tue, 10 Jun 2025 15:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57E04235BE5;
+	Tue, 10 Jun 2025 15:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uNo1kwLA"
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="EC83WCWq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out.smtpout.orange.fr (out-72.smtpout.orange.fr [193.252.22.72])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080B9235078
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 15:10:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F601EB5B;
+	Tue, 10 Jun 2025 15:48:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.252.22.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749568238; cv=none; b=hsgVG9Di3jgrK0XvlBXWtJsWJ8dbKwxtIgrxKqI90iBCbgSah8vBEUBVuvd0dDT+eth61EGzNsRTUMFeo440eTohwEu8lIsqT9/e6Jb3dLnCwWwEHciEhAHyRMNEUppRZMa6I0VkJO6FMXAx/BsLKi10cFrXHLfr+ZOuCifd/II=
+	t=1749570511; cv=none; b=RN2K58O9fnMwPjTDIEvi8ZgJqcY0Zjvd0j5tbKwU2hcpP/q938p8cA2En6mbXeFxjHUSDEG5K9g4NpH5G84Y1qtctwD1n+FDEqqMPoPQDa4uSJacJKmdmbET+oSsDkv7gB2lUQ5HlSCSfZQRzEWjSgOBwXllJpAY+RqEP1iDaPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749568238; c=relaxed/simple;
-	bh=K16qniHpP1rKeMQwwTwoeEHkNwIBAmZZGNj2G/YDHZc=;
+	s=arc-20240116; t=1749570511; c=relaxed/simple;
+	bh=DPCZKmqe6KLsdpWRELAuTfIYliurAwbzWQccF/Ay6zk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nL8cMqJTkn8cUezfyj4O+SCc3M+CYMvpYrTQPYJa1tKqkeL7ak6AotdFhrjmGlBFbgE6pMBDbruDIrom3nuwzXFdmI9dhjzPD5q8cBx9KWvqjSeb1cF4pmDcxKhpoNQ4tCsynULfkPgggpIQq0aTZj6SvNYI8k6v/M9Vf5tk1jQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uNo1kwLA; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-55333839ffaso446854e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 08:10:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749568235; x=1750173035; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3/NJem0CCXpUoiew+hmOOEKe+Dga4CVHATU4U2OxMVQ=;
-        b=uNo1kwLAv51ceXp833OhKyCYE5ERoiUMYBBtdbZv8rluN18y5Yhiv9PG0q7nCrhOk4
-         iP7Qvec0ck/nxLmKITDjdKGx7sl8uiJet0UOryS+NxWlfpBADQZtKCajzAUJw7LyVI3O
-         8ZCzpeT+9+MiZilXNz/5VCPT3iOlqX8WWokLKCH9HfiBeHQO+aHceC3HPrH4LVexSMRz
-         47KT2VR2Uz3nLMiH3uJ2kVXtCTHtJqzr5OzP0BdYNUUEvrM8KuEij5cgDu5Is9gq0uha
-         h8X6ot4/v024E7Ryjpkkbd8cbIsEckzJo8IJj5wAPZCXpkD49paxMKCWn1LLpnR2vv+b
-         PCuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749568235; x=1750173035;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3/NJem0CCXpUoiew+hmOOEKe+Dga4CVHATU4U2OxMVQ=;
-        b=Je61nsVk8bNoH8tbsUUvuvv9QCkW9CurYVXoblMG905Vg864bIhKj4egAuE/37M5am
-         9zffIi9kWT54nMkPnKsnYvfALwC//N6BaEOAIFH+E1Z8bolQ0ZnvvvE+AAs5h0C0q2Ie
-         3MW3PrjzjJGA8ObGbSp1IyXQ0gYFzeFJ4dMWGiDAjC4Ui/ZTbm5Q07pZ4vKDIrknGbzo
-         FHLLcNvcL5LULQE6QXNwQ39QKv7njNgnwstbwxgCTqv07ZLXcTY20DlneNmtilMJfInj
-         TcZ4ZQdgNtOAXg/IkGFrVMsFdoDnBPu8oOzvicxnpWVwa6f7dcx4sFIY1ecTVkCcZ6HF
-         gYqA==
-X-Forwarded-Encrypted: i=1; AJvYcCXH8gyA/l/PINHGJXpT7a9SvLNj5LtAjtYGc55ptbqIx6RO7njOiEO/oExOpbyJhemhAi+mLUUEfMNdl+Bo@vger.kernel.org
-X-Gm-Message-State: AOJu0YzCjdY9cZmEZ70JD0opzfOwbKCyV/bEkRcNEqF9Y5Tvfeq+6iS/
-	ACLhGup79kYzyHs7Pky++3M+q/b4aA3vNHHQlXKldAtEAAzA4sEokOrdMwtPgkdi5AI=
-X-Gm-Gg: ASbGnctndHDnfDPYf8VFACOYBogK9kY3PBSDZkk5BZaBEJv/QVlEbVfBU8bt4zwzCv5
-	a+VXJsL8xXRc5hKL17e5x8mDfecYOP5T2Sz7qa6D9E850gbQs1iCuq1t7n/7U/DTm2kH6e6bDuB
-	Wmtg2WI1drAIrzJa0DU4J/gfyIwS+gv9KNAeXHBCvbshULbU2BpOpGKmJ59STwo5C4MraqwPDrI
-	/0rawjgsYXTHzgAYBC8aaqargwN6L3iX8mq9q4ZcvHlAx5UL/MjjYoJQPx+WTzVHqNCNqA6dDba
-	bjclcYuQI+SUgOpO+qNNGklo7kQJlpkA6FWH77S4hKQPd0QTMOHjGvWAwyxj4yZfhXk7Ugh2z6t
-	G9OhPJvem5Mq4DyERsm0EQuLWPe+1iFtwnnRiHQ+g
-X-Google-Smtp-Source: AGHT+IGWP0mYIM0V+jmKRvUZVJcYGowyFpThgb2g5qr9J0zY4ATJ9nMZs6lGrCBfIU9ObrVo71xwwA==
-X-Received: by 2002:a05:6512:3e1b:b0:553:391f:2554 with SMTP id 2adb3069b0e04-5536860f8a4mr1434711e87.5.1749568234994;
-        Tue, 10 Jun 2025 08:10:34 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553677222aasm1578146e87.105.2025.06.10.08.10.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jun 2025 08:10:34 -0700 (PDT)
-Message-ID: <97e51ab0-737b-496e-81df-b73c9f598bb0@linaro.org>
-Date: Tue, 10 Jun 2025 18:10:33 +0300
+	 In-Reply-To:Content-Type; b=WxBXOMre/rvsX+7DbV6xD9ZAWdEJKLCYscmNoGsChR8Q4JkcBlKatNMGo3Bmi26glHMilKIqf5+IB85OdCoCM+YcF9UoE71na0QfgyzL+MbCzHTd6mXgH1P9VnPCSt1KiXdBw+5GYKCXOsAnw9+nztkgCCbWkQsczvV3uud43VQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=EC83WCWq; arc=none smtp.client-ip=193.252.22.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+Received: from [172.16.82.72] ([124.33.176.97])
+	by smtp.orange.fr with ESMTPA
+	id P1CsuQaoBVbicP1Cuu8707; Tue, 10 Jun 2025 17:48:25 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1749570505;
+	bh=hLNYfBAm8Db4RivC9m4UtJY5EbKQApeN/nL5cCj0Ugs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=EC83WCWq0Suc7xo7F75oL6tuLJhZcGgcA6T6SjE5M2HznAFXg+53/ja2YV2L9jlm4
+	 67XAJYZjzNIulLfpR9HbVmuA69kx2uRbqwRC7P4itIvQxYL7jWvnqZIqoFwUBoyCaG
+	 H3MPbtXKHrbdoEz3hjUlSsEwc2yUrPfZcdlFT5dWCWJJ/0qWSWULoXHqI8jwgTD9wt
+	 +88473ymjTW0O1lA5aOjECvA7xFkyKjOqMpuNk4fIXCc5bKmdofVWaX8JRwPiGBEKr
+	 AfmH/5enwlcQEMJBSCx3HPKFHMg8JhbUC/Q3N0I4p387Fb8+i1cIfr4CTBAhSvUx1/
+	 QTmOlFNpa0KAw==
+X-ME-Helo: [172.16.82.72]
+X-ME-Auth: bWFpbGhvbC52aW5jZW50QHdhbmFkb28uZnI=
+X-ME-Date: Tue, 10 Jun 2025 17:48:25 +0200
+X-ME-IP: 124.33.176.97
+Message-ID: <b9ea7e0e-7dd1-460b-950a-083620dd52e9@wanadoo.fr>
+Date: Wed, 11 Jun 2025 00:48:09 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,52 +57,110 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: media: qcom,x1e80100-camss: Sort
- interconnect alphabetically
-Content-Language: ru-RU
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Hans Verkuil <hverkuil@xs4all.nl>,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250610083318.2773727-1-vladimir.zapolskiy@linaro.org>
- <a072d00e-df91-420b-9363-424bcdf1ed8e@linaro.org>
- <3e8f8220-1fad-437e-9fa4-5eb628891110@linaro.org>
- <ae364f1c-5d64-4178-b26c-e58e352feee0@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <ae364f1c-5d64-4178-b26c-e58e352feee0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 3/4] net: can: mcp251x: use new GPIO line value setter
+ callbacks
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linux-can@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Andrew Lunn <andrew@lunn.ch>, Vladimir Oltean <olteanv@gmail.com>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ "Chester A. Unal" <chester.a.unal@arinc9.com>,
+ Daniel Golle <daniel@makrotopia.org>, DENG Qingfang <dqfext@gmail.com>,
+ Sean Wang <sean.wang@mediatek.com>, Matthias Brugger
+ <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Marc Kleine-Budde <mkl@pengutronix.de>,
+ Heiner Kallweit <hkallweit1@gmail.com>, Russell King <linux@armlinux.org.uk>
+References: <20250610-gpiochip-set-rv-net-v1-0-35668dd1c76f@linaro.org>
+ <20250610-gpiochip-set-rv-net-v1-3-35668dd1c76f@linaro.org>
+ <b2f87cff-3a81-482b-bfdd-389950b7ec8e@wanadoo.fr>
+ <CAMRc=MfCwz3BV15aATr_5er7wU=AmKV=Z=sHJyrjEvLwx2cMjQ@mail.gmail.com>
+Content-Language: en-US
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Autocrypt: addr=mailhol.vincent@wanadoo.fr; keydata=
+ xjMEZluomRYJKwYBBAHaRw8BAQdAf+/PnQvy9LCWNSJLbhc+AOUsR2cNVonvxhDk/KcW7FvN
+ LFZpbmNlbnQgTWFpbGhvbCA8bWFpbGhvbC52aW5jZW50QHdhbmFkb28uZnI+wrIEExYKAFoC
+ GwMFCQp/CJcFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AWIQTtj3AFdOZ/IOV06OKrX+uI
+ bbuZwgUCZx41XhgYaGtwczovL2tleXMub3BlbnBncC5vcmcACgkQq1/riG27mcIYiwEAkgKK
+ BJ+ANKwhTAAvL1XeApQ+2NNNEwFWzipVAGvTRigA+wUeyB3UQwZrwb7jsQuBXxhk3lL45HF5
+ 8+y4bQCUCqYGzjgEZx4y8xIKKwYBBAGXVQEFAQEHQJrbYZzu0JG5w8gxE6EtQe6LmxKMqP6E
+ yR33sA+BR9pLAwEIB8J+BBgWCgAmFiEE7Y9wBXTmfyDldOjiq1/riG27mcIFAmceMvMCGwwF
+ CQPCZwAACgkQq1/riG27mcJU7QEA+LmpFhfQ1aij/L8VzsZwr/S44HCzcz5+jkxnVVQ5LZ4B
+ ANOCpYEY+CYrld5XZvM8h2EntNnzxHHuhjfDOQ3MAkEK
+In-Reply-To: <CAMRc=MfCwz3BV15aATr_5er7wU=AmKV=Z=sHJyrjEvLwx2cMjQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 6/10/25 18:02, Bryan O'Donoghue wrote:
-> On 10/06/2025 13:45, Vladimir Zapolskiy wrote:
+On 10/06/2025 at 23:05, Bartosz Golaszewski wrote:
+> On Tue, Jun 10, 2025 at 3:55 PM Vincent Mailhol
+> <mailhol.vincent@wanadoo.fr> wrote:
+>>
+>> On 10/06/2025 at 21:37, Bartosz Golaszewski wrote:
+>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >>>
->>> How is this a Fixes: ?
+>>> struct gpio_chip now has callbacks for setting line values that return
+>>> an integer, allowing to indicate failures. Convert the driver to using
+>>> them.
+>>>
+>>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 >>
->> I call it the fix to the dt-bindings documentation, then what is this
->> change, if it's not a fix?..
+>> This does not match the address with which you sent the patch: brgl@bgdev.pl
 >>
->> Anyway, if there is a strong disagreement about if it's a fix or not,
->> the Fixes tag can be dropped from the change, since it's so secondary.
+>>> ---
+>>>  drivers/net/can/spi/mcp251x.c | 16 ++++++++++------
+>>>  1 file changed, 10 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/drivers/net/can/spi/mcp251x.c b/drivers/net/can/spi/mcp251x.c
+>>> index ec5c64006a16f703bc816983765584c5f3ac76e8..7545497d14b46c6388f3976c2bf7b9a99e959c1e 100644
+>>> --- a/drivers/net/can/spi/mcp251x.c
+>>> +++ b/drivers/net/can/spi/mcp251x.c
+>>> @@ -530,8 +530,8 @@ static int mcp251x_gpio_get_multiple(struct gpio_chip *chip,
+>>>       return 0;
+>>>  }
+>>>
+>>> -static void mcp251x_gpio_set(struct gpio_chip *chip, unsigned int offset,
+>>> -                          int value)
+>>> +static int mcp251x_gpio_set(struct gpio_chip *chip, unsigned int offset,
+>>> +                         int value)
+>>>  {
+>>>       struct mcp251x_priv *priv = gpiochip_get_data(chip);
+>>>       u8 mask, val;
+>>> @@ -545,9 +545,11 @@ static void mcp251x_gpio_set(struct gpio_chip *chip, unsigned int offset,
+>>>
+>>>       priv->reg_bfpctrl &= ~mask;
+>>>       priv->reg_bfpctrl |= val;
+>>> +
+>>> +     return 0;
+>>
+>> mcp251x_gpio_set() calls mcp251x_write_bits() which calls mcp251x_spi_write()
+>> which can fail.
+>>
+>> For this change to really make sense, the return value of mcp251x_spi_write()
+>> should be propagated all the way around.
+>>
 > 
-> Since we don't have a committed upstream user I don't think this is an
-> ABI break.
+> I don't know this code so I followed the example of the rest of the
+> codebase where the result of this function is never checked - even in
+> functions that do return values. I didn't know the reason for this and
+> so didn't want to break anything as I have no means of testing it.
 
-Well, Dmitry says it's an ABI break... It would be beneficial to come to
-a common understanding here.
+The return value of mcp251x_spi_write() is used in mcp251x_hw_reset(). In other
+locations, mcp251x_spi_write() is only used in functions which return void, so
+obviously, the return value is not checked.
 
-> But I also don't think it warrants a Fixes: tag either, there's no bug.
+> Can you confirm that you really want the result to be checked here?
 
-There is no bug, but there are Documentation/ changes with Fixes tags,
-it's okay.
+That's the point of those new gpio setters, isn't it? If we do not check the
+result, I do not understand the purpose of the migration.
 
-I will resend the changes with whatever updates requested by both of you,
-if they do not contradict to each other.
 
---
-Best wishes,
-Vladimir
+Yours sincerely,
+Vincent Mailhol
+
 
