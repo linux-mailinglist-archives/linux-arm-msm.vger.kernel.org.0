@@ -1,216 +1,301 @@
-Return-Path: <linux-arm-msm+bounces-60773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7BEBAD360A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 14:22:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECEDBAD3606
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 14:22:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 613453A6CD0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 12:21:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A28F91676D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 12:22:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1E82290BBA;
-	Tue, 10 Jun 2025 12:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 811F0290D8A;
+	Tue, 10 Jun 2025 12:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HPILu5HQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FPrOUMtk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECB828FFF6;
-	Tue, 10 Jun 2025 12:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B89290D80
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 12:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749558136; cv=none; b=Sd+un3qkGG9dVaUNFcgzgcrEH/vD8cTOto7fXwyMNVwMny5919OcDuJ1I7j/dbD6XSonR3MYWrFyQ97we2pzKZd46afQzLgogGzY7xWQDCkQPbE2e37u5xzSFBERD4l5FttHeJU3A7+ASwi0nOMDJhjkHEteVMC8A2aVcgR1TKA=
+	t=1749558149; cv=none; b=Ii2hh+Wtu+3lpbFISPcbzVfT4yAYfockReT7cemgWZnM+3YFBDLg5eBZ/ZCeIKZxG8PECNzPAAxCtpDjSDLokEvcxmRzBZXfQV1oVezkcj83e7aE3FvVaPC64sFLHdKcCtsk10xP4Jaq6+CstSeQr3qN5peeuphxnj+YrS+Ufig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749558136; c=relaxed/simple;
-	bh=1GTnyJiPlySUW+sdF/eciLUoDRF+5HxLCmh9o8qNeeQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LAByMx/d5FGQlLA3JuZEs0Su3Yx3B2nNXXAhUbZWux8nh3NzO7ghbBb0rYBnhLYg7Uh1fgNYSQUlXgScNaiiIm55HB2rNX4RRL4/vQKdpOayl0ugiwn0n2prRClf09h7I64lbey8a8QkXcuF6PwIbjlcc86p7GhJyK0VmQgGgRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HPILu5HQ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55A8N3gp016705;
-	Tue, 10 Jun 2025 12:22:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1749558149; c=relaxed/simple;
+	bh=3nov+w/79AwM+k5VQ8ISrPEvTChWKftWH47/vtAg6wM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DYRQ+Gq3E6gvA6+FMvT4Q2RpqgHTfwCog7TJe6Cj4it9eyb1egVmkV0UpDoluoiuEoV97UkFTaM7WLarArZCjmDHtWkSyMmncpG5RiI1A2l5hB7RR6ldtInZxbtRFt1Lu/fR4X1u58tU3FXtRm/dlKYAXR18VJiUOYl8t6m0aXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FPrOUMtk; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55A8Xv4x029862
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 12:22:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Z1zz2jZewslSYuANbkXE0TqNW0wgq3c4JFUBtPEF3as=; b=HPILu5HQowy2cKIf
-	+GY6VGuX8gJ8DAP3zjZHJ8cikklM0TJqOgHwubq4jo8RavQrel0rrpDBtB0Li60A
-	htkKtfIMf8MxezOvsd+M7aAaMcuySaTofE1oJuiPHqnPxACoCRXUew6A73Px23LL
-	0y82fwkXC96ZomR8v5947mMN36oBXrM+GAYXUBSQ0f0+cSMZoHlnTEB/mBrl+dZb
-	O4wc115htKHHBU4QX4bfiUh2lXkFqCnFFzh9MjnEzUgXCBPfscR3TEDyUEVIQPYP
-	rK3i0pHD1rlCde+WZXOmL80VSkuRIo+wut5fauLxhLuHnaSypo/oKjMgk0/utDV2
-	OcPklQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474dn69ac7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Jun 2025 12:22:10 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55ACMAe6028955
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Jun 2025 12:22:10 GMT
-Received: from [10.217.216.18] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Jun
- 2025 05:22:04 -0700
-Message-ID: <94f3e5e0-f04f-ca4a-6133-513223919c72@quicinc.com>
-Date: Tue, 10 Jun 2025 17:52:02 +0530
+	8+4GZCvZhqyfrSQa1jH54+D2CYSj2ei+fDIMKlD+3+I=; b=FPrOUMtkFOEZnRW/
+	k65P0MVJ+tKJPY2J6w7H6qFQK7vcf1T9qrhM9C5qgRDmxa0E9zrj8w2v7SkQCA6L
+	b5NgBFHu9MD82+Rtug93nKmWcX7VZNQGtQvrPIJgKorlaBJyIiTN6GFudRUBP90U
+	3Kp4188+oJwGe6d8WHw2E5ulIBKQdPw0c16r5DBiFQi0mZqlYCSGsh7umsa3oiRZ
+	vl7TjFQUovUoktHwr/fyIvX7LM3I3vvn5Ng6Z+dNEP57KotSdxeEDExyrOWlso2r
+	SzwcXsSPpd6995iwS4aOS284L7wc0D+q7JF9moUOrJPwKZJ1op1fEo1CGFHAlPXJ
+	FyucPg==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474eqch92a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 12:22:26 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6facbe71504so12256396d6.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 05:22:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749558145; x=1750162945;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8+4GZCvZhqyfrSQa1jH54+D2CYSj2ei+fDIMKlD+3+I=;
+        b=iHZ1yL5sqez2HlER8mLAHyVr9YKnDwEUhHSZ/DqJNXZw2Ub3/gIanvF5YOtXZn9oxC
+         yUr4c+0auNo5pzaz2cPScoA11LhMgcL0bdRYcqWiLIKll/7S3RNTWFcnMJbLq9fklkeu
+         LiI2m7U5XRKZ72CwOGzjZ23S1a2DCT2JRpQ6YPOhGD8Yaka683J8yfeK99pKQa327Zsx
+         K9U2eKTJs+JC3u05FIygfNa5gSBkOysNDt0W5nWjZk/AY9c1D/lqdym36iXdWqbOx9Zh
+         Zvnftyb8WyZwkf+LixnDs8PZCvJqJGukeycBkIW/Awf0btWiyjRYtj7UJRML8Cg96odJ
+         KcEw==
+X-Forwarded-Encrypted: i=1; AJvYcCVzJVKAFtuz/qDOpU3NJjEzJ/PE/g3hRLanaNzqMXnxEQHHOznjBradFEzyZfRSmqZw0Yl90VguXC0LTJKh@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLrnqO+EaD0p7oRfSVSu1UBts/sc0KwVeK2mua62a4KRKJfWsD
+	yHfd1hC052JEoXd+yD8LOKnNpraRo6XLBOtQNhWlEHBoaIqZ7Vv8VDEgXDIWbKgMfO4a2PvV+U2
+	O11bls1Hqe3UIXjF2zcsqt7fMUZZ2zzqZeoII1zRwpS7VUaCSXGmacQ1f12lJ2uyYi2jT
+X-Gm-Gg: ASbGncsx2LxOGwcfoMr7ueB5DNOqDtwlUhqm2mDyOZlsgi0TG3PGPErI/AAbae13WsA
+	v6Xaoy99ljwLb+C+6ZKYXjfXGMKxVtirWkjDUeWMG0+JwasE9mOKkXFcZ1VCQh3Gn1WLvuVNVLX
+	uS3dmDVLscR8Gx9l/fnk9gb6MQQTA/778hyiuOqIh4y2y+eq/SJLNguWAymOcCS+5h8LtnMglvC
+	8nxKY+niRup7qWAHVI8CKo5Jr+oGHOdJG8UxOZ7zO+eZ8xQCCvC0kSRSduEAYbusy+qut3Vswc1
+	5Cq2Mr2ue9VTE/0uBuacbMKttDjKJlGPCRBr8aGSvVTeXHUutR7zs+dCORU+CzjObiCdbjN8u1Q
+	K
+X-Received: by 2002:a05:620a:45aa:b0:7c0:cc94:46c4 with SMTP id af79cd13be357-7d331c130dbmr936368585a.2.1749558145240;
+        Tue, 10 Jun 2025 05:22:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH4oLcbxXyO1xJ2NayVpeZmZ1NXXp1e08tUxMVaRB6TMRHASLUCAd4tOqY6AsJIISpCrsxCnw==
+X-Received: by 2002:a05:620a:45aa:b0:7c0:cc94:46c4 with SMTP id af79cd13be357-7d331c130dbmr936366685a.2.1749558144803;
+        Tue, 10 Jun 2025 05:22:24 -0700 (PDT)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ade1dc38a11sm708732266b.116.2025.06.10.05.22.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Jun 2025 05:22:24 -0700 (PDT)
+Message-ID: <024285a5-734a-4543-8a7b-897f8186904d@oss.qualcomm.com>
+Date: Tue, 10 Jun 2025 14:22:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH V3 4/4] mmc: sdhci-msm: Rectify DLL programming sequence
- for SDCC
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sachin Gupta
-	<quic_sachgupt@quicinc.com>
-CC: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/8] dt-bindings: soc: qcom: pmic-glink: Move X1E80100
+ out of fallbacks
+To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Bhupesh Sharma
-	<bhupesh.sharma@linaro.org>,
-        <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <quic_nguyenb@quicinc.com>,
-        <quic_bhaskarv@quicinc.com>, <quic_mapa@quicinc.com>,
-        <quic_nitirawa@quicinc.com>, <quic_sartgarg@quicinc.com>
-References: <20250122094707.24859-1-quic_sachgupt@quicinc.com>
- <20250122094707.24859-5-quic_sachgupt@quicinc.com>
- <nmsm6bb5biptmzruggs4f3mweq7d7hcmwqjdidf6bi7gyoliw2@x4yitguzz6zx>
-From: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-In-Reply-To: <nmsm6bb5biptmzruggs4f3mweq7d7hcmwqjdidf6bi7gyoliw2@x4yitguzz6zx>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDA5NiBTYWx0ZWRfXzkCYqt+57Sn0
- kVzvRFZnIMIZDC46bz5xNmr13PHZwM+shkcpft3LzLejPu29TX10Cgmu6u1I3l63PfX/+deZp2c
- WTvYSysySllGWVY8AVBZH60hHPZAgkqO19dVYTd6469mzjXyTCGWdAc0Z2pPnvXOeSEe6SepTB6
- Gs9ftJi6eWaEUkW2y0pvgUBXwFKVwP8kD5Mr1WIsEuWGafJC3Zc0QN1iXwWxhQSPBxV5fssw+bw
- exL9P27CyzczWQiW5Nf3z2o4xD3FypHVfCu8yt0IN4HO3xjvX9cBKfNIf5PS6ItIn+DUqwUfKR1
- G/KdeCBUQJqGTIAe0nk/bS/KCKWWARAa3WmC5bwCg3PTDZOj44Ztrkr/tYLEHuU52suwUEyIDaB
- kS/zq63JvneAdAM1qBl1zb217GD46dAXsY2ujVa6gUZ5VmCiWsPW3trPQJPvvhfUskOeNB+f
-X-Proofpoint-GUID: _FV2bPgd6m-l5RTim6UL3YkGWEMKA-08
-X-Authority-Analysis: v=2.4 cv=FaQ3xI+6 c=1 sm=1 tr=0 ts=68482372 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8
- a=R1gvGUbQ5fRmNe7AyYsA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: _FV2bPgd6m-l5RTim6UL3YkGWEMKA-08
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
+        David Collins <david.collins@oss.qualcomm.com>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, kernel@oss.qualcomm.com,
+        devicetree@vger.kernel.org, linux-usb@vger.kernel.org
+References: <20250530-qcom_battmgr_update-v2-0-9e377193a656@oss.qualcomm.com>
+ <20250530-qcom_battmgr_update-v2-6-9e377193a656@oss.qualcomm.com>
+ <4e093835-af3b-4a84-b42f-fa7d3a6f60a1@kernel.org>
+ <14cba9ae-e3bb-46e8-a800-be5d979b2e06@oss.qualcomm.com>
+ <b07200a2-4e7b-480e-a683-d116e7da8de8@kernel.org>
+ <c4be4b97-6104-45e3-b555-6691e369c3a4@oss.qualcomm.com>
+ <bcf487c9-e522-44a3-b094-daf98823a195@kernel.org>
+ <a840aa80-75ef-4527-bc17-226ba5157a85@oss.qualcomm.com>
+ <898e998f-11b2-4b08-9580-263046c0615a@kernel.org>
+ <9f332148-57ef-4716-8866-36c702a9aeb6@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <9f332148-57ef-4716-8866-36c702a9aeb6@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDA5NiBTYWx0ZWRfXwfirzA8sqnRX
+ /5wC4o9dDFKznneM48HGpoUEddjoIGJzLAAVaLxHU4/8lfFLKacWWDyPLkr5CADENujiH1eH+4U
+ vnJ5zelUw5ie4xTeW0U0lhIZ9V9BaaqQ0hogKuaxg3yOie+OZznnAd9tzMNCaWFie3XbaO18fEm
+ KE9h0bOm3edikwrirmCyaGjii6FCYkPZhrK7S0sZqLKRBDvv3vLAvVLhp05er5lmCZYUSQ/n2nj
+ 3Sxeega8kWhkIDHuH27Aq6jmNbVYyD3PxMNWYmeeWNutOkk8mJSPKeyYnCitnZBDbUdQz2Vd8Kv
+ +aT1fbc6p7aciTe7seR2mkBh82+fBQPvlu4FL69hlYE37S8H5eYVsek2MfScTwdkM9EXMXnrLqt
+ 1QureoRrT1PHuVCgj7Ew2e97Hlc0qWpv5g2f7tUqcxOaPoCQunRFhYdPA8lVV15LPE0QC9xG
+X-Authority-Analysis: v=2.4 cv=Q7TS452a c=1 sm=1 tr=0 ts=68482382 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=A600xkEho2GeGM6nczkA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-GUID: -Stg2GyM3OHlQxqXk2pEjTHJzYHL2bJ9
+X-Proofpoint-ORIG-GUID: -Stg2GyM3OHlQxqXk2pEjTHJzYHL2bJ9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-10_04,2025-06-10_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 adultscore=0
- mlxlogscore=999 mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0
- priorityscore=1501 clxscore=1015 classifier=spam authscore=0 authtc=n/a
+ suspectscore=0 phishscore=0 mlxscore=0 spamscore=0 mlxlogscore=999
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0 impostorscore=0
+ priorityscore=1501 malwarescore=0 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2505280000 definitions=main-2506100096
 
-Hi Dmitry,
+On 6/4/25 11:40 AM, Fenglin Wu wrote:
+> 
+> On 6/3/2025 5:34 PM, Krzysztof Kozlowski wrote:
+>> On 03/06/2025 09:41, Fenglin Wu wrote:
+>>> On 6/3/2025 3:06 PM, Krzysztof Kozlowski wrote:
+>>>> On 03/06/2025 08:59, Fenglin Wu wrote:
+>>>>> On 6/3/2025 2:47 PM, Krzysztof Kozlowski wrote:
+>>>>>> On 03/06/2025 08:42, Fenglin Wu wrote:
+>>>>>>> On 6/2/2025 3:40 PM, Krzysztof Kozlowski wrote:
+>>>>>>>> On 30/05/2025 09:35, Fenglin Wu via B4 Relay wrote:
+>>>>>>>>> From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+>>>>>>>>>
+>>>>>>>>> Move X1E80100 out of the fallbacks of SM8550 in pmic-glink support.
+>>>>>>>> Why?
+>>>>>>>>
+>>>>>>>> Do not describe what you do here, it's obvious. We see it from the diff.
+>>>>>>>>
+>>>>>>>>
+>>>>>>>> Best regards,
+>>>>>>>> Krzysztof
+>>>>>>> Previously, in qcom_battmgr driver, x1e80100 was specified with a match
+>>>>>>> data the same as sc8280xp, also sm8550 was treated a fallback of sm8350
+>>>>>>> without the need of a match data.
+>>>>>>>
+>>>>>>> In ucsi_glink driver, sm8550 had a match data and x1e80100 was treated
+>>>>>>> as a fallback of sm8550. There was no issues to make x1e80100 as a
+>>>>>>> fallback of sm8550 from both qcom_battmgr and ucsi_glink driver perspective.
+>>>>>>>
+>>>>>>> In patch [5/8] in this series, in qcom_battmgr driver, it added charge
+>>>>>>> control functionality for sm8550 and x1e80100 differently hence
+>>>>>>> different match data was specified for them, and it makes x1e80100 ad
+>>>>>>> sm8550 incompatible and they need to be treated differently.
+>>>>>> So you break ABI and that's your problem to fix. You cannot make devices
+>>>>>> incompatible without good justification.
+>>>>> I would say x1e80100 and sm8550 are different and incompatible from a
+>>>>> battery management firmware support perspective. The x1e80100 follows
+>>>>> the sc8280xp as a compute platform, whereas the sm8550 follows the
+>>>>> sm8350 as a mobile platform.
+>>>> Not correct arguments for compatibility.
+>>>>
+>>>>> The difference between them was initially ignored because the sm8550
+>>>>> could use everything that the sm8350 has, and no match data needed to be
+>>>>> specified for it. However, now the sm8550 has new features that the
+>>>>> sm8350 doesn't have, requiring us to treat it differently, thus the
+>>>>> incompatibility was acknowledged.
+>>>> So they are perfectly compatible.
+>>>>
+>>>> I really do not understand what we are discussing here. Explain in
+>>>> simple terms of DT spec: what is incompatible that SW cannot use one
+>>>> interface to handle the other?
+>>> 1. x1e80100 was a fallback of sc8280xp, it used "sc8280xp_bat_psy_desc"
+>>
+>> No, that's not true. Read the binding again:
+>>
+>>                - qcom,x1e80100-pmic-glink
+>>             - const: qcom,sm8550-pmic-glink
+>>
+>> No fallback to sc8280xp.
+>>
+>>
+>>> when registering the power supply device.
+>>>
+>>> 2. sm8550 was a fallback of sm8350, and they all used
+>>
+>> Also not true. The remaining fallback is not sm8350.
+>>
+>>
+>>> "sm8350_bat_psy_desc" when registering the power supply device.
+>>>
+>>> 3. x1e80100 and sm8550 they are incompatible as they are using different
+>>> data structure of "xxx_bat_psy_desc"  and other “psy_desc" too, such as,
+>>> ac/usb/wls.
+>> Look at the driver and bindings now - they are compatible. It looks like
+>> you made it incompatible and now you claim the "they are incompatible".
+>> No, you did it. Look at the driver.
+>>
+>>
+>>
+>>> 4. For charge control functionality, it's only supported in the battery
+>>> management firmware in x1e80100 and sm8550 platforms. And the change in
+>>> battmgr driver (patch [5/8]) adds the support by using 2 additional
+>>> power supply properties, which eventually need to be added in the
+>>> "properties" data member of "xxx_bat_psy_desc" when registering power
+>>> supply devices. Hence, "x1e80100_bat_psy_desc" and "sm8550_bat_psy_desc"
+>>> are created and used separately when registering power supply device
+>>> according to the "variant" value defined in the match data.
+>>>
+>>> The main code change is in [5/8], I am pasting a snippet which might
+>>> help to explain this a little bit:
+>>>
+>>> -       if (battmgr->variant == QCOM_BATTMGR_SC8280XP) {
+>>> -               battmgr->bat_psy = devm_power_supply_register(dev,
+>>> &sc8280xp_bat_psy_desc, &psy_cfg);
+>>> +       if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
+>>> battmgr->variant == QCOM_BATTMGR_X1E80100) {
+>>> +               if (battmgr->variant == QCOM_BATTMGR_X1E80100)
+>>> +                       psy_desc = &x1e80100_bat_psy_desc;
+>>> +               else
+>>> +                       psy_desc = &sc8280xp_bat_psy_desc;
+>>> +
+>>> +               battmgr->bat_psy = devm_power_supply_register(dev,
+>>> psy_desc, &psy_cfg);
+>>>                   if (IS_ERR(battmgr->bat_psy))
+>>>                           return dev_err_probe(dev,
+>>> PTR_ERR(battmgr->bat_psy),
+>>
+>> This explains nothing to me. I think you did not get my questions at all
+>> and just want to push whatever you have in drivers.
+>>
+>> Such ping pongs are just tiring, so go back to my previous email, read
+>> it carefully and try harder to understand what compatibility means.
+>>
+>>
+>> NAK, you are affecting the users and ABI with justification "I make it
+>> now incompatible, so it is incompatible".
+>>
+>> Best regards,
+>> Krzysztof
+> 
+> Thanks for the explanation with patience. I misunderstood the fallback behavior.
+> 
+> I was worried about if the compatible string matching would work correctly if both the device node and the driver declared multiple identical compatible strings.
+> 
+> I understand now and even if the device node and the driver have defined multiple identical compatible strings, the best match which is the most specific compatible string will be found.
+> 
+> So in the example below, for X1E80100-CRD, the battmgr driver will always match to "qcom,x1e80100-pmic-glink" which is the most specific compatible string defined at the beginning of the device node compatible string, and the compatibility has not been broken.
+> 
+> In qcom_battmgr driver:
+> 
+> static const struct of_device_id qcom_battmgr_of_variants[] = {
+>         ...
+>         { .compatible = "qcom,x1e80100-pmic-glink", .data = (void *)QCOM_BATTMGR_X1E80100 },
+>         { .compatible = "qcom,sm8550-pmic-glink", .data = (void *)QCOM_BATTMGR_SM8550 },
+>         ...
+> };
+> 
+> In x1-crd.dtsi:
+> 
+> pmic-glink {
+>           compatible = "qcom,x1e80100-pmic-glink",
+>                      "qcom,sm8550-pmic-glink",
+>                      "qcom,pmic-glink";
+>         ...
+> 
+> }
+> 
+> Let me know if my understanding is correct. I will drop patch [6/8],[7/8],[8/8] in next version.
 
-I will start on this with addressing your comments in previous version as
-suggested.
+Unless we have some mobile-firmware-specific calls/behaviors that apply to
+sm8550, but not to x1e80100 (which I don't believe we do), I think this is
+fair
 
-Thanks,
-Ram
-
-On 1/22/2025 3:30 PM, Dmitry Baryshkov wrote:
-> On Wed, Jan 22, 2025 at 03:17:07PM +0530, Sachin Gupta wrote:
->> With the current DLL sequence stability issues for data
->> transfer seen in HS400 and HS200 modes.
->>
->> "mmc0: cqhci: error IRQ status: 0x00000000 cmd error -84
->> data error 0"
->>
->> Rectify the DLL programming sequence as per latest hardware
->> programming guide
->>
->> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
->> ---
->>  drivers/mmc/host/sdhci-msm.c | 270 ++++++++++++++++++++++++++++++++---
->>  1 file changed, 252 insertions(+), 18 deletions(-)
->>
->> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
->> index cc7756a59c55..17f17a635d83 100644
->> --- a/drivers/mmc/host/sdhci-msm.c
->> +++ b/drivers/mmc/host/sdhci-msm.c
->> @@ -28,6 +28,7 @@
->>  #define CORE_VERSION_MAJOR_SHIFT	28
->>  #define CORE_VERSION_MAJOR_MASK		(0xf << CORE_VERSION_MAJOR_SHIFT)
->>  #define CORE_VERSION_MINOR_MASK		0xff
->> +#define SDHCI_MSM_MIN_V_7FF		0x6e
->>  
->>  #define CORE_MCI_GENERICS		0x70
->>  #define SWITCHABLE_SIGNALING_VOLTAGE	BIT(29)
->> @@ -118,7 +119,8 @@
->>  #define CORE_PWRSAVE_DLL	BIT(3)
->>  
->>  #define DDR_CONFIG_POR_VAL	0x80040873
->> -
->> +#define DLL_CONFIG_3_POR_VAL	0x10
->> +#define TCXO_FREQ               19200000
->>  
->>  #define INVALID_TUNING_PHASE	-1
->>  #define SDHCI_MSM_MIN_CLOCK	400000
->> @@ -309,6 +311,16 @@ struct sdhci_msm_host {
->>  	bool artanis_dll;
->>  };
->>  
->> +enum dll_init_context {
->> +	DLL_INIT_NORMAL,
->> +	DLL_INIT_FROM_CX_COLLAPSE_EXIT,
->> +};
->> +
->> +enum mode {
->> +	HS400, // equivalent to SDR104 mode for DLL.
->> +	HS200, // equivalent to SDR50 mode for DLL.
->> +};
->> +
->>  static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
->>  {
->>  	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
->> @@ -793,6 +805,211 @@ static int msm_init_cm_dll(struct sdhci_host *host)
->>  	return 0;
->>  }
->>  
->> +static unsigned int sdhci_msm_get_min_clock(struct sdhci_host *host)
->> +{
->> +	return SDHCI_MSM_MIN_CLOCK;
->> +}
->> +
->> +static unsigned int sdhci_msm_get_clk_rate(struct sdhci_host *host, u32 req_clk)
->> +{
->> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
->> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
->> +	struct clk *core_clk = msm_host->bulk_clks[0].clk;
->> +	unsigned int sup_clk;
->> +
->> +	if (req_clk < sdhci_msm_get_min_clock(host))
->> +		return sdhci_msm_get_min_clock(host);
->> +
->> +	sup_clk = clk_get_rate(core_clk);
->> +
->> +	if (host->clock != msm_host->clk_rate)
->> +		sup_clk = sup_clk / 2;
-> Please resolve previous discussions before sending new versions. Just
-> sending a response and then sending next iteration of the patchset is
-> not a proper way to communicate.
->
-> NAK until the discussion is resolved in the previous thread.
->
->> +
->> +	return sup_clk;
->> +}
->> +
+Konrad
 
