@@ -1,239 +1,363 @@
-Return-Path: <linux-arm-msm+bounces-60715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54729AD2EBA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 09:32:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8436AD2F1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 09:47:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0762E171657
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 07:32:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 98C81188C9E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 07:47:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C76C27A93A;
-	Tue, 10 Jun 2025 07:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E41D27FD71;
+	Tue, 10 Jun 2025 07:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="oCXRy/U8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GnEHwjy4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11olkn2063.outbound.protection.outlook.com [40.92.18.63])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FA221D5AF;
-	Tue, 10 Jun 2025 07:32:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.18.63
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749540724; cv=fail; b=TfXuJ6oFY/6SRZdlwA7DY6tXExtFs+PVa/bJnJ+nYbwl7vg/FPtEOQSGWK2PlNrQvIYBaaokb0Gxw+tF/GlFJ/iKgEK0RHhPYp4uewGog/caq5ZDzLf+7L/8CsQGoLsaTBxFoHtgbzLni+IWdZMjoxxsWzP6TVxbnuL/NnGGotI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749540724; c=relaxed/simple;
-	bh=I/aWZjGKmDxsV+Q1xc9BLNp5+RsmeFc60PfOgUA1Jd4=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=ANvYgG0nh4M+K9Uy33mTKpO2aji03LI0WsmmUDgczEMii2BWXmdEqPbC5Aybv1H1xri/Cgz0gpSXhEUUMg2WJj5xhTqOce9R7yxEnVZCCFgWnW3DFPbxJe+IrVRPbJtnKWYw8x6rE2SOMqFzgn9UDcsG1Bq9NhSxm3AINaiCfrY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=oCXRy/U8; arc=fail smtp.client-ip=40.92.18.63
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NRm+6/EirXsBp4mFhcEKh0isBNnXRrdfIiGfJzL13a40Zm9P+3mGzweTOGG5fBaM5yBh1eGX4zCS5Ift4zhNVYqZeswr6M2907Hy/OOdPNYh2m+7bJWe/fipowWzFl6rTSSHjyKVidPGH2vP+4OC5FdWLZfb2p196FP/k6JTc6UrIZn9JDWUT/ORDeg6I0Z13em/0wXRGjhKJ3voVlnkJI5mrPglEpX8nws8nJuPz8Y2vrWh8s9sW8duivJKR2H82QKZPKXWh7c016FfFcnzcBv0/XgJyjytRMaA/pea7Mgh1WyLWzNlf/fS104ehwKIwRcrJNifc3XfEvw/gqJAYg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rPUsiljrq85Qr+SKbgWwMr1HCsPdKPzRmtnf/tpoUoU=;
- b=gQELTSgv/wvh8xSZ5EKcemTlrh3afsG7GS97gtWTnqh3fvzNBGKJdiL0/G0fAMwTfBNggly52qngyVLZDFmN9tleHnoatc3PXdrBArSsuUY4K7IQbY74+NGjgbJ9Ci11VD4owMpnsPIiTO+n3/xNgwSqABTb50f9IIMUlPj2WWS1IF5zmixgLEvMKj1+NMVwf6l4N9wQ1MT018zJNPRIfn9oJzxA8KAGIfsPt8vY+D8oI/bq3BZi9cgG/Yvu2f0Neh8DvX2CMidlaQYx8jV8ybU0sHxcZppee5AXa8hh9L07GwjfQLw4/tWeK3UIg8cSKn9N7gf7rTaTTXVL0JOJDQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rPUsiljrq85Qr+SKbgWwMr1HCsPdKPzRmtnf/tpoUoU=;
- b=oCXRy/U89vYx1wU6d2J2oNbMNA8E6Nm4XL47S358P1YUk+dlshcl9optPnFLcIJ+oqkQpji5JT/HlaQo1HhgCQ8ucao/OiSw9c1AV+DhnQ548FyBgSyvmzhk9REFzGUrh4r7m7a7p5/YFwzyPrnhnLIUNlFjEcDMw6Q9vAh89G9IpD3ShCAIat/b9edKyUwSbE1r9hnj/JheThK3P5dZxtyXYDFot0UD07X7a2tgUrgXLDn79FkCN20MYEdV1CbpKomBezmEPXh4UW6pHBG20JPrcgocQuSAlwwjwKCdJqU54w7ROhieqyhZNjd3MfL2mgno+tN1R2HbaTpQVOfUpA==
-Received: from DS7PR19MB8883.namprd19.prod.outlook.com (2603:10b6:8:253::16)
- by MW6PR19MB8136.namprd19.prod.outlook.com (2603:10b6:303:247::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.14; Tue, 10 Jun
- 2025 07:31:59 +0000
-Received: from DS7PR19MB8883.namprd19.prod.outlook.com
- ([fe80::e0c2:5b31:534:4305]) by DS7PR19MB8883.namprd19.prod.outlook.com
- ([fe80::e0c2:5b31:534:4305%6]) with mapi id 15.20.8835.012; Tue, 10 Jun 2025
- 07:31:58 +0000
-Message-ID:
- <BL4PR19MB8902726DC9C0E8C8FE8155F79D6AA@BL4PR19MB8902.namprd19.prod.outlook.com>
-Date: Tue, 10 Jun 2025 11:31:46 +0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] net: phy: qcom: at803x: Add Qualcomm IPQ5018
- Internal PHY support
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
-Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Florian Fainelli <f.fainelli@gmail.com>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, netdev@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org
-References: <20250609-ipq5018-ge-phy-v4-0-1d3a125282c3@outlook.com>
- <20250609-ipq5018-ge-phy-v4-3-1d3a125282c3@outlook.com>
- <aEbqQYDi8_LN7lDj@shell.armlinux.org.uk>
-Content-Language: en-US
-From: George Moussalem <george.moussalem@outlook.com>
-In-Reply-To: <aEbqQYDi8_LN7lDj@shell.armlinux.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DX1P273CA0033.AREP273.PROD.OUTLOOK.COM
- (2603:1086:300:20::20) To BL4PR19MB8902.namprd19.prod.outlook.com
- (2603:10b6:208:5aa::11)
-X-Microsoft-Original-Message-ID:
- <bd436df5-e540-456e-a40e-c2159b327fb4@outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418DF27FD75
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 07:46:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749541602; cv=none; b=kQPfC8btZ4GW8cOkmhluE/TdZw9xv0hVwhMWwp3+k72SRdTpy/hkb+p7554s7GfZ2R6NJB3m73KFTY9din9htkuqUI4ygl62QagNXOOqP+VWDRVIhaP345cS8KWE1WZc3dcOAEz+wtEifli63pzGIDBuo2JGc1DQfseqwPQQIyE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749541602; c=relaxed/simple;
+	bh=6/THYvgLbES0YhhJZPQnRn7c/QwZTodoYVo1PYBsJvE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QozfgGgFiyNeyPhO8T5hZYpFApLlkHFbuEGSgudH+XAH8gd6Q1tMPAyU3E2q2iQZYZwFbX0+slIVy3twR+IwB0fSzy5pgO8snMimKHhiQ1h2XEetByDwmwXGzY8kFW+9DGp20PyM3YK4GeuoVU1GqPfljJfKeIU8lyyT21YxcyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GnEHwjy4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 559MLpKb026500
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 07:46:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	LkmLQstAxmaDWYQl0rijYwctWd0n5xL/jDxvnCy/h8w=; b=GnEHwjy42NF6FOZO
+	A/qWXFNCjG6zuEJF5XimW/InL2sV6f4qvX3x4oBCn12sJsjVzA6GMPQmVVhRoDxn
+	8/YOSUtRucmUfXVTQ/+c0QH/EHh0rubDQ+8214WVoFXiMe37mefrCE1cGarAaC/v
+	p2aCiWtWTaLKuxXiZmF13jw06X+xR7diuKS2fiW+zWZpgFmGvCiX78Yao1cNVAfB
+	fY+dfjSIVdBijTnXsxbiuYFbgfHrVacfilR699yZ3QPX5IRMplwX5PnzzWpn1R0h
+	1Jj7HqEYPenwwyG5H+o236VpXYW/UD3qODzx6C0g9V1CEqR5pIGb3cYGafZ1eEbu
+	HB1a6A==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474ce9rmah-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 07:46:37 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-235842baba4so44083575ad.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 00:46:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749541596; x=1750146396;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LkmLQstAxmaDWYQl0rijYwctWd0n5xL/jDxvnCy/h8w=;
+        b=UCuws4HVphNWHeEA+8QAteQVI2KVaUjIb6p12VZ9p3MkkJGxGxreXfOSaUIW9Kv3nD
+         bM/cyxd77UpNv6xvqTi6tTwNZEuIo4fDPMBeuhpZStd4noKpUj34WuiG61J5+5BplR4L
+         4TBx4FLzgEIcnHqfrBfof3dwd0nUL5uzR8uTS6eOtwir1gHW4HWk7B1EVGjgkH4sQZhd
+         7vG6OTE7tPKKhPfnOr9mLL4rYx3erZyATokvbS5LhQOlOsRa+nf9reFKO8/rHbg/Kz4u
+         xP2lQk70QdufU3HMTAO7y5qkaYlvmq7av43qtv8ceidc386aH7J5hnP2qMMOVli6XgB5
+         we1Q==
+X-Gm-Message-State: AOJu0YxIHhuY9miBDoTzByUbU7q2ih9BPgF0i3BuRPfFU/RzGWJENidB
+	Jx7Qy3q5UeXQB453DSLWGPm087FkE+kDeE7/IEWyNtytURHoS0jGt69wkvhdseqgbYHab1zWlxW
+	jE7o2f/vtuCXXOAnWJDLFGEWImgdNb++eqcswa2/TN8czGTRwevYhvffuDpi/pM/LfUpi
+X-Gm-Gg: ASbGncueqim1xyt9JgEn0rOLGk4ZpM3OiCyOF8s8KHlW/L1fAcmCUAZXpg1uii+16BG
+	S/avHEPtKG85Kdfz0Uu0Abezr7Rxa8D38UoRBc0U4k2ucghamE4Xe7dYr03faAUdPsX83CFFWSU
+	pU21ZenGvq3wAjgBYRPAiG8DwjO+NgGI+S5A0AEzGhTu4g89Ahg1pbQxGXR1mPW6OVal3lIt2YK
+	44aQV1qLBrKYUYkFcaYtaaedtHTFcPgX2ayxhycCXdfiQ4KeBvren16BB/N8QRvLj3ysvQPM13B
+	sreGZwXyXg5glBd2Ilm4WDDgIBGX9JJfjPd35z5PJ5ljyKv1kBD1embJ/LmpyYA=
+X-Received: by 2002:a17:902:ce88:b0:235:f45f:ed49 with SMTP id d9443c01a7336-236383677camr24638545ad.33.1749541596509;
+        Tue, 10 Jun 2025 00:46:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9ioJqWJjAW3OBxKY8Q3keXw9lPemyCTPatvYkEI9nkTwJZxVY8u4zpkiMNnh4ZOWVzQ758w==
+X-Received: by 2002:a17:902:ce88:b0:235:f45f:ed49 with SMTP id d9443c01a7336-236383677camr24638175ad.33.1749541596052;
+        Tue, 10 Jun 2025 00:46:36 -0700 (PDT)
+Received: from [10.152.199.23] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23603078116sm65678165ad.19.2025.06.10.00.46.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Jun 2025 00:46:35 -0700 (PDT)
+Message-ID: <c2d138ba-5b08-4daa-95b3-e1f95f05938d@oss.qualcomm.com>
+Date: Tue, 10 Jun 2025 13:16:30 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR19MB8883:EE_|MW6PR19MB8136:EE_
-X-MS-Office365-Filtering-Correlation-Id: 906b1b83-0cea-46d1-c672-08dda7f0e09d
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|7092599006|8060799009|41001999006|19110799006|6090799003|461199028|5072599009|15080799009|12121999007|440099028|3412199025|12091999003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?L0FySkZ4VVFBSU1ESG9UdFp1WFRRUFZkQjFvc3Rxc09aM1FpM09YS1MzODMz?=
- =?utf-8?B?TjVpUEZuZDEyaUFYRDVQQVRhRDhWSktUdFdvenptNnNlL0wyTWVPWVZaTnJ5?=
- =?utf-8?B?amVDa1RidGdNYUFtWjZSUkRuV3dSZlg0VTNtb1hPL0U1ckJXZ3llZndHWlBY?=
- =?utf-8?B?Yng5MW1aMllRSzNoQ3VEVnd0WHBwL2VOaDRkR1hkSWVhMGtabUlaWU1wSnpX?=
- =?utf-8?B?MzB2SE9jZEVVRHlCd3ByUVU4L21yYXh4VWlnTjMxcngveGRGK1lRamgwUTJV?=
- =?utf-8?B?K2VjY2dkWklqWFVjZzZEM290TXZwV3VMbVQvMnN0Y1NTT3FQTGdvRXBvcS94?=
- =?utf-8?B?VFUzKzN6YVVtaEhCaTk2UkVzak9HMWFtK0l3TTNneDB5YlovTDhCQ1pNRngw?=
- =?utf-8?B?cEZWSjRUOTIybTZxcHpnM3ZzandlSTI3TG9xdWV5ckNlenVrVG51SzljaFpy?=
- =?utf-8?B?MVF2V2hkcUxmaGpSMmZLQkdSNll0WHhnUXFGNEllOXlVeDhWaEtCWTlPT3NQ?=
- =?utf-8?B?UjJOUWE3bHRMemM0Zk1ua3FpZVJFbkJpY3I5dTVKRzhsaHJBS21yRU5OWi9C?=
- =?utf-8?B?aWJzY1B4azRrZDdPVVh6Um9FSXF2Yi9nUkdDS1FIbEdhTnF4UmpsVUw1ZCtz?=
- =?utf-8?B?VHpoM3JZSW5MNEgzdm9DRnBWSC9BN0ZLc1I2QUJUdTBOV0taYk5aNHozQW1m?=
- =?utf-8?B?Tnc3RlRpWHZpSENJbEtudlc3N01RamV4alpMTmJVTHV1SjgybGJzSklOYlFP?=
- =?utf-8?B?bksyTFlpQ2pPcXppWEtlTDhLSU83NGNLT2htTXN6RGRreVprQk1XVDEwdG1E?=
- =?utf-8?B?QnRPRUVkekZ2elA5SzlCTjFSdkh5a25QV2xhdnRQdUFqWjk3TldMb2pIOXZa?=
- =?utf-8?B?SC9DTnZLdHRGTmU4Mmt2TmRXcWlIMkxnaHdFQ3ZUanZiS0dnZm11STVpQVdI?=
- =?utf-8?B?b3NXQ2haKzBaaDBNSng4bnhMY05nUVdYRHJ4U011VTQraHhJeXVyL052b0oy?=
- =?utf-8?B?VEk0S3hUY3NLN3dBaEk1ZlF3RE5telJhZGYva0FaK2p6VGw5ODFkM0hrdDhP?=
- =?utf-8?B?eDFwVnNGcGJWWWdRQmdpT0RqK3cxajFEUUVwMjlESHgxOVZhYlJ6b0dyYWFs?=
- =?utf-8?B?a1hSb0pUVlRUaDlrZUs5VEMvQlNlWXlGUDdrMmI3cjFtQTdjRTRsK3ptY3VJ?=
- =?utf-8?B?OEJwbmJSeElzQ2V2WHZFcFd4T1o3U1ZPQ1BJcXJpSlB2RHg4QnlnZS9ndjA5?=
- =?utf-8?B?NGwvQkFpQW5wcHNlVHdkS1FzdkZEN0EwSjlieEM3NGFKTklyYVYxTFhHazRz?=
- =?utf-8?B?MEMrQ1hGazdkdjUrT3NoQjZMRW8rcndRZkZzZW9JdUkvaFhSelNTeFBXNTdr?=
- =?utf-8?B?QmlQUG1ES3AxaE9EbzhPN0ZoWmxlUVRUaUN2U1dCb1pNT3dFZlJaSW82Y0Ir?=
- =?utf-8?B?TElBMjFIMGNvZ0pIK0ExQ3hPcEhGN0szajgzWVg4SndPSER6U3ZyQ2VnUjBR?=
- =?utf-8?B?b2NmV1JWVTlqL3lnb0d0ZEJ6L1B5VStYYWNYcmlxbVBnVDM2b0gyR20vWGM5?=
- =?utf-8?B?MVlVS1RLQndlNFpzZkhzWUFwRVRvTTRRd2cwR2c4MURPNGlrKzhIRGhZUzZY?=
- =?utf-8?Q?ZUzzqW583iS5kJsy3rBGiveXqs4PBaDRef4nIYNTPnHE=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?WFhxeHlyb2JxY0ZkQ21NRmFpMFZpRDV6N29XNGtQU0U1ejZzbkVlRWhqYlNU?=
- =?utf-8?B?UFJRWDZjNFI3Tjh2QUV6bGc4TTQ4YU83b3NvWXlBYWE1cXFCTWVZQWtpeDVy?=
- =?utf-8?B?cFVrU1IzT1lYVGdwcUp6RnVnbEZYK0k4L2hSTXBnOUcyT1d6U1MvaDhzVTRR?=
- =?utf-8?B?bU93YnZXcEgyTzYzN2pxNWtBYXZaM1RjT0ZmTDRPSkp5VmZBejMvYjhpNVU0?=
- =?utf-8?B?UWJiekhKcUlxekt0QkpaKzg4Y2RCUDFrZnZsNlAxdC9oMndhNDRiVXpjRVNI?=
- =?utf-8?B?ZC92Uk1CWlZqdUx3cldsWndQTWdBdmJDOW9qODByb1BkeS9ueVBqYnpvbnN3?=
- =?utf-8?B?a1NNeUFTVEtnUzhxUDViR0RZa0xscWJZVGI5YTdkNGZFZSsvUkRxVXhLbGxU?=
- =?utf-8?B?Y1luak1tcGtKZTRVQmp6dHRob0FHbEJhZlBtZXBvQ09uRXFVa0JhdVBKclV0?=
- =?utf-8?B?UjFCYUxKRlJtWHdqYUlYQUg3M3RpNlpDbS9QdHl4eCt4eHVBNzlDaytEUjE2?=
- =?utf-8?B?Ui9ucmxRUERRSWpvVjltRVVQOEd5NUQyOUFFaDE3dmk2M0ZQYytvc3RreGd4?=
- =?utf-8?B?OHo5Q2hXeFJqSGtTVkQwa0s1ZU5wVDE5WjUyczd2eDI5QktnMkZyNzlRL2hL?=
- =?utf-8?B?bmNTbklBdytORHF6WmZmYTdGQnhxdFg5ZEg1T1k2K3Vva09zOEsyNk9VdXYx?=
- =?utf-8?B?TXRBTTRWbDJSemwvSVlzN1g0Tk5SVDlxVHkzTVlUUWhpYmdyMEZCdFpaTXlW?=
- =?utf-8?B?NXkvR1BSQ2V3KytKMHBqVW9xcmxick12VUdLeklOdTRLN0tTbzVmMzhiK3Bt?=
- =?utf-8?B?MXZiaUtwQnBEREF0Mll5bktHTXI2WVlieGFYQnBjQXY1RU8wdzlWZEhjRE4r?=
- =?utf-8?B?SEtjclc2Uy9IeERqV3VVVVJxTmQ4Q2NlVWhlTmd5T0hwY0RnTU80VUdhR2tB?=
- =?utf-8?B?WjdGWGRHMGJPYTdCaXJWcFpZQmRKR25sVUNGcnZsZTRnbVBlSHo4VHB1QjR4?=
- =?utf-8?B?bjB1Ti9pTUtHdk05Q3hPVW91TTc3eWZjSnl6L0JoOEhOVTNJUGJnaFlnUkIr?=
- =?utf-8?B?bzU1b2pQNmlZV1VISlI2WTRscW85QVl2OVRCZlk3elV6WmF1a0M4clV3aUM1?=
- =?utf-8?B?L2VrNDlmbFRUQXBqdXhTYTRrYVNjZnpQS3lGRk5VK1kxWDhWQmYxekZDRXl1?=
- =?utf-8?B?cFlJeHFUMzFkMWIvMkNIS3piQnVQbzhObnppaHI4cVZqWDQ5ZmlsMm5ueDI1?=
- =?utf-8?B?TS9ZUHpObU5hK2RYNm9aY1Zacm95YzcyWVRvOWFPLzl6SmYwMmtPSHFEYkdi?=
- =?utf-8?B?VWJmaEc3VnYrS2Y5L0FlQXB6MTdEdWdSak5UeG5CNTV1ZjZJdlp5VlE5SHow?=
- =?utf-8?B?NldRS3djcDVsVWc3b2s3M1FNTU1DK1BSaXovUllrdnY0WUFOTUNMemluYWdR?=
- =?utf-8?B?OXhvZk5BV2Rubnk1ckg4N3FNc0dtYkZITnYvUmt0Yzl6MmFoZmJTUUFzTlky?=
- =?utf-8?B?NkZ6WElhdW9KTWttTHpEblhKL0pRanFBekY3UVNJYllMVUIrN0IvM0JqTkJT?=
- =?utf-8?B?MTFzSVJpQXo4b1dqeHpCNWpZTWxQcGxVY1NXUzdEVjJ3MTRYZjVSaWdjT1E2?=
- =?utf-8?B?SU5wbzI4R3lKam9tL3pCT0t3U01yREREWkx5NXZGZGhHNHlaLzJyZldaZExQ?=
- =?utf-8?Q?6uvIsiO7u8sErjrlEl9c?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 906b1b83-0cea-46d1-c672-08dda7f0e09d
-X-MS-Exchange-CrossTenant-AuthSource: BL4PR19MB8902.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jun 2025 07:31:58.3577
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR19MB8136
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] wifi: ath12k: Avoid CPU busy-wait by handling VDEV_STAT
+ and BCN_STAT
+To: bjorn.andersson@oss.qualcomm.com, Jeff Johnson <jjohnson@kernel.org>,
+        Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
+        Mahendran P <quic_mahep@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org,
+        Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+        linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+References: <20250609-ath12k-fw-stats-done-v1-1-2b3624656697@oss.qualcomm.com>
+Content-Language: en-US
+From: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+In-Reply-To: <20250609-ath12k-fw-stats-done-v1-1-2b3624656697@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: UgJpN7TjdsNwbeaDrPzqPaJBjS5oqwci
+X-Authority-Analysis: v=2.4 cv=drjbC0g4 c=1 sm=1 tr=0 ts=6847e2dd cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=6rQvm6eimZqQVVFLZJ0A:9
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-ORIG-GUID: UgJpN7TjdsNwbeaDrPzqPaJBjS5oqwci
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDA1OCBTYWx0ZWRfX+pGC2TRS3ln3
+ +zGkAMTZItWmFc681rntv12Uedp0uDSY3egOpVNOd4BafsDzbv/yp9SPBCPhd9kF/JR7NXarcsU
+ czD9deSZjdDnh9wy54d5mNMQgn3Et6lE4yFe6OJMbxksT7oDuHgxg0OrvZtyzexolc3lA76222V
+ kIdsDj7INiT/2I6h3elsxL4wdFH3a05ieM//XWhpahqwCumwO8qXYvg47KJ8RORaYG+dux1o16q
+ o8PfvNg0ZLUy93IKvGVlvKqNIeAViRYvVA8YvEtKipVlczMc6yEGgnPKUlkHw+483Kg8uTGxHvS
+ DuO4QdJ9S1A5MRG2GLzK57zcgE56kDSH3w9sEXzca2iDhUcJ7nz8QYotVowu65rFToRU2t6c1oa
+ nKUUe2dD/fTX1q2EPBaOcGtHflVKZj6rAx/ezOMWfFJVNXRugG2Q4TdgwX2nYkFuEx3RQpOI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-10_02,2025-06-09_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1011
+ priorityscore=1501 suspectscore=0 bulkscore=0 mlxlogscore=999 adultscore=0
+ phishscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506100058
 
 
 
-On 6/9/25 18:05, Russell King (Oracle) wrote:
-> On Mon, Jun 09, 2025 at 03:44:36PM +0400, George Moussalem via B4 Relay wrote:
->> +static int ipq5018_config_init(struct phy_device *phydev)
->> +{
->> +	struct ipq5018_priv *priv = phydev->priv;
->> +	u16 val = 0;
+On 6/10/2025 8:36 AM, Bjorn Andersson via B4 Relay wrote:
+> From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 > 
-> Useless initialisation. See the first statement below which immediately
-> assigns a value to val. I've no idea why people think local variables
-> need initialising in cases like this, but it seems to have become a
-> common pattern. I can only guess that someone is teaching this IMHO bad
-> practice.
+> When the ath12k driver is built without CONFIG_ATH12K_DEBUG, the
+> recently refactored stats code can cause any user space application
+> (such at NetworkManager) to consume 100% CPU for 3 seconds, every time
+> stats are read.
+> 
+> Commit 'b8a0d83fe4c7 ("wifi: ath12k: move firmware stats out of
+> debugfs")' moved ath12k_debugfs_fw_stats_request() out of debugfs, by
+> merging the additional logic into ath12k_mac_get_fw_stats().
+> 
+> Among the added responsibility of ath12k_mac_get_fw_stats() was the
+> busy-wait for `fw_stats_done`.
+> 
+> Signalling of `fw_stats_done` happens when one of the
+> WMI_REQUEST_PDEV_STAT, WMI_REQUEST_VDEV_STAT, and WMI_REQUEST_BCN_STAT
+> messages are received, but the handling of the latter two commands remained
+> in the debugfs code. As `fw_stats_done` isn't signalled, the calling
+> processes will spin until the timeout (3 seconds) is reached.
+> 
+> Moving the handling of these two additional responses out of debugfs
+> resolves the issue.
+> 
+> Fixes: b8a0d83fe4c7 ("wifi: ath12k: move firmware stats out of debugfs")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> ---
+>   drivers/net/wireless/ath/ath12k/debugfs.c | 58 --------------------------
+>   drivers/net/wireless/ath/ath12k/debugfs.h |  7 ----
+>   drivers/net/wireless/ath/ath12k/wmi.c     | 67 +++++++++++++++++++++++++++----
+>   3 files changed, 60 insertions(+), 72 deletions(-)
+> 
+> diff --git a/drivers/net/wireless/ath/ath12k/debugfs.c b/drivers/net/wireless/ath/ath12k/debugfs.c
+> index dd624d73b8b2714e77c9d89b5a52f7b3fcb02951..23da93afaa5c25e806c9859dbbdd796afd23d78a 100644
+> --- a/drivers/net/wireless/ath/ath12k/debugfs.c
+> +++ b/drivers/net/wireless/ath/ath12k/debugfs.c
+> @@ -1251,64 +1251,6 @@ void ath12k_debugfs_soc_destroy(struct ath12k_base *ab)
+>   	 */
+>   }
+>   
+> -void
+> -ath12k_debugfs_fw_stats_process(struct ath12k *ar,
+> -				struct ath12k_fw_stats *stats)
+> -{
+> -	struct ath12k_base *ab = ar->ab;
+> -	struct ath12k_pdev *pdev;
+> -	bool is_end;
+> -	static unsigned int num_vdev, num_bcn;
+> -	size_t total_vdevs_started = 0;
+> -	int i;
+> -
+> -	if (stats->stats_id == WMI_REQUEST_VDEV_STAT) {
+> -		if (list_empty(&stats->vdevs)) {
+> -			ath12k_warn(ab, "empty vdev stats");
+> -			return;
+> -		}
+> -		/* FW sends all the active VDEV stats irrespective of PDEV,
+> -		 * hence limit until the count of all VDEVs started
+> -		 */
+> -		rcu_read_lock();
+> -		for (i = 0; i < ab->num_radios; i++) {
+> -			pdev = rcu_dereference(ab->pdevs_active[i]);
+> -			if (pdev && pdev->ar)
+> -				total_vdevs_started += pdev->ar->num_started_vdevs;
+> -		}
+> -		rcu_read_unlock();
+> -
+> -		is_end = ((++num_vdev) == total_vdevs_started);
+> -
+> -		list_splice_tail_init(&stats->vdevs,
+> -				      &ar->fw_stats.vdevs);
+> -
+> -		if (is_end) {
+> -			ar->fw_stats.fw_stats_done = true;
+> -			num_vdev = 0;
+> -		}
+> -		return;
+> -	}
+> -	if (stats->stats_id == WMI_REQUEST_BCN_STAT) {
+> -		if (list_empty(&stats->bcn)) {
+> -			ath12k_warn(ab, "empty beacon stats");
+> -			return;
+> -		}
+> -		/* Mark end until we reached the count of all started VDEVs
+> -		 * within the PDEV
+> -		 */
+> -		is_end = ((++num_bcn) == ar->num_started_vdevs);
+> -
+> -		list_splice_tail_init(&stats->bcn,
+> -				      &ar->fw_stats.bcn);
+> -
+> -		if (is_end) {
+> -			ar->fw_stats.fw_stats_done = true;
+> -			num_bcn = 0;
+> -		}
+> -	}
+> -}
+> -
+>   static int ath12k_open_vdev_stats(struct inode *inode, struct file *file)
+>   {
+>   	struct ath12k *ar = inode->i_private;
+> diff --git a/drivers/net/wireless/ath/ath12k/debugfs.h b/drivers/net/wireless/ath/ath12k/debugfs.h
+> index ebef7dace3448e4bdf2d6cb155d089267315172c..21641a8a03460c6cc1b34929a353e5605bb834ce 100644
+> --- a/drivers/net/wireless/ath/ath12k/debugfs.h
+> +++ b/drivers/net/wireless/ath/ath12k/debugfs.h
+> @@ -12,8 +12,6 @@ void ath12k_debugfs_soc_create(struct ath12k_base *ab);
+>   void ath12k_debugfs_soc_destroy(struct ath12k_base *ab);
+>   void ath12k_debugfs_register(struct ath12k *ar);
+>   void ath12k_debugfs_unregister(struct ath12k *ar);
+> -void ath12k_debugfs_fw_stats_process(struct ath12k *ar,
+> -				     struct ath12k_fw_stats *stats);
+>   void ath12k_debugfs_op_vif_add(struct ieee80211_hw *hw,
+>   			       struct ieee80211_vif *vif);
+>   void ath12k_debugfs_pdev_create(struct ath12k_base *ab);
+> @@ -126,11 +124,6 @@ static inline void ath12k_debugfs_unregister(struct ath12k *ar)
+>   {
+>   }
+>   
+> -static inline void ath12k_debugfs_fw_stats_process(struct ath12k *ar,
+> -						   struct ath12k_fw_stats *stats)
+> -{
+> -}
+> -
+>   static inline bool ath12k_debugfs_is_extd_rx_stats_enabled(struct ath12k *ar)
+>   {
+>   	return false;
+> diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+> index 60e2444fe08cefa39ae218d07eb9736d2a0c982b..2d2444417e2b2d9281754d113f2b073034e27739 100644
+> --- a/drivers/net/wireless/ath/ath12k/wmi.c
+> +++ b/drivers/net/wireless/ath/ath12k/wmi.c
+> @@ -7626,6 +7626,63 @@ static int ath12k_wmi_pull_fw_stats(struct ath12k_base *ab, struct sk_buff *skb,
+>   				   &parse);
+>   }
+>   
+> +static void ath12k_wmi_fw_stats_process(struct ath12k *ar,
+> +					struct ath12k_fw_stats *stats)
+> +{
+> +	struct ath12k_base *ab = ar->ab;
+> +	struct ath12k_pdev *pdev;
+> +	bool is_end;
+> +	static unsigned int num_vdev, num_bcn;
+> +	size_t total_vdevs_started = 0;
+> +	int i;
+> +
+> +	if (stats->stats_id == WMI_REQUEST_VDEV_STAT) {
+> +		if (list_empty(&stats->vdevs)) {
+> +			ath12k_warn(ab, "empty vdev stats");
+> +			return;
+> +		}
+> +		/* FW sends all the active VDEV stats irrespective of PDEV,
+> +		 * hence limit until the count of all VDEVs started
+> +		 */
+> +		rcu_read_lock();
+> +		for (i = 0; i < ab->num_radios; i++) {
+> +			pdev = rcu_dereference(ab->pdevs_active[i]);
+> +			if (pdev && pdev->ar)
+> +				total_vdevs_started += pdev->ar->num_started_vdevs;
+> +		}
+> +		rcu_read_unlock();
+> +
+> +		is_end = ((++num_vdev) == total_vdevs_started);
+> +
+> +		list_splice_tail_init(&stats->vdevs,
+> +				      &ar->fw_stats.vdevs);
+> +
+> +		if (is_end) {
+> +			ar->fw_stats.fw_stats_done = true;
+> +			num_vdev = 0;
+> +		}
+> +		return;
+> +	}
+> +	if (stats->stats_id == WMI_REQUEST_BCN_STAT) {
+> +		if (list_empty(&stats->bcn)) {
+> +			ath12k_warn(ab, "empty beacon stats");
+> +			return;
+> +		}
+> +		/* Mark end until we reached the count of all started VDEVs
+> +		 * within the PDEV
+> +		 */
+> +		is_end = ((++num_bcn) == ar->num_started_vdevs);
+> +
+> +		list_splice_tail_init(&stats->bcn,
+> +				      &ar->fw_stats.bcn);
+> +
+> +		if (is_end) {
+> +			ar->fw_stats.fw_stats_done = true;
+> +			num_bcn = 0;
+> +		}
+> +	}
+> +}
+> +
+>   static void ath12k_update_stats_event(struct ath12k_base *ab, struct sk_buff *skb)
+>   {
+>   	struct ath12k_fw_stats stats = {};
+> @@ -7655,19 +7712,15 @@ static void ath12k_update_stats_event(struct ath12k_base *ab, struct sk_buff *sk
+>   
+>   	spin_lock_bh(&ar->data_lock);
+>   
+> -	/* WMI_REQUEST_PDEV_STAT can be requested via .get_txpower mac ops or via
+> -	 * debugfs fw stats. Therefore, processing it separately.
+> -	 */
+> +	/* Handle WMI_REQUEST_PDEV_STAT status update */
+>   	if (stats.stats_id == WMI_REQUEST_PDEV_STAT) {
+>   		list_splice_tail_init(&stats.pdevs, &ar->fw_stats.pdevs);
+>   		ar->fw_stats.fw_stats_done = true;
+>   		goto complete;
+>   	}
+>   
+> -	/* WMI_REQUEST_VDEV_STAT and WMI_REQUEST_BCN_STAT are currently requested only
+> -	 * via debugfs fw stats. Hence, processing these in debugfs context.
+> -	 */
+> -	ath12k_debugfs_fw_stats_process(ar, &stats);
+> +	/* Handle WMI_REQUEST_VDEV_STAT and WMI_REQUEST_BCN_STAT updates. */
+> +	ath12k_wmi_fw_stats_process(ar, &stats);
+>   
+>   complete:
+>   	complete(&ar->fw_stats_complete);
 > 
 
-val is not initialized in v5.
 
->> +
->> +	/*
->> +	 * set LDO efuse: first temporarily store ANA_DAC_FILTER value from
->> +	 * debug register as it will be reset once the ANA_LDO_EFUSE register
->> +	 * is written to
->> +	 */
->> +	val = at803x_debug_reg_read(phydev, IPQ5018_PHY_DEBUG_ANA_DAC_FILTER);
->> +	at803x_debug_reg_mask(phydev, IPQ5018_PHY_DEBUG_ANA_LDO_EFUSE,
->> +			      IPQ5018_PHY_DEBUG_ANA_LDO_EFUSE_MASK,
->> +			      IPQ5018_PHY_DEBUG_ANA_LDO_EFUSE_DEFAULT);
->> +	at803x_debug_reg_write(phydev, IPQ5018_PHY_DEBUG_ANA_DAC_FILTER, val);
->> +
->> +	/* set 8023AZ CTRL values */
->> +	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_AZ_CTRL1,
->> +		      IPQ5018_PHY_PCS_AZ_CTRL1_VAL);
->> +	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_AZ_CTRL2,
->> +		      IPQ5018_PHY_PCS_AZ_CTRL2_VAL);
-> 
-> The comment doesn't help understand what's going on here, neither do the
-> register definition names.
+This look fine to me, Thanks for fixing this.
 
-These are the EEE TX and RX timer values. Will update the macro 
-definitions accordingly.
+Apart from this we may also have to free up the stats buffer list 
+maintained when the stats is requested out of debugfs (like 
+ath12k_mac_op_get_txpower() and ath12k_mac_op_sta_statistics()) once its 
+scope of usage is done, else the memory will be held untill next fw 
+stats request or module unload.
 
-> 
-> Also, what interface modes on the host side does this PHY actually
-> support?
-
-Based on the QCA-SSDK and the reference boards, the PHY supports SGMII 
-mode. I can't speak with 100% certainty, but SGMII is the only mode used 
-so I can't rule out whether GMII, MII, or other modes are supported. 
-I'll add it to the commit message.
-
-> 
->> +	priv->rst = devm_reset_control_array_get_exclusive(dev);
->> +	if (IS_ERR_OR_NULL(priv->rst))
->> +		return dev_err_probe(dev, PTR_ERR(priv->rst),
->> +				     "failed to acquire reset\n");
-> 
-> Why IS_ERR_OR_NULL() ? What error do you think will be returned by this
-> if priv->rst is NULL? (Hint: PTR_ERR(NULL) is 0.)
-> 
-
-Changed to IS_ERR in v5.
-
-Thanks,
-George
+-- 
+--
+Ramesh
 
 
