@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-60781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 072E0AD375F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 14:53:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 96D2AAD3786
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 14:57:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E95889C060C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 12:49:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9FB379E07AE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 12:52:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12F282949FD;
-	Tue, 10 Jun 2025 12:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35C3D2949FA;
+	Tue, 10 Jun 2025 12:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dI+u6Ptn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="f+oaCdpV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07ED929B79A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 12:42:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF8E2951C4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 12:45:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749559331; cv=none; b=bQfXbv/3mog4fY6I9jCQKfg1mUycNIydxIeP6xORT078lnstv6hHJ8omaRs3HUZXfaoq/lNmXECh5Xy5TOJSSc9sXSaiOSiOdO9CIrF1nqGuLafVI8KC824gbvFYYEhqDlyRtV8KkiTl0bU+vc5y473BXosyhLURkgoYY9LecaY=
+	t=1749559553; cv=none; b=CYwTjpzC1h6xQtP2iBThfrFyRv3o/oMiwM47PkBlTC5b6T2QobYpwrW/CjdqSXkV452RZCNAwBRJBNX9pp3Wfa9c+t4kBJ5ZKjxtTZbiMQVFAijYxBQSpXbMFVMeisG19SAM25Opsg3ydJSyiWcxp2c8CMo1/MLFRTvN0HVHzRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749559331; c=relaxed/simple;
-	bh=iKluIB/aogkNb4SsYFfMAeMNaCttGkx2Qf5lwDYT/IA=;
+	s=arc-20240116; t=1749559553; c=relaxed/simple;
+	bh=ECwOYI5b2VaA7h0aRDFK8MLU8vsXKHpJZ5sCzn6LJmg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VUYGN/zf14t8n7670JvmtvkrcecdRhG+nWiLPYXHdkqgQudPcSEI5q511e/8QwtWGjdNBkTnH6hiQpTJxuBUQIJmAoCRSStN55KbLzUfJTmwLv13QuUhTh1flrVvVGsfRM6QWoyKcKBWtt4UFokuWt++Mr35/tzZY5XsPCgyCh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dI+u6Ptn; arc=none smtp.client-ip=209.85.208.174
+	 In-Reply-To:Content-Type; b=iJWl6G/cAQ2vxC2ocs2TVnwBzsY8VSgV2Fh56qT5oryDIJebpFM87e39K0cTWgrMBTcZUYMGzphoYoRaAiNWSaoJ1+v6cRTblcxVPMhndQOKueqAX19o6jpXrO3aqFsP6rozvThVn6+JBhS6hxeMq37sqSRNf7qT1wmGz615mNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=f+oaCdpV; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-32a6c0d613eso5240021fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 05:42:08 -0700 (PDT)
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-32a607e7130so2481871fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 05:45:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749559327; x=1750164127; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1749559548; x=1750164348; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7892+96/YNyaPMEOcMkrUJ4mJoRZWMLEaU8stqv79JU=;
-        b=dI+u6PtnPircfLGGMfYWHOL220vHR/2bSr5XXfsH0dXPKPLqVW7AZGWzWjRTrGbB2Y
-         MexHDowTion1jrzR59fJ4SFVayTeMTwbI6ZsK2JUCQqw1K63Jo0ydLKFWc1S4NTr+51r
-         +Uf2e6N4/vNS5ZxlzZgk6yrS9Jd9j2uX4en3mJ3+DRadWb5pR0xgOqD8or19GR+0mbNt
-         FEizI1TB8ZxW8qpzV0clbLwA0rFXx50O6FS/6A2mBr+3FoJp0hsAbvLOp4F+tfi/FGKq
-         hpPDmb5A3wm6nwJiBSwOi43JCOotLCR8RP6WSyaLWRzXmWxykIQHbPfYgvqCY5JDF6mI
-         Bs9w==
+        bh=LqL5XJg3suH9NDZDnjmeajU5avldpvnV7zhk3Tu6UWI=;
+        b=f+oaCdpVe/nybhYtBNi9ZZmKu2jVUN+T+gwgtgyHGxJAxcXGuRFGj2pyCOyyrEG9qB
+         p5sRe6YJwjhEqMudHfpe1QLOeXdiB34qp/Ln1wjwyOfYghlC0pAFqJLZ8YKlKQu5/n3k
+         oNA90HgPrnEbnCy07H7kw4KrXqCsskCL0+YdfXc6zzD84CcsHFQmbFgeC5uTIqESzTZp
+         /Zx10HtTWymBLap06vloJ5+HnQssNAXu0cbVlO/F47VJj5nVdM3IPeT3/JRA1++x8VEn
+         WrHwftbDEpBGeWZNzPhPxLAErIhDslanRk06/J1ClDRA/tbo9sicr2EwCWNaTAKsx0HJ
+         UsWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749559327; x=1750164127;
+        d=1e100.net; s=20230601; t=1749559548; x=1750164348;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7892+96/YNyaPMEOcMkrUJ4mJoRZWMLEaU8stqv79JU=;
-        b=lTAWGJBbSkbwxx79Wysi6vRbAlIvKlT+12vK1HW5T4rO5i8pLLZxgxSQcAhHwWF3ww
-         h4/caWUAZkZi58gM2LVddqfCTDFB/bT6ia2Z6Hj1fNK8MTkLO2WI808JtjoA2TkJRpoc
-         xBGVJ4t/JWxBLosmSqvzeB8vxojy9hlostr1nTkKrLCu2c1VjKN/+arlfHfw+5r2IDBG
-         XKqyrzm46OmriudbWs5789coN/DBSTvElOyTPNnd+yMR08WP/soU/nGTZk8XH6RX1kQU
-         rvjYTQ3xahOAbaNB8bnnofHN1VR5FW3wu9NEDKwy31Cboj4p3wRsd663OgkZGH1nj0vc
-         Gp9A==
-X-Forwarded-Encrypted: i=1; AJvYcCWTCIF3N4hVQG4k5nayLdZ4hXmUDe1YXnWTm3OISVhVdnsPkbs7GU/nn/GP/LuhDYDEmIypukKmRCWcCgL+@vger.kernel.org
-X-Gm-Message-State: AOJu0YxuBl4iFtxo2zJi4PU3dET1Hyl6YzsCJ3tFrZEWfB6bpFy12xUA
-	o7MeWau4yJl0y7EbR125emXkKV3+MhAy26kZ6BRNOTwairxaBtDyhRwPCD4gFYf70m8=
-X-Gm-Gg: ASbGncvm9XKyZicSaFCN4wMBZWgI2rrIMbGSYYllq7BXSRBDj817GnTHFzjX5kKeAA2
-	QiRZd3JGZJhIRJrz9KkmUHqorj/F2+IxlQB2rVlo1W3BVZUYj/74xI8fBpIzFdZL1qCcpDxlFvk
-	GSGNenCwKz+M2v4rJstZnZDr52mrF5635uz9GhjZlWEtO5S0fVeR6c91YQWH7ys3Nez4Xmf7eBj
-	77hGUc85c3NkQ/fnFX/S+UID8hLtznMw3IaYLOpE+B2nyi7hjLpD8onLPf0Fbx/vpj8uhZDTTgr
-	5/k3onBugWibUxsWwC2ZCQk4nTNL9JOhkiQZ62Ev5ch+6/dsTcWZDPJftvvUrUho7kvNWKyccxS
-	TR2acMxMARwlO2AHL4CGdDaRGdU2VIHntSsr2gjHl
-X-Google-Smtp-Source: AGHT+IFAhNH7DEpOKaM2NRhWOMRt0wnPmUnBMxXQ+wBRObzbAd5OuDTUSptTXwysMUwvBMWR/vTvgQ==
-X-Received: by 2002:a2e:a549:0:b0:32a:62a2:f727 with SMTP id 38308e7fff4ca-32ae32324a6mr16684341fa.1.1749559327097;
-        Tue, 10 Jun 2025 05:42:07 -0700 (PDT)
+        bh=LqL5XJg3suH9NDZDnjmeajU5avldpvnV7zhk3Tu6UWI=;
+        b=J7Q5OlgWx5as8Nqq6wxJq0y2OKfhUBeXFq2gCIdSl9tEcyd5BwcHCs22eRAD/fzYF5
+         KcLyQ8uhbIKc3WmqrGV4ApKVOUc0KeQS894VDQhKfxi9Id1gJh6n3e1yZggTBeO6WfJF
+         Qc8x7XqtFSn9aaedDlsUA63AkLS1EnrqWA1GW8VAhBZPPyns4k5pQjKABx9noDLb9dgC
+         ThI9Ii5IuQAvOy6OMHguiDAnvL8HX50Q6EQokNwMrx0X19UfU5UPZAvxFSHD3cRraKLT
+         nzeYkf7+PvDSZ9wg+mM25CBEoy73huzM5/5JLSwKzOe1imCafB0LmQLekc/VM4ip7gew
+         Zhnw==
+X-Forwarded-Encrypted: i=1; AJvYcCWQThxPaf8fbZ4mgprYSF+LZdvSWI0twuGdHVmFtjlS0vtXU3iQAZIgeFF0+f0Pjdmsym4bL/w1G96sVM5J@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3oTxdLSYtkCLHYKmWysqhA4obT3OUOydFl6pZIdDPLIB3g61m
+	i5NtzW7Db4VMD0jLC+hYwPAxQtNyFyeQVRqLxUTWYrgY5sRrf0aK7OBL4TKRxz4Jyls=
+X-Gm-Gg: ASbGnctBcfTm55sYtQt30UGfhqgxw+kDFENcFH+Sho3R/USMHZi7RpUvmSudl54EyBr
+	RmI7F6egkcxaHRBNk6ouuYeDFq1k/OBQ2iPTTBzLuJIisrTe9llpK/3MWbvUU9I98sYHCuXBIZJ
+	khU6bNyV1hLdn676Od31t5V+y4y2D3lNvMf0bXOsrFvNUiQWoGXzGsMfOXZr3gLY7T1NA6hRUqB
+	qrViIE1XlPS3wRK5xSOX8hoXcycCRHOvYZ5HnP/BTgBhYu7GYU7CdtWLxXL/ccHwF3U+grhMIP+
+	Ot3ePkjTxA903IDDVt6C7FHUjz/lCAsxmprAmbT7PB2xc+9iYZMDw6XXXkF0tdYIGPaWkFko3GM
+	qVgR2fUr9hp7oZ62rtc6cfircZj0LUDzBklXGkAJQ
+X-Google-Smtp-Source: AGHT+IHC9YB6oACnOWDNzo0PuZcLT6T2Ygjbu5Xg/VoumKply1Dlzi216VGH9WxR8L+CkelN5PDO1A==
+X-Received: by 2002:a05:651c:221f:b0:32a:8ac3:93fc with SMTP id 38308e7fff4ca-32ae3243c47mr13618631fa.4.1749559547806;
+        Tue, 10 Jun 2025 05:45:47 -0700 (PDT)
 Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32ae1d00c11sm13765191fa.106.2025.06.10.05.42.06
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32ae1b0cb82sm15393731fa.16.2025.06.10.05.45.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jun 2025 05:42:06 -0700 (PDT)
-Message-ID: <26a0a50a-849a-4a2b-87f7-af11b6f91ea1@linaro.org>
-Date: Tue, 10 Jun 2025 15:42:05 +0300
+        Tue, 10 Jun 2025 05:45:47 -0700 (PDT)
+Message-ID: <3e8f8220-1fad-437e-9fa4-5eb628891110@linaro.org>
+Date: Tue, 10 Jun 2025 15:45:46 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,43 +85,75 @@ User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/2] dt-bindings: media: qcom,x1e80100-camss: Sort
  interconnect alphabetically
 Content-Language: ru-RU
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Hans Verkuil <hverkuil@xs4all.nl>,
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Hans Verkuil <hverkuil@xs4all.nl>,
  linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20250610083318.2773727-1-vladimir.zapolskiy@linaro.org>
- <20250610111145.zp62zx5rjmezvmkb@umbar.lan>
+ <a072d00e-df91-420b-9363-424bcdf1ed8e@linaro.org>
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20250610111145.zp62zx5rjmezvmkb@umbar.lan>
+In-Reply-To: <a072d00e-df91-420b-9363-424bcdf1ed8e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 6/10/25 14:11, Dmitry Baryshkov wrote:
-> On Tue, Jun 10, 2025 at 11:33:17AM +0300, Vladimir Zapolskiy wrote:
+On 6/10/25 14:14, Bryan O'Donoghue wrote:
+> On 10/06/2025 09:33, Vladimir Zapolskiy wrote:
 >> Sort the entries of interconnect and interconnect-names lists in
 >> alphabetical order.
-> 
-> This looks like an ABI change. At least you should explain the reason
-> for the patch.
-
-There was a number of comments and notes on the mailing list that
-any changes to dt bindings without users are acceptable, i.e. no
-users implies no ABI change.
-
-Also it was used as a justification to accept dt binding documentation
-changes without the correspondent .dtsi changes, like in this particular
-case. So, I believe the room for fixes is still open.
-
 >>
 >> Fixes: 2ab7f87a7f4b ("dt-bindings: media: Add qcom,x1e80100-camss")
 >> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 >> ---
 >> Another fix on top of https://lore.kernel.org/all/20250502204142.2064496-1-vladimir.zapolskiy@linaro.org/
+>>
+>>    .../devicetree/bindings/media/qcom,x1e80100-camss.yaml | 10 +++++-----
+>>    1 file changed, 5 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
+>> index c101e42f22ac..7d4e6ef57bf8 100644
+>> --- a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
+>> +++ b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
+>> @@ -100,8 +100,8 @@ properties:
+>>        items:
+>>          - const: ahb
+>>          - const: hf_mnoc
+>> -      - const: sf_mnoc
+>>          - const: sf_icp_mnoc
+>> +      - const: sf_mnoc
+>>    
+>>      iommus:
+>>        maxItems: 8
+>> @@ -321,15 +321,15 @@ examples:
+>>                                 &config_noc SLAVE_CAMERA_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
+>>                                <&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_ALWAYS
+>>                                 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>> -                            <&mmss_noc MASTER_CAMNOC_SF QCOM_ICC_TAG_ALWAYS
+>> -                             &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>>                                <&mmss_noc MASTER_CAMNOC_ICP QCOM_ICC_TAG_ALWAYS
+>> +                             &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>> +                            <&mmss_noc MASTER_CAMNOC_SF QCOM_ICC_TAG_ALWAYS
+>>                                 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
+>>    
+>>                interconnect-names = "ahb",
+>>                                     "hf_mnoc",
+>> -                                 "sf_mnoc",
+>> -                                 "sf_icp_mnoc";
+>> +                                 "sf_icp_mnoc",
+>> +                                 "sf_mnoc";
+>>    
+>>                iommus = <&apps_smmu 0x800 0x60>,
+>>                         <&apps_smmu 0x860 0x60>,
 > 
+> How is this a Fixes: ?
+
+I call it the fix to the dt-bindings documentation, then what is this
+change, if it's not a fix?..
+
+Anyway, if there is a strong disagreement about if it's a fix or not,
+the Fixes tag can be dropped from the change, since it's so secondary.
 
 --
 Best wishes,
