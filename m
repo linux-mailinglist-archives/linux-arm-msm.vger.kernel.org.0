@@ -1,150 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-60880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05C5AAD4494
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 23:15:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BCD1AD45B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 00:09:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3707D3A6323
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 21:14:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BD86B3A6800
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 22:08:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A14A2749E7;
-	Tue, 10 Jun 2025 21:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D136287515;
+	Tue, 10 Jun 2025 22:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xq2SfB7C"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HNuDHYPl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02C42749C8
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 21:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BEE286893
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 22:08:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749590113; cv=none; b=OtX2sDjgMQ3KMrdC70NLHcyT/wYmqEnW4oZx+eIsDyI8RrH6hdl4tRlPpksgQfxfGYePQFYrmWKmwYphWBtkyWrnPCp04A0UjdGen0SDAtK7BJHwn6MFMVItuava05bQIHARMhv9/womU3uexAiQZVN/N2Nb6kO4Zs8ce6fm2js=
+	t=1749593336; cv=none; b=Qwy31fLYsXqztxY7M4brBc2knxYmODdqSdGGbsukhvTQrAQpiBryrMPqKnj+WiLSZ7yAbc7hxCCtKmIFuBAO8rb5rpmdk6gR6l704Qjv+aljAX/Iiw9mkRBBaDUYyuprp0le0wa00oTLlRBrid5LO5IkmmhUfhVHcsq9gfKc7Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749590113; c=relaxed/simple;
-	bh=Z38cuJp33LWArvdj5hyZqOMy6cQfIIBF5uVgw+/DXwg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Cb+2RLDCEKcA7j9qwtnXwDogLLlSc1wrLr5VsSq8ZdYZuXYzg7PQNxdp6BlvQcT0L+xLo4PLQT5E2En75ekJn5+hvG/4ZTjcv6dOpsVS1s4fuyDo1LcFBJoL7tRymFHZg92EJFsfp459yfbXtLlPzPocC9Pyv190+/0GYUJU1ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Xq2SfB7C; arc=none smtp.client-ip=209.85.167.46
+	s=arc-20240116; t=1749593336; c=relaxed/simple;
+	bh=y7nuDXxHMeW+apAcE+4L7YtuvyqeNU/MY3xvfvw+85c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NsWPhPtXP999q9XwjvcTU5phZIM8aDWtG3xUS40S/iQuIqLQk1szBD6qD6uNIs2NhreQzbTsTcwdyAn3RTlHomtLjMmu6xMn+yhwjeAO+/iso1HqROM9zSN0Oih+a1OLt+Xd8G2wUoxyzikrLdoFgShgPC5LIJbiB4RYGZLmHU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HNuDHYPl; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-55329e42551so728601e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 14:15:11 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-551fc6d4a76so6438043e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 15:08:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749590110; x=1750194910; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xp9DTTw1nAnCu7+mJSX+wELA9PUPZoEDRChqKms+7Zw=;
-        b=Xq2SfB7C438tDciEkqt/yJ6bIvaGTzbR3hB4EFmmI0Gx2qAozCUjmoJ4kakAVW+kGn
-         tcHluRuyU4K+mFX9JEnje+hDLfRkErv51nJGtMDRkODwUeLVd7i1x6dCp7Ml5S+SKoVM
-         UJGXMlH8XkCUPELs4yVT/WkY7MN9cJV2VJOMRUCK8MJ3XO46gUjrv1lMCtpBRcqGJzTc
-         7Ajsb12XsUGmv97Lp7kwIE9kQi6AsnO+nSOAitG1nJPsWFnVLnRj/N/fRbUrw9rUcPPF
-         b3to4Z48Cd5OHqYq+Jjtj23ffoKErEN3HuZLmNwMUfQT+YYeL5NZOKJJaQYnowH3wAmT
-         SPGg==
+        d=linaro.org; s=google; t=1749593332; x=1750198132; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=y7nuDXxHMeW+apAcE+4L7YtuvyqeNU/MY3xvfvw+85c=;
+        b=HNuDHYPl+K2Zm5Mnxn2A5pYoDofWUVMI9eny4zxnJqj9L+tNaq3dT9srblTB9Cl+Yo
+         cMdG/rtMGo02HzGBe2TU3voDdHpHg5Eb9cK1o/VLXS0Ng2MjiKY9lrmh0Un6XNL643eq
+         cEhhRXkcoMAEZTdH0eBxGpsluQHJJtox9sdfAuS5hd0vRva4vdtsTOXF8ChPGfVsOLvR
+         KLOza4yaAa/VOROLBFy9QhzupDz0JVGzXkYMKwwFLmjR/rdX2++MX6ESNmNZQOceaQuJ
+         oAFBK9EKp6EK0rChdUA5oZfrJ35zRnxZtJmqJqVbcocgfahNKuCTtVGupI6Y82qhuSh8
+         qcQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749590110; x=1750194910;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xp9DTTw1nAnCu7+mJSX+wELA9PUPZoEDRChqKms+7Zw=;
-        b=ORu3MS/ygAvFTW3RzLx2rU5Q591VpuJzBbxT1vkrvEP3cDfcCfNVypBg6I4M3CWffB
-         EtJahqtY09FFr3qP6pNYYdi+FG/vh2ewYAFEe0NKAhAgoFgZiN9cBse2kbRduqEAA15O
-         yCboXYeb3WsdNUuHnZRr7tvqu9lIc/a6iuB93m58U6ikePfSamUc7ofWsi/yvUM/ZkBM
-         xcPLaJVyWnuLXD23kPsAHBnyi9eUX78FEsKAjvdkzXPYHzUjSychoG6F6VDw0Bo35u5C
-         R/Eq8DH88LHZd69FuIt/h2b39BYbyv/22hXw3VzKT/eDsw9V0f42lcc1MjICrMK9edK6
-         P+zQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXFZRcjUaS1g4GhKU9jDEw1nxp9zZI2whdrMM28wG/V000mz+9tHAFBMAahJshhiR+k12TK7wkIO/GC9nJP@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy9+6UP0csZMNfya6zGLBH6RxKwwfzzeQwQRbGhfgGa7u648Wi5
-	xxOHSW5fP4lwaDQedPjuTCTVU8OGp2dh1n2XtofzTipNEMkJYrMTeYlTPjaM+Q90GIh9hWnlcxv
-	muvxh
-X-Gm-Gg: ASbGncuaPmLhHysBOp/sABwDxyLK+V8lTaCjYXZq4PD8JRVsX77xcc0taYdKSPm9tQ0
-	DgV/aLR7xUG3jLt9NWKeCJUolKqnACRfx35vcVrdgY9UVoTIM//7muMMYPDEnSoQkEW45V733jh
-	VuTVjKP6fmlogOBUIQTeOdkDRqoKlbXB00+uMx3z4rZ9kyHC23WBQ3ndX0M9dqLcE6BYI9DqHrR
-	U+0kNKnkdbxnmJAe5cG/sfLl1XA9EbLxmOnrKHVk45i0F6VBQNmB269A5mfvR26w/890DeGYruv
-	cwhzWwF8YpDXMF4CSXxoZnlukq2pSLUCYVC7rSDIcR7iHwo/pVX9LkOY5wM3n6cIOhRdkkfnsIp
-	uFKEMSAPH4dHqIirpOHTuDKYdMoP0ZzUuXOt9Jts1
-X-Google-Smtp-Source: AGHT+IGZItlbSfmzgJrv1aE8F6o4CS4khJJN0XB1HO2JSTvC5zGxXbluAy7/VezJqQ/3zhgAVPeIQg==
-X-Received: by 2002:a05:6512:1329:b0:545:2774:4cb0 with SMTP id 2adb3069b0e04-5539c04fd49mr116148e87.0.1749590109708;
-        Tue, 10 Jun 2025 14:15:09 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553676cfe42sm1709240e87.30.2025.06.10.14.15.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jun 2025 14:15:09 -0700 (PDT)
-Message-ID: <7e82074f-0476-4081-b30e-2d1ace9bb3f9@linaro.org>
-Date: Wed, 11 Jun 2025 00:15:08 +0300
+        d=1e100.net; s=20230601; t=1749593332; x=1750198132;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=y7nuDXxHMeW+apAcE+4L7YtuvyqeNU/MY3xvfvw+85c=;
+        b=cEWC6gwcaedgBmlQ+T0oSN4oGsGrzS4X/0/JOWlMZ+DdW2nIKa/RL03uY50b70O00X
+         N1zxstIsmQPy2n/3fFgPXdpAecNSUctGMBgYnvXgFZ2XA78ZainLnF8o/daXoyh+/Epc
+         ZqshVgjM2yxX0uZaLy2TtjTuBTowHFNvVClmbvjoX/t+uHj9BTZiHpjJhAMptMycQGoO
+         p6rKTNau6FGKabgszwJ2LHYOi1tQPBygzsbDAsNG549YIXrpiIgEsJFHKYaCLAp7zqi0
+         b9h1yWahX5M6syGG13aTSBWZ+9zbziQdqEZpE+55plHfe0p4Kem47e2FgnB9jKaF9N9G
+         933Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXvHB2JiRH9Gnf8jPQqwBcJROobADU9ZpY98WQIOV08wDxNhX21/8VjdMkBCheuG/0WSorR8GqqZbXerbsg@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZyVUjdRr/CAsHoLFrqopk9YiIHsUKGZ6Q1Mn3XyXlzQ0UdsJu
+	4ycOBPRkB6j9z/YDmqWyHn5Tjq6rDnL/UN2ZUwkc7NAzlqmPk0VegBjKJAk+eWwQ3iI3YSJkGaN
+	ng4xqmAmccF6ux/vf/OmsNDgbZvz5P+2Jy3VXHK8SMQ==
+X-Gm-Gg: ASbGnct7Otz6b1j6+VvPodg0zW+VAZo4P3oAH+1XQI1CfATduxGPADMrx8SHPeM7d/Z
+	odV+GTZOKUzUZeoKvcPB8oeFa4hoNO4w4JLg89nmcvIKebTdw07kvkLnkYBZL4IYQ+tJj5Y+PY1
+	l/mn6wi+Ya/D19zsxnLtS0xJa801zMTjIG23uThfe+nW4=
+X-Google-Smtp-Source: AGHT+IH8MetiTltiLxVsoQdcqnz9SyKbfeIivBe6BgaYPax7FqypUr47bqpDDYKrtQHdmKVxRlIZT6Fr1Q1yswx0lfM=
+X-Received: by 2002:a05:6512:3b96:b0:553:202e:a405 with SMTP id
+ 2adb3069b0e04-5539d327776mr135286e87.0.1749593331540; Tue, 10 Jun 2025
+ 15:08:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/9] media: qcom: camss: a number of cleanups and fixes
-Content-Language: ru-RU
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Hans Verkuil <hverkuil@xs4all.nl>, Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20250513142353.2572563-1-vladimir.zapolskiy@linaro.org>
- <b268a017-b42c-4b4c-859c-a7e8ea6cf8fa@linaro.org>
- <bc139945-2fe7-46da-8929-2098d77e155a@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <bc139945-2fe7-46da-8929-2098d77e155a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20250610-gpiochip-set-rv-net-v1-0-35668dd1c76f@linaro.org> <20250610-gpiochip-set-rv-net-v1-1-35668dd1c76f@linaro.org>
+In-Reply-To: <20250610-gpiochip-set-rv-net-v1-1-35668dd1c76f@linaro.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Wed, 11 Jun 2025 00:08:40 +0200
+X-Gm-Features: AX0GCFvL7R8uIhwfFeu8Zy5wwVjWQCtUtnOLFaGyd-WVGbMxfXjNiZWqOaZW5QQ
+Message-ID: <CACRpkdb+1uYy92975JbFUgvO0GWZBru1A8gOsF_VY-opzxopSQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] net: dsa: vsc73xx: use new GPIO line value setter callbacks
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Andrew Lunn <andrew@lunn.ch>, Vladimir Oltean <olteanv@gmail.com>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	"Chester A. Unal" <chester.a.unal@arinc9.com>, Daniel Golle <daniel@makrotopia.org>, 
+	DENG Qingfang <dqfext@gmail.com>, Sean Wang <sean.wang@mediatek.com>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Marc Kleine-Budde <mkl@pengutronix.de>, Vincent Mailhol <mailhol.vincent@wanadoo.fr>, 
+	Heiner Kallweit <hkallweit1@gmail.com>, Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
+	linux-can@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Bryan.
+On Tue, Jun 10, 2025 at 2:38=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl>=
+ wrote:
 
-On 6/10/25 21:53, Bryan O'Donoghue wrote:
-> On 10/06/2025 18:26, Vladimir Zapolskiy wrote:
->> On 5/13/25 17:23, Vladimir Zapolskiy wrote:
->>> The patchset prepares the ground for a CSIPHY rework in CAMSS ISP driver.
->>>
->>> For simplicity of continuing my reviews of CAMSS paches add myself as
->>> a reviewer, as well it will simplify the work of syncing and avoiding
->>> patch conflicts between work oin CAMSS done by others and myself.
->>>
->>> Vladimir Zapolskiy (9):
->>>     media: qcom: camss: cleanup media device allocated resource on
->>> error path
->>>     media: qcom: camss: remove duplicated csiphy_formats_sc7280 data
->>>     media: qcom: camss: remove .link_entities
->>>     media: qcom: camss: register camss media device before subdevices
->>>     media: qcom: camss: unconditionally set async notifier of subdevices
->>>     media: qcom: camss: simplify camss_subdev_notifier_complete() function
->>>     media: qcom: camss: change internals of endpoint parsing to fwnode
->>> handling
->>>     media: qcom: camss: use a handy v4l2_async_nf_add_fwnode_remote()
->>> function
->>>     MAINTAINERS: add myself as a CAMSS patch reviewer
->>>
->>>    MAINTAINERS                                   |   1 +
->>>    .../media/platform/qcom/camss/camss-csiphy.c  |   5 -
->>>    .../media/platform/qcom/camss/camss-csiphy.h  |   1 -
->>>    drivers/media/platform/qcom/camss/camss.c     | 182 +++++++-----------
->>>    drivers/media/platform/qcom/camss/camss.h     |   1 -
->>>    5 files changed, 71 insertions(+), 119 deletions(-)
->>>
->>
->> The changeset is left unreviewed for 4 weeks...
->>
->> May I ask linux-media maintainers to take care of the patchset?..
->>
->> -- 
->> Best wishes,
->> Vladimir
-> 
-> I haven't forgotten about your series, thanks for the ping.
-> 
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> struct gpio_chip now has callbacks for setting line values that return
+> an integer, allowing to indicate failures. Convert the driver to using
+> them.
+>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Thank you in advance, it would be nice to get your review/testing
-and get the changeset landed into the linux-next.
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
---
-Best wishes,
-Vladimir
+Yours,
+Linus Walleij
 
