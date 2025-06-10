@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-60745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C2FAAD322F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 11:35:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 483A3AD3233
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 11:35:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE86D3B3F83
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 09:34:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A8C4718860FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 09:35:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDE1528AB03;
-	Tue, 10 Jun 2025 09:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0520528AB10;
+	Tue, 10 Jun 2025 09:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pXIjezdV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r2gXuDDG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9C1289348
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 09:34:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282A4289348
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 09:34:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749548060; cv=none; b=Oksh8/tAFyeWzmLsx5vvOuxT+cl6ouyBEvDVm8fxJOLO8HujduSKszd5qQjGixjjGzmywcZefjYbtF4Dil10qmwyK7H190M1uKLXFKX3Esu5mqxAde668DFDKJ9GG3v2N6i5yvA/kXSexrooYqsPcYMcDYfhCAeVQiRxbBxd1OA=
+	t=1749548094; cv=none; b=oXkcTYlXiy+ZRP3cgcROsNERonE/FxF7dp1LE89zQYeo3JrIi9hbO7Su1mdrz1cn08IA7WuDuKnr/KWDuFiDBKd/BMPw+KjtPC2nOflAwVE2im7EqAg6rKRAhP5KWH6YekuKOfuSQ/SxPqhkQuV2HeQXt8RWR8GfgY/yvGh0ch0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749548060; c=relaxed/simple;
-	bh=I1K9tWbjDdnJVLwMOtJQ8wqurk7EW2N8ZkjWa+a8L44=;
+	s=arc-20240116; t=1749548094; c=relaxed/simple;
+	bh=XUIk7Bdw8E80v5bpFNR598DwZ4V2cA3+ophOGVTknx4=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=oBQdYq/0iV8gc9XZAf6eVe+07CkteHVm2Be9FWVuBD8uuKOK/YS/bAk4R07tew+HJPdnv0pcPocga3xwXkiVU/WE6+HgZSD29JTbhJYn/eXQTtSb3ACP63npfSx0yEHNHsEpcZKGmDfMvYz5ek2eqa6yYvPQIZTO1frWLuL/154=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pXIjezdV; arc=none smtp.client-ip=209.85.221.42
+	 In-Reply-To:Content-Type; b=hoesvUDtF+AXCgtfDgn8G0noU8jLQGdS4eTI6WVXGY+9GzrjiQz/54fYrqztzwt+KIE6dJFHzedyqL/XckGmhxVnTY80GGE94vuyDuMGcFOpYKYCjG++F8nvNVaNe3BGEC0Pn889rm78UE1DQHtUNIkwL0bQsioae6MWLgDOf2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r2gXuDDG; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3a3798794d3so4449168f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 02:34:18 -0700 (PDT)
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a54690d369so1795795f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 02:34:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749548057; x=1750152857; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1749548091; x=1750152891; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2sgAb1XNW7IcbUYG5Vl92Yrpvf31sMblVDDnz2uwCdM=;
-        b=pXIjezdV6M6plzz0/iPNRsy58Mu6zGYhkIfc6X/ZBubfdYOHqsOK6LtZNuQD+Gblph
-         IXECnlWpzsBha7Xsf0sFMZdKUZZen9g7fPHhDGKm9ARNL+fnEbPLMV2a6PKRpiK+zhGc
-         cgPW8BjUzUYJWouVLxiv1eRCduRB1S/rNFa0Q3kSpIPPadU5oD+02hWWfBXJnK4LkSRz
-         DBgOdmLE2M3cOea3rR1Vr3q9r7O+cvB4tDzJ7IuLH/yK4aLDsVd+pn5JoDNCiWPGyhdb
-         f2fv0H1+VMI8Po0Kbu3ONoF0aDlOg1ofXJo9H0af5o0Tgt9ZrhTgphcTNYsjcI6ZiwYK
-         thSg==
+        bh=6qjiCyEztD9opOLbbfERWUUIfACksihnoJ6dNpfTVa0=;
+        b=r2gXuDDGUDLfjw3jSP8uHwn5iAXq1cPvhzh9iGPEsJwqlFyhEm9ZmV2Aa94tSpT5KP
+         lqPnKCG/0Vzg1OWYc5fXpzAwlS3gekIn6qNKjEKkQwIkZa3EKLb7Gjy4U7R7C+LZKw4T
+         RZkg2f4hehHADqYLRMiw6jSUhWZ31y+T08xQZ5uy1lQZU7+k78o2e+mi1jDP/lvz3363
+         sO2j/ZArYMy1uIHvZEv75LBePKFL/KIKjrXb6zGgLhYBQ5aJ9N+BsiguCLIeKzwLkOGY
+         +96mUnDRqEitYy4L2Bc8UFB/1FlAjPxtz73cYeUsUxTRhv10tpxw4+trSWqfegtLj34k
+         c/yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749548057; x=1750152857;
+        d=1e100.net; s=20230601; t=1749548091; x=1750152891;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=2sgAb1XNW7IcbUYG5Vl92Yrpvf31sMblVDDnz2uwCdM=;
-        b=kHvuRApnqoIpDQyloI91Pu8pkHhbSxL1NnZHrMfhq0jXDvHSMmmAqgpKF0LWRZtlZS
-         kuk4mtf7iPCZTjk1j/doXL8IKxtHdO+dkXJJUaUtHn8/PZa1bjdzCHlkLOxsJ5pOqaIo
-         dZC2xCRDxBPDgUsYbIet9ojOHtY7n5awpKTyTXkRlMdbJnnYyyl0NLyAQ02ONhnLqhfl
-         A90s8WgHQGeubt99LxdChNRl9EIww642Div3Ed5CVm/j+jahFWSihMCswXxdEZ/zjEGk
-         LxyEEmFKzNjvSjmYVDVD9D0vAknCyxIgp5U9L3zkiWDJ6n7maGLoPydP9Zg6dirX6IB5
-         u1zw==
-X-Forwarded-Encrypted: i=1; AJvYcCXMtEmH9yni64x+jCu/61xRaaQ0eTlAiPAW8Yoh+IZROlI4SB5tqy61ZRkiU43hOwII/TW7EYJf61L1GKeW@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJkJGbcxmpmnMnc4+GuL86NgV8iGsF/ftTH8Y9XoO2ZoqoaIDy
-	nTSxhEI8Qled/D4xCHztweozk1LwbVZX/8VEbr1BwN3Z09qmuyQlinq5D5B6H1UkdCQ=
-X-Gm-Gg: ASbGncsCnqt0ZmWYtDnUGwCyWPB66vj1J9VVFls02HMozekR9eshn7lJt9GN58iWphS
-	vKnLgsp2FR+v6R/vQQRAWP5QoXPGRfudZdqe+GQJJPSvHHTKXRrKqblNwnnJu3Yi0OoyvQQN1yq
-	AcHRgQ/sCLbdGVNSVo5lWh45lEDNBMekJJIc9YqYpXAv2PVclohZg+c+mcerwsPp/kU1V/ru5eS
-	vIkXd/mWs6lDWRhja2XKds8rf7eRtpY4dsdp29O4wwFDV+MK2lvGAqXQXpu6SMOt7iKuN+6R+uC
-	7nGwYXzqn2JAkczmcPo1Kvl86oVTnhvcHtHpYnMCNVqmd0ntbH6+qQMNq9kS4UsXtixVVJHcOLq
-	MlSjkO8fKdmo9OTiybQ4epYEKBkpUyUaJVfrP
-X-Google-Smtp-Source: AGHT+IFH0HuMjwqMdNYVSnjDPrZbsV6mlwKgIbS1lF2FMgN1dbTtzO2vCD3SgrqFOHSyP+hq+BtSTQ==
-X-Received: by 2002:a5d:588a:0:b0:3a5:2e9c:edb with SMTP id ffacd0b85a97d-3a531cde0cbmr13358935f8f.47.1749548057284;
-        Tue, 10 Jun 2025 02:34:17 -0700 (PDT)
+        bh=6qjiCyEztD9opOLbbfERWUUIfACksihnoJ6dNpfTVa0=;
+        b=W+cT7pgHCsg3B96svhfiovZZQs2ql8j6tHKdL21vlBnZgyWIAALF09tZljfyaxK4Bv
+         9zTKYaqwc2ImFKq+qUOIis8WJ9VkFeYWHoAbUBTsYj/Qw3fe1B20DoBNEmyhMk72WA5A
+         A6yEg928WkdVVVLk1e3HiD4bWkgbHJtnEqWRknkSTgju62hD247rNOEI3lhBMoMM7Jrl
+         w0b3t5kjxRPmNFGOoJRlotRoUpUkM4yfEMz8U6mCJVtW8vVYvGqQ5yNCQHYudzDhTGsV
+         AeI45ClL4TQJjlf89QZ+92znZoHVYVOE6bXI2mAPjIVgYYIy81TCH2gafPR4vaOdxNb6
+         I5wA==
+X-Forwarded-Encrypted: i=1; AJvYcCWAxxxGOGXpkWr4QyHBGNHU1fcuTxxsOVlh5Z8EkOLFuOfbJY16zgbUqWTje6iLiyEcc+dJi54hACKuUEcF@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywv946Qxhgf/BEZtHpjqBUw8W4XqzZMivH0OuHv+S/gzeaQRPyB
+	mkh2I8mg2Zh5AiU584hQtw20ZaCyNZYigpvaS1gHynnvB6sgp5KIIcmRyjAzi+kqrDc=
+X-Gm-Gg: ASbGncus6d6mNd38x49CwQfqHuolxHvibUhKTGRmuzasYEiMsh5ClYY/MPfJivoFrk/
+	dDjPBPdG5gbl0d3dSvXHB+rUHDp/gYB5WrHut8Rvl00un8F63KfnWDH0xM37sWDGVKrpZ0uQBms
+	luWNLeihRSugfYXo0rMpQ49yrlLdkX/UOMa52HJh4H/Ydn5cpKI7OFiWcgW7aVU5GmRimFkDPwe
+	2xw8gslwwVOu7BSjYxnV05bpOgzBF7MxR9ksaUT8aSQjY4VWjtGColgfonzLyva5Ves/pEyl3eE
+	5ZqLMTWDIoBhwMed7JQ7+jVeLDsUrllsZ5gg19FZ8hS+RCG9y9UUu+yLUSzPJLgx71+J0iJSALm
+	qEywvM+QgQqQb/a3GEOWFX0JjPZo2Rurxi8Sh
+X-Google-Smtp-Source: AGHT+IGxYDa2RcSwYGiwKBk4KBlxyIfiHs2wpGxhwXlMFqt0eszMWqbB6Md+Cmed4LNRihsS/tlUQA==
+X-Received: by 2002:a05:6000:4013:b0:3a4:fa6a:9174 with SMTP id ffacd0b85a97d-3a531cb54a8mr13732949f8f.33.1749548089574;
+        Tue, 10 Jun 2025 02:34:49 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:3d9:2080:f0b:a9b6:d508:9d14? ([2a01:e0a:3d9:2080:f0b:a9b6:d508:9d14])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-452fba4621csm123988285e9.13.2025.06.10.02.34.16
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a5323ad414sm11939108f8f.31.2025.06.10.02.34.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jun 2025 02:34:16 -0700 (PDT)
-Message-ID: <7f5b7a49-28a0-4923-bbf4-8b0afdefe571@linaro.org>
-Date: Tue, 10 Jun 2025 11:34:16 +0200
+        Tue, 10 Jun 2025 02:34:49 -0700 (PDT)
+Message-ID: <2570d61c-a0b6-4dd5-a64c-37b95c6f5023@linaro.org>
+Date: Tue, 10 Jun 2025 11:34:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,14 +86,14 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 0/2] Flattening USB controller on SM8450 QRD
+Subject: Re: [PATCH] clk: qcom: sm8450: Enable retention for usb controller
+ gdsc
 To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
  linux-arm-msm@vger.kernel.org
-References: <20250610091805.2997546-1-krishna.kurapati@oss.qualcomm.com>
+References: <20250610092253.2998351-1-krishna.kurapati@oss.qualcomm.com>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -120,34 +120,57 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20250610091805.2997546-1-krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <20250610092253.2998351-1-krishna.kurapati@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/06/2025 11:18, Krishna Kurapati wrote:
-> Flatten USB Controller node on SM8450 QRD to move away from legacy USB
-> Qualcomm glue driver and make use of new one. The series has been tested
-> with driver changes [1] to enable runtime suspend/resume during cable
-> disconnect/connect scenarios.
+On 10/06/2025 11:22, Krishna Kurapati wrote:
+> When USB controller enters runtime suspend while operating in host
+> mode, then wakeup because of cable disconnect or a button press of
+> a headset causes the following kind of errors:
 > 
-> I was testing on SM8450 QRD and hence flattened usb node on that platform
-> only. If the community suggests to flatten all platforms of sm8450, I can
-> do a compile test for the ones I can't get hands on and send a follow up
-> series.
-
-I can test on an SM8450 HDK, so please flatten for all the boards and CC me
-
-Neil
-
+> Error after button press on a connected headset :
 > 
+> [  355.309260] usb 1-1: reset full-speed USB device number 2 using xhci-hcd
+> [  355.725844] usb 1-1: device not accepting address 2, error -108
+> 
+> Error on removal of headset device from usb port:
+> 
+> [  157.563136] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402
+> ,iova=0xd65504710, fsynr=0x100011, cbfrsynra=0x0, cb=6
+> [  157.574842] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF],
+> SID=0x0
+> [  157.582181] arm-smmu 15000000.iommu: FSYNR0 = 00100011 [S1CBNDX=16 WNR
+> PLVL=1]
+> [  157.589610] xhci-hcd xhci-hcd.0.auto: WARNING: Host Controller Error
+> [  157.596197] xhci-hcd xhci-hcd.0.auto: WARNING: Host Controller Error
+> 
+> Enabling retention on usb controller GDSC fixes the above issues.
+> 
+> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+> ---
+> 
+> Note:
+> The above mentioned issues pop up after I enabled runtime suspend after
+> applying [1].
 > [1]: https://lore.kernel.org/all/20250610091357.2983085-1-krishna.kurapati@oss.qualcomm.com/
 > 
-> Krishna Kurapati (2):
->    arm64: dts: qcom: sm8450-qrd: add pmic glink node
->    arm64: dts: qcom: sm8450-qrd: Flatten usb controller node
+>   drivers/clk/qcom/gcc-sm8450.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
->   arch/arm64/boot/dts/qcom/sm8450-qrd.dts | 110 +++++++++++++++++++++++-
->   1 file changed, 108 insertions(+), 2 deletions(-)
-> 
+> diff --git a/drivers/clk/qcom/gcc-sm8450.c b/drivers/clk/qcom/gcc-sm8450.c
+> index 65d7d52bce03..f94da4a1c921 100644
+> --- a/drivers/clk/qcom/gcc-sm8450.c
+> +++ b/drivers/clk/qcom/gcc-sm8450.c
+> @@ -3141,7 +3141,7 @@ static struct gdsc usb30_prim_gdsc = {
+>   	.pd = {
+>   		.name = "usb30_prim_gdsc",
+>   	},
+> -	.pwrsts = PWRSTS_OFF_ON,
+> +	.pwrsts = PWRSTS_RET_ON,
+>   };
+>   
+>   static struct clk_regmap *gcc_sm8450_clocks[] = {
 
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
