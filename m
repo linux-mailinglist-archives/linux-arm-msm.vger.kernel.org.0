@@ -1,145 +1,404 @@
-Return-Path: <linux-arm-msm+bounces-60786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57862AD37C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 15:02:18 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22356AD3850
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 15:10:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 24C481BA1977
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 12:58:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BC1337AE631
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 13:09:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56B3F299A9A;
-	Tue, 10 Jun 2025 12:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F080B29AAF0;
+	Tue, 10 Jun 2025 13:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fgWOMiAc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Liy1rDUv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8A6299933;
-	Tue, 10 Jun 2025 12:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F6B2980D0;
+	Tue, 10 Jun 2025 13:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749559994; cv=none; b=GCqh8P+I+I5kos6uMkjFAaFjHJp4tPegKl3azxMhaPJ9Th+ZYbc8TaoK3xCMTuN6aYtgljEBJOxx7eaG0gLm2AlsgM8tSXZ3KafHWHBTcKgCxHm1MG6HcdTOnc1VhXUAAR+bbRetnLBSLVw4oD/sJivaYw6ASbJftZBLoAPXw08=
+	t=1749560623; cv=none; b=POuD2ZB2uBfeCDu/3bh1nQdpATQwuR/sGFl8qefGSx0SjN8mooMGmbkiJJltmMjEDOuk9pwpgyukvMz+jvFpvCOX0nNLzVj268mBgKUqfebLrs9D3vOCmdrl0q1qD/4KmGjlQfUR3i1Cu6gshKbOpVNBfHPLNDri/BMEusNMB2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749559994; c=relaxed/simple;
-	bh=ISYaAhggFyjnVtTWRorHjZCRnq1DLz9VGr6XjpJVG7U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=g6GjAuLXvUq+dxQMoMDir02SKqSnHOGaIDfipvf71OQwpqcKdWxf0SOBjIMeppvGGyiVTHJaLwbjliBbqCJ2brkIyhkwrBNNYOfWpZoz5n3SSCPUIZ6ytWElPVjkDHXFyyYk0LCIB5U4BWG/l0q5TrXVurnhVUSNE7j9mIjhnYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fgWOMiAc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3FBDC4CEED;
-	Tue, 10 Jun 2025 12:53:09 +0000 (UTC)
+	s=arc-20240116; t=1749560623; c=relaxed/simple;
+	bh=VtRG7DfzhJh56X3RJNGS6YUWTSlI7il++qkOZT/n2j0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Xh2p3HyHHBxnl79zkbWPDvWBhRznIU0i3yGmdXaRQzJ4SMCAl9Jf/bSGd1ltwxsP81p10iGdUPNe3nprFSjEUQKZr03jFmjnSS1t3M1LsmoC8LSX8VIcj1NIY5n4n53pj4wVhGhRd0KB/gW5VAfPnlklutq9TPHhlvoiLMl+yuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Liy1rDUv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 9C2B7C4CEED;
+	Tue, 10 Jun 2025 13:03:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749559993;
-	bh=ISYaAhggFyjnVtTWRorHjZCRnq1DLz9VGr6XjpJVG7U=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=fgWOMiAcTYjMjBVI/Z4s8WvdzFuQ5LLsV3FLWEMo670XZ8buZ8OyjsASrIcMoICvv
-	 ri+y5rf8Fd0oO3DTqf3TIlGOPeWMN3uEVC5cGejHpHgbiPihsaReBiUWLM2k/L6BB1
-	 NXK7SR4smEjC3+tjlGjZ7ew1jxrOUciLQukf5Dehj7exiI0ZI5f0TO2k1ePWhAja7l
-	 Mz9QPWA0QK4kEXcIEBccMRau4e3jrSL8iXExIip8EROw0iQygCM7cr8JahGGGU7QHn
-	 Lmdwkixbvw6TBHsvPwE9Q7CG74fyxEAxW/AgeKAEzJTuPtS3Q+LTPzhyjqD4Q2ZHQL
-	 fERVymuPdEBfQ==
-Message-ID: <18053999-c337-47e5-b6df-72c2be6a72df@kernel.org>
-Date: Tue, 10 Jun 2025 14:53:08 +0200
+	s=k20201202; t=1749560623;
+	bh=VtRG7DfzhJh56X3RJNGS6YUWTSlI7il++qkOZT/n2j0=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=Liy1rDUv+UlTCCsd97xZODV/uK9bD0kU2uTpPkHI/Bol5SwnGVFxsDtrgVKpPTH4m
+	 lZhEmE+rGdxEvBl7E/2FxhO5l/OU+clxbVrammr9I1DOctl8uCBQXnQItvx7jLr7US
+	 nlMiLVKFQ0WerqITLsgQAIMP6wNj7XMHEdwX5MjikEtJdtqtw7wdWq6sC3E/BRc5mE
+	 Fsd135hgctWsY/irN+shC3Xv60ZzekgmRduzBMNNC+qw6aiVu4a7+dlyCRD2OE0VxZ
+	 CSpR5VeX8A+OWYJWlUmOgvHUyRpWfeuid67hAJX5KdO96QWvBx0G7KUxFHp4ty4Uow
+	 NBuXMw8WD8aVg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C1F7C5B552;
+	Tue, 10 Jun 2025 13:03:43 +0000 (UTC)
+From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
+Date: Tue, 10 Jun 2025 17:03:34 +0400
+Subject: [PATCH v10] arm64: dts: qcom: ipq5018: Add tsens node
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 1/4] dt-bindings: mmc: Add dll-hsr-list for HS400 and
- HS200 modes
-To: Ram Prakash Gupta <quic_rampraka@quicinc.com>,
- Sachin Gupta <quic_sachgupt@quicinc.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
- Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- quic_cang@quicinc.com, quic_nguyenb@quicinc.com, quic_bhaskarv@quicinc.com,
- quic_mapa@quicinc.com, quic_narepall@quicinc.com, quic_nitirawa@quicinc.com,
- quic_sartgarg@quicinc.com
-References: <20250122094707.24859-1-quic_sachgupt@quicinc.com>
- <20250122094707.24859-2-quic_sachgupt@quicinc.com>
- <72b02fd1-5195-4bb0-b01d-5481b49a5680@kernel.org>
- <e0f43fc7-2f38-335d-1515-c97594a55566@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <e0f43fc7-2f38-335d-1515-c97594a55566@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20250610-ipq5018-tsens-v10-1-3a10a5a2642c@outlook.com>
+X-B4-Tracking: v=1; b=H4sIACUtSGgC/1WMQQ+CIABG/4rjHA5QFDo1oWNbq2PrYALJSiCw1
+ ub87zlvHd+3770JJB2tTmCbTSDqj03WuwUw2mSg61t319CqZQAEEYpKVEIbXhRhBsekXYJVeTO
+ cGlUUuAaLE6I29rsGL9eFTfQDHPuo27Uiz/XxhPmhYYwVlRQVryjFdI+JrFHTEMGlEGT3d8tdO
+ 4SoMM9D9Cr37/Hp/SPv/ADm+QeMRN+4wQAAAA==
+X-Change-ID: 20250404-ipq5018-tsens-64bf95fd3317
+To: Amit Kucheria <amitk@kernel.org>, 
+ Thara Gopinath <thara.gopinath@gmail.com>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+ Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ George Moussalem <george.moussalem@outlook.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1749560621; l=9602;
+ i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
+ bh=yu3qG3q34AVTZVwyPg7XgkDM9uBnXGU5mfAmQhOKUAo=;
+ b=D8XiKy7N34c5iF/yKh41z9UXEkkUHv1N5i61xCQJWMg9OKdn6kZk8yn3liDmyqKBcrqhth1Ok
+ ThaC6R2uaMJCmWVE6gAKR3wq/Jz9Q1xaJ/VPY9lvtD80eku9mPFn5Vs
+X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
+ pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
+X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
+ with auth_id=364
+X-Original-From: George Moussalem <george.moussalem@outlook.com>
+Reply-To: george.moussalem@outlook.com
 
-On 10/06/2025 14:07, Ram Prakash Gupta wrote:
-> Hi Krzysztof,
-> 
-> Thanks for your comment, The Qualcomm Engineer who initiated this work,
-> is no longer working on this and I am taking up the responsibility to continue
-> on this work. I have started to check this and will start with addressing your
-> comment next.
-> 
-> Thanks,
-> Ram
-> 
-> On 1/22/2025 3:56 PM, Krzysztof Kozlowski wrote:
->> On 22/01/2025 10:47, Sachin Gupta wrote:
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 
-Above timeline is interesting:
-1. Patch sent on 22nd January.
-2. I provided comments few hours later, the same day.
-3. Silence.
-4. Employee changes job.
-5. Five months later...
+IPQ5018 has tsens V1.0 IP with 5 sensors, though 4 are in use.
+There is no RPM, so tsens has to be manually enabled. Adding the tsens
+and nvmem nodes and adding 4 thermal sensors (zones). With the
+critical temperature being 120'C and action is to reboot.
 
-Not your fault Ram of course, but above timeline is not a responsible
-way of upstreaming patches.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+IPQ5018 has tsens V1.0 IP with 5 sensors, of which 4 are in use,
+and 1 interrupt. There is no RPM present in the soc to do tsens early
+enable. Adding support for the same here.
+
+Last patch series sent by Qualcomm dates back to Sep 22, 2023.
+Since I'm working on OpenWrt support for IPQ5018 based boards (routers)
+and Sricharan Ramabadhran <quic_srichara@quicinc.com> in below email
+confirmed this SoC is still active, I'm continuing the efforts to send
+patches upstream for Linux kernel support.
+https://lore.kernel.org/all/63dc4054-b1e2-4e7a-94e7-643beb26a6f3@quicinc.com/
+
+[v10]
+	*) Rebased onto updated pull of master to resolve merge conflicts in the
+	   DTS patch
+	*) Link to v9: https://lore.kernel.org/all/DS7PR19MB88836DC6965515E12D70BB2C9DCC2@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+[v9]
+	*) Updated checks in tsens to more strictly evaluate for v2+ upon enabling
+	   v2 features as suggsted by Dmitry.
+	*) Split patch 3 into two, one to update conditional statements as
+	   mentioned above and the other to implement tsens IP v1 without RPM.
+	*) Added back Dmitry's RB tag on patch 6 which wasn't carried over
+	   from v7 to v8
+	*) Link to v8: https://lore.kernel.org/all/DS7PR19MB88833F7A9C8F4FC484977BA69DCD2@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+[v8]
+	*) Tsens V1 uses v1 interrupts and watchdog is not present (only on v2.3+).
+	   As such, replaced VER_1_X with VER_1_X_NO_RPM in conditons to ensure
+	   v1 interrupts are set and watchdog isn't enabled.
+	*) Tested on Linksys MX2000 and SPNMX56
+	*) Link to v7: https://lore.kernel.org/all/DS7PR19MB88831624F11516945C63400F9DC22@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+[v7]
+	*) Updated cover letter
+	*) Replaced patch 3 with a new one to add support for tsens v1.0 with
+	   no RPM and removed Dmitry's 'Reviewed-by tag
+	*) Refactored patch 4 and split support for IPQ5018 from support for
+	   tsens v1.0 without RPM. As such, also removed Dmitry's RB tag.
+	*) Depends on patch 1 and 2 from patch series to add support for
+	   IQP5332 and IPQ5424 applied on Feb 11 2025:
+	   https://patchwork.kernel.org/project/linux-arm-msm/cover/20250210120436.821684-1-quic_mmanikan@quicinc.com/
+	*) Link to v6: https://lore.kernel.org/all/DS7PR19MB88838833C0A3BFC3C7FC481F9DC02@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+[v6]
+	*) Include (this) cover letter
+	*) Picked up Dmitry's Reviewed-by tag on patch 5
+	*) Link to v5: https://lore.kernel.org/all/DS7PR19MB88832FDED68D3EBB0EE7E99F9DC72@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+[v5]
+	*) Adjusted commit messages to indicate IPQ5018 has 5 sensors of
+	   which 4 are described and in use as per downstream driver and dts.
+	*) Padded addresses of tsens and qfprom nodes with leading zeros.
+	*) Link to v4: https://lore.kernel.org/all/DS7PR19MB8883BE38C2B500D03213747A9DC72@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+[v4]
+	*) Documented ipq5018 in qcom,qfprom bindings
+	*) Constrained ipq5018-tsens to one interrupt with description
+	*) Added Rob's Acked-by tag
+	*) Added Dmitry's Reviewed-by tag
+	*) Fixed modpost warning: added __init to init_common
+	*) Sorted tsens nodes by address
+	*) Sorted thermal-zones nodes by name
+	*) Link to v3: https://lore.kernel.org/all/20230922115116.2748804-1-srichara@win-platform-upstream01.qualcomm.com/
+
+[v3]
+	*) Added the tsens-ipq5018 as  new binding without rpm
+	*) Added Dmitry's Reviewed tag
+	*) Fixed Dmitry's comments for error checks in init_ipq5018
+	*) Ordered the qfprom device node properties
+	*) Link to v2: https://lore.kernel.org/all/20230915121504.806672-1-quic_srichara@quicinc.com/
+
+[v2]
+	*) Sorted the compatible and removed example
+	*) Fixed the name for new tsens_feature
+	*) Used tsend_calibrate_common instead of legacy
+	   and addressed comments from Dmitry.
+	*) Squashed patch 3 & 4
+	*) Fixed node names, order and added qfprom cells
+            for points seprately
+	*) Squashed patch 6 & 7
+	*) Link to v1: https://lore.kernel.org/all/1693250307-8910-1-git-send-email-quic_srichara@quicinc.com/
+
+George Moussalem (2):
+  thermal: qcom: tsens: update conditions to strictly evaluate for IP
+    v2+
+  thermal: qcom: tsens: add support for tsens v1 without RPM
+
+Sricharan Ramabadhran (4):
+  dt-bindings: nvmem: Add compatible for IPQ5018
+  dt-bindings: thermal: qcom-tsens: Add ipq5018 compatible
+  thermal: qcom: tsens: Add support for IPQ5018 tsens
+  arm64: dts: qcom: ipq5018: Add tsens node
+
+ .../bindings/nvmem/qcom,qfprom.yaml           |   1 +
+ .../bindings/thermal/qcom-tsens.yaml          |   2 +
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi         | 169 ++++++++++++++++++
+ drivers/thermal/qcom/tsens-v1.c               |  62 +++++++
+ drivers/thermal/qcom/tsens.c                  |  27 ++-
+ drivers/thermal/qcom/tsens.h                  |   4 +
+ 6 files changed, 256 insertions(+), 9 deletions(-)
+
+--
+2.48.1
+---
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi | 169 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 169 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+index 130360014c5e14c778e348d37e601f60325b0b14..4677e1d19cdabefab44d9eaeae431150fd74abd5 100644
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -182,6 +182,117 @@ pcie0_phy: phy@86000 {
+ 			status = "disabled";
+ 		};
+ 
++		qfprom: qfprom@a0000 {
++			compatible = "qcom,ipq5018-qfprom", "qcom,qfprom";
++			reg = <0x000a0000 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			tsens_mode: mode@249 {
++				reg = <0x249 0x1>;
++				bits = <0 3>;
++			};
++
++			tsens_base1: base1@249 {
++				reg = <0x249 0x2>;
++				bits = <3 8>;
++			};
++
++			tsens_base2: base2@24a {
++				reg = <0x24a 0x2>;
++				bits = <3 8>;
++			};
++
++			tsens_s0_p1: s0-p1@24b {
++				reg = <0x24b 0x2>;
++				bits = <2 6>;
++			};
++
++			tsens_s0_p2: s0-p2@24c {
++				reg = <0x24c 0x1>;
++				bits = <1 6>;
++			};
++
++			tsens_s1_p1: s1-p1@24c {
++				reg = <0x24c 0x2>;
++				bits = <7 6>;
++			};
++
++			tsens_s1_p2: s1-p2@24d {
++				reg = <0x24d 0x2>;
++				bits = <5 6>;
++			};
++
++			tsens_s2_p1: s2-p1@24e {
++				reg = <0x24e 0x2>;
++				bits = <3 6>;
++			};
++
++			tsens_s2_p2: s2-p2@24f {
++				reg = <0x24f 0x1>;
++				bits = <1 6>;
++			};
++
++			tsens_s3_p1: s3-p1@24f {
++				reg = <0x24f 0x2>;
++				bits = <7 6>;
++			};
++
++			tsens_s3_p2: s3-p2@250 {
++				reg = <0x250 0x2>;
++				bits = <5 6>;
++			};
++
++			tsens_s4_p1: s4-p1@251 {
++				reg = <0x251 0x2>;
++				bits = <3 6>;
++			};
++
++			tsens_s4_p2: s4-p2@254 {
++				reg = <0x254 0x1>;
++				bits = <0 6>;
++			};
++		};
++
++		tsens: thermal-sensor@4a9000 {
++			compatible = "qcom,ipq5018-tsens";
++			reg = <0x004a9000 0x1000>, /* TM */
++			      <0x004a8000 0x1000>; /* SROT */
++
++			nvmem-cells = <&tsens_mode>,
++				      <&tsens_base1>,
++				      <&tsens_base2>,
++				      <&tsens_s0_p1>,
++				      <&tsens_s0_p2>,
++				      <&tsens_s1_p1>,
++				      <&tsens_s1_p2>,
++				      <&tsens_s2_p1>,
++				      <&tsens_s2_p2>,
++				      <&tsens_s3_p1>,
++				      <&tsens_s3_p2>,
++				      <&tsens_s4_p1>,
++				      <&tsens_s4_p2>;
++
++			nvmem-cell-names = "mode",
++					   "base1",
++					   "base2",
++					   "s0_p1",
++					   "s0_p2",
++					   "s1_p1",
++					   "s1_p2",
++					   "s2_p1",
++					   "s2_p2",
++					   "s3_p1",
++					   "s3_p2",
++					   "s4_p1",
++					   "s4_p2";
++
++			interrupts = <GIC_SPI 184 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "uplow";
++			#qcom,sensors = <5>;
++			#thermal-sensor-cells = <1>;
++		};
++
+ 		tlmm: pinctrl@1000000 {
+ 			compatible = "qcom,ipq5018-tlmm";
+ 			reg = <0x01000000 0x300000>;
+@@ -631,6 +742,64 @@ pcie@0 {
+ 		};
+ 	};
+ 
++	thermal-zones {
++		cpu-thermal {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++			thermal-sensors = <&tsens 2>;
++
++			trips {
++				cpu-critical {
++					temperature = <120000>;
++					hysteresis = <2>;
++					type = "critical";
++				};
++			};
++		};
++
++		gephy-thermal {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++			thermal-sensors = <&tsens 4>;
++
++			trips {
++				gephy-critical {
++					temperature = <120000>;
++					hysteresis = <2>;
++					type = "critical";
++				};
++			};
++		};
++
++		top-glue-thermal {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++			thermal-sensors = <&tsens 3>;
++
++			trips {
++				top_glue-critical {
++					temperature = <120000>;
++					hysteresis = <2>;
++					type = "critical";
++				};
++			};
++		};
++
++		ubi32-thermal {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++			thermal-sensors = <&tsens 1>;
++
++			trips {
++				ubi32-critical {
++					temperature = <120000>;
++					hysteresis = <2>;
++					type = "critical";
++				};
++			};
++		};
++	};
++
+ 	timer {
+ 		compatible = "arm,armv8-timer";
+ 		interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+
+---
+base-commit: afc582fb6563b8eb5cd73f9eca52e55da827567f
+change-id: 20250404-ipq5018-tsens-64bf95fd3317
 
 Best regards,
-Krzysztof
+-- 
+George Moussalem <george.moussalem@outlook.com>
+
+
 
