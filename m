@@ -1,209 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-60742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E00A2AD31DC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 11:25:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57BCBAD31EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 11:27:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE3B33B6D8D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 09:24:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C34C118826CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 09:27:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A05B28A409;
-	Tue, 10 Jun 2025 09:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96B8A28A3E1;
+	Tue, 10 Jun 2025 09:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QU3NycOY"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="PAahuwat"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f68.google.com (mail-ej1-f68.google.com [209.85.218.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AAC1FF5F9;
-	Tue, 10 Jun 2025 09:24:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C7822172F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 09:27:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749547449; cv=none; b=hHz1Z9sxeXTCKpc0zEDE7bEPjOxUrRLuP3d3E/WLvVAHXa7EeVUZ29pEmhJd9aIJEAbVyRaln1kF9YDxaOPxnob+8G6EjZXbfImV30XeS9dvNflkAYw2FYVZchQC0UNVCOPavbHsAAoVF0gXchuZbZ7c0K85vwkA3tvms3Wuud8=
+	t=1749547644; cv=none; b=bpzzCJhCWlqPpNLYztrgyZGrK8e0nJKku50VzrQSCSAZDz1OFImnkzPsISyzCWw8sPZuPRFKHBHlpXxW+r9kq3/pvMh4Vs29OC1gBiIrkHHccVClBgBk7mkLupA9lRMo9feQrNuq3nipYPsR+BE2oKX7PQrKf6ILbkhOT/AEbAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749547449; c=relaxed/simple;
-	bh=cbHTa7eH8HCFYh9dMh7/U0vdEyuqU847Ua4Nh4/c+b0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jRB2Buj+8LA53DyGvz+2KJhLeS1vXsB9ugfGwa7Q044H25NEmbSUFE9V0tjEsnJU6GeAv4py0QdRkGPS1SVzQT0wUyC4wkD/KKQnJNHC//CqJHJnFTtifvzNmkuFspnzHVYpDBdZa8dQJBB3cXrt33kcFfQBDjp+vZReSWTQY2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QU3NycOY; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 559MfPp0008107;
-	Tue, 10 Jun 2025 09:23:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SLhYKXUBlq/76Q8kCP0zJNioPnWqVmep9hlrNQUyLmg=; b=QU3NycOYoTGMHmlP
-	oCwadU5LFsF+PLGcbyAJ3NorxQb19M/mq2KefjFhSc4lUkFFVPgHaVqMuu0O18tQ
-	pRvzlH2CicPaDfSXBYSJzk12Bul65cDfut/PH8dqcvtxwQa9RlGSXPogFSj+UXeE
-	QfZhzdzzSFlifdVfZvYaQhKHlYqmgrZrBm9CjVJV5a2kVT01v4Vfo7w9jpuBaSn2
-	PCuuIsRwd4TjuQI7JszahyxmrujEotHcbjmqbTNjkx1QcrAzw9amzRqeSliyKkDB
-	yeoKO2aXRB/YZvbKSfRXg+IgZpvyqOmMBGqCpZKOelbWY8fOZeLf7k68RoVgt5nE
-	Y/voeg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474d120y0w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Jun 2025 09:23:58 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55A9Nans015791
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Jun 2025 09:23:36 GMT
-Received: from [10.217.217.109] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Jun
- 2025 02:23:31 -0700
-Message-ID: <814deadc-9b7d-49d6-88c4-cb8837486cdd@quicinc.com>
-Date: Tue, 10 Jun 2025 14:53:28 +0530
+	s=arc-20240116; t=1749547644; c=relaxed/simple;
+	bh=P4qNKYMYQd7qLMstPICfugAtikYCJruU0i37lwRR5YY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=Z11FOI3FsiptySYHbfIURDBlszzERWvymKtVwcmYVC5NPPo6E/av2MPCsAabiZrrvqXMa91+p7JQTVaQlenkDFLlyEL883LMj/yMeVsVIdNU1t2kk/RKk8rB/kuon0qVVncIIdC6w+I4vvUxNk2dDCdTqAARdgiHEzTVslHqdEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=PAahuwat; arc=none smtp.client-ip=209.85.218.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f68.google.com with SMTP id a640c23a62f3a-ad574992fcaso783335866b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 02:27:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1749547641; x=1750152441; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AeEbp6Gm80Y2xA4U7p4NRH2uge9EsjQvg8tgeLtWScE=;
+        b=PAahuwatiXN1E+75I9XGdQvUHRQ5pYtaYdcsR8KqCFsv470QkvRsmIiF/B9/nPre8q
+         fG02JrO4YWdOhcXQWpezDcrdpULGIxZBIK2K66tZxkwOjTmXhpUM/kNGcOkrheKWoOo7
+         vVmZGuQqoCvhntiiCOKQiXiksRuK8kQjUK8Wj6F4lvXUL/t++GwakCA7/dW8viQqt6u2
+         ZFnOJzEKmcYzDrE6+v+ztbXzHHlBJAy9Jq3m6kHfoIg1YLRJGJmGmKVU5xMNvQeWnN3d
+         lGAzQLqyPlP/7AQlpMg9oN4Nwo3RxwVbtP8mIlvrO965zZeQ9f49wu1FVLJ61K6mie5d
+         JKhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749547641; x=1750152441;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=AeEbp6Gm80Y2xA4U7p4NRH2uge9EsjQvg8tgeLtWScE=;
+        b=rZLUaeQuwzWTb+hF1TJV8K8Z7YQpZOAG7ph2twlbOpjMCkRhuqPh0pBeOghnqLYT1i
+         hUZvd++74f5pCC5Z/He0QMEaVEcoKfnsAg1nAsxgnAHoYNp0VIXTOM7yYM13tbEuvvZW
+         VWu24eIoybgzI/peqiwRf+OwVzyYhZWxy+atlhYl0AF/HwR2635L/NIk7R5OpBUc9pcm
+         ag6F3l+hpSc+M6K40jROcx1J5T80UkY2HVbI1eu9tcuXQ7GPe4S0OjmQOsJZO70u9QCx
+         yW0gv99StpRBDymq5T7xgK3dDw80vlMtml1EFNNthlZ/T5tqwgQw4ZQUDW4prF2rJcUf
+         eE+A==
+X-Forwarded-Encrypted: i=1; AJvYcCWiDPbYmBV4Bvd7d7s2yQkIKLONvVrEldo65lz7toHIhraF7a/G/m+udh5xsN8Ka8v1h1/uzLs3uCnBNVDJ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5RZ870s8cj7v5SizyD7ddv8SsBN+nk8cL1oOUYaKQFjL4tN9k
+	gDIm5djjCdv9LfGW0gnXhfjS9siqg9ZrvH7AIeWTUMxUczSpBhQgMldQ7JXhT3xfUfk=
+X-Gm-Gg: ASbGncucnugB3wJpN3/wC+n82vkYsKLaE0t26LhcbVKZBA4SmGNWQGB3ZUlcDYj+vnW
+	g8fKaVzB2MfTJzfnaBViMlLI5HWWDR/tYpi7UkbFC0IW2I6r+wQrniD0ot9xfA1JhJOaX7ZZ1yS
+	2UK0wwrt4DZtkhIwLnOhQNzdagYECGGfzBvEmBswqjfPz8I3Z/GRglrJAsdWUgDg2Vrn83wD+6E
+	OVvQmMPgJunhEWkN0oYuu2XNSpwDocmAVOe062BPQMAzHzNVXSV+Bj7vpxTDc3be1HUCRIZOlmi
+	eDppNUw6CJ8U0eRvK9BGu1f46PIS7PT2VKW6cYyShRTE0K8wkIZ7PWfXg17nbcT7ExJ9TcGj2xe
+	9sSmSEYJ1LeMBXQfedFs5A+6+VekB87g=
+X-Google-Smtp-Source: AGHT+IEdYnXS+bPwfn+SKA9Tzp8XBT0Y+gshkASBWPpQkaRkgexqlj88PwmcmosZG1sajuE1IZOlTg==
+X-Received: by 2002:a17:907:fdca:b0:ad5:61fb:265 with SMTP id a640c23a62f3a-ade1aa06c69mr1477466266b.47.1749547640612;
+        Tue, 10 Jun 2025 02:27:20 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ade1db557d1sm696297866b.50.2025.06.10.02.27.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Jun 2025 02:27:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 02/10] dt-bindings: clock: Add Qualcomm QCS615 Camera
- clock controller
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Stephen
- Boyd" <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas
-	<catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20250424-qcs615-mm-v7-clock-controllers-v8-0-bacad5b3659a@quicinc.com>
- <20250424-qcs615-mm-v7-clock-controllers-v8-2-bacad5b3659a@quicinc.com>
- <b80d500b-6203-4d83-8396-3ba579abd980@linaro.org>
-Content-Language: en-US
-From: Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <b80d500b-6203-4d83-8396-3ba579abd980@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: paoPOxfTkq3Z8Db8VHkhp7K7FNbxtFRD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDA3MiBTYWx0ZWRfX+xuEUv/2DpC/
- lIvcAmnFSA7A/gkwUEAVaVfDqxDr8CQ0e/MycgGXp028hOoRfjAdOFavxNPV3yvCZogNthqB83p
- MFz/iEOoUc1EGKs9jxOPZ9piimDJ23bapwuGDgHD5MH12oD/WuxATOz9EsGIme/TTH3btHeDAKc
- /kI+eWAfderfLVpIuzhbxkQCfUpN8nI9m6DgukPwxNU59mmb8gbM5sgdHFDrQSZ/KiykvcTYsdv
- pUtmKB6cZQ9sK2YjCj7XZq3k3uPsvbT4toB6Abo1FeYd3//oAe/BsZTBQ9sMC/wlEmA1Eyo2Pth
- a7xCUVzSJGu8hUli87+e2SvFeA2HbBSzEKeuV7HxVqZqJH/1Tvj3S6wJmSqJSA0BJyi76cV/19u
- uqsc7/3CXeuLqfFM7lWytXeH1o8InFMmZ3fU6910M/ZCpWVk3KMxQ0CGM15kp/Nze1VjAhFk
-X-Authority-Analysis: v=2.4 cv=GYkXnRXL c=1 sm=1 tr=0 ts=6847f9ae cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=gEfo2CItAAAA:8
- a=COk6AnOGAAAA:8 a=WPGCOMWRFNVID3d5GRAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: paoPOxfTkq3Z8Db8VHkhp7K7FNbxtFRD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_03,2025-06-09_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 spamscore=0 mlxlogscore=999 bulkscore=0
- impostorscore=0 clxscore=1015 malwarescore=0 priorityscore=1501 mlxscore=0
- adultscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506100072
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 10 Jun 2025 11:27:19 +0200
+Message-Id: <DAIQVM2164NF.35T50MSWTTQWG@fairphone.com>
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Taniya Das"
+ <quic_tdas@quicinc.com>, "Jagadeesh Kona" <quic_jkona@quicinc.com>, "Bjorn
+ Andersson" <andersson@kernel.org>, "Michael Turquette"
+ <mturquette@baylibre.com>, "Stephen Boyd" <sboyd@kernel.org>, "Rob Herring"
+ <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
+ Dooley" <conor+dt@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sm6350: Add video clock
+ controller
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
+References: <20250324-sm6350-videocc-v2-0-cc22386433f4@fairphone.com>
+ <20250324-sm6350-videocc-v2-4-cc22386433f4@fairphone.com>
+ <1c09fee5-9626-4540-83fb-6d90db2ce595@oss.qualcomm.com>
+ <9eb6dfd7-2716-4150-9392-98e26892d82d@quicinc.com>
+ <e3dda8bf-e19e-4dde-83a4-7876ca81e5e6@oss.qualcomm.com>
+ <69fba227-ed47-4004-9451-777ca19b687f@quicinc.com>
+ <cfa4003c-e8b0-40f6-821d-07f8d44752af@oss.qualcomm.com>
+ <0db798bf-04b3-40b5-af90-7dda5b606727@quicinc.com>
+ <702ba6b2-b84d-41e0-aedf-747535d6ab32@oss.qualcomm.com>
+In-Reply-To: <702ba6b2-b84d-41e0-aedf-747535d6ab32@oss.qualcomm.com>
 
+Hi Konrad and all,
 
+On Tue Apr 15, 2025 at 11:13 AM CEST, Konrad Dybcio wrote:
+> On 4/15/25 6:05 AM, Taniya Das wrote:
+>>=20
+>>=20
+>> On 4/12/2025 12:56 AM, Konrad Dybcio wrote:
+>>> On 4/11/25 1:37 PM, Jagadeesh Kona wrote:
+>>>>
+>>>>
+>>>> On 4/11/2025 2:42 PM, Konrad Dybcio wrote:
+>>>>> On 4/11/25 9:15 AM, Jagadeesh Kona wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 4/1/2025 10:03 PM, Konrad Dybcio wrote:
+>>>>>>> On 3/24/25 9:41 AM, Luca Weiss wrote:
+>>>>>>>> Add a node for the videocc found on the SM6350 SoC.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>>>>>>> ---
+>>>>>>>>  arch/arm64/boot/dts/qcom/sm6350.dtsi | 14 ++++++++++++++
+>>>>>>>>  1 file changed, 14 insertions(+)
+>>>>>>>>
+>>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boo=
+t/dts/qcom/sm6350.dtsi
+>>>>>>>> index 42f9d16c2fa6da66a8bb524a33c2687a1e4b40e0..4498d6dfd61a7e30a0=
+50a8654d54dae2d06c220c 100644
+>>>>>>>> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
+>>>>>>>> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+>>>>>>>> @@ -1952,6 +1952,20 @@ usb_1_dwc3_ss_out: endpoint {
+>>>>>>>>  			};
+>>>>>>>>  		};
+>>>>>>>> =20
+>>>>>>>> +		videocc: clock-controller@aaf0000 {
+>>>>>>>> +			compatible =3D "qcom,sm6350-videocc";
+>>>>>>>> +			reg =3D <0x0 0x0aaf0000 0x0 0x10000>;
+>>>>>>>> +			clocks =3D <&gcc GCC_VIDEO_AHB_CLK>,
+>>>>>>>> +				 <&rpmhcc RPMH_CXO_CLK>,
+>>>>>>>> +				 <&sleep_clk>;
+>>>>>>>> +			clock-names =3D "iface",
+>>>>>>>> +				      "bi_tcxo",
+>>>>>>>> +				      "sleep_clk";
+>>>>>>>> +			#clock-cells =3D <1>;
+>>>>>>>> +			#reset-cells =3D <1>;
+>>>>>>>> +			#power-domain-cells =3D <1>;
+>>>>>>>> +		};
+>>>>>>>
+>>>>>>> You'll probably want to hook up some additional power domains here,=
+ see
+>>>>>>>
+>>>>>>> https://lore.kernel.org/linux-arm-msm/20250327-videocc-pll-multi-pd=
+-voting-v3-0-895fafd62627@quicinc.com/
+>>>>>>>
+>>>>>>
+>>>>>> On SM6350, videocc doesn't need multiple power domains at HW level, =
+it is only on CX rail which would be ON
+>>>>>> when system is active, hence power-domains are not mandatory here.
+>>>>>
+>>>>> 6350 doesn't have either MMCX nor a split MX - shouldn't both normal
+>>>>> CX and MX be in there?
+>>>>>
+>>>>
+>>>> All clocks & GDSC's of SM6350 videocc are only on CX rail, so it requi=
+res only CX power domain. But when HLOS
+>>>> is active, CX rail will be ON and operate at a level above retention, =
+which is sufficient for videocc to operate.
+>>>> Hence clock driver don't need to explicitly vote on CX rail.
+>>>>
+>>>> The same is not true for other rails like MMCX and Split MX(MXC), henc=
+e clock drivers had to explicitly vote on
+>>>> those rails.
+>>>
+>>> I'm worried about MX being undervolted for higher OPPs
+>>>
+>>=20
+>> From a videocc PoV there is no requirement of Mx on SM6350. The CX
+>> levels would be taken care by Video SW driver from their defined OPP. Mx
+>> at system level would be catered via the BW votes.
+>
+> So I'm specifically thinking about the videocc (and other) PLLs, which
+> have defined vdd levels downstream - currently we're relying on random
+> luck rather than ensuring each one of them has its requirements fulfilled
 
-On 4/28/2025 6:38 PM, Vladimir Zapolskiy wrote:
-> Hi Taniya.
-> 
-> On 4/24/25 12:32, Taniya Das wrote:
->> Add DT bindings for the Camera clock on QCS615 platforms. Add the
->> relevant DT include definitions as well.
->>
->> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->> ---
->>   .../bindings/clock/qcom,qcs615-camcc.yaml          |  43 ++++++++
->>   include/dt-bindings/clock/qcom,qcs615-camcc.h      | 110 +++++++++++
->> ++++++++++
->>   2 files changed, 153 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,qcs615-
->> camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,qcs615-
->> camcc.yaml
->> new file mode 100644
->> index
->> 0000000000000000000000000000000000000000..2b811e66d406c16c70004bb3a9fce294422a5914
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/clock/qcom,qcs615-camcc.yaml
->> @@ -0,0 +1,43 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/clock/qcom,qcs615-camcc.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Camera Clock & Reset Controller on QCS615
->> +
->> +maintainers:
->> +  - Taniya Das <quic_tdas@quicinc.com>
->> +
->> +description: |
->> +  Qualcomm camera clock control module provides the clocks, resets
->> and power
->> +  domains on QCS615.
->> +
->> +  See also: include/dt-bindings/clock/qcom,qcs615-camcc.h
->> +
->> +properties:
->> +  compatible:
->> +    const: qcom,qcs615-camcc
->> +
->> +  clocks:
->> +    items:
->> +      - description: Board XO source
->> +
->> +allOf:
->> +  - $ref: qcom,gcc.yaml#
->> +
->> +unevaluatedProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/qcom,rpmh.h>
->> +    clock-controller@ad00000 {
->> +      compatible = "qcom,qcs615-camcc";
->> +      reg = <0xad00000 0x10000>;
->> +      clocks = <&rpmhcc RPMH_CXO_CLK>;
->> +
->> +      #clock-cells = <1>;
->> +      #reset-cells = <1>;
->> +      #power-domain-cells = <1>;
->> +    };
->> +...
-> 
-> Is there anything what prevents to add this clock controller dt bindings
-> description into qcom,sm6350-camcc.yaml ?
-> 
-> Apart of compatible values I barely see any difference between two of them.
-> 
+Any further comments than this? Not sure how to proceed.
 
-Sure, I can re-use the bindings and push the next patch.
-
-
-> -- 
-> Best wishes,
-> Vladimir
-
+Regards
+Luca
 
