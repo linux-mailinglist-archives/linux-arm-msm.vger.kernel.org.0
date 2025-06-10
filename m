@@ -1,311 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-60705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8515AD2C15
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 05:06:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1142AD2C53
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 05:53:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C18B188FCFC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 03:06:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 648431892C2F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 03:53:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5BC219E83E;
-	Tue, 10 Jun 2025 03:06:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sPn/JFa2"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EAAA25D204;
+	Tue, 10 Jun 2025 03:53:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F939460;
-	Tue, 10 Jun 2025 03:06:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BB811712;
+	Tue, 10 Jun 2025 03:53:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749524784; cv=none; b=JtVESOzczsy2dvQVT364IK0FTiY14/1X56WXByJc7+xH/AOdFDqMMhxzckDh8R88IJiCVi6PKeIPlx6QfdksTM/icrcCR2OobpOaML+WuzgPGX5c1E6mdp0txKkBpN/yA30vZu1sQiIWOPk6T0RIVA5zkoehbg506jeoBDdv9bE=
+	t=1749527585; cv=none; b=hvluul7jwDipk1VuLXeadU/QIAuMxvSRukCZ9N8piIGG9aAiHaoqdvoMhPSige8LPmIn87uh3gBRqwBfn296EfqB5vSR+mgO+VBhOUKYdBSTICAGm/dmdWp4ZrdlTDqxYSmTg2nuCbqPj+HNJ0zCEnptdfyH9k1wy7LIcgU4THc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749524784; c=relaxed/simple;
-	bh=AoTaZLGzoqqkmNSAL5T91ZptQFroksDGcKIxLU9z7y0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=rnBWl6auOEH7tzgyvdO8u/oV6KivqYE8WlyW7cJDucrckpG9KkPe6zAJrpbPVihgiDVvEttjvFZaZbU32UIyFACCCzUfBxNryC4M+DvZg///lyKFLvpZ9rT2bPuwAecsfXyoTt4MfH1ZJFwPqXmKdrJVGIoduTIq7TKh5OxwxHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sPn/JFa2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 2D8AEC4CEEB;
-	Tue, 10 Jun 2025 03:06:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749524784;
-	bh=AoTaZLGzoqqkmNSAL5T91ZptQFroksDGcKIxLU9z7y0=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=sPn/JFa2C+jD12SM0IdloQfuMVprrNmTbuXTdNnSWeU1jz3vgxRRHSVquMTXuXIFb
-	 OXVKPWzUiSS4FIqLZDvlCV/dLgI3bG4LC2AA+cH/F+6gthxfcI19WWvzV2Er3gAJCZ
-	 d2Fh1J/6SE5Yo07HR3FFyE6ldtZj3A39AbsWFSsYrcQAyX6l+Bv3zPbCEFPSHiKmr0
-	 Ax6L3iCYnuuCq2IhLjBfXUy4bSTr5+GhQEoJkACBQY3uM7T0iehEPzwvYPkMqQIfQl
-	 P+uY/tPozHOQYKf/K7vL+r5O2nmlEpHZTIH7ieO+lE4Ahmsc1VI9hToIZBj+mn6NiO
-	 AWHCWt0Ba0Nlg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11CDFC5B552;
-	Tue, 10 Jun 2025 03:06:24 +0000 (UTC)
-From: Bjorn Andersson via B4 Relay <devnull+bjorn.andersson.oss.qualcomm.com@kernel.org>
-Date: Mon, 09 Jun 2025 22:06:22 -0500
-Subject: [PATCH] wifi: ath12k: Avoid CPU busy-wait by handling VDEV_STAT
- and BCN_STAT
+	s=arc-20240116; t=1749527585; c=relaxed/simple;
+	bh=SuVp9AFmt8gLD64j4a+SRLxEwyPAPmST5oVeKyyVGVI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dr+17gViv/G3wrJCZeqh9AV9Xk5h1zZ9drqhlzuFey/seFcpT3+MkFNIu6O5oui2pWUHAwB7ZPG7jYXbsWfT017/Zj2rOPxREYQnlpGpxU3q5/wkUDJgpNdanFSUlu1pPxM6WmN+4WFl7F+FPu0y3ZI35gZALur86Ic3U3ir0hU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5532e0ad84aso5208945e87.2;
+        Mon, 09 Jun 2025 20:53:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749527581; x=1750132381;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nZk/7/4MvcJfckdyvA+r+JfqYVWkeTH5dDDkcVRzYjI=;
+        b=KhhcGJSgZ5PvBScI9Ax7F48s/ybhfF6fvS3bqrzPZIfjD2jlT25mfIRFJguj1ea57r
+         BpCHH7wJ4BVRD3wrCfN0IlcmrZ6pTX3XIy5FMgkXJjXkvBXMRnV2NNlYKMJnPjHCtpMA
+         o0Et7UbgXc6pxENvjOOh8dku+B5AR605THKkY49sd8XiTkzBMQOycS+Z+rJp3Y6xHt3L
+         6jovsTxbaksrNBUMcaA9FG++WFG8fRd4xd/Mb0U75xEiEEWg0sN2EhSkKjPiEE2EMBTQ
+         X52Ya4NhXFPcmHtKO5gIbPrvokRcfrnr0UF/wJchxIAhpIgfr2EwHOizANJTyLmRXQNp
+         qp4g==
+X-Forwarded-Encrypted: i=1; AJvYcCU9/FJZuFGLfbbkg2vIw/reXkvkPO3h/aVc/2KrGu1birjDnxfXqyWueS4YKM5JvSKLtCSZ1i3fxo8Miw==@vger.kernel.org, AJvYcCW+HqwT+OTsKkEaAbslDnRJlz+bI1nYph23aDy2We5ct8VE7uRDFoQ8LoluDNoM+uOFBsoW+10WF9OltUex@vger.kernel.org, AJvYcCWi4iwzU36BvEhRSLupeTZIoEbdT3vFrOYqmalnuhnayrajAi4VSApwpjzKEXpDwq+aLj4/RnU3M7nfJPk=@vger.kernel.org, AJvYcCX0CGgMmXMNb+LMul6MbVbHRd0HjuSJtZsbVq3/NodqAYA0oIJ0l+F4QPg/XcAI9w1TKIVIEUl6ud0ZRh6rSB/6Yoc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxyiTg3S2Tv/ybAu+aUHISgZT2q8gboVBjzpA652HqMd1DUO2//
+	clugsNf8vljHdgnOP1JLko4xnwSzIJ35JGf+dKsSUaUswXVKFlZlVeHdCtEbe8a0rPQRxQ==
+X-Gm-Gg: ASbGncsCsD9uxztsGJe732e3OLpJgthnZLEjJlUclnNs6jheoe/ubbz3IEq3PALu11Q
+	mt/7dwjHU7NvEgPf+3bqVn0rb8wG+tPHbGoyYq4vUPHIgqJHb9oeLUKkkALyidBDW4sLkF28U8N
+	qva5arm79zRaiKIr6pFr7/84fgw+4aJH3suIErADceo6HN+s6xdfjmwprVuceqm7NBtV0ojCHWq
+	d77XguqkppbonIZhbBgd9G18rufdjMsnmsTcHlIHIZQPmZjkkbCV1mUxlOxDjc0GfugV1oWc3Rq
+	AirPOC6UyeFJG0qfsuVc9ilWjqKlC8a/mcqCARydXEjk3J8Qp2DaMrBl9Tz6j9kZnNtfkgd9RXz
+	8BpQq/B92y1UDPr2tjc3XDRx+9g==
+X-Google-Smtp-Source: AGHT+IEjqIl/G//+0L2PG04SCS4x7CxnAtsVII5K2shRbeMMFO+P5s1IyWnobe6Hdd+bWTuBmFu+IA==
+X-Received: by 2002:a05:651c:1508:b0:32a:7a12:9286 with SMTP id 38308e7fff4ca-32adfd366d6mr36284881fa.31.1749527581287;
+        Mon, 09 Jun 2025 20:53:01 -0700 (PDT)
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com. [209.85.167.42])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32ae1d03507sm13378511fa.113.2025.06.09.20.53.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Jun 2025 20:53:01 -0700 (PDT)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-54e98f73850so5370718e87.1;
+        Mon, 09 Jun 2025 20:53:01 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUOTsd/Kq0p5rPpjxHBGg3JsQ/kWwn6lIfNotPtyxU7ZshUtqLLmXmJIeRPEr17cIomF0meIkrPHVt1GA==@vger.kernel.org, AJvYcCUrr+gkm9kJ7C3W1pcMkrqFUjJuzlNGbPvXRg4Q9t1BVMpG4x3Wwv70gDO4YvPfaRo6iilKddHd31m62FuQ@vger.kernel.org, AJvYcCVeTQhlzr0mPNb4h7V4eHKQBbWVmeBKCncIyPwK666cavh0e0zMFoCWLWcqawY8JXKvYXIOPtkUXM70yDeIY7gno6M=@vger.kernel.org, AJvYcCVnxFLxzQUkwzcHO0uyFV7YzNcnccwzaz835xx5W7FnOPPPS/RQSRZhzDaPmyAcgO4dFZ6GLEPHurVaTY4=@vger.kernel.org
+X-Received: by 2002:a2e:b693:0:b0:32a:ddd2:208e with SMTP id
+ 38308e7fff4ca-32adfc06f41mr30364041fa.9.1749527274652; Mon, 09 Jun 2025
+ 20:47:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250609-ath12k-fw-stats-done-v1-1-2b3624656697@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAC2hR2gC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDMwNL3cSSDEOjbN20ct3iksSSYt2U/LxU3ZTkRIukNHPzRPOURCWg1oK
- i1LTMCrCx0bG1tQAE2LaZZgAAAA==
-X-Change-ID: 20250609-ath12k-fw-stats-done-dca8bf77a7da
-To: Jeff Johnson <jjohnson@kernel.org>, 
- Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>, 
- Mahendran P <quic_mahep@quicinc.com>, 
- Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, 
- Jeff Johnson <jeff.johnson@oss.qualcomm.com>, 
- linux-wireless@vger.kernel.org, ath12k@lists.infradead.org, 
- linux-kernel@vger.kernel.org, 
- Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749524783; l=7583;
- i=bjorn.andersson@oss.qualcomm.com; s=20250318; h=from:subject:message-id;
- bh=4ab2pBSyw77wiRpufdGeMp8wcqCAzZr9bUoFTeou1RE=;
- b=XZRCzCTURtCBkIL9HPyWVc/+jQFZXV9YNjI1Sy0fn1SVZHZoKi101zfOA3aHUXaqviDqMX869
- evaNCoyIKhQB4UPZAlRy/WMe/VJor5UgjV6CQicgYpEjbjv4gF/oNlp
-X-Developer-Key: i=bjorn.andersson@oss.qualcomm.com; a=ed25519;
- pk=rD3O9C9Erg+mUPBRBNw91AGaIaDVqquHZbnn6N6xh6s=
-X-Endpoint-Received: by B4 Relay for
- bjorn.andersson@oss.qualcomm.com/20250318 with auth_id=362
-X-Original-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Reply-To: bjorn.andersson@oss.qualcomm.com
+References: <0-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com> <4-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
+In-Reply-To: <4-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
+Reply-To: wens@csie.org
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Tue, 10 Jun 2025 11:47:42 +0800
+X-Gmail-Original-Message-ID: <CAGb2v672aLfjX2_+=gnYEt09Z2m+sDoUi-weN2VsgtqnrK_fDw@mail.gmail.com>
+X-Gm-Features: AX0GCFvT3cfnNTYictCtJSVKUrXJH3fCgSrvu85ggYc6KyathRV-zklZHWwYSnM
+Message-ID: <CAGb2v672aLfjX2_+=gnYEt09Z2m+sDoUi-weN2VsgtqnrK_fDw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/7] iommu: Remove iommu_ops pgsize_bitmap from simple drivers
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	asahi@lists.linux.dev, Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	David Woodhouse <dwmw2@infradead.org>, Gerald Schaefer <gerald.schaefer@linux.ibm.com>, 
+	Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev, Janne Grunau <j@jannau.net>, 
+	Jean-Philippe Brucker <jean-philippe@linaro.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Jonathan Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
+	linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	Matthew Rosato <mjrosato@linux.ibm.com>, Neal Gompa <neal@gompa.dev>, 
+	Orson Zhai <orsonzhai@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Robin Murphy <robin.murphy@arm.com>, Samuel Holland <samuel@sholland.org>, Sven Peter <sven@kernel.org>, 
+	Thierry Reding <thierry.reding@gmail.com>, Krishna Reddy <vdumpa@nvidia.com>, 
+	virtualization@lists.linux.dev, Will Deacon <will@kernel.org>, 
+	Yong Wu <yong.wu@mediatek.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
+	Lu Baolu <baolu.lu@linux.intel.com>, Kevin Tian <kevin.tian@intel.com>, patches@lists.linux.dev, 
+	Niklas Schnelle <schnelle@linux.ibm.com>, Sven Peter <sven@svenpeter.dev>, 
+	Tomasz Jeznach <tjeznach@rivosinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+On Tue, Jun 10, 2025 at 4:41=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wr=
+ote:
+>
+> These drivers just have a constant value for their page size, move it
+> into their domain_alloc_paging function before setting up the geometry.
+>
+> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+> Acked-by: Niklas Schnelle <schnelle@linux.ibm.com> # for s390-iommu.c
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/exynos-iommu.c   | 3 ++-
+>  drivers/iommu/ipmmu-vmsa.c     | 4 ++--
+>  drivers/iommu/mtk_iommu_v1.c   | 3 ++-
+>  drivers/iommu/omap-iommu.c     | 3 ++-
+>  drivers/iommu/rockchip-iommu.c | 3 ++-
+>  drivers/iommu/s390-iommu.c     | 2 +-
+>  drivers/iommu/sprd-iommu.c     | 3 ++-
+>  drivers/iommu/sun50i-iommu.c   | 3 ++-
 
-When the ath12k driver is built without CONFIG_ATH12K_DEBUG, the
-recently refactored stats code can cause any user space application
-(such at NetworkManager) to consume 100% CPU for 3 seconds, every time
-stats are read.
-
-Commit 'b8a0d83fe4c7 ("wifi: ath12k: move firmware stats out of
-debugfs")' moved ath12k_debugfs_fw_stats_request() out of debugfs, by
-merging the additional logic into ath12k_mac_get_fw_stats().
-
-Among the added responsibility of ath12k_mac_get_fw_stats() was the
-busy-wait for `fw_stats_done`.
-
-Signalling of `fw_stats_done` happens when one of the
-WMI_REQUEST_PDEV_STAT, WMI_REQUEST_VDEV_STAT, and WMI_REQUEST_BCN_STAT
-messages are received, but the handling of the latter two commands remained
-in the debugfs code. As `fw_stats_done` isn't signalled, the calling
-processes will spin until the timeout (3 seconds) is reached.
-
-Moving the handling of these two additional responses out of debugfs
-resolves the issue.
-
-Fixes: b8a0d83fe4c7 ("wifi: ath12k: move firmware stats out of debugfs")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
----
- drivers/net/wireless/ath/ath12k/debugfs.c | 58 --------------------------
- drivers/net/wireless/ath/ath12k/debugfs.h |  7 ----
- drivers/net/wireless/ath/ath12k/wmi.c     | 67 +++++++++++++++++++++++++++----
- 3 files changed, 60 insertions(+), 72 deletions(-)
-
-diff --git a/drivers/net/wireless/ath/ath12k/debugfs.c b/drivers/net/wireless/ath/ath12k/debugfs.c
-index dd624d73b8b2714e77c9d89b5a52f7b3fcb02951..23da93afaa5c25e806c9859dbbdd796afd23d78a 100644
---- a/drivers/net/wireless/ath/ath12k/debugfs.c
-+++ b/drivers/net/wireless/ath/ath12k/debugfs.c
-@@ -1251,64 +1251,6 @@ void ath12k_debugfs_soc_destroy(struct ath12k_base *ab)
- 	 */
- }
- 
--void
--ath12k_debugfs_fw_stats_process(struct ath12k *ar,
--				struct ath12k_fw_stats *stats)
--{
--	struct ath12k_base *ab = ar->ab;
--	struct ath12k_pdev *pdev;
--	bool is_end;
--	static unsigned int num_vdev, num_bcn;
--	size_t total_vdevs_started = 0;
--	int i;
--
--	if (stats->stats_id == WMI_REQUEST_VDEV_STAT) {
--		if (list_empty(&stats->vdevs)) {
--			ath12k_warn(ab, "empty vdev stats");
--			return;
--		}
--		/* FW sends all the active VDEV stats irrespective of PDEV,
--		 * hence limit until the count of all VDEVs started
--		 */
--		rcu_read_lock();
--		for (i = 0; i < ab->num_radios; i++) {
--			pdev = rcu_dereference(ab->pdevs_active[i]);
--			if (pdev && pdev->ar)
--				total_vdevs_started += pdev->ar->num_started_vdevs;
--		}
--		rcu_read_unlock();
--
--		is_end = ((++num_vdev) == total_vdevs_started);
--
--		list_splice_tail_init(&stats->vdevs,
--				      &ar->fw_stats.vdevs);
--
--		if (is_end) {
--			ar->fw_stats.fw_stats_done = true;
--			num_vdev = 0;
--		}
--		return;
--	}
--	if (stats->stats_id == WMI_REQUEST_BCN_STAT) {
--		if (list_empty(&stats->bcn)) {
--			ath12k_warn(ab, "empty beacon stats");
--			return;
--		}
--		/* Mark end until we reached the count of all started VDEVs
--		 * within the PDEV
--		 */
--		is_end = ((++num_bcn) == ar->num_started_vdevs);
--
--		list_splice_tail_init(&stats->bcn,
--				      &ar->fw_stats.bcn);
--
--		if (is_end) {
--			ar->fw_stats.fw_stats_done = true;
--			num_bcn = 0;
--		}
--	}
--}
--
- static int ath12k_open_vdev_stats(struct inode *inode, struct file *file)
- {
- 	struct ath12k *ar = inode->i_private;
-diff --git a/drivers/net/wireless/ath/ath12k/debugfs.h b/drivers/net/wireless/ath/ath12k/debugfs.h
-index ebef7dace3448e4bdf2d6cb155d089267315172c..21641a8a03460c6cc1b34929a353e5605bb834ce 100644
---- a/drivers/net/wireless/ath/ath12k/debugfs.h
-+++ b/drivers/net/wireless/ath/ath12k/debugfs.h
-@@ -12,8 +12,6 @@ void ath12k_debugfs_soc_create(struct ath12k_base *ab);
- void ath12k_debugfs_soc_destroy(struct ath12k_base *ab);
- void ath12k_debugfs_register(struct ath12k *ar);
- void ath12k_debugfs_unregister(struct ath12k *ar);
--void ath12k_debugfs_fw_stats_process(struct ath12k *ar,
--				     struct ath12k_fw_stats *stats);
- void ath12k_debugfs_op_vif_add(struct ieee80211_hw *hw,
- 			       struct ieee80211_vif *vif);
- void ath12k_debugfs_pdev_create(struct ath12k_base *ab);
-@@ -126,11 +124,6 @@ static inline void ath12k_debugfs_unregister(struct ath12k *ar)
- {
- }
- 
--static inline void ath12k_debugfs_fw_stats_process(struct ath12k *ar,
--						   struct ath12k_fw_stats *stats)
--{
--}
--
- static inline bool ath12k_debugfs_is_extd_rx_stats_enabled(struct ath12k *ar)
- {
- 	return false;
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 60e2444fe08cefa39ae218d07eb9736d2a0c982b..2d2444417e2b2d9281754d113f2b073034e27739 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -7626,6 +7626,63 @@ static int ath12k_wmi_pull_fw_stats(struct ath12k_base *ab, struct sk_buff *skb,
- 				   &parse);
- }
- 
-+static void ath12k_wmi_fw_stats_process(struct ath12k *ar,
-+					struct ath12k_fw_stats *stats)
-+{
-+	struct ath12k_base *ab = ar->ab;
-+	struct ath12k_pdev *pdev;
-+	bool is_end;
-+	static unsigned int num_vdev, num_bcn;
-+	size_t total_vdevs_started = 0;
-+	int i;
-+
-+	if (stats->stats_id == WMI_REQUEST_VDEV_STAT) {
-+		if (list_empty(&stats->vdevs)) {
-+			ath12k_warn(ab, "empty vdev stats");
-+			return;
-+		}
-+		/* FW sends all the active VDEV stats irrespective of PDEV,
-+		 * hence limit until the count of all VDEVs started
-+		 */
-+		rcu_read_lock();
-+		for (i = 0; i < ab->num_radios; i++) {
-+			pdev = rcu_dereference(ab->pdevs_active[i]);
-+			if (pdev && pdev->ar)
-+				total_vdevs_started += pdev->ar->num_started_vdevs;
-+		}
-+		rcu_read_unlock();
-+
-+		is_end = ((++num_vdev) == total_vdevs_started);
-+
-+		list_splice_tail_init(&stats->vdevs,
-+				      &ar->fw_stats.vdevs);
-+
-+		if (is_end) {
-+			ar->fw_stats.fw_stats_done = true;
-+			num_vdev = 0;
-+		}
-+		return;
-+	}
-+	if (stats->stats_id == WMI_REQUEST_BCN_STAT) {
-+		if (list_empty(&stats->bcn)) {
-+			ath12k_warn(ab, "empty beacon stats");
-+			return;
-+		}
-+		/* Mark end until we reached the count of all started VDEVs
-+		 * within the PDEV
-+		 */
-+		is_end = ((++num_bcn) == ar->num_started_vdevs);
-+
-+		list_splice_tail_init(&stats->bcn,
-+				      &ar->fw_stats.bcn);
-+
-+		if (is_end) {
-+			ar->fw_stats.fw_stats_done = true;
-+			num_bcn = 0;
-+		}
-+	}
-+}
-+
- static void ath12k_update_stats_event(struct ath12k_base *ab, struct sk_buff *skb)
- {
- 	struct ath12k_fw_stats stats = {};
-@@ -7655,19 +7712,15 @@ static void ath12k_update_stats_event(struct ath12k_base *ab, struct sk_buff *sk
- 
- 	spin_lock_bh(&ar->data_lock);
- 
--	/* WMI_REQUEST_PDEV_STAT can be requested via .get_txpower mac ops or via
--	 * debugfs fw stats. Therefore, processing it separately.
--	 */
-+	/* Handle WMI_REQUEST_PDEV_STAT status update */
- 	if (stats.stats_id == WMI_REQUEST_PDEV_STAT) {
- 		list_splice_tail_init(&stats.pdevs, &ar->fw_stats.pdevs);
- 		ar->fw_stats.fw_stats_done = true;
- 		goto complete;
- 	}
- 
--	/* WMI_REQUEST_VDEV_STAT and WMI_REQUEST_BCN_STAT are currently requested only
--	 * via debugfs fw stats. Hence, processing these in debugfs context.
--	 */
--	ath12k_debugfs_fw_stats_process(ar, &stats);
-+	/* Handle WMI_REQUEST_VDEV_STAT and WMI_REQUEST_BCN_STAT updates. */
-+	ath12k_wmi_fw_stats_process(ar, &stats);
- 
- complete:
- 	complete(&ar->fw_stats_complete);
-
----
-base-commit: 4f27f06ec12190c7c62c722e99ab6243dea81a94
-change-id: 20250609-ath12k-fw-stats-done-dca8bf77a7da
-
-Best regards,
--- 
-Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-
-
+Acked-by: Chen-Yu Tsai <wens@csie.org> # sun50i-iommu.c
 
