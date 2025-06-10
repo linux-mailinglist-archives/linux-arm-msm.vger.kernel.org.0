@@ -1,151 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-60883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4D57AD45C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 00:16:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0015AD45C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 00:17:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 158AB189E1CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 22:16:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C9D717C3E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 22:17:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FAA928B4FD;
-	Tue, 10 Jun 2025 22:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B29FE28AB07;
+	Tue, 10 Jun 2025 22:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mOLrrqEK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AlVtTujI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3976021C19F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 22:16:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA576278772
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 22:17:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749593772; cv=none; b=h3YxPJtncBcgt+cbWdHiELB/wKJQweOoHRG8D5HQIoZdkV/Azi9y1pdEvOFBPnmyHFbnFo9sHpokgvwoHJTqWOV1wERuy0Dw7gOZdR51oWefEqlg74xoY/P2Krz+fAuGelpmCfCj2tk1Lrq7iFBnJG+IxrY0zsL4MV6q1j2mVqQ=
+	t=1749593829; cv=none; b=mVBqs1u4EcMkEm637Ky2NizHfuKyXtAFkPjgq2+/cItrDbOsG0nBRVPkq/0De2/5UULtlpCVIHaSkOZiGVgxBGATyYLBv0Jy5oNqnJtb6F7gLLhnjsQ0KvZCoQfvE9K0KwqOvprNNRRdh3tpkBj6Ho88fZIa4XCvCSHGnWlJrN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749593772; c=relaxed/simple;
-	bh=AdckpzHORZ04nz52khFJp8hY694kPNdQO93ZPbWS0Qk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hT3TRB01Ys9atgpZ3ysXCXbuiHqu/cyknATxfkCUBm/2K001jFcuDHtLlAySVBEOmShA6h7gV/lUeyujEe6nDBo0Zrr3gD5jd1J1PAU77rpU3fwx59X0JDjpeeLfszXBG345yEXHcX/mBTyokq2UlMMlvvoiVYVnYjYjRIJPQaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mOLrrqEK; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AIPuAL010121
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 22:16:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=9pZN1HLKcnKZHer+eXfm+cc/
-	DOSG+5TIvmhgIGDFcyE=; b=mOLrrqEK003d+TjbzN+MMJvU0R/CMQ3T+77usO0T
-	p/2wQJsNA7kaxxfjlZGNU9A9muJ4KQfEEtlTsPKg3YA1HbnamQNXVaaguG72LL3B
-	4VqroCwDQEUxDOHGdmNWwv/ww5iPkhAZecz4pTyEwBEFFn7JFnAf79ID/gN8fnlD
-	D04bFikUpEdcKGrdNaJdYKTa639fEjQ09fFffsbIZ+nKZY9VY0scX6UtoSdN3ffP
-	6vCEMsjHA4BfxOyzn8jgwwVbqFajm3XKptDvdbIOCM17H2EFNy8knTJRjGL4pO2p
-	OhrsUtT2I0JOyaPQkU0cGjsV23WPxIl7CoyYeaKH1gvbQQ==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474d1231qm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 22:16:08 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c760637fe5so1079825985a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 15:16:07 -0700 (PDT)
+	s=arc-20240116; t=1749593829; c=relaxed/simple;
+	bh=7TfUR8R2IrpRs1f5np0P2PSPG9JH0doPxboC0XmNhik=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=X8Snu/Vo4ZAuz6DyKrbkS1+tyDaGdw5ei/I/lQFRgCgMND9z+GJSwxt3z6U29pYNVlfRmRz+wORTCv5BuZaTMOvfXsKHDzIJOzQi10cUZUyybh0sW+G4iHYsW9/eZYiR+CCS4UiOif/B36ajoicJw8EekW4c6sB0PFkVF9Xwcng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AlVtTujI; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3a50fc819f2so4860787f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 15:17:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1749593826; x=1750198626; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DIt2WsPysp6xDtdH49fFBClr+UXdYRyo8pVXPNJ74C0=;
+        b=AlVtTujIl4s2x1TJUtdWI+Nc4y3lKISil4BGa4q50EP0cuwOOk+NFS9hEt+Chdezk6
+         ozYCX8q048nj02uxRcDGafRs5bZ6xxErghsoS4XW7mmGrBQZNjeC6T7LkM68WWPBbfog
+         0JmvDx7RhuYAfoJy9FBecQBt2L3zQXsyG2RtXm3Fdh/wZH6m/ceVEnS+bjWyU+xZpB0F
+         Lto1ejC4VBenDjmlaYQIbEh4crXYxTx/t1sN09Rw1EWCsTURFCM5ba/1Yrz9j0ofo6B7
+         qZZ+Vlym9w62N+U7/FtIrlTKdpXKA48ZSlnwz9hPwV88grY3GMtEXZytHfQQyIgHUcVi
+         2hDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749593767; x=1750198567;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9pZN1HLKcnKZHer+eXfm+cc/DOSG+5TIvmhgIGDFcyE=;
-        b=BURN1F9pxFMJS77SUTmMQU75mlCU0n5CmqfFJkus0VOfXCzYUg5TgvCQSFjW1Iuav8
-         hyblgCexanr/UgCIeK0N0VwIqM1VvfzjmuPZPHOVIq7hZVcU/zuAH0i+CwTCfaCZPFcu
-         s5hzzcV7NPENkCQ6d9Gsh2bfG6l1XPBztwuPDPWlnV+YTjbprwiJM1EvuoTPdPW8sl89
-         pw8heqWamwb8bQ8BJnD9+XrNlmrGhZ4qfFFxzTLF5qsCODwe/1MFr0vc0DuWMYD5m2Ve
-         iJ8lBWtMA+sEaO8a5Npe/WbH3/q4dNc9b8tTSUXjGQeR1ybsNBNiePqrQllIguoZeLe3
-         xXhw==
-X-Forwarded-Encrypted: i=1; AJvYcCWae1gk5qFv7T++F7mQgmM7Pn9YfOC2oPZQylQwEImmy3QVL50RQ+eOh/1zeotkrrIHO8GMxebV3V3hlorq@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5PxuKEzVAhZn72mUgEENzbW2x5Co9wy+H4f3L9WEdlXDXbq0S
-	J8cKOmaCL7lSapbkKvGnAUJ4MNRtqUbk18r3rrtVn/UBhFSBNupyKXvYO1yiAHxM7oCymN3zUwK
-	rOpg81qsqvWGNdL3CCYYKqaTJOXKyx40Kk8RuaBAvD6sd3bdhvyonEl8zhwBg1NxaFC3e
-X-Gm-Gg: ASbGncspQVsu5sKTWpfaz3GGopoRf+VLxNdXFDg61uu4Xr6lcGxdv8kOKXFQYdCGfxk
-	ZwlEozTGOa/3GASArBaRX1uOs8JsheOajrHaKx+PfrUaKDmuJcHF0hHic0+fRBr54eHekbbAn4S
-	B1GoMNo6ncLOXjPTwPIKBhG0Dd0W+xcaWw1a+BkKE2HaoP1rfL8D75la5yZDvXwXKiys6SS+O2s
-	0n3Guj2rmXFoICN6mkZRLamc8AOI9a19LsVTiA5tJ4k/1jvd2/+pcEEUlcmFrJXy01t//PiewYY
-	splI9ywCgAYTqZ0SFPzCSyHVQkXnTI/x7UONqkyF4lGykSX+4ro6ei2uWLvaDjiXnPorVcqQ/qS
-	gcfUugQSe98UYIXYQsPGTLgDKAlgFW+yMyEM=
-X-Received: by 2002:a05:620a:440f:b0:7ce:ba1d:400a with SMTP id af79cd13be357-7d3a88e40bcmr167394585a.30.1749593767236;
-        Tue, 10 Jun 2025 15:16:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF/M0hvJvyIKxc0xXO1KKdRvRgsx+vq+O0zU4EI6ADE1ohAPsKxZG+F+D2prd/gjcYfYouQdA==
-X-Received: by 2002:a05:620a:440f:b0:7ce:ba1d:400a with SMTP id af79cd13be357-7d3a88e40bcmr167391185a.30.1749593766930;
-        Tue, 10 Jun 2025 15:16:06 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553676d765esm1718734e87.85.2025.06.10.15.16.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Jun 2025 15:16:04 -0700 (PDT)
-Date: Wed, 11 Jun 2025 01:16:03 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Luca Weiss <luca@lucaweiss.eu>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kevin Widjaja <kevin.widjaja21@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] ARM: dts: qcom: msm8974-sony-xperia-rhine: Enable
- USB charging
-Message-ID: <kgbfmd6ql75nw37eocsdhoj2mrvibdhnv5hixxakv75uycgujc@6umcwrjo2d5o>
-References: <20250610-togari-v2-0-10e7b53b87c1@lucaweiss.eu>
- <20250610-togari-v2-1-10e7b53b87c1@lucaweiss.eu>
+        d=1e100.net; s=20230601; t=1749593826; x=1750198626;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DIt2WsPysp6xDtdH49fFBClr+UXdYRyo8pVXPNJ74C0=;
+        b=EqW27ShO1Prrnb+UcAiI2wMXI2ePsxkKT/wESOtcRMWunvQM3DvyRYLP70Mp9Mmcoq
+         nlWKRCNurvhiXCLbcGIcIsCybQbJOPAolAmgHWn3l1egAnwDqmuTb77GI4JUIj5Exom7
+         D7qaiFMBjDroTcn4pQHB/+b9ckQYYjTAKFO9e26U95qAN7zRmaWfVOV2TigHanhfgGLC
+         znsNG1tcsBzZ53Z4cTHFEYUJNd5SmYB6+xK+fqvGSiWzoKHcjudg+/sG79UGFjN6bgQe
+         +2FQZQRuF6BtPmTP4XWGzTPslLtJkItqjpCBlgHFbE1A0HPQI0GhWC3E2xvpHTo7nqrL
+         moDQ==
+X-Gm-Message-State: AOJu0YwjdgwLNt6reEH4dUucvSUA37+28TwnACp1TyV+xv0cjBwHWJpQ
+	qWe0ujo9j9TmK8FfvV2TsGmGjenRvbWYqZy4OwfNGLvkqgWNFM876CLPse3IOflKGfE=
+X-Gm-Gg: ASbGncs3RpHBJswRKQkYAixOPtREXnOasTRHFjGynhEL04+6PGmpZxCBUVhBad8gNsT
+	6mcpuxFTRI1V/eL+WFBfda4k2x+82tMiioUim5YjLw+/fAEXdbXpyKpN8/wZ9g2lBx2pj564H+m
+	KbieqFnoKXh/iCXCWDkqeouVn0tNKzTvKFgx0wDnE/K0pulbvI0ziHoHIR67EOH3so3gHXvS/hW
+	AVm0OhUdwzHYcfZq4vx14E5HwumTpPcRwl6PtrQFuHIryj+myhjXsrFYYWethvkmj/yXrGG9Pnb
+	m+akL1dY87286R9sRgK5vpmDR4gPXKnWhXfsVTSKeNJdbyIxIS6miEO8+q8vn5Xg6rzKrAHiS72
+	/YZ22jTALq6dPPl+XrT5SdanEt1I=
+X-Google-Smtp-Source: AGHT+IERnljNf31VprhAEokS9VT8ilK90CxWqw6sUIOgCUXrKGJiaOEei3ELCJOxQ0LlxD+btzZ1Ww==
+X-Received: by 2002:a05:6000:2285:b0:3a4:d6ed:8e07 with SMTP id ffacd0b85a97d-3a558a27717mr467480f8f.32.1749593826029;
+        Tue, 10 Jun 2025 15:17:06 -0700 (PDT)
+Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a532464f20sm13422204f8f.98.2025.06.10.15.17.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Jun 2025 15:17:05 -0700 (PDT)
+Message-ID: <10f07a65-0549-443d-889b-d36b3515a237@linaro.org>
+Date: Tue, 10 Jun 2025 23:17:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250610-togari-v2-1-10e7b53b87c1@lucaweiss.eu>
-X-Proofpoint-GUID: 9bEm1rcP2UpBvxmIiJrzZ1bQJ0kPlL-k
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDE4MyBTYWx0ZWRfX+RfRDJy2tZBx
- 5iKDWnjPxdcARwfAGGIIHXug0RI/CkC+6So3AlGq3mOY/fjdK5oMO9+y5x6gMIgCJZORt358YH0
- B6tOHtoLv+R6ag/FNWjivopgpRHO9mVH3mbKjbwRMisip5SKyvGc3dNPg+m/wvXOsg5ABHjvFoX
- cpRfOadYobLo3UA4o3/vpKp/Djxq5ZUK11Qlzy+5y3j/ojoeNqRwwf+8cTTl7RnUPwVKxsdQaPA
- ky1e50nOFX7yh/ZpHcOBukP+7dmIKtX7GImejPSy3aOg9Cal4569HmAUarZH3YnjzYoxEIz9sxL
- f5Pdl20zzCSxT9QUV3BWvYeu39rXRzns3so9k03QUblJD0GOyMvcTRhLLSOc6UzLq5jRwNM2mNQ
- FCuexQ9UHwR9I8Rg8PVv7Qw1JJwV3aIjh5XBZKoMRRM7BLOLiEEso+I/ATnBZMcTOpH7pNPO
-X-Authority-Analysis: v=2.4 cv=GYkXnRXL c=1 sm=1 tr=0 ts=6848aea8 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6IFa9wvqVegA:10 a=pGLkceISAAAA:8 a=dlmhaOwlAAAA:8 a=EUspDBNiAAAA:8
- a=UvBUG8sCUGYd-mWNjhcA:9 a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
- a=y4cfut4LVr_MrANMpYTh:22
-X-Proofpoint-ORIG-GUID: 9bEm1rcP2UpBvxmIiJrzZ1bQJ0kPlL-k
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_10,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 spamscore=0 mlxlogscore=618 bulkscore=0
- impostorscore=0 clxscore=1015 malwarescore=0 priorityscore=1501 mlxscore=0
- adultscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506100183
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RESEND] arm64: dts: qcom: sm8550: Add support for camss
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Wenmeng Liu <quic_wenmliu@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, andersson@kernel.org, konradybcio@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ quic_depengs@quicinc.com
+References: <20250516072707.388332-1-quic_wenmliu@quicinc.com>
+ <0367d5bd-a42e-4b6c-b841-ba20190b3127@linaro.org>
+ <dc4720a8-2f15-44aa-9a52-8440c7518328@linaro.org>
+ <739bad1b-f26d-44a6-9cc1-eee28023474f@linaro.org>
+ <dc82457e-de2b-43ec-a50c-08f7d8bdeff1@linaro.org>
+ <1883d9d7-26d4-40b1-9848-ae0477cf95c7@linaro.org>
+ <6bbd526c-3193-40c7-91be-e629949dca8a@oss.qualcomm.com>
+ <b4a7aed0-a05e-4d1b-965f-78e0c5e0709b@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <b4a7aed0-a05e-4d1b-965f-78e0c5e0709b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 10, 2025 at 08:34:52PM +0200, Luca Weiss wrote:
-> From: Kevin Widjaja <kevin.widjaja21@gmail.com>
+On 10/06/2025 22:13, Vladimir Zapolskiy wrote:
+> Hi Konrad.
 > 
-> Set usb-charge-current-limit to enable charging over USB for all
-> sony-rhine devices.
+> On 6/11/25 00:04, Konrad Dybcio wrote:
+>> On 6/10/25 11:02 PM, Vladimir Zapolskiy wrote:
+>>> On 6/10/25 22:02, Bryan O'Donoghue wrote:
+>>>> On 10/06/2025 13:49, Vladimir Zapolskiy wrote:
+>>>>>>
+>>>>>> List feedback from DT people is isp@ is the correct prefix.
+>>>>>>
+>>>>>
+>>>>> My bad, but I don't understand this comment, it seems irrelevant...
+>>>>>
+>>>>> The expressed concern is about the novel label name.
+>>>>
+>>>> I mean to say the feedback from Krzysztof was that we should use isp@
+>>>> not camss@ and I agree.
+>>>>
+>>>
+>>> Let me repeat it thrice, it's okay...
+>>>
+>>> I don't object against the properly selected device tree node name 
+>>> "isp",
+>>> here I object against a never used and very questionable label name 
+>>> "isp".
+>>>
+>>> Please feel free to ask more questions, if you still find it confusing.
+>>>
+>>> Again, I may missed a discussion about the need to get and use a novel
+>>> label name, then please share a link to it, it'll be very much 
+>>> appreciated.
+>>
+>> To hopefully help out:
+>>
+>> label: node-name@unit-address {
+>>     property = value;
+>> };
+>>
 > 
-> Signed-off-by: Kevin Widjaja <kevin.widjaja21@gmail.com>
-> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-> ---
->  arch/arm/boot/dts/qcom/qcom-msm8974-sony-xperia-rhine.dtsi | 2 ++
->  1 file changed, 2 insertions(+)
+> Thank you, here is a link to the wanted section of the dt specification
+> for Bryan's comprehension:
 > 
+> * https://github.com/devicetree-org/devicetree-specification/blob/main/ 
+> source/chapter6-source-language.rst.
+> 
+> If for whatever reason a proposed "isp" label is preferred, then
+> since a label rename is not an ABI change, it would make sense to
+> do a massive change of renaming all camss labels. Otherwise there will
+> be an outstanding incorrespondence/confusion of the label names in
+> board .dts files, and that's bad.
+> 
+> -- 
+> Best wishes,
+> Vladimir
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Ah the label, I thought you meant node.
 
+camss: isp@value
 
--- 
-With best wishes
-Dmitry
+Yes
+---
+bod
 
