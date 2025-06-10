@@ -1,120 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-60862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46303AD41BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 20:11:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0A82AD4205
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 20:36:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0EB353A1890
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 18:11:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9BDD0189C178
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 18:36:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF7341DE2A8;
-	Tue, 10 Jun 2025 18:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14CE9248F59;
+	Tue, 10 Jun 2025 18:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bghh+Fpv"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="u9aSaxpw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93F323C8D6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 18:11:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5711D23C505;
+	Tue, 10 Jun 2025 18:35:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749579110; cv=none; b=R0b3KXjsMppjPSsqQm//J1UzuaW9xbHqjqGHKdYSnFIE1NML8JcPySO4tEycE4+Q6ygGky25y682rYvD3UwDIbC477dXIqBrQ8iUh24TCUWXJVMBQB7zYIhSnGfXJEIS7Lj1sfFnOX08E5fQ61Eq2rLj7Hg2EmeD8BZjdqbrW4I=
+	t=1749580557; cv=none; b=N7gpJgoKSI0BSkzEwHd9HV8gpUpmbGp8aXaLORdVwKOZovINiOVZZ87VudEGqKcNpRQyIDEdDptIR8AlTm1VyuA6OeCL3djltqnH40GjVktRj5wd80Z8Jx8R5gJf1As5hYl7rj8f0pn9XvkSBxJk2iW7LjVx0aFiqg3OYjdww1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749579110; c=relaxed/simple;
-	bh=rHmlH02rtBQhOU5fSreB3NZ/qixbOFkAfp1S++oSn7g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bRjx7FbjSRz6rxxDVdE/s6nvGrH/EDweocThnj717dAy7kOnaeLF92AwbLLEd1hTMoqa8L4JFzgtkNwnOHqG+Aa3ztk8HPnfL9Ld14KHDiX3KPtA+OoplqY06OAUidfmrb9vG3De+iWEP6/lIgNaTIS3vya/2sxibdcJzsdaptM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bghh+Fpv; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AGcv5s017745;
-	Tue, 10 Jun 2025 18:11:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1lgjBE0ZQiFtVoxRkUmb+FYR1lfzS+CPJvhvgqqpvXs=; b=bghh+FpvWRmHihdS
-	QyO/S2ftCMgOeGxNOIrXgNdTQ9J0dGM4tViXeZmcin55ZranbMuoEt7mpe9jEXq4
-	RsmckiLvQ2l7VhMPRQhswI0jud2nuySFQ7Zka2fZgNqGcAL7y4D1bXuuXExXVlAV
-	ZBde2cR+kn3q/uLbGaI9UArkyd2fN1KvIx1W7BNTdM3WMwMhdzd7aj2/4WiKiFIq
-	sbr4fcEPCOspir4R7RVwg0Tvrw0eTOIeHocECArdLFqNH6KAjMWRInXes9wWTdQi
-	JZw33PWyQ3biireLKxOVW9bdrUPIjCQdhWdzFD9yYpKZGsIhNGiBmdqBCu+7NYDq
-	lZwsGw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474ccvabr8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Jun 2025 18:11:32 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55AIBVGd029773
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Jun 2025 18:11:31 GMT
-Received: from [10.111.163.19] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Jun
- 2025 11:11:30 -0700
-Message-ID: <bae922db-df0e-4eb7-996c-2defd4fffbd4@quicinc.com>
-Date: Tue, 10 Jun 2025 14:11:28 -0400
+	s=arc-20240116; t=1749580557; c=relaxed/simple;
+	bh=v60N7PQZ0qEhAwT2ZoCBLsiw1TXfUlnbvUIkPV9Cm0o=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=QemsTHDC7qtTSSLNZmclE4aZZn2pDA7po1eS+0pvKK1MKKK2oad6zNDSOARQrcLNN5NL+aRihqYCT27uQ9YgnACDZH6FmU3PzROhC/o/ZiFfbwpwPu2DUrSbzBBbMbvSINmmo/iZfQQoEXwjHePNR/OBvZ2pHfCazkpK4eiFUVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=u9aSaxpw; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1749580552; bh=v60N7PQZ0qEhAwT2ZoCBLsiw1TXfUlnbvUIkPV9Cm0o=;
+	h=From:Subject:Date:To:Cc;
+	b=u9aSaxpwyBU9TISkC7WrXfmFcByt5EpPtmBpqpDtpX8PDHEWNlLB8eKINQJSrHD3g
+	 Wi7Gqd9mCqMmvf/KRFJgaDuE4803a4IHLOw2+Ffbjzq9GNgE5L44yq+ih+LmG5iqU/
+	 eewHsNOeT3PfccxTTBRbkWzMk5Tzefxv+8cH8lQQ=
+From: Luca Weiss <luca@lucaweiss.eu>
+Subject: [PATCH v2 0/4] Add support for Sony Xperia Z Ultra (togari)
+Date: Tue, 10 Jun 2025 20:34:51 +0200
+Message-Id: <20250610-togari-v2-0-10e7b53b87c1@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/qaic: Use dev_printk() in RAS
-To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>, <quic_carlv@quicinc.com>,
-        <lizhi.hou@amd.com>, <jacek.lawrynowicz@linux.intel.com>,
-        <quic_yabdulra@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>
-References: <20250610175912.2086773-1-jeff.hugo@oss.qualcomm.com>
-Content-Language: en-US
-From: Troy Hanson <quic_thanson@quicinc.com>
-In-Reply-To: <20250610175912.2086773-1-jeff.hugo@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KdnP_ojUA03-sNC53O8H8V_pl7sFfzlz
-X-Authority-Analysis: v=2.4 cv=TsLmhCXh c=1 sm=1 tr=0 ts=68487554 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8
- a=rOUgymgbAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=R4TYlyjI-1KM9QihRk8A:9
- a=QEXdDO2ut3YA:10 a=MP9ZtiD8KjrkvI0BhSjB:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: KdnP_ojUA03-sNC53O8H8V_pl7sFfzlz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDE0NyBTYWx0ZWRfX+C/WWXk5RIuQ
- AtTf1xEYSgiKF3B/XoAVqUZFYg6aiVRujG/CDXq+nrqb2xB5enRS5JGYXbmEtSZrpPjZkJ4++Cw
- i2fMiFRuqFE2cVkTvPkbRqqmmB6cROjyXida3r0iyTxc2dzgUpwRmoMV2UwQKQ3AZ0g9ZgTJIhc
- n3EFEn0te7aEXIvmSFPNL1lD41ckaUED0odyNl9NQPi2SKaiBKRj08PFNM+My6a+cxq2xpN571e
- oWp/3daMGFS9zGMvlqhLagoK0zTdBtJnxwEsXQg9+yyMi61AxtHmhz/U253vE8F2wbQDbwemGmV
- ZbW+l98V/TL6n362zx+5UmaRB4rLZFKiq42BGC1J/UmBR9TW/cV7d/cvZ/i43zfVeuZBn4v6TzS
- WVIIWwWEMWgP2bR1wBTw1dCps5zsyJJiOzrVMr0oaNF3ifIgHrWUViFIym/EMvYU97E0tv8k
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_08,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 spamscore=0 mlxlogscore=778 impostorscore=0
- priorityscore=1501 bulkscore=0 adultscore=0 clxscore=1011 mlxscore=0
- malwarescore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506100147
+X-B4-Tracking: v=1; b=H4sIAMt6SGgC/2XMSw7CIBSF4a00dyyGV0tx5D5MB4jX9iamGGhR0
+ 7B3sVOH/8nJt0HCSJjg1GwQMVOiMNeQhwb85OYRGd1qg+Sy5VpYtoTRRWJXj97YXlqlDNTzM+K
+ d3jt0GWpPlJYQP7ubxW/9I7JgnOm219x3xqhOnx+rdy+klI64wlBK+QLwv772nwAAAA==
+X-Change-ID: 20250419-togari-bcec79829337
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Kevin Widjaja <kevin.widjaja21@gmail.com>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca@lucaweiss.eu>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1387; i=luca@lucaweiss.eu;
+ h=from:subject:message-id; bh=v60N7PQZ0qEhAwT2ZoCBLsiw1TXfUlnbvUIkPV9Cm0o=;
+ b=owEBbQKS/ZANAwAKAXLYQ7idTddWAcsmYgBoSHsDg1KBTYu27aW7gSs2w9FD2lRK++JLe+Rbv
+ 9/V2KW+1iaJAjMEAAEKAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCaEh7AwAKCRBy2EO4nU3X
+ VhYLEACn1Xm26fCzQi3G92Myb8uMO/W3MYc/n9+tP9yNLIRQUpDVQfRg+JYFu6WN0sx++NmfkuK
+ SpyMvx9pUvvTmGFg02+z5y22N2xxwFK0opDcLIcWtKg9aU+bZyyXnsOMZbY04EQqbInHcLl96Z4
+ vay9MJZwEax/QO0BY/FUBLsO0ogDG5XOYy3Ai1PP1PgOx9gSq6fKJiGeBsHyrBHZRW/0oJFsWiy
+ vnxDtJ9AJwgEpxuUm++A7VAI+jOJNoq2C15XzBBBEaNxY+JEyD7WrNMGypotR7+al2GHt3sXAxL
+ Hh5FSXyBPopEibwBEAJuDsjkzQMqpQkTA0gOKhCgNUM3THqAF5ZXjWsoOW5faT/a3lm+VWG7PCw
+ GCxAi3qX0GpL8PHcEmI01CIHCfMse5VMSFyfydxyf9kogqpr3c+gmsuC6nwL+2wosY6MK1/BFbT
+ Vmp+bjH94WZ/SqTUZM5ckKJRqYtHJhHB9JoH46oHD+vdHj6Jtz34g7Y+j3fQTTVp7YADJklZwIX
+ OuqbhVfv6VBfrKjAphdtgt1EuGD1wUBUrPS99NqRZ09/zYGyGKMy1EZy+xJfw9cHsXcH+wB9eWm
+ L1I4SuK8ShgQLHjB9QUw8vH0wdg4YYJwft7o/97kjMDoa+ABgj7FZplgEM/MB2xdA9hnrP3Mm3f
+ ZnpWWa70B/3mOIQ==
+X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
+Do some tweaks to the common file for the devices in the 'rhine' family
+of Sony devices, and add a dts for togari.
 
+Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+---
+Changes in v2:
+- Move non-vendor property first as per style guide in first patch
+  (Dmitry)
+- Add msm8974- to commit messages
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20250419-togari-v1-0-45840c677364@lucaweiss.eu
 
-On 6/10/25 1:59 PM, Jeff Hugo wrote:
-> pci_printk() was removed with commit 1c8a0ed2043c ("PCI: Remove unused pci_printk()")
-> so change to using dev_printk().
-> 
-> Fixes: c11a50b170e7 ("accel/qaic: Add Reliability, Accessibility, Serviceability (RAS)")
-> Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-> Closes: https://lore.kernel.org/all/20250610124809.1e1ff0cd@canb.auug.org.au/
-> Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+---
+Kevin Widjaja (4):
+      ARM: dts: qcom: msm8974-sony-xperia-rhine: Enable USB charging
+      ARM: dts: qcom: msm8974-sony-xperia-rhine: Move camera buttons to amami & honami
+      dt-bindings: arm: qcom: Add Sony Xperia Z Ultra (togari)
+      ARM: dts: qcom: Add initial support for Sony Xperia Z Ultra (togari)
 
-Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
+ Documentation/devicetree/bindings/arm/qcom.yaml        |  1 +
+ arch/arm/boot/dts/qcom/Makefile                        |  1 +
+ .../dts/qcom/qcom-msm8974-sony-xperia-rhine-amami.dts  | 16 ++++++++++++++++
+ .../dts/qcom/qcom-msm8974-sony-xperia-rhine-honami.dts | 16 ++++++++++++++++
+ .../dts/qcom/qcom-msm8974-sony-xperia-rhine-togari.dts | 16 ++++++++++++++++
+ .../boot/dts/qcom/qcom-msm8974-sony-xperia-rhine.dtsi  | 18 +++---------------
+ 6 files changed, 53 insertions(+), 15 deletions(-)
+---
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+change-id: 20250419-togari-bcec79829337
+
+Best regards,
+-- 
+Luca Weiss <luca@lucaweiss.eu>
+
 
