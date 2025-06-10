@@ -1,96 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-60737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A132AD3195
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 11:18:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F062AD31A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 11:20:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 78862188D993
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 09:18:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C771F188424B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 09:20:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34D4C28C033;
-	Tue, 10 Jun 2025 09:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FFA328C033;
+	Tue, 10 Jun 2025 09:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="O4ZgTby1"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BKfdBQj+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711CD28CF69
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 09:14:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DB428B7CD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 09:18:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749546862; cv=none; b=a0405dijHeyCS+yzLK+ToOfbpIWtKWiWLYx1dH/WYAg1TshHJfp+CoSZ3E4zq9bzLi3lUzKt+gLt2Gg6OghCBE8QX8grZw1LqIBpQjzY/BlyLpzVeCGydSxJwZsZEsWP8UWstrhi/va71SfpmjjCrUAhFrfvXS2v15WWUJ4GitA=
+	t=1749547095; cv=none; b=pZozvM2HRba9VzrfuD5jVHvjZqUYYBEpNJqPrLPQs5ATJidMvisxszu9VuxLoHEsb6FL/YqjBVT3x9n3uY7fJshYYMc01D0bp7TTObeywsRx7Xfohm1Qq0moRmG5QuZ3vRjmkJlsIBpUOQc9DE26AoKWXBdouDbRPWDLpo3r4QI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749546862; c=relaxed/simple;
-	bh=euV+fbYXNTbYMl4eJVb4KK0RriCHNxifXVblrf9rQ20=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Pj0ZTRCbeNgGmztesYLuQvZd9AJwvyHhoB7KZuKQzcPxEd1CH1R/j5V6Xj0CL3S/Q6C/SF6eUI6+bDx7O2ORwRCbGavsfkAAWKqN7UsI3VwB6vealxDi6xH9SfyOsAjQh2oKzj9QPHXcQKuXZWYLtcRb/G/CvprQv71XgMWF8ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=O4ZgTby1; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1749547095; c=relaxed/simple;
+	bh=S02eX3cwwq3IqD5T1Y/z8bQjR5t8zDb4jbbctA55FK8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=AhZXpyq73xKmAlahDOrNU+TzwCqx18LItdQRegjYPaPTuHyvWCcOtGVhSDgVIDid4xEYJJvnk1pU9k3ryHnAZP87+P9gSGnyCtPmho5p8dhZ57pmVPaVHFnIlJpnrg1O+etX2nX7GCGhA4cOc4Xk0r9DzjLEaxbthXHG/8ttE2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BKfdBQj+; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55A6XvlW026905
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 09:14:19 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55A8wrBb001471
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 09:18:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=Nk+S4I0TlH2
-	z4qmWoHPeH+Psft3DzglIZdxip0XMeN4=; b=O4ZgTby1v4QYeaY5EhV/Dd34Wk1
-	js7nNev59Imtwd6iJxpmJ8o/tRsBPGai++SeTGVR3cRX/s+7ZZY+QL+r+yclVOZM
-	4AmS5Te677kWH8TEnpn42kVt8paOMzlGAzDpc5G+4z/5pX/uc2j+vX2irLhsVtub
-	NFzf+1E2wbqiQesZyZnQ8eYDaRyuYBKo8lT6791ZBd8t9WYkgIUciXSoxpxccjCq
-	4ZqtMur5b/w+Xf6sRjlGRwfFklPo8e5wY21xH97F6JvMQU+tA4oZo9IksN/cT0C0
-	55OnPUMgYmvYDaG98bR5fPGYI7uGUnHlDFjwITYSYwG84r11oWy/q8M8PjQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4762tg26ug-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=LD/9cXhB15D7e64MfPVXxDkC/NmdpQlnbE3
+	wwb3R8hk=; b=BKfdBQj+v9xEWynAzywk0NwBVBT3M0DtiZKhfuxUDLOCxQ0V/nj
+	UnBrLTaBQ4zIOzH5gaw2i9ikz5hCsw5e+cnyFjkFenwNorTF4TcON+cYglxsR4rm
+	uJ/TmR3HpQZg9UeSDI40K0ZYD7hJgGU3ngrQcAjdAus8WpfZM/k+8WhLrKxk9488
+	3A2OSyip7MkMZB44YBw2p7YIA31PSMzrD1qwIzDX5PXEZvgShq3hy+ddGJ6HhyVL
+	4yWTc1JzCotvU64PxjgfqFKvCDY5+Nw7n5o4F/3kH+EX7pkoZR2ijZYSr/EvKlTY
+	kv9X8ZgZf3q1jOU3EHaRkm9DDT6srsZlBHg==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474dn68rmr-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 09:14:19 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-31218e2d5b0so7705288a91.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 02:14:19 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 09:18:13 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-311b6d25163so4568339a91.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 02:18:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749546858; x=1750151658;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Nk+S4I0TlH2z4qmWoHPeH+Psft3DzglIZdxip0XMeN4=;
-        b=ARCFcK89CZMaRoOVdvuNepyozEDWShC64GvwYCj50loUscmKEPo1KDqbWdI09/JGa3
-         tIucOzvphjwLk2fv/1bBJOjDHziolRN9QgySNx6FePojjLfO9vp3NP5+ObeYPP0EzvXQ
-         px7XafzvwcyBXkZN9XNx8G+k99OcI5cbNUhG2hHZhBswKy207LAKh17ELXWUpin/4oaJ
-         SRj+mza6WLz/RJZ2+eU6wtpPBn3m0Yme5d86JDLB73Nu1XC9v4zrprZ9VadrTdyXIKpP
-         5vd6MYuO2DO6qnu/+duw0aXJ8qrKGHb72FBvt3RC+qMD783Pr6kanrcyUfjRSCfoF60o
-         Y7AA==
-X-Gm-Message-State: AOJu0Yw6vHpIyyVKqtcdf3KiD2WBe0nTxRn4Q5P/GK5WNGmEjmWtW8vX
-	/XO+5PHRyOu4wz7VtXkuW9pYlfERWUteMbczB70OVAokkeJwxqID9CdFwo+I1dSrYgEANzgfKw+
-	QNOoqo5sQfu1G8Rn5Cuk4JIVmbbrue/Xpj74m750ALdgxKNGQkMfJdiKLRLPrceUgWblv
-X-Gm-Gg: ASbGnctH346EynL6CgTKbQz/MZhW8d643VjN8mHYLlpPq9qVg+7oC7NC7ztmyG3oBE3
-	xZE+Z5iF+A7ObxYl4QbpwNJQMQ78jbfgichwoRxFDtBQgfaQtLHcIvKrigg6RKrDnvNQE5eP5qB
-	TWliM2XWhLSGgfmLDHvzIkXEZaWieyfe8F0T9wS7HJG8AMLW1TxTYaOWsYq/uEUG5LJbOUYKfLy
-	vZywYDomstyR4BO0hPETkOuwP2lhMF2uVV/lRfaCy1nVYOKOhM2GAPXMHo8nPzhIJypGsdPdjtT
-	oOsEFhry2vf5nAmDssHW+ohHemwvAk+deOsX8Nu/e2pFGPF3Hc9usTK6F/MN
-X-Received: by 2002:a17:90b:3b92:b0:311:a4d6:30f8 with SMTP id 98e67ed59e1d1-313472ec763mr22830128a91.13.1749546857934;
-        Tue, 10 Jun 2025 02:14:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IELox5dA0ziiallWsp271HuMBN3cbaKKMWH6TLzvTwcc9o/ILNrURvqAD8FhsIAGvrwut4eEw==
-X-Received: by 2002:a17:90b:3b92:b0:311:a4d6:30f8 with SMTP id 98e67ed59e1d1-313472ec763mr22830082a91.13.1749546857459;
-        Tue, 10 Jun 2025 02:14:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749547092; x=1750151892;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LD/9cXhB15D7e64MfPVXxDkC/NmdpQlnbE3wwb3R8hk=;
+        b=PSir7ThdXFfl+vYCx9Ogj2PkhhzNDHjO/HkSbdmN1AiR+BuwItyuCOItj718us/KhR
+         1mq3t0KSIr+bBTmFVihxirW7E5Ivx5+6INhTsoBj33XTa9OQRRAlDWGrFOhXer3HOl7H
+         ndhOfRltFzVTyISL1dqKJhcKcP4Mc8Pn5dtfTotEdB6nPGWR08ZIXBF8gVJ9d29TzkOc
+         3djV0XYA4Dp7m9vXLIVTxfrbfJ3XxgJW6IY9KUE5K8pq8gd6Kz0s6kPKBh/a041k2U5t
+         7hEuj3UBW3ed6ADzbqh5YUxq/O3C8UK04/qv1OIT62rKSOFpaVRZmKT+DqjWJafvmIqf
+         xp5w==
+X-Forwarded-Encrypted: i=1; AJvYcCVmpq1SeWWyZ2lYwxKX3VZfRFbcCO3beal7VDcFTaTsIxxWTOee35l+Fd6rFJZxt7/0cQ204PrYNC6r8y4H@vger.kernel.org
+X-Gm-Message-State: AOJu0YxQ1lCq2UIMRknyXTgjQyYnixnNN+co050SvnoFrCbInSh8NUsj
+	kiBuZzbE1++8XAOnQnzhGJLEZg6VLUHOi+LYy7RTUnSTd4atpROUYs145YMCB/rOIXAyYoFRGqY
+	+ZZtg/WaLyZwk3XJuMAWxI6sl21wxecWtNThY8JAKHygKt+l5847K5jzWn+eaR3bhsOvU
+X-Gm-Gg: ASbGncvgG9jABDc6AVMh+/7ncQbvtBzBEFM1+bFpoENWBwlXyt8foKHBBsktgApzVGu
+	PS0K5757W3IQhhPsEoVQnIm6cXDX9n0xlwxKPxEOny+gEEfYQjbB99530P4gQRhdFP9AtHhNx7U
+	lG7xWcJKjBxcGlS1nJfwhV1LzcqWTjM1i5tQ4HaZmIibIKHwPC9S5nbIKqsmErOm7c/Va6IjqjU
+	QrCArBXI9YJftaloMJ6wq+9bFHhG2qHzO1cmep346P8zJ4aT6qC/nz65jk3efp9PfEgZFw1kdkQ
+	rN1jCBEWuT5mPScMl67wxOGM79K3v1gTKv1jNxWBsYY0IIhcrZbeB7SyHg/7
+X-Received: by 2002:a17:90b:254d:b0:311:c939:c851 with SMTP id 98e67ed59e1d1-31346afa132mr21731762a91.4.1749547092314;
+        Tue, 10 Jun 2025 02:18:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHA6A7Fb6MP+DJ9bPZH2QmIbZNP81kULJOwxSyuh+v1p3lpVKxB4ERFlDWV9kdLaXlo1o/WCA==
+X-Received: by 2002:a17:90b:254d:b0:311:c939:c851 with SMTP id 98e67ed59e1d1-31346afa132mr21731729a91.4.1749547091884;
+        Tue, 10 Jun 2025 02:18:11 -0700 (PDT)
 Received: from hu-kriskura-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31349fc3e72sm6913550a91.31.2025.06.10.02.14.15
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23603d14206sm66951195ad.34.2025.06.10.02.18.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Jun 2025 02:14:17 -0700 (PDT)
+        Tue, 10 Jun 2025 02:18:11 -0700 (PDT)
 From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
         Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Subject: [PATCH v2 4/4] usb: dwc3: qcom: Remove extcon functionality from glue
-Date: Tue, 10 Jun 2025 14:43:57 +0530
-Message-Id: <20250610091357.2983085-5-krishna.kurapati@oss.qualcomm.com>
+Subject: [PATCH v2 0/2] Flattening USB controller on SM8450 QRD
+Date: Tue, 10 Jun 2025 14:48:03 +0530
+Message-Id: <20250610091805.2997546-1-krishna.kurapati@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250610091357.2983085-1-krishna.kurapati@oss.qualcomm.com>
-References: <20250610091357.2983085-1-krishna.kurapati@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,187 +97,48 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=OqZPyz/t c=1 sm=1 tr=0 ts=6847f76b cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=HsaRtseu1FE5unmruSMA:9
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDA3MCBTYWx0ZWRfX3WDbK0vsFNqi
- QH5Ej3v+ED+dI/FYEI+pTyl8fkxzdrhGtjUsHz/42Bt5i3AfgbJQjT69DKdPfWV6sixjJTrk7EF
- 0R3GLjhilI2wREAUpE4FyQNHq9ZSfKZr883zh1GimnSt82RZV7LCVMscd5L49ho/JJVwwaxGf/H
- mdS23zo1l6HyMRTFMi9OcdZCMBqqDn9WPtf1HcbrrEUSaK23I4pMDU9sc0tMjwlbd5db0tT/pBP
- +Xe4YRYaNVLdZ+CVa1xaKZJN2QmVIiOJTFmjz1g3x/KW4tciTXzBGDSJURLK4r4ZDAWIWhFGGWG
- Sd1y3/DVKJ+5knvSbSQZ94UvIJy96szLee3PGjtz0BCGgRh2vgj6bwWF00fmx6w68+FZJvgxWgn
- +K/Bs7jELNPTk+1eBXKTCJSmMrvAhJRUKFtlrbScbijs+h+IzXdCcbS0pqfDwoX9PTlWMfCS
-X-Proofpoint-ORIG-GUID: oadkBcUOpLkRgHh_5xdM59uvV-wn91Yz
-X-Proofpoint-GUID: oadkBcUOpLkRgHh_5xdM59uvV-wn91Yz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDA3MCBTYWx0ZWRfX9Bq2WCyhQcp4
+ 6CFd6ka77VRDu8wu417BI5fP/SHBu8n409ydIvM3mf2WKqJ+TudykXqe4WN4h9lpHLhgosGr4JE
+ 8NSc0flSrlmMN2EnyuYGYp1wv7q/Pla8OwUV42p+tEZRaMtSvoNuSL9hX9oQ1hD1w1l/kzsqwIF
+ tIBbJ11vX4bGgj25YzqVr5/fUlIsDuRMvBdH9BE5idNXHvxHUQs1IWKA8CwSV1t/+w0YrNhyqbP
+ 0SpuyPymkDqc88GvdW+lG84e3bUlASxHYksygv7/MfB8ImklPvUwND2ne1ODQSE0bNn7DU/wDeB
+ dIcGK9AYEPzsdewmBsFaih7Ip/bWKDT4Ri6Wti/jDU60Aex3BFL9qfZYq7d0Ax3q7pM6C9uYMU8
+ hx++MEOojPjdD82z5i9peVlR4Pgds6C0iVNvNSVJfRuWfYVjYCTbsIA1Tim5gLEnRA1T4hhm
+X-Proofpoint-GUID: 5C9FGC2YwqcjL0rGJBbKowIowKBWRDZv
+X-Authority-Analysis: v=2.4 cv=FaQ3xI+6 c=1 sm=1 tr=0 ts=6847f855 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=h4yBHxX_cEBQcTB0eGkA:9
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-ORIG-GUID: 5C9FGC2YwqcjL0rGJBbKowIowKBWRDZv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-10_03,2025-06-09_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0 clxscore=1011
- phishscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0 spamscore=0
- priorityscore=1501 impostorscore=0 classifier=spam authscore=0 authtc=n/a
+ impostorscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 adultscore=0
+ mlxlogscore=820 mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0
+ priorityscore=1501 clxscore=1015 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2505280000 definitions=main-2506100070
 
-Deprecate usage of extcon functionality from the glue driver. Now
-that the glue driver is a flattened implementation, all existing
-DTs would eventually move to new bindings. While doing so let them
-make use of role-switch/ typec frameworks to provide role data
-rather than using extcon.
+Flatten USB Controller node on SM8450 QRD to move away from legacy USB
+Qualcomm glue driver and make use of new one. The series has been tested
+with driver changes [1] to enable runtime suspend/resume during cable
+disconnect/connect scenarios.
 
-On upstream, summary of targets/platforms using extcon is as follows:
+I was testing on SM8450 QRD and hence flattened usb node on that platform
+only. If the community suggests to flatten all platforms of sm8450, I can
+do a compile test for the ones I can't get hands on and send a follow up
+series.
 
-1. MSM8916 and MSM8939 use Chipidea controller, hence the changes have no
-effect on them.
+[1]: https://lore.kernel.org/all/20250610091357.2983085-1-krishna.kurapati@oss.qualcomm.com/
 
-2. Of the other extcon users, most of them use "linux,extcon-usb-gpio"
-driver which relies on id/vbus gpios to inform role changes. This can be
-transitioned to role switch based driver (usb-conn-gpio) while flattening
-those platforms to move away from extcon and rely on role
-switching.
+Krishna Kurapati (2):
+  arm64: dts: qcom: sm8450-qrd: add pmic glink node
+  arm64: dts: qcom: sm8450-qrd: Flatten usb controller node
 
-3. The one target that uses dwc3 controller and extcon and is not based
-on reading gpios is "arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi".
-This platform uses TI chip to provide extcon. If usb on this platform is
-being flattneed, then effort should be put in to define a usb-c-connector
-device in DT and make use of role switch functionality in TUSB320L driver.
+ arch/arm64/boot/dts/qcom/sm8450-qrd.dts | 110 +++++++++++++++++++++++-
+ 1 file changed, 108 insertions(+), 2 deletions(-)
 
-Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
----
- drivers/usb/dwc3/dwc3-qcom.c | 91 ------------------------------------
- 1 file changed, 91 deletions(-)
-
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 17bbd5a06c08..1a73a7797d41 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -79,11 +79,6 @@ struct dwc3_qcom {
- 	struct dwc3_qcom_port	ports[DWC3_QCOM_MAX_PORTS];
- 	u8			num_ports;
- 
--	struct extcon_dev	*edev;
--	struct extcon_dev	*host_edev;
--	struct notifier_block	vbus_nb;
--	struct notifier_block	host_nb;
--
- 	enum usb_dr_mode	mode;
- 	bool			is_suspended;
- 	bool			pm_suspended;
-@@ -125,11 +120,6 @@ static inline void dwc3_qcom_clrbits(void __iomem *base, u32 offset, u32 val)
- 	readl(base + offset);
- }
- 
--/*
-- * TODO: Validate that the in-core extcon support is functional, and drop
-- * extcon handling from the glue. Make in-core extcon invoke
-- * dwc3_qcom_vbus_override_enable()
-- */
- static void dwc3_qcom_vbus_override_enable(struct dwc3_qcom *qcom, bool enable)
- {
- 	if (enable) {
-@@ -145,80 +135,6 @@ static void dwc3_qcom_vbus_override_enable(struct dwc3_qcom *qcom, bool enable)
- 	}
- }
- 
--static int dwc3_qcom_vbus_notifier(struct notifier_block *nb,
--				   unsigned long event, void *ptr)
--{
--	struct dwc3_qcom *qcom = container_of(nb, struct dwc3_qcom, vbus_nb);
--
--	/* enable vbus override for device mode */
--	dwc3_qcom_vbus_override_enable(qcom, event);
--	qcom->mode = event ? USB_DR_MODE_PERIPHERAL : USB_DR_MODE_HOST;
--
--	return NOTIFY_DONE;
--}
--
--static int dwc3_qcom_host_notifier(struct notifier_block *nb,
--				   unsigned long event, void *ptr)
--{
--	struct dwc3_qcom *qcom = container_of(nb, struct dwc3_qcom, host_nb);
--
--	/* disable vbus override in host mode */
--	dwc3_qcom_vbus_override_enable(qcom, !event);
--	qcom->mode = event ? USB_DR_MODE_HOST : USB_DR_MODE_PERIPHERAL;
--
--	return NOTIFY_DONE;
--}
--
--static int dwc3_qcom_register_extcon(struct dwc3_qcom *qcom)
--{
--	struct device		*dev = qcom->dev;
--	struct extcon_dev	*host_edev;
--	int			ret;
--
--	if (!of_property_present(dev->of_node, "extcon"))
--		return 0;
--
--	qcom->edev = extcon_get_edev_by_phandle(dev, 0);
--	if (IS_ERR(qcom->edev))
--		return dev_err_probe(dev, PTR_ERR(qcom->edev),
--				     "Failed to get extcon\n");
--
--	qcom->vbus_nb.notifier_call = dwc3_qcom_vbus_notifier;
--
--	qcom->host_edev = extcon_get_edev_by_phandle(dev, 1);
--	if (IS_ERR(qcom->host_edev))
--		qcom->host_edev = NULL;
--
--	ret = devm_extcon_register_notifier(dev, qcom->edev, EXTCON_USB,
--					    &qcom->vbus_nb);
--	if (ret < 0) {
--		dev_err(dev, "VBUS notifier register failed\n");
--		return ret;
--	}
--
--	if (qcom->host_edev)
--		host_edev = qcom->host_edev;
--	else
--		host_edev = qcom->edev;
--
--	qcom->host_nb.notifier_call = dwc3_qcom_host_notifier;
--	ret = devm_extcon_register_notifier(dev, host_edev, EXTCON_USB_HOST,
--					    &qcom->host_nb);
--	if (ret < 0) {
--		dev_err(dev, "Host notifier register failed\n");
--		return ret;
--	}
--
--	/* Update initial VBUS override based on extcon state */
--	if (extcon_get_state(qcom->edev, EXTCON_USB) ||
--	    !extcon_get_state(host_edev, EXTCON_USB_HOST))
--		dwc3_qcom_vbus_notifier(&qcom->vbus_nb, true, qcom->edev);
--	else
--		dwc3_qcom_vbus_notifier(&qcom->vbus_nb, false, qcom->edev);
--
--	return 0;
--}
--
- static int dwc3_qcom_interconnect_enable(struct dwc3_qcom *qcom)
- {
- 	int ret;
-@@ -848,11 +764,6 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto remove_core;
- 
--	/* register extcon to override sw_vbus on Vbus change later */
--	ret = dwc3_qcom_register_extcon(qcom);
--	if (ret)
--		goto interconnect_exit;
--
- 	wakeup_source = of_property_read_bool(dev->of_node, "wakeup-source");
- 	device_init_wakeup(&pdev->dev, wakeup_source);
- 
-@@ -860,8 +771,6 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
--interconnect_exit:
--	dwc3_qcom_interconnect_exit(qcom);
- remove_core:
- 	dwc3_core_remove(&qcom->dwc);
- unregister_notify:
 -- 
 2.34.1
 
