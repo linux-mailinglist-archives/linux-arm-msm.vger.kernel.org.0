@@ -1,52 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-60907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61664AD4A4D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 07:13:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 82216AD4A83
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 07:44:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AEC113A6147
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 05:12:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 198A83A65EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 05:44:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C8D92253F3;
-	Wed, 11 Jun 2025 05:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D62B226534;
+	Wed, 11 Jun 2025 05:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O796kNJQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SXRSRZdE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3613020DD48;
-	Wed, 11 Jun 2025 05:13:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A462253F3
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 05:44:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749618785; cv=none; b=azJwQ7PHVzRhamdeJEfIJy34jgIGlv+PUGh1ygsm9JYTo6LOtJpVzPP9ipuPQHJg9n4T87/UZg0o3LEGGMk+sTOjfy0WMd4pzndkznboSXceG0PhkqZjGM5TB6pcZ3RE2RHAEj/dWNKEVbd2RcUZOzQ55TW48SB/0gcjUkCVVGI=
+	t=1749620663; cv=none; b=cy5v+kO32JQWX6xkVEX/b1AyWKGs4OLkVFSzmhlRTF0flK2mn5Yxh/I75olxz2lGfvwddEbAgk5wGUjX8dJkKKEyP69hf5qr9jZVBGF1NzSSaDiODvWpGt/hb1RhpJlpBofFMQFt1LY0DNduOjzZTwb6SfOAyv+zPEQ5tDhVb4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749618785; c=relaxed/simple;
-	bh=BkxTyX33gHEtjP2JawH8Psdf9hWjmqaryNkUQiqnx24=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=a7pOXACfQ5zse/A69Ra2V7H1d4afetydmyvGzqb4WpTeCBXZDaI1sg4IoyOKEZ5QNthZGKcxgIv+Tglghq/+wfWQ24rMBayDvIdIKABLES9BtKoBXKG106FSs+OWW04VzvvCNLdZV2qOGh2IinKXPVkWmbYidUowsp1s5Xu6UJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O796kNJQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C30F6C4CEF2;
-	Wed, 11 Jun 2025 05:13:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749618784;
-	bh=BkxTyX33gHEtjP2JawH8Psdf9hWjmqaryNkUQiqnx24=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=O796kNJQxYSE4m7qAahv1pwhGygVxfUhZ/KhkNpaypoMt4RBH5Lw9mjK19MrVYfo2
-	 Iq/wz8ipzzXM+ND8LP/66ASI9ONG24solRtIQ6pmC7mT+YWvPnS7eeNnDmWvQPNzMY
-	 NGnAsHuPQVguCFT1WD9qs15O+9jnKJg220qicd+TyjUo4VU+sPM70fGKLxbptCfrJg
-	 8U177wPAw4SmLR+gd1qsHJrdkjdz16lbp0/reoZezErnFMNLPx/0X1a+iHruDCLgSP
-	 rrJyXSJxarMSvejRks9930BG7UWdBFTRfqESzakzn0vIIVNWNM/j+oW7XpIoQ4GhxZ
-	 3GdSIt2NXq6zg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B35F5C71135;
-	Wed, 11 Jun 2025 05:13:04 +0000 (UTC)
-From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Date: Wed, 11 Jun 2025 09:12:46 +0400
-Subject: [PATCH v11 2/2] arm64: dts: qcom: ipq5018: Add tsens node
+	s=arc-20240116; t=1749620663; c=relaxed/simple;
+	bh=4bPODOzNV1J1Wag20WqHQpC7iwILRqUaFidO5fo7Wj8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=HXpcRD+LDZG+fHYKt1Auk+PsU6uOSnki8fvM/NUP4xaaTn8neEdpeQxfz300uv3f8u9qLRlxgdDJ54do8AbyK3HofPVO/hLMt433wmEpnVHc7qgEGFCGj+SN3ezWKmQVUtxvExreNxEiHHNLWPeixcnY8YAz8dIsxjTLVZwFkmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SXRSRZdE; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55B4sqZd017402
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 05:44:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Z2paThcjo4kV5rlHhG4CJt
+	0FpfCXVKHmPjNjUTqWvJw=; b=SXRSRZdEgdV0prrcKjzTTowChbnivKHrZeLDPb
+	WL7MhNdZGWFmcDVzAA4ABDh/Va9NzJdysQn/Dm4TvUjFni2GWj7nsOh9iWxMKVGU
+	o9NK3ZFP5knGhGE9DHyAR2W5QbGLZ8GyMBRoPzMcf6YEOpFLQawHrqrT+UsL4bR4
+	/bKZA2ZYXjy3IhdbRLl7tbI17s/J26UCcV7soTCGIA06akVZayXyZzJhGSWxccsT
+	AdAqQ+tIAdM29u/KlQvEgvrQWXXrrBfCEx4QRRROanC8TNBBnJFep6eeq3wny2UK
+	IW08dnWVRIxkk1BwlhW2wML3k5FRSSK68ffmS3dHdR5Q680Q==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47736dr35x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 05:44:19 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-748269c6516so3926085b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 22:44:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749620658; x=1750225458;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z2paThcjo4kV5rlHhG4CJt0FpfCXVKHmPjNjUTqWvJw=;
+        b=L3WdWNHAwc1rPnODO8F/af96SmySjVM7grIf8P/OgtS109eCvWt0G5csk03erx7teC
+         GFxkWQlEyp08/t5NLYpKFWQlak8JoYBXUDFa+Xi59ZjuT6TYVU0i+OodoLFXQdLtWMKp
+         Tapikac9bkcr8U8Jbvqhda9F3+bYU3yVzv8dGE0nA6iEyDrwbJ/LKtIpIIXMdUVQWw7U
+         C83xIAbfzaZjM3xHPejtQZ+AIjQsEdSulzeuztSN4+IGgZWixjepLZiDdEIJ/NzfpBh5
+         xHMdSu6T13pCwonqY49qQZU32Y0l3GLkZ689eMSSJoUBqxZNQx7FmMxUdDWr7MwIhMv2
+         877w==
+X-Forwarded-Encrypted: i=1; AJvYcCVuHrAi6ADMVveOcQWBTmlxERjfJftyuh5Ce8dRLwui622pOcRWIUawOkexL8pFPcpN75h63dhyC6MeR+D5@vger.kernel.org
+X-Gm-Message-State: AOJu0YwCM53ajpKjssqZdhGyj3enFWtb+XV5eyTrI5ZRdpUsd7kArSs3
+	ECXfdFpK9yr+zzbnzboFZN8tCSs9lM7NjpT/T6Dk8DVCNs7+PW1FmO5ijSvJ2PoZUnIITTE7vqy
+	hsjCYv2dzXBomWLuwxfEHlGih9SSFFemeoOtZ1QLPlOKZpnszsbxiMO8w/D2uj7Hkq5Yb
+X-Gm-Gg: ASbGncslmXTm53+/OYiTgUqgL0llXUFggrQ5U7WcJf6vpCLrs8UlHpAgXay90bQ5ecu
+	QhWZXEkIqIz21aH9l+gczHjWF1B0zQlhsV3IkzipTnuz+Z0BpGL+HO0rWEWkxcwvjPt89irNnls
+	7wHCklipzAn78La/6m28eQTXVwfoWntlR5frhMUDCkBGO37FAqrMBbE74wuj0nXNtda+cIcO32y
+	5xa3I7Vui+kvErWF2LTv+wNl/jXqAfrOCP4BJgkxxpN2bCNZP0imrMFG5PNah+xlz4O3O3ju0/V
+	94HoDDwFIlf4nH6O/N6rVwR1D7+Zdbkd
+X-Received: by 2002:a05:6a20:2589:b0:21f:53a9:b72c with SMTP id adf61e73a8af0-21f86754dbemr3178023637.38.1749620658386;
+        Tue, 10 Jun 2025 22:44:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE5RTYJPaD19g1+QKXGXvxhjvcmz9N0P/Wo4pkBLGPiOVS4sBLpqjPb8UTr/LDjbvr/4AnFYw==
+X-Received: by 2002:a05:6a20:2589:b0:21f:53a9:b72c with SMTP id adf61e73a8af0-21f86754dbemr3177998637.38.1749620657998;
+        Tue, 10 Jun 2025 22:44:17 -0700 (PDT)
+Received: from [10.213.111.143] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7482b0eb0dasm8629697b3a.170.2025.06.10.22.44.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Jun 2025 22:44:17 -0700 (PDT)
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Date: Wed, 11 Jun 2025 11:13:44 +0530
+Subject: [PATCH] media: iris: Fix opp scaling of power domains
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,276 +89,80 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250611-ipq5018-tsens-v11-2-266566bfd16a@outlook.com>
-References: <20250611-ipq5018-tsens-v11-0-266566bfd16a@outlook.com>
-In-Reply-To: <20250611-ipq5018-tsens-v11-0-266566bfd16a@outlook.com>
-To: Amit Kucheria <amitk@kernel.org>, 
- Thara Gopinath <thara.gopinath@gmail.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
- Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- George Moussalem <george.moussalem@outlook.com>, 
- Dmitry Baryshkov <lumag@kernel.org>
+Message-Id: <20250611-iris-opp-fix-v1-1-424caec41158@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAI8XSWgC/yWMQQ6CMBAAv9Ls2TVtSTHyFcOh1EX3AK27SEwIf
+ 6eR40wys4GSMCl0ZgOhlZXzXMFdDKR3nF+E/KwM3vpgg78hCyvmUnDkHzY0+nB3yTY+Qk2KUNX
+ /3aM/WejzrdfllDBEJUx5mnjpzNpeXYuSHPT7fgAkGRzpiwAAAA==
+X-Change-ID: 20250527-iris-opp-fix-3ef2591c032a
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749618782; l=5540;
- i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=8VbrGnbVEEGlTeBi9Ev67z9HvHAIvHkO/H7Vls/aG78=;
- b=uOrwg1pLM1xnBOdSnqUhLxR/M9QsRaBVSVdexIJRe/jspGlxZe9X9D+Ky/iFCkoTrB9DS2Uoh
- 1QMLjyVpQXhBjoCEFc7DMSCUq4nLNgsG5mzSrx5QD6QiYB3nkLJ4WO0
-X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
- pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
-X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
- with auth_id=364
-X-Original-From: George Moussalem <george.moussalem@outlook.com>
-Reply-To: george.moussalem@outlook.com
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1749620655; l=1267;
+ i=akhilpo@oss.qualcomm.com; s=20240726; h=from:subject:message-id;
+ bh=4bPODOzNV1J1Wag20WqHQpC7iwILRqUaFidO5fo7Wj8=;
+ b=GW1VPWKI/sCUGw/lmdjcfb1/v1p4eeE2hxIHDUz6r0uc8ZG6Nh6B1h6ZjF1CXCVBjg7JskGvw
+ jcYo3SVzHEYBjKshveIrasbrGRIJ9GRxGQPohIyCG7g/J+DEMY0SQcC
+X-Developer-Key: i=akhilpo@oss.qualcomm.com; a=ed25519;
+ pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
+X-Authority-Analysis: v=2.4 cv=GIYIEvNK c=1 sm=1 tr=0 ts=684917b3 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=Bqk5Gw0CwUaqKlFR4NYA:9
+ a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-ORIG-GUID: AmftLXpSwHuAF5OJhDhj8I8-zAXpbvH0
+X-Proofpoint-GUID: AmftLXpSwHuAF5OJhDhj8I8-zAXpbvH0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDA0OSBTYWx0ZWRfXxXT7y88p+1f8
+ qP6Zg4+bS9JSTYjw6b355zVALcAN2AltHb82GGsT4Vqy2TVdmPOHAtRxfk7JpfR87aioN/Kd7RN
+ KC2GJdSeItdf+Z6E8bu19UPEFP5i1Mj0VrBxigXxl0sdO5ft3L4HLq9PlrxWPGkJfkVZnBfYLjh
+ KpwhreCpf4j3/fp6QVV40+HdQH/rZR5S80e3ZGo7s9BWPdkmANEPJV+X56NVqswv7REu6MYWpPs
+ I3ZCL8vfZHvbfqycgcAiCzulevn2iGJsJvJbS5E0rSV05ngffxNGJidNGLhozXAU6ISLm6PS8sD
+ Ii7jTLMTALuBVhrwkXN1Y42VFvgdBR4/M7+mg9VrCnhUV8uu9FeaSEi6in1S0VsmY4acRr5ZWV5
+ W61UcZ0gjVBnRrX0FpxCt0aANArn3HdiWFfkKhqs02LqhAj7TpwT+D72uzSUW1GtiFRtLBMN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-11_02,2025-06-10_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0 phishscore=0
+ suspectscore=0 spamscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
+ adultscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506110049
 
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Pass PD_FLAG_REQUIRED_OPP flag to allow opp framework to scale the rpmpd
+power domains.
 
-IPQ5018 has tsens V1.0 IP with 5 sensors, though 4 are in use.
-There is no RPM, so tsens has to be manually enabled. Adding the tsens
-and nvmem nodes and adding 4 thermal sensors (zones). The critical trip
-temperature is set to 120'C with an action to reboot.
-
-In addition, adding a cooling device to the CPU thermal zone which uses
-CPU frequency scaling.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/ipq5018.dtsi | 182 ++++++++++++++++++++++++++++++++++
- 1 file changed, 182 insertions(+)
+Found this issue while reviewing the Iris source and only compile tested.
+---
+ drivers/media/platform/qcom/iris/iris_probe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index 130360014c5e14c778e348d37e601f60325b0b14..defeb697c8d89686e3aaf2e6f7b6cb7493219336 100644
---- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -9,6 +9,7 @@
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
- #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
-+#include <dt-bindings/thermal/thermal.h>
- 
- / {
- 	interrupt-parent = <&intc>;
-@@ -39,6 +40,7 @@ cpu0: cpu@0 {
- 			next-level-cache = <&l2_0>;
- 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
- 			operating-points-v2 = <&cpu_opp_table>;
-+			#cooling-cells = <2>;
- 		};
- 
- 		cpu1: cpu@1 {
-@@ -49,6 +51,7 @@ cpu1: cpu@1 {
- 			next-level-cache = <&l2_0>;
- 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
- 			operating-points-v2 = <&cpu_opp_table>;
-+			#cooling-cells = <2>;
- 		};
- 
- 		l2_0: l2-cache {
-@@ -182,6 +185,117 @@ pcie0_phy: phy@86000 {
- 			status = "disabled";
- 		};
- 
-+		qfprom: qfprom@a0000 {
-+			compatible = "qcom,ipq5018-qfprom", "qcom,qfprom";
-+			reg = <0x000a0000 0x1000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			tsens_mode: mode@249 {
-+				reg = <0x249 0x1>;
-+				bits = <0 3>;
-+			};
-+
-+			tsens_base1: base1@249 {
-+				reg = <0x249 0x2>;
-+				bits = <3 8>;
-+			};
-+
-+			tsens_base2: base2@24a {
-+				reg = <0x24a 0x2>;
-+				bits = <3 8>;
-+			};
-+
-+			tsens_s0_p1: s0-p1@24b {
-+				reg = <0x24b 0x2>;
-+				bits = <2 6>;
-+			};
-+
-+			tsens_s0_p2: s0-p2@24c {
-+				reg = <0x24c 0x1>;
-+				bits = <1 6>;
-+			};
-+
-+			tsens_s1_p1: s1-p1@24c {
-+				reg = <0x24c 0x2>;
-+				bits = <7 6>;
-+			};
-+
-+			tsens_s1_p2: s1-p2@24d {
-+				reg = <0x24d 0x2>;
-+				bits = <5 6>;
-+			};
-+
-+			tsens_s2_p1: s2-p1@24e {
-+				reg = <0x24e 0x2>;
-+				bits = <3 6>;
-+			};
-+
-+			tsens_s2_p2: s2-p2@24f {
-+				reg = <0x24f 0x1>;
-+				bits = <1 6>;
-+			};
-+
-+			tsens_s3_p1: s3-p1@24f {
-+				reg = <0x24f 0x2>;
-+				bits = <7 6>;
-+			};
-+
-+			tsens_s3_p2: s3-p2@250 {
-+				reg = <0x250 0x2>;
-+				bits = <5 6>;
-+			};
-+
-+			tsens_s4_p1: s4-p1@251 {
-+				reg = <0x251 0x2>;
-+				bits = <3 6>;
-+			};
-+
-+			tsens_s4_p2: s4-p2@254 {
-+				reg = <0x254 0x1>;
-+				bits = <0 6>;
-+			};
-+		};
-+
-+		tsens: thermal-sensor@4a9000 {
-+			compatible = "qcom,ipq5018-tsens";
-+			reg = <0x004a9000 0x1000>,
-+			      <0x004a8000 0x1000>;
-+
-+			nvmem-cells = <&tsens_mode>,
-+				      <&tsens_base1>,
-+				      <&tsens_base2>,
-+				      <&tsens_s0_p1>,
-+				      <&tsens_s0_p2>,
-+				      <&tsens_s1_p1>,
-+				      <&tsens_s1_p2>,
-+				      <&tsens_s2_p1>,
-+				      <&tsens_s2_p2>,
-+				      <&tsens_s3_p1>,
-+				      <&tsens_s3_p2>,
-+				      <&tsens_s4_p1>,
-+				      <&tsens_s4_p2>;
-+
-+			nvmem-cell-names = "mode",
-+					   "base1",
-+					   "base2",
-+					   "s0_p1",
-+					   "s0_p2",
-+					   "s1_p1",
-+					   "s1_p2",
-+					   "s2_p1",
-+					   "s2_p2",
-+					   "s3_p1",
-+					   "s3_p2",
-+					   "s4_p1",
-+					   "s4_p2";
-+
-+			interrupts = <GIC_SPI 184 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "uplow";
-+			#qcom,sensors = <5>;
-+			#thermal-sensor-cells = <1>;
-+		};
-+
- 		tlmm: pinctrl@1000000 {
- 			compatible = "qcom,ipq5018-tlmm";
- 			reg = <0x01000000 0x300000>;
-@@ -631,6 +745,74 @@ pcie@0 {
- 		};
+diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
+index 9a7ce142f7007ffcda0bd422c1983f2374bb0d92..4e6e92357968d7419f114cc0ffa9b571bad19e46 100644
+--- a/drivers/media/platform/qcom/iris/iris_probe.c
++++ b/drivers/media/platform/qcom/iris/iris_probe.c
+@@ -53,7 +53,7 @@ static int iris_init_power_domains(struct iris_core *core)
+ 	struct dev_pm_domain_attach_data iris_opp_pd_data = {
+ 		.pd_names = core->iris_platform_data->opp_pd_tbl,
+ 		.num_pd_names = core->iris_platform_data->opp_pd_tbl_size,
+-		.pd_flags = PD_FLAG_DEV_LINK_ON,
++		.pd_flags = PD_FLAG_DEV_LINK_ON | PD_FLAG_REQUIRED_OPP,
  	};
  
-+	thermal-zones {
-+		cpu-thermal {
-+			polling-delay-passive = <0>;
-+			thermal-sensors = <&tsens 2>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <120000>;
-+					hysteresis = <2>;
-+					type = "critical";
-+				};
-+
-+				cpu_alert: cpu-passive {
-+					temperature = <100000>;
-+					hysteresis = <2>;
-+					type = "passive";
-+				};
-+			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu_alert>;
-+					cooling-device = <&cpu0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&cpu1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
-+		};
-+
-+		gephy-thermal {
-+			polling-delay-passive = <0>;
-+			thermal-sensors = <&tsens 4>;
-+
-+			trips {
-+				gephy-critical {
-+					temperature = <120000>;
-+					hysteresis = <2>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		top-glue-thermal {
-+			polling-delay-passive = <0>;
-+			thermal-sensors = <&tsens 3>;
-+
-+			trips {
-+				top-glue-critical {
-+					temperature = <120000>;
-+					hysteresis = <2>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		ubi32-thermal {
-+			polling-delay-passive = <0>;
-+			thermal-sensors = <&tsens 1>;
-+
-+			trips {
-+				ubi32-critical {
-+					temperature = <120000>;
-+					hysteresis = <2>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+	};
-+
- 	timer {
- 		compatible = "arm,armv8-timer";
- 		interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+ 	ret = devm_pm_domain_attach_list(core->dev, &iris_pd_data, &core->pmdomain_tbl);
 
+---
+base-commit: d9946fe286439c2aeaa7953b8c316efe5b83d515
+change-id: 20250527-iris-opp-fix-3ef2591c032a
+
+Best regards,
 -- 
-2.49.0
-
+Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
 
