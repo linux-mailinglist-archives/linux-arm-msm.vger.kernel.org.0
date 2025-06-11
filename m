@@ -1,213 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-61016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1175AD5C56
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 18:36:11 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12DBBAD5E07
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 20:21:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6CEE13A9453
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 16:34:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A57447A393A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 18:19:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B920220F51;
-	Wed, 11 Jun 2025 16:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73DBB235C1E;
+	Wed, 11 Jun 2025 18:20:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="F52v95jE"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QFjUXWbQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7635D213E78;
-	Wed, 11 Jun 2025 16:34:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D85224B06
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 18:20:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749659645; cv=none; b=UXLKyRYuajp5gSd1gioyC1vziNP4RShxFvFptcmaxRNKUPaOJ9rvznrdFtxZxfE7/zR4vRsq2XX6u79smGUCOLUgLQmbPmdjOYUdWX+IpphB1oOdFs15xZeWDFwdyRz7o6bpVEJ+RBRLqkSE/OQH6rTXsofN7KNLrFQYChSPeXg=
+	t=1749666055; cv=none; b=WuStxh50OnqwHtp7SCyduTUEuOSwl0yjgKJNFytVZuTKtLuAqa7JooxnBbwUcJJARkWmj44C8ZRwB81uSUgC61j5DXKHr6+J4mH9TUtcRidNRoTea3OQq+Z/Uu8R2vLUXyVn1j3RToW13I4+SjNTBX4eLmdnoQ3hSLjPJo4Mzfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749659645; c=relaxed/simple;
-	bh=9PghBU/VAIibPl4YWoEbxb+Vq7pSne0KImwxsb0T908=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Vt5sqbI4Yc1U2KJAdaxvae2yhBAllk1QMjmuJ5iJAdXiDS5NfaHqVgu9e0F3DcOWES1t5CCHVfGo4KZjx0+EyIn4giDBi1ARG6XFO9F+6xdgoc4X+KvrsSHbE/Dbvsu1839zRA04tn8qiBaHphUWZmD3hdV+KWmbHuvM4UkEHro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=F52v95jE; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1749659639; bh=9PghBU/VAIibPl4YWoEbxb+Vq7pSne0KImwxsb0T908=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=F52v95jEqDy6RoNLRnD+RLUwn8rapwmQP5bV7oDh1HxNwcxULvniTMwfndx682YRT
-	 MTCQBDBihwuHwpSHRXc2MxGWGHxBw/GO+B2Nq91PstepJCNavA0ulIovZ32+NVgUti
-	 UEWVJG4QidcWOgCrJO7EqpFwGhYPnb7OQRtFT2mg=
-From: Luca Weiss <luca@lucaweiss.eu>
-Date: Wed, 11 Jun 2025 18:33:18 +0200
-Subject: [PATCH v4 4/4] arm64: dts: qcom: sdm632-fairphone-fp3: Enable
- display and GPU
+	s=arc-20240116; t=1749666055; c=relaxed/simple;
+	bh=L+PQ8oC5SKj2Pvt3GVWZzPVy8l1E6eCuxqGGzJ4Ezoc=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=l/a479MAEj7mCde3FjWZiViJX3w7Niv6sB+90Dyo0YUTY1farmMbBnb8lvdofAokBHFXk5JLm0tM0YBmcjQIlLr6GkL0Oh9DtySEE5tdvj2BLaMI5+8zhCPa06dDbIuMSBOF8Dz+PpGC0Vc0jFrmasXHwcQTOSBRo2TD3crH1IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QFjUXWbQ; arc=none smtp.client-ip=209.85.210.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-742b6705a52so183595b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 11:20:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1749666052; x=1750270852; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=L+PQ8oC5SKj2Pvt3GVWZzPVy8l1E6eCuxqGGzJ4Ezoc=;
+        b=QFjUXWbQLMPftCuT1i4VEZ6Lj5NFSWGeK8bRb305fIDeKZaauboNIzOo2rWQK/kNOJ
+         VW+pLpU2joBY/klW5zV2kHMkdHadngmcVSlaDTgtCvB+FbosmJLaSJyn3v9upmqZL8IO
+         kwnJkafTiKB0pAk717NujbU0OQL3vjn+5+Hmp7W+bhGda49y1KkGdDoOqIFrHV6Ub/it
+         5iV/D+rLeNTtZPiPBuLzjnaGnOpk7vyGcdyJLR97/qGYlm3mCxkKBzBzG1+KSnXGT4/C
+         JjMZsTpGO5EXk+k9meoITmZ3HvzQIKff+A7Nghggwo1RW9tFix1RrGwCuIGt06wdU/xe
+         nAow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749666052; x=1750270852;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=L+PQ8oC5SKj2Pvt3GVWZzPVy8l1E6eCuxqGGzJ4Ezoc=;
+        b=uTxi0CnLQXZxNksaBtcsY9aAC4NZLzmWJWQZlmScmBqopfZur2ljDc44XU8zJ2jopJ
+         J6RpPSrX2rU4fmtNFn6TnMarnlwNHlhv6qSaWxd+8Ora7y6VElVtHiRQXudav1Gz4xWV
+         7ZaMVSmr5GNoO8mbCuERTAhDgCisfzfWhkQSmZvI1pGjSh/ahI3dZJW2lX6vby5cEWb6
+         2ZT52dQhhjDv3TsYaWlOBJGAhKLx2D0UT7zQxV9w29HrQrcsxKjjqadlg1RyOS91DVC1
+         hKX/gfNU6jjaLJCHbmc7kj11H43zIUscZRDchsOZextQwlL2vcXoXrZYgUnxBO+KKoVw
+         z5XA==
+X-Forwarded-Encrypted: i=1; AJvYcCX+TvkUpkIrZSFBudDFOEcAdptLnim0da/Dkf1ugTKewmMlxALT1ofD+IWW0Y1rkN+ByuS0/le8thDxdPQ2@vger.kernel.org
+X-Gm-Message-State: AOJu0YyOlZNHjA8Zpz2/l7Mf8Pg8OvggG+y2EsD8TQHXSrCmzSnl5r9A
+	s6vp0/tlc72bZjTgANRStvZ0Ou+QcsdZxt3XRbZEldoopaAMsxdjxSo2k6djsBTegPrL+8PL2Kb
+	su5LLAht7sGYzRIToqi38AZfCyw==
+X-Google-Smtp-Source: AGHT+IF9dOmPoH3f/Yv0MDUAXNH7QyABROACGGNRSdkVBP3APUAHFDt+InrBgJ0rMfVnQW8MeeLtIRfDXx/Of21iag==
+X-Received: from pfnx17.prod.google.com ([2002:aa7:84d1:0:b0:746:27ff:87f8])
+ (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6300:41:b0:1ee:d418:f764 with SMTP id adf61e73a8af0-21f978c4298mr1110324637.38.1749666051578;
+ Wed, 11 Jun 2025 11:20:51 -0700 (PDT)
+Date: Wed, 11 Jun 2025 11:20:49 -0700
+In-Reply-To: <95fe5d24-560b-4c20-b988-6d7072ed2293@amd.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
+Mime-Version: 1.0
+References: <20250605153800.557144-1-tabba@google.com> <20250605153800.557144-9-tabba@google.com>
+ <ad4157a1-6e38-46df-ae24-76d036972fbc@redhat.com> <95fe5d24-560b-4c20-b988-6d7072ed2293@amd.com>
+Message-ID: <diqz4iwmw35q.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [PATCH v11 08/18] KVM: guest_memfd: Allow host to map guest_memfd pages
+From: Ackerley Tng <ackerleytng@google.com>
+To: Shivank Garg <shivankg@amd.com>, David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>, 
+	kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	kvmarm@lists.linux.dev
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, mail@maciej.szmigiero.name, michael.roth@amd.com, 
+	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250611-fp3-display-v4-4-ef67701e7687@lucaweiss.eu>
-References: <20250611-fp3-display-v4-0-ef67701e7687@lucaweiss.eu>
-In-Reply-To: <20250611-fp3-display-v4-0-ef67701e7687@lucaweiss.eu>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Jessica Zhang <quic_jesszhan@quicinc.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Luca Weiss <luca@lucaweiss.eu>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3280; i=luca@lucaweiss.eu;
- h=from:subject:message-id; bh=9PghBU/VAIibPl4YWoEbxb+Vq7pSne0KImwxsb0T908=;
- b=owEBbQKS/ZANAwAKAXLYQ7idTddWAcsmYgBoSa/0dZklWpKiHcLeocBA55qVH330Y6VmwhQt1
- FME+LsNK16JAjMEAAEKAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCaEmv9AAKCRBy2EO4nU3X
- Vtc3D/sGEpreLVLjkNB9Q0671b/UlYCfku5noSUCU+kK7JT6IWI/st31bd33VQP8qe2xaXzKW+c
- feNsmmF25dB3Tht6FnF4xV4sTxFRyZF8H7+G1Tafw13AnX5NPFdKYvL1q7616wfl4GUFMzyqQhk
- mHyv2kvsbiRVCk0sN6pPgG6OL2ppAuGMGg/fbUQptmTsvavdLQw1ihufyr1H+PHyvNSOoyGsJeK
- OXCJ6EtKGXYgweQY3AYU6RfPjhOOp6qfdJBOr08b5LMhFrbP8Cl4+JHU2eqlAwTrUxgGU0MSY+n
- d9Z0U8dmr4md1mIj77Up5WdasPlZr+9QjEqtFsstvby5ouObwbgEdHpixy/FRIR50NFfA8iEsUO
- hDTZYyjlqbwZOSUGhIOS0hnwZhwO+j8r1Kx+X6I1BfKAr0PsQmbd9IkLEP8SDCk3RCLoal7Mxlo
- wjGoGCnVRiXTIOlRNr//IR8PWBmgzQ5xHRSIxruxZrHSJD/ou3IYB/l1Wyoqoeqw8ciZQhzJJKQ
- 6SNECSnMUNo7Z0swtCawhpZMEyqPXNTTGG/0W5kqqkx8ksh65xo8URojQEWfm1uad6oHQ0/OyyL
- n25vjtGumTJxc+eXAmgYdF7yG1SMZok+U58bkpJYeagmZlLKs3u82qmTTZKbZqQjluYfr1xzWgL
- URD3tSw0v8ZAAVw==
-X-Developer-Key: i=luca@lucaweiss.eu; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+Content-Transfer-Encoding: quoted-printable
 
-Add the description for the display panel found on this phone.
-Unfortunately the LCDB module on PMI632 isn't yet supported upstream so
-we need to use a dummy regulator-fixed in the meantime.
+Shivank Garg <shivankg@amd.com> writes:
 
-And with this done we can also enable the GPU and set the zap shader
-firmware path.
+> On 6/6/2025 2:42 PM, David Hildenbrand wrote:
+>> On 05.06.25 17:37, Fuad Tabba wrote:
+>>> This patch enables support for shared memory in guest_memfd, including
+>>> mapping that memory from host userspace.
+>>>
+>>> This functionality is gated by the KVM_GMEM_SHARED_MEM Kconfig option,
+>>> and enabled for a given instance by the GUEST_MEMFD_FLAG_SUPPORT_SHARED
+>>> flag at creation time.
+>>>
+>>> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
+>>> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+>>> Signed-off-by: Fuad Tabba <tabba@google.com>
+>>> ---
+>>=20
+>> [...]
+>>=20
+>>> +static bool kvm_gmem_supports_shared(struct inode *inode)
+>>> +{
+>>> +=C2=A0=C2=A0=C2=A0 u64 flags;
+>>> +
+>>> +=C2=A0=C2=A0=C2=A0 if (!IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM))
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
+>>> +
+>>> +=C2=A0=C2=A0=C2=A0 flags =3D (u64)inode->i_private;
+>>=20
+>> Can probably do above
+>>=20
+>> const u64 flags =3D (u64)inode->i_private;
+>>=20
+>>> +
+>>> +=C2=A0=C2=A0=C2=A0 return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
+>>> +}
+>>> +
+>
+> I agree on using const will have some safety, clarity and optimization.
+> I did not understand why don't we directly check the flags like...
+>
+> return (u64)inode->i_private & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
+>
+> ...which is more concise.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
----
- arch/arm64/boot/dts/qcom/msm8953.dtsi             |  2 +-
- arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts | 62 +++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 1 deletion(-)
+Imo having an explicit variable name here along with the cast is useful
+in reinforcing and repeating that guest_memfd is using inode->i_private
+to store flags.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-index 273e79fb75695af1fd7a6f77273b95fe3b913fac..c5205d09c442e45e4a0cc3e6d8ff7d9d7bda0034 100644
---- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-@@ -1147,7 +1147,7 @@ &bimc SLV_EBI RPM_ALWAYS_TAG>,
- 
- 			status = "disabled";
- 
--			zap-shader {
-+			gpu_zap_shader: zap-shader {
- 				memory-region = <&zap_shader_region>;
- 			};
- 
-diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-index 31ed26c31e6ea381a8942ccf569513df3300cdeb..55a45b528bd3f1bf9b6fe7882753338b43c62271 100644
---- a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-@@ -36,6 +36,14 @@ key-volume-up {
- 		};
- 	};
- 
-+	/* Dummy regulator until PMI632 has LCDB VSP/VSN support */
-+	lcdb_dummy: regulator-lcdb-dummy {
-+		compatible = "regulator-fixed";
-+		regulator-name = "lcdb_dummy";
-+		regulator-min-microvolt = <5500000>;
-+		regulator-max-microvolt = <5500000>;
-+	};
-+
- 	vph_pwr: vph-pwr-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vph_pwr";
-@@ -44,6 +52,14 @@ vph_pwr: vph-pwr-regulator {
- 	};
- };
- 
-+&gpu {
-+	status = "okay";
-+};
-+
-+&gpu_zap_shader {
-+	firmware-name = "qcom/msm8953/fairphone/fp3/a506_zap.mbn";
-+};
-+
- &hsusb_phy {
- 	vdd-supply = <&pm8953_l3>;
- 	vdda-pll-supply = <&pm8953_l7>;
-@@ -87,6 +103,45 @@ &lpass {
- 	status = "okay";
- };
- 
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi0 {
-+	vdda-supply = <&pm8953_s3>;
-+	status = "okay";
-+
-+	panel@0 {
-+		compatible = "djn,98-03057-6598b-i";
-+		reg = <0>;
-+
-+		reset-gpios = <&tlmm 61 GPIO_ACTIVE_LOW>;
-+
-+		iovcc-supply = <&pm8953_l6>;
-+		vsn-supply = <&lcdb_dummy>;
-+		vsp-supply = <&lcdb_dummy>;
-+
-+		pinctrl-0 = <&mdss_te_default>;
-+		pinctrl-names = "default";
-+
-+		port {
-+			panel_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&panel_in>;
-+};
-+
-+&mdss_dsi0_phy {
-+	vcca-supply = <&pm8953_l3>;
-+	status = "okay";
-+};
-+
- &mpss {
- 	firmware-name = "qcom/msm8953/fairphone/fp3/mba.mbn",
- 			"qcom/msm8953/fairphone/fp3/modem.mbn";
-@@ -292,6 +347,13 @@ &tlmm {
- 	 * 135-138: fingerprint reader (SPI)
- 	 */
- 	gpio-reserved-ranges = <0 4>, <135 4>;
-+
-+	mdss_te_default: mdss-te-default-state {
-+		pins = "gpio24";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
- };
- 
- &uart_0 {
+I would rather retain the explicit variable name, and looks like in v11
+it was retained.
 
--- 
-2.49.0
-
+>
+> Thanks,
+> Shivank
 
