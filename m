@@ -1,155 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-61005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF494AD5A44
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 17:24:02 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D570AD5A06
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 17:15:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D5B571899C9B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 15:15:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 270257A4B7F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 15:14:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F394F1B0F19;
-	Wed, 11 Jun 2025 15:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D78751CBEAA;
+	Wed, 11 Jun 2025 15:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jU4oHpYE"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="An9ldRSC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A581AAE17;
-	Wed, 11 Jun 2025 15:13:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CEE1C8606
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 15:14:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749654840; cv=none; b=UdgcPFt6j85Wuqg0prY9V5IB7/Ek1eMhTQbYuHCI77laE/ZLm2y74G4AVxN4AEF5YjIvetjv+2H8p+G6uyn9nfXkwBSfF4GrBufqfhsHXOeVLdRRw0wg8xeG2uMqtUjD9d5I3VwstMAFJjvWrHlL5SKWhg8gbVw7Fm4JKhu6rTI=
+	t=1749654849; cv=none; b=SGZ0OJqGdt3HQz/+UyUWUm0v7S+ZyOXiBCdr8wOeKL8QPQLoqH92yOXKl4BKiq9o5Rzy4nw+pps/bpByT6wyZDFRLvjX3rP2ueM7YuCDSogHqTy22Dc61E1q3Ketvr/6HsrIaxJnU+tScke6i7TEA3TVKYbIlo6I8RYWfMJPOOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749654840; c=relaxed/simple;
-	bh=jM9SIv47uSPzQUgIKVYIjte5g3q2lgRBj97mkI7HfGk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nMIAtJw3vwD80qSINKsuEcSCglsATvA8qK71QZ+1xOmltT1/uZmyUbXTATMUjr0Lc3Sh4s/kA906oDJ9zrvX31tfFHlCadxS3lVmQhz3ynJvfGhszm92zp8Vr7XVHwNk3ix+bgW66kWxaW/CNOSEdHQ/m0+CvGiI1RptVYyw/8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jU4oHpYE; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a5257748e1so4510820f8f.2;
-        Wed, 11 Jun 2025 08:13:58 -0700 (PDT)
+	s=arc-20240116; t=1749654849; c=relaxed/simple;
+	bh=xXF1fKQYQwjTZw8iXbTlsihrAwKe/UiVkJhwQdslq/U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=blI908fBuWrcDF5q+lom0zVuZxAgJFd8sWhR6Y+X1lTKruhuCN8rM5g605eJNvb0R8K3WXfSaEw/ONPuoFktkuM70SwcJ2VNhWDDcRnRcFGicaf0+Aas55nzhSI6qq1xFePxmLEEEhT6PIiZhVbzSpDQJQNc5yk8n0wQ5exaOHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=An9ldRSC; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-54d98aa5981so8358640e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 08:14:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749654837; x=1750259637; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eJ6kiseIwpUGWM4WxgWJ+3dmEqkiZU2MHZ6Ixbn90Es=;
-        b=jU4oHpYEhXHoLbMsu7wb0l0e7R8pcZsyNjWlxtTdbpVnmjeupf339WZsbwIdi8HNBE
-         BiQs5yBUZ8RIc9PfhkUfJay0YbZV06FJcS6N3ywCAynSTE7AKzOA4uo/+imIdXjaqktP
-         5K5G60Gu0g2/BNHhwnVSY19jab6FVw9x+BfRCP/CwZ+3k1X637RF00zjIGilIZLXXW3o
-         MIhsAzq74WGgKYacDiT1r50SzAnMvZWw5jhNHflA3hTkVGANLGZnIHyA1OMmLOZlGsrV
-         XUEQ38xZRF8R/+GQW7ecq4Tkj1BBVWkw5qvhseav3Di4pmwBZy0JZuhXqwFNlvHNM/NV
-         6wzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749654837; x=1750259637;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1749654846; x=1750259646; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eJ6kiseIwpUGWM4WxgWJ+3dmEqkiZU2MHZ6Ixbn90Es=;
-        b=osK0NShBw5AdSS3m/9oMosK6lS6DnVojwY6mNDOR3pLtLWvQX1tPXGdV4/FLcxXkjo
-         KraRI+w1XTDQ8hGgVgJr++1sRFwDsgO1IhDTu9EI7PX0l6HfsHUuqguwrMK4rSLZsUMi
-         IlI36uCEiFSAY9LqzjPPouLgEoHZ+08gMoaQTrYNIf3piBo+u7tzppXkH2imiJciEts7
-         cZ+SfnItxlqdOFXh3NABO98IaR/jqjbOgcLXG4Dm6a7hx45L26kugOwuiAbnxvIj3di8
-         6QkmUdO/ox+cnGh7SVrOpv3xMYT19d+VUen9G0vJTGTnovfgCODAjIOQDuPiZwUZEIRq
-         jtWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUe5YBvCW1J8iioOZjj/KSTT5piuv5DgR20LBox8BVfw8gT/e7aw1FcRopaCGKjOgIzqh9lSe+ZLwc=@vger.kernel.org, AJvYcCVRmpaoyAjS+A0Eg2RGj2db+jDbX8QL2juKXI2RdPR/IIUzdnA255lXX5sNOKvqCcuzrwAo/FEkC8AwexbN@vger.kernel.org, AJvYcCVe8B6A0HifLFy2D/2UE1LPiJY/VM4+ZWkYi4FIR8ef0iGfraJrn87qHdrgbv9B7+B8KJ8nvV/NUbsM0Dc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWljuuY/KUE3BULbT5GqNhuxHX9ciEQP2Gqy3hE6LIGD5oOEeZ
-	4d51mPhKgJ0jPG6ORC4xQnei4qlpz0nGmKBtuetnsj0WB0eH9qkQhPDJ
-X-Gm-Gg: ASbGncsfZaxuDbutHQh1MW9a02ZaZpy7rQGnBswkRQhVipRpU+s5y1/NAXTTGmL5XC6
-	NY7pfgI5YP51TmBcgeQL5VBga+cAr1ylilASVPkqx1bHDcf4AsS+ckUtOMUtuE3XkOmvJPTaHvf
-	K3LibdTeQQ0d1+RMOnXhtvmoubxOZVR88jx7PURb06ky3T3AJIp7HMrY+UhikNJSx26eAgaVLwU
-	D4FZFOjmvYImLABaEcdr105KE9oVEvwCAScHbw5MLIC9NE2N9AI6G3LHzGZd8U0U1owpOFAcH/9
-	2uLKQhEpbfFjCyeAMvXoEHnRq71uVKo64a8GqOHWQt7AnRn62Ld4XQN20BdarkyU6Ank496AFRd
-	lg7LINhDbVRmS02g4AO+z8xKdt4NMAmv/CbGLV1NN7bafl9GL
-X-Google-Smtp-Source: AGHT+IEGpelflXkAhSGolv6mTEYB7BjVwN4miqspdqDRdGhmnX0Z42dVwsOdmIjC2aRr/sZhwbCWTg==
-X-Received: by 2002:a05:6000:2407:b0:3a5:3a03:79c1 with SMTP id ffacd0b85a97d-3a558a45e91mr3053746f8f.48.1749654837243;
-        Wed, 11 Jun 2025 08:13:57 -0700 (PDT)
-Received: from orome (p200300e41f281b00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f28:1b00:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a5323b67ccsm15592582f8f.40.2025.06.11.08.13.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jun 2025 08:13:55 -0700 (PDT)
-Date: Wed, 11 Jun 2025 17:13:53 +0200
-From: Thierry Reding <thierry.reding@gmail.com>
-To: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Cc: linux-kernel@vger.kernel.org, tglx@linutronix.de, 
-	Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org, 
-	linux-pm@vger.kernel.org
-Subject: Re: [PATCH] thermal: Use dev_fwnode()
-Message-ID: <afevspocjaijeysxxtlehlge5rillcocnjsaij5qqrlijjghfw@rms6i2jvdgw6>
-References: <20250611104348.192092-1-jirislaby@kernel.org>
- <20250611104348.192092-20-jirislaby@kernel.org>
+        bh=xXF1fKQYQwjTZw8iXbTlsihrAwKe/UiVkJhwQdslq/U=;
+        b=An9ldRSCdLRkipqgVv/skcPgiURxe11hGCS7E3tbTBbNHTK8cdAtHj8cDJjaXDYzfB
+         gd2yjyERbvy1MJPwo6HigNPfk1bcebLu5gjtwxn7MPvqbbTYmeCRPiYx59miRTYOVCHw
+         acDl5JX45HU2QvV+zF0Ob6sq5I1odFhCNvzhKFsuzl7SziC13LtY7y3ZnAN+/v6aOzXO
+         mYJWq0HrchckMgeczwD/LFcsVfouB5FECagEbxRMUcCZWTa0uufCWhMMW1AW1UD3wbAQ
+         ZvX32eH+wz7XO7IdPZck6hpDYcg8MbOf4N9LhWhUC1PEceIaS6YaxheylvzgpEpZLDcz
+         pKHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749654846; x=1750259646;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xXF1fKQYQwjTZw8iXbTlsihrAwKe/UiVkJhwQdslq/U=;
+        b=hNiGw8OanuOdW6cf4PiPz1mJNxPHzX+p0kYI2wAPEVtwoCqG/PsXNQrEJn82LFJRgo
+         5yGIRCFJHH2N4gPvgRvWGb/4hQst5wejSL3VbZRrn/k46IOnXvU2vrMUO8izkQvs8v8q
+         y7zwq1KG2c2T2xlWAH6Ymd8YM5tpb+ZciJQ4H7E4ap/dVd50JoaaqfK4W0lFp4C2xKi/
+         4iVjn5ZP8t/LRN8Ww2Yalv0WiQX1xGND46yTjXLJ37qq5nxsFoSrH4HCxdvTKxHAjd3J
+         EfPeqX6Nh1PJv7IinWv9tCHAkEWopQEiftbSuB5XosXAMWo5cE3Gtq+gFec8lEHl0sdk
+         5N/A==
+X-Forwarded-Encrypted: i=1; AJvYcCUn1f0iczKi1FWLuZZT+/0Mtn/QaR62hNFcPMSoHfXSLgqLHv2saU8Jx52SNod+W3OAqmzshQ+GDVFhjkvE@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzy51hGkWYamGYIjNLKAziLK5lYh69QttOyHdKi+175i/Edkisu
+	MxO1W40wsEdoAk1ajd5rBRD5sQRu37v2ihFWrsDFirgUcJYAtrHKPAJ/Gx9DjADqOis3CCLmkQE
+	hIw36Hdl+krnPk9qYFtsjHlbLxv8JO0LkyXzkXpNYgA==
+X-Gm-Gg: ASbGnctSgymcO7m11GwGuMjzghWiuqugaSaTWfxwuS8xSNgeNFkiR+IQccBZBe2umSq
+	d0J6qjmu4xjXITLGVcNYfbC2c/QC+sDJ9BwXIbWySizPERoqVv1Vc5zq691dqdFLLRbAaN8SM6t
+	juzDlUqaTUlC1bDyG8Zdar8Y01j4Zn5Htjmveg4ui+1J+7/Gyw1TXHzjCXvl1zBtVjUfxd3qKp0
+	j0=
+X-Google-Smtp-Source: AGHT+IGw+q2yvYWpmAIUWy0VGe58eE1SrQ78oJJGrnBnU83UjI38DO9zFzggcPEe+DrUAq6iTBI5SWIZkHBiPk9ESOc=
+X-Received: by 2002:a05:6512:2355:b0:553:3178:2928 with SMTP id
+ 2adb3069b0e04-5539c0e243emr1434831e87.16.1749654846050; Wed, 11 Jun 2025
+ 08:14:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="fm3wygecilpics7d"
-Content-Disposition: inline
-In-Reply-To: <20250611104348.192092-20-jirislaby@kernel.org>
-
-
---fm3wygecilpics7d
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
+References: <20250611143911.48501-1-brgl@bgdev.pl> <3i6ni6jfq7vzij5cj4h35sy4ceegeekuv3lr5b3nmyqtheky6q@mlrspoyavfwt>
+In-Reply-To: <3i6ni6jfq7vzij5cj4h35sy4ceegeekuv3lr5b3nmyqtheky6q@mlrspoyavfwt>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 11 Jun 2025 17:13:54 +0200
+X-Gm-Features: AX0GCFtymhBATZElPAXX9UTuzF3eRZfHttarjFE9PeI16lNBM-F_-vPrq_rdhb8
+Message-ID: <CAMRc=McF+eRfdo73Z_WHj75vOJcc3=yvd2QbVFwGNp7OOYyHHw@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: msm: mark certain pins as invalid for interrupts
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH] thermal: Use dev_fwnode()
-MIME-Version: 1.0
 
-On Wed, Jun 11, 2025 at 12:43:48PM +0200, Jiri Slaby (SUSE) wrote:
-> irq_domain_create_simple() takes fwnode as the first argument. It can be
-> extracted from the struct device using dev_fwnode() helper instead of
-> using of_node with of_fwnode_handle().
->=20
-> So use the dev_fwnode() helper.
->=20
-> Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-> Cc: Amit Kucheria <amitk@kernel.org>
-> Cc: Thara Gopinath <thara.gopinath@gmail.com>
-> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
-> Cc: Zhang Rui <rui.zhang@intel.com>
-> Cc: Lukasz Luba <lukasz.luba@arm.com>
-> Cc: Thierry Reding <thierry.reding@gmail.com>
-> Cc: Jonathan Hunter <jonathanh@nvidia.com>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-tegra@vger.kernel.org
-> ---
-> Cc: linux-pm@vger.kernel.org
-> ---
->  drivers/thermal/qcom/lmh.c       |  3 +--
->  drivers/thermal/tegra/soctherm.c | 13 +++++--------
->  2 files changed, 6 insertions(+), 10 deletions(-)
+On Wed, Jun 11, 2025 at 5:03=E2=80=AFPM Bjorn Andersson <andersson@kernel.o=
+rg> wrote:
+>
+> On Wed, Jun 11, 2025 at 04:39:11PM +0200, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > When requesting pins whose intr_detection_width setting is not 1 or 2
+> > for interrupts (for example by running `gpiomon -c 0 113` on RB2), we'l=
+l
+> > hit a BUG() in msm_gpio_irq_set_type(). Potentially crashing the kernel
+> > due to an invalid request from user-space is not optimal, so let's go
+> > through the pins and mark those that would fail the check as invalid fo=
+r
+> > the irq chip as we should not even register them as available irqs.
+> >
+>
+> I had to go dig into the code to understand why there is a problem with
+> GPIO 113 on RB2 (i.e. UFS_RESET on SM6115)... I think it would have been
+> better to document the actual reason for the problem, which is:
+>
+> "The UFS_RESET pin doesn't have interrupt logic, but is registered as a
+> GPIO. Requesting the interrupt of this pin hits a BUG() in
+> msm_gpio_irq_set_type() because intr_detection_width is invalid"
 
-Acked-by: Thierry Reding <treding@nvidia.com>
+The UFS_RESET() case is the one I figured out initially but then
+realized that the issue will be the same for other non-PINGROUP()
+macros which set all the interrupt related fields to -1 so I made the
+message more generic. I will include the above in v2.
 
---fm3wygecilpics7d
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmhJnTEACgkQ3SOs138+
-s6GrQBAAsNm3TKyX297z1PynC4dEqHNjhRi9f6sXy1Naf6bD6ogpKRr++lLGad1h
-DVFMn8TF/fW9v/FaVYegtZeMbWKY3vHZtxlp+b1d9pRwhHvcJz+QFx/apmcWqJBv
-CQ9CX0Ofs+tRc9rFsgHHlg0VEh3i0IeyX2HaTiyxQNxeYl2nZ/BHYNw1Bl/QKKJI
-ySTQaTJu1cuWHmwvSkNembec6Q+8Pw86Nu6eXBDP5/+TaYlJSuTNzh8fDN76/UcL
-i4jeqt88pG6bjBhEzUf6sVm/uoI1eoKjKaCPQO3hZSX4+K6FcKGM7jO0S6OsbiMn
-hkJXnNUNkNDyoyM7f79GsWbpqjKDM4iBhhKjIZvcsGaa1l3rS2WIx/18C90NbWPq
-JvyKK4KkgJ1XuhbHK1iw4s+lsEeAkG3Ft8Xbo9jOvZmgn0a9qzp80rx/ALqdODl3
-BoRR89TDqEQ5ZUqQ0YK6R9ZWjFSTbpz2pWBspvqYlxEchK2SeV7IZGzc3OJmF7Ny
-drEgx1hfhwlC7iPOshELk2RoEE7++xPDWKfHa6INteFnT33o+YDTrz05IoQIt5Mc
-ajuQKylSBh899/RiR5CtPfM0DvtzSrJLDHAPR2FaWTDG0rb0PeaZb05kWpC7K3PZ
-QfwJhcOtGiLR6OigH+bLtjNE8PkbDDYeadXxd0lgOJ1JqkDKHQM=
-=o3tl
------END PGP SIGNATURE-----
-
---fm3wygecilpics7d--
+Bart
 
