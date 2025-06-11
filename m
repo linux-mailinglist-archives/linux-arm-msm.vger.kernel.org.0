@@ -1,160 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-61017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12DBBAD5E07
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 20:21:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62DAAAD5EFB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 21:25:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A57447A393A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 18:19:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 27BE2176F5D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 19:25:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73DBB235C1E;
-	Wed, 11 Jun 2025 18:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC3DE29B772;
+	Wed, 11 Jun 2025 19:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QFjUXWbQ"
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="RNavwkus"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.135])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D85224B06
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 18:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91C727CCDB;
+	Wed, 11 Jun 2025 19:25:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.135
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749666055; cv=none; b=WuStxh50OnqwHtp7SCyduTUEuOSwl0yjgKJNFytVZuTKtLuAqa7JooxnBbwUcJJARkWmj44C8ZRwB81uSUgC61j5DXKHr6+J4mH9TUtcRidNRoTea3OQq+Z/Uu8R2vLUXyVn1j3RToW13I4+SjNTBX4eLmdnoQ3hSLjPJo4Mzfw=
+	t=1749669926; cv=none; b=JTdBgd0/w6/kENaHqUByDsRgytqSk5fHqbfYiEiPdJCONTWXAzOS9yjZXFiEcSNyWTfT0in5U0qoCkEKpCiXZ3QPD6R4UMq/SAV9t5GyVaFRBm2LPO+mRQfsyZY0NM7cqdJBwTJI5DXllIcyIlOJRyPIX3AMDF1GR+vCxiZSLlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749666055; c=relaxed/simple;
-	bh=L+PQ8oC5SKj2Pvt3GVWZzPVy8l1E6eCuxqGGzJ4Ezoc=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=l/a479MAEj7mCde3FjWZiViJX3w7Niv6sB+90Dyo0YUTY1farmMbBnb8lvdofAokBHFXk5JLm0tM0YBmcjQIlLr6GkL0Oh9DtySEE5tdvj2BLaMI5+8zhCPa06dDbIuMSBOF8Dz+PpGC0Vc0jFrmasXHwcQTOSBRo2TD3crH1IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QFjUXWbQ; arc=none smtp.client-ip=209.85.210.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-742b6705a52so183595b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 11:20:52 -0700 (PDT)
+	s=arc-20240116; t=1749669926; c=relaxed/simple;
+	bh=rMrecsMLV05QJATkaLBYEZHt+MUdO5IkweZcLHHNWPU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=GjrI6ywXUjODMnp09nwd2vpILPYTIuwovmy5Zfzpditu+xEypo5LHLd2/+vWd4CSZ6ORfPBTlNtRMvq3gMxqVBJ9y9l+4NzB1FMAmhJlm84BEzQdW0kWhgOat9p04wySpwRWfkZGrG1r3kEtm6PFZG/3HorrkcLAKAVxooo9heE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=RNavwkus; arc=none smtp.client-ip=212.227.126.135
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1749666052; x=1750270852; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=L+PQ8oC5SKj2Pvt3GVWZzPVy8l1E6eCuxqGGzJ4Ezoc=;
-        b=QFjUXWbQLMPftCuT1i4VEZ6Lj5NFSWGeK8bRb305fIDeKZaauboNIzOo2rWQK/kNOJ
-         VW+pLpU2joBY/klW5zV2kHMkdHadngmcVSlaDTgtCvB+FbosmJLaSJyn3v9upmqZL8IO
-         kwnJkafTiKB0pAk717NujbU0OQL3vjn+5+Hmp7W+bhGda49y1KkGdDoOqIFrHV6Ub/it
-         5iV/D+rLeNTtZPiPBuLzjnaGnOpk7vyGcdyJLR97/qGYlm3mCxkKBzBzG1+KSnXGT4/C
-         JjMZsTpGO5EXk+k9meoITmZ3HvzQIKff+A7Nghggwo1RW9tFix1RrGwCuIGt06wdU/xe
-         nAow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749666052; x=1750270852;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=L+PQ8oC5SKj2Pvt3GVWZzPVy8l1E6eCuxqGGzJ4Ezoc=;
-        b=uTxi0CnLQXZxNksaBtcsY9aAC4NZLzmWJWQZlmScmBqopfZur2ljDc44XU8zJ2jopJ
-         J6RpPSrX2rU4fmtNFn6TnMarnlwNHlhv6qSaWxd+8Ora7y6VElVtHiRQXudav1Gz4xWV
-         7ZaMVSmr5GNoO8mbCuERTAhDgCisfzfWhkQSmZvI1pGjSh/ahI3dZJW2lX6vby5cEWb6
-         2ZT52dQhhjDv3TsYaWlOBJGAhKLx2D0UT7zQxV9w29HrQrcsxKjjqadlg1RyOS91DVC1
-         hKX/gfNU6jjaLJCHbmc7kj11H43zIUscZRDchsOZextQwlL2vcXoXrZYgUnxBO+KKoVw
-         z5XA==
-X-Forwarded-Encrypted: i=1; AJvYcCX+TvkUpkIrZSFBudDFOEcAdptLnim0da/Dkf1ugTKewmMlxALT1ofD+IWW0Y1rkN+ByuS0/le8thDxdPQ2@vger.kernel.org
-X-Gm-Message-State: AOJu0YyOlZNHjA8Zpz2/l7Mf8Pg8OvggG+y2EsD8TQHXSrCmzSnl5r9A
-	s6vp0/tlc72bZjTgANRStvZ0Ou+QcsdZxt3XRbZEldoopaAMsxdjxSo2k6djsBTegPrL+8PL2Kb
-	su5LLAht7sGYzRIToqi38AZfCyw==
-X-Google-Smtp-Source: AGHT+IF9dOmPoH3f/Yv0MDUAXNH7QyABROACGGNRSdkVBP3APUAHFDt+InrBgJ0rMfVnQW8MeeLtIRfDXx/Of21iag==
-X-Received: from pfnx17.prod.google.com ([2002:aa7:84d1:0:b0:746:27ff:87f8])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6300:41:b0:1ee:d418:f764 with SMTP id adf61e73a8af0-21f978c4298mr1110324637.38.1749666051578;
- Wed, 11 Jun 2025 11:20:51 -0700 (PDT)
-Date: Wed, 11 Jun 2025 11:20:49 -0700
-In-Reply-To: <95fe5d24-560b-4c20-b988-6d7072ed2293@amd.com>
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1749669921; x=1750274721;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=rMrecsMLV05QJATkaLBYEZHt+MUdO5IkweZcLHHNWPU=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=RNavwkusowpDrsPNRnGLUItYxG1uNkOcG3yrpdLMEhYpIvP2DpzlUqpIJPqLG6Jf
+	 DKyhS14JO+tjDNe/AsDHXYL+rNMHKs4ypt/sTjfE0u6DcuoStSJL7P0kzNzmNgPpX
+	 NQAZzwgtm3cqJMRXh2QDjxcT1r9kez/IRLPJhSfvljls7cUuUf9nOo4NFrBKBBIVx
+	 nsN+2apwe4yT3pCtltvKI9EJQ1ZtHKf61iHkGuzjYmnJ5Nemj24qz8FvH5qmRn+Wq
+	 sDhgPrEGaUOuJW63G0fyCeprq78r44gyuhP60O2XqV9m4rWGchriQntvJFnWccijZ
+	 bIR6jG+gvipHT9VQIA==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.0.174] ([91.64.235.193]) by mrelayeu.kundenserver.de
+ (mreue011 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1Mum2d-1uh6iQ2xSV-00z90C; Wed, 11 Jun 2025 21:25:21 +0200
+Message-ID: <64d963bd-b38c-4f14-bb1d-f7e89dad999a@oldschoolsolutions.biz>
+Date: Wed, 11 Jun 2025 21:25:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250605153800.557144-1-tabba@google.com> <20250605153800.557144-9-tabba@google.com>
- <ad4157a1-6e38-46df-ae24-76d036972fbc@redhat.com> <95fe5d24-560b-4c20-b988-6d7072ed2293@amd.com>
-Message-ID: <diqz4iwmw35q.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [PATCH v11 08/18] KVM: guest_memfd: Allow host to map guest_memfd pages
-From: Ackerley Tng <ackerleytng@google.com>
-To: Shivank Garg <shivankg@amd.com>, David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>, 
-	kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	kvmarm@lists.linux.dev
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, mail@maciej.szmigiero.name, michael.roth@amd.com, 
-	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Subject: Re: [PATCH v2] dt: arm64: qcom: sc8280xp-x13s: amend usb0-sbu-mux
+ enable gpio
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Johan Hovold <johan+linaro@kernel.org>
+References: <20250610-x13s-usb0-mux-v2-1-598454e6ad64@oldschoolsolutions.biz>
+ <aEffYQND8eUgJbua@hovoldconsulting.com>
+Content-Language: en-US
+In-Reply-To: <aEffYQND8eUgJbua@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:+BhG55VDLfj/+sqJDIgRGg/xEIZuxqkARB81LAmByP2KY+VvmwX
+ KbxPjrXWTlmUZAEMU7pQDVK828BKjt2i6RiCmh/RUONusVBym3XRDQ3HZc/HC9w6PmqmHBk
+ Xs+X4KawGhyM4AB3K2noTmfFsm1+HPy4r8qBRLiVO+cgWcHow3Rg8q/whOPnYbV2/bmm38o
+ umPbLH2OXC3SZV04lSRsQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:gHbHn8FrmBY=;4+vtrRykcxVoC5UInwTgKOlID5D
+ k8WcsuUZC2Zo1K/b2Ee6q32HE36RplDskMb2TNuJ9F6wmWrmgKKsv2jbX4D1/9MzQ7lGTW16f
+ z0bQnot+f+iMuhA+XecQbuRr8ZctysUjOlCISJFJSwdgwqiMUm97fUwPMBaCTtHwC8KaYSOiR
+ +Ht9aRM/LWXaIJcwxnG6+NX7ylBtpVBNvfUIaNZ6UY9Ofy2RP0xBuATgEKuuUdr9FCO4dwPy3
+ y7TsGcqrqx6/MsrIF9hSSfNr+c8ANPL6T32C/+fBsm7Z1UA3zCpbp4I34rAWsIocKT32W8J0R
+ Myiiz6QI41VvdMAV7fzCLwtpZmgpLZQLY/8PtbgFL9C25P9bnAYpFKxCdLFrIsYF6gBaCR+l4
+ eQ15KzoxUOuF3SXo0B2ETUhhTizNFnsI6h9SS4SP7YxUCHzxxlbr0Y3XCtSRUKkOi1fNoufkb
+ qUO8F5+/MD92kMYcNBadTNl/oJk1riaX7YMQIpsJm4XRCO5UR0iQkO34J7ak8Do6CwXLkoczJ
+ Ge8q3VJknFH/gbhhWdsVASg3wUzNpverYFTf9HH6je25wVHsFA8936vNmnTl06G5xWzrh9iCe
+ KhKTzovNGVWfHnaNPEE+rpsEK+Cty3qpnWC2cR+hogHnV7v/7IoQa0lEAxwQaSdJqKiym9HPM
+ Dy1agpSIwx0becGHzAKNgHOId1gVZ5PjokeG1uD8wSh3+hkodlShKccXPdYgvxXIaUKOBwFD0
+ 0SZDa2dQFfF18/bo86dAxrat4nDwuNUcvI/NI69jgFw5kNnJJflFadxXyEBLnLiDD/58QBKDS
+ ha+LZIfF6kKuWnC9K164JaNox/FU2AxYGHHBs7wD9dawRO9/832c7g/gnU/zGE9kgMUhs/uTh
+ gSZ/2LZUigBxlX7Qw4U5koVfcIePAlJXQ2ndSTIC+VO0qjM30K7xMzwpzUqD4AMVZw+K1lkSa
+ 2Zt8sIQFr4+/EbgzOWcp4UBI3+DDXpxYIZahfWBbOsy2kydGDRHWMHHa7NqxtGbAI0e1Fgcht
+ 58i6LrVCeuuQAusrf3+rTNKYGEIDQaYV8YagL9u4Il7CgYJLbSV8qULxI4TcpRioSYHvPgnnD
+ aToxUU4SSjIPIXm2ynAfeknoD83FNRgz9rrZg6CABRKfJtMOdm58fhfUZC3+8E+VtbDrXmP4k
+ YbhlNUjfX3yWCfl/AOPsKJLcXqXUm5Wi2aM3znUdFfrQsxdfnvZ9Pp/cOEDzv2DYQi6BX1nQs
+ koPv/mjSPAU6WN2cn9OlU+rNYH8QjsrKQ1phPQJBm5dagVSSkQSAKpxfOGnvUFz8RGsL6c5S3
+ 6211vtMTDaTnLBGTzg3a1gPU93ILZtAr8nNH302BNidiEJ0KiVVoFMu2/PYCC/F2G4I0QUva9
+ aNZDbR49NZCOqaB/4O/+cA2RXfHWTDxTZA3tVSSbPXlnk6xCB669htflOx
 
-Shivank Garg <shivankg@amd.com> writes:
 
-> On 6/6/2025 2:42 PM, David Hildenbrand wrote:
->> On 05.06.25 17:37, Fuad Tabba wrote:
->>> This patch enables support for shared memory in guest_memfd, including
->>> mapping that memory from host userspace.
->>>
->>> This functionality is gated by the KVM_GMEM_SHARED_MEM Kconfig option,
->>> and enabled for a given instance by the GUEST_MEMFD_FLAG_SUPPORT_SHARED
->>> flag at creation time.
->>>
->>> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
->>> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
->>> Signed-off-by: Fuad Tabba <tabba@google.com>
->>> ---
->>=20
->> [...]
->>=20
->>> +static bool kvm_gmem_supports_shared(struct inode *inode)
->>> +{
->>> +=C2=A0=C2=A0=C2=A0 u64 flags;
->>> +
->>> +=C2=A0=C2=A0=C2=A0 if (!IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM))
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
->>> +
->>> +=C2=A0=C2=A0=C2=A0 flags =3D (u64)inode->i_private;
->>=20
->> Can probably do above
->>=20
->> const u64 flags =3D (u64)inode->i_private;
->>=20
->>> +
->>> +=C2=A0=C2=A0=C2=A0 return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
->>> +}
->>> +
+On 6/10/25 09:31, Johan Hovold wrote:
+> On Tue, Jun 10, 2025 at 07:04:46AM +0200, Jens Glathe via B4 Relay wrote=
+:
+> DP alt mode works on both ports of the X13s and "resulted in
+> gpio165" makes little sense so this commit message would need to be
+> extended.
+
+Well, that was the problem. It didn't on USB0. without and with the 4=20
+lanes patch.
+
+Observed on Windows Dev Kit 2023 and X13s, what prompted me to look deeper=
+.
+
+> GPIO 101 *is* the OE_N pin, while GPIO 165 is not even connected
+> according to the schematics. The mux may still work after this change,
+> but you'd be relying on it having been enabled by the boot firmware.
 >
-> I agree on using const will have some safety, clarity and optimization.
-> I did not understand why don't we directly check the flags like...
->
-> return (u64)inode->i_private & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
->
-> ...which is more concise.
+Schematics trump any other data, of course. After a lot of tests and=20
+some wild
+results I could narrow it down to the display I used for testing, iiyama=
+=20
+XUB2792QSN.
+It works with HDMI adapters on ~all other displays I have - with and=20
+without any
+4-lanes, lttpr patches. And the original GPIO.=C2=A0The issue with the=20
+display appears to
+be something linked to how negotiation is done by it on that specific port=
+.
 
-Imo having an explicit variable name here along with the cast is useful
-in reinforcing and repeating that guest_memfd is using inode->i_private
-to store flags.
+Do I need to do anything since its already NAK?
 
-I would rather retain the explicit variable name, and looks like in v11
-it was retained.
+with best regards
 
->
-> Thanks,
-> Shivank
+Jens
+
 
