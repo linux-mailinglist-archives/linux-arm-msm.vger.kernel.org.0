@@ -1,65 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-60930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB865AD4F39
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 11:05:06 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCC55AD4FE1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 11:33:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BD1354605E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 09:04:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E7DEF7A5AA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 09:32:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B553C2566D2;
-	Wed, 11 Jun 2025 09:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EEB2248861;
+	Wed, 11 Jun 2025 09:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CZdxCNQK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R1sBmeGv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E74254AE1;
-	Wed, 11 Jun 2025 09:00:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF55E482EB;
+	Wed, 11 Jun 2025 09:33:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749632458; cv=none; b=Z3CmOe1Ct+dvaaymz5GREAXkY4Dzy8MSH04AvaJq4z13MiQjHF0DGKT/pcDhjmROzx64qDg1CRnR/PJnDxF6b2+RNTFTzM9UxPyGVXOVRUgXDdOKWti43TrgydXeUxFUBpYvGxMr9fVBnFEriiLchYPI/ImMe/hHf0i1CTw3FsE=
+	t=1749634409; cv=none; b=aKDVpDApF/y2JMXWKCF5UjUwhZToPM9YftJJKHNaCQ/BmOtPmyq17zARVvsG83QcCTvedKd4DkNxtbClHxG724wb3Zd3Y47OURvRqX9/RK7XZ5dEdrACKleaRvYdtpdEvTMmVQSZggaaSVqq/PgjWmFzL90OxpbDt0dIzL0P6Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749632458; c=relaxed/simple;
-	bh=qGwNpH1nPkISzIrrF4+7NRMSzT4lX5oedrD5TFv4OCI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=E4+Yxm4GVdectE4qHINUYd3kc5dyHBb4kiyzMM0k6T3d8wIoSo6PIpwHvo6Io2wCSJ/+B6MAVcR35zl5a+ZVRpmiVsFS/eexoPA+FRo57FWw9PW69O/kzM5pEsLc6jWzJTJ8dj5yTzqewl8/W6U41weDZoYq/4z8Lg+RyQfyPoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CZdxCNQK; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55B7qJhE010618;
-	Wed, 11 Jun 2025 09:00:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/sEVYGPHMgstVe1vXwTRq2xATk23fiqrBWRAQJs1Y/k=; b=CZdxCNQKkhkQwP2Z
-	hWWLIMzjFJYEIoDv4JBa/hJQg/p9t0Ey8EcrL79sFcijhWRmGOt6DGcpVNfpK7OG
-	r2gswY0boSiKX1BSTATrU0Yhw0iKlHH7UaKaWz2vu4pbFzVCHVO6AepYzE5BRqoN
-	GUjbzLpNX3SKif5LPIKDGIkFLVPO64bhDjMWkVII8ANpcayBhlMnJ/VdL8af9Vfd
-	QXGQi/IhXfSq2QES3LC6LEzDLbokCVzdfXvIeRq879xp8w5qi2t5T+qScHlsk0R8
-	iTQ/MJnWB9glRgU5TnCi9waw6mPnRjkC78eiP67mjpQ72ykgeeV36b6g50tJvx1p
-	olNPfg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474d124c10-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 09:00:41 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55B90epU016919
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 09:00:40 GMT
-Received: from yuanfang4-gv.ap.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 11 Jun 2025 02:00:37 -0700
-From: Yuanfang Zhang <quic_yuanfang@quicinc.com>
-Date: Wed, 11 Jun 2025 16:59:47 +0800
-Subject: [PATCH v9 2/2] coresight: add coresight Trace Network On Chip
- driver
+	s=arc-20240116; t=1749634409; c=relaxed/simple;
+	bh=5DRr7AZHrJWUPaFLYxjMOWvjVddxzI7+L7NjuR+7jGo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XSAIL3grzcNgmNzNHhw4KROHn+P/3e27k1Pk+4Lvsw2/gXJ9KIla9U4seeigTK/I2+7VCcgdcxinB2zay5uhbuDY7L1IWAuhnSjcc4rzQEd3kyJqGA063LTliQBKlEjOxZGm7IRpTV7sZtr7o7hGHTg1I09mTQwY6TCqFu/aOvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R1sBmeGv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6435AC4CEEE;
+	Wed, 11 Jun 2025 09:33:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749634408;
+	bh=5DRr7AZHrJWUPaFLYxjMOWvjVddxzI7+L7NjuR+7jGo=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=R1sBmeGvdBbjIJ/sw/Pdh8rlSG0t1cUd6nAIvn5HHcf62POzcP+NegXzyChT41tJ9
+	 d7DrmfLYp7jYPcBcihIFr78bocm4ehfYkPh4otovQamPjODRult4mRze3DH27CL58k
+	 0RRXQan4Q9xV36t1nk+baYGxAFbMEQSmwgt3eymhET9R73YMxfAZh6JMvn0VxtzBpY
+	 bgsuoM7EaH4SxVkWslyMPIk7fjA62hPfi8kOECnAwKAB/DumZyBQ2yufIzB+6uAz9+
+	 b4P/rKVTCZ1uJopSqwqBO/lmlbDwVhaKnrrdlrLOXIegZC5+/pezSH59aZoGLCnRN5
+	 3r2ePzt0XGc8A==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DD69C677C4;
+	Wed, 11 Jun 2025 09:33:28 +0000 (UTC)
+From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
+Subject: [PATCH v12 0/2] Add support for IPQ5018 tsens
+Date: Wed, 11 Jun 2025 13:33:20 +0400
+Message-Id: <20250611-ipq5018-tsens-v12-0-a61374a5517d@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,395 +55,160 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250611-trace-noc-v9-2-4322d4cf8f4b@quicinc.com>
-References: <20250611-trace-noc-v9-0-4322d4cf8f4b@quicinc.com>
-In-Reply-To: <20250611-trace-noc-v9-0-4322d4cf8f4b@quicinc.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>
-CC: <kernel@oss.qualcomm.com>, <linux-arm-msm@vger.kernel.org>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Yuanfang Zhang
-	<quic_yuanfang@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAGBNSWgC/53TyYrcMBAG4FcZfI5MVWnPqb3eAiE5hhA0XmZE2
+ kvb7k7C0O8e2ZDMND6EDuhSQv+nhdJLNDeTb+bo/cNLNDUXP/uhDwXSu4eoenb9U8N8HSYiApI
+ gQDA/niSgYcvc9DNT4rG1sq05Rx2FzDg1rf+5gV++hvrZz8sw/dr8C66zESrLg8VBM2MRGLInv
+ 7Cg1azpnD+y09lX3+bJh/0nd1gr31dxNXTRKl5oU8J5OFiUSBjOFRtQSlOw/hHmb8JEGPKoYtL
+ CmHA1ZH+DP3zPxqNb2mHq2Hmcl6lxHWB8OrtjwLpXUWxi/ll//IT2Q2qM4WnBTUapBMiBE3Itd
+ GLzTNPhZlncu26carTxOA11PJyX4zB8f5XlXqYyL3Jlcl6kKRSFLqwt/0NWezkMnkHC0zLjmS4
+ zYXCV4U5Z72VUJMr1pZUVMlNcAKwy3SmbvVwYsqQKIQoAQA1ab6+R3ynbvZzkiZBcGw4JaGElt
+ 3qVsztlhD/tJkGFVr/9O5et+blDcNKRElQd9gK+FXAnIANGSkmlHtsalbsVrtfrbyjagcLiAwA
+ A
+X-Change-ID: 20250404-ipq5018-tsens-64bf95fd3317
+To: Amit Kucheria <amitk@kernel.org>, 
+ Thara Gopinath <thara.gopinath@gmail.com>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+ Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ George Moussalem <george.moussalem@outlook.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Dmitry Baryshkov <lumag@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749632429; l=11577;
- i=quic_yuanfang@quicinc.com; s=20241209; h=from:subject:message-id;
- bh=qGwNpH1nPkISzIrrF4+7NRMSzT4lX5oedrD5TFv4OCI=;
- b=epNGQHbx6WzzLXfaZIIVz98bz8gnt6NcB1hY424vdf7yyLT1M+0vQiovUG6pI9qDHpImo+xB2
- vxNJblpHPovBkpy7CgNBOA7G3hTrJcnbkDHEg8pfIwRs5880coIsN8Z
-X-Developer-Key: i=quic_yuanfang@quicinc.com; a=ed25519;
- pk=ZrIjRVq9LN8/zCQGbDEwrZK/sfnVjwQ2elyEZAOaV1Q=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 59eTzBpy_49KRZTP3cVPEL7sA5KhSB0K
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDA3NyBTYWx0ZWRfX26lJwmI/pOGP
- OcrE1EpPE2C2grQVWdVIo2fakaSMwWO8RshGPAF8UWB6i/lnqgzu25gOXm3ff0o6MRV1n4/wssr
- J7yyvWDN4vwB0QCkS5aT1vHJNXETjqmv8LYGNBYhu59hGqYITNXMgDHbYXxbIzS6NBeol0XnkKk
- Z68Jhle5zqPUS3GWW25YKxQqip9OkYj1GgCi/Ijo5mTYf4DkQdgfHufyZvf+ZaG7RwXF0H9We7s
- NDs0gatYjnk+jf85eW+7iI7NWNRJBdVOrDZOaXLERdm/nC9R9r2lEvNM6WXZ08R9QLdWtsNBRUi
- /TKrn0g6/zoASb1HEzwbrGDE3ViOj9wmXfZ+EN7lF4ysdVFYgRiyr9Grb7LQirwqMagDtlZslI6
- jpRxHjuWFAt735WewkCQP/g4WcHGI4N1BzvrkAtpK4JPw/aFQvRwcp5xfIumreF6hdMvJnq4
-X-Authority-Analysis: v=2.4 cv=GYkXnRXL c=1 sm=1 tr=0 ts=684945b9 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8
- a=kfjrt-ETKUMyBX4eaP0A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: 59eTzBpy_49KRZTP3cVPEL7sA5KhSB0K
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-11_03,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 spamscore=0 mlxlogscore=999 bulkscore=0
- impostorscore=0 clxscore=1015 malwarescore=0 priorityscore=1501 mlxscore=0
- adultscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506110077
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1749634406; l=5550;
+ i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
+ bh=5DRr7AZHrJWUPaFLYxjMOWvjVddxzI7+L7NjuR+7jGo=;
+ b=LQ92VY71wz/3CBE0OlMOMUiKu9St8Jew4FoMS0Aa9+D91/f0s2dI7x5WAwilKyqzQ2hcv2IZY
+ Vt/woT5NhYNA2wK5AyD2uS9d0rWbHr8EqeEpjPyqCeBOdbW1azkZLkk
+X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
+ pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
+X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
+ with auth_id=364
+X-Original-From: George Moussalem <george.moussalem@outlook.com>
+Reply-To: george.moussalem@outlook.com
 
-Add a driver to support Coresight device Trace Network On Chip (TNOC),
-which is an integration hierarchy integrating functionalities of TPDA
-and funnels. It aggregates the trace and transports to coresight trace
-bus.
+IPQ5018 has tsens V1.0 IP with 5 sensors, of which 4 are in use,
+and 1 interrupt. There is no RPM present in the soc to do tsens early
+enable. Adding support for the same here.
 
-Compared to current configuration, it has the following advantages:
-1. Reduce wires between subsystems.
-2. Continue cleaning the infrastructure.
-3. Reduce Data overhead by transporting raw data from source to target.
+Last patch series sent by Qualcomm dates back to Sep 22, 2023.
+Since I'm working on OpenWrt support for IPQ5018 based boards (routers)
+and Sricharan Ramabadhran <quic_srichara@quicinc.com> in below email
+confirmed this SoC is still active, I'm continuing the efforts to send
+patches upstream for Linux kernel support.
+https://lore.kernel.org/all/63dc4054-b1e2-4e7a-94e7-643beb26a6f3@quicinc.com/
 
-  +------------------------+                +-------------------------+
-  | Video Subsystem        |                |Video Subsystem          |
-  |       +-------------+  |                |       +------------+    |
-  |       | Video TPDM  |  |                |       | Video TPDM |    |
-  |       +-------------+  |                |       +------------+    |
-  |            |           |                |              |          |
-  |            v           |                |              v          |
-  |   +---------------+    |                |        +-----------+    |
-  |   | Video funnel  |    |                |        |Video TNOC |    |
-  |   +---------------+    |                |        +-----------+    |
-  +------------|-----------+                +------------|------------+
-               |                                         |
-               v-----+                                   |
-+--------------------|---------+                         |
-|  Multimedia        v         |                         |
-|  Subsystem   +--------+      |                         |
-|              |  TPDA  |      |                         v
-|              +----|---+      |              +---------------------+
-|                   |          |              |   Aggregator  TNOC  |
-|                   |          |              +----------|----------+
-|                   +--        |                         |
-|                     |        |                         |
-|                     |        |                         |
-|              +------v-----+  |                         |
-|              |  Funnel    |  |                         |
-|              +------------+  |                         |
-+----------------|-------------+                         |
-                 |                                       |
-                 v                                       v
-      +--------------------+                    +------------------+
-      |   Coresight Sink   |                    |  Coresight Sink  |
-      +--------------------+                    +------------------+
-
-       Current Configuration                            TNOC
-
-Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
- drivers/hwtracing/coresight/Kconfig          |  13 ++
- drivers/hwtracing/coresight/Makefile         |   1 +
- drivers/hwtracing/coresight/coresight-tnoc.c | 242 +++++++++++++++++++++++++++
- 3 files changed, 256 insertions(+)
+Changes in v12:
+- Updated description in dt bindings for IP v1 without RPM
+- Added Fixes tag as this this version of tsens needs to be explicitly
+  reset and enabled in the driver, introduced as part of:
+  commit: 19f9b02ebc8f ("thermal/drivers/qcom/tsens: Add support for tsens v1 without RPM")
+- Link to v11: https://lore.kernel.org/r/20250611-ipq5018-tsens-v11-0-266566bfd16a@outlook.com
 
-diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/coresight/Kconfig
-index ecd7086a5b83e86b6bc8ea039d6d26a628334ed3..f20600d58f38568f8178f69d3f678c2df2cbca7e 100644
---- a/drivers/hwtracing/coresight/Kconfig
-+++ b/drivers/hwtracing/coresight/Kconfig
-@@ -259,4 +259,17 @@ config CORESIGHT_DUMMY
- 
- 	  To compile this driver as a module, choose M here: the module will be
- 	  called coresight-dummy.
-+
-+config CORESIGHT_TNOC
-+	tristate "Coresight Trace Network On Chip driver"
-+	help
-+	  This driver provides support for Trace Network On Chip (TNOC) component.
-+	  TNOC is an interconnect used to collect traces from various subsystems
-+	  and transport to a coresight trace sink. It sits in the different
-+	  tiles of SOC and aggregates the trace local to the tile and transports
-+	  it another tile or to coresight trace sink eventually.
-+
-+	  To compile this driver as a module, choose M here: the module will be
-+	  called coresight-tnoc.
-+
- endif
-diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/hwtracing/coresight/Makefile
-index 8e62c3150aebd1e82b445fafc97a0a9b44397b0e..880e9ed6bfe9c711492c6a2cd972751f56dd8010 100644
---- a/drivers/hwtracing/coresight/Makefile
-+++ b/drivers/hwtracing/coresight/Makefile
-@@ -34,6 +34,7 @@ obj-$(CONFIG_CORESIGHT_SINK_TPIU) += coresight-tpiu.o
- obj-$(CONFIG_CORESIGHT_SINK_ETBV10) += coresight-etb10.o
- obj-$(CONFIG_CORESIGHT_LINKS_AND_SINKS) += coresight-funnel.o \
- 					   coresight-replicator.o
-+obj-$(CONFIG_CORESIGHT_TNOC) += coresight-tnoc.o
- obj-$(CONFIG_CORESIGHT_SOURCE_ETM3X) += coresight-etm3x.o
- coresight-etm3x-y := coresight-etm3x-core.o coresight-etm-cp14.o \
- 		     coresight-etm3x-sysfs.o
-diff --git a/drivers/hwtracing/coresight/coresight-tnoc.c b/drivers/hwtracing/coresight/coresight-tnoc.c
-new file mode 100644
-index 0000000000000000000000000000000000000000..ac0b165f8742aaa8b6f6ed81d75eb75a81a85e39
---- /dev/null
-+++ b/drivers/hwtracing/coresight/coresight-tnoc.c
-@@ -0,0 +1,242 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+ #include <linux/amba/bus.h>
-+ #include <linux/coresight.h>
-+ #include <linux/device.h>
-+ #include <linux/io.h>
-+ #include <linux/kernel.h>
-+ #include <linux/module.h>
-+ #include <linux/of.h>
-+ #include <linux/platform_device.h>
-+
-+#include "coresight-priv.h"
-+#include "coresight-trace-id.h"
-+
-+#define TRACE_NOC_CTRL      0x008
-+#define TRACE_NOC_XLD       0x010
-+#define TRACE_NOC_FREQVAL   0x018
-+#define TRACE_NOC_SYNCR     0x020
-+
-+/* Enable generation of output ATB traffic.*/
-+#define TRACE_NOC_CTRL_PORTEN   BIT(0)
-+/* Sets the type of issued ATB FLAG packets.*/
-+#define TRACE_NOC_CTRL_FLAGTYPE BIT(7)
-+/* Sets the type of issued ATB FREQ packet*/
-+#define TRACE_NOC_CTRL_FREQTYPE BIT(8)
-+
-+#define TRACE_NOC_SYNC_INTERVAL	0xFFFF
-+
-+/*
-+ * struct trace_noc_drvdata - specifics associated to a trace noc component
-+ * @base:      memory mapped base address for this component.
-+ * @dev:       device node for trace_noc_drvdata.
-+ * @csdev:     component vitals needed by the framework.
-+ * @spinlock:  serialize enable/disable operation.
-+ * @atid:      id for the trace packet.
-+ */
-+struct trace_noc_drvdata {
-+	void __iomem		*base;
-+	struct device		*dev;
-+	struct coresight_device	*csdev;
-+	spinlock_t		spinlock;
-+	u32			atid;
-+};
-+
-+DEFINE_CORESIGHT_DEVLIST(trace_noc_devs, "traceNoc");
-+
-+static void trace_noc_enable_hw(struct trace_noc_drvdata *drvdata)
-+{
-+	u32 val;
-+
-+	/* Set ATID */
-+	writel_relaxed(drvdata->atid, drvdata->base + TRACE_NOC_XLD);
-+
-+	/* Set the data word count between 'SYNC' packets */
-+	writel_relaxed(TRACE_NOC_SYNC_INTERVAL, drvdata->base + TRACE_NOC_SYNCR);
-+
-+	/* Set the Control register:
-+	 * - Set the FLAG packets to 'FLAG' packets
-+	 * - Set the FREQ packets to 'FREQ_TS' packets
-+	 * - Enable generation of output ATB traffic
-+	 */
-+
-+	val = readl_relaxed(drvdata->base + TRACE_NOC_CTRL);
-+
-+	val &= ~TRACE_NOC_CTRL_FLAGTYPE;
-+	val |= TRACE_NOC_CTRL_FREQTYPE;
-+	val |= TRACE_NOC_CTRL_PORTEN;
-+
-+	writel(val, drvdata->base + TRACE_NOC_CTRL);
-+}
-+
-+static int trace_noc_enable(struct coresight_device *csdev, struct coresight_connection *inport,
-+			    struct coresight_connection *outport)
-+{
-+	struct trace_noc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-+
-+	scoped_guard(spinlock, &drvdata->spinlock) {
-+		if (csdev->refcnt == 0)
-+			trace_noc_enable_hw(drvdata);
-+
-+		csdev->refcnt++;
-+	}
-+
-+	dev_dbg(drvdata->dev, "Trace NOC is enabled\n");
-+	return 0;
-+}
-+
-+static void trace_noc_disable(struct coresight_device *csdev, struct coresight_connection *inport,
-+			      struct coresight_connection *outport)
-+{
-+	struct trace_noc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-+
-+	scoped_guard(spinlock, &drvdata->spinlock) {
-+		if (--csdev->refcnt == 0)
-+			writel(0x0, drvdata->base + TRACE_NOC_CTRL);
-+	}
-+	dev_dbg(drvdata->dev, "Trace NOC is disabled\n");
-+}
-+
-+static int trace_noc_id(struct coresight_device *csdev, __maybe_unused enum cs_mode mode,
-+			__maybe_unused struct coresight_device *sink)
-+{
-+	struct trace_noc_drvdata *drvdata;
-+
-+	drvdata = dev_get_drvdata(csdev->dev.parent);
-+
-+	return drvdata->atid;
-+}
-+
-+static const struct coresight_ops_link trace_noc_link_ops = {
-+	.enable		= trace_noc_enable,
-+	.disable	= trace_noc_disable,
-+};
-+
-+static const struct coresight_ops trace_noc_cs_ops = {
-+	.trace_id	= trace_noc_id,
-+	.link_ops	= &trace_noc_link_ops,
-+};
-+
-+static int trace_noc_init_default_data(struct trace_noc_drvdata *drvdata)
-+{
-+	int atid;
-+
-+	atid = coresight_trace_id_get_system_id();
-+	if (atid < 0)
-+		return atid;
-+
-+	drvdata->atid = atid;
-+
-+	return 0;
-+}
-+
-+static ssize_t traceid_show(struct device *dev,
-+			    struct device_attribute *attr, char *buf)
-+{
-+	unsigned long val;
-+	struct trace_noc_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+
-+	val = drvdata->atid;
-+	return sprintf(buf, "%#lx\n", val);
-+}
-+static DEVICE_ATTR_RO(traceid);
-+
-+static struct attribute *coresight_tnoc_attrs[] = {
-+	&dev_attr_traceid.attr,
-+	NULL,
-+};
-+
-+static const struct attribute_group coresight_tnoc_group = {
-+	.attrs = coresight_tnoc_attrs,
-+};
-+
-+static const struct attribute_group *coresight_tnoc_groups[] = {
-+	&coresight_tnoc_group,
-+	NULL,
-+};
-+
-+static int trace_noc_probe(struct amba_device *adev, const struct amba_id *id)
-+{
-+	struct device *dev = &adev->dev;
-+	struct coresight_platform_data *pdata;
-+	struct trace_noc_drvdata *drvdata;
-+	struct coresight_desc desc = { 0 };
-+	int ret;
-+
-+	desc.name = coresight_alloc_device_name(&trace_noc_devs, dev);
-+	if (!desc.name)
-+		return -ENOMEM;
-+
-+	pdata = coresight_get_platform_data(dev);
-+	if (IS_ERR(pdata))
-+		return PTR_ERR(pdata);
-+	adev->dev.platform_data = pdata;
-+
-+	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
-+	if (!drvdata)
-+		return -ENOMEM;
-+
-+	drvdata->dev = &adev->dev;
-+	dev_set_drvdata(dev, drvdata);
-+
-+	drvdata->base = devm_ioremap_resource(dev, &adev->res);
-+	if (!drvdata->base)
-+		return -ENOMEM;
-+
-+	spin_lock_init(&drvdata->spinlock);
-+
-+	ret = trace_noc_init_default_data(drvdata);
-+	if (ret)
-+		return ret;
-+
-+	desc.ops = &trace_noc_cs_ops;
-+	desc.type = CORESIGHT_DEV_TYPE_LINK;
-+	desc.subtype.link_subtype = CORESIGHT_DEV_SUBTYPE_LINK_MERG;
-+	desc.pdata = adev->dev.platform_data;
-+	desc.dev = &adev->dev;
-+	desc.access = CSDEV_ACCESS_IOMEM(drvdata->base);
-+	desc.groups = coresight_tnoc_groups;
-+	drvdata->csdev = coresight_register(&desc);
-+	if (IS_ERR(drvdata->csdev)) {
-+		coresight_trace_id_put_system_id(drvdata->atid);
-+		return PTR_ERR(drvdata->csdev);
-+	}
-+	pm_runtime_put(&adev->dev);
-+
-+	return 0;
-+}
-+
-+static void trace_noc_remove(struct amba_device *adev)
-+{
-+	struct trace_noc_drvdata *drvdata = dev_get_drvdata(&adev->dev);
-+
-+	coresight_trace_id_put_system_id(drvdata->atid);
-+	coresight_unregister(drvdata->csdev);
-+}
-+
-+static struct amba_id trace_noc_ids[] = {
-+	{
-+		.id     = 0x000f0c00,
-+		.mask   = 0x00ffff00,
-+	},
-+	{},
-+};
-+MODULE_DEVICE_TABLE(amba, trace_noc_ids);
-+
-+static struct amba_driver trace_noc_driver = {
-+	.drv = {
-+		.name   = "coresight-trace-noc",
-+		.suppress_bind_attrs = true,
-+	},
-+	.probe          = trace_noc_probe,
-+	.remove		= trace_noc_remove,
-+	.id_table	= trace_noc_ids,
-+};
-+
-+module_amba_driver(trace_noc_driver);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("Trace NOC driver");
+Changes in v11:
+- Dropped polling-delay property as its value of 0 is the default value
+- Removed comments for TM and SROT in tsens node
+- Replace underscore by hyphen in node name of top-glue-critical trip
+- Added cooling device using CPU freq scaling making use of the passive
+  trip defined under the CPU trips
+- Make qcom,ipq5018-tsens a standalone compatible in the bindings as it
+  should not use qcom,tsens-v1 as a fallback. This also fixes the issue
+  reported by Rob's bot
 
+Changes in v10:
+- Rebased onto updated pull of master to resolve merge conflicts in the
+  DTS patch
+- Link to v9: https://lore.kernel.org/all/DS7PR19MB88836DC6965515E12D70BB2C9DCC2@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+Changes in v9:
+- Updated checks in tsens to more strictly evaluate for v2+ upon enabling
+  v2 features as suggsted by Dmitry.
+- Split patch 3 into two, one to update conditional statements as
+  mentioned above and the other to implement tsens IP v1 without RPM.
+- Added back Dmitry's RB tag on patch 6 which wasn't carried over
+  from v7 to v8
+- Link to v8: https://lore.kernel.org/all/DS7PR19MB88833F7A9C8F4FC484977BA69DCD2@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+Changes in v8:
+- Tsens V1 uses v1 interrupts and watchdog is not present (only on v2.3+).
+  As such, replaced VER_1_X with VER_1_X_NO_RPM in conditons to ensure
+  v1 interrupts are set and watchdog isn't enabled.
+- Tested on Linksys MX2000 and SPNMX56
+- Link to v7: https://lore.kernel.org/all/DS7PR19MB88831624F11516945C63400F9DC22@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+Changes in v7:
+- Updated cover letter
+- Replaced patch 3 with a new one to add support for tsens v1.0 with
+  no RPM and removed Dmitry's 'Reviewed-by tag
+- Refactored patch 4 and split support for IPQ5018 from support for
+  tsens v1.0 without RPM. As such, also removed Dmitry's RB tag.
+- Depends on patch 1 and 2 from patch series to add support for
+  IQP5332 and IPQ5424 applied on Feb 11 2025:
+  https://patchwork.kernel.org/project/linux-arm-msm/cover/20250210120436.821684-1-quic_mmanikan@quicinc.com/
+- Link to v6: https://lore.kernel.org/all/DS7PR19MB88838833C0A3BFC3C7FC481F9DC02@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+Changes in v6:
+- Include (this) cover letter
+- Picked up Dmitry's Reviewed-by tag on patch 5
+- Link to v5: https://lore.kernel.org/all/DS7PR19MB88832FDED68D3EBB0EE7E99F9DC72@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+Changes in v5:
+- Adjusted commit messages to indicate IPQ5018 has 5 sensors of
+  which 4 are described and in use as per downstream driver and dts.
+- Padded addresses of tsens and qfprom nodes with leading zeros.
+- Link to v4: https://lore.kernel.org/all/DS7PR19MB8883BE38C2B500D03213747A9DC72@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+Changes in v4:
+- Documented ipq5018 in qcom,qfprom bindings
+- Constrained ipq5018-tsens to one interrupt with description
+- Added Rob's Acked-by tag
+- Added Dmitry's Reviewed-by tag
+- Fixed modpost warning: added __init to init_common
+- Sorted tsens nodes by address
+- Sorted thermal-zones nodes by name
+- Link to v3: https://lore.kernel.org/all/20230922115116.2748804-1-srichara@win-platform-upstream01.qualcomm.com/
+
+Changes in v3:
+- Added the tsens-ipq5018 as  new binding without rpm
+- Added Dmitry's Reviewed tag
+- Fixed Dmitry's comments for error checks in init_ipq5018
+- Ordered the qfprom device node properties
+- Link to v2: https://lore.kernel.org/all/20230915121504.806672-1-quic_srichara@quicinc.com/
+
+Changes in v2:
+- Sorted the compatible and removed example
+- Fixed the name for new tsens_feature
+- Used tsend_calibrate_common instead of legacy
+  and addressed comments from Dmitry.
+- Squashed patch 3 & 4
+- Fixed node names, order and added qfprom cells
+  for points seprately
+- Squashed patch 6 & 7
+- Link to v1: https://lore.kernel.org/all/1693250307-8910-1-git-send-email-quic_srichara@quicinc.com/
+
+---
+George Moussalem (1):
+      dt-bindings: thermal: qcom-tsens: make ipq5018 tsens standalone compatible
+
+Sricharan Ramabadhran (1):
+      arm64: dts: qcom: ipq5018: Add tsens node
+
+ .../devicetree/bindings/thermal/qcom-tsens.yaml    |   7 +-
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi              | 182 +++++++++++++++++++++
+ 2 files changed, 188 insertions(+), 1 deletion(-)
+---
+base-commit: afc582fb6563b8eb5cd73f9eca52e55da827567f
+change-id: 20250404-ipq5018-tsens-64bf95fd3317
+
+Best regards,
 -- 
-2.34.1
+George Moussalem <george.moussalem@outlook.com>
+
 
 
