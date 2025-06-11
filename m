@@ -1,89 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-60895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DA49AD4909
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 04:58:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4435EAD490E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 04:59:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C012E189A689
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 02:59:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B458A3A52EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 02:58:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA010225A39;
-	Wed, 11 Jun 2025 02:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC3FD226CEB;
+	Wed, 11 Jun 2025 02:58:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mcbO4tcQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="c71lYeF3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0E0225416
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 02:58:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CFC22540B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 02:58:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749610722; cv=none; b=pSLjcuYr/PAh8GJaT0TkdbyHUbkCPyeF3ebsFG1b125JHLu0FXlXvlbdsRI/JZIEiGE6B2ENDIIywGbcyYVImz8PxpQOytJ9h/Z2sZd2ncHXnvwSWcd+opBdC/UhNN8IrR0KcJcTWV54OGcdFQYROR22eh7WN/bGu8+h1ma26vY=
+	t=1749610723; cv=none; b=ZKv3OHxbTSyRP1bP56pfX9OP00ozxffrLH5fy8yZ9xR5exmDgz8oG1WDN+gDJ/9mLItXsakyCpHykvBB/C2dHZRYlClUT7FSslEnUa82+K2EaJNBmhU2zt1+4HuQpfc+X0CEmY+pFfBit15DvTSGUe38jIb3rp/BetgqZ0xiyF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749610722; c=relaxed/simple;
-	bh=DJn9NYHqZgqnTw4yMsPNWysi1jIuh/SNHNWMy4qhxPQ=;
+	s=arc-20240116; t=1749610723; c=relaxed/simple;
+	bh=Tq84tO28/ihL3VCn+xRUdAhQjrUgd8j1sFdAu9HULA8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ds6YnI/svlldqfX74PjMEUfFQW9UgwK33JWWUxhTvj+4HZT4uGtD/N5Aqom+R2keKaIKx7isZ/2fgnBbmQaq8r1H2q7J7kYOkV2jfWO7ENbGjjM8mqtwcafM6GSGHY0kvh3CVawFpbX/P7zqT06Sb0xvk3D12l+w5MzFX7685bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mcbO4tcQ; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=UnDo3gs9tGsNVaC+eDF5Ji6YkieX6EXkNZH0rDJF9WmQPD9b1Td9odDmf9RDEIO62qOQaJWpUpV8bCPRc8Ay45UPNK9yawvPZNBw+RnsrLfD1PBzGPsmTEaSRC/Z3NtXgB+js0k4lK742DZWrvjVp6pijrLPXC0m0LkWQgAlvOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=c71lYeF3; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AKjV5I011519
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 02:58:40 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AIQ0nR012185
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 02:58:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YHqKWedYyr0OY6wJ10igxBdQqHVIA6btUlkeWEdA34E=; b=mcbO4tcQ5e+IxFIi
-	2gII1o93SHjYQi4LJQzxEWpyqyQqWH0nUZfaUZYYSSmhw5pNopJeC4GAFF+a/PWj
-	fi57u1GCEUYhHAu0APylj2TrK9iX3f2WbzLhnzmUShBCzxU5+WHzNC1bmGK12qcv
-	eE+q+I4cUIvPdlZzcsojVtU2RdCw/E5jfj60ZR9mybF5RT0dt54e+Qf5EHEbgZe7
-	1HizZJ4AiZki5rWTPN64Gi5gleUFv7qhxdRW+BjTN+Lmo06MDFVs8OdIrJR+5gnb
-	1kZepFjQds2c2/C8lb/xwjm4/dUtMMk0tB4hzJawohpIbHMniQabmyV7EkmlrRxI
-	pZi67A==
-Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com [209.85.160.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474dn6bf52-1
+	m0HKw6uRkuFduO3sES05/apr/xAyNFuACuh7Zmwxopw=; b=c71lYeF3zzxZGG+m
+	llQz5GYISxBd76fMKQ2q3ps1PMXC14rFFDOUZ080DnKmjRagXuOtbiD+9cgmOsVE
+	+Ry+ivVBKQvY42z4pwjFOrw2Cwe1cRErmGb3j9UmYnSrjOfzHAalHxLqIPFtpIB8
+	4YKZljG7E4PW5NjGHARYLW5Xn1te0yRvLlvm+DNO35fA9zj9MpZkizrDAJ/ttYmJ
+	BwDyYT3RlXDWJZlWWZCQFSFiwW57P7cjHCgx0annB62Cu+Xs8Y3irkLFqlF2q083
+	mxhQwb+XgakTuYCGIEKwgLVZmSSgD3Li5oyf1owQI93I/1DeIF+IF/1sj4mBCqaS
+	NCNxJA==
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com [209.85.160.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474dgxupxj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
 	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 02:58:40 +0000 (GMT)
-Received: by mail-oa1-f72.google.com with SMTP id 586e51a60fabf-2e9339232ecso1391087fac.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 19:58:39 -0700 (PDT)
+Received: by mail-oa1-f71.google.com with SMTP id 586e51a60fabf-2e4a20bbd1aso359201fac.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 19:58:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749610719; x=1750215519;
+        d=1e100.net; s=20230601; t=1749610720; x=1750215520;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YHqKWedYyr0OY6wJ10igxBdQqHVIA6btUlkeWEdA34E=;
-        b=o/8EEF0hpErwF0KLGl97Q/5Or/NF99u6/nxym4bJKLdbiupl1qvdakfrXOXzq7M0Il
-         oyC6zcIXyNHC2oT4WX6x58O7Qw+orFVplzufzYjBtpgz+M3p3n7tih4qiZmzpvTqfXBG
-         ZJDSStSBQaLaYxPhzSoemm/EEdGGbleIa8k6vh6Nl4SdWHLgBOPc5xSP7K6TB1L1sSeh
-         bW3321awBGMrBnK3nhQTVCl7VlZZ4DPymZmzUwJb7JMwYIsZTtiV5nod/j/jsu201kQZ
-         FNU0wSMHK87xLmwu1OXmKanQnvXw8gIsADK19gaDXOc4s7BU6oFUqKkX5Rs8jNvBpQTu
-         +1tA==
-X-Gm-Message-State: AOJu0YxQ5cLIqbKzHxEE3QHHq550DAV5AmGiKmzgx03W63y4akqsZI6/
-	UfKXGDRLRu2DR9ihZwXdClKdpbJ6eLNLPjs2q+q/N0U9CmXv+NhYLfTn4i9LS1RU0ZAXMESnZ1T
-	6Nt7Fpa1AtArenIlOFeUlMVJRoXZglE8H++h8hUZ8fWLs2ZNGfX2jCBK1E92G0VKpp0aM
-X-Gm-Gg: ASbGncsJMTcWhoZrhnT7bSAj0D82Bhjo6QtlbCJBG2aHSJfqivdiWvElp7qRQ94rzP6
-	lwUO0EC4Vaah1jxq4smaTwhvVMG1alpK9Gtppl9GbIbM379cgs2WhqjVT/pzjUfOE/eLDKKG1HW
-	QGsOxLmWghz3SGMYBeoeatg/F9dTfCCz/K2EtMMKM08xGqNWCpTrq86T2EbvCicKRhakUYVEbBM
-	V/E8UgSAXw4bksUkiNPZKPDc0rcDk7G/iCeqTSL70D9xX8ZJwWjj1Rm3PL1aJPEZNaMR4sMQZG9
-	xRLnPV3aBOLGYRvCS0qqxyXoHAOnqHEOGt1eUebbcJuqlZ8KKUWHuc7BC9Ana6dJjHgCVyE3LUv
-	QKkXc/gJ4X6gGap28n2qIXQ==
-X-Received: by 2002:a05:6871:230d:b0:2d6:6633:463a with SMTP id 586e51a60fabf-2ea99630c12mr729393fac.8.1749610718961;
-        Tue, 10 Jun 2025 19:58:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGRLQcilCJwRVztlhp6Tq1XQRDSfon5wVImIcFPTKlDGIIDnxnp7kRLq0y9C6AdKmJ0vdJFaQ==
-X-Received: by 2002:a05:6871:230d:b0:2d6:6633:463a with SMTP id 586e51a60fabf-2ea99630c12mr729379fac.8.1749610718647;
-        Tue, 10 Jun 2025 19:58:38 -0700 (PDT)
+        bh=m0HKw6uRkuFduO3sES05/apr/xAyNFuACuh7Zmwxopw=;
+        b=VKg37nEESkrj6HekbUeg387fcr+EVXyPTeTlImSynIMXKFt6S5Suq8wPF0ZDk5fcUV
+         7p7R1Lfr+m0Itq1s5sKjvn7YXlu0bzv7+qKSNAG847QJ85KOb83y41gmYk+mjNZbl+nm
+         5zO+eGbX9VXrNDfBtPWpTd4YpPQjma9BIlIBOwCJpEurbAQ229QeF9KuOFovs1PIfebD
+         a4OP6p3h4ys+Oi6nEN9HBYjtTeNIfZLOEEoHqavNb9gRcUOd1qBCOFOl+7frwgNsPuHK
+         IN672vHsOoE8QXJlohnS9OC9w/CPiJ++DbBXPwCqxsTiomzYivAN9TBZDClcEp/4XUFH
+         KMig==
+X-Gm-Message-State: AOJu0YwTJ5RFaGL1fghKgl/P+5EFvXUx2JRXAZf/Vnwnws8JjEl+puMY
+	y7YjvMIUeElf4dh8Z64JoL3NpPzl3AVxdc8DPa2DpAGFCm4ccYqyYH9hHwzyLFnGNHtxDANEmYC
+	gUycjh3vehd2pkz5P0Q1wA7hRJjapzgz8wr3Cd0/9NJplRcfLdZ3H6QyQBd5UxrEZBmkw
+X-Gm-Gg: ASbGncvJ5GdXCevyv3cpw1+LSD+AuuYlZzJ4zDg/dOjqki5SJStfGsmKMergLsxLHr+
+	eC56yRtxBm89Ccryku9CCqpMHVY1vM0x9pNq+KVtb22r0PXlE1EhN8jwEfvVADzghDhnhdOIuFH
+	HcQ1jU4/o01J+l6c3ERKAKgSOFfa4B7cwxZIyEyG3kPIo4tRul0VWUFdyTg4cbQc8cXdQLrKqyK
+	1JUf+VomEMJaWtzCvUOD03uo8U08yoIWIJlnEOZYGfd1AI+hcPzJVMInRX+6+jRfw0Aw4Kl/Crh
+	JTyjXlwP/4MrsFjIVu2pPsC3OOlUFQLMm2xP3V8rm57Bt1ZIjJzvVnsQr4u50MvWLVRJBfYKhcz
+	1TujKdFUoIbYC+akleN2Qyg==
+X-Received: by 2002:a05:6870:d0d:b0:2d5:97d0:c03c with SMTP id 586e51a60fabf-2ea9675aa8dmr1180347fac.18.1749610719973;
+        Tue, 10 Jun 2025 19:58:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFBud1AVwyFvOwAw4uK84W6FyfbeOV8nniRVWU9hjKilfxs2wJ95EuOAcCOsyWx63mo0uOdUg==
+X-Received: by 2002:a05:6870:d0d:b0:2d5:97d0:c03c with SMTP id 586e51a60fabf-2ea9675aa8dmr1180339fac.18.1749610719648;
+        Tue, 10 Jun 2025 19:58:39 -0700 (PDT)
 Received: from [192.168.86.65] (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2ea85fa2cbasm478059fac.8.2025.06.10.19.58.37
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2ea85fa2cbasm478059fac.8.2025.06.10.19.58.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Jun 2025 19:58:38 -0700 (PDT)
+        Tue, 10 Jun 2025 19:58:39 -0700 (PDT)
 From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Date: Tue, 10 Jun 2025 21:58:28 -0500
-Subject: [PATCH v2 1/3] soc: qcom: mdt_loader: Ensure we don't read past
- the ELF header
+Date: Tue, 10 Jun 2025 21:58:29 -0500
+Subject: [PATCH v2 2/3] soc: qcom: mdt_loader: Rename mdt_phdr_valid()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,7 +91,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250610-mdt-loader-validation-and-fixes-v2-1-f7073e9ab899@oss.qualcomm.com>
+Message-Id: <20250610-mdt-loader-validation-and-fixes-v2-2-f7073e9ab899@oss.qualcomm.com>
 References: <20250610-mdt-loader-validation-and-fixes-v2-0-f7073e9ab899@oss.qualcomm.com>
 In-Reply-To: <20250610-mdt-loader-validation-and-fixes-v2-0-f7073e9ab899@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -102,147 +101,110 @@ Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
         Doug Anderson <dianders@chromium.org>,
         Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-        stable@vger.kernel.org
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3078;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2179;
  i=bjorn.andersson@oss.qualcomm.com; h=from:subject:message-id;
- bh=DJn9NYHqZgqnTw4yMsPNWysi1jIuh/SNHNWMy4qhxPQ=;
- b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBoSPDcWMhl8PNhEUSpN0/Q5gk8VSK6rZb/VYHEr
- OGbXJKHVbmJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCaEjw3BUcYW5kZXJzc29u
- QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcXRow//XIVlajDg/QB4/Ejz8xnsC13HZRwJw6RFbDmviPK
- 9+M9T+oSd0oJELF+cVbPGfvsPyDgHgQuWQbnHIi4N4rMhtY0Lvfcm5NJelfBet4oJfwckF8fiyR
- LX9ez77SqzOHBBrWoSOMxQBz/IrB4b/30n0oV3Fkf2GnsgFnbaMU/PImMJirh7hMkfAhxo0pRJx
- 7bzA4D2iwOpO3+d7cB8WP7rwyU7QaMngZ2YSElK/cKD2c4kfZav+1KeSwQJRi1sHncuE9+qQXpw
- YuU44pAk4BDRZOPktAt0+vkSdaYRijoE2Dw+JaBj4az0ZZPgbmkgJu5wviMEdlI/gi2J7PLeeJM
- CerjSJEmHdAJii3IvdU953ABtk70tL0FYrgGL5jIUpGDV4+9msLY6NyZdXUmJD5QIDQtQb/wMSg
- nOk1VsbsqPyd1Ud9u8cmB8T29tqTbaCn3L4XUu2yg2LVs/n4xKpdn44cgjrVYYNpqo0GrytATQL
- lX9ROm5A4TopngVk6nT/5257bw7RpMNNZGly1r/J1Bv1TCAYWc4JujZ+c4P72wSDmSgkyKn37gI
- QJU+aJ1k29rR7q8ACOmDdk+t8bTSyf77YA1/g5bNlYXBDD64Lcn1RzVd0yWOY/i3R+zVRzc08lE
- 4aEzqmNwJtZ2ftWHoX5/8+FYqiUpTmJJPKe4eS87JI+M=
+ bh=Tq84tO28/ihL3VCn+xRUdAhQjrUgd8j1sFdAu9HULA8=;
+ b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBoSPDc4wVmjoJsFrBJ245i0TjD3UoQWw+0wMjrm
+ 3hxu2fVQP+JAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCaEjw3BUcYW5kZXJzc29u
+ QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcVCSA//e0sVwVAchDT3X4CcbVrsKKgPUvslkgFpwmOx7yN
+ xMsnQmBsofbHlFBmLq0t4TGoaojZ4ngWL3HnMMOH6+dgETJ2aZ4vBtu64ejcvBcoVmhLBaMtan2
+ ONHmIw10bDj+AVQvOls+sSY4EYcHIXBkr1/9pFFteLBQ2bKB7eeStBQ10eDyASzVRZtAFGfRSva
+ AklEM/xbpHPIGh9CirHxnJ47lzeJusITmllIvSn7Oh+BgyQYuEsjIJAAioy7DCyKt4c8SSxk+0W
+ JcQuu/bgEs6PnUdR+Yb7PDsJxFlDdFF6YXsyiMkrrJX/N1qEarQubfD96UI4oiAMV+8hUDYgFfY
+ lsYVIX0WP/9WILXLwo7fr8ZaHxzZPoI5wmVeB1kPSqN+/Kc2qV8KN02XSroXXJRgZc9vcHiF9bt
+ VcFVLu9KTMQLdVutQAGf2AYkXniXOfvRyoLo8+XM98IeWyMcZ+Z6+ZlzU/mKKj3h2Q9Qlj1uGdJ
+ ensj+BgKMcwgVAIZHtlDNiR6tpfb0vX755XsPaO/O9vDCZR04bX68Ar4EGoae0iQLVke9mQDcJq
+ VZb4oPrUlXK2wWBv2ZcvzHwpthCa9bMJpE4MPGv2czvIpF7TrLsPZFAp1SMrGoR4cUTa7xMgM00
+ 2PW/g9yxHQKIdr4b31cHNFMQxI/ajIzgPINDRhKrIQUw=
 X-Developer-Key: i=bjorn.andersson@oss.qualcomm.com; a=openpgp;
  fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDAyNSBTYWx0ZWRfX7vJ0GxV/Q8fm
- bmbfFctGBVnBqNWXmTt0Ek5PFHC7rcxT1saOzG89B+lEw4bi5EpXP9vfsklGO8E1uoz5kB0sCBL
- cHrca0/3EyUVY5nWQuvXoNIaTLoTcK1CGv+xxELqs15V9wdGIsHo5J6wcxgqPk35L5bUxUpl1Ca
- NIl0Ji+PUE4Ghmhkifk4WRjwjeY0/ZE/hlJb60OBKjN1dm3lglKKXZHpbipFaVoS2O7bsFsyJf8
- Y4o4U5UKb+24RPyA90ySZPnCLEVzn9+wCpZG1OsGQavECxNKwaXP3f4dAOKlrwKLS73w0z1Frxa
- Nui4ePntO6e48mWI0VOYkB5IQlzwe56cwyGTweEPpFPYC5frsri/TuHk8KVkN4oXx9kcCdYxg2s
- DynGO8tbbbeN8j0GKCz2o0nEemVvnY6p3hKBl7Sixg7OBfiCucLUCp9FAe55TZAqKWEDegdZ
-X-Proofpoint-GUID: G4J91coFbbC04KtyxgFD-n991S8DTiUO
-X-Authority-Analysis: v=2.4 cv=FaQ3xI+6 c=1 sm=1 tr=0 ts=6848f0e0 cx=c_pps
- a=Z3eh007fzM5o9awBa1HkYQ==:117 a=DaeiM5VmU20ml6RIjrOvYw==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=cm27Pg_UAAAA:8
- a=EUspDBNiAAAA:8 a=R2NP8FmM25b3pXeoK7YA:9 a=QEXdDO2ut3YA:10
- a=eBU8X_Hb5SQ8N-bgNfv4:22
-X-Proofpoint-ORIG-GUID: G4J91coFbbC04KtyxgFD-n991S8DTiUO
+X-Proofpoint-GUID: ia6rQsKg0JZ1zqQx3NCmqM0Kc9BlnT6y
+X-Authority-Analysis: v=2.4 cv=HMbDFptv c=1 sm=1 tr=0 ts=6848f0e0 cx=c_pps
+ a=CWtnpBpaoqyeOyNyJ5EW7Q==:117 a=DaeiM5VmU20ml6RIjrOvYw==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=KKqZDcqvNeJUIbkoXhUA:9
+ a=QEXdDO2ut3YA:10 a=vh23qwtRXIYOdz9xvnmn:22
+X-Proofpoint-ORIG-GUID: ia6rQsKg0JZ1zqQx3NCmqM0Kc9BlnT6y
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDAyNSBTYWx0ZWRfXyifNINsSriP0
+ QTgHEYhJJ65vLBvAnHXn+F/s30P/r8ObJa1cD0nX9MWNK2tH4jpExCmeqaor0XAH5UShv6yMpDy
+ TTbcidc9TVMUvwknW/+Oe1HF+ztsFriyRYSWYaL+EzU4StC4K+WRegUsPfOWAirHhj2OjlcHYZt
+ hItl8lb34/RcSuw86mQk68ZAjfMugIvFvWyabsvo4BZPSAlFGu1AETdvNe4l6myXw96OnAvbFSg
+ AhtYmgFncEww2GbkmLo/WefKtamYcSk+5Gd5WE6hLSrOfc7KXyF/3BvRj29PTEPqqZiTNihjYL8
+ DW3f72uSzkZJ/W0ef+0YWGk8cp4u73hdohgNfeXqwZoh8DOjwlsoee3ZbAIvl9Z0MSZ9BcRfsRk
+ a49+7q0yuNiBCF5j2eq09+F1gWVEERRu3c69RbqIONYaPcr2dRk+vFTQeOlFd9xM59u35Fqh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-11_01,2025-06-10_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 adultscore=0
- mlxlogscore=999 mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0
- priorityscore=1501 clxscore=1015 classifier=spam authscore=0 authtc=n/a
+ clxscore=1015 mlxlogscore=999 priorityscore=1501 impostorscore=0
+ suspectscore=0 malwarescore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ adultscore=0 mlxscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2505280000 definitions=main-2506110025
 
-When the MDT loader is used in remoteproc, the ELF header is sanitized
-beforehand, but that's not necessary the case for other clients.
+The function checks if a program header refers to a PT_LOAD segment,
+that isn't a hash segment (which should be PT_LOAD in the first place),
+andwith non-zero size. That's not the definition of "valid", but rather
+if it's "loadable".
 
-Validate the size of the firmware buffer to ensure that we don't read
-past the end as we iterate over the header. e_phentsize and e_shentsize
-are validated as well, to ensure that the assumptions about step size in
-the traversal are valid.
+Rename the function to reflect what it does.
 
-Fixes: 2aad40d911ee ("remoteproc: Move qcom_mdt_loader into drivers/soc/qcom")
-Cc: <stable@vger.kernel.org>
-Reported-by: Doug Anderson <dianders@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 ---
- drivers/soc/qcom/mdt_loader.c | 43 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ drivers/soc/qcom/mdt_loader.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-index b2c0fb55d4ae678ee333f0d6b8b586de319f53b1..b2c9731b6f2afacf4acafe555dd36ca0657444a6 100644
+index b2c9731b6f2afacf4acafe555dd36ca0657444a6..52f0c8bb7c5ee9f043009a274f147128f0778151 100644
 --- a/drivers/soc/qcom/mdt_loader.c
 +++ b/drivers/soc/qcom/mdt_loader.c
-@@ -18,6 +18,37 @@
- #include <linux/slab.h>
- #include <linux/soc/qcom/mdt_loader.h>
+@@ -49,7 +49,7 @@ static bool mdt_header_valid(const struct firmware *fw)
+ 	return true;
+ }
  
-+static bool mdt_header_valid(const struct firmware *fw)
-+{
-+	const struct elf32_hdr *ehdr;
-+	size_t phend;
-+	size_t shend;
-+
-+	if (fw->size < sizeof(*ehdr))
-+		return false;
-+
-+	ehdr = (struct elf32_hdr *)fw->data;
-+
-+	if (memcmp(ehdr->e_ident, ELFMAG, SELFMAG))
-+		return false;
-+
-+	if (ehdr->e_phentsize != sizeof(struct elf32_phdr))
-+		return -EINVAL;
-+
-+	phend = size_add(size_mul(sizeof(struct elf32_phdr), ehdr->e_phnum), ehdr->e_phoff);
-+	if (phend > fw->size)
-+		return false;
-+
-+	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
-+		return -EINVAL;
-+
-+	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
-+	if (shend > fw->size)
-+		return false;
-+
-+	return true;
-+}
-+
- static bool mdt_phdr_valid(const struct elf32_phdr *phdr)
+-static bool mdt_phdr_valid(const struct elf32_phdr *phdr)
++static bool mdt_phdr_loadable(const struct elf32_phdr *phdr)
  {
  	if (phdr->p_type != PT_LOAD)
-@@ -82,6 +113,9 @@ ssize_t qcom_mdt_get_size(const struct firmware *fw)
- 	phys_addr_t max_addr = 0;
- 	int i;
+ 		return false;
+@@ -122,7 +122,7 @@ ssize_t qcom_mdt_get_size(const struct firmware *fw)
+ 	for (i = 0; i < ehdr->e_phnum; i++) {
+ 		phdr = &phdrs[i];
  
-+	if (!mdt_header_valid(fw))
-+		return -EINVAL;
-+
- 	ehdr = (struct elf32_hdr *)fw->data;
- 	phdrs = (struct elf32_phdr *)(ehdr + 1);
+-		if (!mdt_phdr_valid(phdr))
++		if (!mdt_phdr_loadable(phdr))
+ 			continue;
  
-@@ -134,6 +168,9 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
- 	ssize_t ret;
- 	void *data;
+ 		if (phdr->p_paddr < min_addr)
+@@ -260,7 +260,7 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
+ 	for (i = 0; i < ehdr->e_phnum; i++) {
+ 		phdr = &phdrs[i];
  
-+	if (!mdt_header_valid(fw))
-+		return ERR_PTR(-EINVAL);
-+
- 	ehdr = (struct elf32_hdr *)fw->data;
- 	phdrs = (struct elf32_phdr *)(ehdr + 1);
+-		if (!mdt_phdr_valid(phdr))
++		if (!mdt_phdr_loadable(phdr))
+ 			continue;
  
-@@ -214,6 +251,9 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
- 	int ret;
- 	int i;
+ 		if (phdr->p_flags & QCOM_MDT_RELOCATABLE)
+@@ -360,7 +360,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+ 	for (i = 0; i < ehdr->e_phnum; i++) {
+ 		phdr = &phdrs[i];
  
-+	if (!mdt_header_valid(fw))
-+		return -EINVAL;
-+
- 	ehdr = (struct elf32_hdr *)fw->data;
- 	phdrs = (struct elf32_phdr *)(ehdr + 1);
+-		if (!mdt_phdr_valid(phdr))
++		if (!mdt_phdr_loadable(phdr))
+ 			continue;
  
-@@ -310,6 +350,9 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
- 	if (!fw || !mem_region || !mem_phys || !mem_size)
- 		return -EINVAL;
+ 		if (phdr->p_flags & QCOM_MDT_RELOCATABLE)
+@@ -387,7 +387,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+ 	for (i = 0; i < ehdr->e_phnum; i++) {
+ 		phdr = &phdrs[i];
  
-+	if (!mdt_header_valid(fw))
-+		return -EINVAL;
-+
- 	is_split = qcom_mdt_bins_are_split(fw, fw_name);
- 	ehdr = (struct elf32_hdr *)fw->data;
- 	phdrs = (struct elf32_phdr *)(ehdr + 1);
+-		if (!mdt_phdr_valid(phdr))
++		if (!mdt_phdr_loadable(phdr))
+ 			continue;
+ 
+ 		offset = phdr->p_paddr - mem_reloc;
 
 -- 
 2.49.0
