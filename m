@@ -1,88 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-61007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C1B1AD5A34
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 17:21:15 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C11ECAD5A87
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 17:31:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A6FB160E2A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 15:17:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6366B7ADDC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 15:30:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5C281A83E8;
-	Wed, 11 Jun 2025 15:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1786A1D95B3;
+	Wed, 11 Jun 2025 15:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bHg0w8FU"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hxAtWI7U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F01E19994F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 15:17:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F541AE875
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 15:31:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749655037; cv=none; b=kAw2zJN56pp8OzRmd1N6WMP+OBPB6mTq6fCUdzK5CcyXMwS0qX18hiVkDiwwyAyaxOLN8xNZp9cs3RD3KsXDBzluDsml5JIs0x0Hgc6TjHxjRpGKdws3WouEu9/ItbP91D26a28keBUy114YzxaxvbI7ehyEo/ADohe/KVptHBs=
+	t=1749655894; cv=none; b=p0mitRJjTuShUoojW8e+NxwLYozhLqY9BY4m66yHi9iIwzSmSL3CBMAO7vEcSJwYnxvm3nOLKGKf9N9nLgueqVq/jp58/4ew2YapG88inj2Fdhfd4f39yfsVUTHXLJgDAlyQNYfsJaloeCc+GPl79KiXp+qn2mBPxt6wkyJyI3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749655037; c=relaxed/simple;
-	bh=pGgotr9k0uSAGJ/bX3htTWswsENYRPWHaegUlGQDCiY=;
+	s=arc-20240116; t=1749655894; c=relaxed/simple;
+	bh=VZmnhpMNAmXEbbqud23neFBnq7loO8MoNJRWiN7z2uI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Af/ttMmWwHx/87IVnF8TlTfoieVAGvotBAT4CiIsMMHYC5Mn3IILYuAmPbLkcRqE+eDsUbEy3w2e0bmRV560jGtuekDT+/hd73QGZBuLwhaG1MtPogGWpllSGMUHMqDVmQl1tsS3TsTUGSmPnV8T3CgkEOYzBFF+m1OYXwYvc70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bHg0w8FU; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=p3I420mpEzfqJGSDUXxXyPjbVcr/u5rCLVo6cwnWV2wqw48PlpkpPUWjseaSbls9bLH2lYex4wK9ypp04vb8XhznUJLZSY8xbRl86g0JFXk46XzojIJKt9e6wh00wsOC7yAfjSxAWqrWbak+14XSp47y+n9HLhDcnGimog19giY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hxAtWI7U; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55B9DGig029304
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 15:17:15 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55B9DEEW027727
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 15:31:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	EqTW/NVYvWCa/RrQ71wsb3xnRvish0J2TidcBsJz/7o=; b=bHg0w8FUw0YHtQ1/
-	sj9ponopkcNURpPNqj5l1H+rnMWzzdZ7SZLG1ZXxNPz3yyk6zC3604OL+CJbpwo9
-	5iQXv4yib1niyonEkfGcnjVMxlMGGjD/S35GG2rzoa3W6MnIPkKV0ukZR+uY6+sM
-	qYm3lnfUXwLKcHHntAus0CvsV4c4I4I39ItEN16x2pqVAXInbdJZ+CuPcu4Mz0hw
-	t0L9Fxaz7+syk/gz1ulRNnqjepbu2Ik+yqEs5XCsi9Om8svcCxehpJ9gfGXlyJC5
-	jec5kGcgc/jq4btiB5AqXBLNVPISFo0NRW57EggMVh3IVCk62wAFK3ZfUVx3kKUI
-	DX3s5w==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474dn6dcya-1
+	455gzgu0hHWS67hAKzKZb/nm3WenYkc/X441OZiZOVk=; b=hxAtWI7UUjCGmbMV
+	ZivBuX7r1oKK1BmJZQUQovu0xLwD+GkbuX03yAVA1Ts73LM1e/7KUe6Kcqq2MKqm
+	z5BfqNh4/mJ8CyyhtFDnuU4gnTBjy9Cnbjd5z9hI6SyHdii6gtqvN+icyd2MaGWN
+	xuK2QUVQGC4mHBwWx/Gx0hdUFFVFqR0AQstfpmNm4WV4JW17pg+z7JTUSZWTof+X
+	f+KVTgFugyNPC4RmBAnJICVDLK1XIjLuBsum3/a0N2Ks8IYiuFCcRn8lGj2iTZRA
+	MGnFIL22jbyCDzCGhKUquxTS+flCpWdjWS8pMgwbx8KAdjU3j3Kp0WJYQjDEGM+J
+	KdJPEQ==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 476jrhcetk-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 15:17:15 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d0a9d20c2eso21129885a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 08:17:15 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 15:31:29 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6fb030f541bso38386d6.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 08:31:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749655034; x=1750259834;
+        d=1e100.net; s=20230601; t=1749655889; x=1750260689;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EqTW/NVYvWCa/RrQ71wsb3xnRvish0J2TidcBsJz/7o=;
-        b=bybwsX7t99J4vFabQ69RDRTis7j2v/LYTeXQvhpq00DCTFgohnVxT2HUZNVtCFTfuh
-         otBfeFfxIFw39pbrTG54Pb3Lqvs7TwDFOpDBRKzY+lAuXchLvfBRKdBHvRwTpjEcy3E4
-         nl0rFedc+J7iJ3FXovPTc66ZY9UfyLMpYIT7HDsrpMlYJpO3lR1uNVL53QIl3RzwGv0Y
-         vlKytmklsJ7m49Nhr20crW7zLf4ABND1QA9kiMQ2fByAqA8lCdOUXy3n2mVqh8tGm+3l
-         c6/nR+lVi9wg1R2k3dDqPt9BszEYHEDLBouTc8sBjBJ8an2okqbRNEn7ftp5KzFZEDbs
-         G0Ag==
-X-Forwarded-Encrypted: i=1; AJvYcCVlt8B9ugevqdsQ1TuR3z8lf4DpkAnMsbcF+8SyZ6hKDg5rIuSmnxTP7Y1SRmTWLZJNdWZRWsdl9viHB4KJ@vger.kernel.org
-X-Gm-Message-State: AOJu0YySnm2F4auIcAJvM2IdPM7QsR/8NJpnCzegF3DCN/8/EINdvY3n
-	p7IH9pO//FKRqZH8q76ES9WibaxkFbsx0YNHsUvCmnMWZ02iR0NsIDZPo0e/ZIB7MAOHOpY7AU0
-	UJ6QuNRs22wrWzGRszSZY4I9VM/VuOf5Jbe5nLeKV6apbJPFlq9MuILYl2bFc6H70xbGq
-X-Gm-Gg: ASbGncvgNuB7lAVi2M7eZ6N9TBL4np8EnPA9/Y1UvPbL0Q0yrzUuAlLxQO6NnaBWEOC
-	snxcdSmJ7FODnSSBc5V8Ys1iKjatyuOgfLqopPcSZtBSVfO1J4yKa3/CNs3XbrvPQ+QK1MiDpOf
-	ziJhcQw7WwMkgiJddxwmA2wbjddT9l6vo8n3CmBbU992k2Ed/WjW8rbbrRXJL8KMgebdsIDU5QY
-	33SL4QnlXnJx0N2yXq4dDlXPvCk+2NbLloQSNnFW/yKcBoCkgdrVYE15Bv521mR1PVJVz0BDhal
-	plT04XR5eELRYidXh8/6C7xxIxyGO/1WnQPsxVJU/itueaHv4sboKCHqAPPcJnf8bxrfYFh11fE
-	l3hc=
-X-Received: by 2002:a05:620a:800c:b0:7c3:d3a0:578d with SMTP id af79cd13be357-7d3a8865591mr218867985a.14.1749655033570;
-        Wed, 11 Jun 2025 08:17:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOlrj+WvRgsqxAguisTMF18suedyxOAw5Xm9Xpltd4DgN1JJ+kNX5luk8nv8h7J7EhzglSGA==
-X-Received: by 2002:a05:620a:800c:b0:7c3:d3a0:578d with SMTP id af79cd13be357-7d3a8865591mr218864285a.14.1749655033020;
-        Wed, 11 Jun 2025 08:17:13 -0700 (PDT)
+        bh=455gzgu0hHWS67hAKzKZb/nm3WenYkc/X441OZiZOVk=;
+        b=kNR4Z5bx6qyXN15gH0XviL2urYho6x12fDppkm2IYrvh7Lw3+ESD+tgY+x0RVOj37u
+         lDmZAOOe92iCiuSpFizH3dAEp6odP7/A2yprxsRK+BEZNfnKoMS+IDs3fGLZT6dz7cmu
+         TRTDeNcI2C+Tt7UTk/wT6UTIl1iz/EXQzFV0Vb/eMw+IFTTQAP3ozXdQytIDSFH7MNdR
+         cXptISMxRH6PPBKoO4Ad9ztXW8U/CENtthuoEBPN+Uevio7Qlz3+jx0upgA4LevXCwoe
+         J+PuExFDQduMbu+YgIhkmpFFEom4VxGiB/OydHUFGaCTk3ybYex4azAKOP++IQQ+j1Fe
+         RNAg==
+X-Gm-Message-State: AOJu0YyuXV9/iGbB8rtb+TDLZVpy1vOztkE6sYO6Rn8rOQOAIx3DYj/g
+	h/FsNUSE7uXziPw5GcFOBAqGevxc3BIEt27Gy4oW4S3FnTp4uUuAIdgzAmtNWy+gkwEdlnZPqFm
+	QpvlQZjfwTAV1yIWU9mxPrb2OdKwJRiCoTZr46udNWKnwudGLie9+uUy9oaUY3NYJW3DW
+X-Gm-Gg: ASbGncvuZ4R8Ia9zfp5owO8G2fn8lF475rp14AlKv2FGdbninMsgt7VG9cs11aqhFXC
+	hrMoPMQJCy7UKIAmO20Hu/VwvapRIKGygC/KLSojDQ2WAidOdY72IAWb3dnt39L4213OvA1MBE+
+	7kVAahTBHTMpSJySlbD5jI3NWmYjF8WayJAaT7gkbiALJWMZekXrD5EhLrDIykc0ykuqpEwnzll
+	UEcthTTTcRrUTPhl2oct8YR2XweSAo5fLifiU0EOtHBr98H/YviDcg332xipY51xjlR3mtS9dn+
+	XehJGMINczr5ePg6y1aZCPApOtmRaxAc2b0UoRWnL1wFKg/JPw4+pvx7DN2YyConloQ3dDlcKu3
+	5C1Q=
+X-Received: by 2002:a05:620a:43a8:b0:7c0:cc94:46c4 with SMTP id af79cd13be357-7d3a87d34b9mr218667785a.2.1749655889049;
+        Wed, 11 Jun 2025 08:31:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH5SyB2UQ9M+HBsZiuY7IxSNchyuOSdndxJp/raWV9Me50SKe7sJUDsLyWN7TOdPxpU9D5OXw==
+X-Received: by 2002:a05:620a:43a8:b0:7c0:cc94:46c4 with SMTP id af79cd13be357-7d3a87d34b9mr218665285a.2.1749655888415;
+        Wed, 11 Jun 2025 08:31:28 -0700 (PDT)
 Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ade1dc1c771sm906550266b.103.2025.06.11.08.17.09
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ade1db55f6bsm906998066b.51.2025.06.11.08.31.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Jun 2025 08:17:12 -0700 (PDT)
-Message-ID: <7eca5cd3-9ab8-4c42-93e8-d8043dd26408@oss.qualcomm.com>
-Date: Wed, 11 Jun 2025 17:17:09 +0200
+        Wed, 11 Jun 2025 08:31:25 -0700 (PDT)
+Message-ID: <c24314dd-229f-4e26-befb-1491a5ca4037@oss.qualcomm.com>
+Date: Wed, 11 Jun 2025 17:31:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,100 +89,142 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] arm64: qcom: sc7280: Move phy, perst to root port
- node
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Rob Herring
- <robh@kernel.org>,
-        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski
- <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_mrana@quicinc.com
-References: <20250419-perst-v3-0-1afec3c4ea62@oss.qualcomm.com>
- <20250419-perst-v3-3-1afec3c4ea62@oss.qualcomm.com>
- <20250423153747.GA563929-robh@kernel.org>
- <2ce28fb9-1184-4503-8f16-878d1fcb94cd@oss.qualcomm.com>
- <ba107a41-5520-47fa-9943-6e33946f50b1@kernel.org>
- <56eccdb0-c877-431d-9833-16254afa1a0c@oss.qualcomm.com>
- <77eeca94-0703-44c9-b30b-17fc989dedb7@kernel.org>
+Subject: Re: [PATCH v2 1/2] PCI: qcom: Add equalization settings for 8.0 GT/s
+To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>, andersson@kernel.org,
+        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, jingoohan1@gmail.com, mani@kernel.org,
+        lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com,
+        johan+linaro@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+        dmitry.baryshkov@linaro.org, manivannan.sadhasivam@linaro.org,
+        neil.armstrong@linaro.org, abel.vesa@linaro.org, kw@linux.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com
+References: <20250611100319.464803-1-quic_ziyuzhan@quicinc.com>
+ <20250611100319.464803-2-quic_ziyuzhan@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <77eeca94-0703-44c9-b30b-17fc989dedb7@kernel.org>
+In-Reply-To: <20250611100319.464803-2-quic_ziyuzhan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDEyOCBTYWx0ZWRfX2WQrZbPo9nsm
- AfF4wdOaDn06i4goSDCvOScG+qXlhdbZsROtsHsr89LLItLM0dIzD30/XY25aI/oJDnhd8xpF1N
- EVeXpI389Ig0/Fb2Irh06N32JR1CYJrpdqosyLLbeAp16wnTYPIntUqMwLIzfOUTRON9CaVFwy9
- walJA7ekybaeIcMib9RY8F0D4S4Lbk4Iv/YHxR8mUPLLsOHfcrldZ9gwSwKxyr02mzTWwibf5UP
- WUAif9Q2RzVgOt42M+thbyF7aGnffB3PX531iBRO3f9ELjbbd9/ZDWIzfT/TooF+mOOa00PmJAQ
- bXWhIRGglEoTRQDRLK4zcQ4T1MU7VsKrbtTXKa+EheJiHPp1MG+iqouFIqqr8/pMhb0NVCeln+Q
- qRPGfKRd75LI9ZQg/1FWxh3okAMrGAzZ1aRfift+Txq5uK9geuyV3IaQOyo8jJiI4OtKCfC8
-X-Proofpoint-GUID: 6ZpNmDMo0pGhVVKsoAuCKLaO9CnM4X5o
-X-Authority-Analysis: v=2.4 cv=FaQ3xI+6 c=1 sm=1 tr=0 ts=68499dfb cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=lYUf8r55RHZWWh1rIM8A:9
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-ORIG-GUID: 6ZpNmDMo0pGhVVKsoAuCKLaO9CnM4X5o
+X-Authority-Analysis: v=2.4 cv=EovSrTcA c=1 sm=1 tr=0 ts=6849a151 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=XRhAMW6oQtNP-qC2JosA:9 a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 40mLCRKLiDE1sKxeByvmcrh2wYXf2xRd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDEzMCBTYWx0ZWRfX7EWz0HVGLcia
+ vwPqA3FspUEbMIb72d7+b6ij6XKzuZs0xoZHEvXMty5ukNwTgitp+BEL80k0U8NP0Oy2n3ZroOm
+ nieY+TSWBUmL2Z/KLOHmME6gKKhdtKDmqkGXT5hll6wIoevRYMN1ngAtbdkArHkh5YM1A0DDu5n
+ 8LMDN+pqdGFlDGuge3pTkpcUj5PVPv7AjSpRriNJ1lhx8SrUMmN+GdobUQWa7oFGW1/AryT6mTC
+ qxf10mypNHGBUbk9QV51ipbaDgpfe4biiVF34gkycB2JnfruSXR0fagnYHGlVlkx+95QsZ1oanT
+ q5uAKGLadRi1n7FMMCsYMPlbR4JLZ+se3Pojk+AFjoHaURkU77YhRuhTJV7iQ2I4IGookdWnTv+
+ F7hGNARdKbDuGUewvsdyyzZY7jk+QNup+aF3EvNw1jq617Ip9z4UgYO3Nrvkb1cWYnElnYaK
+X-Proofpoint-GUID: 40mLCRKLiDE1sKxeByvmcrh2wYXf2xRd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-11_05,2025-06-10_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 adultscore=0
- mlxlogscore=999 mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0
- priorityscore=1501 clxscore=1015 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506110128
+ impostorscore=0 spamscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999
+ mlxscore=0 clxscore=1015 malwarescore=0 adultscore=0 lowpriorityscore=0
+ phishscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506110130
 
-On 6/11/25 8:36 AM, Krzysztof Kozlowski wrote:
-> On 10/06/2025 15:15, Konrad Dybcio wrote:
->> On 6/2/25 3:01 PM, Krzysztof Kozlowski wrote:
->>> On 08/05/2025 16:26, Konrad Dybcio wrote:
->>>> On 4/23/25 5:37 PM, Rob Herring wrote:
->>>>> On Sat, Apr 19, 2025 at 10:49:26AM +0530, Krishna Chaitanya Chundru wrote:
->>>>>> There are many places we agreed to move the wake and perst gpio's
->>>>>> and phy etc to the pcie root port node instead of bridge node[1].
->>>>>>
->>>>>> So move the phy, phy-names, wake-gpio's in the root port.
->>>>>> There is already reset-gpio defined for PERST# in pci-bus-common.yaml,
->>>>>> start using that property instead of perst-gpio.
->>>>>
->>>>> Moving the properties will break existing kernels. If that doesn't 
->>>>> matter for these platforms, say so in the commit msg.
->>>>
->>>> I don't think we generally guarantee *forward* dt compatibility though, no?
->>> We do not guarantee, comment was not about this, but we expect. This DTS
->>> is supposed and is used by other projects. There was entire complain
->>> last DT BoF about kernel breaking DTS users all the time.
->>
->> Yeah I get it.. we're in a constant cycle of adding new components and
->> later coming to the conclusion that whoever came up with the initial
->> binding had no clue what they're doing..
->>
->> That said, "absens carens".. if users or developers of other projects
->> don't speak up on LKML (which serves as the de facto public square for
->> DT development), we don't get any feedback to take into account when
->> making potentially breaking changes (that may have a good reason behind
->> them). We get a patch from OpenBSD people every now and then, but it's
->> a drop in the ocean.
->>
-> I don't understand what you are commenting on. Do you reject what I
-> asked for?
+On 6/11/25 12:03 PM, Ziyue Zhang wrote:
+> Adding lane equalization setting for 8.0 GT/s to enhance link stability
+> and fix AER correctable errors reported on some platforms (eg. SA8775P).
+> 
+> 8.0 GT/s and 16.0GT/s require the same equalization setting. This setting
+> is programmed into a group of shadow registers, which can be switched to
+> configure equalization for different GEN speeds by writing 00b, 01b
+> to `RATE_SHADOW_SEL`.
+> 
+> Hence program equalization registers in a loop using link speed as index,
+> so that equalization setting can be programmed for both 8.0 GT/s and
+> 16.0 GT/s.
+> 
+> Co-developed-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+> ---
 
-If the general consensus among kernel PCIe folks will come down to what
-this patch does, I think it's fair to shift to a "correct" hw
-description, especially if this is a requirement to resolve a blocker
-on functionality (which the author didn't clarify whether is the case)
+[...]
+
+> -void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci)
+> +void qcom_pcie_common_set_equalization(struct dw_pcie *pci)
+>  {
+>  	u32 reg;
+> +	u16 speed, max_speed = PCIE_SPEED_16_0GT;
+> +	struct device *dev = pci->dev;
+>  
+>  	/*
+>  	 * GEN3_RELATED_OFF register is repurposed to apply equalization
+> @@ -18,33 +20,43 @@ void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci)
+>  	 * GEN3_EQ_*. The RATE_SHADOW_SEL bit field of GEN3_RELATED_OFF
+>  	 * determines the data rate for which these equalization settings are
+>  	 * applied.
+> +	 *
+> +	 * TODO:
+> +	 * EQ settings need to be added for 32.0 T/s in future
+>  	 */
+> -	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+> -	reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
+> -	reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
+> -	reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK,
+> -			  GEN3_RELATED_OFF_RATE_SHADOW_SEL_16_0GT);
+> -	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
+> +	if (pcie_link_speed[pci->max_link_speed] < PCIE_SPEED_32_0GT)
+> +		max_speed = pcie_link_speed[pci->max_link_speed];
+> +	else
+> +		dev_warn(dev, "The target supports 32.0 GT/s, but the EQ setting for 32.0 GT/s is not configured.\n");
+>  
+> -	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
+> -	reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
+> -		GEN3_EQ_FMDC_N_EVALS |
+> -		GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
+> -		GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
+> -	reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
+> -		FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
+> -		FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
+> -		FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
+> -	dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
+> +	for (speed = PCIE_SPEED_8_0GT; speed <= max_speed; ++speed) {
+> +		reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+> +		reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
+> +		reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
+> +		reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK,
+> +			  speed - PCIE_SPEED_8_0GT);
+> +		dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
+>  
+> -	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
+> -	reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
+> -		GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
+> -		GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
+> -		GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
+> -	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
+> +		reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
+> +		reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
+> +			GEN3_EQ_FMDC_N_EVALS |
+> +			GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
+> +			GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
+> +		reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
+> +			FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
+> +			FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
+> +			FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
+> +		dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
+> +
+> +		reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
+> +		reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
+> +			GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
+> +			GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
+> +			GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
+> +		dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
+> +	}
+
+this function could receive `speed` as a parameter instead, so that
+it's easier to parse
 
 Konrad
 
