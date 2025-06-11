@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-60960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 449A0AD543C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 13:40:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1F9AAD546A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 13:45:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D7563A55DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 11:39:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4DB843AA531
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 11:44:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59861248F75;
-	Wed, 11 Jun 2025 11:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7942526E71B;
+	Wed, 11 Jun 2025 11:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iSsTEPjU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c687v4ID"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0212E6118;
-	Wed, 11 Jun 2025 11:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FFFA26E6F4;
+	Wed, 11 Jun 2025 11:44:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749641983; cv=none; b=XJL/XiyxrBRBoVCgQMRi6U3vwV5CQfRdP0w1EjG/gqylitAyuPdniMglZ2r66q2zjnlbIWigC3OGuoHtJt4NVdRrt0e3b6PQdcHFCOQiIr9xjzx2zVUbp8Li9Bsjv1W01g1g178DpMVmodzljUYPHCHWjLM46BCKHksCMUiv8N4=
+	t=1749642277; cv=none; b=hoXWkuYolH7PjbJ2W7sHXPZqUg3Ge9nlBNXpNQT8UIja6+K9NIlSmHLn4Czrsdl08hGe1XH/WuX3FIePX3PxSgcddva13thGU5U6xODrdq2YgoYYgrxS+9XPR4A3UkLsAcNG1VByzKssW8QoIu2sYDCo1BAf5ncv1hy2sHw5Op8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749641983; c=relaxed/simple;
-	bh=W51h0IvnLdS5At9t6QhFGW2D1lfrpdK/sP/Mih6WkUI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=VGmlfA7Y6yedBFQjcNn5unhphYJO/omC68B26TWP6ROaNbhCfmEVT4NqCDW0KzQV3THJLsIvU2a5i7pOLH11B5kmISZUYRtzpP2cyUbo1/HjAj2PFkfcl3wJUCgfdQiUhIED6Yauah+F7yk+bUk524Vr17/XB23MKrOEu5GcSEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iSsTEPjU; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1749642277; c=relaxed/simple;
+	bh=N6NlSbZHRWK+AzjTOX4n4rvaVkmv+EwmB/LtVmREygg=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=qq4Cyr3PpG9GM3qNpJaVcZX126/N70ie6rQecA8U13p4Ai+z+EoKCRIwxmhzXGl5NMt+g4LWHew/x/pDY9Kh98hyVAj7sx5PDM1qSkAC+ieTzyu5zG6jcKNtOO01oWghIckV70j72zli3xkL19d6eBL6IjZ3K0tc1BgyMXJCtVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c687v4ID; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55B9DFQ0024015;
-	Wed, 11 Jun 2025 11:39:32 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55B9DEOs019621;
+	Wed, 11 Jun 2025 11:44:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zaAaEOESVrv9W2C/ubnOn7Ss13DYm5bDSbnH0FQyCv4=; b=iSsTEPjUAxANapbC
-	eZ8yWaaYOfO3JhIFrn14wcyB4iIGFQtaB5hh8HlfcXiyIthcpipGUdG3NBom6RnJ
-	imMwvhsngp/NydsYqYWmQY76gaBfHOHfcKDP0rGEjLZoSsuEdN9F4wJpwZXs54Cf
-	6DH7XLN+xOk5SVlHENsadgUC9AV+vlrR49c/bVEOFW/Fnfhpn2U4VSRPyRvTVN6d
-	oLJeRU8YK9sDMkmfyHfxOYwlTvIOjP+gg8kOmY5H7FsWzNCwMg/3j+hvP/20u2++
-	2yc1uKCMNgVEhJeKBdhb0YwmPPUX45UIpPC85WUJ26/9HsZGHxkM8Yzut8aqzb0w
-	hyegVg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 475v2tfdyf-1
+	mYz9eiz4fM3AyCKPeLBg+OwsyTVUkHaAqTPGtn1VnfU=; b=c687v4IDXD9zl1Bn
+	OLrwjQjiZd8yH0/oN0EllYVV4gPp9FirX4r9cdWSVp2l+XufAXGklIWUeO9EQPoU
+	ShlvaeuCIJQ6OrXUJnoMcQtFZeJphGAMZVwJTHFfF3N4K3ckmjLCC3P9e9RD+dgz
+	ihC4zUErCO6u5txENyitPK1cP4yNA07ODCJDj4C7Wm4IAVG1fLg+LMtB3jhpZHlP
+	xenQwg8T7XKiPIN642fas0orzdt4bx7bSUTshnyTcP4hM83MqwrEI7ecN5+v+UZV
+	LSHhnReeflpd0YNMhfttXnr3izHCC3/DO+c9fPEU+zSpAxcIpivbHC2OJvWWThUG
+	gKDckQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474eqcmsrg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 11:39:31 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55BBdUHr003533
+	Wed, 11 Jun 2025 11:44:27 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55BBiQdI005313
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 11:39:30 GMT
-Received: from [10.64.68.119] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 11 Jun 2025 11:44:26 GMT
+Received: from [10.216.47.202] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Jun
- 2025 04:39:27 -0700
-Message-ID: <07f3a522-0b38-45bd-bb93-a5dc7c622d12@quicinc.com>
-Date: Wed, 11 Jun 2025 19:39:24 +0800
+ 2025 04:44:19 -0700
+Message-ID: <01850482-7648-4a20-bb02-f4956f3ae6d2@quicinc.com>
+Date: Wed, 11 Jun 2025 17:14:15 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,756 +65,1055 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 28/38] drm/msm/dp: add dp_mst_drm to manage DP MST
- bridge operations
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Abhinav Kumar
-	<abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>
-References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
- <20250609-msm-dp-mst-v2-28-a54d8902a23d@quicinc.com>
- <s433wb4q2jyppdnrqgplonos5m6ummee4vancr55nnjdnogvda@xi72bcq5adnx>
+Subject: Re: [PATCH v3 6/9] soc: qcom: geni-se: Add support to load QUP SE
+ Firmware via Linux subsystem
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>
+CC: <andi.shyti@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <gregkh@linuxfoundation.org>,
+        <jirislaby@kernel.org>, <broonie@kernel.or>, <konradybcio@kernel.org>,
+        <johan+linaro@kernel.org>, <dianders@chromium.org>,
+        <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-i2c@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-serial@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <quic_msavaliy@quicinc.com>,
+        <quic_anupkulk@quicinc.com>
+References: <20250303124349.3474185-1-quic_vdadhani@quicinc.com>
+ <20250303124349.3474185-7-quic_vdadhani@quicinc.com>
+ <2kmnhxj3je366livo67btpbmjiyeyx4q23of42ng4co6xngemj@kitsdtqepgce>
+ <ac2f3d9a-1dd5-48c0-abc3-b541720d244c@quicinc.com>
 Content-Language: en-US
-From: Yongxing Mou <quic_yongmou@quicinc.com>
-In-Reply-To: <s433wb4q2jyppdnrqgplonos5m6ummee4vancr55nnjdnogvda@xi72bcq5adnx>
+In-Reply-To: <ac2f3d9a-1dd5-48c0-abc3-b541720d244c@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZIdA80zvYQ1dOnyPjFesm8a4heWW4rO0
-X-Authority-Analysis: v=2.4 cv=GoxC+l1C c=1 sm=1 tr=0 ts=68496af3 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDEwMCBTYWx0ZWRfX3uLyLrnUNclY
+ 3CBJBi+Ep7XQ49hM0jAnR4eNglpnk6Ak2edCeSg97tLU1CszB1ZAm8sYvG3vYAckYzv3bCwP5uo
+ N77rMAG7U75vVSmsmd1FuACePR44mwLJVETXVxBjdpRu1lk3+DwlIRhOpHOynm0VWQuPbPNIYyv
+ BOqpmKWedTMee8uo8AqXQSOYx0TYQAHQg5J7LX9w3LfmbsFOMMRUGLA4zADJqKELzJCMeWhL+v2
+ 2wgIyoDKEGtDodMoMpqYoaHybOCmtZz6GSc6gZOZFKNgJXTtVzvskea5zK7EkkGI+P75APdMJdB
+ 7AOL+XsWMFADiKNnF/8hWRLW7DWYFPBbQ+4pz0Bdv+pDft9BgpRVOKI6wR5FVbpfJMYZROwk00l
+ DY/jhxWTo2AAocGmEeUJdqRU7e5TPHTpqXp41H/PxoZCxbzuZnSe6EljbBYkyDvM7Sd3oQD8
+X-Authority-Analysis: v=2.4 cv=Q7TS452a c=1 sm=1 tr=0 ts=68496c1b cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8
- a=0Cf2mubyukSqxOWUNqcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=tRCGQ2Qnnd116j_COkoA:9 a=KGXNd6_PMDzJ1iBM:21
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=-_B0kFfA75AA:10
  a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: ZIdA80zvYQ1dOnyPjFesm8a4heWW4rO0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDEwMCBTYWx0ZWRfX6xpRCKGCRG6z
- r80Jld/rIMfGyoUDC/r/olC/dVzloiMvHCbuxzcpcqg/eeDs8KT5/LOOl1uO1s9fPS3ILgW1WNt
- SVMVVAsEgsEQ0k5/KWCNv4kd+SUFy+H94RJ8Yx/b0sVpfJ/IysxFUMyOLapaglXnMYUW+lP4I2l
- v/AALYn6EgkuhNggezEzdm+fmnE2V4YNCnIUKOOcHPYjgtkpyFu1mQbV25mpLgPGlIOFonX8e30
- ELt8uOWIAk31uLGpo6we08vaI/y52T41TJAhDxvDiA1A1Ng9jyr6beG7+61MOD/fxq6d5fPIC0R
- ZrjXyhbrwka46SpLTjTosmhGdJJJyEzOj+LWpIZWCgVpgbYYctmfHcIHyjHwU+LptXK2LFoWUec
- nPLDpktzEp6hGM/ln7Jtlewjrbqi16UGOwA+/b06+nF9A2eM35H9H+moxY8b+gO/0I4GBN6K
+X-Proofpoint-GUID: u-xajT8VFmF9_2gfhNToQIjW_m8lEXhS
+X-Proofpoint-ORIG-GUID: u-xajT8VFmF9_2gfhNToQIjW_m8lEXhS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-11_05,2025-06-10_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 adultscore=0 impostorscore=0 malwarescore=0 mlxscore=0
- suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ suspectscore=0 phishscore=0 mlxscore=0 spamscore=0 mlxlogscore=999
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0 impostorscore=0
+ priorityscore=1501 malwarescore=0 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2505280000 definitions=main-2506110100
 
 
 
-On 2025/6/9 23:57, Dmitry Baryshkov wrote:
-> On Mon, Jun 09, 2025 at 08:21:47PM +0800, Yongxing Mou wrote:
->> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+On 4/22/2025 12:02 PM, Viken Dadhaniya wrote:
+> 
+> 
+> On 3/6/2025 4:57 AM, Bjorn Andersson wrote:
+>> On Mon, Mar 03, 2025 at 06:13:46PM +0530, Viken Dadhaniya wrote:
+>>> Load the firmware to QUP SE based on the 'firmware-name' property 
+>>> specified
 >>
->> Add a new file dp_mst_drm to manage the DP MST bridge operations
->> similar to the dp_drm file which manages the SST bridge operations.
->> Each MST encoder creates one bridge and each bridge is bound to its
->> own dp_panel abstraction to manage the operations of its pipeline.
-> 
-> I don't see this patch being improved from v1. Please follow the
-> feedback or provide a _good_ reason to ignore it.
-> 
-Sorry for that, will explain one by one later..
+>> Please start your commit message with a description of "the problem"
+>> you're trying to solve, explain that QUP firmware is typically loaded by
+>> the "bootloader" and that for <reason> you're adding support for loading
+>> firmware are load time. Please read and follow:
+>> https://docs.kernel.org/process/submitting-patches.html#describe-your- 
+>> changes
 >>
->> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/Makefile        |   3 +-
->>   drivers/gpu/drm/msm/dp/dp_display.h |   3 +
->>   drivers/gpu/drm/msm/dp/dp_mst_drm.c | 501 ++++++++++++++++++++++++++++++++++++
->>   drivers/gpu/drm/msm/dp/dp_mst_drm.h | 100 +++++++
->>   4 files changed, 606 insertions(+), 1 deletion(-)
+>>> in devicetree. Populate Serial engine and base address details in the 
+>>> probe
+>>> function of the protocol driver and pass to firmware load routine.
 >>
->> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
->> index 7a2ada6e2d74a902879e4f12a78ed475e5209ec2..d317e5ecda28dfd708ccdc5d3d27d4cf0b78b9d5 100644
->> --- a/drivers/gpu/drm/msm/Makefile
->> +++ b/drivers/gpu/drm/msm/Makefile
->> @@ -142,7 +142,8 @@ msm-display-$(CONFIG_DRM_MSM_DP)+= dp/dp_aux.o \
->>   	dp/dp_link.o \
->>   	dp/dp_panel.o \
->>   	dp/dp_audio.o \
->> -	dp/dp_utils.o
->> +	dp/dp_utils.o \
->> +	dp/dp_mst_drm.o
->>   
->>   msm-display-$(CONFIG_DRM_MSM_HDMI_HDCP) += hdmi/hdmi_hdcp.o
->>   
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
->> index 85eaa55fdcb7d9d8713849ec64a2cc9b08924425..9ca045ed2b4f1a9bc3254b733d1ce5332ebaba96 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.h
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
->> @@ -7,6 +7,7 @@
->>   #define _DP_DISPLAY_H_
->>   
->>   #include "dp_panel.h"
->> +#include "dp_mst_drm.h"
->>   #include "disp/msm_disp_snapshot.h"
->>   
->>   #define DP_MAX_PIXEL_CLK_KHZ	675000
->> @@ -24,6 +25,8 @@ struct msm_dp {
->>   	bool is_edp;
->>   	bool internal_hpd;
->>   
->> +	struct msm_dp_mst *msm_dp_mst;
->> +
->>   	struct msm_dp_audio *msm_dp_audio;
->>   	bool psr_supported;
->>   };
->> diff --git a/drivers/gpu/drm/msm/dp/dp_mst_drm.c b/drivers/gpu/drm/msm/dp/dp_mst_drm.c
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..a3ea34ae63511db0ac920cbeebe30c4e2320b8c4
->> --- /dev/null
->> +++ b/drivers/gpu/drm/msm/dp/dp_mst_drm.c
->> @@ -0,0 +1,501 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +/*
->> + * Copyright © 2014 Red Hat.
->> + *
->> + * Permission to use, copy, modify, distribute, and sell this software and its
->> + * documentation for any purpose is hereby granted without fee, provided that
->> + * the above copyright notice appear in all copies and that both that copyright
->> + * notice and this permission notice appear in supporting documentation, and
->> + * that the name of the copyright holders not be used in advertising or
->> + * publicity pertaining to distribution of the software without specific,
->> + * written prior permission.  The copyright holders make no representations
->> + * about the suitability of this software for any purpose.  It is provided "as
->> + * is" without express or implied warranty.
->> + *
->> + * THE COPYRIGHT HOLDERS DISCLAIM ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
->> + * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO
->> + * EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY SPECIAL, INDIRECT OR
->> + * CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
->> + * DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
->> + * TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
->> + * OF THIS SOFTWARE.
->> + */
->> +
->> +#include "dp_mst_drm.h"
->> +
->> +static struct drm_private_state *msm_dp_mst_duplicate_bridge_state(struct drm_private_obj *obj)
->> +{
->> +	struct msm_dp_mst_bridge_state *state;
->> +
->> +	state = kmemdup(obj->state, sizeof(*state), GFP_KERNEL);
->> +	if (!state)
->> +		return NULL;
->> +
->> +	__drm_atomic_helper_private_obj_duplicate_state(obj, &state->base);
->> +
->> +	return &state->base;
->> +}
->> +
->> +static void msm_dp_mst_destroy_bridge_state(struct drm_private_obj *obj,
->> +					    struct drm_private_state *state)
->> +{
->> +	struct msm_dp_mst_bridge_state *priv_state =
->> +		to_msm_dp_mst_bridge_priv_state(state);
->> +
->> +	kfree(priv_state);
->> +}
->> +
->> +static const struct drm_private_state_funcs msm_dp_mst_bridge_state_funcs = {
->> +	.atomic_duplicate_state = msm_dp_mst_duplicate_bridge_state,
->> +	.atomic_destroy_state = msm_dp_mst_destroy_bridge_state,
->> +};
->> +
->> +/**
->> + * dp_mst_find_vcpi_slots() - Find VCPI slots for this PBN value
->> + * @mgr: manager to use
->> + * @pbn: payload bandwidth to convert into slots.
->> + *
->> + * Calculate the number of VCPI slots that will be required for the given PBN
->> + * value.
->> + *
->> + * RETURNS:
->> + * The total slots required for this port, or error.
->> + */
->> +static int msm_dp_mst_find_vcpi_slots(struct drm_dp_mst_topology_mgr *mgr, int pbn)
->> +{
->> +	int num_slots;
->> +	struct drm_dp_mst_topology_state *state;
->> +
->> +	state = to_drm_dp_mst_topology_state(mgr->base.state);
->> +	num_slots = DIV_ROUND_UP(pbn, dfixed_trunc(state->pbn_div));
->> +
->> +	/* max. time slots - one slot for MTP header */
->> +	if (num_slots > 63)
->> +		return -ENOSPC;
->> +	return num_slots;
->> +}
->> +
->> +static void _msm_dp_mst_update_timeslots(struct msm_dp_mst *mst,
->> +					 struct msm_dp_mst_bridge *mst_bridge,
->> +					 struct drm_dp_mst_port *port)
+>> Don't describe the code flow, describe how this fits into the bigger
+>> picture. E.g. that SE-functional drivers will load this at bootup.
+>>
+>>>
+>>> Skip the firmware loading if the firmware is already loaded in Serial
+>>> Engine's firmware memory area.
+>>>
+>>
+>> Above description should be clear enough that this is obvious.
+>>
+>>> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+>>> ---
+>>> v2 -> v3:
+>>>
+>>> - Remove code related to the 'qcom,xfer-mode' property.
+>>> - Add logic to read the boolean property 'qcom,gsi-dma-allowed' and 
+>>> select the transfer mode.
+>>> - Hardcode FIFO mode for the serial driver as GSI mode is currently 
+>>> not supported.
+>>> - Update function descriptions as suggested.
+>>> - Enhance error handling and remove redundant if conditions.
+>>> - Drop the ternary operator.
+>>>
+>>> v2 Link: https://lore.kernel.org/linux-arm- 
+>>> msm/20250124105309.295769-6-quic_vdadhani@quicinc.com/
+>>>
+>>> v1 -> v2:
+>>>
+>>> - Remove the fixed firmware path and add logic to read the path from 
+>>> the device tree.
+>>> - Remove code related to the 'qcom,load-firmware' property.
+>>> - Resolve kernel test robot warnings.
+>>> - Update the commit message.
+>>> - Update Copyright year.
+>>>
+>>> v1 Link: https://lore.kernel.org/linux- 
+>>> kernel/20241204150326.1470749-5-quic_vdadhani@quicinc.com/
+>>> ---
+>>> ---
+>>>   drivers/soc/qcom/qcom-geni-se.c      | 423 +++++++++++++++++++++++++++
+>>>   include/linux/soc/qcom/geni-se.h     |  18 ++
+>>>   include/linux/soc/qcom/qup-fw-load.h | 179 ++++++++++++
+>>>   3 files changed, 620 insertions(+)
+>>>   create mode 100644 include/linux/soc/qcom/qup-fw-load.h
+>>>
+>>> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom- 
+>>> geni-se.c
+>>> index 4cb959106efa..345181ad6fcc 100644
+>>> --- a/drivers/soc/qcom/qcom-geni-se.c
+>>> +++ b/drivers/soc/qcom/qcom-geni-se.c
+>>> @@ -1,5 +1,6 @@
+>>>   // SPDX-License-Identifier: GPL-2.0
+>>>   // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+>>> +// Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights 
+>>> reserved.
+>>
+>> Odd, this should be a multiline comment.
+>>
+>>>   /* Disable MMIO tracing to prevent excessive logging of unwanted 
+>>> MMIO traces */
+>>>   #define __DISABLE_TRACE_MMIO__
+>>> @@ -15,6 +16,7 @@
+>>>   #include <linux/pinctrl/consumer.h>
+>>>   #include <linux/platform_device.h>
+>>>   #include <linux/soc/qcom/geni-se.h>
+>>> +#include <linux/soc/qcom/qup-fw-load.h>
+>>>   /**
+>>>    * DOC: Overview
+>>> @@ -110,6 +112,9 @@ struct geni_se_desc {
+>>>   static const char * const icc_path_names[] = {"qup-core", "qup- 
+>>> config",
+>>>                           "qup-memory"};
+>>> +static const char * const protocol_name[] = { "None", "SPI", "UART",
+>>> +                          "I2C", "I3C", "SPI SLAVE"};
+>>> +
+>>>   #define QUP_HW_VER_REG            0x4
+>>>   /* Common SE registers */
+>>> @@ -891,6 +896,424 @@ int geni_icc_disable(struct geni_se *se)
+>>>   }
+>>>   EXPORT_SYMBOL_GPL(geni_icc_disable);
+>>> +/**
+>>> + * elf_phdr_valid() - Validate an ELF header.
+>>> + * @phdr: Pointer to the ELF header.
+>>> + *
+>>> + * Validate the ELF header by comparing the fields stored in p_flags 
+>>> and the payload type.
+>>
+>> The interesting piece of information here would be what the definition
+>> of "valid" is - because you're not checking that the program header
+>> entry is valid, you're checking that it's a specific valid.
+>>
+>>> + *
+>>> + * Return: true if the validation is successful, false otherwise.
+>>> + */
+>>
+>> That said, I think you should just inline these checks in "read_elf()"
+>> below, preferably with a comment about what you're looking for.
+>>
+>>> +static bool elf_phdr_valid(const struct elf32_phdr *phdr)
+>>> +{
+>>> +    if (phdr->p_type != PT_LOAD || !phdr->p_memsz)
+>>> +        return false;
+>>> +
+>>> +    if (MI_PBT_PAGE_MODE_VALUE(phdr->p_flags) == 
+>>> MI_PBT_NON_PAGED_SEGMENT &&
+>>> +        MI_PBT_SEGMENT_TYPE_VALUE(phdr->p_flags) != 
+>>> MI_PBT_HASH_SEGMENT &&
+>>> +        MI_PBT_ACCESS_TYPE_VALUE(phdr->p_flags) != 
+>>> MI_PBT_NOTUSED_SEGMENT &&
+>>> +        MI_PBT_ACCESS_TYPE_VALUE(phdr->p_flags) != 
+>>> MI_PBT_SHARED_SEGMENT)
+>>> +        return true;
+>>> +
+>>> +    return false;
+>>> +}
+>>> +
+>>> +/**
+>>> + * valid_seg_size() - Validate the segment size.
+>>> + * @pelfseg: Pointer to the ELF header.
+>>> + * @p_filesz: Pointer to the file size.
+>>> + *
+>>> + * Validate the ELF segment size by comparing the file size.
+>>> + *
+>>> + * Return: true if the segment is valid, false if the segment is 
+>>> invalid.
+>>> + */
+>>> +static bool valid_seg_size(struct elf_se_hdr *pelfseg, Elf32_Word 
+>>> p_filesz)
+>>> +{
+>>> +    if (p_filesz >= pelfseg->fw_offset + pelfseg->fw_size_in_items * 
+>>> sizeof(u32) &&
+>>> +        p_filesz >= pelfseg->cfg_idx_offset + pelfseg- 
+>>> >cfg_size_in_items * sizeof(u8) &&
+>>> +        p_filesz >= pelfseg->cfg_val_offset + pelfseg- 
+>>> >cfg_size_in_items * sizeof(u32))
+>>> +        return true;
+>>> +    return false;
+>>> +}
+>>> +
+>>> +/**
+>>> + * read_elf() - Read an ELF file.
+>>> + * @rsc: Pointer to the SE resources structure.
+>>> + * @fw: Pointer to the firmware buffer.
+>>> + * @pelfseg: Pointer to the SE-specific ELF header.
+>>> + * @phdr: Pointer to one of the valid headers from the list in the 
+>>> firmware buffer.
+>>> + *
+>>> + * Read the ELF file and output a pointer to the header data, which
+>>> + * contains the firmware data and any other details.
+>>> + *
+>>> + * Return: 0 if successful, otherwise return an error value.
+>>> + */
+>>> +static int read_elf(struct qup_se_rsc *rsc, const struct firmware *fw,
+>>
+>> I think this name is too generic, please prefix it with "geni_" to make
+>> it easier to search for.
+>>
+>>> +            struct elf_se_hdr **pelfseg, struct elf32_phdr **phdr)
+>>> +{
+>>> +    const struct elf32_hdr *ehdr = (const struct elf32_hdr *)fw->data;
+>>> +    struct elf32_phdr *phdrs = (struct elf32_phdr *)(ehdr + 1);
+>>> +    const u8 *addr;
+>>> +    int i;
+>>> +
+>>> +    ehdr = (struct elf32_hdr *)fw->data;
+>>
+>> Please validate that fw->size is sufficient before accessing - here and
+>> in the loop.
+>>
+>>> +
+>>> +    if (ehdr->e_phnum < 2)
+>>> +        return -EINVAL;
+>>> +
+>>> +    for (i = 0; i < ehdr->e_phnum; i++) {
+>>> +        *phdr = &phdrs[i];
+>>> +        if (!elf_phdr_valid(*phdr))
+>>> +            continue;
+>>> +
+>>> +        if ((*phdr)->p_filesz >= sizeof(struct elf_se_hdr)) {
+>>> +            addr =  fw->data + (*phdr)->p_offset;
+>>> +            *pelfseg = (struct elf_se_hdr *)addr;
+>>
+>> Don't assign *pelfseg until you've found a match.
+>>
+>>> +
+>>> +            if ((*pelfseg)->magic == MAGIC_NUM_SE &&
+>>> +                (*pelfseg)->version == 1 &&
+>>> +                valid_seg_size(*pelfseg, (*phdr)->p_filesz) &&
+>>> +                (*pelfseg)->serial_protocol == rsc->protocol &&
+>>> +                (*pelfseg)->serial_protocol != GENI_SE_NONE)
+>>
+>> There's so much going on in this one conditional. Turn this the way
+>> around:
+>>
+>> if (phdr->p_filesz < sizeof(struct elf_se_hdr))
+>>     continue;
+>>
+>> if (se->magic != MAGIC_NUM_SE)
+>>     continue;
+>>
+>> ...
+>>
+>> Makes is super easy to read and each one encapsulates one disqualifying
+>> factor.
+>>
+>>> +                return 0;
+>>> +        }
+>>> +    }
+>>> +    return -EINVAL;
+>>> +}
+>>> +
+>>> +/**
+>>> + * geni_config_common_control() - Configure common CGC and disable 
+>>> high priority interrupt.
+>>> + * @rsc: Pointer to a structure representing SE-related resources.
+>>> + *
+>>> + * Configure the common CGC and disable high priority interrupts 
+>>> until the current low priority
+>>> + * interrupts are handled.
+>>
+>> What do you mean with "low priority interrupt", this is called from the
+>> firmware loading operation - that doesn't sound like an interrupt at
+>> all.
+>>
+>> It leaves me with the question about why interrupts should be disabled
+>> and why they should be disabled in a function called "config common
+>> control".
+>>
+>>
+>> Unless it makes the code easier to read, you should wrap it at 80
+>> characters. I don't think this sentence is easier to read in it's
+>> unwrapped form.
+>>
+>>> + *
+>>> + * Return: None.
+>>
+>> Drop this for void functions.
+>>
+>>> + */
+>>> +static void geni_config_common_control(struct qup_se_rsc *rsc)
+>>> +{
+>>> +    /*
+>>> +     * Disable high priority interrupt until current
+>>> +     * low priority interrupts are handled.
+>>> +     */
+>>> +    setbits32(rsc->se->wrapper->base + QUPV3_COMMON_CFG,
+>>
+>> I find that the qup_se_rsc structure makes these functions overflow with
+>> pointer dereferences, and it makes it impossible to know if a function
+>> operates on 1, 2, or 3 of its members.
+>>
+>> Please just pass the arguments around where necessary.
+>>
+>>> +          FAST_SWITCH_TO_HIGH_DISABLE_BMASK);
+>>> +
+>>> +    /*
+>>> +     * Set AHB_M_CLK_CGC_ON to indicate hardware controls
+>>> +     * se-wrapper cgc clock.
+>>> +     */
+>>> +    setbits32(rsc->se->wrapper->base + QUPV3_SE_AHB_M_CFG,
+>>> +          AHB_M_CLK_CGC_ON_BMASK);
+>>> +
+>>> +    /* Let hardware to control common cgc. */
+>>> +    setbits32(rsc->se->wrapper->base + QUPV3_COMMON_CGC_CTRL,
+>>> +          COMMON_CSR_SLV_CLK_CGC_ON_BMASK);
+>>> +}
+>>> +
+>>> +/**
+>>> + * geni_configure_xfer_mode() - Set the transfer mode.
+>>> + * @rsc: Pointer to a structure representing SE-related resources.
+>>> + *
+>>> + * Set the transfer mode to either FIFO or DMA according to the mode 
+>>> specified by the protocol
+>>> + * driver.
+>>> + *
+>>> + * Return: 0 if successful, otherwise return an error value.
+>>> + */
+>>> +static int geni_configure_xfer_mode(struct qup_se_rsc *rsc)
+>>> +{
+>>> +    /* Configure SE FIFO, DMA or GSI mode. */
+>>> +    switch (rsc->mode) {
+>>> +    case GENI_GPI_DMA:
+>>> +        setbits32(rsc->se->base + QUPV3_SE_GENI_DMA_MODE_EN,
+>>> +              GENI_DMA_MODE_EN_GENI_DMA_MODE_EN_BMSK);
+>>> +        writel_relaxed(0x0, rsc->se->base + SE_IRQ_EN);
+>>> +        writel_relaxed(SE_GSI_EVENT_EN_BMSK, rsc->se->base + 
+>>> SE_GSI_EVENT_EN);
+>>> +        break;
+>>> +
+>>> +    case GENI_SE_FIFO:
+>>> +        clrbits32(rsc->se->base + QUPV3_SE_GENI_DMA_MODE_EN,
+>>> +              GENI_DMA_MODE_EN_GENI_DMA_MODE_EN_BMSK);
+>>> +        writel_relaxed(SE_IRQ_EN_RMSK, rsc->se->base + SE_IRQ_EN);
+>>> +        writel_relaxed(0x0, rsc->se->base + SE_GSI_EVENT_EN);
+>>> +        break;
+>>> +
+>>> +    case GENI_SE_DMA:
+>>> +        setbits32(rsc->se->base + QUPV3_SE_GENI_DMA_MODE_EN,
+>>> +              GENI_DMA_MODE_EN_GENI_DMA_MODE_EN_BMSK);
+>>> +        writel_relaxed(SE_IRQ_EN_RMSK, rsc->se->base + SE_IRQ_EN);
+>>> +        writel_relaxed(0x0, rsc->se->base + SE_GSI_EVENT_EN);
+>>> +        break;
+>>> +
+>>> +    default:
+>>> +        dev_err(rsc->se->dev, "invalid se mode: %d\n", rsc->mode);
+>>
+>> Please make this error more descriptive so that it's easier for someone
+>> finding it in the kernel log to understand what the problem is.
+>>
+>>> +        return -EINVAL;
+>>> +    }
+>>> +    return 0;
+>>> +}
+>>> +
+>>> +/**
+>>> + * geni_enable_interrupts() Enable interrupts.
+>>> + * @rsc: Pointer to a structure representing SE-related resources.
+>>> + *
+>>> + * Enable the required interrupts during the firmware load process.
+>>> + *
+>>> + * Return: None.
+>>> + */
+>>> +static void geni_enable_interrupts(struct qup_se_rsc *rsc)
+>>> +{
+>>> +    u32 reg_value;
+>>> +
+>>> +    /* Enable required interrupts. */
+>>> +    writel_relaxed(M_COMMON_GENI_M_IRQ_EN, rsc->se->base + 
+>>> GENI_M_IRQ_ENABLE);
+>>> +
+>>> +    reg_value = S_CMD_OVERRUN_EN | S_ILLEGAL_CMD_EN |
+>>> +                S_CMD_CANCEL_EN | S_CMD_ABORT_EN |
+>>
+>> Please confirm that the indentation is correct here.
+>>
+>>> +                S_GP_IRQ_0_EN | S_GP_IRQ_1_EN |
+>>> +                S_GP_IRQ_2_EN | S_GP_IRQ_3_EN |
+>>> +                S_RX_FIFO_WR_ERR_EN | S_RX_FIFO_RD_ERR_EN;
+>>> +    writel_relaxed(reg_value, rsc->se->base + GENI_S_IRQ_ENABLE);
+>>> +
+>>> +    /* DMA mode configuration. */
+>>> +    reg_value = DMA_TX_IRQ_EN_SET_RESET_DONE_EN_SET_BMSK |
+>>> +            DMA_TX_IRQ_EN_SET_SBE_EN_SET_BMSK |
+>>> +            DMA_TX_IRQ_EN_SET_DMA_DONE_EN_SET_BMSK;
+>>> +    writel_relaxed(reg_value, rsc->se->base + DMA_TX_IRQ_EN_SET);
+>>> +    reg_value = DMA_RX_IRQ_EN_SET_FLUSH_DONE_EN_SET_BMSK |
+>>> +            DMA_RX_IRQ_EN_SET_RESET_DONE_EN_SET_BMSK |
+>>> +            DMA_RX_IRQ_EN_SET_SBE_EN_SET_BMSK |
+>>> +            DMA_RX_IRQ_EN_SET_DMA_DONE_EN_SET_BMSK;
+>>> +    writel_relaxed(reg_value, rsc->se->base + DMA_RX_IRQ_EN_SET);
+>>> +}
+>>> +
+>>> +/**
+>>> + * geni_flash_fw_revision() - Flash the firmware revision.
+>>
+>> It's not really "flashing", it's more just "writing"...right?
+>>
+>>> + * @rsc: Pointer to a structure representing SE-related resources.
+>>> + * @hdr: Pointer to the ELF header of the Serial Engine.
+>>
+>> That's not the ELF header, it's the serial engine firmware header. That
+>> said, you only consume the serial_protocol and fw_version, so a function
+>> called "geni_write_fw_revision()" could perhaps just take those two
+>> values as parameters?
+>>
+>>> + *
+>>> + * Flash the firmware revision and protocol into the respective 
+>>> register.
+>>
+>> Again, no flashing, just writing.
+>>
+>>> + *
+>>> + * Return: None.
+>>> + */
+>>> +static void geni_flash_fw_revision(struct qup_se_rsc *rsc, struct 
+>>> elf_se_hdr *hdr)
+>>> +{
+>>> +    u32 reg_value;
+>>> +
+>>> +    /* Flash firmware revision register. */
+>>> +    reg_value = (hdr->serial_protocol << FW_REV_PROTOCOL_SHFT) |
+>>> +            (hdr->fw_version & 0xFF << FW_REV_VERSION_SHFT);
+>>> +    writel_relaxed(reg_value, rsc->se->base + SE_GENI_FW_REVISION);
+>>> +
+>>> +    reg_value = (hdr->serial_protocol << FW_REV_PROTOCOL_SHFT) |
+>>> +            (hdr->fw_version & 0xFF << FW_REV_VERSION_SHFT);
+>>> +
+>>> +    writel_relaxed(reg_value, rsc->se->base + SE_S_FW_REVISION);
+>>> +}
+>>> +
+>>> +/**
+>>> + * geni_load_se_fw() - Load Serial Engine specific firmware.
+>>> + * @rsc: Pointer to a structure representing SE-related resources.
+>>> + * @fw: Pointer to the firmware structure.
+>>> + *
+>>> + * Load the protocol firmware into the IRAM of the Serial Engine.
+>>> + *
+>>> + * Return: 0 if successful, otherwise return an error value.
+>>> + */
+>>> +static int geni_load_se_fw(struct qup_se_rsc *rsc, const struct 
+>>> firmware *fw)
+>>> +{
+>>> +    const u32 *fw_val_arr, *cfg_val_arr;
+>>> +    const u8 *cfg_idx_arr;
+>>> +    u32 i, reg_value, mask, ramn_cnt;
+>>> +    int ret;
+>>> +    struct elf_se_hdr *hdr;
+>>> +    struct elf32_phdr *phdr;
+>>> +
+>>> +    ret = geni_icc_set_bw(rsc->se);
+>>> +    if (ret) {
+>>> +        dev_err(rsc->se->dev, "%s: Failed to set ICC BW %d\n", 
+>>> __func__, ret);
+>>
+>> Drop the __func__ from all your printouts.
+>>
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> +    ret = geni_icc_enable(rsc->se);
+>>> +    if (ret) {
+>>> +        dev_err(rsc->se->dev, "%s: Failed to enable ICC %d\n", 
+>>> __func__, ret);
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> +    ret = geni_se_resources_on(rsc->se);
+>>
+>> Why do you turn on the buses and clocks before you're parsing the
+>> firmware file?
+>>
+>>> +    if (ret) {
+>>> +        dev_err(rsc->se->dev, "%s: Failed to enable common clocks 
+>>> %d\n", __func__, ret);
+>>> +        goto err;
+>>> +    }
+>>> +
+>>> +    ret = read_elf(rsc, fw, &hdr, &phdr);
+>>
+>> Why is phdr returned here? Makes read_elf() harder to read...
+>>
+>>> +    if (ret) {
+>>> +        dev_err(rsc->se->dev, "%s: ELF parsing failed ret: %d\n", 
+>>> __func__, ret);
+>>> +        goto err;
+>>> +    }
+>>> +
+>>> +    fw_val_arr = (const u32 *)((u8 *)hdr + hdr->fw_offset);
+>>
+>> Why is this a "firmware value array", isn't it the "firmware data"? Why
+>> is it chunks of u32? Does it also need to be written in words?
+>>
+>>> +    cfg_idx_arr = (const u8 *)hdr + hdr->cfg_idx_offset;
+>>> +    cfg_val_arr = (const u32 *)((u8 *)hdr + hdr->cfg_val_offset);
+>>> +
+>>> +    geni_config_common_control(rsc);
+>>> +
+>>> +    /* Allows to drive corresponding data according to hardware 
+>>> value. */
+>>> +    writel_relaxed(0x0, rsc->se->base + GENI_OUTPUT_CTRL);
+>>> +
+>>> +    /* Set SCLK and HCLK to program RAM */
+>>> +    setbits32(rsc->se->base + GENI_CGC_CTRL, 
+>>> GENI_CGC_CTRL_PROG_RAM_SCLK_OFF_BMSK |
+>>> +            GENI_CGC_CTRL_PROG_RAM_HCLK_OFF_BMSK);
+>>> +    writel_relaxed(0x0, rsc->se->base + SE_GENI_CLK_CTRL);
+>>> +    clrbits32(rsc->se->base + GENI_CGC_CTRL, 
+>>> GENI_CGC_CTRL_PROG_RAM_SCLK_OFF_BMSK |
+>>> +            GENI_CGC_CTRL_PROG_RAM_HCLK_OFF_BMSK);
+>>> +
+>>> +    /* Enable required clocks for DMA CSR, TX and RX. */
+>>> +    reg_value = DMA_GENERAL_CFG_AHB_SEC_SLV_CLK_CGC_ON_BMSK |
+>>> +        DMA_GENERAL_CFG_DMA_AHB_SLV_CLK_CGC_ON_BMSK |
+>>> +        DMA_GENERAL_CFG_DMA_TX_CLK_CGC_ON_BMSK |
+>>> +        DMA_GENERAL_CFG_DMA_RX_CLK_CGC_ON_BMSK;
+>>> +
+>>> +    setbits32(rsc->se->base + DMA_GENERAL_CFG, reg_value);
+>>> +
+>>> +    /* Let hardware control CGC by default. */
+>>> +    writel_relaxed(DEFAULT_CGC_EN, rsc->se->base + GENI_CGC_CTRL);
+>>> +
+>>> +    /* Set version of the configuration register part of firmware. */
+>>> +    writel_relaxed(hdr->cfg_version, rsc->se->base + 
+>>> GENI_INIT_CFG_REVISION);
+>>> +    writel_relaxed(hdr->cfg_version, rsc->se->base + 
+>>> GENI_S_INIT_CFG_REVISION);
+>>> +
+>>> +    /* Configure GENI primitive table. */
+>>> +    for (i = 0; i < hdr->cfg_size_in_items; i++)
+>>> +        writel_relaxed(cfg_val_arr[i],
+>>> +                   rsc->se->base + GENI_CFG_REG0 + (cfg_idx_arr[i] * 
+>>> sizeof(u32)));
+>>
+>> What goes into this configuration?
+>>
+>>> +
+>>> +    /* Configure condition for assertion of RX_RFR_WATERMARK 
+>>> condition. */
+>>> +    reg_value = readl_relaxed(rsc->se->base + QUPV3_SE_HW_PARAM_1);
+>>> +    mask = (reg_value >> RX_FIFO_WIDTH_BIT) & RX_FIFO_WIDTH_MASK;
+>>
+>> Based on the WIDTH_MASK, those 6 bits doesn't sound like a "BIT"... And
+>> is the RX_FIFO_WIDTH really a "mask"?
+>>
+>>> +    writel_relaxed(mask - 2, rsc->se->base + 
+>>> GENI_RX_RFR_WATERMARK_REG);
+>>
+>> mask - 2?
+>>
+>> Use FIELD_GET() and name things with the intention of making it easy for
+>> others to understand what the code does.
+>>
+>>> +
+>>> +    /* Let hardware control CGC */
+>>> +    setbits32(rsc->se->base + GENI_OUTPUT_CTRL, 
+>>> DEFAULT_IO_OUTPUT_CTRL_MSK);
+>>> +
+>>> +    ret = geni_configure_xfer_mode(rsc);
+>>> +    if (ret)
+>>> +        goto err_resource;
+>>> +
+>>> +    geni_enable_interrupts(rsc);
+>>> +
+>>> +    geni_flash_fw_revision(rsc, hdr);
+>>> +
+>>> +    ramn_cnt = hdr->fw_size_in_items;
+>>> +    if (hdr->fw_size_in_items % 2 != 0)
+>>> +        ramn_cnt++;
+>>> +
+>>> +    if (ramn_cnt >= MAX_GENI_CFG_RAMn_CNT)
+>>> +        goto err_resource;
+>>
+>> As far as I can tell this error path is based entirely on the firmware
+>> being read from the file system, so you could have checked it before you
+>> turned on any resources - making a cleaner exit on failure.
+>>
+>>> +
+>>> +    /* Program RAM address space. */
+>>> +    memcpy((void *)(rsc->se->base + SE_GENI_CFG_RAMN), fw_val_arr, 
+>>> ramn_cnt * sizeof(u32));
+>>
+>> I presume this typecast to void * is to hide the fact that se->base is
+>> flagged as __iomem? Use memcpy_toio() intead.
+>>
+>>> +
+>>> +    /* Put default values on GENI's output pads. */
+>>> +    writel_relaxed(0x1, rsc->se->base + GENI_FORCE_DEFAULT_REG);
+>>> +
+>>> +    /* High to low SCLK and HCLK to finish RAM. */
+>>> +    setbits32(rsc->se->base + GENI_CGC_CTRL, 
+>>> GENI_CGC_CTRL_PROG_RAM_SCLK_OFF_BMSK |
+>>> +            GENI_CGC_CTRL_PROG_RAM_HCLK_OFF_BMSK);
+>>> +    setbits32(rsc->se->base + SE_GENI_CLK_CTRL, 
+>>> GENI_CLK_CTRL_SER_CLK_SEL_BMSK);
+>>> +    clrbits32(rsc->se->base + GENI_CGC_CTRL, 
+>>> GENI_CGC_CTRL_PROG_RAM_SCLK_OFF_BMSK |
+>>> +            GENI_CGC_CTRL_PROG_RAM_HCLK_OFF_BMSK);
+>>> +
+>>> +    /* Serial engine DMA interface is enabled. */
+>>> +    setbits32(rsc->se->base + SE_DMA_IF_EN, DMA_IF_EN_DMA_IF_EN_BMSK);
+>>> +
+>>> +    /* Enable or disable FIFO interface of the serial engine. */
+>>> +    if (rsc->mode == GENI_SE_FIFO)
+>>> +        clrbits32(rsc->se->base + SE_FIFO_IF_DISABLE, FIFO_IF_DISABLE);
+>>> +    else
+>>> +        setbits32(rsc->se->base + SE_FIFO_IF_DISABLE, FIFO_IF_DISABLE);
+>>> +
+>>> +err_resource:
+>>> +    geni_se_resources_off(rsc->se);
+>>> +err:
+>>> +    geni_icc_disable(rsc->se);
+>>> +    return ret;
+>>> +}
+>>> +
+>>> +/**
+>>> + * qup_fw_load() - Initiate firmware load.
+>>> + * @rsc: Pointer to a structure representing SE-related resources.
+>>> + *
+>>> + * Load the firmware into a specific SE. Read the associated ELF file,
+>>> + * copy the data into a buffer in kernel space using the 
+>>> request_firmware API, write the
+>>> + * data into the SE's IRAM register, and then free the buffers. 
+>>> Handle firmware loading
+>>> + * and parsing for a specific protocol.
+>>> + *
+>>> + * Return: 0 if successful, otherwise return an error value.
+>>> + */
+>>> +static int qup_fw_load(struct qup_se_rsc *rsc, const char *fw_name)
+>>> +{
+>>> +    int ret;
+>>> +    const struct firmware *fw;
+>>> +    struct device *dev = rsc->se->dev;
+>>> +
+>>> +    ret = request_firmware(&fw, fw_name, dev);
+>>> +    if (ret) {
+>>> +        dev_err(dev, "request_firmware failed for %d: %d\n", rsc- 
+>>> >protocol, ret);
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> +    ret = geni_load_se_fw(rsc, fw);
+>>> +
+>>> +    release_firmware(fw);
+>>> +
+>>> +    return ret;
+>>> +}
+>>> +
+>>> +/**
+>>> + * geni_load_se_firmware() - Initiate firmware loading.
+>>> + * @se: Serial engine details.
+>>> + * @protocol: Protocol (SPI, I2C, or UART) for which the firmware is 
+>>> to be loaded.
+>>> + *
+>>> + * If the device tree properties are configured to load QUP firmware 
+>>> and the firmware
+>>> + * is not already loaded, start the firmware loading process. If the 
+>>> device tree properties
+>>> + * are not defined, skip loading the firmware, assuming it is 
+>>> already loaded by TZ.
+>>> + *
+>>> + * Return: 0 if successful, otherwise return an error value.
+>>> + */
+>>> +int geni_load_se_firmware(struct geni_se *se,
+>>> +              enum geni_se_protocol_type protocol)
+>>
+>> This line is 82 characters long if you don't line break it, but it's
+>> cleaner to read...so please unbreak it.
+>>
+>>> +{
+>>> +    struct qup_se_rsc rsc;
+>>> +    const char *fw_name;
+>>> +    int ret;
+>>> +
+>>> +    ret = device_property_read_string(se->wrapper->dev, "firmware- 
+>>> name", &fw_name);
+>>> +    if (ret)
+>>> +        return  -EINVAL;
+>>> +
+>>> +    rsc.se = se;
+>>> +    rsc.protocol = protocol;
+>>> +    /* Set default xfer mode to FIFO */
+>>
+>> This isn't the "default" mode, this is the else statement in the
+>> conditional below.
+>>
+>>> +    rsc.mode = GENI_SE_FIFO;
+>>> +
+>>> +    if (of_property_read_bool(se->dev->of_node, "qcom,gsi-dma- 
+>>> allowed"))
+>>> +        rsc.mode = GENI_GPI_DMA;
+>>
+>> if (of_property_present())
+>>     sc.mode = GENI_GPI_DMA;
+>> else
+>>     sc.mode = GENI_GPI_FIFO;
+>>
+>> /* Comment about UART, because it's actually worth mentioning */
+>> if (serial)
+>>
+>>
+>>> +
+>>> +    /* GSI mode is not supported by the UART driver; therefore, 
+>>> setting FIFO mode */
+>>> +    if (protocol == GENI_SE_UART)
+>>> +        rsc.mode = GENI_SE_FIFO;
+>>> +
+>>> +    ret = qup_fw_load(&rsc, fw_name);
+>>> +    if (ret)
+>>> +        return ret;
+>>> +
+>>> +    dev_dbg(se->dev, "Firmware load for %s protocol is successful 
+>>> for xfer mode %d\n",
+>>> +        protocol_name[rsc.protocol], rsc.mode);
+>>
+>> How do you know that rsc.protocol < ARRAY_SIZE(protocol_name)?
+>>
+>>> +    return 0;
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(geni_load_se_firmware);
+>>> +
+>>>   static int geni_se_probe(struct platform_device *pdev)
+>>>   {
+>>>       struct device *dev = &pdev->dev;
+>>> diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/ 
+>>> qcom/geni-se.h
+>>> index 2996a3c28ef3..fd8cf5c6791f 100644
+>>> --- a/include/linux/soc/qcom/geni-se.h
+>>> +++ b/include/linux/soc/qcom/geni-se.h
+>>> @@ -1,6 +1,7 @@
+>>>   /* SPDX-License-Identifier: GPL-2.0 */
+>>>   /*
+>>>    * Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+>>> + * Copyright (c) 2023-2025 Qualcomm Innovation Center, Inc. All 
+>>> rights reserved.
+>>>    */
+>>>   #ifndef _LINUX_QCOM_GENI_SE
+>>> @@ -36,6 +37,7 @@ enum geni_se_protocol_type {
+>>>       GENI_SE_I2C,
+>>>       GENI_SE_I3C,
+>>>       GENI_SE_SPI_SLAVE,
+>>> +    GENI_SE_INVALID_PROTO = 255,
+>>
+>> This is unused.
+>>
+>>>   };
+>>>   struct geni_wrapper;
+>>> @@ -72,6 +74,19 @@ struct geni_se {
+>>>       struct geni_icc_path icc_paths[3];
+>>>   };
+>>> +/**
+>>> + * struct qup_se_rsc - Structure containing se details protocol and 
+>>> xfer mode
+>>> + *
+>>> + * @mode: transfer mode se fifo, dma or gsi.
+>>> + * @protocol: Protocol spi or i2c or serial.
+>>> + * @se: Pointer to the concerned serial engine.
+>>
+>> I'd like you to drop this struct, so it doesn't really matter...but
+>> order of parameters doesn't match the structure.
+>>
+>>> + */
+>>> +struct qup_se_rsc {
+>>> +    struct geni_se *se;
+>>> +    enum geni_se_xfer_mode mode;
+>>> +    enum geni_se_protocol_type protocol;
+>>> +};
+>>> +
+>>>   /* Common SE registers */
+>>>   #define GENI_FORCE_DEFAULT_REG        0x20
+>>>   #define GENI_OUTPUT_CTRL        0x24
+>>> @@ -531,5 +546,8 @@ void geni_icc_set_tag(struct geni_se *se, u32 tag);
+>>>   int geni_icc_enable(struct geni_se *se);
+>>>   int geni_icc_disable(struct geni_se *se);
+>>> +
+>>> +int geni_load_se_firmware(struct geni_se *se,
+>>> +              enum geni_se_protocol_type protocol);
+>>
+>> Unbreak the line.
+>>
+>>>   #endif
+>>>   #endif
+>>> diff --git a/include/linux/soc/qcom/qup-fw-load.h b/include/linux/ 
+>>> soc/qcom/qup-fw-load.h
+>>> new file mode 100644
+>>> index 000000000000..f139720987f9
+>>> --- /dev/null
+>>> +++ b/include/linux/soc/qcom/qup-fw-load.h
+>>> @@ -0,0 +1,179 @@
+>>> +/* SPDX-License-Identifier: GPL-2.0 */
+>>> +/*
+>>> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights 
+>>> reserved.
+>>> + */
+>>> +#ifndef _LINUX_QCOM_QUP_FW_LOAD
+>>> +#define _LINUX_QCOM_QUP_FW_LOAD
+>>> +
+>>> +#include <linux/device.h>
+>>> +#include <linux/elf.h>
+>>> +#include <linux/firmware.h>
+>>
+>> Why are device.h, elf.h and firmware.h included here, they are not used.
+>>
+>>> +#include <linux/kernel.h>
+>>> +
+>>> +/*Magic numbers*/
+>>> +#define MAGIC_NUM_SE            0x57464553
+>>
+>> Prefix things.
+>>
+>>> +
+>>> +/* Common SE registers*/
+>>> +#define GENI_INIT_CFG_REVISION        0x0
+>>> +#define GENI_S_INIT_CFG_REVISION    0x4
+>>> +#define GENI_FORCE_DEFAULT_REG        0x20
+>>
+>> A bunch of these registers and bitmasks area already defined in
+>> include/soc/qcom/geni-se.h why are they duplicated here?
+>>
+>>> +#define GENI_CGC_CTRL            0x28
+>>> +#define GENI_CFG_REG0            0x100
+>>> +
+>>> +#define QUPV3_SE_HW_PARAM_1        0xE28
+>>
+>> Lowercase hex digits please.
+>>
+>>> +#define RX_FIFO_WIDTH_BIT        24
+>>> +#define RX_FIFO_WIDTH_MASK        0x3F
+>>> +
+>>> +/*Same registers as GENI_DMA_MODE_EN*/
+>>> +#define QUPV3_SE_GENI_DMA_MODE_EN    0x258
+>>> +#define GENI_M_IRQ_ENABLE        0x614
+>>> +#define GENI_S_IRQ_ENABLE        0x644
+>>> +#define GENI_RX_RFR_WATERMARK_REG    0x814
+>>> +#define DMA_TX_IRQ_EN_SET        0xC4C
+>>> +#define DMA_RX_IRQ_EN_SET        0xD4C
+>>> +#define DMA_GENERAL_CFG            0xE30
+>>> +#define SE_GENI_FW_REVISION        0x1000
+>>> +#define SE_S_FW_REVISION        0x1004
+>>> +#define SE_GENI_CFG_RAMN        0x1010
+>>> +#define SE_GENI_CLK_CTRL        0x2000
+>>> +#define SE_DMA_IF_EN            0x2004
+>>> +#define SE_FIFO_IF_DISABLE        0x2008
+>>> +
+>>> +#define MAX_GENI_CFG_RAMn_CNT        455
+>>> +
+>>> +#define MI_PBT_NON_PAGED_SEGMENT    0x0
+>>> +#define MI_PBT_HASH_SEGMENT        0x2
+>>> +#define MI_PBT_NOTUSED_SEGMENT        0x3
+>>> +#define MI_PBT_SHARED_SEGMENT        0x4
+>>> +#define MI_PBT_FLAG_PAGE_MODE_MASK    0x100000
+>>> +#define MI_PBT_FLAG_PAGE_MODE_SHIFT    0x14
+>>> +#define MI_PBT_FLAG_SEGMENT_TYPE_MASK    0x7000000
+>>> +#define MI_PBT_FLAG_SEGMENT_TYPE_SHIFT    0x18
+>>> +#define MI_PBT_FLAG_ACCESS_TYPE_MASK    0xE00000
+>>> +#define MI_PBT_FLAG_ACCESS_TYPE_SHIFT    0x15
+>>> +
+>>> +#define MI_PBT_PAGE_MODE_VALUE(x) \
+>>> +    (((x) & MI_PBT_FLAG_PAGE_MODE_MASK) >> \
+>>> +      MI_PBT_FLAG_PAGE_MODE_SHIFT)
+>>
+>> Please replace masking and shifting with FIELD_GET() from
+>> linux/bitfield.h.
+>>
+>>> +
+>>> +#define MI_PBT_SEGMENT_TYPE_VALUE(x) \
+>>> +    (((x) & MI_PBT_FLAG_SEGMENT_TYPE_MASK) >> \
+>>> +        MI_PBT_FLAG_SEGMENT_TYPE_SHIFT)
+>>> +
+>>> +#define MI_PBT_ACCESS_TYPE_VALUE(x) \
+>>> +    (((x) & MI_PBT_FLAG_ACCESS_TYPE_MASK) >> \
+>>> +      MI_PBT_FLAG_ACCESS_TYPE_SHIFT)
+>>> +
+>>> +/* GENI_FORCE_DEFAULT_REG fields */
+>>> +#define FORCE_DEFAULT            BIT(0)
+>>> +
+>>> +/* FW_REVISION_RO fields */
+>>> +#define FW_REV_PROTOCOL_SHFT        8
+>>> +#define FW_REV_VERSION_SHFT        0
+>>> +
+>>> +#define GENI_FW_REVISION_RO        0x68
+>>> +#define GENI_S_FW_REVISION_RO        0x6C
+>>> +
+>>> +/* SE_GENI_DMA_MODE_EN */
+>>> +#define GENI_DMA_MODE_EN        BIT(0)
+>>> +
+>>> +/* GENI_M_IRQ_EN fields */
+>>> +#define M_CMD_DONE_EN            BIT(0)
+>>> +#define M_IO_DATA_DEASSERT_EN        BIT(22)
+>>> +#define M_IO_DATA_ASSERT_EN        BIT(23)
+>>> +#define M_RX_FIFO_RD_ERR_EN        BIT(24)
+>>> +#define M_RX_FIFO_WR_ERR_EN        BIT(25)
+>>> +#define M_RX_FIFO_WATERMARK_EN        BIT(26)
+>>> +#define M_RX_FIFO_LAST_EN        BIT(27)
+>>> +#define M_TX_FIFO_RD_ERR_EN        BIT(28)
+>>> +#define M_TX_FIFO_WR_ERR_EN        BIT(29)
+>>> +#define M_TX_FIFO_WATERMARK_EN        BIT(30)
+>>> +#define M_COMMON_GENI_M_IRQ_EN    (GENMASK(6, 1) | \
+>>> +                M_IO_DATA_DEASSERT_EN | \
+>>> +                M_IO_DATA_ASSERT_EN | M_RX_FIFO_RD_ERR_EN | \
+>>> +                M_RX_FIFO_WR_ERR_EN | M_TX_FIFO_RD_ERR_EN | \
+>>> +                M_TX_FIFO_WR_ERR_EN)
+>>> +
+>>> +/* GENI_S_IRQ_EN fields */
+>>> +#define S_CMD_OVERRUN_EN        BIT(1)
+>>> +#define S_ILLEGAL_CMD_EN        BIT(2)
+>>> +#define S_CMD_CANCEL_EN            BIT(4)
+>>> +#define S_CMD_ABORT_EN            BIT(5)
+>>> +#define S_GP_IRQ_0_EN            BIT(9)
+>>> +#define S_GP_IRQ_1_EN            BIT(10)
+>>> +#define S_GP_IRQ_2_EN            BIT(11)
+>>> +#define S_GP_IRQ_3_EN            BIT(12)
+>>> +#define S_RX_FIFO_RD_ERR_EN        BIT(24)
+>>> +#define S_RX_FIFO_WR_ERR_EN        BIT(25)
+>>> +#define S_COMMON_GENI_S_IRQ_EN    (GENMASK(5, 1) | GENMASK(13, 9) | \
+>>> +                 S_RX_FIFO_RD_ERR_EN | S_RX_FIFO_WR_ERR_EN)
+>>> +
+>>> +#define GENI_CGC_CTRL_PROG_RAM_SCLK_OFF_BMSK        0x00000200
+>>> +#define GENI_CGC_CTRL_PROG_RAM_HCLK_OFF_BMSK        0x00000100
+>>> +
+>>> +#define GENI_DMA_MODE_EN_GENI_DMA_MODE_EN_BMSK        0x00000001
+>>> +
+>>> +#define DMA_TX_IRQ_EN_SET_RESET_DONE_EN_SET_BMSK    0x00000008
+>>> +#define DMA_TX_IRQ_EN_SET_SBE_EN_SET_BMSK        0x00000004
+>>> +#define DMA_TX_IRQ_EN_SET_DMA_DONE_EN_SET_BMSK        0x00000001
+>>> +
+>>> +#define DMA_RX_IRQ_EN_SET_FLUSH_DONE_EN_SET_BMSK    0x00000010
+>>> +#define DMA_RX_IRQ_EN_SET_RESET_DONE_EN_SET_BMSK    0x00000008
+>>> +#define DMA_RX_IRQ_EN_SET_SBE_EN_SET_BMSK        0x00000004
+>>> +#define DMA_RX_IRQ_EN_SET_DMA_DONE_EN_SET_BMSK        0x00000001
+>>> +
+>>> +#define DMA_GENERAL_CFG_AHB_SEC_SLV_CLK_CGC_ON_BMSK    0x00000008
+>>> +#define DMA_GENERAL_CFG_DMA_AHB_SLV_CLK_CGC_ON_BMSK    0x00000004
+>>> +#define DMA_GENERAL_CFG_DMA_TX_CLK_CGC_ON_BMSK        0x00000002
+>>> +#define DMA_GENERAL_CFG_DMA_RX_CLK_CGC_ON_BMSK        0x00000001
+>>> +
+>>> +#define GENI_CLK_CTRL_SER_CLK_SEL_BMSK            0x00000001
+>>> +#define DMA_IF_EN_DMA_IF_EN_BMSK            0x00000001
+>>> +#define SE_GSI_EVENT_EN_BMSK                0x0000000f
+>>> +#define SE_IRQ_EN_RMSK                    0x0000000f
+>>> +
+>>> +#define QUPV3_COMMON_CFG                0x0120
+>>> +#define FAST_SWITCH_TO_HIGH_DISABLE_BMASK        0x00000001
+>>> +
+>>> +#define QUPV3_SE_AHB_M_CFG                0x0118
+>>> +#define AHB_M_CLK_CGC_ON_BMASK                0x00000001
+>>> +
+>>> +#define QUPV3_COMMON_CGC_CTRL                0x021C
+>>> +#define COMMON_CSR_SLV_CLK_CGC_ON_BMASK            0x00000001
+>>> +
+>>> +/* access ports */
+>>> +#define setbits32(_addr, _v) out_be32((_addr), in_be32(_addr) |  (_v))
+>>> +#define clrbits32(_addr, _v) out_be32((_addr), in_be32(_addr) & ~(_v))
+>>
+>> These names are way too generic.
+>>
+>>> +
+>>> +#define out_be32(a, v) writel_relaxed(v, a)
+>>> +#define in_be32(a) readl_relaxed(a)
+>>
+>> Don't create aliases.
+>>
+>>> +
+>>> +/**
+>>> + * struct elf_se_hdr - firmware configurations
+>>> + *
+>>> + * @magic: set to 'SEFW'
+>>> + * @version: A 32-bit value indicating the structure’s version number
+>>> + * @core_version: QUPV3_HW_VERSION
+>>> + * @serial_protocol: Programmed into GENI_FW_REVISION
+>>> + * @fw_version: Programmed into GENI_FW_REVISION
+>>> + * @cfg_version: Programmed into GENI_INIT_CFG_REVISION
+>>> + * @fw_size_in_items: Number of (uint32_t) GENI_FW_RAM words
+>>> + * @fw_offset: Byte offset of GENI_FW_RAM array
+>>> + * @cfg_size_in_items: Number of GENI_FW_CFG index/value pairs
+>>> + * @cfg_idx_offset: Byte offset of GENI_FW_CFG index array
+>>> + * @cfg_val_offset: Byte offset of GENI_FW_CFG values array
+>>> + */
+>>> +struct elf_se_hdr {
+>>
+>> This structure doesn't seem to relate to ELF at all, it seems to be the
+>> header for the serial engine configuration.
+>>
+>> It happens to be packaged up in a ELF segment, but I don't see a reason
+>> for defining the format of the outer container here.
 > 
-> As I wrote:
-> 
-> drm_dp_atomic_find_time_slots() should be called from atomic_check(),
-> this function must be dropped.
-> 
-This func not call drm_dp_atomic_find_time_slots(). 
-drm_dp_atomic_find_time_slots() called in msm_dp_mst_compute_config in 
-the previous one patch. msm_dp_mst_compute_config is in atomic_check().
->> +{
->> +	int i;
->> +	struct msm_dp_mst_bridge *msm_dp_bridge;
->> +	struct drm_dp_mst_topology_state *mst_state;
->> +	struct drm_dp_mst_atomic_payload *payload;
->> +	int prev_start = 0;
->> +	int prev_slots = 0;
->> +
->> +	mst_state = to_drm_dp_mst_topology_state(mst->mst_mgr.base.state);
->> +	payload = drm_atomic_get_mst_payload_state(mst_state, port);
->> +
->> +	if (!payload) {
->> +		DRM_ERROR("mst bridge [%d] update_timeslots failed, null payload\n",
->> +			  mst_bridge->id);
->> +		return;
->> +	}
->> +
->> +	for (i = 0; i < mst->max_streams; i++) {
->> +		msm_dp_bridge = &mst->mst_bridge[i];
->> +		if (mst_bridge == msm_dp_bridge) {
->> +			/*
->> +			 * When a payload was removed make sure to move any payloads after it
->> +			 * to the left so all payloads are aligned to the left.
->> +			 */
-> 
-> :-(
-> 
-Emm,  will get back to this part later.
->> +			if (payload->vc_start_slot < 0) {
->> +				// cache the payload
->> +				prev_start = msm_dp_bridge->start_slot;
->> +				prev_slots = msm_dp_bridge->num_slots;
->> +				msm_dp_bridge->pbn = 0;
->> +				msm_dp_bridge->start_slot = 1;
->> +				msm_dp_bridge->num_slots = 0;
->> +				msm_dp_bridge->vcpi = 0;
->> +			} else { //add payload
->> +				msm_dp_bridge->pbn = payload->pbn;
->> +				msm_dp_bridge->start_slot = payload->vc_start_slot;
->> +				msm_dp_bridge->num_slots = payload->time_slots;
->> +				msm_dp_bridge->vcpi = payload->vcpi;
->> +			}
->> +		}
->> +	}
->> +
->> +	// Now commit all the updated payloads
->> +	for (i = 0; i < mst->max_streams; i++) {
->> +		msm_dp_bridge = &mst->mst_bridge[i];
->> +
->> +		//Shift payloads to the left if there was a removed payload.
->> +		if (payload->vc_start_slot < 0 && msm_dp_bridge->start_slot > prev_start)
->> +			msm_dp_bridge->start_slot -= prev_slots;
->> +
->> +		msm_dp_display_set_stream_info(mst->msm_dp, msm_dp_bridge->msm_dp_panel,
->> +					       msm_dp_bridge->id, msm_dp_bridge->start_slot,
->> +					       msm_dp_bridge->num_slots,
->> +					       msm_dp_bridge->pbn, msm_dp_bridge->vcpi);
->> +		drm_dbg_dp(mst->msm_dp->drm_dev,
->> +			   "conn:%d vcpi:%d start_slot:%d num_slots:%d, pbn:%d\n",
->> +			   DP_MST_CONN_ID(msm_dp_bridge), msm_dp_bridge->vcpi,
->> +			   msm_dp_bridge->start_slot,
->> +			   msm_dp_bridge->num_slots, msm_dp_bridge->pbn);
->> +	}
->> +}
->> +
->> +static int _msm_dp_mst_bridge_pre_enable_part1(struct msm_dp_mst_bridge *dp_bridge,
->> +					       struct drm_atomic_state *state)
->> +{
->> +	struct msm_dp *msm_dp = dp_bridge->display;
->> +	struct msm_dp_mst *mst = msm_dp->msm_dp_mst;
->> +	struct msm_dp_mst_connector *mst_conn = to_msm_dp_mst_connector(dp_bridge->connector);
->> +	struct drm_dp_mst_port *port = mst_conn->mst_port;
->> +	struct drm_dp_mst_topology_state *mst_state;
->> +	struct drm_dp_mst_atomic_payload *payload;
->> +	struct msm_dp_panel *dp_panel = mst_conn->dp_panel;
->> +	int pbn, slots;
->> +	int rc = 0;
->> +
->> +	mst_state = drm_atomic_get_new_mst_topology_state(state, &mst->mst_mgr);
->> +
->> +	pbn = drm_dp_calc_pbn_mode(dp_panel->msm_dp_mode.drm_mode.clock,
->> +				   (mst_conn->connector.display_info.bpc * 3) << 4);
->> +
->> +	slots = msm_dp_mst_find_vcpi_slots(&mst->mst_mgr, pbn);
->> +
->> +	drm_dbg_dp(msm_dp->drm_dev, "conn:%d pbn:%d, slots:%d\n", DP_MST_CONN_ID(dp_bridge),
->> +		   pbn, slots);
->> +
->> +	payload = drm_atomic_get_mst_payload_state(mst_state, port);
->> +	if (!payload || payload->time_slots <= 0) {
->> +		DRM_ERROR("time slots not allocated for conn:%d\n", DP_MST_CONN_ID(dp_bridge));
->> +		rc = -EINVAL;
->> +		return rc;
->> +	}
->> +
->> +	drm_dp_mst_update_slots(mst_state, DP_CAP_ANSI_8B10B);
->> +
->> +	rc = drm_dp_add_payload_part1(&mst->mst_mgr, mst_state, payload);
->> +	if (rc) {
->> +		DRM_ERROR("payload allocation failure for conn:%d\n", DP_MST_CONN_ID(dp_bridge));
->> +		return rc;
->> +	}
->> +
->> +	_msm_dp_mst_update_timeslots(mst, dp_bridge, port);
->> +
->> +	return rc;
->> +}
->> +
->> +static void _msm_dp_mst_bridge_pre_enable_part2(struct msm_dp_mst_bridge *dp_bridge,
->> +						struct drm_atomic_state *state)
->> +{
->> +	struct msm_dp *msm_dp = dp_bridge->display;
->> +	struct msm_dp_mst *mst = msm_dp->msm_dp_mst;
->> +	struct msm_dp_mst_connector *mst_conn = to_msm_dp_mst_connector(dp_bridge->connector);
->> +	struct drm_dp_mst_port *port = mst_conn->mst_port;
->> +	struct drm_dp_mst_topology_state *mst_state;
->> +	struct drm_dp_mst_atomic_payload *payload;
->> +
->> +	drm_dp_check_act_status(&mst->mst_mgr);
->> +
->> +	mst_state = to_drm_dp_mst_topology_state(mst->mst_mgr.base.state);
->> +	payload = drm_atomic_get_mst_payload_state(mst_state, port);
->> +
->> +	if (!payload) {
->> +		DRM_ERROR("mst bridge [%d] null payload\n", dp_bridge->id);
->> +		return;
->> +	}
->> +
->> +	if (!payload->port) {
->> +		DRM_ERROR("mst bridge [%d] null port\n", dp_bridge->id);
->> +		return;
->> +	}
->> +
->> +	if (!payload->port->connector) {
->> +		DRM_ERROR("mst bridge [%d] part-2 failed, null connector\n",
->> +			  dp_bridge->id);
->> +		return;
->> +	}
->> +
->> +	if (payload->vc_start_slot == -1) {
->> +		DRM_ERROR("mst bridge [%d] part-2 failed, payload alloc part 1 failed\n",
->> +			  dp_bridge->id);
->> +		return;
->> +	}
->> +
->> +	drm_dp_add_payload_part2(&mst->mst_mgr, payload);
->> +
->> +	drm_dbg_dp(msm_dp->drm_dev, "mst bridge [%d] _pre enable part-2 complete\n",
->> +		   dp_bridge->id);
->> +}
->> +
->> +static void _msm_dp_mst_bridge_pre_disable_part1(struct msm_dp_mst_bridge *dp_bridge,
->> +						 struct drm_atomic_state *state)
->> +{
->> +	struct msm_dp *msm_dp = dp_bridge->display;
->> +	struct msm_dp_mst *mst = msm_dp->msm_dp_mst;
->> +	struct msm_dp_mst_connector *mst_conn = to_msm_dp_mst_connector(dp_bridge->connector);
->> +	struct drm_dp_mst_port *port = mst_conn->mst_port;
->> +	struct drm_dp_mst_topology_state *old_mst_state;
->> +	struct drm_dp_mst_topology_state *new_mst_state;
->> +	const struct drm_dp_mst_atomic_payload *old_payload;
->> +	struct drm_dp_mst_atomic_payload *new_payload;
->> +
->> +	old_mst_state = drm_atomic_get_old_mst_topology_state(state, &mst->mst_mgr);
->> +
->> +	new_mst_state = drm_atomic_get_new_mst_topology_state(state, &mst->mst_mgr);
->> +
->> +	old_payload = drm_atomic_get_mst_payload_state(old_mst_state, port);
->> +	new_payload = drm_atomic_get_mst_payload_state(new_mst_state, port);
->> +
->> +	if (!old_payload || !new_payload) {
->> +		DRM_ERROR("mst bridge [%d] _pre disable part-1 failed, null payload\n",
->> +			  dp_bridge->id);
->> +		return;
->> +	}
->> +
->> +	drm_dp_remove_payload_part1(&mst->mst_mgr, new_mst_state, new_payload);
->> +	drm_dp_remove_payload_part2(&mst->mst_mgr, new_mst_state, old_payload, new_payload);
->> +
->> +	_msm_dp_mst_update_timeslots(mst, dp_bridge, port);
->> +
->> +	drm_dbg_dp(msm_dp->drm_dev, "mst bridge [%d] _pre disable part-1 complete\n",
->> +		   dp_bridge->id);
->> +}
->> +
->> +static void _msm_dp_mst_bridge_pre_disable_part2(struct msm_dp_mst_bridge *dp_bridge)
->> +{
->> +	struct msm_dp *msm_dp = dp_bridge->display;
->> +	struct msm_dp_mst *mst = msm_dp->msm_dp_mst;
->> +
->> +	drm_dp_check_act_status(&mst->mst_mgr);
->> +
->> +	drm_dbg_dp(msm_dp->drm_dev, "mst bridge [%d] _pre disable part-2 complete\n",
->> +		   dp_bridge->id);
->> +}
->> +
->> +static void msm_dp_mst_bridge_atomic_pre_enable(struct drm_bridge *drm_bridge,
->> +						struct drm_atomic_state *state)
->> +{
->> +	int rc = 0;
->> +	struct msm_dp_mst_bridge *bridge;
->> +	struct msm_dp *dp;
->> +	struct msm_dp_mst_bridge_state *msm_dp_bridge_state;
->> +	struct msm_dp_mst *dp_mst;
->> +
->> +	if (!drm_bridge) {
->> +		DRM_ERROR("Invalid params\n");
->> +		return;
->> +	}
->> +
->> +	bridge = to_msm_dp_mst_bridge(drm_bridge);
->> +	msm_dp_bridge_state = to_msm_dp_mst_bridge_state(bridge);
->> +	dp = bridge->display;
->> +	dp_mst = dp->msm_dp_mst;
->> +
->> +	/* to cover cases of bridge_disable/bridge_enable without modeset */
->> +	bridge->connector = msm_dp_bridge_state->connector;
->> +	bridge->msm_dp_panel = msm_dp_bridge_state->msm_dp_panel;
->> +
->> +	if (!bridge->connector) {
->> +		DRM_ERROR("Invalid connector\n");
->> +		return;
->> +	}
->> +
->> +	mutex_lock(&dp_mst->mst_lock);
->> +	msm_dp_display_atomic_prepare(dp);
->> +
->> +	rc = _msm_dp_mst_bridge_pre_enable_part1(bridge, state);
->> +	if (rc) {
->> +		DRM_ERROR("[%d] DP display pre-enable failed, rc=%d\n", bridge->id, rc);
->> +		msm_dp_display_unprepare(dp);
->> +		mutex_unlock(&dp_mst->mst_lock);
->> +		return;
->> +	}
->> +
->> +	msm_dp_display_enable_helper(dp, bridge->msm_dp_panel);
->> +
->> +	_msm_dp_mst_bridge_pre_enable_part2(bridge, state);
->> +
->> +	mutex_unlock(&dp_mst->mst_lock);
->> +
->> +	drm_dbg_dp(dp->drm_dev, "conn:%d mode:%s fps:%d vcpi:%d slots:%d to %d\n",
->> +		   DP_MST_CONN_ID(bridge), bridge->drm_mode.name,
->> +		   drm_mode_vrefresh(&bridge->drm_mode),
->> +		   bridge->vcpi, bridge->start_slot,
->> +		   bridge->start_slot + bridge->num_slots);
->> +}
->> +
->> +static void msm_dp_mst_bridge_atomic_disable(struct drm_bridge *drm_bridge,
->> +					     struct drm_atomic_state *state)
->> +{
->> +	struct msm_dp_mst_bridge *bridge;
->> +	struct msm_dp *dp;
->> +	struct msm_dp_mst *mst;
->> +
->> +	if (!drm_bridge) {
->> +		DRM_ERROR("Invalid params\n");
->> +		return;
->> +	}
->> +
->> +	bridge = to_msm_dp_mst_bridge(drm_bridge);
->> +	if (!bridge->connector) {
->> +		DRM_ERROR("Invalid connector\n");
->> +		return;
->> +	}
->> +
->> +	dp = bridge->display;
->> +	mst = dp->msm_dp_mst;
->> +
->> +	mutex_lock(&mst->mst_lock);
->> +
->> +	_msm_dp_mst_bridge_pre_disable_part1(bridge, state);
->> +
->> +	msm_dp_display_disable_helper(dp, bridge->msm_dp_panel);
->> +
->> +	_msm_dp_mst_bridge_pre_disable_part2(bridge);
->> +
->> +	mutex_unlock(&mst->mst_lock);
->> +
->> +	drm_dbg_dp(dp->drm_dev, "mst bridge:%d conn:%d disable complete\n", bridge->id,
->> +		   DP_MST_CONN_ID(bridge));
->> +}
->> +
->> +static void msm_dp_mst_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
->> +						  struct drm_atomic_state *state)
->> +{
->> +	int conn = 0;
->> +	struct msm_dp_mst_bridge *bridge;
->> +	struct msm_dp *dp;
->> +	struct msm_dp_mst *mst;
->> +
->> +	if (!drm_bridge) {
->> +		DRM_ERROR("Invalid params\n");
->> +		return;
->> +	}
->> +
->> +	bridge = to_msm_dp_mst_bridge(drm_bridge);
->> +	if (!bridge->connector) {
->> +		DRM_ERROR("Invalid connector\n");
->> +		return;
->> +	}
->> +
->> +	conn = DP_MST_CONN_ID(bridge);
->> +
->> +	dp = bridge->display;
->> +	mst = dp->msm_dp_mst;
->> +
->> +	mutex_lock(&mst->mst_lock);
->> +
->> +	msm_dp_display_atomic_post_disable_helper(dp, bridge->msm_dp_panel);
->> +
->> +	if (!dp->mst_active)
->> +		msm_dp_display_unprepare(dp);
->> +
->> +	bridge->connector = NULL;
->> +	bridge->msm_dp_panel =  NULL;
->> +
->> +	mutex_unlock(&mst->mst_lock);
->> +
->> +	drm_dbg_dp(dp->drm_dev, "mst bridge:%d conn:%d post disable complete\n",
->> +		   bridge->id, conn);
->> +}
->> +
->> +static void msm_dp_mst_bridge_mode_set(struct drm_bridge *drm_bridge,
->> +				       const struct drm_display_mode *mode,
->> +				       const struct drm_display_mode *adjusted_mode)
->> +{
->> +	struct msm_dp_mst_bridge *bridge;
->> +	struct msm_dp_mst_bridge_state *dp_bridge_state;
->> +	struct msm_dp *dp;
->> +	struct msm_dp_panel *msm_dp_panel;
->> +
->> +	if (!drm_bridge || !mode || !adjusted_mode) {
->> +		DRM_ERROR("Invalid params\n");
->> +		return;
->> +	}
->> +
->> +	bridge = to_msm_dp_mst_bridge(drm_bridge);
->> +
->> +	dp_bridge_state = to_msm_dp_mst_bridge_state(bridge);
->> +	bridge->connector = dp_bridge_state->connector;
->> +	bridge->msm_dp_panel = dp_bridge_state->msm_dp_panel;
->> +
->> +	msm_dp_panel = bridge->msm_dp_panel;
->> +	dp = bridge->display;
->> +
->> +	memcpy(&bridge->drm_mode, adjusted_mode, sizeof(bridge->drm_mode));
->> +	msm_dp_display_mode_set_helper(dp, mode, adjusted_mode, bridge->msm_dp_panel);
->> +	msm_dp_panel->pbn = drm_dp_calc_pbn_mode(msm_dp_panel->msm_dp_mode.drm_mode.clock,
->> +							  (msm_dp_panel->msm_dp_mode.bpp << 4));
->> +	drm_dbg_dp(dp->drm_dev, "mst bridge:%d conn:%d mode set complete %s\n", bridge->id,
->> +		   DP_MST_CONN_ID(bridge), mode->name);
->> +}
->> +
->> +/* DP MST Bridge APIs */
->> +static const struct drm_bridge_funcs msm_dp_mst_bridge_ops = {
->> +	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
->> +	.atomic_destroy_state   = drm_atomic_helper_bridge_destroy_state,
->> +	.atomic_reset           = drm_atomic_helper_bridge_reset,
->> +	.atomic_pre_enable   = msm_dp_mst_bridge_atomic_pre_enable,
->> +	.atomic_disable      = msm_dp_mst_bridge_atomic_disable,
->> +	.atomic_post_disable = msm_dp_mst_bridge_atomic_post_disable,
->> +	.mode_set     = msm_dp_mst_bridge_mode_set,
->> +};
->> +
->> +int msm_dp_mst_drm_bridge_init(struct msm_dp *dp, struct drm_encoder *encoder)
->> +{
->> +	int rc = 0;
->> +	struct msm_dp_mst_bridge *bridge = NULL;
->> +	struct msm_dp_mst_bridge_state *state;
->> +	struct drm_device *dev;
->> +	struct msm_dp_mst *mst = dp->msm_dp_mst;
->> +	int i;
->> +
->> +	for (i = 0; i < mst->max_streams; i++) {
->> +		if (!mst->mst_bridge[i].in_use) {
->> +			bridge = &mst->mst_bridge[i];
->> +			bridge->encoder = encoder;
->> +			bridge->in_use = true;
->> +			bridge->id = i;
->> +			break;
->> +		}
->> +	}
->> +
->> +	if (i == mst->max_streams) {
->> +		DRM_ERROR("mst supports only %d bridges\n", i);
->> +		rc = -EACCES;
->> +		goto end;
->> +	}
->> +
->> +	dev = dp->drm_dev;
->> +	bridge->display = dp;
->> +	bridge->base.funcs = &msm_dp_mst_bridge_ops;
->> +	bridge->base.encoder = encoder;
->> +	bridge->base.type = dp->connector_type;
->> +	bridge->base.ops = DRM_BRIDGE_OP_MODES;
->> +	drm_bridge_add(&bridge->base);
->> +
->> +	rc = drm_bridge_attach(encoder, &bridge->base, NULL, 0);
->> +	if (rc) {
->> +		DRM_ERROR("failed to attach bridge, rc=%d\n", rc);
->> +		goto end;
->> +	}
->> +
->> +	state = kzalloc(sizeof(*state), GFP_KERNEL);
->> +	if (!state) {
->> +		rc = -ENOMEM;
->> +		goto end;
->> +	}
->> +
->> +	drm_atomic_private_obj_init(dev, &bridge->obj,
->> +				    &state->base,
->> +				    &msm_dp_mst_bridge_state_funcs);
->> +
->> +	drm_dbg_dp(dp->drm_dev, "mst drm bridge init. bridge id:%d\n", i);
->> +
->> +	return 0;
->> +
->> +end:
->> +	return rc;
->> +}
->> diff --git a/drivers/gpu/drm/msm/dp/dp_mst_drm.h b/drivers/gpu/drm/msm/dp/dp_mst_drm.h
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..cdde59da7bb937ad67fa818a728082f8fd43a3a6
->> --- /dev/null
->> +++ b/drivers/gpu/drm/msm/dp/dp_mst_drm.h
->> @@ -0,0 +1,100 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only */
->> +/*
->> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
->> + *
->> + * Permission to use, copy, modify, distribute, and sell this software and its
->> + * documentation for any purpose is hereby granted without fee, provided that
->> + * the above copyright notice appear in all copies and that both that copyright
->> + * notice and this permission notice appear in supporting documentation, and
->> + * that the name of the copyright holders not be used in advertising or
->> + * publicity pertaining to distribution of the software without specific,
->> + * written prior permission.  The copyright holders make no representations
->> + * about the suitability of this software for any purpose.  It is provided "as
->> + * is" without express or implied warranty.
->> + *
->> + * THE COPYRIGHT HOLDERS DISCLAIM ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
->> + * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO
->> + * EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY SPECIAL, INDIRECT OR
->> + * CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
->> + * DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
->> + * TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
->> + * OF THIS SOFTWARE.
->> + */
->> +
->> +#ifndef _DP_MST_DRM_H_
->> +#define _DP_MST_DRM_H_
->> +
->> +#include <linux/kernel.h>
->> +#include <linux/init.h>
->> +#include <linux/errno.h>
->> +#include <linux/version.h>
->> +
->> +#include <drm/drm_atomic_helper.h>
->> +#include <drm/drm_atomic.h>
->> +#include <drm/drm_bridge.h>
->> +#include <drm/drm_crtc.h>
->> +#include <drm/drm_fixed.h>
->> +#include <drm/drm_connector.h>
->> +#include <drm/display/drm_dp_helper.h>
->> +#include <drm/display/drm_dp_mst_helper.h>
->> +
->> +#include "dp_panel.h"
->> +#include "dp_display.h"
->> +
->> +#define DP_MST_CONN_ID(bridge) ((bridge)->connector ? \
->> +		(bridge)->connector->base.id : 0)
->> +
->> +struct msm_dp_mst_bridge {
->> +	struct drm_bridge base;
->> +	struct drm_private_obj obj;
->> +	u32 id;
->> +
->> +	bool in_use;
->> +
->> +	struct msm_dp *display;
->> +	struct drm_encoder *encoder;
->> +
->> +	struct drm_display_mode drm_mode;
->> +	struct drm_connector *connector;
->> +	struct msm_dp_panel *msm_dp_panel;
->> +
->> +	int vcpi;
->> +	int pbn;
->> +	int num_slots;
->> +	int start_slot;
-> 
-> All of these should go to the bridge_state or be dropped.
+> This structure is related to firmware written in an ELF file. I didn't 
+> understand your concern. Could you please clarify what is required here?
 > 
 
-Got it. will move to bridge_state.
->> +};
->> +
->> +struct msm_dp_mst_bridge_state {
->> +	struct drm_private_state base;
->> +	struct drm_connector *connector;
->> +	struct msm_dp_panel *msm_dp_panel;
->> +	int num_slots;
->> +};
->> +
->> +struct msm_dp_mst {
->> +	struct drm_dp_mst_topology_mgr mst_mgr;
->> +	struct msm_dp_mst_bridge *mst_bridge;
->> +	struct msm_dp *msm_dp;
->> +	u32 max_streams;
->> +	struct mutex mst_lock;
->> +};
->> +
->> +struct msm_dp_mst_connector {
->> +	struct drm_connector connector;
->> +	struct drm_dp_mst_port *mst_port;
->> +	struct msm_dp *msm_dp;
->> +	struct msm_dp_panel *dp_panel;
->> +};
->> +
->> +#define to_msm_dp_mst_bridge(x)     container_of((x), struct msm_dp_mst_bridge, base)
->> +#define to_msm_dp_mst_bridge_priv(x) \
->> +		container_of((x), struct msm_dp_mst_bridge, obj)
->> +#define to_msm_dp_mst_bridge_priv_state(x) \
->> +		container_of((x), struct msm_dp_mst_bridge_state, base)
->> +#define to_msm_dp_mst_bridge_state(x) \
->> +		to_msm_dp_mst_bridge_priv_state((x)->obj.state)
->> +#define to_msm_dp_mst_connector(x) \
->> +		container_of((x), struct msm_dp_mst_connector, connector)
-> 
-> Please check, which of these structures and conversion macros can go
-> into the source file because they are not used outside of it.
-> 
-Got it.
->> +int msm_dp_mst_drm_bridge_init(struct msm_dp *dp, struct drm_encoder *encoder);
->> +
->> +#endif /* _DP_MST_DRM_H_ */
+If I understand your comments correctly, the current struct name does 
+not align with its functionality. shall i  update it to 
+se_fw_config_hdr. Hope that matches the ELF as per functionality.
+
 >>
->> -- 
->> 2.34.1
+>>> +    u32 magic;
 >>
+>> What endian is that u32? Please be specific.
+>>
+>> Regards,
+>> Bjorn
+>>
+>>> +    u32 version;
+>>> +    u32 core_version;
+>>> +    u16 serial_protocol;
+>>> +    u16 fw_version;
+>>> +    u16 cfg_version;
+>>> +    u16 fw_size_in_items;
+>>> +    u16 fw_offset;
+>>> +    u16 cfg_size_in_items;
+>>> +    u16 cfg_idx_offset;
+>>> +    u16 cfg_val_offset;
+>>> +};
+>>> +#endif /* _LINUX_QCOM_QUP_FW_LOAD */
+>>> -- 
+>>> 2.34.1
+>>>
 > 
 
 
