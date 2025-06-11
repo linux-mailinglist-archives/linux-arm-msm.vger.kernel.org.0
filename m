@@ -1,104 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-60893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C450AD4826
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 03:47:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CB35AD4905
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 04:58:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C7E0D189A86E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 01:47:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A07561899CD1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 02:58:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 856E1139566;
-	Wed, 11 Jun 2025 01:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D24951B392B;
+	Wed, 11 Jun 2025 02:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SspwfqCl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bXx9v6tP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7A91B960;
-	Wed, 11 Jun 2025 01:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D33D2253F3
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 02:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749606419; cv=none; b=SbjPJ8YvvcbUJZ5QGjbD+F5TPXBIEaO3dQSfiePMVOeX6mDADEeN+pdRFaA6CIvHZtBfkQzvDIUcLx7JH3EfqsZMyo+MGgjI9lrRsSejEpKi2gPmFbiP191GE0zgkZhwUcSOD9s0KHmYLSkN49nwVED92YQIfkC22yQVOwQBbwg=
+	t=1749610721; cv=none; b=L+p0XPU7N2ywsoKrBlsbkHXsoczgrT9/Yj54FYd0npOVC5Vo1fr0tZCbw7RcFRyT8sD5F1xV3kye848gulShu8xiulH3b/YHPFiCQHzjpfDtFpVT9fPMahFLjIFiMr9OkXLWpJrlDEBG/q34Qk6EIHPfOJkCqRHVCbW/F02HvQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749606419; c=relaxed/simple;
-	bh=YvR/YQNOuRzwgj2S3Hl8+PzCdzJrDRJdTlry5kKBF+A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qLf2o9eHSa3ZbST1LIVw7gLlEiBHcjVaqP8LBntN/mUX4hijUljJSsL/5FrEFsdITpSxW/Sx5AEHP8yt13eOVuvMHIf0Cqk9tDUYCudFowek1gWakeM/mH9h4dbCdyDVFyE1j5E/RooKK2mRtJNZ69W+BT/D7jhLjgW4Odzc4Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SspwfqCl; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+	s=arc-20240116; t=1749610721; c=relaxed/simple;
+	bh=CAZ/SIZXGULw26SKxotaF4nRCv62GltcOelZ3heoC6w=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=It5fEPkJ9pm3OBPwUik7s5jeFRIA3++o+y7weAucka68L49uT27vl2dYS9xBjDp4r/7v3mLtj/eNnveXr/FUFDRJH0GhNzJF2Tp8heL9kTyfSW0dLgrI4aA6neFcJUvuGDzfa/redJg7rjEuO6+JwkzudsnxPmRiXmHXIOvCwsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bXx9v6tP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AIPr6e028710;
-	Wed, 11 Jun 2025 01:46:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	l82STVtCU6R80dx9yP/eIowJs4LM6MV86jS2Xmqb+f8=; b=SspwfqClIFAmLMCs
-	Y8DmEb52NyHMPWdjZEzLhhGzAAwXU5uPP0JzclO0V4paBHul02SujXV4jCfJX0ak
-	C7FlN7zw2dFc9DRKmTTltC+ErWFhAkLjhSBfrDfrjVLjG81AZBZDcADZX/nzmgJw
-	BwZTXN3DrnzSEgQ1Myjg0Qd3r3r/yEcUMcBM0BhPThzZh3PQmK6WZBxiQAH+G6wT
-	yQ6EplDUEbHskrbuAOSaRbstE4sXEnXGNzajgkuDIdmVeIGPGTb41M2RAp0Ceh0f
-	9tv+mDzrkbg8iBUnluxRyWzBR20mwEBcvUkv2p4R2t5inLI1uyAe4lBh16ALU7pR
-	nDyEWg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 476jrha9c4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 01:46:51 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55B1kpmx011171
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 01:46:51 GMT
-Received: from [10.231.216.119] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Jun
- 2025 18:46:48 -0700
-Message-ID: <a23d759a-9048-42e8-b72d-34c1e913e7fe@quicinc.com>
-Date: Wed, 11 Jun 2025 09:46:46 +0800
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AIPt6d028783
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 02:58:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=PnvbGOLWjgVd2ibog5YycE
+	QyE3LZR9r4haxSXY7ibqM=; b=bXx9v6tPlZxdLY9glWmE7kcis92aVz7dD86rBe
+	zsKEKr2hKonY3rV/EuSsOlpip7gBmy5fLX2XKpE+Fd/twECK/7+7ZlHy1n9hWrAm
+	euxruVB2zGhaq2DQmChIlzkRFwAcWe5Pa7bFGt5jotlamHb8XvxSKXRQ5YctWNgp
+	TyeEraKAK9xHNsgo1vlVDRb6WljKw5Su4ZgoG2HbrRurH03keKZSFW9P7r+V0lNg
+	1mGkKUXsBmW6TMG54ASe1q/5r/8IxqIlCdGbHD1AobtEjMyLlPvuRx/OJs8fVfLY
+	umUDKGWp739oduQv4MM9rp8L873EfFiqlkk4oPBBabk9iSbQ==
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com [209.85.161.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 476jrhae8f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 02:58:38 +0000 (GMT)
+Received: by mail-oo1-f71.google.com with SMTP id 006d021491bc7-60f3ceb14bbso4622015eaf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 19:58:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749610718; x=1750215518;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PnvbGOLWjgVd2ibog5YycEQyE3LZR9r4haxSXY7ibqM=;
+        b=OGn/8os97HhPqg6rGDFVJ8FjYrUtsPtfl3QJ3B4Svt8FzmgMlV5ZXEkfT121XclmTY
+         As1p8rq94x6ffejaJi+a6TT1CU0VdIUhqOIcVUe4qnnhs42anrBRJSfuP2CsnuVjYhov
+         ZZXVER+KeDX9DfEea1HAgn69yrXiIbWWL8Q1AFV1nAphQqQTrXpLiPN2lVwDLAIZPLb4
+         OGqDx2QaWwziuCWxp3byraBH2T9kJqm46UutFcaAv/uAB/WTuXWV36fW6u7egixr4NRL
+         lVU90gGT7KZ89UGUtyPA8xAvdRRNpz9Bm7XquDsry8xg3ZCZYSKrQDf6cBSnaNKx1ANY
+         Xrhw==
+X-Gm-Message-State: AOJu0YxWG38pxb9H/AzBpuG2za8pore79ukqOdIVBu5KHJky0V5RIkCG
+	C94fjj3sdwW1rxnJe90BL1yfDY4Th/e2lIH0klKuFdEgo9xnRF13aWK/qa/RhV/cugggsvhLlEh
+	3jJHGs2MsRqNq2F9lmf/CqFTPpZirKQV5SYHfGkHzWCHVdJllhNXYPM0MU56pAOevj58MyRNOQR
+	LqaLQ=
+X-Gm-Gg: ASbGnct0wcVjty8NvcFPrUyMUBThrHY3u90rUR22URJZ3pXcbS0vPEk5z/GGawRNY82
+	7n8F7YeSfmB2ejiUHaLWLPIf0O74Q+h0JZKzTGD6KbPT/K5ux80JeaJ11gS0WkH4ad+ckDgd/66
+	/gcF1vmIP8IdS05f6QCYS680ABC+vdpxHbujzilm9F3GXxWmEsGazGqWYq5ES9ZdgKIaANDyxht
+	VKiQ3ejbd+vnPVDYdpuDLHGpeFh54QTLrUUKRzK/IGOvNwBkV2VtG5TFuxpt7DVu02HGxj3l+h+
+	EOQt71bUuDqIRRgSqG09MZB8Re8xecA0PT93ieYOFxAqDNZqXamr1Zs8RL88sxWcCyWZy4vPONL
+	V1nsXWDUmsKg4I4eHV+imUw==
+X-Received: by 2002:a05:6870:d38d:b0:2e9:a15f:6c3b with SMTP id 586e51a60fabf-2ea96c4f2cfmr1052592fac.10.1749610718050;
+        Tue, 10 Jun 2025 19:58:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFOYMDwQ9+qWoO9sZAHQjuHpCm3eIJ+fGXAaOH2eDXzRmpmRSfdlsETZJ1wyfXaLwgJC/19HQ==
+X-Received: by 2002:a05:6870:d38d:b0:2e9:a15f:6c3b with SMTP id 586e51a60fabf-2ea96c4f2cfmr1052580fac.10.1749610717755;
+        Tue, 10 Jun 2025 19:58:37 -0700 (PDT)
+Received: from [192.168.86.65] (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2ea85fa2cbasm478059fac.8.2025.06.10.19.58.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Jun 2025 19:58:37 -0700 (PDT)
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Subject: [PATCH v2 0/3] soc: qcom: mdt_loader: Validation and cleanup fixes
+Date: Tue, 10 Jun 2025 21:58:27 -0500
+Message-Id: <20250610-mdt-loader-validation-and-fixes-v2-0-f7073e9ab899@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: venus: pm_helpers: use opp-table for the frequency
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250610-use_freq_with_opp_table-v1-1-7339d690fd1a@quicinc.com>
- <76e40130-897e-4547-8d5a-a0054f123fbe@linaro.org>
-Content-Language: en-US
-From: Renjiang Han <quic_renjiang@quicinc.com>
-In-Reply-To: <76e40130-897e-4547-8d5a-a0054f123fbe@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=EovSrTcA c=1 sm=1 tr=0 ts=6848e00c cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=wZNEWwjKhD01ZXd6ls4A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: b2Ad2H_6p6vXQ88tKY_CRrCwDWsIcyO-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDAxNCBTYWx0ZWRfXyOsP4ilC+EAB
- /EIeMZGhEO8FClBzEZav0KiZ6s3nf7vpHsSzFSjgx63G4S3FdD/8qUcx3xloVJmW7jNcbDsXKi5
- +w6h9LwOJhAvFa5Hx7A8Gr3RiqVRLWSi25t6z+BtL8MGEsiceGlKC6/LFtUyLdKSZDs8Fhr6eIM
- Dtsk6GWGfK0pAzUcCFI7DVTk08d+gOlvVWnvWOKX0yWYwyvEyFVlDNn6XUr6D9nU+z5WNLEI9lR
- or2CctPOXKJo7cD0SSs1D5wbCUw3YVGuUmoP5oPFGFI3EGGDukdrMipJNjpv081nj/v3Cplxak1
- hs+J0gH0dic3XsG1OtEfrRKR6mwK/XL2NejQkR94rvo67/+tYzdK+JUbxLAuoAwBe5MpbkzU6t5
- cRPoErBFhdpUWSNb8p3oedyCRWxJvpMXLd1HcKdy/Dh56EsPTjk9QP+1gXgQ6+MT6am+pvsf
-X-Proofpoint-GUID: b2Ad2H_6p6vXQ88tKY_CRrCwDWsIcyO-
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANPwSGgC/4WNQQ6CMBBFr0K6dkgZKYgr72FYjHQqTYBii42Gc
+ HcriWs3k7z/89+sIrC3HMQ5W4XnaIN1UwI8ZKLrabozWJ1YoEQlK1nCqBcYHGn2EGmwmpa0AJo
+ 0GPviAKo7YlUbdSsaI5Jl9rwXSXJtE/c2LM6/94ex+KY/t/rrjgVIwIYRuaYTmvLiQsgfTxo6N
+ 455OqLdtu0DDAXoCtUAAAA=
+X-Change-ID: 20250604-mdt-loader-validation-and-fixes-5c3267f5b19f
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+        Doug Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+        stable@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=684;
+ i=bjorn.andersson@oss.qualcomm.com; h=from:subject:message-id;
+ bh=CAZ/SIZXGULw26SKxotaF4nRCv62GltcOelZ3heoC6w=;
+ b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBoSPDceVmktbeGo5Ss9Evwmm1BekycHe1ROSgLC
+ GrysKoq1f2JAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCaEjw3BUcYW5kZXJzc29u
+ QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcX3KhAA2hs1VdO/LFQzQLgsU3BG2hssf1iW48bhD0XhM74
+ IU6pit9HUYEyrJhBT03PnZ3rxy7BomH9Y06pQ9s47EyHojwnho5oRRD6MjH3sse/Jp7ZL75ibFA
+ lnOot35mzN+uQBaahtcZGP3vGslKuXeTHXfC3p5qr2phduPdcCZPUOu98Vewwdr/x9dLl9TordW
+ 2OrJtV6PQ1t0CF6vqvu5dS7PUplOpXecrTuA6IdeQJaE//Yz9GmAkydb4ffTqhFJOIlvWbSZJX1
+ bbR5gRxM8S7r//057iUYJvXLUh+ZDvW+kWi3HIaI3e9S+y4X8eW8XqUXT8d+ybE6Q7HVy+fPE9O
+ UxkOjefBvt1rTI13KrsZqocXKyCZQmUQjrC7JkNemrH6F5tNplv7RhjP+Iz4qLyjATOaVVThNIK
+ vJYJNurNvvayYQf1NqOiWJHYrbraKDahVw1aSiqGtWr6Awz2CCl7hDdwwkhnA2GS0b9lNSfKAo8
+ FopzqFannBwB48Hpf1GskAbCKO8JuNi13RStomgJu1mkN3jaWbcX4KLe/WFBrJftMM4NMBkS+Q+
+ tPu39VGwBNK1J9uWJly/V7OBCqCVLRjxs23SA3Vsj4DMVyAiD7Knu5M8ApyKEbM36MWdi3qTL9Z
+ dvQrgqdEXWHUa+DcEb+GF/mLULonX5NypihJvV0yeOs4=
+X-Developer-Key: i=bjorn.andersson@oss.qualcomm.com; a=openpgp;
+ fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
+X-Authority-Analysis: v=2.4 cv=EovSrTcA c=1 sm=1 tr=0 ts=6848f0de cx=c_pps
+ a=V4L7fE8DliODT/OoDI2WOg==:117 a=DaeiM5VmU20ml6RIjrOvYw==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=OVvt1KTugGfhVnbKlbwA:9
+ a=QEXdDO2ut3YA:10 a=WZGXeFmKUf7gPmL3hEjn:22
+X-Proofpoint-ORIG-GUID: z7I83f_HUlsvY-523FUBSsnje4wyQA5N
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDAyNSBTYWx0ZWRfX0TJBA1nJH8vS
+ pPVLiYPH2vsTPrbUceuIoteSUBcvG+2863jU5cfvgX/ps3RAd1gL8Uz37LROVoZkO2i32Np67fY
+ V6FZq880LGTMIGI0c6/T3SCz2G3Lxf3uVl8bBorS7K5zJgIksfQh5u5jFZsj/n23L68yYjoE+WW
+ AAAUoe4s2iUcPeeSi8O1oBTmhHK+7tnmVEATF3onW9UWBr9N82DgWl0NBukC/plQZKT+Uq7kniq
+ dRz4OkVV/ly35IRKrf30wuejTfE0TZD6JqkV85fstAawqKhwnhuc13Qg0Qa+7XFAHf7DV9csRRK
+ BCInTylVUEXe3ynxg2yB8pJX6k4vJu7N1RHhqW2KU5wHblhhelutSToe7b7lrD8h2Vl+UFwSkUf
+ lIva7X+r12UIcw3Li0YJRJOz/68ovNgtj6kFG+9o2IoNbEsdkif1Jw7oRolCQeaUg3GWDbHM
+X-Proofpoint-GUID: z7I83f_HUlsvY-523FUBSsnje4wyQA5N
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-11_01,2025-06-10_01,2025-03-28_01
@@ -107,198 +144,27 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  mlxscore=0 clxscore=1015 malwarescore=0 adultscore=0 lowpriorityscore=0
  phishscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506110014
+ definitions=main-2506110025
 
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+---
+Changes in v2:
+- Validate e_phentsize and and e_shentsize as well
 
-On 6/11/2025 3:01 AM, Bryan O'Donoghue wrote:
-> On 10/06/2025 10:13, Renjiang Han wrote:
->> The frequency values in the opp-table of the device tree and the 
->> freq_tbl
->> in the driver are the same. So the driver can choose either table for 
->> freq
->> values.
->
-> I'd completely drop this sentence as you basically contradict it in 
-> the next line.
->
->> However, 
->
-> Drop
->
-> some platforms (such as qcs615 and sc7180) use the same core but
->> have different frequency tables. Using the opp-table allows us to 
->> separate
->> the core description from the frequency data and supports the use of
->> fallback compatibles.
->
-> This is a bit better.
->
-> Basically you can have identical bindings, even identical compats but 
-> for reasons such as binning of silicon parts you might run at higher 
-> or lower frequencies so static tables in the driver are not 
-> appropriate and are better represented in the DT.
->
->
->> Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
->> ---
->> The frequency values in the opp-table of the device tree and the 
->> freq_tbl
->> in the driver are the same. So the driver can choose either table for 
->> freq
->> values.
->>
->> However, some platforms (such as qcs615 and sc7180) use the same core 
->> but
->> have different frequency tables. Using the opp-table allows us to 
->> separate
->> the core description from the frequency data and supports the use of
->> fallback compatibles.
->>
->> Therefore, it is necessary to update pm_helpers.c to use the frequency
->> values from the opp-table for the v4 core.
->>
->> Note:
->> Earlier discussion was concluded in [1] where it was agreed to rely on
->> opp-table for QCS615.
->>
->> [1] 
->> https://lore.kernel.org/linux-arm-msm/c9b83c8b-68d1-43bc-99d6-d2d2b9e445f4@oss.qualcomm.com/
->> ---
->>   drivers/media/platform/qcom/venus/pm_helpers.c | 58 
->> +++++++++++++++-----------
->>   1 file changed, 34 insertions(+), 24 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c 
->> b/drivers/media/platform/qcom/venus/pm_helpers.c
->> index 
->> 409aa9bd0b5d099c993eedb03177ec5ed918b4a0..8dd5a9b0d060cddfeafd4da477ade0c7aeb6c390 
->> 100644
->> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
->> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
->> @@ -41,16 +41,14 @@ static int core_clks_get(struct venus_core *core)
->>   static int core_clks_enable(struct venus_core *core)
->>   {
->>       const struct venus_resources *res = core->res;
->> -    const struct freq_tbl *freq_tbl = core->res->freq_tbl;
->> -    unsigned int freq_tbl_size = core->res->freq_tbl_size;
->> -    unsigned long freq;
->> +    struct device *dev = core->dev;
->> +    unsigned long freq = 0;
->> +    struct dev_pm_opp *opp;
->>       unsigned int i;
->>       int ret;
->>   -    if (!freq_tbl)
->> -        return -EINVAL;
->> -
->> -    freq = freq_tbl[freq_tbl_size - 1].freq;
->> +    opp = dev_pm_opp_find_freq_ceil(dev, &freq);
->> +    dev_pm_opp_put(opp);
->>         for (i = 0; i < res->clks_num; i++) {
->>           if (IS_V6(core)) {
->> @@ -636,7 +634,9 @@ static int decide_core(struct venus_inst *inst)
->>       u32 min_coreid, min_load, cur_inst_load;
->>       u32 min_lp_coreid, min_lp_load, cur_inst_lp_load;
->>       struct hfi_videocores_usage_type cu;
->> -    unsigned long max_freq;
->> +    unsigned long max_freq = ULONG_MAX;
->> +    struct device *dev = core->dev;
->> +    struct dev_pm_opp *opp;
->>       int ret = 0;
->>         if (legacy_binding) {
->> @@ -659,7 +659,8 @@ static int decide_core(struct venus_inst *inst)
->>       cur_inst_lp_load *= inst->clk_data.low_power_freq;
->>       /*TODO : divide this inst->load by work_route */
->>   -    max_freq = core->res->freq_tbl[0].freq;
->> +    opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
->> +    dev_pm_opp_put(opp);
->>         min_loaded_core(inst, &min_coreid, &min_load, false);
->>       min_loaded_core(inst, &min_lp_coreid, &min_lp_load, true);
->> @@ -949,7 +950,10 @@ static int core_resets_get(struct venus_core *core)
->>   static int core_get_v4(struct venus_core *core)
->>   {
->>       struct device *dev = core->dev;
->> +    const struct freq_tbl *freq_tbl = core->res->freq_tbl;
->> +    unsigned int num_rows = core->res->freq_tbl_size;
->>       const struct venus_resources *res = core->res;
->> +    unsigned int i;
->>       int ret;
->>         ret = core_clks_get(core);
->> @@ -986,9 +990,17 @@ static int core_get_v4(struct venus_core *core)
->>         if (core->res->opp_pmdomain) {
->>           ret = devm_pm_opp_of_add_table(dev);
->> -        if (ret && ret != -ENODEV) {
->> -            dev_err(dev, "invalid OPP table in device tree\n");
->> -            return ret;
->> +        if (ret) {
->> +            if (ret == -ENODEV) {
->> +                for (i = 0; i < num_rows; i++) {
->> +                    ret = dev_pm_opp_add(dev, freq_tbl[i].freq, 0);
->> +                    if (ret)
->> +                        return ret;
->> +                }
->> +            } else {
->> +                dev_err(dev, "invalid OPP table in device tree\n");
->> +                return ret;
->> +            }
->>           }
->>       }
->>   @@ -1078,11 +1090,11 @@ static unsigned long 
->> calculate_inst_freq(struct venus_inst *inst,
->>   static int load_scale_v4(struct venus_inst *inst)
->>   {
->>       struct venus_core *core = inst->core;
->> -    const struct freq_tbl *table = core->res->freq_tbl;
->> -    unsigned int num_rows = core->res->freq_tbl_size;
->>       struct device *dev = core->dev;
->>       unsigned long freq = 0, freq_core1 = 0, freq_core2 = 0;
->> +    unsigned long max_freq = ULONG_MAX;
->>       unsigned long filled_len = 0;
->> +    struct dev_pm_opp *opp;
->>       int i, ret = 0;
->>         for (i = 0; i < inst->num_input_bufs; i++)
->> @@ -1108,20 +1120,18 @@ static int load_scale_v4(struct venus_inst 
->> *inst)
->>         freq = max(freq_core1, freq_core2);
->>   -    if (freq > table[0].freq) {
->> -        dev_dbg(dev, VDBGL "requested clock rate: %lu scaling clock 
->> rate : %lu\n",
->> -            freq, table[0].freq);
->> +    opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
->> +    dev_pm_opp_put(opp);
->>   -        freq = table[0].freq;
->> +    if (freq > max_freq) {
->> +        dev_dbg(dev, VDBGL "requested clock rate: %lu scaling clock 
->> rate : %lu\n",
->> +            freq, max_freq);
->> +        freq = max_freq;
->>           goto set_freq;
->>       }
->>   -    for (i = num_rows - 1 ; i >= 0; i--) {
->> -        if (freq <= table[i].freq) {
->> -            freq = table[i].freq;
->> -            break;
->> -        }
->> -    }
->> +    opp = dev_pm_opp_find_freq_ceil(dev, &freq);
->> +    dev_pm_opp_put(opp);
->>     set_freq:
->>
->> ---
->> base-commit: b27cc623e01be9de1580eaa913508b237a7a9673
->> change-id: 20250610-use_freq_with_opp_table-b81162cfecba
->>
->> Best regards,
-> Please make your commit log more succinct and precise then add.
-Sure, thanks for your comment. I'll update this with next version.
->
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->
-> ---
-> bod
+---
+Bjorn Andersson (3):
+      soc: qcom: mdt_loader: Ensure we don't read past the ELF header
+      soc: qcom: mdt_loader: Rename mdt_phdr_valid()
+      soc: qcom: mdt_loader: Actually use the e_phoff
 
+ drivers/soc/qcom/mdt_loader.c | 63 ++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 53 insertions(+), 10 deletions(-)
+---
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+change-id: 20250604-mdt-loader-validation-and-fixes-5c3267f5b19f
+
+Best regards,
 -- 
-Best Regards,
-Renjiang
+Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
 
