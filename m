@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-60892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE718AD47B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 03:07:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C450AD4826
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 03:47:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 66A203AAD8C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 01:05:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C7E0D189A86E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 01:47:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EA172030A;
-	Wed, 11 Jun 2025 01:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 856E1139566;
+	Wed, 11 Jun 2025 01:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fUmzr6VA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SspwfqCl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413971F949;
-	Wed, 11 Jun 2025 01:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7A91B960;
+	Wed, 11 Jun 2025 01:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749603929; cv=none; b=Oy8jKchh44EaCq5uxubPxEw7kpBiULEGZBMjfP0QAkWc/sa3uqis8wcTjhTb7dj5PKtUDlMYPH+xyWd7wZvZinS1vjLSxkDJNgcGSSENvA/ofAKUeY/uyBYINsJlhMTxynEqU2QVvA4ffyq2eYJG49TOnDrkv4wCN8yjukl9LOQ=
+	t=1749606419; cv=none; b=SbjPJ8YvvcbUJZ5QGjbD+F5TPXBIEaO3dQSfiePMVOeX6mDADEeN+pdRFaA6CIvHZtBfkQzvDIUcLx7JH3EfqsZMyo+MGgjI9lrRsSejEpKi2gPmFbiP191GE0zgkZhwUcSOD9s0KHmYLSkN49nwVED92YQIfkC22yQVOwQBbwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749603929; c=relaxed/simple;
-	bh=dOkoIKcGlaQosiiCi9rgVkqR/O0cr1xBBo61BLwUxgY=;
+	s=arc-20240116; t=1749606419; c=relaxed/simple;
+	bh=YvR/YQNOuRzwgj2S3Hl8+PzCdzJrDRJdTlry5kKBF+A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=P1oU45R4JqWTrRg37h63/7iVv5hx5KINkeW1PyG2cKxZ+B2uSBgYHfO7CF1hsCNU1YmaJZoVG4Kvam8aborpEquZ8zdZGFbphzWzTOyp753URIqdmnkam8RtwYLI2lJOTGIc6CgVZhBxtGan4f4RQySCtpWds464NLoV424lko8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fUmzr6VA; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=qLf2o9eHSa3ZbST1LIVw7gLlEiBHcjVaqP8LBntN/mUX4hijUljJSsL/5FrEFsdITpSxW/Sx5AEHP8yt13eOVuvMHIf0Cqk9tDUYCudFowek1gWakeM/mH9h4dbCdyDVFyE1j5E/RooKK2mRtJNZ69W+BT/D7jhLjgW4Odzc4Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SspwfqCl; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AIPqps030889;
-	Wed, 11 Jun 2025 01:05:23 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AIPr6e028710;
+	Wed, 11 Jun 2025 01:46:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	v+a+SXakBgY50D6h/qPLnwaw5txhUBpHruIFhwWc8qY=; b=fUmzr6VA47VhQnXC
-	EP3/0eJesu+tjlNO0HFMUEUfX4ISm02lnF4TfeuOoHRHMPdQqYijoZgcM9Fi54uU
-	rvqB2XtsapJIdQ+spj/0X+W0JSwXRr5jvpR5GoE8R+8jOLN6hYhqeY791B10LMqo
-	3tFe1huk3AMsIddZ8FkjKapE+G1WC1ObWY8aqPRYtasXy113KTPcF/1SQSgy9OyF
-	u63X/xQUWp/6ce9LCtN8b0Y8oTpyUhQKpB0wLF4yw72uALg8y+xlWCsr5UMQm5ym
-	7u8wMjcwfwVQsnNS6KAqu76yod73kEpjgkBwC5X7+A6rSpIjRV/P3SfIoZSdnkze
-	t3x/yA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 475v2tdw05-1
+	l82STVtCU6R80dx9yP/eIowJs4LM6MV86jS2Xmqb+f8=; b=SspwfqClIFAmLMCs
+	Y8DmEb52NyHMPWdjZEzLhhGzAAwXU5uPP0JzclO0V4paBHul02SujXV4jCfJX0ak
+	C7FlN7zw2dFc9DRKmTTltC+ErWFhAkLjhSBfrDfrjVLjG81AZBZDcADZX/nzmgJw
+	BwZTXN3DrnzSEgQ1Myjg0Qd3r3r/yEcUMcBM0BhPThzZh3PQmK6WZBxiQAH+G6wT
+	yQ6EplDUEbHskrbuAOSaRbstE4sXEnXGNzajgkuDIdmVeIGPGTb41M2RAp0Ceh0f
+	9tv+mDzrkbg8iBUnluxRyWzBR20mwEBcvUkv2p4R2t5inLI1uyAe4lBh16ALU7pR
+	nDyEWg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 476jrha9c4-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 01:05:23 +0000 (GMT)
+	Wed, 11 Jun 2025 01:46:51 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55B15LIQ010262
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55B1kpmx011171
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 01:05:22 GMT
-Received: from [10.64.68.153] (10.80.80.8) by nalasex01c.na.qualcomm.com
+	Wed, 11 Jun 2025 01:46:51 GMT
+Received: from [10.231.216.119] (10.80.80.8) by nalasex01c.na.qualcomm.com
  (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Jun
- 2025 18:05:18 -0700
-Message-ID: <6759e8c9-53a6-42cf-8199-d6836c77445c@quicinc.com>
-Date: Wed, 11 Jun 2025 09:05:16 +0800
+ 2025 18:46:48 -0700
+Message-ID: <a23d759a-9048-42e8-b72d-34c1e913e7fe@quicinc.com>
+Date: Wed, 11 Jun 2025 09:46:46 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,145 +65,240 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qcs615: disable the CTI device of the
- camera block
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Jie Gan
-	<jie.gan@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad
- Dybcio" <konradybcio@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao
-	<quic_jinlmao@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+Subject: Re: [PATCH] media: venus: pm_helpers: use opp-table for the frequency
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-References: <20250527015224.7343-1-jie.gan@oss.qualcomm.com>
- <5fbb515a-c3d0-4bbe-a689-41e730ecd952@oss.qualcomm.com>
- <9a156925-cf7b-4d2e-88a8-fdfed5528553@quicinc.com>
- <1fef810c-47fe-4f6d-95bc-0d72dbd63bf0@oss.qualcomm.com>
- <79f5e42f-f857-4247-abf9-d0f3f5c1a498@quicinc.com>
- <f3f8f446-4f0d-482d-952d-35c80d7d7881@oss.qualcomm.com>
- <405f0432-3f07-45be-8511-06235dcd84d0@oss.qualcomm.com>
- <a63ff3a7-c67b-4251-81f3-ce6cc3a3d068@oss.qualcomm.com>
+References: <20250610-use_freq_with_opp_table-v1-1-7339d690fd1a@quicinc.com>
+ <76e40130-897e-4547-8d5a-a0054f123fbe@linaro.org>
 Content-Language: en-US
-From: Jie Gan <quic_jiegan@quicinc.com>
-In-Reply-To: <a63ff3a7-c67b-4251-81f3-ce6cc3a3d068@oss.qualcomm.com>
+From: Renjiang Han <quic_renjiang@quicinc.com>
+In-Reply-To: <76e40130-897e-4547-8d5a-a0054f123fbe@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ivas1hn-Oh8OBIRpnoa1XYVwqQ8lY5Ki
-X-Authority-Analysis: v=2.4 cv=GoxC+l1C c=1 sm=1 tr=0 ts=6848d653 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=EovSrTcA c=1 sm=1 tr=0 ts=6848e00c cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=P-IC7800AAAA:8
- a=OefDGO8NFz7VKNv-hUoA:9 a=QEXdDO2ut3YA:10 a=d3PnA9EDa4IxuAV0gXij:22
-X-Proofpoint-ORIG-GUID: ivas1hn-Oh8OBIRpnoa1XYVwqQ8lY5Ki
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDAwOCBTYWx0ZWRfX7BjdkqVQz4HV
- JGegskcinglcHH+M0Rfv28+o3qXvhu+j8GpOORbqy0sVEDSbjI1OF3sDd5r0C6S/FVV7VE6LMiF
- OKvf+I8fHMa9E/GphiQ3mWiwOdABHvJjF9IK3B653PZ+X12bRudN3bqVqxm8lVqM/DpzHK5Ka8R
- nfNAA5+R/IcK5D6gJPsatGlufG/AkZidJpNKCDCUn1SnManFqseGdzyla0Ls0PGc4jgVSdR9lEo
- Mx+HooWb3R0kLaQmTUgEUuq1n/e8jmL8leUSHYDpZ/kseiQIrxkUlFq/aNS7UUgwq3iGvRHy+n6
- okCB60p+vLP74EkglY2d+I8qWBppvMRVxwrYbG8STEZHDX61d11BsRErtR1t8LSHTT+hZOwnmrr
- lRvMMaAMzYwezo2SPKB+bJCCaTSKxeN36fNZLGma/acLQMgRWcDcWLZ2qtckuyBd7VHO+V6+
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=wZNEWwjKhD01ZXd6ls4A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: b2Ad2H_6p6vXQ88tKY_CRrCwDWsIcyO-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDAxNCBTYWx0ZWRfXyOsP4ilC+EAB
+ /EIeMZGhEO8FClBzEZav0KiZ6s3nf7vpHsSzFSjgx63G4S3FdD/8qUcx3xloVJmW7jNcbDsXKi5
+ +w6h9LwOJhAvFa5Hx7A8Gr3RiqVRLWSi25t6z+BtL8MGEsiceGlKC6/LFtUyLdKSZDs8Fhr6eIM
+ Dtsk6GWGfK0pAzUcCFI7DVTk08d+gOlvVWnvWOKX0yWYwyvEyFVlDNn6XUr6D9nU+z5WNLEI9lR
+ or2CctPOXKJo7cD0SSs1D5wbCUw3YVGuUmoP5oPFGFI3EGGDukdrMipJNjpv081nj/v3Cplxak1
+ hs+J0gH0dic3XsG1OtEfrRKR6mwK/XL2NejQkR94rvo67/+tYzdK+JUbxLAuoAwBe5MpbkzU6t5
+ cRPoErBFhdpUWSNb8p3oedyCRWxJvpMXLd1HcKdy/Dh56EsPTjk9QP+1gXgQ6+MT6am+pvsf
+X-Proofpoint-GUID: b2Ad2H_6p6vXQ88tKY_CRrCwDWsIcyO-
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_11,2025-06-10_01,2025-03-28_01
+ definitions=2025-06-11_01,2025-06-10_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=956 adultscore=0 impostorscore=0 malwarescore=0 mlxscore=0
- suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506110008
+ impostorscore=0 spamscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999
+ mlxscore=0 clxscore=1015 malwarescore=0 adultscore=0 lowpriorityscore=0
+ phishscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506110014
 
 
-
-On 6/10/2025 9:24 PM, Konrad Dybcio wrote:
-> On 6/3/25 5:17 AM, Jie Gan wrote:
+On 6/11/2025 3:01 AM, Bryan O'Donoghue wrote:
+> On 10/06/2025 10:13, Renjiang Han wrote:
+>> The frequency values in the opp-table of the device tree and the 
+>> freq_tbl
+>> in the driver are the same. So the driver can choose either table for 
+>> freq
+>> values.
+>
+> I'd completely drop this sentence as you basically contradict it in 
+> the next line.
+>
+>> However, 
+>
+> Drop
+>
+> some platforms (such as qcs615 and sc7180) use the same core but
+>> have different frequency tables. Using the opp-table allows us to 
+>> separate
+>> the core description from the frequency data and supports the use of
+>> fallback compatibles.
+>
+> This is a bit better.
+>
+> Basically you can have identical bindings, even identical compats but 
+> for reasons such as binning of silicon parts you might run at higher 
+> or lower frequencies so static tables in the driver are not 
+> appropriate and are better represented in the DT.
+>
+>
+>> Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
+>> ---
+>> The frequency values in the opp-table of the device tree and the 
+>> freq_tbl
+>> in the driver are the same. So the driver can choose either table for 
+>> freq
+>> values.
 >>
+>> However, some platforms (such as qcs615 and sc7180) use the same core 
+>> but
+>> have different frequency tables. Using the opp-table allows us to 
+>> separate
+>> the core description from the frequency data and supports the use of
+>> fallback compatibles.
 >>
->> On 5/31/2025 7:05 AM, Konrad Dybcio wrote:
->>> On 5/28/25 5:02 AM, Jie Gan wrote:
->>>>
->>>>
->>>> On 5/27/2025 6:41 PM, Konrad Dybcio wrote:
->>>>> On 5/27/25 12:32 PM, Jie Gan wrote:
->>>>>>
->>>>>>
->>>>>> On 5/27/2025 6:23 PM, Konrad Dybcio wrote:
->>>>>>> On 5/27/25 3:52 AM, Jie Gan wrote:
->>>>>>>> Disable the CTI device of the camera block to prevent potential NoC errors
->>>>>>>> during AMBA bus device matching.
->>>>>>>>
->>>>>>>> The clocks for the Qualcomm Debug Subsystem (QDSS) are managed by aoss_qmp
->>>>>>>> through a mailbox. However, the camera block resides outside the AP domain,
->>>>>>>> meaning its QDSS clock cannot be controlled via aoss_qmp.
->>>>>>>
->>>>>>> Which clock drives it then?
->>>>>>
->>>>>> It's qcom,aoss-qmp.
->>>>>>
->>>>>> clk_prepare->qmp_qdss_clk_prepare
->>>>>> https://elixir.bootlin.com/linux/v6.15-rc7/source/drivers/soc/qcom/qcom_aoss.c#L280
->>>>>
->>>>> I'm confused about this part:
->>>>>
->>>>>> However, the camera block resides outside the AP domain,
->>>>>> meaning its QDSS clock cannot be controlled via aoss_qmp.
->>>>>
->>>>> Do we need to poke the QMP of another DRV?
->>>>
->>>> The AOSS has a clock control register for all QDSS clocks. when we vote the qdss clock, the aoss_qmp driver will send a message to AOSS to enable the clock control register, then the clock control register will enable all QDSS clocks.
->>>>
->>>> The QDSS clock is not a single clock source, it is a term that representing all the clock sources utilized by the QDSS.
->>>
->>> What I'm trying to ask is, is there any way we could enable that
->>> clock from Linux? Can the camera hw turn these on? Maybe we could
->>> trick it into enabling them?
+>> Therefore, it is necessary to update pm_helpers.c to use the frequency
+>> values from the opp-table for the v4 core.
 >>
->> There is a power issue if we keep the debug clock on with a long time.
+>> Note:
+>> Earlier discussion was concluded in [1] where it was agreed to rely on
+>> opp-table for QCS615.
 >>
->> We had a discussion with AOP to check if possible to add the debug clock of titan to the QDSS clock list, but they need time to evaluate it.
-> 
-> Changing the firmware is a band-aid solution, as the update will never
-> reach millions of devices on the market. I'm curious in whether there's
-> any way (or os-accessible debug register) to manage the necessary clocks
-> from Linux, as a workaround.
-> 
->>  From Coresight view, what we can do by now is disable it in DT to prevent the unexpected NoC error.
-> 
-> How about something like this:
+>> [1] 
+>> https://lore.kernel.org/linux-arm-msm/c9b83c8b-68d1-43bc-99d6-d2d2b9e445f4@oss.qualcomm.com/
+>> ---
+>>   drivers/media/platform/qcom/venus/pm_helpers.c | 58 
+>> +++++++++++++++-----------
+>>   1 file changed, 34 insertions(+), 24 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c 
+>> b/drivers/media/platform/qcom/venus/pm_helpers.c
+>> index 
+>> 409aa9bd0b5d099c993eedb03177ec5ed918b4a0..8dd5a9b0d060cddfeafd4da477ade0c7aeb6c390 
+>> 100644
+>> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+>> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+>> @@ -41,16 +41,14 @@ static int core_clks_get(struct venus_core *core)
+>>   static int core_clks_enable(struct venus_core *core)
+>>   {
+>>       const struct venus_resources *res = core->res;
+>> -    const struct freq_tbl *freq_tbl = core->res->freq_tbl;
+>> -    unsigned int freq_tbl_size = core->res->freq_tbl_size;
+>> -    unsigned long freq;
+>> +    struct device *dev = core->dev;
+>> +    unsigned long freq = 0;
+>> +    struct dev_pm_opp *opp;
+>>       unsigned int i;
+>>       int ret;
+>>   -    if (!freq_tbl)
+>> -        return -EINVAL;
+>> -
+>> -    freq = freq_tbl[freq_tbl_size - 1].freq;
+>> +    opp = dev_pm_opp_find_freq_ceil(dev, &freq);
+>> +    dev_pm_opp_put(opp);
+>>         for (i = 0; i < res->clks_num; i++) {
+>>           if (IS_V6(core)) {
+>> @@ -636,7 +634,9 @@ static int decide_core(struct venus_inst *inst)
+>>       u32 min_coreid, min_load, cur_inst_load;
+>>       u32 min_lp_coreid, min_lp_load, cur_inst_lp_load;
+>>       struct hfi_videocores_usage_type cu;
+>> -    unsigned long max_freq;
+>> +    unsigned long max_freq = ULONG_MAX;
+>> +    struct device *dev = core->dev;
+>> +    struct dev_pm_opp *opp;
+>>       int ret = 0;
+>>         if (legacy_binding) {
+>> @@ -659,7 +659,8 @@ static int decide_core(struct venus_inst *inst)
+>>       cur_inst_lp_load *= inst->clk_data.low_power_freq;
+>>       /*TODO : divide this inst->load by work_route */
+>>   -    max_freq = core->res->freq_tbl[0].freq;
+>> +    opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
+>> +    dev_pm_opp_put(opp);
+>>         min_loaded_core(inst, &min_coreid, &min_load, false);
+>>       min_loaded_core(inst, &min_lp_coreid, &min_lp_load, true);
+>> @@ -949,7 +950,10 @@ static int core_resets_get(struct venus_core *core)
+>>   static int core_get_v4(struct venus_core *core)
+>>   {
+>>       struct device *dev = core->dev;
+>> +    const struct freq_tbl *freq_tbl = core->res->freq_tbl;
+>> +    unsigned int num_rows = core->res->freq_tbl_size;
+>>       const struct venus_resources *res = core->res;
+>> +    unsigned int i;
+>>       int ret;
+>>         ret = core_clks_get(core);
+>> @@ -986,9 +990,17 @@ static int core_get_v4(struct venus_core *core)
+>>         if (core->res->opp_pmdomain) {
+>>           ret = devm_pm_opp_of_add_table(dev);
+>> -        if (ret && ret != -ENODEV) {
+>> -            dev_err(dev, "invalid OPP table in device tree\n");
+>> -            return ret;
+>> +        if (ret) {
+>> +            if (ret == -ENODEV) {
+>> +                for (i = 0; i < num_rows; i++) {
+>> +                    ret = dev_pm_opp_add(dev, freq_tbl[i].freq, 0);
+>> +                    if (ret)
+>> +                        return ret;
+>> +                }
+>> +            } else {
+>> +                dev_err(dev, "invalid OPP table in device tree\n");
+>> +                return ret;
+>> +            }
+>>           }
+>>       }
+>>   @@ -1078,11 +1090,11 @@ static unsigned long 
+>> calculate_inst_freq(struct venus_inst *inst,
+>>   static int load_scale_v4(struct venus_inst *inst)
+>>   {
+>>       struct venus_core *core = inst->core;
+>> -    const struct freq_tbl *table = core->res->freq_tbl;
+>> -    unsigned int num_rows = core->res->freq_tbl_size;
+>>       struct device *dev = core->dev;
+>>       unsigned long freq = 0, freq_core1 = 0, freq_core2 = 0;
+>> +    unsigned long max_freq = ULONG_MAX;
+>>       unsigned long filled_len = 0;
+>> +    struct dev_pm_opp *opp;
+>>       int i, ret = 0;
+>>         for (i = 0; i < inst->num_input_bufs; i++)
+>> @@ -1108,20 +1120,18 @@ static int load_scale_v4(struct venus_inst 
+>> *inst)
+>>         freq = max(freq_core1, freq_core2);
+>>   -    if (freq > table[0].freq) {
+>> -        dev_dbg(dev, VDBGL "requested clock rate: %lu scaling clock 
+>> rate : %lu\n",
+>> -            freq, table[0].freq);
+>> +    opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
+>> +    dev_pm_opp_put(opp);
+>>   -        freq = table[0].freq;
+>> +    if (freq > max_freq) {
+>> +        dev_dbg(dev, VDBGL "requested clock rate: %lu scaling clock 
+>> rate : %lu\n",
+>> +            freq, max_freq);
+>> +        freq = max_freq;
+>>           goto set_freq;
+>>       }
+>>   -    for (i = num_rows - 1 ; i >= 0; i--) {
+>> -        if (freq <= table[i].freq) {
+>> -            freq = table[i].freq;
+>> -            break;
+>> -        }
+>> -    }
+>> +    opp = dev_pm_opp_find_freq_ceil(dev, &freq);
+>> +    dev_pm_opp_put(opp);
+>>     set_freq:
+>>
+>> ---
+>> base-commit: b27cc623e01be9de1580eaa913508b237a7a9673
+>> change-id: 20250610-use_freq_with_opp_table-b81162cfecba
+>>
+>> Best regards,
+> Please make your commit log more succinct and precise then add.
+Sure, thanks for your comment. I'll update this with next version.
+>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>
+> ---
+> bod
 
-Thanks for the suggestion. It makes sense for me and much better than 
-current version.
-
-I will send a new version to fix it.
-
-Thanks,
-Jie
-
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> index bb8b6c3ebd03..fc2ab750f2cd 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-> @@ -2461,6 +2461,9 @@ cti@6c13000 {
->   
->                          clocks = <&aoss_qmp>;
->                          clock-names = "apb_pclk";
-> +
-> +                       /* Not all required clocks can be enabled from the OS */
-> +                       status = "fail";
->                  };
->   
->                  cti@6c20000 {
-> 
-> Konrad
+-- 
+Best Regards,
+Renjiang
 
 
