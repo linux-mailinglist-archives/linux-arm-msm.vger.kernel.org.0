@@ -1,155 +1,372 @@
-Return-Path: <linux-arm-msm+bounces-60898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 222AFAD4914
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 05:00:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 58A5DAD4928
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 05:04:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84FF13A4A3B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 03:00:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 24E493A3925
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 03:04:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF0282253FB;
-	Wed, 11 Jun 2025 03:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFC6C22578D;
+	Wed, 11 Jun 2025 03:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="F35BS/br"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LbkIPTVb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6659218DB3D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 03:00:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49E314B965;
+	Wed, 11 Jun 2025 03:04:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749610822; cv=none; b=hjW+5BQ1+FO1m3A8NswqGzGy7YbdPsmxJt4g4khSRQ4pa2HFEyiTynSuqD8oa3lNoc/Dm2QAUIIlzoQWjFuo0y/5a5UztD1j6X4FHJfcuDK5bBN9tPETgoNE9haszRjCOkiWWZD8IGrnaSag/zrvPwaZc4KB6YBeteWi0LpnnOg=
+	t=1749611082; cv=none; b=AW/K1Lsogb0V59IXvaYKWQx2kNj/9eXLZGt8SxCfkftZ5rFH+/9FnggM1q82Im9hbVMZ4/zx2OSExJnJOOB/8JPSziD1GXLmeZIvtT6UIDHGkmGzbHbxm/PFoZAX+VJs15/I18UoFW23nHOGwJ//qDUoqGKkuSzmzGOBfOjKbAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749610822; c=relaxed/simple;
-	bh=YwimPYQo5w5oj3euFTtVkBsrZNt3dvgUqWiiSoaOPQE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=KDN8zEUxOJZMcvifrnH0NQfpD+1GVE9ZvOf9xcVh7hvxI/o4i1u1wGt9N9/AIl4tEnu6rJJO08p06CRVbdUoVgxnhDrEFmrPm6K5uBfpdlMxYJBzoGaj8gQmuwuQjxsWy1yGT5qxl5C89YvFH68opwHOKS4O4sbD+97jX3gkCNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=F35BS/br; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AIPoWE016708
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 03:00:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=jk7S7lY42gg5pO/gSWtDrK8morqTLehUEY7
-	fLQbfzbI=; b=F35BS/brsrmClxp4+G2rBV3XqdWLPv9bmzybXsfnjPCjzKsQdCW
-	vRtFYLwgfgr/Crp69Tb2CBe7reir/Dej5V8PAZJv35QPs/HpYAGpp+rDe419aeYB
-	COrZYxzNgCVcRgqQ8aIKWgJswlWUj5WL36KsitdhC2C40I1D0usaeg99zug1lX5e
-	fstLBfHV3b9irojfEmvA+1ne3q/VjSu0gs3qJZs0DEHX2dVrjgyChbAhRb4ml7by
-	1CUl4Rgm80Jj+XpWulkSKpZZO6mdEg/o0F+InzMzshusKCKoJwNMTawUYWBSPtbp
-	ictmBzc/ciq5lh+NfRaibjAU8mg8rWcTr9g==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 476fmnb40h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 03:00:20 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2354ba59eb6so96807485ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 20:00:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749610819; x=1750215619;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jk7S7lY42gg5pO/gSWtDrK8morqTLehUEY7fLQbfzbI=;
-        b=wVySrcTOMg9M0JnzA5vymE25Rq13p0ZyljTm3HgIDFAYBIZYr6ED0jtlsUAFLMsWV/
-         l+y2jNAHQN3a3XOpEzziqBXr4858A2rtfbGQaWIi60DTA/DHJNdtICNYf8EjZmxUdv2u
-         eZKhVgHIDA1xY7l1uHkyFDpDwV7SekM7KQnbGcyasZCKohn6kT5rVt7zZSFZvl0mdO9v
-         tS7pFWY5tk1St1GTpCTMBktfAgyiyuVt6Yxnbpdr/yu3GR07Duh+JC5smWKqrN1tOROx
-         uUsx8zWQTUPWhO0mdFIRk92qW40voWS/+24JnUWDzh0bQH2CNWh/EYh4jquL4r+PjCIE
-         ybGg==
-X-Forwarded-Encrypted: i=1; AJvYcCVz/oBng7uHJ9SuPrZ3YuAbRXmG+XYsm7B9xJY1jYFylO5sqpD7o4CWm229SgTIH1i4KKJWeTLqE7JUcuKr@vger.kernel.org
-X-Gm-Message-State: AOJu0YwK3UlZuN1QjbVSHeKFrj/q9TRlWNza5hcAJjWzch3yPmFmyYJH
-	CqEGYAXXgPZo4WB4CJiWAapkNO7bUE2e/3dTTXzWq9V8vi4huXcvLXmMCWRn+kQ4dYtrGDOZaCl
-	OiOsX1T+9UfhejjLcI+Q2+iXhQBOPMWsGHe7LXk4vNREoHcv+3UIGgOeLFnljh3CHcWilLhjbAf
-	8OBZc=
-X-Gm-Gg: ASbGnctJQhA+BskNBuEExEDkQozJoLYPVSoAAABMo0l4il/uzIedsxWgkO87pYoVgWR
-	G6P3Sj23Dvbdi7eeiyqpwbgItC9s5Jc+gXUL6v/5FtQiq0rZdcqUbup788A7NT0dXLJMDmwF8hc
-	YW9vCDEFQy28CNkDHP/inTlvb6yTywBdpkR6VmLcKJ4EiFZ9d8dKvZXfh80xdiD19M7wCDZQo82
-	mPp79JkCp6mkxYMACCB8GhrOaJZkSVn6DXDmJu2BhKmuIOKSlTsbRPjpVyOJkVyjtHRmUZQnp2w
-	+AupIH8fb4BYyglGeuKKZCZARB8qqAXMoJQUwQSut+qYsjEYnBDEIgC+jTbJLMr24fFVylda2su
-	+hCM=
-X-Received: by 2002:a17:903:3b8e:b0:235:f4f7:a654 with SMTP id d9443c01a7336-2364262d8c2mr17519885ad.22.1749610819290;
-        Tue, 10 Jun 2025 20:00:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEm97iwcYG4U9+2Ei9ZjiYgSzh6GmTA1c+FFmow1NqLf2qf8IaBoa6JWs0uyzi5uM0TYpYH/g==
-X-Received: by 2002:a17:902:ce0f:b0:234:f182:a754 with SMTP id d9443c01a7336-236426d657amr14845775ad.47.1749610807973;
-        Tue, 10 Jun 2025 20:00:07 -0700 (PDT)
-Received: from jiegan.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23603511b2bsm77273225ad.243.2025.06.10.20.00.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Jun 2025 20:00:07 -0700 (PDT)
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Jie Gan <quic_jiegan@quicinc.com>
-Cc: Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] arm64: dts: qcom: qcs615: disable the CTI device of the camera block
-Date: Wed, 11 Jun 2025 11:00:03 +0800
-Message-Id: <20250611030003.3801-1-jie.gan@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1749611082; c=relaxed/simple;
+	bh=tMVbwX8q7yKp+m/nWv/8AM1ELenkBxHLUa86v+2rir8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=TSNxtMZNmGEsckgPjbVhGLa2CaF6HzKfkHqScc+28ENZC7gGTWMLnl0R+BbAUdJ3lnm6O+MPuioANv3Ygye4rzBhKwYZd8g2r1cb75g53LL1LgXOKrFWTqo3+hobpDri5rV4wxNtsP3jqglNyycu10Qb9+pryGqGB1sfNdRKUcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LbkIPTVb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AIPrhO030928;
+	Wed, 11 Jun 2025 03:04:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	VzkC5ZKh9OUNH1vFltysfWJB99nL7fmVjscSBmNOAHQ=; b=LbkIPTVb3emW06kR
+	KWZQsPbZixTNjMtXamaXD+u4PRD2JCnEYNCy5IrclZ25d7LWSIbvtrBYI4H1YDCx
+	HyHGov51QKP9Tlg4BslBOOAYk5HdmrnHm7Ps6haYFS6ue0vaBuwXWScbC6eq18yG
+	LWDFrCiRjmJQx6Oxh+emywTF22RvMIym7FhiECtp3Cy9joM/FSs4CsOffoT12pr2
+	syylg0AJqNddiXLN5EqzcIEu8Lg9w1zUx9+1moOGF0y5cmsK2ZuI3zGM5XgSO6a1
+	TKLpVWEkFnS48rx5ZmHBAaqx39YrTniHmtZY5/XT5WP7Y7gyA1P1lOx8wCWaPsC2
+	WLLeaA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 475v2te4qg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Jun 2025 03:04:33 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55B34W3q004140
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Jun 2025 03:04:32 GMT
+Received: from [10.231.195.67] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Jun
+ 2025 20:04:30 -0700
+Message-ID: <3676e97c-fafd-4cf0-987c-64f139bab78f@quicinc.com>
+Date: Wed, 11 Jun 2025 11:04:26 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 5BxfPtCPWseUuZ5q1hdjhfLiCW8YZZru
-X-Proofpoint-GUID: 5BxfPtCPWseUuZ5q1hdjhfLiCW8YZZru
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDAyNSBTYWx0ZWRfX3XAA/+yYhikm
- b3mc4ZPa52km0/wim7GbQjcRxLh6zr0KykLMlVM7lBGThcED+M7iD7bF0xj8rUxsj8wBkzA3SZx
- bR+114/xdk1QwqLuOj0dZT22rRH0C3W6cd/Veb3T3ce99HlzyonT+uV6NcVT3POR/ZmnJMgxWhf
- mn6q6iEjhgeO2skitrKOTNH2zWRKUom9eBAp4ewUo5c2cDPNN6dxLsiLUuAl5Tp1APvUsATE8JJ
- PbPT+/2ozD5mY0t85mOifl9jh/T63Q7AlUPZKqWsXpnBkmzsZXVaoBNXxSoVcxd3sMQTRvj386q
- CA/TSE5bJnWFVDFLHtS6PxAap2jcEzQm2C6Z1HgYKz7W1og/goAzEnBOayAqwZeYS2us8bRU1p3
- 8m3t0hwnAQkromZTrh8QU9wVndtVnppyJNMh9sWgQOlG5mQd8HLicqmNyemgnXDy1tYCosXf
-X-Authority-Analysis: v=2.4 cv=K8wiHzWI c=1 sm=1 tr=0 ts=6848f144 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=95F7GRXi1wRhAKWngM4A:9
- a=1OuFwYUASf3TG4hYMiVC:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] wifi: ath12k: Avoid CPU busy-wait by handling VDEV_STAT
+ and BCN_STAT
+To: Bjorn Andersson <andersson@kernel.org>,
+        Rameshkumar Sundaram
+	<rameshkumar.sundaram@oss.qualcomm.com>
+CC: <bjorn.andersson@oss.qualcomm.com>, Jeff Johnson <jjohnson@kernel.org>,
+        Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
+        Mahendran P
+	<quic_mahep@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        Jeff Johnson
+	<jeff.johnson@oss.qualcomm.com>,
+        <linux-wireless@vger.kernel.org>, <ath12k@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250609-ath12k-fw-stats-done-v1-1-2b3624656697@oss.qualcomm.com>
+ <c2d138ba-5b08-4daa-95b3-e1f95f05938d@oss.qualcomm.com>
+ <v44xnvqxjdqtonpfvnn6iblzmchgxbhtj7t25dhaxcimippba5@rbjf5roopwdx>
+Content-Language: en-US
+From: Baochen Qiang <quic_bqiang@quicinc.com>
+In-Reply-To: <v44xnvqxjdqtonpfvnn6iblzmchgxbhtj7t25dhaxcimippba5@rbjf5roopwdx>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: wu8zE6l1f0_EW8xIMHWRwke_gCyKWebW
+X-Authority-Analysis: v=2.4 cv=GoxC+l1C c=1 sm=1 tr=0 ts=6848f241 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=XhntT_gzShnWNOLXFk8A:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: wu8zE6l1f0_EW8xIMHWRwke_gCyKWebW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDAyNSBTYWx0ZWRfX3NLVirWRLwkV
+ xdo8lA9m1WeoZUTA+4y+SRzBZ7uBNB5IsiXBypN0H3L8oh/DuwYaoKC8QYzXUNvblE4j368Xa4a
+ LhP5PKbxj2BswoH/W2+bpMTiXnMZAgOtfwVFLPArdrlQ8QLPhPtww41v6FkQrMUmFtxvM3l96wo
+ 6Oqq4/cC6N2iT5c2ztDLTcdFy4bN46A+vrtUw9Nx2eakgO5FCqoU5UXcD4gTO8oXmUtT2rhnCan
+ G5V25Igyl83H7GvXbEo/EPZwfCO9G0ip7+z1L6xY/0yBe9lWMEJXi2EU7ayqp+t1x1OYzR8klMx
+ DwNdM/dsJc2r4rvbS5tQDTUUIizTv+01mtMtuOHTCBZVUawf86Pn5Xm2PM76Iz9SGqml0h+8Lzb
+ NEOfVP0VSEi0BtdWgBi6TZy7vmrJ1IohX4gVzBNYX/MNAPshEtjLuL0NCOfPommTUwD7KB/R
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-11_01,2025-06-10_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 mlxscore=0 mlxlogscore=648 phishscore=0 lowpriorityscore=0
- malwarescore=0 adultscore=0 bulkscore=0 spamscore=0 impostorscore=0
- priorityscore=1501 suspectscore=0 classifier=spam authscore=0 authtc=n/a
+ mlxlogscore=999 adultscore=0 impostorscore=0 malwarescore=0 mlxscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2505280000 definitions=main-2506110025
 
-Disable the CTI device of the camera block to prevent potential NoC errors
-during AMBA bus device matching.
 
-The clocks for the Qualcomm Debug Subsystem (QDSS) are managed by aoss_qmp
-through a mailbox. However, the camera block resides outside the AP domain,
-meaning its QDSS clock cannot be controlled via aoss_qmp.
 
-Fixes: bf469630552a ("arm64: dts: qcom: qcs615: Add coresight nodes")
-Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/qcs615.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+On 6/11/2025 1:41 AM, Bjorn Andersson wrote:
+> On Tue, Jun 10, 2025 at 01:16:30PM +0530, Rameshkumar Sundaram wrote:
+>>
+>>
+>> On 6/10/2025 8:36 AM, Bjorn Andersson via B4 Relay wrote:
+>>> From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+>>>
+>>> When the ath12k driver is built without CONFIG_ATH12K_DEBUG, the
+>>> recently refactored stats code can cause any user space application
+>>> (such at NetworkManager) to consume 100% CPU for 3 seconds, every time
+>>> stats are read.
+>>>
+>>> Commit 'b8a0d83fe4c7 ("wifi: ath12k: move firmware stats out of
+>>> debugfs")' moved ath12k_debugfs_fw_stats_request() out of debugfs, by
+>>> merging the additional logic into ath12k_mac_get_fw_stats().
+>>>
+>>> Among the added responsibility of ath12k_mac_get_fw_stats() was the
+>>> busy-wait for `fw_stats_done`.
+>>>
+>>> Signalling of `fw_stats_done` happens when one of the
+>>> WMI_REQUEST_PDEV_STAT, WMI_REQUEST_VDEV_STAT, and WMI_REQUEST_BCN_STAT
+>>> messages are received, but the handling of the latter two commands remained
+>>> in the debugfs code. As `fw_stats_done` isn't signalled, the calling
+>>> processes will spin until the timeout (3 seconds) is reached.
+>>>
+>>> Moving the handling of these two additional responses out of debugfs
+>>> resolves the issue.
+>>>
+>>> Fixes: b8a0d83fe4c7 ("wifi: ath12k: move firmware stats out of debugfs")
+>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+>>> ---
+>>>   drivers/net/wireless/ath/ath12k/debugfs.c | 58 --------------------------
+>>>   drivers/net/wireless/ath/ath12k/debugfs.h |  7 ----
+>>>   drivers/net/wireless/ath/ath12k/wmi.c     | 67 +++++++++++++++++++++++++++----
+>>>   3 files changed, 60 insertions(+), 72 deletions(-)
+>>>
+>>> diff --git a/drivers/net/wireless/ath/ath12k/debugfs.c b/drivers/net/wireless/ath/ath12k/debugfs.c
+>>> index dd624d73b8b2714e77c9d89b5a52f7b3fcb02951..23da93afaa5c25e806c9859dbbdd796afd23d78a 100644
+>>> --- a/drivers/net/wireless/ath/ath12k/debugfs.c
+>>> +++ b/drivers/net/wireless/ath/ath12k/debugfs.c
+>>> @@ -1251,64 +1251,6 @@ void ath12k_debugfs_soc_destroy(struct ath12k_base *ab)
+>>>   	 */
+>>>   }
+>>> -void
+>>> -ath12k_debugfs_fw_stats_process(struct ath12k *ar,
+>>> -				struct ath12k_fw_stats *stats)
+>>> -{
+>>> -	struct ath12k_base *ab = ar->ab;
+>>> -	struct ath12k_pdev *pdev;
+>>> -	bool is_end;
+>>> -	static unsigned int num_vdev, num_bcn;
+>>> -	size_t total_vdevs_started = 0;
+>>> -	int i;
+>>> -
+>>> -	if (stats->stats_id == WMI_REQUEST_VDEV_STAT) {
+>>> -		if (list_empty(&stats->vdevs)) {
+>>> -			ath12k_warn(ab, "empty vdev stats");
+>>> -			return;
+>>> -		}
+>>> -		/* FW sends all the active VDEV stats irrespective of PDEV,
+>>> -		 * hence limit until the count of all VDEVs started
+>>> -		 */
+>>> -		rcu_read_lock();
+>>> -		for (i = 0; i < ab->num_radios; i++) {
+>>> -			pdev = rcu_dereference(ab->pdevs_active[i]);
+>>> -			if (pdev && pdev->ar)
+>>> -				total_vdevs_started += pdev->ar->num_started_vdevs;
+>>> -		}
+>>> -		rcu_read_unlock();
+>>> -
+>>> -		is_end = ((++num_vdev) == total_vdevs_started);
+>>> -
+>>> -		list_splice_tail_init(&stats->vdevs,
+>>> -				      &ar->fw_stats.vdevs);
+>>> -
+>>> -		if (is_end) {
+>>> -			ar->fw_stats.fw_stats_done = true;
+>>> -			num_vdev = 0;
+>>> -		}
+>>> -		return;
+>>> -	}
+>>> -	if (stats->stats_id == WMI_REQUEST_BCN_STAT) {
+>>> -		if (list_empty(&stats->bcn)) {
+>>> -			ath12k_warn(ab, "empty beacon stats");
+>>> -			return;
+>>> -		}
+>>> -		/* Mark end until we reached the count of all started VDEVs
+>>> -		 * within the PDEV
+>>> -		 */
+>>> -		is_end = ((++num_bcn) == ar->num_started_vdevs);
+>>> -
+>>> -		list_splice_tail_init(&stats->bcn,
+>>> -				      &ar->fw_stats.bcn);
+>>> -
+>>> -		if (is_end) {
+>>> -			ar->fw_stats.fw_stats_done = true;
+>>> -			num_bcn = 0;
+>>> -		}
+>>> -	}
+>>> -}
+>>> -
+>>>   static int ath12k_open_vdev_stats(struct inode *inode, struct file *file)
+>>>   {
+>>>   	struct ath12k *ar = inode->i_private;
+>>> diff --git a/drivers/net/wireless/ath/ath12k/debugfs.h b/drivers/net/wireless/ath/ath12k/debugfs.h
+>>> index ebef7dace3448e4bdf2d6cb155d089267315172c..21641a8a03460c6cc1b34929a353e5605bb834ce 100644
+>>> --- a/drivers/net/wireless/ath/ath12k/debugfs.h
+>>> +++ b/drivers/net/wireless/ath/ath12k/debugfs.h
+>>> @@ -12,8 +12,6 @@ void ath12k_debugfs_soc_create(struct ath12k_base *ab);
+>>>   void ath12k_debugfs_soc_destroy(struct ath12k_base *ab);
+>>>   void ath12k_debugfs_register(struct ath12k *ar);
+>>>   void ath12k_debugfs_unregister(struct ath12k *ar);
+>>> -void ath12k_debugfs_fw_stats_process(struct ath12k *ar,
+>>> -				     struct ath12k_fw_stats *stats);
+>>>   void ath12k_debugfs_op_vif_add(struct ieee80211_hw *hw,
+>>>   			       struct ieee80211_vif *vif);
+>>>   void ath12k_debugfs_pdev_create(struct ath12k_base *ab);
+>>> @@ -126,11 +124,6 @@ static inline void ath12k_debugfs_unregister(struct ath12k *ar)
+>>>   {
+>>>   }
+>>> -static inline void ath12k_debugfs_fw_stats_process(struct ath12k *ar,
+>>> -						   struct ath12k_fw_stats *stats)
+>>> -{
+>>> -}
+>>> -
+>>>   static inline bool ath12k_debugfs_is_extd_rx_stats_enabled(struct ath12k *ar)
+>>>   {
+>>>   	return false;
+>>> diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+>>> index 60e2444fe08cefa39ae218d07eb9736d2a0c982b..2d2444417e2b2d9281754d113f2b073034e27739 100644
+>>> --- a/drivers/net/wireless/ath/ath12k/wmi.c
+>>> +++ b/drivers/net/wireless/ath/ath12k/wmi.c
+>>> @@ -7626,6 +7626,63 @@ static int ath12k_wmi_pull_fw_stats(struct ath12k_base *ab, struct sk_buff *skb,
+>>>   				   &parse);
+>>>   }
+>>> +static void ath12k_wmi_fw_stats_process(struct ath12k *ar,
+>>> +					struct ath12k_fw_stats *stats)
+>>> +{
+>>> +	struct ath12k_base *ab = ar->ab;
+>>> +	struct ath12k_pdev *pdev;
+>>> +	bool is_end;
+>>> +	static unsigned int num_vdev, num_bcn;
+>>> +	size_t total_vdevs_started = 0;
+>>> +	int i;
+>>> +
+>>> +	if (stats->stats_id == WMI_REQUEST_VDEV_STAT) {
+>>> +		if (list_empty(&stats->vdevs)) {
+>>> +			ath12k_warn(ab, "empty vdev stats");
+>>> +			return;
+>>> +		}
+>>> +		/* FW sends all the active VDEV stats irrespective of PDEV,
+>>> +		 * hence limit until the count of all VDEVs started
+>>> +		 */
+>>> +		rcu_read_lock();
+>>> +		for (i = 0; i < ab->num_radios; i++) {
+>>> +			pdev = rcu_dereference(ab->pdevs_active[i]);
+>>> +			if (pdev && pdev->ar)
+>>> +				total_vdevs_started += pdev->ar->num_started_vdevs;
+>>> +		}
+>>> +		rcu_read_unlock();
+>>> +
+>>> +		is_end = ((++num_vdev) == total_vdevs_started);
+>>> +
+>>> +		list_splice_tail_init(&stats->vdevs,
+>>> +				      &ar->fw_stats.vdevs);
+>>> +
+>>> +		if (is_end) {
+>>> +			ar->fw_stats.fw_stats_done = true;
+>>> +			num_vdev = 0;
+>>> +		}
+>>> +		return;
+>>> +	}
+>>> +	if (stats->stats_id == WMI_REQUEST_BCN_STAT) {
+>>> +		if (list_empty(&stats->bcn)) {
+>>> +			ath12k_warn(ab, "empty beacon stats");
+>>> +			return;
+>>> +		}
+>>> +		/* Mark end until we reached the count of all started VDEVs
+>>> +		 * within the PDEV
+>>> +		 */
+>>> +		is_end = ((++num_bcn) == ar->num_started_vdevs);
+>>> +
+>>> +		list_splice_tail_init(&stats->bcn,
+>>> +				      &ar->fw_stats.bcn);
+>>> +
+>>> +		if (is_end) {
+>>> +			ar->fw_stats.fw_stats_done = true;
+>>> +			num_bcn = 0;
+>>> +		}
+>>> +	}
+>>> +}
+>>> +
+>>>   static void ath12k_update_stats_event(struct ath12k_base *ab, struct sk_buff *skb)
+>>>   {
+>>>   	struct ath12k_fw_stats stats = {};
+>>> @@ -7655,19 +7712,15 @@ static void ath12k_update_stats_event(struct ath12k_base *ab, struct sk_buff *sk
+>>>   	spin_lock_bh(&ar->data_lock);
+>>> -	/* WMI_REQUEST_PDEV_STAT can be requested via .get_txpower mac ops or via
+>>> -	 * debugfs fw stats. Therefore, processing it separately.
+>>> -	 */
+>>> +	/* Handle WMI_REQUEST_PDEV_STAT status update */
+>>>   	if (stats.stats_id == WMI_REQUEST_PDEV_STAT) {
+>>>   		list_splice_tail_init(&stats.pdevs, &ar->fw_stats.pdevs);
+>>>   		ar->fw_stats.fw_stats_done = true;
+>>>   		goto complete;
+>>>   	}
+>>> -	/* WMI_REQUEST_VDEV_STAT and WMI_REQUEST_BCN_STAT are currently requested only
+>>> -	 * via debugfs fw stats. Hence, processing these in debugfs context.
+>>> -	 */
+>>> -	ath12k_debugfs_fw_stats_process(ar, &stats);
+>>> +	/* Handle WMI_REQUEST_VDEV_STAT and WMI_REQUEST_BCN_STAT updates. */
+>>> +	ath12k_wmi_fw_stats_process(ar, &stats);
+>>>   complete:
+>>>   	complete(&ar->fw_stats_complete);
+>>>
+>>
+>>
+>> This look fine to me, Thanks for fixing this.
+>>
+>> Apart from this we may also have to free up the stats buffer list maintained
+>> when the stats is requested out of debugfs (like ath12k_mac_op_get_txpower()
+>> and ath12k_mac_op_sta_statistics()) once its scope of usage is done, else
+>> the memory will be held untill next fw stats request or module unload.
+>>
+> 
+> I agree with this. In fact it seems to me that the majority of [1]
+> should be considered for ath12k as well (and Jeff acknowledged the
+> same).
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-index bb8b6c3ebd03..fc2ab750f2cd 100644
---- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-@@ -2461,6 +2461,9 @@ cti@6c13000 {
- 
- 			clocks = <&aoss_qmp>;
- 			clock-names = "apb_pclk";
-+
-+			/* Not all required clocks can be enabled from the OS */
-+			status = "fail";
- 		};
- 
- 		cti@6c20000 {
--- 
-2.34.1
+Yeah, there are some other issues in addition to this DEBUGFS one, I jsut posted the fix
+for review.
+
+> 
+> The purpose of this patch was solely to deal with the regression from
+> the previous behavior introduced in v6.16-rc1, causing my X Elite laptop
+> to idle about 10C warmer. (Afaict neither distros or upstream arm64
+> defconfig has ATH12K_DEBUG enabled)
+> 
+> The "also fix X, Y, Z" would at least be separate patches, and could be
+> applied either to -rc or v6.17 on top of something like this.
+> 
+> [1] https://lore.kernel.org/ath11k/20250220082448.31039-1-quic_bqiang@quicinc.com/
+> 
+> Regards,
+> Bjorn
+> 
+>> -- 
+>> --
+>> Ramesh
+>>
+>>
+> 
 
 
