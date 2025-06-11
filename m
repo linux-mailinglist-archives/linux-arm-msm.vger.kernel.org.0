@@ -1,80 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-60891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2D4FAD4669
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 01:06:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE718AD47B9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 03:07:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 48C201896D6F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jun 2025 23:07:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 66A203AAD8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 01:05:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 489AF280021;
-	Tue, 10 Jun 2025 23:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EA172030A;
+	Wed, 11 Jun 2025 01:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E1Ulayps"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fUmzr6VA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A24C23AB9F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 23:00:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413971F949;
+	Wed, 11 Jun 2025 01:05:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749596454; cv=none; b=IoIfjuj6DRsywZ1SWfPy0Axz9rxe7vHTJCjpOaNb92ZAx44/GcZWyOIrq3GJAc+wM6CoeH4nkQ6VrGpqzhjwrXG1rd/CObXcF/qkP0OQlG7TUAd4Uae4UC3Y0nCp9s/X3BIRi8ZoQCMwHs6tfk1ngt+EqoiNJ8DpeXDt6QlXPS8=
+	t=1749603929; cv=none; b=Oy8jKchh44EaCq5uxubPxEw7kpBiULEGZBMjfP0QAkWc/sa3uqis8wcTjhTb7dj5PKtUDlMYPH+xyWd7wZvZinS1vjLSxkDJNgcGSSENvA/ofAKUeY/uyBYINsJlhMTxynEqU2QVvA4ffyq2eYJG49TOnDrkv4wCN8yjukl9LOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749596454; c=relaxed/simple;
-	bh=YGpY68rA/JhjEp+LxAFTrZMk9ii1rggbyBCVjH5Hi/0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UBjcUIxgxLmnqCzjCjkcwLYDVi3zHQxugVEWxQwqQTiH607Eo9YLOXpAmPccMz071GmQANFMpWRU75GqV88JnauOEKnJF7HNyqFrftcDLsC2sOhHreSMwz8ncLDN+ewkg1w8bqDQSkyCPAeBCLOAVCC76GzAoRFROHoQnBDpGmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E1Ulayps; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-551fdd1c4b3so831430e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jun 2025 16:00:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749596450; x=1750201250; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pv6eC8BWJe/QC9w4Z6dJHOpH2uERhEZbO922xRkpRTM=;
-        b=E1Ulaypso42LWSiGsujPuX+rpA6xoQfdDwYYL0bI+3Y23Ptx5xiOCiV0vD8IaFhVnx
-         mGeefsNjmdCZvIxjiDDfwk2EmhuyW7G8BTq4n1Qa0kRj2AVvQxoWy5NqNdigbRTkm132
-         9P13jlQ1D6fnVc1pSOmFKcR9nPHdKc3DBDFlfOu9V665f1bF2VBo6AwHhNvIrbfE62VG
-         8WMVcioP4Z+9qAkYFrZ+5m3gwC37gu0TjEFYqP2hqzYBArpfQtgHuvayjLyHlfUkGq18
-         PvA5pv7CmWp5vwG+PjUh50vf6tmsr75NfbZkMuP0d9topJo1To1/8X9zkXqkNFCYuBgG
-         kLNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749596450; x=1750201250;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pv6eC8BWJe/QC9w4Z6dJHOpH2uERhEZbO922xRkpRTM=;
-        b=enIuF8V2032tNuXxhehjGPV6rVZZDQJNDcMW6N/4o+DC8X4/T1iG0JTdT1q2ImUfMG
-         ix7RLh5W4yAo63XQk24PfY37rjVczpoqrDH6NFB8Ec0c12qGiEcpsB83Tw8S8ZuNkw8b
-         d+y4jlzdkMwFjTunZadqyNzS0HvZ8/IeGM0kKQQIjK4f+NAYVvVTIu5p6s8kbPKH9cDD
-         p3fJPaWlUsGrxXmVC4PlLgxM2lzPfrmnEFCYbmMX6Q2rNElB7fNoyagAjtPfdtedb44j
-         4i6YGxItPmtMH6wspwUutHMDJYzcEIIYRuYqE5vdi4XLzH5eMbBH+m7b2t4IlJL+ne6q
-         zCjA==
-X-Forwarded-Encrypted: i=1; AJvYcCVKYaqRSeJO4MmPuHflUr/S3k4kFGRzTsSFYMK3kAiAFPl8NWvodMdvDXnOfzZw9csbHXgyxFpeqKZ1LDHq@vger.kernel.org
-X-Gm-Message-State: AOJu0YwT6rQIonKnU1l/WmYFnm1QpR+bLzc+PV3f6GErbPq7TPKWfpxC
-	9bm82/4eUrq6vnhMs3i+gBSJLydDGxID5T4CvCHb5C7QJZR91ey8huyj0W/bwyO6ezs=
-X-Gm-Gg: ASbGncu+C1trAebkk+M0xHC2e5z7D/WM7oXkpTGJtltHSCmTAt/HswYfxhzYW1CJ/2T
-	Bv5HG4SpKTT4LT9f2irHXOW4oTRoPXeWuKfE4rlYmexVy6GRBAZzcJbO1wtmbDu6zq+hJOaTB1+
-	FqTch7wlzbhhMMVmm1+W5blFt8qGQyDmjxYJvwQ1p/OiutzNFL1/5UPnU2PQZCU30S5f8UJ10Nv
-	sPqRFS+Msjm4uBtxs8ofdHeZ8Ao2xwWtD9N82jhDxvv8CmuXs11A3LDocWM4IxwrdO1mEtL0Q+p
-	pNy8Mp89wbzMJhKle1IovaTy3BQ8jz87ISq5XyThRfDHaeTy6mA8D4BLWQrUsBYgwM5rkF2aPLc
-	x/T0usi+z61vCFEqhz0hMOTLraOaZJUg2fYRVX6y6Gi0nTEAi7vk=
-X-Google-Smtp-Source: AGHT+IHxOB/GIvprDibRGH8b/xJoWimp0/bpa4Tr3aOnKL4YrIP9uIWQke3mgMvMH8CXv6c9NpUI5A==
-X-Received: by 2002:a05:6512:b09:b0:550:ecdf:a7f9 with SMTP id 2adb3069b0e04-5539c246fb3mr134143e87.10.1749596450228;
-        Tue, 10 Jun 2025 16:00:50 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553926a7d2dsm578480e87.157.2025.06.10.16.00.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jun 2025 16:00:49 -0700 (PDT)
-Message-ID: <0943821e-603a-4ee6-9bcb-e5fe690358c5@linaro.org>
-Date: Wed, 11 Jun 2025 02:00:48 +0300
+	s=arc-20240116; t=1749603929; c=relaxed/simple;
+	bh=dOkoIKcGlaQosiiCi9rgVkqR/O0cr1xBBo61BLwUxgY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=P1oU45R4JqWTrRg37h63/7iVv5hx5KINkeW1PyG2cKxZ+B2uSBgYHfO7CF1hsCNU1YmaJZoVG4Kvam8aborpEquZ8zdZGFbphzWzTOyp753URIqdmnkam8RtwYLI2lJOTGIc6CgVZhBxtGan4f4RQySCtpWds464NLoV424lko8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fUmzr6VA; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AIPqps030889;
+	Wed, 11 Jun 2025 01:05:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	v+a+SXakBgY50D6h/qPLnwaw5txhUBpHruIFhwWc8qY=; b=fUmzr6VA47VhQnXC
+	EP3/0eJesu+tjlNO0HFMUEUfX4ISm02lnF4TfeuOoHRHMPdQqYijoZgcM9Fi54uU
+	rvqB2XtsapJIdQ+spj/0X+W0JSwXRr5jvpR5GoE8R+8jOLN6hYhqeY791B10LMqo
+	3tFe1huk3AMsIddZ8FkjKapE+G1WC1ObWY8aqPRYtasXy113KTPcF/1SQSgy9OyF
+	u63X/xQUWp/6ce9LCtN8b0Y8oTpyUhQKpB0wLF4yw72uALg8y+xlWCsr5UMQm5ym
+	7u8wMjcwfwVQsnNS6KAqu76yod73kEpjgkBwC5X7+A6rSpIjRV/P3SfIoZSdnkze
+	t3x/yA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 475v2tdw05-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Jun 2025 01:05:23 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55B15LIQ010262
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 11 Jun 2025 01:05:22 GMT
+Received: from [10.64.68.153] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Jun
+ 2025 18:05:18 -0700
+Message-ID: <6759e8c9-53a6-42cf-8199-d6836c77445c@quicinc.com>
+Date: Wed, 11 Jun 2025 09:05:16 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,77 +65,145 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: media: qcom,x1e80100-camss: Sort
- interconnect alphabetically
-Content-Language: ru-RU
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Hans Verkuil <hverkuil@xs4all.nl>,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250610083318.2773727-1-vladimir.zapolskiy@linaro.org>
- <a072d00e-df91-420b-9363-424bcdf1ed8e@linaro.org>
- <3e8f8220-1fad-437e-9fa4-5eb628891110@linaro.org>
- <ae364f1c-5d64-4178-b26c-e58e352feee0@linaro.org>
- <97e51ab0-737b-496e-81df-b73c9f598bb0@linaro.org>
- <35muvo7h7ynfvzjt6jomasr54xaomfgt5etjc3uuczhfxww2ds@u5xsayanthx7>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <35muvo7h7ynfvzjt6jomasr54xaomfgt5etjc3uuczhfxww2ds@u5xsayanthx7>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH] arm64: dts: qcom: qcs615: disable the CTI device of the
+ camera block
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Jie Gan
+	<jie.gan@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao
+	<quic_jinlmao@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250527015224.7343-1-jie.gan@oss.qualcomm.com>
+ <5fbb515a-c3d0-4bbe-a689-41e730ecd952@oss.qualcomm.com>
+ <9a156925-cf7b-4d2e-88a8-fdfed5528553@quicinc.com>
+ <1fef810c-47fe-4f6d-95bc-0d72dbd63bf0@oss.qualcomm.com>
+ <79f5e42f-f857-4247-abf9-d0f3f5c1a498@quicinc.com>
+ <f3f8f446-4f0d-482d-952d-35c80d7d7881@oss.qualcomm.com>
+ <405f0432-3f07-45be-8511-06235dcd84d0@oss.qualcomm.com>
+ <a63ff3a7-c67b-4251-81f3-ce6cc3a3d068@oss.qualcomm.com>
+Content-Language: en-US
+From: Jie Gan <quic_jiegan@quicinc.com>
+In-Reply-To: <a63ff3a7-c67b-4251-81f3-ce6cc3a3d068@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ivas1hn-Oh8OBIRpnoa1XYVwqQ8lY5Ki
+X-Authority-Analysis: v=2.4 cv=GoxC+l1C c=1 sm=1 tr=0 ts=6848d653 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=P-IC7800AAAA:8
+ a=OefDGO8NFz7VKNv-hUoA:9 a=QEXdDO2ut3YA:10 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-ORIG-GUID: ivas1hn-Oh8OBIRpnoa1XYVwqQ8lY5Ki
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDAwOCBTYWx0ZWRfX7BjdkqVQz4HV
+ JGegskcinglcHH+M0Rfv28+o3qXvhu+j8GpOORbqy0sVEDSbjI1OF3sDd5r0C6S/FVV7VE6LMiF
+ OKvf+I8fHMa9E/GphiQ3mWiwOdABHvJjF9IK3B653PZ+X12bRudN3bqVqxm8lVqM/DpzHK5Ka8R
+ nfNAA5+R/IcK5D6gJPsatGlufG/AkZidJpNKCDCUn1SnManFqseGdzyla0Ls0PGc4jgVSdR9lEo
+ Mx+HooWb3R0kLaQmTUgEUuq1n/e8jmL8leUSHYDpZ/kseiQIrxkUlFq/aNS7UUgwq3iGvRHy+n6
+ okCB60p+vLP74EkglY2d+I8qWBppvMRVxwrYbG8STEZHDX61d11BsRErtR1t8LSHTT+hZOwnmrr
+ lRvMMaAMzYwezo2SPKB+bJCCaTSKxeN36fNZLGma/acLQMgRWcDcWLZ2qtckuyBd7VHO+V6+
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-10_11,2025-06-10_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=956 adultscore=0 impostorscore=0 malwarescore=0 mlxscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506110008
 
-On 6/11/25 01:21, Dmitry Baryshkov wrote:
-> On Tue, Jun 10, 2025 at 06:10:33PM +0300, Vladimir Zapolskiy wrote:
->> On 6/10/25 18:02, Bryan O'Donoghue wrote:
->>> On 10/06/2025 13:45, Vladimir Zapolskiy wrote:
+
+
+On 6/10/2025 9:24 PM, Konrad Dybcio wrote:
+> On 6/3/25 5:17 AM, Jie Gan wrote:
+>>
+>>
+>> On 5/31/2025 7:05 AM, Konrad Dybcio wrote:
+>>> On 5/28/25 5:02 AM, Jie Gan wrote:
+>>>>
+>>>>
+>>>> On 5/27/2025 6:41 PM, Konrad Dybcio wrote:
+>>>>> On 5/27/25 12:32 PM, Jie Gan wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 5/27/2025 6:23 PM, Konrad Dybcio wrote:
+>>>>>>> On 5/27/25 3:52 AM, Jie Gan wrote:
+>>>>>>>> Disable the CTI device of the camera block to prevent potential NoC errors
+>>>>>>>> during AMBA bus device matching.
+>>>>>>>>
+>>>>>>>> The clocks for the Qualcomm Debug Subsystem (QDSS) are managed by aoss_qmp
+>>>>>>>> through a mailbox. However, the camera block resides outside the AP domain,
+>>>>>>>> meaning its QDSS clock cannot be controlled via aoss_qmp.
+>>>>>>>
+>>>>>>> Which clock drives it then?
+>>>>>>
+>>>>>> It's qcom,aoss-qmp.
+>>>>>>
+>>>>>> clk_prepare->qmp_qdss_clk_prepare
+>>>>>> https://elixir.bootlin.com/linux/v6.15-rc7/source/drivers/soc/qcom/qcom_aoss.c#L280
 >>>>>
->>>>> How is this a Fixes: ?
+>>>>> I'm confused about this part:
+>>>>>
+>>>>>> However, the camera block resides outside the AP domain,
+>>>>>> meaning its QDSS clock cannot be controlled via aoss_qmp.
+>>>>>
+>>>>> Do we need to poke the QMP of another DRV?
 >>>>
->>>> I call it the fix to the dt-bindings documentation, then what is this
->>>> change, if it's not a fix?..
+>>>> The AOSS has a clock control register for all QDSS clocks. when we vote the qdss clock, the aoss_qmp driver will send a message to AOSS to enable the clock control register, then the clock control register will enable all QDSS clocks.
 >>>>
->>>> Anyway, if there is a strong disagreement about if it's a fix or not,
->>>> the Fixes tag can be dropped from the change, since it's so secondary.
+>>>> The QDSS clock is not a single clock source, it is a term that representing all the clock sources utilized by the QDSS.
 >>>
->>> Since we don't have a committed upstream user I don't think this is an
->>> ABI break.
+>>> What I'm trying to ask is, is there any way we could enable that
+>>> clock from Linux? Can the camera hw turn these on? Maybe we could
+>>> trick it into enabling them?
 >>
->> Well, Dmitry says it's an ABI break... It would be beneficial to come to
->> a common understanding here.
+>> There is a power issue if we keep the debug clock on with a long time.
 >>
->>> But I also don't think it warrants a Fixes: tag either, there's no bug.
->>
->> There is no bug, but there are Documentation/ changes with Fixes tags,
->> it's okay.
+>> We had a discussion with AOP to check if possible to add the debug clock of titan to the QDSS clock list, but they need time to evaluate it.
 > 
-> Fixes means that there was a bug / issue that needs to be fixed. For
-> example, if there was a user for the bindings and the user had these
-
-That's "for example" only, I don't think it's an all-descriptive definition.
-
- From Documentation/process/submitting-patches.rst:
-
-   A Fixes: tag indicates that the patch fixes an issue in a previous commit.
-
-In my opinion this is quite applicable here, the "fixed issue" in the device
-tree binding documentation file is well set, and anyone can get it from
-the provided commit message.
-
-Anyway, per the ask I'll remove the Fixes: tag and resubmit these changes,
-thank you for the patch review and discussion.
-
-> values in a different order, then changing schema to follow established
-> order would have been a fix.
+> Changing the firmware is a band-aid solution, as the update will never
+> reach millions of devices on the market. I'm curious in whether there's
+> any way (or os-accessible debug register) to manage the necessary clocks
+> from Linux, as a workaround.
 > 
->>
->> I will resend the changes with whatever updates requested by both of you,
->> if they do not contradict to each other.
->>
+>>  From Coresight view, what we can do by now is disable it in DT to prevent the unexpected NoC error.
+> 
+> How about something like this:
 
---
-Best wishes,
-Vladimir
+Thanks for the suggestion. It makes sense for me and much better than 
+current version.
+
+I will send a new version to fix it.
+
+Thanks,
+Jie
+
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> index bb8b6c3ebd03..fc2ab750f2cd 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+> @@ -2461,6 +2461,9 @@ cti@6c13000 {
+>   
+>                          clocks = <&aoss_qmp>;
+>                          clock-names = "apb_pclk";
+> +
+> +                       /* Not all required clocks can be enabled from the OS */
+> +                       status = "fail";
+>                  };
+>   
+>                  cti@6c20000 {
+> 
+> Konrad
+
 
