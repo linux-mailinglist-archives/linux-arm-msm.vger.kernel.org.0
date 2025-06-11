@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-60926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26694AD4CA6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 09:30:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61C19AD4E18
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 10:18:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1A1B77AC371
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 07:29:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D4A13A337B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 08:17:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6167229B29;
-	Wed, 11 Jun 2025 07:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A65223643F;
+	Wed, 11 Jun 2025 08:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NS7GlzER"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iDLg0h8U"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1512F85B;
-	Wed, 11 Jun 2025 07:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D8D21B9D6;
+	Wed, 11 Jun 2025 08:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749627027; cv=none; b=EHekUnowiWKjaSA+xODUD8fvbGtTCgUn9w5+nhyu7vdqs/Susqo/6WpC0Q7KzGqVPFKj8hAXhCrv+P05WvDnvH9PBug2GyGhGg0WwB3xmRc4YHgIZjLwWzZbgtp1cBooW6k9Lehf+PllysII2QTwxi9b2uQAcUXMz4M81z+5Uw4=
+	t=1749629875; cv=none; b=smMqZXOcLcQmlWEAboDsO2UGCr2hroYOoPBwG5NxHPjq6ADnpGntKgDPi0KrQh1q+xVrxvT+4G3aJtIG8jbyb8zf6wYkDMqe4ycSIVHpxtHi4JxqU13mNdM+ta2DOOyzgz9nreXfQgFL0PFwe4vGZN5+MYoH0L8BE9clWZ+KzEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749627027; c=relaxed/simple;
-	bh=sy5kn5awUjdCFl4l9yIgKO1VPoi0N8FQbXka7IUtnk4=;
+	s=arc-20240116; t=1749629875; c=relaxed/simple;
+	bh=2LzeeufXjEPMtFWp+PnoigkYYRqq/JI4VyA6/ujyTj0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K050Q3y4u8qxUKH+eqKE3b3C1dfwUlvx2yDPtQOhZoZOg+rTfkSKt1IiGBfI5XwrkVBR0USNmPqvtcumJgTGzoKRXyTYC64PB0jqDNAa+UkGileoTuc8MPpBqVT2gFLWZWdPi6fkhIxOeohRkB9W0Sepl2ACLlP1jEXe73MpI60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NS7GlzER; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F07AC4CEEE;
-	Wed, 11 Jun 2025 07:30:22 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=fLyfVpCmZ4ZdqCf/j8jlXutTLuoGL0LZRoavMwz4uKq8wvVutf1NbtHncCIlSvkB0dogSYGQKx5qDyxWndmOVTRfEtUFxxN7pbrpOEU3hj6K56JqFZKaX+/JLtV5cAbJklA4sfRI2w0HqWj2g4+pt2SNTulqiQXfLBz/VD3ZJWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iDLg0h8U; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77972C4CEEE;
+	Wed, 11 Jun 2025 08:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749627027;
-	bh=sy5kn5awUjdCFl4l9yIgKO1VPoi0N8FQbXka7IUtnk4=;
+	s=k20201202; t=1749629874;
+	bh=2LzeeufXjEPMtFWp+PnoigkYYRqq/JI4VyA6/ujyTj0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=NS7GlzERIBroxx3Y17LLWE9ZpHvQKYOG6xRvepQJFgY6TsMjbrRcp0+a/vkRbU6T5
-	 p82K1Urx2t6YCBLEaVRUEyifFzor6oAtsiMf20wS7e06atGQCnFEy4o5H9tcnWAS7r
-	 oUOUcWdOxhv9bqNqVTyxEbH+ec6O7D6tJZq0ngDZ2W6pC13zFrRrZkP5JWyfhp29Mt
-	 03ElxAh9S2nznivvqSLTfmZa1EsIcJPROSWwcTRrdSqcDC99Gy9LGTtv3OIi8Z6oaM
-	 9iZkE3v1x6JZaSoC3I+e/b1Zt7rkeLHJLW0d1pdAIXusSQRu7NflXivkNqEy3M8fp6
-	 4UbpessIMnfCQ==
-Message-ID: <501a3c12-c010-40ac-8d20-224633a36556@kernel.org>
-Date: Wed, 11 Jun 2025 09:30:21 +0200
+	b=iDLg0h8Upcqqqw/ysGdmxXHLCc0L5NQyV0Xw+jmN0z9GfWSdHXhl4EOFBIXG1NFeV
+	 MJ+c99W8I7t4f3nn4VhnvAcj2oGxtVzzL+fTzUCzUdu30IFL6hUCctm2aTQQ2iSCmq
+	 9fLJbqj3WeCOI4SX6Y3tHd0y593XBu1rYsiPkLOm6AUWAYUwA6btrDTlCdhs0UiFj+
+	 DYkUaR/utGAjzI/sh1mf2fV/Y4VvBa1XvNYqel5h8D2zsFDbZNtBZfmVYTYPgvadWa
+	 byurqs6M68AFiuA2FcnxHi1B7CHNMouwG+fkMUHv/clC9WkOOo462zz+GRazc4x31z
+	 fqzLxVWUbpDHA==
+Message-ID: <c9688c18-515d-4e5b-82d9-fcdcb468c634@kernel.org>
+Date: Wed, 11 Jun 2025 10:17:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,24 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 1/2] dt-bindings: thermal: qcom-tsens: make ipq5018
- tsens standalone compatible
-To: George Moussalem <george.moussalem@outlook.com>,
- Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH v3 2/4] dt-bindings: display: panel: Add Himax HX83112B
+To: Luca Weiss <luca@lucaweiss.eu>, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250611-ipq5018-tsens-v11-0-266566bfd16a@outlook.com>
- <20250611-ipq5018-tsens-v11-1-266566bfd16a@outlook.com>
- <17eaaad4-7713-4149-b66c-1c48db3ab42f@kernel.org>
- <DS7PR19MB8883034308D6642B6B567CAD9D75A@DS7PR19MB8883.namprd19.prod.outlook.com>
- <61e53f55-394d-422f-8600-9035eac40ff4@kernel.org>
- <DS7PR19MB88830F20F9AA1D54EE130CC99D75A@DS7PR19MB8883.namprd19.prod.outlook.com>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20250610-fp3-display-v3-0-e7e7561812e1@lucaweiss.eu>
+ <20250610-fp3-display-v3-2-e7e7561812e1@lucaweiss.eu>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,55 +109,27 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <DS7PR19MB88830F20F9AA1D54EE130CC99D75A@DS7PR19MB8883.namprd19.prod.outlook.com>
+In-Reply-To: <20250610-fp3-display-v3-2-e7e7561812e1@lucaweiss.eu>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/06/2025 09:23, George Moussalem wrote:
->>>>
->>>>
->>>>>    1 file changed, 4 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>>>> index 0e653bbe9884953b58c4d8569b8d096db47fd54f..73d722bda8adc2c930edfc3373e6011f19c7c491 100644
->>>>> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>>>> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>>>> @@ -36,10 +36,13 @@ properties:
->>>>>                  - qcom,msm8974-tsens
->>>>>              - const: qcom,tsens-v0_1
->>>>>    
->>>>> +      - description: v1 of TSENS
->>>>
->>>> So that's still v1... I don't understand.
->>>
->>> As mentioned, the IP is still v1 but with a different init routine in
->>> the driver for IP v1 without RPM
->>
->> OK, just merge it into first enum and drop the description there.
-> 
-> can't merge it into the first enum as that description is invalid for 
-> this SoC ("description: msm8960 TSENS based").
+On 10/06/2025 21:09, Luca Weiss wrote:
+> +  iovcc-supply:
+> +    description: I/O voltage rail
+> +
+> +  vsn-supply:
+> +    description: Positive source voltage rail
+> +
+> +  vsp-supply:
+> +    description: Negative source voltage rail
+> +
+> +  port: true
 
-That is why I asked to drop the description there.
+if you are going to resend, then drop port here.
 
-> 
-> My proposal would be:
-> 
->        - description: v1 of TSENS
->          oneOf:
->            - enum: # for IP V1 without RPM
->                - qcom,ipq5018-tsens
->            - items:
->                - enum:
->                    - qcom,msm8937-tsens
->                    - qcom,msm8956-tsens
->                    - qcom,msm8976-tsens
->                    - qcom,qcs404-tsens
->                - const: qcom,tsens-v1
 
-No double nesting. That's already oneOf at the top. Anyway, not
-important, so fine if you want to keep it like in this patch, but add
-detailed description.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
