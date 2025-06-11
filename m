@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-60966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03B07AD5590
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 14:29:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38263AD55A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 14:34:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F98C1BC348B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 12:30:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E25463A574F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 12:34:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBC7F28001A;
-	Wed, 11 Jun 2025 12:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3AFF271446;
+	Wed, 11 Jun 2025 12:34:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="m4QutV/x"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PiM9yxD6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE7127FD48;
-	Wed, 11 Jun 2025 12:29:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB33927C864;
+	Wed, 11 Jun 2025 12:34:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749644980; cv=none; b=Vf+egodCiYOneu0cMhznlcoHvQWEjP/NeOehbRC7YcZtgUArerV2jt8YigXe/oh/uZ8NSwid3BD7Fn4WMs7m51fTKZO3BWSaQeFuAY5YZqABFwuEBxMoKXOtk8oCuC/Ux6G1uTylEjn7fp1cx2wpk44auJehRM0r3+V7w4szQYI=
+	t=1749645288; cv=none; b=HfNbkJNDMkA0bdi9rv/P5/xoF3n9KDSH6ocPbdNXdZeRoqA9On5ZwLDCJgXLvfcd4vcCLAWC8Y8FWuX0ZbXe2P39gocTNMPclj35fTyY0QMs4b2kmmFz3YxrvxWsELkr6F+Xy9YRW5mSgf9mLBVczcCAJL7eyuSr0nHj57rrcUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749644980; c=relaxed/simple;
-	bh=8BwKFjsDsa8Zb8Ayr7RasbWSssCKt/ijSpC6aXZiHhA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ZOvqhlvrbvlXkzXT1H8lqnW+wT3zaGkyAg5Oul+O8UGJ6Vygn6qNUHR/Yv2BFoQAXWQtP5UkiPQuLA5uFgMuf0O2PDnpUuqh11YsUWVDHLuK6kkeWPF3LxrnpIHn5L69Q31N9eZAU4S4JeyF89X9zcg8E3RTSp9Sz9T27zHBnP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=m4QutV/x; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55B9DEBG029570;
-	Wed, 11 Jun 2025 12:29:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lceMfIGYuCPCZ+W3coEkS0Ut+HidNJnVCjzT2QYpkyc=; b=m4QutV/xaKTpKISA
-	NOwmIrj73dsc3KE2A3orL22BZtxj66vP/LhJHNPXNSDxoCBhsfUWXRfqcHZmXJxc
-	NSHBVV5/ciMSesHHPlF2yiIhkZx5hZvwX1I6WB6Mm2SUA6b3iziXEM+X2Jz7XuNN
-	CxdkVsuTWXNq1SJ23PZHm7OSh12YcYZ4k5RipN/vzXCm9SttyJ9yG2hO2HrkBg0L
-	qrZ+YAZrIr+6OGdRfDjaoqfQtpf7TnQ70o+gaRmnzH0XbU2Z4UMwUji23leDIVTT
-	TjGdWt0RdRgmHmqHfu8I9L1VOw/66MAGtlhrov+yOeopM8mFUnSl2k+LDIwdI1lV
-	YciKMQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474d124y0w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 12:29:24 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55BCT1Xi020022
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 12:29:01 GMT
-Received: from [10.216.28.79] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Jun
- 2025 05:28:52 -0700
-Message-ID: <80dae86f-fb3b-4469-9322-7996811d33cc@quicinc.com>
-Date: Wed, 11 Jun 2025 17:58:49 +0530
+	s=arc-20240116; t=1749645288; c=relaxed/simple;
+	bh=94aY9ORBcSVbBqk9ahiKUVj4/SWVjjIGCogb4ANaBlY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uctrrZvsY3KPHT2sUzRS+8SHloJvmiFZtcWeBgNWciX846f+8AKER0Krv4Nzrqs7+2XcbRUVhrMHaUZtgQUDZMUEbso7VoUWgxwM5o2KGdwLFk8rfG9zgXi7hgirMXszmUUj+0eJRxSg3oZfqTc6j+hAhOlv+PHL/UyjhjgK6Ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PiM9yxD6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27365C4CEF0;
+	Wed, 11 Jun 2025 12:34:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749645288;
+	bh=94aY9ORBcSVbBqk9ahiKUVj4/SWVjjIGCogb4ANaBlY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=PiM9yxD65tgRtXwanDDohsgWMGPhDG82gyCHdJDYCmjCJ+d1fG5H15TGYVPMmH6R4
+	 VByn2DUJ3pS7ex5xhMgmsHoJ7oK3h0lm/OO2himtBgo3WDVwkhHJJ4TU38miQnzIqc
+	 JEhrpjtT8/Mdla3HSb7cqN82lAiyt0iUV+p2B/4KnISZvXWyy1y59Qv5gZMKA0qUaE
+	 2E8B8WMnF+HI8xfTcHJs8qtmq7KtmSdW5ATS3HRoMoFwk0qVvEH8cYrHdd6vdSc8lS
+	 PNWHAW4ymfld8lmyy14KwJ79HO0bXh+v/8MhzV6XqEKCXrWy3l1YMNliL5rBVcHdVl
+	 7be8VorZvwwbQ==
+Message-ID: <3d745c75-5f41-46ff-a276-cc9b8be84dc3@kernel.org>
+Date: Wed, 11 Jun 2025 21:34:46 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,84 +50,73 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] arm64: defconfig: Enable X1P42100_GPUCC driver
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Akhil P Oommen
-	<akhilpo@oss.qualcomm.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "Will
- Deacon" <will@kernel.org>,
-        Rob Clark <robin.clark@oss.qualcomm.com>, Sean
- Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry
- Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>, Rob
- Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor
- Dooley <conor+dt@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
-        Nishanth
- Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>
-CC: <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-References: <20250611-x1p-adreno-v2-0-5074907bebbd@oss.qualcomm.com>
- <20250611-x1p-adreno-v2-2-5074907bebbd@oss.qualcomm.com>
- <810f7614-ed73-471e-bc5b-3305816737da@kernel.org>
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Subject: Re: [PATCH 2/4] PCI: qcom: Do not enumerate bus before endpoint
+ devices are ready
+To: Niklas Cassel <cassel@kernel.org>, Manivannan Sadhasivam
+ <mani@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+ Laszlo Fiat <laszlo.fiat@proton.me>, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org
+References: <20250611105140.1639031-6-cassel@kernel.org>
+ <20250611105140.1639031-8-cassel@kernel.org>
 Content-Language: en-US
-In-Reply-To: <810f7614-ed73-471e-bc5b-3305816737da@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+From: Damien Le Moal <dlemoal@kernel.org>
+Organization: Western Digital Research
+In-Reply-To: <20250611105140.1639031-8-cassel@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: xvORiqpGvBtv2J1sNLJ6NcrW_sSxcy2e
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDEwNyBTYWx0ZWRfX6S74eAHxepUr
- DKO7C/ah9ofD43oLGaXM/WDQTt6dBTT4+CthKexuMHKsaRmv+IxRMl4kNygf9T8BldHdFVztYRl
- XXWC2i9tmGleOrLnFh3oa/tLlFquN0K3KZ/XhM0rXUdf08GskL+L0+xQQoEAmHgTEIJIx8snut7
- Wos9ulCOCB2QReriLLbHz3jFAlCYtRRnNv4NmLjSBz4NYR6oOmyKVsdn2NCQeq4JSvpN8s8z1Fi
- ZpQELKsNK48FQvo338aE6WMnvNPsDzOkVqI/4MW3aghAAxUV/zU5KL8qPJuVe4KKQ1RIS9D4m4u
- nILZ+yvWO5kNiUXjSaaM/NvFFtA68BY5b9X1VhhI5BUhJbq/DKBe/yVJXi/ztW7LLy+iHFF1e6y
- Je67yY3fTdTwLBzAbT8skLYeVbZbMlG7HLYeVgq1N4G3CiODf+86ULL4PnbVGNsHDz4b/SAo
-X-Authority-Analysis: v=2.4 cv=GYkXnRXL c=1 sm=1 tr=0 ts=684976a4 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10
- a=cSTdfOdMco8EzcehTqUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: xvORiqpGvBtv2J1sNLJ6NcrW_sSxcy2e
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-11_05,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 spamscore=0 mlxlogscore=999 bulkscore=0
- impostorscore=0 clxscore=1011 malwarescore=0 priorityscore=1501 mlxscore=0
- adultscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506110107
 
-On 6/11/2025 4:55 PM, Krzysztof Kozlowski wrote:
-> On 11/06/2025 13:15, Akhil P Oommen wrote:
->> In order to enable GPU support in Snapdragon X1P42100
->> (8 CPU core version found on Asus Zenbook A14 and other
+On 6/11/25 19:51, Niklas Cassel wrote:
+> Commit 36971d6c5a9a ("PCI: qcom: Don't wait for link if we can detect Link
+> Up") changed so that we no longer call dw_pcie_wait_for_link(), and instead
+> enumerate the bus directly after receiving the Link Up IRQ.
 > 
-> There is no A14 upstream board DTS in next. Your commit msg should
-> provide rationale for this, e.g. which upstream boards use this driver.
+> This means that there is no longer any delay between link up and the bus
+> getting enumerated.
 > 
+> As per PCIe r6.0, sec 6.6.1, a Downstream Port that supports Link speeds
+> greater than 5.0 GT/s, software must wait a minimum of 100 ms after Link
+> training completes before sending a Configuration Request.
+> 
+> Add this delay in the threaded link up IRQ handler in order to satisfy
+> the requirements of the PCIe spec.
+> 
+> Fixes: 36971d6c5a9a ("PCI: qcom: Don't wait for link if we can detect Link Up")
+> Signed-off-by: Niklas Cassel <cassel@kernel.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index c789e3f85655..0a627f3b5e2c 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1565,6 +1565,13 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
+>  
+>  	if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
+>  		dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
 
-Will replace "Asus Zenbook" with "X1P42100 CRD" which is supported upstream.
+Same comment here as for the dw-rockchip. Sleep before printing the message ?
 
--Akhil.
+> +		/*
+> +		 * As per PCIe r6.0, sec 6.6.1, a Downstream Port that supports
+> +		 * Link speeds greater than 5.0 GT/s, software must wait a
+> +		 * minimum of 100 ms after Link training completes before
+> +		 * sending a Configuration Request.
+> +		 */
+> +		msleep(PCIE_T_RRS_READY_MS);
+>  		/* Rescan the bus to enumerate endpoint devices */
+>  		pci_lock_rescan_remove();
+>  		pci_rescan_bus(pp->bridge->bus);
 
-> Best regards,
-> Krzysztof
+Either way,
 
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+
+-- 
+Damien Le Moal
+Western Digital Research
 
