@@ -1,243 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-60915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FA0BAD4BB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 08:30:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2204AD4BB8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 08:30:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 64A821899A77
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 06:30:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EE6981899A3F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 06:30:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C591227B9A;
-	Wed, 11 Jun 2025 06:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B27D8225A39;
+	Wed, 11 Jun 2025 06:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="IYi+FVWn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rCik9PTQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2071.outbound.protection.outlook.com [40.107.236.71])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CAA22B8CE;
-	Wed, 11 Jun 2025 06:30:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.71
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749623417; cv=fail; b=HWNJGD8v487GOIKI2HTqGlbXpiEbMAYhSgjKQgYv2Eskjnwm/L+f//+BRZJJbsh4obKAyiG8E8jT8jGhBzRcuOESvvQpTXxvQS3CVzvOQLGeWey48LGrD+ZFDMu6XdgXUGEWKwtJ8f53+SklWsTpd8Sxbm3TMuAz8ajJRNlWZdc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749623417; c=relaxed/simple;
-	bh=K2S089rMW+CBWRdoq4BZnZib+DKuSRHLKGm+0+31/ts=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=etdrO+33Z1Pvy764BqgmbSU3eEbuCz5tVfuD+dvFIDciAHNX+vcMkrnUgXWzw5Q4uvvB49Q4b6Ziuco1owWUl1INWVUMdXZx1YCAfW9TA7dVdZ9aRvVfiltyQn6jOEbH7U0W5j0TxhaZaotZ/QLof/fmNIjbEkVfQH8e1erJw70=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=IYi+FVWn; arc=fail smtp.client-ip=40.107.236.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=G4pdslVhorS7YGaWdfRKuFQwJonHv0OGHOabhl5iniul/XoiiW7XYQzOlAJuNDjMJegf1Wa1HVoyclJnY8amAWCUc3+8/tv8cQG2PiwFwIhOlCPMbAZRhRACd0GC3YPBXNn7XGmw610FXQbIWb+3SaXHn0yvreaQRCGj5foGQMjemhHUfh0c0gBw8P6/vaD0z4upqjUEMO4Z6JqWVXKEy/5M+gHZSiL+3fsFO81LQAhEmoqVX3pxS+zBeBw+VaGooQmlq1ZN8EJ5Zm6M8rSHo0WTQ3540UHyG0qIGcoL7fWmqaRmjHDxJc/NaJeS6iCXDNsxcy41a9GfUv+vWTu3Sg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MqaOgz4etSF6pXNx8OmJk7r3mXcWLSh0xLAC/KwsU9I=;
- b=VUW9xq1Wd/tuXielWl9aZBL9wxvqGZHJFBGXo0j5cJB37ek1c2jKpRYKPx6Zd03Jsv+am/FzPpYjfc6Qzete9bJXkDKT4iuArP5Ik1ki2yago+vwcWrvfz39qgeSyfXthWZPlxULipTjhflmncN7ztO//95bCzU6mrnSJH+oMt+0ltT7oJ26HWNOyzbpJPJxEViVZ9muMWAzd8KfuKkDv9Qkb2jI3vQXWkHgUK5R+IZWcfx4qisc1pP/e6iVS+rrVoAHwv7/cpk689cbdkrI3YuK4MEtlDsZEJj2QseNIS5qMnYs9DF05/rb3s0znFKNPB+ZqZlu0GQQk3mDSdnt6g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MqaOgz4etSF6pXNx8OmJk7r3mXcWLSh0xLAC/KwsU9I=;
- b=IYi+FVWnopWQ+hiO4/zuEU+bbj1rdPUSZ2MSk0DBroCjMogCMZLuRicP7qTLwrD+5Z2HOTK0F1ves/Lo+deBOUB0vUmvx5ciiwhz+uKqv/T0PQObig4d7Ce+KW475oE3g0HghxFnxJJL5oTHBwQ3ko0NppTCOhkY6VgjHcsgcC8=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CH2PR12MB4262.namprd12.prod.outlook.com (2603:10b6:610:af::8)
- by SN7PR12MB8789.namprd12.prod.outlook.com (2603:10b6:806:34b::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.18; Wed, 11 Jun
- 2025 06:30:10 +0000
-Received: from CH2PR12MB4262.namprd12.prod.outlook.com
- ([fe80::3bdb:bf3d:8bde:7870]) by CH2PR12MB4262.namprd12.prod.outlook.com
- ([fe80::3bdb:bf3d:8bde:7870%5]) with mapi id 15.20.8813.024; Wed, 11 Jun 2025
- 06:30:09 +0000
-Message-ID: <95fe5d24-560b-4c20-b988-6d7072ed2293@amd.com>
-Date: Wed, 11 Jun 2025 11:59:19 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 08/18] KVM: guest_memfd: Allow host to map guest_memfd
- pages
-To: David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>,
- kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
- kvmarm@lists.linux.dev
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
- vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
- michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com,
- isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com,
- suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com,
- quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com,
- quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com,
- quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com,
- james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev,
- maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com,
- roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com,
- rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com
-References: <20250605153800.557144-1-tabba@google.com>
- <20250605153800.557144-9-tabba@google.com>
- <ad4157a1-6e38-46df-ae24-76d036972fbc@redhat.com>
-Content-Language: en-US
-From: Shivank Garg <shivankg@amd.com>
-In-Reply-To: <ad4157a1-6e38-46df-ae24-76d036972fbc@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PN4PR01CA0067.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:26c::6) To CH2PR12MB4262.namprd12.prod.outlook.com
- (2603:10b6:610:af::8)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBF528FD;
+	Wed, 11 Jun 2025 06:30:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749623439; cv=none; b=lUVGAuAou0iyXEBZc+4RC3AYTb7jFQzP+MIN2K+dZprnaNmjmicikoIH2MK9yD/LtQUL+oLr981h8QJYDKfRYNSPOJObDQqtkbs4/S7pw/BYqCzC7YnnmRbiMi6T0AvBzUdHAtn3BYozTu+IyhRcO3AkUwa2ovuKa1FKDvSan7s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749623439; c=relaxed/simple;
+	bh=Eqwe71FwB2joW1I6Xy4GZaN1pBqXDrm63lZSn17aIOo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KhoB4Cdx5bGYAijgxBDGFR1uT+wSP/25LP44UAPAi6hEqADtGUONAJD+jLTJNzUOQ7r7zgc5C57y2NenjmmIWf8d3NL58NwDEdpHcIKCIA5T3opSJWH1sl6ZONGmr0fsaoxw7CfjwZt671s+wOD58v0SMJmixSUq1B6VdudgdQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rCik9PTQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B25CC4CEEE;
+	Wed, 11 Jun 2025 06:30:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749623439;
+	bh=Eqwe71FwB2joW1I6Xy4GZaN1pBqXDrm63lZSn17aIOo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=rCik9PTQe0mWY83smq5T3YIS7kM2Q/SPiH0W/FEWNOq+eEq7xNl5k9ymbATz+Nq3x
+	 10lRHm6KGjmIjspzqdlJm+4qK44ONtntHQubEGxoO0+CYswAA78HdJqpNi9fAF6fLy
+	 HSYjK1rkJU/Cs7Ok+TnyMedLj10k2aFRmm6syUhlHhMQrKrhDVFCLmdq/XAlD3TT2d
+	 u/3AFj15snkMwLA8qvOLtKXaqcB5BE3VBe61hXJAsz02clJs6puPFI30YHCIiYHHcS
+	 pi40wIgZjYGiYGpL992HL+1khEMhZxGx8+FspmVu26hG2khWFYWwbSjNgCLIXxJ0Vf
+	 dIc9J6lmyTM1g==
+Message-ID: <717e3f5f-1753-4715-b569-3d7567508d76@kernel.org>
+Date: Wed, 11 Jun 2025 08:30:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR12MB4262:EE_|SN7PR12MB8789:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7e2dc140-a8f8-4852-66e5-08dda8b1693d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?QmM0RERvRkhoMHpvUmt1andSaUNnVi9EMHNjc1o5Nm9YbVlGQkYrZWZLVXla?=
- =?utf-8?B?M1F0UGRpTlpET0YrblV2eGFJdDlwNlFmejYrY3pGNlZIbTBLNWRrK0JrcmVu?=
- =?utf-8?B?eWlQSmhLTE9ObFM0aW5XUVJCQ2Z3TDE1RmlIOEpaTWQvN3pXdWVxTlNMUDhK?=
- =?utf-8?B?b2IvOG5hRmZrRU0vUVl2MzNqYXJHZjNaZUJTaGtlOUh6TVBvanJGazNIZDFS?=
- =?utf-8?B?RG9EeWhNVnVlbi9oWXczYXEyU1FRMVp3dVZBM3dXQng2d3lUL1hCU3o4Zjkw?=
- =?utf-8?B?NmhZaGtidWQxdE56citLSFRGR0xubml0eHpNOXRFTEswQlJsdHVXVmVFNmwy?=
- =?utf-8?B?U1dpMWwza1BIemtGRGdWVG50bzZSOFpmblFIWkRhVWJEbmxDMHRId3ZVNUJi?=
- =?utf-8?B?MzlyQ21MWG5FcC9CNnlkTWQxSWJiMkRjbm9MRVEvc0lYajQvakJDalErMm1x?=
- =?utf-8?B?YWM0SDJQRTVpT2ZXak9CR0tKTksxUHdldWFURGVOMUEyZEVSdDNNK2kvaHBC?=
- =?utf-8?B?TWczNzV4ZDRVT1hkUFhWYmhQTXIwdlo3K3RySzBLbm5tNHV3TDF6aFpKMTRY?=
- =?utf-8?B?Mmd0Z3BmME5xT1FhSGFKU0MvT2FSek9ka1ZkMktZbWVzK2I2ZXl3azUzd0Fo?=
- =?utf-8?B?NHFFZWtqNU5MZzFVOXc0Ni93NzRSZnM1Q29SYU1JWUhpRm9mSU95L09WQm1C?=
- =?utf-8?B?enRjeHNMb09oczFOdVNyaXFXWS9zOFZqdTFDSjVIZWRlSmJ3aFpoc2xPZlNy?=
- =?utf-8?B?ZzNLbVIyOGJYbXRhbGhkeFJ2eG5lVE9pV0txSUZuaHEzdjYwSWJTVGZvVjk5?=
- =?utf-8?B?VUlZTHFUQlNEY0Q1emZiODRqMzhNVFZCb205K0MxMW9helVreHJ1OExiTmJ3?=
- =?utf-8?B?SjdDcHZ2R1hqUFpKQW9TUU5BN29tSjlRaHIrdTlYK3pORnZzaHcwWGZZa21y?=
- =?utf-8?B?SDI5L1hTdDRRbjNHRzZ6eWQ4TjB6ci9sSWtXVERnRVViSHJVQVIyNzVXOG5O?=
- =?utf-8?B?K2Y0WWVLOCsxNTcvWGxnUWV6L2c0anVKMWlEUjNaOWdXNkx5cUFZYWZVWmNk?=
- =?utf-8?B?SkR2TVE2NWVMaVMrZDFOR05rQTJKMm00QXJqdWxLeUlsMEZBUEQrbkZYeERF?=
- =?utf-8?B?NC9wWTNYWHdRN0xyVm5qK2JCbGppU05aVFlLakVBQnQwRm1TbnNzdHZXYkRl?=
- =?utf-8?B?WFNWNEkreFFCbFRQYUF6RVQ0Zjg0UDdQcGtsMnI4WFBUQ3dLcysxcUtXUGpR?=
- =?utf-8?B?eTFCWkNqeFVXL0twTzhkSE8zRFNxYnNHa1pUb1JTVFpIZlFWd2hhQmJIaWFw?=
- =?utf-8?B?Q2s2NC9HN0s2bXMvbG5KQlRxQVBON1g2aVlRbzNjSE5aYk80VWtHUkcrQW9F?=
- =?utf-8?B?aEZoSGFDQVhMYWw1VnlOcFQ3MFBIYmxES29CNnQyQXBxWXJZMFY0ek9Xcis1?=
- =?utf-8?B?eDk0ek54OGp4cEZHaVg4dDBEaWNsa3ZseFJUSzJSUzhJM0JKNEQ5TkNaS01z?=
- =?utf-8?B?c0Z4aE41MWRJdnhxOGRjT1N0VC9hZzNZd29xME5WSFNkc0lYNDYvTGxBNUpM?=
- =?utf-8?B?MFEzb2VUalZzTDJxbTB0QjJsRGxadENtWENNdkNWY0JVSk5HTE10TGRMaHM0?=
- =?utf-8?B?SDlIVUtDZm11c2pqTUpCQUdMRldxQUJTTy9Uc0hzT3p0RmtUbDhITW5xbTFV?=
- =?utf-8?B?Mnh5T0x6Znh6T0wyL1JiY1VnNkpIWEIxQ1VqOGprQlVIZ0FzOXJlSno5RUpi?=
- =?utf-8?B?VW9UMWo0VU8xNEJTMWZlSTV0cmoyeDNXWmtqd2cyTDhNbkdIakUrYWpiajlG?=
- =?utf-8?B?UkIxMTZGSUNGWHZucVAyWWFnVXROTWF2czZleS9JbTkwNHVzVFlZVlR5Z01X?=
- =?utf-8?B?QkQ4L1dtVFpEVyttZm1mMHNuTEkrOTlDNm01dzJLTVlJZjhEMEcrcDlJZHhl?=
- =?utf-8?Q?w+RalwGgSNU=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH2PR12MB4262.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?aEhuZUpsd21KV3BiK1hZMHliSUwrYzFIOThseVJ3THJqNGM4cEV4QlpXTnJF?=
- =?utf-8?B?Z3ZYRjAySEVOR0NNV2lJUHBBYXE2ODNQK3FCQUw3d2FqZ2ZLM3ZpSDVJQzk5?=
- =?utf-8?B?NXlWRVpkTU5DQmNjK2hOemhVU0NyTTBTdDVVbXBiT2lwakNiR2NmMXdNZWNK?=
- =?utf-8?B?bE81dG1JRFNva3I2VzNldVV6eXZIa0ZDS1B6K09OSmhuRE5zR1U5M0NjWCtw?=
- =?utf-8?B?SEhGRDNhOCtzYVVYTnE2UU5mWXB3bGpqSEFMb2VwTmJnUlJnL2xoc3NFMEF0?=
- =?utf-8?B?TjlhTEtSVjZ3ekNRSlpzOGdHWjd4bUg0bjZCWG1WRitnWEhSQlM5TDRseWxB?=
- =?utf-8?B?azZ0MENPeE5HQ1BHQ2N6WXVhVVNIcExlcjc3U0xGOVY5R0hzWEhreE1VUHNu?=
- =?utf-8?B?R1RhWXBIb0tnTnAxMXZVTkJZeTdUNE80UnZZbER1OC9FajM2RXhGOFVHK1JJ?=
- =?utf-8?B?dTdWKys5M2NIOHJHTG1oQ2k4SVNmS1YwNFdiVWtwcHFjUDZiYXVseTdGNFRT?=
- =?utf-8?B?dWFpazR6eVFFeWp2YmFTR1JIcnZ6V1c5MzNwTi9KUW1zZVl4YXo5UkpNYmJS?=
- =?utf-8?B?MWkvODR0YkczcFNpRWUxRDNPVE05REJuWVdTbHNCZ241b2xldXhnNzcySEt3?=
- =?utf-8?B?VnVNc2c4K0VrYTJCd256YVRaSFFqOVhTS0N5dGIwTU5aU3hmelJpL2Jlc0x0?=
- =?utf-8?B?S2hhL0ZJbzNmL2NaajBFYUU1UFlKelFsR2c1QWNKc1BhRUdkaUhOZ2FOTUI1?=
- =?utf-8?B?MnRLZFIwRkV1a3dwaHVXWXpudDA0WDd1dktxWVpxQjdZbDBFWHBrNytkbjJM?=
- =?utf-8?B?aVVFMVozZ0FNcEoxREFUMUdSSkJ5QThDdlEzT204b3pkMDE2WEhvQVhJQU1i?=
- =?utf-8?B?ank5QUZvSUxya2k5Q1RMS0N5aXpZODdmM1djbUlnUlQ5ZVpQY2JuOU5ZaEZj?=
- =?utf-8?B?QzAwbGxUTjlEOXVvZjJEempTZ3ErM3JIQXIrRkRvVHZMQlFvUjB4bnZ3dUUx?=
- =?utf-8?B?b3hDWHBGK2RKVFQveGVOSWNsN0JwZlI2QzNSSE5EMFpuZWFWOXhraWJtMXdk?=
- =?utf-8?B?NXRROHNiVHJkajVzNk1idjVXWkZwQ0VZMXdOZE9nb2pWbmRyak0vbkcyamMr?=
- =?utf-8?B?VkJLdFhoQzIxVFhtUVVZL3cvVFFyZUVSZ3FEMEhNVXpURzNCSS9xWGZxWFRN?=
- =?utf-8?B?elFONHNlaVBYWkRVUk1lZXByMWtRaG83OXI0MjVLeDFaY0syeCtoSXkwQmg3?=
- =?utf-8?B?YW43VHVHZGlxMHB1ZmEzLzJjWUJrNEU4RDl4QzBWV2NBOHl6QzhLM2hLL2x6?=
- =?utf-8?B?Y0pPQktvUXJ4bVB6aENNSWc5NXJFU0RWLzRPWUFQMGM2b0pTZlJwc1NMU285?=
- =?utf-8?B?TW5UR25scmJBcEdWbGwxOHJkVHpBL3Nrd0t6eFhlQkZ3dWV1MlNadjVIajJR?=
- =?utf-8?B?SUUzNWdaYndNMDhKaGovVm9FZnF6aFRIczZKU3BRckRnWENrNHlOOW1VYUtV?=
- =?utf-8?B?am1udmk3N2I4djNHc3dJekMrMWE5ZEswWXZHU0l0OVYvL2M4ZFJGeTVHTDlh?=
- =?utf-8?B?TWZUKy9aTG8yME1jd0Q3OGFTNVJxenBhMFRjemtHUlg4UDNTN0F0WFJtd0Nu?=
- =?utf-8?B?d3JmWC9tRVI1YVhuaVFrdzV5ZVBHRVJ1a3RpVWlvTjBjcFRNYWhldEZEUEgz?=
- =?utf-8?B?NHFvUkc4VFAwSEw2aGVzVlRGU052S3dPM2o5SklxQ203TW9RbHpKcUlEcm9s?=
- =?utf-8?B?Y3BqRUErS1lJZU9FN0d3bnJwbjRwNHFCZk9YeVdnamlMaVl0Mkg4Z1NMUk1V?=
- =?utf-8?B?L1dwazE2RkhOcnNTcmVJamc5R3RJMGZwa1RGY25BQm15MS83WnNlRno2OSsv?=
- =?utf-8?B?YXBVcU1qVTJ2a2ROQzNaZEpmdVdpd3R2aXJkYlp6TU8xdVlJRTNGM3R5MWZZ?=
- =?utf-8?B?cTdnQWE2WEZpK3lNb2VqRzNZUDFTYTdoR012K0FYemIwa2NtT09wb2VJRVM3?=
- =?utf-8?B?TER5cEhPZjZLY1k4ZlhMUlZjQW16b0Rmd1oxVzlJdy9TMW96NDNVR1BPRlRu?=
- =?utf-8?B?MlhVQ0RKZysyMXoyNjNwemdDN0V6RzhNeEsxbVJoa3Bma0VzcFEyTTVnMVFp?=
- =?utf-8?Q?V6s7yogI5/JlQ7YEOTIovRssP?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7e2dc140-a8f8-4852-66e5-08dda8b1693d
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4262.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jun 2025 06:30:09.6856
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 67wWuLW/P1sarYdbfNJvMmMsT90HZlqa7pwASDzUep+enzLZwQ6Oq6ryFYc/YkfD0WG9n/DltV3+1oVWtas0Jw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB8789
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] dt-bindings: mailbox: qcom,apcs: Add separate node
+ for clock-controller
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Stephan Gerhold <stephan.gerhold@linaro.org>,
+ Saravana Kannan <saravanak@google.com>, Rob Herring <robh@kernel.org>,
+ Jassi Brar <jassisinghbrar@gmail.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-clk@vger.kernel.org, Georgi Djakov <djakov@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+References: <20250506-qcom-apcs-mailbox-cc-v1-0-b54dddb150a5@linaro.org>
+ <20250506-qcom-apcs-mailbox-cc-v1-1-b54dddb150a5@linaro.org>
+ <7vszdea2djl43oojvw3vlrip23f7cfyxkyn6jw3wc2f7yowht5@bgsc2pqscujc>
+ <aCNGSwL7043GoJBz@linaro.org> <20250514160841.GA2427890-robh@kernel.org>
+ <aCUHTJGktLFhXq4Q@linaro.org> <20250521-psychedelic-cute-grouse-ee1291@kuoka>
+ <aC-AqDa8cjq2AYeM@linaro.org>
+ <20250523-markhor-of-fortunate-experience-1f575e@kuoka>
+ <jvsdn67x2qm2avaktnpqzoixcd46xuuf6i5kpeolsnewgoqt6q@jid7unlmmu65>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <jvsdn67x2qm2avaktnpqzoixcd46xuuf6i5kpeolsnewgoqt6q@jid7unlmmu65>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-
-On 6/6/2025 2:42 PM, David Hildenbrand wrote:
-> On 05.06.25 17:37, Fuad Tabba wrote:
->> This patch enables support for shared memory in guest_memfd, including
->> mapping that memory from host userspace.
+On 11/06/2025 05:31, Bjorn Andersson wrote:
+> On Fri, May 23, 2025 at 11:06:04AM +0200, Krzysztof Kozlowski wrote:
+>> On Thu, May 22, 2025 at 09:53:12PM GMT, Stephan Gerhold wrote:
+>>> +Saravana
+>>>
+>>> On Wed, May 21, 2025 at 11:20:40AM +0200, Krzysztof Kozlowski wrote:
+>>>> On Wed, May 14, 2025 at 10:12:44PM GMT, Stephan Gerhold wrote:
+>>>>>>>>> The mailbox itself does not need any clocks and should probe early to
+>>>>
+>>>> ... so probe it early.
+>>>>
+>>>>>>>>> unblock the rest of the boot process. The "clocks" are only needed for the
+>>>>>>>>> separate clock controller. In Linux, these are already two separate drivers
+>>>>>>>>> that can probe independently.
+>>>>
+>>>> They can probe later, no problem and DT does not stop that. Linux, not
+>>>> DT, controls the ways of probing of devices and their children.
+>>>>
+>>>>>>>>>
+>>>>>>>>
+>>>>>>>> Why does this circular dependency need to be broken in the DeviceTree
+>>>>>>>> representation?
+>>>>>>>>
+>>>>>>>> As you describe, the mailbox probes and register the mailbox controller
+>>>>>>>> and it registers the clock controller. The mailbox device isn't affected
+>>>>>>>> by the clock controller failing to find rpmcc...
+>>>>>>>>
+>>>>>>>
+>>>>>>> That's right, but the problem is that the probe() function of the
+>>>>>>> mailbox driver won't be called at all. The device tree *looks* like the
+>>>>>>> mailbox depends on the clock, so fw_devlink tries to defer probing until
+>>>>>>> the clock is probed (which won't ever happen, because the mailbox is
+>>>>>>> needed to make the clock available).
+>>>>>>>
+>>>>>>> I'm not sure why fw_devlink doesn't detect this cycle and tries to probe
+>>>>>>> them anyway, but fact is that we need to split this up in order to avoid
+>>>>>>> warnings and have the supplies/consumers set up properly. Those device
+>>>>>>> links are created based on the device tree and not the drivers.
+>>>>>>
+>>>>>> Does "post-init-providers" providers solve your problem?
+>>>>>>
+>>>>>
+>>>>> I would expect that it does, but it feels like the wrong solution to the
+>>>>> problem to me. The clock is not really a post-init provider: It's not
+>>>>> consumed at all by the mailbox and needed immediately to initialize the
+>>>>> clock controller. The real problem in my opinion is that we're
+>>>>> describing two essentially distinct devices/drivers in a single device
+>>>>> node, and there is no way to distinguish that.
+>>>>>
+>>>>> By splitting up the two distinct components into separate device tree
+>>>>> nodes, the relation between the providers/consumers is clearly
+>>>>> described.
+>>>>
+>>>> You can split devices without splitting the nodes. I do not see reason
+>>>> why the DT is the problem here.
+>>>>
+>>>
+>>> The Linux drivers for this particular mailbox/clock controller already
+>>> work exactly the way you propose. They are split into two devices that
+>>> can probe independently.
+>>>
+>>> The problem is outside of the drivers, because fw_devlink in Linux
+>>> blocks probing until all resources specified in the device tree nodes
+>>> become available. fw_devlink has no knowledge that the mailbox described
+>>> by this peculiar device tree node does not actually need the clocks:
+>>>
+>>> 	apcs1_mbox: mailbox@b011000 {
+>>> 		compatible = "qcom,msm8939-apcs-kpss-global", "syscon";
+>>> 		reg = <0x0b011000 0x1000>;
+>>> 		#mbox-cells = <1>;
+>>> 		clocks = <&a53pll_c1>, <&gcc GPLL0_VOTE>, <&rpmcc RPM_SMD_XO_CLK_SRC>;
+>>> 		clock-names = "pll", "aux", "ref";
+>>> 		#clock-cells = <0>;
+>>> 	};
+>>>
+>>> Without device-specific quirks in fw_devlink, the fact that these clocks
+>>> are only used by an unrelated clock controller only becomes clear if we
+>>> split the device tree node like I propose in this series:
+>>>
+>>> 	apcs1_mbox: mailbox@b011000 {
+>>> 		compatible = "qcom,msm8939-apcs-kpss-global", "syscon";
+>>> 		reg = <0x0b011000 0x1000>;
+>>> 		#mbox-cells = <1>;
+>>>
+>>> 		apcs1_clk: clock-controller {
+>>> 			clocks = <&a53pll_c1>, <&gcc GPLL0_VOTE>, <&rpmcc RPM_SMD_XO_CLK_SRC>;
+>>> 			clock-names = "pll", "aux", "ref";
+>>> 			#clock-cells = <0>;
+>>> 		};
+>>> 	};
 >>
->> This functionality is gated by the KVM_GMEM_SHARED_MEM Kconfig option,
->> and enabled for a given instance by the GUEST_MEMFD_FLAG_SUPPORT_SHARED
->> flag at creation time.
+>> Above code suggests that clocks are not needed for the mailbox at all.
+>> You need to be really sure of that. If that's the case, then this
+>> description looks like correct hardware description, more detailed then
+>> the first case, though.
 >>
->> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
->> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
->> Signed-off-by: Fuad Tabba <tabba@google.com>
->> ---
 > 
-> [...]
+> I'm still sceptical here.
 > 
->> +static bool kvm_gmem_supports_shared(struct inode *inode)
->> +{
->> +    u64 flags;
->> +
->> +    if (!IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM))
->> +        return false;
->> +
->> +    flags = (u64)inode->i_private;
+> In the first snippet above, we describe a single IP block which provides
+> mailboxes and clocks.
 > 
-> Can probably do above
+> In the second snippet we're saying that the IP block is a mailbox, and
+> then it somehow have a subcomponent which is a clock provider.
 > 
-> const u64 flags = (u64)inode->i_private;
+> It seems to me that we're choosing the second option because it better
+> fits the Linux implementation, rather than that it would be a better
+
+I initially commented in similar way, however some more explanations
+were provided.
+
+> representation of the hardware. To the point that we can't even describe
+> the register range of the subcomponent...
+
+I did not check in any manual, so all my comments here are based on
+above explanations and DTS.
+
+Subnodes are allowed if they come with their own resources. You are
+right there is no separate address space, so that's argument against
+subnode. But there is separate clock, not needed for the parent (!!!),
+which is an argument in favor.
+
 > 
->> +
->> +    return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
->> +}
->> +
+> 
+> Can you confirm that this is the path we want to go here?
 
-I agree on using const will have some safety, clarity and optimization.
-I did not understand why don't we directly check the flags like...
+It is an acceptable solution to me, but I am not saying that every
+device should be converted that way.
 
-return (u64)inode->i_private & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-
-...which is more concise.
-
-Thanks,
-Shivank
-
-
+Best regards,
+Krzysztof
 
