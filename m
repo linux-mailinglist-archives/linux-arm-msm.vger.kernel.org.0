@@ -1,151 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-60934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35F73AD502F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 11:40:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A753AD503E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 11:40:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 275073A48F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 09:39:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BCA2B3A4955
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 09:40:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D634253937;
-	Wed, 11 Jun 2025 09:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10A80262FDD;
+	Wed, 11 Jun 2025 09:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E5ZhuLox"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="G1EFhqLh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83529242D90;
-	Wed, 11 Jun 2025 09:39:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215BA2609F0;
+	Wed, 11 Jun 2025 09:40:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749634800; cv=none; b=UvnVuTSfJahwxHPj3gXJKudMUu9H9RQXoseFtTAF+Wkff4gqdulX/xnD+fqzoZ6UDmGqgbzco6OupdgmOShgZ+kHIKW/x7gcQP9c+oovQ0l3T3GxSpmQNahYaJcnrPWC/737ukmF4AjtZNAneab4TAVUCjRJQPY+OHuWjkibLv8=
+	t=1749634819; cv=none; b=cf0tBekk9n2CgXA50m+8J6HqWdaCvq4JEeeZBS0PCb44zkuNAO9Vt1evpwvnjH/r3BsC8DmsIf3O86ZbFVTjmkMTGVsLpxOUqAiptnF4THX4ZLWzD2bpV0Bnk4HcaPsIBlEu1z67hLDL2Ch7SI1pydqDgyIK1U5N8OIC++ckt+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749634800; c=relaxed/simple;
-	bh=WqoGafln+7FperWTCGCHOW05uCz41nHkE1cz45ZlgtA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bXl85EiWj4ybNJye7nHs0sQDLYZqsrUo65iB5vUQn/0toUB66gcTVnGfDBD+eZuarMkVBB26wI7qOtyr9sY0s92xfsBPrVwYeel3TshFxJORmtrOzQftoL4vkm0udqAibZiJC7v5ELXaw1LHR/fw0nFiGZI3S7QcfPtEJtR50JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E5ZhuLox; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55B9DD82023919;
-	Wed, 11 Jun 2025 09:39:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XwQM9qqqoO7U5Z+l4qQLkY9bopanOmB0vao/Vd7bkag=; b=E5ZhuLox5J5ocwv6
-	RC7jhwu5a+TvnimRGo+ZJdnAmVx2tlmbJDynk5AbCn3JGPNP0fzVFtUfdIqjAN6M
-	wXXV265ZbTBmvHFmz32QPMOOiq/jok+aS48BSFUootHj3szdUSVCboFnc1Nj9rWZ
-	Ix1KUypV7BVOF0d9c4/deWz2Hqj0Ia1HmO/URFD6/6arhzj54MmtBbHzo97BbrCR
-	KRx8IXuZfrY5OZbPXYLs0KUIIPGcN2W9ZuQhYNuuS6Isx/v2WVeL/tb7Aie9Q4e4
-	B7Ta3wRC3KhuXXkF5DQq98YauUYF+4nvyqj6jlakAkbQxR5DI8ujj9eAA+NZlcmh
-	TgL0ag==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 475v2tf2vf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 09:39:52 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55B9dp00010846
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 09:39:51 GMT
-Received: from [10.50.30.75] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Jun
- 2025 02:39:49 -0700
-Message-ID: <9485fe7a-49f3-8cd0-5085-76a9d133045a@quicinc.com>
-Date: Wed, 11 Jun 2025 15:09:46 +0530
+	s=arc-20240116; t=1749634819; c=relaxed/simple;
+	bh=EOF0wPKaDO4VgvfGSVrXCHsbhCfTQG4KN/6dg+9yv4s=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=hE9ZrSywuDAB8B9Ty7kfGOVbaR2FJCOidO4+xjCYa1RVdgx+leegRXmkErMX075rvqOBH2DJ5DXrBcQ+9esFl6JWEYgu91e6sYGvOV1iE2I13RVJq9uEvF41Echp0BSIrusz8o3J4vT5VWEC7ZoKep8oIQwU7kikLM+8wWgdQ+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=G1EFhqLh; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1749634815;
+	bh=EOF0wPKaDO4VgvfGSVrXCHsbhCfTQG4KN/6dg+9yv4s=;
+	h=Date:From:Subject:To:Cc:References:In-Reply-To:From;
+	b=G1EFhqLhpfUNHYRce2Shf7OUW7CiLa9zTxIYeMK9msSvQcpGRddVYbboJFxp09cTw
+	 pfCXxWcB111nao4H/6Un1OT5MRE1keyyNcCbWArEQxEoS4sKk6cKLDyN5wQmCcFRe0
+	 6ULMq4cpFtCfLIVeK1Vn1ahRyCQau3XZn5ofNA0qvwhRWHfYxuoovAr99sRCcgUx2z
+	 P6tlwpz/dHR3L5Keiq4qtZ7yTZES8vavuGGH4aTGckSgw/BhIDDk1c1a8p1aR852Yb
+	 iTSEbqL8vlmj9ANW56RRvQAKnFqOpvUFvx70VMhHzOFWrfwNI15zoQoSEU0wkePWUt
+	 D6rgOCsNCAr2A==
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id D4FA517E0FAD;
+	Wed, 11 Jun 2025 11:40:12 +0200 (CEST)
+Message-ID: <d5f0a339-11a4-42d1-82b6-807e6e45953b@collabora.com>
+Date: Wed, 11 Jun 2025 11:40:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] media: iris: Fix opp scaling of power domains
+User-Agent: Mozilla Thunderbird
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: Re: [PATCH v2 4/7] iommu: Remove iommu_ops pgsize_bitmap from simple
+ drivers
+To: Jason Gunthorpe <jgg@nvidia.com>, Alexandre Ghiti <alex@ghiti.fr>,
+ Alim Akhtar <alim.akhtar@samsung.com>,
+ Alyssa Rosenzweig <alyssa@rosenzweig.io>, Albert Ou <aou@eecs.berkeley.edu>,
+ asahi@lists.linux.dev, Baolin Wang <baolin.wang@linux.alibaba.com>,
+ David Woodhouse <dwmw2@infradead.org>,
+ Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+ Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+ Janne Grunau <j@jannau.net>, Jean-Philippe Brucker
+ <jean-philippe@linaro.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+ linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org,
+ linux-s390@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+ linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+ Marek Szyprowski <m.szyprowski@samsung.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Neal Gompa <neal@gompa.dev>,
+ Orson Zhai <orsonzhai@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Robin Murphy
+ <robin.murphy@arm.com>, Samuel Holland <samuel@sholland.org>,
+ Sven Peter <sven@kernel.org>, Thierry Reding <thierry.reding@gmail.com>,
+ Krishna Reddy <vdumpa@nvidia.com>, virtualization@lists.linux.dev,
+ Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+ Yong Wu <yong.wu@mediatek.com>, Chunyan Zhang <zhang.lyra@gmail.com>
+Cc: Lu Baolu <baolu.lu@linux.intel.com>, Kevin Tian <kevin.tian@intel.com>,
+ patches@lists.linux.dev, Niklas Schnelle <schnelle@linux.ibm.com>,
+ Sven Peter <sven@svenpeter.dev>, Tomasz Jeznach <tjeznach@rivosinc.com>
+References: <4-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
 Content-Language: en-US
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        "Bryan
- O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250611-iris-opp-fix-v1-1-424caec41158@oss.qualcomm.com>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <20250611-iris-opp-fix-v1-1-424caec41158@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <4-v2-68a2e1ba507c+1fb-iommu_rm_ops_pgsize_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -GuxHknpWWUj4nVCDumxsou2mEWezlmz
-X-Authority-Analysis: v=2.4 cv=GoxC+l1C c=1 sm=1 tr=0 ts=68494ee8 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=cnNNxmBRD2D--d2aX-gA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: -GuxHknpWWUj4nVCDumxsou2mEWezlmz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDA4MiBTYWx0ZWRfXx89wAVd+NBgb
- Uf0a4qNZf8EdsmXAmZPNK225+eL1Nwev8Ud5Pk8UbJUBm2INWbYq403F0b8tyTxIwIPjEQ6LWGP
- v9fsxqrcjhuepUseyeohtEr+LVSDq9h5fQRy4fuHSbA5zMbnlUAyRttwPvMsXjAlYeTHeTo7wL9
- SP0vIq/blx5VeIPkTc8mY/LJihtMZz8MnjljzGZK0ATf9Mf6yV1ibsEdzvx5XklEoUIusWg5/j2
- 0TYDd9MdRRkIO9OUYM3ZUcHULt2C450mCZQx8TG/cHU0NOHS9zEjflNxR8HeCyzl1wF+e+psqCQ
- 2iiqMRHufIeDfpNv4CFfWI5TR8H5Q0uVIYW6juKsLCIerQY2ilgelrhz+xJ65z7EwqDn1h0U0G+
- S6Yw46DNKwD2qsMrC/kG/2fd1xJ2lDuXy7H80vb/O9hGdrAZPFEKiWom+DdCmBfJJUmKu6uq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-11_04,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 adultscore=0 impostorscore=0 malwarescore=0 mlxscore=0
- suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506110082
 
-
-
-On 6/11/2025 11:13 AM, Akhil P Oommen wrote:
-> Pass PD_FLAG_REQUIRED_OPP flag to allow opp framework to scale the rpmpd
-> power domains.
+Il 09/06/25 22:41, Jason Gunthorpe ha scritto:
+> These drivers just have a constant value for their page size, move it
+> into their domain_alloc_paging function before setting up the geometry.
 > 
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+> Acked-by: Niklas Schnelle <schnelle@linux.ibm.com> # for s390-iommu.c
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+For MediaTek:
 
-Thanks,
-Dikshita
-> ---
-> Found this issue while reviewing the Iris source and only compile tested.
-> ---
->  drivers/media/platform/qcom/iris/iris_probe.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
-> index 9a7ce142f7007ffcda0bd422c1983f2374bb0d92..4e6e92357968d7419f114cc0ffa9b571bad19e46 100644
-> --- a/drivers/media/platform/qcom/iris/iris_probe.c
-> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
-> @@ -53,7 +53,7 @@ static int iris_init_power_domains(struct iris_core *core)
->  	struct dev_pm_domain_attach_data iris_opp_pd_data = {
->  		.pd_names = core->iris_platform_data->opp_pd_tbl,
->  		.num_pd_names = core->iris_platform_data->opp_pd_tbl_size,
-> -		.pd_flags = PD_FLAG_DEV_LINK_ON,
-> +		.pd_flags = PD_FLAG_DEV_LINK_ON | PD_FLAG_REQUIRED_OPP,
->  	};
->  
->  	ret = devm_pm_domain_attach_list(core->dev, &iris_pd_data, &core->pmdomain_tbl);
-> 
-> ---
-> base-commit: d9946fe286439c2aeaa7953b8c316efe5b83d515
-> change-id: 20250527-iris-opp-fix-3ef2591c032a
-> 
-> Best regards,
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+
+
 
