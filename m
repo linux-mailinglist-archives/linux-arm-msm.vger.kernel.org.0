@@ -1,350 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-60920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD470AD4BE6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 08:38:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 784D2AD4C0C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 08:52:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A413E17B757
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 06:38:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 080203A44EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 06:51:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE51822CBC8;
-	Wed, 11 Jun 2025 06:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D654A227E84;
+	Wed, 11 Jun 2025 06:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ASkqsBsq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fchDWAkO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC07A22B5AD;
-	Wed, 11 Jun 2025 06:38:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53B014B07A;
+	Wed, 11 Jun 2025 06:51:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749623902; cv=none; b=pPVATQOrCpoRPWZeXvvPTSzdE+4HaZF0n00b7aT+2Z4kTPPl8wOrNkbvFfBHy8xFjMPaic1RIvRHmAL4+ZX9AhCKcLSxWtnTanlItWiJuEqkuphhwsocY7D3ZThY2ZCbIbCAB0fwXvDbsyRXxK6ylI7/dZ4KeptFcg+tdsYpFdk=
+	t=1749624719; cv=none; b=pnoIkMd7ErqIOa3SyqGoicS3hjueMZrhZkW1fD3A1qiHZkoFHgnz6weaRSxi5tRiJhJPcnSA5rSwyByOMDxvZEVgVsfJNmRi5S0FtYhMZRtphgrO/NjEQqQy09o5TDzsLZgO4klnnOZn9RxDRUJM1oDqTZ95pKRQ5zmQDqck/Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749623902; c=relaxed/simple;
-	bh=by01+6bkiNjcw2guSx+ZK5tYg3bKc4RqWti/1PN0ivE=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lYrzv8xCOKPenkalczZNLWeCu7o4nMa9VtySVk2Gg1nw62UyK0g1F9h2yyaf7z2+O6Zm1mq9GpjGohAhVL55QcW4fxo3hucQORvJ5WPupGqSis6pI5q6FWU9QM/Rf0TBXb2JWTj9eaGkAEnU/GL+IVISpYolN7aTWM/6uCAv4/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ASkqsBsq; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AIPqCf023657;
-	Wed, 11 Jun 2025 06:38:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	KWcjnl5rnaEBQHdaSbbvBEgn0HyplXQ8bEiwzfkxnzk=; b=ASkqsBsqB6l44lfF
-	fm4A+Ce8EjTnLW2E/BKkuIXe5wXUk5Di7u56eZ9aGYXKtymeWmrmAnRHgeJb8bXK
-	swYFap969HFDabImV2++UAojODOxdV9OrW5wB26at5P3dpk6nC+l8xqStKJ605z7
-	1gpZX8HXn1nT2H+IqEUP0cS9T8V4cF1K66zShIABvH9mm204JkUkB3tDt0M0gLBb
-	zWmWuO/c36WL0NqzvLR/uE9U8URbYY7/B5oSNDFOciCLBYOTQSHsk4B2vrzZHTZk
-	fozgN5BWS8IwTK0uRSbUlrOv+gXNoEMoGGgT7LYRIJObetlUGTsTm7TGqWoW9rvS
-	TFF6pA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474eqckwvk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 06:38:15 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55B6cFJ5005592
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Jun 2025 06:38:15 GMT
-Received: from hu-gkohli-hyd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 10 Jun 2025 23:38:11 -0700
-From: Gaurav Kohli <quic_gkohli@quicinc.com>
-To: <amitk@kernel.org>, <daniel.lezcano@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>
-CC: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_manafm@quicinc.com>,
-        Gaurav Kohli
-	<quic_gkohli@quicinc.com>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: qcs615: Enable TSENS support for QCS615 SoC
-Date: Wed, 11 Jun 2025 12:07:43 +0530
-Message-ID: <1758b5c2d839d40a9cb1dd17c734f36c279ac81c.1744955863.git.gkohli@qti.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1744955863.git.gkohli@qti.qualcomm.com>
-References: <cover.1744955863.git.gkohli@qti.qualcomm.com>
+	s=arc-20240116; t=1749624719; c=relaxed/simple;
+	bh=szXoYLleDDeUV39thdUuvfqybaNXKW0uWbkX75i96yE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fdr1Rx3T7Zsf1xjAAWpAW8eMLE1HMUKbHt6T0kfQJo5a0Eg1l99xw3Mhrd9SBMNoAFI7j2X2dUbTGqZEAeHTQsE4M7mftMGW3rBQxgXHqJ4jBCxFfGnjOinhhwnwF6LgLyakjWXqVG93JzuBVm6pf3EjAhW4dbpRxyX0Q4ACoZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fchDWAkO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9EEC4CEEE;
+	Wed, 11 Jun 2025 06:51:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749624719;
+	bh=szXoYLleDDeUV39thdUuvfqybaNXKW0uWbkX75i96yE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=fchDWAkO4Rz8+uWItSHpa1PC0P2HAYjsuAO/hcZtuvHmupoRiB39pbuzpo7lrlH56
+	 d7VaaS9o8tBNK4WBzF7aqMwbE6o5ZeMGUmRbEyDnZhrHMy5NXF8mzbnqLQFgBhSm8+
+	 t8EkjQ2JRDTJVqL3uSEniBjRXpteHKkeGhFWyvfdWTSkiK0g2uyo+w864RFZpT5ufK
+	 5CvqGqN6jQ4WCPEXHcWVdY6Um6c9oiMdCIQYXNNMtfHottqiP3QUC1sWNa8kFQ2y58
+	 C4/s6RNAlbskkNXHtfWnsDQH7PUraUYOI7n8mPcAdzMUy4nxJ21XcIchH+lYh29VyF
+	 TjaBqAhwSjsvQ==
+Message-ID: <17eaaad4-7713-4149-b66c-1c48db3ab42f@kernel.org>
+Date: Wed, 11 Jun 2025 08:51:54 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDA1NyBTYWx0ZWRfXzm7B7mnx80XO
- dGV9YQAToALi/SenPMqqPc0cgp/deV+DO18nS/l5x2VOogg3AHNEXc+I5VCY1Duo2zhUiX3yPzV
- M+i8KtvqGqfmWlwnPx2xjtaU0ZA8tLQpmFnbXxE5tqRVEaXLqltWXovrwQpMEFIhwll0/qn2e2r
- wdgjFIkMi+WNPgtpeMErgnJkXIKpABADSHPVq26JpJegeafoghAFUwe4Eaty7NccYPK4aI004Bn
- IDODDjbS6U5NiXafVzyd3HcLNipAUvVS2AEWAP921+gcMIH1vxr6eGKKYcS1WrQFPX3MLho63Ks
- zU5utEsdcTmJ+hAK607PiGp4kBDUVLlhYJGfrHiqiehwSd7naa8NAnLh8uIdOD5Yg8c1huT7jEo
- 9svUjiXIWab7zxcc0hOhZmFYW+/HCJ/1nWtstz8RTZr19pBYxS5k0IR3l2YQW37Sk0Ynn+iJ
-X-Authority-Analysis: v=2.4 cv=Q7TS452a c=1 sm=1 tr=0 ts=68492457 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8 a=3mcCAZ4DCuo2i6UhkvcA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: vDvCwaLDXnUE7QlqJcvz9qMER7jKq6aZ
-X-Proofpoint-ORIG-GUID: vDvCwaLDXnUE7QlqJcvz9qMER7jKq6aZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-11_02,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 mlxscore=0 spamscore=0 mlxlogscore=658
- bulkscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0 impostorscore=0
- priorityscore=1501 malwarescore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506110057
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 1/2] dt-bindings: thermal: qcom-tsens: make ipq5018
+ tsens standalone compatible
+To: george.moussalem@outlook.com, Amit Kucheria <amitk@kernel.org>,
+ Thara Gopinath <thara.gopinath@gmail.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
+ Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250611-ipq5018-tsens-v11-0-266566bfd16a@outlook.com>
+ <20250611-ipq5018-tsens-v11-1-266566bfd16a@outlook.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250611-ipq5018-tsens-v11-1-266566bfd16a@outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add TSENS and thermal devicetree node for QCS615 SoC.
+On 11/06/2025 07:12, George Moussalem via B4 Relay wrote:
+> From: George Moussalem <george.moussalem@outlook.com>
+> 
+> IPQ5018 tsens should not use qcom,tsens-v1 as fallback since it has no RPM
+> and, as such, deviates from the standard v1 init routine in the driver.
+> So let's make qcom,ipq5018-tsens a standalone compatible in the bindings.
+> 
+> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+> ---
+>  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 5 ++++-
 
-Signed-off-by: Gaurav Kohli <quic_gkohli@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs615.dtsi | 217 +++++++++++++++++++++++++++
- 1 file changed, 217 insertions(+)
+You just added it recently with the fallback (in v9 of this patchset)
+and now remove it?
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-index edfb796d8dd3..bbc132a1df46 100644
---- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-@@ -3668,6 +3668,17 @@ usb_2_dwc3: usb@a800000 {
- 				maximum-speed = "high-speed";
- 			};
- 		};
-+
-+		tsens0: tsens@c222000 {
-+			compatible = "qcom,qcs615-tsens", "qcom,tsens-v2";
-+			reg = <0x0 0x0c263000 0x0 0x1ff>,
-+				<0x0 0x0c222000 0x0 0x8>;
-+			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "uplow", "critical";
-+			#qcom,sensors = <16>;
-+			#thermal-sensor-cells = <1>;
-+		};
- 	};
- 
- 	arch_timer: timer {
-@@ -3677,4 +3688,210 @@ arch_timer: timer {
- 			     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
- 			     <GIC_PPI 0 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
- 	};
-+
-+	thermal-zones {
-+		aoss-thermal {
-+			thermal-sensors = <&tsens0 0>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <110000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		cpuss-0-thermal {
-+			thermal-sensors = <&tsens0 1>;
-+
-+			trips {
-+				cpuss0-critical {
-+					temperature = <115000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpuss-1-thermal {
-+			thermal-sensors = <&tsens0 2>;
-+
-+			trips {
-+				cpuss1-critical {
-+					temperature = <115000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpuss-2-thermal {
-+			thermal-sensors = <&tsens0 3>;
-+
-+			trips {
-+				cpuss2-critical {
-+					temperature = <115000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpuss-3-thermal {
-+			thermal-sensors = <&tsens0 4>;
-+
-+			trips {
-+				cpuss3-critical {
-+					temperature = <115000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpu-1-0-thermal {
-+			thermal-sensors = <&tsens0 5>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <115000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpu-1-1-thermal {
-+			thermal-sensors = <&tsens0 6>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <115000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpu-1-2-thermal {
-+			thermal-sensors = <&tsens0 7>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <115000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpu-1-3-thermal {
-+			thermal-sensors = <&tsens0 8>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <115000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		gpu-thermal {
-+			thermal-sensors = <&tsens0 9>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <105000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+
-+				trip-point1 {
-+					temperature = <110000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		q6-hvx-thermal {
-+			thermal-sensors = <&tsens0 10>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <105000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+
-+				trip-point1 {
-+					temperature = <110000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		mdm-core-thermal {
-+			thermal-sensors = <&tsens0 11>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <110000>;
-+					hysteresis = <10000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		camera-thermal {
-+			thermal-sensors = <&tsens0 12>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <110000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		wlan-thermal {
-+			thermal-sensors = <&tsens0 13>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <110000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		display-thermal {
-+			thermal-sensors = <&tsens0 14>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <110000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		video-thermal {
-+			thermal-sensors = <&tsens0 15>;
-+
-+			trips {
-+				trip-point0 {
-+					temperature = <110000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+	};
- };
--- 
-2.34.1
+And what does it mean it has no RPM? How does it affect the driver? Does
+fallback work or not?
 
+
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index 0e653bbe9884953b58c4d8569b8d096db47fd54f..73d722bda8adc2c930edfc3373e6011f19c7c491 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -36,10 +36,13 @@ properties:
+>                - qcom,msm8974-tsens
+>            - const: qcom,tsens-v0_1
+>  
+> +      - description: v1 of TSENS
+
+So that's still v1... I don't understand.
+
+> +        enum:
+> +          - qcom,ipq5018-tsens
+> +
+>        - description: v1 of TSENS
+>          items:
+>            - enum:
+> -              - qcom,ipq5018-tsens
+>                - qcom,msm8937-tsens
+>                - qcom,msm8956-tsens
+>                - qcom,msm8976-tsens
+> 
+
+
+Best regards,
+Krzysztof
 
