@@ -1,192 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-60969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CE51AD56CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 15:19:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2A74AD5721
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 15:33:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4AF6E3A64BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 13:18:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7A833A1939
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 13:33:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B0D62857C1;
-	Wed, 11 Jun 2025 13:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1F9828935F;
+	Wed, 11 Jun 2025 13:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="M17/FgXi"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uGaC3ukC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out.smtpout.orange.fr (out-70.smtpout.orange.fr [193.252.22.70])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-wr1-f73.google.com (mail-wr1-f73.google.com [209.85.221.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FFF78F43;
-	Wed, 11 Jun 2025 13:18:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.252.22.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4ABC28A1F0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 13:33:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749647908; cv=none; b=VPLRzMXhA97VVIbiNxcqyVGdrEAlzvyU6bPgPj8GktQ6DRGq2Zh69QjF/hOaUr/n9NP6z0VIqgNwxjUwhk1Vi5KPwuFbNkVVMC39u/RSls+KM2EnYAXR9t8Olvx07P8rpBqvlP3WPJkA0CN0JvilaS4HiBosneom5F3TFZ6zu3Y=
+	t=1749648815; cv=none; b=g1pDbM0E9dtkCBY8t92vgPrufF3eSA2XD62JK4WGYe87Lchc8kjhwx9/vkyj/nHspFSHhWb1QlHqucVcGgfkH4qtiMOI2h2aOTwq1u5PdpZ+3HL9B/VVXJ1Jd/eokKHNAbujKefFEqvWjJJXFtCdhebOSpoZVbAUqrNLdnjPCv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749647908; c=relaxed/simple;
-	bh=3ImL6HcMMuEnuKo/YZNjhvWD+k67FXIGpUec8YR+upk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iJrT9Ziax3zyhhsWFsXm7xvSSn0zSXf2DH4pTYFdPJavb9r2/q0Qc9r/j2wJq6SJzqf+RwVPbFL7r4qu2+Rwoz1ao3roMDXifIhz6A1Nw1tc80qsjgDOwglmfrunRavrBxeVcX+JU9KuUIYONgclQPCxmRJq/4fY/+pZUAlzJuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=M17/FgXi; arc=none smtp.client-ip=193.252.22.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
-Received: from [172.16.82.72] ([124.33.176.97])
-	by smtp.orange.fr with ESMTPA
-	id PLK1uaf7zSZTqPLK3uQEoa; Wed, 11 Jun 2025 15:17:07 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1749647827;
-	bh=gPwsajLBsNL8XA7/sk2C74g5jjpD7PSQHxW65bPJTD4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=M17/FgXiTcdr7lS6G03JsO24EzLrPAbSaLdpabOS8KSO9ZEXvCwjxVSLQlhclwiey
-	 GU56llktfNWO77AIbtJnO0IAiggrUGmaiUzv8Xmkw2DgB0RpdGc07IBsV0w1nsbXu8
-	 fAXtlPWEo57EiI6hAVY6AQFCCwfdJ6BzRYW0kgC5C3yIIN6W5eFA9Fc3JLan2k8kHc
-	 egUAG7bVTwa/EvSd4aaAKk/s2n6UNuFr5HTZgzxV3+RLRh3GYkYM20NYmhzLtOoyO6
-	 HW0Pw9zzC3ok64XoPrHLF5ogesxujWXldaMR0SeWUqXPPz9UoJXWYF/7kr4W1ygWPl
-	 fGi2IavEa67Cw==
-X-ME-Helo: [172.16.82.72]
-X-ME-Auth: bWFpbGhvbC52aW5jZW50QHdhbmFkb28uZnI=
-X-ME-Date: Wed, 11 Jun 2025 15:17:07 +0200
-X-ME-IP: 124.33.176.97
-Message-ID: <e252f15f-ea80-4969-b754-82da5f9a7f56@wanadoo.fr>
-Date: Wed, 11 Jun 2025 22:16:52 +0900
+	s=arc-20240116; t=1749648815; c=relaxed/simple;
+	bh=r+XqC7uGn13lAp3H+wBcGZnLyvGZSd2YBfaeiZv4mds=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=Ew2vx0qoaGT7B5LhRW4auadY6QzvMONRIpCYWa5uCY9swZmByL1LygxjxmHhg6iE2McS+R8wxCpKKc/Zkf3plWnnp9zUP7tGndZw8ledua9Rm+J5CzT4BfBOw7pSncmCdf4gZCiLAhSRFGWbnY4v3tCWGGrQgo6xp7UvU7KKjgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uGaC3ukC; arc=none smtp.client-ip=209.85.221.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com
+Received: by mail-wr1-f73.google.com with SMTP id ffacd0b85a97d-3a4f6ff23ccso4083357f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 06:33:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1749648812; x=1750253612; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=rSsJgXVmQFLNXrSUPRm9zqOBDde8bKjGO9WdZWsvbm0=;
+        b=uGaC3ukC/B4e24d7XRJuLl5QdWk8iH+7cr0PulXnGtPFz9xR8mb9Rsth4x0EEP15vj
+         haLs6UaS/vI9nsZdI5lfJ6EsRz4WItvP5wWNP6qbRjBWAScPrrW7LTXZd6w7Kv0z7z9w
+         St/gZ+p4u/rn5aOWJi4KKm6UVU90YfxcBgeGZKgqejsUt/DWW3/6PWeHFWqze2uem0vu
+         UeNFoK083jTcL9b6+xhcem52038/in3QJpXiELfXlMl4IL6MhckpI0LPevbuKSkoiGZ/
+         ht9d8nxNKjgZyccruDqZPmVjWpkLY+V5GQjLhX+Ht4mdrR7z90drkmfkiigpSXI/pnby
+         aqyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749648812; x=1750253612;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rSsJgXVmQFLNXrSUPRm9zqOBDde8bKjGO9WdZWsvbm0=;
+        b=v48lpb1RhYUgYp3nWqitZXgvu0TzJ+80iSqeSYsLfAWJw70JpClRlhPZzcrKeHBvNB
+         g6HBzkr9vdWGexgx5bR2LiCTayfxc+bAYeXD14Q9qnVDaK3dkGkEza0cAuXI1sJvr2Do
+         oVrn1otj75JKKR+clyClDeXwShzhd9B7aoohy0xigUisutAbN9/a11jQuWpQ9aDZC8qj
+         clvqCkb3tVIL+VB1NngfeicgU6agP6r4EX9pbJ+JwHAVouwJZoC+mNZh7SowS5jSs8Ft
+         gkOsfR7Zqp6JBI8VtMasN7A0I2numNFtdFqRnUhjmK6v5ezHpMpRLwFjptS5jZb9/bcP
+         s8aw==
+X-Forwarded-Encrypted: i=1; AJvYcCX/6iintyLMJnPfV3E5vdzMLzIznufTds3UqR+Ij4bfQLFI8meX6hNa59DBNV4IKmjJo3ed+cYHFpFEWsQk@vger.kernel.org
+X-Gm-Message-State: AOJu0YynbqXhWmm4dUCI825nW9CpE1dj2JXE0XSR1nfQrmAdBjzyLtL7
+	0SH2kNi7pc4iyUOf7L+bs6k51vPIfjRo+Ua2orGFzzh1DFJ07Z6IqDGjEDt/KbJRdHtBNBqX4+Y
+	QmQ==
+X-Google-Smtp-Source: AGHT+IGEi4Njnn/PJTVKY9QV/QZh9cv9Pk+XkVMH4dPXzSBVTZZ2YPR7bte2KhD8R7o+Ouq1GEzt+pIysg==
+X-Received: from wrs3.prod.google.com ([2002:a05:6000:643:b0:3a5:271e:ad7d])
+ (user=tabba job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6000:24c8:b0:3a4:d83a:eb4c
+ with SMTP id ffacd0b85a97d-3a558a43cb0mr2865406f8f.57.1749648812045; Wed, 11
+ Jun 2025 06:33:32 -0700 (PDT)
+Date: Wed, 11 Jun 2025 14:33:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] net: can: mcp251x: use new GPIO line value setter
- callbacks
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-mediatek@lists.infradead.org, linux-can@vger.kernel.org,
- linux-arm-msm@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Andrew Lunn <andrew@lunn.ch>, Vladimir Oltean <olteanv@gmail.com>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Linus Walleij <linus.walleij@linaro.org>,
- "Chester A. Unal" <chester.a.unal@arinc9.com>,
- Daniel Golle <daniel@makrotopia.org>, DENG Qingfang <dqfext@gmail.com>,
- Sean Wang <sean.wang@mediatek.com>, Matthias Brugger
- <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Marc Kleine-Budde <mkl@pengutronix.de>,
- Heiner Kallweit <hkallweit1@gmail.com>, Russell King <linux@armlinux.org.uk>
-References: <20250610-gpiochip-set-rv-net-v1-0-35668dd1c76f@linaro.org>
- <20250610-gpiochip-set-rv-net-v1-3-35668dd1c76f@linaro.org>
- <b2f87cff-3a81-482b-bfdd-389950b7ec8e@wanadoo.fr>
- <CAMRc=MfCwz3BV15aATr_5er7wU=AmKV=Z=sHJyrjEvLwx2cMjQ@mail.gmail.com>
- <b9ea7e0e-7dd1-460b-950a-083620dd52e9@wanadoo.fr>
- <CAMRc=Mf4qupdJEm9mWPF3-B3hprn6AvP7Po2=aQYbaSvFf8OeA@mail.gmail.com>
-Content-Language: en-US
-From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Autocrypt: addr=mailhol.vincent@wanadoo.fr; keydata=
- xjMEZluomRYJKwYBBAHaRw8BAQdAf+/PnQvy9LCWNSJLbhc+AOUsR2cNVonvxhDk/KcW7FvN
- LFZpbmNlbnQgTWFpbGhvbCA8bWFpbGhvbC52aW5jZW50QHdhbmFkb28uZnI+wrIEExYKAFoC
- GwMFCQp/CJcFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AWIQTtj3AFdOZ/IOV06OKrX+uI
- bbuZwgUCZx41XhgYaGtwczovL2tleXMub3BlbnBncC5vcmcACgkQq1/riG27mcIYiwEAkgKK
- BJ+ANKwhTAAvL1XeApQ+2NNNEwFWzipVAGvTRigA+wUeyB3UQwZrwb7jsQuBXxhk3lL45HF5
- 8+y4bQCUCqYGzjgEZx4y8xIKKwYBBAGXVQEFAQEHQJrbYZzu0JG5w8gxE6EtQe6LmxKMqP6E
- yR33sA+BR9pLAwEIB8J+BBgWCgAmFiEE7Y9wBXTmfyDldOjiq1/riG27mcIFAmceMvMCGwwF
- CQPCZwAACgkQq1/riG27mcJU7QEA+LmpFhfQ1aij/L8VzsZwr/S44HCzcz5+jkxnVVQ5LZ4B
- ANOCpYEY+CYrld5XZvM8h2EntNnzxHHuhjfDOQ3MAkEK
-In-Reply-To: <CAMRc=Mf4qupdJEm9mWPF3-B3hprn6AvP7Po2=aQYbaSvFf8OeA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.50.0.rc0.642.g800a2b2222-goog
+Message-ID: <20250611133330.1514028-1-tabba@google.com>
+Subject: [PATCH v12 00/18] KVM: Mapping guest_memfd backed memory at the host
+ for software protected VMs
+From: Fuad Tabba <tabba@google.com>
+To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	kvmarm@lists.linux.dev
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com, tabba@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/06/2025 at 01:05, Bartosz Golaszewski wrote:
-> On Tue, Jun 10, 2025 at 5:48 PM Vincent Mailhol
-> <mailhol.vincent@wanadoo.fr> wrote:
->>
->> On 10/06/2025 at 23:05, Bartosz Golaszewski wrote:
->>> On Tue, Jun 10, 2025 at 3:55 PM Vincent Mailhol
->>> <mailhol.vincent@wanadoo.fr> wrote:
->>>>
->>>> On 10/06/2025 at 21:37, Bartosz Golaszewski wrote:
->>>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>>>
->>>>> struct gpio_chip now has callbacks for setting line values that return
->>>>> an integer, allowing to indicate failures. Convert the driver to using
->>>>> them.
->>>>>
->>>>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>>                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>>>
->>>> This does not match the address with which you sent the patch: brgl@bgdev.pl
->>>>
->>>>> ---
->>>>>  drivers/net/can/spi/mcp251x.c | 16 ++++++++++------
->>>>>  1 file changed, 10 insertions(+), 6 deletions(-)
->>>>>
->>>>> diff --git a/drivers/net/can/spi/mcp251x.c b/drivers/net/can/spi/mcp251x.c
->>>>> index ec5c64006a16f703bc816983765584c5f3ac76e8..7545497d14b46c6388f3976c2bf7b9a99e959c1e 100644
->>>>> --- a/drivers/net/can/spi/mcp251x.c
->>>>> +++ b/drivers/net/can/spi/mcp251x.c
->>>>> @@ -530,8 +530,8 @@ static int mcp251x_gpio_get_multiple(struct gpio_chip *chip,
->>>>>       return 0;
->>>>>  }
->>>>>
->>>>> -static void mcp251x_gpio_set(struct gpio_chip *chip, unsigned int offset,
->>>>> -                          int value)
->>>>> +static int mcp251x_gpio_set(struct gpio_chip *chip, unsigned int offset,
->>>>> +                         int value)
->>>>>  {
->>>>>       struct mcp251x_priv *priv = gpiochip_get_data(chip);
->>>>>       u8 mask, val;
->>>>> @@ -545,9 +545,11 @@ static void mcp251x_gpio_set(struct gpio_chip *chip, unsigned int offset,
->>>>>
->>>>>       priv->reg_bfpctrl &= ~mask;
->>>>>       priv->reg_bfpctrl |= val;
->>>>> +
->>>>> +     return 0;
->>>>
->>>> mcp251x_gpio_set() calls mcp251x_write_bits() which calls mcp251x_spi_write()
->>>> which can fail.
->>>>
->>>> For this change to really make sense, the return value of mcp251x_spi_write()
->>>> should be propagated all the way around.
->>>>
->>>
->>> I don't know this code so I followed the example of the rest of the
->>> codebase where the result of this function is never checked - even in
->>> functions that do return values. I didn't know the reason for this and
->>> so didn't want to break anything as I have no means of testing it.
->>
->> The return value of mcp251x_spi_write() is used in mcp251x_hw_reset(). In other
->> locations, mcp251x_spi_write() is only used in functions which return void, so
->> obviously, the return value is not checked.
->>
-> 
-> Wait, after a second look GPIO callbacks (including those that return
-> a value like request()) use mcp251x_write_bits() which has no return
-> value.
+Main changes since v11 [1]:
+- Addressed various points of feedback from the last revision.
+- Rebased on Linux 6.16-rc1.
 
-Yes. Read again my first message:
+This patch series enables mapping of guest_memfd backed memory in the
+host. This is useful for VMMs like Firecracker that aim to run guests
+entirely backed by guest_memfd [2]. When combined with Patrick's series
+for direct map removal [3], this provides additional hardening against
+Spectre-like transient execution attacks.
 
-  mcp251x_gpio_set() calls mcp251x_write_bits() which calls mcp251x_spi_write()
-  which can fail.
+This series also lays the groundwork for restricted mmap() support for
+guest_memfd backed memory in the host for Confidential Computing
+platforms that permit in-place sharing of guest memory with the host
+[4].
 
-My point is that the grand father can fail.
+Patch breakdown:
 
-> It probably should propagate what mcp251x_spi_write() returns
+Patches 1-7: Primarily refactoring and renaming to decouple the concept
+of guest memory being "private" from it being backed by guest_memfd.
 
-Exactly what I asked for :)
+Patches 8-9: Add support for in-place shared memory and the ability for
+the host to map it. This is gated by a new configuration option, toggled
+by a new flag, and advertised to userspace by a new capability
+(introduced in patch 16).
 
-> but that's material for a different series.
+Patches 10-15: Implement the x86 and arm64 support for this feature.
 
-Why? Are you going to do this other series?
+Patch 16: Introduces the new capability to advertise this support and
+updates the documentation.
 
-If the answer is no, then please just do it here. Propagating the error in
-mcp251x_write_bits() is a three line change. Am I asking for too much?
+Patches 17-18: Add and fix selftests for the new functionality.
 
-> The goal of this one is to
-> use the new setters treewide and drop the old ones from struct
-> gpio_chip.
+For details on how to test this patch series, and on how to boot a guest
+that uses the new features, please refer to the instructions in v8 [5],
+but use the updated kvmtool for 6.16 (KVM_CAP_GMEM_SHARED_MEM number has
+changed) [6].
 
-Yours sincerely,
-Vincent Mailhol
+Cheers,
+/fuad
+
+[1] https://lore.kernel.org/all/20250605153800.557144-1-tabba@google.com/
+[2] https://github.com/firecracker-microvm/firecracker/tree/feature/secret-hiding
+[3] https://lore.kernel.org/all/20250221160728.1584559-1-roypat@amazon.co.uk/
+[4] https://lore.kernel.org/all/20250328153133.3504118-1-tabba@google.com/
+[5] https://lore.kernel.org/all/20250430165655.605595-1-tabba@google.com/
+[6] https://android-kvm.googlesource.com/kvmtool/+/refs/heads/tabba/guestmem-basic-6.16
+
+Ackerley Tng (2):
+  KVM: x86/mmu: Handle guest page faults for guest_memfd with shared
+    memory
+  KVM: x86: Consult guest_memfd when computing max_mapping_level
+
+Fuad Tabba (16):
+  KVM: Rename CONFIG_KVM_PRIVATE_MEM to CONFIG_KVM_GMEM
+  KVM: Rename CONFIG_KVM_GENERIC_PRIVATE_MEM to
+    CONFIG_KVM_GENERIC_GMEM_POPULATE
+  KVM: Rename kvm_arch_has_private_mem() to kvm_arch_supports_gmem()
+  KVM: x86: Rename kvm->arch.has_private_mem to kvm->arch.supports_gmem
+  KVM: Rename kvm_slot_can_be_private() to kvm_slot_has_gmem()
+  KVM: Fix comments that refer to slots_lock
+  KVM: Fix comment that refers to kvm uapi header path
+  KVM: guest_memfd: Allow host to map guest_memfd pages
+  KVM: guest_memfd: Track shared memory support in memslot
+  KVM: x86: Enable guest_memfd shared memory for non-CoCo VMs
+  KVM: arm64: Refactor user_mem_abort()
+  KVM: arm64: Handle guest_memfd-backed guest page faults
+  KVM: arm64: Enable host mapping of shared guest_memfd memory
+  KVM: Introduce the KVM capability KVM_CAP_GMEM_SHARED_MEM
+  KVM: selftests: Don't use hardcoded page sizes in guest_memfd test
+  KVM: selftests: guest_memfd mmap() test when mapping is allowed
+
+ Documentation/virt/kvm/api.rst                |   9 +
+ arch/arm64/include/asm/kvm_host.h             |   4 +
+ arch/arm64/kvm/Kconfig                        |   1 +
+ arch/arm64/kvm/mmu.c                          | 189 ++++++++++++----
+ arch/x86/include/asm/kvm_host.h               |  22 +-
+ arch/x86/kvm/Kconfig                          |   5 +-
+ arch/x86/kvm/mmu/mmu.c                        | 135 ++++++-----
+ arch/x86/kvm/svm/sev.c                        |   4 +-
+ arch/x86/kvm/svm/svm.c                        |   4 +-
+ arch/x86/kvm/x86.c                            |   4 +-
+ include/linux/kvm_host.h                      |  80 +++++--
+ include/uapi/linux/kvm.h                      |   2 +
+ tools/testing/selftests/kvm/Makefile.kvm      |   1 +
+ .../testing/selftests/kvm/guest_memfd_test.c  | 212 +++++++++++++++---
+ virt/kvm/Kconfig                              |  14 +-
+ virt/kvm/Makefile.kvm                         |   2 +-
+ virt/kvm/guest_memfd.c                        |  91 +++++++-
+ virt/kvm/kvm_main.c                           |  16 +-
+ virt/kvm/kvm_mm.h                             |   4 +-
+ 19 files changed, 630 insertions(+), 169 deletions(-)
+
+
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+-- 
+2.50.0.rc0.642.g800a2b2222-goog
+
 
