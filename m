@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-60916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2204AD4BB8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 08:30:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F3BAAD4BD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 08:36:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EE6981899A3F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 06:30:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 37A4A17957B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 06:36:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B27D8225A39;
-	Wed, 11 Jun 2025 06:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ACEB22836C;
+	Wed, 11 Jun 2025 06:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rCik9PTQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q7aMl/oc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBF528FD;
-	Wed, 11 Jun 2025 06:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4974E17A300;
+	Wed, 11 Jun 2025 06:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749623439; cv=none; b=lUVGAuAou0iyXEBZc+4RC3AYTb7jFQzP+MIN2K+dZprnaNmjmicikoIH2MK9yD/LtQUL+oLr981h8QJYDKfRYNSPOJObDQqtkbs4/S7pw/BYqCzC7YnnmRbiMi6T0AvBzUdHAtn3BYozTu+IyhRcO3AkUwa2ovuKa1FKDvSan7s=
+	t=1749623779; cv=none; b=bJYcrYrwxlC+8L2tSWT4z2a3pPRmbfjmUUWFjBUM2KOMpfYzotzzYPvamvuVEGqUVCrK/OqLO4R4n4YTuKj8BneyQXps+0EmF3XRiLa5YT0bRgyvhC1BKuIycpy6f9rA3jw3MLzDUcjBgYn3rl1cZqOgsMJsxfuujYF0e2+4PXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749623439; c=relaxed/simple;
-	bh=Eqwe71FwB2joW1I6Xy4GZaN1pBqXDrm63lZSn17aIOo=;
+	s=arc-20240116; t=1749623779; c=relaxed/simple;
+	bh=iBenA2DN1x1l5U6EZgOXDobSylhCJy9lWl3Re/GYpPs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KhoB4Cdx5bGYAijgxBDGFR1uT+wSP/25LP44UAPAi6hEqADtGUONAJD+jLTJNzUOQ7r7zgc5C57y2NenjmmIWf8d3NL58NwDEdpHcIKCIA5T3opSJWH1sl6ZONGmr0fsaoxw7CfjwZt671s+wOD58v0SMJmixSUq1B6VdudgdQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rCik9PTQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B25CC4CEEE;
-	Wed, 11 Jun 2025 06:30:35 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Alu9XOdxnarAVNu5d2tc7hirwSmPKl8vZCuCOKRFgijeLPFVetYz9qtHew+7hLRaK+M1LzFbuy6blvf013ey6ERtelG0kNDqYQdfhkNhXjXHApbyaIfi2cVgVgYo7a4wS8yv2C9wwrxEYePFiJNlsXTr9HkAAhLGqa2fBpeiPKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q7aMl/oc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064BAC4CEEE;
+	Wed, 11 Jun 2025 06:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749623439;
-	bh=Eqwe71FwB2joW1I6Xy4GZaN1pBqXDrm63lZSn17aIOo=;
+	s=k20201202; t=1749623776;
+	bh=iBenA2DN1x1l5U6EZgOXDobSylhCJy9lWl3Re/GYpPs=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rCik9PTQe0mWY83smq5T3YIS7kM2Q/SPiH0W/FEWNOq+eEq7xNl5k9ymbATz+Nq3x
-	 10lRHm6KGjmIjspzqdlJm+4qK44ONtntHQubEGxoO0+CYswAA78HdJqpNi9fAF6fLy
-	 HSYjK1rkJU/Cs7Ok+TnyMedLj10k2aFRmm6syUhlHhMQrKrhDVFCLmdq/XAlD3TT2d
-	 u/3AFj15snkMwLA8qvOLtKXaqcB5BE3VBe61hXJAsz02clJs6puPFI30YHCIiYHHcS
-	 pi40wIgZjYGiYGpL992HL+1khEMhZxGx8+FspmVu26hG2khWFYWwbSjNgCLIXxJ0Vf
-	 dIc9J6lmyTM1g==
-Message-ID: <717e3f5f-1753-4715-b569-3d7567508d76@kernel.org>
-Date: Wed, 11 Jun 2025 08:30:33 +0200
+	b=q7aMl/ocsy+TNoGsLf9cDteA5XPqxzve/XBJhORfrNlksCpoho1OiOqNgo4V7vc6o
+	 IfIdXW8WNunT1zvWdfskotnvVYiCbV6LsYbA/seuDz8flcCIilWJuFRHoPw9QVYFLH
+	 s5cq/p4ZCubMnz6dRid0sNRK0V3Rr3gsqUdJAbgjbyepkuVUe3FftEaDIqgbCmcqaE
+	 ZiHKhStAXTTbluNAe1WVf45KsrEjEbb49o0jcCPRvuZyllCWYwNFk1pJnGiYRkgP95
+	 y5tImE2Zzr8DLlZQhOknwV+ZaCZop/xdkRwflT5aHUkWFXCKzdJlfOo0xSEoGflfEt
+	 j2CZOUXJ+5dbw==
+Message-ID: <77eeca94-0703-44c9-b30b-17fc989dedb7@kernel.org>
+Date: Wed, 11 Jun 2025 08:36:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,26 +50,27 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: mailbox: qcom,apcs: Add separate node
- for clock-controller
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Stephan Gerhold <stephan.gerhold@linaro.org>,
- Saravana Kannan <saravanak@google.com>, Rob Herring <robh@kernel.org>,
- Jassi Brar <jassisinghbrar@gmail.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-clk@vger.kernel.org, Georgi Djakov <djakov@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-References: <20250506-qcom-apcs-mailbox-cc-v1-0-b54dddb150a5@linaro.org>
- <20250506-qcom-apcs-mailbox-cc-v1-1-b54dddb150a5@linaro.org>
- <7vszdea2djl43oojvw3vlrip23f7cfyxkyn6jw3wc2f7yowht5@bgsc2pqscujc>
- <aCNGSwL7043GoJBz@linaro.org> <20250514160841.GA2427890-robh@kernel.org>
- <aCUHTJGktLFhXq4Q@linaro.org> <20250521-psychedelic-cute-grouse-ee1291@kuoka>
- <aC-AqDa8cjq2AYeM@linaro.org>
- <20250523-markhor-of-fortunate-experience-1f575e@kuoka>
- <jvsdn67x2qm2avaktnpqzoixcd46xuuf6i5kpeolsnewgoqt6q@jid7unlmmu65>
+Subject: Re: [PATCH v3 3/3] arm64: qcom: sc7280: Move phy, perst to root port
+ node
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Rob Herring <robh@kernel.org>,
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_vbadigan@quicinc.com, quic_mrana@quicinc.com
+References: <20250419-perst-v3-0-1afec3c4ea62@oss.qualcomm.com>
+ <20250419-perst-v3-3-1afec3c4ea62@oss.qualcomm.com>
+ <20250423153747.GA563929-robh@kernel.org>
+ <2ce28fb9-1184-4503-8f16-878d1fcb94cd@oss.qualcomm.com>
+ <ba107a41-5520-47fa-9943-6e33946f50b1@kernel.org>
+ <56eccdb0-c877-431d-9833-16254afa1a0c@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,138 +116,43 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <jvsdn67x2qm2avaktnpqzoixcd46xuuf6i5kpeolsnewgoqt6q@jid7unlmmu65>
+In-Reply-To: <56eccdb0-c877-431d-9833-16254afa1a0c@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/06/2025 05:31, Bjorn Andersson wrote:
-> On Fri, May 23, 2025 at 11:06:04AM +0200, Krzysztof Kozlowski wrote:
->> On Thu, May 22, 2025 at 09:53:12PM GMT, Stephan Gerhold wrote:
->>> +Saravana
->>>
->>> On Wed, May 21, 2025 at 11:20:40AM +0200, Krzysztof Kozlowski wrote:
->>>> On Wed, May 14, 2025 at 10:12:44PM GMT, Stephan Gerhold wrote:
->>>>>>>>> The mailbox itself does not need any clocks and should probe early to
->>>>
->>>> ... so probe it early.
->>>>
->>>>>>>>> unblock the rest of the boot process. The "clocks" are only needed for the
->>>>>>>>> separate clock controller. In Linux, these are already two separate drivers
->>>>>>>>> that can probe independently.
->>>>
->>>> They can probe later, no problem and DT does not stop that. Linux, not
->>>> DT, controls the ways of probing of devices and their children.
->>>>
->>>>>>>>>
->>>>>>>>
->>>>>>>> Why does this circular dependency need to be broken in the DeviceTree
->>>>>>>> representation?
->>>>>>>>
->>>>>>>> As you describe, the mailbox probes and register the mailbox controller
->>>>>>>> and it registers the clock controller. The mailbox device isn't affected
->>>>>>>> by the clock controller failing to find rpmcc...
->>>>>>>>
->>>>>>>
->>>>>>> That's right, but the problem is that the probe() function of the
->>>>>>> mailbox driver won't be called at all. The device tree *looks* like the
->>>>>>> mailbox depends on the clock, so fw_devlink tries to defer probing until
->>>>>>> the clock is probed (which won't ever happen, because the mailbox is
->>>>>>> needed to make the clock available).
->>>>>>>
->>>>>>> I'm not sure why fw_devlink doesn't detect this cycle and tries to probe
->>>>>>> them anyway, but fact is that we need to split this up in order to avoid
->>>>>>> warnings and have the supplies/consumers set up properly. Those device
->>>>>>> links are created based on the device tree and not the drivers.
->>>>>>
->>>>>> Does "post-init-providers" providers solve your problem?
->>>>>>
+On 10/06/2025 15:15, Konrad Dybcio wrote:
+> On 6/2/25 3:01 PM, Krzysztof Kozlowski wrote:
+>> On 08/05/2025 16:26, Konrad Dybcio wrote:
+>>> On 4/23/25 5:37 PM, Rob Herring wrote:
+>>>> On Sat, Apr 19, 2025 at 10:49:26AM +0530, Krishna Chaitanya Chundru wrote:
+>>>>> There are many places we agreed to move the wake and perst gpio's
+>>>>> and phy etc to the pcie root port node instead of bridge node[1].
 >>>>>
->>>>> I would expect that it does, but it feels like the wrong solution to the
->>>>> problem to me. The clock is not really a post-init provider: It's not
->>>>> consumed at all by the mailbox and needed immediately to initialize the
->>>>> clock controller. The real problem in my opinion is that we're
->>>>> describing two essentially distinct devices/drivers in a single device
->>>>> node, and there is no way to distinguish that.
->>>>>
->>>>> By splitting up the two distinct components into separate device tree
->>>>> nodes, the relation between the providers/consumers is clearly
->>>>> described.
+>>>>> So move the phy, phy-names, wake-gpio's in the root port.
+>>>>> There is already reset-gpio defined for PERST# in pci-bus-common.yaml,
+>>>>> start using that property instead of perst-gpio.
 >>>>
->>>> You can split devices without splitting the nodes. I do not see reason
->>>> why the DT is the problem here.
->>>>
+>>>> Moving the properties will break existing kernels. If that doesn't 
+>>>> matter for these platforms, say so in the commit msg.
 >>>
->>> The Linux drivers for this particular mailbox/clock controller already
->>> work exactly the way you propose. They are split into two devices that
->>> can probe independently.
->>>
->>> The problem is outside of the drivers, because fw_devlink in Linux
->>> blocks probing until all resources specified in the device tree nodes
->>> become available. fw_devlink has no knowledge that the mailbox described
->>> by this peculiar device tree node does not actually need the clocks:
->>>
->>> 	apcs1_mbox: mailbox@b011000 {
->>> 		compatible = "qcom,msm8939-apcs-kpss-global", "syscon";
->>> 		reg = <0x0b011000 0x1000>;
->>> 		#mbox-cells = <1>;
->>> 		clocks = <&a53pll_c1>, <&gcc GPLL0_VOTE>, <&rpmcc RPM_SMD_XO_CLK_SRC>;
->>> 		clock-names = "pll", "aux", "ref";
->>> 		#clock-cells = <0>;
->>> 	};
->>>
->>> Without device-specific quirks in fw_devlink, the fact that these clocks
->>> are only used by an unrelated clock controller only becomes clear if we
->>> split the device tree node like I propose in this series:
->>>
->>> 	apcs1_mbox: mailbox@b011000 {
->>> 		compatible = "qcom,msm8939-apcs-kpss-global", "syscon";
->>> 		reg = <0x0b011000 0x1000>;
->>> 		#mbox-cells = <1>;
->>>
->>> 		apcs1_clk: clock-controller {
->>> 			clocks = <&a53pll_c1>, <&gcc GPLL0_VOTE>, <&rpmcc RPM_SMD_XO_CLK_SRC>;
->>> 			clock-names = "pll", "aux", "ref";
->>> 			#clock-cells = <0>;
->>> 		};
->>> 	};
->>
->> Above code suggests that clocks are not needed for the mailbox at all.
->> You need to be really sure of that. If that's the case, then this
->> description looks like correct hardware description, more detailed then
->> the first case, though.
->>
+>>> I don't think we generally guarantee *forward* dt compatibility though, no?
+>> We do not guarantee, comment was not about this, but we expect. This DTS
+>> is supposed and is used by other projects. There was entire complain
+>> last DT BoF about kernel breaking DTS users all the time.
 > 
-> I'm still sceptical here.
+> Yeah I get it.. we're in a constant cycle of adding new components and
+> later coming to the conclusion that whoever came up with the initial
+> binding had no clue what they're doing..
 > 
-> In the first snippet above, we describe a single IP block which provides
-> mailboxes and clocks.
+> That said, "absens carens".. if users or developers of other projects
+> don't speak up on LKML (which serves as the de facto public square for
+> DT development), we don't get any feedback to take into account when
+> making potentially breaking changes (that may have a good reason behind
+> them). We get a patch from OpenBSD people every now and then, but it's
+> a drop in the ocean.
 > 
-> In the second snippet we're saying that the IP block is a mailbox, and
-> then it somehow have a subcomponent which is a clock provider.
-> 
-> It seems to me that we're choosing the second option because it better
-> fits the Linux implementation, rather than that it would be a better
-
-I initially commented in similar way, however some more explanations
-were provided.
-
-> representation of the hardware. To the point that we can't even describe
-> the register range of the subcomponent...
-
-I did not check in any manual, so all my comments here are based on
-above explanations and DTS.
-
-Subnodes are allowed if they come with their own resources. You are
-right there is no separate address space, so that's argument against
-subnode. But there is separate clock, not needed for the parent (!!!),
-which is an argument in favor.
-
-> 
-> 
-> Can you confirm that this is the path we want to go here?
-
-It is an acceptable solution to me, but I am not saying that every
-device should be converted that way.
+I don't understand what you are commenting on. Do you reject what I
+asked for?
 
 Best regards,
 Krzysztof
