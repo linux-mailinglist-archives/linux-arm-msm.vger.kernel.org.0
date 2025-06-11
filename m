@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-60923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-60924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3C3EAD4C5A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 09:13:20 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6503EAD4C6E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 09:17:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 74A863A77B1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 07:12:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0A6307AA02F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jun 2025 07:16:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9452E22F743;
-	Wed, 11 Jun 2025 07:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F0982144A2;
+	Wed, 11 Jun 2025 07:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ggpUFbak"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n37MAECU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D5C1494A8;
-	Wed, 11 Jun 2025 07:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A5FA923;
+	Wed, 11 Jun 2025 07:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749625987; cv=none; b=hpZlzaaH9zypVepE0GTU/LH4HLl7h4a7OdS4gkw4eGrBOlstw2ZcPRb1RCqMGerH/MT52bm0WRprZIxOBEVjGt30Oo10R3qrjNYJzVzKe1h5+YotQQi0n0840w4Ocl/T9h76U6QGfc1E2bX9XHYk812s531V+f8f8uDHgeLFpB8=
+	t=1749626269; cv=none; b=l9QZiEvasg1DCkIzAhwHxDjD2Kdy2Barqmb/6zjxEZSHcLeK6vL6bEr5nNHMPTsvmg+nSfnXW7KWFtDnPZU/j/uPUqCkYnaYx5aR+C0PKD72tUiXQ9gpde8fRhO3q5RxdzpKfWrq31WaUZ8Wp6AURtLrwuuqBqxmndW/lEv7I4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749625987; c=relaxed/simple;
-	bh=BU/YIa0ZINv1YKgZsp2RiDxt77s+yheUVlOxVKJfnoI=;
+	s=arc-20240116; t=1749626269; c=relaxed/simple;
+	bh=iHrPvVx1WWrg1knUNOkgUot4HWCPgK9t4nazhE6gR8o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l5Dd/EUntMLFlp8uOCBSboTZ04tmD3/bi8TzillrIwVVolEJWM46mr1Tfz2wC//hG3dV9rTeTKfFJzWZ6MhfNV0+cnyRKHwSD/uKlD6R9pvogz4q5lrI95LgUTRtiDZjlZvKo0oaDwSEsoKm4D3PQZ+ZTT5Jm0ek+PiOfaiRy70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ggpUFbak; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B3EC4CEEE;
-	Wed, 11 Jun 2025 07:13:03 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=RZtLJKwD+Tsx2w1HEm6FZqXRiG4rGqlGqIXKRGN8ni6E7QBZ1QGfC5jalqDBjUIIQoCM4Y7A2pQqt4isDYELHojnD/tOrq0+9mQHKH65l13KPpyB+EODMO6l6Zh76LgwIRZ/z7Y1kwHmsVVLDta9KzNB/VrxCjoB371wjHBIAYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n37MAECU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7ADBC4CEEE;
+	Wed, 11 Jun 2025 07:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749625986;
-	bh=BU/YIa0ZINv1YKgZsp2RiDxt77s+yheUVlOxVKJfnoI=;
+	s=k20201202; t=1749626268;
+	bh=iHrPvVx1WWrg1knUNOkgUot4HWCPgK9t4nazhE6gR8o=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ggpUFbakPeZUwoBwH3YDz6XB4SvzLcIv93QmM46YM+pk7TkxphJmt2AVm4vM4d2I4
-	 9YRikKRU79nDuRh9+COoO01myW8eoqucdmNmT0Ss1NCLtMRHoQi+mRpjdkuLVTi3YZ
-	 /K9HDQFxYSEToErX9mnDPVlsYlxvYn0ED1ktHAcIeATAh8ADHulLe6C8+BO+qvC+hx
-	 cfPS/DEEHI1kDaHTrdbqUBDDirhU5SFwmKEB38XR0R3eA24RPfN19S29wSdIYx2FOX
-	 wbcLBHbnidiJVTIn2ldh2CCZKuXrE2VsfLWS6K+Q3cnP9a/+ipMcSUyziEumMJXQnN
-	 2mnFPkDF9EUTw==
-Message-ID: <61e53f55-394d-422f-8600-9035eac40ff4@kernel.org>
-Date: Wed, 11 Jun 2025 09:13:01 +0200
+	b=n37MAECUXxjw+k6WTr221FhWxHuilUlwS7gxTQD6iKFT3Jmmkp8WHls+zxXLSq7Ih
+	 xQ/Ok+l05QGc+/wBuUXIgNAnRVbZzwv3FpO1CwIfFn6fCQTWYeOmTbbgS3rpdK3qzc
+	 YKhYoHMJs4VGnZe2Y7ZijjhuOem/e9CZfHOL659o6HaYM6sNmF2dABerp3N1ZcwgPg
+	 3NQ0jI1+AkIGMyRgR/MkV+U8OBlwHyU690V+qbUgil+NZeVgHQs86gw6DLaTMWnR+W
+	 Src1vabhPrSd/e5aXh6sbzOPt6ZYW4e6rxOXkaK+ZX5sH9bARo/U6JceNMyqLKq1IV
+	 7CuGSnp3SZY0Q==
+Message-ID: <b137e6bb-7380-4f4c-8469-422587d08c60@kernel.org>
+Date: Wed, 11 Jun 2025 09:17:42 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,24 +50,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 1/2] dt-bindings: thermal: qcom-tsens: make ipq5018
- tsens standalone compatible
-To: George Moussalem <george.moussalem@outlook.com>,
- Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v6 1/8] dt-bindings: serial: describe SA8255p
+To: Praveen Talari <quic_ptalari@quicinc.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250611-ipq5018-tsens-v11-0-266566bfd16a@outlook.com>
- <20250611-ipq5018-tsens-v11-1-266566bfd16a@outlook.com>
- <17eaaad4-7713-4149-b66c-1c48db3ab42f@kernel.org>
- <DS7PR19MB8883034308D6642B6B567CAD9D75A@DS7PR19MB8883.namprd19.prod.outlook.com>
-Content-Language: en-US
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+ devicetree@vger.kernel.org, psodagud@quicinc.com, djaggi@quicinc.com,
+ quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+ quic_arandive@quicinc.com, quic_mnaresh@quicinc.com,
+ quic_shazhuss@quicinc.com, Nikunj Kela <quic_nkela@quicinc.com>
+References: <20250606172114.6618-1-quic_ptalari@quicinc.com>
+ <20250606172114.6618-2-quic_ptalari@quicinc.com>
+ <20250610-tested-lilac-raccoon-6c59c4@kuoka>
+ <d744b518-2ae9-4ca0-86ce-11cf74c945e6@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -111,67 +111,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <DS7PR19MB8883034308D6642B6B567CAD9D75A@DS7PR19MB8883.namprd19.prod.outlook.com>
+In-Reply-To: <d744b518-2ae9-4ca0-86ce-11cf74c945e6@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/06/2025 09:06, George Moussalem wrote:
-> Hi Krzysztof,
-> 
-> On 6/11/25 10:51, Krzysztof Kozlowski wrote:
->> On 11/06/2025 07:12, George Moussalem via B4 Relay wrote:
->>> From: George Moussalem <george.moussalem@outlook.com>
->>>
->>> IPQ5018 tsens should not use qcom,tsens-v1 as fallback since it has no RPM
->>> and, as such, deviates from the standard v1 init routine in the driver.
->>> So let's make qcom,ipq5018-tsens a standalone compatible in the bindings.
->>>
->>> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
->>> ---
->>>   Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 5 ++++-
+On 10/06/2025 10:10, Praveen Talari wrote:
+>>> +
+>>> +  interrupts:
+>>> +    minItems: 1
 >>
->> You just added it recently with the fallback (in v9 of this patchset)
->> and now remove it?
->>
->> And what does it mean it has no RPM? How does it affect the driver? Does
->> fallback work or not?
+>> Drop, this is not in sync with interrupt-names. You already received
+>> comments on this. We talk about this since v4!
+> I hope you have reviewed the commit message and the description under 
+> interrupt-name regarding the optional wakeup IRQ. I believe that address 
+> your query.
 > 
-> IPQ5018 tsens IP is V1, but since it's got no RPM, it follows a 
-> different init routine for which VER_1_X_NO_RPM was created just like 
-> there is one for V2 without RPM, else the driver wouldn't probe. This 
-> was added as part of:
-> 
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/DS7PR19MB8883C5D7974C7735E23923769DCC2@DS7PR19MB8883.namprd19.prod.outlook.com/
-> 
-> Since its introduction, I missed updating the bindings which caused a 
-> binding issue (as reported by Rob) on the compatible as it expects the 
-> qcom,tsens-v1 as a fallback. But we can't use that fallback, so that's 
-> why it needs to be a standalone compatible.
-
-
-So you need Fixes tag and explain what was buggy in previous patch.
-
-> 
->>
->>
->>>   1 file changed, 4 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>> index 0e653bbe9884953b58c4d8569b8d096db47fd54f..73d722bda8adc2c930edfc3373e6011f19c7c491 100644
->>> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>> @@ -36,10 +36,13 @@ properties:
->>>                 - qcom,msm8974-tsens
->>>             - const: qcom,tsens-v0_1
->>>   
->>> +      - description: v1 of TSENS
->>
->> So that's still v1... I don't understand.
-> 
-> As mentioned, the IP is still v1 but with a different init routine in 
-> the driver for IP v1 without RPM
-
-OK, just merge it into first enum and drop the description there.
+> I can include minItems:1 in the interrupt-name property in the next 
+> patch set to align/sync with interrupts property.
+Yes, then the interrupt-names needs minItems.
 
 Best regards,
 Krzysztof
