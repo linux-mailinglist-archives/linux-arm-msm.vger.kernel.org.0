@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-61136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7E7AAD786C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 18:44:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82339AD789C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 19:03:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9B9C6172F37
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 16:44:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3600D17A075
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 17:03:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3D6F299AB5;
-	Thu, 12 Jun 2025 16:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 021B87263C;
+	Thu, 12 Jun 2025 17:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wla5QSUL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ITyyuu3e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C112F4328
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 16:44:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A9B223DD1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 17:03:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749746649; cv=none; b=d9nyiOmyxhnOue74oUUCVLqSPL4KkhRwgPSl6ZXI5KooJbRqtjwSFArL7WxkenlX6na727Ic9Z68VksEbNCR2h+VsOs5DhTiCCZONkj2z1OC5K1L1kCfJitseb4ocgVygiKqO6Rou/xBH7IYkmeaSO4MS7bdWK+qih1ERQIOExA=
+	t=1749747793; cv=none; b=f3FIBpmrT/L9wfvac79lHpOgKGw42PoUrGWckoQKS5fy9idC0+b04SGUKDq9FJSmKKD7KC7hua2TloPATIhWrG5H6NbYYCzJlBDbUmXZ/0yWaBVdqpcpP+x6ZeieedpgkvxQ1WnKIjr+tCuaPj4bQbQWxv2cI/F3SIqU9PfBcMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749746649; c=relaxed/simple;
-	bh=XNRFCn2xq6ZvMxYEmFNVYqpK5j+n7FaHQGELdFrNTNM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Bdinzv+k3nn+K/tuqyFkWAidg6IrxVd19eS+y+BQNwnfq4E/k5r1z/nCKToErRvTJ6Nv/00pZy6Dfh5xeuuAtQ2ejUpqJKa4xtLMXy1P/7K9oVWSRYH0rGAOxcBFbYYuPIsmQFsEU2MhQ8zAD+hXaqzdfhAoYkH8IS8cG2r5hCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wla5QSUL; arc=none smtp.client-ip=209.85.167.50
+	s=arc-20240116; t=1749747793; c=relaxed/simple;
+	bh=Uzulu6zrQEvHbRp6tiLTxSgfAnec6yLbNovF+/MqgSw=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=L230rQ7dLi4XEPbqR+1cSF3nbywG6r4kKfgD3sHFTQImNyYSacJyc6frRtQHahUjNiQanqcuXqcxSFI2DxYaqOXqdPgR3DVAGWlwGsul+b6GF3H6qOioDuojc03P5VCLA8VDnQVcKt/rikqouJmmzhHQ2E+R5e2Uw+StFTYmjho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ITyyuu3e; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-553aba2f99eso53740e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 09:44:07 -0700 (PDT)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-55367f03b0fso107344e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 10:03:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749746646; x=1750351446; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZXFzlDR3NN9zjV+kXINmEMgirHyF0OEuBzat3RN+F+Y=;
-        b=wla5QSULow5uFJPZAP3UtIjEmlFoHsM00a7vJnB9HJ+K4F342A/WsB/zI/un2irIAp
-         yYJELFQ62DQL+XPO4P6bk8lctPf2zTem7QfKMR+ctDbDfT4Rwy7+K+b0x8yGt4mWRBFx
-         jdovMecSFKLgptyM2lBfW0p09ashdVsfZcow/HO7oNcE49f4UgmikFCgaRVQmJRUbN4N
-         ayDWQQy/0mnm+QHUObSFKx2tlFv1XeLnnekv/JGuWba0qpeieHZsR2tIwyA55x5/aurz
-         1hHweLnVXAe8lfDmEn9b+Sun5Njip668qBQ2pWoIsSUKZZ8pcO3jY8rhcZiI3ysbe4bz
-         NQAA==
+        d=linaro.org; s=google; t=1749747790; x=1750352590; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=SITDSWa0NPXWLuqPl1GawCzU6z/B2XGFHZuUqZFEKYs=;
+        b=ITyyuu3eSqcZnB/ndID++a/8LddzeYj1/48I7GyIhsibz0h4mkHTiw/0yV/gt8M2hP
+         gWuXd9zKa8nBVkw6NQE0+QQtPQBnFcGv7jK4v/FvvuZoDyG/3JAit51IvMhLes19xLeS
+         fSk7tWK6iVViZ0+E6dSOwKndtX2XSC79YrwIEhHu1w1w6qQ4wibO+GpuWYMFjH2eHu5+
+         smVfJGiGAgINaM/fIaoA+SOY0hvasSsuqBgWpFsw7Apbj1LWoElEhGDOp2j9ZhwGEqMV
+         PM+pwi9NHYZ09fmQPk+AG4VantnxzMwPre5UcaXpuvVuyzZDnUEaxx8t/lQMAeGVeD7N
+         cpPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749746646; x=1750351446;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1749747790; x=1750352590;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZXFzlDR3NN9zjV+kXINmEMgirHyF0OEuBzat3RN+F+Y=;
-        b=SZgcrc9wR5ftts2i71rjqllGviCAlB76QKLZ8Rq6XklAjj87P28lM8lizkqnIuReac
-         Pt6Y0WMkBoZHHFOr/Eg9c1RdOCfOKk5otYNzxiHKwd4tB1rUVMnUSoo8lFksMkbeqJmW
-         cZ3RgThlu8CES9wkKZZIpZD6q97H7sujOTDtpvfQzrcUk2HOvADOk+LnSaSv2C2FBpSy
-         2MYjl0ZVbZecBxEGwV5bNhJ4sQmJG/++ueU9tv6saxYDmNmSeYWD0cVGjR0W01oMX4IT
-         kFT2JEii+/qyTrBabBVy28rn0KC00Zkcnzsh8YeYzzt0rNb01D1middeL5u2RNEeQnTV
-         EGkg==
-X-Forwarded-Encrypted: i=1; AJvYcCUuatUit5ud/TRS2MRnMe8CpcTjV+Fbp4kH1+fEIjEUQhQmI6+H3+cnurVpqbaPsTLlaCSIOIu0oqxgK5x+@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx+qYzJcxfBgCZnkCsMfc+4yhL4J7PThH9OizPeBryIIuyqWKyj
-	BilFqcfE+oV3PJenWTTP0LB3+U3K5y9VjIR2sVwpHZYUNqnmOuuV1UbmiOgxcVxgitw=
-X-Gm-Gg: ASbGncsNybFFsM1GfFw9EseDxUV16d9vaZv6j0SwsBvGDLHpYbKuQk4S3UbPbhR8xW7
-	PmqAnUg33IbCBuGbx8RbQDv1O9t7DskrBrQLW/bsOWolTwotA3PU3KVdcm2Z4Rs2DjA3XRqO1mh
-	mZAGAwY53YJ2WQfQcd5ZOo7YqTdwAQT2Dkv2ZkveoxFEl2DTDKMyTApGSn0XHhYl+GAE8WTfu2l
-	DHiXuvW/NmQ+VQkQpPfgV8lRPfdxeB6Ta714k3xPsEa2irCE+/CQohuT2lmH+dP313rDq/jzVw5
-	Mrax8C+tmGoC0p1NvfWBCdOEPpgJDSycDlmBKa+P44cpXIwEigR/8sUF4JuI2l2fbE7hThiU9+J
-	shba9HaKMRguTEcnM8eGD1xee/ewBnsFwRELR8m2c
-X-Google-Smtp-Source: AGHT+IE8FzVDQPCKuB1NwCD9tDUD32maNeFB/5bboQRVfOquwmRZ2GcL3C5ERe17LRZKxcyKs7voUA==
-X-Received: by 2002:ac2:532c:0:b0:553:a88c:2ae2 with SMTP id 2adb3069b0e04-553a88c2d03mr311456e87.0.1749746645884;
-        Thu, 12 Jun 2025 09:44:05 -0700 (PDT)
+        bh=SITDSWa0NPXWLuqPl1GawCzU6z/B2XGFHZuUqZFEKYs=;
+        b=IPt7iN7DtqLBjVfdNmYJ21RkfcrM8Cuq825Kr4vMZHP4plF1r8A1FGnC0p7v6Jqgo7
+         wKYToqgvdjrB9AFm79tA+Wbzft6vkH0mJloSUHSni/4qUItu2dO12jyb0MIXbTr0eG76
+         M8p3CnFK+2x9qXay9ay+VwNnwD9N8S02Ev428vKwXh19pKyOBnWSbAOT8jTELzIySaRY
+         YkxvRdmDvaxQB/2ygd0vJJcOfRAwDMcOeOgs+2OK0Qf3omTLfBDFp0YaGdrApdpK5N4J
+         qJe6PUsfphKdFphzasal4ed17p5YjfgLg8ZKzYuHMfF8lGNl6CjgohhmQXV29vrbBd9o
+         a5lQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUhR+Taf+HDsJ0bf3mnjMhNJ0bKq0BjMJaK/vmK9l/c5/qNF3QOMy5p7PSqlh7ZmSRTmEwD6YOt2KW5S2+X@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCycNCcORqX7kJ5b+YR5q3UHQGjramehmpqKzdazFaknW68V76
+	hkXbXQhlDBTmFnHYrMGYNpfPAeoGV1b6KaUHwYVzXGR+B0Wfuycuhi7xxFXlpECO1a4=
+X-Gm-Gg: ASbGncuoW25LfFxg41KHkEDTjBusj+HzaxbuSYyzoHYwYAYMEP1g5MbX6O7O0hFVebD
+	cb7pEZ8iQR2okCz9+FD7nrpz+Yn4SQKJwxZuxXyonTNLWKnq11Tucuq0VMyccxOjhqdh70HTpWY
+	rMo53aibIXQtuHHWusazRMLZI61XJzVCazKU2QJq7aa4K9OfVjT05ZZvLJauQpcM+cYVafxlI2T
+	i7ORZJpSUIjNJ0rN/91gF+o2gdpnJ5EvsONDkWhlXb8B6e8C5Pp3lNu7+fXZzjxgcwy9+73x6sw
+	fvdcQy54xY3fTewhXXUkCVN8H79+pfgFFtIDGjakZKzL+hnwEyDvc9rkmZIKGMpYsZ8bTDjiC7n
+	Z1rh/a2SlMZ+qKvx9zmx7VUsAVLFhmq53yqhRhbwoFbV/NBoeLAg=
+X-Google-Smtp-Source: AGHT+IHBNlGFExNNCXER22K2I+rmkBd4bai+7wjdxAJR0qh3kxp4mSKVh18JVv1lOatKNdJNTNYcRQ==
+X-Received: by 2002:a05:6512:3e1e:b0:553:2480:230a with SMTP id 2adb3069b0e04-5539c051370mr1023527e87.0.1749747789240;
+        Thu, 12 Jun 2025 10:03:09 -0700 (PDT)
 Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553ac11678csm163378e87.9.2025.06.12.09.44.04
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553ac135c14sm166631e87.73.2025.06.12.10.03.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jun 2025 09:44:05 -0700 (PDT)
-Message-ID: <9bd4ff5d-7c51-4e21-91e8-17c6bcab7f67@linaro.org>
-Date: Thu, 12 Jun 2025 19:44:04 +0300
+        Thu, 12 Jun 2025 10:03:08 -0700 (PDT)
+Message-ID: <843772bd-711b-4d49-a5bc-096a1ab13747@linaro.org>
+Date: Thu, 12 Jun 2025 20:03:07 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,11 +82,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] dt-bindings: media: qcom: Add Qualcomm MIPI
- C-/D-PHY schema for CSIPHY IPs
-Content-Language: ru-RU
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Krzysztof Kozlowski <krzk@kernel.org>,
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH 09/10] [RFT] arm64: dts: qcom: sm8250: extend CAMSS with
+ new CSIPHY subdevices
+To: Krzysztof Kozlowski <krzk@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>,
@@ -97,75 +96,101 @@ Cc: Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
  Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
  linux-media@vger.kernel.org, devicetree@vger.kernel.org
 References: <20250612011531.2923701-1-vladimir.zapolskiy@linaro.org>
- <20250612011531.2923701-9-vladimir.zapolskiy@linaro.org>
- <6e411e89-ce1e-4d6a-8d48-b800554f830e@kernel.org>
- <e02cead0-665d-443a-a884-c3a307409c66@kernel.org>
- <9e38a09b-1521-4196-b179-d29c62e143bc@linaro.org>
- <4848f13b-3b2c-4210-933c-b4f28d7c6ae7@oss.qualcomm.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <4848f13b-3b2c-4210-933c-b4f28d7c6ae7@oss.qualcomm.com>
+ <20250612011531.2923701-10-vladimir.zapolskiy@linaro.org>
+ <dd6fd001-6209-4bd9-807a-4e9b5fc4cd5a@kernel.org>
+Content-Language: ru-RU
+In-Reply-To: <dd6fd001-6209-4bd9-807a-4e9b5fc4cd5a@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 6/12/25 19:17, Konrad Dybcio wrote:
-> On 6/12/25 9:57 AM, Vladimir Zapolskiy wrote:
->> On 6/12/25 10:39, Krzysztof Kozlowski wrote:
->>> On 12/06/2025 09:38, Krzysztof Kozlowski wrote:
->>>> On 12/06/2025 03:15, Vladimir Zapolskiy wrote:
->>>>> Add dt-binding schema for Qualcomm CAMSS CSIPHY IP, which provides
->>>>> MIPI C-PHY/D-PHY interfaces on Qualcomm SoCs.
->>>>>
->>>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->>>>> ---
->>>>> RFC verion of the change:
->>>>> * https://lore.kernel.org/all/20250513143918.2572689-1-vladimir.zapolskiy@linaro.org/
->>>>>
->>>>> Changes from RFC to v1:
->>>>> * moved from phy/qcom,csiphy.yaml to media/qcom,csiphy.yaml,
->>>>> * added 'clock-names' property,
->>>>> * removed SM8250 CSIPHY specifics, a generic binding is good enough for now,
->>>
->>>
->>> Now I noticed this... weird change and clearly a no-go.
->>>
->>> Device binding cannot be generic, so it is not good enough for now.
->>> Please write specific bindings for specific hardware.
->>>
->>
->> Can I add platform specific changes on top of the displayed generic one
->> like in Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
->> etc?
->>
->> The generic compatible is sufficienlty good for adding the enhanced
->> CSIPHY support to any currently present in the upstream platform CAMSS.
->>
->> Obviously I can rename it to something SoC-specific, but then a question
->> arises, if a selected platform has to be a totally new one in the upstream,
->> or it could be among any of platforms with a ready CAMSS, and a backward
->> compatibility is preserved by these series and the new CSIPHY dt bindings.
+On 6/12/25 10:43, Krzysztof Kozlowski wrote:
+> On 12/06/2025 03:15, Vladimir Zapolskiy wrote:
+>> Following the new device tree bindings for CAMSS IPs introduce csiphy2
+>> device tree node under SM8250 CAMSS, which allows to perform camera
+>> tests of the model on an RB5 board with an attached vision mezzanine.
 > 
-> A YAML file hosting common properties will probably be very welcome, but
-> the compatibles must be specific to avoid having to redo this dance in
-> a couple years..
+> How the binding allows to perform camera tests? So camera was not
+> working here at all? Then this is a fix, no?
 
-Right, that's a good way for sure, and I keep this option in my mind.
+Here the assumed testing is a regression testing on the selected and
+well supported legacy platform SM8250/RB5.
 
-My concern is that it might be not a perfect fit particularly for CAMSS
-CSIPHY IPs, because likely at least all currently supported in the upstream
-CAMSS IPs will get one in one equal hardware descriptions, despite CSIPHY
-IPs are obviously different. In other words I anticipate that there will
-be just one platform prefixed YAML file with a long list of various platform
-specific CSIPHYs, and therefore it's just one potential $ref user of this
-hypothetical YAML file containing common device tree properties of CSIPHYs.
-
-> Then, the camera ip is well-versioned, so you can use that as the 'specific'
-> part. It'll also make it easier to resolve the unlikely case of a SoC using
-> a mix of different PHY versions.
+>>
+>> Note that the optional 'phys' property is deliberately not added.
+> 
+> Why? Your commit msg must explain that.
 > 
 
-Many thanks for input and reviews, regression test results of the given
-CAMSS driver changes will be also very much appreciated, it may be helpful
-for Bryan.
+Sure, will add it, just giving a short note here, 'phys' property
+provides a list of wanted/enabled phys, and this is board specific,
+thus, and if it is desired to preserve backward ABI compatibility,
+when this property is just not present, I believe it makes sense
+to add the 'phys' property to board .dts files only, like it's
+done in 10/10 patch of this series.
+
+>>
+>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>> ---
+>> For testing only, do not merge.
+
+This.
+
+>>   arch/arm64/boot/dts/qcom/sm8250.dtsi | 14 ++++++++++++++
+>>   1 file changed, 14 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+>> index f0d18fd37aaf..401a32679580 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+>> @@ -4613,6 +4613,10 @@ camss: camss@ac6a000 {
+>>   					     "cam_sf_0_mnoc",
+>>   					     "cam_sf_icp_mnoc";
+>>   
+>> +			#address-cells = <2>;
+>> +			#size-cells = <2>;
+>> +			ranges;
+>> +
+>>   			ports {
+>>   				#address-cells = <1>;
+>>   				#size-cells = <0>;
+>> @@ -4641,6 +4645,16 @@ port@5 {
+>>   					reg = <5>;
+>>   				};
+>>   			};
+>> +
+>> +			csiphy2: phy@ac6e000 {
+> 
+> This will fail checks. You can run them, regardless of "RFT" status.
+
+I ran "dt_binding_check" and "dtbs_check" with no errors reported,
+something is screwed on my end, because "additionalProperties: false"
+from qcom,sm8250-camss.yaml shall scream here... Or is it a child
+device node is not a property?..
+
+>> +				compatible = "qcom,csiphy";
+>> +				reg = <0 0x0ac6e000 0 0x1000>;
+>> +				clocks = <&camcc CAM_CC_CSIPHY2_CLK>,
+>> +					 <&camcc CAM_CC_CSI2PHYTIMER_CLK>;
+>> +				clock-names = "csiphy", "csiphy_timer";
+>> +				interrupts = <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>;
+>> +				#phy-cells = <0>;
+> 
+> This is also duplicating existing ports thus you have a mixed MMIO and
+> non-MMIO children which is also issue to fix.
+
+That's correct, there are mixed MMIO and non-MMIO children above,
+there might be children of just any one type of two.
+
+It's a valuable review comment and I missed the flaw, thank you,
+and to be honest so far I don't have a good idea how to overcome
+the issue in an easy way...
+
+>> +			};
+>>   		};
+>>   
+>>   		camcc: clock-controller@ad00000 {
+> 
+> 
 
 --
 Best wishes,
