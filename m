@@ -1,81 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-61081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17D0EAD69F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 10:07:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52D12AD69F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 10:07:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4ADE33A6EBA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 08:07:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7107E189A03E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 08:07:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E10B921421D;
-	Thu, 12 Jun 2025 08:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7387F221DB1;
+	Thu, 12 Jun 2025 08:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Eeeec68B"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ESBURVkE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078701F0E29
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 08:07:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CD820F069
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 08:07:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749715642; cv=none; b=IN9BQWzBdkZhLSSuTtDZ2xsDv7vwrNkGicvVTM71hmYveTAVKoELnjMJrU1NZUbcGBV/vozjhkSD9xD0VmIGPcxoVu7Zr3R1fZD7P14/UNo7aQV02fHYpnF5ZQCB5bTCNfR86814clhJl3fKatYR4dYTWOV0rm2PkIPL7QsEHi4=
+	t=1749715644; cv=none; b=sqLb/bPK272/MMIYnGCIkyq3qcvHkzQd5NCW0m0SFC3WhqxoRYg7QLzUoMokZKh/KgojmT27EAGqDSMIQe8stJ6x85/cNp3XQjTXbhn2a3PwgO7cLs0divafVLkXOFKLsBAB14dO/1+XqxDSeDIPEOk6xEZGc9y7DSN/da5zGvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749715642; c=relaxed/simple;
-	bh=8tDz2WWtHl5iNiZtu805A7AYCZLwxYys726Q+3nadXg=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kq5z3DvSXxv/Dy77ivFHeWPWgTqhxtZyaDjnK6wJktMaGUCpj23+QHNLUCmUiPNtpwFzMiqwWaOG99tdnpZBVq7zNnVCJ2VYYbI7CAZ8a6ZlI03oKbm5ms6gm+IrDIOZoN31W7LKqNNo+QBkWUoaeLytllTJiW0qJKSfQjRroWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Eeeec68B; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1749715644; c=relaxed/simple;
+	bh=AtsJ+IxXw+KuC8dwPP3HdyWmqSk21Kq2o1lyXTJBbVk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Geu9ds+sJTe61aNMnkn+an5b8G9GPS0xsU5eqcbpaJiERCxvHTji2dl/J9trtXcOcj/rnrbdeQxVEe0NHEtc7bTzQfm88fiex+EjWx3hkLpo28nOuNcMQhgqCmxoMRn2tpZwGecpFiZwMqkHivDa+1Ln8BNmZ4EN9daHMt7ka/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ESBURVkE; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3a35c894313so607197f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 01:07:20 -0700 (PDT)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-442f4a3a4d6so3304375e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 01:07:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749715639; x=1750320439; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8EsXhAjGTTQWpaDRlErU9rdRhfOKTZnFTlIFcBZuhGs=;
-        b=Eeeec68BK+ZVINceo2v3/MoOp6XZjFie5jO82x99y06q5MJctyeOMq0LVWL2idfgxn
-         pXuVu+z+x1M6hjoATQ/YPBdwNryPfRH8/dol1IoTwZ5ClwNimNCtMrZv3w4gsSXMTDFC
-         Myy72ZJis11uL2KuIh9rmFZSQrPL2CVTd6w6pVXJtGFIvZINUBr+HeOxzIFR7R872qMI
-         8Ows8AGMrBqKwpp+Gz94kqnESkDiyO1UgIOP/haZbZQOKhKDu7H0SyYgcG5+9QNcm2Kb
-         dy+bnPa45mPbUxAWaRCizI2SnW51CLdF7f4083CE951yMxgOLgR/hQcV7GTBmhwzzf+Q
-         GCTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749715639; x=1750320439;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1749715640; x=1750320440; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8EsXhAjGTTQWpaDRlErU9rdRhfOKTZnFTlIFcBZuhGs=;
-        b=gCEbw23ir16t8cNCliwKBp06Xds8ThEl9Nc3z1xro06QjHXmXcchtiK/XCyt+jdLC5
-         IT/i5UwtRN2p3MsCQ0SOuQmWxnLCC2BDme1jvht+XNeVUTJ0ZB+gekJ6qRSjKIkdwMgL
-         M0fcziJglHdKx51saMLw1Mtjn++Wcj5cPo7irGYYs2+YoRyZNQnK69yDlVgsazxXLkQX
-         J0VFxcEZbsvJ6d3dluNXIesgsHdO7mEVZtcgEbSpmjiAPP2OCtCrDdpWQ7WL5OjcqlJ/
-         KX0DTkmwqEtjsiUp1nSGIjR04eNQjcF2AouBsXYDlPGtPr5GqbdUUJC622HSqd9oyYbu
-         cuyw==
-X-Forwarded-Encrypted: i=1; AJvYcCVvp3Y45qN5O+hSzHWf0WitQ+1vup0VTMmqH9QAYCukz0xQyHqrWUE2yUYb+sIKqKv5rNsdjqcnkRQDWATW@vger.kernel.org
-X-Gm-Message-State: AOJu0YyUThwrygrLU8KFzvOJ8h3I8GcwQiusaZROZMXwJXs94j0fkPDT
-	aWAjtu+Eb+QPv44x6/f+S9Oumns82VvztYhHy+HxYuelAN6DTFu9VaSswOKCTc6pEHUS+SRmUY/
-	wu1kea6c=
-X-Gm-Gg: ASbGncstKL2zCV5LUOGob9LENAQL5VYtmB/3KGtaTWmfbczJi8ETVfw4/BCWIndHnh+
-	gdTcvYp8MB3SufcwD8L6ry2rTfr8wya4S0DxSoBWsoArJ0w1yPQIdicy0+0ILlytzE/nrtRw5lN
-	60z9XRZkku+ZkCXASkhtt0KuNfUUXDWgqLCtH0tyrvtnr3tqOKJ6kReKhf2z7BoTE6UixaeQz2o
-	J2QESUoabG1bRJeOHOaACOv+Ur0vbAJZEw5NAo3syEVFJAu+NMK2DWLkKw0/jvnR47syVa0dkW4
-	psTC7Tdxit7PHm3DGpyQxW+9+RNhh4qFP3V9GhysA69r9KeDPPaZdrnrYvZ1O4OaMGV0iOXUPZ2
-	2BGiXQYcJ5qczWXykQ29DwRM=
-X-Google-Smtp-Source: AGHT+IELKF2BpPbSWqRYk4Gz6CQukHgSMRWMkrUf0ssis7ZGRpZXgfdefuUMTWLkzrdWYkstVJZCJA==
-X-Received: by 2002:a5d:588e:0:b0:3a4:ef70:e0e1 with SMTP id ffacd0b85a97d-3a56130ce70mr1541851f8f.55.1749715639161;
-        Thu, 12 Jun 2025 01:07:19 -0700 (PDT)
+        bh=+nQf2BZSyAt2CWjF2NvZ+AX3gPhR25QkJsGYwFCerdA=;
+        b=ESBURVkETzU6ASQnrTsiqtJpQ3HgYwVGPKp/MYnkcU3k8nk7yhzYXeYxT2kxKl8lYk
+         GDJmtUFKuvLwcIvlBoF7JiRk3lpoJgDNiobR9Cmi4BKiTrbAyXmCleB+fZdlEsnVCkpg
+         BGog4FfyT5KINdF3fCro0/K9Q9kU15BWS7EE2vKuZhunjWxoKPhQeE0Gmi0ayGQMWYtV
+         pb4vN7yin1Dw8K0y/2wSdVNBUgp+q1WlOLYlTJLRrnL2c7iKgKPesWYzD2tpvpMrbN0j
+         Um80GqaUYFpuoKKHOPSukYiY5qVv8SKIhKCzphyXP2KAh8A6LQuYUmIQhCtSyNekAxpQ
+         FJ7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749715640; x=1750320440;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+nQf2BZSyAt2CWjF2NvZ+AX3gPhR25QkJsGYwFCerdA=;
+        b=nhOqXbkxfXkWF4OSqphzJgKZ3VB0XuxhKLiU6BVVAbWYzCYfgFzQLNPomHB5ZGi6hq
+         JOuxacX7RQ3x9aQXpbl8A8z0NOE0uaxi6k4fGPna5ZOh0zhi23LlL+yC2rPvJ7eEacRk
+         p9NTe9YkbiNR3dxW9cZkr1kOcMMYkUP754VKhodTAKpIdy9vW7E9p5n5VTh2ia+9Zfw/
+         LsYUxRT8dQwk0CMOHVCKRl545iYQrt5yjtFwn5VtstdcLXb+ySlcRa0+iQwstW3ch+js
+         /Bp8lIyTlEP03f9fntHGVP/A2vKcl4BsqyH/YGSil0wALRuxVV5CtEHjsrhtoWF5WS1v
+         Ewdw==
+X-Forwarded-Encrypted: i=1; AJvYcCXywoVjHVcXy1PV3+GirmUMikaVsGvzynEqlMtcErDvK6rXdmu1azUqVEyWYFUZYN1wHDu6Q08qdiVd/SyP@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz12HdLibQqXDzufgoxs/wjcwFfLcB8N7BkAWGV3moa3P59CZv/
+	qm0zfW4sT/L+fVK8I++T3jmMg2H0NpJMaVpdqF/gFIvjw582hORVFRaJAQutYBtFAPOtIoLJS40
+	BE2fHE6Q=
+X-Gm-Gg: ASbGncsVFZov3uIvpvfX17WG8aNdgEWcQh1Ll1BfoBQG7ilLbn+uJjl1CYVMae9Evn1
+	YR5y3V9JnObo486orHcVCaVt9l74iqwnAdT75v+oF7rmuxQVAm3hCvzBQy4GZLzMvLX5UjDcXrf
+	EyfzoYevfof7fRlJH97qDAeLFfAfJHvfWrVvTaBE/oXAyIt3BI3WUgwHQHk7sDXgBeHiqhzIfrA
+	ITwxOn5XVYLBajDtbvyE+Lx+g61mPA2lL320v5T83hi1khJayr5zSmV1GuuLrmcAg251Q6wnouM
+	am0pfhue8K/s4G/f/gv8Axabn+kDVUwpS7YqHYgJML1k5AzqdoEETBXfGrAcrLAFM5pC24ILKmX
+	8vf/y65VS4QxER63b8uyR+Q0=
+X-Google-Smtp-Source: AGHT+IF7PDQ6/yCFsqlgB7Wu8quV4z9XPesjcMh2veIPWxHp3FzT5vhDioJXDj3C3QVyAwVLuesm8w==
+X-Received: by 2002:a05:600c:3484:b0:450:d79d:3b16 with SMTP id 5b1f17b1804b1-4532c2b3123mr25508875e9.14.1749715640517;
+        Thu, 12 Jun 2025 01:07:20 -0700 (PDT)
 Received: from [127.0.0.1] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532de8c64esm12942335e9.7.2025.06.12.01.07.17
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532de8c64esm12942335e9.7.2025.06.12.01.07.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jun 2025 01:07:18 -0700 (PDT)
+        Thu, 12 Jun 2025 01:07:19 -0700 (PDT)
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: [PATCH 0/2] media: qcom: camss: Fix two bugs in mainline
-Date: Thu, 12 Jun 2025 09:07:14 +0100
-Message-Id: <20250612-linux-next-25-05-30-daily-reviews-v1-0-88ba033a9a03@linaro.org>
+Date: Thu, 12 Jun 2025 09:07:15 +0100
+Subject: [PATCH 1/2] media: qcom: camss: csiphy-3ph: Fix inadvertent
+ dropping of SDM660/SDM670 phy init
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,10 +86,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALKKSmgC/x2NQQrCMBQFr1L+2ge/sbHgVcRFsK/6oURJtEZK7
- 97Y5SxmZpHMZMxybhZJnC3bM1ZoD43cHiHeCRsqi1Pn9dQqJoufgsjyhvNQj6NiCDb98Nf5zeh
- 6jr4j2TNI7bwSRyv743Jd1w05S/pscwAAAA==
-X-Change-ID: 20250610-linux-next-25-05-30-daily-reviews-47ef54eee7ea
+Message-Id: <20250612-linux-next-25-05-30-daily-reviews-v1-1-88ba033a9a03@linaro.org>
+References: <20250612-linux-next-25-05-30-daily-reviews-v1-0-88ba033a9a03@linaro.org>
+In-Reply-To: <20250612-linux-next-25-05-30-daily-reviews-v1-0-88ba033a9a03@linaro.org>
 To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
  Mauro Carvalho Chehab <mchehab@kernel.org>, 
  Hans Verkuil <hverkuil@xs4all.nl>, Depeng Shao <quic_depengs@quicinc.com>, 
@@ -95,52 +96,54 @@ To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
  Hans Verkuil <hans.verkuil@cisco.com>
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- stable@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>
+ stable@vger.kernel.org
 X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1140;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1181;
  i=bryan.odonoghue@linaro.org; h=from:subject:message-id;
- bh=8tDz2WWtHl5iNiZtu805A7AYCZLwxYys726Q+3nadXg=;
- b=owEBbQKS/ZANAwAIASJxO7Ohjcg6AcsmYgBoSoq0qnkiS+TZmmJnu9CFHauELJP3na1Z5aUm+
- he35PUBSsOJAjMEAAEIAB0WIQTmk/sqq6Nt4Rerb7QicTuzoY3IOgUCaEqKtAAKCRAicTuzoY3I
- OjYpD/90owDahLx/oFJlZo5Dugmf1+6K/ibsQ/tHTcVrnVzTfDIQ8SgAsyKaCu3rT9x/pIvsRoJ
- 8swTBTOFm1n9Zvjt+i0lDh5FY+gKvOmsu05f0JNTzBYZjjFkv1aAE7Noh48Zqrfjym5qBmeIet9
- VTxj/mDb5wyg6Tx7A1/te2bhnJXqaBl2/d988Ouzsg8DWMxIAfZlLrQ76dG0JQ2deoFiMHTvE6V
- h0O3k1rgwBE9nSHbqUrY8n2t2V8y5GByYHrezqpxswjMfdQ4wqhFaulTgLhuSEq+dl49QVpcRL9
- tPxXcEqzxzpATIg9Ep7CLFXH+eAkppLZfcDEiXIK18GdFgOJhTxW2ppSvlNNOXtDzH9XgkqLTW6
- lgZ1tWxtjhdDkiCxN65I9vn6cbKELju4a5VrS4qH4jsufLB4ebc/XAfX7QLGCYyIBNPn+dhBglo
- Edp9BoOx0kNd09gFw/qZFIKrzZupQtHjB2oqLjREzpcr9Mqn583jai+4UKPfjoqa+3eH3N9/BjX
- AGQOM6v+uBKPXB+ai/pbih3ZeEZFVaH4T2mJkZ/+vKR//o3sS61mdXMGJYPqQ6PxuFCJiZOayj+
- 1ewPnybUvQR0MkXP75LDSIcac07osETEn+xRX3NjvAD4mWIFHhGjCS0rdQEcxWziJ0UEv6/nc9T
- OQxxF+8eicIIwrg==
+ bh=AtsJ+IxXw+KuC8dwPP3HdyWmqSk21Kq2o1lyXTJBbVk=;
+ b=owEBbQKS/ZANAwAIASJxO7Ohjcg6AcsmYgBoSoq1EceJlwmnwNcsYuowFH2zs5QNvjAdyiiGc
+ O0ubvt9pOOJAjMEAAEIAB0WIQTmk/sqq6Nt4Rerb7QicTuzoY3IOgUCaEqKtQAKCRAicTuzoY3I
+ Ot64D/92ram2pjvNmauahadl2ujo5tVHw0LDmcAmBZrFmuK0Y26Pn/gRmgeUP3BeHBGh+BXy3tW
+ X2IkURoUZoRgNQg6Ncotoez92YpR4MKJwrK4leYM0duAx7hCmrl2r38YW87njRxYd+1OJ1OvP+W
+ gRj0OCSWJ7N5HE98U5mQLKB/kqJpL41cXwTOBPJSYUd4ZWPCg74RKP7zmIWfyJyjrEmHp+pOBdx
+ DIw3o3tzsiojn70CXVWlSVZqgUzpD6NYkhEf5Lp51H79tALh4o3iq+fr3mWx3befsIbWHNvgGCQ
+ 8Ymy+Ub6ShjdeTpfTu6Mf1/LxYpYLwKupClefLIaiogUqVLlGwdCJ5loV8fYgZ69IRDL0MOEHcn
+ XjsW+zW3ADKDbZNZNPHe9uI+txbVPxAaiXUIC2Mb7AQWHiTcqsDVEL3UxdzxoQS4a3N9bNa93fl
+ gwV8J6fUNLOfycD3/f35QOXtretH4ZqG66KshXv4wAbzDefdThO2masc5Ae+gsQ3LMbDYUGcvNj
+ 5xkErCIXDGOm2JyC4r1rWgReiMnn4DE28NvgXeMP550gbDZI1xC7AHmwrTTn8w3ufMBLWhBHVEX
+ ZeWtKjKCjfHPBocH+LVUDrmpXlDUKyDPKtqYL1xYyeve3OqxdPxxNi4pKnb+Y3cEy4pJ3Dfz+tJ
+ sE/Jmy1P6/PZNFQ==
 X-Developer-Key: i=bryan.odonoghue@linaro.org; a=openpgp;
  fpr=E693FB2AABA36DE117AB6FB422713BB3A18DC83A
 
-Two bug fixes here.
+The moving of init sequence hook from gen2() to subdev_init() doesn't
+account for gen1 devices such as SDM660 and SDM670. The switch should find
+the right offset for gen2 PHYs only, not reject gen1. Remove the default
+error case to restore gen1 CSIPHY support.
 
-First up SDM630/SDM660 hasn't been probing because moving the CSIPHY gen2
-init sequence into a common location also moved the default case of the
-switch statement which rejects non-gen2 devices.
-
-Second is a fix for a very longstanding bug which is a race-condition
-between fully enumerating /dev/videoX devices along with all of their
-dependent data-structures and gating user-space access to those devices.
-
+Cc: stable@vger.kernel.org
+Fixes: fbce0ca24c3a ("media: qcom: camss: csiphy-3ph: Move CSIPHY variables to data field inside csiphy struct")
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
-Bryan O'Donoghue (2):
-      media: qcom: camss: csiphy-3ph: Fix inadvertent dropping of SDM660/SDM670 phy init
-      media: qcom: camss: vfe: Fix registration sequencing bug
-
  drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c | 3 +--
- drivers/media/platform/qcom/camss/camss-vfe.c            | 8 ++++++++
- drivers/media/platform/qcom/camss/camss-vfe.h            | 1 +
- 3 files changed, 10 insertions(+), 2 deletions(-)
----
-base-commit: 8666245114d979b963dc23894a03c74ecab8a7a6
-change-id: 20250610-linux-next-25-05-30-daily-reviews-47ef54eee7ea
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Best regards,
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+index f732a76de93e3e7b787d9553bf7f31e6c0596c58..88c0ba495c3271f3d09d2c48f07b03d2a4949061 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+@@ -849,8 +849,7 @@ static int csiphy_init(struct csiphy_device *csiphy)
+ 		regs->offset = 0x1000;
+ 		break;
+ 	default:
+-		WARN(1, "unknown csiphy version\n");
+-		return -ENODEV;
++		break;
+ 	}
+ 
+ 	return 0;
+
 -- 
-Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+2.49.0
 
 
