@@ -1,67 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-61058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26062AD6691
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 06:04:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA649AD6696
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 06:05:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DA2973A65CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 04:04:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA468176150
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 04:04:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5930A233D9E;
-	Thu, 12 Jun 2025 04:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D930B232369;
+	Thu, 12 Jun 2025 04:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FqIetFeC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V32cHvn4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C9F23315A;
-	Thu, 12 Jun 2025 04:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA42231A4D;
+	Thu, 12 Jun 2025 04:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749700873; cv=none; b=YWQlm687dVHFPKlRBCHpP/2ac3TyWXyTjILQ+4xyREL7tmYC8tOoEZ1kc+gvRn6BYuJLT7dPa1CWn09LlsicwnrSWO0bw19itwVuUc+w4T94QmLq9eLvKe44KJnSJffUNc3/FygWCuLDYlf+LDx63UfrbRNprlCoFewF7B7zXO4=
+	t=1749700872; cv=none; b=JPaLhz4NzvLvwIEa9Y8b3YN5t1t5y8gnG2+6nOIlXp49K8niBK2cbPmgybd3gYtc1kATiKjiMMZn2B2Dz3OBMKM5Ikth2AafByIXMpCq/9yNQzCp1+f9bktNdNfLYjlxAdx5F4pT06CjgqYFpv2y9O2A5x5cnw/+RZ4xWzNVCPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749700873; c=relaxed/simple;
-	bh=MksUImPZA979XdX5UwujVDcIaositjUOeT0Z3M6VUMY=;
+	s=arc-20240116; t=1749700872; c=relaxed/simple;
+	bh=Ak9Cw+XEVeVNu/bPQVPZBiGN4T3ReR9/GVKensgGhbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LXQKJOGvxd8vUk3Immz10G1SaOKpUtHnz27SZFGBf6dLnSq7vzH5HCfMdprJEmZ1EHhWfrL3nvDE4sZT/L8RBszQ75iXV0hO1fHypOiOF7CzsDxb1gu/mNpwjZPitcYoPyyhS1KWCBhpqtAISkhanSMWfvuIlk87vB5pFIO4ELA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FqIetFeC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48E9C4CEF1;
-	Thu, 12 Jun 2025 04:01:10 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Fi1w8FWHlLVC1mZGbrUKDMIg+aLQM9ZU7Y+Uzc2EGQNJjd6wYZvwBG9edHRXj9N0zhIKQepA9jm6puA4CRRy1e/DUKI0IiW0Dt9HSdjqZukbS9v+NFS4tc286vF7I+l0ue/mDA8CRW/owiOZeuXtu4o1DY8Z2DSoggTOk/nv6wY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V32cHvn4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E701FC4CEF2;
+	Thu, 12 Jun 2025 04:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749700871;
-	bh=MksUImPZA979XdX5UwujVDcIaositjUOeT0Z3M6VUMY=;
+	s=k20201202; t=1749700872;
+	bh=Ak9Cw+XEVeVNu/bPQVPZBiGN4T3ReR9/GVKensgGhbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FqIetFeCberubPDGlGZJA/IEYWGPz5EtC9DqmZ36bb/EOhWURSgCETLv+7SCbBJDp
-	 2Qm9hGDNEccZO4u+14cghaQRYf5X0iPv4P1GEuKLjStL9XHo5Oj/vWWZxSiovLEOTg
-	 I3IELBqahNaYi+edMH7Aqr8bLJm/kv6lY0bMjtJq48BAqiTedujrNWME0vCeA/lMXy
-	 sye+f8wTn9Qv1qhZkPwwDdtWqkJagb9jm+3zbFBBV/O5krC0oZTXSU15xkiY3NZ/YD
-	 pXm1hkF3UH2nJ+KvbA1cdmiREidWkTZTsOlz9DNnvRy4Yc5zX/0P9Ox6jroJ4KkKjX
-	 gDDeIL12rsseQ==
+	b=V32cHvn4GzRNpVO+Gbssd2OW7qhN4AXNiVLhdWCBVMPf1n+k71DIbyJVwPQfO6SyC
+	 SlGRTqPc4fdVrDXn8jlp8sRYWj3qB2dH8daIsz1xoFGRPDyVIPY2Rg6xhNaUPTAEbV
+	 /vlNauytNmibyPPBC6XTc1g61dX1DlvWSi4BlyGy+R4pPM9l79qjmTC6aam/ix/xRX
+	 ZuLi246Hy0fHaacS2klp0fu5NZ1e8+bhF90wdgQgUvmp/trEi0brrmfJEqFUPX7Xs5
+	 NYm+6aH4CL6EWN0VREKTL3VzzJM8m2iQP+323pPBIw691K+KRquQIT6BLCGcpmtPoE
+	 CU0tlNghOl5cA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	Max Shevchenko <wctrl@proton.me>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v7 0/5] media: qcom: iris: add support for QCS8300
-Date: Wed, 11 Jun 2025 23:00:50 -0500
-Message-ID: <174970084194.547582.4302512086798820865.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Rudraksha Gupta <guptarud@gmail.com>
+Subject: Re: [PATCH] ARM: dts: qcom: msm8960: use macros for interrupts
+Date: Wed, 11 Jun 2025 23:00:51 -0500
+Message-ID: <174970084201.547582.5153342376914964484.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250501-qcs8300_iris-v7-0-b229d5347990@quicinc.com>
-References: <20250501-qcs8300_iris-v7-0-b229d5347990@quicinc.com>
+In-Reply-To: <20250606-msm8960-irq-macros-v1-1-03e573ba26d6@proton.me>
+References: <20250606-msm8960-irq-macros-v1-1-03e573ba26d6@proton.me>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,20 +67,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 01 May 2025 02:16:46 +0530, Vikash Garodia wrote:
-> add support for video hardware acceleration on QCS8300 platform.
-> 
-> This series depends on
-> https://lore.kernel.org/all/20250417-topic-sm8x50-iris-v10-v7-1-f020cb1d0e98@linaro.org/
+On Fri, 06 Jun 2025 14:03:51 +0300, Max Shevchenko wrote:
+> Replace the raw values with macros. No changes to the output
 > 
 > 
 
 Applied, thanks!
 
-[4/5] arm64: dts: qcom: qcs8300: add video node
-      commit: bf6ec39c3f36d5f65335e68f756b639e872869ce
-[5/5] arm64: dts: qcom: qcs8300-ride: enable video
-      commit: f981efd411d260794f3d24bdc7f26cb6200e21f3
+[1/1] ARM: dts: qcom: msm8960: use macros for interrupts
+      commit: da7811bb0edbea0208800cfa16516a47b8d45747
 
 Best regards,
 -- 
