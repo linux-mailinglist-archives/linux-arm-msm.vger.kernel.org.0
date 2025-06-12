@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-61150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 799F4AD7D8A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 23:28:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D155AD7D98
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 23:29:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D23A3A54DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 21:28:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8ECB33B96EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 21:28:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60FCB2DECDD;
-	Thu, 12 Jun 2025 21:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DEA92DCBFD;
+	Thu, 12 Jun 2025 21:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lbpvlZ6H"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cT2UR8KA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5FD2D8DB1;
-	Thu, 12 Jun 2025 21:26:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761D42D4B58;
+	Thu, 12 Jun 2025 21:28:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749763610; cv=none; b=KGvNBZN4RG+WP2f+oLuL3fEM8n+d9GFWmXfTTLpDkW5H+drd2eb3QQVC1xoRZnyHud77qyQ+eIdGvpV2O3GpbiHgFnk1Z4wFhnMPbJIzNIyeKPIUDX7sItvE1t/MShUlKntmt1qiliwuHRaOZ2p+CBAWdXAcYYZp7GjN5qPSkxg=
+	t=1749763696; cv=none; b=MUPGX/I4dM30T67kmoJcTNFL5pAwLdWYsLajy38vKp1E1keB1w7nAOp2dWlPiiWXJ0m/lkBfs0ZAHRUDdt4/CAbp1zJQjvmcKayCmtK1k1NLZTcPb53mVHfspC3usAwkPS+DyCAjq1GgS8GZHHvl2eWLDe2sYE9401tJ4Q0AeAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749763610; c=relaxed/simple;
-	bh=US16q34C7zX6uKKctpq06uDvmccIaBfy2iK6ItBYqkE=;
+	s=arc-20240116; t=1749763696; c=relaxed/simple;
+	bh=le1e1vor5r4yoJAN07ddNFHwCZWwRxAQNvcpbUCjIwg=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=EXCg7ZwSu4Gh3TzZoDvq81ci0sslo9RcoLXBDCyzXnENsmHPKDucj3yAkeGzF+RBpxuexOxsVnERCVv4nK8SblJUyhi5nebsU3LNKz2F+4fyCbpY7JvcJM5Kk/vco9ZsJZRZ0t6mhjFYi6EWaAYT3BYrdsUmx/FtRzL2V7J8+i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lbpvlZ6H; arc=none smtp.client-ip=209.85.221.47
+	 In-Reply-To:Content-Type; b=jXN6DoitB+1eqrFuXURdUQmL7HNtCcs0JtsSrRgN8bPsi16MFsJT8cLFjw/Ko4B4Y7fc2cVt/tBXhFh043CTfg3MJ0QZ1KABVWEG3GtMPwdXGolt0q7mbl+AH+/Gq4vDct3OXA7Hf+ObFQcnwgkHeSmSyrwtvux4n9+8ItA+isc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cT2UR8KA; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a5257748e1so1173133f8f.2;
-        Thu, 12 Jun 2025 14:26:48 -0700 (PDT)
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a54700a46eso1217162f8f.1;
+        Thu, 12 Jun 2025 14:28:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749763607; x=1750368407; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1749763693; x=1750368493; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:from:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fo9wzmPugQy46hcPSYpcUoW3QHliUX1AUw5rA3sdlD0=;
-        b=lbpvlZ6H+R3WiOpKrbbjZFWzZmsUT3pAOa6xkry1qL1sxYRt0dcCRfrd2HjYFo4+Um
-         ovXkIlEWlGYFgfwcQ+EtyXB5NjLiX2CVpuHJwv+2t4UFFuhLTkKuEchCrzxBhDgkk+yq
-         aCQaMAJJl5M6nemIX+VTXLsruoq1HsJ4pG/zZusg0d8UpI0+5cPjH3t+6BLyPVDFMZ+p
-         8qbbjFc77EiY/RsL+dapyMMOGaO8kZEv738kEWh3ZJZswElQIm4GXRaAe3FPyJeWeuaS
-         lIytffx7+ZwWmIrYkqiaPuNEXJIlgazU99URALM7ydvfFmA0iL3Tmidt8wCFq1daLaE1
-         TsyQ==
+        bh=RtBm7dhzS7vdeIwSr3GhYSR7TMJjCHW8IHR7lAffLu0=;
+        b=cT2UR8KAVzAJwl8DYK+4sdS0ZvcedKK6IxLXOkdErQ0jyVcFZQVfH44KwiPwRPIhEi
+         BbgheBn3h3eIYoyj6gxr/XwLFVQEhPy1mpb1wU4VRb63CNY8jci7VHOA4rzoU4ieaasH
+         8/w9JOVBYmEVAd4E5OEFsS+l4+ZM01SqPOd8t0lJdWipLiowSDoOkH6jRTRrxqqedyyp
+         42liZETjCBgIkhspnyXZozH9Y2vDMS9mox2CgO3xOhRE97GiApJGz24wxayxxqJ7lfCm
+         +aePqM+4UWs+e2iALZddSfEimLs3b7WDuHUDhdfUE+8J6neNVlnr/hrMQit30ZSctiIX
+         0/YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749763607; x=1750368407;
+        d=1e100.net; s=20230601; t=1749763693; x=1750368493;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:from:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Fo9wzmPugQy46hcPSYpcUoW3QHliUX1AUw5rA3sdlD0=;
-        b=vgrxDJqE2WRUR8NP48x9kh3aVu+dGyUoYkoRA743Sm8rooO4neRpVJ7pFGDkP92mG6
-         CXvHCCuW7XAHG8GeCDwwEdA8z4YQ45+9m7Vw6fWLZvhc9jKe1t3bXZgeKASt5g2qPIZT
-         /mG3/En7mGSCXcWEtX/hsyzW3sKMvvTlRw6KQ8ozI9DhiDZtqitq4QHFRNsetgY/+D4k
-         xeP5V8FPXbMuk7u1HoxIM00+b4GP0PDKvrDx+QZNrCGR7FSnPgEYiZw0D2bvjYC8HFUW
-         NjZm0Yc6pI+OjY1wG58qMYTikMk8tkKLVP1ZjmRc7BvmvTZ34UN8vJOfnWS9ly4pJ8XB
-         4oTg==
-X-Forwarded-Encrypted: i=1; AJvYcCUbcu1ORqmQjPJGX0YLG4XJzreEc1x9IK376WvIYeCd7bIEG+MQfYGq25fbaYlwpPJI7t4a0oASTqMHniXd@vger.kernel.org
-X-Gm-Message-State: AOJu0YwjnmACGmRVxOWIoPfCMGDyH8e2PwDuas3gYyADYEa8O+SBXWqf
-	IPT/sxvWlOrdoN4KW1W0KCagMgwW9u5bYrOA5TwlkH4hbIyHsvSbZf35
-X-Gm-Gg: ASbGncsw5Nl8F3jSUkPaEsyaxanmj8dsnK+zl7ovsNXd2qLHhZuBbewTcCfR8auH1VW
-	rVvCjHLzq30iI+CQ1GJnB6jKN07TrYTaiK52SL67c30Qumgr27zCnR9V2TlqCreB8rFlihCn5hn
-	z6qsTS4rCEjwPa6REnpyLF7vShNDo5I8amHYX37jUPCLDEZc1UF/5HizRinUH0CiT8seltIVfAL
-	bTAgFk0frHPyPxCaq6w3bhCMbcAZk92v0mgZRhZgzsREJi/l/EmlfPkOwfZpqa6JsxlKjSOrOQ0
-	r895Nnxipp8K0dzZ7ykowlQSx4N69bD30CqmFwFhlLftyoOSJjcJZSD6vknbjNXgaF+TSrbgqyR
-	QIKM6d+nSKEXcNq7UZIFIO1UTprCy/qabWC2Pv205EM3tThd7TVvBrgLd58XMG1RCNmrTDayQwt
-	GuWCfAjtgWcuiiRMzuOYUA8pEviQ==
-X-Google-Smtp-Source: AGHT+IGjhaPDdiFgN2xGS7Y5o5eCrajDG/RKgkSt5hb2yP8w38zJXvf9AZOqP79PpvYJ+nGTlwFQqA==
-X-Received: by 2002:a05:6000:4313:b0:3a4:f7db:6ff7 with SMTP id ffacd0b85a97d-3a56878834emr701000f8f.52.1749763606594;
-        Thu, 12 Jun 2025 14:26:46 -0700 (PDT)
+        bh=RtBm7dhzS7vdeIwSr3GhYSR7TMJjCHW8IHR7lAffLu0=;
+        b=YQIKOGDvR2NRQKNMs0sehh8rMx3voy5O6EqlUMqHQv3734GX0u4Hhs3azELeQfXJxd
+         42nFv4aOebLXrTPZWz+C24NGfj8zaldDUUKT2YYZ9C6/jhvvoA/KYAJ95XHTVH4nNT7p
+         82aul4OdSeoxc+kmoStIK6/qTQUOYLiZyQFEOZVtFgAjq6a3pJWztLKBKHbQAF5oA0dd
+         OYJXwzEixMZiX+wBh4jv0sq9E7ZGGam5UbMHcT6TucZTfZn2rV9RpfwrTDrdWBwiexSg
+         4RBswPGpsNKisT3X4i4+R10ZVHV4Yb/Kc+b9DHtiJEWdgdD7CdecaYbd4h+7xflSaRQy
+         LfTA==
+X-Forwarded-Encrypted: i=1; AJvYcCULViTCsGHjiBg7vozKTNhJqrU5+ZrnrzDhWIDoy/n2Wi6Uv4nx3Oknb3FnK1a/hq28DTc9SlsPHn2LYX5u@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxscnl7o4rq/W5KG8fSg3gFpb6CgOap2Eqsd9V7snh2gzZdJobj
+	xyyfscqjBg4Gys8J4oUYjCzv3wjzrhs3EKIAaC/gbRB1kCylATaTn/L2
+X-Gm-Gg: ASbGncvrXjy6hpoHX7/33RMd8LlF7yY3Q1jUVz/7MuorN8/05aUu5LzrdVkklPT2PUw
+	1lP5GYEVhtrR3WlFG7Xs/D1eNyxZGbviJJhG/qXgIRbznUZ25l9upCePcJ3iaAT9htbwYNZ8O5W
+	RyQinrfzfIRwiHIkU4KrbIajyjdMbmL1HaAW0Rhp5a5TDbJRL53XMfV/G1KB+y8HKKYkA5EWdI0
+	GvD9oxYy4QCYr/RIpnJuGWE2s5/YQaS2bXB95LQVCzXF9BL+i/nN7SydYHBo58IGs6dtTz/bOaO
+	nKcxgLheQ2YcrKynL7+qd08AUKCqo5j+X1Du1upH+W103lXIyXlt7QqJVUjdBqlyCNKLGeFtS9X
+	aEAFNfvEZBl6w6alXxBi6l0Xxg9NLaAXISibxjyI0/NVKzYsnZj9UOJYPQ7Z6ZXLM5i4bm7KjdQ
+	XsGJObm1kkGtOdUAh4uDtof4/96Q==
+X-Google-Smtp-Source: AGHT+IE1XU4nO/VzkNo3ZuofzqheSkVfnICKLzbgowD//YuyvE9aSKTHQ8v90RNFDlyeUk68AvpS0w==
+X-Received: by 2002:a05:6000:1acc:b0:3a5:2875:f986 with SMTP id ffacd0b85a97d-3a56871751cmr620856f8f.44.1749763692667;
+        Thu, 12 Jun 2025 14:28:12 -0700 (PDT)
 Received: from ?IPV6:2003:ea:8f22:3f00:7533:d8b1:ff14:6fe5? (p200300ea8f223f007533d8b1ff146fe5.dip0.t-ipconnect.de. [2003:ea:8f22:3f00:7533:d8b1:ff14:6fe5])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3a568b5bfefsm388520f8f.88.2025.06.12.14.26.45
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3a568b2ca65sm413139f8f.77.2025.06.12.14.28.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jun 2025 14:26:46 -0700 (PDT)
-Message-ID: <66bb4cce-b6a3-421e-9a7b-5d4a0c75290e@gmail.com>
-Date: Thu, 12 Jun 2025 23:26:52 +0200
+        Thu, 12 Jun 2025 14:28:12 -0700 (PDT)
+Message-ID: <42c05496-61b2-4b09-b853-3d99b3dfe95c@gmail.com>
+Date: Thu, 12 Jun 2025 23:28:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH net-next 2/3] net: phy: make phy_package a separate module
+Subject: [PATCH net-next 3/3] net: phy: add Kconfig symbol PHY_PACKAGE
 From: Heiner Kallweit <hkallweit1@gmail.com>
 To: Andrew Lunn <andrew+netdev@lunn.ch>, Paolo Abeni <pabeni@redhat.com>,
  Jakub Kicinski <kuba@kernel.org>, David Miller <davem@davemloft.net>,
@@ -145,47 +145,92 @@ In-Reply-To: <eec346a4-e903-48af-8150-0191932a7a0b@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Make phy_package a separate module, so that this code is only loaded
-if needed.
+Only a handful of PHY drivers needs the PHY package functionality,
+therefore build the module only if needed.
 
 Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 ---
- drivers/net/phy/Makefile      | 3 ++-
- drivers/net/phy/phy_package.c | 3 +++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/phy/Kconfig          | 6 ++++++
+ drivers/net/phy/Makefile         | 2 +-
+ drivers/net/phy/mediatek/Kconfig | 1 +
+ drivers/net/phy/qcom/Kconfig     | 1 +
+ 4 files changed, 9 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/net/phy/Kconfig b/drivers/net/phy/Kconfig
+index 53dad2482..28acc6392 100644
+--- a/drivers/net/phy/Kconfig
++++ b/drivers/net/phy/Kconfig
+@@ -25,6 +25,9 @@ if PHYLIB
+ config SWPHY
+ 	bool
+ 
++config PHY_PACKAGE
++	 tristate
++
+ config LED_TRIGGER_PHY
+ 	bool "Support LED triggers for tracking link state"
+ 	depends on LEDS_TRIGGERS
+@@ -157,6 +160,7 @@ config BCM54140_PHY
+ 	tristate "Broadcom BCM54140 PHY"
+ 	depends on HWMON || HWMON=n
+ 	select BCM_NET_PHYLIB
++	select PHY_PACKAGE
+ 	help
+ 	  Support the Broadcom BCM54140 Quad SGMII/QSGMII PHY.
+ 
+@@ -292,6 +296,7 @@ source "drivers/net/phy/mediatek/Kconfig"
+ config MICREL_PHY
+ 	tristate "Micrel PHYs"
+ 	depends on PTP_1588_CLOCK_OPTIONAL
++	select PHY_PACKAGE
+ 	help
+ 	  Supports the KSZ9021, VSC8201, KS8001 PHYs.
+ 
+@@ -323,6 +328,7 @@ config MICROSEMI_PHY
+ 	depends on MACSEC || MACSEC=n
+ 	depends on PTP_1588_CLOCK_OPTIONAL || !NETWORK_PHY_TIMESTAMPING
+ 	select CRYPTO_LIB_AES if MACSEC
++	select PHY_PACKAGE
+ 	help
+ 	  Currently supports VSC8514, VSC8530, VSC8531, VSC8540 and VSC8541 PHYs
+ 
 diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
-index 7827609e9..4e69597f2 100644
+index 4e69597f2..b4795aaf9 100644
 --- a/drivers/net/phy/Makefile
 +++ b/drivers/net/phy/Makefile
-@@ -3,7 +3,7 @@
- 
- libphy-y			:= phy.o phy-c45.o phy-core.o phy_device.o \
- 				   linkmode.o phy_link_topology.o \
--				   phy_package.o phy_caps.o mdio_bus_provider.o
-+				   phy_caps.o mdio_bus_provider.o
- mdio-bus-y			+= mdio_bus.o mdio_device.o
- 
- ifdef CONFIG_PHYLIB
-@@ -19,6 +19,7 @@ obj-$(CONFIG_MDIO_BUS)		+= mdio-bus.o
+@@ -19,7 +19,7 @@ obj-$(CONFIG_MDIO_BUS)		+= mdio-bus.o
  obj-$(CONFIG_PHYLINK)		+= phylink.o
  obj-$(CONFIG_PHYLIB)		+= libphy.o
  obj-$(CONFIG_PHYLIB)		+= mdio_devres.o
-+obj-$(CONFIG_PHYLIB)		+= phy_package.o
+-obj-$(CONFIG_PHYLIB)		+= phy_package.o
++obj-$(CONFIG_PHY_PACKAGE)	+= phy_package.o
  
  obj-$(CONFIG_NETWORK_PHY_TIMESTAMPING) += mii_timestamper.o
  
-diff --git a/drivers/net/phy/phy_package.c b/drivers/net/phy/phy_package.c
-index 5dd5db7e8..3024da0bb 100644
---- a/drivers/net/phy/phy_package.c
-+++ b/drivers/net/phy/phy_package.c
-@@ -414,3 +414,6 @@ int devm_of_phy_package_join(struct device *dev, struct phy_device *phydev,
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(devm_of_phy_package_join);
-+
-+MODULE_DESCRIPTION("PHY package support");
-+MODULE_LICENSE("GPL");
+diff --git a/drivers/net/phy/mediatek/Kconfig b/drivers/net/phy/mediatek/Kconfig
+index 9f30a91be..bb7dc8762 100644
+--- a/drivers/net/phy/mediatek/Kconfig
++++ b/drivers/net/phy/mediatek/Kconfig
+@@ -27,6 +27,7 @@ config MEDIATEK_GE_SOC_PHY
+ 	depends on ARCH_AIROHA || (ARCH_MEDIATEK && NVMEM_MTK_EFUSE) || \
+ 		   COMPILE_TEST
+ 	select MTK_NET_PHYLIB
++	select PHY_PACKAGE
+ 	help
+ 	  Supports MediaTek SoC built-in Gigabit Ethernet PHYs.
+ 
+diff --git a/drivers/net/phy/qcom/Kconfig b/drivers/net/phy/qcom/Kconfig
+index 570626cc8..bba14be8d 100644
+--- a/drivers/net/phy/qcom/Kconfig
++++ b/drivers/net/phy/qcom/Kconfig
+@@ -24,6 +24,7 @@ config QCA808X_PHY
+ config QCA807X_PHY
+ 	tristate "Qualcomm QCA807x PHYs"
+ 	select QCOM_NET_PHYLIB
++	select PHY_PACKAGE
+ 	depends on OF_MDIO
+ 	help
+ 	  Currently supports the Qualcomm QCA8072, QCA8075 and the PSGMII
 -- 
 2.49.0
 
