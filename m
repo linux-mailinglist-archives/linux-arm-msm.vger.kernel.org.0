@@ -1,176 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-61061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 950A8AD673A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 07:20:24 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB9D3AD682F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 08:47:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2ABAC3A460D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 05:20:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5FD947A770A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 06:45:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 501EC1DEFC8;
-	Thu, 12 Jun 2025 05:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C626A1FAC54;
+	Thu, 12 Jun 2025 06:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cIsEVmFL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qHiQthmz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B378F40
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 05:20:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890581E5B7A;
+	Thu, 12 Jun 2025 06:46:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749705620; cv=none; b=Kxzo1s0P2kbkz9vvDoJtL7Yge68VOlnT7ZuX82WyxYC53DMO534nbtuU7NxN67KQaVNXU5+n8yCpQHtlc5/F18h4/hjjAOhuO9iVNvEc/j93ntAl+b2IZqzHOaxgyg1KfApAKQPtwJMYvYYraAnzre8uh0i2aGPvlpNz9yp0Jq0=
+	t=1749710810; cv=none; b=Gx60V14BqCCP3yhrTc6379yCK4R2jo5OHM66iNFUWVmUvdpSGDEkGwsiv3HT7nFn1FP1cLu3SXEmE3RDm3cRfMixpzcQcjuZlgkVzlSRFW57EDfBPPabfUVQUE53E1EvBWWWTsF422qYMEKT8QFDB67X3z4cwh+cBAIdjyY+SHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749705620; c=relaxed/simple;
-	bh=SgShnvbxYvOe9ejQemiO99fJ84xPVKpU9m8unTXLRdI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QvI3KPmCV4RML0LcGaAGUn3CoQxig4slyZk5UdMi94nnSy7PwHwvNsZZ3ottgaUhrfQpPGOvvdu3u+8xGKDxa9QI4pY4I1V4dyzVdtAeywoX7YSroeazBX/B8YSLHknGTqVwYnuLoftyZvsTlj0sDHCDGrC6ih+noPUVdwc2VJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cIsEVmFL; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55BJji7C009041
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 05:20:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SgShnvbxYvOe9ejQemiO99fJ84xPVKpU9m8unTXLRdI=; b=cIsEVmFLLuUkqwWQ
-	OeN4SVH7c+fBoIaBZ5LnOZcEnpBUNjaASOZCo90WUHqp/E+BoEDTvj9VwPN5Grtr
-	KQrsYxeP6qKX0xAlmjwz1DdJ/pkWXd8VuUqphMgXh4Ng800iJFCbl6kn2nknKx+V
-	2iXDqqE+1kI/759cc9VDAajfARBlkyT/mVBLK3JGnBhMVrrEmIk7+NpxM1mHEyop
-	ZDXOn4OdFPQ/hHPlLwWPNcGTqaMNIoWTMMvaV4OWCxrJxdSpKzaBw4tXDYMEKEtq
-	Wm9E01FSnx/5/bTWtt1s6tz5MT6IO0mC1MzRnT2NBJ8JOvzzA0DciiBPATippACp
-	/S8LBA==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47753bu991-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 05:20:17 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-747af0bf0ebso560836b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 22:20:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749705616; x=1750310416;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SgShnvbxYvOe9ejQemiO99fJ84xPVKpU9m8unTXLRdI=;
-        b=eKZKjyXk6ooG/55UIwIvom3iLq1C26p8lMYHe78HXyOI1PFY11hVCls6fJC1WG0FIn
-         UM25Ss6VUFVNdERnIyMoyMFWdDryoVt1x7jWrn1h7kFWPKWFBp7qOu4uWbSd6aR7GmkL
-         f9/UMnA929XO/cVfHe4YkWr/dAGbVCHstIcG+CepIkKW0JJ2q51azZwydrkD5ZdgtW94
-         01MzvNQGBhAt54VEuajdSCOu/KIbP/keY6/bc4/o09fyW/sKe7OFb1PoIAY2Gg3XMn5T
-         RPMoIKhCc9AnBABRpuyNNRXlz3aV+Eu/FPkWCmnK9owy5ci2JBmeQ4mVJhOuAkFEOFoF
-         MPLg==
-X-Forwarded-Encrypted: i=1; AJvYcCWM3Vtr1yEovg/+o+73mfMtwsegZ1t1RXRjpsLZBRI6hCK4ZxPaeWbiloQ34LrXBKo3djQXvIktPzYfnQhD@vger.kernel.org
-X-Gm-Message-State: AOJu0YzgnYYe85tx8UOhpCBs+Ldv/uGkVG6zRLCfs0ygLyiADyGjLuhc
-	QYpr7NviLHKvT/TGC3ZK3o/MmYOsHydd52p+HJ0sJompI9z1w3z5/TrG6TGcuYCnqKGiYGOLeXG
-	Iq7Ji1IgfPG21yaRhc1CimX70sGhAK4keuBv2Ow4KQxOblqWULh6RLkPH5SpKS7JQoOpT
-X-Gm-Gg: ASbGncsIBzMN19P537JL5UHUP3TR9iNcr7KmFWFvf5uy22TWgNDoF3JcIdCc5lz5pR6
-	3MtLa4xtKgB+0rxYj4TU3wR1u3Cd8/BwOugPhkk4Fflw0KAmXU+sRj0B81+rwCOXq8UfuFjPLHU
-	Q0ZETdfgLTldQe5VtEd0zpPL+47CPwfLffWm1tzvK2r/FJTLaKz1OYk2aneZ5UfG6j9pxnYp/Xl
-	GSlvqEHfixpeh14lm+t4EWFw0icrlZORjsLwJcY72g9I7jVOT0WiwFh8q7dCdf/CLh25baNQsGP
-	Cb37X4y7vWMQ/+FszRXhpj+F37ZIsI1rACM1VSCofo311dJfLw==
-X-Received: by 2002:a05:6a00:8ca:b0:740:b5f8:ac15 with SMTP id d2e1a72fcca58-7487e0f4523mr2216972b3a.10.1749705615906;
-        Wed, 11 Jun 2025 22:20:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEqs1m+QLoDS+x2lBJsjsDDNIg8J4sHRXwm/0j8jv4uUBZesEksjlKMxB2tDesABKn2IscKXQ==
-X-Received: by 2002:a05:6a00:8ca:b0:740:b5f8:ac15 with SMTP id d2e1a72fcca58-7487e0f4523mr2216931b3a.10.1749705615442;
-        Wed, 11 Jun 2025 22:20:15 -0700 (PDT)
-Received: from [10.206.107.125] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-748809ebe56sm536054b3a.135.2025.06.11.22.20.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Jun 2025 22:20:14 -0700 (PDT)
-Message-ID: <f3d376cc-6e2d-4ac3-88f6-3104eec67acf@oss.qualcomm.com>
-Date: Thu, 12 Jun 2025 10:50:10 +0530
+	s=arc-20240116; t=1749710810; c=relaxed/simple;
+	bh=Qhrm6Yqf09Uhu8mGMYsjgqSJmKMNkYbsTliS5amUUQU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Ro3UW8sjo2AutK6Jn2Ja6tWNkIvF+iX/QuQ4BREa9cEaiI4K84ZHA2Z+7xiS6IyZ7a+RSYo9509r+7T6jVtZ6Y/ARf87J4RTyi0fgMmSuNBMDhM71VS3o1Lt991z1+GuC4YcJ1byNQmsgDSQevDaXK6N2TXe/RQLoIfRfCeEeoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qHiQthmz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 05C4BC4CEEA;
+	Thu, 12 Jun 2025 06:46:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749710810;
+	bh=Qhrm6Yqf09Uhu8mGMYsjgqSJmKMNkYbsTliS5amUUQU=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=qHiQthmznmSnyemAPmy0Coqq29H4vIa+gJtqedVH2yEvamK0CvaUVyTDXSvm2g0Z9
+	 Y5SSXc7BR3OCgAC/NZ4bWi/69I87ouUSjjY4lWDQ8rZF3EXf39wIUm7M9+x/8d20cO
+	 HaMCScNIpJiEFAr/SvS53hwagosXDowGIaZ9FAWBy+zY24uj5ROtQXaqmEgDS9HRfS
+	 77oLCkIhYfP4D7kViJC7cmIPlyCH3K3qL0/+WhnCWsqUPNBiMltD1cscJekMIvtyLK
+	 QQiljFwH2XKNJ+CscqHlVv3JYpp+bKaQngzcpXvlp7EA+mnkrgqYu/z7cVArlDXUi8
+	 QENnsfwkdYRfA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E130CC61CE8;
+	Thu, 12 Jun 2025 06:46:49 +0000 (UTC)
+From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
+Subject: [PATCH v13 0/2] Add support for IPQ5018 tsens
+Date: Thu, 12 Jun 2025 10:46:12 +0400
+Message-Id: <20250612-ipq5018-tsens-v13-0-a210f3683240@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 5/5] misc: fastrpc: Add missing unmapping
- user-requested remote heap
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: srinivas.kandagatla@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
-        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
-        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-        dri-devel@lists.freedesktop.org, arnd@arndb.de, stable@kernel.org
-References: <20250513042825.2147985-1-ekansh.gupta@oss.qualcomm.com>
- <20250513042825.2147985-6-ekansh.gupta@oss.qualcomm.com>
- <22uccyp5m2szry7bpitqcav5nlvwch5eqh4mdacfedidgrnyhx@vsjobngwdkmb>
- <dc67df54-2a19-4318-acd4-b96b8549b64d@oss.qualcomm.com>
- <7ogkoxsowpd2x5qmjog4qx5eu4eiinvtnyjz5hfufgna2hz7na@oxzmowlnelxb>
- <61dd2c3f-20ac-484e-8a45-f42fd5f42b86@oss.qualcomm.com>
- <CAO9ioeX1uE3ty5oSezYOLJKqf8G5dLYAS5nRiNvryWTk0RPdEQ@mail.gmail.com>
-Content-Language: en-US
-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-In-Reply-To: <CAO9ioeX1uE3ty5oSezYOLJKqf8G5dLYAS5nRiNvryWTk0RPdEQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEyMDAzOCBTYWx0ZWRfX6VE3rEAlRMlK
- Fqnouy9uu44r9uOwdzul4pJqeFSaEF20FBSxBrntX5uXA6DRuOetXhq7RuCgVFkNynxIUcj3nsx
- qnWAJCKKN6H4tU0PJLA31HjJ1Cdx8ojKbLhaVA4PGVpsp/cOAKlGsOUwCoXQ95XS7QOBikNkIif
- QmG0VN7C1Zg/2H+Sjbm4GmDRR1+CcyBP8UlvIHObAlU3Ru6oLaUIB0MxdQVyELLksHls4CVuvTE
- a0Tra9BQ9y4qprSoqua8xefaHYVJaGWhRdnnouYny9L3i0n8MffUZ01tAsx+q4/UwLBpMTMClbF
- dT5Qa8wIm8Z3WlNVMGkGxSRXHeuBfIAxQNDHGPfDtYKntD4IZhGcf5oWQOD2eNJ62YeIx4ZfrDF
- xgbdShNF4KHWH/4PBlZLnGz/sXfBaVPEOE6OlChpWvu5/e/kD2a/zPJTHlL+hOfnyZcN8sGS
-X-Proofpoint-GUID: y6WUebzGwqMmkc66wWXfXhu82mDW7e-f
-X-Proofpoint-ORIG-GUID: y6WUebzGwqMmkc66wWXfXhu82mDW7e-f
-X-Authority-Analysis: v=2.4 cv=SqOQ6OO0 c=1 sm=1 tr=0 ts=684a6391 cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=ZxPKgs51gy0u-eq_dnEA:9
- a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-12_03,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxscore=0 mlxlogscore=999 bulkscore=0 impostorscore=0
- spamscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0 suspectscore=0
- clxscore=1015 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506120038
+X-B4-Tracking: v=1; b=H4sIALR3SmgC/53TS2vcMBAH8K8SfK7MzOjd0/p5K5T2WEpR1nYis
+ n6s7d22hP3ulQ1tsri0bECXEfr/9GD0HE316Ospen/3HI312U++70KB/N1dtH903UPNfBUmIgK
+ SIEAwPxwloGHzVHcTU+K+sbKpOEcdhcww1o3/sYJfvob60U9zP/5c/TMusxEqy4PFQTNjERiyB
+ z+zoFWsbp0/sOPJ779Now/7j263VL7bx/u+jRbxTKsSzsPBokTCcK7YgFKagvWfMH8VJsKQRxW
+ TFsaEqyH7E/zuOzYc3Nz0Y8tOwzSPtWsB4+PJHQLWvohiFfPP+uMntB9SYwxPC24ySiVADpyQa
+ 6ETm2eadlfL4s61w1ihjYexr+L+NB/6/ulFlluZyrzIlcl5kaZQFLqwtnyDrLZyGDyDhKdlxjN
+ dZsLgIsONst7KqEiUy0srK2SmuABYZLpRNlu5MGRJFUIUAIAatF5fI79Rtls5yRMhuTYcEtDCS
+ m71Imc3ygi/202CCq1+/XfOa/Nzh+CkIyVov9sK+FrAjYAMGCkllbpvKlTuLwL9W6AgOLU0qZM
+ SdXUtXC6XX//nKdUkBAAA
+X-Change-ID: 20250404-ipq5018-tsens-64bf95fd3317
+To: Amit Kucheria <amitk@kernel.org>, 
+ Thara Gopinath <thara.gopinath@gmail.com>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+ Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ George Moussalem <george.moussalem@outlook.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Dmitry Baryshkov <lumag@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1749710807; l=5823;
+ i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
+ bh=Qhrm6Yqf09Uhu8mGMYsjgqSJmKMNkYbsTliS5amUUQU=;
+ b=qD0XD9VUfnORyj8ViKGVs7gEFaZa0jcmJ9EFimDy5qEhsqDn8rLdTwJpluY/0lNKh1A1h0wv5
+ HYUjQBxEMQ1Ao3HO3mJZqiCQhZYlgCic4n/1YsT1s+tmS6D1fkYWzld
+X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
+ pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
+X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
+ with auth_id=364
+X-Original-From: George Moussalem <george.moussalem@outlook.com>
+Reply-To: george.moussalem@outlook.com
 
+IPQ5018 has tsens V1.0 IP with 5 sensors, of which 4 are in use,
+and 1 interrupt. There is no RPM present in the soc to do tsens early
+enable. Adding support for the same here.
 
+Last patch series sent by Qualcomm dates back to Sep 22, 2023.
+Since I'm working on OpenWrt support for IPQ5018 based boards (routers)
+and Sricharan Ramabadhran <quic_srichara@quicinc.com> in below email
+confirmed this SoC is still active, I'm continuing the efforts to send
+patches upstream for Linux kernel support.
+https://lore.kernel.org/all/63dc4054-b1e2-4e7a-94e7-643beb26a6f3@quicinc.com/
 
-On 5/22/2025 5:43 PM, Dmitry Baryshkov wrote:
-> On Thu, 22 May 2025 at 08:01, Ekansh Gupta
-> <ekansh.gupta@oss.qualcomm.com> wrote:
->>
->>
->> On 5/19/2025 7:04 PM, Dmitry Baryshkov wrote:
->>> On Mon, May 19, 2025 at 04:28:34PM +0530, Ekansh Gupta wrote:
->>>> On 5/19/2025 4:22 PM, Dmitry Baryshkov wrote:
->>>>> On Tue, May 13, 2025 at 09:58:25AM +0530, Ekansh Gupta wrote:
->>>>>> User request for remote heap allocation is supported using ioctl
->>>>>> interface but support for unmap is missing. This could result in
->>>>>> memory leak issues. Add unmap user request support for remote heap.
->>>>> Can this memory be in use by the remote proc?
->>>> Remote heap allocation request is only intended for audioPD. Other PDs
->>>> running on DSP are not intended to use this request.
->>> 'Intended'. That's fine. I asked a different question: _can_ it be in
->>> use? What happens if userspace by mistake tries to unmap memory too
->>> early? Or if it happens intentionally, at some specific time during
->>> work.
->> If the unmap is restricted to audio daemon, then the unmap will only
->> happen if the remoteproc is no longer using this memory.
->>
->> But without this restriction, yes it possible that some userspace process
->> calls unmap which tries to move the ownership back to HLOS which the
->> remoteproc is still using the memory. This might lead to memory access
->> problems.
-> This needs to be fixed in the driver. We need to track which memory is
-> being used by the remoteproc and unmap it once remoteproc stops using
-> it, without additional userspace intervention.
-If it's the audio daemon which is requesting for unmap then it basically means that
-the remoteproc is no longer using the memory. Audio PD can request for both grow
-and shrink operations for it's dedicated heap. The case of grow is already supported
-from fastrpc_req_mmap but the case of shrink(when remoteproc is no longer using the
-memory) is not yet available. This memory is more specific to audio PD rather than
-complete remoteproc.
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+Changes in v13:
+- Dropped polling-delay-passive property as its value of 0 is the
+  default value
+- Updated hysterssis value to 1000 milicelsius in line with other boards
+- Link to v12: https://lore.kernel.org/r/20250611-ipq5018-tsens-v12-0-a61374a5517d@outlook.com
 
-If we have to control this completely from driver then I see a problem in freeing/unmapping
-the memory when the PD is no longer using the memory.
->
+Changes in v12:
+- Updated description in dt bindings for IP v1 without RPM
+- Added Fixes tag as this this version of tsens needs to be explicitly
+  reset and enabled in the driver, introduced as part of:
+  commit: 19f9b02ebc8f ("thermal/drivers/qcom/tsens: Add support for tsens v1 without RPM")
+- Link to v11: https://lore.kernel.org/r/20250611-ipq5018-tsens-v11-0-266566bfd16a@outlook.com
+
+Changes in v11:
+- Dropped polling-delay property as its value of 0 is the default value
+- Removed comments for TM and SROT in tsens node
+- Replace underscore by hyphen in node name of top-glue-critical trip
+- Added cooling device using CPU freq scaling making use of the passive
+  trip defined under the CPU trips
+- Make qcom,ipq5018-tsens a standalone compatible in the bindings as it
+  should not use qcom,tsens-v1 as a fallback. This also fixes the issue
+  reported by Rob's bot
+
+Changes in v10:
+- Rebased onto updated pull of master to resolve merge conflicts in the
+  DTS patch
+- Link to v9: https://lore.kernel.org/all/DS7PR19MB88836DC6965515E12D70BB2C9DCC2@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+Changes in v9:
+- Updated checks in tsens to more strictly evaluate for v2+ upon enabling
+  v2 features as suggsted by Dmitry.
+- Split patch 3 into two, one to update conditional statements as
+  mentioned above and the other to implement tsens IP v1 without RPM.
+- Added back Dmitry's RB tag on patch 6 which wasn't carried over
+  from v7 to v8
+- Link to v8: https://lore.kernel.org/all/DS7PR19MB88833F7A9C8F4FC484977BA69DCD2@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+Changes in v8:
+- Tsens V1 uses v1 interrupts and watchdog is not present (only on v2.3+).
+  As such, replaced VER_1_X with VER_1_X_NO_RPM in conditons to ensure
+  v1 interrupts are set and watchdog isn't enabled.
+- Tested on Linksys MX2000 and SPNMX56
+- Link to v7: https://lore.kernel.org/all/DS7PR19MB88831624F11516945C63400F9DC22@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+Changes in v7:
+- Updated cover letter
+- Replaced patch 3 with a new one to add support for tsens v1.0 with
+  no RPM and removed Dmitry's 'Reviewed-by tag
+- Refactored patch 4 and split support for IPQ5018 from support for
+  tsens v1.0 without RPM. As such, also removed Dmitry's RB tag.
+- Depends on patch 1 and 2 from patch series to add support for
+  IQP5332 and IPQ5424 applied on Feb 11 2025:
+  https://patchwork.kernel.org/project/linux-arm-msm/cover/20250210120436.821684-1-quic_mmanikan@quicinc.com/
+- Link to v6: https://lore.kernel.org/all/DS7PR19MB88838833C0A3BFC3C7FC481F9DC02@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+Changes in v6:
+- Include (this) cover letter
+- Picked up Dmitry's Reviewed-by tag on patch 5
+- Link to v5: https://lore.kernel.org/all/DS7PR19MB88832FDED68D3EBB0EE7E99F9DC72@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+Changes in v5:
+- Adjusted commit messages to indicate IPQ5018 has 5 sensors of
+  which 4 are described and in use as per downstream driver and dts.
+- Padded addresses of tsens and qfprom nodes with leading zeros.
+- Link to v4: https://lore.kernel.org/all/DS7PR19MB8883BE38C2B500D03213747A9DC72@DS7PR19MB8883.namprd19.prod.outlook.com/
+
+Changes in v4:
+- Documented ipq5018 in qcom,qfprom bindings
+- Constrained ipq5018-tsens to one interrupt with description
+- Added Rob's Acked-by tag
+- Added Dmitry's Reviewed-by tag
+- Fixed modpost warning: added __init to init_common
+- Sorted tsens nodes by address
+- Sorted thermal-zones nodes by name
+- Link to v3: https://lore.kernel.org/all/20230922115116.2748804-1-srichara@win-platform-upstream01.qualcomm.com/
+
+Changes in v3:
+- Added the tsens-ipq5018 as  new binding without rpm
+- Added Dmitry's Reviewed tag
+- Fixed Dmitry's comments for error checks in init_ipq5018
+- Ordered the qfprom device node properties
+- Link to v2: https://lore.kernel.org/all/20230915121504.806672-1-quic_srichara@quicinc.com/
+
+Changes in v2:
+- Sorted the compatible and removed example
+- Fixed the name for new tsens_feature
+- Used tsend_calibrate_common instead of legacy
+  and addressed comments from Dmitry.
+- Squashed patch 3 & 4
+- Fixed node names, order and added qfprom cells
+  for points seprately
+- Squashed patch 6 & 7
+- Link to v1: https://lore.kernel.org/all/1693250307-8910-1-git-send-email-quic_srichara@quicinc.com/
+
+---
+George Moussalem (1):
+      dt-bindings: thermal: qcom-tsens: make ipq5018 tsens standalone compatible
+
+Sricharan Ramabadhran (1):
+      arm64: dts: qcom: ipq5018: Add tsens node
+
+ .../devicetree/bindings/thermal/qcom-tsens.yaml    |   7 +-
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi              | 178 +++++++++++++++++++++
+ 2 files changed, 184 insertions(+), 1 deletion(-)
+---
+base-commit: afc582fb6563b8eb5cd73f9eca52e55da827567f
+change-id: 20250404-ipq5018-tsens-64bf95fd3317
+
+Best regards,
+-- 
+George Moussalem <george.moussalem@outlook.com>
+
 
 
