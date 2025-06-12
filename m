@@ -1,245 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-61079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F2DBAD69DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 10:03:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87B3BAD69E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 10:06:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 85DA23AF788
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 08:02:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3821F1798A7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 08:06:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7488E18CC13;
-	Thu, 12 Jun 2025 08:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B058F18DB2A;
+	Thu, 12 Jun 2025 08:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hi9BzEwX"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hWchK8px"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FDE13C8E8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 08:02:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8DA76025
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 08:06:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749715357; cv=none; b=kpdXYCs/uAjeqtIIykIB1pORdjLXaNLKos2DMKrLH7Q+yuo/w7pxF2243qe/6Dxi5A7MxexsPCHURAiouXagkawHrQSf/Jf9En+YMDwyvbpbAnLjsrtICb4bDLLCSV4nSh2INQYT0MOK7nHdPOJBrB99X5pJLc5hE6mz3ur/mcU=
+	t=1749715564; cv=none; b=ZqS1KiqxwZjoj8GaZROITG+IsYwBNDZIcizMnevhLzOpzRQczFqNWEgU8/m5Jd8XhCT6Ortj4AounVHaoyfSmL4wp6ppIVAU6dcvF4xvpWWHL36iaUfC/tkj20lGMGB8q0pe3NbJe4b/S3KD76iDzllgw2ehGPgoIWeDgvvn/XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749715357; c=relaxed/simple;
-	bh=3eutFv0YUpUcBiELcRGQ/X2KXhDa7HG75EdddSZ3Hb0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FYQsYfkwiZmE2LtcahPy2qNKxGqocGm4zS7SnDUWsWr2h6lIoQtRr37av2B+aXruloeKHuqNp8n4QGUZItlE85tgAZrQAjwq60DJHgOajgyyPHL/Z/FOH4JobxiZlXZzQMHbFl1dJPG6uSLlAvewh6xteEkqGWr2aVqkynHsSN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hi9BzEwX; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a4e742dc97so1182040f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 01:02:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749715354; x=1750320154; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=E+YnI2VE3dubMd3daM6I5J2k+cxEj00izt+Iu1pSlY4=;
-        b=hi9BzEwXvn5wYy5yKKiAbcUB/4VRkPkX7bzmxTWmAIyCAcHBGwd7sxpikktqxCCA+Q
-         3HKyo/OtoD2TIGukUsx9cu/pNeITCYVnazVCozQkHpFbTpVZv25xHBGd6IZFR1A4MRcD
-         G9Sc1qcdF7/OQOUW+gCbfgzZdE2cP6KWO/qbIJ5YcxkftHqD8nZ81ApiPxIdtZ1j+O1X
-         ClKDsuP7SCzvCUyxHxhf/4RkrLUfn6qficiqx9rbtGoksbkHjZOiC3INW331diI9BRMO
-         DlxaJ5JSbmEz0OFz0SSZXCrKIRQNGpqXZ4/3k86NKxiXU+iHMil/qiZ2D2FEGV4WZZvb
-         2c/w==
+	s=arc-20240116; t=1749715564; c=relaxed/simple;
+	bh=GEFxzDSmIx7mSLc9grOdHwi4rsiBtOIV3MQN45BvOzQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sRLUdVNSIS4rD9XK8xPqJR/mIympA5m+YzKpJOr7uH3CaxytkQSbLBuW1s5oI3Ul+x0COvcRSP7/VW9lUYBaEXwNmQANRdYI+uZ69OIUPEat7jz3WDZ58rVjPg4+Hz0g+TX+5rKIaxDhLE/bW7XjwMu7SwnDjvMiM3nQn6GUwwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hWchK8px; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55C7nA5i027470
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 08:06:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=gYLKSuEg9yfr55w0b30ljKxa
+	Qtj5FKzqcidTfQG7b1s=; b=hWchK8pxGoMT2/EG1HZjedxu+PirePqVOZPXDA3W
+	5N7W/ppp/7y8/AbzqgzDPXSdNpwsHrSHQJGKBLRbxnwUnH8oNqH64hMyR3QPlwAK
+	qVnvLLcpuGey6Zu4mq0Vbg1QAeuAaXh5FFrnQxjs8sCHgYLepdSYHIic8NOMK/Zy
+	XnU+CxuLkgojBgZrHS20tYzvntbOBCRHwvdhl2JUCOzIZhmEwR6hj25m8quPsmSA
+	XfH15gFX9TXVHQNqsz+E9AySOg43qGEIbklGh745jjzoHPcuwaUBSXJoRH+jU9b7
+	4Uqi7kCPVUW/4LXVPSae4TCl/RctH7klKLoaM8HJCgj9BQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 476jrheqa5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 08:06:01 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c5750ca8b2so107470485a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 01:06:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749715354; x=1750320154;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E+YnI2VE3dubMd3daM6I5J2k+cxEj00izt+Iu1pSlY4=;
-        b=JrutvxY39/KT7pv4qnkQHRWeABJ/anou2tdH9sXP2Qj2WiVsrc3vGQebTBOKfnaX4R
-         8hG+8SAbOvQD5KH85w8mXcLGIK7BlQyqkhE4YcSixgMT5ULnAsKQmx+OTXSdVzbkC7RN
-         GKvfHb2XtCWaFeIAxA/5OAndQ4JUVqyPAf39auKjBcyje0xAVgEu4clRwKkdwTJdkxtw
-         iSb0JFj7BPL3a6ZIeAdmZ/Ndt5fTbNnZTGiv77xOxc3texCCLlTweAsXb7tpkUlICeb1
-         pzCrSF0X2pR/TpMUlXsLr+9ReAV6+hDw6RT3Z1mHbxGbagC5I2hHS19cjCrP/4zXf2kz
-         aYzA==
-X-Forwarded-Encrypted: i=1; AJvYcCWfYjuTllxqA4SuVxF0o1Wfx9HkLOxKoT0JyN6v8CV/1gL0UpLdID+GwE+hf/K+k1/FugRpUz9qnZ5VEXKk@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUSQXKxXiJP5nyXjrkD45201yLf7/ZJfJ2IdAP/QdOTeWjA+ci
-	bzaqwAdj+lQuOtdXApRLMqjQWqtff9An/maDxsVPAXCa3eg1oDCc1j2L2Z0+C0Qdvyc=
-X-Gm-Gg: ASbGncvw8T9CrgKmL+pwQC+39KuLKjRUxXoM1yCK+BZ+cYrZljjrpcOMOgBxBDEwzPR
-	NJ0lEeidnZwXIb+wvWMU9KFmCOivfra3A86dQ53h177QI80HNohHZ9qRsyX6OG/QGai7t+VBHfG
-	1kZYNMay/1lU6AXQG3ZIZkl2gY48L6gcVWFRJppMR33UfbOpWQ0PFnstgSTzKkHeiRks7+a5SBa
-	OlQEt8PE9W8jK68f2xnx/3hmZi4RW+hlQ7Fpc/LmBK0UaVUX6sdG6dAobJ4AlZkQMbJknQFM7Rl
-	FK/bEwEpcnTo5M1Tll46cMxtH4HYQcFrTMEa0Al9l+rV2q0aA0j+vtUyBaM8qgA2m7yP8MVOUUt
-	88sNfRbl1/FmtlJnU5Lj0INCmFZE=
-X-Google-Smtp-Source: AGHT+IHr17lu04o6X3T3YbGhmI/P2yypu+DOM9jKCZ/WyDlw1KtOQazaviQwWkcOGDM2PNTVAyQCaA==
-X-Received: by 2002:a05:6000:178a:b0:3a1:f724:eb15 with SMTP id ffacd0b85a97d-3a56087effdmr1859459f8f.2.1749715353121;
-        Thu, 12 Jun 2025 01:02:33 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a561a3c756sm1214328f8f.52.2025.06.12.01.02.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jun 2025 01:02:32 -0700 (PDT)
-Message-ID: <1fc9eb4c-6da2-4146-98e2-1bb6fc422a55@linaro.org>
-Date: Thu, 12 Jun 2025 09:02:30 +0100
+        d=1e100.net; s=20230601; t=1749715561; x=1750320361;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gYLKSuEg9yfr55w0b30ljKxaQtj5FKzqcidTfQG7b1s=;
+        b=NmcGtdqHTiaDqe9McChx7eVVR0u/fS1XdA4dnzamTvosmRKK7KGh7Ci14bPdoRdxAX
+         LKxBsP32Z/JQBrcR4U+HEffJ84B/9Tk+IQmT+zVkg4QuwfKbZ15T1IFdjoTdzeeevh+D
+         COqsdttlHg4yRNXtwQZyoC7x/J844P5f3rc4/qfTX7V1hIKCFTJrc66JUCTBml17cOpS
+         Ex4qVBMU66ORSkqJT594R6ACuUNIjAzEhNNtqkJCPsi1y81hfqhYctScfbzZ+P6Df0l4
+         5SxMqTj9gMOhjx/Fn+14tTveq7Z8NzFdDm+Xxpk7TJcETUssgLu7/bCADwrljyeZGC/6
+         XV+A==
+X-Forwarded-Encrypted: i=1; AJvYcCUvsYDjJOW5X4VKNx86UELurqXflJMobYm7FGa4PfD+IUiR8GZVc0NAnZmBHltTn1PCVOS2/5jSQH4rKgdG@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxf8BMEPgCAAjRo2E4XRwqjM1Ru7olM33PSlVoRvdk/NwTJvyGw
+	YYj1+lIA1aFBNYQMA1Uc1uA6r1SgjyNppZF1lZYi4SlHITAPx3th3FomvoHiaDPRabc5tZizaae
+	b0e6TooopouyKnGLJq469kHZd2nDdTYhwYwuGTNBWvnhlOCIgDplMXke410J6b7G1PJf2
+X-Gm-Gg: ASbGnctos68u0+5Ljs+l5rF1WNCx+FigdMNtPF7HzK4rD7f43zIKRpay0wfNqR8aom9
+	yKLJOnsVSpaoowmkrkhakYq7IOVpJW5TKxM2v4qquv9H3U+bkkXCkMl4EjhTCik23VylPbynogz
+	iyTDMZO8ibT4T43f8byjTsJ5TkKTQZGaRw2UJAXmxffmlx8oktBJvXeYTUg7B85eT66BgBbinSo
+	puHGx81ivwOTqAuaGqAb9WDCoYQZuvAqo63WaMcUxfMROEW4ySbHj4XzAFTWhdd4P68DrDfcA2f
+	eg14JPBIro7yeHP5hV0n4U0dea0mgxi4IIT3cYI2C0BhK7VHijIYGcCmRlZMKA9iUBdGSQVyGSg
+	AdoXiDyY95w4gR8cuCTkpInwEBiGpfHX0MMA=
+X-Received: by 2002:a05:620a:2d8a:b0:7d3:a6bd:93fc with SMTP id af79cd13be357-7d3a88e236emr679314685a.28.1749715560597;
+        Thu, 12 Jun 2025 01:06:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGtEx7/LfcxXUMv7FkqbwpLWknBCvl7pRsgiOfE3tIOvpsdV/K8xXm+GR9qDQXkbL/OA9rOLw==
+X-Received: by 2002:a05:620a:2d8a:b0:7d3:a6bd:93fc with SMTP id af79cd13be357-7d3a88e236emr679311185a.28.1749715560158;
+        Thu, 12 Jun 2025 01:06:00 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32b3307ae32sm1370641fa.39.2025.06.12.01.05.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Jun 2025 01:05:59 -0700 (PDT)
+Date: Thu, 12 Jun 2025 11:05:57 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Cc: srinivas.kandagatla@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+        dri-devel@lists.freedesktop.org, arnd@arndb.de, stable@kernel.org
+Subject: Re: [PATCH v1 5/5] misc: fastrpc: Add missing unmapping
+ user-requested remote heap
+Message-ID: <qw64xqfnyy76f6oawtaecvraejcwyml5k7oxdy67adj2rh46lq@nupxbuy3vwu4>
+References: <20250513042825.2147985-1-ekansh.gupta@oss.qualcomm.com>
+ <20250513042825.2147985-6-ekansh.gupta@oss.qualcomm.com>
+ <22uccyp5m2szry7bpitqcav5nlvwch5eqh4mdacfedidgrnyhx@vsjobngwdkmb>
+ <dc67df54-2a19-4318-acd4-b96b8549b64d@oss.qualcomm.com>
+ <7ogkoxsowpd2x5qmjog4qx5eu4eiinvtnyjz5hfufgna2hz7na@oxzmowlnelxb>
+ <61dd2c3f-20ac-484e-8a45-f42fd5f42b86@oss.qualcomm.com>
+ <CAO9ioeX1uE3ty5oSezYOLJKqf8G5dLYAS5nRiNvryWTk0RPdEQ@mail.gmail.com>
+ <f3d376cc-6e2d-4ac3-88f6-3104eec67acf@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/10] media: qcom: camss: csiphy: simplify arguments of
- lanes_enable and lanes_disable
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org
-References: <20250612011531.2923701-1-vladimir.zapolskiy@linaro.org>
- <20250612011531.2923701-4-vladimir.zapolskiy@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250612011531.2923701-4-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f3d376cc-6e2d-4ac3-88f6-3104eec67acf@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=EovSrTcA c=1 sm=1 tr=0 ts=684a8a69 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=QxY6PIr9u2238qDpXlUA:9 a=CjuIK1q_8ugA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-ORIG-GUID: KtD2xeBAgAE579GuHrIyV_RnTuk0cUWK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEyMDA2MSBTYWx0ZWRfX1l7XFhpbs5X1
+ MtRGeBCe6j2V7Qw9o34ln+fbkFjFPnzItzy8D+ICLRZh6vcFlSL834DIvSLGffg/SLkutRHTmur
+ 9YLOAA70OkX9gvhygMq4R2vIWzQ/EIgJhm7gKU7rb5pkzMSmMZ+Avop0DfUMjf05JHDd3y4Bv1T
+ oV7F4hAXm64BwBHXNxpITIt5766YvRWkrGSQBUZPu7kwcVHcHOLmL0JGtmDApaN+EfoVB7yuI/y
+ p8wurGTDqgETn/rRo4PazipjVm1rKvu1ypEqKpUkHuW+2GRS6OJH/6JmE7pLnlztq3c27Bn2C8K
+ FBm6HaP6xMGDSK9ZaayFtJOkSaVTX2+Z6+7AUZhjzvApc9vXMSrjlRswQzB0XVX+mVUOtGJMMKA
+ gDM2un0jT6/xudCZYnwYf/WQPiKpB174zQMitLIXAVz8vTRgLJB2sr1v+4kEedVqMRnY56fL
+X-Proofpoint-GUID: KtD2xeBAgAE579GuHrIyV_RnTuk0cUWK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-12_05,2025-06-10_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999
+ mlxscore=0 clxscore=1015 malwarescore=0 adultscore=0 lowpriorityscore=0
+ phishscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506120061
 
-On 12/06/2025 02:15, Vladimir Zapolskiy wrote:
-> In some of .lanes_enable and .lanes_disable functions the second argument
-> of csiphy_config type is either unused or it can be derived from the
-> main function argument, this lets to remove it from the list of arguments.
+On Thu, Jun 12, 2025 at 10:50:10AM +0530, Ekansh Gupta wrote:
 > 
-> Apart of being the simplification the change is needed for further updates
-> to CSIPHY part of the CAMSS driver to get CSIPHY combo mode feature and
-> a related to it management of non-statically assigned CSIPHY media pads.
 > 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->   .../media/platform/qcom/camss/camss-csiphy-2ph-1-0.c  | 10 ++++------
->   .../media/platform/qcom/camss/camss-csiphy-3ph-1-0.c  | 11 ++++-------
->   drivers/media/platform/qcom/camss/camss-csiphy.c      |  4 ++--
->   drivers/media/platform/qcom/camss/camss-csiphy.h      |  4 +---
->   4 files changed, 11 insertions(+), 18 deletions(-)
+> On 5/22/2025 5:43 PM, Dmitry Baryshkov wrote:
+> > On Thu, 22 May 2025 at 08:01, Ekansh Gupta
+> > <ekansh.gupta@oss.qualcomm.com> wrote:
+> >>
+> >>
+> >> On 5/19/2025 7:04 PM, Dmitry Baryshkov wrote:
+> >>> On Mon, May 19, 2025 at 04:28:34PM +0530, Ekansh Gupta wrote:
+> >>>> On 5/19/2025 4:22 PM, Dmitry Baryshkov wrote:
+> >>>>> On Tue, May 13, 2025 at 09:58:25AM +0530, Ekansh Gupta wrote:
+> >>>>>> User request for remote heap allocation is supported using ioctl
+> >>>>>> interface but support for unmap is missing. This could result in
+> >>>>>> memory leak issues. Add unmap user request support for remote heap.
+> >>>>> Can this memory be in use by the remote proc?
+> >>>> Remote heap allocation request is only intended for audioPD. Other PDs
+> >>>> running on DSP are not intended to use this request.
+> >>> 'Intended'. That's fine. I asked a different question: _can_ it be in
+> >>> use? What happens if userspace by mistake tries to unmap memory too
+> >>> early? Or if it happens intentionally, at some specific time during
+> >>> work.
+> >> If the unmap is restricted to audio daemon, then the unmap will only
+> >> happen if the remoteproc is no longer using this memory.
+> >>
+> >> But without this restriction, yes it possible that some userspace process
+> >> calls unmap which tries to move the ownership back to HLOS which the
+> >> remoteproc is still using the memory. This might lead to memory access
+> >> problems.
+> > This needs to be fixed in the driver. We need to track which memory is
+> > being used by the remoteproc and unmap it once remoteproc stops using
+> > it, without additional userspace intervention.
+> If it's the audio daemon which is requesting for unmap then it basically means that
+> the remoteproc is no longer using the memory. Audio PD can request for both grow
+> and shrink operations for it's dedicated heap. The case of grow is already supported
+> from fastrpc_req_mmap but the case of shrink(when remoteproc is no longer using the
+> memory) is not yet available. This memory is more specific to audio PD rather than
+> complete remoteproc.
 > 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-2ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-2ph-1-0.c
-> index 9d67e7fa6366..d9735f61fffc 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy-2ph-1-0.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-2ph-1-0.c
-> @@ -95,10 +95,9 @@ static u8 csiphy_settle_cnt_calc(s64 link_freq, u32 timer_clk_rate)
->   }
->   
->   static void csiphy_lanes_enable(struct csiphy_device *csiphy,
-> -				struct csiphy_config *cfg,
->   				s64 link_freq, u8 lane_mask)
->   {
-> -	struct csiphy_lanes_cfg *c = &cfg->csi2->lane_cfg;
-> +	struct csiphy_lanes_cfg *c = &csiphy->cfg.csi2->lane_cfg;
->   	u8 settle_cnt;
->   	u8 val, l = 0;
->   	int i = 0;
-> @@ -114,7 +113,7 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
->   	val |= lane_mask << 1;
->   	writel_relaxed(val, csiphy->base + CAMSS_CSI_PHY_GLBL_PWR_CFG);
->   
-> -	val = cfg->combo_mode << 4;
-> +	val = csiphy->cfg.combo_mode << 4;
->   	writel_relaxed(val, csiphy->base + CAMSS_CSI_PHY_GLBL_RESET);
->   
->   	for (i = 0; i <= c->num_data; i++) {
-> @@ -134,10 +133,9 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
->   	}
->   }
->   
-> -static void csiphy_lanes_disable(struct csiphy_device *csiphy,
-> -				 struct csiphy_config *cfg)
-> +static void csiphy_lanes_disable(struct csiphy_device *csiphy)
->   {
-> -	struct csiphy_lanes_cfg *c = &cfg->csi2->lane_cfg;
-> +	struct csiphy_lanes_cfg *c = &csiphy->cfg.csi2->lane_cfg;
->   	u8 l = 0;
->   	int i = 0;
->   
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> index f732a76de93e..69d95bfeb9d2 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> @@ -638,10 +638,9 @@ static u8 csiphy_settle_cnt_calc(s64 link_freq, u32 timer_clk_rate)
->   }
->   
->   static void csiphy_gen1_config_lanes(struct csiphy_device *csiphy,
-> -				     struct csiphy_config *cfg,
->   				     u8 settle_cnt)
->   {
-> -	struct csiphy_lanes_cfg *c = &cfg->csi2->lane_cfg;
-> +	struct csiphy_lanes_cfg *c = &csiphy->cfg.csi2->lane_cfg;
->   	int i, l = 0;
->   	u8 val;
->   
-> @@ -758,10 +757,9 @@ static bool csiphy_is_gen2(u32 version)
->   }
->   
->   static void csiphy_lanes_enable(struct csiphy_device *csiphy,
-> -				struct csiphy_config *cfg,
->   				s64 link_freq, u8 lane_mask)
->   {
-> -	struct csiphy_lanes_cfg *c = &cfg->csi2->lane_cfg;
-> +	struct csiphy_lanes_cfg *c = &csiphy->cfg.csi2->lane_cfg;
->   	struct csiphy_device_regs *regs = csiphy->regs;
->   	u8 settle_cnt;
->   	u8 val;
-> @@ -791,7 +789,7 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
->   	if (csiphy_is_gen2(csiphy->camss->res->version))
->   		csiphy_gen2_config_lanes(csiphy, settle_cnt);
->   	else
-> -		csiphy_gen1_config_lanes(csiphy, cfg, settle_cnt);
-> +		csiphy_gen1_config_lanes(csiphy, settle_cnt);
->   
->   	/* IRQ_MASK registers - disable all interrupts */
->   	for (i = 11; i < 22; i++) {
-> @@ -800,8 +798,7 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
->   	}
->   }
->   
-> -static void csiphy_lanes_disable(struct csiphy_device *csiphy,
-> -				 struct csiphy_config *cfg)
-> +static void csiphy_lanes_disable(struct csiphy_device *csiphy)
->   {
->   	struct csiphy_device_regs *regs = csiphy->regs;
->   
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> index 1ba3fc2e33ac..f561811b7617 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> @@ -295,7 +295,7 @@ static int csiphy_stream_on(struct csiphy_device *csiphy)
->   		wmb();
->   	}
->   
-> -	csiphy->res->hw_ops->lanes_enable(csiphy, cfg, link_freq, lane_mask);
-> +	csiphy->res->hw_ops->lanes_enable(csiphy, link_freq, lane_mask);
->   
->   	return 0;
->   }
-> @@ -308,7 +308,7 @@ static int csiphy_stream_on(struct csiphy_device *csiphy)
->    */
->   static void csiphy_stream_off(struct csiphy_device *csiphy)
->   {
-> -	csiphy->res->hw_ops->lanes_disable(csiphy, &csiphy->cfg);
-> +	csiphy->res->hw_ops->lanes_disable(csiphy);
->   }
->   
->   
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/media/platform/qcom/camss/camss-csiphy.h
-> index d82dafd1d270..3b73248f1364 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy.h
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
-> @@ -72,10 +72,8 @@ struct csiphy_hw_ops {
->   				struct device *dev);
->   	void (*reset)(struct csiphy_device *csiphy);
->   	void (*lanes_enable)(struct csiphy_device *csiphy,
-> -			     struct csiphy_config *cfg,
->   			     s64 link_freq, u8 lane_mask);
-> -	void (*lanes_disable)(struct csiphy_device *csiphy,
-> -			      struct csiphy_config *cfg);
-> +	void (*lanes_disable)(struct csiphy_device *csiphy);
->   	irqreturn_t (*isr)(int irq, void *dev);
->   	int (*init)(struct csiphy_device *csiphy);
->   };
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> If we have to control this completely from driver then I see a problem in freeing/unmapping
+> the memory when the PD is no longer using the memory.
+
+What happens if userspace requests to free the memory that is still in
+use by the PD
+
+How does PD signal the memory is no longer in use?
+
+> >
+> 
+
+-- 
+With best wishes
+Dmitry
 
