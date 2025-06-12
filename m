@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-61104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F980AD6CD6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 11:59:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 654F2AD6CE5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 12:00:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6626A177539
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 09:59:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 63C57188D02E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 09:59:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 426E823C4E1;
-	Thu, 12 Jun 2025 09:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E19D023FC42;
+	Thu, 12 Jun 2025 09:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SSyxfZed"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lDM0dIjL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4019823185C;
-	Thu, 12 Jun 2025 09:57:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652AF23D2A3;
+	Thu, 12 Jun 2025 09:57:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749722244; cv=none; b=ZUAXuOthEQiP9ZKqHkEe47Et3BsE+Ro078VRCDw/fEVqimNWg84RZ84TK0GSC53mZauPQ7gakUrOS7Gxp8YqYWmCIxs1bAu2sFEoBXkqwnbxhboxdbS9u/oRNIh7Brkoq8ip7CfevJ8jhrE1NSn6i/qLDzXYCCdxziGFjmQLbMU=
+	t=1749722246; cv=none; b=mJVTKAmj65ZTIKWhHWdZglLPMGYtOTntoILDOSDfSVbriHnZ+j5q/7NZhmRxQPd5LW26rbC3u3C0T5ihAtLSuiuLhw/LEGLMqwK9q+/246QuFYdk0+Fbvg9Uc2B+dasX4Q6LRIGqurN0RDex8yeYd7Quordz0yZIKRpm8DxINsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749722244; c=relaxed/simple;
-	bh=srsv/AiJxJgqsSz57F4s8UnZtSOKWbHESiMEHWc796g=;
+	s=arc-20240116; t=1749722246; c=relaxed/simple;
+	bh=YBA6jnA9sM4kNyLA2idKAgmx5/jFGbrObUJsm+MgpzI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=T/L3NTptavpatkjIoCOqm/PDIxMLPVk77uGDIjT/a8fP1ROW5P8HHaIOV7pPX3TBrE+M+G9aN0tltTCzAdA4aG+hcekB+FHR86E+gksHf65Kgm41fBiw4u8Aifhgcn/Ca0riRAwPefO0tpPqndu88szSnQR948fQOy2m1sfw6uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SSyxfZed; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:CC; b=EGMwoJiPVp3RhFe7fMIDOqcPnTPtC44WM6fM8/vJkttiLflXqu4Jj91mMV+ZfDeCm5rn5KoUoc1QP73n/84uElywmTsKc6TCui4jGsgQ4RZeJD6SK9xY7U/JjU/vcIlBqEN0g4++yzF4yT61wNYGpjkhhHbnfif1Q1xj1YUWsO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lDM0dIjL; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55C8Cnln027397;
-	Thu, 12 Jun 2025 09:57:12 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55C7k3rN011004;
+	Thu, 12 Jun 2025 09:57:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Nxfhy0pYx9O/nztLjUmlUM34WDUnca9b7ZpkFADa1A4=; b=SSyxfZedo/0DX6C1
-	kyj1x883iqTYIp0KzC4MwXmux+HZ6/JhS4IDMz6zMKY/kc+ZgdRepGwwLGPp1Amf
-	0Z+dze7vl365d8Rz8e4/8vRf9zBY59TZdfivZac0tSmhtZDP+MtkidD8uQPTu9Sy
-	/lDICHddd4Y8yXJQ/yT31BKkp7YfBaVd1hkeMrAvBCI9whRmDmHt9nUyoRDo2gsg
-	uQh2EA4WuIRBgK84ZlkQN5r9R+KkWJBLndWHa8tmzFh5kB4eAk8rcdPoqQy+6iAm
-	/YOw0fa0e/aFahXn1zYrkgwQP3HTt1+K4zKjNk2uGB5oNavW8OxLRV6d69LFyvsJ
-	PD2etA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 476jrhf0xw-1
+	KV2raVMltn4SFpAF4A6GQbfks1PnBbrURU9IoC05gfg=; b=lDM0dIjLfn75399c
+	6vA2SBAqGmUaKxliuNOradf9dY4vXx9psuNYiGpkkpRVVpXYdtTXHN0R2ezOXubW
+	G8MTyHTGkvg6RSLtKmigaGaZPTczIcpZ6K34v3fucoCUvp0tWYNyvUugeRwKDofN
+	FG0QOFvjHqWuePTN9buR1dc128E68P+3dcvXmBX+El/k9uPctuFZ+rGjbeVABAZl
+	kq6CyrOtMFRi0iG8vZeF3IlpRfIQhBIG+j6x1uCb/CnaNqJlQc8NgshQo1KVeftk
+	YeTowCIpY40Mo0sLFO9lMIANb4eJKWJy02/RAYcFLY8mHTQb9ZvZnwJ3JnwHy5TT
+	KOempA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474ekpyrk3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Jun 2025 09:57:12 +0000 (GMT)
+	Thu, 12 Jun 2025 09:57:17 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55C9vBUq024133
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55C9vGQE013708
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Jun 2025 09:57:11 GMT
+	Thu, 12 Jun 2025 09:57:16 GMT
 Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 12 Jun 2025 02:57:05 -0700
+ 15.2.1544.9; Thu, 12 Jun 2025 02:57:11 -0700
 From: Taniya Das <quic_tdas@quicinc.com>
-Date: Thu, 12 Jun 2025 15:25:13 +0530
-Subject: [PATCH v9 09/10] clk: qcom: videocc-qcs615: Add QCS615 video clock
- controller driver
+Date: Thu, 12 Jun 2025 15:25:14 +0530
+Subject: [PATCH v9 10/10] arm64: defconfig: Enable QCS615 clock controllers
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +67,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250612-qcs615-mm-v9-clock-controllers-v9-9-b34dc78d6e1b@quicinc.com>
+Message-ID: <20250612-qcs615-mm-v9-clock-controllers-v9-10-b34dc78d6e1b@quicinc.com>
 References: <20250612-qcs615-mm-v9-clock-controllers-v9-0-b34dc78d6e1b@quicinc.com>
 In-Reply-To: <20250612-qcs615-mm-v9-clock-controllers-v9-0-b34dc78d6e1b@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -90,419 +89,66 @@ CC: Ajit Pandey <quic_ajipan@quicinc.com>,
         <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>,
         Taniya Das <quic_tdas@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov
-	<lumag@kernel.org>
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.15-dev-aa3f6
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=EovSrTcA c=1 sm=1 tr=0 ts=684aa478 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=JcO8rVKV c=1 sm=1 tr=0 ts=684aa47d cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=KKAkSRfTAAAA:8
- a=COk6AnOGAAAA:8 a=JAwqC2qxYZ4pZjR4haUA:9 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: zI2Q91wd0casNl_RAWPBHe5KO_RlKIJG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEyMDA3NiBTYWx0ZWRfX9ENUA4/v8+RB
- seFC5kdvLgnDDiF4W98GhQ05adNfku0WRRMGjZXxcH3OLNjzZZ1aPApIraoDxIlnJhaKggh5hHc
- kdfqhlhV6wHLBAu/GcP4rUtOL+ng0V61zlz7SKEfdb1hxr/lOdI/DKv7H8PDq/hZRkRgBMZ2iaX
- 8YWd3P5NOV0/zDBeQjgVXi98+uniey7JHWoXD7t85J6ycm/fwndGwbQqsQzTZyYCrnYzWJr5GDQ
- op/sQdAo7yKpRa5inSmVilnAos8VX15tWIlGy30zj03Ch0gn/V1yqrQP3Dkhm0j3+8twHOcVlxB
- vs1MX0S8Zmh2ltfKbLIK/esROC7AYuxPpoPjeCAIcnS0G4EBcpFE3kzsOUQqM/BptMYmgyHh8w5
- 83k6prWKmgIds+t2uDu0VnECuAC6O4OBRZljBthVPsWwLjxna2g37KQG2w65lkhcdB0cyFqO
-X-Proofpoint-GUID: zI2Q91wd0casNl_RAWPBHe5KO_RlKIJG
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=AElZlkIX1ip-SmTVEvQA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEyMDA3NiBTYWx0ZWRfX4eEC9irIRCCB
+ c0GJ/pkCEIfIqhs3M28ZoMazSJqoAZJbws+0H8GsYQzj+z1GhQ/oKmW7oB37oKZTi54qkNC6qGO
+ XRwgIscx2lig/Omu40GvFgHeRO96nGKv0+ib3QhGcaUGfBUhHh3eY0IpGevnwbbY06ObiLk+h+K
+ RhC3XCQm9lxKXsXgXeX3YkdImowYU2pH8oW23q3u2OJ3jNXHHOeae3yM0puGeHGpHqdySKxTPQc
+ v+cqvT9I+9qhyKNj0BGZ9gKtqqU1bAFv6e5PGUDC2m3Abz/BGXtYH/2G9sDoxGK2RNeVa+rEQ/F
+ NR9sJNl6kNXwucu2twQnG0IBXev0LcOEcF5rSfmYK7qFq+ZXyro4Oyzf0/i+v++0J503/R9Z6mw
+ acfXJCCf31lCoO7COzaFAtF2I6QNm0eqocn3HLkqetdhY1oga8Wzdp0DKL2wkvWFXg2tkuwC
+X-Proofpoint-GUID: vAnuZamaiF99YRnPZgpojiHxJpLaqJmW
+X-Proofpoint-ORIG-GUID: vAnuZamaiF99YRnPZgpojiHxJpLaqJmW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-12_07,2025-06-10_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999
- mlxscore=0 clxscore=1015 malwarescore=0 adultscore=0 lowpriorityscore=0
- phishscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506120076
+ mlxlogscore=762 bulkscore=0 spamscore=0 impostorscore=0 phishscore=0
+ priorityscore=1501 mlxscore=0 adultscore=0 clxscore=1015 malwarescore=0
+ suspectscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506120076
 
-Add support for the video clock controller for video clients to
-be able to request for the clocks on QCS615 platform.
+Enable the QCS615 display, video, camera and graphics clock controller
+for their respective functionalities on the Qualcomm QCS615 ride
+platform.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 ---
- drivers/clk/qcom/Kconfig          |   8 +
- drivers/clk/qcom/Makefile         |   1 +
- drivers/clk/qcom/videocc-qcs615.c | 332 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 341 insertions(+)
+ arch/arm64/configs/defconfig | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 2dd2937fd2a75e2ac4a72a45f5580f49dbb83fa0..b739f77b8555326464b2ae56b73d8ba9cca870d0 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -556,6 +556,14 @@ config QCS_GPUCC_615
- 	  Say Y if you want to support graphics controller devices and
- 	  functionality such as 3D graphics.
- 
-+config QCS_VIDEOCC_615
-+	tristate "QCS615 Video Clock Controller"
-+	select QCS_GCC_615
-+	help
-+	  Support for the video clock controller on QCS615 devices.
-+	  Say Y if you want to support video devices and functionality such as
-+	  video encode and decode.
-+
- config SC_CAMCC_7180
- 	tristate "SC7180 Camera Clock Controller"
- 	depends on ARM64 || COMPILE_TEST
-diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-index f2b95008ee4e682bb3eb67ec9774d0feb05aef3f..76b3af774a17539ef57f939b816d005d96dd779e 100644
---- a/drivers/clk/qcom/Makefile
-+++ b/drivers/clk/qcom/Makefile
-@@ -79,6 +79,7 @@ obj-$(CONFIG_QCS_GCC_404) += gcc-qcs404.o
- obj-$(CONFIG_QCS_GCC_615) += gcc-qcs615.o
- obj-$(CONFIG_QCS_GCC_8300) += gcc-qcs8300.o
- obj-$(CONFIG_QCS_GPUCC_615) += gpucc-qcs615.o
-+obj-$(CONFIG_QCS_VIDEOCC_615) += videocc-qcs615.o
- obj-$(CONFIG_QCS_Q6SSTOP_404) += q6sstop-qcs404.o
- obj-$(CONFIG_QCS_TURING_404) += turingcc-qcs404.o
- obj-$(CONFIG_QDU_ECPRICC_1000) += ecpricc-qdu1000.o
-diff --git a/drivers/clk/qcom/videocc-qcs615.c b/drivers/clk/qcom/videocc-qcs615.c
-new file mode 100644
-index 0000000000000000000000000000000000000000..14704185d9fa2548ade7dd60f4f9f5d378bb0938
---- /dev/null
-+++ b/drivers/clk/qcom/videocc-qcs615.c
-@@ -0,0 +1,332 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#include <linux/clk-provider.h>
-+#include <linux/module.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
-+
-+#include <dt-bindings/clock/qcom,qcs615-videocc.h>
-+
-+#include "clk-alpha-pll.h"
-+#include "clk-branch.h"
-+#include "clk-pll.h"
-+#include "clk-rcg.h"
-+#include "clk-regmap.h"
-+#include "clk-regmap-divider.h"
-+#include "clk-regmap-mux.h"
-+#include "common.h"
-+#include "gdsc.h"
-+#include "reset.h"
-+
-+enum {
-+	DT_BI_TCXO,
-+	DT_SLEEP_CLK,
-+};
-+
-+enum {
-+	P_BI_TCXO,
-+	P_SLEEP_CLK,
-+	P_VIDEO_PLL0_OUT_AUX,
-+	P_VIDEO_PLL0_OUT_AUX2,
-+	P_VIDEO_PLL0_OUT_MAIN,
-+};
-+
-+static const struct pll_vco video_cc_pll0_vco[] = {
-+	{ 500000000, 1000000000, 2 },
-+};
-+
-+/* 600MHz configuration VCO - 2 */
-+static struct alpha_pll_config video_pll0_config = {
-+	.l = 0x1f,
-+	.alpha_hi = 0x40,
-+	.alpha = 0x00,
-+	.alpha_en_mask = BIT(24),
-+	.vco_val = BIT(21),
-+	.vco_mask = GENMASK(21, 20),
-+	.main_output_mask = BIT(0),
-+	.config_ctl_val = 0x4001055b,
-+	.test_ctl_hi_val = 0x1,
-+	.test_ctl_hi_mask = 0x1,
-+};
-+
-+static struct clk_alpha_pll video_pll0 = {
-+	.offset = 0x42c,
-+	.vco_table = video_cc_pll0_vco,
-+	.num_vco = ARRAY_SIZE(video_cc_pll0_vco),
-+	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
-+	.clkr = {
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_pll0",
-+			.parent_data = &(const struct clk_parent_data) {
-+				.index = DT_BI_TCXO,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_alpha_pll_slew_ops,
-+		},
-+	},
-+};
-+
-+static const struct parent_map video_cc_parent_map_0[] = {
-+	{ P_SLEEP_CLK, 0 },
-+};
-+
-+static const struct clk_parent_data video_cc_parent_data_0_ao[] = {
-+	{ .index = DT_SLEEP_CLK },
-+};
-+
-+static const struct parent_map video_cc_parent_map_1[] = {
-+	{ P_BI_TCXO, 0 },
-+	{ P_VIDEO_PLL0_OUT_MAIN, 1 },
-+	{ P_VIDEO_PLL0_OUT_AUX, 2 },
-+	{ P_VIDEO_PLL0_OUT_AUX2, 3 },
-+};
-+
-+static const struct clk_parent_data video_cc_parent_data_1[] = {
-+	{ .index = DT_BI_TCXO },
-+	{ .hw = &video_pll0.clkr.hw },
-+	{ .hw = &video_pll0.clkr.hw },
-+	{ .hw = &video_pll0.clkr.hw },
-+};
-+
-+static const struct freq_tbl ftbl_video_cc_sleep_clk_src[] = {
-+	F(32000, P_SLEEP_CLK, 1, 0, 0),
-+	{ }
-+};
-+
-+static struct clk_rcg2 video_cc_sleep_clk_src = {
-+	.cmd_rcgr = 0xaf8,
-+	.mnd_width = 0,
-+	.hid_width = 5,
-+	.parent_map = video_cc_parent_map_0,
-+	.freq_tbl = ftbl_video_cc_sleep_clk_src,
-+	.clkr.hw.init = &(const struct clk_init_data) {
-+		.name = "video_cc_sleep_clk_src",
-+		.parent_data = video_cc_parent_data_0_ao,
-+		.num_parents = ARRAY_SIZE(video_cc_parent_data_0_ao),
-+		.ops = &clk_rcg2_ops,
-+	},
-+};
-+
-+static const struct freq_tbl ftbl_video_cc_venus_clk_src[] = {
-+	F(19200000, P_BI_TCXO, 1, 0, 0),
-+	F(133333333, P_VIDEO_PLL0_OUT_MAIN, 4.5, 0, 0),
-+	F(240000000, P_VIDEO_PLL0_OUT_MAIN, 2.5, 0, 0),
-+	F(300000000, P_VIDEO_PLL0_OUT_MAIN, 2, 0, 0),
-+	F(380000000, P_VIDEO_PLL0_OUT_MAIN, 2, 0, 0),
-+	F(410000000, P_VIDEO_PLL0_OUT_MAIN, 2, 0, 0),
-+	F(460000000, P_VIDEO_PLL0_OUT_MAIN, 2, 0, 0),
-+	{ }
-+};
-+
-+static struct clk_rcg2 video_cc_venus_clk_src = {
-+	.cmd_rcgr = 0x7f0,
-+	.mnd_width = 0,
-+	.hid_width = 5,
-+	.parent_map = video_cc_parent_map_1,
-+	.freq_tbl = ftbl_video_cc_venus_clk_src,
-+	.clkr.hw.init = &(const struct clk_init_data) {
-+		.name = "video_cc_venus_clk_src",
-+		.parent_data = video_cc_parent_data_1,
-+		.num_parents = ARRAY_SIZE(video_cc_parent_data_1),
-+		.flags = CLK_SET_RATE_PARENT,
-+		.ops = &clk_rcg2_shared_ops,
-+	},
-+};
-+
-+static struct clk_branch video_cc_sleep_clk = {
-+	.halt_reg = 0xb18,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0xb18,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "video_cc_sleep_clk",
-+			.parent_data = &(const struct clk_parent_data){
-+				.hw = &video_cc_sleep_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_vcodec0_axi_clk = {
-+	.halt_reg = 0x8f0,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x8f0,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_cc_vcodec0_axi_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_vcodec0_core_clk = {
-+	.halt_reg = 0x890,
-+	.halt_check = BRANCH_HALT_VOTED,
-+	.clkr = {
-+		.enable_reg = 0x890,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_cc_vcodec0_core_clk",
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&video_cc_venus_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_venus_ahb_clk = {
-+	.halt_reg = 0x9b0,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x9b0,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_cc_venus_ahb_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_venus_ctl_axi_clk = {
-+	.halt_reg = 0x8d0,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x8d0,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_cc_venus_ctl_axi_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_venus_ctl_core_clk = {
-+	.halt_reg = 0x850,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x850,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_cc_venus_ctl_core_clk",
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&video_cc_venus_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct gdsc vcodec0_gdsc = {
-+	.gdscr = 0x874,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0x6,
-+	.pd = {
-+		.name = "vcodec0_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = HW_CTRL_TRIGGER | POLL_CFG_GDSCR,
-+};
-+
-+static struct gdsc venus_gdsc = {
-+	.gdscr = 0x814,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0x6,
-+	.pd = {
-+		.name = "venus_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = POLL_CFG_GDSCR,
-+};
-+
-+static struct clk_regmap *video_cc_qcs615_clocks[] = {
-+	[VIDEO_CC_SLEEP_CLK] = &video_cc_sleep_clk.clkr,
-+	[VIDEO_CC_SLEEP_CLK_SRC] = &video_cc_sleep_clk_src.clkr,
-+	[VIDEO_CC_VCODEC0_AXI_CLK] = &video_cc_vcodec0_axi_clk.clkr,
-+	[VIDEO_CC_VCODEC0_CORE_CLK] = &video_cc_vcodec0_core_clk.clkr,
-+	[VIDEO_CC_VENUS_AHB_CLK] = &video_cc_venus_ahb_clk.clkr,
-+	[VIDEO_CC_VENUS_CLK_SRC] = &video_cc_venus_clk_src.clkr,
-+	[VIDEO_CC_VENUS_CTL_AXI_CLK] = &video_cc_venus_ctl_axi_clk.clkr,
-+	[VIDEO_CC_VENUS_CTL_CORE_CLK] = &video_cc_venus_ctl_core_clk.clkr,
-+	[VIDEO_PLL0] = &video_pll0.clkr,
-+};
-+
-+static struct gdsc *video_cc_qcs615_gdscs[] = {
-+	[VCODEC0_GDSC] = &vcodec0_gdsc,
-+	[VENUS_GDSC] = &venus_gdsc,
-+};
-+
-+static const struct qcom_reset_map video_cc_qcs615_resets[] = {
-+	[VIDEO_CC_INTERFACE_BCR] = { 0x8b0 },
-+	[VIDEO_CC_VCODEC0_BCR] = { 0x870 },
-+	[VIDEO_CC_VENUS_BCR] = { 0x810 },
-+};
-+
-+static const struct regmap_config video_cc_qcs615_regmap_config = {
-+	.reg_bits = 32,
-+	.reg_stride = 4,
-+	.val_bits = 32,
-+	.max_register = 0xb94,
-+	.fast_io = true,
-+};
-+
-+static const struct qcom_cc_desc video_cc_qcs615_desc = {
-+	.config = &video_cc_qcs615_regmap_config,
-+	.clks = video_cc_qcs615_clocks,
-+	.num_clks = ARRAY_SIZE(video_cc_qcs615_clocks),
-+	.resets = video_cc_qcs615_resets,
-+	.num_resets = ARRAY_SIZE(video_cc_qcs615_resets),
-+	.gdscs = video_cc_qcs615_gdscs,
-+	.num_gdscs = ARRAY_SIZE(video_cc_qcs615_gdscs),
-+};
-+
-+static const struct of_device_id video_cc_qcs615_match_table[] = {
-+	{ .compatible = "qcom,qcs615-videocc" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, video_cc_qcs615_match_table);
-+
-+static int video_cc_qcs615_probe(struct platform_device *pdev)
-+{
-+	struct regmap *regmap;
-+
-+	regmap = qcom_cc_map(pdev, &video_cc_qcs615_desc);
-+	if (IS_ERR(regmap))
-+		return PTR_ERR(regmap);
-+
-+	clk_alpha_pll_configure(&video_pll0, regmap, &video_pll0_config);
-+
-+	/* Keep some clocks always enabled */
-+	qcom_branch_set_clk_en(regmap, 0xab8); /* VIDEO_CC_XO_CLK */
-+
-+	return qcom_cc_really_probe(&pdev->dev, &video_cc_qcs615_desc, regmap);
-+}
-+
-+static struct platform_driver video_cc_qcs615_driver = {
-+	.probe = video_cc_qcs615_probe,
-+	.driver = {
-+		.name = "videocc-qcs615",
-+		.of_match_table = video_cc_qcs615_match_table,
-+	},
-+};
-+
-+module_platform_driver(video_cc_qcs615_driver);
-+
-+MODULE_DESCRIPTION("QTI VIDEOCC QCS615 Driver");
-+MODULE_LICENSE("GPL");
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 510e0d0a3397929bb267f558d4c2ace87eb3979b..2f053ef2c84a637a0161edaa0c9c1e19dc4e9c1e 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1376,11 +1376,15 @@ CONFIG_MSM_GCC_8998=y
+ CONFIG_MSM_MMCC_8998=m
+ CONFIG_QCM_GCC_2290=y
+ CONFIG_QCM_DISPCC_2290=m
++CONFIG_QCS_DISPCC_615=m
++CONFIG_QCS_CAMCC_615=m
+ CONFIG_QCS_GCC_404=y
+ CONFIG_QCS_GCC_615=y
+ CONFIG_QCS_GCC_8300=y
+ CONFIG_SC_CAMCC_7280=m
+ CONFIG_SA_CAMCC_8775P=m
++CONFIG_QCS_GPUCC_615=m
++CONFIG_QCS_VIDEOCC_615=m
+ CONFIG_QDU_GCC_1000=y
+ CONFIG_SC_CAMCC_8280XP=m
+ CONFIG_SC_DISPCC_7280=m
 
 -- 
 2.34.1
