@@ -1,80 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-61118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B181AD6EFB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 13:27:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F782AD6F0A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 13:30:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1BDC6189731D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 11:28:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C9CC11BC2034
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 11:30:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9FE423C4E9;
-	Thu, 12 Jun 2025 11:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26CE823C51A;
+	Thu, 12 Jun 2025 11:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WdCn39G2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RfdUCG1Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB2923A99F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 11:27:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE6923A99F;
+	Thu, 12 Jun 2025 11:29:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749727671; cv=none; b=qBqTr/gbYMh62ohl2sW5M2OYuLRj9qoBwsLJFtm+3EeAl+stMwQKxVCoWpjju1zlNYEPxYO2jCBAKAjlBErDGsZOJ/nDRqFQkLia/ASgwte9BBdAQb9GFI+WuNSQUfHjCQdeyyq5qR3QwlWc1A6RRAD0RN97D3cRSovdnVaBQL0=
+	t=1749727789; cv=none; b=Vis9NN6+HS9HxezLZQ1T36yAZs0L0hhyYazCYg6AXU0CBY4nA4fmrz9z5i7f7UW5OmPyU/uhxx7bNZ1xG2iTaBdgwceIqc+OZkDnHI61FEiRLGAFs6od/d8u8Qj1Sf6Z1lfRfu27BM6a8wFTLZWyF0RQGLs3ouDsV9uJDsqLf3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749727671; c=relaxed/simple;
-	bh=baOh6JNrNs+y+44obXR/Ufj9U6PUWPAjBVng4c8Z9hM=;
+	s=arc-20240116; t=1749727789; c=relaxed/simple;
+	bh=h0T3I7+TyMc8TPOcdKVmcbRavVxEBpO6mjA9/hD7GHQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A2ROOB/eCI6RnnjndpStse2f0FICUv5YSowWfSkqBhgyIG/nGzNISM7HPN6ICjLftFapTiJCrn0BfbsxYLariP9f+c1eX/UKRH/FqFiBVnLSfaBQRaQ9aByLvCel+Vm3AxQ9aeRpooyKfqIiQibV+fXIy09VHHLim6hss8fW1RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WdCn39G2; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-32a8abb1613so1240961fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 04:27:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749727668; x=1750332468; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UMJIO+9hxF2T1hW8fxlUtSq3+LhB5vVChGg7nGiwpMk=;
-        b=WdCn39G2E6CPs7UXaqW5eAx6v5HgjxmSyrVlYtyLsQdM2ITwC1kp2CUndzUoHt+FOA
-         EWeix5toMcAZ3uDE8TwSyL5+b6F2aNyZVQpwT4hmBLOvNqvFPHd8AElsa5Ttp3YkyTHV
-         llYqxZRCy582KbrH0NaWtru6HJqx5MM2sBtT/0mHwGA76lFcyA4jxn7IDZEF4GplP+/2
-         JXdl/yFRm3Y/AfmZxuLs43t4go5nBwtPY7I+OujwlCkJQ/8zUtvoPo+WAOM8wNuibtml
-         dKQg4AOOFiMCayfZMMUQIf3/j/Yeb6MabczG1MnO869I1mRZXEELzTU/UfAlXwx8v7Ku
-         5YoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749727668; x=1750332468;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UMJIO+9hxF2T1hW8fxlUtSq3+LhB5vVChGg7nGiwpMk=;
-        b=DAFtc5ZK84hPkL8QOrCT2OnIWpyxpx/qSIY7m31u8K8xVob1VxE/BC+D/fX7cOiXcV
-         bKAOMbOrjtm5N/4+6XiBxHhR53P5a2IkH/jlnGvWFNr0FUfQQuGKO8XjNgOUSbYDyADM
-         PVka1y5GKFxOo0W3XafuC1ZXf2DCfj36yKqDZ5hurebbbr5PWFYa2TffzQ59gYEcAUoU
-         r9Vs2Txu1MJxFJy1w+EqJfaWZ5+9eCVc4ufyz3uHuBBvoNG8W0PB9R7yZTM5Th8p5mzd
-         xffv2tyh2MwYXc2iY7OQ2KN4tRDZHyuZm21CGz88iNXDUt6v9YftR4OZWKmI7IzzNGmJ
-         TyNA==
-X-Forwarded-Encrypted: i=1; AJvYcCXnJ8pFko7Hte2juCzweZoOyjnNvVAzb4/g2pvKZNuGRN/fKuhZSJgx37wyiIAl1sulnbK35UBP9KPqs8gO@vger.kernel.org
-X-Gm-Message-State: AOJu0YwnADzEca5DyVyyKKKDIeVVwchq1xxE5D6fIUPhueQzQVaTRk3f
-	UY8Xl7x2gnoSEBk09jPWNftzOJ9JxRszwb2ejLoGTCpm4X6J8389BzG39Tk9wh0rlV4=
-X-Gm-Gg: ASbGncuZFaE5UfjipvoOcq0GSTwQx9vC5Oe+5ucI05vG2MTJ6whNGzxP7OCC7vvyfiF
-	RtkrMElWggFt7bYUdBwWUWM8qd3EtguI/EPI9S5wajrykFmXxXYXEqWKVMHh/zmP1oXn1wfg6Tx
-	DyN9shXzsHU/zQQG2+/pfqwdsyv4iONkGw1qNWb/IhziACWrLc2W0FK/SOVuSNprfgaY7lbzxtv
-	k/Mz3BHeuNGvF3rpSK6YTYPWWcMnGfFFSa9URtUFRgJJJYT//zLu4EMSfnFhIvgGSso/y//szR+
-	dvjBdIHAAFEQkXFnqR4RM5qmTvfHdFYKx121XS2gJ28hSulGcJt3lsObnFqwP7hupbInBN1JLwo
-	6d10gh22zPLPW1BOF0WOSzTzTL7wGuZSrl+ehCi8BMnSOsvtPcCU=
-X-Google-Smtp-Source: AGHT+IHim72L19yadAXZGJXEuLrBbBbuXPX7tGYPhPYpnsQljqwHSSz7SjlCn5GLRjBPKu2TFNsZbw==
-X-Received: by 2002:a05:651c:1a0a:b0:32a:6236:7094 with SMTP id 38308e7fff4ca-32b21d8c15fmr7846241fa.9.1749727667784;
-        Thu, 12 Jun 2025 04:27:47 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32b3321f973sm1821551fa.112.2025.06.12.04.27.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jun 2025 04:27:47 -0700 (PDT)
-Message-ID: <51a91c84-c83f-4b22-9861-88929b222432@linaro.org>
-Date: Thu, 12 Jun 2025 14:27:46 +0300
+	 In-Reply-To:Content-Type; b=Ccns66A+UA6r5RqIuhn4ubox8uTQluhlZKJS99aCMDEdkx3/4kFJY928geWH9Z6paQ2lhaETwdeGwxnyb3jNayvUZUZIj4I0lAtZel55QDJB2bV6z9sXBz9FLOuYf9GvsOp+RYTHFsF2mokvcys2OdUiAFrB59CInilRzdK6nyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RfdUCG1Y; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3110C4CEEA;
+	Thu, 12 Jun 2025 11:29:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749727788;
+	bh=h0T3I7+TyMc8TPOcdKVmcbRavVxEBpO6mjA9/hD7GHQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=RfdUCG1Y+NMTMgwC6sdb2WUIdBETLGR2cl+QEVneNbfasc66xvmqmDv2xqr/J1+zY
+	 ZpEjTI2ohRf2iuWtU3DGYamY10vvSjHiNI8ghanj3moN/B2+SLBBovKMZff6FBjSIn
+	 1KNzOVCtmn4kwkoHEqGceFJrtIMjmgXDIZL4sQa/glz7+3tRYqJE2e3kcAcOo2VfCo
+	 seeQ7z/Ps4D8JyratgoT2PloZk7fYuE7iQWFR+lcQDXYdnta4+SCWKS9FyvtaXS3bI
+	 uCPwkiXSbNK9wgkbMTTMF1w33nFG5GI9Q0LURf1SkCTnFWI3aBNhl6sLTbsbRQcQx4
+	 u0TJCoCx1BV1w==
+Message-ID: <750da319-d25f-454d-b376-ebbc194e0e41@kernel.org>
+Date: Thu, 12 Jun 2025 13:29:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,90 +50,97 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] dt-bindings: media: qcom: Add Qualcomm MIPI
- C-/D-PHY schema for CSIPHY IPs
-Content-Language: ru-RU
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org
-References: <20250612011531.2923701-1-vladimir.zapolskiy@linaro.org>
- <20250612011531.2923701-9-vladimir.zapolskiy@linaro.org>
- <6e411e89-ce1e-4d6a-8d48-b800554f830e@kernel.org>
- <e02cead0-665d-443a-a884-c3a307409c66@kernel.org>
- <9e38a09b-1521-4196-b179-d29c62e143bc@linaro.org>
- <d424481b-cb06-4bee-8d36-5e31ca2838a2@kernel.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <d424481b-cb06-4bee-8d36-5e31ca2838a2@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v2 1/4] dt-bindings: opp: adreno: Update regex of OPP
+ entry
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>,
+ Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
+ Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-pm@vger.kernel.org
+References: <20250611-x1p-adreno-v2-0-5074907bebbd@oss.qualcomm.com>
+ <20250611-x1p-adreno-v2-1-5074907bebbd@oss.qualcomm.com>
+ <492417fe-c086-4980-b108-0487bad08155@kernel.org>
+ <d482653e-5c0e-4b03-98d6-2c898b445917@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <d482653e-5c0e-4b03-98d6-2c898b445917@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 6/12/25 14:02, Krzysztof Kozlowski wrote:
-> On 12/06/2025 09:57, Vladimir Zapolskiy wrote:
->> On 6/12/25 10:39, Krzysztof Kozlowski wrote:
->>> On 12/06/2025 09:38, Krzysztof Kozlowski wrote:
->>>> On 12/06/2025 03:15, Vladimir Zapolskiy wrote:
->>>>> Add dt-binding schema for Qualcomm CAMSS CSIPHY IP, which provides
->>>>> MIPI C-PHY/D-PHY interfaces on Qualcomm SoCs.
->>>>>
->>>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->>>>> ---
->>>>> RFC verion of the change:
->>>>> * https://lore.kernel.org/all/20250513143918.2572689-1-vladimir.zapolskiy@linaro.org/
->>>>>
->>>>> Changes from RFC to v1:
->>>>> * moved from phy/qcom,csiphy.yaml to media/qcom,csiphy.yaml,
->>>>> * added 'clock-names' property,
->>>>> * removed SM8250 CSIPHY specifics, a generic binding is good enough for now,
->>>
->>>
->>> Now I noticed this... weird change and clearly a no-go.
->>>
->>> Device binding cannot be generic, so it is not good enough for now.
->>> Please write specific bindings for specific hardware.
->>>
+On 11/06/2025 14:24, Akhil P Oommen wrote:
+>>>  
+>>>  patternProperties:
+>>> -  '^opp-[0-9]+$':
+>>> +  '^opp(-?[0-9]+)*$':
 >>
->> Can I add platform specific changes on top of the displayed generic one
->> like in Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
->> etc?
->>
->> The generic compatible is sufficienlty good for adding the enhanced
->> CSIPHY support to any currently present in the upstream platform CAMSS.
->>
->> Obviously I can rename it to something SoC-specific, but then a question
->> arises, if a selected platform has to be a totally new one in the upstream,
->> or it could be among any of platforms with a ready CAMSS, and a backward
->> compatibility is preserved by these series and the new CSIPHY dt bindings.
+>> Not correct regex. You allow "opp", "opp1" and all other unusual
+>> variants. Commit does not explain what problem you are solving, so I
+>> have no clue what you want here, but for sure opp1 is wrong.
 > 
-> Just use a specific compatible for the actual hardware this is being
-> added for. I don't understand why this is different than all other work
-> upstream.
+> Just to confirm, would this be fine for the requirement I mentioned above?
+> 
+> "'^opp(-[0-9]+)*$'"
 
-There are very close examples in upstream, for instance that's a generic
-value from Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml:
+No, You did not solve half of the problems - still allows "opp" and
+commit msg does not explain why "opp" is now correct. Describe the
+actual problem and then write the regex solving it in specific way, not
+causing other effects.
 
-properties:
-   compatible:
-     enum:
-       - qcom,dsi-phy-10nm
-       - qcom,dsi-phy-10nm-8998
-
-To save time reviewing the next version of the same change, will you
-accept a list of acceptable compatible properties like this one?
-
-properties:
-   compatible:
-     enum:
-       - qcom,csiphy
-       - qcom,sm8250-csiphy
-
---
-Best wishes,
-Vladimir
+Best regards,
+Krzysztof
 
