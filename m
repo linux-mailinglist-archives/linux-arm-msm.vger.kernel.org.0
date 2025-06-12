@@ -1,87 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-61147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07BA5AD7D5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 23:24:16 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7310BAD7D62
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 23:25:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C2CA3B5613
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 21:23:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 55901189893F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 21:25:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F4FC2D4B7A;
-	Thu, 12 Jun 2025 21:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0716029B227;
+	Thu, 12 Jun 2025 21:24:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="A0svTzDM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JTPKirrs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BCC156C69
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 21:24:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6151531E3;
+	Thu, 12 Jun 2025 21:24:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749763451; cv=none; b=RaU9JsqMoL/EP9KBD+1sq3PrUeduIERmR8zi+u9UT4UNhr/9wifxshmtbflnVQI7LjQgmQ6+vRXjY2EdgCf5rsQSZ4bigyWEC1Ac1T9LWQjh7Rc8HoQktwScQTpQe8XIQpstcp8xbLxwHrz1J72G1GRYZevDXBmYN3tBOu4vrKg=
+	t=1749763497; cv=none; b=h+yTC3hsGr8lJiomZv7c48i55ANwYwXivq2PmZ0qKQd6W4SZZuP9xmrYHJ1/K+fzd/ZGWruv9PLRmG1vLuw6DAs8dYOkQvTvd+EUb+fOW8tR99MY51Tupy/YRqYaGXgdPqReKfy6+MdgpmYtu/9y4d+Dr9AbKw+SW/xGIPmcp7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749763451; c=relaxed/simple;
-	bh=EAiFdZRb0iwdQ7gdqsgVwQKl6NqJs/YQOLPXfSliJ50=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=QhjPim3/uEXgqa1+utElR3dqzjhFifzeQ35yV85rIsxNnPpQEUF8AtdYtw5kEJX+hhgDrRAQApKQ5Gpo5UnNqcvdqmSxBNmeaF21j4gqrC6U1J8PbnAyWD9rYVxcII2sfftR5cjyLr2U7P10bGbViWWaDzNH3qVgy3V1qouIulw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=A0svTzDM; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55CKMwv2026009
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 21:24:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	R4kkaqz6aoxGxzS4kTIIcyBNqY3fNdzJXVUNZZZLfnE=; b=A0svTzDMFjZBJMSQ
-	qmC9YDrXyO+28J483GHtxHwYApBrQNam0M7my+6AY2nuDc3r9QxxpKGiaB9wJM1y
-	71aE6XuWmbm4/jFMn/gRO/83sWH4dbIgAm/VhqikjFXZqHTTOued/o2dgj25Z4xX
-	d29f5TvThXd1S/v0C47c1zhmyNFXx00BRch1kmnEqxiyNs3IT9Qsb9ee1ai5Y6vj
-	BTwXNRzWMyoU4+ldx8LwVbY7h3fLNvwthfRkilgvWZm8WA9moBl7g28f6n6ZVxW9
-	ayzektr493EYn3yENzj81Zicveg1gJGFQyZqArFRmzem2u+KKcyUSWlPLexXJKen
-	1gIdGw==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474dn6hw8s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 21:24:08 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-747fa83d81dso1279554b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 14:24:08 -0700 (PDT)
+	s=arc-20240116; t=1749763497; c=relaxed/simple;
+	bh=DHH8hkBqSA7Q7Nmp5dlwHqT6uJlwMcmjTvWINT+5pXA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=UTfz6UaipLhvED9UO1/8CPZgBplSU7fBmSRLseuVZ3p/kTZY2Nh0I0llRXurqiiFHI5tjOQjRzY/H6e4SCcoH1N5OjFsgKJmf2h1cJx4tMHhPNolcS4O4k4ouPmbxH2vEUtLfJU+8dHWRSn5RCvuyxgZHZGDcOEdhDzVfZRAO6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JTPKirrs; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3a50fc819f2so1251984f8f.2;
+        Thu, 12 Jun 2025 14:24:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749763494; x=1750368294; darn=vger.kernel.org;
+        h=content-transfer-encoding:autocrypt:content-language:cc:to:subject
+         :from:user-agent:mime-version:date:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=nCdRQGm7H/a7r2fssPG4pEF+V61SawrKuUSAco8WEoo=;
+        b=JTPKirrsVTH4K28jhGc2czjVfLWPuJAqfuFdSbqEZRXIRHQXIGxk7feiFHpAjWtTGl
+         94V5IGYuT1QzZZl9l6Q+9P0bh1pUXK9mMrj5s0fhqi5U58yoOe/6y3EF3/fZiBRBg/GY
+         482tyYpzCQtooznglNrrn+YCLvl3N4tj3W4Kdn6abtjfObTocBBLFua/tOLeBA5rEdQM
+         LwlM1+iWHv4wJOX6zAUFuC/8gpIdTgIT5GvGwlEF22Q5aSXO9wXLwXULyT+bcJXsu7zk
+         I/GF2wAuys4Usza831PN6rLGsBashTj73wASTmRCMxLT52ZpfTQzMYWSfEBpt09BGLlk
+         ZBgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749763447; x=1750368247;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=R4kkaqz6aoxGxzS4kTIIcyBNqY3fNdzJXVUNZZZLfnE=;
-        b=Fdjr7CAkG66YROZlV+YY++44AqzpbL1lXYypLB+orBJHpeArDIOrHFd63ROsdpOWil
-         4XYZxPpkAbJ5g3hFGaq0sB4wFj2XvEPOSYSr1qQav+6TUsLJwpVAPWdMhm6jtMorU5EF
-         +c2GFkrWE/DjvXQpBKgPdEQLNe8kW17QUfiMIinpAHD2JGaYE6dRYPc7jplb6LAHL1LI
-         zq8kii/FD6mx7Rr59QWXPiwDmXFdkAotdM04piDFLqWTGGwSRzWUp5BAJ/5rS3zo4hfj
-         AcP8TWc3O3j3ZyGGEu7LIay2sVYgKQyVPsMIJXuklyQw7LnYINL81fWSEuuGBxv/saEi
-         03XA==
-X-Gm-Message-State: AOJu0YwYQAE71w4E4fBXRO6uQQjoNZyBdYAVR6/oPV+MI3L73g6fzR0a
-	foGUUh0I6KgiX12CPbzhIuunEsbNLjrkqFb6M1ajC8ZJb/9t6oepkD8Zs8AO0TSuclc12+FCm0s
-	22FNHBRbyBuNHxwkFzLICc3UJfWr7RqmhB9EYx5T26ZAv678kKhTX7EkHT6yr518dRPEkS/5G9a
-	Q1
-X-Gm-Gg: ASbGncsL9910DbnojDR39JzeKAEzLqXsrCSACOkLSBxy26vbP0ZqoM0vFnoi0MBCyjc
-	MG89U1M7KMSIFyPKllFiORmOwtLOL1JeyV/uHjtf4U85xsoN8cBwyePLd7A2P2BhCc6WiNEpjHM
-	s4Oe9H2yXO5IGobYJog+VG6EI/VUoM6OXYToRdarDzgz6jdp6hIjz0cxcvd1aKTAFe9s1u3R9bb
-	RgtR41euQMTVQ4z244nfJo2S+fMB5gHN0/9d8CWTr7UOvFDSt8di9GGVlH8ab7vem4o/KLzAOlS
-	wB7vYkQwc9rGoeA6XHda1IJ3GrV9q5esq/P3k/5dv4F4zM1hbFSgMLfY7n+ybk93
-X-Received: by 2002:a05:6a00:3a04:b0:736:5438:ccc with SMTP id d2e1a72fcca58-7488f70d83amr946342b3a.9.1749763447190;
-        Thu, 12 Jun 2025 14:24:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFaro1S2SqADI8S7Y/c1VRuYB/ZsLniuDLm1/0zeqvd20a25ETugb6/sj+dQE9QI9PmVnCp5A==
-X-Received: by 2002:a05:6a00:3a04:b0:736:5438:ccc with SMTP id d2e1a72fcca58-7488f70d83amr946307b3a.9.1749763446715;
-        Thu, 12 Jun 2025 14:24:06 -0700 (PDT)
-Received: from [10.73.112.69] (pat_11.qualcomm.com. [192.35.156.11])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7489000749csm214938b3a.68.2025.06.12.14.24.05
+        d=1e100.net; s=20230601; t=1749763494; x=1750368294;
+        h=content-transfer-encoding:autocrypt:content-language:cc:to:subject
+         :from:user-agent:mime-version:date:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nCdRQGm7H/a7r2fssPG4pEF+V61SawrKuUSAco8WEoo=;
+        b=rfC/N2M43WFYzxFFdo91j96EarfhdL0xzoLoCTMmj51yZa24rkYn3x5lfUhXLf0VDw
+         vO1M35T5VvJ4vKD2hR+CaqZRxPVU03IeuLEugc2YZ33pZhHSBxZuv3etDuHSoM0yxAv8
+         NJX3JaDExSmu9ubMwbk4v4SLeCe/gGKG9pf0zpRT7WAFfMWMReF4gxuuqTje+huV23uy
+         v5FS7TUXOMOo/Bgpe8qH4LQXo4v38+L7LkpCY8Q5jn/Gi1wmBsv7iahHt4LtE6pxlyGz
+         1Bxu+OulvIchHQfLu0hoWsIG4GYdT4+dradDSVEzNXrB0C6NnSGrfoZSeJ+T1w4vj/Fj
+         KT/g==
+X-Forwarded-Encrypted: i=1; AJvYcCWfw9xjm0ziHHoPHcUhmBJ4f6aUaqJREbQVbUkwiRASkEtLzv4LPYOHlPj3n9C4U3Zkhwxs0Ew/Ym9twg/s@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx4R6yg36p1ThxnwMPwYq0cfShYxBiT3ZEEIRdWbFwcIjFNdtWP
+	9jtOPUBKh4RGUGkMgGQj/085XFzU+vqhgb3aTjaI/W6aNQ2qcb9Q48E8B5gItQ==
+X-Gm-Gg: ASbGnctNlXNPNGQcNrrGEbHHhXgkUdvCqS2pGxvZr+RoI+M0F/zKV3KR71SjFTRdpYX
+	cfETd6RwEsO5mI2hYJ2uOPflBPwuohRy+fmBGD9PqzJkSXEGBxXgR4YBDqTW+ELWDNnaGIQEpum
+	stX5d6JPyjfWYEpYXFlg7IZZOJ81MkLnaHEqpbLNDUwIFiFll+sWSsFlBrxUvcjsYp+9RTAin/G
+	9fHn6oKya+U/aVCj6pzsIF5NVPLF28oWpVuHFj6VQtuWK/Sv4OB/ZuIHuwh96sB8ZH2LI/cxwhq
+	g/TwD2XjV0K2AHvHwghJfnlAndsTV2s9TG2I+1t4pPJmDIsn1mMF+X8gtalTBPlZQNF3mt+7viP
+	RybZ5X0Mcts05L7VqlLizNvtlB/nUsKc9evzNX1lwQMHVY7ZwtdajUNRlIPfiqBBPZugVG4/j2K
+	q9szdlxwRRZ/V5VfxKdhyHH69Vjw==
+X-Google-Smtp-Source: AGHT+IEDyjt+W1tVeHRtL0gQRYPwvvU0pqeB3cicRl1P7ymc3YBPCaOz2r95S5pJzpgpTXILBSi7mg==
+X-Received: by 2002:a5d:64ee:0:b0:3a4:f50a:bd5f with SMTP id ffacd0b85a97d-3a56871b319mr609716f8f.31.1749763494281;
+        Thu, 12 Jun 2025 14:24:54 -0700 (PDT)
+Received: from ?IPV6:2003:ea:8f22:3f00:7533:d8b1:ff14:6fe5? (p200300ea8f223f007533d8b1ff146fe5.dip0.t-ipconnect.de. [2003:ea:8f22:3f00:7533:d8b1:ff14:6fe5])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4532de8f2e0sm32004255e9.8.2025.06.12.14.24.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jun 2025 14:24:06 -0700 (PDT)
-Message-ID: <683bc42f-2810-4d8f-8712-80f933c4b8ad@oss.qualcomm.com>
-Date: Thu, 12 Jun 2025 14:24:04 -0700
+        Thu, 12 Jun 2025 14:24:53 -0700 (PDT)
+Message-ID: <eec346a4-e903-48af-8150-0191932a7a0b@gmail.com>
+Date: Thu, 12 Jun 2025 23:25:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,197 +82,85 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/4] Add Qualcomm SA8255p based firmware managed PCIe
- root complex
-From: Mayank Rana <mayank.rana@oss.qualcomm.com>
-To: linux-pci@vger.kernel.org, lpieralisi@kernel.org, kw@linux.com,
-        robh@kernel.org, bhelgaas@google.com, andersson@kernel.org,
-        manivannan.sadhasivam@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, devicetree@vger.kernel.org,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, quic_ramkri@quicinc.com,
-        quic_shazhuss@quicinc.com, quic_msarkar@quicinc.com,
-        quic_nitegupt@quicinc.com
-References: <20250522001425.1506240-1-mayank.rana@oss.qualcomm.com>
- <584d217a-e8df-4dbe-ad70-2c69597a0545@oss.qualcomm.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
+Subject: [PATCH net-next 0/3] net: phy: make phy_package a separate module
+To: Andrew Lunn <andrew+netdev@lunn.ch>, Paolo Abeni <pabeni@redhat.com>,
+ Jakub Kicinski <kuba@kernel.org>, David Miller <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Andrew Lunn <andrew@lunn.ch>,
+ Russell King - ARM Linux <linux@armlinux.org.uk>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ linux-arm-msm@vger.kernel.org,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>, linux-mediatek@lists.infradead.org
 Content-Language: en-US
-In-Reply-To: <584d217a-e8df-4dbe-ad70-2c69597a0545@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEyMDE2NSBTYWx0ZWRfX3d7CNlqwnQ/n
- V44uyA/VfwZsc/+xeVscB1tZPFpXmwVhSYceXpWLbXQyHXRgBZxF7icC4vYzzeQ6bPRgGGBB0qf
- eqLUKL2L7FtM+AgKvocypyYV0BAKm28cUCTKX+bxF0iL5b8xFkIViEk1cMD4kKw/N6nTgJFYCj1
- KyMB62qtDBziuUxyATVz0qz8PxZ6OiRVzpW1f1Q9hDQlpSlMcRJqOAq+wmIoh9rEnF2LW2DNIPZ
- qVv86mRNrzqR9MDjoVu2YBGdGQxkqGgmfNvQ8WQPfI2tEFoaDprLODRyp0nJaBFlz7rcJ27iQQX
- bHm9f73kh7L4ONyNufrogGJmgvpJvioIUKBMFzZ0nDU4YVsf7TpJEA6rl95dKq0wo8wKZ3VkbtM
- A7g4R5ZHwmnD9DFfXHGla1CNH03E+6itKW9pbAkTVbJLVcz/fAGWcnxpyaIzv7SpLNUaqBth
-X-Proofpoint-GUID: z27Wko_Hmok4GPpvTpEdQdva2XOj5aY8
-X-Authority-Analysis: v=2.4 cv=FaQ3xI+6 c=1 sm=1 tr=0 ts=684b4578 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ZdW6uxA9NKXbfdqeeS2OGA==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=zt2UopkEdLRU5ZEdUz8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=OpyuDcXvxspvyRM73sMx:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: z27Wko_Hmok4GPpvTpEdQdva2XOj5aY8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-12_10,2025-06-12_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 adultscore=0
- mlxlogscore=999 mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0
- priorityscore=1501 clxscore=1015 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506120165
+Autocrypt: addr=hkallweit1@gmail.com; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Mani
+Only a handful of PHY drivers needs the PHY package functionality,
+therefore make it a separate module which is built only if needed.
 
-Gentle reminder for review.
+Heiner Kallweit (3):
+  net: phy: move __phy_package_[read|write]_mmd to phy_package.c
+  net: phy: make phy_package a separate module
+  net: phy: add Kconfig symbol PHY_PACKAGE
 
-Regards
-Mayank
+ drivers/net/phy/Kconfig           |  6 +++
+ drivers/net/phy/Makefile          |  3 +-
+ drivers/net/phy/mediatek/Kconfig  |  1 +
+ drivers/net/phy/phy-core.c        | 75 +++----------------------------
+ drivers/net/phy/phy_package.c     | 71 ++++++++++++++++++++++++++++-
+ drivers/net/phy/phylib-internal.h |  6 ++-
+ drivers/net/phy/qcom/Kconfig      |  1 +
+ 7 files changed, 91 insertions(+), 72 deletions(-)
 
-On 6/4/2025 10:38 AM, Mayank Rana wrote:
-> Hi Mani
-> 
-> As we discussed previously, I resumed working on this functionality.
-> Please help with reviewing this patchset.
-> 
-> Regards,
-> Mayank
-> On 5/21/2025 5:14 PM, Mayank Rana wrote:
->> Based on received feedback, this patch series adds support with existing
->> Linux qcom-pcie.c driver to get PCIe host root complex functionality on
->> Qualcomm SA8255P auto platform.
->>
->> 1. Interface to allow requesting firmware to manage system resources and
->> performing PCIe Link up (devicetree binding in terms of power domain and
->> runtime PM APIs is used in driver)
->>
->> 2. SA8255P is using Synopsys Designware PCIe controller which supports 
->> MSI
->> controller. Using existing MSI controller based functionality by 
->> exporting
->> important pcie dwc core driver based MSI APIs, and using those from
->> pcie-qcom.c driver.
->>
->> Below architecture is used on Qualcomm SA8255P auto platform to get ECAM
->> compliant PCIe controller based functionality. Here firmware VM based 
->> PCIe
->> driver takes care of resource management and performing PCIe link related
->> handling (D0 and D3cold). Linux pcie-qcom.c driver uses power domain to
->> request firmware VM to perform these operations using SCMI interface.
->> --------------------
->>
->>
->>                                     ┌────────────────────────┐
->>                                     │                        │
->>    ┌──────────────────────┐         │     SHARED MEMORY      
->> │            ┌──────────────────────────┐
->>    │     Firmware VM      │         │                        
->> │            │         Linux VM         │
->>    │ ┌─────────┐          │         │                        
->> │            │    ┌────────────────┐    │
->>    │ │ Drivers │ ┌──────┐ │         │                        
->> │            │    │   PCIE Qcom    │    │
->>    │ │ PCIE PHY◄─┤      │ │         │   ┌────────────────┐   
->> │            │    │    driver      │    │
->>    │ │         │ │ SCMI │ │         │   │                │   
->> │            │    │                │    │
->>    │ │PCIE CTL │ │      │ ├─────────┼───►    PCIE        
->> ◄───┼─────┐      │    └──┬──────────▲──┘    │
->>    │ │         ├─►Server│ │         │   │    SHMEM       │   │     
->> │      │       │          │       │
->>    │ │Clk, Vreg│ │      │ │         │   │                │   │     
->> │      │    ┌──▼──────────┴──┐    │
->>    │ │GPIO,GDSC│ └─▲──┬─┘ │         │   └────────────────┘   │     
->> └──────┼────┤PCIE SCMI Inst  │    │
->>    │ └─────────┘   │  │   │         │                        
->> │            │    └──▲──────────┬──┘    │
->>    │               │  │   │         │                        
->> │            │       │          │       │
->>    └───────────────┼──┼───┘         │                        
->> │            └───────┼──────────┼───────┘
->>                    │  │             │                        
->> │                    │          │
->>                    │  │             
->> └────────────────────────┘                    │          │
->>                    │  
->> │                                                           │          │
->>                    │  
->> │                                                           │          │
->>                    │  
->> │                                                           │          │
->>                    │  
->> │                                                           │IRQ       
->> │HVC
->>                IRQ │  
->> │HVC                                                        │          │
->>                    │  
->> │                                                           │          │
->>                    │  
->> │                                                           │          │
->>                    │  
->> │                                                           │          │
->> ┌─────────────────┴──▼───────────────────────────────────────────────────────────┴──────────▼──────────────┐
->> │                                                                                                          │
->> │                                                                                                          │
->> │                                      
->> HYPERVISOR                                                          │
->> │                                                                                                          │
->> │                                                                                                          │
->> │                                                                                                          │
->> └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
->>    ┌─────────────┐    ┌─────────────┐  ┌──────────┐   ┌───────────┐   
->> ┌─────────────┐  ┌────────────┐
->>    │             │    │             │  │          │   │           │   
->> │  PCIE       │  │   PCIE     │
->>    │   CLOCK     │    │   REGULATOR │  │   GPIO   │   │   GDSC    │   
->> │  PHY        │  │ controller │
->>    └─────────────┘    └─────────────┘  └──────────┘   └───────────┘   
->> └─────────────┘  └────────────┘
->> -----------------
->> Changes in v4:
->> - Addressed provided review comments from reviewers
->> Link to v3: https://lore.kernel.org/lkml/20241106221341.2218416-1- 
->> quic_mrana@quicinc.com/
->>
->> Changes in v3:
->> - Drop usage of PCIE host generic driver usage, and splitting of MSI 
->> functionality
->> - Modified existing pcie-qcom.c driver to add support for getting ECAM 
->> compliant and firmware managed
->> PCIe root complex functionality
->> Link to v2: https://lore.kernel.org/linux-arm- 
->> kernel/925d1eca-975f-4eec-bdf8-ca07a892361a@quicinc.com/T/
->>
->> Changes in v2:
->> - Drop new PCIe Qcom ECAM driver, and use existing PCIe designware 
->> based MSI functionality
->> - Add power domain based functionality within existing ECAM driver
->> Link to v1: https://lore.kernel.org/all/d10199df-5fb3-407b-b404- 
->> a0a4d067341f@quicinc.com/T/
->>
->> Tested:
->> - Validated NVME functionality with PCIe1 on SA8255P-RIDE platform
->>
->> Mayank Rana (4):
->>    PCI: dwc: Export dwc MSI controller related APIs
->>    PCI: host-generic: Rename and export gen_pci_init() API to allow ECAM
->>      creation
->>    dt-bindings: PCI: qcom,pcie-sa8255p: Document ECAM compliant PCIe root
->>      complex
->>    PCI: qcom: Add Qualcomm SA8255p based PCIe root complex functionality
->>
->>   .../bindings/pci/qcom,pcie-sa8255p.yaml       | 103 ++++++++++++++++
->>   drivers/pci/controller/dwc/Kconfig            |   1 +
->>   .../pci/controller/dwc/pcie-designware-host.c |  38 +++---
->>   drivers/pci/controller/dwc/pcie-designware.h  |  14 +++
->>   drivers/pci/controller/dwc/pcie-qcom.c        | 114 ++++++++++++++++--
->>   drivers/pci/controller/pci-host-common.c      |   5 +-
->>   include/linux/pci-ecam.h                      |   2 +
->>   7 files changed, 248 insertions(+), 29 deletions(-)
->>   create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie- 
->> sa8255p.yaml
->>
-> 
+-- 
+2.49.0
+
+
 
 
