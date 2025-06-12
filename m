@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-61149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BABCAD7D88
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 23:28:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 799F4AD7D8A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 23:28:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 07F76189A1B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 21:28:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D23A3A54DD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 21:28:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7326D2DCBEA;
-	Thu, 12 Jun 2025 21:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60FCB2DECDD;
+	Thu, 12 Jun 2025 21:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sto8UeVB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lbpvlZ6H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D724223327;
-	Thu, 12 Jun 2025 21:26:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5FD2D8DB1;
+	Thu, 12 Jun 2025 21:26:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749763563; cv=none; b=b35dKL0rJ7M0Ta4hjYT6OTQqKslpyRxiS8vnBouDRfJF2nnWnlrKB4KI/n5duy1+erX/GTt4qIPrQGTOdPdJIJe6sbmC504CkERxRn2YEOd4IQPTS2BXM6pgHY2RylNrXItfGkAU4R3vBoVkMEarlxhwkUhPPcW7GPqlLx6YVQo=
+	t=1749763610; cv=none; b=KGvNBZN4RG+WP2f+oLuL3fEM8n+d9GFWmXfTTLpDkW5H+drd2eb3QQVC1xoRZnyHud77qyQ+eIdGvpV2O3GpbiHgFnk1Z4wFhnMPbJIzNIyeKPIUDX7sItvE1t/MShUlKntmt1qiliwuHRaOZ2p+CBAWdXAcYYZp7GjN5qPSkxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749763563; c=relaxed/simple;
-	bh=lCyUXfgutWy9ZjpxhFwkAe8dCzlXmlRjDGuy6q4lx2k=;
+	s=arc-20240116; t=1749763610; c=relaxed/simple;
+	bh=US16q34C7zX6uKKctpq06uDvmccIaBfy2iK6ItBYqkE=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=pv6O4hMvZ95H6SthUIx3GGDlDaranijOrco/PFDFgmro9n2HiENHY4ZxcxRxuNogZUOYaqI7ycTn5+EPJB4534HTKlFL7Kb2F79bHGreKUIiSP9Wqsjx3PchP4wcYldFHZ5mEnOxk7UwE6zotW7EmJiBdY0COd9wWRK4W5EEdMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sto8UeVB; arc=none smtp.client-ip=209.85.128.43
+	 In-Reply-To:Content-Type; b=EXCg7ZwSu4Gh3TzZoDvq81ci0sslo9RcoLXBDCyzXnENsmHPKDucj3yAkeGzF+RBpxuexOxsVnERCVv4nK8SblJUyhi5nebsU3LNKz2F+4fyCbpY7JvcJM5Kk/vco9ZsJZRZ0t6mhjFYi6EWaAYT3BYrdsUmx/FtRzL2V7J8+i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lbpvlZ6H; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43edecbfb94so17457945e9.1;
-        Thu, 12 Jun 2025 14:26:01 -0700 (PDT)
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a5257748e1so1173133f8f.2;
+        Thu, 12 Jun 2025 14:26:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749763560; x=1750368360; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1749763607; x=1750368407; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:from:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4bgNZC8EZ+8YN8zYzWZFcyV2guT062DAzWNQyh77fkg=;
-        b=Sto8UeVBds17sWUVoLwJ5tPpTYpsES9DLxkJ80Mic/m3D6m6K3pST9+zD/NZS0mTJy
-         kowjerQ8yr3REtolZNAP8QXThe/vDtpXRwG3nGvbmLiGS1CDsNihAmF0PdFPg/+G9K9t
-         EM3gCqNUU73tUFxIvIgXVL9cUfvoWWIthDVCK74dXdNMp9uIoB//bM2zwMs/r9ahIY1M
-         AFPcrlcKGIjLn8ZYusvUdobTdRlC9YRIyi7hVPMu7NL4wQ+4WjrSZpC/shn29NNJLG7B
-         m6bPFtptukVD7tpDBFJ7I0QSp99POUu/Yw+ImASM8saZ9Upt49masY9C1+QNMI7N/biT
-         qn9A==
+        bh=Fo9wzmPugQy46hcPSYpcUoW3QHliUX1AUw5rA3sdlD0=;
+        b=lbpvlZ6H+R3WiOpKrbbjZFWzZmsUT3pAOa6xkry1qL1sxYRt0dcCRfrd2HjYFo4+Um
+         ovXkIlEWlGYFgfwcQ+EtyXB5NjLiX2CVpuHJwv+2t4UFFuhLTkKuEchCrzxBhDgkk+yq
+         aCQaMAJJl5M6nemIX+VTXLsruoq1HsJ4pG/zZusg0d8UpI0+5cPjH3t+6BLyPVDFMZ+p
+         8qbbjFc77EiY/RsL+dapyMMOGaO8kZEv738kEWh3ZJZswElQIm4GXRaAe3FPyJeWeuaS
+         lIytffx7+ZwWmIrYkqiaPuNEXJIlgazU99URALM7ydvfFmA0iL3Tmidt8wCFq1daLaE1
+         TsyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749763560; x=1750368360;
+        d=1e100.net; s=20230601; t=1749763607; x=1750368407;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :references:cc:to:from:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=4bgNZC8EZ+8YN8zYzWZFcyV2guT062DAzWNQyh77fkg=;
-        b=oI1Bm5SNWcL2G2n+vxQcU+W67Jr92CnyDTn1HjZ//7QULEJQvY19HtIqODTkyHpUJH
-         t2BkcYfPUPDSZl2FqeG4nnr1nC6hvUT7G2i6JYZHewlubyKooMXCkhrZ5DBhEPX1NtFT
-         vfXk1PRpruIQRA5LtEuC5HT6U3lge/hCqOOX2zDEKtGSh1vpQCOHuigfHVZYpufIv+Cm
-         cHZBfP1f/ey57Xfd05LmxjlKOR48DxgACkwnPLUDaplHpC5Ij7FBHHX2eiE2GHEAWO/9
-         IpNUrGFVwr7iQDeNEErl828W9oWAilYOeZJAiPW89jB81ojji7oVFY78qVJup90BOucC
-         Y4jA==
-X-Forwarded-Encrypted: i=1; AJvYcCWuFKkNjWrGT2EWiGf5doXp2RGrtoZ8uHYDgVb412jJNfR/epHcd9YO0bsjiWNKILgJRBph0x4ajttTQ0q8@vger.kernel.org
-X-Gm-Message-State: AOJu0YzoIXpCUjJsgekY/pH4re2/wxwzwyAzRkqT+XZMUGn1RfcpkR+O
-	lgZ+tj0UgWDtkiIHANQAs23nTOIkPZbzyOtxD95IPdF+r3zZKg/Mz0en
-X-Gm-Gg: ASbGncsR5wsfCZAk+McfBbMFijPSYEOhogSEfZIiUpthfI7jHOdWpRq6zQzJHZEwcT1
-	OF2OG98Zq5V9pdSTPKjmLE1IObGXGzcCLqhrtXyQL380VNWxQMQRir6tBS1ejS7OCh8OKhRDgDK
-	IUnngB1H+g93/KDtlp3z9ZAMH7I9pNcAZtwck8TnRj2FiME6qtYpa1u6AimCVK+Mqw4UWhdcSmO
-	88cHeCSMd20W2DnKL9/tYAt1yhhhLtrAZF0K/6qCvUVEHYOX1XKAYFmVW1cbdcQBapPBKszfAeq
-	eEhOkhwQ2gdw/UfQmk1pox2b6vwG3Gntg0LXPbek7owxbZdlM/xd7FM0niErmMxFcdd1FNF540Y
-	fIHQrdSaLle0RCuKl4wbq0gRm6M/pZNeWr+sgUQhe8WKs0Eomro4hm1sYPH0tRxfPWnMSh7iuMQ
-	cr1/SBkXdQrErROYkIZS+MvBOMvHTcqidfDms1
-X-Google-Smtp-Source: AGHT+IHDrhuvDBNzi1HkVALmKY8HkCyd4dp7xmwD3CMCAlBZD/sd6lcRLB41MxGjbZLFJ5vPTfE4cg==
-X-Received: by 2002:a05:6000:1ace:b0:3a4:f379:65b6 with SMTP id ffacd0b85a97d-3a56876c6ffmr585636f8f.46.1749763559385;
-        Thu, 12 Jun 2025 14:25:59 -0700 (PDT)
+        bh=Fo9wzmPugQy46hcPSYpcUoW3QHliUX1AUw5rA3sdlD0=;
+        b=vgrxDJqE2WRUR8NP48x9kh3aVu+dGyUoYkoRA743Sm8rooO4neRpVJ7pFGDkP92mG6
+         CXvHCCuW7XAHG8GeCDwwEdA8z4YQ45+9m7Vw6fWLZvhc9jKe1t3bXZgeKASt5g2qPIZT
+         /mG3/En7mGSCXcWEtX/hsyzW3sKMvvTlRw6KQ8ozI9DhiDZtqitq4QHFRNsetgY/+D4k
+         xeP5V8FPXbMuk7u1HoxIM00+b4GP0PDKvrDx+QZNrCGR7FSnPgEYiZw0D2bvjYC8HFUW
+         NjZm0Yc6pI+OjY1wG58qMYTikMk8tkKLVP1ZjmRc7BvmvTZ34UN8vJOfnWS9ly4pJ8XB
+         4oTg==
+X-Forwarded-Encrypted: i=1; AJvYcCUbcu1ORqmQjPJGX0YLG4XJzreEc1x9IK376WvIYeCd7bIEG+MQfYGq25fbaYlwpPJI7t4a0oASTqMHniXd@vger.kernel.org
+X-Gm-Message-State: AOJu0YwjnmACGmRVxOWIoPfCMGDyH8e2PwDuas3gYyADYEa8O+SBXWqf
+	IPT/sxvWlOrdoN4KW1W0KCagMgwW9u5bYrOA5TwlkH4hbIyHsvSbZf35
+X-Gm-Gg: ASbGncsw5Nl8F3jSUkPaEsyaxanmj8dsnK+zl7ovsNXd2qLHhZuBbewTcCfR8auH1VW
+	rVvCjHLzq30iI+CQ1GJnB6jKN07TrYTaiK52SL67c30Qumgr27zCnR9V2TlqCreB8rFlihCn5hn
+	z6qsTS4rCEjwPa6REnpyLF7vShNDo5I8amHYX37jUPCLDEZc1UF/5HizRinUH0CiT8seltIVfAL
+	bTAgFk0frHPyPxCaq6w3bhCMbcAZk92v0mgZRhZgzsREJi/l/EmlfPkOwfZpqa6JsxlKjSOrOQ0
+	r895Nnxipp8K0dzZ7ykowlQSx4N69bD30CqmFwFhlLftyoOSJjcJZSD6vknbjNXgaF+TSrbgqyR
+	QIKM6d+nSKEXcNq7UZIFIO1UTprCy/qabWC2Pv205EM3tThd7TVvBrgLd58XMG1RCNmrTDayQwt
+	GuWCfAjtgWcuiiRMzuOYUA8pEviQ==
+X-Google-Smtp-Source: AGHT+IGjhaPDdiFgN2xGS7Y5o5eCrajDG/RKgkSt5hb2yP8w38zJXvf9AZOqP79PpvYJ+nGTlwFQqA==
+X-Received: by 2002:a05:6000:4313:b0:3a4:f7db:6ff7 with SMTP id ffacd0b85a97d-3a56878834emr701000f8f.52.1749763606594;
+        Thu, 12 Jun 2025 14:26:46 -0700 (PDT)
 Received: from ?IPV6:2003:ea:8f22:3f00:7533:d8b1:ff14:6fe5? (p200300ea8f223f007533d8b1ff146fe5.dip0.t-ipconnect.de. [2003:ea:8f22:3f00:7533:d8b1:ff14:6fe5])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3a568b28240sm404295f8f.72.2025.06.12.14.25.57
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3a568b5bfefsm388520f8f.88.2025.06.12.14.26.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jun 2025 14:25:58 -0700 (PDT)
-Message-ID: <8956fa53-3eda-4079-8203-a8fddcc17bf3@gmail.com>
-Date: Thu, 12 Jun 2025 23:26:04 +0200
+        Thu, 12 Jun 2025 14:26:46 -0700 (PDT)
+Message-ID: <66bb4cce-b6a3-421e-9a7b-5d4a0c75290e@gmail.com>
+Date: Thu, 12 Jun 2025 23:26:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,8 +84,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH net-next 1/3] net: phy: move __phy_package_[read|write]_mmd to
- phy_package.c
+Subject: [PATCH net-next 2/3] net: phy: make phy_package a separate module
 From: Heiner Kallweit <hkallweit1@gmail.com>
 To: Andrew Lunn <andrew+netdev@lunn.ch>, Paolo Abeni <pabeni@redhat.com>,
  Jakub Kicinski <kuba@kernel.org>, David Miller <davem@davemloft.net>,
@@ -146,234 +145,47 @@ In-Reply-To: <eec346a4-e903-48af-8150-0191932a7a0b@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Move both functions to phy_package.c, so that phy_core.c no longer
-has a dependency on phy_package.c (phy_package_address).
+Make phy_package a separate module, so that this code is only loaded
+if needed.
 
 Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 ---
- drivers/net/phy/phy-core.c        | 75 +++----------------------------
- drivers/net/phy/phy_package.c     | 68 +++++++++++++++++++++++++++-
- drivers/net/phy/phylib-internal.h |  6 ++-
- 3 files changed, 78 insertions(+), 71 deletions(-)
+ drivers/net/phy/Makefile      | 3 ++-
+ drivers/net/phy/phy_package.c | 3 +++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/phy-core.c b/drivers/net/phy/phy-core.c
-index e177037f9..27f183356 100644
---- a/drivers/net/phy/phy-core.c
-+++ b/drivers/net/phy/phy-core.c
-@@ -375,8 +375,8 @@ static void mmd_phy_indirect(struct mii_bus *bus, int phy_addr, int devad,
- 			devad | MII_MMD_CTRL_NOINCR);
- }
+diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
+index 7827609e9..4e69597f2 100644
+--- a/drivers/net/phy/Makefile
++++ b/drivers/net/phy/Makefile
+@@ -3,7 +3,7 @@
  
--static int mmd_phy_read(struct mii_bus *bus, int phy_addr, bool is_c45,
--			int devad, u32 regnum)
-+int mmd_phy_read(struct mii_bus *bus, int phy_addr, bool is_c45,
-+		 int devad, u32 regnum)
- {
- 	if (is_c45)
- 		return __mdiobus_c45_read(bus, phy_addr, devad, regnum);
-@@ -385,9 +385,10 @@ static int mmd_phy_read(struct mii_bus *bus, int phy_addr, bool is_c45,
- 	/* Read the content of the MMD's selected register */
- 	return __mdiobus_read(bus, phy_addr, MII_MMD_DATA);
- }
-+EXPORT_SYMBOL_GPL(mmd_phy_read);
+ libphy-y			:= phy.o phy-c45.o phy-core.o phy_device.o \
+ 				   linkmode.o phy_link_topology.o \
+-				   phy_package.o phy_caps.o mdio_bus_provider.o
++				   phy_caps.o mdio_bus_provider.o
+ mdio-bus-y			+= mdio_bus.o mdio_device.o
  
--static int mmd_phy_write(struct mii_bus *bus, int phy_addr, bool is_c45,
--			 int devad, u32 regnum, u16 val)
-+int mmd_phy_write(struct mii_bus *bus, int phy_addr, bool is_c45,
-+		  int devad, u32 regnum, u16 val)
- {
- 	if (is_c45)
- 		return __mdiobus_c45_write(bus, phy_addr, devad, regnum, val);
-@@ -396,6 +397,7 @@ static int mmd_phy_write(struct mii_bus *bus, int phy_addr, bool is_c45,
- 	/* Write the data into MMD's selected register */
- 	return __mdiobus_write(bus, phy_addr, MII_MMD_DATA, val);
- }
-+EXPORT_SYMBOL_GPL(mmd_phy_write);
+ ifdef CONFIG_PHYLIB
+@@ -19,6 +19,7 @@ obj-$(CONFIG_MDIO_BUS)		+= mdio-bus.o
+ obj-$(CONFIG_PHYLINK)		+= phylink.o
+ obj-$(CONFIG_PHYLIB)		+= libphy.o
+ obj-$(CONFIG_PHYLIB)		+= mdio_devres.o
++obj-$(CONFIG_PHYLIB)		+= phy_package.o
  
- /**
-  * __phy_read_mmd - Convenience function for reading a register
-@@ -485,71 +487,6 @@ int phy_write_mmd(struct phy_device *phydev, int devad, u32 regnum, u16 val)
- }
- EXPORT_SYMBOL(phy_write_mmd);
+ obj-$(CONFIG_NETWORK_PHY_TIMESTAMPING) += mii_timestamper.o
  
--/**
-- * __phy_package_read_mmd - read MMD reg relative to PHY package base addr
-- * @phydev: The phy_device struct
-- * @addr_offset: The offset to be added to PHY package base_addr
-- * @devad: The MMD to read from
-- * @regnum: The register on the MMD to read
-- *
-- * Convenience helper for reading a register of an MMD on a given PHY
-- * using the PHY package base address. The base address is added to
-- * the addr_offset value.
-- *
-- * Same calling rules as for __phy_read();
-- *
-- * NOTE: It's assumed that the entire PHY package is either C22 or C45.
-- */
--int __phy_package_read_mmd(struct phy_device *phydev,
--			   unsigned int addr_offset, int devad,
--			   u32 regnum)
--{
--	int addr = phy_package_address(phydev, addr_offset);
--
--	if (addr < 0)
--		return addr;
--
--	if (regnum > (u16)~0 || devad > 32)
--		return -EINVAL;
--
--	return mmd_phy_read(phydev->mdio.bus, addr, phydev->is_c45, devad,
--			    regnum);
--}
--EXPORT_SYMBOL(__phy_package_read_mmd);
--
--/**
-- * __phy_package_write_mmd - write MMD reg relative to PHY package base addr
-- * @phydev: The phy_device struct
-- * @addr_offset: The offset to be added to PHY package base_addr
-- * @devad: The MMD to write to
-- * @regnum: The register on the MMD to write
-- * @val: value to write to @regnum
-- *
-- * Convenience helper for writing a register of an MMD on a given PHY
-- * using the PHY package base address. The base address is added to
-- * the addr_offset value.
-- *
-- * Same calling rules as for __phy_write();
-- *
-- * NOTE: It's assumed that the entire PHY package is either C22 or C45.
-- */
--int __phy_package_write_mmd(struct phy_device *phydev,
--			    unsigned int addr_offset, int devad,
--			    u32 regnum, u16 val)
--{
--	int addr = phy_package_address(phydev, addr_offset);
--
--	if (addr < 0)
--		return addr;
--
--	if (regnum > (u16)~0 || devad > 32)
--		return -EINVAL;
--
--	return mmd_phy_write(phydev->mdio.bus, addr, phydev->is_c45, devad,
--			     regnum, val);
--}
--EXPORT_SYMBOL(__phy_package_write_mmd);
--
- /**
-  * phy_modify_changed - Function for modifying a PHY register
-  * @phydev: the phy_device struct
 diff --git a/drivers/net/phy/phy_package.c b/drivers/net/phy/phy_package.c
-index c738f76e8..5dd5db7e8 100644
+index 5dd5db7e8..3024da0bb 100644
 --- a/drivers/net/phy/phy_package.c
 +++ b/drivers/net/phy/phy_package.c
-@@ -52,7 +52,8 @@ void *phy_package_get_priv(struct phy_device *phydev)
+@@ -414,3 +414,6 @@ int devm_of_phy_package_join(struct device *dev, struct phy_device *phydev,
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(phy_package_get_priv);
- 
--int phy_package_address(struct phy_device *phydev, unsigned int addr_offset)
-+static int phy_package_address(struct phy_device *phydev,
-+			       unsigned int addr_offset)
- {
- 	struct phy_package_shared *shared = phydev->shared;
- 	u8 base_addr = shared->base_addr;
-@@ -90,6 +91,71 @@ int __phy_package_write(struct phy_device *phydev, unsigned int addr_offset,
- }
- EXPORT_SYMBOL_GPL(__phy_package_write);
- 
-+/**
-+ * __phy_package_read_mmd - read MMD reg relative to PHY package base addr
-+ * @phydev: The phy_device struct
-+ * @addr_offset: The offset to be added to PHY package base_addr
-+ * @devad: The MMD to read from
-+ * @regnum: The register on the MMD to read
-+ *
-+ * Convenience helper for reading a register of an MMD on a given PHY
-+ * using the PHY package base address. The base address is added to
-+ * the addr_offset value.
-+ *
-+ * Same calling rules as for __phy_read();
-+ *
-+ * NOTE: It's assumed that the entire PHY package is either C22 or C45.
-+ */
-+int __phy_package_read_mmd(struct phy_device *phydev,
-+			   unsigned int addr_offset, int devad,
-+			   u32 regnum)
-+{
-+	int addr = phy_package_address(phydev, addr_offset);
+ EXPORT_SYMBOL_GPL(devm_of_phy_package_join);
 +
-+	if (addr < 0)
-+		return addr;
-+
-+	if (regnum > (u16)~0 || devad > 32)
-+		return -EINVAL;
-+
-+	return mmd_phy_read(phydev->mdio.bus, addr, phydev->is_c45, devad,
-+			    regnum);
-+}
-+EXPORT_SYMBOL(__phy_package_read_mmd);
-+
-+/**
-+ * __phy_package_write_mmd - write MMD reg relative to PHY package base addr
-+ * @phydev: The phy_device struct
-+ * @addr_offset: The offset to be added to PHY package base_addr
-+ * @devad: The MMD to write to
-+ * @regnum: The register on the MMD to write
-+ * @val: value to write to @regnum
-+ *
-+ * Convenience helper for writing a register of an MMD on a given PHY
-+ * using the PHY package base address. The base address is added to
-+ * the addr_offset value.
-+ *
-+ * Same calling rules as for __phy_write();
-+ *
-+ * NOTE: It's assumed that the entire PHY package is either C22 or C45.
-+ */
-+int __phy_package_write_mmd(struct phy_device *phydev,
-+			    unsigned int addr_offset, int devad,
-+			    u32 regnum, u16 val)
-+{
-+	int addr = phy_package_address(phydev, addr_offset);
-+
-+	if (addr < 0)
-+		return addr;
-+
-+	if (regnum > (u16)~0 || devad > 32)
-+		return -EINVAL;
-+
-+	return mmd_phy_write(phydev->mdio.bus, addr, phydev->is_c45, devad,
-+			     regnum, val);
-+}
-+EXPORT_SYMBOL(__phy_package_write_mmd);
-+
- static bool __phy_package_set_once(struct phy_device *phydev, unsigned int b)
- {
- 	struct phy_package_shared *shared = phydev->shared;
-diff --git a/drivers/net/phy/phylib-internal.h b/drivers/net/phy/phylib-internal.h
-index afac2bd15..ebda74eb6 100644
---- a/drivers/net/phy/phylib-internal.h
-+++ b/drivers/net/phy/phylib-internal.h
-@@ -7,6 +7,7 @@
- #define __PHYLIB_INTERNAL_H
- 
- struct phy_device;
-+struct mii_bus;
- 
- /*
-  * phy_supported_speeds - return all speeds currently supported by a PHY device
-@@ -20,7 +21,10 @@ void of_set_phy_timing_role(struct phy_device *phydev);
- int phy_speed_down_core(struct phy_device *phydev);
- void phy_check_downshift(struct phy_device *phydev);
- 
--int phy_package_address(struct phy_device *phydev, unsigned int addr_offset);
-+int mmd_phy_read(struct mii_bus *bus, int phy_addr, bool is_c45,
-+		 int devad, u32 regnum);
-+int mmd_phy_write(struct mii_bus *bus, int phy_addr, bool is_c45,
-+		  int devad, u32 regnum, u16 val);
- 
- int genphy_c45_read_eee_adv(struct phy_device *phydev, unsigned long *adv);
- 
++MODULE_DESCRIPTION("PHY package support");
++MODULE_LICENSE("GPL");
 -- 
 2.49.0
 
