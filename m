@@ -1,68 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-61051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECCE3AD667E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 06:03:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D5AEAD6680
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 06:03:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4D94C3AE1DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 04:02:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4AF15164094
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 04:03:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 912CF229B0D;
-	Thu, 12 Jun 2025 04:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F8B622A808;
+	Thu, 12 Jun 2025 04:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fA/CU71+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TN93aQnp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE53227EA7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25085223321;
 	Thu, 12 Jun 2025 04:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749700864; cv=none; b=dUaLEapUKkyZRD9mbeY3XDGEM3lKIQWC5k62Y+3rU6dxJsXCn0pLRM6nkZchhSBBJsD4szs2SNHl15JMOKVamIVKIhCrr278bY+B6M68KRf1chplgpLa+kFewopODz4X5vXXH+banUri3qRK6s/5q/K32ma5EKSoQUTOQ/hQbAA=
+	t=1749700865; cv=none; b=J6OymbkaKcOpsRgHK9TXXJKeNq+GyA4GemhoDFeyb7QtzKWqEpqKxS5QMgnMmJx1xjT03O5ALeH+iV9KMFIpdOEiDC8oieOy31f+ozRBaj0+fAGfUWXWTmQ9t9T4qiiz42M7DwrNxyZM9+1EpSri+JqW/lPgqNpL//d1xE3+MRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749700864; c=relaxed/simple;
-	bh=agqZ4kwIFiAfv2mknwnH4MYpFMkhrcT3U+7UIHs/KXY=;
+	s=arc-20240116; t=1749700865; c=relaxed/simple;
+	bh=gAfgCoWf3j3yQC1Z32xPGcJfoYIcj1weQQ7cX82OrOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qTNCHZchzDkJ71mcaNdcnUuitxIbarI2lQQWROfmT3ma1a2x24M6lP1HZMbgM9Abv1+ypaqtHjwkkItP1aLUZy/+8DmDM/dXcCcksKUJbaLEpR4n28g42PxOOAzDY8vszZIOprs9B5scl+JQyNEvaHKbqPCU9TRtru1T4vJ/MYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fA/CU71+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20D8C4CEEA;
-	Thu, 12 Jun 2025 04:01:02 +0000 (UTC)
+	 MIME-Version:Content-Type; b=PuIjSeKL8Ox8SueT+2R+pYI8d3ESIEc7SKTN7C2id38UpFZCEf+s5DFtsDjSij91glwezhFC19QvZOSQo0Ul14bhYW867flLgDq3u3j5DXokxobm8FR/ckKtwuKHEDX2afienb2UXGpK946Bf4MiX39klVoKgJTkXY7+Q1Msm9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TN93aQnp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31129C4CEF1;
+	Thu, 12 Jun 2025 04:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1749700864;
-	bh=agqZ4kwIFiAfv2mknwnH4MYpFMkhrcT3U+7UIHs/KXY=;
+	bh=gAfgCoWf3j3yQC1Z32xPGcJfoYIcj1weQQ7cX82OrOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fA/CU71+pyTlGOV9ThEDbuPOU4POnh+yIqgxUrTr5qtdHSxfL9GyMuqYza/yOcFDR
-	 Pgg+I7Gg5eOpUWM/c9uGy9ex+q80bZP0lX1mdx6bUAG69Hiy9CJfViamZD/M3mzeZZ
-	 TrknE85gBwtPmCK2d7ewu/1A6RALU5NvabNUxew79Yqafoa6mZ6qm6wpk5mOtWHbsc
-	 036mQ5VzpBanrT4yaZCvstQgteuL7OdjxfvggMj6P08uVAD+Q6bFCsjpWOj7AGTui/
-	 cyi955Ivh+ADidaM2Mo6aQQNT9t6HW0MQxUDJHYIUFiWFHMMDW4Z+iAZM/toj5geJd
-	 9jXS62XrQ1qnw==
+	b=TN93aQnphdC6cDFK5znw9gM8D5vFutfaB6JVPiIUS9kAdwri1u5JApIVMQctv5Xjj
+	 atBcDtseIjSwaXcoyRnZJZKPXf5TcIgYtQrFqxdCZ7YPgOoOtGDgg0eL1Lg096n6or
+	 9r25I+fXsT9Ek4l83kC7mMi96r7M05OoBmP3EqQsVx+aqf8S68CAcg3nGLXso5I8I9
+	 hpQA9MhoZPMyY4HdDNniFjgJwYLGzES9uzm3tg/D1QectuR2mWp5fUiHFbYJ6BwZ79
+	 YlZhORVuakmcl5S1+hmRaESEjx6FC2p9ozz0wzqzD0jxWGuUNFm3uO9RoB4LqIMIjY
+	 1ZEbrNpvHW6AQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
+	Pengyu Luo <mitltlatltl@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v2 0/4] Add video clock controller for SM6350
-Date: Wed, 11 Jun 2025 23:00:44 -0500
-Message-ID: <174970084196.547582.13141993457803698213.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8650: remove unused reg
+Date: Wed, 11 Jun 2025 23:00:45 -0500
+Message-ID: <174970084204.547582.13304867983228862385.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250324-sm6350-videocc-v2-0-cc22386433f4@fairphone.com>
-References: <20250324-sm6350-videocc-v2-0-cc22386433f4@fairphone.com>
+In-Reply-To: <20250525152317.1378105-1-mitltlatltl@gmail.com>
+References: <20250525152317.1378105-1-mitltlatltl@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,17 +66,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 24 Mar 2025 09:41:00 +0100, Luca Weiss wrote:
-> The driver for the SM6350 videocc has been lying around in some branches
-> of my git tree for a long time, let's upstream it. It doesn't get any
-> better by letting it age!
+On Sun, 25 May 2025 23:23:17 +0800, Pengyu Luo wrote:
+> <0 0x17a30000 0 0x10000> is unused for apps_rsc.
 > 
 > 
 
 Applied, thanks!
 
-[4/4] arm64: dts: qcom: sm6350: Add video clock controller
-      commit: 67081281bb0dffd09e5f11c991088e6ac546a4ae
+[1/1] arm64: dts: qcom: sm8650: remove unused reg
+      commit: 779d1edd42e487fd85659983a7d2f98cd68096b3
 
 Best regards,
 -- 
