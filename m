@@ -1,191 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-61120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6F0AAD6F1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 13:36:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C54DAD6F78
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 13:51:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A5C43A9370
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 11:36:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8E2D3B2117
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 11:50:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB34C2F4321;
-	Thu, 12 Jun 2025 11:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB3B9218E9F;
+	Thu, 12 Jun 2025 11:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LOj+xzJb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aR2f9CzX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC93FEC2;
-	Thu, 12 Jun 2025 11:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9158D1E1A16;
+	Thu, 12 Jun 2025 11:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749728198; cv=none; b=qqJ54PAXl1TLAmgqO42bU88ie04Qr1lN0AmOs1ZPF6zfFKCz8MwnxdTeEkZ+E+qU4OmyfagZ36V64sB+W6ZVcMN5lizHCtlLkKgQPz1TwsFnXVIOI4hqiDEzu/gl65xi8ZxU1JqdTOsxtKq6Q9WfAaAArLfCyTsTYLsKHigo6Tg=
+	t=1749728988; cv=none; b=ng8Q2VvKibMJxFIoepc2CraommvbCN4NUBLOah7maYTqFpFIhvewTZS+K4WwkR8xksPjDSCzxenKrvNds4GrILrlpLabgRRnZR1xf0CJdbbnul1c0LkKQUA2ffKO41oyQ4vxbkFNLP8rL5rREHMq5UFglBL+cnnvAppnfGk2NaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749728198; c=relaxed/simple;
-	bh=3N7FzZgOhubknsIKQSHsXc3phDEJSc5osYBSHxh6U2U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IJRRnEFSFoijwoBRhTx2w3rk7yTraE1PXxqD7Rt1gag0w+DRKtUMxi//3nGyD/yhmoCMqLuQO7erAV2HGbKnHW16IC8HL83Oy8HAkCUmEPRAyFcCMEGfIwKfDJvZEUxxB1jh5JnRgKAyFP8scO+ctd6D6W8omNov9Fz4ryMWYp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LOj+xzJb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD92FC4CEEA;
-	Thu, 12 Jun 2025 11:36:32 +0000 (UTC)
+	s=arc-20240116; t=1749728988; c=relaxed/simple;
+	bh=njIe3vfl/yf5a86Ak2CvrAcNRqdijy5GYXgG3V1TR/Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=aqR7+L37H7q6DQ7s+KYDNgcMxLyoWVYwHIBDAVtFouGbUFpTSLzpTnKu4BtAC0q0Vv/BBkRCccU+gG68ASd2gxaoy5FUu8G7Zdln7J2/+Hnh9TzraumnTZjYItdYa0nDf8Kes+lCD+CrDkTcwiRkr3cT2J14nc1ZBo04uFZOCH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aR2f9CzX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61258C4CEEA;
+	Thu, 12 Jun 2025 11:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749728196;
-	bh=3N7FzZgOhubknsIKQSHsXc3phDEJSc5osYBSHxh6U2U=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LOj+xzJbf/LdpybReE9UcMpx/rW+lyky73IQYXZDyAAPfKalv/EfRNvoTs9nfX46d
-	 TtPe6y23ROSV5J3Kl0vs3eKKB26VaIuYXqEpjxpzdG8Zrs34h6qMDhFL5yzs9U1mgB
-	 DJmPFt07YJowqt/DMTg76/vpvM8yrWorNQ2vr/Fp9BITqUfnfaE3WdbHRIG2o978mh
-	 nmudVh2iD9OOf9d5N+/YneBz+94syIx/7K8R+9Gtn80EvrW3uCS4rXmeruh9rWBZq1
-	 PxDftDwMD5DtfF8kluInvAkqY+Erw0mhvOznq1beKPMIh6qje6XVnxwLlXlmkWOI3t
-	 Edi4GLs/0z+7g==
-Message-ID: <91f87756-b44e-41cb-86f2-624204d401ef@kernel.org>
-Date: Thu, 12 Jun 2025 13:36:31 +0200
+	s=k20201202; t=1749728988;
+	bh=njIe3vfl/yf5a86Ak2CvrAcNRqdijy5GYXgG3V1TR/Q=;
+	h=From:To:Cc:Subject:Date:From;
+	b=aR2f9CzX4sSdrcF01pGjRWKZr3p5X2TCpNofdfzPk+Whcf3aQIjbaVvLHASzaA8VR
+	 Ahg5SQQTsjzoYwwndIrmsZJ6bhIVUH8WWsSBUgKyeN3lIabuKC4Tf7K74Ioqk1471x
+	 AOw6553PZud0t0e23XIFz4uJujc1WAvGx1pkz6nIHaP2SvG3xBXUQqbVWZFP7Rq/a5
+	 UCTpG3aw8C4bbWTW/CaHPTMHIKX9ngyp1qN9Y6PSYhQSLi8VM+duuZBcVuhJtRB5E7
+	 FQ3ce7GO/0If2ta0VEmtQx/XLCTfgdXwisiGIqvB8xldCdqGEvTqUmOReDhv6MQCCp
+	 cEhVg2r91nWoQ==
+From: Niklas Cassel <cassel@kernel.org>
+To: Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Kever Yang <kever.yang@rock-chips.com>,
+	Simon Xue <xxm@rock-chips.com>,
+	Stanimir Varbanov <svarbanov@mm-sol.com>
+Cc: Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Laszlo Fiat <laszlo.fiat@proton.me>,
+	Niklas Cassel <cassel@kernel.org>,
+	linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 0/5] PCI: dwc: Do not enumerate bus before endpoint devices are ready
+Date: Thu, 12 Jun 2025 13:49:23 +0200
+Message-ID: <20250612114923.2074895-7-cassel@kernel.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] dt-bindings: media: qcom: Add Qualcomm MIPI
- C-/D-PHY schema for CSIPHY IPs
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org
-References: <20250612011531.2923701-1-vladimir.zapolskiy@linaro.org>
- <20250612011531.2923701-9-vladimir.zapolskiy@linaro.org>
- <6e411e89-ce1e-4d6a-8d48-b800554f830e@kernel.org>
- <e02cead0-665d-443a-a884-c3a307409c66@kernel.org>
- <9e38a09b-1521-4196-b179-d29c62e143bc@linaro.org>
- <d424481b-cb06-4bee-8d36-5e31ca2838a2@kernel.org>
- <51a91c84-c83f-4b22-9861-88929b222432@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <51a91c84-c83f-4b22-9861-88929b222432@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1672; i=cassel@kernel.org; h=from:subject; bh=njIe3vfl/yf5a86Ak2CvrAcNRqdijy5GYXgG3V1TR/Q=; b=owGbwMvMwCV2MsVw8cxjvkWMp9WSGDK89h3m2vVR+7+JaGj15ilvzx6Pt/HZqLl0zfpvcXVTK 76sln64raOUhUGMi0FWTJHF94fL/uJu9ynHFe/YwMxhZQIZwsDFKQAT2cLB8JutaP6tsqf56uE9 wuVTp1tNPtR5+TjbPw+7z1/Xs+9c5fqf4b/rVptpMlkFh7W2Wa4/pV9cHFEqwLR0+iI12RXOHJ/ /zWUDAA==
+X-Developer-Key: i=cassel@kernel.org; a=openpgp; fpr=5ADE635C0E631CBBD5BE065A352FE6582ED9B5DA
+Content-Transfer-Encoding: 8bit
 
-On 12/06/2025 13:27, Vladimir Zapolskiy wrote:
-> On 6/12/25 14:02, Krzysztof Kozlowski wrote:
->> On 12/06/2025 09:57, Vladimir Zapolskiy wrote:
->>> On 6/12/25 10:39, Krzysztof Kozlowski wrote:
->>>> On 12/06/2025 09:38, Krzysztof Kozlowski wrote:
->>>>> On 12/06/2025 03:15, Vladimir Zapolskiy wrote:
->>>>>> Add dt-binding schema for Qualcomm CAMSS CSIPHY IP, which provides
->>>>>> MIPI C-PHY/D-PHY interfaces on Qualcomm SoCs.
->>>>>>
->>>>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->>>>>> ---
->>>>>> RFC verion of the change:
->>>>>> * https://lore.kernel.org/all/20250513143918.2572689-1-vladimir.zapolskiy@linaro.org/
->>>>>>
->>>>>> Changes from RFC to v1:
->>>>>> * moved from phy/qcom,csiphy.yaml to media/qcom,csiphy.yaml,
->>>>>> * added 'clock-names' property,
->>>>>> * removed SM8250 CSIPHY specifics, a generic binding is good enough for now,
->>>>
->>>>
->>>> Now I noticed this... weird change and clearly a no-go.
->>>>
->>>> Device binding cannot be generic, so it is not good enough for now.
->>>> Please write specific bindings for specific hardware.
->>>>
->>>
->>> Can I add platform specific changes on top of the displayed generic one
->>> like in Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
->>> etc?
->>>
->>> The generic compatible is sufficienlty good for adding the enhanced
->>> CSIPHY support to any currently present in the upstream platform CAMSS.
->>>
->>> Obviously I can rename it to something SoC-specific, but then a question
->>> arises, if a selected platform has to be a totally new one in the upstream,
->>> or it could be among any of platforms with a ready CAMSS, and a backward
->>> compatibility is preserved by these series and the new CSIPHY dt bindings.
->>
->> Just use a specific compatible for the actual hardware this is being
->> added for. I don't understand why this is different than all other work
->> upstream.
-> 
-> There are very close examples in upstream, for instance that's a generic
-> value from Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml:
-> 
-> properties:
->    compatible:
->      enum:
->        - qcom,dsi-phy-10nm
->        - qcom,dsi-phy-10nm-8998
+Hello all,
 
-That's ancient now style. Don't use something from 10 years ago as example.
+The DWC PCIe controller driver currently does not follow the PCIe
+specification with regards to the delays after link training, before
+sending out configuration requests. This series fixes this.
 
-> 
-> To save time reviewing the next version of the same change, will you
-> accept a list of acceptable compatible properties like this one?
-> 
-> properties:
->    compatible:
->      enum:
->        - qcom,csiphy
+At the same time, PATCH 1/4 addresses a regression where a Plextor
+NVMe drive fails to be configured correctly. With this series, the
+Plextor NVMe drive works once again.
 
-No. You cannot have generic compatible. We keep repeating this all the
-time, so this is nothing new.
 
->        - qcom,sm8250-csiphy
-> 
+Kind regards,
+Niklas
 
-Best regards,
-Krzysztof
+
+Changes since v1:
+-Put msleep() before the dev_dbg() that says "Enumerating bus" (Damien)
+-Rewrite comment above LINK_WAIT_MAX_RETRIES / LINK_WAIT_SLEEP_MS (Damien)
+-Remove comments above PCIE_RESET_CONFIG_DEVICE_WAIT_MS (Bjorn)
+-Use different Fixes-tags (Bjorn)
+-Shamelessly took Bjorn's commit message for patch 1 and 2 (Bjorn)
+-Use PCIE_RESET_CONFIG_DEVICE_WAIT_MS rather than PCIE_T_RRS_READY_MS
+-Add new patch (5/5) that drops PCIE_T_RRS_READY_MS
+
+
+Niklas Cassel (5):
+  PCI: dw-rockchip: Wait PCIE_RESET_CONFIG_DEVICE_WAIT_MS after link-up
+    IRQ
+  PCI: qcom: Wait PCIE_RESET_CONFIG_DEVICE_WAIT_MS after link-up IRQ
+  PCI: dwc: Ensure that dw_pcie_wait_for_link() waits 100 ms after link
+    up
+  PCI: dwc: Reduce LINK_WAIT_SLEEP_MS
+  PCI: rockchip-host: Use macro PCIE_RESET_CONFIG_DEVICE_WAIT_MS
+
+ drivers/pci/controller/dwc/pcie-designware.c  | 13 ++++++++++++-
+ drivers/pci/controller/dwc/pcie-designware.h  | 13 +++++++++----
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c |  1 +
+ drivers/pci/controller/dwc/pcie-qcom.c        |  1 +
+ drivers/pci/controller/pcie-rockchip-host.c   |  2 +-
+ drivers/pci/pci.h                             |  7 -------
+ 6 files changed, 24 insertions(+), 13 deletions(-)
+
+-- 
+2.49.0
+
 
