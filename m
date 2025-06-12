@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-61109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 843A4AD6D63
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 12:18:25 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9575FAD6D61
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 12:18:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6ED411687E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 10:18:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7DAD47A956B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 10:16:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5761122E3E3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E496C235070;
 	Thu, 12 Jun 2025 10:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GYa+HrOJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="chc6zCsu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FAB13C8E8;
-	Thu, 12 Jun 2025 10:17:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3B4226CF8;
+	Thu, 12 Jun 2025 10:17:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749723474; cv=none; b=NWWxjuMhCgVIZlFzoHgyWyuDIsVssLSUTvN3YTIPqBJEJl6L8Sk0WvmcrMl0KVNvzkT3E/nzR3qFhdXk/wTliZ5uKxYA6nKadYvM6e0ObvDyd2TS/0WYWMbnNwXWZq0RSG0W2yVpux/j/vzl08vtxgna0gAV7/pSw+vi+/JGZBo=
+	t=1749723474; cv=none; b=ZXPpQu/SoKN0kVBr2x++sQE8wI+YBpnEnBQPIBm2CsBmbVZEVgokYPlR3Dzek5YUDAWiqsHqUlTndbl8LJXaGe1aVg/X9yIRMr9Csjiw5hRjQIsnT1NSE/iWVnL5XfbXkm3Ocx+0QsAlr+OS59oesvxCvGmuDFhkK94MdA1/WfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1749723474; c=relaxed/simple;
-	bh=i9vTqtbujvIZWy8PAvqDlqilwW0G1+ZCc1ttgNyM0J4=;
+	bh=+BliPsXwPp1tzPYnYrLgAAtN1tgEd4YGahC/jK8LdiY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=ShI8C9iKAXxb62JWqlaRMlZS/2jF1eYfW2yrAMta2nh34Dp97c3Us81cvyv5zk3IX+GuXaIOjEkGQGUOx5KlvWYRYch+WN6DpmM0WXo/0KrvwNVX0FxdxDsD3m21YSaskVXMsnLFFhm9uA4EYPlvPTlFACuO3DMbUBWZV4IcoE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GYa+HrOJ; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:CC; b=X9rJUQT9a0qMOG/Bcd8EYeu4AFYqjWraBUHFWn+9KHW5ZPMRWda5q2YQsP5LjBPjWYxjZrKLOfEvaRmN/o0FdSnh0mOBP60p1dIRu/Hd5/dLbIlVGvKgAHpAa4TP+82tufK2a3zoRxhFBF6hQe28pKn8EYQRZ5oCRvHGtHuRzWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=chc6zCsu; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55C9awv6000792;
-	Thu, 12 Jun 2025 10:17:47 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55C7NBKC019613;
+	Thu, 12 Jun 2025 10:17:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3p1U/wxNATGNtk64FCSx6tNzDkJ3YgCoc86Cp3JpoRk=; b=GYa+HrOJVWiY7G+X
-	L77IUqiQ2A2dGpjykTSLpQvYmz+aoU4wirKUrQpcOAtzV4hdEcWMpqGRu37QFCdh
-	OOPxiqNrubhp4OccAmDHVMURKTwNua8dgA5afpxKN8QL6jhlHFOiKNFqsCDQgR1N
-	4e7eme9ppLckv3TKvgQreXUr29uIW33Yr0gs0XYe9n7/8MqOTYTpj19+uVY5/Nx2
-	vQkfpjJ4KZwij/D/pjMt4ZAaByNQYd7v1Yj8l7Y8ARwAnjxrziwoRSXcS3JH+pHD
-	X1l/igrECFqYp4Dn6q2ejZS0XhaKI+MDsANPexuO5/TILedWvZzcNsfQCZlxkD0D
-	hLGdXQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 477jdwsmyn-1
+	lf16w4NVY4QFBoi0NbZrCw3i1k1OJd9j7N2JsDbo4Ww=; b=chc6zCsur4MNYsD6
+	2UF3//5mFLKOUPrF+t5vssoT6MtoRqEyVvGeiwboIQlueS2I2NQgCGzEossKeW5l
+	DKCOjOfGiOzDuqbgivf9EgBBCnOrsuOlJUWbx6w8bJHpAl7r4SCIeGFTZh2g2Ztv
+	MN4qsgPsYkn/ETVaPA7Fpp3bv5EPTbmNf+LggP0WQazx92fIX4bbRTkdoFJU6vv1
+	3bRQEu83eY9QYFwilWXeNCVIiPfgVGbm9khwWAKIiEOiyOgwSOIDnvk8dFBbnNue
+	+3nXF/+8Sd6GE7bxOAdzvYWl+TMkCjoR6VuLZvyky38n/ftfiXGEVV4mgg+uCego
+	sAUlRg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 474eqcr4b8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Jun 2025 10:17:47 +0000 (GMT)
+	Thu, 12 Jun 2025 10:17:50 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55CAHkLQ014941
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55CAHnib027484
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Jun 2025 10:17:46 GMT
+	Thu, 12 Jun 2025 10:17:49 GMT
 Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 12 Jun 2025 03:17:42 -0700
+ 15.2.1544.9; Thu, 12 Jun 2025 03:17:46 -0700
 From: Taniya Das <quic_tdas@quicinc.com>
-Date: Thu, 12 Jun 2025 15:47:20 +0530
-Subject: [PATCH v3 1/2] arm64: dts: qcom: qcs615: Add clock nodes for
- multimedia clock
+Date: Thu, 12 Jun 2025 15:47:21 +0530
+Subject: [PATCH v3 2/2] arm64: dts: qcom: qcs615: Add CPU scaling clock
+ node
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250612-qcs615-mm-cpu-dt-v3-v3-1-721d5db70342@quicinc.com>
+Message-ID: <20250612-qcs615-mm-cpu-dt-v3-v3-2-721d5db70342@quicinc.com>
 References: <20250612-qcs615-mm-cpu-dt-v3-v3-0-721d5db70342@quicinc.com>
 In-Reply-To: <20250612-qcs615-mm-cpu-dt-v3-v3-0-721d5db70342@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -82,124 +82,138 @@ CC: Ajit Pandey <quic_ajipan@quicinc.com>,
 	<quic_imrashai@quicinc.com>,
         Jagadeesh Kona <quic_jkona@quicinc.com>,
         <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-        "Konrad
- Dybcio" <konrad.dybcio@oss.qualcomm.com>
+        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>
 X-Mailer: b4 0.15-dev-aa3f6
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEyMDA3OSBTYWx0ZWRfXyUpxqPX95Cz/
- OeQv763L1iAov/23wYDuxumGbiDFAS2H7LpRCO2dZPdUigjpn6pflOjeh0xZjzLIjDeBJGKLhks
- xy7vRZ9LrYu2gHwgNJ6I/fRjcC8xivFBy01vwr234GGQmwPkaNgdl25Ty/nBx5z2usbkEPKplVM
- erAW6FIHaS9Ln75d4tyu/mb4ZEwu7ASMEAQvwCWaHYIGu9nvIe2qfJepqV0tJ/2EDaN/GfIVrZb
- sT/C0ojKvWa/3XTGWVh1r8lzxuMUxRTXjNI7ezx1L8jkjzjDJ3TV5/EP43m4D7STJnAbNBUf+3o
- 6eT5Q4tlfdaWpuPN8txTjrnPn/Okkdaz+XGahMbA8BFIsIQ103hrPLp9LWlNryoqbuSm5BI3aFE
- 4j+Dw6Eg6dGyXouae717fq+CRycXC1YO4er6kpjLcqCdCK1v7VkAd0BnRm35QnrPhpYkUVMB
-X-Proofpoint-ORIG-GUID: 0T1ejfC1jxd6oJ3RnybXk8ZSB3h3-dTy
-X-Proofpoint-GUID: 0T1ejfC1jxd6oJ3RnybXk8ZSB3h3-dTy
-X-Authority-Analysis: v=2.4 cv=Jce8rVKV c=1 sm=1 tr=0 ts=684aa94b cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEyMDA3OSBTYWx0ZWRfX/HWRp/i/W0BB
+ gNbfI84BnXhXKXrhopZv4Wcl+gj7Tp5etwqxXMXvTvPizeg4E4UyXdDgHK6mmIsH5inHn+Vs86c
+ +n+nHNdmO6FUS8Qn1124DCTiB6/2ESASQu6zzkbkkzhiMnmUaiDiNXpkybOhW0pRFB3nI2rKYBA
+ 0qGMM7fRdP2ytAYVTD1g3jgkM1HQ1kWWnhHZdi43egwmmX3TcOqT9VcjXwQPT1ZbzbTLWFZV5ZQ
+ 2NnDIQmnUIkePxjc+P1Zk25fphKfy91yKzYNFo+uw5o5hEsE8B874BEvaxGWp66BhIMZAKXj5V7
+ 8XicFuDdBW6S+2MO9SSopKrcYgnOuDX4x5MVwcDUI8oFga7sgDMKI+y9ZpTXQ2ZD/I0lKPAjuvM
+ ZSpfGBmUaKtwQt433Q9yVaMOq+RZCH6K64fugKUq8zXUL/wPCVg5ADq16W7xcdXtTeteTzCf
+X-Authority-Analysis: v=2.4 cv=Q7TS452a c=1 sm=1 tr=0 ts=684aa94e cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=eX7r7zjc-4eniw70hzgA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8
+ a=glh6sAxJXOJWtZD9WfkA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: mH9bGoUARStwRe9buB3nBce9yZxQSwhc
+X-Proofpoint-ORIG-GUID: mH9bGoUARStwRe9buB3nBce9yZxQSwhc
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-12_07,2025-06-10_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0
- mlxlogscore=999 priorityscore=1501 malwarescore=0 spamscore=0 impostorscore=0
- mlxscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506120079
+ suspectscore=0 phishscore=0 mlxscore=0 spamscore=0 mlxlogscore=860
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0 impostorscore=0
+ priorityscore=1501 malwarescore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506120079
 
-Add support for video, camera, display and gpu clock controller nodes
-for QCS615 platform.
+Add cpufreq-hw node to support CPU frequency scaling.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/qcs615.dtsi | 51 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ arch/arm64/boot/dts/qcom/qcs615.dtsi | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-index bb8b6c3ebd03f086b44493024ce782acf6f9e1ed..5868a115dd802d4007b08739e8968d1428af397f 100644
+index 5868a115dd802d4007b08739e8968d1428af397f..97be7aab27ea0f844511d1e10fe5319297c4f1ed 100644
 --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
 +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
-@@ -3,7 +3,11 @@
-  * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-  */
+@@ -36,6 +36,8 @@ cpu0: cpu@0 {
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <100>;
+ 			next-level-cache = <&l2_0>;
++			clocks = <&cpufreq_hw 0>;
++			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			#cooling-cells = <2>;
  
-+#include <dt-bindings/clock/qcom,qcs615-camcc.h>
-+#include <dt-bindings/clock/qcom,qcs615-dispcc.h>
- #include <dt-bindings/clock/qcom,qcs615-gcc.h>
-+#include <dt-bindings/clock/qcom,qcs615-gpucc.h>
-+#include <dt-bindings/clock/qcom,qcs615-videocc.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/dma/qcom-gpi.h>
- #include <dt-bindings/interconnect/qcom,icc.h>
-@@ -1452,6 +1456,18 @@ data-pins {
+ 			l2_0: l2-cache {
+@@ -56,6 +58,8 @@ cpu1: cpu@100 {
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <100>;
+ 			next-level-cache = <&l2_100>;
++			clocks = <&cpufreq_hw 0>;
++			qcom,freq-domain = <&cpufreq_hw 0>;
+ 
+ 			l2_100: l2-cache {
+ 			      compatible = "cache";
+@@ -75,6 +79,8 @@ cpu2: cpu@200 {
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <100>;
+ 			next-level-cache = <&l2_200>;
++			clocks = <&cpufreq_hw 0>;
++			qcom,freq-domain = <&cpufreq_hw 0>;
+ 
+ 			l2_200: l2-cache {
+ 			      compatible = "cache";
+@@ -94,6 +100,8 @@ cpu3: cpu@300 {
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <100>;
+ 			next-level-cache = <&l2_300>;
++			clocks = <&cpufreq_hw 0>;
++			qcom,freq-domain = <&cpufreq_hw 0>;
+ 
+ 			l2_300: l2-cache {
+ 			      compatible = "cache";
+@@ -113,6 +121,8 @@ cpu4: cpu@400 {
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <100>;
+ 			next-level-cache = <&l2_400>;
++			clocks = <&cpufreq_hw 0>;
++			qcom,freq-domain = <&cpufreq_hw 0>;
+ 
+ 			l2_400: l2-cache {
+ 			      compatible = "cache";
+@@ -132,6 +142,8 @@ cpu5: cpu@500 {
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <100>;
+ 			next-level-cache = <&l2_500>;
++			clocks = <&cpufreq_hw 0>;
++			qcom,freq-domain = <&cpufreq_hw 0>;
+ 
+ 			l2_500: l2-cache {
+ 			      compatible = "cache";
+@@ -151,6 +163,8 @@ cpu6: cpu@600 {
+ 			capacity-dmips-mhz = <1740>;
+ 			dynamic-power-coefficient = <404>;
+ 			next-level-cache = <&l2_600>;
++			clocks = <&cpufreq_hw 1>;
++			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			#cooling-cells = <2>;
+ 
+ 			l2_600: l2-cache {
+@@ -171,6 +185,8 @@ cpu7: cpu@700 {
+ 			capacity-dmips-mhz = <1740>;
+ 			dynamic-power-coefficient = <404>;
+ 			next-level-cache = <&l2_700>;
++			clocks = <&cpufreq_hw 1>;
++			qcom,freq-domain = <&cpufreq_hw 1>;
+ 
+ 			l2_700: l2-cache {
+ 			      compatible = "cache";
+@@ -3743,6 +3759,19 @@ usb_2_dwc3: usb@a800000 {
+ 				maximum-speed = "high-speed";
  			};
  		};
++
++		cpufreq_hw: cpufreq@18323000 {
++			compatible = "qcom,sc7180-cpufreq-hw", qcom,cpufreq-hw";
++			reg = <0 0x18323000 0 0x1400>, <0 0x18325800 0 0x1400>;
++			reg-names = "freq-domain0", "freq-domain1";
++
++			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
++			clock-names = "xo", "alternate";
++
++			#freq-domain-cells = <1>;
++			#clock-cells = <1>;
++		};
++
+ 	};
  
-+		gpucc: clock-controller@5090000 {
-+			compatible = "qcom,qcs615-gpucc";
-+			reg = <0 0x05090000 0 0x9000>;
-+
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GPLL0>;
-+
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		stm@6002000 {
- 			compatible = "arm,coresight-stm", "arm,primecell";
- 			reg = <0x0 0x06002000 0x0 0x1000>,
-@@ -3221,6 +3237,41 @@ gem_noc: interconnect@9680000 {
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
-+		videocc: clock-controller@ab00000 {
-+			compatible = "qcom,qcs615-videocc";
-+			reg = <0 0x0ab00000 0 0x10000>;
-+
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&sleep_clk>;
-+
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		camcc: clock-controller@ad00000 {
-+			compatible = "qcom,qcs615-camcc";
-+			reg = <0 0x0ad00000 0 0x10000>;
-+
-+			clocks = <&rpmhcc RPMH_CXO_CLK>;
-+
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		dispcc: clock-controller@af00000 {
-+			compatible = "qcom,qcs615-dispcc";
-+			reg = <0 0x0af00000 0 0x20000>;
-+
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_DISP_GPLL0_DIV_CLK_SRC>;
-+
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		pdc: interrupt-controller@b220000 {
- 			compatible = "qcom,qcs615-pdc", "qcom,pdc";
- 			reg = <0x0 0x0b220000 0x0 0x30000>,
+ 	arch_timer: timer {
 
 -- 
 2.34.1
