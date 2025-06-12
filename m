@@ -1,63 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-61044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 805AAAD6667
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 06:01:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE9BAAD666B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 06:01:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CE88C3AD8DC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 04:01:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DA1753AD797
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 04:01:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5CB41F2BB5;
-	Thu, 12 Jun 2025 04:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A88871F7910;
+	Thu, 12 Jun 2025 04:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ca/XZble"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fz3HgwJf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BCE1F153A;
-	Thu, 12 Jun 2025 04:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9F01F582F;
+	Thu, 12 Jun 2025 04:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749700857; cv=none; b=etHCVykDi8/yC/b4M4Avycjda4l58jP7oOwMZAdR9E6Jsr+j8P9uYnlkV4LpTvAQRdP1jS/cRmM8DZbT6Yyxx4uREVQ2pllzsR1J2LA0BPmsixCmn4IUhtTAj3dE39t3gs0aZDfegxDxAP5p2ahuxrM5s17ocoIGzJ0O9iIoWo0=
+	t=1749700858; cv=none; b=auUlDb80wDr83oq++Iz91huINh/JNCsvbB97gfGmOVsukM5/LBIIy626gWgVl8LL6CMrLNZZ55iq1qQLdTHe//UMHOSNB9FLywMzs+J9F3coEOVl06zUg8CsQrO5L7wqIHfb0NKSgueppiEW3y0iWlU0IE8w1++c4DoMTPXyLfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749700857; c=relaxed/simple;
-	bh=NcKly+haszVBag+//cbmwSI8Ud5H0c36rU786IZV8bE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s20cpIDw+aFl92VTeBVwFg54J1wKouFW8LbkLbmXapp0VGfcPpa59dTQMR6eQC1ozuvh0XoPtM5oCjarTdBsitCbp6gsP1ki543+3i8CL3giawo03QTSqLi3x7QJ+A3EJG/D0s3lPVrWxgzzAXPA0V/SSKL877w7i7E98NnPOlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ca/XZble; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF45DC4CEEA;
-	Thu, 12 Jun 2025 04:00:56 +0000 (UTC)
+	s=arc-20240116; t=1749700858; c=relaxed/simple;
+	bh=RVH6pdk8kg08pnsSb/u/BpAoPWRLJstnPfSnLVhBu3g=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=cqK3Qqcdf6RupeG7WBA4+R5H+nIWsI8FUya76ZKJV0G1JEYqrxyHm6Bhev4FWNBgsF3C/cWQ9yfSbbjNEr9rf5ZQVr+evk3ywyHsujAnwXkw3svfmXuUJX1I0a5/rRCtStKpaIPRIEyylin+VMGrK5Jw2Jxc+kBaeJX/lB6QUj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fz3HgwJf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1107C4CEF4;
+	Thu, 12 Jun 2025 04:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749700857;
-	bh=NcKly+haszVBag+//cbmwSI8Ud5H0c36rU786IZV8bE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ca/XZble6LdXaQhedsNuk1k+sKkZSIpMP6mZebn3yezDik90CsGezOnuHqLJnxgHH
-	 33/cJrA9pkA35z4KBtARAgd2PTMbViKQQ0kMYxuVSYHqFfCE7AKgnwjj4t9lHlGVHD
-	 O/A2XabhadOVedG7nKCGu6QOQqVAgIxepb/udKZqM2u52EL0qggG2doHed0vAwq/h3
-	 W+6UzWpk/+d+IZLhJelgZ1ESt2tpB7ub+2yc/CVGTv5Igf9HoiL9ot5dl6ulwLya2o
-	 c44c7oFWzfPkJT7pDwPnD/mP0gDrMxSCjaaayJ0zjyOiffwuakOsGBcqVDgOl7L7+1
-	 xlfGr6eq6dF2Q==
+	s=k20201202; t=1749700858;
+	bh=RVH6pdk8kg08pnsSb/u/BpAoPWRLJstnPfSnLVhBu3g=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=Fz3HgwJfRmbP5W95/P9os9xkzHGq1WFJijsEk9SxGKOBCFwLc7/bhUlwN7Rdwgztd
+	 5PaQM+gerayPb1Xn08Wl1F1v1sDvyHVhGzu5OFRjWte0In5ABXHOTpjL2razDR7GF1
+	 M7P3VX/VSvF8/2aKp6ZBOqfH/b7FprEei2n37tNMQlsVGTWNG8HklKXN19VXuDpokH
+	 sV8EeoPW25HUps8fxybyTMQlOMphCrc0TBnF6xzplAKjwjQloPtgrWXXmF5zdtFn8O
+	 YwpXQrmQWDf0O8OpCMfvsWkwKRZ9F3K21GspSukmq7gTwLDbJKXL+NB02+XdRPAcYK
+	 GMBNbHN12CtfQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: jens.glathe@oldschoolsolutions.biz,
-	Marijn Suijten <marijn.suijten@somainline.org>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: x1p42100: Fix thermal sensor configuration
-Date: Wed, 11 Jun 2025 23:00:37 -0500
-Message-ID: <174970084205.547582.14874289593554743911.b4-ty@kernel.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] ARM: dts: qcom: Align wifi node name with bindings
+Date: Wed, 11 Jun 2025 23:00:38 -0500
+Message-ID: <174970084181.547582.1484951567557967500.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250520-topic-x1p4_tsens-v2-1-9687b789a4fb@oss.qualcomm.com>
-References: <20250520-topic-x1p4_tsens-v2-1-9687b789a4fb@oss.qualcomm.com>
+In-Reply-To: <20250424084713.105080-1-krzysztof.kozlowski@linaro.org>
+References: <20250424084713.105080-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,16 +66,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 20 May 2025 22:14:46 +0200, Konrad Dybcio wrote:
-> The 8-core SKUs of the X1 family have a different sensor configuration.
-> Override it to expose what the sensors really measure.
+On Thu, 24 Apr 2025 10:47:13 +0200, Krzysztof Kozlowski wrote:
+> Since commit 3c3606793f7e ("dt-bindings: wireless: bcm4329-fmac: Use
+> wireless-controller.yaml schema"), bindings expect 'wifi' as node name:
+> 
+>   qcom-msm8974-lge-nexus5-hammerhead.dtb: bcrmf@1: $nodename:0: 'bcrmf@1' does not match '^wifi(@.*)?$'
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: x1p42100: Fix thermal sensor configuration
-      commit: 63350a07966f61183462c200361a8c8cc275d560
+[1/1] ARM: dts: qcom: Align wifi node name with bindings
+      commit: 25dcfe4042aaa96b3792ffaa933314a4bbebab98
 
 Best regards,
 -- 
