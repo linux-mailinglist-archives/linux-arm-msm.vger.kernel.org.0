@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-61031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B965AD6502
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 03:16:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5CE9AD6505
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 03:16:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 24A4F1BC094E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 01:16:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 70F8F3ACD11
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jun 2025 01:15:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AB7713C8E8;
-	Thu, 12 Jun 2025 01:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B219E78F24;
+	Thu, 12 Jun 2025 01:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WubHWjMc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sn+TuWXy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BA3154BF5
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 01:15:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0EDB155C87
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jun 2025 01:15:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749690954; cv=none; b=Z6IocNzT2pgTO+IiXgJPZEsAySpzWlP3LkDl7ECBP9ZCFxNnSypUYf46alDk3OtHS9qksqWOB49JejIWp/t34e77I6qKVkLyrvxRsDcaEFSq86mFoI7+uzQTCGVzflVVZoRXpR/1PdxcccKHY/8s51E3W8JykesLwNE5JdVOOFc=
+	t=1749690956; cv=none; b=DedrCrH9oQZI39GoMHsff3pmbEN9QU8wzdhwf7ZpyH/oTuSN0btzLAUDrxpRhEbPPavZTi3FlZLnaiZBKBQpuDGQC1S25WwNIHCqaEI98aQLRUvLyY2pRTA6ZionnxWS95JpGUt4l7Or+ZWTk6IE2UxpEMNpGAXQ8zVhuNCCYtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749690954; c=relaxed/simple;
-	bh=LqRPAqNQlNO3zu9aKoKgeHnMk4rQEK/l7ENgXrCUZAI=;
+	s=arc-20240116; t=1749690956; c=relaxed/simple;
+	bh=/XhbVM4wWSMUnltH22SqmYD67wEfCALUV37VwxYBKRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IX6pFikU5xhyIq+hhPe56YAsfZ865a6HV63BZNhLImbacIXapsKEciBzQj+8z+6U4jCRM16G3o/4mIHi1DccIjJarVn6tfZE51fR5wcpoDLfMJugfQzM1sAOa3a9MIpu1WSPg6UQL8X2AgtYdlWOw7BogAlhTxzIN45SpZQ0kGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WubHWjMc; arc=none smtp.client-ip=209.85.208.172
+	 MIME-Version; b=BKHO9WzakGN8YJ6xYjCcz2dIuWpYiVLcFfkfQq29VxZDivZe0IKzFXCHpwQMApYxYPSISzMAXqVv/OGbl/xe5GRXUqK1/fRXJWUpLKXDtDaYi+XRKmln+cMZDxG24mkH4zs2i1j6yKN4ZjqkdPoH0MBVc65uopuLlNKXlXtLwvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sn+TuWXy; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-32a65d1a966so505101fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 18:15:52 -0700 (PDT)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5532bb8687dso18107e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jun 2025 18:15:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749690951; x=1750295751; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1749690953; x=1750295753; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TGXO7XE6Zd1Vk08ChbQh+PqLJC+OLbKRi30oxb1Svek=;
-        b=WubHWjMcdRXHWWKVCKOkjUI9SRv/lW6N1KGO85u30YHbhzoODvdJH7BFlrEYzbvB4U
-         G7YGEQZp+azNp6ZXMNtdj4tvXmKNYCeT6cDgNPbv0VmmYn71/tusVC2r2X3lwbebRMQr
-         J2w75gqIquc0E/ktDaOxSliwqYU3V+8OP8+5/7EaZ/7vvaWI9NS252GaHkJpcaJMzGG1
-         Az8jSBXRttrLgkWd/yfSsTCI6YeOoyBOvkiyJ7GGQND9ZdwvsJ0vXfhN5ejtuWzbti2X
-         QfoF730eWa9M/4GdndiSw9zHd/UDD/E0kVJQSOc6QDoXLl9F7URI/fqYqKapOC6wdS9O
-         D2Lg==
+        bh=dZ2Yg+hw1/125iG7FYFyo2XHO42QFH1nZ0UWT9nVLTA=;
+        b=sn+TuWXy5TcFuBJYENNxSMmOI4z3COBpKgtHUc5Ph4Hz05HqB2+u/e1hB0jCvdXQiR
+         p89+q13PpjLXJZXbOsVsVdoKPh34EjD026dETAv2JmkMKb/3I8P6EAgYoNo6Y0s1mbj/
+         WSWqd2kQFgA5lezNs001H5LRA0yuSLQ7HuggS/QyQhaJi9SCbRCNqZoWYypY3KdNMbu8
+         4XBQKjZnvNCML/PAj8lbkMR/OMqRy4XX/UAvSMM9JxKWFwtTwoNnS9yA9rHH6Joz4PD7
+         KsJ+Z+ZjAP82ldTCV0RsnM9w8kAWeKoY6pPl8gcMDnhWgsvfEkHD5wUHim9A1VNExOYh
+         2x8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749690951; x=1750295751;
+        d=1e100.net; s=20230601; t=1749690953; x=1750295753;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TGXO7XE6Zd1Vk08ChbQh+PqLJC+OLbKRi30oxb1Svek=;
-        b=Aa1xX1CUrnXWdM2X3zaqG9VUqVCJqo5p2/i0xvM+l7qVOC6BOY/ZNFwZt6hf8N6znl
-         CuecAK9ruJAtz1i9T7vo9YLvkmQotCMo8vSrQL2VlCAfipflyoD7TZ5RnUr2dSVvPqmC
-         QkpGz85dMMn0r8fwgQpc+m/Y8Ggs4oRBwGsSIYAyAj3fQ8F5uQMM1KfZdDu6v1exbgYj
-         Rs51ERSMRa9djgfT7EWHjvght01mtkGWdXVVUxTOhVTvI5T2xvt8HWVA8KEUiG5BeNXA
-         aRU2KZy+qwak/kPMghlWQICpYyb66XVb/XBv5QszhxKU262evsDiBTfzIObnrOYMM5Ah
-         wI2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWFvZeRZuTShM6bJJ+Rx7F5TIs+54txNcyJIY5m+7oYHXUTjTVu0g/CYSv5zi7qZ2nWtspspOcNLHGoGmuQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yye7H18rEPvbblCvaG5ubwU1xMtzvEvkRFKmk3u+QPFgILC+k3G
-	xzsSle81wUqePX4C4+toq7dLnesGEaDoW+LLAgdtdzaOxeKe6YV5UwsRM3Y3vB5DYY4=
-X-Gm-Gg: ASbGncswy5/Jz3rAC+f2OEOq+kQoFJec5ayU9QC5cI2JRD9xTxxH9Cw7h2ieJG5Mbw6
-	RQ7dUeYwHD4D6VY2yv7wbGPPUFFxe8LhlA+rkjE8Rgn4aVkX7XWfrfP2U5ufSj3OuAoBVQ8559S
-	W0nZZuv9BAsBr6DcOWKEnrSNKV4fHgCG5qPmYCS5rQs6M+pF9J154ozOL1sitfoykY4V8QmuQN6
-	sZO1XTNcJn/VEi4Sv4SXEXiK/eMd+MaquvGT0Aa6/hYS0Az7bHzLeIclIy8C/87AozZDD6n6ZSA
-	wFVKFRvOR4c9rmfVyXFIBxAoN7I/9kNXQ2yI4L138Xjl5+DyJV9D+l+hwbZIQ5XFyOpcUijErwx
-	LN1HYl9Kc0VtApUD9GoH8Lu6RHE2qNTIe4gPA/5wICMo5sUGvzpQ=
-X-Google-Smtp-Source: AGHT+IF6li0/wsba5vOcpZ+7hE86fPFgQ1nbQpeMNRGYiv+YLYSCoO8kXCjs4MSZkmCv4t6gWdR79A==
-X-Received: by 2002:a05:6512:acf:b0:553:34fc:3bd5 with SMTP id 2adb3069b0e04-5539c2004a5mr587329e87.8.1749690950543;
-        Wed, 11 Jun 2025 18:15:50 -0700 (PDT)
+        bh=dZ2Yg+hw1/125iG7FYFyo2XHO42QFH1nZ0UWT9nVLTA=;
+        b=G7U2gQIfzdU+ld3M3FlmyyU+E6jS0EIUcG2QYc16GESlM4CxP7DjgoIvkInOOmVTsw
+         4moUc5t2fH3Q4fHXVrNeI1imxDbHJ+S8a/X6r2MrKUf2byjluo3huGm3ZqEs/46VUoui
+         s9j7tYeoPq/+1YZu2AKK82FLtb6cxbttj35/p9iOL/GLf2/m9IJuP1XrKjHm/MGEjiSY
+         IzyoH6Qr4WsEzpUMoq8jh3xhtbhnbAQwHhbsDzZQTLtOGRc53EyX9UZHF4qIldnoiB87
+         tapjvU6ALuOp7JpP+OgSdV2JRst5Bfib3jr8EtdDs3NhTFY+PKpNC9+czNZhz0i//NQD
+         mUfw==
+X-Forwarded-Encrypted: i=1; AJvYcCVHknLrzAX0ksLav+OE1eGo6pJY2z9cwfHrKQSAahxUhbIE/O2Dd5Qk/WsJJP7Aa+ZeOH4KJqRlHzIhBvbr@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmiaHCfT9LE3AY5RF7rF9GXvml7OyyxRi6a6fcdLSBgR/OAtbW
+	jAKMPipfqykeHZItjWUmulAOs8qIIQGZb6OB97nQCNaFXvivrGm28/gJHsa9NRZX++g=
+X-Gm-Gg: ASbGncvaWXb/yVLrbOLq5fJ0mUct3uVpcdbYtLAGpqrYLMtAdUNyB2Af0d2vAEZPT7D
+	y3Qz9JwOwfsYTCgNIsniCA+BSO0XlcYVWmnAq2BULkpuXUT5IAOsPsefjvxr4BKwS7zFL6zp9wE
+	wNLo4jNM7eYXEqVBQalclbu3xbuVVmXByaY8JO7MabUgD+LWugcfQdfkVXHLPPuzlQ+66Wxs5Vg
+	00Li7KB8jg29XkbXrUfGAFhOyw/c3pigNo+Hh7dukQzZtybqKvP2Wz2TCfDw9JXqjPZrhpmX1fh
+	V/MdfOz8D0SBig8iIMc3q3DCJgpvJ70XEjpxVKcTsA5OFtPT2BseKqPwoMPRYnIY0KAyaYm1ndW
+	Vi9ZSrjkWCPgSAkm1i9mfv6ZAaEeAXQagE8ZqpCokBKM3zgyL/z0=
+X-Google-Smtp-Source: AGHT+IHm91uAYi4NKW7xBMaxW2aWgQgZM3ryOzUpvaUBQco+HVLoDZFQ7XSw3K4U3HUpWMmUW8p0Bw==
+X-Received: by 2002:a05:6512:3d0d:b0:553:2bf7:77bf with SMTP id 2adb3069b0e04-5539c0d3b49mr633019e87.8.1749690952737;
+        Wed, 11 Jun 2025 18:15:52 -0700 (PDT)
 Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553a7018069sm62808e87.157.2025.06.11.18.15.48
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553a7018069sm62808e87.157.2025.06.11.18.15.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jun 2025 18:15:50 -0700 (PDT)
+        Wed, 11 Jun 2025 18:15:51 -0700 (PDT)
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 To: Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Rob Herring <robh@kernel.org>,
@@ -88,9 +88,9 @@ Cc: Conor Dooley <conor+dt@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-media@vger.kernel.org,
 	devicetree@vger.kernel.org
-Subject: [PATCH 06/10] media: qcom: camss: export camss_parse_endpoint_node() to csiphy
-Date: Thu, 12 Jun 2025 04:15:27 +0300
-Message-ID: <20250612011531.2923701-7-vladimir.zapolskiy@linaro.org>
+Subject: [PATCH 07/10] media: qcom: camss: csiphy: probe any present children CSIPHY subdevices
+Date: Thu, 12 Jun 2025 04:15:28 +0300
+Message-ID: <20250612011531.2923701-8-vladimir.zapolskiy@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250612011531.2923701-1-vladimir.zapolskiy@linaro.org>
 References: <20250612011531.2923701-1-vladimir.zapolskiy@linaro.org>
@@ -102,54 +102,320 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Export the function to reuse the remote endpoint node helper function
-from a CSIPHY driver.
+Add CSIPHY driver routines to catch any possible csiphy subdevices
+under CAMSS device tree node.
 
 Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 ---
- drivers/media/platform/qcom/camss/camss.c | 6 +++---
- drivers/media/platform/qcom/camss/camss.h | 4 ++++
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ .../media/platform/qcom/camss/camss-csiphy.c  | 248 ++++++++++++++++++
+ .../media/platform/qcom/camss/camss-csiphy.h  |   3 +
+ drivers/media/platform/qcom/camss/camss.c     |   2 +
+ 3 files changed, 253 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index e03308d7a366..40bb20bbe8b4 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -2981,9 +2981,9 @@ static const struct parent_dev_ops vfe_parent_dev_ops = {
-  *
-  * Return 0 on success or a negative error code on failure
-  */
--static int camss_parse_endpoint_node(struct device *dev,
--				     struct fwnode_handle *ep,
--				     struct camss_async_subdev *csd)
-+int camss_parse_endpoint_node(struct device *dev,
-+			      struct fwnode_handle *ep,
-+			      struct camss_async_subdev *csd)
- {
- 	struct csiphy_lanes_cfg *lncfg = &csd->interface.csi2.lane_cfg;
- 	struct v4l2_mbus_config_mipi_csi2 *mipi_csi2;
-diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-index 99831846ebb5..c3eedeb87ddc 100644
---- a/drivers/media/platform/qcom/camss/camss.h
-+++ b/drivers/media/platform/qcom/camss/camss.h
-@@ -14,6 +14,7 @@
- #include <linux/types.h>
- #include <media/v4l2-async.h>
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+index f561811b7617..3020f7d0f621 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+@@ -17,6 +17,7 @@
+ #include <linux/pm_runtime.h>
+ #include <media/media-entity.h>
  #include <media/v4l2-device.h>
 +#include <media/v4l2-fwnode.h>
  #include <media/v4l2-subdev.h>
- #include <media/media-device.h>
- #include <media/media-entity.h>
-@@ -150,6 +151,9 @@ struct parent_dev_ops {
- 	void __iomem *(*get_base_address)(struct camss *camss, int id);
- };
  
-+int camss_parse_endpoint_node(struct device *dev,
-+			      struct fwnode_handle *ep,
-+			      struct camss_async_subdev *csd);
- void camss_add_clock_margin(u64 *rate);
- int camss_enable_clocks(int nclocks, struct camss_clock *clock,
- 			struct device *dev);
+ #include "camss-csiphy.h"
+@@ -24,6 +25,17 @@
+ 
+ #define MSM_CSIPHY_NAME "msm_csiphy"
+ 
++struct csiphy_priv {
++	struct device *dev;
++	unsigned int id;
++	struct camss *camss;
++	struct csiphy_device *csiphy;
++
++	struct v4l2_async_notifier notifier;
++
++	bool combo_mode;
++};
++
+ static const struct csiphy_format_info formats_8x16[] = {
+ 	{ MEDIA_BUS_FMT_UYVY8_1X16, 8 },
+ 	{ MEDIA_BUS_FMT_VYUY8_1X16, 8 },
+@@ -836,3 +848,239 @@ void msm_csiphy_unregister_entity(struct csiphy_device *csiphy)
+ 	v4l2_device_unregister_subdev(&csiphy->subdev);
+ 	media_entity_cleanup(&csiphy->subdev.entity);
+ }
++
++static int csiphy_notify_bound(struct v4l2_async_notifier *notifier,
++			       struct v4l2_subdev *subdev,
++			       struct v4l2_async_connection *asd)
++{
++	struct csiphy_priv *csiphy_priv = container_of(notifier,
++						struct csiphy_priv, notifier);
++	struct camss_async_subdev *csd = container_of(asd,
++						struct camss_async_subdev, asd);
++	struct csiphy_device *csiphy = csiphy_priv->csiphy;
++	struct media_entity *sensor = &subdev->entity;
++	unsigned int i;
++
++	/* Keep parsed media interface data, but set the correct port id */
++	csiphy->id = csiphy_priv->id;
++	csiphy->cfg.csi2 = &csd->interface.csi2;
++
++	for (i = 0; i < sensor->num_pads; i++)
++		if (sensor->pads[i].flags & MEDIA_PAD_FL_SOURCE)
++			break;
++
++	if (i == sensor->num_pads) {
++		dev_err(csiphy_priv->dev, "No source pad in external entity\n");
++		return -EINVAL;
++	}
++
++	return media_create_pad_link(sensor, i, &csiphy->subdev.entity,
++				MSM_CSIPHY_PAD_SINK,
++				MEDIA_LNK_FL_IMMUTABLE | MEDIA_LNK_FL_ENABLED);
++}
++
++static int csiphy_notify_complete(struct v4l2_async_notifier *notifier)
++{
++	struct csiphy_priv *csiphy = container_of(notifier, struct csiphy_priv,
++						  notifier);
++	struct camss *camss = csiphy->camss;
++
++	return v4l2_device_register_subdev_nodes(&camss->v4l2_dev);
++}
++
++static const struct v4l2_async_notifier_operations csiphy_notify_ops = {
++	.bound = csiphy_notify_bound,
++	.complete = csiphy_notify_complete,
++};
++
++static int msm_csiphy_parse_ports(struct csiphy_priv *csiphy)
++{
++	struct device *dev = csiphy->dev;
++	struct fwnode_handle *fwnode = dev_fwnode(dev), *ep;
++	unsigned int num_endpoints = fwnode_graph_get_endpoint_count(fwnode,
++						FWNODE_GRAPH_DEVICE_DISABLED);
++	int ret;
++
++	switch (num_endpoints) {
++	case 0:
++		return 0;
++	case 1:
++		break;
++	case 2:
++		csiphy->combo_mode = true;
++		break;
++	default:
++		return -EINVAL;
++	}
++
++	v4l2_async_nf_init(&csiphy->notifier, &csiphy->camss->v4l2_dev);
++	csiphy->notifier.ops = &csiphy_notify_ops;
++
++	fwnode_graph_for_each_endpoint(fwnode, ep) {
++		struct camss_async_subdev *csd;
++
++		csd = v4l2_async_nf_add_fwnode_remote(&csiphy->notifier, ep,
++						struct camss_async_subdev);
++		if (IS_ERR(csd)) {
++			ret = PTR_ERR(csd);
++			goto err_remote;
++		}
++
++		ret = camss_parse_endpoint_node(dev, ep, csd);
++		if (ret < 0)
++			goto err_remote;
++	}
++
++	ret = v4l2_async_nf_register(&csiphy->notifier);
++	if (ret)
++		goto err_cleanup;
++
++	return 0;
++
++err_remote:
++	fwnode_handle_put(ep);
++err_cleanup:
++	v4l2_async_nf_cleanup(&csiphy->notifier);
++
++	return ret;
++}
++
++static int msm_csiphy_init(struct csiphy_priv *csiphy)
++{
++	struct camss *camss = csiphy->camss;
++	unsigned int i = csiphy->id, j;
++	int ret;
++
++	ret = msm_csiphy_subdev_init(camss, &camss->csiphy[i], i);
++	if (ret < 0) {
++		dev_err(csiphy->dev, "Failed to init csiphy%d sub-device: %d\n",
++			i, ret);
++		return ret;
++	}
++
++	ret = msm_csiphy_register_entity(&camss->csiphy[i], &camss->v4l2_dev);
++	if (ret < 0) {
++		dev_err(csiphy->dev, "Failed to register csiphy%d entity: %d\n",
++			i, ret);
++		return ret;
++	}
++
++	for (j = 0; j < camss->res->csid_num; j++) {
++		ret = media_create_pad_link(&camss->csiphy[i].subdev.entity,
++					    1 /* source */,
++					    &camss->csid[j].subdev.entity,
++					    0 /* sink */,
++					    0);
++		if (ret < 0) {
++			dev_err(csiphy->dev,
++				"Failed to link csiphy%d to csid: %d\n",
++				i, ret);
++			msm_csiphy_unregister_entity(&camss->csiphy[i]);
++			return ret;
++		}
++	}
++
++	return 0;
++}
++
++static int msm_csiphy_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct device_node *phy_node = dev_of_node(dev), *camss_node;
++	struct csiphy_priv *csiphy_priv;
++	struct of_phandle_iterator it;
++	struct camss *camss;
++	unsigned int i = 0;
++	int ret;
++
++	/* Bail out if camss device driver has not yet been registered */
++	camss = dev_get_drvdata(dev->parent);
++	if (!camss || !camss->v4l2_dev.dev)
++		return -EPROBE_DEFER;
++
++	camss_node = of_get_parent(phy_node);
++	if (!camss_node)
++		return -ENODEV;
++
++	of_for_each_phandle(&it, ret, camss_node, "phys", "#phy-cells", -1) {
++		if (it.node != phy_node) {
++			i++;
++			continue;
++		}
++
++		if (!of_node_name_eq(it.node, "phy") ||
++		    !of_device_is_available(it.node))
++			ret = -ENODEV;
++
++		of_node_put(it.node);
++		break;
++	}
++	of_node_put(camss_node);
++
++	if (ret)
++		return ret;
++
++	if (i >= camss->res->csiphy_num)
++		return -EINVAL;
++
++	csiphy_priv = devm_kzalloc(dev, sizeof(*csiphy_priv), GFP_KERNEL);
++	if (!csiphy_priv)
++		return -ENOMEM;
++
++	csiphy_priv->dev = dev;
++	csiphy_priv->camss = camss;
++	csiphy_priv->id = i;
++	csiphy_priv->csiphy = &camss->csiphy[i];
++
++	ret = msm_csiphy_init(csiphy_priv);
++	if (ret < 0)
++		goto err_parse;
++
++	ret = msm_csiphy_parse_ports(csiphy_priv);
++	if (ret < 0)
++		goto err_cleanup;
++
++	dev_set_drvdata(dev, csiphy_priv);
++
++	return 0;
++
++err_cleanup:
++	msm_csiphy_unregister_entity(csiphy_priv->csiphy);
++err_parse:
++	v4l2_async_nf_unregister(&csiphy_priv->notifier);
++	v4l2_async_nf_cleanup(&csiphy_priv->notifier);
++
++	return ret;
++}
++
++static void msm_csiphy_remove(struct platform_device *pdev)
++{
++	struct csiphy_priv *csiphy_priv = dev_get_drvdata(&pdev->dev);
++
++	msm_csiphy_unregister_entity(csiphy_priv->csiphy);
++
++	v4l2_async_nf_unregister(&csiphy_priv->notifier);
++	v4l2_async_nf_cleanup(&csiphy_priv->notifier);
++}
++
++static const struct of_device_id csiphy_dt_match[] = {
++	{ .compatible = "qcom,csiphy", },
++	{}
++};
++
++static struct platform_driver csiphy_platform_driver = {
++	.probe	= msm_csiphy_probe,
++	.remove	= msm_csiphy_remove,
++	.driver	= {
++		.name		= "qcom-csiphy",
++		.of_match_table	= csiphy_dt_match,
++	},
++};
++
++void __init msm_csiphy_driver_register(void) {
++	platform_driver_register(&csiphy_platform_driver);
++}
++
++void __exit msm_csiphy_driver_unregister(void) {
++	platform_driver_unregister(&csiphy_platform_driver);
++}
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/media/platform/qcom/camss/camss-csiphy.h
+index f092b7ff2f26..b984aa745c78 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.h
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
+@@ -120,6 +120,9 @@ int msm_csiphy_register_entity(struct csiphy_device *csiphy,
+ 
+ void msm_csiphy_unregister_entity(struct csiphy_device *csiphy);
+ 
++void msm_csiphy_driver_register(void);
++void msm_csiphy_driver_unregister(void);
++
+ extern const struct csiphy_formats csiphy_formats_8x16;
+ extern const struct csiphy_formats csiphy_formats_8x96;
+ extern const struct csiphy_formats csiphy_formats_sdm845;
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index 40bb20bbe8b4..57a522fcb8c0 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -3955,6 +3955,7 @@ static struct platform_driver qcom_camss_driver = {
+ 
+ static int __init qcom_camss_init(void)
+ {
++	msm_csiphy_driver_register();
+ 	return platform_driver_register(&qcom_camss_driver);
+ }
+ module_init(qcom_camss_init);
+@@ -3962,6 +3963,7 @@ module_init(qcom_camss_init);
+ static void __exit qcom_camss_exit(void)
+ {
+ 	platform_driver_unregister(&qcom_camss_driver);
++	msm_csiphy_driver_unregister();
+ }
+ module_exit(qcom_camss_exit);
+ 
 -- 
 2.49.0
 
