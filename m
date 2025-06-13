@@ -1,154 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-61243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B233AD8FCE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 16:41:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75A73AD8FDD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 16:43:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 00F127A71BD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 14:40:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C83CD1894017
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 14:43:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D5A018EFD1;
-	Fri, 13 Jun 2025 14:41:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pay6qyGV"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92C6D19D88F;
+	Fri, 13 Jun 2025 14:43:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC57191493
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 14:41:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DAD1DE4CA;
+	Fri, 13 Jun 2025 14:42:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749825714; cv=none; b=XCLL+dEtZTnSulyw5d79BqYRUZwK3uEsXUeIJGkr0DtLFsycX5vdESc5RTcMx6Gx2Fqp40qmLwHuo2xEgYpA7mwwV2mK5xaEvcjP+YoHdwyBGnZaGuPR2L84VYo2ymj9i97eNIxU+Dxd6qv+nohcnwLejzAaoWnM/Ogr6OpFjj4=
+	t=1749825784; cv=none; b=F3mKKcE5I8yo0qd9G8SDpX6XUU24peBNrv2vZ95DCDcVA8Fj7J5HYHRo/CDwQRdnaalctTLHTHbdbQNe6qtFX0tZl6NbTxs+yowvqmXS9JfoFLf9q8ekw1JmHfGUPzyD7TU9gGpqjb/+/Db6eWC7gWj2JkIV2wGGvd3PaGoANGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749825714; c=relaxed/simple;
-	bh=xR59NA9k6u+fku9xip3VLu0AuEwpmUQHbSWP6W9jjqg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sKNu2V6oF9nMtz/Vl95iowrKaOyxAWLSpc37niwyKsKfqQYb2sbiX3OIS7HWbF+kaWUx1WOmGAMzglzQ/H91RVOnHoYy/p5okIwdyS7Ga30qoCAscVCZIEHO4aEr4GPJk8P8d4Lcg0RU3pcT5P5tXc7TM881mSGPpNPDvD4yC3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pay6qyGV; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55D9JSXF014952
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 14:41:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=f8LvzWRSramzprfrBFvO2s+C1Hm+tEbtLlK
-	RSfKO3eY=; b=pay6qyGVBWCIHRDWXvnRM8KGHFLmvqXlScGFJW1m0kP6ycHs2uS
-	12j1vP2HUfI22Sr7degxe/C8v4R6fxxYhLv57pLOoCbayh9KEayLx7+NK7O6hgL9
-	GH+9vx7+SGAgNh/saaT/p5Mp/MKWG+EyfGDn420awxfDOvJssKc2T8S4x582lllJ
-	gq1YxzsYSN/h2RX9lAiWznmrGMSyuzMbADosqAZFJ0+CCue9LRI671oLRcPz7/0n
-	EeQHxpoK7V1diHe/VDtMgNat+5fbczjHOaiQZoEU1dGPr0i13bLtFLbYckKQ8Ce3
-	XrhamGf/gXNpoNmmdyQ98akCJ6PWmTBC1wQ==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 478h8krmy0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 14:41:52 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b090c7c2c6aso1476976a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 07:41:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749825711; x=1750430511;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f8LvzWRSramzprfrBFvO2s+C1Hm+tEbtLlKRSfKO3eY=;
-        b=IMAE1C2l3DS4U6VNqO4o7GTcIGuGgzjpH8jsU9Z5OAe3euoUnK5PQA8amATQ7OlIP7
-         piqr3rktl3pcSCuLySlL1H/WlWW+ePZwoqdH/zlzkVnUR7qC0kEim/NrGLopT3q6u1ZY
-         H4quEwUf/8fg+RBZITQhc4T0dlssmYZsB3qEOh7PtGRL26zyBBrfZeaWn6smA13suJKZ
-         pR/z4BN8rzUQnDw5sjtF8rcoK0yfLmh6Xi7CtCGU3tAtPnbjKGY1GacgAafQjVVRVL+M
-         +iIbgr+w5XsO4x49L5MigcSaKp8Eqrq4Bbp0hdmX4X292rfmo5DR9fbF51dYD1tjB6cv
-         yfuw==
-X-Forwarded-Encrypted: i=1; AJvYcCUaHvGODCZysAACJE2hRECNpPjwxlxfWd4i8GScQP0mOEFEQB8MdzUyIcfaRaLuYs9/YV+BpR15t4uRhbsJ@vger.kernel.org
-X-Gm-Message-State: AOJu0YwtRVGllwCOjTUzgGQ5lz8wkBiGVCJo4clvrGKQtiWtGT+xp74O
-	wMUHQ68mapTjU7uVatYg4ToYiGckO3UBwkkqv697BWHVgZmqd6VRSgz7kg9AGcO8XrvX29lnC/S
-	iv9Lmf+8ST5Nl6TK/ZSQy/Yq/BtuCZnetMTp0JVHvSAJlCF0hrLHdmo4727g4sD0RmEUX
-X-Gm-Gg: ASbGncvm2RrKhuJQDbYzf4uxfhSjrqRFZhYxLrAjD/NsY3Bbk55tbPqhqgPNOBO3RCY
-	bMLfQQCWQxPx9axnnfDa0F56GPp4Lh1uCzxvYZWgX3Rqy56UJN21XBqsGZLpHSQ96V5br/KL0c7
-	pUQbDjkvGdaH3foSCQb1tt98CBuG1iwTv+NIiotaRxeQRUysZ4KnnTZFR5v6RbcY5okl5xiM+BJ
-	heG27nfABMb2GOw7TLZ4a4jzEQUAIouodnh7w0CDWeKXrPB+9JTYMTti9jI9HSxy0BgCNzOv656
-	Z54SHHV+OrQK7P1toKUw6Mmbpq+/nAQD
-X-Received: by 2002:a05:6a20:748c:b0:21f:a883:d1dd with SMTP id adf61e73a8af0-21facbdebf9mr4553234637.14.1749825710750;
-        Fri, 13 Jun 2025 07:41:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE7GnAOt+z7rv+BSeU7ZHDxFM735EmwOZ4MxONhEpinIvFL7k6YOrMe2Cgq92R1/zv8XQne8A==
-X-Received: by 2002:a05:6a20:748c:b0:21f:a883:d1dd with SMTP id adf61e73a8af0-21facbdebf9mr4553202637.14.1749825710353;
-        Fri, 13 Jun 2025 07:41:50 -0700 (PDT)
-Received: from localhost ([2601:1c0:5000:d5c:5b3e:de60:4fda:e7b1])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2fe1680c5fsm1775491a12.49.2025.06.13.07.41.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jun 2025 07:41:50 -0700 (PDT)
-From: Rob Clark <robin.clark@oss.qualcomm.com>
-To: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Fix inverted WARN_ON() logic
-Date: Fri, 13 Jun 2025 07:41:44 -0700
-Message-ID: <20250613144144.27945-1-robin.clark@oss.qualcomm.com>
-X-Mailer: git-send-email 2.49.0
+	s=arc-20240116; t=1749825784; c=relaxed/simple;
+	bh=tPl/PEIb8eSUeiYkBoCGfQu4ggnOVkwSBcpHJFJlX+E=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=o18ibQfeQNuTS0uW/Lb/WqX4QSlCE8RE/5h4MmxLmKnma0VBLKrIyyJ9vZ684p2c0m5miHALvUb4iDKS8lij/hEK9Z2SjUuTDsocT7BIkaheUX1zORlbteCSSeqB6OMEudLZAcKuvO2d9g88t5PiL0dcz1uJ/sXMf1zPeQGXR+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.254.200.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpip2t1749825713tbe4f63a0
+X-QQ-Originating-IP: V63lOhA8be4jkOMxbffSjrLoj7ZrMWN4e7cYEOp3Yfc=
+Received: from [192.168.30.36] ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 13 Jun 2025 22:41:51 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 6568943623001376254
+EX-QQ-RecipientCnt: 9
+From: Xilin Wu <sophon@radxa.com>
+Date: Fri, 13 Jun 2025 22:41:48 +0800
+Subject: [PATCH] phy: qcom-qmp-ufs: Fix HS-G4 PHY init table for sc7280
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 55YIUWDObSGMzGEZs9dj0JFGwLIBT3YU
-X-Proofpoint-GUID: 55YIUWDObSGMzGEZs9dj0JFGwLIBT3YU
-X-Authority-Analysis: v=2.4 cv=Pp2TbxM3 c=1 sm=1 tr=0 ts=684c38b0 cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=xqWC_Br6kY4A:10 a=6IFa9wvqVegA:10
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=4MAclHcQAAAA:8 a=r-1N9bTl5XODNADl1y4A:9
- a=x9snwWr2DeNwDh03kgHS:22 a=cvBusfyB2V15izCimMoJ:22 a=6vtlOZhwcO7ZS_iRoh4Z:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEzMDEwNiBTYWx0ZWRfX4OQwRaHPcohT
- F5COy1pgsocF69Ql7xoFKoQycuRLzIaXiOnkBKL9KBV7fKrkNgrRnVkHmTZnEeW2s+uG0maIq3N
- 0poq+xoWfoEJ2lgOJRympveuN57ZlFXuJ+fhWiduSAJIIM+XR7Yh3S/aZN3Bnqxi3jnlMpzLoTh
- E+6FhU0ut4ecvyVewAnuU3FuUQ32PaqHaiT5y3X3EHRLlSNjXfZ8QrmxeY3PVOpOOgE1xtyKKUE
- /DgtfcOd2SZVb3zyZmvVDiFrPohoDzG+Dm2p0kl6gND9ga7aZQbZFt+wAdm+gVh2djbnuOm0RtW
- 4b38HEabAANfI+X/5lZy0q1qLZWGSmxj1MKUqV0uayqcE1JBfk5Lhw11frTLbL2qUxpmPyMkDIr
- ebadeb2ayh6HU1cQew26KdE67U4OvKaymy/n67vzog0Rt7pWa8NZIfqnqlfCcpX+ajL6GXdO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-13_01,2025-06-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 bulkscore=0 spamscore=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=999 mlxscore=0 priorityscore=1501
- malwarescore=0 impostorscore=0 phishscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506130106
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250613-sc7280-ufsphy-g4-fix-v1-1-1bf60744f5ac@radxa.com>
+X-B4-Tracking: v=1; b=H4sIAKs4TGgC/x2MSQqAMAwAvyI5G2jTuuBXxIPUVHNRaVAU8e8Wj
+ zMw84ByElboigcSn6KyrRlsWUBYxnVmlCkzkKHK1NahhoZag0fUfblx9hjlQkO+8hSdjWOAnO6
+ Js/63/fC+H2qSSPVmAAAA
+X-Change-ID: 20250613-sc7280-ufsphy-g4-fix-024542f31fac
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Nitin Rawat <quic_nitirawa@quicinc.com>, 
+ Manish Pandey <quic_mapa@quicinc.com>, Dmitry Baryshkov <lumag@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, Xilin Wu <sophon@radxa.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1749825712; l=1667;
+ i=sophon@radxa.com; s=20240424; h=from:subject:message-id;
+ bh=tPl/PEIb8eSUeiYkBoCGfQu4ggnOVkwSBcpHJFJlX+E=;
+ b=TjZ2DBGaELqKjKwUCVZYItwat+JLv7VGMiBu46gSHT+NLI6IL6S34l0NvKdoZJLxA8weVyFov
+ WSnE5vBfj2jDyLaAUmZ8l+7kXNOSyBxXAyUwGUW3+lBIHjNo2Aa2YH0
+X-Developer-Key: i=sophon@radxa.com; a=ed25519;
+ pk=vPnxeJnlD/PfEbyQPZzaay5ezxI/lMrke7qXy31lSM8=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:radxa.com:qybglogicsvrgz:qybglogicsvrgz8a-1
+X-QQ-XMAILINFO: NDaL9YIDjH+JVfTGJPjC0drK2S3l6oMd3sX5QMU8QcrEPwj//KVurX/4
+	x0DMEfg89F9b35oZ9c/645mhKqkHufdB3p5lsOx5BTfK0nzNtXtpxF6a2/qJASpGgm9MNg0
+	gSCLgEXzBS3rmhN+WQRwCHxIPH6A1wsTNakGcW8sLQT8w1N0lsS3qMN2gFEIogU5ft6P1+t
+	5rfuzVvbHj1o+uIgDMIgnNikl99dPglr9t8+vvJqtU7ao6LsalmBL6Bz2R0QXTZXKLC9fic
+	gmZ0SvoxkpaWm/0Y3DNpIDZXUceHfb4gtA3Kq8Il6ap1QhU1smk+aGN5dTkFlWNiKfhULYu
+	g4rjGIaAnmYfrHQ660CxqoTehbkPJgIF7Vk/fe9eiHlwHJ0mF+8m5HnZccsdJBdqw0lmBqo
+	1UHMSgDV4QJVmILNIxTIWOx1LKR95x5vvyZGmF8TZGNhqtdcn8U8Nj6qZiTnbAfC88ela0+
+	rRdkUk52HlMIFsNu3DVaVNARhMdVYqEQihjz8eOazgmcAzqV2VzJO33IHqLN9ksd+R05zno
+	BFCpJQ/ipPD48oFmdR5D7+lXqyDlDi4Wil2zlfamtcVbIZ2/PgDKpPlEz1m7AeGVKJfnJiJ
+	pE/fdqIH+2lNzxeqiyzFBAwwyM9D0lyxmFk7tVDv1+wJN4nIPF/pe+ARNtBPNhkuQOU6YbY
+	DUSuGymQJSksdGXMhlCLMnm6nTf3Blf6ZJZhctVzbQjEQ0/ONnTZZbjFmmD6LAL2/NBpVcS
+	h21EliiOMyQODF6ZSaOaLemTJY+B3kuVw4wt/2U2ePiQDcAMzyrYn5K6/JPQUjhcLdWLRKt
+	QYj4zgMIwcvyNNOitsGbxtzVLkRXI310oowqxbkvXBSq59JD2yUO09BQzrJDF6wiKLHcFeb
+	qlqBZLebPGJLbag/52GexvAAMANYiBdQMoc8lwPhNSe79BaBVUSFqOvLliiYUnBe5PW72TW
+	CZceVTKkF3nL3ybBnyB9l5BZBzLuqdreD27Y8BusDvmi81IoZvxOk3+dy
+X-QQ-XMRINFO: Nq+8W0+stu50PRdwbJxPCL0=
+X-QQ-RECHKSPAM: 0
 
-We want to WARN_ON() if info is NULL.
+The PHY is limited to operating in HS-G3 mode during the initial PCS
+registers initialization. Extra PHY init sequence is required to allow
+HS-G4 mode to work when needed.
 
-Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Fixes: 0838fc3e6718 ("drm/msm/adreno: Check for recognized GPU before bind")
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fixes: 8abe9792d1ff ("phy: qcom-qmp-ufs: Add Phy Configuration support for SC7280")
+Signed-off-by: Xilin Wu <sophon@radxa.com>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This might need testing on sm8150, sm8250 and sc8180x as well.
+---
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 0d12454b1f2e..5c52d392427f 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -217,7 +217,7 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+index b33e2e2b5014d3ca8f19b623ba080887f53e616d..7797be329d75f95c80863e05351d0cf55fdf38c2 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+@@ -570,6 +570,13 @@ static const struct qmp_phy_init_tbl sm8150_ufsphy_pcs[] = {
  
- 	info = adreno_info(config.chip_id);
- 	/* We shouldn't have gotten this far if we don't recognize the GPU: */
--	if (!WARN_ON(info))
-+	if (WARN_ON(!info))
- 		return -ENXIO;
+ static const struct qmp_phy_init_tbl sm8150_ufsphy_hs_g4_pcs[] = {
+ 	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x10),
++	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_PLL_CNTL, 0x0b),
++	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TIMER_20US_CORECLK_STEPS_MSB, 0x2d),
++	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TIMER_20US_CORECLK_STEPS_LSB, 0xb0),
++	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_PWM_GEAR_BAND, 0xff),
++	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_HS_GEAR_BAND, 0x1b),
++	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x04),
++	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x04),
+ 	QMP_PHY_INIT_CFG(QPHY_V4_PCS_UFS_BIST_FIXED_PAT_CTRL, 0x0a),
+ };
  
- 	config.info = info;
+
+---
+base-commit: bc6e0ba6c9bafa6241b05524b9829808056ac4ad
+change-id: 20250613-sc7280-ufsphy-g4-fix-024542f31fac
+
+Best regards,
 -- 
-2.49.0
+Xilin Wu <sophon@radxa.com>
 
 
