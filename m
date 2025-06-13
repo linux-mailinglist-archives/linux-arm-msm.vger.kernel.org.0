@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-61163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1013AD80A3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 03:55:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27CB1AD80AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 03:55:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4595318996DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 01:55:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF3C01E2FDC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 01:55:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78F991E0489;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8823C1E7C18;
 	Fri, 13 Jun 2025 01:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XGnWSRQ+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P/iEYGIa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438C413C9D4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53BEF1DFD86;
 	Fri, 13 Jun 2025 01:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749779723; cv=none; b=AUEPWLJ4VFViJ5tscJIhZaEgovaQ4UAPriYMQQ9wnu5ti+Bh7v3A4jSYt2cJlW3mG2ospkixnDfUuqJET7nDYz98LqSj/7xOt0LuKDSn0XL9G53Wxa0a1jf/7fYWscnUwq+bbjQLypnszoTJ7zcyjcBSlkM244+AsT4Sa7qRSeI=
+	t=1749779723; cv=none; b=LteK6WA7Lxo07Hcoy9z2yY91dAB2OeU6dB7fEkoN6w/o50jWFXU+OtSoVxV5075KR0mXrQvRRdJLl6kbkIlM75PcfJ1F/86yMHwjY3qwcOxdNucPOvUNHaoPyQ6Qm5Sf6PZ+XhziU2XdfslBfAhTupFdjJ+iD3iG4hNotvC/2VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1749779723; c=relaxed/simple;
-	bh=Ntn9IiFPx8N6O+ViIz67FABe2gTeLIkgTCgnOwwHOGE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WxOiEB49sDD84sFIULXFrYUOKjR66lOIlhQqw12RXZRLqWLAx1bKilDIje/Q3I3LKwAusaMecmUrq3AP4RfbrXYFMo6sy7D6ejiDy7bQ97WlWC4nT7PjGX9qFDrlNuaK5sTSPBA/vLwHMNG54JbA7+oyfjcdjp+0l/NW5oxLvpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XGnWSRQ+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C3319C4CEEA;
+	bh=w9+uhG8mukFv3LUxt/Camybk60EdgO3KKFcvGpshaz8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=ZP7YqNziT5XYVobsYMN0br8ocIQzJ3kka1eTJ5ppIWQs0XbN7klT00cWdnHY/Li7T+IhJesma8KatXobPX4bmi8401Y+e+EYfbQlhj0ca701Opgpx3cfB086SysONJ7t8EoqpfzPTJaemftt7VMQJkGuRlSz2LqcB6EcEgyyr/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P/iEYGIa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DD62DC4CEF0;
 	Fri, 13 Jun 2025 01:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749779722;
-	bh=Ntn9IiFPx8N6O+ViIz67FABe2gTeLIkgTCgnOwwHOGE=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=XGnWSRQ+RmTdUH1HwxU0YrDe+698fAKCLW5XN39C1G84hz5VrRlfkPVsfZ2m1+rCB
-	 cQtz7KrBkK9PGtGSC4HTOuafQFZOFRBjIwdzodBUoAO5OJm1aA/PSk8ugLYISC/V31
-	 niR819TWdiDrWTPzO/NXkmjCucIab+7rTf3iZUTxWxpZ/3LO/MhSjOSic+e0T7oLz7
-	 EGDkyNQ3xsD7NU33+hlJ35kow7exIfMfxcoOipVWLn2A0mS62FBDKMutsFMtPles37
-	 ZXrJkj8K4mFqKcDQ2mIIGEMaeQGEWzGx5hMh4kSznMC8BlzSS2zk0p2rBAwsD7D6Y+
-	 B8GxmIYx1rtYA==
+	s=k20201202; t=1749779723;
+	bh=w9+uhG8mukFv3LUxt/Camybk60EdgO3KKFcvGpshaz8=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=P/iEYGIapK6CORVhx0aBzk4QJQljMwwpVF4iWrUH7B14Bwxic4YBKR//yM4pBLk4i
+	 jW6Ov/HxAPmMbewZtk5AuVpbmvnYrPxOY3khiMe1mb5gC/UAzyXj0Jc3wUnx8ROILF
+	 VYbVnZ8oRaj2X0em9dBUfMSpwHKh0+jXo6XExersUPeFLz3tnZp6CWuklY9aLZLgcS
+	 27yoYrinXUSXdO+W3wMaDw6Odr8rMMqkrn4BfscZVhYI6OqmW5Pfk5R6aEyb2AWb86
+	 L9EYGnof7OnX7V+YEHs6xWSg1nyfj0XXMSSpVj7d+hL0WdsU733GfhPrq7+/hcnppD
+	 xInu61qEJXX8Q==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFDBFC61CE8;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4C0DC71148;
 	Fri, 13 Jun 2025 01:55:22 +0000 (UTC)
 From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Subject: [PATCH RESEND net-next v5 0/2] Add support for the IPQ5018
- Internal GE PHY
-Date: Fri, 13 Jun 2025 05:55:06 +0400
-Message-Id: <20250613-ipq5018-ge-phy-v5-0-9af06e34ea6b@outlook.com>
+Date: Fri, 13 Jun 2025 05:55:07 +0400
+Subject: [PATCH RESEND net-next v5 1/2] dt-bindings: net: qca,ar803x: Add
+ IPQ5018 Internal GE PHY support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,12 +56,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPqES2gC/2XPsXLCMAwG4FfhPNecLdlJytQBVgY69hgcWzQ+S
- hySkIPj8u4YL+Xw+MvSJ/nOBuo9DWy1uLOeJj/40MagPxbMNqb9Je5dzAwEaKFQcN+dtZAVjy9
- dc+OuLrQyB6MsORaHup4O/prAH7bbfG+262e5pZG3dB3ZPobGD2Pob2nnJFNn4jXod36SXHDnT
- F1VWhFo/AqX8S+E49KGU8ImeAWqDIAEiAKLUtlS2hzAf6AQkAEYAQUSsTQCZQ05oF6BzwxQEZA
- OjYR4H9i3L8zz/ACbxrHYhQEAAA==
-X-Change-ID: 20250430-ipq5018-ge-phy-db654afa4ced
+Message-Id: <20250613-ipq5018-ge-phy-v5-1-9af06e34ea6b@outlook.com>
+References: <20250613-ipq5018-ge-phy-v5-0-9af06e34ea6b@outlook.com>
+In-Reply-To: <20250613-ipq5018-ge-phy-v5-0-9af06e34ea6b@outlook.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Michael Turquette <mturquette@baylibre.com>, 
  Stephen Boyd <sboyd@kernel.org>, Andrew Lunn <andrew@lunn.ch>, 
@@ -77,11 +74,11 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
  devicetree@vger.kernel.org, George Moussalem <george.moussalem@outlook.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749779719; l=4379;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1749779719; l=2960;
  i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=Ntn9IiFPx8N6O+ViIz67FABe2gTeLIkgTCgnOwwHOGE=;
- b=YV16xTbHfHIVmbf+WUVNtN/N2G1iWu1uFOXAw4O3t48z06uRKuaTrA8n8OG4pIvPFJWKcVS1n
- 0cSBkwwFXKSCapU1/eFjCIwB6QK4qmoz1tNh7BNyy4IOfqw9iJYZetZ
+ bh=MSreklj9uhNRgsWlk9VY//Ue1TwD7d3ZsG5R6DaH9lo=;
+ b=kVQ8JntaLhMiRoj//SVbfu2GsOyZi18OCEamIWjZA5JsVyeYZ8fVi6oMLMNnUX19H+Y7gaWpm
+ l3cJY01QEajAT9EuDjDupBQ/UqFAIiV748uTU7r7K2VFIoGn1jxDag7
 X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
  pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
 X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
@@ -89,93 +86,94 @@ X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
 X-Original-From: George Moussalem <george.moussalem@outlook.com>
 Reply-To: george.moussalem@outlook.com
 
-The IPQ5018 SoC contains an internal Gigabit Ethernet PHY with its
-output pins that provide an MDI interface to either an external switch
-in a PHY to PHY link architecture or directly to an attached RJ45
+From: George Moussalem <george.moussalem@outlook.com>
+
+Document the IPQ5018 Internal Gigabit Ethernet PHY found in the IPQ5018
+SoC. Its output pins provide an MDI interface to either an external
+switch in a PHY to PHY link scenario or is directly attached to an RJ45
 connector.
 
-The PHY supports 10BASE-T/100BASE-TX/1000BASE-T link modes in SGMII
-interface mode, CDT, auto-negotiation and 802.3az EEE.
+The PHY supports 10/100/1000 mbps link modes, CDT, auto-negotiation and
+802.3az EEE.
 
-The LDO controller found in the IPQ5018 SoC needs to be enabled to drive
-power to the CMN Ethernet Block (CMN BLK) which the GE PHY depends on.
-The LDO must be enabled in TCSR by writing to a specific register.
+For operation, the LDO controller found in the IPQ5018 SoC for which
+there is provision in the mdio-4019 driver.
 
-In a phy to phy architecture, DAC values need to be set to accommodate
-for the short cable length.
+Two common archictures across IPQ5018 boards are:
+1. IPQ5018 PHY --> MDI --> RJ45 connector
+2. IPQ5018 PHY --> MDI --> External PHY
+In a phy to phy architecture, the DAC needs to be configured to
+accommodate for the short cable length. As such, add an optional boolean
+property so the driver sets preset DAC register values accordingly.
 
 Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
-Changes in v5:
-- No changes to code, but this version contains 2 out of 5 patches for
-  merge into net-next specifically as requested by Jakub
-- Picked by Andrew's RB tag on patch ("net: phy: qcom: at803x: Add Qualcomm IPQ5018 Internal PHY support")
-- Removed unused macro definition (IPQ5018_TCSR_ETH_LDO_READY)
-- Reverted sorting of header files for which a separate patch can be
-  submitted
-- Added a comment to explain why the FIFO buffer needs to be reset
-- Do not initialize local variable as caught by Russell
-- Updated macro definition names to more accurately describe the PHY
-  registers and their functions
-- Include SGMII as supported interface mode in driver commit message
-- Changed error handling of acquirement of PHY reset to use IR_ERR
-  instead of IS_ERR_OR_NULL
-- Link to v4: https://lore.kernel.org/r/20250609-ipq5018-ge-phy-v4-0-1d3a125282c3@outlook.com
+ .../devicetree/bindings/net/qca,ar803x.yaml        | 43 ++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-Changes in v4:
-- Updated description of qcom,dac-preset-short-cable property in
-  accordance with Andrew's recommendation to indicate that if the
-  property is not set, no DAC values will be modified.
-- Added newlines between properties
-- Added PHY ID as compatible in DT bindings for conditional check to
-  evaluate correctly. Did a 'git grep' on all other PHY IDs defined in
-  the driver but none are explicitly referenced so I haven't added them
-- Link to v3: https://lore.kernel.org/r/20250602-ipq5018-ge-phy-v3-0-421337a031b2@outlook.com
+diff --git a/Documentation/devicetree/bindings/net/qca,ar803x.yaml b/Documentation/devicetree/bindings/net/qca,ar803x.yaml
+index 3acd09f0da863137f8a05e435a1fd28a536c2acd..7ae5110e7aa2cc97498a0ec46b67d8ed8440f3f2 100644
+--- a/Documentation/devicetree/bindings/net/qca,ar803x.yaml
++++ b/Documentation/devicetree/bindings/net/qca,ar803x.yaml
+@@ -16,8 +16,37 @@ description: |
+ 
+ allOf:
+   - $ref: ethernet-phy.yaml#
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - ethernet-phy-id004d.d0c0
++
++    then:
++      properties:
++        reg:
++          const: 7  # This PHY is always at MDIO address 7 in the IPQ5018 SoC
++
++        resets:
++          items:
++            - description:
++                GE PHY MISC reset which triggers a reset across MDC, DSP, RX, and TX lines.
++
++        qcom,dac-preset-short-cable:
++          description:
++            Set if this phy is connected to another phy to adjust the values for
++            MDAC and EDAC to adjust amplitude, bias current settings, and error
++            detection and correction algorithm to accommodate for short cable length.
++            If not set, DAC values are not modified and it is assumed the MDI output pins
++            of this PHY are directly connected to an RJ45 connector.
++          type: boolean
+ 
+ properties:
++  compatible:
++    enum:
++      - ethernet-phy-id004d.d0c0
++
+   qca,clk-out-frequency:
+     description: Clock output frequency in Hertz.
+     $ref: /schemas/types.yaml#/definitions/uint32
+@@ -132,3 +161,17 @@ examples:
+             };
+         };
+     };
++  - |
++    #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
++
++    mdio {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        ge_phy: ethernet-phy@7 {
++            compatible = "ethernet-phy-id004d.d0c0";
++            reg = <7>;
++
++            resets = <&gcc GCC_GEPHY_MISC_ARES>;
++        };
++    };
 
-Changes in v3:
-- Replace bitmask of GEPHY_MISC_ARES with GENMASK as suggested by Konrad
-- Removed references to RX and TX clocks as the driver need not
-  explicitly enable them. The GCC gatecontrols and routes the PHY's
-  output clocks, registered in the DT as fixed clocks, back to the PHY.
-  The bindings file has been updated accordingly.
-- Removed acquisition and enablement of RX and TX clocks from the driver
-- Link to v2: https://lore.kernel.org/r/20250528-ipq5018-ge-phy-v2-0-dd063674c71c@outlook.com
-
-Changes in v2:
-- Moved values for MDAC and EDAC into the driver and converted DT
-  property qca,dac to a new boolean: qcom,dac-preset-short-cable as per
-  discussion.
-- Added compatible string along with a condition with a description of
-  properties including clocks, resets, and qcom,dac-preset-short-cable
-  in the bindings to address bindings issues reported by Rob and to
-  bypass restrictions on nr of clocks and resets in ethernet-phy.yaml
-- Added example to bindings file
-- Renamed all instances of IPQ5018_PHY_MMD3* macros to IPQ5018_PHY_PCS*
-- Removed qca,eth-ldo-ready property and moved the TCSR register to the
-  mdio bus the phy is on as there's already support for setting this reg
-  property in the mdio-ipq4019 driver as per commit:
-  23a890d493e3ec1e957bc925fabb120962ae90a7
-- Explicitly probe on PHY ID as otherwise the PHY wouldn't come up and
-  initialize as found during further testing when the kernel is flashed
-  to NAND
-- Link to v1: https://lore.kernel.org/r/20250525-ipq5018-ge-phy-v1-0-ddab8854e253@outlook.com
-
----
-George Moussalem (2):
-      dt-bindings: net: qca,ar803x: Add IPQ5018 Internal GE PHY support
-      net: phy: qcom: at803x: Add Qualcomm IPQ5018 Internal PHY support
-
- .../devicetree/bindings/net/qca,ar803x.yaml        |  43 ++++++
- drivers/net/phy/qcom/Kconfig                       |   2 +-
- drivers/net/phy/qcom/at803x.c                      | 167 +++++++++++++++++++++
- 3 files changed, 211 insertions(+), 1 deletion(-)
----
-base-commit: 5d6d67c4cb10a4b4d3ae35758d5eeed6239afdc8
-change-id: 20250430-ipq5018-ge-phy-db654afa4ced
-
-Best regards,
 -- 
-George Moussalem <george.moussalem@outlook.com>
+2.49.0
 
 
 
