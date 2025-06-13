@@ -1,346 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-61164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBA60AD80A5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 03:55:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2ACE1AD833A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 08:28:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 870481E3009
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 01:55:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3228018982EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 06:29:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8463F1E5734;
-	Fri, 13 Jun 2025 01:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43E36257451;
+	Fri, 13 Jun 2025 06:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Aqf/N1tB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LFMOselE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B941DF990;
-	Fri, 13 Jun 2025 01:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105AF248F6F;
+	Fri, 13 Jun 2025 06:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749779723; cv=none; b=rAc4ZYc7AJomr4SwIJQoBjENJ5bb+aXy9tBCBlTYcrgimXGomVrhMYZB/ApORBceMB1quLFvFtIKK7/qjrMIthSu1zK/c8YxTza+rIXs9lvQ1RumwG3tmQc64smEDyHr84yhDuW59SVjQH3JtGCXdOG27j+hinIR32JRWwMAgGk=
+	t=1749796121; cv=none; b=eB2hmMB+qofmBPDCojUEAH/7ZppMzQ7euMwypE2mimw9pG2f30xDD0HihruCHG3yMcHKy8tOP93Q6eEhbw8fVfxshOtR5f8H2CvUcvrMajAku0pNUrEIg4JceDOfkQwagqCDlvhaGmCVXWk4nQX8m8WbleEUwC3kXKV+/9jck3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749779723; c=relaxed/simple;
-	bh=ioQAPz2xaDe+HRnOdXbR3y7vvtc51k6zFgxMh+n8twI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gZg4diA19x4H+DexOvncsRjPp+bCFGV6KQpZZxnobr6F+tvkxxxOYJPxLL5NOo/EQUj4OnRa16mxCX8EFrsC/O5s0P29ayf4g/Wn022dQGVrZJbQQt7hP6SMn8NxxQKojDJdyQuFHtP7JlRO/JBMJlZPY6eIkDml0gKBQDLOYbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Aqf/N1tB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id EB02DC4CEF5;
-	Fri, 13 Jun 2025 01:55:22 +0000 (UTC)
+	s=arc-20240116; t=1749796121; c=relaxed/simple;
+	bh=sTw2wEL6VKmpegEJNASmlk28/U2SuxO/zeQ8hpyBuC8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S+lVe+kmOMywuyfQKp7PJMlEXo8aIGpQoIrXLskkrySv9GsF+97WzeXyMsvCg3vAL9VTUjE/Tz37qi0DSw8FYa7kSV5GC+KHOZ0lu8M5QFnylPzDwFtH+7+5S7yNTuDFJvHvRSlM/ecigfKY6+9VljcoYIkfs+KRyTOiG37Ltr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LFMOselE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BAFC4CEE3;
+	Fri, 13 Jun 2025 06:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749779723;
-	bh=ioQAPz2xaDe+HRnOdXbR3y7vvtc51k6zFgxMh+n8twI=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=Aqf/N1tBDPtvPZAM1GhcunHi+fV1S3lK+W8ZYvOIkyEXeFnBuExslf8wOXWXVthaP
-	 Zl6NWn4OqZXjcDQs1zDKx4APG+018JsmmJ1k9+rCK/yko5h6wNf6UZ8qTyIvaMaVVX
-	 b1Iu2U5L2nr/11djmF12setYDuTDht35MpzhpylJcPL9/jDEnnXeuJG75LJ/8fhwlA
-	 hEpexhNf1mkiJh6i/bN0NuxA1pbtNbBSXf/5EmzIJaQupcHUXN/q/BSGFK+OLbxXho
-	 Co0pYzVMp4qKzQnqdSSwj2xuVCupJx5/LXBhj5e57HmopXV3yrWoujcae3kVADi53+
-	 qSvqL3R51R9lQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9E42C71150;
-	Fri, 13 Jun 2025 01:55:22 +0000 (UTC)
-From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Date: Fri, 13 Jun 2025 05:55:08 +0400
-Subject: [PATCH RESEND net-next v5 2/2] net: phy: qcom: at803x: Add
- Qualcomm IPQ5018 Internal PHY support
+	s=k20201202; t=1749796120;
+	bh=sTw2wEL6VKmpegEJNASmlk28/U2SuxO/zeQ8hpyBuC8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=LFMOselELQrdqlCWhXCplIrz88jVVHWHVxKeVMXnnQzut036gWuwa7jpMEVmymzKO
+	 Lvy2hC7yfg0gUxKdxYMvI46R4XhoLCkb8pAp7JZ7fmdJ6ph3/pDe+AimzmJWz3POHy
+	 gXCVLPjR6NEtg3Hm4jiIFY8b7b0qptd2OfsZUPchKmPlTUVBQELiXOoGMSc9VQ2tCE
+	 4ZOvpOPIWn9VgI/jjuBdzXBXaGR42gH6pUIglhJaji0bumOT2AMBmkX6qBjMjoJ4P1
+	 GhHVL2sTYoZqgqkG4xBvnbjn+CFEFtGQrtgfvy+iJ3CE3gptXpJ2TJGBqfnw76oOqf
+	 xXGA9Q+WzmWbg==
+Message-ID: <b96f9cca-cdd4-4456-8ced-f4a8fd810ff1@kernel.org>
+Date: Fri, 13 Jun 2025 08:28:35 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/10] dt-bindings: media: qcom: Add Qualcomm MIPI
+ C-/D-PHY schema for CSIPHY IPs
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org
+References: <20250612011531.2923701-1-vladimir.zapolskiy@linaro.org>
+ <20250612011531.2923701-9-vladimir.zapolskiy@linaro.org>
+ <6e411e89-ce1e-4d6a-8d48-b800554f830e@kernel.org>
+ <e9afdd0f-7842-4780-9044-d5afa6a09d7f@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <e9afdd0f-7842-4780-9044-d5afa6a09d7f@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250613-ipq5018-ge-phy-v5-2-9af06e34ea6b@outlook.com>
-References: <20250613-ipq5018-ge-phy-v5-0-9af06e34ea6b@outlook.com>
-In-Reply-To: <20250613-ipq5018-ge-phy-v5-0-9af06e34ea6b@outlook.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Andrew Lunn <andrew@lunn.ch>, 
- Heiner Kallweit <hkallweit1@gmail.com>, 
- Russell King <linux@armlinux.org.uk>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Florian Fainelli <f.fainelli@gmail.com>, 
- Philipp Zabel <p.zabel@pengutronix.de>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- devicetree@vger.kernel.org, George Moussalem <george.moussalem@outlook.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749779719; l=9492;
- i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=R5k0bIbl9k/QACKkeDffKhqMQ6qO/YSOmshLeIdltn4=;
- b=dc6dGdFri5bKuQH8ZPveu5XTni+GbbDrhGGKQzI1DndxewaK1vg7tJbJt6ZFiyRf+Lotcdbh7
- 0hPvHyjJ38oB4K4v6/CN1343nTI75hDsU6vY2x88tnfCP6/wwyZ52YE
-X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
- pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
-X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
- with auth_id=364
-X-Original-From: George Moussalem <george.moussalem@outlook.com>
-Reply-To: george.moussalem@outlook.com
 
-From: George Moussalem <george.moussalem@outlook.com>
+On 12/06/2025 19:13, Vladimir Zapolskiy wrote:
+> On 6/12/25 10:38, Krzysztof Kozlowski wrote:
+>> On 12/06/2025 03:15, Vladimir Zapolskiy wrote:
+>>> Add dt-binding schema for Qualcomm CAMSS CSIPHY IP, which provides
+>>> MIPI C-PHY/D-PHY interfaces on Qualcomm SoCs.
+>>>
+>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>>> ---
+> 
+> <snip>
+> 
+>>> +
+>>> +  clocks:
+>>> +    maxItems: 2
+>>> +
+>>> +  clock-names:
+>>> +    items:
+>>> +      - const: csiphy
+>>> +      - const: csiphy_timer
+>>
+>> Drop csiphy from both, redundant. And this points to the first clock
+>> name not having any useful name. Name equal to device name is not useful.
+>>
+> 
+> I got the rationale, but I have no idea how to correct it, since it's
+> literally the case, the first clock name on the list in 'csiphy'.
 
-The IPQ5018 SoC contains a single internal Gigabit Ethernet PHY which
-provides an MDI interface directly to an RJ45 connector or an external
-switch over a PHY to PHY link.
+What do you mean by "list"? You can point me also to internal
+documentation if that helps.
 
-The PHY supports 10BASE-T/100BASE-TX/1000BASE-T link modes in SGMII
-interface mode, CDT, auto-negotiation and 802.3az EEE.
+> 
+> What could be an alternative name then?..
 
-Let's add support for this PHY in the at803x driver as it falls within
-the Qualcomm Atheros OUI.
+The real clock input name, signal name. You can also drop the names.
 
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: George Moussalem <george.moussalem@outlook.com>
----
- drivers/net/phy/qcom/Kconfig  |   2 +-
- drivers/net/phy/qcom/at803x.c | 167 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 168 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/net/phy/qcom/Kconfig b/drivers/net/phy/qcom/Kconfig
-index 570626cc8e14d3e6615f74a6377f0f7c9f723e89..84239e08a8dfa466b0a7b2a5ec724a168b692cd2 100644
---- a/drivers/net/phy/qcom/Kconfig
-+++ b/drivers/net/phy/qcom/Kconfig
-@@ -7,7 +7,7 @@ config AT803X_PHY
- 	select QCOM_NET_PHYLIB
- 	depends on REGULATOR
- 	help
--	  Currently supports the AR8030, AR8031, AR8033, AR8035 model
-+	  Currently supports the AR8030, AR8031, AR8033, AR8035, IPQ5018 model
- 
- config QCA83XX_PHY
- 	tristate "Qualcomm Atheros QCA833x PHYs"
-diff --git a/drivers/net/phy/qcom/at803x.c b/drivers/net/phy/qcom/at803x.c
-index 26350b962890b0321153d74758b13d817407d094..43e604171828ce35d5950e02b1d08ee3e4523fdc 100644
---- a/drivers/net/phy/qcom/at803x.c
-+++ b/drivers/net/phy/qcom/at803x.c
-@@ -19,6 +19,7 @@
- #include <linux/regulator/consumer.h>
- #include <linux/of.h>
- #include <linux/phylink.h>
-+#include <linux/reset.h>
- #include <linux/sfp.h>
- #include <dt-bindings/net/qca-ar803x.h>
- 
-@@ -96,6 +97,8 @@
- #define ATH8035_PHY_ID				0x004dd072
- #define AT8030_PHY_ID_MASK			0xffffffef
- 
-+#define IPQ5018_PHY_ID				0x004dd0c0
-+
- #define QCA9561_PHY_ID				0x004dd042
- 
- #define AT803X_PAGE_FIBER			0
-@@ -108,6 +111,48 @@
- /* disable hibernation mode */
- #define AT803X_DISABLE_HIBERNATION_MODE		BIT(2)
- 
-+#define IPQ5018_PHY_FIFO_CONTROL		0x19
-+#define IPQ5018_PHY_FIFO_RESET			GENMASK(1, 0)
-+
-+#define IPQ5018_PHY_DEBUG_EDAC			0x4380
-+#define IPQ5018_PHY_MMD1_MDAC			0x8100
-+#define IPQ5018_PHY_DAC_MASK			GENMASK(15, 8)
-+
-+/* MDAC and EDAC values for short cable length */
-+#define IPQ5018_PHY_DEBUG_EDAC_VAL		0x10
-+#define IPQ5018_PHY_MMD1_MDAC_VAL		0x10
-+
-+#define IPQ5018_PHY_MMD1_MSE_THRESH1		0x1000
-+#define IPQ5018_PHY_MMD1_MSE_THRESH2		0x1001
-+#define IPQ5018_PHY_PCS_EEE_TX_TIMER		0x8008
-+#define IPQ5018_PHY_PCS_EEE_RX_TIMER		0x8009
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL3	0x8074
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL4	0x8075
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL5	0x8076
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL6	0x8077
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL7	0x8078
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL9	0x807a
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL13	0x807e
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL14	0x807f
-+
-+#define IPQ5018_PHY_MMD1_MSE_THRESH1_VAL	0xf1
-+#define IPQ5018_PHY_MMD1_MSE_THRESH2_VAL	0x1f6
-+#define IPQ5018_PHY_PCS_EEE_TX_TIMER_VAL	0x7880
-+#define IPQ5018_PHY_PCS_EEE_RX_TIMER_VAL	0xc8
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL3_VAL	0xc040
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL4_VAL	0xa060
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL5_VAL	0xc040
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL6_VAL	0xa060
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL7_VAL	0xc24c
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL9_VAL	0xc060
-+#define IPQ5018_PHY_PCS_CDT_THRESH_CTRL13_VAL	0xb060
-+#define IPQ5018_PHY_PCS_NEAR_ECHO_THRESH_VAL	0x90b0
-+
-+#define IPQ5018_PHY_DEBUG_ANA_LDO_EFUSE		0x1
-+#define IPQ5018_PHY_DEBUG_ANA_LDO_EFUSE_MASK	GENMASK(7, 4)
-+#define IPQ5018_PHY_DEBUG_ANA_LDO_EFUSE_DEFAULT	0x50
-+#define IPQ5018_PHY_DEBUG_ANA_DAC_FILTER	0xa080
-+
- MODULE_DESCRIPTION("Qualcomm Atheros AR803x PHY driver");
- MODULE_AUTHOR("Matus Ujhelyi");
- MODULE_LICENSE("GPL");
-@@ -133,6 +178,11 @@ struct at803x_context {
- 	u16 led_control;
- };
- 
-+struct ipq5018_priv {
-+	struct reset_control *rst;
-+	bool set_short_cable_dac;
-+};
-+
- static int at803x_write_page(struct phy_device *phydev, int page)
- {
- 	int mask;
-@@ -987,6 +1037,109 @@ static int at8035_probe(struct phy_device *phydev)
- 	return at8035_parse_dt(phydev);
- }
- 
-+static int ipq5018_cable_test_start(struct phy_device *phydev)
-+{
-+	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_CDT_THRESH_CTRL3,
-+		      IPQ5018_PHY_PCS_CDT_THRESH_CTRL3_VAL);
-+	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_CDT_THRESH_CTRL4,
-+		      IPQ5018_PHY_PCS_CDT_THRESH_CTRL4_VAL);
-+	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_CDT_THRESH_CTRL5,
-+		      IPQ5018_PHY_PCS_CDT_THRESH_CTRL5_VAL);
-+	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_CDT_THRESH_CTRL6,
-+		      IPQ5018_PHY_PCS_CDT_THRESH_CTRL6_VAL);
-+	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_CDT_THRESH_CTRL7,
-+		      IPQ5018_PHY_PCS_CDT_THRESH_CTRL7_VAL);
-+	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_CDT_THRESH_CTRL9,
-+		      IPQ5018_PHY_PCS_CDT_THRESH_CTRL9_VAL);
-+	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_CDT_THRESH_CTRL13,
-+		      IPQ5018_PHY_PCS_CDT_THRESH_CTRL13_VAL);
-+	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_CDT_THRESH_CTRL3,
-+		      IPQ5018_PHY_PCS_NEAR_ECHO_THRESH_VAL);
-+
-+	/* we do all the (time consuming) work later */
-+	return 0;
-+}
-+
-+static int ipq5018_config_init(struct phy_device *phydev)
-+{
-+	struct ipq5018_priv *priv = phydev->priv;
-+	u16 val;
-+
-+	/*
-+	 * set LDO efuse: first temporarily store ANA_DAC_FILTER value from
-+	 * debug register as it will be reset once the ANA_LDO_EFUSE register
-+	 * is written to
-+	 */
-+	val = at803x_debug_reg_read(phydev, IPQ5018_PHY_DEBUG_ANA_DAC_FILTER);
-+	at803x_debug_reg_mask(phydev, IPQ5018_PHY_DEBUG_ANA_LDO_EFUSE,
-+			      IPQ5018_PHY_DEBUG_ANA_LDO_EFUSE_MASK,
-+			      IPQ5018_PHY_DEBUG_ANA_LDO_EFUSE_DEFAULT);
-+	at803x_debug_reg_write(phydev, IPQ5018_PHY_DEBUG_ANA_DAC_FILTER, val);
-+
-+	/* set 8023AZ EEE TX and RX timer values */
-+	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_EEE_TX_TIMER,
-+		      IPQ5018_PHY_PCS_EEE_TX_TIMER_VAL);
-+	phy_write_mmd(phydev, MDIO_MMD_PCS, IPQ5018_PHY_PCS_EEE_RX_TIMER,
-+		      IPQ5018_PHY_PCS_EEE_RX_TIMER_VAL);
-+
-+	/* set MSE threshold values */
-+	phy_write_mmd(phydev, MDIO_MMD_PMAPMD, IPQ5018_PHY_MMD1_MSE_THRESH1,
-+		      IPQ5018_PHY_MMD1_MSE_THRESH1_VAL);
-+	phy_write_mmd(phydev, MDIO_MMD_PMAPMD, IPQ5018_PHY_MMD1_MSE_THRESH2,
-+		      IPQ5018_PHY_MMD1_MSE_THRESH2_VAL);
-+
-+	/* PHY DAC values are optional and only set in a PHY to PHY link architecture */
-+	if (priv->set_short_cable_dac) {
-+		/* setting MDAC (Multi-level Digital-to-Analog Converter) in MMD1 */
-+		phy_modify_mmd(phydev, MDIO_MMD_PMAPMD, IPQ5018_PHY_MMD1_MDAC,
-+			       IPQ5018_PHY_DAC_MASK, IPQ5018_PHY_MMD1_MDAC_VAL);
-+
-+		/* setting EDAC (Error-detection and Correction) in debug register */
-+		at803x_debug_reg_mask(phydev, IPQ5018_PHY_DEBUG_EDAC,
-+				      IPQ5018_PHY_DAC_MASK, IPQ5018_PHY_DEBUG_EDAC_VAL);
-+	}
-+
-+	return 0;
-+}
-+
-+static void ipq5018_link_change_notify(struct phy_device *phydev)
-+{
-+	/*
-+	 * Reset the FIFO buffer upon link disconnects to clear any residual data
-+	 * which may cause issues with the FIFO which it cannot recover from.
-+	 */
-+	mdiobus_modify_changed(phydev->mdio.bus, phydev->mdio.addr,
-+			       IPQ5018_PHY_FIFO_CONTROL, IPQ5018_PHY_FIFO_RESET,
-+			       phydev->link ? IPQ5018_PHY_FIFO_RESET : 0);
-+}
-+
-+static int ipq5018_probe(struct phy_device *phydev)
-+{
-+	struct device *dev = &phydev->mdio.dev;
-+	struct ipq5018_priv *priv;
-+	int ret;
-+
-+	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	priv->set_short_cable_dac = of_property_read_bool(dev->of_node,
-+							  "qcom,dac-preset-short-cable");
-+
-+	priv->rst = devm_reset_control_array_get_exclusive(dev);
-+	if (IS_ERR(priv->rst))
-+		return dev_err_probe(dev, PTR_ERR(priv->rst),
-+				     "failed to acquire reset\n");
-+
-+	ret = reset_control_reset(priv->rst);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to reset\n");
-+
-+	phydev->priv = priv;
-+
-+	return 0;
-+}
-+
- static struct phy_driver at803x_driver[] = {
- {
- 	/* Qualcomm Atheros AR8035 */
-@@ -1078,6 +1231,19 @@ static struct phy_driver at803x_driver[] = {
- 	.read_status		= at803x_read_status,
- 	.soft_reset		= genphy_soft_reset,
- 	.config_aneg		= at803x_config_aneg,
-+}, {
-+	PHY_ID_MATCH_EXACT(IPQ5018_PHY_ID),
-+	.name			= "Qualcomm Atheros IPQ5018 internal PHY",
-+	.flags			= PHY_IS_INTERNAL | PHY_POLL_CABLE_TEST,
-+	.probe			= ipq5018_probe,
-+	.config_init		= ipq5018_config_init,
-+	.link_change_notify	= ipq5018_link_change_notify,
-+	.read_status		= at803x_read_status,
-+	.config_intr		= at803x_config_intr,
-+	.handle_interrupt	= at803x_handle_interrupt,
-+	.cable_test_start	= ipq5018_cable_test_start,
-+	.cable_test_get_status	= qca808x_cable_test_get_status,
-+	.soft_reset		= genphy_soft_reset,
- }, {
- 	/* Qualcomm Atheros QCA9561 */
- 	PHY_ID_MATCH_EXACT(QCA9561_PHY_ID),
-@@ -1104,6 +1270,7 @@ static const struct mdio_device_id __maybe_unused atheros_tbl[] = {
- 	{ PHY_ID_MATCH_EXACT(ATH8032_PHY_ID) },
- 	{ PHY_ID_MATCH_EXACT(ATH8035_PHY_ID) },
- 	{ PHY_ID_MATCH_EXACT(ATH9331_PHY_ID) },
-+	{ PHY_ID_MATCH_EXACT(IPQ5018_PHY_ID) },
- 	{ PHY_ID_MATCH_EXACT(QCA9561_PHY_ID) },
- 	{ }
- };
-
--- 
-2.49.0
-
-
+Best regards,
+Krzysztof
 
