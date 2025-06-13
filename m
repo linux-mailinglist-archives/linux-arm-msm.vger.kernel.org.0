@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-61251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39830AD90EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 17:15:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C92A8AD917F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 17:36:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 581EA1BC3479
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 15:15:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9DBCC3AAE42
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 15:36:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B4D61E8353;
-	Fri, 13 Jun 2025 15:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 383AC1EEA47;
+	Fri, 13 Jun 2025 15:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AbIdonJd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GyJq3AGI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C241E5729
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 15:14:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E291F3FC6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 15:36:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749827659; cv=none; b=IExGpgG1l0/SneF9LXV+1xod0qnZUDSO+1/FfKp+4v8eDfuqCNRmYU5Xnqm2hZpXodxi3DKaSEyLY0Yv6cVG46CEXcs4NVmkOMgrGFPS+a/WwYbWlGeNyRC9BQPrVzp6VArze/XbwoGFtdj/QKHa9A2Rd4Yc8yo+00zHhaSzPwc=
+	t=1749828989; cv=none; b=cLjypHhZVf1Ro4LqmUp3H+2e6IJiTi2E89cuuaHxd1+YLaR5j626iKhaVJfy3lyNfotdlCEfN8tGVU2DyalDD3UWkqprAjx3WiZaZZOuta5Wq6S57I6dbDt0AUGvY86Cq5hxBUJ24XW4wA8GfBDwgVuE+Oy1/WEK6fKP5yWefnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749827659; c=relaxed/simple;
-	bh=yigUz7BHxw8QBhJm4Z5XVyp2Bokda5y8lA60GXi8/tk=;
+	s=arc-20240116; t=1749828989; c=relaxed/simple;
+	bh=mQPr3lx+oLsQJZVsqTLtsRDGu+1Ha23dzIO1vBurXIA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ka2n9A9dGIMGgD2J0e8+EGD7BHeppuw7KilNvyzukhF1+3+DP0wiLGCk/FQgyDbVCLrHfWWC+Kqt8ofaYYo+qPiLxDZrAJ9KcOx3EDxCFX5zDAbLTAuRp2eqI3yDUJrovnqfhN+F4xzC4+H7dEiVZ9zaR01/ygW+FdOTTgrlzy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AbIdonJd; arc=none smtp.client-ip=209.85.128.52
+	 In-Reply-To:Content-Type; b=Fh8769je+dJPWVcvEzeZ8N+JFnwqrINOaCTZeurxTrUNfHt4bggaCHuKYB8Ss2sX45EXfFthIY/uAMbmbqLdZ4SnXg2yB1HnkqYKd2hI5p1vD0kclIrd5iiNZTdGbuzBr/juaQz5phSE817651gVktLIYnVhhZ6DP2uluk8RUBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GyJq3AGI; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43cfe63c592so26813265e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 08:14:17 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4532ff4331cso6387725e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 08:36:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749827656; x=1750432456; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1749828986; x=1750433786; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=A5YL1/PTWX9ntjACVUMCkmmCdXN1AOyN6/cgs5Z/ZJw=;
-        b=AbIdonJdKmaOhTw+HXKauFkWJvbpj+j7oM7WcX5IA546PTlfLWEan5zIhU6ipW/pQl
-         Z85CYmmRdaBOAHGo0shOCsUX57CQauRLEdin4j109j2jlHJWMdsI/7/V1gzmlSoT7nAg
-         aj2mMDoNXIbYX2gd+C+lV2QzFj1ZLXdPqXIvVHaMhGTz6z8pDHU6k3wXTZERlhFj2Jve
-         4Bkdo2aBlIcqMqFPR3gJPMhb2lZdUwFCUZHrXpxbg/manM9WpUQQw9uK+PXv1sUkymuo
-         4vnRF+w4BZRnp+ofRd4zcJegXTfUVdxRi6GYiMk3GpyPcJ7FwR4ehup1CX2WTCt3qqFF
-         lqBw==
+        bh=OWv4UeFVj2hILiovDcCHvWzMoWMBEkghmUzZ6WsdBWo=;
+        b=GyJq3AGI6b8mYByxX5TlBcvjJ2lmuHO0xrCsukpP6gEyhVfZUsOVwdTSyTfAHFXBCR
+         fabh2eXpz6aPF+QESWBIm1zVZXD+CfdFcNwzkITHvCWXQMiKzel8IqgYeG68L50C8cZu
+         Gj+BIHrX7xctNLG0gFKKHQ6Ypdhp1dZUiztCmrAU506PO8O8B7FzOLHbwO5bs34Txl2r
+         q/TZeoixowfh3yBeMbOrek1yjJeW3je5vG+WuO4/q3snquXRsf/2MwS/sRvrvSiIw6lO
+         Zp7/WB4JlUprOv5KtlWmST95Zt2T2x2gK+0WOpVDF2VXukYgTlwLFTBgI7RjHRga0BaY
+         AI7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749827656; x=1750432456;
+        d=1e100.net; s=20230601; t=1749828986; x=1750433786;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A5YL1/PTWX9ntjACVUMCkmmCdXN1AOyN6/cgs5Z/ZJw=;
-        b=lVUul1w4KJOZse0G0sddkiBCyDIocs6eaJOkcTRNDE+q818NY1aRI2sRNhWnkALLKA
-         S9nRTDKbZgR1JdLYxf7aBwGZ8n07VNYVSaPNTgni4OpsfWjvfehz6D5YMVVl8mv9Ix7m
-         sokPVhHsxkzQqqfi8GEtCB7fgcHo+Q+RzKqy+raGdaMhwX+IZBLaV8f/aCrWE4dn0xVQ
-         L1AGkqzmIbkwv2hF8bHLg0bVhvwF3wpBDUD2Q992KtwgRx3sDGhWsX3s6ivzguuUgTdT
-         6IcC5+gW3OieJ7KOpRgntE/IT33It2eDiks0vPi1E0py5778HTSuvCUyjdJdu5pqEzoy
-         iqmg==
-X-Forwarded-Encrypted: i=1; AJvYcCWfk9obxmE0YBZ1JbSBwjqB3hxd2QfXzI/qCrXlAcBUHmmknyHrMq6EAMeRyB15Mx3XRnJvYNxByyFk/csL@vger.kernel.org
-X-Gm-Message-State: AOJu0YxCY6sIkHeLpZXlpZew1KZteWCTgMLvADvSm5HL5vS+FkRwptG2
-	wwcM2HXL9TUD1z5VPYxbjSaaPb/973b0c8dfHWDAuiNFeBJ1MaytSkEKIiN7EXCa9KA=
-X-Gm-Gg: ASbGnctvS0T5K68jtYyYeiOVj9Dh3gWiZjMNFAahyQgyvcVTKjHQsewT61G8jMoXUAN
-	eQUXiAtmFsOl7+pEleJCisqWSBKR4+FEA8N60ndYWH1WGf0BEV1X61grz7Up+h1g77J3tA9DjnE
-	Qp7IsWD36gHIDJ7SZsXZQUAA3019LkBIjyHdHoV+/iBxR/RqZEO75uvjwJN1aqIp3UOTG6j63Va
-	dt5r6JPLj1D9/lpSiB54SRw035OBlRatPMoQd2Tl3r+WIK05n0SN5l9delz4mXdpdNgzGZHhfmW
-	ej2ILsuHwnafq7PGyN+iRvRXabqHwjjS6QTA2shy8wEwiNCZIyLngdYXjJfZ+hKT72JArm2BEpd
-	NGXLYLr02zQGRh9fqE4l8Oj6It20=
-X-Google-Smtp-Source: AGHT+IE5BqWkTcV/YtfSzruju0bqO5TpxF/6X93NQ6kxh0a7Xc5nDXiCwJmre3t2cwX6AdTEyT0K5A==
-X-Received: by 2002:a05:600c:1c23:b0:441:d2d8:bd8b with SMTP id 5b1f17b1804b1-45334ac72d5mr36043655e9.8.1749827655647;
-        Fri, 13 Jun 2025 08:14:15 -0700 (PDT)
+        bh=OWv4UeFVj2hILiovDcCHvWzMoWMBEkghmUzZ6WsdBWo=;
+        b=W2t5TOWpvScpSyKOw2k4OkFVoS+AdjOLG/73+Uda0uPaiyps7421iZCY8RYyJZH7nK
+         uGxWHBf3nZq3ZqNO9zkC9YVqmtA32YNatUQLhv3BJ4U3iNqRfkVU87KV21DfuMZq9wqL
+         oa/1v3KK2mAJyD9dTLCpirlgh+jQlanFNYVyZMsB86mviHVT+3kymsmcz8ZdiM9J96JX
+         /936FWNu9bg2h60O+NCw6XywEppOoh7WG/lMtr+cWx+xLaC3LNyJkTF7ZzrbUo5CryY3
+         sxj/5uggMYmGBdWwMREPrLk2bFOoKTV14JTIuGBTAczQxbBJyjUPhU1gU7GFZ/uml8XV
+         LwCA==
+X-Forwarded-Encrypted: i=1; AJvYcCW3X49ZncN8fE/FBNZHpmgVODwyB5xTxuahdKCbaALt1gBaPNnn4TZOb7ErKxiRY7wtzIu2mk0B85qhvuJP@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywyphm7cUNXovv4pLvRkUvNlW304yB/hzm6s5CgIa533iE08xAS
+	xiQS2RVI1WoSXXDOWngkTWXMLVr0OXmsKvqZMA0aqtPMMJ2YJqY6Y/XTRjdgcClv+Ak=
+X-Gm-Gg: ASbGncsGeQ2sj7JMoXWQFaLYmndGbt5KxdAtUpAd9emfKNIYtddH6bXtLr05oYe0mET
+	yOf3YDyihLMhvs5/j2WKcYTvMPoW7QHSfHyDzLsHTtYxSQ0e9PN0D3WIBiMvG9M/IWoWBly8Q8R
+	xJ/hEzZAnb9aKVb/YJ+380G+YtCRkN+Qa/XZwzTWWWNEHF1LBqc5Cue5nD+CpTzTIDNhhT5sYmh
+	r3A1acEQD4aa30sw5fO6H3RGcA2r+S7cIk9OG97Ozxigk7p2UTRsRuB7JBjIZv0AcONw5+vB502
+	RUtudoH05ezAkPRxO40tdzxOYlhLfHGBDAWlUrjuoypLiuR9DEuX+eecx7enrHd7Vu/8Ihef/3q
+	x8hudHHfAiMsyXNhCFEp+iYX/DeE=
+X-Google-Smtp-Source: AGHT+IEdPQZ+kMct/mFrIqWxhQP7ARSC+kL3lHuKH4nuAFPPB0GmSIcXahH+K6ef7TZ3V7gCc7y8vA==
+X-Received: by 2002:a5d:5c84:0:b0:3a4:f55a:4ae2 with SMTP id ffacd0b85a97d-3a572e92c50mr144867f8f.50.1749828985372;
+        Fri, 13 Jun 2025 08:36:25 -0700 (PDT)
 Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532e14f283sm55321915e9.27.2025.06.13.08.14.14
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568b2a6a5sm2644199f8f.74.2025.06.13.08.36.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jun 2025 08:14:15 -0700 (PDT)
-Message-ID: <069d5c16-f3a9-408b-aa61-4bc060ec2771@linaro.org>
-Date: Fri, 13 Jun 2025 16:14:13 +0100
+        Fri, 13 Jun 2025 08:36:24 -0700 (PDT)
+Message-ID: <0798f626-0ed7-47ad-bd9c-39732cd4aa19@linaro.org>
+Date: Fri, 13 Jun 2025 16:36:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,69 +82,61 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCHv3] media: venus: protect against spurious interrupts
- during probe
-To: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
- quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com, mchehab@kernel.org
-Cc: hans.verkuil@cisco.com, stanimir.varbanov@linaro.org,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250606152522.4123158-1-jorge.ramirez@oss.qualcomm.com>
+Subject: Re: [PATCH 1/9] media: qcom: camss: cleanup media device allocated
+ resource on error path
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Hans Verkuil <hans.verkuil@cisco.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20250513142353.2572563-1-vladimir.zapolskiy@linaro.org>
+ <QSZ_UJl8EdHC4ZGWyIbBtFJFp1xi6HoqNXYRJCBhInwieOERlOo8Wkk-NERxAYIY_WJ9rWwnlGR31zI25yVqcg==@protonmail.internalid>
+ <20250513142353.2572563-2-vladimir.zapolskiy@linaro.org>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250606152522.4123158-1-jorge.ramirez@oss.qualcomm.com>
+In-Reply-To: <20250513142353.2572563-2-vladimir.zapolskiy@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 06/06/2025 16:25, Jorge Ramirez-Ortiz wrote:
-> Make sure the interrupt handler is initialized before the interrupt is
-> registered.
+On 13/05/2025 15:23, Vladimir Zapolskiy wrote:
+> A call to media_device_init() requires media_device_cleanup() counterpart
+> to complete cleanup and release any allocated resources.
 > 
-> If the IRQ is registered before hfi_create(), it's possible that an
-> interrupt fires before the handler setup is complete, leading to a NULL
-> dereference.
+> This has been done in the driver .remove() right from the beginning, but
+> error paths on .probe() shall also be fixed.
 > 
-> This error condition has been observed during system boot on Rb3Gen2.
-> 
-> Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+> Fixes: a1d7c116fcf7 ("media: camms: Add core files")
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 > ---
->   v3:
->      Added Fixes tag
->   v2:
->      Fix authorship
->      Fix spelling mistake
->   
->   drivers/media/platform/qcom/venus/core.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+>   drivers/media/platform/qcom/camss/camss.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-> index d305d74bb152..5bd99d0aafe4 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -424,13 +424,13 @@ static int venus_probe(struct platform_device *pdev)
->   	INIT_DELAYED_WORK(&core->work, venus_sys_error_handler);
->   	init_waitqueue_head(&core->sys_err_done);
->   
-> -	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, venus_isr_thread,
-> -					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-> -					"venus", core);
-> +	ret = hfi_create(core, &venus_core_ops);
->   	if (ret)
->   		goto err_core_put;
->   
-> -	ret = hfi_create(core, &venus_core_ops);
-> +	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, venus_isr_thread,
-> +					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-> +					"venus", core);
->   	if (ret)
->   		goto err_core_put;
->   
-
-@Dikshita @Vikash.
-
-Good/happy with this patch ? Looks right to me.
-
----
-bod
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 06f42875702f..f76773dbd296 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -3625,7 +3625,7 @@ static int camss_probe(struct platform_device *pdev)
+>   	ret = v4l2_device_register(camss->dev, &camss->v4l2_dev);
+>   	if (ret < 0) {
+>   		dev_err(dev, "Failed to register V4L2 device: %d\n", ret);
+> -		goto err_genpd_cleanup;
+> +		goto err_media_device_cleanup;
+>   	}
+> 
+>   	v4l2_async_nf_init(&camss->notifier, &camss->v4l2_dev);
+> @@ -3680,6 +3680,8 @@ static int camss_probe(struct platform_device *pdev)
+>   	v4l2_device_unregister(&camss->v4l2_dev);
+>   	v4l2_async_nf_cleanup(&camss->notifier);
+>   	pm_runtime_disable(dev);
+> +err_media_device_cleanup:
+> +	media_device_cleanup(&camss->media_dev);
+>   err_genpd_cleanup:
+>   	camss_genpd_cleanup(camss);
+> 
+> --
+> 2.45.2
+> 
+> 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
