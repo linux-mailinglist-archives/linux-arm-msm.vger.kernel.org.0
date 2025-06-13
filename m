@@ -1,129 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-61272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 656E2AD95C4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 21:45:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F8F5AD967A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 22:36:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2574817E886
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 19:45:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE6674A0088
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 20:36:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72AAD22370A;
-	Fri, 13 Jun 2025 19:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 454C625A333;
+	Fri, 13 Jun 2025 20:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YEAR26wY"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kwaGcAFD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1FA220F47;
-	Fri, 13 Jun 2025 19:45:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A717B25B69A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 20:35:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749843921; cv=none; b=LoYSTVAMJHFpyarrTX/3zCKtTaliFXM9fZiW/TGtNUr5D6C/YZfQdpiF2XVyuxKH1F7yXwTCHLnKs7C/FqLmRfKH89G4+uYqbz298Da0x2+7zxEc7Nz6AWhWant7Wy7uPF/gxc9wgvi3rHT+u+u1dVtZmAqPYJeGGxYgULPfsJk=
+	t=1749846937; cv=none; b=s5ItESKzsh9ludsIZp4sLufZgA6TaUR4R6Dr7qj9u79+NGnj7xjmJaI6VLpg09ux6V72MAWpgiYUtNjIpndc4I6sdVV3Szt80qYoInLegc6i2C2vnd+1za2xhj8aJAGZwXN9C0CyoTNBYVUQhLOQCqQgbyxARFv9TD3ooXJIc94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749843921; c=relaxed/simple;
-	bh=Yh7CDMY7zhVuwkLIdCkcnqO9gsEcVQzTOnr84L42C7s=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GaeW3g2Jgjqt3AR8dlks/Rz0bzd4ggFYM4iXAd7hlYz/+aqRH3nr84aLh0qjQS/tiVMakc8nhnIZ0u+D8CaW63trF4L+s1o0kzvr+W8I27r2hXKrzb9BYksW24eTgbEFFMEIQol+ZljyBxI9AXt188SauxSgD0Os8kHFm14MWYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YEAR26wY; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6084dfb4cd5so6473755a12.0;
-        Fri, 13 Jun 2025 12:45:19 -0700 (PDT)
+	s=arc-20240116; t=1749846937; c=relaxed/simple;
+	bh=TCA/bkZV1eOXGd9TQy3i5G9neadJfD5XdVh30uDYjMM=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=kdFFXS33azCOtM0KEF+GCPvV3RvDLmO9lgIpUfHHRGDtPh3g218w51+ODOP9sgBTbfsRyybj+IKxxyqCFfSmMgJS2NrODegwUm9PNiu7sE5vdefbjZLYSDbA62Zj2sfldUNkFeRxKD5YS5wOBTgtqBEmEFhijdEgqDIrNsWb6dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=kwaGcAFD; arc=none smtp.client-ip=209.85.210.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-74858256d38so1894865b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 13:35:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749843918; x=1750448718; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+        d=google.com; s=20230601; t=1749846935; x=1750451735; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Yh7CDMY7zhVuwkLIdCkcnqO9gsEcVQzTOnr84L42C7s=;
-        b=YEAR26wYwCMkVVGcZaEg2tytzguot0VT8pBeIoq0ZcolvNcdM6mMtp+wwWgSAiJ3PW
-         +2+M0f1q8ZC+uTxDWnuq6w51KkQo+cJ3K+BPZnDRaaXbWp9F5u9tkyxm5bOMp5UPs40p
-         HLdTS14vmpa/ualvLvvw5obuLxDEKNMHzTovDrVNJSqDOtlNr4QBwQPZH0HqBETIKWz6
-         O+0JFsldbipfLH7Iz89cpNIAuvfDdlUXknINOfw0BLpide3m+LGsg0VxHZhRPSsot+58
-         HVsu7ao93ZljPkqKf2Ku5XxMBomc4Bx2AqMcfQzY1i7NGjRR80k0j3S4JfrcseP53zGW
-         RHDg==
+        bh=aD6EYmSk/zIl2SjxJRx3+64lAlSQfo57iDrafX9vuYg=;
+        b=kwaGcAFD5R0DY+HeJ3H43pH0k/ABpUOd0HFjgaV9iH0K+/csSwKcTyhk8NVzfnaV2Z
+         o0GXmTNxuaUySH5stT+nEknmoMCEk02gb079kYhzDrdav1ngvTTVz+qOeR54GJ9cj+i4
+         pMmvy1Vsoa+C5vLPNBq5XGPakG2dMXuSNGItsGWbzj5uA19hy5o/tGK3ARLZ/xCF31Tz
+         xJPSAjWE+cmJNk2E3TABuLcgNejsIvbS1ZnyZTYhSJ2yWuU1KbMvuoLFw8ZFK5ltYd9h
+         9yTZ7GHeJa46dH8SicGIqvMToz4E/WaOExtKtW3emKx7s6NhS04c1qr0YvMbfOb1o5K1
+         ogcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749843918; x=1750448718;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Yh7CDMY7zhVuwkLIdCkcnqO9gsEcVQzTOnr84L42C7s=;
-        b=a8TKgmUR1rTyH5NcHV9HkYSIFeubrpWqDXqyDxgAtQn0YTeb7iJh7d+ajAPeJIijFC
-         TNVSRu+h5K7Hc8zMq47sgHG4OW2kITey6y+QSgQqlCgjj3HStubkHGZW8e/cuwwTfUQQ
-         TEJBz29+Hx+FiE7vDaVoRubSF8q/bjYqalqnrUahwh/Y1SD/y7wGfIz2qHEHo6Gj4hLg
-         bCfVatqzfBcDCxJf7D3HnV35QF8DPbIR+kLTCycsaOX+6syXthhQ/byZwOE3ULXnD7t7
-         zFrUia3IEDPSGDy7+pnjAjT8kmY2OGkmBI0N/C9clWHiZiMMwd3rmof1SXDDy6djhIJ0
-         i3kg==
-X-Forwarded-Encrypted: i=1; AJvYcCV6A6ihPTvg4I67/lpT55jDouyJoe2Id1ERmL6krUDRUkmZV40P+6mD8iAAIYhAXwldjGimTAvUo4Vw@vger.kernel.org, AJvYcCWBrvzGBR78cE+5+s5pmtGAqc7NfYD5f4ZxDyrh6k0A0ueDgttgjBFLFaOi1H5iNiWzbt/owDHyeuT34agkFg==@vger.kernel.org, AJvYcCX1Nl3H4qLYdnj9mmR3ykjJNSZxyZvZXwPL00mY0xu5CdzZLClNkkJg7VMxoJRxxwyZHPiDRyQs6/ezHRkX@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSPWTaHJTUudOV114TVy6hdSVj5RT8wTuax0jdzWhkdKbsbqJc
-	bRV7JLMI1PzJvgDjm3VZc1J60hKNxTCIf1yykJzanR5sJP1P8Cf3VC77
-X-Gm-Gg: ASbGncuTYDznEMQBB7vXEc6RFVeK1L0hwOz5vciEeCpbIHNvbA273MR0Jgx5uj4oYNf
-	ScfzJFSsM59BSgToHJLYHGQWlvL403QKL3P1Kyv6e4l+HZirDUJqBx5kpz/5C9LT/Y76sFCfCzr
-	HNKx2nJEFaSqDC+qKg1plXKWcmaoal497mw8LIcyi5xWZnKB+bwMmZ38r8pr4m6y2YRa8YaWX9w
-	sXsUErfisoXKss5x7dI1GWtr/fHlp6Elt5i3gyvG9WffnTOvVX2HxmV+dEHk2+ZiqlnDwKVztic
-	ln6e6oYYRiIV1c9FpGOFfrlX15AnfTnkiMhNJxn9xJ2KrlnntPnN6DQTxj+HPy6dH/1vmUMVBXk
-	=
-X-Google-Smtp-Source: AGHT+IF6z6qUjSoRJkdCpZJ9gUQ+bcq/eU0vQiN2mvd8PVrsm86gtKRwcAsm8FThCuyMb+x13CdxpA==
-X-Received: by 2002:a17:907:3c90:b0:ade:3413:8792 with SMTP id a640c23a62f3a-adf9c02dc6dmr94078666b.8.1749843917916;
-        Fri, 13 Jun 2025 12:45:17 -0700 (PDT)
-Received: from ainazi.localnet ([2001:9e8:1ad:9f00:925:9e86:49c5:c55f])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-adec88fe907sm176790666b.93.2025.06.13.12.45.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jun 2025 12:45:17 -0700 (PDT)
-From: Shinjo Park <peremen@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- "open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>,
- "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH] ARM: dts: qcom: pm8921: add vibrator device node
-Date: Fri, 13 Jun 2025 21:45:16 +0200
-Message-ID: <5021407.31r3eYUQgx@ainazi>
-In-Reply-To: <6bd88bc5-c1b4-4ae9-b631-93b208e9862f@oss.qualcomm.com>
-References:
- <20250613194004.19390-1-peremen@gmail.com>
- <6bd88bc5-c1b4-4ae9-b631-93b208e9862f@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1749846935; x=1750451735;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=aD6EYmSk/zIl2SjxJRx3+64lAlSQfo57iDrafX9vuYg=;
+        b=Kb28vW/u417TUz3gHWVeevaMycze6fLT8KF8bdeblR8/9AwzKdaWrqyae2xqzO8NKb
+         yNQg1/LXxLfljMCdn4JumLOQjYdoqyS9Hb3IrXDUMDabzzdvBcYJlBAQBfjmB9eIqJLH
+         b3/ZwqwLa960WxGRmy8ZNkJ+bX/KcHIG/w1s9Wa8Z85X+VmCqTaseENmXeb0n5gVQQeO
+         hbk5xGZNCeuCEZt9cY+8WcUJtoyQ/UEFQ7J563kxAA2UaSPMM2t1NYG8vtpD/tCISvgo
+         SiGAcCZFjx/sNvX7W2QHoEHS5RjHUgoNKwfW+tPDKVdwrabgkkP2MWSqro+qyBVi8J7m
+         Syow==
+X-Forwarded-Encrypted: i=1; AJvYcCVjM0tZFafWbFcWna+YJ6oom7z/aR7DUsLGL8RCUfK+tA0l0b/PbKMUWeymWePlZRPf6oFSQxxBRR/Oki4w@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxlwqi7hh1ijzdrvfpoyvG3PnLlOPdaid/VJ956d4NbvHBmIx+w
+	zRhMXMKnSO5D5QBSIfmgvlIZRqpApVBIJmbpcb/gfD1YCSpFAE923C7YdGNm2VEHj9Y75hG4JWq
+	2wpoRpg==
+X-Google-Smtp-Source: AGHT+IFQyKC+fuYoxxZ60HlL1zbUz9ZwG4ryuK7MxSum1tmaUoFCTmYa27wuTrzB35IdSIo2hT+LP8d31ms=
+X-Received: from pfmm18.prod.google.com ([2002:a05:6a00:2492:b0:748:4f7c:c605])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:2ea6:b0:747:ee09:1fdf
+ with SMTP id d2e1a72fcca58-7489cf6aaf9mr933541b3a.4.1749846934794; Fri, 13
+ Jun 2025 13:35:34 -0700 (PDT)
+Date: Fri, 13 Jun 2025 13:35:33 -0700
+In-Reply-To: <20250611133330.1514028-5-tabba@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+References: <20250611133330.1514028-1-tabba@google.com> <20250611133330.1514028-5-tabba@google.com>
+Message-ID: <aEyLlbyMmNEBCAVj@google.com>
+Subject: Re: [PATCH v12 04/18] KVM: x86: Rename kvm->arch.has_private_mem to kvm->arch.supports_gmem
+From: Sean Christopherson <seanjc@google.com>
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
+	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
 Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi all,
+On Wed, Jun 11, 2025, Fuad Tabba wrote:
+> The bool has_private_mem is used to indicate whether guest_memfd is
+> supported.
 
-I am very sorry for annoying through multiple messages, I mistook the SMTP=
-=20
-result code as "failure" while it was successful.=20
+No?  This is at best weird, and at worst flat out wrong:
 
-Best,
-Shinjo
+	if (kvm->arch.supports_gmem &&
+	    fault->is_private !=3D kvm_mem_is_private(kvm, fault->gfn))
+		return false;
 
-2025=EB=85=84 6=EC=9B=94 13=EC=9D=BC =EA=B8=88=EC=9A=94=EC=9D=BC =EC=98=A4=
-=ED=9B=84 9=EC=8B=9C 41=EB=B6=84 33=EC=B4=88 =EC=A4=91=EB=B6=80=EC=9C=A0=EB=
-=9F=BD =ED=95=98=EA=B3=84 =ED=91=9C=EC=A4=80=EC=8B=9C=EC=97=90 Konrad Dybci=
-o =EB=8B=98=EC=9D=B4 =EC=93=B4 =EA=B8=80:
-> On 6/13/25 9:40 PM, Shinjo Park wrote:
-> > Use the same definition as pm8058.dtsi. Since vibrator is used only by
-> > some devices, disable it by default and let it be enabled explicitly.
-> >=20
-> > Signed-off-by: Shinjo Park <peremen@gmail.com>
-> > ---
+ditto for this code:
+
+	if (kvm_arch_supports_gmem(vcpu->kvm) &&
+	    kvm_mem_is_private(vcpu->kvm, gpa_to_gfn(range->gpa)))i
+		error_code |=3D PFERR_PRIVATE_ACCESS;
+
+and for the memory_attributes code.  E.g. IIRC, with guest_memfd() mmap sup=
+port,
+private vs. shared will become a property of the guest_memfd inode, i.e. th=
+is will
+become wrong:
+
+static u64 kvm_supported_mem_attributes(struct kvm *kvm)
+{
+	if (!kvm || kvm_arch_supports_gmem(kvm))
+		return KVM_MEMORY_ATTRIBUTE_PRIVATE;
+
+	return 0;
+}
+
+Instead of renaming kvm_arch_has_private_mem() =3D> kvm_arch_supports_gmem(=
+), *add*
+kvm_arch_supports_gmem() and then kill off kvm_arch_has_private_mem() once =
+non-x86
+usage is gone (i.e. query kvm->arch.has_private_mem directly).
+
+And then rather than rename has_private_mem, either add supports_gmem or do=
+ what
+you did for kvm_arch_supports_gmem_shared_mem() and explicitly check the VM=
+ type.
+
+> Rename it to supports_gmem to make its meaning clearer and to decouple me=
+mory
+> being private from guest_memfd.
 >=20
-> This is the third time I receive this patch within 5 minutes - please
-> check https://lore.kernel.org/linux-arm-msm/ to make sure your emails
-> reached the outside world
->=20
-> Konrad
+> Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Reviewed-by: Shivank Garg <shivankg@amd.com>
+> Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+> Co-developed-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>  arch/x86/include/asm/kvm_host.h | 4 ++--
+>  arch/x86/kvm/mmu/mmu.c          | 2 +-
+>  arch/x86/kvm/svm/svm.c          | 4 ++--
+>  arch/x86/kvm/x86.c              | 3 +--
+>  4 files changed, 6 insertions(+), 7 deletions(-)
 
+This missed the usage in TDX (it's not a staleness problem, because this se=
+ries
+was based on 6.16-rc1, which has the relevant code).
 
-
-
+arch/x86/kvm/vmx/tdx.c: In function =E2=80=98tdx_vm_init=E2=80=99:
+arch/x86/kvm/vmx/tdx.c:627:18: error: =E2=80=98struct kvm_arch=E2=80=99 has=
+ no member named =E2=80=98has_private_mem=E2=80=99
+  627 |         kvm->arch.has_private_mem =3D true;
+      |                  ^
+make[5]: *** [scripts/Makefile.build:287: arch/x86/kvm/vmx/tdx.o] Error 1
 
