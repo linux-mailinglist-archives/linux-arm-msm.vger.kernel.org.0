@@ -1,287 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-61274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31840AD96D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 23:04:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3798AD9724
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 23:12:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5ECDD3BF8F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 21:03:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 53E854A1870
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 21:12:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2A3D25DD12;
-	Fri, 13 Jun 2025 21:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E94EA27147B;
+	Fri, 13 Jun 2025 21:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ehvl6d5W"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="W/+KmpmN";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="B+7CxHUz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987CB25B1C7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 21:03:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF2F272E45;
+	Fri, 13 Jun 2025 21:10:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749848595; cv=none; b=fG+0DI45JXd+YmHnOflKwc/vXbmuXisCKn/WFEBKEMLaHsll6by5g+CuxrHimRwwG3ZT0YKTjke4ke2qcysh/Kl3PitwQCdZ2gvs1a7+nf6h2nqfsNoC6LdjjAlKWK9rUkQw98OQpR6i1avSmWkdcmGA5qAxq9Ahwj033nN4CIU=
+	t=1749849011; cv=none; b=Ka6w8RLcfIAvRzP7/5JFOpFduE6qTIhcoCSe6F1dnHEpm3cCPPCd+VjJsh0aGNb5cNUvX+xaiICegbIMnQM5gpaURWZhOYMsXUP2pvVbvnhCv8t86f6AQZ+kRG1TZIRVuqzSTT4eJEeMgTGcsYAWjnnJFZllF2ct/e0ClcIOW0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749848595; c=relaxed/simple;
-	bh=lT7Zcp8p6wA3KAogKquAqZSGA7HSCm6dNohixcuq6/I=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=S0gzgpunWN63cPBggPl2VyaVzXbra7XvIigaj4KWMHfp6dlh8E7CTpMHjyRctns2+HbLBkRRuwX0rGfwEHzZXHQKUBnoE2ckJDwPJXt9Ik18qQif4Bxh15J/xZ98Y5Y7ImF8dRl29zLhegsbfiHj9mmUgp6YDStseSMcigf47L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ehvl6d5W; arc=none smtp.client-ip=209.85.215.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-b2fa1a84565so1558940a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 14:03:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1749848593; x=1750453393; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=A3Wch+x3uNF1XdTWEOPRulvN+JzipLoRE2aMsLqF+rU=;
-        b=ehvl6d5W2/oZIW6V/ezMJYg81ZPJt/W8lYcv8GHnzutzT1Ee4H0zu6udFrZxbALpiW
-         PhbpCX/dl28T9GtymTuA687Yl3uNJZOtZk2/c5tbP9beV2jz3hafZpFjCOyUl3WBBW7x
-         K54qFPET3gwVyzWHemYrwxWP/ecE04x34QJ0dMeIs3xl2USxqjJsS46MSz+Crs0EWN2G
-         Olq1HfBpsSMS8Vate17vA07Vm6ZJTWNkiHgcdF0za4Zc6boCIpMxaT866orj9X18deUQ
-         xElrr5AOsF+2OIMK2EamiBqV3M/iIDdG99XqbJr2U+510RDdCwUc6EPWWB4DMgdgQpDX
-         HPnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749848593; x=1750453393;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A3Wch+x3uNF1XdTWEOPRulvN+JzipLoRE2aMsLqF+rU=;
-        b=YBRIFdhEns9GBEAJw60KFyMCfDQZqsqwh7wSkNPmdifkOnvt3EVFA8LIMppQTi0k0A
-         +rzPGMUz5C7BwVqGLdEdxZ06o734irXq2u4X2zcB432E7FHhk0F7qI5KbXVXdUd66pJz
-         BeYAPAfAADhpjQqQlgWrNAHVNo0I8L8osVB52tqXaxUCRpz0vwMds2mNqCC5GgmxotAk
-         DoJDdR37WIRhvT5Rwbt2XZSOUSAdzj75WpWczs+2i60CzrxXcOhTQPHyDrIjlgnwBYYi
-         6UXVzfHKH/JJqaWzwdScXq0yoHTamEbfL+qIW3k4i/6l1idSx/rdrbUlnEe4J8695Z+k
-         beBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUNj+v/AIhPArKOcSyjIJfDp4UI+BVZDXzOUnVD8zIXrJOdVs3kyU4HQeUM68EEpYLU8ZkwPJBZKqG/tR49@vger.kernel.org
-X-Gm-Message-State: AOJu0YysqAa3Jt/ZbSevBjWIPZW+j/0DhNu6OCqz1CT02M8N/c0NCF3Z
-	ZX3janMS+Na3k478Q5niFVnDp+Yp5Yn+J+NWdC1KXKSDdvBY38fmmRRIFM/s2+3ikkG2dwEGqfL
-	hOpfv6w==
-X-Google-Smtp-Source: AGHT+IFCqUrg4V9bdDrybRc7q8t0EQEaXYwnc3flICr7EMgc9UCftl1VaSgXOwrdPngPPXCTz+jIrKW0iLY=
-X-Received: from pfbch3.prod.google.com ([2002:a05:6a00:2883:b0:746:22b3:4c0d])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a21:3a48:b0:1f3:2e85:c052
- with SMTP id adf61e73a8af0-21fbd634e55mr1185002637.35.1749848592921; Fri, 13
- Jun 2025 14:03:12 -0700 (PDT)
-Date: Fri, 13 Jun 2025 14:03:11 -0700
-In-Reply-To: <20250611133330.1514028-9-tabba@google.com>
+	s=arc-20240116; t=1749849011; c=relaxed/simple;
+	bh=OmkcJNAV0hfO/+rD4d1mO4Zskm+DdbNdyEKY6x3S9ZA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NFIHgkYtlaCEl8vktKQGX2Tz0D31a/kKZXDcqYvbQ8QNEAbigNgzHOupWPwr5sMSWkluRBUgXC0dIjImoG2kRhrpiAex7EbSUIzAatKykAVDuYxM8wpH1ZWiNvH2rTRbWIsmuxmPgTwHYdYKOdFaYJM9vYDiZBzaHi6BHKsS4dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=W/+KmpmN; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=B+7CxHUz; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+From: Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1749849007;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=MuBzFJ8bax/C07ekYms0nJGiLaxwPvHrXMpn69ItGCE=;
+	b=W/+KmpmNybGnuRoYv0AkuKtnsKYy49mDsnZqnAuVFR1iteOuBy0nacsuwGwXn52voU6/A3
+	rlpGxKzE17HSzJPSKGvwNQJEKPQ2IFAH0QXreT8YqKLVvYCy/n1ZCmO4AAVX15Jd+MYBUZ
+	f078Jahg2V4fzWuEaulUv7ngS3jkX9Tek/CfN3Gn+gU1TOIbsKZQYlPliMSLFsqyqornBW
+	lsIadsSDSfNHZTi+A/6p2ZwnwTvAdvZSMEF/OVyDAxeAFC4jk3gJJG1QVukp+FAy2z+3wo
+	2gYCjOHwj5rC7TfnnNYbSEVUNJgT0ejodJqurt21ADxWP4ylesQwYB2SVPEGEg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1749849007;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=MuBzFJ8bax/C07ekYms0nJGiLaxwPvHrXMpn69ItGCE=;
+	b=B+7CxHUzslKZqG2mQ5S8cP+m4qTSW7M8mzh4mOWSOA/tKqAiCbq9U6NTQHVBHdo+sCpJ1L
+	VBPCCiAD4jsOM0DA==
+To: Eugen Hristev <eugen.hristev@linaro.org>, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+Cc: linux-doc@vger.kernel.org, corbet@lwn.net, mingo@redhat.com,
+ rostedt@goodmis.org, john.ogness@linutronix.de, senozhatsky@chromium.org,
+ pmladek@suse.com, peterz@infradead.org, mojha@qti.qualcomm.com,
+ linux-arm-kernel@lists.infradead.org, vincent.guittot@linaro.org,
+ konradybcio@kernel.org, dietmar.eggemann@arm.com, juri.lelli@redhat.com,
+ andersson@kernel.org
+Subject: Re: [RFC][PATCH 09/14] genirq: add irq_kmemdump_register
+In-Reply-To: <f916cf7f-6d0d-4d31-8e4b-24fc7da13f4d@linaro.org>
+References: <20250422113156.575971-1-eugen.hristev@linaro.org>
+ <20250422113156.575971-10-eugen.hristev@linaro.org> <87h61wn2qq.ffs@tglx>
+ <1331aa82-fee9-4788-abd9-ef741d00909e@linaro.org>
+ <f916cf7f-6d0d-4d31-8e4b-24fc7da13f4d@linaro.org>
+Date: Fri, 13 Jun 2025 23:10:06 +0200
+Message-ID: <87ikkzpcup.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250611133330.1514028-1-tabba@google.com> <20250611133330.1514028-9-tabba@google.com>
-Message-ID: <aEySD5XoxKbkcuEZ@google.com>
-Subject: Re: [PATCH v12 08/18] KVM: guest_memfd: Allow host to map guest_memfd pages
-From: Sean Christopherson <seanjc@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain
 
-On Wed, Jun 11, 2025, Fuad Tabba wrote:
-> This patch enables support for shared memory in guest_memfd, including
+On Fri, Jun 13 2025 at 17:33, Eugen Hristev wrote:
+> On 5/7/25 13:27, Eugen Hristev wrote:
+>>> Let KMEMDUMP_VAR() store the size and the address of 'nr_irqs' in a
+>>> kmemdump specific section and then kmemdump can just walk that section
+>>> and dump stuff. No magic register functions and no extra storage
+>>> management for static/global variables.
+>>>
+>>> No?
+>> 
+>> Thank you very much for your review ! I will try it out.
+>
+> I have tried this way and it's much cleaner ! thanks for the
+> suggestion.
 
-Please don't lead with with "This patch", simply state what changes are being
-made as a command.
+Welcome.
 
-> mapping that memory from host userspace.
+> The thing that I am trying to figure out now is how to do something
+> similar for a dynamically allocated memory, e.g.
+> void *p = kmalloc(...);
+> and then I can annotate `p` itself, it's address and size, but what I
+> would also want to so dump the whole memory region pointed out by p. and
+> that area address and size cannot be figured out at compile time hence I
+> can't instantiate a struct inside the dedicated section for it.
+> Any suggestion on how to make that better ? Or just keep the function
+> call to register the area into kmemdump ?
 
-> This functionality is gated by the KVM_GMEM_SHARED_MEM Kconfig option,
-> and enabled for a given instance by the GUEST_MEMFD_FLAG_SUPPORT_SHARED
-> flag at creation time.
+Right. For dynamically allocated memory there is obviously no compile
+time magic possible.
 
-Why?  I can see that from the patch.
+But I think you can simplify the registration for dynamically allocated
+memory significantly.
 
-This changelog is way, way, waaay too light on details.  Sorry for jumping in at
-the 11th hour, but we've spent what, 2 years working on this? 
+struct kmemdump_entry {
+	void			*ptr;
+        size_t			size;
+        enum kmemdump_uids	uid;
+};
 
-> Reviewed-by: Gavin Shan <gshan@redhat.com>
-> Acked-by: David Hildenbrand <david@redhat.com>
-> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
-> diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
-> index d00b85cb168c..cb19150fd595 100644
-> --- a/include/uapi/linux/kvm.h
-> +++ b/include/uapi/linux/kvm.h
-> @@ -1570,6 +1570,7 @@ struct kvm_memory_attributes {
->  #define KVM_MEMORY_ATTRIBUTE_PRIVATE           (1ULL << 3)
->  
->  #define KVM_CREATE_GUEST_MEMFD	_IOWR(KVMIO,  0xd4, struct kvm_create_guest_memfd)
-> +#define GUEST_MEMFD_FLAG_SUPPORT_SHARED	(1ULL << 0)
+You use that layout for the compile time table and the runtime
+registrations.
 
-I find the SUPPORT_SHARED terminology to be super confusing.  I had to dig quite
-deep to undesrtand that "support shared" actually mean "userspace explicitly
-enable sharing on _this_ guest_memfd instance".  E.g. I was surprised to see
+I intentionally used an UID as that avoids string allocation and all of
+the related nonsense. Mapping UID to a string is a post processing
+problem and really does not need to be done in the kernel. The 8
+character strings are horribly limited and a simple 4 byte unique id is
+achieving the same and saving space.
 
-IMO, GUEST_MEMFD_FLAG_SHAREABLE would be more appropriate.  But even that is
-weird to me.  For non-CoCo VMs, there is no concept of shared vs. private.  What's
-novel and notable is that the memory is _mappable_.  Yeah, yeah, pKVM's use case
-is to share memory, but that's a _use case_, not the property of guest_memfd that
-is being controlled by userspace.
+Just stick the IDs into include/linux/kmemdump_ids.h and expose the
+content for the post processing machinery.
 
-And kvm_gmem_memslot_supports_shared() is even worse.  It's simply that the
-memslot is bound to a mappable guest_memfd instance, it's that the guest_memfd
-instance is the _only_ entry point to the memslot.
+So you want KMEMDUMP_VAR() for the compile time created table to either
+automatically create that ID derived from the variable name or you add
+an extra argument with the ID.
 
-So my vote would be "GUEST_MEMFD_FLAG_MAPPABLE", and then something like
-KVM_MEMSLOT_GUEST_MEMFD_ONLY.  That will make code like this:
+kmemdump_init()
+        // Use a simple fixed size array to manage this
+        // as it avoids all the memory allocation nonsense
+        // This stuff is neither performance critical nor does allocating
+        // a few hundred entries create a memory consumption problem
+        // It consumes probably way less memory than the whole IDR/XARRAY allocation
+        // string duplication logic consumes text and data space.
+	kmemdump_entries = kcalloc(NR_ENTRIES, sizeof(*kmemdump_entries), GFP_KERNEL);
 
-	if (kvm_slot_has_gmem(slot) &&
-	    (kvm_gmem_memslot_supports_shared(slot) ||
-	     kvm_get_memory_attributes(kvm, gfn) & KVM_MEMORY_ATTRIBUTE_PRIVATE)) {
-		return kvm_gmem_max_mapping_level(slot, gfn, max_level);
-	}
+kmemdump_register(void *ptr, size_t size, enum kmemdump_uids uid)
+{
+        guard(entry_mutex);
 
-much more intutive:
+	entry = kmemdump_find_empty_slot();
+        if (!entry)
+        	return;
 
-	if (kvm_is_memslot_gmem_only(slot) ||
-	    kvm_get_memory_attributes(kvm, gfn) & KVM_MEMORY_ATTRIBUTE_PRIVATE))
-		return kvm_gmem_max_mapping_level(slot, gfn, max_level);
+        entry->ptr = ptr;
+        entry->size = size;
+        entry->uid = uid;
 
-And then have kvm_gmem_mapping_order() do:
+        // Make this unconditional by providing a dummy backend
+        // implementation. If the backend changes re-register all
+        // entries with the new backend and be done with it.
+        backend->register(entry);
+}
 
-	WARN_ON_ONCE(!kvm_slot_has_gmem(slot));
-	return 0;
+kmemdump_unregister(void *ptr)
+{
+        guard(entry_mutex);
+        entry = find_entry(ptr);
+        if (entry) {
+                backend->unregister(entry);
+        	memset(entry, 0, sizeof(*entry);
+        }
+}
 
->  struct kvm_create_guest_memfd {
->  	__u64 size;
-> diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
-> index 559c93ad90be..e90884f74404 100644
-> --- a/virt/kvm/Kconfig
-> +++ b/virt/kvm/Kconfig
-> @@ -128,3 +128,7 @@ config HAVE_KVM_ARCH_GMEM_PREPARE
->  config HAVE_KVM_ARCH_GMEM_INVALIDATE
->         bool
->         depends on KVM_GMEM
-> +
-> +config KVM_GMEM_SHARED_MEM
-> +       select KVM_GMEM
-> +       bool
-> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> index 6db515833f61..06616b6b493b 100644
-> --- a/virt/kvm/guest_memfd.c
-> +++ b/virt/kvm/guest_memfd.c
-> @@ -312,7 +312,77 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
->  	return gfn - slot->base_gfn + slot->gmem.pgoff;
->  }
->  
-> +static bool kvm_gmem_supports_shared(struct inode *inode)
-> +{
-> +	const u64 flags = (u64)inode->i_private;
-> +
-> +	if (!IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM))
-> +		return false;
-> +
-> +	return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> +}
-> +
-> +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
+You get the idea.
 
-And to my point about "shared", this is also very confusing, because there are
-zero checks in here about shared vs. private.
+Coming back to the registration at the call site itself.
 
-> +{
-> +	struct inode *inode = file_inode(vmf->vma->vm_file);
-> +	struct folio *folio;
-> +	vm_fault_t ret = VM_FAULT_LOCKED;
-> +
-> +	if (((loff_t)vmf->pgoff << PAGE_SHIFT) >= i_size_read(inode))
-> +		return VM_FAULT_SIGBUS;
-> +
-> +	folio = kvm_gmem_get_folio(inode, vmf->pgoff);
-> +	if (IS_ERR(folio)) {
-> +		int err = PTR_ERR(folio);
-> +
-> +		if (err == -EAGAIN)
-> +			return VM_FAULT_RETRY;
-> +
-> +		return vmf_error(err);
-> +	}
-> +
-> +	if (WARN_ON_ONCE(folio_test_large(folio))) {
-> +		ret = VM_FAULT_SIGBUS;
-> +		goto out_folio;
-> +	}
-> +
-> +	if (!folio_test_uptodate(folio)) {
-> +		clear_highpage(folio_page(folio, 0));
-> +		kvm_gmem_mark_prepared(folio);
-> +	}
-> +
-> +	vmf->page = folio_file_page(folio, vmf->pgoff);
-> +
-> +out_folio:
-> +	if (ret != VM_FAULT_LOCKED) {
-> +		folio_unlock(folio);
-> +		folio_put(folio);
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static const struct vm_operations_struct kvm_gmem_vm_ops = {
-> +	.fault = kvm_gmem_fault_shared,
-> +};
-> +
-> +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
-> +{
-> +	if (!kvm_gmem_supports_shared(file_inode(file)))
-> +		return -ENODEV;
-> +
-> +	if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
-> +	    (VM_SHARED | VM_MAYSHARE)) {
+       struct foo = kmalloc(....);
 
-And the SHARED terminology gets really confusing here, due to colliding with the
-existing notion of SHARED file mappings.
+       if (!foo)
+       		return;
 
-> +		return -EINVAL;
-> +	}
-> +
-> +	vma->vm_ops = &kvm_gmem_vm_ops;
-> +
-> +	return 0;
-> +}
-> +
->  static struct file_operations kvm_gmem_fops = {
-> +	.mmap		= kvm_gmem_mmap,
->  	.open		= generic_file_open,
->  	.release	= kvm_gmem_release,
->  	.fallocate	= kvm_gmem_fallocate,
-> @@ -463,6 +533,9 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args)
->  	u64 flags = args->flags;
->  	u64 valid_flags = 0;
->  
-> +	if (kvm_arch_supports_gmem_shared_mem(kvm))
-> +		valid_flags |= GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> +
->  	if (flags & ~valid_flags)
->  		return -EINVAL;
->  
-> -- 
-> 2.50.0.rc0.642.g800a2b2222-goog
-> 
+       kmemdump_register(foo, sizeof(*foo), KMEMDUMP_ID_FOO);
+
+That's a code duplication shitshow. You can wrap that into:
+
+       struct foo *foo = kmemdump_alloc(foo, KMEMDUMP_ID_FOO, kmalloc, ...);
+
+#define kmemdump_alloc(var, id, fn, ...)				\
+	({								\
+        	void *__p = fn(##__VA_ARGS__);				\
+									\
+                if (__p)						\
+                	kmemdump_register(__p, sizeof(*var), id);	\
+		__p;
+        })
+
+or something daft like that. And provide the matching magic for the free
+side.
+
+Thoughts?
+
+Thanks,
+
+        tglx
 
