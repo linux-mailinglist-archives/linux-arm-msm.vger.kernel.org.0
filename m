@@ -1,58 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-61219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FEA6AD8A9C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 13:35:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE35AAD8AEE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 13:44:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C0170168D86
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 11:35:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EAAE6189DA7C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 11:44:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D4792D23A6;
-	Fri, 13 Jun 2025 11:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A4762DA755;
+	Fri, 13 Jun 2025 11:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="U19sVfz6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dPKPmXui"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253FD2D2392;
-	Fri, 13 Jun 2025 11:35:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749814519; cv=pass; b=WZ88mDkQk9Neoi8B3QDCd4fF7+gjuTVmrb2sjrmebPSStu+n6cuvBYVxD/l3BI2FNnYmN1+Ujma/ztAuzOOfLEs8zj3Qe2HH3qFmKe2CbAM9xHYBo6hAI64/cIVaPkYVE2Z4eUVedfeststBnu9tPXQtN5a38+wUV7wRqHzq5ws=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749814519; c=relaxed/simple;
-	bh=FwF5gcy/sg4T3XYi70dfrvpopDl97RJ7KYLH2cJ4P4M=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=aqYetkR/SzgBDTSF/32fbjbEtGkPG5MAdOgP9OqS1DC+nFfwGpvFRiSPaM0T5iG6XS/7fMYt2WzGSBgnAfgDKmya74G+JnezJpDvvDgFHAEuqH8BIkNtCmlXPalRpnqRipHCv3EGfX7bwQptMROH6GDsVwcs3g6zQIsKEpKIeVY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=U19sVfz6; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1749814474; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=lETLoGB93kdeds4S0KtNgOM7REQiwh+NZ6/JULXJtNWu0wDh7njH+EAT21aIV0vuQZBgZL6HhZL4qjblaCJJms7usXnNucSq6ioJtIRNjT9eEctgPyUG1Wd7dbpxaZasVZszsHIlNh4DLEm0BzZ37fHfFGceOU/LKs8iM0ABrTw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1749814474; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=63O4HhVlmCIQH37e2yHnmXGKXhP1A6hZ3WnVeHzeLEY=; 
-	b=kMZGZWpT0GGC+aDITWLFTMZkO6X0afeAstC8/ug09xlUzVnHv5bfYJHm8LqcdKp2SWXr5pSNumIC/Zza/QdMmDVqhj7haDn1ojsa8ucnNtgfYU1vN1oMTjRwTuqgwHsW5lDBu72GxB4jj8xfbEIqaAH0oL6WGks2uBj+btQmkqI=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
-	dmarc=pass header.from=<usama.anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1749814474;
-	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
-	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=63O4HhVlmCIQH37e2yHnmXGKXhP1A6hZ3WnVeHzeLEY=;
-	b=U19sVfz6Zbmlpv0eumTx1fIYHMVk7lX/xpIlvbmK7WXwJQbF8yOpD64+dbqp7Ib/
-	Gt3+S9ia5k/c/e30enP+saH+RNyJHoB0/39CvJEu5Pm0szVrVZVSQ1VdPW+aD+fOe12
-	/6zI5fopVgzD3SIYhrF1pyvafdR+9Vb6r/7P35Io=
-Received: by mx.zohomail.com with SMTPS id 174981447219438.66651306626147;
-	Fri, 13 Jun 2025 04:34:32 -0700 (PDT)
-Message-ID: <73496f2a-ae0d-42c8-8013-9e157177c477@collabora.com>
-Date: Fri, 13 Jun 2025 16:34:20 +0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82942D23A6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 11:42:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749814959; cv=none; b=cYrhG/PyT38NdK2a1xRO5IpSZQ6Hl6Sifd64eXZoy7C3nlf6aI7BXpsxcsvkh/EbWa1XmAaT3tFLP/ttJK/FBUzg36sp3FRYXPeaikCTYLFoE/m9folbbPqsHO+NA++FRYMdefDXnfHO8KoF2OTDM6wJ4QNVoGxFWzJtwA0IsnE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749814959; c=relaxed/simple;
+	bh=j+WpPPNJFVv5cc8th/z2eLNPWQbQU7n97BO8H4n+ffk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mCdaisrn24hb6wTNmIlJLEbLwesEJLy8+zDLpDVkP6uFHqIAHsa4Mnb3H7Bs3LCkHrjWDCHTG354dIJGIEuFS2Zfj+tezAzAL3cvU5UBM2xJrq/BElE8Z5103vBT6oXrkD2xiC7WVa7YasmsvUVSUJe56qz4KmNONi0psLSucTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dPKPmXui; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3a52874d593so1964320f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 04:42:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1749814955; x=1750419755; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MvwEhGPx6wb8xbrbsUHrrq52O4YNiUINr5fVID9eklE=;
+        b=dPKPmXuiGOVeHOs5gcat0XHSdBSmIQ3XEmr8rDTHAei2Y0eGSxxTSflxbWbZ0WwSVN
+         1UiOxhrzK2BRPt1HIik2FDNA9nuC616I5eZKlBxFlvLmkT3jDlYFGL0GDit3KRvk9O8Z
+         s5Mar8l8bsKH9BfJlD7kWunPaa+w5W3D5J0ohgH13yE3ZXQqSK1kIXhTD3ou/Z+yjz/i
+         qv0x5ExnLJtZU05htDP4VsFjVf2sGlmUiMPduGR+jDogBMAYFcmWTlInyk22X0m9P0xG
+         0vEZaUwx5aj2oU+4t+s0B8ir0JwUxdleRs+v1cV+wcDW4Xi90Gm/iokgu3RFBgdXRn7U
+         PZYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749814955; x=1750419755;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MvwEhGPx6wb8xbrbsUHrrq52O4YNiUINr5fVID9eklE=;
+        b=snhxNKw5U35+/VxggaPAIDd0yiCW0B+h6f+54Tr2Gs0x6Obgo8pPJgc3NyZx27aBZU
+         hbtHsidN7h+C6W26oToQr5IylF0y8crR2kRHSkHtOGkpH9LzIjMlQRyDLNEAr6VJdnCB
+         1lVD2zfIYZjH/fuy38gqc0T87jlquZVD4mgJ3tAkhUL8pCJLrg4jg4zo1vbgkrCOOnz7
+         bxt/rHpOXs4Cl8TRgYedC2asfHcLVfI8Qqm/sbLX+w5LqKKZJgoKSypwZdtCjG2VU9u6
+         oFB6HOhaJTnQujLshxYcLLcvjVRW9w12Rs4y1UTYozQOY0cCwSsC9ynC00Io7jhe32tm
+         dadg==
+X-Forwarded-Encrypted: i=1; AJvYcCXc+6qTWPoQ8qYXPfH4E+XPhPI6GcIPI+3mTGCEHBIEWqgaOAe8nsPSrcErzB8vqsVzKTen5rD2yv11O1Bx@vger.kernel.org
+X-Gm-Message-State: AOJu0YxSenIi3eOA6rl7rhjC234w5IbAnoeK4qdEU6Xd3oERfFbchLvM
+	2eue98gTpWoOlNWbC4Ty7Jj4y312lNHHkV1omzAywkT5TPN8HAxl6GpljTbtHX7cd58=
+X-Gm-Gg: ASbGncsxS1HETcE9lM+VZxiFSkMm17mmcSF7hxGUfmnGHzyMvX2J8lnCaUCguPQaRfc
+	YL0/3i14yg5prhWm5+PIUyNlkWWRJh+YAuvhe2CYPLVOk6xcmLYjkrNjRmiDrgl3CPspPQiAnQf
+	JRbR+TY1Jif0EDv3+5rrHqpvAylvew0F3g/R3UMeZRhOnYmdE3q1z+yjxxNBuo756uEZ7yyCvM7
+	fWfXcSfMoYfOD6wFSmuUTa9QjpzGYOMSQyhxyW0vjoRQSeRGxREGng0AOZqZmgRN8r5FzqKz+0+
+	H5ejSxfAqg/UVmH89j8DYF0Hic0alF0olEW7V4r01RNJMWm3SrWYcx+pOhS0TxTUl1J0zO8GUOq
+	DoqHmXplc7Yv03ZN8nJELPcEKqqk=
+X-Google-Smtp-Source: AGHT+IFHSX81XGRTonZWsTCONugCLIzvlTJnwuwWqkN66G3W6Veq1ddBm9U4o0xZRHNlrQelgSceTw==
+X-Received: by 2002:a05:6000:4205:b0:3a5:3e64:1ac4 with SMTP id ffacd0b85a97d-3a5687665e0mr2632048f8f.33.1749814955260;
+        Fri, 13 Jun 2025 04:42:35 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568b08e21sm2136681f8f.52.2025.06.13.04.42.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Jun 2025 04:42:34 -0700 (PDT)
+Message-ID: <59944b49-67dd-43a8-b6a4-a1ad0b9baa59@linaro.org>
+Date: Fri, 13 Jun 2025 12:42:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,289 +82,299 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: usama.anjum@collabora.com, kernel@collabora.com,
- sebastian.reichel@collabora.com, Jeff Johnson
- <jeff.johnson@oss.qualcomm.com>, Baochen Qiang <quic_bqiang@quicinc.com>,
- Sumit Garg <sumit.garg@kernel.org>, mhi@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
- ath12k@lists.infradead.org, Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
- Jeff Johnson <jjohnson@kernel.org>,
- Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
- Youssef Samir <quic_yabdulra@quicinc.com>,
- Matthew Leung <quic_mattleun@quicinc.com>,
- Carl Vanderlip <quic_carlv@quicinc.com>,
- "Dr. David Alan Gilbert" <linux@treblig.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Troy Hanson <quic_thanson@quicinc.com>, Alex Elder <elder@kernel.org>,
- Yan Zhen <yanzhen@vivo.com>, Kunwu Chan <chentao@kylinos.cn>
-Subject: Re: [PATCH v6] bus: mhi: host: don't free bhie tables during
- suspend/hibernation
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-References: <20250516184952.878726-1-usama.anjum@collabora.com>
- <819f15f9-1b16-4b96-8273-3f95c1e071bb@collabora.com>
+Subject: Re: [PATCH v5 3/4] media: dt-bindings: Add qcom,msm8939-camss
+To: vincent.knecht@mailoo.org, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+ phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20250613-camss-8x39-vbif-v5-0-a002301a7730@mailoo.org>
+ <20250613-camss-8x39-vbif-v5-3-a002301a7730@mailoo.org>
 Content-Language: en-US
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
-In-Reply-To: <819f15f9-1b16-4b96-8273-3f95c1e071bb@collabora.com>
-Content-Type: text/plain; charset=UTF-8
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250613-camss-8x39-vbif-v5-3-a002301a7730@mailoo.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
 
-Hi,
-
-Reminder
-
-On 5/28/25 10:25 AM, Muhammad Usama Anjum wrote:
-> Soft reminder
+On 13/06/2025 10:33, Vincent Knecht via B4 Relay wrote:
+> From: Vincent Knecht <vincent.knecht@mailoo.org>
 > 
-> On 5/16/25 11:49 PM, Muhammad Usama Anjum wrote:
->> Fix dma_direct_alloc() failure at resume time during bhie_table
->> allocation because of memory pressure. There is a report where at
->> resume time, the memory from the dma doesn't get allocated and MHI
->> fails to re-initialize.
->>
->> To fix it, don't free the memory at power down during suspend /
->> hibernation. Instead, use the same allocated memory again after every
->> resume / hibernation. This patch has been tested with resume and
->> hibernation both.
->>
->> Optimize the rddm and fbc bhie allocations. The rddm is of constant
->> size for a given hardware. While the fbc_image size depends on the
->> firmware. If the firmware changes, we'll free and allocate new memory
->> for it. This patch is motivated from the ath12k [1] and ath11k [2]
->> patches. They don't free the memory and reuse the same memory if new
->> size is same. The firmware caching hasn't been implemented for the
->> drivers other than in the nouveau. (The changing of firmware isn't
->> tested/supported for wireless drivers. But let's follow the example
->> patches here.)
->>
->> [1] https://lore.kernel.org/all/20240419034034.2842-1-quic_bqiang@quicinc.com/
->> [2] https://lore.kernel.org/all/20220506141448.10340-1-quic_akolli@quicinc.com/
->>
->> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
->> Tested-on: WCN7850 hw2.0 WLAN.HMT.1.1.c5-00284-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
->>
->> Acked-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
->> Tested-by: Baochen Qiang <quic_bqiang@quicinc.com>
->> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
->> ---
->> Changes since v1:
->> - Don't free bhie tables during suspend/hibernation only
->> - Handle fbc_image changed size correctly
->> - Remove fbc_image getting set to NULL in *free_bhie_table()
->>
->> Changes since v2:
->> - Remove the new mhi_partial_unprepare_after_power_down() and instead
->>   update mhi_power_down_keep_dev() to use
->>   mhi_power_down_unprepare_keep_dev() as suggested by Mani
->> - Update all users of this API such as ath12k (previously only ath11k
->>   was updated)
->> - Define prev_fw_sz in docs
->> - Do better alignment of comments
->>
->> Changes since v3:
->> - Fix state machine of ath12k by setting ATH12K_MHI_DEINIT with
->>   ATH12K_MHI_POWER_OFF_KEEP_DEV state (Thanks Sebastian for testing and
->>   finding the problem)
->> - Use static with mhi_power_down_unprepare_keep_dev()
->> - Remove crash log as it was showing that kworker wasn't able to
->>   allocate memory.
->>
->> Changes since v4:
->> - Update description
->> - Use __mhi_power_down_unprepare_keep_dev() in
->>   mhi_unprepare_after_power_down()
->>
->> Changes since v5:
->> - Update description to don't give an impression that all bhie
->>   allocations are being fixed. mhi_load_image_bhie() doesn't require
->>   this optimization.
->>
->> This patch doesn't have fixes tag as we are avoiding error in case of
->> memory pressure. We are just making this driver more robust by not
->> freeing the memory and using the same after resuming.
->> ---
->>  drivers/bus/mhi/host/boot.c           | 15 +++++++++++----
->>  drivers/bus/mhi/host/init.c           | 18 ++++++++++++------
->>  drivers/bus/mhi/host/internal.h       |  2 ++
->>  drivers/bus/mhi/host/pm.c             |  1 +
->>  drivers/net/wireless/ath/ath11k/mhi.c |  8 ++++----
->>  drivers/net/wireless/ath/ath12k/mhi.c | 14 ++++++++++----
->>  include/linux/mhi.h                   |  2 ++
->>  7 files changed, 42 insertions(+), 18 deletions(-)
->>
->> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
->> index efa3b6dddf4d2..bc8459798bbee 100644
->> --- a/drivers/bus/mhi/host/boot.c
->> +++ b/drivers/bus/mhi/host/boot.c
->> @@ -584,10 +584,17 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->>  	 * device transitioning into MHI READY state
->>  	 */
->>  	if (fw_load_type == MHI_FW_LOAD_FBC) {
->> -		ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
->> -		if (ret) {
->> -			release_firmware(firmware);
->> -			goto error_fw_load;
->> +		if (mhi_cntrl->fbc_image && fw_sz != mhi_cntrl->prev_fw_sz) {
->> +			mhi_free_bhie_table(mhi_cntrl, mhi_cntrl->fbc_image);
->> +			mhi_cntrl->fbc_image = NULL;
->> +		}
->> +		if (!mhi_cntrl->fbc_image) {
->> +			ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
->> +			if (ret) {
->> +				release_firmware(firmware);
->> +				goto error_fw_load;
->> +			}
->> +			mhi_cntrl->prev_fw_sz = fw_sz;
->>  		}
->>  
->>  		/* Load the firmware into BHIE vec table */
->> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
->> index 13e7a55f54ff4..8419ea8a5419b 100644
->> --- a/drivers/bus/mhi/host/init.c
->> +++ b/drivers/bus/mhi/host/init.c
->> @@ -1173,8 +1173,9 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
->>  		/*
->>  		 * Allocate RDDM table for debugging purpose if specified
->>  		 */
->> -		mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
->> -				     mhi_cntrl->rddm_size);
->> +		if (!mhi_cntrl->rddm_image)
->> +			mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->rddm_image,
->> +					     mhi_cntrl->rddm_size);
->>  		if (mhi_cntrl->rddm_image) {
->>  			ret = mhi_rddm_prepare(mhi_cntrl,
->>  					       mhi_cntrl->rddm_image);
->> @@ -1200,6 +1201,14 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
->>  }
->>  EXPORT_SYMBOL_GPL(mhi_prepare_for_power_up);
->>  
->> +void __mhi_unprepare_keep_dev(struct mhi_controller *mhi_cntrl)
->> +{
->> +	mhi_cntrl->bhi = NULL;
->> +	mhi_cntrl->bhie = NULL;
->> +
->> +	mhi_deinit_dev_ctxt(mhi_cntrl);
->> +}
->> +
->>  void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
->>  {
->>  	if (mhi_cntrl->fbc_image) {
->> @@ -1212,10 +1221,7 @@ void mhi_unprepare_after_power_down(struct mhi_controller *mhi_cntrl)
->>  		mhi_cntrl->rddm_image = NULL;
->>  	}
->>  
->> -	mhi_cntrl->bhi = NULL;
->> -	mhi_cntrl->bhie = NULL;
->> -
->> -	mhi_deinit_dev_ctxt(mhi_cntrl);
->> +	__mhi_unprepare_keep_dev(mhi_cntrl);
->>  }
->>  EXPORT_SYMBOL_GPL(mhi_unprepare_after_power_down);
->>  
->> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
->> index ce566f7d2e924..41b3fb835880b 100644
->> --- a/drivers/bus/mhi/host/internal.h
->> +++ b/drivers/bus/mhi/host/internal.h
->> @@ -427,4 +427,6 @@ void mhi_unmap_single_no_bb(struct mhi_controller *mhi_cntrl,
->>  void mhi_unmap_single_use_bb(struct mhi_controller *mhi_cntrl,
->>  			     struct mhi_buf_info *buf_info);
->>  
->> +void __mhi_unprepare_keep_dev(struct mhi_controller *mhi_cntrl);
->> +
->>  #endif /* _MHI_INT_H */
->> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
->> index e6c3ff62bab1d..c2c09c308b9b7 100644
->> --- a/drivers/bus/mhi/host/pm.c
->> +++ b/drivers/bus/mhi/host/pm.c
->> @@ -1263,6 +1263,7 @@ void mhi_power_down_keep_dev(struct mhi_controller *mhi_cntrl,
->>  			       bool graceful)
->>  {
->>  	__mhi_power_down(mhi_cntrl, graceful, false);
->> +	__mhi_unprepare_keep_dev(mhi_cntrl);
->>  }
->>  EXPORT_SYMBOL_GPL(mhi_power_down_keep_dev);
->>  
->> diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
->> index acd76e9392d31..c5dc776b23643 100644
->> --- a/drivers/net/wireless/ath/ath11k/mhi.c
->> +++ b/drivers/net/wireless/ath/ath11k/mhi.c
->> @@ -460,12 +460,12 @@ void ath11k_mhi_stop(struct ath11k_pci *ab_pci, bool is_suspend)
->>  	 * workaround, otherwise ath11k_core_resume() will timeout
->>  	 * during resume.
->>  	 */
->> -	if (is_suspend)
->> +	if (is_suspend) {
->>  		mhi_power_down_keep_dev(ab_pci->mhi_ctrl, true);
->> -	else
->> +	} else {
->>  		mhi_power_down(ab_pci->mhi_ctrl, true);
->> -
->> -	mhi_unprepare_after_power_down(ab_pci->mhi_ctrl);
->> +		mhi_unprepare_after_power_down(ab_pci->mhi_ctrl);
->> +	}
->>  }
->>  
->>  int ath11k_mhi_suspend(struct ath11k_pci *ab_pci)
->> diff --git a/drivers/net/wireless/ath/ath12k/mhi.c b/drivers/net/wireless/ath/ath12k/mhi.c
->> index 08f44baf182a5..3af524ccf4a5a 100644
->> --- a/drivers/net/wireless/ath/ath12k/mhi.c
->> +++ b/drivers/net/wireless/ath/ath12k/mhi.c
->> @@ -601,6 +601,12 @@ static int ath12k_mhi_set_state(struct ath12k_pci *ab_pci,
->>  
->>  	ath12k_mhi_set_state_bit(ab_pci, mhi_state);
->>  
->> +	/* mhi_power_down_keep_dev() has been updated to DEINIT without
->> +	 * freeing bhie tables
->> +	 */
->> +	if (mhi_state == ATH12K_MHI_POWER_OFF_KEEP_DEV)
->> +		ath12k_mhi_set_state_bit(ab_pci, ATH12K_MHI_DEINIT);
->> +
->>  	return 0;
->>  
->>  out:
->> @@ -635,12 +641,12 @@ void ath12k_mhi_stop(struct ath12k_pci *ab_pci, bool is_suspend)
->>  	 * workaround, otherwise ath12k_core_resume() will timeout
->>  	 * during resume.
->>  	 */
->> -	if (is_suspend)
->> +	if (is_suspend) {
->>  		ath12k_mhi_set_state(ab_pci, ATH12K_MHI_POWER_OFF_KEEP_DEV);
->> -	else
->> +	} else {
->>  		ath12k_mhi_set_state(ab_pci, ATH12K_MHI_POWER_OFF);
->> -
->> -	ath12k_mhi_set_state(ab_pci, ATH12K_MHI_DEINIT);
->> +		ath12k_mhi_set_state(ab_pci, ATH12K_MHI_DEINIT);
->> +	}
->>  }
->>  
->>  void ath12k_mhi_suspend(struct ath12k_pci *ab_pci)
->> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
->> index dd372b0123a6d..6fd218a877855 100644
->> --- a/include/linux/mhi.h
->> +++ b/include/linux/mhi.h
->> @@ -306,6 +306,7 @@ struct mhi_controller_config {
->>   *           if fw_image is NULL and fbc_download is true (optional)
->>   * @fw_sz: Firmware image data size for normal booting, used only if fw_image
->>   *         is NULL and fbc_download is true (optional)
->> + * @prev_fw_sz: Previous firmware image data size, when fbc_download is true
->>   * @edl_image: Firmware image name for emergency download mode (optional)
->>   * @rddm_size: RAM dump size that host should allocate for debugging purpose
->>   * @sbl_size: SBL image size downloaded through BHIe (optional)
->> @@ -382,6 +383,7 @@ struct mhi_controller {
->>  	const char *fw_image;
->>  	const u8 *fw_data;
->>  	size_t fw_sz;
->> +	size_t prev_fw_sz;
->>  	const char *edl_image;
->>  	size_t rddm_size;
->>  	size_t sbl_size;
+> Add bindings for qcom,msm8939-camss in order to support the camera
+> subsystem for MSM8939.
 > 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+> ---
+>   .../bindings/media/qcom,msm8939-camss.yaml         | 254 +++++++++++++++++++++
+>   1 file changed, 254 insertions(+)
 > 
-
-
--- 
-Regards,
-Usama
+> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8939-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8939-camss.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..9fbb4b204ac8728b822864ad8336aa9d826d6b5b
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,msm8939-camss.yaml
+> @@ -0,0 +1,254 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/media/qcom,msm8939-camss.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm MSM8939 Camera Subsystem (CAMSS)
+> +
+> +maintainers:
+> +  - Vincent Knecht <vincent.knecht@mailoo.org>
+> +
+> +description:
+> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,msm8939-camss
+> +
+> +  reg:
+> +    maxItems: 11
+> +
+> +  reg-names:
+> +    items:
+> +      - const: csi_clk_mux
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: csiphy0
+> +      - const: csiphy0_clk_mux
+> +      - const: csiphy1
+> +      - const: csiphy1_clk_mux
+> +      - const: ispif
+> +      - const: vfe0
+> +      - const: vfe0_vbif
+> +
+> +  clocks:
+> +    maxItems: 24
+> +
+> +  clock-names:
+> +    items:
+> +      - const: ahb
+> +      - const: csi0
+> +      - const: csi0_ahb
+> +      - const: csi0_phy
+> +      - const: csi0_pix
+> +      - const: csi0_rdi
+> +      - const: csi1
+> +      - const: csi1_ahb
+> +      - const: csi1_phy
+> +      - const: csi1_pix
+> +      - const: csi1_rdi
+> +      - const: csi2
+> +      - const: csi2_ahb
+> +      - const: csi2_phy
+> +      - const: csi2_pix
+> +      - const: csi2_rdi
+> +      - const: csi_vfe0
+> +      - const: csiphy0_timer
+> +      - const: csiphy1_timer
+> +      - const: ispif_ahb
+> +      - const: top_ahb
+> +      - const: vfe0
+> +      - const: vfe_ahb
+> +      - const: vfe_axi
+> +
+> +  interrupts:
+> +    maxItems: 7
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: csiphy0
+> +      - const: csiphy1
+> +      - const: ispif
+> +      - const: vfe0
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    items:
+> +      - description: VFE GDSC - Video Front End, Global Distributed Switch
+> +          Controller.
+> +
+> +  vdda-supply:
+> +    description:
+> +      Definition of the regulator used as 1.2V analog power supply.
+> +
+> +  ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    description:
+> +      CSI input ports.
+> +
+> +    patternProperties:
+> +      "^port@[0-1]$":
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +
+> +        description:
+> +          Input port for receiving CSI data.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +              bus-type:
+> +                enum:
+> +                  - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
+> +
+> +            required:
+> +              - data-lanes
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - clocks
+> +  - clock-names
+> +  - interrupts
+> +  - interrupt-names
+> +  - iommus
+> +  - power-domains
+> +  - vdda-supply
+> +  - ports
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/clock/qcom,gcc-msm8939.h>
+> +
+> +    isp@1b00020 {
+> +        compatible = "qcom,msm8939-camss";
+> +
+> +        reg = <0x01b00020 0x10>,
+> +              <0x01b08000 0x100>,
+> +              <0x01b08400 0x100>,
+> +              <0x01b08800 0x100>,
+> +              <0x01b0ac00 0x200>,
+> +              <0x01b00030 0x4>,
+> +              <0x01b0b000 0x200>,
+> +              <0x01b00038 0x4>,
+> +              <0x01b0a000 0x500>,
+> +              <0x01b10000 0x1000>,
+> +              <0x01b40000 0x200>;
+> +
+> +        reg-names = "csi_clk_mux",
+> +                    "csid0",
+> +                    "csid1",
+> +                    "csid2",
+> +                    "csiphy0",
+> +                    "csiphy0_clk_mux",
+> +                    "csiphy1",
+> +                    "csiphy1_clk_mux",
+> +                    "ispif",
+> +                    "vfe0",
+> +                    "vfe0_vbif";
+> +
+> +        clocks = <&gcc GCC_CAMSS_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI0_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI0_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI0PHY_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI0PIX_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI0RDI_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI1_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI1_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI1PHY_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI1PIX_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI1RDI_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI2_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI2_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI2PHY_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI2PIX_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI2RDI_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI_VFE0_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI0PHYTIMER_CLK>,
+> +                 <&gcc GCC_CAMSS_CSI1PHYTIMER_CLK>,
+> +                 <&gcc GCC_CAMSS_ISPIF_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_TOP_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_VFE0_CLK>,
+> +                 <&gcc GCC_CAMSS_VFE_AHB_CLK>,
+> +                 <&gcc GCC_CAMSS_VFE_AXI_CLK>;
+> +
+> +        clock-names = "ahb",
+> +                      "csi0",
+> +                      "csi0_ahb",
+> +                      "csi0_phy",
+> +                      "csi0_pix",
+> +                      "csi0_rdi",
+> +                      "csi1",
+> +                      "csi1_ahb",
+> +                      "csi1_phy",
+> +                      "csi1_pix",
+> +                      "csi1_rdi",
+> +                      "csi2",
+> +                      "csi2_ahb",
+> +                      "csi2_phy",
+> +                      "csi2_pix",
+> +                      "csi2_rdi",
+> +                      "csi_vfe0",
+> +                      "csiphy0_timer",
+> +                      "csiphy1_timer",
+> +                      "ispif_ahb",
+> +                      "top_ahb",
+> +                      "vfe0",
+> +                      "vfe_ahb",
+> +                      "vfe_axi";
+> +
+> +        interrupts = <GIC_SPI 51 IRQ_TYPE_EDGE_RISING>,
+> +                     <GIC_SPI 52 IRQ_TYPE_EDGE_RISING>,
+> +                     <GIC_SPI 153 IRQ_TYPE_EDGE_RISING>,
+> +                     <GIC_SPI 78 IRQ_TYPE_EDGE_RISING>,
+> +                     <GIC_SPI 79 IRQ_TYPE_EDGE_RISING>,
+> +                     <GIC_SPI 55 IRQ_TYPE_EDGE_RISING>,
+> +                     <GIC_SPI 57 IRQ_TYPE_EDGE_RISING>;
+> +
+> +        interrupt-names = "csid0",
+> +                          "csid1",
+> +                          "csid2",
+> +                          "csiphy0",
+> +                          "csiphy1",
+> +                          "ispif",
+> +                          "vfe0";
+> +
+> +        iommus = <&apps_iommu 3>;
+> +
+> +        power-domains = <&gcc VFE_GDSC>;
+> +
+> +        vdda-supply = <&reg_1v2>;
+> +
+> +        ports {
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +
+> +            port@1 {
+> +                reg = <1>;
+> +
+> +                csiphy1_ep: endpoint {
+> +                    data-lanes = <0 2>;
+> +                    remote-endpoint = <&sensor_ep>;
+> +                };
+> +            };
+> +        };
+> +    };
+> 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
