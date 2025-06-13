@@ -1,121 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-61246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0434AD901B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 16:51:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AED7DAD9051
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 16:56:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5B4143B80EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 14:51:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 806811893641
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 14:54:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 720619444;
-	Fri, 13 Jun 2025 14:51:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YqnOd9/U"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F39E19CD0B;
+	Fri, 13 Jun 2025 14:54:25 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB56433A5
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 14:51:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E992E15573F;
+	Fri, 13 Jun 2025 14:54:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749826262; cv=none; b=atIXdsYiT4+iZ5yxErtLIW1VRybgxVlTUFT532apNRE/4kJMWZ03vZLFaphf6CwXTKylZ/Mds9QJMG1T5wNJyJyJJacAnJYDWySCApJrH4UVrK1XO50nbRIAislPwnMH7uF0xA58eaLhsj/1ezNwufFoPak2hmkRsGzi/61TwgE=
+	t=1749826465; cv=none; b=rcgM8Ki6u0VDfk9yqAdMwasFiONBGqs1GVFeahMjRJecSnHpG7NyqCf/trLdmdNbJ7CHI2k8NCadG02mi8LRlRygsabJLAI2oUW/61NeeZzPpWH7p9XR6AvEMjQmrvRWAM922J6u+fYs2K1kGWJ/keKXsdxkI9GGYyBTQpYxUe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749826262; c=relaxed/simple;
-	bh=WXGpMxHygcfzTELJGLmTF9Qa1p/d89Zbk7jdPDFTfug=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=M5Mb+zx9tcbMf0+Z9bZ1dg3T+Lwh0ydUk0IMG4D5fXOHoxQAIDxcDEJN2DTICU+twuf4o7rdCPIt7Da0A6kQRpr0Udhvt6YbJumJN5sNM6t+PsJfqxRpBVhrJapgfNjDbf22qj++etAzwFdH6JdsI6nqj3olcr3YWwBORgycri8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YqnOd9/U; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-442e9c00bf4so19045425e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 07:51:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749826259; x=1750431059; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WXGpMxHygcfzTELJGLmTF9Qa1p/d89Zbk7jdPDFTfug=;
-        b=YqnOd9/UpYAnk/h4wt4ESiDSiT5nVw7RACJYscBjYQDxN0GdH8A9a0ZuWry6z1zjhc
-         4mjAGAIue6oT9uCpJLe7DmUUaU53Kf5QzcEdkUYQvA7XB8+Z1NiGhhb8p/mO4tG80NO3
-         xIxv0VXeBQYEkwogxSkYmzXMZz9ZmsN41zyvGjGN1S2WQXpaAz3B9wIsNee8z98iVkt7
-         zSZZUyPHcTSlr2Rew41CTVIkUygNGoUp2YOAnpEbBnQsQhcj+VBATL2wsBOwa6V9J5YA
-         AleyU+8mps2ajjwiFYie/ANBDUVW46mgRgCFqbsCKqFrk6mJWOpnHWFhiD3wDuK/GVkj
-         IEiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749826259; x=1750431059;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=WXGpMxHygcfzTELJGLmTF9Qa1p/d89Zbk7jdPDFTfug=;
-        b=UUSxOgfqcUiDhO0NDq9rMTosOEbK5waLdR1YZGAaaKGFxqmr/Cmg6o0Rw+fwAAAqH/
-         qzqUgX0CjHbayWyWd952RdxFKkhWbi5s78oQtiXOwhN8r8NEjHTk/3dkpgCXn7u0MjvZ
-         gQ3AfDSc4oDnPKv+nttDWOd9xE+N60bvaMmYM+3G2g3aw9SnXqiw8jOuakkgUue/HVH8
-         u8x5HN47rwsCu8DX2+k9d47zDY5fIkUz1BrIWWsOpp0o6lexyzjPmr2ks8M81UL+hqo5
-         zOpSY+fg3DqWgi/2lHbv5LX0x0bBsXTPrs6a3nY2JK7Rw18aP6XYVXvB0E9b5T9MUQlC
-         WqZw==
-X-Forwarded-Encrypted: i=1; AJvYcCVib6YqDbYB59WNiW5GzmzyU1dOsMHLn8VQ8V79MXX+EBHjCVrZImMTlu5Wr33WWbObCe22+OY8gZmvnrvr@vger.kernel.org
-X-Gm-Message-State: AOJu0YxmAJloi9L3vzahqFfgqmCNa/hb5UNP5Yxb+KS7kG2aIJegQ3Eu
-	CprHgQK8J7fi7VfREKpG9TT5AE4G8nXhWeOuxEAkEVPjscw4u9LGHCLW1wmBajMdMPQ=
-X-Gm-Gg: ASbGnctEU2AQnAZGj6DOrJknXwNpiDtzegZVAhcPAivGeYBfCSZNvaz2TQeoQMNo57e
-	M73QYGtrMxsKxnYXNNSJg+9bLyrvzvKQxJsNdY0cGWFLQglGO1tS7Z8QA5r7rjqcxW92wmw8hvM
-	/JXQ5JG3ETVy3qMAhkOXPQgK/e7gh+CLNd0CBmQmdtuGXhMPHFB9MXKx/WQ5kpfl4hZrrSMAaQ+
-	VID3fRQ2ZOm96tvUMr6GrsDMHhiL3wCzeByprXj3D58ycWmWj6nmMJ4q2Vnq3LFkaUzZFDn9L4x
-	giHoqNoV+6iGFMuiBNyDrIpAwBcn1R82HKKLeUgmKZbg6JUQiLm+JS86otxW/yW4l4O6OyGuUHz
-	4y5c=
-X-Google-Smtp-Source: AGHT+IGJ34DzRWm1T2gZxcoEWSQEcbIW5w0AwTNiA/GS5kJjbzV7TTazO9AA/zJ8635JEJWkBn/LUw==
-X-Received: by 2002:a05:6000:2893:b0:3a5:2fe2:c9e1 with SMTP id ffacd0b85a97d-3a56876abe1mr3243520f8f.30.1749826258845;
-        Fri, 13 Jun 2025 07:50:58 -0700 (PDT)
-Received: from localhost ([2a02:c7c:7213:c700:c8e2:ba7d:a1c6:463f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568a54d1fsm2562363f8f.2.2025.06.13.07.50.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jun 2025 07:50:58 -0700 (PDT)
+	s=arc-20240116; t=1749826465; c=relaxed/simple;
+	bh=8cOPkGn/szCCpXB2qWZWgqyw7ZOYYE0Zy6npeEJKfws=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=OMzZ7AyiKTaNykrC1v8iHGSVxFrOPDp4eIvHitSszZdnJrD4xEpNMCmnMnQDZ7mM/kDUymSX4cIAM1nq+tyA30p0B+7cHbEtnZ1QgbBUjscBwEMPB8VZVc6bPZZAhjj4DRUPtV1hCw0rkWQ2PjqQnZmIHyiyqlFPrW4jzLEjWXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=18.194.254.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpip3t1749826425td2e088ce
+X-QQ-Originating-IP: Z5TTPs9mOc1QREyKbkANH7OY8KCSckJh6gkg7KuqpRk=
+Received: from [192.168.30.36] ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 13 Jun 2025 22:53:44 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 6558941307661380512
+EX-QQ-RecipientCnt: 6
+From: Xilin Wu <sophon@radxa.com>
+Date: Fri, 13 Jun 2025 22:53:38 +0800
+Subject: [PATCH] interconnect: qcom: sc7280: Add missing num_links to
+ xm_pcie3_1 node
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 13 Jun 2025 15:50:57 +0100
-Message-Id: <DALHN1EOXETI.3BLGEY3KMN4HD@linaro.org>
-Cc: <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
- "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Neil Armstrong"
- <neil.armstrong@linaro.org>, "Rob Clark" <robdclark@gmail.com>, "Sean Paul"
- <sean@poorly.run>, "Konrad Dybcio" <konradybcio@kernel.org>, "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>, "Dmitry Baryshkov" <lumag@kernel.org>,
- "Marijn Suijten" <marijn.suijten@somainline.org>, "David Airlie"
- <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "open list"
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] drm/msm: Fix inverted WARN_ON() logic
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Rob Clark" <robin.clark@oss.qualcomm.com>,
- <dri-devel@lists.freedesktop.org>
-X-Mailer: aerc 0.20.0
-References: <20250613144144.27945-1-robin.clark@oss.qualcomm.com>
-In-Reply-To: <20250613144144.27945-1-robin.clark@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250613-sc7280-icc-pcie1-fix-v1-1-0b09813e3b09@radxa.com>
+X-B4-Tracking: v=1; b=H4sIAHE7TGgC/x2MQQqAMAzAviI9W+jmnNOviAepVXtR2UAE2d8dH
+ hNIXkgSVRIM1QtRbk16HgVMXQHv87EJ6lIYLNmWvGkwcWcDoTLjxSoGV32Q+hCcJ+NCZ6GkV5S
+ i/+045fwB/uIKRmYAAAA=
+X-Change-ID: 20250613-sc7280-icc-pcie1-fix-098846014872
+To: Georgi Djakov <djakov@kernel.org>, 
+ Odelu Kukatla <quic_okukatla@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Xilin Wu <sophon@radxa.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1749826424; l=927;
+ i=sophon@radxa.com; s=20240424; h=from:subject:message-id;
+ bh=8cOPkGn/szCCpXB2qWZWgqyw7ZOYYE0Zy6npeEJKfws=;
+ b=LYU3mT8poMy5IX056AH7Ctc3vbR2+hrcFJdzFhBppoxyeXqEKEK0du4TntPpXLEMHo2ykPEph
+ bNmcW6p9bm5AYiHTkWaDQhWm0/045K3Svl5Db8WWj2Gt9QesNOXnvOx
+X-Developer-Key: i=sophon@radxa.com; a=ed25519;
+ pk=vPnxeJnlD/PfEbyQPZzaay5ezxI/lMrke7qXy31lSM8=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:radxa.com:qybglogicsvrgz:qybglogicsvrgz8a-1
+X-QQ-XMAILINFO: MMRwY2QoRaEQwrIgYAyvWdURrqOddORGOmj2cKN3JzWsy8L0RIZUCSmR
+	C4QdZ4TYRDBc0Uti6Ev5LFuf5xd6OMAFCUzy/8aTx76DwRgw683VDRIqGBDIs5t+JStDBUg
+	Ns33mrlIZAKMKEZJrmXBAAGAKIYlyJBHtawk+5HHmOgja/+9UC4jYMShDafE5O5oJTKGStT
+	0uzljY8GGB7gVoRl4etp8jOQC4WDLX8N8vuZ+fR2EnsIIJkfoe4/tyq+FLJJSrC+DUbv1w3
+	CC9BoR2wHnXK6r/qh3WNdDfwKv97nR2m997yVPKzWLh5ahIkeq0TS0Ti4dEOFY+FjLYRvBz
+	xHZlF146ss0eb8jUfpnM0uKo6KLf+1m4bcszSKrgMs/z5Yb29aXQto+Pts++KbuPbp7pzKJ
+	E19Nu9NCsZ/7PIvNXssvBWMLe59Xvk73Ld8SncHsdkiZQT5akXs6659tx5vH/jGAyHr/T0y
+	q5nYqeBmAc4sUZ/cXXwFIMGg2mrDeTDsacpH8wDOsfCxR/tUZGfLNAYfOWJAXo2REWu02NR
+	3ZAT2nLm6ODmUNpYEPLzcLGIlJeG1jVn9PsO+KIOhA1hCtwP4+MzvipQHj6YIVwZOnZSBQR
+	bqcmOE/EouMKT+OdJAu+3z0zsNv7vWjALa8dGNlX5KXe8FqxOBLbkHAMbeK57O855VT69y/
+	5hrfDRtEJbxtJwo2UY+Gxt39sDu7j213r27oNKgeySAsqw9HgQ6IZl32f/APW2smkwq94At
+	aUOQ4Mp4a7sH0dbDYnXROHNRLKVlsxr9fJs+gsYxVuCSxA8gxOHjKw2u2OnWFEYdpvLffon
+	PhXk58fNUVcpq1fT4SZrCe93XjeQP/i+n+Br3Vzj0zwU1vYEhwrhGwiAhle5Fv3Ib9DFdIo
+	Wxq790/moJmy+KAM+L9v2ERaqa2HIXGi6/mXdPni0FIRXYmugyLLfTgwwCp1oF9OF79cak0
+	G40Wq1QtzCNctEiytlrH7qQErnPDzrI6n7/vHE9iORe1/7jX3qxRLRNntQFPK/T1zEyEJ8i
+	PZmUBXUCr4qj3e1uxCs8l3Lx3tJKM=
+X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+X-QQ-RECHKSPAM: 0
 
-On Fri Jun 13, 2025 at 3:41 PM BST, Rob Clark wrote:
-> We want to WARN_ON() if info is NULL.
->
-> Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Fixes: 0838fc3e6718 ("drm/msm/adreno: Check for recognized GPU before bin=
-d")
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+This allows adding interconnect paths for PCIe 1 in device tree later.
 
-You forgot Reported-by tag.
+Fixes: 46bdcac533cc ("interconnect: qcom: Add SC7280 interconnect provider driver")
+Signed-off-by: Xilin Wu <sophon@radxa.com>
+---
+ drivers/interconnect/qcom/sc7280.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+diff --git a/drivers/interconnect/qcom/sc7280.c b/drivers/interconnect/qcom/sc7280.c
+index 346f18d70e9e5e95821437ca716ef8f151a42574..905403a3a930a2e1cd01f62e375e60c6b2d524f7 100644
+--- a/drivers/interconnect/qcom/sc7280.c
++++ b/drivers/interconnect/qcom/sc7280.c
+@@ -238,6 +238,7 @@ static struct qcom_icc_node xm_pcie3_1 = {
+ 	.id = SC7280_MASTER_PCIE_1,
+ 	.channels = 1,
+ 	.buswidth = 8,
++	.num_links = 1,
+ 	.links = { SC7280_SLAVE_ANOC_PCIE_GEM_NOC },
+ };
+ 
 
-Was the series where it is applied already merged?
+---
+base-commit: bc6e0ba6c9bafa6241b05524b9829808056ac4ad
+change-id: 20250613-sc7280-icc-pcie1-fix-098846014872
 
-[..]
+Best regards,
+-- 
+Xilin Wu <sophon@radxa.com>
 
-Thanks,
-Alexey
 
