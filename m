@@ -1,181 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-61204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 409E2AD8768
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 11:13:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F757AD8769
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 11:13:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 483F83B37BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 09:13:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B33A33AB33C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 09:13:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46EFB279DC5;
-	Fri, 13 Jun 2025 09:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BB0E28135D;
+	Fri, 13 Jun 2025 09:13:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eX8sfjU0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ctnowZ7+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71680279DBC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 09:13:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0719B2727EC;
+	Fri, 13 Jun 2025 09:13:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749806015; cv=none; b=bViGSicBC+ry54pC85iVN11bi645iCvhA01He8wWo9vu18Vcvvn15/1z/0y0SSMfLP+p06FkK6ICOq8/vQT73edsph2YxQqEiDurApj7LQNKZHdmOHogcdHmyKL0lD2Ow/8/dl2rL1mjsVkt06GdiLr+G+3WsKeu24qjbp7Rf8s=
+	t=1749806029; cv=none; b=FqqREwZCEqX6y1DrEly6wR3l/lk21Jsnl7DULTekb/7s5KwBhPjnTJcAgYuGa/hChvG6mNdGPuW0B4+CWpLqfHhdH/BgxLz/1Vbhf3C4mJpSpd3u1s9v5kHd01IA9j4DpZT5/Fr2Y1+RvhA01ezTHlOad0/2hK/kCicbF0vQYXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749806015; c=relaxed/simple;
-	bh=0Y6jj9KLtJf7LDEPJ7LwBrYF5ykPWh73hsXHYb3N9m0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nDkaozyeRuRVOee6rj5jbGyHsvbMU5bEwQMlQD+WmsNIVpLQdZ6WmVhtcMHYyE5zq4rCvSq0j6W2Va5FnpxoX+ENA0VqhVtqOz844TYe49HbNOadyVcXToIN8I3UM8ciEnBpJs7ZqClsXecAiZpj5WKJMBQ2clGatmoDBb7pIog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eX8sfjU0; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3a4f78ebec8so1291905f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 02:13:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749806012; x=1750410812; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1aYNJkPV0aW25Kv1bxqP6lGz7djS3jyufH29SAsPd+Y=;
-        b=eX8sfjU0OuJYBUc/YNoqshkt78VpSG345KRQ+Bnz7497qPvFCQaenijTi4oncKqPdZ
-         /Kr5MrwCTrDbVoXPvuGQxcExbBfOr3DniCSQWDFeS3Fud2olx4BR3eK2VTnu+Xh1sdgh
-         OJ3ixASS61vkFMdnqevoPoX5OTEeOkjivXXXZXukavdh4MzIebclNPmZsuy9t5hY/9G8
-         NGBd/soSg3yucdoDTclgQfV6MgtNFKUBh4ACVwenFN0XXvez2Xxy0UETIeFBmEY+iZx7
-         Ke5qFd7nDDzBT8pK6H0DuIzoK8RclJixvDoPU5YvKqO01liQc3l/v5nJv5ObQBqPe43i
-         DT8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749806012; x=1750410812;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1aYNJkPV0aW25Kv1bxqP6lGz7djS3jyufH29SAsPd+Y=;
-        b=GB3XhnQqKEXSWBmQc8VX58+Qf1KLXvEFeRXLAqs/GDmoy5Y8FzCqtuE9euqEMu+PsB
-         uLZSp5a/ewflO3v/kS8R3d8ysvkOq2v/O9IkWnssoO8CNslJ9ClV2OC9+E4rMbDwvHkq
-         MsGAgs1bI/nDwtQKbJwTzlh+uVHJW/Tn2j1LHTHJ5nKp4VDrPXtt2U7JlCMNFBUOQJxS
-         4cZINsph9CCINQ1Vla7ALSW8V7+TTguUWHZwvP0U1iX0A5v9ckRmSbLMVcW6uXpdPJag
-         +HKLOlkap99rooFSjdIzBLjJgGRcSccTol/ua3T5YQFWUVDTdrRZRfEDb79E0mvcE4V3
-         MmGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXU+IREbtuG1Nv3ALYGtFnER7PLErsH63QZ4OwbXuG+i3+OWZqCPxsehEVXzZcX+ybzIyqkJt16n5Erp5HP@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7SW47gtpWxdjNVrr4g0OdGV5xKuOrex2DtZl2qL6unco7n0VY
-	mwBczM6j0Y/VM+U3bEHoIGMDJiZ8cl1O5pqfkwcFckevkQc1qEBJy4kmiSbjoQo3N5w=
-X-Gm-Gg: ASbGncuIeX1gUk8Bf0STaCjsV6shjRHOjfcTjNQ/ftDOeE3ZifS+XSmCBl/afUUMYU2
-	I6T3dfKuTD7TyWXMea1qkdcoXQ2bSoYP/28G06lEChtF8APnBrcN84nX5dTVTC2Ei+YlQafzHVC
-	0q9nfK84QFuUwhwQtq9S8wD1yA8w5dB8dh8uF8Xi6FphUkvFa0noJ2IK6QFDACLAqvOMSSYug9C
-	VGFYKpKaH5ocZzoElQ2dNWjQyYqHR3Ihy/puu2Vs5B0lqCJ2qRp8p+OPTBYl+csQPbR6dWJMaxC
-	/lia+iVwBAuA5lQnWDqKUwKtoIIFu/367T4NJHEAtfn8y8r+JsRnzzK5LGQXJdl1oxvRM9yDb8u
-	70npAnT24zdzNt0P4y+mdWczM6hc=
-X-Google-Smtp-Source: AGHT+IGW47TYDwlkxZMyvu4lj634mjFRvgCqkvRaKt0YG2LrxM+RfM/AFmBv8OvJjzRO2nK2t9L3Xg==
-X-Received: by 2002:a05:6000:2502:b0:3a4:f024:6717 with SMTP id ffacd0b85a97d-3a568730dc7mr2113321f8f.53.1749806011699;
-        Fri, 13 Jun 2025 02:13:31 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568b1bc97sm1745386f8f.68.2025.06.13.02.13.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jun 2025 02:13:31 -0700 (PDT)
-Message-ID: <a020c020-c28d-4f06-aea1-483f404ed715@linaro.org>
-Date: Fri, 13 Jun 2025 10:13:30 +0100
+	s=arc-20240116; t=1749806029; c=relaxed/simple;
+	bh=A4rei9vr0g663YBmbvMyS3DhGYGv66yWEgowRVk+S8U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e7MIic14rFVDaK8u+CHCymh/DXBYq8fY4hq42j9kd89ZKOx/fpvWdYOeI+vxSzvl0F+0bCmOoBdzGrX2HDBQy9a00AHkiPAzMp99PT3bc1W/bSweh6rJD2fsW+Tmon8ADxm2ecsKw67ahOe7VkCG2caJ/kA41ZGYmtpNzNM7Yp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ctnowZ7+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E6DC4CEEB;
+	Fri, 13 Jun 2025 09:13:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749806028;
+	bh=A4rei9vr0g663YBmbvMyS3DhGYGv66yWEgowRVk+S8U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ctnowZ7+xat8+n++ruzyMKi4rSUPpy7C6PxmsBAeCvG5vn8DIQTiIKSgyC6HWQgfs
+	 wSi/QTkKH5EnMf+yNB8TIgyR6zN+8nYqDBW7yKv8iifN4UgitR+XFZOm4A/MilI277
+	 k5Srscym/w0I5LVd1MRyg8/ol4HinEhXjtJS8N6d0A0k0M7Nra8igd9Q5vFXjl47Ph
+	 4fHaaRnPlhyREBzFc4VsYYGor4i7co+akWQ/0BTIxZqJ+PGVbs1p8u5BfVpmYdnk4u
+	 5eU4+8HHXaQbkrkZGucVDkYVjVUD72mGqKlzYxFZdzt/0sc/kW5WOLz5aEejBQsqEP
+	 jLadRYSNVZRZQ==
+Date: Fri, 13 Jun 2025 14:43:38 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>, 
+	krishna.chundru@oss.qualcomm.com
+Cc: Bjorn Helgaas <bhelgaas@google.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Qiang Yu <quic_qianyu@quicinc.com>, 
+	Ziyue Zhang <quic_ziyuzhan@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH 1/4] dt-bindings: PCI: qcom,pcie-sc8180x: Drop unrelated
+ clocks from PCIe hosts
+Message-ID: <qri7dxwqoltam2yanxicgejjq3xprd6cunvpgukasmtt7c5lmh@ikdl24royen6>
+References: <20250521-topic-8150_pcie_drop_clocks-v1-0-3d42e84f6453@oss.qualcomm.com>
+ <20250521-topic-8150_pcie_drop_clocks-v1-1-3d42e84f6453@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] media: qcom: camss: simplify
- camss_subdev_notifier_complete() function
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hans.verkuil@cisco.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20250513142353.2572563-1-vladimir.zapolskiy@linaro.org>
- <gH5U5Np4YjvmdEnO8j2Pam7buBgsyZNrP4crrHHDSDkI_2jijUdo7mWsUoJTGjJHnQPWy3SFa-MnK4TrhFLa4A==@protonmail.internalid>
- <20250513142353.2572563-7-vladimir.zapolskiy@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250513142353.2572563-7-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250521-topic-8150_pcie_drop_clocks-v1-1-3d42e84f6453@oss.qualcomm.com>
 
-On 13/05/2025 15:23, Vladimir Zapolskiy wrote:
-> For sake of code simplicity and readability reduce the function code by
-> one level of indentation, the change is non-functional.
++ Krishna
+
+On Wed, May 21, 2025 at 03:38:10PM +0200, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> The TBU clock belongs to the Translation Buffer Unit, part of the SMMU.
+> The ref clock is already being driven upstream through some of the
+> branches.
+> 
+
+Can you please cross check with the hardware programming guide (I don't have
+access to atm) that the 'ref' clock is no longer voted by the driver?
+
+- Mani
+
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > ---
->   drivers/media/platform/qcom/camss/camss.c | 50 +++++++++++------------
->   1 file changed, 25 insertions(+), 25 deletions(-)
+>  .../devicetree/bindings/pci/qcom,pcie-sc8180x.yaml         | 14 ++++----------
+>  1 file changed, 4 insertions(+), 10 deletions(-)
 > 
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 4e91e4b6ef52..39c5472f4552 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -3385,35 +3385,35 @@ static int camss_subdev_notifier_complete(struct v4l2_async_notifier *async)
->   	struct camss *camss = container_of(async, struct camss, notifier);
->   	struct v4l2_device *v4l2_dev = &camss->v4l2_dev;
->   	struct v4l2_subdev *sd;
-> -	int ret;
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sc8180x.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sc8180x.yaml
+> index 331fc25d7a17d657d4db3863f0c538d0e44dc840..34a4d7b2c8459aeb615736f54c1971014adb205f 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-sc8180x.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sc8180x.yaml
+> @@ -33,8 +33,8 @@ properties:
+>        - const: mhi # MHI registers
+>  
+>    clocks:
+> -    minItems: 8
+> -    maxItems: 8
+> +    minItems: 6
+> +    maxItems: 6
+>  
+>    clock-names:
+>      items:
+> @@ -44,8 +44,6 @@ properties:
+>        - const: bus_master # Master AXI clock
+>        - const: bus_slave # Slave AXI clock
+>        - const: slave_q2a # Slave Q2A clock
+> -      - const: ref # REFERENCE clock
+> -      - const: tbu # PCIe TBU clock
+>  
+>    interrupts:
+>      minItems: 8
+> @@ -117,17 +115,13 @@ examples:
+>                       <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
+>                       <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+>                       <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
+> -                     <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>,
+> -                     <&gcc GCC_PCIE_0_CLKREF_CLK>,
+> -                     <&gcc GCC_AGGRE_NOC_PCIE_TBU_CLK>;
+> +                     <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>;
+>              clock-names = "pipe",
+>                            "aux",
+>                            "cfg",
+>                            "bus_master",
+>                            "bus_slave",
+> -                          "slave_q2a",
+> -                          "ref",
+> -                          "tbu";
+> +                          "slave_q2a";
+>  
+>              dma-coherent;
+>  
 > 
->   	list_for_each_entry(sd, &v4l2_dev->subdevs, list) {
-> -		if (sd->host_priv) {
-> -			struct media_entity *sensor = &sd->entity;
-> -			struct csiphy_device *csiphy =
-> -					(struct csiphy_device *) sd->host_priv;
-> -			struct media_entity *input = &csiphy->subdev.entity;
-> -			unsigned int i;
-> -
-> -			for (i = 0; i < sensor->num_pads; i++) {
-> -				if (sensor->pads[i].flags & MEDIA_PAD_FL_SOURCE)
-> -					break;
-> -			}
-> -			if (i == sensor->num_pads) {
-> -				dev_err(camss->dev,
-> -					"No source pad in external entity\n");
-> -				return -EINVAL;
-> -			}
-> +		struct csiphy_device *csiphy = sd->host_priv;
-> +		struct media_entity *input, *sensor;
-> +		unsigned int i;
-> +		int ret;
-> +
-> +		if (!csiphy)
-> +			continue;
-> +
-> +		input = &csiphy->subdev.entity;
-> +		sensor = &sd->entity;
-> +
-> +		for (i = 0; i < sensor->num_pads; i++) {
-> +			if (sensor->pads[i].flags & MEDIA_PAD_FL_SOURCE)
-> +				break;
-> +		}
-> +		if (i == sensor->num_pads) {
-> +			dev_err(camss->dev,
-> +				"No source pad in external entity\n");
-> +			return -EINVAL;
-> +		}
+> -- 
+> 2.49.0
 > 
-> -			ret = media_create_pad_link(sensor, i,
-> -				input, MSM_CSIPHY_PAD_SINK,
-> +		ret = media_create_pad_link(sensor, i, input,
-> +				MSM_CSIPHY_PAD_SINK,
->   				MEDIA_LNK_FL_IMMUTABLE | MEDIA_LNK_FL_ENABLED);
-> -			if (ret < 0) {
-> -				camss_link_err(camss, sensor->name,
-> -					       input->name,
-> -					       ret);
-> -				return ret;
-> -			}
-> +		if (ret < 0) {
-> +			camss_link_err(camss, sensor->name, input->name, ret);
-> +			return ret;
->   		}
->   	}
-> 
-> --
-> 2.45.2
-> 
-> 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
