@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-61253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2105FAD921B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 17:57:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DB85BAD92EF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 18:38:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D778F188B071
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 15:55:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F32941BC12E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jun 2025 16:39:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C23441FCFF0;
-	Fri, 13 Jun 2025 15:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C62832E11B5;
+	Fri, 13 Jun 2025 16:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eVSUBYiu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UrXvI2eT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E001F4C8A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 15:54:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8118D205AD7
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 16:38:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749830098; cv=none; b=bbEMewJ9xdnWYB+s3cXwsNM6t0Kmk+hGl3KSEpUis/R7V1dKtOkKWp/CCfeBm1BXPMxgCMmHCnUDOs7Ud6Ue+LyNZVI3D9eU0v5AI/pJFVuCHzcOSkuSqXObXytOAYwjBPQMxq5zH2r0JwrjhexUUjTXC0PzuUcMkHAjdVOeHEE=
+	t=1749832732; cv=none; b=Hnk/wY5B3XTzzNj3ljXNtX3IvFXkJCkXM8Nvk+iQuKtCXI0NsQdyJHMRRd18m+EGKn86ZlYYj6evTr0MxpRC5Srkeh+fH+8M5A84mU1ZozUk8tNoaU8jJp1JTfPfxs3U3LabpQktXvfMFZF/D+e9Q/AEZxE5bjrlZJSMM6OS59k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749830098; c=relaxed/simple;
-	bh=LlVD9KrH3xGpv6ug3UfE4cxBBYTg4D6iYOLrCNyIWDU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=VYV8tyCuVcX2tuXMS3E0GGIYsD9OY7zLAyqlOWPDOuggEDgtvECzNXWZNwcS6vVu5ZYMpXmnSTE5b8rxtpoVJYu/eeDJ6TxijooF8FjSRezTtQZVd4xoQ7kn4DQERxI7krtQe4cwEKWRmwlUoCObGNj28fyikgcI/2bd5gQhC4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eVSUBYiu; arc=none smtp.client-ip=209.85.167.47
+	s=arc-20240116; t=1749832732; c=relaxed/simple;
+	bh=z+N8jqjN/nASPdQ0iP1STfKAC3rAtGf71WFeCKFFe4g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=H4MkTHxx3ZLajzY0e4di3GSV/j6up5NQUENRdkbs7Dpi5mSu56RiWizJ/zJW18wn5Spq6HOIqyA8Ezk6lc/GDUxDOpXAg8JrxEfC2Y/vWqlqfg3Avx++/cq5GuV7vFyFwQs/JtY0iufHIzMi1oxxYM/enHy0gsPcH8IVVpasezk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UrXvI2eT; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5532bb8687dso136366e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 08:54:56 -0700 (PDT)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-553b6da862aso151e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jun 2025 09:38:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749830095; x=1750434895; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=linaro.org; s=google; t=1749832728; x=1750437528; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=N970D+3TWVdFNN6dsaEAVQw86o2ZV5k5a3iFxFajZPo=;
-        b=eVSUBYiuTcL8NsJLoJj1FudgvlFkrGBdSE2WpkkrdxotFq5GGISArKJLUaDfaZBhul
-         F+Vl2OygSTaAst93eMp+y3wyJ6lsBtGvH8o+wYzh1NRe/a5pq5RU2azfNZJyw4KVDPMt
-         r1iM5i2nSxFlZ/PnG2BKVFqu4LCZVCRBoSS5LF6CWnvoCE4Dl76eWAuCbxWEm6Rese3b
-         CD/+0iq3r4OruaMJKv+7LOydOWnExnMmJD5jUmbVRM6QtT6lP9l5iWjbECgc2tC3s8Yz
-         ML6qqTzdbacs+GtaEKuG1uCmKTAHDWG1ys75js8WKSJo9bnDOq8b69QAl8QUeQXicyVM
-         RkYQ==
+        bh=cYUtT+6UfKx7Gs9aWpbJRe4xmbx/ClKSljdS1pnK8R4=;
+        b=UrXvI2eTdCBGACPLTStoFa8xEcUAVUfn08PBuPpbkf1o2OudeK+zyn4d7/uwR1kpr7
+         xY05abDosFePjvXdkjq3Z1G9R7cDDO1/abE1MGoIVo2Kynbdwyx9/pzTsXu+6ooDg4Mr
+         Yg+OCI+kQyTIK40or6RBfD73KsUYzD8O1Ly5AOG1WDienuUVAS1IrHjr5HztulybFshF
+         pSlyU7aFEnuL9ijCTk+5A5sbZ2FCCT1AT3/2XPa1tfqSse98akdr1To7MHDu2qMWjGuu
+         WmB/2TxoU74ABPrDg2gMovvypgfejojxyhoY8tHiKbrueSL9dinJMD1dFZMSNF2N0r/e
+         cTAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749830095; x=1750434895;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=1e100.net; s=20230601; t=1749832728; x=1750437528;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N970D+3TWVdFNN6dsaEAVQw86o2ZV5k5a3iFxFajZPo=;
-        b=KKG4s81vZqqhbFGi8xcdiVeW9SxaJFHqEBuyaqOfX7oxUYpnmj5WwdgmhMUf8xcag9
-         8xsXLL7Gz3JMUjzV5lh9MmyJP89z7B12x/Nflk0MsRuYal+IUOGSJMZGwRiAo//lpQuW
-         bgZ69quZePdza9VmUAJIPS/JfOPn2B5+9sihQHC10zDhA9Wh0O4rXF6sn2yQLa5K3k37
-         446hSsNdOyVWWNBwjWtzYXXjLUSXE7jj8HVs0Fv9ZEh+XqT3rJXub3o/kXjlnquQn7or
-         WK0/+mhEggj5v5k4IrzD2hVxs65xjSxVE+zRcxSHablXKxVceAg9dgtc/L10PiLrNZdN
-         N1vA==
-X-Forwarded-Encrypted: i=1; AJvYcCWxiTt7UnnqQByPQwkHSiyrDAWAai2fUw7daELBDcQZH3YdKP1JYXjj8fVz5eN0ZWgB9K+3eokYJ3aK1i6T@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw0aA+bjuwcxXqhUI89wf6Cx7CPVuPiFxpsoWXFvVRUiDgAEDgY
-	RoBfw2lSmmpeAVwsNNJitha+Ee+/shwNVQVOtSc/Z/nG30BwY0OkNd8SZ7s6BQe7Trs=
-X-Gm-Gg: ASbGncvnwqGhbfX9HUk8w09Fo3idzbljM6OgaATA5hTq12X6wcbh7Gs2EqyeIVsIFB6
-	zVvmriYrTbzpqdkiqngsd5+opWIqHrgu/bdLx7CowbF3iKHVqhJ8CKgJLntMEGZkiGvDI2T8de5
-	sRNyWziqX5pWy11OtVDbon95XhfO+IymtUqSWZ8ntc5NM29g1T4owbZky3OxFyY3/7DdoCc1FY5
-	NXZtHtYceI3B6iNIeFezboMbzPvVA69ulJdD0M/4a7J5u3OAotIp90B39MLeswDz+8r2jv9UpJL
-	hj93XGgwuLNT4okr3YHc2N6T1dDOGst+i96vn1y3v48EWhsy1qSm53FdN8CboTeJZH5S/Edwq6J
-	Dn1ayPD4+cc+Cam4xRivFHXrXEvmSrtSecK4nXgmg
-X-Google-Smtp-Source: AGHT+IGgSAzTvcHYxv6mwQqkfGzUItooKxtagJreytvxb+kfOanDqHK73QctYtSBcRHOnp032MnZ8Q==
-X-Received: by 2002:a05:6512:108d:b0:553:35e6:af10 with SMTP id 2adb3069b0e04-553af95cb08mr320535e87.7.1749830094777;
-        Fri, 13 Jun 2025 08:54:54 -0700 (PDT)
+        bh=cYUtT+6UfKx7Gs9aWpbJRe4xmbx/ClKSljdS1pnK8R4=;
+        b=C4GCL45POb8knnHqLSry26GJQOV0vFhh5I1TUfiM9aNLRQ48bdtKJ9Ecz7IVDBAwXF
+         oIZSXXtMNhkGOvVpyK6pokfJhJXsqy/hCVE22Oh6B7EqbvgAwRUfpowjAsKCrhuUXqSm
+         aWUeq2PsJg2fkB7vnDkKvT7eFfxbDWZjQSPHBhc18XaU7mdUObL/qcD8eBs7eO/hRi/U
+         Ag/9g5FqfJcN7qjHrcY97OZNEY962BfGKppwQ3EEgtUvLPpj4Yw04ClWEaMZNgnjUDW8
+         Lt/a9dq1qBl83vj1lhJ/EKHdfSymu3Hm2AJIfpdalshRB1IKdgH7ed6Sv4y4G7NGGYUe
+         F0AA==
+X-Forwarded-Encrypted: i=1; AJvYcCWg9uT9pL6UiS06geK7pqdi+qjAW6dz8zSgt/JGxJ1GSh7jiP7eWhvG8Qsd0xjc1NORvzyBf4a4p/ZUwIOI@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywp42ug7HNP8Tg5zHSDE7KBbFV/AuBosnZ1k9F+djYA6PlbnQl2
+	16CNxe5uPDY8O63xhYMcfohWzYJ5rE0GMTiR8VNfbl/AGhGYivBEz0F/DVDKFdQ722E=
+X-Gm-Gg: ASbGncvciu3OEDHRccPhiitQF3FnSi9eP7OfqP1b87G86oP6T+inpArHjjc2DAly0oF
+	zEkfAaHHbx3IfvhR413L+tpahJ8/abmX6qjO4MsRao5so62Sad3jOq0xPXjM1+ZdfHrRe/IPl5U
+	rJLQIkEVGi3YWFJE3Q5ZRyvnRS2HTdj/As9BaPnXzWtuovMfhZbCRq+9SturCqVIJMrYMjAaQsK
+	wSLOEc7roxhZIcxgkgwBbeOjIu/kIqGr/FhGhd/zi3yovFE8Zm7uookAjZjQ66hWsy/zsoFJ/8W
+	hoo5+ubnigTejrmG8/5ZXs7Hik9FYEUq9peei/BBhCrq5zKGoHfP4dV8MVrcMXmC03t5LfTBPub
+	glnqHg8B99Wqiw7mVmmJ/JbbdgL64vq9uBrrawScGIRAjVkdCfRs=
+X-Google-Smtp-Source: AGHT+IHj662g3SbQNpP4iPqUmNkvYX9U4szpKPW9FX5yhoIuara4ioYwpzJZkOyb7Ebp5gFoz9go2g==
+X-Received: by 2002:a05:6512:acf:b0:553:2421:f5e5 with SMTP id 2adb3069b0e04-553af991409mr356267e87.9.1749832728513;
+        Fri, 13 Jun 2025 09:38:48 -0700 (PDT)
 Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553ac1aadd4sm485930e87.105.2025.06.13.08.54.54
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553ac1fd7aesm494781e87.258.2025.06.13.09.38.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jun 2025 08:54:54 -0700 (PDT)
-Message-ID: <a89091f8-756b-49c2-b608-670119af1b50@linaro.org>
-Date: Fri, 13 Jun 2025 18:54:53 +0300
+        Fri, 13 Jun 2025 09:38:48 -0700 (PDT)
+Message-ID: <0b94f65a-ec4c-44a1-8021-cbafe6beab31@linaro.org>
+Date: Fri, 13 Jun 2025 19:38:47 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,28 +82,35 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: qcom: camss: Power pipeline only when streaming
+Subject: Re: [PATCH v5 3/4] media: dt-bindings: Add qcom,msm8939-camss
 Content-Language: ru-RU
-To: Richard Acayan <mailingradian@gmail.com>, Robert Foss <rfoss@kernel.org>,
+To: vincent.knecht@mailoo.org, Robert Foss <rfoss@kernel.org>,
  Todor Tomov <todor.too@gmail.com>,
  Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20250526232837.686822-3-mailingradian@gmail.com>
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+ phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20250613-camss-8x39-vbif-v5-0-a002301a7730@mailoo.org>
+ <20250613-camss-8x39-vbif-v5-3-a002301a7730@mailoo.org>
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20250526232837.686822-3-mailingradian@gmail.com>
+In-Reply-To: <20250613-camss-8x39-vbif-v5-3-a002301a7730@mailoo.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 5/27/25 02:28, Richard Acayan wrote:
-> The libcamera plugin for Pipewire may keep an open file descriptor to
-> the video device, even while streaming. This simplifies its operation,
-> as it only needs to keep track of a number instead of a file path. When
-> the video device is open but not streaming, the pipeline can be powered
-> off. Move the pipeline power management to the prepare_streaming and
-> unprepare_streaming functions.
+On 6/13/25 12:33, Vincent Knecht via B4 Relay wrote:
+> From: Vincent Knecht <vincent.knecht@mailoo.org>
 > 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> Add bindings for qcom,msm8939-camss in order to support the camera
+> subsystem for MSM8939.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
 
 Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
