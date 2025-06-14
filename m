@@ -1,195 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-61312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 184C3AD9FA1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Jun 2025 22:05:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54C18AD9FA7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Jun 2025 22:11:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B2034175003
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Jun 2025 20:05:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1697B1896915
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Jun 2025 20:11:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CEA72E2F1E;
-	Sat, 14 Jun 2025 20:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5375318DB29;
+	Sat, 14 Jun 2025 20:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k1JBFg5R"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ksqqlrLe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCC41BD9C1;
-	Sat, 14 Jun 2025 20:05:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0588615A
+	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jun 2025 20:11:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749931521; cv=none; b=IRAv2citeY85WdPv7PRHR0zcqXj6IsGN5bAUDor5wJN+nU6nl0RLDy5yeloi4neP+weRBKbw4FfbwkzLVPrOuDS45TxA1/vd7NGnwC0dGIINjEJP6mChNA/edTUvze6CaIhbx96vd/nVcipiaToFUoBesKtwSRGK16+tc6ZVo3w=
+	t=1749931868; cv=none; b=eueltvMN67uOJsudIdqmB2mzLFC7nzbvxTNeBayuhluSICqy2zj93htbuHFbVWUTc8LQvdMqZ/IGH4IvsDXt9mtdXktkTC3WZt888MLhOdNCfVsYJqSoLP1ODuWgd42Jql7N+/du6dIMhl444YP/i4cKoNAqKRMtwIsHx1tqipw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749931521; c=relaxed/simple;
-	bh=slRsPvk4x7D7++RNJlqHaH2v5niYKW6vSDS25QC8uAY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ctYrwoVBPQ9sl4oEVS1usAiPoximU1r6Pn/AM1Ve2On5M07sHjPGpojG+lkXddZzO7UqVeljqXfKm2rp2NQUq53Y2XYDP4UiyLefqPiQ5D/NlZHS8NUlASX+NsLBKO6qX3sobfhBkmvKCwLCT3FPcXE5veorItz8uaY8Bnh7vcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k1JBFg5R; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80BAC4CEEB;
-	Sat, 14 Jun 2025 20:05:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749931521;
-	bh=slRsPvk4x7D7++RNJlqHaH2v5niYKW6vSDS25QC8uAY=;
-	h=From:Date:Subject:To:Cc:From;
-	b=k1JBFg5R/IQN3bNpA6vRdIxHOha+XRAas3nx9mmLWUTjzZInsRqx2PPVRL9AIDheu
-	 CIIti5roiN960cJHRNUKzvHuHebEACfvMqAQ95tQQ3zypNnwY0ADyb6t+cdwBHRZhM
-	 6v30iijqyvLiigSEYcLjR0Ea07kY82mYqD0GHvHAdf88V15TZiSkmIQTwYd1ovkEKr
-	 zLDMtO2NibjudGnO8/T9+qYFV8/ExoEm3Pu38Qu1hwOiutWK577mBVsst5X97Rl2eh
-	 KZE+WCMohnAhD2twsDQl0UajR8+hquUgL1epTMLI/3f8HZUVg5g0JOw4GPtH22A38F
-	 sfG1BLjVvfIJQ==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Sat, 14 Jun 2025 22:05:09 +0200
-Subject: [PATCH] media: dt-bindings: qcom,venus: Allow OPP specifics
- universally
+	s=arc-20240116; t=1749931868; c=relaxed/simple;
+	bh=Lf9M7Zr6DW7RmmLY8Cgj4YgFzJGrLdOc6mEeFxy0Ouo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DGeQ3uADWDT6eVz0ADFZgo3VQv5T/s0sW+RvPW6sKK8ENmxoithp9+PgIfh37QtVXMe256lUoJTjb95Th+YE/s2Ouze1ssPR2dvgKGm8cxtUkKzKwuC77/RJDccmy3G9XKbv3Xk/POZaTFBEDHKK7AWLI7WjXAbASrahmLTOGtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ksqqlrLe; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55EDar7C008275
+	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jun 2025 20:11:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0jNtszeQm2L003a+S6O026ShhafqRqBRqMlvofcvflg=; b=ksqqlrLelS/xBtJ2
+	JJBd2+gV+QcROc8PTelvqKMDdMu1gkGamoh5Iz7q6rq06XbGwV2u5M4sFnDo/PG9
+	mlYKK0Y1YMYsPvsfLgV0ekY4UNdb+PSFMV4KoW7nBTXORge2jYeqPjQyxbVYnaP9
+	dZYWsnRVAVXviB63rqqazXHQnhZFK5Bc5ap+sAFi84VOzrUlaV0xIVWEYaizquNl
+	WdsJ75HbpCERM9p0CVDj76YbUW8FLH+8f1ePtjZnRuqfKsObdKfsjEVVIOAU0UVb
+	Scb4PIcQJuIqSMLuyBt/igP8HX4oOoxgczbWp7yPq6yjNr2RfstBVvmjUDXsatSU
+	R4Yz8w==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4792c9rwqm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jun 2025 20:11:04 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d09a3b806aso62190185a.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jun 2025 13:11:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749931862; x=1750536662;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0jNtszeQm2L003a+S6O026ShhafqRqBRqMlvofcvflg=;
+        b=GWFY0DuXN4vEldAHgkdEwahwR1srCqe8RCHtDdMqF9ofKhtFY+vuVH9qKrkCHTMDMC
+         CaDdrfCTyok3BOENblcbsrC2Utrr61pd5rR7yJUKssL7hPHzXsN0uFHmQ4En160ntB+c
+         AjtxfzfgA+wKIHigGLTeufq3NrtUO/GRTMjj9q1BAZHVD7DHAHBJudl6yrMCG5R7bymJ
+         hfpGrjySah5BF1NcsqVKhQX1Df6WLssctGvqqksJTzcN3LHgMWIQX5j7olGPks8ESyAG
+         ao0ucD43D7zFKPkKizdLi+tH3DWIdILtDl/hTSmc835ISoymwt/ovKK12Vj042mx+1cD
+         1AZw==
+X-Gm-Message-State: AOJu0YwHSsJVXYfbn8cmfUuQEMrQpD8W/Shmg5n0ZypTwP7akRF+pk2U
+	m762ERdc0nUePbytNih7mEI0AFGlR27JrEyF+UBNnURAdqGUm/hREH2NE4mSp3/3TiU0LX1f7/0
+	mtPphtuq3uv+TunZ+b8skh+4MkeYf2Ty/A5KDdS7pK2Cq2IxK81IulKIa/B63g24wnpmZ
+X-Gm-Gg: ASbGncsMjJ3ebMQ/TJb7E4wqP/GYh8zw+mkBA0WoHOXEBbQWG1s0ukNTqS8vtMcstdz
+	iCB34era7KDFW3Lk7MzE3RIQKQrVPdBrM5WHPomPvjdqPcorhP6ZoVJ8UIyBcq3QYr8UFip+jF1
+	KFeEbK4s3yjOamAkCnHau4r6x6bYnn4NgykSuyO9DhzCDmFGlgvZmcI6JPSGT6icIMzJoSsvdiE
+	KTOo/4XvP2kdLjSsChRN0YSEr/Zy8Jy/xo6kXbpaWJvBIj17+QQVrPz55q36wuPrITALws1pOZj
+	CpkL9DLXE46s7q8e3MivT0xWMf7nA4qrMqGGQbPOXbgj0ACKufbDVqvHNaAo7lJXmsudiSx51zo
+	KZGQ=
+X-Received: by 2002:a05:6214:1d23:b0:6fa:c6c0:47dd with SMTP id 6a1803df08f44-6fb477df5d4mr21509676d6.8.1749931862561;
+        Sat, 14 Jun 2025 13:11:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRES697/oN1AQmDhdRQilCw0Ubbzj8UpxMJ2bP9ZmoY9s77DbcZSICsQ0QM0NVB4w93RwYIg==
+X-Received: by 2002:a05:6214:1d23:b0:6fa:c6c0:47dd with SMTP id 6a1803df08f44-6fb477df5d4mr21509546d6.8.1749931862145;
+        Sat, 14 Jun 2025 13:11:02 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-adec8158bf0sm355754266b.26.2025.06.14.13.11.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 14 Jun 2025 13:11:01 -0700 (PDT)
+Message-ID: <74f7053c-10d6-4aca-a87a-0ac7f55c2f1f@oss.qualcomm.com>
+Date: Sat, 14 Jun 2025 22:10:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250614-topic-venus_opp-v1-1-5ec6f64f395d@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAPTVTWgC/x3MQQqAIBBA0avErBMsrKSrRITZWLNR0ZJAvHvS8
- i3+zxAxEEaYmwwBE0VytqJrG9CXsicyOqqh5/3Ax06w23nSLKF94ua8Z4YLZSYpj31CqJUPaOj
- 9j8taygdoYGusYQAAAA==
-X-Change-ID: 20250614-topic-venus_opp-f04af788db7e
-To: Vikash Garodia <quic_vgarodia@quicinc.com>, 
- Dikshita Agarwal <quic_dikshita@quicinc.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749931517; l=4350;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=k/9QSJMm1AvzFa3EOIGbiuIbb9WoAR1TLb3OICDsOUA=;
- b=cnGVtCTeKaFK28FxSnvTX5qHxtYHP8F87l5w8Xr52+C/ygT3fpOE3A6U0BjvPFJQk8zvM1EgA
- hLTEfaknoXgDVeWa8zehab2O+T/laNrjSOhQOTcrnPc0qdFR4C4DqWA
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: rename bus clock to follow the
+ bindings
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Mahadevan <quic_mahap@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250602-sa8775p-fix-dts-v1-1-f9f6271b33a3@oss.qualcomm.com>
+Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250602-sa8775p-fix-dts-v1-1-f9f6271b33a3@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: K3SFSo0A9BH15PBTT0GHIS7XeKeN6bb3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE0MDE2OCBTYWx0ZWRfX+3qdL44Op1Ax
+ WGHJLqKbfKcyb5+93/pfG/vDOCQvG1iOcCNCHHgtmsIqP4rXh83AWzzFecsqKvCjjpb/l0BnFAo
+ amfGzneRU0/HRR3zIsN4HZR7QKM1OMcX3YjV++3JM4ldCpRYoR+VKEHK1QvLAqc3j+bVxAyRZwa
+ rS45lSOPSzkToTHHPRTrmv1+7Y4kRilxUubRoMp9WkF2oegzRPLi2UN0/plG4fph15+SFiwOo7v
+ mdePJSN/uT5tRDvNKQinzxkWKU2M02AKc4op5xkG8qW1OyZ86OineolISTfvOQ63omToXjKIDSq
+ jEQalJEUk4v6snfQOh3+ouvMNqcngFz1fz3r0KH9ECPnR6BOuSAsPIQStF2ufQ+JQx62uBlalzz
+ S3mQR3AcJWTGvoRIz+78eB0bh5xwjnVNM4RQWGYL1DbP5qbC/DgfD8M7JCwtN6fiky1efjYI
+X-Proofpoint-ORIG-GUID: K3SFSo0A9BH15PBTT0GHIS7XeKeN6bb3
+X-Authority-Analysis: v=2.4 cv=etffzppX c=1 sm=1 tr=0 ts=684dd758 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=3CVIpg13t1iulFfMIbsA:9
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-14_08,2025-06-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 adultscore=0 spamscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 mlxlogscore=926
+ lowpriorityscore=0 bulkscore=0 mlxscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506140168
 
-All venus hardware has a number of OPPs, so it only makes sense to
-commonize the allowing of operating-points-v2/opp-table. Do so.
+On 6/2/25 9:23 AM, Dmitry Baryshkov wrote:
+> DT bindings for the DPU SA8775P declare the first clock to be "nrt_bus",
+> not just "bus". Fix the DT file accordingly.
+> 
+> Fixes: 2f39d2d46c73 ("arm64: dts: qcom: sa8775p: add display dt nodes for MDSS0 and DPU")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 45f536633f6449e6ce6bb0109b5446968921f684..7eac6919b2992a3512df1e042af22d0cbad04853 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -4122,7 +4122,7 @@ mdss0_mdp: display-controller@ae01000 {
+>  					 <&dispcc0 MDSS_DISP_CC_MDSS_MDP_LUT_CLK>,
+>  					 <&dispcc0 MDSS_DISP_CC_MDSS_MDP_CLK>,
+>  					 <&dispcc0 MDSS_DISP_CC_MDSS_VSYNC_CLK>;
+> -				clock-names = "bus",
+> +				clock-names = "nrt_bus",
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml    | 4 ----
- Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml    | 4 ----
- Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 4 ----
- Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml    | 4 ----
- Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml     | 5 -----
- Documentation/devicetree/bindings/media/qcom,venus-common.yaml    | 4 ++++
- 6 files changed, 4 insertions(+), 21 deletions(-)
+Is it the "nrt" clock though, and not "rt"?
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
-index bfd8b1ad473128c974bce84639cb0aff59d8c2cc..e5c05b9c1e914a618a71b86a75ff5516556d55ef 100644
---- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
-@@ -61,10 +61,6 @@ properties:
-       - const: video-mem
-       - const: cpu-cfg
- 
--  operating-points-v2: true
--  opp-table:
--    type: object
--
-   video-decoder:
-     type: object
- 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-index 413c5b4ee6504ba1d5fe9f74d5be04ad8c90c318..0a3b3cd525678b13c201f417f418de4927ea1d8d 100644
---- a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-@@ -54,10 +54,6 @@ properties:
-       - const: cpu-cfg
-       - const: video-mem
- 
--  operating-points-v2: true
--  opp-table:
--    type: object
--
-   video-decoder:
-     type: object
- 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
-index c839cb1ebc0999e10b865f4bb43ea76ffa2bf46d..c177c96d6bd1d4e10de816a330b4e7b1c6e3f3dc 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
-@@ -56,10 +56,6 @@ properties:
-       - const: video-mem
-       - const: cpu-cfg
- 
--  operating-points-v2: true
--  opp-table:
--    type: object
--
-   video-core0:
-     type: object
- 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
-index da54493220c9dc90e7d9f5fcfce7590acb241c85..89db76817be4c6a8d10e46b95546397e85481988 100644
---- a/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
-@@ -51,10 +51,6 @@ properties:
-       - const: cpu-cfg
-       - const: video-mem
- 
--  operating-points-v2: true
--  opp-table:
--    type: object
--
-   resets:
-     maxItems: 2
- 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-index c79bf2101812d83b99704f38b7348a9f728dff44..c2076e80bb5c5f976384875f0406bbfa2cd6f100 100644
---- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-@@ -69,11 +69,6 @@ properties:
- 
-   dma-coherent: true
- 
--  operating-points-v2: true
--
--  opp-table:
--    type: object
--
- required:
-   - compatible
-   - power-domain-names
-diff --git a/Documentation/devicetree/bindings/media/qcom,venus-common.yaml b/Documentation/devicetree/bindings/media/qcom,venus-common.yaml
-index 3153d91f9d18a327559dd750f152332cdc652ac4..67f0e0f78c72756e9d4ccc34def3da1402b7aa38 100644
---- a/Documentation/devicetree/bindings/media/qcom,venus-common.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,venus-common.yaml
-@@ -47,6 +47,10 @@ properties:
-     minItems: 1
-     maxItems: 4
- 
-+  operating-points-v2: true
-+  opp-table:
-+    type: object
-+
-   video-firmware:
-     type: object
-     additionalProperties: false
+There used to be a split for non-/real-time use cases, but
+I have little idea about the specifics.
 
----
-base-commit: bc6e0ba6c9bafa6241b05524b9829808056ac4ad
-change-id: 20250614-topic-venus_opp-f04af788db7e
-
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
+Konrad
 
