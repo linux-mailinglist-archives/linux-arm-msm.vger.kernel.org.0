@@ -1,150 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-61334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82A04ADA3B0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jun 2025 22:43:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDB92ADA3B3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jun 2025 22:44:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 016711884A29
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jun 2025 20:44:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 01135188CA19
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jun 2025 20:45:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA4F527FB27;
-	Sun, 15 Jun 2025 20:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23C2627F74C;
+	Sun, 15 Jun 2025 20:44:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="aAALW427"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZePkCC2a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.134])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f196.google.com (mail-pg1-f196.google.com [209.85.215.196])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F4A1DE8B3;
-	Sun, 15 Jun 2025 20:43:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.134
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D8320D4FF;
+	Sun, 15 Jun 2025 20:44:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750020224; cv=none; b=cVs8LeIzKwz8fjkt4UvXGuRzS2OtA5ofsXoFxUwmPe1ELda8SUYB03hubqcpnsuFwjPP0wBDPT/AIE1Mj1fbgWh5gT9IEeVis6wP0+juxUEAItp1qy4wqtu3PrklWaFrtExhGSovJKdtndbSW3sANhwgJRsu8Ku6+FayrYhbA7c=
+	t=1750020286; cv=none; b=FrEP0TS+vuP7AF65q++zDZ7Xwjnp3GIP3By1JXqsEvSNLZlr/gdO1yLm51VyLwIZV/oJvZrBGYVXxakv2jCDVnxsHt4UGnbMEFPtoUWaT54eUwRpUXVIcaJgGE8hPCnptL8/ukrFPxXVxOcD72jAk6q5qei+7V651TKQSUtKHEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750020224; c=relaxed/simple;
-	bh=BK+l2HO6viJZW2r4pfwwcFEhEL6waRkz7dHP6HyzD94=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KN1N9J/GBWXhMAPYd0IHCkFouay7n0InaVOnxd4yhihNGLniabYBcQz1e5NAWNfxNIxIS19zHOIZ+TVuWhezZQQQO7PHA4z2lUuRaICzmdDzuvVcDSPDLwUpcolL9QIY1Mgd+C94kzvClzDTZKhvw4aXk4VlAxMhDhsaUjaTMBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=aAALW427; arc=none smtp.client-ip=212.227.126.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+	s=arc-20240116; t=1750020286; c=relaxed/simple;
+	bh=vOPI8xnUs42FAhBrM6Eo99dhtN/4bO9n2twfJR8aP3M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=aEIHp/JVNJTFWHsRpP2Xkls+0t7OZZ/BmMP8VvnYejtF3JU65mCVo3wTs4DysdXB+Gr61OOxvKdLJ+uFs2pycP1f8OKTfK3Yc26K8KOEzXjM0WrckmurygyYm7dFKPsb8Az6zlsl8sV5rtrKc6Dosc29x2UFoXwVzbztnCZms7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZePkCC2a; arc=none smtp.client-ip=209.85.215.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f196.google.com with SMTP id 41be03b00d2f7-b2c49373c15so2836474a12.3;
+        Sun, 15 Jun 2025 13:44:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=oldschoolsolutions.biz; s=s1-ionos; t=1750020173; x=1750624973;
-	i=jens.glathe@oldschoolsolutions.biz;
-	bh=onUUPi4Wsm0wWvtRzn7J1Is1tHETTLIUY7qL9YrjcWs=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=aAALW427wCiTHK39cJJv2kjo5O3E9Pc5agRqdW8bWA+LeGPYnK0+OoD+wSPbGNMs
-	 a/bk8C+aLobCM408Blc7Y+YD5VqacRjTkSU24zOz9Kj5FHMA/mBtMhhmoQbGycgrk
-	 tKEeGeP/NKcAmVjNZfpC4fpqsfyRFYhs4rWuQp+UByzpEVnljo4K7AOdFLRFnWr4t
-	 t6VM5dzTGFyvp9zXYR2gRfAsS9DAy018Smyej00I3g/f9rUEYo8dt0lKNPVputYfC
-	 ikij9RCwlYOlkf75sF5x9wMkSszH2JPLwnx/doEdtr0cKa/MO9PS2ePMRT6wa+pgE
-	 /TjBIkhEtH8JRwbEXQ==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.0.174] ([62.226.41.128]) by mrelayeu.kundenserver.de
- (mreue011 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1MqsGv-1vD7Bk1UkT-00lJbT; Sun, 15 Jun 2025 22:42:53 +0200
-Message-ID: <df125ce9-c271-4cd2-b9ee-798d7b1c8648@oldschoolsolutions.biz>
-Date: Sun, 15 Jun 2025 22:42:50 +0200
+        d=gmail.com; s=20230601; t=1750020284; x=1750625084; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+KoSt+5ZL3v0iSQDCq0LPccgjeEHmo3nVMHVXpvIsbs=;
+        b=ZePkCC2adhswgtJeYEUacxajbnQ7mPnwRWw63objXuu6ItTEFI3Jrx7L65tomJ8yEd
+         teRljkBvZHdlWMWkQn1om2UdOqcx/0DzSv+JqX0404YlTpLr04Q5oBu5kHST7++swPSD
+         mLMBMjvEQqT/ZW+JqHvxKAwil06TJ0hF9nmUhuSSXKQbgjb15haViVWIZfWCi5Cbyl++
+         v9Gx9fV0hKKnaahCbGylGp4Pi1FXtiPD5iZofvhrQj3vbykWH7i3xhyVvG7khFbF+2ft
+         n4z+837FFKOPVyIZSk4AntZF2Cp2BgC3On5THF9fluBbv0Vkrb2YolW9GwjF5f7zenei
+         BKZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750020284; x=1750625084;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+KoSt+5ZL3v0iSQDCq0LPccgjeEHmo3nVMHVXpvIsbs=;
+        b=AsT7U0lbiwpzIqUwIPl5i7PFfWtkN/LdCBIcgVRAOIZznBMFsdmHCusqDVXLHunVNI
+         YFhaA+l/YQR69AcHOWYNZ0PILRHlfTn0EFb5urd4g1MadCj06CfBtezqbnium++vMIIF
+         Qe3r+5AoG7PDwDqmNT1Rb3tnhx13BEu52IVUc0MJKjidUqBrNYY+mCuCgsV4AX6OqO+L
+         5W/O1PndQDRZxoTvo7/huSfIoxNv4Plk4hAk5wJaxXBj8+HwNuZfnAQffPxdq9PW59Cp
+         CJrvB9OC7Dfl+mM856g9h3tSFaHarlrjk4WiRljYKyRqxVByrmuX1QGUyWX24Xhonelc
+         aTGA==
+X-Gm-Message-State: AOJu0YwMCyp1wmOKzAJrckCPNzOE4wk1jdd49H1YyqK1obDTSqrV7/i5
+	CWIq/A6xXIMSA51xZMeVcqOwNuNzl4PM+0ztzn7ks41FE1CS/+XPwes97x2cQr9tdXs=
+X-Gm-Gg: ASbGncu2redBF2zZ9cAUEx+g6UcyckXNcD7oRdOR3XayWXf3GuoZrc9SkTFqI3KuuHI
+	KINV1MMkiF304eY9f0lfs7O51bG3i1HBYa8C0u5ic3Fumh2ys0IN/6NfaeFfC3AfzGwCelooZFf
+	TZ8a2zHT8EvykTp+tm/V6pi65ObL92SGb7CSY1OetNh3HeeZBv3A/O8Nlb3ljb8CsAnNCaFUCUV
+	wmcAZOiZtwCdvBDgFFhAUxvPY04NzCu1EZtX7XVd7tF5DtG8DNbNxk9K88AMcOCTLym2Rq4PFIp
+	uUZYtt2D8Na6T+zgTSW/tN4r2ujrbFYwUEbWwddRkAx4iFs4W/EDAxz7r5uSm/D47ky5nPL00ZL
+	jAFk71y8Au60=
+X-Google-Smtp-Source: AGHT+IEEuMOqk2/zxOVXhcR0Uxt42Lq2ZQjQ4HYKiNoUcZOeihsC7DkRQIJpeiihtN/uJyu5fodiug==
+X-Received: by 2002:a17:90b:224b:b0:311:a314:c2dc with SMTP id 98e67ed59e1d1-313f1cc4b7dmr11381939a91.14.1750020283525;
+        Sun, 15 Jun 2025 13:44:43 -0700 (PDT)
+Received: from localhost.localdomain ([191.193.166.140])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2365d8a190esm47830995ad.69.2025.06.15.13.44.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Jun 2025 13:44:43 -0700 (PDT)
+From: =?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
+To: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org,
+	konradybcio@kernel.org,
+	robh@kernel.org,
+	=?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
+Subject: [PATCH] dt-bindings: arm: qcom: document r0q board binding
+Date: Sun, 15 Jun 2025 20:44:37 +0000
+Message-ID: <20250615204438.1130213-1-ghatto404@gmail.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v2 0/4] Support for Adreno X1-45 GPU
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
- Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-pm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20250611-x1p-adreno-v2-0-5074907bebbd@oss.qualcomm.com>
- <0e6fd97d-9a56-426b-8b98-dc8aa50d02d2@oldschoolsolutions.biz>
- <036e739c-54e4-4252-b6f0-c8eed5557d15@oss.qualcomm.com>
-Content-Language: en-US
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-In-Reply-To: <036e739c-54e4-4252-b6f0-c8eed5557d15@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:NPypNcwQLw4G4JWfH5eQewUs1fAhXA4gnmLwZKj+YXP2JQCVDLw
- hHHaFiRxV8yKAi8HhsY8i7ZxODi73S6CjKM9nVFccdGkPhfkB5pOrBOyVW9yaBNN4b0H+Ns
- dg9kfLxx2wyWiBgoyv/B9zEcXS+CPe57RHvxQpv2+5cF8Zfq1sB+eFs/1EV0GqXTBh6gg++
- +pqFx1RAv2flOXyJR+vlg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:klnQglAAmwE=;E6ZFj467byVMRokAgVi3n9DEdRR
- N1m/VSAojUu+ULxgCdZ4o+cCjlVmxVqa/sFULgrw6SEKsIo2NNWw35rUEyudvLLsVmQK4Z3p9
- 591we6xn+bjnbhuu92332R/BK6nyJg75u8PVumSroAKebZIVkhWrNbtqyL4RCzEamfJlIsHg3
- Q1An5m81MgIKuU59h6/exUcKN3r0iMrAs50XrEeUQeLDrYY9E+53WzWLlq2fC6NA2KjrX8JaC
- gZOw95SRi5w/ifsbqET4WItvnvvSPuEniYP4n5heEBpB1vHXrmElJhhtN4BRiuBwL5OqFEdS5
- NZGYR1ut3tvw4AaLB72JrG5VlIpTo+opklz68zFKwM38VZx/MabOGpv/umwEkMfcNvjlG/pjo
- rESxS3yShxjydsx9s2Ns/tZz/8gc+ikVEQCYyq6vk1pUaooWxZA5vMJjMuHKEdyw4e498DCor
- WG8X17Pi3eXakotXfmGvHB6AWJRWKIsHNC8+vOWJfSm8Y4m/O0PtuZnhnvWyD92CVMeKu4XQF
- yWCK++uPU1Zm3TDk0tEHCewFA9Vq52o7yywfM9/S3tlTZykC614j+z6R1DJ1RNyJc4dEqZmtg
- B+OwBWNJiShSqxaPQlg/6oeuujHaFFfz++nU6Xf0pOEMWPpPqsxzoAzAkIyafeZyrk/Q5rmFr
- 1fRo+JJIAzSVVyyc6MvlIMvA1u5sdgT94lJaiEXBl+R1PMa/fCs/7GRVfH/MUNhQewq1pHxNO
- tJivuh+YxIiRvz/HgkfbrSG8gK4MycVAiN8T+rRFG5+0rM+fKbjaDyxWo++mucpT3G75rGtq2
- wfdXKfA4euhbu8XN8lEpe7XQJu2zkNy8NlzZgBApFiw6EtuGXAEZZp85P6AKyZ8ExF4/HQaKd
- xZ9fgizegncf77vAwsnWhBykpNH6a9whTFOhRp4TwiRIzfEOb+IshEj9XF++voXK44mQhwOZF
- 6tdBL0StGxlPuziwMhDjfSaoDaTY8xTVMgIaefvlBhHIHOpQJHicXlZPGLsnspzpzrgDcZ32/
- sFOGfjHxA5lPFtseLVEaLrZQzK9OSDEheJNc9hd85+vCHwr2zqnWFaAa88Xa/NEyvK1De3A3G
- hRlpE1fkiCpoaee8Qw9jJxHHBBwi3uCZYkrkLH4XBA67ydVj5WK7MEDsw7UVe0O/aY35bq4Mw
- rlvKdCFwtLAtvqOnIfYj6NslmMJTqHS3655lLfIILocFlIl83vmvO8HYdyzB8Ywr4IqPEwq+N
- oXYgPcyehI67+KnUBn2wkBNlBUhy/Jk4/5BtEEhmfnj+nbYP42HYRGD3g6VRB1iher4rXqrjf
- HGT7hQ349cRxaVSkYw9HPNyXbw0MV7fBQmGZBd1w1+0/SDtHhcaca40bKnvADp28METqZVpa0
- XzZAMSDylIKBf0zvqJe7mfrDIev7ODjahDP1ZNbB+/b1VZcgienlG8PIOp
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 12.06.25 23:19, Akhil P Oommen wrote:
-> Hi Jens,
->
-> Could you please try the below patch?
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> index 2db748ce7df5..7748f92919b8 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> @@ -1510,7 +1510,8 @@ static const struct adreno_info a7xx_gpus[] =3D {
->                          { 0,   0 },
->                          { 294, 1 },
->                          { 263, 2 },
-> -                       { 141, 3 },
-> +                       { 233, 3 },
-> +                       { 141, 4 },
->                  ),
->          }
->   };
->
-> With this, you should see 1107Mhz as the GPU Fmax.
->
-jglathe@tb16-jg:~$ cat /sys/class/devfreq/*gpu*/available_frequencies
-280000000 380000000 550000000 666000000 720000000 825000000 940000000=20
-1014000000 1107000000
+Adds compatible for the Samsung Galaxy S22 (SM-S901E) (r0q), based on the Snapdragon 8 Gen 1 SoC.
 
-Looking good. Thanks!
+Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-
-with best regards
-
-Jens
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index b14206d11f8b..7ed1da6e42ed 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -1092,6 +1092,7 @@ properties:
+               - qcom,sm8450-qrd
+               - sony,pdx223
+               - sony,pdx224
++              - samsung,r0q
+           - const: qcom,sm8450
+ 
+       - items:
+-- 
+2.49.0
 
 
