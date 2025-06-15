@@ -1,171 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-61327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CF95ADA2F7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jun 2025 20:29:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33CCDADA31E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jun 2025 21:15:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7B7763AEB98
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jun 2025 18:28:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D4BBE16DC6A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jun 2025 19:15:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 271682609FB;
-	Sun, 15 Jun 2025 18:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFC2827A919;
+	Sun, 15 Jun 2025 19:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YIh+KBm8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hPvkF4yr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5223B25776;
-	Sun, 15 Jun 2025 18:29:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A9F2620D1;
+	Sun, 15 Jun 2025 19:15:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750012154; cv=none; b=WeGQd4WeHD/fLxGkv82s05tRfK/pjRppSSr4f/FlJGcJxRImD9+70Su6kMVFWaoSAlmc0TgoHYV8qniZ/WPyIt7YSYZHzKku++fFP1qWgeDa96lU2VAz5BGe/KQSHxO00H0QpAR169cTIxvK36y3BJ/Hpg4XgsjLZ4E8NRWce2o=
+	t=1750014917; cv=none; b=m/MJf+SKTVHkvibk5xlygha3iBFV3Cep/xOAxCTi9Js0QsJSU/D0vqFPr4r6kHPgy8h6kFESf607cDFdEKO77FuCDDqKZRUJFTlN4qkK3EmBCykouSwJgmLNbGfVSRk5hvffZ2vKcuSmKWyLmiNr0OmmRk5BTz46wjZuLi71GcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750012154; c=relaxed/simple;
-	bh=C3lOkzqrABff39iJT4/2npmJrwhUW+QYorbNRbYTHBw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AJQLikW5AeAowzj35YURo++B1cHoDNh56xayrD6v0lYbZVNr0uxPO+gPKS82m9dxBadGZZepySAr9Xvrr980MSUj1Q1R7vx91PyRNO1/zoQXeX4H5IHrVjs46aCtKBeERYsEEFdAxAk5igoGkYLorQLTTc531LnZ3A8QKIdR1D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YIh+KBm8; arc=none smtp.client-ip=209.85.221.41
+	s=arc-20240116; t=1750014917; c=relaxed/simple;
+	bh=AEPHeQ8ow5bQ+OwuQX3dBueDKyaPEcN6FkEiyQXj2Hw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O8yVlWa6l/42lv8IRUCSXPbpJnIgGNr8g0NiSBzSbvm8g/MsCWSFLHT+5lmc7QC2Q5t6Q9+dCCcfbnUY8QtwQ0GA4/PNmzPBmJmGeNmQExPV9hjdTx4SwjWFALSBqg9TwOJF0NEL+c/UYm/DhQOMR9OG3Y81pXFFWsvHViNSvhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hPvkF4yr; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3a507e88b0aso3728053f8f.1;
-        Sun, 15 Jun 2025 11:29:11 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so46075895e9.1;
+        Sun, 15 Jun 2025 12:15:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750012150; x=1750616950; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=foMShdEYfYc8JBQ1H9qjE5Pp7YV/FWiy7YlvAva/c1Q=;
-        b=YIh+KBm8z9zZMjlOKcE2DjKyeIM2AFIWGQWD0E2NSd15lca6GyXvkvVKriNzpJBQuR
-         AvMkystGQMHuVkNZwBuJj/VltNCKmLpiDzw9AmiZqAVSICjK14OMAHpxlD4MahklfWyX
-         u/Bp70DpnjMGw0DOX1HTGe/5tcq89BlipZ1BTmjj0JGxDdjZLPc+qrY8Y7zFQdZ3RGGM
-         ZYh0CtFqxt/8VTlINktdcM9PwhQXim3i/kgnA6Rv+tdXCXxV8voLEbZPX7omAFjGt5uU
-         5/qjTtOrqz0e6xAAK5CVU3Fw3Pr/IzRkvcMn7eeOhejRoJJY9wIsDqK5OLsXwqe3kIxk
-         4VtA==
+        d=gmail.com; s=20230601; t=1750014914; x=1750619714; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=FlPzMKu4igdnQzEXLhlv+B8h95JnIJGKPzIiOmsd940=;
+        b=hPvkF4yrhNyMLA8YKoE+dT+YXGsLi12xHWKwozb1RsWMcE4a6YwV6091LyzsukgJTu
+         Tga6pVTCUhkfM0FGs7ltGx9Qy6VYVviGtmhHgbSDnGXlDkga3d2SXG8z1LnNiLd7Uxsq
+         C0IZI9Fg10nyqyd6ZWL+Rkv+wJ2WjrRdF3UyW8XoRJ4ehXBKxu7U8/+XMpZjOcNJ8F01
+         CD32hZKoNbsiInbjFt93eGpkt0+NQLSPK8Oaw0TPVr8uTldhd/bQwlCySja91Chi4Ld3
+         foZ0elIwjaLJeTrBjAzxCy4wGgegmRlaXfi5qcXYqYdQHOkNDE08J8PzN6Jxm5L/LnDs
+         ldzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750012150; x=1750616950;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1750014914; x=1750619714;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=foMShdEYfYc8JBQ1H9qjE5Pp7YV/FWiy7YlvAva/c1Q=;
-        b=niXRbSA+Ba/xorTsOEEJFD9Sm8eAWozfDOK063YIr9v8V+gb6lRZG3y4VL5WO7MHbU
-         574F+43BMhRrpR2CRHC/ezNNxR/RpVP1KtyEbMMfrbzjlUft/5gzhGDRA6Z4NdxFu4tK
-         yMs/Nn4VkHBew+crv70+FR/avWG4HFGpLx8DkdpFLqzqYhUGy0/A7NErUnBtQBoTSo2K
-         AavFPcGueKdzU4QzV3mgNDDBzVbLKn3UiwCn6XUylqVBOOmkgIx5VzbmaOGlcP0U8bnZ
-         D0FVTPkQOwfo/oqLaVbtb9gcpLnjjH2rEsoCVW/wzDoL5YleVvefiymw4NQ6uhLBKY5v
-         4aVw==
-X-Forwarded-Encrypted: i=1; AJvYcCUucov2lmIjGLwCXkWy2lf39hzLj7+tYXuzscYpb/SqGcVA9DwErsiRszhATg+MgoBozYo23gMWr7gaUmxZ8A==@vger.kernel.org, AJvYcCVoeWwE3R3eCizDJdjcytZmTpjuAPssoxoWcUBN1QdhfvB9UyXQ/xxL+5r1gpB1h+64AR1yzm8CHtrZ@vger.kernel.org, AJvYcCWQuppP6QFfT8jCHQ/59cEUPgXt4YA5CgVbMFuOXhK9BliyMFvu6EgEniFjR5SHC7UrJICgQQEQNPn9He2T@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8yBKrKCfjU10pjb71OR7iEvmGVIDXoUIf4KMGlJ84OhFfcmNh
-	dCQAnn2BhM0k8oEdwtUJjwPTC0np9pZEoVyKGPTmvq+KmHmEqEDnMpI=
-X-Gm-Gg: ASbGncsq3twla81MxjCf2EI9XyfeBJ3+O+D3uhbvUnzQ5HwIx6vEzT+GIW1K2fv9P27
-	BnWpuP53MGNQjfwg6eMZ61z7tsHhwHNfcuUV1+9TfJBs8J+nqaOk19xODoxGVSzfeNCAKX/jtEA
-	Z7EiHB2Q3rSJRk6tYD/Dqmr8Ns324XCLTLVB3V4YJVKsLMNRFY3PasxVxH0ptUQannsmRtxz8Ky
-	FE8h2dUjwv5iByj28Od5PD5nwKnV3jZsrUiRq0cquvXOTM6hEWG66KBP4OncEfGoYwQSEjaDy7x
-	yQKI9S1rIvcJe1rkxdxe3AnNRusJbIMgrwSLpgxTgj5SVDQxOKIdnWQ0Hw1L6/dwIlrdkMv9qSA
-	=
-X-Google-Smtp-Source: AGHT+IHzcr/OQUl46bEd3VZNisBnnNoyG1XYdc0O5SgHL7n17Rwe1f1L0hLWYYhUTLp21maBk1d3UQ==
-X-Received: by 2002:a5d:64ee:0:b0:3a4:e75f:53f5 with SMTP id ffacd0b85a97d-3a5723a26f8mr5623912f8f.35.1750012149242;
-        Sun, 15 Jun 2025 11:29:09 -0700 (PDT)
-Received: from [192.168.20.104] ([84.226.118.249])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568a6389esm8351124f8f.27.2025.06.15.11.29.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Jun 2025 11:29:08 -0700 (PDT)
-Message-ID: <d2eabc30-f1d2-47d8-82f9-86f6f7a705bb@gmail.com>
-Date: Sun, 15 Jun 2025 20:29:07 +0200
+        bh=FlPzMKu4igdnQzEXLhlv+B8h95JnIJGKPzIiOmsd940=;
+        b=jiyXvUk/IVOdpAVIk3BLYT0c/BHJs70oMo9Djyla5psDxsuGJRXk82xeC8Zpgno53F
+         HzQYzOfgUbBF5j0XnoXr1vwyl9r2yOlhrffPkRDpOXgQUFd7oevceNxIAzI+vyW+fnrf
+         BPG/Ts2XsLV+98w8BvrM+NrA4Y2n3jmghclPcuhWiu7qsMkTMgVEsKt8vbMZjwMV2lvS
+         UjdqMWZMJxLJOomw62KFahSnQVjRE1+9FLd73jkq3Qy5GVGX83sPOeiSTfkWkur9WvRF
+         p78wpKJi7JnELMkmrtkvk8wr0k+wucvaEVvlY+pSUJCiThCeHYQ1Mvwt+66IRBvu5BEV
+         Qg4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUgRFpjm4mNxi4h4tGRU2UOAqcZd/ATvV0cYO11v1YnBJtIiChby7Ff9jJx5tENikSmCtj1CYzA1+bn39Xk@vger.kernel.org, AJvYcCV4yAFFOIGTz1gYkro54Jfev6CljEluE5Wk5UrznUDZqeuzWzmI50FoBCTn1gtK9arkkDZPpu2A@vger.kernel.org, AJvYcCWKRvQPyRxfsR6a5zC56WC8tAxQdGed+Kj5afBkJ7xVpvXDZKdqSatvFIUzh5tZ+6fAdykE+ZqqjsA=@vger.kernel.org, AJvYcCWsoHYV4SWdG9wUKTh8hOgm/SU1jzeJ7lfUMGV7tIWwWv/NzZ5YB1fQo3uJTfOPDcLv01TIeeOb9+wyOzTy2g==@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywm9+0yI63IRiBLmYrDkac/L7l3HTn9WjmtF6G56N7xZRgRoQnT
+	2t46+8v0jch+nReO+0m9irJb9xLdC5LB5c/wAvJ6l6t4CDMppEff0U38Cg7imw==
+X-Gm-Gg: ASbGnct336u9dM3LxK2UrW25dCjg0N62nt9svJcg59ejLMDa3lnfRFbU/j9NAUbS1AT
+	7kbEBy9HyQhgqwYYTnRt5Qqv8eQM6X7+A32EfZRWdiNgfE2e7cSjkXR4xbsyLiS5v92QrhSXF6X
+	Jmm1CeeToTOKUUXpOWF21ss7TA9JbliK4oHRUFJbI6B+m6cx+Jn1GCVNaT5BU4yvPUXSGc+/Co+
+	ZR98dMs5ZL2bCIrjtl5/Z1DxE105T68GPkTU+BohhxKflMCTCcquJUIuObJDRb6mTW+GZKdlCl5
+	0E9Ypyw4qRgLHqEUp05UfohsRov/reOjAZmO6YhfoOMVXq+DBGhjMhcZPw==
+X-Google-Smtp-Source: AGHT+IH2bJWppEAVzSL6erEhSao6ZwWSsziOevhXh5q8BLnlA4Nj/np4851kfzIOx/I/qjbdaicjSw==
+X-Received: by 2002:a05:600c:8b65:b0:44b:eb56:1d45 with SMTP id 5b1f17b1804b1-4533ca6e6a8mr72032075e9.15.1750014914236;
+        Sun, 15 Jun 2025 12:15:14 -0700 (PDT)
+Received: from gmail.com ([2a02:c7c:f4f0:900:5194:623a:df1:d4bc])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532e13cfbesm118671195e9.22.2025.06.15.12.15.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Jun 2025 12:15:12 -0700 (PDT)
+Date: Sun, 15 Jun 2025 20:15:07 +0100
+From: Qasim Ijaz <qasdev00@gmail.com>
+To: Sinan Kaya <Okaya@kernel.org>
+Cc: Eugen Hristev <eugen.hristev@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH 2/2] dmaengine: qcom_hidma: fix handoff FIFO memory leak
+ on driver removal
+Message-ID: <aE8bu2woUe96DVo-@gmail.com>
+References: <20250601224231.24317-1-qasdev00@gmail.com>
+ <20250601224231.24317-3-qasdev00@gmail.com>
+ <3c6513fe-83b3-4117-8df6-6f8c7eb07303@linaro.org>
+ <7649f016-87f1-475d-8ff7-7608b14c5654@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-dell-xps13-9345: Disable
- PM8010
-To: Bjorn Andersson <andersson@kernel.org>,
- Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: bjorn.andersson@oss.qualcomm.com, Konrad Dybcio <konradybcio@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>, laurentiu.tudor1@dell.com
-References: <20250318-xps13-no-pm8010-v1-1-c46236d96428@oss.qualcomm.com>
- <Z9qXFLmnae86_GT9@linaro.org>
- <a7zyhmv5lqxl2l5rdg2x5g55wokm6ztwvzwrfkyeignwdromjr@afpe7zwsmkt2>
-Content-Language: en-US
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-In-Reply-To: <a7zyhmv5lqxl2l5rdg2x5g55wokm6ztwvzwrfkyeignwdromjr@afpe7zwsmkt2>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7649f016-87f1-475d-8ff7-7608b14c5654@kernel.org>
 
+On Fri, Jun 06, 2025 at 09:35:44AM -0400, Sinan Kaya wrote:
+> 
+> On 6/5/2025 9:04 AM, Eugen Hristev wrote:
+> > > diff --git a/drivers/dma/qcom/hidma_ll.c b/drivers/dma/qcom/hidma_ll.c
+> > > index fee448499777..0c2bae46746c 100644
+> > > --- a/drivers/dma/qcom/hidma_ll.c
+> > > +++ b/drivers/dma/qcom/hidma_ll.c
+> > > @@ -816,6 +816,7 @@ int hidma_ll_uninit(struct hidma_lldev *lldev)
+> > >   	required_bytes = sizeof(struct hidma_tre) * lldev->nr_tres;
+> > >   	tasklet_kill(&lldev->task);
+> > > +	kfifo_free(&lldev->handoff_fifo);
+> > >   	memset(lldev->trepool, 0, required_bytes);
+> > >   	lldev->trepool = NULL;
+> > >   	atomic_set(&lldev->pending_tre_count, 0);
+> > Is it possible that the handoff_fifo is freed, then we could observe
+> > reset complete interrupts before they are being cleared in
+> > hidma_ll_uninit later on, which would lead to the following call chain
+> > 
+> >   hidma_ll_inthandler - hidma_ll_int_handler_internal -
+> > hidma_handle_tre_completion - hidma_post_completed -
+> > tasklet_schedule(&lldev->task); - hidma_ll_tre_complete - kfifo_out
+> 
+> According to the documentation, the way to guarantee this from not happening
+> 
+> is to call tasklet_disable() to ensure that tasklet completes execution.
+> Only after that
+> 
+> data structures used by the tasklet can be freed.
+> 
+> I think proper order is:
+> 
+> 1. tasklet_disable
+> 
+> 2. tasklet_kill
+> 
+> 3. kfifo_free
 
-On 3/19/25 15:00, Bjorn Andersson wrote:
-> On Wed, Mar 19, 2025 at 11:06:12AM +0100, Stephan Gerhold wrote:
->> On Tue, Mar 18, 2025 at 10:17:02PM -0500, Bjorn Andersson via B4 Relay wrote:
->>> From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
->>>
->>> The Qualcomm X Elite reference design uses the PM8010 PMIC for camera
->>> use cases, but the Dell XPS13 doesn't. Disable this PMIC to avoid the
->>> error in the kernel log caused by an attempt to access it during boot.
->>>
->>> Fixes: f5b788d0e8cd ("arm64: dts: qcom: Add support for X1-based Dell XPS 13 9345")
->>> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
->> Usually we do the opposite: disable nodes by default that may or may not
->> be there and enable them where needed. E.g. for the 4 SMB2360 instances
->> in x1e80100-pmics.dtsi.
->>
->> I think the same approach would also be preferable here. You shouldn't
->> get an error in the log just because you didn't go through all of your
->> DT includes and checked if you really have all of the components listed
->> there. I think it's okay to enable PMICs that are more or less
->> guaranteed to be there, but clearly this is not the case for PM8010.
->>
-> That's reasonable. Have there been reports of this error from anyone
-> else, or should I go ahead and enable &pm8010 on all !xps13 devices?
+Hi Sinan, hi Eugen,
 
+Thanks for reviewing the patch and for pointing out the correct
+shutdown ordering.
 
-Hi all,
+If you’re both happy with it, I’ll send a v2 that calls
+tasklet_disable() before tasklet_kill(), then frees the handoff_fifo.
 
+Just let me know and I’ll resend.
 
-Revisiting this change in context of Dell XPS 9345 and now Lenovo 
-ThinkBook 16 [1] (and upcoming Lenovo Ideapad 5) as these do not have 
-pm8010.
-
-
-Perhaps safest and easiest is to simply disable pm8010 in 
-`x1e80100-pmics.dtsi` as proposed and _not_ enable it on any devices, 
-since its known to not be used anywhere _yet_? As its a camera PMIC, the 
-only submitted upstream (did not land yet) change that utilizes pm8010 
-on X1/X1E is Bryan's CAMSS series that enables camera on CRD [2]. There 
-are a few other laptops that have patches to enable the camera (my 
-Zenbook, Bryan's branch on Gitlab for few more laptops) but those were 
-not submitted yet, so can be easily changed to explicitly enable pm8010 
-before submission. This way we could simplify this change and not have 
-to figure out which of the upstream devices do in fact have pm8010 onboard.
-
-
-On XPS 9345 specifically failure to probe pm8010 leads to power button's 
-short press not working for shutdown/suspend (only long press kill 
-laptop power), which is a minor but not irrelevant detail, hence 
-bringing this up.
-
-
-Thanks,
-
-Alex
-
-
-[1] 
-https://lore.kernel.org/all/20250607-tb16-dt-v6-4-61a31914ee72@oldschoolsolutions.biz/
-
-[2] 
-https://lore.kernel.org/all/20250417-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-5-3fd4124cf35a@linaro.org/
-
->
-> Regards,
-> Bjorn
->
+Thanks
+Qasim
+> 
+> 
+> 
 
