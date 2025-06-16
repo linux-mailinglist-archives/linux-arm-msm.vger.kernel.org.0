@@ -1,251 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-61483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FA7DADB66B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 18:15:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0433ADB678
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 18:18:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE7F23A42B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 16:14:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2AFAE189033A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 16:18:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE2232857FA;
-	Mon, 16 Jun 2025 16:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 967CD286437;
+	Mon, 16 Jun 2025 16:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JNCL0Pl7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YQiRguyq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE7E281513
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 16:14:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046CC286404
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 16:18:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750090497; cv=none; b=uiLo1cI1aYN5t0hYQC6kMLocRBENnfPsNtGurHV1ckR4IDZEEI6IjLcFlRSHSr8HUtOmnD+koiNChthWOzy9Y9OXw/PNNn8DpxE010jv3uDI5ZM1JnbDICq6PI1DiVMpxLDsyGCLmN4tw68fgCmCcJcPXHAWbZPvZhzLeRB5Ucg=
+	t=1750090707; cv=none; b=au9JQmJJp4kmqRlVr3sjXrJPKyaBeRVjrk9pvJDPdKaCOtDkGjqVSKV4u/UklZy9hUDEbm1TBKN15eE4TyVemERakZKszajES0P79UULhgUk9YcgQ6sHRjsGfo8YJs9rPW84YsGbyI/qkz7AFqQK5uh0ijUCTDPPMUHDMBytoBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750090497; c=relaxed/simple;
-	bh=z439W5Ak0AIQ4ZXFqNztHbJlyRGwss0RRsUcYjTyWOk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=jYiRQaPWRPD4vMC8MFCU56hH5rwatPVyIAwdFMla/CjYlgtgmcdHxJpUrBF9dkjjT3BBQnZZYydnk1NHsBbEtRYJjxTp4pBkZYObrbPYVzU3jx0LLEFzm67hd7G2lstTsBVfBL/hSqsID2wxjC9YR8rmhyNB6zA5Q3LOazrF+rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JNCL0Pl7; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-450cb2ddd46so26447575e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 09:14:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750090494; x=1750695294; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=T6ibnzdhEbpwMjSrCwWztiKo4mjian3JWQr5b7BDJBQ=;
-        b=JNCL0Pl7wdkuKSQk9CBHiPDTjh+4d3b8wnIua7jG2CU4N+rLCSWGVFPRojdAMNynQX
-         d8CucZN80xB+Jls8HUNdgvzoxz/ufGm5ZV84adAb8oHwTpsIa+HLnC8nStiaYKdkw+hv
-         eWForqgLXeRPRG3B8brB0Mrlp39ndThlKyu4EhDVjEwftI7RXmvg5sfe697orWcZUFD8
-         vvRNiPYvKVdccZ4FvJrn8FmQKcDzCC+cVzBg43j9YnTujLaUbyBcg6hQtYpj+hXeTHZt
-         fHWv3ajTaQiVrTLtUKtBjtnrQc0izLfNveBHESgEA1RclJKSJjChxdA5ih5hWoZT0006
-         MthA==
+	s=arc-20240116; t=1750090707; c=relaxed/simple;
+	bh=5dxQ60As8s/8rmI2TuFgJPch2gZ+j1BB1ZNS7po3vgM=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Djl1jCCEF10S9cq9AkhExMRmtPd1XF5u6C+0mKXzYJqP+kjFyOhyDfLsiKNu1KgQVG7ksJBs+4r2hucwlXkMBnQNYF9E0HXYHwbAyK6Az1fvfh4zgzlJVmxSFRI8giQ4wyO7WfBg6HKC66gtVBQ6zRjRLT3rfijs0zBaqrnjpAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YQiRguyq; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55GG6tfH014411
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 16:18:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=lenjTOuIiqQxj1snFC9JaLJ/
+	OZ0qD8QNh76r2FAzoEI=; b=YQiRguyq5DL80RlloScVAfpw9lTcjLnppkegCMZa
+	XA3bRC9ogFQHNt0RhUOL4ceODzfvxjFD+qsYDyDR9S+0aXDgcR0xXljWFrqGLb4C
+	XXJrG/LV3wDn2zt6EEFhv0eJrpT1T9+/S7oeaJ6BIMPsmW1YfIDF8FAyjXz8mtu/
+	cOQeBKOuYMJXOYM0Z9wCaK40w2Ueu2rS4YwrMBEFstW0GQSFzU9SjqfXigg1iUK3
+	QTZw4yT9ff3MdaU7YNg5I8GUPNgCKRHtCKHOMvzkgMUpEJqt6JLRvMg27m4uOycB
+	NBZBWDuqz48C74/lMeLP2BSmHTR4cAYc+R4Jt8KR7dzDpw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4791crn4n8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 16:18:24 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7c53e316734so883412285a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 09:18:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750090494; x=1750695294;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=T6ibnzdhEbpwMjSrCwWztiKo4mjian3JWQr5b7BDJBQ=;
-        b=ZlyB9YsQDxpXkUiZKayPx+jQtCqxB9Mzx8hXDaNR8T6trCiXRbrtN1oIF+Sa16e8gG
-         IWnxq69vSTcT2T7AHbWyoftrCaV28M9XX9LocSEiYg6Qu2x7URg9HCxtqLgCn2yEVx6W
-         l75Ip5+UO/cxmvLXx8l0Rhcbjr4jFZj0OPr+qTr6x3si0x57qOkGXUOB/lP4wwwiqeie
-         LO1QIPbMzuyXmCc/tRj5NOAL4m1da8iBPnpd1E5+AT5T6/FAzHcwEwDjLLL+BPQ0LORi
-         3gBg3MEIryWj7jZm+8ik4OJhpOXdet+zZw1rWqbzBPLxbwkikNzhaz0ARP8NW5Zbj/g4
-         GqJA==
-X-Gm-Message-State: AOJu0Yyn3lRom4IZn+CBse7e7FFAZwP9IHTDlfUC1it8TIMOT9jpFTfa
-	Kghf7Sm/9SRXwKK5eoceTBEMqAjS1373CsL/Nf+2MbUExL7LKJ7fjc1e4ixZgz+tFE4=
-X-Gm-Gg: ASbGncsGkPfkkRSqGD3QJ0waosLSWvDBqpXgImCDPZ3wrJYmNoHPy0fCGKPn5c9GhMv
-	AzhKKVUWjCaEWplVmBtvneeGvg8eQDz6YWMe+t1gyHVla6iyGkhjRnJW+9Aaw6Dk0FZvUyi6ChC
-	MZhrxy6mZvjLq9uUDlCHVfD89HrX9bBRJ2V+tDtJeTZA+ruChOHwAZNX/T5ZBGwVhzfEuq4FG3u
-	59Zug5GrrbcO50QHrpvkcCcQo0nLzNtBRfgdUdHKoN9NyYgZcWt2iCMK67IETB+dc2rkxZ6kEPT
-	MWoqXEi+X0ZPyYjR6y7a/xdDCeZ71NbipshN2FMRHORZozv01+a4gVW0MCIZtAtCkSrzuEWBFKb
-	EEDJKBlKnUhc6ZzGIAVhUX71Bs316Ag5235VU
-X-Google-Smtp-Source: AGHT+IEPIO5Rqt/93HylwQWU87OlnErReHGRzssV5WREAarN4Bu7nuprotM72PiFJu5jYscm3o2rqw==
-X-Received: by 2002:a05:600c:4e02:b0:453:c39:d0c2 with SMTP id 5b1f17b1804b1-4533cab541amr86940715e9.24.1750090494145;
-        Mon, 16 Jun 2025 09:14:54 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:6c7:97de:65a8:488a? ([2a01:e0a:3d9:2080:6c7:97de:65a8:488a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532dea1cc5sm153416565e9.16.2025.06.16.09.14.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Jun 2025 09:14:53 -0700 (PDT)
-Message-ID: <346f0fbe-5bf7-492e-9e00-0fafbf02899e@linaro.org>
-Date: Mon, 16 Jun 2025 18:14:53 +0200
+        d=1e100.net; s=20230601; t=1750090704; x=1750695504;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lenjTOuIiqQxj1snFC9JaLJ/OZ0qD8QNh76r2FAzoEI=;
+        b=clmqbSk2Rwq/Zkj7MkpA1k8ix+VV6yrtQgIluMrmd7zATcBNiN9vjL6yBiJpQ3/Ybj
+         dqNPVw0MFUKGz7b+HKt149ililJl57OdWkGcPuYnLgc2f4+MnmZApPkPDDcrNEEqSmpb
+         YqilNoiRP3XOfPD8CF+mp7Jg+3/+dapH8z2fx8YY8ZGi4P/Dw2M5dnhBiCa+9yE8AvU5
+         a1hs5WnltTSHi3iPEEZ8HjFAYMslu+JXTSrgiDdi2z8pZaucdYBR5sOxkUQtapvE7OJV
+         YNzY6jOFMfkCPk43tM6PZYQz1XqpKSz+TzaFtJ3TLgQwimwgKDm2yN+61pCJbMx6ypPz
+         /Hig==
+X-Forwarded-Encrypted: i=1; AJvYcCWaVKneeDIzMXuCSIDWH7lFXX9FftcedlnNTJP2txAlUSme0Sj0D6t39+VOKMWmd7cq5UEOmBV1JPdPdI93@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyq1nua5MAP0zDUYwapKVNfaDXmiDPxP8TNUAd+scp0QLIziX83
+	+jz+99I/q6x8Psr2BXZL1YzrkaXqCVlsdqledt4pQZPy/XgKIhu6YJ16c3LuEVxrcuTBRqIMgj4
+	duTaT/JicjK2WCEpybSgAaZP6vnd7VnvVEZOq8keWJX0a77UPJQYCq0JhX2426NOqVrMP
+X-Gm-Gg: ASbGncsoxlW2Rw+sxqh1UruyXx5PGrwJde8Na7x0tHGZWyAr988JzcD4AOorpwPN+IY
+	vd1A2JPnEuJAsM8m2TbTIqvEk1ES5ZiElwSjSdNC0hr8TkqHXoTg01tnt3hfGeshqwMrAhHkqFI
+	oHbUIcyB3skBUehJIoDlSk8ssV7jaFt5CiIK1vS8eQ1wsAlPGx6EdbVacQKHdxj2YCd8vd/tbc6
+	2X8To/z2Axei5/gAwCVUZhyEe/X0pg73ZjPikyEyUJk+r0RnB0eIXcdCfmQ+igGXlGYtM5uB+rs
+	/a00VcOqRs5M6EkfRyPBXLCeaQ3oPTc7Zjd3lEraL9nbMvBvhNa0UOssMg==
+X-Received: by 2002:a05:620a:450b:b0:7d3:b9b6:f1b9 with SMTP id af79cd13be357-7d3c6cd6c86mr1518730385a.26.1750090703922;
+        Mon, 16 Jun 2025 09:18:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEYH0Bi1Qj/amsWCd72LYxFHGoIlfM8IzTVbUpM+all+BJ6C4oqXrBLJLX310yA58Ug9cHwug==
+X-Received: by 2002:a05:620a:450b:b0:7d3:b9b6:f1b9 with SMTP id af79cd13be357-7d3c6cd6c86mr1518724785a.26.1750090703338;
+        Mon, 16 Jun 2025 09:18:23 -0700 (PDT)
+Received: from trex (132.red-79-144-190.dynamicip.rima-tde.net. [79.144.190.132])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532e13d014sm149938815e9.24.2025.06.16.09.18.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jun 2025 09:18:22 -0700 (PDT)
+From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
+Date: Mon, 16 Jun 2025 18:18:21 +0200
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>, quic_vgarodia@quicinc.com,
+        quic_dikshita@quicinc.com, bryan.odonoghue@linaro.org,
+        mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, stanimir.varbanov@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/5] dt-bindings: media: venus: Add qcm2290 dt schema
+Message-ID: <aFBDzWLkKC9MWGoC@trex>
+References: <20250613140402.3619465-1-jorge.ramirez@oss.qualcomm.com>
+ <20250613140402.3619465-2-jorge.ramirez@oss.qualcomm.com>
+ <6f4e715f-1c73-450e-b7eb-92781b7fa050@kernel.org>
+ <aFATp3zoSgkrj3YX@trex>
+ <a76789cf-afe1-4d91-afdf-65c3af5ad11f@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 00/28] interconnect: qcom: icc-rpmh: use NULL-terminated
- arrays and drop static IDs
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Georgi Djakov <djakov@kernel.org>, Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250616-rework-icc-v1-0-bc1326294d71@oss.qualcomm.com>
- <786e3337-4c14-4281-932e-6a93aac53cf8@linaro.org>
- <8af6ce19-7aa3-4fc7-a963-d8ab0cd22b02@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <8af6ce19-7aa3-4fc7-a963-d8ab0cd22b02@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a76789cf-afe1-4d91-afdf-65c3af5ad11f@kernel.org>
+X-Proofpoint-ORIG-GUID: HunAIVKWtMe8kHcMUO_JZMz7TRpDMOJm
+X-Authority-Analysis: v=2.4 cv=BoedwZX5 c=1 sm=1 tr=0 ts=685043d0 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=wjE3nLva0YkvARyJ+Gfmxg==:17
+ a=kj9zAlcOel0A:10 a=6IFa9wvqVegA:10 a=4oi7HMmTljfVUEt6n0wA:9
+ a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: HunAIVKWtMe8kHcMUO_JZMz7TRpDMOJm
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE2MDEwNiBTYWx0ZWRfX2hJ5vq4h2Uen
+ /bnkgnLGOoHuZZByC9Aic4+/Rr6nYAqjSnqmZiYxFm9RwRpjxzditKzUjRBuHebK1T89q/EKkjI
+ M236Vq6ZC0pBaJyipd6wTGBBJ5+bjsD5rFCSUA/96zMCQNE1OF12zPsF+LfKzr7Ywq064uN0oUj
+ /1kjPSDP/I3l3vZYM0gJB95PJqT7GyfaHzl9dblc7ukIdr4sPjvUP5Rft4Rr3VI53Uc51kdUBx+
+ wvAcndVsowmJ+3eL45dK6VG4nDaO4mb8b/0kKHFwQRRJyMENDzzHsOrXSsRQoH97LKgXMHbhrzE
+ ZvDH+Kvm54PNm+fWykTHfC5fnKi8J5j/vr1fse1gFz0mAdf2BKCCdIkOH4yl+ElR0ASoqg0T3z+
+ aUSyuA2745VAzPyIZ+j4CG7Qs+/5G1D4aCskmcgGP8R8n6xr6QXiOlt772qyRRF74P0Uy9OJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-16_08,2025-06-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 mlxscore=0 adultscore=0 phishscore=0 lowpriorityscore=0
+ mlxlogscore=999 bulkscore=0 malwarescore=0 priorityscore=1501 clxscore=1015
+ spamscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506160106
 
-On 16/06/2025 17:53, Dmitry Baryshkov wrote:
-> On 16/06/2025 18:51, neil.armstrong@linaro.org wrote:
->> Hi,
->>
->> On 16/06/2025 02:28, Dmitry Baryshkov wrote:
->>> Qualcomm interconnect code has been using .num_foo fields together with
->>> the arrays embedded in the structure, which results in hard-to-notice
->>> mistakes if .num_foo gets omitted or incorrect.
->>>
->>> Rework RPMh interconnect code to use NULL-terminated arrays for the
->>> dynamic IDs case (as now all the arrays contain only pointers) and,
->>> while we are at it, rework all the drivers to use dynamic IDs and drop
->>> static IDs code.
->>>
->>> This series touches only RPMh interconnect drivers. Corresponding series
->>> for RPM drivers will follow up shortly.
->>
->> Can you specify on which base thie patchset applies ?
->>
->> I tried v6.15, v6.16-rc1, v6.16-rc2, next-20250613 & next-20250616 and they all fail to
->> apply on patch 5.
+On 16/06/25 16:41:44, Krzysztof Kozlowski wrote:
+> On 16/06/2025 14:52, Jorge Ramirez wrote:
+> >>
+> >>> +  The Venus AR50_LITE IP is a video encode and decode accelerator present
+> >>> +  on Qualcomm platforms
+> >>> +
+> >>> +allOf:
+> >>> +  - $ref: qcom,venus-common.yaml#
+> >>> +
+> >>> +properties:
+> >>> +  compatible:
+> >>> +    const: qcom,qcm2290-venus
+> >>> +
+> >>> +  power-domains:
+> >>> +    minItems: 2
+> >>> +    maxItems: 3
+> >>> +
+> >>> +  power-domain-names:
+> >>> +    minItems: 2
+> >>
+> >> Why is this flexible? Either you have two or three. Not mixed.
+> > 
+> > please check 5b380f242f360256c96e96adabeb7ce9ec784306
 > 
-> I'm sorry, I forgot to mention https://lore.kernel.org/linux-arm-msm/20250613-sc7280-icc-pcie1-fix-v1-1-0b09813e3b09@radxa.com/
+> This does not explain why this is optional HERE. You cannot use for a
+> new platform an argument that some existing platform was changed in
+> ABI-preserving way.
 
-This does the trick, thx!
+thanks for quick the follow up.
 
-Neil
+but bear with me please because I dont follow - why can the same logic
+be used - it being applicable - and therefore result in a definition
+similar to those other platforms?
+
+how would I capture such a requirement if not as done in this patch?
 
 > 
->>
->> Thanks,
->> Neil
->>
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>> ---
->>> Dmitry Baryshkov (28):
->>>        interconnect: qcom: sc8280xp: specify num_links for qnm_a1noc_cfg
->>>        interconnect: qcom: sc8180x: specify num_nodes
->>>        interconnect: qcom: rpmh: make nodes a NULL_terminated array
->>>        interconnect: qcom: rpmh: make link_nodes a NULL_terminated array
->>>        interconnect: qcom: sc7280: convert to dynamic IDs
->>>        interconnect: qcom: sc8180x: convert to dynamic IDs
->>>        interconnect: qcom: sc8280xp: convert to dynamic IDs
->>>        interconnect: qcom: sdm845: convert to dynamic IDs
->>>        interconnect: qcom: sm8250: convert to dynamic IDs
->>>        interconnect: qcom: x1e80100: convert to dynamic IDs
->>>        interconnect: qcom: qcs615: convert to dynamic IDs
->>>        interconnect: qcom: qcs8300: convert to dynamic IDs
->>>        interconnect: qcom: qdu1000: convert to dynamic IDs
->>>        interconnect: qcom: sar2130p: convert to dynamic IDs
->>>        interconnect: qcom: sc7180: convert to dynamic IDs
->>>        interconnect: qcom: sdm670: convert to dynamic IDs
->>>        interconnect: qcom: sdx55: convert to dynamic IDs
->>>        interconnect: qcom: sdx65: convert to dynamic IDs
->>>        interconnect: qcom: sdx75: convert to dynamic IDs
->>>        interconnect: qcom: sm6350: convert to dynamic IDs
->>>        interconnect: qcom: sm7150: convert to dynamic IDs
->>>        interconnect: qcom: sm8150: convert to dynamic IDs
->>>        interconnect: qcom: sm8350: convert to dynamic IDs
->>>        interconnect: qcom: sm8450: convert to dynamic IDs
->>>        interconnect: qcom: sm8550: convert to dynamic IDs
->>>        interconnect: qcom: sm8650: convert to dynamic IDs
->>>        interconnect: qcom: sm8750: convert to dynamic IDs
->>>        interconnect: qcom: icc-rpmh: drop support for non-dynamic IDS
->>>
->>>   drivers/interconnect/qcom/bcm-voter.c |    4 +-
->>>   drivers/interconnect/qcom/icc-rpmh.c  |   20 +-
->>>   drivers/interconnect/qcom/icc-rpmh.h  |   13 +-
->>>   drivers/interconnect/qcom/qcs615.c    |  713 ++++++++-----------
->>>   drivers/interconnect/qcom/qcs615.h    |  128 ----
->>>   drivers/interconnect/qcom/qcs8300.c   |  911 +++++++++++-------------
->>>   drivers/interconnect/qcom/qcs8300.h   |  177 -----
->>>   drivers/interconnect/qcom/qdu1000.c   |  470 ++++++------
->>>   drivers/interconnect/qcom/qdu1000.h   |   95 ---
->>>   drivers/interconnect/qcom/sa8775p.c   |  493 ++++++-------
->>>   drivers/interconnect/qcom/sar2130p.c  |  795 ++++++++-------------
->>>   drivers/interconnect/qcom/sc7180.c    |  892 +++++++++++------------
->>>   drivers/interconnect/qcom/sc7180.h    |  149 ----
->>>   drivers/interconnect/qcom/sc7280.c    |  840 ++++++++++------------
->>>   drivers/interconnect/qcom/sc7280.h    |  154 ----
->>>   drivers/interconnect/qcom/sc8180x.c   | 1013 +++++++++++++-------------
->>>   drivers/interconnect/qcom/sc8180x.h   |  179 -----
->>>   drivers/interconnect/qcom/sc8280xp.c  | 1257 +++++++++++++++ +-----------------
->>>   drivers/interconnect/qcom/sc8280xp.h  |  209 ------
->>>   drivers/interconnect/qcom/sdm670.c    |  712 +++++++++----------
->>>   drivers/interconnect/qcom/sdm670.h    |  128 ----
->>>   drivers/interconnect/qcom/sdm845.c    |  986 ++++++++++++--------------
->>>   drivers/interconnect/qcom/sdm845.h    |  140 ----
->>>   drivers/interconnect/qcom/sdx55.c     |  611 ++++++++--------
->>>   drivers/interconnect/qcom/sdx55.h     |   70 --
->>>   drivers/interconnect/qcom/sdx65.c     |  577 +++++++--------
->>>   drivers/interconnect/qcom/sdx65.h     |   65 --
->>>   drivers/interconnect/qcom/sdx75.c     |  498 ++++++-------
->>>   drivers/interconnect/qcom/sdx75.h     |   97 ---
->>>   drivers/interconnect/qcom/sm6350.c    |  838 +++++++++++-----------
->>>   drivers/interconnect/qcom/sm6350.h    |  139 ----
->>>   drivers/interconnect/qcom/sm7150.c    |  860 +++++++++++-----------
->>>   drivers/interconnect/qcom/sm7150.h    |  140 ----
->>>   drivers/interconnect/qcom/sm8150.c    |  930 ++++++++++++------------
->>>   drivers/interconnect/qcom/sm8150.h    |  152 ----
->>>   drivers/interconnect/qcom/sm8250.c    |  977 ++++++++++++-------------
->>>   drivers/interconnect/qcom/sm8250.h    |  168 -----
->>>   drivers/interconnect/qcom/sm8350.c    |  901 ++++++++++++-----------
->>>   drivers/interconnect/qcom/sm8350.h    |  158 -----
->>>   drivers/interconnect/qcom/sm8450.c    |  823 ++++++++++-----------
->>>   drivers/interconnect/qcom/sm8450.h    |  169 -----
->>>   drivers/interconnect/qcom/sm8550.c    |  683 ++++++++----------
->>>   drivers/interconnect/qcom/sm8550.h    |  138 ----
->>>   drivers/interconnect/qcom/sm8650.c    |  713 ++++++++-----------
->>>   drivers/interconnect/qcom/sm8650.h    |  144 ----
->>>   drivers/interconnect/qcom/sm8750.c    |  779 ++++++++------------
->>>   drivers/interconnect/qcom/x1e80100.c  |  819 ++++++++++-----------
->>>   drivers/interconnect/qcom/x1e80100.h  |  192 -----
->>>   48 files changed, 8655 insertions(+), 13464 deletions(-)
->>> ---
->>> base-commit: 410f15dcfe222c06f0d6379adec630061e88dc72
->>> change-id: 20250613-rework-icc-0d3b7276a798
->>>
->>> Best regards,
->>
-> 
-> 
+> BTW, also subject prefixes needs fixing. For DTS: it is never "arch".
 
+right, that is for patch 2 but ok, will fix there.
+
+> For this patch: wrong order (see DT submitting patches).
+
+yep, that is addressed in the next series
+
+TIA!
+
+> 
+> Best regards,
+> Krzysztof
 
