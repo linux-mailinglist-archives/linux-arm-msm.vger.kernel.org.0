@@ -1,125 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-61454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56480ADB3FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 16:36:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D7C11ADB436
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 16:44:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 79FAB3A2EC1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 14:33:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84A963A8087
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 14:42:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DEC51C2324;
-	Mon, 16 Jun 2025 14:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 955A3214236;
+	Mon, 16 Jun 2025 14:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Soi7IpU6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YTseeEiK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A021DED70
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 14:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658AF17A2F7;
+	Mon, 16 Jun 2025 14:41:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750084440; cv=none; b=fWYyC6FHOIUqXvltru5pxcf9oBDvsc1HyvcTYu0nyjDtDKQECEyD3OghUvjMYUK3bgi/UYud2pV8Yxp3NipGeWe+Jp8O+uqnWKFRZjyz5h5ksS11RhHU0XOp/yxxMXUn1JaMFescGkaPQyLhZ3QkcHnYZfV8VNH1btuKSI1C5ys=
+	t=1750084910; cv=none; b=d75ts4f+1lApkYwET5SvZZYT2+DylM6rEYYL0G4PrQDJYVKxzTQeIFsG4P1cgyrgvmS/crwd6lezQrxbLCfcD21ynBFZ71Wpoq2QpkjrOQrZjukIZrKbb4VwRT/PvRqUUiaDwQruO6K02jaX8jeDM1vWK/u/TfpN6GnQ+TdYsxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750084440; c=relaxed/simple;
-	bh=4xNh2lhTG0rhBmyIj3i75Ktf9mjebgJlLZdNho8P3uE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EypFQmmDwP5UIiJ4FegSxQtm/a9ZLRy87bJrT3D4+Ssy7UTkOIyd37va47P4Xg+2PYWoMXP/9spmTOuLGHEo6NqH41JM9bGZ3+BsCzgeTS9OYoeEvmRPNpLWnjhdhk1Cb7P4IBjlKZjNAAJb+TQIqsO8eHDpIDiH8j3byFIJ1RE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Soi7IpU6; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-451e2f0d9c2so39771325e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 07:33:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750084436; x=1750689236; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bjYWwMAn574NDA8zKjETWNZDW1d4gxcRMlquZ/twLmI=;
-        b=Soi7IpU6wPZnUR6vS8qRQfzVUEZGKCgFZNiF47mYK7DM8ocSdijI6VHF4Inct1dmUL
-         THX1XIkRHTBGuhjTdxGXg+R+EWkpVTwQuC5v34A5B5wioQjFN9zkqm9TwUun/GK9+lqD
-         1BZ/BYUxEQnuWgTxpAtQAfvkFb06hyBMigEa20TIwfTPDb86PmNGS100TTUdsgIkHhJA
-         W8E2vxoQFVC0Yb7uJ/3Da9feLpUYjL6CflSS28+p2mC6a9jAx3q7sZKbmjLvlFA0/xGQ
-         gZOOg+nF0b8g/yiOE4pH22eB1WGGhum9mgFBSs/LOsxvv6nn9MKEp57CkQ2O8qNRnW4d
-         QXAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750084436; x=1750689236;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bjYWwMAn574NDA8zKjETWNZDW1d4gxcRMlquZ/twLmI=;
-        b=gt29Knyed5TNedTjHDTxSTPvvSmv54nBX/OWN/4RDBESKLFGl+b8lOlJp6GvV6L7x9
-         +ol1yjsi6yvYZY0bcSCp+XpOCHysJ56n3owtJdAD3WiNUyNPNrAz/zfo1pwP7n312xRV
-         VV8vXFNEE49HPRJI9JwuEt9HZ+lAk8QdOvEC0KDMSkFcvu04PARR2izIyIaZHd2PFMq1
-         udrb4U0HKVwq4gZ6xZsL8/Ilc7IIH+5ng6b8jFXgary2SnXrYIs4mwttgJ0ObMdXuujL
-         PwwQVN5wUKeAmCmduU4F2kCY77ncRTqZqhgGe4ZJhlZwbWMGc+ngXNnW4Q7A+ny3U8V2
-         9LwA==
-X-Gm-Message-State: AOJu0YyZiTrgsIieW9ihHZNmoORKXrZvtVVPT+4qSsFOPgDx0nEUQv+O
-	oHXIRZL5IJEQ0Y5T5/Zpb+GQgDd8niPwt9LB7oNK3J4jANO9X6z5lxaWlgmugfsLJgZtiBGavhB
-	ZcHFoX8o=
-X-Gm-Gg: ASbGncvZu9SsrrZtQHOnsWl3PWIPUUy1/A1k4g3Jz/zqUZkzCoqH+p4K0AMTrcNjNyS
-	4m5ps4/Bbr57gJeyAxGfuLPebUNa26DTEcoHQH7ojm3MZNIrvO6L2B+VJjI9/+FKAblDfh8Jk1e
-	uXhYGgA46kGKxBhI34luB+F3tUucNfIFy0yunHgVJcBGXHNDsU91YlJDf8ndwDWeD+EeEnoGVoJ
-	yUly5pQ/4aXLUyMneF/LvN+nUvnaMDnudlbD2WRPVtpjBRL9+GYSObnIyRZ04Mt7mrcuYxqJCA3
-	xiJz0WEc2axdqnIOBdyP9cIS1MKIfKroacb/A/C6mp9py4ZHJlk1IMvZgXcmVQ==
-X-Google-Smtp-Source: AGHT+IEkKlsjTJOZ7xD1hvpkJ6pL/BYV7+Qy4hoDku5ob31YSgbW7jPZbexdLG5gWcjm4pcq4o+6/g==
-X-Received: by 2002:a05:600c:5013:b0:453:10c1:cb21 with SMTP id 5b1f17b1804b1-4533c8fe4b1mr97134035e9.8.1750084436289;
-        Mon, 16 Jun 2025 07:33:56 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:4238:f8a4:c034:8590])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4533fc6578csm77862345e9.19.2025.06.16.07.33.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Jun 2025 07:33:55 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: add debug UART pins to reserved GPIO ranges on RB2
-Date: Mon, 16 Jun 2025 16:33:41 +0200
-Message-ID: <20250616143341.51944-1-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.48.1
+	s=arc-20240116; t=1750084910; c=relaxed/simple;
+	bh=vhstHZRuSYJvZRwNcZU6+arIkhJ+f2L5XWPkhRILN8c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EAmtlZJt+SRVtINFXM4hL4dOWJrjxx69Nb/itPGbyeurCZZdQJy0efxZyf07p+hGBtgNn9/fJZgONxnyQKhRou5qzREpwIdy5Zms7NspXfrAF5PCr4Tlknk5g1EMgXdeeDzhHR67HRrHlYfRiFW0gaUYnbK10GDWeajSi7oKGOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YTseeEiK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D384AC4CEF0;
+	Mon, 16 Jun 2025 14:41:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750084909;
+	bh=vhstHZRuSYJvZRwNcZU6+arIkhJ+f2L5XWPkhRILN8c=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=YTseeEiKwjqLqpPDiuwU3IR8eq/RSkQXFQAfgeLafgjCnLHYlFDmp9xPCtvZQ9Dvf
+	 RcWFAzlyWJV4VelFVbrx/ojhyhAVPqApBDt5lT0gxC8ErR/kWmx4NoGmuJSnYLZJNV
+	 g4Fkz4FpqXo+lj6y9IpMaL6og5O4g+7PDjXCd+1j4K8ppLOSbykillBxkHrTc2t9Fa
+	 G56/s1fSD3rrPAiPnTlVMz+8OfD6gAY/bhRT85WcMnAOPZjVCh3rbcjlqplzoqVTIw
+	 /52+UoXxarTfMZOfl9Hco8vZcHOwlJ9l+Nv4OxMlyv2+I2H0hS8wYgK6ENQrpwq9XZ
+	 JF52kILaAKD0A==
+Message-ID: <a76789cf-afe1-4d91-afdf-65c3af5ad11f@kernel.org>
+Date: Mon, 16 Jun 2025 16:41:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] dt-bindings: media: venus: Add qcm2290 dt schema
+To: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+Cc: quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com,
+ bryan.odonoghue@linaro.org, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, stanimir.varbanov@linaro.org,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250613140402.3619465-1-jorge.ramirez@oss.qualcomm.com>
+ <20250613140402.3619465-2-jorge.ramirez@oss.qualcomm.com>
+ <6f4e715f-1c73-450e-b7eb-92781b7fa050@kernel.org> <aFATp3zoSgkrj3YX@trex>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
+ QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
+ +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
+ ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
+ 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
+ hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
+ tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
+ 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
+ naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
+ hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
+ whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
+ qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
+ RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
+ Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
+ H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
+ dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
+ AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
+ jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
+ zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
+ XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <aFATp3zoSgkrj3YX@trex>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 16/06/2025 14:52, Jorge Ramirez wrote:
+>>
+>>> +  The Venus AR50_LITE IP is a video encode and decode accelerator present
+>>> +  on Qualcomm platforms
+>>> +
+>>> +allOf:
+>>> +  - $ref: qcom,venus-common.yaml#
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    const: qcom,qcm2290-venus
+>>> +
+>>> +  power-domains:
+>>> +    minItems: 2
+>>> +    maxItems: 3
+>>> +
+>>> +  power-domain-names:
+>>> +    minItems: 2
+>>
+>> Why is this flexible? Either you have two or three. Not mixed.
+> 
+> please check 5b380f242f360256c96e96adabeb7ce9ec784306
 
-GPIO12 and GPIO13 are used for the debug UART and must not be available
-to drivers or user-space. Add them to the gpio-reserved-ranges.
+This does not explain why this is optional HERE. You cannot use for a
+new platform an argument that some existing platform was changed in
+ABI-preserving way.
 
-Fixes: 8d58a8c0d930c ("arm64: dts: qcom: Add base qrb4210-rb2 board dts")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+BTW, also subject prefixes needs fixing. For DTS: it is never "arch".
+For this patch: wrong order (see DT submitting patches).
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index a37860175d273..384427e98dfbd 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -606,9 +606,8 @@ &sleep_clk {
- };
- 
- &tlmm {
--	gpio-reserved-ranges = <43 2>, <49 1>, <54 1>,
--			       <56 3>, <61 2>, <64 1>,
--			       <68 1>, <72 8>, <96 1>;
-+	gpio-reserved-ranges = <12 2>, <43 2>, <49 1>, <54 1>, <56 3>,
-+			       <61 2>, <64 1>, <68 1>, <72 8>, <96 1>;
- 
- 	uart3_default: uart3-default-state {
- 		cts-pins {
--- 
-2.48.1
-
+Best regards,
+Krzysztof
 
