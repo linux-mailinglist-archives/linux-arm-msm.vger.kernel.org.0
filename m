@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-61372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89AAEADA814
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 08:18:16 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 856E8ADA817
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 08:18:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 564B81890CD0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 06:18:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3352916CF9A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 06:18:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 532CF73451;
-	Mon, 16 Jun 2025 06:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 828458633A;
+	Mon, 16 Jun 2025 06:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UHtKbxMM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ENs52J4R"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAA11863E;
-	Mon, 16 Jun 2025 06:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FDE1863E;
+	Mon, 16 Jun 2025 06:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750054691; cv=none; b=qwBRPQ/Ma6Wkg+cYe9kBTRThePntoYbFcyZUiBxWQZVbY9xM01IgKsQH0NEejt9uiqRBvs+2dauoMKvmeIPVLjd1BCNUpWjXV50Ds88Qr2y3DNlDClwQnBILNBvh/KbJ43sS5dQ/SebtineKUMsjbMkWDvok0zyMl5nYFuzAy6w=
+	t=1750054719; cv=none; b=Sn3QvGNZqw5vY3PFydmBuPBveE9OVO3oHAjlaXs96EdNp15n0HGAa1Vx8ID+tdtUiqavlAbyDMymyEMegqetgCV621806G6AVao5S1Cp7Cp5BW7Tla1BIAgXNYD+Y1ifpffjbQHOjklDt7OVxg2tfc9Rc3psVxPe+4kZR5n4u/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750054691; c=relaxed/simple;
-	bh=kS2pJgU6Nff7S8fAfvWuwuBfcDcxJoQKLg8XbbWLVAU=;
+	s=arc-20240116; t=1750054719; c=relaxed/simple;
+	bh=qb7rnu3mAT/UAW89XtcAFLwipk9zjWSk5xPD6OvutUE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=neIdJLr5aHFPnFSzJlVy5aQagFPQjZv2GTvuPtQBlDqtimTHDyZytwKKJWqxwEr9vKZ0wy+BWZc7DT24UiREEFfXOyUzscr3HSpCL1LNfY5naQB0oiLUg2DCzWeg1Hez/1c0ED9ORjXbE+tpgrJPs6hbHNMkUZo5x499WZS8tJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UHtKbxMM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F035C4CEEA;
-	Mon, 16 Jun 2025 06:18:09 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Hl8iQTgoEu7FkPziTpUFBrID7IhAV1RpqqHtreQGLjL5cSYgs25IOLnOZh/cal0LqliZJTHahUW/Gu9Inkbsyc54LSJFM0JWk4EdRD+g2opBmGk5f3GkxEUmkLtcyARRyAku3gqK2yz0QY3nb4qU0Hhx6Lcdk6Iojjm1TV2+5KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ENs52J4R; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A4E4C4CEEA;
+	Mon, 16 Jun 2025 06:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750054690;
-	bh=kS2pJgU6Nff7S8fAfvWuwuBfcDcxJoQKLg8XbbWLVAU=;
+	s=k20201202; t=1750054717;
+	bh=qb7rnu3mAT/UAW89XtcAFLwipk9zjWSk5xPD6OvutUE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=UHtKbxMMirg3ZnEReYpc7u8FYbA0iOABuOfF3DseRrkR/dGeAF2PgAxcFjavEXN1W
-	 7+WJd0H0jsMIR5RBeLZH1B3068aSxlkHwnAB+b/U9Yosot/BIJMaxs240VIwJczjba
-	 gZnWHqKupY+sDD0gijBfrCgYTtE2h17QUmgYTBjl6worYTZ360gesaVHq2YOXPOKQl
-	 dsDTqZ+X/Y/1NbspJMJSZWvP7iuNIsq7RcqWF98OjM6czQ5Biu8YKOcMC3NhiERB84
-	 R6UYw7Od7XuccomrkcEpnN9uK6JUr53+ZkohjPMBbM77YCdPmT+BXD2+RAJWIag6Lz
-	 xG0xLUJhiVn4A==
-Message-ID: <41d6142c-0198-4a39-b0f6-e3d292e10bf4@kernel.org>
-Date: Mon, 16 Jun 2025 08:18:07 +0200
+	b=ENs52J4Rl4UNxjm0cqP8J7lk3LkxzALwbtiA+k+od22Y+yESoYOgBTo1pHGWfCrT5
+	 fBk0DUt8pozbFQA1c/y//DCGFQ6Vq2PcyLn+KSAN9yL/Dw5WrJv2Lhxmv1Z4z33BG4
+	 VPkBPcn1LWCCA+HS7jdBJvraab002couIczzbc5Nx4iROVJVcN7ZdWkZY+yeQVGwUq
+	 vXJCeFuo4IApY3iFl3xi/A/5XQ1Etb83aMQWxGyzFU+J7+dWy5tYBFbxQcCytlaVxG
+	 krwuZjCbE2dw6ny1on+oTA4B27gvnnH9wKKdW7RNq8+DVc5QPHtjBnasA/BdsdQivi
+	 TXcglSi/kjJdQ==
+Message-ID: <fc053f87-8d15-4f5c-8707-565920a68074@kernel.org>
+Date: Mon, 16 Jun 2025 08:18:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,13 +50,11 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: add initial tree for Samsung Galaxy
- S22
+Subject: Re: [PATCH v2] dt-bindings: arm: qcom: document r0q board binding
 To: =?UTF-8?Q?Eric_Gon=C3=A7alves?= <ghatto404@gmail.com>,
  linux-arm-msm@vger.kernel.org
 Cc: devicetree@vger.kernel.org, konradybcio@kernel.org, robh@kernel.org
 References: <20250615205608.1133129-1-ghatto404@gmail.com>
- <20250615205608.1133129-2-ghatto404@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -102,112 +100,36 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250615205608.1133129-2-ghatto404@gmail.com>
+In-Reply-To: <20250615205608.1133129-1-ghatto404@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 On 15/06/2025 22:56, Eric Gonçalves wrote:
-> Adds new device support for the Samsung Galaxy S22 (SM-S901E) phone
-> 
-> Working features:
-> - simple-framebuffer
-> - side buttons
-> - storage
-> - usb
+> Adds compatible for the Samsung Galaxy S22 (SM-S901E) (r0q), based on the Snapdragon 8 Gen 1 SoC.
 
-Thread and name your patches correctly, e.g. use b4 or git format-patch
--vX -2, and add changelog in cover letter or under '---' of individual
-patches describing changes from previous version.
+Please run scripts/checkpatch.pl on the patches and fix reported
+warnings. After that, run also 'scripts/checkpatch.pl --strict' on the
+patches and (probably) fix more warnings. Some warnings can be ignored,
+especially from --strict run, but the code here looks like it needs a
+fix. Feel free to get in touch if the warning is not clear.
 
-<form letter>
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC (and consider --no-git-fallback argument, so you will
-not CC people just because they made one commit years ago). It might
-happen, that command when run on an older kernel, gives you outdated
-entries. Therefore please be sure you base your patches on recent Linux
-kernel.
-
-Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-people, so fix your workflow. Tools might also fail if you work on some
-ancient tree (don't, instead use mainline) or work on fork of kernel
-(don't, instead use mainline). Just use b4 and everything should be
-fine, although remember about `b4 prep --auto-to-cc` if you added new
-patches to the patchset.
-</form letter>
-
-> 
-> Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../boot/dts/qcom/sm8450-samsung-r0q.dts      | 365 ++++++++++++++++++
->  2 files changed, 366 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 669b888b27a1..cde80a17f2ab 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -287,6 +287,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-hdk.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-qrd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx223.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx224.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-samsung-r0q.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-hdk.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-mtp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-qrd.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
-> new file mode 100644
-> index 000000000000..cb58626e879e
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
-> @@ -0,0 +1,365 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2025, Eric Gonçalves <ghatto404@gmail.com>
-> + * Copyright (c) 2025, Arthur Aligon <arthurus36.alt2@tutanota.com>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/input/linux-event-codes.h>
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +
-> +#include "sm8450.dtsi"
-> +#include "pm8350.dtsi"
-> +#include "pm8350b.dtsi"
-> +#include "pm8350c.dtsi"
-> +#include "pm8450.dtsi"
-> +#include "pmk8350.dtsi"
-> +#include "pmr735a.dtsi"
-> +
-> +/delete-node/ &xbl_ramdump_mem;
-> +/delete-node/ &xbl_sc_mem;
-> +/delete-node/ &adsp_mem;
-> +/delete-node/ &rmtfs_mem;
-> +/delete-node/ &mte_mem;
-> +/delete-node/ &trusted_apps_mem;
-> +/delete-node/ &trusted_apps_ext_mem;
-> +
-> +/ {
-> +	chassis-type = "handset";
-> +	model = "Samsung Galaxy S22 (SM-S901E)";
-> +	compatible = "samsung,r0q", "qcom,sm8450";
-> +
-> +	chosen {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		bootargs = "clk_ignore_unused pd_ignore_unused";
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index b14206d11f8b..7ed1da6e42ed 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -1092,6 +1092,7 @@ properties:
+>                - qcom,sm8450-qrd
+>                - sony,pdx223
+>                - sony,pdx224
+> +              - samsung,r0q
 
-This is not really part of mainline DTS. If it is, then you need to
-clearly document the reasons with comment.
+Keep alphabetical order.
 
-> +		linux,initrd-start = <0x00 0xb6915000>;
-> +		linux,initrd-end = <0x00 0xb7fff22c>;
 
-Why this has to be in DTS?
 
 Best regards,
 Krzysztof
