@@ -1,162 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-61380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5277EADA90E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 09:14:16 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AD04ADA945
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 09:24:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE5C416F4BD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 07:14:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 623061882A5E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 07:24:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 741231F03D8;
-	Mon, 16 Jun 2025 07:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A16B1E9B21;
+	Mon, 16 Jun 2025 07:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FDJGkOsc"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="3HNRZZF6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D8027454;
-	Mon, 16 Jun 2025 07:14:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0D11DF267
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 07:24:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750058052; cv=none; b=b8s7tpfRXDCtSrTBrEEycb3Mq6rUG70yUEyYgTK9s3Ejq4Y1n+2KEqRNY+UuAUNvTb3tR3lG8FefVZfIwub/LAKQVwhPKo4kXHPATXOz1kvFQY8L51CQUmgrCw8bzhbJld2mpbypfyN/xMJEwrUR0asvPr+sKoH5MyUO7j7qLyE=
+	t=1750058654; cv=none; b=IbH1IY94hlWfCv5LqCWs928ryDJvkGrjImGShUFwh5YD81bGb7j0Ijme/fGDMAhZRfnEuSQaSQwutY3jde7+99CUAZgOv6sc5oolcgY3pMTsqCi7gIE+tCpHK4wG8iazQ0XZGXoVpOUMM7NpQWpOJtCcxN9CcUubzkVUt2Iem2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750058052; c=relaxed/simple;
-	bh=8mjw1p7jH5U3R+sYOCQOnSj98L74qXNWmdd6u//UBqg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=QVcKrnTqt7Uaq4Fb1iZL5Ua8loDau7Gzs+w4Qt3AmC3l8IoHBjJeCwi/AVJN0gIww9aP7OncbuxyU8nDuzaUsgku2ibonr6jBiZg9cQb5zp8wPRaG/2B5n3GVb2HeoYoMDhfOzz2ls0f4YYekojMTSzfPC1t1FBCgDG9uhos9QA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FDJGkOsc; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55FMjLD4021701;
-	Mon, 16 Jun 2025 07:14:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YfE33/hzYMpvHI+EVdkFbVpEI44vnDFenLTTlPLs3Sc=; b=FDJGkOsccrC5PNe3
-	1M6VVACtfXJTwNcC5RBpbdN0WWkmRZfEUeOGzThS1CsZVaHmV5wk38NXs5gtkdFA
-	KWSdm49mokPGagmkliA+J0v9iufSVO5kUv109VlINMz3FrbfrUos5vhUv0CG6lWw
-	0Lu+9pkfs3tfpE7UVg/DW1UQNeNhOOZuONbnU4+0VLARcffA/tXyAEmm65NVsRrq
-	MEo+DTjsZVAErMW4jtkcBAkJAeeKYN5qakt0DNCkW2+fT7Bu7GO7U8eNy1NxY0+1
-	2BrV0Z3zkca+cQCVCWeHA2yctr9VL1oQln5JpRh6gvqym0c/2OGi7IYE4F+MD9qs
-	ttL4JQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4792c9ude8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Jun 2025 07:14:06 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55G7E5Ir018364
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Jun 2025 07:14:06 GMT
-Received: from [10.217.216.168] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 16 Jun
- 2025 00:14:00 -0700
-Message-ID: <b35d6797-c574-4b85-878d-502fb4b22152@quicinc.com>
-Date: Mon, 16 Jun 2025 12:44:00 +0530
+	s=arc-20240116; t=1750058654; c=relaxed/simple;
+	bh=uR2GGIFJoNUWja26+eqtvHQqGtdircsCPqOzrEceufw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ptQ+Xg9MM4xtbCQCZFGwnj3GFQKWKW81L1fcq/AO6uOuXDQMLWdmv3AIDfOHw9JCaAP6g90raVwIIm8+E7PoNe6WssjTmP2eWoKZsep0ySF6/0XN+8xZ3/MtPvYxEdVfyaGFWdcuvItmJXDyk3IrHkHzAWQ9Nkkyb/tBQgLLgFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=3HNRZZF6; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a510432236so3104483f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 00:24:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750058651; x=1750663451; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vFu6VBmeq/w4W0+U2cqQ9ftqsZ6qKfNlKR84sMlRxPs=;
+        b=3HNRZZF63Ni+q8LKEYBqpEnIv0wvPsIoqmZNEx8xvkDwavyGY+kJ/170Dq3QiRj4zO
+         a7n8zHFqOvXrggBUaFaAMZe77CQ1lc2PDceLIl6yOpZV71V6TT+MiElBJ/0o+BbcMVTb
+         0f8EIojqGA2m0ILx8gRit3q3KSkCVO4ri3xaZK9s+DxgJlx+JN99QMGpC2vL8rAnwH7Y
+         nZo4FK8jipnqq/MaTWYnNZCo3SFbYN17TnaVe7+XZZAPhI37vFCIuTa5KbssqL6429TD
+         AQd9FSnoIoZQhC3c7akx3AJumZcpF6gWuX3mIMqjTRwUk1NPqtgH779Y9lGzu7nEv8L+
+         Ph6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750058651; x=1750663451;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vFu6VBmeq/w4W0+U2cqQ9ftqsZ6qKfNlKR84sMlRxPs=;
+        b=UbohDlAOijXLIKfa6BTnWwq5w6Q5qng4pC0Fnx+BK9YdRvTHrrO5c+5AuLxZovCzFI
+         1tiDgKniijJyUKxdEUTGbpdtgfJIT0rEfEbFRUkY2oCLFJhZDmKSTqokl+kSKUEG9e+v
+         VxJfYXAkgbvZ73/juE0iS+EHPrbkC1DUzkUn+r2eHLVnpCe7md5lNrfzSox6tC4ecAwP
+         2iuUA57lOCCWQG6+itIsB//OUU9i80JIHRbdC99JgSc/ikG6x3O2f6czO0ghHEXMyipX
+         qPXNeLuZmCjv+0pxvxqLZtgbe8CKDmGKI7Yky3KeXYGCSugYgEk8CH0lH6b8Wp8M4h8r
+         BRjA==
+X-Forwarded-Encrypted: i=1; AJvYcCXj5adWBB+V5feuItgntQMMxY0/9CJa0LL/Ac0IMMxgAmrfg7NAcDcVai4l/tTCHeHNEZmgCCnlmzupE8el@vger.kernel.org
+X-Gm-Message-State: AOJu0YyctqVpLlQSOEsKliqpkguQtdXWACvOyqIqu+h8KH03A8orMuo4
+	3Q6++aJmtVOXNFELCryh1BOnrQ5TPOIsNwmX2V4AfPVkoTUEdRg525uupCDgTnvNOiA=
+X-Gm-Gg: ASbGncv/WbIZCCDO7RI5CXXLOmMupHE+fa3r3GSlhehRzDLpnAZrZHAATkjJn5OPSrS
+	LrgXTCsiKny441BYaON5h6K91zWJZkwSfhi/ELDvOclgrJ997tJNdr7+qyZBoIWRp1gAtOCnlU0
+	pceYELQ65sWkHT0VvECg3LrF3tCa+/REljxzf5cbCt0EWpoZIupQ4cJQP4zpxPuy1nngFmZ2CpV
+	DSl6tuILHwm7cT0h7OcZqBCOmV0fZNWYVJ5smBlZk8pWPJS/OTQIGT9pd30L+TCctVnWbn+1NUq
+	b5WuM90VM1Esyu8z99onGHm4sgMoRjqQW6LmnDGXnhGYlQaSyYOB1S4fTxQHoTIgMJ8=
+X-Google-Smtp-Source: AGHT+IGOQ/05R6rCvIZwn3dIA2Nugc/IsmfEl2HAgh9BK3DzCi3R0HMyStiSUVCIGzVyM4FshOI6yQ==
+X-Received: by 2002:a05:6000:2507:b0:3a4:efc0:c90b with SMTP id ffacd0b85a97d-3a5723974e2mr7184735f8f.15.1750058651143;
+        Mon, 16 Jun 2025 00:24:11 -0700 (PDT)
+Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:4238:f8a4:c034:8590])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568b08c99sm10312334f8f.63.2025.06.16.00.24.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jun 2025 00:24:10 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Subject: [PATCH v2 0/5] net: use new GPIO line value setter callbacks
+Date: Mon, 16 Jun 2025 09:24:03 +0200
+Message-Id: <20250616-gpiochip-set-rv-net-v2-0-cae0b182a552@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 0/3] Add level shifter support for qualcomm SOC's
-Content-Language: en-US
-To: Ulf Hansson <ulf.hansson@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Adrian Hunter
-	<adrian.hunter@intel.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <quic_nguyenb@quicinc.com>,
-        <quic_rampraka@quicinc.com>, <quic_pragalla@quicinc.com>,
-        <quic_sayalil@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_bhaskarv@quicinc.com>
-References: <20250523105745.6210-1-quic_sartgarg@quicinc.com>
- <d0d3c2c0-d5ab-484d-835b-3a76055cad55@oss.qualcomm.com>
- <CAPDyKFoKh6KLtn6-Rvttt9zKh2fk7T28t_jC7KC8peYE+RkL5Q@mail.gmail.com>
-From: Sarthak Garg <quic_sartgarg@quicinc.com>
-In-Reply-To: <CAPDyKFoKh6KLtn6-Rvttt9zKh2fk7T28t_jC7KC8peYE+RkL5Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Z3sYcZ34SVXSTAF2ZUKEExoXLFmsFZgL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE2MDA0NiBTYWx0ZWRfX7YPUs/OdImC6
- 0XRGG3+pcdBlpaEMtlRrZHjus4lJzuaSVOn0c/gfCX/UgDly4fRdxf02UTJFSqE6EnW0Fwr3rdF
- NXuKxpVVZLHy3GzK59y/21qyCmUxsy1MLQ0spSwtrUuFfzcBl4nBK9H3PWQvkyykXIWPvf/61jJ
- gYAA9oSdtmJvsIQLtUQthX+u6YY3PGPwqvb/y3PwjeSRuZO0DR+vDi4BR/uAkWkYlA0urfXfmw5
- AVtjepMDUHClpHlEQoUQrOLn1FhqhtNBO8psvdrGMr1eLDRF4zaOKB24ffdKi1yGTZwFKC8EqoZ
- xMajAerulR4OLSNRLQJOt7AYk/5vpm/7Ey4lGcBjZuBygVDKoGGgN/Q4eRPJVc4/3nYFb3xcqvS
- HZ/MXBBjXXHZPghqJiImND+9DAgtYQbYy1MKabDgrlAKcWIJIAvaVho/YxvqJuhuYmHuWgj4
-X-Proofpoint-ORIG-GUID: Z3sYcZ34SVXSTAF2ZUKEExoXLFmsFZgL
-X-Authority-Analysis: v=2.4 cv=etffzppX c=1 sm=1 tr=0 ts=684fc43e cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8
- a=R8EqlNOSqXiF4fyEEKEA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-16_03,2025-06-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 adultscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 suspectscore=0 phishscore=0 mlxlogscore=980
- lowpriorityscore=0 bulkscore=0 mlxscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506160046
+X-B4-Tracking: v=1; b=H4sIAJPGT2gC/22NwQrCMBBEf6Xs2ZUk2sR68j+kh5pu2wVJyqYEp
+ fTfjfXqaXgD82aFRMKU4FqtIJQ5cQwFzKECP3VhJOS+MBhlalUbh+PM0U88Y6IFJWMo0ZB7NLo
+ 7m8F5KMtZaODXbr23hSdOS5T3fpL1t/35rFZ/fVmjwlNt7aXvtXd2uD05dBKPUUZot237AKUyb
+ PG3AAAA
+X-Change-ID: 20250527-gpiochip-set-rv-net-9e7b91a42f7c
+To: Andrew Lunn <andrew@lunn.ch>, Vladimir Oltean <olteanv@gmail.com>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Linus Walleij <linus.walleij@linaro.org>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, 
+ "Chester A. Unal" <chester.a.unal@arinc9.com>, 
+ Daniel Golle <daniel@makrotopia.org>, DENG Qingfang <dqfext@gmail.com>, 
+ Sean Wang <sean.wang@mediatek.com>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Marc Kleine-Budde <mkl@pengutronix.de>, 
+ Vincent Mailhol <mailhol.vincent@wanadoo.fr>, 
+ Heiner Kallweit <hkallweit1@gmail.com>, 
+ Russell King <linux@armlinux.org.uk>
+Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-mediatek@lists.infradead.org, linux-can@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1610;
+ i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
+ bh=uR2GGIFJoNUWja26+eqtvHQqGtdircsCPqOzrEceufw=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBoT8aYW4MUwvKOocqHKQFcXvihCO599Xx46HuuP
+ BdHcdXSED+JAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaE/GmAAKCRARpy6gFHHX
+ cvZBD/0aIizVMfAcrRGn+eGFgxroefc64UEncpO5XRYZr4fpLreEOW/l/6kJdsUC3ln+H5m7qyd
+ afXzJbi7dzgzaaakQc0F1Yl+Xk3ybyaO9jL9EijyiRnrThzoYCuJEn2/uLHV+NK8n+mMWa6/vmU
+ 4iKlPXYrPpKMMp4vF5r6UBKlFKQd68CXKBqaUvLQlq5NK4K8hFyMVxGngeVomNZJEOs8Xb/RNae
+ CY2grMseA4NDMv0+JNPAEoFFPvYDyhLjm9jSZdwXItdJJJ9Hxs4SoAo+hrS9mI1nFETaXK95JII
+ K5lzvRb8Gaciin93TS4nnmpboRPiyKHjjNjG3f6G9bMD9N4O1ZhsJdidluXfoYINmbuECVCmhBo
+ oI8F4ba9fca7wCeBSvTpopmVe055GxvDiUoX1Pf4BrEEqXdIU1O3d2yadpQcrNqc8M2NJmnuVwe
+ HcEjM/EZiESaur6u6pva7RjUNFK0AyVWHaRy1BQO66SK7Z867KEhTyFW4Ktc05qPpzXJY+nUvV/
+ 8RMUio65JmAVSUOsG1GzV48Zh1dlS46nqyItSAiEje8/saGqMuCqVyyMK1jZT/wYP576NtkqcXf
+ +iiCZPwC1n6roZHDTuirFnU5fInYX3zemFdlV9BGW4VaG3RuwHRHuDuP0FlLi4HraM9oJSfXHh8
+ Ez87K2sH4EmaVOQ==
+X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
+Commit 98ce1eb1fd87e ("gpiolib: introduce gpio_chip setters that return
+values") added new line setter callbacks to struct gpio_chip. They allow
+to indicate failures to callers. We're in the process of converting all
+GPIO controllers to using them before removing the old ones. This series
+converts all GPIO chips implemented under drivers/net/.
 
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+Changes in v2:
+- propagate the return value of mcp251x_spi_write() in the mcp251x
+  driver up to the new GPIO callbacks (and the old request() too)
+- check the return value of phy_read_mmd() as well in qca807x
+- Link to v1: https://lore.kernel.org/r/20250610-gpiochip-set-rv-net-v1-0-35668dd1c76f@linaro.org
 
-On 5/27/2025 8:05 PM, Ulf Hansson wrote:
-> On Fri, 23 May 2025 at 20:25, Konrad Dybcio
-> <konrad.dybcio@oss.qualcomm.com> wrote:
->>
->> On 5/23/25 12:57 PM, Sarthak Garg wrote:
->>> Add level shifter support for qualcomm SOC's.
->>>
->>> - Changed from v1
->>>      - As suggested by Krzysztof Kozlowski redesigned logic to use
->>>      compatible property for adding this level shifter support.
->>>      - Addressed Adrian Hunter comments on V1 with resepect to
->>>        checkpatch.
->>>      - Cleared the bits first and then set bits in
->>>        sdhci_msm_execute_tuning as suggested by Adrian Hunter.
->>>      - Upated the if condition logic in msm_set_clock_rate_for_bus_mode
->>>        as suggested by Adrian Hunter.
->>
->> During internal review I suggested we could introduce a generic quirk,
->> perhaps called "max-hs-frequency" which would update this
->> currently-constant value:
->>
->> ---------------- drivers/mmc/core/sd.c ----------------
->> if (status[13] & SD_MODE_HIGH_SPEED)
->>          card->sw_caps.hs_max_dtr = HIGH_SPEED_MAX_DTR;
->> -------------------------------------------------------
->>
->> (50 MHz)
->>
->> which I believe is where it comes from
-> 
-> I agree that a DT property for the mmc controller would make sense.
-> 
-> Although, this seems limited to SD UHS-I speed modes, so perhaps
-> "max-sd-uhs-frequency" would be a better name for it?
-> 
-> Kind regards
-> Uffe
+---
+Bartosz Golaszewski (5):
+      net: dsa: vsc73xx: use new GPIO line value setter callbacks
+      net: dsa: mt7530: use new GPIO line value setter callbacks
+      net: can: mcp251x: propagate the return value of mcp251x_spi_write()
+      net: can: mcp251x: use new GPIO line value setter callbacks
+      net: phy: qca807x: use new GPIO line value setter callbacks
 
-Sure will update this logic in V3.
+ drivers/net/can/spi/mcp251x.c          | 37 +++++++++++++++++++++++-----------
+ drivers/net/dsa/mt7530.c               |  6 ++++--
+ drivers/net/dsa/vitesse-vsc73xx-core.c | 10 ++++-----
+ drivers/net/phy/qcom/qca807x.c         | 13 ++++++------
+ 4 files changed, 41 insertions(+), 25 deletions(-)
+---
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+change-id: 20250527-gpiochip-set-rv-net-9e7b91a42f7c
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+
 
