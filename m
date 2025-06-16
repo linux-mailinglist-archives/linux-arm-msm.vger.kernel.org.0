@@ -1,408 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-61443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73415ADB279
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 15:49:13 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B086CADB275
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 15:48:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0EFDD3AAA42
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 13:43:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7BC5E1881E97
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 13:48:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCE672877D1;
-	Mon, 16 Jun 2025 13:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23C332BF001;
+	Mon, 16 Jun 2025 13:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="c+FIv3wR"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fKxODzvU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EFD2877C0;
-	Mon, 16 Jun 2025 13:43:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.14
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750081404; cv=fail; b=Vi3B2y0b2vDIxJYp5GqTBjP6wioz8KoZzS7UXPhVM84G3Lr70er6mL0tieZcRie/225SXOwqY8wUmvTJ688nZEg1wLHwgBwAQka+r9w6306DaF5vvG697KLKiMjE5X5MthAsvy6JUKDtKaBLfWOomdZkepqtVE/B7bMxU1k+UgI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750081404; c=relaxed/simple;
-	bh=FiW9n2KszQAzEEwW61SbvorwN3dnL3g5QpVJjnGFjSM=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=QVqyYmBZpezs3hakmQquF6fBcn9YNJhRS5uvQd0vXTCfyAx8cyCEM/YMP+GIY+VxmBw9CnBLQChojQ8ljjAyGNZUIMx5JtrMW/ZnbV6jSOunMN3HAdZP8E/UJBiGhrgHNmt6WU0DVEhp8Wn5W5WU1axljhOg89a0zg1bLPHNBRo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=c+FIv3wR; arc=fail smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750081402; x=1781617402;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=FiW9n2KszQAzEEwW61SbvorwN3dnL3g5QpVJjnGFjSM=;
-  b=c+FIv3wRRTmcnbFn3KHG2aFVROwkvgshZ6/B1xbjmbsQubrCD42s7l20
-   c8lXTi57l7gfUb7Av4on08WxsM8+cz2dhqKe8iGAL+v3rkIYh30ZLJm0Z
-   3Mmz70uu7BqDO8vOegvwY3pjaWOPO3y/irPv5KAiymYGXh6C6SfSBb/GH
-   yvZju8UNDuSda5u2KKrdJzvceRo8831WtsBOxAbe1LEdhpc37lvbQeZLF
-   RPEfS6W1wBwZcLfboUssMyxeIelCb/Az+EB2bQX4fMOw4Xkwk2j+5Pjxw
-   haFQEHr0jkJeaollrj5Ef1kDCoqqXnCUj+LTdnyFW6h7YhIii6vy5/d6o
-   Q==;
-X-CSE-ConnectionGUID: oEGE2ZjBQwuXjxk9cUn/iw==
-X-CSE-MsgGUID: hE9FcJ13T9a1IeqJ6cx1/w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="52315960"
-X-IronPort-AV: E=Sophos;i="6.16,241,1744095600"; 
-   d="scan'208";a="52315960"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 06:43:21 -0700
-X-CSE-ConnectionGUID: S/sTlcr9SDiE2VZPRgkzVA==
-X-CSE-MsgGUID: vVV97YBBRVO1eaf29H9SEw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,241,1744095600"; 
-   d="scan'208";a="171697793"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2025 06:43:20 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Mon, 16 Jun 2025 06:43:18 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Mon, 16 Jun 2025 06:43:18 -0700
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (40.107.93.70) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Mon, 16 Jun 2025 06:43:17 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jB64cXjczRvhNjurfcJdyTfSG5mqTKfkAtm9kVL+DG8JoaqdjEkzOGC6anT+1T/tbpPBbmDR9BAl3LkJJ54XWhQcf2gSWvEOM+2dvM2W/1G54P+dWzdndKZMVUeLRmoblv6loiusoEwszPP5iyiqrMd0oiHAoVaFlkmnWmzKfAwRwlfcpsF0gYdpDtWx2/UEJI1RZGCTjdBAMgNxZSdHiQgWrafisDasWz+L30KFpqx2dKgEpT5Y4boCghNMEyr7e+RRAX3JUWBu9taiqumQ0qMwQ2n3HdifS3895jNN6V2gnPyR+2AHWrB7rhVtxVRnN7l5gFTJtn3fwJ4Ew6WylQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zcFljD8rP7OtsuANFsBQ0C3gYtGRYsATyTij7PAVa/w=;
- b=p4JqOOFx1hfdTupGScG0CriPCA8FyuSmLOUyQBDrhZbWqwl/MiA3pNpG3Hy96zgCFms2/NrYkmLZrT+RauLnG7tzTUcx3qsMtdhOTnFh24YRInlPz/QMj4dcSYvCVZPUKkTJpwDyziRWokXBqtYYYI5BFZGj8fPqou69/o82d9gAOIi6uUHKYh/1n4DeUyYXA52iWp6FKIrUzQVK1Kfboig4EvQVVKlklz/V2a2Keyo1CwSszgM1DUgLKcvCk1A7PvuQDaPRo/3OVrTxEtUeKZK2SdyWFhnzdKcvYVpQxBXFL7oFImBdRdrhO6D5OlJsHBCmM4fMXq4OJMWlEBOXoA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from PH3PPF9E162731D.namprd11.prod.outlook.com
- (2603:10b6:518:1::d3c) by MN2PR11MB4550.namprd11.prod.outlook.com
- (2603:10b6:208:267::7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.25; Mon, 16 Jun
- 2025 13:43:01 +0000
-Received: from PH3PPF9E162731D.namprd11.prod.outlook.com
- ([fe80::19ef:ed1c:d30:468f]) by PH3PPF9E162731D.namprd11.prod.outlook.com
- ([fe80::19ef:ed1c:d30:468f%4]) with mapi id 15.20.8835.018; Mon, 16 Jun 2025
- 13:43:00 +0000
-Date: Mon, 16 Jun 2025 08:44:05 -0500
-From: Ira Weiny <ira.weiny@intel.com>
-To: Sean Christopherson <seanjc@google.com>, Fuad Tabba <tabba@google.com>
-CC: <kvm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-mm@kvack.org>, <kvmarm@lists.linux.dev>, <pbonzini@redhat.com>,
-	<chenhuacai@kernel.org>, <mpe@ellerman.id.au>, <anup@brainfault.org>,
-	<paul.walmsley@sifive.com>, <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>,
-	<viro@zeniv.linux.org.uk>, <brauner@kernel.org>, <willy@infradead.org>,
-	<akpm@linux-foundation.org>, <xiaoyao.li@intel.com>, <yilun.xu@intel.com>,
-	<chao.p.peng@linux.intel.com>, <jarkko@kernel.org>, <amoorthy@google.com>,
-	<dmatlack@google.com>, <isaku.yamahata@intel.com>, <mic@digikod.net>,
-	<vbabka@suse.cz>, <vannapurve@google.com>, <ackerleytng@google.com>,
-	<mail@maciej.szmigiero.name>, <david@redhat.com>, <michael.roth@amd.com>,
-	<wei.w.wang@intel.com>, <liam.merwick@oracle.com>,
-	<isaku.yamahata@gmail.com>, <kirill.shutemov@linux.intel.com>,
-	<suzuki.poulose@arm.com>, <steven.price@arm.com>, <quic_eberman@quicinc.com>,
-	<quic_mnalajal@quicinc.com>, <quic_tsoni@quicinc.com>,
-	<quic_svaddagi@quicinc.com>, <quic_cvanscha@quicinc.com>,
-	<quic_pderrin@quicinc.com>, <quic_pheragu@quicinc.com>,
-	<catalin.marinas@arm.com>, <james.morse@arm.com>, <yuzenghui@huawei.com>,
-	<oliver.upton@linux.dev>, <maz@kernel.org>, <will@kernel.org>,
-	<qperret@google.com>, <keirf@google.com>, <roypat@amazon.co.uk>,
-	<shuah@kernel.org>, <hch@infradead.org>, <jgg@nvidia.com>,
-	<rientjes@google.com>, <jhubbard@nvidia.com>, <fvdl@google.com>,
-	<hughd@google.com>, <jthoughton@google.com>, <peterx@redhat.com>,
-	<pankaj.gupta@amd.com>, <ira.weiny@intel.com>
-Subject: Re: [PATCH v12 08/18] KVM: guest_memfd: Allow host to map
- guest_memfd pages
-Message-ID: <68501fa5dce32_2376af294d1@iweiny-mobl.notmuch>
-References: <20250611133330.1514028-1-tabba@google.com>
- <20250611133330.1514028-9-tabba@google.com>
- <aEySD5XoxKbkcuEZ@google.com>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <aEySD5XoxKbkcuEZ@google.com>
-X-ClientProxiedBy: MW4PR04CA0075.namprd04.prod.outlook.com
- (2603:10b6:303:6b::20) To PH3PPF9E162731D.namprd11.prod.outlook.com
- (2603:10b6:518:1::d3c)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56746285C9F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 13:48:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1750081695; cv=none; b=YLeEeSo4SEMaC2IFt1KzxJPkrxU+dTfKzWfT1hJHn2ic86Dlccn67A5TmDM9l3UBnsSA75F911r8W+U6CHqRi6h3rOG56d8lYgwH3RBmy9+4PE5jABW4S8ubZIB8Pcy2d/Yqo7C+VNlhkvCr1dmf5ZH2VOr3XvJVib4UlpUFUAQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1750081695; c=relaxed/simple;
+	bh=GzgbkQhkxGKkIQaYd3TxcpGQW2BoX1t9v+87GbmUuoI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dH9Kl0uxAqEenk44MBlGrdlYCu/HEt3fZFuBAqt8k/14YJLQvkTxZg0Ph/+vYCLbl+ACj/6Q199072tgwc7F2Q0PlDlxvOvcKiEbWnPyZTS3GeW5WWka9A9QTPwOIQDSEV+RTxwSovU5dB3mEfBvME9fj/hTE0uVoRdKLnN9bGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fKxODzvU; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55G8RBCN019132
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 13:48:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=BIIY/fRKWsQgNmG2HbZPcw1m
+	+aSAr4IzJ2LTNf0iuZ4=; b=fKxODzvUyXzYkNWXxcEuVXnKnKWE8tgplu93rLqn
+	/jt8j6bVg/62lB45+YRYEslrCh0UJFCfNy/0iPTqqYVpTZt8RkbqF5hbR3hwWV4c
+	15r7sqSM6oPhcJgHnFdJCP9W1B0KtISa+9xjsSEudS/7DlI9pReP/8mvyKs5D+Qd
+	cd0WJ82x27xZ7v2OizMGkXUyf6zPuzksfCw5qDcJMLPTQwilKyYGK04rxswHGu+c
+	Ki8UNWfgVjWinIWkO93K+hf5UDFDATIFUriAqAKfoFqs3youqo6wo8CbZXk4Kxpr
+	sgxjo31Ow/tBqp3j0/hM/vMKUSX3APZRu4FZOeGN0M3wWA==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4791encppg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 13:48:11 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6fb01bb5d9aso58495196d6.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 06:48:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750081691; x=1750686491;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BIIY/fRKWsQgNmG2HbZPcw1m+aSAr4IzJ2LTNf0iuZ4=;
+        b=t+UnzuGjZLykH5GjrgF1CS5vfBUm8KufmSvJGZBw32d42yQxOIcpWYqhs6DI//YBSN
+         fdoFeiYtDW+8gXljRo/4rrSuNkcF/d5Q5ISAaHbPLQwAcNU6oy7PGzTGGf4xV0BYQVpG
+         Q9zKBo80fdfWWXHfHOmNTDx6mVL/H+DYUXfBUyjIVURBQKPfzsuCpQYkFfPLuAlaabNq
+         LbciTfQk7YNKMxwWXS9oYlOBqZHLrWTaosh/c+1rFi7Anzq1ddNy6WaCvxjfV7UBc1fn
+         g0Eo8hXMwQZM6Syb4iJMXeMoXpzZKiuxorxPC4Out2qt/wK2gtcKb8rhpoMOtUsCRVYX
+         5Www==
+X-Forwarded-Encrypted: i=1; AJvYcCU/E9M1A0NHHlC8gjnJ8L+5yLVr9BB7fg04It/4+GbG1eHvs6ocIJXbJjkvzgum6TZH5kYbwttTnglTuoVM@vger.kernel.org
+X-Gm-Message-State: AOJu0YykGOrEbUyChxrlhumViyQNTnNElB7nyD5EYSuqxs4WLD6b18Wu
+	h5C3ECS5ZTeYT1mAMtFGqhaEaHfzqfySFFX8l36r98Sj8kKaDmUWcYzWHmehBAPcH52kq1Ynm5a
+	MSvkyOSzegmGH+xkPpMitOo6SwuzCLdqlRsnlNRqmSXF19TmcIXvc0/c1Vu4ISBC0+lvp
+X-Gm-Gg: ASbGncu0xUX/rXG+ijVysPUBtCiWPbdzhvqbxaZHtmmb3auLo81SzXdHGmEQYldKVD0
+	KO0RlvvbxHzP0OEMvRFW46aDRMs0GIAyq7f8RGHoJ7eOpWLMqWo6epOlj0gNRjtL8/BQA9VGIi9
+	JLNtz7N3Q4Wf9BC7MMeYiTb3j0bj/XsMHo8jD6tpinjTv8RafpiC7lPQ8QXDFI6n8EF5fkT2mME
+	50Qyv4pxSrorRRpX+G/pUyy6O7RZvflETLWr5Spxi2P6bRhujMO2ii/q48pZyO1wj+mf9zAUoC5
+	jF0i6axq4tUYJRqZw7WaCqA47Y+o8TNLyI7cNjRs/7O4cMsA6Fnd8JOwxnmDPssGx/eILIcH6/3
+	Cax2pkQ/edR5KJV3hFdY+nBxZ4zOWGGyaYmc=
+X-Received: by 2002:a05:6214:252d:b0:6fa:ff79:2cfe with SMTP id 6a1803df08f44-6fb47729df2mr137837806d6.12.1750081691121;
+        Mon, 16 Jun 2025 06:48:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF4hLKRzzWBZMauvEObY3mOqYUuEjkBCcDNkBKkaRNoOK6orlQCG9s5Zi1kcaeGYrzQFeU1Ug==
+X-Received: by 2002:a05:6214:252d:b0:6fa:ff79:2cfe with SMTP id 6a1803df08f44-6fb47729df2mr137837276d6.12.1750081690559;
+        Mon, 16 Jun 2025 06:48:10 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553ac1c25d5sm1537270e87.166.2025.06.16.06.48.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jun 2025 06:48:09 -0700 (PDT)
+Date: Mon, 16 Jun 2025 16:48:06 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <quic_yongmou@quicinc.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: Re: [PATCH v2 29/38] drm/msm/dp: add connector abstraction for DP MST
+Message-ID: <7r7vdbeols4suew7rlvogft4b5lmg22osipydxzkubxsychewi@lpyj6vmoapzb>
+References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
+ <20250609-msm-dp-mst-v2-29-a54d8902a23d@quicinc.com>
+ <fcmbo5qhiifo3erfnejgtu6es2nmeo3c5r4plbutj23gdtydng@xy3mqkhbsjia>
+ <1c09642b-7a0c-4073-97d3-f6f6cddbde83@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH3PPF9E162731D:EE_|MN2PR11MB4550:EE_
-X-MS-Office365-Filtering-Correlation-Id: ee6786be-d227-4087-9430-08ddacdbb5d6
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?hdARHb780v1wlHgoVAT+p4aMpBwC03mCAbJSscNvhXAuKyIM2m7v0+RgIJgd?=
- =?us-ascii?Q?4NMGr6OEHpyqggipFRKF2AorIena4RHQzVJwbNejh10LjCGhkdXQ0vbXIkiv?=
- =?us-ascii?Q?iR4IEar5RlF8MukF821iaqQZQRjlswiW61ExfIETqciXP+24XWl3uqeAyCjV?=
- =?us-ascii?Q?GtK0qg69ewg3aAgS0AMs8S3WRfk2Ehf1bnJVWc9aFUhx1HCy3ThW3V1gRG6P?=
- =?us-ascii?Q?Tur0LVLVv39Jv7P8q0RfMjttSd4ISAhDaZ/tD2rbvR4wHQ13mieDvHlSL4hD?=
- =?us-ascii?Q?xlPaTOahwFV1rhUURoMaPmBMkHuGWH8HDWCieeBUneS53s2H1cg4NCICRIMd?=
- =?us-ascii?Q?PweYQQYK8F7Lr42uWHWV3AFmLAJCpCXSBY2KxlCiAt5DhC35oAJpf+DAIBao?=
- =?us-ascii?Q?emusFa/apUxGCypKqif96V8x26lbguLFyGZZ4TSg1ZmU1AO4RjOgqqpB3IKq?=
- =?us-ascii?Q?pActYdCCZpU8oqAsVaaX6sEVWx2EucFg2N5yeWGplNXHszgjQKgBqab8OpN2?=
- =?us-ascii?Q?NwB/zGL/S8tMBwNwvZlwNQ9VCx1wTZch8D/yZFZO3+052l7u26UWbHELY6j7?=
- =?us-ascii?Q?JiWx2SzA3r1H07nY99Sl7vzmV6zNqhsDs9p2dLWRCWoVs/i6/mALljiXkEda?=
- =?us-ascii?Q?fNPsYBRmFDQy1EYIlAKoebSv2LeS3YgUMHB1p1WaZoTvN/LOyXrpUh1i3ojO?=
- =?us-ascii?Q?Dtf1nwSuBw2czBiNNXHXn2CjUzGtuYmorAGVKUaq6dBAhjrs6AiNiys4qTbi?=
- =?us-ascii?Q?1kHVO9xnvbp8uV10lLR7brYnQjnywlOxp15iMiAAh6i9K+YtvaTktXPA7P8x?=
- =?us-ascii?Q?dgK/nsRr7cKNVkILopVVkcPSoI31/okqQ7Y4Tg1keYPi77bdDEPb6EA3Mgfy?=
- =?us-ascii?Q?GzXYtk1fkfbatzzwzm0dQKe2Hq6dVAje/DZRYLT3icsb6hkIFNb6s1VszYZI?=
- =?us-ascii?Q?gns3uDCMyk8mgaUNby6ZdEZjXRnYXnbLR5pkqVa82Hv6vWu/amMQ7jdFbfqn?=
- =?us-ascii?Q?l/CGtto+9wr/Q8Yvu0AMAOUdLT5DqaDuMYJ3fQ8EoHBG+XRKZIcxa50ppk2G?=
- =?us-ascii?Q?3KDi76uw54v6OomgjEgFB/3YGWgi3AGxDF0xy63HUKwT4W169u4xXskvAt8S?=
- =?us-ascii?Q?Plg3zZPoXGVF/vB4MirXmHDRJaH/sktyrCt1OayVtrIXSzh9cXOTbFkLW5Sy?=
- =?us-ascii?Q?YMinwA1r+PU7vS+W2pMuBv3tfgyWOc4/wdoHAfO3h3+6nT1Ul46DUH5zhlJ6?=
- =?us-ascii?Q?if/v2fxDaqJLjqxpb/fLqSPMdS5+2ApY+AnHRt56UnWJn7JBULxvA6lgnQ+6?=
- =?us-ascii?Q?fHjazTC172sAL7sCjR/3SFEb9EgsZJ5SQnZYnFxx0xedl/y+P5hYBxy44uRp?=
- =?us-ascii?Q?qawHK7l/UNlt7ODG75CfmzdhMMUaBqisL3tiD1KU6TubLGApwkHozWzZFyv1?=
- =?us-ascii?Q?rSbGR9xjxi4=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH3PPF9E162731D.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ho6P0A6t3dudpxjAvsbTyyvAFIRyEQChXtLDoDoihQvsurdyZWUtlEuTNK8G?=
- =?us-ascii?Q?vOyAsEJUiTGsNWbRug4RUQL5KyW2WnXRXqWlcbidD1q7QBVb7DFbBEa1CUrJ?=
- =?us-ascii?Q?JA8/IfB05HDhSar2OGo2CmpSvNbCM4ctIM84jbs7P7Dh3aGJ4IEgi0AiSHxq?=
- =?us-ascii?Q?DXWLGY+9RAlLaNn+D3GgICXssqE8wB0asMnIl2aAqS+EIufGBsOkGTy4g9ch?=
- =?us-ascii?Q?5QHKDBOAzEdk+UOHqC7y+aK1MDvxXzxHU1OmUqpmcXUtODXiQw1xXNVViFan?=
- =?us-ascii?Q?qp9QYpd91aGOFuPatYkdqUTLpFva/LW4wih3TJow6Mo9NsZKCJn2lqkkYYOR?=
- =?us-ascii?Q?QmKQbz04/JhYw7Yk0AfoKmrQJxhXcxOfnK9LRpRN1r5eQVRkBHIkn7/Kw/MA?=
- =?us-ascii?Q?ZJHyQE7dTCHgR0ZHfDP2HKUQC//G4KEbLFeaDIEpXasUQez30BpAWCja4T8P?=
- =?us-ascii?Q?fdmLmktJMhKIJeO4pXwul/0V2HuxYwv9HHaO5ahOB+fbir1vXKv5ABt/L+GP?=
- =?us-ascii?Q?RQyj7J+7argOb/GKfENooK/kOCHCRLOridhdEEgIki5r50HMAoQkvimEmdTA?=
- =?us-ascii?Q?7eGi3gwDFU3V7DMrUGxtu0TlHcWtaTjfp/dDOCQi7JDO9vhhb+CcYsaJcsln?=
- =?us-ascii?Q?J7cgYcnMHUgDtE8V6n6BUgVcldq7Nu8EjA93494Vsl/N2tk7eE9VtnTnKB4e?=
- =?us-ascii?Q?Ar7EOuUmJfnUHfq8UDqBeMswgSMjVoDcYf+ww20Z6PU9QXym1HdTKQF3j97L?=
- =?us-ascii?Q?uMIWdNAdWZCRA/7zIN5+E08IXAEHAMFX9rG12dUbM9sG9NcFwNJHdL66DvW4?=
- =?us-ascii?Q?mtfsQnLloDXErK96tRaaL/UoSbd8sdy0YpnCILQeqLBbWdUxPfSVJb4yUyNe?=
- =?us-ascii?Q?Lbr4RoQxeZsSpn5JwP05qFmWWaaNbJNAof2lUqmlapww+RguZ/oD/56NKIRG?=
- =?us-ascii?Q?P34WG4R+RpbhB1/A5n7G2cQa1FRwKENbmRL5wD4SaWMvDM3z81nMaaaq7jCj?=
- =?us-ascii?Q?nvic6FvcHl2VA/7iK8krBea80xHmWDLTJ2dGA829pOOAcdDIhNt05tgxZGg/?=
- =?us-ascii?Q?OmHXml+UWL8Kbl+StEMXYfm2Sz2cN6IhdOq9HORHlAG71WJrc3lOY23RSQut?=
- =?us-ascii?Q?KgdhZIFSCnkxUgCcujQN/h+CLXXw9LfUVHcxX9sXZLGu0GqJ7pBVQHeIQF+E?=
- =?us-ascii?Q?4w8ahXAD9Q0Sq/Qht/HKKB7e8yli5x+HyDanc9z5dR47I3Np05WiNpnBkdIF?=
- =?us-ascii?Q?1i27/Scgj+DDCqllVzo/GFFGjZNJlUMcpoBXC9Gj5pKywStsdqIKGvUfCyAC?=
- =?us-ascii?Q?CEDw1O6oxjfTSOJBp8o0cEXDhn12Ukhf4yympz1gZxNe53xLUSyTG0m50ESC?=
- =?us-ascii?Q?4oiFrNjUBgylGKIGDDouZHVKauMw6UxLP+xuYWyVqlS5ZcpArjGkwknF2MzC?=
- =?us-ascii?Q?8HqU3sHIfdm2HPYOrm64ma0M68bMLCvj2ugleB6LvYovk9GxvHUwy0ODclfU?=
- =?us-ascii?Q?+udj8zIgqj40FUyIU1CdMo27mCXHoWAyHYk8XroMlJ33Y/A0D89yhVpb1tQr?=
- =?us-ascii?Q?C8o4yb8kOKqSXVr4Nni/S9iDjR7Gx1b0KfeZWCgM?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: ee6786be-d227-4087-9430-08ddacdbb5d6
-X-MS-Exchange-CrossTenant-AuthSource: PH3PPF9E162731D.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2025 13:43:00.7923
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: u1WKVykR11RyRD+RFqIwdTfm9uqRQyug1Dy0NqcwJho3jeQsdcG5RehqbD0g+5RgX0+Lju1zkdOjtt7DEVxu/Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB4550
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1c09642b-7a0c-4073-97d3-f6f6cddbde83@quicinc.com>
+X-Proofpoint-ORIG-GUID: KSZi9qVJ3NzLkAzXDcISsnethrIBxUuh
+X-Authority-Analysis: v=2.4 cv=D6RHKuRj c=1 sm=1 tr=0 ts=6850209c cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8 a=xh06mepXuQVyf8XfyCsA:9 a=CjuIK1q_8ugA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: KSZi9qVJ3NzLkAzXDcISsnethrIBxUuh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE2MDA4NyBTYWx0ZWRfXzj7nyJ9qGuFJ
+ FZqlHbnmP1KMKcvAd61lq8bhZNazxRvTxWLV1X8CqU9zDdb6XQJ4cYB4T2eqK2w/ws8KvY7wIfD
+ 7Y9cS0SEz/7fGqqCoHKRo44XErUJ11Gmd6/7NLTHW/ahowOmewVxJOivJJOla2URslYC8wU9qK8
+ H2F0s8SOgFHMaofHmpof9tzcik9LpNle1FBqQdhtLBbj0VBrmxx2g3rKnzelpQEbny66VDzIySl
+ I+h66oklYDn4e37l7qBhvIF1byUYvaEdBnSMyHOjNPLmDoUICDwBoGT1Z3FhrTCyspuwOXi1j47
+ GxfKzC0iM+sP04mIe4JyuLuNnewtSflsez97RW2aHOs0licrCEGwaFholAEXJYPaI+qrurEdYvd
+ MMAv7hQw1tc/oIbyrRAXuF56IxvyBm70pRWHifGk+NzcNjJ7qRvd3qW147xIw2nhcDlcpnTw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-16_06,2025-06-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 impostorscore=0 phishscore=0 adultscore=0
+ suspectscore=0 mlxlogscore=999 clxscore=1015 mlxscore=0 lowpriorityscore=0
+ spamscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506160087
 
-Sean Christopherson wrote:
-> On Wed, Jun 11, 2025, Fuad Tabba wrote:
-> > This patch enables support for shared memory in guest_memfd, including
+On Mon, Jun 16, 2025 at 08:43:40PM +0800, Yongxing Mou wrote:
 > 
-> Please don't lead with with "This patch", simply state what changes are being
-> made as a command.
 > 
-> > mapping that memory from host userspace.
-> 
-> > This functionality is gated by the KVM_GMEM_SHARED_MEM Kconfig option,
-> > and enabled for a given instance by the GUEST_MEMFD_FLAG_SUPPORT_SHARED
-> > flag at creation time.
-> 
-> Why?  I can see that from the patch.
-> 
-> This changelog is way, way, waaay too light on details.  Sorry for jumping in at
-> the 11th hour, but we've spent what, 2 years working on this? 
-> 
-> > Reviewed-by: Gavin Shan <gshan@redhat.com>
-> > Acked-by: David Hildenbrand <david@redhat.com>
-> > Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-> > Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> > diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
-> > index d00b85cb168c..cb19150fd595 100644
-> > --- a/include/uapi/linux/kvm.h
-> > +++ b/include/uapi/linux/kvm.h
-> > @@ -1570,6 +1570,7 @@ struct kvm_memory_attributes {
-> >  #define KVM_MEMORY_ATTRIBUTE_PRIVATE           (1ULL << 3)
-> >  
-> >  #define KVM_CREATE_GUEST_MEMFD	_IOWR(KVMIO,  0xd4, struct kvm_create_guest_memfd)
-> > +#define GUEST_MEMFD_FLAG_SUPPORT_SHARED	(1ULL << 0)
-> 
-> I find the SUPPORT_SHARED terminology to be super confusing.  I had to dig quite
-> deep to undesrtand that "support shared" actually mean "userspace explicitly
-> enable sharing on _this_ guest_memfd instance".  E.g. I was surprised to see
-> 
-> IMO, GUEST_MEMFD_FLAG_SHAREABLE would be more appropriate.  But even that is
-> weird to me.  For non-CoCo VMs, there is no concept of shared vs. private.  What's
-> novel and notable is that the memory is _mappable_.  Yeah, yeah, pKVM's use case
-> is to share memory, but that's a _use case_, not the property of guest_memfd that
-> is being controlled by userspace.
-> 
-> And kvm_gmem_memslot_supports_shared() is even worse.  It's simply that the
-> memslot is bound to a mappable guest_memfd instance, it's that the guest_memfd
-> instance is the _only_ entry point to the memslot.
-> 
-> So my vote would be "GUEST_MEMFD_FLAG_MAPPABLE", and then something like
-
-If we are going to change this; FLAG_MAPPABLE is not clear to me either.
-The guest can map private memory, right?  I see your point about shared
-being overloaded with file shared but it would not be the first time a
-term is overloaded.  kvm_slot_has_gmem() does makes a lot of sense.
-
-If it is going to change; how about GUEST_MEMFD_FLAG_USER_MAPPABLE?
-
-Ira
-
-> KVM_MEMSLOT_GUEST_MEMFD_ONLY.  That will make code like this:
-> 
-> 	if (kvm_slot_has_gmem(slot) &&
-> 	    (kvm_gmem_memslot_supports_shared(slot) ||
-> 	     kvm_get_memory_attributes(kvm, gfn) & KVM_MEMORY_ATTRIBUTE_PRIVATE)) {
-> 		return kvm_gmem_max_mapping_level(slot, gfn, max_level);
-> 	}
-> 
-> much more intutive:
-> 
-> 	if (kvm_is_memslot_gmem_only(slot) ||
-> 	    kvm_get_memory_attributes(kvm, gfn) & KVM_MEMORY_ATTRIBUTE_PRIVATE))
-> 		return kvm_gmem_max_mapping_level(slot, gfn, max_level);
-> 
-> And then have kvm_gmem_mapping_order() do:
-> 
-> 	WARN_ON_ONCE(!kvm_slot_has_gmem(slot));
-> 	return 0;
-> 
-> >  struct kvm_create_guest_memfd {
-> >  	__u64 size;
-> > diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
-> > index 559c93ad90be..e90884f74404 100644
-> > --- a/virt/kvm/Kconfig
-> > +++ b/virt/kvm/Kconfig
-> > @@ -128,3 +128,7 @@ config HAVE_KVM_ARCH_GMEM_PREPARE
-> >  config HAVE_KVM_ARCH_GMEM_INVALIDATE
-> >         bool
-> >         depends on KVM_GMEM
-> > +
-> > +config KVM_GMEM_SHARED_MEM
-> > +       select KVM_GMEM
-> > +       bool
-> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> > index 6db515833f61..06616b6b493b 100644
-> > --- a/virt/kvm/guest_memfd.c
-> > +++ b/virt/kvm/guest_memfd.c
-> > @@ -312,7 +312,77 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
-> >  	return gfn - slot->base_gfn + slot->gmem.pgoff;
-> >  }
-> >  
-> > +static bool kvm_gmem_supports_shared(struct inode *inode)
-> > +{
-> > +	const u64 flags = (u64)inode->i_private;
-> > +
-> > +	if (!IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM))
-> > +		return false;
-> > +
-> > +	return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> > +}
-> > +
-> > +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
-> 
-> And to my point about "shared", this is also very confusing, because there are
-> zero checks in here about shared vs. private.
-> 
-> > +{
-> > +	struct inode *inode = file_inode(vmf->vma->vm_file);
-> > +	struct folio *folio;
-> > +	vm_fault_t ret = VM_FAULT_LOCKED;
-> > +
-> > +	if (((loff_t)vmf->pgoff << PAGE_SHIFT) >= i_size_read(inode))
-> > +		return VM_FAULT_SIGBUS;
-> > +
-> > +	folio = kvm_gmem_get_folio(inode, vmf->pgoff);
-> > +	if (IS_ERR(folio)) {
-> > +		int err = PTR_ERR(folio);
-> > +
-> > +		if (err == -EAGAIN)
-> > +			return VM_FAULT_RETRY;
-> > +
-> > +		return vmf_error(err);
-> > +	}
-> > +
-> > +	if (WARN_ON_ONCE(folio_test_large(folio))) {
-> > +		ret = VM_FAULT_SIGBUS;
-> > +		goto out_folio;
-> > +	}
-> > +
-> > +	if (!folio_test_uptodate(folio)) {
-> > +		clear_highpage(folio_page(folio, 0));
-> > +		kvm_gmem_mark_prepared(folio);
-> > +	}
-> > +
-> > +	vmf->page = folio_file_page(folio, vmf->pgoff);
-> > +
-> > +out_folio:
-> > +	if (ret != VM_FAULT_LOCKED) {
-> > +		folio_unlock(folio);
-> > +		folio_put(folio);
-> > +	}
-> > +
-> > +	return ret;
-> > +}
-> > +
-> > +static const struct vm_operations_struct kvm_gmem_vm_ops = {
-> > +	.fault = kvm_gmem_fault_shared,
-> > +};
-> > +
-> > +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
-> > +{
-> > +	if (!kvm_gmem_supports_shared(file_inode(file)))
-> > +		return -ENODEV;
-> > +
-> > +	if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
-> > +	    (VM_SHARED | VM_MAYSHARE)) {
-> 
-> And the SHARED terminology gets really confusing here, due to colliding with the
-> existing notion of SHARED file mappings.
-> 
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	vma->vm_ops = &kvm_gmem_vm_ops;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> >  static struct file_operations kvm_gmem_fops = {
-> > +	.mmap		= kvm_gmem_mmap,
-> >  	.open		= generic_file_open,
-> >  	.release	= kvm_gmem_release,
-> >  	.fallocate	= kvm_gmem_fallocate,
-> > @@ -463,6 +533,9 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args)
-> >  	u64 flags = args->flags;
-> >  	u64 valid_flags = 0;
-> >  
-> > +	if (kvm_arch_supports_gmem_shared_mem(kvm))
-> > +		valid_flags |= GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> > +
-> >  	if (flags & ~valid_flags)
-> >  		return -EINVAL;
-> >  
-> > -- 
-> > 2.50.0.rc0.642.g800a2b2222-goog
+> On 2025/6/9 23:51, Dmitry Baryshkov wrote:
+> > On Mon, Jun 09, 2025 at 08:21:48PM +0800, Yongxing Mou wrote:
+> > > From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > 
+> > > Add connector abstraction for the DP MST. Each MST encoder
+> > > is connected through a DRM bridge to a MST connector and each
+> > > MST connector has a DP panel abstraction attached to it.
+> > > 
+> > > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+> > > ---
+> > >   drivers/gpu/drm/msm/dp/dp_mst_drm.c | 515 ++++++++++++++++++++++++++++++++++++
+> > >   drivers/gpu/drm/msm/dp/dp_mst_drm.h |   3 +
+> > >   2 files changed, 518 insertions(+)
 > > 
+> > > +
+> > > +static enum drm_mode_status msm_dp_mst_connector_mode_valid(struct drm_connector *connector,
+> > > +							    const struct drm_display_mode *mode)
+> > > +{
+> > > +	struct msm_dp_mst_connector *mst_conn;
+> > > +	struct msm_dp *dp_display;
+> > > +	struct drm_dp_mst_port *mst_port;
+> > > +	struct msm_dp_panel *dp_panel;
+> > > +	struct msm_dp_mst *mst;
+> > > +	u16 full_pbn, required_pbn;
+> > > +	int available_slots, required_slots;
+> > > +	struct msm_dp_mst_bridge_state *dp_bridge_state;
+> > > +	int i, slots_in_use = 0, active_enc_cnt = 0;
+> > > +	const u32 tot_slots = 63;
+> > > +
+> > > +	if (drm_connector_is_unregistered(connector))
+> > > +		return 0;
+> > > +
+> > > +	mst_conn = to_msm_dp_mst_connector(connector);
+> > > +	dp_display = mst_conn->msm_dp;
+> > > +	mst = dp_display->msm_dp_mst;
+> > > +	mst_port = mst_conn->mst_port;
+> > > +	dp_panel = mst_conn->dp_panel;
+> > > +
+> > > +	if (!dp_panel || !mst_port)
+> > > +		return MODE_ERROR;
+> > > +
+> > > +	for (i = 0; i < mst->max_streams; i++) {
+> > > +		dp_bridge_state = to_msm_dp_mst_bridge_state(&mst->mst_bridge[i]);
+> > > +		if (dp_bridge_state->connector &&
+> > > +		    dp_bridge_state->connector != connector) {
+> > > +			active_enc_cnt++;
+> > > +			slots_in_use += dp_bridge_state->num_slots;
+> > > +		}
+> > > +	}
+> > > +
+> > > +	if (active_enc_cnt < DP_STREAM_MAX) {
+> > > +		full_pbn = mst_port->full_pbn;
+> > > +		available_slots = tot_slots - slots_in_use;
+> > > +	} else {
+> > > +		DRM_ERROR("all mst streams are active\n");
+> > > +		return MODE_BAD;
+> > > +	}
+> > > +
+> > > +	required_pbn = drm_dp_calc_pbn_mode(mode->clock, (connector->display_info.bpc * 3) << 4);
+> > > +
+> > > +	required_slots = msm_dp_mst_find_vcpi_slots(&mst->mst_mgr, required_pbn);
+> > > +
+> > > +	if (required_pbn > full_pbn || required_slots > available_slots) {
+> > > +		drm_dbg_dp(dp_display->drm_dev,
+> > > +			   "mode:%s not supported. pbn %d vs %d slots %d vs %d\n",
+> > > +			   mode->name, required_pbn, full_pbn,
+> > > +			   required_slots, available_slots);
+> > > +		return MODE_BAD;
+> > > +	}
+> > 
+> > I almost missed this. Could you please point me, do other drivers
+> > perform mode_valid() check based on the current slots available or not?
+> > Could you please point me to the relevant code in other drivers? Because
+> > it doesn't look correct to me. The mode on the screen remains valid no
+> > matter if I plug or unplug other devices. The atomic_check() should fail
+> > if we don't have enough resources (which includes slots).
+> > 
+> Currently, I haven't found other drivers checking available slots during
+> mode_valid(). Intel will check the PBN in here.
 
+pointer? Also, what do AMD and nouveau do?
 
+> This condition can help us
+> in the following case:
+> 
+> Assume two downstream devices both support 4K 60Hz 10-bit. In MST mode, when
+> the first device occupies the 4Kx60Hzx10bit mode, the remaining bandwidth is
+> insufficient to support the same mode for the second device.
+> 
+> If we check the slots in mode_valid(), the second device will reject the
+> 4Kx60Hzx10bit mode but accept 4Kx30Hzx10bit. However, if the check is done
+> in atomic_check(), the second device will display a black screen (because
+> 4Kx60Hzx10bit is considered valid in mode_valid() but failed in
+> atomic_check()).
+
+If we filter modes in mode_valid(), then consider the following
+scenario: we plug monitor A, plug monitor B, then unplug monitor A. At
+this point we only have monitor B, but it has all modes filtered when A
+has been plugged. So, it is impossible to select 4k@60x10, even though
+it is a perfectly valid mode now.
+
+Also, with the check happening in the atomic_check() the user will not
+get the black screen: the commit will get rejected, letting userspace to
+lower the mode for the second monitor.
+
+> > > +
+> > > +	return msm_dp_display_mode_valid(dp_display, &dp_display->connector->display_info, mode);
+> > > +}
+> > > +
+> > 
+> 
+
+-- 
+With best wishes
+Dmitry
 
