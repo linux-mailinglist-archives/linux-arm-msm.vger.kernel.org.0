@@ -1,83 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-61402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29BCAADAB60
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 11:03:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9A9FADAB61
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 11:03:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 36DC23AE3AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 09:02:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA2E618836D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 09:03:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCE421A7253;
-	Mon, 16 Jun 2025 09:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4151A19AD5C;
+	Mon, 16 Jun 2025 09:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YvKJ1OX2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UxGOJjSR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-pl1-f195.google.com (mail-pl1-f195.google.com [209.85.214.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEDF19AD5C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 09:02:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB05E1DF982
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 09:02:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750064577; cv=none; b=SrVmLpGf4T3UERyNPe8Fdd4/diIzHCJtymjwMyBV1CwRIcH0qQ/yjRaYksHzhFlUKeioc/xzr4oHjAKG1fVJjERLzXFB543wI0NMW8vu+7li2MXYHl/KfkIOwAWK0iUY4fPKjDf+KFbo+CY+JxcuhvAsaU16zyxrdC0cqfCHpdA=
+	t=1750064580; cv=none; b=nhjIvw1QEGdetyoffE5fo9NfLN6G1GyK2ZzCBqRzYHYgqSYSZIr1JkNcneP1O4KtWOfemHyDD3XD8hs36goBtucb3Qpo/EyJlSQE4phB2jIMT1EmSx6xZkmDGpodWMxK5sE49vZQ4urO4hCiVax9naU9HdgaFNMkI/Yk/5Ecnss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750064577; c=relaxed/simple;
-	bh=UwsxL1aUM6Mq/Nn7cHE33JximgrwfYiALv5ltiyWp9I=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=b1AvpwHSKj4+Ym9xn7Pqpj4v0Snvl9kzZ3oDZMKOHKLIeMdrIGkySEL3Z3IBKydzjdO/gUrjh918VKEjPBuvtfHPNrr7ryT2VVhzRM5kQL/aAJOB2AwGHeIfOyqEokRv3xtAau2wR7jO87XnNmD01qYrX/m1a8aDn6HvU6XoJOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YvKJ1OX2; arc=none smtp.client-ip=209.85.215.181
+	s=arc-20240116; t=1750064580; c=relaxed/simple;
+	bh=YpQUAJfBHgcW6qx2+w7RfDe5r0TFs3DIlKvmmYJA//0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CfAFIvXJBK83DVsvocbz7UgiwniQ4JB/v52hLbgOY/sSr4Rn4Q8SEOGKW5cg7wDTNYxaIHl5ZWEvMv4xslIvRZ7FSgzd68UVt0O0jK+RgV4B7KidFqDXLGZCZ5IU2RnnpNnqpXmUe8eC9uiyEY1xyNG2LWqHevLtGF2BxkCj4y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UxGOJjSR; arc=none smtp.client-ip=209.85.214.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-b2fc93728b2so3352576a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 02:02:56 -0700 (PDT)
+Received: by mail-pl1-f195.google.com with SMTP id d9443c01a7336-235e1d4cba0so36421805ad.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 02:02:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750064575; x=1750669375; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=l7lynWEm2yiF3vVL7de15JUkvsY7sKVMsw2kq7kei3c=;
-        b=YvKJ1OX2LEsOXfLcPGGL5GpcgPSItm68q7yuHfpFu1SC2F7HFFwNdJ8lqu9r5LPdvc
-         mwNe3lZGxRIujRTBNs5CpnvV6hEfpEp1V1uvizuT/SNz6LGsknrWMHAFQou/nWHjjGwt
-         JBkC8waCBm6KpEhALQLfAigabnIIxOdhhUQDed7ll/9lu2jNLCnq2sZq4VY9dKr0xoXj
-         dZlvAMe0uAh5dGURiof/AphrY6KW5knSpHjyNZuLNnZq6eaZN3spE87T4S3akf+TtaO4
-         mXIu+/c6yI2BfFlsKEw+yLMt/XVehKhDN65cA+h045uIZvrHk9JCpyZtBoKaa8T/LTqY
-         Ye3g==
+        d=gmail.com; s=20230601; t=1750064578; x=1750669378; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9x/ZfoRrg2fYU3yDXLmSkfalYSRqOjrfYotmadlQhYs=;
+        b=UxGOJjSRgBzO3c3pJkuH++uuUV6DxdfWk9N9/5TcE3owUI2DsqxVezDMyeDIqPX0LK
+         xYdM4Qt8U2SiO6qSyC89dVu5EehPUDf5HbdgOdIYR3IhiY6WdrffE6YVtQHOHS4Tm0PC
+         ZktVy1Yhr4frC+NTXooxyldg77W6ZOqUBKLkwBBarHGptau2Mw6zqjryS/P2bvWm37hW
+         N19cpkr67D084/tRMRF0Ir38RwFX4YcRmmFke4pZNK328+qUi/Nad2IMhirPFodeAOOw
+         NfNXQyyZtoPU8CNX4yY1mB1g9u+LohS6DA7/Pprke1Zcqjkvrx0n0mVZEnLfPYK5JzDQ
+         w9Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750064575; x=1750669375;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=l7lynWEm2yiF3vVL7de15JUkvsY7sKVMsw2kq7kei3c=;
-        b=mY/VOy2PXN1TMXqaP1+7AUAMWWUQ3ssi5wATfap95bW+CzBNE1cA1It52M4khqDS4N
-         Lv0xXZs+o0hOaXi1LdWqt47NTB0m5wktpZzz07OXCW2RW0YyE6FvMXzZ1vvy09WahLaS
-         GnF1qjP9kDb5jqqQ8FU768zGJGPO7rtLPjlAwUYfRcjSKoBrIYXLNzsxpOWhudRkQhHd
-         TMeLiGXg3wOBhGtD9aAW5HhOiLVVafVqFu8DtQjqDJLNia+ELZfIiTEZxOQ4tGEitl/h
-         1goGFyHipst9fXKBmAsVwN96PmjBi370BWKCWy6VxBxIfkvSoM486WDE+kBMmL69ioLL
-         ckOA==
-X-Gm-Message-State: AOJu0YyLcvtplHXk3nqY4YDBqXfZiTAngPqdzexCRHerZQik+ICJ02sM
-	fRlXq46iA4sppHPytRXyQY5VZz50FFjC/cKscsK1lnhuILNPJOfX4B6H8BMZZZ83
-X-Gm-Gg: ASbGncsvIXH1qYLmuzritoKiDGJ6mjc83s0OI+Xdpm9otADQLw3UDgRkL1mH8iXJb44
-	7maPH7mMKe6AmMU0MrvRVzHtCoHyPoOzEyCWDYn2N6RkZ0EPhVpxCzoVEJuZFm8QXEeUAPN/e2m
-	X9ZHoqsUzJUui7P8pqoNoyEccAG3T10cuoQ3x8k5fL3WXjHdjYg9HDA9Lr1p0I9856LVQBZ3Z6B
-	mzKcxf1TXjCZ1xdFwycDrrBbJrPuqTAK3dAdYbrm4T5zkXNlYxYR0soKEOChtQGIrwbzB75yXDR
-	UP1FiUahaDEJUE68xFKBO4t3nIbf4O86DRZUoKwDCSKjglwRq687WcO5MAO0P1IbjdiOUlNHV8H
-	o
-X-Google-Smtp-Source: AGHT+IEb4wLophcQi6etKY0zR9MIlqBvkCbCJuNXLuWpCizX3FpqK3qUOVN19JiA5wqQs8iqjdWwTw==
-X-Received: by 2002:a17:90b:1b49:b0:312:ec3b:82c0 with SMTP id 98e67ed59e1d1-313f1cf8c3dmr12511354a91.29.1750064575512;
-        Mon, 16 Jun 2025 02:02:55 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1750064578; x=1750669378;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9x/ZfoRrg2fYU3yDXLmSkfalYSRqOjrfYotmadlQhYs=;
+        b=F6V2Le082HjiAjsDO39aS1wxYlGpdkfFGGMk2cO+54bg00n/6VA6gMOUJaGgEzCFBn
+         oMzyjV7+hLiALCo8emD26JLVbdUI2lClXpGvALVRtlt/mQFcPJcjqpy40ctTWDnc941U
+         lwbzF7dcOaF9CCdRYGkXYnspz3FbtB1ir5uL8J05bn1qbZLfroi0xg2XpvSexcUddgcy
+         7jHjpIEs/eo6srgvBDwYqFoK7kjDwik4UsZRulcdJJPUDHPxOHUoC52QbRNQlqT5GDyC
+         ToaGAu456mUuprRq1lKrRIrppKwkep+6PpwsvYEoqmBFS2H2IGzrgRP39VqYGxxeHZF+
+         a1fA==
+X-Gm-Message-State: AOJu0YyF+NybBR5Hq3lHL7W4inkE2uUHBNDR8/PFqRjZlTCoYJb0W1uh
+	6b+EmBBiZqwUrZA3ZOmUxPkfGLJYo9diZKNrJRdOWx5SGPrZy0EfCR1Q/7/qg9Z+fPE=
+X-Gm-Gg: ASbGnct7JByTt32KB4evu0rnhPYuHw2eWHhEAWy5B6pU31UVyd430savFxe6jrKA8DZ
+	znuZeXi1ztTrI37KDGc0S65454bj61q7YCvDu3W8EgMTC4XcrD0hoCfPs3xZMQrNpIMrJyzUJ1S
+	iJgKs872cgI6+KxRIvtifhwVT6Nuxefj4DWYccksIkuvIPqWLrvpY1k+CMZIFk2GFg6Ppag1AYm
+	rkhGXvsHFgf1Dp72rv3NbngQXrammvz7PUj4LHN74paoPne7v9hOtAXFaeAC+vTXlAQKFAdSufa
+	FRpdBytefapTiMWWPwv9VKeb+aQxGRqMTUBjZy/yI53NcwKp9/S9Dmhz8Y+o9KAtJdeAVwSbYKj
+	C+0Id94WYz+o=
+X-Google-Smtp-Source: AGHT+IHDF42pjib4htT4guBtrZKvC8+uWEbjDBAlxOFYpc9qOB1jGtRDWUUHZG0Fkiw48U/5zFi25Q==
+X-Received: by 2002:a17:903:1b6f:b0:235:ef87:bd50 with SMTP id d9443c01a7336-2366b151fbcmr123228165ad.45.1750064577930;
+        Mon, 16 Jun 2025 02:02:57 -0700 (PDT)
 Received: from localhost.localdomain ([191.193.166.140])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-313c1c4e4cbsm8032258a91.27.2025.06.16.02.02.54
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-313c1c4e4cbsm8032258a91.27.2025.06.16.02.02.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Jun 2025 02:02:55 -0700 (PDT)
+        Mon, 16 Jun 2025 02:02:57 -0700 (PDT)
 From: =?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
 To: linux-arm-msm@vger.kernel.org
 Cc: konradybcio@kernel.org,
 	=?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
-Subject: [PATCH v5 0/2] arm64: dts: qcom: add initial support for Samsung Galaxy S22
-Date: Mon, 16 Jun 2025 09:02:48 +0000
-Message-ID: <20250616090250.36605-1-ghatto404@gmail.com>
+Subject: [PATCH v5 1/2] dt-bindings: arm: qcom: document r0q board binding
+Date: Mon, 16 Jun 2025 09:02:49 +0000
+Message-ID: <20250616090250.36605-2-ghatto404@gmail.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250616090250.36605-1-ghatto404@gmail.com>
+References: <20250616090250.36605-1-ghatto404@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,32 +91,25 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Changes in v5:
-- Properly format the thread
+Adds compatible for the Samsung Galaxy S22 (SM-S901E) (r0q), based on the Snapdragon 8 Gen 1 SoC.
 
-Changes in v4:
-- Try to properly format the thread
+Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes in v3:
-- Removed unnecessary initrd start and end addresses
-- Make sure r0q is in right order on Makefile
-- Properly format memory addresses
-- Set r0q to the correct, alphabetical order in documents
-
-I'm sorry for my mistakes, this is my first patch and I got
-a bit confused on how the whole patch system works. 
-I hope that is cleared up.
-
-Eric Gonçalves (2):
-  dt-bindings: arm: qcom: document r0q board binding
-  arm64: dts: qcom: add initial support for Samsung Galaxy S22
-
- .../devicetree/bindings/arm/qcom.yaml         |   1 +
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/sm8450-samsung-r0q.dts      | 363 ++++++++++++++++++
- 3 files changed, 365 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
-
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index b14206d11f8b..491409905da4 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -1090,6 +1090,7 @@ properties:
+           - enum:
+               - qcom,sm8450-hdk
+               - qcom,sm8450-qrd
++              - samsung,r0q
+               - sony,pdx223
+               - sony,pdx224
+           - const: qcom,sm8450
 -- 
 2.49.0
 
