@@ -1,256 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-61434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 692F8ADAF12
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 13:50:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59752ADAF40
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 13:56:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 36EBB1889C67
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 11:51:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 68B9F3B5656
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 11:56:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63AB22E0B7E;
-	Mon, 16 Jun 2025 11:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F30B82E7F36;
+	Mon, 16 Jun 2025 11:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="oo/LIOIc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BIcPgRsF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B232D9EE1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 11:50:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD17257458;
+	Mon, 16 Jun 2025 11:56:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750074644; cv=none; b=BhLMB97uXFv8QDnfTaMEkSBsbAcE9NK1P3HmTYH4o1DZHLQKyj0giY7IPGgMu/04selW+CO5+VUcY9Q0LWwt/Uw2O2naKQeE3nf75YpFIIXGN946uLCWTrExaJQcgD2ZMhvEDrZZ73+z5nfUKJlUwSz+btYOxIQ9WAuVOhBjcxM=
+	t=1750074995; cv=none; b=jFkZiLds70M446brSYZhpxUauBqhtKyvvLiFermAPl1v14eOZ9e3BHfyKdkCAt68Rlsqrwj2e7XPEbU3Lpc7mjnzUq5OdEt8Fv+7na7L+JAjtqBZBQs7IGg7LNUvRFJBkbh6HfZ/RUKQhbwmxDDL9zl0plFWU8s8kPOVLQuFfLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750074644; c=relaxed/simple;
-	bh=2TXIdS0DrtcJ/aN3kEEgXsku4ahxNSy7vjY6kQ9nPJg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=RQsts6l2yqIJJzEJnu7lTpSdNHDUalwKsdXp5Jn7QU5CGff+q6nK5mQEbGzSnXGzQd7HJVib0ferzAKESBwBr9mWlCgbylSilbHIekhZjEparBoFsvQgacycfLrSj5L1iTSMck82t1iqfs26iGhWh/b9Rbfw8cH2kbbOpTqpur0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=oo/LIOIc; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-adb2bd27c7bso655935866b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 04:50:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1750074641; x=1750679441; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xuSf6RLaP8+rHWDi/+Q9MWXI6iUycqZnVn3e8MQYPzQ=;
-        b=oo/LIOIc2AQwaEDw6APuTipI/APVrhhgtlAsZ3ROG3hWKiqdKtvrC7/4wnuu6ST/gl
-         4RUBfH7JWJ9IJDei/bjaou8yfr9IFsoIH/7C2BVWQOLFk8tfhay/OPF5NCpHn7HBN9i1
-         obNRXcs04fi/1yLNYVMBcFqPcS/Y4RvLI/Df/4pcaqpjlgru9XizUAr94iitKLxW5IDL
-         9oeXy/3A2yQq/oXUoPzPirRXVQb93Uq17BHJo0VHpvRWtxY8Txy3VToxSyQPp22tIKiQ
-         IuZiDfQk7W5nKh0WOkH+oq+f7bFjXjvxfO2EJwtjtb18xV9ccIR5/cNr1vdpYyHjnYdh
-         BmnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750074641; x=1750679441;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xuSf6RLaP8+rHWDi/+Q9MWXI6iUycqZnVn3e8MQYPzQ=;
-        b=kUbA3qPxqO7XhVBtSrmDa9YJjO/Tr795YZQKN1y77C6J3erAiqayw8ElyN0Lk6SKMR
-         coBofPb6Vxp/QuyrP6hLxjsyEYLMXGmzPOvOxDYvjX5ESDW9DypvyvUcr/LvLpYQuB0R
-         /9TQ7mhDUT3yzNZ9MajsRplks2+6lA3vrOc09A4DwEAyWup6vEJWPwTSI4riTvSQcoeJ
-         7OA013oBBhxvo/wdYVDp2/3G38A7ZlFrSGR5z423pkmq1/vMdXXPjGS6HtUsnMrDbIYv
-         Iok1oIhlHd0D88QMre2fvICHh28qHJjgtMTFhBhpMJuMMz9RGRmIQK3Vx/mmOjLvEA/X
-         DzWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVEc0gk5nbL4FcI83vfygbZpxSWsBErD0w95DYaIGRWbsHCDavN4/E9El9rPC4vwHY9759Ip7Sh/RKezUtF@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxlp5rj/1RTDJ898kZltHuUpgvuAR0yd0BFb02hNa/gVm+NFp2p
-	e7D7MiCZKO9KmyHohHr7E6j3Zg/pPlLJXd6djwtDdV06wzqDoX8SACkbkId/wfJSHs8=
-X-Gm-Gg: ASbGncuV8EJwebcvFmO1jT7z03BU3Q3MLL49kAmJbKKevjZyMlHD25kpOqQMxz37g+E
-	Nvd5POPUemV8QKp2ZliHMEel1VCUPrK/PWp2p5O45dSAN1yZjxgUYbbeZBwmwbGljLNROl6g1vR
-	x3ek+wKzYUXecB26nj/SKiIDX0i5WWR6VLgt6TvL/RxCVNmNzpaUeJf6Ysb4z/oFk5MMdSvbuMW
-	/r5mzdbq5rSwMrrI7SlMAVE5eCNAft+sk22Prt0InD/Xivs+AffxpmV1MpsmZ9MN0CzA6bSJdmn
-	Fn6kt8lgPs0KTJHR7x9BnffXPcM2ZjSeN7slKkShqSNEJaVJTmQ7P0dzadaGmNdIvTd1bLmPQyu
-	b93vCDT9bYyBRCc6gIqTy3H2VkZY7kJw=
-X-Google-Smtp-Source: AGHT+IEw/IbSDxrPrp5P71189l+YICG0EEl5mwsAYurOHLofD+R6bizDKSfCRwi4sa9axsT85oX+fQ==
-X-Received: by 2002:a17:907:6d0d:b0:adb:2bb2:ee2 with SMTP id a640c23a62f3a-adfad451438mr946727766b.41.1750074640652;
-        Mon, 16 Jun 2025 04:50:40 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-adec88ff5d3sm657753466b.101.2025.06.16.04.50.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Jun 2025 04:50:40 -0700 (PDT)
+	s=arc-20240116; t=1750074995; c=relaxed/simple;
+	bh=1BYl8vGZcp8qkQIS/k7/EDF7txlfV4e2fvxJT8xn5Oo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=pTqff4FAutoDPbVEYRIGyotq3AXhA00ULQkTpV8nu6dGrA3ieeWD/tHCDBB6DC2l3jEC6cxb6Ik77+6jTgLxqKnRVPcjlEk01P3qaZP1wvyfI4c2GrfWNbJ6Kwv1KNPz1XvpBLBrmRSYuBtkFClsJsgANZ8VfnFHPVOmmIYEUZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BIcPgRsF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55G8QtHa031850;
+	Mon, 16 Jun 2025 11:56:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ZtSOvAt0q/d0enJM4qc+OSsnJ7dqqVOnt42/ihjbwqQ=; b=BIcPgRsFgG3NZJXR
+	71xfl07VSThDwEzHBM0Ku5ofB6k+nhor22vYd6fKn4fd3eV5t4FIebBydqGNDRqP
+	9CSqi8a+kE4deEqOhMVDjldBnweFG47tsTsfz8TYEb6ylqtj/WsccbBPclgiZDMe
+	jbJxsBrbqgChsd1fsg2Ft/iSwe8j2gDDBTEPllFBmyOQ6IxRyDCd/F0RO8kcR3Ad
+	LSFLRjv78xMt0zqxo+VBia5ZWkcOVBO8UKTPc0qjgsxDZmAQar7fn49DX1Lc7JAT
+	HZeX+vGCn0JJHXrfPrcRk0Lc+HaYL+5cJ5Uf4GmU3zfg0hc9oxC7L4Qx0YQbxhcz
+	6pTHdw==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4792c9varu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Jun 2025 11:56:30 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55GBuTwX031350
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Jun 2025 11:56:30 GMT
+Received: from [10.206.101.41] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 16 Jun
+ 2025 04:56:27 -0700
+Message-ID: <54157ce5-8a6b-75ae-0a21-a8df59242c40@quicinc.com>
+Date: Mon, 16 Jun 2025 17:26:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 16 Jun 2025 13:50:39 +0200
-Message-Id: <DANXOMLSCTUE.149W1NJZ0U8M0@fairphone.com>
-Cc: "Vinod Koul" <vkoul@kernel.org>, "Kishon Vijay Abraham I"
- <kishon@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Abel Vesa"
- <abel.vesa@linaro.org>, "Konrad Dybcio" <konradybcio@kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] phy: qualcomm: phy-qcom-eusb2-repeater: Don't
- zero-out registers
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a
-References: <20250616-eusb2-repeater-tuning-v1-0-9457ff0fbf75@fairphone.com>
- <20250616-eusb2-repeater-tuning-v1-2-9457ff0fbf75@fairphone.com>
- <qmcoh5lysln46mg7tbmeelmnzc7s6o7bssir3a7r3n3x5lnboq@cizzodjel4ut>
-In-Reply-To: <qmcoh5lysln46mg7tbmeelmnzc7s6o7bssir3a7r3n3x5lnboq@cizzodjel4ut>
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH] media: venus: hfi: explicitly release IRQ during teardown
+Content-Language: en-US
+To: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
+        <quic_dikshita@quicinc.com>, <bryan.odonoghue@linaro.org>,
+        <loic.poulain@oss.qualcomm.com>, <mchehab@kernel.org>,
+        <hans.verkuil@cisco.com>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250612082943.2753676-1-jorge.ramirez@oss.qualcomm.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <20250612082943.2753676-1-jorge.ramirez@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: QfcPl0fUP-qRbJVCiZHgP8HGGykswjz2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE2MDA3NCBTYWx0ZWRfX5OkmvYYblrzY
+ TIz039kHECRG2xs1tarlG56pFUiYSIS9Y+3yNqYayfQr3gUPWRGEU5ad6RJJqEtkNLrS+DpWO/b
+ ML2J4cvrqBofjJD4dgifpmqNn2oXi+O/iMbwM/mrB/lXDa3WH9/6J02J2/7PzYpJWENe3MVwz0v
+ jVBkcYkb+VkpeetPVcQXuWI98tq/LnE6FhQQjHSJAq5NcxVFM2EkA0UbJMYmFajXkhwlFWqB/Tn
+ kY1ezHhTnVw8UPtCwcJEYE1mtC3e006btbglyrWGgO4qXNTX1cyrqmuXAgaLg1PmDVffRGY7Q5X
+ uBTTZUTDLIxVgTJN0WZiSO+JxmFRadATKpLocgcboZoeyOkL9xG7+26UUNwe1mvofi2SHZhDZHA
+ UU/B/w4dTBEyQAIF6MHWnPKjefc1PHXlTi+n9EKJSTBndkYTZGI0tDUFGjUfftOzC6QtS+Yy
+X-Proofpoint-ORIG-GUID: QfcPl0fUP-qRbJVCiZHgP8HGGykswjz2
+X-Authority-Analysis: v=2.4 cv=etffzppX c=1 sm=1 tr=0 ts=6850066e cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=P-IC7800AAAA:8
+ a=EUspDBNiAAAA:8 a=U5IicJL0JrA6Xyt5t0MA:9 a=QEXdDO2ut3YA:10
+ a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-16_05,2025-06-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 adultscore=0 spamscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 mlxlogscore=767
+ lowpriorityscore=0 bulkscore=0 mlxscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506160074
 
-On Mon Jun 16, 2025 at 1:40 PM CEST, Dmitry Baryshkov wrote:
-> On Mon, Jun 16, 2025 at 11:45:12AM +0200, Luca Weiss wrote:
->> Zeroing out registers does not happen in the downstream kernel, and will
->> "tune" the repeater in surely unexpected ways since most registers don't
->> have a reset value of 0x0.
->>=20
->> Stop doing that and instead just set the registers that are in the init
->> sequence (though long term I don't think there's actually PMIC-specific
->> init sequences, there's board specific tuning, but that's a story for
->> another day).
->>=20
->> Fixes: 99a517a582fc ("phy: qualcomm: phy-qcom-eusb2-repeater: Zero out u=
-ntouched tuning regs")
->> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->> ---
->>  drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c | 63 +++++++++++++------=
--------
->>  1 file changed, 32 insertions(+), 31 deletions(-)
->>=20
->> diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/ph=
-y/qualcomm/phy-qcom-eusb2-repeater.c
->> index 6bd1b3c75c779d2db2744703262e132cc439f76e..a246c897fedb2edfd376ac5f=
-dc0423607f8c562b 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
->> @@ -61,8 +61,13 @@ enum eusb2_reg_layout {
->>  	LAYOUT_SIZE,
->>  };
->> =20
->> +struct eusb2_repeater_init_tbl_reg {
->> +	u8 reg;
->> +	u8 value;
->> +};
->> +
->>  struct eusb2_repeater_cfg {
->> -	const u32 *init_tbl;
->> +	const struct eusb2_repeater_init_tbl_reg *init_tbl;
->>  	int init_tbl_num;
->>  	const char * const *vreg_list;
->>  	int num_vregs;
->> @@ -82,16 +87,16 @@ static const char * const pm8550b_vreg_l[] =3D {
->>  	"vdd18", "vdd3",
->>  };
->> =20
->> -static const u32 pm8550b_init_tbl[NUM_TUNE_FIELDS] =3D {
->> -	[TUNE_IUSB2] =3D 0x8,
->> -	[TUNE_SQUELCH_U] =3D 0x3,
->> -	[TUNE_USB2_PREEM] =3D 0x5,
->> +static const struct eusb2_repeater_init_tbl_reg pm8550b_init_tbl[] =3D =
-{
->> +	{ TUNE_IUSB2, 0x8 },
->> +	{ TUNE_SQUELCH_U, 0x3 },
->> +	{ TUNE_USB2_PREEM, 0x5 },
->>  };
->> =20
->> -static const u32 smb2360_init_tbl[NUM_TUNE_FIELDS] =3D {
->> -	[TUNE_IUSB2] =3D 0x5,
->> -	[TUNE_SQUELCH_U] =3D 0x3,
->> -	[TUNE_USB2_PREEM] =3D 0x2,
->> +static const struct eusb2_repeater_init_tbl_reg smb2360_init_tbl[] =3D =
-{
->> +	{ TUNE_IUSB2, 0x5 },
->> +	{ TUNE_SQUELCH_U, 0x3 },
->> +	{ TUNE_USB2_PREEM, 0x2 },
->>  };
->> =20
->>  static const struct eusb2_repeater_cfg pm8550b_eusb2_cfg =3D {
->> @@ -129,17 +134,10 @@ static int eusb2_repeater_init(struct phy *phy)
->>  	struct eusb2_repeater *rptr =3D phy_get_drvdata(phy);
->>  	struct device_node *np =3D rptr->dev->of_node;
->>  	struct regmap *regmap =3D rptr->regmap;
->> -	const u32 *init_tbl =3D rptr->cfg->init_tbl;
->> -	u8 tune_usb2_preem =3D init_tbl[TUNE_USB2_PREEM];
->> -	u8 tune_hsdisc =3D init_tbl[TUNE_HSDISC];
->> -	u8 tune_iusb2 =3D init_tbl[TUNE_IUSB2];
->>  	u32 base =3D rptr->base;
->> -	u32 val;
->> +	u32 poll_val;
->>  	int ret;
->> -
->> -	of_property_read_u8(np, "qcom,tune-usb2-amplitude", &tune_iusb2);
->> -	of_property_read_u8(np, "qcom,tune-usb2-disc-thres", &tune_hsdisc);
->> -	of_property_read_u8(np, "qcom,tune-usb2-preem", &tune_usb2_preem);
->> +	u8 val;
->> =20
->>  	ret =3D regulator_bulk_enable(rptr->cfg->num_vregs, rptr->vregs);
->>  	if (ret)
->> @@ -147,21 +145,24 @@ static int eusb2_repeater_init(struct phy *phy)
->> =20
->>  	regmap_write(regmap, base + EUSB2_EN_CTL1, EUSB2_RPTR_EN);
->> =20
->> -	regmap_write(regmap, base + EUSB2_TUNE_EUSB_HS_COMP_CUR, init_tbl[TUNE=
-_EUSB_HS_COMP_CUR]);
->> -	regmap_write(regmap, base + EUSB2_TUNE_EUSB_EQU, init_tbl[TUNE_EUSB_EQ=
-U]);
->> -	regmap_write(regmap, base + EUSB2_TUNE_EUSB_SLEW, init_tbl[TUNE_EUSB_S=
-LEW]);
->> -	regmap_write(regmap, base + EUSB2_TUNE_USB2_HS_COMP_CUR, init_tbl[TUNE=
-_USB2_HS_COMP_CUR]);
->> -	regmap_write(regmap, base + EUSB2_TUNE_USB2_EQU, init_tbl[TUNE_USB2_EQ=
-U]);
->> -	regmap_write(regmap, base + EUSB2_TUNE_USB2_SLEW, init_tbl[TUNE_USB2_S=
-LEW]);
->> -	regmap_write(regmap, base + EUSB2_TUNE_SQUELCH_U, init_tbl[TUNE_SQUELC=
-H_U]);
->> -	regmap_write(regmap, base + EUSB2_TUNE_RES_FSDIF, init_tbl[TUNE_RES_FS=
-DIF]);
->> -	regmap_write(regmap, base + EUSB2_TUNE_USB2_CROSSOVER, init_tbl[TUNE_U=
-SB2_CROSSOVER]);
->> +	/* Write registers from init table */
->> +	for (int i =3D 0; i < rptr->cfg->init_tbl_num; i++)
->> +		regmap_write(regmap, base + rptr->cfg->init_tbl[i].reg,
->
-> Init tables have TUNE_foo values in the .reg field instead of
-> EUSB2_TUNE_foo, which means that writes go to a random location.
 
-Right, stupid mistake. Thanks for spotting!
+On 6/12/2025 1:59 PM, Jorge Ramirez-Ortiz wrote:
+> Ensure the IRQ is released before dismantling the ISR handler and
+> clearing related pointers.
+> 
+> This prevents any possibility of the interrupt triggering after the
+> handler context has been invalidated.
+> 
+> Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+> ---
+>  drivers/media/platform/qcom/venus/hfi_venus.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+> index b5f2ea879950..d9d62d965bcf 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+> @@ -1678,6 +1678,7 @@ void venus_hfi_destroy(struct venus_core *core)
+>  	venus_interface_queues_release(hdev);
+>  	mutex_destroy(&hdev->lock);
+>  	kfree(hdev);
+> +	devm_free_irq(core->dev, core->irq, core);
+Could you please check and add the handling here [1] as well ?
 
-I will fix the init tables to use EUSB2_TUNE_*, and probably drop this
-"enum eusb2_reg_layout" completely.
+[1]
+https://elixir.bootlin.com/linux/v6.16-rc1/source/drivers/media/platform/qcom/venus/core.c#L427
 
-Regards
-Luca
-
->
->> +			     rptr->cfg->init_tbl[i].value);
->> =20
->> -	regmap_write(regmap, base + EUSB2_TUNE_USB2_PREEM, tune_usb2_preem);
->> -	regmap_write(regmap, base + EUSB2_TUNE_HSDISC, tune_hsdisc);
->> -	regmap_write(regmap, base + EUSB2_TUNE_IUSB2, tune_iusb2);
->> +	/* Override registers from devicetree values */
->> +	if (!of_property_read_u8(np, "qcom,tune-usb2-amplitude", &val))
->> +		regmap_write(regmap, base + EUSB2_TUNE_USB2_PREEM, val);
->> =20
->> -	ret =3D regmap_read_poll_timeout(regmap, base + EUSB2_RPTR_STATUS, val=
-, val & RPTR_OK, 10, 5);
->> +	if (!of_property_read_u8(np, "qcom,tune-usb2-disc-thres", &val))
->> +		regmap_write(regmap, base + EUSB2_TUNE_HSDISC, val);
->> +
->> +	if (!of_property_read_u8(np, "qcom,tune-usb2-preem", &val))
->> +		regmap_write(regmap, base + EUSB2_TUNE_IUSB2, val);
->> +
->> +	/* Wait for status OK */
->> +	ret =3D regmap_read_poll_timeout(regmap, base + EUSB2_RPTR_STATUS, pol=
-l_val,
->> +				       poll_val & RPTR_OK, 10, 5);
->>  	if (ret)
->>  		dev_err(rptr->dev, "initialization timed-out\n");
->> =20
->>=20
->> --=20
->> 2.49.0
->>=20
-
+Regards,
+Vikash
+>  	core->ops = NULL;
+>  }
+>  
 
