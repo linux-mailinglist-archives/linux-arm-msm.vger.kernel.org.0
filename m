@@ -1,189 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-61387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B772ADA95D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 09:25:48 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91518ADA967
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 09:26:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7FB6A170976
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 07:25:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DCBA81895D83
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 07:26:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB70B2135CE;
-	Mon, 16 Jun 2025 07:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C1401F0E58;
+	Mon, 16 Jun 2025 07:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="xeYYH912"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KEeBvaFx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7948020E716
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 07:24:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30322CA6;
+	Mon, 16 Jun 2025 07:26:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750058661; cv=none; b=EUbUMd1nP8tiIdi0m3ZvxQO9EmxwB99//wPgJhOdfO+Iot6sb0CmpfAQQ650Gh7XaCYb2ycIESILxwFnOaPXoH443Pyl25NtkSHERlwU+UhpD0owd+PM5LPWdW78jMGNbR3MRryKHtz5GZpwAFzvGKykuU9AR0AuiBhJdFatWJc=
+	t=1750058763; cv=none; b=Q4qr0eIcSc5lVRUv6p5Gd5iJE30Oi7epIEl5HxGz5RXYx5/vj7ujyXZKaPnKxCiP6Tl5xs/izoVOJzbPTtzIOqJLMbz7p/2yrD8FrOrRMpw48ArGgG07ccVe/dNJYxzxEICo92wLfNSAEN7EKQsKrCG4+g7x1qG39BeRv9ZTdCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750058661; c=relaxed/simple;
-	bh=bd8/aik3yGNPjXbB6KULRUrIDnWYBUIad25vDgDipU4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QsqV7XHmkkt91UVmSpWgGJsMYfmhwCvuxTJDX+WECQnAuU+OnalJDDbHwTOQxg0gJBxVf7yP05eNNxvzcc68GdagLZSARuTnr7qYhrIdE3mNGxFwWbl8pNtU1e33QZj/ZZKoJ/rf8wO1tRMrAUtS8qZDCoLPqUQxbN9iZpH+nh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=xeYYH912; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-450cea01b9cso18466455e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 00:24:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750058657; x=1750663457; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dk2490V7toxDqdX6m2bpZwWhZapb2e47P6mgRch0L+A=;
-        b=xeYYH912+eWOaHa65vB/dPXI/ZFTQL/TeF7b+xXWe3r70W1RDvduV6us+wWEIHZMRx
-         v/H0vlwAbdGWaM0cUPa3953j9uA7buzk08j5sioxZAIFWy3IJDS6FD/jWzl/euTQczuy
-         7kgD7213wZpVc7kwPhSufz3U56wGspTBVnsw5IQHg6U+VaFEo+0N2ocImJZlPFTeNJmp
-         uDfJtN0u4IPI6urBs2QUzTjcKCmDvkFrRa3mcFSWNyDa1FtnEX4PW4+SFBIZZYNLSmWe
-         MGr3BszVeU6ylt6iIF8ZIRIoYXvFPI70Owjov3wwa88BMNCDQofbCtrvDu1aALJb75jM
-         NOJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750058657; x=1750663457;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dk2490V7toxDqdX6m2bpZwWhZapb2e47P6mgRch0L+A=;
-        b=U2gPAG0zUKLmKx5HPb5OnzVlOd2IMIsQE0gRJxdIj2GBB2pkRQUJlhtpXySIrva+Ku
-         GgdIFFk7t/IyHBMutkzGBbHuQopFLaU3qEGbzRNzFgNdnpWWgeT9wda4IA1Welf8FDK8
-         Zv56uRNARt2/URMnT2/fX9xeCxFCoWg6xElVV8MNYGcWyek44LM1mxehYZ4krnf5TrN+
-         U2Bqo6RqrJZ4Crxd5TzPih0PCjktUKF6aP3ssthPxe5OsOmBYzW78Oghgv6+5ri5fWcH
-         92vW4I8sfDnzPP1TYQ/SzJcx6sYqFCxMsNgvlprbELBK+2MrBt1JjfEk5FUF16Ay2ZCf
-         c9zQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXdNJ5gknaKM8IqJLAKcAz9Pi1WM3/hBPUN0K4oETm9fYUiCGF7IQda1HYYEMWaziXqrVK9n0tbPdqOZqM6@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUpl8HYtdPlKSe307hajiTNzxsDoilpLpbvGaBDJr5f7YA4iur
-	nooh+jYU9VAfyAosELwzP/H99zxSHosIabosvpbkP2Y/MeohHy2jJlmRpnYWRq7tWV4=
-X-Gm-Gg: ASbGnctIzGQAW7hhtPOH43ff43TR+5m9OqjmAhGWv6zLa3pas9FRMmuItWHS80DrXJg
-	QF4zNHjteQTsb9jK8cKXDSC4oSz0h2krYvkjS6qxAxOLS4/9F+bzqo/tVPITn1FF/8S0X26QBUg
-	eSVK9tmmf8EWgHfTJk1GmnGxuwdj3UOLbFie6PnFabMIa1yXEMZGntyDBEa6hNEap5Z/33amD49
-	emSFK8DxRgu3M+HkWrqgPWBOXUHM4v3WNbLjYRT6GFB2L3vnfeiu61puqftt0nhtJN/5asS8c+b
-	Jna40IIqQK2pzOqotHt67R3EBUrrWymnk2LM/zSrH6ZmxU4lTg+iMHxf
-X-Google-Smtp-Source: AGHT+IHjTITSdrkkTH11GT/+EzTBq3NAlKsV/J8ox/RCJxKJGn5B+8SotQM6qAKPmFBSZqyU8wHWmA==
-X-Received: by 2002:a05:6000:2901:b0:3a5:2f23:3789 with SMTP id ffacd0b85a97d-3a5723721acmr6221770f8f.15.1750058657595;
-        Mon, 16 Jun 2025 00:24:17 -0700 (PDT)
-Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:4238:f8a4:c034:8590])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568b08c99sm10312334f8f.63.2025.06.16.00.24.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Jun 2025 00:24:17 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 16 Jun 2025 09:24:08 +0200
-Subject: [PATCH v2 5/5] net: phy: qca807x: use new GPIO line value setter
- callbacks
+	s=arc-20240116; t=1750058763; c=relaxed/simple;
+	bh=XP9PvxbbFwpO9eJAx75niUIURXU9zqEWph+Lc77aPAk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=k8aKLKxaDoUqRDWCgWomC/vTyFXidT/XERGpLHppTx9s1QuPGhpWottqvss7E8Qv0PqG1BQh2MivrKYCNsoKycsUESJ4kGSid4wwGapQ0ApCMIYW2bZdHcJNM7Nok4CFJM4/qfkKtpu2nfu44o22Nj6u+vNzWPC+esmlbhsORck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KEeBvaFx; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55FNqAWg025415;
+	Mon, 16 Jun 2025 07:25:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	XcAily78zL3qaqYDxn/xmpaLjAqqMN5K0g0hvjaD8L4=; b=KEeBvaFxHO77fjN/
+	FeHD3Q0WqQJpOUjk1oRLS1za33xmvfGQ6nvVU9lW3XF3NcsU2SerVFqyjCaTyDmB
+	nsRMZVIzaobiESI/Qp9z7EP6tU8S6cTxkhlGJ6hZfG6TBIqitlAokgxqyguslflK
+	0abLCOm+t0H9pc9r5wfBl9+6LmBnx3rGsIy04xfofhTMS4oGchCg+lIJCXYsLDW+
+	DbJ0oUkZRBEMyDdMMQgwnG/SS2E1/ABIGctG3H3eJjX5dpF/Gp/ZfbXdbVMoXx1Y
+	7zcvMG2c8VBiVNq0mSO8yL3m/Pbo47/Sf3MzJ75MHOWs8CpJZ47b8OWPb06CEgss
+	VfgGag==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 479qp5j2jd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Jun 2025 07:25:57 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55G7Puis009950
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Jun 2025 07:25:56 GMT
+Received: from [10.217.216.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 16 Jun
+ 2025 00:25:50 -0700
+Message-ID: <0d9846f8-da23-4f2a-a593-35350c026b44@quicinc.com>
+Date: Mon, 16 Jun 2025 12:55:47 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: (subset) [PATCH v5 00/18] clk: qcom: Add support to attach
+ multiple power domains in cc probe
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Dmitry Baryshkov <lumag@kernel.org>
+CC: Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        "Satya Priya
+ Kakitapalli" <quic_skakitap@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@oss.qualcomm.com>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>
+References: <20250530-videocc-pll-multi-pd-voting-v5-0-02303b3a582d@quicinc.com>
+ <174970084192.547582.612305407582982706.b4-ty@kernel.org>
+ <65828662-5352-449b-a892-7c09d488a1f4@quicinc.com>
+ <91c11e62-b0d4-40e9-91a1-20da9973e415@linaro.org>
+Content-Language: en-US
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+In-Reply-To: <91c11e62-b0d4-40e9-91a1-20da9973e415@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250616-gpiochip-set-rv-net-v2-5-cae0b182a552@linaro.org>
-References: <20250616-gpiochip-set-rv-net-v2-0-cae0b182a552@linaro.org>
-In-Reply-To: <20250616-gpiochip-set-rv-net-v2-0-cae0b182a552@linaro.org>
-To: Andrew Lunn <andrew@lunn.ch>, Vladimir Oltean <olteanv@gmail.com>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Linus Walleij <linus.walleij@linaro.org>, 
- Bartosz Golaszewski <brgl@bgdev.pl>, 
- "Chester A. Unal" <chester.a.unal@arinc9.com>, 
- Daniel Golle <daniel@makrotopia.org>, DENG Qingfang <dqfext@gmail.com>, 
- Sean Wang <sean.wang@mediatek.com>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Marc Kleine-Budde <mkl@pengutronix.de>, 
- Vincent Mailhol <mailhol.vincent@wanadoo.fr>, 
- Heiner Kallweit <hkallweit1@gmail.com>, 
- Russell King <linux@armlinux.org.uk>
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-mediatek@lists.infradead.org, linux-can@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2068;
- i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=902geVroxqYNedJuDkhJncS6CjvxOYP3g9PjXCsT2tY=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBoT8aZsS4bPVXRFW8hbhc2HST9zbVAikAosjSbI
- VX1fc56BVGJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaE/GmQAKCRARpy6gFHHX
- crs/EACb+XZ2NzlhRTyZfKfSIMQTWBEOV5YlX+0P+ziYYneyaZfSMCBPUdEJBK484XG1I1qHbJv
- Cmm6pNOUfA/aS3PvVVLRpFRew4lHAGNBxWMwkEDMdr4R3fLHomhTENRC/o5GlosvQbirXlm+YZ3
- xl+ulmmLLqnxVo2rkU85w+4KaCvAZQWOWrGHjCmP6qbYdLh5UvNbq7Adfu7hvuaNn7tPTdVrvCP
- gpod/ON6nr2S48R5ssyepgil95lcxK+GL883CxVhFpYNBxXswOlUjmb6dhEAAQIs7lz0k5I4Vfz
- hkDI0NuwjjNWG5VCXCF1c6rDyDn0MZNaoQTxhuAlk/RzIoE9VW8n/mTzISVQO3uI4qq7LakfmQa
- QmACdUVNQJcVF/bhdLfkbTm3wYlVcgj5cVhg+D/6XuIyJ30s8VfVltAyuh8+0HDtqRGLJ396pNN
- gK3QIS5FwHsvtDIEWoswl/DsYodSNONEubXFnddYuM4SvhMHM1Oj4EVkC3F8Lx7AVMGpeCu4Rnk
- e987RhUzSpX7bPmzdtASZSflEpbRKe5vESs+ZXkMWWBo8qbfL4QEINVH4IpN2b82fUmSAUTKXns
- XPxhjw4a+Gggh9ujtD6GzkOXQbxq2Nd+85WregsI5+tVUQXeGUsF4WLG/lJKPiGKSIEVaGEXZVp
- SbeagtT3GHBmMPA==
-X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
- fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: uIkot9sHibWn9vjlb_aH7r3PxNan9Lg7
+X-Proofpoint-ORIG-GUID: uIkot9sHibWn9vjlb_aH7r3PxNan9Lg7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE2MDA0OCBTYWx0ZWRfX5Z/C+ZXYek0t
+ Q3OLc16zslcmrB0Hz0nVi8H/55dGfx8M8lnH3TdJnsKnO/6beNzsKkYtD9GB4bvuVIq2XWyGkfN
+ j2Vz4391McwGr3HnvNsfL7BUa9aCBxZmBSaLTs2fFM3IRKUbV29/+9GvS9MCNnq4HJR2hk9oNSQ
+ 0GuIGAlGSOHQlWj3hpQcICtWH6vYvP0/0XSBNTKybKjcomBacOFoLVCal27pbtL9ClpliGpEgqw
+ 6LtE/nPcoR0pA+J+4N+NiV/wbpE/8wD6Njp0hYcBBKi3z6k1EysVmxKL+u/KMRTS/O5HQf0BCau
+ RipXrcBjpsAsbmjfXLW50QM68+x4wAQwVidw/bTgraQc0T+kYutnAOqHvhJvPj+9qRKOy6X5KDa
+ EOp2zdwB+7gzd1yXcpZJHt/0d7K9wpcv6kNBQDS0DTbSAVl0S032RDWrkbrjC/1wN7wfOZYY
+X-Authority-Analysis: v=2.4 cv=fMc53Yae c=1 sm=1 tr=0 ts=684fc705 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10
+ a=4vALZuFKeRXYYujc2Y0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-16_03,2025-06-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0 bulkscore=0 clxscore=1015 malwarescore=0
+ mlxlogscore=999 spamscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
+ priorityscore=1501 suspectscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506160048
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-struct gpio_chip now has callbacks for setting line values that return
-an integer, allowing to indicate failures. Convert the driver to using
-them.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- drivers/net/phy/qcom/qca807x.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+On 6/12/2025 4:22 PM, Krzysztof Kozlowski wrote:
+> On 12/06/2025 12:03, Jagadeesh Kona wrote:
+>>
+>>
+>> On 6/12/2025 9:30 AM, Bjorn Andersson wrote:
+>>>
+>>> On Fri, 30 May 2025 18:50:45 +0530, Jagadeesh Kona wrote:
+>>>> In recent QCOM chipsets, PLLs require more than one power domain to be
+>>>> kept ON to configure the PLL. But the current code doesn't enable all
+>>>> the required power domains while configuring the PLLs, this leads to
+>>>> functional issues due to suboptimal settings of PLLs.
+>>>>
+>>>> To address this, add support for handling runtime power management,
+>>>> configuring plls and enabling critical clocks from qcom_cc_really_probe.
+>>>> The clock controller can specify PLLs, critical clocks, and runtime PM
+>>>> requirements using the descriptor data. The code in qcom_cc_really_probe()
+>>>> ensures all necessary power domains are enabled before configuring PLLs
+>>>> or critical clocks.
+>>>>
+>>>> [...]
+>>>
+>>> Applied, thanks!
+>>>
+>>> [01/18] dt-bindings: clock: qcom,sm8450-videocc: Add MXC power domain
+>>>         commit: 1a42f4d4bb92ea961c58599bac837fb8b377a296
+>>> [02/18] dt-bindings: clock: qcom,sm8450-camcc: Allow to specify two power domains
+>>>         commit: a02a8f8cb7f6f54b077a6f9eb74ccd840b472416
+>>> [03/18] dt-bindings: clock: qcom,sm8450-camcc: Move sc8280xp camcc to sa8775p camcc
+>>>         commit: 842fa748291553d2f56410034991d0eb36b70900
+>>> [04/18] clk: qcom: clk-alpha-pll: Add support for common PLL configuration function
+>>>         commit: 0f698c16358ef300ed28a608368b89a4f6a8623a
+>>> [05/18] clk: qcom: common: Handle runtime power management in qcom_cc_really_probe
+>>>         commit: c0b6627369bcfec151ccbd091f9ff1cadb1d40c1
+>>> [06/18] clk: qcom: common: Add support to configure clk regs in qcom_cc_really_probe
+>>>         commit: 452ae64997dd1db1fe9bec2e7bd65b33338e7a6b
+>>> [07/18] clk: qcom: videocc-sm8450: Move PLL & clk configuration to really probe
+>>>         commit: 512af5bf312efe09698de0870e99c0cec4d13e21
+>>> [08/18] clk: qcom: videocc-sm8550: Move PLL & clk configuration to really probe
+>>>         commit: a9dc2cc7279a1967f37192a2f954e7111bfa61b7
+>>> [09/18] clk: qcom: camcc-sm8450: Move PLL & clk configuration to really probe
+>>>         commit: eb65d754eb5eaeab7db87ce7e64dab27b7d156d8
+>>> [10/18] clk: qcom: camcc-sm8550: Move PLL & clk configuration to really probe
+>>>         commit: adb50c762f3a513a363d91722dbd8d1b4afc5f10
+>>> [11/18] clk: qcom: camcc-sm8650: Move PLL & clk configuration to really probe
+>>>         commit: 3f8dd231e60b706fc9395edbf0186b7a0756f45d
+>>> [12/18] clk: qcom: camcc-x1e80100: Move PLL & clk configuration to really probe
+>>>         commit: d7eddaf0ed07e79ffdfd20acb2f6f2ca53e7851b
+>>>
+>>> Best regards,
+>>
+>>
+>> Hi Bjorn,
+>>
+>> Thanks for picking these patches. However, the dt-bindings patches are closely linked with
+>> the DT patches in this series and needs to be picked together. The dt-bindings changes adds
+> 
+> DT bindings are the DT patches. What do you mean by DT? DTS? If so, then
+> you introduce regressions without explaining this at all in cover letter
+> or patches.
+> 
+>> multiple power domains support for clock controllers, and without the corresponding DT
+>> patches, dtbs_check will give warnings.
+>>
+>> Can you please help to pick DT patches as well?
+> 
+> Please read soc maintainer profile explaining how DTS is being organized.
+> 
 
-diff --git a/drivers/net/phy/qcom/qca807x.c b/drivers/net/phy/qcom/qca807x.c
-index 1af6b5ead74bf615ad155e396b0ecc6fe5636e8c..6d10ef7e9a8a4d906ea3a7e0d73087e8907be9c4 100644
---- a/drivers/net/phy/qcom/qca807x.c
-+++ b/drivers/net/phy/qcom/qca807x.c
-@@ -377,7 +377,7 @@ static int qca807x_gpio_get(struct gpio_chip *gc, unsigned int offset)
- 	return FIELD_GET(QCA807X_GPIO_FORCE_MODE_MASK, val);
- }
- 
--static void qca807x_gpio_set(struct gpio_chip *gc, unsigned int offset, int value)
-+static int qca807x_gpio_set(struct gpio_chip *gc, unsigned int offset, int value)
- {
- 	struct qca807x_gpio_priv *priv = gpiochip_get_data(gc);
- 	u16 reg;
-@@ -386,18 +386,19 @@ static void qca807x_gpio_set(struct gpio_chip *gc, unsigned int offset, int valu
- 	reg = QCA807X_MMD7_LED_FORCE_CTRL(offset);
- 
- 	val = phy_read_mmd(priv->phy, MDIO_MMD_AN, reg);
-+	if (val < 0)
-+		return val;
-+
- 	val &= ~QCA807X_GPIO_FORCE_MODE_MASK;
- 	val |= QCA807X_GPIO_FORCE_EN;
- 	val |= FIELD_PREP(QCA807X_GPIO_FORCE_MODE_MASK, value);
- 
--	phy_write_mmd(priv->phy, MDIO_MMD_AN, reg, val);
-+	return phy_write_mmd(priv->phy, MDIO_MMD_AN, reg, val);
- }
- 
- static int qca807x_gpio_dir_out(struct gpio_chip *gc, unsigned int offset, int value)
- {
--	qca807x_gpio_set(gc, offset, value);
--
--	return 0;
-+	return qca807x_gpio_set(gc, offset, value);
- }
- 
- static int qca807x_gpio(struct phy_device *phydev)
-@@ -425,7 +426,7 @@ static int qca807x_gpio(struct phy_device *phydev)
- 	gc->get_direction = qca807x_gpio_get_direction;
- 	gc->direction_output = qca807x_gpio_dir_out;
- 	gc->get = qca807x_gpio_get;
--	gc->set = qca807x_gpio_set;
-+	gc->set_rv = qca807x_gpio_set;
- 
- 	return devm_gpiochip_add_data(dev, gc, priv);
- }
+I apologize for not mentioning this details in cover letter. Here the dt-bindings documentation
+changes(patches 1-3) are only applied and the corresponding DTS changes(patches 13-18) are not
+yet applied via DTS tree, leading to dtbs_check warnings.
 
--- 
-2.48.1
+Thanks,
+Jagadeesh
 
+> 
+> Best regards,
+> Krzysztof
 
