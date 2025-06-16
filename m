@@ -1,112 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-61407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D948ADAC15
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 11:38:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 077EAADAC42
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 11:46:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4E9C118915B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 09:38:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 146F63ADED3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 09:46:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A1FC273D78;
-	Mon, 16 Jun 2025 09:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB763274FCD;
+	Mon, 16 Jun 2025 09:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="OEyRP9xW"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="p8UG9Rd8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out.smtpout.orange.fr (out-18.smtpout.orange.fr [193.252.22.18])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCAC272E6D;
-	Mon, 16 Jun 2025 09:38:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.252.22.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AFF274669
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 09:45:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750066697; cv=none; b=qdr4sJP+gETMoTRCW7T5n8f5aYylNeqT2uTAIBWVeUnwVUmRUooN/Vw2pGlO+2skWtcdi8hfhgekvNSQNIqVQ1gCclbwxWxBqtbObUAQgbfx0AlwLn+/FERXbC+An8BNH5nlILY0PyEKueVUpH44sa1Z6w0q211550Y6JOUDPTw=
+	t=1750067160; cv=none; b=Mpit6ZgqeKDkDLHgWkAaOKRV1WwCp+BRotNZfNTMTCeYm+DKhiA0VarlE250Q0FznOWmgHu5EUIPpG4YiQHfrJmG+K5mbCjRUdxOYsXcs+Y0eqpmcBwou6t4YEn8UKeWexRkha+zSjsDAhb5DbjWKwb2bccjO9VrsGb//8f4yec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750066697; c=relaxed/simple;
-	bh=eFWpLJrvSktG6hsikqM/vAYb5SGJiAG2EBNlsdvsk8c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BalvZG5STdPG7O5ZIegrv11Il2UVMiPmFsDXa7HBvLLdLF7GYygPsrQKwxJY/urUIIItVrkhhP16fIYJOTSouS9Di+w9tVUXw9s6Hx2oQv/al82GlJ0NJqjLO8T2vD30gmywoFeMYqmRlrXmhb1RjMGSzSWPSwlTQFK3TpaO4fE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=OEyRP9xW; arc=none smtp.client-ip=193.252.22.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
-Received: from [172.16.82.72] ([124.33.176.97])
-	by smtp.orange.fr with ESMTPA
-	id R6GpufzEh5CROR6GquoLPE; Mon, 16 Jun 2025 11:37:02 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1750066622;
-	bh=H3wLlyw8govUof7jzDiaEVO+xcofIEdKMOe3pzartzs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=OEyRP9xW44ewXUweqboT5llf1e4621CPOiXfomOMnuGe8fCHddB6LBFiu0TwHmzM8
-	 UyaZ98d7nUFc0r4kYXFoXtVhIrtlUKhu6bLcLYankmzdni5YPm0/2BFsCac+G63mpC
-	 9CuKPxZmibBTRc2xNF8C8DMSTxr2C68HL3zGXVXEIGodQQJ+FnPGx+n6uZk7YGF3s7
-	 kppAgo078Os2kmioe2fqN1jPOl75ZwDfY0rx6+n36e6m1K1i0TCDtYQzu4zlSQWysy
-	 Nf80YeuBgis4QeSasjiSFXk+oIl7siJqJxsD+T7+yvrm5FxlQEWtFxFF3ARhNlClp3
-	 krHPbjPpzjBMA==
-X-ME-Helo: [172.16.82.72]
-X-ME-Auth: bWFpbGhvbC52aW5jZW50QHdhbmFkb28uZnI=
-X-ME-Date: Mon, 16 Jun 2025 11:37:02 +0200
-X-ME-IP: 124.33.176.97
-Message-ID: <1716571a-664b-4b14-b94c-f76303766ec0@wanadoo.fr>
-Date: Mon, 16 Jun 2025 18:36:51 +0900
+	s=arc-20240116; t=1750067160; c=relaxed/simple;
+	bh=yg/Z605KkyVU+56JZHlueaasnOvYoTqeMlYl3QzL15E=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=V0bJIzZ9pUG9k5dST8m7DY9TJ3rZgiLElPKRW5yGJpT4OahW/2jTkWviKaRDi45VfWFswYZeSNbf5V2Gxm0kH/cu6ovw6uz9aoaAm0v2Oxpm1af/ftXAJTsbMRDZMHp19hnWNFO2GrSWJCdr0GYDg1zKHYRoP367k6aay65d2w0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=p8UG9Rd8; arc=none smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-607c2b96b29so8583182a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 02:45:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1750067156; x=1750671956; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wv5TZzXE1pnoqd59sPXctLTMd18ru0CNrepNvpJnV7Y=;
+        b=p8UG9Rd8e6xg2tEJ/OQLvkHv/K0MvrZ1fxcvINZAjD95zW3RD2we37oduXBgYK831c
+         tadIWKh4qxfNkVv4y1nJO9BAvmdT3PbAcgZiZTi+ot2iAq7N6dXyrTmkyGmSxkSqtBTC
+         nQjf3V5f+U9pljT2MmYGztzAfVkNB9d1PYAtFOXzo/iFjMF6bNOEUHWcw2DJoXi+Zlhr
+         mVD2jWR9SKRNUfJd7Q/CT9xFwn1aMKQZ3h34vD6Jje9tCElIb11evUUVs7YRG++BligC
+         TbCdb6zlYHui+p5L0A3OuXafLeJboUN/DDLpxnm298ttuSMRx2IAQ4W8f8YqBNhLbzn5
+         LCxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750067156; x=1750671956;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Wv5TZzXE1pnoqd59sPXctLTMd18ru0CNrepNvpJnV7Y=;
+        b=wglUrCqA0VimeduhvpjziLRUHhBhhmBOkPO5P1bnU33vINEEgM1ts2GBzlvgf7DHm+
+         00/x6Phw42tMWiNdKL2DHsCi3piqjT1ejiAwbfF/pCfgMpXXflWEBV2Fv2xVBn2NLMZ/
+         7VfmMmqevYlhHr6qy56Qv5eLS2v8yJSYpD23sZgOdAEq7wjHPF2LgWU/6j6Ndz8/PVBz
+         ggkhJ05zQlwiTVbg7NozfUgMIbOXMKAK/eyFP3+d/l3+f0de6edKpktoMhdqL483uG1O
+         bmbIe4zBHGv/6OOPBmUDdqI3rgeF2SJWpGlN20NlMDa+eHKZ/Xp/BB99qt6daN6Y2wK2
+         MZIA==
+X-Gm-Message-State: AOJu0YxqjpBuM2gfc92Klamq8XHkeHz/KLr8jYasjCu9Up7hJoiZOL00
+	lzu4TjNTIQ2p4w13yKQuw7cxJKbmlyIFLLiedzBIh530ufshT4lNluMMpbT5WUBAokU=
+X-Gm-Gg: ASbGncucIY7UqrPdAT0BFPPj4XMBXPhMQUJKYpSoqFDM1+ZUZEWzfNINIGCmiHpA9zv
+	tA/+kTUPaLyVAfq34nVsaQ0UHr1qfpPouzo+S5qqvkxjCjvTSg5ZSKmpARKFo+CnNw+3BstSqNh
+	WUjF8YYOIkp6xsVSpWHaVp1GAP6E9QP7fp8oocpYKtD8qaWyY+A9+l2WM10i3VnArwy2SE3TOSj
+	LYr1OFfhuNetsICKawJMGuFZArtOtiBdwgmXfS0raPwZwStEvpBYgANYtlsf+obJxTAIXY23/Ib
+	kq7tvqGp4t2vNygmwJLNgaag3yB7Yy6HAneJe9gSWvuldoTFvkBW1GSYSJ9T/Q3JKX1UubUigs3
+	xa5A1fTFpjN9tW55wj0J5FaITP+dhpZd5EhicCNk4dho=
+X-Google-Smtp-Source: AGHT+IF1UCCT/9hU3wi3KuAvxeqhvZuI9qbh0Qqdl66L5+wsfuS8m2r+/KHpbcCfod5gb4crjQOdiA==
+X-Received: by 2002:a17:907:72d4:b0:ad5:55db:e411 with SMTP id a640c23a62f3a-adfad3eaca4mr807509666b.27.1750067156564;
+        Mon, 16 Jun 2025 02:45:56 -0700 (PDT)
+Received: from otso.local (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-adec81c0421sm613375666b.46.2025.06.16.02.45.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jun 2025 02:45:56 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 0/2] Fix tuning on eUSB2 repeater
+Date: Mon, 16 Jun 2025 11:45:10 +0200
+Message-Id: <20250616-eusb2-repeater-tuning-v1-0-9457ff0fbf75@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] net: can: mcp251x: use new GPIO line value setter
- callbacks
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-mediatek@lists.infradead.org, linux-can@vger.kernel.org,
- linux-arm-msm@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Andrew Lunn <andrew@lunn.ch>, Vladimir Oltean <olteanv@gmail.com>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Linus Walleij <linus.walleij@linaro.org>,
- "Chester A. Unal" <chester.a.unal@arinc9.com>,
- Daniel Golle <daniel@makrotopia.org>, DENG Qingfang <dqfext@gmail.com>,
- Sean Wang <sean.wang@mediatek.com>, Matthias Brugger
- <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Marc Kleine-Budde <mkl@pengutronix.de>,
- Heiner Kallweit <hkallweit1@gmail.com>, Russell King <linux@armlinux.org.uk>
-References: <20250616-gpiochip-set-rv-net-v2-0-cae0b182a552@linaro.org>
- <20250616-gpiochip-set-rv-net-v2-4-cae0b182a552@linaro.org>
-Content-Language: en-US
-From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Autocrypt: addr=mailhol.vincent@wanadoo.fr; keydata=
- xjMEZluomRYJKwYBBAHaRw8BAQdAf+/PnQvy9LCWNSJLbhc+AOUsR2cNVonvxhDk/KcW7FvN
- LFZpbmNlbnQgTWFpbGhvbCA8bWFpbGhvbC52aW5jZW50QHdhbmFkb28uZnI+wrIEExYKAFoC
- GwMFCQp/CJcFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AWIQTtj3AFdOZ/IOV06OKrX+uI
- bbuZwgUCZx41XhgYaGtwczovL2tleXMub3BlbnBncC5vcmcACgkQq1/riG27mcIYiwEAkgKK
- BJ+ANKwhTAAvL1XeApQ+2NNNEwFWzipVAGvTRigA+wUeyB3UQwZrwb7jsQuBXxhk3lL45HF5
- 8+y4bQCUCqYGzjgEZx4y8xIKKwYBBAGXVQEFAQEHQJrbYZzu0JG5w8gxE6EtQe6LmxKMqP6E
- yR33sA+BR9pLAwEIB8J+BBgWCgAmFiEE7Y9wBXTmfyDldOjiq1/riG27mcIFAmceMvMCGwwF
- CQPCZwAACgkQq1/riG27mcJU7QEA+LmpFhfQ1aij/L8VzsZwr/S44HCzcz5+jkxnVVQ5LZ4B
- ANOCpYEY+CYrld5XZvM8h2EntNnzxHHuhjfDOQ3MAkEK
-In-Reply-To: <20250616-gpiochip-set-rv-net-v2-4-cae0b182a552@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKbnT2gC/x3MQQ5AMBBG4avIrE2iFV24ilhU/WU2JVNEIu6us
+ fwW7z2UoYJMffWQ4pIsWyowdUVh9WkBy1xMtrFd44xjnHmyrNjhDygfZ5K0cOxc25rgJhM9lXZ
+ XRLn/7zC+7wdbt4NzZwAAAA==
+X-Change-ID: 20250616-eusb2-repeater-tuning-f56331c6b1fa
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1750067155; l=953;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=yg/Z605KkyVU+56JZHlueaasnOvYoTqeMlYl3QzL15E=;
+ b=3GYemwlBi62KkKVXr1IAcK4akalZscChQtxjpoaSKQQ1Wl5RrGQtsumLggN6/gEGWykiP3ruh
+ uo1DCOtKVQJBbW5GvuxtStUCl9EdnWqu2TWea+fa92D6VCCaiMmSQJ6
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-On 16/06/2025 at 16:24, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> struct gpio_chip now has callbacks for setting line values that return
-> an integer, allowing to indicate failures. Convert the driver to using
-> them.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Update the dt-bindings to remove the 'default' tuning values, since they
+depend on the PMIC and are not guaranteed to be the same.
 
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+And add a fix into the driver to not zero-out all tuning registers if
+they are not specified in the "init sequence", since zero is not the
+reset value for most parameter and will lead to very unexpected tuning.
 
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Luca Weiss (2):
+      dt-bindings: phy: qcom,snps-eusb2-repeater: Remove default tuning values
+      phy: qualcomm: phy-qcom-eusb2-repeater: Don't zero-out registers
 
-Yours sincerely,
-Vincent Mailhol
+ .../bindings/phy/qcom,snps-eusb2-repeater.yaml     |  3 --
+ drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c     | 63 +++++++++++-----------
+ 2 files changed, 32 insertions(+), 34 deletions(-)
+---
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+change-id: 20250616-eusb2-repeater-tuning-f56331c6b1fa
+
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
 
