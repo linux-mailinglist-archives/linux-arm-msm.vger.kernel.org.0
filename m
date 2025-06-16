@@ -1,202 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-61476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3921ADB5BD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 17:44:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0E36ADB5E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 17:52:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D09713B1F88
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 15:44:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F54E1890322
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 15:52:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9AFB264A85;
-	Mon, 16 Jun 2025 15:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF5F12701CB;
+	Mon, 16 Jun 2025 15:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DwoWy/fp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qP9peBEB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D206264A86;
-	Mon, 16 Jun 2025 15:44:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D230B26A1B5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 15:51:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750088685; cv=none; b=F01kYaRcMD7pHHY1JXuRUROK1eAkn88EG6TZOm50ZehkJThtPgWxaUz2J4+0CgX9dBVRhzXdiC4SP92U3bbxdKl63FbpMwIazmSFZDgu4uuA9ujRO0vzTHh/3vf88L3q2YfiG2UnlPtGouKEvfJGdH3PpC/05AjZhKoR1waykGo=
+	t=1750089118; cv=none; b=C9UoWxd/d0RcgnkNIgCVdbRRjIRUcFeFewL/+IdnaUU3KS0RUiylMoQMa0xcMY8+xxH7TXh8yQ/07yo+bSpRYVfC0YsapAFWOp+bnGw//D1/Jlwiba3/RvW51mUvaR6Yf3DARhIksfeZeiL5WTrxpXSSfUO/tOCoei69wiNQFN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750088685; c=relaxed/simple;
-	bh=9rz+mrHPoaI5Kg2Za3krpinYLKHUEQEoj0pZqDoZb88=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SQgmFChtOK7MMv2VlID0L1E28ezRN+LFch9WV6dn/uMvnvVc3q6dw+7Ut+RnI++15o0YuYLfN5i0WwnlyKCKHMOhvx3ZmHUlNAzKoAdVsi52tYc8kmm0FPjnK3aQcaX72PELBt1fmLAua6Fdl/jJsM0jqmUMv20pQ/n+UMp+gls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DwoWy/fp; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55G8vb7r005454;
-	Mon, 16 Jun 2025 15:44:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mlaRo8vtmKHPBjk6pe+ClWtYueoxt98XtE8Z3PK40wE=; b=DwoWy/fpjrAmapp/
-	RyVMlibZQ2FL4v4kwXYl4e+AbbkbNQ20MxW/cpXQDIT5d5A/4i4gx0ZprVpxSbIw
-	RAnYVPAotXfuOILMy+pHY/swT9qLCtbxyK2yIyRLJd93xnGXyi8A5O/8t+Aaa6UW
-	FHXlxyfdp9lDasP2OCSXZpYDqWJlWmjOdxnxX623XbKD5SVS+uTUynO9V5C6wBsy
-	aDnY/xeGtzor+Km16s01XXlQnBpOpRSep6SXsWZCSqBd0v0mAtH4hkgmGhlsIMNx
-	TYsLIXHAHGrNPdv1PPjEhjCE8BFZFAAdo5v91EcwN0CIyiwfyFb1prOZULOSfiJ4
-	xHJcUg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4791hcw3b0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Jun 2025 15:44:35 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55GFiYB8001860
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Jun 2025 15:44:34 GMT
-Received: from [10.50.31.25] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 16 Jun
- 2025 08:44:31 -0700
-Message-ID: <dbbf8b29-0ef4-8ebe-9fd3-c4b2f9c57b29@quicinc.com>
-Date: Mon, 16 Jun 2025 21:14:27 +0530
+	s=arc-20240116; t=1750089118; c=relaxed/simple;
+	bh=PV+hjbr1UcOA60DQPHguMD3wEZU4n+jwNG7/rCy7Fvw=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=gMxPr1STUs9sliEOWKk9kJxPBl45d5AGSXmKo+SYEgKdf89fXNdBbKtfRnz0FTZIvDdlUsfSr61TGet+KlN/+QWEuzGCU95z5tw2Pm/LOaPHJ5RqI2fpIfugQ6vLu5/WmBnV10LcOmmAb7vJtxoU1RtUgZtlYCKiqRuo/YP4e/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qP9peBEB; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3a510432236so3449626f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 08:51:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1750089114; x=1750693914; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B3aIxTq8eP0LU6Js9V3eNq8kd450CZ0HrFoXlpXX77I=;
+        b=qP9peBEBMe1KGRcqA2zIdj2HsKSyRbSk1mQcq3XOsTitKUjwVzCxGmucxHdWzHgdTI
+         p7/dFsvy1ra2khZuSe7SJrEqxKDiU4/h7spvC3cZJKWqQir8XLr+/ywX+8INSPxvnkvy
+         rzg4ezYwFahht/d1la+m16dI8mUcKLZMXBOvKFuqPvXNltFNvZreUTY+8EKuFs38Yodw
+         /kKdddJWIUmhFEuiv0sfvIbivbKvUsTh/DnpjPUxquFpuGDKp7sl6OdQH0AiyPXw0v3V
+         HbQRhoQwUcZLbcsyP6FSFf/78d+bNxWAggB9XCUy96/lts+UGCKDEC9NwbtZh5RFxYYQ
+         zD/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750089114; x=1750693914;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=B3aIxTq8eP0LU6Js9V3eNq8kd450CZ0HrFoXlpXX77I=;
+        b=gjZDjGxbRUQzCt31/C1bZe3oQBS91a3p1P3smOdFoBlS+X+OgojoGCT0LfEBEsrPiR
+         QBY9f1qFhtGGaxa/kPaB529ye2zDyRbXRPjER/KRNhPhDffOUQRcdmRl7LYqpsA+lfxG
+         Q+/kr68KsQgW3ZR8JDHfKuksovFWW2uyYluH1fd9u/dwgV7Vg0Tnn3glwFg7q6nTW+pt
+         XXUZuXK9RsFXTEKnx/mmwKafcU6Imyy5lr0nzrxQeOb2bMBHZG3HWr0byUuiWorTmCPQ
+         pZ0al6OWRc6IOZ0LPfdaInp87IG4KoXSeq3zoHWMpTvKtIxnodOALzUhTG0jzIEjMkNZ
+         IA6A==
+X-Gm-Message-State: AOJu0Yyk+y/s6wub40rZ2gkuyRPIjYg9yOAiq3Wwc1Zukt5W7G8cyh6y
+	fCb6GM8tpkpTAzppUyHiqmLQ2o6stYFXyRQkWDUAb5oD9ee5TBM1sip2cFVca+JH6rg=
+X-Gm-Gg: ASbGnctmRs1ubpImgI3qmnrDYodZVmLn3l2t4ZaQjWsEytzTFduA9szb0TkqafrpGgf
+	eMKep/PtF4p54NMwuDm3vAV7hS/WWaZSrQ1PzzVHNjN+JpQa5Twa3L9wCzYXKf4OocJJLiu6Z1g
+	yvKUuk6ZNiGoJWiW7KJVVrKljDutMC8mLGaJ0sAf4TD6zg1cqDN9Oyv6vOE8mB3cEsi0fm8rfBJ
+	LwfPU9nLwtdmoOhvioMHS/wswvVYnwONHzEuaKogpWDTuWxSNR6b6UySpF1BIsmCrqCOrxx1mXW
+	lMKDVXn61ZSYr2m++qZJDmP2EFiIFgSJjewUSWDtkNjxG8kvW/miT6YIMnwg3CAtn2dREyPOQTN
+	bLLA1YR/raH+JUdHC2yBscoFtLyravLpyOpm8
+X-Google-Smtp-Source: AGHT+IEj5cUnxUUFo+d8zqbumS2ayHNMbIjK7THuy3PbiLsuMDqskV06eRRHi2zveWUbvuEPOUaqXQ==
+X-Received: by 2002:a05:6000:4818:b0:3a5:2e59:833a with SMTP id ffacd0b85a97d-3a57238b9fcmr8023602f8f.1.1750089114107;
+        Mon, 16 Jun 2025 08:51:54 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:6c7:97de:65a8:488a? ([2a01:e0a:3d9:2080:6c7:97de:65a8:488a])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532e224795sm150088105e9.7.2025.06.16.08.51.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Jun 2025 08:51:53 -0700 (PDT)
+Message-ID: <786e3337-4c14-4281-932e-6a93aac53cf8@linaro.org>
+Date: Mon, 16 Jun 2025 17:51:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v6 2/6] media: venus: vdec: Clamp parm smaller than 1fps
- and bigger than 240.
-Content-Language: en-US
-To: Ricardo Ribalda <ribalda@chromium.org>
-CC: Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>, <linux-media@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20250111-fix-cocci-v6-0-1aa7842006cc@chromium.org>
- <20250111-fix-cocci-v6-2-1aa7842006cc@chromium.org>
- <41cba134-4c8c-bb6d-c68b-a7de8da0689c@quicinc.com>
- <CANiDSCsVN0gXd=0GLALYvoBZ=cBY8daAJBmL=NJ5UteikZLpNg@mail.gmail.com>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <CANiDSCsVN0gXd=0GLALYvoBZ=cBY8daAJBmL=NJ5UteikZLpNg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 00/28] interconnect: qcom: icc-rpmh: use NULL-terminated
+ arrays and drop static IDs
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Georgi Djakov <djakov@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250616-rework-icc-v1-0-bc1326294d71@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250616-rework-icc-v1-0-bc1326294d71@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE2MDEwMSBTYWx0ZWRfX/Ljl0Jj4YzJk
- 640lHU62e6N5nqCWRwG2KElJB2UvKGojtBigI2lmoWAN77F5hoz52dQIZqfAuewUhSVWJ9fWgPq
- d3s0o6wgOeGXVQLJ3J2Fc8uyQtrT1teKePUNJraqxCuCG/ETxwmTrc4lpU503Nowa9W1ygDD1Sv
- dEwcQpOfp/If3mqE+TzsAu6gTQ8mtfH1Vdp8kEj9/EerMq4uSGQcal52YV0jiEDQBNAvCYMPHSU
- /37raFyuoVDyNzR0zJxSTQQSex/y6B0JcXx5utt3p/12089MbGo6HzNO/6guDVUR7g0l92vE52Z
- xjjm2xi/guMq5SBunZEaTHA/weCJ7W7fLAm3uuWj3aUM04x15NW1vjjYrRFuT7D/SJ2ZtuvNie2
- r3PzDLiRLNtFAWvBtG7U52W+OY2xfcL2BEWcwQTMDzVptjiFU4t1Jdt48ylUCnCu8oe3war9
-X-Authority-Analysis: v=2.4 cv=PtaTbxM3 c=1 sm=1 tr=0 ts=68503be3 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8
- a=xOd6jRPJAAAA:8 a=COk6AnOGAAAA:8 a=cm27Pg_UAAAA:8 a=lCR6N9lNe_t9pZXtK3cA:9
- a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: aLYtIzwUcY_nBpW5e5Cue-KggdGJQG1f
-X-Proofpoint-GUID: aLYtIzwUcY_nBpW5e5Cue-KggdGJQG1f
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-16_08,2025-06-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 mlxlogscore=999 suspectscore=0 malwarescore=0
- lowpriorityscore=0 impostorscore=0 adultscore=0 spamscore=0
- priorityscore=1501 phishscore=0 mlxscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506160101
 
+Hi,
 
-On 6/16/2025 5:14 PM, Ricardo Ribalda wrote:
-> Hi Vikash
+On 16/06/2025 02:28, Dmitry Baryshkov wrote:
+> Qualcomm interconnect code has been using .num_foo fields together with
+> the arrays embedded in the structure, which results in hard-to-notice
+> mistakes if .num_foo gets omitted or incorrect.
 > 
-> On Mon, 16 Jun 2025 at 13:04, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
->>
->>
->> On 1/11/2025 3:25 PM, Ricardo Ribalda wrote:
->>> The driver uses "whole" fps in all its calculations (e.g. in
->>> load_per_instance()). Those calculation expect an fps bigger than 1, and
->>> not big enough to overflow.
->>>
->>> Clamp the value if the user provides a parm that will result in an invalid
->>> fps.
->>>
->>> Reported-by: Hans Verkuil <hverkuil@xs4all.nl>
->>> Closes: https://lore.kernel.org/linux-media/f11653a7-bc49-48cd-9cdb-1659147453e4@xs4all.nl/T/#m91cd962ac942834654f94c92206e2f85ff7d97f0
->>> Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
->>> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
->>> ---
->>>  drivers/media/platform/qcom/venus/core.h | 2 ++
->>>  drivers/media/platform/qcom/venus/vdec.c | 5 ++---
->>>  2 files changed, 4 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
->>> index 44f1c3bc4186..afae2b9fdaf7 100644
->>> --- a/drivers/media/platform/qcom/venus/core.h
->>> +++ b/drivers/media/platform/qcom/venus/core.h
->>> @@ -28,6 +28,8 @@
->>>  #define VIDC_RESETS_NUM_MAX          2
->>>  #define VIDC_MAX_HIER_CODING_LAYER 6
->>>
->>> +#define VENUS_MAX_FPS                        240
->>> +
->>>  extern int venus_fw_debug;
->>>
->>>  struct freq_tbl {
->>> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
->>> index 98c22b9f9372..c1d5f94e16b4 100644
->>> --- a/drivers/media/platform/qcom/venus/vdec.c
->>> +++ b/drivers/media/platform/qcom/venus/vdec.c
->>> @@ -481,11 +481,10 @@ static int vdec_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
->>>       us_per_frame = timeperframe->numerator * (u64)USEC_PER_SEC;
->>>       do_div(us_per_frame, timeperframe->denominator);
->>>
->>> -     if (!us_per_frame)
->>> -             return -EINVAL;
->>> -
->>> +     us_per_frame = max(USEC_PER_SEC, us_per_frame);
->> This logic changes the actual fps from client. Consider a regular encode usecase
->> from client setting an fps as 30. The "max(USEC_PER_SEC, us_per_frame)" would
->> override it to USEC_PER_SEC and then the subsequent logic would eventually make
->> fps to 1.
->> Please make it conditional to handle the 0 fps case, i guess that the objective
->> in above code, something like below
->> if (!us_per_frame)
->>   us_per_frame = USEC_PER_SEC;
+> Rework RPMh interconnect code to use NULL-terminated arrays for the
+> dynamic IDs case (as now all the arrays contain only pointers) and,
+> while we are at it, rework all the drivers to use dynamic IDs and drop
+> static IDs code.
 > 
-> You are correct. Thanks for catching it!
-> 
-> I think I prefer:
-> us_per_frame = clamp(us_per_frame, 1, USEC_PER_SEC);
-This is good.
+> This series touches only RPMh interconnect drivers. Corresponding series
+> for RPM drivers will follow up shortly.
 
-Regards,
-Vikash
+Can you specify on which base thie patchset applies ?
+
+I tried v6.15, v6.16-rc1, v6.16-rc2, next-20250613 & next-20250616 and they all fail to
+apply on patch 5.
+
+Thanks,
+Neil
+
 > 
-> Regards
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+> Dmitry Baryshkov (28):
+>        interconnect: qcom: sc8280xp: specify num_links for qnm_a1noc_cfg
+>        interconnect: qcom: sc8180x: specify num_nodes
+>        interconnect: qcom: rpmh: make nodes a NULL_terminated array
+>        interconnect: qcom: rpmh: make link_nodes a NULL_terminated array
+>        interconnect: qcom: sc7280: convert to dynamic IDs
+>        interconnect: qcom: sc8180x: convert to dynamic IDs
+>        interconnect: qcom: sc8280xp: convert to dynamic IDs
+>        interconnect: qcom: sdm845: convert to dynamic IDs
+>        interconnect: qcom: sm8250: convert to dynamic IDs
+>        interconnect: qcom: x1e80100: convert to dynamic IDs
+>        interconnect: qcom: qcs615: convert to dynamic IDs
+>        interconnect: qcom: qcs8300: convert to dynamic IDs
+>        interconnect: qcom: qdu1000: convert to dynamic IDs
+>        interconnect: qcom: sar2130p: convert to dynamic IDs
+>        interconnect: qcom: sc7180: convert to dynamic IDs
+>        interconnect: qcom: sdm670: convert to dynamic IDs
+>        interconnect: qcom: sdx55: convert to dynamic IDs
+>        interconnect: qcom: sdx65: convert to dynamic IDs
+>        interconnect: qcom: sdx75: convert to dynamic IDs
+>        interconnect: qcom: sm6350: convert to dynamic IDs
+>        interconnect: qcom: sm7150: convert to dynamic IDs
+>        interconnect: qcom: sm8150: convert to dynamic IDs
+>        interconnect: qcom: sm8350: convert to dynamic IDs
+>        interconnect: qcom: sm8450: convert to dynamic IDs
+>        interconnect: qcom: sm8550: convert to dynamic IDs
+>        interconnect: qcom: sm8650: convert to dynamic IDs
+>        interconnect: qcom: sm8750: convert to dynamic IDs
+>        interconnect: qcom: icc-rpmh: drop support for non-dynamic IDS
 > 
+>   drivers/interconnect/qcom/bcm-voter.c |    4 +-
+>   drivers/interconnect/qcom/icc-rpmh.c  |   20 +-
+>   drivers/interconnect/qcom/icc-rpmh.h  |   13 +-
+>   drivers/interconnect/qcom/qcs615.c    |  713 ++++++++-----------
+>   drivers/interconnect/qcom/qcs615.h    |  128 ----
+>   drivers/interconnect/qcom/qcs8300.c   |  911 +++++++++++-------------
+>   drivers/interconnect/qcom/qcs8300.h   |  177 -----
+>   drivers/interconnect/qcom/qdu1000.c   |  470 ++++++------
+>   drivers/interconnect/qcom/qdu1000.h   |   95 ---
+>   drivers/interconnect/qcom/sa8775p.c   |  493 ++++++-------
+>   drivers/interconnect/qcom/sar2130p.c  |  795 ++++++++-------------
+>   drivers/interconnect/qcom/sc7180.c    |  892 +++++++++++------------
+>   drivers/interconnect/qcom/sc7180.h    |  149 ----
+>   drivers/interconnect/qcom/sc7280.c    |  840 ++++++++++------------
+>   drivers/interconnect/qcom/sc7280.h    |  154 ----
+>   drivers/interconnect/qcom/sc8180x.c   | 1013 +++++++++++++-------------
+>   drivers/interconnect/qcom/sc8180x.h   |  179 -----
+>   drivers/interconnect/qcom/sc8280xp.c  | 1257 ++++++++++++++++-----------------
+>   drivers/interconnect/qcom/sc8280xp.h  |  209 ------
+>   drivers/interconnect/qcom/sdm670.c    |  712 +++++++++----------
+>   drivers/interconnect/qcom/sdm670.h    |  128 ----
+>   drivers/interconnect/qcom/sdm845.c    |  986 ++++++++++++--------------
+>   drivers/interconnect/qcom/sdm845.h    |  140 ----
+>   drivers/interconnect/qcom/sdx55.c     |  611 ++++++++--------
+>   drivers/interconnect/qcom/sdx55.h     |   70 --
+>   drivers/interconnect/qcom/sdx65.c     |  577 +++++++--------
+>   drivers/interconnect/qcom/sdx65.h     |   65 --
+>   drivers/interconnect/qcom/sdx75.c     |  498 ++++++-------
+>   drivers/interconnect/qcom/sdx75.h     |   97 ---
+>   drivers/interconnect/qcom/sm6350.c    |  838 +++++++++++-----------
+>   drivers/interconnect/qcom/sm6350.h    |  139 ----
+>   drivers/interconnect/qcom/sm7150.c    |  860 +++++++++++-----------
+>   drivers/interconnect/qcom/sm7150.h    |  140 ----
+>   drivers/interconnect/qcom/sm8150.c    |  930 ++++++++++++------------
+>   drivers/interconnect/qcom/sm8150.h    |  152 ----
+>   drivers/interconnect/qcom/sm8250.c    |  977 ++++++++++++-------------
+>   drivers/interconnect/qcom/sm8250.h    |  168 -----
+>   drivers/interconnect/qcom/sm8350.c    |  901 ++++++++++++-----------
+>   drivers/interconnect/qcom/sm8350.h    |  158 -----
+>   drivers/interconnect/qcom/sm8450.c    |  823 ++++++++++-----------
+>   drivers/interconnect/qcom/sm8450.h    |  169 -----
+>   drivers/interconnect/qcom/sm8550.c    |  683 ++++++++----------
+>   drivers/interconnect/qcom/sm8550.h    |  138 ----
+>   drivers/interconnect/qcom/sm8650.c    |  713 ++++++++-----------
+>   drivers/interconnect/qcom/sm8650.h    |  144 ----
+>   drivers/interconnect/qcom/sm8750.c    |  779 ++++++++------------
+>   drivers/interconnect/qcom/x1e80100.c  |  819 ++++++++++-----------
+>   drivers/interconnect/qcom/x1e80100.h  |  192 -----
+>   48 files changed, 8655 insertions(+), 13464 deletions(-)
+> ---
+> base-commit: 410f15dcfe222c06f0d6379adec630061e88dc72
+> change-id: 20250613-rework-icc-0d3b7276a798
 > 
-> 
->>
->> Regards,
->> Vikash
->>>       fps = (u64)USEC_PER_SEC;
->>>       do_div(fps, us_per_frame);
->>> +     fps = min(VENUS_MAX_FPS, fps);
->>>
->>>       inst->fps = fps;
->>>       inst->timeperframe = *timeperframe;
->>>
-> 
-> 
-> 
-> --
-> Ricardo Ribalda
+> Best regards,
+
 
