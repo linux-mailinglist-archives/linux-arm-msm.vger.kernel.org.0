@@ -1,199 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-61381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FB6CADA911
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 09:14:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5277EADA90E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 09:14:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F2AB41885136
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 07:14:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE5C416F4BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 07:14:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 409D81F4C8E;
-	Mon, 16 Jun 2025 07:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 741231F03D8;
+	Mon, 16 Jun 2025 07:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YwN+Xszw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FDJGkOsc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC351F4703
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 07:14:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D8027454;
+	Mon, 16 Jun 2025 07:14:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750058057; cv=none; b=R0qOQIRZknmJ8jDqNNODLi7DLBuT15YLHW2CYvUooEMQWK5eWRuKWfVg5op8W4DnQqY1Bh93kClw5FX/D8Uo7zPhVfnzGOwpaFFlM2WKqZCp0XFfYudBOCEjf7e7rql0nSgheT3i2b3Ab+A87CqLX+TMcrQf7nSN176mYOYma28=
+	t=1750058052; cv=none; b=b8s7tpfRXDCtSrTBrEEycb3Mq6rUG70yUEyYgTK9s3Ejq4Y1n+2KEqRNY+UuAUNvTb3tR3lG8FefVZfIwub/LAKQVwhPKo4kXHPATXOz1kvFQY8L51CQUmgrCw8bzhbJld2mpbypfyN/xMJEwrUR0asvPr+sKoH5MyUO7j7qLyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750058057; c=relaxed/simple;
-	bh=5B+m8LJRszE/eOQ7rN2wxVR0e0sQd7dvBxHZtcWiquo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DdFgzZZouxPVUXvnmKmCmKg+jK1U5xbO8FXlB5uuNnca04r01osZheZVOMPZrW15gYAWsTpu9WrwfC3VCKYrMrXO3dq0SBeWSF5hC7zVrAuqZzuZbXsZPuGVYQMOlLnfNqL3n4RiBc+e3hbWkOD/sv+cc9KF2Z5gHFZkLmoe83o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YwN+Xszw; arc=none smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4a58ef58a38so293351cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 00:14:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1750058054; x=1750662854; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G4dscraCi99Sxb2AdbSI/1exeAb4GQbHQ2olocOXtjo=;
-        b=YwN+Xszw0eW/yG5YhFbtK2PVtM0xbhj5ey4JrQhMEf+Ir1D9+AzvXRkunkpaY/TIHt
-         NAIgqQNLrZLZK/ITvgNgmZIOEzhZ2EXb6V63JHrKVQ6ZOexvfNO4oEGkv2KFxaxg5n2p
-         h6ok+Iw9hwMfbd1XHiyAG5qKusgnjRVejOdOI4Rb2lm1rEBqg/31cgovdFRYh0pHns+y
-         RfCmlPFsiiKaFBxsmaEHkoVeFsJPbeHE1Gd05k4H0XBHOEpGV+SCka1gwxyxZ24W9/AD
-         KxjmhV2HD7muI0JTORAezU3Q3DPIz47aZjB1kIFvpT1cO///LgfqlRRceGXWchPhH8dT
-         1q2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750058054; x=1750662854;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=G4dscraCi99Sxb2AdbSI/1exeAb4GQbHQ2olocOXtjo=;
-        b=JvWpQNflFhvz9p0UbZb9yS0YjqM6YN7+75RPkd4goNRZnkOXh9KXBN4wgznud16TJJ
-         nuzN1G+K6l07C4aWsx8dvTU0olH+27OcOkqHmmAQEEQHnxtZ3aK8UVKKbrqxtrxlJ560
-         1JLiNmr6ep7dwffPI7TiS6V8sT9YtOJxm0FFJ9CHKqv036hqAuFgLOfRFETmRBEFk5jZ
-         pe5umzpc34+eGV7+UEh7GxMBUu6R71ZIZQVFH6iZO2vBI8sTH8t1GqILBZqfgshxC2nq
-         dx2IaVIKxNVhXLkPSDQUcq4eRCxTomjAQKVeQKREk43H8mmMz8It04n6nIO1CQuHx+g4
-         w6aw==
-X-Forwarded-Encrypted: i=1; AJvYcCW8EJ25mtSKTtE+NXuRicaBYOS1aeCL0nollTAFSLtabGzm8LTOWt+mASmt3hWlOj+Gw2URiOKK2oE0sU56@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZKq0dD5kkCsd74kbDXMfmIacw+6wNiDxrmWeQb1YfEhy+6J5B
-	NEQqsfCfruD5ep9SiG4t1UQ2lCWlSl1bb1fXlNndhTgQ8WSsp3iJPX0ZxoAcs8eI4lpNrvwdbcD
-	X9J1sWM7hIcqXRc97DVK3QF7cv4eHV/7R+3/Mv4H8
-X-Gm-Gg: ASbGncviyioaBtmFY6TMD6pKKot6p21b605hb+sSySnBvAP4a2Y7TFcoCyXFrALCBoW
-	lpAm3cPgnws9lL8TeC1Kuc9aIX50mfEJIN9uzab5+UKsNJyW+JrxbTeULyHNCXJQ4UR2G+CzxA/
-	JgDslloCc0PwBsiimTVe18dj3Yjr51O4sqUsg/2qAJOXoFA9plKbgB6g==
-X-Google-Smtp-Source: AGHT+IHRP1CpUCig8F7p0iqSMmnDgYVd+hSQrG9KB86uiC6pnZNQNaE6PPvaROhLDIFwY0y51UIij5JffUL2jbFDWys=
-X-Received: by 2002:ac8:58c8:0:b0:4a5:9b0f:a150 with SMTP id
- d75a77b69052e-4a73d63d978mr5025451cf.16.1750058053808; Mon, 16 Jun 2025
- 00:14:13 -0700 (PDT)
+	s=arc-20240116; t=1750058052; c=relaxed/simple;
+	bh=8mjw1p7jH5U3R+sYOCQOnSj98L74qXNWmdd6u//UBqg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=QVcKrnTqt7Uaq4Fb1iZL5Ua8loDau7Gzs+w4Qt3AmC3l8IoHBjJeCwi/AVJN0gIww9aP7OncbuxyU8nDuzaUsgku2ibonr6jBiZg9cQb5zp8wPRaG/2B5n3GVb2HeoYoMDhfOzz2ls0f4YYekojMTSzfPC1t1FBCgDG9uhos9QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FDJGkOsc; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55FMjLD4021701;
+	Mon, 16 Jun 2025 07:14:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	YfE33/hzYMpvHI+EVdkFbVpEI44vnDFenLTTlPLs3Sc=; b=FDJGkOsccrC5PNe3
+	1M6VVACtfXJTwNcC5RBpbdN0WWkmRZfEUeOGzThS1CsZVaHmV5wk38NXs5gtkdFA
+	KWSdm49mokPGagmkliA+J0v9iufSVO5kUv109VlINMz3FrbfrUos5vhUv0CG6lWw
+	0Lu+9pkfs3tfpE7UVg/DW1UQNeNhOOZuONbnU4+0VLARcffA/tXyAEmm65NVsRrq
+	MEo+DTjsZVAErMW4jtkcBAkJAeeKYN5qakt0DNCkW2+fT7Bu7GO7U8eNy1NxY0+1
+	2BrV0Z3zkca+cQCVCWeHA2yctr9VL1oQln5JpRh6gvqym0c/2OGi7IYE4F+MD9qs
+	ttL4JQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4792c9ude8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Jun 2025 07:14:06 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55G7E5Ir018364
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 16 Jun 2025 07:14:06 GMT
+Received: from [10.217.216.168] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 16 Jun
+ 2025 00:14:00 -0700
+Message-ID: <b35d6797-c574-4b85-878d-502fb4b22152@quicinc.com>
+Date: Mon, 16 Jun 2025 12:44:00 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250611133330.1514028-1-tabba@google.com> <20250611133330.1514028-5-tabba@google.com>
- <aEyLlbyMmNEBCAVj@google.com>
-In-Reply-To: <aEyLlbyMmNEBCAVj@google.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Mon, 16 Jun 2025 08:13:37 +0100
-X-Gm-Features: AX0GCFulb2IhkWValvX9vFqGHI2nVg_Dnrs5LCKRKWUrkMeevUaVx5iPDic8k40
-Message-ID: <CA+EHjTz=j==9evN7n1sGfTwxi5DKSr5k0yzXhDGzvwk7UawSGA@mail.gmail.com>
-Subject: Re: [PATCH v12 04/18] KVM: x86: Rename kvm->arch.has_private_mem to kvm->arch.supports_gmem
-To: Sean Christopherson <seanjc@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
-	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 0/3] Add level shifter support for qualcomm SOC's
+Content-Language: en-US
+To: Ulf Hansson <ulf.hansson@linaro.org>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Adrian Hunter
+	<adrian.hunter@intel.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <quic_cang@quicinc.com>, <quic_nguyenb@quicinc.com>,
+        <quic_rampraka@quicinc.com>, <quic_pragalla@quicinc.com>,
+        <quic_sayalil@quicinc.com>, <quic_nitirawa@quicinc.com>,
+        <quic_bhaskarv@quicinc.com>
+References: <20250523105745.6210-1-quic_sartgarg@quicinc.com>
+ <d0d3c2c0-d5ab-484d-835b-3a76055cad55@oss.qualcomm.com>
+ <CAPDyKFoKh6KLtn6-Rvttt9zKh2fk7T28t_jC7KC8peYE+RkL5Q@mail.gmail.com>
+From: Sarthak Garg <quic_sartgarg@quicinc.com>
+In-Reply-To: <CAPDyKFoKh6KLtn6-Rvttt9zKh2fk7T28t_jC7KC8peYE+RkL5Q@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Z3sYcZ34SVXSTAF2ZUKEExoXLFmsFZgL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE2MDA0NiBTYWx0ZWRfX7YPUs/OdImC6
+ 0XRGG3+pcdBlpaEMtlRrZHjus4lJzuaSVOn0c/gfCX/UgDly4fRdxf02UTJFSqE6EnW0Fwr3rdF
+ NXuKxpVVZLHy3GzK59y/21qyCmUxsy1MLQ0spSwtrUuFfzcBl4nBK9H3PWQvkyykXIWPvf/61jJ
+ gYAA9oSdtmJvsIQLtUQthX+u6YY3PGPwqvb/y3PwjeSRuZO0DR+vDi4BR/uAkWkYlA0urfXfmw5
+ AVtjepMDUHClpHlEQoUQrOLn1FhqhtNBO8psvdrGMr1eLDRF4zaOKB24ffdKi1yGTZwFKC8EqoZ
+ xMajAerulR4OLSNRLQJOt7AYk/5vpm/7Ey4lGcBjZuBygVDKoGGgN/Q4eRPJVc4/3nYFb3xcqvS
+ HZ/MXBBjXXHZPghqJiImND+9DAgtYQbYy1MKabDgrlAKcWIJIAvaVho/YxvqJuhuYmHuWgj4
+X-Proofpoint-ORIG-GUID: Z3sYcZ34SVXSTAF2ZUKEExoXLFmsFZgL
+X-Authority-Analysis: v=2.4 cv=etffzppX c=1 sm=1 tr=0 ts=684fc43e cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8
+ a=R8EqlNOSqXiF4fyEEKEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-16_03,2025-06-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 adultscore=0 spamscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 mlxlogscore=980
+ lowpriorityscore=0 bulkscore=0 mlxscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506160046
 
-Hi Sean,
 
-On Fri, 13 Jun 2025 at 21:35, Sean Christopherson <seanjc@google.com> wrote=
-:
->
-> On Wed, Jun 11, 2025, Fuad Tabba wrote:
-> > The bool has_private_mem is used to indicate whether guest_memfd is
-> > supported.
->
-> No?  This is at best weird, and at worst flat out wrong:
->
->         if (kvm->arch.supports_gmem &&
->             fault->is_private !=3D kvm_mem_is_private(kvm, fault->gfn))
->                 return false;
->
-> ditto for this code:
->
->         if (kvm_arch_supports_gmem(vcpu->kvm) &&
->             kvm_mem_is_private(vcpu->kvm, gpa_to_gfn(range->gpa)))i
->                 error_code |=3D PFERR_PRIVATE_ACCESS;
->
-> and for the memory_attributes code.  E.g. IIRC, with guest_memfd() mmap s=
-upport,
-> private vs. shared will become a property of the guest_memfd inode, i.e. =
-this will
-> become wrong:
->
-> static u64 kvm_supported_mem_attributes(struct kvm *kvm)
-> {
->         if (!kvm || kvm_arch_supports_gmem(kvm))
->                 return KVM_MEMORY_ATTRIBUTE_PRIVATE;
->
->         return 0;
-> }
->
-> Instead of renaming kvm_arch_has_private_mem() =3D> kvm_arch_supports_gme=
-m(), *add*
-> kvm_arch_supports_gmem() and then kill off kvm_arch_has_private_mem() onc=
-e non-x86
-> usage is gone (i.e. query kvm->arch.has_private_mem directly).
->
-> And then rather than rename has_private_mem, either add supports_gmem or =
-do what
-> you did for kvm_arch_supports_gmem_shared_mem() and explicitly check the =
-VM type.
 
-Will do.
+On 5/27/2025 8:05 PM, Ulf Hansson wrote:
+> On Fri, 23 May 2025 at 20:25, Konrad Dybcio
+> <konrad.dybcio@oss.qualcomm.com> wrote:
+>>
+>> On 5/23/25 12:57 PM, Sarthak Garg wrote:
+>>> Add level shifter support for qualcomm SOC's.
+>>>
+>>> - Changed from v1
+>>>      - As suggested by Krzysztof Kozlowski redesigned logic to use
+>>>      compatible property for adding this level shifter support.
+>>>      - Addressed Adrian Hunter comments on V1 with resepect to
+>>>        checkpatch.
+>>>      - Cleared the bits first and then set bits in
+>>>        sdhci_msm_execute_tuning as suggested by Adrian Hunter.
+>>>      - Upated the if condition logic in msm_set_clock_rate_for_bus_mode
+>>>        as suggested by Adrian Hunter.
+>>
+>> During internal review I suggested we could introduce a generic quirk,
+>> perhaps called "max-hs-frequency" which would update this
+>> currently-constant value:
+>>
+>> ---------------- drivers/mmc/core/sd.c ----------------
+>> if (status[13] & SD_MODE_HIGH_SPEED)
+>>          card->sw_caps.hs_max_dtr = HIGH_SPEED_MAX_DTR;
+>> -------------------------------------------------------
+>>
+>> (50 MHz)
+>>
+>> which I believe is where it comes from
+> 
+> I agree that a DT property for the mmc controller would make sense.
+> 
+> Although, this seems limited to SD UHS-I speed modes, so perhaps
+> "max-sd-uhs-frequency" would be a better name for it?
+> 
+> Kind regards
+> Uffe
 
-To make sure we're on the same page, we should add `supports_gmem` and
-keep `has_private_mem`, and continue using it for x86 code by querying
-it directly once the helpers are added.
-
-> > Rename it to supports_gmem to make its meaning clearer and to decouple =
-memory
-> > being private from guest_memfd.
-> >
-> > Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-> > Reviewed-by: Gavin Shan <gshan@redhat.com>
-> > Reviewed-by: Shivank Garg <shivankg@amd.com>
-> > Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-> > Co-developed-by: David Hildenbrand <david@redhat.com>
-> > Signed-off-by: David Hildenbrand <david@redhat.com>
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >  arch/x86/include/asm/kvm_host.h | 4 ++--
-> >  arch/x86/kvm/mmu/mmu.c          | 2 +-
-> >  arch/x86/kvm/svm/svm.c          | 4 ++--
-> >  arch/x86/kvm/x86.c              | 3 +--
-> >  4 files changed, 6 insertions(+), 7 deletions(-)
->
-> This missed the usage in TDX (it's not a staleness problem, because this =
-series
-> was based on 6.16-rc1, which has the relevant code).
->
-> arch/x86/kvm/vmx/tdx.c: In function =E2=80=98tdx_vm_init=E2=80=99:
-> arch/x86/kvm/vmx/tdx.c:627:18: error: =E2=80=98struct kvm_arch=E2=80=99 h=
-as no member named =E2=80=98has_private_mem=E2=80=99
->   627 |         kvm->arch.has_private_mem =3D true;
->       |                  ^
-> make[5]: *** [scripts/Makefile.build:287: arch/x86/kvm/vmx/tdx.o] Error 1
-
-I did test and run this before submitting the series. Building it on
-x86 with x86_64_defconfig and with allmodconfig pass (I obviously
-missed TDX though, apologies for that). I should have grepped for
-has_private_mem. That said, if I understood your suggestion correctly,
-this problem wouldn't happen again.
-
-Cheers,
-/fuad
+Sure will update this logic in V3.
 
