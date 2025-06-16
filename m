@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-61494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B120EADB8F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 20:36:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F24AADB91F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 20:53:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DCF083A307A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 18:36:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3D69B17386E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 18:53:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FEFA28982A;
-	Mon, 16 Jun 2025 18:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C57C6286884;
+	Mon, 16 Jun 2025 18:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cA/F1eN5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QtyKoM+4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6888F289375
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 18:36:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381941A2632
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 18:53:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750099005; cv=none; b=drLELWFaRrMVib4ICndD1VUULXDN/WHfgJxWloY7wp8LVLrtSAuH1YmengL+7Ldh17lT/hFM7k2R1GWEJh08IoYUBatCf3TwnkHw+3YB+F7hSWj/Qim96k2r5wAN2XTbXhg4ZG/sDhjZ+JuZ3tj8hdtcCFed/5DkREE2mZbqDO8=
+	t=1750100003; cv=none; b=V0iDVGA9lfr6hUapVnsG1/VcP64h/4tb2SHOMjB4414I2VUfxA28mLZJGSAhNU3ZgBD8Wnmo72itPMXj42XInYaS2NsdojZWKbrK7gnJb6twyZ7t7s/Fki1ph6Te6u/Z0HQ97+hAvaV00EdKvMqPtb0TRv6gQWU+e+//tcqSfa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750099005; c=relaxed/simple;
-	bh=nSGpYWFyBH0MVGDs4F5C6K0C8gD+RnNU3LfhbrL4ibM=;
+	s=arc-20240116; t=1750100003; c=relaxed/simple;
+	bh=wPUzTydNxr8Bne1mftnFfwNbN2QFUqUlnk1+McjJqZY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lwd5UqGBepthxS8xzRf77o8EMpiNBXGBeFx+vYVqJt1gs7FHOhD9r8FHpJXzXYwZyYzlitjNBHYueuYNa0uXFTf/MIeVVw9UVdCoTmOGkRFNr+cXu7HxeHAaTD2Uv7/SrYi3PpNttRYtX2vdOvYUD2vjVBExOFxFNAOlem+gDkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cA/F1eN5; arc=none smtp.client-ip=209.85.128.51
+	 In-Reply-To:Content-Type; b=kZuMrgbN3odsS/UmHFbatK4Aq1IWiuzLNYZovB5P3pOX17Ua3O967v03heTdtdVI3isxd/elp5yn4n9XLvZ3g1uVHvYU/nSpKmfAht4Mo/vJORZ6JdwagMR7fuuKtPjeU9+SNw1yk832F8OL4/s/BK7qOIjLXU6UD1kIMxwXa9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QtyKoM+4; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-45310223677so39644345e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 11:36:43 -0700 (PDT)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43edecbfb94so54505115e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 11:53:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750099002; x=1750703802; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1750100000; x=1750704800; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=MsNLhXeNsR5rk9ayuQ10RaODgphRzkJpXaeg/oHPIag=;
-        b=cA/F1eN5FnMMfvCnDKK4KXCf9tq+CO/a0dOxHINgDO+7lAfEnRGlHq0HBfl2BCRaFq
-         DQIit3VjNxO+NbT6drasSJxRccqdCOxF5KaQggbm5CpAPcZDVr7fd+gNZYMG5xBx1RI/
-         30ZPAgLFYg7ADLkxzH+nw/yDOvBRWoiP3EC8olplncP8JeKffyyHkLOTFvnrIvM3cFJL
-         vA2p6L4whA8KpsuYfBiARdkQx64V275/Ex8FgjFl7VrhHZvjJXa6ZXRPCMPG1dgfIkCv
-         gv7eUl+Wd3vQhQdkhAZ4M51wuPxBVurFI3syM8+P3wiLsR4rsxgaZ2tQjm+/cRiAVhgN
-         j8jw==
+        bh=PSAHs0D4DZvGhRjRk5eyEpbY9QCRDT/qtuz8dJZf7TA=;
+        b=QtyKoM+4RSR73zqxL6whQ3NIHi1t6v0ytaruQzzcMK+WhZautDAR+FEZ+ABEacl1mS
+         TVHBjyxKSNvgkISpWyvWL8leKOwEbgnhGz24p+f3GayJr0yxQXVwG6aJb+tzk24ZOxbe
+         j0eNcK+o1EJ/b26p6tHlGRxUDvDQ54he0Dxn8D+GovyHLb6qSRS6HdBLL5TeRRhqndAt
+         /o5Ieh8NofcR9rfNdxHzIibwrTi0N26nMzEx3byo+rsMMf90dsqAQDYdipnf6b6QfyHV
+         dbNZGB66WpwtUWc0uRNzSIp6gQ9TDxDHaZ33hFZXSoD8zMPmVC3ukNkD5FILRquA0sKp
+         /RQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750099002; x=1750703802;
+        d=1e100.net; s=20230601; t=1750100000; x=1750704800;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MsNLhXeNsR5rk9ayuQ10RaODgphRzkJpXaeg/oHPIag=;
-        b=u54hdn76V0Y0q3oJS5kvuviHtrKxPnah8nFuSLqHYsrzUVOseWtV7Lh/SnT72xgYg0
-         fjHMtZwWcjqroMuNVcETtFkwwEwugFxfLUShZRcZ90JUwVpN0IazTfAx7IN3QxGJn86Z
-         B/GbixUSSTfjfO1f3KRKZeedwAHuEuddihzlDHRUJ9cNzPSICCr7dvWEd9oakRdDm6w1
-         G94kBlaBn2mVkTT/zfuDlhFuGRvGalklrA5aGE26FHYJuJ68PYIJ9AwhBtOUybNd6uJK
-         TCsi6CFNJ1WRejTFb4VjmBqYHEp16TB/tOkw8ZBH+I0XEpa9sSM4+pZFBuUfzeGRGCAg
-         0Nyw==
-X-Forwarded-Encrypted: i=1; AJvYcCVvUwnRqEv+uteybmTBqs7UgWjIXiV23q2Ekyjqrb1OsqIW086spc1wipO0Tycs0EtPX7V6a8wQYfb0bPqK@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz8jg8lJ5coTM67ds1gOmKdZU3VktR69+bt1B2mdWmhBX+7Rck+
-	x5n18SU1a7DqCi5bHegDFBAXslp5NFwKzw4doBETo/oH8D1vkicEzi+Wsi5jTrPD3R8=
-X-Gm-Gg: ASbGncvH76QrLL/Ky6hbEJhJxvNmLIatk8kKLDgP6w8kQY3qJE4oN1kGvnarLzvpAEr
-	1w3KsZLNpU+6pTdk24LwXAixprbPY/pzy7grYuLLNnG93+cXyj5PqOyOp94nSegxYO59VV3sjjA
-	/8VbrSl7aV4BHii8RAkL236VgBB1yrP37n/RsyXVmIKR+tkFo95pOdRPTeDXGoIMqoZvOXwF4e2
-	UsVwyDS4TRDyE6aP+CXu17B3hD+0WcNS97i7bC4JXndBUJS4B0vEAPKJt6OGaXhjAqXo8bUEcWf
-	EcX6K1AyyThDu6qSbpp7gnwR/Ap36ETjwpJXdUBY6sT1HT+55s/MO3HGfTGk7B4B+iTMsk4yXPl
-	8seeX4Y+UoPTmRWGLNA2xT40k3To=
-X-Google-Smtp-Source: AGHT+IEOqlSJqgf9CjZ6ykf5glgsWkGCYO0VsbAq9E/MbhDTl0OUTeg5nKbhy7qj1p+F2PwbU9Gfqg==
-X-Received: by 2002:a05:600c:8509:b0:441:b19c:96fe with SMTP id 5b1f17b1804b1-4533caa3d54mr126618725e9.10.1750099001671;
-        Mon, 16 Jun 2025 11:36:41 -0700 (PDT)
+        bh=PSAHs0D4DZvGhRjRk5eyEpbY9QCRDT/qtuz8dJZf7TA=;
+        b=hXFx7TjMQ527jR1nd8eSmOaTzDwbKkQ3Nrf+U8lDqF/N7rvI6OvFCerRPPSyXrBqbN
+         jkHn9xTUduHs3FEjEGJW3L6ZUlc2RLHC44HlP2bj29ZUncFCClm9gqU68OP35gmJv2W0
+         fULqQPCbuIyFFHsKE/uDop4ybU+inaswDG0xB4g7D8retv8XZw2AbJpjPLujWTr15kdg
+         yNhJrZeUj+uqBU6JVdHOYg5qvOGpZ1NMQidaxGG0p0NX4MT7fN9Nqc1hmAlq0t10N9nE
+         MeMe//L8P5L7LQ1xfbzUfj5Qt/B5Ez/qLVL51CDTEGdh9TJ/fWwjahbRDAz1gdEbzq9W
+         D8uA==
+X-Forwarded-Encrypted: i=1; AJvYcCVXOBHf+hwGEsNVAjTMCgMfZH6Hv9fg3wvbv/LDA5tskK2PpEQ7Jk85eEJo79cNPtYKmv/QY638m9vqmOxI@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxj8jXl9hvMF0uwVyixNt3H82kx8eYPCN7bBB1JPD6xbeoLkmxQ
+	Yy2tDqFUCT+ejPxJC4WIN9fnwHIAgKEwteU2e14AcDd3iA+jyjoJiU4tAIOIz0ZRmE8wMUFWzl9
+	dFSZFcs0=
+X-Gm-Gg: ASbGnctH7K/24uw5yZZfWe42f28aCzs1xEfjdmZGYdcOA68XQxjW5qIOw6uIMTvxLGJ
+	z8wRjr4FQN3ks6PaGmApSMMPb4WYcuEMKOg6rU2wvw6b44ilJGjxJV/bPUbQEsCi0B9JFAzCAF5
+	bN7j5oDFXLlDAlfBjhZHnybb1wPVlPoeG8lSIeHn9nVNKB5REdtsqELvNhtwwD8Xjlp1HzZS4Ip
+	AmQxz8TkM5deRkm9uHYDvJMBOiJo8KfjBuawLrtFCyYG/VqgBymfWh/FWDeUiHHOmx0CNvEgoIj
+	ZiETglhDwyXp8p3Ivl6YAHBl+Bm02fsiwMTHrmCEUj8NmJJk2B8ZtPC/Ff7kWTaRIHfUMJjU9Au
+	xB+ptMqPGQ+y/tWsdGtjrbyfDbBE=
+X-Google-Smtp-Source: AGHT+IFn0SbC3L/Gh4Y2s0CsidlVrBqISko0TH0zpbHX6Ka08lsavjOIKbCtPTUiRNsMm0TcYXt/4A==
+X-Received: by 2002:a05:600c:674a:b0:453:dda:a52e with SMTP id 5b1f17b1804b1-4533cad28b6mr89612035e9.33.1750099999511;
+        Mon, 16 Jun 2025 11:53:19 -0700 (PDT)
 Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568b08dfesm11931080f8f.60.2025.06.16.11.36.40
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532e254396sm156200275e9.28.2025.06.16.11.53.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Jun 2025 11:36:41 -0700 (PDT)
-Message-ID: <956ddebf-9db4-4875-a948-41f17afe2e8c@linaro.org>
-Date: Mon, 16 Jun 2025 19:36:38 +0100
+        Mon, 16 Jun 2025 11:53:19 -0700 (PDT)
+Message-ID: <2eea0b19-1a82-428a-8c04-74ee465e7516@linaro.org>
+Date: Mon, 16 Jun 2025 19:53:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,39 +97,210 @@ Cc: psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
  quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
  quic_mnaresh@quicinc.com, quic_shazhuss@quicinc.com
 References: <20250606172114.6618-1-quic_ptalari@quicinc.com>
+ <SlCtr38wFck_Zdxg3nfChaMwe2uSvlQdfRCutdXc-Z2BTqoUOPd9Z9QY0cdREgcdxl40k41wXpszBkVTBB2T7A==@protonmail.internalid>
  <20250606172114.6618-4-quic_ptalari@quicinc.com>
- <d4ce9309-4021-44e2-bc26-1bd9e7b7e8df@quicinc.com>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <d4ce9309-4021-44e2-bc26-1bd9e7b7e8df@quicinc.com>
+In-Reply-To: <20250606172114.6618-4-quic_ptalari@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 16/06/2025 09:40, Praveen Talari wrote:
-> Hi Bryan,
+On 06/06/2025 18:21, Praveen Talari wrote:
+> On the sa8255p platform, resources such as clocks,interconnects
+> and TLMM (GPIO) configurations are managed by firmware.
 > 
-> Gentle reminder!!
+> Introduce a platform data function callback to distinguish whether
+> resource control is performed by firmware or directly by the driver
+> in linux.
 > 
-> Thanks,
-> Praveen talari
+> The refactor ensures clear differentiation of resource
+> management mechanisms, improving maintainability and flexibility
+> in handling platform-specific configurations.
 > 
-Small nitpick here.
+> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+> ---
+> v5 -> v6
+> - replaced dev_err with dev_err_probe
 
-1. You didn't include me in your v6 CC list so the ping
-    is the first direct notification of this series I've received.
-    This is no problem BTW just for your reference.
+You've missed two opportunities for dev_err_probe() in this submission.
 
-2. Again as a general recommendation to qcom folks the commit
-    overview logs are fine but please include the name of the person
-    whose feedback you are addressing in that log.
+> - added a check for desc->num_clks with MAX_CLKS, an error if
+>    the specified num_clks in descriptor exceeds defined MAX_CLKS.
+> - removed min_t which is not necessary.
+> - renamed callback function names to resources_init.
+> - resolved kernel bot warning error by documenting function
+>    pointer in geni_se_desc structure.
+> 
+> v3 -> v4
+> - declared an empty struct for sa8255p and added check as num clks.
+> - Added version log after ---
+> 
+> v1 -> v2
+> - changed datatype of i from int to unsigned int as per comment.
+> ---
+>   drivers/soc/qcom/qcom-geni-se.c | 77 +++++++++++++++++++++------------
+>   1 file changed, 49 insertions(+), 28 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+> index 4cb959106efa..5c727b9a17e9 100644
+> --- a/drivers/soc/qcom/qcom-geni-se.c
+> +++ b/drivers/soc/qcom/qcom-geni-se.c
+> @@ -101,10 +101,13 @@ struct geni_wrapper {
+>    * struct geni_se_desc - Data structure to represent the QUP Wrapper resources
+>    * @clks:		Name of the primary & optional secondary AHB clocks
+>    * @num_clks:		Count of clock names
+> + * @resources_init:	Function pointer for initializing QUP Wrapper resources
+>    */
+>   struct geni_se_desc {
+>   	unsigned int num_clks;
+>   	const char * const *clks;
+> +	int (*resources_init)(struct geni_wrapper *wrapper,
+> +			      const struct geni_se_desc *desc);
+>   };
+> 
+>   static const char * const icc_path_names[] = {"qup-core", "qup-config",
+> @@ -891,10 +894,47 @@ int geni_icc_disable(struct geni_se *se)
+>   }
+>   EXPORT_SYMBOL_GPL(geni_icc_disable);
+> 
+> +static int geni_se_resource_init(struct geni_wrapper *wrapper,
+> +				 const struct geni_se_desc *desc)
+> +{
+> +	struct device *dev = wrapper->dev;
+> +	int ret;
+> +	unsigned int i;
+> +
+> +	if (desc->num_clks > MAX_CLKS)
+> +		return dev_err_probe(dev, -EINVAL,
+> +				     "Too many clocks specified in descriptor:%u (max allowed: %u)\n",
+> +				     desc->num_clks, MAX_CLKS);
 
-eg
+I think this is an extraneous add, we should trust the array indexes 
+inside our own driver that we control.
 
-v5 -> v6
+Actually why do we have a MAX_CLKS ? We specify a list of clk names with 
+aggregate-initialisation and ARRAY_SIZE() of the aggregate.
 
-- replaced dev_err with dev_err_probe - Bryan
+Like so:
 
-etc, that way a reviewer can re-up their context quicker.
+static const char * const qup_clks[] = {
+         "m-ahb",
+         "s-ahb",
+};
+
+static const struct geni_se_desc qup_desc = {
+         .clks = qup_clks,
+         .num_clks = ARRAY_SIZE(qup_clks),
+
+> +
+> +	wrapper->num_clks = desc->num_clks;
+> +
+> +	for (i = 0; i < wrapper->num_clks; ++i)
+> +		wrapper->clks[i].id = desc->clks[i];
+> +
+> +	ret = of_count_phandle_with_args(dev->of_node, "clocks", "#clock-cells");
+> +	if (ret < 0)
+> +		return dev_err_probe(dev, ret, "invalid clocks property at %pOF\n", dev->of_node);
+> +
+> +	if (ret < wrapper->num_clks) {
+> +		dev_err(dev, "invalid clocks count at %pOF, expected %d entries\n",
+> +			dev->of_node, wrapper->num_clks);
+> +		return -EINVAL;
+> +	}
+
+This code OTOH makes way more sense as we are validating our internal 
+num_clks variable which we have enumerated ourselves against a DT input 
+which we are consuming.
+
+> +
+> +	ret = devm_clk_bulk_get(dev, wrapper->num_clks, wrapper->clks);
+> +	if (ret) {
+> +		dev_err(dev, "Err getting clks %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+>   static int geni_se_probe(struct platform_device *pdev)
+>   {
+>   	struct device *dev = &pdev->dev;
+>   	struct geni_wrapper *wrapper;
+> +	const struct geni_se_desc *desc;
+>   	int ret;
+> 
+>   	wrapper = devm_kzalloc(dev, sizeof(*wrapper), GFP_KERNEL);
+> @@ -906,36 +946,12 @@ static int geni_se_probe(struct platform_device *pdev)
+>   	if (IS_ERR(wrapper->base))
+>   		return PTR_ERR(wrapper->base);
+> 
+> -	if (!has_acpi_companion(&pdev->dev)) {
+> -		const struct geni_se_desc *desc;
+> -		int i;
+> -
+> -		desc = device_get_match_data(&pdev->dev);
+> -		if (!desc)
+> -			return -EINVAL;
+> -
+> -		wrapper->num_clks = min_t(unsigned int, desc->num_clks, MAX_CLKS);
+> -
+> -		for (i = 0; i < wrapper->num_clks; ++i)
+> -			wrapper->clks[i].id = desc->clks[i];
+> -
+> -		ret = of_count_phandle_with_args(dev->of_node, "clocks", "#clock-cells");
+> -		if (ret < 0) {
+> -			dev_err(dev, "invalid clocks property at %pOF\n", dev->of_node);
+> -			return ret;
+> -		}
+> +	desc = device_get_match_data(&pdev->dev);
+> 
+> -		if (ret < wrapper->num_clks) {
+> -			dev_err(dev, "invalid clocks count at %pOF, expected %d entries\n",
+> -				dev->of_node, wrapper->num_clks);
+> +	if (!has_acpi_companion(&pdev->dev) && desc->num_clks) {
+> +		ret = desc->resources_init(wrapper, desc);
+> +		if (ret)
+>   			return -EINVAL;
+> -		}
+> -
+> -		ret = devm_clk_bulk_get(dev, wrapper->num_clks, wrapper->clks);
+> -		if (ret) {
+> -			dev_err(dev, "Err getting clks %d\n", ret);
+> -			return ret;
+> -		}
+>   	}
+> 
+>   	dev_set_drvdata(dev, wrapper);
+> @@ -951,8 +967,11 @@ static const char * const qup_clks[] = {
+>   static const struct geni_se_desc qup_desc = {
+>   	.clks = qup_clks,
+>   	.num_clks = ARRAY_SIZE(qup_clks),
+> +	.resources_init = geni_se_resource_init,
+>   };
+> 
+> +static const struct geni_se_desc sa8255p_qup_desc;
+> +
+>   static const char * const i2c_master_hub_clks[] = {
+>   	"s-ahb",
+>   };
+> @@ -960,11 +979,13 @@ static const char * const i2c_master_hub_clks[] = {
+>   static const struct geni_se_desc i2c_master_hub_desc = {
+>   	.clks = i2c_master_hub_clks,
+>   	.num_clks = ARRAY_SIZE(i2c_master_hub_clks),
+> +	.resources_init = geni_se_resource_init,
+>   };
+> 
+>   static const struct of_device_id geni_se_dt_match[] = {
+>   	{ .compatible = "qcom,geni-se-qup", .data = &qup_desc },
+>   	{ .compatible = "qcom,geni-se-i2c-master-hub", .data = &i2c_master_hub_desc },
+> +	{ .compatible = "qcom,sa8255p-geni-se-qup", .data = &sa8255p_qup_desc },
+>   	{}
+>   };
+>   MODULE_DEVICE_TABLE(of, geni_se_dt_match);
+> --
+> 2.17.1
+> 
+> 
 
 ---
 bod
