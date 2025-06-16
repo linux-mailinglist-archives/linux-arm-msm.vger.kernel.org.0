@@ -1,128 +1,270 @@
-Return-Path: <linux-arm-msm+bounces-61412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6101ADAC8A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 11:58:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EDC7ADAD1C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 12:13:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BED0E16F38B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 09:58:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6272166545
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 10:13:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A854826E718;
-	Mon, 16 Jun 2025 09:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3053A273D9F;
+	Mon, 16 Jun 2025 10:13:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yON3bbUg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F682741B7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 09:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A10F25E450
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 10:13:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750067885; cv=none; b=k5YXOYFV1OZUAazKdMQwS7xJXKOy6BWS1JKVk6+So1UH/c6hCQqmwaqCrLTQA7Vq3hcj5ugown8s9KNCx/q2rffcr1JBRu2QjH2/bdX5f3GovJ+HiiFwEYC2pxiE4feUAcGSc9uXtHycqLMLzXv8DL+VKIiRiOGPzU7Paa1cwpM=
+	t=1750068783; cv=none; b=Pq//DWHxnE6N/PsBAUJKzgWnQAx6pRaZLxUFk/igMfr+GNNcke1F2qvUiC/fVmX5yKYn3iJAB6WrokB+tU7BSse9ZYZI+oT150C5IB/2k2XrgLmawMcPx0p2N5MmTtp5lKaDluXwEvUBicnXtAC99ZxqF8aUzkJqR7/LY0HXJEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750067885; c=relaxed/simple;
-	bh=9HK13tBfv+jEnFNg79GNo9j4TrEZUStIBqXdIdGFZk4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rj5HUr+PI+92QRFfFiurxBqFu8napWdzxa9h+iAPwjRW20bwRv3e9SsuFwvc7pOGUnpyfhXf+/YsCPMtOkqC5YEAKMZUw6shizlYyZaVRFXquY95i9jMKHm4zPYwSUxmxr4T/8PLBtyeOxzvqFFWxSc1YQj+Z/Pa8rM39Ch2wCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1uR6b4-0002wJ-5K; Mon, 16 Jun 2025 11:57:46 +0200
-Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1uR6b3-003mk9-2d;
-	Mon, 16 Jun 2025 11:57:45 +0200
-Received: from pengutronix.de (p5b1645f7.dip0.t-ipconnect.de [91.22.69.247])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	(Authenticated sender: mkl-all@blackshift.org)
-	by smtp.blackshift.org (Postfix) with ESMTPSA id 7498F428696;
-	Mon, 16 Jun 2025 09:57:45 +0000 (UTC)
-Date: Mon, 16 Jun 2025 11:57:45 +0200
-From: Marc Kleine-Budde <mkl@pengutronix.de>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Andrew Lunn <andrew@lunn.ch>, Vladimir Oltean <olteanv@gmail.com>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Linus Walleij <linus.walleij@linaro.org>, "Chester A. Unal" <chester.a.unal@arinc9.com>, 
-	Daniel Golle <daniel@makrotopia.org>, DENG Qingfang <dqfext@gmail.com>, 
-	Sean Wang <sean.wang@mediatek.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Vincent Mailhol <mailhol.vincent@wanadoo.fr>, 
-	Heiner Kallweit <hkallweit1@gmail.com>, Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-mediatek@lists.infradead.org, linux-can@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 4/5] net: can: mcp251x: use new GPIO line value setter
- callbacks
-Message-ID: <20250616-quick-blazing-dogfish-1d73c3-mkl@pengutronix.de>
-References: <20250616-gpiochip-set-rv-net-v2-0-cae0b182a552@linaro.org>
- <20250616-gpiochip-set-rv-net-v2-4-cae0b182a552@linaro.org>
+	s=arc-20240116; t=1750068783; c=relaxed/simple;
+	bh=AGLdc8sUlEHbNtvihWlXNY6ZuP0jWSwRkeYw87Ib8XY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CrEF1EnwKtGdwCjW6x+pTlyp3UGFKVA/wtJl2Y0IjWfe/4efrp3z6cSkK5fWyGYs9PTtSoGPnLI5ABEvazY8EWBQRGJyFjDY7ZpoGllCatBfWBBAdoSUAOwWQmrmTqaxYwLzBuAdabf3GjlgSDoaJjyF55lb15PG67xQ5RU4kqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yON3bbUg; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-addda47ebeaso861056666b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 03:13:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1750068779; x=1750673579; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cdiI/smVJOY0cX4ZuH0mmdvKWwyCh8vEN4C+U7z3NJo=;
+        b=yON3bbUgP1w5+T6Y/Ni6PASdj4tsCQEDqxhtU9QhVVo6DjgDSAehvo2KAwmvbApth8
+         9rcUPSlBFxXoD6r000Y9eiOYvtBF1qXx4QmjGBR0yEA38odxBl7YTuVgh8eUQSx06nRp
+         1xATpmwTZ20isOjCuvv7BLyQLxx7f50kwXD4kPzGye1LNkkIbI4MeeBLQawfGDBTRtdX
+         qnwT8mvXqISmZSJfWD1acIbD33XH9hMM2ShzxpvI3IOQDXw62KYS+iQOa7D5sWoxg3z9
+         dggldSrAvniHeB9kSgoS5Jyy4CRLMiKM/vHFRtn4TGbXGXVBnysIE/j4wzswjCvrVxaI
+         PW6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750068779; x=1750673579;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cdiI/smVJOY0cX4ZuH0mmdvKWwyCh8vEN4C+U7z3NJo=;
+        b=QAmDuCmtTQ2MiPWat2sJTR+fzD+bHs9wjs8Bq4fKFiRnrPGUemvnHmVG6bFtzJQNR4
+         HoutEiDTfOeWoh2zNwz+vF+3H/H39oZg+IK7OiirCYILQdJx0w6mKFDFyiEx/ki4tM0o
+         ByqMyeZGIpEH+1Acvf3bVuwiI1IS04HfjDxVkSZQfIKS5UesAabzNqvvl9ecd+O+3k5x
+         NEuILl8k1nx+XjwHqN9jWI6rL/CfgNOTZ7aoO4iwqFeTlPJvPMf4v06kFSfzoGcGTP2i
+         ipnqWofFTfCxSmaJuwsY13vQXIeoW5dP6MGVmm5IXglo2X/4raSMX35o6cEeSfysNJkg
+         tz/A==
+X-Forwarded-Encrypted: i=1; AJvYcCXAjjBeAHLKyK7L3vjUY9z1mljFOZHSFHIHpd7tmcYQtrUzx4NscWAtOsrnqSoM0aVJBvokHL4OIGehVszo@vger.kernel.org
+X-Gm-Message-State: AOJu0YwZAAaOUoVnl9Vr0AT4KfvxWOMuAJa5Nd38fBw1y+gwEUGabaV5
+	brBVeBrykfU86/DQLtar1PR/uKQt1+AG0/cYGIuNxsdb07ZYAzcORdUw7ggKWLxTreY=
+X-Gm-Gg: ASbGncsupDeRPnEiz5bZPsVuOCNW+kASHQvC506aXlFEVhrPkW4fpTSDQMSGKK0RYCY
+	Kzc1tUom9ixmL9wQHeG4wgs6Dr27pqtSwVA8WeYkgzgj3fUnYU9OinUs9oLXXqs4NR2UrURcyuL
+	aWD+bgo5F1FJ7n5OtFlnk7e9ck8A1HaLGwB7cmC5WbcdyKRixaATsOR77+zHXW2Vl/ldsivxIHO
+	+49nD9Dt97tEseKqPpI7nrQvl15eUEzicJYxYx7Y0kIfoVcWvbFUlVTYZJDuO3u+dn1UscSVz72
+	b1sS1Ubizl1HJLCtjloh9g5rijIZnkKkORstM/AgV8c6+SCHG0a9vbW3g6tEXhdqwudtAyD5nTL
+	dYj0J
+X-Google-Smtp-Source: AGHT+IGarxBcmQbjxtZfqg39/812dZL7oJLKKdvVC7LLX0AVrEROcYWKaHBGWjIfiBnmq6KNQDjrVw==
+X-Received: by 2002:a17:907:db15:b0:ad5:8594:652e with SMTP id a640c23a62f3a-adfad469cf2mr788992566b.35.1750068779409;
+        Mon, 16 Jun 2025 03:12:59 -0700 (PDT)
+Received: from [192.168.0.33] ([82.76.24.202])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-adec897ac3dsm626980266b.155.2025.06.16.03.12.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Jun 2025 03:12:59 -0700 (PDT)
+Message-ID: <6a493968-744a-4fa2-803c-3f64a8e7225e@linaro.org>
+Date: Mon, 16 Jun 2025 13:12:58 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cgo7ltpow6ehzxso"
-Content-Disposition: inline
-In-Reply-To: <20250616-gpiochip-set-rv-net-v2-4-cae0b182a552@linaro.org>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: mkl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC][PATCH 09/14] genirq: add irq_kmemdump_register
+To: Thomas Gleixner <tglx@linutronix.de>, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+Cc: linux-doc@vger.kernel.org, corbet@lwn.net, mingo@redhat.com,
+ rostedt@goodmis.org, john.ogness@linutronix.de, senozhatsky@chromium.org,
+ pmladek@suse.com, peterz@infradead.org, mojha@qti.qualcomm.com,
+ linux-arm-kernel@lists.infradead.org, vincent.guittot@linaro.org,
+ konradybcio@kernel.org, dietmar.eggemann@arm.com, juri.lelli@redhat.com,
+ andersson@kernel.org
+References: <20250422113156.575971-1-eugen.hristev@linaro.org>
+ <20250422113156.575971-10-eugen.hristev@linaro.org> <87h61wn2qq.ffs@tglx>
+ <1331aa82-fee9-4788-abd9-ef741d00909e@linaro.org>
+ <f916cf7f-6d0d-4d31-8e4b-24fc7da13f4d@linaro.org> <87ikkzpcup.ffs@tglx>
+From: Eugen Hristev <eugen.hristev@linaro.org>
+Content-Language: en-US
+In-Reply-To: <87ikkzpcup.ffs@tglx>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
 
---cgo7ltpow6ehzxso
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2 4/5] net: can: mcp251x: use new GPIO line value setter
- callbacks
-MIME-Version: 1.0
 
-On 16.06.2025 09:24:07, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->=20
-> struct gpio_chip now has callbacks for setting line values that return
-> an integer, allowing to indicate failures. Convert the driver to using
-> them.
->=20
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 6/14/25 00:10, Thomas Gleixner wrote:
+> On Fri, Jun 13 2025 at 17:33, Eugen Hristev wrote:
+>> On 5/7/25 13:27, Eugen Hristev wrote:
+>>>> Let KMEMDUMP_VAR() store the size and the address of 'nr_irqs' in a
+>>>> kmemdump specific section and then kmemdump can just walk that section
+>>>> and dump stuff. No magic register functions and no extra storage
+>>>> management for static/global variables.
+>>>>
+>>>> No?
+>>>
+>>> Thank you very much for your review ! I will try it out.
+>>
+>> I have tried this way and it's much cleaner ! thanks for the
+>> suggestion.
+> 
+> Welcome.
+> 
+>> The thing that I am trying to figure out now is how to do something
+>> similar for a dynamically allocated memory, e.g.
+>> void *p = kmalloc(...);
+>> and then I can annotate `p` itself, it's address and size, but what I
+>> would also want to so dump the whole memory region pointed out by p. and
+>> that area address and size cannot be figured out at compile time hence I
+>> can't instantiate a struct inside the dedicated section for it.
+>> Any suggestion on how to make that better ? Or just keep the function
+>> call to register the area into kmemdump ?
+> 
+> Right. For dynamically allocated memory there is obviously no compile
+> time magic possible.
+> 
+> But I think you can simplify the registration for dynamically allocated
+> memory significantly.
+> 
+> struct kmemdump_entry {
+> 	void			*ptr;
+>         size_t			size;
+>         enum kmemdump_uids	uid;
+> };
+> 
+> You use that layout for the compile time table and the runtime
+> registrations.
+> 
+> I intentionally used an UID as that avoids string allocation and all of
+> the related nonsense. Mapping UID to a string is a post processing
+> problem and really does not need to be done in the kernel. The 8
+> character strings are horribly limited and a simple 4 byte unique id is
+> achieving the same and saving space.
+> 
+> Just stick the IDs into include/linux/kmemdump_ids.h and expose the
+> content for the post processing machinery.
+> 
+> So you want KMEMDUMP_VAR() for the compile time created table to either
+> automatically create that ID derived from the variable name or you add
+> an extra argument with the ID.
 
-Reviewed-by: Marc Kleine-Budde <mkl@pengutronix.de>
+First of all, thank you very much for taking the time to think about this !
 
-Marc
+In KMEMDUMP_VAR, I can use __UNIQUE_ID to derive something unique from
+the variable name for the table entry.
 
---=20
-Pengutronix e.K.                 | Marc Kleine-Budde          |
-Embedded Linux                   | https://www.pengutronix.de |
-Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
-Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
+The only problem with having something like
 
---cgo7ltpow6ehzxso
-Content-Type: application/pgp-signature; name="signature.asc"
+#define KMEMDUMP_VAR(sym) \
+	 static struct entry __UNIQUE_ID(kmemdump_entry_##sym) ...
 
------BEGIN PGP SIGNATURE-----
+is when calling it with e.g. `init_mm.pgd` which will make the `.`
+inside the name and that can't happen.
+So I have to figure a way to remove unwanted chars or pass a name to the
+macro.
 
-iQEzBAABCgAdFiEEn/sM2K9nqF/8FWzzDHRl3/mQkZwFAmhP6pYACgkQDHRl3/mQ
-kZwhTgf/Rdvldz+sfHV1GPN68aLAO5qzKJUWpvJ05B1WZ62FpeQ32yATbOX4Gdza
-PXxXP4fcb4CI/tchuSLijWxILlaHeH3XmLKr6dbISHa+3fITiyTfrT8aIVrbXad7
-B7Lk/k3xCSpFeIy59IYjx3x/JuVeAlOnId9AnKiv2eXJAJbxta5HNL9XcwpJ59kl
-68PO//pu7LDxwyyuxtoMT2xkhBV72NEQPBnK/vzYuw0sVvTxpRi4LuJtW0Twth3G
-qSspMeG2q8te19InHtEwF/hvgGE5wPwMf+pH9DBwVdFH0R5yuu4O4mzKTt2Cg6Qv
-mNLmJthXx+uFjegch384egz7Aw7oyg==
-=8T2d
------END PGP SIGNATURE-----
+I cannot do something like
+static  void * ptr = &init_mm.pgd;
+and then
+KMEMDUMP_VAR(ptr)
+because ptr's dereferencing can't happen at compile time to add it's
+value into the table entry.
 
---cgo7ltpow6ehzxso--
+> 
+> kmemdump_init()
+>         // Use a simple fixed size array to manage this
+>         // as it avoids all the memory allocation nonsense
+>         // This stuff is neither performance critical nor does allocating
+>         // a few hundred entries create a memory consumption problem
+>         // It consumes probably way less memory than the whole IDR/XARRAY allocation
+>         // string duplication logic consumes text and data space.
+> 	kmemdump_entries = kcalloc(NR_ENTRIES, sizeof(*kmemdump_entries), GFP_KERNEL);
+> 
+> kmemdump_register(void *ptr, size_t size, enum kmemdump_uids uid)
+> {
+>         guard(entry_mutex);
+> 
+> 	entry = kmemdump_find_empty_slot();
+>         if (!entry)
+>         	return;
+> 
+>         entry->ptr = ptr;
+>         entry->size = size;
+>         entry->uid = uid;
+> 
+>         // Make this unconditional by providing a dummy backend
+>         // implementation. If the backend changes re-register all
+>         // entries with the new backend and be done with it.
+>         backend->register(entry);
+> }
+> 
+> kmemdump_unregister(void *ptr)
+> {
+>         guard(entry_mutex);
+>         entry = find_entry(ptr);
+>         if (entry) {
+>                 backend->unregister(entry);
+>         	memset(entry, 0, sizeof(*entry);
+>         }
+> }
+> 
+> You get the idea.
+> 
+> Coming back to the registration at the call site itself.
+> 
+>        struct foo = kmalloc(....);
+> 
+>        if (!foo)
+>        		return;
+> 
+>        kmemdump_register(foo, sizeof(*foo), KMEMDUMP_ID_FOO);
+> 
+> That's a code duplication shitshow. You can wrap that into:
+> 
+>        struct foo *foo = kmemdump_alloc(foo, KMEMDUMP_ID_FOO, kmalloc, ...);
+> 
+> #define kmemdump_alloc(var, id, fn, ...)				\
+> 	({								\
+>         	void *__p = fn(##__VA_ARGS__);				\
+> 									\
+>                 if (__p)						\
+>                 	kmemdump_register(__p, sizeof(*var), id);	\
+> 		__p;
+>         })
+> 
+
+I was thinking into a new variant of kmalloc, like e.g. kdmalloc() which
+would be a wrapper over kmalloc and also register the region into
+kmemdump like you are suggesting.
+It would be like a `dumpable` kmalloc'ed memory.
+And it could take an optional ID , if missing, it could generate one.
+
+However this would mean yet another k*malloc friend, and it would
+default to usual kmalloc if CONFIG_KMEMDUMP=n .
+I am unsure whether this would be welcome by the community
+
+Let me know what you think.
+
+Thanks again !
+Eugen
+
+> or something daft like that. And provide the matching magic for the free
+> side.
+> 
+> Thoughts?
+> 
+> Thanks,
+> 
+>         tglx
+
 
