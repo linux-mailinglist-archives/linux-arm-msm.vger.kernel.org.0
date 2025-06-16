@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-61486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 173E6ADB6BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 18:26:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60CFFADB6CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 18:27:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D8F5188ADD4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 16:24:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB88D3B822E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 16:25:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BA7728689F;
-	Mon, 16 Jun 2025 16:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 723902874E5;
+	Mon, 16 Jun 2025 16:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p0xwSQyx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cxnmz4GS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA5C283FC4;
-	Mon, 16 Jun 2025 16:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA4B2868BE;
+	Mon, 16 Jun 2025 16:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750091003; cv=none; b=B7OaG2KFhB5WaaenKbkNlT8gJ3IZzvldhdidhT6tLwWsa60tHbF8T1ZEcWdPB9yBAHXbdD+jcVgCNFhYGEFEXcD6o5FuVICObnIIBgMH/WbV9c4jn2VNTlrJ0NZauHXoSrN4UdHmrweOCA3aeSJRhith17Lf0dBv+lffPlTHg40=
+	t=1750091113; cv=none; b=NWOU5/pL2XSSI/Iw10qq5S5Gvbo2a+2zMQuNWUbtViRZsRiEdbf0EfZzVU+Lto0SKulmyGkg5nh5EZqp6aypWqhC+zJ+bcYvrKmc3tWhvXX1gQJgbRCnSxb1dB61jJ7rekaR5DargSspNTXNr6JAKqKlE/RVFwrYwpS4Q7cUeR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750091003; c=relaxed/simple;
-	bh=qFpotMY7tq4ADsoi3DUebAKJTMXci31UD1MWqzHTu7k=;
+	s=arc-20240116; t=1750091113; c=relaxed/simple;
+	bh=lTP9ME9lQBH2tMr1b7jvwaV3z+f6gkkpO8bZyw0hUHg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EoaMTLNOMWT5gtD80QD77zVQ3IIn3vjO28lJ+abfRMJqVGzobZ2anUMvboNXI8ZSWnqxXXhL2yo02dOXpWbHigT6kgvxkRi9cLmI5+asevoCZ96K7xUSxkSIckhSsKetfTO6kSoD+DcMp6Z6srU0GO9sf49P6tpmLaj1bw0XHLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p0xwSQyx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA8BC4CEEA;
-	Mon, 16 Jun 2025 16:23:20 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Rt3lxC1t0DxpMahT4wh9QdeIR0cjMVkIdmQqyBfynVsESXMNbea6SB+XmvuaYaAeOIJL2FtaDJEhSyHR15FXtaRWaubciBuTg7yal/TZuG+RwaU4xTwObr3s6XClfdW/1K33N4OUm5VJiYN9AMlYuebEwnB2CRrT7gt8nUUxNEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cxnmz4GS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74917C4CEF0;
+	Mon, 16 Jun 2025 16:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750091003;
-	bh=qFpotMY7tq4ADsoi3DUebAKJTMXci31UD1MWqzHTu7k=;
+	s=k20201202; t=1750091112;
+	bh=lTP9ME9lQBH2tMr1b7jvwaV3z+f6gkkpO8bZyw0hUHg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=p0xwSQyxC2/YKKvq1zomzh/UTxDXOFM6cVT6l1b81FM0GIBkoShWmbGUYidAcGE+j
-	 zfVSJQo1GCdcunPqJQfcPBxaOHq1L+RdnYOshC1XZl5vvDzq9wvN6YgzunP7b+23hp
-	 540L+dO1091AvjzZUeoWPgpECDob7HscFfF3brQEAaxMNqrHoogCRAVXath9tSJaW1
-	 SgEnPBizK5nWto+5YkBcnaFCnDYf4MkgjwdCMTO4bJRWui0AmHMY0Uj5X27ksgTTwV
-	 3a8xJJLDUOvfQz8ibVFjZ9u2mpaEGgEFwsHBYdLOmCUoy6jGt57FRp9IpvKNcT1IbS
-	 M1Je5K0XDbICA==
-Message-ID: <48e6cc62-ffb0-4ca7-80c8-9e510db505db@kernel.org>
-Date: Mon, 16 Jun 2025 18:23:18 +0200
+	b=Cxnmz4GS+pymyvT6Nsa6YpHyJ0ZQXKlGzPSZMk26Sm8BEglwIE7KwxIq/BGeq5TJZ
+	 kDcBgSPB1ZotnXZ3b5/yhuLBfMK9ybfhs0xZBRDab1FViH/SPhKKaLWgRiPSKUCpvx
+	 cLr2lo8gJzOeoO0wCv0W89czytbTVQdwcoOnuLNGfNmGYbxwejklkgVll6xc5+j87F
+	 Ksxw5m5oPEKaIYQJHY9YUrbHNq7HVfvJCwSTVEwU/eGZyhdLA8Br5+LUV4qWRbuQW6
+	 FKe0Etpm/WQhtlmjqlR0ojfshsQufyO2lasKxxrRErZdp+3JSBGFyYeKUaX2rC/Ydf
+	 RFZdCQPnmSrLw==
+Message-ID: <20832f74-6df3-4c7a-b50f-1b19003a3d0e@kernel.org>
+Date: Mon, 16 Jun 2025 18:25:06 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] dt-bindings: media: venus: Add qcm2290 dt schema
-To: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
-Cc: quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com,
- bryan.odonoghue@linaro.org, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, stanimir.varbanov@linaro.org,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250613140402.3619465-1-jorge.ramirez@oss.qualcomm.com>
- <20250613140402.3619465-2-jorge.ramirez@oss.qualcomm.com>
- <6f4e715f-1c73-450e-b7eb-92781b7fa050@kernel.org> <aFATp3zoSgkrj3YX@trex>
- <a76789cf-afe1-4d91-afdf-65c3af5ad11f@kernel.org> <aFBDzWLkKC9MWGoC@trex>
+Subject: Re: [PATCH v6 6/8] serial: qcom-geni: move clock-rate logic to
+ separate function
+To: Praveen Talari <quic_ptalari@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+ devicetree@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
+ quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
+ quic_mnaresh@quicinc.com, quic_shazhuss@quicinc.com
+References: <20250606172114.6618-1-quic_ptalari@quicinc.com>
+ <20250606172114.6618-7-quic_ptalari@quicinc.com>
+ <509c94bb-cf31-43bb-a92d-db006efd43aa@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,47 +111,16 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aFBDzWLkKC9MWGoC@trex>
+In-Reply-To: <509c94bb-cf31-43bb-a92d-db006efd43aa@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 16/06/2025 18:18, Jorge Ramirez wrote:
-> On 16/06/25 16:41:44, Krzysztof Kozlowski wrote:
->> On 16/06/2025 14:52, Jorge Ramirez wrote:
->>>>
->>>>> +  The Venus AR50_LITE IP is a video encode and decode accelerator present
->>>>> +  on Qualcomm platforms
->>>>> +
->>>>> +allOf:
->>>>> +  - $ref: qcom,venus-common.yaml#
->>>>> +
->>>>> +properties:
->>>>> +  compatible:
->>>>> +    const: qcom,qcm2290-venus
->>>>> +
->>>>> +  power-domains:
->>>>> +    minItems: 2
->>>>> +    maxItems: 3
->>>>> +
->>>>> +  power-domain-names:
->>>>> +    minItems: 2
->>>>
->>>> Why is this flexible? Either you have two or three. Not mixed.
->>>
->>> please check 5b380f242f360256c96e96adabeb7ce9ec784306
->>
->> This does not explain why this is optional HERE. You cannot use for a
->> new platform an argument that some existing platform was changed in
->> ABI-preserving way.
+On 16/06/2025 18:04, Praveen Talari wrote:
+> Hi Bryan,
 > 
-> thanks for quick the follow up.
-> 
-> but bear with me please because I dont follow - why can the same logic
-> be used - it being applicable - and therefore result in a definition
-> similar to those other platforms?
+> Gentle reminder!!
 
-Because this platform either has 2 or 3, not both. Unless that's not
-true, but then please share some arguments.
+That's neither gentle nor needed to ping multiple times, every 8 hours.
 
 Best regards,
 Krzysztof
