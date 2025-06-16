@@ -1,282 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-61498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C154ADBA5A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 21:54:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65541ADBBF9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 23:39:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C7AE188EE2A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 19:54:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7ECC7188BC5D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 21:39:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 826D22153ED;
-	Mon, 16 Jun 2025 19:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B77F81DF24F;
+	Mon, 16 Jun 2025 21:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="joWrUbcV"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="N9s0yTSi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA8F1DF24F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 19:54:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C7D2CA6
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 21:39:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750103663; cv=none; b=meeR8MOe7glvBE5/EZ0E7L/SG19ecpARGq/+P5hzbYgBUSfeHdPWXxUOWSiXkb5U5XUFwA7dW8f3ykhIITjU3Zb+PN5x9G7ABoZZEZsds+BKJ75zzUez5eClmAuAoG/XquBO3v0Ie+a8k3eLi6Hw/1m8c1lIOxW3eEJgLvistKY=
+	t=1750109944; cv=none; b=ltQHRIlJuUUi3UF+NkUR652dIQIE4cWLLVOhD1rVvzt/m663UObJzXfLmsDBT1X4LxzTNs4JhWX3RTOaq2okQXywegLEjUINxILEfEH8q2qhlQdLw+ANKlDYwpUIzdrXODKU1YcwPhRZn6JnW2e2gPPG/Zhcq1LrEce4A/7S6oM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750103663; c=relaxed/simple;
-	bh=DzQkA5W6ZIhKPWw5S/j85sM++f2+cNXvXoRn/1gennM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HItRPthfk1b6HuppcltbYQGM9c7tGr9zKqV0v3Gc2m+HS371bkz7hXM7oVZoDHtg3EP6IARvHNBgXCS7YieZ8ozP4iB31/akxeYpPcrf1329ZX+NSSAwGPGa9v90n/gLNtF+Gw5Aro+H5D8G/cpV5robIG7HOP+dRCdGG5PJdmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=joWrUbcV; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-551ed563740so5321585e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 12:54:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1750103660; x=1750708460; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BXz3Yj+fndsiQvF8Y+I/xW2CmjWY6qouxuqd1z1WGzE=;
-        b=joWrUbcVy3eik7doCl+hmdq6sNlw4yWfPKU84yVJlxQHivOk+vxnyTp6M44sSblc35
-         8qXBHEqWrbuVbtM1VJWVPYTD4ZAv9ueh4w4w2s3qyo7zyu0BZ+fFBfdzBeSQZjqSh30q
-         qdsDHlaugCzCJaH+DKGpXfMSJQsRMjHmC46D0=
+	s=arc-20240116; t=1750109944; c=relaxed/simple;
+	bh=QN2i0eqFGWNXPooFbASnWQglHggpPgBSU7wRAUtSHX0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qJRWdi8GsvWRmMi5vq6VgSnAiZkGaR0LdobU+h9OrIGqQeIEkrMb24NQV2JfNSNPPnVZznsIdwCw7XuuP6DO6xoqmR/lTt7V08ju38A9IWMvSt5rejZq/d+IYnthmSSTJ74SENRTQFF7BI37nb98s4Y9Y7re2santh7riAkAuPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=N9s0yTSi; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1750109941;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=7emt/zNGr/CBhfVNgDPKicHgy2P2Bp4GbdXMzFzaVxk=;
+	b=N9s0yTSi2DUgcDMwl2XLDF+1jzncb9KWx1Xk9/E9u6Owqe69wQeJNQozswUu7atK7qQpzt
+	ykdGCClt9H5rHwROBU7eKBkbMSI0I2dB8xDaL0/CQUxnKDc74OwIdDkcg4jTMQF9/I3cbQ
+	rAE6R/MY2JxfGixoRhgwPtUZz0qJEG0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-404-Wte3RQgxOKWENd4gGucuqw-1; Mon, 16 Jun 2025 17:38:59 -0400
+X-MC-Unique: Wte3RQgxOKWENd4gGucuqw-1
+X-Mimecast-MFC-AGG-ID: Wte3RQgxOKWENd4gGucuqw_1750109939
+Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-3a37a0d1005so2990392f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 14:38:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750103660; x=1750708460;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BXz3Yj+fndsiQvF8Y+I/xW2CmjWY6qouxuqd1z1WGzE=;
-        b=dOrBi4Z+kDHzemeyH5yA7ahXHD4vsIghvGGdbxMDQopd4pc41H3uuQUjvMaeWugqSM
-         NjmgVTyOApXb0Z39wIA3fgTkbIshEJzPWj1GeM0ruorpz3Ph9dQFneNZJu/docEMFLGK
-         Y7w7mhA+IcZu8eN7Z8RNFGXGGYqnAmQPdRcuIV4CJmhQlqsSkmdfre14u/Whl7RP/l1x
-         IcNEr2yp4WwOA3S1JfadLRxeu/E5C44MXXr885gOwQSlPb+EAgwEArXO1C9ZscMv8na7
-         mYQn6SXl6h2UPJ9Y6Ym4fF82P8Pafq0u6NbGTWQxR/D+Gz9quy6Pd1b9J43SRCLH8NXF
-         dfRA==
-X-Forwarded-Encrypted: i=1; AJvYcCWltcabFD8adRFh/nXaXaKT738FSyWGW5BZMzU7PR8kf6WSACliAPGZIlwzn9Ip5GJ3m5pNhUnTmqH7A6A7@vger.kernel.org
-X-Gm-Message-State: AOJu0YzewkVtu/eiVNgZikKNlc8EIHVx6bLRFUV1sLl2fYya4dRYXtNJ
-	751xK4WjehfqS90aXf9zKIJkfFNXTaDunmqwQkdxU8zuNRFFDnRhFkagLU6SbIV3xPnUZ1i2kAs
-	iQCY=
-X-Gm-Gg: ASbGnctX//vRKDXoAD1gFBDFSxueOOshsHmW5D3H2ZrgN4tvtqNPsr9MZ/zHcj4oPdz
-	4FpCCNc+Q4cRexMsw6h6FrAUlBSLIrLyCpN99lOw8uGf9gfIYoPyNQLQOkuHksvYX13b8Qah8k8
-	PqH59aO8U6M9+euMNYMKiZ+xnOvfH6GydIu2tRsSm4S22xIYyKerfYT7Yvqzks4YjYfqSohj4K4
-	AQRX2keV1aN3q57ZGzreV3VPsQ6r14YVwcxabmIDyoJjQzHd+1kRCsPSS78ssX2uIJn5vJuK7hS
-	aulp8sy4eGZEDEKX94fR/E0/6U4SzLONXgGn8o/hKR+SMMyhTb/XVEsTdHshlL4/FEbLmot9KrC
-	h8ZwCZE2UHFQLxJziUtELTIU1
-X-Google-Smtp-Source: AGHT+IEvWapHALlL5uKlgr1G6HbBVosNLppmEfxvNyEueo0xavaS1NJnNrqZXwI11DUbWm2r7tv+4g==
-X-Received: by 2002:a05:6512:4014:b0:553:2c93:6140 with SMTP id 2adb3069b0e04-553b6e77058mr2714847e87.9.1750103659603;
-        Mon, 16 Jun 2025 12:54:19 -0700 (PDT)
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com. [209.85.167.42])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553ca1a78cesm23264e87.158.2025.06.16.12.54.18
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Jun 2025 12:54:18 -0700 (PDT)
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-551ed563740so5321555e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 12:54:18 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCV4qsdphr+KXIyimLSxl1MoVDZLFHlkT9ULuWZ8q59csrr7jOyoVLeJp10Vh+DSC54UU4cFOfwzqbjfRINJ@vger.kernel.org
-X-Received: by 2002:a05:6512:2351:b0:553:24b7:2f61 with SMTP id
- 2adb3069b0e04-553b6f5a056mr2704851e87.57.1750103657726; Mon, 16 Jun 2025
- 12:54:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1750109938; x=1750714738;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7emt/zNGr/CBhfVNgDPKicHgy2P2Bp4GbdXMzFzaVxk=;
+        b=YFD7q9E/raBY7fWxXnF48XohUZ2oIIDGTVjZUeeyx/MckJfM8EnuxR81Hy4j6JrxF4
+         WHSunIgz4j2QCBEUs66B6En6FySr7ILs291kzPz3m4C9GCtBfqhb0e2a7TjbuMiQU8Ij
+         mskWKGIyp6R3r4uoSXe9svvSpmEy7MO/bGPmtSEabm1ytbQ+qfswBvPd2G4AH40s51C2
+         TYlTdyGxqwH6T7f76qoIGb3iqeqVat1eIQ0lwuHpAqKpCktNWzy9xZzMs4tZZTWiTZdA
+         lqJXFwDz6GIMRwXtHANRKY83S5c5gS2Jez+xn4jcRlZbmLF8GLbia+WUpzl5ydRRd02g
+         lM+g==
+X-Forwarded-Encrypted: i=1; AJvYcCVCNjieR2Q7wnAug9ZdiGSDJ4B5/WWBQIwS8u4wolGMClZ58a3OuO2vF0jzlvlGjKKt6x9z1dCyIPw6VybP@vger.kernel.org
+X-Gm-Message-State: AOJu0YxH9H7wNNuIcfW1C5uHVT4GH/n9nkHxZlSCHGzYtStYHp+Ti6Bi
+	T/Ti+kygIiLncWv9xY09dAix3Uda3hO11wliLmKK3eec8ETREjxf3C6YONBoXjJwHdx9bnWvann
+	U05bTU85EC77x1Q1/mD5lDqNhCGW4kzqwDaST4V8zhQeqB8MXoR1Mp60XEGb+YrqeeEM=
+X-Gm-Gg: ASbGnctVGnoJDBXVaIsv6sPA42m9J8ePMiMMgAaAy1jOrh1PnUIkS7QSznWHPHG/Cta
+	jLtLdZrQ9qOIDlssaYWMao0bOJpyWFZOgHeYx1aDXY1IoLnUhXaJd9x3ZtJpjI+U6vuJ2ioVYSD
+	XQcPQ5l2pHWeoLN4aYdQW91H16C2GX1iBYlLY305pMrq/5PPNZSlyhRexbnM1F8n74Pq6PCYxf0
+	Nbu56qe4e7W4XSfabgEgKxktGy/hN+rLejsoVkkasSAIxzc6CAq9Ii+0PNMdrYaSiODWi55A5sV
+	eqwshXK2Vt0=
+X-Received: by 2002:a05:6000:400a:b0:3a5:2cb5:63fd with SMTP id ffacd0b85a97d-3a57238b522mr9595362f8f.10.1750109938541;
+        Mon, 16 Jun 2025 14:38:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEzpDB07Ow6Aq7oaibwATYH2bwGc1v46BbhwhcmxYHu7okQGHS3ELJ0eFf8b83N36p9EgRDvg==
+X-Received: by 2002:a05:6000:400a:b0:3a5:2cb5:63fd with SMTP id ffacd0b85a97d-3a57238b522mr9595351f8f.10.1750109938128;
+        Mon, 16 Jun 2025 14:38:58 -0700 (PDT)
+Received: from pollux ([2a00:79c0:662:b300:abf:b8ff:feee:998b])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568b089a7sm11887641f8f.49.2025.06.16.14.38.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jun 2025 14:38:57 -0700 (PDT)
+Date: Mon, 16 Jun 2025 23:38:55 +0200
+From: Danilo Krummrich <dakr@redhat.com>
+To: Rob Clark <rob.clark@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/2] drm/gpuvm: Add locking helpers
+Message-ID: <aFCO7_RHuAaGyq1Q@pollux>
+References: <20250613235705.28006-1-robin.clark@oss.qualcomm.com>
+ <20250613235705.28006-3-robin.clark@oss.qualcomm.com>
+ <aE1RPZ_-oFyM4COy@pollux>
+ <CACSVV00uwmuAC4eMi-4QiF4sOu4r9u8eXxyAgt83YS8Yfgoemg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250616-test-v7-0-b8c0f98494fa@chromium.org> <20250616-test-v7-3-b8c0f98494fa@chromium.org>
- <3d08da09653034128c48e97c1f6fad59c2ff5f35.camel@ndufresne.ca>
-In-Reply-To: <3d08da09653034128c48e97c1f6fad59c2ff5f35.camel@ndufresne.ca>
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 16 Jun 2025 21:54:05 +0200
-X-Gmail-Original-Message-ID: <CANiDSCtRE+kEt=1jr=L+EB_axbAeg_-bhD1FAPe2xufuC_nmeA@mail.gmail.com>
-X-Gm-Features: AX0GCFso7Umw_6wpxvuce0gLpPYr1ipCL6-nm2w3EzXeGlmtVoG3SHyPy3-SJDI
-Message-ID: <CANiDSCtRE+kEt=1jr=L+EB_axbAeg_-bhD1FAPe2xufuC_nmeA@mail.gmail.com>
-Subject: Re: [PATCH v7 3/5] media: venus: Remove timeperframe from inst
-To: Nicolas Dufresne <nicolas@ndufresne.ca>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, Dikshita Agarwal <quic_dikshita@quicinc.com>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Stanimir Varbanov <stanimir.varbanov@linaro.org>, Hans Verkuil <hans.verkuil@cisco.com>, 
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACSVV00uwmuAC4eMi-4QiF4sOu4r9u8eXxyAgt83YS8Yfgoemg@mail.gmail.com>
 
-Hi Nicolas
+On Sat, Jun 14, 2025 at 08:03:20AM -0700, Rob Clark wrote:
+> On Sat, Jun 14, 2025 at 3:39 AM Danilo Krummrich <dakr@redhat.com> wrote:
+> >
+> > On Fri, Jun 13, 2025 at 04:57:03PM -0700, Rob Clark wrote:
+> > > For UNMAP/REMAP steps we could be needing to lock objects that are not
+> > > explicitly listed in the VM_BIND ioctl in order to tear-down unmapped
+> > > VAs.  These helpers handle locking/preparing the needed objects.
+> >
+> > Yes, that's a common use-case. I think drivers typically iterate through their
+> > drm_gpuva_ops to lock those objects.
+> >
+> > I had a look at you link [1] and it seems that you keep a list of ops as well by
+> > calling vm_op_enqueue() with a new struct msm_vm_op from the callbacks.
+> >
+> > Please note that for exactly this case there is the op_alloc callback in
+> > struct drm_gpuvm_ops, such that you can allocate a custom op type (i.e. struct
+> > msm_vm_op) that embedds a struct drm_gpuva_op.
+> 
+> I did use drm_gpuvm_sm_xyz_ops_create() in an earlier iteration of my
+> VM_BIND series, but it wasn't quite what I was after.  I wanted to
+> apply the VM updates immediately to avoid issues with a later
+> map/unmap overlapping an earlier map, which
+> drm_gpuvm_sm_xyz_ops_create() doesn't really handle.  I'm not even
+> sure why this isn't a problem for other drivers unless userspace is
+> providing some guarantees.
 
+The drm_gpuva_ops are usually used in a pattern like this.
 
-On Mon, 16 Jun 2025 at 21:37, Nicolas Dufresne <nicolas@ndufresne.ca> wrote=
-:
->
-> Hi Ricardo,
->
-> Le lundi 16 juin 2025 =C3=A0 15:29 +0000, Ricardo Ribalda a =C3=A9crit :
-> > The driver only cares about whole fps. We can infer the timeperframe
-> > from the fps field. Remove the redundant field.
->
-> I do have reserved about this change. Video standards commonly uses fract=
-ional
-> rates for videos. If my memory is correct, venus uses Q16 ... So with thi=
-s change,
-> we now round all frame rate passed to encoders to an integer, which will =
-introduce
-> error in the resulting bitrate.
->
-> Perhaps it was already broken, but if so, it should be fixed instead ?
+	vm_bind {
+		for_each_vm_bind_operation {
+			drm_gpuva_for_each_op {
+				// modify drm_gpuvm's interval tree
+				// pre-allocate memory
+				// lock and prepare objects
+			}
+		}
+		
+		drm_sched_entity_push_job();
+	}
 
-It seems like today it only supports integer frame rates, or at least
-timeperframe is not used anywhere in the code, this is why I
-implemented the change.
+	run_job {
+		for_each_vm_bind_operation {
+			drm_gpuva_for_each_op {
+				// modify page tables
+			}
+		}
+	}
 
-In other words, when the driver was returning a fractional it was lying (a =
-bit).
+	run_job {
+		for_each_vm_bind_operation {
+			drm_gpuva_for_each_op {
+				// free page table structures, if any
+				// free unused pre-allocated memory
+			}
+		}
+	}
 
-I do not have the hardware to test this, the best thing I can offer is
-to remove this patch from the set and rebase the code.
+What did you do instead to get map/unmap overlapping? Even more interesting,
+what are you doing now?
 
-My main concern is to fix the "division errors" from the static analyzer :)
+> Once I realized I only wanted to defer the
+> application of the pgtable changes, but keep all the
+> locking/allocation/etc in the synchronous part of the ioctl,
+> vm_op_enqueue() was the natural solution.
 
->
-> regards,
-> Nicolas
->
-> >
-> > Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> > Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-> > ---
-> >  drivers/media/platform/qcom/venus/core.h |  2 --
-> >  drivers/media/platform/qcom/venus/vdec.c | 15 ++++++++-------
-> >  drivers/media/platform/qcom/venus/venc.c | 16 ++++++++--------
-> >  3 files changed, 16 insertions(+), 17 deletions(-)
-> >
-> > diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/p=
-latform/qcom/venus/core.h
-> > index 5b1ba1c69adba14c3560a4bc6d09435529f295a6..9cfb860e01e752bf9856a35=
-50f59c8c7b43647d2 100644
-> > --- a/drivers/media/platform/qcom/venus/core.h
-> > +++ b/drivers/media/platform/qcom/venus/core.h
-> > @@ -413,7 +413,6 @@ enum venus_inst_modes {
-> >   * @tss:             timestamp metadata
-> >   * @payloads:                cache plane payload to use it for clock/B=
-W scaling
-> >   * @fps:             holds current FPS
-> > - * @timeperframe:    holds current time per frame structure
-> >   * @fmt_out: a reference to output format structure
-> >   * @fmt_cap: a reference to capture format structure
-> >   * @num_input_bufs:  holds number of input buffers
-> > @@ -484,7 +483,6 @@ struct venus_inst {
-> >       struct venus_ts_metadata tss[VIDEO_MAX_FRAME];
-> >       unsigned long payloads[VIDEO_MAX_FRAME];
-> >       u64 fps;
-> > -     struct v4l2_fract timeperframe;
-> >       const struct venus_format *fmt_out;
-> >       const struct venus_format *fmt_cap;
-> >       unsigned int num_input_bufs;
-> > diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/p=
-latform/qcom/venus/vdec.c
-> > index fca27be61f4b869840904cc0577949635bc63cab..7d6612234d18a49573dc502=
-d48ee61a900b63194 100644
-> > --- a/drivers/media/platform/qcom/venus/vdec.c
-> > +++ b/drivers/media/platform/qcom/venus/vdec.c
-> > @@ -471,10 +471,12 @@ static int vdec_s_parm(struct file *file, void *f=
-h, struct v4l2_streamparm *a)
-> >               return -EINVAL;
-> >
-> >       memset(cap->reserved, 0, sizeof(cap->reserved));
-> > -     if (!timeperframe->denominator)
-> > -             timeperframe->denominator =3D inst->timeperframe.denomina=
-tor;
-> > -     if (!timeperframe->numerator)
-> > -             timeperframe->numerator =3D inst->timeperframe.numerator;
-> > +
-> > +     if (!timeperframe->numerator || !timeperframe->denominator) {
-> > +             timeperframe->numerator =3D 1;
-> > +             timeperframe->denominator =3D inst->fps;
-> > +     }
-> > +
-> >       cap->readbuffers =3D 0;
-> >       cap->extendedmode =3D 0;
-> >       cap->capability =3D V4L2_CAP_TIMEPERFRAME;
-> > @@ -487,7 +489,8 @@ static int vdec_s_parm(struct file *file, void *fh,=
- struct v4l2_streamparm *a)
-> >       fps =3D min(VENUS_MAX_FPS, fps);
-> >
-> >       inst->fps =3D fps;
-> > -     inst->timeperframe =3D *timeperframe;
-> > +     timeperframe->numerator =3D 1;
-> > +     timeperframe->denominator =3D inst->fps;
-> >
-> >       return 0;
-> >  }
-> > @@ -1622,8 +1625,6 @@ static void vdec_inst_init(struct venus_inst *ins=
-t)
-> >       inst->out_width =3D frame_width_min(inst);
-> >       inst->out_height =3D frame_height_min(inst);
-> >       inst->fps =3D 30;
-> > -     inst->timeperframe.numerator =3D 1;
-> > -     inst->timeperframe.denominator =3D 30;
-> >       inst->opb_buftype =3D HFI_BUFFER_OUTPUT;
-> >  }
-> >
-> > diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/p=
-latform/qcom/venus/venc.c
-> > index b9ccee870c3d1238e04cef5e9344bd992d86d737..4979392aa20b6dc94895c70=
-89878531b92b57754 100644
-> > --- a/drivers/media/platform/qcom/venus/venc.c
-> > +++ b/drivers/media/platform/qcom/venus/venc.c
-> > @@ -401,10 +401,10 @@ static int venc_s_parm(struct file *file, void *f=
-h, struct v4l2_streamparm *a)
-> >
-> >       memset(out->reserved, 0, sizeof(out->reserved));
-> >
-> > -     if (!timeperframe->denominator)
-> > -             timeperframe->denominator =3D inst->timeperframe.denomina=
-tor;
-> > -     if (!timeperframe->numerator)
-> > -             timeperframe->numerator =3D inst->timeperframe.numerator;
-> > +     if (!timeperframe->numerator || !timeperframe->denominator) {
-> > +             timeperframe->numerator =3D 1;
-> > +             timeperframe->denominator =3D inst->fps;
-> > +     }
-> >
-> >       out->capability =3D V4L2_CAP_TIMEPERFRAME;
-> >
-> > @@ -416,8 +416,9 @@ static int venc_s_parm(struct file *file, void *fh,=
- struct v4l2_streamparm *a)
-> >       do_div(fps, us_per_frame);
-> >       fps =3D min(VENUS_MAX_FPS, fps);
-> >
-> > -     inst->timeperframe =3D *timeperframe;
-> >       inst->fps =3D fps;
-> > +     timeperframe->numerator =3D 1;
-> > +     timeperframe->denominator =3D inst->fps;
-> >
-> >       return 0;
-> >  }
-> > @@ -431,7 +432,8 @@ static int venc_g_parm(struct file *file, void *fh,=
- struct v4l2_streamparm *a)
-> >               return -EINVAL;
-> >
-> >       a->parm.output.capability |=3D V4L2_CAP_TIMEPERFRAME;
-> > -     a->parm.output.timeperframe =3D inst->timeperframe;
-> > +     a->parm.output.timeperframe.numerator =3D 1;
-> > +     a->parm.output.timeperframe.denominator =3D inst->fps;
-> >
-> >       return 0;
-> >  }
-> > @@ -1454,8 +1456,6 @@ static void venc_inst_init(struct venus_inst *ins=
-t)
-> >       inst->out_width =3D 1280;
-> >       inst->out_height =3D 720;
-> >       inst->fps =3D 15;
-> > -     inst->timeperframe.numerator =3D 1;
-> > -     inst->timeperframe.denominator =3D 15;
-> >       inst->hfi_codec =3D HFI_VIDEO_CODEC_H264;
-> >  }
-> >
+But vm_op_enqueue() creates exactly this list of operations you would get from
+drm_gpuvm_sm_{map,unmap}_ops_create(), just manually, no?
 
+<snip>
 
+> > > Note that these functions do not strictly require the VM changes to be
+> > > applied before the next drm_gpuvm_sm_map_lock()/_unmap_lock() call.  In
+> > > the case that VM changes from an earlier drm_gpuvm_sm_map()/_unmap()
+> > > call result in a differing sequence of steps when the VM changes are
+> > > actually applied, it will be the same set of GEM objects involved, so
+> > > the locking is still correct.
+> >
+> > I'm not sure about this part, how can we be sure that's the case?
+> 
+> I could be not imaginative enough here, so it is certainly worth a
+> second opinion.  And why I explicitly called it out in the commit msg.
+> But my reasoning is that any new op in the second pass that actually
+> applies the VM updates which results from overlapping with a previous
+> update in the current VM_BIND will only involve GEM objects from that
+> earlier update, which are already locked.
 
---=20
-Ricardo Ribalda
+Yeah, it's probably fine, since, as you say, the only additional object can be
+the req_obj from the previous iteration.
+
 
