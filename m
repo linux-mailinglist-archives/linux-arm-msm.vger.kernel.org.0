@@ -1,215 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-61437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78163ADB07A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 14:44:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A126ADB0A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 14:53:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 94D821886AE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 12:44:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4CDDC3A41DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jun 2025 12:52:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E20FB285CB3;
-	Mon, 16 Jun 2025 12:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00F63292B2D;
+	Mon, 16 Jun 2025 12:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pi2tzzsn"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dLAFIxgM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082921B423C;
-	Mon, 16 Jun 2025 12:44:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59877285CAC
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 12:53:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750077855; cv=none; b=XMHDmbjv5XnCefO5gHBvindZtx5eWN/c6VtdfsL6+x1ECGmcTEGKrLd/nCEbZPu5hegemQRpLCy47NYBkdR4VEBesmLt5bLirRv/kObBRgIS6neLRj0k7HLxlg76Qw4hPqEFS+3pNsYCQbomUqN/832RkgzD+WmltehUmBwL6Hw=
+	t=1750078381; cv=none; b=NzcKS+GX77qL7NTYeFEXyhzYGz8wAKSdozY6iyhIrcNyeVmEp9AVOZlDjeeFIOTB47386w36K8fGbIeifHL9l/L2FA5522W0fQX6Y1xKvHsKSIDCiCyc7x2Ydq7wwWnq19wHfTzwaSfSGLaosZhk4137lFlAKXt99dLwH4bmxRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750077855; c=relaxed/simple;
-	bh=Jkvn56qWdjn8/iqxjuK4kmPiH3Bi1Cybuc3l8X+qhso=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=tczQz/2MJca/ebZgLN6GJNmi00oOhdPmybT/XGFOwX3YGyGcNfIyV0ZvPUDc/DDWr86OSV97syvVbx51Tf42M3oXbUY5nWrqBKxq8+9+ghbUGl23KBucOCNQTXT5iTBwGMTWHyUedxYjrMTOvOQ2sZi9n+riJwOyGn/UZB4EcEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pi2tzzsn; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55G8lKt7004321;
-	Mon, 16 Jun 2025 12:43:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	a5oO1qo73hKkbnLVV/jzEVM+2GsEeaJYPdF275S4nGY=; b=pi2tzzsnhRW7DipV
-	1ZTBW2maRYi85fr9woOnQZymJYtSUreJd3TxGEznOxqE95leOi3O5P81mr0n8iuO
-	15+uvgVwLX24w4U6+umYGwZpZA0B+HxtuzDR8VcZRKME1cgTAjsRgafqSkLpjsgR
-	TcRU7DcF7O6ioQiN7/ZYqk3LEBoi271lAjW3mzdcVO2Njn7tMBlCFvBGvJhho9fi
-	nr2r0KZM/igK37ZPJXBDE2G7H7OA2kLhKND18qxvGjcZZyosDAnu10AAEn5vVD9l
-	QysL3vn7EJZU1DeSd3yJ9VV0ozkqjCtkQzRUOCwIGB8iy4PNtASMwT5deAi/F+2w
-	v0Fncg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ag230njy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Jun 2025 12:43:48 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55GChlED027287
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Jun 2025 12:43:47 GMT
-Received: from [10.64.68.119] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 16 Jun
- 2025 05:43:43 -0700
-Message-ID: <1c09642b-7a0c-4073-97d3-f6f6cddbde83@quicinc.com>
-Date: Mon, 16 Jun 2025 20:43:40 +0800
+	s=arc-20240116; t=1750078381; c=relaxed/simple;
+	bh=xDo/CFd9O80cjbXr3irb8h8miFyh3mpLQ44oVF5ZXVw=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XFu0Zf0ffHf1TeXq7TNqJsPyScYjsJvrS5fvMs8raPCdVsfbKQIJhzd95CxfGpU0u/X6g9vfIDKcUO2a3pPVexJ5qcSzupyRlpqwYHLBnrk8WB56HyVy51UNuoEzYSI2Iqe/Re9g62G3Af4ne98JL0Ywrq/Ryed0/8c1dpPCf5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dLAFIxgM; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55G8RBig011469
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 12:52:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=3KaQaSQSjoPXPxix0wFVI/K7
+	2pUStJJyIYhcrvQzs8U=; b=dLAFIxgMECezCzCS9OY0D5uNzeiMkztyFQR/SAeb
+	7IPY6AJG5N7oUpmMDS9TmSnnUIYXDUxBE2/hpkoHDMlSHyDoOHErAcJFOSUXi417
+	JZ2eLoo+eYyI7i9ffDBB9Y17arBk3aQVT0WkHZ5BQFiD+UU0TLmILfErROT5dabJ
+	rbFudxOTUNy2IgNFcHDAcLCS95YtImAjwRiQrvdCUbU820lULhOpWRSePM43FBnZ
+	8+g/JlGxu6zEPd9Vpf/yxjlqLxd/7hNzDDUWALnegko5g5Q21dWZKsbKg4bF2mzn
+	zSYmQgm8xx7iz4FH3xkqgggTNQiJnbD0Vd/ge7dcO8njvw==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 479qp5k44h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 12:52:59 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6fb3bb94b5cso57056766d6.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jun 2025 05:52:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750078378; x=1750683178;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3KaQaSQSjoPXPxix0wFVI/K72pUStJJyIYhcrvQzs8U=;
+        b=BvcgpDOLG+cRkyZ459cEQ7W2FRw0E7d/QFpEElorz7JgswQC2FlWP0YnCLqfeFRw3P
+         XEwE0XkZkyaUmD3BD5LavTdZNwuq6HPHE4invYk8vTUtzGGW1X+nNL4pSOP69sy1vHsz
+         O1PH0loFI00SmJP27RWFjMRCCK2EuiNMRek0S0h508bJ5BZ7x9NZLlLKwNVVBsfmBXQ4
+         +Djh2U/ZcmaTJJsipZ1rIQfJ9F4waRLww0ofHYNKEDsV4lYD0e4bonLOpz3Hl7hqOtmT
+         VSBOPLyu1Uo5PRvR5cR0YQGqISvCeXMlMUVzyNW4cife29y2a3eedZ4LX7JYkf29WDvL
+         rSyg==
+X-Forwarded-Encrypted: i=1; AJvYcCU7p5GHHoNHZno/ZzVaz8+MrsyW1H29VKmTXMk8eCbjGJGpkhkkABsMG7RcFpTD5c8/OTClHwtp7sK0y0YH@vger.kernel.org
+X-Gm-Message-State: AOJu0YweRN3n20m+nlTaupJ9obo9H8ZdqxPdPYvlMm9Q/HH19pYGnZAi
+	UFtdNcMntzOSw5XycBDV5gDIftcDbklTHTvmhY8JRHaKAjNfSpcvaG9fj19TOenemTJcKJwWptI
+	AH+d6eLBNN9xaPvGYSLNK+NCdK6It9WbwlkQnqbG+T09F8YYlg64FvlenB4I3cTNgdp75
+X-Gm-Gg: ASbGncvZGh95A7AQP3qDgq5KwuoyyTArtFqVoE/2j7wg43s8s2+mEjOiwQ8ffmg86Oj
+	hYA+sA/KQ3Ks9Mz3LDQzjGUnZFCX8ZSQte7mQ9fOR1rjMZ0ylVv2cxO1xNL5sqJlB6cFnIJpU7C
+	01z5IKaQXqyMNt4ZaDcxw2CmeaRANEi9EREecdvn6VgcIFRwFKj2s23KPWRIPnS2ylsVZL5nojd
+	ncnL+lgeA7i12/rXarwufMmQCpSP2/LBjtLltkZ9YTUGdZB+pUlECupTyrkuZKiRw/ja39S5d7j
+	Y2RHY9/hP7MMFF2tNLMeryOD+upLVM8wfNw38WCnwC+KlWTUuvVg6QfI3g==
+X-Received: by 2002:ad4:5e87:0:b0:6e8:97f6:3229 with SMTP id 6a1803df08f44-6fb4772a019mr128592166d6.16.1750078377858;
+        Mon, 16 Jun 2025 05:52:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+OFLF4t7/ZWk0HbQ5uqeqFokxTATjRvaApyd+ckaiuS8GwJZ2WNkfZTT+6OXd0WtcCQEi5w==
+X-Received: by 2002:ad4:5e87:0:b0:6e8:97f6:3229 with SMTP id 6a1803df08f44-6fb4772a019mr128591716d6.16.1750078377401;
+        Mon, 16 Jun 2025 05:52:57 -0700 (PDT)
+Received: from trex (132.red-79-144-190.dynamicip.rima-tde.net. [79.144.190.132])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532f2ca228sm145532895e9.13.2025.06.16.05.52.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jun 2025 05:52:56 -0700 (PDT)
+From: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+X-Google-Original-From: Jorge Ramirez <JorgeRamirez-Ortiz>
+Date: Mon, 16 Jun 2025 14:52:55 +0200
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
+        quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com,
+        bryan.odonoghue@linaro.org, mchehab@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, stanimir.varbanov@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/5] dt-bindings: media: venus: Add qcm2290 dt schema
+Message-ID: <aFATp3zoSgkrj3YX@trex>
+References: <20250613140402.3619465-1-jorge.ramirez@oss.qualcomm.com>
+ <20250613140402.3619465-2-jorge.ramirez@oss.qualcomm.com>
+ <6f4e715f-1c73-450e-b7eb-92781b7fa050@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 29/38] drm/msm/dp: add connector abstraction for DP MST
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Abhinav Kumar
-	<abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>
-References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
- <20250609-msm-dp-mst-v2-29-a54d8902a23d@quicinc.com>
- <fcmbo5qhiifo3erfnejgtu6es2nmeo3c5r4plbutj23gdtydng@xy3mqkhbsjia>
-Content-Language: en-US
-From: Yongxing Mou <quic_yongmou@quicinc.com>
-In-Reply-To: <fcmbo5qhiifo3erfnejgtu6es2nmeo3c5r4plbutj23gdtydng@xy3mqkhbsjia>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: n-gg6bA6jRxgzECik29ZpGnikXtBBm-U
-X-Authority-Analysis: v=2.4 cv=edY9f6EH c=1 sm=1 tr=0 ts=68501184 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8
- a=nS5M5X4IFjjFUfIJem0A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE2MDA3OSBTYWx0ZWRfXwfur6E3PVpN3
- ZGzPHuNO565diGHsLpm03pddHh0cA+n7Mokg6eh2etyTGXQfdAuByVCU/JXgoBjjvi1cCPYQEIq
- jf8GjtI7o//Mcri+pM3Lu+psWE1Vv/A+BRCez84q5pV/6A8TBtTeoMTSL0wqHdOoRZKjFbjFzBH
- PMYVxwLzZTL8niQOlVtbzV+559r48uuz+PwaCHkUFnzY9pt2/ESkan68BzsJ+B4NzZgsfLt5H7C
- njWga/eesmZi1VU4L6BR+2s8z9K3wJipdWYxXdpbA2xeYqTYbDvoFz4SIOaKe/qr15//x7rWjA/
- P3rI6fU90NqQumGFh/TlONekuVerCMjLbHP028X0eTi0NlvmyIvo/dq0ib79MR4RXSyQLn/m9jV
- jAy77/1txLTKahq7JLG1FsuGnkm29yXpwelunO0HAypFSndTjRw+tRYa5EV2Ql8g06l04qkU
-X-Proofpoint-GUID: n-gg6bA6jRxgzECik29ZpGnikXtBBm-U
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6f4e715f-1c73-450e-b7eb-92781b7fa050@kernel.org>
+X-Proofpoint-GUID: qXUuJiAppPCra6n70rsemjSxkwB8dL0j
+X-Proofpoint-ORIG-GUID: qXUuJiAppPCra6n70rsemjSxkwB8dL0j
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE2MDA4MCBTYWx0ZWRfXy5E5RQCG5B1f
+ jUb1CxLuP3KqWUAMBCA3fy1K1OPgMQW1UXnmjAEjYcJmOEAeX0GFj1T7SkMCvZMrXrMigsyrfva
+ KZxKqpTUuc7uU8DndRmLVdFjCsXA4UsaZxp/4R0UsKZ4HZvkfp6MqORGxX9AH7sdMsFcJUlsJyC
+ 0OqbVAojA+wpudc9zxPJgDgGHDI2a7DEDcQjsAqjvInXkvxYSDDFJ2Gh7a892DD1QWDieLijZc7
+ O9OurxIpUBWdz/GdmqpNPM9YJ0dy2Hwv9BTI4LC5qiJVSGlydPsAZd+ZnGB8Ma+1L3BbXhw4rSz
+ UeOeeRA6EgGnIpwc+t8Lo5eM17Oxw0eHZ2GA47xcxRTrcqTaqzfhDHLrJEB0j6K3cRmompkzwoc
+ Ep5ltDZihenregxOGPpI8VooMWVwqkIU2AqyLRa8n5jgVc1ReOvY3TCA8JUsejnN72RnD2Zm
+X-Authority-Analysis: v=2.4 cv=fMc53Yae c=1 sm=1 tr=0 ts=685013ab cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=wjE3nLva0YkvARyJ+Gfmxg==:17
+ a=kj9zAlcOel0A:10 a=6IFa9wvqVegA:10 a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8
+ a=KKAkSRfTAAAA:8 a=DAQgPmeqjGmo1aN9fEMA:9 a=CjuIK1q_8ugA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22 a=sptkURWiP4Gy88Gu7hUp:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-16_05,2025-06-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 suspectscore=0 spamscore=0 bulkscore=0
- impostorscore=0 mlxscore=0 clxscore=1015 mlxlogscore=999 malwarescore=0
- phishscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506160079
+ phishscore=0 adultscore=0 bulkscore=0 clxscore=1015 malwarescore=0
+ mlxlogscore=999 spamscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
+ priorityscore=1501 suspectscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506160080
 
-
-
-On 2025/6/9 23:51, Dmitry Baryshkov wrote:
-> On Mon, Jun 09, 2025 at 08:21:48PM +0800, Yongxing Mou wrote:
->> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>
->> Add connector abstraction for the DP MST. Each MST encoder
->> is connected through a DRM bridge to a MST connector and each
->> MST connector has a DP panel abstraction attached to it.
->>
->> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dp/dp_mst_drm.c | 515 ++++++++++++++++++++++++++++++++++++
->>   drivers/gpu/drm/msm/dp/dp_mst_drm.h |   3 +
->>   2 files changed, 518 insertions(+)
+On 16/06/25 10:20:57, Krzysztof Kozlowski wrote:
+> On 13/06/2025 16:03, Jorge Ramirez-Ortiz wrote:
+> > Add a schema for the venus video encoder/decoder on the qcm2290.
+> > 
+> > Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+> > ---
+> >  .../bindings/media/qcom,qcm2290-venus.yaml    | 153 ++++++++++++++++++
+> >  1 file changed, 153 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
+> > new file mode 100644
+> > index 000000000000..ffa72f1e27f3
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
+> > @@ -0,0 +1,153 @@
+> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/media/qcom,qcm2290-venus.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm QCM2290 Venus video encode and decode accelerators
+> > +
+> > +maintainers:
+> > +  - Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> > +
+> > +description: |
 > 
->> +
->> +static enum drm_mode_status msm_dp_mst_connector_mode_valid(struct drm_connector *connector,
->> +							    const struct drm_display_mode *mode)
->> +{
->> +	struct msm_dp_mst_connector *mst_conn;
->> +	struct msm_dp *dp_display;
->> +	struct drm_dp_mst_port *mst_port;
->> +	struct msm_dp_panel *dp_panel;
->> +	struct msm_dp_mst *mst;
->> +	u16 full_pbn, required_pbn;
->> +	int available_slots, required_slots;
->> +	struct msm_dp_mst_bridge_state *dp_bridge_state;
->> +	int i, slots_in_use = 0, active_enc_cnt = 0;
->> +	const u32 tot_slots = 63;
->> +
->> +	if (drm_connector_is_unregistered(connector))
->> +		return 0;
->> +
->> +	mst_conn = to_msm_dp_mst_connector(connector);
->> +	dp_display = mst_conn->msm_dp;
->> +	mst = dp_display->msm_dp_mst;
->> +	mst_port = mst_conn->mst_port;
->> +	dp_panel = mst_conn->dp_panel;
->> +
->> +	if (!dp_panel || !mst_port)
->> +		return MODE_ERROR;
->> +
->> +	for (i = 0; i < mst->max_streams; i++) {
->> +		dp_bridge_state = to_msm_dp_mst_bridge_state(&mst->mst_bridge[i]);
->> +		if (dp_bridge_state->connector &&
->> +		    dp_bridge_state->connector != connector) {
->> +			active_enc_cnt++;
->> +			slots_in_use += dp_bridge_state->num_slots;
->> +		}
->> +	}
->> +
->> +	if (active_enc_cnt < DP_STREAM_MAX) {
->> +		full_pbn = mst_port->full_pbn;
->> +		available_slots = tot_slots - slots_in_use;
->> +	} else {
->> +		DRM_ERROR("all mst streams are active\n");
->> +		return MODE_BAD;
->> +	}
->> +
->> +	required_pbn = drm_dp_calc_pbn_mode(mode->clock, (connector->display_info.bpc * 3) << 4);
->> +
->> +	required_slots = msm_dp_mst_find_vcpi_slots(&mst->mst_mgr, required_pbn);
->> +
->> +	if (required_pbn > full_pbn || required_slots > available_slots) {
->> +		drm_dbg_dp(dp_display->drm_dev,
->> +			   "mode:%s not supported. pbn %d vs %d slots %d vs %d\n",
->> +			   mode->name, required_pbn, full_pbn,
->> +			   required_slots, available_slots);
->> +		return MODE_BAD;
->> +	}
-> 
-> I almost missed this. Could you please point me, do other drivers
-> perform mode_valid() check based on the current slots available or not?
-> Could you please point me to the relevant code in other drivers? Because
-> it doesn't look correct to me. The mode on the screen remains valid no
-> matter if I plug or unplug other devices. The atomic_check() should fail
-> if we don't have enough resources (which includes slots).
-> 
-Currently, I haven't found other drivers checking available slots during 
-mode_valid(). Intel will check the PBN in here. This condition can help 
-us in the following case:
+> Do not need '|' unless you need to preserve formatting.
 
-Assume two downstream devices both support 4K 60Hz 10-bit. In MST mode, 
-when the first device occupies the 4Kx60Hzx10bit mode, the remaining 
-bandwidth is insufficient to support the same mode for the second device.
+ack
 
-If we check the slots in mode_valid(), the second device will reject the 
-4Kx60Hzx10bit mode but accept 4Kx30Hzx10bit. However, if the check is 
-done in atomic_check(), the second device will display a black screen 
-(because 4Kx60Hzx10bit is considered valid in mode_valid() but failed in 
-atomic_check()).
->> +
->> +	return msm_dp_display_mode_valid(dp_display, &dp_display->connector->display_info, mode);
->> +}
->> +
 > 
+> > +  The Venus AR50_LITE IP is a video encode and decode accelerator present
+> > +  on Qualcomm platforms
+> > +
+> > +allOf:
+> > +  - $ref: qcom,venus-common.yaml#
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: qcom,qcm2290-venus
+> > +
+> > +  power-domains:
+> > +    minItems: 2
+> > +    maxItems: 3
+> > +
+> > +  power-domain-names:
+> > +    minItems: 2
+> 
+> Why is this flexible? Either you have two or three. Not mixed.
 
+please check 5b380f242f360256c96e96adabeb7ce9ec784306
 
