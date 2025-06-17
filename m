@@ -1,323 +1,282 @@
-Return-Path: <linux-arm-msm+bounces-61603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 376C0ADCDDC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 15:46:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 148BDADCF82
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 16:22:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EED153AC90B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 13:43:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A3582C0A9E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 14:17:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D8782E3AE1;
-	Tue, 17 Jun 2025 13:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A74D2E06EE;
+	Tue, 17 Jun 2025 14:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bas43Ag8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JIKyLmom"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F50C2E337C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 13:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F284236A99;
+	Tue, 17 Jun 2025 14:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750167817; cv=none; b=fX0ICmDG7KpLaM/Us8gELPhiUnMocVFLLXScxuMZmO+0PasNe8U33qgLaUf6h+et5Q7oRpIZ8JrRTKTpgyrIyT6P0uT9PbnGvwouMrUmeROcVGnI0ckGTuCj0USWdeO4tx5kP9Wa7xWktoCxZs308HX6uKEZTLUrOlHlBZa4k6c=
+	t=1750169514; cv=none; b=PhzywegDV3TmAAjytgsE+2nINyXwhVJB5hk0p7ejO+uhAQhd6/mBQLnP9kchvwM7lfEidng2mop77kPU+SOEgsdxXI3U2s7qXWmOTXiD10sl6jxaYlzJ4KmRtkIdhtb9U4OX29GZggiBPWZ51+ZFeWTaF6rG2NDL9AEMN2ABPX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750167817; c=relaxed/simple;
-	bh=Fb+vqgCN98LvD+p+CciLWxcBLokNMkWf4WHJp9LBBRo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EG4XzLJe1f4ikyaHhU9dR24Qt5TMdJJCw7KahwNlwcqG2S6otOoJiZjaWb+hmoHNJ1E/ZCdfcJqXFLb+KPJw8hFWsnQOppKMO10Wo93dUtC3xB/rvV+l6AAPr7dhT4wmnNHPYh6lEXJ8+ILPkMKqi/yqhPB7nx4t/lmNHOeJy74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bas43Ag8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55H8Rpcp015082
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 13:43:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1750169514; c=relaxed/simple;
+	bh=FlpT4mSnskv7dw1+BpUTd2fv+q+ZZUHkItf8LExXoX8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qqIiD1SQGXMabTzXrUZ7dJtEFmhmNUi5g+Pgb5U6QIaCxw34kCo7UqgtH32TV4HosE+H8ywkVvCIHvrwRWPju3pTEavhony1+Ii3cY8DT0kAg1VorSnd+cUnKlNSTHPYfoNecD3DQlQQlPDsOgWldadimX71iKCE8FSjxk8VQUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JIKyLmom; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55H7wc8g014442;
+	Tue, 17 Jun 2025 14:11:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:to; s=
-	qcppdkim1; bh=89iVzQKlOZSzEW5QJvWpp5Nf+zKhS4IZciCVta9tSNE=; b=ba
-	s43Ag8rW2mElnPIoWtolXBypKLasVLH5B4YiajQexHTf0svrxXX0o+zXfoXCqIBr
-	UwHap4XoAz6TogD1aEV3PaP78n6uZydzEyqaJVwsmNUCVSazV2RxsK1LG39mwlUH
-	2hcBwVLfnOpPQYRU0Yk8Qd/a7qAl/MCvuN9mmoJfrS3S5+KeHbJbHTN1jM1TzvG7
-	7XZNSUj72DHMu+5ky7xn7krtQnU8WaL/OnoZsO50yruOB7JJNFJJ1zVsRwyEV/o1
-	Aq0r1dYxqSYvNbhVjUi/AEi3ZDmYdWQ7zQLmr7NXrNWBj10ZZwPqU62V1Eu4f2la
-	wbtpcN6MFvh3Z4OqxkkQ==
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com [209.85.160.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4792ca0k20-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 13:43:34 +0000 (GMT)
-Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-2eacd9f1342so3815650fac.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 06:43:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750167813; x=1750772613;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=89iVzQKlOZSzEW5QJvWpp5Nf+zKhS4IZciCVta9tSNE=;
-        b=kg+G26atod+73oz2L9MFhyuJ6gTbmd1EYcIsmdRls7bOl2VhfhbsNgvjv8ZmFTCdJe
-         bT3WSrtflvmz7uadUKSZBb7kb9Xyjh5a85iMrC8GWVkuTUJS0T+Tac26iu8/5qpWk0YC
-         0EZW8GrWYw+WAuj1RdITI4iDqymHkBMG3oBTMmm/cl8lSWalbLmkwds3mxEuGYQiGL1V
-         HakZDUG92qumoF3ihRlOrt3I/J6Meq0sXLpHuQVsSZVMafT9mGqIoaZ2lZjCy0LAeyXJ
-         qMVBwm+KGDTYJHs4e/S2fJjisep7djmLzzVrYL9AJK6o/VS1WKfEjzgxA/hMb+Gu+zJL
-         8QQg==
-X-Forwarded-Encrypted: i=1; AJvYcCWRZJ0t5sdnnwDu/2cWT7SbT3u5H8pJOj3tsytzXdjrIM/VirAc/mn5VUC8TXxntxnwWo1cLp22rgCwtTuu@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzw6JFCCmTdogJuDZVcAMMfWDUSnuNnx20iPa8SoIAcB95xFX5O
-	eoxWwuL+DhPjuY3bFkw9ypxg3scZrlFIJvrlrfuAfBsexzB0Ance3vAFy/K7l4geXnSueuFzDNV
-	K3ECg2n8Ud6V3yjhSAbZPohysEgbL66R1doPaUej+P0SMqC/qSwAXvBLHt4pTXuUIWGCsy83G6g
-	G9YSptNXZkgvmu/C0dyMjfzKYU3XpGemtB9kEtZQd/IXeVPlvy078=
-X-Gm-Gg: ASbGncsYyk2GlKx3p8NGkR3qP86iA5uM8R7NuN662ieKIajOyszAJbIkZsjghW7RodK
-	fyZkXBhpZxygCHxYN+8YNXAGTfoPGhylOTplyWBJeQmNlmbYvH881rKd3UKUD2rMJFK3N8DcMy6
-	0F+fCFhw6CkVXBel1Mm11cB184+h7JTAOtNug=
-X-Received: by 2002:a05:6870:55d1:b0:2e8:755d:b4e9 with SMTP id 586e51a60fabf-2eaf0713decmr7772110fac.1.1750167813043;
-        Tue, 17 Jun 2025 06:43:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFhDJZimhXQKcNIsXL5L6BmeP7ICuKtSU3Jxm1tzONbFrkSvIPcVUF/XXyIKFzo5An/dyyhPKUafantFxuovG8=
-X-Received: by 2002:a05:6870:55d1:b0:2e8:755d:b4e9 with SMTP id
- 586e51a60fabf-2eaf0713decmr7772090fac.1.1750167812615; Tue, 17 Jun 2025
- 06:43:32 -0700 (PDT)
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ifkXAcVLvQpNJRJEgIpDZf0Mg9P6CL8tC8Po4cRO0LU=; b=JIKyLmome0qxDDYW
+	gO4chYUKOI4Lj0arNspoZ2xFlYcVU6vnu4PEnfpBy5TNswTKK1Wm+0wr/iW8Vy/d
+	j8Cet/8+2K4SQ6dgop7xqoUNkEfduPQDHqaS8AswUWIFPNgJkGssOCPtr0QdnaTb
+	yxm8QXgRIxyLxMLw9zQKXs8z6zYEVhLp01ka86CHej0Cvhfc0EPTD3+uARtmuESk
+	lsn+6N1g3XjwkwD7O6snmuDICJeArHdD8NE5RZyLt+zA50MtR/f9xqMmsrytzgWM
+	zXg37CkFunI7MQcoxG9kUBhC3pihAPZUBT5XkE3oHP6ZmVLvlDLtw8qc2jjni5bH
+	R098yg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47akuwc1fb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Jun 2025 14:11:43 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55HEBgTb013489
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 17 Jun 2025 14:11:42 GMT
+Received: from [10.217.219.62] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 17 Jun
+ 2025 07:11:38 -0700
+Message-ID: <dc7358a1-ddc5-402e-9024-283f8e46e3b6@quicinc.com>
+Date: Tue, 17 Jun 2025 19:41:35 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250613235705.28006-1-robin.clark@oss.qualcomm.com>
- <20250613235705.28006-3-robin.clark@oss.qualcomm.com> <aE1RPZ_-oFyM4COy@pollux>
- <CACSVV00uwmuAC4eMi-4QiF4sOu4r9u8eXxyAgt83YS8Yfgoemg@mail.gmail.com>
- <aFCO7_RHuAaGyq1Q@pollux> <CACSVV03WboQp_A1bzQ+xpX5DDkfaoXmbTuo9RfZ9bMaVTqdU+A@mail.gmail.com>
- <aFE6pq8l33NXfFdT@pollux> <CACSVV00VzOfTDh2sKst+POzkZ-5MH+0BDY-GVB2WKTyONRrHjw@mail.gmail.com>
-In-Reply-To: <CACSVV00VzOfTDh2sKst+POzkZ-5MH+0BDY-GVB2WKTyONRrHjw@mail.gmail.com>
-Reply-To: rob.clark@oss.qualcomm.com
-From: Rob Clark <rob.clark@oss.qualcomm.com>
-Date: Tue, 17 Jun 2025 06:43:21 -0700
-X-Gm-Features: AX0GCFvUN5Vtw6q9IQOQDEBExOpLuP6bjoq_1cf32Yhb7iLKA8phUQzitd1kxgQ
-Message-ID: <CACSVV00cng4PzHzqydGw_L34_f+6KiZTyCRdggNfHaDePGzFOA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] drm/gpuvm: Add locking helpers
-To: Danilo Krummrich <dakr@redhat.com>
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-GUID: kukuSVnv4lbrs1G6vf2uZsCOA1MMkU3o
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE3MDEwNyBTYWx0ZWRfX5HEAz14PLBKN
- a3Uw+VMn0hhIOJXY/ShqRhgmdEkScKicWM+JIBUYFUs9RLjtHgEj4P/v+akLOLs7+9/+mG/usKT
- 6CbJILZ3YVX7e9RcmsOTsUHFTqRcg/NQwMKbnaYSZmpBivj+rpI1kGhOL53I1kq6gw/pduaMNjh
- xt8rhuJLIgFBxwelhgrLcA9vEO8KlS/azPfAxlrqunV1YUEeWO7QIgeGKcvIIis2CET2M6nLW+J
- khzB2SQEetoBsI4PbrJT7zpj3lo8fyzRLijHlHDBUn3JjjIwW87NK9G2gYwQb7WcsRvRRQBUNJ6
- KsZ63a9iLJjQfmTcq/HmSw8QcM2Qk8i30T7TqzE7zZl8FbBi1vaLlaf3p92xvVX6hkMuLPcccnm
- TCDVDfqU7wNZMadEmQnCOB3ON2mGo8D6q9K7ac0pLlZD5V7p9APhbz9YlniIlYyRilteIeh6
-X-Proofpoint-ORIG-GUID: kukuSVnv4lbrs1G6vf2uZsCOA1MMkU3o
-X-Authority-Analysis: v=2.4 cv=etffzppX c=1 sm=1 tr=0 ts=68517106 cx=c_pps
- a=nSjmGuzVYOmhOUYzIAhsAg==:117 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10
- a=e5mUnYsNAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=AMTndSw0vTCt-rItpBEA:9
- a=QEXdDO2ut3YA:10 a=1zu1i0D7hVQfj8NKfPKu:22 a=Vxmtnl_E_bksehYqCbjh:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/2] i2c: i2c-qcom-geni: Add Block event interrupt
+ support
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Vinod Koul <vkoul@kernel.org>,
+        Mukesh Kumar Savaliya
+	<quic_msavaliy@quicinc.com>,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-media@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linaro-mm-sig@lists.linaro.org>, <quic_vtanuku@quicinc.com>
+References: <20250506111844.1726-1-quic_jseerapu@quicinc.com>
+ <20250506111844.1726-3-quic_jseerapu@quicinc.com>
+ <qizkfszruwcny7f3g3i7cjst342s6ma62k5sgc6pg6yfoti7b3@fo2ssj7jvff2>
+ <3aa92123-e43e-4bf5-917a-2db6f1516671@quicinc.com>
+ <a98f0f1a-d814-4c6a-9235-918091399e4b@oss.qualcomm.com>
+ <ba7559c8-36b6-4628-8fc4-26121f00abd5@quicinc.com>
+ <w6epbao7dwwx65crst6md4uxi3iivkcj55mhr2ko3z5olezhdl@ffam3xif6tmh>
+ <5ed77f6d-14d7-4b62-9505-ab988fa43bf2@quicinc.com>
+ <644oygj43z2um42tmmldp3feemgzrdoirzfw7pu27k4zi76bwg@wfxbtgqqgh4p>
+Content-Language: en-US
+From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+In-Reply-To: <644oygj43z2um42tmmldp3feemgzrdoirzfw7pu27k4zi76bwg@wfxbtgqqgh4p>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: rC0ari-Li_pF2kZj154HFxX8R1HQ_rji
+X-Authority-Analysis: v=2.4 cv=He0UTjE8 c=1 sm=1 tr=0 ts=6851779f cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10
+ a=BcHELEONEp7jDoDfLvUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: rC0ari-Li_pF2kZj154HFxX8R1HQ_rji
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE3MDEwOSBTYWx0ZWRfX2Lco3J5gqTV8
+ 5wndbDs4HBTbgbA8t4NSX6tDVPAg8eGGCaPIC0swObhtdlXmJNqhDWkGbdpbXWslW1NPgFu4z7b
+ CO20vgdChxOvf6wFPukbVWvZCbLH9inUdWniKqKnmzDK+/UFy1UXWcoL33w3GVCHsoH7OJYohPb
+ NuYz78k8NcxnIC0AzJUf6Vsb5+W+XXsqLnyVqBFplVYiQvlLfVRriszcBjvXHv6kfkeMTOLNmq+
+ erPuDtkuLkGsnFy3FD42UgGpfl2+4UIPz520rhSlnzTkdyDulsIqMfGJ5Tv2LBSB2GHp8B+Ny+B
+ Y5Hvjehjsnr2hLhr5IyjVh61RprjzPTOK0iwzXpMes8qiFcYV7Ktb12+PlzdbYRs0H6qprFZJWP
+ tdsE10V/JScrIKfufFXzzOuSn/acLsn6xMXlyAQuW8mnIbsE2ozWJ0WkvV7MMRjehmvgWafa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-17_06,2025-06-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 adultscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 suspectscore=0 phishscore=0 mlxlogscore=999
- lowpriorityscore=0 bulkscore=0 mlxscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506170107
+ mlxscore=0 clxscore=1011 malwarescore=0 priorityscore=1501 suspectscore=0
+ impostorscore=0 bulkscore=0 mlxlogscore=999 lowpriorityscore=0 phishscore=0
+ adultscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506170109
 
-On Tue, Jun 17, 2025 at 5:48=E2=80=AFAM Rob Clark <rob.clark@oss.qualcomm.c=
-om> wrote:
->
-> On Tue, Jun 17, 2025 at 2:51=E2=80=AFAM Danilo Krummrich <dakr@redhat.com=
-> wrote:
-> >
-> > On Mon, Jun 16, 2025 at 03:25:08PM -0700, Rob Clark wrote:
-> > > On Mon, Jun 16, 2025 at 2:39=E2=80=AFPM Danilo Krummrich <dakr@redhat=
-.com> wrote:
-> > > >
-> > > > On Sat, Jun 14, 2025 at 08:03:20AM -0700, Rob Clark wrote:
-> > > > > On Sat, Jun 14, 2025 at 3:39=E2=80=AFAM Danilo Krummrich <dakr@re=
-dhat.com> wrote:
-> > > > > >
-> > > > > > On Fri, Jun 13, 2025 at 04:57:03PM -0700, Rob Clark wrote:
-> > > > > > > For UNMAP/REMAP steps we could be needing to lock objects tha=
-t are not
-> > > > > > > explicitly listed in the VM_BIND ioctl in order to tear-down =
-unmapped
-> > > > > > > VAs.  These helpers handle locking/preparing the needed objec=
-ts.
-> > > > > >
-> > > > > > Yes, that's a common use-case. I think drivers typically iterat=
-e through their
-> > > > > > drm_gpuva_ops to lock those objects.
-> > > > > >
-> > > > > > I had a look at you link [1] and it seems that you keep a list =
-of ops as well by
-> > > > > > calling vm_op_enqueue() with a new struct msm_vm_op from the ca=
-llbacks.
-> > > > > >
-> > > > > > Please note that for exactly this case there is the op_alloc ca=
-llback in
-> > > > > > struct drm_gpuvm_ops, such that you can allocate a custom op ty=
-pe (i.e. struct
-> > > > > > msm_vm_op) that embedds a struct drm_gpuva_op.
-> > > > >
-> > > > > I did use drm_gpuvm_sm_xyz_ops_create() in an earlier iteration o=
-f my
-> > > > > VM_BIND series, but it wasn't quite what I was after.  I wanted t=
-o
-> > > > > apply the VM updates immediately to avoid issues with a later
-> > > > > map/unmap overlapping an earlier map, which
-> > > > > drm_gpuvm_sm_xyz_ops_create() doesn't really handle.  I'm not eve=
-n
-> > > > > sure why this isn't a problem for other drivers unless userspace =
-is
-> > > > > providing some guarantees.
-> > > >
-> > > > The drm_gpuva_ops are usually used in a pattern like this.
-> > > >
-> > > >         vm_bind {
-> > > >                 for_each_vm_bind_operation {
-> >                             drm_gpuvm_sm_xyz_ops_create();
-> > > >                         drm_gpuva_for_each_op {
-> > > >                                 // modify drm_gpuvm's interval tree
-> > > >                                 // pre-allocate memory
-> > > >                                 // lock and prepare objects
-> > > >                         }
-> > > >                 }
-> > > >
-> > > >                 drm_sched_entity_push_job();
-> > > >         }
-> > > >
-> > > >         run_job {
-> > > >                 for_each_vm_bind_operation {
-> > > >                         drm_gpuva_for_each_op {
-> > > >                                 // modify page tables
-> > > >                         }
-> > > >                 }
-> > > >         }
-> > > >
-> > > >         run_job {
-> > > >                 for_each_vm_bind_operation {
-> > > >                         drm_gpuva_for_each_op {
-> > > >                                 // free page table structures, if a=
-ny
-> > > >                                 // free unused pre-allocated memory
-> > > >                         }
-> > > >                 }
-> > > >         }
-> > > >
-> > > > What did you do instead to get map/unmap overlapping? Even more int=
-eresting,
-> > > > what are you doing now?
-> > >
-> > > From what I can tell, the drivers using drm_gpva_for_each_op()/etc ar=
-e
-> > > doing drm_gpuva_remove() while iterating the ops list..
-> > > drm_gpuvm_sm_xyz_ops_create() itself does not modify the VM.  So this
-> > > can only really work if you perform one MAP or UNMAP at a time.  Or a=
-t
-> > > least if you process the VM modifying part of the ops list before
-> > > proceeding to the next op.
-> >
-> > (Added the drm_gpuvm_sm_xyz_ops_create() step above.)
-> >
-> > I went through the code you posted [1] and conceptually you're implemen=
-ting
-> > exactly the pattern I described above, i.e. you do:
-> >
-> >         vm_bind {
-> >                 for_each_vm_bind_operation {
-> >                         drm_gpuvm_sm_xyz_exec_lock();
-> >                 }
-> >
-> >                 for_each_vm_bind_operation {
-> >                         drm_gpuvm_sm_xyz() {
-> >                                 // modify drm_gpuvm's interval tree
-> >                                 // create custom ops
-> >                         }
-> >                 }
-> >
-> >                 drm_sched_entity_push_job();
-> >         }
-> >
-> >         run_job {
-> >                 for_each_vm_bind_operation {
-> >                         for_each_custom_op() {
-> >                                 // do stuff
-> >                         }
-> >                 }
-> >         }
->
-> Close, but by the time we get to run_job there is just a single list
-> of ops covering all the vm_bind operations:
->
->         run_job {
->                 for_each_custom_op() {
->                         // do stuff
->                 }
->         }
->
-> rather than a list of va ops per vm_bind op.
->
-> > However, GPUVM intends to solve your use-case with the following, seman=
-tically
-> > identical, approach.
-> >
-> >         vm_bind {
-> >                 for_each_vm_bind_operation {
-> >                         drm_gpuvm_sm_xyz_ops_create();
-> >
-> >                         drm_gpuva_for_each_op {
-> >                                 // modify drm_gpuvm's interval tree
-> >                                 // lock and prepare objects (1)
->
-> I currently decouple lock+pin from VM modification to avoid an error
-> path that leaves the VM partially modified.  Once you add this back
-> in, the va-ops approach isn't simpler, IMHO.
 
-Oh, actually scratch that.. using va-ops, it is not even possible to
-decouple locking/prepare from VM modifications.  So using
-DRM_EXEC_INTERRUPTIBLE_WAIT, for ex, with va-ops list would be an
-actively bad idea.
 
-BR,
--R
+On 5/30/2025 10:12 PM, Dmitry Baryshkov wrote:
+> On Fri, May 30, 2025 at 07:36:05PM +0530, Jyothi Kumar Seerapu wrote:
+>>
+>>
+>> On 5/21/2025 6:15 PM, Dmitry Baryshkov wrote:
+>>> On Wed, May 21, 2025 at 03:58:48PM +0530, Jyothi Kumar Seerapu wrote:
+>>>>
+>>>>
+>>>> On 5/9/2025 9:31 PM, Dmitry Baryshkov wrote:
+>>>>> On 09/05/2025 09:18, Jyothi Kumar Seerapu wrote:
+>>>>>> Hi Dimitry, Thanks for providing the review comments.
+>>>>>>
+>>>>>> On 5/6/2025 5:16 PM, Dmitry Baryshkov wrote:
+>>>>>>> On Tue, May 06, 2025 at 04:48:44PM +0530, Jyothi Kumar Seerapu wrote:
+>>>>>>>> The I2C driver gets an interrupt upon transfer completion.
+>>>>>>>> When handling multiple messages in a single transfer, this
+>>>>>>>> results in N interrupts for N messages, leading to significant
+>>>>>>>> software interrupt latency.
+>>>>>>>>
+>>>>>>>> To mitigate this latency, utilize Block Event Interrupt (BEI)
+>>>>>>>> mechanism. Enabling BEI instructs the hardware to prevent interrupt
+>>>>>>>> generation and BEI is disabled when an interrupt is necessary.
+>>>>>>>>
+>>>>>>>> Large I2C transfer can be divided into chunks of 8 messages internally.
+>>>>>>>> Interrupts are not expected for the first 7 message completions, only
+>>>>>>>> the last message triggers an interrupt, indicating the completion of
+>>>>>>>> 8 messages. This BEI mechanism enhances overall transfer efficiency.
+>>>>>>>
+>>>>>>> Why do you need this complexity? Is it possible to set the
+>>>>>>> DMA_PREP_INTERRUPT flag on the last message in the transfer?
+>>>>>>
+>>>>>> If i undertsand correctly, the suggestion is to get the single
+>>>>>> intetrrupt for last i2c message only.
+>>>>>>
+>>>>>> But With this approach, we can't handle large number of i2c messages
+>>>>>> in the transfer.
+>>>>>>
+>>>>>> In GPI driver, number of max TREs support is harcoded to 64 (#define
+>>>>>> CHAN_TRES   64) and for I2C message, we need Config TRE, GO TRE and
+>>>>>> DMA TREs. So, the avilable TREs are not sufficient to handle all the
+>>>>>> N messages.
+>>>>>
+>>>>> It sounds like a DMA driver issue. In other words, the DMA driver can
+>>>>> know that it must issue an interrupt before exausting 64 TREs in order
+>>>>> to
+>>>>>
+>>>>>>
+>>>>>> Here, the plan is to queue i2c messages (QCOM_I2C_GPI_MAX_NUM_MSGS
+>>>>>> or 'num' incase for less messsages), process and unmap/free upon the
+>>>>>> interrupt based on QCOM_I2C_GPI_NUM_MSGS_PER_IRQ.
+>>>>>
+>>>>> Why? This is some random value which has no connection with CHAN_TREs.
+>>>>> Also, what if one of the platforms get a 'liter' GPI which supports less
+>>>>> TREs in a single run? Or a super-premium platform which can use 256
+>>>>> TREs? Please don't workaround issues from one driver in another one.
+>>>>
+>>>> We are trying to utilize the existing CHAN_TRES mentioned in the GPI driver.
+>>>> With the following approach, the GPI hardware can process N number of I2C
+>>>> messages, thereby improving throughput and transfer efficiency.
+>>>>
+>>>> The main design consideration for using the block event interrupt is as
+>>>> follows:
+>>>>
+>>>> Allow the hardware to process the TREs (I2C messages), while the software
+>>>> concurrently prepares the next set of TREs to be submitted to the hardware.
+>>>> Once the TREs are processed, they can be freed, enabling the software to
+>>>> queue new TREs. This approach enhances overall optimization.
+>>>>
+>>>> Please let me know if you have any questions, concerns, or suggestions.
+>>>
+>>> The question was why do you limit that to QCOM_I2C_GPI_NUM_MSGS_PER_IRQ.
+>>> What is the reason for that limit, etc. If you think about it, The GENI
+>>> / I2C doesn't impose any limit on the number of messages processed in
+>>> one go (if I understand it correctly). Instead the limit comes from the
+>>> GPI DMA driver. As such, please don't add extra 'handling' to the I2C
+>>> driver. Make GPI DMA driver responsible for saying 'no more for now',
+>>> then I2C driver can setup add an interrupt flag and proceed with
+>>> submitting next messages, etc.
+>>>
+>>
+>> For I2C messages, we need to prepare TREs for Config, Go and DMAs. However,
+>> if a large number of I2C messages are submitted then may may run out of
+>> memory for serving the TREs. The GPI channel supports a maximum of 64 TREs,
+>> which is insufficient to serve 32 or even 16 I2C messages concurrently,
+>> given the multiple TREs required per message.
+>>
+>> To address this limitation, a strategy has been implemented to manage how
+>> many messages can be queued and how memory is recycled. The constant
+>> QCOM_I2C_GPI_MAX_NUM_MSGS is set to 16, defining the upper limit of
+>> messages that can be queued at once. Additionally,
+>> QCOM_I2C_GPI_NUM_MSGS_PER_IRQ is set to 8, meaning that
+>> half of the queued messages are expected to be freed or deallocated per
+>> interrupt.
+>> This approach ensures that the driver can efficiently manage TRE resources
+>> and continue queuing new I2C messages without exhausting memory.
+>>> I really don't see a reason for additional complicated handling in the
+>>> geni driver that you've implemented. Maybe I misunderstand something. In
+>>> such a case it usually means that you have to explain the design in the
+>>> commit message / in-code comments.
+>>>
+>>
+>>
+>> The I2C Geni driver is designed to prepare and submit descriptors to the GPI
+>> driver one message at a time.
+>> As a result, the GPI driver does not have visibility into the current
+>> message index or the total number of I2C messages in a transfer. This lack
+>> of context makes it challenging to determine when to set the block event
+>> interrupt, which is typically used to signal the completion of a batch of
+>> messages.
+>>
+>> So, the responsibility for deciding when to set the BEI should lie with the
+>> I2C driver.
+>>
+>> If this approach is acceptable, I will proceed with updating the relevant
+>> details in the commit message.
+>>
+>> Please let me know if you have any concerns or suggestions.
+>
+Hi Dmitry, Sorry for the delayed response, and thank you for the 
+suggestions.
 
-> >                         }
-> >                 }
-> >
-> >                 drm_sched_entity_push_job();
-> >         }
-> >
-> >         run_job {
-> >                 for_each_vm_bind_operation {
-> >                         drm_gpuva_for_each_op() {
-> >                                 // do stuff
-> >                         }
-> >                 }
-> >         }
-> >
-> > (Note that GPUVM already supports to extend the existing OP structures;=
- you
-> > should take advantage of that.)
-> >
-> > Hence, the helper we really want is to lock and prepare the objects at =
-(1). I.e.
-> > a helper that takes a pointer to a struct drm_gpuva_op and locks / vali=
-dates the
-> > corresponding objects.
->
-> I still prefer that we don't _require_ using va-ops.  But if it makes
-> it more useful for other drivers I could add a helper which
-> exec_lock's based on a list of va-ops instead.
->
-> BR,
-> -R
->
-> > [1] https://gitlab.freedesktop.org/robclark/msm/-/blob/sparse-newer/dri=
-vers/gpu/drm/msm/msm_gem_vma.c
-> >
+> - Make gpi_prep_slave_sg() return NULL if flags don't have
+>    DMA_PREP_INTERRUPT flag and there are no 3 empty TREs for the
+>    interrupt-enabled transfer.
+"there are no 3 empty TREs for the interrupt-enabled transfer."
+Could you please help me understand this a bit better?
+> 
+> - If I2C driver gets NULL from dmaengine_prep_slave_single(), retry
+>    again, adding DMA_PREP_INTERRUPT. Make sure that the last one always
+>    gets DMA_PREP_INTERRUPT.
+Does this mean we need to proceed to the next I2C message and ensure 
+that the DMA_PREP_INTERRUPT flag is set for the last I2C message in each 
+chunk? And then, should we submit the chunk of messages to the GSI 
+hardware for processing?
+
+> 
+> - In geni_i2c_gpi_xfer() split the loop to submit messages until you
+>    can, then call wait_for_completion_timeout() and then
+>    geni_i2c_gpi_unmap() for submitted messages, then continue with a new
+>    portion of messages.
+Since the GPI channel supports a maximum of 64 TREs, should we consider 
+submitting a smaller number of predefined messages — perhaps fewer than 
+32, such as 16?
+This is because handling 32 messages would require one TRE for config 
+and 64 TREs for the Go and DMA preparation steps, which exceeds the 
+channel's TRE capacity of 64.
+
+We designed the approach to submit a portion of the messages — for 
+example, 16 at a time. Once 8 messages are processed and freed, the 
+hardware can continue processing the TREs, while the software 
+simultaneously prepares the next set of TREs. This parallelism helps in 
+efficiently utilizing the hardware and enhances overall system 
+optimization.
+
+
+> 
+
 
