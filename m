@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-61525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65881ADC200
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 08:02:18 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2455ADC205
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 08:04:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 126ED16924D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 06:02:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A06197A8EBB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 06:03:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 552B52E401;
-	Tue, 17 Jun 2025 06:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B5D228B3EC;
+	Tue, 17 Jun 2025 06:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kJXGn4YO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mvP52BCg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEF74430
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 06:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F9F28A73D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 06:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750140135; cv=none; b=WSPGybpFIeQRnAl+r/zA6s/+C4B1kBQsuJiHEv28gYzn4fIswdtRvoOTWDp282gyhN37Ah4QYmjXUfwm2XR78UMVkfaovcsGUlQSpUtlTyc32okivbT5tIzkfWNmPhGzQVYFIOUXikQcxBGU9yt5FE74QHz6MUcQiurcNk/Evgo=
+	t=1750140253; cv=none; b=l7a2cR64Drd4Yx6rD8qP7D3U/igL0ltnvM/YGTsL14/T/67aaTdIBxDZG0+FA2pJ9z8IOxLsyRgxwg5CVTVYjfeHs+2suyIU5w0eBvzx/x4S1gPLsp87eW430b2vTkf843sAE+NMj0qdX6N2k3Zqlk26qxpFpBAIxNOzt2zmMEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750140135; c=relaxed/simple;
-	bh=74SzCtSO5boRrhRS7wob39wXReDS7PvPq7QHqkaTOoo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SelnRRQQVTktJfaLa2rmEqxsW1IqsFUmV+0o+qMppl5s9fQF3y7vjeduO64rIKan8Dp/TyxrHM9ZTL9uM8FrqWq5P1gDmFqha0t46vRTg712WqjnjvRun341ApAm6sRL9HUcXqxQp5NzuuqcyaFqTPgkPHcd9HxVxDFvMFLnrJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kJXGn4YO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BC9C4CEE7;
-	Tue, 17 Jun 2025 06:02:13 +0000 (UTC)
+	s=arc-20240116; t=1750140253; c=relaxed/simple;
+	bh=Uab+vhEMc9Bm49kRHLnv1dH8hIuGd3RqGSvTBTk81xU=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=E2hYlt98DbVDIgmULh8f3ZP2A9ZaPxrz/xxxloNvZ7P0jsE/gxMZGZPZSq0wM7S3zYPpHmAdVkiLcHa3YRT2u8UTi38tarHN5ppam3aypIiB8O0tsa4XtI32RCPrXXAYb2NCHus70h5YP0LJdk/osa0XymqtNRFSSkZvzcvgayI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mvP52BCg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA4BC4CEE3;
+	Tue, 17 Jun 2025 06:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750140135;
-	bh=74SzCtSO5boRrhRS7wob39wXReDS7PvPq7QHqkaTOoo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=kJXGn4YOInQA+r3G5zYRMZO78w2pH9a2iMarwevsAYryBZoc7WM13IZFIFBEpCpPo
-	 3h17SMikNqyjDOZASH9B+vh5yMRxHgRfhOdkgVwRvl02ueKAXgfJYfKVwqNdxONO1Z
-	 /RGLMKeDqEtXXfp4Df/oq4cBwLC3qRkVrzMzpwGT4hEX861WQv3/X0I75yXUYpn/Be
-	 891BkKQfewO5ZNAxzGf9lrNK1+8QWyrR+AvpYM0hMo8Q2IxwDSNxb0nQFf8jZU3Ajj
-	 RwyMsSFVJrwryNm2AbfUMbUCK2Mw7W8qFctXbWbzU6oXCtJm1iSUkFtBljK4fq5tm+
-	 pe8R5QUEOri7g==
-Message-ID: <ae7e77ef-4ed9-4cab-b10d-27f780449adf@kernel.org>
-Date: Tue, 17 Jun 2025 08:02:12 +0200
+	s=k20201202; t=1750140252;
+	bh=Uab+vhEMc9Bm49kRHLnv1dH8hIuGd3RqGSvTBTk81xU=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=mvP52BCg/SUxBjYLpIjStJuL7uSNHBucY0gQq4PXIjxZUP2nytXIsgZ9IM+5npcVD
+	 1fLgJINUfViD08KH0aBKBG7MEuaolcz7PsAfhqRYoI38ToHLCPoD7QqKp2qBq72reu
+	 mBhmicMZl5pVgaQZKDcw4cu8iVdr3hJbvUR+JUD851Dll66qasHzDIehfETyGU2WyS
+	 ZutWSxGQDeAmh2qvL5IOy/Ea/7+OhFzK7gumTbjPMe9iTOWB/OY0ej6sJG+C4m54RR
+	 JTcaa2x/dfDyNsEWJV/SSOuKPwXSVq/HukHbblOqA8WC/hWCN0h8m0RUJD8JhC9Sqv
+	 hX1KDBLTYdkng==
+Message-ID: <44520871-6f2f-46f2-a4c0-bb95b54ce212@kernel.org>
+Date: Tue, 17 Jun 2025 08:04:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,11 +52,12 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v5 0/2] arm64: dts: qcom: add initial support for Samsung
  Galaxy S22
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: =?UTF-8?Q?Eric_Gon=C3=A7alves?= <ghatto404@gmail.com>,
  linux-arm-msm@vger.kernel.org
 Cc: konradybcio@kernel.org
 References: <20250616090250.36605-1-ghatto404@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <ae7e77ef-4ed9-4cab-b10d-27f780449adf@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -101,48 +102,45 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250616090250.36605-1-ghatto404@gmail.com>
+In-Reply-To: <ae7e77ef-4ed9-4cab-b10d-27f780449adf@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 16/06/2025 11:02, Eric Gonçalves wrote:
-> Changes in v5:
-> - Properly format the thread
+On 17/06/2025 08:02, Krzysztof Kozlowski wrote:
+> On 16/06/2025 11:02, Eric Gonçalves wrote:
+>> Changes in v5:
+>> - Properly format the thread
+>>
+>> Changes in v4:
+>> - Try to properly format the thread
+>>
+>> Changes in v3:
+>> - Removed unnecessary initrd start and end addresses
+>> - Make sure r0q is in right order on Makefile
+>> - Properly format memory addresses
+>> - Set r0q to the correct, alphabetical order in documents
+>>
+>> I'm sorry for my mistakes, this is my first patch and I got
+>> a bit confused on how the whole patch system works. 
+>> I hope that is cleared up.
+>>
+> Can you slow down please? One patchset per day.
 > 
-> Changes in v4:
-> - Try to properly format the thread
+> <form letter>
+> Please use scripts/get_maintainers.pl to get a list of necessary people
+> and lists to CC. It might happen, that command when run on an older
+> kernel, gives you outdated entries. Therefore please be sure you base
+> your patches on recent Linux kernel.
 > 
-> Changes in v3:
-> - Removed unnecessary initrd start and end addresses
-> - Make sure r0q is in right order on Makefile
-> - Properly format memory addresses
-> - Set r0q to the correct, alphabetical order in documents
+> Tools like b4 or scripts/get_maintainer.pl provide you proper list of
+> people, so fix your workflow. Tools might also fail if you work on some
+> ancient tree (don't, instead use mainline) or work on fork of kernel
+> (don't, instead use mainline). Just use b4 and everything should be
+> fine, although remember about `b4 prep --auto-to-cc` if you added new
+> patches to the patchset.
 > 
-> I'm sorry for my mistakes, this is my first patch and I got
-> a bit confused on how the whole patch system works. 
-> I hope that is cleared up.
-> 
-Can you slow down please? One patchset per day.
-
-<form letter>
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC. It might happen, that command when run on an older
-kernel, gives you outdated entries. Therefore please be sure you base
-your patches on recent Linux kernel.
-
-Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-people, so fix your workflow. Tools might also fail if you work on some
-ancient tree (don't, instead use mainline) or work on fork of kernel
-(don't, instead use mainline). Just use b4 and everything should be
-fine, although remember about `b4 prep --auto-to-cc` if you added new
-patches to the patchset.
-
-You missed at least devicetree list (maybe more), so this won't be
-tested by automated tooling. Performing review on untested code might be
-a waste of time.
-
-Please kindly resend and include all necessary To/Cc entries.
-</form letter>
+Heh, I already asked that and you ignored the comment. Respond to
+comments and implement them.
 
 Best regards,
 Krzysztof
