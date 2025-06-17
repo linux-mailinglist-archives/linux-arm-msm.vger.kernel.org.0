@@ -1,98 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-61520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AE1DADBFA5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 05:18:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68499ADBFFB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 05:42:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EADC71890B44
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 03:19:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 149331687FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 03:42:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31D3713C816;
-	Tue, 17 Jun 2025 03:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A5FE1C5485;
+	Tue, 17 Jun 2025 03:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xa9T2VGj"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="ar8hT+LR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A081EB2F;
-	Tue, 17 Jun 2025 03:18:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B928F54;
+	Tue, 17 Jun 2025 03:42:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750130334; cv=none; b=A5CGsOKAxXrUqxU6YiXD1NoJL/iEHOPmYUXIee6P7Bp2b/B+q+GXGppuB5TUWMXDRNs5UNXUe5UJOl6qGmKD5OPkjFDeLogH+SrS56z2TFxE3fDysj4C51Df5uteg4UPBLR1pIeNEOUfO4BtGLhdbV5OACDCSlbKMJDXFxxAwDA=
+	t=1750131774; cv=none; b=M9j1LsgyAnOfUHKSN/uuXRLoOU5ysx25roM43omsMJl0+GXo8P37qa5RfAqeaFgCfz83TutycfcS9yTbcVJp21TWsC3NE0XO9tO1aOv3Hs0DchxceNWZKKQfeHRchxDXZTShHPM4FTHVzPbi8MztiYKIIUglpLKje5hoPWDDwzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750130334; c=relaxed/simple;
-	bh=ALZwaXmYqhLFDRldlSM9ss8w9shR+ct4nGkojL7p978=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dleX7ENC4IowRoVDMahSnVWytn7OeGdr5XxSSZkowbgQT84zbx5uS046C4w5k78+gBzkr5XnCIPUVYdYaxZxCFBdwLgw6PZSGU4YgapnvoptTl8jebfy0LiQQZHEyKdv2DFWCiHBEVzdhoYLj87iEtvrbp8I4furDiD7cuXMTC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xa9T2VGj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C693CC4CEEA;
-	Tue, 17 Jun 2025 03:18:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750130333;
-	bh=ALZwaXmYqhLFDRldlSM9ss8w9shR+ct4nGkojL7p978=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Xa9T2VGjCYhthpBzI7FsyWMdxukjipcAs0MohIO4GzpxQx6JGqc2fjH75/IBC6KkD
-	 vAxwMaJa8WGj+V1O0r1O8LiG7/+Gql7S0LUNbFhSA9HxsdyMKUQ7gUvx10osmpzJ9e
-	 /vZEHpM5qNUQM9TtCn8GCjAlLGlCdNhlzp4+2iIp+sIoeoWx5dYf0ef0oR8JHO406R
-	 GikxjsaVt5tyfpwZBPTQ8TPFzJd3mKG9uXSput5vxz2QkTSB2focPh8LIsMJ18YH0p
-	 a3ZVRv8XoB/0w8xGUSpH2qg9ibrwAii3cdAjgWvUL/Ztg5vqYPXi5AbONFUf5upBih
-	 I8vpf+1gf5HlA==
-Date: Mon, 16 Jun 2025 22:18:50 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH] arm64: dts: qcom: add debug UART pins to reserved GPIO
- ranges on RB2
-Message-ID: <vyr6s4wzw5jc5gt7mywu4s4xob6aeca5aclbe5tdr4v3yng2tn@yb7rn2b2btb7>
-References: <20250616143341.51944-1-brgl@bgdev.pl>
- <713cd518-935f-4501-9753-d33c9ea6aef7@oss.qualcomm.com>
- <CAMRc=MceV-HgyFFvqytXAiuY+y10PQbdPBxuvd57NCeSLVLXCg@mail.gmail.com>
+	s=arc-20240116; t=1750131774; c=relaxed/simple;
+	bh=WqqMW+qsiOfAWMlck+pU6E3joWu1LWgnjALA2SeRfBM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kqm6n4tN1duduwWdjOOZHv/Gt5nek4pjzP8TR3E5Je7fTkZx9CEM9EWdUxPH3uGyoaxgYWjZmx8JcxLl0WhmajqKKnYHhntC9xAa1zUWqrJpP2IE2b4ZyeGlZ0ZsP2GuzaebcVK87l3dlr5Vw68+t8kbqo9bPgaW6A1jg52nizc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=ar8hT+LR; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=xNzm8JTZrL0Z+qIuK4t25ph3zxJy8ovZdHxX/XhkomY=; b=ar8hT+LRFuEQwMuvFTpHjF8sTS
+	OSj7wPZtHc7grShSNi7S3IAWCTHVLBWiOqnSlV122P0nDOby+uB2IzKxJBpJacdO8rNMv6vVwFByC
+	LDHJ5RKiIoVU37aElKs/8Qwf1LT2FBKlhej8s9K/AjmmtE4g/iGxGzmGSsIwgNd/zzjPNIfYZBpoG
+	rRyCqdLzBeH4veiwvaXkUfKVyupJdGg326kCN/MbkG74xQsLoy4+HGnu+AUUar9fq5O8z1llJxCqx
+	ohN1tPZ7g9Pvx0O1ATmKZ93olz0p+bcqGROPXIsGExSniidGgmM2z8iWxJmo3kewOjQq6OIHaFBpa
+	fVkLok+w==;
+Received: from [50.53.25.54] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1uRNDm-000000067FP-24iY;
+	Tue, 17 Jun 2025 03:42:50 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: linux-kernel@vger.kernel.org
+Cc: Randy Dunlap <rdunlap@infradead.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Melody Olvera <melody.olvera@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	linux-phy@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH] phy: qcom: add linux/bitfield.h header to fix a build error
+Date: Mon, 16 Jun 2025 20:42:49 -0700
+Message-ID: <20250617034249.2067135-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=MceV-HgyFFvqytXAiuY+y10PQbdPBxuvd57NCeSLVLXCg@mail.gmail.com>
 
-On Mon, Jun 16, 2025 at 06:43:16PM +0200, Bartosz Golaszewski wrote:
-> On Mon, Jun 16, 2025 at 6:20 PM Konrad Dybcio
-> <konrad.dybcio@oss.qualcomm.com> wrote:
-> >
-> > On 6/16/25 4:33 PM, Bartosz Golaszewski wrote:
-> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >
-> > > GPIO12 and GPIO13 are used for the debug UART and must not be available
-> > > to drivers or user-space. Add them to the gpio-reserved-ranges.
-> > >
-> > > Fixes: 8d58a8c0d930c ("arm64: dts: qcom: Add base qrb4210-rb2 board dts")
-> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > > ---
-> >
-> > That also makes them unavailable to the kernel though, no?
-> >
-> 
-> Yes. They could only be used by QUP - I2C or SPI #4 - on sm6115 but
-> none of these are used on RB2. I just noticed that my console froze
-> when I accidentally requested GPIO12 and figured that it makes sense
-> to make them unavailable. Let me know if this should be dropped.
-> 
+Add the <linux/bitfield.h> header to prevent a build error:
 
-I'm guessing that this would be a problem for any pin that is used for
-some other function. Should we instead prevent userspace from being able
-to request pins that are not in "gpio" pinmux state?
+drivers/phy/qualcomm/phy-qcom-m31-eusb2.c: In function 'm31eusb2_phy_init':
+drivers/phy/qualcomm/phy-qcom-m31-eusb2.c:210:37: error: implicit declaration of function 'FIELD_PREP' [-Wimplicit-function-declaration]
+  210 |                                     FIELD_PREP(FSEL, data->fsel));
 
-Regards,
-Bjorn
+Fixes: 9c8504861cc4 ("phy: qcom: Add M31 based eUSB2 PHY driver")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: Melody Olvera <melody.olvera@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: linux-phy@lists.infradead.org
+Cc: linux-arm-msm@vger.kernel.org
+---
+ drivers/phy/qualcomm/phy-qcom-m31-eusb2.c |    1 +
+ 1 file changed, 1 insertion(+)
+
+--- linux-next-20250616.orig/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
++++ linux-next-20250616/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/err.h>
 
