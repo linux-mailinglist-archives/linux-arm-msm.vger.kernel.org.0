@@ -1,189 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-61618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2311EADD789
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 18:45:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9EEFADD7AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 18:48:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE45B1947CB0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 16:28:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97F7419E035B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 16:28:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6692B2E88B1;
-	Tue, 17 Jun 2025 16:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09C7521FF44;
+	Tue, 17 Jun 2025 16:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wumJfGyo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jfgI3HFf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5672DFF3D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 16:22:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7592221F14;
+	Tue, 17 Jun 2025 16:23:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177374; cv=none; b=aGuADqP6lSxPbmxwM67xTcQlN2i0bLIY95kdwL41DBgkmm+3LaU4dtBr84BVu2Wy+s/ZQpVd+CpFFrR/0o4ZY4mxuqvdVEQAZARV8mmKjFmKFJQ3r0AtNHfHQx3c/lHVn3N3zgoRMm/uwYNFDcTvP9MHTB3v4pLP2SUjPnx8RvQ=
+	t=1750177420; cv=none; b=fLhggOPk57CrZtUEfPaBVH/ZCHxGB+ORTBvsTlqk3T5zoNpi5w23q8khaqW4jX9RjNPmHWZ9XNqCcwzhVagME4x+kEyxmgP7zJJ0jYYpy+4AShFnGyv5nbzUo8nOMR7WeGBX1MRR21R5cBfS8t520FzTB+7Dou8rjOti0WUf8S8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177374; c=relaxed/simple;
-	bh=MhwFtxAlravvczw0JfhOul+bnIosi3MCsdE1UFu1e/E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UWD6+Dp7T2RMYUi9lq+TcjsALYis2F9AXwSfwRxfQ5NGQbT7p2/nBlsO95d2ztzIB8pp33XWYuNT12kykUrjhkZYPAj6bqupa9m3jZrSvHexfJ28HmIAL4RGjedR4mW6GUqmUHeXrGFSSJMTbKiPogjaA/4kGFnzXDMOSPTjlck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wumJfGyo; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-553affea534so476445e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 09:22:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750177370; x=1750782170; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PsoeicGOSSqRUjsJsDG6LBXx49UWTO0GwrK8vHTZV54=;
-        b=wumJfGyoXwYpGHfpQLWBUsI/Lm9bwRJY5XNNRnlkVs3hX+QLEBjx/Ic7cT1f+Gz9E1
-         XMKM62mVcaXDXbEXxbEIMNWxlBKYfqzqC/iUVHQmRGGjHTt6d7hmfGJwoL18Vo88Xx1z
-         FOEqaHCJZc+IFnb8qkxX6j+1pPulryiNcfVPfts83Mk6T6WiHBya2XzY4hIpHnJ161LA
-         qqmvZMN3xVWmrW2Uws4x8l7cd1TMDTPjASK3vBctB8qXlVixslLq2OLswMDD9W2hte7B
-         x/SbAjcwu8VviWTR5ljAmz78a55XLph/xgU+S0ek752onVKmsGpmHrcBdF0MQF56Rz84
-         dHIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750177370; x=1750782170;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PsoeicGOSSqRUjsJsDG6LBXx49UWTO0GwrK8vHTZV54=;
-        b=nwH/FVtDvThewyFn/sHLhpwrdpX0rRXGKFL6oTAviIoDVQZAO0IsNhDuGa9+Q7ms7l
-         8rwTB9dzuqdRlX7oholkfyuo9+zhM4lN9yri9DStyheiHozYMS8RKoWMX/HSDaERXqbg
-         sCqROijzf5d+As9Lbh47lJf7432yZ/tZdpxFolaSSc4OE176SkJ4H58vdRa7rjZjTPkf
-         ffq6AL9TOTbOYPjYWPw88qL8s1RC9AtpSfIugadkvaqfzLkPMj2K4mRJ7lXUSUyMj6rx
-         4CrZsjcTXelMghQ+vJp4e5tchHbAIAH8NTJjnwH804bAwhpgLPJH6djsdY6t8/u1KapO
-         /S9w==
-X-Forwarded-Encrypted: i=1; AJvYcCVZRQkTplMSVK1vRH2u/8Hr6TRrUitsLe8hdTEtXsvHkfVj9+qaeKujk4HKdxhkWL8YFStJnax1AfwVG6fu@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQNjnF7hpoSb5btqxzRXbH13MJBT++h7bVVBFHiqEv7r1WRrq2
-	Jiy296ElXdwOrwpFUraqPb8iLf32hlmpBq/+3DXytteC0jp8nz/rx6j71Ng2faBcqWA=
-X-Gm-Gg: ASbGncsGWDq8dkCm7gnq+KVGVkw/nHFWDw04NHLrS+uY54QTyPVs6GdLoduRhthDc3r
-	qBUI7S1TV1O2hA5PIOLIlBSxqmMg1NbgnoMpJHu7rZqtB+NfEUNjQPrAbUYPMCzOG/wZYjFV9DL
-	Y8R1EUD9mLFBfoIXqO06SQXXw7hj8ff6lS3qwLioRxLrw4sXIa30BdnikZH/Klt3azE8lWvNH/3
-	L6R1y0xyYFrA0P62BzM24StEyRY3Y49sYtO7ARMcICPk722T4IDpu0POzHEN3uC5lnjhmKAVpEX
-	l9ZpQ1YarWhRMD/jwaU/wdpjk7LU4FYPaR/x9Y9tUwwII0OkXRgG23SYvCwBGaRVrjxdhd0jCu+
-	XifyoGOq16YlpanMg6MqIlenqyXYsjqpQfgINUFN9fFL7Zv7o0NQ=
-X-Google-Smtp-Source: AGHT+IFUlwulBeBW+bhEpLJ2Qe4Oxt3ON2DjPUtoN45ku2zX2tmviv7zPbSQch2uU/1FVIFysizEJQ==
-X-Received: by 2002:a05:6512:398b:b0:553:35f5:7aa5 with SMTP id 2adb3069b0e04-553b6f13a34mr1088543e87.9.1750177370379;
-        Tue, 17 Jun 2025 09:22:50 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553ac1cb193sm1969179e87.169.2025.06.17.09.22.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Jun 2025 09:22:50 -0700 (PDT)
-Message-ID: <6378b7f3-969d-4a98-a0a1-e410c63c1ede@linaro.org>
-Date: Tue, 17 Jun 2025 19:22:49 +0300
+	s=arc-20240116; t=1750177420; c=relaxed/simple;
+	bh=V8t5bo5FF6oerOdwGkDXKtDkx0wzlN6pNvzLOhsekAY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DOeQQM1CLbHx58aR6eUVYi/sq43uUdgQwVl/oa1GggNK4q5sq4AZlsqRIB2a8TDzWlnDEm2c60J3ChW6P/VaPozce7LNBgB9x0iBaoCThTQNNNwlnP2qVOk5KMkmh+i0VgDWM/gUbmt+OJJPYlG5OtXJHHrSYftW2Yn/PbLeGiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jfgI3HFf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B54C4CEE3;
+	Tue, 17 Jun 2025 16:23:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750177420;
+	bh=V8t5bo5FF6oerOdwGkDXKtDkx0wzlN6pNvzLOhsekAY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jfgI3HFf4DEK5tMMrbCmXDo5gMBLSPmrFShaTkHn2SAYErrKEoooB22PsftEu4Dn6
+	 gd/vU85cZRp54Nkmkt8VCBy+Mobpj/xQ27uts5EZWwRstndjB5Mbpms0JmfsNhJVoN
+	 U/YRwgamazLTUCw5K7qGQlE77O6v4EgbH+X1tYTXbMNySQPZC4rzZiaX9FPI97Kkc+
+	 h0Bl2j/VYdgEtIZmIiWxxfPyAlaCwyZZF+QpOCIMQQ2koP3yAm5llS8cj9Bz3HKRbW
+	 9m80iAeyOKXvCBxxi27V0NdXOKVLYqwEbvZB9/MZAu3tt4Y8TFqQKGhd5pT/AeKmSx
+	 SclUXo7xd5Psg==
+Date: Tue, 17 Jun 2025 21:53:28 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Cc: lpieralisi@kernel.org, kwilczynski@kernel.org, 
+	manivannan.sadhasivam@linaro.org, robh@kernel.org, bhelgaas@google.com, krzk+dt@kernel.org, 
+	neil.armstrong@linaro.org, abel.vesa@linaro.org, kw@linux.com, conor+dt@kernel.org, 
+	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, quic_qianyu@quicinc.com, 
+	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com
+Subject: Re: [PATCH v5 0/4] pci: qcom: Add QCS615 PCIe support
+Message-ID: <t6bwkld55a2dcozxz7rxnvdgpjis6oveqzkh4s7nvxgikws4rl@fn2sd7zlabhe>
+References: <20250527072036.3599076-1-quic_ziyuzhan@quicinc.com>
+ <d67ba247-6b2d-4f2e-9583-ddbe375bf08d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/9] media: qcom: camss: unconditionally set async
- notifier of subdevices
-Content-Language: ru-RU
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hans.verkuil@cisco.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20250513142353.2572563-1-vladimir.zapolskiy@linaro.org>
- <zBer3I3HLlZQo2k4k2sL3uFKCBxznED-ZHOnvQLXBVcNUBIy9DndjcOE1TxMSdb8Kkpj9xCmWGPpX9mdLHE-uA==@protonmail.internalid>
- <20250513142353.2572563-6-vladimir.zapolskiy@linaro.org>
- <91792283-8b61-42f8-b16d-e7f468325b42@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <91792283-8b61-42f8-b16d-e7f468325b42@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d67ba247-6b2d-4f2e-9583-ddbe375bf08d@quicinc.com>
 
-Hi Bryan.
-
-On 6/13/25 12:11, Bryan O'Donoghue wrote:
-> On 13/05/2025 15:23, Vladimir Zapolskiy wrote:
->> For sake of simplicity it makes sense to register async notifier
->> for all type of subdevices, both CAMSS components and sensors.
->>
->> The case of sensors not connected to CAMSS is extraordinary and
->> degenerate, it does not deserve any specific optimization.
+On Tue, Jun 17, 2025 at 06:34:03PM +0800, Ziyue Zhang wrote:
 > 
-> Degenerate is an odd word to use.
+> On 5/27/2025 3:20 PM, Ziyue Zhang wrote:
+> > This series adds document, phy, configs support for PCIe in QCS615.
+> > 
+> > This series depend on the dt-bindings change
+> > https://lore.kernel.org/all/20250521-topic-8150_pcie_drop_clocks-v1-0-3d42e84f6453@oss.qualcomm.com/
+> > 
+> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+> > ---
+> > Have following changes:
+> > 	- Add a new Document the QCS615 PCIe Controller
+> > 	- Add configurations in devicetree for PCIe, including registers, clocks, interrupts and phy setting sequence.
+> > 	- Add configurations in devicetree for PCIe, platform related gpios, PMIC regulators, etc.
+> > 
+> > Changes in v5:
+> > - Drop qcs615-pcie.yaml and use sm8150, as qcs615 is the downgraded
+> >    version of sm8150, which can share the same yaml.
+> > - Drop compatible enrty in driver and use sm8150's enrty (Krzysztof)
+> > - Fix the DT format problem (Konrad)
+> > - Link to v4: https://lore.kernel.org/all/20250507031559.4085159-1-quic_ziyuzhan@quicinc.com/
+> > 
+> > Changes in v4:
+> > - Fixed compile error found by kernel test robot(Krzysztof)
+> > - Update DT format (Konrad & Krzysztof)
+> > - Remove QCS8550 compatible use QCS615 compatible only (Konrad)
+> > - Update phy dt bindings to fix the dtb check errors.
+> > - Link to v3: https://lore.kernel.org/all/20250310065613.151598-1-quic_ziyuzhan@quicinc.com/
+> > 
+> > Changes in v3:
+> > - Update qcs615 dt-bindings to fit the qcom-soc.yaml (Krzysztof & Dmitry)
+> > - Removed the driver patch and using fallback method (Mani)
+> > - Update DT format, keep it same with the x1e801000.dtsi (Konrad)
+> > - Update DT commit message (Bojor)
+> > - Link to v2: https://lore.kernel.org/all/20241122023314.1616353-1-quic_ziyuzhan@quicinc.com/
+> > 
+> > Changes in v2:
+> > - Update commit message for qcs615 phy
+> > - Update qcs615 phy, using lowercase hex
+> > - Removed redundant function
+> > - split the soc dtsi and the platform dts into two changes
+> > - Link to v1: https://lore.kernel.org/all/20241118082619.177201-1-quic_ziyuzhan@quicinc.com/
+> > 
+> > Krishna chaitanya chundru (2):
+> >    arm64: dts: qcom: qcs615: enable pcie
+> >    arm64: dts: qcom: qcs615-ride: Enable PCIe interface
+> > 
+> > Ziyue Zhang (2):
+> >    dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Update pcie phy bindings
+> >      for QCS615
+> >    dt-bindings: PCI: qcom,pcie-sm8150: document qcs615
+> > 
 
-Well, here the wording "degenerate case" is a direct borrowing from a
-mathematical term "degenerate case" with no intended change of meaning:
+Applied to pci/dt-bindings, thanks!
 
-https://en.wikipedia.org/wiki/Degeneracy_(mathematics)
+- Mani
 
->> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->> ---
->>    drivers/media/platform/qcom/camss/camss.c | 30 ++++++-----------------
->>    1 file changed, 8 insertions(+), 22 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
->> index 976b70cc6d6a..4e91e4b6ef52 100644
->> --- a/drivers/media/platform/qcom/camss/camss.c
->> +++ b/drivers/media/platform/qcom/camss/camss.c
->> @@ -3556,7 +3556,6 @@ static int camss_probe(struct platform_device *pdev)
->>    {
->>    	struct device *dev = &pdev->dev;
->>    	struct camss *camss;
->> -	int num_subdevs;
->>    	int ret;
->>
->>    	camss = devm_kzalloc(dev, sizeof(*camss), GFP_KERNEL);
->> @@ -3627,11 +3626,9 @@ static int camss_probe(struct platform_device *pdev)
->>
->>    	pm_runtime_enable(dev);
->>
->> -	num_subdevs = camss_of_parse_ports(camss);
->> -	if (num_subdevs < 0) {
->> -		ret = num_subdevs;
->> +	ret = camss_of_parse_ports(camss);
->> +	if (ret < 0)
->>    		goto err_v4l2_device_unregister;
->> -	}
->>
->>    	ret = camss_register_entities(camss);
->>    	if (ret < 0)
->> @@ -3647,23 +3644,12 @@ static int camss_probe(struct platform_device *pdev)
->>    		goto err_register_subdevs;
->>    	}
->>
->> -	if (num_subdevs) {
->> -		camss->notifier.ops = &camss_subdev_notifier_ops;
->> -
->> -		ret = v4l2_async_nf_register(&camss->notifier);
->> -		if (ret) {
->> -			dev_err(dev,
->> -				"Failed to register async subdev nodes: %d\n",
->> -				ret);
->> -			goto err_media_device_unregister;
->> -		}
->> -	} else {
->> -		ret = v4l2_device_register_subdev_nodes(&camss->v4l2_dev);
->> -		if (ret < 0) {
->> -			dev_err(dev, "Failed to register subdev nodes: %d\n",
->> -				ret);
->> -			goto err_media_device_unregister;
->> -		}
->> +	camss->notifier.ops = &camss_subdev_notifier_ops;
->> +	ret = v4l2_async_nf_register(&camss->notifier);
->> +	if (ret) {
->> +		dev_err(dev,
->> +			"Failed to register async subdev nodes: %d\n", ret);
->> +		goto err_media_device_unregister;
->>    	}
-> I'm a little concerned about changing the current flow. Have you tested
-> this out without sensors attached, the TPG on rb5 for example ?
-
-Yes, I have tested this out with the TPG on RB5 by removing a sensor
-description from the RB5 vision mezzanine, I don't find any regression.
-
-Please let me know, if you find any issues with the change.
-
---
-Best wishes,
-Vladimir
+-- 
+மணிவண்ணன் சதாசிவம்
 
