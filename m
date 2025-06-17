@@ -1,144 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-61561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E818BADC625
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 11:23:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ABABAADC631
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 11:24:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 206E21899328
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 09:23:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 967D43A5737
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 09:23:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1ED8F28FFFB;
-	Tue, 17 Jun 2025 09:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A21B292B29;
+	Tue, 17 Jun 2025 09:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZgIkpeNn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j4sK07r3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E811628BAAD;
-	Tue, 17 Jun 2025 09:23:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2D52147E6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 09:24:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750152191; cv=none; b=mq9CGM7pSkoiBVYJl76kwTU7aZUsuTxrhlAmrDjKRcMdU+2ivvOTHG99uAx6CdX6et3NxkfpDyVEY1UQeqh30whCG/50YFKn6rgHkpSE9pRgYSnf6xXVdp+3OlkhvJg/PexSzaRPLXM/4sV5AXHsWSLQwDxQMT+b/gotYlEuJWU=
+	t=1750152252; cv=none; b=YEqAQs9pKdaGcB3mtof1cJJoQLNoU59MFfj7wRuxddmanyAXBVggx3qD4FznIoEyeVhOYo4p44YKFg8m81c9VVlLCb+CMafEvRmt3Lcekvi+cSwjenmgqUJg+sGib2R2pmPM0+ed6kns3/JcwDPOti1J44GuedCzblqf8F5BNS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750152191; c=relaxed/simple;
-	bh=iwobDMTP14MT073l3r6w7NaFeAJNSNdSdh8lG+b6y/A=;
+	s=arc-20240116; t=1750152252; c=relaxed/simple;
+	bh=0FVH0nf1hFWs5snO5t/bUXQFon9Yjbecd6o+YdwqYHE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jm3b/4V5J3MopGMPUVVaiLAa1MlIt2I6IT1Td1uOMtwyn9KXVYhpCK2rklR0rK6SbQNIxKiAjQ3q7jFKLeqTVIsTAF0Hfzk9k8t/rQ8dAmuaB+DJVwV5PJPe22nUWk5YjXmnwnDcniXP6lIBrHXTFbuWIk9NjfGvwzuwSu1ZZw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZgIkpeNn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F11C4CEE3;
-	Tue, 17 Jun 2025 09:23:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750152190;
-	bh=iwobDMTP14MT073l3r6w7NaFeAJNSNdSdh8lG+b6y/A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZgIkpeNnH6xif35u9hjFGmrKr/R6QiO7gCZyEi5o+T21JgzCvV6OD5yklhI/xVQmj
-	 OW9JVwJLKlnCylolzqkxN+bWpNhoih0rElvqdm9vGjMIRzOlbskF6Ux1FnYC17gKy4
-	 lRzURBmcj21abZR7RIaaNpLEJ5uguFupgume38DoyZwmTwhmgKaVG41jAvTt3jryEv
-	 PL8eddYgBDnozEUoNdSBhAG44EeCxC+eR8h4kh6U8NpcUorZJDwcIu16FZpZQBhssK
-	 nrQgOyX7dcrdO+1gu1OysPNCD/cquwIjPcy49QGKhGgnV/VY9TbFwR2yCHXOYts4Fj
-	 U+uYY9e7XLwTg==
-Date: Tue, 17 Jun 2025 14:53:02 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Baochen Qiang <quic_bqiang@quicinc.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	Qiang Yu <qiang.yu@oss.qualcomm.com>, jeff.hugo@oss.qualcomm.com, mhi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, can.guo@oss.qualcomm.com, 
-	Mayank Rana <mayank.rana@oss.qualcomm.com>
-Subject: Re: [PATCH v2] mhi: host: Add standard elf image download
- functionality
-Message-ID: <q3uxu5cki7c3nkv65kozibiz7ofjcm3clelog3oaqcya32kph4@ntvsqbshmeuw>
-References: <20250603-standard_elf_image_load_support-v2-1-cce97644e99e@oss.qualcomm.com>
- <sdhop6vyvt4y63tbbtorqfd5xa4ckbiwxdad5g6zzwlljqvd6q@eoaqmairdeey>
- <9ab8e8f8-e176-44ab-b8e5-0c27e5eff30b@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=K0gakwZ/ia8O6DIRztRC7rMVZScq9bP5DvXZ7V0G9/rcoyv2eVwWTJtFPnNhl89uXpS4KlcyrIW+FSkagYMvrPNEGw8q7HdyKg1K0llf6pgzK1GevHRlPLiYEb1I0uFFAOL6KE+7LwxGgRFhbb+6hDdMStnJAhdCxOYiKfzfEpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j4sK07r3; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6097d144923so1386567a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 02:24:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1750152249; x=1750757049; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5qmCi5AjNmyApPkeggD1UBIutb08W79XxmIwYywNdyI=;
+        b=j4sK07r3C3B34LEq1JlcgfnUK/UE/dCLXuO4dz8YQQJGIno2LQys94N5/ZyMTCAFOh
+         MGcyy2PEMp8eBZjP0jJMMQ7Ij3t/OnoPzEWbh6/Mactd2fke2/MYh5e80Bud7d1yBJMf
+         /zpP8SbMEIEdZnfEz0+XyiSSsqLhK2f6FmOLhS0P20EY9hVBFW15w7z3gn8N+ScU0N3T
+         L0d9Tv6ZDkNjXSz6pY7nUFgRItZiDVe9Ua9MfiE9Bh2LeV9OBUjRUrebINV3KPPLNE/9
+         I+IENTwKfwK38QsrUHY+lM8foI9HuT2WUk5YufntXLPKd1TtHZxuZtc/7BbZg1wY2Uu9
+         S+Xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750152249; x=1750757049;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5qmCi5AjNmyApPkeggD1UBIutb08W79XxmIwYywNdyI=;
+        b=lzdrURyQlspbVsvjidPrVTerDpne9qeBEq92JfEetMZIzJBMgN0sHGNF4cShb+sxkC
+         4Sg8eAZIDEMPhEcswnvMT6HrEC433HSC0Q3LSCX9BfuRw+rpasBUGdH55nFcRsLNTd3r
+         vH23DSWfDZEqmzda33G4wx1SBfpllZ5raXzdvNS3ElQW6T4YuDvnZSr8KrVpPfwxs9AR
+         4+U+EUzWNEdxqN5ghFysTtVlpCNlC0R8sC6r7sLFXA4eu6lq18IKZ06Okik+qd9jEKIF
+         sYyvaSkpyKP9iVy1rWPKRvsbYBrm1qllC7/N718asaFGdHEcaeFD80tDaPUp4Bw/zbaf
+         f5bA==
+X-Forwarded-Encrypted: i=1; AJvYcCUbfVRxMlsLKwVjuZIEsdghR6zrHhPyP0cpEFB+cMZT69zFqR6y8nmB9NIL1qVpJmQzxp/FD5twwROnIGZI@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhsxxxFpspl5RrYUV9Qc+b0iPO2bnMnejnpoHRgMjJfqoccEpX
+	drfciLl2MDmAtBoOFnL8WcZQCROsug0qdGZDSpS8N92RO7bjYmj8RX+J2eH+XNDkKqw=
+X-Gm-Gg: ASbGncvwVTo8l55H1XEvRW0pxRxyiqWxIA4VzDOSocJCqMtx6z6nyVz2ZH2Vl5891yw
+	Fb31O/tgMaGkEBUhsM2H3tGD0xUzxe3Y3xmwAbPytwbYH4pBu8tYydR+XRh9ymbsqRjdhwHzFUH
+	krbX32ZUzFLwpe58fkTO3kgVXtixK5OI3VrWyZvNuWrH9HAUBB31N3KKIIUqzltqEncEaOOqePS
+	LvYnTxZ5khz0tPpmapgimvwmtULEBwq0Nao56DVpDDnOI0YwcNI2ll4l30aavFbWYf9bIKZDKl7
+	00Ak2YKT3SyigXl5YAssxr7us3ELIPdGy/zYsmJHknSrJ6lYdKgwRaWLNaQ=
+X-Google-Smtp-Source: AGHT+IEnQHxM84ovHQi50egnS9UEgVOz9GmXYcPlKnLN4jCfbnYv7EbdDH2huGe6x+oNGIph9jx7kw==
+X-Received: by 2002:a05:6402:34ce:b0:600:129:444e with SMTP id 4fb4d7f45d1cf-608ce49deb8mr11863903a12.4.1750152248723;
+        Tue, 17 Jun 2025 02:24:08 -0700 (PDT)
+Received: from linaro.org ([82.79.186.23])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-608b4a5b6a5sm7931639a12.40.2025.06.17.02.24.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Jun 2025 02:24:08 -0700 (PDT)
+Date: Tue, 17 Jun 2025 12:24:06 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 2/2] phy: qualcomm: phy-qcom-eusb2-repeater: Don't
+ zero-out registers
+Message-ID: <aFE0Nu8CKFBlCCrd@linaro.org>
+References: <20250617-eusb2-repeater-tuning-v2-0-ed6c484f18ee@fairphone.com>
+ <20250617-eusb2-repeater-tuning-v2-2-ed6c484f18ee@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9ab8e8f8-e176-44ab-b8e5-0c27e5eff30b@quicinc.com>
+In-Reply-To: <20250617-eusb2-repeater-tuning-v2-2-ed6c484f18ee@fairphone.com>
 
-On Fri, Jun 06, 2025 at 09:58:06AM +0800, Baochen Qiang wrote:
+On 25-06-17 10:26:36, Luca Weiss wrote:
+> Zeroing out registers does not happen in the downstream kernel, and will
+> "tune" the repeater in surely unexpected ways since most registers don't
+> have a reset value of 0x0.
 > 
+> Stop doing that and instead just set the registers that are in the init
+> sequence (though long term I don't think there's actually PMIC-specific
+> init sequences, there's board specific tuning, but that's a story for
+> another day).
 > 
-> On 6/6/2025 1:04 AM, Manivannan Sadhasivam wrote:
-> > On Tue, Jun 03, 2025 at 02:05:44AM -0700, Qiang Yu wrote:
-> >> From: Mayank Rana <mayank.rana@oss.qualcomm.com>
-> >>
-> >> Currently, the FBC image is a non-standard ELF file that contains a single
-> >> ELF header, followed by segments for SBL, RDDM, and AMSS. Some devices are
-> >> unable to process this non-standard ELF format and therefore require
-> >> special handling during image loading.
-> >>
-> > 
-> > What are those "some devices"? Why are they not able to process this format
-> > which is used across the rest of the Qcom devices?
-> > 
-> >> Add standard_elf_image flag to determine whether the device can process
-> >> the non-standard ELF format. If this flag is set, a standard ELF image
-> >> must be loaded, meaning the first 512 KB of the FBC image should be
-> >> skipped when loading the AMSS image over the BHIe interface.
-> > 
-> > Please explain what is present in the first 512KiB and why skipping that is
-> > required.
-> > 
-> >> Note that
-> >> this flag does not affect the SBL image download process.
-> >>
-> >> Signed-off-by: Mayank Rana <mayank.rana@oss.qualcomm.com>
-> >> Co-developed-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> >> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> >> ---
-> >> Changes in v2:
-> >> - V1 patch is paused because of no user. WLAN team plan to add support for
-> >>   new WLAN chip that requires this patch, so send v2.
-> >> - Change author and SOB with new mail address.
-> >> - Reword commit message.
-> >> - Place standard_elf_image flag after wake_set in struct mhi_controller
-> >> - Link to v1: https://lore.kernel.org/mhi/1689907189-21844-1-git-send-email-quic_qianyu@quicinc.com/
-> >> ---
-> >>  drivers/bus/mhi/host/boot.c | 7 +++++++
-> >>  include/linux/mhi.h         | 4 ++++
-> >>  2 files changed, 11 insertions(+)
-> >>
-> >> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-> >> index efa3b6dddf4d2f937535243bd8e8ed32109150a4..f1686a8e0681d49f778838820b44f4c845ddbd1f 100644
-> >> --- a/drivers/bus/mhi/host/boot.c
-> >> +++ b/drivers/bus/mhi/host/boot.c
-> >> @@ -584,6 +584,13 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
-> >>  	 * device transitioning into MHI READY state
-> >>  	 */
-> >>  	if (fw_load_type == MHI_FW_LOAD_FBC) {
-> >> +		dev_dbg(dev, "standard_elf_image:%s\n",
-> >> +			(mhi_cntrl->standard_elf_image ? "True" : "False"));
-> > 
-> > This print is just a noise even for debug.
-> > 
-> >> +		if (mhi_cntrl->standard_elf_image) {
-> >> +			fw_data += mhi_cntrl->sbl_size;
-> >> +			fw_sz -= mhi_cntrl->sbl_size;
-> > 
-> > Is it possible to detect the image type during runtime instead of using a flag?
-> > Also, the flag is currently unused. So it should come along an user.
-> 
-> The flag would be used when a new WLAN device getting upstream. So either we merge this
-> patch alone, or we get it grouped within the WLAN patches. Kindly share your thoughts?
-> 
+> Fixes: 99a517a582fc ("phy: qualcomm: phy-qcom-eusb2-repeater: Zero out untouched tuning regs")
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 
-For the reason I mentioned in my previous reply, I don't think we should rely on
-the flag unless the WLAN device is shipped with *only* the new FW. If that is
-the case, then please send this patch when the ath driver support shows up. I
-do not want to merge a patch with an unused interface.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
