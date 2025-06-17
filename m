@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-61526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2455ADC205
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 08:04:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ED0F6ADC238
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 08:14:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A06197A8EBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 06:03:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9B41F7A2BAD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 06:13:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B5D228B3EC;
-	Tue, 17 Jun 2025 06:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E14F128B3F8;
+	Tue, 17 Jun 2025 06:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mvP52BCg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N9yxKEh1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F9F28A73D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 06:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31BE4430;
+	Tue, 17 Jun 2025 06:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750140253; cv=none; b=l7a2cR64Drd4Yx6rD8qP7D3U/igL0ltnvM/YGTsL14/T/67aaTdIBxDZG0+FA2pJ9z8IOxLsyRgxwg5CVTVYjfeHs+2suyIU5w0eBvzx/x4S1gPLsp87eW430b2vTkf843sAE+NMj0qdX6N2k3Zqlk26qxpFpBAIxNOzt2zmMEs=
+	t=1750140868; cv=none; b=Fj/BR7hf8g/OBlY/kFM1b94klmD7a5oYyWXllCWKgF6fjE7caA1BRcbc2UM2q8T39k/eqTMzbLP/IqmtpZqXvagUQeQ3ZcFxL5zNieQo/0/VYqcbqOYfTDac85xGIGaxbHXnPnn8WDPDlS/2XaDsBxxhGamjhhh9yyfTzMQL1kU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750140253; c=relaxed/simple;
-	bh=Uab+vhEMc9Bm49kRHLnv1dH8hIuGd3RqGSvTBTk81xU=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=E2hYlt98DbVDIgmULh8f3ZP2A9ZaPxrz/xxxloNvZ7P0jsE/gxMZGZPZSq0wM7S3zYPpHmAdVkiLcHa3YRT2u8UTi38tarHN5ppam3aypIiB8O0tsa4XtI32RCPrXXAYb2NCHus70h5YP0LJdk/osa0XymqtNRFSSkZvzcvgayI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mvP52BCg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA4BC4CEE3;
-	Tue, 17 Jun 2025 06:04:11 +0000 (UTC)
+	s=arc-20240116; t=1750140868; c=relaxed/simple;
+	bh=atcA+m1RP63WSr7kzFhVShoS22kZRQhKEPWYi3FCQsU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CDQ1GVFBDZ+6rNUkyfVje+Sc8w0A83tvQdVuqi4MjQNbSg7Y6u3a5P6M1VtXaFIWSDDRSDVlqKhwvZuQUahTH6JvfCNnMkGchSkVALkINfrSyKYgdn3fPXWvY8I5CAtPIwIEBT34353PibnmD6qWizjiQExA8LgYrVOr2fMg7ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N9yxKEh1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F9CC4CEE3;
+	Tue, 17 Jun 2025 06:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750140252;
-	bh=Uab+vhEMc9Bm49kRHLnv1dH8hIuGd3RqGSvTBTk81xU=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=mvP52BCg/SUxBjYLpIjStJuL7uSNHBucY0gQq4PXIjxZUP2nytXIsgZ9IM+5npcVD
-	 1fLgJINUfViD08KH0aBKBG7MEuaolcz7PsAfhqRYoI38ToHLCPoD7QqKp2qBq72reu
-	 mBhmicMZl5pVgaQZKDcw4cu8iVdr3hJbvUR+JUD851Dll66qasHzDIehfETyGU2WyS
-	 ZutWSxGQDeAmh2qvL5IOy/Ea/7+OhFzK7gumTbjPMe9iTOWB/OY0ej6sJG+C4m54RR
-	 JTcaa2x/dfDyNsEWJV/SSOuKPwXSVq/HukHbblOqA8WC/hWCN0h8m0RUJD8JhC9Sqv
-	 hX1KDBLTYdkng==
-Message-ID: <44520871-6f2f-46f2-a4c0-bb95b54ce212@kernel.org>
-Date: Tue, 17 Jun 2025 08:04:09 +0200
+	s=k20201202; t=1750140868;
+	bh=atcA+m1RP63WSr7kzFhVShoS22kZRQhKEPWYi3FCQsU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=N9yxKEh1Kjf62bOHmpOn1cYdpdRn1gofl+mZtpTpBPwQZ5vvawpJBCsM9W17N15FQ
+	 9VN9Gavv5SrMW9KFbY0jiP9jjpNvgFxtGtE/z3HswJiawSpfuGys4Zo4zekCvLi+/b
+	 kHETdWjx85ognmiLMpXTv86ZUfgur00+k1na1l/1Xc7nLwSl/hnuEVP5K+ClMwvgWR
+	 2YRux22WQv+jwy+DpMTp4kvHQobCS4bfk3Ijx3z6AF8ruzH/P8RooaJi0SfcAvWETX
+	 CHG++iPmEW5Sl3nv06WN8TuWcILgS8cILbXnAnVkr7Bl9spDuRZO8Crfo9iY0dIYd0
+	 L/9AfKJukd63Q==
+Message-ID: <c7aef6cd-e07d-4422-a34a-ce04c37ad2e8@kernel.org>
+Date: Tue, 17 Jun 2025 08:14:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/2] arm64: dts: qcom: add initial support for Samsung
- Galaxy S22
+Subject: Re: [PATCH 1/5] dt-bindings: media: venus: Add qcm2290 dt schema
+To: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+Cc: quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com,
+ bryan.odonoghue@linaro.org, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, stanimir.varbanov@linaro.org,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250613140402.3619465-1-jorge.ramirez@oss.qualcomm.com>
+ <20250613140402.3619465-2-jorge.ramirez@oss.qualcomm.com>
+ <6f4e715f-1c73-450e-b7eb-92781b7fa050@kernel.org> <aFATp3zoSgkrj3YX@trex>
+ <a76789cf-afe1-4d91-afdf-65c3af5ad11f@kernel.org> <aFBDzWLkKC9MWGoC@trex>
+ <48e6cc62-ffb0-4ca7-80c8-9e510db505db@kernel.org> <aFBNVjl4n7I+OkO5@trex>
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: =?UTF-8?Q?Eric_Gon=C3=A7alves?= <ghatto404@gmail.com>,
- linux-arm-msm@vger.kernel.org
-Cc: konradybcio@kernel.org
-References: <20250616090250.36605-1-ghatto404@gmail.com>
- <ae7e77ef-4ed9-4cab-b10d-27f780449adf@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -102,45 +107,78 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <ae7e77ef-4ed9-4cab-b10d-27f780449adf@kernel.org>
+In-Reply-To: <aFBNVjl4n7I+OkO5@trex>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 17/06/2025 08:02, Krzysztof Kozlowski wrote:
-> On 16/06/2025 11:02, Eric Gonçalves wrote:
->> Changes in v5:
->> - Properly format the thread
+On 16/06/2025 18:59, Jorge Ramirez wrote:
+> On 16/06/25 18:23:18, Krzysztof Kozlowski wrote:
+>> On 16/06/2025 18:18, Jorge Ramirez wrote:
+>>> On 16/06/25 16:41:44, Krzysztof Kozlowski wrote:
+>>>> On 16/06/2025 14:52, Jorge Ramirez wrote:
+>>>>>>
+>>>>>>> +  The Venus AR50_LITE IP is a video encode and decode accelerator present
+>>>>>>> +  on Qualcomm platforms
+>>>>>>> +
+>>>>>>> +allOf:
+>>>>>>> +  - $ref: qcom,venus-common.yaml#
+>>>>>>> +
+>>>>>>> +properties:
+>>>>>>> +  compatible:
+>>>>>>> +    const: qcom,qcm2290-venus
+>>>>>>> +
+>>>>>>> +  power-domains:
+>>>>>>> +    minItems: 2
+>>>>>>> +    maxItems: 3
+>>>>>>> +
+>>>>>>> +  power-domain-names:
+>>>>>>> +    minItems: 2
+>>>>>>
+>>>>>> Why is this flexible? Either you have two or three. Not mixed.
+>>>>>
+>>>>> please check 5b380f242f360256c96e96adabeb7ce9ec784306
+>>>>
+>>>> This does not explain why this is optional HERE. You cannot use for a
+>>>> new platform an argument that some existing platform was changed in
+>>>> ABI-preserving way.
+>>>
+>>> thanks for quick the follow up.
+>>>
+>>> but bear with me please because I dont follow - why can the same logic
+>>> be used - it being applicable - and therefore result in a definition
+>>> similar to those other platforms?
 >>
->> Changes in v4:
->> - Try to properly format the thread
->>
->> Changes in v3:
->> - Removed unnecessary initrd start and end addresses
->> - Make sure r0q is in right order on Makefile
->> - Properly format memory addresses
->> - Set r0q to the correct, alphabetical order in documents
->>
->> I'm sorry for my mistakes, this is my first patch and I got
->> a bit confused on how the whole patch system works. 
->> I hope that is cleared up.
->>
-> Can you slow down please? One patchset per day.
+>> Because this platform either has 2 or 3, not both. Unless that's not
+>> true, but then please share some arguments.
 > 
-> <form letter>
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC. It might happen, that command when run on an older
-> kernel, gives you outdated entries. Therefore please be sure you base
-> your patches on recent Linux kernel.
+> as with every other venus schema with more than 1 power domain, the
+> argument is the same one that I have shared with you a couple of
+> messages back (DVFS).
 > 
-> Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-> people, so fix your workflow. Tools might also fail if you work on some
-> ancient tree (don't, instead use mainline) or work on fork of kernel
-> (don't, instead use mainline). Just use b4 and everything should be
-> fine, although remember about `b4 prep --auto-to-cc` if you added new
-> patches to the patchset.
+> verbatim:
+>     Venus needs to vote for the performance state of a power domain (cx)
+>     to be able to support DVFS. This 'cx' power domain is controlled by
+>     rpm and is a common power domain (scalable) not specific to
+>     venus alone. This is optional in the sense that, leaving this power
+>     domain out does not really impact the functionality but just makes
+>     the platform a little less power efficient.
+
+That's not definition of optional. The domain is needed for this device,
+the device is one way or another having its rails routed to that domain.
+It is not optional.
+
 > 
-Heh, I already asked that and you ignored the comment. Respond to
-comments and implement them.
+> Seeing all these venus schemas follow the same pattern, it seems to me
+> that this is the correct way of implementing the above.
+
+No for the reason I mentioned earlier.
+
+> 
+> You seem to disagree. please could you explain?
+
+I already explained. You add new device, so argument to preserve ABI,
+which was accepted THAT TIME, is not valid. You do not have ABI.
+
 
 Best regards,
 Krzysztof
