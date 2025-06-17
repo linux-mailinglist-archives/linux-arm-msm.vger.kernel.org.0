@@ -1,118 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-61562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABABAADC631
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 11:24:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E95DADC642
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 11:26:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 967D43A5737
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 09:23:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B3F1F3BB1C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 09:26:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A21B292B29;
-	Tue, 17 Jun 2025 09:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F560293C47;
+	Tue, 17 Jun 2025 09:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j4sK07r3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KGmA42M0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2D52147E6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 09:24:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A550BA53;
+	Tue, 17 Jun 2025 09:26:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750152252; cv=none; b=YEqAQs9pKdaGcB3mtof1cJJoQLNoU59MFfj7wRuxddmanyAXBVggx3qD4FznIoEyeVhOYo4p44YKFg8m81c9VVlLCb+CMafEvRmt3Lcekvi+cSwjenmgqUJg+sGib2R2pmPM0+ed6kns3/JcwDPOti1J44GuedCzblqf8F5BNS0=
+	t=1750152377; cv=none; b=UgqdR9SiUiqXTlVbmpE9mQAULl/WaAZyr7ABR8Cune6Q7PUgy26BhB8pRkoMkLUb1fZPR84nMGI5i7hkYVPOXlozrHKuG2psca/1xGUKQrvvE+tsprOnuWKEAPv+oF4gvZfPf4ef3A0m9mcfEm31LdoptWK1ziYvc7i7lzAkJd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750152252; c=relaxed/simple;
-	bh=0FVH0nf1hFWs5snO5t/bUXQFon9Yjbecd6o+YdwqYHE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K0gakwZ/ia8O6DIRztRC7rMVZScq9bP5DvXZ7V0G9/rcoyv2eVwWTJtFPnNhl89uXpS4KlcyrIW+FSkagYMvrPNEGw8q7HdyKg1K0llf6pgzK1GevHRlPLiYEb1I0uFFAOL6KE+7LwxGgRFhbb+6hDdMStnJAhdCxOYiKfzfEpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j4sK07r3; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6097d144923so1386567a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 02:24:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750152249; x=1750757049; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5qmCi5AjNmyApPkeggD1UBIutb08W79XxmIwYywNdyI=;
-        b=j4sK07r3C3B34LEq1JlcgfnUK/UE/dCLXuO4dz8YQQJGIno2LQys94N5/ZyMTCAFOh
-         MGcyy2PEMp8eBZjP0jJMMQ7Ij3t/OnoPzEWbh6/Mactd2fke2/MYh5e80Bud7d1yBJMf
-         /zpP8SbMEIEdZnfEz0+XyiSSsqLhK2f6FmOLhS0P20EY9hVBFW15w7z3gn8N+ScU0N3T
-         L0d9Tv6ZDkNjXSz6pY7nUFgRItZiDVe9Ua9MfiE9Bh2LeV9OBUjRUrebINV3KPPLNE/9
-         I+IENTwKfwK38QsrUHY+lM8foI9HuT2WUk5YufntXLPKd1TtHZxuZtc/7BbZg1wY2Uu9
-         S+Xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750152249; x=1750757049;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5qmCi5AjNmyApPkeggD1UBIutb08W79XxmIwYywNdyI=;
-        b=lzdrURyQlspbVsvjidPrVTerDpne9qeBEq92JfEetMZIzJBMgN0sHGNF4cShb+sxkC
-         4Sg8eAZIDEMPhEcswnvMT6HrEC433HSC0Q3LSCX9BfuRw+rpasBUGdH55nFcRsLNTd3r
-         vH23DSWfDZEqmzda33G4wx1SBfpllZ5raXzdvNS3ElQW6T4YuDvnZSr8KrVpPfwxs9AR
-         4+U+EUzWNEdxqN5ghFysTtVlpCNlC0R8sC6r7sLFXA4eu6lq18IKZ06Okik+qd9jEKIF
-         sYyvaSkpyKP9iVy1rWPKRvsbYBrm1qllC7/N718asaFGdHEcaeFD80tDaPUp4Bw/zbaf
-         f5bA==
-X-Forwarded-Encrypted: i=1; AJvYcCUbfVRxMlsLKwVjuZIEsdghR6zrHhPyP0cpEFB+cMZT69zFqR6y8nmB9NIL1qVpJmQzxp/FD5twwROnIGZI@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhsxxxFpspl5RrYUV9Qc+b0iPO2bnMnejnpoHRgMjJfqoccEpX
-	drfciLl2MDmAtBoOFnL8WcZQCROsug0qdGZDSpS8N92RO7bjYmj8RX+J2eH+XNDkKqw=
-X-Gm-Gg: ASbGncvwVTo8l55H1XEvRW0pxRxyiqWxIA4VzDOSocJCqMtx6z6nyVz2ZH2Vl5891yw
-	Fb31O/tgMaGkEBUhsM2H3tGD0xUzxe3Y3xmwAbPytwbYH4pBu8tYydR+XRh9ymbsqRjdhwHzFUH
-	krbX32ZUzFLwpe58fkTO3kgVXtixK5OI3VrWyZvNuWrH9HAUBB31N3KKIIUqzltqEncEaOOqePS
-	LvYnTxZ5khz0tPpmapgimvwmtULEBwq0Nao56DVpDDnOI0YwcNI2ll4l30aavFbWYf9bIKZDKl7
-	00Ak2YKT3SyigXl5YAssxr7us3ELIPdGy/zYsmJHknSrJ6lYdKgwRaWLNaQ=
-X-Google-Smtp-Source: AGHT+IEnQHxM84ovHQi50egnS9UEgVOz9GmXYcPlKnLN4jCfbnYv7EbdDH2huGe6x+oNGIph9jx7kw==
-X-Received: by 2002:a05:6402:34ce:b0:600:129:444e with SMTP id 4fb4d7f45d1cf-608ce49deb8mr11863903a12.4.1750152248723;
-        Tue, 17 Jun 2025 02:24:08 -0700 (PDT)
-Received: from linaro.org ([82.79.186.23])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-608b4a5b6a5sm7931639a12.40.2025.06.17.02.24.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jun 2025 02:24:08 -0700 (PDT)
-Date: Tue, 17 Jun 2025 12:24:06 +0300
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 2/2] phy: qualcomm: phy-qcom-eusb2-repeater: Don't
- zero-out registers
-Message-ID: <aFE0Nu8CKFBlCCrd@linaro.org>
-References: <20250617-eusb2-repeater-tuning-v2-0-ed6c484f18ee@fairphone.com>
- <20250617-eusb2-repeater-tuning-v2-2-ed6c484f18ee@fairphone.com>
+	s=arc-20240116; t=1750152377; c=relaxed/simple;
+	bh=nUJx5FDnH2sD4TErjmPiEN41GB7XRa0QMp9vPPWz2Mc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OD33GU1qZzI+S84qmamY/al3UDeyMVyusKcd7Hu9PfYSUju5BZu5RGrENysWevvVYsVJ/Mg1e6FoonaoE7m3vlAGgJrjln3gbSrYC/3+WumR97SkH89tys7bG9Q1p1qjV2ZishQDXeqQXUv3jM8xffD7LIzfOwj4QoXHrGmgP+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KGmA42M0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBE5C4CEE3;
+	Tue, 17 Jun 2025 09:26:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750152376;
+	bh=nUJx5FDnH2sD4TErjmPiEN41GB7XRa0QMp9vPPWz2Mc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=KGmA42M0eke2tzE4BhOsey97ZgVF8iztYjsoalYkyaGUxI0UIFO3h8WEpMeaGHV9U
+	 FhOckt1YL0z9LMNhNiM3af1bwS9w1PS/KrnLMoksfaA3M9l+Btk3ZDloZXYR/vGXRv
+	 Swe6NisSSyfbzXvFO+zOhlTu77ziXk6XIIfjNcXhWYqmleb5E332Sw7s5MUJrqJeyQ
+	 uz+OKhEh59gh8AGfLjGO3Je0LuM5ruOqVp9WTi4b12iXUninaaNh1ZML/01Chr+nNy
+	 Cp/ATQe77G8lXiXNQDy8MClZnMFutJD9jSebt7uFQati+lTxA4d1jqCtOyzcrFTodp
+	 0Ck6CWqMuztmA==
+Message-ID: <2f96d485-a398-43c7-ac87-5cc0982c811c@kernel.org>
+Date: Tue, 17 Jun 2025 11:26:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250617-eusb2-repeater-tuning-v2-2-ed6c484f18ee@fairphone.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dt-bindings: interconnect: Add EPSS L3 compatible for
+ QCS8300 SoC
+To: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>,
+ Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Mike Tiption <mdtipton@quicinc.com>, Sibi Sankar
+ <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250617090651.55-1-raviteja.laggyshetty@oss.qualcomm.com>
+ <20250617090651.55-2-raviteja.laggyshetty@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250617090651.55-2-raviteja.laggyshetty@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 25-06-17 10:26:36, Luca Weiss wrote:
-> Zeroing out registers does not happen in the downstream kernel, and will
-> "tune" the repeater in surely unexpected ways since most registers don't
-> have a reset value of 0x0.
+On 17/06/2025 11:06, Raviteja Laggyshetty wrote:
+> Add Epoch Subsystem (EPSS) L3 interconnect provider binding for
+> QCS8300 SoC.
 > 
-> Stop doing that and instead just set the registers that are in the init
-> sequence (though long term I don't think there's actually PMIC-specific
-> init sequences, there's board specific tuning, but that's a story for
-> another day).
+> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
+> ---
+>  Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> Fixes: 99a517a582fc ("phy: qualcomm: phy-qcom-eusb2-repeater: Zero out untouched tuning regs")
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+> index cd4bb912e0dc..64ad3898abb6 100644
+> --- a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
+> @@ -35,6 +35,7 @@ properties:
+>                - qcom,sm8250-epss-l3
+>                - qcom,sm8350-epss-l3
+>                - qcom,sm8650-epss-l3
+> +              - qcom,qcs8300-epss-l3
 
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Keep order, don't just stuff to the end of the lists.
+
+Isn't this already on your internal checklist/guide?
+
+
+
+Best regards,
+Krzysztof
 
