@@ -1,271 +1,298 @@
-Return-Path: <linux-arm-msm+bounces-61607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 476B4ADCFEF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 16:33:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AF6FADD006
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 16:36:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42C4C3A423F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 14:24:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 11A321885B6B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 14:31:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93BA52EF650;
-	Tue, 17 Jun 2025 14:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC87D13A26D;
+	Tue, 17 Jun 2025 14:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XIyeNQqd"
+	dkim=pass (1024-bit key) header.d=raptorengineering.com header.i=@raptorengineering.com header.b="ehLhXi/Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from raptorengineering.com (mail.raptorengineering.com [23.155.224.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F19A2EF64C;
-	Tue, 17 Jun 2025 14:25:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2182516C850;
+	Tue, 17 Jun 2025 14:31:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.155.224.40
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750170301; cv=none; b=PZKEMF7J0rIPIkSP6NwsQGuE0H9JhzhMjn3tVYQx/hrJ5rH2KZLcuIWHwoazsXOEVmuhhHUuBG3tblnAHg6EG7g40qY5rxGx9mAk4bMAEIpapjJ7TIomYoBGciSS1Kg/qi0QCfmmSJauVqr3xUcbK6H1PsO+V2UFhKogHh/iOuk=
+	t=1750170685; cv=none; b=a7Zffg4Cnbr31rfsBHWPxR5ncLV10XpMZYXzJAteg6mF1Ncb7NcJKubfwrlfGH71bzcnde0AmUkq/QLhy+A8uRZ+NK9yxFyYPJEkzrt0ZqS+GnV/4iiQtsaB+NA5NjZh/pRNMimVzG13rtXiGtPEoypsE2kVNkQoJAR9SQY7/D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750170301; c=relaxed/simple;
-	bh=RKp0dSWKgDenpsXCZCvzvHN8SLhhM9lokbjMKsoO5ck=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B6USRnaxWiXCzIfKLmTl7AGCWemu5sszAS7o4iEOD/l6NPDZ+xdD5HSGiGaqbixtgBC1m3LtIYmxXyjNZmIOMgpxX55URyoQsDkTAfsdWJAUSuVzJhrEsL0oqH/gu9zGAd9AzZbCcfdm7jDbaDP/cgJbkybZYL/ibu6nAYMbQEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XIyeNQqd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5819C4CEE3;
-	Tue, 17 Jun 2025 14:24:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750170300;
-	bh=RKp0dSWKgDenpsXCZCvzvHN8SLhhM9lokbjMKsoO5ck=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XIyeNQqdJi42s3GLrTWVJiA9ldEF6TQB1VgOWYIkFcnZPgXIvvdOuAUjFH9ZAezBy
-	 16VsCgej3Fg8e58rWMKQAnqCSckI6RRa2/XtlrWgEjM1/mQLP9LTyGgAnoGais4edQ
-	 Q+OEM8m7lnJC4ssINvEXmcuZcaryB9Kndt8zuYdG1pOl3E53x5iF49a75hCH31HGuq
-	 sv86Fm4lvWlw5H9Uw6YcO/VzzMIOqv5hGEcqCKsq4lTOEjNEi6NQ4F5jan5VtHLKjl
-	 6KhuRhtCU25ChgQx0RJWpXYD5MtGJXd5E9MWOnOxqsqD78VLr+03ReQqYRpjnGmUN7
-	 LiJrSr+z83WBg==
-Date: Tue, 17 Jun 2025 09:24:57 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Praveen Talari <quic_ptalari@quicinc.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-serial@vger.kernel.org, devicetree@vger.kernel.org, psodagud@quicinc.com, 
-	djaggi@quicinc.com, quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com, 
-	quic_arandive@quicinc.com, quic_mnaresh@quicinc.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v6 3/8] soc: qcom: geni-se: Enable QUPs on SA8255p
- Qualcomm platforms
-Message-ID: <52elmnb77a4kvlnmy5bhheypfyyw6x5qn4k45u22mvzybax7ti@wmpi2ww5uqsg>
-References: <20250606172114.6618-1-quic_ptalari@quicinc.com>
- <20250606172114.6618-4-quic_ptalari@quicinc.com>
+	s=arc-20240116; t=1750170685; c=relaxed/simple;
+	bh=fjblYqco9O2pK2/UG66z+ix0P+/RjiRxHTHn4GLpv6k=;
+	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type; b=Ug116Uwa9bvc64PezFD26Cv01i9TgMp++rV64/H1bOU5tnQH8y6mryY0CBwQRCr23Hk2virWX1yXpaU2MvR2HAKU3KPZdSyYizrq+eOgAHjgwHAqmKY1kCm6ojGpOHv9UftURhJ0pVQho17h3+jsDbkgm3xVLnkFyDF5w0TMyYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=raptorengineering.com; spf=pass smtp.mailfrom=raptorengineering.com; dkim=pass (1024-bit key) header.d=raptorengineering.com header.i=@raptorengineering.com header.b=ehLhXi/Y; arc=none smtp.client-ip=23.155.224.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=raptorengineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=raptorengineering.com
+Received: from localhost (localhost [127.0.0.1])
+	by mail.rptsys.com (Postfix) with ESMTP id DF82182856F8;
+	Tue, 17 Jun 2025 09:31:21 -0500 (CDT)
+Received: from mail.rptsys.com ([127.0.0.1])
+	by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id 0--oJCWWxd3v; Tue, 17 Jun 2025 09:31:20 -0500 (CDT)
+Received: from localhost (localhost [127.0.0.1])
+	by mail.rptsys.com (Postfix) with ESMTP id 9211E8286FBD;
+	Tue, 17 Jun 2025 09:31:20 -0500 (CDT)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.rptsys.com 9211E8286FBD
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=raptorengineering.com; s=B8E824E6-0BE2-11E6-931D-288C65937AAD;
+	t=1750170680; bh=aunofFWjbhf0ebvsXaS+3/oQyj1Pul1Wqor5cviReNg=;
+	h=Date:From:To:Message-ID:MIME-Version;
+	b=ehLhXi/YHfQfXpXaWjPddQEuDeGS3q8spg8C8ai4iGm/jfzQn7dwU9toEg1UKEmXq
+	 MwDbyysltHWR7ZK8TrdthPgXXwx23APcc0C/c82PyJ/bTC7ToTtwQSmenMvfiVssjl
+	 80WuuK6paHuD+hNb4Ppm8NS4z+aELtNZwldo6/Bg=
+X-Virus-Scanned: amavisd-new at rptsys.com
+Received: from mail.rptsys.com ([127.0.0.1])
+	by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id OsWGbPjsCkx3; Tue, 17 Jun 2025 09:31:20 -0500 (CDT)
+Received: from vali.starlink.edu (localhost [127.0.0.1])
+	by mail.rptsys.com (Postfix) with ESMTP id 5449982856F8;
+	Tue, 17 Jun 2025 09:31:20 -0500 (CDT)
+Date: Tue, 17 Jun 2025 09:31:20 -0500 (CDT)
+From: Timothy Pearson <tpearson@raptorengineering.com>
+To: Shawn Anastasio <sanastasio@raptorengineering.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+	Rob Herring <robh@kernel.o>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, 
+	chaitanya chundru <quic_krichai@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, 
+	Jingoo Han <jingoohan1@gmail.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, quic_vbadigan@quicnic.com, 
+	amitk@kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	jorge.ramirez@oss.qualcomm.com, Dmitry Baryshkov <lumag@kernel.org>
+Message-ID: <1581123048.1308046.1750170680177.JavaMail.zimbra@raptorengineeringinc.com>
+Subject: [PATCH v7] PCI: Add pcie_link_is_active() to determine if the PCIe
+ link
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250606172114.6618-4-quic_ptalari@quicinc.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Mailer: Zimbra 8.5.0_GA_3042 (ZimbraWebClient - GC137 (Linux)/8.5.0_GA_3042)
+Thread-Index: wD146B6OyvES+Feuh0TpgiI26pdz2Q==
+Thread-Topic: Add pcie_link_is_active() to determine if the PCIe link
 
-On Fri, Jun 06, 2025 at 10:51:09PM +0530, Praveen Talari wrote:
-> On the sa8255p platform, resources such as clocks,interconnects
-> and TLMM (GPIO) configurations are managed by firmware.
-> 
-> Introduce a platform data function callback to distinguish whether
-> resource control is performed by firmware or directly by the driver
-> in linux.
-> 
-> The refactor ensures clear differentiation of resource
-> management mechanisms, improving maintainability and flexibility
-> in handling platform-specific configurations.
-> 
-> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
-> ---
-> v5 -> v6
-> - replaced dev_err with dev_err_probe
-> - added a check for desc->num_clks with MAX_CLKS, an error if
->   the specified num_clks in descriptor exceeds defined MAX_CLKS.
-> - removed min_t which is not necessary.
-> - renamed callback function names to resources_init.
-> - resolved kernel bot warning error by documenting function
->   pointer in geni_se_desc structure.
-> 
-> v3 -> v4
-> - declared an empty struct for sa8255p and added check as num clks.
-> - Added version log after ---
-> 
-> v1 -> v2
-> - changed datatype of i from int to unsigned int as per comment.
-> ---
->  drivers/soc/qcom/qcom-geni-se.c | 77 +++++++++++++++++++++------------
->  1 file changed, 49 insertions(+), 28 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index 4cb959106efa..5c727b9a17e9 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -101,10 +101,13 @@ struct geni_wrapper {
->   * struct geni_se_desc - Data structure to represent the QUP Wrapper resources
->   * @clks:		Name of the primary & optional secondary AHB clocks
->   * @num_clks:		Count of clock names
-> + * @resources_init:	Function pointer for initializing QUP Wrapper resources
->   */
->  struct geni_se_desc {
->  	unsigned int num_clks;
->  	const char * const *clks;
-> +	int (*resources_init)(struct geni_wrapper *wrapper,
-> +			      const struct geni_se_desc *desc);
->  };
->  
->  static const char * const icc_path_names[] = {"qup-core", "qup-config",
-> @@ -891,10 +894,47 @@ int geni_icc_disable(struct geni_se *se)
->  }
->  EXPORT_SYMBOL_GPL(geni_icc_disable);
->  
-> +static int geni_se_resource_init(struct geni_wrapper *wrapper,
-> +				 const struct geni_se_desc *desc)
-> +{
-> +	struct device *dev = wrapper->dev;
-> +	int ret;
-> +	unsigned int i;
-> +
-> +	if (desc->num_clks > MAX_CLKS)
-> +		return dev_err_probe(dev, -EINVAL,
-> +				     "Too many clocks specified in descriptor:%u (max allowed: %u)\n",
-> +				     desc->num_clks, MAX_CLKS);
-> +
-> +	wrapper->num_clks = desc->num_clks;
-> +
-> +	for (i = 0; i < wrapper->num_clks; ++i)
-> +		wrapper->clks[i].id = desc->clks[i];
-> +
-> +	ret = of_count_phandle_with_args(dev->of_node, "clocks", "#clock-cells");
-> +	if (ret < 0)
-> +		return dev_err_probe(dev, ret, "invalid clocks property at %pOF\n", dev->of_node);
-> +
-> +	if (ret < wrapper->num_clks) {
-> +		dev_err(dev, "invalid clocks count at %pOF, expected %d entries\n",
-> +			dev->of_node, wrapper->num_clks);
-> +		return -EINVAL;
-> +	}
-> +
-> +	ret = devm_clk_bulk_get(dev, wrapper->num_clks, wrapper->clks);
-> +	if (ret) {
-> +		dev_err(dev, "Err getting clks %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	return ret;
-> +}
-> +
->  static int geni_se_probe(struct platform_device *pdev)
->  {
->  	struct device *dev = &pdev->dev;
->  	struct geni_wrapper *wrapper;
-> +	const struct geni_se_desc *desc;
->  	int ret;
->  
->  	wrapper = devm_kzalloc(dev, sizeof(*wrapper), GFP_KERNEL);
-> @@ -906,36 +946,12 @@ static int geni_se_probe(struct platform_device *pdev)
->  	if (IS_ERR(wrapper->base))
->  		return PTR_ERR(wrapper->base);
->  
-> -	if (!has_acpi_companion(&pdev->dev)) {
-> -		const struct geni_se_desc *desc;
-> -		int i;
-> -
-> -		desc = device_get_match_data(&pdev->dev);
-> -		if (!desc)
-> -			return -EINVAL;
-> -
-> -		wrapper->num_clks = min_t(unsigned int, desc->num_clks, MAX_CLKS);
-> -
-> -		for (i = 0; i < wrapper->num_clks; ++i)
-> -			wrapper->clks[i].id = desc->clks[i];
-> -
-> -		ret = of_count_phandle_with_args(dev->of_node, "clocks", "#clock-cells");
-> -		if (ret < 0) {
-> -			dev_err(dev, "invalid clocks property at %pOF\n", dev->of_node);
-> -			return ret;
-> -		}
-> +	desc = device_get_match_data(&pdev->dev);
->  
-> -		if (ret < wrapper->num_clks) {
-> -			dev_err(dev, "invalid clocks count at %pOF, expected %d entries\n",
-> -				dev->of_node, wrapper->num_clks);
-> +	if (!has_acpi_companion(&pdev->dev) && desc->num_clks) {
+is active
 
-Reading this again, the only functional change I can spot is the
-addition of this desc->num_clks check. (And the addition of the new
-compatible)
+Introduce a common API to check if the PCIe link is active, replacing
+duplicate code in multiple locations.
 
-The rest of the patch is just moving things out of this if statement
-body, introducing the flexibility of a function pointer with a single
-possible value etc.
+Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Signed-off-by: Shawn Anastasio <sanastasio@raptorengineering.com>
+Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
+---
+ arch/powerpc/kernel/eeh_driver.c  |  8 +++++++-
+ drivers/pci/hotplug/pciehp.h      |  1 -
+ drivers/pci/hotplug/pciehp_ctrl.c |  2 +-
+ drivers/pci/hotplug/pciehp_hpc.c  | 33 +++----------------------------
+ drivers/pci/pci.c                 | 31 ++++++++++++++++++++++++++---
+ include/linux/pci.h               |  4 ++++
+ 6 files changed, 43 insertions(+), 36 deletions(-)
 
-
-As I've said before, function pointers are useful to create
-abstractions, but they make it harder to follow the code (both for me
-and the CPU) so you need to provide some value in return - and I'm
-failing to see what that value is.
-
-> +		ret = desc->resources_init(wrapper, desc);
-
-In other words, you can replace this line with:
-
-	ret = geni_se_resource_init();
-
-Or, if this is all we get, then you can do nothing and just add the
-additional expression to the condition and be done with it.
-
-> +		if (ret)
->  			return -EINVAL;
-> -		}
-> -
-> -		ret = devm_clk_bulk_get(dev, wrapper->num_clks, wrapper->clks);
-> -		if (ret) {
-> -			dev_err(dev, "Err getting clks %d\n", ret);
-> -			return ret;
-> -		}
->  	}
->  
->  	dev_set_drvdata(dev, wrapper);
-> @@ -951,8 +967,11 @@ static const char * const qup_clks[] = {
->  static const struct geni_se_desc qup_desc = {
->  	.clks = qup_clks,
->  	.num_clks = ARRAY_SIZE(qup_clks),
-> +	.resources_init = geni_se_resource_init,
->  };
->  
-> +static const struct geni_se_desc sa8255p_qup_desc;
-
-This looks like a forward declaration, it took me a while to realize
-that this is giving you the actual all-zero geni_se_desc.
-
-Add a = {}; to make it clear that this is where you declare the
-variable.
-
-Thanks,
-Bjorn
-
-> +
->  static const char * const i2c_master_hub_clks[] = {
->  	"s-ahb",
->  };
-> @@ -960,11 +979,13 @@ static const char * const i2c_master_hub_clks[] = {
->  static const struct geni_se_desc i2c_master_hub_desc = {
->  	.clks = i2c_master_hub_clks,
->  	.num_clks = ARRAY_SIZE(i2c_master_hub_clks),
-> +	.resources_init = geni_se_resource_init,
->  };
->  
->  static const struct of_device_id geni_se_dt_match[] = {
->  	{ .compatible = "qcom,geni-se-qup", .data = &qup_desc },
->  	{ .compatible = "qcom,geni-se-i2c-master-hub", .data = &i2c_master_hub_desc },
-> +	{ .compatible = "qcom,sa8255p-geni-se-qup", .data = &sa8255p_qup_desc },
->  	{}
->  };
->  MODULE_DEVICE_TABLE(of, geni_se_dt_match);
-> -- 
-> 2.17.1
-> 
+diff --git a/arch/powerpc/kernel/eeh_driver.c b/arch/powerpc/kernel/eeh_driver.c
+index 441a3562bddd..4fdd62432f2c 100644
+--- a/arch/powerpc/kernel/eeh_driver.c
++++ b/arch/powerpc/kernel/eeh_driver.c
+@@ -1097,8 +1097,14 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
+ 		eeh_pe_dev_mode_mark(pe, EEH_DEV_REMOVED);
+ 
+ 		pci_lock_rescan_remove();
+-		pci_hp_remove_devices(bus);
++		bus = eeh_pe_bus_get(pe);
++		if (bus)
++			pci_hp_remove_devices(bus);
++		else
++			pr_err("%s: PCI bus for PHB#%x-PE#%x disappeared\n",
++				__func__, pe->phb->global_number, pe->addr);
+ 		pci_unlock_rescan_remove();
++
+ 		/* The passed PE should no longer be used */
+ 		return;
+ 	}
+diff --git a/drivers/pci/hotplug/pciehp.h b/drivers/pci/hotplug/pciehp.h
+index debc79b0adfb..79df49cc9946 100644
+--- a/drivers/pci/hotplug/pciehp.h
++++ b/drivers/pci/hotplug/pciehp.h
+@@ -186,7 +186,6 @@ int pciehp_query_power_fault(struct controller *ctrl);
+ int pciehp_card_present(struct controller *ctrl);
+ int pciehp_card_present_or_link_active(struct controller *ctrl);
+ int pciehp_check_link_status(struct controller *ctrl);
+-int pciehp_check_link_active(struct controller *ctrl);
+ bool pciehp_device_replaced(struct controller *ctrl);
+ void pciehp_release_ctrl(struct controller *ctrl);
+ 
+diff --git a/drivers/pci/hotplug/pciehp_ctrl.c b/drivers/pci/hotplug/pciehp_ctrl.c
+index bcc938d4420f..6cc1b27b3b11 100644
+--- a/drivers/pci/hotplug/pciehp_ctrl.c
++++ b/drivers/pci/hotplug/pciehp_ctrl.c
+@@ -260,7 +260,7 @@ void pciehp_handle_presence_or_link_change(struct controller *ctrl, u32 events)
+ 	/* Turn the slot on if it's occupied or link is up */
+ 	mutex_lock(&ctrl->state_lock);
+ 	present = pciehp_card_present(ctrl);
+-	link_active = pciehp_check_link_active(ctrl);
++	link_active = pcie_link_is_active(ctrl->pcie->port);
+ 	if (present <= 0 && link_active <= 0) {
+ 		if (ctrl->state == BLINKINGON_STATE) {
+ 			ctrl->state = OFF_STATE;
+diff --git a/drivers/pci/hotplug/pciehp_hpc.c b/drivers/pci/hotplug/pciehp_hpc.c
+index ebd342bda235..d29ce3715a44 100644
+--- a/drivers/pci/hotplug/pciehp_hpc.c
++++ b/drivers/pci/hotplug/pciehp_hpc.c
+@@ -221,33 +221,6 @@ static void pcie_write_cmd_nowait(struct controller *ctrl, u16 cmd, u16 mask)
+ 	pcie_do_write_cmd(ctrl, cmd, mask, false);
+ }
+ 
+-/**
+- * pciehp_check_link_active() - Is the link active
+- * @ctrl: PCIe hotplug controller
+- *
+- * Check whether the downstream link is currently active. Note it is
+- * possible that the card is removed immediately after this so the
+- * caller may need to take it into account.
+- *
+- * If the hotplug controller itself is not available anymore returns
+- * %-ENODEV.
+- */
+-int pciehp_check_link_active(struct controller *ctrl)
+-{
+-	struct pci_dev *pdev = ctrl_dev(ctrl);
+-	u16 lnk_status;
+-	int ret;
+-
+-	ret = pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &lnk_status);
+-	if (ret == PCIBIOS_DEVICE_NOT_FOUND || PCI_POSSIBLE_ERROR(lnk_status))
+-		return -ENODEV;
+-
+-	ret = !!(lnk_status & PCI_EXP_LNKSTA_DLLLA);
+-	ctrl_dbg(ctrl, "%s: lnk_status = %x\n", __func__, lnk_status);
+-
+-	return ret;
+-}
+-
+ static bool pci_bus_check_dev(struct pci_bus *bus, int devfn)
+ {
+ 	u32 l;
+@@ -467,7 +440,7 @@ int pciehp_card_present_or_link_active(struct controller *ctrl)
+ 	if (ret)
+ 		return ret;
+ 
+-	return pciehp_check_link_active(ctrl);
++	return pcie_link_is_active(ctrl_dev(ctrl));
+ }
+ 
+ int pciehp_query_power_fault(struct controller *ctrl)
+@@ -614,7 +587,7 @@ static void pciehp_ignore_link_change(struct controller *ctrl,
+ 	 * Synthesize it to ensure that it is acted on.
+ 	 */
+ 	down_read_nested(&ctrl->reset_lock, ctrl->depth);
+-	if (!pciehp_check_link_active(ctrl) || pciehp_device_replaced(ctrl))
++	if (!pcie_link_is_active(ctrl_dev(ctrl)) || pciehp_device_replaced(ctrl))
+ 		pciehp_request(ctrl, ignored_events);
+ 	up_read(&ctrl->reset_lock);
+ }
+@@ -921,7 +894,7 @@ int pciehp_slot_reset(struct pcie_device *dev)
+ 	pcie_capability_write_word(dev->port, PCI_EXP_SLTSTA,
+ 				   PCI_EXP_SLTSTA_DLLSC);
+ 
+-	if (!pciehp_check_link_active(ctrl))
++	if (!pcie_link_is_active(ctrl_dev(ctrl)))
+ 		pciehp_request(ctrl, PCI_EXP_SLTSTA_DLLSC);
+ 
+ 	return 0;
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index e9448d55113b..ad639e60f3bd 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -4908,7 +4908,6 @@ int pci_bridge_wait_for_secondary_bus(struct pci_dev *dev, char *reset_type)
+ 		return 0;
+ 
+ 	if (pcie_get_speed_cap(dev) <= PCIE_SPEED_5_0GT) {
+-		u16 status;
+ 
+ 		pci_dbg(dev, "waiting %d ms for downstream link\n", delay);
+ 		msleep(delay);
+@@ -4924,8 +4923,7 @@ int pci_bridge_wait_for_secondary_bus(struct pci_dev *dev, char *reset_type)
+ 		if (!dev->link_active_reporting)
+ 			return -ENOTTY;
+ 
+-		pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &status);
+-		if (!(status & PCI_EXP_LNKSTA_DLLLA))
++		if (pcie_link_is_active(dev) <= 0)
+ 			return -ENOTTY;
+ 
+ 		return pci_dev_wait(child, reset_type,
+@@ -6230,6 +6228,33 @@ void pcie_print_link_status(struct pci_dev *dev)
+ }
+ EXPORT_SYMBOL(pcie_print_link_status);
+ 
++/**
++ * pcie_link_is_active() - Checks if the link is active or not
++ * @pdev: PCI device to query
++ *
++ * Check whether the physical link is active or not. Note it is
++ * possible that the card is removed immediately after this so the
++ * caller may need to take it into account.
++ *
++ * If the PCI device itself is not available anymore returns
++ * %-ENODEV.
++ *
++ * Return: link state, or -ENODEV if the config read failes.
++ */
++int pcie_link_is_active(struct pci_dev *pdev)
++{
++	u16 lnk_status;
++	int ret;
++
++	ret = pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &lnk_status);
++	if (ret == PCIBIOS_DEVICE_NOT_FOUND || PCI_POSSIBLE_ERROR(lnk_status))
++		return -ENODEV;
++
++	pci_dbg(pdev, "lnk_status = %x\n", lnk_status);
++	return !!(lnk_status & PCI_EXP_LNKSTA_DLLLA);
++}
++EXPORT_SYMBOL(pcie_link_is_active);
++
+ /**
+  * pci_select_bars - Make BAR mask from the type of resource
+  * @dev: the PCI device for which BAR mask is made
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 05e68f35f392..5d1c9f718ac8 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -1993,6 +1993,7 @@ pci_release_mem_regions(struct pci_dev *pdev)
+ 			    pci_select_bars(pdev, IORESOURCE_MEM));
+ }
+ 
++int pcie_link_is_active(struct pci_dev *dev);
+ #else /* CONFIG_PCI is not enabled */
+ 
+ static inline void pci_set_flags(int flags) { }
+@@ -2141,6 +2142,9 @@ pci_alloc_irq_vectors(struct pci_dev *dev, unsigned int min_vecs,
+ {
+ 	return -ENOSPC;
+ }
++
++static inline bool pcie_link_is_active(struct pci_dev *dev)
++{ return false; }
+ #endif /* CONFIG_PCI */
+ 
+ /* Include architecture-dependent settings and functions */
+-- 
+2.39.5
 
