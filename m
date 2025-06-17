@@ -1,163 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-61516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E22FDADBF01
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 04:17:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AE1DADBFA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 05:18:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 94D057A36E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 02:15:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EADC71890B44
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 03:19:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B017230981;
-	Tue, 17 Jun 2025 02:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31D3713C816;
+	Tue, 17 Jun 2025 03:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lYGavRez"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xa9T2VGj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4CA2116F6;
-	Tue, 17 Jun 2025 02:16:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A081EB2F;
+	Tue, 17 Jun 2025 03:18:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750126609; cv=none; b=TBmLYBeMSjv7mTZDRPnBVBYAMH9ScxDTCqaUpTcEBgHhqBPFKX7Ba+zkL+nIB66rh90F2MPfo4VXKqH8MEy4fbVSw3GrMYVYjV4aIxANB002Hn3VlHLdEIYD1hD4rdTzay7Lv2p44RTej9ZwK+uVSkmyHpd2cdT0dGjU5gPWd9o=
+	t=1750130334; cv=none; b=A5CGsOKAxXrUqxU6YiXD1NoJL/iEHOPmYUXIee6P7Bp2b/B+q+GXGppuB5TUWMXDRNs5UNXUe5UJOl6qGmKD5OPkjFDeLogH+SrS56z2TFxE3fDysj4C51Df5uteg4UPBLR1pIeNEOUfO4BtGLhdbV5OACDCSlbKMJDXFxxAwDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750126609; c=relaxed/simple;
-	bh=TOz77rK64wuOst6edr14gFbSvvkRGSUgwmdFWS0G5sY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Fa2wjOv644ainzjqBBLBOfaJ8ba6lk6N32pG4kjuM8OzTA4sYsTviBSueYcEvKSXkvan1TxtBGAkLWOYVnG8XI8o2i6LXRTKnEEAEJmYifeohLGchpwHgDVCiblcZ+O9AfnBSWuVinX3Fmi09abRrelG4q0VSYnRUXcdcWP+GHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lYGavRez; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55GKCPif024672;
-	Tue, 17 Jun 2025 02:16:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=RZDbmWCB7vB
-	1sSjKbroaoJW/AdWelJ+QzFQ3matJB+8=; b=lYGavRez9c0TlYCUd7NgXc1VLYy
-	6HHuMwguTA3dC2i7ph0begdNuEMMzh7PbRZu4KYXEJOTSdGlgDAXFaFN7kdOoZso
-	4643BZL95jShAUBG0hJsGNn4IIRdbECDO8vAj+/FgdarW5re5VP8tm7fcx0x+iCe
-	0XG4fj5VUgDdRZ3DFQ6YAMzplNuIcXp4PquQfMukKiHXoJod9zeq4d2ZhyLa6Ijr
-	xe5+xx+jo3yxKuDlVMNpT0Srl4UURXiCnWh6Mmo0CC4MnfjNtRaVxy6LamINbbS4
-	Iw9gI4jCF6wkbJPLDeUgISvMnnauQxB79BAO6SbZmHO2q86JzbVeFN72j4A==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4792c9xfwr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Jun 2025 02:16:31 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 55H2GTIS014424;
-	Tue, 17 Jun 2025 02:16:29 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 479jt4gb0f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Jun 2025 02:16:29 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55H2GSxY014406;
-	Tue, 17 Jun 2025 02:16:28 GMT
-Received: from cse-cd02-lnx.ap.qualcomm.com (cse-cd02-lnx.qualcomm.com [10.64.75.246])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 55H2GSgK014398
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Jun 2025 02:16:28 +0000
-Received: by cse-cd02-lnx.ap.qualcomm.com (Postfix, from userid 4438065)
-	id D86B2365F; Tue, 17 Jun 2025 10:16:26 +0800 (CST)
-From: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
-        mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
-        bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
-        kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
-        kw@linux.com
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
-        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-        Ziyue Zhang <quic_ziyuzhan@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v2 4/4] arm64: dts: qcom: sa8775p: add link_down reset for pcie
-Date: Tue, 17 Jun 2025 10:16:17 +0800
-Message-Id: <20250617021617.2793902-5-quic_ziyuzhan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250617021617.2793902-1-quic_ziyuzhan@quicinc.com>
-References: <20250617021617.2793902-1-quic_ziyuzhan@quicinc.com>
+	s=arc-20240116; t=1750130334; c=relaxed/simple;
+	bh=ALZwaXmYqhLFDRldlSM9ss8w9shR+ct4nGkojL7p978=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dleX7ENC4IowRoVDMahSnVWytn7OeGdr5XxSSZkowbgQT84zbx5uS046C4w5k78+gBzkr5XnCIPUVYdYaxZxCFBdwLgw6PZSGU4YgapnvoptTl8jebfy0LiQQZHEyKdv2DFWCiHBEVzdhoYLj87iEtvrbp8I4furDiD7cuXMTC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xa9T2VGj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C693CC4CEEA;
+	Tue, 17 Jun 2025 03:18:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750130333;
+	bh=ALZwaXmYqhLFDRldlSM9ss8w9shR+ct4nGkojL7p978=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Xa9T2VGjCYhthpBzI7FsyWMdxukjipcAs0MohIO4GzpxQx6JGqc2fjH75/IBC6KkD
+	 vAxwMaJa8WGj+V1O0r1O8LiG7/+Gql7S0LUNbFhSA9HxsdyMKUQ7gUvx10osmpzJ9e
+	 /vZEHpM5qNUQM9TtCn8GCjAlLGlCdNhlzp4+2iIp+sIoeoWx5dYf0ef0oR8JHO406R
+	 GikxjsaVt5tyfpwZBPTQ8TPFzJd3mKG9uXSput5vxz2QkTSB2focPh8LIsMJ18YH0p
+	 a3ZVRv8XoB/0w8xGUSpH2qg9ibrwAii3cdAjgWvUL/Ztg5vqYPXi5AbONFUf5upBih
+	 I8vpf+1gf5HlA==
+Date: Mon, 16 Jun 2025 22:18:50 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH] arm64: dts: qcom: add debug UART pins to reserved GPIO
+ ranges on RB2
+Message-ID: <vyr6s4wzw5jc5gt7mywu4s4xob6aeca5aclbe5tdr4v3yng2tn@yb7rn2b2btb7>
+References: <20250616143341.51944-1-brgl@bgdev.pl>
+ <713cd518-935f-4501-9753-d33c9ea6aef7@oss.qualcomm.com>
+ <CAMRc=MceV-HgyFFvqytXAiuY+y10PQbdPBxuvd57NCeSLVLXCg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 55xi-o5Q5aD3wGlIU2KhuoyFd0gCW1HS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE3MDAxOSBTYWx0ZWRfX6iV6m1gPECdG
- tWaEfsT5BeTDowgTlMYUpZUGMk/onRB8RcD9jiICzv4+BFn5QFo0qusALwSxVU/h8NxtRih+Sz+
- JH2mnczdQ/07oxdXKvlcNFuQ5BEb/G/lx+gpIIWPB+QHYcU4zGD1nG+jBXCGdtShvKHbiagP6J7
- VTbjQCGpxala2mYYpjL/17P1fZwQCuNvJi5Npd48ZQhFl5McKPNsMvbZ9adEh5kxirLMPYx01/2
- X+S2BaYB4fminOae+21/2CZCU9J8r6a8uuzY0wQiP9NMUeUNf1VrSS9luDld5ge5Xv49vjTP1ms
- 1mWTtnM3SD//975bcOOYESUqd54tup7LMZGgem8FTljt3ViZCC1cF6t0PJ4l0xD6c7+3sm8aNYy
- plbLi6OQ1rCe0wGCEK8i76EATTBe8ZLHRhkqsjr4YYGBZhqDPVfWvQwI7G7TsfEccCLrhbqM
-X-Proofpoint-ORIG-GUID: 55xi-o5Q5aD3wGlIU2KhuoyFd0gCW1HS
-X-Authority-Analysis: v=2.4 cv=etffzppX c=1 sm=1 tr=0 ts=6850cfff cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=UMluCPnEzjiUAf4N7sYA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-17_01,2025-06-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 adultscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 suspectscore=0 phishscore=0 mlxlogscore=999
- lowpriorityscore=0 bulkscore=0 mlxscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506170019
+In-Reply-To: <CAMRc=MceV-HgyFFvqytXAiuY+y10PQbdPBxuvd57NCeSLVLXCg@mail.gmail.com>
 
-SA8775p supports 'link_down' reset on hardware, so add it for both pcie0
-and pcie1, which can provide a better user experience.
+On Mon, Jun 16, 2025 at 06:43:16PM +0200, Bartosz Golaszewski wrote:
+> On Mon, Jun 16, 2025 at 6:20 PM Konrad Dybcio
+> <konrad.dybcio@oss.qualcomm.com> wrote:
+> >
+> > On 6/16/25 4:33 PM, Bartosz Golaszewski wrote:
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > GPIO12 and GPIO13 are used for the debug UART and must not be available
+> > > to drivers or user-space. Add them to the gpio-reserved-ranges.
+> > >
+> > > Fixes: 8d58a8c0d930c ("arm64: dts: qcom: Add base qrb4210-rb2 board dts")
+> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > ---
+> >
+> > That also makes them unavailable to the kernel though, no?
+> >
+> 
+> Yes. They could only be used by QUP - I2C or SPI #4 - on sm6115 but
+> none of these are used on RB2. I just noticed that my console froze
+> when I accidentally requested GPIO12 and figured that it makes sense
+> to make them unavailable. Let me know if this should be dropped.
+> 
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+I'm guessing that this would be a problem for any pin that is used for
+some other function. Should we instead prevent userspace from being able
+to request pins that are not in "gpio" pinmux state?
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index d7248014368b..c8ce3d42c894 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -7152,8 +7152,11 @@ pcie0: pcie@1c00000 {
- 		iommu-map = <0x0 &pcie_smmu 0x0000 0x1>,
- 			    <0x100 &pcie_smmu 0x0001 0x1>;
- 
--		resets = <&gcc GCC_PCIE_0_BCR>;
--		reset-names = "pci";
-+		resets = <&gcc GCC_PCIE_0_BCR>,
-+			 <&gcc GCC_PCIE_0_LINK_DOWN_BCR>;
-+		reset-names = "pci",
-+			      "link_down";
-+
- 		power-domains = <&gcc PCIE_0_GDSC>;
- 
- 		phys = <&pcie0_phy>;
-@@ -7312,8 +7315,11 @@ pcie1: pcie@1c10000 {
- 		iommu-map = <0x0 &pcie_smmu 0x0080 0x1>,
- 			    <0x100 &pcie_smmu 0x0081 0x1>;
- 
--		resets = <&gcc GCC_PCIE_1_BCR>;
--		reset-names = "pci";
-+		resets = <&gcc GCC_PCIE_1_BCR>,
-+			 <&gcc GCC_PCIE_1_LINK_DOWN_BCR>;
-+		reset-names = "pci",
-+			      "link_down";
-+
- 		power-domains = <&gcc PCIE_1_GDSC>;
- 
- 		phys = <&pcie1_phy>;
--- 
-2.34.1
-
+Regards,
+Bjorn
 
