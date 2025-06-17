@@ -1,140 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-61641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D971BADDE03
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 23:32:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E27FADDE0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 23:32:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B2B08189E25E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 21:32:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C9823ACE81
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 21:32:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CB9F2F270C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6FE02F94A1;
 	Tue, 17 Jun 2025 21:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YmarUdqc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HHpZwRbV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E272F30CC;
-	Tue, 17 Jun 2025 21:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE8E2F2735;
+	Tue, 17 Jun 2025 21:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750195903; cv=none; b=YyXbgnKGU5fBBnG/viMoxabLCi3Oi3x5KdGDZDPqdovyFh2d4pQhPg0tAwIu0psdWQvCdzngwhPfs8FfK+aElKZCwH914IEtvbv4pctSFyOP3+2HpYZaq2twYhSmBYB4yW58RyTCAldb/qBJIKuQXEWHicI/Mz1A3RMy49dru9c=
+	t=1750195903; cv=none; b=uPsi62YC8ITxX10aXediiAsreRCJbDCtft56c5rcVr+o860PpZGi9imNZQSOenvMqw8deE4J6NMn1tu78Nsf3CwLSeXI6NGPAUMjuJiSN7EyLF13XC1IGx5m2JyifMNzSHkmC16X2VcZWAGk5qe+SfmEomwV1oFZbicRQ90XmRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750195903; c=relaxed/simple;
-	bh=1YfwZW+S936XwdA8SGfJ1ZJvlipD9uTXygNO4srMawo=;
+	bh=n0fK+Y7FKX+Yod78GlKCXCWSHa3VLt6/sk6IuN4jSuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BWrl/fwZcbwWBEcKxMkQFCJPUAghwLr4ETQ3G0/zqBGUnvzaVwO+umBbCrqaHe9Wt2xY1m0b6lkI/Jp7FrJr2E00mA8gPxcCrk3hPGMaKqW877GTFTqBfep3XdCaFEKktQZnkAFa+SxNOGWu57oLURUcQOEumwlHExYURyd/FKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YmarUdqc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEBBFC4CEF1;
-	Tue, 17 Jun 2025 21:31:36 +0000 (UTC)
+	 MIME-Version:Content-Type; b=hJtx1sLv0X2pn1HA37Io87ibUlmexUHcYJPDTabM4EOgLctbXfHiSlAOfGB3ib67+uvLO0f673Sobv7Scy6up7U55q5SnL63arF6T5dE3j0vymZ1J/5e8WO3wKkiVhLEnx/Du669Wd7plxuHfvb11rtX9PD0Hw/bVZgv4ZfLpXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HHpZwRbV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FB8C4CEE3;
+	Tue, 17 Jun 2025 21:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750195902;
-	bh=1YfwZW+S936XwdA8SGfJ1ZJvlipD9uTXygNO4srMawo=;
+	s=k20201202; t=1750195903;
+	bh=n0fK+Y7FKX+Yod78GlKCXCWSHa3VLt6/sk6IuN4jSuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YmarUdqcOEke0FSqL0Xg4J8Lsf3Wt1uxrnUTrBql9tooIzqRSqrJXRb/RthUG96tM
-	 UhmIuCJamZ3RxGpHFDGNgVGHqRgU1HHltdd03/dUDd3yZXgKOp1z4NJsBzWdqKZRoT
-	 Nhpr9RanMRtnDUygTTyNdDrv/EZ+9j1PkN20sbSIICvlIom/jxXKO7Iy/l/5DOxHrK
-	 Bbs/ObfLHkXDYrqiBgMagOsKvqyvb6JzIr1I9Liskj/HU2yXXiA0ZapCnbVd5Mg2Kc
-	 jqYO7cFto/25mDOQtAHCbJcXHeN3ftaqa2xSE6M8SFyV/zeuKzmBhVcfLIJFp6Mr6z
-	 Mn6XCuVHjg8Yw==
+	b=HHpZwRbVNZs4qeigd2Z/Hmka9bdyphhVIEt0khgD6QTge6yKkOz6J5bKWNoHDgixP
+	 dlOSNYOs7aSRW8WuTnK6AIPrxsjT926J686Xpt4GzLha7yhNOB011PZu/sp6Lj1CJb
+	 JTn4vu/foF70hiOWaUF/RdrFZpCEsBPCfVE4w5icWqkVfMBeoXlqoacDQHzIlRDbrt
+	 XfLm/xC6SzXXqXX8gRTaeklnzRhsX07gLSiy5l5r8XTAqITxHb8s8+Uv/DU0iSnFJm
+	 xoFLxEi2m3Mw1BMqvPNKZ9v98NLVemrZSnAotteOW1UNW/OP89iql/QyeDyKqUx0i0
+	 3K5vvEWZ/Yhsg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-	Lee Jones <lee@kernel.org>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Alex Elder <elder@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Andy Gross <agross@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Kees Cook <kees@kernel.org>,
-	Tony Luck <tony.luck@intel.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	David Wronek <david@mainlining.org>,
-	Jens Reidel <adrian@mainlining.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Danila Tikhonov <danila@jiaxyga.com>
-Cc: devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-watchdog@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-mmc@vger.kernel.org,
-	netdev@vger.kernel.org,
-	linux-scsi@vger.kernel.org,
-	dmaengine@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	linux-i2c@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	iommu@lists.linux.dev,
-	linux-remoteproc@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-hardening@vger.kernel.org,
-	linux@mainlining.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	Connor Mitchell <c.dog29@hotmail.com>
-Subject: Re: (subset) [PATCH 00/33] Add support for Qualcomm Snapdragon SM7150 SoC and Google Pixel 4a
-Date: Tue, 17 Jun 2025 16:31:26 -0500
-Message-ID: <175019588888.714929.17490930593303808143.b4-ty@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: socinfo: Add support to retrieve TME build details
+Date: Tue, 17 Jun 2025 16:31:27 -0500
+Message-ID: <175019588865.714929.6194965927774309821.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250422-sm7150-upstream-v1-0-bf9a9081631d@jiaxyga.com>
-References: <20250422-sm7150-upstream-v1-0-bf9a9081631d@jiaxyga.com>
+In-Reply-To: <20250519-tme-crm-version-v1-1-a6dceadc10aa@oss.qualcomm.com>
+References: <20250519-tme-crm-version-v1-1-a6dceadc10aa@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -145,31 +62,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 22 Apr 2025 23:17:01 +0300, Danila Tikhonov wrote:
-> This patch series adds support for the Qualcomm Snapdragon 730/730G/732G
-> (SM7150) platform along with the Google Pixel 4a (sunfish) device. Since
-> the most critical drivers were submitted and applied in separate patch
-> series, this series is largely composed of DT bindings and device‑trees.
+On Mon, 19 May 2025 19:14:01 +0530, Kathiravan Thirumoorthy wrote:
+> Add support to retrieve Trust Management Engine (TME) image details
+> from SMEM, which is present in the IPQ5424 SoC.
 > 
-> To date, we’ve tested SM7150 support on the following eleven devices:
-> - Google Pixel 4a (sunfish)
-> - Samsung Galaxy A71 (a715f)
-> - Lenovo Tab P11 Pro (j706f)
-> - Xiaomi POCO X2 (phoenix)
-> - Xiaomi POCO X3 (karna) / POCO X3 NFC (surya)
-> - Xiaomi Redmi Note 10 Pro (sweet)
-> - Xiaomi Redmi Note 12 Pro (sweet_k6a)
-> - Xiaomi Mi 9T / Redmi K20 (davinci)
-> - Xiaomi Mi Note 10 Lite (toco)
-> - Xiaomi Mi Note 10 (CC9 Pro) & Mi Note 10 Pro (CC9 Pro Premium) (tucana)
-> - Xiaomi Mi 11 Lite 4G (courbet)
 > 
-> [...]
 
 Applied, thanks!
 
-[01/33] dt-bindings: arm: cpus: Add Kryo 470 CPUs
-        commit: 7b768d1235dbd98ef7268596995d86df31afce21
+[1/1] soc: qcom: socinfo: Add support to retrieve TME build details
+      commit: 64a026dd896e423a177fe87e11aa69bf5348c27b
 
 Best regards,
 -- 
