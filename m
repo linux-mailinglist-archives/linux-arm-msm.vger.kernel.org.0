@@ -1,161 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-61601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA2A4ADCC22
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 14:59:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 267A3ADCD84
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 15:37:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C4AC1769DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 12:59:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 60DF43A218D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 13:30:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 326AC2C030D;
-	Tue, 17 Jun 2025 12:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D63412E2660;
+	Tue, 17 Jun 2025 13:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ORMG9S8A"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ixr6ZHvj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CCB28C2D2;
-	Tue, 17 Jun 2025 12:59:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B992D0289;
+	Tue, 17 Jun 2025 13:27:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750165189; cv=none; b=ASOh3Lko24uvhMsBdVbS+4e1aFO6fHvtRf0+2RYyU83HbAk2B+SozUBEortQxnPh120rJ90LV0MSDUB8Gr6sHVK3L3YzjVDKaWHjREGvYmXIxDcQe4fN3Wdq6FbwEt+nuxjZ2SjQOPuK9RC3GQLBK+P2Q8nTEgfindJXr3XCs4w=
+	t=1750166867; cv=none; b=ZMq1AvgPcA3yTAnn9uPyBjIthn7vBCX/dGOBHoE6uKQpko4djPC/n+Sh0lFwW0/Eh+heoRBYm3cFz9UcMWzMrPokPW8VSsyO1EbCKIwTQicrhNUgCBD+RQEi3WPhZF2hR9hRgt3uNekyWu3sP0JFQaOBH9nQ16WbklbAww9v0nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750165189; c=relaxed/simple;
-	bh=oYOeIAfsmU4t9r2TCrVIZpfx7hejLpjjsg6BpCI0j9g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cJXdFp9/slGbFGbNGkvFQTvzocfyPWqWPJQOMvog+tlc9o7LHaHL0+aEOT0Ga2oEVaiioUlJa2W6PUudl3KbbwQxuuP0+9T6ho9XLHxywkMch56p0njhz2WCEatbfbHgxXj1ma5TpEthbq66L5Z9Fxr8CaZ35TWWzgFfJsIj8sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ORMG9S8A; arc=none smtp.client-ip=209.85.221.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-528ce9730cfso1367022e0c.3;
-        Tue, 17 Jun 2025 05:59:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750165186; x=1750769986; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IJGnTu2P8k2zWLpKT9gQ0C6Ynav6qAdbDTnXBuG6SzE=;
-        b=ORMG9S8AviVWps2q7cE2qTujtqL3y/uL5aplY7pFiAH9qTSBls2RwtPaJiMJmARIeK
-         AtTIHejHFlJ56wUQT9UF+HUA205bz0F5ON1zg4YWtJlGEXM4JNlR2TFcZi09ykZxRUl5
-         pIAkKxarvVxANcFbDNWY6GUXb6yhazx1y6+2jojw+wiNZT2PF110J3QFfM9LtbrpLMVB
-         SD1YNpNm3NwZkt2YjIh5MJp4p9d5UVKxQZ5jLXIV87P/Kp/XAB/9AbdNhA/n/vGWGZhs
-         e92yE40k3oxrf4EKmcYHcuRZAmyEcVjdKD1lM2LW6obIZy/Iio18Pi7QTwyo4DyMgPMF
-         qVqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750165186; x=1750769986;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IJGnTu2P8k2zWLpKT9gQ0C6Ynav6qAdbDTnXBuG6SzE=;
-        b=HofpYPYs9ptLzJcZotHvtvg1SL/K0PpkFCxuOcsggNaWgIQBkFQpC0qv94NDLjwItu
-         37mdsX87YTirTUCvNU9ggQXjTBF1YIAhp0N3jNm5ir4s90A4toX6lyj5nn3xROZJrLfe
-         ByHv7z6qUDBzRZtxFhpQMBRHr9QmZw+VdoFzw853xgzZ/rX+EnFzCg1UClRVlyAgBc8F
-         Zykg+Jhsq6o1LLhaMOsDJLqbmfCZkPPftLsYGPyfadHWWNAZWk0/gj9ihjWqoJP+D4St
-         FyDbwO8TnryYqp7AO3f3+xMtO44/rwV5m2FWccj5pt/5kYn+fte6Qzydx2WBAy0oaxwS
-         gdug==
-X-Forwarded-Encrypted: i=1; AJvYcCUUczxDnXsZLVuPzhPm+Ms5U01Ar1HG+S7DgD3ipwFyPwEsRa8hf9DIwYjtRM1YMqAVwYI1h9C5RuIBZzsl@vger.kernel.org, AJvYcCVOQALkpL0teT0Z4A2UxvkW8vp9yh/q4jZQg0E9rMxxuEtai4KKapEcu8DbN3EquYTVWiw4uThEprprFbS86ceukfg=@vger.kernel.org, AJvYcCXIuJvCwTo5OaELGFLQQCJS4tSpqeM7ZPG11QeegpCs2Xay6j3aAGG1HPj8nbepRbHOog+0z1M2BqHTRTpBiPsTwXU=@vger.kernel.org, AJvYcCXZNH3ieSC7kuEua8T11IAGnmNgdK8FTfOqI/zrABMwF3FTB4KnELnqIUeP9LNIdut9waidF2syXRtCZoU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzr+9YTg5SwfgY6wiTTAf+y1QjEeyHYKFnSy3NUlzocAPGwAGZT
-	3Bcs4q1u2P7/3Zkj1v00TO3B3Yev/1BN9tXzgmFWVQMWHrSxNjfI8Q+jWUd7jB+IhwpV+m+slzu
-	k6a1zGp2y8VzktfQaisoeWA0UjQWh5tk=
-X-Gm-Gg: ASbGncv5d3jeHrFmbelJT0RjFYrJCq6OQ22dHLuRO/4dlFGncOgOicIbJ8hCtSOQuxp
-	3PA6uH8amFpFYIwXQl3YMUqhmCyer4F6eToyhHoIwUeTNiD2p4vmURRJ7K0vuuSPlPA1GY5D3BZ
-	/yQkRDISFijcnW2NwPNESDP6PhVs4ddyMPf2Qx/P9IAA==
-X-Google-Smtp-Source: AGHT+IFyDxk9ofOoSE1jUdDwuXC6uj68bPw86gFHeN0xbFulbam2J1M/auQRgbuNa5uXdcywAXE8tSUc/+x2hYqgo2M=
-X-Received: by 2002:a05:6122:4586:b0:52f:47de:3700 with SMTP id
- 71dfb90a1353d-53149677e4amr8402312e0c.5.1750165185838; Tue, 17 Jun 2025
- 05:59:45 -0700 (PDT)
+	s=arc-20240116; t=1750166867; c=relaxed/simple;
+	bh=UO6DltEcFmOtT7v55Hv8JTY23RWYaSkglV0z5dSo/ps=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mbjY6pEtymRgHF+lMyglaDFeiLh2KLt8WzTgqkPe0tOz1pj6Jy9atzqNLij+tvxwMdlmUnqL86BfnVVoQ5FUXydqRi2k5gxBxOHrSvXvzl4rvmir3sadHTTPxjkJhdecM+8h1qSX5g/Hk/R/FPFMDsOPPztoDGqPA6dfjJ73pR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ixr6ZHvj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D0CC4CEEE;
+	Tue, 17 Jun 2025 13:27:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750166867;
+	bh=UO6DltEcFmOtT7v55Hv8JTY23RWYaSkglV0z5dSo/ps=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ixr6ZHvj/y2d9XOFh+UH8xpKton11gccdWwtmWElF33BpT6mQBtqHaGoB3IwOC90M
+	 9ZCWNR4EJywf1jQX56Lh7nUoToJfgb4CkKaatcYdlv1/LD3wXu5PFVumT+a+ECw2yX
+	 Yc/bLneQ1uMlEgl3Slp77eX3HRkf957IY41D+lfFPFYZwxV2/ybHniEZo0c7e8l1cT
+	 u7b1SbxPeOs1SFQbC0wuwzzqimbm4O9k6uvFM+DCYoR+gJG40uw5rzg8xWITNx4twJ
+	 l5tri/YSi/7J5MOwQLmFObTktP6ZfoXs0g1MuEFs8DnQ1yUvVl6PEXBpP49zNf/WJV
+	 KPdwzO/uu916w==
+Date: Tue, 17 Jun 2025 08:27:43 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>, 
+	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v5 00/18] clk: qcom: Add support to attach
+ multiple power domains in cc probe
+Message-ID: <wew4ptjmsugbahtpxe3z6647mapp5k6fyhajdzkd75ml6cqwaz@ulwhe6ikkb6m>
+References: <20250530-videocc-pll-multi-pd-voting-v5-0-02303b3a582d@quicinc.com>
+ <174970084192.547582.612305407582982706.b4-ty@kernel.org>
+ <65828662-5352-449b-a892-7c09d488a1f4@quicinc.com>
+ <91c11e62-b0d4-40e9-91a1-20da9973e415@linaro.org>
+ <0d9846f8-da23-4f2a-a593-35350c026b44@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250613090431.127087-1-tzimmermann@suse.de> <20250613090431.127087-8-tzimmermann@suse.de>
-In-Reply-To: <20250613090431.127087-8-tzimmermann@suse.de>
-From: Inki Dae <daeinki@gmail.com>
-Date: Tue, 17 Jun 2025 21:59:08 +0900
-X-Gm-Features: Ac12FXy1YqAOwtksyoMPU_mcRXzK8GOxRWP5F_To6gWRQ1V5y95DviShSwJIG6g
-Message-ID: <CAAQKjZOiz3Z42N_GEPzqU=CCfim+Z7oCuyxuji6Guj_dKYsimw@mail.gmail.com>
-Subject: Re: [PATCH v5 07/25] drm/exynos: Compute dumb-buffer sizes with drm_mode_size_dumb()
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: simona@ffwll.ch, airlied@gmail.com, mripard@kernel.org, 
-	maarten.lankhorst@linux.intel.com, geert@linux-m68k.org, 
-	tomi.valkeinen@ideasonboard.com, dri-devel@lists.freedesktop.org, 
-	linux-mediatek@lists.infradead.org, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, imx@lists.linux.dev, 
-	linux-samsung-soc@vger.kernel.org, nouveau@lists.freedesktop.org, 
-	virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org, 
-	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	linux-tegra@vger.kernel.org, intel-xe@lists.freedesktop.org, 
-	xen-devel@lists.xenproject.org, Seung-Woo Kim <sw0312.kim@samsung.com>, 
-	Kyungmin Park <kyungmin.park@samsung.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0d9846f8-da23-4f2a-a593-35350c026b44@quicinc.com>
 
-2025=EB=85=84 6=EC=9B=94 13=EC=9D=BC (=EA=B8=88) =EC=98=A4=ED=9B=84 6:05, T=
-homas Zimmermann <tzimmermann@suse.de>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1=
-:
->
-> Call drm_mode_size_dumb() to compute dumb-buffer scanline pitch and
-> buffer size. No alignment required.
->
+On Mon, Jun 16, 2025 at 12:55:47PM +0530, Jagadeesh Kona wrote:
+> 
+> 
+> On 6/12/2025 4:22 PM, Krzysztof Kozlowski wrote:
+> > On 12/06/2025 12:03, Jagadeesh Kona wrote:
+> >>
+> >>
+> >> On 6/12/2025 9:30 AM, Bjorn Andersson wrote:
+> >>>
+> >>> On Fri, 30 May 2025 18:50:45 +0530, Jagadeesh Kona wrote:
+> >>>> In recent QCOM chipsets, PLLs require more than one power domain to be
+> >>>> kept ON to configure the PLL. But the current code doesn't enable all
+> >>>> the required power domains while configuring the PLLs, this leads to
+> >>>> functional issues due to suboptimal settings of PLLs.
+> >>>>
+> >>>> To address this, add support for handling runtime power management,
+> >>>> configuring plls and enabling critical clocks from qcom_cc_really_probe.
+> >>>> The clock controller can specify PLLs, critical clocks, and runtime PM
+> >>>> requirements using the descriptor data. The code in qcom_cc_really_probe()
+> >>>> ensures all necessary power domains are enabled before configuring PLLs
+> >>>> or critical clocks.
+> >>>>
+> >>>> [...]
+> >>>
+> >>> Applied, thanks!
+> >>>
+> >>> [01/18] dt-bindings: clock: qcom,sm8450-videocc: Add MXC power domain
+> >>>         commit: 1a42f4d4bb92ea961c58599bac837fb8b377a296
+> >>> [02/18] dt-bindings: clock: qcom,sm8450-camcc: Allow to specify two power domains
+> >>>         commit: a02a8f8cb7f6f54b077a6f9eb74ccd840b472416
+> >>> [03/18] dt-bindings: clock: qcom,sm8450-camcc: Move sc8280xp camcc to sa8775p camcc
+> >>>         commit: 842fa748291553d2f56410034991d0eb36b70900
+> >>> [04/18] clk: qcom: clk-alpha-pll: Add support for common PLL configuration function
+> >>>         commit: 0f698c16358ef300ed28a608368b89a4f6a8623a
+> >>> [05/18] clk: qcom: common: Handle runtime power management in qcom_cc_really_probe
+> >>>         commit: c0b6627369bcfec151ccbd091f9ff1cadb1d40c1
+> >>> [06/18] clk: qcom: common: Add support to configure clk regs in qcom_cc_really_probe
+> >>>         commit: 452ae64997dd1db1fe9bec2e7bd65b33338e7a6b
+> >>> [07/18] clk: qcom: videocc-sm8450: Move PLL & clk configuration to really probe
+> >>>         commit: 512af5bf312efe09698de0870e99c0cec4d13e21
+> >>> [08/18] clk: qcom: videocc-sm8550: Move PLL & clk configuration to really probe
+> >>>         commit: a9dc2cc7279a1967f37192a2f954e7111bfa61b7
+> >>> [09/18] clk: qcom: camcc-sm8450: Move PLL & clk configuration to really probe
+> >>>         commit: eb65d754eb5eaeab7db87ce7e64dab27b7d156d8
+> >>> [10/18] clk: qcom: camcc-sm8550: Move PLL & clk configuration to really probe
+> >>>         commit: adb50c762f3a513a363d91722dbd8d1b4afc5f10
+> >>> [11/18] clk: qcom: camcc-sm8650: Move PLL & clk configuration to really probe
+> >>>         commit: 3f8dd231e60b706fc9395edbf0186b7a0756f45d
+> >>> [12/18] clk: qcom: camcc-x1e80100: Move PLL & clk configuration to really probe
+> >>>         commit: d7eddaf0ed07e79ffdfd20acb2f6f2ca53e7851b
+> >>>
+> >>> Best regards,
+> >>
+> >>
+> >> Hi Bjorn,
+> >>
+> >> Thanks for picking these patches. However, the dt-bindings patches are closely linked with
+> >> the DT patches in this series and needs to be picked together. The dt-bindings changes adds
+> > 
+> > DT bindings are the DT patches. What do you mean by DT? DTS? If so, then
+> > you introduce regressions without explaining this at all in cover letter
+> > or patches.
+> > 
+> >> multiple power domains support for clock controllers, and without the corresponding DT
+> >> patches, dtbs_check will give warnings.
+> >>
+> >> Can you please help to pick DT patches as well?
+> > 
+> > Please read soc maintainer profile explaining how DTS is being organized.
+> > 
+> 
+> I apologize for not mentioning this details in cover letter. Here the dt-bindings documentation
+> changes(patches 1-3) are only applied and the corresponding DTS changes(patches 13-18) are not
+> yet applied via DTS tree, leading to dtbs_check warnings.
+> 
 
-Acked-by : Inki Dae <inki.dae@samsung.com>
+Mentioning this in the cover letter wouldn't change the fact that the
+binding is changing in an unexpected way.
 
-Thanks,
-Inki Dae
+As the binding now express that 2 power-domains is required, the driver
+author would be free to expect that the loaded DTB has 2 power-domains
+specified. But the user might still have an older DTB on their system
+(exactly what dtbs_check is complaining about now).
 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Cc: Inki Dae <inki.dae@samsung.com>
-> Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
-> Cc: Kyungmin Park <kyungmin.park@samsung.com>
-> Cc: Krzysztof Kozlowski <krzk@kernel.org>
-> Cc: Alim Akhtar <alim.akhtar@samsung.com>
-> ---
->  drivers/gpu/drm/exynos/exynos_drm_gem.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/gpu/drm/exynos/exynos_drm_gem.c b/drivers/gpu/drm/ex=
-ynos/exynos_drm_gem.c
-> index 4787fee4696f..ffa1c02b4b1e 100644
-> --- a/drivers/gpu/drm/exynos/exynos_drm_gem.c
-> +++ b/drivers/gpu/drm/exynos/exynos_drm_gem.c
-> @@ -11,6 +11,7 @@
->  #include <linux/shmem_fs.h>
->  #include <linux/module.h>
->
-> +#include <drm/drm_dumb_buffers.h>
->  #include <drm/drm_prime.h>
->  #include <drm/drm_vma_manager.h>
->  #include <drm/exynos_drm.h>
-> @@ -330,15 +331,16 @@ int exynos_drm_gem_dumb_create(struct drm_file *fil=
-e_priv,
->         unsigned int flags;
->         int ret;
->
-> +       ret =3D drm_mode_size_dumb(dev, args, 0, 0);
-> +       if (ret)
-> +               return ret;
-> +
->         /*
->          * allocate memory to be used for framebuffer.
->          * - this callback would be called by user application
->          *      with DRM_IOCTL_MODE_CREATE_DUMB command.
->          */
->
-> -       args->pitch =3D args->width * ((args->bpp + 7) / 8);
-> -       args->size =3D args->pitch * args->height;
-> -
->         if (is_drm_iommu_supported(dev))
->                 flags =3D EXYNOS_BO_NONCONTIG | EXYNOS_BO_WC;
->         else
-> --
-> 2.49.0
->
->
+A quick look makes me think that it's because you removed the maxItems:1
+which means that the properties needs to match completely. Changing this
+to minItems:1 should allow for both cases, I think.
+
+
+Can you please send a patch that fixes up the bindings to allow both the
+old and new case?
+
+Regards,
+Bjorn
+
+> Thanks,
+> Jagadeesh
+> 
+> > 
+> > Best regards,
+> > Krzysztof
 
