@@ -1,150 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-61649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA463ADDFB2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 01:32:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 188C3ADE019
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 02:40:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4AB6017BF94
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jun 2025 23:32:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C3BF189AC56
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 00:40:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5DA125B1E0;
-	Tue, 17 Jun 2025 23:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABEC570830;
+	Wed, 18 Jun 2025 00:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LgsAfPqg"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AXXE/KGG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212B7136A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 23:32:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F153B2F5301
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 00:40:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750203142; cv=none; b=u2j/Izanr3UslLkIVdr+fNmtlK5U5j0Bxzk7yP0eEIEv0HqF0sE2pjn+Bf5uet+NmrjaeFRhXl4EM1eNNXZjb4kuQR+FMPlr/Ght7cWcfjvtd0T86To7ictCnEP/fESiVNCj3XISUQDKBr+QtgJOLg2CIK5oD6d24vQ0toyFGLA=
+	t=1750207226; cv=none; b=LWiqfNpTu6pwFvV8NPhH7TYLGNBwwRFYUfWZeLL8EZRrx69Dj5bB1NOgGrytl4qOfv/b/RnW506/1Y5OUGrGNQDtcrMaY2JuE1w1eaIWA5bWgxRm+bZsHinMpAUEshsWAlfIiKc5KNbQrNIMq7MkKdwVNTWe12mThOMXGsNqhjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750203142; c=relaxed/simple;
-	bh=jqXxdnaOvZX8C6DjwEIvCBFEEPamboFLctzJbB8tlb8=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=ErLueSYI1vt3RbpEm0iJfc486QvipsyIUQHEB/EWnEu4jOVLFWVHjQETObfN/FM2j/xHrgE2D75W1rFmBeFCZ+q04p4oTuPQLwb2bRIan80KYYB9Rd+d0wHiJhWyXWKLNz9ihXE5MsA5d171RvjohnVh/AUD7BbWhf+3CbB+lQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LgsAfPqg; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55HEvfk0019040
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 23:32:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qUL7CroyrpZf6btOL7w3xb0NqyXrGo9D++p4e6dJYhc=; b=LgsAfPqgqyni7jWW
-	EKLz5N88ZA7ADl8qF9GZXx+FdFwJGZhlFcy8zrOxVgG3HVtt9I6kgcrzvr7Gh2Dw
-	BVucyvca63lBcHAaCIyRwbS93/A0xqJNpF9mNhSpqYIHhkPzwqDdVbhBgnv8suoz
-	UlXPKPVUqz+ivkCWnXQSxaDX9XkvdGgznBVPifWWjOp9KgEkxJcHwiP540cxY6It
-	KJpsg/V/bBzs4OHUcv3k+Ib22sRTu27kTiyJKQy5a2z+A0cH2Pd/tzeLLUIBMoUF
-	nBJ3eS/pXPBKiTGXjt4MXgAplIIOWBH4TB6JMeAGMTcRujUrhG/87JQOnD6ljFxo
-	2hryCw==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4791hfj5fa-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 23:32:20 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b2f103f6074so3730480a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 16:32:20 -0700 (PDT)
+	s=arc-20240116; t=1750207226; c=relaxed/simple;
+	bh=Yvp8SNdsJcGrrxssUzVqkAxiC5tM/QgGNkfM+x9d4NA=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=aBWc5rTUliWeaPfwVtX8kL5b/24eD2W2iVatgoRoD7fSnfWsD5RXGj7J10oOg3fMp3xG8mLGaTqf9xOd82tdXtoXt/3lUfkZ2hy/v4Guks42SwvgGwTvpxJRiJuVxphfakrNe1JJW9bauGSx+2q4Immz+3Yny+RTNtmYRVuLnTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=AXXE/KGG; arc=none smtp.client-ip=209.85.210.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-747af0bf0ebso5153227b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 17:40:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1750207224; x=1750812024; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=k/9aJlHm+goEi0z8rczKBwE3W8+faYM+8dllr+qUaic=;
+        b=AXXE/KGGJVyqHCnH2vAzu3C+Kt2cXPpwYGA3xicHYL10YIrwkGBDgWXkYGHYGLjxEU
+         PE1+KrDMBIM29DcqGlO5LAsiIHOjCw0B/1R8rwEnN8IQQc5atyVSHfQbwo0AgM2bzgOg
+         5drJRBgPFr52ztNn1rLBprt0K+zr4cesVuv8z8uy9lYNnLvOOiXQ+/puraHjFhB++9+e
+         iLXWSW2QlApVKu6vyvE9WFq5hXVzAOgOafFnCKVosm98ZI83ltlWqMsk2s7pz+/C2gK3
+         5VYGQEvqAF2qI+XuXFYQdzAZ7W7X9eaRguXnfd1bOUBBnSB835FUWRVwvI+Bu/cW/Jnt
+         YLhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750203139; x=1750807939;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qUL7CroyrpZf6btOL7w3xb0NqyXrGo9D++p4e6dJYhc=;
-        b=ohlJzHMrdqu6cAxDiOfPjWt1UPPSQ7AhabaOEozwurvFVFKCesreF/WZ2kmIQnbkYP
-         QoZF0I27l6K1s4+oPefGyEGQkOGdKNtMzSIXzFw43YYireYEMnunh2qgYHkJD7Jw0ix+
-         NEqPIJMHIG1TSHcZzpKHpyWyd9vG/1W6kc5I8hhuFGIhkexaaxxFV8I1o1MDNANq+c9l
-         H6tade6frzRVsbc/Z69b5NSaJzv97LFEK3GeAqOHbMwpilxoejfMFcJimoK05jfH9/m2
-         3ZIvqeYSbmf1k6gvZhfM8/cCRqODpfAOvoC0EkqOzTA8pJQVydXqMj8ISQw66l3IaewX
-         4yEg==
-X-Gm-Message-State: AOJu0Ywmd3eI0W91RKI0EvDKGyQhoV/5pT+HI72wNl9+WPqo7PtuhWV2
-	AKiZ+RWTstP4j4RLCjFKbPaEyOlrDq7UYfVzDtssF7buURxxVsA+Ekt8zxoxHcx0drJ3EAzwaml
-	D/vk58V2nf+5k5++lxsOvsiiW7OBOj2dMPxJBYw88VUo+IUKdFDdaBDdRQDfW0uis+Won
-X-Gm-Gg: ASbGncu55CK6m/rr9yu1Idp97X1z+sB0iuRUpCwZPoYZFdjKQOH/fQoS6+cEfV0uNEH
-	EMWRymcDRmUMWxIdx7RPi6ahz7NriKrErbMt5k6CM4i9uYD/p49+SXtB7w8GM28/wrDFtqJg5F/
-	GJcFzdY3qXJU8kjxW4oDPdOXGriHNok5QljDpuKZ0tot52VOK+nwIwCLNxxDXtBSnqwO8G80ypr
-	Uyc+pjkNeglIPOsT3GM5yrktRw8SQOTbYxIa/lJ/yBfz5KBsbl6ZzUGuwKLnTRU1wM577kzNIm1
-	Rejata5rGlXi0zya1OypFQ3LZEUgdJyGqGS1gLOSCtfrMxF7/E0ZufuekGM=
-X-Received: by 2002:a17:90b:1dcf:b0:311:b5ac:6f6b with SMTP id 98e67ed59e1d1-313f1ca3a91mr25943765a91.9.1750203139297;
-        Tue, 17 Jun 2025 16:32:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGRLipJpoM80vKlOqw1gaHg58pnt9kyoTUloinNoXItVvcxbbGa8jPFnicyxoYhInuo1UjPCQ==
-X-Received: by 2002:a17:90b:1dcf:b0:311:b5ac:6f6b with SMTP id 98e67ed59e1d1-313f1ca3a91mr25943713a91.9.1750203138833;
-        Tue, 17 Jun 2025 16:32:18 -0700 (PDT)
-Received: from [169.254.0.1] (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-313c19b84e5sm12731527a91.2.2025.06.17.16.32.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jun 2025 16:32:18 -0700 (PDT)
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-To: Jeff Johnson <jjohnson@kernel.org>,
-        Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
-        Mahendran P <quic_mahep@quicinc.com>,
-        Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-wireless@vger.kernel.org,
-        ath12k@lists.infradead.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20250609-ath12k-fw-stats-done-v1-1-2b3624656697@oss.qualcomm.com>
-References: <20250609-ath12k-fw-stats-done-v1-1-2b3624656697@oss.qualcomm.com>
-Subject: Re: [PATCH] wifi: ath12k: Avoid CPU busy-wait by handling
- VDEV_STAT and BCN_STAT
-Message-Id: <175020313777.3793705.9220172332163404030.b4-ty@oss.qualcomm.com>
-Date: Tue, 17 Jun 2025 16:32:17 -0700
+        d=1e100.net; s=20230601; t=1750207224; x=1750812024;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=k/9aJlHm+goEi0z8rczKBwE3W8+faYM+8dllr+qUaic=;
+        b=n0Es4D10trqCb1JtmuW3HODP7ULm+rdAxkY8RNxb/zfDpEnj5sDrinKXR3wbQWHHoZ
+         CuGVEc+eCy1rFLNDhq7qHT9YWZB6pJsEb014g5lQOhMmbyRDbkmaskW6cLb5Li/W2+Jj
+         A3zVXvDZafiud+elNaDEz9/1mjWBI0GkapN5NmXvbhQIIoahXHRQfXxPraQe/bsmtzhG
+         JxgNf/Oy5mRPXBa/1HBZoumFDo/jAOf5yxetKeAA6hpZczBrRguS22AKAlmnb+7/+b5b
+         5eIqbYSerOrTtl7dvs5tDpPfhbxfZeDM4wsRoq3dqAjQr/5KubqSSMYHcQdY7DKKJRIb
+         DRyQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU2a+Vmqmm0qlTnPU/O853VWKwUoQzwGNop+7OrhGRBKP5n2OWI8HZo0+V7w3t6ueS8jHRA1VqLSzoXNY79@vger.kernel.org
+X-Gm-Message-State: AOJu0YwNn8cGJzVRK2ISyyrAfOcHR0qEtQfpdpN5r8yWulEW9QJLSlPl
+	zZD52iAePwq5TjKF5QNMY6O4GnfgH4NmngjtF+FCYtBaDRAlYBR982kKl6Oll2ep5M6ohdNITJo
+	4drXrGA==
+X-Google-Smtp-Source: AGHT+IFnYwYFUetnQyZQ6TOSbasVaExJ476XGu1ioWQ0wajRmFxtx38py86YH2tJpmtJ5k1m1wGBTN+0spM=
+X-Received: from pfbch3.prod.google.com ([2002:a05:6a00:2883:b0:746:22b3:4c0d])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:3a19:b0:746:1e35:3307
+ with SMTP id d2e1a72fcca58-7489cfd5ee0mr20211902b3a.14.1750207224147; Tue, 17
+ Jun 2025 17:40:24 -0700 (PDT)
+Date: Tue, 17 Jun 2025 17:40:22 -0700
+In-Reply-To: <701c8716-dd69-4bf6-9d36-4f8847f96e18@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE3MDE5MiBTYWx0ZWRfX/mvj47yhy2st
- XbpBYQ1CnICxc7IEIxKchaxccIS12KceD8G0iGGlscqC48dRhBXcNzQSjqL9GJp8rbXzlOzZK2t
- OuadubCuHG/NaqWPQqgTaAPnexEe43UUfdrEmX/gQGc1TKw6YmUo29rsvjntNtY/EbOrk5Uza+q
- q/qfonq6t7AGNq1NzazQPcw4czWhpo/QmVUCRMim9PSh8oYZj0PwpmkLz1Un97xYNJlRKA47lxi
- gHOyfvdC/3JuJK8VyOr4cB1euk+nIkOOWTS8/jOpqx5bC21PhNsilGMcAUsXwXgTyE5PRaDIm6c
- 2ZeBRYxmAhvwwDCWYowgVT3CK5qBTGJFbxrmEcrwa1+sX2HOgyJT4DAqHy71LkddSa0mj5+x10A
- ybocgpNbwX5t0x2BoFYPx7TDVKzQGhSzCBoDIdZMEX2BmlDMXmTog6N/mt+DZ0b48xjhzino
-X-Authority-Analysis: v=2.4 cv=VvEjA/2n c=1 sm=1 tr=0 ts=6851fb04 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=srnEmxFwYOmbeGIj9OsA:9
- a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-GUID: 5JJHNtK74_qI9nEXysXFDEiPjbS9kkKI
-X-Proofpoint-ORIG-GUID: 5JJHNtK74_qI9nEXysXFDEiPjbS9kkKI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-17_09,2025-06-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0 mlxlogscore=999
- malwarescore=0 impostorscore=0 clxscore=1015 bulkscore=0 suspectscore=0
- priorityscore=1501 phishscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506170192
+Mime-Version: 1.0
+References: <20250611133330.1514028-1-tabba@google.com> <20250611133330.1514028-9-tabba@google.com>
+ <aEySD5XoxKbkcuEZ@google.com> <68501fa5dce32_2376af294d1@iweiny-mobl.notmuch>
+ <bbc213c3-bc3d-4f57-b357-a79a9e9290c5@redhat.com> <CA+EHjTxvqDr1tavpx7d9OyC2VfUqAko864zH9Qn5+B0UQiM93g@mail.gmail.com>
+ <701c8716-dd69-4bf6-9d36-4f8847f96e18@redhat.com>
+Message-ID: <aFIK9l6H7qOG0HYB@google.com>
+Subject: Re: [PATCH v12 08/18] KVM: guest_memfd: Allow host to map guest_memfd pages
+From: Sean Christopherson <seanjc@google.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Fuad Tabba <tabba@google.com>, Ira Weiny <ira.weiny@intel.com>, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org, 
+	willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com, 
+	yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org, 
+	amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com, 
+	mic@digikod.net, vbabka@suse.cz, vannapurve@google.com, 
+	ackerleytng@google.com, mail@maciej.szmigiero.name, michael.roth@amd.com, 
+	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com
+Content-Type: text/plain; charset="us-ascii"
 
+On Mon, Jun 16, 2025, David Hildenbrand wrote:
+> On 16.06.25 16:16, Fuad Tabba wrote:
+> > On Mon, 16 Jun 2025 at 15:03, David Hildenbrand <david@redhat.com> wrote:
+> > > > > IMO, GUEST_MEMFD_FLAG_SHAREABLE would be more appropriate.  But even that is
+> > > > > weird to me.  For non-CoCo VMs, there is no concept of shared vs. private.  What's
+> > > > > novel and notable is that the memory is _mappable_.  Yeah, yeah, pKVM's use case
+> > > > > is to share memory, but that's a _use case_, not the property of guest_memfd that
+> > > > > is being controlled by userspace.
+> > > > > 
+> > > > > And kvm_gmem_memslot_supports_shared() is even worse.  It's simply that the
+> > > > > memslot is bound to a mappable guest_memfd instance, it's that the guest_memfd
+> > > > > instance is the _only_ entry point to the memslot.
+> > > > > 
+> > > > > So my vote would be "GUEST_MEMFD_FLAG_MAPPABLE", and then something like
+> > > > 
+> > > > If we are going to change this; FLAG_MAPPABLE is not clear to me either.
+> > > > The guest can map private memory, right?  I see your point about shared
+> > > > being overloaded with file shared but it would not be the first time a
+> > > > term is overloaded.  kvm_slot_has_gmem() does makes a lot of sense.
+> > > > 
+> > > > If it is going to change; how about GUEST_MEMFD_FLAG_USER_MAPPABLE?
+> > > 
+> > > If "shared" is not good enough terminology ...
+> > > 
+> > > ... can we please just find a way to name what this "non-private" memory
+> > > is called?
 
-On Mon, 09 Jun 2025 22:06:22 -0500, Bjorn Andersson wrote:
-> When the ath12k driver is built without CONFIG_ATH12K_DEBUG, the
-> recently refactored stats code can cause any user space application
-> (such at NetworkManager) to consume 100% CPU for 3 seconds, every time
-> stats are read.
-> 
-> Commit 'b8a0d83fe4c7 ("wifi: ath12k: move firmware stats out of
-> debugfs")' moved ath12k_debugfs_fw_stats_request() out of debugfs, by
-> merging the additional logic into ath12k_mac_get_fw_stats().
-> 
-> [...]
+guest_memfd?  Not trying to be cheeky, I genuinely don't understand the need
+to come up with a different name.  Before CoCo came along, I can't think of a
+single time where we felt the need to describe guest memory.  There have been
+*many* instances of referring to the underlying backing store (e.g. HugeTLB vs.
+THP), and many instances where we've needed to talk about the types of mappings
+for guest memory, but I can't think of any cases where describing the state of
+guest memory itself was ever necessary or even useful.
+ 
+> > > That something is mappable into $whatever is not the right
+> > > way to look at this IMHO.
 
-Applied, thanks!
+Why not?  Honest question.  USER_MAPPABLE is very literal, but I think it's the
+right granularity.  E.g. we _could_ support read()/write()/etc, but it's not
+clear to me that we need/want to.  And so why bundle those under SHARED, or any
+other one-size-fits-all flag?
 
-[1/1] wifi: ath12k: Avoid CPU busy-wait by handling VDEV_STAT and BCN_STAT
-      commit: 18ae7d0cdd76420e80f6ab15ada063708f14ba40
+> > > As raised in the past, we can easily support read()/write()/etc to this
+> > > non-private memory.
+> > > 
+> > > I'll note, the "non-private" memory in guest-memfd behaves just like ...
+> > > the "shared" memory in shmem ... well, or like other memory in memfd.
+> > > (which is based on mm/shmem.c).
+> > > 
+> > > "Private" is also not the best way to describe the "protected\encrypted"
+> > > memory, but that ship has sailed with KVM_MEMORY_ATTRIBUTE_PRIVATE.
 
-Best regards,
--- 
-Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Heh, I would argue that ship sailed when TDX called the PTE flag the Shared bit :-)
 
+But yeah, in hindsight, maybe not the greatest name.
+
+> > > I'll further note that in the doc of KVM_SET_USER_MEMORY_REGION2 we talk
+> > > about "private" vs "shared" memory ... so that would have to be improved
+> > > as well.
+> > 
+> > To add to what David just wrote, V1 of this series used the term
+> > "mappable" [1].  After a few discussions, I thought the consensus was
+> > that "shared" was a more accurate description --- i.e., mappability
+> > was a side effect of it being shared with the host.
+
+As I mentioned in the other thread with respect to sharing between other
+entities, simply SHARED doesn't provide sufficient granularity.  HOST_SHAREABLE
+gets us closer, but I still don't like that because it implies the memory is
+100% shareable, e.g. can be accessed just like normal memory.
+
+And for non-CoCo x86 VMs, sharing with host userspace isn't even necessarily the
+goal, i.e. "sharing" is a side effect of needing to allow mmap() so that KVM can
+continue to function.
+
+> > One could argue that non-CoCo VMs have no concept of "shared" vs
+> > "private".
+
+I am that one :-)
+
+> A different way of looking at it is, non-CoCo VMs have
+> > their state as shared by default.
+
+Eh, there has to be another state for there to be a default.  
+
+> All memory of these VMs behaves similar to other memory-based shared memory
+> backends (memfd, shmem) in the system, yes. You can map it into multiple
+> processes and use it like shmem/memfd.
+
+Ya, but that's more because guest_memfd only supports MAP_SHARED, versus KVM
+really wanting to truly share the memory with the entire system.
+
+Of course, that's also an argument to some extent against USER_MAPPABLE, because
+that name assumes we'll never want to support MAP_PRIVATE.  But letting userspace
+MAP_PRIVATE guest_memfd would completely defeat the purpose of guest_memfd, so
+unless I'm forgetting a wrinkle with MAP_PRIVATE vs. MAP_SHARED, that's an
+assumption I'm a-ok making.
+
+If we are really dead set on having SHARED in the name, it could be
+GUEST_MEMFD_FLAG_USER_MAPPABLE_SHARED or GUEST_MEMFD_FLAG_USER_MAP_SHARED?  But
+to me that's _too_ specific and again somewhat confusing given the unfortunate
+private vs. shared usage in CoCo-land.  And just playing the odds, I'm fine taking
+a risk of ending up with GUEST_MEMFD_FLAG_USER_MAPPABLE_PRIVATE or whatever,
+because I think that is comically unlikely to happen.
+
+> I'm still thinking about another way to call non-private memory ... no
+> success so far. "ordinary" or "generic" is .... not better.
+
+As above, I don't have the same sense of urgency regarding finding a name for
+guest_memfd.
 
