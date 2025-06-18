@@ -1,267 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-61709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB2D9ADE817
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 12:09:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D80AADE829
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 12:11:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B28167A284C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 10:07:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C869189B66C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 10:11:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AB1F28C03B;
-	Wed, 18 Jun 2025 10:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C4EF286D5F;
+	Wed, 18 Jun 2025 10:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="YhqGn9EV"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="VeRWDszD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10olkn2076.outbound.protection.outlook.com [40.92.42.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2AC28541A;
-	Wed, 18 Jun 2025 10:03:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.42.76
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750241018; cv=fail; b=dfnTAb+/DHG9XbiEokekF7fLgdki6HlyrSdBl0qTNpZPXY3JXmRYVBBWFC8o8FtzNZX23q4wAZ86eUVeDJYkihMz7R0fAIk8T6rEkG3WgVEhJQWeXXNiPwQK44cFG+yaE1+bVnkkZjOGiQiwNrqI08t1DJwOcaYkbHAgcRX0llg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750241018; c=relaxed/simple;
-	bh=JPihzxpGXTZ0ZT5lVuD/DGlzvjKy2kQi+MTu6n17Cbk=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=BEt+c6r/VMcNAwU8Eup60u+UrkEKCA16vKPIfSpDQZAAYPsfbQBF9SWB/lvOzDpNossl/Cx4DHnKvRRpejpqXrOoFsTQ5w9FWQQeVwKcU0/NT/0Y7Uonp982Eossjxz2l1qiHfhMh+A4nCZt/un/OAVy+VEpYWTVT7y9ozdBYvA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=YhqGn9EV; arc=fail smtp.client-ip=40.92.42.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LzA/VeP9GKt1HwKHDige0tRE2I7jRkmAwaz7O6hK6VywfR7e9CBjYtja35+wq4+c1ZbAmTjzx3okMruIZBGtTDrhfNEbYpKK6LPZu0t1/mLhO6Y8vmved4SM1y1HFEKEK2YrHISudI0k8WkqfVdVeTpOHKet1A6cOD7eTn4/UWPn9+AZN1FPKRYaS4660XvUgSd2OEIp6gTKSYx9r/JB67WfWqyiz8ckAb/+CFeAKejA7MH9u0DPavujsosxOyZ7nllvA9ruP43KUptxo6Y5RPFV9C8o5Hm3rpSGHC2tyd+2aVGmpe4J+NQ4s2gQtFKsSu152XKXrOUJfJuASQhHAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oglveZlBinOEXw0Ye8sTATaiQy/gqwQfBApCw4tvr5w=;
- b=VBh2so3ut9/AYHZ7U2kdRwCSsxU9NZYhUPsfxO+YgvRx2INdAtBa9wf0NKpNbN1TcPhKd/dItI+b3cW0UCZUj2IptKfv7m+/ydAVSFYh3X3z/0uNTzYsvRhVMt6050kV25fEUVSWWk+saPKJsuRhu0KUUEGl85OsckIvCHthL/xo9xFANQzCni/ANlV7NCUNa6qNiSw+Zv6yRriI8Q/dpeMP8Bma9+1dboXp4GPJfe5ssmqM/IOGaw+k8cUxzzhOTNDMah2JJXzWCEH9EpqqhoPG8EQ63f4ojY32YXNjN9C767DbekJ5DzW0QB+tRTNSkXfouk/YnWTr5ydiTIl2cQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oglveZlBinOEXw0Ye8sTATaiQy/gqwQfBApCw4tvr5w=;
- b=YhqGn9EVUzAmjGpKBZIUfCBrpX8PGx0LoCPEMExLf1h/A4T8QbN3k2AUVaOBkcF/9AQEvSSoDcRWuBZgZgPsZyEMkB20Ox0AavtE0aPF18807WeDqQTfGqFmJfrSDm8G++CorLepuliwvCUq6ejhOSmx4bM9sGwE+4yggItM4slM7KIXZaTKA7384lnsTwewdPRyFvhhKV4rIoVuqIvZXE0vTtFnvkvMIiaV/VQrDTJ1is6eerhk8MtrwQgaiHQJp7rS+m9JMkLdKbD2u8ylFjbIebkUrpjzCxfOWdmivBnBVBY/+Vyo4MgX/YWvqDuLzabfPsvAyD5vn3XgEJoxTw==
-Received: from BL4PR19MB8902.namprd19.prod.outlook.com (2603:10b6:208:5aa::11)
- by DS7PR19MB5853.namprd19.prod.outlook.com (2603:10b6:8:78::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.18; Wed, 18 Jun
- 2025 10:03:32 +0000
-Received: from BL4PR19MB8902.namprd19.prod.outlook.com
- ([fe80::b62f:534e:cf19:51f4]) by BL4PR19MB8902.namprd19.prod.outlook.com
- ([fe80::b62f:534e:cf19:51f4%4]) with mapi id 15.20.8857.016; Wed, 18 Jun 2025
- 10:03:31 +0000
-Message-ID:
- <BL4PR19MB8902AFEA7DCC8C41B7C2C6569D72A@BL4PR19MB8902.namprd19.prod.outlook.com>
-Date: Wed, 18 Jun 2025 14:03:24 +0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/5] clk: qcom: ipq5018: keep XO clock always on
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Luo Jie <quic_luoj@quicinc.com>,
- Lee Jones <lee@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250516-ipq5018-cmn-pll-v4-0-389a6b30e504@outlook.com>
- <20250516-ipq5018-cmn-pll-v4-1-389a6b30e504@outlook.com>
- <wao5fe7nbupujho3ql46ctvbqhe6y2adzqrtbyxqgfja6oriwt@nekluv75lcze>
-Content-Language: en-US
-From: George Moussalem <george.moussalem@outlook.com>
-In-Reply-To: <wao5fe7nbupujho3ql46ctvbqhe6y2adzqrtbyxqgfja6oriwt@nekluv75lcze>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MR2P264CA0154.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:501:1::17) To BL4PR19MB8902.namprd19.prod.outlook.com
- (2603:10b6:208:5aa::11)
-X-Microsoft-Original-Message-ID:
- <530cf5f8-6c2e-4265-a449-415c6d6bf834@outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D52F286D62
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 10:08:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1750241332; cv=none; b=EoqHZ98n9uJouSO7otQjm6h0ZwDMwVE2YjUDOgkTbz3GgSOE0bX757xAlECwo7nkJU8pPFOHs++lEih24ETKhXktR+oZ2sO0dWQmEreIxZWuAX9Z5xfrs4Cq3diA6CKYxW4z2TIxr6pdEXiuck+Af5kxwep13ct+7dyIlgn1674=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1750241332; c=relaxed/simple;
+	bh=j3LmGpuLinBOOisNliZ1REifD1qpXjaHaC2z7QzKPbI=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PIs6kUVsuF3jrH5rDJy+Ms4bolzbLAtMt8uZxV6/lg2hdXqjqBsOW+E+OyOb4mHQ7eSCAwP3S8r7PVx2b2GQ+G7cPuT1qPsbkXs9kpv6uoLWvny/7UADTsb1Sk1HuX/MI4BSEB4KuYg+VRxvOFQjwAkKJ/Ydy72VUxphnn8tWpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=VeRWDszD; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-553b16a0e38so6261813e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 03:08:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750241328; x=1750846128; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:references
+         :mime-version:in-reply-to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uBBnBFuo97eVPKNi0/6hOTdEWfgAEZkRO54pBO14yjo=;
+        b=VeRWDszDhmPobjmRJtlV+T7ZdlPnVD5OeGDHzBvWlcHZS1AX8yFpl3xi1fTHpbQ9Ew
+         HZ1UwFhCV9E3cDo31FIibncuuoziZqHgsw202mvkxF+94sQ+c0z4klaC7olsSshZCDmT
+         und6LHcatdMGlUXl54j7wcSl5DE+omU9TLGxnCgyalIIwfipWjua7fObLPH/A+uJmnhb
+         PN2mrg3U4p558mvDYu16P3KGQ/mQd2YO4LdlMZqaqaKAYBQo2zugaLKLEga0v4Zk0Inw
+         clR3tJWh5KO82O83FqeWDXsFsY7goIG47f86SpuxRRmP1nHS5IUxwB46X51c8Dfrg/Yp
+         FBXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750241328; x=1750846128;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:references
+         :mime-version:in-reply-to:from:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=uBBnBFuo97eVPKNi0/6hOTdEWfgAEZkRO54pBO14yjo=;
+        b=jL2KGJm0fmlRY2WW79/URGBK/5eGIzH95dXdlBkOZmqMEYdM9oMlIbuAF7AZubOW4r
+         brEbgSMyTftDyl6juuTYLCiUSYk3tIbVfX+SqsEOxvMUBxNGzzY5rd/DprAxxHCIHmPa
+         uL8chBvrU6H+eO1UVL7wdt+sFkBgmzWz8s02iY2G7TtqvbiuH5LuopneVBV1nnuM5kED
+         uc5NgZN7lNztFLFWAk1OiiUYBnxTcgj3ZlfwbCHXX7a7yOqsFEW0bCpzLvqzOvSoe3w+
+         cFQiBhOC4YG4AZ6xiv6iLnjMGeRx0BCQESiT9GGZ/LUY3hzZEB/+vtg9TUbyJ7FBKFfm
+         Heyw==
+X-Forwarded-Encrypted: i=1; AJvYcCW637RfPHuG/4WMU4ujuoIeAtHzHuOX4RXJIFhnpX1qORVS4fvbM1D/7/ldNgUUkxCs7kl7DcpOPiaE5IJJ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw8LPz+jTPCan4ZPXWg16ZnZCJcI0J72suhElPUJ6+mJ1O8Uy9B
+	k2QCotFZlI+5kPOyatixO0ob8xB2sWiDM/zI0HTiSpi2vP90ln74PTWzj5JbwWepT4sIs9+XJE6
+	i3KEZzmpnl5yfBQ3meYeecmKA/ZHbb/vEIDRVHuCRpbdLw6nga1vLjW8=
+X-Gm-Gg: ASbGnctJkdoKEWsiIXiC2rLEeQyEWaDoMhTulibdncQlsHP4EYefq9Kbd5VxrmqgM3G
+	cMkH14MH0FbePqhv8Cl9pVc8luBkQcCV8dlEhekVIikKZCOl52fh+Z/ENlNl7tnvJZPDK3/qmT9
+	2BXQeksu+yAmmLXJ4gCFaycXaoeaMHvNuJmNYFAxYz0ThtHbfx9Ubm51QQxMQi4CBtQSTelNcS+
+	Q==
+X-Google-Smtp-Source: AGHT+IHojWs9ewmmbTXyI3d7ehaXuASwREwS94656w0ibfKkK8SMr5fKycoZ4i06qEq80ZcwPD5KAKdfsHdS/P8044w=
+X-Received: by 2002:a05:6512:3d03:b0:553:35f5:7aac with SMTP id
+ 2adb3069b0e04-553b6f4cd1amr4194333e87.48.1750241327991; Wed, 18 Jun 2025
+ 03:08:47 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 18 Jun 2025 03:08:46 -0700
+From: brgl@bgdev.pl
+In-Reply-To: <iuqppo7k6qp7v4pm4xtllqkqdtnarlkr2ey7s3fp3g2jd5dynz@oanc7zlfod7m>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL4PR19MB8902:EE_|DS7PR19MB5853:EE_
-X-MS-Office365-Filtering-Correlation-Id: 093a60ce-fdd0-4a90-133c-08ddae4f6115
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|7092599006|6090799003|15080799009|8060799009|19110799006|461199028|5072599009|440099028|4302099013|3412199025|40105399003|10035399007|1602099012;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?ejFIcTIrejZKRi9kTGVTUk1wYURvbG95TGx4cmxYQmpOaTUyQUlxZHl4NzZF?=
- =?utf-8?B?L284UENCYmdwelF2bDY1MkxhcUVFSmhhRE5FYkpTbU9yK3JnRGkyOUxRV3lU?=
- =?utf-8?B?V2VvV08rY0Q4MWxOVk9LOTBIWkdFaHhnMVlPQ1R0MXVJRnZ4aFgxcHZhc2Fi?=
- =?utf-8?B?b0FyVmVCMFp4dzF1ems5Y2VLRlJhTWxhbTlXSUtsL1kwbHg2aEczaXZMc05S?=
- =?utf-8?B?M3E5N05Fa2NiVjh2OHczcDZnejdJN2xYd0tUQW9MQ1RtdGNsMzVWeU5xd2l3?=
- =?utf-8?B?T1h2TzhseXFlWWl5cDBoVjl3OUhqTjFucTIrTkRQdW9abmNzUGhscTIwNjZu?=
- =?utf-8?B?MVhkNkNDUzdzNU9NUzhGZTRrK1QwWHA2Mis1Wmk0dXJ0VGI3SXV6MWpHUXVF?=
- =?utf-8?B?WUJadTAzTklJd3dJeThSUi9qaU1WOC85M3J1ZWhpL2pEZlQ5YVRoRktiWU5o?=
- =?utf-8?B?aS9tZU00R2FZbitpMldNcjFNSWtYb2M1NnNJR3BDbG16T3NENDU2RlUzN1pN?=
- =?utf-8?B?RFhLTS9MdWhacFNIakZWbTBGUW5GVmdaek1rZTZrRGZ5YUxsR2dvZWtxSVFz?=
- =?utf-8?B?NlU0MU1qNytrNVNBbzZGWGk0MEczdnZ1VFpRZ2hKNi9pTlZSbEFWT1dMczJK?=
- =?utf-8?B?UFg3bmNtU012MWlaSEpWcTBKb2JCVmQ2TlEwRDV5dE14c2NjUk1NNzhqSkJa?=
- =?utf-8?B?dm1zbGxxYnhNK05SNExEREV4T2k5dEJDZ1dnRUg0WjZVL29MMytDY2tKRVQz?=
- =?utf-8?B?UzQxdnNJWDFsanVsS3dvSUdXUjZON0tFTU1yWWU5OGV0Q0dKN3hKWGN2dldH?=
- =?utf-8?B?Tkhrb3BEQXlJUXhpWEE1SVJueVRMRnlvdE5OV29hY0VDbHkyK29YRWk4UUty?=
- =?utf-8?B?V0RTS29QRGpkRk1JM2dnb0dTaE80TmN3a2VVQnRDVEQ0bXNjUmFJSUl5RmRw?=
- =?utf-8?B?WjZCWkVzY2VBb3U2OHlrSk5aWTVQMUxGM0VkVHR5TkJmUW02NStGQ3dmSHR2?=
- =?utf-8?B?cmlzZVQ0T3c2d2lDbXFnZzlidGtUT3J1ZU9PNUVnL1B0S0I0Q0w2MnB1Q2Z0?=
- =?utf-8?B?T1VVcHowY0s5NHRERmg1UXQ5T0Y0OVlwcVY5ZG9OeUp3OEgzcjEwK05ad3Bn?=
- =?utf-8?B?MmxkUHNLVENOSVZTZE1OK3ZFbi9MU1lIWVpwK1BoYWJDbHExa05KYmhsVmZw?=
- =?utf-8?B?ZVNKcmRZRmlZcFl4R1NLblU2RU42SzhtRzNuNTRPR3htYmlEUG45RXEvSTVT?=
- =?utf-8?B?b3dGazNBNUZoRDMyYWpDNlpKTGNTd09KM0R3RkxWZk5Kd2xTczR4WWZJaFRO?=
- =?utf-8?B?V2ZkajN0TndHdGgydVZWSVk2Z2s2K3FidGlNUENyYTJCTFRBQTdYRlM0L1RG?=
- =?utf-8?B?RXE1YUloTXdlaDd3NmpxMkZIdk84SnNQM2JzVmxrRjBXYkg2Zm81THhOcnFE?=
- =?utf-8?B?Rjg2TmJXTDVDUWdtRE54b084TkRpQWZLVlpkaDBzbEI5Ymhxb2xTQmJUWUdX?=
- =?utf-8?B?b2gxMnpPVkpnY0M1VkUwajlFNUhlcWczNnhGb24rU0xFUVlOZGtvYllyTFhu?=
- =?utf-8?B?eEhlbUZzZnlPaytEQ0Ixdk9EM24zNUxGYUE2WUVXN3JqL0MyZWZaa0puNjJQ?=
- =?utf-8?B?NWphTHA5SVJWcUppZTZZNzVvUDhwMmk5YitCQUNRblgxcjVuZ2RYV05va0kv?=
- =?utf-8?B?ZVJmb0VTNnBkTmpwWUREaUppUFE3TTR2ckRNNWhhRithb2syZGVkczB6OWQ5?=
- =?utf-8?B?TlE1cU9USWdzLytHcjczeTQ5UGxSaERBR3lEOTZFa3dvdDgwZitEMzVnemhy?=
- =?utf-8?B?ZlRTSUtER3ZkZndaMk02Zz09?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?aWhQRlF2WHFtZFRrVnZzL2dXQnQxUENMV1VJUXVua0tFc3J5RFhNMmxqeTUy?=
- =?utf-8?B?NUx3UkU2WFBWYkdsUXZ0c2wwSlh4VjRqMHVnLzlnQ0UrSEhJYU5HWXQxVDBB?=
- =?utf-8?B?dnVUOVN3K2RONkpGVEw4QzFKVVFyWjBCeTRVZU1vYUFCc2ExQVBjVng2NGc0?=
- =?utf-8?B?NC9hRFRBVWJvOU5pdk81SWxHYitCQVc0OW5iZlZ4NGc1WmM1bWhKY3crMGky?=
- =?utf-8?B?emNOeGJwc04yUDJhTUFoc0tsaVRsYklMUmEyZnpUblE3T3lkZ3FMUzVxaitw?=
- =?utf-8?B?Z0FRay9SQlNHRCs0RlNKQklIZllGSXYvMitJcHJCd0NtVm5vOS84a0Nqai9q?=
- =?utf-8?B?QmtvcWVtNENXeHlCSlZYNE1qSmVXaElHbnNpb1ZGd2tkaHV5ZFR6UlVvNDZM?=
- =?utf-8?B?KzlqRGtWU2kxcjdHM0RRRHIvdWdqNlBNbVVPT2FhTGs2QzB2SDJ5bENRM20w?=
- =?utf-8?B?TjlQZktaZFh0OGhUSHRVUUY4UjVOZTBxU0ZGVWJ4dVFvVENhZzUrSE5kOWdh?=
- =?utf-8?B?OGx4NGF3enpaVWREYTRzZ2tlZ0ROUXlzbFdYU1cvbldCUzN2T3ZaZDJOY1hn?=
- =?utf-8?B?Z0NOcTBWYUdveHN3eGlzM2VwT2JkQ0VaR0UraXVMY3FSUkYwNXVqWktsbVBx?=
- =?utf-8?B?eTdEM0NMZDFzVzZFckREYzNoQ2NVYzVkV29oZ2tNMU1qR3prK0ppSjRnOXQr?=
- =?utf-8?B?L0hjNGxUMEtvbVAyRDRWZXJmRmkyTUE4N3U5WkdBRW4yZXZkZW5sRnRSTHBv?=
- =?utf-8?B?eW9OSHF3M2Jyc0NNUGFpMDA0d0ZhMlk1Z3EwQU1iUWNyNGlMNDdNRjNuaitt?=
- =?utf-8?B?SWt3TUs4Y1NzZTBQM3ZmNWtYem15NGJaaGw5SG9xd0lnSldYTGlSbDhvUE9o?=
- =?utf-8?B?djB6ckF0YXJUSDNSTEtYazlYVEdKMEhnUzFYMmZtVTRXTW12Q3FxWU14WDll?=
- =?utf-8?B?dTZIM3VjdFNnQUUyd1dWak8xd0llQmJHRTk3dytGQUIrdFUzRTVyWTl0R3hy?=
- =?utf-8?B?K1JWMVRkbml6OUFNUjhEalBhenBCOXdwY3Ztb2pTbERvYnFjQ0dDWlhyS1JL?=
- =?utf-8?B?cTVLWmk5YVk4TTQ4Z1JSaFF4dEkyVDVqWEt6MHlHa1FWUTV6amozMlYyVllz?=
- =?utf-8?B?aE5mN1ZXcXV0cUZDWUQyaVlRUytnVVpYcjZMVUxmUUE3VlpIbWlMbmVBRjM1?=
- =?utf-8?B?dDhDNmtkNmFpT2VTcVpzK21ON1J4L2VjNi9CWXN6Y1BxY3dyWnBhTGVIMDRF?=
- =?utf-8?B?bHoxLzZLOWZ2eHZNM3pweFpkeG5pWGswWDYzdjFJelZNRDZZWEhBVnJXSStp?=
- =?utf-8?B?eWhzdG1oU0FnOXZhSVNkVmVYZlBhRTQ5M3k3aW1WQVNaWTN3TUhPelVGQ09h?=
- =?utf-8?B?OUlKUS9odGVGZk9YVUx4S2RUaGV3VkNma1RyQ0h0SlBWejYxcUxTS0twclhx?=
- =?utf-8?B?SUxKUjZUenF1K3JWN2o4ZHNTMVBWb1J5WXdlQVdGVXd6MHcvUnREUGZwZFdF?=
- =?utf-8?B?VGxYKzJJNWFuQWR5OFRCcVZXUEsvdnhRbkh3ckhKbUd0VnBQUnFTVjVNZm1T?=
- =?utf-8?B?eTREL0swalYzUUdsMVB2ek5jKzgya3QrR0pXN0ZwVGRHSGZ5OG1HNzl6eFNm?=
- =?utf-8?B?UnVxT0ZTMmxmWVRKY0ZLcFJSVFBVVWdGZWlRZDUydkFJdlB3bHB1cnBZV1Zw?=
- =?utf-8?Q?cfwxZxePnCmi50KJQQVi?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 093a60ce-fdd0-4a90-133c-08ddae4f6115
-X-MS-Exchange-CrossTenant-AuthSource: BL4PR19MB8902.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jun 2025 10:03:31.8175
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR19MB5853
+References: <20250616143341.51944-1-brgl@bgdev.pl> <713cd518-935f-4501-9753-d33c9ea6aef7@oss.qualcomm.com>
+ <CAMRc=MceV-HgyFFvqytXAiuY+y10PQbdPBxuvd57NCeSLVLXCg@mail.gmail.com>
+ <vyr6s4wzw5jc5gt7mywu4s4xob6aeca5aclbe5tdr4v3yng2tn@yb7rn2b2btb7>
+ <CAMRc=MccuJe144NcwapPPRXtQOZbPW8qmybuEA2O9EtfKzs7oQ@mail.gmail.com> <iuqppo7k6qp7v4pm4xtllqkqdtnarlkr2ey7s3fp3g2jd5dynz@oanc7zlfod7m>
+Date: Wed, 18 Jun 2025 03:08:46 -0700
+X-Gm-Features: AX0GCFujqBFBkEMRSldzaIW8AP2PK4RrOY49khUHZq4DSFM-4sjy8X1X0XmOx8I
+Message-ID: <CAMRc=MdTuL9K4etfqM=BEkHy+KKWpT+JKHCo4iRdCX48gs8M8Q@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: add debug UART pins to reserved GPIO
+ ranges on RB2
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Bjorn,
+On Wed, 18 Jun 2025 04:33:31 +0200, Bjorn Andersson <andersson@kernel.org> =
+said:
+> On Tue, Jun 17, 2025 at 01:28:41PM +0200, Bartosz Golaszewski wrote:
+>> On Tue, Jun 17, 2025 at 5:18=E2=80=AFAM Bjorn Andersson <andersson@kerne=
+l.org> wrote:
+>> >
+>> > On Mon, Jun 16, 2025 at 06:43:16PM +0200, Bartosz Golaszewski wrote:
+>> > > On Mon, Jun 16, 2025 at 6:20=E2=80=AFPM Konrad Dybcio
+>> > > <konrad.dybcio@oss.qualcomm.com> wrote:
+>> > > >
+>> > > > On 6/16/25 4:33 PM, Bartosz Golaszewski wrote:
+>> > > > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>> > > > >
+>> > > > > GPIO12 and GPIO13 are used for the debug UART and must not be av=
+ailable
+>> > > > > to drivers or user-space. Add them to the gpio-reserved-ranges.
+>> > > > >
+>> > > > > Fixes: 8d58a8c0d930c ("arm64: dts: qcom: Add base qrb4210-rb2 bo=
+ard dts")
+>> > > > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.o=
+rg>
+>> > > > > ---
+>> > > >
+>> > > > That also makes them unavailable to the kernel though, no?
+>> > > >
+>> > >
+>> > > Yes. They could only be used by QUP - I2C or SPI #4 - on sm6115 but
+>> > > none of these are used on RB2. I just noticed that my console froze
+>> > > when I accidentally requested GPIO12 and figured that it makes sense
+>> > > to make them unavailable. Let me know if this should be dropped.
+>> > >
+>> >
+>> > I'm guessing that this would be a problem for any pin that is used for
+>> > some other function. Should we instead prevent userspace from being ab=
+le
+>> > to request pins that are not in "gpio" pinmux state?
+>> >
+>>
+>> That's supported by the "strict" flag in struct pinmux_ops. However
+>> the two pins in question are muxed to GPIOs as far as the msm pinctrl
+>> driver is concerned so it wouldn't help.
+>
+> This doesn't sound correct, the pins needs to be muxed to the qup in
+> order for UART to work, so how can they show as "gpio" function?
+>
 
-On 6/18/25 07:33, Bjorn Andersson wrote:
-> On Fri, May 16, 2025 at 04:36:08PM +0400, George Moussalem via B4 Relay wrote:
->> From: George Moussalem <george.moussalem@outlook.com>
->>
->> The XO clock must not be disabled to avoid the kernel trying to disable
->> the it. As such, keep the XO clock always on by flagging it as critical.
->>
-> 
-> Is there any reason for us to model this clock in Linux, if we're not
-> allowed to touch it?
-> 
-> CLK_IS_CRITICAL has side effect on the runtime PM state of the clock
-> controller, so would be nice if we can avoid that.
+There's no pinctrl-0 property in the uart4 node. But if we do the following=
+:
 
-see discussion here in v2:
-https://patchwork.kernel.org/project/linux-arm-msm/patch/20250506-ipq5018-cmn-pll-v2-1-c0a9fcced114@outlook.com/
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index c8865779173ec..8c29440e9f43c 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -672,6 +672,18 @@ qup_i2c4_default: qup-i2c4-default-state {
+                                bias-pull-up;
+                        };
 
-we explored removing the structs for xo and xo_src and updating the
-parent clocks that relied on them, which worked. But the recommendation
-eventually was to go for this flag.
++                       qup_uart4_default: qup-uart4-default-state {
++                               qup_uart4_tx: tx-pins {
++                                       pins =3D "gpio12";
++                                       function =3D "qup4";
++                               };
++
++                               qup_uart4_rx: rx-pins {
++                                       pins =3D "gpio13";
++                                       function =3D "qup4";
++                               };
++                       };
++
+                        qup_i2c5_default: qup-i2c5-default-state {
+                                pins =3D "gpio14", "gpio15";
+                                function =3D "qup5";
+@@ -1565,6 +1577,8 @@ uart4: serial@4a90000 {
+                                reg =3D <0x0 0x04a90000 0x0 0x4000>;
+                                clock-names =3D "se";
+                                clocks =3D <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
++                               pinctrl-names =3D "default";
++                               pinctrl-0 =3D <&qup_uart4_default>;
+                                interrupts =3D <GIC_SPI 331 IRQ_TYPE_LEVEL_=
+HIGH>;
+                                interconnects =3D <&clk_virt
+MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
+                                                 &clk_virt
+SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c
+b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 5c4687de1464a..e5c85d21e13c7 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -293,6 +293,7 @@ static const struct pinmux_ops msm_pinmux_ops =3D {
+        .get_function_groups    =3D msm_get_function_groups,
+        .gpio_request_enable    =3D msm_pinmux_request_gpio,
+        .set_mux                =3D msm_pinmux_set_mux,
++       .strict                 =3D true,
+ };
 
-> 
-> Regards,
-> Bjorn
-> 
->> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
->> ---
->> The kernel will panic when parenting it under the CMN PLL reference
->> clock and the below message will appear in the kernel logs.
->>
->> [    0.916515] ------------[ cut here ]------------
->> [    0.918890] gcc_xo_clk_src status stuck at 'on'
->> [    0.918944] WARNING: CPU: 0 PID: 8 at drivers/clk/qcom/clk-branch.c:86 clk_branch_wait+0x114/0x124
->> [    0.927926] Modules linked in:
->> [    0.936945] CPU: 0 PID: 8 Comm: kworker/0:0 Not tainted 6.6.74 #0
->> [    0.939982] Hardware name: Linksys MX2000 (DT)
->> [    0.946151] Workqueue: pm pm_runtime_work
->> [    0.950489] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
->> [    0.954566] pc : clk_branch_wait+0x114/0x124
->> [    0.961335] lr : clk_branch_wait+0x114/0x124
->> [    0.965849] sp : ffffffc08181bb50
->> [    0.970101] x29: ffffffc08181bb50 x28: 0000000000000000 x27: 61c8864680b583eb
->> [    0.973317] x26: ffffff801fec2168 x25: ffffff800000abc0 x24: 0000000000000002
->> [    0.980437] x23: ffffffc0809f6fd8 x22: 0000000000000000 x21: ffffffc08044193c
->> [    0.985276] loop: module loaded
->> [    0.987554] x20: 0000000000000000 x19: ffffffc081749278 x18: 000000000000007c
->> [    0.987573] x17: 0000000091706274 x16: 000000001985c4f7 x15: ffffffc0816bbdf0
->> [    0.987587] x14: 0000000000000174 x13: 000000000000007c x12: 00000000ffffffea
->> [    0.987601] x11: 00000000ffffefff x10: ffffffc081713df0 x9 : ffffffc0816bbd98
->> [    0.987615] x8 : 0000000000017fe8 x7 : c0000000ffffefff x6 : 0000000000057fa8
->> [    1.026268] x5 : 0000000000000fff x4 : 0000000000000000 x3 : ffffffc08181b950
->> [    1.033385] x2 : ffffffc0816bbd30 x1 : ffffffc0816bbd30 x0 : 0000000000000023
->> [    1.040507] Call trace:
->> [    1.047618]  clk_branch_wait+0x114/0x124
->> [    1.049875]  clk_branch2_disable+0x2c/0x3c
->> [    1.054043]  clk_core_disable+0x60/0xac
->> [    1.057948]  clk_core_disable+0x68/0xac
->> [    1.061681]  clk_disable+0x30/0x4c
->> [    1.065499]  pm_clk_suspend+0xd4/0xfc
->> [    1.068971]  pm_generic_runtime_suspend+0x2c/0x44
->> [    1.072705]  __rpm_callback+0x40/0x1bc
->> [    1.077392]  rpm_callback+0x6c/0x78
->> [    1.081038]  rpm_suspend+0xf0/0x5c0
->> [    1.084423]  pm_runtime_work+0xf0/0xfc
->> [    1.087895]  process_one_work+0x17c/0x2f8
->> [    1.091716]  worker_thread+0x2e8/0x4d4
->> [    1.095795]  kthread+0xdc/0xe0
->> [    1.099440]  ret_from_fork+0x10/0x20
->> [    1.102480] ---[ end trace 0000000000000000 ]---
->> ---
->>  drivers/clk/qcom/gcc-ipq5018.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/clk/qcom/gcc-ipq5018.c b/drivers/clk/qcom/gcc-ipq5018.c
->> index 70f5dcb96700f55da1fb19fc893d22350a7e63bf..24eb4c40da63462077ee2e5714e838aa30ced2e3 100644
->> --- a/drivers/clk/qcom/gcc-ipq5018.c
->> +++ b/drivers/clk/qcom/gcc-ipq5018.c
->> @@ -1371,7 +1371,7 @@ static struct clk_branch gcc_xo_clk = {
->>  				&gcc_xo_clk_src.clkr.hw,
->>  			},
->>  			.num_parents = 1,
->> -			.flags = CLK_SET_RATE_PARENT,
->> +			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
->>  			.ops = &clk_branch2_ops,
->>  		},
->>  	},
->>
->> -- 
->> 2.49.0
->>
->>
+ static int msm_config_reg(struct msm_pinctrl *pctrl,
 
-Best regards,
-George
+Then the problem on RB2 goes away.
+
+>> Turning on the strict flag at
+>> the global level of the pinctrl-msm driver would be risky though as it
+>> would affect so many platforms, I'm sure it would break things. So IMO
+>> it's either this change or let's drop it and leave it as is.
+>>
+>
+> I share your concern, but the benefit sounds desirable. I think
+> protecting the UART pins would set a precedence for filling that list
+> with all kinds of pins, for all platforms, so lets give this some more
+> thought,
+>
+
+I can only test this change on so many boards. We could give it a try, it's
+early into the cycle so if we get this change into next now, we'd have some
+time to see if anything breaks. I can send patches with the above changes
+if you're alright with it.
+
+Bart
 
