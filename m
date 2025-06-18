@@ -1,72 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-61665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EDE6ADE21F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 06:11:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA9FDADE223
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 06:11:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2512D7A53F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 04:10:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF1043B043F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 04:11:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40D5F218ADC;
-	Wed, 18 Jun 2025 04:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF75B219E8F;
+	Wed, 18 Jun 2025 04:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uDkLvr2H"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XaFOgCkh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A09217705;
-	Wed, 18 Jun 2025 04:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDB8219A89;
+	Wed, 18 Jun 2025 04:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750219782; cv=none; b=TwH1mJNQ47QS05njkb1RlMiZUoaqP3+0+Vssc4iEWFozrwoYJdI2ESqhErmAPW6qcQo73V31cFsGRk5LzTg370c0IdFhfMt4F+lwHmQ7n7ShF2DbI4C6GHgWVxqDON9PQMUM0Hep2lVXDfmAQK37H3HQAzgf1E7Polg5Kno6x2I=
+	t=1750219783; cv=none; b=rRkk2nPIXhY0ztzLwDPm79TWEPg6FaAlzYxMRCYjMSHN/ggDizKsY4T2GdgMaV4mAtrf93lrn8UoqF0JuLoO8aL3HcsLiDzAmO2Rxc3vto0hEIjFYXaIUcTS1Un/63O0wFFEt6w6W4eQ4kA+W4nIbY1lgKJNBUCTRZif3OLvdGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750219782; c=relaxed/simple;
-	bh=jbXuGjveBWcNQ5KRWJaQ7dY3pRGqFzyOvHhfzAX5awk=;
+	s=arc-20240116; t=1750219783; c=relaxed/simple;
+	bh=ODt+2+GkMCGt71Fp2dlPmHqOy1HSpcbumhkPqILkDHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Le15+zOOQKUKffb5VuIiNA4cP8BKF/7J7Q8PLQBECJYIadu3ciJdf3S7plt9RsMPAk+12kKSxgkI1qD70jO3xt1hU/QYjj4I2Kp+88u+2fc89ZbJYlmm9E4fgWAmTabEXrUklT0NNTSJ7sq0dH3z/OAMK5L6HkmpTo9H0bDXeWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uDkLvr2H; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5BEC4CEEE;
-	Wed, 18 Jun 2025 04:09:40 +0000 (UTC)
+	 MIME-Version:Content-Type; b=uiv2TsxTfKQWiXrx7LXbiBRebDd+jlL1s/H26TlkRBnExrofcWP4PYpHH5zvLxuwLQMDDVcM7Ql5qQJcQNoxMlk7r/w/NbInEw13UMEpAhQcneQPs3z9Is2hrp12V6Z9ONWn47/8cgHqkSWjrnwS4WbaUtWDb9MAG3kZSzau6Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XaFOgCkh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F2BC4CEF4;
+	Wed, 18 Jun 2025 04:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750219781;
-	bh=jbXuGjveBWcNQ5KRWJaQ7dY3pRGqFzyOvHhfzAX5awk=;
+	s=k20201202; t=1750219783;
+	bh=ODt+2+GkMCGt71Fp2dlPmHqOy1HSpcbumhkPqILkDHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDkLvr2H7rmgR2+45h0JVBI7K/1damAvQJAeCrOQuRhN+zJZKn83DDh28V5GajxvZ
-	 zVqjJ9vJtla/GgN1yQLa6Xmj+1czIHKVCgCSOboEq2cQn/fEgCrd71Zoc2wk13koR3
-	 pxvnAv9UkQhYpIiLymDJRJMLlriPtpPZsnts/VZ7m//jkXn3gk5qxhPEuGmjVA0Jxv
-	 e6r2jtOricps6LUuCy/Gzf4dNWSTs0XyxNnApxhM+bETEvCydXrQ/bgQzg8hn7w3IT
-	 vP5tzGuoQRrit87pMzRPp9IBj486NPcPXNxz8VlLv6cJRHsvwE+ZVWQ5fMk8lpFdny
-	 dM3Au7za6zn6A==
+	b=XaFOgCkh7/fG0TVSeeYcZPVuOE+c37HoRCbkg+MkPq8WvZVxtx7YvZJ+MRkiFNllD
+	 gsHHp6WFXjeD1XbH+fxLzr2etwN48+2Yn9nTD4RGPn3Ci79g5YhpfWFRAyuAXZVASn
+	 4oxhIIjwVZzdGo38+cO8a3cQSGdLmo5sV3gychFswZdpqjSSSVyXMjDmuTFlTidse3
+	 ufIG47P1N+qeMXz60U4S5ARmS1kl+X6wWiEsT1wJdZhiGjNQAQ0D1Rd8whxSnQoxrU
+	 ScaFV0isklwhA1H/64aRC3jrhoOplmahY1t+XLuHUNcP/CJpNZDMvidIkpc9CcVCSa
+	 tcvSsmH/lcKPw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+To: Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Andy Gross <agross@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
-	Melody Olvera <melody.olvera@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-scsi@vger.kernel.org,
+	Lijuan Gao <quic_lijuang@quicinc.com>
+Cc: kernel@quicinc.com,
+	linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Nitin Rawat <quic_nitirawa@quicinc.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Manish Pandey <quic_mapa@quicinc.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v3 0/4] Add UFS support for SM8750
-Date: Tue, 17 Jun 2025 23:09:24 -0500
-Message-ID: <175021976635.732077.8780491343614094066.b4-ty@kernel.org>
+	Kyle Deng <quic_chunkaid@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v4 0/6] arm64: dts: qcom: qcs615: enable remoteprocs - ADSP and CDSP
+Date: Tue, 17 Jun 2025 23:09:25 -0500
+Message-ID: <175021976648.732077.7430926610007550509.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250327-sm8750_ufs_master-v3-0-bad1f5398d0a@oss.qualcomm.com>
-References: <20250327-sm8750_ufs_master-v3-0-bad1f5398d0a@oss.qualcomm.com>
+In-Reply-To: <20250526-add_qcs615_remoteproc_support-v4-0-06a7d8bed0b5@quicinc.com>
+References: <20250526-add_qcs615_remoteproc_support-v4-0-06a7d8bed0b5@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,18 +74,26 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 27 Mar 2025 13:54:27 -0700, Melody Olvera wrote:
-> Add UFS support for SM8750 SoCs.
+On Mon, 26 May 2025 13:21:46 +0800, Lijuan Gao wrote:
+> Enable the remote processor PAS loader for QCS615 ADSP and CDSP
+> processors. This allows different platforms/architectures to control
+> (power on, load firmware, power off) those remote processors while
+> abstracting the hardware differences. Additionally, and add a PIL region
+> in IMEM so that post mortem debug tools can collect ramdumps.
 > 
+> 
+> [...]
 
 Applied, thanks!
 
-[2/4] arm64: dts: qcom: sm8750: Add UFS nodes for SM8750 SoC
-      commit: d288abc3a70efd23a3882de9d2a5effb890f8e40
-[3/4] arm64: dts: qcom: sm8750: Add UFS nodes for SM8750 MTP
-      commit: a95d8e3f40756d87c35b1c5b4318297005ddc7ce
-[4/4] arm64: dts: qcom: sm8750: Add UFS nodes for SM8750 QRD board
-      commit: 66bf410e72348691cfbc222afae4414ed1cc657c
+[3/6] arm64: dts: qcom: qcs615: Add mproc node for SEMP2P
+      commit: bf2a6a7765412dbf487eb478b00783868c32a348
+[4/6] arm64: dts: qcom: qcs615: Add IMEM and PIL info region
+      commit: a129ca1a9413d5ad605a7bbcdc50e01a3e772580
+[5/6] arm64: dts: qcom: qcs615: add ADSP and CDSP nodes
+      commit: 18b011d4569da5f39d5003ab23bda0e7e23af6bf
+[6/6] arm64: dts: qcom: qcs615-ride: enable remoteprocs
+      commit: 47d59463bd885f9c8cb6f2ded8be67fa89d98726
 
 Best regards,
 -- 
