@@ -1,163 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-61696-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D95EADE57A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 10:25:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33817ADE588
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 10:28:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 50C6B188C635
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 08:25:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 894FD16E631
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 08:28:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9241A274FC2;
-	Wed, 18 Jun 2025 08:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A7CF202965;
+	Wed, 18 Jun 2025 08:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nNrGdRwL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hFNMK0v0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605C135963;
-	Wed, 18 Jun 2025 08:25:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F2027E7EF
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 08:28:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750235127; cv=none; b=JFNvCPVRbwXogIfdPIisKmZphcc6T7AtvAlHLwxmY9wYUNsU99Rdxxe/teu+JBjA81FKKW+H4Ie2YkCDtE09d35Mrkh9uscqczDsiBfH/YGsdvqK0Rf34b1lFtmHq4FrSlpyA7Fni5aB8JNd7Mt8YDF/QrhcIFBnmcwKLErlH+E=
+	t=1750235297; cv=none; b=NB3KSknQ3WgplYI7I/Jd49DMT+I5ykrSDMSK0CPpnnN99VA86UtPP06R3P07i5PCq+QK6d9DngZDNDz47i2CJeDnVNA1Y8f2al05ecuZiZE9HKj3RlV+guFHpfbFXksX69U41n9oJ9RCC8ZXAhvFXvkne2psHWWTHYPJO0NSfdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750235127; c=relaxed/simple;
-	bh=CfnRxmufD9BFa5b8W1bL5FF2qtdnavYecQUsRTtCjJg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VOIgPPKVdNjQuEG6Ln1gOgScVX/5JmITod08eHlNRFQ0TNego9jo5kDZA7IjEx6cxQ42d9cVmLIw1fMnRpTXOGRDYKy7pHn6+nxm8uUmkEQ6lJ4sGJvqim4WdqQ0BULRsk6WKns8F18GmQs68aNo3rjJG9tidgArLjioIN+z+IA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nNrGdRwL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF5EC4CEE7;
-	Wed, 18 Jun 2025 08:25:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750235126;
-	bh=CfnRxmufD9BFa5b8W1bL5FF2qtdnavYecQUsRTtCjJg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nNrGdRwLhZ7NP0P6VyZegnph1FkmFymqeTegErJcd+OoajPMd/mZfGF07/mEir47S
-	 +M4+0S5SJAih9ojrKXszbdqmHYJvFveMJPfx9CcA0dYNJt9GrVl1fQnGhV8XS3w1D5
-	 DhXdcJI8NMWKG+cj/6ekw4l5Lwk5tSHaJ74EM3FbgMoL9qv5eab3ISECnU8JzEUS8P
-	 Y0NIQyLxOtJsC0GlZcXIcDrIFfGUPkvf8tUDHclnMOYb33O7avMkkCDZjnGghLpObV
-	 B6Z0fBjFuQRr8DHI/RdwKyRkmg4n3LhpRH+H47fkQTzKIblTgwFmvQ1VB9zpRT+dwo
-	 E/5hB09Ftoymw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1uRo6n-000000007yV-2JUI;
-	Wed, 18 Jun 2025 10:25:25 +0200
-Date: Wed, 18 Jun 2025 10:25:25 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Chris Lew <chris.lew@oss.qualcomm.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Hemant Kumar <quic_hemantk@quicinc.com>,
-	Maxim Kochetkov <fido_max@inbox.ru>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] net: qrtr: mhi: synchronize qrtr and mhi preparation
-Message-ID: <aFJ39fpIkEpqtZiM@hovoldconsulting.com>
-References: <20250604-qrtr_mhi_auto-v2-1-a143433ddaad@oss.qualcomm.com>
- <aFJwfXsnxiCEWL1u@hovoldconsulting.com>
+	s=arc-20240116; t=1750235297; c=relaxed/simple;
+	bh=3asa5TniM42B8mxsX6+ZKjpxOQm4wJdwzje+nMHfkEQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tu12DVZXG7bppGJF7SQ91z1r0SASTm2T+RjjTELyZOvkmf8whuGKuWoFBvw8KFknfdTrANkEjFjNczM0OunIN0IPcbgZLMWss/mt08sH2fVOPC7bjEy8uJ4fJON/cORKLCBr/7IMeITrtnzYkG2HRaPpUqMyBd9M6ArH3XVn/+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hFNMK0v0; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a4eb4acf29so936526f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 01:28:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1750235294; x=1750840094; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=dAB1KFolAhtJgPLCNg/mHV2FDuFjiwI4pqfdHMCq72I=;
+        b=hFNMK0v0fKHMmVyXtAnNPxLNyFqbivuQbCIX5EcknQIj4sV2hX67FinNrd6dN7gcO0
+         8rkIe0ZICmEbNVgSbZs/YkXFx/K/778jp+wtMnkypN19p1svyyEfdhIpPmfBzmgC71WK
+         ZB1yOnrSIuJvy3eZ0EXR+ozaQ8n81jdN8A6gR+iynEXDs2D2VYz2llsGE9Z2Qj0i4Wbk
+         NurqN2RVpMkruDODQd6EFF/eKi69JEZd6JsC+prEiY3RkflEsJskYSIMUGzrneI1Qy7g
+         nmZU4jXZaAOopuvhYiSdUdn9pyJs2HIjNUTntFhlV5diP2FGRMzLQMUA0B4LV45e1dzN
+         Dm4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750235294; x=1750840094;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dAB1KFolAhtJgPLCNg/mHV2FDuFjiwI4pqfdHMCq72I=;
+        b=ZsqH+7PAWXyZ8TzEvKr89dFxYnCdqTa9IxoxlGu0sTZGuc7KcFcEmV6wCbFBZA8Nen
+         ZFPbR8XtaG+sh8VrbtkDLhCT9h+Ty4DABAgJBr8ID8tHM9YmYRRYeaNucdq+J/rRCtc7
+         qvIW4KohJY+ViRW3x7wR+VRV5UDgZUUIshvmhl873djN7VfqoCLT6W67rH+1zmv2MF0U
+         yFge1tgvcBVtl1YKSKoKZVbyHO+THMCCVOH1JcoVXFLAjFs7FKVkoWmNQqkMx9o8I42t
+         DBBYdhaJn6FCmun7SW0MxhpFq7GdNjUwVJkqV89mBpnWNtlLSxSndvoZIXS6MTi+S/kv
+         1Q2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCX5KVPZnWi0DIKXihkscT0UAIIAIcsN1ooaYnbjrbqVnNVFsjBLfITrQBNvGazcBdvCbWqJUzms5waUN2rb@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZIi+L3Hdj/p/Byb2wNucKoXRcgQ+ju8bLl8zByTZy/s3xXgh+
+	WmBkHwMPqHEkdwBnQXRXhe1tDDvvmBmn7gxMXvzBcbGxb6Vs64zvewzIWOjEWeyi3gw=
+X-Gm-Gg: ASbGncsUbW+++/gm2X1OpW/hjcCIWp8szC39MAWQ0q+o592PIPH0CTRIfT5+wPGQBmp
+	NHdeXGspBlDjQESk3iS25uIMZZ17VyqQD7rauZrELPvEFPwJcPIwflx92bNobpVj2Sr7sDMflOb
+	RQylTyHdwO9tfO/pQyOzRSF3VWz5XgDi6dS/1gilarHw4/M2UvC9laxRcr3TY7tSVHLJvBeoUFU
+	+Hm/WlG1Nc0KqRD0PDad1n1buvpQaxbZXqsk91F587M9scINZv9gzbpo09OtVppp5hdhF/yoGsV
+	Tz0cR406YudAgw79e3x9RygqtwJ6npHjf2dFkcdi0WeTInfh/brIiH+SH0ZvZZIv0xea98QXST/
+	OGHrvye8=
+X-Google-Smtp-Source: AGHT+IEprwipG9q6XIESI5sdRLoyTfDlnOgcmO3o69MyV1WWyhSo6jKYIfJfdr8pd/BlFyyUshJepg==
+X-Received: by 2002:a05:600c:1c12:b0:43b:cab3:1fd1 with SMTP id 5b1f17b1804b1-4533ca487dbmr56926295e9.1.1750235294000;
+        Wed, 18 Jun 2025 01:28:14 -0700 (PDT)
+Received: from [192.168.1.29] ([178.197.223.125])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532e184724sm197066785e9.39.2025.06.18.01.28.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Jun 2025 01:28:13 -0700 (PDT)
+Message-ID: <8a986ebb-5c25-46d9-8a2f-7c0ad7702c15@linaro.org>
+Date: Wed, 18 Jun 2025 10:28:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aFJwfXsnxiCEWL1u@hovoldconsulting.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 08/17] drm/msm/dsi/phy: Fix reading zero as PLL rates
+ when unprepared
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Krishna Manikandan <quic_mkrishn@quicinc.com>,
+ Jonathan Marek <jonathan@marek.ca>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Dmitry Baryshkov <lumag@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+ Abel Vesa <abel.vesa@linaro.org>, Srinivas Kandagatla <srini@kernel.org>
+References: <20250610-b4-sm8750-display-v6-0-ee633e3ddbff@linaro.org>
+ <20250610-b4-sm8750-display-v6-8-ee633e3ddbff@linaro.org>
+ <n5djafe2bm4cofoa3z4urfogchhfacybzou763nelttgfspo25@bywfd5febe6g>
+ <dbcfcb3c-0cba-45f6-aaed-b79494d96cde@linaro.org>
+ <738a889d-9bd5-40c3-a8f5-f76fcde512f4@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ 2+47PN9NZAOyb771QoVr8A==
+In-Reply-To: <738a889d-9bd5-40c3-a8f5-f76fcde512f4@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 18, 2025 at 09:53:34AM +0200, Johan Hovold wrote:
-> On Wed, Jun 04, 2025 at 02:05:42PM -0700, Chris Lew wrote:
-> > The call to qrtr_endpoint_register() was moved before
-> > mhi_prepare_for_transfer_autoqueue() to prevent a case where a dl
-> > callback can occur before the qrtr endpoint is registered.
-> > 
-> > Now the reverse can happen where qrtr will try to send a packet
-> > before the channels are prepared. The correct sequence needs to be
-> > prepare the mhi channel, register the qrtr endpoint, queue buffers for
-> > receiving dl transfers.
-> > 
-> > Since qrtr will not use mhi_prepare_for_transfer_autoqueue(), qrtr must
-> > do the buffer management and requeue the buffers in the dl_callback.
-> > Sizing of the buffers will be inherited from the mhi controller
-> > settings.
-> > 
-> > Fixes: 68a838b84eff ("net: qrtr: start MHI channel after endpoit creation")
-> > Reported-by: Johan Hovold <johan@kernel.org>
-> > Closes: https://lore.kernel.org/linux-arm-msm/ZyTtVdkCCES0lkl4@hovoldconsulting.com/
-> > Signed-off-by: Chris Lew <chris.lew@oss.qualcomm.com>
+On 13/06/2025 16:04, Dmitry Baryshkov wrote:
+> On 13/06/2025 17:02, Krzysztof Kozlowski wrote:
+>> On 13/06/2025 15:55, Dmitry Baryshkov wrote:
+>>>>   
+>>>> @@ -361,24 +373,47 @@ static int dsi_pll_7nm_lock_status(struct dsi_pll_7nm *pll)
+>>>>   
+>>>>   static void dsi_pll_disable_pll_bias(struct dsi_pll_7nm *pll)
+>>>>   {
+>>>> +	unsigned long flags;
+>>>>   	u32 data;
+>>>>   
+>>>> +	spin_lock_irqsave(&pll->pll_enable_lock, flags);
+>>>> +	--pll->pll_enable_cnt;
+>>>> +	if (pll->pll_enable_cnt < 0) {
+>>>> +		spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
+>>>> +		DRM_DEV_ERROR_RATELIMITED(&pll->phy->pdev->dev,
+>>>> +					  "bug: imbalance in disabling PLL bias\n");
+>>>> +		return;
+>>>> +	} else if (pll->pll_enable_cnt > 0) {
+>>>> +		spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
+>>>> +		return;
+>>>> +	} /* else: == 0 */
+>>>> +
+>>>>   	data = readl(pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
+>>>>   	data &= ~DSI_7nm_PHY_CMN_CTRL_0_PLL_SHUTDOWNB;
+>>>>   	writel(0, pll->phy->pll_base + REG_DSI_7nm_PHY_PLL_SYSTEM_MUXES);
+>>>>   	writel(data, pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
+>>>> +	spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
+>>>>   	ndelay(250);
+>>>
+>>> What is this ndelay protecting? Is is to let the hardware to wind down
+>>> correctly? I'm worried about dsi_pll_disable_pll_bias() beng followed up
+>>> by dsi_pll_enable_pll_bias() in another thread, which would mean that
+>>> corresponding writes to the REG_DSI_7nm_PHY_CMN_CTRL_0 can come up
+>>> without any delay between them.
+>>>
+>>
+>> Great question, but why do you ask me? The code was there already and
+>> MSM DRM drivers are not something I know and could provide context about.
 > 
-> Thanks for the update. I believe this one should have a stable tag as
-> well as it fixes a critical boot failure on Qualcomm platforms that we
-> hit frequently with the in-kernel pd-mapper.
+> Because it's you who are changing the code as you've faced the issue 
+> with recalc_rate.
 > 
-> And it indeed fixes the crash:
-> 
-> Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Heh, the answer is then: I don't know. I think authors of the code could
+know.
 
-While it fixes the registration race and NULL-deref, something else is
-not right with the patch.
-
-On resume from suspend I now get a bunch of mhi errors for the ath12k
-wifi:
-
-[   25.843963] mhi mhi1: Requested to power ON
-[   25.848766] mhi mhi1: Power on setup success
-[   25.939124] mhi mhi1: Wait for device to enter SBL or Mission mode
-[   26.325393] mhi mhi1: Error recycling buffer for chan:21
-[   26.331193] mhi mhi1: Error recycling buffer for chan:21
-[   26.336798] mhi mhi1: Error recycling buffer for chan:21
-[   26.342390] mhi mhi1: Error recycling buffer for chan:21
-[   26.347994] mhi mhi1: Error recycling buffer for chan:21
-[   26.353609] mhi mhi1: Error recycling buffer for chan:21
-[   26.359207] mhi mhi1: Error recycling buffer for chan:21
-...
-
-and after that there's a warning at shutdown when tearing down mhi:
-
-[   36.384573] WARNING: CPU: 5 PID: 109 at mm/slub.c:4753 free_large_kmalloc+0x13c/0x160
-[   36.552152] CPU: 5 UID: 0 PID: 109 Comm: kworker/u52:0 Not tainted 6.16.0-rc2 #10 PREEMPT
-[   36.560724] Hardware name: Qualcomm CRD, BIOS 6.0.241007.BOOT.MXF.2.4-00534.1-HAMOA-1 10/ 7/2024
-[   36.569835] Workqueue: mhi_hiprio_wq mhi_pm_st_worker [mhi]
-[   36.575648] pstate: 21400005 (nzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-[   36.582882] pc : free_large_kmalloc+0x13c/0x160
-[   36.587610] lr : kfree+0x208/0x32c
-[   36.591166] sp : ffff80008107b900
-[   36.594636] x29: ffff80008107b900 x28: 0000000000000000 x27: ffff800082b9d690
-[   36.602045] x26: ffff800082f681e0 x25: ffff800082f681e8 x24: 00000000ffffffff
-[   36.609454] x23: ffff00080406cd80 x22: 0000000000000001 x21: ffff0008023f2000
-[   36.616863] x20: 05a2dd88f4602478 x19: fffffdffe008fc80 x18: 00000000000c8dc0
-[   36.624272] x17: 0000000000000028 x16: ffffdd893588f02c x15: ffffdd8936a28928
-[   36.631681] x14: ffffdd8936af16e8 x13: 0000000000008000 x12: 0000000000000000
-[   36.639097] x11: ffffdd893709c968 x10: 0000000000000001 x9 : ffff0008099c95c0
-[   36.646505] x8 : 0000001000000000 x7 : ffff0008099c95c0 x6 : 00000008823f2000
-[   36.653915] x5 : ffffdd8937417f60 x4 : 0000000000000020 x3 : ffff000801c2d7e0
-[   36.661324] x2 : 0bfffe0000000000 x1 : ffff0008023f2000 x0 : 00000000000000ff
-[   36.668733] Call trace:
-[   36.671307]  free_large_kmalloc+0x13c/0x160 (P)
-[   36.676036]  kfree+0x208/0x32c
-[   36.679241]  mhi_reset_chan+0x1d4/0x2e4 [mhi]
-[   36.683786]  mhi_driver_remove+0x1bc/0x1fc [mhi]
-[   36.688597]  device_remove+0x70/0x80
-[   36.692341]  device_release_driver_internal+0x1e4/0x240
-[   36.697778]  device_release_driver+0x18/0x24
-[   36.702233]  bus_remove_device+0xd0/0x148
-[   36.706424]  device_del+0x148/0x374
-[   36.710077]  mhi_destroy_device+0xb0/0x13c [mhi]
-[   36.714888]  device_for_each_child+0x60/0xbc
-[   36.719344]  mhi_pm_disable_transition+0x154/0x510 [mhi]
-[   36.724875]  mhi_pm_st_worker+0x2dc/0xb18 [mhi]
-[   36.729594]  process_one_work+0x20c/0x610
-[   36.733788]  worker_thread+0x244/0x388
-[   36.737711]  kthread+0x150/0x220
-[   36.741093]  ret_from_fork+0x10/0x20
-
-Johan
+Best regards,
+Krzysztof
 
