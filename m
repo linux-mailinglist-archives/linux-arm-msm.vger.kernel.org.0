@@ -1,108 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-61651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA03AADE0BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 03:40:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E7F7ADE122
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 04:33:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 35F8D1898EAB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 01:41:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 35F713BD48A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 02:33:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FBCA199FD0;
-	Wed, 18 Jun 2025 01:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B57618B495;
+	Wed, 18 Jun 2025 02:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dw/g8ufy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DLA2Tv3x"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C800B199396;
-	Wed, 18 Jun 2025 01:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4561854;
+	Wed, 18 Jun 2025 02:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750210842; cv=none; b=s6o9K1Qf5eHNiVYhEYjfH97w6rxfW2m3nT+gTzI09WPaVmNAD90PaYcp57fjbnrChncR/uTxVlddeCOXJf0uAh8/ZhmvTzgPzAp2ERsqhTJ3NXPX9srzQYQs5iU/7+RNbiM6eKu31KCSklasH0v3RfGP1lhmrcPG51jrKqQIOQw=
+	t=1750214014; cv=none; b=XKv3OLU8lg2gtjRXVx5qaq/TIAi26UwYHRaoSOha/uO5ntQMQweJSU6WqSt1qOjyQO3FdcyN/Wt4XVUsxsZ4lstVdZzg33tgUGdcbiEr9bh1vwz69WH15wNI0oNQCa88SS6tDnzf1x8qk0UtJJixjhukj0a5zsvqWfh19klK3jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750210842; c=relaxed/simple;
-	bh=dWWHgiEt3tYWTZRgQm02U8aGJUCEgTY0w6sEmnkU+4s=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=EOeaqdgMAwHUXcMNCjSAvVcIz62zJpSucv2Zhr+XXFO6s1D0xvKOVXaoR23InDEzI4OJceUXUZGA/WDPyYjPYB6dwfLoBuQdSIw5ajRVWAIWZcIO+NfSKc82YY1w8aRsIrKc8QeHxWzzLC6vJPJ8EzNBopo/BInmBfRYJLFodC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dw/g8ufy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348C4C4CEF0;
-	Wed, 18 Jun 2025 01:40:41 +0000 (UTC)
+	s=arc-20240116; t=1750214014; c=relaxed/simple;
+	bh=t+i4C9taSwbDZfwplbne/P71XM8K8RlhY+2k7AICaCA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GN9DGmGuHaWHNPSxjAbFiHGrsSnMbUcg87mPzl6g1GeKyLcEJAweIKDeCGLvKTOBnrkGaNJ3dR9XS/YS0zAUzaxlDtEy9xEnVdvwPjAzAQpCnmYMxSBCT4dP1+G5kmdzCM1MHyWV9fBMqRSdVBY86/ixbla/Fobl18pgVAb86N4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DLA2Tv3x; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCA0C4CEE3;
+	Wed, 18 Jun 2025 02:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750210841;
-	bh=dWWHgiEt3tYWTZRgQm02U8aGJUCEgTY0w6sEmnkU+4s=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=dw/g8ufyu11VCbuMaNH4zZzsZdGQI+Frv2Bdhof0fbxSnVzrdeBylNSHvRJhDwibv
-	 QD3nGymvb8a2VPn8/d/F+xH5C2fcdkUVNUfs9gBSYOYcnoBtQf/YiioPQ8qWhU/1Fi
-	 /TwI0Cz59/BlnTyiC5q7u6K6bE2XF85SWcYyM4R8LcW5T8dAQ6pLOup1yl6nQK2rwo
-	 tNb+jVEzw8TSsodBpO8MgA6c/kh20BoqSecflSaYFp9EDsbuguuuZnpJU8gCvFN5nQ
-	 WmlL/8Ss+ex1zz0eLaE1Kz/w/ns6U8ZH+eTjGkqyptLL6PEMAm3kXr+3w1NQjjOHsu
-	 npR4ZTWw/z2xg==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id EADD338111DD;
-	Wed, 18 Jun 2025 01:41:10 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1750214013;
+	bh=t+i4C9taSwbDZfwplbne/P71XM8K8RlhY+2k7AICaCA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DLA2Tv3x4RMPWICy2wVHZWQWdTAPRvWHGbbau9fYwtcMKiJrqUkdkEm4mLEujmLW+
+	 ImGll3SRAhLT3wb9cy1UADg7Souv/tHfYUCUFAYIR+cKy7U90FrBRnLulGtyxP6oEa
+	 +BQF/5dDMyKyLJd27emcr3RvOlZJb1kJC4niCQeTzhKF8O1ejBYds+ZBqcvV7f1Mg6
+	 mgmPAZG6zaoMjc25d8KKSrwMDY3Ubr9UTGs5K7EXiN/9WtP/q+E6jjU3yaT0ldbJqv
+	 SCHa4C5OClQJkTpIbVAmXHe4gH26kBBOIJY7xVXysqJjmMBiI2Dw1kag28JZVWZSzT
+	 HYEsiLUqdz3/A==
+Date: Tue, 17 Jun 2025 21:33:31 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH] arm64: dts: qcom: add debug UART pins to reserved GPIO
+ ranges on RB2
+Message-ID: <iuqppo7k6qp7v4pm4xtllqkqdtnarlkr2ey7s3fp3g2jd5dynz@oanc7zlfod7m>
+References: <20250616143341.51944-1-brgl@bgdev.pl>
+ <713cd518-935f-4501-9753-d33c9ea6aef7@oss.qualcomm.com>
+ <CAMRc=MceV-HgyFFvqytXAiuY+y10PQbdPBxuvd57NCeSLVLXCg@mail.gmail.com>
+ <vyr6s4wzw5jc5gt7mywu4s4xob6aeca5aclbe5tdr4v3yng2tn@yb7rn2b2btb7>
+ <CAMRc=MccuJe144NcwapPPRXtQOZbPW8qmybuEA2O9EtfKzs7oQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 0/5] net: use new GPIO line value setter callbacks
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <175021086974.3761578.16857215533657509710.git-patchwork-notify@kernel.org>
-Date: Wed, 18 Jun 2025 01:41:09 +0000
-References: <20250616-gpiochip-set-rv-net-v2-0-cae0b182a552@linaro.org>
-In-Reply-To: <20250616-gpiochip-set-rv-net-v2-0-cae0b182a552@linaro.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: andrew@lunn.ch, olteanv@gmail.com, davem@davemloft.net,
- edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
- linus.walleij@linaro.org, chester.a.unal@arinc9.com, daniel@makrotopia.org,
- dqfext@gmail.com, sean.wang@mediatek.com, matthias.bgg@gmail.com,
- angelogioacchino.delregno@collabora.com, mkl@pengutronix.de,
- mailhol.vincent@wanadoo.fr, hkallweit1@gmail.com, linux@armlinux.org.uk,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-mediatek@lists.infradead.org, linux-can@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, bartosz.golaszewski@linaro.org
+In-Reply-To: <CAMRc=MccuJe144NcwapPPRXtQOZbPW8qmybuEA2O9EtfKzs7oQ@mail.gmail.com>
 
-Hello:
-
-This series was applied to netdev/net-next.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Mon, 16 Jun 2025 09:24:03 +0200 you wrote:
-> Commit 98ce1eb1fd87e ("gpiolib: introduce gpio_chip setters that return
-> values") added new line setter callbacks to struct gpio_chip. They allow
-> to indicate failures to callers. We're in the process of converting all
-> GPIO controllers to using them before removing the old ones. This series
-> converts all GPIO chips implemented under drivers/net/.
+On Tue, Jun 17, 2025 at 01:28:41PM +0200, Bartosz Golaszewski wrote:
+> On Tue, Jun 17, 2025 at 5:18 AM Bjorn Andersson <andersson@kernel.org> wrote:
+> >
+> > On Mon, Jun 16, 2025 at 06:43:16PM +0200, Bartosz Golaszewski wrote:
+> > > On Mon, Jun 16, 2025 at 6:20 PM Konrad Dybcio
+> > > <konrad.dybcio@oss.qualcomm.com> wrote:
+> > > >
+> > > > On 6/16/25 4:33 PM, Bartosz Golaszewski wrote:
+> > > > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > > >
+> > > > > GPIO12 and GPIO13 are used for the debug UART and must not be available
+> > > > > to drivers or user-space. Add them to the gpio-reserved-ranges.
+> > > > >
+> > > > > Fixes: 8d58a8c0d930c ("arm64: dts: qcom: Add base qrb4210-rb2 board dts")
+> > > > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > > > ---
+> > > >
+> > > > That also makes them unavailable to the kernel though, no?
+> > > >
+> > >
+> > > Yes. They could only be used by QUP - I2C or SPI #4 - on sm6115 but
+> > > none of these are used on RB2. I just noticed that my console froze
+> > > when I accidentally requested GPIO12 and figured that it makes sense
+> > > to make them unavailable. Let me know if this should be dropped.
+> > >
+> >
+> > I'm guessing that this would be a problem for any pin that is used for
+> > some other function. Should we instead prevent userspace from being able
+> > to request pins that are not in "gpio" pinmux state?
+> >
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> That's supported by the "strict" flag in struct pinmux_ops. However
+> the two pins in question are muxed to GPIOs as far as the msm pinctrl
+> driver is concerned so it wouldn't help.
+
+This doesn't sound correct, the pins needs to be muxed to the qup in
+order for UART to work, so how can they show as "gpio" function?
+
+> Turning on the strict flag at
+> the global level of the pinctrl-msm driver would be risky though as it
+> would affect so many platforms, I'm sure it would break things. So IMO
+> it's either this change or let's drop it and leave it as is.
 > 
-> [...]
 
-Here is the summary with links:
-  - [v2,1/5] net: dsa: vsc73xx: use new GPIO line value setter callbacks
-    https://git.kernel.org/netdev/net-next/c/c73832445bf2
-  - [v2,2/5] net: dsa: mt7530: use new GPIO line value setter callbacks
-    https://git.kernel.org/netdev/net-next/c/4a03562794a3
-  - [v2,3/5] net: can: mcp251x: propagate the return value of mcp251x_spi_write()
-    https://git.kernel.org/netdev/net-next/c/b9e3c7af9e4d
-  - [v2,4/5] net: can: mcp251x: use new GPIO line value setter callbacks
-    https://git.kernel.org/netdev/net-next/c/5d31311715b5
-  - [v2,5/5] net: phy: qca807x: use new GPIO line value setter callbacks
-    https://git.kernel.org/netdev/net-next/c/dea3be40464a
+I share your concern, but the benefit sounds desirable. I think
+protecting the UART pins would set a precedence for filling that list
+with all kinds of pins, for all platforms, so lets give this some more
+thought, 
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Thank you,
+Bjorn
 
