@@ -1,383 +1,396 @@
-Return-Path: <linux-arm-msm+bounces-61671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE7DAADE28D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 06:29:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A8B00ADE2F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 07:15:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BEFE73AA199
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 04:28:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7714D3B2EEF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 05:15:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 430CC1EF092;
-	Wed, 18 Jun 2025 04:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 995E61E5702;
+	Wed, 18 Jun 2025 05:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cMOaRcvp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iOGHIrpA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420A01C5496
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 04:26:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D151922C0;
+	Wed, 18 Jun 2025 05:15:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750220822; cv=none; b=bPNPUBU4rIBeiBmbjiTTLXqcnfsFWDQhl/F1eYnS8n1U5C7ocyrJyisv+ZfKzYdA2oFW7JiqxVVC8icsr38UAhM41TkQf5b7Rp7iW+1JV+JVRo3piTGHXuMyenFgfOzHjvLgOpkduWyfLptCZIeTo5YJybbfJXDWOH4XP9EM8n0=
+	t=1750223740; cv=none; b=TmGIKeMTPxCEsCbhB61+HpZVypeeNqTILBj9JfSVsOikJ/0hoC0I7C2hWSQTNrrsXE2DNuSP7eYLWANTyZG5xef+jcsw5UZcO2azN1kdXBYpW0XhoeFaOLLr5m7fKMNVtkfAUpTskJhXIohblS6A6B2LQ9t7AffFkwLZhBCEgYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750220822; c=relaxed/simple;
-	bh=Re7uJ68Ehg6FTxwG5PwASqyRnnvQuln7dCvdjpWABto=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Gb1WNA64HAwUQw6yFiSTiCm5F72gPMNKVzp4vnixN7e5jD2XRSUszodPMwEmfc8h6Iublnq1lwo13X8Y+bd5VR64EzGAN8Mji7KwTmwbjVFsEPwjcyYcAX8MYR6G2UAi5X+LHkqrUheFJTt6VyNxJTG6iM+SIOcLcnFNlCKDlgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cMOaRcvp; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55I1UO9O021241
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 04:26:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=HYo/jTJnslty2qiYpTIGQd
-	70ScyWgQWrHYTXzntSuZw=; b=cMOaRcvpLfneOBXi7/Lf5u9F/foeHEZfZEo9a9
-	HC9mCxRN8HXH6OJTVRrQn1g2gRsXa+xv9JSRp/cfIcAf11Atj7tb7gYluGtBKcbu
-	UslDAUwzYUH6YvKnhN3fHKpPs3xKRWU2vYgod2nZxn87LX4pv4lFg+70LM4supCb
-	Es+Yp3uA54kbKj5+plq8L+87pySFAhqdlbeJsqgnxU3njR8bJ0tW8nlUK9GkK/yh
-	mbAkv6eABIP9yk4BwFWlyDWEaMrgeNTqLBlHJQIHxbTo8X6BDjPTMzp6Eutgh+Fp
-	UsTOU+wx2LS5m0B2IG9keHf+7ZIJpm5qvYAGEN6vR7oDQ5WA==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 479qp5s9pb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 04:26:58 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-747cebffd4eso5080313b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jun 2025 21:26:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750220817; x=1750825617;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HYo/jTJnslty2qiYpTIGQd70ScyWgQWrHYTXzntSuZw=;
-        b=SkpJsQaTl4HgnTm01SsbgWvq0QrIeyuh2Bjn1TbK9GPQ0wZi49uwqw9JNaJ737wLDe
-         iVWHF5Ba7eBpdrdia0kzoYzbLXDDq20VwrQaom427rB/kWRzipJWPDZqs453iEO33M/4
-         jYpKp1laTAhX3T9+K98lx6xL+LFPy941Iz2Vzf3GKY6Ad/NKbTalDfz97MZlHxtuPASt
-         UFcAAVAILqgAKgL5pVY2qt/P/08n7qGCs36qRdvTUiaRRowftxdojAT2mzfkDU04MWaQ
-         jMOpPQyK8OyqB/ge98l3S7Q8el/y8048gaQFvf55JV5PfDgTXs5FmBm3AGHQlFMcyqcN
-         Y2Tw==
-X-Gm-Message-State: AOJu0YxdG4RZlshhzPu6+WVjFm8KpXmfQYCDvj5LfNjwe1zOeNMZlEYo
-	JljzSMuWI1C3+GUSCF06pHlvqZXyzg7912JHvbgcegYid23f7O0pnrJ2j2sP8i5/vzNCinVQuiY
-	kjuiYPZ0EzB8FZCY0seti9boCrkQ34H4+GXopEKZBCyRs7pPfzBTMes2em85z9ubhPnSSVterGC
-	b2Ng==
-X-Gm-Gg: ASbGnctneRT9iwBNtmPc3hsCcYm9aqzv79wGWGnPSq1UdkDsoBe1qa6sZZzdZixtxfU
-	sF1iNDQTyLyRKvNvBvkjKlcUfGuprdPSQ/RZ8liHbCD0BI5HMVp0r+lC6EJoLup/Y+b/KZys6Uk
-	f5zsyAYXrTStHdt/es3hU82NJeXcjabo0fdv+0owh6tzIJjVZuVReQcwPDOMcmeL+EfjjpeOdyy
-	FKEFH+4Jx9m9shNFuf+unHW0ghU8nyujkMnz28o6MOe3iNr3Wx+FwCFSml45ovmRGzpgjrtzwmu
-	BMiccEq7+QoDxHGgOQM4ASHJe+G8yGJSXgFKERzoaTi6a2gBnaUVKEqs8nPeoDwm7F7yga1aZBq
-	KlOOewg==
-X-Received: by 2002:a05:6a00:92a8:b0:742:a5f2:9c51 with SMTP id d2e1a72fcca58-7489cfeb010mr22046437b3a.16.1750220817483;
-        Tue, 17 Jun 2025 21:26:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHNdoo1zE+YYZvAP9uC0JrnzDCOJF8BLEa+zrc49IDdrGbi4+kZ4TzqDxfxMmnSgeKPJmqXbQ==
-X-Received: by 2002:a05:6a00:92a8:b0:742:a5f2:9c51 with SMTP id d2e1a72fcca58-7489cfeb010mr22046406b3a.16.1750220816940;
-        Tue, 17 Jun 2025 21:26:56 -0700 (PDT)
-Received: from hu-azarrabi-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7489000749csm10252212b3a.68.2025.06.17.21.26.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jun 2025 21:26:56 -0700 (PDT)
-From: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-Date: Tue, 17 Jun 2025 21:26:22 -0700
-Subject: [PATCH v2] tee: optee: prevent use-after-free when the client
- exits before the supplicant
+	s=arc-20240116; t=1750223740; c=relaxed/simple;
+	bh=9cnnnPk+qwpmc0uHzEP50LzcjBCctcnPH90s9o0gvYU=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=HG78dgcP24J7gv78EUbd2n63OI17eBGdr+ApW4oBjzCA+KcITDvLHLvlmhnQ+d2YIRhxyo8TfNaQzF83Z/0ass9hhsHnjO+zfxAP/rFSpu+JbsFA+bCfF0azEdC852uukrVzaxS9PAQdpnmOdt7+hnpx4LraQ/gT4GT5o49KUek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iOGHIrpA; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55HNQGKJ017747;
+	Wed, 18 Jun 2025 05:15:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	zYwBcLDqSZXEmkD+XgiK2pi5Ul4Qa6msN9KN86EaU2o=; b=iOGHIrpAEcfm03R1
+	qnkZjPm7THg+77P5o861YH+5q4tYBBmfacTCxWK/VhSAHphw0L3zd1YaF42ARY48
+	cCZF1wFdmX095cUTxFI5DFHzDY7glxiR+silYLdlX2I76bGBzmpA3u18PccvOuGQ
+	upw+UIpXbYUVKez/9uYQH7mtjJ4KbNZGidUX7VePCWjNkM232MO+u4yDWQg2vM9U
+	s+M/Z83ftSU6gGuBME6UMPOXpL5pNcNEZLaYrxz6+ZbcNDzA91OZHn+tUw1NQ9td
+	eFn3ZCjUUJx99wyZaRKCZqE7t537AdNzerdmWPjnakZYKCAtRDV8EUL+Kk0MZ7Ca
+	m7fO9w==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4791crtkmr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Jun 2025 05:15:24 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55I5FMdn006302
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Jun 2025 05:15:22 GMT
+Received: from [10.239.29.49] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 17 Jun
+ 2025 22:15:18 -0700
+Message-ID: <36464d9c-9bbb-488e-85c0-7e5318a16bf8@quicinc.com>
+Date: Wed, 18 Jun 2025 13:15:16 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250617-fix-use-after-free-v2-1-1fbfafec5917@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAO0/UmgC/22NQQ6CMBBFr0Jm7ZC2UiGuvIdhUeiMNBGqLTQaw
- t2tJO7cTPJ+/n+zQqTgKMK5WCFQctH5KYM6FNAPZroROpsZlFBanESF7F64RELDMwXkQIQNs+y
- 01bauK8jDR6Dc2qXXNvPg4uzDe/+R5Df96fQ/XZIo0dTCqmPHrKrm4mMsn4u5934cy3yg3bbtA
- 80QXZO7AAAA
-To: Jens Wiklander <jens.wiklander@linaro.org>,
-        Sumit Garg <sumit.garg@kernel.org>, Arnd Bergmann <arnd@arndb.de>
-Cc: linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org,
-        linux-kernel@vger.kernel.org,
-        Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-X-Mailer: b4 0.13.0
-X-Proofpoint-GUID: pHOSLL0e_6LaOgGJ77SYG7cwrQIBheSR
-X-Proofpoint-ORIG-GUID: pHOSLL0e_6LaOgGJ77SYG7cwrQIBheSR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE4MDAzNSBTYWx0ZWRfX5WHdDMTmDWAG
- kLhpDiFW76qwJCf/b79P76xt4kN6rATXhM4MfztP/mO20r4kmajFh4xNqy3ZFlcfqgcoaz3QcuZ
- Hzec820b0k12Xrsu9pZTvYOCqQ2EoRVHEWj16XKsiZxQIACYD5rrlRVwg872aSBTPKaXNAwguYV
- /aXNd5pAQgKcU9dzOo0fdHqCNd40EvUIJGHAtYq955BPRLvjoc/O1hd2dTZGb++l9WX4njQrstX
- q/h/5QL1axxg7SRPN616ZmWQt5pRzB/o6EAuT62IR1kTI6iDC+eaOWhQgBjlLE1rgoCbxGssija
- SIhiPc+U/ZHtl+PhvW4W0xvFYBeiZE+84x1yNigv27iih2gHoxzY6n6EAvZFMt8evrhypBYr/NP
- vsKqoveIRBh+oQl2ApaF86nVklO8AA4nhCuc8u0TBqKygEGPyIeep2KfZcjLr2WoqJwUzpu5
-X-Authority-Analysis: v=2.4 cv=fMc53Yae c=1 sm=1 tr=0 ts=68524013 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=BsZwT7xNq_OLigDTsxMA:9 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] misc: fastrpc: add support for gpdsp remoteproc
+From: Ling Xu <quic_lxu5@quicinc.com>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <amahesh@qti.qualcomm.com>, <arnd@arndb.de>,
+        <gregkh@linuxfoundation.org>
+CC: <quic_kuiw@quicinc.com>, <quic_ekangupt@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
+References: <20250320091446.3647918-1-quic_lxu5@quicinc.com>
+ <20250320091446.3647918-3-quic_lxu5@quicinc.com>
+ <30bba296-8e6f-41ee-880e-2d5ecc8fe5a4@linaro.org>
+ <e2a8528b-fa18-471f-9cb8-da64bb488f2a@quicinc.com>
+ <07bfc5f3-1bcb-4018-bd63-8317ec6dac48@linaro.org>
+ <5f70a482-6e61-4817-afdb-d5db4747897a@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <5f70a482-6e61-4817-afdb-d5db4747897a@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: LQme4HAp6VPPDX9ZXZ5qmACbY6suSGID
+X-Authority-Analysis: v=2.4 cv=BoedwZX5 c=1 sm=1 tr=0 ts=68524b6c cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=NEAV23lmAAAA:8
+ a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=vofbUKIwNjXqtydJ3YAA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: LQme4HAp6VPPDX9ZXZ5qmACbY6suSGID
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE4MDA0MiBTYWx0ZWRfXw6wora67F3DJ
+ Lglk1ONJ2VONaC+U9nUB1XQBDgFEKW8/8Ak8IEZiYE3gBkxVe1wgzLpq2x7OJvG0aI69LUDE7tF
+ dLSln09KLLnEQgc3Er82fYP83D0UAgbJKJN8Kq00OmwKxgXyRgxnjpOwOxxXl3YOJEqyeyY1SM3
+ JqWgFstm7LPUg7gofkQqlHSrk4nd8Is7hvHKPrA7RcWCddm3HORwmR5+0ceCi1S859gsgSX2are
+ jtGp6SqKe/SrJZVo1Dh0ShaNc1Qb8KxJO4J3GXkObpAVA8MTbSIJlqmQ4+qNP4j2YaaHASTq6qt
+ xslpEkAMHx19h6NtFPZuhE2dHMdSdxG7C/iYigN9kXTsq4aj/2XAdqkpawvgcHuOOUokPwiQIOv
+ CdAl0iLReclvg0fdBSzBNSrbI5XihgAIQt48dZhGC9bDYix5KwUqtBjDoVzTWsXZW6nwS1m7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-18_01,2025-06-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 bulkscore=0 clxscore=1015 malwarescore=0
- mlxlogscore=999 spamscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
- priorityscore=1501 suspectscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506180035
+ impostorscore=0 mlxscore=0 adultscore=0 phishscore=0 lowpriorityscore=0
+ mlxlogscore=999 bulkscore=0 malwarescore=0 priorityscore=1501 clxscore=1015
+ spamscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506180042
 
-Commit 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop") made the
-client wait as killable so it can be interrupted during shutdown or
-after a supplicant crash. This changes the original lifetime expectations:
-the client task can now terminate while the supplicant is still processing
-its request.
+在 6/16/2025 7:28 PM, Ling Xu 写道:
+> 在 4/8/2025 4:14 PM, Srinivas Kandagatla 写道:
+>>
+>>
+>> On 07/04/2025 10:13, Ling Xu wrote:
+>>> 在 3/21/2025 1:11 AM, Srinivas Kandagatla 写道:
+>>>>
+>>>>
+>>>> On 20/03/2025 09:14, Ling Xu wrote:
+>>>>> The fastrpc driver has support for 5 types of remoteprocs. There are
+>>>>> some products which support GPDSP remoteprocs. Add changes to support
+>>>>> GPDSP remoteprocs.
+>>>>>
+>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>>>> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
+>>>>> ---
+>>>>>    drivers/misc/fastrpc.c | 10 ++++++++--
+>>>>>    1 file changed, 8 insertions(+), 2 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>>>>> index 7b7a22c91fe4..80aa554b3042 100644
+>>>>> --- a/drivers/misc/fastrpc.c
+>>>>> +++ b/drivers/misc/fastrpc.c
+>>>>> @@ -28,7 +28,9 @@
+>>>>>    #define SDSP_DOMAIN_ID (2)
+>>>>>    #define CDSP_DOMAIN_ID (3)
+>>>>>    #define CDSP1_DOMAIN_ID (4)
+>>>>> -#define FASTRPC_DEV_MAX        5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
+>>>>> +#define GDSP0_DOMAIN_ID (5)
+>>>>> +#define GDSP1_DOMAIN_ID (6)
+>>>>
+>>>> We have already made the driver look silly here, Lets not add domain ids for each instance, which is not a scalable.
+>>>>
+>>>> Domain ids are strictly for a domain not each instance.
+>>>>
+>>>>
+>>>>> +#define FASTRPC_DEV_MAX        7 /* adsp, mdsp, slpi, cdsp, cdsp1, gdsp0, gdsp1 */
+>>>>>    #define FASTRPC_MAX_SESSIONS    14
+>>>>>    #define FASTRPC_MAX_VMIDS    16
+>>>>>    #define FASTRPC_ALIGN        128
+>>>>> @@ -107,7 +109,9 @@
+>>>>>    #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
+>>>>>      static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
+>>>>> -                        "sdsp", "cdsp", "cdsp1" };
+>>>>> +                        "sdsp", "cdsp",
+>>>>> +                        "cdsp1", "gdsp0",
+>>>>> +                        "gdsp1" };
+>>>>>    struct fastrpc_phy_page {
+>>>>>        u64 addr;        /* physical address */
+>>>>>        u64 size;        /* size of contiguous region */
+>>>>> @@ -2338,6 +2342,8 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>>>>            break;
+>>>>>        case CDSP_DOMAIN_ID:
+>>>>>        case CDSP1_DOMAIN_ID:
+>>>>> +    case GDSP0_DOMAIN_ID:
+>>>>> +    case GDSP1_DOMAIN_ID:
+>>>>>            data->unsigned_support = true;
+>>>>>            /* Create both device nodes so that we can allow both Signed and Unsigned PD */
+>>>>>            err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
+>>>>
+>>>>
+>>>> Can you try this patch: only compile tested.
+>>>>
+>>>> ---------------------------------->cut<---------------------------------------
+>>>>  From 3f8607557162e16673b26fa253d11cafdc4444cf Mon Sep 17 00:00:00 2001
+>>>> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>>>> Date: Thu, 20 Mar 2025 17:07:05 +0000
+>>>> Subject: [PATCH] misc: fastrpc: cleanup the domain names
+>>>>
+>>>> Currently the domain ids are added for each instance of domain, this is
+>>>> totally not scalable approch.
+>>>>
+>>>> Clean this mess and create domain ids for only domains not its
+>>>> instances.
+>>>> This patch also moves the domain ids to uapi header as this is required
+>>>> for FASTRPC_IOCTL_GET_DSP_INFO ioctl.
+>>>>
+>>>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>>>> ---
+>>>>   drivers/misc/fastrpc.c      | 45 ++++++++++++++++++++-----------------
+>>>>   include/uapi/misc/fastrpc.h |  7 ++++++
+>>>>   2 files changed, 32 insertions(+), 20 deletions(-)
+>>>>
+>>>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>>>> index 7b7a22c91fe4..b3932897a437 100644
+>>>> --- a/drivers/misc/fastrpc.c
+>>>> +++ b/drivers/misc/fastrpc.c
+>>>> @@ -23,12 +23,6 @@
+>>>>   #include <uapi/misc/fastrpc.h>
+>>>>   #include <linux/of_reserved_mem.h>
+>>>>
+>>>> -#define ADSP_DOMAIN_ID (0)
+>>>> -#define MDSP_DOMAIN_ID (1)
+>>>> -#define SDSP_DOMAIN_ID (2)
+>>>> -#define CDSP_DOMAIN_ID (3)
+>>>> -#define CDSP1_DOMAIN_ID (4)
+>>>> -#define FASTRPC_DEV_MAX        5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
+>>>>   #define FASTRPC_MAX_SESSIONS    14
+>>>>   #define FASTRPC_MAX_VMIDS    16
+>>>>   #define FASTRPC_ALIGN        128
+>>>> @@ -106,8 +100,6 @@
+>>>>
+>>>>   #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
+>>>>
+>>>> -static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
+>>>> -                        "sdsp", "cdsp", "cdsp1" };
+>>>>   struct fastrpc_phy_page {
+>>>>       u64 addr;        /* physical address */
+>>>>       u64 size;        /* size of contiguous region */
+>>>> @@ -1769,7 +1761,7 @@ static int fastrpc_get_dsp_info(struct fastrpc_user *fl, char __user *argp)
+>>>>           return  -EFAULT;
+>>>>
+>>>>       cap.capability = 0;
+>>>> -    if (cap.domain >= FASTRPC_DEV_MAX) {
+>>>> +    if (cap.domain >= FASTRPC_DOMAIN_MAX) {
+>>>>           dev_err(&fl->cctx->rpdev->dev, "Error: Invalid domain id:%d, err:%d\n",
+>>>>               cap.domain, err);
+>>>>           return -ECHRNG;
+>>>
+>>> I tested this patch and saw one issue.
+>>> Here FASTRPC_DOMAIN_MAX is set to 4, but in userspace, cdsp1 is 4, gdsp0 is 5 and gdsp1 is 6.
+>>
+>>
+>> Why is the userspace using something that is not uAPI?
+>>
+>> Why does it matter if its gdsp0 or gdsp1 for the userspace?
+>> It should only matter if its gdsp domain or not.
+>>
+> 
+> Give an example here:
+> In test example, user can use below API to query the notification capability of the specific domain_id,
+> (actually this will not have any functional issue, but just return an error and lead wrong message):
+> request_status_notifications_enable(domain_id, (void*)STATUS_CONTEXT, pd_status_notifier_callback)
+> 
+> this will call ioctl_getdspinfo in fastrpc_ioctl.c:
+> https://github.com/quic-lxu5/fastrpc/blob/8feccfd2eb46272ad1fabed195bfddb7fd680cbd/src/fastrpc_ioctl.c#L201
+> 
+> code snip:
+> 	FARF(ALWAYS, "ioctl_getdspinfo in ioctl.c domain:%d", domain);
+> 	ioErr = ioctl(dev, FASTRPC_IOCTL_GET_DSP_INFO, &cap);
+> 	FARF(ALWAYS, "done ioctl_getdspinfo in ioctl.c ioErr:%x", ioErr);
+> 
+> and finally call fastrpc_get_dsp_info in fastrpc.c.
+> 
+> if I use the patch you shared, it will report below error:
+> 
+> UMD log:
+> 2025-01-08T18:45:03.168718+00:00 qcs9100-ride-sx calculator: fastrpc_ioctl.c:201: ioctl_getdspinfo in ioctl.c domain:5
+> 2025-01-08T18:45:03.169307+00:00 qcs9100-ride-sx calculator: log_config.c:396: file_watcher_thread starting for domain 5
+> 2025-01-08T18:45:03.180355+00:00 qcs9100-ride-sx calculator: fastrpc_ioctl.c:203: done ioctl_getdspinfo in ioctl.c ioErr:ffffffff
+> 
+> putty log:
+> [ 1332.308444] qcom,fastrpc 20c00000.remoteproc:glink-edge.fastrpcglink-apps-dsp.-1.-1: Error: Invalid domain id:5, err:0
+> 
+> Because on the user side, gdsp0 and gdsp1 will be distinguished to 5 and 6.
+> so do you mean you want me to modify UMD code to transfer both gdsp0 and gdsp1 to gdsp just in ioctl_getdspinfo?
+>>
 
-If the client exits first it removes the request from its queue and
-kfree()s it, while the request ID remains in supp->idr. A subsequent
-lookup on the supplicant path then dereferences freed memory, leading to
-a use-after-free.
+There is no error message after removing these lines based on srini's patch, is this modification appropriate? If so, I will submit a new patch.
+@@ -1771,17 +1763,6 @@ static int fastrpc_get_dsp_info(struct fastrpc_user *fl, char __user *argp)
+                return  -EFAULT;
 
-Serialise access to the request with supp->mutex:
-
-  * Hold supp->mutex in optee_supp_recv() and optee_supp_send() while
-    looking up and touching the request.
-  * Let optee_supp_thrd_req() notice that the client has terminated and
-    signal optee_supp_send() accordingly.
-
-With these changes the request cannot be freed while the supplicant still
-has a reference, eliminating the race.
-
-Fixes: 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop")
-Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
----
-Changes in v2:
-- Replace the static variable with a sentinel value.
-- Fix the issue with returning the popped request to the supplicant.
-- Link to v1: https://lore.kernel.org/r/20250605-fix-use-after-free-v1-1-a70d23bff248@oss.qualcomm.com
----
- drivers/tee/optee/supp.c | 110 ++++++++++++++++++++++++++++++++---------------
- 1 file changed, 75 insertions(+), 35 deletions(-)
-
-diff --git a/drivers/tee/optee/supp.c b/drivers/tee/optee/supp.c
-index d0f397c90242..fa39f5f226aa 100644
---- a/drivers/tee/optee/supp.c
-+++ b/drivers/tee/optee/supp.c
-@@ -9,6 +9,7 @@
- 
- struct optee_supp_req {
- 	struct list_head link;
-+	int id;
- 
- 	bool in_queue;
- 	u32 func;
-@@ -19,6 +20,9 @@ struct optee_supp_req {
- 	struct completion c;
- };
- 
-+/* It is temporary request used for invalid pending request in supp->idr. */
-+#define INVALID_REQ_PTR ((struct optee_supp_req *)ERR_PTR(-ENOENT))
-+
- void optee_supp_init(struct optee_supp *supp)
- {
- 	memset(supp, 0, sizeof(*supp));
-@@ -102,6 +106,7 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u32 func, size_t num_params,
- 	mutex_lock(&supp->mutex);
- 	list_add_tail(&req->link, &supp->reqs);
- 	req->in_queue = true;
-+	req->id = -1;
- 	mutex_unlock(&supp->mutex);
- 
- 	/* Tell an eventual waiter there's a new request */
-@@ -117,21 +122,40 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u32 func, size_t num_params,
- 	if (wait_for_completion_killable(&req->c)) {
- 		mutex_lock(&supp->mutex);
- 		if (req->in_queue) {
-+			/* Supplicant has not seen this request yet. */
- 			list_del(&req->link);
- 			req->in_queue = false;
-+
-+			ret = TEEC_ERROR_COMMUNICATION;
-+		} else if (req->id  == -1) {
-+			/*
-+			 * Supplicant has processed this request. Ignore the
-+			 * kill signal for now and submit the result.
-+			 */
-+			ret = req->ret;
-+		} else {
-+			/*
-+			 * Supplicant is in the middle of processing this
-+			 * request. Replace req with INVALID_REQ_PTR so that
-+			 * the ID remains busy, causing optee_supp_send() to
-+			 * fail on the next call to supp_pop_req() with this ID.
-+			 */
-+			idr_replace(&supp->idr, INVALID_REQ_PTR, req->id);
-+			ret = TEEC_ERROR_COMMUNICATION;
- 		}
-+
- 		mutex_unlock(&supp->mutex);
--		req->ret = TEEC_ERROR_COMMUNICATION;
-+	} else {
-+		ret = req->ret;
- 	}
- 
--	ret = req->ret;
- 	kfree(req);
- 
- 	return ret;
- }
- 
- static struct optee_supp_req  *supp_pop_entry(struct optee_supp *supp,
--					      int num_params, int *id)
-+					      int num_params)
- {
- 	struct optee_supp_req *req;
- 
-@@ -153,8 +177,8 @@ static struct optee_supp_req  *supp_pop_entry(struct optee_supp *supp,
- 		return ERR_PTR(-EINVAL);
- 	}
- 
--	*id = idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
--	if (*id < 0)
-+	req->id = idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
-+	if (req->id < 0)
- 		return ERR_PTR(-ENOMEM);
- 
- 	list_del(&req->link);
-@@ -214,7 +238,6 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
- 	struct optee *optee = tee_get_drvdata(teedev);
- 	struct optee_supp *supp = &optee->supp;
- 	struct optee_supp_req *req = NULL;
--	int id;
- 	size_t num_meta;
- 	int rc;
- 
-@@ -223,16 +246,47 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
- 		return rc;
- 
- 	while (true) {
--		mutex_lock(&supp->mutex);
--		req = supp_pop_entry(supp, *num_params - num_meta, &id);
--		mutex_unlock(&supp->mutex);
-+		scoped_guard(mutex, &supp->mutex) {
-+			req = supp_pop_entry(supp, *num_params - num_meta);
-+			if (!req)
-+				goto wait_for_request;
- 
--		if (req) {
- 			if (IS_ERR(req))
- 				return PTR_ERR(req);
--			break;
-+
-+			/*
-+			 * Process the request while holding the lock,
-+			 * so that optee_supp_thrd_req() doesn't pull the
-+			 * request out from under us.
-+			 */
-+
-+			if (num_meta) {
-+				/*
-+				 * tee-supplicant support meta parameters ->
-+				 * requests can be processed asynchronously.
-+				 */
-+				param->attr =
-+					TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INOUT |
-+					TEE_IOCTL_PARAM_ATTR_META;
-+				param->u.value.a = req->id;
-+				param->u.value.b = 0;
-+				param->u.value.c = 0;
-+			} else {
-+				supp->req_id = req->id;
-+			}
-+
-+			*func = req->func;
-+			*num_params = req->num_params + num_meta;
-+			memcpy(param + num_meta, req->param,
-+			       sizeof(struct tee_param) * req->num_params);
-+
-+			return 0;
- 		}
- 
-+		/* Check for the next request in the queue. */
-+		continue;
-+
-+wait_for_request:
- 		/*
- 		 * If we didn't get a request we'll block in
- 		 * wait_for_completion() to avoid needless spinning.
-@@ -245,27 +299,6 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
- 			return -ERESTARTSYS;
- 	}
- 
--	if (num_meta) {
--		/*
--		 * tee-supplicant support meta parameters -> requsts can be
--		 * processed asynchronously.
--		 */
--		param->attr = TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INOUT |
--			      TEE_IOCTL_PARAM_ATTR_META;
--		param->u.value.a = id;
--		param->u.value.b = 0;
--		param->u.value.c = 0;
--	} else {
--		mutex_lock(&supp->mutex);
--		supp->req_id = id;
--		mutex_unlock(&supp->mutex);
--	}
+        cap.capability = 0;
+-       if (cap.domain >= FASTRPC_DEV_MAX) {
+-               dev_err(&fl->cctx->rpdev->dev, "Error: Invalid domain id:%d, err:%d\n",
+-                       cap.domain, err);
+-               return -ECHRNG;
+-       }
 -
--	*func = req->func;
--	*num_params = req->num_params + num_meta;
--	memcpy(param + num_meta, req->param,
--	       sizeof(struct tee_param) * req->num_params);
--
- 	return 0;
- }
- 
-@@ -297,12 +330,19 @@ static struct optee_supp_req *supp_pop_req(struct optee_supp *supp,
- 	if (!req)
- 		return ERR_PTR(-ENOENT);
- 
-+	/* optee_supp_thrd_req() already returned to optee. */
-+	if (IS_ERR(req))
-+		goto failed_req;
-+
- 	if ((num_params - nm) != req->num_params)
- 		return ERR_PTR(-EINVAL);
- 
-+	req->id = -1;
-+	*num_meta = nm;
-+failed_req:
- 	idr_remove(&supp->idr, id);
- 	supp->req_id = -1;
--	*num_meta = nm;
-+
- 
- 	return req;
- }
-@@ -328,9 +368,8 @@ int optee_supp_send(struct tee_context *ctx, u32 ret, u32 num_params,
- 
- 	mutex_lock(&supp->mutex);
- 	req = supp_pop_req(supp, num_params, param, &num_meta);
--	mutex_unlock(&supp->mutex);
--
- 	if (IS_ERR(req)) {
-+		mutex_unlock(&supp->mutex);
- 		/* Something is wrong, let supplicant restart. */
- 		return PTR_ERR(req);
- 	}
-@@ -358,6 +397,7 @@ int optee_supp_send(struct tee_context *ctx, u32 ret, u32 num_params,
- 
- 	/* Let the requesting thread continue */
- 	complete(&req->c);
-+	mutex_unlock(&supp->mutex);
- 
- 	return 0;
- }
+-       /* Fastrpc Capablities does not support modem domain */
+-       if (cap.domain == MDSP_DOMAIN_ID) {
+-               dev_err(&fl->cctx->rpdev->dev, "Error: modem not supported %d\n", err);
+-               return -ECHRNG;
+-       }
 
----
-base-commit: 3be1a7a31fbda82f3604b6c31e4f390110de1b46
-change-id: 20250604-fix-use-after-free-8ff1b5d5d774
+        if (cap.attribute_id >= FASTRPC_MAX_DSP_ATTRIBUTES) {
+                dev_err(&fl->cctx->rpdev->dev, "Error: invalid attribute: %d, err: %d\n",
 
-Best regards,
+>> --srini
+>>
+>>
+>>> For example, if we run a demo on gdsp0, cap.domain copied from userspace will be 5 which could lead to wrong message.
+>>>
+>>> --Ling Xu
+>>>
+>>>> @@ -2255,6 +2247,24 @@ static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ct
+>>>>       return err;
+>>>>   }
+>>>>
+>>>> +static int fastrpc_get_domain_id(const char *domain)
+>>>> +{
+>>>> +    if (strncmp(domain, "adsp", 4) == 0) {
+>>>> +        return ADSP_DOMAIN_ID;
+>>>> +    } else    if (strncmp(domain, "cdsp", 4) == 0) {
+>>>> +        return CDSP_DOMAIN_ID;
+>>>> +    } else if (strncmp(domain, "mdsp", 4) ==0) {
+>>>> +        return MDSP_DOMAIN_ID;
+>>>> +    } else if (strncmp(domain, "sdsp", 4) ==0) {
+>>>> +        return SDSP_DOMAIN_ID;
+>>>> +    } else if (strncmp(domain, "gdsp", 4) ==0) {
+>>>> +        return GDSP_DOMAIN_ID;
+>>>> +    }
+>>>> +
+>>>> +    return -EINVAL;
+>>>> +
+>>>> +}
+>>>> +
+>>>>   static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>>>   {
+>>>>       struct device *rdev = &rpdev->dev;
+>>>> @@ -2272,15 +2282,10 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>>>           return err;
+>>>>       }
+>>>>
+>>>> -    for (i = 0; i < FASTRPC_DEV_MAX; i++) {
+>>>> -        if (!strcmp(domains[i], domain)) {
+>>>> -            domain_id = i;
+>>>> -            break;
+>>>> -        }
+>>>> -    }
+>>>> +    domain_id = fastrpc_get_domain_id(domain);
+>>>>
+>>>>       if (domain_id < 0) {
+>>>> -        dev_info(rdev, "FastRPC Invalid Domain ID %d\n", domain_id);
+>>>> +        dev_info(rdev, "FastRPC Domain %s not supported\n", domain);
+>>>>           return -EINVAL;
+>>>>       }
+>>>>
+>>>> @@ -2332,19 +2337,19 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>>>       case SDSP_DOMAIN_ID:
+>>>>           /* Unsigned PD offloading is only supported on CDSP and CDSP1 */
+>>>>           data->unsigned_support = false;
+>>>> -        err = fastrpc_device_register(rdev, data, secure_dsp, domains[domain_id]);
+>>>> +        err = fastrpc_device_register(rdev, data, secure_dsp, domain);
+>>>>           if (err)
+>>>>               goto fdev_error;
+>>>>           break;
+>>>>       case CDSP_DOMAIN_ID:
+>>>> -    case CDSP1_DOMAIN_ID:
+>>>> +    case GDSP_DOMAIN_ID:
+>>>>           data->unsigned_support = true;
+>>>>           /* Create both device nodes so that we can allow both Signed and Unsigned PD */
+>>>> -        err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
+>>>> +        err = fastrpc_device_register(rdev, data, true, domain);
+>>>>           if (err)
+>>>>               goto fdev_error;
+>>>>
+>>>> -        err = fastrpc_device_register(rdev, data, false, domains[domain_id]);
+>>>> +        err = fastrpc_device_register(rdev, data, false, domain);
+>>>>           if (err)
+>>>>               goto populate_error;
+>>>>           break;
+>>>> diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
+>>>> index f33d914d8f46..89516abd258f 100644
+>>>> --- a/include/uapi/misc/fastrpc.h
+>>>> +++ b/include/uapi/misc/fastrpc.h
+>>>> @@ -133,6 +133,13 @@ struct fastrpc_mem_unmap {
+>>>>       __s32 reserved[5];
+>>>>   };
+>>>>
+>>>> +#define ADSP_DOMAIN_ID (0)
+>>>> +#define MDSP_DOMAIN_ID (1)
+>>>> +#define SDSP_DOMAIN_ID (2)
+>>>> +#define CDSP_DOMAIN_ID (3)
+>>>> +#define GDSP_DOMAIN_ID (4)
+>>>> +
+>>>> +#define FASTRPC_DOMAIN_MAX    4
+>>>>   struct fastrpc_ioctl_capability {
+>>>>       __u32 domain;
+>>>>       __u32 attribute_id;
+>>>
+> 
+
 -- 
-Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+Thx and BRs,
+Ling Xu
 
 
