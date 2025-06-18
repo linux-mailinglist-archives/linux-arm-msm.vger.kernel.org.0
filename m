@@ -1,508 +1,284 @@
-Return-Path: <linux-arm-msm+bounces-61726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D724DADED8F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 15:14:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56B28ADED99
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 15:16:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7825A16C91F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 13:14:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E6177172D77
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 13:16:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BCDB2E6D33;
-	Wed, 18 Jun 2025 13:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27BB62E8E0E;
+	Wed, 18 Jun 2025 13:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Y3NRHQz3"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="LW3etMaT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414702DFF1F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 13:14:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4329B2556E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 13:16:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750252482; cv=none; b=ofKZeRIO0o7GOAXJTjDyvtoiO5yX0qVevnENfndO7VkOylNJie8qfb7Ff98sw0yVs4ckhVqcYaUj8boPIyLSQ4bBeAOBTvBvGjMIYiZ01jx0VxazwuDygkzsY1RDorMxye/ZpEQ2G5QWfwf4bBiAsIj95/HygWQHxAHSDVmiLmI=
+	t=1750252594; cv=none; b=sA/6vMYyhEUtDZK4ExuBskgSzDLgukEVyKi62ackJE8L61ebmGpLZV0Jwr0gm792KErOc7hTXXVvq/OyKPXFL3BwGJafzsl+zOD9ach53uZ2h+nCgK60G6tJpLMgEGauEh31cwM8Oke47791h/32XTvnQaKQie27RdBc7A1HTJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750252482; c=relaxed/simple;
-	bh=Lp72izDzamoZbzVWGiZrrQI70qZJmwJwD2+Gaf2uxwI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gxxPh6gBu3z+YhC3Kt7ntcbilLd3Fe8fVnk0GccZJBYSU06LMKsKiDu43Jo2ApsH2jKpHkWZj2EGU0RXm430t8YIAyLenswuugNH51J52cQwudQYUkTNsZUDyvbLY1aXNr0Rg2ZlaGLDlH4GSP28pigCU0+ALKM4nHsq9d+IuoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Y3NRHQz3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55IB1u4r028698
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 13:14:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=m7pPr07uK/MO7S0+vu1FGmwy
-	IRKndt0ZmMbzbptnkmU=; b=Y3NRHQz3pgblNX/79jJHV0DLyPwEDvhQNkumtxwY
-	KSSgrY2PciBzzUGuCi2IR3497qQDR7euUk/eIB8aq5NUMMLCTKBjpvGmQCQzZ9HE
-	XvsxWthlfs2XqKvlglBIRUakhMxikwneFYaVVa+q6H4lsOsu7Rd/4g5X3h6dGvk/
-	TAP9u1rkL8er4SiFi4YYcCnYoZ5+mC0Ui9+o1poCyOwcoS/UWE6OWmik/RvklMkl
-	5qzPd3wXDInGEGnf3rk3vXPCyOSYW6BDdjQfyXLNJc5PyhjqKrOaXj3HuJpbMELH
-	3CHNMxZvK2TUB3td2wdHSqyTD8YhFB2LLPfCr/nTAdzdlA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47928mm62x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 13:14:39 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7d3d3f6471cso584987585a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 06:14:38 -0700 (PDT)
+	s=arc-20240116; t=1750252594; c=relaxed/simple;
+	bh=8J9KAhlWf5co3iUUu4FPJNVpTzmF1Oipo85JzD2iQw8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QiYwvcww7VlFcl/Ff6WqFBBuPn2BmL6YG8E65COqJFLGWzsTAHG7UrLp1v+eGP0FFQ2E9rZRLAcDzieJtkedgrYJ2WHUk7HA5bo4TLcOW/mt5f2RIfw8mejjA0tcyuPSXWG5au7TCRYf5+lqhBnUOyu8GlumDHt0/CDivJ15BJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=LW3etMaT; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1750252591;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=HF/h5iERcRiAWZcVo6GzXQXrMZ2C+pgVCc623GzbLyU=;
+	b=LW3etMaT/xdP8CyF2RS8BbE9k9H5iyGRRx9fhUvpbyy7FNoFDBO0QMIjfPGzrWVWvihApV
+	qu1EsEsD6d6HBsZih4SwctoZVVzdAR9Ojnrbh/g74jyNPu14hTSb9ckjcHlqHUmkB9GA4r
+	qbxYFP2IHGAcj9sSGnV7raUVz57V6BY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-662-IVIIMbixNguObTCXTX2EyQ-1; Wed, 18 Jun 2025 09:16:27 -0400
+X-MC-Unique: IVIIMbixNguObTCXTX2EyQ-1
+X-Mimecast-MFC-AGG-ID: IVIIMbixNguObTCXTX2EyQ_1750252587
+Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4535ad64d30so5481515e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 06:16:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750252478; x=1750857278;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=m7pPr07uK/MO7S0+vu1FGmwyIRKndt0ZmMbzbptnkmU=;
-        b=qZK+a58lDCcpxapFiQtDgE34QsdPJHFmIm3n06hAK0jt75YWdbJPQptxI0d1Dza4nb
-         fPIZ2gmYB71QLIfZfxwJIdXqKoBstQfi98esBennj36uciA42q3OJrkDc3v58N8nce0E
-         C55fueZeCcZoqZM8hjwhMrpGLt36hqGDFTwgih+dAyEmC/LdjGAvtyMBxv1xSbXl+22Y
-         xtGVpA3N4cmXts0TPmvlu64mJ7Q2ex4Js660mf3QuvXA1uVbIx5ZITeYeH7GL5l+ZFCw
-         nB4dMTXr4hcr80k3m4LXJYUscjR5BNOYggCkAUsq8Jdco8d1HIY0nOQ2MTIZtqH/UBgr
-         VRog==
-X-Forwarded-Encrypted: i=1; AJvYcCXe8UhEVtGSEPfX6SZplN6IbJyNg7VhQCKw+TuLok+Xdz8ih7C2rn1XtOb4ff5VuyWt+s1kmrBVWYea2COC@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzq5g+9qwVGMjCv/qMwUXnVlUx9PLWQhCaMvjZFoxZ1auUSovXR
-	Nmfd4e3epPqsgjdrZc0HYpfoxMpv/PMl52WqLbl2yM66g6ou9VPKGsFItmitS02CIT9GqMUSI5k
-	x/M7njBwhFSUveg0/3fCrUvuAcfGzIaombvcf3Q3MjSJfQnJNGo508b+DaEsfXnuDQk29
-X-Gm-Gg: ASbGncvGQ79uZvfm2RAJXu109kt0r3VHvAZMH2aZ/a0KvqlKuU6JhVG9HYeDtHq7p1E
-	NURZr4faeVM8r8mnFOsVf0ulbaW+osBFr6yDKIuIiF47Rvcds42AYit4cvsuS7NTZFAYVzPzfUx
-	ti7zvuKnIz+ihGkC6M+ZXL5x9ufsRUsImuly6actM1p6CvAQv7s8cFLtHQYajSERkMkxFY1+VC7
-	JkmikTpJWpLWgkknDa1zjkOXoOFRonhF4NtmpUOX9IfzVOCw0EYwhObG17po1OR42nbpWdHiT68
-	63pEVAmggN12k8zoFu3BWUdPIG/Y1Ji6pAnal4QGQVAxnTofM92o0Aq/8/I/5pQTqE94L3Me+nA
-	M9kcU8JPsCDom5vSD+E1ShQWwEGEUjJ13Gk4=
-X-Received: by 2002:a05:620a:440f:b0:7ca:f02a:4d2b with SMTP id af79cd13be357-7d3c6c0d3b0mr2494974485a.12.1750252477503;
-        Wed, 18 Jun 2025 06:14:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEA8A1wCa+lNoHoi9aZDSTVEUTqllBLepRhgBUA+jlwu8cJiBPuW7WORbByYRdCn80uO0XdsQ==
-X-Received: by 2002:a05:620a:440f:b0:7ca:f02a:4d2b with SMTP id af79cd13be357-7d3c6c0d3b0mr2494967485a.12.1750252476904;
-        Wed, 18 Jun 2025 06:14:36 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553d51b1d52sm138017e87.65.2025.06.18.06.14.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jun 2025 06:14:36 -0700 (PDT)
-Date: Wed, 18 Jun 2025 16:14:34 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Shivendra Pratap <quic_spratap@quicinc.com>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, cros-qcom-dts-watchers@chromium.org,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Stephen Boyd <swboyd@chromium.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Elliot Berman <elliotb317@gmail.com>,
-        quic_spratap@qucinc.com,
-        Elliot Berman <elliot.berman@oss.qualcomm.com>,
-        quic_kaushalk@qucinc.com
-Subject: Re: [PATCH v9 2/5] firmware: psci: Read and use vendor reset types
-Message-ID: <rz7tnl5gg73gtyij3kmwk6hubikfsvu3krekjkpoofpdio6cwe@innio7qvotye>
-References: <20250303-arm-psci-system_reset2-vendor-reboots-v9-0-b2cf4a20feda@oss.qualcomm.com>
- <20250303-arm-psci-system_reset2-vendor-reboots-v9-2-b2cf4a20feda@oss.qualcomm.com>
- <Z9QQw6BcE7IXzu+r@lpieralisi>
- <Z+K3uNjTNbq3pUis@hu-mojha-hyd.qualcomm.com>
- <Z/U95G+2GsoLD6Mi@lpieralisi>
- <973eaca7-0632-53d8-f892-fe4d859ebbac@quicinc.com>
- <Z/+dGLAGXpf9bX7G@lpieralisi>
- <e96e315c-69fb-bc7e-5d07-06909344ff65@quicinc.com>
+        d=1e100.net; s=20230601; t=1750252587; x=1750857387;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=HF/h5iERcRiAWZcVo6GzXQXrMZ2C+pgVCc623GzbLyU=;
+        b=BQld18NRViQBqr6VRmfp+8nGkZqKQtfXjB7x+cnIAOrbnXeqgeLAGw9R6ULZJ2g/P2
+         2NCy2hpX+VhS3Tp/a8gqqrRtJ7xUWqf5ub7KHaOgDhAdvchJb+7iquQt4s77KPU766x+
+         OKFkxKgApC4lpMRfxh+AMXNLprw1QNlQ2sY0KRtBEwd/ZwOHHGCtyU1ePILI7t3KDxTr
+         ksFrlGDuP9RxyGTA4eW/BIxGVGZrHvG49ZuXgP8nvJR9sNRgSppmmR3+RnxcBDV1jSgi
+         O84qm6vvhMpeIH4x3EJc6a1YQvDpUrPvSf2sjF2PeeljgfELSiAoM6VxIXzxFfsOK5pe
+         5xKw==
+X-Forwarded-Encrypted: i=1; AJvYcCUG6fx+kRAHEciP2FcrXYyzVkAljuCgoyY4ljVMUpXHMzNoGiL4/A2/sj4BDP1droyjY1thxg/P7In3xRoG@vger.kernel.org
+X-Gm-Message-State: AOJu0YxJ4f2RNoM7RVHAVNDyY3Vv9ZFnZqOe0qjyPK9gmCa3HjCTgpNl
+	p1/Y1aJ9NDyCLtxpL2hNlSOin3goCAjnqUKF3ZE8n4pCRXHdXnvLSPY48T+dnJW81g+bhVwHwre
+	7sybeW7xUcZB+9fBaslN1wHUeh/xhzDvF600QlTFa8tNZtt4CP4b1YinG1KQaSEv6+Xg=
+X-Gm-Gg: ASbGncvHOQ2c+vmZdNVtOrvbwjKe2ywt1amV9EwAQ2cp7RRg5iEbNZUVC9AdvUtl2i2
+	rs/oluB1gAMDr4LpTJSeYZQPqUTTM3aeshy9hkz0lo1tzGOJz3pSgevXOH3iiQRMLnFXHHmlEf2
+	frjCyu+cpV50dWFTIPFEs7XCqTjOWgCWoi4b9WKWmKarGC01L5uD6OGjxw7n8UkjHd9MiAfUll3
+	ojbsnYsCjg98SMBMCB4mhFB3JeHHy1507gwIMgwCcHNrpVvYhQ7yx2lEx8rZrfeq0SG/05AV1e0
+	FJDclBvg/rRZkhP2zqtmoE+m2kr8nXH89Zn3VtuxhDcU+1ba05dHKq1NcM4ZxolSDgyZirrPFkJ
+	47iHOkpFU6VEVPewUhOv0WH+RcQEGvbhfivCI2+1gKhe9QFg=
+X-Received: by 2002:a05:600c:4e02:b0:43d:ac5:11e8 with SMTP id 5b1f17b1804b1-4533caaeb57mr146639475e9.21.1750252586528;
+        Wed, 18 Jun 2025 06:16:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFjSUUqdc83WhSU0K6mVnps9+N/GTCXXKIMqt/yKtrTCHClblot/wii0/9onwg7tf1gxoVdxA==
+X-Received: by 2002:a05:600c:4e02:b0:43d:ac5:11e8 with SMTP id 5b1f17b1804b1-4533caaeb57mr146638745e9.21.1750252586082;
+        Wed, 18 Jun 2025 06:16:26 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f2d:2400:4052:3b5:fff9:4ed0? (p200300d82f2d2400405203b5fff94ed0.dip0.t-ipconnect.de. [2003:d8:2f2d:2400:4052:3b5:fff9:4ed0])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532e232219sm204383145e9.9.2025.06.18.06.16.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Jun 2025 06:16:25 -0700 (PDT)
+Message-ID: <80cb9936-416f-42c4-96c2-416304bd9262@redhat.com>
+Date: Wed, 18 Jun 2025 15:16:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e96e315c-69fb-bc7e-5d07-06909344ff65@quicinc.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE4MDExMiBTYWx0ZWRfX/+pJKzUwdrgr
- KCi+dW5GT+bdKatb01QMzQRCfQCvDpboJSuq732ZgGgrYNMzwMwik41OMhxzyMKj+mOiJY/fqrI
- 5RRsDputPbab07LmAAbcW/PNOXtsfqculvm2oxm+JTTitK0jFd0p3TL/wNbU4TMMes8WByeFD6b
- N8USIH2U4ag+AIqfQPkdkJMcI0ZHwlJDdvHSgtGW0RgocUhXZV2EBLiAgzoCIABDLaavbdyA+DE
- lDNreedftHrelFDOQkkpKMmDvA2Hp8ilCxOktlYPU6rsbbS+2dXzhXOEMEb4zCzZnge6yuKCIN4
- P120ipA7WdGIXwcPYczxCoIcaMgieIKB43kvX0bhi7DaRQBuNWGH0OxfTK1YiEjx+KdaXWc/xfO
- QG3BR+mlyJHm1eerUkiR8ne/06z64nTCICvfnpS+0MQFvISvwIBhuU40xDxLSqHpoxcvfgC7
-X-Authority-Analysis: v=2.4 cv=fvbcZE4f c=1 sm=1 tr=0 ts=6852bbbf cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6IFa9wvqVegA:10 a=GcyzOjIWAAAA:8 a=EUspDBNiAAAA:8 a=u11vpO89wc5r4MctJj4A:9
- a=CjuIK1q_8ugA:10 a=dtxw0mqMjrQA:10 a=NFOGd7dJGGMPyQGDc5-O:22
- a=hQL3dl6oAZ8NdCsdz28n:22
-X-Proofpoint-GUID: uQiN8HbrtIpKAv41ZSrd81hFsSHMhbu3
-X-Proofpoint-ORIG-GUID: uQiN8HbrtIpKAv41ZSrd81hFsSHMhbu3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-18_05,2025-06-18_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
- mlxlogscore=999 phishscore=0 clxscore=1015 mlxscore=0 impostorscore=0
- adultscore=0 spamscore=0 suspectscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506180112
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 08/18] KVM: guest_memfd: Allow host to map guest_memfd
+ pages
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Sean Christopherson <seanjc@google.com>
+Cc: Fuad Tabba <tabba@google.com>, Ira Weiny <ira.weiny@intel.com>,
+ kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
+ kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org,
+ mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com,
+ palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
+ amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
+ mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
+ ackerleytng@google.com, mail@maciej.szmigiero.name, michael.roth@amd.com,
+ wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com
+References: <20250611133330.1514028-1-tabba@google.com>
+ <20250611133330.1514028-9-tabba@google.com> <aEySD5XoxKbkcuEZ@google.com>
+ <68501fa5dce32_2376af294d1@iweiny-mobl.notmuch>
+ <bbc213c3-bc3d-4f57-b357-a79a9e9290c5@redhat.com>
+ <CA+EHjTxvqDr1tavpx7d9OyC2VfUqAko864zH9Qn5+B0UQiM93g@mail.gmail.com>
+ <701c8716-dd69-4bf6-9d36-4f8847f96e18@redhat.com>
+ <aFIK9l6H7qOG0HYB@google.com>
+ <3fb0e82b-f4ef-402d-a33c-0b12e8aa990c@redhat.com>
+ <5ee9bbb8-d100-408c-ac07-ea9c5b603545@intel.com>
+ <5a55d95e-5e32-4239-a445-be13228ea80b@redhat.com>
+ <45af2c0d-a416-49bc-8011-4ec57a56d6f5@intel.com>
+ <40a5903b-f747-4eab-8959-06ddd6e88f82@redhat.com>
+ <fa3cea2a-d005-44fd-8a2f-2bcea1dc9042@intel.com>
+ <38101158-4475-4885-83e7-654045ca0f9b@redhat.com>
+ <3031b949-c42a-49bc-be0c-f95a62c792e2@intel.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <3031b949-c42a-49bc-be0c-f95a62c792e2@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, May 06, 2025 at 11:03:55PM +0530, Shivendra Pratap wrote:
+On 18.06.25 14:17, Xiaoyao Li wrote:
+> On 6/18/2025 7:14 PM, David Hildenbrand wrote:
+>> On 18.06.25 12:42, Xiaoyao Li wrote:
+>>> On 6/18/2025 5:59 PM, David Hildenbrand wrote:
+>>>> On 18.06.25 11:44, Xiaoyao Li wrote:
+>>>>> On 6/18/2025 5:27 PM, David Hildenbrand wrote:
+>>>>>> On 18.06.25 11:20, Xiaoyao Li wrote:
+>>>>>>> On 6/18/2025 4:15 PM, David Hildenbrand wrote:
+>>>>>>>>> If we are really dead set on having SHARED in the name, it could be
+>>>>>>>>> GUEST_MEMFD_FLAG_USER_MAPPABLE_SHARED or
+>>>>>>>>> GUEST_MEMFD_FLAG_USER_MAP_SHARED?  But
+>>>>>>>>> to me that's _too_ specific and again somewhat confusing given the
+>>>>>>>>> unfortunate
+>>>>>>>>> private vs. shared usage in CoCo-land.  And just playing the odds,
+>>>>>>>>> I'm
+>>>>>>>>> fine taking
+>>>>>>>>> a risk of ending up with GUEST_MEMFD_FLAG_USER_MAPPABLE_PRIVATE or
+>>>>>>>>> whatever,
+>>>>>>>>> because I think that is comically unlikely to happen.
+>>>>>>>>
+>>>>>>>> I think in addition to GUEST_MEMFD_FLAG_MMAP we want something to
+>>>>>>>> express "this is not your old guest_memfd that only supports private
+>>>>>>>> memory". And that's what I am struggling with.
+>>>>>>>
+>>>>>>> Sorry for chiming in.
+>>>>>>>
+>>>>>>> Per my understanding, (old) guest memfd only means it's the memory
+>>>>>>> that
+>>>>>>> cannot be accessed by userspace. There should be no shared/private
+>>>>>>> concept on it.
+>>>>>>>
+>>>>>>> And "private" is the concept of KVM. Guest memfd can serve as private
+>>>>>>> memory, is just due to the character of it cannot be accessed from
+>>>>>>> userspace.
+>>>>>>>
+>>>>>>> So if the guest memfd can be mmap'ed, then it become userspace
+>>>>>>> accessable and cannot serve as private memory.
+>>>>>>>
+>>>>>>>> Now, if you argue "support for mmap() implies support for non-
+>>>>>>>> private
+>>>>>>>> memory", I'm probably okay for that.
+>>>>>>>
+>>>>>>> I would say, support for mmap() implies cannot be used as private
+>>>>>>> memory.
+>>>>>>
+>>>>>> That's not where we're heading with in-place conversion support: you
+>>>>>> will have private (ianccessible) and non-private (accessible)
+>>>>>> parts, and
+>>>>>> while guest_memfd will support mmap() only the accessible parts can
+>>>>>> actually be accessed (faulted in etc).
+>>>>>
+>>>>> That's OK. The guestmemfd can be fine-grained, i.e., different
+>>>>> range/part of it can have different access property. But one rule never
+>>>>> change: only the sub-range is not accessible by userspace can it be
+>>>>> serve as private memory.
+>>>>
+>>>> I'm sorry, I don't understand what you are getting at.
+>>>>
+>>>> You said "So if the guest memfd can be mmap'ed, then it become userspace
+>>>> accessable and cannot serve as private memory." and I say, with in-place
+>>>> conversion support you are wrong.
+>>>>
+>>>> The whole file can be mmaped(), that does not tell us anything about
+>>>> which parts can be private or not.
+>>>
+>>> So there is nothing prevent userspace from accessing it after a range is
+>>> converted to private via KVM_GMEM_CONVERT_PRIVATE since the whole file
+>>> can be mmaped()?
+>>>
+>>> If so, then for TDX case, userspace can change the TD-owner bit of the
+>>> private part by accessing it and later guest access will poison it and
+>>> trigger #MC. If the #MC is only delivered to the PCPU that triggers it,
+>>> it just leads to the TD guest being killed. If the #MC is broadcasted,
+>>> it affects other in the system.
+>>>
+>>> I just give it a try on real TDX system with in-place conversion. The TD
+>>> is killed due to SIGBUS (host kernel handles the #MC and sends the
+>>> SIGBUS). It seems OK if only the TD guest being affected due to
+>>> userspace accesses the private memory. But I'm not sure if there is any
+>>> corner case that will affect the host.
+>>
+>> I suggest you go ahead and read all about in-place conversion support,
+>> and how it all relates to the #MC problem you mention here.
+>>
+>> Long story short: SIGBUS is triggered by the fault handler, not by the
+>> #MC, because private pages cannot be faulted in and accessed.
+>>
 > 
-> 
-> On 4/16/2025 5:35 PM, Lorenzo Pieralisi wrote:
-> > On Wed, Apr 09, 2025 at 11:48:24PM +0530, Shivendra Pratap wrote:
-> >>
-> >>
-> >> On 4/8/2025 8:46 PM, Lorenzo Pieralisi wrote:
-> >>> On Tue, Mar 25, 2025 at 07:33:36PM +0530, Mukesh Ojha wrote:
-> >>>> On Fri, Mar 14, 2025 at 12:19:31PM +0100, Lorenzo Pieralisi wrote:
-> >>>>> On Mon, Mar 03, 2025 at 01:08:31PM -0800, Elliot Berman wrote:
-> >>>>>> From: Elliot Berman <elliot.berman@oss.qualcomm.com>
-> >>>>>>
-> >>>>>> SoC vendors have different types of resets and are controlled through
-> >>>>>> various registers. For instance, Qualcomm chipsets can reboot to a
-> >>>>>> "download mode" that allows a RAM dump to be collected. Another example
-> >>>>>> is they also support writing a cookie that can be read by bootloader
-> >>>>>> during next boot. PSCI offers a mechanism, SYSTEM_RESET2, for these
-> >>>>>> vendor reset types to be implemented without requiring drivers for every
-> >>>>>> register/cookie.
-> >>>>>>
-> >>>>>> Add support in PSCI to statically map reboot mode commands from
-> >>>>>> userspace to a vendor reset and cookie value using the device tree.
-> >>>>>
-> >>>>> I have managed to discuss a little bit this patchset over the last
-> >>>>> few days and I think we have defined a plan going forward.
-> >>>>>
-> >>>>> A point that was raised is:
-> >>>>>
-> >>>>> https://man7.org/linux/man-pages/man2/reboot.2.html
-> >>>>>
-> >>>>> LINUX_REBOOT_CMD_RESTART2 *arg command, what is it supposed to
-> >>>>> represent ?
-> >>>>>
-> >>>>> Is it the mode the system should reboot into OR it is the
-> >>>>> actual command to be issued (which is what this patchset
-> >>>>> implements) ?
-> >>>>>
-> >>>>> LINUX_REBOOT_CMD_RESTART "..a default restart..."
-> >>>>>
-> >>>>> It is unclear what "default" means. We wonder whether the
-> >>>>> reboot_mode variable was introduced to _define_ that "default".
-> >>>>>
-> >>>>> So, in short, my aim is trying to decouple reboot_mode from the
-> >>>>> LINUX_REBOOT_CMD_RESTART2 *arg command.
-> >>>>>
-> >>>>> I believe that adding a sysfs interface to reboot-mode driver
-> >>>>> infrastructure would be useful, so that the commands would
-> >>>>> be exposed to userspace and userspace can set the *arg command
-> >>>>> specifically to issue a given reset/mode.
-> >>>>>
-> >>>>> I wonder why this is not already in place for eg syscon-reboot-mode
-> >>>>> resets, how does user space issue a command in those systems if the
-> >>>>> available commands aren't exposed to userspace ?
-> >>>>>
-> >>>>> Is there a kernel entity exposing those "modes" to userspace, somehow ?
-> >>>>>
-> >>>>>> A separate initcall is needed to parse the devicetree, instead of using
-> >>>>>> psci_dt_init because mm isn't sufficiently set up to allocate memory.
-> >>>>>>
-> >>>>>> Reboot mode framework is close but doesn't quite fit with the
-> >>>>>> design and requirements for PSCI SYSTEM_RESET2. Some of these issues can
-> >>>>>> be solved but doesn't seem reasonable in sum:
-> >>>>>>  1. reboot mode registers against the reboot_notifier_list, which is too
-> >>>>>>     early to call SYSTEM_RESET2. PSCI would need to remember the reset
-> >>>>>>     type from the reboot-mode framework callback and use it
-> >>>>>>     psci_sys_reset.
-> >>>>>>  2. reboot mode assumes only one cookie/parameter is described in the
-> >>>>>>     device tree. SYSTEM_RESET2 uses 2: one for the type and one for
-> >>>>>>     cookie.
-> >>>>>
-> >>>>> This can be changed and I think it should, so that the reboot modes
-> >>>>> are exposed to user space and PSCI can use that.
-> >>>>>
-> >>>> In the case of a regular reboot or panic, the reboot/panic notifiers run
-> >>>> first, followed by the restart notifiers. The PSCI reset/reset2 should
-> >>>> be the last call from Linux, and ideally, this call should not fail.
-> >>>>
-> >>>> Reboot mode notifiers => restart notifiers or Panic notifiers => restart
-> >>>> notifiers
-> >>>>
-> >>>> So, if I understand correctly, you mean that we can change the reboot
-> >>>> mode framework to expose the arguments available to user space. We can
-> >>>> extend it to accept magic and cookies, save them in the reboot
-> >>>> framework, and retrieve them via a call from PSCI during a regular
-> >>>> reboot or panic based on the current arguments. Is this leading towards
-> >>>> writing an ARM-specific PSCI-reboot-mode driver, which in its reboot
-> >>>> notifier callback saves the magic and cookies, and these magic and
-> >>>> cookies will be used during psci_sys_reset2()? Or is there something
-> >>>> wrong with my understanding?
-> >>>
-> >>> No, you got it right (apologies for the delay in replying) - if the
-> >>> case for making reboot mode available to user space is accepted.
-> >>>
-> While moving this into reboot-mode framework, one more query came up.
-> The "ARM-specific PSCI-reboot-mode driver" that we are going to write needs
-> to be a Platform device driver for using reboot-mode framework.
+> Sorry for the wrong information and thanks for your patience!
 
-No, it doesn't. It rqeuires struct device, but there is no requirement
-for struct platform_device at any place.
+No problem. As raised, it would all be clearer if we started out with 
+guest_memfd behaving just like memfd (mmap() support etc) and then added 
+support for "private" memory on top.
 
-> As psci is not a platform device driver, a subdevice under it may not probe as a
-> platform driver. Is it ok to implement the "PSCI-reboot-mode driver" as a
-> early_initcall("psci_xyz") and then create a platform device something as
-> below or any other suggestions for this?
-
-Change struct reboot_mode_driver to pass corresponding of_node (or
-better fwnode) directly.  Corresponding device is used only in the
-reboot_mode_register() and only to access of-node or to print error
-messages.
-
-> 
-> power:reset:<psci-vendor-reset-driver>:
-> -----
-> static int __init psci_vendor_reset_init(void) {
-> ..
-> ..
-> 	np = of_find_node_by_name(NULL, "psci-vendor-reset");
-> 	if(!np)
-> 		return -ENODEV;
-> 	pdev = of_platform_device_create(np, "psci-vendor-reset", NULL);
-> ..
-> ..
-> }
-> -------
-> 
-> the sysfs we will expose from reboot-mode may show like below in above 
-> implementation:
-> 
-> ###### 
-> / # cat ./sys/devices/platform/psci-vendor-reset/available_modes
-> bootloader edl 
-> ###### 
-> 
-> thanks,
-> Shivendra
-> 
-> >>
-> >> Agree that the available modes should be exposed to usespace via sysfs interface
-> >> and we should implement it. Also #1 and #2 can be handled via some
-> >> changes in the design as mentioned in above discussion.
-> >>
-> >> I have one doubt though when we implement this via reboot-mode framework.
-> >> The current patch implements PSCI ARM PSCI SYSTEM RESET2 vendor reset types.
-> >> psci driver is initialized very early at boot but potential ARM psci reboot-mode
-> >> driver will not probe at that stage and the ARM PSCI SYSTEM RESET2 vendor reset
-> >> types functionality will not be available in psci reset path until the reboot-mode
-> >> driver probes. Will this cause any limitation on usage of ARM's PSCI vendor-reset
-> >> types for early device resets?
-> >>
-> >> One use-case may be an early device crash or a early reset where a vendor 
-> >> wants to use PSCI SYSTEM RESET2 vendor reset type to a reset the device to a 
-> >> specific state but may not be able to use this driver.
-> >> (eg: a kernel panic at early boot where a vendor wants to reset device 
-> >> to a specific state using vendor reset. Currently panic passes a NULL
-> >> (*arg command) while device reset but it may be explored for vendor specific
-> >> reset).
-> > 
-> > As you said, that would not be a PSCI only issue - *if* we wanted to
-> > plug in this use case we should find a way to do it at reboot mode
-> > driver level.
-> > 
-> > As a matter of fact, this is not a mainline issue AFAICS.
-> > 
-> > Even if we did not design this as a reboot mode driver there would be a
-> > time window where you would not be able to use vendor resets on panic.
-> > 
-> > I don't see it as a major roadblock at the moment.
-> Got it.
-> > 
-> > Thanks,
-> > Lorenzo
-> > 
-> >>
-> >> - Shivendra
-> >>
-> >>>> P.S. We appreciate Elliot for his work and follow-up on this while being
-> >>>> employed at Qualcomm.
-> >>>
-> >>> Yes I sincerely do for his patience, thank you.
-> >>>
-> >>> Lorenzo
-> >>>
-> >>>>>>  3. psci cpuidle driver already registers a driver against the
-> >>>>>>     arm,psci-1.0 compatible. Refactoring would be needed to have both a
-> >>>>>>     cpuidle and reboot-mode driver.
-> >>>>>>
-> >>>>>> Signed-off-by: Elliot Berman <elliot.berman@oss.qualcomm.com>
-> >>>>>> ---
-> >>>>>>  drivers/firmware/psci/psci.c | 105 +++++++++++++++++++++++++++++++++++++++++++
-> >>>>>>  1 file changed, 105 insertions(+)
-> >>>>>>
-> >>>>>> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
-> >>>>>> index a1ebbe9b73b136218e9d9f9b8daa7756b3ab2fbe..6f8c47deaec0225f26704e1f3bcad52603127a85 100644
-> >>>>>> --- a/drivers/firmware/psci/psci.c
-> >>>>>> +++ b/drivers/firmware/psci/psci.c
-> >>>>>> @@ -80,6 +80,14 @@ static u32 psci_cpu_suspend_feature;
-> >>>>>>  static bool psci_system_reset2_supported;
-> >>>>>>  static bool psci_system_off2_hibernate_supported;
-> >>>>>>  
-> >>>>>> +struct psci_reset_param {
-> >>>>>> +	const char *mode;
-> >>>>>> +	u32 reset_type;
-> >>>>>> +	u32 cookie;
-> >>>>>> +};
-> >>>>>> +static struct psci_reset_param *psci_reset_params __ro_after_init;
-> >>>>>> +static size_t num_psci_reset_params __ro_after_init;
-> >>>>>> +
-> >>>>>>  static inline bool psci_has_ext_power_state(void)
-> >>>>>>  {
-> >>>>>>  	return psci_cpu_suspend_feature &
-> >>>>>> @@ -306,9 +314,39 @@ static int get_set_conduit_method(const struct device_node *np)
-> >>>>>>  	return 0;
-> >>>>>>  }
-> >>>>>>  
-> >>>>>> +static int psci_vendor_system_reset2(const char *cmd)
-> >>>>>> +{
-> >>>>>> +	unsigned long ret;
-> >>>>>> +	size_t i;
-> >>>>>> +
-> >>>>>> +	for (i = 0; i < num_psci_reset_params; i++) {
-> >>>>>> +		if (!strcmp(psci_reset_params[i].mode, cmd)) {
-> >>>>>> +			ret = invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2),
-> >>>>>> +					     psci_reset_params[i].reset_type,
-> >>>>>> +					     psci_reset_params[i].cookie, 0);
-> >>>>>> +			/*
-> >>>>>> +			 * if vendor reset fails, log it and fall back to
-> >>>>>> +			 * architecture reset types
-> >>>>>
-> >>>>> That's not what the code does.
-> >>>>>
-> >>>> Ack.
-> >>>>
-> >>>> -Mukesh
-> >>>>
-> >>>>>> +			 */
-> >>>>>> +			pr_err("failed to perform reset \"%s\": %ld\n", cmd,
-> >>>>>> +			       (long)ret);
-> >>>>>> +			return 0;
-> >>>>>> +		}
-> >>>>>> +	}
-> >>>>>> +
-> >>>>>> +	return -ENOENT;
-> >>>>>> +}
-> >>>>>> +
-> >>>>>>  static int psci_sys_reset(struct notifier_block *nb, unsigned long action,
-> >>>>>>  			  void *data)
-> >>>>>>  {
-> >>>>>> +	/*
-> >>>>>> +	 * try to do the vendor system_reset2
-> >>>>>> +	 * If there wasn't a matching command, fall back to architectural resets
-> >>>>>> +	 */
-> >>>>>> +	if (data && !psci_vendor_system_reset2(data))
-> >>>>>> +		return NOTIFY_DONE;
-> >>>>>> +
-> >>>>>>  	if ((reboot_mode == REBOOT_WARM || reboot_mode == REBOOT_SOFT) &&
-> >>>>>>  	    psci_system_reset2_supported) {
-> >>>>>>  		/*
-> >>>>>> @@ -795,6 +833,73 @@ static const struct of_device_id psci_of_match[] __initconst = {
-> >>>>>>  	{},
-> >>>>>>  };
-> >>>>>>  
-> >>>>>> +#define REBOOT_PREFIX "mode-"
-> >>>>>> +
-> >>>>>> +static int __init psci_init_system_reset2_modes(void)
-> >>>>>> +{
-> >>>>>> +	const size_t len = strlen(REBOOT_PREFIX);
-> >>>>>> +	struct psci_reset_param *param;
-> >>>>>> +	struct device_node *psci_np __free(device_node) = NULL;
-> >>>>>> +	struct device_node *np __free(device_node) = NULL;
-> >>>>>> +	struct property *prop;
-> >>>>>> +	size_t count = 0;
-> >>>>>> +	u32 magic[2];
-> >>>>>> +	int num;
-> >>>>>> +
-> >>>>>> +	if (!psci_system_reset2_supported)
-> >>>>>> +		return 0;
-> >>>>>> +
-> >>>>>> +	psci_np = of_find_matching_node(NULL, psci_of_match);
-> >>>>>> +	if (!psci_np)
-> >>>>>> +		return 0;
-> >>>>>> +
-> >>>>>> +	np = of_find_node_by_name(psci_np, "reset-types");
-> >>>>>> +	if (!np)
-> >>>>>> +		return 0;
-> >>>>>
-> >>>>> Related to my initial question above. If LINUX_REBOOT_CMD_RESTART2 *arg command,
-> >>>>> is the actual reset to be issued, should we add a default mode "cold"
-> >>>>> and, if SYSTEM_RESET2 is supported, a "warm" reset mode too ?
-> >>>>>
-> >>>>> It all boils down to what *arg represents - adding "cold" and "warm"
-> >>>>> modes would remove the dependency on reboot_mode for resets issued
-> >>>>> through LINUX_REBOOT_CMD_RESTART2, the question is whether this
-> >>>>> is the correct thing to do.
-> >>>>>
-> >>>>> Comments very welcome.
-> >>>>>
-> >>>>> Thanks,
-> >>>>> Lorenzo
-> >>>>>
-> >>>>>> +
-> >>>>>> +	for_each_property_of_node(np, prop) {
-> >>>>>> +		if (strncmp(prop->name, REBOOT_PREFIX, len))
-> >>>>>> +			continue;
-> >>>>>> +		num = of_property_count_u32_elems(np, prop->name);
-> >>>>>> +		if (num != 1 && num != 2)
-> >>>>>> +			continue;
-> >>>>>> +
-> >>>>>> +		count++;
-> >>>>>> +	}
-> >>>>>> +
-> >>>>>> +	param = psci_reset_params =
-> >>>>>> +		kcalloc(count, sizeof(*psci_reset_params), GFP_KERNEL);
-> >>>>>> +	if (!psci_reset_params)
-> >>>>>> +		return -ENOMEM;
-> >>>>>> +
-> >>>>>> +	for_each_property_of_node(np, prop) {
-> >>>>>> +		if (strncmp(prop->name, REBOOT_PREFIX, len))
-> >>>>>> +			continue;
-> >>>>>> +
-> >>>>>> +		num = of_property_read_variable_u32_array(np, prop->name, magic,
-> >>>>>> +							  1, ARRAY_SIZE(magic));
-> >>>>>> +		if (num < 0) {
-> >>>>>> +			pr_warn("Failed to parse vendor reboot mode %s\n",
-> >>>>>> +				param->mode);
-> >>>>>> +			kfree_const(param->mode);
-> >>>>>> +			continue;
-> >>>>>> +		}
-> >>>>>> +
-> >>>>>> +		param->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
-> >>>>>> +		if (!param->mode)
-> >>>>>> +			continue;
-> >>>>>> +
-> >>>>>> +		/* Force reset type to be in vendor space */
-> >>>>>> +		param->reset_type = PSCI_1_1_RESET_TYPE_VENDOR_START | magic[0];
-> >>>>>> +		param->cookie = num > 1 ? magic[1] : 0;
-> >>>>>> +		param++;
-> >>>>>> +		num_psci_reset_params++;
-> >>>>>> +	}
-> >>>>>> +
-> >>>>>> +	return 0;
-> >>>>>> +}
-> >>>>>> +arch_initcall(psci_init_system_reset2_modes);
-> >>>>>> +
-> >>>>>>  int __init psci_dt_init(void)
-> >>>>>>  {
-> >>>>>>  	struct device_node *np;
-> >>>>>>
-> >>>>>> -- 
-> >>>>>> 2.34.1
-> >>>>>>
+But that's not how it happened :)
 
 -- 
-With best wishes
-Dmitry
+Cheers,
+
+David / dhildenb
+
 
