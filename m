@@ -1,80 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-61762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4022ADF6F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 21:38:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95FA0ADF731
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 21:50:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83D8316A123
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 19:38:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 434C24A37A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 19:50:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C73FE215F56;
-	Wed, 18 Jun 2025 19:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20D2721A434;
+	Wed, 18 Jun 2025 19:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EEcZv57L"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hDnOKgRN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F362A19DF7A;
-	Wed, 18 Jun 2025 19:38:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94243218EBA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 19:50:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750275509; cv=none; b=JSguxg8+IXZlw7PrSH1WIHgpksXi+qk9C3VuiWt2rWHityV0UN/HTeiL1M3enYCHVcWEfSkE2dKskmGZVG9SDrsNVgS6kbZVUjhOFIPz4HtJ+eQ6JVfRDQ8PNxk9T7sFBwflUpaKeXaUYWupVNRZRnFg2vQsW9/wa2tXXvOVj/c=
+	t=1750276214; cv=none; b=PAjWozBokftFXxaNXVa5wQgKPhfTBp6stqdjOhPHT9hzMJ7SNctfUL9Q3LJyewgUQIwkLZ7glfon6L/O3fLXra7Sc6V+X95W1HuiQnM0kxuiy9W5txMS8Z62a2Y5eNOrrL66j1GRXKsWGeHyzmDPntFaQzGakEZU5J2sLuFUfnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750275509; c=relaxed/simple;
-	bh=d1whGUe6/gw5D8L1TsbBMFsSRpmq5A/atFpTf7gs4bs=;
+	s=arc-20240116; t=1750276214; c=relaxed/simple;
+	bh=luoJ2EhFdNRnqQJG9cSh5+lCaNdS01/9QmmpcN3PjGI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=plt3DQX6R/jNYGCvCz+Z7ywWliVjiOs6Rx5iw0RmtlLodbjRug8uz2Jg6IlCfyU81gcn8SJZ6rFB/9o130QzKl0o4Nw7ImT0iZOC5wVzb5DLFxBo49qDo8pSlIrwNThlMcsp3/ITG5ZPwhlkoqJpZJxa6cLScpkdW9vjgXwCwSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EEcZv57L; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-450ce3a2dd5so183755e9.3;
-        Wed, 18 Jun 2025 12:38:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750275506; x=1750880306; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=j2D68AjOhD65ob6ahc321W824b9bdePyaOMeGU4pu4s=;
-        b=EEcZv57LV+/GQznMnC6aieF7rKuZevPAxQ/aIj7LuVvVCuFyz2CUnSGDaA/uWsskaE
-         znND6sd44aZkfNwknJNZ9G3sr/xYN4qL4LSFdhqNiwhllckasPOjB1lWkfeKHNp3jKuo
-         lWvKiW+syotQV7myuv/1/F0bb32M9Uoijs44yLyjybAfA8G19UjIXjOoIRqE9iuljasd
-         aMCbeAY9ybq4LjG1C8cMdhEyShq8ufowsutbCwdvmYnSakdS1W/TaVWVbfsHXrRLy4Jp
-         oXKP/xkU1mt8iFZKKi16h07Oz+3makQw/cx7bj1ITxs6+ixYnfSiMNNXzpfiFqJOQ3iI
-         +pfw==
+	 In-Reply-To:Content-Type; b=JJpi94iwXs1kqJTHiwsLU3X2h8WFLtULClRltPz0HZO/uPYpk+7Rl89ruDO3qzvSAklPMCQQP3lSgA6S1GmTcuU81h0pRtvyO5egAhKww0jMYOIjoZUVFJcBqqC6BAUwUzkfKzb7tayaw9P/9lg4J9U8zQonlQs330EC9zUOeA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hDnOKgRN; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55IJ6Gv5022401
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 19:50:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Eb0PR7MC8vATjVfhJQjNH3z5UBkyJTka8cUrPI6EnrQ=; b=hDnOKgRNDff/Lyaw
+	quOkZ8IaI5VQYSbR6zgdrzmzL9ZzoMT3n9PDasulA3H8vuV9yVM9bDkjTutLKlIp
+	cG4bra97nsK3EVP++Y2r9jhzwqHwGsR4/cYkni9bvcEhCg13DVs9DlDR6/7P3OZu
+	wtBKcA/ojneNcgQLpnanKt605HR0zMGoQA3h/7Ig+mzgEfydcTA7vcmf5rp0FEXQ
+	gRCVyZpgiVNbAsDnB/AQfD38TM6PuoWaha/4wVq/asD38Plw/yMT1CtUk5IVryHp
+	0VLNfxQ4Pt1L8b/9GEm0mExQGcumVzVgtDiTRLrvOC02LF1EGjUlr7XMQQotDnqX
+	gBpn6A==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47928mndck-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 19:50:10 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d21080c26fso1556985a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 12:50:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750275506; x=1750880306;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1750276209; x=1750881009;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=j2D68AjOhD65ob6ahc321W824b9bdePyaOMeGU4pu4s=;
-        b=SZALCZEijKxdYVPVnljc8j7CYTg92RerDv0YXFJrC13XGqjtEkJC107aSeQJ1+e7Yo
-         7/2V0cJkBeljT2PGnll/IUsxyb7A2z3VftiKhDwZWh/HCZ0U9zySDKu9xJV36jDDqZWf
-         mwa7TXGZa7GX9uhMvFy6SEsAnW1dB6iRks6DmnENBBKjipSQoEqwJdYsRsaRmzfpsQQQ
-         LLj/ymbjbxzTPzauZzL2PuEonVk8Qa2LhiSG9DjpSc0uiY7U01nDVzLia+6YPkQ1C3Wf
-         xUv1BrwoSfiSSrZUyAvK7f/Riu5r48XEJ3lJStgGtzqLCWuadDbmToaEHLx35T3onzCk
-         QDxw==
-X-Forwarded-Encrypted: i=1; AJvYcCU4Lx6Y8clDPZarcO4XsBLgtKdOZy7NOrvVQLbz4uhJ9+V9aux8KA+adG+kAIbvOMcdWvsCQPLnjZc=@vger.kernel.org, AJvYcCWh8ijdIHdRlQU492x9XCZlyiDta0VgzL7VFbcrXapiEw0p109z3ML5jFXhER+33xF78LtdVjilMTmfGc19@vger.kernel.org, AJvYcCWlelS5aFZYuL1EbknObxH426JsfgrKv70iHl3sUMwkIt++xK+9ekgJ/paR/gB5SQATHE3VNlznRyppMwin@vger.kernel.org
-X-Gm-Message-State: AOJu0YzbYKnHoqlVrISI9AkbBX+pagQ+P0cqWLvgSTnzTZaSJS9yVQUb
-	EezrSUf6rLFXeFSeanVKgUGE6i6+8XycZmVQcwhGrJSp8DZp3p65O9kM
-X-Gm-Gg: ASbGncutLKo2HSFwUCsT3y6yPvnbF8ISDUeEM+MpDj3LwMEbNRa865yMdUGzx663t3v
-	c8UqpSb0z700aDiuZeH6ToTtXG0YR2Wr5Rc2GSLi888mJGYaOfTIsD1v9dVFOasrT2344+X0nPp
-	HSvqbkYCSiK/kuikRspj8o+rDHq6ripueXgGjmHc5+JyjAANa7Ex0qzASlv7tChhKZkYBY1og/w
-	9zxlPZtLNBHxlUhJu8jAVLHBMKS+Z574V9mHwp+uv5R2+YlIGMC2XfuYZL018XQ4eUOoZ6/iVPn
-	nOpl158ZecevsRCie9VF7aYYfoPvthyaINq23PxNBxOzvgmIZcV9jrJEjh24WSJNAqaskr2JjQc
-	vEkg7BGYAGwpkB8v9mXL0lpUGCIM=
-X-Google-Smtp-Source: AGHT+IEAlu8eaLc4zokaEd0yP7OxADSH00EGrKoNAOkdeTQ8e1Zn5FmjRwQrIlj8sevy2FyyZoKXRw==
-X-Received: by 2002:a05:600c:3587:b0:43c:fda5:41e9 with SMTP id 5b1f17b1804b1-4533cad1aa0mr195109995e9.31.1750275505926;
-        Wed, 18 Jun 2025 12:38:25 -0700 (PDT)
-Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4535eac8c41sm5947235e9.26.2025.06.18.12.38.24
+        bh=Eb0PR7MC8vATjVfhJQjNH3z5UBkyJTka8cUrPI6EnrQ=;
+        b=Bx++cK8roM2RL/oI1grwtTT14cvML27xG8JBi6fWBhTNa4ovR/9WP0s2suUQ8+VNQ7
+         ILq7l9jdUxmi8Khs7g+Bln3cfsa/v51kyYQV2U8QfBKBkHZPmw+sUOFCQSzQbZRhuliy
+         JXImOKIuUcuv2Tcn95U3B53xZ1RhdyUN7Pnjj1zAwq17AS9VCPkAdyRbSRDV7X03yac8
+         3J8B+cc/rd8+bqhnVBj/GNwRkBFzzMgoimEJZdPx6h5d8U1qY3uZpo622Gmi0Br1t9nf
+         gqVu8lxGIIw+Fev1qA97e7HkolumNmXbnNEVtquGJ1PFdZGczF6aWWEZ1x0Znf9r7+Hs
+         7Tzw==
+X-Gm-Message-State: AOJu0YzChKZAFB3SWoIfN7/xQcBx3GdVonSkCqkDZymjEfsIY+TvCk0b
+	9lhkpWIn1ZtbkAxBrJw4Hr3DlNFrFOQF4xn2ky5MdDfE+E2Z4kDQXlGaImfzDYXuneQ9ChkC4Y7
+	oSX6XjsexfrIfkK4tTwt3i85WwKuhg2m7Py1x1DlPhCk1hs6mtx+e0J/7ztoyfSY9iH44lqnloq
+	QB
+X-Gm-Gg: ASbGncslqTvjFgvB1V6yr5e7t6RVU1uqkOBD+I5mx4/ak1P/iMx3+Nv3Eoxhl/QvjLW
+	Io2v0imJahA/UoS75lJLOv9wzNIWgD+FzJSSKE6djFmIkMlm2okJTzGyl/VuoOCS1GJJ03Vpn2p
+	qFk3pOS7FFhBthfJ2/b9zCS5asstCS0ZW3T6APuOjHMxTcYYFsEAnyS791Rn7oNCohPq5a45Bhq
+	bYc4EpYvArh2EgVfIht8PgBIwbRTTuBKoffCHPgUh5qqf6MAsUZOab6gUZ2m24aPL+KA5vHuN2G
+	M2/Iij5Hn5eStWv6baa9ZSeRI4lO44elIGCR+YVnPTKMNsAX4ATPrEzmtQciZ4M4EhJ0ndbUKx7
+	CNX4=
+X-Received: by 2002:a05:620a:414a:b0:7cd:4a08:ea12 with SMTP id af79cd13be357-7d3dddd3dcamr452893985a.0.1750276209383;
+        Wed, 18 Jun 2025 12:50:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFL3SJd4iFzCwT5g6MhwkHB+B/Bg64lwAFozgDBTuMDs9zJo+cDkA5jqPxifdTnFFGAD0h1eQ==
+X-Received: by 2002:a05:620a:414a:b0:7cd:4a08:ea12 with SMTP id af79cd13be357-7d3dddd3dcamr452892985a.0.1750276208907;
+        Wed, 18 Jun 2025 12:50:08 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-adec81c0135sm1090314466b.47.2025.06.18.12.50.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Jun 2025 12:38:25 -0700 (PDT)
-Message-ID: <5f8c1163-d347-4c93-968c-3fd191336f04@gmail.com>
-Date: Wed, 18 Jun 2025 21:38:23 +0200
+        Wed, 18 Jun 2025 12:50:08 -0700 (PDT)
+Message-ID: <f2b806af-510c-4f33-a4be-9c84a37cd247@oss.qualcomm.com>
+Date: Wed, 18 Jun 2025 21:50:06 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,102 +90,58 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] interconnect: avoid memory allocation when 'icc_bw_lock'
- is held
-Content-Language: hu
-To: Johan Hovold <johan@kernel.org>, Georgi Djakov <djakov@kernel.org>
-Cc: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-pm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250529-icc-bw-lockdep-v1-1-3d714b6a9374@gmail.com>
- <aFK0a8AIOl704DpP@hovoldconsulting.com>
-From: Gabor Juhos <j4g8y7@gmail.com>
-In-Reply-To: <aFK0a8AIOl704DpP@hovoldconsulting.com>
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sar2130p: use TAG_ALWAYS for MDSS's
+ mdp0-mem path
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250618-sar2130p-fix-mdss-v1-0-78c2fb9e9fba@oss.qualcomm.com>
+ <20250618-sar2130p-fix-mdss-v1-1-78c2fb9e9fba@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250618-sar2130p-fix-mdss-v1-1-78c2fb9e9fba@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE4MDE2OCBTYWx0ZWRfX6c1Mahz5okK4
+ 0HBM6AJkz9fsh4zsqK3T45v5qtKfgOW+hcuxmKE1+mUwzdO1cLO+UDAKzdABEudCubydrpHHfOV
+ VmpAeKEbFsoESJImFSmGY9QjlznDfAMvYRQzlr8Vz8/RkoYMrRaKUAsvIPAccO01uEv7CV6Po3s
+ hKR1DJnAKg/JFHh6zwjUfavCBSt+0Gd7cjSSelVYycIC73xpWQmQCBNGGXz6SBxEWwYBTBCnMm1
+ X5muaxefpE0sj1/JUgMUKS3w7LjnYYKpOqE2lZmnhdNP3mpmQDMhxD/U/nOGqD8o3S61+zPGPNg
+ w0/kt/5S3CijUviN/HgHBFx9o9SrE6nQLXCwBhVma6kdkGqrpz7qSULEMdJGNCqWSv5fymV5BhQ
+ fwa14b/f2Zq1t7UBbuzFcoO/W6ZLUHsLMNoN85jfP2CIRBGAwwfLRXeL2Dw5dST9H6+5PKtg
+X-Authority-Analysis: v=2.4 cv=fvbcZE4f c=1 sm=1 tr=0 ts=68531872 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=LxG8ozSyjN6uvR1bqNQA:9
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: b_bppjHrwRbetMhpeZGGtTP66SMaJ8ZJ
+X-Proofpoint-ORIG-GUID: b_bppjHrwRbetMhpeZGGtTP66SMaJ8ZJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-18_05,2025-06-18_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
+ mlxlogscore=761 phishscore=0 clxscore=1015 mlxscore=0 impostorscore=0
+ adultscore=0 spamscore=0 suspectscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506180168
 
-Hi Johan,
+On 6/18/25 7:49 PM, Dmitry Baryshkov wrote:
+> Switch the main memory interconnect of the MDSS device to use
+> QCOM_ICC_TAG_ALWAYS instead of _ACTIVE_ONLY.
+> 
+> Fixes: 541d0b2f4dcd ("arm64: dts: qcom: sar2130p: add display nodes")
+> Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
 
-Thank you for taking a look into this.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-2025. 06. 18. 14:43 keltezéssel, Johan Hovold írta:
-> On Thu, May 29, 2025 at 04:46:22PM +0200, Gabor Juhos wrote:
->> The 'icc_bw_lock' mutex is introduced in commit af42269c3523
->> ("interconnect: Fix locking for runpm vs reclaim") in order
->> to decouple serialization of bw aggregation from codepaths
->> that require memory allocation.
->>
->> However commit d30f83d278a9 ("interconnect: core: Add dynamic
->> id allocation support") added a devm_kasprintf() call into a
->> path protected by the 'icc_bw_lock' which causes this lockdep
->> warning (at least on the IPQ9574 platform):
->>
->>     ======================================================
->>     WARNING: possible circular locking dependency detected
->>     6.15.0-next-20250529 #0 Not tainted
->>     ------------------------------------------------------
->>     swapper/0/1 is trying to acquire lock:
->>     ffffffc081df57d8 (icc_bw_lock){+.+.}-{4:4}, at: icc_init+0x8/0x108
->>
->>     but task is already holding lock:
->>     ffffffc081d7db10 (fs_reclaim){+.+.}-{0:0}, at: icc_init+0x28/0x108
->>
->>     which lock already depends on the new lock.
-> 
-> Thanks for fixing this. I get a similar splat with sc8280xp and the
-> icc_ism_l3 driver since 6.16-rc1.
-> 
-> Georgi, this is a regression that prevents lockdep from being used on a
-> bunch of Qualcomm platforms and should be fixed in mainline ASAP (e.g.
-> to avoid further locking issues from being introduced).
-> 
->> Move the memory allocation part of the code outside of the protected
->> path to eliminate the warning. Also add a note about why it is moved
->> to there,
->>
->> Fixes: d30f83d278a9 ("interconnect: core: Add dynamic id allocation support")
->> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
->> ---
->>  drivers/interconnect/core.c | 14 ++++++++++----
->>  1 file changed, 10 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
->> index 1a41e59c77f85a811f78986e98401625f4cadfa3..acdb3b8f1e54942dbb1b71ec2b170b08ad709e6b 100644
->> --- a/drivers/interconnect/core.c
->> +++ b/drivers/interconnect/core.c
->> @@ -1023,6 +1023,16 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
->>  		return;
->>  
->>  	mutex_lock(&icc_lock);
->> +
->> +	if (node->id >= ICC_DYN_ID_START) {
->> +		/*
->> +		 * Memory allocation must be done outside of codepaths
->> +		 * protected by icc_bw_lock.
->> +		 */
->> +		node->name = devm_kasprintf(provider->dev, GFP_KERNEL, "%s@%s",
->> +					    node->name, dev_name(provider->dev));
->> +	}
-> 
-> The node name has already been set by the caller and the node has not
-> been added yet, so I think you should move this before taking the
-> icc_lock.
-
-It seems reasonable. I will send a modified version, which also contains
-handling of memory allocation failures.
-
-> 
->> +
->>  	mutex_lock(&icc_bw_lock);
->>  
->>  	node->provider = provider;
-> 
-> With that addressed, feel free to add my:
-> 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> Tested-by: Johan Hovold <johan+linaro@kernel.org>
-
-
-Regards,
-Gabor
+Konrad
 
