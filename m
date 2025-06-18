@@ -1,208 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-61717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2E33ADEBFA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 14:26:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AF6AADEC42
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 14:31:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BFDD84A5C34
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 12:22:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 57B10188461C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 12:29:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 334492BDC2D;
-	Wed, 18 Jun 2025 12:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27FF02E54D5;
+	Wed, 18 Jun 2025 12:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mm3Xhz2B"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Q62LiJ4a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A56528A1D8;
-	Wed, 18 Jun 2025 12:19:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276582E54AB
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 12:27:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750249165; cv=none; b=qNwuUur8IdbxRTw05d74FG/w3HCfX1xw3sAwh/4iPUjg3yrpFZaDfQi65j0gqpCKYsGTWuQMkfS8Lbld18/RsVPvdvToL3iUFz50wqmt27SUKWjzZVkF1x1gWGgjE8t3+ZTHC/83EvAfSBeaB2OHsHyw+teJ8UrR0zGVnCV0PuM=
+	t=1750249670; cv=none; b=ZQxou7nhdaw4Sy9kirlbI5QuiyeojwksyWnHBFYQ868sf3Sn8ZEMAyS/n0oyujV2Mt296THSvoaohJOa0c+O+kYfGcqN0duOTq6Mx0Nb4HsSXd4YOcyfNIWpwiSmsjzm3jI7hGEj9yQ+zr//PwN32hqaTNtKNqKxBG1IdFzYhhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750249165; c=relaxed/simple;
-	bh=k+8qTSYcfkM1u4FWin0jAagfhW9z2r/NVtbj44YotsY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tUwJbClyVvylX8F1KmtG07560gN4usv+M71m1YmJUaTdU0+Z80XIUEONVYWCrohqJbAYPVdvy/ljsEh4tpAHHs3qSa/JVDyRShCShxg3E0rpRqaBxMHiGz+ULH81osdVdsJdZxASCYNkurvffeQXrNtO9W1fCGOhCQo6cXu7wGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mm3Xhz2B; arc=none smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750249164; x=1781785164;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=k+8qTSYcfkM1u4FWin0jAagfhW9z2r/NVtbj44YotsY=;
-  b=mm3Xhz2Bu7P11kSxef2YP56jWRnDSSK0qMi9TEvJP5ys/gaZL7OFWuoA
-   qcSJp2siu/FimJ/NM/jmoZgoLkrTSH4oAX2rNuP80Us/6nRvsHv9fnFuJ
-   GGZ03jm9XCTn1petdbOmLWismA8vi7aFpmw8fo+MXb6BLIM6oufBqBd99
-   exqwrAykMZGm4NG+7eAV1ej2RxDxQqvSOCsTI345obAIsQH68WCuw+S6G
-   XodkF3n+L494pnUXQEN0CKIUewGUq7w1X6aNhgPtcMe3i8P+XaiwOUBhY
-   Wl/Vxcuvis/Z3nSPWjLFp4TGkUH2pJYom20icacT9fAvu89XM2Skz6SfC
-   g==;
-X-CSE-ConnectionGUID: hewjvgD/S62tjhVdSQf1MA==
-X-CSE-MsgGUID: c0661op7SMOwqAvcm/1qsw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11468"; a="52331202"
-X-IronPort-AV: E=Sophos;i="6.16,246,1744095600"; 
-   d="scan'208";a="52331202"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jun 2025 05:18:15 -0700
-X-CSE-ConnectionGUID: 9r6V4U3FS1SpaQqBstaAOA==
-X-CSE-MsgGUID: F5hO37xQQqqSDpHTn4JSbQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,246,1744095600"; 
-   d="scan'208";a="153479359"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jun 2025 05:18:01 -0700
-Message-ID: <3031b949-c42a-49bc-be0c-f95a62c792e2@intel.com>
-Date: Wed, 18 Jun 2025 20:17:58 +0800
+	s=arc-20240116; t=1750249670; c=relaxed/simple;
+	bh=lvDeYY1tyHLW44AqHwWF82BKnD0o1q8Cao4PGtdqJcc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B0+xZGF6uC2uuhlExvjcketbc8NW5Cm6ENAIgYeETYxC8uBH/OBmWJq2HgM0N9zPfswh1mTHZSot7rRYeTdh8mFCQwa2NNX4Ve2TI0lS4gWjfBM9nsWgROC3WykxtqiOLJi3W9tvCwce3l4Uima5383GWnK4cPm/OdW1Kl5qTk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Q62LiJ4a; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-32b7fd20f99so4705751fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 05:27:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1750249666; x=1750854466; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lvDeYY1tyHLW44AqHwWF82BKnD0o1q8Cao4PGtdqJcc=;
+        b=Q62LiJ4anBM9mCtPO1s1wPQafnXMiY44Wb6sed9JH7B+3kqfcj6OlRn0afcRWdxW2T
+         GbRcS2/PDp9OME8vCM6aCKmKaSnRlRkd59Vywk+e0f+LJKKgmpr0IkbPHWiFpdeQJTed
+         Ki1UZKrjGbTKc3php1hkcjQXclqOj8kH4nvJPUbCkJ64BuXCSjNYt7EpEJ9H8YK6/UAt
+         hYlkTo3J5CwzbkEY7LCkAbhwCYvxdwlCVBsecB6OxorgUdahP0dPqdIUTSpYbRS0VW0b
+         jmNktZZFxYS4UhcC6SxCXM/VnJgbSDqrjF/aSDVzedYhZLiOR6sWKcwvIHp7m1Ky8hvt
+         U3wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750249666; x=1750854466;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lvDeYY1tyHLW44AqHwWF82BKnD0o1q8Cao4PGtdqJcc=;
+        b=S44cTD1iuy63RDVQj/XI8cxk1Carn7bt1Z79gjsW/UO3n4+T0dVbez00VxDYYv754S
+         G9K3d59FVoo2f681UHPv0ZWlM0/hAzq9pp8RXH3P6USTNUeT/KA7q/Ao6c1HPK1cMhwL
+         ZEV3L0Veld6RqlLLojDNKo/n2oGDCpWGQk1S1khorpCe9Wkij3B1Ai5jFx07iJS9fRuZ
+         KLyjg/uDPaq29pBH9MSXaVUxkODB+jiceWlXuEppqc6ze6vvkv/Spdi9o2X79JRv3KRd
+         gAwSOgPzDWk0nQlQBcxxzzvE1oCjk6JTcK3qbMUf9/0uLPtBkzdQKVCvt1oSF/+R51wW
+         198w==
+X-Forwarded-Encrypted: i=1; AJvYcCVwwnJlnv6x3NEjiUrV/Qwhm4kpI4swgmNgLd89ABgy7HPZo9GMqRRQK5LVe5BSB+Od+apUkL58MEp3RzEx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxp5j7Us+SU9Zw87DZVms/0Dlt3K7w8YuzXwTg35Hz/5NKUYxbx
+	FSFQV58VF+UCCxSsuYipr8IgYgggRX1aB0Vd+ooq5J75uuYpAHq/xJiTCNIEYg1eJHJeMITuv5N
+	uaPwfg2XSqNwfKt6SlS5KmMpX3+ntcxCjfaE9j34ahA==
+X-Gm-Gg: ASbGncurh1pFs5RMqC3f9ZVuIb5E8x+gYX50PevPxCJgE0j+iKPrQ4WYPtNFLujVT8Q
+	GQwDUyyRw8FvY123pkahowvDMzKDT1J3yscd47JgIqJjt4dAO0sQ8BCkrPWRA3T4MTBIqBZCyZR
+	J50bmeahJa1p/0IzPCQiAUzfRQ72rBCRN5H6Df97xbesk=
+X-Google-Smtp-Source: AGHT+IEO41Nyhls6z+tYoLHnOV+DOmxEURxkPhjx4goE9pZdzx8ZYG8pWoqgfu9hnvxH3hdYq4NmpJCLdC/k/NenFbc=
+X-Received: by 2002:a05:651c:169c:b0:32b:4441:e1a6 with SMTP id
+ 38308e7fff4ca-32b7cece005mr6055841fa.1.1750249666214; Wed, 18 Jun 2025
+ 05:27:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 08/18] KVM: guest_memfd: Allow host to map guest_memfd
- pages
-To: David Hildenbrand <david@redhat.com>,
- Sean Christopherson <seanjc@google.com>
-Cc: Fuad Tabba <tabba@google.com>, Ira Weiny <ira.weiny@intel.com>,
- kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
- kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org,
- mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com,
- palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
- amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
- mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
- ackerleytng@google.com, mail@maciej.szmigiero.name, michael.roth@amd.com,
- wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com,
- kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
- steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
- quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
- quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
- quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
- yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
- will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
- shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
- jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com
-References: <20250611133330.1514028-1-tabba@google.com>
- <20250611133330.1514028-9-tabba@google.com> <aEySD5XoxKbkcuEZ@google.com>
- <68501fa5dce32_2376af294d1@iweiny-mobl.notmuch>
- <bbc213c3-bc3d-4f57-b357-a79a9e9290c5@redhat.com>
- <CA+EHjTxvqDr1tavpx7d9OyC2VfUqAko864zH9Qn5+B0UQiM93g@mail.gmail.com>
- <701c8716-dd69-4bf6-9d36-4f8847f96e18@redhat.com>
- <aFIK9l6H7qOG0HYB@google.com>
- <3fb0e82b-f4ef-402d-a33c-0b12e8aa990c@redhat.com>
- <5ee9bbb8-d100-408c-ac07-ea9c5b603545@intel.com>
- <5a55d95e-5e32-4239-a445-be13228ea80b@redhat.com>
- <45af2c0d-a416-49bc-8011-4ec57a56d6f5@intel.com>
- <40a5903b-f747-4eab-8959-06ddd6e88f82@redhat.com>
- <fa3cea2a-d005-44fd-8a2f-2bcea1dc9042@intel.com>
- <38101158-4475-4885-83e7-654045ca0f9b@redhat.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <38101158-4475-4885-83e7-654045ca0f9b@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20250616-gpiochip-set-rv-net-v2-0-cae0b182a552@linaro.org> <20250616-gpiochip-set-rv-net-v2-1-cae0b182a552@linaro.org>
+In-Reply-To: <20250616-gpiochip-set-rv-net-v2-1-cae0b182a552@linaro.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Wed, 18 Jun 2025 14:27:32 +0200
+X-Gm-Features: AX0GCFudNOYMyXLJ7vMaeO2dSvhoaQWQJroQG17p-nXTR5Iec4T0QKmapC2D9eA
+Message-ID: <CACRpkdYJ9O_y9TGTOw8mzf1=LvaxYCE463MPf12YaXUQCKaLzQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/5] net: dsa: vsc73xx: use new GPIO line value setter callbacks
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Andrew Lunn <andrew@lunn.ch>, Vladimir Oltean <olteanv@gmail.com>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	"Chester A. Unal" <chester.a.unal@arinc9.com>, Daniel Golle <daniel@makrotopia.org>, 
+	DENG Qingfang <dqfext@gmail.com>, Sean Wang <sean.wang@mediatek.com>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Marc Kleine-Budde <mkl@pengutronix.de>, Vincent Mailhol <mailhol.vincent@wanadoo.fr>, 
+	Heiner Kallweit <hkallweit1@gmail.com>, Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
+	linux-can@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/18/2025 7:14 PM, David Hildenbrand wrote:
-> On 18.06.25 12:42, Xiaoyao Li wrote:
->> On 6/18/2025 5:59 PM, David Hildenbrand wrote:
->>> On 18.06.25 11:44, Xiaoyao Li wrote:
->>>> On 6/18/2025 5:27 PM, David Hildenbrand wrote:
->>>>> On 18.06.25 11:20, Xiaoyao Li wrote:
->>>>>> On 6/18/2025 4:15 PM, David Hildenbrand wrote:
->>>>>>>> If we are really dead set on having SHARED in the name, it could be
->>>>>>>> GUEST_MEMFD_FLAG_USER_MAPPABLE_SHARED or
->>>>>>>> GUEST_MEMFD_FLAG_USER_MAP_SHARED?  But
->>>>>>>> to me that's _too_ specific and again somewhat confusing given the
->>>>>>>> unfortunate
->>>>>>>> private vs. shared usage in CoCo-land.  And just playing the odds,
->>>>>>>> I'm
->>>>>>>> fine taking
->>>>>>>> a risk of ending up with GUEST_MEMFD_FLAG_USER_MAPPABLE_PRIVATE or
->>>>>>>> whatever,
->>>>>>>> because I think that is comically unlikely to happen.
->>>>>>>
->>>>>>> I think in addition to GUEST_MEMFD_FLAG_MMAP we want something to
->>>>>>> express "this is not your old guest_memfd that only supports private
->>>>>>> memory". And that's what I am struggling with.
->>>>>>
->>>>>> Sorry for chiming in.
->>>>>>
->>>>>> Per my understanding, (old) guest memfd only means it's the memory 
->>>>>> that
->>>>>> cannot be accessed by userspace. There should be no shared/private
->>>>>> concept on it.
->>>>>>
->>>>>> And "private" is the concept of KVM. Guest memfd can serve as private
->>>>>> memory, is just due to the character of it cannot be accessed from
->>>>>> userspace.
->>>>>>
->>>>>> So if the guest memfd can be mmap'ed, then it become userspace
->>>>>> accessable and cannot serve as private memory.
->>>>>>
->>>>>>> Now, if you argue "support for mmap() implies support for non- 
->>>>>>> private
->>>>>>> memory", I'm probably okay for that.
->>>>>>
->>>>>> I would say, support for mmap() implies cannot be used as private
->>>>>> memory.
->>>>>
->>>>> That's not where we're heading with in-place conversion support: you
->>>>> will have private (ianccessible) and non-private (accessible) 
->>>>> parts, and
->>>>> while guest_memfd will support mmap() only the accessible parts can
->>>>> actually be accessed (faulted in etc).
->>>>
->>>> That's OK. The guestmemfd can be fine-grained, i.e., different
->>>> range/part of it can have different access property. But one rule never
->>>> change: only the sub-range is not accessible by userspace can it be
->>>> serve as private memory.
->>>
->>> I'm sorry, I don't understand what you are getting at.
->>>
->>> You said "So if the guest memfd can be mmap'ed, then it become userspace
->>> accessable and cannot serve as private memory." and I say, with in-place
->>> conversion support you are wrong.
->>>
->>> The whole file can be mmaped(), that does not tell us anything about
->>> which parts can be private or not.
->>
->> So there is nothing prevent userspace from accessing it after a range is
->> converted to private via KVM_GMEM_CONVERT_PRIVATE since the whole file
->> can be mmaped()?
->>
->> If so, then for TDX case, userspace can change the TD-owner bit of the
->> private part by accessing it and later guest access will poison it and
->> trigger #MC. If the #MC is only delivered to the PCPU that triggers it,
->> it just leads to the TD guest being killed. If the #MC is broadcasted,
->> it affects other in the system.
->>
->> I just give it a try on real TDX system with in-place conversion. The TD
->> is killed due to SIGBUS (host kernel handles the #MC and sends the
->> SIGBUS). It seems OK if only the TD guest being affected due to
->> userspace accesses the private memory. But I'm not sure if there is any
->> corner case that will affect the host.
-> 
-> I suggest you go ahead and read all about in-place conversion support, 
-> and how it all relates to the #MC problem you mention here.
-> 
-> Long story short: SIGBUS is triggered by the fault handler, not by the 
-> #MC, because private pages cannot be faulted in and accessed.
+On Mon, Jun 16, 2025 at 9:24=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl>=
+ wrote:
+
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >
+> struct gpio_chip now has callbacks for setting line values that return
+> an integer, allowing to indicate failures. Convert the driver to using
+> them.
+>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Sorry for the wrong information and thanks for your patience!
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-I'm clearer now that this series and the in-place conversion try to make 
-shared/private the property of guest memfd. If under this big picture, 
-it looks reasonable to name the flag with "shared'. While just looking 
-at this patch alone, Sean's concern makes more sense.
+Yours,
+Linus Walleij
 
