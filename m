@@ -1,165 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-61761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83180ADF6BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 21:20:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E4022ADF6F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 21:38:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 02DE9175446
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 19:20:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83D8316A123
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 19:38:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0E3D20D50B;
-	Wed, 18 Jun 2025 19:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C73FE215F56;
+	Wed, 18 Jun 2025 19:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="a7HkDahI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EEcZv57L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CF71A2632;
-	Wed, 18 Jun 2025 19:19:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F362A19DF7A;
+	Wed, 18 Jun 2025 19:38:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750274393; cv=none; b=fH+8ZhcnV0GVfD8WQi75GzDVIm8vajiXVxck7NndaXbODnEZqnhGpSeKoXaaDsvSaIC26X+jGvo/di7Dl79Tts0iBwJVOt6bgtkcEXLDBlMwiQ+M64QkfsAhn0qTKrToOAA291GuaXZM1XCLyKGlStaep7JkQBihmDqc8HsFrjM=
+	t=1750275509; cv=none; b=JSguxg8+IXZlw7PrSH1WIHgpksXi+qk9C3VuiWt2rWHityV0UN/HTeiL1M3enYCHVcWEfSkE2dKskmGZVG9SDrsNVgS6kbZVUjhOFIPz4HtJ+eQ6JVfRDQ8PNxk9T7sFBwflUpaKeXaUYWupVNRZRnFg2vQsW9/wa2tXXvOVj/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750274393; c=relaxed/simple;
-	bh=l+CGLaIk4eVguzrZZFsUdEtSHXK3ZjcP7ggXpAQ0o8w=;
+	s=arc-20240116; t=1750275509; c=relaxed/simple;
+	bh=d1whGUe6/gw5D8L1TsbBMFsSRpmq5A/atFpTf7gs4bs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BhpTFSNppSOwVAHwuS5NX1HTOP9hZQyMlLB6/7o+Keii12yK11ZlBOiJeThXksuMls4a3onv5LgKigHReTbT8cFP/vmUFaYHlwNF0w/ASNC2VyzVZTilwlXevuwVSaTTj21tsvCSgAAqEYkyuAjhOCI9S/wPQnLFNn7JnEcxwxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=a7HkDahI; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1750274383; bh=l+CGLaIk4eVguzrZZFsUdEtSHXK3ZjcP7ggXpAQ0o8w=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=a7HkDahICdgPiRTpNg1HTPNq5u+XQyHBc8SKqAd/jak7dPWPOY0f5KQXCP0JF9LkR
-	 406IVwmhHOjhKffoYccr40dotXqjdddNrw+xg5DKmjqEvT+sp3GHYu8dTmsbf3wB8+
-	 xanZWfpue4k/l74iwyWnPFICi9MaTQYX06Oav0Oc=
-Message-ID: <ea183f5a-b4c8-4dc0-960f-dba0db5a5abb@lucaweiss.eu>
-Date: Wed, 18 Jun 2025 21:19:42 +0200
+	 In-Reply-To:Content-Type; b=plt3DQX6R/jNYGCvCz+Z7ywWliVjiOs6Rx5iw0RmtlLodbjRug8uz2Jg6IlCfyU81gcn8SJZ6rFB/9o130QzKl0o4Nw7ImT0iZOC5wVzb5DLFxBo49qDo8pSlIrwNThlMcsp3/ITG5ZPwhlkoqJpZJxa6cLScpkdW9vjgXwCwSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EEcZv57L; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-450ce3a2dd5so183755e9.3;
+        Wed, 18 Jun 2025 12:38:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750275506; x=1750880306; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=j2D68AjOhD65ob6ahc321W824b9bdePyaOMeGU4pu4s=;
+        b=EEcZv57LV+/GQznMnC6aieF7rKuZevPAxQ/aIj7LuVvVCuFyz2CUnSGDaA/uWsskaE
+         znND6sd44aZkfNwknJNZ9G3sr/xYN4qL4LSFdhqNiwhllckasPOjB1lWkfeKHNp3jKuo
+         lWvKiW+syotQV7myuv/1/F0bb32M9Uoijs44yLyjybAfA8G19UjIXjOoIRqE9iuljasd
+         aMCbeAY9ybq4LjG1C8cMdhEyShq8ufowsutbCwdvmYnSakdS1W/TaVWVbfsHXrRLy4Jp
+         oXKP/xkU1mt8iFZKKi16h07Oz+3makQw/cx7bj1ITxs6+ixYnfSiMNNXzpfiFqJOQ3iI
+         +pfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750275506; x=1750880306;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=j2D68AjOhD65ob6ahc321W824b9bdePyaOMeGU4pu4s=;
+        b=SZALCZEijKxdYVPVnljc8j7CYTg92RerDv0YXFJrC13XGqjtEkJC107aSeQJ1+e7Yo
+         7/2V0cJkBeljT2PGnll/IUsxyb7A2z3VftiKhDwZWh/HCZ0U9zySDKu9xJV36jDDqZWf
+         mwa7TXGZa7GX9uhMvFy6SEsAnW1dB6iRks6DmnENBBKjipSQoEqwJdYsRsaRmzfpsQQQ
+         LLj/ymbjbxzTPzauZzL2PuEonVk8Qa2LhiSG9DjpSc0uiY7U01nDVzLia+6YPkQ1C3Wf
+         xUv1BrwoSfiSSrZUyAvK7f/Riu5r48XEJ3lJStgGtzqLCWuadDbmToaEHLx35T3onzCk
+         QDxw==
+X-Forwarded-Encrypted: i=1; AJvYcCU4Lx6Y8clDPZarcO4XsBLgtKdOZy7NOrvVQLbz4uhJ9+V9aux8KA+adG+kAIbvOMcdWvsCQPLnjZc=@vger.kernel.org, AJvYcCWh8ijdIHdRlQU492x9XCZlyiDta0VgzL7VFbcrXapiEw0p109z3ML5jFXhER+33xF78LtdVjilMTmfGc19@vger.kernel.org, AJvYcCWlelS5aFZYuL1EbknObxH426JsfgrKv70iHl3sUMwkIt++xK+9ekgJ/paR/gB5SQATHE3VNlznRyppMwin@vger.kernel.org
+X-Gm-Message-State: AOJu0YzbYKnHoqlVrISI9AkbBX+pagQ+P0cqWLvgSTnzTZaSJS9yVQUb
+	EezrSUf6rLFXeFSeanVKgUGE6i6+8XycZmVQcwhGrJSp8DZp3p65O9kM
+X-Gm-Gg: ASbGncutLKo2HSFwUCsT3y6yPvnbF8ISDUeEM+MpDj3LwMEbNRa865yMdUGzx663t3v
+	c8UqpSb0z700aDiuZeH6ToTtXG0YR2Wr5Rc2GSLi888mJGYaOfTIsD1v9dVFOasrT2344+X0nPp
+	HSvqbkYCSiK/kuikRspj8o+rDHq6ripueXgGjmHc5+JyjAANa7Ex0qzASlv7tChhKZkYBY1og/w
+	9zxlPZtLNBHxlUhJu8jAVLHBMKS+Z574V9mHwp+uv5R2+YlIGMC2XfuYZL018XQ4eUOoZ6/iVPn
+	nOpl158ZecevsRCie9VF7aYYfoPvthyaINq23PxNBxOzvgmIZcV9jrJEjh24WSJNAqaskr2JjQc
+	vEkg7BGYAGwpkB8v9mXL0lpUGCIM=
+X-Google-Smtp-Source: AGHT+IEAlu8eaLc4zokaEd0yP7OxADSH00EGrKoNAOkdeTQ8e1Zn5FmjRwQrIlj8sevy2FyyZoKXRw==
+X-Received: by 2002:a05:600c:3587:b0:43c:fda5:41e9 with SMTP id 5b1f17b1804b1-4533cad1aa0mr195109995e9.31.1750275505926;
+        Wed, 18 Jun 2025 12:38:25 -0700 (PDT)
+Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4535eac8c41sm5947235e9.26.2025.06.18.12.38.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Jun 2025 12:38:25 -0700 (PDT)
+Message-ID: <5f8c1163-d347-4c93-968c-3fd191336f04@gmail.com>
+Date: Wed, 18 Jun 2025 21:38:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH 3/3] iio: Add Qualcomm Sensor Manager drivers
-Content-Language: en-US
-To: Yassine Oudjana <y.oudjana@protonmail.com>,
- Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Simon Horman <horms@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>,
- Nathan Chancellor <nathan@kernel.org>,
- Nicolas Schier <nicolas.schier@linux.dev>,
- Alexander Sverdlin <alexander.sverdlin@gmail.com>,
- Sean Nyekjaer <sean@geanix.com>,
- Javier Carrasco <javier.carrasco.cruz@gmail.com>,
- Matti Vaittinen <mazziesaccount@gmail.com>,
- Antoniu Miclaus <antoniu.miclaus@analog.com>,
- Ramona Gradinariu <ramona.gradinariu@analog.com>,
- "Yo-Jung (Leo) Lin" <0xff07@gmail.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
- Danila Tikhonov <danila@jiaxyga.com>,
- Antoni Pokusinski <apokusinski01@gmail.com>,
- Vasileios Amoiridis <vassilisamir@gmail.com>,
- Petar Stoykov <pd.pstoykov@gmail.com>,
- shuaijie wang <wangshuaijie@awinic.com>, Yasin Lee <yasin.lee.x@gmail.com>,
- "Borislav Petkov (AMD)" <bp@alien8.de>,
- Dave Hansen <dave.hansen@linux.intel.com>, Tony Luck <tony.luck@intel.com>,
- Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
- Ingo Molnar <mingo@kernel.org>
-Cc: Yassine Oudjana <yassine.oudjana@gmail.com>,
- linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
- linux-kbuild@vger.kernel.org
-References: <20250406140706.812425-1-y.oudjana@protonmail.com>
- <20250406140706.812425-4-y.oudjana@protonmail.com>
-From: Luca Weiss <luca@lucaweiss.eu>
-In-Reply-To: <20250406140706.812425-4-y.oudjana@protonmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] interconnect: avoid memory allocation when 'icc_bw_lock'
+ is held
+Content-Language: hu
+To: Johan Hovold <johan@kernel.org>, Georgi Djakov <djakov@kernel.org>
+Cc: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-pm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250529-icc-bw-lockdep-v1-1-3d714b6a9374@gmail.com>
+ <aFK0a8AIOl704DpP@hovoldconsulting.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
+In-Reply-To: <aFK0a8AIOl704DpP@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Yassine!
+Hi Johan,
 
-On 06-04-2025 4:08 p.m., Yassine Oudjana wrote:
-> Add drivers for sensors exposed by the Qualcomm Sensor Manager service,
-> which is provided by SLPI or ADSP on Qualcomm SoCs. Supported sensors
-> include accelerometers, gyroscopes, pressure sensors, proximity sensors
-> and magnetometers.
+Thank you for taking a look into this.
+
+2025. 06. 18. 14:43 keltezéssel, Johan Hovold írta:
+> On Thu, May 29, 2025 at 04:46:22PM +0200, Gabor Juhos wrote:
+>> The 'icc_bw_lock' mutex is introduced in commit af42269c3523
+>> ("interconnect: Fix locking for runpm vs reclaim") in order
+>> to decouple serialization of bw aggregation from codepaths
+>> that require memory allocation.
+>>
+>> However commit d30f83d278a9 ("interconnect: core: Add dynamic
+>> id allocation support") added a devm_kasprintf() call into a
+>> path protected by the 'icc_bw_lock' which causes this lockdep
+>> warning (at least on the IPQ9574 platform):
+>>
+>>     ======================================================
+>>     WARNING: possible circular locking dependency detected
+>>     6.15.0-next-20250529 #0 Not tainted
+>>     ------------------------------------------------------
+>>     swapper/0/1 is trying to acquire lock:
+>>     ffffffc081df57d8 (icc_bw_lock){+.+.}-{4:4}, at: icc_init+0x8/0x108
+>>
+>>     but task is already holding lock:
+>>     ffffffc081d7db10 (fs_reclaim){+.+.}-{0:0}, at: icc_init+0x28/0x108
+>>
+>>     which lock already depends on the new lock.
 > 
-> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+> Thanks for fixing this. I get a similar splat with sc8280xp and the
+> icc_ism_l3 driver since 6.16-rc1.
+> 
+> Georgi, this is a regression that prevents lockdep from being used on a
+> bunch of Qualcomm platforms and should be fixed in mainline ASAP (e.g.
+> to avoid further locking issues from being introduced).
+> 
+>> Move the memory allocation part of the code outside of the protected
+>> path to eliminate the warning. Also add a note about why it is moved
+>> to there,
+>>
+>> Fixes: d30f83d278a9 ("interconnect: core: Add dynamic id allocation support")
+>> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+>> ---
+>>  drivers/interconnect/core.c | 14 ++++++++++----
+>>  1 file changed, 10 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+>> index 1a41e59c77f85a811f78986e98401625f4cadfa3..acdb3b8f1e54942dbb1b71ec2b170b08ad709e6b 100644
+>> --- a/drivers/interconnect/core.c
+>> +++ b/drivers/interconnect/core.c
+>> @@ -1023,6 +1023,16 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
+>>  		return;
+>>  
+>>  	mutex_lock(&icc_lock);
+>> +
+>> +	if (node->id >= ICC_DYN_ID_START) {
+>> +		/*
+>> +		 * Memory allocation must be done outside of codepaths
+>> +		 * protected by icc_bw_lock.
+>> +		 */
+>> +		node->name = devm_kasprintf(provider->dev, GFP_KERNEL, "%s@%s",
+>> +					    node->name, dev_name(provider->dev));
+>> +	}
+> 
+> The node name has already been set by the caller and the node has not
+> been added yet, so I think you should move this before taking the
+> icc_lock.
 
-<snip>
+It seems reasonable. I will send a modified version, which also contains
+handling of memory allocation failures.
 
-> +static const char *const qcom_smgr_sensor_type_platform_names[] = {
-> +	[SNS_SMGR_SENSOR_TYPE_ACCEL] = "qcom-smgr-accel",
-> +	[SNS_SMGR_SENSOR_TYPE_GYRO] = "qcom-smgr-gyro",
-> +	[SNS_SMGR_SENSOR_TYPE_MAG] = "qcom-smgr-mag",
-> +	[SNS_SMGR_SENSOR_TYPE_PROX_LIGHT] = "qcom-smgr-prox-light",
-> +	[SNS_SMGR_SENSOR_TYPE_PRESSURE] = "qcom-smgr-pressure",
-> +	[SNS_SMGR_SENSOR_TYPE_HALL_EFFECT] = "qcom-smgr-hall-effect"
-> +};
-> +
-> +static void qcom_smgr_unregister_sensor(void *data)
-> +{
-> +	struct platform_device *pdev = data;
-> +
-> +	platform_device_unregister(pdev);
-> +}
-> +
-> +static int qcom_smgr_register_sensor(struct qcom_smgr *smgr,
-> +				     struct qcom_smgr_sensor *sensor)
-> +{
-> +	struct platform_device *pdev;
-> +	const char *name = qcom_smgr_sensor_type_platform_names[sensor->type];
+> 
+>> +
+>>  	mutex_lock(&icc_bw_lock);
+>>  
+>>  	node->provider = provider;
+> 
+> With that addressed, feel free to add my:
+> 
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> Tested-by: Johan Hovold <johan+linaro@kernel.org>
 
-On msm8226 lg-lenok I get NULL here leading to a crash with the next call.
 
-I get sensor->type=0 for some heart rate sensor on that watch. I've 
-added this patch on top to fix that (excuse the formatting):
-
-<snip>
-
-> diff --git a/drivers/iio/common/qcom_smgr/qmi/sns_smgr.h b/drivers/iio/common/qcom_smgr/qmi/sns_smgr.h
-> new file mode 100644
-> index 000000000000..a741dfd87452
-> --- /dev/null
-> +++ b/drivers/iio/common/qcom_smgr/qmi/sns_smgr.h
-> @@ -0,0 +1,163 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +
-> +#ifndef __SSC_SNS_SMGR_H__
-> +#define __SSC_SNS_SMGR_H__
-> +
-> +#include <linux/iio/common/qcom_smgr.h>
-> +#include <linux/soc/qcom/qmi.h>
-> +#include <linux/types.h>
-> +
-> +/*
-> + * The structures of QMI messages used by the service were determined
-> + * purely by watching transactions between proprietary Android userspace
-> + * components and SSC. along with comparing values reported by Android APIs
-> + * to values received in response messages. Due to that, the purpose or
-> + * meaning of many fields remains unknown. Such fields are named "val*",
-> + * "data*" or similar. Furthermore, the true maximum sizes of some messages
-> + * with unknown array fields may be different than defined here.
-> + */
-> +
-> +#define SNS_SMGR_QMI_SVC_ID			0x0100
-> +#define SNS_SMGR_QMI_SVC_V1			1
-> +#define SNS_SMGR_QMI_INS_ID			50
-This instance ID needs to be 0 on msm8974 and msm8226, so I assume we 
-don't want to make this a define but just add the 50 and the 0 as-is to 
-the match table?
-
-Regards
-Luca
+Regards,
+Gabor
 
