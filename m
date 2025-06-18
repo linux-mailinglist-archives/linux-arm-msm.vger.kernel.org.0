@@ -1,80 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-61706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C22B0ADE75B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 11:43:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 751B5ADE765
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 11:45:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8EB4B16A9D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 09:43:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 950D6189B756
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 09:45:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D0292820CD;
-	Wed, 18 Jun 2025 09:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48207283FFB;
+	Wed, 18 Jun 2025 09:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gRyAipns"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UqIytWtX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B00627FD59;
-	Wed, 18 Jun 2025 09:42:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725FE283FE9;
+	Wed, 18 Jun 2025 09:45:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750239764; cv=none; b=C6ABQi4UmDtkABPlQYpkcy+In1yw1uzsUU4Ncxrm77zcELq6k9Jc8jiOg7F5ikWTdc67A9Iu87kg0u8ASlS5Jc4ZVZ36CwFbmzwiR1kJbADKufHttV2LnwGfKCIoXV51Gf2ZW0TIYeyQbbRFUlTeAN4nXhTj5J+nzONxMSe8Wn8=
+	t=1750239911; cv=none; b=hDijheO1olCeuGy4FATKlk8iProwTk7T9R3xuZyagrmtGaWk93uAzkIQXDWStv/yV/VOWRuXgAfuQeknDrpHSeAhX4ZhuIegzlORUVDB88HD2zOMEPhYOIqB4F3lhpFOS45Imtk8T5y8GE56eH8Q+VR4PsUAF4kkXnpTWGrGkMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750239764; c=relaxed/simple;
-	bh=QFN6YR0t8F3HIowOt0b4TfDFzltjdytD41c1NAiofmM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XNXNc63vFyLGRh3cpYTxGihTB24KnwnuitylzaQaR6X8E0m9UVBbqbpxpkkeRfKrtU8/KP+2/rs5vfCgOhub13bXEvJHArkjisHnPEbj0dHy8KAo/vw4cCUmBI+KSbo054pyO/CuNJE8aOsyf+nNWMA/nrm/A4R28gseXuuC+h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gRyAipns; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DBBC4CEE7;
-	Wed, 18 Jun 2025 09:42:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750239762;
-	bh=QFN6YR0t8F3HIowOt0b4TfDFzltjdytD41c1NAiofmM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gRyAipns3EE9QymXHgam6qF8i7LcjuO/rCWLRQiPMJduifseTTZveIqdTG3AKCiMN
-	 xWsh1m38ltECia1PTOK19E3njW5SFLk59A7wKtnS1ZtzdGaVm8JSqFzB70A1JAJmtb
-	 Pc9PXdCQOTFbtyOp/Iw8H/3PeIRHP5l2M3lO+ldJLcKMwNvCmtuPUCCdthUXf0pYpG
-	 2Tu91FedF+AmU5h9bKARQz3albMdDg7GWhKSD8ZV9DclwE71Hl4+NO5mepbfsap3T4
-	 Xkh9p1EEFqxKfCanoZHBfQqFVDkx4hh14bQp2xf9hMrpiATivq8ggo9ovBThEHUaRa
-	 3pyFEoeDvDKjw==
-Date: Wed, 18 Jun 2025 11:42:39 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Pengyu Luo <mitltlatltl@gmail.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: dma: qcom,gpi: Document the sc8280xp
- GPI DMA engine
-Message-ID: <20250618-rough-optimal-dragon-3358a4@kuoka>
-References: <20250617090032.1487382-1-mitltlatltl@gmail.com>
- <20250617090032.1487382-2-mitltlatltl@gmail.com>
+	s=arc-20240116; t=1750239911; c=relaxed/simple;
+	bh=c3zisHeSgsiOmCxzsYHp1qfDX2IAhPXU7UJ7X5H2xHw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kwpYKvCqxAyl/BECBYP9DmcPR2h6+nRqrLrQkwRf8XFk+rJBO5AgeKDF/PAvJ+OjfQzBzf6nTNR9CfIuJ/XHMgKLstPiENh1kwguO6YPwfOSIM3xBzPmwM5Cd5UqqbyZGRcP4wOX6lah3XB5HUlo57PuDo2vrOU41VS21pc2UMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UqIytWtX; arc=none smtp.client-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1750239910; x=1781775910;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=c3zisHeSgsiOmCxzsYHp1qfDX2IAhPXU7UJ7X5H2xHw=;
+  b=UqIytWtXzl/2rKMCShccumucMZnxELyKu8duFy79X+91e0+sOCYIMRWQ
+   nprf4HARsEd0EJCOc8+F8VFKI2PvygSE1wyd2Fi6JMWmtFirf/wxmwdyK
+   p2mQInfPAG5pnZEgaN4qBsR7sQAZvDHNI59tlnv78yhrJSnow0lrWvurZ
+   mjpXyNBD7zCvmMdAtO37CdYIc0VjbySrWE70lPoXldBTthXWcjIMlkYgV
+   UX7Tiw+mKh6Y/uVdD9CuTGWu4ljHs+TS0p8u9B0Qp+vRoXdvAucWRUZyW
+   e4fDxCJAAmVJzAzS1qbL0f2Rdlj1tUQpay57OClU/gzjUXp8WXKrUVDhi
+   g==;
+X-CSE-ConnectionGUID: nM7tgjGGQ1+VUJUzzLyZgA==
+X-CSE-MsgGUID: ux2LSy96R66lHoFLIBs4qw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11467"; a="51673188"
+X-IronPort-AV: E=Sophos;i="6.16,245,1744095600"; 
+   d="scan'208";a="51673188"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jun 2025 02:45:09 -0700
+X-CSE-ConnectionGUID: 8NAui1Z5SV6Jhb3YSmbdjg==
+X-CSE-MsgGUID: Diu13044RRG0wAG9m+vEMw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,245,1744095600"; 
+   d="scan'208";a="150198980"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
+  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jun 2025 02:44:54 -0700
+Message-ID: <45af2c0d-a416-49bc-8011-4ec57a56d6f5@intel.com>
+Date: Wed, 18 Jun 2025 17:44:50 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250617090032.1487382-2-mitltlatltl@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 08/18] KVM: guest_memfd: Allow host to map guest_memfd
+ pages
+To: David Hildenbrand <david@redhat.com>,
+ Sean Christopherson <seanjc@google.com>
+Cc: Fuad Tabba <tabba@google.com>, Ira Weiny <ira.weiny@intel.com>,
+ kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
+ kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org,
+ mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com,
+ palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
+ amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
+ mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
+ ackerleytng@google.com, mail@maciej.szmigiero.name, michael.roth@amd.com,
+ wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com
+References: <20250611133330.1514028-1-tabba@google.com>
+ <20250611133330.1514028-9-tabba@google.com> <aEySD5XoxKbkcuEZ@google.com>
+ <68501fa5dce32_2376af294d1@iweiny-mobl.notmuch>
+ <bbc213c3-bc3d-4f57-b357-a79a9e9290c5@redhat.com>
+ <CA+EHjTxvqDr1tavpx7d9OyC2VfUqAko864zH9Qn5+B0UQiM93g@mail.gmail.com>
+ <701c8716-dd69-4bf6-9d36-4f8847f96e18@redhat.com>
+ <aFIK9l6H7qOG0HYB@google.com>
+ <3fb0e82b-f4ef-402d-a33c-0b12e8aa990c@redhat.com>
+ <5ee9bbb8-d100-408c-ac07-ea9c5b603545@intel.com>
+ <5a55d95e-5e32-4239-a445-be13228ea80b@redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <5a55d95e-5e32-4239-a445-be13228ea80b@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 17, 2025 at 05:00:31PM GMT, Pengyu Luo wrote:
-> Document the GPI DMA engine on the sc8280xp platform.
+On 6/18/2025 5:27 PM, David Hildenbrand wrote:
+> On 18.06.25 11:20, Xiaoyao Li wrote:
+>> On 6/18/2025 4:15 PM, David Hildenbrand wrote:
+>>>> If we are really dead set on having SHARED in the name, it could be
+>>>> GUEST_MEMFD_FLAG_USER_MAPPABLE_SHARED or
+>>>> GUEST_MEMFD_FLAG_USER_MAP_SHARED?  But
+>>>> to me that's _too_ specific and again somewhat confusing given the
+>>>> unfortunate
+>>>> private vs. shared usage in CoCo-land.  And just playing the odds, I'm
+>>>> fine taking
+>>>> a risk of ending up with GUEST_MEMFD_FLAG_USER_MAPPABLE_PRIVATE or
+>>>> whatever,
+>>>> because I think that is comically unlikely to happen.
+>>>
+>>> I think in addition to GUEST_MEMFD_FLAG_MMAP we want something to
+>>> express "this is not your old guest_memfd that only supports private
+>>> memory". And that's what I am struggling with.
+>>
+>> Sorry for chiming in.
+>>
+>> Per my understanding, (old) guest memfd only means it's the memory that
+>> cannot be accessed by userspace. There should be no shared/private
+>> concept on it.
+>>
+>> And "private" is the concept of KVM. Guest memfd can serve as private
+>> memory, is just due to the character of it cannot be accessed from
+>> userspace.
+>>
+>> So if the guest memfd can be mmap'ed, then it become userspace
+>> accessable and cannot serve as private memory.
+>>
+>>> Now, if you argue "support for mmap() implies support for non-private
+>>> memory", I'm probably okay for that.
+>>
+>> I would say, support for mmap() implies cannot be used as private memory.
 > 
-> Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-> ---
->  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> That's not where we're heading with in-place conversion support: you 
+> will have private (ianccessible) and non-private (accessible) parts, and 
+> while guest_memfd will support mmap() only the accessible parts can 
+> actually be accessed (faulted in etc).
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+That's OK. The guestmemfd can be fine-grained, i.e., different 
+range/part of it can have different access property. But one rule never 
+change: only the sub-range is not accessible by userspace can it be 
+serve as private memory.
 
-Best regards,
-Krzysztof
-
+(I haven't read the in-place conversion support patch series. But I 
+think the private part is not mmap-able, right?)
 
