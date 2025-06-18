@@ -1,143 +1,259 @@
-Return-Path: <linux-arm-msm+bounces-61765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81044ADF73B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 21:51:23 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 398D6ADF755
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 21:58:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 21E0F4A37B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 19:51:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7DB781BC2CAD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 19:59:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CD9121ADC6;
-	Wed, 18 Jun 2025 19:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFB97219E8F;
+	Wed, 18 Jun 2025 19:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XnM2iGOb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NcphAlM0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD12219A89
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 19:50:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E55204F93;
+	Wed, 18 Jun 2025 19:58:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750276256; cv=none; b=nou9jxRDGScvEDn9C6f9D5Ua5T47t81+dlUjG+SI+C+D6KlZ+3+PVcyCtMNAlmpPCdzAx8M4mNWQ1sukjDLXeFL2IJKH6nX3c1Bocwmki19W1bJUorgTMLg8vUvIvyFOTAuuqoLGaXDBcCh1hPnkfCyhnPWhBDJLFxV/vnshug0=
+	t=1750276725; cv=none; b=uHmnxZu0+8miMxMLRXm+oQImVxuCttMRuhqgrgDcYN3tgfqKzRK8Z11zZpbrx4e0G7casR9OIi8uBdoSHgg1aXGovVyezWdjqLvdpKWxHla14/TBLdG2lPZU8a7MIb7pNA3IiW7Fw+1Gn5QSWVwACQlrGZNj+niDh3X0laOLUVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750276256; c=relaxed/simple;
-	bh=Abe84Q55V8uLaOGPFRiyP7NZWpfQt9lsxHaIzy2vJKE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HCAtNemGT4nbCcaN/nLIKbkf5sO5noP7vQgh72gt0AAImK0M+W2dQzmrA37UxiyTgH+T1a5TcvPA7L0dhAhEsExUZYJ9pZ6g5X+7OVZS0/MhPsYDgjoJ0NzC6jifecaVSD3ULc+mygQ7dcb6cszc8AnrQYmI1dav98H55I5km7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XnM2iGOb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55IGBq0K005635
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 19:50:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FOzsOSYkCLW2ggvd0CZgtgGnw4BaefQGhIvMT/TEkjU=; b=XnM2iGObMqoEo6lf
-	g2scR+b50htBei+ddhijz7lFpT6jkC+CUE9B8IXrQbeuRwAphjqxH4gyAzl36zGg
-	EAXjXw8FnlhtfQzmXSoWBzc81DDcaiqBVYKs8qMwUCxRrMqxAweXcq+sm50ESf9a
-	Su8mBE6j99asU3sNrJfLizPOqrstkfar1EqGiludaRf4yY9d1b4KQunRbfW867qY
-	AQi5kkjx4Mo5EXhKRbevfj3jIroX9JknaAQS5bfQnsPadSdegb311jv401rYl1Gj
-	XlMvCgq3IV7366lqZy2VYC6qOnWdCem0hX6XMnpoLK3cxzegaOrr/UxxL42IY1C1
-	A2QL+g==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47c0rvgmsh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 19:50:53 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7d0979c176eso1203485a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 12:50:53 -0700 (PDT)
+	s=arc-20240116; t=1750276725; c=relaxed/simple;
+	bh=oW4TG705Njm3fkS66GWsdvEAqtCg4YLGDNfdILMxpE8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=MnvvpfzHeWkhOnAGzyKcwFUetK2QrSXkyi9jo7n3encp7L+xmGUQkO46uyDwJdeEec+SWQNpxWH/b9vBHKDMaoxogUWSp5LMHVzxL9wTeZ5i1OFm5QCK7A7FEHPsfvsyOsdc+/KDzJuCm+AX9vryd1tWAkDaMNq61p6p6EDmpbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NcphAlM0; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a525eee2e3so40712f8f.2;
+        Wed, 18 Jun 2025 12:58:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750276721; x=1750881521; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yILEYjuFKOksTOtZQJ1mh+Zyv9A7FgLZzQhTctgdMTI=;
+        b=NcphAlM0Cy33uhHypioyrU92Q2KfmNF03NgvSdGlAfce9XmhhoiCSok5ASm96H9b1k
+         aLbHzncJ5j9o8W4sh/qTQ0Tv+VZtdJjVyfJ1PFyD3HWspYLioRgbqJpcoLQi6d8uMSzb
+         IBbkY+1t7jpMn0N/8WS4YJ4sReNkHETlJQcitkEsKnyIdVsYHeCdeOVoSBu4JdA4pkTX
+         OiW+Fl55MGGBgQO6UlTsVKIsvzIoyMQg8xew9m1aJ86YSdcFJri1fL6ladQnMz3X5Wsi
+         QgqfuFcELHN1IothtbqKGGWqj8sav/xRd/88ia4zOm7utMmQAclGYzoiypOH7bMs94RI
+         8b+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750276252; x=1750881052;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FOzsOSYkCLW2ggvd0CZgtgGnw4BaefQGhIvMT/TEkjU=;
-        b=LLDmBgKKfMpLxk+fxaOtjFmFFvq8hBzIKYUKvnASXvN2sGFChtg0xGqNUsz6ppKLfZ
-         2NEOJ0oZ0AKKGdTwiw30RDmEw/+ecpwbzrKaw6Eg5WYT9mcNmp/67tLoWimCrds/uMb+
-         6889HIdTLuW/GcHvjZOkGL5hgM3Jvzl5DpV4oPrdSFRWWGnzJAANWCE5pzhx+3+JLP5n
-         u0FvetMyXBL/SDrc+EL/r7xOF7lvVAXh9IQvv7F39bAcUp2sch4l2epPWUKglQoa/awI
-         AAJRd3ryWstZ1TsCtieO8moyNTRdFrqZ+kljk0iOYweVywGnAtgMaNDmZUhO1Mu76lod
-         XkAQ==
-X-Gm-Message-State: AOJu0YxnVkh0n81rSHG80VXp3me/Q4PzkWMf94gJYt9xwXnYzMvtZnF/
-	pCgYLJoXN0UKovp/zhQdsZfQR+gLOSqkZE/0E++rCBxbrXP8sxIpSZS+thf+ugfUqc77JrNOAWV
-	LfpLv0HlaRV8mqg+T0kqbR6Ik4ujcW/apeQxqSIsJrh4Z+8ohcHtDgRxnluZC/3K1i4LU
-X-Gm-Gg: ASbGncvuA869JMp35HZew3ko75ed51IS1QATIcCpiwVcqrNj6qqkJL6cwTf6pkiaYGt
-	9pQjAyuVfSN6ifC4JguvmpkhbNG91qVG/5zSCqA3ddn9n45SuCUVNwb1Yw+sthSPcXLHejRrvb7
-	kx2rLRzQmdang9jfxl3r2AoW4nMxgHZkLR6qYN4uBT+8V50RoBDIxhczvE+dte2CkN6Bw3DPVtA
-	JVDLL0WeT+sGq/ca+hfMw7D24HVQyWjG3Geg+IBl/40epUppe19iYFS2qAPHB6hoBZD7NPoerAn
-	ytw4paku2GD9aKlshEtFGjqCnjnnANID1AIpkDeoMcoRwxepiAzXxpbS5nJ+DbLwcwDDdZ4GvxW
-	cDzE=
-X-Received: by 2002:a05:620a:4307:b0:7c0:c024:d5 with SMTP id af79cd13be357-7d3f1b5439cmr37309485a.8.1750276252373;
-        Wed, 18 Jun 2025 12:50:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEKmaXk+Vmkvjg46kiwK/r2FLExfJoQV8V595azEx4ecLa7oANL+iNpPolnQOfeL6VLJxOtmQ==
-X-Received: by 2002:a05:620a:4307:b0:7c0:c024:d5 with SMTP id af79cd13be357-7d3f1b5439cmr37308185a.8.1750276251956;
-        Wed, 18 Jun 2025 12:50:51 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-adf8b393ea8sm966523166b.159.2025.06.18.12.50.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Jun 2025 12:50:51 -0700 (PDT)
-Message-ID: <f4ee6c98-3071-4121-bd6b-a41959f7f5ef@oss.qualcomm.com>
-Date: Wed, 18 Jun 2025 21:50:49 +0200
+        d=1e100.net; s=20230601; t=1750276721; x=1750881521;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yILEYjuFKOksTOtZQJ1mh+Zyv9A7FgLZzQhTctgdMTI=;
+        b=Efb01SUtbxK39jni2Z5e5vFpofMG2dtOPChMAaOMtoJSXLxzLLhQsphq1ZprSgQce7
+         mexe/oh9qbdJcXoQBygjRKPPVO1txu7hkke1NYyGeFCe+xZ0bm7epx9laPZ4lNsa7+xe
+         el73TBtfTfCGAl0Qo+94iJ/Fbm+ALGtAQ0ar48UVxFVc/byXg1h1AHOEr2QxFXJPbWNC
+         75qml+ZiIVqvGYxe8tKhNLcLmBF7uG+GbbqTIc29t76br8XgHFEiPbLGv6hu0QfkIf3o
+         ua9Z3ywqJF1RR0Pim4nm497m1HPKqk5k6H+1B8I7GPy3EKlv24o42040EFmhU6GPvPRS
+         AMkw==
+X-Forwarded-Encrypted: i=1; AJvYcCVe4a47EhKRFJ6/SUaIRdOD5741kZVeMy3LPeqOZ48cbX2M9Q3n+28RCe2eYPRkvHYqbzBmIc748Zni3aXZ@vger.kernel.org, AJvYcCW4tZJaG98rgZa9k3BLwvx3/Q0yU5UyAHzbpCCUOypOElmWaihimCwgD4hRWv0ezayScPwnq1gwGcbbn3dQ@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywq/46DHdgEXBlf7Kfo623raYqcjC996U/pajhEI08++zXIXGq2
+	k/WWxJrDd9HnQrJzEkdmA1Tud0Wqqa/FNSzmKxtcLr7DZhzSHu7Mg5Kg
+X-Gm-Gg: ASbGncvsqphwPLrPcZR2LqPqNR/kjuHymP/D+WpikXejTeMWReCeS9E+14RyEpBu4bM
+	kFXb5GKPltNFlCH3dMQi+u2G8W1geoeSFa319Y941JkNXVUmO9TeLxtec2F2784F2BIQGCZkPhC
+	GEcDCzmgtAzFltUNZEL0+skNTtGubo9oNh4ef8/0qo/lSD9Y7jpXRUdUba+7EHmcd9w5piXl49t
+	uQwo23XvFa7fUIW++oG9j5Gd3Wy+YqT5LURxnIlBReiTAH9Ze3+66Xt06qBCGQ+MEOGUvuziRgG
+	8xFP4KFL8QJBG9P29/nLPQYyDLgaCVHEHXOugDSERBwnqrT9Ek2Ho9RT24veVvWzfTuS4UFehIO
+	/Es/YJlYN55WbBSM+r/XrysUkZA==
+X-Google-Smtp-Source: AGHT+IHKDBE85qKyxIh/y74WJ1k5i5BdngRQIWn0H2JXqVuA/Jp5pXJ5N/mmlj9xCDhDKks1oNCrxA==
+X-Received: by 2002:a05:6000:2d0c:b0:3a5:8d0b:d0b8 with SMTP id ffacd0b85a97d-3a58d0bd1camr3306079f8f.54.1750276720655;
+        Wed, 18 Jun 2025 12:58:40 -0700 (PDT)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3a57b15015fsm12196730f8f.95.2025.06.18.12.58.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Jun 2025 12:58:40 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Wed, 18 Jun 2025 21:58:31 +0200
+Subject: [PATCH v2] interconnect: avoid memory allocation when
+ 'icc_bw_lock' is held
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sar2130p: use defines for DSI PHY
- clocks
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250618-sar2130p-fix-mdss-v1-0-78c2fb9e9fba@oss.qualcomm.com>
- <20250618-sar2130p-fix-mdss-v1-3-78c2fb9e9fba@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250618-sar2130p-fix-mdss-v1-3-78c2fb9e9fba@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE4MDE2OCBTYWx0ZWRfX0xeS2Ys4ktgY
- dc4EnqzJgfjzwgeq2e0q6ikje3lye/nKYqL3CBteZ/z8vri1tGRqQ3nHaJSmzjlbjCO5/TMKhEF
- oi6EoHLjpj7cmW+Au/bEsdCd/KouHdRPbwB6DO9YNIRxB2ibgLMdA3UcgM1+9b7stD/a/82HFmw
- J1AFfrPpcRM9iIplVWQRK8+y/Hj79m1crsx3sHbse3Vj0miIv7O1nR9v5xzuA9XY0TShsAKuE6s
- s5mOlXn+Dl+T6mzlm7ewodcy8Fnl/1JWkxT7nvo9O6eRUIcHhO8hv5fIQRE4eabIBk+/uo3mJds
- IAxAWueUWK7xov2W+HXoPb0QLOfT95f+pjgf6DUC1MVyhariaIrMwoMtJXrflfwJdNODxpOPYNh
- mWOrAtA/zdwS1NIYTY50yw68UPNOuYtendw0YtJOUwatTT9sxyHiPsx0GloMyl4ljOop+pdL
-X-Proofpoint-GUID: d0wK5qNmq9w_b4pUVrrwEThe9uN5rjH4
-X-Authority-Analysis: v=2.4 cv=btJMBFai c=1 sm=1 tr=0 ts=6853189d cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=FoSyCDDHJe3iGoLm4rcA:9
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: d0wK5qNmq9w_b4pUVrrwEThe9uN5rjH4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-18_05,2025-06-18_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 adultscore=0 lowpriorityscore=0 mlxscore=0
- suspectscore=0 clxscore=1015 malwarescore=0 spamscore=0 mlxlogscore=485
- bulkscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506180168
+Message-Id: <20250618-icc-bw-lockdep-v2-1-3223da346765@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAGYaU2gC/3XMQQ6CMBCF4auQWTumLSDWlfcwLEo7wkSgpDWoI
+ b27lb3L/yXv2yBSYIpwKTYItHJkP+dQhwLsYOaekF1uUELVolYa2VrsXjh6+3C0IDlRCnfWykg
+ N+bQEuvN7B29t7oHj04fP7q/yt/6lVokSS9fIqjsZXTbVtZ8Mj0frJ2hTSl9vjjULrAAAAA==
+X-Change-ID: 20250529-icc-bw-lockdep-ed030d892a19
+To: Georgi Djakov <djakov@kernel.org>, 
+ Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>, 
+ Johan Hovold <johan+linaro@kernel.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 
-On 6/18/25 7:49 PM, Dmitry Baryshkov wrote:
-> Use defined IDs to reference DSI PHY clocks instead of using raw
-> numbers.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
+The 'icc_bw_lock' mutex is introduced in commit af42269c3523
+("interconnect: Fix locking for runpm vs reclaim") in order
+to decouple serialization of bw aggregation from codepaths
+that require memory allocation.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+However commit d30f83d278a9 ("interconnect: core: Add dynamic
+id allocation support") added a devm_kasprintf() call into a
+path protected by the 'icc_bw_lock' which causes this lockdep
+warning (at least on the IPQ9574 platform):
 
-Konrad
+    ======================================================
+    WARNING: possible circular locking dependency detected
+    6.15.0-next-20250529 #0 Not tainted
+    ------------------------------------------------------
+    swapper/0/1 is trying to acquire lock:
+    ffffffc081df57d8 (icc_bw_lock){+.+.}-{4:4}, at: icc_init+0x8/0x108
+
+    but task is already holding lock:
+    ffffffc081d7db10 (fs_reclaim){+.+.}-{0:0}, at: icc_init+0x28/0x108
+
+    which lock already depends on the new lock.
+
+    the existing dependency chain (in reverse order) is:
+
+    -> #1 (fs_reclaim){+.+.}-{0:0}:
+           fs_reclaim_acquire+0x7c/0xb8
+           slab_alloc_node.isra.0+0x48/0x188
+           __kmalloc_node_track_caller_noprof+0xa4/0x2b8
+           devm_kmalloc+0x5c/0x138
+           devm_kvasprintf+0x6c/0xb8
+           devm_kasprintf+0x50/0x68
+           icc_node_add+0xbc/0x160
+           icc_clk_register+0x15c/0x230
+           devm_icc_clk_register+0x20/0x90
+           qcom_cc_really_probe+0x320/0x338
+           nss_cc_ipq9574_probe+0xac/0x1e8
+           platform_probe+0x70/0xd0
+           really_probe+0xdc/0x3b8
+           __driver_probe_device+0x94/0x178
+           driver_probe_device+0x48/0xf0
+           __driver_attach+0x13c/0x208
+           bus_for_each_dev+0x6c/0xb8
+           driver_attach+0x2c/0x40
+           bus_add_driver+0x100/0x250
+           driver_register+0x68/0x138
+           __platform_driver_register+0x2c/0x40
+           nss_cc_ipq9574_driver_init+0x24/0x38
+           do_one_initcall+0x88/0x340
+           kernel_init_freeable+0x2ac/0x4f8
+           kernel_init+0x28/0x1e8
+           ret_from_fork+0x10/0x20
+
+    -> #0 (icc_bw_lock){+.+.}-{4:4}:
+           __lock_acquire+0x1348/0x2090
+           lock_acquire+0x108/0x2d8
+           icc_init+0x50/0x108
+           do_one_initcall+0x88/0x340
+           kernel_init_freeable+0x2ac/0x4f8
+           kernel_init+0x28/0x1e8
+           ret_from_fork+0x10/0x20
+
+    other info that might help us debug this:
+
+     Possible unsafe locking scenario:
+
+           CPU0                    CPU1
+           ----                    ----
+      lock(fs_reclaim);
+                                   lock(icc_bw_lock);
+                                   lock(fs_reclaim);
+      lock(icc_bw_lock);
+
+     *** DEADLOCK ***
+
+    1 lock held by swapper/0/1:
+     #0: ffffffc081d7db10 (fs_reclaim){+.+.}-{0:0}, at: icc_init+0x28/0x108
+
+    stack backtrace:
+    CPU: 3 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.15.0-next-20250529 #0 NONE
+    Hardware name: Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C7 (DT)
+    Call trace:
+     show_stack+0x20/0x38 (C)
+     dump_stack_lvl+0x90/0xd0
+     dump_stack+0x18/0x28
+     print_circular_bug+0x334/0x448
+     check_noncircular+0x12c/0x140
+     __lock_acquire+0x1348/0x2090
+     lock_acquire+0x108/0x2d8
+     icc_init+0x50/0x108
+     do_one_initcall+0x88/0x340
+     kernel_init_freeable+0x2ac/0x4f8
+     kernel_init+0x28/0x1e8
+     ret_from_fork+0x10/0x20
+
+Move the memory allocation part of the code outside of the protected
+path to eliminate the warning, and add a note about why it is moved
+to there. Also add memory allocation failure handling, while we are
+at it.
+
+Fixes: d30f83d278a9 ("interconnect: core: Add dynamic id allocation support")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+Changes in v2:
+  - move memory allocation outside of icc_lock
+  - issue a warning and return without modifying the node name in case of
+    memory allocation failure, and adjust the commit description
+  - remove offered tags from Johan and Bryan
+    Note: since I was not sure that that the added WARN_ON() is a substantial
+    change or not, I have removed the offered tags intentionally to be on the
+    safe side
+---
+ drivers/interconnect/core.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+index 1a41e59c77f85a811f78986e98401625f4cadfa3..32d969c349093bc356dc66234c62484aa9b9e872 100644
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -1022,6 +1022,21 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
+ 	if (WARN_ON(node->provider))
+ 		return;
+ 
++	if (node->id >= ICC_DYN_ID_START) {
++		char *name;
++
++		/*
++		 * Memory allocation must be done outside of codepaths
++		 * protected by icc_bw_lock.
++		 */
++		name = devm_kasprintf(provider->dev, GFP_KERNEL, "%s@%s",
++				      node->name, dev_name(provider->dev));
++		if (WARN_ON(!name))
++			return;
++
++		node->name = name;
++	}
++
+ 	mutex_lock(&icc_lock);
+ 	mutex_lock(&icc_bw_lock);
+ 
+@@ -1038,10 +1053,6 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
+ 	node->avg_bw = node->init_avg;
+ 	node->peak_bw = node->init_peak;
+ 
+-	if (node->id >= ICC_DYN_ID_START)
+-		node->name = devm_kasprintf(provider->dev, GFP_KERNEL, "%s@%s",
+-					    node->name, dev_name(provider->dev));
+-
+ 	if (node->avg_bw || node->peak_bw) {
+ 		if (provider->pre_aggregate)
+ 			provider->pre_aggregate(node);
+
+---
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+change-id: 20250529-icc-bw-lockdep-ed030d892a19
+
+Best regards,
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
+
 
