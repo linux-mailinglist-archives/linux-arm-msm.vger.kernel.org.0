@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-61700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88923ADE642
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 11:08:23 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10852ADE648
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 11:08:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5149E3B103A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 09:07:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 435321896FAE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 09:08:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CF3B27FB3C;
-	Wed, 18 Jun 2025 09:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97C6927FB3F;
+	Wed, 18 Jun 2025 09:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rahVlYsM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jbXRXq5t"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE31127FB37;
-	Wed, 18 Jun 2025 09:08:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6302B27FB05;
+	Wed, 18 Jun 2025 09:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750237699; cv=none; b=ZYqnzivDd4HH58ECvZ7ypO50kpmlXtDHhv80ujmA6KFKG+rjJ2mk63Hf8e7Zztmwqz6T53aw9voBRXJfo4ACHOVv7MtDoPpuikA3SlKPBZT2eMBOu/WEutA/1fNQwwoKsdIRgCKFGhg2j8epFDcBy58/v7ixdOh/mmiPaunWHws=
+	t=1750237712; cv=none; b=aK2m9g96EFxyEQfBcLKPRnhu3qfCKMEToxqPKiGjF+UQHgHAsi3eUXhmv3GL8XakccmmT67aEBcW/Sxn7k0S+8P8f6pcdT4ZDt0bTKMK38EQ7Nd6FZBNLng6hBYsOAr9GN4xsXUlQuDIx+2fnHx8qhgylsboSjf0ayi+n0TgtDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750237699; c=relaxed/simple;
-	bh=Znwom1NdED/dYAH4xL7nUXQjN8SthFU/dT6KAA1gfL8=;
+	s=arc-20240116; t=1750237712; c=relaxed/simple;
+	bh=0+sFPaL0Jxk/lHkLW2jW5q8iyj0drtqRimLRRflGR2g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f4lXkkAIrpsIL9pX02vVH0D6huSrv8NhZXpw9oMUz/zRwmLYj/RFc/AGQG5iAwEAhekDDDNGtC/FULTUJgU4XyOVjbZXqV3p517HsU94Qu7i9FXI6MimxD6mlAl4p5ydO/6lKPcRXbB119gV3UGjArkAqAAJ+WVvgA3zdHIE4tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rahVlYsM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0702FC4CEE7;
-	Wed, 18 Jun 2025 09:08:11 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=C2E/zmLGCQte8kU0/4h9KZvBON7ojkdgEfI0wSUUKewDvdb5m3wK3hVBlhz6yz2ZHAi/Ns9fc+t1Lz7YlcVnTlwdf/MAqnW9m5WcmOyDjKPp4VZ2ULb5qe2XtrM4AfliPxP885dq8S8Mr1u9RijL7uUUmvXt7miiFod0CZxRK3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jbXRXq5t; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D355C4CEE7;
+	Wed, 18 Jun 2025 09:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750237696;
-	bh=Znwom1NdED/dYAH4xL7nUXQjN8SthFU/dT6KAA1gfL8=;
+	s=k20201202; t=1750237712;
+	bh=0+sFPaL0Jxk/lHkLW2jW5q8iyj0drtqRimLRRflGR2g=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rahVlYsMunMFBAizbh5HnPv5AZIpKAQgZnJ/W0DL/VlmB5Gtf9xlpNPARl95XPdTo
-	 XH4Y3zjaeSgIn/orTF4ZbT4nq36/rmwPhoZrc1EaORsjvCDQmssdi3+zdqWt9Ay4Py
-	 ABO+/r2KE7ZxL6HgzpBcJuBuf2spYrE4tEhrh0dv+f3n86OfMR6+nlwumzy4iRQMRS
-	 6H4co0s+c0SYlI1EaoWWAy0NGHnAsVLMiIhEGIC6OGxf7Od0u8ytMxmMpQOZ0ndEil
-	 Pc1EskmmzpDlwQtT04GoWkJ3QiCEbMa8le6RGMicaf8TIcHudq+qucyYFvuuEAhT3l
-	 X4lrskt3+JI8g==
-Message-ID: <4038339c-a352-4007-85f5-44601a3578c2@kernel.org>
-Date: Wed, 18 Jun 2025 11:08:10 +0200
+	b=jbXRXq5tUgwuXlqsPmr98Q76JjsK8O0wF4ENkwfqKXqrq5prpRJaUQHybfahmUmyI
+	 sx/w3FdMLK7QM5s5pbpZgvmjP5g2XOlLoYOq5M8Nn9K4AqVYGirStcqpHMm/py5E09
+	 rhkfMEIZg5ma2udO8n8cfhsEIN606wTgpF/1MP/OUuHUT10oGLDlWW/ysTRF5w7ZBu
+	 RVrkaj7qzkbtvhIUQQ3W9VAMhcDsUqoCoM0g2V72LrnjW/hXhgsvNs1ND/62h/tiTu
+	 2knv0aOtTMUbe9veX7CV3JVEm0RG3nqV21u5ToSZi/FbDqqkioxO535tJv1yQ6wNQ/
+	 +/LCe1olud25Q==
+Message-ID: <a3796e76-d597-4c0d-ae7c-d042cce564a5@kernel.org>
+Date: Wed, 18 Jun 2025 11:08:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 4/4] arm64: dts: qcom: sm8550: Remove SDR104/SDR50
- broken capabilities
+Subject: Re: [PATCH V3 2/4] dt-bindings: mmc: controller: Add
+ max-sd-hs-frequency property
 To: Sarthak Garg <quic_sartgarg@quicinc.com>,
  Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -64,9 +64,9 @@ Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
  quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
  quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
 References: <20250618072818.1667097-1-quic_sartgarg@quicinc.com>
- <20250618072818.1667097-5-quic_sartgarg@quicinc.com>
- <5336c00d-3b80-423a-bb52-4e1ec35bc7ed@kernel.org>
- <86ad5ddb-1a43-45c3-af35-9eb863c66f63@quicinc.com>
+ <20250618072818.1667097-3-quic_sartgarg@quicinc.com>
+ <6040afd9-a2a8-49f0-85e9-95257b938156@kernel.org>
+ <d1ffbcf5-967a-4c1e-9f2c-becc5fb6c6ed@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,58 +112,63 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <86ad5ddb-1a43-45c3-af35-9eb863c66f63@quicinc.com>
+In-Reply-To: <d1ffbcf5-967a-4c1e-9f2c-becc5fb6c6ed@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 18/06/2025 10:44, Sarthak Garg wrote:
+On 18/06/2025 10:38, Sarthak Garg wrote:
 > 
 > 
-> On 6/18/2025 1:11 PM, Krzysztof Kozlowski wrote:
+> On 6/18/2025 1:13 PM, Krzysztof Kozlowski wrote:
 >> On 18/06/2025 09:28, Sarthak Garg wrote:
->>> Kernel now handles all level shifter limitations related to SD card
->>> modes.
->>> As a result, the broken hardware capabilities for SDR104 and SDR50 modes
->>> can be removed from the device tree.
->>> Additionally, due to level shifter constraints, set the maximum
->>> frequency for High Speed (HS) mode to 37.5 MHz using the
->>> max-sd-hs-frequency property for sm8550.
+>>> Introduce a new optional device tree property `max-sd-hs-frequency` to
+>>> limit the maximum frequency (in Hz) used for SD cards operating in
+>>> High-Speed (HS) mode.
+>>>
+>>> This property is useful for platforms with vendor-specific hardware
+>>> constraints, such as the presence of a level shifter that cannot
+>>> reliably support the default 50 MHz HS frequency. It allows the host
+>>> driver to cap the HS mode frequency accordingly.
 >>>
 >>> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
 >>> ---
->>>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 4 +---
->>>   1 file changed, 1 insertion(+), 3 deletions(-)
+>>>   .../devicetree/bindings/mmc/mmc-controller-common.yaml | 10 ++++++++++
+>>>   1 file changed, 10 insertions(+)
 >>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->>> index 82cabf777cd2..2c770c979d39 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->>> @@ -3180,6 +3180,7 @@ sdhc_2: mmc@8804000 {
->>>   			iommus = <&apps_smmu 0x540 0>;
->>>   			qcom,dll-config = <0x0007642c>;
->>>   			qcom,ddr-config = <0x80040868>;
->>> +			max-sd-hs-frequency = <37500000>;
->> So my previous comments stay... This is SoC thus deducible from compatible.
+>>> diff --git a/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml b/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml
+>>> index 9a7235439759..1976f5f8c401 100644
+>>> --- a/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml
+>>> +++ b/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml
+>>> @@ -93,6 +93,16 @@ properties:
+>>>       minimum: 400000
+>>>       maximum: 384000000
+>>>   
+>>> +  max-sd-hs-frequency:
+>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>> +    description: |
+>>> +      Maximum frequency (in Hz) to be used for SD cards operating in
+>>> +      High-Speed (HS) mode. This is useful for platforms with vendor-specific
+>>> +      limitations, such as the presence of a level shifter that cannot support
+>>> +      the default 50 MHz HS frequency or other.
+>>> +    minimum: 400000
+>>> +    maximum: 50000000
+>>
+>> This might be fine, but your DTS suggests clearly this is SoC compatible
+>> deducible, which I already said at v1.
+>>
+>> So now you send v3 which is the same as v1, so you get the same comments.
 >>
 >> Best regards,
 >> Krzysztof
 > 
-> " I agree that a DT property for the mmc controller would make sense.
-> 
-> Although, this seems limited to SD UHS-I speed modes, so perhaps
-> "max-sd-uhs-frequency" would be a better name for it?
-> 
-> Kind regards
-> Uffe "
-> 
-> https://patchwork.kernel.org/project/linux-mmc/cover/20250523105745.6210-1-quic_sartgarg@quicinc.com/
-> 
-> This was the comment given on V2 to introduce a generic dt
-> property.
+> Introducing this flag no longer becomes SoC compatible because as per 
+> discussions in V2 patchset with Ulf and Konrad this new property can be 
+> used by any vendor who wants to limit the HS mode frequency due to any 
+> reason. Thats why moved to this generic approach again in V3 as compared 
+> to compatible based approach in V2.
 
-
-I know, it does not matter. If this is here, it is a 100% proof this is
-SoC specific, thus you have compatible for that.
+The are no arguments provided in favor, so my review from v1 stays. You
+get the same comments.
 
 Best regards,
 Krzysztof
