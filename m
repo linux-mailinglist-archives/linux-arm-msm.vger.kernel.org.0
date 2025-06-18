@@ -1,188 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-61711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD87FADE958
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 12:44:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57512ADE995
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 13:06:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3CB143A3217
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 10:43:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A3703AC8A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jun 2025 11:05:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DB741E5215;
-	Wed, 18 Jun 2025 10:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FAE5288CAC;
+	Wed, 18 Jun 2025 11:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XgOx2snm"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="oYi7t4eU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6054A1F542A;
-	Wed, 18 Jun 2025 10:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3ABF27FD45;
+	Wed, 18 Jun 2025 11:05:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750243410; cv=none; b=tVjb2Sx0N7ipnJ4rfs+s8kzT6h6u9YaOrolri3c3zxdKmHMOldDFUL8ORRowuB3/ZLwlngv5BKgffMxZAp6iJui0q8+xIyWo5mbcFzM3gjnAbZI0f0OOpV+BUZWNIzPTqAP0wI9eCHu75LCjcmfYqQyEmUqLUy3mzDHvoAZlpHk=
+	t=1750244761; cv=none; b=GSQtvwoHXJE5YOAxrMzeY+r/ABPic8a/B2WkkyAb2XL6UmC/jbBWR/vqWY/J6/VyY/S93wsnLH2RT9Mizvoh4tlAu24RNHJbPMqbQKpVn6p7t08c+BiHinTFh7rBgnHA4IXI6abR8ECArmDKImGf8LGU2yotNK6ZPzv/b6gtnns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750243410; c=relaxed/simple;
-	bh=I9PmKGx6C4Hu/BoA88yCIXxqN5ojWcA35Miba1RUffg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sEP06aNAMbOHdQ72yxBdjMfDEIjmxmJ+lMhPzMhlEVzApyGyh3rBd2CRLPJdfUwsILOgDKQq8A8mMW2Dp69JCxL435JQFbPu76ZGnvu5F3cBcQMubEFruqGgPy6lGYk7X21Tiogg2/k2tQtxWxXkWu6iMfrpjGx853b4i/ShwLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XgOx2snm; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750243408; x=1781779408;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=I9PmKGx6C4Hu/BoA88yCIXxqN5ojWcA35Miba1RUffg=;
-  b=XgOx2snm82/Eey/pBpfW5/+ahVKDfIwuL5sr+YA5dMjEn7jqf09qw29m
-   FR9HCbM+NR8hsa2wLLn2+N3krSv2GGJ/nPDv+FZv8z148mvuAhxclIh1P
-   DaUvZxSk5Mm9+V2OBlgelYLsHD1Xz5rAwmEnvsmxaluBq5IZoeIDogakE
-   TFdX7rY1GSNv+Rybxo78kzgcqwimc9P8zCVkyfr/dwK4ogN3TmuTiCqyq
-   l0hActRildWkMp7mJ7ROyKXVl52LUknmz+MVaU5+jXQ1MpeqPw/Kwoy64
-   bwYhA/IbE4zRTS60r8yIxooCPlv0BgAxuDXEPJqrNNtrgVt1nuLmSJeiu
-   Q==;
-X-CSE-ConnectionGUID: 31tBF8OjT0WTR4RiWp6grQ==
-X-CSE-MsgGUID: p+urGSlNQCyx2pa01AB3ow==
-X-IronPort-AV: E=McAfee;i="6800,10657,11467"; a="56271992"
-X-IronPort-AV: E=Sophos;i="6.16,245,1744095600"; 
-   d="scan'208";a="56271992"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jun 2025 03:42:18 -0700
-X-CSE-ConnectionGUID: TWdBwNcFRtSq2PYHbigelA==
-X-CSE-MsgGUID: SccbtXZMQZq6raWpgFnzug==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,245,1744095600"; 
-   d="scan'208";a="150123348"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1]) ([10.124.247.1])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jun 2025 03:42:05 -0700
-Message-ID: <fa3cea2a-d005-44fd-8a2f-2bcea1dc9042@intel.com>
-Date: Wed, 18 Jun 2025 18:42:02 +0800
+	s=arc-20240116; t=1750244761; c=relaxed/simple;
+	bh=gW+ni8plbleqdd52MUQ6wZCG5RzzGMHShvs76e8/JxI=;
+	h=From:To:Cc:Subject:MIME-Version:Content-Disposition:Content-Type:
+	 Message-Id:Date; b=HwyktCCEiJINIVzz00OuzYWAbWbl8oqAtfSTryd+TmaVr3YCEnMecYVssk9xmVhbmTcwYReKpZu97pVixYySUytp0+7ecSZfE737qcupDZamWGgbhJY334wGqjjA0+OmmFPDHbVfjonHRnlkwM4qaD805tRws1LZ+G/I4NG7zus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=oYi7t4eU; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
+	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:Reply-To:Content-ID
+	:Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:
+	Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=0FtSwqCoG1msMXua6u5n/l3M96NDt+D8zynwIuxQY18=; b=oYi7t4eUUgqA9X/LKQQQjb0B8Y
+	2voagUW4WpphDfgL6QLIe5/vM8kM3E/KeH/aqO5XKh3OnpGgvkeZvqA39qm/HrOxc1z0N/eQ8LK+U
+	bLKOvvlVyo1YS5/sCRZuTitH3LfuO6z83S2ThIWAYDQFgGfwrVVs/lhcdHyUowomZZSPs28EuiJYH
+	9QIf7fe+ojKLpbYzWh4XO1/k0zLMYVUrP4NIw9eg8tgOs9VItwM9CY+gr/KSmIoDMcWQ/l3px7bkx
+	FmziY8svNBEAj0Y7GYBAVsQ6JC/KZqBxBdSUq0dXNtZJIfVX9ToqXpjjalSWu+JLAurYhZInDRls+
+	yiTzuh8Q==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:37278 helo=rmk-PC.armlinux.org.uk)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <rmk@armlinux.org.uk>)
+	id 1uRqc4-0006Km-1c;
+	Wed, 18 Jun 2025 12:05:52 +0100
+Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
+	id 1uRqbQ-004djP-1l; Wed, 18 Jun 2025 12:05:12 +0100
+From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH net-next] net: stmmac: replace ioaddr with stmmac_priv for
+ pcs_set_ane() method
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 08/18] KVM: guest_memfd: Allow host to map guest_memfd
- pages
-To: David Hildenbrand <david@redhat.com>,
- Sean Christopherson <seanjc@google.com>
-Cc: Fuad Tabba <tabba@google.com>, Ira Weiny <ira.weiny@intel.com>,
- kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
- kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org,
- mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com,
- palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org,
- amoorthy@google.com, dmatlack@google.com, isaku.yamahata@intel.com,
- mic@digikod.net, vbabka@suse.cz, vannapurve@google.com,
- ackerleytng@google.com, mail@maciej.szmigiero.name, michael.roth@amd.com,
- wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com,
- kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
- steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
- quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
- quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
- quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
- yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
- will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
- shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
- jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com
-References: <20250611133330.1514028-1-tabba@google.com>
- <20250611133330.1514028-9-tabba@google.com> <aEySD5XoxKbkcuEZ@google.com>
- <68501fa5dce32_2376af294d1@iweiny-mobl.notmuch>
- <bbc213c3-bc3d-4f57-b357-a79a9e9290c5@redhat.com>
- <CA+EHjTxvqDr1tavpx7d9OyC2VfUqAko864zH9Qn5+B0UQiM93g@mail.gmail.com>
- <701c8716-dd69-4bf6-9d36-4f8847f96e18@redhat.com>
- <aFIK9l6H7qOG0HYB@google.com>
- <3fb0e82b-f4ef-402d-a33c-0b12e8aa990c@redhat.com>
- <5ee9bbb8-d100-408c-ac07-ea9c5b603545@intel.com>
- <5a55d95e-5e32-4239-a445-be13228ea80b@redhat.com>
- <45af2c0d-a416-49bc-8011-4ec57a56d6f5@intel.com>
- <40a5903b-f747-4eab-8959-06ddd6e88f82@redhat.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <40a5903b-f747-4eab-8959-06ddd6e88f82@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Message-Id: <E1uRqbQ-004djP-1l@rmk-PC.armlinux.org.uk>
+Sender: Russell King <rmk@armlinux.org.uk>
+Date: Wed, 18 Jun 2025 12:05:12 +0100
 
-On 6/18/2025 5:59 PM, David Hildenbrand wrote:
-> On 18.06.25 11:44, Xiaoyao Li wrote:
->> On 6/18/2025 5:27 PM, David Hildenbrand wrote:
->>> On 18.06.25 11:20, Xiaoyao Li wrote:
->>>> On 6/18/2025 4:15 PM, David Hildenbrand wrote:
->>>>>> If we are really dead set on having SHARED in the name, it could be
->>>>>> GUEST_MEMFD_FLAG_USER_MAPPABLE_SHARED or
->>>>>> GUEST_MEMFD_FLAG_USER_MAP_SHARED?  But
->>>>>> to me that's _too_ specific and again somewhat confusing given the
->>>>>> unfortunate
->>>>>> private vs. shared usage in CoCo-land.  And just playing the odds, 
->>>>>> I'm
->>>>>> fine taking
->>>>>> a risk of ending up with GUEST_MEMFD_FLAG_USER_MAPPABLE_PRIVATE or
->>>>>> whatever,
->>>>>> because I think that is comically unlikely to happen.
->>>>>
->>>>> I think in addition to GUEST_MEMFD_FLAG_MMAP we want something to
->>>>> express "this is not your old guest_memfd that only supports private
->>>>> memory". And that's what I am struggling with.
->>>>
->>>> Sorry for chiming in.
->>>>
->>>> Per my understanding, (old) guest memfd only means it's the memory that
->>>> cannot be accessed by userspace. There should be no shared/private
->>>> concept on it.
->>>>
->>>> And "private" is the concept of KVM. Guest memfd can serve as private
->>>> memory, is just due to the character of it cannot be accessed from
->>>> userspace.
->>>>
->>>> So if the guest memfd can be mmap'ed, then it become userspace
->>>> accessable and cannot serve as private memory.
->>>>
->>>>> Now, if you argue "support for mmap() implies support for non-private
->>>>> memory", I'm probably okay for that.
->>>>
->>>> I would say, support for mmap() implies cannot be used as private 
->>>> memory.
->>>
->>> That's not where we're heading with in-place conversion support: you
->>> will have private (ianccessible) and non-private (accessible) parts, and
->>> while guest_memfd will support mmap() only the accessible parts can
->>> actually be accessed (faulted in etc).
->>
->> That's OK. The guestmemfd can be fine-grained, i.e., different
->> range/part of it can have different access property. But one rule never
->> change: only the sub-range is not accessible by userspace can it be
->> serve as private memory.
-> 
-> I'm sorry, I don't understand what you are getting at.
-> 
-> You said "So if the guest memfd can be mmap'ed, then it become userspace 
-> accessable and cannot serve as private memory." and I say, with in-place 
-> conversion support you are wrong.
-> 
-> The whole file can be mmaped(), that does not tell us anything about 
-> which parts can be private or not.
+Pass the stmmac_priv structure into the pcs_set_ane() MAC method rather
+than having callers dereferencing this structure for the IO address.
 
-So there is nothing prevent userspace from accessing it after a range is 
-converted to private via KVM_GMEM_CONVERT_PRIVATE since the whole file 
-can be mmaped()?
+Tested-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org> # sa8775p-ride-r3
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+---
+ drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c    | 6 +++---
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c       | 4 ++--
+ drivers/net/ethernet/stmicro/stmmac/hwif.h              | 4 ++--
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c    | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c       | 2 +-
+ 6 files changed, 10 insertions(+), 10 deletions(-)
 
-If so, then for TDX case, userspace can change the TD-owner bit of the 
-private part by accessing it and later guest access will poison it and 
-trigger #MC. If the #MC is only delivered to the PCPU that triggers it, 
-it just leads to the TD guest being killed. If the #MC is broadcasted, 
-it affects other in the system.
-
-I just give it a try on real TDX system with in-place conversion. The TD 
-is killed due to SIGBUS (host kernel handles the #MC and sends the 
-SIGBUS). It seems OK if only the TD guest being affected due to 
-userspace accesses the private memory. But I'm not sure if there is any 
-corner case that will affect the host.
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index 2e398574c7a7..d8fd4d8f6ced 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -624,7 +624,7 @@ static void ethqos_set_serdes_speed(struct qcom_ethqos *ethqos, int speed)
+ 
+ static void ethqos_pcs_set_inband(struct stmmac_priv *priv, bool enable)
+ {
+-	stmmac_pcs_ctrl_ane(priv, priv->ioaddr, enable, 0, 0);
++	stmmac_pcs_ctrl_ane(priv, enable, 0, 0);
+ }
+ 
+ /* On interface toggle MAC registers gets reset.
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
+index 38875c832bb8..fe776ddf6889 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
+@@ -393,10 +393,10 @@ static void dwmac1000_set_eee_timer(struct mac_device_info *hw, int ls, int tw)
+ 	writel(value, ioaddr + LPI_TIMER_CTRL);
+ }
+ 
+-static void dwmac1000_ctrl_ane(void __iomem *ioaddr, bool ane, bool srgmi_ral,
+-			       bool loopback)
++static void dwmac1000_ctrl_ane(struct stmmac_priv *priv, bool ane,
++			       bool srgmi_ral, bool loopback)
+ {
+-	dwmac_ctrl_ane(ioaddr, GMAC_PCS_BASE, ane, srgmi_ral, loopback);
++	dwmac_ctrl_ane(priv->ioaddr, GMAC_PCS_BASE, ane, srgmi_ral, loopback);
+ }
+ 
+ static void dwmac1000_debug(struct stmmac_priv *priv, void __iomem *ioaddr,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+index bc06b24fc611..d85bc0bb5c3c 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+@@ -583,10 +583,10 @@ static void dwmac4_flow_ctrl(struct mac_device_info *hw, unsigned int duplex,
+ 	}
+ }
+ 
+-static void dwmac4_ctrl_ane(void __iomem *ioaddr, bool ane, bool srgmi_ral,
++static void dwmac4_ctrl_ane(struct stmmac_priv *priv, bool ane, bool srgmi_ral,
+ 			    bool loopback)
+ {
+-	dwmac_ctrl_ane(ioaddr, GMAC_PCS_BASE, ane, srgmi_ral, loopback);
++	dwmac_ctrl_ane(priv->ioaddr, GMAC_PCS_BASE, ane, srgmi_ral, loopback);
+ }
+ 
+ /* RGMII or SMII interface */
+diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+index e1ac9a245bfe..14dbe0685997 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
++++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+@@ -374,7 +374,7 @@ struct stmmac_ops {
+ 		      struct stmmac_extra_stats *x, u32 rx_queues,
+ 		      u32 tx_queues);
+ 	/* PCS calls */
+-	void (*pcs_ctrl_ane)(void __iomem *ioaddr, bool ane, bool srgmi_ral,
++	void (*pcs_ctrl_ane)(struct stmmac_priv *priv, bool ane, bool srgmi_ral,
+ 			     bool loopback);
+ 	/* Safety Features */
+ 	int (*safety_feat_config)(void __iomem *ioaddr, unsigned int asp,
+@@ -464,7 +464,7 @@ struct stmmac_ops {
+ #define stmmac_mac_debug(__priv, __args...) \
+ 	stmmac_do_void_callback(__priv, mac, debug, __priv, __args)
+ #define stmmac_pcs_ctrl_ane(__priv, __args...) \
+-	stmmac_do_void_callback(__priv, mac, pcs_ctrl_ane, __args)
++	stmmac_do_void_callback(__priv, mac, pcs_ctrl_ane, __priv, __args)
+ #define stmmac_safety_feat_config(__priv, __args...) \
+ 	stmmac_do_callback(__priv, mac, safety_feat_config, __args)
+ #define stmmac_safety_feat_irq_status(__priv, __args...) \
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+index 72f1724af037..77758a7299b4 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+@@ -380,7 +380,7 @@ stmmac_ethtool_set_link_ksettings(struct net_device *dev,
+ 			return -EINVAL;
+ 
+ 		mutex_lock(&priv->lock);
+-		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, priv->hw->ps, 0);
++		stmmac_pcs_ctrl_ane(priv, 1, priv->hw->ps, 0);
+ 		mutex_unlock(&priv->lock);
+ 
+ 		return 0;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index c3845ec62fbd..f350a6662880 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -3586,7 +3586,7 @@ static int stmmac_hw_setup(struct net_device *dev, bool ptp_register)
+ 	}
+ 
+ 	if (priv->hw->pcs)
+-		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, priv->hw->ps, 0);
++		stmmac_pcs_ctrl_ane(priv, 1, priv->hw->ps, 0);
+ 
+ 	/* set TX and RX rings length */
+ 	stmmac_set_rings_length(priv);
+-- 
+2.30.2
 
 
