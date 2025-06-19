@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-61819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54333AE095B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 16:57:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8387BAE0969
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 16:58:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F3D41BC7CA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 14:55:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EC25D3B0536
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 14:55:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E458269B01;
-	Thu, 19 Jun 2025 14:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C887C28B4E3;
+	Thu, 19 Jun 2025 14:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="f5Y+sFRC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nqHNZFEJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA963267714
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 14:55:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C0723498F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 14:55:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750344920; cv=none; b=Xcb7GuPn/ZKgDILyQryWFfdNBzJDX4lokOBarRe3GGpJWorulWoVC6+bu2Wg0oIKosltF6XVvujj1aylRPVL8AvnC3rRQVHRgFhFoCxJUvYTnY8IHkzyt4pBKiWeCWQ7R/z7t5Nm0+lzDnRG+CWTzHjmh4M8mUnh+eFOSxMIW10=
+	t=1750344922; cv=none; b=Z2tnwjVIQMZQBCAhBkxHT2lKVyB64by4VX0v/UgGDpNgojEBxRMsBVviuafHClGQYUsDdgo5r+dbsctMgWXGuynGdKLmOD0KLYA0drBbZkga7Jkov89G4lrIyk+YKK1QP4N89rJJzlv3U4rSrBYeo+dLUn4PPmm9/UCTIPS2/cQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750344920; c=relaxed/simple;
-	bh=4LGiNnB42HT/satjOaXpllHvqUrhfVY8Ni1b3Yq5VS4=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GKh2WOPX0fhSNtkVcZdPBxdnEUECjYwTZarIv49WDYAoDrFF6YuNYVKZ/2jJmRCVpGU4TOqlQUMvyGsAeHPU9Ryp+lxjpfpFuiGQR1Ka0aaltPhAVZ6t9FzE3TynOFV7EpNflShbL7rj6JKzDD6isMYRNgK7EgtUZxmrg9PzSyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=f5Y+sFRC; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1750344922; c=relaxed/simple;
+	bh=MB5gNv4+QCpg94YIRZF4W9VQB93gw02YQkHuOGD6vUQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=mAK7aJziWiyyYdLFqlohqZogA/77TvZKeYCNwTo58RLQ5w6H9QdWTHgf+qOwn+1B5vZEd2N0BOlfFi/SGzesvcV1Pks+oLour+gcpG0aDSQp7Ga0lh74RxYb1IjC5Yj3/rzoE5MyvIIEZi6YmCYFL7PrHd4inQKiAXmDtKKwM0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nqHNZFEJ; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-451dbe494d6so10571685e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 07:55:17 -0700 (PDT)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-451ebd3d149so5710185e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 07:55:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750344916; x=1750949716; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4USzl16XHbjEvoqhmZEboDyYQXTg9f/7FGZf3i+x69k=;
-        b=f5Y+sFRCGXAtX7E+WgWJQ3/z/VxGBSL9+AgKoy4VRaPu79zOhybRXYGNlUe3mcH0O0
-         BIZilJlhWdTq7NizVuKIhk5X2k0tYcATpZY/aJfZ/cf0UFuv8ha4cKHMcz+/V/aUnsLW
-         eyClWvwOH2MlD2W9mRBgELI0x4enylXCq+nVEB8sGqip1Y6WMbiYf3CGtsSgo2+QmHb0
-         69T8iaCvEbi0wouWZqhFxzgzBsOXAomfyzzq3CsJi/iWr2hPUN195B+ytEqSqwthGMqm
-         ORRpxQj/VjtvZJwvfUapxq80eeaYEHrP1eonksrzqJ1+2OQHdsu8pEmTT2N7cowwLB8u
-         3Gqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750344916; x=1750949716;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1750344917; x=1750949717; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=4USzl16XHbjEvoqhmZEboDyYQXTg9f/7FGZf3i+x69k=;
-        b=PRn3p5irdHbDORawbqOJGN1X1oBkw7a4nApObqeYEaaoJGaeyx1O1nnVc9ETJjBOoM
-         3r15pBtowlVWBF3upUNB2zrPhiL+EWfWGwo02djxgslnq7CRqObIWJkJWfjcXwVWi5rP
-         SuQ8DvU7PStfJ35HvqfrpOxJC3AhtP5iOtPK6E5aHOFe4JaEIrQc9uN39GHjncD4aVK6
-         3ycuo5eFARUG3EZyL0tlyKhSAao0xGMKOjtL/LfN8UaaecC4i/73S+TBg5Jc+RF0HZnb
-         9n3Mp8cU5y4CbNnaoT8bsZpyTZAD16Cn3Ga30qynL0m5Q6SNplet1kRnXfnJl4KS2Aun
-         /dug==
-X-Gm-Message-State: AOJu0YyZxDuqJ3eGMsd9ZllZDLxxa0kmSVZX5a3Sbj5LnC7ZjDgKldwX
-	J86tRv7exIHnStzLSdUBPi5adEcgQ49esPDFNXAwyISwCtdZpMc8bLHJfHJ5Br81klo=
-X-Gm-Gg: ASbGncsN72Hxduf7qgykEWMNFMNBFBBaWL9ENoexIb24slzr0V76xSwyDjhnP8xa+qu
-	vtTuF19epZMxGgW7k54sNRC1H48G3LGAmNYD51ub0bdA7NzGJy7JHzeLjBIVesjmBNOSdr6pdxp
-	4GC1XRgQcwJhXFbw/xSHWj01crLdSjSLI6MrmXobl+4Gf3GmryQ/krUNuENyELLH4oOMO647BrB
-	q0FMf4CcMLvbiHHWYxy0JRGUrRp2dd90hSkmOkpY6p76U2+D6FKdr+uAujkLvPoyjqBSPpU9cPG
-	TFnY0yjhA0N+W9nT9dO2mR9ZxlfaudCZ0u977Z7mde9xYYWcZ5NF2rHHrPVYgtvfq02nordoBSX
-	TZxjgMJaiIMk=
-X-Google-Smtp-Source: AGHT+IHsS97h8hzfBpiAdoEh1bqIjuOor9mhtoQ7zk3firIt0dQex4OoKJ/uKCBlmaCVrFLgewQWYw==
-X-Received: by 2002:a05:600c:a316:b0:43c:fdbe:4398 with SMTP id 5b1f17b1804b1-4533d494104mr157215915e9.6.1750344915914;
-        Thu, 19 Jun 2025 07:55:15 -0700 (PDT)
+        bh=e226Tcn8nARRrl/o7ezCwkhDY/r/vdSmLiez583al2Y=;
+        b=nqHNZFEJA43FDoybqSa/jmGsD09Q0uWkhO2rpMUJW4sKY2/E2k9a+w0wUvtPuZGJ9j
+         swtFceSO8IGu8MwVdjy6VJ2WCpTCl9yoVo/QzCnQVdb2duRIkKjDyV8ftaPPltEqJyEa
+         aFcdCg8bdp+NpoXwKduxu097QWaab7F22hRuZxyyqymuQn+g7m0+VhG+ABcvFNrsb7Vt
+         LKmoIp3uQsLFudcdUkpnMSQLCPfhTY//k1tTKLpE5evelLzTBgSayba6B15qwvJCUhgC
+         iaZnEH6R0yd5X3P1A/fujzlxpiBuzzLRbryq03fiIoLiTAvnJekj3ceTqhyGAqjJVbH8
+         PDdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750344917; x=1750949717;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=e226Tcn8nARRrl/o7ezCwkhDY/r/vdSmLiez583al2Y=;
+        b=WEW27YR+w11Ap0e8BgKFT/vna668ib0340Gnn7geWGx2oqEYVZO+6OstACq4If2drT
+         p/Za+dTpGLt8KktAWEqSvN9q0B6Y32kZvHtbtCL7GUU5w898ACC7sj4OzZqRIa9iWo/2
+         tgCKrvnlQQws7yvboEWUhJI3qUNL3+RyrvXT962sR7eb0DYFo8vVjLoiX7OZ5bU8aXNr
+         CYJX5ieRPVmVEuu3AoBhYX3gCrA1WZK+bwlJhi2xOtrdNnJILr/icRSCXxi8sIMZ6VZa
+         9kcFMZC2A4Klybzsi6IGloPIRpQMtoQg7fFJpElQUlnjJd1WzRir/xZ5B5NSPRe37pAr
+         xyuQ==
+X-Gm-Message-State: AOJu0YxLfvslPnFYJ5IPRmhEhcSyxTqg19gXT+lL4NtIjZbRlnzpj35a
+	w/Bb6Exl738udfwXtVKFh8vQ2ZdaLoXyU5L4UQtEYlKSmvOcV/bkcxaMz8yNMBecaNA=
+X-Gm-Gg: ASbGncttj18Mll7F39CLVVf/gCbJ8LOclCs4D/sZUyq5Ke9o/xwwEsw46pXyHEC18DV
+	1VmIHqOYf8jpVfU8zIeiC8AVuAQeTFSC1SkE6aYS4ybdOmtCO09N61Arhc5R4f02RiNid07PPXA
+	QgGofF6xKQGSNC9DZINXOoV/3ihywIZVh7IJJAi+LM0TbSXG7ObA4DVg6zGE/wNIEdSWlTbUByi
+	Fiqz1/O0ztWp4T1m7eInlWib1MHCziLWNwHSOUEHRChcY/jlbCCiHv5vuDOsck/3xvUKAElnTri
+	QLg+znjztB3wI0W+eeFNzECR6LbPwIG/0xOYSn8B0vy2Vje5ahX3QMHHAtiPvAjeTSpzgfKMHG2
+	JylKvFtPfgVg=
+X-Google-Smtp-Source: AGHT+IFQzca4+a+ltyk7vQE3TZE/D2mu0OwKAeR+4tbx2F99S6hmXreNik1ilhlwI9i/rW0dhkrFBA==
+X-Received: by 2002:a05:600c:870b:b0:450:d5bf:6720 with SMTP id 5b1f17b1804b1-4533ef3dc36mr211428225e9.3.1750344917257;
+        Thu, 19 Jun 2025 07:55:17 -0700 (PDT)
 Received: from toyger.tail248178.ts.net ([2a0e:c5c1:0:100:b058:b8f5:b561:423c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4535ebced8asm31343715e9.40.2025.06.19.07.55.14
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4535ebced8asm31343715e9.40.2025.06.19.07.55.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jun 2025 07:55:15 -0700 (PDT)
+        Thu, 19 Jun 2025 07:55:16 -0700 (PDT)
 From: Casey Connolly <casey.connolly@linaro.org>
-Subject: [PATCH 00/11] power: supply: pmi8998 charger improvements and smb5
- support
-Date: Thu, 19 Jun 2025 16:55:08 +0200
-Message-Id: <20250619-smb2-smb5-support-v1-0-ac5dec51b6e1@linaro.org>
+Date: Thu, 19 Jun 2025 16:55:09 +0200
+Subject: [PATCH 01/11] dt-bindings: power: supply: qcom,pmi89980-charger:
+ add pm8150b and 7250b
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,10 +84,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAMwkVGgC/x2MQQqAIBAAvxJ7TlBBib4SHdK22kMqbkUg/T3rM
- jCHmQKMmZChbwpkvIgphiqqbcBvU1hR0FwdtNRGGtUJ3p3+YASfKcV8CKlsZ9BPdnEOapcyLnT
- /z2F8nhc3OVlSYwAAAA==
-X-Change-ID: 20250518-smb2-smb5-support-01685eca6fbb
+Message-Id: <20250619-smb2-smb5-support-v1-1-ac5dec51b6e1@linaro.org>
+References: <20250619-smb2-smb5-support-v1-0-ac5dec51b6e1@linaro.org>
+In-Reply-To: <20250619-smb2-smb5-support-v1-0-ac5dec51b6e1@linaro.org>
 To: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
@@ -97,76 +97,49 @@ Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
  Sebastian Reichel <sebastian.reichel@collabora.com>, 
  linux-hardening@vger.kernel.org, Casey Connolly <casey.connolly@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2617;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=916;
  i=casey.connolly@linaro.org; h=from:subject:message-id;
- bh=4LGiNnB42HT/satjOaXpllHvqUrhfVY8Ni1b3Yq5VS4=;
- b=owEBbQKS/ZANAwAKAQWDMSsZX2S2AcsmYgBoVCTQYi1fZnsxW0KpR2M6N9AhTeUNpZ8R15Xsg
- fASw6hYLiKJAjMEAAEKAB0WIQS2UaFGPGq+0GkMVc0FgzErGV9ktgUCaFQk0AAKCRAFgzErGV9k
- toSNEACcVkJ5pXc4sSBzKt+AtXEXVm3KdSTMeLAl3F94K7QQsZShksHm6I1JXR99tdxwVRMLkxD
- 0KKYMExkME3to0PIKKCN7MUXLD6HnS0JhmolahDzcEPB0QbOgEK5de5HCPw3x+jjlma6zGdC6MS
- FVnOHqq4DEn8aTjTxQSEZ8vBqg0lEKLVpxXN+ER5Zj58O4Jnm8gj+5ZjLFCxbV0KpFIy4NKRnYg
- BVB+JaiWkJhKT+A9bpbnDkkahP190kE55ykRlIqaHEmrwJhqj7oWGyvmDG/5fAov1lZiX8VVVsa
- TbCnmO8nWEssBVRB6ojQoF7GOqdzRJOwgn12/dvuTa2J07Qk0Ze77MJNevZTRl/8d7EKmAsLLMf
- HypRX+E6+4KwPa3Mh4YKwgWCAI07jpKVe5PTPqC+rda8YYbcEFL6Xpvz2pd+vt97Ku+w/abOjEk
- LaO7qsrhZEQaEhSPqiPOwNC3Y22jFLYRDkc44f9+mT4KaTDs3kz22zxOf7OMEY01SioV+SrErHC
- GKSamZRxFEHFuPPnH97GMxjBh/85WEwGpk0Y/MBQAcg0y6wNZPSYvXK/nV9eN6jCamg/WUDZhit
- nWQqOyXnBCYmWMk4C6GO7TAxbSIlYydvP6GeAGB0V89ztKNa6DXDbQQgSJgJhtgmUkb2Nm9pRb7
- gCHxlP7kXmSX5hA==
+ bh=MB5gNv4+QCpg94YIRZF4W9VQB93gw02YQkHuOGD6vUQ=;
+ b=owEBbQKS/ZANAwAKAQWDMSsZX2S2AcsmYgBoVCTR5stwaRD3G+1RyljrB3UVlYuZ+3+s+ShMF
+ as6OYZp7liJAjMEAAEKAB0WIQS2UaFGPGq+0GkMVc0FgzErGV9ktgUCaFQk0QAKCRAFgzErGV9k
+ ttYDD/9KFimD2p4h23k5xwtIATlmZZyylMC73cSMtYuVsujSDMChaMvxzCR+hqEXwJFOPamuSsK
+ pGjKknYRSfjfbxlnwUnplNRJDaTLLE6LMnz8Dg+nqIHpYIKUabmGbcGchwGAwi7R6IEvjRcqXFG
+ dJSoRpByMALnezFURpEV0rgBSYJ6t4bpne+Nfq10A3jWutIYtV3Nh9UrUHF2z5EG+fEjXhds1nb
+ lkm2xGBz58/R97WDxYI2vuP9HIVB/x/lo10izOgvF8v+GO7rFuTE8Q/sRgaZ04bLvx6jyxcpBNg
+ bROsC2G/cLSeQ4Ka+LzcUHe1q/KAWRvlJcdVgHbpUuQMufcl3rNathQbVQvZudDscvgG+7V7eDP
+ RtTkX8okMc9GTQ4oXCsjA0hg2iUemH+gp1uV5CI8d+LWBPoIDkxqfhhXickhWFys1KLgn5d15sO
+ j5is6KBoi9XaDltq127ONHfW6sd0V2Yyq25KfdBvGkUd2CsPp4dlMayENF5s/CHlo4cfBwccRLz
+ 5/XY6c1yGhaQidhpGz4xKUxv7qlbmAnLE1Z2KYElQHRVbvLwUQ4aWgbrWq1rFc280fnU1jjMAen
+ wd6nXa/uzyPYg92Kcl7EyF/uYihEUKAbxFFy+AGOnJgekqnRQUyNF/9bBEJ1HCOZzNYtrqUbSgh
+ /i4F/G9yKI0VTsQ==
 X-Developer-Key: i=casey.connolly@linaro.org; a=openpgp;
  fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
 
-This series contains fixes and cleanups for the pmi8998 charger driver,
-as well as introducing support for the newer smb5 charger found in the
-pm8150b and other newer Qualcomm PMICs..
+Add compatible strings for these two PMICs which use the SMB5 generation
+of charger.
 
-A bug is fixed where wakeirq enable/disable refcounting wasn't respected
-when the driver was unloaded and reloaded.
-
-Support is added for disabling charging entirely by writing a 0 to the
-"status" register (as described in the psy documentation). This allows
-for userspace programs to manage charging, e.g. to stop at 80% capacity.
-
-The AICL re-run interval is programmed to a consistent value (3
-seconds).
-
-The battery property charge-term-current-microamp is now respected, this
-is used to program the constant charge current limit during the fast
-charging phase. This also makes it safer to increase the max current
-limit this driver originally imposed from 1A to ~2A. According to the
-PMIC docs this is easy to handle without a secondary charger chip (which
-most but not all phones have).
-
-Further increasing the charge current limit would require tighter
-integration with thermal zones and a mechanism to limit the current
-when the device gets too warm (e.g. by modelling the power supply as
-a cooling device). This infrastructure is currently missing from the
-kernel.
-
+Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
 ---
-Casey Connolly (11):
-      dt-bindings: power: supply: qcom,pmi89980-charger: add pm8150b and 7250b
-      arm64: dts: qcom: sdm845-oneplus-*: set constant-charge-current-max-microamp
-      power: supply: qcom_pmi8998_charger: fix wakeirq
-      power: supply: pmi8998_charger: rename to qcom_smbx
-      power: supply: qcom_smbx: allow disabling charging
-      power: supply: qcom_smbx: respect battery charge-term-current-microamp
-      power: supply: qcom_smbx: bump up the max current
-      power: supply: qcom_smbx: remove unused registers
-      power: supply: qcom_smbx: add smb5 support
-      MAINTAINERS: add myself as smbx charger driver maintainer
-      power: supply: qcom_smbx: program aicl rerun time
+ .../devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml          | 2 ++
+ 1 file changed, 2 insertions(+)
 
- .../power/supply/qcom,pmi8998-charger.yaml         |   2 +
- MAINTAINERS                                        |   7 +
- .../boot/dts/qcom/sdm845-oneplus-enchilada.dts     |   8 +
- arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts |   8 +
- drivers/power/supply/Makefile                      |   2 +-
- .../supply/{qcom_pmi8998_charger.c => qcom_smbx.c} | 730 ++++++++++++---------
- 6 files changed, 430 insertions(+), 327 deletions(-)
----
-base-commit: bc6e0ba6c9bafa6241b05524b9829808056ac4ad
-change-id: 20250518-smb2-smb5-support-01685eca6fbb
+diff --git a/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml b/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
+index 90c7dc7632c58dc5cbfb3abcde8e730882bfd936..d19746b64fee19a07bdb8f7a996e42103a9e0e73 100644
+--- a/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
++++ b/Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
+@@ -11,8 +11,10 @@ maintainers:
+ 
+ properties:
+   compatible:
+     enum:
++      - qcom,pm7250b-charger
++      - qcom,pm8150b-charger
+       - qcom,pmi8998-charger
+       - qcom,pm660-charger
+ 
+   reg:
 
-Casey Connolly <casey.connolly@linaro.org>
+-- 
+2.49.0
 
 
