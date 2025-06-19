@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-61834-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4759AE0C5E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 20:11:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E237CAE0CD8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 20:25:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 06FCC1BC7A22
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 18:11:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6E0831C24230
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 18:23:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CF7730E840;
-	Thu, 19 Jun 2025 18:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DB2C28FAB3;
+	Thu, 19 Jun 2025 18:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CQOUOu6n"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KFbfZ7nc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD44230E825;
-	Thu, 19 Jun 2025 18:11:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA692417FA;
+	Thu, 19 Jun 2025 18:14:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750356689; cv=none; b=oNTVhkufQ0icSMg3oBHzQfuFyWjEj5+ZW2FmD07dY2qXXnRXt9ufQ+o6j44/4zntk4s9Kb69aZYqsjBPA+DjwP9bFODJ7h2Bs+tccNer0yYQVkVWxkaoQy0ElaW15SJ3j26L9ZIUPTVNPhnuPPL7joNqbYkMJ1wK//nKHs3hf90=
+	t=1750356887; cv=none; b=eDno2FGvF1atzuYC0l/Jf8XjjwKsfL5zdDuweblcGZxIHN9e0deYA/7gfYiyDG1rXTeJ4t3d1VyLxAn3NmVU13X5QCUdQ2SDdu2I4LP/yC0cQOmSrsffu9802KkqokGGDg3F4a/ZzY39Jsy+f7IHJdn94aS1l286q3IMuGEs3r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750356689; c=relaxed/simple;
-	bh=gndn72D5AOE6O4oF4sfccge8o/V0cR4aj2LeYA5Vo5M=;
+	s=arc-20240116; t=1750356887; c=relaxed/simple;
+	bh=eSZoNChqYhwyIiNX+oCll1bQsN3J9sIjRESSxfn8Dvc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SRI+yOJCv1O/nue7MseAsJsvRvKVJBCTeBBUu9bB91qY/lgeEITqIrUZkoA3OCNy0XZEWs04Txuzk27uKdIE6Us+ex+zL0WZaa2cznX86b6GxFQ2YYQokoHO2qMnX5RIwJu4FgjKUkgrnggDmEET6W33sp+njVixWky90/vWPRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CQOUOu6n; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=d63o+kSdTuKQ81yLixYuFqxyAeumxYLPJZARiHlvOtLG68+Y+ew9Kwxjy6jtZtLRbAenZzVvv4iRz0EShgx282w6y9kY+pCXnfIuSWI/HwSbV40w6TIpSpa+ygCg+Hw9pxW2bU7PR1io6g490iYjCg0XoOTCW2rb3BOMEjsouFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KFbfZ7nc; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55JDYA80002625;
-	Thu, 19 Jun 2025 18:11:23 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55JCLFKd007075;
+	Thu, 19 Jun 2025 18:14:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7KF3Rq9p7XDPS8vG/WULk68Pn/cCnnM7nBO7pj/8AOk=; b=CQOUOu6nHUHcD14A
-	S7o9PU3Ms8vyFhy5dxGXjbaD98eGoZpc6I5CafCcqb5IL5uVF6PCo/5NWJ/Ff6la
-	AZGkX7Wo3Vp20gvQRpM/pnrnedkhdzPvlnQ7QK4QJ0draT5OcWF31F+PKw0MMfbr
-	er8PpZujI3NmvQIz8EinYK3nA5AavKZolLBGyAc5JZxl56dCGPQFUf5zfrS/4fNo
-	TiBE9B+ghjqGrqvipUqLwMDZlWquSrBDQz6fZX7sn3Pj13CkQKpFHi78mrr63sGQ
-	hsrwliByl50VEuSCM5L0dhZ2yUuWVVs8yrbx/I4S84MxZ0HnsgcOgla+W9fZtAg/
-	gr31oA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4791hd8y38-1
+	jWcAAg6TI5glqZYBhjErZuQLZCjvDtjxdpBIQgV87Ps=; b=KFbfZ7ncus2vS9ZD
+	+Say/FwWQltNrza1doksaggcTByHY72ZsFsjuA47Ks4/EkZZ6lWPU7jy1eIg+SG9
+	zok5dCsVSukrD7sHvDpXl85KpcIHM9Sw5pJcoJvIzDimYQMEhHqEXpePIF6qUbqn
+	RnMS6Tqn3lBNLmvkCnU9AJWVvhADrawdplEBDKyCU3keNmQ1B/F/vffp9BaLaQvy
+	WIGnQr20Nto5+4aRpOhW841jZaGlKI0Vn+RW6LXaMT1hn5GZgPREvq5bQzOpi/ND
+	2POcFQFjiwc6A0euT/fZUsYUaG6gWAL8tO4Pv3xoQGNF1kp8wG1QI6hFIuhBlQDa
+	CUlJqQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47c0rvm1eq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 19 Jun 2025 18:11:23 +0000 (GMT)
+	Thu, 19 Jun 2025 18:14:37 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55JIBM5L008400
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55JIEagt005117
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 19 Jun 2025 18:11:22 GMT
+	Thu, 19 Jun 2025 18:14:36 GMT
 Received: from [10.50.57.163] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 19 Jun
- 2025 11:11:20 -0700
-Message-ID: <16982155-d51a-82a0-6b16-785cd99ab502@quicinc.com>
-Date: Thu, 19 Jun 2025 23:41:04 +0530
+ 2025 11:14:32 -0700
+Message-ID: <3035fc55-f422-d0d7-8889-48530dd0748e@quicinc.com>
+Date: Thu, 19 Jun 2025 23:44:29 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,78 +66,93 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.13.0
-Subject: Re: [PATCH v2] media: venus: hfi: explicitly release IRQ during
- teardown
+Subject: Re: [PATCHv3] media: venus: protect against spurious interrupts
+ during probe
+Content-Language: en-US
 To: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
         <quic_vgarodia@quicinc.com>, <bryan.odonoghue@linaro.org>,
         <mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+CC: <hans.verkuil@cisco.com>, <stanimir.varbanov@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-References: <20250619074830.1708453-1-jorge.ramirez@oss.qualcomm.com>
-Content-Language: en-US
+References: <20250606152522.4123158-1-jorge.ramirez@oss.qualcomm.com>
 From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <20250619074830.1708453-1-jorge.ramirez@oss.qualcomm.com>
+In-Reply-To: <20250606152522.4123158-1-jorge.ramirez@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE5MDE0OSBTYWx0ZWRfXy6bUkQd9Apvy
- So2V1g3ZViBeUrj+EhkPVa0DfkVoQUwE8ltVVp0gKrPoP56QGof2X/1p7swa+7OxcmAr5ivJiom
- tiLJtuPlgEz16UDnVeFtiyEAC2lp/QyJsgt87oK3btXr4YcKrp+vPlh2waTFZslwHgRTBJl1Obj
- Wq1Q50dMdPErNTVzPIdHV50TO90l2/9FT149UGE5V061KYp0HCqdi86tRdinlUVO+Acr80g435F
- k3XpmFx7RGrXzyI8NIE4bmDYyHvxBODXK3o/njvyIQ86jI3z3VbS1ZUJl6mjQVnC9pQ8cQgt3MH
- D73Z3Xq/pXWFV1G50mGLv9VAcnMTGo8Ot1YH1iLLxxMaggaw1m+izkUCRmLZoQ3iarTdTGy4UAC
- 9tjlU5DJwz7Q7fq831mwTQrHeCmcx6zi9DyVn8RufRU7iXcilPvwjgA9VlVH1bngyGe4tQj0
-X-Authority-Analysis: v=2.4 cv=PtaTbxM3 c=1 sm=1 tr=0 ts=685452cb cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE5MDE0OSBTYWx0ZWRfX451ua99n7W6O
+ TpWL71lLZXfjBExJL5TkMjuZF0ytjJwbczY2/9PSSIFAkyrSW89NUc25NOQVzoELqqhpWlSWUTB
+ AQnRO7j+7iL6OG3ciie+x4nYeUSBenNXjnelY58JiY8SUECbQXHjI1eZuqf2f+L8t3Hb3nafxyF
+ QofPqIx4DA16HbISfTBDLCxHSByDddEKGRFvcxGXoIFbOhUieT/pWeXKdfOWAR4vaYjb0CSMj//
+ kno+aKvjp5hwD0bFAQBRDbRGzk4jnjeEsGEaddokMGuL2tnebIs6M3zjap6uUGpRAhK9WscmAP3
+ c/s/KmPPBwHe0gINQwVzLa2Ay5rPWP1DoKIQyBfRZGvGnW4W5YwiKWV9XqgPWK0kBIycXbaFhbJ
+ TCALZVToARpH2IIiQJwQ9W/B0pmU8/6UZT4kjymtqFR5R0j8AYwhDEmW38bHL/c0T8JswA8U
+X-Proofpoint-GUID: at_Re-Tbgl27_bHyWfveBRPoGwPVud-y
+X-Authority-Analysis: v=2.4 cv=btJMBFai c=1 sm=1 tr=0 ts=6854538d cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=KVH4ev5q36qbvSy0r5QA:9 a=QEXdDO2ut3YA:10
+ a=COk6AnOGAAAA:8 a=Ez5CtaCykSblQmOPNncA:9 a=QEXdDO2ut3YA:10
  a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: KsF7CixRg6lBuvtxuTN8PhVRIDRx0iHP
-X-Proofpoint-GUID: KsF7CixRg6lBuvtxuTN8PhVRIDRx0iHP
+X-Proofpoint-ORIG-GUID: at_Re-Tbgl27_bHyWfveBRPoGwPVud-y
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-19_06,2025-06-18_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 mlxlogscore=647 suspectscore=0 malwarescore=0
- lowpriorityscore=0 impostorscore=0 adultscore=0 spamscore=0
- priorityscore=1501 phishscore=0 mlxscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506190149
+ impostorscore=0 phishscore=0 adultscore=0 lowpriorityscore=0 mlxscore=0
+ suspectscore=0 clxscore=1015 malwarescore=0 spamscore=0 mlxlogscore=854
+ bulkscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506190149
 
 
 
-On 6/19/2025 1:18 PM, Jorge Ramirez-Ortiz wrote:
-> Ensure the IRQ is disabled - and all pending handlers completed - before
-> dismantling the interrupt routing and clearing related pointers.
+On 6/6/2025 8:55 PM, Jorge Ramirez-Ortiz wrote:
+> Make sure the interrupt handler is initialized before the interrupt is
+> registered.
 > 
-> This prevents any possibility of the interrupt triggering after the
-> handler context has been invalidated.
+> If the IRQ is registered before hfi_create(), it's possible that an
+> interrupt fires before the handler setup is complete, leading to a NULL
+> dereference.
 > 
-> Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+> This error condition has been observed during system boot on Rb3Gen2.
+> 
+> Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
 > Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
 > ---
-> 
+>  v3:
+>     Added Fixes tag
 >  v2:
->     disable the handler and block until complete.
->     allow devres to release and free the allocated irq
+>     Fix authorship
+>     Fix spelling mistake
+>  
+>  drivers/media/platform/qcom/venus/core.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 > 
->  drivers/media/platform/qcom/venus/hfi_venus.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-> index b5f2ea879950..ed003adb0282 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-> @@ -1678,6 +1678,7 @@ void venus_hfi_destroy(struct venus_core *core)
->  	venus_interface_queues_release(hdev);
->  	mutex_destroy(&hdev->lock);
->  	kfree(hdev);
-> +	disable_irq(core->irq);
->  	core->ops = NULL;
->  }
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index d305d74bb152..5bd99d0aafe4 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -424,13 +424,13 @@ static int venus_probe(struct platform_device *pdev)
+>  	INIT_DELAYED_WORK(&core->work, venus_sys_error_handler);
+>  	init_waitqueue_head(&core->sys_err_done);
+>  
+> -	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, venus_isr_thread,
+> -					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+> -					"venus", core);
+> +	ret = hfi_create(core, &venus_core_ops);
+>  	if (ret)
+>  		goto err_core_put;
+>  
+> -	ret = hfi_create(core, &venus_core_ops);
+> +	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, venus_isr_thread,
+> +					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+> +					"venus", core);
+>  	if (ret)
+>  		goto err_core_put;
 >  
 Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 Tested-by: Dikshita Agarwal <quic_dikshita@quicinc.com> # RB5
