@@ -1,248 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-61785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56EB2ADFBEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 05:44:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCC41ADFCBE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 07:10:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E37ED178CE2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 03:44:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 39D9D189C45F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 05:10:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9028D239E77;
-	Thu, 19 Jun 2025 03:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EA6D24113D;
+	Thu, 19 Jun 2025 05:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RJ9j6xfg"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pQYQpTIg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098C3238C2F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 03:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9648454764
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 05:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750304668; cv=none; b=rgDIJlytMZdecJ0puokhZp4BUoEMlGwU1qrB0iceQoMSItW1mg8l8c77ZW1FtzZhDVrm0p4wzTjVsUdHZdbO9abjWqpmXm+V+pmRJi1RrXaTZKN3UjrzhdaOdkPX7KJ+zx8imU74gKx9Llxj9rcoGTXlPuDMWaOSa9JFL1IcYlg=
+	t=1750309837; cv=none; b=UGTFqa5cV2uKbN1gy+3qvP8K2rLH9Lvo1d/ygU5SgMiN4xVwHPQoCC/JK8u6qhgj51AUCPesLJTauK6ai0wISfK8fmSAXXZ1+HR9YEcFHqN59fF1lKzpyBl9upj4uJxXbrCp1z1aGZmEDZFTcqPK9ZCDLLSZpcwG0MmAQ56NymM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750304668; c=relaxed/simple;
-	bh=r9bEY7GBNI+f4W0qFdTtSzPy54h3PUtuOsmYJA0PBfM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QFFCw42H51vQ+rGZciIVmS5vItlaLXWmXg9E3AOhQ2RAhvIuhSH/pwd0JhSAxXtVWWO02ix1FdWQxQ1pk2Bb8oykiarXquR0ExM+Cdq7j3wJXh/IkvJmrVGNI9exZDuI5j7ybTQbBd6DzBqrDfkCH5pDLC4ei7maPHxXH7QUdpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RJ9j6xfg; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1750309837; c=relaxed/simple;
+	bh=olvrA9VoAgGHjSGsRlyP5LDLiH3fWWRwt9BuHkcOrYs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=CU8WJhDSS05eusV4ZFMf6w+YaVcUb0wGmrU6BcsBxeG4awPUCFftA1b9CGXX+P+eToPlUUeUGJRSg+POGtShdPEHrw3+F+qGwE/UDjFtQ05fmu7yvjt7KudM4VudKLYPFWiJxf/RUpFdW1xxpAjhJVJJSXy/KOprC4IzaFPrKgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pQYQpTIg; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55IHnIOY020136
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 03:44:19 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55IJ3Bqf027539
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 05:10:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+scRbnc9DB9ul454aKhxI5Nurcon1EsQyC5VkFAXI5w=; b=RJ9j6xfgHY5b9Mrv
-	AJxFlkf/IWk7MbgbpcseY8v70tAiKpKhVqEc3AUYV1uoUzfCNxwPnxUmWXZQE5Ax
-	YjvqJovDSjVrpKPlXyFWdZv5awQLqjul+bV+xh+KiwZeEBs3YW6FKm6AeM0YLMRK
-	h54cmSE+wA0pkovDODCTRDQO4oGJz86fQKOL44qoJkGkCS7AKAS+iA9Gx50Vxub3
-	16lOfnQwkrQIDeik0buZs3O9628vyHMQGMDgWWjhzJ+pxfNN9ULB7TJwRKXHdtLb
-	YwKsPJgs00K6DL/MgNJ9rz/NBVP+p+uUiH/YGDbesRzps7yS0veRODSHto1qi7o5
-	hmbQXQ==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 479qp5w1gn-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=yBSzG2njIyjzGMlaHr5sTGjTp0z/ExZCJsw
+	dGgzeFLU=; b=pQYQpTIgtxWm/1W7ghUqnJkFV7qvxjQQ+QSzv7u9+f6EMrqz3+f
+	AWnkeLqOK3ek/+1/FzB/qLN80ffRNf37VXDOkVatWWCRaKCMwSCA2CkPDKd4OtOc
+	RfDVcYIspZPueM3umo5wPDzzmvV98bMDzGHcqoRrWp/UFJIygGkRFwhNU/Y6Lg4V
+	vXKgTc/5iHInW6+wRXEpNNbyUsZseteUGgMu2gkgqY+fCqaL8tdTADI7hvE1Lj2r
+	PE7Sg+OF8CXNvXiGNTlGZVv9uzakKHqhSCheK0ZMql51We85rqJJgMowzrJZqNTA
+	AqFBNbo71S314pLaxxQZBYjINnfbuBp1tQQ==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4791hd6p4x-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 03:44:18 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b26e33ae9d5so448659a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 20:44:18 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 05:10:33 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-748f3613e6aso207340b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 22:10:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750304658; x=1750909458;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+scRbnc9DB9ul454aKhxI5Nurcon1EsQyC5VkFAXI5w=;
-        b=ZZP5SZE37OIOXHxgHWT2bBmfkqcMDFTZ+szl7Ih3+NMTg9mGG18POmP1PPf+wMo1qz
-         mQs/rXK+YEfp5ldln73XZZznQywMT9/mOs8AhuijPD4Mlktrokct03m13SA7Da1Nz2Ff
-         DPOTRE3/Jn3Gz8zOEC6+Uz5wJCkLkmby5iAGmSzNI8ylH7k7nZeZJdkU8tKkAEROnzaT
-         sDly00uRCODfwB/7o/0KOXus3oVHCHgpbDnKclv73DWPp6vH8PnIAd0LIJ7dVWBIiNE5
-         SjmTV53TxSy6roxRgzdo+9mBcrrmuA2X/sDiqRDuMXMrGKsYraQLmPzv9d28qIE8xq3+
-         myiw==
-X-Forwarded-Encrypted: i=1; AJvYcCVeZ+hiPCEI369krStIG+hrWypnetdkgN/Y/qncgK+TfKys7V7D4+fUe8id8JcBc6p0gQTAVb4PanRV/23s@vger.kernel.org
-X-Gm-Message-State: AOJu0YwchXY0bJiYWoC3X9m9V9w1HtHccpKve2PrvBzYlUhkoSnSV4DZ
-	kKOEOLa+GQyyR0nL6hAdATg1c6m0IywL2MOnyrQY7PcfO6ouW6UhuGZzBe6G7hY1AoE671TpUE7
-	SoghVkzvy0LlHIdxfXo0c7hxXJNFELX299jOxG4y9FXZEwfw9BYJ5Z9OgW19HWf9QzzSp
-X-Gm-Gg: ASbGncv4v35qtT4oVrqXjDzrMXSrn2zkPA7lMoMbHKjGwvLx/ILUxvyqBcJ8qrIoEM+
-	ROxyW6X3f7UjDY4sAR/YWAQfwrbAYhLtnJ81hE1actwVblEFYTuv9wWGoC8oSiwEqqVMg2EAbW4
-	e20Q/ejFPBNmlcUjEGNE3gxW5mBzWqyg3mQY/n+JIsmCP8kZw1Pb9sSJR9tZsnshSaS6B2sxu8E
-	SZo3fcGn2vSz/zY3jrgSKCP3h32u6No4Xg1mO7XY0uamMnsXniiIJb5umjfj7gqk/Wis4KJCEW6
-	uwyCqD9NW3QopsvSbkfR4W55Dm/HLdCvwNw9bSnCr2xFjsFRGOqcwpc6BeMq111uEupo2Q==
-X-Received: by 2002:a05:6a20:6f89:b0:21f:a8fd:6938 with SMTP id adf61e73a8af0-21fbd57b5bcmr36360068637.36.1750304657717;
-        Wed, 18 Jun 2025 20:44:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEsdAGHVir91RhaZ0NNhcSSvKvJF/rY80yQk7blyq3sFyZzlQKRDY1UhTZGX3iQt/XLrErE3Q==
-X-Received: by 2002:a05:6a20:6f89:b0:21f:a8fd:6938 with SMTP id adf61e73a8af0-21fbd57b5bcmr36360025637.36.1750304657260;
-        Wed, 18 Jun 2025 20:44:17 -0700 (PDT)
-Received: from hu-qianyu-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-748d8093c63sm4556579b3a.57.2025.06.18.20.44.16
+        d=1e100.net; s=20230601; t=1750309833; x=1750914633;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yBSzG2njIyjzGMlaHr5sTGjTp0z/ExZCJswdGgzeFLU=;
+        b=cFZzziDnSDEOoMcFYiNUI883nyq3N4P+LOEvOH6atViaM/Tdzg7esiu50JhlNh+5tu
+         +/XVIM8BRbV+P1/phny0QfRv41aINkMfGLrkcePry9xj/Od03biRxH9l2T27HecQ4gjR
+         m7UM9kV47Dmar7VI3kYayTF2cD1Hia9Bc6aNyk0BD/vZIgJdprPvHToo8MEOvIeodxg2
+         XfP8MEV3hi0sSDlQhhqR5B/g59oa1W88hph3q+XNjCxEIfRrdl4Y6PaSBXa2Z9yjdGyL
+         R/1XZOnKm4h80+Oq3oVmlrCNIDcdS2Hf8JZjd148NHXg8eeckm79dZfm7i9d5CQofarN
+         rPlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX8qQ3uj3Po0b6kEFSgE9fuFEcqzJIQXAIdCyCZ18C1FCbw6dnoLhATQdUg9y0ELKAv8pI5N426gJYN7PWm@vger.kernel.org
+X-Gm-Message-State: AOJu0YwbmoXHBHUoy6Jcz0mfetZRXefJkIwOVGqfExtn815UQVEsW9a2
+	ZWP0pV3fcXyyJnUxsDIHfmbxkXb9KtEE26FWhqmTyby3W77G3+kt4woC4z9X/1PBgly/woo2VBi
+	81EVn4+O3H8jD28WaxIqExVzAE3q3VZszeCw/mzsFPlAcCvUXSX2AAhBK/rF9vFc4dp8m
+X-Gm-Gg: ASbGncsgEF5olIuwzhrv7i5MZ9kabVYhbOxuIUpo8ywYwYJxIwocOTdfvMzZiC7d4Qr
+	WTArOInFRDL9ktPUCsSFRipIEo2dKAi1f6Cp7TBgrcXhfsyVoi69hl7nvqZMvuoyiK9t2uXfGGF
+	W6e4GI0BTL6xIWzcsVKDoYDTNb5AF4Okhz6dao5gvrhZ8bBspmXFH7nxz/xTd8rNlPIkqYpaZzg
+	Ndr6hnSDyAchRx6UgD9WMLQsPwP0214eNJmhxa6REWQtxUzyJZ3Eui0Ww5bh8Rf/vmq7Uls+IPO
+	XJxviQO1b+PZDNp4XRAJaL0z1blpc6kgXQgU5zIX9JzwQHGAvcWKT0Q=
+X-Received: by 2002:a05:6a00:2d8e:b0:740:6f69:f52a with SMTP id d2e1a72fcca58-7489cd5c0b9mr26579015b3a.0.1750309832745;
+        Wed, 18 Jun 2025 22:10:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEA/WHenrVOufZGpGW9L1DNeVeFkF/dZeZeaY+6zyszeiKYWdLj6ZMmiPckF+pSaxxsR2z9iQ==
+X-Received: by 2002:a05:6a00:2d8e:b0:740:6f69:f52a with SMTP id d2e1a72fcca58-7489cd5c0b9mr26578984b3a.0.1750309832315;
+        Wed, 18 Jun 2025 22:10:32 -0700 (PDT)
+Received: from hu-ekangupt-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-748900e3a09sm12124060b3a.180.2025.06.18.22.10.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jun 2025 20:44:16 -0700 (PDT)
-Date: Wed, 18 Jun 2025 20:44:15 -0700
-From: Qiang Yu <qiang.yu@oss.qualcomm.com>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        jeff.hugo@oss.qualcomm.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_bqiang@quicinc.com, can.guo@oss.qualcomm.com,
-        Mayank Rana <mayank.rana@oss.qualcomm.com>
-Subject: Re: [PATCH v2] mhi: host: Add standard elf image download
- functionality
-Message-ID: <aFOHjw8WZRqI6xVp@hu-qianyu-lv.qualcomm.com>
-References: <20250603-standard_elf_image_load_support-v2-1-cce97644e99e@oss.qualcomm.com>
- <sdhop6vyvt4y63tbbtorqfd5xa4ckbiwxdad5g6zzwlljqvd6q@eoaqmairdeey>
- <aEKefb87GTR/scbO@hu-qianyu-lv.qualcomm.com>
- <5g6j4guzrbhl4zqmt7amdgewdusycccsh5rdxlpjbkhjdhbdoa@h6tlwam4i3kq>
+        Wed, 18 Jun 2025 22:10:31 -0700 (PDT)
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+To: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
+Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+        dri-devel@lists.freedesktop.org, arnd@arndb.de,
+        dmitry.baryshkov@oss.qualcomm.com, stable@kernel.org
+Subject: [PATCH v2] misc: fastrpc: Fix channel resource access in device_open
+Date: Thu, 19 Jun 2025 10:40:26 +0530
+Message-Id: <20250619051026.984361-1-ekansh.gupta@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <5g6j4guzrbhl4zqmt7amdgewdusycccsh5rdxlpjbkhjdhbdoa@h6tlwam4i3kq>
-X-Proofpoint-GUID: PO_BI2QfQ_MgPFsJtn1fIBT5pSWb_V2Y
-X-Proofpoint-ORIG-GUID: PO_BI2QfQ_MgPFsJtn1fIBT5pSWb_V2Y
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE5MDAzMSBTYWx0ZWRfX1YjFOflHkDoM
- mEDFTc1HGnaygxPLoppsidFeLQeQRoETsxW+kRxj7YeFlJJCxxpVhMjlIWpEEXNsx+t7SVvWSk1
- pCPQHp1StkCsWRdF8RCRq6hyEe9uGZyOhqn8xVipyCJormqiBQxdFQm+Th8/dfbMk2wTBffxnzh
- SwIss6sSvi8OWmM+SZC54cZbugYcJK3SePF2kCeiCboFDZ9oMF5Sxfxej54RU/qeJw8HPDhIUAX
- RL1USyyya6MuNu+BrPRGBu0tT9+joJq4pO7jxEsvDhy53Az16XfOz0bcDu5oWSdT3Z64lV4Jqk4
- ZzpRDEjPzZGx18+Q/W6PjEhWZvRA3xRG4eKObIOlVn9c0dZCoJ8OwnIhe1ZaQwiOwqD+YbwAr2m
- 8AxVF7r6nwIzlWAFiI/R95qFPZt+ANCglFS/B5a/bNwpqcQa87wMBQbelXDeFsMvwrGxnXyp
-X-Authority-Analysis: v=2.4 cv=fMc53Yae c=1 sm=1 tr=0 ts=68538792 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=y1Uosm5IMMVjWa0GvE4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=_Vgx9l1VpLgwpw_dHYaR:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE5MDA0MCBTYWx0ZWRfX8zHd2+AIX2xv
+ q6tZn/FIRa67PTpkZGDH6mUEyRlbn4bOUTBvpIzE4k9E9Qwch3H5tpiGjXuuqW2CpqZjKm3d8QS
+ /lKQFj+h4sPRg3B14F0BNfX823WEJChYBeMyWJAoXSehDKFE8E9810r5ZyqE7VnCd1O+dL9jrND
+ u/tawE+ksdT1fyB/dEBBOb/lDrl2vEM73jb6SMTavn3Ge7ToAmKCXVL7cvinCVBB3n3HUQkvARP
+ jVdpI1uKuSgOtYBWQxkWFHdpl2oE9rqf2zcO4lVxtqz1YVcHZPlGqt31G6SZ6+Plpjc4wurKoLw
+ KUoov4OiwCb0LIBr+Vt3c588jI8MmF+a3+21dpG8Sm1gA4iUecvbHGQ3qAeBMcpmXS7Pd+bssS5
+ TDWSRL4AdkARYEzI0V/QWIHVpLSTKrqk6ooSsmVSi1xPPzxbIQqKV6X/0JKC08Bz7JGAoEKW
+X-Authority-Analysis: v=2.4 cv=PtaTbxM3 c=1 sm=1 tr=0 ts=68539bc9 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=pYQKlj0DQmeGCljNor0A:9
+ a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-ORIG-GUID: WqA6yEpRa2_buWmd-6IdYOZsog3VRSp4
+X-Proofpoint-GUID: WqA6yEpRa2_buWmd-6IdYOZsog3VRSp4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-19_01,2025-06-18_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 bulkscore=0 clxscore=1015 malwarescore=0
- mlxlogscore=999 spamscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
- priorityscore=1501 suspectscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506190031
+ bulkscore=0 clxscore=1015 mlxlogscore=999 suspectscore=0 malwarescore=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 spamscore=0
+ priorityscore=1501 phishscore=0 mlxscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506190040
 
-On Tue, Jun 17, 2025 at 02:49:30PM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Jun 06, 2025 at 12:53:33AM -0700, Qiang Yu wrote:
-> > On Thu, Jun 05, 2025 at 10:34:50PM +0530, Manivannan Sadhasivam wrote:
-> > > On Tue, Jun 03, 2025 at 02:05:44AM -0700, Qiang Yu wrote:
-> > > > From: Mayank Rana <mayank.rana@oss.qualcomm.com>
-> > > > 
-> > > > Currently, the FBC image is a non-standard ELF file that contains a single
-> > > > ELF header, followed by segments for SBL, RDDM, and AMSS. Some devices are
-> > > > unable to process this non-standard ELF format and therefore require
-> > > > special handling during image loading.
-> > > > 
-> > > 
-> > > What are those "some devices"? Why are they not able to process this format
-> > 
-> > Eg. QCC2072
-> 
-> Is it a new kind of WLAN chipset using the ath12k driver?
+During rpmsg_probe, fastrpc device nodes are created first, then
+channel specific resources are initialized, followed by
+of_platform_populate, which triggers context bank probing. This
+sequence can cause issues as applications might open the device
+node before channel resources are initialized or the session is
+available, leading to problems. For example, spin_lock is initialized
+after the device node creation, but it is used in device_open,
+potentially before initialization. Move device registration after
+channel resource initialization in fastrpc_rpmsg_probe.
 
-Yes
+Fixes: f6f9279f2bf0e ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
+Cc: stable@kernel.org
+Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+---
+Patch v1: https://lore.kernel.org/all/20250517072432.1331803-1-ekansh.gupta@oss.qualcomm.com/
+Changes in v2:
+  - Moved device registration after channel resource initialization
+    to resolve the problem.
+  - Modified commit text accordingly.
 
-> 
-> > 
-> > > which is used across the rest of the Qcom devices?
-> > 
-> > These devices include TME-L (Trust Management Engine Lite).
-> > Currently, the FBC image is a non-standard ELF file containing an ELF
-> > header followed by segments for SBL and WLAN firmware. The ELF header and
-> > SBL segment within the first 512KB are loaded via BHI, while the full FBC
-> > image is loaded via BHIe.
-> > 
-> > Due to TME-L limitations, the full FBC image loaded via BHIe cannot be
-> > processed, as it does not conform to the standard ELF format. 
-> 
-> Okay. These information should be part of the patch description.
+ drivers/misc/fastrpc.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-OK, will add it in commit message.
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 378923594f02..f9a2ab82d823 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -2326,6 +2326,22 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
+ 	data->secure = secure_dsp;
+ 
++	kref_init(&data->refcount);
++
++	dev_set_drvdata(&rpdev->dev, data);
++	rdev->dma_mask = &data->dma_mask;
++	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
++	INIT_LIST_HEAD(&data->users);
++	INIT_LIST_HEAD(&data->invoke_interrupted_mmaps);
++	spin_lock_init(&data->lock);
++	idr_init(&data->ctx_idr);
++	data->domain_id = domain_id;
++	data->rpdev = rpdev;
++
++	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
++	if (err)
++		goto err_free_data;
++
+ 	switch (domain_id) {
+ 	case ADSP_DOMAIN_ID:
+ 	case MDSP_DOMAIN_ID:
+@@ -2353,22 +2369,6 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 		goto err_free_data;
+ 	}
+ 
+-	kref_init(&data->refcount);
+-
+-	dev_set_drvdata(&rpdev->dev, data);
+-	rdev->dma_mask = &data->dma_mask;
+-	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
+-	INIT_LIST_HEAD(&data->users);
+-	INIT_LIST_HEAD(&data->invoke_interrupted_mmaps);
+-	spin_lock_init(&data->lock);
+-	idr_init(&data->ctx_idr);
+-	data->domain_id = domain_id;
+-	data->rpdev = rpdev;
+-
+-	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
+-	if (err)
+-		goto err_deregister_fdev;
+-
+ 	return 0;
+ 
+ err_deregister_fdev:
+-- 
+2.34.1
 
-> 
-> > > 
-> > > > Add standard_elf_image flag to determine whether the device can process
-> > > > the non-standard ELF format. If this flag is set, a standard ELF image
-> > > > must be loaded, meaning the first 512 KB of the FBC image should be
-> > > > skipped when loading the AMSS image over the BHIe interface.
-> > > 
-> > > Please explain what is present in the first 512KiB and why skipping that is
-> > > required.
-> > 
-> > ELF header and SBL segment are in the first 512KiB.
-> > 
-> > New FBC image format adds second ELF header in the start of WLAN FW
-> > segment on top of current format. After loading SBL, second ELF header
-> > and WLAN FW segment is loaded using BHIe.
-> > > 
-> > > > Note that
-> > > > this flag does not affect the SBL image download process.
-> > > > 
-> > > > Signed-off-by: Mayank Rana <mayank.rana@oss.qualcomm.com>
-> > > > Co-developed-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> > > > Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> > > > ---
-> > > > Changes in v2:
-> > > > - V1 patch is paused because of no user. WLAN team plan to add support for
-> > > >   new WLAN chip that requires this patch, so send v2.
-> > > > - Change author and SOB with new mail address.
-> > > > - Reword commit message.
-> > > > - Place standard_elf_image flag after wake_set in struct mhi_controller
-> > > > - Link to v1: https://lore.kernel.org/mhi/1689907189-21844-1-git-send-email-quic_qianyu@quicinc.com/
-> > > > ---
-> > > >  drivers/bus/mhi/host/boot.c | 7 +++++++
-> > > >  include/linux/mhi.h         | 4 ++++
-> > > >  2 files changed, 11 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-> > > > index efa3b6dddf4d2f937535243bd8e8ed32109150a4..f1686a8e0681d49f778838820b44f4c845ddbd1f 100644
-> > > > --- a/drivers/bus/mhi/host/boot.c
-> > > > +++ b/drivers/bus/mhi/host/boot.c
-> > > > @@ -584,6 +584,13 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
-> > > >  	 * device transitioning into MHI READY state
-> > > >  	 */
-> > > >  	if (fw_load_type == MHI_FW_LOAD_FBC) {
-> > > > +		dev_dbg(dev, "standard_elf_image:%s\n",
-> > > > +			(mhi_cntrl->standard_elf_image ? "True" : "False"));
-> > > 
-> > > This print is just a noise even for debug.
-> > 
-> > Will drop it.
-> > 
-> > > 
-> > > > +		if (mhi_cntrl->standard_elf_image) {
-> > > > +			fw_data += mhi_cntrl->sbl_size;
-> > > > +			fw_sz -= mhi_cntrl->sbl_size;
-> > > 
-> > > Is it possible to detect the image type during runtime instead of using a flag?
-> > > Also, the flag is currently unused. So it should come along an user.
-> > 
-> > Perhaps we can check the second ELF Magic Number, but I don't think it's
-> > safe to determine the format by doing such check. Using a flag is simple
-> > and safe.
-> 
-> Why do you think it is not safe? IMO, relying on a flag is the not so safe
-> option. What would happen if an user has used old FW? The driver would blindly
-> assume that the FW is always of the new format, but the user is not aware of it.
-> It may lead to weird FW crash that would be difficult to debug.
->
-
-It's possible that the WL firmware segment could contain the sequence 0x7f
-'E' 'L' 'F', which might lead to a false detection of the second ELF
-header.
-
-- Qiang Yu
-
-> - Mani
-> 
-> -- 
-> மணிவண்ணன் சதாசிவம்
-> 
 
