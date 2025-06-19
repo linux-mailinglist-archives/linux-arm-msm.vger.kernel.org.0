@@ -1,58 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-61799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E607AE02A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 12:28:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7195EAE030D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 13:05:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A428F3A44A7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 10:27:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9E8F4A02D8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 11:05:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75F49222594;
-	Thu, 19 Jun 2025 10:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A36BC22652E;
+	Thu, 19 Jun 2025 11:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="ctwrdXbl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pLHItSHu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D804F221733;
-	Thu, 19 Jun 2025 10:28:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750328896; cv=pass; b=G2lWJOunTH7RsWdY4Ofc6N4ZwCU+0qoyIwh7mWn2kh0qe+o9qV/RxMfPkzUG4I157HdCn+WsQov9V1xZ0/EwlJRwkA7eFXiivZLFK/SyDHjA1O4Du/QHqhkXPsC8K71iVsZIYIVC6GgW1Op0SQWRbk2maljWe4DjZT/Ijm8ajGA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750328896; c=relaxed/simple;
-	bh=QDOYoHHL952J6V07CuD4IQmi1U+dfrsHdcDzlMuFds0=;
-	h=Content-Type:Message-ID:Date:MIME-Version:From:Subject:To:Cc; b=but9DgaCnvCBkj0uhhV8iUPv9nqUHl07PFQ5dgA5TOIjwq2bJihcOKDYQQQhmZbb35F+qxaxEcWo7cs1tpWMrPvpPCnVYOHVU9PgtfFOG5AKNE8Ao6guGL70AgROiHuOxxczeJOg4Q2ktCdueIBJznP2jk+SCGvPDZPwefoItqo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=ctwrdXbl; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1750328876; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=N1jV7VXQfQ3PMi5LI7llPVNx+fGoOJ1JeVjxxbV67XfBld+b2I6mkaLsy5IvID4wayrwuQpiiJAgip/C5fwYw1DcqeA/8TtSXZRk7VMjxEEll6EvDF/iteraBuLQ9MvFr5Q6WGudnyiRSn3F0xB90VttMln+01Y6c4b1hzMGoQE=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1750328876; h=Content-Type:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=QDOYoHHL952J6V07CuD4IQmi1U+dfrsHdcDzlMuFds0=; 
-	b=GP38UmPd+rQdj9HWXpahCpjIPNvtu0OQO1McfyQBEgpxK0PaSyWyAWr2Wmxh+A+p4nbTsf0+cVAGrpPq/Bfbub3QrOZINiqzb4JuuhEMMgrSUYUvapPYdzBp68A+QvxLaMnoTUwGg0gfAAOV2PtkYuqOPRyIfIMpAb1EiSNAof8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
-	dmarc=pass header.from=<usama.anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1750328876;
-	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
-	h=Content-Type:Message-ID:Date:Date:MIME-Version:From:From:Subject:Subject:To:To:Cc:Cc:Message-Id:Reply-To;
-	bh=QDOYoHHL952J6V07CuD4IQmi1U+dfrsHdcDzlMuFds0=;
-	b=ctwrdXbliX8CKNB442vghpE74GboV0LC7drFCGfs0ufisr7YGJAJGoNNIzbVuV1n
-	Wtrtd+LQ9pUyodTcoCPsPoF2pCwllNhc/eDNscytw4t0fPNIWNPGNB9UJPsnza2jbPE
-	7/taSRrYGiRKZjTsidjtsitnXFlgHwG7e6cnMy6c=
-Received: by mx.zohomail.com with SMTPS id 1750328874197529.39958808683;
-	Thu, 19 Jun 2025 03:27:54 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="------------aizF0e2MjL0MnZTH80Zhkm9J"
-Message-ID: <ead32f5b-730a-4b81-b38f-93d822f990c6@collabora.com>
-Date: Thu, 19 Jun 2025 15:27:50 +0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAE521FF26
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 11:04:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1750331098; cv=none; b=fAd3uoDmjlTcj+BC3q7/m9+Rb9aZll+CQuD1Z3jCFpW0a/mb2iaa31Jtzjo/7ILkTV4KC89jnZJgUyPeqPBErcZZfmLVnlkweRyj2S9EnobVQCuddZ0kavQgurYBYtaTyhR11/QdhK1MAyw0G0OFyb7sIUZurnyF0VA+o1uzhbk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1750331098; c=relaxed/simple;
+	bh=+Rg/Ejmw66dEEyBOc6g7Eugm3x8tS1VGSR+YdllcthU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TGl3VN/jcWzwUngqK9iwK5vbI3SRNtNzoc7RicW4lwvi3Aq3fLzyiNPW50nrKr64/jh5rGF95/o8tgPz1Ntaot2lKDq/7p+6Rz+HF5AlpaSyCqFAwMfMizSBKJk5XB2uRLBNe54EHJBl+JeSMNL2K6Oc4FcO0j3+4T29grLK8G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pLHItSHu; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55J7AbF9027326
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 11:04:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	XlD0jDu5XcpsIfoFEzFmr2OmjZR66dVaXN46uC1WaQI=; b=pLHItSHud3GSYtca
+	QV0T4Z6yJNkSWsK2qHOjllJ840iCmshso28+nmpr2bU++lAa514vbupHf3r8ogpl
+	H7RohPn6Q1XmBEywKjxRn8VZYoACerJKNWf7TLLhx6qulYuhdUCrmoXsu2ev5Ppm
+	21IrYzYI+cra0RcSFueM1wz8m+c/3H3kMAgQHrOZQhDZ7rBtLj3FacEuoNJ87JaH
+	U0hgdCdy3coNNwYO/029LevLd/nmhH4QpA11uk8t7uy8TS/EmPOJvzmsWigalY1F
+	2JIAudqul0kK08kLopC0Mt+JIMqAvWlB9ZJZXrClSre387Pu0pwGJzpNBapYn6nG
+	GC8TbQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4791cryg3d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 11:04:54 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7cf6c53390eso51506885a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 04:04:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750331094; x=1750935894;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XlD0jDu5XcpsIfoFEzFmr2OmjZR66dVaXN46uC1WaQI=;
+        b=RNj+G3TilpUp2s/TMFCEcdXuxGyaYQYIndP58q3AXmap4VNUhRRPy8G0pkbjOEhkE1
+         Gca5f2lk/ZUUv1nyhMsuX7aKT5yyO9kVNhzAVERZyVkFGqgYCTASD8P+eInQn+0m9hbR
+         SP7uypAvg/vwsoeTvs2WqGHN+n6T5V/sJHb0aMBHiXB8nL6VEvfyOM5h4knijX7Q6lnA
+         HO+wL1B+SnZDhkYwk5chG4lI6sos03nee8PE7kAsBBoE943ZVDU7SPPyiXuMaCvM4VO2
+         bWaE7v2WQfCjYWOtQhon0D+RK7+gpoqRfz3JWWC9rg71YZg2fLHW0SMkbS0W8JWreQuW
+         mvfQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWBheU74oVbsbhWtymauxElbKLwWKk/I4P3DKu7skiBqP0xtdJ0OlXpjBoFGhVwv3B/w8t6GKwu/8ugiN5N@vger.kernel.org
+X-Gm-Message-State: AOJu0YwdaxYBvyOunJBvr7qfVtpB6lRnXTivv+RoAB6m/UhizOSyqv6T
+	lZ5zhrybS7VVByAaowOk0QCPR7UTFubqBaShTyg41p8aqehur1haX6R809c2nUv8ABRnxID/r+W
+	TlL6lXgSuvV4mzsbqygs7D/u8tjCRgscitvRJyVoecn8Ex1J8L5HQ2ygsPBRZwa9KLvK3
+X-Gm-Gg: ASbGncutdWVL0LKAsJTw+HQqXtzs4BWavPVZuiNmJeYevkJH/oCkOwxLuBpLAtYSHHP
+	9g0M91TlFwzh/P+Nas47qSt2ne9VHNf4hnDbaI8nc2GBJ8IW86znZ1z2QXlYamN1OjKAURm8QrC
+	LVKVdORiUCyxGEyW29v7LeDZmwzl1zxkyycVOYTII98ezyzPyiAKJcvn0WPEvg24Y7k30sZL3Uo
+	Guwohds2U+fc+pwjaLON77k0tsqa4Xjdee3aGf4yflkvBpZ7ixscDJ6nB8gpmuFyEMaOuN5645F
+	i6xOWGlcfvhGSVkpTWlapWUiGmlGNCcgDD8TDnfJww==
+X-Received: by 2002:a05:620a:44d0:b0:7d0:4615:1ffb with SMTP id af79cd13be357-7d3c6c202f8mr3145803585a.23.1750331093861;
+        Thu, 19 Jun 2025 04:04:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEoSlHxX8jEI2+SjCqE6br09GomP1Ic5Vvt18H2D5+AqrRWjD6wMbIgqNBSUiCGIuhMu07zxA==
+X-Received: by 2002:a05:620a:44d0:b0:7d0:4615:1ffb with SMTP id af79cd13be357-7d3c6c202f8mr3145795785a.23.1750331093182;
+        Thu, 19 Jun 2025 04:04:53 -0700 (PDT)
+Received: from [10.92.240.160] ([212.136.9.4])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-adfb6c14386sm977513366b.87.2025.06.19.04.04.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Jun 2025 04:04:52 -0700 (PDT)
+Message-ID: <775e4f46-32c2-406f-a47d-8c2b1f607e1a@oss.qualcomm.com>
+Date: Thu, 19 Jun 2025 14:04:49 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,497 +89,443 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 2/5] firmware: psci: Read and use vendor reset types
+To: Shivendra Pratap <quic_spratap@quicinc.com>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Andy Yan <andy.yan@rock-chips.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+        Krzysztof Kozlowski
+ <krzk+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        Stephen Boyd <swboyd@chromium.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Elliot Berman <elliotb317@gmail.com>,
+        quic_spratap@qucinc.com,
+        Elliot Berman <elliot.berman@oss.qualcomm.com>,
+        quic_kaushalk@qucinc.com
+References: <20250303-arm-psci-system_reset2-vendor-reboots-v9-0-b2cf4a20feda@oss.qualcomm.com>
+ <20250303-arm-psci-system_reset2-vendor-reboots-v9-2-b2cf4a20feda@oss.qualcomm.com>
+ <Z9QQw6BcE7IXzu+r@lpieralisi> <Z+K3uNjTNbq3pUis@hu-mojha-hyd.qualcomm.com>
+ <Z/U95G+2GsoLD6Mi@lpieralisi>
+ <973eaca7-0632-53d8-f892-fe4d859ebbac@quicinc.com>
+ <Z/+dGLAGXpf9bX7G@lpieralisi>
+ <e96e315c-69fb-bc7e-5d07-06909344ff65@quicinc.com>
+ <rz7tnl5gg73gtyij3kmwk6hubikfsvu3krekjkpoofpdio6cwe@innio7qvotye>
+ <d3e4417a-66cd-4e6e-590f-7a0e2bcfc0e6@quicinc.com>
 Content-Language: en-US
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Subject: [Bug Report] mhi: ath11k: dma_alloc_coherent() failures during resume
-To: Manivannan Sadhasivam <mani@kernel.org>,
- Jeff Johnson <jjohnson@kernel.org>, quic_bqiang@quicinc.com,
- jeff.hugo@oss.qualcomm.com
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, ath11k@lists.infradead.org,
- linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
- sumit.garg@kernel.org
-X-Zoho-Virus-Status: 1
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-1.4.2/250.246.82
-X-ZohoMailClient: External
-
-This is a multi-part message in MIME format.
---------------aizF0e2MjL0MnZTH80Zhkm9J
-Content-Type: text/plain; charset=UTF-8
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+In-Reply-To: <d3e4417a-66cd-4e6e-590f-7a0e2bcfc0e6@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: xPavkr90xNLWPwKfJRwy2TvOeSgrxxYI
+X-Authority-Analysis: v=2.4 cv=BoedwZX5 c=1 sm=1 tr=0 ts=6853eed6 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=dNlqnMcrdpbb+gQrTujlOQ==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=GcyzOjIWAAAA:8 a=EUspDBNiAAAA:8
+ a=fT9P2u7C5VdAaNBtMXsA:9 a=QEXdDO2ut3YA:10 a=dtxw0mqMjrQA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=hQL3dl6oAZ8NdCsdz28n:22
+X-Proofpoint-GUID: xPavkr90xNLWPwKfJRwy2TvOeSgrxxYI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE5MDA5MSBTYWx0ZWRfX6cKwVoRfZs4M
+ j2oy8SpjZ76AIjX6NzSkVQxvUrzapPN31J1j8YvOhmud3j0UDAYMGchuAeDEKHjZqW7OnbuBibq
+ SLdIEQSbb0GnJ89jlFuReOBBItESf9gDKAWUmHdmPPJnEJ61MJliczc5Wpv/9mXRbx1gDTeQYBU
+ 7rL9NJmUcNCBKSHMpeaQs5e2oL5pbmqzaQoLZgZ7QaT+AAnPyOZETSifLVdq6hsRU6X5nYLu+3J
+ UDiihvzRo3JmBwLltYIvmwc9Ydy3m/ocU/vupNtfZz051W+YjpbCw5A9j9iHXVR/UQPxLwktAVG
+ piuphipI8baEg9mDTzyQr1VBgzl/CFGl9p6lEDSrGmAw/dK3GqCEpb1fhkqy+Py0ilcXGJS3Bpx
+ VkxBrlOSZXAA20SNmMxSkw7yb7LZSko0Kwx7vHFPh+7G6LjEIBlVj2e7ld/DJo9VWbaa5nYL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-19_03,2025-06-18_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 mlxscore=0 adultscore=0 phishscore=0 lowpriorityscore=0
+ mlxlogscore=999 bulkscore=0 malwarescore=0 priorityscore=1501 clxscore=1015
+ spamscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506190091
 
-Hi,
+On 19/06/2025 12:00, Shivendra Pratap wrote:
+> 
+> 
+> On 6/18/2025 6:44 PM, Dmitry Baryshkov wrote:
+>> On Tue, May 06, 2025 at 11:03:55PM +0530, Shivendra Pratap wrote:
+>>>
+>>>
+>>> On 4/16/2025 5:35 PM, Lorenzo Pieralisi wrote:
+>>>> On Wed, Apr 09, 2025 at 11:48:24PM +0530, Shivendra Pratap wrote:
+>>>>>
+>>>>>
+>>>>> On 4/8/2025 8:46 PM, Lorenzo Pieralisi wrote:
+>>>>>> On Tue, Mar 25, 2025 at 07:33:36PM +0530, Mukesh Ojha wrote:
+>>>>>>> On Fri, Mar 14, 2025 at 12:19:31PM +0100, Lorenzo Pieralisi wrote:
+>>>>>>>> On Mon, Mar 03, 2025 at 01:08:31PM -0800, Elliot Berman wrote:
+>>>>>>>>> From: Elliot Berman <elliot.berman@oss.qualcomm.com>
+>>>>>>>>>
+>>>>>>>>> SoC vendors have different types of resets and are controlled through
+>>>>>>>>> various registers. For instance, Qualcomm chipsets can reboot to a
+>>>>>>>>> "download mode" that allows a RAM dump to be collected. Another example
+>>>>>>>>> is they also support writing a cookie that can be read by bootloader
+>>>>>>>>> during next boot. PSCI offers a mechanism, SYSTEM_RESET2, for these
+>>>>>>>>> vendor reset types to be implemented without requiring drivers for every
+>>>>>>>>> register/cookie.
+>>>>>>>>>
+>>>>>>>>> Add support in PSCI to statically map reboot mode commands from
+>>>>>>>>> userspace to a vendor reset and cookie value using the device tree.
+>>>>>>>>
+>>>>>>>> I have managed to discuss a little bit this patchset over the last
+>>>>>>>> few days and I think we have defined a plan going forward.
+>>>>>>>>
+>>>>>>>> A point that was raised is:
+>>>>>>>>
+>>>>>>>> https://man7.org/linux/man-pages/man2/reboot.2.html
+>>>>>>>>
+>>>>>>>> LINUX_REBOOT_CMD_RESTART2 *arg command, what is it supposed to
+>>>>>>>> represent ?
+>>>>>>>>
+>>>>>>>> Is it the mode the system should reboot into OR it is the
+>>>>>>>> actual command to be issued (which is what this patchset
+>>>>>>>> implements) ?
+>>>>>>>>
+>>>>>>>> LINUX_REBOOT_CMD_RESTART "..a default restart..."
+>>>>>>>>
+>>>>>>>> It is unclear what "default" means. We wonder whether the
+>>>>>>>> reboot_mode variable was introduced to _define_ that "default".
+>>>>>>>>
+>>>>>>>> So, in short, my aim is trying to decouple reboot_mode from the
+>>>>>>>> LINUX_REBOOT_CMD_RESTART2 *arg command.
+>>>>>>>>
+>>>>>>>> I believe that adding a sysfs interface to reboot-mode driver
+>>>>>>>> infrastructure would be useful, so that the commands would
+>>>>>>>> be exposed to userspace and userspace can set the *arg command
+>>>>>>>> specifically to issue a given reset/mode.
+>>>>>>>>
+>>>>>>>> I wonder why this is not already in place for eg syscon-reboot-mode
+>>>>>>>> resets, how does user space issue a command in those systems if the
+>>>>>>>> available commands aren't exposed to userspace ?
+>>>>>>>>
+>>>>>>>> Is there a kernel entity exposing those "modes" to userspace, somehow ?
+>>>>>>>>
+>>>>>>>>> A separate initcall is needed to parse the devicetree, instead of using
+>>>>>>>>> psci_dt_init because mm isn't sufficiently set up to allocate memory.
+>>>>>>>>>
+>>>>>>>>> Reboot mode framework is close but doesn't quite fit with the
+>>>>>>>>> design and requirements for PSCI SYSTEM_RESET2. Some of these issues can
+>>>>>>>>> be solved but doesn't seem reasonable in sum:
+>>>>>>>>>   1. reboot mode registers against the reboot_notifier_list, which is too
+>>>>>>>>>      early to call SYSTEM_RESET2. PSCI would need to remember the reset
+>>>>>>>>>      type from the reboot-mode framework callback and use it
+>>>>>>>>>      psci_sys_reset.
+>>>>>>>>>   2. reboot mode assumes only one cookie/parameter is described in the
+>>>>>>>>>      device tree. SYSTEM_RESET2 uses 2: one for the type and one for
+>>>>>>>>>      cookie.
+>>>>>>>>
+>>>>>>>> This can be changed and I think it should, so that the reboot modes
+>>>>>>>> are exposed to user space and PSCI can use that.
+>>>>>>>>
+>>>>>>> In the case of a regular reboot or panic, the reboot/panic notifiers run
+>>>>>>> first, followed by the restart notifiers. The PSCI reset/reset2 should
+>>>>>>> be the last call from Linux, and ideally, this call should not fail.
+>>>>>>>
+>>>>>>> Reboot mode notifiers => restart notifiers or Panic notifiers => restart
+>>>>>>> notifiers
+>>>>>>>
+>>>>>>> So, if I understand correctly, you mean that we can change the reboot
+>>>>>>> mode framework to expose the arguments available to user space. We can
+>>>>>>> extend it to accept magic and cookies, save them in the reboot
+>>>>>>> framework, and retrieve them via a call from PSCI during a regular
+>>>>>>> reboot or panic based on the current arguments. Is this leading towards
+>>>>>>> writing an ARM-specific PSCI-reboot-mode driver, which in its reboot
+>>>>>>> notifier callback saves the magic and cookies, and these magic and
+>>>>>>> cookies will be used during psci_sys_reset2()? Or is there something
+>>>>>>> wrong with my understanding?
+>>>>>>
+>>>>>> No, you got it right (apologies for the delay in replying) - if the
+>>>>>> case for making reboot mode available to user space is accepted.
+>>>>>>
+>>> While moving this into reboot-mode framework, one more query came up.
+>>> The "ARM-specific PSCI-reboot-mode driver" that we are going to write needs
+>>> to be a Platform device driver for using reboot-mode framework.
+>>
+>> No, it doesn't. It rqeuires struct device, but there is no requirement
+>> for struct platform_device at any place.
+> yes, it can be struct device so may be create a virtual device
+> using reset-type node?
 
-When there is memory pressure during resume and no DMA memory is available,
-the ath11k driver fails to resume. The driver currently frees its DMA memory
-during suspend or hibernate, and attempts to re-allocate it during resume.
-However, if the DMA memory has been consumed by other software in the
-meantime, these allocations can fail, leading to critical failures in the WiFi
-driver.
+It can be created, but I don't see a strong need for it.
 
-Although I have recently fixed several instances to ensure DMA memory is not
-freed once allocated, we continue to receive reports of failures. I was
-preparing to submit a patch for the another case, but this issue cannot be
-fully resolved as long as even one DMA allocation remains in the resume path.
+>>
+>>> As psci is not a platform device driver, a subdevice under it may not probe as a
+>>> platform driver. Is it ok to implement the "PSCI-reboot-mode driver" as a
+>>> early_initcall("psci_xyz") and then create a platform device something as
+>>> below or any other suggestions for this?
+>>
+>> Change struct reboot_mode_driver to pass corresponding of_node (or
+>> better fwnode) directly.  Corresponding device is used only in the
+>> reboot_mode_register() and only to access of-node or to print error
+>> messages.
+> struct reboot_mode_driver can be changed just to pass of_node. But then the other
+> suggestion was to expose sysfs from reboot-mode to show available commands.
+> For that we need a device. Any suggestion? A virtual device with reset-types node
+> passed to reboot-mode framework looks fine?
 
-The following functions are allocating dma memory in resume path:
+You still don't need it. You'll create a new device, belonging to the 
+new 'reboot' or 'reset' class to hold corresponding attributes.
 
-<function> <size> <index>
-mhi_init_dev_ctxt dma_alloc_coherent(5632)
-mhi_init_dev_ctxt dma_alloc_coherent(88)
-mhi_alloc_aligned_ring dma_alloc_coherent(1023)
-mhi_alloc_aligned_ring dma_alloc_coherent(8191)
-mhi_init_dev_ctxt dma_alloc_coherent(44)
-mhi_alloc_aligned_ring dma_alloc_coherent(4095)
-mhi_alloc_aligned_ring dma_alloc_coherent(2047)
-mhi_alloc_aligned_ring dma_alloc_coherent(2047)
-ath11k_hal_alloc_cont_rdp dma_alloc_coherent(688)
-[ath11k_hal_alloc_cont_wrp dma_alloc_coherent(180)
-ath11k_dp_srng_setup dma_alloc_coherent(262143)
-ath11k_dp_link_desc_bank_alloc dma_alloc_coherent(2097152) 0
-ath11k_dp_link_desc_bank_alloc dma_alloc_coherent(2097152) 1
-ath11k_dp_link_desc_bank_alloc dma_alloc_coherent(384) 2
-ath11k_dp_srng_setup dma_alloc_coherent(2055)
-ath11k_dp_srng_setup dma_alloc_coherent(1031)
-ath11k_dp_srng_setup dma_alloc_coherent(1159)
-ath11k_dp_srng_setup dma_alloc_coherent(16391)
-ath11k_dp_srng_setup dma_alloc_coherent(1048583)
-ath11k_dp_srng_setup dma_alloc_coherent(1031)
-ath11k_dp_srng_setup dma_alloc_coherent(32775)
-ath11k_dp_srng_setup dma_alloc_coherent(8199)
-ath11k_dp_srng_setup dma_alloc_coherent(10247)
-ath11k_dp_srng_setup dma_alloc_coherent(212999)
-ath11k_dp_srng_setup dma_alloc_coherent(131079)
-ath11k_dp_srng_setup dma_alloc_coherent(131079)
-ath11k_dp_srng_setup dma_alloc_coherent(131079)
-ath11k_dp_srng_setup dma_alloc_coherent(131079)
-ath11k_dp_srng_setup dma_alloc_coherent(32775)
-ath11k_dp_srng_setup dma_alloc_coherent(8199)
-ath11k_dp_srng_setup dma_alloc_coherent(8199)
-ath11k_dp_srng_setup dma_alloc_coherent(32775)
-ath11k_dp_srng_setup dma_alloc_coherent(32775)
-ath11k_dp_srng_setup dma_alloc_coherent(8199)
-ath11k_dp_srng_setup dma_alloc_coherent(8199)
+>>
+>>>
+>>> power:reset:<psci-vendor-reset-driver>:
+>>> -----
+>>> static int __init psci_vendor_reset_init(void) {
+>>> ..
+>>> ..
+>>> 	np = of_find_node_by_name(NULL, "psci-vendor-reset");
+>>> 	if(!np)
+>>> 		return -ENODEV;
+>>> 	pdev = of_platform_device_create(np, "psci-vendor-reset", NULL);
+>>> ..
+>>> ..
+>>> }
+>>> -------
+>>>
+>>> the sysfs we will expose from reboot-mode may show like below in above
+>>> implementation:
+>>>
+>>> ######
+>>> / # cat ./sys/devices/platform/psci-vendor-reset/available_modes
+>>> bootloader edl
+>>> ######
+>>>
+>>> thanks,
+>>> Shivendra
+>>>
+>>>>>
+>>>>> Agree that the available modes should be exposed to usespace via sysfs interface
+>>>>> and we should implement it. Also #1 and #2 can be handled via some
+>>>>> changes in the design as mentioned in above discussion.
+>>>>>
+>>>>> I have one doubt though when we implement this via reboot-mode framework.
+>>>>> The current patch implements PSCI ARM PSCI SYSTEM RESET2 vendor reset types.
+>>>>> psci driver is initialized very early at boot but potential ARM psci reboot-mode
+>>>>> driver will not probe at that stage and the ARM PSCI SYSTEM RESET2 vendor reset
+>>>>> types functionality will not be available in psci reset path until the reboot-mode
+>>>>> driver probes. Will this cause any limitation on usage of ARM's PSCI vendor-reset
+>>>>> types for early device resets?
+>>>>>
+>>>>> One use-case may be an early device crash or a early reset where a vendor
+>>>>> wants to use PSCI SYSTEM RESET2 vendor reset type to a reset the device to a
+>>>>> specific state but may not be able to use this driver.
+>>>>> (eg: a kernel panic at early boot where a vendor wants to reset device
+>>>>> to a specific state using vendor reset. Currently panic passes a NULL
+>>>>> (*arg command) while device reset but it may be explored for vendor specific
+>>>>> reset).
+>>>>
+>>>> As you said, that would not be a PSCI only issue - *if* we wanted to
+>>>> plug in this use case we should find a way to do it at reboot mode
+>>>> driver level.
+>>>>
+>>>> As a matter of fact, this is not a mainline issue AFAICS.
+>>>>
+>>>> Even if we did not design this as a reboot mode driver there would be a
+>>>> time window where you would not be able to use vendor resets on panic.
+>>>>
+>>>> I don't see it as a major roadblock at the moment.
+>>> Got it.
+>>>>
+>>>> Thanks,
+>>>> Lorenzo
+>>>>
+>>>>>
+>>>>> - Shivendra
+>>>>>
+>>>>>>> P.S. We appreciate Elliot for his work and follow-up on this while being
+>>>>>>> employed at Qualcomm.
+>>>>>>
+>>>>>> Yes I sincerely do for his patience, thank you.
+>>>>>>
+>>>>>> Lorenzo
+>>>>>>
+>>>>>>>>>   3. psci cpuidle driver already registers a driver against the
+>>>>>>>>>      arm,psci-1.0 compatible. Refactoring would be needed to have both a
+>>>>>>>>>      cpuidle and reboot-mode driver.
+>>>>>>>>>
+>>>>>>>>> Signed-off-by: Elliot Berman <elliot.berman@oss.qualcomm.com>
+>>>>>>>>> ---
+>>>>>>>>>   drivers/firmware/psci/psci.c | 105 +++++++++++++++++++++++++++++++++++++++++++
+>>>>>>>>>   1 file changed, 105 insertions(+)
+>>>>>>>>>
+>>>>>>>>> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+>>>>>>>>> index a1ebbe9b73b136218e9d9f9b8daa7756b3ab2fbe..6f8c47deaec0225f26704e1f3bcad52603127a85 100644
+>>>>>>>>> --- a/drivers/firmware/psci/psci.c
+>>>>>>>>> +++ b/drivers/firmware/psci/psci.c
+>>>>>>>>> @@ -80,6 +80,14 @@ static u32 psci_cpu_suspend_feature;
+>>>>>>>>>   static bool psci_system_reset2_supported;
+>>>>>>>>>   static bool psci_system_off2_hibernate_supported;
+>>>>>>>>>   
+>>>>>>>>> +struct psci_reset_param {
+>>>>>>>>> +	const char *mode;
+>>>>>>>>> +	u32 reset_type;
+>>>>>>>>> +	u32 cookie;
+>>>>>>>>> +};
+>>>>>>>>> +static struct psci_reset_param *psci_reset_params __ro_after_init;
+>>>>>>>>> +static size_t num_psci_reset_params __ro_after_init;
+>>>>>>>>> +
+>>>>>>>>>   static inline bool psci_has_ext_power_state(void)
+>>>>>>>>>   {
+>>>>>>>>>   	return psci_cpu_suspend_feature &
+>>>>>>>>> @@ -306,9 +314,39 @@ static int get_set_conduit_method(const struct device_node *np)
+>>>>>>>>>   	return 0;
+>>>>>>>>>   }
+>>>>>>>>>   
+>>>>>>>>> +static int psci_vendor_system_reset2(const char *cmd)
+>>>>>>>>> +{
+>>>>>>>>> +	unsigned long ret;
+>>>>>>>>> +	size_t i;
+>>>>>>>>> +
+>>>>>>>>> +	for (i = 0; i < num_psci_reset_params; i++) {
+>>>>>>>>> +		if (!strcmp(psci_reset_params[i].mode, cmd)) {
+>>>>>>>>> +			ret = invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2),
+>>>>>>>>> +					     psci_reset_params[i].reset_type,
+>>>>>>>>> +					     psci_reset_params[i].cookie, 0);
+>>>>>>>>> +			/*
+>>>>>>>>> +			 * if vendor reset fails, log it and fall back to
+>>>>>>>>> +			 * architecture reset types
+>>>>>>>>
+>>>>>>>> That's not what the code does.
+>>>>>>>>
+>>>>>>> Ack.
+>>>>>>>
+>>>>>>> -Mukesh
+>>>>>>>
+>>>>>>>>> +			 */
+>>>>>>>>> +			pr_err("failed to perform reset \"%s\": %ld\n", cmd,
+>>>>>>>>> +			       (long)ret);
+>>>>>>>>> +			return 0;
+>>>>>>>>> +		}
+>>>>>>>>> +	}
+>>>>>>>>> +
+>>>>>>>>> +	return -ENOENT;
+>>>>>>>>> +}
+>>>>>>>>> +
+>>>>>>>>>   static int psci_sys_reset(struct notifier_block *nb, unsigned long action,
+>>>>>>>>>   			  void *data)
+>>>>>>>>>   {
+>>>>>>>>> +	/*
+>>>>>>>>> +	 * try to do the vendor system_reset2
+>>>>>>>>> +	 * If there wasn't a matching command, fall back to architectural resets
+>>>>>>>>> +	 */
+>>>>>>>>> +	if (data && !psci_vendor_system_reset2(data))
+>>>>>>>>> +		return NOTIFY_DONE;
+>>>>>>>>> +
+>>>>>>>>>   	if ((reboot_mode == REBOOT_WARM || reboot_mode == REBOOT_SOFT) &&
+>>>>>>>>>   	    psci_system_reset2_supported) {
+>>>>>>>>>   		/*
+>>>>>>>>> @@ -795,6 +833,73 @@ static const struct of_device_id psci_of_match[] __initconst = {
+>>>>>>>>>   	{},
+>>>>>>>>>   };
+>>>>>>>>>   
+>>>>>>>>> +#define REBOOT_PREFIX "mode-"
+>>>>>>>>> +
+>>>>>>>>> +static int __init psci_init_system_reset2_modes(void)
+>>>>>>>>> +{
+>>>>>>>>> +	const size_t len = strlen(REBOOT_PREFIX);
+>>>>>>>>> +	struct psci_reset_param *param;
+>>>>>>>>> +	struct device_node *psci_np __free(device_node) = NULL;
+>>>>>>>>> +	struct device_node *np __free(device_node) = NULL;
+>>>>>>>>> +	struct property *prop;
+>>>>>>>>> +	size_t count = 0;
+>>>>>>>>> +	u32 magic[2];
+>>>>>>>>> +	int num;
+>>>>>>>>> +
+>>>>>>>>> +	if (!psci_system_reset2_supported)
+>>>>>>>>> +		return 0;
+>>>>>>>>> +
+>>>>>>>>> +	psci_np = of_find_matching_node(NULL, psci_of_match);
+>>>>>>>>> +	if (!psci_np)
+>>>>>>>>> +		return 0;
+>>>>>>>>> +
+>>>>>>>>> +	np = of_find_node_by_name(psci_np, "reset-types");
+>>>>>>>>> +	if (!np)
+>>>>>>>>> +		return 0;
+>>>>>>>>
+>>>>>>>> Related to my initial question above. If LINUX_REBOOT_CMD_RESTART2 *arg command,
+>>>>>>>> is the actual reset to be issued, should we add a default mode "cold"
+>>>>>>>> and, if SYSTEM_RESET2 is supported, a "warm" reset mode too ?
+>>>>>>>>
+>>>>>>>> It all boils down to what *arg represents - adding "cold" and "warm"
+>>>>>>>> modes would remove the dependency on reboot_mode for resets issued
+>>>>>>>> through LINUX_REBOOT_CMD_RESTART2, the question is whether this
+>>>>>>>> is the correct thing to do.
+>>>>>>>>
+>>>>>>>> Comments very welcome.
+>>>>>>>>
+>>>>>>>> Thanks,
+>>>>>>>> Lorenzo
+>>>>>>>>
+>>>>>>>>> +
+>>>>>>>>> +	for_each_property_of_node(np, prop) {
+>>>>>>>>> +		if (strncmp(prop->name, REBOOT_PREFIX, len))
+>>>>>>>>> +			continue;
+>>>>>>>>> +		num = of_property_count_u32_elems(np, prop->name);
+>>>>>>>>> +		if (num != 1 && num != 2)
+>>>>>>>>> +			continue;
+>>>>>>>>> +
+>>>>>>>>> +		count++;
+>>>>>>>>> +	}
+>>>>>>>>> +
+>>>>>>>>> +	param = psci_reset_params =
+>>>>>>>>> +		kcalloc(count, sizeof(*psci_reset_params), GFP_KERNEL);
+>>>>>>>>> +	if (!psci_reset_params)
+>>>>>>>>> +		return -ENOMEM;
+>>>>>>>>> +
+>>>>>>>>> +	for_each_property_of_node(np, prop) {
+>>>>>>>>> +		if (strncmp(prop->name, REBOOT_PREFIX, len))
+>>>>>>>>> +			continue;
+>>>>>>>>> +
+>>>>>>>>> +		num = of_property_read_variable_u32_array(np, prop->name, magic,
+>>>>>>>>> +							  1, ARRAY_SIZE(magic));
+>>>>>>>>> +		if (num < 0) {
+>>>>>>>>> +			pr_warn("Failed to parse vendor reboot mode %s\n",
+>>>>>>>>> +				param->mode);
+>>>>>>>>> +			kfree_const(param->mode);
+>>>>>>>>> +			continue;
+>>>>>>>>> +		}
+>>>>>>>>> +
+>>>>>>>>> +		param->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
+>>>>>>>>> +		if (!param->mode)
+>>>>>>>>> +			continue;
+>>>>>>>>> +
+>>>>>>>>> +		/* Force reset type to be in vendor space */
+>>>>>>>>> +		param->reset_type = PSCI_1_1_RESET_TYPE_VENDOR_START | magic[0];
+>>>>>>>>> +		param->cookie = num > 1 ? magic[1] : 0;
+>>>>>>>>> +		param++;
+>>>>>>>>> +		num_psci_reset_params++;
+>>>>>>>>> +	}
+>>>>>>>>> +
+>>>>>>>>> +	return 0;
+>>>>>>>>> +}
+>>>>>>>>> +arch_initcall(psci_init_system_reset2_modes);
+>>>>>>>>> +
+>>>>>>>>>   int __init psci_dt_init(void)
+>>>>>>>>>   {
+>>>>>>>>>   	struct device_node *np;
+>>>>>>>>>
+>>>>>>>>> -- 
+>>>>>>>>> 2.34.1
+>>>>>>>>>
+>>
 
-Let's discuss the general possible solution for this. I'm sure a lot
-of other drivers would be facing the same kind of issues. What can be
-general approach to solve this problem.
 
-Regards,
-Muhammad Usama Anjum
---------------aizF0e2MjL0MnZTH80Zhkm9J
-Content-Type: text/x-log; charset=UTF-8; name="ath11k_dma_nomem.log"
-Content-Disposition: attachment; filename="ath11k_dma_nomem.log"
-Content-Transfer-Encoding: base64
-
-WyA3MDYxLjM5NTI3M10gcHJpbnRrOiBTdXNwZW5kaW5nIGNvbnNvbGUocykgKHVzZSBub19j
-b25zb2xlX3N1c3BlbmQgdG8gZGVidWcpClsgNzA2MS45ODM0MjhdIEFDUEk6IEVDOiBpbnRl
-cnJ1cHQgYmxvY2tlZApbIDcwNjIuMDE3MzUxXSBBQ1BJOiBQTTogUHJlcGFyaW5nIHRvIGVu
-dGVyIHN5c3RlbSBzbGVlcCBzdGF0ZSBTMwpbIDcwNjIuMDE4MjMxXSBBQ1BJOiBFQzogZXZl
-bnQgYmxvY2tlZApbIDcwNjIuMDE4MjMzXSBBQ1BJOiBFQzogRUMgc3RvcHBlZApbIDcwNjIu
-MDE4MjM1XSBBQ1BJOiBQTTogU2F2aW5nIHBsYXRmb3JtIE5WUyBtZW1vcnkKWyA3MDYyLjAx
-ODgzNF0gRGlzYWJsaW5nIG5vbi1ib290IENQVXMgLi4uClsgNzA2Mi4wMjEzNjldIHNtcGJv
-b3Q6IENQVSA3IGlzIG5vdyBvZmZsaW5lClsgNzA2Mi4wMjQwMjldIHNtcGJvb3Q6IENQVSA2
-IGlzIG5vdyBvZmZsaW5lClsgNzA2Mi4wMjY2MzddIHNtcGJvb3Q6IENQVSA1IGlzIG5vdyBv
-ZmZsaW5lClsgNzA2Mi4wMjkwNjVdIHNtcGJvb3Q6IENQVSA0IGlzIG5vdyBvZmZsaW5lClsg
-NzA2Mi4wMzE4MTFdIHNtcGJvb3Q6IENQVSAzIGlzIG5vdyBvZmZsaW5lClsgNzA2Mi4wMzQz
-OTldIHNtcGJvb3Q6IENQVSAyIGlzIG5vdyBvZmZsaW5lClsgNzA2Mi4wMzcxNTJdIHNtcGJv
-b3Q6IENQVSAxIGlzIG5vdyBvZmZsaW5lClsgNzA2Mi4wMzc5NjhdIFNwZWN0cmUgVjIgOiBV
-cGRhdGUgdXNlciBzcGFjZSBTTVQgbWl0aWdhdGlvbjogU1RJQlAgb2ZmClsgNzA2Mi4wMzg0
-OTNdIEFDUEk6IFBNOiBMb3ctbGV2ZWwgcmVzdW1lIGNvbXBsZXRlClsgNzA2Mi4wMzg1MjRd
-IEFDUEk6IEVDOiBFQyBzdGFydGVkClsgNzA2Mi4wMzg1MjZdIEFDUEk6IFBNOiBSZXN0b3Jp
-bmcgcGxhdGZvcm0gTlZTIG1lbW9yeQpbIDcwNjIuMDM4OTQ0XSBMVlQgb2Zmc2V0IDAgYXNz
-aWduZWQgZm9yIHZlY3RvciAweDQwMApbIDcwNjIuMDM5NzA1XSBFbmFibGluZyBub24tYm9v
-dCBDUFVzIC4uLgpbIDcwNjIuMDM5ODI1XSBzbXBib290OiBCb290aW5nIE5vZGUgMCBQcm9j
-ZXNzb3IgMSBBUElDIDB4MQpbIDcwNjIuMDQ0MTA5XSBTcGVjdHJlIFYyIDogVXBkYXRlIHVz
-ZXIgc3BhY2UgU01UIG1pdGlnYXRpb246IFNUSUJQIGFsd2F5cy1vbgpbIDcwNjIuMDQ0MTU0
-XSBDUFUxIGlzIHVwClsgNzA2Mi4wNDQyNjZdIHNtcGJvb3Q6IEJvb3RpbmcgTm9kZSAwIFBy
-b2Nlc3NvciAyIEFQSUMgMHgyClsgNzA2Mi4wNDgwODZdIENQVTIgaXMgdXAKWyA3MDYyLjA0
-ODE5OF0gc21wYm9vdDogQm9vdGluZyBOb2RlIDAgUHJvY2Vzc29yIDMgQVBJQyAweDMKWyA3
-MDYyLjA1MTg2MV0gQ1BVMyBpcyB1cApbIDcwNjIuMDUxOTE3XSBzbXBib290OiBCb290aW5n
-IE5vZGUgMCBQcm9jZXNzb3IgNCBBUElDIDB4NApbIDcwNjIuMDU1MjgxXSBDUFU0IGlzIHVw
-ClsgNzA2Mi4wNTUzNjddIHNtcGJvb3Q6IEJvb3RpbmcgTm9kZSAwIFByb2Nlc3NvciA1IEFQ
-SUMgMHg1ClsgNzA2Mi4wNTg4ODVdIENQVTUgaXMgdXAKWyA3MDYyLjA1ODk5NF0gc21wYm9v
-dDogQm9vdGluZyBOb2RlIDAgUHJvY2Vzc29yIDYgQVBJQyAweDYKWyA3MDYyLjA2MjU1NF0g
-Q1BVNiBpcyB1cApbIDcwNjIuMDYyNjU4XSBzbXBib290OiBCb290aW5nIE5vZGUgMCBQcm9j
-ZXNzb3IgNyBBUElDIDB4NwpbIDcwNjIuMDY2MjM3XSBDUFU3IGlzIHVwClsgNzA2Mi4wNjgx
-NDhdIEFDUEk6IFBNOiBXYWtpbmcgdXAgZnJvbSBzeXN0ZW0gc2xlZXAgc3RhdGUgUzMKWyA3
-MDYyLjA2OTQ1M10gQUNQSTogRUM6IGludGVycnVwdCB1bmJsb2NrZWQKWyA3MDcxLjg1ODkz
-N10ga3dvcmtlci91MzI6MTI6IHBhZ2UgYWxsb2NhdGlvbiBmYWlsdXJlOiBvcmRlcjowLCBt
-b2RlOjB4YzA0KEdGUF9OT0lPfEdGUF9ETUEzMiksIG5vZGVtYXNrPShudWxsKSxjcHVzZXQ9
-LyxtZW1zX2FsbG93ZWQ9MApbIDcwNzEuODU4OTU0XSBDUFU6IDIgVUlEOiAwIFBJRDogNzU1
-MDcgQ29tbToga3dvcmtlci91MzI6MTIgVGFpbnRlZDogRyAgICAgICAgVyAgT0UgICAgICAg
-Ni4xNi4wLXJjMi1hdGgwLW5leHQgIzIgUFJFRU1QVChmdWxsKSAgMTUyODhiYjRjNTAzODJl
-YWIyMzc2Y2M3OTEwM2UyNTMzNjY2NDdlZApbIDcwNzEuODU4OTU5XSBUYWludGVkOiBbV109
-V0FSTiwgW09dPU9PVF9NT0RVTEUsIFtFXT1VTlNJR05FRF9NT0RVTEUKWyA3MDcxLjg1ODk2
-MF0gSGFyZHdhcmUgbmFtZTogVmFsdmUgR2FsaWxlby9HYWxpbGVvLCBCSU9TIEY3RzAxMTIg
-MDgvMDEvMjAyNApbIDcwNzEuODU4OTYyXSBXb3JrcXVldWU6IGFzeW5jIGFzeW5jX3J1bl9l
-bnRyeV9mbgpbIDcwNzEuODU4OTY5XSBDYWxsIFRyYWNlOgpbIDcwNzEuODU4OTcyXSAgPFRB
-U0s+ClsgNzA3MS44NTg5NzVdICBkdW1wX3N0YWNrX2x2bCsweDUzLzB4NzAKWyA3MDcxLjg1
-ODk4MF0gIHdhcm5fYWxsb2MrMHgxNjIvMHgxZTAKWyA3MDcxLjg1ODk4OV0gIF9fYWxsb2Nf
-cGFnZXNfc2xvd3BhdGguY29uc3Rwcm9wLjArMHgyZjYvMHhkZDAKWyA3MDcxLjg1ODk5N10g
-IF9fYWxsb2NfZnJvemVuX3BhZ2VzX25vcHJvZisweDMyZC8weDM1MApbIDcwNzEuODU5MDAy
-XSAgX19hbGxvY19wYWdlc19ub3Byb2YrMHhlLzB4MjAKWyA3MDcxLjg1OTAwNF0gIF9fZG1h
-X2RpcmVjdF9hbGxvY19wYWdlcy5jb25zdHByb3AuMCsweDIxYi8weDMzMApbIDcwNzEuODU5
-MDEwXSAgZG1hX2RpcmVjdF9hbGxvYysweDcwLzB4MjcwClsgNzA3MS44NTkwMTRdICBkbWFf
-YWxsb2NfYXR0cnMrMHg1YS8weDEwMApbIDcwNzEuODU5MDIwXSAgbWhpX2FsbG9jX2FsaWdu
-ZWRfcmluZysweDJhLzB4NjAgW21oaSA5OTBkNTUwMjA5MDI0N2YwNDc2NTM3NjkyZjNmNmMw
-ZDU4OTY3ZmVlXQpbIDcwNzEuODU5MDMwXSAgbWhpX3ByZXBhcmVfZm9yX3Bvd2VyX3VwKzB4
-MWYwLzB4NjAwIFttaGkgOTkwZDU1MDIwOTAyNDdmMDQ3NjUzNzY5MmYzZjZjMGQ1ODk2N2Zl
-ZV0KWyA3MDcxLjg1OTA0MV0gIGF0aDExa19taGlfc3RhcnQrMHgyZS8weGEwIFthdGgxMWtf
-cGNpIGU5Y2IwZTIyZWFkYzdkMGFhOTE3ZjBlOTkxMDMxNTg5NGIzZjA4NmZdClsgNzA3MS44
-NTkwNDZdICBhdGgxMWtfcGNpX3Bvd2VyX3VwKzB4OWQvMHgxMzAgW2F0aDExa19wY2kgZTlj
-YjBlMjJlYWRjN2QwYWE5MTdmMGU5OTEwMzE1ODk0YjNmMDg2Zl0KWyA3MDcxLjg1OTA1MV0g
-IGF0aDExa19jb3JlX3Jlc3VtZV9lYXJseSsweDU4LzB4YTAgW2F0aDExayAwZmU3ZjE5NmY1
-YmRhNzVkYjU4ZWNjMDBkYzRhYzQyZGVmYTk4OTBjXQpbIDcwNzEuODU5MDcyXSAgYXRoMTFr
-X3BjaV9wbV9yZXN1bWVfZWFybHkrMHgxYS8weDUwIFthdGgxMWtfcGNpIGU5Y2IwZTIyZWFk
-YzdkMGFhOTE3ZjBlOTkxMDMxNTg5NGIzZjA4NmZdClsgNzA3MS44NTkwNzZdICA/IHNyc29f
-cmV0dXJuX3RodW5rKzB4NS8weDVmClsgNzA3MS44NTkwODBdICA/IF9fcGZ4X3BjaV9wbV9y
-ZXN1bWVfZWFybHkrMHgxMC8weDEwClsgNzA3MS44NTkwODRdICBkcG1fcnVuX2NhbGxiYWNr
-KzB4OGIvMHgxZTAKWyA3MDcxLjg1OTA4OV0gIGRldmljZV9yZXN1bWVfZWFybHkrMHg4OC8w
-eDJjMApbIDcwNzEuODU5MDkzXSAgYXN5bmNfcmVzdW1lX2Vhcmx5KzB4MWQvMHgzMApbIDcw
-NzEuODU5MDk2XSAgYXN5bmNfcnVuX2VudHJ5X2ZuKzB4MzQvMHgxNjAKWyA3MDcxLjg1OTA5
-OV0gIHByb2Nlc3Nfb25lX3dvcmsrMHgxYTEvMHgzZTAKWyA3MDcxLjg1OTEwNF0gIHdvcmtl
-cl90aHJlYWQrMHgyZGYvMHg0MzAKWyA3MDcxLjg1OTEwOV0gID8gX19wZnhfd29ya2VyX3Ro
-cmVhZCsweDEwLzB4MTAKWyA3MDcxLjg1OTExMV0gIGt0aHJlYWQrMHgxMDAvMHgyODAKWyA3
-MDcxLjg1OTExNV0gID8gc3Jzb19yZXR1cm5fdGh1bmsrMHg1LzB4NWYKWyA3MDcxLjg1OTEx
-N10gID8gZmluaXNoX3Rhc2tfc3dpdGNoLmlzcmEuMCsweDg4LzB4MmQwClsgNzA3MS44NTkx
-MjFdICA/IF9fcGZ4X2t0aHJlYWQrMHgxMC8weDEwClsgNzA3MS44NTkxMjNdICA/IF9fcGZ4
-X2t0aHJlYWQrMHgxMC8weDEwClsgNzA3MS44NTkxMjZdICByZXRfZnJvbV9mb3JrKzB4MTRh
-LzB4MTgwClsgNzA3MS44NTkxMzBdICA/IF9fcGZ4X2t0aHJlYWQrMHgxMC8weDEwClsgNzA3
-MS44NTkxMzNdICByZXRfZnJvbV9mb3JrX2FzbSsweDFhLzB4MzAKWyA3MDcxLjg1OTE0MV0g
-IDwvVEFTSz4KWyA3MDcxLjg1OTE0Ml0gTWVtLUluZm86ClsgNzA3MS44NTkxNDRdIGFjdGl2
-ZV9hbm9uOjE0IGluYWN0aXZlX2Fub246MjIyMTAwIGlzb2xhdGVkX2Fub246MAogICAgICAg
-ICAgICAgICAgYWN0aXZlX2ZpbGU6MTU3MjMgaW5hY3RpdmVfZmlsZTo4MDY2ODMgaXNvbGF0
-ZWRfZmlsZTowCiAgICAgICAgICAgICAgICB1bmV2aWN0YWJsZTo0NDggZGlydHk6MTM4IHdy
-aXRlYmFjazowCiAgICAgICAgICAgICAgICBzbGFiX3JlY2xhaW1hYmxlOjExNjQ5IHNsYWJf
-dW5yZWNsYWltYWJsZToyMjk0NgogICAgICAgICAgICAgICAgbWFwcGVkOjE1ODYwMSBzaG1l
-bToyMDc3MCBwYWdldGFibGVzOjM5OTMKICAgICAgICAgICAgICAgIHNlY19wYWdldGFibGVz
-OjAgYm91bmNlOjAKICAgICAgICAgICAgICAgIGtlcm5lbF9taXNjX3JlY2xhaW1hYmxlOjAK
-ICAgICAgICAgICAgICAgIGZyZWU6MjE1NjQ3NSBmcmVlX3BjcDo2MiBmcmVlX2NtYTowClsg
-NzA3MS44NTkxNDldIE5vZGUgMCBhY3RpdmVfYW5vbjo1NmtCIGluYWN0aXZlX2Fub246ODg4
-NDAwa0IgYWN0aXZlX2ZpbGU6NjI4OTJrQiBpbmFjdGl2ZV9maWxlOjMyMjY3MzJrQiB1bmV2
-aWN0YWJsZToxNzkya0IgaXNvbGF0ZWQoYW5vbik6MGtCIGlzb2xhdGVkKGZpbGUpOjBrQiBt
-YXBwZWQ6NjM0NDA0a0IgZGlydHk6NTUya0Igd3JpdGViYWNrOjBrQiBzaG1lbTo4MzA4MGtC
-IHNobWVtX3RocDowa0Igc2htZW1fcG1kbWFwcGVkOjBrQiBhbm9uX3RocDozMTk0ODhrQiB3
-cml0ZWJhY2tfdG1wOjBrQiBrZXJuZWxfc3RhY2s6MTAwMzJrQiBwYWdldGFibGVzOjE1OTcy
-a0Igc2VjX3BhZ2V0YWJsZXM6MGtCIGFsbF91bnJlY2xhaW1hYmxlPyBubyBCYWxsb29uOjBr
-QgpbIDcwNzEuODU5MTU1XSBOb2RlIDAgRE1BIGZyZWU6NzM2MGtCIGJvb3N0OjBrQiBtaW46
-NjhrQiBsb3c6ODRrQiBoaWdoOjEwMGtCIHJlc2VydmVkX2hpZ2hhdG9taWM6MEtCIGZyZWVf
-aGlnaGF0b21pYzowS0IgYWN0aXZlX2Fub246MGtCIGluYWN0aXZlX2Fub246MGtCIGFjdGl2
-ZV9maWxlOjBrQiBpbmFjdGl2ZV9maWxlOjBrQiB1bmV2aWN0YWJsZTowa0Igd3JpdGVwZW5k
-aW5nOjBrQiBwcmVzZW50OjE1OTkya0IgbWFuYWdlZDoxNTM2MGtCIG1sb2NrZWQ6MGtCIGJv
-dW5jZTowa0IgZnJlZV9wY3A6MGtCIGxvY2FsX3BjcDowa0IgZnJlZV9jbWE6MGtCClsgNzA3
-MS44NTkxNjFdIGxvd21lbV9yZXNlcnZlW106IDAgMTgyMyAxNDgwMiAxNDgwMiAxNDgwMgpb
-IDcwNzEuODU5MTY3XSBOb2RlIDAgRE1BMzIgZnJlZTo4MDQwa0IgYm9vc3Q6MGtCIG1pbjo4
-MjYwa0IgbG93OjEwMzI0a0IgaGlnaDoxMjM4OGtCIHJlc2VydmVkX2hpZ2hhdG9taWM6MEtC
-IGZyZWVfaGlnaGF0b21pYzowS0IgYWN0aXZlX2Fub246MGtCIGluYWN0aXZlX2Fub246MGtC
-IGFjdGl2ZV9maWxlOjBrQiBpbmFjdGl2ZV9maWxlOjBrQiB1bmV2aWN0YWJsZTowa0Igd3Jp
-dGVwZW5kaW5nOjBrQiBwcmVzZW50OjE5MzU3MzZrQiBtYW5hZ2VkOjE4Njc0NDBrQiBtbG9j
-a2VkOjBrQiBib3VuY2U6MGtCIGZyZWVfcGNwOjI0OGtCIGxvY2FsX3BjcDoyNDhrQiBmcmVl
-X2NtYTowa0IKWyA3MDcxLjg1OTE3Ml0gbG93bWVtX3Jlc2VydmVbXTogMCAwIDEyOTc5IDEy
-OTc5IDEyOTc5ClsgNzA3MS44NTkxNzhdIE5vZGUgMCBETUE6IDAqNGtCIDAqOGtCIDAqMTZr
-QiAwKjMya0IgMSo2NGtCIChVKSAxKjEyOGtCIChVKSAwKjI1NmtCIDAqNTEya0IgMSoxMDI0
-a0IgKFUpIDEqMjA0OGtCIChNKSAxKjQwOTZrQiAoTSkgPSA3MzYwa0IKWyA3MDcxLjg1OTE5
-N10gTm9kZSAwIERNQTMyOiA0KjRrQiAoVU0pIDEqOGtCIChNKSAxNSoxNmtCIChVTSkgMTcq
-MzJrQiAoVU0pIDE1KjY0a0IgKFVNKSAxNyoxMjhrQiAoVU0pIDgqMjU2a0IgKFVNKSAyKjUx
-MmtCIChVTSkgMSoxMDI0a0IgKE0pIDAqMjA0OGtCIDAqNDA5NmtCID0gODA0MGtCClsgNzA3
-MS44NTkyMTldIE5vZGUgMCBodWdlcGFnZXNfdG90YWw9MCBodWdlcGFnZXNfZnJlZT0wIGh1
-Z2VwYWdlc19zdXJwPTAgaHVnZXBhZ2VzX3NpemU9MTA0ODU3NmtCClsgNzA3MS44NTkyMjFd
-IE5vZGUgMCBodWdlcGFnZXNfdG90YWw9MCBodWdlcGFnZXNfZnJlZT0wIGh1Z2VwYWdlc19z
-dXJwPTAgaHVnZXBhZ2VzX3NpemU9MjA0OGtCClsgNzA3MS44NTkyMjNdIDg0MzUyNiB0b3Rh
-bCBwYWdlY2FjaGUgcGFnZXMKWyA3MDcxLjg1OTIyNF0gMCBwYWdlcyBpbiBzd2FwIGNhY2hl
-ClsgNzA3MS44NTkyMjVdIEZyZWUgc3dhcCAgPSA5NjgzNDQ4a0IKWyA3MDcxLjg1OTIyNl0g
-VG90YWwgc3dhcCA9IDk2ODM0NDhrQgpbIDcwNzEuODU5MjI4XSAzODkyNjA0IHBhZ2VzIFJB
-TQpbIDcwNzEuODU5MjI5XSAwIHBhZ2VzIEhpZ2hNZW0vTW92YWJsZU9ubHkKWyA3MDcxLjg1
-OTIzMF0gOTkyNzIgcGFnZXMgcmVzZXJ2ZWQKWyA3MDcxLjg1OTIzMV0gMCBwYWdlcyBjbWEg
-cmVzZXJ2ZWQKWyA3MDcxLjg1OTIzMV0gMCBwYWdlcyBod3BvaXNvbmVkClsgNzA3MS44NTky
-NTBdIGF0aDExa19wY2kgMDAwMDowMzowMC4wOiBmYWlsZWQgdG8gcHJlcGFyZSBtaGk6IC0x
-MgpbIDcwNzEuODU5MjUzXSBhdGgxMWtfcGNpIDAwMDA6MDM6MDAuMDogZmFpbGVkIHRvIHN0
-YXJ0IG1oaTogLTEyClsgNzA3MS44NTkyNTVdIGF0aDExa19wY2kgMDAwMDowMzowMC4wOiBm
-YWlsZWQgdG8gcG93ZXIgdXAgaGlmIGR1cmluZyByZXN1bWU6IC0xMgpbIDcwNzEuODU5MjU4
-XSBhdGgxMWtfcGNpIDAwMDA6MDM6MDAuMDogZmFpbGVkIHRvIGVhcmx5IHJlc3VtZSBjb3Jl
-OiAtMTIKWyA3MDcxLjg1OTI1OV0gYXRoMTFrX3BjaSAwMDAwOjAzOjAwLjA6IFBNOiBkcG1f
-cnVuX2NhbGxiYWNrKCk6IHBjaV9wbV9yZXN1bWVfZWFybHkgcmV0dXJucyAtMTIKWyA3MDcx
-Ljg1OTI2N10gYXRoMTFrX3BjaSAwMDAwOjAzOjAwLjA6IFBNOiBmYWlsZWQgdG8gcmVzdW1l
-IGFzeW5jIGVhcmx5OiBlcnJvciAtMTIKWyA3MDcxLjg1OTMxOF0gcWNvbV9taGlfcXJ0ciBt
-aGkwX0lQQ1I6IEN1cnJlbnQgRUU6IERJU0FCTEUgUmVxdWlyZWQgRUUgTWFzazogMHg0Clsg
-NzA3MS44NTkzMjFdIHFjb21fbWhpX3FydHIgbWhpMF9JUENSOiBmYWlsZWQgdG8gcHJlcGFy
-ZSBmb3IgYXV0b3F1ZXVlIHRyYW5zZmVyIC0xMDcKWyA3MDcxLjg1OTMyM10gcWNvbV9taGlf
-cXJ0ciBtaGkwX0lQQ1I6IFBNOiBkcG1fcnVuX2NhbGxiYWNrKCk6IHFjb21fbWhpX3FydHJf
-cG1fcmVzdW1lX2Vhcmx5IFtxcnRyX21oaV0gcmV0dXJucyAtMTA3ClsgNzA3MS44NTkzMjhd
-IHFjb21fbWhpX3FydHIgbWhpMF9JUENSOiBQTTogZmFpbGVkIHRvIHJlc3VtZSBlYXJseTog
-ZXJyb3IgLTEwNwpbIDcwNzEuODU5NzI3XSBBQ1BJOiBFQzogZXZlbnQgdW5ibG9ja2VkClsg
-NzA3MS44NjA1ODFdIFtkcm1dIFBDSUUgR0FSVCBvZiAxMDI0TSBlbmFibGVkICh0YWJsZSBh
-dCAweDAwMDAwMEY0M0ZDMDAwMDApLgpbIDcwNzEuODYwNjE4XSBhbWRncHUgMDAwMDowNDow
-MC4wOiBhbWRncHU6IFBTUCBpcyByZXN1bWluZy4uLgpbIDcwNzEuODcxMDMwXSBtYXg5ODM4
-OCBpMmMtQURTODM4ODowMDogUmVzZXQgY29tcGxldGVkIChyZXRyeTowKQpbIDcwNzEuODcx
-MjQ2XSBtYXg5ODM4OCBpMmMtQURTODM4ODowMTogUmVzZXQgY29tcGxldGVkIChyZXRyeTow
-KQpbIDcwNzEuODgzMjAzXSBhbWRncHUgMDAwMDowNDowMC4wOiBhbWRncHU6IHJlc2VydmUg
-MHhhMDAwMDAgZnJvbSAweGY0M2UwMDAwMDAgZm9yIFBTUCBUTVIKWyA3MDcxLjkyNjIwNF0g
-bnZtZSBudm1lMDogOC8wLzAgZGVmYXVsdC9yZWFkL3BvbGwgcXVldWVzClsgNzA3MS45Nzkw
-NTldIGFtZGdwdSAwMDAwOjA0OjAwLjA6IGFtZGdwdTogU01VIGlzIHJlc3VtaW5nLi4uClsg
-NzA3MS45NzkyNzNdIGFtZGdwdSAwMDAwOjA0OjAwLjA6IGFtZGdwdTogZHBtIGhhcyBiZWVu
-IGRpc2FibGVkClsgNzA3MS45ODAxMDVdIGFtZGdwdSAwMDAwOjA0OjAwLjA6IGFtZGdwdTog
-U01VIGlzIHJlc3VtZWQgc3VjY2Vzc2Z1bGx5IQpbIDcwNzEuOTgwMzg5XSBbZHJtXSBraXEg
-cmluZyBtZWMgMiBwaXBlIDEgcSAwClsgNzA3MS45ODQ5NjZdIGFtZGdwdSAwMDAwOjA0OjAw
-LjA6IGFtZGdwdTogW2RybV0gRE1VQiBoYXJkd2FyZSBpbml0aWFsaXplZDogdmVyc2lvbj0w
-eDAzMDAwMDBBClsgNzA3Mi4xMDE5NjldIHVzYiAxLTM6IHJlc2V0IGZ1bGwtc3BlZWQgVVNC
-IGRldmljZSBudW1iZXIgMiB1c2luZyB4aGNpX2hjZApbIDcwNzIuNDA4NjYxXSBbZHJtXSBG
-YWlsZWQgdG8gYWRkIGRpc3BsYXkgdG9wb2xvZ3ksIERUTSBUQSBpcyBub3QgaW5pdGlhbGl6
-ZWQuClsgNzA3Mi40MjU0OTldIGFtZGdwdSAwMDAwOjA0OjAwLjA6IGFtZGdwdTogcmluZyBn
-ZnhfMC4wLjAgdXNlcyBWTSBpbnYgZW5nIDAgb24gaHViIDAKWyA3MDcyLjQyNTUwNF0gYW1k
-Z3B1IDAwMDA6MDQ6MDAuMDogYW1kZ3B1OiByaW5nIGdmeF8wLjEuMCB1c2VzIFZNIGludiBl
-bmcgMSBvbiBodWIgMApbIDcwNzIuNDI1NTA2XSBhbWRncHUgMDAwMDowNDowMC4wOiBhbWRn
-cHU6IHJpbmcgY29tcF8xLjAuMCB1c2VzIFZNIGludiBlbmcgNCBvbiBodWIgMApbIDcwNzIu
-NDI1NTA4XSBhbWRncHUgMDAwMDowNDowMC4wOiBhbWRncHU6IHJpbmcgY29tcF8xLjEuMCB1
-c2VzIFZNIGludiBlbmcgNSBvbiBodWIgMApbIDcwNzIuNDI1NTEwXSBhbWRncHUgMDAwMDow
-NDowMC4wOiBhbWRncHU6IHJpbmcgY29tcF8xLjIuMCB1c2VzIFZNIGludiBlbmcgNiBvbiBo
-dWIgMApbIDcwNzIuNDI1NTEyXSBhbWRncHUgMDAwMDowNDowMC4wOiBhbWRncHU6IHJpbmcg
-Y29tcF8xLjMuMCB1c2VzIFZNIGludiBlbmcgNyBvbiBodWIgMApbIDcwNzIuNDI1NTE0XSBh
-bWRncHUgMDAwMDowNDowMC4wOiBhbWRncHU6IHJpbmcgY29tcF8xLjAuMSB1c2VzIFZNIGlu
-diBlbmcgOCBvbiBodWIgMApbIDcwNzIuNDI1NTE2XSBhbWRncHUgMDAwMDowNDowMC4wOiBh
-bWRncHU6IHJpbmcgY29tcF8xLjEuMSB1c2VzIFZNIGludiBlbmcgOSBvbiBodWIgMApbIDcw
-NzIuNDI1NTE4XSBhbWRncHUgMDAwMDowNDowMC4wOiBhbWRncHU6IHJpbmcgY29tcF8xLjIu
-MSB1c2VzIFZNIGludiBlbmcgMTAgb24gaHViIDAKWyA3MDcyLjQyNTUyMF0gYW1kZ3B1IDAw
-MDA6MDQ6MDAuMDogYW1kZ3B1OiByaW5nIGNvbXBfMS4zLjEgdXNlcyBWTSBpbnYgZW5nIDEx
-IG9uIGh1YiAwClsgNzA3Mi40MjU1MjJdIGFtZGdwdSAwMDAwOjA0OjAwLjA6IGFtZGdwdTog
-cmluZyBraXFfMC4yLjEuMCB1c2VzIFZNIGludiBlbmcgMTIgb24gaHViIDAKWyA3MDcyLjQy
-NTUyNF0gYW1kZ3B1IDAwMDA6MDQ6MDAuMDogYW1kZ3B1OiByaW5nIHNkbWEwIHVzZXMgVk0g
-aW52IGVuZyAxMyBvbiBodWIgMApbIDcwNzIuNDI1NTI2XSBhbWRncHUgMDAwMDowNDowMC4w
-OiBhbWRncHU6IHJpbmcgdmNuX2RlY18wIHVzZXMgVk0gaW52IGVuZyAwIG9uIGh1YiA4Clsg
-NzA3Mi40MjU1MjhdIGFtZGdwdSAwMDAwOjA0OjAwLjA6IGFtZGdwdTogcmluZyB2Y25fZW5j
-XzAuMCB1c2VzIFZNIGludiBlbmcgMSBvbiBodWIgOApbIDcwNzIuNDI1NTMwXSBhbWRncHUg
-MDAwMDowNDowMC4wOiBhbWRncHU6IHJpbmcgdmNuX2VuY18wLjEgdXNlcyBWTSBpbnYgZW5n
-IDQgb24gaHViIDgKWyA3MDcyLjQyNTUzMl0gYW1kZ3B1IDAwMDA6MDQ6MDAuMDogYW1kZ3B1
-OiByaW5nIGpwZWdfZGVjIHVzZXMgVk0gaW52IGVuZyA1IG9uIGh1YiA4ClsgNzA5Mi44Njc5
-MjNdIGF0aDExa19wY2kgMDAwMDowMzowMC4wOiB0aW1lb3V0IHdoaWxlIHdhaXRpbmcgZm9y
-IHJlc3RhcnQgY29tcGxldGUKWyA3MDkyLjg2NzkzNF0gYXRoMTFrX3BjaSAwMDAwOjAzOjAw
-LjA6IGZhaWxlZCB0byByZXN1bWUgY29yZTogLTExMApbIDcwOTIuODY3OTQwXSBhdGgxMWtf
-cGNpIDAwMDA6MDM6MDAuMDogUE06IGRwbV9ydW5fY2FsbGJhY2soKTogcGNpX3BtX3Jlc3Vt
-ZSByZXR1cm5zIC0xMTAKWyA3MDkyLjg2Nzk2Ml0gYXRoMTFrX3BjaSAwMDAwOjAzOjAwLjA6
-IFBNOiBmYWlsZWQgdG8gcmVzdW1lIGFzeW5jOiBlcnJvciAtMTEwClsgNzA5Ni4wNjc4MTRd
-IGF0aDExa19wY2kgMDAwMDowMzowMC4wOiB3bWkgY29tbWFuZCAxNjM4NyB0aW1lb3V0Clsg
-NzA5Ni4wNjc4MjldIGF0aDExa19wY2kgMDAwMDowMzowMC4wOiBmYWlsZWQgdG8gc2VuZCBX
-TUlfUERFVl9TRVRfUEFSQU0gY21kClsgNzA5Ni4wNjc4NDBdIGF0aDExa19wY2kgMDAwMDow
-MzowMC4wOiBmYWlsZWQgdG8gZW5hYmxlIGR5bmFtaWMgYnc6IC0xMQpbIDcwOTYuMDY3ODQ2
-XSAtLS0tLS0tLS0tLS1bIGN1dCBoZXJlIF0tLS0tLS0tLS0tLS0KWyA3MDk2LjA2Nzg0OF0g
-SGFyZHdhcmUgYmVjYW1lIHVuYXZhaWxhYmxlIHVwb24gcmVzdW1lLiBUaGlzIGNvdWxkIGJl
-IGEgc29mdHdhcmUgaXNzdWUgcHJpb3IgdG8gc3VzcGVuZCBvciBhIGhhcmR3YXJlIGlzc3Vl
-LgpbIDcwOTYuMDY3OTI0XSBXQVJOSU5HOiBuZXQvbWFjODAyMTEvdXRpbC5jOjE4MTggYXQg
-aWVlZTgwMjExX3JlY29uZmlnKzB4NDIyLzB4MTVjMCBbbWFjODAyMTFdLCBDUFUjNToga3dv
-cmtlci91MzI6MTcvNzU1MTIKWyA3MDk2LjA2ODA0NV0gTW9kdWxlcyBsaW5rZWQgaW46IGRt
-YV9hbGxvYyhPRSkgdGxzIHNuZF9zZXFfZHVtbXkgc25kX2hydGltZXIgcmZjb21tIHNuZF9z
-ZXEgc25kX3NlcV9kZXZpY2UgdWlucHV0IG1pY2hhZWxfbWljIGNjbSBhbGdpZl9hZWFkIGRl
-czNfZWRlX3g4Nl82NCBjYmMgZGVzX2dlbmVyaWMgbGliZGVzIG5mdF9maWJfaW5ldCBuZnRf
-ZmliX2lwdjQgbWQ0IG5mdF9maWJfaXB2NiBuZnRfZmliIG5mdF9yZWplY3RfaW5ldCBuZl9y
-ZWplY3RfaXB2NCBuZl9yZWplY3RfaXB2NiBuZnRfcmVqZWN0IG5mdF9jdCBuZnRfY2hhaW5f
-bmF0IGlwNnRhYmxlX25hdCBpcDZ0YWJsZV9tYW5nbGUgaXA2dGFibGVfcmF3IGlwNnRhYmxl
-X3NlY3VyaXR5IGlwdGFibGVfbmF0IG5mX25hdCBuZl9jb25udHJhY2sgbmZfZGVmcmFnX2lw
-djYgbmZfZGVmcmFnX2lwdjQgaXB0YWJsZV9tYW5nbGUgaXB0YWJsZV9yYXcgaXB0YWJsZV9z
-ZWN1cml0eSB1aGlkIG5mX3RhYmxlcyBjbWFjIGFsZ2lmX2hhc2ggaXA2dGFibGVfZmlsdGVy
-IGFsZ2lmX3NrY2lwaGVyIHJhbW9vcHMgaXA2X3RhYmxlcyBxcnRyX21oaSBhZl9hbGcgaXB0
-YWJsZV9maWx0ZXIgYm5lcCByZWVkX3NvbG9tb24gYW1kZ3B1IGpveWRldiBzbmRfYWNwX3Nv
-Zl9tYWNoIHNuZF9hY3BfbWFjaCBzbmRfc29mX3Byb2JlcyBzbmRfc29jX2RtaWMgc25kX3Nv
-Zl9hbWRfYWNwNjMgc25kX3NvY19hY3BpX2FtZF9tYXRjaCBzbmRfc29mX2FtZF92YW5nb2do
-IHNuZF9zb2ZfYW1kX2FjcCBzbmRfYW1kX3Nkd19hY3BpIHNvdW5kd2lyZV9hbWQgc291bmR3
-aXJlX2dlbmVyaWNfYWxsb2NhdGlvbiBhbWR4Y3Agc25kX3NvZl9wY2kgaTJjX2FsZ29fYml0
-IHNuZF9zb2ZfeHRlbnNhX2RzcCBkcm1fdHRtX2hlbHBlciBzbmRfaGRhX2NvZGVjX2hkbWkg
-c25kX3NvZiB0dG0gYW1kX2F0bCBpbnRlbF9yYXBsX21zciBkcm1fZXhlYyBzbmRfc29mX3V0
-aWxzIHNuZF9oZGFfaW50ZWwgbW91c2VkZXYgaW50ZWxfcmFwbF9jb21tb24gZ3B1X3NjaGVk
-IHNuZF9pbnRlbF9kc3BjZmcgY2RjX2FjbQpbIDcwOTYuMDY4MjA0XSAgaGlkX3N0ZWFtIGRy
-bV9zdWJhbGxvY19oZWxwZXIgc25kX2ludGVsX3Nkd19hY3BpIGRybV9wYW5lbF9iYWNrbGln
-aHRfcXVpcmtzIHNvdW5kd2lyZV9idXMgc25kX2hkYV9jb2RlYyBkcm1fYnVkZHkgcXJ0ciBz
-bmRfc29jX3NkY2EgZHJtX2Rpc3BsYXlfaGVscGVyIHNuZF9oZGFfY29yZSBzbmRfcGNpX2Fj
-cDV4IGF0aDExa19wY2kgc25kX2FjcF9jb25maWcgY2VjIHNuZF9zb2NfYWNwaSBzbmRfaHdk
-ZXAgYXRoMTFrIGt2bV9hbWQgY2RjX21iaW0gcW1pX2hlbHBlcnMgY2NwIGNkY193ZG0gaGlk
-X211bHRpdG91Y2ggaGNpX3VhcnQgbWFjODAyMTEgYnRxY2Egc25kX3NvY19tYXg5ODM4OCBr
-dm0gYnRydGwgc25kX3NvY19uYXU4ODIxIGxpYmFyYzQgYnRpbnRlbCBoaWRfZ2VuZXJpYyBi
-dGJjbSBzbmRfc29jX2NvcmUgaXJxYnlwYXNzIHNuZF9jb21wcmVzcyBjZmc4MDIxMSBibHVl
-dG9vdGggcG9seXZhbF9jbG11bG5pIGFjOTdfYnVzIGNkY19uY20gc25kX3BjbV9kbWFlbmdp
-bmUgZ2hhc2hfY2xtdWxuaV9pbnRlbCBzcDUxMDBfdGNvIGF0a2JkIGNkY19ldGhlciBzaGE1
-MTJfc3NzZTMgc25kX3BjbSBpMmNfcGlpeDQgbGlicHMyIHZpZGVvIHVzYm5ldCBzaGExX3Nz
-c2UzIGFlc25pX2ludGVsIG1paSByYXBsIHZpdmFsZGlfZm1hcCB3ZGF0X3dkdCBwY3Nwa3Ig
-c25kX3RpbWVyIHRwbV9jcmIgbWhpIGkyY19zbWJ1cyB3bWkgcmZraWxsIGkyY19oaWRfYWNw
-aSBzbmQgbHRyZjIxNmEgaTJjX2hpZCB0cG1fdGlzIHNvdW5kY29yZSBpbmR1c3RyaWFsaW8g
-ODI1MF9kdyB0cG1fdGlzX2NvcmUgbWFjX2hpZCBwa2NzOF9rZXlfcGFyc2VyIGhpZF9wbGF5
-c3RhdGlvbiBsZWRfY2xhc3NfbXVsdGljb2xvciBoaWRfbmludGVuZG8gZmZfbWVtbGVzcyBp
-MmNfZGV2IGNyeXB0b191c2VyIGxvb3AgZG1fbW9kIG5mbmV0bGluayB6cmFtIHRwbSBsaWJh
-ZXNjZmIgZWNkaF9nZW5lcmljIGlwX3RhYmxlcyB4X3RhYmxlcyBvdmVybGF5IGV4dDQgY3Jj
-MTYgbWJjYWNoZSBqYmQyIGNyYzMyY19jcnlwdG9hcGkKWyA3MDk2LjA2ODM1OV0gIHZmYXQg
-ZmF0IHVzYmhpZCB4aGNpX3BsYXRfaGNkIGJ0cmZzIGJsYWtlMmJfZ2VuZXJpYyB4b3IgcmFp
-ZDZfcHEgZHdjMyBzZGhjaV9wY2kgdWxwaSB1ZGNfY29yZSBzZGhjaV91aHMyIG52bWUgc2Vy
-aW9fcmF3IHJvbGVzIHNkaGNpIG52bWVfY29yZSBjcWhjaSBudm1lX2tleXJpbmcgaTgwNDIg
-bW1jX2NvcmUgZHdjM19wY2kgbnZtZV9hdXRoIHNlcmlvIHNwaV9hbWQKWyA3MDk2LjA2ODM5
-MF0gVW5sb2FkZWQgdGFpbnRlZCBtb2R1bGVzOiBkbWFfYWxsb2MoT0UpOjUgW2xhc3QgdW5s
-b2FkZWQ6IGRtYV9hbGxvYyhPRSldClsgNzA5Ni4wNjgzOTldIENQVTogNSBVSUQ6IDAgUElE
-OiA3NTUxMiBDb21tOiBrd29ya2VyL3UzMjoxNyBUYWludGVkOiBHICAgICAgICBXICBPRSAg
-ICAgICA2LjE2LjAtcmMyLWF0aDAtbmV4dCAjMiBQUkVFTVBUKGZ1bGwpICAxNTI4OGJiNGM1
-MDM4MmVhYjIzNzZjYzc5MTAzZTI1MzM2NjY0N2VkClsgNzA5Ni4wNjg0MDVdIFRhaW50ZWQ6
-IFtXXT1XQVJOLCBbT109T09UX01PRFVMRSwgW0VdPVVOU0lHTkVEX01PRFVMRQpbIDcwOTYu
-MDY4NDA2XSBIYXJkd2FyZSBuYW1lOiBWYWx2ZSBHYWxpbGVvL0dhbGlsZW8sIEJJT1MgRjdH
-MDExMiAwOC8wMS8yMDI0ClsgNzA5Ni4wNjg0MTBdIFdvcmtxdWV1ZTogYXN5bmMgYXN5bmNf
-cnVuX2VudHJ5X2ZuClsgNzA5Ni4wNjg0MThdIFJJUDogMDAxMDppZWVlODAyMTFfcmVjb25m
-aWcrMHg0MjIvMHgxNWMwIFttYWM4MDIxMV0KWyA3MDk2LjA2ODQ2Nl0gQ29kZTogYzYgODUg
-YWQgMDUgMDAgMDAgMDAgNGMgODkgZWYgZTggNDkgNzMgZmIgZmYgNDEgODkgYzAgODUgYzAg
-MGYgODQgODcgZmMgZmYgZmYgNDggYzcgYzcgNzggNWQgNTEgYzEgNDQgODkgMDQgMjQgZTgg
-OWUgMzcgOTUgYzMgPDBmPiAwYiA0NCA4YiAwNCAyNCBlOSAzMiBmZSBmZiBmZiBjNiA0NCAy
-NCAxNiAwMCA0OSA4YiA5ZCA0MCAwNiAwMApbIDcwOTYuMDY4NDY3XSBSU1A6IDAwMTg6ZmZm
-ZmNmMDExNWY1YmNhOCBFRkxBR1M6IDAwMDEwMjg2ClsgNzA5Ni4wNjg0NzBdIFJBWDogMDAw
-MDAwMDAwMDAwMDAwMCBSQlg6IDAwMDAwMDAwMDAwMDAwMDAgUkNYOiAwMDAwMDAwMDAwMDAw
-MDI3ClsgNzA5Ni4wNjg0NzJdIFJEWDogZmZmZjhjNDc2ZWY1YzI0OCBSU0k6IDAwMDAwMDAw
-MDAwMDAwMDEgUkRJOiBmZmZmOGM0NzZlZjVjMjQwClsgNzA5Ni4wNjg0NzRdIFJCUDogZmZm
-ZjhjNDQ2ZTdjODNjMCBSMDg6IDAwMDAwMDAwMDAwMDAwMDAgUjA5OiAwMDAwMDAwMDAwMDAw
-MDAzClsgNzA5Ni4wNjg0NzVdIFIxMDogZmZmZmNmMDExNWY1YmE3MCBSMTE6IGZmZmY4YzQ3
-N2VmN2ZmZTggUjEyOiAwMDAwMDAwMDAwMDAwMDAxClsgNzA5Ni4wNjg0NzddIFIxMzogZmZm
-ZjhjNDQ2ZTdjODkwMCBSMTQ6IGZmZmZmZmZmODYxMGM4ZDEgUjE1OiBmZmZmOGM0NDZlN2M4
-NWI4ClsgNzA5Ni4wNjg0NzhdIEZTOiAgMDAwMDAwMDAwMDAwMDAwMCgwMDAwKSBHUzpmZmZm
-OGM0N2U4MGZmMDAwKDAwMDApIGtubEdTOjAwMDAwMDAwMDAwMDAwMDAKWyA3MDk2LjA2ODQ4
-MF0gQ1M6ICAwMDEwIERTOiAwMDAwIEVTOiAwMDAwIENSMDogMDAwMDAwMDA4MDA1MDAzMwpb
-IDcwOTYuMDY4NDgyXSBDUjI6IDAwMDAwMDAwMDAwMDAwMDAgQ1IzOiAwMDAwMDAwMWRiODIw
-MDAwIENSNDogMDAwMDAwMDAwMDM1MGVmMApbIDcwOTYuMDY4NDg0XSBDYWxsIFRyYWNlOgpb
-IDcwOTYuMDY4NDg4XSAgPFRBU0s+ClsgNzA5Ni4wNjg0OTRdICA/IHNyc29fcmV0dXJuX3Ro
-dW5rKzB4NS8weDVmClsgNzA5Ni4wNjg1MDFdICA/IHF1ZXVlX3dvcmtfbm9kZSsweGJiLzB4
-ZTAKWyA3MDk2LjA2ODUwNl0gID8gc3Jzb19yZXR1cm5fdGh1bmsrMHg1LzB4NWYKWyA3MDk2
-LjA2ODUwOV0gID8gX19hc3luY19zY2hlZHVsZV9ub2RlX2RvbWFpbisweGUxLzB4MTcwClsg
-NzA5Ni4wNjg1MTFdICA/IF9fcGZ4X2FzeW5jX3Jlc3VtZSsweDEwLzB4MTAKWyA3MDk2LjA2
-ODUxN10gID8gc3Jzb19yZXR1cm5fdGh1bmsrMHg1LzB4NWYKWyA3MDk2LjA2ODUyMF0gID8g
-X193YWl0X2Zvcl9jb21tb24rMHgxNjMvMHgxYTAKWyA3MDk2LjA2ODUyM10gID8gX19wZnhf
-c2NoZWR1bGVfdGltZW91dCsweDEwLzB4MTAKWyA3MDk2LjA2ODUyOV0gIHdpcGh5X3Jlc3Vt
-ZSsweDg1LzB4MWEwIFtjZmc4MDIxMSBmZThkMGQzZDg0MzIwNTczMzY4OTlhNzU3NzY0MjYw
-YjVlNTFhOWFhXQpbIDcwOTYuMDY4NTg4XSAgPyBfX3BmeF93aXBoeV9yZXN1bWUrMHgxMC8w
-eDEwIFtjZmc4MDIxMSBmZThkMGQzZDg0MzIwNTczMzY4OTlhNzU3NzY0MjYwYjVlNTFhOWFh
-XQpbIDcwOTYuMDY4NjI2XSAgZHBtX3J1bl9jYWxsYmFjaysweDhiLzB4MWUwClsgNzA5Ni4w
-Njg2MzFdICBkZXZpY2VfcmVzdW1lKzB4MWI2LzB4MmEwClsgNzA5Ni4wNjg2MzVdICBhc3lu
-Y19yZXN1bWUrMHgxZC8weDMwClsgNzA5Ni4wNjg2MzhdICBhc3luY19ydW5fZW50cnlfZm4r
-MHgzNC8weDE2MApbIDcwOTYuMDY4NjQyXSAgcHJvY2Vzc19vbmVfd29yaysweDFhMS8weDNl
-MApbIDcwOTYuMDY4NjQ4XSAgd29ya2VyX3RocmVhZCsweDJkZi8weDQzMApbIDcwOTYuMDY4
-NjUyXSAgPyBfX3BmeF93b3JrZXJfdGhyZWFkKzB4MTAvMHgxMApbIDcwOTYuMDY4NjU2XSAg
-a3RocmVhZCsweDEwMC8weDI4MApbIDcwOTYuMDY4NjYwXSAgPyBfX3BmeF9rdGhyZWFkKzB4
-MTAvMHgxMApbIDcwOTYuMDY4NjYzXSAgPyBfX3BmeF9rdGhyZWFkKzB4MTAvMHgxMApbIDcw
-OTYuMDY4NjY2XSAgcmV0X2Zyb21fZm9yaysweDE0YS8weDE4MApbIDcwOTYuMDY4NjcxXSAg
-PyBfX3BmeF9rdGhyZWFkKzB4MTAvMHgxMApbIDcwOTYuMDY4Njc0XSAgcmV0X2Zyb21fZm9y
-a19hc20rMHgxYS8weDMwClsgNzA5Ni4wNjg2ODNdICA8L1RBU0s+ClsgNzA5Ni4wNjg2ODVd
-IC0tLVsgZW5kIHRyYWNlIDAwMDAwMDAwMDAwMDAwMDAgXS0tLQpbIDcwOTYuMDY4Nzc1XSAt
-LS0tLS0tLS0tLS1bIGN1dCBoZXJlIF0tLS0tLS0tLS0tLS0KWyA3MDk2LjA2ODc3N10gV0FS
-TklORzogbmV0L21hYzgwMjExL2RyaXZlci1vcHMuYzo0MSBhdCBkcnZfc3RvcCsweGZkLzB4
-MTEwIFttYWM4MDIxMV0sIENQVSM1OiBrd29ya2VyL3UzMjoxNy83NTUxMgpbIDcwOTYuMDY4
-ODIyXSBNb2R1bGVzIGxpbmtlZCBpbjogZG1hX2FsbG9jKE9FKSB0bHMgc25kX3NlcV9kdW1t
-eSBzbmRfaHJ0aW1lciByZmNvbW0gc25kX3NlcSBzbmRfc2VxX2RldmljZSB1aW5wdXQgbWlj
-aGFlbF9taWMgY2NtIGFsZ2lmX2FlYWQgZGVzM19lZGVfeDg2XzY0IGNiYyBkZXNfZ2VuZXJp
-YyBsaWJkZXMgbmZ0X2ZpYl9pbmV0IG5mdF9maWJfaXB2NCBtZDQgbmZ0X2ZpYl9pcHY2IG5m
-dF9maWIgbmZ0X3JlamVjdF9pbmV0IG5mX3JlamVjdF9pcHY0IG5mX3JlamVjdF9pcHY2IG5m
-dF9yZWplY3QgbmZ0X2N0IG5mdF9jaGFpbl9uYXQgaXA2dGFibGVfbmF0IGlwNnRhYmxlX21h
-bmdsZSBpcDZ0YWJsZV9yYXcgaXA2dGFibGVfc2VjdXJpdHkgaXB0YWJsZV9uYXQgbmZfbmF0
-IG5mX2Nvbm50cmFjayBuZl9kZWZyYWdfaXB2NiBuZl9kZWZyYWdfaXB2NCBpcHRhYmxlX21h
-bmdsZSBpcHRhYmxlX3JhdyBpcHRhYmxlX3NlY3VyaXR5IHVoaWQgbmZfdGFibGVzIGNtYWMg
-YWxnaWZfaGFzaCBpcDZ0YWJsZV9maWx0ZXIgYWxnaWZfc2tjaXBoZXIgcmFtb29wcyBpcDZf
-dGFibGVzIHFydHJfbWhpIGFmX2FsZyBpcHRhYmxlX2ZpbHRlciBibmVwIHJlZWRfc29sb21v
-biBhbWRncHUgam95ZGV2IHNuZF9hY3Bfc29mX21hY2ggc25kX2FjcF9tYWNoIHNuZF9zb2Zf
-cHJvYmVzIHNuZF9zb2NfZG1pYyBzbmRfc29mX2FtZF9hY3A2MyBzbmRfc29jX2FjcGlfYW1k
-X21hdGNoIHNuZF9zb2ZfYW1kX3ZhbmdvZ2ggc25kX3NvZl9hbWRfYWNwIHNuZF9hbWRfc2R3
-X2FjcGkgc291bmR3aXJlX2FtZCBzb3VuZHdpcmVfZ2VuZXJpY19hbGxvY2F0aW9uIGFtZHhj
-cCBzbmRfc29mX3BjaSBpMmNfYWxnb19iaXQgc25kX3NvZl94dGVuc2FfZHNwIGRybV90dG1f
-aGVscGVyIHNuZF9oZGFfY29kZWNfaGRtaSBzbmRfc29mIHR0bSBhbWRfYXRsIGludGVsX3Jh
-cGxfbXNyIGRybV9leGVjIHNuZF9zb2ZfdXRpbHMgc25kX2hkYV9pbnRlbCBtb3VzZWRldiBp
-bnRlbF9yYXBsX2NvbW1vbiBncHVfc2NoZWQgc25kX2ludGVsX2RzcGNmZyBjZGNfYWNtClsg
-NzA5Ni4wNjg4OTRdICBoaWRfc3RlYW0gZHJtX3N1YmFsbG9jX2hlbHBlciBzbmRfaW50ZWxf
-c2R3X2FjcGkgZHJtX3BhbmVsX2JhY2tsaWdodF9xdWlya3Mgc291bmR3aXJlX2J1cyBzbmRf
-aGRhX2NvZGVjIGRybV9idWRkeSBxcnRyIHNuZF9zb2Nfc2RjYSBkcm1fZGlzcGxheV9oZWxw
-ZXIgc25kX2hkYV9jb3JlIHNuZF9wY2lfYWNwNXggYXRoMTFrX3BjaSBzbmRfYWNwX2NvbmZp
-ZyBjZWMgc25kX3NvY19hY3BpIHNuZF9od2RlcCBhdGgxMWsga3ZtX2FtZCBjZGNfbWJpbSBx
-bWlfaGVscGVycyBjY3AgY2RjX3dkbSBoaWRfbXVsdGl0b3VjaCBoY2lfdWFydCBtYWM4MDIx
-MSBidHFjYSBzbmRfc29jX21heDk4Mzg4IGt2bSBidHJ0bCBzbmRfc29jX25hdTg4MjEgbGli
-YXJjNCBidGludGVsIGhpZF9nZW5lcmljIGJ0YmNtIHNuZF9zb2NfY29yZSBpcnFieXBhc3Mg
-c25kX2NvbXByZXNzIGNmZzgwMjExIGJsdWV0b290aCBwb2x5dmFsX2NsbXVsbmkgYWM5N19i
-dXMgY2RjX25jbSBzbmRfcGNtX2RtYWVuZ2luZSBnaGFzaF9jbG11bG5pX2ludGVsIHNwNTEw
-MF90Y28gYXRrYmQgY2RjX2V0aGVyIHNoYTUxMl9zc3NlMyBzbmRfcGNtIGkyY19waWl4NCBs
-aWJwczIgdmlkZW8gdXNibmV0IHNoYTFfc3NzZTMgYWVzbmlfaW50ZWwgbWlpIHJhcGwgdml2
-YWxkaV9mbWFwIHdkYXRfd2R0IHBjc3BrciBzbmRfdGltZXIgdHBtX2NyYiBtaGkgaTJjX3Nt
-YnVzIHdtaSByZmtpbGwgaTJjX2hpZF9hY3BpIHNuZCBsdHJmMjE2YSBpMmNfaGlkIHRwbV90
-aXMgc291bmRjb3JlIGluZHVzdHJpYWxpbyA4MjUwX2R3IHRwbV90aXNfY29yZSBtYWNfaGlk
-IHBrY3M4X2tleV9wYXJzZXIgaGlkX3BsYXlzdGF0aW9uIGxlZF9jbGFzc19tdWx0aWNvbG9y
-IGhpZF9uaW50ZW5kbyBmZl9tZW1sZXNzIGkyY19kZXYgY3J5cHRvX3VzZXIgbG9vcCBkbV9t
-b2QgbmZuZXRsaW5rIHpyYW0gdHBtIGxpYmFlc2NmYiBlY2RoX2dlbmVyaWMgaXBfdGFibGVz
-IHhfdGFibGVzIG92ZXJsYXkgZXh0NCBjcmMxNiBtYmNhY2hlIGpiZDIgY3JjMzJjX2NyeXB0
-b2FwaQpbIDcwOTYuMDY4OTc5XSAgdmZhdCBmYXQgdXNiaGlkIHhoY2lfcGxhdF9oY2QgYnRy
-ZnMgYmxha2UyYl9nZW5lcmljIHhvciByYWlkNl9wcSBkd2MzIHNkaGNpX3BjaSB1bHBpIHVk
-Y19jb3JlIHNkaGNpX3VoczIgbnZtZSBzZXJpb19yYXcgcm9sZXMgc2RoY2kgbnZtZV9jb3Jl
-IGNxaGNpIG52bWVfa2V5cmluZyBpODA0MiBtbWNfY29yZSBkd2MzX3BjaSBudm1lX2F1dGgg
-c2VyaW8gc3BpX2FtZApbIDcwOTYuMDY5MDAxXSBVbmxvYWRlZCB0YWludGVkIG1vZHVsZXM6
-IGRtYV9hbGxvYyhPRSk6NSBbbGFzdCB1bmxvYWRlZDogZG1hX2FsbG9jKE9FKV0KWyA3MDk2
-LjA2OTAwNl0gQ1BVOiA1IFVJRDogMCBQSUQ6IDc1NTEyIENvbW06IGt3b3JrZXIvdTMyOjE3
-IFRhaW50ZWQ6IEcgICAgICAgIFcgIE9FICAgICAgIDYuMTYuMC1yYzItYXRoMC1uZXh0ICMy
-IFBSRUVNUFQoZnVsbCkgIDE1Mjg4YmI0YzUwMzgyZWFiMjM3NmNjNzkxMDNlMjUzMzY2NjQ3
-ZWQKWyA3MDk2LjA2OTAwOV0gVGFpbnRlZDogW1ddPVdBUk4sIFtPXT1PT1RfTU9EVUxFLCBb
-RV09VU5TSUdORURfTU9EVUxFClsgNzA5Ni4wNjkwMTFdIEhhcmR3YXJlIG5hbWU6IFZhbHZl
-IEdhbGlsZW8vR2FsaWxlbywgQklPUyBGN0cwMTEyIDA4LzAxLzIwMjQKWyA3MDk2LjA2OTAx
-Ml0gV29ya3F1ZXVlOiBhc3luYyBhc3luY19ydW5fZW50cnlfZm4KWyA3MDk2LjA2OTAxNV0g
-UklQOiAwMDEwOmRydl9zdG9wKzB4ZmQvMHgxMTAgW21hYzgwMjExXQpbIDcwOTYuMDY5MDU2
-XSBDb2RlOiA0OCA4NSBjMCA3NCAwZSA0OCA4YiA3OCAwOCA4OSBlYSA0OCA4OSBkZSBlOCA2
-YSA0MSAwNSAwMCA2NSBmZiAwZCA5MyAzMyBkNSBjNSAwZiA4NSAzOCBmZiBmZiBmZiBlOCAy
-OCAzNSA5MCBjMyBlOSAyZSBmZiBmZiBmZiA8MGY+IDBiIDViIDVkIGU5IGVhIGUzIDc2IGM0
-IDY2IDJlIDBmIDFmIDg0IDAwIDAwIDAwIDAwIDAwIDkwIDkwIDkwClsgNzA5Ni4wNjkwNThd
-IFJTUDogMDAxODpmZmZmY2YwMTE1ZjViYzc4IEVGTEFHUzogMDAwMTAyNDYKWyA3MDk2LjA2
-OTA2MF0gUkFYOiAwMDAwMDAwMDAwMDAwMDAwIFJCWDogZmZmZjhjNDQ2ZTdjODkwMCBSQ1g6
-IDAwMDAwMDAwMDAwMDAwMDAKWyA3MDk2LjA2OTA2MV0gUkRYOiAwMDAwMDAwMDAwMDAwMDAx
-IFJTSTogMDAwMDAwMDAwMDAwMDAwMCBSREk6IGZmZmY4YzQ0NmU3Yzg5MDAKWyA3MDk2LjA2
-OTA2M10gUkJQOiAwMDAwMDAwMDAwMDAwMDAwIFIwODogMDAwMDAwMDAwMDAwMDAwMCBSMDk6
-IDAwMDAwMDAwMDAwMDAwMDAKWyA3MDk2LjA2OTA2NF0gUjEwOiBmZmZmOGM0NDY2YzQzOTMw
-IFIxMTogMDAwMDAwMDAwMDAwMDI0NiBSMTI6IGZmZmY4YzQ0NmU3Yzg5MDAKWyA3MDk2LjA2
-OTA2Nl0gUjEzOiBmZmZmY2YwMTE1ZjViY2MwIFIxNDogMDAwMDAwMDAwMDAwMDAwMCBSMTU6
-IGZmZmZjZjAxMTVmNWJjYzAKWyA3MDk2LjA2OTA2N10gRlM6ICAwMDAwMDAwMDAwMDAwMDAw
-KDAwMDApIEdTOmZmZmY4YzQ3ZTgwZmYwMDAoMDAwMCkga25sR1M6MDAwMDAwMDAwMDAwMDAw
-MApbIDcwOTYuMDY5MDY5XSBDUzogIDAwMTAgRFM6IDAwMDAgRVM6IDAwMDAgQ1IwOiAwMDAw
-MDAwMDgwMDUwMDMzClsgNzA5Ni4wNjkwNzFdIENSMjogMDAwMDAwMDAwMDAwMDAwMCBDUjM6
-IDAwMDAwMDAxZGI4MjAwMDAgQ1I0OiAwMDAwMDAwMDAwMzUwZWYwClsgNzA5Ni4wNjkwNzJd
-IENhbGwgVHJhY2U6ClsgNzA5Ni4wNjkwNzVdICA8VEFTSz4KWyA3MDk2LjA2OTA3Nl0gIGll
-ZWU4MDIxMV9kb19zdG9wKzB4N2JjLzB4OTcwIFttYWM4MDIxMSBhYzA5NzdjMzc5NmFhMTRh
-MjM2ZGRhYmU5MGNmMjA4NjYyMzMzYzkwXQpbIDcwOTYuMDY5MTI0XSAgPyBzcnNvX3JldHVy
-bl90aHVuaysweDUvMHg1ZgpbIDcwOTYuMDY5MTI3XSAgPyB0cnlfdG9fd2FrZV91cCsweDJl
-Ny8weDYzMApbIDcwOTYuMDY5MTM1XSAgY2ZnODAyMTFfc3RvcF9wMnBfZGV2aWNlKzB4NTYv
-MHgxNTAgW2NmZzgwMjExIGZlOGQwZDNkODQzMjA1NzMzNjg5OWE3NTc3NjQyNjBiNWU1MWE5
-YWFdClsgNzA5Ni4wNjkxNzRdICBjZmc4MDIxMV9zaHV0ZG93bl9hbGxfaW50ZXJmYWNlcysw
-eGFlLzB4ZjAgW2NmZzgwMjExIGZlOGQwZDNkODQzMjA1NzMzNjg5OWE3NTc3NjQyNjBiNWU1
-MWE5YWFdClsgNzA5Ni4wNjkyMTNdICB3aXBoeV9yZXN1bWUrMHhiZS8weDFhMCBbY2ZnODAy
-MTEgZmU4ZDBkM2Q4NDMyMDU3MzM2ODk5YTc1Nzc2NDI2MGI1ZTUxYTlhYV0KWyA3MDk2LjA2
-OTI1NF0gID8gX19wZnhfd2lwaHlfcmVzdW1lKzB4MTAvMHgxMCBbY2ZnODAyMTEgZmU4ZDBk
-M2Q4NDMyMDU3MzM2ODk5YTc1Nzc2NDI2MGI1ZTUxYTlhYV0KWyA3MDk2LjA2OTI5Ml0gIGRw
-bV9ydW5fY2FsbGJhY2srMHg4Yi8weDFlMApbIDcwOTYuMDY5Mjk2XSAgZGV2aWNlX3Jlc3Vt
-ZSsweDFiNi8weDJhMApbIDcwOTYuMDY5MzAwXSAgYXN5bmNfcmVzdW1lKzB4MWQvMHgzMApb
-IDcwOTYuMDY5MzAzXSAgYXN5bmNfcnVuX2VudHJ5X2ZuKzB4MzQvMHgxNjAKWyA3MDk2LjA2
-OTMwNl0gIHByb2Nlc3Nfb25lX3dvcmsrMHgxYTEvMHgzZTAKWyA3MDk2LjA2OTMxMF0gIHdv
-cmtlcl90aHJlYWQrMHgyZGYvMHg0MzAKWyA3MDk2LjA2OTMxNV0gID8gX19wZnhfd29ya2Vy
-X3RocmVhZCsweDEwLzB4MTAKWyA3MDk2LjA2OTMxOF0gIGt0aHJlYWQrMHgxMDAvMHgyODAK
-WyA3MDk2LjA2OTMyMV0gID8gX19wZnhfa3RocmVhZCsweDEwLzB4MTAKWyA3MDk2LjA2OTMy
-NF0gID8gX19wZnhfa3RocmVhZCsweDEwLzB4MTAKWyA3MDk2LjA2OTMyN10gIHJldF9mcm9t
-X2ZvcmsrMHgxNGEvMHgxODAKWyA3MDk2LjA2OTMzMF0gID8gX19wZnhfa3RocmVhZCsweDEw
-LzB4MTAKWyA3MDk2LjA2OTMzMl0gIHJldF9mcm9tX2ZvcmtfYXNtKzB4MWEvMHgzMApbIDcw
-OTYuMDY5MzQwXSAgPC9UQVNLPgpbIDcwOTYuMDY5MzQxXSAtLS1bIGVuZCB0cmFjZSAwMDAw
-MDAwMDAwMDAwMDAwIF0tLS0KWyA3MDk2LjA2OTM0OF0gaWVlZTgwMjExIHBoeTA6IFBNOiBk
-cG1fcnVuX2NhbGxiYWNrKCk6IHdpcGh5X3Jlc3VtZSBbY2ZnODAyMTFdIHJldHVybnMgLTEx
-ClsgNzA5Ni4wNjkzOTFdIGllZWU4MDIxMSBwaHkwOiBQTTogZmFpbGVkIHRvIHJlc3VtZSBh
-c3luYzogZXJyb3IgLTExClsgNzA5Ni4wNzAzNzRdIE9PTSBraWxsZXIgZW5hYmxlZC4KWyA3
-MDk2LjA3MDM3N10gUmVzdGFydGluZyB0YXNrczogU3RhcnRpbmcKWyA3MDk2LjA3MTMzN10g
-UmVzdGFydGluZyB0YXNrczogRG9uZQpbIDcwOTYuMDcxMzg4XSByYW5kb206IGNybmcgcmVz
-ZWVkZWQgb24gc3lzdGVtIHJlc3VtcHRpb24KWyA3MDk2LjA4Mzg2NV0gUE06IHN1c3BlbmQg
-ZXhpdApbIDcwOTkuMjY3NjkzXSBhdGgxMWtfcGNpIDAwMDA6MDM6MDAuMDogd21pIGNvbW1h
-bmQgMTYzODcgdGltZW91dApbIDcwOTkuMjY3NzA4XSBhdGgxMWtfcGNpIDAwMDA6MDM6MDAu
-MDogZmFpbGVkIHRvIHNlbmQgV01JX1BERVZfU0VUX1BBUkFNIGNtZApbIDcwOTkuMjY3NzIw
-XSBhdGgxMWtfcGNpIDAwMDA6MDM6MDAuMDogZmFpbGVkIHRvIGVuYWJsZSBQTUYgUU9TOiAo
-LTExClsgNzI1NS45NzEwMDZdIGlucHV0OiBTdGVhbSBEZWNrIGFzIC9kZXZpY2VzL3BjaTAw
-MDA6MDAvMDAwMDowMDowOC4xLzAwMDA6MDQ6MDAuNC91c2IxLzEtMy8xLTM6MS4yLzAwMDM6
-MjhERToxMjA1LjAwMDMvaW5wdXQvaW5wdXQyNgpbIDcyNTUuOTcxMjM4XSBpbnB1dDogU3Rl
-YW0gRGVjayBNb3Rpb24gU2Vuc29ycyBhcyAvZGV2aWNlcy9wY2kwMDAwOjAwLzAwMDA6MDA6
-MDguMS8wMDAwOjA0OjAwLjQvdXNiMS8xLTMvMS0zOjEuMi8wMDAzOjI4REU6MTIwNS4wMDAz
-L2lucHV0L2lucHV0MjcKWyA3MjU2LjM2MzY0N10gW2RybV0gRmFpbGVkIHRvIGFkZCBkaXNw
-bGF5IHRvcG9sb2d5LCBEVE0gVEEgaXMgbm90IGluaXRpYWxpemVkLgpbIDcyNTYuOTA2OTUy
-XSBbZHJtXSBGYWlsZWQgdG8gYWRkIGRpc3BsYXkgdG9wb2xvZ3ksIERUTSBUQSBpcyBub3Qg
-aW5pdGlhbGl6ZWQuClsgNzI1OC45OTY5NjhdIFtkcm1dIEZhaWxlZCB0byBhZGQgZGlzcGxh
-eSB0b3BvbG9neSwgRFRNIFRBIGlzIG5vdCBpbml0aWFsaXplZC4KWyA3MjY2LjcwMzAxN10g
-aW5wdXQ6IE1pY3Jvc29mdCBYLUJveCAzNjAgcGFkIDAgYXMgL2RldmljZXMvdmlydHVhbC9p
-bnB1dC9pbnB1dDI4Cg==
-
---------------aizF0e2MjL0MnZTH80Zhkm9J--
+-- 
+With best wishes
+Dmitry
 
