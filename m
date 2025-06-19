@@ -1,71 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-61783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6D5DADFB04
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 03:48:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 723EEADFB06
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 03:50:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6DF9A3B20BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 01:47:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 096C317D3A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jun 2025 01:50:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A33321CC6C;
-	Thu, 19 Jun 2025 01:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D44D821D3E8;
+	Thu, 19 Jun 2025 01:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="RqEMBpaK"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dQYuY/FN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6652A1BA
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 01:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6528721D3C5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jun 2025 01:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750297690; cv=none; b=aRCWXcNsnq0f3jFgWrwMRwOLwzC6/HgQUplcaHzbhtpcG+BrTGPr/KxxznM/ueVgUhLBKlbstRyIme9C4cKYdD5sL0uIt52tuXx3KCeXfSdFfvxT33IUS99/P1/OdJEMQJVbFiVq6SJ+/QCQF34CtnJgzIFRKbRRU94oUKkeRi0=
+	t=1750297841; cv=none; b=Oj3TpKnP2aWH+tB81e5xXHfxuJzJHvI032s6sjA6Ru1jbIgMLj6Ak0gd3XhQyQ5Ys9knG/UaOQ3qWfWphANx80f6L78irs4IJe6z5JLPhyvmISmxnr+GjsnzV4KluygZmshuN17yTkB0ENXjpz5Fe8Hcrs7StTKneDnc1/tjxh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750297690; c=relaxed/simple;
-	bh=81o6bescB9v3lhPMTrOg1UBMsSJ474FvjKsHJN3ltGw=;
+	s=arc-20240116; t=1750297841; c=relaxed/simple;
+	bh=byNHkanhQbJdZ5XbDcaqI9g6pjljdL2hBTwL7tVfO/U=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=t22I3YTCNuoDdoXtWeKjXTzTjDf2vPVsbNK0bbeRiejnOHUA4MKx0rO5EiFy8NlywPFpl0UucNZeb2caTJNKsW017aCXqSAM6KBPIQYbVIxulqc5Tc2uEbL+Md09GXC+nSCLucyQ7ZqjEoW1RvIKeemYPD9R60SgspWdYgBqWeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=RqEMBpaK; arc=none smtp.client-ip=209.85.216.74
+	 To:Cc:Content-Type; b=KzuB0bCGHqZ7uE6ewbYHi9ii/a+chI6ogDSDsL4uuLhg2vOZC+dbfQ/c6EtmbS3huGOrWDvZ/ivogbokdQ3gsYItvqkrC4aBb2PVFelJRuS35yTepvGZxMlYhewTqB3eGtlA1I4FpgLReeJCPB/PdY44yvuQfOymtwoeJopFMDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dQYuY/FN; arc=none smtp.client-ip=209.85.216.74
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-311a6b43ed7so178911a91.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 18:48:08 -0700 (PDT)
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-3138e65efe2so184232a91.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jun 2025 18:50:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1750297688; x=1750902488; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1750297839; x=1750902639; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iK4ZjkA8jkWCWhJSogXww/jXtNZjhSvpmcPS6ek9IU8=;
-        b=RqEMBpaKKYiqgBH8Ahme8ubAV3Cl5/yJqQCf3my7tX7W9mh2P9UxyP3DlEOjqccIsn
-         5b+wt2MBOqJtj+kCaSv3R54g2Ye19kG62UmrBiFIbNYwCbN9cfpESeW98s3YwVFt0tvu
-         5KuFUb1IrX7j1/QtysfYy6G+ajq2TAxf/D84rsvjvvxRDS+cEfcWMQ0SlV7zq4qp+FaI
-         l7a1+UZwnTpCvW+1KkyVfFp9HrL3YwxjGYyshReqr3pY5JhUaESayvCeT209UDn0sPX5
-         3//3vKuGDStT3THTlyFue7Q+N2J0lkKsroLIHSLmbJEPAFAYem1Zoe1qHcebvzYiZYlT
-         NaSg==
+        bh=oMyWfQw26TyUS5xbeLell4c85EVnEgCQej52N6NWW2o=;
+        b=dQYuY/FNMDLkF35GnfLCGTP6Zi9HFZxCNvWpX6i91lXnNTAAfqkzYdmtBmW/h/LUeP
+         xR4i/QyODEfcSlx/naROtripsyG3qazjce+jYqW2kt8H4jPJOH+Yn49wuq5UmB7bKzMI
+         8dUUh9OTdfrRT+7O1w9lZytCJiOX1P4tK/uIEua2/SgAeiVOlPi96uKpgKUqZITeYK4i
+         uZPDLoo/kDgM5MNpkSNRfIq88pbP0XyYZ8xRFTIy2iv+apBvWzFaVbnglgNXgJ0XzjJu
+         f4m6REQK+D4ywWQHJAjyVa+icV+/bEfo8hs2udX5wBgEcEteWlB8xKuAvlFEj3ZoI7MQ
+         +uvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750297688; x=1750902488;
+        d=1e100.net; s=20230601; t=1750297839; x=1750902639;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iK4ZjkA8jkWCWhJSogXww/jXtNZjhSvpmcPS6ek9IU8=;
-        b=Kv9YRhr/EmjvPuA7OCjQwBNdzbIQOr5Ogr1YBD9sf7eKCLhLe4JphK1XIv9724Nrnj
-         GhrbFSY59JMa7FRVHrm/0ZIcOdKY84sJqBzG2ADQ59UCKUBKZYz1IpZU/V0F439N9vSZ
-         n/7aSZCVpU8avSI/Ng645G1MZ4mtsVNEl8sjLYJTjkg+ZKHH/A217DpthIwxk17Q0KS1
-         vu1+r8gVcxGGQRwTQA95+QznRAyRw7en1qHm1Bm+hEI6zx6t4HCsiSpxoY5EVAoknLWP
-         WzckEvXpaxtdCoPVmcTbBgaGulQcizp42n+d/9VQuINLPOdEas5KeaaohJgOBm9OuJL/
-         /9dw==
-X-Forwarded-Encrypted: i=1; AJvYcCXdPC7T0RfZU9xgFGOTR7kJEwP8826hD4/LtrUmlc0bZ9EAZrmnF8aC6+jT6vBykrS2LRbIdABowk1f5eYb@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUQS4qMOJm4yaNb5p/1TFwIWSDn5Rn6l6Lc8dxkMaLAxMahpNM
-	+J8rDeFk69AkuQ4+2sAqgDp002HFO82doqt1mpoz1Izy6P+APEPJzA2gUzd16DLVln/UDaLLdQK
-	6AgMqLA==
-X-Google-Smtp-Source: AGHT+IEE4ydtFaw4e1z+EoMImiqkpcubj+zuBIUlhh64xauiektJcBJlVfVom5ZkidUtziKce7G2cJ/ISuk=
-X-Received: from pjm13.prod.google.com ([2002:a17:90b:2fcd:b0:312:15b:e5d1])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:2c86:b0:311:b3e7:fb31
- with SMTP id 98e67ed59e1d1-313f1b2bbdbmr33782851a91.0.1750297688027; Wed, 18
- Jun 2025 18:48:08 -0700 (PDT)
-Date: Wed, 18 Jun 2025 18:48:06 -0700
-In-Reply-To: <3fb0e82b-f4ef-402d-a33c-0b12e8aa990c@redhat.com>
+        bh=oMyWfQw26TyUS5xbeLell4c85EVnEgCQej52N6NWW2o=;
+        b=f1jALG3+odu8w338SB4j5h93V8vJYcAFeyjJYJK9GlxDGvQB7ZfpraAQCtXpbbvPCG
+         jwkn5SJbo7irzMORF+qZhGkT6DctxhmYpITIBfHktS27SMNmWnJSkIFhCVrBinLSgFGt
+         s4odBEw1Owffh/OitHUmuQihZQFiGQqOtqUq8XzDPgNOoQJcth/UhcoprLVLD2cBOBSJ
+         tITavL8SYUCY4b8gyUq0rcWPhuT+iM/XD3k5430Hn34g2sTXYrXf0pCV9wNI9NSyW+N5
+         2g1bYs3Kr9PYApjweT2kIVGDslvu9xzYTjrC/RjdsgxvP5cxaQtlnB8DOnmDg/+wBZ4D
+         5OLw==
+X-Forwarded-Encrypted: i=1; AJvYcCU83j07l78Z7xVl9/dtirO2AzIF39207yfMkJ3Tm67Th9erEg+XwIG7Zx+p1/cPw7xDG1lQo0YtRoNnmL/c@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy/LdsRpyqeHkxTIdT65XyF8ibB6M5eLXXC0vRhE/1w2b9/y92/
+	kCyxWouWXW50YLGVqoBNGLfCzp4vJPZnPLOLoL3SP9hodUAD5yfismgCjXV9ylVNhY/f/B6SK/R
+	UIH8qMw==
+X-Google-Smtp-Source: AGHT+IFYrz5Id5uH6iXof80e1fCW/jK+FUGGZzqnfiU3o4Gv59B5LgfHnd+rsdx73+Z8UQC28CXkLiecz6U=
+X-Received: from pjyd13.prod.google.com ([2002:a17:90a:dfcd:b0:30a:31eb:ec8e])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90a:d60b:b0:313:283e:e87c
+ with SMTP id 98e67ed59e1d1-313f1c77731mr27133495a91.3.1750297839512; Wed, 18
+ Jun 2025 18:50:39 -0700 (PDT)
+Date: Wed, 18 Jun 2025 18:50:37 -0700
+In-Reply-To: <aFNsVreb41robgbv@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,8 +76,8 @@ References: <20250611133330.1514028-1-tabba@google.com> <20250611133330.1514028-
  <aEySD5XoxKbkcuEZ@google.com> <68501fa5dce32_2376af294d1@iweiny-mobl.notmuch>
  <bbc213c3-bc3d-4f57-b357-a79a9e9290c5@redhat.com> <CA+EHjTxvqDr1tavpx7d9OyC2VfUqAko864zH9Qn5+B0UQiM93g@mail.gmail.com>
  <701c8716-dd69-4bf6-9d36-4f8847f96e18@redhat.com> <aFIK9l6H7qOG0HYB@google.com>
- <3fb0e82b-f4ef-402d-a33c-0b12e8aa990c@redhat.com>
-Message-ID: <aFNsVreb41robgbv@google.com>
+ <3fb0e82b-f4ef-402d-a33c-0b12e8aa990c@redhat.com> <aFNsVreb41robgbv@google.com>
+Message-ID: <aFNs7fyWn8xWnTDO@google.com>
 Subject: Re: [PATCH v12 08/18] KVM: guest_memfd: Allow host to map guest_memfd pages
 From: Sean Christopherson <seanjc@google.com>
 To: David Hildenbrand <david@redhat.com>
@@ -103,129 +103,25 @@ Cc: Fuad Tabba <tabba@google.com>, Ira Weiny <ira.weiny@intel.com>, kvm@vger.ker
 	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com
 Content-Type: text/plain; charset="us-ascii"
 
-On Wed, Jun 18, 2025, David Hildenbrand wrote:
-> On 18.06.25 02:40, Sean Christopherson wrote:
-> > On Mon, Jun 16, 2025, David Hildenbrand wrote:
-> > > On 16.06.25 16:16, Fuad Tabba wrote:
-> > > > On Mon, 16 Jun 2025 at 15:03, David Hildenbrand <david@redhat.com> wrote:
-> > > > > That something is mappable into $whatever is not the right
-> > > > > way to look at this IMHO.
+On Wed, Jun 18, 2025, Sean Christopherson wrote:
+> On Wed, Jun 18, 2025, David Hildenbrand wrote:
+> > > Ya, but that's more because guest_memfd only supports MAP_SHARED, versus KVM
+> > > really wanting to truly share the memory with the entire system.
+> > > Of course, that's also an argument to some extent against USER_MAPPABLE, because
+> > > that name assumes we'll never want to support MAP_PRIVATE.  But letting userspace
+> > > MAP_PRIVATE guest_memfd would completely defeat the purpose of guest_memfd, so
+> > > unless I'm forgetting a wrinkle with MAP_PRIVATE vs. MAP_SHARED, that's an
+> > > assumption I'm a-ok making.
 > > 
-> > Why not?  Honest question.  USER_MAPPABLE is very literal, but I think it's the
-> > right granularity.  E.g. we _could_ support read()/write()/etc, but it's not
-> > clear to me that we need/want to.  And so why bundle those under SHARED, or any
-> > other one-size-fits-all flag?
-> 
-> Let's take a step back. There are various ways to look at this:
-> 
-> 1) Indicate support for guest_memfd operations:
-> 
-> "GUEST_MEMFD_FLAG_MMAP": we support the mmap() operation
-> "GUEST_MEMFD_FLAG_WRITE": we support the write() operation
-> "GUEST_MEMFD_FLAG_READ": we support the read() operation
-> ...
-> "GUEST_MEMFD_FLAG_UFFD": we support userfaultfd operations
-> 
-> 
-> Absolutely fine with me. In this series, we'd be advertising
-> GUEST_MEMFD_FLAG_MMAP. Because we support the mmap operation.
->
-> If the others are ever required remains to be seen [1].
-
-Another advantage of granular flags that comes to mind: WRITE (and READ) could
-be withdrawn after populating memory, e.g. to harden against unexpected accesses
-once the VM has been initialized.
-
-And FWIW, I'm pretty sure it's only MMAP that *needs* userspace to opt-in.  If it
-weren't for the change in memslot behavior, i.e. to always look at the guest_memfd
-fd and ignore the hva, then MMAP wouldn't need a userspace opt-in.  Though we
-might *want* an opt-in, e.g. for hardening purposes.
-
-> 2) Indicating the mmap mapping type (support for MMAP flags)
-> 
-> As you write below, one could indicate that we support "mmap(MAP_SHARED)" vs
-> "mmap(MAP_PRIVATE)".
-> 
-> I don't think that's required for now, as MAP_SHARED is really the default
-> that anything that supports mmap() supports. If someone ever needs
-> MAP_PRIVATE (CoW) support they can add such a flag
-> (GUEST_MEMFD_FLAG_MMAP_MAP_PRIVATE). I doubt we want that, but who knows.
-> 
-> As expressed elsewhere, the mmap mapping type was never what the "SHARED" in
-> KVM_GMEM_SHARED_MEM implied.
-> 
-> 
-> 3) *guest-memfd specific* memory access characteristics
-> 
-> "private (non-accessible, private, secure, protected, ...) vs.
-> "non-private".
-> 
-> Traditionally, all was memory in guest-memfd was private, now we will make
-> guest_memfd also support non-private memory. As this memory is
-> "inaccessible" from a host point of view, any access to read/write it (fault
-> it into user page tables, read(), write(), etc) will fail.
-
-...
-
-> > As I mentioned in the other thread with respect to sharing between other
-> > entities, simply SHARED doesn't provide sufficient granularity.  HOST_SHAREABLE
-> > gets us closer, but I still don't like that because it implies the memory is
-> > 100% shareable, e.g. can be accessed just like normal memory.
+> > So, first important question, are we okay with adding:
 > > 
-> > And for non-CoCo x86 VMs, sharing with host userspace isn't even necessarily the
-> > goal, i.e. "sharing" is a side effect of needing to allow mmap() so that KVM can
-> > continue to function.
+> > "GUEST_MEMFD_FLAG_MMAP": we support the mmap() operation
 > 
-> Does mmap() support imply "support for non-private" memory or does "support
-> for non-private" imply mmap() support? :)
+> Probably stating the obvious, but yes, I am.
 
-...
+Heh, my brain is a bit fried.  I didn't realize you were asking about
+doing s/GUEST_MEMFD_FLAG_MMAPPABLE/GUEST_MEMFD_FLAG_MMAP until I read your other
+mail.
 
-> > Ya, but that's more because guest_memfd only supports MAP_SHARED, versus KVM
-> > really wanting to truly share the memory with the entire system.
-> > Of course, that's also an argument to some extent against USER_MAPPABLE, because
-> > that name assumes we'll never want to support MAP_PRIVATE.  But letting userspace
-> > MAP_PRIVATE guest_memfd would completely defeat the purpose of guest_memfd, so
-> > unless I'm forgetting a wrinkle with MAP_PRIVATE vs. MAP_SHARED, that's an
-> > assumption I'm a-ok making.
-> 
-> So, first important question, are we okay with adding:
-> 
-> "GUEST_MEMFD_FLAG_MMAP": we support the mmap() operation
-
-Probably stating the obvious, but yes, I am.
-
-> > If we are really dead set on having SHARED in the name, it could be
-> > GUEST_MEMFD_FLAG_USER_MAPPABLE_SHARED or GUEST_MEMFD_FLAG_USER_MAP_SHARED?  But
-> > to me that's _too_ specific and again somewhat confusing given the unfortunate
-> > private vs. shared usage in CoCo-land.  And just playing the odds, I'm fine taking
-> > a risk of ending up with GUEST_MEMFD_FLAG_USER_MAPPABLE_PRIVATE or whatever,
-> > because I think that is comically unlikely to happen.
-> 
-> I think in addition to GUEST_MEMFD_FLAG_MMAP we want something to express
-> "this is not your old guest_memfd that only supports private memory". And
-> that's what I am struggling with.
-> 
-> Now, if you argue "support for mmap() implies support for non-private
-> memory", I'm probably okay for that.
-
-Yep, that essentially what I'm advocating.
-
-> I could envision support for non-private memory even without mmap() support,
-> how useful that might be, I don't know.
-
-It _could_ be very useful, e.g. to have very strong confidence that nothing in
-userspace can accidentally clobber guest memory.  The problem is that reality gets
-in the way, and so unfortunately I don't see this idea ever coming to fruition
-(though I really, really like the concept).
-
-> But that's why I was arguing that we mmap() is just one way to consume
-> non-private memory.
-
-I agree that mmap() is just one way to interact with non-private memory, but
-in addition to wanting to avoid having to name "non-private memory", I also want
-to avoid bundling all of those ways together.  I.e. I want to start with the bare
-minimum and add functionality if/when it's needed.  Partly so that we don't have
-to spend much time thinking about the unsupported methods, but mostly because
-adding functionality is almost always way easier than taking it away.
+Luckily, I 100% agree that GUEST_MEMFD_FLAG_MMAP is way better.
 
