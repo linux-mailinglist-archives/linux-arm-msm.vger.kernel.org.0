@@ -1,118 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-61849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EB82AE11D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 05:33:31 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25849AE1200
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 06:08:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D35143AD44C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 03:33:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DADA17ABB53
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 04:07:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 483351DE891;
-	Fri, 20 Jun 2025 03:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D855F1B87C9;
+	Fri, 20 Jun 2025 04:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gUBaWCiJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g+z/8JuW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823311B87F2;
-	Fri, 20 Jun 2025 03:33:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D3118024;
+	Fri, 20 Jun 2025 04:08:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750390406; cv=none; b=t22C8bhTVoL6y6z82t8pVp2SCyPYnNdIjY0ba8KYoJ6yLkcIuCOLkFrwAAktDbhYuMcXGsp4fWnlcWg0bfpHn4cVJdf3naXpwI9lY5jORHLnXqF53s3o7m4mVet2IbYvaWJz1r7HSTj5ZK2DqZHfVWSS5DXdCVGOakjOuQ4sHhk=
+	t=1750392496; cv=none; b=nIEe0i79jKMko3nStd04adupVxUtr+SMmsClOrOsLwm+RfYPe7VtzcteHGy8A0091mrkF6kvfAadMHvsb7sNmx7mNS0qYAezarpMf8k+7n/1/ID6xA5n2+4kMVDX0vlCp8Qlf07VMf74BhAMIkHFZeNGCUs+/zooRsFwiH3IkQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750390406; c=relaxed/simple;
-	bh=6+/5o6kmcWKk3e2NbFhat/dx9eXksyOA9L6fkZ/p9uU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Vyk8emCz4Ftrtls2DAO0OJEErsX38bRbRCZqJPAcJ/00XEQMn0QHD32+yWsF8kR2BrOBftzRi7HUAO3eW4ZsqOo/qULttyhAaTERaq+YyXC7No+S11hLZf4tCLUSkT0ddVFB6B8/noshq3c2X4xAhim1AMvZR6nyNUJhLTRGKPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gUBaWCiJ; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750390404; x=1781926404;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=6+/5o6kmcWKk3e2NbFhat/dx9eXksyOA9L6fkZ/p9uU=;
-  b=gUBaWCiJGuywIjJtog9di/kCyviKcdjpS6ru+SaVCLKQ1dYqTjP+9lr9
-   WRrrc2I5XWCjyNTFJ+ERFVrBcHisSh9jS4yefgaz38P6o/R0AfVvpoUVy
-   BOsFrj6DeaW7gyQi9/0muR2eYluh9MP5ZlIXllTNVX+ubnBTMPDMF6B5Q
-   2474hvuy0l925Z24OciP3BWCV+gJGb1OkE2nCf5cKP2mSrGUq4/Mnriy+
-   jFPS563Y45BxpomSgEm4GE6t4yBK/7WzldqNp62sZh34t6tWgfSu5/vwg
-   +FMS+iNFruh19kZ00R9Wf40KthlRljOwVfNn+cpAFOYC0qYqAdgOHjs1t
-   g==;
-X-CSE-ConnectionGUID: asbSkjizR0qeQfwuNlsa7A==
-X-CSE-MsgGUID: 1SRYPx4FQJimbAGCwveB/w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11469"; a="63692002"
-X-IronPort-AV: E=Sophos;i="6.16,250,1744095600"; 
-   d="scan'208";a="63692002"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jun 2025 20:33:24 -0700
-X-CSE-ConnectionGUID: VUdPqhjeRb2L7mMeCgCrCw==
-X-CSE-MsgGUID: 7ZdBpbZbRx6UeBW6+OSrbA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,250,1744095600"; 
-   d="scan'208";a="151105038"
-Received: from lkp-server01.sh.intel.com (HELO e8142ee1dce2) ([10.239.97.150])
-  by fmviesa009.fm.intel.com with ESMTP; 19 Jun 2025 20:33:20 -0700
-Received: from kbuild by e8142ee1dce2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uSSVB-000LL8-2s;
-	Fri, 20 Jun 2025 03:33:17 +0000
-Date: Fri, 20 Jun 2025 11:32:50 +0800
-From: kernel test robot <lkp@intel.com>
-To: Casey Connolly <casey.connolly@linaro.org>,
-	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, Kees Cook <kees@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-hardening@vger.kernel.org,
-	Casey Connolly <casey.connolly@linaro.org>
-Subject: Re: [PATCH 09/11] power: supply: qcom_smbx: add smb5 support
-Message-ID: <202506201101.9HMIR1fb-lkp@intel.com>
-References: <20250619-smb2-smb5-support-v1-9-ac5dec51b6e1@linaro.org>
+	s=arc-20240116; t=1750392496; c=relaxed/simple;
+	bh=7JkcwPGNxgH1LvLwJizKR2M15gLV4I6zqw4s4RwpCJo=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=FuFyzWWn5fIqRn84BCe0og67Iya3wbsds+iKpgk4OzjPTy0Ef2tB5jvRqA8dG+Y2rBcM9Qj8HJ/gEccVGTzHtzPKh0xZeKXJp40Bil553jWlJ9nZwZalTqafuhy6pzLTnSj8i9WI7Mq+TjY/0FK4W4MzMaJ8bM25Wx3CJMO4LYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g+z/8JuW; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55JIeZjb004996;
+	Fri, 20 Jun 2025 04:08:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=osXx2yeYQBpkRudhyrzx2G
+	8o6ewUMFwFvVT5nW9IZ44=; b=g+z/8JuWdDymOFpd9G/5Rh28qmx5kuy+ySpG4k
+	aFrqOk/sv4D9tI3HXag17R8XthDOr5c38EMploiRxKtlUJI/09IUgdQ99ALva+LW
+	AX+8pzidN0Xm3uqoJKLjbTQnCCExiRRbp5GYMAQ1vI91ygd3eVdPm5VCn1XuucD3
+	2YpXLV4THwDFl2+mBn66uM6/PkXXbht2kabNA/55jpXuD696XNh2agpUtdZ46RWZ
+	W9MY93tKFq9tXlWZtonRUTnJ97PmnMrsDrVadTJTqkWEouy976G/p7kJHbQU/zrj
+	RXvg12Dl/naXHFNhDQzRhoiTfsMxfpSat/Yfk9AJ3cIxnKWg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47928msuph-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 20 Jun 2025 04:08:04 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55K48357008325
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 20 Jun 2025 04:08:03 GMT
+Received: from cse-cd01-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Thu, 19 Jun 2025 21:07:58 -0700
+From: Wenmeng Liu <quic_wenmliu@quicinc.com>
+To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <akapatra@quicinc.com>,
+        <hariramp@quicinc.com>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_svankada@quicinc.com>, <quic_depengs@quicinc.com>,
+        <quic_vikramsa@quicinc.com>, <quic_wenmliu@quicinc.com>
+Subject: [RFC PATCH 0/3] Add current load setting for qcom camss csiphy
+Date: Fri, 20 Jun 2025 12:07:33 +0800
+Message-ID: <20250620040736.3032667-1-quic_wenmliu@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250619-smb2-smb5-support-v1-9-ac5dec51b6e1@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjIwMDAyOSBTYWx0ZWRfX8rFA5esmRSHG
+ mYOtRvp9KXPMr2h7Xt6lEgcH1794XmrYKPilk7X+o7+hdvJVGC1+BvtxOoC33OnP6FcJUUKuKW8
+ djXvo4juvkMuwJ7nLJXIQa7JceCWjJli353nBqQrLfNmIvfin1UbcMt55CyA9Orau0lGelbAqEX
+ Bao/IAyzB5jkD0keyOV6h4H2w8BZhZDKNVb/S4AI2YQzjTL9LJX+i7KuRYXoDJOSa8zMHP/s2Ix
+ jji8G6De2CSA8DTuEQwboJnKJOmsj2lciHUsln2IUPIObyPGIGI/oXfApFh0QMdaDQRtEFcl84T
+ /BKMNFjm7Hm6+RqmzNsJE7APqELPufiGQwpXMYWNW9kEPIyOGwkARTqh9zjezZt6IDj1g+nVahi
+ Dx7iR4hgu5B43WAo9H7ax0tPnZNNh6Lhzp7wU6/F5vTsaW97uZVqU4xE08I6TsdZZKz8ZZ7M
+X-Authority-Analysis: v=2.4 cv=fvbcZE4f c=1 sm=1 tr=0 ts=6854dea4 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10
+ a=5PY4Jy_kNzdOWRqGdsgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: PfYBADR1N-702LMNksSQxQmI3w713Jso
+X-Proofpoint-ORIG-GUID: PfYBADR1N-702LMNksSQxQmI3w713Jso
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-20_01,2025-06-18_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
+ mlxlogscore=982 phishscore=0 clxscore=1015 mlxscore=0 impostorscore=0
+ adultscore=0 spamscore=0 suspectscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506200029
 
-Hi Casey,
+Currently qcom camss csiphy drivers don’t set regulator’s currents
+load properly using Linux regulator framework. This causes every 
+regulator’s initial mode set as HPM (high current mode), 
+which may have higher power consumption.
+To address this issue, add current configuration for CSIPHY.
 
-kernel test robot noticed the following build warnings:
+Wenmeng Liu (3):
+  media: dt-bindings: Add regulator current load
+  media: qcom: camss: csiphy: Add regulator current load setting
+  arm64: dts: qcom: qcs6490-rb3gen2: Add csiphy current support
 
-[auto build test WARNING on bc6e0ba6c9bafa6241b05524b9829808056ac4ad]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Casey-Connolly/dt-bindings-power-supply-qcom-pmi89980-charger-add-pm8150b-and-7250b/20250619-230137
-base:   bc6e0ba6c9bafa6241b05524b9829808056ac4ad
-patch link:    https://lore.kernel.org/r/20250619-smb2-smb5-support-v1-9-ac5dec51b6e1%40linaro.org
-patch subject: [PATCH 09/11] power: supply: qcom_smbx: add smb5 support
-config: x86_64-buildonly-randconfig-006-20250620 (https://download.01.org/0day-ci/archive/20250620/202506201101.9HMIR1fb-lkp@intel.com/config)
-compiler: clang version 20.1.2 (https://github.com/llvm/llvm-project 58df0ef89dd64126512e4ee27b4ac3fd8ddf6247)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250620/202506201101.9HMIR1fb-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202506201101.9HMIR1fb-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> Warning: drivers/power/supply/qcom_smbx.c:250 struct member 'gen' not described in 'smb_chip'
+ .../bindings/media/qcom,sc7280-camss.yaml     |  6 ++++
+ .../qcs6490-rb3gen2-vision-mezzanine.dtso     |  1 +
+ .../media/platform/qcom/camss/camss-csiphy.c  | 29 +++++++++++++++++++
+ .../media/platform/qcom/camss/camss-csiphy.h  |  1 +
+ 4 files changed, 37 insertions(+)
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.34.1
+
 
