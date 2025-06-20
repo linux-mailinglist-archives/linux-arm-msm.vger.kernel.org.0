@@ -1,140 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-61873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95201AE1634
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 10:35:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 156E4AE1681
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 10:42:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3AD3B188AE76
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 08:35:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B328F5A4FD5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 08:41:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05978228C9C;
-	Fri, 20 Jun 2025 08:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53B5126E6EF;
+	Fri, 20 Jun 2025 08:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z1Vy+sm6"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Q9xiXWaU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9FE218EBF;
-	Fri, 20 Jun 2025 08:35:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1D524EAA9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 08:39:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750408522; cv=none; b=tZBfOSbDsEdJbYdc5ZzaSdIDslxDoV12BkNDs6V/PmLZTC+ggw4gctv+PDoZbEu3Ip8ja01PdOi9b0LX4MeoTlFUrMwuFr/LXt5eNOUejFyy3PG1gPsIxqe+MEDNGHw932h1tVaAgmj7gca5MbC7Icoj/4oly9Li1TmxQJu2Zyc=
+	t=1750408756; cv=none; b=NRrELppRv4ET0/gsYdiHqh79bU3gVFZnHVXARZEHsEEXtq5TSlAKMTjwSvQqZz0irapSdqj8KgI/om/FqpwDMjKlQKgyA4J7lN7IJ43f50/K5j9xtXnRw3mjevtZPyqDziVkp0jmWROvwQ24JaWXB1bDqAJ/opQOwJM5Bgkzuhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750408522; c=relaxed/simple;
-	bh=5vgG1+o5zvUvcy9IV1oX0v/oDHQeoYwHQUnEwHesPoo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tJyQ5WHk6T/O3QAaaeWIiWWUmCD/DegKkbjNKLa8kBfrE3eTgUMRpbsargVcJ8QPNdhAZK4S/UEzlD8CdbHSg68C17nShjqgJCewfkXr/ek1egZJ0QUmmQOr9t/KFePK/FimhIrfRqEMT/tf7jqdx9YYSuGYGgIekGwu5crkyGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z1Vy+sm6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E900BC4CEE3;
-	Fri, 20 Jun 2025 08:35:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750408522;
-	bh=5vgG1+o5zvUvcy9IV1oX0v/oDHQeoYwHQUnEwHesPoo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Z1Vy+sm681/k9NWqGx6RHL0cVDfPgc1yhukI/2LseV8I4KzPG+7fDxsWuqoVpgD29
-	 UMsZ7ABpZRfmsNX9hjKZBxdOg1I8N3gBwUe3QQXiFpbiv/PUfwGqELDuHo4pVz7G8F
-	 1laifqmyGnZ/6u239bBC227+R6+H0HYvlyyqaF7gAbjtpSJNC3SZtq18lOSF1T9+Fa
-	 gIrP8Hrj6hSssDYJ+1GE+I7fS1hMrGNsVp1bHxJIFBU3LjdLyF2o/HUl5STnECGBb5
-	 4JI7BmZ9rrdcuo3t35ZyiY5BGWxPyrERtnzXUiAJVqs4k3DHmIVaBCUE+m7NK5OZ1w
-	 xwa+fRWQy2ENg==
-Message-ID: <96ee2939-d0d6-439e-bde4-1e5476214c5a@kernel.org>
-Date: Fri, 20 Jun 2025 10:35:16 +0200
+	s=arc-20240116; t=1750408756; c=relaxed/simple;
+	bh=nW0F0O/hWqw37ehBTiHOaKNVn3q7ZPdsEdlHH98mdbM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=TiL10YpdPY3HQJcd7l9pCfzcr/xK/gIoQ85504A99nxwb3/hw41TrpeFIuMdcN/DbSQGkTMht/LksE+ebJnelo2GeLKNr2ISSufoqapdL2/ZQQVkgFu6f4A7nnHUhp95Yd22Deb+FmRt4XQuDokalgURTPSwJmq7AMwGJ+oH39I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Q9xiXWaU; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ad1b94382b8so303282566b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 01:39:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1750408752; x=1751013552; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6V7zu0Kxpdwv0OZSUsLSOjM7ZQH3dEZE86mrHpx7mAI=;
+        b=Q9xiXWaUVze6+3GxmnW8BlyGUQCfzbUuMCDHKuvU9se1IwGuIfLyzdveR2kcLu5Udn
+         xBSlTM/JaO96BhWAbE4WYr2MzkknDj7NFwNZ2zqGVcLOp/JB36tJ1uLmtYDTErgwTidQ
+         tmkldF6E1bTWV2zSrIeiJu4laeHtsAUdhr5m6QIb1kvRJRQZ3JVSofIYgf9SHw/kI2xL
+         CMS4nO7AooBQ7lStCAXLR5+YaZU7pbcEqyFHcgmdWD7q02R3NrB5xVaYsSIsTDlxilP5
+         js3OU1+BWZL55bsKeeTa9P5GHHvs1qfsewrTSmYhY6/psnV8azoc1lj+Mkd2G/oUHxpo
+         Xsng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750408752; x=1751013552;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6V7zu0Kxpdwv0OZSUsLSOjM7ZQH3dEZE86mrHpx7mAI=;
+        b=dSGV94bcuGwg28bFH7+K5V/FIQv6xkLO19N493d3jqoPyZ75a8HMGnR9D2sgsGiG9x
+         NfbxEhf0ApmoCJVA1HeHynm7+5fa0TnuQtBZUUaZEcMeOLI2v0/ZRiKeDTwBaTdGO3eD
+         XjacHfiobYaYZOs1C9D4PYWP5wtIzwkOmad3KixzXjP+jE+04DCzfKbF8IE1JIojk2Ma
+         pVVoSYyVFApmCpCTB8mVU2zGXVeQzN0SpkojwNlhmnxArPk1WaAZC2Yx42Ppmz1adnBq
+         Jl0GCXxNNsq6bzipYsu9nho2PpWFw/3YMWEhhsu1qBZfZ8jEgAN5QveEbbNpxqLyV+NF
+         od2Q==
+X-Gm-Message-State: AOJu0YwwvhRR0CFFJiSv89ob3gr3CPnqF2yT93X16hHjiMdpcjIrk1GS
+	s1c5LRFz/IyBdIf2W6NXcVSvFP+FdKnnReH65LqxokEpRuBwk6DC1mdsCsH1wmX+aw8=
+X-Gm-Gg: ASbGnctN8OWG0aDF4Gx85uHk+lnQHC6Znbutk1WIH/vHtY/le1ELvn3coQc17mY9Qb7
+	walDBG2yOoIytpiStkzJaBCnYtD8xbpgzlalDj5+L5K+KbvpSEnQujbGRgO05JH7z+4RoUcjHMR
+	3/3D2UuJ7Q/+MgNJfmV4+2uhEeVczf+vK02ZKtBKnp3gXfnY8drK8w6XCOVoxhOdkN/I/Y47kbE
+	oGCYubtVJ9KVU4VRHO4f7AvHuVFCCbEaMbeB9ZJNUTF/Zzd2h32mvh0QlmWSVnHPV7v/wTf+kjK
+	HLLhUadzYMVCbxXyoQzZWpw0ZFFClrr3rwtDBB2+SjdX+/IvL9M0Dk+0rQ/c4cg7qzrkPf3bTFw
+	JXx6laGxH8/6KbWKG8szgMBhGe0VT0bM=
+X-Google-Smtp-Source: AGHT+IHnn+pgrcY80rrdIAItBJEQnsl8DLBgDjOptwBLYFl+zdmUZHUQXrI9nz0s+HIckaBRB9p+5A==
+X-Received: by 2002:a17:907:9816:b0:ad5:55db:e413 with SMTP id a640c23a62f3a-ae057a284e5mr172285466b.26.1750408751642;
+        Fri, 20 Jun 2025 01:39:11 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae0541b6e36sm123747666b.120.2025.06.20.01.39.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Jun 2025 01:39:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/3] media: dt-bindings: Add regulator current load
-To: Wenmeng Liu <quic_wenmliu@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org, akapatra@quicinc.com,
- hariramp@quicinc.com
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_svankada@quicinc.com, quic_depengs@quicinc.com,
- quic_vikramsa@quicinc.com
-References: <20250620040736.3032667-1-quic_wenmliu@quicinc.com>
- <20250620040736.3032667-2-quic_wenmliu@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250620040736.3032667-2-quic_wenmliu@quicinc.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Fri, 20 Jun 2025 10:39:10 +0200
+Message-Id: <DAR846ZKJENY.KINMYGVYAY97@fairphone.com>
+Cc: <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>, "Sebastian
+ Reichel" <sebastian.reichel@collabora.com>,
+ <linux-hardening@vger.kernel.org>
+Subject: Re: [PATCH 09/11] power: supply: qcom_smbx: add smb5 support
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Casey Connolly" <casey.connolly@linaro.org>, "Sebastian Reichel"
+ <sre@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Bjorn
+ Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>, "Kees Cook" <kees@kernel.org>, "Gustavo A. R.
+ Silva" <gustavoars@kernel.org>, "Bryan O'Donoghue"
+ <bryan.odonoghue@linaro.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
+References: <20250619-smb2-smb5-support-v1-0-ac5dec51b6e1@linaro.org>
+ <20250619-smb2-smb5-support-v1-9-ac5dec51b6e1@linaro.org>
+In-Reply-To: <20250619-smb2-smb5-support-v1-9-ac5dec51b6e1@linaro.org>
 
-On 20/06/2025 06:07, Wenmeng Liu wrote:
-> Add regulator current load support for vdda-phy vdda-pll.
-> 
-> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
+Hi Casey!
+
+Adding a note here, I also plan to look into what (if any) changes are
+necessary for this to work on PMI632 (which is the PMIC for
+sdm632/msm8953 Fairphone 3) since that's also SMB5.
+
+On Thu Jun 19, 2025 at 4:55 PM CEST, Casey Connolly wrote:
+> Introduce support for the SMB5 charger found on pm8150b and other more
+> modern Qualcomm SoCs.
+>
+> SMB5 is largely similar to SMB2, with a few register differences. The
+> main difference is the new Type-C hardware block which some registers
+> are moved to.
+>
+> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
 > ---
->  .../devicetree/bindings/media/qcom,sc7280-camss.yaml        | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
+>  drivers/power/supply/qcom_smbx.c | 367 +++++++++++++++++++++++++++++++++=
+------
+>  1 file changed, 314 insertions(+), 53 deletions(-)
 
-This patch fails on so many levels... do internal reviews first.
+<snip>
 
-Use existing properties, see regulators. If not, use existing unit
-suffixes. Otherwise it is just another downstream property you send us,
-to which we responded many times - don't.
+> +/* Bits 2:0 match PMI8998 TYPE_C_INTRPT_ENB_SOFTWARE_CTRL */
+> +#define SMB5_TYPE_C_MODE_CFG				0x544
+> +#define SMB5_EN_TRY_SNK_BIT				BIT(4)
+> +#define SMB5_EN_SNK_ONLY_BIT				BIT(1)
+> +
+> +#define SMB5_TYPEC_TYPE_C_VCONN_CONTROL			0x546
+> +#define SMB5_VCONN_EN_ORIENTATION_BIT			BIT(2)
+> +#define SMB5_VCONN_EN_VALUE_BIT				BIT(1)
+> +#define SMB5_VCONN_EN_SRC_BIT				BIT(0)
+> +
+> +
+> +#define SMB5_TYPE_C_DEBUG_ACCESS_SINK			0x54a
+> +#define SMB5_TYPEC_DEBUG_ACCESS_SINK_MASK		GENMASK(4, 0)
+> +
+> +#define SMB5_DEBUG_ACCESS_SRC_CFG			0x54C
+> +#define SMB5_EN_UNORIENTED_DEBUG_ACCESS_SRC_BIT	BIT(0)
+> +
+> +#define SMB5_TYPE_C_EXIT_STATE_CFG			0x550
+> +#define SMB5_BYPASS_VSAFE0V_DURING_ROLE_SWAP_BIT	BIT(3)
+> +#define SMB5_SEL_SRC_UPPER_REF_BIT			BIT(2)
+> +#define SMB5_EXIT_SNK_BASED_ON_CC_BIT			BIT(0)
 
-Please use subject prefixes matching the subsystem. You can get them for
-example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-your patch is touching. For bindings, the preferred subjects are
-explained here:
-https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
+<snip>
 
-Read meeting notes from internal discussions where you discussed this
-already.
+>  /* Init sequence derived from vendor downstream driver */
+> -static const struct smb_init_register smb_init_seq[] =3D {
+> -	{ .addr =3D AICL_RERUN_TIME_CFG, .mask =3D AICL_RERUN_TIME_MASK, .val =
+=3D 0 },
+> +static const struct smb_init_register smb5_init_seq[] =3D {
+> +	{ .addr =3D USBIN_CMD_IL, .mask =3D USBIN_SUSPEND_BIT, .val =3D 0 },
+> +	/*
+> +	 * By default configure us as an upstream facing port
+> +	 * FIXME: This will be handled by the type-c driver
+> +	 */
+> +	{ .addr =3D SMB5_TYPE_C_MODE_CFG,
+> +	  .mask =3D SMB5_EN_TRY_SNK_BIT | SMB5_EN_SNK_ONLY_BIT,
+> +	  .val =3D SMB5_EN_TRY_SNK_BIT },
 
-Best regards,
-Krzysztof
+Since there's already a driver for the Type-C in pm8150b and pm7250b,
+can we remove this? Or is additional plumbing between the two drivers
+necessary to make this work? Maybe Bryan can also jump in here.
+
+Regards
+Luca
+
+> +	{ .addr =3D SMB5_TYPEC_TYPE_C_VCONN_CONTROL,
+> +	  .mask =3D SMB5_VCONN_EN_ORIENTATION_BIT | SMB5_VCONN_EN_SRC_BIT |
+> +		  SMB5_VCONN_EN_VALUE_BIT,
+> +	  .val =3D SMB2_VCONN_EN_SRC_BIT },
+> +	{ .addr =3D SMB5_DEBUG_ACCESS_SRC_CFG,
+> +	  .mask =3D SMB5_EN_UNORIENTED_DEBUG_ACCESS_SRC_BIT,
+> +	  .val =3D SMB5_EN_UNORIENTED_DEBUG_ACCESS_SRC_BIT },
+> +	{ .addr =3D SMB5_TYPE_C_EXIT_STATE_CFG,
+> +	  .mask =3D SMB5_SEL_SRC_UPPER_REF_BIT,
+> +	  .val =3D SMB5_SEL_SRC_UPPER_REF_BIT },
+> +	/*
+> +	 * Disable Type-C factory mode and stay in Attached.SRC state when VCON=
+N
+> +	 * over-current happens
+> +	 */
+> +	{ .addr =3D TYPE_C_CFG,
+> +	  .mask =3D APSD_START_ON_CC_BIT,
+> +	  .val =3D 0 },
+> +	{ .addr =3D SMB5_TYPE_C_DEBUG_ACCESS_SINK,
+> +	  .mask =3D SMB5_TYPEC_DEBUG_ACCESS_SINK_MASK,
+> +	  .val =3D 0x17 },
 
