@@ -1,166 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-61868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62A09AE1477
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 09:02:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 395BCAE1495
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 09:09:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7CBCB7AC4F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 07:00:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0EAD719E17CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 07:10:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C846C224B06;
-	Fri, 20 Jun 2025 07:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3263D22655E;
+	Fri, 20 Jun 2025 07:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="l02k53+9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GxOUOpN4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEB192045B5;
-	Fri, 20 Jun 2025 07:02:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6A72253E0;
+	Fri, 20 Jun 2025 07:09:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750402923; cv=none; b=Bdzp2MUSAlKPavkmJ3aBs45YhPLidr5Dr8/g4NR8zvsv2501HF5Vld0FjYFnSU5bHsha4nV2E9AOtAs+/X/6RUk9XzEMV46vQAONbvanSt8GP/yy1FEdKDCAaDABFeUP39a6lJsnWJ2i9L7q3EBjhKfyqTZUiNXqY+yN92uzyUw=
+	t=1750403386; cv=none; b=BGFbtRI9im5zykPzr2Jgg4KcKQiiqmxTVE7RO1vUrI7fZrS+g/8kOknNHAze+Hfq43A3/wVGYcb7WWAop842AZ7+XAIITBsw0gCBcmdPY8kGKWf3tAtPCvT7XU+f6x00OaEDj+djV6xh5Wpa61G0qo7hWaga2FVMvQo064Pt/uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750402923; c=relaxed/simple;
-	bh=PPGIeVhRL2lTJDHqNuXa88LI8/7e7OhApOd+69gueiw=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=RQbz6LTBYl5o1Mhpv6izpHKdl9BO8aIhRndwsuzX69vsta1z4iCGOd7ZJYWnHU82czTNES994klhcW3Zsnc+fFDncHEIYO8oo9I/cbcLsGzNKq+VJIqj1theHvOeyegONT1DXmER8RBI6lPop9THuVePDNViZeo46Ipr2r1gRlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=l02k53+9 reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=5jU6bv8xXmRLsTj5uh1t8r9LWPcLjVEkYquNpqGe6Oo=; b=l
-	02k53+9rAu7tgnppr2kOTKzYz4LcDHXpbJCKvAcIh0iu0kYSdEt4ywzAWanN3JL8
-	WvrhRhuCTSCc4+c3dtzuXL6dZRzeaCexuSxF2/jN4y/6iLwRGKOYyb57nutGpsqP
-	SXc/DH6kOWK2uYK4HLa03CebN+rScrEvt3zBCjP4pI=
-Received: from slark_xiao$163.com ( [2408:8459:3c50:e0b:fe63:4f5:6342:5dbf]
- ) by ajax-webmail-wmsvr-40-141 (Coremail) ; Fri, 20 Jun 2025 15:01:25 +0800
- (CST)
-Date: Fri, 20 Jun 2025 15:01:25 +0800 (CST)
-From: "Slark Xiao" <slark_xiao@163.com>
-To: "Manivannan Sadhasivam" <mani@kernel.org>
-Cc: manivannan.sadhasivam@linaro.org, johan+linaro@kernel.org,
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re:Re: [PATCH v2] bus: mhi: host: pci_generic: Add Foxconn T99W696
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
- Copyright (c) 2002-2025 www.mailtech.cn 163com
-In-Reply-To: <4k7426oxhrnfoshkcqwwilq5lqldjovvtrwfownllwxwgudwjo@a3i47vma4lhr>
-References: <20250528092232.16111-1-slark_xiao@163.com>
- <4k7426oxhrnfoshkcqwwilq5lqldjovvtrwfownllwxwgudwjo@a3i47vma4lhr>
-X-NTES-SC: AL_Qu2eAvibvUAj4yOaYekfmUoQhek9W8qwvPsu1YFfOZlwjCrr1xgqRntMJGPT6vOOBj2FkReYcAVo2N95fLRaUKsZZGjZndk2xjgTxJQf+GiCCQ==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1750403386; c=relaxed/simple;
+	bh=BCFllEoY5gzDCd+pq8P7iPKpzwybmkCLAP5pwNN5M98=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=goWyvjWd6qPL6lEQLDzzwC1EGghhJ6rV1L1s63UX0FIh6XpWunBkhJEoBJTNHax9MlJm5jPbPbfGnih8qdZCkCX/uBzmKKb7vttGr8wZyp9ANMGdziD1schvNCYB6G/+HTIMap7gdj8Ed81ivYWYZwQtK2NE+H3mK4xz0t0JN5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GxOUOpN4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47C5C4CEEE;
+	Fri, 20 Jun 2025 07:09:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750403385;
+	bh=BCFllEoY5gzDCd+pq8P7iPKpzwybmkCLAP5pwNN5M98=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=GxOUOpN4VXDvY/WttyaqkcOUWF731SS3YM4qSbiD9OSw2hQNyB6X367NZBRULwysb
+	 6RHRzWiypNZze0YVgwqcIm/0lW0XlX78Zi8lQ+NTFWPxw9g06bS/eAbyw8TRYXptHm
+	 QnfCsitpVT32vjNLJkVqNTDnhVhc8xiuSVgV0cHnBSSNz8IBtZvULhBVZNJUNxiIWk
+	 IH6c6iPWUcQ/ZCK6p4oVAXo/9WhoYmyLy9sacl8a10+DOIRxcE3QstQZV2+dJpMR3q
+	 UAbhKLDaMPFyGzF6wY3SRpx5mlswfcnWgrpRLhr95raFKiSipcF8TslhR+TAeiEcCp
+	 f3FR/z1Ma2dUg==
+Message-ID: <66094c33-07bd-4621-b49c-b29a0270e002@kernel.org>
+Date: Fri, 20 Jun 2025 09:09:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <cb7bd34.6056.1978c2466d2.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:jSgvCgD3n2lFB1VoyAohAA--.64024W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiRxVyZGhU+HIFAAACs1
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/4] arm64: defconfig: Enable X1P42100 GPUCC driver
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
+ Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-pm@vger.kernel.org, Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+References: <20250620-x1p-adreno-v3-0-56398c078c15@oss.qualcomm.com>
+ <20250620-x1p-adreno-v3-2-56398c078c15@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250620-x1p-adreno-v3-2-56398c078c15@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-CgpBdCAyMDI1LTA2LTE3IDE3OjM5OjExLCAiTWFuaXZhbm5hbiBTYWRoYXNpdmFtIiA8bWFuaUBr
-ZXJuZWwub3JnPiB3cm90ZToKPk9uIFdlZCwgTWF5IDI4LCAyMDI1IGF0IDA1OjIyOjMyUE0gKzA4
-MDAsIFNsYXJrIFhpYW8gd3JvdGU6Cj4+IFQ5OVc2OTYgaXMgZGVzaWduZWQgYmFzZWQgb24gUXVh
-bGNvbW0gU0RYNjEgY2hpcCB3aGljaCBpcyBhIGNvc3QKPj4gZG93biBjaGlwIHJlZmVyIHRvIHBy
-ZXZpb3VzIFNEWDYyL1NEWDY1LiBUaG91Z2ggd2UgaGF2ZSBhIHN1cHBvcnQKPj4gb24gU0RYNjIv
-U0RYNjUsIHdlIGNyZWF0ZSBhIG5ldyBjaGFubmVsIGNvbmZpZyBmb3IgU0RYNjEgc2luY2UKPj4g
-d2UgYWRkIGEgTk1FQSBjaGFubmVsIHN1cHBvcnQgZnJvbSB0aGlzIHByb2R1Y3QuCj4+IEZvciBu
-ZXcgcHJvZHVjdHMgd2UgYXJlIGFsbG93ZWQgdG8gY3VzdG9taXplIHRoZSBzdWJWSUQgYW5kCj4+
-IHN1YlBJRCBvbmx5Lgo+PiAKPgo+Q291bGQgeW91IHBsZWFzZSBwdXNoIHRoZSBmaXJtd2FyZSB0
-byBsaW51eC1maXJtd2FyZT8gSSBkb24ndCBleHBlY3QgdGhlIHVzZXJzCj5vZiB0aGUgcHJvZHVj
-dHMgdG8gdXBzdHJlYW0gdGhlIGZpcm13YXJlLCBidXQgSSBkbyBleHBlY3QgdGhlIHZlbmRvcnMg
-dG8gZG8gc28uCj4KPkZZSTogUWNvbSB3YXMgYWJsZSB0byB1cHN0cmVhbSB0aGUgZmlybXdhcmUg
-Zm9yIG9uZSBvZiB0aGVpciBtb2RlbXM6Cj5odHRwczovL3dlYi5naXQua2VybmVsLm9yZy9wdWIv
-c2NtL2xpbnV4L2tlcm5lbC9naXQvZmlybXdhcmUvbGludXgtZmlybXdhcmUuZ2l0L2NvbW1pdC9x
-Y29tL3FkdTEwMC94Ymxfcy5tZWxmP2lkPTAxODQyZGE0NWRmMGE5Zjg2MjA5OGQxNTk3ZjZhZTU3
-NzRiM2U0OGEKPgo+U28gdGhlcmUgc2hvdWxkIGJlIG5vIGxpY2Vuc2luZyBpc3N1ZXMuIEdvaW5n
-IGZvcndhcmQsIEkgd2FudCBib3RoIFFjb20gYW5kCj52ZW5kb3JzIHRvIHVwc3RyZWFtIHRoZSBm
-aXJtd2FyZSBiZWZvcmUgdGhlIG1vZGVtIHN1cHBvcnQgZ2V0cyBpbi4KPgo+LSBNYW5pCj4KSXQg
-c2hvdWxkIGJlIG9rYXkuIEJ1dCB3ZSBhcmUgZmFjaW5nIHRoYXQgd2UgY2FuJ3QgY29tbWl0IGZp
-bGVzIHRvIGxpbnV4LWZpcm13YXJlCnNpbmNlIENoaW5hIHdhcyBiYW5uZWQgZnJvbSB0aGF0IGNv
-bW11bml0eS4KSSB3aWxsIHNoYXJlIHRoZSBlZGwgZmlsZSB0byB5b3UgaW4gYW5vdGhlciBtYWls
-LgoKVGhhbmtzCj4+IFNpZ25lZC1vZmYtYnk6IFNsYXJrIFhpYW8gPHNsYXJrX3hpYW9AMTYzLmNv
-bT4KPj4gLS0tCj4+IHYyOiBDb3JyZWN0IHRoZSBjaF9jZmcgYXMgc2R4NjEgY2hhbm5lbHMKPj4g
-LS0tCj4+ICBkcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5jIHwgNTIgKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrCj4+ICAxIGZpbGUgY2hhbmdlZCwgNTIgaW5zZXJ0aW9ucygr
-KQo+PiAKPj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMg
-Yi9kcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5jCj4+IGluZGV4IGE0YTYyNDI5Yzc4
-NC4uYTkwYWIzMWM0NmE5IDEwMDY0NAo+PiAtLS0gYS9kcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lf
-Z2VuZXJpYy5jCj4+ICsrKyBiL2RyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMKPj4g
-QEAgLTQ5MCw2ICs0OTAsMjMgQEAgc3RhdGljIGNvbnN0IHN0cnVjdCBtaGlfY2hhbm5lbF9jb25m
-aWcgbWhpX2ZveGNvbm5fc2R4NTVfY2hhbm5lbHNbXSA9IHsKPj4gIAlNSElfQ0hBTk5FTF9DT05G
-SUdfSFdfREwoMTAxLCAiSVBfSFcwX01CSU0iLCAxMjgsIDMpLAo+PiAgfTsKPj4gIAo+PiArc3Rh
-dGljIGNvbnN0IHN0cnVjdCBtaGlfY2hhbm5lbF9jb25maWcgbWhpX2ZveGNvbm5fc2R4NjFfY2hh
-bm5lbHNbXSA9IHsKPj4gKwlNSElfQ0hBTk5FTF9DT05GSUdfVUwoMCwgIkxPT1BCQUNLIiwgMzIs
-IDApLAo+PiArCU1ISV9DSEFOTkVMX0NPTkZJR19ETCgxLCAiTE9PUEJBQ0siLCAzMiwgMCksCj4+
-ICsJTUhJX0NIQU5ORUxfQ09ORklHX1VMKDQsICJESUFHIiwgMzIsIDEpLAo+PiArCU1ISV9DSEFO
-TkVMX0NPTkZJR19ETCg1LCAiRElBRyIsIDMyLCAxKSwKPj4gKwlNSElfQ0hBTk5FTF9DT05GSUdf
-VUwoMTIsICJNQklNIiwgMzIsIDApLAo+PiArCU1ISV9DSEFOTkVMX0NPTkZJR19ETCgxMywgIk1C
-SU0iLCAzMiwgMCksCj4+ICsJTUhJX0NIQU5ORUxfQ09ORklHX1VMKDMyLCAiRFVOIiwgMzIsIDAp
-LAo+PiArCU1ISV9DSEFOTkVMX0NPTkZJR19ETCgzMywgIkRVTiIsIDMyLCAwKSwKPj4gKwlNSElf
-Q0hBTk5FTF9DT05GSUdfVUxfRlAoMzQsICJGSVJFSE9TRSIsIDMyLCAwKSwKPj4gKwlNSElfQ0hB
-Tk5FTF9DT05GSUdfRExfRlAoMzUsICJGSVJFSE9TRSIsIDMyLCAwKSwKPj4gKwlNSElfQ0hBTk5F
-TF9DT05GSUdfVUwoNTAsICJOTUVBIiwgMzIsIDApLAo+PiArCU1ISV9DSEFOTkVMX0NPTkZJR19E
-TCg1MSwgIk5NRUEiLCAzMiwgMCksCj4+ICsJTUhJX0NIQU5ORUxfQ09ORklHX0hXX1VMKDEwMCwg
-IklQX0hXMF9NQklNIiwgMTI4LCAyKSwKPj4gKwlNSElfQ0hBTk5FTF9DT05GSUdfSFdfREwoMTAx
-LCAiSVBfSFcwX01CSU0iLCAxMjgsIDMpLAo+PiArfTsKPj4gKwo+PiAgc3RhdGljIHN0cnVjdCBt
-aGlfZXZlbnRfY29uZmlnIG1oaV9mb3hjb25uX3NkeDU1X2V2ZW50c1tdID0gewo+PiAgCU1ISV9F
-VkVOVF9DT05GSUdfQ1RSTCgwLCAxMjgpLAo+PiAgCU1ISV9FVkVOVF9DT05GSUdfREFUQSgxLCAx
-MjgpLAo+PiBAQCAtNTA2LDYgKzUyMywxNSBAQCBzdGF0aWMgY29uc3Qgc3RydWN0IG1oaV9jb250
-cm9sbGVyX2NvbmZpZyBtb2RlbV9mb3hjb25uX3NkeDU1X2NvbmZpZyA9IHsKPj4gIAkuZXZlbnRf
-Y2ZnID0gbWhpX2ZveGNvbm5fc2R4NTVfZXZlbnRzLAo+PiAgfTsKPj4gIAo+PiArc3RhdGljIGNv
-bnN0IHN0cnVjdCBtaGlfY29udHJvbGxlcl9jb25maWcgbW9kZW1fZm94Y29ubl9zZHg2MV9jb25m
-aWcgPSB7Cj4+ICsJLm1heF9jaGFubmVscyA9IDEyOCwKPj4gKwkudGltZW91dF9tcyA9IDIwMDAw
-LAo+PiArCS5udW1fY2hhbm5lbHMgPSBBUlJBWV9TSVpFKG1oaV9mb3hjb25uX3NkeDYxX2NoYW5u
-ZWxzKSwKPj4gKwkuY2hfY2ZnID0gbWhpX2ZveGNvbm5fc2R4NjFfY2hhbm5lbHMsCj4+ICsJLm51
-bV9ldmVudHMgPSBBUlJBWV9TSVpFKG1oaV9mb3hjb25uX3NkeDU1X2V2ZW50cyksCj4+ICsJLmV2
-ZW50X2NmZyA9IG1oaV9mb3hjb25uX3NkeDU1X2V2ZW50cywKPj4gK307Cj4+ICsKPj4gIHN0YXRp
-YyBjb25zdCBzdHJ1Y3QgbWhpX2NvbnRyb2xsZXJfY29uZmlnIG1vZGVtX2ZveGNvbm5fc2R4NzJf
-Y29uZmlnID0gewo+PiAgCS5tYXhfY2hhbm5lbHMgPSAxMjgsCj4+ICAJLnRpbWVvdXRfbXMgPSAy
-MDAwMCwKPj4gQEAgLTYxNSw2ICs2NDEsMTcgQEAgc3RhdGljIGNvbnN0IHN0cnVjdCBtaGlfcGNp
-X2Rldl9pbmZvIG1oaV9mb3hjb25uX2R3NTkzNGVfaW5mbyA9IHsKPj4gIAkuc2lkZWJhbmRfd2Fr
-ZSA9IGZhbHNlLAo+PiAgfTsKPj4gIAo+PiArc3RhdGljIGNvbnN0IHN0cnVjdCBtaGlfcGNpX2Rl
-dl9pbmZvIG1oaV9mb3hjb25uX3Q5OXc2OTZfaW5mbyA9IHsKPj4gKwkubmFtZSA9ICJmb3hjb25u
-LXQ5OXc2OTYiLAo+PiArCS5lZGwgPSAicWNvbS9zZHg2MS9mb3hjb25uL3Byb2dfZmlyZWhvc2Vf
-bGl0ZS5lbGYiLAo+PiArCS5lZGxfdHJpZ2dlciA9IHRydWUsCj4+ICsJLmNvbmZpZyA9ICZtb2Rl
-bV9mb3hjb25uX3NkeDYxX2NvbmZpZywKPj4gKwkuYmFyX251bSA9IE1ISV9QQ0lfREVGQVVMVF9C
-QVJfTlVNLAo+PiArCS5kbWFfZGF0YV93aWR0aCA9IDMyLAo+PiArCS5tcnVfZGVmYXVsdCA9IDMy
-NzY4LAo+PiArCS5zaWRlYmFuZF93YWtlID0gZmFsc2UsCj4+ICt9Owo+PiArCj4+ICBzdGF0aWMg
-Y29uc3Qgc3RydWN0IG1oaV9jaGFubmVsX2NvbmZpZyBtaGlfbXYzeF9jaGFubmVsc1tdID0gewo+
-PiAgCU1ISV9DSEFOTkVMX0NPTkZJR19VTCgwLCAiTE9PUEJBQ0siLCA2NCwgMCksCj4+ICAJTUhJ
-X0NIQU5ORUxfQ09ORklHX0RMKDEsICJMT09QQkFDSyIsIDY0LCAwKSwKPj4gQEAgLTg2Myw2ICs5
-MDAsMjEgQEAgc3RhdGljIGNvbnN0IHN0cnVjdCBwY2lfZGV2aWNlX2lkIG1oaV9wY2lfaWRfdGFi
-bGVbXSA9IHsKPj4gIAkvKiBUZWxpdCBGRTk5MEEgKi8KPj4gIAl7IFBDSV9ERVZJQ0VfU1VCKFBD
-SV9WRU5ET1JfSURfUUNPTSwgMHgwMzA4LCAweDFjNWQsIDB4MjAxNSksCj4+ICAJCS5kcml2ZXJf
-ZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkgJm1oaV90ZWxpdF9mZTk5MGFfaW5mbyB9LAo+PiArCS8q
-IEZveGNvbm4gVDk5VzY5Ni4wMSwgTGVub3ZvIEdlbmVyaWMgU0tVICovCj4+ICsJeyBQQ0lfREVW
-SUNFX1NVQihQQ0lfVkVORE9SX0lEX1FDT00sIDB4MDMwOCwgUENJX1ZFTkRPUl9JRF9GT1hDT05O
-LCAweGUxNDIpLAo+PiArCQkuZHJpdmVyX2RhdGEgPSAoa2VybmVsX3Vsb25nX3QpICZtaGlfZm94
-Y29ubl90OTl3Njk2X2luZm8gfSwKPj4gKwkvKiBGb3hjb25uIFQ5OVc2OTYuMDIsIExlbm92byBY
-MSBDYXJib24gU0tVICovCj4+ICsJeyBQQ0lfREVWSUNFX1NVQihQQ0lfVkVORE9SX0lEX1FDT00s
-IDB4MDMwOCwgUENJX1ZFTkRPUl9JRF9GT1hDT05OLCAweGUxNDMpLAo+PiArCQkuZHJpdmVyX2Rh
-dGEgPSAoa2VybmVsX3Vsb25nX3QpICZtaGlfZm94Y29ubl90OTl3Njk2X2luZm8gfSwKPj4gKwkv
-KiBGb3hjb25uIFQ5OVc2OTYuMDMsIExlbm92byBYMSAyaW4xIFNLVSAqLwo+PiArCXsgUENJX0RF
-VklDRV9TVUIoUENJX1ZFTkRPUl9JRF9RQ09NLCAweDAzMDgsIFBDSV9WRU5ET1JfSURfRk9YQ09O
-TiwgMHhlMTQ0KSwKPj4gKwkJLmRyaXZlcl9kYXRhID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX2Zv
-eGNvbm5fdDk5dzY5Nl9pbmZvIH0sCj4+ICsJLyogRm94Y29ubiBUOTlXNjk2LjA0LCBMZW5vdm8g
-UFJDIFNLVSAqLwo+PiArCXsgUENJX0RFVklDRV9TVUIoUENJX1ZFTkRPUl9JRF9RQ09NLCAweDAz
-MDgsIFBDSV9WRU5ET1JfSURfRk9YQ09OTiwgMHhlMTQ1KSwKPj4gKwkJLmRyaXZlcl9kYXRhID0g
-KGtlcm5lbF91bG9uZ190KSAmbWhpX2ZveGNvbm5fdDk5dzY5Nl9pbmZvIH0sCj4+ICsJLyogRm94
-Y29ubiBUOTlXNjk2LjAwLCBGb3hjb25uIFNLVSAqLwo+PiArCXsgUENJX0RFVklDRV9TVUIoUENJ
-X1ZFTkRPUl9JRF9RQ09NLCAweDAzMDgsIFBDSV9WRU5ET1JfSURfRk9YQ09OTiwgMHhlMTQ2KSwK
-Pj4gKwkJLmRyaXZlcl9kYXRhID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX2ZveGNvbm5fdDk5dzY5
-Nl9pbmZvIH0sCj4+ICAJeyBQQ0lfREVWSUNFKFBDSV9WRU5ET1JfSURfUUNPTSwgMHgwMzA4KSwK
-Pj4gIAkJLmRyaXZlcl9kYXRhID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX3Fjb21fc2R4NjVfaW5m
-byB9LAo+PiAgCXsgUENJX0RFVklDRShQQ0lfVkVORE9SX0lEX1FDT00sIDB4MDMwOSksCj4+IC0t
-IAo+PiAyLjI1LjEKPj4gCj4KPi0tIAo+4K6u4K6j4K6/4K614K6j4K+N4K6j4K6p4K+NIOCumuCu
-pOCuvuCumuCuv+CuteCuruCvjQo=
+On 20/06/2025 08:54, Akhil P Oommen wrote:
+> In order to enable GPU support in X1P42100-CRD and other similar
+> laptops with Snapdragon X1P42100 SoC, enable X1P42100 GPUCC driver
+> as a module.
+> 
+> Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+
+Defconfigs cannot be tested really...
+
+> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+> ---
+>  arch/arm64/configs/defconfig | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 897fc686e6a91b79770639d3eb15beb3ee48ef77..ccd03ab5de495498281175a4550bc73d3e65f3f4 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -1347,6 +1347,7 @@ CONFIG_CLK_X1E80100_CAMCC=m
+>  CONFIG_CLK_X1E80100_DISPCC=m
+>  CONFIG_CLK_X1E80100_GCC=y
+>  CONFIG_CLK_X1E80100_GPUCC=m
+> +CONFIG_CLK_X1P42100_GPUCC=m
+
+Not placed in proper spot. Don't add things in random order, but follow
+savedefconfig.
+
+Best regards,
+Krzysztof
 
