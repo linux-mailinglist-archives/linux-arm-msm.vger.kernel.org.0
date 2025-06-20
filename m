@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-61875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2D67AE1689
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 10:43:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 685D2AE16B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 10:51:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC73619E663B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 08:42:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F26EC1898998
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 08:51:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFFDB2459E6;
-	Fri, 20 Jun 2025 08:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3807A2561BB;
+	Fri, 20 Jun 2025 08:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="OzsPiecT"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="eElRhdTF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1129F26B090
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 08:40:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEEB23AB98
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 08:51:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750408816; cv=none; b=cSjtvfzw08CBpLPWXdjGPESmU+AaX/ZJXyNPUV0YZmV/R1KK99YLemayaWB9aUiOk6+Wh3uILUrbGNcFKM3+bsNhcUPBxEeUlL6I866jFPeLPrbchWSGosPmVzovhsgNy/WApYR1AVgEre3Ga+dthBTxunvRg8dYPqHaxKb8E/E=
+	t=1750409475; cv=none; b=C/+sl4OwFVTwjHhjCJGkBdBl0aYUNmvmJsZkyjljOJOvWznXn1gXkUdktIL1cyOt7uqQnkOgVmomlElD1eG+blGZj4YL+LvpOIxB0R586K2EeyPd4izostICuTlJVcCyIaPdNo6J2MtVxMgJ7WoSptkdGPQbYCtw2vrErmy/ZVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750408816; c=relaxed/simple;
-	bh=a3mQToStIF6B1IdwttoHX1nYEJ1tyZcwTnGtOMKW35Q=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=jpa7X9CpLg8evtrWLOcxIrIDtDHSmFgrBkgZkjDGbv+eL5YJuHR4R5RALvb0Wu/7po2UKFtJsFL4abYWjWUf8ee83Zwpj5rmr2lcLxJs0Ss3O4JbVGzjBO7mM9TkW4PC9zexzPzx1Ti/evA0BNiOfn/yWSr1TwDJsHC4oMW2ROU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=OzsPiecT; arc=none smtp.client-ip=209.85.208.47
+	s=arc-20240116; t=1750409475; c=relaxed/simple;
+	bh=41+NV6wm7M4BUwGUu5BfX6Y/1mglDykUJq2/D+L+bV0=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=dNCJJSRj640oKSrgeD2w9eku3YKVd18lh6LgrSbiERcxG6OoXIlzkQCS3P9jI7krdh5Hz3eraSlfogUU5EPEkHPAxSS4EAfu2nnp4Xg0o2QpJsMh3EX8AJbhPW8DImMgoY8LHtYLYWj62moy4auVYqf9KGzieWJzf5t+1+7IWAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=eElRhdTF; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-60700a745e5so3310306a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 01:40:14 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-605b9488c28so2650844a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 01:51:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1750408813; x=1751013613; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=fairphone.com; s=fair; t=1750409472; x=1751014272; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Xb6LSPnM0jp92EEKrNM76UM1fccTcugFDTVrUIjKDq8=;
-        b=OzsPiecTJAWEDjY3lZVKGcTxZo1IjiJb6A2krnBK+QO63UFoy2xb0TJC7c+x27xhqC
-         K8WPcXa8R5ILdCCXOBByLgtcytWRNtmsOZ9/JG/zthzGETQq/2fYFtvwclG094H+UI+0
-         nIz53UkqIJZt+ICtDSDObVG9OvQ9ORUvlDGym3Rx80kk+BY9BrFKR3rrtR/BriuTB9/k
-         M/9Nc9ti9da3+kBYbgfP9Wv4qci+5XbGRDaxp6aALp25RvhqKygC2Ard7nq2Fz63Xxum
-         zc4keaPBkwSVzswBkmkNS+1zSyoieN9aWB+bkf3FQ4vcVozl3HdC9lkHMHw+qMQ/jObH
-         8r3A==
+        bh=tQs46cNDxNcEM2859ny72mW8pcAVQ7BIEu+RAnGt+Uk=;
+        b=eElRhdTFqyfet3zX6SJ1DemBoJg/QYIVepXir4utb5zKu3ZxnIQpSDe8Wb4f2IeYlv
+         c6YoNmHPjPVqMTBfMpoup5C3PIFs+jAuldaiJy5wWPS/o9WohoWF5sUO/2aRQPS4lgky
+         JxhAlYByweTDsfqvJ8OGmK+gNOvF48TvrdZVnH58kMiaVh4njA3jXSfF2AunQzjQ5jKq
+         COLm+FZQSG4PMPsfsxeCNYl6mbsKwLSBCVrU5ms9jJKSiFYiMm1fBJbYLNhBA8yZeGXJ
+         wIiMp7w4tAcggmF3uxO1ArOmUCHu8FHJSIyhKJnYGXi1XZ6cbfh9mWnlJlxunJ/kqXr8
+         3KSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750408813; x=1751013613;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=1e100.net; s=20230601; t=1750409472; x=1751014272;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
          :content-transfer-encoding:mime-version:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=Xb6LSPnM0jp92EEKrNM76UM1fccTcugFDTVrUIjKDq8=;
-        b=JBYoTWBuz/3Lf0ZYDqBSkeEiM4+T80El3PFMdyHVnItMZcnNmXRO2dtMjfCOtKv28R
-         QDWhU1OENcZeG+rx8H+al9wjxwLbFZ++HtmA9CqjuO4w36Fl+HKEd1Q7yZl2Z++X7BvV
-         gDKl4dSDZdzgKuXcJ7wnf+zQXT60liPgDH2NPCzjYCJzCCjavMpqqydxL9jAq3WbCvq4
-         IWEOlVLh+KbuPM5DiJa7bN7yhIJjFABdmK8faowXWZ1A61zv7NMxzVYAe6gJ0tR0j2QI
-         ce8Za3fEqd7+JiV1nITEBjGLgDpQhbdq/3nEc7+er+ANxQmj5Db6uFuBCLqV30vAIxD1
-         GswA==
-X-Gm-Message-State: AOJu0YxGppVWHtah31Xu2HS1k5Mpqpqtun5zOmBBN2ORz3XcgpHYUpXh
-	zKfhqFBOM5mU099h2SL2zImwoVFzgknqiuH+JTdi51qhnpqKdyJ9VclWz/iizHp85zw=
-X-Gm-Gg: ASbGncsBhMPSHL3MP6GiLOIeuSGFTLibhu4QVVg8WZB5COZsnomOmhTqkqXdUbJSsbJ
-	r8ztFBUCNNdH/+POKBwbJxl4KXlBUPUajTKzqblfUZyM73jHDklVGNvlu0Xr5KLm49Yawpbs6aa
-	NXZizcjKjwUvAM28C4d1BJoFlJnCnsljNBUm/pApLg6xCfP8ImATiJ6fkmGXDk0AIXsMjuUCOOw
-	hFhy1GFmjMtV81wo3JZp+3Lza1lDcTHJZ3zvN7p5FxxZQQczh5XdnAgmbJe00DMDChkwU3Ay75u
-	1X7UHlXwZzJ3lPRY/XQkgA+gKgj4NbRlVSWaHeagkb702+JexoljRwW3VkfzAq731UYeavHXoTp
-	iN9HLdfhB0B1NdCpesNPlPEOHFKJ9xF8=
-X-Google-Smtp-Source: AGHT+IHSanY7BYLP4aWQy8kFVBDTWraG5UXAI4rv0kvSKzHjiyN5FBJKlVrNJSNccFlJIgG0wJH/Gg==
-X-Received: by 2002:a05:6402:35d3:b0:606:bd9d:a772 with SMTP id 4fb4d7f45d1cf-60a1d18ee41mr1852590a12.24.1750408813427;
-        Fri, 20 Jun 2025 01:40:13 -0700 (PDT)
+        bh=tQs46cNDxNcEM2859ny72mW8pcAVQ7BIEu+RAnGt+Uk=;
+        b=aEfGlKzpf8YSUkOdgiEUJPau1SiwPVTH41tMeKFf4iouOhc5ylGsx5QFfB2FqNbTvs
+         85JIEz7LpWoj6rvYvr2C3vJtwNin0o3qDUN+vO12Px4FE6zr0zTXFJ90id6K0u60/lEP
+         wdvLHomsTVWs89px5incZp7aK82DVZPumPffEsF6SUGpBj6G/9noZmUfm6JjYb7sMDqW
+         8XZm1u270EiSaYmkvDwqR5XHrzCgk2stn9PxGHXk9NuahNfTC7k9TVhBBjIxUwU7vTVR
+         qztaK6htZuRRk2XoWlvAiwkQBEg8SAD87ixov1XGHoZOUYsJ/gndW2uAfUQsRh9KLpgR
+         ekWg==
+X-Gm-Message-State: AOJu0YyENnTfGT6oZGPP1e+sxPz5jLassLp0qHqwNGLNcsBXYXBcoowi
+	hmymRPMgv7m1OcuQz15OvmDxTC7In92kPCPQ+IX/ITc300uwSwCZ/k2AuzGk0xf23T8=
+X-Gm-Gg: ASbGncsvpAGRMNAJlQu3vRQipkBl/J44TposudVb9iV6IA6ZsDKg6ho/av92u7XftVK
+	uA/vo7x+wJ0D2rlLsrtMJ8KcVDgDyV6HyvxJtqun09e3ebEtGRcf0s/CAUnuS66vCO2L4u2ARqP
+	GPTGiTYJpxVHssthnzhWX6+4VoHujQI8TiTYrgtQ0Sod3Zi+N8zsfxGqvyJ6G/s+y/AUmU+hwDk
+	tJNz8BM8xkzW3g+jAmcpy591ENSaHIsNO/TA3n+jj2i3KBIYboIaNWmr7OczJB9CTlQrqnaY87H
+	Mo+8LGN84/n0BkpqU0OzugaD6madczpPmM85KbDObEZ9kR5wUU25Qz/AQABDZmgWPorK7sRywbO
+	RS7BOlhmiclMJBILzGHP4z/H7+XaKpo4=
+X-Google-Smtp-Source: AGHT+IEmFiflCY72gns8BJi7+wHzY3UkumCt6vc+CYitRi/cG7BsMF02qzVY1w31/s9Tg+2mrG6kaA==
+X-Received: by 2002:a17:907:f1c2:b0:ae0:635c:a400 with SMTP id a640c23a62f3a-ae0635cad5cmr13076866b.51.1750409471648;
+        Fri, 20 Jun 2025 01:51:11 -0700 (PDT)
 Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60a1854362csm1084336a12.20.2025.06.20.01.40.12
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae0541bc9a0sm128495266b.146.2025.06.20.01.51.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Jun 2025 01:40:13 -0700 (PDT)
+        Fri, 20 Jun 2025 01:51:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,14 +80,8 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 20 Jun 2025 10:40:12 +0200
-Message-Id: <DAR84ZHFZOJI.3CRLDTISWFUEQ@fairphone.com>
-Cc: <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>, "Sebastian
- Reichel" <sebastian.reichel@collabora.com>,
- <linux-hardening@vger.kernel.org>
-Subject: Re: [PATCH 10/11] MAINTAINERS: add myself as smbx charger driver
- maintainer
+Date: Fri, 20 Jun 2025 10:51:10 +0200
+Message-Id: <DAR8DDUQ8HM7.3IKL9TCT7SJM3@fairphone.com>
 From: "Luca Weiss" <luca.weiss@fairphone.com>
 To: "Casey Connolly" <casey.connolly@linaro.org>, "Sebastian Reichel"
  <sre@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
@@ -95,49 +89,50 @@ To: "Casey Connolly" <casey.connolly@linaro.org>, "Sebastian Reichel"
  Andersson" <andersson@kernel.org>, "Konrad Dybcio"
  <konradybcio@kernel.org>, "Kees Cook" <kees@kernel.org>, "Gustavo A. R.
  Silva" <gustavoars@kernel.org>
+Cc: <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>, "Sebastian
+ Reichel" <sebastian.reichel@collabora.com>,
+ <linux-hardening@vger.kernel.org>
+Subject: Re: [PATCH 04/11] power: supply: pmi8998_charger: rename to
+ qcom_smbx
 X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
 References: <20250619-smb2-smb5-support-v1-0-ac5dec51b6e1@linaro.org>
- <20250619-smb2-smb5-support-v1-10-ac5dec51b6e1@linaro.org>
-In-Reply-To: <20250619-smb2-smb5-support-v1-10-ac5dec51b6e1@linaro.org>
-
-Hi Casey,
+ <20250619-smb2-smb5-support-v1-4-ac5dec51b6e1@linaro.org>
+In-Reply-To: <20250619-smb2-smb5-support-v1-4-ac5dec51b6e1@linaro.org>
 
 On Thu Jun 19, 2025 at 4:55 PM CEST, Casey Connolly wrote:
-> Missed when this originally went upstream, add myself to the MAINTAINERS
-> file for this driver.
+> Prepare to add smb5 support by making variables and the file name more
+> generic. Also take the opportunity to remove the "_charger" suffix since
+> smb2 always refers to a charger.
 >
 > Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
 > ---
->  MAINTAINERS | 7 +++++++
->  1 file changed, 7 insertions(+)
+>  drivers/power/supply/Makefile                      |   2 +-
+>  .../supply/{qcom_pmi8998_charger.c =3D> qcom_smbx.c} | 148 ++++++++++---=
+--------
+>  2 files changed, 75 insertions(+), 75 deletions(-)
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index c2b570ed5f2f28341a3bcb7b699cbb250ffa2a88..a32e53d89c29cacf6e456258c=
-4c7c0206cf8abf2 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -20565,8 +20565,15 @@ L:	linux-arm-msm@vger.kernel.org
->  S:	Maintained
->  F:	Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
->  F:	drivers/mtd/nand/raw/qcom_nandc.c
-> =20
-> +QUALCOMM SMB2 CHARGER DRIVER
+> diff --git a/drivers/power/supply/Makefile b/drivers/power/supply/Makefil=
+e
+> index 4f5f8e3507f80da02812f0d08c2d81ddff0a272f..f943c9150b326d41ff241f826=
+10f70298635eb08 100644
+> --- a/drivers/power/supply/Makefile
+> +++ b/drivers/power/supply/Makefile
+> @@ -119,6 +119,6 @@ obj-$(CONFIG_RN5T618_POWER)	+=3D rn5t618_power.o
+>  obj-$(CONFIG_BATTERY_ACER_A500)	+=3D acer_a500_battery.o
+>  obj-$(CONFIG_BATTERY_SURFACE)	+=3D surface_battery.o
+>  obj-$(CONFIG_CHARGER_SURFACE)	+=3D surface_charger.o
+>  obj-$(CONFIG_BATTERY_UG3105)	+=3D ug3105_battery.o
+> -obj-$(CONFIG_CHARGER_QCOM_SMB2)	+=3D qcom_pmi8998_charger.o
+> +obj-$(CONFIG_CHARGER_QCOM_SMB2)	+=3D qcom_smbx.o
 
-SMB2/SMB5 or SMBX probably?
+While you may want to keep the CONFIG_ name the same, the description
+should be updated, at least in the SMB5 commit.
+
+  =E2=94=82 Say Y here to enable the Qualcomm PMIC Charger driver. This
+  =E2=94=82 adds support for the SMB2 switch mode battery charger found
+  =E2=94=82 in PMI8998 and related PMICs.
 
 Regards
 Luca
-
-> +M:	Casey Connolly <casey.connolly@linaro.org>
-> +L:	linux-arm-msm@vger.kernel.org
-> +S:	Maintained
-> +F:	Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.y=
-aml
-> +F:	drivers/power/supply/qcom_smbx_charger.c
-> +
->  QUALCOMM QSEECOM DRIVER
->  M:	Maximilian Luz <luzmaximilian@gmail.com>
->  L:	linux-arm-msm@vger.kernel.org
->  S:	Maintained
-
 
