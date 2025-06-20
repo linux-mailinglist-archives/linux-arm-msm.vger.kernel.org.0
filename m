@@ -1,192 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-61901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08160AE2110
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 19:39:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E916AE21D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 20:14:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7DC9C16E207
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 17:39:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E6C57188BA65
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 18:14:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAB6D2E7172;
-	Fri, 20 Jun 2025 17:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E51D2DF3CF;
+	Fri, 20 Jun 2025 18:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Fuufy6ry"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UkdN/irB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F9329C355
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 17:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04E01E7C32
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 18:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750441153; cv=none; b=cJP+OsDxvR7XzWpM2EKW3bNVaPx7a4+Sk1xZ+nFECeVKCZUgpGulz9lMWl5GQPLm38nPEOnmkyxyT86rMH3RQNDtrCPKYgf8YFl7+lJxZpgZMsKG3oud7+TjpCLALigscLExgUvnmPcniiC1aV4sQ3/78vuZtX6fW3JW7vhLux0=
+	t=1750443243; cv=none; b=ZmuonE04F8nNSOp2C7rTkeBuNJKvwIWLwPr5LHwfLzCiid0qW4XzAXjJjFf+Z19MCdXgTVeZMucyKaK8VQXHtb6IZt10tV4QGJgoo+LaWAUkLAnQfB7YG4l1a8ZIFgR9Zz5ZI0mCzIbK876XNr4e7UsUixl0AKPdyZ+hBP1eIvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750441153; c=relaxed/simple;
-	bh=oZD1xNj16wBtMPl2KYpBMl1KQEJsUgQ9ZavXtFYw6i0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DSZR6z59JyqstCygm22gd/SpmS4sCmjrU0haaa7cSVqN8oBCiCz4EqAzCzyusTwf1iXOgrVZcXTpMuLO0vtxdjabDj67wKRrobij9KF3Edvys5B2oTqMSQmdggzvRgeX8FNsq2mI6Yrn6IQDQymvY6SMDoOhL54QUHRUEHJS3m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Fuufy6ry; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1750443243; c=relaxed/simple;
+	bh=O9rMUb8dJS90DJ6roaFWV08HwXxZs4iuT9JWlNh1E80=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FvL6mUlqHFU6Ztp4uiT5cQgtdLGRhn2BEkI81vpBmJZlPYWlrlmc0oU0SigC2q0JtbdE3VYQPbUI06uzWxlz5P0N7uMA4RgNKfvEMNfkfsL8xK7zBSWV+H9KgQnN1PJBgvtHuPllNY695ayTREugT1llsoxb4l8S+Okn75cM0eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UkdN/irB; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55KHcKDg025318
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 17:39:11 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55KHcKFe025318
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 18:14:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MIzQyroerxtQLieSpZxpk3xlFK40waICuo303fVMmi0=; b=Fuufy6ry8qgXPJPt
-	JJEosJEMbmSyKSA0kmjxQrwb8SGypixrZS7uneGJL5ogRsBI9VMW58JdGyY9YgXB
-	mbNRZqPwTNv+H8Xw2CNCOmhXSzo3f+dew0Y6XNzEDe+kha7wAUQcl5oFu7Tc1eyn
-	wVLOiImOuhhWfOTgip69DjB1FkJLksmxDzd2RaWIMXcyU06lC2+PjFSpuxupNETH
-	YWT7rT1yflnGE+4mb1PHjFBL+lZa7sN5TsEcR3m0wxTL49ih26bZwe/ifc7khWao
-	92oxTadDoYJbc5WXv3rWLuBbxwGxmd47upAu6EPqnjImsW7m0B5P+k3S8cx9GiEp
-	EYHCxQ==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47dc72r02k-1
+	jG+tT6iYc7a6QUyEAhUjHjnsvAkz1ye2EdBIx/ExqFk=; b=UkdN/irB8eMnJ2NO
+	0jKqzAQYkjVmkjPwzGLnd2yjmhC6ai+LAD0gYtUrCOK8BEwRvqqoZR/ugLxYiVuX
+	9k9jLWr44aC3OHxETeTlhAm5+i8CiiOz8ZilzWSUj7Q4JnCemiVtWuStq45Huipk
+	A2+GSGi0whhqnkJ4UEP5TzN7Q/5w/1yuxrrFt/OdGIICQ5+CmHrvfC6J0/KF+aSS
+	0YloyFiwf30ppri10MrRtHrzhqKNyO8yu9zt9UQBThQGIkh4AnV5NWIsl3e7YfQ9
+	MsdHh5fl5Yox+G5VF2uNNL4og0XshRfyaWglpdIwx/PjnaavMahQY9VnybmUaRgI
+	ERE2Ng==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47dc72r270-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 17:39:10 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6fb030f541bso5067116d6.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 10:39:10 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 18:14:00 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7caee990721so466570285a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jun 2025 11:14:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750441150; x=1751045950;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MIzQyroerxtQLieSpZxpk3xlFK40waICuo303fVMmi0=;
-        b=p6Kw+hc7ti5yc2FA0GBLQYEUo26rb7KOeNFF+tjlGEOT1Av945eGdotqIjTQb1mvTL
-         ix/lj2CBkmhjUPQWPWAc7JuSazHC3kcZG2Oas9onWOl7TMnE0Th0TjUqf65puG+3VgAF
-         fdRorpStT14iwfKEmgddDZCnakzcgFRgZhkF/oJRTRV40TVnln1WLFortau3A3SpF+Jk
-         HAoVcyJVZTZe2GGkgRJUpr1I1rWjDtQE7gAvXdeb6MjhSP8n4UtJuPbR8HEKMSfno/VO
-         tdkMZbZRAySIK1gMNyo+4Wy86YNvgwZdXdUJv/KnYtzEwWteMXZ3Ba4gBTetcYoeG2GY
-         85TA==
-X-Forwarded-Encrypted: i=1; AJvYcCUhBqEEXixDibinD0hoiGqFv5mpjP8lfUE/5P+eboGyF8UnqLqvR4HQJnYPqk+pyQNhE1DFtLAKwueK4J4W@vger.kernel.org
-X-Gm-Message-State: AOJu0YwvQogu0Pa5X6HGOIRxKQ393jh9GI55Y3C1IObrAhIIgdFF7vVQ
-	dg3gjujKtpRvAOKC3LfCHIGT2oZbhA5nkDpPyfcq2HL89p1LJ3H9MSqPUW1vXoFDnZGWN8yr4fD
-	1x4yEYGa+IVz0GnMdUdcXOSqvQx0nCP8mEjpW+j52hSvGDA9f4nk7ubuBS1FEJX8WuZ4V
-X-Gm-Gg: ASbGnctrTgmyipoTUN9grOuNKFZEW8O1TKsZXJn0pe8H/LxC/IGWruXedgKtOM/Zae9
-	7tf8ct26eKoPyqjkvF7BqMDKkhGwM+KmERol5zr4DA4dyBkSbJR9OICUo8egkyaEWFmQI9lAcB/
-	Yi1ZGI375laNra2M2iZy4jYGBZrwjycltcp9rKqMw9D21sGQMSpLYSl1+ENuGlDfcxWVaVOf4bg
-	QRkBFeoqhkn7fK8ojg/2VEMQq5IKGnti6JRKb0Siyi458sOQAc2WuXvzJ+pgtJyeSJ6GfYVY+Xj
-	zDCjjgPqvgLVQn2WL9h4ichW12LLajTSYbpbdukf1+ZIUsHNHJ14rwY6DowhVlL0kCf4JzSs787
-	/ABs=
-X-Received: by 2002:a05:620a:608a:b0:7d0:aafe:dd6 with SMTP id af79cd13be357-7d3f98b45efmr205528985a.1.1750441149918;
-        Fri, 20 Jun 2025 10:39:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEldEd/5u4LjK+ngUSwInt4G+HtJbJuyQ7dN6nn2mCwiZYCVBKZAsFgmxDZfrnlwznHevAmEw==
-X-Received: by 2002:a05:620a:608a:b0:7d0:aafe:dd6 with SMTP id af79cd13be357-7d3f98b45efmr205527585a.1.1750441149405;
-        Fri, 20 Jun 2025 10:39:09 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae0542035ddsm193586066b.147.2025.06.20.10.39.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Jun 2025 10:39:08 -0700 (PDT)
-Message-ID: <ffe32102-cc55-4f86-b945-ae77a4e163bd@oss.qualcomm.com>
-Date: Fri, 20 Jun 2025 19:39:06 +0200
+        d=1e100.net; s=20230601; t=1750443240; x=1751048040;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jG+tT6iYc7a6QUyEAhUjHjnsvAkz1ye2EdBIx/ExqFk=;
+        b=c0foQaiHlsAtHiDImygs2pq/kW8RqiRkfW4z956C0foEpyMGnnD4DCM2nwGVpkz3vS
+         ocfLBYUmvIUUDdWzbNeBM1TP02liXXF43RslqWH3PkI84QcnLUFRCvlXjrYIBzz+b+Wx
+         xLdxDdrRF1rlFwHDWK0G7WytVVp/7l8hZUsnxHD/6AoIUCWNA03KvMMdU8roOFDtcGUg
+         S/4Fjyz+eL/vMZ0r6X7M+lWOyINRntruiGnBl2GmpUQtzmG2C1UDnneumMle72sz2yA0
+         lW/CMaEQZZm3X2AcMtwdtekUR1ir0efqjNfb8xA1QkBigEKTF1WZlTUvNSrtQq+ek31E
+         KIbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVowat5caxfGX/V7Z+So0GL8iuESyzb4h1aAZU8pZCZSgIsaVMdhRnKIvJCKr8qtfwoo3EdqfQ8ZbauYxl9@vger.kernel.org
+X-Gm-Message-State: AOJu0YxyQqk1K3/RXehbrVj4jL19PT3INYxnczkxs0fZIUK+JYvxOh5O
+	Xbd/rUPwE+loPo2R/u8qSQb//obR8UjqXUwoktsNOvoqHLK4CNSpciVuvs+BpsswOkHpCsjYSyg
+	lfBWY1YBFfrwok3T2jXAu8omSZNN1LjExEdD0voIzps2NoxPN7b/ghBUvlk8UFAhizhdS
+X-Gm-Gg: ASbGncvMlt2NkdKTtbcN1sXPY2iHM0814A6vmy3kO5b9tPTGaLQJKAEJa58MUVTSu6c
+	fi6Fl8hH2/6LS0Hxntwd0x/o1OEApaRgXAHWS3/L+2lw9xEm74gUW0CNhr/nrH6BsBfOmLw67V8
+	jqkXoXNkEzcJ/PFPACArmQDtEKeuiGyZuI7iXRE4mgBqGKN+NrIwOHblc+laIX5uNkQvEPcDMrW
+	iqTRM3jZ2wZHRDI4x0Ei3g9fzKSL1txBSXboroyylOhRZGGZRl033XIsItUOh4hb5+nu2TZC/m/
+	uUqV1WO5UeJ6Aum16wzG6XjAlOwDADpI3SWx1KATcG/lRaIXIBrXmhhapziTlAHEf8XFE3/Trmx
+	3r/XTAgVXwAKOnKteSrXrhJ8dO2V3Kag8P+Y=
+X-Received: by 2002:a05:620a:f12:b0:7d0:a25b:d04c with SMTP id af79cd13be357-7d3f98c5721mr607832885a.9.1750443239579;
+        Fri, 20 Jun 2025 11:13:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGrRvs8vYgSxtHBNL8Gik6EafDnQeb6cUhaJFFn4yZST6SpGSMyqxM73JI0IZzDqbtPeAIlXg==
+X-Received: by 2002:a05:620a:f12:b0:7d0:a25b:d04c with SMTP id af79cd13be357-7d3f98c5721mr607826485a.9.1750443238988;
+        Fri, 20 Jun 2025 11:13:58 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553e4144306sm363384e87.18.2025.06.20.11.13.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Jun 2025 11:13:56 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Vinod Koul <vkoul@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, Dmitry Baryshkov <lumag@kernel.org>
+Subject: Re: [PATCH v5 00/30] drm/msm/dpu: rework HW block feature handling
+Date: Fri, 20 Jun 2025 21:13:51 +0300
+Message-Id: <175044313810.2014621.9717827153141285782.b4-ty@oss.qualcomm.com>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250522-dpu-drop-features-v5-0-3b2085a07884@oss.qualcomm.com>
+References: <20250522-dpu-drop-features-v5-0-3b2085a07884@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: clock: qcom,sm8450-videocc: Add minItems
- property
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel test robot <lkp@intel.com>
-References: <20250618-sm8450-videocc-camcc-bindings-single-pd-fix-v1-0-02e83aeba280@quicinc.com>
- <20250618-sm8450-videocc-camcc-bindings-single-pd-fix-v1-1-02e83aeba280@quicinc.com>
- <4657c6d8-8454-478a-aac3-114c6194b72e@linaro.org>
- <5ed72663-da54-46a4-8f44-1ceda4a7d0d9@quicinc.com>
- <6068badd-8d33-4660-aef8-81de15d9b566@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <6068badd-8d33-4660-aef8-81de15d9b566@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=GNgIEvNK c=1 sm=1 tr=0 ts=68559cbe cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=-bYYbqjr0qm3h48m4OUA:9
- a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-ORIG-GUID: 7b7nFGF9BhPTLw36yckk8Nb4KnePo9li
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjIwMDEyNCBTYWx0ZWRfX9ciTwNHa2PDL
- 4u8ICGlFCJN4AkxC6MtV60VS0aS+0/vOMJq6c6d2eJyBpC8qLmVyoczzXgrrGEqryd25yq22yOr
- OuRH+z1l6nHe1mw1h0yKGTgWCHTIfHFX2iWvA4drjjWv7BSAYWSY7bvkNL2QSAP9wuiuy8nOvrF
- dAgwr8mYqGB01siKHq02RyBSuRmpVANMW06OJw4AjIzHYIrFYjchZ3Va8YA1EHyKO5qD7K1uwvc
- N8d42T+FfEpMNiN4HlRK190mgoyCCBXxIQ6m9bkQbDiAPMWnz47BTKHPx+SArtHhsSES8BwxlfG
- b5pX8QlkUeJJ4AE9874hwJHPf+dmFDJis5IszXpWJJZLZZW3xWj0uEjmsusWnsPqDR+xhtpjVC6
- f1iYrzhHufwi3BTw4rHbDsmzrysN3CeSqQ9H3zHGY9XYjlLJ0IFpR0zmub5gWLW7nLFGE7J2
-X-Proofpoint-GUID: 7b7nFGF9BhPTLw36yckk8Nb4KnePo9li
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=GNgIEvNK c=1 sm=1 tr=0 ts=6855a4e8 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=6IFa9wvqVegA:10 a=e5mUnYsNAAAA:8 a=KLh1uqfzAhr9BImysYoA:9 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22 a=Vxmtnl_E_bksehYqCbjh:22
+X-Proofpoint-ORIG-GUID: 3TlrlBOeU-mE23qGF-DVTwkNOopYvbRV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjIwMDEyNyBTYWx0ZWRfX8xkl/TRG9XOl
+ Ls3mERjBQJsLPh/fXdgbagYVReP1o4ebqH9TvE8J0H0X/kaASjgZmScqwcnz4Ip0Hp8OCybirg0
+ v75gyiDQjB4Fphv3qiDL6/UQkPEL2B3JXtR1bc7Wlp1cA3rz1dTFaQt3M8YxMsWYej8iz2wEEQZ
+ RUMIlXYvMuo6XrAP0Sd1qi7R8DmTv2Elo5OA9RRww0e1vAW5B+4iYQg8nSoLdW4zBNhCrsmD6RV
+ xFMvkaU5+QhxLqYnoAXzaHx1cooTgreaxvHtL/GnWqefLRUXHO8AWU1p12UEED4nFokKRh6jOuu
+ 5V+NuDhG2m0ArCuAZAjjbkY+bm5Rx4IIeSPe+TAhYwbB22cbFJNIyu48XeN6loRwl7zI/od0iLU
+ Lgh40VwJ4wGs3ZUTd/0OGqznVrNxo+j3JOyRSobEojl7pN0uvqpIgbRDl5+W+1h2sfB3L+N1
+X-Proofpoint-GUID: 3TlrlBOeU-mE23qGF-DVTwkNOopYvbRV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-20_07,2025-06-20_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  phishscore=0 mlxscore=0 suspectscore=0 spamscore=0 impostorscore=0
- lowpriorityscore=0 mlxlogscore=999 clxscore=1015 malwarescore=0 bulkscore=0
+ lowpriorityscore=0 mlxlogscore=823 clxscore=1015 malwarescore=0 bulkscore=0
  priorityscore=1501 adultscore=0 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506200124
+ engine=8.19.0-2505280000 definitions=main-2506200127
 
-On 6/20/25 7:56 AM, Krzysztof Kozlowski wrote:
-> On 19/06/2025 12:20, Jagadeesh Kona wrote:
->>
->>
->> On 6/18/2025 11:56 AM, Krzysztof Kozlowski wrote:
->>> On 17/06/2025 21:07, Jagadeesh Kona wrote:
->>>> Add minItems as 1 for power-domains and required-opps properties
->>>> to allow this binding to be compatible with both single and multiple
->>>> power domains.
->>>
->>> This is your hardware, so you know how it works thus I expect here
->>> arguments why this is correct from the hardware point of view. Without
->>> this, it is impossible to judge whether this is a correct change.
->>>
->>> If I overlook this now, it will be used in discussions by other qcom
->>> engineers, so unfortunately you see, you need to prepare perfect commits
->>> now...
->>>
->>
->> These clk controllers mainly require MMCX power domain to be enabled to access
->> the clock registers. But to configure the cam & video PLLs in probe, an additional
->> MXC power domain also needs to be enabled.
-> 
-> 
-> Then your patch is not correct. Anyway, you should explain the hardware
-> in commit msg, why this domain is optional in the hardware.
-> 
->>
->> Since the initial DTS changes only added MMCX power domain, this change is required
->> to be backward compatible with older DTS and avoid ABI breakage as discussed in below
->> thread.
-> 
-> 
-> So you send incorrect hardware description allowing something which will
-> not work? Or how exactly?
 
-So I think there's a mistake in understanding the backwards compatibility
-paradigm here.
+On Thu, 22 May 2025 22:03:19 +0300, Dmitry Baryshkov wrote:
+> Some time ago we started the process of converting HW blocks to use
+> revision-based checks instead of having feature bits (which are easy to
+> miss or to set incorrectly). Then the process of such a conversion was
+> postponed. (Mostly) finish the conversion. The only blocks which still
+> have feature bits are SSPP, WB and VBIF. In the rare cases where
+> behaviour actually differs from platform to platform (or from block to
+> block) use unsigned long bitfields, they have simpler syntax to be
+> checked and don't involve test_bit() invocation.
+> 
+> [...]
 
-There exists a single, objectively correct and represented in hardware,
-list of required power-domains and the commit that caused the schema
-validation errors was essentially "align YAML with reality" which should
-be coupled with an immediate DT update to match and we forget about the
-incomplete past
+Applied, thanks!
 
-Konrad 
+[01/30] drm/msm/dpu: stop passing mdss_ver to setup_timing_gen()
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/5d25efaaa327
+[02/30] drm/msm/dpu: drop INTF_SC7280_MASK
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/768d87108f24
+[03/30] drm/msm/dpu: inline _setup_ctl_ops()
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/cc34e7f8d8a3
+[04/30] drm/msm/dpu: inline _setup_dsc_ops()
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/155e4d05136b
+[05/30] drm/msm/dpu: inline _setup_dspp_ops()
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/cfc1dbe27f63
+[06/30] drm/msm/dpu: inline _setup_mixer_ops()
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/d01d027a6ae1
+[07/30] drm/msm/dpu: remove DSPP_SC7180_MASK
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/64558d6ec1dc
+[08/30] drm/msm/dpu: get rid of DPU_CTL_HAS_LAYER_EXT4
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/40b7aa8fb641
+[09/30] drm/msm/dpu: get rid of DPU_CTL_ACTIVE_CFG
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/a1c5eafeab9b
+[10/30] drm/msm/dpu: get rid of DPU_CTL_FETCH_ACTIVE
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/a22c33cb4ccc
+[11/30] drm/msm/dpu: get rid of DPU_CTL_DSPP_SUB_BLOCK_FLUSH
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/91003d9f8fb6
+[12/30] drm/msm/dpu: get rid of DPU_CTL_VM_CFG
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/e479fb02dc72
+[13/30] drm/msm/dpu: get rid of DPU_DATA_HCTL_EN
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/39890da06970
+[14/30] drm/msm/dpu: get rid of DPU_INTF_STATUS_SUPPORTED
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/e7da245a3402
+[15/30] drm/msm/dpu: get rid of DPU_INTF_INPUT_CTRL
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/9db68425f24c
+[16/30] drm/msm/dpu: get rid of DPU_PINGPONG_DSC
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/d521c4200c94
+[17/30] drm/msm/dpu: get rid of DPU_PINGPONG_DITHER
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/bbd131f1e095
+[18/30] drm/msm/dpu: get rid of DPU_MDP_VSYNC_SEL
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/5094aa5474a2
+[19/30] drm/msm/dpu: get rid of DPU_MDP_PERIPH_0_REMOVED
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/820405f6e2e6
+[20/30] drm/msm/dpu: get rid of DPU_MDP_AUDIO_SELECT
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/b14f7c55b079
+[21/30] drm/msm/dpu: get rid of DPU_MIXER_COMBINED_ALPHA
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/5b14c003781b
+[22/30] drm/msm/dpu: get rid of DPU_DIM_LAYER
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/36beee41c4c3
+[23/30] drm/msm/dpu: get rid of DPU_DSC_HW_REV_1_2
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/27b1a01fcdb8
+[24/30] drm/msm/dpu: get rid of DPU_DSC_OUTPUT_CTRL
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/a88c80ecb442
+[25/30] drm/msm/dpu: get rid of DPU_WB_INPUT_CTRL
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/fa811f768713
+[26/30] drm/msm/dpu: get rid of DPU_SSPP_QOS_8LVL
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/0709ec21abcf
+[27/30] drm/msm/dpu: drop unused MDP TOP features
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/0ea9f990c352
+[28/30] drm/msm/dpu: drop ununused PINGPONG features
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/a1e42a921dee
+[29/30] drm/msm/dpu: drop ununused MIXER features
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/1f783bf4f8f9
+[30/30] drm/msm/dpu: move features out of the DPU_HW_BLK_INFO
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/c70c860fb00c
+
+Best regards,
+-- 
+With best wishes
+Dmitry
+
 
