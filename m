@@ -1,168 +1,371 @@
-Return-Path: <linux-arm-msm+bounces-61917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BB67AE24D5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jun 2025 00:06:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50D8EAE2581
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jun 2025 00:27:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DA6943B841B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 22:06:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C09971BC69A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jun 2025 22:27:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CBEC23814A;
-	Fri, 20 Jun 2025 22:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2201A23C8C9;
+	Fri, 20 Jun 2025 22:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VKK7sG80"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="iVE6Hq+p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772BB221DAC;
-	Fri, 20 Jun 2025 22:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD23623C505;
+	Fri, 20 Jun 2025 22:20:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750457182; cv=none; b=ZFzsswkZfP8mr+TpiKnINyC3X9EAAMX+me6eaLirRIBGpEme4IJcV3SZT4U+7YOmFc4dQMoVlokNw6cxyAJEqJ0vLyymZEJm20QvRbDS7rFnGC2/7/oN+cTVg0bhb+s7Qp4DB0uFqordfq0b+sRA8Kr+QfbuD6Qm1SFjuEreQ6o=
+	t=1750458022; cv=none; b=WzbIXK1QkR80X4zw+j36Xej/zXUyd6iB2Mp+YCz/IcsT0NIxrjbQSppG251reqhGw5I26PhNouxqI0PqwUSds8qwDqRdYsWNgoRAdG4Kg+XUoWbS78np44IeArq5hgo4Ya7XA7t0vhZ0CK0sXSflxwlCj0BePoKG1PXD6avm9ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750457182; c=relaxed/simple;
-	bh=H8bLbm8mQ5ONpzCJ5rL6mWTR4959rBNGjMmqbfMAJKo=;
+	s=arc-20240116; t=1750458022; c=relaxed/simple;
+	bh=qHB0fqkbMgKmWT614pkeoUg7b5X7upr9aAVqBFaaggw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=quv9t8fcXRa3cl+T/B0chAKuMEMvK3mZEjaKqVBUG1pNa39UaSvVBlesMc4tFqaS6CQ6wWPXlbcIiwTZq+Vyt2W4w5qrnyDT9kt6RaAuE7O9/AN33RYPKHAgAh+X/yH5Y3ShLjpw8FGt/FdXJBgKRwY4UoH0OP3ab1woA89vpL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VKK7sG80; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-adb4e36904bso453607866b.1;
-        Fri, 20 Jun 2025 15:06:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750457179; x=1751061979; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/nZ5vLwAzsNnnPm1vpVhd40+MzAtASMHps3Kb30tzxE=;
-        b=VKK7sG80WDD05slSwWtDQHHyX4BoAoEDC5l5Y+MV5WX2kbsweHhzHmH5Wxbm7SFNlH
-         PmpBObpJ3XxrIVcSoH0F6TYLRIHTPD/943oBPyawQEl+KUeY0wlsa4q4glfI+14LupqO
-         G1PhWu1M7a48U+V6avLqKjtHfLpJKR9v50Y3Q133G6jOyGi1iUuEcXFWNiXJNtTXGqWV
-         uC2gQMTWm0F+PimJDPBSxC46rptGpKJKcG3MHN7x8IRFfPcSS418J2/W1s5FJsBo6bQU
-         G38V4HbG6mDpoLEas5zwDgRXtRMMeC3ZfI1KpG+c1GoNBJF+xQK2bYF43GD7HRB6PmwL
-         F7ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750457179; x=1751061979;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/nZ5vLwAzsNnnPm1vpVhd40+MzAtASMHps3Kb30tzxE=;
-        b=i6RyLoB9CTpMzslgo/6/17BjfsuWadCN9eBowN0MeLFF7SoG44Wnp8Njr8FyTIv8J9
-         HSDvfuN+IKm9TnhDEIoNTWk+eFwvN2Qqx87V493PmON1KpUUCUQPey+Q0jJiuCygMita
-         rEgyq68xyT5tSvxFTX+mMmqjkR1IUS062runLlnSAdge+Ok5XUcWP3UP/V/beNQhx3Xm
-         5evhGtt4N++ESglhx3yzbJbej83GB7A0vL/Nu434apX1xvm87cwBeLSspoZ3fmEtdz1Q
-         0aHyLa332iL3uaxMMQGRfn8m1931a1jHtITzdwzF51zfWe1xiHnOGP5xRldLTHpWnCBW
-         vDoA==
-X-Forwarded-Encrypted: i=1; AJvYcCU1eblzd5toEo75zzJjNCSOyGaxbFae7muhiXmynWJpkIIsV4XosWwf9bCr2ktb+EfbGYlD8dlT5Z9k/njfdg==@vger.kernel.org, AJvYcCVUwxRtehTxa/mdOrBm0FH6fvGE0fpcGYAq0+IdVTr3WoTXktNhc98TeTEQ6ZcC5qbVAyoIcBe9Mnxy@vger.kernel.org, AJvYcCW6fY1Mlv2m5yOsHgrGe5A1cqXdwbC7UDlXsvF9G5vnAET8a8K5/bzlOoh/B+VvgzI4aK9aGNmlOEu7MsLx@vger.kernel.org, AJvYcCWyXcw4JoP8h1UIkT2EKyVzGIZgKri6P/lbwn3K3+5/C25M1nhW/hBB31jK9r+YWb6irE/KcJD5hLI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyavWSwGOY+mUbeuT2Y7oI9bCgZEAzbOXBGUimim8MZ1byU2sgR
-	VRGnj38ZSLuJI9+CQ+2UHk4S6yAUg8IVp/l3oixvIZn9bb6v0tpcP8E=
-X-Gm-Gg: ASbGnctPU8a+RclwvOU1PIt9ffvp0kiDRYGHD+DaU6qaM/kuw6BDCrfVqIklZ/xC5dz
-	aJhpysU7x/uClOjuuvvE4ArsvzTM/Z1FKU6Cp+akwCK5MlVvr8Wn7wt3Z7S3dO6iEvc9Ex51q3D
-	Vi75bGlWLvwjTWZ5/lQ17b82PSHMrw/pNPmeKUKHMKbDTmzJM79iSwRH/mNX1yp5eVBhEEmqQge
-	USZHp32JfLuB4+c8qqKY860l0ftV6hNKzwZW4Y5y4r7KSW1cprREbxfk79OSSS2a8MHCOoa8yuU
-	u2ysIFkGiFVz8KIMRWxNkX20dCGdUp8p+EXG1W2LtfFcvvCLtRieygSMZw8bYpbZITv1nvZumQ=
-	=
-X-Google-Smtp-Source: AGHT+IEYDHPLPS/aiLsylQmdV4aS29FcdoVYkARHkjeD3JC5HuUi2/GalehZw8KEnx2WXwNuzXZgDw==
-X-Received: by 2002:a17:907:1ca8:b0:ade:35fc:1a73 with SMTP id a640c23a62f3a-ae057f9e1b6mr483910966b.55.1750457178076;
-        Fri, 20 Jun 2025 15:06:18 -0700 (PDT)
-Received: from [192.168.20.26] ([84.226.118.249])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae054083406sm227701466b.75.2025.06.20.15.06.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Jun 2025 15:06:17 -0700 (PDT)
-Message-ID: <970c41dc-e89b-4963-abbe-398dc3d53110@gmail.com>
-Date: Sat, 21 Jun 2025 00:06:16 +0200
+	 In-Reply-To:Content-Type; b=fzcZd/7XtDmYLGXBf7g7zmbpLmzBd2H50MQxn2wKF2MQNoHiS7VXS2/ya90/yU8XhBrWr/suVvvTnbKGCC/iTemsoVsIlyJuynljv1+HsMVGBZV8e3npMID6obAJoUkh3Ae1G3C6d4lJ84Wnkh6Wfv5YCFMZ65edYE3UBLKJ6ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=iVE6Hq+p; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1750458012; bh=qHB0fqkbMgKmWT614pkeoUg7b5X7upr9aAVqBFaaggw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=iVE6Hq+pcNg2FfnGNByMbjpvehjarmWT7OQs2GajQbkSynVd2VgMuh/yKdzn7cZAF
+	 Wu6tWc9RFvx8Co/hPqQf4zQB/nhDADEcZjMcDyHRkjsejcGFBQji8bEsdD/LaDlxZO
+	 Xu2HzcMYCSx75i0o71wK6CmaK1LkMprg+RxjCPXc=
+Message-ID: <d4564d4b-9510-47f8-9930-65d3c4e90e6c@lucaweiss.eu>
+Date: Sat, 21 Jun 2025 00:20:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/4] Support for Adreno X1-45 GPU
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
- Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-pm@vger.kernel.org, Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20250620-x1p-adreno-v3-0-56398c078c15@oss.qualcomm.com>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: msm8953: Add device tree for
+ Billion Capture+
 Content-Language: en-US
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-In-Reply-To: <20250620-x1p-adreno-v3-0-56398c078c15@oss.qualcomm.com>
+To: cristian_ci@protonmail.com, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org
+References: <20250620-rimob-initial-devicetree-v1-0-8e667ea21f82@protonmail.com>
+ <20250620-rimob-initial-devicetree-v1-3-8e667ea21f82@protonmail.com>
+From: Luca Weiss <luca@lucaweiss.eu>
+In-Reply-To: <20250620-rimob-initial-devicetree-v1-3-8e667ea21f82@protonmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
+Hi Cristian,
 
-On 6/20/25 08:54, Akhil P Oommen wrote:
-> Add support for X1-45 GPU found in X1P41200 chipset (8 cpu core
-> version). X1-45 is a smaller version of X1-85 with lower core count and
-> smaller memories. From UMD perspective, this is similar to "FD735"
-> present in Mesa.
->
-> Tested Glmark & Vkmark on Debian Gnome desktop.
->
-> I think Bjorn can pick the DT patch and Rob Clark can pick up the rest.
->
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+On 20-06-2025 11:51 p.m., Cristian Cozzolino via B4 Relay wrote:
+> From: Cristian Cozzolino <cristian_ci@protonmail.com>
+> 
+> Billion Capture+ (flipkart,rimob) is a smartphone released in 2017, based
+> on Snapdragon 625 (MSM8953) SoC.
+> 
+> Add a device tree with initial support for:
+> 
+> - GPIO keys
+> - SDHCI (internal and external storage)
+> - USB Device Mode
+> - Regulators
+> - Simple framebuffer
 
-Hi,
+Thanks for sending this upstream!
 
-Thanks for the long awaited series!
-Works on Asus Zenbook A14 UX3407QA (x1-26-100), tested on Ubuntu 24.10 
-with Gnome 47 on Wayland.
-
-Tested-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com> # x1-26-100
-
-Regards,
-Alex
-
+> 
+> Signed-off-by: Cristian Cozzolino <cristian_ci@protonmail.com>
 > ---
-> Changes in v3:
-> - Rebased on v6.16-rc1
-> - Fixed speedbin table in drm/msm
-> - Corrected the regex for the adreno opp node (Krzysztof)
-> - Replace underscore with hypen in DT node names (Krzysztof)
-> - Link to v2: https://lore.kernel.org/r/20250611-x1p-adreno-v2-0-5074907bebbd@oss.qualcomm.com
->
-> Changes in v2:
-> - Skip 'delete-property' wherever it is unnecessary (Dmitry)
-> - Reorder dt nodes alphabetically (Konrad)
-> - A new patch#1 to fix the dtbs_check error
-> - Link to v1: https://lore.kernel.org/r/20250607-x1p-adreno-v1-0-a8ea80f3b18b@oss.qualcomm.com
->
-> ---
-> Akhil P Oommen (4):
->        dt-bindings: opp: adreno: Update regex of OPP entry
->        arm64: defconfig: Enable X1P42100 GPUCC driver
->        drm/msm/adreno: Add Adreno X1-45 support
->        arm64: dts: qcom: Add GPU support to X1P42100 SoC
->
->   .../bindings/opp/opp-v2-qcom-adreno.yaml           |   2 +-
->   arch/arm64/boot/dts/qcom/x1e80100.dtsi             |   7 ++
->   arch/arm64/boot/dts/qcom/x1p42100-crd.dts          |   4 +
->   arch/arm64/boot/dts/qcom/x1p42100.dtsi             | 120 ++++++++++++++++++++-
->   arch/arm64/configs/defconfig                       |   1 +
->   drivers/gpu/drm/msm/adreno/a6xx_catalog.c          |  39 +++++++
->   6 files changed, 170 insertions(+), 3 deletions(-)
-> ---
-> base-commit: d9946fe286439c2aeaa7953b8c316efe5b83d515
-> change-id: 20250603-x1p-adreno-219da2fd4ca4
->
-> Best regards,
+>   arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+>   .../arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts | 251 +++++++++++++++++++++
+>   2 files changed, 252 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 140b0b2abfb555b8ef61bd9ed0217d8997800809..af3757ca017b6e3d8c579e43f647a71fc64c62b3 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -70,6 +70,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-samsung-a7.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-wingtech-wt82918.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-wingtech-wt82918hd.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-flipkart-rimob.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-mido.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts b/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..9fc58bb4dae7b463691659f8e84a634529642b69
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
+> @@ -0,0 +1,251 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2025, Cristian Cozzolino
+> + */
+> +/dts-v1/;
+> +
+> +#include "msm8953.dtsi"
+> +#include "pm8953.dtsi"
+> +#include "pmi8950.dtsi"
+> +
+> +/delete-node/ &cont_splash_mem;
+> +/delete-node/ &qseecom_mem;
+> +
+> +/ {
+> +	model = "Billion Capture+";
+> +	compatible = "flipkart,rimob", "qcom,msm8953";
+> +	chassis-type = "handset";
+> +	qcom,msm-id = <293 0>;
+> +	qcom,board-id = <0x340008 0>;
+> +
+> +	chosen {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		framebuffer@90001000 {
+> +			compatible = "simple-framebuffer";
+> +			reg = <0 0x90001000 0 (1920 * 1080 * 3)>;
+> +
+> +			width = <1080>;
+> +			height = <1920>;
+> +			stride = <(1080 * 3)>;
+> +			format = "r8g8b8";
+> +
+> +			power-domains = <&gcc MDSS_GDSC>;
+> +
+> +			clocks = <&gcc GCC_MDSS_AHB_CLK>,
+> +				 <&gcc GCC_MDSS_AXI_CLK>,
+> +				 <&gcc GCC_MDSS_VSYNC_CLK>,
+> +				 <&gcc GCC_MDSS_MDP_CLK>,
+> +				 <&gcc GCC_MDSS_BYTE0_CLK>,
+> +				 <&gcc GCC_MDSS_PCLK0_CLK>,
+> +				 <&gcc GCC_MDSS_ESC0_CLK>;
+> +		};
+> +	};
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&gpio_key_default>;
+> +
+> +		key-volume-up {
+> +			label = "Volume Up";
+> +			gpios = <&tlmm 85 GPIO_ACTIVE_LOW>;
+> +			linux,code = <KEY_VOLUMEUP>;
+> +			debounce-interval = <15>;
+> +		};
+> +	};
+> +
+> +	reserved-memory {
+> +		qseecom@0 {
+
+qseecom@84a00000 ?
+
+> +			reg = <0x00 0x84a00000 0x00 0x1900000>;
+> +			no-map;
+> +		};
+> +
+> +		cont_splash_mem: cont-splash@90001000 {
+> +			reg = <0x0 0x90001000 0x0 (1080 * 1920 * 3)>;
+> +			no-map;
+> +		};
+> +	};
+> +
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +	};
+> +};
+> +
+> +
+> +&hsusb_phy {
+> +	vdd-supply = <&pm8953_l3>;
+> +	vdda-pll-supply = <&pm8953_l7>;
+> +	vdda-phy-dpdm-supply = <&pm8953_l13>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pm8953_resin {
+> +	linux,code = <KEY_VOLUMEDOWN>;
+> +	status = "okay";
+> +};
+> +
+> +&rpm_requests {
+> +	regulators {
+> +		compatible = "qcom,rpm-pm8953-regulators";
+> +		vdd_s1-supply = <&vph_pwr>;
+> +		vdd_s2-supply = <&vph_pwr>;
+> +		vdd_s3-supply = <&vph_pwr>;
+> +		vdd_s4-supply = <&vph_pwr>;
+> +		vdd_s5-supply = <&vph_pwr>;
+> +		vdd_s6-supply = <&vph_pwr>;
+> +		vdd_s7-supply = <&vph_pwr>;
+> +		vdd_l1-supply = <&pm8953_s3>;
+> +		vdd_l2_l3-supply = <&pm8953_s3>;
+> +		vdd_l4_l5_l6_l7_l16_l19-supply = <&pm8953_s4>;
+> +		vdd_l8_l11_l12_l13_l14_l15-supply = <&vph_pwr>;
+> +		vdd_l9_l10_l17_l18_l22-supply = <&vph_pwr>;
+> +		vdd_l23-supply = <&pm8953_s3>;
+> +
+> +		pm8953_s1: s1 {
+> +			regulator-min-microvolt = <870000>;
+> +			regulator-max-microvolt = <1156000>;
+> +		};
+> +
+> +		pm8953_s3: s3 {
+> +			regulator-min-microvolt = <1224000>;
+> +			regulator-max-microvolt = <1224000>;
+> +		};
+> +
+> +		pm8953_s4: s4 {
+> +			regulator-min-microvolt = <1900000>;
+> +			regulator-max-microvolt = <2050000>;
+> +		};
+> +
+> +		pm8953_l1: l1 {
+> +			regulator-min-microvolt = <1000000>;
+> +			regulator-max-microvolt = <1000000>;
+> +		};
+> +
+> +		pm8953_l2: l2 {
+> +			regulator-min-microvolt = <975000>;
+> +			regulator-max-microvolt = <1225000>;
+> +		};
+> +
+> +		pm8953_l3: l3 {
+> +			regulator-min-microvolt = <925000>;
+> +			regulator-max-microvolt = <925000>;
+> +		};
+> +
+> +		pm8953_l5: l5 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +		};
+> +
+> +		pm8953_l6: l6 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +		};
+> +
+> +		pm8953_l7: l7 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1900000>;
+> +		};
+> +
+> +		pm8953_l8: l8 {
+> +			regulator-min-microvolt = <2900000>;
+> +			regulator-max-microvolt = <2900000>;
+> +		};
+> +
+> +		pm8953_l9: l9 {
+> +			regulator-min-microvolt = <3000000>;
+> +			regulator-max-microvolt = <3300000>;
+> +		};
+> +
+> +		pm8953_l10: l10 {
+> +			regulator-min-microvolt = <2850000>;
+> +			regulator-max-microvolt = <2850000>;
+> +		};
+> +
+> +		pm8953_l11: l11 {
+> +			regulator-min-microvolt = <2950000>;
+> +			regulator-max-microvolt = <2950000>;
+> +		};
+> +
+> +		pm8953_l12: l12 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <2950000>;
+> +		};
+> +
+> +		pm8953_l13: l13 {
+> +			regulator-min-microvolt = <3125000>;
+> +			regulator-max-microvolt = <3125000>;
+> +		};
+> +
+> +		pm8953_l16: l16 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +		};
+> +
+> +		pm8953_l17: l17 {
+> +			regulator-min-microvolt = <2850000>;
+> +			regulator-max-microvolt = <2850000>;
+> +		};
+> +
+> +		pm8953_l19: l19 {
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1350000>;
+> +		};
+> +
+> +		pm8953_l22: l22 {
+> +			regulator-min-microvolt = <2800000>;
+> +			regulator-max-microvolt = <2800000>;
+> +		};
+> +
+> +		pm8953_l23: l23 {
+> +			regulator-min-microvolt = <975000>;
+> +			regulator-max-microvolt = <1225000>;
+> +		};
+> +	};
+> +};
+> +
+> +&sdhc_1 {
+> +	vmmc-supply = <&pm8953_l8>;
+> +	vqmmc-supply = <&pm8953_l5>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&sdhc_2 {
+> +	vmmc-supply = <&pm8953_l11>;
+> +	vqmmc-supply = <&pm8953_l12>;
+> +
+> +	cd-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
+> +
+> +	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
+> +	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off>;
+> +	pinctrl-names = "default", "sleep";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <0 4>, <135 4>;
+
+Any ideas what's connected to these pins? If you do, good to document 
+this like in other devices.
+
+Regards
+Luca
+
+> +
+> +	gpio_key_default: gpio-key-default-state {
+> +		pins = "gpio85";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-pull-up;
+> +	};
+> +};
+> +
+> +&usb3 {
+> +	status = "okay";
+> +};
+> +
+> +&usb3_dwc3 {
+> +	dr_mode = "peripheral";
+> +};
+> 
+
 
