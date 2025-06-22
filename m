@@ -1,95 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-61980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87946AE315B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 20:33:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3023AE3162
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 20:37:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 11A83188EB02
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 18:33:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6778F1890536
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 18:37:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC2EF1F3B9E;
-	Sun, 22 Jun 2025 18:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E26D41F4621;
+	Sun, 22 Jun 2025 18:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=smankusors.com header.i=@smankusors.com header.b="KwHGSWZp"
+	dkim=pass (2048-bit key) header.d=smankusors.com header.i=@smankusors.com header.b="fDtb7KSW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bumble.birch.relay.mailchannels.net (bumble.birch.relay.mailchannels.net [23.83.209.25])
+Received: from toucan.tulip.relay.mailchannels.net (toucan.tulip.relay.mailchannels.net [23.83.218.254])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC060129A78;
-	Sun, 22 Jun 2025 18:33:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.209.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2AE42260C;
+	Sun, 22 Jun 2025 18:36:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.254
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750617197; cv=pass; b=m1qNUTaHLl4LP8ji6epIM4RGVeDLgK7sizKUa7Nv6ylT0RhHVdij0bVrPE3XnWgSTsVgAUdzGhtmYfAqQbug7VjWcjA9/byg1DmZWL0hCpsue4XBLYMm7JIVb5Ow1xvbdjbIn5D4FwvJipsOgiShnDPJl3c0DoEmJkPAT9DG9Bc=
+	t=1750617419; cv=pass; b=gYu77gxyPURHYBjCAlCFuqZ0kr3ExjGGVV5F3F4ddbSvcS0Aj2SKuc30DqpL/IWaj6oW9RXgH1MKp87Wb3XOTs0VzB13rYpHxWRB6CJJb6XTEqznt444KSkYQ9UOH/9dPdCBJE+mqavPffdYabZJaZusMzcW6Pjd5aZQoWrVdkE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750617197; c=relaxed/simple;
-	bh=2FBjTisACpH9fj5OF0/0Lwq1a5pOglylkWwX9ve/Z9c=;
-	h=From:Subject:Message-Id:MIME-Version:Content-Type:To:Cc:Date; b=etXTpnPrOVOwf1fr/EgdSVs0bUI1qj1N/0cruwJo2pogYauaU/SzVjL0RkbjeEqT0N+J4/t2i0cOB6eSQWOsbvcBjGeilvr9KQjogCosfWdOD4WaADgKiSAgVOX+vCVy4eYaDsf1gbMcth+KpOewRtqbHyEAXvttsyKZOGs9qsY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=smankusors.com; spf=pass smtp.mailfrom=smankusors.com; dkim=pass (2048-bit key) header.d=smankusors.com header.i=@smankusors.com header.b=KwHGSWZp; arc=pass smtp.client-ip=23.83.209.25
+	s=arc-20240116; t=1750617419; c=relaxed/simple;
+	bh=AEyr0s1lN9Tsb7Gyv22SLI62+3u++q2bNqb/BorFezQ=;
+	h=From:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc:Date; b=mXROTwXy9VwLz63EvH+p7raMd89vGv3HqPyuHgHK7qjGZPTBUzYRs/+oAVaEeAYaACmlU4nP09w+gja685ZpkfMmSm0jJ7iPYv0o//vnhHvyTMECxiSDLOWJgbgsPZSz0fE+MOBDPTWRs050CB4230yrc4aJXrJzi4GCZY0BXJQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=smankusors.com; spf=pass smtp.mailfrom=smankusors.com; dkim=pass (2048-bit key) header.d=smankusors.com header.i=@smankusors.com header.b=fDtb7KSW; arc=pass smtp.client-ip=23.83.218.254
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=smankusors.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smankusors.com
 X-Sender-Id: hostingeremail|x-authuser|linux@smankusors.com
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id F046B78403C;
-	Sun, 22 Jun 2025 18:26:44 +0000 (UTC)
-Received: from fr-int-smtpout7.hostinger.io (trex-green-6.trex.outbound.svc.cluster.local [100.100.153.33])
+	by relay.mailchannels.net (Postfix) with ESMTP id 76A1118301A;
+	Sun, 22 Jun 2025 18:26:48 +0000 (UTC)
+Received: from fr-int-smtpout7.hostinger.io (trex-green-5.trex.outbound.svc.cluster.local [100.127.221.91])
 	(Authenticated sender: hostingeremail)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 8D4B1783FDD;
-	Sun, 22 Jun 2025 18:26:40 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1750616802; a=rsa-sha256;
+	by relay.mailchannels.net (Postfix) with ESMTPA id 5FC8E183D68;
+	Sun, 22 Jun 2025 18:26:43 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1750616805; a=rsa-sha256;
 	cv=none;
-	b=52EdFduJcqe9ErntDzQTpS4NGCGlmFQfnOYIUhv6CFMh7v9v4mEkGEGckLxLivWMDry/RN
-	B1/jOiN+ZuT5++J/IBZykvWYx/b2rlqst8y5iN/7Al63GEhw+H9RVC3R8jbptbbxsoHCOt
-	DrPsfT0/VtMBMkNZfTD9YULJyeFZytOudkn0hegPHnnjNSUZRmhVlqA21QEOV9Lm9CRsgi
-	FJ6PZ1jZ7awMIXr3PbD+VZGgLySLq2bMYxBfSqROaUPpFX12T2AWIvLQnrd5uYqKJA/wwo
-	d4SkFlEUb4QkJ05JrS95YnmaElAYusT6zzymE8n36eb8QGCYWr3COq7OEuoZvw==
+	b=honM+T4M346jeoCLqW3clSTTgH87iKze6f+nHwm7609bN4g/4PZwAjoe1w+pc/7v8SrinR
+	+iUbyX+7Uab2YA9KQUQNXwzp2etK+0Y+hfFGcppdQX2nk9TpH5bEODa1P3wJinDqqauVDz
+	FYk18zR9H7Voptz9P4PlVEJO/aQpXr/YlMwp7vuN0bLifk/BD43HCuFIrK9GHKT0dVqqWi
+	KZKoV06WgslvAcu/m5uleZPWIJOSEbdNpEocx0xY+Mb8qtd5YxqPBQASwcNaNDhhMBzcvo
+	05BSm/dQK2wr7aPKgAw28eJbTavWMy3cFBLdwJRxbHjfV9aPK0//ts9v873xdw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
  d=mailchannels.net;
-	s=arc-2022; t=1750616802;
+	s=arc-2022; t=1750616805;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:dkim-signature;
-	bh=fMQajSbX/B9xTx+xMvWpCNmk72doBEFkzHAzUfqkWno=;
-	b=SoRrtQ5sUsrkCUh5pRFuj70cjxR/K+bFIfUXsUsXLjrpwNcdLxIiDcTC+XLALtQ/2VakhU
-	MV+rzRR+oisEWYCUlotfVa7sYtwNl0tya1SSi23BN+wrE5u56hyDiZq6EWG+B52HghX9qU
-	mlxYgpDrice8NXSAubQIiY6v01SuEZWp2U7VhMBM3KPXHvbldqJcp832GM3cj0bGBmC2t7
-	S5kB5BLSXHHQWkg87o5ZvxT7BITegQV93kpg113799HTPI3hHrctnjR7WMFi9wXz2xZ95c
-	53mPofCc/hpLGhnx6lTz//KkZZWGOl+qKIqfM6g2aoqDfTQBSoh8wSmR2BtJLQ==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=rc3HHQegCVPQFmYqd8gctSDPuwAn2xx+6Q/U8EdGm7E=;
+	b=VUxTeMZFRJws3yuYKPrCPsaaw9S90GMcU+SFVstQm59WkcXYOAL+Z5sjxtOhnsm3CzDoLP
+	00fk6qqSqljL3jOF/vxg83ttfgD21GEcLxkJAq9XfNbCR9EGxq0pyWtqO3TlxwuqVfZeid
+	VNMe4PR7q1PJJGzh7yVHZBUERCG6R1dtX/APHsmB/UAZEfZ2wsuIEgkvFp5d1CINZ275tF
+	VrFvB269T1xMKTOewFXyxdKNU1Iy8lnWfEEUT9LHzne4kpORvCv0VvvUEv5QPuKUl6brFY
+	ThEcGPJKo4hEfX+gPy8qMmY4lN2+HkeDYEZpL0vPO3v7Ja/Bko0tDV51IXrOtg==
 ARC-Authentication-Results: i=1;
-	rspamd-679c59f89-q8vz2;
+	rspamd-679c59f89-qvsjt;
 	auth=pass smtp.auth=hostingeremail smtp.mailfrom=linux@smankusors.com
 X-Sender-Id: hostingeremail|x-authuser|linux@smankusors.com
 X-MC-Relay: Neutral
 X-MailChannels-SenderId: hostingeremail|x-authuser|linux@smankusors.com
 X-MailChannels-Auth-Id: hostingeremail
-X-Vacuous-Suffer: 7a6c8cb23e14d072_1750616804724_4040051527
-X-MC-Loop-Signature: 1750616804724:624159769
-X-MC-Ingress-Time: 1750616804724
+X-Battle-Versed: 542b59dc55d284b1_1750616808375_777128975
+X-MC-Loop-Signature: 1750616808375:2165682262
+X-MC-Ingress-Time: 1750616808375
 Received: from fr-int-smtpout7.hostinger.io (fr-int-smtpout7.hostinger.io
  [89.116.146.203])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.100.153.33 (trex/7.0.3);
-	Sun, 22 Jun 2025 18:26:44 +0000
+	by 100.127.221.91 (trex/7.0.3);
+	Sun, 22 Jun 2025 18:26:48 +0000
 Received: from [172.17.0.2] (unknown [36.79.123.39])
 	(Authenticated sender: linux@smankusors.com)
-	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4bQKRc29VJzKLL4h;
-	Sun, 22 Jun 2025 18:26:36 +0000 (UTC)
+	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4bQKRg0mb2zKLLGY;
+	Sun, 22 Jun 2025 18:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smankusors.com;
-	s=hostingermail-a; t=1750616798;
+	s=hostingermail-a; t=1750616801;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=fMQajSbX/B9xTx+xMvWpCNmk72doBEFkzHAzUfqkWno=;
-	b=KwHGSWZpR2sT4H6HFwHf11Fnhi/uc0u5uRXuGEid4c/8NXa8qbicgbuEKc9TQZonx94vVc
-	VDANnwzGtvYfvJVVTRfhIZ7C5nRBaT0qVVbqniMVsHtFaqvhG8164SWlQIKn2oXnR56f0g
-	Z0Rxuc7s+zxhI1v3pz9ZtS55XTCP9nYc73Rh1/+MBX8H9RNGFKZqjni0c40CJ0CF0BjPns
-	ioPHySxodDebl8ESqbA2jTsqOMOH33opl55k7CTwiaas5jPDaOl2bcznViDYaMaQJA5Uf2
-	AANTA90FoF+4K03oHms5ueR1LWj8Plk7o3RXzM8aNSfWoDRyMYAnG7byvZJqxw==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rc3HHQegCVPQFmYqd8gctSDPuwAn2xx+6Q/U8EdGm7E=;
+	b=fDtb7KSWqWWkUgalslY2TBfLqlDZziTrzTv/tFQq/q+ZZrN5+vtMESqrNTW95XFtpKs+Lg
+	mFNxuirrnTy6UErDXAEUJFQtMb6/0nXZiV9r3oK4YGbGmiscmLqWurKU0c9Ns5rFYbP+Dy
+	QYfPl6s46VU9j7tgM5FPyV3c0fNz5UNbEsGV+Xejd2cTvJiOo4hiKp2MH3sfIe1h4unfvX
+	f82VSesBTD5l465IEJNuowec7JoyrseMzhnUUV1D7B2sYcn7jiN28Rl4QGqraFYmn2s8eb
+	8UyZpkiph6H6LVZa1ZFe/SSre69pW/X2c987Wivtbdxu9UJoHRhxaDQRy9bmMA==
 From: Antony Kurniawan Soemardi <linux@smankusors.com>
-Subject: [PATCH v2 0/5] Add support for Sony Xperia SP
-Message-Id: <20250623-msm8960-sdcard-v2-0-340a5e8f7df0@smankusors.com>
+Subject: [PATCH v2 1/5] ARM: dts: qcom: msm8960: add sdcc3 pinctrl states
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,11 +100,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALRKWGgC/13MwQoCIRSF4VcZ7jpDxURb9R7DLExvjYRjeEuKw
- XfPhlYt/wPnW4GwRCQ4DisUrJFiXnrI3QB+dssVWQy9QXJ54JoLligZqzmj4F0JDKUIqKxzBhX
- 0073gJb42cJx6z5Eeubw3v4rv+qOE+qeqYJx571FLq6Q56xMlt9yelAvtfU4wtdY+yxbUt7EAA
- AA=
-X-Change-ID: 20250601-msm8960-sdcard-e21de49aa8e4
+Message-Id: <20250623-msm8960-sdcard-v2-1-340a5e8f7df0@smankusors.com>
+References: <20250623-msm8960-sdcard-v2-0-340a5e8f7df0@smankusors.com>
+In-Reply-To: <20250623-msm8960-sdcard-v2-0-340a5e8f7df0@smankusors.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -112,73 +112,97 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Antony Kurniawan Soemardi <linux@smankusors.com>, 
  Max Shevchenko <wctrl@proton.me>, Rudraksha Gupta <guptarud@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1750616795; l=2505;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1750616795; l=2211;
  i=linux@smankusors.com; s=20250609; h=from:subject:message-id;
- bh=2FBjTisACpH9fj5OF0/0Lwq1a5pOglylkWwX9ve/Z9c=;
- b=9YqKaD/Zj39dXWbHZ4NqTUEpjMFjbnTQztL1KLjqLzFH7pRR00m7fnqgHT+wE9YF4I2zz/EA6
- Ixkj5b9vOoXBbh+ROQx1jgnPPz+yYoO3kJcpWD9p9lYf0yJZ6IHVbmG
+ bh=AEyr0s1lN9Tsb7Gyv22SLI62+3u++q2bNqb/BorFezQ=;
+ b=hnwNLKHd3sUr3z1uyqSQG1scDdBa7BB+pCjP20Zrx/goUNdPJomL4azD0gmK3hZbAJV2N8i0N
+ AoKoHQaSTzuCFXsYexqGnaPjhHOpuKgdJDoIp8w0DMkAH2F5TE+tQTb
 X-Developer-Key: i=linux@smankusors.com; a=ed25519;
  pk=65wTy06fJl2/h/EJwjr704YG+yjHFhZObJBWzzK+N00=
-Date: Sun, 22 Jun 2025 18:26:36 +0000 (UTC)
-X-CM-Envelope: MS4xfFr14+EZCO+7OKCq5lOGyxFjatEttFkEWMrD5alRA1n+irfH9zWq6HWiE2PRWMz9PgGjgmtXScCnfIrvQi0GmUqZJyvTeGMPVNjQH+sKMV9l/NFqbYZB xCbgvAqUndRAHlxElXeRBJohNxr3emVKPgj0550mUynPUhaflRNvKvdjP5hhVHT7oh59JNQJs1HjXaB/guCuCJJm71Da93lAC43/VG1rdxsnypsSy9lXyXc8 tgQuW2pR9uXqA6ZWxDV3YUkRCwMB9PRllEHj81S2Ma0j7deeJvXYzfjGxcXN2bq88M8Ra7p4BoZsFQl7aLGdmssE8vGBMeTr+WnP0iO8U2Ojh+31jwqyB6L2 BCEr92e/Boxt4KTz2tj/PSSrL/pQe2piKEE0BWhLU1nP+ahhcld/CvbavV3xy5uTU2ZiO9GEZZVSt+uMtd823hhY2E8rPjKtr4qhEnrplMEwvx5k2lNomu8I YtTIOcD4NVeU5O6AglzkoAYfFHyAhYv7///bfT1tQZ6owcrT8aVcq9zvbSg=
-X-CM-Analysis: v=2.4 cv=Vv1xAP2n c=1 sm=1 tr=0 ts=68584ade a=vFgqIyFt8cetXi1S0ACNwg==:117 a=vFgqIyFt8cetXi1S0ACNwg==:17 a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=wxLWbCv9AAAA:8 a=nOCiSSVSubMVZeN752YA:9 a=QEXdDO2ut3YA:10 a=QJY96suAAestDpCc5Gi9:22
+Date: Sun, 22 Jun 2025 18:26:38 +0000 (UTC)
+X-CM-Envelope: MS4xfPKxLiBMIkAs3iTKMDwMkguZlGPca+w0e79twyntxV60UC7Rj+U9U2W2wflSo2gxTVhe3atx0fzJk0rYRqvtn3yK5X/O7XG6tjrNurx3aIg+Y4fbDCVJ pVduceROPM1+pS5m8cgc4MfmdaeI50rSqivHTjvCA8OEnPLOItIxYogcfnKdgPy03I3LJOVezKUVcLnkN+ewpZ5Bd15OqGgxKJzpT3FmrNYYmwJKukZQJdry 6m8Ij+D8DqoumrD8/2GZDHfzJT9lg5ATPxDm7JcSkkxgtH33sEYey992an/uFShiLpyvErs+W4mDSEaTiskl5QlGXy5dFguhgEmJXY2q0AexoljdIrL5j7jt Ynlpwh0D7wdPNECn3FWWIzUO7dL6D3vC5KlpXMGL5zxVFY676zMFISFz6yZTdvLcdopQoFJyXb+r9ie+Eln66SjXQvmyRAN8HDMnv/ceF0JKXKKTuLJ+qEUc NyZa5J16uyiae8HBcFRh5nHga+FUqohuxoSgtH84XiCy5b2yMkd/umPuTgg=
+X-CM-Analysis: v=2.4 cv=Vv1xAP2n c=1 sm=1 tr=0 ts=68584ae1 a=vFgqIyFt8cetXi1S0ACNwg==:117 a=vFgqIyFt8cetXi1S0ACNwg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=wxLWbCv9AAAA:8 a=2wrJF2QuKA2qlS4toWQA:9 a=QEXdDO2ut3YA:10 a=QJY96suAAestDpCc5Gi9:22
 X-AuthUser: linux@smankusors.com
 
-This patch series adds initial support for the Sony Xperia SP (codename:
-sony-huashan), a smartphone based on the Qualcomm MSM8960T SoC. The
-MSM8960T is a variant of the MSM8960 featuring an upgraded GPU (Adreno
-320 instead of Adreno 225) and a slightly overclocked CPU (1.7GHz
-instead of 1.5GHz).
+Adds sdcc3-default-state and sdcc3-sleep-state pinctrl states for
+MSM8960. These are required for devices like Sony Xperia SP to ensure
+micro SD card functionality, though they are a no-op on the Samsung
+Galaxy Express.
 
-The following changes are included:
-
-1. Adding sdcc3 pinctrl states to ensure micro SD card functionality.
-2. Adding gsbi8 node and serial configuration for the MSM8960 SoC.
-3. Disabling unused gsbi1 and gsbi5 nodes in the MSM8960 SoC device
-   tree.
-4. Documentation for the Sony Xperia SP.
-5. Initial device tree support for the Sony Xperia SP, including serial
-   console, GPIO keys, PM8921 keypad, eMMC, micro SD card, and USB OTG.
-
-This patch series has been tested on the non-LTE variant of the
-Xperia SP.
-
+Tested-by: Rudraksha Gupta <guptarud@gmail.com>
 Signed-off-by: Antony Kurniawan Soemardi <linux@smankusors.com>
 ---
-Changes in v2:
-- Add explicit bias-pull-up to sdcc3_sleep_state
-  The Xperia SP board file actually uses bias-pull-down, but further
-  validation is needed to determine if this is a quirk. I checked the
-  generic MSM8960 and Samsung Express board files, and both use
-  bias-pull-up, so I believe this is the correct approach.
-- Fix alignment on gsbi8 node on qcom-msm8960.dtsi
-- Add new line before status in gsbi1 and gsbi5 nodes in
-  qcom-msm8960.dtsi
-- Add short booting notes to the qcom-msm8960-sony-huashan.dts commit
-  message
-- Link to v1: https://lore.kernel.org/r/20250614-msm8960-sdcard-v1-0-ccce629428b6@smankusors.com
+ arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi      | 40 ++++++++++++++++++++++
+ .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   |  5 +++
+ 2 files changed, 45 insertions(+)
 
----
-Antony Kurniawan Soemardi (5):
-      ARM: dts: qcom: msm8960: add sdcc3 pinctrl states
-      ARM: dts: qcom: msm8960: add gsbi8 and its serial configuration
-      ARM: dts: qcom: msm8960: disable gsbi1 and gsbi5 nodes in msm8960 dtsi
-      dt-bindings: arm: qcom: add Sony Xperia SP
-      ARM: dts: qcom: add device tree for Sony Xperia SP
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi
+index 4fa98277128897a531c54296576a6f15cd6d2a28..f18753e9f5ef3b8ebd33cb0ca0b2cfd1010b679c 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi
+@@ -18,4 +18,44 @@ i2c3-pins {
+ 			bias-bus-hold;
+ 		};
+ 	};
++
++	sdcc3_default_state: sdcc3-default-state {
++		clk-pins {
++			pins = "sdc3_clk";
++			drive-strength = <8>;
++			bias-disable;
++		};
++
++		cmd-pins {
++			pins = "sdc3_cmd";
++			drive-strength = <8>;
++			bias-pull-up;
++		};
++
++		data-pins {
++			pins = "sdc3_data";
++			drive-strength = <8>;
++			bias-pull-up;
++		};
++	};
++
++	sdcc3_sleep_state: sdcc3-sleep-state {
++		clk-pins {
++			pins = "sdc3_clk";
++			drive-strength = <2>;
++			bias-disable;
++		};
++
++		cmd-pins {
++			pins = "sdc3_cmd";
++			drive-strength = <2>;
++			bias-pull-up;
++		};
++
++		data-pins {
++			pins = "sdc3_data";
++			drive-strength = <2>;
++			bias-pull-up;
++		};
++	};
+ };
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
+index af6cc6393d740d30f3555825175ea6851d406166..49d117ea033a0ef73c134d1225982786fbded2c2 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
+@@ -71,6 +71,11 @@ &sdcc1 {
+ &sdcc3 {
+ 	vmmc-supply = <&pm8921_l6>;
+ 	vqmmc-supply = <&pm8921_l7>;
++
++	pinctrl-0 = <&sdcc3_default_state>;
++	pinctrl-1 = <&sdcc3_sleep_state>;
++	pinctrl-names = "default", "sleep";
++
+ 	status = "okay";
+ };
+ 
 
- Documentation/devicetree/bindings/arm/qcom.yaml    |   7 +
- arch/arm/boot/dts/qcom/Makefile                    |   1 +
- arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi      |  40 +++
- .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   |   5 +
- .../boot/dts/qcom/qcom-msm8960-sony-huashan.dts    | 361 +++++++++++++++++++++
- arch/arm/boot/dts/qcom/qcom-msm8960.dtsi           |  32 ++
- 6 files changed, 446 insertions(+)
----
-base-commit: 75f5f23f8787c5e184fcb2fbcd02d8e9317dc5e7
-change-id: 20250601-msm8960-sdcard-e21de49aa8e4
-
-Best regards,
---
-Antony Kurniawan Soemardi <linux@smankusors.com>
+-- 
+2.34.1
 
 
