@@ -1,359 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-61974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38833AE3036
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 15:43:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B482AE3082
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 17:16:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BB4A4163F65
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 13:43:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CAC15169B8F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 15:16:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C347C1EA7E4;
-	Sun, 22 Jun 2025 13:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26BB61EFFA6;
+	Sun, 22 Jun 2025 15:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ov07dk9i"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DNhlYn8S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76BC1E1DE7;
-	Sun, 22 Jun 2025 13:43:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C591CF7AF
+	for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jun 2025 15:16:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750599790; cv=none; b=OuJ3KE7eJysqJg6Zi/XYJ0Z4Er0njs+ZO+iZ5dPLuwBvEkke/kFaKelZS9DLpZTV6aQWTAOcYe00sDnU0vkCFZADiM0ImqFdgog+zkg1psReTWCGL93Cp2Y3zlIjB4tZc/WRQxyo8VzjS1ceQAsnDw09aWqKONMOP8ypAqAH95M=
+	t=1750605385; cv=none; b=dm05L6E/KoGIsZ/cynLYg8H3aocR3tnzMTWAgyOwIpSrM+T9Mv4hC21ygTCqGwjnYQJBmfXF+C1Z/8euCGNee4l7ErtFeQ2ZZVVdCnWWqs94ktGdZ7GWQxTKIP7d4s4fvUexfnRKtPCKdZr/WzxwE5UTCLM63xzhHfryT2sCZZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750599790; c=relaxed/simple;
-	bh=DcAbh50nJ/9+gl7gbnxkWQz+6p4e4XzKjPqGtKppBoU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=njsFpiGoHGJJwqThMaUeaVQQfhNz7I3azng54cJx++quIKa11HeFSctRstjfOPlDNoK2vPWv3jZjaqCP+dxp5q/S1NiLEyavlWuMpdJvFRl+kEN6+ybDph5zjaXuU7rM3+Ks/GIBGzRyOCItqZmFvAvg4R81I4EMl8+W0es71mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ov07dk9i; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-606b6dbe316so6470898a12.3;
-        Sun, 22 Jun 2025 06:43:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750599787; x=1751204587; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CKxND9wDhUqTTJe60cYRYDByv8VnJJT28t+GbpuOw+w=;
-        b=Ov07dk9ibMvwXbBuSomem/2yRePWXGi7pf1JxvCxPBCuZHp8MCErnOXEueN1R5ExsI
-         bRzP+N1PrhNxRjf7oaUF6h0MY14QzKEOiOqx24yb1HIcvkDNdgr15ET5ecdHBGQ23bH5
-         vRScPSoh+xS7nCUFIPdDi6UBaOeGES7+lHyNhWxQkOdrATSZH6FzjvHfS430b65oasRM
-         IZS4KpELDLaBg4rAytY3iO6K6a67RLyuQv3Vz7/Q0TV0lDfRDrFEoSNuFQl+NP2T9cva
-         zPjzIYdxhG0QF+4bf7IqowzBznJAeq0EYKKqpRh0gU11RtZjvLzv1NpdfOJnrz13ziqE
-         Ew/Q==
+	s=arc-20240116; t=1750605385; c=relaxed/simple;
+	bh=8uAt+R9QKABn3nX6nZT/Y7rKM1grPj/9mjul5urxgwk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=puBsIZxOmYPwBXZbNLz/iTVhE0WCE+emDB7lTppclgJI7tARmkcmZxs9kOhL01NgBMAAd0NbT9jcpuPMj0CUtDIgyceibcukJXvKbPzdYIPNBRIdM+VX5+PV71OP2EKFZMzpLjbOp3IipwXWw9FWbJ8jn+E+Ji+Y9dxNadXOsvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DNhlYn8S; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55MCvHic018017
+	for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jun 2025 15:16:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=w44qBsK+6lDTVdeGCkoj9uoc
+	0+WdT0uN8/42Vd0SJ0c=; b=DNhlYn8S/pc51pN0200rO+7nsW9ztT91FFjy9kk/
+	eVuBGx5ZrTu8HtRve7rLFgc/0Gvhs2DvIM1EutuZjcOo5RC8iZ9roJPMWhh2Qcde
+	YxF5vUWgMGPUAc+rcWJnMGPBSDRc87jAwhy+Rz5oL0I3fVXSWHwaqY19nTy5ogkU
+	RksgKmgVTQCf7sDLJtQXNsY17+8PBbnnSOVPRok/CX0YveI5Uxmc129V2W7zfxAQ
+	0hy1O0E/L5jLqA4VNiZ+ra6wPVgcluSQ18cTrgxK9n9snIq/lZWm7qM5PETHg/4i
+	dSuoKAcyxVUi9Rd6f9YkJwwdIT3so05HktHbLE1V9IWq2w==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47e3xgh13g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jun 2025 15:16:22 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-31332dc2b59so2774000a91.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jun 2025 08:16:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750599787; x=1751204587;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CKxND9wDhUqTTJe60cYRYDByv8VnJJT28t+GbpuOw+w=;
-        b=NZy1RRyjrTM8npRtHszW+2URs3OQ2NRgdayHdbCl3t/JER6u2lmSzT6wg2S8O6L6/9
-         OwU8VQREUksE3H8G4vcb1H+0EjD9dDvFEUzIVD3faj4cl5r60+dWu5wmEfFW+5E7hD1B
-         fsoZGa29BUqi3/icSywo1jn7izpPtTOwdVfZaLfPYgOjEXoAba/4Zl9+A8i7dY524gbk
-         EByP4DDECZL9PE7ANhGx9QoMs5XsJr/oLJKyh8+o6TqnWDDGPylEinEE+x++xIpUwJLL
-         xDpX8Xf4HlyjC0mn81HWcyOyDyNNSo34Pnmxsm7PAjcdGkQraWy/2eY5c06vJF2fj7MQ
-         DXyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVtEfbjbD0X77CrDEgJ9xMpAKsjMIR9CULpGE5pmfZcQH3GYAthPOYiwS/ESXi66X4USIIbkOJur2cU@vger.kernel.org, AJvYcCW+x296bnlGUq49caZWU+ssZrBl238gHrkJw6DsQniKSTfW/SEXTnNIwkMYG6vLtYeWtPe2Z489JuFqhEsM@vger.kernel.org, AJvYcCWz0990XIh1wSRsE0MAmLT77cn8+hEen99ndhqKS6NeoCZLYjwOywv4Ac6DtmUw9Zyq4jKS2QFLP5XU6QqsuA==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz9bs72ke41ElzA8fYo0VjgidIfTALh5mXrwlF1xIG86hPjq9AX
-	/B17LtH1jFn+FnkjzaxF6xYYPRnPaP/jPJUo+D+3I8vcApkZFfFQTz9Y7drrNQw=
-X-Gm-Gg: ASbGncuWa7V7ar/DTGGsjm7WYs6e3Kwcm37+kn2aJdYtzq78KN61d2baCwtakvT7AVG
-	O/FIfwqmwsCG3DZYiWx8IeRaSWp7+/MajCOYNNBOUJaPbN3WzA8XdNhZhDsXxlXI75IEDqxtpS6
-	hV2n1Ocjcd6BCuGlg7R0kggRAof3z2L4Hv+31+VZyzzk6snE5Seup71bsIyLC9ancuH5HuJwJhZ
-	lI3887i4sQV++Y6eRPFF/qjHorc1WUSsij23kN2NLPVAaQeWYAaH3lDEVNSXEtPU8Y31oL7vXtC
-	DWNzfO+4F4IdN/Q88AwS4Vd2pTpQz3HBK9y4K68pOw4DUBB+ldPYbjdeuO6s2yv6epgqXp7h+nk
-	RBmY=
-X-Google-Smtp-Source: AGHT+IHeC3wpaGuXsxsGS1ou5yDXSrA2CWtnGo1/tOsnyk09UcUcyVKGoDq84C/WLDo5IEQIppyBxQ==
-X-Received: by 2002:a05:6402:2355:b0:5f6:fab2:9128 with SMTP id 4fb4d7f45d1cf-60a1d16761dmr8484214a12.19.1750599786714;
-        Sun, 22 Jun 2025 06:43:06 -0700 (PDT)
-Received: from alex-x1.localdomain ([84.226.118.249])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60a18cb9e5dsm4654457a12.53.2025.06.22.06.43.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Jun 2025 06:43:06 -0700 (PDT)
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Subject: [PATCH v1 2/2] arm64: dts: qcom: x1-asus-zenbook: support sound
-Date: Sun, 22 Jun 2025 15:40:01 +0200
-Message-ID: <20250622134301.10403-3-alex.vinarskis@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250622134301.10403-1-alex.vinarskis@gmail.com>
-References: <20250622134301.10403-1-alex.vinarskis@gmail.com>
+        d=1e100.net; s=20230601; t=1750605381; x=1751210181;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=w44qBsK+6lDTVdeGCkoj9uoc0+WdT0uN8/42Vd0SJ0c=;
+        b=IIoKB9cptTtulSyv91chh6lsBcrKB4exB9bkSchJMjkMKp/lWSXKiZtdI0GjP+iZlY
+         O8hQamRE3rqlgtL2nxpymeY6617/DW2GFXyc4BjCaQXaLCeak2tW2yXfv1+IMaon648l
+         fokoGWW186qY6lENPSqIs/AOBhcH/qO4qIsPC3dYOiYtGenOAS/r2DK6qcxpjiS+99qI
+         y7lJjq/grVqFJL934BhHHI94N/lJN8esuyjhg5ZKZb0+skD2ZSdJwt1Q8aWJl2NgdSXV
+         Bzw6WGARDYYEW5WV5PlGD9sAUn5kuuqjHRMwkUvtUU/J7epFW0pggczvBUWF+om+eNLa
+         n2dg==
+X-Forwarded-Encrypted: i=1; AJvYcCWH8oNgORVI8GEoxfthNtB3eJhV+s9j6bBXHDujCV0tuR+wf9tIGiNGv5e0bv32f+/xevBQYpjzkZQ6qNhn@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx0+SnKOQmG4cbhceErOoU5D506g0avaf6524y/JDxF5MVwt4n4
+	nR1FNuJXwj0xJ1bq5h5q2yFrZoKlO1ZziTGIrAWda4R14alqxp9AaGZTFqexMktcgXSP6j0Z1qe
+	wmcNsR33sdLHDRC/i8xvlcp15V+PEYwhJcf9SxsAspzFMFB5dzYrY1sdOnmZ17WNLKhQ9dsHCDY
+	/dD8d2bpLjeAu8vXVVHQNaq6oEw8C3cIgTz1sfMovlEJdZeqb0fh8=
+X-Gm-Gg: ASbGnctCC7mZPGaP00Y9iaNwcT42OdUbgeQELuVcYAOiRuHol4hMFZBzV7fnwS4jHT7
+	Khn91F8YaPPtpuZa0onJH66CAOGQYee8iDiiWy0w2J0nFv04hVyh1ftyduzP42ofxTihgAYdaPT
+	LYJw==
+X-Received: by 2002:a17:90b:538d:b0:312:39c1:c9cf with SMTP id 98e67ed59e1d1-3159d62b22cmr15786180a91.7.1750605380958;
+        Sun, 22 Jun 2025 08:16:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEiwVZwDGbFUpSLYFGCsHNtl3tE4hRSKWPLVVMlFvnXrZYfO89S0fwQKG1OCoJMnXdixhjlo6XBKZbBKl9aewg=
+X-Received: by 2002:a17:90b:538d:b0:312:39c1:c9cf with SMTP id
+ 98e67ed59e1d1-3159d62b22cmr15786133a91.7.1750605380412; Sun, 22 Jun 2025
+ 08:16:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250622104531.19567-1-quic_nitirawa@quicinc.com>
+In-Reply-To: <20250622104531.19567-1-quic_nitirawa@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Sun, 22 Jun 2025 18:16:09 +0300
+X-Gm-Features: Ac12FXwyH-cIk5yRdWwy9i0E5tkcXIM9jcGCRkf5RmrHI1lbknvM47tnpdZ-3sM
+Message-ID: <CAO9ioeXtLk5k3c-jg1CTt4SKYu6QKjqTM_WOEx3BM3Uwpe+7EQ@mail.gmail.com>
+Subject: Re: [PATCH V1] scsi: ufs: qcom : Fix NULL pointer dereference in ufs_qcom_setup_clocks
+To: Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc: mani@kernel.org, James.Bottomley@hansenpartnership.com,
+        martin.petersen@oracle.com, bvanassche@acm.org, andersson@kernel.org,
+        neil.armstrong@linaro.org, konrad.dybcio@oss.qualcomm.com,
+        quic_cang@quicinc.com, vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
+        Naresh Kamboju <naresh.kamboju@linaro.org>,
+        Aishwarya <aishwarya.tcv@arm.com>,
+        Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjIyMDA5NiBTYWx0ZWRfX3pUivVJcFriD
+ IhEwKKKLU/rqokVP4RyHKbxmjvkbXc3GPp0pdieduQeyiczBXIzvel5TK/Hdgtz4oozh23t7nQq
+ KhQTTm9VUyhuRK2FJu1QD0nlpz/qozK3ovH6tGSeA4w1X2zGsHIgfmDwIL1j7UDid6ANtN2P879
+ rrUtfZ4s2Ejlyjr77bCb1nMF/bnOM64LhmkhZ4nU+ZlqsOqnEvGZagRL0Ln+vNRG8ZQB3RVaQq2
+ fk09KD9R+9JZqiTnZqUuga3BGYuuEeZAIgoxRAn+wSPiD/wvNfRO2Vsvt+ibVYpAR9By2EyRtXl
+ 5ewfiK12qBr+4fEJQltnyPXqV0W5m9K74Jxf8MEqnvMdpfxGEzNJjmsgDYObADMVDMvigyq57A7
+ vJOtjVJf0m4TfY8spHkojnw4wVRsTU+w1ivlNgK++qX5So/YmldHsNpD0MC9nLmGlppZk9mQ
+X-Authority-Analysis: v=2.4 cv=e8UGSbp/ c=1 sm=1 tr=0 ts=68581e46 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10
+ a=VwQbUJbxAAAA:8 a=7CQSdrXTAAAA:8 a=pGLkceISAAAA:8 a=COk6AnOGAAAA:8
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=BtV6YcfmfsbFzQIroTEA:9 a=QEXdDO2ut3YA:10
+ a=uKXjsCUrEbL0IQVhDsJ9:22 a=a-qgeE7W1pNrGK8U0ZQC:22 a=TjNXssC_j7lpFel5tvFf:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: -onipn_L59N9ez3laz7HL29YnY2cXILS
+X-Proofpoint-GUID: -onipn_L59N9ez3laz7HL29YnY2cXILS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-22_05,2025-06-20_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 malwarescore=0 phishscore=0 suspectscore=0
+ spamscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0 adultscore=0
+ mlxlogscore=934 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506220096
 
-Works:
-* Both speakers
-* Both MICs
-* Headphones jack, L/R channels
-* Headphones jack, MIC
+On Sun, 22 Jun 2025 at 13:45, Nitin Rawat <quic_nitirawa@quicinc.com> wrote:
+>
+> Fix a NULL pointer dereference in ufs_qcom_setup_clocks due to an
+> uninitialized 'host' variable. The variable 'phy' is now assigned
+> after confirming 'host' is not NULL.
+>
+> Call Stack:
+>
+> [    6.448070] Unable to handle kernel NULL pointer dereference at
+> virtual address 0000000000000000
+> [    6.448449] ufs_qcom_setup_clocks+0x28/0x148 ufs_qcom (P)
+> [    6.448466] ufshcd_setup_clocks (drivers/ufs/core/ufshcd-priv.h:142)
+> [    6.448477] ufshcd_init (drivers/ufs/core/ufshcd.c:9468)
+> [    6.448485] ufshcd_pltfrm_init (drivers/ufs/host/ufshcd-pltfrm.c:504)
+> [    6.448495] ufs_qcom_probe+0x28/0x68 ufs_qcom
+> [    6.448508] platform_probe (drivers/base/platform.c:1404)
+> [    6.448519] really_probe (drivers/base/dd.c:579 drivers/base/dd.c:657)
+> [    6.448526] __driver_probe_device (drivers/base/dd.c:799)
+> [    6.448532] driver_probe_device (drivers/base/dd.c:829)
+> [    6.448539] __driver_attach (drivers/base/dd.c:1216)
+> [    6.448545] bus_for_each_dev (drivers/base/bus.c:370)
+> [    6.448556] driver_attach (drivers/base/dd.c:1234)
+> [    6.448567] bus_add_driver (drivers/base/bus.c:678)
+> [    6.448577] driver_register (drivers/base/driver.c:249)
+> [    6.448584] __platform_driver_register (drivers/base/platform.c:868)
+> [    6.448592] ufs_qcom_pltform_init+0x28/0xff8 ufs_qcom
+> [    6.448605] do_one_initcall (init/main.c:1274)
+> [    6.448615] do_init_module (kernel/module/main.c:3041)
+> [    6.448626] load_module (kernel/module/main.c:3511)
+> [    6.448635] init_module_from_file (kernel/module/main.c:3704)
+> [    6.448644] __arm64_sys_finit_module (kernel/module/main.c:3715.
+>
+> Fixes: 77d2fa54a945 ("scsi: ufs: qcom : Refactor phy_power_on/off calls")
+>
+> Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
 
-Now working/untested:
-* Sound over DisplayPort
-* Sound over HDMI
+No empty lines between tags, please.
 
-Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
----
- .../boot/dts/qcom/x1-asus-zenbook-a14.dtsi    | 194 ++++++++++++++++++
- 1 file changed, 194 insertions(+)
+> Reported-by: Aishwarya <aishwarya.tcv@arm.com>
+> Closes: https://lore.kernel.org/lkml/20250620214408.11028-1-aishwarya.tcv@arm.com/
+> Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+> Closes: https://lore.kernel.org/linux-scsi/CA+G9fYuFQ2dBvYm1iB6rbwT=4b1c8e4NJ3yxqFPGZGUKH3GmMA@mail.gmail.com/T/#t
+> Co-developed-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi b/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
-index c8d6d66d05c8..80cd3613c5b8 100644
---- a/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
-@@ -22,6 +22,32 @@ aliases {
- 		serial1 = &uart14;
- 	};
- 
-+	wcd938x: audio-codec {
-+		compatible = "qcom,wcd9385-codec";
-+
-+		pinctrl-0 = <&wcd_default>;
-+		pinctrl-names = "default";
-+
-+		qcom,micbias1-microvolt = <1800000>;
-+		qcom,micbias2-microvolt = <1800000>;
-+		qcom,micbias3-microvolt = <1800000>;
-+		qcom,micbias4-microvolt = <1800000>;
-+		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
-+		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-+		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-+		qcom,rx-device = <&wcd_rx>;
-+		qcom,tx-device = <&wcd_tx>;
-+
-+		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
-+
-+		vdd-buck-supply = <&vreg_l15b_1p8>;
-+		vdd-rxtx-supply = <&vreg_l15b_1p8>;
-+		vdd-io-supply = <&vreg_l15b_1p8>;
-+		vdd-mic-bias-supply = <&vreg_bob1>;
-+
-+		#sound-dai-cells = <1>;
-+	};
-+
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 
-@@ -149,6 +175,88 @@ linux,cma {
- 		};
- 	};
- 
-+	sound {
-+		compatible = "qcom,x1e80100-sndcard";
-+		model = "X1E80100-ASUS-Zenbook-A14";
-+		audio-routing = "SpkrLeft IN", "WSA WSA_SPK1 OUT",
-+				"SpkrRight IN", "WSA WSA_SPK2 OUT",
-+				"IN1_HPHL", "HPHL_OUT",
-+				"IN2_HPHR", "HPHR_OUT",
-+				"AMIC2", "MIC BIAS2",
-+				"VA DMIC0", "MIC BIAS1",
-+				"VA DMIC1", "MIC BIAS1",
-+				"VA DMIC0", "VA MIC BIAS1",
-+				"VA DMIC1", "VA MIC BIAS1",
-+				"TX SWR_INPUT1", "ADC2_OUTPUT";
-+
-+		va-dai-link {
-+			link-name = "VA Capture";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&lpass_vamacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		wcd-capture-dai-link {
-+			link-name = "WCD Capture";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-+			};
-+
-+			codec {
-+				sound-dai = <&wcd938x 1>, <&swr2 1>,
-+					    <&lpass_txmacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		wcd-playback-dai-link {
-+			link-name = "WCD Playback";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&wcd938x 0>, <&swr1 0>,
-+					    <&lpass_rxmacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		wsa-dai-link {
-+			link-name = "WSA Playback";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&left_spkr>, <&right_spkr>,
-+					    <&swr0 0>, <&lpass_wsamacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+	};
-+
- 	vreg_edp_3p3: regulator-edp-3p3 {
- 		compatible = "regulator-fixed";
- 
-@@ -372,6 +480,13 @@ vreg_bob2: bob2 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-+		vreg_l1b_1p8: ldo1 {
-+			regulator-name = "vreg_l1b_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l2b_3p0: ldo2 {
- 			regulator-name = "vreg_l2b_3p0";
- 			regulator-min-microvolt = <3072000>;
-@@ -843,6 +958,24 @@ keyboard@15 {
- 	};
- };
- 
-+&lpass_tlmm {
-+	spkr_01_sd_n_active: spkr-01-sd-n-active-state {
-+		pins = "gpio12";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
-+};
-+
-+&lpass_vamacro {
-+	pinctrl-0 = <&dmic01_default>;
-+	pinctrl-names = "default";
-+
-+	vdd-micb-supply = <&vreg_l1b_1p8>;
-+	qcom,dmic-sample-rate = <4800000>;
-+};
-+
- &mdss {
- 	status = "okay";
- };
-@@ -1045,6 +1178,59 @@ &spi10 {
- 	/* Unknown device */
- };
- 
-+&swr0 {
-+	status = "okay";
-+
-+	pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
-+	pinctrl-names = "default";
-+
-+	/* WSA8845, Left Speaker */
-+	left_spkr: speaker@0,0 {
-+		compatible = "sdw20217020400";
-+		reg = <0 0>;
-+		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <0>;
-+		sound-name-prefix = "SpkrLeft";
-+		vdd-1p8-supply = <&vreg_l15b_1p8>;
-+		vdd-io-supply = <&vreg_l12b_1p2>;
-+		qcom,port-mapping = <1 2 3 7 10 13>;
-+	};
-+
-+	/* WSA8845, Right Speaker */
-+	right_spkr: speaker@0,1 {
-+		compatible = "sdw20217020400";
-+		reg = <0 1>;
-+		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <0>;
-+		sound-name-prefix = "SpkrRight";
-+		vdd-1p8-supply = <&vreg_l15b_1p8>;
-+		vdd-io-supply = <&vreg_l12b_1p2>;
-+		qcom,port-mapping = <4 5 6 7 11 13>;
-+	};
-+};
-+
-+&swr1 {
-+	status = "okay";
-+
-+	/* WCD9385 RX */
-+	wcd_rx: codec@0,4 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 4>;
-+		qcom,rx-port-mapping = <1 2 3 4 5>;
-+	};
-+};
-+
-+&swr2 {
-+	status = "okay";
-+
-+	/* WCD9385 TX */
-+	wcd_tx: codec@0,3 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 3>;
-+		qcom,tx-port-mapping = <2 2 3 4>;
-+	};
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <44 4>,  /* SPI11, TZ Protected */
- 			       <90 1>;	/* Unknown, TZ Protected */
-@@ -1175,6 +1361,14 @@ usb1_pwr_3p3_reg_en: usb1-pwr-3p3-reg-en-state {
- 		bias-disable;
- 	};
- 
-+	wcd_default: wcd-reset-n-active-state {
-+		pins = "gpio191";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
-+
- 	wcn_bt_en: wcn-bt-en-state {
- 		pins = "gpio116";
- 		function = "gpio";
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> # sc8180x-primus
+
 -- 
-2.45.2
-
+With best wishes
+Dmitry
 
