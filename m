@@ -1,77 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-61969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0F3EAE3024
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 15:41:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A6CFAE302F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 15:43:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 74D7316F9D6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 13:41:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 47CFC18909D4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 13:43:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FA481DE4E3;
-	Sun, 22 Jun 2025 13:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D05BC1E1A05;
+	Sun, 22 Jun 2025 13:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Vard2IVJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BoIS3GA1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4F71D516A;
-	Sun, 22 Jun 2025 13:41:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E011DE3D9;
+	Sun, 22 Jun 2025 13:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750599669; cv=none; b=YvQD9z+f+Cf1MlXnc4qGj1raD9ROyt2tlwcgkdYwCJI9L2G784vDq1j849evBpN43GaBRRuetG18/AbT6oPzWE0Od6H2rRrARqf7TqfirX2HVaHjI0m4Z8wVoGusNe6ikVnd1N68T2a1iqefgA0FEPTtysuwJximIL9mkOyuTCE=
+	t=1750599788; cv=none; b=aQICsTaeIuYxen3c+iI/ZKwrMzo/u5/Amr/SWwo7hVolqocee/MlxvaRcJdRyMr+P88LYdWB9/Tbbu8Xiluwujvd35wTJtRH7FzkUqumIhNS6wleLpkf/8mj/RXNw0+sQbGn1SaGdbG17iaLq/KAtCSQh/39C6FIBoePY4ts5fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750599669; c=relaxed/simple;
-	bh=409aeblqXYUb+RvSL9eQ1PFZrz61/X4RZLcDMPi51vM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XgYxttk89JcBW2O+/6es6z+yJV4VxSUC6Bur65cRgVCLUBzGpE/EFqPflg54lx9+5pnkrUIdJVoxdLnl/7gfLX1fhMBYly/fsaqw2PSuxfiMuAFQW3Arn34DONIZ25rx4SoY/mzmda82zftjlnmP7XxJcj1swI/pRAbGhQrqXNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Vard2IVJ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55MAZKmb026783;
-	Sun, 22 Jun 2025 13:41:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	QVPcesTHipTdGKpkbL8rnQ0tTkSObsJN0xNEHqVU/2w=; b=Vard2IVJMYqskkJX
-	5XbTxVkgk7lwQxGrmrs0b0L5VMSL3+VovIsr4AGbnsxTy6mprne3wBUyo+nTJr6t
-	J5OyMoMSSNiSyihDOHN9slHToQlT+AnGVvuqZh9+0tJFaiuuscTyUHNAtR/q/GbS
-	RcEu4XfWIm2Tli56vBXtWChJMmWG1TrjpOfx0BDpT4D+xorWmJA4i6pSDLKOKS6S
-	v9vimzjjctM7a9niivMQWbrfcOUkfvgFoxWdPGsL90th+oRBtt++I8sdf3WVRlsH
-	azOJQ/Nx62fxcJ9dRyI5x2KlvMWfjBxFaM+HQYGmxgLikZcOH1+blzPa4+nYvuYx
-	IFviBQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47eg70r5c8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 22 Jun 2025 13:41:00 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55MDexGa024450
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 22 Jun 2025 13:40:59 GMT
-Received: from hu-lxu5-sha.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 22 Jun 2025 06:40:56 -0700
-From: Ling Xu <quic_lxu5@quicinc.com>
-To: <srini@kernel.org>, <amahesh@qti.qualcomm.com>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <arnd@arndb.de>,
-        <gregkh@linuxfoundation.org>
-CC: <quic_kuiw@quicinc.com>, <ekansh.gupta@oss.qualcomm.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Ling Xu
-	<quic_lxu5@quicinc.com>
-Subject: [PATCH v3 3/3] misc: fastrpc: add support for gdsp remoteproc
-Date: Sun, 22 Jun 2025 19:08:20 +0530
-Message-ID: <20250622133820.18369-4-quic_lxu5@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250622133820.18369-1-quic_lxu5@quicinc.com>
-References: <20250622133820.18369-1-quic_lxu5@quicinc.com>
+	s=arc-20240116; t=1750599788; c=relaxed/simple;
+	bh=Mi7EbXJYwTfH182hrH2FJtHRM03mQEHRNxZoyWO337U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bSCAdJzT+FnlvZBPKnpvh6e/gmZHwLEN2zbNTssM2HjV5EzgUmRL6JvenBlQtz57eiSzkBlCzeizLdRGxIh3aE73Z3hsZuv4NjikbEL/ZguA5k2wDWsl0dwAawCNnVtQFBeJ/mDQNUJYpA13XlKt+rcGSn+0M7Qq2kGFt309BCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BoIS3GA1; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-6077dea37easo6338765a12.3;
+        Sun, 22 Jun 2025 06:43:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750599785; x=1751204585; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WZj5o7l4DsZDoAa+GaV62W37tm18RdoNakKUCj7Ro8M=;
+        b=BoIS3GA1Vl+zS+UjNK90pT3HmQBQ8eI+uTl/OhYrj4gbUs/gBNeB115hDBDvnmUCMf
+         TvDX+hadVgJeB416CHRNLYP/Qq/PihBEu3plR/UaWdLYOi0w1UapVEsLP4tOW89nOK8I
+         CCQlUojNcns4Yy8DvgxLXt+0PVoprYR6IwgE7m82ZeHLnq7dLp69/AdQIiQ00mac3Gdv
+         jkQ5uZMj14FDJYOgkgDdKf6w2bntwqNFHksrNSwl9X3wPrfxmHG1mVEDzFLtzLf4y74Q
+         2viKatfmCHjyJ0qKNYNLnfiCsRZpfvpuNmTa7dXE2zsgVZCibRyuelYlvgVXpbAUmqXJ
+         yC9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750599785; x=1751204585;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WZj5o7l4DsZDoAa+GaV62W37tm18RdoNakKUCj7Ro8M=;
+        b=qHVgGmPAzdJJf5l4HPWSag44tmrEN2jYDeNyLSw1rUeXga4jZton6oRyKeq4eslbmA
+         UaKHVMktTjJ1r5l9Dlzi4tHtJNoh7sLSbO6oAD2NjzAdt8updcngIX2oL60nTST13IiQ
+         57f2nQstTPTY/sHo7/JtJZHt6zzobt2imcDb1rSB51Dx+j5ybgQsZx2usN5rJd9+rRHr
+         bRGMj6v1rkqZr5QfNB70xietg/UOjLhUC0HEVxSkbsKbrqlLv1BXHradoGgZBL8WqZyo
+         QguklqsiOw6tW0RnN+Ald5rnhMo7k+qE8DNv5xlx/EXSgzguQBkg003hjv1/KJZiEoZb
+         DIvg==
+X-Forwarded-Encrypted: i=1; AJvYcCVElmE4q45nfuBb5x/6Tyx5gD6FLbREVOeVeRgMKu1huAOdiRD6ZPkUIJaa5F6lRyjxN5e9PKkjbW/1@vger.kernel.org, AJvYcCWY02IHTwaTd0dEjkv9IjPZdeW4/+8LlpRfucNRlQBYqbhDcNb8nt2rO3yLa22Y70lIDvIeubEkHpPPXecoRw==@vger.kernel.org, AJvYcCWYpyKpORRHHnSXP9d7f8nSXKEIXpnhQfumXDKZ4GZID/vDNB8IjThh9sqfuwcr1hDqKx2d8S8K+7yelWup@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzx3ziO9hsjsj7CuLbGjbRqhk03L6Zifs+HajDwG44BnWbajLgm
+	OvkZNG1FkgrYj9i7+0T59O8sZTuDMnf+KmcC0WiGCTyud/jujbU5c6Y=
+X-Gm-Gg: ASbGncv3/9dmbsMOqSD98EaX1wqM4UUVBVukmbfuscw2rXgjvZoJkuv4zQEHsNplODM
+	fCqiQetXPIe/usHBR5157MyWTj2CPyhKEoscNpmUcWWGNrOfZtw6mz9LXrvisgoyWdVtpo78UKF
+	jxu/GcWQNjNJvt7VPOaC8w9QEAFIuEmDCwehnjGfc72oqoebArz/PbBGXnD3cJezhyDzy6QoF2s
+	4Bjykq2wEM8IG+UtGekaEZn/H6/RFIBdGMrfVVjV8RvoPYyNyZIt3VDcsUPBw4unRUPp9hyFbFk
+	9WvcRdYZIx4UgPYO75Yk2S8LgLe5ixDazUlje0G7qlR7VeXbfJP6ZZDb5nx3vRpM1yFWMxblU86
+	FhAM=
+X-Google-Smtp-Source: AGHT+IEgfGyHvmCU634nEZQA9Y91tsbXZK1bPtGknigRwAMNLAh6lnz3IVeeuN4PtLNR45cQzJO4SA==
+X-Received: by 2002:a05:6402:5207:b0:601:31e6:698d with SMTP id 4fb4d7f45d1cf-60a1d18e136mr6698120a12.23.1750599784894;
+        Sun, 22 Jun 2025 06:43:04 -0700 (PDT)
+Received: from alex-x1.localdomain ([84.226.118.249])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60a18cb9e5dsm4654457a12.53.2025.06.22.06.43.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Jun 2025 06:43:04 -0700 (PDT)
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Subject: [PATCH v1 0/2] Asus Zenbook A14 improvements
+Date: Sun, 22 Jun 2025 15:39:59 +0200
+Message-ID: <20250622134301.10403-1-alex.vinarskis@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,205 +93,28 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: X2w0ghu33Z_GnLPgg0I8pjVBIkZzZlfn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjIyMDA4NSBTYWx0ZWRfX/gAcLJdeFm2k
- +BNmHXhq7DS927Wplyc0OgrEgUYt8SXrW+0Z1Dow9HlOzwXbreHGm1UB+G9YfCFJ4HaoyU07SsX
- vEfW73FjJxjpd/OFyJjXAcO/tdklex7b/2PmAlv+eWZsQ5hf4Z2GXY/BzOVgCYfECjleH0mRXvq
- SGQ8JzDLZqtv6VuJq5m8LZXEKlDWRHlYYndvTF725m1yBSdZu+hv0/4g9dRuFqJuitq7xseqRu0
- 0didcEP8JvL9ao83WUiLgIpujBqv7FcTM8kirxAAtBiPwN7D7OqYR0lAB7nI3B+qVOHA1RAHTfL
- l6j3bjDxDytdj37CXJ/u68oN3I5QiXzlxAWbDOMDT4kFy+L/M2lWTyzBycnZdmz7GneSYewtedD
- TC2meRk8/BdlRED9unqPgGzhAGdj+yGAw9nkwJNgUWQBz/nYLBK7FxfOMGYGEl85z0rnovn/
-X-Proofpoint-GUID: X2w0ghu33Z_GnLPgg0I8pjVBIkZzZlfn
-X-Authority-Analysis: v=2.4 cv=ccHSrmDM c=1 sm=1 tr=0 ts=685807ec cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8 a=c6LfSGLPLEd2mbsvFOMA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-22_04,2025-06-20_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0 clxscore=1015
- priorityscore=1501 spamscore=0 mlxlogscore=999 bulkscore=0 adultscore=0
- mlxscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506220085
 
-The fastrpc driver has support for 5 types of remoteprocs. There are
-some products which support GDSP remoteprocs. Add changes to support
-GDSP remoteprocs.
+First round of improvements for Asus Zenbook A14 which has just landed
+to linux-next.
 
-Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
----
- drivers/misc/fastrpc.c      | 57 ++++++++++++++++---------------------
- include/uapi/misc/fastrpc.h | 11 +++++--
- 2 files changed, 33 insertions(+), 35 deletions(-)
+* First patch updates DTs from v5 to v7 that was mailed earlier. Fixes
+  GPU enable and mistake in firmware path for Purwa/X1P
+* Second patch adds audio support. Audioreach topology and Alsa UCM
+  configs were already merged [1],[2].
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 378923594f02..cd3063bc64f2 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -23,12 +23,6 @@
- #include <uapi/misc/fastrpc.h>
- #include <linux/of_reserved_mem.h>
- 
--#define ADSP_DOMAIN_ID (0)
--#define MDSP_DOMAIN_ID (1)
--#define SDSP_DOMAIN_ID (2)
--#define CDSP_DOMAIN_ID (3)
--#define CDSP1_DOMAIN_ID (4)
--#define FASTRPC_DEV_MAX		5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
- #define FASTRPC_MAX_SESSIONS	14
- #define FASTRPC_MAX_VMIDS	16
- #define FASTRPC_ALIGN		128
-@@ -106,8 +100,6 @@
- 
- #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
- 
--static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
--						"sdsp", "cdsp", "cdsp1" };
- struct fastrpc_phy_page {
- 	u64 addr;		/* physical address */
- 	u64 size;		/* size of contiguous region */
-@@ -1723,7 +1715,6 @@ static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
- 	uint32_t attribute_id = cap->attribute_id;
- 	uint32_t *dsp_attributes;
- 	unsigned long flags;
--	uint32_t domain = cap->domain;
- 	int err;
- 
- 	spin_lock_irqsave(&cctx->lock, flags);
-@@ -1741,7 +1732,7 @@ static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
- 	err = fastrpc_get_info_from_dsp(fl, dsp_attributes, FASTRPC_MAX_DSP_ATTRIBUTES);
- 	if (err == DSP_UNSUPPORTED_API) {
- 		dev_info(&cctx->rpdev->dev,
--			 "Warning: DSP capabilities not supported on domain: %d\n", domain);
-+			 "Warning: DSP capabilities not supported\n");
- 		kfree(dsp_attributes);
- 		return -EOPNOTSUPP;
- 	} else if (err) {
-@@ -1769,17 +1760,6 @@ static int fastrpc_get_dsp_info(struct fastrpc_user *fl, char __user *argp)
- 		return  -EFAULT;
- 
- 	cap.capability = 0;
--	if (cap.domain >= FASTRPC_DEV_MAX) {
--		dev_err(&fl->cctx->rpdev->dev, "Error: Invalid domain id:%d, err:%d\n",
--			cap.domain, err);
--		return -ECHRNG;
--	}
--
--	/* Fastrpc Capablities does not support modem domain */
--	if (cap.domain == MDSP_DOMAIN_ID) {
--		dev_err(&fl->cctx->rpdev->dev, "Error: modem not supported %d\n", err);
--		return -ECHRNG;
--	}
- 
- 	if (cap.attribute_id >= FASTRPC_MAX_DSP_ATTRIBUTES) {
- 		dev_err(&fl->cctx->rpdev->dev, "Error: invalid attribute: %d, err: %d\n",
-@@ -2255,6 +2235,22 @@ static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ct
- 	return err;
- }
- 
-+static int fastrpc_get_domain_id(const char *domain)
-+{
-+	if (strncmp(domain, "adsp", 4) == 0)
-+		return ADSP_DOMAIN_ID;
-+	else if (strncmp(domain, "cdsp", 4) == 0)
-+		return CDSP_DOMAIN_ID;
-+	else if (strncmp(domain, "mdsp", 4) == 0)
-+		return MDSP_DOMAIN_ID;
-+	else if (strncmp(domain, "sdsp", 4) == 0)
-+		return SDSP_DOMAIN_ID;
-+	else if (strncmp(domain, "gdsp", 4) == 0)
-+		return GDSP_DOMAIN_ID;
-+
-+	return -EINVAL;
-+}
-+
- static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- {
- 	struct device *rdev = &rpdev->dev;
-@@ -2272,15 +2268,10 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 		return err;
- 	}
- 
--	for (i = 0; i < FASTRPC_DEV_MAX; i++) {
--		if (!strcmp(domains[i], domain)) {
--			domain_id = i;
--			break;
--		}
--	}
-+	domain_id = fastrpc_get_domain_id(domain);
- 
- 	if (domain_id < 0) {
--		dev_info(rdev, "FastRPC Invalid Domain ID %d\n", domain_id);
-+		dev_info(rdev, "FastRPC Domain %s not supported\n", domain);
- 		return -EINVAL;
- 	}
- 
-@@ -2330,21 +2321,21 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 	case ADSP_DOMAIN_ID:
- 	case MDSP_DOMAIN_ID:
- 	case SDSP_DOMAIN_ID:
--		/* Unsigned PD offloading is only supported on CDSP and CDSP1 */
-+		/* Unsigned PD offloading is only supported on CDSP and GDSP */
- 		data->unsigned_support = false;
--		err = fastrpc_device_register(rdev, data, secure_dsp, domains[domain_id]);
-+		err = fastrpc_device_register(rdev, data, secure_dsp, domain);
- 		if (err)
- 			goto err_free_data;
- 		break;
- 	case CDSP_DOMAIN_ID:
--	case CDSP1_DOMAIN_ID:
-+	case GDSP_DOMAIN_ID:
- 		data->unsigned_support = true;
- 		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
--		err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
-+		err = fastrpc_device_register(rdev, data, true, domain);
- 		if (err)
- 			goto err_free_data;
- 
--		err = fastrpc_device_register(rdev, data, false, domains[domain_id]);
-+		err = fastrpc_device_register(rdev, data, false, domain);
- 		if (err)
- 			goto err_deregister_fdev;
- 		break;
-diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
-index f33d914d8f46..ebef9ddcd184 100644
---- a/include/uapi/misc/fastrpc.h
-+++ b/include/uapi/misc/fastrpc.h
-@@ -18,6 +18,14 @@
- #define FASTRPC_IOCTL_MEM_UNMAP		_IOWR('R', 11, struct fastrpc_mem_unmap)
- #define FASTRPC_IOCTL_GET_DSP_INFO	_IOWR('R', 13, struct fastrpc_ioctl_capability)
- 
-+#define ADSP_DOMAIN_ID (0)
-+#define MDSP_DOMAIN_ID (1)
-+#define SDSP_DOMAIN_ID (2)
-+#define CDSP_DOMAIN_ID (3)
-+#define GDSP_DOMAIN_ID (4)
-+
-+#define FASTRPC_DOMAIN_MAX    4
-+
- /**
-  * enum fastrpc_map_flags - control flags for mapping memory on DSP user process
-  * @FASTRPC_MAP_STATIC: Map memory pages with RW- permission and CACHE WRITEBACK.
-@@ -134,10 +142,9 @@ struct fastrpc_mem_unmap {
- };
- 
- struct fastrpc_ioctl_capability {
--	__u32 domain;
- 	__u32 attribute_id;
- 	__u32 capability;   /* dsp capability */
--	__u32 reserved[4];
-+	__u32 reserved[5];
- };
- 
- #endif /* __QCOM_FASTRPC_H__ */
+[1] https://github.com/linux-msm/audioreach-topology/commit/952d16b16c4ee23578c001c97a31540c61315a0c
+[2] https://github.com/alsa-project/alsa-ucm-conf/commit/87a48b90213106f6e310dd611590e6a608ae6596
+
+Aleksandrs Vinarskis (2):
+  arm64: dts: qcom: x1-asus-zenbook: fixup GPU nodes
+  arm64: dts: qcom: x1-asus-zenbook: support sound
+
+ .../boot/dts/qcom/x1-asus-zenbook-a14.dtsi    | 198 +++++++++++++++++-
+ .../dts/qcom/x1e80100-asus-zenbook-a14.dts    |   4 +
+ .../dts/qcom/x1p42100-asus-zenbook-a14.dts    |   6 +-
+ 3 files changed, 203 insertions(+), 5 deletions(-)
+
 -- 
-2.34.1
+2.45.2
 
 
