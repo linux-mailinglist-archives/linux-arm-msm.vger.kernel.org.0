@@ -1,198 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-61965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1D0BAE2DD1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 03:27:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2866AE2F3E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 11:48:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 259153AE16B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 01:26:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 446FF3B230D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jun 2025 09:48:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 700AB7261C;
-	Sun, 22 Jun 2025 01:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2F8213B280;
+	Sun, 22 Jun 2025 09:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="VFI/kT8L"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OnaFMLJQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455DF2581;
-	Sun, 22 Jun 2025 01:27:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750555629; cv=pass; b=nngl/8Puoo3GZafzOEFhKMhl2asd4V1JZ4nJtl7sMLP3j0RSbdT1fYk51pFrrOiU0UsGRw4l5gENHetuS5yV6wwwmxtdslEM88hfBECF9A7MjJcgexyx0dGMbAhIr0j8wxxe/RnYXW4c2TfxHqRNoYnH/jAetcbA7Maprx2tigQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750555629; c=relaxed/simple;
-	bh=D0UPu1HNdTRNwid4W5kqZ802BggmR9+6yj1qcBOgkEc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DS7EzMzOISaqrV+MNP3Ax+r9DeTaMIs6OPBYnlgIQIP32SCzPJ3LyZIl/3lQHygrOxiVMHl0O+H6g5aJbwCrBYomo9dVsEs6KHbJy8ImJfJMsiOurA+ZTr1LNsjbeH6AiPNH3j/BfSrM9QD9BYDRCVB38y3PppPhguZNoi/Dx3Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=VFI/kT8L; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1750555617; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=RBJdQL/GN8H1veCJwnJYZhSuSxiU5BtZeTkGn+2uZTfIzwQ/gIvDl1SslquWPR3FC6kGFTszHCE9PFaXYmWBQPFr4F5riQrlinoeNEzaDMxVRri84bR8a/HFHWI6WRiKZF1MJx7rF0tI9k0hhAX1kNl36QSxtTkj1VgHVhdBZNM=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1750555617; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=gQIUsgIGn42vlwD+axbELwPL5aL0OuQaX/33hU+2LEQ=; 
-	b=SI9jsbjC9++rbY849bJYx3LU+zalp6Hv7etzjgH9DI5WE+m0O0KdOPuSevaDoRs62MVkWwQYKEp0pM2wAsygbgLvo9gEnp53Uz4r6wHcpaTge+eJL8zwBM0ZM0vnIGWZnEYn8xb/gbHsG8IR8GIxgoV0qLnH2BWAQAhGnhawh58=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
-	dmarc=pass header.from=<sebastian.reichel@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1750555617;
-	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=gQIUsgIGn42vlwD+axbELwPL5aL0OuQaX/33hU+2LEQ=;
-	b=VFI/kT8LjLT2u+mdk5MbO3eRgskaZOuVmWN9OkpN9eVuXjim+QNc8JG4kFsVmpXO
-	/jG2z294vQDc70VukhWK1pTflsyQmQ1V//QJHGsLQ4F2lEFKAXsEcqUqM8Pdu4YCZko
-	ImVFPRSxGEvPCSVWa9bVb/G3PchH/mv2o9xYHCds=
-Received: by mx.zohomail.com with SMTPS id 1750555615992395.33436908947795;
-	Sat, 21 Jun 2025 18:26:55 -0700 (PDT)
-Received: by venus (Postfix, from userid 1000)
-	id E9303180692; Sun, 22 Jun 2025 03:26:50 +0200 (CEST)
-Date: Sun, 22 Jun 2025 03:26:50 +0200
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: fenglin.wu@oss.qualcomm.com
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, David Collins <david.collins@oss.qualcomm.com>, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	kernel@oss.qualcomm.com, devicetree@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH v2 1/8] power: supply: core: Add resistance power supply
- property
-Message-ID: <b7m55sjc2rtvtelvez6sxnjvdostvxmfjhhsr4uxhyhh4bxrcd@xmioz2bsgis2>
-References: <20250530-qcom_battmgr_update-v2-0-9e377193a656@oss.qualcomm.com>
- <20250530-qcom_battmgr_update-v2-1-9e377193a656@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3F179F2;
+	Sun, 22 Jun 2025 09:48:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1750585706; cv=none; b=OgbhbaOrbnDdTfNbx3w2+uM2dYqS70ALI+BZ9YRtsG2nGJb5l+12sT+qEN8KI8qDkB1HcKFB8VwBaTjH6sgPm+PS1LgHCrWVW7nh6kffGc++hz/XEwAOAo5Y0v72StW/CZYKhWbr2VAf90uJJccnSLhyaRZjyXcf78UxOK3n+Tc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1750585706; c=relaxed/simple;
+	bh=4vdRfcPbRQB5zMf1V/AuGgKvWFlvsrisrBycdGuo6YE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uB4yQWxLspmwJl7yoOkY5z8ZkYcy5GRyfuLbY+ro5QPXp3jJSgRGQs9okhno0r5f2K0LJsUxhnAieCsAUYZOBjcSKSQslOxbeFr4HEiOXyjukL/mlOXznoyOn50wgqFQHHsx+HKuHMlQhbMq75Hi2d7YJmOlFNNWgf5miPNujW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OnaFMLJQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82436C4CEE3;
+	Sun, 22 Jun 2025 09:48:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750585706;
+	bh=4vdRfcPbRQB5zMf1V/AuGgKvWFlvsrisrBycdGuo6YE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=OnaFMLJQi1s1v1Fc+j8+UrUFjfSejiXGaXH/z/S9pcorncNKJBheiUlVnCkEEFVMA
+	 TR1IY5E+3h97LNA/cABkfMZzfz0ByvbSO3+KZsZD85LdHcLpQgl3qme++E+LISj6vj
+	 OgJ5xoo4VMO03nZoG5LXaCfIkMU3MdA7e0qk8UZExZDMEj8HfEQLBqH5sVQdkyZyoM
+	 a7nL7NHLDvRsD/eQyo8KefPfUG4zCJLHjnDg66wNSaOKj2HDzGHMftIcfVpGSu03Lt
+	 dz9dmkqOQ3bReXLMAm0XbP3ZnIyTVErpf+IazeQ5dDNcuvM73azCfRGQBqLnFFAKQe
+	 Etu+57/945Y5g==
+Message-ID: <bba062a3-f96c-456b-8e9e-fdeb0dc2d28d@kernel.org>
+Date: Sun, 22 Jun 2025 11:48:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ucvcx4vh7elpfixl"
-Content-Disposition: inline
-In-Reply-To: <20250530-qcom_battmgr_update-v2-1-9e377193a656@oss.qualcomm.com>
-X-Zoho-Virus-Status: 1
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-1.4.3/250.540.22
-X-ZohoMailClient: External
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 2/4] dt-bindings: mmc: controller: Add
+ max-sd-hs-frequency property
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Sarthak Garg <quic_sartgarg@quicinc.com>,
+ Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Adrian Hunter <adrian.hunter@intel.com>
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ quic_cang@quicinc.com, quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
+ quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
+ quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
+References: <20250618072818.1667097-1-quic_sartgarg@quicinc.com>
+ <20250618072818.1667097-3-quic_sartgarg@quicinc.com>
+ <6040afd9-a2a8-49f0-85e9-95257b938156@kernel.org>
+ <9627ed6f-2bb8-40b0-b647-5f659d87f2f9@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <9627ed6f-2bb8-40b0-b647-5f659d87f2f9@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 21/06/2025 12:20, Konrad Dybcio wrote:
+> On 6/18/25 9:43 AM, Krzysztof Kozlowski wrote:
+>> On 18/06/2025 09:28, Sarthak Garg wrote:
+>>> Introduce a new optional device tree property `max-sd-hs-frequency` to
+>>> limit the maximum frequency (in Hz) used for SD cards operating in
+>>> High-Speed (HS) mode.
+>>>
+>>> This property is useful for platforms with vendor-specific hardware
+>>> constraints, such as the presence of a level shifter that cannot
+>>> reliably support the default 50 MHz HS frequency. It allows the host
+>>> driver to cap the HS mode frequency accordingly.
+>>>
+>>> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+>>> ---
+>>>  .../devicetree/bindings/mmc/mmc-controller-common.yaml | 10 ++++++++++
+>>>  1 file changed, 10 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml b/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml
+>>> index 9a7235439759..1976f5f8c401 100644
+>>> --- a/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml
+>>> +++ b/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml
+>>> @@ -93,6 +93,16 @@ properties:
+>>>      minimum: 400000
+>>>      maximum: 384000000
+>>>  
+>>> +  max-sd-hs-frequency:
+>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>> +    description: |
+>>> +      Maximum frequency (in Hz) to be used for SD cards operating in
+>>> +      High-Speed (HS) mode. This is useful for platforms with vendor-specific
+>>> +      limitations, such as the presence of a level shifter that cannot support
+>>> +      the default 50 MHz HS frequency or other.
+>>> +    minimum: 400000
+>>> +    maximum: 50000000
+>>
+>> This might be fine, but your DTS suggests clearly this is SoC compatible
+>> deducible, which I already said at v1.
+> 
+> I don't understand why you're rejecting a common solution to a problem
+> that surely exists outside this one specific chip from one specific
+> vendor, which may be caused by a multitude of design choices, including
+> erratic board (not SoC) electrical design
 
---ucvcx4vh7elpfixl
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2 1/8] power: supply: core: Add resistance power supply
- property
-MIME-Version: 1.0
+No one brought any arguments so far that common solution is needed. The
+only argument provided - sm8550 - is showing this is soc design.
 
-Hi,
+I don't reject common solution. I provided review at v1 to which no one
+responded, no one argued, no one provided other arguments.
 
-On Fri, May 30, 2025 at 03:35:06PM +0800, Fenglin Wu via B4 Relay wrote:
-> From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
->=20
-> Some battery drivers provide the ability to export resistance as a
-> parameter. Add resistance power supply property for that purpose.
-
-This is missing some information and the naming is bad.
-
-Which resistance (I suppose battery internal resistance)?
-
-That is heavily dependent on the battery temperature. So this needs
-to document if this is for the current temperature or for some
-specific one.
-
--- Sebastian
-
-> Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-> ---
->  Documentation/ABI/testing/sysfs-class-power | 10 ++++++++++
->  drivers/power/supply/power_supply_sysfs.c   |  1 +
->  include/linux/power_supply.h                |  1 +
->  3 files changed, 12 insertions(+)
->=20
-> diff --git a/Documentation/ABI/testing/sysfs-class-power b/Documentation/=
-ABI/testing/sysfs-class-power
-> index 560124cc31770cde03bcdbbba0d85a5bd78b15a0..22a565a6a1c509461b8c483e1=
-2975295765121d6 100644
-> --- a/Documentation/ABI/testing/sysfs-class-power
-> +++ b/Documentation/ABI/testing/sysfs-class-power
-> @@ -552,6 +552,16 @@ Description:
->  			Integer > 0: representing full cycles
->  			Integer =3D 0: cycle_count info is not available
-> =20
-> +What:		/sys/class/power_supply/<supply_name>/resistance
-> +Date:		May 2025
-> +Contact:	linux-arm-msm@vger.kernel.org
-> +Description:
-> +		Reports the resistance of the battery power supply.
-> +
-> +		Access: Read
-> +
-> +		Valid values: Represented in microohms
-> +
->  **USB Properties**
-> =20
->  What:		/sys/class/power_supply/<supply_name>/input_current_limit
-> diff --git a/drivers/power/supply/power_supply_sysfs.c b/drivers/power/su=
-pply/power_supply_sysfs.c
-> index a438f7983d4f6a832e9d479184c7c35453e1757c..dd829148eb6fda5dcd7eab53f=
-c70f99081763714 100644
-> --- a/drivers/power/supply/power_supply_sysfs.c
-> +++ b/drivers/power/supply/power_supply_sysfs.c
-> @@ -220,6 +220,7 @@ static struct power_supply_attr power_supply_attrs[] =
-__ro_after_init =3D {
->  	POWER_SUPPLY_ATTR(MANUFACTURE_YEAR),
->  	POWER_SUPPLY_ATTR(MANUFACTURE_MONTH),
->  	POWER_SUPPLY_ATTR(MANUFACTURE_DAY),
-> +	POWER_SUPPLY_ATTR(RESISTANCE),
->  	/* Properties of type `const char *' */
->  	POWER_SUPPLY_ATTR(MODEL_NAME),
->  	POWER_SUPPLY_ATTR(MANUFACTURER),
-> diff --git a/include/linux/power_supply.h b/include/linux/power_supply.h
-> index c4cb854971f53a244ba7742a15ce7a5515da6199..de3e88810e322546470b21258=
-913abc7707c86a7 100644
-> --- a/include/linux/power_supply.h
-> +++ b/include/linux/power_supply.h
-> @@ -174,6 +174,7 @@ enum power_supply_property {
->  	POWER_SUPPLY_PROP_MANUFACTURE_YEAR,
->  	POWER_SUPPLY_PROP_MANUFACTURE_MONTH,
->  	POWER_SUPPLY_PROP_MANUFACTURE_DAY,
-> +	POWER_SUPPLY_PROP_RESISTANCE,
->  	/* Properties of type `const char *' */
->  	POWER_SUPPLY_PROP_MODEL_NAME,
->  	POWER_SUPPLY_PROP_MANUFACTURER,
->=20
-> --=20
-> 2.34.1
->=20
->=20
-
---ucvcx4vh7elpfixl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmhXW9oACgkQ2O7X88g7
-+prIkg//VtGhxAwUOJRpgVT7zHHrczHnFqP2fQHOqxnfV3iO6rQqf9gNloR4lPIL
-e03Rm3ye13Mq7bBQxVT9dEUh5qPLJGGeHz+gyaNGMdOqXcA2a9wlMpwpW7OG/L1Z
-tq9ku5MA/NCdp5AjcFo0OdYPzm+Cy7byM9W4dFb3CJcwJds3uDMG5zrgiJPQ2ksI
-myIzRLHNr1tk8kProac4dmeatdeM226sRJ9RbGuQ8mz33++F0ztycPTVoYwMMdD7
-DhT7O/KFjyxfoHqT/j8RFK3RYcF6cHMF2UH8pd9eBjEn60W6555Z1te55Ubgoh4N
-M0PzpIBv3qlKIJknVAUHD3ib/6qGpZZ0fJdruLPTa3kgSaWqyQlPl1MP6MdRubtA
-3nXL0GcsSF4PNh1XOcMwVAeWfmUACWWQgjCjul1bam/rLLUJSPJTBLAZ3Ig9RGfS
-LumDXFMx3lhy5//ISZKxPOVif1cQmux23YITkqyMJCR6/ogqs1vHQzfA3hAmPLRR
-UuIvEW/lIVrze93msOPXqKF0LCw4RYBl+qeebyOzl+qJVO8h1w6QpoTSNB58BCYm
-gg/nHCb6FFlOGvc3D4YGAT4zDjs6/zKw4/LDgHGEtONbjhDLpFvFzYeTnfJJgMrE
-MsqAjVdQUM80LqBYoT4FP1AEZ2xkwr+QuYAMYCq6eAtaGCpqNCg=
-=xaOD
------END PGP SIGNATURE-----
-
---ucvcx4vh7elpfixl--
+Best regards,
+Krzysztof
 
