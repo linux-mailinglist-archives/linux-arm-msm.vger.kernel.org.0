@@ -1,210 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-62061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF353AE3F90
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 14:19:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FAABAE3FBD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 14:22:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7B450189AA0E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 12:15:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B9F6C188ADA1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 12:18:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD11C248F45;
-	Mon, 23 Jun 2025 12:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C919D238C16;
+	Mon, 23 Jun 2025 12:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KE4S5EZA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gsL0ov1r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0E0247281
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 12:09:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA74324A055
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 12:16:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750680548; cv=none; b=GUsLmH44tkglC9wl2PoOcqJTQOrMW4RK0XnPjs7TQmJTu0ptr6FTchz2fGmyKIT3LC3WADiTDmUQWe6K2ptk+tv+tYavK0AYlvjXv11W3rZVCUw0stXtoQNSYVgERA3Lj9S0SXYY6NRmCAjKDZqWM2OX6SdyTu55zKMYdUu3rpA=
+	t=1750680982; cv=none; b=G+k+i+QRe/PKWCFoFIagQCcRGY611v5z3SJrFe77f/FEAOZ8H0zrxQMyAlrV3sZnD3b13ET/fZSbZKFzxmAgbbcuvqnBLLR14cV2p164UCPOnALBJ74HA10ZsJ3XSWVwwZwj6/cstuDyhCCr461W3/OnNLPcbhcA+g37wJSbjTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750680548; c=relaxed/simple;
-	bh=qKSIqsV+KvAGtkioviVhsHDdAWmTF+w9b1unNcPVVFQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nX2VJ+0OmhQeJyLbXeRI+e3fMuAsfASQ7nOXuOn9YcEjdBt3c+HVD29EjBwTPNlm/x0/0f5CC6NrO5kA6FcvHiTctxD9utqvZeYsU9xtyBgFsR/1kxCU3+Wn6946vcPrKwtLBhbt2HyiKZ2qSn814xrmSKjwIFOVOftMoXMO/CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KE4S5EZA; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55N8Lfd3005909
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 12:09:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	iUA4Ux34VVf9K7rAvlG3QrP3wRtZ4mYRuLZS2Rcg8zw=; b=KE4S5EZA8lx6Tzg4
-	Jhpkb/rkGWCT4L4d9fBzMn9RWg0iaweCu/RZMMqP2CKaquT6bK/8RCcaHg84x69G
-	W716sPfUlGUDlbEsX+ChVznKYR1rLvFKInkJ8g+ioPWoMRC68lCg0jQIsMuAT4iG
-	/iZKas6ImwNmnfyt8e6+eHFvNtpbF3Gb2pRlaHvWhtXlPKEywfEoZFb0SDbvxUEU
-	bbo1klTTz7dmhNI47MMOeRK0yQzaSyIjCdt3BdrpjBzxQaTKAYKwp+LLHsZ85s4T
-	vFCSXsGXl3la4xjis/FbnlWxIdRhl/V4mryoYQbqdIpC8ZpgkHcf6GwCofn8UQoW
-	mA9Lnw==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f3bg8m4y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 12:09:05 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6fb53b1e007so7817506d6.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 05:09:05 -0700 (PDT)
+	s=arc-20240116; t=1750680982; c=relaxed/simple;
+	bh=NkXLZqiJfY/csdYeqd5+JOrKqFd5dWqsdN/hyy/5zL0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iW/xHTE7pVU3OPO152kqxXqTt5bFEk8pBxqZAr6881sUMwnTveATyRjXjyw6uXWWevW3RyILjPiVPtwWLQxzgjaRE1W1CCsCmNy7xHDdaxrwPloRRFPDVmtICrcz8bdPWBQQgM0gypc5vRMMUgcrUng8t1vfEDF8WZC+XAgv9Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gsL0ov1r; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-451dbe494d6so47659705e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 05:16:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1750680979; x=1751285779; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=tI+c5+DB9KdJhJt1LZtd5DtDnbtfkWz+1nzFqyeD/8s=;
+        b=gsL0ov1rWp7V8txeD4D2i+tZvViClai0LdlAL+uxdeWoIQmeVpDGeB3dZE6QEd7U8V
+         Ek5VjYRUmYA4fB+JuBMYDcJ07XCUK52zRCj7cIjvWVPalb1aSjyTZD2scf7hcFw+S0zw
+         SnL+c/ODUlm0H8FYoq/IB6dUusy0FhYndvyfLC6AXB4jmjXFIHIxn+vM//Itvc9QjvZF
+         orAqSFgfuMycZKgEMdqzMyF64UwoXzq0X47S7I62DVnT4X01IgF7qXqYIk2RLaCfgxM/
+         gEXTxREfJuYaMnucziXNcac+ajtnOytFnaMFPhbkXkHzp4QsuX5R4OS+J1S4HnIFM80P
+         M0Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750680545; x=1751285345;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iUA4Ux34VVf9K7rAvlG3QrP3wRtZ4mYRuLZS2Rcg8zw=;
-        b=NE824oivnfBzKCi4b8dK49P6kyK7xITeFXvFTyx4ERc1asM7sFP3XWgO7pCS+hk1+E
-         5BBRdUk2cQcBo+6bQi7W6L2y9cF18q1DIpirebw9wmZHMAHPxmcPGngOJuxVImTGF3Xl
-         EKJWnH9tYLuEMRwc/vFcClJiOcBWfhk8Mpr5Wviulu/HqxxSKiXUWV0j+fq5yxj4E5cX
-         wSXzfB8FLpCcJ0tSZ5Pqer1ykMnBG0Afm4wwqReVZV9AmL2QuwHezcO9YdjobtvX5hc+
-         su9PxdwvpN8dMZeBfM/nVQIiGX8BIwKNn97hHM1dCEn7kU2eqI97WHduPqHuOiTOEDS4
-         K/IA==
-X-Forwarded-Encrypted: i=1; AJvYcCXbZlxRCA0IyBvSo7jzGRtcnKCJMPMGjvJ31Lfhc0SQXyD5CzeZvApHmc/CK07Z07eZvrqKxkv4ljWTiqxc@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfDNZ2XrMQPcOByFrUZg/0j/Rdl2SViJ5b100xKDs4Fu6W0NhG
-	y+/4QRwamfV+Bd73OTBW4aquWqhq+YQaJuLuOqh8yKxUm/P6E2ArH7/qenKlcpetzGmbgCtIzVd
-	PdiwCznt3qUdS5jsQqCGh4r0U4IKBJlu3ZXNLZILOvp6iE2EyB/GBVf0SXlibGGcrnirl
-X-Gm-Gg: ASbGnct4XOZd5qEB4QKE1kJwWWRPN+p47zKIJdcw9F5Ax6s81PcEGo9J8+2qQ5EPp2r
-	BRoKZVORFjRs0XMreNgst9rhzxJxZLuf5kF82oSU4W/lVE7ND+D7wnE3mIreveGoWo0+j5mSDMT
-	TpYj2XSby+pmkV9DgECO/ASFCAMPLjg/5N5aACjxoK/Wz4Iwalz6t98qacHdzBOzBHfpTZxiGrL
-	UUQqnsnNTMfFpkrtxno9Zn+U4wfUN7WPDZFi9J6P56DKkNG8dtrv9df3Y7R5MmE4gH3Glj5I2dW
-	qwGjsKK2qqvhZBRNV4A93zXyPyBLLSAH0zToyuKi1l6bPAEe7UBPt6vvw+Ps6Im0DT+CaBm9NUN
-	FXwM=
-X-Received: by 2002:a05:622a:9:b0:4a6:fb4d:b4e with SMTP id d75a77b69052e-4a77a27a4bcmr72341281cf.13.1750680544729;
-        Mon, 23 Jun 2025 05:09:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFoNMINZTAhhl7CMp5Boaokx/8RjnVYVBHAJiF7SNTYL5MUao5HTMPsguWO70eQQTBb5Hr2qg==
-X-Received: by 2002:a05:622a:9:b0:4a6:fb4d:b4e with SMTP id d75a77b69052e-4a77a27a4bcmr72340941cf.13.1750680544191;
-        Mon, 23 Jun 2025 05:09:04 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60a1857c124sm5866353a12.36.2025.06.23.05.09.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jun 2025 05:09:03 -0700 (PDT)
-Message-ID: <5bdae07b-a7b1-49be-b843-1704981bc63b@oss.qualcomm.com>
-Date: Mon, 23 Jun 2025 14:08:59 +0200
+        d=1e100.net; s=20230601; t=1750680979; x=1751285779;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tI+c5+DB9KdJhJt1LZtd5DtDnbtfkWz+1nzFqyeD/8s=;
+        b=UxJXVsaYWeBNVcS7cPj+bZik+vQtGYyrNUMb//fOtqPalaQoim6tlU824ZczxsqMvA
+         U1N26FUzfOaF9Dc7bo3E1vnvK0ddoUhD0RU2G/LnKTXFy0YGzToIcnM0dwCn/nD116vF
+         mx77B3GMI2IT/cfggktoXwOnxbii8hrFhP0ZP3zh9IJZTzbSpW0Ezq/RaIgCxC36m1by
+         WhuYTyFBQRdVUuYZ+zuXVT/8+xP65TDm+8Se9Sirqu3ncbv+il0Gibvee0JDvpgwCVyN
+         51scGUrRxVCJ4l5ECyCQ+LG6e0sKfTybWj07DNFRgHwBNnmzJJ31vD63ybfHF8IYS1/S
+         aehQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV4YxQym/hTSlub7TxP7xOdwJMVKaLuVlBOsLI967icLk45O/3dV/kN8gznlaVg9PZ7MXTnhUV0GSArzQC4@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx1+Cx4RoMqNa1Y2eGbIg1L77V0vjLnu5Rk8R/IrYgNgryerO8B
+	imv0ao4kCsSVMCerp0wcd2Y+gCNl41nEo5jKqNa/OG1NdM5mLIiXHRJeV0IrFbxmdOs=
+X-Gm-Gg: ASbGncuM+zbbnyCmi8rIio9CkpaioRU0hzZ0hQ6iRPipHSBOvS+kCsyiLRwaMIPBzXg
+	zt8VH6mh8UVEdDnaefZ0pnje7Xh738ziy314+cybLHXEMejqQFpYo8r25aoHDwjrkI2wz9SznGg
+	sKhO04f2eflCGe61HNrJinEL2K5JsW16KkQ+OwyDtFdtVu8rS8MgfvcmAwx0x5S5CXGaYXb6fSC
+	/2NrJj/QJqSJdy9xDrvSM6kC7gOAYPLJWYKx3xjW9zEqHo4ZWglukr6xHarwYAK5NKS75FHHqUL
+	nKLvxmReiQGvJWiqYCLZIdYgfqJty746fBCJ/T8l4gnz7JvJtUH58oarMZj8UMnkdiZPTMSXBg=
+	=
+X-Google-Smtp-Source: AGHT+IFldADGsyYQzcmWOXmHdcApCNvxHXRGgwlxtSHaBSQ6Vsn5s+guD1RaxkhQlgmOC9uJO8RIfQ==
+X-Received: by 2002:a05:6000:2282:b0:3a4:d79a:35a6 with SMTP id ffacd0b85a97d-3a6d12e34b9mr11149269f8f.14.1750680978817;
+        Mon, 23 Jun 2025 05:16:18 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:ef30:b3ca:db17:bc4f:ae5a])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453647084a5sm109160175e9.38.2025.06.23.05.16.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jun 2025 05:16:18 -0700 (PDT)
+Date: Mon, 23 Jun 2025 14:16:16 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	jens.glathe@oldschoolsolutions.biz
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Anthony Ruhier <aruhier@mailbox.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: add
+ Bluetooth support
+Message-ID: <aFlFkD7uNC_lOtHg@linaro.org>
+References: <20250610-slim7x-bt-v2-1-0dcd9d6576e9@oldschoolsolutions.biz>
+ <fbedfcb3-a326-4357-8d10-3be925e5df8f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 2/4] dt-bindings: mmc: controller: Add
- max-sd-hs-frequency property
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Sarthak Garg <quic_sartgarg@quicinc.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Adrian Hunter <adrian.hunter@intel.com>
-Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_cang@quicinc.com, quic_nguyenb@quicinc.com,
-        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
-        quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com,
-        quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
-References: <20250618072818.1667097-1-quic_sartgarg@quicinc.com>
- <20250618072818.1667097-3-quic_sartgarg@quicinc.com>
- <6040afd9-a2a8-49f0-85e9-95257b938156@kernel.org>
- <9627ed6f-2bb8-40b0-b647-5f659d87f2f9@oss.qualcomm.com>
- <bba062a3-f96c-456b-8e9e-fdeb0dc2d28d@kernel.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <bba062a3-f96c-456b-8e9e-fdeb0dc2d28d@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: xPQHLxNLSXQsNUSy3YMjq7O5gUJFvesV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjIzMDA3MyBTYWx0ZWRfX2bqB0jFW4ERR
- t8T6zpeD6mJpEEMs+06IiFg6cXFdK5uKmFAOqz1ZZfar6iNE25IpMr1XXTHA82Eq4k0Cei7NyaS
- ho/R6OTKKMuB9sX1o7PUw4woq52tLEL4bOiSi73sZZGqFtxCUyddnogMfSqxmlp9DrkhidG2tG+
- Kr/Ued+JapNakvR1Axn6xTbvFp1ij1tz5U9Z11l7SSQiGfLK+AGc9o6adlRVJXIKVFbqOSpo55z
- yJ7RHqo9WNaG1G1QEt6sT0koUGtNUkWhzMAxtgIbrMlDcHAiRGVt7+Kkjqdc4GtdPhSvAXIBFwr
- 4wRkihI+DhaigtLirfxad49gGZtpVA+5M2JD6qBOLKeYZdG127pjD1HYKJJMFLvlOBLKx81sODz
- LdvNK3pv0h5/6MhwsS3NhDmjyIdTOaavuYDybbcMPNMS160YbUO6v58mXOuken8NINB5+xqB
-X-Authority-Analysis: v=2.4 cv=L4kdQ/T8 c=1 sm=1 tr=0 ts=685943e1 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8 a=yCTWpnfuZRHAWxVBKy4A:9
- a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: xPQHLxNLSXQsNUSy3YMjq7O5gUJFvesV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-23_03,2025-06-23_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0
- adultscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
- spamscore=0 phishscore=0 mlxlogscore=999 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506230073
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fbedfcb3-a326-4357-8d10-3be925e5df8f@oss.qualcomm.com>
 
-On 6/22/25 11:48 AM, Krzysztof Kozlowski wrote:
-> On 21/06/2025 12:20, Konrad Dybcio wrote:
->> On 6/18/25 9:43 AM, Krzysztof Kozlowski wrote:
->>> On 18/06/2025 09:28, Sarthak Garg wrote:
->>>> Introduce a new optional device tree property `max-sd-hs-frequency` to
->>>> limit the maximum frequency (in Hz) used for SD cards operating in
->>>> High-Speed (HS) mode.
->>>>
->>>> This property is useful for platforms with vendor-specific hardware
->>>> constraints, such as the presence of a level shifter that cannot
->>>> reliably support the default 50 MHz HS frequency. It allows the host
->>>> driver to cap the HS mode frequency accordingly.
->>>>
->>>> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
->>>> ---
->>>>  .../devicetree/bindings/mmc/mmc-controller-common.yaml | 10 ++++++++++
->>>>  1 file changed, 10 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml b/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml
->>>> index 9a7235439759..1976f5f8c401 100644
->>>> --- a/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml
->>>> +++ b/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml
->>>> @@ -93,6 +93,16 @@ properties:
->>>>      minimum: 400000
->>>>      maximum: 384000000
->>>>  
->>>> +  max-sd-hs-frequency:
->>>> +    $ref: /schemas/types.yaml#/definitions/uint32
->>>> +    description: |
->>>> +      Maximum frequency (in Hz) to be used for SD cards operating in
->>>> +      High-Speed (HS) mode. This is useful for platforms with vendor-specific
->>>> +      limitations, such as the presence of a level shifter that cannot support
->>>> +      the default 50 MHz HS frequency or other.
->>>> +    minimum: 400000
->>>> +    maximum: 50000000
->>>
->>> This might be fine, but your DTS suggests clearly this is SoC compatible
->>> deducible, which I already said at v1.
->>
->> I don't understand why you're rejecting a common solution to a problem
->> that surely exists outside this one specific chip from one specific
->> vendor, which may be caused by a multitude of design choices, including
->> erratic board (not SoC) electrical design
+On Sat, Jun 14, 2025 at 09:54:05PM +0200, Konrad Dybcio wrote:
+> On 6/10/25 6:59 PM, Jens Glathe via B4 Relay wrote:
+> > From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> > 
+> > To enable Bluetooth pwrseq appears to be required for the WCN7850.
+> > Add the nodes from QCP.
+> > Add uart14 for the BT interface.
+> > 
+> > Tested-by: Anthony Ruhier <aruhier@mailbox.org>
+> > Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> > ---
+> > This patch adds the Bluetooth support for the WCN7850 card on this laptop.
+> > Since WCN7850 is supposed to need pwrseq, also added this from the QCP.
+> > 
+> > This is also part of my tree [1] for the Yoga Slim 7X.
+> > definition for the pwrseq and regulators.
+> > 
+> > [1] https://github.com/jglathe/linux_ms_dev_kit/blob/jg/ubuntu-qcom-x1e-6.15.0-jg-6/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts 
+> > ---
+> > Changes in v2:
+> > - rebased to next-20250610
+> > - added tested-by from Anthony Ruhier
+> > - Link to v1: https://lore.kernel.org/r/20250426-slim7x-bt-v1-1-d68f961af886@oldschoolsolutions.biz
+> > ---
 > 
-> No one brought any arguments so far that common solution is needed. The
-> only argument provided - sm8550 - is showing this is soc design.
+> I'm mildly confused given the multitude of options - but does this
+> check +Stephan's M.2 description appropriateness check?
 > 
-> I don't reject common solution. I provided review at v1 to which no one
-> responded, no one argued, no one provided other arguments.
 
-Okay, so the specific problem that causes this observable limitation
-exists on SM8550 and at least one more platform which is not upstream
-today. It can be caused by various electrical issues, in our specific
-case by something internal to the SoC (but external factors may apply
-too)
+Well, Bjorn has already merged two instances of this description in
+x1e80100-asus-vivobook-s15.dts and x1e80100-hp-omnibook-x14.dts, so it
+doesn't sound fair anymore to block these kind of patches without
+proposing an actually viable alternative solution.
 
-Looking at the docs, a number of platforms have various limitations
-with regards to frequency at specific speed-modes, some of which seem
-to be handled implicitly by rounding in the clock framework's
-round/set_rate().
+From a quick glance at the Yoga Slim 7x mainboard, I think that WiFi/BT
+is indeed a M.2 card there (like CRD/T14s, but unlike QCP). We haven't
+decided on a good way to model that yet. It would be nice to have at
+least my TODO comment that I added in the CRD/T14s commits so that it is
+obvious that there is ideally still some rework to be done in the
+future.
 
-I can very easily imagine there are either boards or platforms in the
-wild, where the speed must be limited for various reasons, maybe some
-of them currently don't advertise it (like sm8550 on next/master) to
-hide that
+Jens, can you add the same TODO comment that exists in the other two
+device trees mentioned above?
 
-Konrad
+Thanks,
+Stephan
 
