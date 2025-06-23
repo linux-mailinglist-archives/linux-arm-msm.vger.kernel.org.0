@@ -1,183 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-62099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E12AAE4857
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 17:22:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 73F18AE4915
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 17:46:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 16D19160D5E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 15:21:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C437A3A2188
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 15:46:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13FE2262FFD;
-	Mon, 23 Jun 2025 15:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEBC125F98E;
+	Mon, 23 Jun 2025 15:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cq22qlyj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TDYCh5y1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF27279DB8;
-	Mon, 23 Jun 2025 15:21:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807533D994;
+	Mon, 23 Jun 2025 15:46:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750692113; cv=none; b=ZLN+gqa0kktMjqBu1DteuvDK/JHaygys1WnLwdqrl/kD13XRHriNSDm0nlbfgIxoSuOCYI/+gYjG5+Kq2KAgupGX7Uy7WlEbnhLcs6qsK/t8C3VPS9mLUnj4iA9yiSqE4dRmUNLbhVW7XfAxIqkkeU6ad4B2r5WpyRo8auw0JG0=
+	t=1750693588; cv=none; b=k8u92AFMPZ42jsGu4SkHEhIifv7DSWSILzfIpI+whZBudArm4ZDn+lkYgTB8p0FU+vSRgmzn+uBFgt33Mox7c6I4YMrc9od6MdkeAryCRwfZHKBt09mS2mPWID/HM8mKaOlYlTJRE9l3uX6i/putxYXT9PviYczcRz2fH932d2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750692113; c=relaxed/simple;
-	bh=iDXmdEhyAO55W9iBkV7RRGlSD2vDaGwcbZyTfII/c6g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X5oWSjO8q26gqrkKidUNLb9VTEv7TEWibHwFqHcjEMr+948vm+XBCZSHajezezi2jbb1QXG8WDqjhvijMKyqd3AIBcyh7RIsf7Harzo7kuOPki21qYMhZHDXrdHXZX3T3DtGu7/A2DUEpLIGv4OQXMHI0dJ7wVm53C6G19w0N78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cq22qlyj; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a588da60dfso2636820f8f.1;
-        Mon, 23 Jun 2025 08:21:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750692109; x=1751296909; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8cS4vJgt2bzsMVFILHHyd6+LvUrXZQpLtPCNsj4gvqY=;
-        b=Cq22qlyjm6TKNL//rujdsm0fHSug0Y3/iMqw+fuU2tTxvrkkeGhzp061B7K1Dln1EI
-         aw0Bjnrw72VVEjh74oREmlq4tJQrKgAI3BbWLhQRqCPwrox8zJREroLn+SmtRX+r1dvE
-         P9ZLHpF5B/G1ylGAbchUlMYyAiITn96Qy7HvG4qJaiynvAZBEyaC1siJvrg1z9rdWk5w
-         TJKBDdvK9+vBz+RpRW2xMdCiWhvlIvB7brqItTzSFTv696U5d48Ag2GfdNViC2TG83P5
-         hsj3sRsHKnu6TGOvjr4bd3A4C//XYgfack69InqjzAKyVRKz5pbLHX37HX3E3ChbalTC
-         +wug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750692109; x=1751296909;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8cS4vJgt2bzsMVFILHHyd6+LvUrXZQpLtPCNsj4gvqY=;
-        b=fOxvhTjU5vw1BY9WRzMhbE0xpuGMn6ufh3WuKtyEIutC3szS3ZdyDvK8DSSUqQY5tN
-         yxrJkfTSqijogfDCtkZYOeOICd7Ih2LtC8dELHIYjxRE9/x/GsAtCmB4XBM4s3OjWz8O
-         rgoUSs7S67d1JL9+XKndXwnoTvst6dKoL4lH8WRyfCcRewcBjANtLbTFyFP/NuFApCpV
-         aUAUxC4u1PHpu8ZIk4NYbY0X1iuGU5f1Jhjri4taw0rbQDCOks9/fopNA1jqNynWjaVA
-         WP7DJK3U3sXe7u6k3OduQxOXsKfatNX8GQPU0MUSyOcOaBGUCSdhG6+b18BJb/WAZjVz
-         CNRA==
-X-Forwarded-Encrypted: i=1; AJvYcCU/s/08SfWdM7gghjl6DELd5fu1HSIkLfHxwYNYwSq1yE4o0T22tmyrAGayLwJQpc4WvBbdYyvIPwsTOy8u@vger.kernel.org, AJvYcCUhu3esKepKG29bPHQEB8CZ+9rlexCcQm4DmnCiTvHTaaKk8hclddC+yzSFLcRoDaPnvR17iHoXRC0=@vger.kernel.org, AJvYcCWBTeSX4RDQOwdn+pMGTrQJ/gO5iu+sj4wVjLWdPSzyEuiiap0sSOaPe1zfchCMm0M1F9Qj+YtiM/x2XBQd@vger.kernel.org
-X-Gm-Message-State: AOJu0YywyWHI31DrFlZGYbbZjFpcAujaXJQaYT3M3jtsY0i9GgRbiyfC
-	g89X+kgU/WLl1U+FixVIrryC1yEd3YG5XCnCW5LRR1aZzopLnyMnjEkO
-X-Gm-Gg: ASbGncsGrCNGBPTaBSBDpwrf5lz4xYnFX7NgkN8RRBPuRlDNqch65GWdIdp1qM24n+H
-	cPrzf7PwkT+UmvirCa9N1lEH0VscFmQWApff1XOx6XzizG8iBqatIC5ETf7VJCUvpvEtMJHxVId
-	WB2FQAPaDUe6IZq48WWaCeeB/k4RfVnJAn2HQNOiOiF2MBvcawuto3kQDJZq/WIQfQvTbX8C8AB
-	+5EEDB4w1op/7m+t6rQwT8miT4EvgWg9rdPA7uVkirtoccCUm+GKwaNg8aEtImBBTe6Nb+ytSyG
-	v2al25JHHLxBHZXUkWU73MOkN5Cb8RrEsgnnGQKSrjl8z5QL4zCjVrmzGdV9su2I+gtYb1Oozzc
-	bWVq1oKyZDjj/kTVEAmHQQbXYIamQfHBQQ7wWyQ==
-X-Google-Smtp-Source: AGHT+IFI+UkT9DwUjH1yfJfwdV03hy+2c6+S628d0RymdX+ud/yGlYJZMvlaz3gsjSyYyweYRnEGjQ==
-X-Received: by 2002:a05:6000:240a:b0:3a5:2182:bce2 with SMTP id ffacd0b85a97d-3a6d129d5a4mr10659078f8f.17.1750692109171;
-        Mon, 23 Jun 2025 08:21:49 -0700 (PDT)
-Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453646cb57fsm115444585e9.1.2025.06.23.08.21.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jun 2025 08:21:48 -0700 (PDT)
-Message-ID: <225213b8-4d90-4db5-a0a8-21edd3a5b2fc@gmail.com>
-Date: Mon, 23 Jun 2025 17:21:47 +0200
+	s=arc-20240116; t=1750693588; c=relaxed/simple;
+	bh=w/l6L6hU5FHxVqXs8auOKsE8vW000g2m20hcmDTlaS4=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=eDEz+7/FbVQZEV+Yd+79N0aUhaDyNtZyinu1Ru9gie8NsV5JZ2MGb5lmK+VFsReOvAdYcdvlsvcUMWY4VQIoXybjpxfOVA8PDeG0KaGcgBFBFXkcgcrKIFW4Y/YfQeI9AP4AvbeQY2kSDvc0HVSWLdkhqQlrp0ITxXoGMXtz2Pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TDYCh5y1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED43C4CEEA;
+	Mon, 23 Jun 2025 15:46:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750693588;
+	bh=w/l6L6hU5FHxVqXs8auOKsE8vW000g2m20hcmDTlaS4=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=TDYCh5y1PNN/APVI70QJMhg3IPnPWxtnrNMNT3jyMDmhR29ZFj7kPz6El99a8Zk39
+	 FokW8n/W5AuT8gt1CDPoabH0V37G1+A2TAN89zwcj3SO46RCaQu/6g8TVLYP+M3VlM
+	 CZbI+Y5KoeOk6VAMmRlzP18A+rg/rfMEDZp7rZFF19c4zpK0AwRGrNgDShwqbMvSNX
+	 7HdsfKABsdhNrPTPnaurf1p0riOeMOsg8n5vSQQhWHDzJr21bJ91FmMjYAxqZt2Z6U
+	 /E4F46TuJgvLxkyCrt1ENlr/91n0qnZJuMeq/xUrrOzox0dlMqRY9T03EzqMYFDa2p
+	 sIDdc/kEAICCA==
+Date: Mon, 23 Jun 2025 10:46:27 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] interconnect: avoid memory allocation when
- 'icc_bw_lock' is held
-Content-Language: hu
-To: Johan Hovold <johan@kernel.org>
-Cc: Georgi Djakov <djakov@kernel.org>,
- Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
- Johan Hovold <johan+linaro@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-pm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>
-References: <20250618-icc-bw-lockdep-v2-1-3223da346765@gmail.com>
- <aFPhdWoZDOrdrbQz@hovoldconsulting.com>
- <90bfae80-f3d3-4c1e-9a5c-9f8205bf90b9@gmail.com>
- <aFkXGUgM9R_MmcB0@hovoldconsulting.com>
-From: Gabor Juhos <j4g8y7@gmail.com>
-In-Reply-To: <aFkXGUgM9R_MmcB0@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>, 
+ kernel@oss.qualcomm.com, Conor Dooley <conor+dt@kernel.org>, 
+ devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>
+To: Umang Chheda <umang.chheda@oss.qualcomm.com>
+In-Reply-To: <20250623130420.3981916-1-umang.chheda@oss.qualcomm.com>
+References: <20250623130420.3981916-1-umang.chheda@oss.qualcomm.com>
+Message-Id: <175069348269.3797007.5540625905808833666.robh@kernel.org>
+Subject: Re: [PATCH 0/2] Add support for IQ-8275-evk board
 
-2025. 06. 23. 10:58 keltezéssel, Johan Hovold írta:
-> [ +CC: Bjorn ]
+
+On Mon, 23 Jun 2025 18:34:18 +0530, Umang Chheda wrote:
+> This series:
 > 
-> On Thu, Jun 19, 2025 at 03:03:50PM +0200, Gabor Juhos wrote:
->> 2025. 06. 19. 12:07 keltezéssel, Johan Hovold írta:
->>> On Wed, Jun 18, 2025 at 09:58:31PM +0200, Gabor Juhos wrote:
->>>> The 'icc_bw_lock' mutex is introduced in commit af42269c3523
->>>> ("interconnect: Fix locking for runpm vs reclaim") in order
->>>> to decouple serialization of bw aggregation from codepaths
->>>> that require memory allocation.
->>>>
->>>> However commit d30f83d278a9 ("interconnect: core: Add dynamic
->>>> id allocation support") added a devm_kasprintf() call into a
->>>> path protected by the 'icc_bw_lock' which causes this lockdep
->>>> warning (at least on the IPQ9574 platform):
->>>>
->>>>     ======================================================
->>>>     WARNING: possible circular locking dependency detected
->>>>     6.15.0-next-20250529 #0 Not tainted
->>>
->>>> Move the memory allocation part of the code outside of the protected
->>>> path to eliminate the warning, and add a note about why it is moved
->>>> to there. Also add memory allocation failure handling, while we are
->>>> at it.
->>>>
->>>> Fixes: d30f83d278a9 ("interconnect: core: Add dynamic id allocation support")
->>>> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
->>>> ---
->>>> Changes in v2:
->>>>   - move memory allocation outside of icc_lock
->>>>   - issue a warning and return without modifying the node name in case of
->>>>     memory allocation failure, and adjust the commit description
->>>>   - remove offered tags from Johan and Bryan
->>>>     Note: since I was not sure that that the added WARN_ON() is a substantial
->>>>     change or not, I have removed the offered tags intentionally to be on the
->>>>     safe side
->>>
->>> Bah, what a mess (thanks for dropping the tags).
->>>
->>> This dynamic id feature looks like a very ad-hoc and badly designed
->>> interface.
->>>
->>> icc_node_add() should not be allocating memory in the first place as it
->>> is not designed to ever fail (e.g. does not return errors).
->>>
->>> Generating the name could have been done as part of of
->>> icc_node_create_dyn() or yet another helper for the caller could have
->>> been added for that. In any case, it should be done before calling
->>> icc_node_add().
->>>
->>> Perhaps the best minimal fix of the regression is to move the allocation
->>> into the two users of this interface. They already handle both dynamic
->>> and non-dynamic node allocation explicitly.
->>
->> Ok, I will change the patch. Just to be clear, do you mean the
->> qcom_icc_rpmh_probe() and qcom_osm_l3_probe() functions, right?
+> Add support for Qualcomm's IQ-8275-evk board using QCS8275 SOC.
 > 
-> Yes, indeed.
-
-Ok.
-
+> QCS8275 is another SoC under IQ8 series of SoCs. Unlike QCS8300
+> which has safety features, it doesn't have safety features which
+> affects thermal management.
 > 
-> Apparently this is how it was done in the first six iterations of the
-> series adding this and then the author was asked to generalise the name
-> generation. That can still be done as a follow up (by the Qualcomm
-> folks) after fixing the immediate issues:
+> IQ8 EVK board is a single board computer (SBC) that supports various
+> industrial applications, including factory automation, industrial
+> robots, drones, edge AI boxes, machine vision, autonomous mobile
+> robots (AMRs), and industrial gateways.
 > 
-> 	https://lore.kernel.org/all/lm6gvcrnd2pcphex4pugxie7m47qlvrgvsvuf75w4uumwoouew@qcuvxeb3u72s
-
-
-Thanks for digging this out, I have only checked the last two iterations.
-
->>> Then whoever cares about this code can come up with a common interface
->>> for allocating the name (e.g. move it into icc_node_create_dyn() or add
->>> a new icc_node_init() helper or similar).
+> Below are detailed informations on IQ-8275-evk HW:
+> ------------------------------------------------------
+> QCS8275 SOM is stacked on top of IQ-8275-evk board.
+> On top of IQ-8275-evk board additional mezzanine boards can be stacked
+> in future.
+> IQ-8275-evk is single board supporting these peripherals:
+>   - Storage: 1 × 128 GB UFS, micro-SD card, EEPROMs for MACs,
+>     eMMC on mezzanine card
+>   - Audio/Video, Camera & Display ports
+>   - Connectivity: RJ45 2.5GbE, WLAN/Bluetooth, CAN/CAN-FD
+>   - PCIe ports
+>   - USB & UART ports
+> 
+> Currently basic features like DSPs, UFS and 'boot to shell' via
+> uart console are enabled.
+> 
+> Umang Chheda (2):
+>   dt-bindings: arm: qcom: Add bindings for IQ8 EVK board
+>   arm64: dts: qcom: Add support for QCS8275 IQ8 EVK
+> 
+>  .../devicetree/bindings/arm/qcom.yaml         |   7 +
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/qcs8275-iq-8275-evk.dts     | 241 ++++++++++++++++++
+>  3 files changed, 249 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qcs8275-iq-8275-evk.dts
+> 
+> --
+> 2.25.1
+> 
+> 
 > 
 
-Regards,
-Gabor
+
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+This patch series was applied (using b4) to base:
+ Base: attempting to guess base-commit...
+ Base: tags/v6.16-rc1-5-g700a4c3f95a3 (exact match)
+
+If this is not the correct base, please add 'base-commit' tag
+(or use b4 which does this automatically)
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250623130420.3981916-1-umang.chheda@oss.qualcomm.com:
+
+arch/arm64/boot/dts/qcom/msm8916-samsung-gt58.dtb: panel@0 (samsung,lsl080al03): 'port' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/panel/samsung,s6d7aa0.yaml#
+
+
+
+
+
 
