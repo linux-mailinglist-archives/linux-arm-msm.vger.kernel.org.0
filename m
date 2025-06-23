@@ -1,203 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-62103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C0C6AE4AC7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 18:27:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C5561AE4B06
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 18:33:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A2D944036D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 16:24:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44FFA3A22D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 16:31:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDC892BE7AB;
-	Mon, 23 Jun 2025 16:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A7A128DF2B;
+	Mon, 23 Jun 2025 16:31:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mLktB6Ax"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qHnlrAH6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0B529B768
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 16:18:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E13323C51F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 16:31:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750695517; cv=none; b=MysV7gVviy+z61NFUAHYLQuEmYeO3RLCZxhVSKFH6L273O2Jjj/OcNPY1HVI78e5e/rzoeftzHHtxuSJydmyHfcq/AFEp/01J09GlHmS57W3vfWilYsqVmjobV2k1pDw8hiqb7QZscTZ9TkzCZGq7U9hECt2Er/GLNLXHl/Ccus=
+	t=1750696297; cv=none; b=p0+r07ULEWB9DQ31YB6ezeSEfrdbTxVS7LxwDK7bQ/bQrV3+jCkffAb9PYIGwVD2QvsoSVzyoqs+R0XXPe8FpYPVQHVYAnKdX4bKyjv502VwCF2sGOxXLEx947u4lnfKZjeySpyApUmYtxXnzyLaBmsRFxiOo7m0iomvv/U0bSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750695517; c=relaxed/simple;
-	bh=zchNO3HCWwoFQnDoUAapWNGzqAw5TG5DYK0U++aFf80=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kOjxX5GaguaOD7Q/cHJdLgGYazWvZUBLCNMJ0mi1tvNeteQCLrQevSx0bggW1qPNUUwDvLBYHeUsBpTVY2GaWe3hy7NzAQbHOh4aPv/LCL1AH7S5Y492DplSFHzvtTvRbOiRua+H3btUHo6QoUdXn6+vAO5gcn10CB7A7XR45hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mLktB6Ax; arc=none smtp.client-ip=209.85.221.48
+	s=arc-20240116; t=1750696297; c=relaxed/simple;
+	bh=8KsekKS5aRcVIvVUBtntQtfWkhVyoUlhEiE174K9srA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DX7BujLE0u0NlnGGTDxjQbLDFrhsyrzyAJZeV2AVDFofsPP40h7/jT5LYh6oxovPZqgsQsDBTSBgOrDS9K+yvDUd619UNtEP+l+ze1Mb8HUUh49Cw3RhhGxGCXH8CqleLHp00aFqMQ9yipsIk7e3FmSzoJeDWROeUtlAdf/RxYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qHnlrAH6; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a4e742dc97so3219680f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 09:18:34 -0700 (PDT)
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a54700a46eso2476390f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 09:31:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750695513; x=1751300313; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8P4BKlF0L91nBpuIvtJw81/Y/F3X1v/6aoitvWQlibo=;
-        b=mLktB6Ax9g0d336NQ+evCmXaeniWsGy8mQ6vvA8i/N8Pk2OwU1Cd/5fET3ZKD8+ci6
-         37Jb+gr+u8niADoWwrssc2X5Ys51rSinyt6bbvJETDeLvAszsAppxtGovdj/yQtiCc/V
-         apQ/UVcZ9N64osjVBmimytFdSNPU8M7YAYhobFgGdefXQ50tKJn7qZsCQYGMNNqFRFCr
-         SmhSbj/cslmDdZAhc0HbT0CYEX0V6psUvtHuyESoGPIl5ctyvvsi6DP4BvDd30iT9MHC
-         KCsfNJNH15neu/ix0zLekkx7Cr9GhjJFTFcqtjbyy1oBPT5/7+vZvOdlIXujY39jePEy
-         ARgQ==
+        d=linaro.org; s=google; t=1750696294; x=1751301094; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0j8AmL2vgCPrh67szF4XCY9cmGpFOza5ajW2zlzTb44=;
+        b=qHnlrAH65AWvyLf+ffRGDHFQlQ8UXXXXodW7rITXKEKgsBWRUUJ01Pt101tLfNdNgz
+         druRmSX5U+bCqNoLkySpbRnNjBEvGhtqWEA6sZgE3faNVC1MOopFIt7aJgpedENnbgA+
+         vLhT/oF+iV4NNJl7ZENbUwAqvYWH3iddwhnanR5l4wIgKj8vv6iI+GCZR6dQ89GS88lQ
+         4HUQJcYLu1l64TswOFIPMbymXvof9EgYaCIw8NBp8I3/Eqx4VOXqXjnURJXJZOFsUk3g
+         05y1QuuzYM81dH5UL1YrQufYoHDEwKgH0zffz4y/y13dXfC9GgNjUFU4R5cTo53tNQSx
+         Q+yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750695513; x=1751300313;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8P4BKlF0L91nBpuIvtJw81/Y/F3X1v/6aoitvWQlibo=;
-        b=gUcYjad8VGq3rbXzLPmy7RPyuVszK34QKTnnO+Te5caFPNqNG3Q9Xj2S0bkpX/UvVQ
-         armuDUD8OB7218NhvGpbXQJmfzGs9xCaXiC9kMSYEvSfyCbRVfgsia54Cd3XSYTZTeH7
-         r03KVYV272UosYoWlcEYDn0UPDhPKZ9aTPVWHaIn3uol8kDPAlP74UiUGQmH5LPm/nUk
-         CYmrPcFcjeg2n53Ev8JnHsD+29Fzr6P4SrZrkaYXUClUwWuMiOZeWXpWG8PHM4j62KAJ
-         IjGG5YxBLKQwmI5LvDYaYXNCHLEV/jiq5/OEoahyomasOU3r3rhajze8IhSKCfrBg19Y
-         IOdw==
-X-Forwarded-Encrypted: i=1; AJvYcCWHuPT59oMfZ5OPtwvkHvJFgMvXgn0/m2J8hgRvKJ07+dn6f7S+XJYR/MpVObfldtA1dMjvrHMXFschqNcQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxOTFFNKymHVMf5TrBQa6lhnkyvEISBVYpTxGTrp2OIOzxLwIeW
-	CrBkOK5nB8VRYqoBC51WBx+jGp9NSaTnKEte9gwlC0f1cnt4jFt27FaA6URbv+mX578=
-X-Gm-Gg: ASbGncuqFV3JPrnQu8lZnCd6M1Oli2gHyqTi9JxvK5ZaUMtwjRDNg9moalPmdjL60kT
-	/h7rMD7zydCr0K/5KvBuUaamP8NhxvxnCwEKg39ZCFcBiAPnTZzSzvXE53DoXfioRFT4mKptjle
-	UyZGPp8XMXkF85uuawiZm69LYOKf9VqKVuuJvfPuyq9Hj9c2/h+qht7XY2gOWPSOGOuttxTEH0v
-	NDyvpa3s9aA58W5QuuNwXiaUB6gw7iuWFfN9tVMUycSbqulq0f37PJknR/CpYIY0OPkk/JPd4cc
-	2JGLfE7Eyq7ekrp+YIlCp45Nu66pgOrokA/k0czI4P957d2BDSDm7wWhDFB2D68nu9llvCNpfw=
+        d=1e100.net; s=20230601; t=1750696294; x=1751301094;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0j8AmL2vgCPrh67szF4XCY9cmGpFOza5ajW2zlzTb44=;
+        b=DEMQrujGAsH9MbABNz7vHWIWP++TE0SnyoqXClwdmtD5waSCb3pEux4Drl0L69hGqX
+         wHhRFLEu88yUCD8s8+DyA7nYOxncKL+37A/yWmED0ZFYhYGpp0hSL0vH8ib+RW8KncTq
+         qxoaZyeE0s+bF45ey17xNLA7CamXfrbDeD/BYx7rXNFZcFzKHaHhHqMoM5HKnCLIC0df
+         Q2lzVYFRL6ihBmrfoGmT8/QOnZIPKSfL9AVtVmZ7cl1kMGNjJR0EIITro67PisfL9MWO
+         oOFuXE3QPNtebdphPDyCvwaQWLzf6eJT/uTPdLGj8MPxA/rul+5vqlIt/4cocrszUOi7
+         E+gw==
+X-Forwarded-Encrypted: i=1; AJvYcCXrAK1+Tz/s3FpK4sVluzdomW6ufwmF86CYXpSMZLg4ROrUuuUDnb2t9ee/UgXEmviEWwWZzfjn4Mfgoayd@vger.kernel.org
+X-Gm-Message-State: AOJu0YxHW+BY0MUb3zjxRw5IdCZnp8Q1Kbac2mL/31u4CYn/l7bBVPzY
+	Ptfk76a091dNuae9LiJzU1QZljJ3CPfkEDH2teUyyzZpm80NCebp7/p5FZds6uF5IL0=
+X-Gm-Gg: ASbGncv7AiK1/DfMnhQWti53UWO16pJI3cEhe/SfWKNXxqJvsdfjgMT3lSlTI8GO2Wh
+	fc0ZTk4vetQPCGkY+Mi0ugDImmzGjuqxrZ5ux2Z3JgwJYgs/zhwYifrPuXIdsqNAacuUqHs4ubP
+	l0qUCCjdJLOb2nVLsEfuTS9fZbSWJxw0NN0SXfcg9cjsSp5DGY4Z9ySUxNCo3lLW3NXfC7MbwJj
+	V9DZFKQLb+y8ooBb+EqfFylliCw7fQuZDDM3E/XJsWdioKP3wbWBgmegw2tA2fY/W4Xl7uw3aNc
+	OXanku86q4K+8d5dSqxFLryx+crQ1U8C8Tq1zwNEyVd4ZzUwa3/30QnxpMh9c6mNA3Rh0lXZmQo
 	=
-X-Google-Smtp-Source: AGHT+IGRAHfzz02yaZCUQ4NgxRMmn6Ic0SvW0VIh60ro1+UYsZHIgHMHFSGMA6Pf56q88UTsOQG+Ig==
-X-Received: by 2002:a05:6000:2882:b0:3a5:23c6:eeee with SMTP id ffacd0b85a97d-3a6e71ddb32mr130435f8f.21.1750695513111;
-        Mon, 23 Jun 2025 09:18:33 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:ef30:b3ca:db17:bc4f:ae5a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a6d0f1054bsm9701697f8f.9.2025.06.23.09.18.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jun 2025 09:18:32 -0700 (PDT)
-Date: Mon, 23 Jun 2025 18:18:27 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Xilin Wu <sophon@radxa.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Hermes Wu <Hermes.wu@ite.com.tw>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v7] drm/msm/dp: reuse generic HDMI codec implementation
-Message-ID: <aFl-U-QX4T6retMq@linaro.org>
-References: <20250423-dp-hdmi-audio-v7-1-8407a23e55b2@oss.qualcomm.com>
- <4E62D52FC6135E5B+a6b1634e-5c66-4db5-bb1e-bf64e2e8d8a2@radxa.com>
+X-Google-Smtp-Source: AGHT+IFtp9SY06hL7tr/NWr3bIhdcZjACNg+h+Rg5V3jKzfHdcvWGYIa/oooWJLbVLfw9PBe9ecQTg==
+X-Received: by 2002:adf:9dc8:0:b0:3a3:63d3:369a with SMTP id ffacd0b85a97d-3a6d130ace1mr9778129f8f.25.1750696293870;
+        Mon, 23 Jun 2025 09:31:33 -0700 (PDT)
+Received: from [192.168.1.159] ([213.240.182.16])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a6d1187cf0sm9786922f8f.71.2025.06.23.09.31.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jun 2025 09:31:33 -0700 (PDT)
+Message-ID: <48c87af4-7d42-4283-b407-697b78d5b913@linaro.org>
+Date: Mon, 23 Jun 2025 18:31:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4E62D52FC6135E5B+a6b1634e-5c66-4db5-bb1e-bf64e2e8d8a2@radxa.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: rectify file entry in QUALCOMM SMB CHARGER
+ DRIVER
+To: Lukas Bulwahn <lbulwahn@redhat.com>,
+ Sebastian Reichel <sebastian.reichel@collabora.com>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Cc: kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Lukas Bulwahn <lukas.bulwahn@redhat.com>
+References: <20250623081240.149446-1-lukas.bulwahn@redhat.com>
+Content-Language: en-US
+From: Casey Connolly <casey.connolly@linaro.org>
+In-Reply-To: <20250623081240.149446-1-lukas.bulwahn@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, May 29, 2025 at 10:40:12AM +0800, Xilin Wu wrote:
-> On 2025/4/24 01:52:45, Dmitry Baryshkov wrote:
-> > From: Dmitry Baryshkov <lumag@kernel.org>
-> > 
-> > The MSM DisplayPort driver implements several HDMI codec functions
-> > in the driver, e.g. it manually manages HDMI codec device registration,
-> > returning ELD and plugged_cb support. In order to reduce code
-> > duplication reuse drm_hdmi_audio_* helpers and drm_bridge_connector
-> > integration.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> > ---
-> > A lot of DisplayPort bridges use HDMI Codec in order to provide audio
-> > support. Present DRM HDMI Audio support has been written with the HDMI
-> > and in particular DRM HDMI Connector framework support, however those
-> > audio helpers can be easily reused for DisplayPort drivers too.
-> > 
-> > Patches by Hermes Wu that targeted implementing HDMI Audio support in
-> > the iTE IT6506 driver pointed out the necessity of allowing one to use
-> > generic audio helpers for DisplayPort drivers, as otherwise each driver
-> > has to manually (and correctly) implement the get_eld() and plugged_cb
-> > support.
-> > 
-> > Implement necessary integration in drm_bridge_connector and provide an
-> > example implementation in the msm/dp driver.
-> > ---
-> > Changes in v7:
-> > - Dropped applied patches
-> > - Link to v6: https://lore.kernel.org/r/20250314-dp-hdmi-audio-v6-0-dbd228fa73d7@oss.qualcomm.com
-> > 
-> > Changes in v6:
-> > - Added DRM_BRIDGE_OP_DP_AUDIO and separate set of DisplayPort audio
-> >    callbacks to the drm_bridge interface (Maxime)
-> > - Link to v5: https://lore.kernel.org/r/20250307-dp-hdmi-audio-v5-0-f3be215fdb78@linaro.org
-> > 
-> > Changes in v5:
-> > - Rebased on top of linux-next, also handling HDMI audio piece of the
-> >    MSM HDMI driver.
-> > - Link to v4: https://lore.kernel.org/r/20250301-dp-hdmi-audio-v4-0-82739daf28cc@linaro.org
-> > 
-> > Changes in v4:
-> > - Rebased on linux-next, adding DRM_BRIDGE_OP_HDMI_AUDIO to Synopsys QP
-> >    HDMI driver.
-> > - Drop outdated comment regarding subconnector from the commit message.
-> > - Link to v3: https://lore.kernel.org/r/20250219-dp-hdmi-audio-v3-0-42900f034b40@linaro.org
-> > 
-> > Changes in v3:
-> > - Dropped DRM_BRIDGE_OP_DisplayPort, added DRM_BRIDGE_OP_HDMI_AUDIO
-> >    (Laurent, Maxime)
-> > - Dropped the subconnector patch (again)
-> > - Link to v2: https://lore.kernel.org/r/20250209-dp-hdmi-audio-v2-0-16db6ebf22ff@linaro.org
-> > 
-> > Changes in v2:
-> > - Added drm_connector_attach_dp_subconnector_property() patches
-> > - Link to v1: https://lore.kernel.org/r/20250206-dp-hdmi-audio-v1-0-8aa14a8c0d4d@linaro.org
-> > ---
-> >   drivers/gpu/drm/msm/Kconfig         |   1 +
-> >   drivers/gpu/drm/msm/dp/dp_audio.c   | 131 ++++--------------------------------
-> >   drivers/gpu/drm/msm/dp/dp_audio.h   |  27 ++------
-> >   drivers/gpu/drm/msm/dp/dp_display.c |  28 ++------
-> >   drivers/gpu/drm/msm/dp/dp_display.h |   6 --
-> >   drivers/gpu/drm/msm/dp/dp_drm.c     |   8 +++
-> >   6 files changed, 31 insertions(+), 170 deletions(-)
-> > 
-> 
-> This change breaks DP audio on the qcs6490 platform, tested on kernel
-> next-20250528.
-> 
-> [    0.368035] [drm:dpu_kms_hw_init:1173] dpu hardware revision:0x70020000
-> [    0.369359] hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_probe:
-> dai_count 0
-> [    0.369362] hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_probe:
-> Missing hw_params
-> [    0.369364] hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_probe:
-> Invalid parameters
-> [    0.369366] hdmi-audio-codec hdmi-audio-codec.0.auto: probe with driver
-> hdmi-audio-codec failed with error -22
-> [    0.370536] [drm] Initialized msm 1.12.0 for ae01000.display-controller
-> on minor 0
-> 
-> Manually reverting this change solves the problem.
-> 
 
-Try applying the following patch, the current code in next/mainline is
-broken and de-references some wrong memory. Probably pure luck that it
-ever worked during testing. :/
 
-https://lore.kernel.org/dri-devel/20250620011616.118-1-kernel@airkyi.com/
+On 6/23/25 10:12, Lukas Bulwahn wrote:
+> From: Lukas Bulwahn <lukas.bulwahn@redhat.com>
+> 
+> Commit 4deeea4b0741  ("MAINTAINERS: add myself as smbx charger driver
+> maintainer") adds the section QUALCOMM SMB CHARGER DRIVER in MAINTAINERS,
+> including a file entry pointing to qcom_smbx_charger.c. Within the same
+> patch series, the commit 5ec53bcc7fce ("power: supply: pmi8998_charger:
+> rename to qcom_smbx") renames qcom_pmi8998_charger.c to qcom_smbx.c and not
+> to qcom_smbx_charger.c, though. Note that the commit message clearly
+> indicates the intentional removal of the "_charger" suffix.
+> 
+> Refer to the intended file.
 
-Thanks,
-Stephan
+oh dear, thanks for catching this!
+
+> 
+> Signed-off-by: Lukas Bulwahn <lukas.bulwahn@redhat.com>
+
+Acked-by: Casey connolly <casey.connolly@linaro.org>
+
+> ---
+>   MAINTAINERS | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 41f13ccef4c8..c76ea415c56f 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -20612,7 +20612,7 @@ M:	Casey Connolly <casey.connolly@linaro.org>
+>   L:	linux-arm-msm@vger.kernel.org
+>   S:	Maintained
+>   F:	Documentation/devicetree/bindings/power/supply/qcom,pmi8998-charger.yaml
+> -F:	drivers/power/supply/qcom_smbx_charger.c
+> +F:	drivers/power/supply/qcom_smbx.c
+>   
+>   QUALCOMM QSEECOM DRIVER
+>   M:	Maximilian Luz <luzmaximilian@gmail.com>
+
+-- 
+Casey (she/they)
+
 
