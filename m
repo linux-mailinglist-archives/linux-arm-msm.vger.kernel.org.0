@@ -1,117 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-62090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03E9AAE46AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 16:27:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 62704AE473E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 16:45:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C523E1883D10
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 14:27:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 30490189D11C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 14:46:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90AB019C558;
-	Mon, 23 Jun 2025 14:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4383426B755;
+	Mon, 23 Jun 2025 14:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cgp1kFzI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OiQgFoRh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665BF6136;
-	Mon, 23 Jun 2025 14:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1635C26B751;
+	Mon, 23 Jun 2025 14:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750688842; cv=none; b=L5no7iyJb9a83Q58eTJ/GCDi8m4LINTGG2scmNdWT3eMTDwosdGaI6nyeVdik78swgyb1E8VdbkSbqdICKjpYSixKfsPIptYo6kR7vZAjwG6zwYCcfpHqt27eZGl2Cphf8B4G77+t6FJIH85MB1tqsCLd72VbGGQFYF4fViihTc=
+	t=1750689935; cv=none; b=Kv4l6tuV1mD0lyuCUVGZOykES6m05K8nck0vlUXFHE6je8lPtSgJnI64sIjpfC2BdSi60KIwykc9Ik7X/i00MA5LpEA2IYWSaWBdeRfLD5PuzOnVvVLyLeS7Xb5IvEcFB8i7nR74Dii0gsGzFSxEmIW9rqgPmvXW88fGp6uSLyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750688842; c=relaxed/simple;
-	bh=obH5Dm7/m7+LGG+XQUGVJ6QnqlXlUijJvUcYAnwt9Ig=;
+	s=arc-20240116; t=1750689935; c=relaxed/simple;
+	bh=BWNrsADcgYwZ2dvZXwG1N6G2J7mZGyjM3XJMSbDzw44=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NS3K4OAaX50m2Y28y24kZmwdD083ifpKbexDQt+8b7MiNSUiNCtUbYv4arW53w4iEyvhLLRwIjLwFkRp9KtNhSaLsGfsxIk05meKv2/L09uG4+MHDAAFdHvqvVfdWWC7w1KXL8M3OaoDiK1z4xMGxBu+llv7QRvi/PNXrW31f58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cgp1kFzI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B330C4CEEA;
-	Mon, 23 Jun 2025 14:27:21 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=VE0h+mKDeiwnlQRa84G6a3ObZneWyKAKWI+sMJT9o9I1xYlkr0S6vvp2/VkJSok4zvR/4GQvpQTRtudcVUN+BGIBor8WintgBMeOZCjhFxqpjpMERCMxDPVjw2POsHZkI5qwHkcgXSlNpU0lgKjNKjnbE6+r9qY5queSRGTp9xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OiQgFoRh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ADDEC4CEF1;
+	Mon, 23 Jun 2025 14:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750688841;
-	bh=obH5Dm7/m7+LGG+XQUGVJ6QnqlXlUijJvUcYAnwt9Ig=;
+	s=k20201202; t=1750689934;
+	bh=BWNrsADcgYwZ2dvZXwG1N6G2J7mZGyjM3XJMSbDzw44=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cgp1kFzIgvBjqGQ6C7HoQFhrnC+4KUs4LI0n80N78e4X3B9D9WybLTCqoNk9sXoyA
-	 xLWlzftVceySiFFceBgfTfRrvvdLtJ5wVglWvkPN/GBguzEK/OggZoD184zIcjsOp/
-	 mUuxkUikNCPCQPLiXAGprm+PDB14IjBMu24hOPflfXMxbX16tdbTmbTGbuYINeuXVe
-	 my6pUb3OtL59Y++4NFNifJSZW4wecLBPlqfRj1s0PmE8SuNHXTGHnF1xS0q1NE4QNP
-	 TWYBHrAMyxTnT9cWcgUMp180tSOxtQg4GYRLLMhvKbw048A1Aldyxw5TkB08dHV3u0
-	 ecgR5EbiuusEg==
-Date: Mon, 23 Jun 2025 08:27:19 -0600
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Stanimir Varbanov <svarbanov@mm-sol.com>, 
-	Wilfred Mallawa <wilfred.mallawa@wdc.com>, Damien Le Moal <dlemoal@kernel.org>, 
-	Laszlo Fiat <laszlo.fiat@proton.me>, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v3 4/6] PCI: qcom: Wait PCIE_RESET_CONFIG_WAIT_MS after
- link-up IRQ
-Message-ID: <ebrnndrw7kifuyixh4umos6ozhg3a45ya2ooxrf44xytdpiczs@qtd2l4tc63kt>
-References: <20250613124839.2197945-8-cassel@kernel.org>
- <20250613124839.2197945-12-cassel@kernel.org>
+	b=OiQgFoRhJD/skmkSCiSbp8PcIJRnlwIFpnOpPNgOFONDQF5xzCKMu3/YOgz5i2ML1
+	 CUvseUYm3azLa7D0nYVj2Hj7mYaZFzb5hDxSKrwE0akP0stAKxLyA9Tf02eDHUXX2H
+	 caXb1D4Z9YG410lVECHcoVEuNUJF0YeSfTiAKYuFmqexPTzTwHw36bKW/UHhak6RwQ
+	 4SysyGU2wnHcd8sQvX0M6UuzjgpbdecktL/s7PXLoQ+VxCJsqAdJSKmIJDBRsXV567
+	 z2Uald1ms+kpHEp8h+PcX+ZQnMK3vT5WibcOWuzLDcKj1E+pPMANMrUWoOnvOwOmwK
+	 c+XqQM6jvJMuA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1uTiQL-000000006Qw-1WSI;
+	Mon, 23 Jun 2025 16:45:30 +0200
+Date: Mon, 23 Jun 2025 16:45:29 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] firmware: qcom: uefisecapp: add support for R/O
+ UEFI vars
+Message-ID: <aFloifxONXnQbVg6@hovoldconsulting.com>
+References: <20250621-more-qseecom-v2-0-6e8f635640c5@oss.qualcomm.com>
+ <20250621-more-qseecom-v2-2-6e8f635640c5@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250613124839.2197945-12-cassel@kernel.org>
+In-Reply-To: <20250621-more-qseecom-v2-2-6e8f635640c5@oss.qualcomm.com>
 
-On Fri, Jun 13, 2025 at 02:48:43PM +0200, Niklas Cassel wrote:
-> Per PCIe r6.0, sec 6.6.1, software must generally wait a minimum of
-> 100ms (PCIE_RESET_CONFIG_WAIT_MS) after Link training completes before
-> sending a Configuration Request.
+On Sat, Jun 21, 2025 at 10:56:11PM +0300, Dmitry Baryshkov wrote:
+> For some platforms (e.g. Lenovo Yoga C630) we don't yet know a way to
+> update variables in the permanent storage. However being able to read
+> the vars is still useful as it allows us to get e.g. RTC offset.
 > 
-> Prior to 36971d6c5a9a ("PCI: qcom: Don't wait for link if we can detect
-> Link Up"), qcom used dw_pcie_wait_for_link(), which waited between 0
-> and 90ms after the link came up before we enumerate the bus, and this
-> was apparently enough for most devices.
+> Add a quirk for QSEECOM specifying that UEFI variables for this platform
+> should be registered in read-only mode.
 > 
-> After 36971d6c5a9a, qcom_pcie_global_irq_thread() started enumeration
-> immediately when handling the link-up IRQ, and devices (e.g., Laszlo
-> Fiat's PLEXTOR PX-256M8PeGN NVMe SSD) may not be ready to handle config
-> requests yet.
-> 
-> Delay PCIE_RESET_CONFIG_WAIT_MS after the link-up IRQ before starting
-> enumeration.
-> 
-> Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-> Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-> Fixes: 82a823833f4e ("PCI: qcom: Add Qualcomm PCIe controller driver")
-
-Shouldn't 36971d6c5a9a be the fixes commit?
-
-- Mani
-
-> Signed-off-by: Niklas Cassel <cassel@kernel.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 1 +
->  1 file changed, 1 insertion(+)
+>  drivers/firmware/qcom/qcom_qseecom_uefisecapp.c | 18 +++++++++++++++++-
+>  include/linux/firmware/qcom/qcom_qseecom.h      |  2 ++
+>  2 files changed, 19 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index c789e3f85655..9b12f2f02042 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1564,6 +1564,7 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
->  	writel_relaxed(status, pcie->parf + PARF_INT_ALL_CLEAR);
+> diff --git a/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c b/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
+> index 98a463e9774bf04f2deb0f7fa1318bd0d2edfa49..05f700dcb8cf3189f640237ff0e045564abb8264 100644
+> --- a/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
+> +++ b/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
+> @@ -792,6 +792,12 @@ static efi_status_t qcuefi_query_variable_info(u32 attr, u64 *storage_space, u64
+>  	return status;
+>  }
 >  
->  	if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
-> +		msleep(PCIE_RESET_CONFIG_WAIT_MS);
->  		dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
->  		/* Rescan the bus to enumerate endpoint devices */
->  		pci_lock_rescan_remove();
-> -- 
-> 2.49.0
-> 
+> +static const struct efivar_operations qcom_efivars_ro_ops = {
+> +	.get_variable = qcuefi_get_variable,
+> +	.get_next_variable = qcuefi_get_next_variable,
+> +	.query_variable_info = qcuefi_query_variable_info,
+> +};
 
--- 
-மணிவண்ணன் சதாசிவம்
+It looks like the efivars implementation does not support read-only
+efivars and this will lead to NULL pointer dereferences whenever you try
+to write a variable.
+
+Also not sure how useful it is to only be able to read variables,
+including for the RTC where you'll end up with an RTC that's always
+slightly off due to drift (even if you can set it when booting into
+Windows or possibly from the UEFI setup).
+
+Don't you have any SDAM blocks in the PMICs that you can use instead for
+a proper functioning RTC on these machines?
+
+Johan
 
