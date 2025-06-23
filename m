@@ -1,80 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-62060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91BE3AE3EFB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 14:04:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF353AE3F90
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 14:19:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D04918984CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 12:04:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7B450189AA0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 12:15:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3C3A2550BA;
-	Mon, 23 Jun 2025 12:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD11C248F45;
+	Mon, 23 Jun 2025 12:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iNq0imsN"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KE4S5EZA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38A92550CC
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 12:00:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0E0247281
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 12:09:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750680050; cv=none; b=VBLfGeny8rxOxbIOrMeBUzDS7Cp/lGbEJEVddircEXEOAPwxHEz9xFCllRQtLInvfc0JMKpcECzqIOl7PpAgutFSITrG1WBCaTaxtO3+yFxEzAjMyp7TF3bCidozHD3h95ljUibxPs17xwKd6XyfD3OhZZ2718uQdYagI82QqJw=
+	t=1750680548; cv=none; b=GUsLmH44tkglC9wl2PoOcqJTQOrMW4RK0XnPjs7TQmJTu0ptr6FTchz2fGmyKIT3LC3WADiTDmUQWe6K2ptk+tv+tYavK0AYlvjXv11W3rZVCUw0stXtoQNSYVgERA3Lj9S0SXYY6NRmCAjKDZqWM2OX6SdyTu55zKMYdUu3rpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750680050; c=relaxed/simple;
-	bh=0PJf2eCLv8/42I2N4x6+4m1hll74iynZigvNzaQLEFY=;
+	s=arc-20240116; t=1750680548; c=relaxed/simple;
+	bh=qKSIqsV+KvAGtkioviVhsHDdAWmTF+w9b1unNcPVVFQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a2OmqVZbRa5khsFmeHLKJFjJGMZm6/u7UbF+nOYoK7U1wIvmIUDNZJKR9eFsTIA1AQHZh0vYWUcWPmH35ATAI81Y20pyQ0Qg582udhe7PYZa1iF8FnTGCGJv8HvtPBVtjEpN2QbZKekYYr08zmyZMiW/vN8dffX/mQW4c57dxJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iNq0imsN; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-553b6da862aso695845e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 05:00:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750680047; x=1751284847; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lP9R0DOq1lsif1WN+MzCn3iMNJnOUN1ymxq6FgDXFH4=;
-        b=iNq0imsN4b9l5MANnIU0VK3hcdtujiUdprA/yk3EC6W0l2CoIQiIljADXBYBxSVP2z
-         6iuhna36iBN1zkv5qP6DyM9NevGsK9ii7rpebar5bAynvpd3IV/kEUwAcz8xC4bo9kJ6
-         rsKgMm7vG8mOCNj1/q0vxjrzQfkzcwaIf4p/f7zGFXhwkqSfojeG+rdG5ozcDPCS9O0S
-         ZNBngH0zm75S1T3B3A62lh1yTdLZSoT5+SdwvBtH2PRU6Ka3V10HOl3B74Z4EEfPAgYq
-         9PMAFRsYClyDrS/xfX6g92vsfEXQXj6H6VIFbSYNO1/awpVoS4T71JkkQcKcj0mfg0cD
-         Fx1A==
+	 In-Reply-To:Content-Type; b=nX2VJ+0OmhQeJyLbXeRI+e3fMuAsfASQ7nOXuOn9YcEjdBt3c+HVD29EjBwTPNlm/x0/0f5CC6NrO5kA6FcvHiTctxD9utqvZeYsU9xtyBgFsR/1kxCU3+Wn6946vcPrKwtLBhbt2HyiKZ2qSn814xrmSKjwIFOVOftMoXMO/CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KE4S5EZA; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55N8Lfd3005909
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 12:09:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	iUA4Ux34VVf9K7rAvlG3QrP3wRtZ4mYRuLZS2Rcg8zw=; b=KE4S5EZA8lx6Tzg4
+	Jhpkb/rkGWCT4L4d9fBzMn9RWg0iaweCu/RZMMqP2CKaquT6bK/8RCcaHg84x69G
+	W716sPfUlGUDlbEsX+ChVznKYR1rLvFKInkJ8g+ioPWoMRC68lCg0jQIsMuAT4iG
+	/iZKas6ImwNmnfyt8e6+eHFvNtpbF3Gb2pRlaHvWhtXlPKEywfEoZFb0SDbvxUEU
+	bbo1klTTz7dmhNI47MMOeRK0yQzaSyIjCdt3BdrpjBzxQaTKAYKwp+LLHsZ85s4T
+	vFCSXsGXl3la4xjis/FbnlWxIdRhl/V4mryoYQbqdIpC8ZpgkHcf6GwCofn8UQoW
+	mA9Lnw==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f3bg8m4y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 12:09:05 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6fb53b1e007so7817506d6.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 05:09:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750680047; x=1751284847;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1750680545; x=1751285345;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lP9R0DOq1lsif1WN+MzCn3iMNJnOUN1ymxq6FgDXFH4=;
-        b=kx84nXlhkMIeiQte5EDAFvd3UI/FF8Hg0yFTP4qUq0QexJYhR9GQLtP0+gDnyhAWMm
-         NasnRTpGIgMT9z/LyxSrn77E5OX8v/mH1oRQ8/F1L5ctukJEhTJWqcXpk+sbnpbsTRn4
-         j/Z2zt6M4+9ezonToRJTm92RXMtxBzsBGo5XZTkC1tAKNkRyl7KPa9ini73AZhoN27Cz
-         wn7i61nWmgd5hTA3gJTR8EESuXG0JjKvYAhypxIAE5sWyJRKC5+a/P3SGS4ruzLT1qTR
-         kJLJ2OyfdjJ8UZLZneEo83eCxvi8lqkdu0Glh2Ey6KaZTczaNnm36qspLIZW1HNXG4Gp
-         PLNw==
-X-Forwarded-Encrypted: i=1; AJvYcCUhrcOsTamZ923dDaqlBiYBg0BCRLiZCdHjFrpZhGndRfOW6aDrBVEio3niUDC0aC9R/RC48M7OxR1idV4n@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx1rQsOWoLd1zd2in7hP9ic4SPNEWbxKo7PDvm7bRIEuVMYauhu
-	VBRIql3NRiCf3S1Dfl8yM3eWdB7dEsGz+KjXR8zxed+W1rEJE1QvRXUpKdfpjAuBVSQ=
-X-Gm-Gg: ASbGncum9HMJ6ZJGg0umOYvb/E67Jc9QCF9JBoe3Bvz8aaDgijDPQCIbsG1+zZJFK/9
-	N9yN9oMU7O+xmWmwWc6M9rqzN/CcAFdWawLUmIuI5HkadoaJ/sc/Eq5YLxvD4awrYsQHo4H87xL
-	uoMV4Mr/krJQ6dQEaSyGv+7CA0KGq3BSBH1YZy2WFlNkqkXCJD+I/UbZ50Q5gBWhlvzMzEBMlcW
-	WKVt3kzjfjkocoqQG/99d0PXokLmty47ObVddzMgvGvLF1obv0+GER0fl/buKbhoBCdkzi41lq4
-	gYzLoUaXFZASU0kfqeMNaeXJmF77JCU5cPNvHQOIs/ARj4jcQh0RIRS98mh7MPR15lAL0hZnxDn
-	vGOX/rR7CYhE9B3okhsxCt44yyeqwL5TjBraZ7nZE
-X-Google-Smtp-Source: AGHT+IEL4AiJTCRdGv36IlSqRDyzbEXMdSslHAtZOU2vAs0tOApYVXi0OBGTgAq1Wz64oX+HiIU1cg==
-X-Received: by 2002:a05:6512:3c87:b0:553:a32a:6c4 with SMTP id 2adb3069b0e04-553e3d14dfemr1070799e87.12.1750680046360;
-        Mon, 23 Jun 2025 05:00:46 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553e41cc029sm1391817e87.207.2025.06.23.05.00.45
+        bh=iUA4Ux34VVf9K7rAvlG3QrP3wRtZ4mYRuLZS2Rcg8zw=;
+        b=NE824oivnfBzKCi4b8dK49P6kyK7xITeFXvFTyx4ERc1asM7sFP3XWgO7pCS+hk1+E
+         5BBRdUk2cQcBo+6bQi7W6L2y9cF18q1DIpirebw9wmZHMAHPxmcPGngOJuxVImTGF3Xl
+         EKJWnH9tYLuEMRwc/vFcClJiOcBWfhk8Mpr5Wviulu/HqxxSKiXUWV0j+fq5yxj4E5cX
+         wSXzfB8FLpCcJ0tSZ5Pqer1ykMnBG0Afm4wwqReVZV9AmL2QuwHezcO9YdjobtvX5hc+
+         su9PxdwvpN8dMZeBfM/nVQIiGX8BIwKNn97hHM1dCEn7kU2eqI97WHduPqHuOiTOEDS4
+         K/IA==
+X-Forwarded-Encrypted: i=1; AJvYcCXbZlxRCA0IyBvSo7jzGRtcnKCJMPMGjvJ31Lfhc0SQXyD5CzeZvApHmc/CK07Z07eZvrqKxkv4ljWTiqxc@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfDNZ2XrMQPcOByFrUZg/0j/Rdl2SViJ5b100xKDs4Fu6W0NhG
+	y+/4QRwamfV+Bd73OTBW4aquWqhq+YQaJuLuOqh8yKxUm/P6E2ArH7/qenKlcpetzGmbgCtIzVd
+	PdiwCznt3qUdS5jsQqCGh4r0U4IKBJlu3ZXNLZILOvp6iE2EyB/GBVf0SXlibGGcrnirl
+X-Gm-Gg: ASbGnct4XOZd5qEB4QKE1kJwWWRPN+p47zKIJdcw9F5Ax6s81PcEGo9J8+2qQ5EPp2r
+	BRoKZVORFjRs0XMreNgst9rhzxJxZLuf5kF82oSU4W/lVE7ND+D7wnE3mIreveGoWo0+j5mSDMT
+	TpYj2XSby+pmkV9DgECO/ASFCAMPLjg/5N5aACjxoK/Wz4Iwalz6t98qacHdzBOzBHfpTZxiGrL
+	UUQqnsnNTMfFpkrtxno9Zn+U4wfUN7WPDZFi9J6P56DKkNG8dtrv9df3Y7R5MmE4gH3Glj5I2dW
+	qwGjsKK2qqvhZBRNV4A93zXyPyBLLSAH0zToyuKi1l6bPAEe7UBPt6vvw+Ps6Im0DT+CaBm9NUN
+	FXwM=
+X-Received: by 2002:a05:622a:9:b0:4a6:fb4d:b4e with SMTP id d75a77b69052e-4a77a27a4bcmr72341281cf.13.1750680544729;
+        Mon, 23 Jun 2025 05:09:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFoNMINZTAhhl7CMp5Boaokx/8RjnVYVBHAJiF7SNTYL5MUao5HTMPsguWO70eQQTBb5Hr2qg==
+X-Received: by 2002:a05:622a:9:b0:4a6:fb4d:b4e with SMTP id d75a77b69052e-4a77a27a4bcmr72340941cf.13.1750680544191;
+        Mon, 23 Jun 2025 05:09:04 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60a1857c124sm5866353a12.36.2025.06.23.05.09.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jun 2025 05:00:46 -0700 (PDT)
-Message-ID: <26ff89ba-4a24-4e71-af53-fa71c489963c@linaro.org>
-Date: Mon, 23 Jun 2025 15:00:45 +0300
+        Mon, 23 Jun 2025 05:09:03 -0700 (PDT)
+Message-ID: <5bdae07b-a7b1-49be-b843-1704981bc63b@oss.qualcomm.com>
+Date: Mon, 23 Jun 2025 14:08:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,170 +90,121 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/9] media: qcom: camss: change internals of endpoint
- parsing to fwnode handling
-Content-Language: ru-RU
-To: Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss
- <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hans.verkuil@cisco.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20250513142353.2572563-1-vladimir.zapolskiy@linaro.org>
- <20250513142353.2572563-8-vladimir.zapolskiy@linaro.org>
- <9ff883f4-e7cc-4b2c-8f12-f583ef5182d0@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <9ff883f4-e7cc-4b2c-8f12-f583ef5182d0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH V3 2/4] dt-bindings: mmc: controller: Add
+ max-sd-hs-frequency property
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Sarthak Garg <quic_sartgarg@quicinc.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Adrian Hunter <adrian.hunter@intel.com>
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_cang@quicinc.com, quic_nguyenb@quicinc.com,
+        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
+        quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com,
+        quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
+References: <20250618072818.1667097-1-quic_sartgarg@quicinc.com>
+ <20250618072818.1667097-3-quic_sartgarg@quicinc.com>
+ <6040afd9-a2a8-49f0-85e9-95257b938156@kernel.org>
+ <9627ed6f-2bb8-40b0-b647-5f659d87f2f9@oss.qualcomm.com>
+ <bba062a3-f96c-456b-8e9e-fdeb0dc2d28d@kernel.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <bba062a3-f96c-456b-8e9e-fdeb0dc2d28d@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: xPQHLxNLSXQsNUSy3YMjq7O5gUJFvesV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjIzMDA3MyBTYWx0ZWRfX2bqB0jFW4ERR
+ t8T6zpeD6mJpEEMs+06IiFg6cXFdK5uKmFAOqz1ZZfar6iNE25IpMr1XXTHA82Eq4k0Cei7NyaS
+ ho/R6OTKKMuB9sX1o7PUw4woq52tLEL4bOiSi73sZZGqFtxCUyddnogMfSqxmlp9DrkhidG2tG+
+ Kr/Ued+JapNakvR1Axn6xTbvFp1ij1tz5U9Z11l7SSQiGfLK+AGc9o6adlRVJXIKVFbqOSpo55z
+ yJ7RHqo9WNaG1G1QEt6sT0koUGtNUkWhzMAxtgIbrMlDcHAiRGVt7+Kkjqdc4GtdPhSvAXIBFwr
+ 4wRkihI+DhaigtLirfxad49gGZtpVA+5M2JD6qBOLKeYZdG127pjD1HYKJJMFLvlOBLKx81sODz
+ LdvNK3pv0h5/6MhwsS3NhDmjyIdTOaavuYDybbcMPNMS160YbUO6v58mXOuken8NINB5+xqB
+X-Authority-Analysis: v=2.4 cv=L4kdQ/T8 c=1 sm=1 tr=0 ts=685943e1 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8 a=yCTWpnfuZRHAWxVBKy4A:9
+ a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: xPQHLxNLSXQsNUSy3YMjq7O5gUJFvesV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-23_03,2025-06-23_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ adultscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ spamscore=0 phishscore=0 mlxlogscore=999 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506230073
 
-On 6/23/25 12:29, neil.armstrong@linaro.org wrote:
-> On 13/05/2025 16:23, Vladimir Zapolskiy wrote:
->> Since a few called V4L2 functions operate with fwnode arguments the change
->> from OF device nodes to fwnodes brings a simplification to the code.
+On 6/22/25 11:48 AM, Krzysztof Kozlowski wrote:
+> On 21/06/2025 12:20, Konrad Dybcio wrote:
+>> On 6/18/25 9:43 AM, Krzysztof Kozlowski wrote:
+>>> On 18/06/2025 09:28, Sarthak Garg wrote:
+>>>> Introduce a new optional device tree property `max-sd-hs-frequency` to
+>>>> limit the maximum frequency (in Hz) used for SD cards operating in
+>>>> High-Speed (HS) mode.
+>>>>
+>>>> This property is useful for platforms with vendor-specific hardware
+>>>> constraints, such as the presence of a level shifter that cannot
+>>>> reliably support the default 50 MHz HS frequency. It allows the host
+>>>> driver to cap the HS mode frequency accordingly.
+>>>>
+>>>> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+>>>> ---
+>>>>  .../devicetree/bindings/mmc/mmc-controller-common.yaml | 10 ++++++++++
+>>>>  1 file changed, 10 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml b/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml
+>>>> index 9a7235439759..1976f5f8c401 100644
+>>>> --- a/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml
+>>>> +++ b/Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml
+>>>> @@ -93,6 +93,16 @@ properties:
+>>>>      minimum: 400000
+>>>>      maximum: 384000000
+>>>>  
+>>>> +  max-sd-hs-frequency:
+>>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>>> +    description: |
+>>>> +      Maximum frequency (in Hz) to be used for SD cards operating in
+>>>> +      High-Speed (HS) mode. This is useful for platforms with vendor-specific
+>>>> +      limitations, such as the presence of a level shifter that cannot support
+>>>> +      the default 50 MHz HS frequency or other.
+>>>> +    minimum: 400000
+>>>> +    maximum: 50000000
+>>>
+>>> This might be fine, but your DTS suggests clearly this is SoC compatible
+>>> deducible, which I already said at v1.
 >>
->> Because camss_probe() as the single caller of camss_of_parse_endpoint_node()
->> has no need to know a number of async registered remote devices, it makes
->> sense to remove the related computation from it. In addition there is no
->> reason to check for a OF device availability on CAMSS side, the check is
->> useless as the always passed one.
+>> I don't understand why you're rejecting a common solution to a problem
+>> that surely exists outside this one specific chip from one specific
+>> vendor, which may be caused by a multitude of design choices, including
+>> erratic board (not SoC) electrical design
 > 
-> I think you should explain why it's useless, TBH I'm not even sure why it's
-> not necessary. What if we set the remote endpoint as disabled, this is
-> a regression, no ?
-
-Here the check of_device_is_available(node) verifies CAMSS endpoint "subdevice"
-node availability, it's not about remote endpoints, and there is no such
-usecases.
-
-> Why not replace it with  fwnode_device_is_available() and remove it in another
-> patch really explaining why it's useless ?
+> No one brought any arguments so far that common solution is needed. The
+> only argument provided - sm8550 - is showing this is soc design.
 > 
+> I don't reject common solution. I provided review at v1 to which no one
+> responded, no one argued, no one provided other arguments.
 
-Probably the commit message could be improved anyway, thank you.
+Okay, so the specific problem that causes this observable limitation
+exists on SM8550 and at least one more platform which is not upstream
+today. It can be caused by various electrical issues, in our specific
+case by something internal to the SoC (but external factors may apply
+too)
 
-Best wishes,
-Vladimir
+Looking at the docs, a number of platforms have various limitations
+with regards to frequency at specific speed-modes, some of which seem
+to be handled implicitly by rounding in the clock framework's
+round/set_rate().
 
->>
->> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->> ---
->>    drivers/media/platform/qcom/camss/camss.c | 52 ++++++++++-------------
->>    1 file changed, 23 insertions(+), 29 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
->> index 39c5472f4552..d4745fb21152 100644
->> --- a/drivers/media/platform/qcom/camss/camss.c
->> +++ b/drivers/media/platform/qcom/camss/camss.c
->> @@ -2973,16 +2973,16 @@ static const struct parent_dev_ops vfe_parent_dev_ops = {
->>    };
->>    
->>    /*
->> - * camss_of_parse_endpoint_node - Parse port endpoint node
->> - * @dev: Device
->> - * @node: Device node to be parsed
->> + * camss_parse_endpoint_node - Parse port endpoint node
->> + * @dev: CAMSS device
->> + * @ep: Device endpoint to be parsed
->>     * @csd: Parsed data from port endpoint node
->>     *
->>     * Return 0 on success or a negative error code on failure
->>     */
->> -static int camss_of_parse_endpoint_node(struct device *dev,
->> -					struct device_node *node,
->> -					struct camss_async_subdev *csd)
->> +static int camss_parse_endpoint_node(struct device *dev,
->> +				     struct fwnode_handle *ep,
->> +				     struct camss_async_subdev *csd)
->>    {
->>    	struct csiphy_lanes_cfg *lncfg = &csd->interface.csi2.lane_cfg;
->>    	struct v4l2_mbus_config_mipi_csi2 *mipi_csi2;
->> @@ -2990,7 +2990,7 @@ static int camss_of_parse_endpoint_node(struct device *dev,
->>    	unsigned int i;
->>    	int ret;
->>    
->> -	ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(node), &vep);
->> +	ret = v4l2_fwnode_endpoint_parse(ep, &vep);
->>    	if (ret)
->>    		return ret;
->>    
->> @@ -3025,52 +3025,46 @@ static int camss_of_parse_endpoint_node(struct device *dev,
->>    }
->>    
->>    /*
->> - * camss_of_parse_ports - Parse ports node
->> - * @dev: Device
->> - * @notifier: v4l2_device notifier data
->> + * camss_parse_ports - Parse ports node
->> + * @dev: CAMSS device
->>     *
->> - * Return number of "port" nodes found in "ports" node
->> + * Return 0 on success or a negative error code on failure
->>     */
->> -static int camss_of_parse_ports(struct camss *camss)
->> +static int camss_parse_ports(struct camss *camss)
->>    {
->>    	struct device *dev = camss->dev;
->> -	struct device_node *node = NULL;
->> -	struct device_node *remote = NULL;
->> -	int ret, num_subdevs = 0;
->> +	struct fwnode_handle *fwnode = dev_fwnode(dev), *ep;
->> +	int ret;
->>    
->> -	for_each_endpoint_of_node(dev->of_node, node) {
->> +	fwnode_graph_for_each_endpoint(fwnode, ep) {
->>    		struct camss_async_subdev *csd;
->> +		struct fwnode_handle *remote;
->>    
->> -		if (!of_device_is_available(node))
->> -			continue;
->> -
->> -		remote = of_graph_get_remote_port_parent(node);
->> +		remote = fwnode_graph_get_remote_port_parent(ep);
->>    		if (!remote) {
->>    			dev_err(dev, "Cannot get remote parent\n");
->>    			ret = -EINVAL;
->>    			goto err_cleanup;
->>    		}
->>    
->> -		csd = v4l2_async_nf_add_fwnode(&camss->notifier,
->> -					       of_fwnode_handle(remote),
->> +		csd = v4l2_async_nf_add_fwnode(&camss->notifier, remote,
->>    					       struct camss_async_subdev);
->> -		of_node_put(remote);
->> +		fwnode_handle_put(remote);
->>    		if (IS_ERR(csd)) {
->>    			ret = PTR_ERR(csd);
->>    			goto err_cleanup;
->>    		}
->>    
->> -		ret = camss_of_parse_endpoint_node(dev, node, csd);
->> +		ret = camss_parse_endpoint_node(dev, ep, csd);
->>    		if (ret < 0)
->>    			goto err_cleanup;
->> -
->> -		num_subdevs++;
->>    	}
->>    
->> -	return num_subdevs;
->> +	return 0;
->>    
->>    err_cleanup:
->> -	of_node_put(node);
->> +	fwnode_handle_put(ep);
->> +
->>    	return ret;
->>    }
->>    
->> @@ -3626,7 +3620,7 @@ static int camss_probe(struct platform_device *pdev)
->>    
->>    	pm_runtime_enable(dev);
->>    
->> -	ret = camss_of_parse_ports(camss);
->> +	ret = camss_parse_ports(camss);
->>    	if (ret < 0)
->>    		goto err_v4l2_device_unregister;
->>    
-> 
+I can very easily imagine there are either boards or platforms in the
+wild, where the speed must be limited for various reasons, maybe some
+of them currently don't advertise it (like sm8550 on next/master) to
+hide that
 
+Konrad
 
