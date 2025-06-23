@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-62007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9E50AE37A9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 10:01:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99E60AE37B5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 10:03:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7959C7A2EA9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 08:00:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 34737164364
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 08:03:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07F3C1EF397;
-	Mon, 23 Jun 2025 08:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E99101F8BA6;
+	Mon, 23 Jun 2025 08:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bB9CRF3D"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kCHUevBO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B3E537F8;
-	Mon, 23 Jun 2025 08:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B334615624B;
+	Mon, 23 Jun 2025 08:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750665711; cv=none; b=GDO0Mu6HaajBKaZY+1sxvbLVk6ehPS7ZtV6Jah1fPSop5oCnrTrisXQatvQaHcUDhM9s/UeVjoZsJhUhHaC5OHuAdG13xkyIjRis783Fl5+5dxzKj306iE4Dm8TI1JXJUMl0AjSmzLS6oW2ammj5johkwbZtaiNuj0xpKWYCWpc=
+	t=1750665810; cv=none; b=rg+10ov+Kvz8LlhX5hECHjCZfDOgignMkLcWBEJjH1nCLez9W/+K1foFyQ/ZJs5lOQcY5RHlGH3M+OUcz5pXeA8zRqhep8Ra+v7LcJXkFdkv2O5ZJOi4A0oodW39MtcLrRZwBcd+GNq1M6qE4VFT020GZy2lziGZdZEHeIv9v4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750665711; c=relaxed/simple;
-	bh=TAR1cdtcLVU/hOIHwRsbxlpEDGpvTNlzvB0o60PEETs=;
+	s=arc-20240116; t=1750665810; c=relaxed/simple;
+	bh=gu/rOe5ESBxHZs+Px8fbuROLzfecA+eHFC6m3syd/2Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GmCrd+Mo9SPh3QssjxEaIrpjgRfB0oX8/5+/u5Shyfzl0ClTe6tkBpOax//Oz3wDOv3/+CSAvTbKw2rZTC9rvW4J+wMsIQMao7uHNekf84p1UxFFNkpjIt8CnZAkDZH2k13vNhqIqBA37Ao2UwANTLGCKfZmWAUEVleT3eWCAcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bB9CRF3D; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89131C4CEED;
-	Mon, 23 Jun 2025 08:01:46 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=fv6M+K6jewpYAz4h67PqOA6qSRKRt0F2QfFWUUEQyXEZ2+1peFE441QwR52jA5XAJ7a/U+5zWtd/svSFwQs2mBPtSs2hNbS+E+0bAgMCmDuS/3Qf2ClV0LelkmoWDZBu2y9/Js7Gvdqq5gwSLiXw2VNltzyaOHUU+YyjLdlnv68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kCHUevBO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2F5C4CEED;
+	Mon, 23 Jun 2025 08:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750665711;
-	bh=TAR1cdtcLVU/hOIHwRsbxlpEDGpvTNlzvB0o60PEETs=;
+	s=k20201202; t=1750665810;
+	bh=gu/rOe5ESBxHZs+Px8fbuROLzfecA+eHFC6m3syd/2Y=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bB9CRF3DemtCO6pIeXGhn711ozWhySaYyGI4ckiKwmfj7WGa2ZgPBgpwP6IeYKweM
-	 jemMjUpZMGXeGIYUtQ5ImOFTXMo5zPK4yvFV894hJrd33Npt7X4v4NUi2VXbyx3Qs0
-	 V7BjDr7VFl/7gr/gY4uqoSnImv94o5L+Xz+Th2TGHiS8XvHL5KXyI8z2PfXmuyF4oY
-	 pPNYk7KJVAKbR3gQOx2XbsbY6xba2sBC9Y6j7ktabFfZQpQLpZUmD7abpD7MHJtWWJ
-	 H1sOvirqNuIE5T8MVmaMU5Os4vEemmvCdJtDuICxMQedubkUqCf+LZKdw2GASnNH8p
-	 VG4gFdQI20wcA==
-Message-ID: <f752cf84-0159-4ef6-a7cd-57b6fc578a74@kernel.org>
-Date: Mon, 23 Jun 2025 10:01:44 +0200
+	b=kCHUevBOyLwfwRYnVGD0C1q4dMm0Cs30hCqX61kDLwpXQitOjO4gjIW2cLgTUSbkJ
+	 YsHXxyODVbQ6a8uCn+aS4LUq4D0LvEW0GW+r9a7Qp/ropgttvW5miSYR5TOpWMKYPq
+	 OV1wPupK3q8Mpy1vfsSlHLZomAOgT6iztIOAhkbbkzKe78rIls1P54aWY/Uj/rdClL
+	 PDtsl3vBCDvhYsTVXT9Ptl4CF9ao5ih7RlveKRN7dvxxK60lEC+w5sUqMa5LffldOb
+	 XoX7FhQfEK2bkNbEJ90Lt+eOV/g5YR0pUUYos2fNtBjHk0DYv2Jc9LMmrma+A9XzU3
+	 OWaVqB2A4dR9w==
+Message-ID: <3ddf2df5-4591-421e-bfc2-50c7d3ca526d@kernel.org>
+Date: Mon, 23 Jun 2025 10:03:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,10 +50,9 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/2] ASoC: codecs: wsa883x: Handle shared reset GPIO
- for WSA883x speakers
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
+Subject: Re: [PATCH v1 1/2] ASoC: dt-bindings: qcom,wsa8830: Add reset-gpios
+ for shared line
+To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
  Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
  Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -65,8 +64,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
  linux-gpio@vger.kernel.org, quic_pkumpatl@quicinc.com,
  kernel@oss.qualcomm.com
 References: <20250620103012.360794-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <20250620103012.360794-3-mohammad.rafi.shaik@oss.qualcomm.com>
- <f9f96bf0-3539-4e77-8d3e-b87ddc561925@oss.qualcomm.com>
+ <20250620103012.360794-2-mohammad.rafi.shaik@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,21 +110,16 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <f9f96bf0-3539-4e77-8d3e-b87ddc561925@oss.qualcomm.com>
+In-Reply-To: <20250620103012.360794-2-mohammad.rafi.shaik@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20/06/2025 20:35, Dmitry Baryshkov wrote:
-> On 20/06/2025 13:30, Mohammad Rafi Shaik wrote:
->> On some Qualcomm platforms, such as QCS6490-RB3Gen2 and QCM6490-IDP,
->> multiple WSA8830/WSA8835 speakers share a common reset (shutdown) GPIO.
->> To handle such cases, use the reset controller framework along with the
->> "reset-gpio" driver.
-> 
-> How does this handle the fact that resetting one codec will also 
-> silently reset another one?
-Will not, that's the entire point of reset framework. See also my talk
-from last year OSS NA for some graphs/explanations.
+On 20/06/2025 12:30, Mohammad Rafi Shaik wrote:
+> On Qualcomm platforms, like QCS6490-RB3Gen2 and QCM6490-IDP, the
+> WSA884x speakers share SD_N GPIOs between two speakers, thus
+
+You copied everything from my commit 26c8a435fce6 ... even device name.
+Please don't blindly copy, but check what you are actually pasting.
 
 Best regards,
 Krzysztof
