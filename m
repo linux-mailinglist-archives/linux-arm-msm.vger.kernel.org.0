@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-62055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C28AAE3E78
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 13:48:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B59B9AE3E7F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 13:49:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BFBA0175548
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 11:48:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8DDC5188283C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 11:49:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8220D246BA8;
-	Mon, 23 Jun 2025 11:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 327CF222591;
+	Mon, 23 Jun 2025 11:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwn9lb3/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CiacpnM3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532DB2253FE;
-	Mon, 23 Jun 2025 11:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B272907;
+	Mon, 23 Jun 2025 11:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750679267; cv=none; b=foxNuAh8TmnkaqM971UPzr8J9wVAv8yIPWV1DgukJzZIHQPYbPUvJpBnf1y364TQXDhaR8fMRpQnuv1ceE+PKn+wZWGvPCHtx58y/Kuot6a4HHreD8YapuGZT7Ff0Ykm4hEjFj0iRZ82GZDEwR1ZrTnOco6CBQFlZ4B1Vbb/dLk=
+	t=1750679367; cv=none; b=bJ+PNHYgguiqOXuDiWlX+rjXJ8I/CKe+L7uG+yl/x2EdUeCv699tC5z4UmN8QUVoihJ3olS2ZvNpyTKS0NG4f/Uyl4oOGKJr8Ig8sghU/j8qAMGzZJZIGLbrlcINgVglUFH7LoVcFUAGJ+EHXJeOX5BDiTZS+JyGQVgA4GvmQz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750679267; c=relaxed/simple;
-	bh=tsVW5ovAuv4Z9ENYmBRZa3Mt8in3QdElahJg8E227yw=;
+	s=arc-20240116; t=1750679367; c=relaxed/simple;
+	bh=8Trw3txrBdR13Nl/jH8oEvluQUWTm9KCCcSHmJZ68+M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=J8wYpSDh13V/LJSsEaEMe+r7mhlsnmWoxnbzOFZyD6wTbVcTWBojCRdaMFdqwQMr8MLqsQ5VMCxnPMeorCqUlLFZow2Q37uTE5DKEh5J6EqWqy6wG3mIAfm6I+K7kvhCtej7+biDZNog7My/AWS51CnTu7jZRAsK9CsHpUoVR4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwn9lb3/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD98C4CEEA;
-	Mon, 23 Jun 2025 11:47:44 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=dkQpRpmxHnn3PHKxLqIgx64ZHiy1cM15igIyy1s/7Ukum3Oc5lrqmZ9O+W4yl1DI+LCm5rCfRwLimrG+N65P6L5IawSrIrwaVQ8y9UKG1E3RrakAe6+JONqknghOgIcjiLFu900KsYZrLgG3LTvgWt7gzd9BZrKLEM25+M8s3AQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CiacpnM3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB11C4CEEA;
+	Mon, 23 Jun 2025 11:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750679266;
-	bh=tsVW5ovAuv4Z9ENYmBRZa3Mt8in3QdElahJg8E227yw=;
+	s=k20201202; t=1750679366;
+	bh=8Trw3txrBdR13Nl/jH8oEvluQUWTm9KCCcSHmJZ68+M=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bwn9lb3/gpatLyud3NdDg5W7X7XJtVJzF6S+C8+oe1mG7cjQ597gb2C1iP6UG6u4x
-	 9Gcl5tOq9D6CDM7q3yAQ+1dYf3PvUGen4cWQaWK2Ba4WCJ2xf0fQG/hXieLFG7q90q
-	 T0zXQSZcW8o8cBxE40+0Fxa/5SoLtmpqiPe03sGFZCHFCpOvAu+qhOlVUdH1zqIlBH
-	 RI9+po8k1QAfXyvcIjixgu3urn/ZhiNd4S0/WF0Olr1X/FMdbYbkWwUZPz98qpFK7Q
-	 X7kpQ6bRaZ6jaIgQ9qs20EIOpqCmd5iEVxj+z1ZvZUDiUXxVOF9Zq7gpdXcXBP5IAC
-	 ODIcOP3FQ7dVg==
-Message-ID: <ea04adee-7e8c-4716-99a3-0f1d4d0edf16@kernel.org>
-Date: Mon, 23 Jun 2025 13:47:42 +0200
+	b=CiacpnM3uFYiYKEJOiqajM/Uo8dZ5SJ7+xEvBNfDQaoO0tAyPYEui7zW+JncD1dhu
+	 L2rcPWP336C6tMmAuE6x7g79HZVJbG95yiPWp7NkLA6yxrmUsEwgU3oH1y2GZ7hh0P
+	 eUenP0jM4LHNc2/7B4z7NEF64u+NxZ/6oiMJIFkHWi7GYqvX7gKEtn9ghf6SwMAW41
+	 gaEC0y3ml5449Lju0nIVzrJ/O5sW4kvBARKjYtoii/k1K/SGH90TB8E77lV1QhKPvq
+	 SCWkdVkEGvNS6lPNmXPdbMjDLd6NfTStL74tVKaDn07mRmC7LC7rHcA5hvDWxQxtP8
+	 C+mTnnErlBiZQ==
+Message-ID: <cbd6b7e3-850a-4bde-a1f9-393c291c1ee3@kernel.org>
+Date: Mon, 23 Jun 2025 13:49:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: x1-asus-zenbook: support sound
-To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
- Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250623113709.21184-1-alex.vinarskis@gmail.com>
- <20250623113709.21184-3-alex.vinarskis@gmail.com>
+Subject: Re: [PATCH v4 1/5] media: dt-bindings: venus: Add qcm2290 dt schema
+To: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
+ quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com,
+ bryan.odonoghue@linaro.org, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250623105107.3461661-1-jorge.ramirez@oss.qualcomm.com>
+ <20250623105107.3461661-2-jorge.ramirez@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,26 +105,37 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250623113709.21184-3-alex.vinarskis@gmail.com>
+In-Reply-To: <20250623105107.3461661-2-jorge.ramirez@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23/06/2025 13:36, Aleksandrs Vinarskis wrote:
-> Works:
-> * Both speakers
-> * Both MICs
-> * Headphones jack, L/R channels
-> * Headphones jack, MIC
+On 23/06/2025 12:51, Jorge Ramirez-Ortiz wrote:
+> Add a schema for the venus video encoder/decoder on the qcm2290.
 > 
-> Now working/untested:
-> * Sound over DisplayPort
-> * Sound over HDMI
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
 > ---
+Don't send multiple versions per day and allow other to actually perform
+review of your patchset instead of sending for every little thing.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+<form letter>
+This is a friendly reminder during the review process.
+
+It looks like you received a tag and forgot to add it.
+
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new versions
+of patchset, under or above your Signed-off-by tag, unless patch changed
+significantly (e.g. new properties added to the DT bindings). Tag is
+"received", when provided in a message replied to you on the mailing
+list. Tools like b4 can help here. However, there's no need to repost
+patches *only* to add the tags. The upstream maintainer will do that for
+tags received on the version they apply.
+
+Please read:
+https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
+
+If a tag was not added on purpose, please state why and what changed.
+</form letter>
 
 Best regards,
 Krzysztof
