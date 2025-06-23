@@ -1,111 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-61995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-61996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA93DAE3641
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 08:51:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15B42AE3669
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 09:00:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA63C3B2E97
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 06:50:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A8FB6164330
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jun 2025 07:00:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B67B1F0E47;
-	Mon, 23 Jun 2025 06:50:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ALGH3HmN"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21CB12628D;
+	Mon, 23 Jun 2025 07:00:23 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA2A45948;
-	Mon, 23 Jun 2025 06:50:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F2D8F5C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 07:00:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750661456; cv=none; b=dXBZg243lzsVxJJttu9lQgOpuPY3J3xTCudafiqca9SE9fFwhdRZ6ZFRLfToPKHNhHXv2IwJ8U/Sgl7a949kwyU1hbmevSFfxORmleGesCyfvPc9psp+CpAtQZ8Dh/iDKNnfh3L7AnQZ19IKjpE6TR4LPzWFud92KdvhHLTVBoQ=
+	t=1750662023; cv=none; b=UMl73p5BhUIcv2cq9Tq5t8NoJhideVcAJ4Uf4i8PBShtwW75EW71o1BG1nqqMYpvxWERSpPuQvnN3cXfIBBPaUnC/7nek6drJf2qjnogm2cgnUzGZHXCl6fKkytCDeDFTJe8Kv7pFO94l3xOj/8o5dPBazi1RK1cka8VH0RdRWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750661456; c=relaxed/simple;
-	bh=nQ1JuUUKyoScy4KhmyGScBxvfx/khrlGlUUW/Zu56QM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j4+1kpf0fUYlG7A9Bdo+MR0WcFWQ/9+vwaZm3i8Jl6aDOBH6L/6hRj/456p6MPEUR8Ymu8bsAjHXuNdBMbaHt77IzrhbKDCMJ0vcR7BxlWxKXRWyTwPYeZ1b96+naev2gUUgBrVnFw5LZI4SItdWQSPqCZhWQyO1+47CvHofTwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ALGH3HmN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA174C4CEED;
-	Mon, 23 Jun 2025 06:50:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750661455;
-	bh=nQ1JuUUKyoScy4KhmyGScBxvfx/khrlGlUUW/Zu56QM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ALGH3HmNsHc5+68o0/oJQL0XZT2UvhxN2g/SzFDo9Go7pOC0YYUAksEFb3VwoV1Hw
-	 hzAB2fl1Qd+Lwe+4eSpVX6sGVpHK6HcDUJNWKTE+HIjI8KfLQebA7r81HhfBG0eC1c
-	 HVfr0sfKsTLV0bu7Dk66p0FHZxlfLNokQxr9CSjpDi1zGDF2ySYtKWuGvnRZXYi9ke
-	 dCcMbd8AQpwvTRkFij+PbcdMOo8sjrgyT+mAnBDgPJSvtEyKLd5u+CbcL6FjEKmhKp
-	 1vrYHbnm6p9KqmXAw6vW3KF4+1NWV6fwJPCgXIYJHLgEKXGnirsjKB67DIWkXJZRIt
-	 3CqEtAhUqcbcA==
-Date: Mon, 23 Jun 2025 08:50:52 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-pm@vger.kernel.org, Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Subject: Re: [PATCH v3 1/4] dt-bindings: opp: adreno: Update regex of OPP
- entry
-Message-ID: <xexpnsi6bzks4dqzlfwtcwfknmmzrd3cinolu5wbm3pw4b7ysx@pukutwlb53jm>
-References: <20250620-x1p-adreno-v3-0-56398c078c15@oss.qualcomm.com>
- <20250620-x1p-adreno-v3-1-56398c078c15@oss.qualcomm.com>
+	s=arc-20240116; t=1750662023; c=relaxed/simple;
+	bh=zoGqFvTYQu5TGvKf49l6X4WkX7DKurr8Fb3EEXazdSU=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=kgPoUhA8GXYtnALro6pXpH6mGV0vicyOgB6OQXz1B9W1FBxffXLwUeNR74B1w0eKrQwPcXmNea46X/AO1JqRAc7c7S7jkcNi1sCx5bxqRUMBKpZ41QHSfaHCXEyK1Rw29LPCxD2QgOn3Xm5M+4BoP3gts3XCc9U/fdNR12PZ5Fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1uTb9z-0001os-My; Mon, 23 Jun 2025 09:00:07 +0200
+Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1uTb9y-004u2X-0w;
+	Mon, 23 Jun 2025 09:00:06 +0200
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1uTb9y-0004eq-0g;
+	Mon, 23 Jun 2025 09:00:06 +0200
+Message-ID: <d42dda52f92b327fd9a051a892c212643f5ab75a.camel@pengutronix.de>
+Subject: Re: [PATCH v1 2/2] ASoC: codecs: wsa883x: Handle shared reset GPIO
+ for WSA883x speakers
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>, Srinivas
+ Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark
+ Brown <broonie@kernel.org>,  Rob Herring <robh@kernel.org>, Krzysztof
+ Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Linus
+ Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-gpio@vger.kernel.org, quic_pkumpatl@quicinc.com,
+ kernel@oss.qualcomm.com
+Date: Mon, 23 Jun 2025 09:00:06 +0200
+In-Reply-To: <20250620103012.360794-3-mohammad.rafi.shaik@oss.qualcomm.com>
+References: <20250620103012.360794-1-mohammad.rafi.shaik@oss.qualcomm.com>
+	 <20250620103012.360794-3-mohammad.rafi.shaik@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250620-x1p-adreno-v3-1-56398c078c15@oss.qualcomm.com>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 20, 2025 at 12:24:28PM +0530, Akhil P Oommen wrote:
-> In some cases, an OPP may have multiple varients to describe the
-> differences in the resources between SKUs. As an example, we may
-> want to vote different peak bandwidths in different SKUs for the
-> same frequency and the OPP node names can have an additional
-> integer suffix to denote this difference like below:
-> 
->  opp-666000000-0 {
->          opp-hz = /bits/ 64 <666000000>;
->          opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
->          opp-peak-kBps = <8171875>;
->          qcom,opp-acd-level = <0xa82d5ffd>;
->          opp-supported-hw = <0xf>;
->  };
-> 
->  /* Only applicable for SKUs which has 666Mhz as Fmax */
->  opp-666000000-1 {
->          opp-hz = /bits/ 64 <666000000>;
->          opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
->          opp-peak-kBps = <16500000>;
->          qcom,opp-acd-level = <0xa82d5ffd>;
->          opp-supported-hw = <0x10>;
->  };
-> 
-> Update the regex to allow this usecase.
-> 
-> Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+On Fr, 2025-06-20 at 16:00 +0530, Mohammad Rafi Shaik wrote:
+> On some Qualcomm platforms, such as QCS6490-RB3Gen2 and QCM6490-IDP,
+> multiple WSA8830/WSA8835 speakers share a common reset (shutdown) GPIO.
+> To handle such cases, use the reset controller framework along with the
+> "reset-gpio" driver.
+>=20
+> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
 > ---
->  Documentation/devicetree/bindings/opp/opp-v2-qcom-adreno.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  sound/soc/codecs/wsa883x.c | 57 ++++++++++++++++++++++++++++++++------
+>  1 file changed, 48 insertions(+), 9 deletions(-)
+>=20
+> diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
+> index 13c9d4a6f015..b82b925c1f8d 100644
+> --- a/sound/soc/codecs/wsa883x.c
+> +++ b/sound/soc/codecs/wsa883x.c
+[...]
+> @@ -1547,6 +1549,44 @@ static const struct hwmon_chip_info wsa883x_hwmon_=
+chip_info =3D {
+>  	.info	=3D wsa883x_hwmon_info,
+>  };
+> =20
+> +static void wsa883x_reset_powerdown(void *data)
+> +{
+> +	struct wsa883x_priv *wsa883x =3D data;
+> +
+> +	if (wsa883x->sd_reset)
+> +		reset_control_assert(wsa883x->sd_reset);
+> +	else
+> +		gpiod_direction_output(wsa883x->sd_n, 1);
+> +}
+> +
+> +static void wsa883x_reset_deassert(struct wsa883x_priv *wsa883x)
+> +{
+> +	if (wsa883x->sd_reset)
+> +		reset_control_deassert(wsa883x->sd_reset);
+> +	else
+> +		gpiod_direction_output(wsa883x->sd_n, 0);
+> +}
+> +
+> +static int wsa883x_get_reset(struct device *dev, struct wsa883x_priv *ws=
+a883x)
+> +{
+> +	wsa883x->sd_reset =3D devm_reset_control_get_optional_shared(dev, NULL)=
+;
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Since this driver only deasserts/asserts on probe/remove, you could use
+devm_reset_control_get_optional_shared_deasserted() and let the
+framework code handle the (de)assertion of sd_reset.
 
-Best regards,
-Krzysztof
+I wonder if the codec could also be put into reset during (runtime)
+suspend.
 
+regards
+Philipp
 
