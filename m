@@ -1,200 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-62234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A88F2AE6DDD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 19:50:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D309AE6EDA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 20:46:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 451C01BC6FB0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 17:51:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB17E3B8A3A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 18:46:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2DC327AC3E;
-	Tue, 24 Jun 2025 17:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DFE3238C3B;
+	Tue, 24 Jun 2025 18:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="o0QwmnT8"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="fdAFfRwM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA61126C05
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 17:50:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4C423315A;
+	Tue, 24 Jun 2025 18:46:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750787444; cv=none; b=NfOpdqdjjfwA291/wnA+/n+Uh9NeFoD9D4ykF715j7QSaIK2LXHBwFCIWNZup8jzTKS6RDNzKBj5cMyhAcShC+/CSaJYmmpjGubVn3WGHtTCJ3rGNaxb9SUwpJJVQEYocMksKWKAvUakqQqgAYfgfhS3XItjqWR+Mc6CRlph8WQ=
+	t=1750790800; cv=none; b=qY3YqpxVGDajnz7XHyIMptEZNvk6/Oi4t4cwbabbr99bcsN3+LduSO8p79MIhBxJ9f6eIAX/6oJ7A225yz15K1PfHiwv5PR/EQhp5r/NeNjQTXh56dqeyc4AwL7kiipSRfLhZzvRRFdPecCWjMYhXTzMbCroDcSW4uLu3kTiSVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750787444; c=relaxed/simple;
-	bh=zvusT+EwbJnfWdzCvqB4CYbGs4mtqTDF968Xj9rM9E0=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=l6ZxPDwnwLxdp/qQ/Ap0UExtqkDHXwQ7DsuXXLf3WOmEcTR8hg6puS4zqnC9d8n5CeqtHMaMOwrnP2FTjK79+i8hwNdBI9R/wivL2RgQyVw3tYl0mLe089F0tV43rHtyKm5svCwG8USipNeEUyG/hyaSbvvl9SFADmH3njEIZM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=o0QwmnT8; arc=none smtp.client-ip=209.85.214.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-2356ce66d7cso73283555ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 10:50:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1750787442; x=1751392242; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JfToG4W/8T4MN37HjczsbaeM2xUggUJm/FAUuhEMyM0=;
-        b=o0QwmnT8Qy/5FM/pV3tJI45iUeNleMMz58gE1QUwhPlDf0h9b4UxpuvOWHgincf/ff
-         7SVF2TJlrVTxm/U7RV42SVetRbaD6WEVGtCQe5phr7qTkEKdfENm71lITk5tO8hxx8Tn
-         HhruRvIgGG+9Xo0pENmr/CEG6dSWu4krbF9VtkL1AJ/aJsT+ZuyDOQrmZ6cfeig8axzJ
-         vVVKyW1WvdBz8Zw5iAsRW1LopV5s5ZEu2fo5h979KkqNjCQ5neHAP3TDARJ1YmxOnUtg
-         pEeId+zcv0UIFI76REOcH6jDaSXcJicGo7jHwS+2YlChz/W4bQUHH0PNZLs7GjyEqZ5s
-         o7+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750787442; x=1751392242;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JfToG4W/8T4MN37HjczsbaeM2xUggUJm/FAUuhEMyM0=;
-        b=PC0SPTO6g11gaNEIvwwMzO3N3ytZcgNEMZnyaKiRYsPp05g2l+Wu8LXACUTixJIG8B
-         E8biIL2H6CAtpQqGR65JXPMD8ReowiKxtD/6/JLk5OctfIcDfF1s8a6TAldCm2SC8L19
-         oQ0BdkpuJ6yBLvZ0N5TnlfP3xIhL0xnhtKJQcBYhDWtoV9Y7tLLNJngPR9L8vCyYaCsK
-         xCX3ybkG8D77XPEmoM5uks26RQjkiKHTKCeXkIGNwK63qFt2rKe3kRcVC7sbT9/jaqKE
-         6IwtgkQflFOl3Httr8Z8xbU/X9yREzzRzFvaQ+poRjQ2xcdO18uxO1n602divG7nkwmS
-         tE+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUWzohDwDB4cdfKgTmnawYzgaGy3MsKsvBMPMMokRQlju98AcRE5qZcsPi7Ar/vIJpGRPdoWhAzTh72CHdC@vger.kernel.org
-X-Gm-Message-State: AOJu0YxvAfjzvCn6m8JpnPKpIn+51OIQJxfXmRoVPh5lPDHN5hmW68iI
-	xzIDgrLW3X/qZtDM+78VLZ7+032UcR/gwEn7xi1/ZI1Z28WQc+kwFbYXNqHjrZCl3C4GgCuJ/k0
-	BeR//kA==
-X-Google-Smtp-Source: AGHT+IHcTeFnioFY8M93iMUzLc4QtOv451+sf1rj5bXR4qDBc1fgUxAPuE+TJu11BtZIFYPrgJNb4J/QJco=
-X-Received: from plbkr7.prod.google.com ([2002:a17:903:807:b0:234:8ec2:bf02])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:da88:b0:234:a139:1216
- with SMTP id d9443c01a7336-23824087149mr3780495ad.44.1750787442548; Tue, 24
- Jun 2025 10:50:42 -0700 (PDT)
-Date: Tue, 24 Jun 2025 10:50:41 -0700
-In-Reply-To: <CA+EHjTyginj74a+A58aAODZ72q9bye5Gm=pTxMmLHrqrRxaSww@mail.gmail.com>
+	s=arc-20240116; t=1750790800; c=relaxed/simple;
+	bh=7Kof3VsVQEwAhnIBqaWj3+BD5FpcbbRwilql5guZhTk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=W+vQnTxzbxpMNvp3dVAP81KD0sbGx2MZCCqyn5HWRcGQn5hLrWtPBM3gi/23yvOJN4MV2wMyF68tO9JwZYqnHHg0mkktYOYxQh4LEBXVTVliJhZzkRtUAqdgWOgc+0xNVxn0t+uHaX4rEgTKoXIHQPIdvj+gh07PMuVEAniXAi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=fdAFfRwM; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1750790789; bh=7Kof3VsVQEwAhnIBqaWj3+BD5FpcbbRwilql5guZhTk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=fdAFfRwM3z2AzSgyy9JisYCxm3OHDo3mBjcJ/1bWgLFPnkJ70qjvO3tEAUpyATx49
+	 4+f0FkeJ2XuE3V5iE3ydpuO47Uf1A6nOSxWOWPul8bbUUEk7X74HXrnClvE6zATtvK
+	 ifMNaQV5uDai3TZayC2pjf5Kz05OBJbZwnz/aXLE=
+Message-ID: <841c41cc-e44d-40c7-9431-a77feaa49b05@lucaweiss.eu>
+Date: Tue, 24 Jun 2025 20:46:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250611133330.1514028-1-tabba@google.com> <80e062dd-2445-45a6-ba4a-8f5fe3286909@redhat.com>
- <CA+EHjTx2MUq98=j=5J+GwSJ1gd7ax-RrpS8WhEJg4Lk9_USUmA@mail.gmail.com>
- <372bbfa5-1869-4bf2-9c16-0b828cdb86f5@redhat.com> <CA+EHjTyxwdu5YhtZRcwb-iR7aaEq1beV+4VWSsv7-X2tDVBkrA@mail.gmail.com>
- <11b23ea3-cadd-442b-88d7-491bba99dabe@redhat.com> <CA+EHjTyginj74a+A58aAODZ72q9bye5Gm=pTxMmLHrqrRxaSww@mail.gmail.com>
-Message-ID: <aFrlcYYM5k5kstUO@google.com>
-Subject: Re: [PATCH v12 00/18] KVM: Mapping guest_memfd backed memory at the
- host for software protected VMs
-From: Sean Christopherson <seanjc@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: David Hildenbrand <david@redhat.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, 
-	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Subject: Re: [PATCH 0/4] Start using rpmpd for power domains on MSM8974
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250621-msm8974-rpmpd-switch-v1-0-0a2cb303c446@lucaweiss.eu>
+ <amfgwjgstu4hoxz4lo7fqrqz5fqtf3r7o6wqvrrjkcfubwrjyz@5i75peprq3wn>
+Content-Language: en-US
+From: Luca Weiss <luca@lucaweiss.eu>
+In-Reply-To: <amfgwjgstu4hoxz4lo7fqrqz5fqtf3r7o6wqvrrjkcfubwrjyz@5i75peprq3wn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jun 24, 2025, Fuad Tabba wrote:
-> On Tue, 24 Jun 2025 at 12:44, David Hildenbrand <david@redhat.com> wrote:
-> >
-> > On 24.06.25 12:25, Fuad Tabba wrote:
-> > > Hi David,
-> > >
-> > > On Tue, 24 Jun 2025 at 11:16, David Hildenbrand <david@redhat.com> wrote:
-> > >>
-> > >> On 24.06.25 12:02, Fuad Tabba wrote:
-> > >>> Hi,
-> > >>>
-> > >>> Before I respin this, I thought I'd outline the planned changes for
-> > >>> V13, especially since it involves a lot of repainting. I hope that
-> > >>> by presenting this first, we could reduce the number of times I'll
-> > >>> need to respin it.
-> > >>>
-> > >>> In struct kvm_arch: add bool supports_gmem instead of renaming
-> > >>> has_private_mem
-> > >>>
-> > >>> The guest_memfd flag GUEST_MEMFD_FLAG_SUPPORT_SHARED should be
-> > >>> called GUEST_MEMFD_FLAG_MMAP
-> > >>>
-> > >>> The memslot internal flag KVM_MEMSLOT_SUPPORTS_GMEM_SHARED should be
-> > >>> called KVM_MEMSLOT_SUPPORTS_GMEM_MMAP
+Hi Dmitry,
 
-This one...
+On 24-06-2025 2:59 a.m., Dmitry Baryshkov wrote:
+> On Sat, Jun 21, 2025 at 03:19:55PM +0200, Luca Weiss wrote:
+>> Switch over the ADSP PIL to use power-domains instead of a regulator,
+>> and have one commit switching over the MSM8974 SoC plus all the devices
+>> to use power-domains.
+>>
+>> Note, that I'm aware that these changes are not backwards compatible and
+>> not really bisectable, but since it only affects the ADSP on these
+> 
+> Why? The cx-supply is handled unconditionally. A single-domain usecase
+> is also handled via a special code path. I think this might be
+> backwards-compatible, by the pure luck.
 
-> > >>> kvm_arch_supports_gmem_shared_mem() should be called
-> > >>> kvm_arch_supports_gmem_mmap()
-> > >>>
-> > >>> kvm_gmem_memslot_supports_shared() should be called
-> > >>> kvm_gmem_memslot_supports_mmap()
+Honestly I have not tried and not looked much. I mostly added this 
+paragraph to avoid the response that this change might break and is not 
+really backwards compatible. If it does (by accident) work with the 
+updated dts without the driver and the other way around, then even better.
 
-...and this one are the only names I don't like.  Explanation below.
+Regards
+Luca
 
-> > >>> Rename  kvm_slot_can_be_private() to kvm_slot_has_gmem(): since
-> > >>> private does imply that it has gmem
-> > >>
-> > >> Right. It's a little more tricky in reality at least with this series:
-> > >> without in-place conversion, not all gmem can have private memory. But
-> > >> the places that check kvm_slot_can_be_private() likely only care about
-> > >> if this memslot is backed by gmem.
-> > >
-> > > Exactly. Reading the code, all the places that check
-> > > kvm_slot_can_be_private() are really checking whether the slot has gmem.
+> 
+>> pretty old boards, I say it's fine to have this. Get all the patches
+>> into the same release (6.17?) and then we're good again.
+>>
+>> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+>> ---
+>> Luca Weiss (4):
+>>        dt-bindings: remoteproc: qcom,adsp: Make msm8974 use CX as power domain
+>>        remoteproc: qcom_q6v5_pas: Use resource with CX PD for MSM8974
+>>        ARM: dts: qcom: msm8974: Sort header includes alphabetically
+>>        ARM: dts: qcom: msm8974: Start using rpmpd for power domains
+>>
+>>   .../devicetree/bindings/remoteproc/qcom,adsp.yaml  | 18 ++------
+>>   .../arm/boot/dts/qcom/qcom-apq8074-dragonboard.dts | 13 ------
+>>   .../qcom/qcom-msm8974-lge-nexus5-hammerhead.dts    | 12 ------
+>>   .../boot/dts/qcom/qcom-msm8974-samsung-hlte.dts    | 12 ------
+>>   .../dts/qcom/qcom-msm8974-sony-xperia-rhine.dtsi   | 12 ------
+>>   arch/arm/boot/dts/qcom/qcom-msm8974.dtsi           | 50 ++++++++++++++++++++--
+>>   .../dts/qcom/qcom-msm8974pro-fairphone-fp2.dts     |  8 ----
+>>   arch/arm/boot/dts/qcom/qcom-msm8974pro-htc-m8.dts  | 11 -----
+>>   .../dts/qcom/qcom-msm8974pro-oneplus-bacon.dts     |  9 ----
+>>   .../qcom/qcom-msm8974pro-samsung-klte-common.dtsi  | 11 ++---
+>>   ...qcom-msm8974pro-sony-xperia-shinano-common.dtsi | 12 ------
+>>   drivers/remoteproc/qcom_q6v5_pas.c                 |  2 +-
+>>   12 files changed, 56 insertions(+), 114 deletions(-)
+>> ---
+>> base-commit: 7fa2fb97cd28e1d9670da538095565b6fba83977
+>> change-id: 20250621-msm8974-rpmpd-switch-b19b166c02be
+>>
+>> Best regards,
+>> -- 
+>> Luca Weiss <luca@lucaweiss.eu>
+>>
+> 
 
-Yeah, I'm fine with this change.  There are a few KVM x86 uses where
-kvm_slot_can_be_private() is slightly better in a vacuum, but in all but one of
-those cases, the check immediately gates a kvm_gmem_xxx() call.  I.e. when
-looking at the code as a whole, I think kvm_slot_has_gmem() will be easier for
-new readers to understand.
-
-The only outlier is kvm_mmu_max_mapping_level(), but that'll probably get ripped
-apart by this series, i.e. I'm guessing kvm_slot_has_gmem() will probably work
-out better there too.
-
-> > > After this series, if a caller is interested in finding out whether a
-> > > slot can be private could achieve the same effect by checking that a gmem
-> > > slot doesn't support mmap (i.e., kvm_slot_has_gmem() &&
-> > > kvm_arch_supports_gmem_mmap() ). If that happens, we can reintroduce
-> > > kvm_slot_can_be_private() as such.
-> > >
-> > > Otherwise, I could keep it and already define it as so. What do you think?
-> > >
-> > >> Sean also raised a "kvm_is_memslot_gmem_only()", how did you end up
-> > >> calling that?
-> > >
-> > > Good point, I'd missed that. Isn't it true that
-> > > kvm_is_memslot_gmem_only() is synonymous (at least for now) with
-> > > kvm_gmem_memslot_supports_mmap()?
-> >
-> > Yes. I think having a simple kvm_is_memslot_gmem_only() helper might
-> > make fault handling code easier to read, though.
-
-Yep, exactly.  The fact that a memslot is bound to a guest_memfd instance that
-supports mmap() isn't actually what KVM cares about.  The important part is that
-the userspace_addr in the memslot needs to be ignored when mapping memory into
-the guest, because the bound guest_memfd is the single source of truth for guest
-mappings.
-
-E.g. userspace could actually point userspace_addr at a completely different
-mapping, in which case walking the userspace page tables to get the max mapping
-size would be all kinds of wrong.
-
-KVM will still use userspace_addr when access guest memory from within KVM,
-but that's not dangerous to the host kernel/KVM, only to the guest (and userspace
-is firmly in the TCB for that side of things).
-
-So I think KVM_MEMSLOT_IS_GMEM_ONLY and kvm_is_memslot_gmem_only()?
-
-Those names are technically not entirely true, because as above, there is no
-guarantee that userspace_addr actually points at the bound guest_memfd.  But
-for all intents and purposes, that will hold true for all non-buggy setups.
 
