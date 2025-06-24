@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-62180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 999BDAE60AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 11:20:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54DDBAE60BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 11:22:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8D0C23BB613
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 09:20:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF61616FE2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 09:22:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D03D27AC45;
-	Tue, 24 Jun 2025 09:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C056D27A93A;
+	Tue, 24 Jun 2025 09:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="S+txhFkQ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XvtgmICy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A732C27AC28;
-	Tue, 24 Jun 2025 09:20:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3268623E347;
+	Tue, 24 Jun 2025 09:21:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750756825; cv=none; b=jKdq+NpBiY0w1pAeF0PXhifisqMTFhr4efYISxWhD+ZYhGXYWe9m8+OKS344aLSYYP1ABHnSCDi88r2VB6laElj3NdPhZXOabrYx+vjm/0VTe0Gpp3LtKGrNPLu3kftcKAZvsQ7wo3RjaGtpyq3WmXO9Wz3grstPXAAR1VfsV6s=
+	t=1750756916; cv=none; b=fqZ81zS1pM9sRh1XwXpV4fnMahJb8N9y3+ses1m1wVaTui4zPYmZzuH/LR1a+OsKyUOxe1O/TNINpMlDgkcZ2moNSQmLS+RAQXYON48+YjIHc1fvA45F4s7CetnX4QOXGyalovcgeacc9o/FZpf9L3J1vrrDI923CgaRoP6S+Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750756825; c=relaxed/simple;
-	bh=jZE+IgGesHcyfgzN3nG1+Ne+xiYv2cRxteQP8fTHOXE=;
+	s=arc-20240116; t=1750756916; c=relaxed/simple;
+	bh=Y9ykpnPfKcHUHs6NNyHG5SYbLx8xRe/y/50hrb078cY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kW1nMZGVEanonli86E/w1Ma/J5R5gIP2L3PuF2rB/GiqsWyRvFmLpYcRZvl6mNe/+NBz0rQW+D8jMk3IOfWfyZgzz/ukOHPjFMUSspq99u3HkTX96rBop0MTV0d3OjUCMqBjVCrH44T2a9ScXL4O7AjIlXmVsxXkHwRh9R5txrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=S+txhFkQ; arc=none smtp.client-ip=192.198.163.13
+	 Content-Type:Content-Disposition:In-Reply-To; b=L3SypMDLt8826i7hreD5zDthMBu+culaA8QdbVvMQOQ9V1cBKHPDnWtPPM5CnhcQIqxg2NzevtH8iyM8ukg1SgPCfhS76sn8Wvbm9SEh8+0qtT69IN9KVBFoC9K4gzRtgz/BvILYLsNrQB5z3qpBzU+41R0iV4SwKvEfLZagqRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XvtgmICy; arc=none smtp.client-ip=198.175.65.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750756824; x=1782292824;
+  t=1750756916; x=1782292916;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=jZE+IgGesHcyfgzN3nG1+Ne+xiYv2cRxteQP8fTHOXE=;
-  b=S+txhFkQM9R/lswsNimIYdK8oHnFHJdZBloZoFdl5ozLY8brwKaM/9kE
-   ljVFV+j/MZpwjDXsOcEOl+JgONI3cMPkBbO0UjZaLT4HXYeuNvsmUPgw/
-   9to3G3KyVCmtf4ZlIPu06QtwH44ThuKu7t1FUG0rkhuzRxZ50QRJ2Jn07
-   0P9xDpxSH4dK+QWc1HL17UuOhm0Dw/cjBFeKwGtNv2x8tuWa+Z0OAZQ/J
-   UZ6pFKSX2IjDI3IOf2m50NRARQglujsKLtUGN/Hy76hKQCJjCbpVBFjNe
-   1+9X3kp2W3uUaWQj5GoohhS16dFt37CL/QVj8/XgFIzwRaihTrutIQCpJ
+  bh=Y9ykpnPfKcHUHs6NNyHG5SYbLx8xRe/y/50hrb078cY=;
+  b=XvtgmICyZ0mOmRlkl3wxOhJdDHtJu6BFgyj+PLpnBm88YcflNeQrrXVy
+   nkxjogPE1Yi7/NHxrg7SdPMR6GhvERyO2WnvSJaLRp1Q0WCIzkhpJb/f+
+   8pfGRwBPtmQgxyTrJrVPyMzPxD9ZuRpeOW+JkZBQXLZ8Acy6iXQ9c1niZ
+   2aIhisWJxW5S2f9JeMlTj8yL4GkOf5sEQQctxJxZX74b2Vfh37t8VW6Vx
+   tgulhuLxoSXHgst6/yorNTO6/GWzOCNJC4DV3n3nPA+mVEgkX+XVipj9m
+   IH4YTcfaQZ2CpqNG2+dqq8R4edaUIh9x12GtpqAInxBxve23+FN20aeN3
    A==;
-X-CSE-ConnectionGUID: Gl+SGGEsScOLUm3+iA7egQ==
-X-CSE-MsgGUID: pgga4psmTYubGiQvJ/RMnQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11473"; a="55618257"
+X-CSE-ConnectionGUID: dXRuMBVhTtyTgPrlqq8+Hg==
+X-CSE-MsgGUID: dxB4cRmPTtiSgttgOshOCA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11473"; a="56664508"
 X-IronPort-AV: E=Sophos;i="6.16,261,1744095600"; 
-   d="scan'208";a="55618257"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2025 02:20:23 -0700
-X-CSE-ConnectionGUID: ouSwOgoxRtml5VKPffnURg==
-X-CSE-MsgGUID: 06FqYvbYTImAMHK+suunGA==
+   d="scan'208";a="56664508"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2025 02:21:55 -0700
+X-CSE-ConnectionGUID: WWAjkbxmRcOXea07g8oNOQ==
+X-CSE-MsgGUID: stK1ZMvJR/SV0Uw+es8bzw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,261,1744095600"; 
-   d="scan'208";a="151995889"
+   d="scan'208";a="175465205"
 Received: from kuha.fi.intel.com ([10.237.72.152])
-  by fmviesa006.fm.intel.com with SMTP; 24 Jun 2025 02:20:20 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 24 Jun 2025 12:20:19 +0300
-Date: Tue, 24 Jun 2025 12:20:18 +0300
+  by fmviesa002.fm.intel.com with SMTP; 24 Jun 2025 02:21:51 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 24 Jun 2025 12:21:50 +0300
+Date: Tue, 24 Jun 2025 12:21:50 +0300
 From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -68,11 +68,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>, linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 7/8] usb: typec: ucsi: yoga-c630: handle USB / HPD
- messages to set port orientation
-Message-ID: <aFpt0j21dOWAnNvR@kuha.fi.intel.com>
+Subject: Re: [PATCH 8/8] usb: typec: ucsi: yoga-c630: register DRM HPD bridge
+Message-ID: <aFpuLuzBXgazxecA@kuha.fi.intel.com>
 References: <20250621-c630-ucsi-v1-0-a86de5e11361@oss.qualcomm.com>
- <20250621-c630-ucsi-v1-7-a86de5e11361@oss.qualcomm.com>
+ <20250621-c630-ucsi-v1-8-a86de5e11361@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,106 +80,118 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250621-c630-ucsi-v1-7-a86de5e11361@oss.qualcomm.com>
+In-Reply-To: <20250621-c630-ucsi-v1-8-a86de5e11361@oss.qualcomm.com>
 
-On Sat, Jun 21, 2025 at 09:13:02PM +0300, Dmitry Baryshkov wrote:
-> Parse USB / HPD messages from EC in order to set the orientation of the
-> corresponding Type-C port, letting connected USB 3 devices to enjoy
-> SuperSpeed connection rather than beign limited to HighSpeed only (if
-> the orientation didn't match).
+On Sat, Jun 21, 2025 at 09:13:03PM +0300, Dmitry Baryshkov wrote:
+> On Qualcomm platforms DisplayPort driver expects to have a drm bridge in
+> the final device on the USB-C chain. Register the DRM HPD bridge in
+> order to fulfill this requirement and to send HPD events to the DRM
+> driver.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
 > ---
->  drivers/usb/typec/ucsi/ucsi_yoga_c630.c | 42 +++++++++++++++++++++++++++++++++
->  1 file changed, 42 insertions(+)
+>  drivers/usb/typec/ucsi/Kconfig          |  1 +
+>  drivers/usb/typec/ucsi/ucsi_yoga_c630.c | 39 +++++++++++++++++++++++++++++++++
+>  2 files changed, 40 insertions(+)
 > 
+> diff --git a/drivers/usb/typec/ucsi/Kconfig b/drivers/usb/typec/ucsi/Kconfig
+> index 8bf8fefb4f07bccc4be90a4b7f771d91294386b0..52b53bb6dfed28c4272f8ccc5e31601aede29911 100644
+> --- a/drivers/usb/typec/ucsi/Kconfig
+> +++ b/drivers/usb/typec/ucsi/Kconfig
+> @@ -85,6 +85,7 @@ config CROS_EC_UCSI
+>  config UCSI_LENOVO_YOGA_C630
+>  	tristate "UCSI Interface Driver for Lenovo Yoga C630"
+>  	depends on EC_LENOVO_YOGA_C630
+> +	select DRM_AUX_HPD_BRIDGE if DRM_BRIDGE && OF
+>  	help
+>  	  This driver enables UCSI support on the Lenovo Yoga C630 laptop.
+>  
 > diff --git a/drivers/usb/typec/ucsi/ucsi_yoga_c630.c b/drivers/usb/typec/ucsi/ucsi_yoga_c630.c
-> index 76afd128d42a2573ff55433f815c2773462a6426..f85170417d19cdc5ae39a15e2f97010259ef12f6 100644
+> index f85170417d19cdc5ae39a15e2f97010259ef12f6..0187c1c4b21abc7b5429526ebb4538c28b2e2e77 100644
 > --- a/drivers/usb/typec/ucsi/ucsi_yoga_c630.c
 > +++ b/drivers/usb/typec/ucsi/ucsi_yoga_c630.c
-> @@ -7,15 +7,25 @@
->   */
->  #include <linux/auxiliary_bus.h>
->  #include <linux/bitops.h>
-> +#include <linux/bitfield.h>
->  #include <linux/completion.h>
+> @@ -12,10 +12,14 @@
 >  #include <linux/container_of.h>
 >  #include <linux/module.h>
 >  #include <linux/notifier.h>
+> +#include <linux/of.h>
+> +#include <linux/property.h>
 >  #include <linux/string.h>
 >  #include <linux/platform_data/lenovo-yoga-c630.h>
-> +#include <linux/usb/typec_dp.h>
+>  #include <linux/usb/typec_dp.h>
 >  
+> +#include <drm/bridge/aux-bridge.h>
+> +
 >  #include "ucsi.h"
 >  
-> +#define LENOVO_EC_USB_MUX	0x08
-> +
-> +#define USB_MUX_MUXC	GENMASK(1, 0)
-> +#define USB_MUX_CCST	GENMASK(3, 2)
-> +#define USB_MUX_DPPN	GENMASK(7, 4)
-> +#define USB_MUX_HPDS	BIT(8)
-> +#define USB_MUX_HSFL	GENMASK(11, 9)
-> +
+>  #define LENOVO_EC_USB_MUX	0x08
+> @@ -29,6 +33,7 @@
 >  struct yoga_c630_ucsi {
 >  	struct yoga_c630_ec *ec;
 >  	struct ucsi *ucsi;
-> @@ -144,6 +154,12 @@ static bool yoga_c630_ucsi_update_altmodes(struct ucsi *ucsi,
->  	return false;
+> +	struct auxiliary_device *bridge;
+>  	struct notifier_block nb;
+>  	u16 version;
+>  };
+> @@ -193,6 +198,13 @@ static void yoga_c630_ucsi_read_port0_status(struct yoga_c630_ucsi *uec)
+>  				      ccst == 1 ?
+>  				      TYPEC_ORIENTATION_REVERSE :
+>  				      TYPEC_ORIENTATION_NORMAL);
+> +
+> +	if (uec->bridge)
+> +		drm_aux_hpd_bridge_notify(&uec->bridge->dev,
+> +					  dppn != 0 ?
+> +					  connector_status_connected :
+> +					  connector_status_disconnected);
+> +
 >  }
 >  
-> +static void yoga_c630_ucsi_update_connector(struct ucsi_connector *con)
-> +{
-> +	if (con->num == 1)
-> +		con->typec_cap.orientation_aware = true;
-> +}
-> +
->  static const struct ucsi_operations yoga_c630_ucsi_ops = {
->  	.read_version = yoga_c630_ucsi_read_version,
->  	.read_cci = yoga_c630_ucsi_read_cci,
-> @@ -152,8 +168,33 @@ static const struct ucsi_operations yoga_c630_ucsi_ops = {
->  	.sync_control = yoga_c630_ucsi_sync_control,
->  	.async_control = yoga_c630_ucsi_async_control,
->  	.update_altmodes = yoga_c630_ucsi_update_altmodes,
-> +	.update_connector = yoga_c630_ucsi_update_connector,
->  };
->  
-> +static void yoga_c630_ucsi_read_port0_status(struct yoga_c630_ucsi *uec)
-> +{
-> +	int val;
-> +	unsigned int muxc, ccst, dppn, hpds, hsfl;
-> +
-> +	val = yoga_c630_ec_read16(uec->ec, LENOVO_EC_USB_MUX);
-> +
-> +	muxc = FIELD_GET(USB_MUX_MUXC, val);
-> +	ccst = FIELD_GET(USB_MUX_CCST, val);
-> +	dppn = FIELD_GET(USB_MUX_DPPN, val);
-> +	hpds = FIELD_GET(USB_MUX_HPDS, val);
-> +	hsfl = FIELD_GET(USB_MUX_HSFL, val);
-> +
-> +	dev_dbg(uec->ucsi->dev, " mux %04x (muxc %d ccst %d dppn %d hpds %d hsfl %d)\n",
-> +		val,
-> +		muxc, ccst, dppn, hpds, hsfl);
-> +
-> +	if (uec->ucsi->connector && uec->ucsi->connector[0].port)
-> +		typec_set_orientation(uec->ucsi->connector[0].port,
-> +				      ccst == 1 ?
-> +				      TYPEC_ORIENTATION_REVERSE :
-> +				      TYPEC_ORIENTATION_NORMAL);
-> +}
-> +
 >  static int yoga_c630_ucsi_notify(struct notifier_block *nb,
->  				 unsigned long action, void *data)
->  {
-> @@ -164,6 +205,7 @@ static int yoga_c630_ucsi_notify(struct notifier_block *nb,
->  	switch (action) {
->  	case LENOVO_EC_EVENT_USB:
->  	case LENOVO_EC_EVENT_HPD:
-> +		yoga_c630_ucsi_read_port0_status(uec);
->  		ucsi_connector_change(uec->ucsi, 1);
->  		return NOTIFY_OK;
+> @@ -237,6 +249,24 @@ static int yoga_c630_ucsi_probe(struct auxiliary_device *adev,
+>  	uec->ec = ec;
+>  	uec->nb.notifier_call = yoga_c630_ucsi_notify;
+>  
+> +	device_for_each_child_node_scoped(&adev->dev, fwnode) {
+> +		u32 port;
+> +
+> +		ret = fwnode_property_read_u32(fwnode, "reg", &port);
+> +		if (ret < 0) {
+> +			dev_err(&adev->dev, "missing reg property of %pfwP\n", fwnode);
+> +			return ret;
+> +		}
+> +
+> +		/* DP is only on port0 */
+> +		if (port != 0)
+> +			continue;
+> +
+> +		uec->bridge = devm_drm_dp_hpd_bridge_alloc(&adev->dev, to_of_node(fwnode));
+> +		if (IS_ERR(uec->bridge))
+> +			return PTR_ERR(uec->bridge);
+> +	}
+> +
+>  	uec->ucsi = ucsi_create(&adev->dev, &yoga_c630_ucsi_ops);
+>  	if (IS_ERR(uec->ucsi))
+>  		return PTR_ERR(uec->ucsi);
+> @@ -255,8 +285,17 @@ static int yoga_c630_ucsi_probe(struct auxiliary_device *adev,
+>  	if (ret)
+>  		goto err_unregister;
+>  
+> +	if (uec->bridge) {
+> +		ret = devm_drm_dp_hpd_bridge_add(&adev->dev, uec->bridge);
+> +		if (ret)
+> +			goto err_ucsi_unregister;
+> +	}
+> +
+>  	return 0;
+>  
+> +err_ucsi_unregister:
+> +	ucsi_unregister(uec->ucsi);
+> +
+>  err_unregister:
+>  	yoga_c630_ec_unregister_notify(uec->ec, &uec->nb);
 >  
 > 
 > -- 
