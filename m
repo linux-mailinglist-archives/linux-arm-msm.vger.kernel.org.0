@@ -1,87 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-62214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E70BAE65E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 15:11:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5CF7AE65E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 15:12:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D50E64C3628
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 13:05:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 64BAC1BC132B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 13:08:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B507D2BFC74;
-	Tue, 24 Jun 2025 13:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B9F6298CCF;
+	Tue, 24 Jun 2025 13:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="U6t4sxbl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QbZx1uyl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B21B2BEC5F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD28290D85
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750770262; cv=none; b=LC9q6+3H8JmtmL+U2ju7jDBYubQrlYPNQ/A0r6cAIEdW0SwF7GENvGhN1Lh+2jGscYSrZFmzkg4+KoiQEytPgT5149c/pMXcqpMn358KHzsygrqH1aOSCJen5kZ2GRZL3y82x3UV6ZWszqk+dR6l558M7yeT2ASzJslHfiWa3JQ=
+	t=1750770510; cv=none; b=u1zFCRx9AMEqvkioymrV2xpIrgoW0O2C46w+zxf1oXV3wXLPMmbYCELRZ9B5c5z4fk0d0JdnrNTywM6QxVEZ3pBRfoiQtAWv3mRbBE22hUbICxcxvGAsfWpadXp/u1uwHhoTwX1T65s/MowQVr93oalTh1Vm1w5G9rploJS6DTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750770262; c=relaxed/simple;
-	bh=MQKowZ3zRpM28etUCfcetudpyb05NjBVDfvr3BSFbxk=;
+	s=arc-20240116; t=1750770510; c=relaxed/simple;
+	bh=OWhxjim2hzRwp44IATiri7aWjY41RYVfuAGrMg9lkKY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bkspDt9b8jsobj+VbOjvJNmLvGVJzO1qngmPkVKbZol/OP/k+Con1ftHy2Ediic5LldvR5BLUNQ83cUAIip+Kfxm/fVQXFIFnzMkULTi2fW45+03x7cnCQvTH7fqWgFJbvnDSIfESm7vCw/XqdSSJFCpQ+PQBPOquOCvyoOu53o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=U6t4sxbl; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=hlBKrTZOS7IyEOOkz234dq2x05ELpCZ3ISDeDXD6uV3VqNHf+6z4asajd0k+BGW7J9DxGKcqAtNaoSvW7HAXh/xd39m1FewsYY4o50VfMntXkOu8cFXxal+sLQrNVd2+0bvNtsOZoyNAo7+fGuij9pirOcpAKIHcLNbl6BYEQBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QbZx1uyl; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55OCGaZQ004334
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:04:20 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55O7D6lA025855
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:08:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	O/495hC0vUVuxQ++cW8y15Nw00kbXFjpRqZMO89lgJs=; b=U6t4sxblEbxZw/wO
-	VG0uUjXknWQQqGCpI9mmEwKPWr3FXrpXOHnxHx0PX6ANP6B+CO+UHiniqrRusYma
-	8J0IuPqxRlbLIaAmHJIoB3d/kxb2Uj1VCLfjYMuq0N1clpEOYK/H3i4ijHJqhlRN
-	ZhYWJx/RXMKPONXftVcuaO4zircF10rUqLDgm0KnnMbjzHSuNzDpRIXCN8th5wBy
-	1+ybZaTQY41tBIoGQ2HhOtQe1CSPqWaSWRZyVsmvLCM9vri6FwSFB2+bRs1IWKrX
-	sR5/IwPDLENbpNrNQEd1+I9rBgN6Ouk66Et45hqW9ejz9cDLXHrwu6Hy8juVXrdE
-	lPtXsg==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f4b3v25u-1
+	GXCLZ7wAY3gbFYvClwpaaAkNVDWwCvFGSPtbvkJl6S4=; b=QbZx1uylK1oDoaHE
+	AxheQ3bLH0vLEbfkRRSrZr/l2/yYim17/kmALfwpQKFR+X7ovIUY+p+RU1+vC2X5
+	16iDRtyt4ZtNqI5TQ3L9yhwhFrAByVNva9qHM7gfny2S9up19BvOq6IeuWY8wYBR
+	LVNGeTg/p3/rL63xnhH4ICX3TOjSiWEiI6v1bOtNBAZQRzGeA9Drh6rO2C3uoPMG
+	UX4/IRvcJTzQHoHMWehZfO/2pQ/FhCv0SvK2L5cRcsJWUK5mNfn4ovwOQr+AkjIn
+	3nObZbjWy0cXguNZsKogCNwLcEPrDKXEvNE/gosHHSTce7idiG0uCHwontU8EFH2
+	c3cdoA==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47emcmnuj5-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:04:20 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2365ab89b52so3460755ad.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 06:04:20 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:08:27 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b2c00e965d0so346603a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 06:08:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750770259; x=1751375059;
+        d=1e100.net; s=20230601; t=1750770507; x=1751375307;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O/495hC0vUVuxQ++cW8y15Nw00kbXFjpRqZMO89lgJs=;
-        b=SvKbNT1hrCDVqPmm+Ek0iUYv/2KE1yjRFFWkxZJMgWR6tcPcn5n8N9uCDj8cukQbdv
-         tirWWYXH100ad2U2Wt8EJlKBkwns3tNJalLGFTOYNSnkOGXyZRKV/8SmjbYtSX3WGBO1
-         w58GhMxz7SDQoRkLOvU9B9AHaBzeT5i4IjB6rzzS82FrAlQP1NFDFwm6ZJjF3m/7miCJ
-         9HsJ3xH3PaVAo4OoFr0Gq5u3DXZ5A/k2CgQKLANkZtiLmuQBBFrZg1RkbZ4epRtbgKHg
-         byeQsx7BbLl0WPOjzdi/Lh699gnafXKi5NAyg9hjeKbbrDgwj4Oo6W63Yzc2oK9wYkQ8
-         OtYA==
-X-Forwarded-Encrypted: i=1; AJvYcCXVa7ssxpetA/za12Pk6RCxQohxGzlrx+MjhHtFFlpXgR5b9v21YNHZQOEIcNdxbt+ZMgO3MBwPnljc+Lwh@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOYUUvXpz77aHPeljSEoYqbhsLIbjr6cZKtzCnJWpiTXehGZkY
-	JAesRdG/dzusKDZoO5jm6OF1vi2MTsk7oa41jPY5RKKL+22iEpBB0qAVUZrG0fzCfOG0lKmAXKN
-	tU70B7AZf77oICYWTbGtjd+GCKzH8ifIP352SJfqXcTNWEmZbJrBiFoZtmKjHsA9ndCZh
-X-Gm-Gg: ASbGncvvj6mk39d6lsWTLux2Jzi3C08gk33bziABaYWIgkOoombds58sorL4bE5nuTD
-	YM0D65GB6NeiK7YFD6+6YHLNmw7T7HhQxLVT15/YZbNCzLAdZLk1sYI8RMQjxssBEScwkCtMrgp
-	pe8UD7Damk0sIKCQLPlIzzweu8ogtcFyrckdsebYkPfMBNHuuIel1zGopP1kVnPVoDt9F4Au8P1
-	R/wdE5jjLKK+y7kLuoL1SNha684GZexB8iFkB7atD8voQFJE+nLqbrPy8+ei+KpnfeEDm1lbC80
-	1M0e5Y5q/7PuIJclxOsBwI2OGMonNLqfg0ytUdm/iuHwUk4H/Hx83J1ydA==
-X-Received: by 2002:a17:903:8cc:b0:234:8f5d:e3c0 with SMTP id d9443c01a7336-237d9767a10mr202186065ad.6.1750770259252;
-        Tue, 24 Jun 2025 06:04:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE9tPnXoLF91QSG183P4Nqg3xkGhJKkNxAVBtQTPbRr76iNpa84omAzPiPt/Ao9F7KIQhX8og==
-X-Received: by 2002:a17:903:8cc:b0:234:8f5d:e3c0 with SMTP id d9443c01a7336-237d9767a10mr202185245ad.6.1750770258270;
-        Tue, 24 Jun 2025 06:04:18 -0700 (PDT)
-Received: from [192.168.0.126] ([175.101.107.119])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b31f1241efbsm10331324a12.36.2025.06.24.06.04.15
+        bh=GXCLZ7wAY3gbFYvClwpaaAkNVDWwCvFGSPtbvkJl6S4=;
+        b=DzvQ9V9sSq2y+wqsOGR8jzZgdfXz0tm+E+92fQVWo6KD1UGMViGiLAdrd9eJ/Q39Ge
+         JA2moNSsBaoWW/NGnBKcyz6WCmIrpZB1SSQTxrgZMVVk9/gfURzmHrwBmEfXa4YmOXIT
+         agx970fvec5e5TJ0t25+PSnUPaNHWQ6hFhlEhTi18FcLsrZEGA2FsWxopHN7VRKoYnH6
+         qGiBsMFI7gvAXWZ1NXC36f5IsHglNkcMfb1XPMllGE86ydPyYtDp9cXSpWmlJqdExDkA
+         ipvtUn7CRC0wLDEhuoGPamN2AmZwL6+/nIuKMK7qmGQyCddbshoyyxf89Q1wzPrv+vdT
+         nsbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXxWln3xIOQS7E94dWZBsZNMG4fSRTzRB0bm/uWHiItjsw1336oA+2tBR0BLPonxDVx13Ief+8T3l28hxq/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4McNRX3bg5HsB5a7FjL1y/u/pyr9E8kSNbiyGMV8cciAu9sVD
+	34dMNx/mrKZpWhEkco4ehKLx7JeJPARD8ifkmD04M0R+IZFuCpypNMGp1l016EAALQhTZC4lBck
+	Q1fJzn0LFQFZqV4iLJ6KzbfvfLiCU2ZWVNF6+8M21DeYvTiM6pun7/Yu/gykVgdzqlfl3
+X-Gm-Gg: ASbGnctA2MIBvJRdIc9hyTiKKXnDglfXFI3mRdaajUGK9DTFXR79yfUMgXjwKExiFu3
+	huZjYivXy9FucgYFYBZl13Q66O0fl+o0XKeh1IvgNZo9IsH67XMPHZBRQLwjPUSihOIYqjBLSg/
+	w5pY+iWUTyrnZBtTz201wTW59bfqy1TDLoTo2FFrGye2EJD2nAnwUoa5oYK54mS/tkFZWC4jrQm
+	ijhZBaXSl2MeuCmSSQtvLhR3YhM8I5m9iZxOiF77+qty69yD0GDxvT3xpButXS2gEJNgV28x882
+	fkIq1RzudrbST0qYw6iO4KJveBeY1fgi04EipsWgUFmSp43U2xK9XWbzjHqDB2ZJ5gDziK9cTA=
+	=
+X-Received: by 2002:a05:6a00:9a0:b0:749:93d:b098 with SMTP id d2e1a72fcca58-7490db4278fmr17729270b3a.22.1750770507032;
+        Tue, 24 Jun 2025 06:08:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFaLKteWP9POVkOhi2cCkGrtK+lX6AAeVvFFXqxc3EwlHw8pY4QVWlpLKOHl1nNiBko7q5DOw==
+X-Received: by 2002:a05:6a00:9a0:b0:749:93d:b098 with SMTP id d2e1a72fcca58-7490db4278fmr17729252b3a.22.1750770506624;
+        Tue, 24 Jun 2025 06:08:26 -0700 (PDT)
+Received: from [192.168.0.126] ([2401:fb00:ffff:fffc:0:1:ac11:493f])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-749c88721b9sm1836215b3a.150.2025.06.24.06.08.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jun 2025 06:04:17 -0700 (PDT)
-Message-ID: <a46b9870-207b-45a1-b3e6-5c13e1857640@oss.qualcomm.com>
-Date: Tue, 24 Jun 2025 18:34:14 +0530
+        Tue, 24 Jun 2025 06:08:26 -0700 (PDT)
+Message-ID: <72f9de63-dc19-4467-b883-8637f95a8e82@oss.qualcomm.com>
+Date: Tue, 24 Jun 2025 18:38:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,8 +90,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] usb: dwc3: qcom: Implement glue callbacks to
- facilitate runtime suspend
+Subject: Re: [PATCH v2 3/4] usb: dwc3: qcom: Facilitate autosuspend during
+ host mode
 To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
@@ -98,101 +99,146 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
         "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 References: <20250610091357.2983085-1-krishna.kurapati@oss.qualcomm.com>
- <20250610091357.2983085-3-krishna.kurapati@oss.qualcomm.com>
- <20250623233211.aeehndz2nxqovepd@synopsys.com>
+ <20250610091357.2983085-4-krishna.kurapati@oss.qualcomm.com>
+ <20250623235856.b2jwgf5j6yup2sww@synopsys.com>
 Content-Language: en-US
 From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-In-Reply-To: <20250623233211.aeehndz2nxqovepd@synopsys.com>
+In-Reply-To: <20250623235856.b2jwgf5j6yup2sww@synopsys.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDExMCBTYWx0ZWRfX3THC1B1g26Mb
- L9Xr0UjdydH8jh1dEqb/2tAcrpPWGBwsHEIOmlmdVbbz9kQH1Exoo2n35TsjlXvKWX3NMbo1+3E
- VkKpgjNNfSb/yR5kTOBb7b0yzisQEhIkLyMDB8nNtmyjadrWDAVvbm+yOj0gS2UQWvYgJTlTzSX
- 78iNlOTykLkHKm4p+9AQEtau5NK3qy39B16Uwtf+4kiPwy4lHe41PP1B0Gxj05ThxuLtvQAfzlk
- rIPw0Yo2KMt1NsuLwYGi4nXaCynVov7iN4MOerBSGA4FoXDkO9Z+9t3dgFtb/zJRaKFNT8Tm6MZ
- RHTZsUFHeqgu0eoIPSTkgDuQRL826Wj9y2iQ26i971nBygjKde5kLQx1Zk2LGLD3WQwYIshi++O
- apltdOCYQVIoWw2a6tOF2F4I1Q6hm/rCxMxOxcbIQfwNQsrCC1mWXaRvr7rwkHWfZ8k2DzaO
-X-Proofpoint-ORIG-GUID: HSlpsEHt12o7imbpR8ich6o6bBVeh7Kf
-X-Proofpoint-GUID: HSlpsEHt12o7imbpR8ich6o6bBVeh7Kf
-X-Authority-Analysis: v=2.4 cv=A8BsP7WG c=1 sm=1 tr=0 ts=685aa254 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=yWXLeC16oIbqf35128AjHQ==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=z0btSGuGm7FRfGALX-gA:9
- a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: ZLdb0aoP6Ch9iVBHVr5t98ZAPoYUAgyR
+X-Proofpoint-ORIG-GUID: ZLdb0aoP6Ch9iVBHVr5t98ZAPoYUAgyR
+X-Authority-Analysis: v=2.4 cv=J+eq7BnS c=1 sm=1 tr=0 ts=685aa34b cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=biFwQZO8mOkSj3tXal0A:9 a=QEXdDO2ut3YA:10
+ a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDExMCBTYWx0ZWRfX0/uTEGISnoz3
+ TUF8TDwJDSyAR/BA6vHdDU1zTPeXzeVHuKOqLTyxi8gUCnOp5nmlBifOQNOZ9tgX3mt4+01QHOB
+ NQhU6VpjJVtHB04scrCIz2K7CttiIEek4P9fkAkSo4HFgGB9FcuOaT4JkC+Gtc1hjPL08NtPK9G
+ GpD0HYs7op8TuItd1eRzdxnKYlWteNlruA+vXRymzBNhD8tKHrddJAW+e+PwxfnfX4eqvJSCK5K
+ NW8lN6AXegcRvicpD88RbPD9q/NypHyXqFHTH/mJCOAZN5xyO3HONDE05HkcThXUYtQyPeKSkMD
+ 4hQh9gPP40mqAImWkUrY/JYJRug3piTB4WDv+1Ivh1/T/opMhQaeKK4FNvPMSrsLsyzdxL0BB37
+ hUCmR5iVXsneOvvfhJRCVo3d9xqxDoWgiz8lwA/r/5d1k/xmtTXyNeYAxRZsVBulzOsUt1+U
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-06-24_05,2025-06-23_07,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 mlxlogscore=898 malwarescore=0 spamscore=0 bulkscore=0
- phishscore=0 adultscore=0 impostorscore=0 suspectscore=0 mlxscore=0
- clxscore=1015 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506240110
+ bulkscore=0 mlxlogscore=999 adultscore=0 impostorscore=0 clxscore=1015
+ spamscore=0 malwarescore=0 phishscore=0 priorityscore=1501 suspectscore=0
+ mlxscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506240110
 
 
 
-On 6/24/2025 5:02 AM, Thinh Nguyen wrote:
+On 6/24/2025 5:29 AM, Thinh Nguyen wrote:
 > On Tue, Jun 10, 2025, Krishna Kurapati wrote:
->> On Qualcomm DWC3 dual-role controllers, the conndone/disconnect events in
->> device mode are generated by controller when software writes to QSCRATCH
->> registers in Qualcomm Glue layer rather than the vbus line being routed to
->> dwc3 core IP for it to recognize and generate these events.
+>> When in host mode, it is intended that the controller goes to suspend
+>> state to save power and wait for interrupts from connected peripheral
+>> to wake it up. This is particularly used in cases where a HID or Audio
+>> device is connected. In such scenarios, the usb controller can enter
+>> auto suspend and resume action after getting interrupts from the
+>> connected device.
 >>
->> UTMI_OTG_VBUS_VALID  bit of QSCRATCH_HS_PHY_CTRL register needs to be set
->> to generate a connection done event and to be cleared for the controller to
->> generate a disconnect event during cable removal. When the disconnect is
->> not generated upon cable removal, the "connected" flag of dwc3 is left
->> marked as "true" and it blocks suspend routines and for that to happen upon
->> cable removal, the cable disconnect notification coming in via set_role
->> call need to be provided to the Qualcomm glue layer as well.
+>> Allow autosuspend for and xhci device and allow userspace to decide
+>> whether to enable this functionality.
 >>
->> Currently, the way DWC3 core and Qualcomm legacy glue driver are designed,
->> there is no mechanism through which the DWC3 core can notify the Qualcomm
->> glue layer of any role changes which it receives via role switch. To
->> register these glue callbacks at probe time, for enabling core to notify
->> glue layer, the legacy Qualcomm driver has no way to find out when the
->> child driver probe was successful since it does not check for the same
->> during of_platform_populate.
+>> a) Register to usb-core notifications in set_role vendor callback to
+>> identify when root hubs are being created. Configure them to
+>> use_autosuspend.
 >>
->> Hence implement the following glue callbacks for flattened Qualcomm glue
->> driver:
->>
->> 1. set_role: To pass role switching information from drd layer to glue.
->> This information is needed to identify NONE/DEVICE mode switch and modify
->> QSCRATCH to generate connect-done event on device mode entry and disconnect
->> event on cable removal in device mode.
->>
->> 2. run_stop: When booting up in device mode, if autouspend is enabled and
->> userspace doesn't write UDC on boot, controller enters autosuspend. After
->> this, if the userspace writes to UDC in the future, run_stop notifier is
->> required to enable UTMI_OTG_VBUS_VALID of QSCRATCH so that connect done
->> event is generated after run_stop(1) is done to finish enumeration.
+>> b) Identify usb core notifications where the HCD is being added and
+>> enable autosuspend for that particular xhci device.
 >>
 >> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
->> ---
->>   drivers/usb/dwc3/dwc3-qcom.c | 82 ++++++++++++++++++++++++++++++++----
->>   1 file changed, 73 insertions(+), 9 deletions(-)
->>
->> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
->> index ca7e1c02773a..d40b52e2ba01 100644
->> --- a/drivers/usb/dwc3/dwc3-qcom.c
->> +++ b/drivers/usb/dwc3/dwc3-qcom.c
->> @@ -89,6 +89,12 @@ struct dwc3_qcom {
->>   	bool			pm_suspended;
->>   	struct icc_path		*icc_path_ddr;
->>   	struct icc_path		*icc_path_apps;
+
+
+[...]
+
+>> +static int dwc3_xhci_event_notifier(struct notifier_block *nb,
+>> +				    unsigned long event, void *ptr)
+>> +{
+>> +	struct dwc3_qcom  *qcom	= container_of(nb, struct dwc3_qcom, xhci_nb);
+>> +	struct dwc3	  *dwc	= &qcom->dwc;
+>> +	struct usb_bus	  *ubus	= ptr;
+>> +	struct usb_hcd	  *hcd;
 >> +
->> +	/*
->> +	 * Current role changes via usb_role_switch_set_role callback protected
->> +	 * internally by mutex lock.
->> +	 */
->> +	enum usb_role		current_role;
+>> +	if (!dwc->xhci)
+>> +		goto done;
+>> +
+>> +	hcd = platform_get_drvdata(dwc->xhci);
+>> +	if (!hcd)
+>> +		goto done;
+>> +
+>> +	if (event != USB_BUS_ADD)
+>> +		goto done;
+>> +
+>> +	if (strcmp(dev_name(ubus->sysdev), dev_name(dwc->sysdev)) != 0)
 > 
-> Can we just track the current role through dwc3 core instead of an
-> addition field in the glue?
+> Can this be false? If possible, I'd like to avoid these pointers and
+> strcmp here.
 > 
 
-Core caches only mode. We need ROLE NONE to identify cable connect. So 
-adding that in glue to keep track.
+Needed this to identify if the dwc3 pointer corresponds to this glue or 
+not. This can be false.
+
+BTW, Dmitry suggested to just do "runtime_use_autosuspend" inside probe 
+of xhci-plat.c and remove this logic. Hope that would be fine ?
+
+>> +		goto done;
+>> +
+>> +	if (event == USB_BUS_ADD) {
+> 
+> This condition is redundant when you have the check a few lines above.
+> 
+
+ACK.
+
+>> +		/*
+>> +		 * Identify instant of creation of primary hcd and
+>> +		 * mark xhci as autosuspend capable at this point.
+>> +		 */
+>> +		pm_runtime_use_autosuspend(&dwc->xhci->dev);
+>> +	}
+>> +
+>> +done:
+>> +	return NOTIFY_DONE;
+>> +}
+>> +
+>>   static void dwc3_qcom_set_role_notifier(struct dwc3 *dwc, enum usb_role next_role)
+>>   {
+>>   	struct dwc3_qcom *qcom = to_dwc3_qcom(dwc);
+>> @@ -659,12 +694,22 @@ static void dwc3_qcom_set_role_notifier(struct dwc3 *dwc, enum usb_role next_rol
+>>   		return;
+>>   	}
+>>   
+>> -	if (qcom->current_role == USB_ROLE_DEVICE &&
+>> -	    next_role != USB_ROLE_DEVICE)
+>> +	if (qcom->current_role == USB_ROLE_NONE) {
+>> +		if (next_role == USB_ROLE_DEVICE) {
+>> +			dwc3_qcom_vbus_override_enable(qcom, true);
+>> +		} else if (next_role == USB_ROLE_HOST) {
+>> +			qcom->xhci_nb.notifier_call = dwc3_xhci_event_notifier;
+>> +			usb_register_notify(&qcom->xhci_nb);
+>> +		}
+>> +	} else if (qcom->current_role == USB_ROLE_DEVICE &&
+>> +		   next_role != USB_ROLE_DEVICE) {
+>>   		dwc3_qcom_vbus_override_enable(qcom, false);
+>> -	else if ((qcom->current_role != USB_ROLE_DEVICE) &&
+>> -		 (next_role == USB_ROLE_DEVICE))
+>> -		dwc3_qcom_vbus_override_enable(qcom, true);
+>> +	} else if (qcom->current_role == USB_ROLE_HOST) {
+>> +		if (next_role == USB_ROLE_NONE)
+>> +			usb_unregister_notify(&qcom->xhci_nb);
+>> +		else if (next_role == USB_ROLE_DEVICE)
+>> +			dwc3_qcom_vbus_override_enable(qcom, true);
+> 
+> We don't unregister the notifier when switching from host to device?
+> 
+
+ACK. My bad, missed it.
+
+Thanks for the review.
 
 Regards,
 Krishna,
