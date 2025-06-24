@@ -1,138 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-62165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DD75AE5D18
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 08:48:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 04A77AE5C80
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 08:06:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8A58D3A485F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 06:47:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED0753AB0F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 06:06:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADEF324678E;
-	Tue, 24 Jun 2025 06:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBE8E2522A2;
+	Tue, 24 Jun 2025 06:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WsUMJ0Ff"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="A1Bqo/Tq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F8A42065;
-	Tue, 24 Jun 2025 06:48:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3502512EE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 06:05:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750747692; cv=none; b=nonDOokRdXjcZwuoZ41CriJYceMmz0xhESYWSOYv1SAHTt0f5EFrmnMRtRlQjtp7XQvWzl45bGL5Z9e9lWPhvoGCVeoiiJ3paYtGpEIhzK9xdu8wTyF2Y9yImCDllOWAG0rcCLOBR6B9sgZ1ifo34xAQ5VlMYtw2/7JnKtiHPCo=
+	t=1750745126; cv=none; b=GjPRHWXVb2FKuI4kb3ErspOKZpdlbGrGzP0QXHtz/7UyB5rDEh1f4qttyc1pgc4CZ1F8psut4ahZVeblNqjzJdUSfH1ehNj7cCCOTOsbGOsYkLC1BNFpT9irSucQHyFgyLi3I+RPUECz8+xZ4wjW9iRdZ0yUdtClCSsMdB251T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750747692; c=relaxed/simple;
-	bh=/RLz7ZWKKduxKsdrG3WYD/VRMrtgaduZg/mTx88WVlo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=GCGf1A9Jasx6FSV38QJkbnt/15Z76fDY0cFX42NnM0uJ/e4QaXm7+5SnNpAVpfpzeChZSkEEt9FpdZRwEe3NZnIU8+KkqMeEyIbAFxt/RRmbD5mTkTKgpLs4f2sDvlf9B2QdjMNYG4h4XfsyVxBpj3EMX4oBkd1oQ6u6Q2ki/fA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WsUMJ0Ff; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55NLBvhq015282;
-	Tue, 24 Jun 2025 06:00:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JOcx2mcdCS/K82vc/hHLsVo2PCuKIVAjHC3ol4pxKUE=; b=WsUMJ0Ffm/l44UFZ
-	6Tcbcj8GcAxFhXPsfg5bkyTjAnLsnm2M9BYTE3JAC7cfpXV7O7sxENw7k78BVLCa
-	3mAGVxvIW4K646KTRJT18WkJ1r1HMnDCpUdlTBrr5cMojzjTJ1sxVuANUAh/3xyt
-	eQaQWaDXjV/ny0QTKyn4cebe7Zmw5asCSQTdeDeIZAiM6MLjInmhWAs+xpZdl7AY
-	cZ9PO5LR3D1saR9bslo47MYaP/nP+gsfJH4cwW7Qf5c1ti01gtQ+2dVFRehswCN3
-	JcWpCf0bvVM9YdOGauKSQwsTG7l0VVsioOAMmw3q4LMtTu2X/lvyGtHSknkFS+39
-	GoXkbQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47evc5m2vv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Jun 2025 06:00:16 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55O60Agx014606
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Jun 2025 06:00:10 GMT
-Received: from [10.239.29.49] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 23 Jun
- 2025 22:59:35 -0700
-Message-ID: <57d65846-66f9-4f77-8f6b-69f8341a5607@quicinc.com>
-Date: Tue, 24 Jun 2025 13:59:33 +0800
+	s=arc-20240116; t=1750745126; c=relaxed/simple;
+	bh=NXbdrziIeuB5pcaSxjAzniV7Y1VF/HCxTAevsWleWaU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=h5qgd5KoGrafRKQ6aQgYwKPYadX838TWQd24zkfpbmB0i8Epqexbmv7412FfByI7+KzzWmZKAKTGJSAzMWMkwWeRjvZ8iO+B35SQRH+Ui3PxShOsil9Gw+p4gV0hgx+NQQtWgOtSmVXnbJIr/YryYHJRvzRE1YeYf3Wg34n/p/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=A1Bqo/Tq; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55NGeAf8021706
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 06:05:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:in-reply-to:message-id
+	:mime-version:references:subject:to; s=qcppdkim1; bh=pon7MrhUMFa
+	eGhGyVgauqCCEFXCkk5I04yNnyLGhKTc=; b=A1Bqo/Tqq9UBD9AlarPJzaoD2Ne
+	KU/qTD72PJzjaINh1EPSAlkXyd0OF+rUqA3Sw8/2qHpbVOuz78ZjNobRnXR5RtMc
+	bJ0v/Jb4NaJ2jLzCM4ixTLyFe3E8XyRM6Wje0b5U83B6hJSERDt6xRdwRTVY6yTB
+	C3Ip8CgEw3NNaVd+1Cd/GzVreZdFFK1Oj2PPbvIOrfasK9WuBY7GGVc1votFZj4E
+	nyYaPI7BPSrRSGYkTzb5ITseMz4WL2520mB/bkntpfEu+icGMAMBk3dZ7qkrPq4R
+	p+GBsiI6h60gG6QVfFAEDZMZUxRsuf1vi9UqeW3fBJSy4vDJ06xchJEwATA==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f2rpu5r1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 06:05:08 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-235e7550f7bso463725ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jun 2025 23:05:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750745107; x=1751349907;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pon7MrhUMFaeGhGyVgauqCCEFXCkk5I04yNnyLGhKTc=;
+        b=f34x7I3ip59kgswGNhne6z5aLzt6Ifb6oNGZL6XPhmKfga1tqL4mvHx6E3t6BzCN7D
+         CON7mNbK8QKXE/Up2/Hc/y+m/zmrg1lKv4li0R0WaiOCZ7OcmowjHqeKHnbvL5+mqF/4
+         DEZysbQJkqyY94bwzvaDoSzAW6ddyI6cU0at9bjJiFily2M6lYS0XA3H6mOM3WoNHeWm
+         ao+KgqFPHJvPwIHRDK8iLRzNHHySUwE2JfZ4dIRSibCh7B5BVNf9QGf4uwQFHjcVUYMU
+         MT3yntzSFJGSvEYkZ/Qu4byQ9OzTch6/87zprKZfP+tRE8pmz6OxuXMlaGOrFTgujJCf
+         kJsw==
+X-Forwarded-Encrypted: i=1; AJvYcCVACDcAh4+cgovaxKYkzSkdFfGVIGOeScqnu70Du3D/4DKzqeWMgJd37keBBuKT6Y0vOD+dAGpZaK7ivC4m@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTLVLMX7GdEMdvA9hP00v1YhTMDEPwH8j+ftfJCBn49roZzkS7
+	aR+3YffA+fZz3CuYF66vDKKQLwZPrS9jQmh+32HewJWqbmtf3d4JnxCHfcXtvK/clnAZ2mNHqXz
+	y9ZwKNdvY5dnMkxRVYQxGBwhC0l9tpMQ/A6HxxKN/Q/PATttOhCQ4zs3pxvF8dMh0RL2I
+X-Gm-Gg: ASbGncvEvQOyCww85S4j2mMz+/1Yp4tVG0TvUlqUuGdz2NM3SMHxmKQAAjsLoOpqM71
+	myVEHB2Q6sZEX3G0yGmEz/vCCDMxEp5pnU8pczmBB1qY+dopatbN7EIvh1e530skB4f9yzfJWgS
+	dR1BpJjzMOqwDj+5w4GFJA8bxmsSa3A4mtHfNPoFGQf2OuZWC/1b9pZJvgo6MVpMuLCSaImOULh
+	fXojj6pxnx3Zb9koDmXcwKNZm0yU0AmRs9lc6YZatmqw5fHRk66mb0jtdoVkCDcTX5o8sEXuqAm
+	QYVJS92W9vbAcpiBtEoZaw6/6CsCpl0VmyovKuGKNyVtVXW5OfDpcrlafDonDIU4AU3EhPFE37y
+	eUQ==
+X-Received: by 2002:a17:902:da8c:b0:234:986c:66f9 with SMTP id d9443c01a7336-237d983d37fmr250600105ad.22.1750745106924;
+        Mon, 23 Jun 2025 23:05:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEyxi/2L5RpxT7jQrCkp0XQD4t5nbonOAsYnD3NIf9AfeQ4K63zfMYh1t30n1bwNRgtIh/QhQ==
+X-Received: by 2002:a17:902:da8c:b0:234:986c:66f9 with SMTP id d9443c01a7336-237d983d37fmr250599855ad.22.1750745106562;
+        Mon, 23 Jun 2025 23:05:06 -0700 (PDT)
+Received: from jiegan.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d83937b1sm101371455ad.52.2025.06.23.23.05.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jun 2025 23:05:05 -0700 (PDT)
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Tingwei Zhang <quic_tingweiz@quicinc.com>, coresight@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        jie.gan@oss.qualcomm.com
+Subject: [PATCH v3 05/10] coresight: tmc: add etr_buf_list to store allocated etr_buf
+Date: Tue, 24 Jun 2025 14:04:33 +0800
+Message-Id: <20250624060438.7469-6-jie.gan@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250624060438.7469-1-jie.gan@oss.qualcomm.com>
+References: <20250624060438.7469-1-jie.gan@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] misc: fastrpc: add support for gdsp remoteproc
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: <srini@kernel.org>, <amahesh@qti.qualcomm.com>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <arnd@arndb.de>,
-        <gregkh@linuxfoundation.org>, <quic_kuiw@quicinc.com>,
-        <ekansh.gupta@oss.qualcomm.com>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250622133820.18369-1-quic_lxu5@quicinc.com>
- <20250622133820.18369-4-quic_lxu5@quicinc.com>
- <loeqgkxkep54mrxwchvypqr3omogwpdukgvfc2dwuhp3ilxkhr@vtgxbgdoy2gu>
-Content-Language: en-US
-From: Ling Xu <quic_lxu5@quicinc.com>
-In-Reply-To: <loeqgkxkep54mrxwchvypqr3omogwpdukgvfc2dwuhp3ilxkhr@vtgxbgdoy2gu>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CtIR83-zCYzwwaRvx0MJPr9Wz_xy6oe5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDA1MCBTYWx0ZWRfX6+1OKacwsGWs
- tnlIDrdE9szb8u78poqc/+U3EHn8j5Cup4jfpWqFz5H7KYqWUzL7i9ypyTlSdMlMWSggFTEZbb8
- mXUr+weHc3MYJhA3dxehjS3LEWz6wWuwHGoKW4Z4TneAd33EpeFaCwBZPLwXYR4DX6h+AJR/qF+
- E536b1SIdIaxdb7ut7EPCz5MGzfdOYfazli07d6sQBQhSH6GcAQidpVdeTZnWbF27hdGPQjzm2A
- Qb8JIGHk3ooVVHJe+aZDmTWLJQInCF7KXxjNBqxFaZQXFWpdfdQiFAYWRiwsIjk62N76jUvoCoW
- PBhcGmT06h8W8usgw3hrs1nqeH949rObgcpgP6DdDCYI3ng5mHRu1ySEfWXwwxvcuf2ZZBryJhN
- dL3MD3Bn8m70cZwTG4I7HOnVSF5dAA005RJtDzdUYlJIUJFe3oidONB+vIqEZcMFmIov41Fl
-X-Authority-Analysis: v=2.4 cv=caHSrmDM c=1 sm=1 tr=0 ts=685a3ef0 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8
- a=d1jN1tAPt5WcxSkl4i4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: CtIR83-zCYzwwaRvx0MJPr9Wz_xy6oe5
+X-Authority-Analysis: v=2.4 cv=NdDm13D4 c=1 sm=1 tr=0 ts=685a4023 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=ORm1qb0EFYpRwVLUulEA:9
+ a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDA1MSBTYWx0ZWRfX1GPaOSqRKmxU
+ lEZI5ZDPDBcJEyKukchoZOS1yj53TPvdjBr44kJpv4muBdRikg3vDA4gyqaLZMd2sa2sk8wBku5
+ oQJPOmN4rzcWLrj5eu5mjOswO1ShBLZHWagZon0EBsOQyfeuDAiH30QeNR6faggwEC9PVKtv+nQ
+ bZ9TnTKumQtm/zl4gdrdhyLhJ8l4Zsc7XmAIEPrNrdapB6bPMdVbEc4iEqlCMgTAxWjktkVuirZ
+ xdyR6x27Yrvb95TtvwX5o1LYMeeFKGjYEAvIMMKh8vci9LSnk0jTLZryMfUZ5ydV4aiSfR0E+dL
+ ooDWQPS7cNmp0Cy7YiXX3baLlQ/SXJv4PJO839jGV7+RpYF+D6Fh8rmzrUgGFD5WOabDUxJuXq6
+ 9lyaduHM1AB/EQ/Ksd/5M+Mjqoa81SU+GSrlBdYXu1wJJarXbS6ml+7nHxvC9Y7wv0T3E2fj
+X-Proofpoint-ORIG-GUID: URNg9tEMNm1LngfYy5s-_CLzJvvF_QoB
+X-Proofpoint-GUID: URNg9tEMNm1LngfYy5s-_CLzJvvF_QoB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-06-24_02,2025-06-23_07,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 mlxlogscore=999 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 adultscore=0 mlxscore=0 spamscore=0
- malwarescore=0 phishscore=0 clxscore=1015 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506240050
+ bulkscore=0 mlxscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ phishscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=999 adultscore=0
+ clxscore=1015 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506240051
 
-在 6/24/2025 10:37 AM, Dmitry Baryshkov 写道:
-> On Sun, Jun 22, 2025 at 07:08:20PM +0530, Ling Xu wrote:
->> The fastrpc driver has support for 5 types of remoteprocs. There are
->> some products which support GDSP remoteprocs. Add changes to support
->> GDSP remoteprocs.
-> 
-> Please don't mix code refactoring with adding new features. Split this
-> patch accordingly.
-> 
+Add a list to store allocated etr_buf.
 
-Okay, thanks for review.
-I will update in next version.
->>
->> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
->> ---
->>  drivers/misc/fastrpc.c      | 57 ++++++++++++++++---------------------
->>  include/uapi/misc/fastrpc.h | 11 +++++--
->>  2 files changed, 33 insertions(+), 35 deletions(-)
->>
-> 
+The byte-cntr functionality requires two etr_buf to receive trace data.
+The active etr_buf collects the trace data from source device, while the
+byte-cntr reading function accesses the deactivated etr_buf after is
+has been filled and synced, transferring data to the userspace.
 
+Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+---
+ .../hwtracing/coresight/coresight-tmc-core.c  |  1 +
+ drivers/hwtracing/coresight/coresight-tmc.h   | 19 +++++++++++++++++++
+ 2 files changed, 20 insertions(+)
+
+diff --git a/drivers/hwtracing/coresight/coresight-tmc-core.c b/drivers/hwtracing/coresight/coresight-tmc-core.c
+index 88afb16bb6be..8531bac79211 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc-core.c
++++ b/drivers/hwtracing/coresight/coresight-tmc-core.c
+@@ -840,6 +840,7 @@ static int __tmc_probe(struct device *dev, struct resource *res)
+ 		idr_init(&drvdata->idr);
+ 		mutex_init(&drvdata->idr_mutex);
+ 		dev_list = &etr_devs;
++		INIT_LIST_HEAD(&drvdata->etr_buf_list);
+ 		break;
+ 	case TMC_CONFIG_TYPE_ETF:
+ 		desc.groups = coresight_etf_groups;
+diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
+index 6541a27a018e..f6b05639aeca 100644
+--- a/drivers/hwtracing/coresight/coresight-tmc.h
++++ b/drivers/hwtracing/coresight/coresight-tmc.h
+@@ -208,6 +208,21 @@ struct tmc_resrv_buf {
+ 	s64		len;
+ };
+ 
++/**
++ * @sysfs_buf:	Allocated sysfs_buf.
++ * @is_free:	Indicates whether the buffer is free to choose.
++ * @reading:	Indicates whether the buffer is reading.
++ * @pos:	Position of the buffer.
++ * @node:	Node in etr_buf_list.
++ */
++struct etr_buf_node {
++	struct etr_buf		*sysfs_buf;
++	bool			is_free;
++	bool			reading;
++	loff_t			pos;
++	struct list_head	node;
++};
++
+ /**
+  * struct tmc_drvdata - specifics associated to an TMC component
+  * @pclk:	APB clock if present, otherwise NULL
+@@ -242,6 +257,8 @@ struct tmc_resrv_buf {
+  *		(after crash) by default.
+  * @crash_mdata: Reserved memory for storing tmc crash metadata.
+  *		 Used by ETR/ETF.
++ * @etr_buf_list: List that is used to manage allocated etr_buf.
++ * @reading_node:  Available buffer for byte-cntr reading.
+  */
+ struct tmc_drvdata {
+ 	struct clk		*pclk;
+@@ -271,6 +288,8 @@ struct tmc_drvdata {
+ 	struct etr_buf		*perf_buf;
+ 	struct tmc_resrv_buf	resrv_buf;
+ 	struct tmc_resrv_buf	crash_mdata;
++	struct list_head        etr_buf_list;
++	struct etr_buf_node     *reading_node;
+ };
+ 
+ struct etr_buf_operations {
 -- 
-Thx and BRs,
-Ling Xu
+2.34.1
 
 
