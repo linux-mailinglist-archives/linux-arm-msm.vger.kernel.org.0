@@ -1,201 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-62147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7B6AAE5B39
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 06:15:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78CF1AE5C4E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 08:00:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D8B867B11E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 04:13:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 524A1400A26
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 05:59:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABBA8231842;
-	Tue, 24 Jun 2025 04:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CAAC22CBEC;
+	Tue, 24 Jun 2025 05:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="klJVlien"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d5gSWGCa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827CD226863;
-	Tue, 24 Jun 2025 04:13:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8450E21A435;
+	Tue, 24 Jun 2025 05:59:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750738380; cv=none; b=ZC4vtWB/U4Zhnt7wBOzNaGce7McOHl19p6wQFNTbYc2FquhvYtRQhcn+FCj1HVEZ0ezz0nSfkrGKz1arO68eYLSC+I2ZPXHYEvXC1C9kYzeips6iN42PeUGbj0g30m9xke3YLwrvYWro41QhhVYQRDR6Simnt1Llu8/XCjZ9N0c=
+	t=1750744752; cv=none; b=UYFxUokafDdPDB3qL5inymowVJpqwFavtTGiUsLY3rEfsQQMmbYWKnE/cFV2jifRvX5PHp1ZULcjchmc6iJtxGcCvsy0u1wNLHKFFZ/cwhMSrsgFdv4Uw+Lg4NcNxC8yND46RuJ2CAPT4YOjPJmJeMhoIvTT2F9Ms8CKRAATyHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750738380; c=relaxed/simple;
-	bh=OWKr3iYYfNlyoe4CLe+r8pAGoAlofTVtUNMv1N9HkQA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=UqLx3g4KMYZIuNj4Z0sJ9AST4ITCztuXffdKcQbUj3+V+Psk4CXUiiKNoAR2DqyQnbw6Pr+yboVsMpys3pvEvyby8Oid1wHy4BvanPvRgqpX+FZSM+8xk4rWcL/93naVp3eLfZGCvXPzq7izvxjgix6QcIccX/4TKw6NpS8CNik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=klJVlien; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119F2C4CEE3;
-	Tue, 24 Jun 2025 04:13:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750738380;
-	bh=OWKr3iYYfNlyoe4CLe+r8pAGoAlofTVtUNMv1N9HkQA=;
-	h=From:To:Cc:Subject:Date:From;
-	b=klJVlienSf9rrV0gX4Q7uf35Z03+WJxGeGgZJRy8gz7iIjvw5mWWRQrMm8SdFV+V9
-	 q8a/rZ3S5YAakuSlUX5kT2RNTrnEeaBjGFmzi/DT8p5eVOjSxi+Yfin+KsUGgX29S4
-	 ittDRl01jV6uwwnsbvPeN5sOitNO83T2f5i+5pmifvEdkv+1eNuEqByvlAaQk1hFHr
-	 A+4Gmf/NPJQo71+FJj30FRK3wWSipnRMDqOEkQZDdT3CVPOlGo0hkoRwsGTXD4KoMD
-	 cMbsQSFjTQDO2hal+d3dyGQhifDXrW58D4L5ER47oVcz6yHK7WSe2d2ezciAV8wwk/
-	 x/vOBQQtrBEFg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	lumag@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.15 01/11] drm/msm: Fix a fence leak in submit error path
-Date: Tue, 24 Jun 2025 00:12:49 -0400
-Message-Id: <20250624041259.84940-1-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
+	s=arc-20240116; t=1750744752; c=relaxed/simple;
+	bh=tQ+ZxhLq+WnBTT5fj+ECFv0Kj6JPuQkZSgQX+COKdvY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=VBWehgmIYuWARWq9LAKLScc+7LxrWI+Y9yXOmQJaFZL3T+0yXzvP7gTnsDc6jcg5o2ulQ9M5z3DkAZJRjm4b87i8WKdDy9k1LVcOO7kp9PxPl5oiCM2lykRh29N9IiIhg1y8y/+BwES7mnbzjV8thOVBS4Lscs2Vh+LSIwRZyaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d5gSWGCa; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55NKl361014571;
+	Tue, 24 Jun 2025 05:59:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	avD/4RMjlpnVZvRXzcBZ82PYWUxXl/6xOUZ3YTEAuWc=; b=d5gSWGCan3HX8qqd
+	xNgxwr19iahsV9TN9pUK9KlQMCZiB7YCVTdZhGm/BbO6ou2Ts7pWcRbzd/lOnidT
+	R0RRjOHa3bUymLjLHX3grel0K20zIC1U/EtxoMpjiuHtcvQib71ArXTy1GjSoJwH
+	KpvA9mYijBs89+fwt2dlkzwoFXvBry74UhUijjPrFohKe80AQ4GnuSACze1Mw447
+	T94iNm3lhHnC4A7/hZAcuuci91+QYX8yh6PmJqs8ADpLWHnX+N9xVeBqOduJa1mc
+	jMH5E92Sr25EAMRUzFnnTGwBSxWJjh8LCujbOjMtPJceW0ADc/N0Cmpx/HNrsVQm
+	cPSG7g==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f2rpu55f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Jun 2025 05:59:03 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55O5x2NR025411
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Jun 2025 05:59:02 GMT
+Received: from [10.239.29.49] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 23 Jun
+ 2025 22:58:53 -0700
+Message-ID: <9bbd768b-6ee0-4c9a-9835-3a2cda19373b@quicinc.com>
+Date: Tue, 24 Jun 2025 13:58:47 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.15.185
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] misc: fastrpc: add support for gdsp remoteproc
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <srini@kernel.org>,
+        <amahesh@qti.qualcomm.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <arnd@arndb.de>,
+        <gregkh@linuxfoundation.org>
+CC: <quic_kuiw@quicinc.com>, <ekansh.gupta@oss.qualcomm.com>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20250622133820.18369-1-quic_lxu5@quicinc.com>
+ <20250622133820.18369-4-quic_lxu5@quicinc.com>
+ <09bf24d7-2998-4a15-9b9e-ba476fc08a90@oss.qualcomm.com>
+Content-Language: en-US
+From: Ling Xu <quic_lxu5@quicinc.com>
+In-Reply-To: <09bf24d7-2998-4a15-9b9e-ba476fc08a90@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=NdDm13D4 c=1 sm=1 tr=0 ts=685a3ea7 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10
+ a=7Hdw3R14QpBl625ZrCYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDA0OSBTYWx0ZWRfX1aRlqa5CSTyu
+ e3+qHESNjSlsPI3F/JSN0iYBLaJlNzI/RzRblT8vUDbfDjS0quqab3wWMKIvguxSy3qNYg9+wlI
+ YxgrUTbqUytrm14d9HqeFj0m2xpwzRjVY9UW3ycdEhfV3ZWHVrsGRfa6VQ9aqopAYTgu/BewCmI
+ W3MEQDdBQ2o6+Trvdy/c/WivKAKeMm4yqZCkguywYdCk2EcYNuYl0WUljD4vvgXQdtjwAe+XY5H
+ Ir1Ov/011uXYbPvynT/16C/9xat3s58WaX5cZ3LD/baI3mfAzFjONjXWlO04Mrh0vjjMU/X2Zh/
+ hxoa5BZmfqljciixmdYuJuSaG1WPohtFUKo3Tw30TWhcbN76yMS/D46tlhVA8vailZ2FZjJ4KFP
+ D5xDStm7X6y7pwzg8PUIRGWSKre0aVZ6UwiohCcmIJLYgwx1Us2D0JVnq0wmPnWPwxB2dlIk
+X-Proofpoint-ORIG-GUID: kQYKwsbK4sJy37Gmve63qbzXwNufPS-9
+X-Proofpoint-GUID: kQYKwsbK4sJy37Gmve63qbzXwNufPS-9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-24_02,2025-06-23_07,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 mlxscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ phishscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=999 adultscore=0
+ clxscore=1015 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506240049
 
-From: Rob Clark <robdclark@chromium.org>
+在 6/23/2025 6:28 PM, Konrad Dybcio 写道:
+> On 6/22/25 3:38 PM, Ling Xu wrote:
+>> The fastrpc driver has support for 5 types of remoteprocs. There are
+>> some products which support GDSP remoteprocs. Add changes to support
+>> GDSP remoteprocs.
+> 
+> Commit messages saying "add changes to support xyz" often indicate
+> the problem or the non-obvious solution is not properly described
+> (which is the case here as well)
+> 
+> [...]
+> 
 
-[ Upstream commit 5d319f75ccf7f0927425a7545aa1a22b3eedc189 ]
+Okay, I will change to
+"Add related domain IDS to support GDSP remoteprocs."
 
-In error paths, we could unref the submit without calling
-drm_sched_entity_push_job(), so msm_job_free() will never get
-called.  Since drm_sched_job_cleanup() will NULL out the
-s_fence, we can use that to detect this case.
+>> +static int fastrpc_get_domain_id(const char *domain)
+>> +{
+>> +	if (strncmp(domain, "adsp", 4) == 0)
+> 
+> if (!strncmp(...)) is the common syntax, although it's obviously
+> not functionally different
+> 
+>> +		return ADSP_DOMAIN_ID;
+>> +	else if (strncmp(domain, "cdsp", 4) == 0)
+>> +		return CDSP_DOMAIN_ID;
+>> +	else if (strncmp(domain, "mdsp", 4) == 0)
+>> +		return MDSP_DOMAIN_ID;
+>> +	else if (strncmp(domain, "sdsp", 4) == 0)
+>> +		return SDSP_DOMAIN_ID;
+>> +	else if (strncmp(domain, "gdsp", 4) == 0)
+>> +		return GDSP_DOMAIN_ID;
+> 
+> FWIW, other places call it G*P*DSP
+> 
+In fastrpc, we call it GDSP to match dsp side.
+because in device,the related path for gdsp images are gdsp and gdsp0.
+> [...]
+> 
+>> --- a/include/uapi/misc/fastrpc.h
+>> +++ b/include/uapi/misc/fastrpc.h
+>> @@ -18,6 +18,14 @@
+>>  #define FASTRPC_IOCTL_MEM_UNMAP		_IOWR('R', 11, struct fastrpc_mem_unmap)
+>>  #define FASTRPC_IOCTL_GET_DSP_INFO	_IOWR('R', 13, struct fastrpc_ioctl_capability)
+>>  
+>> +#define ADSP_DOMAIN_ID (0)
+>> +#define MDSP_DOMAIN_ID (1)
+>> +#define SDSP_DOMAIN_ID (2)
+>> +#define CDSP_DOMAIN_ID (3)
+>> +#define GDSP_DOMAIN_ID (4)
+>> +
+>> +#define FASTRPC_DOMAIN_MAX    4
+> 
+> What are these used for now?
+> 
+To get proper domain IDs for fastrpc_rpmsg_probe etc.
+>>  /**
+>>   * enum fastrpc_map_flags - control flags for mapping memory on DSP user process
+>>   * @FASTRPC_MAP_STATIC: Map memory pages with RW- permission and CACHE WRITEBACK.
+>> @@ -134,10 +142,9 @@ struct fastrpc_mem_unmap {
+>>  };
+>>  
+>>  struct fastrpc_ioctl_capability {
+>> -	__u32 domain;
+>>  	__u32 attribute_id;
+>>  	__u32 capability;   /* dsp capability */
+>> -	__u32 reserved[4];
+>> +	__u32 reserved[5];
+> 
+> This is an ABI break, as the data within structs is well, structured
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Patchwork: https://patchwork.freedesktop.org/patch/653584/
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
+this is suggested by Dmitry, I will have a discussion internally.
+> 
+> Konrad
 
-Let me analyze based on what I know from the commit:
-
-**YES**
-
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
-
-## Analysis of the Fence Leak Fix
-
-### 1. **Bug Description**
-The commit fixes a resource leak in the MSM GPU driver's submit error
-path. When errors occur after `drm_sched_job_arm()` but before
-`drm_sched_entity_push_job()`, the scheduler fence (`s_fence`) is leaked
-because `drm_sched_job_cleanup()` is never called.
-
-### 2. **Code Changes Analysis**
-
-The fix adds this critical code to `__msm_gem_submit_destroy()`:
-
-```c
-/*
- - In error paths, we could unref the submit without calling
- - drm_sched_entity_push_job(), so msm_job_free() will never
- - get called.  Since drm_sched_job_cleanup() will NULL out
- - s_fence, we can use that to detect this case.
- */
-if (submit->base.s_fence)
-    drm_sched_job_cleanup(&submit->base);
-```
-
-This is a defensive check that ensures proper cleanup of scheduler
-resources when the submit is destroyed without going through the normal
-scheduler path.
-
-### 3. **Why This is a Good Backport Candidate**
-
-**a) Fixes a Real Bug:** This addresses a concrete resource leak that
-affects system stability. Each leaked fence consumes memory and other
-kernel resources that are never freed.
-
-**b) Small and Contained:** The fix is minimal - just 9 lines of code
-including comments. It doesn't change any APIs or data structures.
-
-**c) Clear Error Path Fix:** The fix targets a specific error handling
-path without affecting the normal execution flow. When
-`drm_sched_entity_push_job()` is called successfully, `msm_job_free()`
-handles the cleanup as before.
-
-**d) Follows Established Patterns:** The fix uses the same pattern as
-the hw_fence cleanup (checking refcount) that's already in the code,
-making it consistent with existing error handling.
-
-**e) No Architectural Changes:** This is purely a bug fix that plugs a
-resource leak. It doesn't introduce new features or change behavior.
-
-**f) Critical Subsystem:** GPU drivers are important for system
-stability and user experience. Memory leaks in GPU submission paths can
-accumulate quickly under heavy graphics workloads.
-
-### 4. **Comparison with Similar Commits**
-
-Looking at the similar commits provided:
-- The first commit (drm/msm: Fix wait_fence submitqueue leak) with
-  backport status YES also fixes a resource leak in error paths
-- It's similarly small, contained, and fixes a clear bug without
-  architectural changes
-
-### 5. **Risk Assessment**
-
-**Low Risk:**
-- The added check only executes in the destroy path when `s_fence` is
-  non-NULL
-- If `drm_sched_entity_push_job()` was called, `msm_job_free()` will
-  have already cleaned up `s_fence`, making it NULL
-- The fix is defensive and won't cause issues even if called
-  unnecessarily
-
-### 6. **Stable Criteria Met**
-
-According to stable tree rules:
-- ✓ Fixes a bug (fence resource leak)
-- ✓ Minimal change (9 lines)
-- ✓ Obviously correct (clear logic with explanatory comment)
-- ✓ Already tested (has Patchwork link indicating review)
-- ✓ No new features
-- ✓ Fixes a real issue users could encounter
-
-The fence leak could accumulate over time, especially in scenarios with
-GPU submission failures, leading to memory exhaustion and system
-instability. This makes it an important fix for stable kernels.
-
- drivers/gpu/drm/msm/msm_gem_submit.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index fc2fb1019ea1c..2ffb2ca88ffe1 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -76,6 +76,15 @@ void __msm_gem_submit_destroy(struct kref *kref)
- 	struct dma_fence *fence;
- 	unsigned i;
- 
-+	/*
-+	 * In error paths, we could unref the submit without calling
-+	 * drm_sched_entity_push_job(), so msm_job_free() will never
-+	 * get called.  Since drm_sched_job_cleanup() will NULL out
-+	 * s_fence, we can use that to detect this case.
-+	 */
-+	if (submit->base.s_fence)
-+		drm_sched_job_cleanup(&submit->base);
-+
- 	if (submit->fence_id) {
- 		mutex_lock(&submit->queue->lock);
- 		idr_remove(&submit->queue->fence_idr, submit->fence_id);
 -- 
-2.39.5
+Thx and BRs,
+Ling Xu
 
 
