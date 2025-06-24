@@ -1,217 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-62169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83D49AE5D2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 08:51:45 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4B8CAE5F6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 10:33:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 860AF3AF0C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 06:51:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2515B7A6845
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 08:31:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D79824678F;
-	Tue, 24 Jun 2025 06:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0113725D1F4;
+	Tue, 24 Jun 2025 08:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LIJviuAR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dzj9ABnR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E5B2472B0;
-	Tue, 24 Jun 2025 06:51:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EAB125C82C;
+	Tue, 24 Jun 2025 08:33:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750747902; cv=none; b=G9yyJqz7Njq8vuYs047KjxlXciXQmtFtBk9b2fzk1VWIMu7EnN05zuT6Gh2aBvd80kk5P7vTWQDcj8Tcy4R6PySv/QaodHnZpy2ZSuw2AOasWYjjj9lcjLHUCGiTpWdG3s/vyzc+p6GHqQbabbWPJuZWNJYffMpd5gHyf9XHgRw=
+	t=1750753986; cv=none; b=j8siAq/ixnRmEt81XYO7I/xwm7Q5/oxhDFlJdxgHuMi8UZK4CkkQPbOASXQ+v3uSS66YyHeQEFhz+/3zqfEi19lYGpKZo9ztaf8OubCz6KKwULaPgyTsataP/3cA43ZJhm13j8b6vgfO7+66Ng3HiBIGmSl6Jd6aqL+tSF1Z+7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750747902; c=relaxed/simple;
-	bh=5aKCggvOJxLCD7EswMpRU6RabM7vBq0MzzQon9YpWZU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=cXg+imICv8ERX8zhtRWDP16Q7M3Uwg0EUkQTw2GxMvuJZAjuitQ/7zbcwoMahwpcId5uATRrbI8Yn4kpcA0QBQlN4GGSQPdJFadQ0vSCP/PSFIEhets5SQ3lCfEEXvx/YBlZjRxUZUSn6N5OCIV0y0lwX/aqlopuAEOJ1KwhfWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LIJviuAR; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55NKmVPo009499;
-	Tue, 24 Jun 2025 06:51:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=DHmFpKA2pR57THdjEkkqRC8I8y4RsOFi7aJ
-	IAlQWDsA=; b=LIJviuARTO+i/NvtjxyzQ0ESCv9vftIEY7KPGG0GF8V/XXh5dOA
-	gkZHqtpnGBO1fEJDo8Ua+kXEqWDO+p73QkJDxMimi5w5DvZVMIHTU0CJdFM//DSt
-	fC6wLhd7b7uK9Y6fyPMA9TZJ9AxVGqtxySMDnr5Ki68NSo7vr43Jf+OrA/1KqOKv
-	M7FTIv8e2Ymr4GHJ8Pc/kKpLxEUWT9dT3ryUeNjYFUIDc9G8T5HgRfSlW41IkoPX
-	G2f8AlqUzi5+P+8+tkZwJJtuDd09MDfcQnYYyeMuZCvw29Nr3/gltNPSeGvOfIls
-	NH6UmhUFXzQin5FCA/Vw29NHdZlEcrdecVw==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f7ttt9d8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Jun 2025 06:51:34 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 55O6pVH8010679;
-	Tue, 24 Jun 2025 06:51:31 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 47dntm3rfn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Jun 2025 06:51:31 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55O6pUMI010672;
-	Tue, 24 Jun 2025 06:51:30 GMT
-Received: from cse-cd02-lnx.ap.qualcomm.com (cse-cd02-lnx.qualcomm.com [10.64.75.246])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 55O6pUiB010527
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Jun 2025 06:51:30 +0000
-Received: by cse-cd02-lnx.ap.qualcomm.com (Postfix, from userid 4571896)
-	id D405337A5; Tue, 24 Jun 2025 14:51:28 +0800 (CST)
-From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
-To: andersson@kernel.org, linus.walleij@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc: kernel@oss.qualcomm.com, quic_tingweiz@quicinc.com,
-        quic_yuanjiey@quicinc.com
-Subject: [PATCH] pinctrl: qcom: add multi TLMM region option parameter
-Date: Tue, 24 Jun 2025 14:51:21 +0800
-Message-Id: <20250624065121.4000885-1-quic_yuanjiey@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1750753986; c=relaxed/simple;
+	bh=6d9ilZKlt54Cy4GygVeA1BUh6llNTH6aW8oKt2FPRxk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WlCoE+qL61Rz3mMqeSnn7z7x5dJnMczyy09QRo2z84iZYHDtxr6/lMnrDCS5RMkFU3aa+z8mEDJX01pMnqA4DMIMSIkyhD8ebj2TOgZabgkxBV1vi9JFDWhz/Tx5d9AnKrNVPFCocLgSaoL1wg9MJCu/xhrR10Ih6EtKRz8SA9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dzj9ABnR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C469CC4CEEF;
+	Tue, 24 Jun 2025 08:33:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750753985;
+	bh=6d9ilZKlt54Cy4GygVeA1BUh6llNTH6aW8oKt2FPRxk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Dzj9ABnRS80dywSl2xcQvuz60BjS/EzVRE/7sQoofkNYQ7RofCuvsObKAXpaQaHhY
+	 zXC0Z9eZQx9FnJKQkn5I3NuTOAOoCzPH53F+3rfQps4BK8S9K3JinrQOaMWzdUPfEX
+	 k5fJq+MzTJDDQZEzILWEIpIPCwhhSXqC1RWwgpyeQoBLjzzKySewQVrL5o6fKCS7DZ
+	 M5XqquZLWD0jRbVTRuQhkN6xqIGL8HazkCLVHd0jg0WbeGDbdDRajTMzQktlQ5yuwM
+	 RbpXXibS/6NldZc7u1AAeN0S3EseToLZxoWwhYt22I98mvRMDa3ZbOp/W7O3DVuTQ3
+	 jT0iISOUpT7eA==
+Message-ID: <ea0d8afb-4d64-4fc5-996b-452420e750da@kernel.org>
+Date: Tue, 24 Jun 2025 10:33:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=QINoRhLL c=1 sm=1 tr=0 ts=685a4af7 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8 a=ZPOA_RKLrMsrJ4bpLEgA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: VP7j933ZV6sTAfVedLceMJdoGqnfoDxJ
-X-Proofpoint-GUID: VP7j933ZV6sTAfVedLceMJdoGqnfoDxJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDA1NyBTYWx0ZWRfXwWMWmdvtWvI3
- CrfyPmY0P1e43TQ4fFXtM4EyG13X1C7r27hzFWhcIRNdqqWjTHXvQYohQppMEMHAHOPHAaFY1/M
- UQJnKVrl0D+iBrPwab8gis7Jxbbi2FZJOgnPrv2wq/E1r8C/jF32YxQkSXjT0sbk+iInJdjJXxy
- 133YSEBs19XeBUWZGKd2jK0eq7bu+dvHf9hAZBS3wGuiDIHm7oop63CMkvXqsfQXw86DIBXhPkh
- dnUk42i56pVwDRQufhdb3IxJAu1uYqcLdWVMtSQDSoWTq2Mts8CS3R/IytBx7FYQWrz4AP9vPc2
- iskqAPJk7L++CsdwT04PsMHfIdBqR//4OyZgrf9aE8YK5YvmaGo4HbsDlhBL6Lbw99jEesYqE5J
- ABNrLZxCFjDbbVcKYsrWevnk4XWe/fpQhqh/JSOcb0Iq3KDJzXxRJa2Es724gbY5OsW1b66a
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-24_02,2025-06-23_07,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0 mlxscore=0
- clxscore=1011 mlxlogscore=999 bulkscore=0 suspectscore=0 phishscore=0
- impostorscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506240057
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] dt-bindings: media: qcom,sm8550-iris: add non_pixel
+ and resv_region properties
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250620-video_cb-v1-0-9bcac1c8800c@quicinc.com>
+ <20250620-video_cb-v1-1-9bcac1c8800c@quicinc.com>
+ <a35d3928-8ac6-49ab-8689-16ba69afe197@kernel.org>
+ <2bd17ab5-950c-4260-ae7c-9ba9a6441496@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <2bd17ab5-950c-4260-ae7c-9ba9a6441496@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add support for selecting multiple TLMM regions using the
-tlmm-test tool.
-The current implementation only selects the TLMM Node region
-0, which can lead to incorrect region selection.
+On 20/06/2025 19:27, Konrad Dybcio wrote:
+> On 6/20/25 8:39 AM, Krzysztof Kozlowski wrote:
+>> On 20/06/2025 08:20, Vikash Garodia wrote:
+>>> Existing definition limits the IOVA to an addressable range of 4GiB, and
+>>> even within that range, some of the space is used by IO registers,
+>>> thereby limiting the available IOVA to even lesser. Video hardware is
+>>> designed to emit different stream-ID for pixel and non_pixel buffers,
+>>> thereby introduce a non_pixel sub node to handle non_pixel stream-ID.
+>>>
+>>> With this, both iris and non_pixel device can have IOVA range of 0-4GiB
+>>> individually. Certain video usecases like higher video concurrency needs
+>>> IOVA higher than 4GiB.
+>>>
+>>> Add the "resv_region" property, which defines reserved IOVA regions that
+>>> are *excluded* from addressable range. Video hardware generates
+>>> different stream IDs based on the range of IOVA addresses. Thereby IOVA
+>>> addresses for firmware and data buffers need to be non overlapping. For
+>>> ex. 0x0-0x25800000 address range is reserved for firmware stream-ID,
+>>> while non_pixel (bitstream ) stream-ID can be generated by hardware only
+>>> when bitstream buffers IOVA address is from 0x25800000-0xe0000000.
+>>>
+>>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>>> ---
+>>>  .../bindings/media/qcom,sm8550-iris.yaml           | 35 ++++++++++++++++++++++
+>>>  1 file changed, 35 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+>>> index c79bf2101812d83b99704f38b7348a9f728dff44..a1e83bae3c36f3a4c58b212ef457905e38091b97 100644
+>>> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+>>> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+>>> @@ -65,10 +65,45 @@ properties:
+>>>        - const: core
+>>>  
+>>>    iommus:
+>>> +    minItems: 1
+>>
+>> As discussed in other patchset, this needs clear explanation, so
+>> imperfect patch won't be used in future discussions as argument to take
+>> more of such things.
+>>
+>>>      maxItems: 2
+>>>  
+>>>    dma-coherent: true
+>>>  
+>>> +  resv_region:
+>>
+>> DTS coding style. Anyway, regions go with memory-region bindings. Use that.
+> 
+> On a tangent, FWIW this is a discussion related to this patchset that
+> never got much attention:
+> 
+> https://lore.kernel.org/linux-devicetree/9439182e-3338-4d57-aa02-b621bc9498a3@oss.qualcomm.com/
 
-QCS 615 TLMM Node dts reg:
-	tlmm: pinctrl@3100000 {
-		compatible = "qcom,qcs615-tlmm";
-		reg = <0x0 0x03100000 0x0 0x300000>,
-		      <0x0 0x03500000 0x0 0x300000>,
-		      <0x0 0x03d00000 0x0 0x300000>;
-		reg-names = "east",
-			    "west",
-			    "south";
 
-QCS615 gpio57 is in the south region with an offset of 0x39000,
-and its address is 0x3d39000. However, the default region selection
-is region 0 (east region), resulting in a wrong calculated address
-of 0x3139000.
+There is no patchset above, just email describing a problem. It did not
+get attention maybe because of usual kernel process: show the code, we
+do not have time to comment on every problem or idea.
 
-Add a tlmm option parameter named tlmm_reg_name to select the region.
-If the user does not input the parameter, the default region is 0.
-
-Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
----
- drivers/pinctrl/qcom/tlmm-test.c | 42 +++++++++++++++++++++++++++++++-
- 1 file changed, 41 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/pinctrl/qcom/tlmm-test.c b/drivers/pinctrl/qcom/tlmm-test.c
-index 7b99e89e0f67..b8040c440fe9 100644
---- a/drivers/pinctrl/qcom/tlmm-test.c
-+++ b/drivers/pinctrl/qcom/tlmm-test.c
-@@ -16,6 +16,7 @@
- #include <linux/of_irq.h>
- #include <linux/pinctrl/consumer.h>
- #include <linux/platform_device.h>
-+#include <linux/slab.h>
- 
- /*
-  * This TLMM test module serves the purpose of validating that the TLMM driver
-@@ -38,7 +39,10 @@
- #define TLMM_REG_SIZE		0x1000
- 
- static int tlmm_test_gpio = -1;
-+static char *tlmm_reg_name = "default_region";
-+
- module_param_named(gpio, tlmm_test_gpio, int, 0600);
-+module_param_named(name, tlmm_reg_name, charp, 0600);
- 
- static struct {
- 	void __iomem *base;
-@@ -570,6 +574,42 @@ static const struct of_device_id tlmm_of_match[] = {
- 	{}
- };
- 
-+static int tlmm_reg_base(struct device_node *tlmm, struct resource *res)
-+{
-+	const char **reg_names;
-+	int count;
-+	int ret;
-+
-+	count = of_property_count_strings(tlmm, "reg-names");
-+	if (count <= 0) {
-+		pr_err("failed to find tlmm reg name\n");
-+		return count;
-+	}
-+
-+	reg_names = kcalloc(count, sizeof(char *), GFP_KERNEL);
-+	if (!reg_names)
-+		return -ENOMEM;
-+
-+	ret = of_property_read_string_array(tlmm, "reg-names", reg_names, count);
-+	if (ret != count) {
-+		kfree(reg_names);
-+		return -EINVAL;
-+	}
-+
-+	if (!strcmp(tlmm_reg_name, "default_region")) {
-+		ret = of_address_to_resource(tlmm, 0, res);
-+	} else {
-+		for (int i = 0; i < count; i++) {
-+			if (!strcmp(reg_names[i], tlmm_reg_name))
-+				ret = of_address_to_resource(tlmm, i, res);
-+		}
-+	}
-+
-+	kfree(reg_names);
-+
-+	return ret;
-+}
-+
- static int tlmm_test_init_suite(struct kunit_suite *suite)
- {
- 	struct of_phandle_args args = {};
-@@ -588,7 +628,7 @@ static int tlmm_test_init_suite(struct kunit_suite *suite)
- 		return -EINVAL;
- 	}
- 
--	ret = of_address_to_resource(tlmm, 0, &res);
-+	ret = tlmm_reg_base(tlmm, &res);
- 	if (ret < 0)
- 		return ret;
- 
-
-base-commit: 5d4809e25903ab8e74034c1f23c787fd26d52934
--- 
-2.34.1
-
+Best regards,
+Krzysztof
 
