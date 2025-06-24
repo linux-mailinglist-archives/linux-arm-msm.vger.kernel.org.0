@@ -1,195 +1,301 @@
-Return-Path: <linux-arm-msm+bounces-62163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C4D6AE5D01
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 08:42:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0086BAE5D14
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 08:46:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7379C174FE2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 06:42:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 10F393AE6A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 06:45:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2F60248880;
-	Tue, 24 Jun 2025 06:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20B4824678F;
+	Tue, 24 Jun 2025 06:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="pAdl/dm+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J98Eml5I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BF81231A55;
-	Tue, 24 Jun 2025 06:41:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E945123C8A0;
+	Tue, 24 Jun 2025 06:46:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750747309; cv=none; b=nSpUCczPBINlBaXf0NkMqjSVu4qwW8izA/R0wztTyFigi72da0w9nIDty4yLoVdLTOIiNYcmHE0U/zuchYEnTNcNkBKQEqBQgVPwXJdYrQk4qIIRXYu0Vs095fF6iVB+GXmG+lH0O8YTw74N77wrT6saFqeT3TSuhTJlX0H59Dw=
+	t=1750747571; cv=none; b=XXMAieyIaPOs0WXJG5kPPETEfH5rg7Ny8Ma1SbunDf7jIbfsfvUHCwecTuL5Ei+hzgQF3NWapD1qmrpJwuc4tB2GxUw4jKFmHJ0dRwjepNxel9gZ8nqZJbbQ+1f4OSpDXteG4eSy0pOSqhksrfbz9lbqPjawho13GJJEToY1Dlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750747309; c=relaxed/simple;
-	bh=debyt0q70KDaD16OabEd+m5eg17icr+KI7O3ZE/vcS8=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=tEem357Et74IHzyaGWbdpKgLnKVqew3CuafdO887wkUw9ZTZ5qGi8toOgJdVDEDnsuWzhZkaSvk7banKuOxHp6Jr/wihYrj5olzQFoXea1BCQOBUccow42QKoha41vky80pUT8edQq9PXDgXyq39CJVgA822RWEAcEn3333segQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=pAdl/dm+; arc=none smtp.client-ip=117.135.210.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=debyt0q70KDaD16OabEd+m5eg17icr+KI7O3ZE/vcS8=; b=p
-	Adl/dm+prw/erxILI1MgMxswdp1SZU8e0ACiUv0t/6YxjWkCuoJnQsA5kuEOLb+o
-	UsDop5Hu4f9rbWcXWnj22BCA9n6dhQ427uDA2pD7Umedvq/92hliwsv2VCwonuM7
-	GKDDzaCHkxOvTw7mqHM3+w5DmvAmD8cwDzQhVlPA4o=
-Received: from slark_xiao$163.com ( [112.97.83.125] ) by
- ajax-webmail-wmsvr-40-101 (Coremail) ; Tue, 24 Jun 2025 14:40:55 +0800
- (CST)
-Date: Tue, 24 Jun 2025 14:40:55 +0800 (CST)
-From: "Slark Xiao" <slark_xiao@163.com>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
-Cc: "Manivannan Sadhasivam" <mani@kernel.org>,
-	manivannan.sadhasivam@linaro.org, johan+linaro@kernel.org,
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re:Re: [PATCH v2] bus: mhi: host: pci_generic: Add Foxconn T99W696
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
- Copyright (c) 2002-2025 www.mailtech.cn 163com
-In-Reply-To: <o45vqmp26vu6jjijq5an2s3xtxieyqx37sitpqal2fijnpanxq@2rtmibk5lkqi>
-References: <20250528092232.16111-1-slark_xiao@163.com>
- <4k7426oxhrnfoshkcqwwilq5lqldjovvtrwfownllwxwgudwjo@a3i47vma4lhr>
- <cb7bd34.6056.1978c2466d2.Coremail.slark_xiao@163.com>
- <o45vqmp26vu6jjijq5an2s3xtxieyqx37sitpqal2fijnpanxq@2rtmibk5lkqi>
-X-NTES-SC: AL_Qu2eAvufuEou4ymZYOkfmk8Sg+84W8K3v/0v1YVQOpF8jCvp2i8xXlJTMVrL6cWDLCyHkAiHdRhU18V4Y4RyXIsNaNaAC5yPaSAnnyIHBqIuPg==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1750747571; c=relaxed/simple;
+	bh=UnUzSUJIrXCgCEFB+1HDuw9p/td8y+NxwkpFeusr7pk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=dWn1tHznXoiQCgMYXMLaNgoGmCYeJelK+5FoW2TiGfkLECus356Gc7Q8dCPOKY4ENOVozSsbnyzu83JHfW2A6iTpzPOjZpdwd7jW8ESgKrCq5FKma77wcVjCSfz24aUveXphw/Q0lmHGF4DxnYtw4b+ZRJp1vUdAZepYxOyLR90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J98Eml5I; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 7A05AC4CEE3;
+	Tue, 24 Jun 2025 06:46:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750747569;
+	bh=UnUzSUJIrXCgCEFB+1HDuw9p/td8y+NxwkpFeusr7pk=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=J98Eml5Id7v/XGf/DNWxtddlaoVtMVrYjHP9zrQNJkk3NHg2s+ODYTH8r0vFvTKuk
+	 B6+piG/wObTFR4xsG5xBXcOlmGsnGL9B7SQCV7vLL+MT+43+PMAMT87xrmJHCU89wC
+	 pUzJJMsa9GR+ABQl2BYSCHe2hviq/H473LIaWRelj5ICg53ITd7j5F5F52TALlgRii
+	 yEz+Yg2KwUmEBB8Sgvt4Tx5RwUQiOLlfPcGc1njm2To2VO1ZlDccTmOhYUxjXMrAt9
+	 Bob9a6YVTu5+OYXapdFaheUT0plYLJhbTbc+yTnYKwiN8nESnexkx+++gC/wHEu+vM
+	 AjHqgSLDkHISg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 670DBC7EE2A;
+	Tue, 24 Jun 2025 06:46:09 +0000 (UTC)
+From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
+Date: Tue, 24 Jun 2025 08:46:00 +0200
+Subject: [PATCH v3] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: add
+ Bluetooth support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <19cd7a91.5c49.197a0ab146e.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:ZSgvCgD3_1J3SFpo23wjAA--.35892W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiRxN2ZGhaNO9+-QACsu
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250624-slim7x-bt-v3-1-7ada18058419@oldschoolsolutions.biz>
+X-B4-Tracking: v=1; b=H4sIAKdJWmgC/3XOQQ6CMBCF4auYrq3pVBnAlfcwLoApMkmlpsUGJ
+ dzdwkYXuvxfJl9mEsF4NkEcN5PwJnJg16fYbzei6ar+aiRTaqGVztRBowyWb/ko60EiKQCd6xI
+ IRLq/e9PyuFrnS+qOw+D8c6UjLOsvJYIESVi0JULVFgWenKXQdM7Z4OxjSP+EXc0vsZBRfxgE9
+ c3oxChqqCTMcjTlX2ae5zecCJbX9gAAAA==
+X-Change-ID: 20250426-slim7x-bt-6d01127291d1
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+ Anthony Ruhier <aruhier@mailbox.org>, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1750747567; l=5836;
+ i=jens.glathe@oldschoolsolutions.biz; s=20240919;
+ h=from:subject:message-id;
+ bh=Rfj0lKIgurk3KPnFJFcUYsg9HfPliPrwZ5+zSKU+KJQ=;
+ b=GEGejG5N8AKEh5vdIqdNmTzPUfM/Y8H/QQmm9C/AT36RKJM+PHBqUsaxfJckORGP1jNgeCGml
+ GL1yC7izrMtDZoGxDn6H7dryTqzb/QVw6h8uZaWyMKM7Ypcbpwsxl4A
+X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
+ pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
+X-Endpoint-Received: by B4 Relay for
+ jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
+X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Reply-To: jens.glathe@oldschoolsolutions.biz
 
-CkF0IDIwMjUtMDYtMjQgMTA6NTA6MTEsICJEbWl0cnkgQmFyeXNoa292IiA8ZG1pdHJ5LmJhcnlz
-aGtvdkBvc3MucXVhbGNvbW0uY29tPiB3cm90ZToKPk9uIEZyaSwgSnVuIDIwLCAyMDI1IGF0IDAz
-OjAxOjI1UE0gKzA4MDAsIFNsYXJrIFhpYW8gd3JvdGU6Cj4+IAo+PiAKPj4gQXQgMjAyNS0wNi0x
-NyAxNzozOToxMSwgIk1hbml2YW5uYW4gU2FkaGFzaXZhbSIgPG1hbmlAa2VybmVsLm9yZz4gd3Jv
-dGU6Cj4+ID5PbiBXZWQsIE1heSAyOCwgMjAyNSBhdCAwNToyMjozMlBNICswODAwLCBTbGFyayBY
-aWFvIHdyb3RlOgo+PiA+PiBUOTlXNjk2IGlzIGRlc2lnbmVkIGJhc2VkIG9uIFF1YWxjb21tIFNE
-WDYxIGNoaXAgd2hpY2ggaXMgYSBjb3N0Cj4+ID4+IGRvd24gY2hpcCByZWZlciB0byBwcmV2aW91
-cyBTRFg2Mi9TRFg2NS4gVGhvdWdoIHdlIGhhdmUgYSBzdXBwb3J0Cj4+ID4+IG9uIFNEWDYyL1NE
-WDY1LCB3ZSBjcmVhdGUgYSBuZXcgY2hhbm5lbCBjb25maWcgZm9yIFNEWDYxIHNpbmNlCj4+ID4+
-IHdlIGFkZCBhIE5NRUEgY2hhbm5lbCBzdXBwb3J0IGZyb20gdGhpcyBwcm9kdWN0Lgo+PiA+PiBG
-b3IgbmV3IHByb2R1Y3RzIHdlIGFyZSBhbGxvd2VkIHRvIGN1c3RvbWl6ZSB0aGUgc3ViVklEIGFu
-ZAo+PiA+PiBzdWJQSUQgb25seS4KPj4gPj4gCj4+ID4KPj4gPkNvdWxkIHlvdSBwbGVhc2UgcHVz
-aCB0aGUgZmlybXdhcmUgdG8gbGludXgtZmlybXdhcmU/IEkgZG9uJ3QgZXhwZWN0IHRoZSB1c2Vy
-cwo+PiA+b2YgdGhlIHByb2R1Y3RzIHRvIHVwc3RyZWFtIHRoZSBmaXJtd2FyZSwgYnV0IEkgZG8g
-ZXhwZWN0IHRoZSB2ZW5kb3JzIHRvIGRvIHNvLgo+PiA+Cj4+ID5GWUk6IFFjb20gd2FzIGFibGUg
-dG8gdXBzdHJlYW0gdGhlIGZpcm13YXJlIGZvciBvbmUgb2YgdGhlaXIgbW9kZW1zOgo+PiA+aHR0
-cHM6Ly93ZWIuZ2l0Lmtlcm5lbC5vcmcvcHViL3NjbS9saW51eC9rZXJuZWwvZ2l0L2Zpcm13YXJl
-L2xpbnV4LWZpcm13YXJlLmdpdC9jb21taXQvcWNvbS9xZHUxMDAveGJsX3MubWVsZj9pZD0wMTg0
-MmRhNDVkZjBhOWY4NjIwOThkMTU5N2Y2YWU1Nzc0YjNlNDhhCj4+ID4KPj4gPlNvIHRoZXJlIHNo
-b3VsZCBiZSBubyBsaWNlbnNpbmcgaXNzdWVzLiBHb2luZyBmb3J3YXJkLCBJIHdhbnQgYm90aCBR
-Y29tIGFuZAo+PiA+dmVuZG9ycyB0byB1cHN0cmVhbSB0aGUgZmlybXdhcmUgYmVmb3JlIHRoZSBt
-b2RlbSBzdXBwb3J0IGdldHMgaW4uCj4+ID4KPj4gPi0gTWFuaQo+PiA+Cj4+IEl0IHNob3VsZCBi
-ZSBva2F5LiBCdXQgd2UgYXJlIGZhY2luZyB0aGF0IHdlIGNhbid0IGNvbW1pdCBmaWxlcyB0byBs
-aW51eC1maXJtd2FyZQo+PiBzaW5jZSBDaGluYSB3YXMgYmFubmVkIGZyb20gdGhhdCBjb21tdW5p
-dHkuCj4+IEkgd2lsbCBzaGFyZSB0aGUgZWRsIGZpbGUgdG8geW91IGluIGFub3RoZXIgbWFpbC4K
-Pgo+WW91IGNhbiB1c2UgYjQgV2ViIFJlbGF5IHRvIHNlbmQgcGF0Y2hlcy4gT3IgeW91IGNhbiB1
-c2UgdGhlIGdpdAo+c2VuZC1lbWFpbCB0byBzZW5kIGl0IHRvIHRoZSBsaW51eC1maXJtd2FyZSBN
-TC4gVGhlIGlzc3VlIGlzIHRoYXQKPmxpbnV4LWZpcm13YXJlIG1haW50YWluZXJzIGNvdWxkIG5v
-dCBpZGVudGlmeSB5b3UgYXMgYSB2YWxpZCBzZW5kZXIgb2YKPnRoZSBmaXJtd2FyZS4gRWl0aGVy
-IHVzZSBhIEZveGNvbm4tcmVsYXRlZCBidXNpbmVzcyBlbWFpbCB0byBTaWduLW9mZgo+dGhlIHBh
-dGNoIChhbmQgcHJvYmFibHkgc2VuZCB0aGUgZW1haWwgdGhyb3VnaCBGb3hjb25uIGVtYWlsIGNo
-YW5uZWxzKQo+b3IgZmluZCBzb21lYm9keSBpbiBRdWFsY29tbSB3aG8gY2FuIGFja25vd2xlZGdl
-IHlvdSBhcyBhIHZhbGlkIHNlbmRlcgo+Zm9yIEZveGNvbm4gZmlybXdhcmUuIE90aGVyd2lzZSB5
-b3VyIGVtYWlscyB0byBsaW51eC1maXJtd2FyZSBsb29rIGxpa2UKPmNvbWluZyBmcm9tIHRoZSBy
-YW5kb20gdXNlci4KPgo+PiAKPj4gVGhhbmtzCkl0J3Mgbm90IGVhc3kgdG8gc2V0dXAgdGhlIHNt
-dHAgc3lzdGVtIGZvciBteSBjb21wYW55IGVtYWlsLgpTbyBmb3Iga2VybmVsIHBhdGNoZXMsIEkg
-YWx3YXlzIHVzZSBteSBvd24gMTYzIG1haWwgdG8gY29tbWl0IHBhdGhlcwpsaWtlIHRoaXMuIEJ1
-dCBJIGp1c3QgZm91bmQgdGhpcyBtYWlsIG1heSBub3QgYmUgYWNjZXB0ZWQgYnkgbGludXgtZmly
-bXdhcmUKaW4gZ2l0bGFiLmNvbS4gU28gSSBzd2l0Y2ggbXkgZW1haWwgZnJvbSAxNjMgbWFpbCB0
-byBnbWFpbC4gVGhhdCdzIHdoeQpJIHVzZSAyIGRpZmZlcmVudCBtYWlsIHRvIHNlbmQgcGF0Y2hl
-cy4KQW55d2F5LCBJIGp1c3QgdXNlZCBteSBjb21tcGFueSdzIGVtYWlsIHRvIGRvIGFuIEFDSy4K
-ClRoYW5rcwo+PiA+PiBTaWduZWQtb2ZmLWJ5OiBTbGFyayBYaWFvIDxzbGFya194aWFvQDE2My5j
-b20+Cj4+ID4+IC0tLQo+PiA+PiB2MjogQ29ycmVjdCB0aGUgY2hfY2ZnIGFzIHNkeDYxIGNoYW5u
-ZWxzCj4+ID4+IC0tLQo+PiA+PiAgZHJpdmVycy9idXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMuYyB8
-IDUyICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKwo+PiA+PiAgMSBmaWxlIGNoYW5nZWQs
-IDUyIGluc2VydGlvbnMoKykKPj4gPj4gCj4+ID4+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2J1cy9t
-aGkvaG9zdC9wY2lfZ2VuZXJpYy5jIGIvZHJpdmVycy9idXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMu
-Ywo+PiA+PiBpbmRleCBhNGE2MjQyOWM3ODQuLmE5MGFiMzFjNDZhOSAxMDA2NDQKPj4gPj4gLS0t
-IGEvZHJpdmVycy9idXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMuYwo+PiA+PiArKysgYi9kcml2ZXJz
-L2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5jCj4+ID4+IEBAIC00OTAsNiArNDkwLDIzIEBAIHN0
-YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX2NoYW5uZWxfY29uZmlnIG1oaV9mb3hjb25uX3NkeDU1X2No
-YW5uZWxzW10gPSB7Cj4+ID4+ICAJTUhJX0NIQU5ORUxfQ09ORklHX0hXX0RMKDEwMSwgIklQX0hX
-MF9NQklNIiwgMTI4LCAzKSwKPj4gPj4gIH07Cj4+ID4+ICAKPj4gPj4gK3N0YXRpYyBjb25zdCBz
-dHJ1Y3QgbWhpX2NoYW5uZWxfY29uZmlnIG1oaV9mb3hjb25uX3NkeDYxX2NoYW5uZWxzW10gPSB7
-Cj4+ID4+ICsJTUhJX0NIQU5ORUxfQ09ORklHX1VMKDAsICJMT09QQkFDSyIsIDMyLCAwKSwKPj4g
-Pj4gKwlNSElfQ0hBTk5FTF9DT05GSUdfREwoMSwgIkxPT1BCQUNLIiwgMzIsIDApLAo+PiA+PiAr
-CU1ISV9DSEFOTkVMX0NPTkZJR19VTCg0LCAiRElBRyIsIDMyLCAxKSwKPj4gPj4gKwlNSElfQ0hB
-Tk5FTF9DT05GSUdfREwoNSwgIkRJQUciLCAzMiwgMSksCj4+ID4+ICsJTUhJX0NIQU5ORUxfQ09O
-RklHX1VMKDEyLCAiTUJJTSIsIDMyLCAwKSwKPj4gPj4gKwlNSElfQ0hBTk5FTF9DT05GSUdfREwo
-MTMsICJNQklNIiwgMzIsIDApLAo+PiA+PiArCU1ISV9DSEFOTkVMX0NPTkZJR19VTCgzMiwgIkRV
-TiIsIDMyLCAwKSwKPj4gPj4gKwlNSElfQ0hBTk5FTF9DT05GSUdfREwoMzMsICJEVU4iLCAzMiwg
-MCksCj4+ID4+ICsJTUhJX0NIQU5ORUxfQ09ORklHX1VMX0ZQKDM0LCAiRklSRUhPU0UiLCAzMiwg
-MCksCj4+ID4+ICsJTUhJX0NIQU5ORUxfQ09ORklHX0RMX0ZQKDM1LCAiRklSRUhPU0UiLCAzMiwg
-MCksCj4+ID4+ICsJTUhJX0NIQU5ORUxfQ09ORklHX1VMKDUwLCAiTk1FQSIsIDMyLCAwKSwKPj4g
-Pj4gKwlNSElfQ0hBTk5FTF9DT05GSUdfREwoNTEsICJOTUVBIiwgMzIsIDApLAo+PiA+PiArCU1I
-SV9DSEFOTkVMX0NPTkZJR19IV19VTCgxMDAsICJJUF9IVzBfTUJJTSIsIDEyOCwgMiksCj4+ID4+
-ICsJTUhJX0NIQU5ORUxfQ09ORklHX0hXX0RMKDEwMSwgIklQX0hXMF9NQklNIiwgMTI4LCAzKSwK
-Pj4gPj4gK307Cj4+ID4+ICsKPj4gPj4gIHN0YXRpYyBzdHJ1Y3QgbWhpX2V2ZW50X2NvbmZpZyBt
-aGlfZm94Y29ubl9zZHg1NV9ldmVudHNbXSA9IHsKPj4gPj4gIAlNSElfRVZFTlRfQ09ORklHX0NU
-UkwoMCwgMTI4KSwKPj4gPj4gIAlNSElfRVZFTlRfQ09ORklHX0RBVEEoMSwgMTI4KSwKPj4gPj4g
-QEAgLTUwNiw2ICs1MjMsMTUgQEAgc3RhdGljIGNvbnN0IHN0cnVjdCBtaGlfY29udHJvbGxlcl9j
-b25maWcgbW9kZW1fZm94Y29ubl9zZHg1NV9jb25maWcgPSB7Cj4+ID4+ICAJLmV2ZW50X2NmZyA9
-IG1oaV9mb3hjb25uX3NkeDU1X2V2ZW50cywKPj4gPj4gIH07Cj4+ID4+ICAKPj4gPj4gK3N0YXRp
-YyBjb25zdCBzdHJ1Y3QgbWhpX2NvbnRyb2xsZXJfY29uZmlnIG1vZGVtX2ZveGNvbm5fc2R4NjFf
-Y29uZmlnID0gewo+PiA+PiArCS5tYXhfY2hhbm5lbHMgPSAxMjgsCj4+ID4+ICsJLnRpbWVvdXRf
-bXMgPSAyMDAwMCwKPj4gPj4gKwkubnVtX2NoYW5uZWxzID0gQVJSQVlfU0laRShtaGlfZm94Y29u
-bl9zZHg2MV9jaGFubmVscyksCj4+ID4+ICsJLmNoX2NmZyA9IG1oaV9mb3hjb25uX3NkeDYxX2No
-YW5uZWxzLAo+PiA+PiArCS5udW1fZXZlbnRzID0gQVJSQVlfU0laRShtaGlfZm94Y29ubl9zZHg1
-NV9ldmVudHMpLAo+PiA+PiArCS5ldmVudF9jZmcgPSBtaGlfZm94Y29ubl9zZHg1NV9ldmVudHMs
-Cj4+ID4+ICt9Owo+PiA+PiArCj4+ID4+ICBzdGF0aWMgY29uc3Qgc3RydWN0IG1oaV9jb250cm9s
-bGVyX2NvbmZpZyBtb2RlbV9mb3hjb25uX3NkeDcyX2NvbmZpZyA9IHsKPj4gPj4gIAkubWF4X2No
-YW5uZWxzID0gMTI4LAo+PiA+PiAgCS50aW1lb3V0X21zID0gMjAwMDAsCj4+ID4+IEBAIC02MTUs
-NiArNjQxLDE3IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX3BjaV9kZXZfaW5mbyBtaGlfZm94
-Y29ubl9kdzU5MzRlX2luZm8gPSB7Cj4+ID4+ICAJLnNpZGViYW5kX3dha2UgPSBmYWxzZSwKPj4g
-Pj4gIH07Cj4+ID4+ICAKPj4gPj4gK3N0YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX3BjaV9kZXZfaW5m
-byBtaGlfZm94Y29ubl90OTl3Njk2X2luZm8gPSB7Cj4+ID4+ICsJLm5hbWUgPSAiZm94Y29ubi10
-OTl3Njk2IiwKPj4gPj4gKwkuZWRsID0gInFjb20vc2R4NjEvZm94Y29ubi9wcm9nX2ZpcmVob3Nl
-X2xpdGUuZWxmIiwKPj4gPj4gKwkuZWRsX3RyaWdnZXIgPSB0cnVlLAo+PiA+PiArCS5jb25maWcg
-PSAmbW9kZW1fZm94Y29ubl9zZHg2MV9jb25maWcsCj4+ID4+ICsJLmJhcl9udW0gPSBNSElfUENJ
-X0RFRkFVTFRfQkFSX05VTSwKPj4gPj4gKwkuZG1hX2RhdGFfd2lkdGggPSAzMiwKPj4gPj4gKwku
-bXJ1X2RlZmF1bHQgPSAzMjc2OCwKPj4gPj4gKwkuc2lkZWJhbmRfd2FrZSA9IGZhbHNlLAo+PiA+
-PiArfTsKPj4gPj4gKwo+PiA+PiAgc3RhdGljIGNvbnN0IHN0cnVjdCBtaGlfY2hhbm5lbF9jb25m
-aWcgbWhpX212M3hfY2hhbm5lbHNbXSA9IHsKPj4gPj4gIAlNSElfQ0hBTk5FTF9DT05GSUdfVUwo
-MCwgIkxPT1BCQUNLIiwgNjQsIDApLAo+PiA+PiAgCU1ISV9DSEFOTkVMX0NPTkZJR19ETCgxLCAi
-TE9PUEJBQ0siLCA2NCwgMCksCj4+ID4+IEBAIC04NjMsNiArOTAwLDIxIEBAIHN0YXRpYyBjb25z
-dCBzdHJ1Y3QgcGNpX2RldmljZV9pZCBtaGlfcGNpX2lkX3RhYmxlW10gPSB7Cj4+ID4+ICAJLyog
-VGVsaXQgRkU5OTBBICovCj4+ID4+ICAJeyBQQ0lfREVWSUNFX1NVQihQQ0lfVkVORE9SX0lEX1FD
-T00sIDB4MDMwOCwgMHgxYzVkLCAweDIwMTUpLAo+PiA+PiAgCQkuZHJpdmVyX2RhdGEgPSAoa2Vy
-bmVsX3Vsb25nX3QpICZtaGlfdGVsaXRfZmU5OTBhX2luZm8gfSwKPj4gPj4gKwkvKiBGb3hjb25u
-IFQ5OVc2OTYuMDEsIExlbm92byBHZW5lcmljIFNLVSAqLwo+PiA+PiArCXsgUENJX0RFVklDRV9T
-VUIoUENJX1ZFTkRPUl9JRF9RQ09NLCAweDAzMDgsIFBDSV9WRU5ET1JfSURfRk9YQ09OTiwgMHhl
-MTQyKSwKPj4gPj4gKwkJLmRyaXZlcl9kYXRhID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX2ZveGNv
-bm5fdDk5dzY5Nl9pbmZvIH0sCj4+ID4+ICsJLyogRm94Y29ubiBUOTlXNjk2LjAyLCBMZW5vdm8g
-WDEgQ2FyYm9uIFNLVSAqLwo+PiA+PiArCXsgUENJX0RFVklDRV9TVUIoUENJX1ZFTkRPUl9JRF9R
-Q09NLCAweDAzMDgsIFBDSV9WRU5ET1JfSURfRk9YQ09OTiwgMHhlMTQzKSwKPj4gPj4gKwkJLmRy
-aXZlcl9kYXRhID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX2ZveGNvbm5fdDk5dzY5Nl9pbmZvIH0s
-Cj4+ID4+ICsJLyogRm94Y29ubiBUOTlXNjk2LjAzLCBMZW5vdm8gWDEgMmluMSBTS1UgKi8KPj4g
-Pj4gKwl7IFBDSV9ERVZJQ0VfU1VCKFBDSV9WRU5ET1JfSURfUUNPTSwgMHgwMzA4LCBQQ0lfVkVO
-RE9SX0lEX0ZPWENPTk4sIDB4ZTE0NCksCj4+ID4+ICsJCS5kcml2ZXJfZGF0YSA9IChrZXJuZWxf
-dWxvbmdfdCkgJm1oaV9mb3hjb25uX3Q5OXc2OTZfaW5mbyB9LAo+PiA+PiArCS8qIEZveGNvbm4g
-VDk5VzY5Ni4wNCwgTGVub3ZvIFBSQyBTS1UgKi8KPj4gPj4gKwl7IFBDSV9ERVZJQ0VfU1VCKFBD
-SV9WRU5ET1JfSURfUUNPTSwgMHgwMzA4LCBQQ0lfVkVORE9SX0lEX0ZPWENPTk4sIDB4ZTE0NSks
-Cj4+ID4+ICsJCS5kcml2ZXJfZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkgJm1oaV9mb3hjb25uX3Q5
-OXc2OTZfaW5mbyB9LAo+PiA+PiArCS8qIEZveGNvbm4gVDk5VzY5Ni4wMCwgRm94Y29ubiBTS1Ug
-Ki8KPj4gPj4gKwl7IFBDSV9ERVZJQ0VfU1VCKFBDSV9WRU5ET1JfSURfUUNPTSwgMHgwMzA4LCBQ
-Q0lfVkVORE9SX0lEX0ZPWENPTk4sIDB4ZTE0NiksCj4+ID4+ICsJCS5kcml2ZXJfZGF0YSA9IChr
-ZXJuZWxfdWxvbmdfdCkgJm1oaV9mb3hjb25uX3Q5OXc2OTZfaW5mbyB9LAo+PiA+PiAgCXsgUENJ
-X0RFVklDRShQQ0lfVkVORE9SX0lEX1FDT00sIDB4MDMwOCksCj4+ID4+ICAJCS5kcml2ZXJfZGF0
-YSA9IChrZXJuZWxfdWxvbmdfdCkgJm1oaV9xY29tX3NkeDY1X2luZm8gfSwKPj4gPj4gIAl7IFBD
-SV9ERVZJQ0UoUENJX1ZFTkRPUl9JRF9RQ09NLCAweDAzMDkpLAo+PiA+PiAtLSAKPj4gPj4gMi4y
-NS4xCj4+ID4+IAo+PiA+Cj4+ID4tLSAKPj4gPuCuruCuo+Cuv+CuteCuo+CvjeCuo+CuqeCvjSDg
-rprgrqTgrr7grprgrr/grrXgrq7gr40KPgo+LS0gCj5XaXRoIGJlc3Qgd2lzaGVzCj5EbWl0cnkK
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+
+To enable Bluetooth pwrseq appears to be required for the WCN7850.
+Add the nodes from QCP, add the TODO hint for vreg_wcn_0p95 and
+vreg_wcn_1p9
+Add uart14 for the BT interface.
+
+Tested-by: Anthony Ruhier <aruhier@mailbox.org>
+Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+---
+This patch adds the Bluetooth support for the WCN7850 card on this laptop.
+Since WCN7850 is supposed to need pwrseq, also added this from the QCP.
+
+This is also part of my tree [1] for the Yoga Slim 7X.
+definition for the pwrseq and regulators.
+
+[1] https://github.com/jglathe/linux_ms_dev_kit/blob/jg/ubuntu-qcom-x1e-6.15.0-jg-6/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts 
+---
+Changes in v3:
+- pwrseq: add the TODO hint for vreg_wcn_0p95 and vreg_wcn_1p9 (Stephan)
+- Link to v2: https://lore.kernel.org/r/20250610-slim7x-bt-v2-1-0dcd9d6576e9@oldschoolsolutions.biz
+
+Changes in v2:
+- rebased to next-20250610
+- added tested-by from Anthony Ruhier
+- Link to v1: https://lore.kernel.org/r/20250426-slim7x-bt-v1-1-d68f961af886@oldschoolsolutions.biz
+---
+ .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 143 +++++++++++++++++++++
+ 1 file changed, 143 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+index dad0f11e8e8583df6fd8aeec5be2af86739d85fb..d02f8d4f7baf0a8e7c1bb95cd4a84ffe24ba8ef1 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+@@ -18,6 +18,7 @@ / {
+ 
+ 	aliases {
+ 		serial0 = &uart21;
++		serial1 = &uart14;
+ 	};
+ 
+ 	chosen {
+@@ -404,6 +405,107 @@ vph_pwr: regulator-vph-pwr {
+ 		regulator-always-on;
+ 		regulator-boot-on;
+ 	};
++
++	vreg_wcn_3p3: regulator-wcn-3p3 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_WCN_3P3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&tlmm 214 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&wcn_sw_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	/*
++	 * TODO: These two regulators are actually part of the removable M.2
++	 * card and not the CRD mainboard. Need to describe this differently.
++	 * Functionally it works correctly, because all we need to do is to
++	 * turn on the actual 3.3V supply above.
++	 */
++	vreg_wcn_0p95: regulator-wcn-0p95 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_WCN_0P95";
++		regulator-min-microvolt = <950000>;
++		regulator-max-microvolt = <950000>;
++
++		vin-supply = <&vreg_wcn_3p3>;
++	};
++
++	vreg_wcn_1p9: regulator-wcn-1p9 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_WCN_1P9";
++		regulator-min-microvolt = <1900000>;
++		regulator-max-microvolt = <1900000>;
++
++		vin-supply = <&vreg_wcn_3p3>;
++	};
++
++	wcn7850-pmu {
++		compatible = "qcom,wcn7850-pmu";
++
++		vdd-supply = <&vreg_wcn_0p95>;
++		vddio-supply = <&vreg_l15b_1p8>;
++		vddaon-supply = <&vreg_wcn_0p95>;
++		vdddig-supply = <&vreg_wcn_0p95>;
++		vddrfa1p2-supply = <&vreg_wcn_1p9>;
++		vddrfa1p8-supply = <&vreg_wcn_1p9>;
++
++		wlan-enable-gpios = <&tlmm 117 GPIO_ACTIVE_HIGH>;
++		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&wcn_wlan_bt_en>;
++		pinctrl-names = "default";
++
++		regulators {
++			vreg_pmu_rfa_cmn: ldo0 {
++				regulator-name = "vreg_pmu_rfa_cmn";
++			};
++
++			vreg_pmu_aon_0p59: ldo1 {
++				regulator-name = "vreg_pmu_aon_0p59";
++			};
++
++			vreg_pmu_wlcx_0p8: ldo2 {
++				regulator-name = "vreg_pmu_wlcx_0p8";
++			};
++
++			vreg_pmu_wlmx_0p85: ldo3 {
++				regulator-name = "vreg_pmu_wlmx_0p85";
++			};
++
++			vreg_pmu_btcmx_0p85: ldo4 {
++				regulator-name = "vreg_pmu_btcmx_0p85";
++			};
++
++			vreg_pmu_rfa_0p8: ldo5 {
++				regulator-name = "vreg_pmu_rfa_0p8";
++			};
++
++			vreg_pmu_rfa_1p2: ldo6 {
++				regulator-name = "vreg_pmu_rfa_1p2";
++			};
++
++			vreg_pmu_rfa_1p8: ldo7 {
++				regulator-name = "vreg_pmu_rfa_1p8";
++			};
++
++			vreg_pmu_pcie_0p9: ldo8 {
++				regulator-name = "vreg_pmu_pcie_0p9";
++			};
++
++			vreg_pmu_pcie_1p8: ldo9 {
++				regulator-name = "vreg_pmu_pcie_1p8";
++			};
++		};
++	};
+ };
+ 
+ &apps_rsc {
+@@ -1045,6 +1147,16 @@ &pcie4_port0 {
+ 	wifi@0 {
+ 		compatible = "pci17cb,1107";
+ 		reg = <0x10000 0x0 0x0 0x0 0x0>;
++
++		vddaon-supply = <&vreg_pmu_aon_0p59>;
++		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
++		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
++		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
++		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
++		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
++		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
++		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
++		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
+ 	};
+ };
+ 
+@@ -1403,6 +1515,37 @@ usb2_pwr_3p3_reg_en: usb2-pwr-3p3-reg-en-state {
+ 		drive-strength = <2>;
+ 		bias-disable;
+ 	};
++
++	wcn_sw_en: wcn-sw-en-state {
++		pins = "gpio214";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	wcn_wlan_bt_en: wcn-wlan-bt-en-state {
++		pins = "gpio116", "gpio117";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++};
++
++&uart14 {
++	status = "okay";
++
++	bluetooth {
++		compatible = "qcom,wcn7850-bt";
++		max-speed = <3200000>;
++
++		vddaon-supply = <&vreg_pmu_aon_0p59>;
++		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
++		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
++		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
++		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
++		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
++		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
++	};
+ };
+ 
+ &uart21 {
+
+---
+base-commit: f817b6dd2b62d921a6cdc0a3ac599cd1851f343c
+change-id: 20250426-slim7x-bt-6d01127291d1
+
+Best regards,
+-- 
+Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+
 
 
