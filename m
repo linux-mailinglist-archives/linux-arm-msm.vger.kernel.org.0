@@ -1,89 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-62252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBBA6AE72A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 00:55:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2013AE72B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 00:56:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 24337170879
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 22:55:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE7201BC4DD7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 22:55:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E93B25A2A3;
-	Tue, 24 Jun 2025 22:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0349D25F7A8;
+	Tue, 24 Jun 2025 22:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GZXI4aAg"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gEPgoDpG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7984525E44B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 22:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC11125E811
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 22:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750805623; cv=none; b=pUKL0XAZJ2xqkER+YwxCL+NfiQcxg/Q/Gsbj7YE+7p3mf25res9i24pVenIuiRgJPQb/Nq2bpc52DFc8m4Tj30C79fwtaUBnHWoFDWI21cZ/ImT+L8WtBzPPYfYAuUjj6tTmSGgABC60uEUs1mp8by/dR5EN1yV5lT+XvydNQds=
+	t=1750805625; cv=none; b=rXgSE1TrpHBjn+yUQZGcITDVDerCHOp4Zg+IPeVB3H6mlxu8aiXrjwAaaGjIHdKBI1E8H/bT4Url07CW2h2fyfF0GHGPItly8G7vBjh2eLjXpuPcE/iuXSJnf40RbSxfdFI4Yyy115VknDBj3526TnTIAls1Zki1K702wwS68oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750805623; c=relaxed/simple;
-	bh=fzBC2xoL+zqcCdvdFp6QOzxB8vCAph7pd10rAyAoyFQ=;
+	s=arc-20240116; t=1750805625; c=relaxed/simple;
+	bh=wwPgZquGtv5ruN02X/fEQJ5qyMWldQS8yZQEL7GHlMM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UsXbEujh09YRPM9vNgcwSPsGEPp+UOsX6I7Yr1OsylDe5AgzLqt5nJtRfDWvbh/6b4cpxt+/KoZQBAXCWmhCo2ikWiaydQ3xAHOt9QtcdYAbar75oTFGTMkZhwYC/LkXUGs4rbeL0My2Itm0OjDMMe/qi0jEDYAI08rVsgNSZZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GZXI4aAg; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=ZPm/xKdmhNIX++3b9KSGbB9Kj9q8M79TbzZxSWvdxDmIxFMvkGeCtObXHnK33NS9qRGLGPYSzKudHzFwnJ5YptfqsjSQncnCTbUfXw+eAdNhF/4ujlNNlVQ9Y9G7uLwnlL6+ou0wM7V4mwcPZOwH3jCtCjWhb3Unxpy/dff3wnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gEPgoDpG; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55OGjhLa008088
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 22:53:40 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55OF6C9i006106
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 22:53:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	8NIM9T6hNdyQApd2V3NHJVIC0mrVXV0ISFYbKqPxryc=; b=GZXI4aAgC5zdYbkB
-	RWawKfyY6Gszevvpx/HE1AhxdO1l3b1aQvRiwdVVQH+cdZtvNoh7mEy24yq16o7c
-	IOOSt6yDbJcCw/Lc3ZbOeCJ1a/OtGzSWyxDyhmarWdFHPXJd98uArZUm6JcSJHfy
-	+ZxufvRbZHJltHsoWkPK84LPlboRVv0PqTI4i3GQoVTb5RgssSmWk3EJYLR/TXUw
-	JU/zTRfNKDp/2sdn/xJhcKtahfsOIzDCuarTuWOqRphDxt8h1lvLd3MdX4SVyXRl
-	3xxXxi5pFLnAXnRQaD7+pX4oeAykFg7bGjJFIjHYOv24iQTyLQGkNB52dexFJqI1
-	JI5fsg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f7ttw2y2-1
+	tyyvulGuGpaTaUXvNlB8/sd2dCkHRiL8Dbbs2iTh6WI=; b=gEPgoDpGvLojpvmN
+	ferkvyLbtO30MbcEM/UDeq31z2HtlUTqYLcGGFCbiqhn20mvxejazf9F/RL8ngGJ
+	HhOCacnvpHcHC0MvgvMpdt6lwmpqc8sIBZrRB3qkhL28BbRfRpxtmWKuqNCmL7AY
+	Lu0vcVtWZMoDhWtX+lEzqynmYDvJ3I/V6N+iVFdyc/pCEjONTR9+mQzh/1iyn5LH
+	ouk39fIxE1HnWOXD6yxv8IT6FG+bzU9sNYyFtrLQJBflUfES9yTX8DmH9KDkFK5J
+	SZ2fh9a/WactcTF/L8qKm+Nm3bWvLvSMjYizxqsA26vSZWR0ylXKH2pfMNThL8xE
+	uSQFoQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f3bgdusu-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 22:53:40 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7d400a4d4f2so172740285a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 15:53:40 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 22:53:41 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7d3f0958112so140696385a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 15:53:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750805619; x=1751410419;
+        d=1e100.net; s=20230601; t=1750805621; x=1751410421;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8NIM9T6hNdyQApd2V3NHJVIC0mrVXV0ISFYbKqPxryc=;
-        b=aysZdI7870YXR1mnvl70vjcCX4LKlwuJiuQ2DHCcidI1mkBCX6ViLmFbYft8ygL3uz
-         uyoxWRaVwE1itqg9AFMcPfeX1KjsKxzQrGwXYZ1+/bn1Vwmcg0bfwsJGearudlassqH3
-         COy2yPLRuc573pDp53uRb3ZnNEK9ehfpPMw9vFoddYrYJsWHP5UficDFWYms9DUCE3Jg
-         bHiPA0pOK6uw/HX45/cBE8Yof3b1IimGVdLbsTWPwBD5U808vUbtbS2DIlvGyb4iWcbi
-         guI82GTdHeko4ORr6+laBHlwDqVywgX3MTDlGHJ1IgFkep0JnPkR5/Q/9UInaaJ5q0qA
-         WnZA==
-X-Forwarded-Encrypted: i=1; AJvYcCVbyYjcMT5aJBhru2FTft/VwOVbYHy+m9vhrR5yOwkZ6atg0XYkNezVBYajQC6BWJ1RwGS0qEUfVwgiyVUf@vger.kernel.org
-X-Gm-Message-State: AOJu0YzgRnWIo1ZHXwl+9wERz5VfnEOcYoQanFtRbIr1uJTuKeyxtHEm
-	LICVMgaC+N5IuqfALz3RwVdd+oLD+kPTIqk6g1q5AXfJdCNA6RzkPwqUStqpzy57oa6Dolf1kB0
-	T53ksTEQMixbc197bcnFjpbZqIWYkty7UTwJoTRb9ZKRKnA7HJI3fWLnBw9o778DoDrG3
-X-Gm-Gg: ASbGncuiMzvCHU2pe8iaDUVdOiRjDcyPp4DfbBtirA3Hp9948Zq5uJgM2+cenRN4ZXh
-	V8zoOUmr3yXAflny1x8SwKVkF1cXU/dpXfRA7RYqK4YRogSKCW7Sz76v+bVfmhfiKzL0qokYZkw
-	wsstPwGoLChAblkFP+Gs+ag4uoV+EyPLBin8wu82r4hrbW7KcGLiPlINkr3Cn8cfwNAasVNcalB
-	H/t5N7bH+ObEGSaNDjp2hEMibqqHq9gjbC6FEqWAdlKmJxGk7wYkxH3hobqqoiCS/O+0y7W1REL
-	Xd8WBGyhqCCkiei2CFeCj1UTEDsPPpJtyK3SVVz0VqhmTSR0EAo7wBQlPdsZwILhduHUyq+RSQM
-	6zLW+9oFTGdI8cD5fJyl0EaHGma25WEOhT0Y=
-X-Received: by 2002:a05:620a:489a:b0:7c5:4463:29a3 with SMTP id af79cd13be357-7d4296eaeb3mr136492185a.25.1750805619199;
-        Tue, 24 Jun 2025 15:53:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEArHTt7L3yra76vcOX9pHi5y0XwXAgplfEwKMaA+D1SyjqM/8XRnYIHLsA2KpxGeCCOQTelQ==
-X-Received: by 2002:a05:620a:489a:b0:7c5:4463:29a3 with SMTP id af79cd13be357-7d4296eaeb3mr136488985a.25.1750805618744;
-        Tue, 24 Jun 2025 15:53:38 -0700 (PDT)
+        bh=tyyvulGuGpaTaUXvNlB8/sd2dCkHRiL8Dbbs2iTh6WI=;
+        b=tUQJFPUwsIJsX4JcJPA3cCJXdwUrOO90e7sOfNHm7s56wUuDiXxsgLNRFyTXjxDsXK
+         PXKHEIzq3sNVm2Zydg3yhWtobPyyyI0pdfbCE1K/Rxk96d7sPkW94/0IOKpjJgVJvOCQ
+         8wvdSMh47p0tf7ckqiCTUPq8HNkh/Tw0wVhO3MpSuNMtDVggTYZvu07ggVrYp2vWljO5
+         u4Hs/pr7YU1PapAyzkU8DgjNe8+xNIueTMgLOmEe1YZee6MVGFJJfHI05nU0EpBdU9b7
+         eM7ekTn9W9hbHlXjUzIRWIRHAjoyIjD0evF5hgj+d50JPArTMiitb+DXTcH7bih4+vVm
+         lctA==
+X-Forwarded-Encrypted: i=1; AJvYcCXiejGC/wDR9DRmwal3ZNluYZr0ZvSCbKAmyIWkLIK1PzV6D4UaY+TlCQLhdIpFepLOPIgKSw0m1TFRYvix@vger.kernel.org
+X-Gm-Message-State: AOJu0YzR7zrxBac87jMeZ0VbqCnW5rfU1ewURwmaIsGiaFJSHJSuF0nO
+	xawMUzS/AUaYQEIA42g4sgOskX9rUchYxPWYx/9vhJne42uFQ3OuqWIHUv8/o0nguP3SZ+/PHPh
+	XdqV6cQk1laSZOMGbDa00OizfWWFbhLBsE94MxOJxIajXQp2EvS4KZQ5b1rZD6OQx/zNI
+X-Gm-Gg: ASbGncs5ZayoI3Lk/NNHj25Bv0Bhq16okniQY5FqheHaq3QqKRCbbTZ4Z4CUvpo42mX
+	Wwuuyfcus96l8XdRWj7kndfYT3YI2vKQQ/aacJpmcQK3hVKQTuSizwxL285btTOwVw3GwoK7Tp7
+	f+SLy/DG7NG/+E4drEzOa9zbKOzYnsBbXBgPcsa2hE908qrpCprg2RTC4u3hPxQak/dXnIeHHkR
+	yLzMI4Z0TDxXxoGxw/8hXnMeQ97iXRvWXufctboPdmHyVFbj4F/ywO3Q8ignuodLnEulHyAymyc
+	NBVnl9c6ZLU1RQrsdvDzGSRgBY8Mdjlee0TLllzf5AppeNJdPJk9DiCdojm0kZBp0861Z8kGV3p
+	0g4AIIyvfqHX5hcVGSYurTw/5JpWs1vDMw2U=
+X-Received: by 2002:a05:620a:27d6:b0:7cd:4b5b:a202 with SMTP id af79cd13be357-7d429660f2dmr101678285a.20.1750805620726;
+        Tue, 24 Jun 2025 15:53:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG9xF1syLAiuEsqu/heJ8lpyFR46117M7xKVjAZCzFveTqDxwrpzUPLXqhhICzq+lLpzCaIFA==
+X-Received: by 2002:a05:620a:27d6:b0:7cd:4b5b:a202 with SMTP id af79cd13be357-7d429660f2dmr101676185a.20.1750805620360;
+        Tue, 24 Jun 2025 15:53:40 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32b97f5980bsm17843851fa.7.2025.06.24.15.53.37
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32b97f5980bsm17843851fa.7.2025.06.24.15.53.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jun 2025 15:53:37 -0700 (PDT)
+        Tue, 24 Jun 2025 15:53:39 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Wed, 25 Jun 2025 01:53:26 +0300
-Subject: [PATCH v4 7/8] firmware: qcom: scm: rework QSEECOM allowlist
+Date: Wed, 25 Jun 2025 01:53:27 +0300
+Subject: [PATCH v4 8/8] arm64: dts: qcom: sdm850-lenovo-yoga-c630: fix RTC
+ offset info
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,7 +93,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250625-more-qseecom-v4-7-aacca9306cee@oss.qualcomm.com>
+Message-Id: <20250625-more-qseecom-v4-8-aacca9306cee@oss.qualcomm.com>
 References: <20250625-more-qseecom-v4-0-aacca9306cee@oss.qualcomm.com>
 In-Reply-To: <20250625-more-qseecom-v4-0-aacca9306cee@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -104,165 +105,83 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: Johan Hovold <johan@kernel.org>, Steev Klimaszewski <steev@kali.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, linux-efi@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4931;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1628;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=cWoHO0MsVGuzMZsWaCgpVEQsk3VIUIcF/KJvccYMdzs=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoWyxjQwD68t32h8d/QHOesm1x5z3pruiLn7HRU
- w9Ub4Us1bCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaFssYwAKCRCLPIo+Aiko
- 1RH2B/98/HW2wQwAkPEHQXtfRUHSuLSmvcQvdNliBhX9EGiDR26KoItjdnPz353c2hroFgqzkyt
- 5MlUIJNAARicuZ17oB8HsJAs1Fj6/kHYJil96po9yxEFUGO7CJgkVZRuDY7/RCN1mlcWlhaK53N
- RANcoWMs068o6HEAQblUSEMpUgB8kgxm0C/TsClgmyO9Z0ridT6n/pxmSDzhRhxPSFG5wwkpcyL
- mW5abuK1SGFEoUXfafScbF6uJ9/jkWQDpFWBFj1NNFrNNrfDDxhpMNJ/RkG6m7O1qDTmbQTetWy
- HVzEhf+q9fJ+pJl9Cx/AN1hUGGAfCt06PlpPPAcH/pCuW4qY
+ bh=wwPgZquGtv5ruN02X/fEQJ5qyMWldQS8yZQEL7GHlMM=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoWyxjU159/FTOyS5BGPqQoUzEdLnGP1il44N/x
+ nc515L+9muJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaFssYwAKCRCLPIo+Aiko
+ 1VmMCACerDOGChKCDcExtpZQRx5lJTaSBwEz4xFhjhGd/BKiRHyF/9eb9hrZB7qJg6JKmZAYtIb
+ 9CHm8W3pJwTyvM+GG6WKaI0CUexK2Ko/4bg0NHIiaSLaLJqmjq96/0zj+zThY5gves/Rqc4L6jT
+ 5LS0eQKJKYv6JfZSByY0HqD8epocnxMQaEaZVzlRViknEzKLVt5Xa9LQLqsGY5FOj/rOA1dqDwg
+ LlZGrH+BpA7VVzXnU3fDiC9KG7BHfVVOPqxDyCPfdD9tEnuyFNFOIS6DAvhNwXgsZdn+gHGtRwp
+ ThQyNVqtrtELFswd9kF9hoKFAMnkdKyEM9xun3P565ZyKOks
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Authority-Analysis: v=2.4 cv=QINoRhLL c=1 sm=1 tr=0 ts=685b2c74 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=6IFa9wvqVegA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=-DwM1zgTEUuOfulMvEAA:9
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: hZM1-ezws1Qvs7iNXP891FOKB05InVRb
-X-Proofpoint-GUID: hZM1-ezws1Qvs7iNXP891FOKB05InVRb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDE4MiBTYWx0ZWRfX4R1NHgUqsNg3
- YaYTyW+AfsHsRFKveV4sNBBHpqg2OHtt7OPbiGcL8hylXbJ2hUUOgwYcJI0a6CDpqtylNN1cPM5
- 01AG9IA2gFq1lnimcsHBHSihZZf0nJ3S+XIgfppV42dxTGm84tmmvjA3gGHrKBX7j4IZeLeskE6
- 6T8NKIJr1dpb/69o60fhdB+SRZzJibfFhcOjvvTi4JaR2MYfZQKU8IxooxUZM7BnfPCsUeuF2+S
- BIIqQuJSgt65yrUH//PAoX11R4b2z2NuUHPjELbV3J7rbA9tft4BlrDFrz09W828ZZYcodaazhX
- IWZOeo7ZN4aLh0SzK4QYTU+WXoV5rYjsXZxPO4O1GpxEzeedBBalwfnm+VsRGsDrWx97VeYXC1p
- DIFfbQ9PVOHUOFH6R2xxRy4PI8UhariT4X7U5Ks1EejRLX6aEO/xwsZvnCIjeLC1+Ufcj2eH
+X-Proofpoint-ORIG-GUID: PtsIq65MEbEdLxMDS4R7qXNOGZ9kAcla
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDE4MiBTYWx0ZWRfX+1Y5GcLURzn5
+ t579VC+AHy6zySGw+KF5CAHL2ICunm1eGtAxGK9b4zta+KCE6hcK8P0jL2vJUr7kw745zqkvObx
+ whZz/DUyRiQckkwe4xe1iyxrtGt781Qy3SFjIYW8W8wNo8VoOyJ0ORhj27ovP2pYNT+ksohm0T3
+ kmC0Kdq9TSqNOGLfpxuYMOAX4V+qWlCbIq4OEWhjaLT+R+nx5lbHlcdGZ/CZn2WMXjtxuxompQC
+ lhA3ewpn262XjYwDuxSrw6wZeYO5jqnKoZ16Dx9+o+zE+oulO+Lt5y9BvEi9GKjN8aQyBPP+jn6
+ ZcHlM/aZpOzSHVRoK9td0MdhKLN2mbPpgbqdtGLnzXgA5X+8N7dNBr+tGoSm9fvJ/QpN34pF5Pf
+ kYzmZIiPzWs7nFpari/y8DO25/mHZJ2yApE51aTpAWiPmaGUiYsBnMZS23dMaDoPlxj0nb3U
+X-Authority-Analysis: v=2.4 cv=L4kdQ/T8 c=1 sm=1 tr=0 ts=685b2c75 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=lpcYNmPcDvg0ODyLRbEA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-GUID: PtsIq65MEbEdLxMDS4R7qXNOGZ9kAcla
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-06-24_06,2025-06-23_07,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0 mlxscore=0
- clxscore=1015 mlxlogscore=999 bulkscore=0 suspectscore=0 phishscore=0
- impostorscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
+ mlxscore=0 malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ adultscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ spamscore=0 phishscore=0 mlxlogscore=980 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2505280000 definitions=main-2506240182
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Lenovo Yoga C630 as most of the other WoA devices stores RTC offset in
+the UEFI variable. Add corresponding property to the RTC device in order
+to make RTC driver wait for UEFI variables to become available and then
+read offset value from the corresponding variable.
 
-Listing individual machines in qcom_scm_qseecom_allowlist doesn't scale.
-Allow it to function as allow and disallow list at the same time by the
-means of the match->data and list the SoC families instead of devices.
-
-In case a particular device has buggy or incompatible firmware user
-still can disable QSEECOM by specifying qcom_scm.qseecom=off kernel
-param and (in the longer term) adding machine-specific entry to the
-qcom_scm_qseecom_allowlist table.
-
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- drivers/firmware/qcom/qcom_scm.c           | 49 ++++++++++++++----------------
- include/linux/firmware/qcom/qcom_qseecom.h |  1 +
- 2 files changed, 24 insertions(+), 26 deletions(-)
+ arch/arm64/boot/dts/qcom/pm8998.dtsi                 | 2 +-
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 4 ++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 5bf59eba2a863ba16e59df7fa2de1c50b0a218d0..025f834e95b537b76d41b59b63871a4ce5bed717 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -1981,6 +1981,7 @@ int qcom_scm_qseecom_app_send(u32 app_id, void *req, size_t req_size,
- }
- EXPORT_SYMBOL_GPL(qcom_scm_qseecom_app_send);
+diff --git a/arch/arm64/boot/dts/qcom/pm8998.dtsi b/arch/arm64/boot/dts/qcom/pm8998.dtsi
+index 3ecb330590e59a6640f833a0bf4d2c62f40de17d..50b41942b06cf1a3f43f9c754b3bf2e1eaa4d353 100644
+--- a/arch/arm64/boot/dts/qcom/pm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8998.dtsi
+@@ -101,7 +101,7 @@ pm8998_adc_tm: adc-tm@3400 {
+ 			status = "disabled";
+ 		};
  
-+static unsigned long qcom_qseecom_disable = QCOM_QSEECOM_QUIRK_DISABLE;
- static unsigned long qcom_qseecom_ro_uefi = QCOM_QSEECOM_QUIRK_RO_UEFIVARS;
- 
- static char *qseecom = "auto";
-@@ -1989,32 +1990,20 @@ module_param(qseecom, charp, 0);
- 
- /*
-  * We do not yet support re-entrant calls via the qseecom interface. To prevent
-- * any potential issues with this, only allow validated machines for now. Users
-+ * any potential issues with this, only allow validated platforms for now. Users
-  * still can manually enable or disable it via the qcom_scm.qseecom modparam.
-+ *
-+ * To disable QSEECOM for a particular machine, add compatible entry and set
-+ * data to &qcom_qseecom_disable.
-  */
- static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
--	{ .compatible = "asus,vivobook-s15" },
--	{ .compatible = "asus,zenbook-a14-ux3407qa" },
--	{ .compatible = "asus,zenbook-a14-ux3407ra" },
--	{ .compatible = "dell,xps13-9345" },
--	{ .compatible = "hp,elitebook-ultra-g1q" },
--	{ .compatible = "hp,omnibook-x14" },
--	{ .compatible = "huawei,gaokun3" },
--	{ .compatible = "lenovo,flex-5g" },
--	{ .compatible = "lenovo,thinkpad-t14s" },
--	{ .compatible = "lenovo,thinkpad-x13s", },
- 	{ .compatible = "lenovo,yoga-c630", .data = &qcom_qseecom_ro_uefi, },
--	{ .compatible = "lenovo,yoga-slim7x" },
--	{ .compatible = "microsoft,arcata", },
--	{ .compatible = "microsoft,blackrock" },
--	{ .compatible = "microsoft,romulus13", },
--	{ .compatible = "microsoft,romulus15", },
--	{ .compatible = "qcom,sc8180x-primus" },
-+	{ .compatible = "qcom,sc8180x", },
-+	{ .compatible = "qcom,sc8280xp", },
- 	{ .compatible = "qcom,sc8280xp-crd", .data = &qcom_qseecom_ro_uefi, },
--	{ .compatible = "qcom,x1e001de-devkit" },
--	{ .compatible = "qcom,x1e80100-crd" },
--	{ .compatible = "qcom,x1e80100-qcp" },
--	{ .compatible = "qcom,x1p42100-crd" },
-+	{ .compatible = "qcom,sdm845", .data = &qcom_qseecom_disable, },
-+	{ .compatible = "qcom,x1e80100", },
-+	{ .compatible = "qcom,x1p42100", },
- 	{ }
+-		rtc@6000 {
++		pm8998_rtc: rtc@6000 {
+ 			compatible = "qcom,pm8941-rtc";
+ 			reg = <0x6000>, <0x6100>;
+ 			reg-names = "rtc", "alarm";
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index 8ef6db3be6e3dffe4ec819288193a183b32db8e8..c0c007ce8682cacd1cbfe816ddb975c0a099ac89 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -592,6 +592,10 @@ sw_edp_1p2_en: pm8998-gpio9-state {
+ 	};
  };
  
-@@ -2046,12 +2035,22 @@ static bool qcom_scm_qseecom_machine_is_allowed(struct device *scm_dev,
- 	match = of_match_node(qcom_scm_qseecom_allowlist, np);
- 	of_node_put(np);
- 
--	if (match && match->data)
-+	if (!match) {
-+		dev_info(scm_dev, "qseecom: untested machine, skipping\n");
-+		return false;
-+	}
++&pm8998_rtc {
++	qcom,uefi-rtc-info;
++};
 +
-+	if (match->data)
- 		*quirks = *(unsigned long *)(match->data);
- 	else
- 		*quirks = 0;
- 
--	return match;
-+	if (*quirks & QCOM_QSEECOM_QUIRK_DISABLE) {
-+		dev_info(scm_dev, "qseecom: disabled by the quirk\n");
-+		return false;
-+	}
-+
-+	return true;
- }
- 
- static void qcom_scm_qseecom_free(void *data)
-@@ -2086,10 +2085,8 @@ static int qcom_scm_qseecom_init(struct qcom_scm *scm)
- 
- 	dev_info(scm->dev, "qseecom: found qseecom with version 0x%x\n", version);
- 
--	if (!qcom_scm_qseecom_machine_is_allowed(scm->dev, &quirks)) {
--		dev_info(scm->dev, "qseecom: untested machine, skipping\n");
-+	if (!qcom_scm_qseecom_machine_is_allowed(scm->dev, &quirks))
- 		return 0;
--	}
- 
- 	/*
- 	 * Set up QSEECOM interface device. All application clients will be
-diff --git a/include/linux/firmware/qcom/qcom_qseecom.h b/include/linux/firmware/qcom/qcom_qseecom.h
-index 8d6d660e854fdb0fabbef10ab5ee6ff23ad79826..d48044ece20cc9ebac3357a642dc671c349d4343 100644
---- a/include/linux/firmware/qcom/qcom_qseecom.h
-+++ b/include/linux/firmware/qcom/qcom_qseecom.h
-@@ -52,5 +52,6 @@ static inline int qcom_qseecom_app_send(struct qseecom_client *client,
- }
- 
- #define QCOM_QSEECOM_QUIRK_RO_UEFIVARS		BIT(0)
-+#define QCOM_QSEECOM_QUIRK_DISABLE		BIT(1)
- 
- #endif /* __QCOM_QSEECOM_H */
+ &qup_i2c10_default {
+ 	drive-strength = <2>;
+ 	bias-disable;
 
 -- 
 2.39.5
