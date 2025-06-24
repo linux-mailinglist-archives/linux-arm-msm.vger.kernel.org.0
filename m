@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-62221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C158AE6672
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 15:30:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 14EB1AE667A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 15:31:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 857F77ABD74
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 13:29:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1BE637B255E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 13:29:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D3C52C3265;
-	Tue, 24 Jun 2025 13:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8977F2D1926;
+	Tue, 24 Jun 2025 13:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="StSsBfzn"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kpYPKUN3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D682C1590
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2602D027F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750771718; cv=none; b=cWRosbTCQiYwLOaHnqIeL9MIvk1NRj390yvqYKr8zPIP2iGVp+r7udUw+ERgzuls3q9MefzhOC+//0BpY+133WY9mNzGV0wK5I5hHYw+ZPyOsl2WGhFvTGF5pELHww5GbC/J5cTxp9iyK7xiyMt2pNsPk0ZNmSSUcwDNhBceCEc=
+	t=1750771742; cv=none; b=rjhjrQLs0DUT4wcbbzb1DCIcq5NYWp9Z8WPsZN0N+mbm44cbr1sPfX8+yXDpALgRuPj9SrXRuH6YULcFaMh/fEwU2UnUWGRGxGbJMRmk3taH4OFzluLIwMFtDveKYUMBsc8PMtlf9eI3d896wltMkV3JsGTwcDk2fWHuimDU/SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750771718; c=relaxed/simple;
-	bh=EGi6Js4t1+Z8KlSKkFFm0EkPtH4FtV0CZisHn9B3Rsg=;
+	s=arc-20240116; t=1750771742; c=relaxed/simple;
+	bh=Kq2queKYiWK77xeA7BlasqdaXnXERjuMkIMarM++d/c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jYkqoQiOfxB/99GOLg1yKLUMUK+L9tsV4gDgHBM52yoy0hG8ZK/K4aQkcNKOTt9qtzYXsdd4CAuZ03wX4iV0h8OjzrXo5Nw+FfSksSBmNuZDa8jtXGclvNfGQAA28s2zAyNO8New62p/ljvfqPkySHxykXM/UF7RodlvqUUir7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=StSsBfzn; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=I5KAlfCFRdbfqnNONjCtAWx8/9RLT7C90uXx9I4ixZVeLq+ggtJd4I9dplsd2BfxzrXoZ5ikOFJFVHaKTiRCPkF8YiK+f5pYeh57sjmDHVDHbBzJWBc6fPZUAm06n7ozd7FklDItsC6dK4LQ9X0SIAmdI13I/hOwCPBRu5Ey9ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kpYPKUN3; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55O8htrD014586
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:35 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55O7Ucxb026740
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	RvZazCwxIEFv8meBdBiCL7u1qoqBdDyV6DUE2XCe3rg=; b=StSsBfznSX7FPokl
-	prC7bOr1dq6rSqbwon7V5OaBroPwPDswksoarR7lQC84ugZt7s2maAvfsEUcswg4
-	GZXUJIWXgdlycoR8tty8IFaqn6xQam4uMKc6vPVZ2/B1LAioHGYXEzsnzEc9cwln
-	0WGr+O33wxOJADti/jyMr3Pc7hwBd7KegW1yITwItX4CraIqkM22yf3dEvJtRS4K
-	U/iOOudFEksMDJlA80ViAKP4zIM4yi3caO9GD818seqMlLfn1ydYGOT1+Gxt10yY
-	KyL6E1UN59NoXzYuvPSA2M4XuvhEkg1EL9vPAJSnVO6PE+NTH5G1sCEQiKK/G1L/
-	vsYZCQ==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f2rpvewp-1
+	qPEA4wWOBi3YOtgcaFrbSGcrL6j9MPJBC/grGvjBzWA=; b=kpYPKUN3znQtt8K9
+	z1hmTSKeR/6a4fmLW8ZxbnVJlYM9gjSq0k/3shIZ/0s4iE9EX5R5BmLUVyk+sePk
+	Jafd3n6sbLkzKt8Nkpw7bg1R97E2gUaJuynxU4vEUYZfaM32yPbhj4lAxKu2L0Tq
+	7//1HAaGx/IHTf+OkttAr++DQt6VZ+5YCbh+cDt9y+OqGyG1YxAf2eJc6YaIhIh0
+	klG9FD9tMt4bwtTQUt7MlY1cG0zQ7xDNquyHa/72MgqGOfdNPUb8h92BZa5J9YNi
+	CgNXV+wRfhUuE3LZAnOYEAEmFnpd+y7mVdb3yEjj5LMplwfQz1UFTg5hTSWI72JX
+	6YH0xg==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47fbhqjqnp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:34 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b26e33ae9d5so6704615a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 06:28:34 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:58 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2354ba59eb6so82952085ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 06:28:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750771713; x=1751376513;
+        d=1e100.net; s=20230601; t=1750771737; x=1751376537;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RvZazCwxIEFv8meBdBiCL7u1qoqBdDyV6DUE2XCe3rg=;
-        b=gbSR0t1XK1YgQlxF99+bhRSoAE/eRlpZMut/hlmbyL9CA39OiHDuJggJqfmRMaeh8y
-         Q++BwAHxs8WH/6H5wcvtjkdkBBthF5slqa6qp3x2/SoBmO+EQZ491q4aG+Ns+fShHMo9
-         O/as7vU4oam4j4PaBozKPcAj6HkwaV1ColHpvB+nJiAAvzFdbOZNF7MTumpUh8zM7DWx
-         aePLja6YP44wDYjzMhMcxTmDy1Y5V0FWdAAuYyn1UvQ9rR7OHnRf6NnmJ3DyTkuUdMgL
-         tfX2FF2jehb7Sq40MhUvMhq+8WVqBFBqBEymBX/I4GgVJKTiAcazWIJfas14GUvBVa1e
-         YPjw==
-X-Forwarded-Encrypted: i=1; AJvYcCVw6mi/tcvymYCeLKoGJl3vl8CZ5rQ+iSuKnA8gmB64dIg9RzvF3Iu49PT16bZmLuD8D73GHoVJILceW0hi@vger.kernel.org
-X-Gm-Message-State: AOJu0YxFlm5U8KjgdFhfpQLcwtmJB94nY7K5Cq+nwHYKYNr8IW/emX+l
-	wzumxD1KCAQH3ut+LZoAo5mQTJklxt866w3jMUKlW5y5OuFyDpBNIoQ9ExqLZUEA61gEs03vGLS
-	uO2H8+tN/vNfosHqrobUrADRXbbWdUVjUPkA3rpXO5i7VmzfThzMHuJm3gicc8LZnibay
-X-Gm-Gg: ASbGncumDuntaKBLYph+SbHIqMHL0PNvkU7zkiGXUETY9GbRe/Voa9hHRT06Ht1/XWj
-	yWLKndgDjgR5pdrOXHjoPK8hBEQH26yjol1ReK6N4qggJSWmVaYTrswuVmm1qXNZOXWS4QExZwd
-	4KWiVQSHgj99odQVcPWm9rXwx9O332d2Bx9POQfhipk43Cn3MwPb4HQlBq90awMc2Mp545e2xwK
-	c4hm3XqFL50MzZUioqJ0/ZGk79fHhyE8ruPhT5sbtP5wCF/4M3wXn0jtgdqpYLIVEJH5E4c1yr+
-	O/ZNAQUo+wqO0MZauWrihBZ7H4tJgFR9sWN+XPiimOpFTDeolzI=
-X-Received: by 2002:a05:6a20:7284:b0:1f5:72eb:8b62 with SMTP id adf61e73a8af0-22026f162a1mr24223810637.20.1750771713015;
-        Tue, 24 Jun 2025 06:28:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGD/iFGK3TEg3DGL2eOm7/r1fQKuDSUgr5lVbG0Ag5wbPKzaX5UAN6m14tHIodZOPm9VJGb6w==
-X-Received: by 2002:a05:6a20:7284:b0:1f5:72eb:8b62 with SMTP id adf61e73a8af0-22026f162a1mr24223727637.20.1750771712450;
-        Tue, 24 Jun 2025 06:28:32 -0700 (PDT)
+        bh=qPEA4wWOBi3YOtgcaFrbSGcrL6j9MPJBC/grGvjBzWA=;
+        b=ZKOpSujoqA58/CN4550dwGFUUtGpeT426Dr/LGNxSlRmCzXHHKDbRrKeJYyXZjAsrA
+         cJQPoW2XI+H7D1n4lTnTFYxxDAKXoIeEANJmqD7YPoLRyynxnTzVlXq0LisgHuSnbgv1
+         0Q3PZWDW3KDnBTqZHB2YDbLzv6XJXkmE2Qv65nnNW7TKSdGNW4wLAMCLta6BkhVQAzfz
+         en3tiJGj8SJU/6fgnQYqWEF3eiiLYpvg2CDLPkxCODd8tU5kYu3yus4Z9ZIJFUPED3Zv
+         eWzFUwZYtYeFmo+bfkYt3L1EZsOEGrTO7Y/CM2Ht7l5vIDl5chzMax+4Qw148ItE8MWN
+         uquw==
+X-Forwarded-Encrypted: i=1; AJvYcCWwAho+0zFDPU8IQeKZ+/E3Pxk0BM+n465EFfU1qhHY9t/CTNO8U2/AEz7MuIswwkcaWqnLZHm+nb6cNwE2@vger.kernel.org
+X-Gm-Message-State: AOJu0YzaSmDtJlJHY7euQZv8MLoTN93Q2dQCTtcB9PLfz9YKLlz44h4e
+	fiAELgmFOdJDjFH75eU+NuYLnd91HIUhh0BRMqos5Sjfv03kBwpA/aLTCk7rCJI5olhBxsnZrEu
+	3NYEqotfw2mMf7vokl4ratDLQueiqq5Ui124Kq4WzsBvcMqO1KxKT6y9uIIBZnd1z1zSD
+X-Gm-Gg: ASbGncs+aZW9Uw92IlzNaIVylQfVrRlGLSsfRMdmn1mY5Mk/XeEI16kpthiB35P96Kp
+	yoZ55vJZW73b6VzFa04Vkqk39q1rPWBxEOWugc0Rs8bd89iVO5Got103esJWdMTTwaNWLeshfZ2
+	Id0dv7lnjcAFRDAdEPg8hKqEnqw1KLTSnCZfkmdP11D1IdNQajLx39Ncthenx/GEwuOwPov/0Jj
+	pMJpNyinVl1rlLmACxLQ9RW/GhUYpb1T16l1NeKB3U9CvgnVL9LB6MdeTYU79ZqO8LXB8kW6ZYP
+	UGx/TW0m6SaVeUqSsyKWLdrsU7mlOU1GEWgVpc7duyR3EVJjwFU=
+X-Received: by 2002:a17:90a:d888:b0:311:c970:c9c0 with SMTP id 98e67ed59e1d1-3159d8c41a8mr22338322a91.22.1750771737058;
+        Tue, 24 Jun 2025 06:28:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHBuLhxpe1LePkqlXex3v+gwLfmUkPle+4L0M+QPnAqLvByeLjot0QMO16fa1+0SFfLZT8AbA==
+X-Received: by 2002:a17:90a:d888:b0:311:c970:c9c0 with SMTP id 98e67ed59e1d1-3159d8c41a8mr22338273a91.22.1750771736450;
+        Tue, 24 Jun 2025 06:28:56 -0700 (PDT)
 Received: from [10.217.217.28] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-749c882f5b8sm1961515b3a.95.2025.06.24.06.28.24
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3159e0483desm10686245a91.32.2025.06.24.06.28.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jun 2025 06:28:32 -0700 (PDT)
-Message-ID: <ff19780e-5bbd-4074-9db3-b4f27922a093@oss.qualcomm.com>
-Date: Tue, 24 Jun 2025 18:58:24 +0530
+        Tue, 24 Jun 2025 06:28:56 -0700 (PDT)
+Message-ID: <b453e9c1-c87d-457b-8ee8-4b82a6417385@oss.qualcomm.com>
+Date: Tue, 24 Jun 2025 18:58:47 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,7 +89,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V6 4/5] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
+Subject: Re: [PATCH V6 5/5] thermal: qcom: add support for PMIC5 Gen3 ADC
+ thermal monitoring
 To: Jonathan Cameron <jic23@kernel.org>
 Cc: robh@kernel.org, krzysztof.kozlowski@linaro.org, krzk+dt@kernel.org,
         conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
@@ -105,357 +106,172 @@ Cc: robh@kernel.org, krzysztof.kozlowski@linaro.org, krzk+dt@kernel.org,
         quic_skakitap@quicinc.com, neil.armstrong@linaro.org,
         stephan.gerhold@linaro.org
 References: <20250509110959.3384306-1-jishnu.prakash@oss.qualcomm.com>
- <20250509110959.3384306-5-jishnu.prakash@oss.qualcomm.com>
- <20250511140418.33171ca3@jic23-huawei>
+ <20250509110959.3384306-6-jishnu.prakash@oss.qualcomm.com>
+ <20250511141120.58941a45@jic23-huawei>
 Content-Language: en-US
 From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-In-Reply-To: <20250511140418.33171ca3@jic23-huawei>
+In-Reply-To: <20250511141120.58941a45@jic23-huawei>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=NdDm13D4 c=1 sm=1 tr=0 ts=685aa802 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=LEaH-SS2L9D2elKWKUoA:9
- a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDExMyBTYWx0ZWRfX4Zn7q6HQoJKC
- NCI7p83zDLSyLAS9T980wwQn+IyQBp5IpfeKYdtavuE1Pq9ZQU02oFgIBqsQ3EziGHMZL70rPii
- WqOgDy9ElZF0ru52JoPE+1szoqEG0lWHHXDT9CfhrU39nAhbSuJ0/Jh09nTlWexScggIq0Zftpj
- 66YcpCxurVXDlOn4o5GwTmo/PT/hItH9TqwbVKeW2M7o7FTeCJ8VjreMqkGDIOlLzM49IgkTm6G
- 1RxgLfCR/9YkU/1lfZkKytIZ9e176IcvTjNXlMyptIxsWetDgLYnBwIobdZsiZ9KrDfCPTk/p6K
- zy3AF67gMAFlmwo9EDKpHBZws3TbDzEnZFiRRfZIvBS2cp+rxZxzEzDKYYflIvhVzChWGguWzjG
- svK6W5jHA8b6pnLxlGZEocmjp49fExMbce9SsS2bAE7oSAC/5wWt87w5MP3RhlpwLgB3vSeV
-X-Proofpoint-ORIG-GUID: EfqZqIOjxG7RAaZBSKMlW_Y2Yys0AxUz
-X-Proofpoint-GUID: EfqZqIOjxG7RAaZBSKMlW_Y2Yys0AxUz
+X-Proofpoint-ORIG-GUID: tjutDmEms5hnZMvi6Xx_gIqGFPkTzM9s
+X-Authority-Analysis: v=2.4 cv=Id+HWXqa c=1 sm=1 tr=0 ts=685aa81a cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=f4knV5qyKpdAkpOjOqoA:9 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-GUID: tjutDmEms5hnZMvi6Xx_gIqGFPkTzM9s
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDExMyBTYWx0ZWRfX5JzaBwpx1x93
+ SZ3g7wL/3LH1V8w4d1raSPMCkHw/XdgAagkqG/De06CpmGKzc8PakJalbsUXPyyF3YiatVf/18d
+ ac6PljOPkfWEnR18qBraBv15FybPNLBsTrPChbzeSJ/PQQIV50IgSa7WimW927/yazGAL/fSCqN
+ GDW0+A+ILwipcdhc6tVKWbDZvOST7DoD39nmzWMN6b+IntlvWCGqJomYSBYlmywnDEGSW9r+Zkf
+ kbHpvTTgsT/VVpRO5VwKf1FL7F6RBwtGCcZP+PMtcyGP+CeSBeUzXzEoBz6AxYTiZCs+Axq7Mg+
+ Q5PNNytRdUcg6akdHEhcKNnNN8+jqV4X/hx751fdkY/ShMrSWfepCBRcz7xCvNR7W4m3apknx4W
+ dV14scAiCE8jUC9ctUhhc3xlFJETAZWwvjCw6XfoXDrcnZT/j4qbGO30oCeaBXQcSwJza9A1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-06-24_05,2025-06-23_07,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
- phishscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=999 adultscore=0
- clxscore=1015 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ spamscore=0 priorityscore=1501 mlxlogscore=864 phishscore=0 bulkscore=0
+ clxscore=1015 impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
  definitions=main-2506240113
 
 Hi Jonathan,
 
-On 5/11/2025 6:34 PM, Jonathan Cameron wrote:
-> On Fri,  9 May 2025 16:39:58 +0530
+On 5/11/2025 6:41 PM, Jonathan Cameron wrote:
+> On Fri,  9 May 2025 16:39:59 +0530
 > Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
 > 
->> The ADC architecture on PMIC5 Gen3 is similar to that on PMIC5 Gen2,
->> with all SW communication to ADC going through PMK8550 which
->> communicates with other PMICs through PBS.
+>> Add support for ADC_TM part of PMIC5 Gen3.
 >>
-
-...
-
->> +#include <linux/delay.h>
->> +#include <linux/iio/adc/qcom-adc5-gen3-common.h>
->> +
->> +int adc5_gen3_read(struct adc5_device_data *adc, unsigned int sdam_index,
->> +		   u16 offset, u8 *data, int len)
->> +{
->> +	return regmap_bulk_read(adc->regmap,
->> +				adc->base[sdam_index].base_addr + offset,
->> +				data, len);
->> +}
->> +EXPORT_SYMBOL(adc5_gen3_read);
+>> This is an auxiliary driver under the Gen3 ADC driver, which implements the
+>> threshold setting and interrupt generating functionalities of QCOM ADC_TM
+>> drivers, used to support thermal trip points.
+>>
+>> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+> Hi Jishnu,
 > 
-> Consider namespacing these exports.
+> A few minor things inline.
 > 
-
-OK, I'll add them in the existing namespace (QCOM_SPMI_ADC5_GEN3)
-if there's no issue.
-
->> +
->> +int adc5_gen3_write(struct adc5_device_data *adc, unsigned int sdam_index,
->> +		    u16 offset, u8 *data, int len)
+> Jonathan
+> 
+>> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
+>> new file mode 100644
+>> index 000000000000..c63822635f10
+>> --- /dev/null
+>> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
+> 
+>> +static int adc_tm5_register_tzd(struct adc_tm5_gen3_chip *adc_tm5)
 >> +{
->> +	return regmap_bulk_write(adc->regmap,
->> +				 adc->base[sdam_index].base_addr + offset,
->> +				 data, len);
->> +}
->> +EXPORT_SYMBOL(adc5_gen3_write);
+>> +	unsigned int i, channel;
+>> +	struct thermal_zone_device *tzd;
 >> +
->> +/*
-
-...
-
->> +	if (status & ADC5_GEN3_STATUS1_CONV_FAULT) {
->> +		dev_err_ratelimited(adc->dev,
->> +				    "Unexpected conversion fault, status:%#x, eoc_status:%#x\n",
->> +				    status, eoc_status);
->> +		val = ADC5_GEN3_CONV_ERR_CLR_REQ;
->> +		adc5_gen3_status_clear(&adc->dev_data, ADC5_GEN3_VADC_SDAM,
->> +				       ADC5_GEN3_CONV_ERR_CLR, &val, 1);
->> +		return IRQ_HANDLED;
->> +	}
+>> +	for (i = 0; i < adc_tm5->nchannels; i++) {
+>> +		channel = V_CHAN(adc_tm5->chan_props[i].common_props);
+>> +		tzd = devm_thermal_of_zone_register(adc_tm5->dev, channel,
+>> +						    &adc_tm5->chan_props[i],
+>> +						    &adc_tm_ops);
 >> +
->> +	/* CHAN0 is the preconfigured channel for immediate conversion */
->> +	if (eoc_status & ADC5_GEN3_EOC_CHAN_0)
->> +		complete(&adc->complete);
->> +
->> +	ret = adc5_gen3_read(&adc->dev_data, ADC5_GEN3_VADC_SDAM,
->> +			     ADC5_GEN3_TM_HIGH_STS, tm_status, sizeof(tm_status));
->> +	if (ret) {
->> +		dev_err(adc->dev, "adc read TM status failed with %d\n", ret);
->> +		return IRQ_HANDLED;
->> +	}
->> +
->> +	if (tm_status[0] || tm_status[1]) {
->> +		adev = adc->tm_aux;
->> +		if (!adev || !adev->dev.driver) {
->> +			dev_err(adc->dev,
->> +				"adc_tm auxiliary device not initialized\n");
->> +			return IRQ_HANDLED;
+>> +		if (IS_ERR(tzd)) {
+>> +			if (PTR_ERR(tzd) == -ENODEV) {
+>> +				dev_warn(adc_tm5->dev,
+>> +					 "thermal sensor on channel %d is not used\n",
+>> +					 channel);
+>> +				continue;
+>> +			}
+>> +			return dev_err_probe(adc_tm5->dev, PTR_ERR(tzd),
+>> +					     "Error registering TZ zone:%ld for channel:%d\n",
+>> +					     PTR_ERR(tzd), channel);
 >> +		}
->> +
->> +		adrv_tm = container_of(adev->dev.driver,
->> +				       struct adc_tm5_auxiliary_drv,
->> +				       adrv.driver);
->> +
->> +		if (adrv_tm && adrv_tm->tm_event_notify)
->> +			adrv_tm->tm_event_notify(adev);
->> +		else
->> +			dev_err(adc->dev,
->> +				"adc_tm auxiliary driver not initialized\n");
+>> +		adc_tm5->chan_props[i].tzd = tzd;
+>> +		devm_thermal_add_hwmon_sysfs(adc_tm5->dev, tzd);
 > 
-> Not return?  Seems odd to print the dbg print only in this error path path.
+> Can fail so unusual not to see an error check.  Add a comment if intended.
+>
 
-In that case, I'll move the print upwards, so that it appears just before
-the if() check checking tm_status[]. I think it might be useful to have this
-print appear in the error paths.
-
-> 
+I just added it this way initially as I saw it was called without an error check
+following it in other places in the kernel. I'll add an error check. 
+ 
 >> +	}
->> +
->> +	dev_dbg(adc->dev,
->> +		"Interrupt status:%#x, EOC status:%#x, high:%#x, low:%#x\n",
->> +		status, eoc_status, tm_status[0], tm_status[1]);
->> +
->> +	return IRQ_HANDLED;
+>> +	return 0;
 >> +}
 > 
->> +static int adc5_gen3_get_fw_channel_data(struct adc5_chip *adc,
->> +					 struct adc5_channel_prop *prop,
->> +					 struct fwnode_handle *fwnode)
+>> +
+>> +static int adc_tm5_probe(struct auxiliary_device *aux_dev,
+>> +			 const struct auxiliary_device_id *id)
 >> +{
->> +	const char *name = fwnode_get_name(fwnode);
->> +	const struct adc5_data *data = adc->data;
+>> +	struct adc_tm5_gen3_chip *adc_tm5;
+>> +	struct tm5_aux_dev_wrapper *aux_dev_wrapper;
+>> +	struct device *dev = &aux_dev->dev;
+>> +	int i, ret;
+>> +
+>> +	adc_tm5 = devm_kzalloc(&aux_dev->dev, sizeof(*adc_tm5), GFP_KERNEL);
+> 
 
 ...
 
->> +static const struct adc5_data adc5_gen3_data_pmic = {
->> +	.full_scale_code_volt = 0x70e4,
->> +	.adc_chans = adc5_gen3_chans_pmic,
->> +	.info = &adc5_gen3_info,
->> +	.decimation = (unsigned int [ADC5_DECIMATION_SAMPLES_MAX])
->> +				{85, 340, 1360},
+>> +	/*
+>> +	 * This drvdata is only used in the function (adctm_event_handler)
+>> +	 * called by parent ADC driver in case of TM violation on the first SDAM.
+>> +	 */
+>> +	auxiliary_set_drvdata(aux_dev, adc_tm5);
+>> +
+>> +	ret = devm_add_action(adc_tm5->dev, adc5_gen3_clear_work, adc_tm5);
 > 
-> Inconsistent spacing. Should be { 85 etc
-> 
->> +	.hw_settle_1 = (unsigned int [VADC_HW_SETTLE_SAMPLES_MAX])
->> +				{ 15, 100, 200, 300, 400, 500, 600, 700,
->> +				  1000, 2000, 4000, 8000, 16000, 32000,
->> +				  64000, 128000 },
-> Andy often points this out, but I'll do it this time. Fixed numbers (typically power of 2)
-> elements per line make it much easier to see which element is which in these arrays.
-> Reduce the indent a little to allow that here.
+> I'd add a comment on what this is undoing as normally devm clean up matches
+> something being started and there is no obvious sign of what that is here.
 
-Does this look fine?
-
-	.hw_settle_1 = (unsigned int [VADC_HW_SETTLE_SAMPLES_MAX])
-			  { 15, 100, 200, 300, 
-			    400, 500, 600, 700,
-			    1000, 2000, 4000, 8000,
-			    16000, 32000, 64000, 128000 },
-
+This is meant to cancel any existing instances of tm_handler_work scheduled
+by a TM interrupt, at the time of module removal. I'll add a comment for it.
 
 > 
->> +};
->> +
->> +static const struct of_device_id adc5_match_table[] = {
->> +	{
->> +		.compatible = "qcom,spmi-adc5-gen3",
->> +		.data = &adc5_gen3_data_pmic,
->> +	},
->> +	{ }
->> +};
->> +MODULE_DEVICE_TABLE(of, adc5_match_table);
->> +
->> +static int adc5_get_fw_data(struct adc5_chip *adc)
-
-...
-
-
->> +
->> +static void adc5_gen3_uninit_aux(void *data)
->> +{
->> +	auxiliary_device_uninit(data);
->> +}
->> +
->> +static void adc5_gen3_delete_aux(void *data)
->> +{
->> +	auxiliary_device_delete(data);
->> +}
->> +
->> +static void adc5_gen3_aux_device_release(struct device *dev)
->> +{
->> +	struct auxiliary_device *aux = container_of(dev, struct auxiliary_device,
->> +						    dev);
->> +
->> +	kfree(aux);
-> 
-> It wasn't allocated at that granularity.
-> 
->> +}
->> +
->> +static int adc5_gen3_add_aux_tm_device(struct adc5_chip *adc)
->> +{
->> +	struct tm5_aux_dev_wrapper *aux_device;
->> +	int i, ret, i_tm = 0;
->> +
->> +	aux_device = devm_kzalloc(adc->dev, sizeof(*aux_device), GFP_KERNEL);
-> 
-> There is some lifetime management stuff that is going wrong here.
-> Here you allocate a structure that directly contains the
-> struct auxiliary_device and use devm managed allocation.
-> 
-> But you free the contained struct auxiliary_device via the release
-> above. Firstly that's freeing at a different granularity which is going to
-> go wrong.  Also, that pointer is the same as aux_device here (as first element)
-> and so you free this via devm_ cleanup and on the reference count of the
-> auxiliary device dropping to zero.
-> 
-> 
-> Take a look at some other drivers that make use of auxdevs for
-> how to handle this.
-> 
-> Key is that the devm handler should be reducing the refcount, not freeing
-> the memory as the release will deal with that later.
-> 
-
-Thanks for catching it, I'll fix this in the next patch series. I think
-keeping adc5_gen3_aux_device_release() empty should be the right thing
-to do in this case.
-
-I had tried removing and reloading the main and auxiliary ADC drivers
-using modprobe, but somehow I did not see any issue immediately, when
-I tried this only once or twice. When I repeated removal and reinsertion
-several times, I eventually ran into a segmentation fault. I verified
-that when I tried the same steps keeping adc5_gen3_aux_device_release()
-empty, this did not happen.
-
->> +	if (!aux_device)
->> +		return -ENOMEM;
->> +
->> +	aux_device->aux_dev.name = "adc5_tm_gen3";
->> +	aux_device->aux_dev.dev.parent = adc->dev;
->> +	aux_device->aux_dev.dev.release = adc5_gen3_aux_device_release;
->> +
->> +	aux_device->tm_props = devm_kcalloc(adc->dev, adc->n_tm_channels,
->> +					    sizeof(*aux_device->tm_props),
->> +					    GFP_KERNEL);
->> +	if (!aux_device->tm_props)
->> +		return -ENOMEM;
->> +
->> +	aux_device->dev_data = &adc->dev_data;
->> +
->> +	for (i = 0; i < adc->nchannels; i++) {
->> +		if (!adc->chan_props[i].adc_tm)
->> +			continue;
->> +		aux_device->tm_props[i_tm] = adc->chan_props[i].common_props;
->> +		i_tm++;
->> +	}
->> +
->> +	device_set_of_node_from_dev(&aux_device->aux_dev.dev, adc->dev);
->> +
->> +	aux_device->n_tm_channels = adc->n_tm_channels;
->> +
->> +	ret = auxiliary_device_init(&aux_device->aux_dev);
->> +	if (ret) {
->> +		kfree(&aux_device->aux_dev);
-> 
-> What is this freeing? 
-
-This is also wrong as it frees the auxiliary device struct under the wrapper
-instance aux_device, which has its memory allocated with devm_kzalloc.
-I'll correct this too in the next patch series.
-
-> 
->> +		return ret;
->> +	}
->> +	ret = devm_add_action_or_reset(adc->dev, adc5_gen3_uninit_aux,
->> +				       &aux_device->aux_dev);
 >> +	if (ret)
 >> +		return ret;
 >> +
->> +	ret = auxiliary_device_add(&aux_device->aux_dev);
+>> +	ret = adc_tm5_register_tzd(adc_tm5);
+> 
+> return adc_tm5...
+> 
 >> +	if (ret)
 >> +		return ret;
->> +	ret = devm_add_action_or_reset(adc->dev, adc5_gen3_delete_aux,
->> +				       &aux_device->aux_dev);
->> +	if (ret)
->> +		return ret;
->> +
->> +	adc->tm_aux = &aux_device->aux_dev;
 >> +
 >> +	return 0;
 >> +}
 > 
->> +static int adc5_gen3_probe(struct platform_device *pdev)
+>> +static int __init adctm5_init_module(void)
 >> +{
-> 
+>> +	return auxiliary_driver_register(&adctm5gen3_auxiliary_drv.adrv);
+>> +}
 >> +
->> +	platform_set_drvdata(pdev, indio_dev);
->> +	init_completion(&adc->complete);
->> +	mutex_init(&adc->lock);
-> If spinning again for other reasons, in new code I have slight preference for
-> 	ret = devm_mutex_init(&adc->lock);
-> 	if (ret)
-> 		return ret;
+>> +static void __exit adctm5_exit_module(void)
+>> +{
+>> +	auxiliary_driver_unregister(&adctm5gen3_auxiliary_drv.adrv);
+>> +}
+>> +
+>> +module_init(adctm5_init_module);
+>> +module_exit(adctm5_exit_module);
 > 
-> It was never worth bothering with release until we had devm managed form but
-> now we do the code complexity cost is low enough to make it reasonable.
-> 
->> +	indio_dev->name = pdev->name;
-> 
-> Just to check.  Does that end up as a part number or similar?
+> module_auxiliary_driver() not work for some reason?
 
-I printed this name and it appeared like this:
+Yes, it's because module_auxiliary_driver() relies on its input parameter
+to create variable names for some of the function calls it does internally
+and this goes wrong leading to compilation errors, if the input parameter
+is more complex than a simple variable name.
 
-indio_dev->name: c426000.spmi:pmic@0:adc@9000
+I had described this issue earlier and you had agreed with me too, in this mail:
+https://lore.kernel.org/all/20250301032901.7b38fed4@jic23-huawei/
 
-It only gets the DT node names, which are generic, there are 
-no part numbers in this name.
-
-I'll address all your other comments in the next patch series.
+I'll address your other comments in the next patch series.
 
 Thanks,
 Jishnu
 
+
 > 
->> +	indio_dev->modes = INDIO_DIRECT_MODE;
->> +	indio_dev->info = &adc5_gen3_info;
->> +	indio_dev->channels = adc->iio_chans;
->> +	indio_dev->num_channels = adc->nchannels;
 >> +
->> +	return devm_iio_device_register(dev, indio_dev);
->> +}
+>> +MODULE_DESCRIPTION("SPMI PMIC Thermal Monitor ADC driver");
+>> +MODULE_LICENSE("GPL");
+>> +MODULE_IMPORT_NS("QCOM_SPMI_ADC5_GEN3");
 > 
->> diff --git a/include/linux/iio/adc/qcom-adc5-gen3-common.h b/include/linux/iio/adc/qcom-adc5-gen3-common.h
->> new file mode 100644
->> index 000000000000..4f476cd77b37
->> --- /dev/null
->> +++ b/include/linux/iio/adc/qcom-adc5-gen3-common.h
->> @@ -0,0 +1,193 @@
->> +/* SPDX-License-Identifier: GPL-2.0 */
-> 
-> 
->> +#define V_CHAN(x)		\
-> 
-> Might be a good idea to prefix this.  Seems likely we might end up with
-> a V_CHAN macro in some generic header in future.
-> 
->> +	(FIELD_PREP(ADC5_GEN3_VIRTUAL_SID_MASK, (x).sid) | (x).channel)
 
 
