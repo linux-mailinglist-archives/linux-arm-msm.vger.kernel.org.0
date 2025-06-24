@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-62175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 089F1AE603D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 11:07:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 697F0AE604C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 11:09:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BFF231924436
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 09:08:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 37764188FFF4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 09:09:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0535B27AC2F;
-	Tue, 24 Jun 2025 09:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 398A127A918;
+	Tue, 24 Jun 2025 09:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cXpk7PdQ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lQ2DyeGu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B521279DD4;
-	Tue, 24 Jun 2025 09:07:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DD827A90F;
+	Tue, 24 Jun 2025 09:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750756054; cv=none; b=WYHrFzq1lbZmV4sa5I2zFrV1gy/y22H87TDQqyiByljW7FxQXSlbM+p7AoaBoAGTCqzYNO+3Kzcgopw5+vYvHBDuC3gwgGaDUwDNIwTOLawegO/USJwemNQK2gGKPoddjWtw+67boiqlsuVZTf0h0icAAqLEAegEvIVMU/w0GTM=
+	t=1750756124; cv=none; b=i7TCUHW7VqLlHInOg6LjFyMEIm/pgyTCAbyzdeCTAZb3ePAfqJMKD4tAEB20TIJeA/BniXniLxKuvdLfnowtIlHi5Ib5zmSm6VxP0sbK1iDHxazHiiJqpDu0pyq5teXuu+VpVmgwfPGcRwR/DJabPP0OzAgudtJqIjsbsdWnF08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750756054; c=relaxed/simple;
-	bh=LImjdI/yU6Pe3jIPDaALZwPgLQGhX4tSMeDeFG4akNI=;
+	s=arc-20240116; t=1750756124; c=relaxed/simple;
+	bh=nD9Z85wNJVBrnaSiitJ62UdEMzhSwyJpACrH6JwSTmw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U3ifqAVWnsMYfkeVFTk0GuDW0PwA5TZWbf/eR17hOy8OUBEU600rHssvxqaxzKd1kNbkOjISMEbugPDe0b2y09zN0P3CrhZq6gBH7Ykl5XDbWu4pMZIILYggzjftfEvu+FNCUY+8XZZMwt8Rw0HF20ECb3vGZih3lbz9OcjZrRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cXpk7PdQ; arc=none smtp.client-ip=198.175.65.11
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q2J1DGfcrrdk13uuPMtathOIidhQz7TTBkUFuJQHSn+Bucsp4Sj+xjmnQFcJq5Nq2B6j+dI/9MmMnSWnO0yIRBGwPsPIMXqwCJYR3TN29c78TLmJ3itvNq/Allr8Fh+7WaoEnb9qvB7YXGwDzSxRkprhlulhmGw9fx+KT0iy2ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lQ2DyeGu; arc=none smtp.client-ip=198.175.65.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750756054; x=1782292054;
+  t=1750756122; x=1782292122;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=LImjdI/yU6Pe3jIPDaALZwPgLQGhX4tSMeDeFG4akNI=;
-  b=cXpk7PdQSwENHkV7oOU0MfNOcFZOicbs316bmV0E59SSOsh4hW1uvWNs
-   evfUsgU7HcZPFtaOPwbAvx8DF3hRshgyUUuFAnFq3+qq3c0c+3MX8RQrW
-   tKskYvP827GQsmv++UB0q+NsL7uzbTFhpPRkkiSyBxSuHHOgYFd8k5SH6
-   EYRtpBgBcXGsVYoyu4YssaDL1tuoITN5hWkt1cahooxkyrVdZ19DCkoQD
-   WNiyqJ0zBXd0IBQ/UZvQydx2s0B/PpwlY2QRzXmpqe/sRHJE53fLP25eZ
-   G86HoAsoAt+8SvvasfV2s6lYtvjwS9odMZBRyz0BnOPEU4abCgb+r2AOe
-   g==;
-X-CSE-ConnectionGUID: 1Rcl+j4WQn6UljEdQnSivA==
-X-CSE-MsgGUID: +uINwZwvRLKNHKB5WCxiuA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11473"; a="63251918"
+  bh=nD9Z85wNJVBrnaSiitJ62UdEMzhSwyJpACrH6JwSTmw=;
+  b=lQ2DyeGu/TUNuFFTn/7G+c2Mw1wK+AYye1CeWuE3sVwxEyltmSnvQJ5N
+   EeIPHYUjiAcxZy3arq+r9wlcrVFQkseDc1Rkx54z2mXoGOepjU/8cBiu3
+   JbQixISUP9BZ4WbZuA/cgOXgS0SSuJ0YcUUz6xPH7/r6tiFWogawXw8Sw
+   HPOjjR5Z+hacx+17UTFUadkHhtVO9meG2UY6C+Hbm7jZCK5ImciQmIqsb
+   2VNxMD10Q7otmizNV+7T/cUGPcWlUSJGzv5BCB63g7DH6cNfE7Sffhakz
+   pCsIYLEB12+yEnx9bYhiM/UZbmjz3O+p2wRcYzuYNDp+KvSoMjiyXoifH
+   w==;
+X-CSE-ConnectionGUID: C26KPgtiR1mO4tS+L3GkCw==
+X-CSE-MsgGUID: WvKg51XyQbGb/MI3azR0Dw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11473"; a="53123488"
 X-IronPort-AV: E=Sophos;i="6.16,261,1744095600"; 
-   d="scan'208";a="63251918"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2025 02:07:33 -0700
-X-CSE-ConnectionGUID: LNJ52oFbQHuKRGfw+S9VOg==
-X-CSE-MsgGUID: mZKINAqeRj+hasMGPN8SIg==
+   d="scan'208";a="53123488"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2025 02:08:41 -0700
+X-CSE-ConnectionGUID: NGLu+VhQQnGaJJE3DBGd3g==
+X-CSE-MsgGUID: hi2eUoqAQ/exPm0GXxITBQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,261,1744095600"; 
-   d="scan'208";a="151609097"
+   d="scan'208";a="157364202"
 Received: from kuha.fi.intel.com ([10.237.72.152])
-  by orviesa009.jf.intel.com with SMTP; 24 Jun 2025 02:07:30 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 24 Jun 2025 12:07:28 +0300
-Date: Tue, 24 Jun 2025 12:07:28 +0300
+  by fmviesa004.fm.intel.com with SMTP; 24 Jun 2025 02:08:37 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 24 Jun 2025 12:08:36 +0300
+Date: Tue, 24 Jun 2025 12:08:36 +0300
 From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -68,11 +68,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>, linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/8] usb: typec: ucsi: add recipient arg to
- update_altmodes() callback
-Message-ID: <aFpq0GutBucmKWLw@kuha.fi.intel.com>
+Subject: Re: [PATCH 3/8] usb: typec: ucsi: yoga-c630: remove duplicate
+ AltModes
+Message-ID: <aFprFG2Pmnx1aAXT@kuha.fi.intel.com>
 References: <20250621-c630-ucsi-v1-0-a86de5e11361@oss.qualcomm.com>
- <20250621-c630-ucsi-v1-2-a86de5e11361@oss.qualcomm.com>
+ <20250621-c630-ucsi-v1-3-a86de5e11361@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,81 +81,65 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250621-c630-ucsi-v1-2-a86de5e11361@oss.qualcomm.com>
+In-Reply-To: <20250621-c630-ucsi-v1-3-a86de5e11361@oss.qualcomm.com>
 
-On Sat, Jun 21, 2025 at 09:12:57PM +0300, Dmitry Baryshkov wrote:
-> The update_altmodes() is executed only for connetor's AltModes, because
-> that's what required on the CCG platforms. Other platforms (like Lenovo
-> Yoga C630) requires similar fix for partner's AltModes. Extend
-> update_altmodes() callback to accept the recipient as an argument and
-> move corresponding check to the CCG UCSI driver.
+On Sat, Jun 21, 2025 at 09:12:58PM +0300, Dmitry Baryshkov wrote:
+> On Lenovo Yoga C630 the EC firmware is buggy and it returns duplicate
+> AltModes over and over again instead of returning an empty one, as
+> demanded by the spec. Ignore extra altmodes by zeroing them in the
+> update_altmodes() callback. It is not possible to shortcut that in the
+> sync_control() callback since we need to know if the AltMode matches the
+> first reported AltMode or not.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
 > ---
->  drivers/usb/typec/ucsi/ucsi.c     | 5 ++---
->  drivers/usb/typec/ucsi/ucsi.h     | 3 ++-
->  drivers/usb/typec/ucsi/ucsi_ccg.c | 4 ++++
->  3 files changed, 8 insertions(+), 4 deletions(-)
+>  drivers/usb/typec/ucsi/ucsi_yoga_c630.c | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
 > 
-> diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-> index 01ce858a1a2b3466155db340e213c767d1e79479..e913d099f934c7728cb678fc8e21e75ab0a00cce 100644
-> --- a/drivers/usb/typec/ucsi/ucsi.c
-> +++ b/drivers/usb/typec/ucsi/ucsi.c
-> @@ -531,13 +531,12 @@ ucsi_register_altmodes_nvidia(struct ucsi_connector *con, u8 recipient)
->  	 * Update the original altmode table as some ppms may report
->  	 * multiple DP altmodes.
->  	 */
-> -	if (recipient == UCSI_RECIPIENT_CON)
-> -		multi_dp = ucsi->ops->update_altmodes(ucsi, orig, updated);
-> +	multi_dp = ucsi->ops->update_altmodes(ucsi, recipient, orig, updated);
->  
->  	/* now register altmodes */
->  	for (i = 0; i < max_altmodes; i++) {
->  		memset(&desc, 0, sizeof(desc));
-> -		if (multi_dp && recipient == UCSI_RECIPIENT_CON) {
-> +		if (multi_dp) {
->  			desc.svid = updated[i].svid;
->  			desc.vdo = updated[i].mid;
->  		} else {
-> diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-> index 5a8f947fcece29f98c0458f9eb05c0c5ede2d244..d02f6a3e2f50a4044eb3f22276931017cc624532 100644
-> --- a/drivers/usb/typec/ucsi/ucsi.h
-> +++ b/drivers/usb/typec/ucsi/ucsi.h
-> @@ -82,7 +82,8 @@ struct ucsi_operations {
->  	int (*sync_control)(struct ucsi *ucsi, u64 command, u32 *cci,
->  			    void *data, size_t size);
->  	int (*async_control)(struct ucsi *ucsi, u64 command);
-> -	bool (*update_altmodes)(struct ucsi *ucsi, struct ucsi_altmode *orig,
-> +	bool (*update_altmodes)(struct ucsi *ucsi, u8 recipient,
-> +				struct ucsi_altmode *orig,
->  				struct ucsi_altmode *updated);
->  	void (*update_connector)(struct ucsi_connector *con);
->  	void (*connector_status)(struct ucsi_connector *con);
-> diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
-> index e9a9df1431af3a52c00cc456f5c920b9077a1ade..d83a0051c737336af2543fc2f6d53a131ffe9583 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-> @@ -394,6 +394,7 @@ static void ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
+> diff --git a/drivers/usb/typec/ucsi/ucsi_yoga_c630.c b/drivers/usb/typec/ucsi/ucsi_yoga_c630.c
+> index 47e8dd5b255b2b306dd9c3d6ac8c3b896954981a..7cc1342d6e2f1d2c6f5b95caa48a711a280b91d3 100644
+> --- a/drivers/usb/typec/ucsi/ucsi_yoga_c630.c
+> +++ b/drivers/usb/typec/ucsi/ucsi_yoga_c630.c
+> @@ -71,6 +71,28 @@ static int yoga_c630_ucsi_async_control(struct ucsi *ucsi, u64 command)
+>  	return yoga_c630_ec_ucsi_write(uec->ec, (u8*)&command);
 >  }
 >  
->  static bool ucsi_ccg_update_altmodes(struct ucsi *ucsi,
-> +				     u8 recipient,
->  				     struct ucsi_altmode *orig,
->  				     struct ucsi_altmode *updated)
->  {
-> @@ -402,6 +403,9 @@ static bool ucsi_ccg_update_altmodes(struct ucsi *ucsi,
->  	int i, j, k = 0;
->  	bool found = false;
->  
-> +	if (recipient != UCSI_RECIPIENT_CON)
+> +static bool yoga_c630_ucsi_update_altmodes(struct ucsi *ucsi,
+> +					   u8 recipient,
+> +					   struct ucsi_altmode *orig,
+> +					   struct ucsi_altmode *updated)
+> +{
+> +	int i;
+> +
+> +	if (orig[0].svid == 0 || recipient != UCSI_RECIPIENT_SOP)
 > +		return false;
 > +
->  	alt = uc->orig;
->  	new_alt = uc->updated;
->  	memset(uc->updated, 0, sizeof(uc->updated));
+> +	/* EC is nice and repeats altmodes again and again. Ignore copies. */
+> +	for (i = 1; i < UCSI_MAX_ALTMODES; i++) {
+> +		if (orig[i].svid == orig[0].svid) {
+> +			dev_dbg(ucsi->dev, "Found duplicate altmodes, starting from %d\n", i);
+> +			memset(&orig[i], 0, (UCSI_MAX_ALTMODES - i) * sizeof(*orig));
+> +			break;
+> +		}
+> +	}
+> +
+> +	return false;
+> +}
+> +
+>  static const struct ucsi_operations yoga_c630_ucsi_ops = {
+>  	.read_version = yoga_c630_ucsi_read_version,
+>  	.read_cci = yoga_c630_ucsi_read_cci,
+> @@ -78,6 +100,7 @@ static const struct ucsi_operations yoga_c630_ucsi_ops = {
+>  	.read_message_in = yoga_c630_ucsi_read_message_in,
+>  	.sync_control = ucsi_sync_control_common,
+>  	.async_control = yoga_c630_ucsi_async_control,
+> +	.update_altmodes = yoga_c630_ucsi_update_altmodes,
+>  };
+>  
+>  static int yoga_c630_ucsi_notify(struct notifier_block *nb,
 > 
 > -- 
 > 2.39.5
