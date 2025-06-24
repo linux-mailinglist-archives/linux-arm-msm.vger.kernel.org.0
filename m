@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-62220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2630FAE666F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 15:30:15 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C158AE6672
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 15:30:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC5AA3B2273
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 13:29:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 857F77ABD74
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 13:29:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C93D2C3253;
-	Tue, 24 Jun 2025 13:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D3C52C3265;
+	Tue, 24 Jun 2025 13:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AqAMrige"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="StSsBfzn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9222C08A5
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D682C1590
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750771705; cv=none; b=dPWVDxF0k8jlGPSvLghWwQb2cuB6g3UejsCWK1bYQSoNbaCwFcqSUkEXPKu6uIi6uTRPWUJBxqDJdGA9xqeOC8EbyBEa9sQWCkHrvTp0aKvOshryJovCSNk/ifNZ4H/Uny3WvxMjswsNhjo+F4DR8ZVR0vdFWGfOXEb8dzURLEk=
+	t=1750771718; cv=none; b=cWRosbTCQiYwLOaHnqIeL9MIvk1NRj390yvqYKr8zPIP2iGVp+r7udUw+ERgzuls3q9MefzhOC+//0BpY+133WY9mNzGV0wK5I5hHYw+ZPyOsl2WGhFvTGF5pELHww5GbC/J5cTxp9iyK7xiyMt2pNsPk0ZNmSSUcwDNhBceCEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750771705; c=relaxed/simple;
-	bh=lasfdr/TaGl7iQzxXsOYnVe4ZWgSTCOhymdRSnVVl4w=;
+	s=arc-20240116; t=1750771718; c=relaxed/simple;
+	bh=EGi6Js4t1+Z8KlSKkFFm0EkPtH4FtV0CZisHn9B3Rsg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GjfbD6+rjtRXOj97jdg4gf9SAeVfa0aeo/AnNvqFZW4yftl/2iaR2qrm9A6xyS1RmifGd23bQmlrwq7bjWvFGX2BbkQT94POpqZD3nJRQTdzel0nrCLgPP4mgji4QocMlInqh6aRBdvFX1M1hAq5jT2reL1NiqaFwOcihg585KE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AqAMrige; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=jYkqoQiOfxB/99GOLg1yKLUMUK+L9tsV4gDgHBM52yoy0hG8ZK/K4aQkcNKOTt9qtzYXsdd4CAuZ03wX4iV0h8OjzrXo5Nw+FfSksSBmNuZDa8jtXGclvNfGQAA28s2zAyNO8New62p/ljvfqPkySHxykXM/UF7RodlvqUUir7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=StSsBfzn; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55O6YMva022517
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:21 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55O8htrD014586
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1xHRBt7S0QkIA0FEcCi54MhIM2gOS2cQRRBECPdtA7s=; b=AqAMrigeblmVfCoT
-	kN8W6W+otX543cHItr3bjmHFVsVSHtXCDJyad9/KThtNRIKUK5pDTu1gguqFgnKs
-	0lycQRdRxm0ydG8ysuZynBq8LkKdLz7Uapzu/V4IAyiQE34KUOov6oOzVA+9eUZO
-	uQtJuzTfFrQ0hfEsbh9q3ZQakhi5Qbx3V1U9hvA4zPKEobkca3j0Vs2NhYlR41+K
-	SedpIlwyeKvid+p9Z6YyAbnTVIx79TQExIxCObbUODJ2Zr0SgAxS6ds+83t36hzl
-	DJaex7bbfvnMjogaKmbi7YLIdyNfeP336VNMBAz+cWA0hdmux4LjUaJssx3pvR+Q
-	1QAIuA==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f2rpvevx-1
+	RvZazCwxIEFv8meBdBiCL7u1qoqBdDyV6DUE2XCe3rg=; b=StSsBfznSX7FPokl
+	prC7bOr1dq6rSqbwon7V5OaBroPwPDswksoarR7lQC84ugZt7s2maAvfsEUcswg4
+	GZXUJIWXgdlycoR8tty8IFaqn6xQam4uMKc6vPVZ2/B1LAioHGYXEzsnzEc9cwln
+	0WGr+O33wxOJADti/jyMr3Pc7hwBd7KegW1yITwItX4CraIqkM22yf3dEvJtRS4K
+	U/iOOudFEksMDJlA80ViAKP4zIM4yi3caO9GD818seqMlLfn1ydYGOT1+Gxt10yY
+	KyL6E1UN59NoXzYuvPSA2M4XuvhEkg1EL9vPAJSnVO6PE+NTH5G1sCEQiKK/G1L/
+	vsYZCQ==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f2rpvewp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:21 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b26e33ae9d5so6704303a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 06:28:20 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:34 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b26e33ae9d5so6704615a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 06:28:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750771700; x=1751376500;
+        d=1e100.net; s=20230601; t=1750771713; x=1751376513;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1xHRBt7S0QkIA0FEcCi54MhIM2gOS2cQRRBECPdtA7s=;
-        b=Oeh1bhUg45xtx0z/ZRuKDxzA+F5z9dtSiy/JXHeulIyts+fCTBTCJVMAxQdqeNeY+w
-         rmgu34sxeQlcQ4jRDjOucFR299KF62DLXWMbYiTrfSbE3jBBRh0OVPuxMUpPSAm7N5fq
-         9zzQIbd4XR/mXz2/abMbpFKK8/FADwmkRHSOeMRdcgSnGtXK0shhpmvyRYNWo0Jd9Qkf
-         0/CJmuUwe9hU2PUMPrJLlBqsFRNC2MczLd7t/yiJ2QRnJlg8DX+1iUoJqFTga8ScRcGP
-         h268CJaSSPfr5psumb44jJYPcyDoprZTDHYSPru3TyIC9BcGZohv1j/ldLosPVAFoQyW
-         Wi+A==
-X-Forwarded-Encrypted: i=1; AJvYcCWYoitLQwuy5VhTARqh2unvgRjpFckFl3PvXy0m5piNLVaWlJq6cPrYOyCi8+YsoHo5hCsQd0/xB0XRro0e@vger.kernel.org
-X-Gm-Message-State: AOJu0YxFWAIYSgWL9vQvNi0ORsCPha2kNigrJ29fDVgwGEIq5girKsdG
-	nsxpOKzIj3ATd/w0vKuF4DV4I84hYp3igKwrC6sYub9i75Cp2bA6h/yq0nLgVSM+sjXURtHLrA+
-	KaT8/0yqD5U3pYo7C6f2EiZb749xJjgaH4ZFMeKwukQykTHdnNvQ1lIaduOGTCNxik9rh
-X-Gm-Gg: ASbGncs6wxOUzQQFR4TUMmg2msivU/1B3ei6LO/cY33+UtIubdQpdrlrUnxDOuS4L8q
-	W7T0ke17evoYNKK+paIXaUFaxcLGQZGNIhsx3lyOrDTZGaa1XWw3bIlvBd4rzOZbhQ8oH7WmzOI
-	MN/Vrqbk5LSnS3MbAJ3XrkJ36kgHsx1pClDnUqwlWQpn2KjsqGhInB53DzjkeoSVofeScO7uiFC
-	hCS7K37/vKjIoBUGn48RllXJokfh2ZKWotRr6MtIVQ9VzGA3nzCj9UhxdJEBG3yDmp/+CRo4PfS
-	BqT+TIKyFRrRkXyR/9nmK+DbypmnfRRdS+TTHi02E3HKmwDg5QI=
-X-Received: by 2002:a05:6a00:3e0b:b0:747:bd28:1ca1 with SMTP id d2e1a72fcca58-7490d663700mr28575630b3a.3.1750771699606;
-        Tue, 24 Jun 2025 06:28:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHhSkFmD+5UXG4jGrsUbcWVvnGV+HYRoYvsylLGuSpLZ0cZAFjd7dWnoz7KErNAGSRJxIUwtQ==
-X-Received: by 2002:a05:6a00:3e0b:b0:747:bd28:1ca1 with SMTP id d2e1a72fcca58-7490d663700mr28575577b3a.3.1750771699195;
-        Tue, 24 Jun 2025 06:28:19 -0700 (PDT)
+        bh=RvZazCwxIEFv8meBdBiCL7u1qoqBdDyV6DUE2XCe3rg=;
+        b=gbSR0t1XK1YgQlxF99+bhRSoAE/eRlpZMut/hlmbyL9CA39OiHDuJggJqfmRMaeh8y
+         Q++BwAHxs8WH/6H5wcvtjkdkBBthF5slqa6qp3x2/SoBmO+EQZ491q4aG+Ns+fShHMo9
+         O/as7vU4oam4j4PaBozKPcAj6HkwaV1ColHpvB+nJiAAvzFdbOZNF7MTumpUh8zM7DWx
+         aePLja6YP44wDYjzMhMcxTmDy1Y5V0FWdAAuYyn1UvQ9rR7OHnRf6NnmJ3DyTkuUdMgL
+         tfX2FF2jehb7Sq40MhUvMhq+8WVqBFBqBEymBX/I4GgVJKTiAcazWIJfas14GUvBVa1e
+         YPjw==
+X-Forwarded-Encrypted: i=1; AJvYcCVw6mi/tcvymYCeLKoGJl3vl8CZ5rQ+iSuKnA8gmB64dIg9RzvF3Iu49PT16bZmLuD8D73GHoVJILceW0hi@vger.kernel.org
+X-Gm-Message-State: AOJu0YxFlm5U8KjgdFhfpQLcwtmJB94nY7K5Cq+nwHYKYNr8IW/emX+l
+	wzumxD1KCAQH3ut+LZoAo5mQTJklxt866w3jMUKlW5y5OuFyDpBNIoQ9ExqLZUEA61gEs03vGLS
+	uO2H8+tN/vNfosHqrobUrADRXbbWdUVjUPkA3rpXO5i7VmzfThzMHuJm3gicc8LZnibay
+X-Gm-Gg: ASbGncumDuntaKBLYph+SbHIqMHL0PNvkU7zkiGXUETY9GbRe/Voa9hHRT06Ht1/XWj
+	yWLKndgDjgR5pdrOXHjoPK8hBEQH26yjol1ReK6N4qggJSWmVaYTrswuVmm1qXNZOXWS4QExZwd
+	4KWiVQSHgj99odQVcPWm9rXwx9O332d2Bx9POQfhipk43Cn3MwPb4HQlBq90awMc2Mp545e2xwK
+	c4hm3XqFL50MzZUioqJ0/ZGk79fHhyE8ruPhT5sbtP5wCF/4M3wXn0jtgdqpYLIVEJH5E4c1yr+
+	O/ZNAQUo+wqO0MZauWrihBZ7H4tJgFR9sWN+XPiimOpFTDeolzI=
+X-Received: by 2002:a05:6a20:7284:b0:1f5:72eb:8b62 with SMTP id adf61e73a8af0-22026f162a1mr24223810637.20.1750771713015;
+        Tue, 24 Jun 2025 06:28:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGD/iFGK3TEg3DGL2eOm7/r1fQKuDSUgr5lVbG0Ag5wbPKzaX5UAN6m14tHIodZOPm9VJGb6w==
+X-Received: by 2002:a05:6a20:7284:b0:1f5:72eb:8b62 with SMTP id adf61e73a8af0-22026f162a1mr24223727637.20.1750771712450;
+        Tue, 24 Jun 2025 06:28:32 -0700 (PDT)
 Received: from [10.217.217.28] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-749c882f5b8sm1961515b3a.95.2025.06.24.06.28.11
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-749c882f5b8sm1961515b3a.95.2025.06.24.06.28.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jun 2025 06:28:18 -0700 (PDT)
-Message-ID: <c7361a7e-a1e6-4327-ac7c-243fd8846f7d@oss.qualcomm.com>
-Date: Tue, 24 Jun 2025 18:58:09 +0530
+        Tue, 24 Jun 2025 06:28:32 -0700 (PDT)
+Message-ID: <ff19780e-5bbd-4074-9db3-b4f27922a093@oss.qualcomm.com>
+Date: Tue, 24 Jun 2025 18:58:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,44 +89,42 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V6 3/5] dt-bindings: iio: adc: Add support for QCOM PMIC5
- Gen3 ADC
-To: Neil Armstrong <neil.armstrong@linaro.org>, jic23@kernel.org,
-        robh@kernel.org, krzysztof.kozlowski@linaro.org, krzk+dt@kernel.org,
+Subject: Re: [PATCH V6 4/5] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: robh@kernel.org, krzysztof.kozlowski@linaro.org, krzk+dt@kernel.org,
         conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
         lumag@kernel.org, dmitry.baryshkov@oss.qualcomm.com,
         konradybcio@kernel.org, daniel.lezcano@linaro.org, sboyd@kernel.org,
         amitk@kernel.org, thara.gopinath@gmail.com, lee@kernel.org,
         rafael@kernel.org, subbaraman.narayanamurthy@oss.qualcomm.com,
         david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com,
-        quic_kamalw@quicinc.com
-Cc: rui.zhang@intel.com, lukasz.luba@arm.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        cros-qcom-dts-watchers@chromium.org, quic_skakitap@quicinc.com,
+        quic_kamalw@quicinc.com, rui.zhang@intel.com, lukasz.luba@arm.com,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
+        quic_skakitap@quicinc.com, neil.armstrong@linaro.org,
         stephan.gerhold@linaro.org
 References: <20250509110959.3384306-1-jishnu.prakash@oss.qualcomm.com>
- <20250509110959.3384306-4-jishnu.prakash@oss.qualcomm.com>
- <8736dea0-2a5b-49d8-8445-239e5d11174e@linaro.org>
+ <20250509110959.3384306-5-jishnu.prakash@oss.qualcomm.com>
+ <20250511140418.33171ca3@jic23-huawei>
 Content-Language: en-US
 From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-In-Reply-To: <8736dea0-2a5b-49d8-8445-239e5d11174e@linaro.org>
+In-Reply-To: <20250511140418.33171ca3@jic23-huawei>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=NdDm13D4 c=1 sm=1 tr=0 ts=685aa7f5 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=Bk9QF8R_Bm2aD44dtyUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDExMyBTYWx0ZWRfXwAexk3Ump++A
- jXn46FAGU1vbaidHeDSESd/1TYyKzYz3x4CJuOCEBKfGUsmb18L8zBfNXzVjd3I/mHrkUrV5PvY
- OYk4/BupT0TQFLLnA/mx6FtBq0rbzZEIWGVnw8lP8OF8K+zMHW/2oGuBFnFwGarCyOOFW2zcS9f
- XPw0Z28iswcnT7vie5gVaQ/jlq0Nf0Z7INyZ+hzqhIB9P9kfKPpT1OfO9hdU7/spm83niU6QqYT
- tNyj9I7uVeXhALj1YzG/KDX7ZAXR/DHUtBZV0xVAzSa2Kobj1/1deBfBAv8+cOBNVjzqz9jPkrN
- /E2s+CgHSsPGrPWbk0jfU6b6o80PoLDjEQhBoVFZv/lWxfNm/YoqlgCdS8RI5wy9+pg/sllub/U
- H0kBTv5qyxm2TmpX95y+ZGw1giMPhZOflwrXdg5Tyn7My3wXn9c5WrOzCEy8Az2BXFj/vikl
-X-Proofpoint-ORIG-GUID: Virx0XwsRVOqOhyIlVuFkDwulGhWFVHZ
-X-Proofpoint-GUID: Virx0XwsRVOqOhyIlVuFkDwulGhWFVHZ
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=NdDm13D4 c=1 sm=1 tr=0 ts=685aa802 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=LEaH-SS2L9D2elKWKUoA:9
+ a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDExMyBTYWx0ZWRfX4Zn7q6HQoJKC
+ NCI7p83zDLSyLAS9T980wwQn+IyQBp5IpfeKYdtavuE1Pq9ZQU02oFgIBqsQ3EziGHMZL70rPii
+ WqOgDy9ElZF0ru52JoPE+1szoqEG0lWHHXDT9CfhrU39nAhbSuJ0/Jh09nTlWexScggIq0Zftpj
+ 66YcpCxurVXDlOn4o5GwTmo/PT/hItH9TqwbVKeW2M7o7FTeCJ8VjreMqkGDIOlLzM49IgkTm6G
+ 1RxgLfCR/9YkU/1lfZkKytIZ9e176IcvTjNXlMyptIxsWetDgLYnBwIobdZsiZ9KrDfCPTk/p6K
+ zy3AF67gMAFlmwo9EDKpHBZws3TbDzEnZFiRRfZIvBS2cp+rxZxzEzDKYYflIvhVzChWGguWzjG
+ svK6W5jHA8b6pnLxlGZEocmjp49fExMbce9SsS2bAE7oSAC/5wWt87w5MP3RhlpwLgB3vSeV
+X-Proofpoint-ORIG-GUID: EfqZqIOjxG7RAaZBSKMlW_Y2Yys0AxUz
+X-Proofpoint-GUID: EfqZqIOjxG7RAaZBSKMlW_Y2Yys0AxUz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-06-24_05,2025-06-23_07,2025-03-28_01
@@ -137,58 +135,327 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
  definitions=main-2506240113
 
-Hi Neil,
+Hi Jonathan,
 
-On 5/9/2025 8:05 PM, neil.armstrong@linaro.org wrote:
+On 5/11/2025 6:34 PM, Jonathan Cameron wrote:
+> On Fri,  9 May 2025 16:39:58 +0530
+> Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
 > 
-> Hi,
-> On 09/05/2025 13:09, Jishnu Prakash wrote:
->> For the PMIC5-Gen3 type PMICs, ADC peripheral is present in HW for the
->> following PMICs: PMK8550, PM8550, PM8550B and PM8550VX PMICs.
+>> The ADC architecture on PMIC5 Gen3 is similar to that on PMIC5 Gen2,
+>> with all SW communication to ADC going through PMK8550 which
+>> communicates with other PMICs through PBS.
 >>
->> It is similar to PMIC5-Gen2, with SW communication to ADCs on all PMICs
->> going through PBS(Programmable Boot Sequence) firmware through a single
->> register interface. This interface is implemented on SDAM (Shared
->> Direct Access Memory) peripherals on the master PMIC PMK8550 rather
->> than a dedicated ADC peripheral.
->>
->> Add documentation for PMIC5 Gen3 ADC and macro definitions for ADC
->> channels and virtual channels (combination of ADC channel number and
->> PMIC SID number) per PMIC, to be used by clients of this device.
+
+...
+
+>> +#include <linux/delay.h>
+>> +#include <linux/iio/adc/qcom-adc5-gen3-common.h>
+>> +
+>> +int adc5_gen3_read(struct adc5_device_data *adc, unsigned int sdam_index,
+>> +		   u16 offset, u8 *data, int len)
+>> +{
+>> +	return regmap_bulk_read(adc->regmap,
+>> +				adc->base[sdam_index].base_addr + offset,
+>> +				data, len);
+>> +}
+>> +EXPORT_SYMBOL(adc5_gen3_read);
 > 
-> The following is missing to allow it to be a qcom,spmi-pmic subnode:
-> 
-> =========================><================================================
-> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> index 11da55644262..b97f0e7b269e 100644
-> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> @@ -127,6 +127,7 @@ patternProperties:
->    "^adc@[0-9a-f]+$":
->      type: object
->      oneOf:
-> +      - $ref: /schemas/iio/adc/qcom,spmi-adc5-gen3.yaml#
->        - $ref: /schemas/iio/adc/qcom,spmi-iadc.yaml#
->        - $ref: /schemas/iio/adc/qcom,spmi-rradc.yaml#
->        - $ref: /schemas/iio/adc/qcom,spmi-vadc.yaml#
-> =========================><================================================
-> 
-> Thanks,
-> Neil
+> Consider namespacing these exports.
 > 
 
-Thanks for catching this, I'll add a patch for this in my next patch series.
-Although I tried running full dt_binding_check and dtbs_check in my local
-workspace with my three binding patches applied, I could not see any error
-related to this, I'm not sure why.
+OK, I'll add them in the existing namespace (QCOM_SPMI_ADC5_GEN3)
+if there's no issue.
+
+>> +
+>> +int adc5_gen3_write(struct adc5_device_data *adc, unsigned int sdam_index,
+>> +		    u16 offset, u8 *data, int len)
+>> +{
+>> +	return regmap_bulk_write(adc->regmap,
+>> +				 adc->base[sdam_index].base_addr + offset,
+>> +				 data, len);
+>> +}
+>> +EXPORT_SYMBOL(adc5_gen3_write);
+>> +
+>> +/*
+
+...
+
+>> +	if (status & ADC5_GEN3_STATUS1_CONV_FAULT) {
+>> +		dev_err_ratelimited(adc->dev,
+>> +				    "Unexpected conversion fault, status:%#x, eoc_status:%#x\n",
+>> +				    status, eoc_status);
+>> +		val = ADC5_GEN3_CONV_ERR_CLR_REQ;
+>> +		adc5_gen3_status_clear(&adc->dev_data, ADC5_GEN3_VADC_SDAM,
+>> +				       ADC5_GEN3_CONV_ERR_CLR, &val, 1);
+>> +		return IRQ_HANDLED;
+>> +	}
+>> +
+>> +	/* CHAN0 is the preconfigured channel for immediate conversion */
+>> +	if (eoc_status & ADC5_GEN3_EOC_CHAN_0)
+>> +		complete(&adc->complete);
+>> +
+>> +	ret = adc5_gen3_read(&adc->dev_data, ADC5_GEN3_VADC_SDAM,
+>> +			     ADC5_GEN3_TM_HIGH_STS, tm_status, sizeof(tm_status));
+>> +	if (ret) {
+>> +		dev_err(adc->dev, "adc read TM status failed with %d\n", ret);
+>> +		return IRQ_HANDLED;
+>> +	}
+>> +
+>> +	if (tm_status[0] || tm_status[1]) {
+>> +		adev = adc->tm_aux;
+>> +		if (!adev || !adev->dev.driver) {
+>> +			dev_err(adc->dev,
+>> +				"adc_tm auxiliary device not initialized\n");
+>> +			return IRQ_HANDLED;
+>> +		}
+>> +
+>> +		adrv_tm = container_of(adev->dev.driver,
+>> +				       struct adc_tm5_auxiliary_drv,
+>> +				       adrv.driver);
+>> +
+>> +		if (adrv_tm && adrv_tm->tm_event_notify)
+>> +			adrv_tm->tm_event_notify(adev);
+>> +		else
+>> +			dev_err(adc->dev,
+>> +				"adc_tm auxiliary driver not initialized\n");
+> 
+> Not return?  Seems odd to print the dbg print only in this error path path.
+
+In that case, I'll move the print upwards, so that it appears just before
+the if() check checking tm_status[]. I think it might be useful to have this
+print appear in the error paths.
+
+> 
+>> +	}
+>> +
+>> +	dev_dbg(adc->dev,
+>> +		"Interrupt status:%#x, EOC status:%#x, high:%#x, low:%#x\n",
+>> +		status, eoc_status, tm_status[0], tm_status[1]);
+>> +
+>> +	return IRQ_HANDLED;
+>> +}
+> 
+>> +static int adc5_gen3_get_fw_channel_data(struct adc5_chip *adc,
+>> +					 struct adc5_channel_prop *prop,
+>> +					 struct fwnode_handle *fwnode)
+>> +{
+>> +	const char *name = fwnode_get_name(fwnode);
+>> +	const struct adc5_data *data = adc->data;
+
+...
+
+>> +static const struct adc5_data adc5_gen3_data_pmic = {
+>> +	.full_scale_code_volt = 0x70e4,
+>> +	.adc_chans = adc5_gen3_chans_pmic,
+>> +	.info = &adc5_gen3_info,
+>> +	.decimation = (unsigned int [ADC5_DECIMATION_SAMPLES_MAX])
+>> +				{85, 340, 1360},
+> 
+> Inconsistent spacing. Should be { 85 etc
+> 
+>> +	.hw_settle_1 = (unsigned int [VADC_HW_SETTLE_SAMPLES_MAX])
+>> +				{ 15, 100, 200, 300, 400, 500, 600, 700,
+>> +				  1000, 2000, 4000, 8000, 16000, 32000,
+>> +				  64000, 128000 },
+> Andy often points this out, but I'll do it this time. Fixed numbers (typically power of 2)
+> elements per line make it much easier to see which element is which in these arrays.
+> Reduce the indent a little to allow that here.
+
+Does this look fine?
+
+	.hw_settle_1 = (unsigned int [VADC_HW_SETTLE_SAMPLES_MAX])
+			  { 15, 100, 200, 300, 
+			    400, 500, 600, 700,
+			    1000, 2000, 4000, 8000,
+			    16000, 32000, 64000, 128000 },
+
+
+> 
+>> +};
+>> +
+>> +static const struct of_device_id adc5_match_table[] = {
+>> +	{
+>> +		.compatible = "qcom,spmi-adc5-gen3",
+>> +		.data = &adc5_gen3_data_pmic,
+>> +	},
+>> +	{ }
+>> +};
+>> +MODULE_DEVICE_TABLE(of, adc5_match_table);
+>> +
+>> +static int adc5_get_fw_data(struct adc5_chip *adc)
+
+...
+
+
+>> +
+>> +static void adc5_gen3_uninit_aux(void *data)
+>> +{
+>> +	auxiliary_device_uninit(data);
+>> +}
+>> +
+>> +static void adc5_gen3_delete_aux(void *data)
+>> +{
+>> +	auxiliary_device_delete(data);
+>> +}
+>> +
+>> +static void adc5_gen3_aux_device_release(struct device *dev)
+>> +{
+>> +	struct auxiliary_device *aux = container_of(dev, struct auxiliary_device,
+>> +						    dev);
+>> +
+>> +	kfree(aux);
+> 
+> It wasn't allocated at that granularity.
+> 
+>> +}
+>> +
+>> +static int adc5_gen3_add_aux_tm_device(struct adc5_chip *adc)
+>> +{
+>> +	struct tm5_aux_dev_wrapper *aux_device;
+>> +	int i, ret, i_tm = 0;
+>> +
+>> +	aux_device = devm_kzalloc(adc->dev, sizeof(*aux_device), GFP_KERNEL);
+> 
+> There is some lifetime management stuff that is going wrong here.
+> Here you allocate a structure that directly contains the
+> struct auxiliary_device and use devm managed allocation.
+> 
+> But you free the contained struct auxiliary_device via the release
+> above. Firstly that's freeing at a different granularity which is going to
+> go wrong.  Also, that pointer is the same as aux_device here (as first element)
+> and so you free this via devm_ cleanup and on the reference count of the
+> auxiliary device dropping to zero.
+> 
+> 
+> Take a look at some other drivers that make use of auxdevs for
+> how to handle this.
+> 
+> Key is that the devm handler should be reducing the refcount, not freeing
+> the memory as the release will deal with that later.
+> 
+
+Thanks for catching it, I'll fix this in the next patch series. I think
+keeping adc5_gen3_aux_device_release() empty should be the right thing
+to do in this case.
+
+I had tried removing and reloading the main and auxiliary ADC drivers
+using modprobe, but somehow I did not see any issue immediately, when
+I tried this only once or twice. When I repeated removal and reinsertion
+several times, I eventually ran into a segmentation fault. I verified
+that when I tried the same steps keeping adc5_gen3_aux_device_release()
+empty, this did not happen.
+
+>> +	if (!aux_device)
+>> +		return -ENOMEM;
+>> +
+>> +	aux_device->aux_dev.name = "adc5_tm_gen3";
+>> +	aux_device->aux_dev.dev.parent = adc->dev;
+>> +	aux_device->aux_dev.dev.release = adc5_gen3_aux_device_release;
+>> +
+>> +	aux_device->tm_props = devm_kcalloc(adc->dev, adc->n_tm_channels,
+>> +					    sizeof(*aux_device->tm_props),
+>> +					    GFP_KERNEL);
+>> +	if (!aux_device->tm_props)
+>> +		return -ENOMEM;
+>> +
+>> +	aux_device->dev_data = &adc->dev_data;
+>> +
+>> +	for (i = 0; i < adc->nchannels; i++) {
+>> +		if (!adc->chan_props[i].adc_tm)
+>> +			continue;
+>> +		aux_device->tm_props[i_tm] = adc->chan_props[i].common_props;
+>> +		i_tm++;
+>> +	}
+>> +
+>> +	device_set_of_node_from_dev(&aux_device->aux_dev.dev, adc->dev);
+>> +
+>> +	aux_device->n_tm_channels = adc->n_tm_channels;
+>> +
+>> +	ret = auxiliary_device_init(&aux_device->aux_dev);
+>> +	if (ret) {
+>> +		kfree(&aux_device->aux_dev);
+> 
+> What is this freeing? 
+
+This is also wrong as it frees the auxiliary device struct under the wrapper
+instance aux_device, which has its memory allocated with devm_kzalloc.
+I'll correct this too in the next patch series.
+
+> 
+>> +		return ret;
+>> +	}
+>> +	ret = devm_add_action_or_reset(adc->dev, adc5_gen3_uninit_aux,
+>> +				       &aux_device->aux_dev);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	ret = auxiliary_device_add(&aux_device->aux_dev);
+>> +	if (ret)
+>> +		return ret;
+>> +	ret = devm_add_action_or_reset(adc->dev, adc5_gen3_delete_aux,
+>> +				       &aux_device->aux_dev);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	adc->tm_aux = &aux_device->aux_dev;
+>> +
+>> +	return 0;
+>> +}
+> 
+>> +static int adc5_gen3_probe(struct platform_device *pdev)
+>> +{
+> 
+>> +
+>> +	platform_set_drvdata(pdev, indio_dev);
+>> +	init_completion(&adc->complete);
+>> +	mutex_init(&adc->lock);
+> If spinning again for other reasons, in new code I have slight preference for
+> 	ret = devm_mutex_init(&adc->lock);
+> 	if (ret)
+> 		return ret;
+> 
+> It was never worth bothering with release until we had devm managed form but
+> now we do the code complexity cost is low enough to make it reasonable.
+> 
+>> +	indio_dev->name = pdev->name;
+> 
+> Just to check.  Does that end up as a part number or similar?
+
+I printed this name and it appeared like this:
+
+indio_dev->name: c426000.spmi:pmic@0:adc@9000
+
+It only gets the DT node names, which are generic, there are 
+no part numbers in this name.
+
+I'll address all your other comments in the next patch series.
 
 Thanks,
 Jishnu
 
-
->>
->> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
->> ---
->> Changes since v5:
+> 
+>> +	indio_dev->modes = INDIO_DIRECT_MODE;
+>> +	indio_dev->info = &adc5_gen3_info;
+>> +	indio_dev->channels = adc->iio_chans;
+>> +	indio_dev->num_channels = adc->nchannels;
+>> +
+>> +	return devm_iio_device_register(dev, indio_dev);
+>> +}
+> 
+>> diff --git a/include/linux/iio/adc/qcom-adc5-gen3-common.h b/include/linux/iio/adc/qcom-adc5-gen3-common.h
+>> new file mode 100644
+>> index 000000000000..4f476cd77b37
+>> --- /dev/null
+>> +++ b/include/linux/iio/adc/qcom-adc5-gen3-common.h
+>> @@ -0,0 +1,193 @@
+>> +/* SPDX-License-Identifier: GPL-2.0 */
+> 
+> 
+>> +#define V_CHAN(x)		\
+> 
+> Might be a good idea to prefix this.  Seems likely we might end up with
+> a V_CHAN macro in some generic header in future.
+> 
+>> +	(FIELD_PREP(ADC5_GEN3_VIRTUAL_SID_MASK, (x).sid) | (x).channel)
 
 
