@@ -1,87 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-62222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14EB1AE667A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 15:31:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44494AE6679
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 15:30:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1BE637B255E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 13:29:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4EF45406D2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jun 2025 13:30:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8977F2D1926;
-	Tue, 24 Jun 2025 13:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 191C52C325A;
+	Tue, 24 Jun 2025 13:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kpYPKUN3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="byoPBbY3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2602D027F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAAB2C1583
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:29:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750771742; cv=none; b=rjhjrQLs0DUT4wcbbzb1DCIcq5NYWp9Z8WPsZN0N+mbm44cbr1sPfX8+yXDpALgRuPj9SrXRuH6YULcFaMh/fEwU2UnUWGRGxGbJMRmk3taH4OFzluLIwMFtDveKYUMBsc8PMtlf9eI3d896wltMkV3JsGTwcDk2fWHuimDU/SE=
+	t=1750771774; cv=none; b=lhssOESkupmYl7eOSlPKMTfz7hDYMOQklIA4zYrdC7284370oBOUSydLrFkIcacHV7IoLhRQYciB/aZ2R6Lrh9D7Pm0d4K/fCeeCS++I469letTu3beOlaKcEwobH1JhNKMl6qAur8Q7mOdgsuFvLrlqvPw4pkWvU7dbSfB3K14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750771742; c=relaxed/simple;
-	bh=Kq2queKYiWK77xeA7BlasqdaXnXERjuMkIMarM++d/c=;
+	s=arc-20240116; t=1750771774; c=relaxed/simple;
+	bh=KkGuUQ1jO44VkHngKbwwZg2hXuZAc53zXvsEALMTdVY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I5KAlfCFRdbfqnNONjCtAWx8/9RLT7C90uXx9I4ixZVeLq+ggtJd4I9dplsd2BfxzrXoZ5ikOFJFVHaKTiRCPkF8YiK+f5pYeh57sjmDHVDHbBzJWBc6fPZUAm06n7ozd7FklDItsC6dK4LQ9X0SIAmdI13I/hOwCPBRu5Ey9ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kpYPKUN3; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55O7Ucxb026740
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qPEA4wWOBi3YOtgcaFrbSGcrL6j9MPJBC/grGvjBzWA=; b=kpYPKUN3znQtt8K9
-	z1hmTSKeR/6a4fmLW8ZxbnVJlYM9gjSq0k/3shIZ/0s4iE9EX5R5BmLUVyk+sePk
-	Jafd3n6sbLkzKt8Nkpw7bg1R97E2gUaJuynxU4vEUYZfaM32yPbhj4lAxKu2L0Tq
-	7//1HAaGx/IHTf+OkttAr++DQt6VZ+5YCbh+cDt9y+OqGyG1YxAf2eJc6YaIhIh0
-	klG9FD9tMt4bwtTQUt7MlY1cG0zQ7xDNquyHa/72MgqGOfdNPUb8h92BZa5J9YNi
-	CgNXV+wRfhUuE3LZAnOYEAEmFnpd+y7mVdb3yEjj5LMplwfQz1UFTg5hTSWI72JX
-	6YH0xg==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47fbhqjqnp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 13:28:58 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2354ba59eb6so82952085ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 06:28:58 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=IipilCreXuVUij7QR0l+0fm0927koQuP+m31z87ZuuEUT7J4rZOYci3X1a1GvgGuMZs1vbzjQ/2l0kUe/XiVrOQa5wj4aZ/irRy71wzSOfJvN/w7J+TH0EI2yH0RZ9zIOVKGvUy74c3plICHqs9pkimN79HpExA+3XIlBH4SV3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=byoPBbY3; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-553bcf41429so367590e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jun 2025 06:29:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1750771770; x=1751376570; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3MLKEW0O/I/yGtGiPGESO1OSUMKreNoFwAhjoXeg8po=;
+        b=byoPBbY3udkIICsafgYPb2WA1zYbd/DnfFFOxTZ2dK++/oEcxh/b8Ff/njdLq/DeWl
+         zXlIxX51LlFu6UjZn5H3xy4phhuqPkN0WV4qQn718NUeGuAl7fyoDTJBhCcG7EGHgLbd
+         JxSjelOhTLwdpjHaBc7XPwvrZja9ksrVIAlaE3mbvLFDbDoZrHVRjbweQprkKGNORRCC
+         7TyZRldVeLzEX7WVohCPWV3LLLGbrcMi/Lo98gH2OEZXT17HWByBkXXBd9Xc88XOSxQf
+         A1bNFHN6cFtj1ZYEdcuZvQgsyMTR5ZEk8slZvPXAK4xw4PecGsBUWmYyRq6OxKadDD6d
+         0xCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750771737; x=1751376537;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1750771770; x=1751376570;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qPEA4wWOBi3YOtgcaFrbSGcrL6j9MPJBC/grGvjBzWA=;
-        b=ZKOpSujoqA58/CN4550dwGFUUtGpeT426Dr/LGNxSlRmCzXHHKDbRrKeJYyXZjAsrA
-         cJQPoW2XI+H7D1n4lTnTFYxxDAKXoIeEANJmqD7YPoLRyynxnTzVlXq0LisgHuSnbgv1
-         0Q3PZWDW3KDnBTqZHB2YDbLzv6XJXkmE2Qv65nnNW7TKSdGNW4wLAMCLta6BkhVQAzfz
-         en3tiJGj8SJU/6fgnQYqWEF3eiiLYpvg2CDLPkxCODd8tU5kYu3yus4Z9ZIJFUPED3Zv
-         eWzFUwZYtYeFmo+bfkYt3L1EZsOEGrTO7Y/CM2Ht7l5vIDl5chzMax+4Qw148ItE8MWN
-         uquw==
-X-Forwarded-Encrypted: i=1; AJvYcCWwAho+0zFDPU8IQeKZ+/E3Pxk0BM+n465EFfU1qhHY9t/CTNO8U2/AEz7MuIswwkcaWqnLZHm+nb6cNwE2@vger.kernel.org
-X-Gm-Message-State: AOJu0YzaSmDtJlJHY7euQZv8MLoTN93Q2dQCTtcB9PLfz9YKLlz44h4e
-	fiAELgmFOdJDjFH75eU+NuYLnd91HIUhh0BRMqos5Sjfv03kBwpA/aLTCk7rCJI5olhBxsnZrEu
-	3NYEqotfw2mMf7vokl4ratDLQueiqq5Ui124Kq4WzsBvcMqO1KxKT6y9uIIBZnd1z1zSD
-X-Gm-Gg: ASbGncs+aZW9Uw92IlzNaIVylQfVrRlGLSsfRMdmn1mY5Mk/XeEI16kpthiB35P96Kp
-	yoZ55vJZW73b6VzFa04Vkqk39q1rPWBxEOWugc0Rs8bd89iVO5Got103esJWdMTTwaNWLeshfZ2
-	Id0dv7lnjcAFRDAdEPg8hKqEnqw1KLTSnCZfkmdP11D1IdNQajLx39Ncthenx/GEwuOwPov/0Jj
-	pMJpNyinVl1rlLmACxLQ9RW/GhUYpb1T16l1NeKB3U9CvgnVL9LB6MdeTYU79ZqO8LXB8kW6ZYP
-	UGx/TW0m6SaVeUqSsyKWLdrsU7mlOU1GEWgVpc7duyR3EVJjwFU=
-X-Received: by 2002:a17:90a:d888:b0:311:c970:c9c0 with SMTP id 98e67ed59e1d1-3159d8c41a8mr22338322a91.22.1750771737058;
-        Tue, 24 Jun 2025 06:28:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHBuLhxpe1LePkqlXex3v+gwLfmUkPle+4L0M+QPnAqLvByeLjot0QMO16fa1+0SFfLZT8AbA==
-X-Received: by 2002:a17:90a:d888:b0:311:c970:c9c0 with SMTP id 98e67ed59e1d1-3159d8c41a8mr22338273a91.22.1750771736450;
-        Tue, 24 Jun 2025 06:28:56 -0700 (PDT)
-Received: from [10.217.217.28] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3159e0483desm10686245a91.32.2025.06.24.06.28.48
+        bh=3MLKEW0O/I/yGtGiPGESO1OSUMKreNoFwAhjoXeg8po=;
+        b=Nagaq9ElmGEerCoEiH4XnODGUu+DMIV6lo1ywvUK05uHr2sElCSMrNpy0ousIDxpzC
+         RmTT9Z3zBV7aT76RaG/Z5ke2JIq/HuBH2vItro+uFlPCx/Dp5CjN6WcGgbQr33cBTKhJ
+         rXTC+26eym203/Qijqd1l6eR8ejNlsK0oU+Mrw0P5p3BDTk6Z6MboqgaQKZ9yQT91XAi
+         qQ9jxWnwkhJzOg3dGsLy6P0AB0+UrWqRJaDM4Vb6NbfoYBdwKfRZ/wwB25Mh71sfN2hD
+         thkW0b6++iP0BBR4Ihs/FePb8PRgMd5AohoUAtqOxx3tkYn5lGIk5ad3k5viJcwklmr4
+         t1Zw==
+X-Forwarded-Encrypted: i=1; AJvYcCXgCBnp/a7RG3ZmAaMl7Q3ywwY96zvFNaq9LJt7a7aUtBMix7kOoJCsrqTvHokQ4UEnMHsvR2hEv58NuEb7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzu6g9aoVoIApEk4xtpJavZJ6CUg6cPfA/4LkH2LO2kYxv+xluB
+	p2D/4/tNlIEGnb3Fvg0nQBnQAHFGtcWUhwXQ0AABlV0FbkjAduvzn2wW2ZoS8S3tn+o=
+X-Gm-Gg: ASbGncvEiXtnMQS9nzb4NhLteVtCO8OBngI48Zw/c2vkXYL583zqhvbz220r+saoIEs
+	+4KDnhcFNcJFf7JIvhLL/7gLrjBbNwUjwVy3aOIjPmunvhyTDArcXSRvImyfagmhxCsdbrTFMFz
+	bAgqq2vJt0DIXEo1ZunbnsIZ2iNL6YXADLxEDnSrgUMN2wIM9P6aGlApbHVE7z5o+6SR77jjUob
+	AnxJiGwZty0FTRrr03/KJo4idVrx2Ngmn4FIA5hkDBYmGSNBkwvGIslxVjp8LTF0BK5m2frYUFv
+	MSmtPu2yxNblXAJXntu6uMK3d5CYEItTkOQ9jp/IAluCmOjPMqTQfFxSPGjRxI9gvBkp999uzYx
+	Y5QCZG+J1xcaidrcBlcmYMM+V1iopBsWaWUb6gDlC/A8jyCuXaZg=
+X-Google-Smtp-Source: AGHT+IGvDSwwMCcOPXsenn7I5P7Tg6A5E1lHNYZ5jImzp3hQ4To7P36CxWECrV/a1zEmeSJjd7sc0Q==
+X-Received: by 2002:a05:6512:3b8d:b0:553:35ab:30ae with SMTP id 2adb3069b0e04-553e3bfa0e3mr1661558e87.13.1750771770237;
+        Tue, 24 Jun 2025 06:29:30 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553e41bbba4sm1836925e87.109.2025.06.24.06.29.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jun 2025 06:28:56 -0700 (PDT)
-Message-ID: <b453e9c1-c87d-457b-8ee8-4b82a6417385@oss.qualcomm.com>
-Date: Tue, 24 Jun 2025 18:58:47 +0530
+        Tue, 24 Jun 2025 06:29:29 -0700 (PDT)
+Message-ID: <c29385d4-30ea-4774-9cf9-699b08e29800@linaro.org>
+Date: Tue, 24 Jun 2025 16:29:28 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,189 +82,68 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V6 5/5] thermal: qcom: add support for PMIC5 Gen3 ADC
- thermal monitoring
-To: Jonathan Cameron <jic23@kernel.org>
-Cc: robh@kernel.org, krzysztof.kozlowski@linaro.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
-        lumag@kernel.org, dmitry.baryshkov@oss.qualcomm.com,
-        konradybcio@kernel.org, daniel.lezcano@linaro.org, sboyd@kernel.org,
-        amitk@kernel.org, thara.gopinath@gmail.com, lee@kernel.org,
-        rafael@kernel.org, subbaraman.narayanamurthy@oss.qualcomm.com,
-        david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com,
-        quic_kamalw@quicinc.com, rui.zhang@intel.com, lukasz.luba@arm.com,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
-        quic_skakitap@quicinc.com, neil.armstrong@linaro.org,
-        stephan.gerhold@linaro.org
-References: <20250509110959.3384306-1-jishnu.prakash@oss.qualcomm.com>
- <20250509110959.3384306-6-jishnu.prakash@oss.qualcomm.com>
- <20250511141120.58941a45@jic23-huawei>
-Content-Language: en-US
-From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-In-Reply-To: <20250511141120.58941a45@jic23-huawei>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v2 1/2] dt-bindings: media: qcom,x1e80100-camss: Sort
+ interconnects alphabetically
+Content-Language: ru-RU
+To: Krzysztof Kozlowski <krzk@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org
+References: <20250624094253.57441-1-vladimir.zapolskiy@linaro.org>
+ <20250624094253.57441-2-vladimir.zapolskiy@linaro.org>
+ <aa56b956-95f3-484d-8afa-058925b95bfd@kernel.org>
+ <fff77f71-e21b-43b9-9da5-6cf819add970@linaro.org>
+ <5a5b78f7-e156-4c5e-8407-b249040e227d@kernel.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <5a5b78f7-e156-4c5e-8407-b249040e227d@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: tjutDmEms5hnZMvi6Xx_gIqGFPkTzM9s
-X-Authority-Analysis: v=2.4 cv=Id+HWXqa c=1 sm=1 tr=0 ts=685aa81a cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=f4knV5qyKpdAkpOjOqoA:9 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-GUID: tjutDmEms5hnZMvi6Xx_gIqGFPkTzM9s
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDExMyBTYWx0ZWRfX5JzaBwpx1x93
- SZ3g7wL/3LH1V8w4d1raSPMCkHw/XdgAagkqG/De06CpmGKzc8PakJalbsUXPyyF3YiatVf/18d
- ac6PljOPkfWEnR18qBraBv15FybPNLBsTrPChbzeSJ/PQQIV50IgSa7WimW927/yazGAL/fSCqN
- GDW0+A+ILwipcdhc6tVKWbDZvOST7DoD39nmzWMN6b+IntlvWCGqJomYSBYlmywnDEGSW9r+Zkf
- kbHpvTTgsT/VVpRO5VwKf1FL7F6RBwtGCcZP+PMtcyGP+CeSBeUzXzEoBz6AxYTiZCs+Axq7Mg+
- Q5PNNytRdUcg6akdHEhcKNnNN8+jqV4X/hx751fdkY/ShMrSWfepCBRcz7xCvNR7W4m3apknx4W
- dV14scAiCE8jUC9ctUhhc3xlFJETAZWwvjCw6XfoXDrcnZT/j4qbGO30oCeaBXQcSwJza9A1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-24_05,2025-06-23_07,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 mlxlogscore=864 phishscore=0 bulkscore=0
- clxscore=1015 impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506240113
 
-Hi Jonathan,
-
-On 5/11/2025 6:41 PM, Jonathan Cameron wrote:
-> On Fri,  9 May 2025 16:39:59 +0530
-> Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
-> 
->> Add support for ADC_TM part of PMIC5 Gen3.
+On 6/24/25 15:04, Krzysztof Kozlowski wrote:
+> On 24/06/2025 13:38, Vladimir Zapolskiy wrote:
+>> On 6/24/25 13:10, Krzysztof Kozlowski wrote:
+>>> On 24/06/2025 11:42, Vladimir Zapolskiy wrote:
+>>>> Sort the entries of interconnect and interconnect-names lists in the
+>>>> alphabetical order of values in the latter property.
+>>>
+>>> We do not sort these entries alphabetically and you did not explain why
+>>> you are doing this.
 >>
->> This is an auxiliary driver under the Gen3 ADC driver, which implements the
->> threshold setting and interrupt generating functionalities of QCOM ADC_TM
->> drivers, used to support thermal trip points.
+>> I did it, because I assume that the preference is to sort all named
+>> values alphanumerically.
+> 
+> Where is such preference documented?
+
+There is no such preference documented, as I stated it was my assumption
+and it was based on your firm insistance to apply a particular sorting
+order for regs, clocks and interrupts properties. Apparently you are
+fine with out of the same sort order for 'interconnects' values, the
+criteria of picked properties remains unclear for me.
+
 >>
->> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-> Hi Jishnu,
+>> Since my assumption is incorrect, I kindly ask to let me know, which
+>> properties should have values sorted by alphanumerical order of
+>> ${property}-names values and which are not, there should be a method
+>> to distinguish such different properties.
 > 
-> A few minor things inline.
-> 
-> Jonathan
-> 
->> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
->> new file mode 100644
->> index 000000000000..c63822635f10
->> --- /dev/null
->> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
-> 
->> +static int adc_tm5_register_tzd(struct adc_tm5_gen3_chip *adc_tm5)
->> +{
->> +	unsigned int i, channel;
->> +	struct thermal_zone_device *tzd;
->> +
->> +	for (i = 0; i < adc_tm5->nchannels; i++) {
->> +		channel = V_CHAN(adc_tm5->chan_props[i].common_props);
->> +		tzd = devm_thermal_of_zone_register(adc_tm5->dev, channel,
->> +						    &adc_tm5->chan_props[i],
->> +						    &adc_tm_ops);
->> +
->> +		if (IS_ERR(tzd)) {
->> +			if (PTR_ERR(tzd) == -ENODEV) {
->> +				dev_warn(adc_tm5->dev,
->> +					 "thermal sensor on channel %d is not used\n",
->> +					 channel);
->> +				continue;
->> +			}
->> +			return dev_err_probe(adc_tm5->dev, PTR_ERR(tzd),
->> +					     "Error registering TZ zone:%ld for channel:%d\n",
->> +					     PTR_ERR(tzd), channel);
->> +		}
->> +		adc_tm5->chan_props[i].tzd = tzd;
->> +		devm_thermal_add_hwmon_sysfs(adc_tm5->dev, tzd);
-> 
-> Can fail so unusual not to see an error check.  Add a comment if intended.
->
+> None of them "should" as in "break ABI" or "change something later". I
+> don't understand why again we keep discussing such trivialities which
 
-I just added it this way initially as I saw it was called without an error check
-following it in other places in the kernel. I'll add an error check. 
- 
->> +	}
->> +	return 0;
->> +}
-> 
->> +
->> +static int adc_tm5_probe(struct auxiliary_device *aux_dev,
->> +			 const struct auxiliary_device_id *id)
->> +{
->> +	struct adc_tm5_gen3_chip *adc_tm5;
->> +	struct tm5_aux_dev_wrapper *aux_dev_wrapper;
->> +	struct device *dev = &aux_dev->dev;
->> +	int i, ret;
->> +
->> +	adc_tm5 = devm_kzalloc(&aux_dev->dev, sizeof(*adc_tm5), GFP_KERNEL);
-> 
+A triviality for you is not a universal triviality, that's why people
+ask questions to remove uncertainty, the question asked above has never
+been discussed with me, and the answer is not given also.
 
-...
+Regarding "breaking the ABI", it's been discussed earlier that no dt
+binding user in the upstream implies no ABI break practically.
 
->> +	/*
->> +	 * This drvdata is only used in the function (adctm_event_handler)
->> +	 * called by parent ADC driver in case of TM violation on the first SDAM.
->> +	 */
->> +	auxiliary_set_drvdata(aux_dev, adc_tm5);
->> +
->> +	ret = devm_add_action(adc_tm5->dev, adc5_gen3_clear_work, adc_tm5);
-> 
-> I'd add a comment on what this is undoing as normally devm clean up matches
-> something being started and there is no obvious sign of what that is here.
+I believe this change shall be dropped from the series, it's not
+important at all.
 
-This is meant to cancel any existing instances of tm_handler_work scheduled
-by a TM interrupt, at the time of module removal. I'll add a comment for it.
-
-> 
->> +	if (ret)
->> +		return ret;
->> +
->> +	ret = adc_tm5_register_tzd(adc_tm5);
-> 
-> return adc_tm5...
-> 
->> +	if (ret)
->> +		return ret;
->> +
->> +	return 0;
->> +}
-> 
->> +static int __init adctm5_init_module(void)
->> +{
->> +	return auxiliary_driver_register(&adctm5gen3_auxiliary_drv.adrv);
->> +}
->> +
->> +static void __exit adctm5_exit_module(void)
->> +{
->> +	auxiliary_driver_unregister(&adctm5gen3_auxiliary_drv.adrv);
->> +}
->> +
->> +module_init(adctm5_init_module);
->> +module_exit(adctm5_exit_module);
-> 
-> module_auxiliary_driver() not work for some reason?
-
-Yes, it's because module_auxiliary_driver() relies on its input parameter
-to create variable names for some of the function calls it does internally
-and this goes wrong leading to compilation errors, if the input parameter
-is more complex than a simple variable name.
-
-I had described this issue earlier and you had agreed with me too, in this mail:
-https://lore.kernel.org/all/20250301032901.7b38fed4@jic23-huawei/
-
-I'll address your other comments in the next patch series.
-
-Thanks,
-Jishnu
-
-
-> 
->> +
->> +MODULE_DESCRIPTION("SPMI PMIC Thermal Monitor ADC driver");
->> +MODULE_LICENSE("GPL");
->> +MODULE_IMPORT_NS("QCOM_SPMI_ADC5_GEN3");
-> 
-
+-- 
+Best wishes,
+Vladimir
 
