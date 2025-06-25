@@ -1,160 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-62470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 007DAAE8483
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 15:25:13 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9ADC2AE84BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 15:32:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7B7D26A042F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 13:23:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 992EB1651A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 13:29:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3260C262FD5;
-	Wed, 25 Jun 2025 13:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE57225EF9F;
+	Wed, 25 Jun 2025 13:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="v7Jle7XQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WL9Xp+WK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97309263C8E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 13:21:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9155260563;
+	Wed, 25 Jun 2025 13:29:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750857702; cv=none; b=k2g71I+re1JP36/mmnPfeTzrVmTtfQaUhzXkC0AmSZb4sMXFiXl0c6yENmUy1Ne3cyDTaQO1WVsYeOCcbTpb7s40+617tXFu792+opgFjLBsY1BS61O50Sb6q85hbYXJW4Lau5NqxuSng5T3lIg+CeFpoefkqfgTRL31DqzQzFY=
+	t=1750858191; cv=none; b=CYIVpCrQG3BxywTCL+cRA5dIgL3WPdCWvjsja2cwtkPtOWj0JaJn+p7X+JedF4CiUh1csWHspzv6bL+9/M8WhcfnPQ9T/Pengzh8UlkfaHTLO77dUaGCWr5V7kyBIZDRcaaXMUdZUoBdtYzDsUT90P60phVgGHAPFkOqFopxe+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750857702; c=relaxed/simple;
-	bh=XmvkOnLcSLOA5wRY2raNtw7X2c4Qoh+J6tjA3O9LepE=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=pCCp58hR+hnM0Vm6ftRBpmCo1Esvebu/oTKWijCoPKTJdJ2+XbkorvqK6lU9j1DcsFphZ2oOIzZrkeBpe7tdbcCEYiQSkYgqaNMj/+nMhXg6PSAKgz35Y9C4sg8ZF/VjmGf21vqhbvaZVjKEsTQoxeIqy3+jpKKRpPYailmyJC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=v7Jle7XQ; arc=none smtp.client-ip=185.70.43.166
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1750857688; x=1751116888;
-	bh=CzQtmU7JCNnhBbxBH7NymXOfsBTPoMsAPhfxgdIRkks=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=v7Jle7XQf9DYrcj6qcY6epkUBeT7+hgiY5tEib/wgStygEUBdbYViwWAgLrdDZIdH
-	 7EFgYNHgqtr68WLMLKcZpUV/1zWkHGQ9TCVhlPlpF4Feuyg8Td6rcOUlxucQxYA1DO
-	 AvJxPiVsfLEFd273GnKuasK6Tie6Z25T69/cTA2LLMsH7ywMRCbpe3OSAWixBBgOLL
-	 qHEn5rfJfJDZPbfYTRYQXsk5R45ujNJ/vwhawwNCdfoWgNmTu71YJESse9DQWTK6WN
-	 aTa1mt6w6buDh9dOEnMQGMKBkxi2W0jT7AR2vJuDT78XXHG962Fs+kJACj5dbnUqrZ
-	 A3Jl9Ax8x76fg==
-Date: Wed, 25 Jun 2025 13:21:24 +0000
-To: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-From: "alfredo.nodo" <alfredo.nodo@protonmail.com>
-Subject: Support Qualcomm Snapdragon 8cx Gen 2 (SC8180XP)
-Message-ID: <xAOMDw6RIPBRl1NwaOZsLwoNu1l9Rs88XkbvK0P85jVRSKAakqWbTlrjEWljCJFmEXplwDa9e4MippQ-DPD1XFy_LjPTly9dUxC8NVfT7UA=@protonmail.com>
-Feedback-ID: 25470066:user:proton
-X-Pm-Message-ID: b148024c2b44af1f4e56a4eee1b58be5b191440e
+	s=arc-20240116; t=1750858191; c=relaxed/simple;
+	bh=1XnOVUk2FHxr2/AMNsDMwgOAlwlX7mRmXj/UKnoVNGI=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=fkj0sdZraLY4PdoxwzFHQ5Ecvad4nE0/Fz9EiqhDSOF2fgSxQNQE6BBgd4iwmP5zFbTOwoSF8Ul7kyXTDlU8RlKl7ugLoZTz9HmuEUg32P/pdpoW9RQexsB2L1sS9wHyexHWfp2SE+39+WlrqGO38z35Znpossaf2Mg0P2lG+S4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WL9Xp+WK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EFDCC4CEEE;
+	Wed, 25 Jun 2025 13:29:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750858191;
+	bh=1XnOVUk2FHxr2/AMNsDMwgOAlwlX7mRmXj/UKnoVNGI=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=WL9Xp+WKv90uVhgXxY6pmrgba9Ie/AiqM+WGlsv63ZFh9prR19mLn7slDOJu/vmbs
+	 MnFavOPUHIzben83ZttjjVPbj91bIj6eF2Itwhxsi4reYmn9bb2qIEAKRjLb1uCvYN
+	 j1DIToRLeHwHmG1Bqy+g+o7O0QfmsRBwTX41jAO6SVJ2XQDXxyCeO4Z5RQm8COlotj
+	 K1R5Ou+0bJG8z0lgKskK0tRl/B2r2uH0lXj8IIq0zNSNVhq43dmE743lib3ppWU2vx
+	 Z0wb4u3J3FM5bsl58wknhCwIxWGvR5zMThNWTlbvZQDADKnBBD2Aa/0z9WEbW+uP9L
+	 AIUdieur8/RiA==
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Jingoo Han <jingoohan1@gmail.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Heiko Stuebner <heiko@sntech.de>, Shawn Lin <shawn.lin@rock-chips.com>, 
+ Kevin Xie <kevin.xie@starfivetech.com>, Simon Xue <xxm@rock-chips.com>, 
+ Kever Yang <kever.yang@rock-chips.com>, 
+ Stanimir Varbanov <svarbanov@mm-sol.com>, Niklas Cassel <cassel@kernel.org>
+Cc: Wilfred Mallawa <wilfred.mallawa@wdc.com>, 
+ Damien Le Moal <dlemoal@kernel.org>, Laszlo Fiat <laszlo.fiat@proton.me>, 
+ linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
+In-Reply-To: <20250625102347.1205584-9-cassel@kernel.org>
+References: <20250625102347.1205584-9-cassel@kernel.org>
+Subject: Re: [PATCH v4 0/7] PCI: dwc: Do not enumerate bus before endpoint
+ devices are ready
+Message-Id: <175085818998.6505.2530660642460588895.b4-ty@kernel.org>
+Date: Wed, 25 Jun 2025 07:29:49 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------54767c682df1162113fd7fd91c521e6fe19d7a42b6afce69fa2a4f84989eaf9b"; charset=utf-8
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------54767c682df1162113fd7fd91c521e6fe19d7a42b6afce69fa2a4f84989eaf9b
-Content-Type: multipart/mixed;boundary=---------------------4efc586a905c4dd49a6db4aabbaa7200
-
------------------------4efc586a905c4dd49a6db4aabbaa7200
-Content-Type: multipart/alternative;boundary=---------------------2d3c9ad12a0de02b161fb5a14cd65b15
-
------------------------2d3c9ad12a0de02b161fb5a14cd65b15
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
-
-Hi,
-
-at the moment this is the current status of Snapdragon 8cx SoC support:
-
--   Gen 1 SC8180X (https://linaro.github.io/msm/soc/sc8180x) supported
--   Gen 2 SC8180XP not supported
-    =
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.2
 
 
--   Gen 3 SC8280XP (https://linaro.github.io/msm/soc/sc8280xp) supported
-    =
+On Wed, 25 Jun 2025 12:23:46 +0200, Niklas Cassel wrote:
+> The DWC PCIe controller driver currently does not follow the PCIe
+> specification with regards to the delays after link training, before
+> sending out configuration requests. This series fixes this.
+> 
+> At the same time, PATCH 3/7 addresses a regression where a Plextor
+> NVMe drive fails to be configured correctly. With this series, the
+> Plextor NVMe drive works once again.
+> 
+> [...]
 
+Applied, thanks!
 
--   Gen 4 or X Elite X1E80100 (https://linaro.github.io/msm/soc/x1e80100) =
-supported
-    =
+[1/7] PCI: Rename PCIE_RESET_CONFIG_DEVICE_WAIT_MS to PCIE_RESET_CONFIG_WAIT_MS
+      commit: 817f989700fddefa56e5e443e7d138018ca6709d
+[2/7] PCI: rockchip-host: Use macro PCIE_RESET_CONFIG_WAIT_MS
+      commit: bbc6a829ad3f054181d24a56944f944002e68898
+[3/7] PCI: dw-rockchip: Wait PCIE_RESET_CONFIG_WAIT_MS after link-up IRQ
+      commit: c7eb9c5e1498882951b7583c56add0b77bfc162e
+[4/7] PCI: qcom: Wait PCIE_RESET_CONFIG_WAIT_MS after link-up IRQ
+      commit: 15b6b243cc2b1017cf89e2477aa0b4e1a306a82a
+[5/7] PCI: dwc: Ensure that dw_pcie_wait_for_link() waits 100 ms after link up
+      commit: 80dc18a0cba8dea42614f021b20a04354b213d86
+[6/7] PCI: Move link up wait time and max retries macros to pci.h
+      commit: d7467bc72ce4e3f64062017d6c9ae3816e8a7b0e
+[7/7] PCI: Reduce PCIE_LINK_WAIT_SLEEP_MS
+      commit: 470f10f18b482b3d46429c9e6723ff0f7854d049
 
-
-
-Unfortunately, Gen 2, which is only slightly different from Gen 1, is not =
-supported (same CPU-GPU, but at a higher frequency, with BT 5.1 and WiFi 6=
- instead of BT 5 and WiFi 5).
-
-I have a Lenovo IdeaPad 5G 14Q8X05 with Gen 2 and I am forced to use windo=
-ws 11 with a virtual machine to be able to use GNU/linux. This is my dump =
-https://github.com/aarch64-laptops/build/files/14700163/ACPI.zip
-
-Here you can find the ACPI of other user https://bugzilla.kernel.org/attac=
-hment.cgi?id=3D306011
-
-Is there any hope to see such a device supported?
-
-Thank you
------------------------2d3c9ad12a0de02b161fb5a14cd65b15
-Content-Type: multipart/related;boundary=---------------------54fe12d6c0b230b5c6b5eb06b344172b
-
------------------------54fe12d6c0b230b5c6b5eb06b344172b
-Content-Type: text/html;charset=utf-8
-Content-Transfer-Encoding: base64
-
-PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IFRpbWVzIE5ldyBSb21hbiwgc2VyaWY7IGZvbnQtc2l6
-ZTogMTRweDsiPjwvZGl2PjxwcmUgc3R5bGU9ImZvbnQtc2l6ZTptZWRpdW07d2lkdGg6NTBlbTtm
-b250LWZhbWlseTptb25vc3BhY2U7d2hpdGUtc3BhY2U6cHJlLXdyYXAiPjxwcmUgc3R5bGU9ImZv
-bnQtc2l6ZTptZWRpdW07d2lkdGg6NTBlbTt3aGl0ZS1zcGFjZTpwcmUtd3JhcCI+PC9wcmU+PC9w
-cmU+PHA+SGksPC9wPjxwPmF0IHRoZSBtb21lbnQgdGhpcyBpcyB0aGUgY3VycmVudCBzdGF0dXMg
-b2YgU25hcGRyYWdvbiA4Y3ggU29DIHN1cHBvcnQ6PC9wPjxwPjwvcD48dWwgZGF0YS1lZGl0aW5n
-LWluZm89InsmcXVvdDtvcmRlcmVkU3R5bGVUeXBlJnF1b3Q7OjEsJnF1b3Q7dW5vcmRlcmVkU3R5
-bGVUeXBlJnF1b3Q7OjF9IiBzdHlsZT0ibWFyZ2luLXRvcDogMHB4OyBtYXJnaW4tYm90dG9tOiAw
-cHg7Ij48bGkgc3R5bGU9Imxpc3Qtc3R5bGUtdHlwZTogZGlzYzsiPkdlbiAxIFNDODE4MFggKGh0
-dHBzOi8vbGluYXJvLmdpdGh1Yi5pby9tc20vc29jL3NjODE4MHgpIHN1cHBvcnRlZDwvbGk+PGxp
-IHN0eWxlPSJsaXN0LXN0eWxlLXR5cGU6IGRpc2M7Ij48cD5HZW4gMiBTQzgxODBYUCBub3Qgc3Vw
-cG9ydGVkPC9wPjwvbGk+PGxpIHN0eWxlPSJsaXN0LXN0eWxlLXR5cGU6IGRpc2M7Ij48cD5HZW4g
-MyBTQzgyODBYUCAoaHR0cHM6Ly9saW5hcm8uZ2l0aHViLmlvL21zbS9zb2Mvc2M4MjgweHApIHN1
-cHBvcnRlZDwvcD48L2xpPjxsaSBzdHlsZT0ibGlzdC1zdHlsZS10eXBlOiBkaXNjOyI+PHA+R2Vu
-IDQgb3IgWCBFbGl0ZSBYMUU4MDEwMCAoaHR0cHM6Ly9saW5hcm8uZ2l0aHViLmlvL21zbS9zb2Mv
-eDFlODAxMDApIHN1cHBvcnRlZDwvcD48L2xpPjwvdWw+PHA+PC9wPjxwPlVuZm9ydHVuYXRlbHks
-IEdlbiAyLCB3aGljaCBpcyBvbmx5IHNsaWdodGx5IGRpZmZlcmVudCBmcm9tIEdlbiAxLCBpcyBu
-b3Qgc3VwcG9ydGVkIChzYW1lIENQVS1HUFUsIGJ1dCBhdCBhIGhpZ2hlciBmcmVxdWVuY3ksIHdp
-dGggQlQgNS4xIGFuZCBXaUZpIDYgaW5zdGVhZCBvZiBCVCA1IGFuZCBXaUZpIDUpLjwvcD48cD5J
-IGhhdmUgYSBMZW5vdm8gSWRlYVBhZCA1RyAxNFE4WDA1IHdpdGggR2VuIDIgYW5kIEkgYW0gZm9y
-Y2VkIHRvIHVzZSB3aW5kb3dzIDExIHdpdGggYSB2aXJ0dWFsIG1hY2hpbmUgdG8gYmUgYWJsZSB0
-byB1c2UgR05VL2xpbnV4LiBUaGlzIGlzIG15IGR1bXAgaHR0cHM6Ly9naXRodWIuY29tL2FhcmNo
-NjQtbGFwdG9wcy9idWlsZC9maWxlcy8xNDcwMDE2My9BQ1BJLnppcDwvcD48cD5IZXJlIHlvdSBj
-YW4gZmluZCB0aGUgQUNQSSBvZiBvdGhlciB1c2VyIGh0dHBzOi8vYnVnemlsbGEua2VybmVsLm9y
-Zy9hdHRhY2htZW50LmNnaT9pZD0zMDYwMTE8L3A+PHA+SXMgdGhlcmUgYW55IGhvcGUgdG8gc2Vl
-IHN1Y2ggYSBkZXZpY2Ugc3VwcG9ydGVkPzwvcD48cD5UaGFuayB5b3U8L3A+PGRpdiBjbGFzcz0i
-cHJvdG9ubWFpbF9zaWduYXR1cmVfYmxvY2siIHN0eWxlPSJmb250LWZhbWlseTogVGltZXMgTmV3
-IFJvbWFuLCBzZXJpZjsgZm9udC1zaXplOiAxNHB4OyI+PGRpdiBjbGFzcz0icHJvdG9ubWFpbF9z
-aWduYXR1cmVfYmxvY2stcHJvdG9uIj4KICAgIDwvZGl2Pgo8L2Rpdj4K
------------------------54fe12d6c0b230b5c6b5eb06b344172b--
------------------------2d3c9ad12a0de02b161fb5a14cd65b15--
------------------------4efc586a905c4dd49a6db4aabbaa7200--
-
---------54767c682df1162113fd7fd91c521e6fe19d7a42b6afce69fa2a4f84989eaf9b
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wnUEARYKACcFgmhb97kJkF1i2al9j+o/FiEEOQQUhB+JdKOcPnOCXWLZqX2P
-6j8AAL4gAP92EUmyL7hlQNKYRHXJWOc3uECOVQJFklDkoXaQxXzwQAEAtaB+
-bLr/fFZZkbOkun1JAc2nob5UqGw9bpNOn9Dewg0=
-=MAme
------END PGP SIGNATURE-----
-
-
---------54767c682df1162113fd7fd91c521e6fe19d7a42b6afce69fa2a4f84989eaf9b--
+Best regards,
+-- 
+Manivannan Sadhasivam <mani@kernel.org>
 
 
