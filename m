@@ -1,242 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-62289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7B8AAE7951
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 10:01:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F37A2AE79AD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 10:14:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FBD03A7246
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 08:00:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9A4E81895D59
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 08:15:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBCAE1EDA09;
-	Wed, 25 Jun 2025 08:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A923320DD47;
+	Wed, 25 Jun 2025 08:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kgdcbtQ+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NxLWfs3X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE16017A2F8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 08:01:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BF61E5B95;
+	Wed, 25 Jun 2025 08:14:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750838467; cv=none; b=mcCa2IdK23DOv01O3r51GbR7j6JXPZIj+qU+NGQ4Ll/lHK32Xuc8P5PJSqq0Y45mGfx2MqYZeLUr2zbTGrRwPouO32MGvEnH+Mfx6/D0QNz8ZF+dbFUt/aI7DC13nkIsse4NxWUd/Dar1w/veDKkS5eNZtcr02KFMf8Fz5RcQ3U=
+	t=1750839286; cv=none; b=MhZsMfWnUu2Id7i8NCsKfs+WJMNzTdRm0YXMMIDBqfNVvsfp2J0uaPZHTygzZIcU3EfUu2mRWiAaGTPXN0kSO/3gKgreEzsYHUERAJejGc1D/IXREdwb0CHTdztzCxeNtkQVoDK75cDxu0su88+0yvFnYRwdiWKTKa3KL8v2AL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750838467; c=relaxed/simple;
-	bh=tJ84ame5uiAFGLHTvwxXieWj1I5PmlAvpENctmLN3rM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d6kO9g6MlklNJojZUNmA23RsMRzKlJzaLoeaZYZhiDVqSxPwP3lso+ywTvcY5JTXjk1ud4E4EOyTKX9kHrMrbGMY77FAvMU9P4bgj82qV8u/ex4DDbAKoxRblsGwmAhY3FLkW8ik6USqnug1wxrUQ02V+VpqlXeKGF/pTT5UMko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=kgdcbtQ+; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4a5ac8fae12so308521cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 01:01:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1750838465; x=1751443265; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pkejM18C3GfrxytsVF12qg6ifmp82uJ44inAGNHh7OU=;
-        b=kgdcbtQ+MBzu3FVclZ66c4IA7rWz8L6Gco4jld7iRq5c88RrTh3q0wuTokPfuUeVnH
-         Ac/3HjcZMCH39P6sj9uwTodaVImHqvRRzwq0oVlYGOU5a/fFRr7m4fdyFcbw3wLon1Lt
-         X1RR2QvmHpqhzsMdRo4X3I9bqyASC0YZswWW0YzWoDJtbupllSntJm1/3XnejVxjEPiT
-         K44DyqBah5o6CuNpI8aUOCuyzZ+LIX59Z/2/obnIi6M6oTYhV73bdlaVTVV7B4PZhcnP
-         EmApyY8U0ybSQalRjuRqh72EbwDDZrUebLcq8ayeCwgQr8Zz6MwfPO8KAF3JbCfRjhkB
-         xDBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750838465; x=1751443265;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pkejM18C3GfrxytsVF12qg6ifmp82uJ44inAGNHh7OU=;
-        b=idOrHK4JwbAGmYVxN2G63YI2EAdywSXmF4jlc2ZUB31yVDJJ2ixSAT1kXHlOfEWjL1
-         R33g+IWwCmPaS6+ULTv5dVpqwZveG40aSzSJUdagEyXCj3btwHnLpGTBZ7XM5qgAG/O5
-         4BuCTvzBnJBcP7ekcWDI0mj4wb9bzShc2JRdwTKSy57d86pPQX9Rn6QDbaSSikf/3lTD
-         kvwAqr5vhaUjsvY6JSPa6hdwxaIi2NJl2thtDPEDHrjQyrq5W+P3DFLnDHY6ZwnweC9O
-         JWsi8XVd2p4za3qDPrV2Qbto+quKsPTSNIevMBN0FpM3xgWVqK1lY0zuO5p5oprJ7nfM
-         bEEw==
-X-Forwarded-Encrypted: i=1; AJvYcCVlKC4p040kbu/40Vq2IJ/riXZ2AqHYn2MeLQfLI3WsCx1MHbVWoYGDZZCOzpSK3m1rCJjosWihNfu7d2AY@vger.kernel.org
-X-Gm-Message-State: AOJu0YyI5KtSTGpVn8iG6tXqE7Dg07rep67vO20KdQVPmcmWU2nzCm68
-	3Pid2ZQOH9sAiM+ykvdewWSPs9jf5CnTTp6ZtXj+JdYKFDxN5r1NzPlZZ1/MBOd/8GzctipL9K1
-	ilJjKS4D2Lqp9BY4MDuaXXykMPjy5KPLQBlcuSS/O
-X-Gm-Gg: ASbGncvyx5dstuD4fV58rrMNLuRRKiRXdsHW6EYZuK952jjCD8C1C93j2db/29mV9IP
-	zJnwelVfgc1OspX934Q1qcS8JPNEv1WERsEbRvjE4qxIExCDl56P2aGf+IDqTf/695D7NqPj8nW
-	rC3P1/PigB7z0lafv8SKu+dSMFlC0Lsi5HoVHtVdBGxLTXZMM/+1GgdfFW1tucHAK9oL+McbxC
-X-Google-Smtp-Source: AGHT+IE2Z7ybLIm8G7t7Cyt3+6pzdghtibzBxlp3eQYjFPTUgErAfVsE5Z7imWnMwgGVA5CdNcPQ+V+dHuEnxerz1hc=
-X-Received: by 2002:a05:622a:9010:b0:4a5:9b0f:9a54 with SMTP id
- d75a77b69052e-4a7c2378969mr1821891cf.18.1750838464297; Wed, 25 Jun 2025
- 01:01:04 -0700 (PDT)
+	s=arc-20240116; t=1750839286; c=relaxed/simple;
+	bh=GqL4CggirbV7hh3xRcy8wiv64QmZ9L7ToVZj95DQD6A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=J+U1Mptaaj9n0psHj4154L2x5gJGCejupwT7boEB2ZHS94SLAtmF5mUtFpjQRQBOq7YAE/g9wVEcWi0F2NeBtLgHY+XoqLIC8auX3inHD3ALu3Jy6uGvVedXkFamiAhjTSK0udiEQCBpra/shuQWpILl1rEh1ADKFH8jTRttE4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NxLWfs3X; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55P3VeN8027585;
+	Wed, 25 Jun 2025 08:14:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	nRekJoixgz1lLAacTbvKF4g/prEyVh9BWko1JVSwWmM=; b=NxLWfs3X8Y9IVQoz
+	k69ID8KA+w8iv6gs6kVp5gyUNFs3U9nppXlW+EwufyTGuZgwWiRFxwwaL16SoBo+
+	/ToheVArOI9JWNijwXSC1gTlZcl0oDs66d208Ej2BhthefBFVJRn7ragWCmMbS9W
+	mD8toV1p3R0AzMii4OfMWFBMIgJYqxt7WWLAMCq0UbXnHcQRqL8/tzqVhMOh10Hj
+	aZNgfb+tAaKoQRoKtnTFyDXpNGllrJeDTfg2E8Le9Mat17azwA7r3vfgyXP3hJ4j
+	VCdAeHt5BnYokVHz8Yli95to5hOOoQA3Qn8/DQKVwRfc0DQHRFevsKGqmVSwZYLW
+	wY3EYA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47fbhqnjve-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 25 Jun 2025 08:14:20 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55P8EJGk006042
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 25 Jun 2025 08:14:19 GMT
+Received: from [10.216.41.135] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 25 Jun
+ 2025 01:14:14 -0700
+Message-ID: <c9528c12-378e-4072-804f-0f269246f4ed@quicinc.com>
+Date: Wed, 25 Jun 2025 13:44:11 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250611133330.1514028-1-tabba@google.com> <80e062dd-2445-45a6-ba4a-8f5fe3286909@redhat.com>
- <CA+EHjTx2MUq98=j=5J+GwSJ1gd7ax-RrpS8WhEJg4Lk9_USUmA@mail.gmail.com>
- <372bbfa5-1869-4bf2-9c16-0b828cdb86f5@redhat.com> <CA+EHjTyxwdu5YhtZRcwb-iR7aaEq1beV+4VWSsv7-X2tDVBkrA@mail.gmail.com>
- <11b23ea3-cadd-442b-88d7-491bba99dabe@redhat.com> <CA+EHjTyginj74a+A58aAODZ72q9bye5Gm=pTxMmLHrqrRxaSww@mail.gmail.com>
- <aFrlcYYM5k5kstUO@google.com>
-In-Reply-To: <aFrlcYYM5k5kstUO@google.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Wed, 25 Jun 2025 09:00:27 +0100
-X-Gm-Features: Ac12FXyOZYq0_oSfy0HtoaRPA-7sk9XG35u6SnLqNIC2Y6Zwbb2K7V88hLfiL88
-Message-ID: <CA+EHjTygKUN8xYM10sVHFDpV5GDZJLGK2JaFPbLhB1pHU7jAkw@mail.gmail.com>
-Subject: Re: [PATCH v12 00/18] KVM: Mapping guest_memfd backed memory at the
- host for software protected VMs
-To: Sean Christopherson <seanjc@google.com>
-Cc: David Hildenbrand <david@redhat.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, 
-	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
-	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
-	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
-	ira.weiny@intel.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3] scsi: ufs: qcom : Fix NULL pointer dereference in
+ ufs_qcom_setup_clocks
+To: "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Vinod Koul
+	<vkoul@kernel.org>
+CC: <mani@kernel.org>, <James.Bottomley@HansenPartnership.com>,
+        <bvanassche@acm.org>, <andersson@kernel.org>,
+        <neil.armstrong@linaro.org>, <konrad.dybcio@oss.qualcomm.com>,
+        <dmitry.baryshkov@oss.qualcomm.com>, <quic_cang@quicinc.com>,
+        <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        Naresh Kamboju
+	<naresh.kamboju@linaro.org>,
+        Aishwarya <aishwarya.tcv@arm.com>,
+        "Ram Kumar
+ Dwivedi" <quic_rdwivedi@quicinc.com>
+References: <20250623134809.20405-1-quic_nitirawa@quicinc.com>
+ <yq1bjqcoblg.fsf@ca-mkp.ca.oracle.com>
+Content-Language: en-US
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <yq1bjqcoblg.fsf@ca-mkp.ca.oracle.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4oAVagPOQyK9XJNHnwVF2s5gUIqSxlnG
+X-Authority-Analysis: v=2.4 cv=Id+HWXqa c=1 sm=1 tr=0 ts=685bafdc cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8
+ a=yCiMO8VnE8-TVoMtNoQA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 4oAVagPOQyK9XJNHnwVF2s5gUIqSxlnG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDA2MCBTYWx0ZWRfX0eh+pwMCeW8B
+ GP3tTR09qzoiP4PQwmoMVW2GhUCbTsCGdHgsSX5ai9hOSmJ02N19vfVRxQ9wMjZjwZiNGzIeo8A
+ ObYJW0DBDEcayH9fahHfaKfGioD8xg5AiMrEJTNxXUXK0KjLGs5KrEWN7Z5lpSo416MxR4zNmbK
+ 27Y2g9n5L4csxGCYQi+2tpgBwtpwupC96wZ5Ev2JXBj6q/+sPMDNNdYaAmUL2ElMquC1RMZWwK8
+ W+CIMUO4xdGEQdj9ep6svAHFSIqmXR9aYFMhjP3PA/0eUsp6QQYp748H0ChGJCoTt+Q/VkK0Sv+
+ fHg/sLs0wIrxdMhmI1hsPluF/DalFRQNtLjoAVLyUqZcBMBilDa5Ad2yEZVj5sEgAAcfywddubJ
+ ZyF27RlsRTBv8SkGVv+x9wIRoHRll93nGfXO3JJIQXrjR5k+chTewR2sMNJnpJjMdFYvek7Y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-25_01,2025-06-23_07,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0 bulkscore=0
+ clxscore=1015 impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506250060
 
-Thanks Sean,
 
-On Tue, 24 Jun 2025 at 18:50, Sean Christopherson <seanjc@google.com> wrote:
->
-> On Tue, Jun 24, 2025, Fuad Tabba wrote:
-> > On Tue, 24 Jun 2025 at 12:44, David Hildenbrand <david@redhat.com> wrote:
-> > >
-> > > On 24.06.25 12:25, Fuad Tabba wrote:
-> > > > Hi David,
-> > > >
-> > > > On Tue, 24 Jun 2025 at 11:16, David Hildenbrand <david@redhat.com> wrote:
-> > > >>
-> > > >> On 24.06.25 12:02, Fuad Tabba wrote:
-> > > >>> Hi,
-> > > >>>
-> > > >>> Before I respin this, I thought I'd outline the planned changes for
-> > > >>> V13, especially since it involves a lot of repainting. I hope that
-> > > >>> by presenting this first, we could reduce the number of times I'll
-> > > >>> need to respin it.
-> > > >>>
-> > > >>> In struct kvm_arch: add bool supports_gmem instead of renaming
-> > > >>> has_private_mem
-> > > >>>
-> > > >>> The guest_memfd flag GUEST_MEMFD_FLAG_SUPPORT_SHARED should be
-> > > >>> called GUEST_MEMFD_FLAG_MMAP
-> > > >>>
-> > > >>> The memslot internal flag KVM_MEMSLOT_SUPPORTS_GMEM_SHARED should be
-> > > >>> called KVM_MEMSLOT_SUPPORTS_GMEM_MMAP
->
-> This one...
->
-> > > >>> kvm_arch_supports_gmem_shared_mem() should be called
-> > > >>> kvm_arch_supports_gmem_mmap()
-> > > >>>
-> > > >>> kvm_gmem_memslot_supports_shared() should be called
-> > > >>> kvm_gmem_memslot_supports_mmap()
->
-> ...and this one are the only names I don't like.  Explanation below.
->
-> > > >>> Rename  kvm_slot_can_be_private() to kvm_slot_has_gmem(): since
-> > > >>> private does imply that it has gmem
-> > > >>
-> > > >> Right. It's a little more tricky in reality at least with this series:
-> > > >> without in-place conversion, not all gmem can have private memory. But
-> > > >> the places that check kvm_slot_can_be_private() likely only care about
-> > > >> if this memslot is backed by gmem.
-> > > >
-> > > > Exactly. Reading the code, all the places that check
-> > > > kvm_slot_can_be_private() are really checking whether the slot has gmem.
->
-> Yeah, I'm fine with this change.  There are a few KVM x86 uses where
-> kvm_slot_can_be_private() is slightly better in a vacuum, but in all but one of
-> those cases, the check immediately gates a kvm_gmem_xxx() call.  I.e. when
-> looking at the code as a whole, I think kvm_slot_has_gmem() will be easier for
-> new readers to understand.
->
-> The only outlier is kvm_mmu_max_mapping_level(), but that'll probably get ripped
-> apart by this series, i.e. I'm guessing kvm_slot_has_gmem() will probably work
-> out better there too.
->
-> > > > After this series, if a caller is interested in finding out whether a
-> > > > slot can be private could achieve the same effect by checking that a gmem
-> > > > slot doesn't support mmap (i.e., kvm_slot_has_gmem() &&
-> > > > kvm_arch_supports_gmem_mmap() ). If that happens, we can reintroduce
-> > > > kvm_slot_can_be_private() as such.
-> > > >
-> > > > Otherwise, I could keep it and already define it as so. What do you think?
-> > > >
-> > > >> Sean also raised a "kvm_is_memslot_gmem_only()", how did you end up
-> > > >> calling that?
-> > > >
-> > > > Good point, I'd missed that. Isn't it true that
-> > > > kvm_is_memslot_gmem_only() is synonymous (at least for now) with
-> > > > kvm_gmem_memslot_supports_mmap()?
-> > >
-> > > Yes. I think having a simple kvm_is_memslot_gmem_only() helper might
-> > > make fault handling code easier to read, though.
->
-> Yep, exactly.  The fact that a memslot is bound to a guest_memfd instance that
-> supports mmap() isn't actually what KVM cares about.  The important part is that
-> the userspace_addr in the memslot needs to be ignored when mapping memory into
-> the guest, because the bound guest_memfd is the single source of truth for guest
-> mappings.
->
-> E.g. userspace could actually point userspace_addr at a completely different
-> mapping, in which case walking the userspace page tables to get the max mapping
-> size would be all kinds of wrong.
->
-> KVM will still use userspace_addr when access guest memory from within KVM,
-> but that's not dangerous to the host kernel/KVM, only to the guest (and userspace
-> is firmly in the TCB for that side of things).
->
-> So I think KVM_MEMSLOT_IS_GMEM_ONLY and kvm_is_memslot_gmem_only()?
->
-> Those names are technically not entirely true, because as above, there is no
-> guarantee that userspace_addr actually points at the bound guest_memfd.  But
-> for all intents and purposes, that will hold true for all non-buggy setups.
 
-Got it. So, to summarize again:
+On 6/25/2025 6:58 AM, Martin K. Petersen wrote:
+> 
+> Nitin,
+> 
+>> Fix a NULL pointer dereference in ufs_qcom_setup_clocks due to an
+>> uninitialized 'host' variable. The variable 'phy' is now assigned
+>> after confirming 'host' is not NULL.
+> 
+> Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+> 
+> This will have to go through the phy tree since that's where the rest of
+> these changes went.
 
-    In struct kvm_arch: add `bool supports_gmem` instead of renaming
-`bool has_private_mem`
+Sure Martin. Thanks.
 
-    The guest_memfd flag GUEST_MEMFD_FLAG_SUPPORT_SHARED becomes
-GUEST_MEMFD_FLAG_MMAP
+Hi Vinod,
+Please could you merge this change through the phy tree.
 
-    The memslot internal flag KVM_MEMSLOT_SUPPORTS_GMEM_SHARED becomes
-KVM_MEMSLOT_GMEM_ONLY
+Regards,
+Nitin
+> 
 
-    kvm_gmem_memslot_supports_shared() becomes kvm_memslot_is_gmem_only()
-
-    kvm_arch_supports_gmem_shared_mem() becomes kvm_arch_supports_gmem_mmap()
-
-    kvm_gmem_fault_shared(struct vm_fault *vmf) becomes
-kvm_gmem_fault_user_mapping(struct vm_fault *vmf)
-
-    The capability KVM_CAP_GMEM_SHARED_MEM becomes KVM_CAP_GMEM_MMAP
-
-    The Kconfig CONFIG_KVM_GMEM_SHARED_MEM becomes CONFIG_KVM_GMEM_SUPPORTS_MMAP
-
-What will stay the same as V12:
-
-    CONFIG_KVM_PRIVATE_MEM becomes CONFIG_KVM_GMEM
-
-    CONFIG_KVM_GENERIC_PRIVATE_MEM becomes CONFIG_KVM_GENERIC_GMEM_POPULATE
-
-    kvm_slot_can_be_private() becomes kvm_slot_has_gmem()
-
-Thanks,
-/fuad
 
