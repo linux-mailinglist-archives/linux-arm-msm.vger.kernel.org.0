@@ -1,219 +1,295 @@
-Return-Path: <linux-arm-msm+bounces-62276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8DA3AE7728
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 08:34:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61CBAAE7781
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 08:52:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE4D41BC0F11
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 06:35:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 109543BF100
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 06:51:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 530FA1F8AC8;
-	Wed, 25 Jun 2025 06:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 914F01FF1C4;
+	Wed, 25 Jun 2025 06:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b="fqOFkK9n"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Bs8xII2F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-fw-80007.amazon.com (smtp-fw-80007.amazon.com [99.78.197.218])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D2C1F8755;
-	Wed, 25 Jun 2025 06:33:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=99.78.197.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D2E1F75A6;
+	Wed, 25 Jun 2025 06:50:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750833218; cv=none; b=FghMB3HfBTjkt3PWFlGdkVdzkJQ5kaKmUVwTsgaoaHITPl2QO7EkGqvgKV4i3rtD3zOR/BdNIU2tOmXmqLBJe/YnJZalSjr01HeEe2BR7GmEOXgrAYs60iDcYIQi4m9ZGjaYmcbvzvtKLAeUMDI+hM8JkBegt6TbTGSuO6sTiLM=
+	t=1750834255; cv=none; b=Pfpgm4nn22nBHqB7XDNrtsk6Ifv3jdt4DgMOTMqU8GVIXGw7PgSj37Qp/lV7fogKoQ89wfBA3PeeFIfqEBE8aWMJvGA+i0fWIgw25UcmtX2pEoXK7S89C+Q7bnv5p3NfOuUA1Fer2LaSV+R0/LWiiXO5lXqz8VuaBRr3arSmp48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750833218; c=relaxed/simple;
-	bh=RMqAKar/qsoF0HBR+956qoiEnTuyBiK0mhtIN2pC9LE=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=XDnA7J7kw4U8nAEicryB+hzW2V3ck5Fb3ifxhJaIQmitgTuM+K1ygZAl6Rgg/8puYqRLR82VXacnnPA7ZEJ/NQQogrwt4IAHwrj0tikggzclTGR+ssv0GOSOyrhJ1VrfDyKisbm2HtwgLNvUAzbQqFcZ4BRRbJKFEYyFJm5MCVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk; spf=pass smtp.mailfrom=amazon.co.uk; dkim=pass (2048-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b=fqOFkK9n; arc=none smtp.client-ip=99.78.197.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.co.uk
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.co.uk; i=@amazon.co.uk; q=dns/txt;
-  s=amazoncorp2; t=1750833217; x=1782369217;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=gEnofzmJb8uW1A9eqx0GnHV9D0Z+YeKzOjQZvrEpJsI=;
-  b=fqOFkK9nAAM0CRfEbmgMRWWR3dR8/cxymgTsltwviIcJAM7ONeoWokPm
-   RLfDcjXA9SGrnV/uG9afJ6rDrDgoRIZQK9c4NipffmI7LZnRJh65XVNtr
-   bOJjDnF4sgDRKzMJzdfHUL467HCbUsNgS2tbDt/xu41tr184to8rRnVCl
-   5PruEIuzNw/QH2s3YwpCs3ebsfrCbiucJPWdNNtcCH49+oVbnBEi3l6Oq
-   aORLgT9G7VAAlgS8bkEqhS6BV6dW39cYPYRxNOozbtTyWY1sAxtQUlDAd
-   88jVtQh9NsbDgvsDZZSXamrkzlm7CJlrBKpmVV7PwgIJrH+/Pq0vdREnD
-   w==;
-X-IronPort-AV: E=Sophos;i="6.16,264,1744070400"; 
-   d="scan'208";a="419636510"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.210])
-  by smtp-border-fw-80007.pdx80.corp.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jun 2025 06:33:34 +0000
-Received: from EX19MTAEUC001.ant.amazon.com [10.0.43.254:43950]
- by smtpin.naws.eu-west-1.prod.farcaster.email.amazon.dev [10.0.47.53:2525] with esmtp (Farcaster)
- id 9c25cafc-d2d9-4c9e-8525-84daf9e38da7; Wed, 25 Jun 2025 06:33:32 +0000 (UTC)
-X-Farcaster-Flow-ID: 9c25cafc-d2d9-4c9e-8525-84daf9e38da7
-Received: from EX19D015EUB004.ant.amazon.com (10.252.51.13) by
- EX19MTAEUC001.ant.amazon.com (10.252.51.155) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
- Wed, 25 Jun 2025 06:33:31 +0000
-Received: from EX19D015EUB004.ant.amazon.com (10.252.51.13) by
- EX19D015EUB004.ant.amazon.com (10.252.51.13) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
- Wed, 25 Jun 2025 06:33:31 +0000
-Received: from EX19D015EUB004.ant.amazon.com ([fe80::2dc9:7aa9:9cd3:fc8a]) by
- EX19D015EUB004.ant.amazon.com ([fe80::2dc9:7aa9:9cd3:fc8a%3]) with mapi id
- 15.02.1544.014; Wed, 25 Jun 2025 06:33:31 +0000
-From: "Roy, Patrick" <roypat@amazon.co.uk>
-To: "ackerleytng@google.com" <ackerleytng@google.com>, Sean Christopherson
-	<seanjc@google.com>, Fuad Tabba <tabba@google.com>
-CC: "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
-	"amoorthy@google.com" <amoorthy@google.com>, "anup@brainfault.org"
-	<anup@brainfault.org>, "aou@eecs.berkeley.edu" <aou@eecs.berkeley.edu>,
-	"brauner@kernel.org" <brauner@kernel.org>, "catalin.marinas@arm.com"
-	<catalin.marinas@arm.com>, "chao.p.peng@linux.intel.com"
-	<chao.p.peng@linux.intel.com>, "chenhuacai@kernel.org"
-	<chenhuacai@kernel.org>, "david@redhat.com" <david@redhat.com>,
-	"dmatlack@google.com" <dmatlack@google.com>, "fvdl@google.com"
-	<fvdl@google.com>, "hch@infradead.org" <hch@infradead.org>,
-	"hughd@google.com" <hughd@google.com>, "ira.weiny@intel.com"
-	<ira.weiny@intel.com>, "isaku.yamahata@gmail.com" <isaku.yamahata@gmail.com>,
-	"isaku.yamahata@intel.com" <isaku.yamahata@intel.com>, "james.morse@arm.com"
-	<james.morse@arm.com>, "jarkko@kernel.org" <jarkko@kernel.org>,
-	"jgg@nvidia.com" <jgg@nvidia.com>, "jhubbard@nvidia.com"
-	<jhubbard@nvidia.com>, "jthoughton@google.com" <jthoughton@google.com>,
-	"keirf@google.com" <keirf@google.com>, "kirill.shutemov@linux.intel.com"
-	<kirill.shutemov@linux.intel.com>, "kvm@vger.kernel.org"
-	<kvm@vger.kernel.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
-	"liam.merwick@oracle.com" <liam.merwick@oracle.com>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>, "mail@maciej.szmigiero.name"
-	<mail@maciej.szmigiero.name>, "maz@kernel.org" <maz@kernel.org>,
-	"mic@digikod.net" <mic@digikod.net>, "michael.roth@amd.com"
-	<michael.roth@amd.com>, "mpe@ellerman.id.au" <mpe@ellerman.id.au>,
-	"oliver.upton@linux.dev" <oliver.upton@linux.dev>, "palmer@dabbelt.com"
-	<palmer@dabbelt.com>, "pankaj.gupta@amd.com" <pankaj.gupta@amd.com>,
-	"paul.walmsley@sifive.com" <paul.walmsley@sifive.com>, "pbonzini@redhat.com"
-	<pbonzini@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
-	"qperret@google.com" <qperret@google.com>, "quic_cvanscha@quicinc.com"
-	<quic_cvanscha@quicinc.com>, "quic_eberman@quicinc.com"
-	<quic_eberman@quicinc.com>, "quic_mnalajal@quicinc.com"
-	<quic_mnalajal@quicinc.com>, "quic_pderrin@quicinc.com"
-	<quic_pderrin@quicinc.com>, "quic_pheragu@quicinc.com"
-	<quic_pheragu@quicinc.com>, "quic_svaddagi@quicinc.com"
-	<quic_svaddagi@quicinc.com>, "quic_tsoni@quicinc.com"
-	<quic_tsoni@quicinc.com>, "rientjes@google.com" <rientjes@google.com>, "Roy,
- Patrick" <roypat@amazon.co.uk>, "shuah@kernel.org" <shuah@kernel.org>,
-	"steven.price@arm.com" <steven.price@arm.com>, "suzuki.poulose@arm.com"
-	<suzuki.poulose@arm.com>, "vannapurve@google.com" <vannapurve@google.com>,
-	"vbabka@suse.cz" <vbabka@suse.cz>, "viro@zeniv.linux.org.uk"
-	<viro@zeniv.linux.org.uk>, "wei.w.wang@intel.com" <wei.w.wang@intel.com>,
-	"will@kernel.org" <will@kernel.org>, "willy@infradead.org"
-	<willy@infradead.org>, "xiaoyao.li@intel.com" <xiaoyao.li@intel.com>,
-	"yilun.xu@intel.com" <yilun.xu@intel.com>, "yuzenghui@huawei.com"
-	<yuzenghui@huawei.com>
-Subject: Re: [PATCH v12 04/18] KVM: x86: Rename kvm->arch.has_private_mem to
- kvm->arch.supports_gmem
-Thread-Topic: [PATCH v12 04/18] KVM: x86: Rename kvm->arch.has_private_mem to
- kvm->arch.supports_gmem
-Thread-Index: AQHb5ZsRh+1QiHl0MkWMiF4y2LWD7A==
-Date: Wed, 25 Jun 2025 06:33:31 +0000
-Message-ID: <20250625063328.28063-1-roypat@amazon.co.uk>
-References: <diqzh604lv6n.fsf@ackerleytng-ctop.c.googlers.com>
-In-Reply-To: <diqzh604lv6n.fsf@ackerleytng-ctop.c.googlers.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1750834255; c=relaxed/simple;
+	bh=zry1TbVF/2xgxDCVyb1F2wZ2ccRhXxEddlrrpFb3Lk8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=fFYi0e7PiK+S8feCnnbVqvRPFAEF9bA0YOwX603g41kFCP1MzPcx8tyEha4Y9jE9EtdK0k4bg22aHmIHw6JbgYXoJmVhyT29XzxASS213sZjt4kbZ4y4KtY/4kbKdJ7XxN0xr925kgJSrTGzbJ9qgABbCT/o+LVGJRWzWk8JohY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Bs8xII2F; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55P4mS56014580;
+	Wed, 25 Jun 2025 06:50:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	c8hHnqbIlpHCx26J4C1orX2rK76HQgkp6MrDdnANpYA=; b=Bs8xII2FEb8yC8On
+	PdPatyYO0aPZSJZcbsRzqc+AizrwVVACvdxXHYlU12YVeMzcRFbvFs/HOJcF+m4s
+	sjs9eaEUtcis4m7BET76IQHM0KEm9R9cTCU1RBLFYMIxWFtM+3hf8oqFCCjLS/Id
+	usCahhX8putbp3gw7hbrDIMNNXCcLWK4F96pRyCLw4O489Sh0EFJ8Rs+H77vztsr
+	9XDgCKLLnFp8n94dqHj8vLJjE3lxWLJjep1e5KnWgOH1e5UFGmUZzDqe1ogKwV4Y
+	6CjK0iWWxXTi+peNNnW3pjTpTXz+8HI5BEHpQrWJtyc2Td3ZIfFlU1WhaQGazXh3
+	pUvUEg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47evc5qvde-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 25 Jun 2025 06:50:48 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55P6olOq028735
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 25 Jun 2025 06:50:47 GMT
+Received: from [10.216.43.229] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 24 Jun
+ 2025 23:50:42 -0700
+Message-ID: <74793074-19ee-48f3-b502-8d970b9f50af@quicinc.com>
+Date: Wed, 25 Jun 2025 12:20:39 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/8] arm64: dts: qcom: qcs6490-audioreach: Add gpr node
+To: Bjorn Andersson <andersson@kernel.org>
+CC: Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-sound@vger.kernel.org>,
+        <kernel@oss.qualcomm.com>, Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250527111227.2318021-1-quic_pkumpatl@quicinc.com>
+ <20250527111227.2318021-2-quic_pkumpatl@quicinc.com>
+ <q6rbvbvejugioon6l23nmmzeue7l4bgtlaf44o3a4krj3lytjp@p3y6opl7vs25>
+Content-Language: en-US
+From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+In-Reply-To: <q6rbvbvejugioon6l23nmmzeue7l4bgtlaf44o3a4krj3lytjp@p3y6opl7vs25>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: evxMCpGCLPr4Oq3aJyfN3yt4aycsZw6M
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDA0OSBTYWx0ZWRfX2LnYfKSShuEf
+ JBka6qRiQ8nfO8XwSLjpmsczyu454ddR0VI9ktAqcflLnFOlWK+/fNqqkjUwlusjiRbhI5ppVxo
+ JOR8xXHyyK4z02yJrzBzWQ9n+YHNIHljLRw2lzcqjG42uxIV+s8QTa/sNu9hQ0zn5ZSb05MjFXF
+ TXV+LhTqgqlODnWabm+//t1S8eKM1SzSemV1EFmz3vLlm/eK+GTruyNx2ahvCSNGCUDYgoAhHiv
+ OJ3D/yXckqbHEa5wPFe8BE5BPuRDySA7HLHRn26nxNvOc2qvd1ptxREvq5jm6xMRXCAWq++RUH7
+ JCuiRlWNLj3h1FxN1Xh3aQnQKvCMHrbvoLam3BavH1QD5va1HYa+JS+WqQ6ZAEa8mhMkfJKuYZZ
+ sBCrneS5a/QQ6i0LDAnE5/XBAEqPZoU792FnpETLjnzSW68Pz+aPxFqZknmqCb1rjjnJBSUV
+X-Authority-Analysis: v=2.4 cv=caHSrmDM c=1 sm=1 tr=0 ts=685b9c48 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=gEfo2CItAAAA:8
+ a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=Vh00SPQc0_um_keYItkA:9 a=QEXdDO2ut3YA:10
+ a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: evxMCpGCLPr4Oq3aJyfN3yt4aycsZw6M
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-25_01,2025-06-23_07,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 mlxlogscore=999 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 adultscore=0 mlxscore=0 spamscore=0
+ malwarescore=0 phishscore=0 clxscore=1015 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506250049
 
-=0A=
-Hi Ackerley!=0A=
-=0A=
-On Tue, 2025-06-24 at 21:51 +0100, Ackerley Tng wrote:> Sean Christopherson=
- <seanjc@google.com> writes:=0A=
-> =0A=
-=0A=
-[...]=0A=
-=0A=
->> diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_=
-host.h=0A=
->> index 3d69da6d2d9e..4bc50c1e21bd 100644=0A=
->> --- a/arch/x86/include/asm/kvm_host.h=0A=
->> +++ b/arch/x86/include/asm/kvm_host.h=0A=
->> @@ -1341,7 +1341,7 @@ struct kvm_arch {=0A=
->>       unsigned int indirect_shadow_pages;=0A=
->>       u8 mmu_valid_gen;=0A=
->>       u8 vm_type;=0A=
->> -     bool has_private_mem;=0A=
->> +     bool supports_gmem;=0A=
->>       bool has_protected_state;=0A=
->>       bool pre_fault_allowed;=0A=
->>       struct hlist_head mmu_page_hash[KVM_NUM_MMU_PAGES];=0A=
->> @@ -2270,7 +2270,7 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_fo=
-rced_root_level,=0A=
->>=0A=
->>=0A=
->>  #ifdef CONFIG_KVM_GMEM=0A=
->> -#define kvm_arch_supports_gmem(kvm) ((kvm)->arch.has_private_mem)=0A=
->> +#define kvm_arch_supports_gmem(kvm) ((kvm)->arch.supports_gmem)=0A=
->>  #else=0A=
->>  #define kvm_arch_supports_gmem(kvm) false=0A=
->>  #endif=0A=
->> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c=0A=
->> index e7ecf089780a..c4e10797610c 100644=0A=
->> --- a/arch/x86/kvm/mmu/mmu.c=0A=
->> +++ b/arch/x86/kvm/mmu/mmu.c=0A=
->> @@ -3488,7 +3488,7 @@ static bool page_fault_can_be_fast(struct kvm *kvm=
-, struct kvm_page_fault *fault=0A=
->>        * on RET_PF_SPURIOUS until the update completes, or an actual spu=
-rious=0A=
->>        * case might go down the slow path. Either case will resolve itse=
-lf.=0A=
->>        */=0A=
->> -     if (kvm->arch.has_private_mem &&=0A=
->> +     if (kvm->arch.supports_gmem &&=0A=
->>           fault->is_private !=3D kvm_mem_is_private(kvm, fault->gfn))=0A=
->>               return false;=0A=
->>=0A=
-> =0A=
-> This check should remain as a check on has_private_mem.=0A=
-> =0A=
-> If the VM supports private memory, skip fast page faults on fault type=0A=
-> and KVM memory privacy status mismatches.=0A=
-=0A=
-...=0A=
- =0A=
-> Patrick, Nikita, am I right that for KVM_X86_DEFAULT_VM to work with=0A=
-> mmap-able guest_memfd, the usage in page_fault_can_be_fast() need not be=
-=0A=
-> updated, and that patch 10/18 in this series will be sufficient?=0A=
- =0A=
-Yeah, since KVM_X86_DEFAULT_VM does not and won't ever (?) support private=
-=0A=
-memory in guest_memfd (e.g. it always has to be used in all-shared mode) fr=
-om=0A=
-my understanding, the fault->is_private !=3D kvm_mem_is_private(kvm, fault-=
->gfn))=0A=
-check should never succeed anyway. kvm_mem_is_private() will always return=
-=0A=
-false, and fault->is_private should always be false, too (unless the guest =
-does=0A=
-something it should not be doing, and even then the worst case is that we w=
-on't=0A=
-be handling this weirdness "fast").=0A=
-=0A=
-In my testing with earlier iterations of this series where=0A=
-page_fault_can_be_fast() was untouched I also never saw any problems relate=
-d to=0A=
-page faults on x86.=0A=
-=0A=
-Best, =0A=
-Patrick=0A=
+
+
+On 6/18/2025 2:15 AM, Bjorn Andersson wrote:
+> On Tue, May 27, 2025 at 04:42:20PM +0530, Prasad Kumpatla wrote:
+>> From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>>
+>> Add GPR(Generic Pack router) node along with
+>> APM(Audio Process Manager) and PRM(Proxy resource
+>> Manager) audio services.
+>>
+> 
+> This should talk about the choice of adding a new "-audioreach.dtsi"
+> file, and should cover why it wouldn't make more sense to add the
+> opposite of this change in sc7180-trogdor.dtsi.
+
+Ack
+
+> 
+>> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>> Co-developed-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+>> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>> ---
+>>   .../boot/dts/qcom/qcs6490-audioreach.dtsi     | 53 +++++++++++++++++++
+>>   arch/arm64/boot/dts/qcom/sc7280.dtsi          |  2 +-
+>>   2 files changed, 54 insertions(+), 1 deletion(-)
+>>   create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi b/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi
+>> new file mode 100644
+>> index 000000000000..29d4a6a2db26
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi
+>> @@ -0,0 +1,53 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+> 
+> We can be more permissive than that, please use BSD-3-Clause.
+
+Ack
+
+> 
+>> +/*
+>> + * qcs6490 device tree source for Audioreach Solution.
+>> + * This file will handle the common audio device tree nodes.
+> 
+> "Common audio device tree nodes", but not those audio device tree nodes
+> that are already specified in sc7180.dtsi...
+
+Ack
+
+> 
+>> + *
+>> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#include <dt-bindings/clock/qcom,lpass-sc7280.h>
+>> +#include <dt-bindings/soc/qcom,gpr.h>
+>> +#include <dt-bindings/sound/qcom,q6afe.h>
+>> +#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
+>> +
+>> +&remoteproc_adsp_glink {
+>> +	/delete-node/ apr;
+>> +
+>> +	gpr {
+> 
+> Glink only consider available (status = "okay") nodes, so if there's a
+> even spread across AudioReach and not, we could even move this to
+> sc7180.dtsi and mark both status = "disabled", and have the appropriate
+> one enabled for each board.
+
+I am trying to add apr and gpr both the nodes under glink-edge, but yaml 
+not allowing to add both the nodes.
+
+Facing yaml errors, it's accepting apr (or) gpr only one subnode.
+
+Please find the error logs for reference.
+
+arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: remoteproc@3700000: 
+glink-edge:gpr: False schema does not allow {'compatible': ['qcom,gpr'], 
+'qcom,glink-channels': ['adsp_apps'], 'qcom,domain': 2, 'qcom,intents': 
+[[512, 20]], '#address-cells': 1, '#size-cells': 0, 'service@1': 
+{'compatible': ['qcom,q6apm'], 'reg': [[1]], '#sound-dai-cells': 0, 
+'qcom,protection-domain': ['avs/audio', 'msm/adsp/audio_pd'], 'phandle': 
+356, 'dais': {'compatible': ['qcom,q6apm-dais'], 'iommus': [[66, 6145, 
+0]]}, 'bedais': {'compatible': ['qcom,q6apm-lpass-dais'], 
+'#sound-dai-cells': 1, 'phandle': 355}}, 'service@2': {'compatible': 
+['qcom,q6prm'], 'reg': [[2]], 'qcom,protection-domain': ['avs/audio', 
+'msm/adsp/audio_pd'], 'clock-controller': {'compatible': 
+['qcom,q6prm-lpass-clocks'], '#clock-cells': 2, 'phandle': 204}}}
+         from schema $id: 
+http://devicetree.org/schemas/remoteproc/qcom,sc7180-pas.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: remoteproc@3700000: 
+glink-edge:apr: False schema does not allow {'compatible': 
+['qcom,apr-v2'], 'qcom,glink-channels': ['apr_audio_svc'], 
+'qcom,domain': 4, '#address-cells': 1, '#size-cells': 0, 'service@3': 
+{'reg': [[3]], 'compatible': ['qcom,q6core'], 'qcom,protection-domain': 
+['avs/audio', 'msm/adsp/audio_pd']}, 'service@4': {'compatible': 
+['qcom,q6afe'], 'reg': [[4]], 'qcom,protection-domain': ['avs/audio', 
+'msm/adsp/audio_pd'], 'dais': {'compatible': ['qcom,q6afe-dais'], 
+'#address-cells': 1, '#size-cells': 0, '#sound-dai-cells': 1}, 
+'clock-controller': {'compatible': ['qcom,q6afe-clocks'], 
+'#clock-cells': 2}}, 'service@7': {'compatible': ['qcom,q6asm'], 'reg': 
+[[7]], 'qcom,protection-domain': ['avs/audio', 'msm/adsp/audio_pd'], 
+'dais': {'compatible': ['qcom,q6asm-dais'], '#address-cells': 1, 
+'#size-cells': 0, '#sound-dai-cells': 1, 'iommus': [[66, 6145, 0]], 
+'dai@0': {'reg': [[0]]}, 'dai@1': {'reg': [[1]]}, 'dai@2': {'reg': 
+[[2]]}}}, 'service@8': {'compatible': ['qcom,q6adm'], 'reg': [[8]], 
+'qcom,protection-domain': ['avs/audio', 'msm/adsp/audio_pd'], 'routing': 
+{'compatible': ['qcom,q6adm-routing'], '#sound-dai-cells': 0}}}
+         from schema $id: 
+http://devicetree.org/schemas/remoteproc/qcom,sc7180-pas.yaml#
+arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: remoteproc@3700000: 
+Unevaluated properties are not allowed ('glink-edge', 
+'qcom,smem-state-names', 'qcom,smem-states' were unexpected)
+         from schema $id: 
+http://devicetree.org/schemas/remoteproc/qcom,sc7180-pas.yaml#
+/local/mnt/workspace/ANDRIOD/K2C_project/UPSTREAM/linux_next_11_June_2025/linux-next/arch/arm64/boot/dts/qcom
+
+Thanks,
+Prasad
+
+> 
+> Regards,
+> Bjorn
+> 
+>> +		compatible = "qcom,gpr";
+>> +		qcom,glink-channels = "adsp_apps";
+>> +		qcom,domain = <GPR_DOMAIN_ID_ADSP>;
+>> +		qcom,intents = <512 20>;
+>> +		#address-cells = <1>;
+>> +		#size-cells = <0>;
+>> +
+>> +		q6apm: service@1 {
+>> +			compatible = "qcom,q6apm";
+>> +			reg = <GPR_APM_MODULE_IID>;
+>> +			#sound-dai-cells = <0>;
+>> +			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+>> +
+>> +			q6apmdai: dais {
+>> +				compatible = "qcom,q6apm-dais";
+>> +				iommus = <&apps_smmu 0x1801 0x0>;
+>> +			};
+>> +
+>> +			q6apmbedai: bedais {
+>> +				compatible = "qcom,q6apm-lpass-dais";
+>> +				#sound-dai-cells = <1>;
+>> +			};
+>> +		};
+>> +
+>> +		q6prm: service@2 {
+>> +			compatible = "qcom,q6prm";
+>> +			reg = <GPR_PRM_MODULE_IID>;
+>> +			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+>> +
+>> +			q6prmcc: clock-controller {
+>> +				compatible = "qcom,q6prm-lpass-clocks";
+>> +				#clock-cells = <2>;
+>> +			};
+>> +		};
+>> +	};
+>> +};
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index b1cc3bc1aec8..708df3f08984 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -3814,7 +3814,7 @@ remoteproc_adsp: remoteproc@3700000 {
+>>   
+>>   			status = "disabled";
+>>   
+>> -			glink-edge {
+>> +			remoteproc_adsp_glink: glink-edge {
+>>   				interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
+>>   							     IPCC_MPROC_SIGNAL_GLINK_QMP
+>>   							     IRQ_TYPE_EDGE_RISING>;
+>> -- 
+>> 2.34.1
+>>
+
 
