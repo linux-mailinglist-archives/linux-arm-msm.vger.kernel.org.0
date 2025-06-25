@@ -1,97 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-62282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEBAFAE77C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 09:08:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F10FAE77CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 09:09:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0EA677A25CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 07:07:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E27B9177F10
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 07:09:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC9E61F866B;
-	Wed, 25 Jun 2025 07:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BA9D1F8676;
+	Wed, 25 Jun 2025 07:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rNqbEsp"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXeaT/9k"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CBD8F4A;
-	Wed, 25 Jun 2025 07:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFF61F9F51;
+	Wed, 25 Jun 2025 07:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750835302; cv=none; b=DA1xc05p8UUTgBLT0cnkPHxEfKIbaYwHJlIaF0dRSBVCLL9MoB+94yHUhe248lbTDxHF6eko4Hlnn6BqB8Cf+cR4TstH3UCWlT3Jsu5+NPtUb9uDOUNr41RTospOx+MZx+w9AaRpXyFVfCTg8M6zyKZPuxefX1gPONkwfGpf+B0=
+	t=1750835391; cv=none; b=lca8PHSnju9dUGjJ0gh7aSx2j1AmAAnTElIkYftjfOUg3RQJOXkOPONtbJ3Q9LCuvonuzDOAxuqzz7oPCRCCR2oFrQgCLD4E9L8/rgsiRC5MMsYk26Pv4JcZcJakxeHIRBfQKKc0Jpd4eB+dD9CTad+jum71F0oUijgzYM9FRWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750835302; c=relaxed/simple;
-	bh=CHm5OV3W0KUMqplu/gRPB+lt1EfnCyIHCgP7omgKaPQ=;
+	s=arc-20240116; t=1750835391; c=relaxed/simple;
+	bh=DR1uJyqv9XG/PvqeJ57yVZ2OEhRA5/ykIyTajKQJ4+g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nyxjUdZM0/jq4V0F7Hc8kJYNBVc7nLXixCiyB2rfApWZ9IdyQS3T86QZRFB0GrzI3No0dr4PoQBitkD11Esrrn1PATy/JCFTEBOHa2IaDOhPJGqBlSaK9UpdvpsOQaWT8kCcAf/5C/Km51v2kO/gn0rn5UQEG7awsJ708aHryww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rNqbEsp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1329C4CEEA;
-	Wed, 25 Jun 2025 07:08:20 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=YLh2Sc7mAv4jYkkYob6bQ+ohB7xLP3ML7xfRcXF8pqrdly19Pf+jH3LjFXxFAw48beLZLA4NCPRe8p0LC4OS0m/X2/25ak1c3exJ1PuYYABn23j9x66gLhOw6sKiBSRlcVAtJBIMUeo1GOy/R9ZeGUeizygUPmFIUUgrDAs8Hq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXeaT/9k; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB2DC4CEEA;
+	Wed, 25 Jun 2025 07:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1750835301;
-	bh=CHm5OV3W0KUMqplu/gRPB+lt1EfnCyIHCgP7omgKaPQ=;
+	s=korg; t=1750835391;
+	bh=DR1uJyqv9XG/PvqeJ57yVZ2OEhRA5/ykIyTajKQJ4+g=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=0rNqbEspWPFPt/zAKVCr0S0wNlKMXQ03YJDeHpgpLS1QjLsYqT1I8eKQu3G6XnWkB
-	 lYVZdt3fTaZyweqQkIcaWe9okp7JOTXWBQciP8FZuc9i6AnquSGdELM3bDRlvZmFgU
-	 2NZkuzIlvxPSxNOpgmbAujiS+JFumt9p7wZhEP0E=
-Date: Wed, 25 Jun 2025 08:08:18 +0100
+	b=cXeaT/9kn0q0gdf+AA26jglNvcClZyL8mKFOQRudIj+S4Htm6j5dN+H5IAMbpQq9W
+	 GQ9NaOZdVJoKLbrz6XlvyH+3sosjRnWOqCNlDhuWaWq/pzmDKYGpdvyNfZrGlLemD4
+	 FzEIaoVIaTwhPsX7l6M7S3KPUjcD6wP7Mdq0xs+g=
+Date: Wed, 25 Jun 2025 08:09:48 +0100
 From: Greg KH <gregkh@linuxfoundation.org>
-To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-Cc: heikki.krogerus@linux.intel.com, lumag@kernel.org,
-	neil.armstrong@linaro.org, johan+linaro@kernel.org,
-	quic_bjorande@quicinc.com, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] usb: typec: ucsi: ucsi_glink: Increase buffer size to
- support UCSI v2
-Message-ID: <2025062528-grip-maverick-7a19@gregkh>
-References: <20250624222922.2010820-1-anjelique.melendez@oss.qualcomm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+	srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+	quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
+	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
+	arnd@arndb.de, stable@kernel.org
+Subject: Re: [PATCH v2] misc: fastrpc: Fix channel resource access in
+ device_open
+Message-ID: <2025062535-subsidize-popsicle-38d0@gregkh>
+References: <20250619051026.984361-1-ekansh.gupta@oss.qualcomm.com>
+ <kk3jvlwjdzy2mfs6bip7dadrnsoxwksyp2odi3rfxkv4crmwtn@x5qyn4sp2gck>
+ <2025062424-dizziness-theft-0502@gregkh>
+ <2025062434-reviving-grumble-1e53@gregkh>
+ <golcrcr6voafr3fqsnihyjyut36sii55vzws4josfhkjjg3nie@ur43qq2kvlsv>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250624222922.2010820-1-anjelique.melendez@oss.qualcomm.com>
+In-Reply-To: <golcrcr6voafr3fqsnihyjyut36sii55vzws4josfhkjjg3nie@ur43qq2kvlsv>
 
-On Tue, Jun 24, 2025 at 03:29:22PM -0700, Anjelique Melendez wrote:
-> UCSI v2 specification has increased the MSG_IN and MSG_OUT size from
-> 16 bytes to 256 bytes each for the message exchange between OPM and PPM
-> This makes the total buffer size increase from 48 bytes to 528 bytes.
-> Update the buffer size to support this increase.
+On Wed, Jun 25, 2025 at 02:45:27AM +0300, Dmitry Baryshkov wrote:
+> On Tue, Jun 24, 2025 at 04:38:25PM +0100, Greg KH wrote:
+> > On Tue, Jun 24, 2025 at 04:36:35PM +0100, Greg KH wrote:
+> > > On Tue, Jun 24, 2025 at 04:27:21PM +0300, Dmitry Baryshkov wrote:
+> > > > On Thu, Jun 19, 2025 at 10:40:26AM +0530, Ekansh Gupta wrote:
+> > > > > During rpmsg_probe, fastrpc device nodes are created first, then
+> > > > > channel specific resources are initialized, followed by
+> > > > > of_platform_populate, which triggers context bank probing. This
+> > > > > sequence can cause issues as applications might open the device
+> > > > > node before channel resources are initialized or the session is
+> > > > > available, leading to problems. For example, spin_lock is initialized
+> > > > > after the device node creation, but it is used in device_open,
+> > > > > potentially before initialization. Move device registration after
+> > > > > channel resource initialization in fastrpc_rpmsg_probe.
+> > > > 
+> > > > You've moved device init, however there is still a possibility for the
+> > > > context devices to be created, but not bound to the driver (because all
+> > > > the probings are async). I think instead we should drop the extra
+> > > > platform driver layer and create and set up corresponding devices
+> > > > manually. For example, see how it is handled in
+> > > > host1x_memory_context_list_init(). That function uses iommu-maps, but we
+> > > > can use OF nodes and iommus instead.
+> > > 
+> > > Is this a real platform device?  If so, why do you need a second
+> > > platform driver, what makes this so unique?  If this isn't a platform
+> > > device, then why not just use the faux bus instead?
+> > > 
+> > > It seems that "number of sessions" is a DT property, is that something
+> > > that is really defined by the hardware?  Or is it just a virtual thing
+> > > that people are abusing in the DT?
 > 
-> Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-> ---
->  drivers/usb/typec/ucsi/ucsi_glink.c | 50 ++++++++++++++++++++++++++---
->  1 file changed, 45 insertions(+), 5 deletions(-)
-
-40 lines added new, but:
-
+> Purely software value.
 > 
-> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index 8af79101a2fc..d20f01a0cd5c 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -2,6 +2,7 @@
->  /*
->   * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
->   * Copyright (c) 2023, Linaro Ltd
-> + * ​Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> > > 
+> > > And if you really have all these sessions, why not make them real
+> > > devices, wouldn't that make things simpler?
+> > 
+> > Oh wait, these are "fake" platform devices under the parent (i.e. real)
+> > platform device.  That's not good, please don't do that, use the faux
+> > bus code now instead to properly handle this.  Attempting to create a
+> > device when open() is called is really really odd...
+> 
+> The driver doesn't created devices during open(). It creates them
+> earlier, then another driver probes an populates the data. I suggest to
+> follow Tegra approach, remove the sub-driver completely and instead of
+> calling of_platform_populate() create necessary devices manually and set
+> corresponding IOMMU configuration from the main driver's probe path.
 
-Please don't add odd characters, AND work with your corporate lawyers to
-go over the rules for when you should, and should not, add your
-copyright line to a file that you did not author from the beginning.
-
-Hint, 40 lines added to a file that is 426 lines long does not trigger
-this type of response based on the legal advice I was told to follow
-many years ago, if yours differ, I would love to talk to your lawyers
-about this please.
+That sounds much more reasonable.
 
 thanks,
 
