@@ -1,173 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-62406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFC9CAE7EB7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 12:12:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17BFFAE7F12
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 12:24:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2275C5A3116
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 10:10:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 728961897803
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 10:24:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B77D32BEFF0;
-	Wed, 25 Jun 2025 10:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3762B2882CA;
+	Wed, 25 Jun 2025 10:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X/LrXKFY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HSDzvOOt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FE82D1F5E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 10:09:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB4927FD74;
+	Wed, 25 Jun 2025 10:24:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750846152; cv=none; b=ZgIiIA6goLGTomVEb1aE6adpbWtCaAzm8xMY7xmxAGjK2R7jtFH0UfVga1d21/F99fKM5BaxWw9CeURUxOgQXhQkA7bpewuPk3IKKDGa4KXu2rNaZOaNmHic5azGm9FXKuE1Imh9BOIyGEt/cmz2vaHY2QyjGiw+6wnAJkJTs3A=
+	t=1750847047; cv=none; b=Rwx7Kd6wkHeuYerd/brQhvV6drC2xGFMQDQwdXbzvztrXdgxy1TEiahUt3ly5CIKxL/W4XFDMcXQAm9/F/JxQMAB3Eo9QU1r+WLcmG0hvyj5I6+6RpvwGYFOX9HKtf2HM8JyCu8MmhtLyTnhZxGdCzy7X6bzznN22k5IEz9DjoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750846152; c=relaxed/simple;
-	bh=+b9zYn+YDjgLsmryvBl9enpC15lgjBxwjtFuR9w5viU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=olcbUl9Ei2hs04RXJq3THBwu7Z5orXf2yt28hWt00Ml5NB3tyStS1lJ8/R/OapSIs8KC4z2Uv6XChIFStYPJav3eFuNctoNkAz5310uX+jkFMT/GuSFBF3HvGp2oMyXu+X1UKhUELldTZPiIEosZhkRamUh1QiAWQB8pVuOKfdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X/LrXKFY; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-450cf0120cdso49264735e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 03:09:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750846149; x=1751450949; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qneQjY3X2Jd798VANcewut/m2Zfu0vnaEkQ6ercd+fI=;
-        b=X/LrXKFYapYihJCfYS/pUegA8azbNHtvE24vseQoTN2LbL0J2G9yC8TX9CJoe7PB55
-         9SD76BFXTlW7cyEMXf7ei6RcqKeAbZatDu84M5iZ7duKxx7yM1Mt+pCxlx+R498NQXyn
-         nsaTb+ua3vudSIQa1Xr/1NSWoURaX8LzWxeB7l8pFE+TninSgUJJ2MDh8OX44EIIayLe
-         REPpN2+K1fDDQkT9cbqsQshemvCNKYA2q4X0F3dc4elsGJ1PRCRTk26TAS0oBVUuIxsc
-         OwUkSXb1h+qilj6vwhAcDhfsqFKLMPmUvNwSj8+etQH59/jHUEMMMEOrtsnPjS1hZjiB
-         eAQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750846149; x=1751450949;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=qneQjY3X2Jd798VANcewut/m2Zfu0vnaEkQ6ercd+fI=;
-        b=GGIKlodvMOw8iR5nlKlJg0epqRbdCVjGgQqx2U7jFJhs07oMg3t+T3NjT1zsXawEQ2
-         YsdU95zG7yt/y0GjXAVVJaUAddr/4CX/scT4ExUlf1w7kR8tvQUDgWyhA7IkX1eaYATP
-         98Bz14PVxRpkVBT2bJp7KJJ9VEU7ApBYmfSVuL3x502ZyDNACB2RQMxIAwKFbunmjjE3
-         0CzbQMMB0jZXJu+GCyleuIIL895UDjvSZzICSLfM3EsdbIoRoufk4sUVVVjaanYOB3yd
-         T+1ucHqUsLCZ0og/xf2wJMI0i0rVEBnuEk/GJjiAP320APGuwOqcL6vifbUhbhT8Sa1H
-         5F8w==
-X-Forwarded-Encrypted: i=1; AJvYcCXd7QfJZ2xvgTKFdQPC3pbMzbdAudqK9sULe66XHmOVlsZk2NguQ6Nx4xWfzL3TMrvzvi6q+32X01uSTuY2@vger.kernel.org
-X-Gm-Message-State: AOJu0YwmG9r/xvsNezXVztfxnSjT7y7qe8PTR0sZKkqK5zugex9dAAum
-	4soJA4y7ILijZOEAcFrxIUWZKuv8Qrn0WQhoOHL6HrDTRZ7ln8H9DsRDSZ+jvPPGchA=
-X-Gm-Gg: ASbGnctFL9EZNFqy/EY7ezGyiCOaEGDCoo0YqEGmwE6D+xuH9OVFUNXzk/BDZF+sxJG
-	aOgEckYX5aYe3yxwm4JNuhOO2fJ3t9Xvw0FcZUaC0IhQ88nkssfWL9PZp3fUUVWEe1zuExbPvvH
-	8+j/Ntj66DAci3Jgn8Fko5/ISJSVaysv0rUwIDJxSn7XB/uAy5H4Zw3n6V11qcRM+D/naMkQhFU
-	7/NT4tt0/lae7nx0bzkbnZpivVdjo2ElftL2oO/boh84a/IN3Do6W2JtMCtcibmYiPedOejTJAy
-	v3hF4kKmJMXDg1Ts2JaMw9CzNOol4Z1GebFHSuOJbzZXxMgvYXcP7B8PFoQxmJJApB/qzvri19H
-	d0dGjcJYotyp6MkLbErkPUU9UBXFYCRtOIiNo
-X-Google-Smtp-Source: AGHT+IHnmTs+UY1GFEyjpH83eIaDxqFLZZxp8pZ7AF1bA5Pj3W8QC4Vs1NPzVLgo390Ifg/6DfCTDQ==
-X-Received: by 2002:a05:600c:34d5:b0:442:f97b:87e with SMTP id 5b1f17b1804b1-45381aa54a4mr19922005e9.6.1750846148895;
-        Wed, 25 Jun 2025 03:09:08 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:b3df:bee7:215:e1a4? ([2a01:e0a:3d9:2080:b3df:bee7:215:e1a4])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453823c42e1sm14946555e9.37.2025.06.25.03.09.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jun 2025 03:09:08 -0700 (PDT)
-Message-ID: <052364dd-743f-471b-b420-c9cd6bbc207c@linaro.org>
-Date: Wed, 25 Jun 2025 12:09:07 +0200
+	s=arc-20240116; t=1750847047; c=relaxed/simple;
+	bh=lz4N5vzyJfYNDcEemSYn52O1R2oIT0tnhkw8QrN40KI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fgE13/BmOIVy48iwmhvolk3ZmQjvttLvFsX35iMW+Rqi+0+djktnr30lfxIFbeTHjVDxW4FG6+N1DK9PgvLUGK1AActxCnajyLvuzUKpCup8sqM3ctHiUYNVlP03Vz3tz8il8IzaJq1OsekdVOy1TNNdQ/bC4zkB8oa895QD9e0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HSDzvOOt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D8C6C4CEEA;
+	Wed, 25 Jun 2025 10:24:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750847046;
+	bh=lz4N5vzyJfYNDcEemSYn52O1R2oIT0tnhkw8QrN40KI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=HSDzvOOt9QZbS5sSeRxHGHrTd0sVPRkyhyqCW7IKD2PNZ1YzXJPHMfg8IYKi3sMpo
+	 j548/ZgmsJ7BslOPqlVlZYPBwqg6TjQcwogidxU51Au8pV2SfffpUYMuRpoWDn8mgd
+	 SKl76C1UHM+Hpxgv7lcBBdf6McMMjDq6GK+e8N+YZsbSgov2/srVckeCLyYs67zMkX
+	 iUW7jgc8Hytdj98nvWO3Z+DZjIfZFNUI/ajjzvy4BEzzuW3Oci55OtylUob6uf/Zo+
+	 w2zrhh0TOmSHcCac0MrnUyXet9ZChvtZfCVmRzvmSyYb3mXWapNBwuQD1d+Z1iAlLu
+	 UOsM4AVRsD8Cw==
+From: Niklas Cassel <cassel@kernel.org>
+To: Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Kevin Xie <kevin.xie@starfivetech.com>,
+	Simon Xue <xxm@rock-chips.com>,
+	Kever Yang <kever.yang@rock-chips.com>,
+	Stanimir Varbanov <svarbanov@mm-sol.com>
+Cc: Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Laszlo Fiat <laszlo.fiat@proton.me>,
+	Niklas Cassel <cassel@kernel.org>,
+	linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH v4 0/7] PCI: dwc: Do not enumerate bus before endpoint devices are ready
+Date: Wed, 25 Jun 2025 12:23:46 +0200
+Message-ID: <20250625102347.1205584-9-cassel@kernel.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 4/4] phy: qualcomm: phy-qcom-eusb2-repeater: Add support
- for PMIV0104
-To: Luca Weiss <luca.weiss@fairphone.com>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250625-sm7635-eusb-repeater-v1-0-19d85541eb4c@fairphone.com>
- <20250625-sm7635-eusb-repeater-v1-4-19d85541eb4c@fairphone.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250625-sm7635-eusb-repeater-v1-4-19d85541eb4c@fairphone.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1569; i=cassel@kernel.org; h=from:subject; bh=lz4N5vzyJfYNDcEemSYn52O1R2oIT0tnhkw8QrN40KI=; b=owGbwMvMwCV2MsVw8cxjvkWMp9WSGDKizxk/Urnx8TPnvbnLnkcwKCgxv3jWYLPqsYZuQPTEv d+8/tQ0d5SyMIhxMciKKbL4/nDZX9ztPuW44h0bmDmsTCBDGLg4BWAi7M8Y/ocbbdYsPTl7z+zN d9fZBVcKMboJlm67/mwNc3B8QeOROS8ZGaZ1Rf9wLPh41sPfj7/z8ckMxYfG6yp59Ixa32zzWF+ vxAgA
+X-Developer-Key: i=cassel@kernel.org; a=openpgp; fpr=5ADE635C0E631CBBD5BE065A352FE6582ED9B5DA
+Content-Transfer-Encoding: 8bit
 
-On 25/06/2025 11:14, Luca Weiss wrote:
-> Add support for the eUSB2 repeater found on the PMIV0104. There is no
-> default init table for this PMIC, just the board-specific tuning
-> parameters are used on top of the default tuning values.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->   drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-> index 61594739e5b12706775622e1f76af6ad5d2d29bf..3d4cdc4c18becd8efd5015e698b836ad4d7cf18c 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-> @@ -82,6 +82,14 @@ static const struct eusb2_repeater_cfg pm8550b_eusb2_cfg = {
->   	.num_vregs	= ARRAY_SIZE(pm8550b_vreg_l),
->   };
->   
-> +static const struct eusb2_repeater_cfg pmiv0104_eusb2_cfg = {
-> +	/* No PMIC-specific init sequence, only board level tuning via DT */
-> +	.init_tbl	= (struct eusb2_repeater_init_tbl_reg[]) {},
-> +	.init_tbl_num	= 0,
-> +	.vreg_list	= pm8550b_vreg_l,
-> +	.num_vregs	= ARRAY_SIZE(pm8550b_vreg_l),
-> +};
-> +
->   static const struct eusb2_repeater_cfg smb2360_eusb2_cfg = {
->   	.init_tbl	= smb2360_init_tbl,
->   	.init_tbl_num	= ARRAY_SIZE(smb2360_init_tbl),
-> @@ -264,6 +272,10 @@ static const struct of_device_id eusb2_repeater_of_match_table[] = {
->   		.compatible = "qcom,pm8550b-eusb2-repeater",
->   		.data = &pm8550b_eusb2_cfg,
->   	},
-> +	{
-> +		.compatible = "qcom,pmiv0104-eusb2-repeater",
-> +		.data = &pmiv0104_eusb2_cfg,
-> +	},
->   	{
->   		.compatible = "qcom,smb2360-eusb2-repeater",
->   		.data = &smb2360_eusb2_cfg,
-> 
+Hello all,
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+The DWC PCIe controller driver currently does not follow the PCIe
+specification with regards to the delays after link training, before
+sending out configuration requests. This series fixes this.
+
+At the same time, PATCH 3/7 addresses a regression where a Plextor
+NVMe drive fails to be configured correctly. With this series, the
+Plextor NVMe drive works once again.
+
+
+Kind regards,
+Niklas
+
+
+Changes since v3:
+-Move LINK_WAIT_MAX_RETRIES and LINK_WAIT_SLEEP_MS to pci.h (Mani)
+-Only wait PCIE_RESET_CONFIG_WAIT_MS if > 5 GT/s (Mani)
+-Fix nit in commit log (Mani)
+
+
+Niklas Cassel (7):
+  PCI: Rename PCIE_RESET_CONFIG_DEVICE_WAIT_MS to
+    PCIE_RESET_CONFIG_WAIT_MS
+  PCI: rockchip-host: Use macro PCIE_RESET_CONFIG_WAIT_MS
+  PCI: dw-rockchip: Wait PCIE_RESET_CONFIG_WAIT_MS after link-up IRQ
+  PCI: qcom: Wait PCIE_RESET_CONFIG_WAIT_MS after link-up IRQ
+  PCI: dwc: Ensure that dw_pcie_wait_for_link() waits 100 ms after link
+    up
+  PCI: Move link up wait time and max retries macros to pci.h
+  PCI: Reduce PCIE_LINK_WAIT_SLEEP_MS
+
+ drivers/pci/controller/dwc/pcie-designware.c  | 20 +++++++++++++++----
+ drivers/pci/controller/dwc/pcie-designware.h  |  4 ----
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c |  1 +
+ drivers/pci/controller/dwc/pcie-qcom.c        |  1 +
+ drivers/pci/controller/pcie-rockchip-host.c   |  2 +-
+ drivers/pci/controller/plda/pcie-starfive.c   |  2 +-
+ drivers/pci/pci.h                             | 18 +++++++++--------
+ 7 files changed, 30 insertions(+), 18 deletions(-)
+
+-- 
+2.49.0
+
 
