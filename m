@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-62277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61CBAAE7781
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 08:52:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 61E20AE77A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 08:58:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 109543BF100
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 06:51:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A97E3BA758
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 06:57:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 914F01FF1C4;
-	Wed, 25 Jun 2025 06:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E0881F4176;
+	Wed, 25 Jun 2025 06:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Bs8xII2F"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MjHN1vSW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D2E1F75A6;
-	Wed, 25 Jun 2025 06:50:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F329178372;
+	Wed, 25 Jun 2025 06:58:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750834255; cv=none; b=Pfpgm4nn22nBHqB7XDNrtsk6Ifv3jdt4DgMOTMqU8GVIXGw7PgSj37Qp/lV7fogKoQ89wfBA3PeeFIfqEBE8aWMJvGA+i0fWIgw25UcmtX2pEoXK7S89C+Q7bnv5p3NfOuUA1Fer2LaSV+R0/LWiiXO5lXqz8VuaBRr3arSmp48=
+	t=1750834685; cv=none; b=HHaZOQkhbLZTP2PtVMvcmOsHO2vQbvFbIMYvPKFgssD9Oz59wC8x/6wnFz12mi3bYg9IoCzsIc6Y6UOyIuUWEtXCIS4Xoy7xHzphHVmdq76ZHtwYqgfLnerBND+vS1VQ37XaBtUBBzzC2d0BqnDEk8jXZUGhWBpGYcR0kSwZOek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750834255; c=relaxed/simple;
-	bh=zry1TbVF/2xgxDCVyb1F2wZ2ccRhXxEddlrrpFb3Lk8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=fFYi0e7PiK+S8feCnnbVqvRPFAEF9bA0YOwX603g41kFCP1MzPcx8tyEha4Y9jE9EtdK0k4bg22aHmIHw6JbgYXoJmVhyT29XzxASS213sZjt4kbZ4y4KtY/4kbKdJ7XxN0xr925kgJSrTGzbJ9qgABbCT/o+LVGJRWzWk8JohY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Bs8xII2F; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55P4mS56014580;
-	Wed, 25 Jun 2025 06:50:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	c8hHnqbIlpHCx26J4C1orX2rK76HQgkp6MrDdnANpYA=; b=Bs8xII2FEb8yC8On
-	PdPatyYO0aPZSJZcbsRzqc+AizrwVVACvdxXHYlU12YVeMzcRFbvFs/HOJcF+m4s
-	sjs9eaEUtcis4m7BET76IQHM0KEm9R9cTCU1RBLFYMIxWFtM+3hf8oqFCCjLS/Id
-	usCahhX8putbp3gw7hbrDIMNNXCcLWK4F96pRyCLw4O489Sh0EFJ8Rs+H77vztsr
-	9XDgCKLLnFp8n94dqHj8vLJjE3lxWLJjep1e5KnWgOH1e5UFGmUZzDqe1ogKwV4Y
-	6CjK0iWWxXTi+peNNnW3pjTpTXz+8HI5BEHpQrWJtyc2Td3ZIfFlU1WhaQGazXh3
-	pUvUEg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47evc5qvde-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jun 2025 06:50:48 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55P6olOq028735
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jun 2025 06:50:47 GMT
-Received: from [10.216.43.229] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 24 Jun
- 2025 23:50:42 -0700
-Message-ID: <74793074-19ee-48f3-b502-8d970b9f50af@quicinc.com>
-Date: Wed, 25 Jun 2025 12:20:39 +0530
+	s=arc-20240116; t=1750834685; c=relaxed/simple;
+	bh=T5AhNiQAr14Iyr7zRPMMiE2nRtl/yvq3LjlSKw8tWU8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uibcDv4Z55p5nBhnu66DwFlIW69PJq1V+fjrPWpapPOH/SugfecVuS9FctTI+0sdYBBhzZr0Ga4bGb5GU8nXeflGYC2TraS5sah4DS1mbbroroHwLGSwNe0ElccrD2K05LWCJjmoVxBVqiq4fP5GkVbRq1Sg4t8HRj4A0lH+mbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MjHN1vSW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807DDC4CEEA;
+	Wed, 25 Jun 2025 06:58:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750834685;
+	bh=T5AhNiQAr14Iyr7zRPMMiE2nRtl/yvq3LjlSKw8tWU8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=MjHN1vSWNef7554xM5GtpeQby7T/3vRgsgxq2yBr7JKJB6Jt8QFPNmNqAd0Axx89v
+	 mwnxfyc93lnwksYPjWnhV2Qb7lBd2sMuqaFw66h9VeypbSDx3XWLg2QRbKPc5kXiIg
+	 NZIdrjrd/isOHvivqioMh3hCxyR4/65Tn6LRQbGuYZG0h9Uji2S2/JPc0tGa88k47E
+	 /SNukeQCpr30xIDKGie6oduEi1T59EFxHqYMRfV4yoCAJ4KXGRI/42MjCa937+cmm2
+	 xaJenQcby41DIO6V5gLiTQ26L/6y0+Tl8+XCszhxvRRet9MR9kd2n8gaCoh810Lo3B
+	 YOPL4JYuFnxbg==
+Message-ID: <329b89a4-85a9-496f-8b1b-6239dfc9057b@kernel.org>
+Date: Wed, 25 Jun 2025 08:58:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,231 +50,105 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/8] arm64: dts: qcom: qcs6490-audioreach: Add gpr node
-To: Bjorn Andersson <andersson@kernel.org>
-CC: Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <kernel@oss.qualcomm.com>, Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250527111227.2318021-1-quic_pkumpatl@quicinc.com>
- <20250527111227.2318021-2-quic_pkumpatl@quicinc.com>
- <q6rbvbvejugioon6l23nmmzeue7l4bgtlaf44o3a4krj3lytjp@p3y6opl7vs25>
+Subject: Re: [PATCH v2 1/2] dt-bindings: media: qcom,x1e80100-camss: Sort
+ interconnects alphabetically
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org
+References: <20250624094253.57441-1-vladimir.zapolskiy@linaro.org>
+ <20250624094253.57441-2-vladimir.zapolskiy@linaro.org>
+ <aa56b956-95f3-484d-8afa-058925b95bfd@kernel.org>
+ <fff77f71-e21b-43b9-9da5-6cf819add970@linaro.org>
+ <5a5b78f7-e156-4c5e-8407-b249040e227d@kernel.org>
+ <c29385d4-30ea-4774-9cf9-699b08e29800@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-In-Reply-To: <q6rbvbvejugioon6l23nmmzeue7l4bgtlaf44o3a4krj3lytjp@p3y6opl7vs25>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <c29385d4-30ea-4774-9cf9-699b08e29800@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: evxMCpGCLPr4Oq3aJyfN3yt4aycsZw6M
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDA0OSBTYWx0ZWRfX2LnYfKSShuEf
- JBka6qRiQ8nfO8XwSLjpmsczyu454ddR0VI9ktAqcflLnFOlWK+/fNqqkjUwlusjiRbhI5ppVxo
- JOR8xXHyyK4z02yJrzBzWQ9n+YHNIHljLRw2lzcqjG42uxIV+s8QTa/sNu9hQ0zn5ZSb05MjFXF
- TXV+LhTqgqlODnWabm+//t1S8eKM1SzSemV1EFmz3vLlm/eK+GTruyNx2ahvCSNGCUDYgoAhHiv
- OJ3D/yXckqbHEa5wPFe8BE5BPuRDySA7HLHRn26nxNvOc2qvd1ptxREvq5jm6xMRXCAWq++RUH7
- JCuiRlWNLj3h1FxN1Xh3aQnQKvCMHrbvoLam3BavH1QD5va1HYa+JS+WqQ6ZAEa8mhMkfJKuYZZ
- sBCrneS5a/QQ6i0LDAnE5/XBAEqPZoU792FnpETLjnzSW68Pz+aPxFqZknmqCb1rjjnJBSUV
-X-Authority-Analysis: v=2.4 cv=caHSrmDM c=1 sm=1 tr=0 ts=685b9c48 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=gEfo2CItAAAA:8
- a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=Vh00SPQc0_um_keYItkA:9 a=QEXdDO2ut3YA:10
- a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: evxMCpGCLPr4Oq3aJyfN3yt4aycsZw6M
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-25_01,2025-06-23_07,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 mlxlogscore=999 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 adultscore=0 mlxscore=0 spamscore=0
- malwarescore=0 phishscore=0 clxscore=1015 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506250049
 
-
-
-On 6/18/2025 2:15 AM, Bjorn Andersson wrote:
-> On Tue, May 27, 2025 at 04:42:20PM +0530, Prasad Kumpatla wrote:
->> From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+On 24/06/2025 15:29, Vladimir Zapolskiy wrote:
+> On 6/24/25 15:04, Krzysztof Kozlowski wrote:
+>> On 24/06/2025 13:38, Vladimir Zapolskiy wrote:
+>>> On 6/24/25 13:10, Krzysztof Kozlowski wrote:
+>>>> On 24/06/2025 11:42, Vladimir Zapolskiy wrote:
+>>>>> Sort the entries of interconnect and interconnect-names lists in the
+>>>>> alphabetical order of values in the latter property.
+>>>>
+>>>> We do not sort these entries alphabetically and you did not explain why
+>>>> you are doing this.
+>>>
+>>> I did it, because I assume that the preference is to sort all named
+>>> values alphanumerically.
 >>
->> Add GPR(Generic Pack router) node along with
->> APM(Audio Process Manager) and PRM(Proxy resource
->> Manager) audio services.
->>
+>> Where is such preference documented?
 > 
-> This should talk about the choice of adding a new "-audioreach.dtsi"
-> file, and should cover why it wouldn't make more sense to add the
-> opposite of this change in sc7180-trogdor.dtsi.
+> There is no such preference documented, as I stated it was my assumption
+> and it was based on your firm insistance to apply a particular sorting
+> order for regs, clocks and interrupts properties. Apparently you are
 
-Ack
+Hm? And the rule is by name? I don't think I ever expressed that or
+insisted on some sorting by name. During previous talks on camss
+numerous times you ignored the ONLY rule of sorting I was insisting:
+keep the same as all other devices. That was the one and only rule.
 
-> 
->> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->> Co-developed-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
->> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->> ---
->>   .../boot/dts/qcom/qcs6490-audioreach.dtsi     | 53 +++++++++++++++++++
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi          |  2 +-
->>   2 files changed, 54 insertions(+), 1 deletion(-)
->>   create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi b/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi
->> new file mode 100644
->> index 000000000000..29d4a6a2db26
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi
->> @@ -0,0 +1,53 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
-> 
-> We can be more permissive than that, please use BSD-3-Clause.
+> fine with out of the same sort order for 'interconnects' values, the
+> criteria of picked properties remains unclear for me.
 
-Ack
+I don't understand why it is unclear. That time with Bryan you both
+received VERY CLEAR feedback from me: there is no such rule of sorting
+any values. Yet you were pushing the discussion and patchset like there
+was something.
 
-> 
->> +/*
->> + * qcs6490 device tree source for Audioreach Solution.
->> + * This file will handle the common audio device tree nodes.
-> 
-> "Common audio device tree nodes", but not those audio device tree nodes
-> that are already specified in sc7180.dtsi...
 
-Ack
-
-> 
->> + *
->> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +#include <dt-bindings/clock/qcom,lpass-sc7280.h>
->> +#include <dt-bindings/soc/qcom,gpr.h>
->> +#include <dt-bindings/sound/qcom,q6afe.h>
->> +#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
->> +
->> +&remoteproc_adsp_glink {
->> +	/delete-node/ apr;
->> +
->> +	gpr {
-> 
-> Glink only consider available (status = "okay") nodes, so if there's a
-> even spread across AudioReach and not, we could even move this to
-> sc7180.dtsi and mark both status = "disabled", and have the appropriate
-> one enabled for each board.
-
-I am trying to add apr and gpr both the nodes under glink-edge, but yaml 
-not allowing to add both the nodes.
-
-Facing yaml errors, it's accepting apr (or) gpr only one subnode.
-
-Please find the error logs for reference.
-
-arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: remoteproc@3700000: 
-glink-edge:gpr: False schema does not allow {'compatible': ['qcom,gpr'], 
-'qcom,glink-channels': ['adsp_apps'], 'qcom,domain': 2, 'qcom,intents': 
-[[512, 20]], '#address-cells': 1, '#size-cells': 0, 'service@1': 
-{'compatible': ['qcom,q6apm'], 'reg': [[1]], '#sound-dai-cells': 0, 
-'qcom,protection-domain': ['avs/audio', 'msm/adsp/audio_pd'], 'phandle': 
-356, 'dais': {'compatible': ['qcom,q6apm-dais'], 'iommus': [[66, 6145, 
-0]]}, 'bedais': {'compatible': ['qcom,q6apm-lpass-dais'], 
-'#sound-dai-cells': 1, 'phandle': 355}}, 'service@2': {'compatible': 
-['qcom,q6prm'], 'reg': [[2]], 'qcom,protection-domain': ['avs/audio', 
-'msm/adsp/audio_pd'], 'clock-controller': {'compatible': 
-['qcom,q6prm-lpass-clocks'], '#clock-cells': 2, 'phandle': 204}}}
-         from schema $id: 
-http://devicetree.org/schemas/remoteproc/qcom,sc7180-pas.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: remoteproc@3700000: 
-glink-edge:apr: False schema does not allow {'compatible': 
-['qcom,apr-v2'], 'qcom,glink-channels': ['apr_audio_svc'], 
-'qcom,domain': 4, '#address-cells': 1, '#size-cells': 0, 'service@3': 
-{'reg': [[3]], 'compatible': ['qcom,q6core'], 'qcom,protection-domain': 
-['avs/audio', 'msm/adsp/audio_pd']}, 'service@4': {'compatible': 
-['qcom,q6afe'], 'reg': [[4]], 'qcom,protection-domain': ['avs/audio', 
-'msm/adsp/audio_pd'], 'dais': {'compatible': ['qcom,q6afe-dais'], 
-'#address-cells': 1, '#size-cells': 0, '#sound-dai-cells': 1}, 
-'clock-controller': {'compatible': ['qcom,q6afe-clocks'], 
-'#clock-cells': 2}}, 'service@7': {'compatible': ['qcom,q6asm'], 'reg': 
-[[7]], 'qcom,protection-domain': ['avs/audio', 'msm/adsp/audio_pd'], 
-'dais': {'compatible': ['qcom,q6asm-dais'], '#address-cells': 1, 
-'#size-cells': 0, '#sound-dai-cells': 1, 'iommus': [[66, 6145, 0]], 
-'dai@0': {'reg': [[0]]}, 'dai@1': {'reg': [[1]]}, 'dai@2': {'reg': 
-[[2]]}}}, 'service@8': {'compatible': ['qcom,q6adm'], 'reg': [[8]], 
-'qcom,protection-domain': ['avs/audio', 'msm/adsp/audio_pd'], 'routing': 
-{'compatible': ['qcom,q6adm-routing'], '#sound-dai-cells': 0}}}
-         from schema $id: 
-http://devicetree.org/schemas/remoteproc/qcom,sc7180-pas.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-idp.dtb: remoteproc@3700000: 
-Unevaluated properties are not allowed ('glink-edge', 
-'qcom,smem-state-names', 'qcom,smem-states' were unexpected)
-         from schema $id: 
-http://devicetree.org/schemas/remoteproc/qcom,sc7180-pas.yaml#
-/local/mnt/workspace/ANDRIOD/K2C_project/UPSTREAM/linux_next_11_June_2025/linux-next/arch/arm64/boot/dts/qcom
-
-Thanks,
-Prasad
-
-> 
-> Regards,
-> Bjorn
-> 
->> +		compatible = "qcom,gpr";
->> +		qcom,glink-channels = "adsp_apps";
->> +		qcom,domain = <GPR_DOMAIN_ID_ADSP>;
->> +		qcom,intents = <512 20>;
->> +		#address-cells = <1>;
->> +		#size-cells = <0>;
->> +
->> +		q6apm: service@1 {
->> +			compatible = "qcom,q6apm";
->> +			reg = <GPR_APM_MODULE_IID>;
->> +			#sound-dai-cells = <0>;
->> +			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->> +
->> +			q6apmdai: dais {
->> +				compatible = "qcom,q6apm-dais";
->> +				iommus = <&apps_smmu 0x1801 0x0>;
->> +			};
->> +
->> +			q6apmbedai: bedais {
->> +				compatible = "qcom,q6apm-lpass-dais";
->> +				#sound-dai-cells = <1>;
->> +			};
->> +		};
->> +
->> +		q6prm: service@2 {
->> +			compatible = "qcom,q6prm";
->> +			reg = <GPR_PRM_MODULE_IID>;
->> +			qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
->> +
->> +			q6prmcc: clock-controller {
->> +				compatible = "qcom,q6prm-lpass-clocks";
->> +				#clock-cells = <2>;
->> +			};
->> +		};
->> +	};
->> +};
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index b1cc3bc1aec8..708df3f08984 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -3814,7 +3814,7 @@ remoteproc_adsp: remoteproc@3700000 {
->>   
->>   			status = "disabled";
->>   
->> -			glink-edge {
->> +			remoteproc_adsp_glink: glink-edge {
->>   				interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
->>   							     IPCC_MPROC_SIGNAL_GLINK_QMP
->>   							     IRQ_TYPE_EDGE_RISING>;
->> -- 
->> 2.34.1
->>
-
+Best regards,
+Krzysztof
 
