@@ -1,129 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-62493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9F12AE87F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 17:25:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25EF2AE8836
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 17:33:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 835CD17CEA4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 15:24:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CFC1E18850D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 15:29:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F9C62D6601;
-	Wed, 25 Jun 2025 15:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61A8626B76F;
+	Wed, 25 Jun 2025 15:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FVEeVp8D"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="GoHy6fmw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7B229B20E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 15:22:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C3226B743
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 15:28:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750864966; cv=none; b=d+DVkS9V4iFzjiDHbwRHAXQs14VfUpC4yWVv0peuADPYYOsRK/vaMusUbmZVYqE0JJ0apHqYQa1SSWD1PX+8cptQSgv7Wg8Y9j+yWTwzdpfHDaggPH8wqaaLJU43G6xfpJwuSBToDVVmlQsTW4FLtiY79wR8wadmj2b4yqGF9iI=
+	t=1750865332; cv=none; b=gunADmv/noktUX8XpLv0+zwZxxsvHlhJbFghZQ/AHVYVQvmXDg/AAoIcZugM75F4BGyYthHG16oWuSHDiO0m4omM2LJZKFXt205fld7NeCSTbDgjXLSZt51tbQFru0gHoyOm3ErZhQOcqdC7xakhHw+o1UBANd51ZHsmuzz3czs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750864966; c=relaxed/simple;
-	bh=mQ25qvLYMDyvpv7j/NtUZhUMRsahcY03k4TaRiRkM20=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=bUr9ntG89wcWweLU07webdG2hcRWO+PnmgoghdNy80oLQZkdFZXGVBa5u+UWwJHNLbhCOZznDwHmWaZGk2/3QrDQdhf4S7UI8fT6KO0Vw4kFZUk+6Tz1RfGArMmA/Zr0XUfWXSqOjt9Y3hvliN2Th0Bk63yd+yTYJMyHRlsQvv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FVEeVp8D; arc=none smtp.client-ip=209.85.160.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-2e9071e3706so30059fac.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 08:22:44 -0700 (PDT)
+	s=arc-20240116; t=1750865332; c=relaxed/simple;
+	bh=DGQGEnve4/bgkJQyVwSOGe9EimBGv4nown95OAXf1bk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BCvv08kxRWpAqGZ6eSxHHb0SPR206pRfnJic5vpn4RS/3W5N0Hyh6uYLU+8viR/83cOQwcrdULk9N8XunVrioMzu4xbnCjfqHBnEVLX7u18+RMO9PdJrWohLpu6dyrDmO3swwBfTEsA8907lTqo0NvCoh+3loWD/H1b7EWS4Ifg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=GoHy6fmw; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-451ebd3d149so37791845e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 08:28:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750864963; x=1751469763; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gV6LKTyimmW9Sx8Hibhbqk80op5pM6YCyNN7CEAKCkM=;
-        b=FVEeVp8D7I3eWP/zEEURmhwpJmvCTTmC8Pj5y+FDFPIvzj8Rtl+Zz8DJxTW67fY3Pr
-         zPu0e7KC+B7RBgGwZ+pLVa7Ia3Qe/wvNoSP6KDiJICpazSCtJPIQpg9kvV5+X9xlsjAc
-         3Zk9nocvX12gjIUO3U3j+CF9s3b/rv+VrE6yVxqQt5jDw2Yca0lLVh512fHpUbr0em+n
-         /WnQEcteaEZnKtGLlHuYEvEMb+dRr9gJ3DsT+olDUORWCigLtNCoOISSrxP6dY5P8mLL
-         oDBI3iSdisUFIFSCHliuuj+o19uNIg7qQePHcsqcmoWTKqi3q9HYB9/oIz/iGj1HZIVm
-         XogA==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750865329; x=1751470129; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PI3qPrTkmKZMuiNpclcJbamBpUy45L3AQm07k2EFtpk=;
+        b=GoHy6fmwRcYFfI6v0eKyexJuCfgMF7byV7Jfu/cIlEuuj1MZgVZTHMuPgjRb3WhihF
+         KV4L3pXgY/CeSXSntjw5c9PLxz5wmstP/lryCDi/3O7yMPJd69hr1/lAiNJRjc0UtAep
+         YAx9WZvfJPXpHUUPVBHwoltOcq1hJrhpsYjVwua0d0zTLwdnVmAp+oAeJgqkbs1Xzgok
+         vdgysTMrr45SOZ+sqPOb7pJ52VD20orKNLL+dPtJMvLLLBQET8AcxegQzMIpjo7FLanA
+         RVJfR3m01YIkCnsEbMnyFXa6rWE5PCBENlFpD8BSmVZyHMSeTlsQTalKuedMa1uvgv4q
+         orXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750864963; x=1751469763;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gV6LKTyimmW9Sx8Hibhbqk80op5pM6YCyNN7CEAKCkM=;
-        b=orZy+X1x+GjDjyfhGFPSsEw8g7gc5+NnuLfmgTbRGc2K60D1Cdv744RdlQDeHAklBS
-         sH5QhmNDRLvnUr7+mcGAc17MdyHjc1lrk8fyg0NeR/30kQYeod60JmM4w3glW4nTjkxS
-         GPoIL/06KhuibWK6EjSw1bosYDOCqtL8Opo/8fz6Bst9W8md4YkI0t+DrRoKD3/qy16H
-         MGwSEnCgsjZLM7aSsC2zh1aGmh+Fahrt8+X8lNbCIynsl10e0IgzZwVp0dm+xD1tQFZn
-         9okSPzd7gTxMvxs+ss7HXmVJXDTw09SAKbzBI1B+hGeKdSwWraFGgTiM5Se5VA2LAdv6
-         1Qtw==
-X-Forwarded-Encrypted: i=1; AJvYcCVV1/0cDhdj0CfawXC5ZlelICDgV115HASd93zIQpMWGn3U5NJL9TqcNukOdaJU+YBJ7plJuDQExF0Z4ONI@vger.kernel.org
-X-Gm-Message-State: AOJu0YyMGWm/SIA9ReVxP7WDOXfZ4noIFyOuldBNPbrERkEgUuOoexS5
-	p+gzZJUfrN3ohSIxy501QHheS4B6gNmAZeRi2b/Q2nW2HvO2u4PBn7smHilwVGMoJsNXutvpgac
-	jN801
-X-Gm-Gg: ASbGncuE61MvzlaFRhqV7IVVbiviIdBMAD23gM6K3L10NQJUK5lO9HcCWMt4xtC+3Hx
-	RpZhLAmF71Lh3DfyS6tupZaAl1l2FCTLoD4Zg+xanQ8mZpBwgamQAIusjodLocYdHZO52kSRC01
-	V+S5ur0J1feLbTObnxYe2uVe5uNI4F8+DeWv+cs2GMordHpVqcTYlH6E+WPokvHMprTFEH1AbsW
-	gk0Tv2vShrGIch8k8yDohE9ll9k8Ly6l+zAnSZOe2lXxj1RVU7VXrQeV/pENns8uTP+YYmrnDjI
-	wqF8Ubgk0nTLFMcolbMSrSJCRBslzbufnJknNDfC1RuWWKu8rjh0ze6BZEs0xh7RRTEqu9uytsq
-	2ix7n
-X-Google-Smtp-Source: AGHT+IFd6lJtom/4lncQLlKjav5G6+Wsq1AopBqbxlhEagb6rUzpAIrbOCnTOFGol9ueG4rxfQAm6w==
-X-Received: by 2002:a05:6870:af88:b0:2c2:c92a:5789 with SMTP id 586e51a60fabf-2efb21346b8mr2671351fac.5.1750864963645;
-        Wed, 25 Jun 2025 08:22:43 -0700 (PDT)
-Received: from localhost ([2603:8080:b800:f700:1fca:a60b:12ab:43a3])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2ee664ba910sm2562945fac.8.2025.06.25.08.22.42
+        d=1e100.net; s=20230601; t=1750865329; x=1751470129;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PI3qPrTkmKZMuiNpclcJbamBpUy45L3AQm07k2EFtpk=;
+        b=ZSwqqqOtMWGLGRsyRs492PTkArclXf4u0679qnmy829JXd782TUvBxylUMrAzk7BoL
+         2e9kL0BUDYGhJ4xa8kOVFkKTfWdAyUQyu6Vd3wGf2PY5tPM1I9rAe3F5jVM0hXE8Lfuv
+         vvlUgW9fofe3nczhhViv2FJGAnoczDzeYkU2nkMIsS7pNJZxcLszybEeCR5Lr2wriAN8
+         kbFymsZ6cVc9Gy6Fl13s9tKJfvsgMlYrkLo5ANt91T13gol6vsM/fmF9GjaI7/rm/COK
+         Bv03n9nWCjFK4gZ0R5Dzhfc3GlVRO7gXRc5XtdmDvat/K8HmhtA0gx8NYgTAuiM4Th4c
+         KEWg==
+X-Gm-Message-State: AOJu0Yw8Rk2LTUdcdsnn3ATOSnSTeyWGkYQtQM7LLbpXt1P0MdtILTXt
+	94vLdsgXdt2g62N++ZkK6zCJ4Ls3Y6+LcTX++b+ewU1rVa/uNFZolWe4XaNu0vRXXzw=
+X-Gm-Gg: ASbGncs3hwKU7WZwOSJwuNceLIUZ0bfQyehscfUtPJ+ZyvA6WljlnTlCQVQLZIDq0cp
+	gCgtAbMT5PdWAJzGteqXCKXLh5lUI//NjNcvPD6Zrmh53uxAqiiUhivat6WSr2bNRVNy99H+Pgp
+	0YLSxTrNluyK61nBXhQQy8Ev+Fe1XcknNbQmjifOnEVZ97pm2Q2iIrJZqHVqOypIlE+qFGQzhDU
+	MPXt3dNNiPypH4QJWihIdhXM11SHe0Hr+F1xxB0dfctSZ0WdxNT4jGCZoShBWUefBT4YjyyDbNe
+	PkM7x4sM5IzYdX47st4FypQdiOMbV9pNSqN1B3EMCQsLPzJl4Y3V5w/9EcllQ28=
+X-Google-Smtp-Source: AGHT+IE8ILEBDNbFHwVn4CTLwkc5qRiSUjqDg5Sdx22jaPZhlrkws3KhJcV/ZrUUcqtIut17KcQNeQ==
+X-Received: by 2002:a05:600c:8217:b0:442:f482:c429 with SMTP id 5b1f17b1804b1-45381aee7e7mr31642335e9.8.1750865328896;
+        Wed, 25 Jun 2025 08:28:48 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:d216:42f3:1e7e:472e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45382366f88sm23283235e9.30.2025.06.25.08.28.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Jun 2025 08:22:43 -0700 (PDT)
-Date: Wed, 25 Jun 2025 10:22:41 -0500
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org
-Subject: [PATCH] soc: qcom: mdt_loader: Fix error return values in
- mdt_header_valid()
-Message-ID: <db57c01c-bdcc-4a0f-95db-b0f2784ea91f@sabinyo.mountain>
+        Wed, 25 Jun 2025 08:28:48 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sm6115: add debug UART pins
+Date: Wed, 25 Jun 2025 17:28:38 +0200
+Message-ID: <20250625152839.193672-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email haha only kidding
+Content-Transfer-Encoding: 8bit
 
-This function is supposed to return true for valid headers and false for
-invalid.  In a couple places it returns -EINVAL instead which means the
-invalid headers are counted as true.  Change it to return false.
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Fixes: 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read past the ELF header")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+We should not rely on the bootloader to set up the pinmux of the debug
+UART port. Let's add pin definitions for uart4 to tlmm and bind them to
+the relevant device node.
+
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/soc/qcom/mdt_loader.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-index 1b4ebae458f3..0ca268bdf1f8 100644
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -33,14 +33,14 @@ static bool mdt_header_valid(const struct firmware *fw)
- 		return false;
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index c8865779173ec..91fc36b59abf9 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -721,6 +721,13 @@ qup_spi5_default: qup-spi5-default-state {
+ 				bias-pull-up;
+ 			};
  
- 	if (ehdr->e_phentsize != sizeof(struct elf32_phdr))
--		return -EINVAL;
-+		return false;
- 
- 	phend = size_add(size_mul(sizeof(struct elf32_phdr), ehdr->e_phnum), ehdr->e_phoff);
- 	if (phend > fw->size)
- 		return false;
- 
- 	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
--		return -EINVAL;
-+		return false;
- 
- 	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
- 	if (shend > fw->size)
++			qup_uart4_default: qup-uart4-default-state {
++				pins = "gpio12", "gpio13";
++				function = "qup4";
++				drive-strength = <2>;
++				bias-disable;
++			};
++
+ 			sdc1_state_on: sdc1-on-state {
+ 				clk-pins {
+ 					pins = "sdc1_clk";
+@@ -1565,6 +1572,8 @@ uart4: serial@4a90000 {
+ 				reg = <0x0 0x04a90000 0x0 0x4000>;
+ 				clock-names = "se";
+ 				clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&qup_uart4_default>;
+ 				interrupts = <GIC_SPI 331 IRQ_TYPE_LEVEL_HIGH>;
+ 				interconnects = <&clk_virt MASTER_QUP_CORE_0 RPM_ALWAYS_TAG
+ 						 &clk_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
 -- 
-2.47.2
+2.48.1
 
 
