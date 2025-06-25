@@ -1,211 +1,248 @@
-Return-Path: <linux-arm-msm+bounces-62498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E883AE88E6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 17:57:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B02B3AE88F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 17:59:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 89E35167B9D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 15:57:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8399B17213B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 15:59:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D56929C33A;
-	Wed, 25 Jun 2025 15:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47F3D2BDC10;
+	Wed, 25 Jun 2025 15:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RvyzCJQN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N3hQVCh/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com [209.85.221.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CB426B0BE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 15:56:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FB726A0A7;
+	Wed, 25 Jun 2025 15:58:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750867021; cv=none; b=iwqrWAOsIetdbw3GJI9v0R0PgGK+8kv7C8UsdQeY8rcGD8w/z+ZU393HHOM2lW6vXEfGQWfPiNrSpvKmtZ0N6fjLFfjPgSxlVXjiVSuMIysnzANcavzd5q5gmDmv1ja/lY2f0s86uuz9irdD0PJd9o/jrf3DxZgfkj3i2SbEI2o=
+	t=1750867125; cv=none; b=AQJLL/t7he0QJSDjaXxQoeooh/58jSLmLUfVOSCsQPguHsOx84DwRJ0tx+Fxiw2x64O02ikx7wSJihcIFTqpf29tSFZkajxTGtui/r+eFvSeGp5PnxXqB7UWTofOzGXtxdQy9KxqtyOoQq6rmx3hCypU6m+8TDKhzkrSQQ5SeTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750867021; c=relaxed/simple;
-	bh=FEkokS8/xuXk+goXO73ToH3BN/rlCiO0xkCJYNPSHPc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pHqnMNewe/QZoxa9l22qJ3eOIm7fZtGs5xXlFSfDBi3XJOfhZ8TR/EzLUSlLe0kOVOlz7rbTMPFaXZMJplJBUnM3AxxVPgaxDJwO85PTUm+yihN1vmwfetvZKge9i2nGDD1yG7vks8k6Ln66clZpTaoulrOIoqnK+VwBDNHAuXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RvyzCJQN; arc=none smtp.client-ip=209.85.221.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f66.google.com with SMTP id ffacd0b85a97d-3a522224582so948243f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 08:56:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750867018; x=1751471818; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TnQ6U2Cyxfs2njJfr+S27AJxd4QZUS+L9XHalJW5Its=;
-        b=RvyzCJQNVi28ZjZ24FTQzs6kGYdIzK8GLGefyKqQsnjMHeKSgjomVrkUpTS/lRaa7J
-         rbk19URF4C32JxEPbDSeNlwY2giG9G9tv2Vufx4ne0bCCH2xtO11bqX9p4fwk5M+6zFG
-         xOxli+jsTNjYLx56ESW+szOSu6peaTkoFupTMdXW9xrnc+hQzu1HtckrjVHhGvvfOJKR
-         aOGk1IniMdmYDCIgEvDpImCNLkaHA4lx+hUGW6OoT6XqqN41xeFbe84sx8ip4UFQabTZ
-         Lso2dcnopMzy4ijlchc6NzMNFfrKPslJjgewLILtHYxFNbk1TKrFfb5ST8Z6COC9UZcM
-         aVPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750867018; x=1751471818;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TnQ6U2Cyxfs2njJfr+S27AJxd4QZUS+L9XHalJW5Its=;
-        b=Xs4ugR7+CDZU2U9f/gn9dAMKLDgwsr47r50riMTLSWDaVwkuW4brlAFwjoEVUm00S7
-         /SSq6BnDMrbLQLdvm1k1S+sBvc7ybAK6RLIlsYuuilLDp6zxnvl72+kI1+DYMPqfqcof
-         GmwXwAG2tUMnSUQCdfgJzFTaIX6I3a5ZADKrBFelC+QMmCazITCjDmqVkorZqf0/3v3T
-         Uqn6bRqPd/nO5gIdfzWqDaaOByI9bk7LwP3tyg7BwQ4vTn1mnVRUb9aqu3/VTfZ8IEgE
-         E3fodUf8jqJiJpFaUS/U2B3/sot/OKsqyLRIywZniofcpA5jWXBHMXkJfVFiNYqnlZLi
-         KIPA==
-X-Forwarded-Encrypted: i=1; AJvYcCWdJUdXVfxQEEI5EjFHmyYWdcgEsNCpsJzfzaNzxXk2vgjwCUOdvr6VNwmhPHTUvne3QbzQlewUyXEcPXj6@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKKvJvEoa17NhP23f5gns9UgepzofYgLL/lh2PbPOW2NDKVa5/
-	rCXxPzxySvf/sRXm/HkT9H1aszZvzGTn/RsibU68HSW+UuK7rBVUP66tltsjtGTCeSU=
-X-Gm-Gg: ASbGncvKLlRiUVVe9sbrBhLix+g0fJvArXP951nWdqAcO5BSs54TYV41bFfsjeHju0g
-	I6IRkZEoy/BJocvwr6uaEcL36IplIvisBgI78hC46cwAWMaKFo5Gq6dePdY1E9ER5WqRR/3XlCh
-	6aVRkDkoZoAlsV3Q4GCXjSsn/n7bfLFCsQZHhS/SQBpTy8aILtGPvipqC3Q2fPNhgI/ykRWT8Kf
-	RJcwWa74RVw+ZvTTzaOhcsqYT7KAPnNfX3rpCGm/KvBnL1D7oO6sQ1a615FpERdRyOF3A9C3O8x
-	uDER+t8/1ToMVhLalZaw/S5geCleJ6eAxttymkFrNF5Fp5EZx4QXK3xB7fWEB0PIsebtsGkxvjH
-	1HSs0YP/01wcpTWKg9i23vTC2WIo=
-X-Google-Smtp-Source: AGHT+IFnyjaFwClhoLHY4neCfFPtebMRcA0oo0I9v9S/4LgcQYnOgYL+PndxePy8fTJnbd4Y3QC13A==
-X-Received: by 2002:a05:6000:440d:b0:3a5:8a68:b815 with SMTP id ffacd0b85a97d-3a6f2eb674bmr145165f8f.46.1750867017524;
-        Wed, 25 Jun 2025 08:56:57 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a6e8051677sm4998091f8f.15.2025.06.25.08.56.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jun 2025 08:56:57 -0700 (PDT)
-Message-ID: <a6305f4b-27d5-496d-b3f8-eba958c49a84@linaro.org>
-Date: Wed, 25 Jun 2025 16:56:54 +0100
+	s=arc-20240116; t=1750867125; c=relaxed/simple;
+	bh=D86EJE+46L/7mawYbJNG86v24Im/NiRYBeI4AnD8EQc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A57nZbpzEgRAviM7GLy8qzzYX0Tqc9QENscogwE37QLtONLoCXjnN8DhpRj5YIw3VC1Tdrk5FyY2X8EssP1ZEkrl2/6uHY/n0rxecrd/1570GJ8IPYTj2akRTtM1I1Ao1bmXRACSKZ6LT5h+OUEUWiaHD9sAI+sGlCNatbMrN7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N3hQVCh/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65706C4CEEB;
+	Wed, 25 Jun 2025 15:58:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750867124;
+	bh=D86EJE+46L/7mawYbJNG86v24Im/NiRYBeI4AnD8EQc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=N3hQVCh/66qpNUimTd+Mb047vi7Jnu+csvc1JVj2vp7Y4ikcMTp0K1OSn5ZiZXIkE
+	 klCM+NZ366LMrcRDTdvQZKpWXIUp48xXEmHJfFYe1Q+heVjiQwYcUrHJvQ73kWJ3e1
+	 qfB0/tQ7/aIh/DrGfqNxk9hDlu4B1+BjUqBVX6H1EYtBy8gNeXRTfseac7SHCZqEPx
+	 998A5zBhEbslHVUBCKqZkr40PFQoCl2KEvPCmgsOOOoMs695mWRsiZkhcqbO3iqNu6
+	 SLvVZgmJ61kQ/wRlgQr8PRBXF+M1jzLukXT5gawCBVx+ufi2NUWjaGSHAH3wGhcmLz
+	 V8HdTMxSiwyUA==
+Date: Wed, 25 Jun 2025 09:58:40 -0600
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com, lpieralisi@kernel.org, 
+	kwilczynski@kernel.org, bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org, 
+	kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org, kw@linux.com, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com, 
+	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com
+Subject: Re: [PATCH v3 1/3] PCI: qcom: Add equalization settings for 8.0 GT/s
+Message-ID: <uakd5br4e5l24xmb6rxqs2drlt3fcmemfjilxo7ozph6vysjzs@ag3wjtic3qfm>
+References: <20250625085801.526669-1-quic_ziyuzhan@quicinc.com>
+ <20250625085801.526669-2-quic_ziyuzhan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: media: qcom,x1e80100-camss: Sort
- interconnects alphabetically
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Krzysztof Kozlowski <krzk@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org
-References: <20250624094253.57441-1-vladimir.zapolskiy@linaro.org>
- <20250624094253.57441-2-vladimir.zapolskiy@linaro.org>
- <aa56b956-95f3-484d-8afa-058925b95bfd@kernel.org>
- <fff77f71-e21b-43b9-9da5-6cf819add970@linaro.org>
- <5a5b78f7-e156-4c5e-8407-b249040e227d@kernel.org>
- <c29385d4-30ea-4774-9cf9-699b08e29800@linaro.org>
- <329b89a4-85a9-496f-8b1b-6239dfc9057b@kernel.org>
- <930edec1-7403-4ecf-bb17-2e68b8d351f8@kernel.org>
- <e0eb8d55-b4fd-4f3b-94b0-5c56d48b4671@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <e0eb8d55-b4fd-4f3b-94b0-5c56d48b4671@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250625085801.526669-2-quic_ziyuzhan@quicinc.com>
 
-On 25/06/2025 15:07, Vladimir Zapolskiy wrote:
-> On 6/25/25 10:01, Krzysztof Kozlowski wrote:
->> On 25/06/2025 08:58, Krzysztof Kozlowski wrote:
->>> On 24/06/2025 15:29, Vladimir Zapolskiy wrote:
->>>> On 6/24/25 15:04, Krzysztof Kozlowski wrote:
->>>>> On 24/06/2025 13:38, Vladimir Zapolskiy wrote:
->>>>>> On 6/24/25 13:10, Krzysztof Kozlowski wrote:
->>>>>>> On 24/06/2025 11:42, Vladimir Zapolskiy wrote:
->>>>>>>> Sort the entries of interconnect and interconnect-names lists in 
->>>>>>>> the
->>>>>>>> alphabetical order of values in the latter property.
->>>>>>>
->>>>>>> We do not sort these entries alphabetically and you did not 
->>>>>>> explain why
->>>>>>> you are doing this.
->>>>>>
->>>>>> I did it, because I assume that the preference is to sort all named
->>>>>> values alphanumerically.
->>>>>
->>>>> Where is such preference documented?
->>>>
->>>> There is no such preference documented, as I stated it was my 
->>>> assumption
->>>> and it was based on your firm insistance to apply a particular sorting
->>>> order for regs, clocks and interrupts properties. Apparently you are
->>>
->>> Hm? And the rule is by name? I don't think I ever expressed that or
->>> insisted on some sorting by name. During previous talks on camss
->>> numerous times you ignored the ONLY rule of sorting I was insisting:
->>> keep the same as all other devices. That was the one and only rule.
->>>
->>>> fine with out of the same sort order for 'interconnects' values, the
->>>> criteria of picked properties remains unclear for me.
->>>
->>> I don't understand why it is unclear. That time with Bryan you both
->>> received VERY CLEAR feedback from me: there is no such rule of sorting
->>> any values. Yet you were pushing the discussion and patchset like there
->>> was something.
->>>
->> Look, the first reply:
->>
->> https://lore.kernel.org/all/65e5796a-8b8d-44f0-aef4- 
->> e420083b9d52@kernel.org/
->>
->> "You are supposed to keep the same order, as much as
->> possible."
->>
->> What rule is unclear here?
+On Wed, Jun 25, 2025 at 04:57:59PM +0800, Ziyue Zhang wrote:
+> Add lane equalization setting for 8.0 GT/s to enhance link stability and
+> aviod AER Correctable Errors reported on some platforms (eg. SA8775P).
 > 
-> At the moment of the given comment "the same order" was not "sorting by
-> values", it was "sorting to address".
+> 8.0 GT/s and 16.0 GT/s require the same equalization setting. This
+> setting is programmed into a group of shadow registers, which can be
+> switched to configure equalization for different speeds by writing 00b,
+> 01b to `RATE_SHADOW_SEL`.
 > 
-> Check the next message right in the same thread:
+> Hence program equalization registers in a loop using link speed as index,
+> so that equalization setting can be programmed for both 8.0 GT/s and
+> 16.0 GT/s.
 > 
-> https://lore.kernel.org/all/c1539cce-92eb-43fc-9267- 
-> f6e002611bbb@linaro.org/
+> Co-developed-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware.h  |  1 -
+>  drivers/pci/controller/dwc/pcie-qcom-common.c | 55 +++++++++++--------
+>  drivers/pci/controller/dwc/pcie-qcom-common.h |  2 +-
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c     |  6 +-
+>  drivers/pci/controller/dwc/pcie-qcom.c        |  6 +-
+>  5 files changed, 38 insertions(+), 32 deletions(-)
 > 
-> "We always sort by address". And that was the correct statement at
-> the time of the discussion.
-> 
-> Did it help to "keep the same order" in any sense? No, the message was
-> plainly ignored, and after the long discussion with you the sorting order
-> has been brutally enforced to become the new "sorting by values" order,
-> and to my sincere today's surprise there is no such rule. Apparently now
-> I have to believe it was Bryan's and my voluntary and deliberate decision
-> to change the sorting order, all right.
-> 
->> Even more precise reply from me:
->>
->> https://lore.kernel.org/all/8f11c99b-f3ca-4501- 
->> aec4-0795643fc3a9@kernel.org/
->>
->> "I don't imply sorting by name is any better."
->>
->> And:
->>
->> "The only rule is that all
->> devices from same family type must have the same order."
->>
->>
->> And now you claim there was from me "firm insistance to apply a
->> particular sorting" in context of name?
->>
->> So again, my entire feedback repeated multiple times during that
->> discussion is totally ignored and twisted to some fake new rule of name
->> sorting.
->>
-> 
-> Thank you for the explanation, and not just your messages are ignored
-> sometimes, it happens with anybody regularly.
-> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index ce9e18554e42..388306991467 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -127,7 +127,6 @@
+>  #define GEN3_RELATED_OFF_GEN3_EQ_DISABLE	BIT(16)
+>  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT	24
+>  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK	GENMASK(25, 24)
+> -#define GEN3_RELATED_OFF_RATE_SHADOW_SEL_16_0GT	0x1
+>  
+>  #define GEN3_EQ_CONTROL_OFF			0x8A8
+>  #define GEN3_EQ_CONTROL_OFF_FB_MODE		GENMASK(3, 0)
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
+> index 3aad19b56da8..ed466496f077 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-common.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
+> @@ -8,9 +8,11 @@
+>  #include "pcie-designware.h"
+>  #include "pcie-qcom-common.h"
+>  
+> -void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci)
+> +void qcom_pcie_common_set_equalization(struct dw_pcie *pci)
+>  {
+>  	u32 reg;
+> +	u16 speed, max_speed = PCIE_SPEED_16_0GT;
+> +	struct device *dev = pci->dev;
+>  
+>  	/*
+>  	 * GEN3_RELATED_OFF register is repurposed to apply equalization
+> @@ -19,32 +21,37 @@ void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci)
+>  	 * determines the data rate for which these equalization settings are
+>  	 * applied.
+>  	 */
+> -	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+> -	reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
+> -	reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
+> -	reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK,
+> -			  GEN3_RELATED_OFF_RATE_SHADOW_SEL_16_0GT);
+> -	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
+> +	if (pcie_link_speed[pci->max_link_speed] < PCIE_SPEED_32_0GT)
+> +		max_speed = pcie_link_speed[pci->max_link_speed];
+
+So the logic here is that you want to limit the max_speed to < 32 GT/s because
+you are not sure if 32 GT/s or more would require the same settings?
+
+If so, why can't you just simply bail out early if the link speed > 16 GT/s and
+just use pci->max_link_speed directly? Right now, 32 GT/s or more would be
+skipped implicitly because you have initialized max_speed to PCIE_SPEED_16_0GT.
+
+- Mani
+
+>  
+> -	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
+> -	reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
+> -		GEN3_EQ_FMDC_N_EVALS |
+> -		GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
+> -		GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
+> -	reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
+> -		FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
+> -		FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
+> -		FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
+> -	dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
+> +	for (speed = PCIE_SPEED_8_0GT; speed <= max_speed; ++speed) {
+> +		reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+> +		reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
+> +		reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
+> +		reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK,
+> +			  speed - PCIE_SPEED_8_0GT);
+> +		dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
+>  
+> -	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
+> -	reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
+> -		GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
+> -		GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
+> -		GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
+> -	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
+> +		reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
+> +		reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
+> +			GEN3_EQ_FMDC_N_EVALS |
+> +			GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
+> +			GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
+> +		reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
+> +			FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
+> +			FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
+> +			FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
+> +		dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
+> +
+> +		reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
+> +		reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
+> +			GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
+> +			GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
+> +			GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
+> +		dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
+> +	}
+>  }
+> -EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_equalization);
+> +EXPORT_SYMBOL_GPL(qcom_pcie_common_set_equalization);
+>  
+>  void qcom_pcie_common_set_16gt_lane_margining(struct dw_pcie *pci)
+>  {
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.h b/drivers/pci/controller/dwc/pcie-qcom-common.h
+> index 7d88d29e4766..7f5ca2fd9a72 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-common.h
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.h
+> @@ -8,7 +8,7 @@
+>  
+>  struct dw_pcie;
+>  
+> -void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci);
+> +void qcom_pcie_common_set_equalization(struct dw_pcie *pci);
+>  void qcom_pcie_common_set_16gt_lane_margining(struct dw_pcie *pci);
+>  
+>  #endif
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index bf7c6ac0f3e3..aaf060bf39d4 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -511,10 +511,10 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+>  		goto err_disable_resources;
+>  	}
+>  
+> -	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT) {
+> -		qcom_pcie_common_set_16gt_equalization(pci);
+> +	qcom_pcie_common_set_equalization(pci);
+> +
+> +	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT)
+>  		qcom_pcie_common_set_16gt_lane_margining(pci);
+> -	}
+>  
+>  	/*
+>  	 * The physical address of the MMIO region which is exposed as the BAR
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index c789e3f85655..0fcb17ffd2e9 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -298,10 +298,10 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
+>  {
+>  	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+>  
+> -	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT) {
+> -		qcom_pcie_common_set_16gt_equalization(pci);
+> +	qcom_pcie_common_set_equalization(pci);
+> +
+> +	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT)
+>  		qcom_pcie_common_set_16gt_lane_margining(pci);
+> -	}
+>  
+>  	/* Enable Link Training state machine */
+>  	if (pcie->cfg->ops->ltssm_enable)
 > -- 
-> Best wishes,
-> Vladimir
+> 2.34.1
+> 
 
-Lets put a cap on this discussion.
-
-The direction is to follow what's already upstream.
-
----
-bod
+-- 
+மணிவண்ணன் சதாசிவம்
 
