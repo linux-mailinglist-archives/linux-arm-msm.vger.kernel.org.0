@@ -1,230 +1,369 @@
-Return-Path: <linux-arm-msm+bounces-62302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFBE7AE7A2B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 10:30:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45F6AAE7A97
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 10:45:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 691F73BF93B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 08:30:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9CD4D189EEDE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 08:45:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29BFA26E714;
-	Wed, 25 Jun 2025 08:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F702279DC5;
+	Wed, 25 Jun 2025 08:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eZSQDx54"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lNVrJck7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA3826CE39;
-	Wed, 25 Jun 2025 08:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D7F1DF247;
+	Wed, 25 Jun 2025 08:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750840195; cv=none; b=FCTtP69XaKp9scrzXjiqhvZ3cCUgFr+8+KBPxsPullDkLTb+Bq1sLq1P5IpYr9420fFJsXZKveN/QH4osmb61FBxvChbnP4Z0SiPp0r7OnlHegJ7HVPv/0d2MG1MsM5cdWmz7VluRItf8VFm/ZRmDk5ucZ03wNNSgqFGcWMAdk0=
+	t=1750841061; cv=none; b=oEwV8+fgxOWCpNLQ76oUIm6S+VTruvdcT9tdDIADwIMyt08sTjW09lTSjxezum5i2MFf+RZZ46l+LGCe27M33UtCciVOAuNGzs5a49D6QuggzsJ/GdjcF4+TAvYybV/D8dnpm0MOyarSaXozvtdrcuAZBzPqQGDqc+hXlF6fz6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750840195; c=relaxed/simple;
-	bh=Pn0IAq+EW3ZPpfC2bBtXNhslVya1++GpwORTqaNMocw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rN1YrVkFfBve6KEI4dRCWc79p4aA7hzWtzxG51C2Bo6Szu8Aw4Cp5dNUjC1itdBnAQziu6zHcWQN+m125pMtYIos7ot3BIm+IsgFjmGBzibE83fX/6qvIfcQFByW1jLE83M2XuZHIQOs3wCxrRHGxnSRthWfUsT3e2fQhW6N9Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eZSQDx54; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1750841061; c=relaxed/simple;
+	bh=RP1SCe23A6ubPmDnlSwR40v3qDMdUtqrQd3omt0OMh0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=EtYKPiMfOhETJaxIdnCkVn3ZrrRh4zH9+PORO39WEN5b6Wg8/XIipR42hZXieUog0oUidzpBJ/BUrr4Pyd+eGuPFIZ58vjc7es5htIKwIKxHd+nZj+mw5+8GP5kSNkiaWQzXKttGR/ZtdQButeNj/kkLZcxIcX8Z22givmU9oyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lNVrJck7; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55P3iWDM014481;
-	Wed, 25 Jun 2025 08:29:48 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55P0hSbO007242;
+	Wed, 25 Jun 2025 08:44:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=Dal1OWBcSXu
-	ztEXKmLQhnv0TMe5eFbyOMUlSVoNQl1E=; b=eZSQDx54bIUwqyQN0WjukPDazGJ
-	ja9A18CV5nJBIz7I2G6pWxMs0MmkV4WC0TCkLbQZNmdzKtJwAjy5she8mdyCkApG
-	3VIEefccmshTFNkqloDtY9bxjNhBdYo9zcqZ57L5NRwvXSEl59BXVQlAz9kwK6uj
-	wfsChJLw0Tv4Z1vT8C9xW37DFYZmPQPli1yBV6BmW/DqhrNjZBwVnFG2GXSG7cFZ
-	fHRc4EebDtgVAfzEvIFXFN/r9x2hhDqmxO2T/29LOm/jBnOQFH6sJYrYBBE63c10
-	oQnmnZjG59LhD0D3N66opaUBKYF011OWT8TsW366GRlDZPVI87BT9c0tSnA==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47evc5r636-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	fCyBUr31GwUjVNOw1JrfARK8nDg07jSUAIW9Q3UeD0o=; b=lNVrJck7DOALz4sW
+	vI/tnFzd5X4QBkRD0XkDItdDHmtqWyHyqqQLtOGzl+Kj3KDNqfgkwffswvb2i4NQ
+	Bu5W4Rtx75aW3D/pyxDFeH+37JD8CIWiakNijQDB4wGhhcdAXYz80wx2smOXoVpH
+	Hj0IM8ndqO8BMpyTfmQ2l4u14Sw/k+01gD85ToRA2qBSJ1Z688gpOQ18PIFOvhK2
+	q+oblWuRY3qNFX5BFN6aYkCwSfN2F43hhGRA3OmPSNQMmHmabmArCgCcmhb0AhA/
+	aLWNpFLW8xlLX3FxW0dZF9rkeg8IqGluqmXbBwbExh8q9KZ9iluw2a+UK/ckVzWQ
+	zSA4fg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ec269cn2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jun 2025 08:29:47 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 55P8ThPr032600;
-	Wed, 25 Jun 2025 08:29:44 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 47dntm2eq7-1
+	Wed, 25 Jun 2025 08:44:02 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55P8i1fT020356
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jun 2025 08:29:44 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55P8ThBi032573;
-	Wed, 25 Jun 2025 08:29:44 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-pkumpatl-hyd.qualcomm.com [10.147.245.204])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 55P8TiU4032615
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jun 2025 08:29:44 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 3914174)
-	id C3C505D0; Wed, 25 Jun 2025 13:59:41 +0530 (+0530)
-From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org,
-        quic_pkumpatl@quicinc.com, kernel@oss.qualcomm.com,
-        Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Subject: [PATCH v5 9/9] arm64: dts: qcom: qcm6490-idp: Add sound card
-Date: Wed, 25 Jun 2025 13:59:27 +0530
-Message-Id: <20250625082927.31038-10-quic_pkumpatl@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250625082927.31038-1-quic_pkumpatl@quicinc.com>
-References: <20250625082927.31038-1-quic_pkumpatl@quicinc.com>
+	Wed, 25 Jun 2025 08:44:01 GMT
+Received: from [10.253.74.126] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 25 Jun
+ 2025 01:43:57 -0700
+Message-ID: <326bbd02-f414-48e3-a396-4b94f19054f7@quicinc.com>
+Date: Wed, 25 Jun 2025 16:43:55 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/38] drm/msm/dp: split msm_dp_panel_read_sink_caps()
+ into two parts and drop panel drm_edid
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Abhinav Kumar
+	<abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        "Abhinav
+ Kumar" <quic_abhinavk@quicinc.com>
+References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
+ <20250609-msm-dp-mst-v2-1-a54d8902a23d@quicinc.com>
+ <g6wqvbszbrw6gnvxz7cjmhx4rc53kyulcr5wjekfjaisontikl@723odzngtlnd>
+Content-Language: en-US
+From: Yongxing Mou <quic_yongmou@quicinc.com>
+In-Reply-To: <g6wqvbszbrw6gnvxz7cjmhx4rc53kyulcr5wjekfjaisontikl@723odzngtlnd>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 35IMiFKRx-ag7QkZqdXt2xLPEYv0eCmB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDA2MiBTYWx0ZWRfX0+wg984PgDP+
- owJDQLskVF2NFEg//gJj65pCU5HtjXvbhZj5qevxzlnJ3Da6Ir/6cGSRboOq53dklK0nQbQLYtd
- aLCWM1Jfy34ekYu5tX+1z+LTid7yBGu1AwRRF4ZKjdF+A+1/ay8+640KcmkL5J//qHOf32hdNRM
- JoAjFHDv+v4N4HbJMEai2PwYs+ZG//lisdVgyGaUnl9/zFMgT1fUgsrrf8dgz3MCcUw87ucqeFn
- yWbZPyWMsTNTfUDUkYmjfwtRq7h0qurlbHOOEP/sYYIWcirLen+LXowwrdiQo0rwp5ORO4oCv+h
- 1Gw74+oCpKk8sMN3K+VqtrBKb7NCNDfKHWyjOBnBuArHP3EOILmB49tf734g1cuUIWKUrJEIRJh
- uTYKg+m3QmzoVPgugE6qz49JavIhHZqxAhO5pSOxI5voKSwYLUwvalw4aNgx+lSNsNOvHR9o
-X-Authority-Analysis: v=2.4 cv=caHSrmDM c=1 sm=1 tr=0 ts=685bb37c cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8 a=h_l79siUWkRGThfnGhIA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: 35IMiFKRx-ag7QkZqdXt2xLPEYv0eCmB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDA2NCBTYWx0ZWRfX3jWNZbWVTxVL
+ ly/niwpImwcHTNjrDrrmCGew0lcbqsUWYeqIU6nDNuyG8o0nCEPh8oz707XZNaxy7LZ69ClUrvg
+ 2s4F2mQhlCIoAXhuZEYn0VyvChIdPE7a5BL28132ov/9cyTEtH5sh/rS8kvIcl/db8u1X+6ql0h
+ taLKVqSJR3IiuMwiQUHXcspv9G5BPZwfvtfTQzncO7ivV5Nzjz9Xgkq5u9wyPsZxCwD/ve1LB0n
+ 4090Hl9GcShE9k75UseuVN9LT7CfrZEIj1T8j9aGxe4WawprSI2ikQd1zusTuJfgQHCUsE9e+ad
+ haYJ9AuAvU6+UjC+Mgs7N1GIweA2SEFoefYbFGFtLNVghXGV50QRUEdhG8WKRdEABIQeojUjzt5
+ 90Qwi+O8uYHdMQYRhXm1OyFwGwphtjJofwYIpZWbHQlb7PpYcDylziqxZjiLPsGZ4+NMNPaR
+X-Authority-Analysis: v=2.4 cv=XPQwSRhE c=1 sm=1 tr=0 ts=685bb6d2 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8
+ a=TqKEzCPVLb6d4rQsPy4A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: qVRLKYIYnueoOfiKRFMl2R8OqstgcvBU
+X-Proofpoint-ORIG-GUID: qVRLKYIYnueoOfiKRFMl2R8OqstgcvBU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-25_01,2025-06-23_07,2025-03-28_01
+ definitions=2025-06-25_02,2025-06-23_07,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 mlxlogscore=999 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 adultscore=0 mlxscore=0 spamscore=0
- malwarescore=0 phishscore=0 clxscore=1015 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506250062
+ lowpriorityscore=0 impostorscore=0 clxscore=1015 suspectscore=0 mlxscore=0
+ spamscore=0 phishscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0
+ priorityscore=1501 adultscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506250064
 
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 
-Add the sound card node with tested playback over WSA8835 speakers,
-digital on-board mics along with wcd9370 headset playabck and record.
 
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Co-developed-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 84 ++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-index 468f5f9c0779..acc338e9b60a 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-@@ -757,6 +757,90 @@ &sdhc_2 {
- 	cd-gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
- };
- 
-+&sound {
-+	compatible = "qcom,qcm6490-idp-sndcard";
-+	model = "qcm6490-idp-snd-card";
-+
-+	audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
-+			"SpkrRight IN", "WSA_SPK2 OUT",
-+			"IN1_HPHL", "HPHL_OUT",
-+			"IN2_HPHR", "HPHR_OUT",
-+			"AMIC2", "MIC BIAS2",
-+			"TX DMIC0", "MIC BIAS1",
-+			"TX DMIC1", "MIC BIAS2",
-+			"TX DMIC2", "MIC BIAS3",
-+			"TX SWR_ADC1", "ADC2_OUTPUT",
-+			"VA DMIC0", "VA MIC BIAS3",
-+			"VA DMIC1", "VA MIC BIAS3",
-+			"VA DMIC2", "VA MIC BIAS1",
-+			"VA DMIC3", "VA MIC BIAS1";
-+
-+	wsa-dai-link {
-+		link-name = "WSA Playback";
-+
-+		codec {
-+			sound-dai = <&left_spkr>, <&right_spkr>,
-+				    <&swr2 0>, <&lpass_wsa_macro 0>;
-+		};
-+
-+		cpu {
-+			sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	wcd-playback-dai-link {
-+		link-name = "WCD Playback";
-+
-+		codec {
-+			sound-dai = <&wcd9370 0>, <&swr0 0>, <&lpass_rx_macro 0>;
-+		};
-+
-+		cpu {
-+			sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	wcd-capture-dai-link {
-+		link-name = "WCD Capture";
-+
-+		codec {
-+			sound-dai = <&wcd9370 1>, <&swr1 0>, <&lpass_tx_macro 0>;
-+		};
-+
-+		cpu {
-+			sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	va-dai-link {
-+		link-name = "VA Capture";
-+
-+		codec {
-+			sound-dai = <&lpass_va_macro 0>;
-+		};
-+
-+		cpu {
-+			sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+};
-+
- &swr0 {
- 	status = "okay";
- 
--- 
-2.34.1
+On 2025/6/9 20:41, Dmitry Baryshkov wrote:
+> On Mon, Jun 09, 2025 at 08:21:20PM +0800, Yongxing Mou wrote:
+>> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>
+>> In preparation of DP MST where link caps are read for the
+>> immediate downstream device and the edid is read through
+> 
+> EDID, not edid. Please review all your patches for up/down case.
+> 
+Got it. Thanks~
+>> sideband messaging, split the msm_dp_panel_read_sink_caps() into
+>> two parts which read the link parameters and the edid parts
+>> respectively. Also drop the panel drm_edid cached as we actually
+>> don't need it.
+> 
+> Also => separate change.
+> 
+Got it.
+>>
+>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_display.c | 13 +++++----
+>>   drivers/gpu/drm/msm/dp/dp_panel.c   | 55 ++++++++++++++++++++-----------------
+>>   drivers/gpu/drm/msm/dp/dp_panel.h   |  6 ++--
+>>   3 files changed, 40 insertions(+), 34 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 6f05a939ce9e648e9601597155999b6f85adfcff..4a9b65647cdef1ed6c3bb851f93df0db8be977af 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -389,7 +389,11 @@ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
+>>   
+>>   	dp->link->lttpr_count = msm_dp_display_lttpr_init(dp, dpcd);
+>>   
+>> -	rc = msm_dp_panel_read_sink_caps(dp->panel, connector);
+>> +	rc = msm_dp_panel_read_link_caps(dp->panel);
+>> +	if (rc)
+>> +		goto end;
+>> +
+>> +	rc = msm_dp_panel_read_edid(dp->panel, connector);
+>>   	if (rc)
+>>   		goto end;
+>>   
+>> @@ -720,7 +724,6 @@ static int msm_dp_irq_hpd_handle(struct msm_dp_display_private *dp, u32 data)
+>>   static void msm_dp_display_deinit_sub_modules(struct msm_dp_display_private *dp)
+>>   {
+>>   	msm_dp_audio_put(dp->audio);
+>> -	msm_dp_panel_put(dp->panel);
+>>   	msm_dp_aux_put(dp->aux);
+>>   }
+>>   
+>> @@ -783,7 +786,7 @@ static int msm_dp_init_sub_modules(struct msm_dp_display_private *dp)
+>>   		rc = PTR_ERR(dp->ctrl);
+>>   		DRM_ERROR("failed to initialize ctrl, rc = %d\n", rc);
+>>   		dp->ctrl = NULL;
+>> -		goto error_ctrl;
+>> +		goto error_link;
+>>   	}
+>>   
+>>   	dp->audio = msm_dp_audio_get(dp->msm_dp_display.pdev, dp->catalog);
+>> @@ -791,13 +794,11 @@ static int msm_dp_init_sub_modules(struct msm_dp_display_private *dp)
+>>   		rc = PTR_ERR(dp->audio);
+>>   		pr_err("failed to initialize audio, rc = %d\n", rc);
+>>   		dp->audio = NULL;
+>> -		goto error_ctrl;
+>> +		goto error_link;
+>>   	}
+>>   
+>>   	return rc;
+>>   
+>> -error_ctrl:
+>> -	msm_dp_panel_put(dp->panel);
+>>   error_link:
+>>   	msm_dp_aux_put(dp->aux);
+>>   error:
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+>> index 4e8ab75c771b1e3a2d62f75e9993e1062118482b..d9041e235104a74b3cc50ff2e307eae0c4301ef3 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+>> @@ -118,14 +118,13 @@ static u32 msm_dp_panel_get_supported_bpp(struct msm_dp_panel *msm_dp_panel,
+>>   	return min_supported_bpp;
+>>   }
+>>   
+>> -int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
+>> -	struct drm_connector *connector)
+>> +int msm_dp_panel_read_link_caps(struct msm_dp_panel *msm_dp_panel)
+>>   {
+>>   	int rc, bw_code;
+>>   	int count;
+>>   	struct msm_dp_panel_private *panel;
+>>   
+>> -	if (!msm_dp_panel || !connector) {
+>> +	if (!msm_dp_panel) {
+>>   		DRM_ERROR("invalid input\n");
+>>   		return -EINVAL;
+>>   	}
+>> @@ -160,26 +159,29 @@ int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
+>>   
+>>   	rc = drm_dp_read_downstream_info(panel->aux, msm_dp_panel->dpcd,
+>>   					 msm_dp_panel->downstream_ports);
+>> -	if (rc)
+>> -		return rc;
+>> +	return rc;
+>> +}
+>>   
+>> -	drm_edid_free(msm_dp_panel->drm_edid);
+>> +int msm_dp_panel_read_edid(struct msm_dp_panel *msm_dp_panel, struct drm_connector *connector)
+>> +{
+>> +	struct msm_dp_panel_private *panel;
+>> +	const struct drm_edid *drm_edid;
+>> +
+>> +	panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
+>>   
+>> -	msm_dp_panel->drm_edid = drm_edid_read_ddc(connector, &panel->aux->ddc);
+>> +	drm_edid = drm_edid_read_ddc(connector, &panel->aux->ddc);
+>>   
+>> -	drm_edid_connector_update(connector, msm_dp_panel->drm_edid);
+>> +	drm_edid_connector_update(connector, drm_edid);
+>>   
+>> -	if (!msm_dp_panel->drm_edid) {
+>> +	if (!drm_edid) {
+>>   		DRM_ERROR("panel edid read failed\n");
+>>   		/* check edid read fail is due to unplug */
+>>   		if (!msm_dp_catalog_link_is_connected(panel->catalog)) {
+>> -			rc = -ETIMEDOUT;
+>> -			goto end;
+>> +			return -ETIMEDOUT;
+>>   		}
+>>   	}
+>>   
+>> -end:
+>> -	return rc;
+>> +	return 0;
+>>   }
+>>   
+>>   u32 msm_dp_panel_get_mode_bpp(struct msm_dp_panel *msm_dp_panel,
+>> @@ -208,15 +210,20 @@ u32 msm_dp_panel_get_mode_bpp(struct msm_dp_panel *msm_dp_panel,
+>>   int msm_dp_panel_get_modes(struct msm_dp_panel *msm_dp_panel,
+>>   	struct drm_connector *connector)
+>>   {
+>> +	struct msm_dp_panel_private *panel;
+>> +	const struct drm_edid *drm_edid;
+>> +
+>>   	if (!msm_dp_panel) {
+>>   		DRM_ERROR("invalid input\n");
+>>   		return -EINVAL;
+>>   	}
+>>   
+>> -	if (msm_dp_panel->drm_edid)
+>> -		return drm_edid_connector_add_modes(connector);
+>> +	panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
+>> +
+>> +	drm_edid = drm_edid_read_ddc(connector, &panel->aux->ddc);
+>> +	drm_edid_connector_update(connector, drm_edid);
+> 
+> If EDID has been read and processed after HPD high event, why do we need
+> to re-read it again? Are we expecting that EDID will change?
+> 
+Here we indeed don't need to read the EDID again, so we can directly 
+call drm_edid_connector_add_modes. Thanks.
+>>   
+>> -	return 0;
+>> +	return drm_edid_connector_add_modes(connector);
+>>   }
+>>   
+>>   static u8 msm_dp_panel_get_edid_checksum(const struct edid *edid)
+>> @@ -229,6 +236,7 @@ static u8 msm_dp_panel_get_edid_checksum(const struct edid *edid)
+>>   void msm_dp_panel_handle_sink_request(struct msm_dp_panel *msm_dp_panel)
+>>   {
+>>   	struct msm_dp_panel_private *panel;
+>> +	const struct drm_edid *drm_edid;
+>>   
+>>   	if (!msm_dp_panel) {
+>>   		DRM_ERROR("invalid input\n");
+>> @@ -238,8 +246,13 @@ void msm_dp_panel_handle_sink_request(struct msm_dp_panel *msm_dp_panel)
+>>   	panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
+>>   
+>>   	if (panel->link->sink_request & DP_TEST_LINK_EDID_READ) {
+>> +		drm_edid = drm_edid_read_ddc(msm_dp_panel->connector, &panel->aux->ddc);
+> 
+> And again....
+> 
+Here we need the struct edid,since we drop the cached drm_edid, so we 
+need to read it again. Or we can return the drm_edid from 
+msm_dp_panel_read_edid and pass it to msm_dp_panel_handle_sink_request, 
+then we don't need to read drm_edid here. Emm, I'm still a bit curious 
+why we can't cache the drm_edid? It would help us to access it when 
+needed. Emm, i see other drivers also cache it.
+>> +
+>> +		if (!drm_edid)
+>> +			return;
+>> +
+>>   		/* FIXME: get rid of drm_edid_raw() */
+>> -		const struct edid *edid = drm_edid_raw(msm_dp_panel->drm_edid);
+>> +		const struct edid *edid = drm_edid_raw(drm_edid);
+>>   		u8 checksum;
+>>   
+>>   		if (edid)
+>> @@ -515,11 +528,3 @@ struct msm_dp_panel *msm_dp_panel_get(struct device *dev, struct drm_dp_aux *aux
+>>   
+>>   	return msm_dp_panel;
+>>   }
+>> -
+>> -void msm_dp_panel_put(struct msm_dp_panel *msm_dp_panel)
+>> -{
+>> -	if (!msm_dp_panel)
+>> -		return;
+>> -
+>> -	drm_edid_free(msm_dp_panel->drm_edid);
+>> -}
+> 
+> Too many changes to be stuffed under the hood of "Also perform foo"
+> 
+Got it, thanks , will split  this patch and refactor the commit msg.
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+>> index 4906f4f09f2451cfed3c1007f38b4db7dfdb1d90..7f139478e1012d5b8f1f745f0de5fc3943745428 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+>> @@ -32,7 +32,6 @@ struct msm_dp_panel {
+>>   	u8 downstream_ports[DP_MAX_DOWNSTREAM_PORTS];
+>>   
+>>   	struct msm_dp_link_info link_info;
+>> -	const struct drm_edid *drm_edid;
+>>   	struct drm_connector *connector;
+>>   	struct msm_dp_display_mode msm_dp_mode;
+>>   	struct msm_dp_panel_psr psr_cap;
+>> @@ -51,7 +50,9 @@ int msm_dp_panel_timing_cfg(struct msm_dp_panel *msm_dp_panel);
+>>   int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
+>>   		struct drm_connector *connector);
+>>   u32 msm_dp_panel_get_mode_bpp(struct msm_dp_panel *msm_dp_panel, u32 mode_max_bpp,
+>> -			u32 mode_pclk_khz);
+>> +			      u32 mode_pclk_khz);
+>> +int msm_dp_panel_read_link_caps(struct msm_dp_panel *dp_panel);
+>> +int msm_dp_panel_read_edid(struct msm_dp_panel *dp_panel, struct drm_connector *connector);
+>>   int msm_dp_panel_get_modes(struct msm_dp_panel *msm_dp_panel,
+>>   		struct drm_connector *connector);
+>>   void msm_dp_panel_handle_sink_request(struct msm_dp_panel *msm_dp_panel);
+>> @@ -86,5 +87,4 @@ static inline bool is_lane_count_valid(u32 lane_count)
+>>   
+>>   struct msm_dp_panel *msm_dp_panel_get(struct device *dev, struct drm_dp_aux *aux,
+>>   			      struct msm_dp_link *link, struct msm_dp_catalog *catalog);
+>> -void msm_dp_panel_put(struct msm_dp_panel *msm_dp_panel);
+>>   #endif /* _DP_PANEL_H_ */
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
 
