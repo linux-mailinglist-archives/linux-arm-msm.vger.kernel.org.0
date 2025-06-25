@@ -1,189 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-62396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95E41AE7D69
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 11:39:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0D90AE7E16
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 11:53:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D83F13A1D49
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 09:37:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A61F188811D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 09:49:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E9F72BEC29;
-	Wed, 25 Jun 2025 09:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0ADB327FD4B;
+	Wed, 25 Jun 2025 09:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QG3FDG6/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QNISsXNj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EEA29B232;
-	Wed, 25 Jun 2025 09:26:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F387273D90;
+	Wed, 25 Jun 2025 09:49:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750843562; cv=none; b=seikPwRFIank/JqfSvgvyJDEzHJFesqRClfy0umwqCq6FxeG3dp7y6+iUzu3NCUPqS85XHnLH8gr+BnCMIDGXUWOr+cosC9gd20xcfN4sEdpYk+T7P/VMlTx/GD8o2fpn1wk6SBopa2mlZvVcwx1ZATTa478bz2aZYbxmCxyiUQ=
+	t=1750844965; cv=none; b=Ywe2JucQEI2MpFw/ropW5arBjM0kMmaod6U4P6XGCb5AEdRdDvMOnjHzyyK+stcngVg9dvLCVJ77eCYxZ5JG+7miw941RjU+L/S+pBQgr3oig5EjTR9KH5DLqRTPqtapiQ7khG6pWCmVUyz+EaLQNrOfiGCrJ7wG0vkCKYuZMCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750843562; c=relaxed/simple;
-	bh=DMxABzn9Q/LNeWIKjL84Poq2r4gHFJAc56xCHlCoZZM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=h9addAA7MumYXbeZILnPDA68Cuj4j0Vdbcfni9siB3DhFbZa5Xe4nBE69McX9DaheqcbYs0n0G7Mgy2HXgF5qzBQ/kBd+lw2dywrF2eladwLuPADsa5vyPMeXW78JAhe2dqzDcc9nsKWvNBrKb1zZmRHs4U9OnCOWMXhBAPUr20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QG3FDG6/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55P20Som032291;
-	Wed, 25 Jun 2025 09:25:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=tcdcCjhN1kQ
-	qkrSRaE028Kk2TL8h/mHB4la3MB9/22o=; b=QG3FDG6/CFSon8Vvx4UzaQWqmzS
-	/wtWeMDYgnMl+NfsvjhaDjzaGUR5C62QT2Zspy8pEqUu5gXH+R/nxYP5ZFDO9fmb
-	st2qZFZHiUamifmZs+5aiedZBxlldkI1AQQohnEbl2wPOoEFjobmwHJuqYgD4Mjr
-	IP5reR19w6b5QrRMbco0Wo0t5W9Bo+2SKeFFRGI5zShmoT6RukhZC/6V5m2qf0K8
-	nHP2z+VWZpuwrit8s02LySiu3xWbxFeg6kHURBl/AOysq74EIlUURytBFuWbyQVQ
-	ZNjDNO+M0z6aeVuR4rc94QpS6cmVgaxxE60xtBXYuthQ8LlZmwZjNqF4fbQ==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47fbm1ww5k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jun 2025 09:25:49 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 55P9PkK4024667;
-	Wed, 25 Jun 2025 09:25:46 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 47dntmauy9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jun 2025 09:25:46 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55P9PkjD024662;
-	Wed, 25 Jun 2025 09:25:46 GMT
-Received: from cse-cd02-lnx.ap.qualcomm.com (cse-cd02-lnx.qualcomm.com [10.64.75.246])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 55P9PjBN024659
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jun 2025 09:25:46 +0000
-Received: by cse-cd02-lnx.ap.qualcomm.com (Postfix, from userid 4438065)
-	id D5D2F3866; Wed, 25 Jun 2025 17:25:42 +0800 (CST)
-From: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
-        mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
-        bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
-        kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
-        kw@linux.com
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
-        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-        Ziyue Zhang <quic_ziyuzhan@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v7 5/5] arm64: dts: qcom: qcs8300-ride: enable pcie1 interface
-Date: Wed, 25 Jun 2025 17:25:39 +0800
-Message-Id: <20250625092539.762075-6-quic_ziyuzhan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250625092539.762075-1-quic_ziyuzhan@quicinc.com>
-References: <20250625092539.762075-1-quic_ziyuzhan@quicinc.com>
+	s=arc-20240116; t=1750844965; c=relaxed/simple;
+	bh=njyKbOLtLQeqzlE3NFqljLHpeOQTtmP3fsZXPwv+m3M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cDR+qiupd9ZjVoSyGP4Up1EGmjE8H6PYm6zLcoNmVlKC/upop9+gSMQkXC88JoFlOcbaChq/E4nNYmo01oLgbrH4l51qnVNGJC/SvfTzp3ZM1UEsvTjs4JwPjLsqKKEM2xJb+MmxqWhh40wpGKqHp+r9q/IsXgfpSG2GTUkhd1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QNISsXNj; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a575a988f9so828762f8f.0;
+        Wed, 25 Jun 2025 02:49:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750844962; x=1751449762; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=njyKbOLtLQeqzlE3NFqljLHpeOQTtmP3fsZXPwv+m3M=;
+        b=QNISsXNjvyPFf0XiUOfqb7EMW2N9gNYuhHIfQxk8Av2VlXiLh1AvmNs6Mwk2N6ei3f
+         QOQBoD8ldZL8+xMZjvaxB8mTMMjznG8YClS6JT9CWmJS/ffUQtE9nO29GinLTUHcS5FM
+         r6MPygK7axhGBK2i/Kl72/9ONIPguPXhztf4D3gawe3cXUIYxXSwH5/owyjrEKwWif3x
+         89ZjDKkcni7jjeVeld6WNBspVHfMpRzW4xjThyXjCl5qaAdouJ9Yr+ND7HaFXV/Sd6SW
+         3T5SpWv5299PsGrCkQbawORpv9vHrZo8IvKUnFf2C4QCpDxmae767u8ZoA94YuD0S99G
+         S4HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750844962; x=1751449762;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=njyKbOLtLQeqzlE3NFqljLHpeOQTtmP3fsZXPwv+m3M=;
+        b=UQLMS//+nSrSkM9LwKqKBJcp3WDm7+KeZimmd6iYDcqOHG0r18APstCQwmaeTaOXRP
+         LQNgg2IjHi8e+/QqF8r62PTQqnx3HDuMRyPp6mIqNJRVW8MqwqDsXvlM/MloUaoaNIuR
+         D/25gD1KhYzDrL8kfgcOloR+g+0qDie0kZ7GtyTy2j+scE3fnXPub5U4/m/StxfWrl+i
+         Zm7PqbXH5LFkAcPc0iS1oTmCy+UQkpPUJtxls9oT1kdVH5z3mKHPPVDcUuWSzwvMqv4R
+         gVBFlz3J45gmFUVzW0/4QcHaZgvZpmrnMdXIM37PSDdXEOwoQGGI1OmF0PBve0P0zHv6
+         NSKA==
+X-Forwarded-Encrypted: i=1; AJvYcCVN7nw6vDyhRxtTKgi84qpSCdXFXSoCn3VQQmSGZnMP7GvHUBR5wVbyJ8k9avnRQT8ciZOHObyfKN1OQYBVig==@vger.kernel.org, AJvYcCVowdbXrD7oSUn+C9qMfYaaSKxlnFG1kTzl27X7UhBNYUE/kxiJ1noh/2WEk0b5tV4HD2XhVrBDK6Wb@vger.kernel.org, AJvYcCXyBkZ8PbOQWBJg3w+O2QrV/74mcZg1rBk/aurUEwsVGYUlwMUUP+k/h5UeapgSgIE2qO3ishiYukKlSGXa@vger.kernel.org
+X-Gm-Message-State: AOJu0YxV4lJRETwGT1X/b4Oz12b/Y5pvkAjWOFXoC0WjbySSwadmXD/o
+	ai7YH9dl6zbpVkv5QB4OmzJlwqs650N6cyrLlYoyb5Y8E0/sLJ0KDqb831K1WySrr4h18jQVtqH
+	CGINOaIOah5TGPQMHrX1Phcx7NqNcNA==
+X-Gm-Gg: ASbGncvUgoutFko2zLmr369AQe9efECHx0mY63lSgKw0DfbtWkGLLJ8R34HZDnhoxxc
+	rRvMWy/7yf1TzfGQS9NyzNMLR70FW8kJfgEbVy88+SP6L8bnBTrxN7nlPwfniiOJJGe8XKJInOT
+	WhZjiIy0+IxgO7TyWuqSAMwsRCl9h6CP+xA6mAPnE6NXU=
+X-Google-Smtp-Source: AGHT+IEJ442JhAOHIWyZBURFpryxYK2v8sGLkiTMcUZP34/SamRW2qxVIMhwFQh6GD1kXXh3lReE/naRrec1aznr3QU=
+X-Received: by 2002:a05:6000:200d:b0:3a6:d95c:5e8 with SMTP id
+ ffacd0b85a97d-3a6ed66464dmr2006514f8f.35.1750844961972; Wed, 25 Jun 2025
+ 02:49:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=YYu95xRf c=1 sm=1 tr=0 ts=685bc09d cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=0LYZJ8Fh9g_wO_RM1qMA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: R6irlamBveMzrA2DZ2ui-7HJ_0Pxoalx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDA3MCBTYWx0ZWRfX1u02zJ8MPPFc
- si/KOM+3CdnnDHBLmY8r4MUwsrKLz0JK9zy6o+OWRZFGCO5jvE2X4WEgZu/OFCWWST9oaW720Dk
- V7ffkOIEYnijLcTqTBgHZySflvyu1qOT3DUuqqk0PJKtIE93xcy9pyxrsjDlIxxglHTN/jBaiTL
- 5qWcOgepIp4QEM5S7HJkbGixm5GeiBEqh4wCeW0Lt3yQSHSHTIZQgvx0lFLP8va93CDabUy9xB1
- /+BgJPCyfNCT9o2SKMjxQF3KNTcjPg/oxQxRRVsr0Bqa5G/BdOoQeDBtyXZTMYEECusSSOKncBp
- xbrAr4W9mANPd4+DuH6KJe0U6+PCNDGjYeH4dtXivByRSrIspe9j+bmC2qhnuiGJ+Ynzo7HSTm/
- jDaLlFgzOZeR6VjGGOqqFeJzvQZ82kIy6a3RzrZBahVraC0HRDSc2KwiOq7yOE64dbJ/a1Y2
-X-Proofpoint-ORIG-GUID: R6irlamBveMzrA2DZ2ui-7HJ_0Pxoalx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-25_02,2025-06-23_07,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 spamscore=0 impostorscore=0 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 phishscore=0 mlxlogscore=999
- clxscore=1015 mlxscore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506250070
+References: <20250624225056.1056974-1-alex.vinarskis@gmail.com>
+ <20250624225056.1056974-2-alex.vinarskis@gmail.com> <aFuq2JFZZhC1r3N4@hovoldconsulting.com>
+In-Reply-To: <aFuq2JFZZhC1r3N4@hovoldconsulting.com>
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Date: Wed, 25 Jun 2025 11:49:08 +0200
+X-Gm-Features: Ac12FXz6py_g4izWfb6HHN6uycpIk3UcyhlAK4llx3dEWGlTUorZ7CmrZDAximg
+Message-ID: <CAMcHhXotN7mWwUkAAX8J6d4Yo8xSLV=_=DDJJ5Nhh=Cy98_JNg@mail.gmail.com>
+Subject: Re: [PATCH v1 1/1] arm64: dts: qcom: x1e80100-pmics: Disable pm8010
+ by default
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, laurentiu.tudor1@dell.com, 
+	abel.vesa@linaro.org, bryan.odonoghue@linaro.org, 
+	jens.glathe@oldschoolsolutions.biz
+Content-Type: text/plain; charset="UTF-8"
 
-Add configurations in devicetree for PCIe1, board related gpios,
-PMIC regulators, etc for qcs8300-ride platform.
+On Wed, 25 Jun 2025 at 09:52, Johan Hovold <johan@kernel.org> wrote:
+>
+> On Wed, Jun 25, 2025 at 12:41:20AM +0200, Aleksandrs Vinarskis wrote:
+> > pm8010 is a camera specific PMIC, and may not be present on some
+> > devices. These may instead use a dedicated vreg for this purpose (Dell
+> > XPS 9345, Dell Inspiron..) or use USB webcam instead of a MIPI one
+> > alltogether (Lenovo Thinbook 16, Lenovo Yoga..).
+> >
+> > Disable pm8010 by default, let platforms that actually have one onboard
+> > enable it instead.
+> >
+> > This fixes dmesg errors of PMIC failing to probe, and on Dell XPS 9345
+> > fixes the issue of power button not working as power off/suspend (only
+> > long press cuts the power).
+> >
+> > Fixes: 2559e61e7ef4 ("arm64: dts: qcom: x1e80100-pmics: Add the missing PMICs")
+> >
+>
+> Nit: There shouldn't be a new line here after the Fixes tag.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 40 +++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+Thanks, will fix it next time,
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-index e8e382db2b99..bec2905c5d8f 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-@@ -325,6 +325,23 @@ &pcie0_phy {
- 	status = "okay";
- };
- 
-+&pcie1 {
-+	perst-gpios = <&tlmm 23 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
-+
-+	pinctrl-0 = <&pcie1_default_state>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pcie1_phy {
-+	vdda-phy-supply = <&vreg_l6a>;
-+	vdda-pll-supply = <&vreg_l5a>;
-+
-+	status = "okay";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -388,6 +405,29 @@ perst-pins {
- 			bias-pull-down;
- 		};
- 	};
-+
-+   pcie1_default_state: pcie1-default-state {
-+		wake-pins {
-+			pins = "gpio21";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		clkreq-pins {
-+			pins = "gpio22";
-+			function = "pcie1_clkreq";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		perst-pins {
-+			pins = "gpio23";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+	};
- };
- 
- &uart7 {
--- 
-2.34.1
+>
+> Not sure how this breaks the power button on the XPS, but sounds like
+> this one should be marked for stable backport:
 
+I suspect it's because the power button "pmic_pwrkey" is coming from
+one of the PMICs (..spmi-0/...pmic@0). As pm8010 is on the same spmi
+bus, it appears failing to probe breaks communication on the entire
+bus? pm8010 is the last one in the list, so it could be that other
+PMICs were already initialized to correct voltage, that would explain
+why everything else still works. Just a theory though.
+
+>
+> Cc: stable@vger.kernel.org
+
+Did not think of that, but you are probably right.
+
+Alex
+
+>
+> > Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+>
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+>
+> Johan
 
