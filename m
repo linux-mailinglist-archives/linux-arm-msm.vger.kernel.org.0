@@ -1,188 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-62469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49CC1AE847B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 15:24:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 007DAAE8483
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 15:25:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6734F5A4DF4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 13:23:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7B7D26A042F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 13:23:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A96225B697;
-	Wed, 25 Jun 2025 13:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3260C262FD5;
+	Wed, 25 Jun 2025 13:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WmEJCt+K"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="v7Jle7XQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80192155C82
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 13:20:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97309263C8E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 13:21:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750857636; cv=none; b=HJ5iI/QUR1A0xO1I9De7kG0/4MOhBVS0KUdJM2VRqPndC5RfHJvyb1cXVUWnR4HmTruq5pcONGmVUp0tNF8daGYd0iRiGlHgL43Y9sIILL/pEd9eHISs4rMpL/Uuq5+ihzBdEkuq6WC02gTddD4CnC3bydb4mOySqMcs1FiuuVs=
+	t=1750857702; cv=none; b=k2g71I+re1JP36/mmnPfeTzrVmTtfQaUhzXkC0AmSZb4sMXFiXl0c6yENmUy1Ne3cyDTaQO1WVsYeOCcbTpb7s40+617tXFu792+opgFjLBsY1BS61O50Sb6q85hbYXJW4Lau5NqxuSng5T3lIg+CeFpoefkqfgTRL31DqzQzFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750857636; c=relaxed/simple;
-	bh=J32uwR5PG6Pj/fkgodkU8NToknBPtoDkFd1PmBMP74o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FyUBPl84tBGl3l6bQDRCbx4/5JYdzNN7ZqZmkCUu/nTrK/MedzrUF6TvzCdE0YC4WNFCGiqoiNDbhOyeY+KgK0vV3qgq7f4F0F03bOx8nsLSfPn93nZ0iY7tGsZitSx371H2FRvFl09G3DwbbVgdFQzsEHF6w+aCVZ49fyhoENg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WmEJCt+K; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55PCa9dO016718
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 13:20:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4Wc6gS//yAoCzSiP++Qy1pCvIWUQ0H5tM6n71zaADIw=; b=WmEJCt+KShHamXWM
-	DwQtRpdWj0ommS/ZUnTqMILSd46G8aIrPS2dHbUNg8QsD6ENqdrgsppZUkf1aqWv
-	/7tukxP4ubFmNP0/A1lgRMc/0m4HrWcMbQlwVrvomLcsaFw42o198fZP/biNGa2D
-	XFGsDnCLYsKEgBCn8DQ8CdnNciMy1R+AD/fCOtOQHAFPj+A8kJO32k+2vnP/YydC
-	H/s7Uymw7CFZtlbvmaLzFt8JiZCl3aPu9iufhwPQh3nw2F0y0pWkRShNJ+I3tsWI
-	JHP73zuL+ytXK9cJHa3k6RWj8+cQ0CuWYtvJsbnHWQLt+Keq6gHljgBeiayDY8lt
-	GycS6g==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47fbhqpfxn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 13:20:33 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4a5ae436badso14364911cf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 06:20:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750857622; x=1751462422;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4Wc6gS//yAoCzSiP++Qy1pCvIWUQ0H5tM6n71zaADIw=;
-        b=xPTHpI5177ghvnlqUP4u+de2AtKo0TqZu+WTqRtVBdo5dX+/w6sQJXRRf1lj29eXYO
-         OPURaBVue4L1RDdACJQgCw/XbIgGtZswTsOE5EgNAE5ScduVMdP2zMI+GTxrx8l60j7T
-         0+EeudyuFtssaXv5cuq1R8XCV72k47kpIMBDWaa9kZttG6whVZcso6WHNocfa2lUlBYy
-         BaBTrW/G1laXylwzOtusQ7UtyXzPP+RlfRrfkr5v2+ffs5PofwAeruDRIHfq8CnNy3Kx
-         VixGfiSUJ5ltS5jpysjozHNPK6CF1sUeVeORJ1Q5F+U8RnxStmTw7GESkR+3Ks2KuWqI
-         LlIg==
-X-Forwarded-Encrypted: i=1; AJvYcCXC/AC7Cc6qqJglQUfi6kNURb/xiFYM6IIBqW4rxKegW+BL1jW1AQJO8VDXFFNyotwxTyfWXOVHO76Sv3QL@vger.kernel.org
-X-Gm-Message-State: AOJu0YzEzhh0P6JGLBYk5vibR2nbYS+UP8xHh0aPaEoxkMWpvzPddUG+
-	L7c+F3YMo+1us+kjE1L9fLtZPrkyk6YNiHb2fNn4R7NbgOz3rEIhc/i+RVt1e4uBLJyDxNTbdj4
-	CcrNzGYzrVE7d+L0/kkhSlsJ4CnU8K2ytq5Ae1WyR7gQGG3i61+Zc4qeJdQgPenv9xF9t
-X-Gm-Gg: ASbGncvxRoi2y6EoY0sSxIQWhnQeiBKsrfUQtTlEucPDGRhX1GTFN8x1VZiPGQ4Kmph
-	7ZRIDvs01ikY/FMeR/WahdIvLfQUSodu8FTWOdZC0DXseVW2cmIbCjdI/DekR9IXuEfo49ROc5b
-	BcEcOKeDGQuNvoCBzfQRSRugLD3IGJQjrDOPlkVlCIUoHTG4Q6ojcMjWyxNLvlZD90WNfQoDJnY
-	eyQAlssZlcy3uGRh6W5Js7zlLo9ObyQTCgZ7tpDlECsuQuaRUho25+ac3kORZ6Y8/F0rTSBXMQ1
-	WQKDYhm0us/8fOEiF2oHPVFLeT95V7+lO2QTXPogl+kCE8Bi/TCMv3fsAp3pdhu7VwhONIXOqZ3
-	0GPQ=
-X-Received: by 2002:a05:620a:2552:b0:7d3:c69e:267 with SMTP id af79cd13be357-7d42976a0cemr149809985a.12.1750857622591;
-        Wed, 25 Jun 2025 06:20:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGhWy2dsS1LyGigZ4Dt8bnXgAs0PhlY9HNqrotGcZ/DU5sSn6FMsWkf7WES+YXghkiMky5/Bg==
-X-Received: by 2002:a05:620a:2552:b0:7d3:c69e:267 with SMTP id af79cd13be357-7d42976a0cemr149807385a.12.1750857622105;
-        Wed, 25 Jun 2025 06:20:22 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae0a06ed21bsm373251666b.29.2025.06.25.06.20.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jun 2025 06:20:21 -0700 (PDT)
-Message-ID: <bced42f0-bc9a-47e6-bbdf-c49657d2e18b@oss.qualcomm.com>
-Date: Wed, 25 Jun 2025 15:20:18 +0200
+	s=arc-20240116; t=1750857702; c=relaxed/simple;
+	bh=XmvkOnLcSLOA5wRY2raNtw7X2c4Qoh+J6tjA3O9LepE=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=pCCp58hR+hnM0Vm6ftRBpmCo1Esvebu/oTKWijCoPKTJdJ2+XbkorvqK6lU9j1DcsFphZ2oOIzZrkeBpe7tdbcCEYiQSkYgqaNMj/+nMhXg6PSAKgz35Y9C4sg8ZF/VjmGf21vqhbvaZVjKEsTQoxeIqy3+jpKKRpPYailmyJC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=v7Jle7XQ; arc=none smtp.client-ip=185.70.43.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1750857688; x=1751116888;
+	bh=CzQtmU7JCNnhBbxBH7NymXOfsBTPoMsAPhfxgdIRkks=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=v7Jle7XQf9DYrcj6qcY6epkUBeT7+hgiY5tEib/wgStygEUBdbYViwWAgLrdDZIdH
+	 7EFgYNHgqtr68WLMLKcZpUV/1zWkHGQ9TCVhlPlpF4Feuyg8Td6rcOUlxucQxYA1DO
+	 AvJxPiVsfLEFd273GnKuasK6Tie6Z25T69/cTA2LLMsH7ywMRCbpe3OSAWixBBgOLL
+	 qHEn5rfJfJDZPbfYTRYQXsk5R45ujNJ/vwhawwNCdfoWgNmTu71YJESse9DQWTK6WN
+	 aTa1mt6w6buDh9dOEnMQGMKBkxi2W0jT7AR2vJuDT78XXHG962Fs+kJACj5dbnUqrZ
+	 A3Jl9Ax8x76fg==
+Date: Wed, 25 Jun 2025 13:21:24 +0000
+To: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+From: "alfredo.nodo" <alfredo.nodo@protonmail.com>
+Subject: Support Qualcomm Snapdragon 8cx Gen 2 (SC8180XP)
+Message-ID: <xAOMDw6RIPBRl1NwaOZsLwoNu1l9Rs88XkbvK0P85jVRSKAakqWbTlrjEWljCJFmEXplwDa9e4MippQ-DPD1XFy_LjPTly9dUxC8NVfT7UA=@protonmail.com>
+Feedback-ID: 25470066:user:proton
+X-Pm-Message-ID: b148024c2b44af1f4e56a4eee1b58be5b191440e
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: Add PMXR2230 PMIC
-To: Luca Weiss <luca.weiss@fairphone.com>, Lee Jones <lee@kernel.org>,
-        Pavel Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Fenglin Wu <quic_fenglinw@quicinc.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250625-sm7635-pmxr2230-v1-0-25aa94305f31@fairphone.com>
- <20250625-sm7635-pmxr2230-v1-3-25aa94305f31@fairphone.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250625-sm7635-pmxr2230-v1-3-25aa94305f31@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 8wXqHmlxzIlReCH1vS1MVnqDdKGx4adh
-X-Authority-Analysis: v=2.4 cv=Id+HWXqa c=1 sm=1 tr=0 ts=685bf7a1 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=6H0WHjuAAAAA:8 a=EUspDBNiAAAA:8
- a=1Wqoc7Fd06vDnn7CWGcA:9 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
- a=Soq9LBFxuPC4vsCAQt-j:22
-X-Proofpoint-GUID: 8wXqHmlxzIlReCH1vS1MVnqDdKGx4adh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDA5OCBTYWx0ZWRfX6uoni1PXXeAq
- O9o5HvLmux1ZWVnSom+aYaO9/6rqfNH8kHtnrrJAFYfA+2j+FsGaKEiZzW9NpsrD7g9wV6XyFQ4
- 5FndHlml177x+7xdhEYQDT3DRDHLF3aWW6vDmccGvbq+ADw3yra3LmjUvIw3Np4k2YvN8BLSS97
- N/1JuUgnTxDc+7Ri5fCRri0YsOgRPogy7PH88brfJVPIyWGr0UOSeJVJeuy2JJPVGZBi6j55QkR
- g8ebofd62HDTtBPYPFYeAzbiLkjfHBsVPvMCNrgrB+y3Nb8tMiCJXtsOR67exnKFkBPS8AMd6YE
- RzBk241dy4A7WI79HYynBjOQ+i8K2pW3h6VWukHOUWqd3AKXrzAyvPvzwCJ1q6xyEY+3NYZqD3Q
- MHCnc245BzVigItFOUkhKihbd501ZSV1PsAzLBxgi3w4aF3JDQsLgQh28PaCyekVfFp0INue
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-25_03,2025-06-25_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0 bulkscore=0
- clxscore=1015 impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506250098
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------54767c682df1162113fd7fd91c521e6fe19d7a42b6afce69fa2a4f84989eaf9b"; charset=utf-8
 
-On 6/25/25 11:18 AM, Luca Weiss wrote:
-> Add a dts for the PMIC used e.g. with SM7635 devices.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  arch/arm64/boot/dts/qcom/pmxr2230.dtsi | 63 ++++++++++++++++++++++++++++++++++
->  1 file changed, 63 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/pmxr2230.dtsi b/arch/arm64/boot/dts/qcom/pmxr2230.dtsi
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..a7650f3230c01422b76ef78e897e5e7ae2f20cc6
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pmxr2230.dtsi
-> @@ -0,0 +1,63 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2025, Luca Weiss <luca.weiss@fairphone.com>
-> + */
-> +
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +#include <dt-bindings/spmi/spmi.h>
-> +
-> +/ {
-> +	thermal-zones {
-> +		pmxr2230_thermal: pmxr2230-thermal {
-> +			polling-delay-passive = <100>;
-> +
-> +			thermal-sensors = <&pmxr2230_temp_alarm>;
-> +
-> +			trips {
-> +				pmxr2230_trip0: trip0 {
-> +					temperature = <95000>;
-> +					hysteresis = <0>;
-> +					type = "passive";
-> +				};
-> +
-> +				pmxr2230_crit: pmxr2230-crit {
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------54767c682df1162113fd7fd91c521e6fe19d7a42b6afce69fa2a4f84989eaf9b
+Content-Type: multipart/mixed;boundary=---------------------4efc586a905c4dd49a6db4aabbaa7200
 
-This name is "meh", please change to tripN
+-----------------------4efc586a905c4dd49a6db4aabbaa7200
+Content-Type: multipart/alternative;boundary=---------------------2d3c9ad12a0de02b161fb5a14cd65b15
 
-> +					temperature = <115000>;
+-----------------------2d3c9ad12a0de02b161fb5a14cd65b15
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-Unless there's some actual electrical/physical SKU differences,
-downstream lists 145C as critical for a PMIC carrying the same
-name
+Hi,
 
-with that:
+at the moment this is the current status of Snapdragon 8cx SoC support:
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+-   Gen 1 SC8180X (https://linaro.github.io/msm/soc/sc8180x) supported
+-   Gen 2 SC8180XP not supported
+    =
 
-Konrad
+
+-   Gen 3 SC8280XP (https://linaro.github.io/msm/soc/sc8280xp) supported
+    =
+
+
+-   Gen 4 or X Elite X1E80100 (https://linaro.github.io/msm/soc/x1e80100) =
+supported
+    =
+
+
+
+Unfortunately, Gen 2, which is only slightly different from Gen 1, is not =
+supported (same CPU-GPU, but at a higher frequency, with BT 5.1 and WiFi 6=
+ instead of BT 5 and WiFi 5).
+
+I have a Lenovo IdeaPad 5G 14Q8X05 with Gen 2 and I am forced to use windo=
+ws 11 with a virtual machine to be able to use GNU/linux. This is my dump =
+https://github.com/aarch64-laptops/build/files/14700163/ACPI.zip
+
+Here you can find the ACPI of other user https://bugzilla.kernel.org/attac=
+hment.cgi?id=3D306011
+
+Is there any hope to see such a device supported?
+
+Thank you
+-----------------------2d3c9ad12a0de02b161fb5a14cd65b15
+Content-Type: multipart/related;boundary=---------------------54fe12d6c0b230b5c6b5eb06b344172b
+
+-----------------------54fe12d6c0b230b5c6b5eb06b344172b
+Content-Type: text/html;charset=utf-8
+Content-Transfer-Encoding: base64
+
+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IFRpbWVzIE5ldyBSb21hbiwgc2VyaWY7IGZvbnQtc2l6
+ZTogMTRweDsiPjwvZGl2PjxwcmUgc3R5bGU9ImZvbnQtc2l6ZTptZWRpdW07d2lkdGg6NTBlbTtm
+b250LWZhbWlseTptb25vc3BhY2U7d2hpdGUtc3BhY2U6cHJlLXdyYXAiPjxwcmUgc3R5bGU9ImZv
+bnQtc2l6ZTptZWRpdW07d2lkdGg6NTBlbTt3aGl0ZS1zcGFjZTpwcmUtd3JhcCI+PC9wcmU+PC9w
+cmU+PHA+SGksPC9wPjxwPmF0IHRoZSBtb21lbnQgdGhpcyBpcyB0aGUgY3VycmVudCBzdGF0dXMg
+b2YgU25hcGRyYWdvbiA4Y3ggU29DIHN1cHBvcnQ6PC9wPjxwPjwvcD48dWwgZGF0YS1lZGl0aW5n
+LWluZm89InsmcXVvdDtvcmRlcmVkU3R5bGVUeXBlJnF1b3Q7OjEsJnF1b3Q7dW5vcmRlcmVkU3R5
+bGVUeXBlJnF1b3Q7OjF9IiBzdHlsZT0ibWFyZ2luLXRvcDogMHB4OyBtYXJnaW4tYm90dG9tOiAw
+cHg7Ij48bGkgc3R5bGU9Imxpc3Qtc3R5bGUtdHlwZTogZGlzYzsiPkdlbiAxIFNDODE4MFggKGh0
+dHBzOi8vbGluYXJvLmdpdGh1Yi5pby9tc20vc29jL3NjODE4MHgpIHN1cHBvcnRlZDwvbGk+PGxp
+IHN0eWxlPSJsaXN0LXN0eWxlLXR5cGU6IGRpc2M7Ij48cD5HZW4gMiBTQzgxODBYUCBub3Qgc3Vw
+cG9ydGVkPC9wPjwvbGk+PGxpIHN0eWxlPSJsaXN0LXN0eWxlLXR5cGU6IGRpc2M7Ij48cD5HZW4g
+MyBTQzgyODBYUCAoaHR0cHM6Ly9saW5hcm8uZ2l0aHViLmlvL21zbS9zb2Mvc2M4MjgweHApIHN1
+cHBvcnRlZDwvcD48L2xpPjxsaSBzdHlsZT0ibGlzdC1zdHlsZS10eXBlOiBkaXNjOyI+PHA+R2Vu
+IDQgb3IgWCBFbGl0ZSBYMUU4MDEwMCAoaHR0cHM6Ly9saW5hcm8uZ2l0aHViLmlvL21zbS9zb2Mv
+eDFlODAxMDApIHN1cHBvcnRlZDwvcD48L2xpPjwvdWw+PHA+PC9wPjxwPlVuZm9ydHVuYXRlbHks
+IEdlbiAyLCB3aGljaCBpcyBvbmx5IHNsaWdodGx5IGRpZmZlcmVudCBmcm9tIEdlbiAxLCBpcyBu
+b3Qgc3VwcG9ydGVkIChzYW1lIENQVS1HUFUsIGJ1dCBhdCBhIGhpZ2hlciBmcmVxdWVuY3ksIHdp
+dGggQlQgNS4xIGFuZCBXaUZpIDYgaW5zdGVhZCBvZiBCVCA1IGFuZCBXaUZpIDUpLjwvcD48cD5J
+IGhhdmUgYSBMZW5vdm8gSWRlYVBhZCA1RyAxNFE4WDA1IHdpdGggR2VuIDIgYW5kIEkgYW0gZm9y
+Y2VkIHRvIHVzZSB3aW5kb3dzIDExIHdpdGggYSB2aXJ0dWFsIG1hY2hpbmUgdG8gYmUgYWJsZSB0
+byB1c2UgR05VL2xpbnV4LiBUaGlzIGlzIG15IGR1bXAgaHR0cHM6Ly9naXRodWIuY29tL2FhcmNo
+NjQtbGFwdG9wcy9idWlsZC9maWxlcy8xNDcwMDE2My9BQ1BJLnppcDwvcD48cD5IZXJlIHlvdSBj
+YW4gZmluZCB0aGUgQUNQSSBvZiBvdGhlciB1c2VyIGh0dHBzOi8vYnVnemlsbGEua2VybmVsLm9y
+Zy9hdHRhY2htZW50LmNnaT9pZD0zMDYwMTE8L3A+PHA+SXMgdGhlcmUgYW55IGhvcGUgdG8gc2Vl
+IHN1Y2ggYSBkZXZpY2Ugc3VwcG9ydGVkPzwvcD48cD5UaGFuayB5b3U8L3A+PGRpdiBjbGFzcz0i
+cHJvdG9ubWFpbF9zaWduYXR1cmVfYmxvY2siIHN0eWxlPSJmb250LWZhbWlseTogVGltZXMgTmV3
+IFJvbWFuLCBzZXJpZjsgZm9udC1zaXplOiAxNHB4OyI+PGRpdiBjbGFzcz0icHJvdG9ubWFpbF9z
+aWduYXR1cmVfYmxvY2stcHJvdG9uIj4KICAgIDwvZGl2Pgo8L2Rpdj4K
+-----------------------54fe12d6c0b230b5c6b5eb06b344172b--
+-----------------------2d3c9ad12a0de02b161fb5a14cd65b15--
+-----------------------4efc586a905c4dd49a6db4aabbaa7200--
+
+--------54767c682df1162113fd7fd91c521e6fe19d7a42b6afce69fa2a4f84989eaf9b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wnUEARYKACcFgmhb97kJkF1i2al9j+o/FiEEOQQUhB+JdKOcPnOCXWLZqX2P
+6j8AAL4gAP92EUmyL7hlQNKYRHXJWOc3uECOVQJFklDkoXaQxXzwQAEAtaB+
+bLr/fFZZkbOkun1JAc2nob5UqGw9bpNOn9Dewg0=
+=MAme
+-----END PGP SIGNATURE-----
+
+
+--------54767c682df1162113fd7fd91c521e6fe19d7a42b6afce69fa2a4f84989eaf9b--
+
 
