@@ -1,151 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-62489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31368AE870E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 16:49:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B85DCAE8736
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 16:56:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B19943AA170
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 14:49:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6CE011883C4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 14:56:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B1081BBBE5;
-	Wed, 25 Jun 2025 14:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEC3125E455;
+	Wed, 25 Jun 2025 14:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MWLILeE5"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="3USGO9Cx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13722748D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 14:49:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6DC25DD15
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 14:55:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750862984; cv=none; b=YxJDvAnp6SEQyC+yrVglLrPtpz+ncK5BOmFbTpY/Is5Yqd0xnAWgmUfuKXqdGMpP5oVuCNS4SYb/wk9/IzK/wLbG6htul8P9AOrNd+LTnoUbD0EeMebvypE9RwhbEO8hllI+ygxAFpC7Ecbpfg/JG5fg8fOZoAKoA09qpIooDz8=
+	t=1750863356; cv=none; b=raC2VBazeP/HbdDA6GnDJH1H1xw/e4IumWm3zvKgiWt1IY0iIeKuR8DEmRIC6Aa/gOTjY2I4YtQzP5tHWUwSshwCIcJsA+e8zdox5R58DKQLHfHaGKaRJjFDWVF5ZLuT1SP1/QzuK2fjjto/t9/FcG0SOND66qCB0evnT2c4RMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750862984; c=relaxed/simple;
-	bh=SydFmCluotLIw9NnYRQSRlGNVDDpbWd7dRM0t5Z6aZU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bmi0kRHdoalYmPl0hW+p5KaAMzZxyR6wTCZ65it0SrA7GxwqUrEjcf96PiRxXwpG1FC9LifBnsG7kddG8PO1PizYE6KBsluVfbpQvVLcG5q5tzw+XhGUDPlWqamDhoYSdQMi5caNjU84jrTFWQqeBES5niTNDcO7BugW3tv+b7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MWLILeE5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55PBrJ3T021010
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 14:49:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YtHGBFPnQcSTIMsJlbLHXvrcAPPKBzWjxwiK+zy8ZHs=; b=MWLILeE522ka2lmA
-	VXfypJIT/XH7Ih6GykL5cILU8aGIwSPCBg99rLBhq17sBCneBgnZ0A6Kbnu4Nr/i
-	5ebCPr/aHnkYWNYE/ALc/TKf30oiw7VjteQFbPKT8nSM+nqDUCv6lGpEXMTT0zlh
-	XFCDMaHCnjOyRx3yL0Jq8muYN2KrDA6uiRvJMf8nq1S2otSyaktVaoUtCXnUhKaE
-	E4WHErUWwSiHvzcf89DqTAUTTM1tnuBKTQJ2qweJC0D1BphBubCQj2h2tDeVL1h2
-	9fx1rkypiMdZVPMBJNDXXcsVynmo36cy5+udi5hfXHlW2WzztFiISP6so1RvQ2gx
-	TMBliw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47fdfwxjb4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 14:49:42 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d0976a24ceso208105885a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 07:49:42 -0700 (PDT)
+	s=arc-20240116; t=1750863356; c=relaxed/simple;
+	bh=jrBtoywouXF/4yYfXz6f2gT+dZfD6qO0490nSXgTbM0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IQIEgKsCg5N1MOa/AmczIT1Ps7LYu9DsoX+tQGqKWArUGfFjQTD1S8O35QqT1zS4sefL/Xo5NT+R2FXLj1uysc9AObbgQpOoyCIZqo7CdHzzcKxlHFrdNsA2401/IlObKgAoddzhjH1SNkJlB8DxxULHOSm/phiinkXQ+t1V6s8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=3USGO9Cx; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-553bcba4ff8so6845987e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 07:55:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750863353; x=1751468153; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jrBtoywouXF/4yYfXz6f2gT+dZfD6qO0490nSXgTbM0=;
+        b=3USGO9CxYLwVCIgGOXUk8Xy6OtQJ5adXMT+EBIbjhWERKO2uu1V+R55zS5iP+qFi8+
+         NK+nvZHlTHZxr9xYe2LBAIgMXH40zR/8rTUgbLNIWY+AnU6zwvI95ty3yXyXkXQD3VSW
+         Pv9ZzPU7uLHKZzU411ISuf7tWJk+3qRSCVDjFAU1GR17T7FRUzcY6DRek7eANiv03KRa
+         6KHnVewXrFAXXttVY83h7UiHaazMKQMQs7s/szhSKLjOq+E/4DY59Y9ewQcs296z099M
+         BRcgpVE97GNy2bL2bCvuKQtNpoIihJ6fOaVsbxPNp2XY7QVush3pqB6d9R3Cejjl4sjs
+         bZtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750862981; x=1751467781;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YtHGBFPnQcSTIMsJlbLHXvrcAPPKBzWjxwiK+zy8ZHs=;
-        b=h9WHMDuI/4w0DzhBK5WiwX9iyPmBb7cwqGN6JaeuBrhSQXLcJ6MNSJOy8z1tZt5baS
-         +JjqEqCpRq4YXmOL3b9IVB3Nx/w8mGj/eWLJPmBBIAGZPekUImQe4/1JB2ljbFivXPxB
-         lJiB0P93c9VCu0mq72abiCxCsAYV3Ysm97oO7Ylu9oE1R82DhFmpK+/gQq8qMDiGOfpC
-         xWdzpGtacKHINd1BkIocmS1+SUDaqsB+WIa+BFnwYVYPczZVJVikvVGjs+hEKtNxyPtk
-         EyJ12RK/Grte91l5EtOW6RH8qAgmKVUopgpXAlND6eFOLxagX3yrrGmOr3iv3nrnGGZ2
-         gFUQ==
-X-Gm-Message-State: AOJu0YyabN1Jm1xlrYJEQbPy56cTbEswcgy+NbdpDUDh1CTUt8Hldxuv
-	xFYxMOfhN0RTGPCEA4n5DTyPJTVvRFl44/pTEwbrOjy/go8Iu7qrg+LIHZCck/ezF6lYikSR7T9
-	b1atGTSMMODCiquq9bgwNde2QmdVIjyWzeKshR7dvWeBp98D/andQYQ/l7zs6gUbfvpDY
-X-Gm-Gg: ASbGnctML/CwGmJNsVdYu5BqMo6c7BHyw920B0SnEDztDVb8F8BMwjpV90d+MNL0FmW
-	f3hv8yjeqyBk4d/PbHO2/xG4JORoTzd3JjzEeKqcCXbyzOob/Ej1UX476uEnnqhloRRubHboYi3
-	ikMBzVZd9aWZNozfJIDdUi8XgCJ1rHsOlJb9aWts4bPWHhprUCKNCWI1kP5gTbh4YhxX2g1SHYE
-	Vz7in4oDjfD/LbSHZAeGYFqQ0eV0QpXOdE6PDUy6s0C4cA5/jX0CoofL5/Enr/8IauYRLqDjcvg
-	dIpR2ddddILoA4jd8QiF/syU7bc8E2Zn4dbsMBw0ujseY1zlAK3Ngj2HVY1kH+Di5EQxu4rGZCp
-	T/Sw=
-X-Received: by 2002:a05:620a:170d:b0:7c0:b018:5941 with SMTP id af79cd13be357-7d4296da2eamr157237185a.7.1750862981271;
-        Wed, 25 Jun 2025 07:49:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCfs7blbnaI2Zj/4L6R7J4yAYp7djTR661EQDmxDWY8nDkTHOsowmqinswXsBFWVpq+u2QgA==
-X-Received: by 2002:a05:620a:170d:b0:7c0:b018:5941 with SMTP id af79cd13be357-7d4296da2eamr157235585a.7.1750862980908;
-        Wed, 25 Jun 2025 07:49:40 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60c403a4a2bsm1824376a12.32.2025.06.25.07.49.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jun 2025 07:49:40 -0700 (PDT)
-Message-ID: <c189e03f-a3a7-422e-a156-ecfae92a7443@oss.qualcomm.com>
-Date: Wed, 25 Jun 2025 16:49:38 +0200
+        d=1e100.net; s=20230601; t=1750863353; x=1751468153;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jrBtoywouXF/4yYfXz6f2gT+dZfD6qO0490nSXgTbM0=;
+        b=FcBhzgdtLaAFyk4J9Rv6ZCOaFaFHF8IGpch3v+zHZRdSWMyYWr751QIWGrqMH11ym9
+         bvqzcLYyFK8lG5xz7/uXsCP4YqLnlrXeNpEJmVaVPuPrx0CZwylMccFq9R1ab+UmV8Wx
+         Sxj4kcy0CO9W9h/7Pf06L975zCNlojjhZpeL8RkAZaN8WnzoAWpBsMy++EgPc5U8ofw7
+         uuH26aeqHNY53L1ldjxBcVknLJdhLvua/1bpBEdFIfUk+M094WOcKfNjUqQulnwTG5hL
+         3+FkjOCGxMPDzVZ7EljWaroXxkRlUT8A6//bv5KfYeeJqT422/8DGmSw4X3OVpwh+2XY
+         P4kw==
+X-Forwarded-Encrypted: i=1; AJvYcCWb6gDCIQCMhXGPvCsE//UurGa+j3rbYdBUKCHLLAXyDZq9625nZCROCerJWUMuljR3qPkOr50dMsihqqwj@vger.kernel.org
+X-Gm-Message-State: AOJu0YyYUO1iJzeaKxRmYLomcprpI9zUIMM87Vl0FhCszGbSN3dndVC+
+	9ZRynP0YY6NVmEYfpIn7kvoGm9/LSGVtjomN7Z92dbUAaPoClD7gpsMATc/kqtsVlC3cpG71ToN
+	+8nxD4FEP+RPYw1PdS/1fgTB6Ssk1bKbqxHQqdlVuBssYtBkWFOSOS9B/gQ==
+X-Gm-Gg: ASbGncv3K8G3fuVeqczL/qTsVKVLRZAtW8yrRaf4kMVIQUd9SNBzujbfZavOcC5mOMi
+	OV1Ukz3JFuXXkA9rM1jL6h3Xb1GK0NlfzTm2cn4yek0l4m2Ah63ORrwuePJ1rNtaDEXJloiAMsO
+	5o5PO9vDHB2MBN+u2VfOy4b3r8HVVA6BwbqTuBoxje22v4vfeSvD7KxtN07sKsdb3uy/9gWIB02
+	nQ=
+X-Google-Smtp-Source: AGHT+IGAUq5gFTw7qUZjZn3rHuNNjUzgrTHXn3aPE83EdUFWdbkV7VelOsQBi1h7nliNA6yx9WJxaL/S6b9yacsmTDQ=
+X-Received: by 2002:a05:6512:1591:b0:553:abe6:e3e7 with SMTP id
+ 2adb3069b0e04-554fdf5cefbmr1084123e87.47.1750863352960; Wed, 25 Jun 2025
+ 07:55:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] firmware: qcom: scm: request the waitqueue irq
- *after* initializing SCM
-To: Bartosz Golaszewski <brgl@bgdev.pl>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 References: <20250625-qcom-scm-race-v1-0-45601e1f248b@linaro.org>
- <20250625-qcom-scm-race-v1-4-45601e1f248b@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250625-qcom-scm-race-v1-4-45601e1f248b@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: C7Qzo_6E3TCXd7zVwbeANqaftkVAQ9ab
-X-Proofpoint-ORIG-GUID: C7Qzo_6E3TCXd7zVwbeANqaftkVAQ9ab
-X-Authority-Analysis: v=2.4 cv=MtZS63ae c=1 sm=1 tr=0 ts=685c0c86 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=U-aTzihQr3N9RfWzTXsA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDEwNyBTYWx0ZWRfX7/2fV2EL+rpB
- KwYM+73/SAlC07FcpajDHY87k71ZyvOIhbSs5UJe9YHexebZ+tetBuI+nikYiovnnmj4vESGBKU
- MWVZ27M4oq7Db1z95ZhkwUVB+Y4xu77Q4xAn+Vw71+Akq8p0M22ObjvPN2nAnF7CkAvu9XBONc9
- Jk5uCRv+E7loCP1FwPQZAc9b2EDdmhX3FdP46MuG/GPjEVeMtuws7OlWv1vHKcAmuGUXMVGjy5q
- Vqe9fUuKgz22zcJyoCRaTg/2suN14/Dtbslrbh9CkTWx7vVvdxZOBmTFG4NRJKG56NYQsDS5BM4
- RhHLpdacHTAMLgg0JxLc4p9oNOCVPnb6aw/lCOTHuCavYi5X3F2svc1kc/AhZjNT64YFq/f6gj0
- R4phJb0FWE6r+UlMBmGhV1qtEqGuIycGCwxefLWR0BrwK2Bt58S6Thb0jIMjk4wv65WywA4w
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-25_04,2025-06-25_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0 phishscore=0
- mlxlogscore=673 spamscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 mlxscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506250107
+ <20250625-qcom-scm-race-v1-3-45601e1f248b@linaro.org> <efbe6c4d-cbf2-4749-8a3f-a69b2e4b726c@oss.qualcomm.com>
+In-Reply-To: <efbe6c4d-cbf2-4749-8a3f-a69b2e4b726c@oss.qualcomm.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 25 Jun 2025 16:55:42 +0200
+X-Gm-Features: Ac12FXwpw1VlRY373Rr5D8HNLBzbb_Agr5ioNTABVgBeHneEchkZKiZDcld1xlY
+Message-ID: <CAMRc=McS2MceSr6OmZc4stVAmKd0=gAYUH4qCzZUDYQEYVFnFw@mail.gmail.com>
+Subject: Re: [PATCH 3/4] firmware: qcom: scm: initialize tzmem before marking
+ SCM as available
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/25/25 10:14 AM, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> There's a subtle race in the SCM driver: we assign the __scm pointer
-> before requesting the waitqueue interrupt. Assigning __scm marks the SCM
-> API as ready to accept calls. It's possible that a user makes a call
-> right after we set __scm and the firmware raises an interrupt before the
-> driver's ready to service it. Move the __scm assignment after we request
-> the interrupt.
-> 
-> This has the added benefit of allowing us to drop the goto label.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
+On Wed, Jun 25, 2025 at 4:47=E2=80=AFPM Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> wrote:
+>
+> On 6/25/25 10:14 AM, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Now that qcom_scm_shm_bridge_enable() uses the struct device passed to
+> > it as argument to make the QCOM_SCM_MP_SHM_BRIDGE_ENABLE SCM call, we
+> > can move the TZMem initialization before the assignment of the __scm
+> > pointer in the SCM driver (which marks SCM as ready to users) thus
+> > fixing the potential race between consumer calls and the memory pool
+> > initialization.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+>
+> I'm not sure any user of tzmem ever checks qcom_scm_is_available()
+>
 
-I don't think there's a suitable reference for a Fixes there,
-so let's skip it
+Well, they all should, right? At least the ICE and fastrpc drivers do
+check this from a quick glance. Also: every call that has more than 4
+arguments will be an implicit user of tzmem.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
-Konrad
+Bartosz
 
