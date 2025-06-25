@@ -1,166 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-62500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B52AAE8B44
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 19:11:24 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADFBCAE8B85
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 19:32:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3009D4A5F7B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 17:09:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 694587A29E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 17:31:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8ADC426B76F;
-	Wed, 25 Jun 2025 17:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0229E278E5A;
+	Wed, 25 Jun 2025 17:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="QYYsoD6D"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y7+QRJ7T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-24426.protonmail.ch (mail-24426.protonmail.ch [109.224.244.26])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E08824A3;
-	Wed, 25 Jun 2025 17:09:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407EC1DE4F6;
+	Wed, 25 Jun 2025 17:32:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750871366; cv=none; b=uO0fWoSn3SbghpzcbP36d0gV3U71BxOmqFlxPK0QGVG5gnqHdL9nkbANXnyRaDodWBAXbQSP13rBWWjkEDUpJZm9LtiRrH467cetw/lMgnyw4U9zqb7Mp+0GpdXyirgcuAszpeWtDYi3cknJ+DTLeJKzQhT9YKv85EakPDViiRQ=
+	t=1750872769; cv=none; b=mLqmU5hD7/nxo1jHYWTvh1b0QiCVIDYIfEuc3DHBV0iHf5VJJO4PEh05rx/Af+ZJMW5ccbzeAmYyWuzyeZ2tOz8wR5Bw2vPX4axG5ywsqxN3MIhjLXosupr9VbGoxQtROnp+F4nrQSDKHlliudX0+W0EXuNAWRO/c4/Gfp7sCEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750871366; c=relaxed/simple;
-	bh=mOUyii4I9lrSkNP9KAS0/Fo4HRjD6JuuBO3Yq3cQtu8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K/7/Su2iRgARXt2MjmBtRTYpaRh4DIvpYhc0qRp8QHm6/VXavo+ecdWhU0kUN2UAk2graW3M3uP0n12WMrXdNiMpHtp3rWTj96/eptxR8nOX70PnASFbs0Cjo+iOx+cDvc1CWOe7DHap7Z9KXOzih1p8pJCtLNcq9UxVzd70WXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=QYYsoD6D; arc=none smtp.client-ip=109.224.244.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1750871355; x=1751130555;
-	bh=mOUyii4I9lrSkNP9KAS0/Fo4HRjD6JuuBO3Yq3cQtu8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=QYYsoD6DiOvasJLEoZJLo8VlnWESYPZJgj9k3hVfyposf/xMKpJfcb0ay/kZ0cb9c
-	 /IlFc0LNesFMKQIe49DUMpPKI5wy/V09d17stzZd5m9hM8prjjrA4L+Fyw3evbeQP6
-	 +Hh3CrjT9XChSZ3FcEtAinYGvkJSRqViXwhmPYVBDBOILf8UgHdYcXCDTmgkoHsiGm
-	 i9pyB7ouQVvydkUSFOd0/LLDElZCKpePsQUBJpHLVFDK69ghryjV63RlnAuOGCJ9uC
-	 HtEafLuWbbSK0ww1Dr3yuIX7LD0rhhpnlGt0zYsOuXyz2LOsP50ezgic0UzhxOapfQ
-	 Otx7AgUMsc5sw==
-Date: Wed, 25 Jun 2025 17:09:10 +0000
-To: Luca Weiss <luca@lucaweiss.eu>
-From: Yassine Oudjana <y.oudjana@protonmail.com>
-Cc: Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, Alexander Sverdlin <alexander.sverdlin@gmail.com>, Sean Nyekjaer <sean@geanix.com>, Javier Carrasco <javier.carrasco.cruz@gmail.com>, Matti Vaittinen <mazziesaccount@gmail.com>, Antoniu Miclaus <antoniu.miclaus@analog.com>, Ramona Gradinariu <ramona.gradinariu@analog.com>, "Yo-Jung (Leo) Lin" <0xff07@gmail.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, =?utf-8?Q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?=
-	<barnabas.czeman@mainlining.org>, Danila Tikhonov <danila@jiaxyga.com>, Antoni Pokusinski <apokusinski01@gmail.com>, Vasileios Amoiridis <vassilisamir@gmail.com>, Petar Stoykov <pd.pstoykov@gmail.com>, shuaijie wang <wangshuaijie@awinic.com>, Yasin Lee <yasin.lee.x@gmail.com>, "Borislav Petkov (AMD)" <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, Tony Luck <tony.luck@intel.com>, Pawan Gupta <pawan.kumar.gupta@linux.intel.com>, Ingo Molnar <mingo@kernel.org>, Yassine Oudjana <yassine.oudjana@gmail.com>, linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org, linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, linux-kbuild@vger.kernel.org
-Subject: Re: [PATCH 3/3] iio: Add Qualcomm Sensor Manager drivers
-Message-ID: <WHAT3OVKsj4znTv7P1Y3TGotHKfpY-MGDDVHuZyL-vp5iU7mU353Nf9expuvrTv5uaQ772ybJuTKEiy0WR3lcM4xRRSummPjrVcrPfq-JkQ=@protonmail.com>
-In-Reply-To: <ea183f5a-b4c8-4dc0-960f-dba0db5a5abb@lucaweiss.eu>
-References: <20250406140706.812425-1-y.oudjana@protonmail.com> <20250406140706.812425-4-y.oudjana@protonmail.com> <ea183f5a-b4c8-4dc0-960f-dba0db5a5abb@lucaweiss.eu>
-Feedback-ID: 6882736:user:proton
-X-Pm-Message-ID: 5603c40deb6696a70588c6d5989d7521b94b5071
+	s=arc-20240116; t=1750872769; c=relaxed/simple;
+	bh=EISUxnpIWHu4hrckTW+MYmq12v/BtlCMrfnj+rWuQMs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=RHakQ9fkz0DYuOgihOGbPyWLS+A98se9l/uFbztVRIuwbMgbpgh9E+rFUxFHiaTDDzowcB9PuByXgRo1mTgA042xgkXnDGLSVNSRHqai3JL6B4x0ke962SAqx58qYCqjNoYo7a/gCeoL08M3z3aBHQGgjwF8ByAq1sKnV9cFs9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y7+QRJ7T; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a53359dea5so71189f8f.0;
+        Wed, 25 Jun 2025 10:32:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750872766; x=1751477566; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iT4DMHtGBn9NgzcOhabgnsoKG/OUrJjaTKc+3/rEiC0=;
+        b=Y7+QRJ7T5ymp1h2K7Rkts8bxYJp+GEar5bd3gV1imABUKN6KkShfaJSwW6RvoPqzqA
+         2/r4lwJq90JbOQW9qtX4utXH/W9JNeDf8pKPyn2zid1DJlcj7WuoY6w+otGxKJtsuWdw
+         OAncj1gVl+lEHGG3AGHuCk8p1M4uydphrhGxhiHd4BJ9IlauLkR4HzgR1iLmk7Sgnazr
+         UApGP1M/DsN2Ipq3Up5dARFr9AXJ+CRpB3HnojMG33pLG3nemV2nBO5K8LMtxLjVnft+
+         oZqkYAtHitPbJmQ4sNekiX9cQwaDTCcfJWFSvY9SgVYNFAN+WV5j57odUsvNA+fY9HLy
+         qQVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750872766; x=1751477566;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iT4DMHtGBn9NgzcOhabgnsoKG/OUrJjaTKc+3/rEiC0=;
+        b=aB2YERAg4zCHSqyFiUyADkZ+xvY3SCQXJ53EUds3lj/Z3lQtxbkIQkub+RIEvFu2B6
+         EOy7EHPznbTMbBbVBmfZzzOb2urHKNxmuj+3CATrE761xKS2sjhNpGLXWDa/ALXpyKxV
+         y9L5wY6UaBZD6Ee7RPGPpF9W1Wyxkmx8XKjfRnqTLCFbI83Gv+Mx+RLy0tGjDG9Ut7Wv
+         E/wT8GQpo3R716EnLy4rXR+KCvZ/f//i6LNyQmUFb5tRlPSdD0on9/LUWrZJQ6dJZkZl
+         bWnSjADq252rD3IAfZ2NZw+9kIock3txn6ugI6Ie3tOWut8R0aJHqgFpbjhznvt6sx+y
+         WKEg==
+X-Forwarded-Encrypted: i=1; AJvYcCUXsnme/TgfkT/3+QSZ8hT3B1eVBTuqSqnFe/XoXnSo+3rUHheBJSbUA0WfbTP/LhFWXM1EKpRTNbiSv2hg@vger.kernel.org, AJvYcCWwQoxwo4gAm2AOdDUaSBcqHTtKdhmfvH24DQjLK39WKlZjnwi6H7PBZEa3wAPoR7pS+FJPgBwZnR/ZYXZ7@vger.kernel.org
+X-Gm-Message-State: AOJu0YzM+mCDMSxpMrnXUtVwRlnuwWo4mDQjye4LMNxXRimJBgVAk9ID
+	J7WoTNf5bqT9BU+wQv9mcAvawpFLCIYZH7iFf6D/B7DBicfj2y6j0FdY4SrgLQ==
+X-Gm-Gg: ASbGncvl8wAfPOrxs4q5vty9q7sXvrRQfeEtx6l29GITcMoGlCdL9fm34bmCKMVOY0m
+	vr8x9l4x/bcwYxG/MDB8L02mxpwIZIQjBA1maVv4i3pLpeJEVkSQYtGvf+Jp5a2EbgkdwfioCtx
+	Sz83/RQp83yrDwpgbYcG5QkJ84oaPUbwNUDClR4pfXlyLmL92eFlVHXPIgzT894CvZdtDPqR4Od
+	qL7afDDkr4Pf09Y85bJuaFm+z9tdPO6TcfSu2hrT4kjNRcANKj93Qaux9o8Oyjpwr0bgYmYCSua
+	akwAbU2IOV/Ba2a/2R6c8mh804EXBcFbV9CkU/x3Cq4DSAq5p0ci/mggt5lGMvGbuEyJeYprdz6
+	A/Jy90E4Z2ZSeXPI=
+X-Google-Smtp-Source: AGHT+IE24H8yzbVgSbARWWCY6LBY8tm8b+sjyEHvnDZu7tS1kpGs3b2aEUL9oSco2tXuriUgneZxGQ==
+X-Received: by 2002:a05:6000:4105:b0:3a4:edf5:b952 with SMTP id ffacd0b85a97d-3a6ed66a540mr2932759f8f.36.1750872766354;
+        Wed, 25 Jun 2025 10:32:46 -0700 (PDT)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3a6e8069d78sm5107251f8f.45.2025.06.25.10.32.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Jun 2025 10:32:45 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Wed, 25 Jun 2025 19:32:35 +0200
+Subject: [PATCH] interconnect: icc-clk: destroy nodes in case of memory
+ allocation failures
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250625-icc-clk-memleak-fix-v1-1-4151484cd24f@gmail.com>
+X-B4-Tracking: v=1; b=H4sIALIyXGgC/x2MQQqAIBAAvxJ7bkEtjfpKdCjbaikrFCIQ/550n
+ IGZCIE8U4CuiODp4cDXmUGWBdhtPFdCnjODEkoLozSytWiPHR25g8YdF36xro2atNRV2wjI5e0
+ p6//aDyl95MEwkGUAAAA=
+X-Change-ID: 20250625-icc-clk-memleak-fix-4462b5153970
+To: Georgi Djakov <djakov@kernel.org>, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+ Dmitry Baryshkov <lumag@kernel.org>
+Cc: linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 
+When memory allocation fails during creating the name of the nodes in
+icc_clk_register(), the code continues on the error path and it calls
+icc_nodes_remove() to destroy the already created nodes. However that
+function only destroys the nodes which were already added to the provider
+and the newly created nodes are never destroyed in case of error.
 
+In order to avoid a memory leaks, change the code to destroy the newly
+created nodes explicitly in case of memory allocation failures.
 
+Fixes: 44c5aa73ccd1 ("interconnect: icc-clk: check return values of devm_kasprintf()")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+ drivers/interconnect/icc-clk.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/drivers/interconnect/icc-clk.c b/drivers/interconnect/icc-clk.c
+index 88f311c110207757f0609e5cec7d377a91133c6d..93c030608d3e0aad7d9c1ed81a51dcde0d3f85ab 100644
+--- a/drivers/interconnect/icc-clk.c
++++ b/drivers/interconnect/icc-clk.c
+@@ -117,6 +117,7 @@ struct icc_provider *icc_clk_register(struct device *dev,
+ 
+ 		node->name = devm_kasprintf(dev, GFP_KERNEL, "%s_master", data[i].name);
+ 		if (!node->name) {
++			icc_node_destroy(node->id);
+ 			ret = -ENOMEM;
+ 			goto err;
+ 		}
+@@ -135,6 +136,7 @@ struct icc_provider *icc_clk_register(struct device *dev,
+ 
+ 		node->name = devm_kasprintf(dev, GFP_KERNEL, "%s_slave", data[i].name);
+ 		if (!node->name) {
++			icc_node_destroy(node->id);
+ 			ret = -ENOMEM;
+ 			goto err;
+ 		}
 
-On Wednesday, June 18th, 2025 at 8:19 PM, Luca Weiss <luca@lucaweiss.eu> wr=
-ote:
+---
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+change-id: 20250625-icc-clk-memleak-fix-4462b5153970
 
-> Hi Yassine!
->=20
-> On 06-04-2025 4:08 p.m., Yassine Oudjana wrote:
->=20
-> > Add drivers for sensors exposed by the Qualcomm Sensor Manager service,
-> > which is provided by SLPI or ADSP on Qualcomm SoCs. Supported sensors
-> > include accelerometers, gyroscopes, pressure sensors, proximity sensors
-> > and magnetometers.
-> >=20
-> > Signed-off-by: Yassine Oudjana y.oudjana@protonmail.com
->=20
->=20
-> <snip>
->=20
-> > +static const char *const qcom_smgr_sensor_type_platform_names[] =3D {
-> > + [SNS_SMGR_SENSOR_TYPE_ACCEL] =3D "qcom-smgr-accel",
-> > + [SNS_SMGR_SENSOR_TYPE_GYRO] =3D "qcom-smgr-gyro",
-> > + [SNS_SMGR_SENSOR_TYPE_MAG] =3D "qcom-smgr-mag",
-> > + [SNS_SMGR_SENSOR_TYPE_PROX_LIGHT] =3D "qcom-smgr-prox-light",
-> > + [SNS_SMGR_SENSOR_TYPE_PRESSURE] =3D "qcom-smgr-pressure",
-> > + [SNS_SMGR_SENSOR_TYPE_HALL_EFFECT] =3D "qcom-smgr-hall-effect"
-> > +};
-> > +
-> > +static void qcom_smgr_unregister_sensor(void *data)
-> > +{
-> > + struct platform_device *pdev =3D data;
-> > +
-> > + platform_device_unregister(pdev);
-> > +}
-> > +
-> > +static int qcom_smgr_register_sensor(struct qcom_smgr *smgr,
-> > + struct qcom_smgr_sensor *sensor)
-> > +{
-> > + struct platform_device *pdev;
-> > + const char *name =3D qcom_smgr_sensor_type_platform_names[sensor->typ=
-e];
->=20
->=20
-> On msm8226 lg-lenok I get NULL here leading to a crash with the next call=
-.
->=20
-> I get sensor->type=3D0 for some heart rate sensor on that watch. I've
->=20
-> added this patch on top to fix that (excuse the formatting):
-
-I don't see your patch, but I already have a fix and will include it in the=
- next
-iteration.
-
->=20
-> <snip>
->=20
-> > diff --git a/drivers/iio/common/qcom_smgr/qmi/sns_smgr.h b/drivers/iio/=
-common/qcom_smgr/qmi/sns_smgr.h
-> > new file mode 100644
-> > index 000000000000..a741dfd87452
-> > --- /dev/null
-> > +++ b/drivers/iio/common/qcom_smgr/qmi/sns_smgr.h
-> > @@ -0,0 +1,163 @@
-> > +/* SPDX-License-Identifier: GPL-2.0-only /
-> > +
-> > +#ifndef SSC_SNS_SMGR_H
-> > +#define SSC_SNS_SMGR_H
-> > +
-> > +#include <linux/iio/common/qcom_smgr.h>
-> > +#include <linux/soc/qcom/qmi.h>
-> > +#include <linux/types.h>
-> > +
-> > +/
-> > + * The structures of QMI messages used by the service were determined
-> > + * purely by watching transactions between proprietary Android userspa=
-ce
-> > + * components and SSC. along with comparing values reported by Android=
- APIs
-> > + * to values received in response messages. Due to that, the purpose o=
-r
-> > + * meaning of many fields remains unknown. Such fields are named "val*=
-",
-> > + * "data*" or similar. Furthermore, the true maximum sizes of some mes=
-sages
-> > + * with unknown array fields may be different than defined here.
-> > + */
-> > +
-> > +#define SNS_SMGR_QMI_SVC_ID 0x0100
-> > +#define SNS_SMGR_QMI_SVC_V1 1
-> > +#define SNS_SMGR_QMI_INS_ID 50
->=20
-> This instance ID needs to be 0 on msm8974 and msm8226, so I assume we
-> don't want to make this a define but just add the 50 and the 0 as-is to
-> the match table?
-
-Yes that is a better idea.
+Best regards,
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
 
 
