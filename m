@@ -1,224 +1,276 @@
-Return-Path: <linux-arm-msm+bounces-62485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 342FDAE8677
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 16:29:22 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5288DAE86B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 16:38:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A20203A5155
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 14:28:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D7D327B0429
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 14:37:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CB9D262FE4;
-	Wed, 25 Jun 2025 14:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B10D2690E7;
+	Wed, 25 Jun 2025 14:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="Ph7pKFDr"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ky4Ffp+Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893A120C00B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 14:28:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8603234973
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 14:38:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750861727; cv=none; b=LfdJ8ComC0TiZ2exwk1QkwOUKPRYDjpWzMmBcKf0hfxBXpFRYkejNBsIWEUTmZfeoQtLgB1pVAkY/KWAxKspqRIRkx49lhb11Cl1zqkfGsqYeulksp6LuM+dmdyht48vYU2S9pJXNE4jLwMgZi+PXJbReWkmRUZ0RQ8x+pyUC2w=
+	t=1750862330; cv=none; b=n5irAljMmAke5ptPuWVUYi+ivJjwRQ6fPQdBYlySHVfIPkutkSpaAQLsVnsrIQD3h1Vadj9hsO8RiCbsoAgq1z0jUIaeJ4ZdkXAlKNakEtCgGl7lgWNZ/Z3Ew8Q8HGmcHawrBdHR2VHBggztEmp/jR25lFvAsH2rRXI3sBNrWB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750861727; c=relaxed/simple;
-	bh=dAl+J1Tcz6ISMuuOHvn3vHfUwlysIZFZemmbPeXBWik=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 References; b=YpjN2loiUe0aUOZAxGpe3Ka8seIAO9k/k7bkLtpLbVJnOjFe39ODeoPjqZK2FyuPVU5Kfz8Jd1Lf7hmulBge1WG9F43dlmSC6W+wlfZ2tZlmW8Vyy2Mgu4XvEosaQA8DfteD+KViWBcG2w6r0Hx2gYyasLZ3QLCUVTEi+ZeMxQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=Ph7pKFDr; arc=none smtp.client-ip=210.118.77.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20250625142842euoutp0141b5b4bb3fae2ab08c1c95b65bbe6e41~MT3XJLV-e0155701557euoutp01g
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 14:28:42 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20250625142842euoutp0141b5b4bb3fae2ab08c1c95b65bbe6e41~MT3XJLV-e0155701557euoutp01g
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1750861722;
-	bh=BEHqxKld16NZowdsW9ycdGcz0oJJ1gT1yM+f7Rye0OQ=;
-	h=From:To:Cc:Subject:Date:References:From;
-	b=Ph7pKFDryvyLl2EdRhSLOrwswY0PgMoB3sYDrvk/rNsTvGF/xlk2INtf5dnASSi1d
-	 a/Mo3ftrqvLh49cBkOXpaZINHrC+3eE5uYrPMT0XEUm1MejC9dAKl35std3tpoamPG
-	 ymhl3om1x2pNfXJSwpk3ZUm4wnD73J7UH4dPM1/Y=
-Received: from eusmtip1.samsung.com (unknown [203.254.199.221]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-	20250625142842eucas1p1679542a6f19dbc518a71b603e4c1ac1d~MT3Wy58Sy1524315243eucas1p1X;
-	Wed, 25 Jun 2025 14:28:42 +0000 (GMT)
-Received: from AMDC4653.digital.local (unknown [106.120.51.32]) by
-	eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-	20250625142841eusmtip1aa0b54a9e4cc0989b543e2f351b57c02~MT3WkfpJf0314403144eusmtip1A;
-	Wed, 25 Jun 2025 14:28:41 +0000 (GMT)
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-To: linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>, Georgi Djakov
-	<djakov@kernel.org>
-Subject: [PATCH] interconnect: core: Fix circular locking dependency with
- fs_reclaim lock
-Date: Wed, 25 Jun 2025 16:28:31 +0200
-Message-Id: <20250625142831.754887-1-m.szyprowski@samsung.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1750862330; c=relaxed/simple;
+	bh=gUCK5ZPtvm6MgHUIDv1wxFAc1ecbFd2rMDQC/jqlAuk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iA4UAB3clrlcJatSBWwcUkCWFN9+/88pSyJ5fd6cVwsPtSAq2kqzxLGEHHV3V3r+x2SAIhn5h8XeO3thRt8O+Ix8eEE/x0mgo/wzrQ+DGHoIOTyrlpkJw+7WCr1FHby9uJyw9sk6rWG3mwb9J8Nlv1XglZKqntu2gm/27VZQKiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ky4Ffp+Y; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55PBR8VX026740
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 14:38:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vyp603+DXROKlY8+1tRFEeF1aiIPfGdpzbAJfdYnfMY=; b=ky4Ffp+Y8DWJ5sga
+	ATB71pj5U7o5cN3QB6T16JQmjj9MVT+way4qI2/Jnj/Bq/MVAyK1OeaP0n9T1lsG
+	nYFZroUkLr3jSm4w2xC4/5tpDKeth0qamfd4HVCm671aUtqZ9txeItoWat8IPjuZ
+	2zXLys17vwfBwPHHcAxyy+fdYMxni94WDpwmBRkWcFyZY/4sNf4iug5HnkGDE9io
+	G/WnjXSB8FAkJYqH7drWISk5RktaYC0S4QOykHl/T0tPfdjGsqLoKtjtAGZpCasv
+	HrhG2PqWoVhlMDa1QH2fv2l1Hn8eYWKj3OveQhgK2IDivLOiIsbTg9NNaMwKxGqJ
+	WuP4LA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47fbhqpq6c-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 14:38:47 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4a5a9791fa9so20799551cf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 07:38:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750862326; x=1751467126;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vyp603+DXROKlY8+1tRFEeF1aiIPfGdpzbAJfdYnfMY=;
+        b=BxFt5dXDcDxP1DEda21ySfaAEpEqExH9N22kz38szViB3ZrxJ3Mn1XfxE8XUHkYza9
+         1clgWtcfwY2KKzL0nqi4wPxlPTdyQ9MvMgIpEWLyKje/eL8Y51i9DHGVc+gfFuUw9aCT
+         clIZutXemQtagzYAXB2IHadlQ9FcJrEXVLW/apy71hd8DTYCi4aw7JkWkZqnSwgPAEw1
+         PcsRSLxIVUuosdtKoQrbAA9FdjvOeMueh/AdHVINaaB7C3AFCypLMmkzuBoT1A8gNI4q
+         vj2yNXwX0ZzUV8wTzt+MUD9geEyaCJcSuUGhjV+jyyEkn0OSVIKNLA8OJsO+4qWdE+0E
+         ttHg==
+X-Forwarded-Encrypted: i=1; AJvYcCX5J2od346Ury+GZWJT8FqX+oe8OMDv6umT+wAlA9BHQKF4OYYU3YXT0pgur7Wj8srXWu1VC+jwgrev/rZs@vger.kernel.org
+X-Gm-Message-State: AOJu0YxO7dXypGAUnmoSxDyNRrEm8FymiO5KH8esQeGpqlqGtl5tL0qP
+	uNpawsw7S5817tzoOU2YI1iafU3HgwhSuQeSDRKh4Fi7ve7GvzqpdRMF1VjflNN57hom0Ddu2dE
+	I69L03eGvqE/9PDnFAA4+6wFlvXC9zxXUURHrv8HnGB+9cwyVpr2LPeK5OdzUKzun9CkU
+X-Gm-Gg: ASbGncv5BrlM5oi1F1PnhyY0oSbcp37FoDOR6XW75svRV7Stu10tDcet/11PTzbEdGP
+	7cGKwU0qeyCvS2jJ8EE80/yGrKyn4UxRBA+NUwQCZ4jk1C24KHk6GqhusDaoP8z1Qpfb9XGWPKd
+	DoJejVDsphVvVO0w6AebUUYxSOmPJmrRnajCZlY5k47fKyMFXr9gHRQdKAqmiOmiwdDxorjxpyM
+	KdTtQT1Bbk4XxMuP5B0yK/ZTg9UAuA0XDvVwDBACuW8NMMB9BUeCaCZe8cbX9N44QcnJmeSXt5A
+	XUDLs0ZN5apU9Gl690TwBUYdc2o8CPHOThkThpZGbisdZjNVbnPlKFnpvvlWqJNAlVPtI7oB1MS
+	ehBs=
+X-Received: by 2002:a05:620a:4713:b0:7d3:cec3:3ff with SMTP id af79cd13be357-7d4295fddb1mr179161685a.0.1750862326376;
+        Wed, 25 Jun 2025 07:38:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEHsbOpyUO4OQKuHvZNG56/kH2wg/UDN88jgkkkppU/y2V4JJtDrErgvtJkUii1DRKOsax2AQ==
+X-Received: by 2002:a05:620a:4713:b0:7d3:cec3:3ff with SMTP id af79cd13be357-7d4295fddb1mr179159185a.0.1750862325910;
+        Wed, 25 Jun 2025 07:38:45 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae053ee4cdcsm1076068666b.56.2025.06.25.07.38.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Jun 2025 07:38:44 -0700 (PDT)
+Message-ID: <4200b3b8-5669-4d5a-a509-d23f921b0449@oss.qualcomm.com>
+Date: Wed, 25 Jun 2025 16:38:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250625142842eucas1p1679542a6f19dbc518a71b603e4c1ac1d
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20250625142842eucas1p1679542a6f19dbc518a71b603e4c1ac1d
-X-EPHeader: CA
-X-CMS-RootMailID: 20250625142842eucas1p1679542a6f19dbc518a71b603e4c1ac1d
-References: <CGME20250625142842eucas1p1679542a6f19dbc518a71b603e4c1ac1d@eucas1p1.samsung.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 14/14] arm64: dts: qcom: Add The Fairphone (Gen. 6)
+To: Luca Weiss <luca.weiss@fairphone.com>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>, Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>,
+        Thomas Gleixner
+ <tglx@linutronix.de>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-mmc@vger.kernel.org
+References: <20250625-sm7635-fp6-initial-v1-0-d9cd322eac1b@fairphone.com>
+ <20250625-sm7635-fp6-initial-v1-14-d9cd322eac1b@fairphone.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250625-sm7635-fp6-initial-v1-14-d9cd322eac1b@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: 2OlPltFliDvlzSpJpnjn0wtR8KM7zc5V
+X-Authority-Analysis: v=2.4 cv=Id+HWXqa c=1 sm=1 tr=0 ts=685c09f7 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=gOtRruwUTqeMBgDD9hEA:9
+ a=QEXdDO2ut3YA:10 a=5XHQ0vS7sDUA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-GUID: 2OlPltFliDvlzSpJpnjn0wtR8KM7zc5V
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDEwNiBTYWx0ZWRfX/Uji/VSiTLfv
+ o3N7tnE3hUGZ3mbfXWx7HYeeX8ELm0s9Wmm2MT+OQ9yRLl6I+KWUObbSH0GALpvgTeP5N/DIpIY
+ Yv7aXJOnpWgvv/9SRS7vBq+Hm9NEAFSPw5Z1EYm4Is+Nh8yvMLxq2hOhOgYjWK123L47d3OBjb9
+ KGLaKNEQmacqJSQtMqXZTmC+dbH31D4iGFf6jQaUo8yWNi00j7Q8NK75cmpgum5om8dk5VE0pi0
+ /75uBN2cVEtE+hyD0VCPWfhHSu0qO+LRNiHzr24UowUiGcqEVOaRii1QuIYSt1ZPNCbzpsl29Ve
+ MsvH54+59vC2Kf3BxokEuRWAZvAbCDoA/fIyUvPWbyWbh72xtMSTFx9vKw5lTUpGok4zPo1mGWx
+ 6KTvQM8aK4nLE+H49L2GuBL3Y4ueK/lCdAqpDok2izsI4Hhx4YlqLLb+jh6GvKV4nigEeM3b
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-25_04,2025-06-25_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0 bulkscore=0
+ clxscore=1015 impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506250106
 
-icc_node_add() calls devm_kasprintf() with GFP_KERNEL allocation mode
-under icc_bw_lock. This might lead to circular locking dependency with
-fs_reclaim lock as reported by lockdep checker. Fix this by changing
-that allocation mode to GFP_ATOMIC.
+On 6/25/25 11:23 AM, Luca Weiss wrote:
+> Add a devicetree for The Fairphone (Gen. 6) smartphone, which is based
+> on the SM7635 SoC.
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
----
- drivers/interconnect/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
----
-This issue has been observed on Qualcomm RB5 board. Here is a detailed lockdep
-warning:
-======================================================
-WARNING: possible circular locking dependency detected
-6.15.0-next-20250527 #10635 Not tainted
-------------------------------------------------------
-(udev-worker)/217 is trying to acquire lock:
-ffffb29952bef2c0 (fs_reclaim){+.+.}-{0:0}, at: __kmalloc_node_track_caller_noprof+0xa4/0x3e0
+[...]
 
-but task is already holding lock:
-ffffb29952ffc588 (icc_bw_lock){+.+.}-{4:4}, at: icc_node_add+0x44/0x154
+> +	/* Dummy panel for simple-framebuffer dimension info */
+> +	panel: panel {
+> +		compatible = "boe,bj631jhm-t71-d900";
+> +		width-mm = <65>;
+> +		height-mm = <146>;
+> +	};
 
-which lock already depends on the new lock.
+I haven't ran through all the prerequisite-xx-id, but have
+you submitted a binding for this?
 
-the existing dependency chain (in reverse order) is:
+[...]
 
--> #1 (icc_bw_lock){+.+.}-{4:4}
-       icc_init+0x48/0x108
-       do_one_initcall+0x64/0x308
-       kernel_init_freeable+0x284/0x4ec
-       kernel_init+0x20/0x1d8
-       ret_from_fork+0x10/0x20
+> +	reserved-memory {
+> +		/*
+> +		 * ABL is powering down display and controller if this node is
+> +		 * not named exactly "splash_region".
+> +		 */
+> +		splash_region@e3940000 {
+> +			reg = <0x0 0xe3940000 0x0 0x2b00000>;
+> +			no-map;
+> +		};
+> +	};
 
--> #0 (fs_reclaim){+.+.}-{0:0}:
-       __lock_acquire+0x1408/0x2254
-       lock_acquire+0x1c8/0x354
-       fs_reclaim_acquire+0xd0/0xe4
-       __kmalloc_node_track_caller_noprof+0xa4/0x3e0
-       devm_kmalloc+0x58/0x114
-       devm_kvasprintf+0x74/0xd4
-       devm_kasprintf+0x58/0x80
-       icc_node_add+0xb4/0x154
-       qcom_osm_l3_probe+0x1f0/0x2cc [icc_osm_l3]
-       platform_probe+0x68/0xdc
-       really_probe+0xbc/0x298
-       __driver_probe_device+0x78/0x12c
-       driver_probe_device+0x40/0x164
-       __driver_attach+0x9c/0x1ac
-       bus_for_each_dev+0x74/0xd0
-       driver_attach+0x24/0x30
-       bus_add_driver+0xe4/0x208
-       driver_register+0x60/0x128
-       __platform_driver_register+0x24/0x30
-       osm_l3_driver_init+0x20/0x1000 [icc_osm_l3]
-       do_one_initcall+0x64/0x308
-       do_init_module+0x58/0x23c
-       load_module+0x1b80/0x1e38
-       init_module_from_file+0x84/0xc4
-       idempotent_init_module+0x188/0x27c
-       __arm64_sys_finit_module+0x68/0xac
-       invoke_syscall+0x48/0x110
-       el0_svc_common.constprop.0+0xc8/0xe8
-       do_el0_svc+0x20/0x2c
-       el0_svc+0x4c/0x158
-       el0t_64_sync_handler+0x144/0x168
-       el0t_64_sync+0x198/0x19c
+:/ maybe we can convince ABL not to do it..
 
-other info that might help us debug this:
+[...]
 
- Possible unsafe locking scenario:
+> +		vreg_l12b: ldo12 {
+> +			regulator-name = "vreg_l12b";
+> +			/*
+> +			 * Skip voltage voting for UFS VCC.
+> +			 */
 
-       CPU0                    CPU1
-       ----                    ----
-  lock(icc_bw_lock);
-                               lock(fs_reclaim);
-                               lock(icc_bw_lock);
-  lock(fs_reclaim);
+Why so?
 
- *** DEADLOCK ***
+[...]
 
-3 locks held by (udev-worker)/217:
- #0: ffff0000816488f8 (&dev->mutex){....}-{4:4}, at: __driver_attach+0x90/0x1ac
- #1: ffffb29952ffc490 (icc_lock){+.+.}-{4:4}, at: icc_node_add+0x38/0x154
- #2: ffffb29952ffc588 (icc_bw_lock){+.+.}-{4:4}, at: icc_node_add+0x44/0x154
+> +&gpi_dma0 {
+> +	status = "okay";
+> +};
+> +
+> +&gpi_dma1 {
+> +	status = "okay";
+> +};
 
-stack backtrace:
-CPU: 7 UID: 0 PID: 217 Comm: (udev-worker) Not tainted 6.15.0-next-20250527 #10635 PREEMPT
-Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
-Call trace:
- show_stack+0x18/0x24 (C)
- dump_stack_lvl+0x90/0xd0
- dump_stack+0x18/0x24
- print_circular_bug+0x298/0x37c
- check_noncircular+0x15c/0x170
- __lock_acquire+0x1408/0x2254
- lock_acquire+0x1c8/0x354
- fs_reclaim_acquire+0xd0/0xe4
- __kmalloc_node_track_caller_noprof+0xa4/0x3e0
- devm_kmalloc+0x58/0x114
- devm_kvasprintf+0x74/0xd4
- devm_kasprintf+0x58/0x80
- icc_node_add+0xb4/0x154
- qcom_osm_l3_probe+0x1f0/0x2cc [icc_osm_l3]
- platform_probe+0x68/0xdc
- really_probe+0xbc/0x298
- __driver_probe_device+0x78/0x12c
- driver_probe_device+0x40/0x164
- __driver_attach+0x9c/0x1ac
- bus_for_each_dev+0x74/0xd0
- driver_attach+0x24/0x30
- bus_add_driver+0xe4/0x208
- driver_register+0x60/0x128
- __platform_driver_register+0x24/0x30
- osm_l3_driver_init+0x20/0x1000 [icc_osm_l3]
- do_one_initcall+0x64/0x308
- do_init_module+0x58/0x23c
- load_module+0x1b80/0x1e38
- init_module_from_file+0x84/0xc4
- idempotent_init_module+0x188/0x27c
- __arm64_sys_finit_module+0x68/0xac
- invoke_syscall+0x48/0x110
- el0_svc_common.constprop.0+0xc8/0xe8
- do_el0_svc+0x20/0x2c
- el0_svc+0x4c/0x158
- el0t_64_sync_handler+0x144/0x168
- el0t_64_sync+0x198/0x19c
+These can be enabled in SoC DTSI.. it's possible that the secure 
+configuration forbids access to one, but these are generally made
+per-platform
 
-Best regards
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+[...]
 
-diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index 1a41e59c77f8..f6e9f3de6d48 100644
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -1039,7 +1039,7 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
- 	node->peak_bw = node->init_peak;
- 
- 	if (node->id >= ICC_DYN_ID_START)
--		node->name = devm_kasprintf(provider->dev, GFP_KERNEL, "%s@%s",
-+		node->name = devm_kasprintf(provider->dev, GFP_ATOMIC, "%s@%s",
- 					    node->name, dev_name(provider->dev));
- 
- 	if (node->avg_bw || node->peak_bw) {
--- 
-2.34.1
+> +&pm8550vs_d {
+> +	status = "disabled";
+> +};
+> +
+> +&pm8550vs_e {
+> +	status = "disabled";
+> +};
+> +
+> +&pm8550vs_g {
+> +	status = "disabled";
+> +};
+
+Hm... perhaps we should disable these by deafult
+
+[...]
+
+> +&pmr735b_gpios {
+> +	pm8008_reset_n_default: pm8008-reset-n-default-state {
+> +		pins = "gpio3";
+> +		function = PMIC_GPIO_FUNC_NORMAL;
+> +		bias-pull-down;
+> +	};
+> +
+> +	s1j_enable_default: s1j-enable-default-state {
+> +		pins = "gpio1";
+> +		function = PMIC_GPIO_FUNC_NORMAL;
+> +		power-source = <0>;
+> +		bias-disable;
+> +		output-low;
+> +	};
+
+ordering by pin ID makes more sense, here and in tlmm
+
+(and is actually written down)
+https://docs.kernel.org/devicetree/bindings/dts-coding-style.html#order-of-nodes
+
+[...]
+
+> +&pon_resin {
+> +	linux,code = <KEY_VOLUMEDOWN>;
+> +	status = "okay";
+
+\n before status consistently, please
+
+[...]
+
+> +&tlmm {
+> +	/*
+> +	 * 8-11: Fingerprint SPI
+> +	 * 13: NC
+> +	 * 63-64: WLAN UART
+> +	 */
+> +	gpio-reserved-ranges = <8 4>, <13 1>, <63 2>;
+
+Please match the style in x1-crd.dtsi
+
+[...]
+
+> +&usb_1 {
+> +	dr_mode = "otg";
+> +
+> +	/* USB 2.0 only */
+
+Because there's no usb3phy description yet, or due to hw design?
+
+Konrad
 
 
