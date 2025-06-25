@@ -1,80 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-62327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77E46AE7BC2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 11:13:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F2A2AE7BBE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 11:13:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 317EF1BC733D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 09:13:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EFD211BC7425
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 09:13:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A066A29B23D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7907329B233;
 	Wed, 25 Jun 2025 09:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="jRV6u6PH"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="C0h0TO/N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBAA28850D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 09:12:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F83289361
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 09:12:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750842735; cv=none; b=JEGIvEz1ZMGiEaaW8xo26M5H0nSL17Gf9XqXk8mSNNyAi6GVa/TJYG4czRFtEdn/pprvQI/jByblpV5KZBLk2P1LE9fnP49sjTM0sEjwTzzrsWdrWJhHvBjxtdj3fT26M0hlaH+quao4XWrsIya36hzfLLUKZ7AU785eBZyF+dk=
+	t=1750842735; cv=none; b=QT7vja0daAdh9l/l4f+x9zmxGVdaSm4PsLC01Rx8QXm87O6daEFsr0tpUlxf7UGbNA4PSN34nhA1MkbfK191s5LaPis5EMKTMBNXxbDV4inYrnWqjCyW7a4cmCOrFmT5VoKXcJ2XEy746P2KbGHimri0HOLg/FTvOnC6LpxRtGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750842735; c=relaxed/simple;
-	bh=3rLRX3HD+/2dBnPJ5VcY6hbzIV3hWOdMQ6LQve48/v0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=vFeKbumgJhIP2VE/k8bo3zajYKWb/pXwC/KSgjS2I1jun1igrEb3Hsq6g5sgZAAytJc3KoNlBxuKsB3fAfMcWdxg4bJDFudULxc6+5Jc7glbqwcLGRrxRQl9g+Uq+m9RxPRE/cTlFgruKqB4e0hgXc+0FQYhawntNRFAQ50nNZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=jRV6u6PH; arc=none smtp.client-ip=209.85.208.44
+	bh=RaRzw6dXCJL2a9k5hvxU0+bR/+k0pdf+af8dr1rsdY0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=dSycXsJ4eZ/f1CTiKhNFio5N7t55UpZMdKmISPnAoyT5p0FSrmqkAs6kpUWpZC6oQwaRfZs8RjayOrbOs3gOMnWNN49wkaot4MFRlvG5sVNjS2EzAyhIJg9OnYGzBTjBk7aWvX3FsH+FqBRyKGS12EeyxWXuP/TqGfCSMLIrwPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=C0h0TO/N; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-607cf70b00aso2590121a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 02:12:12 -0700 (PDT)
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ade5a0442dfso242436966b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 02:12:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1750842731; x=1751447531; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=OU6dPNRfW5ncO3ZE9HOdNSZ+keWWv+mGS1rjrgmjGXI=;
-        b=jRV6u6PHugZ3CpY/ErUm7pXEI5u44R3MxNoWSRiKsEdwVles5tnoSPaqUG7U9i3tvW
-         1fBSxuBpVLknNHnOTK0PbQYD6udBbHpHGXdr5mTJ2bXhQ8RIXB85z+9dz6BhoO35OfFy
-         RyndGUETJZkeqLIW5aFXvOwE98E7ADar2BVOkM4js/UrjgLVyApDKzLl8JwTCcvulzz3
-         6pONGOgOypkFA2fIv+iLJTMcqxzkpBF7zhtLic0OdQbmXfWDI9Ee/sbKmDC28VIAuR4l
-         UbtQvsIz8vylYXGwrxzDESs05nOw1G4P+Ap+KeZzcS3iO8R0zJY9OO6+rbCV3vziliKR
-         4+tA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750842731; x=1751447531;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=fairphone.com; s=fair; t=1750842732; x=1751447532; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OU6dPNRfW5ncO3ZE9HOdNSZ+keWWv+mGS1rjrgmjGXI=;
-        b=NNBx8Z0x2A2yTcmd4ojjg3nCwdPxuuVr+42XSUi/h7zKz8XEXABymgP/9XoyCpvvuT
-         MKb0U6/pqOCEvHR1yO6rtJRCZsAsMpMt2uqHHV+u5Vr/dz7v4NGWSVx0EgTT4gA0TVXn
-         gHyNv3elx0HcBy1CaDlOn4h4vek4jBzqcCqgPpzlBuxaLT8AEbDlsvzTduIUQLxqG6oD
-         9J8RH7TqOulgknrEhJWZ09ct51mbe2PJ3wgPOJHWhfbUF7/RNUIOqEQXdhUNXu65xp1K
-         hM9d/VKeVccEiX3e7+c/TH6TK26RqS2YmuA+KNEwT1b/kRrUS0zQtEBot1CuVh4UHEce
-         3dNg==
-X-Forwarded-Encrypted: i=1; AJvYcCXFNBT1CxJSryOHCvEHDQ0IdZN2C6ye6/NOYq62GABYPxEWGAp5CU3+laZ3MhSS1qDHKOwseH4tFpwrIgrZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YyDGxCMeCgFvUKGVRp0QQaNFL+/sl1MkZvVXrYbvjL6Gtuop8Ng
-	6cLiYbnQa/JLL9/eDcOhX65utzUe6QgPAmmhnRhNqdSh9yNE9aMv/utuGpV7VnDIC40=
-X-Gm-Gg: ASbGnctb+gmRb+F3pXA0iZ2G/JL6QD/VV8cz1tMBeMAv+ixShUrrVwRYPcUlB7tg3X3
-	cR0Zl+6Jh87sj3GHHpwy03WpeooZrZC9rhmyMNno+hygpS1zsg34hwkma6akS4zOL48QF2PHZEz
-	hBpv/4IoGyYFj3Pb2RBKMryyjkCLza9pY9nGbmoCCTBBuaWPXYt8FweyeYwSSctdXHMeqIDfzUn
-	EfsaLTM9g0LO66KunQwBb8qOxPU8X0fjjHq75BsLitjSIEtPTynU4ewGV6pfnWcsdtrAyp9Kzj5
-	CgcZdTKUwWjaB4jMBYKPbgz47QvrIeG9H2DhxGsdFKZBEAuqfsiP9n9OBZTetD7brF0zZLdJKOD
-	2KCrwYAGdQV7Mdx6Zj39x41Wgknxr/94u
-X-Google-Smtp-Source: AGHT+IFEzb5lbk3K1+lIUPljZOLxKwp2Mr0rANsWiHgyk6VUfW/suAoRrgQe45mR9hXiAYd1pDszpg==
-X-Received: by 2002:a17:906:7950:b0:ad5:2d77:7ca7 with SMTP id a640c23a62f3a-ae0be9fbf22mr232942066b.43.1750842730958;
-        Wed, 25 Jun 2025 02:12:10 -0700 (PDT)
+        bh=EhGXOCwUIIm3q7C4tiBl1iPL61L8WtrCPnBevMSMH/k=;
+        b=C0h0TO/NSnGYHx6oVRFGx96zMRCTNAX8+rovFPOjimSGNFu6OH1gxBRRJp+rX4lzro
+         9DgpY0aupnWSKi9/BihpzPa+JPqa48KLsF95Pc+muYF6CmygF/OLj2aHiCXAsbLBeoxY
+         7TQwfHTXRoRLl9GG2v+ihgqzFrALYN5kozM5zd5FPgBoopabO6mdctDYS3WABNqvsYok
+         b6AZt8juIMzfpqvO5pNpd5jv6vzFq3GupSry4Suz30iS803hpnhK+CBm8N1bj95j5j25
+         XZcQ+3BX8RG5sSrA+TiVXxsLV+2JivWsAoPyzhsXQMxa1ECyA6C4pj4yOSCrJJivmM0F
+         toqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750842732; x=1751447532;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EhGXOCwUIIm3q7C4tiBl1iPL61L8WtrCPnBevMSMH/k=;
+        b=QsD4xmTV0k9krdw/v0TuaWFYB5s1dWGS9pF17peNaQr9E/bNeTHjrctdnXXynbmezA
+         lSyypaOjFl/Sd60x74m9B41JlTjNJ23PFGs4GsVd3xXLOOEmwfQtMQXvAGav4mV4hRAO
+         Y/iPxi3dQDFwx20eygSilnl/aLBjwnuFj88527PqIvbZ/ecd2H0NkQOctg/o8tZwpJQU
+         n+PLwg5AIcS8bXVqBQ5URBLgH5nDUHPb5wibWL9v/bdPvX0CAY6QpK4U5j2p2Fl6fveM
+         VmRRt9hu6D6vgVuam6/C1odc3zuEPgIArzP+YKCZ7li7S4zf7aO44StXn2lWbsVb9Y5V
+         zp+w==
+X-Forwarded-Encrypted: i=1; AJvYcCUPBOaxBaBI5NQQCJz6MLyxsEJzD0aIfbYpLcxJI/2jEyszo25+kVT/RT8Ll6SkB0r6B8iREEXFceYDmN3w@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy/7VFxR1J3LeHe4CeEjD/FqaTjF/fqnp7l/3zx+sCdezRmUvQS
+	23fW4C+cOYsV34MANzt96B/ZHDLFM5OMTrScv9mdg/+nHJqgyOyqdhCrrkc5yxm89Ck=
+X-Gm-Gg: ASbGnct+EJGJB86muBsqgGMXJJKWv3wNZUDtS1x+6gMeQ9KIz/w5JoLU9gkHK7x+KsK
+	qJxG7DRF9O2b4AjqcJ1sp1zi6c5JtNvCRjQBvPxvipbPpMODefEgmrUlsQo+VRuuwDj9em8HQCu
+	iJgb5odxV+k0496VJkN3yN4xYpT5dAZ/yFzNm1/X93Z+2Cscjx+LFY9rV+eExsY94mEyH9UEqpr
+	Is0XG92H6CVjJ1oLdPN3XhVKHgxmWrJ5TePNsXFX9492cZ5eMLMMhknrmkKvQhhtOU4x60OikI9
+	ZebYlMA176+XAPoO5RSfPbrlxIWz5EtBPMxhKD9R1em0tflHnWzUBTmKj9fORejBPR1i/yl9iTU
+	wHMMe6E7lK41ApUYeFCj9ZqJn3dyZ0ygy
+X-Google-Smtp-Source: AGHT+IE1oWXGY4HO8JEBpv+rAFTtTGib8QOzMGNtx07dFqJ84auma6a3uiljCpQCQ6UGKmu0qGojxA==
+X-Received: by 2002:a17:906:13d6:b0:ad5:5302:4023 with SMTP id a640c23a62f3a-ae0bf1b4672mr183241266b.44.1750842731622;
+        Wed, 25 Jun 2025 02:12:11 -0700 (PDT)
 Received: from otso.local (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae0cab0ed04sm11076666b.135.2025.06.25.02.12.10
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae0cab0ed04sm11076666b.135.2025.06.25.02.12.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Jun 2025 02:12:10 -0700 (PDT)
+        Wed, 25 Jun 2025 02:12:11 -0700 (PDT)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 0/2] Add pinctrl driver for SM7635
-Date: Wed, 25 Jun 2025 11:12:00 +0200
-Message-Id: <20250625-sm7635-pinctrl-v1-0-ebfa9e886594@fairphone.com>
+Date: Wed, 25 Jun 2025 11:12:01 +0200
+Subject: [PATCH 1/2] dt-bindings: pinctrl: document the SM7635 Top Level
+ Mode Multiplexer
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,10 +85,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAGC9W2gC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDMyMD3eJcczNjU92CzLzkkqIcXcu0VOMUCzNLYxOzJCWgpoKi1LTMCrC
- B0bG1tQA6kYpdYAAAAA==
-X-Change-ID: 20250620-sm7635-pinctrl-9fe3d869346b
+Message-Id: <20250625-sm7635-pinctrl-v1-1-ebfa9e886594@fairphone.com>
+References: <20250625-sm7635-pinctrl-v1-0-ebfa9e886594@fairphone.com>
+In-Reply-To: <20250625-sm7635-pinctrl-v1-0-ebfa9e886594@fairphone.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -96,33 +97,162 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1750842730; l=737;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1750842730; l=5132;
  i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=3rLRX3HD+/2dBnPJ5VcY6hbzIV3hWOdMQ6LQve48/v0=;
- b=KzTL/Z/wD17NRYxyIrHXpQRPy8zNXoOYDCUaeDvp5VN57JpWxhNksgX6aQZmwOrPoKPeY2t3l
- LqJm7ikR6sRAWuBNm0KJLJUi0Bz0UxmeH6pF6k24fbzK17kWZufq8Pe
+ bh=RaRzw6dXCJL2a9k5hvxU0+bR/+k0pdf+af8dr1rsdY0=;
+ b=Hw4UUO+Dq6YorSBTgZPlUoorQaQ2mlwSLSDO9Ph86H3s4P6a7+aH/XwyLuYm33n1h9EJeLjX/
+ 33d+KDe+oPPCv4aX03HOvAG+DecuEwnEvzFgih8PKN1UrGiuLj/vOHX
 X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
  pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-Document and add the pinctrl driver for the SM7635 SoC.
+Document the Top Level Mode Multiplexer on the SM7635 Platform.
 
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
-Luca Weiss (2):
-      dt-bindings: pinctrl: document the SM7635 Top Level Mode Multiplexer
-      pinctrl: qcom: Add SM7635 pinctrl driver
+ .../bindings/pinctrl/qcom,sm7635-tlmm.yaml         | 133 +++++++++++++++++++++
+ 1 file changed, 133 insertions(+)
 
- .../bindings/pinctrl/qcom,sm7635-tlmm.yaml         |  133 ++
- drivers/pinctrl/qcom/Kconfig.msm                   |    8 +
- drivers/pinctrl/qcom/Makefile                      |    1 +
- drivers/pinctrl/qcom/pinctrl-sm7635.c              | 1340 ++++++++++++++++++++
- 4 files changed, 1482 insertions(+)
----
-base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
-change-id: 20250620-sm7635-pinctrl-9fe3d869346b
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm7635-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm7635-tlmm.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..3f49239efb6e866015b40e3477a8bd0edd21b1fc
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm7635-tlmm.yaml
+@@ -0,0 +1,133 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/qcom,sm7635-tlmm.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Technologies, Inc. SM7635 TLMM block
++
++maintainers:
++  - Luca Weiss <luca.weiss@fairphone.com>
++
++description:
++  Top Level Mode Multiplexer pin controller in Qualcomm SM7635 SoC.
++
++allOf:
++  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
++
++properties:
++  compatible:
++    const: qcom,sm7635-tlmm
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  gpio-reserved-ranges:
++    minItems: 1
++    maxItems: 84
++
++  gpio-line-names:
++    maxItems: 167
++
++patternProperties:
++  "-state$":
++    oneOf:
++      - $ref: "#/$defs/qcom-sm7635-tlmm-state"
++      - patternProperties:
++          "-pins$":
++            $ref: "#/$defs/qcom-sm7635-tlmm-state"
++        additionalProperties: false
++
++$defs:
++  qcom-sm7635-tlmm-state:
++    type: object
++    description:
++      Pinctrl node's client devices use subnodes for desired pin configuration.
++      Client device subnodes use below standard properties.
++    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
++    unevaluatedProperties: false
++
++    properties:
++      pins:
++        description:
++          List of gpio pins affected by the properties specified in this
++          subnode.
++        items:
++          oneOf:
++            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-5][0-9]|16[0-7])$"
++            - enum: [ ufs_reset, sdc2_clk, sdc2_cmd, sdc2_data ]
++        minItems: 1
++        maxItems: 36
++
++      function:
++        description:
++          Specify the alternative function to be configured for the specified
++          pins.
++        enum: [ gpio, aoss_cti, atest_char, atest_usb, audio_ext_mclk0,
++                audio_ext_mclk1, audio_ref_clk, cam_mclk, cci_async_in0,
++                cci_i2c_scl, cci_i2c_sda, cci_timer, coex_uart1_rx,
++                coex_uart1_tx, dbg_out_clk, ddr_bist_complete, ddr_bist_fail,
++                ddr_bist_start, ddr_bist_stop, ddr_pxi0, ddr_pxi1, dp0_hot,
++                egpio, gcc_gp1, gcc_gp2, gcc_gp3, host2wlan_sol, i2s0_data0,
++                i2s0_data1, i2s0_sck, i2s0_ws, ibi_i3c, jitter_bist, mdp_vsync,
++                mdp_vsync0_out, mdp_vsync1_out, mdp_vsync2_out, mdp_vsync3_out,
++                mdp_vsync_e, nav_gpio0, nav_gpio1, nav_gpio2, pcie0_clk_req_n,
++                pcie1_clk_req_n, phase_flag, pll_bist_sync, pll_clk_aux,
++                prng_rosc0, prng_rosc1, prng_rosc2, prng_rosc3, qdss_cti,
++                qdss_gpio, qlink0_enable, qlink0_request, qlink0_wmss,
++                qlink1_enable, qlink1_request, qlink1_wmss, qspi0, qup0_se0,
++                qup0_se1, qup0_se2, qup0_se3, qup0_se4, qup0_se5, qup0_se6,
++                qup1_se0, qup1_se1, qup1_se2, qup1_se3, qup1_se4, qup1_se5,
++                qup1_se6, resout_gpio_n, sd_write_protect, sdc1_clk, sdc1_cmd,
++                sdc1_data, sdc1_rclk, sdc2_clk, sdc2_cmd, sdc2_data,
++                sdc2_fb_clk, tb_trig_sdc1, tb_trig_sdc2, tgu_ch0_trigout,
++                tgu_ch1_trigout, tmess_prng0, tmess_prng1, tmess_prng2,
++                tmess_prng3, tsense_pwm1, tsense_pwm2, uim0_clk, uim0_data,
++                uim0_present, uim0_reset, uim1_clk_mira, uim1_clk_mirb,
++                uim1_data_mira, uim1_data_mirb, uim1_present_mira,
++                uim1_present_mirb, uim1_reset_mira, uim1_reset_mirb, usb0_hs,
++                usb0_phy_ps, vfr_0, vfr_1, vsense_trigger_mirnat, wcn_sw,
++                wcn_sw_ctrl ]
++
++    required:
++      - pins
++
++required:
++  - compatible
++  - reg
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    tlmm: pinctrl@f100000 {
++        compatible = "qcom,sm7635-tlmm";
++        reg = <0x0f100000 0x300000>;
++
++        interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
++
++        gpio-controller;
++        #gpio-cells = <2>;
++
++        interrupt-controller;
++        #interrupt-cells = <2>;
++
++        gpio-ranges = <&tlmm 0 0 168>;
++
++        gpio-wo-state {
++            pins = "gpio1";
++            function = "gpio";
++        };
++
++        qup-uart5-default-state {
++            pins = "gpio25", "gpio26";
++            function = "qup0_se5";
++            drive-strength = <2>;
++            bias-disable;
++        };
++    };
++...
 
-Best regards,
 -- 
-Luca Weiss <luca.weiss@fairphone.com>
+2.50.0
 
 
