@@ -1,223 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-62554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90876AE8DEE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 21:07:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 005D9AE8E54
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 21:17:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 167E91C23E38
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 19:08:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 14C253A847D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 19:16:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC9022FD87A;
-	Wed, 25 Jun 2025 18:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32CF82DAFA8;
+	Wed, 25 Jun 2025 19:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="E0kPB7le"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FA/FL83a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1192FCFE9
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 18:59:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DDA2D660E;
+	Wed, 25 Jun 2025 19:16:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750877969; cv=none; b=ld/0ogOM8tmMrsyG1/f90IEQSb71fzTG+EBD2jjIijtwDDuwpq8HGEo6hR1BNaKWGI67g5kanayWdDcivGc+qEij1PjX4KurVpoZT02fodtPahJESahKsIRDgV4dS7TbKPID/4ojRk5JOyY6QY2rmc2rEteCKKT+N+ct/LqFLKA=
+	t=1750878987; cv=none; b=U4LyPL8a2vOGt1TyF1KuHKln0C9qyYlbxMaYE5RDq9R8hd2UbqqJBw2KJW5t8VDHh6c62A9hbJ+pKT9yYBmIb757+y6LKngBCm5Mic1auVlbEg10Bzh9DckEFAk9MOezKyEtk/XvqEK/7tHAivYV144ka9jmUKG7DtMcUles6gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750877969; c=relaxed/simple;
-	bh=FgISdIgca1xXqXP2FH+qblBtIUVIylfyUHamP1YgR0E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q1akHGF3Jlx/uMrSp2p56D60Y+qDvoUNrMmbgD5Mjmu0ySSbtSY330lBjlOQZcVNpSDfQDG6cF/50Q09QCdeJFsEze5VpwJl2QxC60krFKRQhCpEM3BXa49KtpAVX33trx+n6SDTCE3nTTvko/E78KCpMsK6TJvQDhHofogbECk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=E0kPB7le; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55PAIEpL022517
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 18:59:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=xpH5LnDLqPp
-	lqQDe5uMXBSo64o86rKmUu4KIOqTfDTg=; b=E0kPB7ler9H1XBVaItMKmLw/Uiw
-	GZPTqVMbhrNYg5mBLE8RcJs1k2duI4GjZrT0T9UxFKB2MkOYVtMXH+UTWjyHuhbK
-	eS+60esDczZG8Luu8n1apcCt72moc80lqTvhoQHVxTB2S8t3j7aJX/DkE6y3t94U
-	ypIok3jQYHQwZ62nYPKvIe7nNFxbJdwA3eVFNii40nAL4W0me/3JSYPuWRNTQKkv
-	pCnXgXEHiwsvc0jwYv7af39KnbAqllxu5WvsuYDJfvz/jvanN/6P40Sg1u0L7xfK
-	LHQqK7Ur5sBADG5nflWzM97/OFdyCY8ywTXMhrYhfaHlTgho5kTvM7/m8qQ==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f2rq15d4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 18:59:26 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-235f6b829cfso1038555ad.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 11:59:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750877965; x=1751482765;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xpH5LnDLqPplqQDe5uMXBSo64o86rKmUu4KIOqTfDTg=;
-        b=iEQr/vWH6We366rSJAaPkF2R4vV14SeSNBrEAQdQMl4XufGFQPUA8ttfREannoCvo+
-         ZQahlvRz9Nm9eo9rc+Ybzi/bEJcyn1HifXfS2zq66U2nUjD6lez0o83kaK4p1ZwepMfC
-         9GhmXJ5R13gClVT78W4B4Gy153nzi3HDoxbS2iMPUfqj3BvCg4phdM8fB2Yd0oAbR5ST
-         ggdnB/hWZKtP/Lb6aS+kp8hzrpDDS+f3lHV5pFz1CNF0baAzHkvgfD8dVIBxITT1ttGm
-         Ru4uT3DkxuY4sW+aSAKP3n7iVV2asxVfKh98A77hF4RhUR54KWLrTNgUPWBbF7ZNIzxh
-         99tw==
-X-Gm-Message-State: AOJu0Yz8+I4NX274BD/kt4Jo1pTxksGguL7WKZHndUbMZ3jf3qg3Yrb6
-	5U5+P+YEsAWZvooI8p+hWn6H7/sVM/pHere9yY/PlU6tKNCV8enPKHCN/dmrwrVZfPAJKZL+UBa
-	S4KlSPUInBFXssXNZGNE8zAwUvA7S8XmX12FMbISmrT8y65cfcKjzYLWFlayQfOHr5anU
-X-Gm-Gg: ASbGncscAiFWxZG1PmylUX4GLiaiSApQJ9eHiMGkdkGvD7e6AYD/pwSAsTWfw4PibPo
-	dqGBc8I/T96Ya+W9qjVf9Epju3otj2LqN9IVJGWUtQadAwP8q/bnCbk/FnoPP9ZkWRTCGEF30vi
-	61x92nmBsm7e9ZAMVT5HF3vRhuFnM4JJNgGG46hjTJST3RyvI4M+ufaBLbwlaJVSiiD9ADT2cqh
-	woIbRDVAMjphUUc6zBoTDqwpAYUkry7gHzWsABIqEW9pwq45FtbPwuZIZEfJ8Q3mfHtc1oLLo2H
-	lG8fPEEkWrmgM/+w0VLVvPwoXoF5UxJs
-X-Received: by 2002:a17:902:e88a:b0:236:9726:7261 with SMTP id d9443c01a7336-2382404d970mr68388435ad.39.1750877965183;
-        Wed, 25 Jun 2025 11:59:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGtVUuEZYb41RLKeTVjavf65tKB8NX8TxZxdhFwSQPFNvRi5z1jUVtVE9kmMQW87zfFtvY+yg==
-X-Received: by 2002:a17:902:e88a:b0:236:9726:7261 with SMTP id d9443c01a7336-2382404d970mr68388205ad.39.1750877964797;
-        Wed, 25 Jun 2025 11:59:24 -0700 (PDT)
-Received: from localhost ([2601:1c0:5000:d5c:5b3e:de60:4fda:e7b1])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d8680b07sm143765655ad.182.2025.06.25.11.59.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Jun 2025 11:59:24 -0700 (PDT)
-From: Rob Clark <robin.clark@oss.qualcomm.com>
-To: dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Connor Abbott <cwabbott0@gmail.com>,
-        Antonino Maniscalco <antomani103@gmail.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v7 42/42] drm/msm: Add VM_BIND throttling
-Date: Wed, 25 Jun 2025 11:47:35 -0700
-Message-ID: <20250625184918.124608-43-robin.clark@oss.qualcomm.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250625184918.124608-1-robin.clark@oss.qualcomm.com>
-References: <20250625184918.124608-1-robin.clark@oss.qualcomm.com>
+	s=arc-20240116; t=1750878987; c=relaxed/simple;
+	bh=jQ6meuQJB7EAkIgLMqxwrSHNKFvoSijnin1Z/61bJus=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MoZkLKIfL4m9YVLds0SftTCVeW9h/NhZy+/+xVL/R4uxxvCFIjIjTr6ZsOOW6eKVWCL0Q0qR/+MrC5LZGxzR+UTxu+E6Acw3ZSjKZC5f0CSCpHqUkxKGyDD/TNqlwJj4tghsnhjZsvBrH/7goYOpzRBfNA4u4umUuY4kVEE5x88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FA/FL83a; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1750878985; x=1782414985;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=jQ6meuQJB7EAkIgLMqxwrSHNKFvoSijnin1Z/61bJus=;
+  b=FA/FL83aA+RpaGRoyKYQe8Ovykv+IC1jLgXgdO8dNmRFodAMAiRdaN2y
+   U51yX3DJXopYXkJNy6gE+3YBTEjuEVe+rUr03tqC2D1npyT190MeZWSQo
+   dpDLip262afZsx0g+rtE8EiahIWVksp2kVzx+AHI89KfOr6j5lEZkqD1n
+   jyr/B8GhcLxG6zp9zMVdE1JYjtGSJmmByupqr0yFQtwZMu9KreKqSqVvd
+   lkkbQIk2olnhH2WQJwbMW81AN7WWXal7wlAe3ReUJT+DX42vsNYGb8oaK
+   ridnYYyCHCNFb2F4ZpN68HM/GcyQMZHmpJNMuru6Q8umLnNeOCIYWEg+W
+   w==;
+X-CSE-ConnectionGUID: HvMehxhzRhOnZUXyR4WYUQ==
+X-CSE-MsgGUID: wmW+hECQQIm3Z1ttJMqFTA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="52280289"
+X-IronPort-AV: E=Sophos;i="6.16,265,1744095600"; 
+   d="scan'208";a="52280289"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jun 2025 12:16:24 -0700
+X-CSE-ConnectionGUID: DiGq+pIDQrWqFy1yzVRG6g==
+X-CSE-MsgGUID: NNEVO8+jQdi+eQljjP0tqw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,265,1744095600"; 
+   d="scan'208";a="157800608"
+Received: from lkp-server01.sh.intel.com (HELO e8142ee1dce2) ([10.239.97.150])
+  by fmviesa004.fm.intel.com with ESMTP; 25 Jun 2025 12:16:18 -0700
+Received: from kbuild by e8142ee1dce2 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uUVbU-000TQO-28;
+	Wed, 25 Jun 2025 19:16:16 +0000
+Date: Thu, 26 Jun 2025 03:15:55 +0800
+From: kernel test robot <lkp@intel.com>
+To: Ziyue Zhang <quic_ziyuzhan@quicinc.com>, andersson@kernel.org,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, jingoohan1@gmail.com, mani@kernel.org,
+	lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com,
+	johan+linaro@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+	neil.armstrong@linaro.org, abel.vesa@linaro.org, kw@linux.com
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
+	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+	Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Subject: Re: [PATCH v3 1/3] PCI: qcom: Add equalization settings for 8.0 GT/s
+Message-ID: <202506260310.BUxJgnmS-lkp@intel.com>
+References: <20250625085801.526669-2-quic_ziyuzhan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=NdDm13D4 c=1 sm=1 tr=0 ts=685c470e cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=xqWC_Br6kY4A:10 a=6IFa9wvqVegA:10
- a=EUspDBNiAAAA:8 a=9ew1I-5mWBoiHqGEK3IA:9 a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDE0MyBTYWx0ZWRfXx+g5pWo0d9VZ
- kHIEHzMfAZORYVbK4rLwl+8DtGKdbxw4X6TyRWFTMjJoUKW34XHLl2be6UttrKneyby2vStCYmQ
- 0XPr9QVVm99dChroMuf9bOksCVprEFf2S4k3LkZFTyxsOGk39i1mV+Li2AtO56akNg4xdrXNeWd
- p3vOhaDTs0CyYaP9fgcfrmeoe8Rf0p0boftGkYkov22vxE605zbNBfj5SL7VIZbxsj+jWBiIKRJ
- UJEhjSYY6lIwWT2mbfGj4okEEX3bgy0Sfbon35tjLUH+pBLKeMUc+93EUjZo6cSISlUQW2G8vHo
- VbRQBolJ+t5neNFV1Nfgq7cLvZ0f0eQQCABF6nGv74kyNDiJ0mIuUiPGbpf+dHfCseOSi+vJFU0
- +K6EIGXRHP/90hg4hWBPYJVg3Go/B5ajcdmuIqpJzb4hWtRDMCXRClpkxzwDI3KZDeE4ME2V
-X-Proofpoint-ORIG-GUID: ERUZ2TLfrH1gOPo_IBqdRs4rWIOxWCVo
-X-Proofpoint-GUID: ERUZ2TLfrH1gOPo_IBqdRs4rWIOxWCVo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-25_06,2025-06-25_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
- phishscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=999 adultscore=0
- clxscore=1015 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506250143
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250625085801.526669-2-quic_ziyuzhan@quicinc.com>
 
-A large number of (unsorted or separate) small (<2MB) mappings can cause
-a lot of, probably unnecessary, prealloc pages.  Ie. a single 4k page
-size mapping will pre-allocate 3 pages (for levels 2-4) for the
-pagetable.  Which can chew up a large amount of unneeded memory.  So add
-a mechanism to put an upper bound on the # of pre-alloc pages.
+Hi Ziyue,
 
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/msm_gem_vma.c | 23 +++++++++++++++++++++--
- drivers/gpu/drm/msm/msm_gpu.h     |  3 +++
- 2 files changed, 24 insertions(+), 2 deletions(-)
+kernel test robot noticed the following build warnings:
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-index 907ebf5073e6..bb3a6e8320c9 100644
---- a/drivers/gpu/drm/msm/msm_gem_vma.c
-+++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-@@ -705,6 +705,8 @@ msm_vma_job_free(struct drm_sched_job *_job)
- 
- 	mmu->funcs->prealloc_cleanup(mmu, &job->prealloc);
- 
-+	atomic_sub(job->prealloc.count, &job->queue->in_flight_prealloc);
-+
- 	drm_sched_job_cleanup(_job);
- 
- 	job_foreach_bo (obj, job)
-@@ -1089,10 +1091,11 @@ ops_are_same_pte(struct msm_vm_bind_op *first, struct msm_vm_bind_op *next)
-  * them as a single mapping.  Otherwise the prealloc_count() will not realize
-  * they can share pagetable pages and vastly overcount.
-  */
--static void
-+static int
- vm_bind_prealloc_count(struct msm_vm_bind_job *job)
- {
- 	struct msm_vm_bind_op *first = NULL, *last = NULL;
-+	int ret;
- 
- 	for (int i = 0; i < job->nr_ops; i++) {
- 		struct msm_vm_bind_op *op = &job->ops[i];
-@@ -1121,6 +1124,20 @@ vm_bind_prealloc_count(struct msm_vm_bind_job *job)
- 
- 	/* Flush the remaining range: */
- 	prealloc_count(job, first, last);
-+
-+	/*
-+	 * Now that we know the needed amount to pre-alloc, throttle on pending
-+	 * VM_BIND jobs if we already have too much pre-alloc memory in flight
-+	 */
-+	ret = wait_event_interruptible(
-+			to_msm_vm(job->vm)->sched.job_scheduled,
-+			atomic_read(&job->queue->in_flight_prealloc) <= 1024);
-+	if (ret)
-+		return ret;
-+
-+	atomic_add(job->prealloc.count, &job->queue->in_flight_prealloc);
-+
-+	return 0;
- }
- 
- /*
-@@ -1411,7 +1428,9 @@ msm_ioctl_vm_bind(struct drm_device *dev, void *data, struct drm_file *file)
- 	if (ret)
- 		goto out_unlock;
- 
--	vm_bind_prealloc_count(job);
-+	ret = vm_bind_prealloc_count(job);
-+	if (ret)
-+		goto out_unlock;
- 
- 	struct drm_exec exec;
- 	unsigned flags = DRM_EXEC_IGNORE_DUPLICATES | DRM_EXEC_INTERRUPTIBLE_WAIT;
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 31b83e9e3673..5508885d865f 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -555,6 +555,8 @@ static inline int msm_gpu_convert_priority(struct msm_gpu *gpu, int prio,
-  *             seqno, protected by submitqueue lock
-  * @idr_lock:  for serializing access to fence_idr
-  * @lock:      submitqueue lock for serializing submits on a queue
-+ * @in_flight_prealloc: for VM_BIND queue, # of preallocated pgtable pages for
-+ *             queued VM_BIND jobs
-  * @ref:       reference count
-  * @entity:    the submit job-queue
-  */
-@@ -569,6 +571,7 @@ struct msm_gpu_submitqueue {
- 	struct idr fence_idr;
- 	struct spinlock idr_lock;
- 	struct mutex lock;
-+	atomic_t in_flight_prealloc;
- 	struct kref ref;
- 	struct drm_sched_entity *entity;
- 
+[auto build test WARNING on e04c78d86a9699d136910cfc0bdcf01087e3267e]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Ziyue-Zhang/PCI-qcom-Add-equalization-settings-for-8-0-GT-s/20250625-170049
+base:   e04c78d86a9699d136910cfc0bdcf01087e3267e
+patch link:    https://lore.kernel.org/r/20250625085801.526669-2-quic_ziyuzhan%40quicinc.com
+patch subject: [PATCH v3 1/3] PCI: qcom: Add equalization settings for 8.0 GT/s
+config: i386-buildonly-randconfig-002-20250626 (https://download.01.org/0day-ci/archive/20250626/202506260310.BUxJgnmS-lkp@intel.com/config)
+compiler: clang version 20.1.7 (https://github.com/llvm/llvm-project 6146a88f60492b520a36f8f8f3231e15f3cc6082)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250626/202506260310.BUxJgnmS-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202506260310.BUxJgnmS-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/pci/controller/dwc/pcie-qcom-common.c:15:17: warning: unused variable 'dev' [-Wunused-variable]
+      15 |         struct device *dev = pci->dev;
+         |                        ^~~
+   1 warning generated.
+
+
+vim +/dev +15 drivers/pci/controller/dwc/pcie-qcom-common.c
+
+    10	
+    11	void qcom_pcie_common_set_equalization(struct dw_pcie *pci)
+    12	{
+    13		u32 reg;
+    14		u16 speed, max_speed = PCIE_SPEED_16_0GT;
+  > 15		struct device *dev = pci->dev;
+    16	
+    17		/*
+    18		 * GEN3_RELATED_OFF register is repurposed to apply equalization
+    19		 * settings at various data transmission rates through registers namely
+    20		 * GEN3_EQ_*. The RATE_SHADOW_SEL bit field of GEN3_RELATED_OFF
+    21		 * determines the data rate for which these equalization settings are
+    22		 * applied.
+    23		 */
+    24		if (pcie_link_speed[pci->max_link_speed] < PCIE_SPEED_32_0GT)
+    25			max_speed = pcie_link_speed[pci->max_link_speed];
+    26	
+    27		for (speed = PCIE_SPEED_8_0GT; speed <= max_speed; ++speed) {
+    28			reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+    29			reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
+    30			reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
+    31			reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK,
+    32				  speed - PCIE_SPEED_8_0GT);
+    33			dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
+    34	
+    35			reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
+    36			reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
+    37				GEN3_EQ_FMDC_N_EVALS |
+    38				GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
+    39				GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
+    40			reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
+    41				FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
+    42				FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
+    43				FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
+    44			dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
+    45	
+    46			reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
+    47			reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
+    48				GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
+    49				GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
+    50				GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
+    51			dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
+    52		}
+    53	}
+    54	EXPORT_SYMBOL_GPL(qcom_pcie_common_set_equalization);
+    55	
+
 -- 
-2.49.0
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
