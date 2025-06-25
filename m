@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-62405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23B7BAE7EA4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 12:10:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AFC9CAE7EB7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 12:12:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9F3E0170414
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 10:10:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2275C5A3116
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 10:10:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 012652BD028;
-	Wed, 25 Jun 2025 10:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B77D32BEFF0;
+	Wed, 25 Jun 2025 10:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XUJ8xRxC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X/LrXKFY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACAC2BCF75
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 10:08:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FE82D1F5E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 10:09:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750846135; cv=none; b=flDoWJSUsCMG4IdFXNaODGysKf/AHsmMLcpM47EL6Jj8IsJnfHClZ5IgP2bV88vhjXGjzzRY5tcTE35I23mZf5jjXyJ3fxCIhFs9PvtiF4um5LfJ1jxf971DjGoGTZxOe1U8nORD3BAKldmGmgaXn6L0f9Ex+QpAjkRwOF1cv5Q=
+	t=1750846152; cv=none; b=ZgIiIA6goLGTomVEb1aE6adpbWtCaAzm8xMY7xmxAGjK2R7jtFH0UfVga1d21/F99fKM5BaxWw9CeURUxOgQXhQkA7bpewuPk3IKKDGa4KXu2rNaZOaNmHic5azGm9FXKuE1Imh9BOIyGEt/cmz2vaHY2QyjGiw+6wnAJkJTs3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750846135; c=relaxed/simple;
-	bh=mibwjvXWkICAj+vwkb1PpjhKmioX5JKsmZ6lo8UyaBs=;
+	s=arc-20240116; t=1750846152; c=relaxed/simple;
+	bh=+b9zYn+YDjgLsmryvBl9enpC15lgjBxwjtFuR9w5viU=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=UQsDgnvLwI9NIeRbtgbHDFY7PhQbxMsuHZzf79mQ3AWw/VZbQsgvDH6BSkDDjrqfZbhzMdHBRsTVuXfRNrIBPcjTNagT+OXOSSoGUMnLPPE/aaNYu3AyKRQpiQXepA9t/ckq21SX1yeLbliq2+kpwqtOgEJflqi2oMZDjK1n/EQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XUJ8xRxC; arc=none smtp.client-ip=209.85.128.53
+	 In-Reply-To:Content-Type; b=olcbUl9Ei2hs04RXJq3THBwu7Z5orXf2yt28hWt00Ml5NB3tyStS1lJ8/R/OapSIs8KC4z2Uv6XChIFStYPJav3eFuNctoNkAz5310uX+jkFMT/GuSFBF3HvGp2oMyXu+X1UKhUELldTZPiIEosZhkRamUh1QiAWQB8pVuOKfdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X/LrXKFY; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-451d3f72391so57005695e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 03:08:53 -0700 (PDT)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-450cf0120cdso49264735e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 03:09:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750846132; x=1751450932; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1750846149; x=1751450949; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=J2a8kk6PcZkE03rGmBEJWejxQtEjJ7yXfgEnoE7M2mA=;
-        b=XUJ8xRxCTAvOqsfssmT7WH+ikFnFRqDhsSZsQmbGiDkNl3rJkLU4VZ7dPHhZmkA7NV
-         Ma0URgGv+6/HueM7M302frj3Li2nKOqrP2gds512MyhdWnbNCO4aEDolTA4HdxzYIfNq
-         09OJ27d/AiJ/Dd/UOKx5xB6e/SuNeHfE1w0/ChIx6ojIGvm/eu26sCe5HJWb9tlW5XqZ
-         toguA6D9Zq9GG4hS0a0qLLfs9yqWH7Nw1q5ijtHdO/QRiAiRGzQ1ebBQczMBLGc4GUT3
-         nqL5TiSujTRleoZcA4UOcz+glKIBH/8xY6S4PhUTLbEWGdWmZcBlDksGcDhIIWrgQELD
-         znsQ==
+        bh=qneQjY3X2Jd798VANcewut/m2Zfu0vnaEkQ6ercd+fI=;
+        b=X/LrXKFYapYihJCfYS/pUegA8azbNHtvE24vseQoTN2LbL0J2G9yC8TX9CJoe7PB55
+         9SD76BFXTlW7cyEMXf7ei6RcqKeAbZatDu84M5iZ7duKxx7yM1Mt+pCxlx+R498NQXyn
+         nsaTb+ua3vudSIQa1Xr/1NSWoURaX8LzWxeB7l8pFE+TninSgUJJ2MDh8OX44EIIayLe
+         REPpN2+K1fDDQkT9cbqsQshemvCNKYA2q4X0F3dc4elsGJ1PRCRTk26TAS0oBVUuIxsc
+         OwUkSXb1h+qilj6vwhAcDhfsqFKLMPmUvNwSj8+etQH59/jHUEMMMEOrtsnPjS1hZjiB
+         eAQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750846132; x=1751450932;
+        d=1e100.net; s=20230601; t=1750846149; x=1751450949;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=J2a8kk6PcZkE03rGmBEJWejxQtEjJ7yXfgEnoE7M2mA=;
-        b=sQxF22pEFZjBcf+0uaFEJBE7h+Q5bSw3crAH1tgwR1bqTfb0ffK66mGMUWj/1zR9r/
-         iBxMEQKNhWIvho/tmWLWhjUni/OMGQRStyAm5fKSD+6lY7bOroCvpcbEDDYzX8hV4LbU
-         x9TRgtgCLZnvwMoHJ0o3OHCx95XVZaF8LJA6ihHebaIF4BIhPBg0xr7IXmwvU2Y75oqS
-         OgJqEgC9k3dOll4gKB6QBWtelsMR8QLSeimk93ZlkJzpv+9lvQB5yloZ/zqFGrw7pCcC
-         gbzwKjr66h3XYz5efwYLTOcOvsVt3l673V0/tyNAo7PjkoaoHK8g3OC/hjkyLj3zTtQc
-         XV/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVjMzu5RbXU8LQp7Z3RYjTUiqKxIhNxm6lRnDWG/g6wYp26NNP7E1LOFwdS6kLRE32tR6YIzAdUWu/ThcKb@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyr+XQB5oyS/8DrbI+tftlDt+dBEBFBxiR71zwLNWUAuMcK6Vg0
-	q0yq0zS4KApdJY3hHhsCkZz1+Cq/aue84FmNZQKhKlBYbOLgPgJG/OgXBBmSweMKvng=
-X-Gm-Gg: ASbGnctRd5+M/xStD8TDHblQnL60IFPAaew3LaOS9npw7osar6lBzJV2WEoxM7aXSet
-	DYjCqkwtLT9Xf1GLrHCqhGispVPfSe1d3/T76EKcqhlSVQ3PFQRkWc+G7weNFJmPx/XCbxFYVRo
-	CP3JqEcBQeI12788eB6mw29CVU0lowsVqoW99UgK7hgHRRpB61FYSQ1X8QwlOJf2gkVT5lJUO3T
-	1TQnjiJ7odrykYTBVL2qCv7yYkJxwZi0tkHjrBiJg1TaS78nA+rjMoIg4huya3vVtwn3tiyDazl
-	w6Xs+yfshbCRoIi+gv8Lj8JNdEwMUta0Jktoog+WBXQS8IBvTa8ByTBwn95LZOYpI8vaBhaUKF3
-	m/cGUqnMwKVsNYtQPYE2YS8rmYt1Xcm7jigiz
-X-Google-Smtp-Source: AGHT+IFJiC0S9QOgaQ2ScQ4U+1EQS39LaD4dPukyAK+89YpzNHu/8nXo31VXa8/vKLOYfbh15deE2A==
-X-Received: by 2002:a05:600c:154e:b0:44a:b478:1387 with SMTP id 5b1f17b1804b1-45381ae3576mr25646825e9.17.1750846132470;
-        Wed, 25 Jun 2025 03:08:52 -0700 (PDT)
+        bh=qneQjY3X2Jd798VANcewut/m2Zfu0vnaEkQ6ercd+fI=;
+        b=GGIKlodvMOw8iR5nlKlJg0epqRbdCVjGgQqx2U7jFJhs07oMg3t+T3NjT1zsXawEQ2
+         YsdU95zG7yt/y0GjXAVVJaUAddr/4CX/scT4ExUlf1w7kR8tvQUDgWyhA7IkX1eaYATP
+         98Bz14PVxRpkVBT2bJp7KJJ9VEU7ApBYmfSVuL3x502ZyDNACB2RQMxIAwKFbunmjjE3
+         0CzbQMMB0jZXJu+GCyleuIIL895UDjvSZzICSLfM3EsdbIoRoufk4sUVVVjaanYOB3yd
+         T+1ucHqUsLCZ0og/xf2wJMI0i0rVEBnuEk/GJjiAP320APGuwOqcL6vifbUhbhT8Sa1H
+         5F8w==
+X-Forwarded-Encrypted: i=1; AJvYcCXd7QfJZ2xvgTKFdQPC3pbMzbdAudqK9sULe66XHmOVlsZk2NguQ6Nx4xWfzL3TMrvzvi6q+32X01uSTuY2@vger.kernel.org
+X-Gm-Message-State: AOJu0YwmG9r/xvsNezXVztfxnSjT7y7qe8PTR0sZKkqK5zugex9dAAum
+	4soJA4y7ILijZOEAcFrxIUWZKuv8Qrn0WQhoOHL6HrDTRZ7ln8H9DsRDSZ+jvPPGchA=
+X-Gm-Gg: ASbGnctFL9EZNFqy/EY7ezGyiCOaEGDCoo0YqEGmwE6D+xuH9OVFUNXzk/BDZF+sxJG
+	aOgEckYX5aYe3yxwm4JNuhOO2fJ3t9Xvw0FcZUaC0IhQ88nkssfWL9PZp3fUUVWEe1zuExbPvvH
+	8+j/Ntj66DAci3Jgn8Fko5/ISJSVaysv0rUwIDJxSn7XB/uAy5H4Zw3n6V11qcRM+D/naMkQhFU
+	7/NT4tt0/lae7nx0bzkbnZpivVdjo2ElftL2oO/boh84a/IN3Do6W2JtMCtcibmYiPedOejTJAy
+	v3hF4kKmJMXDg1Ts2JaMw9CzNOol4Z1GebFHSuOJbzZXxMgvYXcP7B8PFoQxmJJApB/qzvri19H
+	d0dGjcJYotyp6MkLbErkPUU9UBXFYCRtOIiNo
+X-Google-Smtp-Source: AGHT+IHnmTs+UY1GFEyjpH83eIaDxqFLZZxp8pZ7AF1bA5Pj3W8QC4Vs1NPzVLgo390Ifg/6DfCTDQ==
+X-Received: by 2002:a05:600c:34d5:b0:442:f97b:87e with SMTP id 5b1f17b1804b1-45381aa54a4mr19922005e9.6.1750846148895;
+        Wed, 25 Jun 2025 03:09:08 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:3d9:2080:b3df:bee7:215:e1a4? ([2a01:e0a:3d9:2080:b3df:bee7:215:e1a4])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a6e8068fd0sm4309576f8f.38.2025.06.25.03.08.51
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453823c42e1sm14946555e9.37.2025.06.25.03.09.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jun 2025 03:08:52 -0700 (PDT)
-Message-ID: <d923b289-1e4b-4c7c-9bec-7d0c2cbf8b86@linaro.org>
-Date: Wed, 25 Jun 2025 12:08:51 +0200
+        Wed, 25 Jun 2025 03:09:08 -0700 (PDT)
+Message-ID: <052364dd-743f-471b-b420-c9cd6bbc207c@linaro.org>
+Date: Wed, 25 Jun 2025 12:09:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,8 +86,8 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 2/4] phy: qualcomm: phy-qcom-eusb2-repeater: Support
- tune-res-fsdif prop
+Subject: Re: [PATCH 4/4] phy: qualcomm: phy-qcom-eusb2-repeater: Add support
+ for PMIV0104
 To: Luca Weiss <luca.weiss@fairphone.com>, Vinod Koul <vkoul@kernel.org>,
  Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -96,7 +96,7 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250625-sm7635-eusb-repeater-v1-0-19d85541eb4c@fairphone.com>
- <20250625-sm7635-eusb-repeater-v1-2-19d85541eb4c@fairphone.com>
+ <20250625-sm7635-eusb-repeater-v1-4-19d85541eb4c@fairphone.com>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -123,33 +123,50 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20250625-sm7635-eusb-repeater-v1-2-19d85541eb4c@fairphone.com>
+In-Reply-To: <20250625-sm7635-eusb-repeater-v1-4-19d85541eb4c@fairphone.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 25/06/2025 11:14, Luca Weiss wrote:
-> Support reading the FS Differential TX Output Resistance Tuning from
-> devicetree and writing the register, as required on some boards.
+> Add support for the eUSB2 repeater found on the PMIV0104. There is no
+> default init table for this PMIC, just the board-specific tuning
+> parameters are used on top of the default tuning values.
 > 
 > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->   drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c | 3 +++
->   1 file changed, 3 insertions(+)
+>   drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
 > 
 > diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-> index d7493c2294ef23e37e484019a49ddf7b3d6a6a46..61594739e5b12706775622e1f76af6ad5d2d29bf 100644
+> index 61594739e5b12706775622e1f76af6ad5d2d29bf..3d4cdc4c18becd8efd5015e698b836ad4d7cf18c 100644
 > --- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
 > +++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-> @@ -136,6 +136,9 @@ static int eusb2_repeater_init(struct phy *phy)
->   	if (!of_property_read_u8(np, "qcom,tune-usb2-preem", &val))
->   		regmap_write(regmap, base + EUSB2_TUNE_IUSB2, val);
+> @@ -82,6 +82,14 @@ static const struct eusb2_repeater_cfg pm8550b_eusb2_cfg = {
+>   	.num_vregs	= ARRAY_SIZE(pm8550b_vreg_l),
+>   };
 >   
-> +	if (!of_property_read_u8(np, "qcom,tune-res-fsdif", &val))
-> +		regmap_write(regmap, base + EUSB2_TUNE_RES_FSDIF, val);
+> +static const struct eusb2_repeater_cfg pmiv0104_eusb2_cfg = {
+> +	/* No PMIC-specific init sequence, only board level tuning via DT */
+> +	.init_tbl	= (struct eusb2_repeater_init_tbl_reg[]) {},
+> +	.init_tbl_num	= 0,
+> +	.vreg_list	= pm8550b_vreg_l,
+> +	.num_vregs	= ARRAY_SIZE(pm8550b_vreg_l),
+> +};
 > +
->   	/* Wait for status OK */
->   	ret = regmap_read_poll_timeout(regmap, base + EUSB2_RPTR_STATUS, poll_val,
->   				       poll_val & RPTR_OK, 10, 5);
+>   static const struct eusb2_repeater_cfg smb2360_eusb2_cfg = {
+>   	.init_tbl	= smb2360_init_tbl,
+>   	.init_tbl_num	= ARRAY_SIZE(smb2360_init_tbl),
+> @@ -264,6 +272,10 @@ static const struct of_device_id eusb2_repeater_of_match_table[] = {
+>   		.compatible = "qcom,pm8550b-eusb2-repeater",
+>   		.data = &pm8550b_eusb2_cfg,
+>   	},
+> +	{
+> +		.compatible = "qcom,pmiv0104-eusb2-repeater",
+> +		.data = &pmiv0104_eusb2_cfg,
+> +	},
+>   	{
+>   		.compatible = "qcom,smb2360-eusb2-repeater",
+>   		.data = &smb2360_eusb2_cfg,
 > 
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
