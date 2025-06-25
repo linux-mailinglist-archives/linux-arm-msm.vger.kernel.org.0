@@ -1,79 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-62291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2616AE79B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 10:15:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E06B7AE79B2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 10:15:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EA35D17CD08
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 08:15:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 875683AD9E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 08:14:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9799920FA96;
-	Wed, 25 Jun 2025 08:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2AC2213E74;
+	Wed, 25 Jun 2025 08:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Xrwc6/oO"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="2gGzog7T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF52720CCD8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 08:14:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D09020E007
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 08:14:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750839293; cv=none; b=JKQV5B2+czPvqcUmESdbWwH1hxZlBEuqsAXqvb7+cpWH8pW4+YH+PNfD3mh/9V8AtJRbi2LGXYNpZsrv4xgAnHE3as+gt9PJG29Il5FRJp+j0vx+4pboI+uIaHMF/IwHClGwJ1+L1HUW9T4beDhYYTUHJL3PsVpfm79Ry91DXOI=
+	t=1750839294; cv=none; b=uE4RzBjzngWhxH2PcO68YqutavRK5ATkVK9MgyJrmN4jRHPxzTZd8WAanXvNoFwroYlLmzYL70TY8yOoSsT2FQzTQlshS9Bv7nsZZAJAzShN27YY5kzy7kEn6AZO7elzdGgk2i1CXfoo3QI5qjyiFTBeA4azMB7s6LwlwQH7yVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750839293; c=relaxed/simple;
-	bh=odxAEvsjae9gg8oMLkzk/QnwYb3L7Jx3aIy9//HkUqo=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XirIEWmegtUTjh1zndpulEIrwn60RmeZG0rUxuyBV74qFCIDQfTLY6X5lGiVnelhMPCj5LmxcNQWWRDUOdFkeK0YUOADbs7tWpEUgHXchu8R8djz0JY4LpKc/S+MxCgiuQbF+lV+zpXRyYcOY/VlJTmAAil2MQuYq/4Z9mfTuGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Xrwc6/oO; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1750839294; c=relaxed/simple;
+	bh=fdB5IottOpfY3egi52zqvBVxl9fvhOG2JywIrJMbHic=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=PPaqNG5QLkvbEphuWlDJEfWMFwL2npAzlTQ9ktnHKEcdiNzFeHzTmLaCoBp7enBjniw1RivEQRvuMRWlYB0h0RebDi+jd04i98taaKMcizWAC4C4PfsdhgnlzeWzl4JPwrypUNwELHzmu5mUah+L6P+6ala7d5lhznf6VBKoO7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=2gGzog7T; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-451e2f0d9c2so4332385e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 01:14:51 -0700 (PDT)
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3a4fea34e07so667632f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 01:14:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750839290; x=1751444090; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7TXKlaJaB1mfu7CRdnCYLYciwYgyLjAklw/2jo0m4qg=;
-        b=Xrwc6/oOTYkUWAZ2DgIfp0MaIe67pqEBWtYgh2V+9KTysyzdKJKeNFhV9SEgcTaBiW
-         KuhsyqfrVbKAq/DBMK6Ttvg4V5gML5gyVlmQLgZHYyCjEaCT9bfk1gfbak1HWgf5XoCc
-         IyjTvodqoSVmGSG5uSHFhxeiR/Sb0Np9sOSTqxAMJysr1pfgN/npQPndwz60xOnrL2zV
-         kEQ9xucx6/zmhw/ja22QVqWVaQkzrLdkW/qyHHmrtG4FrEYx9py68N0R2FN/3V2BRIBQ
-         H1Jc4lMRmBVuJLwQh93YHNNkmkjakD0G9qsbKu7oVDurRI4cfKPXq1O1d2g6dducWyoC
-         UrUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750839290; x=1751444090;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750839291; x=1751444091; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7TXKlaJaB1mfu7CRdnCYLYciwYgyLjAklw/2jo0m4qg=;
-        b=SAFuKo2aPhJwmy2wG5gpI7VUaI4eNrNoC1DAncHY46DNvEm7jlagQXylhicJj8N0Y2
-         Y2Ttw7bcFWoLloVjMlEs34K2u5GRneG0Jz6Zf3BZUxpfoT5aMH1dF1cUBjKmN+hWdlaH
-         KS3KR7yLwFJnuj3UhiQd7JjLH6jokTG6yJzIX9eN9vGeva+uoHHbVqDWNfx+w1cjDqwe
-         LQF+rZJZyOG4VpJmHJNySNrfPF28qDiznJ/AB8phLIqd9cc3ncmM9rnU63rDC9JCfSCH
-         kPJZ6xQPSTQmIKa8G1tibKCMDdP2XXkUbeMqIUsmsV6/358mMeTIuucsrdCoPBVdINkp
-         Bbeg==
-X-Gm-Message-State: AOJu0Yxa3VnAM3g4YDiMTi1ZVk4yrXA6RUVne3ag5xs5U1tj8+0uMuxA
-	uC9J3AWPZFCIGv8EmyDLc77O0dY3/KMw34wif314qLSxNlSGGJymaZ0OUxACFVI8pg0=
-X-Gm-Gg: ASbGncuV2mAnF0YVX9akCrXkqg7Qfvtsrf6YVQZzwIrresLNRCC+G/PisCPZBa3TfbE
-	RLnzq9oCHIFk5Gkok/27JCSWBRyjIjg3aqNM3Fn38AX//g0ouv5p70oajosAHuHX1aIySPrJZdx
-	bOoC/DFfAAgVaZki1RIgE26XPVJ7dD+ljZD/uK59S6SqXgvL3EDL/XfYXNlIsFb0niGupyC6p4y
-	Ll7v89fSpCheNymenz2s1Xdkr8+xP4N+M3HRl8VWVboPzSLc7WAbcRRebe/YSofGQi7joEdorC2
-	RuFGVYL7TuQPSh5M3m7/ZkwkqEUC8cfny7SCZ1ryfJYke2XrnATFyQ0y
-X-Google-Smtp-Source: AGHT+IHKfY4cJplzTsHmatG1ztCvxABxeb+cv/Fg+MusXuzpeGlmKLd72ZOwYANXtvt/iRQu7AYeQQ==
-X-Received: by 2002:a05:600c:a319:b0:453:45f1:9c96 with SMTP id 5b1f17b1804b1-4537cd8e312mr47207785e9.14.1750839290242;
-        Wed, 25 Jun 2025 01:14:50 -0700 (PDT)
+        bh=ED6dhruIb+QIUuQOz9kWiIXGChQPqNuSf+7wga72VuM=;
+        b=2gGzog7TT/vdLTQRbOckKqCEeXPbmBmB8lKn+LtwH2SqvDSdgHTQlCkx0udjGSBNrN
+         4nRUSRtPXNsBf1OWiIHs5HR4Ygs9Ed8gpcX7gybJyiOK2NNfh7Z6eHgpIEFfy14UEZKZ
+         TQqshwZ3cJYeSjNKofCGzWI5zWvKb6ZE5oQO9mTPrEoraLmn1oOnKztTEOM9IB1HEPEW
+         QGTzjln+gx3pr4TgLtKW5hbY1uVSFcPOY2Z/RtTvRvMb7tnh4rj4CV/3KcfEbkasN1n4
+         ZUAwT0yWdGnJo0dlMA2xc7tpSQ/rR+Et5XhvvvLzL5tAEjrLJuebm69bSe0jC5tWibNr
+         US1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750839291; x=1751444091;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ED6dhruIb+QIUuQOz9kWiIXGChQPqNuSf+7wga72VuM=;
+        b=HTbAcFJ2Pyic/S0jdk6CaUsZSn3Z8znytIXM3zWw5Gxi8nvoEhgzZdUwg4psiVPjEX
+         NGNyYJlCsIt7g0psC1Yy+BsCkV8Dzz+j22YmlURXLGY0+rHRHtyP2qFoysjKsha4r+Ey
+         R3JsBLpfDyHNAej2I0sXoTG1YPFR0AtoiR+7bUVL5WMQWlqOYmYlVOskBHNezWK+r2ZA
+         n6RN1PDWM3G7cvp4zvlWE4WM6WCbqVx76wCp7pLxce+1QPO0L2UEkEMXGlYOAZf10ycb
+         d6a4LjjTzCWrVs3Hv5UxjZTFU4Cv20fOdJa6iAslr4LMKI4Rk72VnCixUSPx92tf1Y/N
+         xbog==
+X-Gm-Message-State: AOJu0YyJ+4NrI6Lbv0O8mOKuY/D9AfbnSEKV8IGUOF4a0shVHDNE12a9
+	9p7uHkZbk2qMIeHlN1lj5Z2dIqY8Bp2zcf0tT5+Rl1gjwWqW1eTYHI/hdkaNaUwQ1OOKu3ebjFF
+	4eeqBLm0=
+X-Gm-Gg: ASbGncsOsaI/QpHMKwvYK8guQWivmkzPbNI1B69lq4NDruC8E5GKIBJCQBn0mdOXaS2
+	iyuMRT2vy5Gzh7bV0g8an+YuNa+ENfvDr371NkBWTvRzJg8RRbCBHVNJgSOopjUhK6adNZ2y8W3
+	K3wA7c50O4TpUuoEr3IADe7SbgfXxVbG/KrCIjcLFAlJp1QK1+hnxiWmuTPZ69rdTek9G6NJCMC
+	758hhbSOxmTKK4pzAe/qA/yW7JTWmw4108D3eLkD+Vqrz9XonbEF2ezZSm0Bx7GEyDqW3W9Ha+z
+	D+J7pZemcIbwyfgJsy2qNYuEsbidd3z1x3IIzl8eC5qzaU1XyqOWI/iU
+X-Google-Smtp-Source: AGHT+IGrJra0HCkMUIy4YxpsjN26bVIxyBea7r8VOZLb/fU3h0SvFfA+o0Zi8pQUx7dC7hq4QUgdug==
+X-Received: by 2002:a05:6000:657:b0:3a4:e672:deef with SMTP id ffacd0b85a97d-3a6ed655cc3mr1409506f8f.36.1750839291389;
+        Wed, 25 Jun 2025 01:14:51 -0700 (PDT)
 Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:d216:42f3:1e7e:472e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45380705351sm20215035e9.0.2025.06.25.01.14.49
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45380705351sm20215035e9.0.2025.06.25.01.14.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Jun 2025 01:14:49 -0700 (PDT)
+        Wed, 25 Jun 2025 01:14:50 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Subject: [PATCH 0/4] firmware: qcom: scm: fix potential race condition with
- tzmem
-Date: Wed, 25 Jun 2025 10:14:47 +0200
-Message-Id: <20250625-qcom-scm-race-v1-0-45601e1f248b@linaro.org>
+Date: Wed, 25 Jun 2025 10:14:48 +0200
+Subject: [PATCH 1/4] firmware: qcom: scm: remove unused arguments from SHM
+ bridge routines
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,59 +84,112 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPevW2gC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDMyMT3cLk/Fzd4uRc3aLE5FRd01Rzc2PzNPM0Y8s0JaCegqLUtMwKsHn
- RsbW1ALXGWFlfAAAA
-X-Change-ID: 20250624-qcom-scm-race-5e7737f7f39f
+Message-Id: <20250625-qcom-scm-race-v1-1-45601e1f248b@linaro.org>
+References: <20250625-qcom-scm-race-v1-0-45601e1f248b@linaro.org>
+In-Reply-To: <20250625-qcom-scm-race-v1-0-45601e1f248b@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1257;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3182;
  i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=odxAEvsjae9gg8oMLkzk/QnwYb3L7Jx3aIy9//HkUqo=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBoW6/4Kxl7vPAEnCQ8Raw4tX45Tmyfwn2lK92Tc
- W3NJLtHzcmJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaFuv+AAKCRARpy6gFHHX
- cqyvD/0VzxhaWo0a5F2yEGJcLOtUr0hkI6quKqs/t3fP8wtAWUktyWj9X7AyJy3D/g5NbQh7yIc
- M4o7xMHw/u5/P5ahBG0BeFop5qBf+XHyYZ8KuW5+fZSb47ykFwfCiDJN2WJ02w//TCUOA6NNO2w
- 8F8OFVl8pZcGQdrgmvxRQeHk2Hn0XdPdLLGniVpooraInZGM4fNS2DxF9ZewovM68XNtVsh6p0h
- duNQU09CRM4v+FI/NR6h0GQt8nrui4bCIYYZgFlS4kQfFgXmfcVf5ZdqemijGVBX/xRbyeecfs0
- PZl7w9Wz3D9FkoCV6Hbpjbai9sgySzokiZsghuJaH6GVe6Q7IdeZedE1Qq5aDXVVgOEAd+TvgHM
- SDqzzaDZDju1KBwKin9Bcx40DgOyQHrgUINSteE8NtfeFSeTcuQ0Rcs0TY5u+7mT56eM/LV7jBz
- j2pPi4P7Th2BT+LNYU0NzTIatKnUK4Aq6HuA8rSWVfQzXNYoD8ZaqqkkbVJmlzj8B4MZezPDxnm
- 7a7saDtvWhd8HJLazSNkuh+LcxBhya1EoCz7j4StmIdV57i23NgGBZKVXbhcSFV9WaOFvDAqAQw
- mc8JVn60fAsgthEUJk6FfysvUkrtzhI3Pu3lld65qPDtnXx3bbfPbrI7mwpkE4pomx2wZJXTeKD
- xoStsCwpFHz4bnQ==
+ bh=doHat/la11mFrInrFzs0V97NeBO7G6mUZ0qmFIG2Vc0=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBoW6/4LV2bP9pH9GKPriBpGcjXCSMWivuIoRJXu
+ 5c68/2YgziJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaFuv+AAKCRARpy6gFHHX
+ cinFD/0cAaKjCRlAiKEGD40icXhFPHuE+ea1FZiaYgJk4ysuenuMc9F74VlcnmrOXHA07Fgo432
+ NOsu6VzHiNOBd8pLO+6M96D5bv1Pl+8+zDNaAymIBalVwalQl8F7FmnY2YKfgus8xYI6P+uhZBv
+ +bJ1ptQaypGJLzWaFMVbC1QeDD/Ppno6DsimpMGWGAn1NJvO9JL05p4E02QZg/bsrDjfGuCvpZX
+ pUDBbbmKSoO91hzNzdlZOMtCVQn02vj8KgtYuUheMN7vUFgSyTb83/3vxmqtvdg6R5BTEbzra2S
+ Q5qDz29AHRTLa60XAGbT9Mmc5YDM9An5axJoJ8yY6Q2vZiRnmxJmmLkyjfjPzQBXn8HbwoFEzhY
+ ggOS/G2B8YX2Es5WP1KAlOyxzCada2FnJmn4/iDthxidjIEWy7OuOitAUxBX6nfB6i/6vIU8RJm
+ KhP2btxM8CvtTH6bbAEmGOYTeN7cSL+wPgoJOmCrTUFwm6ZrNLdGuL9tCVdT1JDCaV5tAuEUs8U
+ 8MfSq2q4qgOqWJX9SsKAO1+xdqYj40xBHSEN632LhsvrYqxirby2+6A67b76LWHFdtVwKltdgEu
+ 58XjDGMGIPHPP+thWxiLYkLM5s8TxXhgU0KCI4j3jzg1qOZ8bs/iSDZBbeDIRSv00nWoYz/iUbc
+ og9yvNLJNNlg9ZQ==
 X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
-There's a race condition between the SCM call API consumers and the TZMem
-initialization in the SCM firmware driver. The internal __scm pointer is
-assigned - marking SCM as ready for accepting calls - before the tzmem
-memory pool is fully initialized. While the race is unlikely to be hit
-thanks to the SCM driver being initialized early, it still must be
-addressed.
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+
+qcom_scm_shm_bridge_create() and qcom_scm_shm_bridge_delete() take
+struct device as argument but don't use it. Remove it from these
+functions' prototypes.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
-Bartosz Golaszewski (4):
-      firmware: qcom: scm: remove unused arguments from SHM bridge routines
-      firmware: qcom: scm: take struct device as argument in SHM bridge enable
-      firmware: qcom: scm: initialize tzmem before marking SCM as available
-      firmware: qcom: scm: request the waitqueue irq *after* initializing SCM
+ drivers/firmware/qcom/qcom_scm.c       | 4 ++--
+ drivers/firmware/qcom/qcom_tzmem.c     | 8 ++++----
+ include/linux/firmware/qcom/qcom_scm.h | 4 ++--
+ 3 files changed, 8 insertions(+), 8 deletions(-)
 
- drivers/firmware/qcom/qcom_scm.c       | 83 ++++++++++++++--------------------
- drivers/firmware/qcom/qcom_scm.h       |  1 +
- drivers/firmware/qcom/qcom_tzmem.c     | 11 +++--
- include/linux/firmware/qcom/qcom_scm.h |  5 +-
- 4 files changed, 43 insertions(+), 57 deletions(-)
----
-base-commit: f817b6dd2b62d921a6cdc0a3ac599cd1851f343c
-change-id: 20250624-qcom-scm-race-5e7737f7f39f
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index f63b716be5b027550ae3a987e784f0814ea6d678..d830511a0082a6a52e544a4b247b2863d8b06dbd 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -1631,7 +1631,7 @@ int qcom_scm_shm_bridge_enable(void)
+ }
+ EXPORT_SYMBOL_GPL(qcom_scm_shm_bridge_enable);
+ 
+-int qcom_scm_shm_bridge_create(struct device *dev, u64 pfn_and_ns_perm_flags,
++int qcom_scm_shm_bridge_create(u64 pfn_and_ns_perm_flags,
+ 			       u64 ipfn_and_s_perm_flags, u64 size_and_flags,
+ 			       u64 ns_vmids, u64 *handle)
+ {
+@@ -1659,7 +1659,7 @@ int qcom_scm_shm_bridge_create(struct device *dev, u64 pfn_and_ns_perm_flags,
+ }
+ EXPORT_SYMBOL_GPL(qcom_scm_shm_bridge_create);
+ 
+-int qcom_scm_shm_bridge_delete(struct device *dev, u64 handle)
++int qcom_scm_shm_bridge_delete(u64 handle)
+ {
+ 	struct qcom_scm_desc desc = {
+ 		.svc = QCOM_SCM_SVC_MP,
+diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
+index 94196ad87105c6efc229bccebfd15e0be55f72c0..4fe333fd2f075a4e92ac6462d854848255665e18 100644
+--- a/drivers/firmware/qcom/qcom_tzmem.c
++++ b/drivers/firmware/qcom/qcom_tzmem.c
+@@ -124,9 +124,9 @@ static int qcom_tzmem_init_area(struct qcom_tzmem_area *area)
+ 	if (!handle)
+ 		return -ENOMEM;
+ 
+-	ret = qcom_scm_shm_bridge_create(qcom_tzmem_dev, pfn_and_ns_perm,
+-					 ipfn_and_s_perm, size_and_flags,
+-					 QCOM_SCM_VMID_HLOS, handle);
++	ret = qcom_scm_shm_bridge_create(pfn_and_ns_perm, ipfn_and_s_perm,
++					 size_and_flags, QCOM_SCM_VMID_HLOS,
++					 handle);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -142,7 +142,7 @@ static void qcom_tzmem_cleanup_area(struct qcom_tzmem_area *area)
+ 	if (!qcom_tzmem_using_shm_bridge)
+ 		return;
+ 
+-	qcom_scm_shm_bridge_delete(qcom_tzmem_dev, *handle);
++	qcom_scm_shm_bridge_delete(*handle);
+ 	kfree(handle);
+ }
+ 
+diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
+index 983e1591bbba75215cc1ae3eb28455c0c360e0ce..82b1b8c50ca3e5f97665e6975e8d7e8e4299e65d 100644
+--- a/include/linux/firmware/qcom/qcom_scm.h
++++ b/include/linux/firmware/qcom/qcom_scm.h
+@@ -149,10 +149,10 @@ bool qcom_scm_lmh_dcvsh_available(void);
+ int qcom_scm_gpu_init_regs(u32 gpu_req);
+ 
+ int qcom_scm_shm_bridge_enable(void);
+-int qcom_scm_shm_bridge_create(struct device *dev, u64 pfn_and_ns_perm_flags,
++int qcom_scm_shm_bridge_create(u64 pfn_and_ns_perm_flags,
+ 			       u64 ipfn_and_s_perm_flags, u64 size_and_flags,
+ 			       u64 ns_vmids, u64 *handle);
+-int qcom_scm_shm_bridge_delete(struct device *dev, u64 handle);
++int qcom_scm_shm_bridge_delete(u64 handle);
+ 
+ #ifdef CONFIG_QCOM_QSEECOM
+ 
 
-Best regards,
 -- 
-Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+2.48.1
 
 
