@@ -1,381 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-62560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B85DAE8F22
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 22:04:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7753AE8F2E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 22:08:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0053D5A7334
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 20:04:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2A8D616E95C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 20:08:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE4A82DAFBC;
-	Wed, 25 Jun 2025 20:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D599F2D3A8C;
+	Wed, 25 Jun 2025 20:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X501Pvl+"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dFJvusXS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761AA20A5F5;
-	Wed, 25 Jun 2025 20:04:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D98E1FE47B;
+	Wed, 25 Jun 2025 20:08:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750881878; cv=none; b=j3MJ93i57i5uO5wEkInrvRFu0u44dGUb8NTuuusZZNMSS0MSBtYFl5TEKaSHjSqBLD0B2u6TpzEvhToE/6R7K0KT2La2k+TpmDvxhDpXk3SoKogUfDPDZGOiWGIRU0XZUGoeVPlAAwnld57goTn/lghhtzIH/3f1L45USr8P8hM=
+	t=1750882108; cv=none; b=lPuDGtAVmYbK8nvw6avknZVQrziNFMlikSBjO7Ymb0QM6o69l8tCHKhfVW1KL1F4arkVXNU2VR3k748CKxnDM8Ts5PUpZUG3Uz2QfvKT7aZroJ2Te1e6zxOTbxPGtF0+0qgXPT0UuAEpXquVCgdesoWY7L4dE0uczVsFuZSmAJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750881878; c=relaxed/simple;
-	bh=z9NgzLPdkixra/QUJxb+x6d8KoigZnVyhXR1Dq4delE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=R9rqD7yGRru3N2MuYn4TOWM78ywxc0kgiDLZOaWafXwYczZTxHQZLsza34QT49dh66sd820DZ2XcjdUy6KmsW7Zx8JJguNvbb6LswJtmgIfdVwUzHrwAUZhvbsq2x+VR8oq404d661Q05xTOAnqr8cCo8786sxCTajp/ZbOvNdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X501Pvl+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 15825C4CEF4;
-	Wed, 25 Jun 2025 20:04:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750881878;
-	bh=z9NgzLPdkixra/QUJxb+x6d8KoigZnVyhXR1Dq4delE=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=X501Pvl+5ZdhTs/MXoPyeDQg0e4XgavclbDE63yfguRRFlAnw9lynnzxoNUROLBWf
-	 XQlHUD0j0eKRjjKAwnDB+qv3VfDpeFoOy0Jg89Asp9ozNQuIH9rdIOZqDOgMfR9YR1
-	 2VQ5ssufqwQm5TwI2RM87UXgDVzIOB0XGFuSQAhucxIJT/1HN1WQ9cPDZ6Gu3CgVBi
-	 kxzmunRQXCdwNzB4TS535Dz94LY3P6qusCw78YLaZiNv8bSjkUBvxh0oMtn9jEFjB/
-	 fFI2iW0dLuXuHPw9HVtIViuaJmcfxqpR7GtRALv4Y6OMz9u4SWa87PLGFdyS0ykzNA
-	 o7IjVVHrZhg2A==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2A00C7EE2A;
-	Wed, 25 Jun 2025 20:04:37 +0000 (UTC)
-From: Cristian Cozzolino via B4 Relay <devnull+cristian_ci.protonmail.com@kernel.org>
-Date: Thu, 26 Jun 2025 00:04:28 +0200
-Subject: [PATCH v3 3/3] arm64: dts: qcom: msm8953: Add device tree for
- Billion Capture+
+	s=arc-20240116; t=1750882108; c=relaxed/simple;
+	bh=xUpMEIzpFjRDAERBUMObbNI+oufFrlvJkWbPLwaUzp0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=etBUnZUQTQCsToX2sWMTogAZVQ5GfbdC5xirLfPl3TZ0kbefPQ8uci7dJymeENqMMNfYQtfRYK4nzw+3yiZ8iiMphlZEc/m7MK6IxuKDhC+JW0HVDioDEAv5pq0ZmurGcsGG4v2Nzk7v17/9Tg+SpMvBdgvUB+Pjq/SlGMNtljo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dFJvusXS; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1750882107; x=1782418107;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=xUpMEIzpFjRDAERBUMObbNI+oufFrlvJkWbPLwaUzp0=;
+  b=dFJvusXSSnTUtEoMw+ge5lgkqAsi2YMxLLvv0V/xwhkZ/bsjImzSEPmC
+   PEMKIMD1Bfs/PwlZeBJ5lcZarbauTwHOeijR5Ltltg7JXTBuq55hCVgBn
+   TMuHYW5vWPm/PgMXylaLHeFLZi4N4wRy1xqisFNXBpJEObgWKsIrPYef7
+   Z2uBtYL/P6rTq/RV5uaRHu8D6sOww6PdT+MjRYHG37U3xnxD5MXdJ0LvW
+   KC2m5LYYj62Mfi7zSckoYU3VzlVTUd/xmeclOW99jTz9cRltAGCuZI3Z+
+   G52/YB7eoBl0GFsE75rDen+rYn37F38FBgN3TZDCPhbc32LEsG7b4uNvg
+   A==;
+X-CSE-ConnectionGUID: +UaOQrb5Q/mlId2UukCGXg==
+X-CSE-MsgGUID: sV/HvzV3TAeWvbnSQxuxPA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="63766168"
+X-IronPort-AV: E=Sophos;i="6.16,265,1744095600"; 
+   d="scan'208";a="63766168"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jun 2025 13:08:26 -0700
+X-CSE-ConnectionGUID: YpEsUcroSXaqWKY9aziD2Q==
+X-CSE-MsgGUID: Tn6UOuwBSeC9ZqjURSczQA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,265,1744095600"; 
+   d="scan'208";a="153033344"
+Received: from lkp-server01.sh.intel.com (HELO e8142ee1dce2) ([10.239.97.150])
+  by fmviesa010.fm.intel.com with ESMTP; 25 Jun 2025 13:08:23 -0700
+Received: from kbuild by e8142ee1dce2 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uUWPt-000TRa-0m;
+	Wed, 25 Jun 2025 20:08:21 +0000
+Date: Thu, 26 Jun 2025 04:07:43 +0800
+From: kernel test robot <lkp@intel.com>
+To: Luca Weiss <luca.weiss@fairphone.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+Subject: Re: [PATCH 08/10] clk: qcom: Add Graphics Clock controller (GPUCC)
+ driver for SM7635
+Message-ID: <202506260357.DyPYkEZb-lkp@intel.com>
+References: <20250625-sm7635-clocks-v1-8-ca3120e3a80e@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250626-rimob-initial-devicetree-v3-3-4017ac9fd93d@protonmail.com>
-References: <20250626-rimob-initial-devicetree-v3-0-4017ac9fd93d@protonmail.com>
-In-Reply-To: <20250626-rimob-initial-devicetree-v3-0-4017ac9fd93d@protonmail.com>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- phone-devel@vger.kernel.org, 
- Cristian Cozzolino <cristian_ci@protonmail.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1750889075; l=7327;
- i=cristian_ci@protonmail.com; s=20250620; h=from:subject:message-id;
- bh=qtnuNmfCBsjsZNE4PsKOQQMDD+xe/GZt7WSU7ruu8fI=;
- b=FYhlVyQR1iRUmooP2P1OzbLuLiksB/VDSWpYe1fyzOCEkZgnTXmUaJIgHBllt8u4MU/xsXknu
- Ww61/T9Z6DOClHtRAxC82qYuUamgeIX2oP3hV6SyoS1mTSNGz2xjTd0
-X-Developer-Key: i=cristian_ci@protonmail.com; a=ed25519;
- pk=xH5IvIPUNHV1Q8R0/pq2CfuVFR/wTiAyuyi6IwedjZY=
-X-Endpoint-Received: by B4 Relay for cristian_ci@protonmail.com/20250620
- with auth_id=438
-X-Original-From: Cristian Cozzolino <cristian_ci@protonmail.com>
-Reply-To: cristian_ci@protonmail.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250625-sm7635-clocks-v1-8-ca3120e3a80e@fairphone.com>
 
-From: Cristian Cozzolino <cristian_ci@protonmail.com>
+Hi Luca,
 
-Billion Capture+ (flipkart,rimob) is a smartphone released in 2017, based
-on Snapdragon 625 (MSM8953) SoC.
+kernel test robot noticed the following build warnings:
 
-Add a device tree with initial support for:
+[auto build test WARNING on 19272b37aa4f83ca52bdf9c16d5d81bdd1354494]
 
-- GPIO keys
-- SDHCI (internal and external storage)
-- USB Device Mode
-- Regulators
-- Simple framebuffer
+url:    https://github.com/intel-lab-lkp/linux/commits/Luca-Weiss/dt-bindings-clock-qcom-document-the-SM7635-Global-Clock-Controller/20250625-171703
+base:   19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+patch link:    https://lore.kernel.org/r/20250625-sm7635-clocks-v1-8-ca3120e3a80e%40fairphone.com
+patch subject: [PATCH 08/10] clk: qcom: Add Graphics Clock controller (GPUCC) driver for SM7635
+config: loongarch-allyesconfig (https://download.01.org/0day-ci/archive/20250626/202506260357.DyPYkEZb-lkp@intel.com/config)
+compiler: loongarch64-linux-gcc (GCC) 15.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250626/202506260357.DyPYkEZb-lkp@intel.com/reproduce)
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Cristian Cozzolino <cristian_ci@protonmail.com>
----
- arch/arm64/boot/dts/qcom/Makefile                  |   1 +
- .../arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts | 255 +++++++++++++++++++++
- 2 files changed, 256 insertions(+)
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202506260357.DyPYkEZb-lkp@intel.com/
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 140b0b2abfb555b8ef61bd9ed0217d8997800809..af3757ca017b6e3d8c579e43f647a71fc64c62b3 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -70,6 +70,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-samsung-a7.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-wingtech-wt82918.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-wingtech-wt82918hd.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-flipkart-rimob.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-mido.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts b/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
-new file mode 100644
-index 0000000000000000000000000000000000000000..ef4faf7631327ba3f7d954cef57bb1ebfc09a1cc
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
-@@ -0,0 +1,255 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2025, Cristian Cozzolino
-+ */
-+/dts-v1/;
-+
-+#include "msm8953.dtsi"
-+#include "pm8953.dtsi"
-+#include "pmi8950.dtsi"
-+
-+/delete-node/ &cont_splash_mem;
-+/delete-node/ &qseecom_mem;
-+
-+/ {
-+	model = "Billion Capture+";
-+	compatible = "flipkart,rimob", "qcom,msm8953";
-+	chassis-type = "handset";
-+	qcom,msm-id = <293 0>;
-+	qcom,board-id = <0x340008 0>;
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		framebuffer@90001000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0 0x90001000 0 (1920 * 1080 * 3)>;
-+
-+			width = <1080>;
-+			height = <1920>;
-+			stride = <(1080 * 3)>;
-+			format = "r8g8b8";
-+
-+			power-domains = <&gcc MDSS_GDSC>;
-+
-+			clocks = <&gcc GCC_MDSS_AHB_CLK>,
-+				 <&gcc GCC_MDSS_AXI_CLK>,
-+				 <&gcc GCC_MDSS_VSYNC_CLK>,
-+				 <&gcc GCC_MDSS_MDP_CLK>,
-+				 <&gcc GCC_MDSS_BYTE0_CLK>,
-+				 <&gcc GCC_MDSS_PCLK0_CLK>,
-+				 <&gcc GCC_MDSS_ESC0_CLK>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&gpio_key_default>;
-+		pinctrl-names = "default";
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			gpios = <&tlmm 85 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	reserved-memory {
-+		qseecom_mem: qseecom@84a00000 {
-+			reg = <0x0 0x84a00000 0x0 0x1900000>;
-+			no-map;
-+		};
-+
-+		cont_splash_mem: cont-splash@90001000 {
-+			reg = <0x0 0x90001000 0x0 (1080 * 1920 * 3)>;
-+			no-map;
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+
-+&hsusb_phy {
-+	vdd-supply = <&pm8953_l3>;
-+	vdda-pll-supply = <&pm8953_l7>;
-+	vdda-phy-dpdm-supply = <&pm8953_l13>;
-+
-+	status = "okay";
-+};
-+
-+&pm8953_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators {
-+		compatible = "qcom,rpm-pm8953-regulators";
-+		vdd_s1-supply = <&vph_pwr>;
-+		vdd_s2-supply = <&vph_pwr>;
-+		vdd_s3-supply = <&vph_pwr>;
-+		vdd_s4-supply = <&vph_pwr>;
-+		vdd_s5-supply = <&vph_pwr>;
-+		vdd_s6-supply = <&vph_pwr>;
-+		vdd_s7-supply = <&vph_pwr>;
-+		vdd_l1-supply = <&pm8953_s3>;
-+		vdd_l2_l3-supply = <&pm8953_s3>;
-+		vdd_l4_l5_l6_l7_l16_l19-supply = <&pm8953_s4>;
-+		vdd_l8_l11_l12_l13_l14_l15-supply = <&vph_pwr>;
-+		vdd_l9_l10_l17_l18_l22-supply = <&vph_pwr>;
-+		vdd_l23-supply = <&pm8953_s3>;
-+
-+		pm8953_s1: s1 {
-+			regulator-min-microvolt = <870000>;
-+			regulator-max-microvolt = <1156000>;
-+		};
-+
-+		pm8953_s3: s3 {
-+			regulator-min-microvolt = <1224000>;
-+			regulator-max-microvolt = <1224000>;
-+		};
-+
-+		pm8953_s4: s4 {
-+			regulator-min-microvolt = <1900000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+
-+		pm8953_l1: l1 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1000000>;
-+		};
-+
-+		pm8953_l2: l2 {
-+			regulator-min-microvolt = <975000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8953_l3: l3 {
-+			regulator-min-microvolt = <925000>;
-+			regulator-max-microvolt = <925000>;
-+		};
-+
-+		pm8953_l5: l5 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8953_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8953_l7: l7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1900000>;
-+		};
-+
-+		pm8953_l8: l8 {
-+			regulator-min-microvolt = <2900000>;
-+			regulator-max-microvolt = <2900000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8953_l9: l9 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8953_l10: l10 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2850000>;
-+		};
-+
-+		pm8953_l11: l11 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8953_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8953_l13: l13 {
-+			regulator-min-microvolt = <3125000>;
-+			regulator-max-microvolt = <3125000>;
-+		};
-+
-+		pm8953_l16: l16 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8953_l17: l17 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2850000>;
-+		};
-+
-+		pm8953_l19: l19 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+
-+		pm8953_l22: l22 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+
-+		pm8953_l23: l23 {
-+			regulator-min-microvolt = <975000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+	};
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&pm8953_l8>;
-+	vqmmc-supply = <&pm8953_l5>;
-+
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	vmmc-supply = <&pm8953_l11>;
-+	vqmmc-supply = <&pm8953_l12>;
-+
-+	cd-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-+
-+	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
-+	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off>;
-+	pinctrl-names = "default", "sleep";
-+
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>, <135 4>;
-+
-+	gpio_key_default: gpio-key-default-state {
-+		pins = "gpio85";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&usb3 {
-+	status = "okay";
-+};
-+
-+&usb3_dwc3 {
-+	dr_mode = "peripheral";
-+};
+All warnings (new ones prefixed by >>):
+
+>> drivers/clk/qcom/gpucc-sm7635.c:135:37: warning: 'gpu_cc_parent_data_2' defined but not used [-Wunused-const-variable=]
+     135 | static const struct clk_parent_data gpu_cc_parent_data_2[] = {
+         |                                     ^~~~~~~~~~~~~~~~~~~~
+>> drivers/clk/qcom/gpucc-sm7635.c:131:32: warning: 'gpu_cc_parent_map_2' defined but not used [-Wunused-const-variable=]
+     131 | static const struct parent_map gpu_cc_parent_map_2[] = {
+         |                                ^~~~~~~~~~~~~~~~~~~
+
+
+vim +/gpu_cc_parent_data_2 +135 drivers/clk/qcom/gpucc-sm7635.c
+
+   130	
+ > 131	static const struct parent_map gpu_cc_parent_map_2[] = {
+   132		{ P_BI_TCXO, 0 },
+   133	};
+   134	
+ > 135	static const struct clk_parent_data gpu_cc_parent_data_2[] = {
+   136		{ .index = DT_BI_TCXO },
+   137	};
+   138	
 
 -- 
-2.49.0
-
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
