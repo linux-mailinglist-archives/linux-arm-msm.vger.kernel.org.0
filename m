@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-62308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2D41AE7AC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 10:49:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BE9EAE7AB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 10:47:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8CF717B4A65
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 08:44:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9E5C33A766A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 08:47:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA8EC27F166;
-	Wed, 25 Jun 2025 08:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99911287517;
+	Wed, 25 Jun 2025 08:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PaA24/eV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W/GEz3iG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E9227280E;
-	Wed, 25 Jun 2025 08:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0402853F8;
+	Wed, 25 Jun 2025 08:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750841097; cv=none; b=dl53133X46qQezdrOEPDIo8ShAkd115qluH/zfpRA1uKS1/I/5lJt8i8/ojEsRf3gOMVTukdSjPpSfMiy3G6CwZKNyyQWUsq/LvHai0zD5F0VHyuJoblCZHS/WZiTYT8rWd7r+o1Dv42uKT6QUSzCvoe9QiMnZLZdEMNR5y4/a8=
+	t=1750841177; cv=none; b=NyJQJC/Rs1Kl6DqvzmdQxCw8s+htvk1SO9bK17ky/C17W+RL8hedVS5BgdpjQuNeZZ8HIhsGLd0si7K5BBd3Ez2am4O+qrHiDwcd1wQhuD8Tz95hVFJs5S3P99UZ73Lv9WguYbuZLEmg7VRfrFh/0Cv2gUoey6S2e56Pvt1woMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750841097; c=relaxed/simple;
-	bh=QMe3XkL13KplpKarUEsTie/WivYKB4KY46eqsvTmXj0=;
+	s=arc-20240116; t=1750841177; c=relaxed/simple;
+	bh=Jd+qJw0ywMovb2fuA4VnIvQS86NthGtKClBkUbHwogo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C07Kq+9vAJJZekyIc75EfHEc3rSWQ15Gpt66U3j7G6IJ3QMsMFbIQOJn+UEN/Pi2HMSV3MW8DeM3eABkjGVMLdmLz6eakOGz96Py3mDw5dMZf/XwXb3enZOhnl163OxQ36M0JTtkhg/TAUVELoddzRa2E9HBC/chGBvzMx/FB+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PaA24/eV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94280C4CEEA;
-	Wed, 25 Jun 2025 08:44:53 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=H9WAwWKzzRkmHW5HpUzq9NhFs535H4ueqTqpmBSG5gSFvYE7u/H20dERBgPTlxgRBEJuDaR4q/LBAtWvUrkRcpVT7/BXrvg2c0LbgwJsMvd16eXKHN++Wk0STrDVMGXiW6hXHnIQNJjBSDYG8sonlf1Rhpdhli9AKj+TJx8TL4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W/GEz3iG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57F3C4CEEA;
+	Wed, 25 Jun 2025 08:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750841097;
-	bh=QMe3XkL13KplpKarUEsTie/WivYKB4KY46eqsvTmXj0=;
+	s=k20201202; t=1750841175;
+	bh=Jd+qJw0ywMovb2fuA4VnIvQS86NthGtKClBkUbHwogo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=PaA24/eV01+iY8pBASJ6nbmiZdRwlrWwSSdFMwQYOw1pLQC5PwExDygUFOP6vc/57
-	 +U4ovRVeJudu2GlUCb5u4TvyDYA93gVSkuhknD3dhJJqQEJo9HnjSSOSMn0Ev+Z+gi
-	 e7xsOgq8JkgFEqtrKLMdESmtPzzzIvgiDfQ0Wf2yYIkybYA+Mt/oN7lue+nIB8WSqV
-	 N+SWZVrOVx8Me+fda9IZF77D6Tj9njEMp/n8jg0c3ZhNvJRTRCwjDunAIKcNpi+S3A
-	 8HNdOUbp1lfr8CBO8O0jYWRepXVjQ59P6Cclqwvubv+gsFYDrkhz8ApYj7SGiuvCrK
-	 0aJgnJyIVN95A==
-Message-ID: <b9767a66-ac0c-4399-9ccb-26677f2a4d34@kernel.org>
-Date: Wed, 25 Jun 2025 10:44:52 +0200
+	b=W/GEz3iG9BjEmGJwmgktAcOa+QeVZ/U0bZ+a2XrAn1Nxbh4A4EujIH+TF68IYQ4w5
+	 X/PSRcvLvP+V31Iy4zsL05RfMp2+AT5RP/1ZvLAaF/qbancewcgrWUf7JDj+HkGca/
+	 7QdaTwSocNZjKFEFdAnHnvcP7Hy1nAr+ri7zjwA7RH6v8o0b6k1L7sMzcjLoyNO5pD
+	 LSDYUcHdHcidtz6r4GlEiZBI0wemFGVq/FKC1NWaud09sAgoB86XrsKYOHVWxgEvHN
+	 en5WEyrWVa2aupSgLNkJfCsuafm7eBdKIZodub/gE8p1CnblU43fxic8/h1FT4y1q/
+	 PnheY5bg1C95g==
+Message-ID: <46f3ca15-b638-4a05-ad61-88e8bb025915@kernel.org>
+Date: Wed, 25 Jun 2025 10:46:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/9] ASoC: qcom: dt-bindings: qcom,lpass-va-macro:
- Update bindings for clocks to support ADSP
+Subject: Re: [PATCH v5 2/9] dt-bindings: pinctrl:
+ qcom,sc7280-lpass-lpi-pinctrl: Document the clock property
 To: Prasad Kumpatla <quic_pkumpatl@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
@@ -64,7 +64,7 @@ Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org,
  kernel@oss.qualcomm.com, Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 References: <20250625082927.31038-1-quic_pkumpatl@quicinc.com>
- <20250625082927.31038-4-quic_pkumpatl@quicinc.com>
+ <20250625082927.31038-3-quic_pkumpatl@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,23 +110,25 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250625082927.31038-4-quic_pkumpatl@quicinc.com>
+In-Reply-To: <20250625082927.31038-3-quic_pkumpatl@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 25/06/2025 10:29, Prasad Kumpatla wrote:
 > From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 > 
-> Manage clock settings for ADSP solution.
+> Document the clock property for sc7280-lpass-lpi-pinctrl driver.
+
+Describe the hardware, not drivers.
+
+> Clock settings required for Audioreach solution.
 > 
+> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> Co-developed-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+> ---
+>  .../pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml   | 16 ++++++++++++++++
 
-Please use subject prefixes matching the subsystem. You can get them for
-example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-your patch is touching. For bindings, the preferred subjects are
-explained here:
-https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
-
-There is no "qcom" prefix.
 
 Best regards,
 Krzysztof
