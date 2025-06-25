@@ -1,128 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-62476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EAD6AE8579
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 16:02:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 355CDAE857E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 16:03:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 573DC5A7D36
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 14:01:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E338163065
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 14:03:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CFAA2620CF;
-	Wed, 25 Jun 2025 14:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 116422641E7;
+	Wed, 25 Jun 2025 14:03:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PsxRvAra"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="X4cMehir"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C59313D53B;
-	Wed, 25 Jun 2025 14:02:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F8C263C91
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 14:03:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750860131; cv=none; b=Bm0WmDF1+kQQUz+vKhKWwZNNfNpfGXeCGm+oJcFujFlPznTxXX/4fofJVEIicOgAX+mXD3nW1Or8S21/qsIpZYLFYe6zmLgwsLV8KmZWffuoa/Hcf0OIGScA/x4IFPXLp3nU9t/VcbLjLBdld/o7YSTGdincSiVz+lKZxaV094Q=
+	t=1750860193; cv=none; b=J99vwcRp1iMZzzp/3HWwtsSPnSuOUVMOUosFsnpeS4ojfySrXSFjtzrRIYFVueQmNPqsyTDg0Dk3Dw/GnFRK4hy5/JyZKrcTsFyyK2pzP5wI1BoPwXNNfUS9TyUx11M6tgp9lhSpf0d9fh1Usrtutowo/RcI83zXKz+BWueUtPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750860131; c=relaxed/simple;
-	bh=0E1iOgTDOe4/hcWEs/6My5mcmsk96XV7Vrk9N+Jysxc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L0TUrYuY6etyF6iYN4mYFkX+MEPr5MH/M3XBmlFeCn3JjZRCaJTdpSl1mS/ojMWJt9MCqRag0OIOZUqUHk6dIsDqH5nZDwrLS62+TqDIrz0jh26/+63vJG8i6JCiEEISaP4JNBDw2LgbwczmZ+gdYv1V5w2CNtH0HhnOMWlvyN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PsxRvAra; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1662C4CEEA;
-	Wed, 25 Jun 2025 14:02:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750860129;
-	bh=0E1iOgTDOe4/hcWEs/6My5mcmsk96XV7Vrk9N+Jysxc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PsxRvAra1+UYAxXNOQfwyROihYt1SLubVcs64pvGPUQv4NrfV/ZDvKniPhQp7iaMc
-	 2E8WSNQMZq4HAR/7TuU6I5/1/v4Sfw+RbxU5GBtdgyly9HNSNirynkWPV7o1UuyWzC
-	 0P7IdB0BcktrXzRN0UoRhNamc0YTldId3dqdOL1ghooDaGDuBx05voZQfUjD0Fj5lg
-	 2IV2XhdLpfxI6s5YKtUSJCiOFYdeqI2U3x8xiaAcwc4ylzGl5CyAeO3waXi/GZ9gD+
-	 d/v3F7klREapn0BL5nVQWuZgZVk+Vd2YeeT/QZTJ7h+iFJBHBAkHFDvYd+wEcLBAi8
-	 pQaYVLvnm7bvQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1uUQhV-0000000080x-2DfT;
-	Wed, 25 Jun 2025 16:02:09 +0200
-Date: Wed, 25 Jun 2025 16:02:09 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Gabor Juhos <j4g8y7@gmail.com>
-Cc: Georgi Djakov <djakov@kernel.org>,
-	Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] interconnect: avoid memory allocation when
- 'icc_bw_lock' is held
-Message-ID: <aFwBYRF0wJwVDdeX@hovoldconsulting.com>
-References: <20250625-icc-bw-lockdep-v3-1-2b8f8b8987c4@gmail.com>
- <aFvr1zSkf4KmIcMT@hovoldconsulting.com>
- <aFvuiVX0kMIqXQtZ@hovoldconsulting.com>
- <84b94649-a248-46b0-a401-772aeb8777a2@gmail.com>
+	s=arc-20240116; t=1750860193; c=relaxed/simple;
+	bh=5zMJXwwWW08GGXTySP2knMOGm23otbDvAH32Yql1p7k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sCETCSeG3/k9ALsYh7UdEh7GXWQR5V+tQ69EUiewXpoEDx9ZsYc0iJlgoAs6s2SUMaHeEFKxh2zRszE8wg200xv2cSArsK2Na1CCGs0EndlRikcRw1IZpFgJHZARxyVgmNtauCFZlQRSkBP+QrjkEuyt6Bfw/6POX0xERJFkvKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=X4cMehir; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55PDCpCY023113
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 14:03:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	XFqnMVGRQpupfxD1RJ2vO64N/c6NtFXjip6hXI1/5Fc=; b=X4cMehirXtoXBVvk
+	ABmJsgAVU1YrN1uzZ6MEUfYF9AjNbW4SRjuWooTtKuxPC08owya/wc/Ckcyn+W8c
+	OVOQ0H2BfBGrhgvhlX0VXyTiKmW1nsD+xNsyLqLuJy0edGOtiFXIK19qvKw86ZAj
+	fcdo6v5zEd2tJX9qVdC+0rYnGPTxm+l0hTSE9T996loTAcNuGhLItlIB6mk+Zpoq
+	FtsMDXw9IRBU7XSb5F4dyKD1G7g3hbMdXNGScjC6rtUasl+tokn1kXKiYoGt+b4U
+	VwlzAo4aCBIRAyS3h/kjvHW6TGi8v1zUvzalSjARgzEZj9N22tLApLFw6QN53eJ9
+	fFoFqg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f3bgg4hx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 14:03:10 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7d3eeb07a05so90567485a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 07:03:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750860189; x=1751464989;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XFqnMVGRQpupfxD1RJ2vO64N/c6NtFXjip6hXI1/5Fc=;
+        b=pDJTsCPbf1YXdUSbp85l0hIJ5br/0vBOuMvmE6aKF9ujTY60VxS4kL/IxiVLV6lxpz
+         bwz2ypYCY80OufpSH1WbGPSzG3Q7ETPxyX5yiIMXCovZZcjk73r7cZRaGIc3dutYh53Z
+         StweYsddtnTmmGnpYmB/OMPj+Q59lii6H8z5M+etFHNnBs4rJ9aK1swCQ2P3Wgf9IcD3
+         d9+snuai/xGdlkfvd009uOkIVFb12hEEKldd7gBU14g4tupqxpp1MQdjYHMYajH7Wtaf
+         yBJ6UByphbZA4LOAhC+Z6hj5LE9osLBL75QNrRdrp1W1GSWrvgLEQuM0LZzWzY+gO21Q
+         W5+w==
+X-Forwarded-Encrypted: i=1; AJvYcCXDlYGKx9CvvmRm3zzbnnabCFYvBCoqADOkEuOamFqr2QPx+1A4+S37y+xsywY7b70Ko8Lm+lCq/pvNmtjs@vger.kernel.org
+X-Gm-Message-State: AOJu0YzgMT8fAiipHgUu1Zhvj2+FXqdxIO6Pzomo11t07n0ZPGd4dV6f
+	h59DRcrlOoB5TQLULfkQDj4dNU8VMJuWioWsva08FS4Ic690GFyohT5pncckkLApfWlYJ1c3F7o
+	Daw2Pftz8D7wfXW4hwifrSYFxcErDB8/bvpNxutTbTdMrYYDgpFcOsXW4+CFH6hda27BI
+X-Gm-Gg: ASbGncvbB966N5HX9OZBrHcTwiu3MtdJiUtG6eReVXvrKiLrtg7qc5UhoEp0RS9lkwh
+	zzgiPQ7K9Re2w9DhqjdZvBac0yca2O2AgydPn1DVOK9odC1v83JMDRkCu3vVCQwuMGNQg1VY205
+	Hf5ORpNWw0+zai5H80DE4kgZE89sxe21lG3f3LmXBogi9Fd6kmi1AVVMCco0sEulGO4re/T6zD5
+	MYjAF/0UaEqFFeMUMf/Gh8cqRhnsWJTrkJV26VufEkMmfjbMS4zbuqIS4dOeP2o0+XhjOynUmdv
+	i8ZTUVHargp4+5HUMr6AhnTJHQwSB4M5Q0CfYyW+K7fx8GZmruNLtVODw8SNJlHuHtlHFeD0xUI
+	VDUU=
+X-Received: by 2002:a05:620a:1b89:b0:7ce:e99e:bc87 with SMTP id af79cd13be357-7d4297074cfmr151197785a.6.1750860188793;
+        Wed, 25 Jun 2025 07:03:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGdIBsWsp4TsebQh9ea0CxfPNx1LapgZvLTSmHhJ3o+vsH2NNt9o3OqUtv9riIIP+wKvxF8wQ==
+X-Received: by 2002:a05:620a:1b89:b0:7ce:e99e:bc87 with SMTP id af79cd13be357-7d4297074cfmr151193085a.6.1750860188053;
+        Wed, 25 Jun 2025 07:03:08 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae054209ad2sm1067888966b.148.2025.06.25.07.03.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Jun 2025 07:03:06 -0700 (PDT)
+Message-ID: <8ed0cca0-c2ed-47b9-b2e0-bbd66e133f78@oss.qualcomm.com>
+Date: Wed, 25 Jun 2025 16:03:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <84b94649-a248-46b0-a401-772aeb8777a2@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] regulator: qcom-rpmh: add support for pmr735b
+ regulators
+To: Luca Weiss <luca.weiss@fairphone.com>,
+        Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20250625-pm7550-pmr735b-rpmh-regs-v1-0-cab8ef2e5c92@fairphone.com>
+ <20250625-pm7550-pmr735b-rpmh-regs-v1-3-cab8ef2e5c92@fairphone.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250625-pm7550-pmr735b-rpmh-regs-v1-3-cab8ef2e5c92@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: BMhiGKY3bD2k3qjpO406ZuP7TCyQ77C5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDEwMSBTYWx0ZWRfXwHOBeOK71zY9
+ QCDrfLVYoFHEOiHL8pyN7y+jm6pON6PpJVUL5P7ToaND5YB/jy5ukpF/x4hmC5ddmVPEfizqniI
+ mbh7GaR16Qy7j0b/2d6GLJLOLCT4jwyLSn5N/fjBgNAoeewf3JhlKrckBn2A2LZdppfXbgSKi24
+ 5RYnhBPgzoIbU3TQtjon5gE3+pf/srCLY26taw15tknvTHnf/8+u0GJZMwC20JTznYWUm2YR66B
+ 1sDzthYeS6CvQ8dYKUQje15X1Rtp//1DopdITilo71w4Wsw8DOYhX/aRk36sY5maoVb1D7Njtbi
+ om+xmBrKDWbVqvREHDIW3huaRxgQKFNZg0r/h6ECUaNsMTslpFCphd/aCg4NpMqrC0NNGQooSlM
+ SiGODxS5TlmCob0pvzvaCWpYt6b1wlH/BmKCtuFhwQ7DhkGthJ+MQbAyx1vXGZAs3jOvNqa9
+X-Authority-Analysis: v=2.4 cv=L4kdQ/T8 c=1 sm=1 tr=0 ts=685c019e cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=6H0WHjuAAAAA:8 a=EUspDBNiAAAA:8
+ a=FIv874YiPNcmhJNsip8A:9 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+ a=Soq9LBFxuPC4vsCAQt-j:22
+X-Proofpoint-GUID: BMhiGKY3bD2k3qjpO406ZuP7TCyQ77C5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-25_04,2025-06-25_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ adultscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ spamscore=0 phishscore=0 mlxlogscore=935 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506250101
 
-On Wed, Jun 25, 2025 at 03:15:53PM +0200, Gabor Juhos wrote:
-> 2025. 06. 25. 14:41 keltezéssel, Johan Hovold írta:
-> > On Wed, Jun 25, 2025 at 02:30:15PM +0200, Johan Hovold wrote:
-> >> On Wed, Jun 25, 2025 at 01:25:04PM +0200, Gabor Juhos wrote:
-> > 
-> >>> @@ -276,13 +276,17 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
-> >>>  		qcom_icc_bcm_init(qp->bcms[i], dev);
-> >>>  
-> >>>  	for (i = 0; i < num_nodes; i++) {
-> >>> +		bool is_dyn_node = false;
-> >>> +
-> >>>  		qn = qnodes[i];
-> >>>  		if (!qn)
-> >>>  			continue;
-> >>>  
-> >>>  		if (desc->alloc_dyn_id) {
-> >>> -			if (!qn->node)
-> >>> +			if (!qn->node) {
-> >>
-> >> AFAICS, qn->node will currently never be set here and I'm not sure why
-> >> commit 7f9560a3bebe ("interconnect: qcom: icc-rpmh: Add dynamic icc node
-> >> id support") added this check, or even the node field to struct
-> >> qcom_icc_desc for that matter.
-> >>
-> >> But if there's some future use case for this, then you may or may not
-> >> need to make sure that a name is allocated also in that case.
-> > 
-> > Ok, I see what's going on. The qn->node may have been (pre-) allocated
-> > in icc_link_nodes() dynamically, which means you need to make sure to
-> > generate a name also in that case.
-> > 
-> >> And that could be done by simply checking if node->id >=
-> >> ICC_DYN_ID_START instead of using a boolean flag below. That may be
-> >> preferred either way.
-> > 
-> > So you should probably use node->id to determine this.
+On 6/25/25 11:18 AM, Luca Weiss wrote:
+> Add RPMH regulators exposed by Qualcomm Technologies, Inc. PMR735B PMIC.
+> It has 12 LDOs with 2 different types, L4 & L10 are LDO512 LV PMOS
+> and the rest are LDO512 NMOS.
 > 
-> You are right. The problem is that ICC_DYN_ID_START is only visible from the
-> core code. Either we have to move that into the 'interconnect-provider.h' header
-> or we have to add an icc_node_is_dynamic() helper or something similar.
-> 
-> Which is the preferred solution?
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
 
-I think adding a helper like icc_node_is_dynamic() in a separate
-preparatory patch is best here.
+As far as I can tell, this is in order
 
-If it wasn't for nodes now being created also in icc_link_nodes() we
-could otherwise perhaps just as well have moved the name generation into
-icc_node_create_dyn(). Now it seems we'd need a new helper to set the
-name (or add error handling for every icc_node_add()), but we've already
-spent way too much time trying to clean up this mess...
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Johan
+Konrad
 
