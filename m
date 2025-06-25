@@ -1,81 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-62380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EB9CAE7D1C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 11:34:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB9C6AE7CF8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 11:33:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 98D5D18925A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 09:32:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D2AA6A17A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 09:31:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B1462DFA3C;
-	Wed, 25 Jun 2025 09:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F122A2DFA5F;
+	Wed, 25 Jun 2025 09:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="VYivzD61"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="GZgjw9su"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B8E2DECD0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 09:23:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4567D2BEC2D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 09:23:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750843393; cv=none; b=Qpbge+nxLbeigIhPfJzUkS9xhJuPDWenLqspM91MVrJxvCROpipKB8q/fDJVNfOSjQ7UTznfTS8K8HxFf/MsbNon3WYwFYcX87YgT2GEQlVhB9teD9ijTsWHcOqAHSDKPSSe77FLQRQbPRwdWVx87+JSWF4SXNhc1JkntPIl39Q=
+	t=1750843394; cv=none; b=RvXhP2ITc6F3QikogfN7JDn+STKdkSCnG16IXabmofHqxIDq6yRQCAJhYExPFwAtNqnv4dw6AdYsQvcnWG3pGG0wmAIpBVW2n8PWvIn8LCCuZJ3Z0nSNFG43Y6h4D8WCQ0t2lFnvGKToRhD5GOMfEOUPKT9e4GsVEoCzEJTCVEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750843393; c=relaxed/simple;
-	bh=X3UlS9d7TlY6Pd12RdYn75CPVuzcGSmzvT+aXKx0h9I=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=fhR2Bf6MG6+4ta8bDe3qcWXVEKM1xU+Yjmu6ryuf+FR+55NsVd8U95ba1bNvai5fi5yfyZkCrw08ooln8ghOmnvuitiLrQ0xLQbEB+7+PtvFehZ45B1syzJGAzzRCbhh7kx4NOecp11lfsNASehkFYlKhL3jTI3ZjfDMitybaRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=VYivzD61; arc=none smtp.client-ip=209.85.208.46
+	s=arc-20240116; t=1750843394; c=relaxed/simple;
+	bh=eQWT5rynZ1PMaMurlFu0xtL6k2P+7npo9dOzB+6rBOg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=C8DeVJQQCvi0/H6RLxGdmFNOU/4k7SAqE2o2UIjweW3bdzwU5IZ+GyAyE971x6IxGHcFsnGWnexs2o+HZ2Mplktnya/NqCXcxwBFiOhySw1zWlEC6eS7FLiL16BKXOyiICBCZwUzNAQ0h+etLB+N7sevCNmdtMeN0FOSJ6ApBFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=GZgjw9su; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-607cc1a2bd8so9550570a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 02:23:10 -0700 (PDT)
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ad8a6c202ffso1169020466b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 02:23:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1750843388; x=1751448188; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hV7WOWtVzsWUafxQtaP9Rv4gkIegzwV0WCsPbafI4b0=;
-        b=VYivzD61f0Rr0FMLvDIF7n1SFPyZ+mQIOotBER9uqhTJi/ugKwTqFcH8fUTX7hmSFL
-         epWoSVaO+thetchX2LtWM/Hu5LhPt2E0eGTzeGibEjLlScaoYUB/+S0NyALD+c+N7g1F
-         kzAEQUA6rdJZfk6idAA09BphWvXoEl+uBds0MK50jeP0DGX/c5/QVihDezDIU6ci0h9J
-         PLKHF9MWFf2qFvfPJOrve7z3hjG5UG2OUxATKAEheqt8yiWFR8V0Xu9qzxeEwkrWhhlQ
-         ruumSzuYAAx7BMs5jnFpYfuxrRRLD/L6bTRS7fHD1e2s48zv/6JMnEcKzZuIZf/r59c3
-         SLDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750843388; x=1751448188;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=fairphone.com; s=fair; t=1750843389; x=1751448189; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hV7WOWtVzsWUafxQtaP9Rv4gkIegzwV0WCsPbafI4b0=;
-        b=Y6xlvP2p1u1Hbf0p6fyZBtE7ErQ+TF50hU9wBX0c0/4nsJPmYh4F60yNmbX2s5gGl9
-         TbXeGu1iajDoxF2LhDc5K1/UIMvCiBqzBXbfHYsZzNThOZZ/I2/3grvrmri+zeLvD/uc
-         hAPjlYNAuLkG1tel0SVjIt2oRclFxpEfC+5ZJ95Ovkf6WYCk3LU8kMrtA16dHtSryKq5
-         E1PmGvM33cjsle4wlzILBgq+6ipgd9K2R5qz8D3kXQVXK7dTcEEaM0/raTeJJ7w3qtjN
-         DS0v5CyDUyrV9+meeBbayQsx1BioQov3rxP9enOBUYOZFM+40gM1PzVUKE4WTx0Z1FPQ
-         uGbA==
-X-Forwarded-Encrypted: i=1; AJvYcCXdN1sHRRCYhBsPxR+oOPOG+qrzCMSY7OMYdTC+KRc8uzgTlOUYqxf/ODT1n+kkbuhhlN8JN+/bigk/fcAp@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6SJGY7m7XC4+l5yjfeKekQW9m7nxMth0yvGBwk4ExPaytgXKG
-	pfycyeoUIl8mwGFA5zEmErEW/OdUpZigJoDAin/nBLkUuOaBxVpmQq6LV3GimvI4yZo=
-X-Gm-Gg: ASbGnctfWpR/Tu3TCH3qaJ17CEcsqy6I7ghibrriRRUT2bmZ25ppBvLHTW+0m0FV/hU
-	BXouZSIEDrtgYfNHhuNDC9fBzebV9BE95IQoV05bZiC2rvU7gA/8z7KERkgM0AstbUtl0vBIUP2
-	DveKnJiATHDFyXwxTdXoa3rlN8lkbPp/8YHfLg1pKIr89T3x7xUomFqoiTMNm5qAvm8DfQjQ5AS
-	ILT2e9FC9iNvhPg3+sgdre2mMUBDr3Akcby5uIRP7MC8haSJutqvFv8hX5NPm7ZDu9ITSSSt0ml
-	Lwc0aeXNECe+zVwyfeE5UanWRHLpGA7eo4r0OQC1hw5/sF7Jh3Sq6WpbbcJ8qPX1d6irW1Rr0DO
-	geDuq/ukheU8UmzrbThp/bEKrIrk+7Ahz
-X-Google-Smtp-Source: AGHT+IGBfPWLF14udRjA4rTQL7Xmj57jJQlVSw3nSt80zUa+Z8byzZivAhETKB7aMXe+Sl/ni3qeIw==
-X-Received: by 2002:a17:907:3e0e:b0:ae0:c7b4:b797 with SMTP id a640c23a62f3a-ae0c7b4b8e3mr103550666b.45.1750843388241;
-        Wed, 25 Jun 2025 02:23:08 -0700 (PDT)
+        bh=DgqZI7oI1+Rtsh8AHih668v9LL7u8KNYlhdavj5r3Pw=;
+        b=GZgjw9suSVLTabJ9F7qRKHA0qOqRKhuHZpCQPymMtDT7WRYpM3iqp314KdtrHhMcen
+         VU0V1meOabxlhUQmEeaeqiYab9ecYmepVQ3+4O5qxoFhi5WTBsI8qdCEYnAbrH1M6kFk
+         8Rw/sf2aeq5vW8n9CJkdaGv+fjizW/nC9iE75Fgh/nMyyhg1bdW7UKeWW8RGBS0b+aex
+         NTXvqFfDcKl2UvCB6U0Oi9q4Gs0e4b4yPA42uS7dCwXJ8q3g4NPcuHykXz11dIwEGQ+V
+         uNtwDDdiN8TwdCktMdgtKz9Sy+raWkEpjrlckVY7Etq3miO4NIGOORO07lkLUBc+7uwO
+         Kq5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750843389; x=1751448189;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DgqZI7oI1+Rtsh8AHih668v9LL7u8KNYlhdavj5r3Pw=;
+        b=vHoPFnUlasmz1SGFBsNV8bbE3+NmQiQUUmIuv6q9+hQr+v/t2hMYEqUpSmXfTyRuh+
+         W7fVNbVb4oush0GBdaQPRVEcQAf05R0mVagRIS70bKge79oJEO2XulF70PuCcAWQj/g0
+         oy7MmTVUig8tHeRCND5uy4shzMX8RH2Uw10a3pWEtBoMHGlHOMmSvXojdvmvNqGdqwBD
+         tdvgNTv+3qTP6SJcZwTtKYeOUAgqQ8GwcUmQvyRyEOHlSiID2YGOcMGThquAnlq6NHGb
+         Dqrf3Kg35pGaRW0t/hBIMr/eEwiIjc//0Ar5vp3y11i4ryb3EkIjmp3mlmvFYboLceKo
+         a9xQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVchCGACWBEH0jyA8nu9/V9HAiLfxN4jks8FD12ZS760Z4YNiV/LiCDqYfYBX99fxS9V4Z6TlTHJ40gvJwE@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxtq/NsLO97v/LYjeB4ywqiPtaj+8pO37GfjrlfV4KK9PLxptSt
+	UEiqoFV+ounqwbCAQOc+5HIY0gFHHmvSFl1wxg3iW/Ba0nJqcpcXYuN4e5vpHWhLvmE=
+X-Gm-Gg: ASbGnctve7KGa04PKoL1mNjtzp4M38kIybkCh9G1oXjAqguaI86vsAZaTQkD1XACYN1
+	VmmCxCUsQ86F3+CjQts+N67uTkuY6U5Xq9qtSN3+Si4smk92YuEoXn4De+OI+OUZ3j0tEwwSk1j
+	Rf0Z5HJMZN6IS4ywXjsHUZDQ2AURwL8cXrGv0sXjyu4gAjKLScC5eX4Y+LNhNG8R9ipemItuDf3
+	0loMV2kvZunejN8qDsRld3+hIhLo6WNZJmfhp4KH0PqCCzEL2LgasTxFhckKpJGHmLmwWuMkFA0
+	K77N1qCiGo49B2s6b4755Noy/P8S/FT29FAhGPzMNrhrvgudTIdDNltHdVjAVW4IsudJ1GGh6IX
+	Q+B6NF7slFnyg0FQXrjOS+m7/TvoaVWgZ
+X-Google-Smtp-Source: AGHT+IEbu2f/7cXyJsOb3QqXP0wh8TgrbA5ZDl76nci0eiAzw3s+R0MtL3pVIqORzpzq/cBkmMRAoQ==
+X-Received: by 2002:a17:907:6088:b0:ae0:a597:2959 with SMTP id a640c23a62f3a-ae0bed8e8acmr247450866b.32.1750843389413;
+        Wed, 25 Jun 2025 02:23:09 -0700 (PDT)
 Received: from otso.local (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae0aaa0a854sm270277766b.68.2025.06.25.02.23.07
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae0aaa0a854sm270277766b.68.2025.06.25.02.23.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Jun 2025 02:23:07 -0700 (PDT)
+        Wed, 25 Jun 2025 02:23:09 -0700 (PDT)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 00/14] Various dt-bindings for SM7635 and The Fairphone
- (Gen. 6) addition
-Date: Wed, 25 Jun 2025 11:22:55 +0200
-Message-Id: <20250625-sm7635-fp6-initial-v1-0-d9cd322eac1b@fairphone.com>
+Date: Wed, 25 Jun 2025 11:22:56 +0200
+Subject: [PATCH 01/14] dt-bindings: arm-smmu: document the support on
+ SM7635
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,15 +85,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPG/W2gC/42TzW7bMBCEX0VQr92CP+KfXqXIgVwubaKWxJKyk
- CLIu0exkaSXQD4RQ/Ab7M6AL32jmqn1Y/fSV9pyy8u8C/6z6/Hs5xNBjrvuBROKaSGhTUZLBal
- oyHNes78AVzSwRElJjP0OlkopP99Mfz/ddaW/1917vV9+WY/d3ZhroGsLAioV8itVWK9znk+Ql
- JaSow48+XET/f9zfcIGWp7KhSDWCVKAjAjWDZqjUs5x+R0o2Mc6bcE8pwUsaiIbrUAXx413P7q
- lrHsk/nJgUPKMa72ASySj1U4OOuwGBxReFvzTwGjnopQ2ojQPQ1NuCCxJ5Xy0kpE/JmuZziVCx
- KAiMq2RxDH0HiYNThEjrTlzx8R7k1DO/yDK4IMeLMbEH8Q++2fR2KSUEY6lBzajaVmp1AUb8MF
- Frwdmh2CPyTLljXE2gBy8Ns5JE2/VH2LPVQjJgEgpb7W3KL4vXO7vjVJsP6qRKtya2Ic+NWCaW
- UMqSO8+og2+EeAyTXkdu03/2j9HRd4/vb6+AXIeQHavAwAA
-X-Change-ID: 20250623-sm7635-fp6-initial-15e40fef53cd
+Message-Id: <20250625-sm7635-fp6-initial-v1-1-d9cd322eac1b@fairphone.com>
+References: <20250625-sm7635-fp6-initial-v1-0-d9cd322eac1b@fairphone.com>
+In-Reply-To: <20250625-sm7635-fp6-initial-v1-0-d9cd322eac1b@fairphone.com>
 To: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
  Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -115,135 +110,51 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org, 
  linux-mmc@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1750843387; l=7315;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1750843387; l=1465;
  i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=X3UlS9d7TlY6Pd12RdYn75CPVuzcGSmzvT+aXKx0h9I=;
- b=PhYFkq1F/db914X03xPoQB5gZpwOk1nGvWuuwEpN40VtD7TEu3y6t9uK9TA7paxOaRoimK4Gk
- /NuLWry4HChDv0DC0NE795vB+PtWL7GdDfNCJ4mvxYQEKrdHOXw/hQF
+ bh=eQWT5rynZ1PMaMurlFu0xtL6k2P+7npo9dOzB+6rBOg=;
+ b=gDsmUgdZBFiEdwrYEbZ8pi64XslJKaJrZmQirkFpqMll05JV6aPCYeaepteR65EJtYCQZk9aa
+ 7x2FpL//Q9vClR/bmMVFhIADOJuoW9AUJVzbXxYdMo+K4lm7WiiCaKO
 X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
  pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-Document various bits of the SM7635 SoC in the dt-bindings, which don't
-really need any other changes.
-
-Then we can add the dtsi for the SM7635 SoC and finally add a dts for
-the newly announced The Fairphone (Gen. 6) smartphone.
-
-Dependencies:
-* The dt-bindings should not have any dependencies on any other patches.
-* The qcom dts bits depend on most other SM7635 patchsets I have sent in
-  conjuction with this one. The exact ones are specified in the b4 deps.
+Add compatible for smmu representing support on SM7635.
 
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
-Luca Weiss (14):
-      dt-bindings: arm-smmu: document the support on SM7635
-      dt-bindings: cpufreq: qcom-hw: document SM7635 CPUFREQ Hardware
-      dt-bindings: crypto: qcom,prng: document SM7635
-      dt-bindings: firmware: qcom,scm: document SM7635 SCM Firmware Interface
-      dt-bindings: qcom,pdc: document the SM7635 Power Domain Controller
-      dt-bindings: mailbox: qcom-ipcc: document the SM7635 Inter-Processor Communication Controller
-      dt-bindings: soc: qcom,aoss-qmp: document the SM7635 Always-On Subsystem side channel
-      dt-bindings: thermal: qcom-tsens: document the SM7635 Temperature Sensor
-      dt-bindings: dma: qcom,gpi: document the SM7635 GPI DMA Engine
-      dt-bindings: mmc: sdhci-msm: document the SM7635 SDHCI Controller
-      dt-bindings: soc: qcom: qcom,pmic-glink: document SM7635 compatible
-      dt-bindings: arm: qcom: Add SM7635 and The Fairphone (Gen. 6)
-      arm64: dts: qcom: Add initial SM7635 dtsi
-      arm64: dts: qcom: Add The Fairphone (Gen. 6)
+ Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
- Documentation/devicetree/bindings/arm/qcom.yaml    |    6 +
- .../bindings/cpufreq/cpufreq-qcom-hw.yaml          |    2 +
- .../devicetree/bindings/crypto/qcom,prng.yaml      |    1 +
- .../devicetree/bindings/dma/qcom,gpi.yaml          |    1 +
- .../devicetree/bindings/firmware/qcom,scm.yaml     |    2 +
- .../bindings/interrupt-controller/qcom,pdc.yaml    |    1 +
- .../devicetree/bindings/iommu/arm,smmu.yaml        |    3 +
- .../devicetree/bindings/mailbox/qcom-ipcc.yaml     |    1 +
- .../devicetree/bindings/mmc/sdhci-msm.yaml         |    1 +
- .../bindings/soc/qcom/qcom,aoss-qmp.yaml           |    1 +
- .../bindings/soc/qcom/qcom,pmic-glink.yaml         |    1 +
- .../devicetree/bindings/thermal/qcom-tsens.yaml    |    1 +
- arch/arm64/boot/dts/qcom/Makefile                  |    1 +
- arch/arm64/boot/dts/qcom/sm7635-fairphone-fp6.dts  |  837 ++++++
- arch/arm64/boot/dts/qcom/sm7635.dtsi               | 2806 ++++++++++++++++++++
- 15 files changed, 3665 insertions(+)
----
-base-commit: d9946fe286439c2aeaa7953b8c316efe5b83d515
-change-id: 20250623-sm7635-fp6-initial-15e40fef53cd
-prerequisite-change-id: 20250616-eusb2-repeater-tuning-f56331c6b1fa:v2
-prerequisite-patch-id: 5c504d171a4d1acd9ec376e01e0dd0fddbad92b8
-prerequisite-patch-id: 0c97dcf5472fbed8ef4cffbd482f3169fe1e972d
-prerequisite-change-id: 20250617-simple-drm-fb-icc-89461c559913:v2
-prerequisite-patch-id: 1ce32150adbe39ad43d9a702623b55937d92a17c
-prerequisite-patch-id: 3562d9a85381bee745402619a7acba9b951f145c
-prerequisite-patch-id: f8447266657b779a546ecbbbc2e38bd61c422f08
-prerequisite-patch-id: cb9d07c82e73ab3691e0ace9604bfa69cdd6bb64
-prerequisite-patch-id: 18ab6ca6a024e5b8ea8138111064db593d72da35
-prerequisite-change-id: 20250620-sm7635-socinfo-8c6ee8d82c9d:v1 # optional
-prerequisite-patch-id: f1b2e11df96c271c9e3d010084809f361ee4249c
-prerequisite-patch-id: 1471abf17230db340c67a84b5a9009f1f2ea6e0e
-prerequisite-patch-id: 57bff00c4fedce1b78615375f12517b955dd1d16
-prerequisite-change-id: 20250620-sm7635-pinctrl-9fe3d869346b:v1
-prerequisite-patch-id: 43b88c44c6fc5b72a490cd3acc5d2585206e81f2
-prerequisite-patch-id: b3b6ebd4a288bd4abf227c939a1a92eafb2cf2c8
-prerequisite-change-id: 20250620-sm7635-clocks-7699d338dc37:v1
-prerequisite-patch-id: 48485e0e7e8a992695af1690f8cd2c09c227a4bf
-prerequisite-patch-id: 4685ceba3f900ad6d1d2ae35116d37f64a171d5d
-prerequisite-patch-id: 80f71dad0c0a77da98e5e66b592f38db6d81b4b1
-prerequisite-patch-id: 49a2fa1a14931d9143da232969e7487061466930
-prerequisite-patch-id: f5d1794f61488235644f78ffc28e3dacdab215d1
-prerequisite-patch-id: ab257573067ff09c94270e1fa6ad4de1480c06b9
-prerequisite-patch-id: 6608bd3f2e198a0780736aebcea3b47ee03df9ef
-prerequisite-patch-id: c463d0d2d84c8786ed9a09016f43b4657cbc231e
-prerequisite-patch-id: e113e76af37f01befaf4059ee3063cb45b27fd6b
-prerequisite-patch-id: 40f8b8acd07a9ff7da8683b1be6a58872250e849
-prerequisite-change-id: 20250620-sm7635-clocks-misc-0f359ad830ea:v1
-prerequisite-patch-id: 127f332296fced39a2fd2f9a1f446ba30ec28ceb
-prerequisite-patch-id: d21a0c8ceb06523c9f3f4ce569d28714878b3f84
-prerequisite-patch-id: 87029a8844ef174ab3e0f953a1d16957fe6c13cc
-prerequisite-patch-id: 095c767d7b7aa67d47026589c926636e57349ca6
-prerequisite-change-id: 20250620-sm7635-rpmhpd-dcb5dc066ce2:v1
-prerequisite-patch-id: d71fe15334032610c05cb55aeb28bfaa44e3530c
-prerequisite-patch-id: 729544e856b8046f7a311b719d9495f8b33c1e1f
-prerequisite-change-id: 20250620-sm7635-icc-e495e0e66109:v1
-prerequisite-patch-id: b387217215d6f83cbd50c380171b159a2f1406d8
-prerequisite-patch-id: bffd82274c35f6d520f524aa2a9c1c4bef7e047e
-prerequisite-change-id: 20250620-sm7635-eusb-phy-d3bab648cdf1:v1
-prerequisite-patch-id: c242c9b099d738214def29d2e464b64be5f14e62
-prerequisite-patch-id: 8c1eb426c08bc1ec9462e77139b3b64d5e1453e9
-prerequisite-patch-id: cdbc469ab33002c6bf697c033755b598dd1a621e
-prerequisite-patch-id: 6bb2900bb530880091622ef47d141fe1f5756a52
-prerequisite-change-id: 20250620-sm7635-eusb-repeater-0d78f557290f:v1
-prerequisite-patch-id: 5c504d171a4d1acd9ec376e01e0dd0fddbad92b8
-prerequisite-patch-id: 0c97dcf5472fbed8ef4cffbd482f3169fe1e972d
-prerequisite-patch-id: a618abb349c3de5b49f79b4b0f86d9ab502ad500
-prerequisite-patch-id: 09f91ff3a25c16a0375bdfec80604a64eab0b4fb
-prerequisite-patch-id: 8fca8b09d70409c5c78f9f1b77d0a4c75bce38cf
-prerequisite-patch-id: f5c2c24d2baefcd7ff91718529ab2f2c264ab99f
-prerequisite-change-id: 20250620-sm7635-remoteprocs-149da64084b8:v1
-prerequisite-patch-id: 3c95a20dd456dfee100f2833de4e9931a2073c7d
-prerequisite-patch-id: 5292d77663ea9c44346b8da86bda36e0cce3fe56
-prerequisite-patch-id: 015edcb2a69b5e837dc7edfbc7adc22145ba611b
-prerequisite-change-id: 20250620-sm7635-pmiv0104-34a679937d9d:v1
-prerequisite-patch-id: 8fca8b09d70409c5c78f9f1b77d0a4c75bce38cf
-prerequisite-patch-id: f5c2c24d2baefcd7ff91718529ab2f2c264ab99f
-prerequisite-patch-id: d7a06ece910e7844c60b910fe8eed30ad2458f34
-prerequisite-patch-id: e91b741c9cfc80aa149bfd8e43cae90ca58e17f2
-prerequisite-patch-id: 5ba4a49c3792cb208ee064a6ba13545e40cb70ac
-prerequisite-patch-id: 5bdfcbdd226f7223c04a65c1a3cdcc3ecad38858
-prerequisite-change-id: 20250620-sm7635-pmxr2230-ee55a86a8c2b:v1
-prerequisite-patch-id: f0bd6e083324f954b988647bb42d4e2be179fbda
-prerequisite-patch-id: 8fe1c0fc544e8bcb35522c5eba0b36e83bfd0c19
-prerequisite-patch-id: 525c9eb0087025024bb0aaec1ed1d7d2c0bc8f03
-prerequisite-change-id: 20250623-pm7550-pmr735b-rpmh-regs-06087e5b3a99:v1
-prerequisite-patch-id: 7360606a06f8fba3ea9a8f84b4ecfb8209e91ab0
-prerequisite-patch-id: 7a06a346abdb7f7386912b92f2b84af87e7439a9
-prerequisite-patch-id: 1e1a6eb9c5421812c07421f9fa7e3f16b26a42da
-prerequisite-patch-id: 224df3e4068bee3a17bde32e16cd9366c55b5faf
+diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+index 7b9d5507d6ccd6b845a57eeae59fe80ba75cc652..8545dd8e886b265caa333188c031f19a44d7fa6b 100644
+--- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
++++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+@@ -55,6 +55,7 @@ properties:
+               - qcom,sm6125-smmu-500
+               - qcom,sm6350-smmu-500
+               - qcom,sm6375-smmu-500
++              - qcom,sm7635-smmu-500
+               - qcom,sm8150-smmu-500
+               - qcom,sm8250-smmu-500
+               - qcom,sm8350-smmu-500
+@@ -99,6 +100,7 @@ properties:
+               - qcom,sc8280xp-smmu-500
+               - qcom,sm6115-smmu-500
+               - qcom,sm6125-smmu-500
++              - qcom,sm7635-smmu-500
+               - qcom,sm8150-smmu-500
+               - qcom,sm8250-smmu-500
+               - qcom,sm8350-smmu-500
+@@ -535,6 +537,7 @@ allOf:
+           items:
+             - enum:
+                 - qcom,sar2130p-smmu-500
++                - qcom,sm7635-smmu-500
+                 - qcom,sm8550-smmu-500
+                 - qcom,sm8650-smmu-500
+                 - qcom,x1e80100-smmu-500
 
-Best regards,
 -- 
-Luca Weiss <luca.weiss@fairphone.com>
+2.50.0
 
 
