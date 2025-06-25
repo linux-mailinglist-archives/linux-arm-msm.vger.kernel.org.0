@@ -1,83 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-62543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32766AE8DE9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 21:07:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B85A4AE8DD9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 21:05:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DB9753AB156
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 19:05:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C64301C2408B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 19:05:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 782BA2F9483;
-	Wed, 25 Jun 2025 18:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 012262F9494;
+	Wed, 25 Jun 2025 18:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="X63vZWpT"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pFGV5HrF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414CD2F547F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 18:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3912F5497
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 18:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750877953; cv=none; b=PunYU3jxDEQQZj++6LpS8pwOnX7Z9hwb0TJO//E39EvXE6HPUrMgmAcVY6Zq0LNQV9RAIBRBS2JT7ycxIF8tCFj5wFtPqJuRE5qCD9dBqzumiKr+GV8yNmvNJsV8rMhKvcStq1ZIoJ0vVd3tJafbcgVRVvTzQMocSeIJc+v/Ckc=
+	t=1750877953; cv=none; b=U+B3KoJhclp4QVRUdCFNIxwN9uoPWixbNZNfwLhXmwhvB5kSSFUkw6oWCj37GOnKNu/u9Z+EXvKwiQ+6ttBmZSiLKYZfMtaTOSbpfUwiP4ggH94c/RisVT+N5MkhLRvtklu0EFU2jG3wqxKKA/ulvV8RFrJ6vDlPYjUXvHXBW54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750877953; c=relaxed/simple;
-	bh=6P72wyHUP0Uts1ho71jfImK3Za+ySadWpObyOKq/Ij8=;
+	bh=miM77xEXTrB6mt10AQICgq6MDZD3BX5ufhFU8RcosDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XASe4qNo5Fyy9y+Ybnwy9v9kggAF3vVAkQjrEXHDKeuYic8lpRma507uS1OYMpRlqq00oY5ZG1j5AV7/qY5e3sEHGamQNQ6C+W8g0e7tZzsG0TdfgZ5CBGKNaSDy9pcl7S4HKNY+aRdwkxjmNg7SZrGY5P6entiMyOXmRDtb8B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=X63vZWpT; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=jBRqrsauNXhpaE/i3z4NCkDfaCdDE84jHkD4+emDjsC6FKPmZVNOxnqhTqID+VnscK5iF2iRrfhuQTubNisyvhiPuj1CxjFsR8plH7JfJ1iMiPD5KWWwtWn6pNLaUaRdWzmXcsVAFSQDjqNLl4eBTykWzGW4mg/eBl3S/jXLDZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pFGV5HrF; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55PAXXjG001551
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 18:59:10 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55PAL9K7001286
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 18:59:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=XUBhuSPLTTK
-	SJ37M+CTYeQmfyEx8yN+0MTUmq1WzjRY=; b=X63vZWpTVGeWh9Dso5ZsT2qob8I
-	NXQmVmMKk6G4MDxuE974sR967Pwo43Lb6KKdNaXRZdUVCF4LZzuLEJOQiAG7Zg6J
-	bCWCHADXYdSEiTY5eQ0P3EcZokGV2FIOoH2/XzcYNn5hUiIqQe97G7ZkzgXyoKQo
-	Zhc70otpNEebgm7Am7EF+ZQg4+9x9J2DV8o1TjIAydO21l3S4okFTExh5uRYmet5
-	BNJX0W4Fksdoo4oTv9ynhy3rKLIGQW01j0nD+qDgiPuUOUuhsMwzw1nT1eJC/F5j
-	esBcQakgXBL/j4I/Ryt7rZlfmePIvjGylMpXjerjAt+caltKJRw8XGYgUJw==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47g7tdaste-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=DtgSsqvS9NG
+	lueSPRpKpNF02UHsYVqSrf4yaa+KHu3E=; b=pFGV5HrFiVHgGbMsigNsiN34XeL
+	V85NrU2arxrLMhWzSknYErzNud7rFy1AoxahQ50iQ5MV+R3gcPYOGziCAxFYskJW
+	4qwK1MuxSf6SEQQ3ait4roeXZnj9GpvXSCMm8CHWBTNN+CIOxEtmyOG/FG8bG5rY
+	y120oAcUqDBgx4ETAdMbMeA900xZlCIhad1KInMlEKwtglPCG046esCod4mk2epg
+	RfmUXOhQPu4wjcjGJEynqnzN4/wReZvmYTnjG3jOZg3ugKVKfaByMk8PP1FlBRFP
+	bdUcjX5uSbiMn1JVjhS4vBzuUi2QTWzZI5Ts9JqyU8M63AwZyRxu3UM9Dhw==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47g7tdasth-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 18:59:10 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2358de17665so1745225ad.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 11:59:10 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 18:59:11 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b31ff60558eso1015527a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 11:59:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750877949; x=1751482749;
+        d=1e100.net; s=20230601; t=1750877951; x=1751482751;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XUBhuSPLTTKSJ37M+CTYeQmfyEx8yN+0MTUmq1WzjRY=;
-        b=bm+Jbngb7kTBLtDdk61MdxRVQAXhm1ODgKmY1eS5VwXsZkhaQwO+GGxTotiddhorSO
-         Cw0Q49VGYJIAvH3o2CBmUWRqeNCzchGZElHn1UHWXJ+Jb8VHWJ1pojrazQFzS5IjRai0
-         zaBZOq6em1GnB5zDvhPtWlPkWGz9Sq6iKWNxLIwCOVQSXcYkgdqCqd/lrgQt+E+11kQI
-         Ytyu0wNduwRWhBK1L62CO4cNyOWu4wyiSi898cSSyk853DQEYtURk9WPsEDD0xSkD0ez
-         Th3ED26CqzzFokt1U0SvLeh4x+0B24WG4o/kwTF9UHOPGHG3WCZOhj76KrP5of7/3gQo
-         5tIA==
-X-Gm-Message-State: AOJu0Yz7iy+Rqwf+fA3djTyyTZoNsbqM+oc8Vlq/X0q05xNPF7ng3FgI
-	CnxoSINaPWc44Xxdb2rWGdOsLKyVpU8wxjcAFBZqhsZlCSsiccplokCI6x3ujXSsBsuM9iUvcpK
-	JRvdxEsBPbpLeJX0yPL4reJLwQuQneKqFTmMtfqz0G6i+kpZ83/otBMiq5QKZWk81Pemy
-X-Gm-Gg: ASbGncvOjc/3ufyW44eYfE/HoU+xw8ujUEDKKbvv0jo23M3MM4TWQvV/9ImlPmybVz2
-	ITgBBiK39TD//o0HktLY6nKEXssIFgmFKMNUPTTHP6pvRfo4kA3msDuHV2/NQom/cU2LBrv2hga
-	FGt1c4sbdhnxojvbJuK6fdcAIV9WF55Skw6voRqy0qe2lt+JYfni4d0mtnZLVBkRGo3cz6TvrhG
-	hq5bMW9dj1U4cULrXFyWqwdre7iwxFU24qDwq1B7uETvx/6uq5S16Nyss1PWBA5QLho+DJfxkYM
-	DHD0YUvA7h7PVKcTGXAzrQK+OkiwE11a
-X-Received: by 2002:a17:903:2f10:b0:234:f182:a759 with SMTP id d9443c01a7336-23824044709mr71556265ad.28.1750877949174;
-        Wed, 25 Jun 2025 11:59:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHvX5Sl/WDvH4+nu3fzC4yJunJqdJ8QtHBAtsyIN1MEJyeXJmSWnXLeTatrEQ7V5hMi05usVw==
-X-Received: by 2002:a17:903:2f10:b0:234:f182:a759 with SMTP id d9443c01a7336-23824044709mr71555915ad.28.1750877948611;
-        Wed, 25 Jun 2025 11:59:08 -0700 (PDT)
+        bh=DtgSsqvS9NGlueSPRpKpNF02UHsYVqSrf4yaa+KHu3E=;
+        b=ZMQwAckEsrfg480Rp3NGN/NsdfOSJ7Qy3B6q0NQFbhtOjZhwgs/eMzsvdugxIssy0i
+         eILPyQWRxmHcdGdv/YGFDJ9AOWHR48usp+ACmEfPhig8EcFxLG/ocaBaUOkuK5VAq4AJ
+         q9xUCCSK1MGXzZXtcxPvk28k1Ry73AoaZepP5rdsUjU07YWz4yaFZLz0hFbGOrceH8JE
+         TOg4HDQsoaAyGUAqceKqeXjZZJP6lEJVdUo2AvFMogXe53h7nsZw53eb5dB+5+rbslzf
+         xhxNHqCbfbPUr5OaK8KForZC3h7K+lne2YEWAMaVyI3LrvG/3+X6RkDw4pTrLdLbCe84
+         yBjw==
+X-Gm-Message-State: AOJu0YyZL1HLsND6EmtCnQAXhMNHa2701PTeKn60jjB/x8TXgGcbhsCb
+	zbGf6tHS6EkQHG5oAvfZDaBXIdve6ravY+YijDZc6rEH/sETnQdvJCALXpnTYR5IZHW+0cmFKS5
+	yONH/D2+Cv7Kg/6H+kp4RoTUyVUE78zhu9zStvwKYA3xHP4aBvoPOcAfNMEfsX5qlTCOX
+X-Gm-Gg: ASbGnctLe1C8ofmCRjectWF1l9PCJMzPdCu7RFDV7GQtErLd6HG2Vgc+8n5SU5wm6Vk
+	h0zwRm+qZtjAO5b255nhUz0aETeGIXz50yApk84d29IdW632NTc5XRiF9mU2wxWAwMn70icKcgg
+	jnSirlB1TkOwOPY6cz9/mIEm+wxJQBkUnD6Xr3yAY6neDOuQR9DBvoYUEPSriWl+JR/mGuesZVK
+	rjuA1Du7z6t7WLNKEOo3iy/DGfMlnhENIuU/DePTFHBv1ttgF5uTeTuO/QNZs2EEihSrAWGKM6z
+	J9363DX2BQZuWcG+aKLSfjcY59EPsVq4
+X-Received: by 2002:a17:90b:5884:b0:310:c8ec:4192 with SMTP id 98e67ed59e1d1-316e2336f18mr798545a91.10.1750877950571;
+        Wed, 25 Jun 2025 11:59:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEbp4SKrEY9d8JIbSkMB6p5URNqdjm5cGwlxWoVGnHIftvqm3YVrqyP0ZrvpIQrI+VVUGZoBA==
+X-Received: by 2002:a17:90b:5884:b0:310:c8ec:4192 with SMTP id 98e67ed59e1d1-316e2336f18mr798499a91.10.1750877950074;
+        Wed, 25 Jun 2025 11:59:10 -0700 (PDT)
 Received: from localhost ([2601:1c0:5000:d5c:5b3e:de60:4fda:e7b1])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d8610177sm138762345ad.121.2025.06.25.11.59.08
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-315f539e6ccsm2331259a91.17.2025.06.25.11.59.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Jun 2025 11:59:08 -0700 (PDT)
+        Wed, 25 Jun 2025 11:59:09 -0700 (PDT)
 From: Rob Clark <robin.clark@oss.qualcomm.com>
 To: dri-devel@lists.freedesktop.org
 Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
@@ -85,23 +85,16 @@ Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         Antonino Maniscalco <antomani103@gmail.com>,
         Rob Clark <robdclark@chromium.org>,
         Rob Clark <robin.clark@oss.qualcomm.com>,
-        Rob Clark <robdclark@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+        Dmitry Baryshkov <lumag@kernel.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        linux-kernel@vger.kernel.org (open list),
-        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK:Keyword:\bdma_(?:buf|fence|resv)\b),
-        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING FRAMEWORK:Keyword:\bdma_(?:buf|fence|resv)\b)
-Subject: [PATCH v7 31/42] drm/msm: Add VM_BIND submitqueue
-Date: Wed, 25 Jun 2025 11:47:24 -0700
-Message-ID: <20250625184918.124608-32-robin.clark@oss.qualcomm.com>
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v7 32/42] drm/msm: Support IO_PGTABLE_QUIRK_NO_WARN_ON
+Date: Wed, 25 Jun 2025 11:47:25 -0700
+Message-ID: <20250625184918.124608-33-robin.clark@oss.qualcomm.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250625184918.124608-1-robin.clark@oss.qualcomm.com>
 References: <20250625184918.124608-1-robin.clark@oss.qualcomm.com>
@@ -112,24 +105,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=CPYqXQrD c=1 sm=1 tr=0 ts=685c46fe cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=xqWC_Br6kY4A:10 a=6IFa9wvqVegA:10
- a=cm27Pg_UAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=PnHp71_pcMtKiH-pJVMA:9
- a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDE0MyBTYWx0ZWRfXyGRRJdaXxi/J
- xruZIOGhcEdksPA/ANYlo3bdGzwBZgdSePjeiBdN2eF6RLwHtSNP7FNh4OBYsHqgy2opeX2DUTV
- EeVtuLw6JCvRDYVu5J9rbKTM+Jau31i5yGir/gaYa1xX+SlWvJ/imLt5WrTRyL9cqdRlo723e3r
- CM0Q2LSOP3X1n8sML8eDSKYLS7r5laF7Wi72tr9GruKXedIFOCRr73MppMWtHOy7nqzqOzbMb/T
- 4W4y4T7KZIpzjX3HtGSyvOP3NPJWhYsHrfLkYzPOeLmd3rxOVczq0hCmZ2dEWXp/iUGlid+MpW9
- +0ZY6VczB1TMQ5UI+qleDu6WCDSgl9UeKFDJm+u1HeDVlTz1wCt91klLPXUrhcnop3I5E0Dt8fO
- Sq1x+G2HvWn8mXC0rK1E50KwO49FAqdWYX6tC7usnn0NfFA77ws0wugRWI3UICbjqbRrjpaP
-X-Proofpoint-GUID: rPYEH6Gs5txmwXigJUtPr4_ncvZvN0O2
-X-Proofpoint-ORIG-GUID: rPYEH6Gs5txmwXigJUtPr4_ncvZvN0O2
+X-Authority-Analysis: v=2.4 cv=CPYqXQrD c=1 sm=1 tr=0 ts=685c46ff cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=xqWC_Br6kY4A:10 a=6IFa9wvqVegA:10
+ a=cm27Pg_UAAAA:8 a=EUspDBNiAAAA:8 a=MLfKQGWeMraaM-6YArcA:9
+ a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDE0MyBTYWx0ZWRfXwvPgR7e0gkzi
+ BN/nAssmV0D8TL7QSWvZTxTGx3p9Vi7Umfk7b2gKVeuLM0bhJXzqKZCEv7kbUWpnsv+uPPhEguC
+ yjHrWWGXwtWrMguyZccFrmgKv19V0fpNCZmDBOls5s7TOfQ2JZnxKyLB0uMbZ8xK37vZisKQ/o6
+ Oi2bMUAxQkmr+R7/2DnopfmVv/KGH2mnrBvlXsSSRot/8gyKOHARZZpfrHqr7jTZl1pnwdZdcGw
+ GDOcUBD5X9IWpcTUTMpYyazbPTzrfYHL1HJ/jDAklHr2eSgCI5jR7zHUaEeTHHGVA+IC6Fi0WXN
+ yakjWD/lbFhz/3DEE2CZO6FQHAvBplAyAVpiBOH8xvAVuKB6QP61V2uDovAtTbBV8q3+6tBc1kw
+ jqS2FjSOmabU+MRzg7PNs1GpfoMFN2tkepOPaysCT+zA+g8Ki/YKt9a8vkCx11vmA55FdoLr
+X-Proofpoint-GUID: 1RjhkwA236nQcaquToT5h_hc3V7VpAMQ
+X-Proofpoint-ORIG-GUID: 1RjhkwA236nQcaquToT5h_hc3V7VpAMQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-06-25_06,2025-06-25_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 mlxlogscore=999 lowpriorityscore=0 malwarescore=0
+ bulkscore=0 phishscore=0 mlxlogscore=978 lowpriorityscore=0 malwarescore=0
  impostorscore=0 suspectscore=0 clxscore=1015 spamscore=0 priorityscore=1501
  adultscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
@@ -137,443 +130,107 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
 
 From: Rob Clark <robdclark@chromium.org>
 
-This submitqueue type isn't tied to a hw ringbuffer, but instead
-executes on the CPU for performing async VM_BIND ops.
+With user managed VMs and multiple queues, it is in theory possible to
+trigger map/unmap errors.  These will (in a later patch) mark the VM as
+unusable.  But we want to tell the io-pgtable helpers not to spam the
+log.  In addition, in the unmap path, we don't want to bail early from
+the unmap, to ensure we don't leave some dangling pages mapped.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/msm_gem.h         | 12 +++++
- drivers/gpu/drm/msm/msm_gem_submit.c  | 60 +++++++++++++++++++---
- drivers/gpu/drm/msm/msm_gem_vma.c     | 71 +++++++++++++++++++++++++++
- drivers/gpu/drm/msm/msm_gpu.h         |  3 ++
- drivers/gpu/drm/msm/msm_submitqueue.c | 67 +++++++++++++++++++------
- include/uapi/drm/msm_drm.h            |  9 +++-
- 6 files changed, 197 insertions(+), 25 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c |  2 +-
+ drivers/gpu/drm/msm/msm_iommu.c       | 23 ++++++++++++++++++-----
+ drivers/gpu/drm/msm/msm_mmu.h         |  2 +-
+ 3 files changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index b44a4f7313c9..945a235d73cf 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -53,6 +53,13 @@ struct msm_gem_vm {
- 	/** @base: Inherit from drm_gpuvm. */
- 	struct drm_gpuvm base;
- 
-+	/**
-+	 * @sched: Scheduler used for asynchronous VM_BIND request.
-+	 *
-+	 * Unused for kernel managed VMs (where all operations are synchronous).
-+	 */
-+	struct drm_gpu_scheduler sched;
-+
- 	/**
- 	 * @mm: Memory management for kernel managed VA allocations
- 	 *
-@@ -71,6 +78,9 @@ struct msm_gem_vm {
- 	 */
- 	struct pid *pid;
- 
-+	/** @last_fence: Fence for last pending work scheduled on the VM */
-+	struct dma_fence *last_fence;
-+
- 	/** @faults: the number of GPU hangs associated with this address space */
- 	int faults;
- 
-@@ -100,6 +110,8 @@ struct drm_gpuvm *
- msm_gem_vm_create(struct drm_device *drm, struct msm_mmu *mmu, const char *name,
- 		  u64 va_start, u64 va_size, bool managed);
- 
-+void msm_gem_vm_close(struct drm_gpuvm *gpuvm);
-+
- struct msm_fence_context;
- 
- #define MSM_VMA_DUMP (DRM_GPUVA_USERBITS << 0)
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 9f18771a1e88..e2174b7d0e40 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -4,6 +4,7 @@
-  * Author: Rob Clark <robdclark@gmail.com>
-  */
- 
-+#include <linux/dma-fence-unwrap.h>
- #include <linux/file.h>
- #include <linux/sync_file.h>
- #include <linux/uaccess.h>
-@@ -258,30 +259,43 @@ static int submit_lookup_cmds(struct msm_gem_submit *submit,
- static int submit_lock_objects(struct msm_gem_submit *submit)
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index f0e37733c65d..83fba02ca1df 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -2267,7 +2267,7 @@ a6xx_create_private_vm(struct msm_gpu *gpu, bool kernel_managed)
  {
- 	unsigned flags = DRM_EXEC_IGNORE_DUPLICATES | DRM_EXEC_INTERRUPTIBLE_WAIT;
-+	struct drm_exec *exec = &submit->exec;
- 	int ret;
+ 	struct msm_mmu *mmu;
  
--// TODO need to add vm_bind path which locks vm resv + external objs
- 	drm_exec_init(&submit->exec, flags, submit->nr_bos);
+-	mmu = msm_iommu_pagetable_create(to_msm_vm(gpu->vm)->mmu);
++	mmu = msm_iommu_pagetable_create(to_msm_vm(gpu->vm)->mmu, kernel_managed);
  
-+	if (msm_context_is_vmbind(submit->queue->ctx)) {
-+		drm_exec_until_all_locked (&submit->exec) {
-+			ret = drm_gpuvm_prepare_vm(submit->vm, exec, 1);
-+			drm_exec_retry_on_contention(exec);
-+			if (ret)
-+				return ret;
-+
-+			ret = drm_gpuvm_prepare_objects(submit->vm, exec, 1);
-+			drm_exec_retry_on_contention(exec);
-+			if (ret)
-+				return ret;
-+		}
-+
-+		return 0;
-+	}
-+
- 	drm_exec_until_all_locked (&submit->exec) {
- 		ret = drm_exec_lock_obj(&submit->exec,
- 					drm_gpuvm_resv_obj(submit->vm));
- 		drm_exec_retry_on_contention(&submit->exec);
- 		if (ret)
--			goto error;
-+			return ret;
- 		for (unsigned i = 0; i < submit->nr_bos; i++) {
- 			struct drm_gem_object *obj = submit->bos[i].obj;
- 			ret = drm_exec_prepare_obj(&submit->exec, obj, 1);
- 			drm_exec_retry_on_contention(&submit->exec);
- 			if (ret)
--				goto error;
-+				return ret;
- 		}
- 	}
- 
- 	return 0;
--
--error:
--	return ret;
- }
- 
- static int submit_fence_sync(struct msm_gem_submit *submit)
-@@ -367,9 +381,18 @@ static void submit_unpin_objects(struct msm_gem_submit *submit)
- 
- static void submit_attach_object_fences(struct msm_gem_submit *submit)
+ 	if (IS_ERR(mmu))
+ 		return ERR_CAST(mmu);
+diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+index 756bd55ee94f..1c068592f9e9 100644
+--- a/drivers/gpu/drm/msm/msm_iommu.c
++++ b/drivers/gpu/drm/msm/msm_iommu.c
+@@ -94,15 +94,24 @@ static int msm_iommu_pagetable_unmap(struct msm_mmu *mmu, u64 iova,
  {
--	int i;
-+	struct msm_gem_vm *vm = to_msm_vm(submit->vm);
-+	struct dma_fence *last_fence;
-+
-+	if (msm_context_is_vmbind(submit->queue->ctx)) {
-+		drm_gpuvm_resv_add_fence(submit->vm, &submit->exec,
-+					 submit->user_fence,
-+					 DMA_RESV_USAGE_BOOKKEEP,
-+					 DMA_RESV_USAGE_BOOKKEEP);
-+		return;
-+	}
+ 	struct msm_iommu_pagetable *pagetable = to_pagetable(mmu);
+ 	struct io_pgtable_ops *ops = pagetable->pgtbl_ops;
++	int ret = 0;
  
--	for (i = 0; i < submit->nr_bos; i++) {
-+	for (unsigned i = 0; i < submit->nr_bos; i++) {
- 		struct drm_gem_object *obj = submit->bos[i].obj;
+ 	while (size) {
+-		size_t unmapped, pgsize, count;
++		size_t pgsize, count;
++		ssize_t unmapped;
  
- 		if (submit->bos[i].flags & MSM_SUBMIT_BO_WRITE)
-@@ -379,6 +402,10 @@ static void submit_attach_object_fences(struct msm_gem_submit *submit)
- 			dma_resv_add_fence(obj->resv, submit->user_fence,
- 					   DMA_RESV_USAGE_READ);
- 	}
-+
-+	last_fence = vm->last_fence;
-+	vm->last_fence = dma_fence_unwrap_merge(submit->user_fence, last_fence);
-+	dma_fence_put(last_fence);
- }
+ 		pgsize = calc_pgsize(pagetable, iova, iova, size, &count);
  
- static int submit_bo(struct msm_gem_submit *submit, uint32_t idx,
-@@ -537,6 +564,11 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	if (!queue)
- 		return -ENOENT;
- 
-+	if (queue->flags & MSM_SUBMITQUEUE_VM_BIND) {
-+		ret = UERR(EINVAL, dev, "Invalid queue type");
-+		goto out_post_unlock;
-+	}
-+
- 	ring = gpu->rb[queue->ring_nr];
- 
- 	if (args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
-@@ -726,6 +758,18 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 
- 	submit_attach_object_fences(submit);
- 
-+	if (msm_context_is_vmbind(ctx)) {
-+		/*
-+		 * If we are not using VM_BIND, submit_pin_vmas() will validate
-+		 * just the BOs attached to the submit.  In that case we don't
-+		 * need to validate the _entire_ vm, because userspace tracked
-+		 * what BOs are associated with the submit.
-+		 */
-+		ret = drm_gpuvm_validate(submit->vm, &submit->exec);
-+		if (ret)
-+			goto out;
-+	}
-+
- 	/* The scheduler owns a ref now: */
- 	msm_gem_submit_get(submit);
- 
-diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-index e16a8cafd8be..cf37abb98235 100644
---- a/drivers/gpu/drm/msm/msm_gem_vma.c
-+++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-@@ -16,6 +16,7 @@ msm_gem_vm_free(struct drm_gpuvm *gpuvm)
- 	drm_mm_takedown(&vm->mm);
- 	if (vm->mmu)
- 		vm->mmu->funcs->destroy(vm->mmu);
-+	dma_fence_put(vm->last_fence);
- 	put_pid(vm->pid);
- 	kfree(vm);
- }
-@@ -154,6 +155,9 @@ static const struct drm_gpuvm_ops msm_gpuvm_ops = {
- 	.vm_free = msm_gem_vm_free,
- };
- 
-+static const struct drm_sched_backend_ops msm_vm_bind_ops = {
-+};
-+
- /**
-  * msm_gem_vm_create() - Create and initialize a &msm_gem_vm
-  * @drm: the drm device
-@@ -195,6 +199,21 @@ msm_gem_vm_create(struct drm_device *drm, struct msm_mmu *mmu, const char *name,
- 		goto err_free_vm;
- 	}
- 
-+	if (!managed) {
-+		struct drm_sched_init_args args = {
-+			.ops = &msm_vm_bind_ops,
-+			.num_rqs = 1,
-+			.credit_limit = 1,
-+			.timeout = MAX_SCHEDULE_TIMEOUT,
-+			.name = "msm-vm-bind",
-+			.dev = drm->dev,
-+		};
-+
-+		ret = drm_sched_init(&vm->sched, &args);
-+		if (ret)
-+			goto err_free_dummy;
-+	}
-+
- 	drm_gpuvm_init(&vm->base, name, flags, drm, dummy_gem,
- 		       va_start, va_size, 0, 0, &msm_gpuvm_ops);
- 	drm_gem_object_put(dummy_gem);
-@@ -206,8 +225,60 @@ msm_gem_vm_create(struct drm_device *drm, struct msm_mmu *mmu, const char *name,
- 
- 	return &vm->base;
- 
-+err_free_dummy:
-+	drm_gem_object_put(dummy_gem);
-+
- err_free_vm:
- 	kfree(vm);
- 	return ERR_PTR(ret);
- 
- }
-+
-+/**
-+ * msm_gem_vm_close() - Close a VM
-+ * @gpuvm: The VM to close
-+ *
-+ * Called when the drm device file is closed, to tear down VM related resources
-+ * (which will drop refcounts to GEM objects that were still mapped into the
-+ * VM at the time).
-+ */
-+void
-+msm_gem_vm_close(struct drm_gpuvm *gpuvm)
-+{
-+	struct msm_gem_vm *vm = to_msm_vm(gpuvm);
-+	struct drm_gpuva *vma, *tmp;
-+
-+	/*
-+	 * For kernel managed VMs, the VMAs are torn down when the handle is
-+	 * closed, so nothing more to do.
-+	 */
-+	if (vm->managed)
-+		return;
-+
-+	if (vm->last_fence)
-+		dma_fence_wait(vm->last_fence, false);
-+
-+	/* Kill the scheduler now, so we aren't racing with it for cleanup: */
-+	drm_sched_stop(&vm->sched, NULL);
-+	drm_sched_fini(&vm->sched);
-+
-+	/* Tear down any remaining mappings: */
-+	dma_resv_lock(drm_gpuvm_resv(gpuvm), NULL);
-+	drm_gpuvm_for_each_va_safe (vma, tmp, gpuvm) {
-+		struct drm_gem_object *obj = vma->gem.obj;
-+
-+		if (obj && obj->resv != drm_gpuvm_resv(gpuvm)) {
-+			drm_gem_object_get(obj);
-+			msm_gem_lock(obj);
+ 		unmapped = ops->unmap_pages(ops, iova, pgsize, count, NULL);
+-		if (!unmapped)
+-			break;
++		if (unmapped <= 0) {
++			ret = -EINVAL;
++			/*
++			 * Continue attempting to unamp the remained of the
++			 * range, so we don't end up with some dangling
++			 * mapped pages
++			 */
++			unmapped = PAGE_SIZE;
 +		}
-+
-+		msm_gem_vma_unmap(vma);
-+		msm_gem_vma_close(vma);
-+
-+		if (obj && obj->resv != drm_gpuvm_resv(gpuvm)) {
-+			msm_gem_unlock(obj);
-+			drm_gem_object_put(obj);
-+		}
-+	}
-+	dma_resv_unlock(drm_gpuvm_resv(gpuvm));
-+}
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 448ebf721bd8..9cbf155ff222 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -570,6 +570,9 @@ struct msm_gpu_submitqueue {
- 	struct mutex lock;
- 	struct kref ref;
- 	struct drm_sched_entity *entity;
-+
-+	/** @_vm_bind_entity: used for @entity pointer for VM_BIND queues */
-+	struct drm_sched_entity _vm_bind_entity[0];
- };
  
- struct msm_gpu_state_bo {
-diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
-index 8ced49c7557b..8617a82cd6b3 100644
---- a/drivers/gpu/drm/msm/msm_submitqueue.c
-+++ b/drivers/gpu/drm/msm/msm_submitqueue.c
-@@ -72,6 +72,9 @@ void msm_submitqueue_destroy(struct kref *kref)
+ 		iova += unmapped;
+ 		size -= unmapped;
+@@ -110,7 +119,7 @@ static int msm_iommu_pagetable_unmap(struct msm_mmu *mmu, u64 iova,
  
- 	idr_destroy(&queue->fence_idr);
+ 	iommu_flush_iotlb_all(to_msm_iommu(pagetable->parent)->domain);
  
-+	if (queue->entity == &queue->_vm_bind_entity[0])
-+		drm_sched_entity_destroy(queue->entity);
-+
- 	msm_context_put(queue->ctx);
+-	return (size == 0) ? 0 : -EINVAL;
++	return ret;
+ }
  
- 	kfree(queue);
-@@ -102,7 +105,7 @@ struct msm_gpu_submitqueue *msm_submitqueue_get(struct msm_context *ctx,
+ static int msm_iommu_pagetable_map_prr(struct msm_mmu *mmu, u64 iova, size_t len, int prot)
+@@ -324,7 +333,7 @@ static const struct iommu_flush_ops tlb_ops = {
+ static int msm_gpu_fault_handler(struct iommu_domain *domain, struct device *dev,
+ 		unsigned long iova, int flags, void *arg);
  
- void msm_submitqueue_close(struct msm_context *ctx)
+-struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
++struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent, bool kernel_managed)
  {
--	struct msm_gpu_submitqueue *entry, *tmp;
-+	struct msm_gpu_submitqueue *queue, *tmp;
+ 	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(parent->dev);
+ 	struct msm_iommu *iommu = to_msm_iommu(parent);
+@@ -358,6 +367,10 @@ struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
+ 	ttbr0_cfg.quirks &= ~IO_PGTABLE_QUIRK_ARM_TTBR1;
+ 	ttbr0_cfg.tlb = &tlb_ops;
  
- 	if (!ctx)
- 		return;
-@@ -111,10 +114,17 @@ void msm_submitqueue_close(struct msm_context *ctx)
- 	 * No lock needed in close and there won't
- 	 * be any more user ioctls coming our way
- 	 */
--	list_for_each_entry_safe(entry, tmp, &ctx->submitqueues, node) {
--		list_del(&entry->node);
--		msm_submitqueue_put(entry);
-+	list_for_each_entry_safe(queue, tmp, &ctx->submitqueues, node) {
-+		if (queue->entity == &queue->_vm_bind_entity[0])
-+			drm_sched_entity_flush(queue->entity, MAX_WAIT_SCHED_ENTITY_Q_EMPTY);
-+		list_del(&queue->node);
-+		msm_submitqueue_put(queue);
- 	}
++	if (!kernel_managed) {
++		ttbr0_cfg.quirks |= IO_PGTABLE_QUIRK_NO_WARN;
++	}
 +
-+	if (!ctx->vm)
-+		return;
-+
-+	msm_gem_vm_close(ctx->vm);
+ 	pagetable->pgtbl_ops = alloc_io_pgtable_ops(ARM_64_LPAE_S1,
+ 		&ttbr0_cfg, pagetable);
+ 
+diff --git a/drivers/gpu/drm/msm/msm_mmu.h b/drivers/gpu/drm/msm/msm_mmu.h
+index c874852b7331..c70c71fb1a4a 100644
+--- a/drivers/gpu/drm/msm/msm_mmu.h
++++ b/drivers/gpu/drm/msm/msm_mmu.h
+@@ -52,7 +52,7 @@ static inline void msm_mmu_set_fault_handler(struct msm_mmu *mmu, void *arg,
+ 	mmu->handler = handler;
  }
  
- static struct drm_sched_entity *
-@@ -160,8 +170,6 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_context *ctx,
- 	struct msm_drm_private *priv = drm->dev_private;
- 	struct msm_gpu_submitqueue *queue;
- 	enum drm_sched_priority sched_prio;
--	extern int enable_preemption;
--	bool preemption_supported;
- 	unsigned ring_nr;
- 	int ret;
+-struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent);
++struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent, bool kernel_managed);
  
-@@ -171,26 +179,53 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_context *ctx,
- 	if (!priv->gpu)
- 		return -ENODEV;
- 
--	preemption_supported = priv->gpu->nr_rings == 1 && enable_preemption != 0;
-+	if (flags & MSM_SUBMITQUEUE_VM_BIND) {
-+		unsigned sz;
- 
--	if (flags & MSM_SUBMITQUEUE_ALLOW_PREEMPT && preemption_supported)
--		return -EINVAL;
-+		/* Not allowed for kernel managed VMs (ie. kernel allocs VA) */
-+		if (!msm_context_is_vmbind(ctx))
-+			return -EINVAL;
- 
--	ret = msm_gpu_convert_priority(priv->gpu, prio, &ring_nr, &sched_prio);
--	if (ret)
--		return ret;
-+		if (prio)
-+			return -EINVAL;
-+
-+		sz = struct_size(queue, _vm_bind_entity, 1);
-+		queue = kzalloc(sz, GFP_KERNEL);
-+	} else {
-+		extern int enable_preemption;
-+		bool preemption_supported =
-+			priv->gpu->nr_rings == 1 && enable_preemption != 0;
-+
-+		if (flags & MSM_SUBMITQUEUE_ALLOW_PREEMPT && preemption_supported)
-+			return -EINVAL;
- 
--	queue = kzalloc(sizeof(*queue), GFP_KERNEL);
-+		ret = msm_gpu_convert_priority(priv->gpu, prio, &ring_nr, &sched_prio);
-+		if (ret)
-+			return ret;
-+
-+		queue = kzalloc(sizeof(*queue), GFP_KERNEL);
-+	}
- 
- 	if (!queue)
- 		return -ENOMEM;
- 
- 	kref_init(&queue->ref);
- 	queue->flags = flags;
--	queue->ring_nr = ring_nr;
- 
--	queue->entity = get_sched_entity(ctx, priv->gpu->rb[ring_nr],
--					 ring_nr, sched_prio);
-+	if (flags & MSM_SUBMITQUEUE_VM_BIND) {
-+		struct drm_gpu_scheduler *sched = &to_msm_vm(msm_context_vm(drm, ctx))->sched;
-+
-+		queue->entity = &queue->_vm_bind_entity[0];
-+
-+		drm_sched_entity_init(queue->entity, DRM_SCHED_PRIORITY_KERNEL,
-+				      &sched, 1, NULL);
-+	} else {
-+		queue->ring_nr = ring_nr;
-+
-+		queue->entity = get_sched_entity(ctx, priv->gpu->rb[ring_nr],
-+						 ring_nr, sched_prio);
-+	}
-+
- 	if (IS_ERR(queue->entity)) {
- 		ret = PTR_ERR(queue->entity);
- 		kfree(queue);
-diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-index 2c2fc4b284d0..6d6cd1219926 100644
---- a/include/uapi/drm/msm_drm.h
-+++ b/include/uapi/drm/msm_drm.h
-@@ -385,12 +385,19 @@ struct drm_msm_gem_madvise {
- /*
-  * Draw queues allow the user to set specific submission parameter. Command
-  * submissions specify a specific submitqueue to use.  ID 0 is reserved for
-- * backwards compatibility as a "default" submitqueue
-+ * backwards compatibility as a "default" submitqueue.
-+ *
-+ * Because VM_BIND async updates happen on the CPU, they must run on a
-+ * virtual queue created with the flag MSM_SUBMITQUEUE_VM_BIND.  If we had
-+ * a way to do pgtable updates on the GPU, we could drop this restriction.
-  */
- 
- #define MSM_SUBMITQUEUE_ALLOW_PREEMPT	0x00000001
-+#define MSM_SUBMITQUEUE_VM_BIND	0x00000002  /* virtual queue for VM_BIND ops */
-+
- #define MSM_SUBMITQUEUE_FLAGS		    ( \
- 		MSM_SUBMITQUEUE_ALLOW_PREEMPT | \
-+		MSM_SUBMITQUEUE_VM_BIND | \
- 		0)
- 
- /*
+ int msm_iommu_pagetable_params(struct msm_mmu *mmu, phys_addr_t *ttbr,
+ 			       int *asid);
 -- 
 2.49.0
 
