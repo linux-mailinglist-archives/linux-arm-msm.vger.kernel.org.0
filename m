@@ -1,59 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-62266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 500F8AE760C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 06:38:16 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C258AE7612
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 06:39:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F9391BC5B93
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 04:38:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BEF337A5EA2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 04:37:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B9C91F099C;
-	Wed, 25 Jun 2025 04:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9EA11F866B;
+	Wed, 25 Jun 2025 04:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HyUwcqL7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Fd1RfeVn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D281E32C6;
-	Wed, 25 Jun 2025 04:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9EA1F4CAC;
+	Wed, 25 Jun 2025 04:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750826216; cv=none; b=cyRxhrITXfEAXhxfXMyL6WSTX778Uaecd5pd7dpt3wylCqatRsj+AwW51Zy7vTlWGuDra0v1SgDgdBrFGaBZqdUwrx/nmhMdhDSVUtgMlordse6dIFsX7NgMS/Gf8zovFpY3uPs87pM83vR0Rb13TQtLiIb1RCOhBPGsoeQV/Yg=
+	t=1750826220; cv=none; b=beRl7Smgdqhqq3V1kPxJojmozsrPHEnlL1PWjklQrNQaqpMUBf2DI7t7jhWPiPEhKIj11kYL4cukfR4R6bI8iRJu17UNj99pAa90IJ9vwHk/Jq4jTi+bFFodSL+U5B9djToYwra8wy8NQkgabIF13XDJ/DKOqYOVqnUlgv4OWns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750826216; c=relaxed/simple;
-	bh=TBHogKU5UYKo7DgvkXDf8EN1yyburvFgHUEZd24xveY=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=OvKbqYEeYK1fU6NB1tL+QG1YSLCXQZTh3ymxnXNHqAq9awxwQRlEJKL7t0WJSjmrrNJIgc17GbEMI9IfM+87m3Qgz3a/LJbEeI/SlNTYVMgatZS3z/ig8DNUOxU+y58erDUpayTiXYYOG+0QNh9AurRqvH7SfCKql1QIY6DwZVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HyUwcqL7; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1750826220; c=relaxed/simple;
+	bh=otBZh15OOyjJkHH2CKgAxb2GW+HM0480P32OmU9pIq4=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=S8PeBSob90ZINjiIiLRwNnqzRxgHD10h8AyAl5jg5vE3WspBW0YIvLHbbRLwdT7mT3vtOEgs/c0oWFfTXJjc1Qm+G+pYQ9plSuvev7+PIZiW4jK4why1WB8RdLryWTqp6vhgwjOWlR7do8ajTEHevtP2ZxVMtevEYArMH+3uKg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Fd1RfeVn; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55P3VW0Q013850;
-	Wed, 25 Jun 2025 04:36:48 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55OFtCeD019573;
+	Wed, 25 Jun 2025 04:36:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=aj/f2WlZzwVLku+COiitPx
-	wQ5c1WO2LueIfG9xSBymM=; b=HyUwcqL7Ft98V0Cx3VononRIznd7WKwnGk+vQ5
-	Fl6+m55ToIUVjhIeyy7G0hWV7UPUcSYBboDb27FgzV2sNlnmJH3D5BEB78uzlOpp
-	X/+m9N7ImHx7JfjWGEspCQZj7OKxo8wkKhedlyc9JiYeXM1oPchWrPs6IneTRA+q
-	HYrVgyzeAe883qADVIBRCq6ZCiQqN7I9sWDeWGwTlEt2HgbrTYIa233SnR88GQG8
-	0viZL9qo8E7frnMUbrzNpgxlvThmWiItSQCvR50bEjfarE8QDIyf1q6++MRjfH7z
-	rd+LOzqdyPNO2x+hM18lw8FdoObJS7sGNLSMRSTclVm1qS9w==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47esa4qqd9-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	DESyyby3BI6Fcvb3mJCAa+KVqYOAQbycV1UC39W8JRw=; b=Fd1RfeVn27rCjwbw
+	1XGFv8grj98VrFGlVflfTxdTj/7xn/bYH9Btkah00+uEWQpEJ+1/rmBID1WgFm52
+	MejVmeqMlGPuXaYNQAI0EN6x6ASZ445d5cMZsoq1zcXnkb6ZDVI4YlqRCQS/jswI
+	Wqmr8T9FypkTxcYD6dzrNgOPyyWBF/wGJkTeZoiMmdAcNZw5mR6AEgXcX+u7dZ3J
+	wa/jjziLMxPkqmBp7zg/dkmNa8j1ICNDDKUSN88xTXFLeZMqjzrFYKHw3xP7746S
+	AI7+5N9h3YGxPN6y8cpj9G/PsdVi5OqZp5Lflf7A6tUMAT+keBDOn0tnnA7ynKVQ
+	t9AwOw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47esa4qqdd-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jun 2025 04:36:47 +0000 (GMT)
+	Wed, 25 Jun 2025 04:36:52 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55P4alh6030820
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55P4apJh021598
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jun 2025 04:36:47 GMT
+	Wed, 25 Jun 2025 04:36:51 GMT
 Received: from hu-gkohli-hyd.qualcomm.com (10.80.80.8) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 24 Jun 2025 21:36:43 -0700
+ 15.2.1544.9; Tue, 24 Jun 2025 21:36:47 -0700
 From: Gaurav Kohli <quic_gkohli@quicinc.com>
 To: <amitk@kernel.org>, <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
         <lukasz.luba@arm.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
@@ -62,10 +64,12 @@ CC: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <linux-arm-msm@vger.kernel.org>, <quic_manafm@quicinc.com>,
         Gaurav Kohli
 	<quic_gkohli@quicinc.com>
-Subject: [PATCH v5 0/2] Enable TSENS and thermal zone for QCS615 SoC
-Date: Wed, 25 Jun 2025 10:06:24 +0530
-Message-ID: <20250625043626.2743155-1-quic_gkohli@quicinc.com>
+Subject: [PATCH v5 1/2] dt-bindings: thermal: tsens: Add QCS615 compatible
+Date: Wed, 25 Jun 2025 10:06:25 +0530
+Message-ID: <20250625043626.2743155-2-quic_gkohli@quicinc.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250625043626.2743155-1-quic_gkohli@quicinc.com>
+References: <20250625043626.2743155-1-quic_gkohli@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,60 +82,49 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=eLYTjGp1 c=1 sm=1 tr=0 ts=685b7cdf cx=c_pps
+X-Authority-Analysis: v=2.4 cv=eLYTjGp1 c=1 sm=1 tr=0 ts=685b7ce4 cx=c_pps
  a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
  a=GEpy-HfZoHoA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=JfOcGDDDXtGUpYJnmSUA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: Uy5duyMRIfQB1OKtnmOnimfa3oEX6Ont
-X-Proofpoint-ORIG-GUID: Uy5duyMRIfQB1OKtnmOnimfa3oEX6Ont
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDAzMyBTYWx0ZWRfXxBvZdzRh19+t
- apf2ZZ816CSM53rp9TfCkIQ711CcwQc9mUyxjtxACq1qJWZbqzPb916M/9FE3JDN1YHsCebiQbf
- /FVSWoBui9WppFZ5T8r/zjsVa3AST1GAgtj4B5L34fLjV5Kbw0vxOpJtBFFYu1GP+xjoDIq/Zkm
- YyFPenLTR91iqEJi/c8/hvspLEBAh3n5YUkt9hRaU/58SSkI1Ms7zCtfSXTTQrDjlNxm+Kt7xn0
- r4An7qOvyFAREwPORfa1sfz8/seB2zJIpwyX+rFWnXw+R6CRAv944s2ncIT8pFwFAGfvPvBeWJU
- /9pyksAd6892yHsSvefJg6bG18DngK7cR7L9ziw7VxmAlyz4f4pnp361YVigcM6oL2AxaV51Gxe
- V26fUTqsL/NAO+05rS6vEG7Z+z5wTZb4j0L9C80lk/4FZvdrRs6DUVbMhfSryz3OKlFU7BLx
+ a=IfUgwc_bth4yghHgifUA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: 6EZvP2rFwHsQE5A98dWDkfj7i_GdxEpO
+X-Proofpoint-ORIG-GUID: 6EZvP2rFwHsQE5A98dWDkfj7i_GdxEpO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDAzMyBTYWx0ZWRfX7BKziKh0a0LW
+ n3nHxVJSTlkwhz5/+n3rT8iHiHrERvKvNmZomT4HR0duU7txz7qJBn4+ppJGtZRPcReqPNz2Ya4
+ n/Kij96Pf1Pm8QTA5Bs2KiyyUK05hiT6F8PVjSssBXMffn4EzIb1GZQt5x5nVim3uSprFhpa0VZ
+ JT4whFl/vyjyusQ3P6qiu7RU+He960lzNtvxbURzL78ZMai+4emQwy2DadWwvkDR6QgrLM2tmrs
+ 9texqot9RVW18kUIO0xsDx0K30nwdEN3B5fR16zqnFj2unJL3JpJ4YOrSIZe1T+AfOmwjqw8lAn
+ 3FYquQYmeZh1Crg8GFs1eoanjOHu0JA/PDCeTlRzv0xwV6jZreOMgxqSHL49aNGsNkkxyXVjCF5
+ Q8fNhcGMOEe/hbFRbnaJVxPu3sPqJQ7r6HXWKbJU+1kNOAYbBXrGC3buMZuOUHSeB2DpnkTO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-06-25_01,2025-06-23_07,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 mlxscore=0 clxscore=1015 mlxlogscore=864
+ phishscore=0 priorityscore=1501 mlxscore=0 clxscore=1015 mlxlogscore=999
  suspectscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
  adultscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
  definitions=main-2506250033
 
-Adding compatible string in TSENS dt-bindings, device node
-for TSENS controller and Thermal zone support.
+Add compatibility string for the thermal sensors on QCS615 platform.
 
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Gaurav Kohli <quic_gkohli@quicinc.com>
 ---
-Changes in v5:
-- Fix git patch edit error.
-- Link to v4: https://lore.kernel.org/linux-devicetree/20250624064945.764245-1-quic_gkohli@quicinc.com/
+ Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes in v4:
-- Fix naming of thermal sensor.
-- Link to v3: https://lore.kernel.org/linux-devicetree/20250613112402.2203617-1-quic_gkohli@quicinc.com/
-
-Changes in v3:
-- Add critical for all trips.
-- Link to v2: https://lore.kernel.org/linux-devicetree/cover.1744955863.git.gkohli@qti.qualcomm.com/
-
-Changes in v2:
-- Drop the passive trip point and add critical for CPU thermal zones.
-- Rearrange the tsens dt node and fix the address part.
-- Fix the commit subject with target name.
-- Link to v1: https://lore.kernel.org/linux-devicetree/cover.1744292503.git.quic_gkohli@quicinc.com/
----
-
-Gaurav Kohli (2):
-  dt-bindings: thermal: tsens: Add QCS615 compatible
-  arm64: dts: qcom: qcs615: Enable TSENS support for QCS615 SoC
-
- .../bindings/thermal/qcom-tsens.yaml          |   1 +
- arch/arm64/boot/dts/qcom/qcs615.dtsi          | 205 ++++++++++++++++++
- 2 files changed, 206 insertions(+)
-
+diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+index 0e653bbe9884..c8cc67b65f73 100644
+--- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
++++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+@@ -53,6 +53,7 @@ properties:
+               - qcom,msm8996-tsens
+               - qcom,msm8998-tsens
+               - qcom,qcm2290-tsens
++              - qcom,qcs615-tsens
+               - qcom,sa8255p-tsens
+               - qcom,sa8775p-tsens
+               - qcom,sar2130p-tsens
 -- 
 2.34.1
 
