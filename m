@@ -1,193 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-62565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76344AE906C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 23:47:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A129AE90F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 00:20:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 418603B8F4F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 21:46:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8308C174429
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 22:20:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A7A725D216;
-	Wed, 25 Jun 2025 21:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 534102F3625;
+	Wed, 25 Jun 2025 22:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="el0VK2bj"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="oDW9APQE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-106102.protonmail.ch (mail-106102.protonmail.ch [79.135.106.102])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0620C20DD54
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 21:47:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9AE1F419B;
+	Wed, 25 Jun 2025 22:20:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.102
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750888030; cv=none; b=jwQ6c6AcYkyJwhn3NJxz65Lo3W38y8ucJ9TCRQTnN8ftGSpxhiTKLZrYEVEgHXxOWGqs6Am6mM8YZF8GtHIdlh/ul6XS92jtyY1ka6zt4kcw9qo68YkZHFpkgMu80CEXeE+VmlXPAoJ6DyOBpHRd1XbnR1t8/YG3HzTPlTZM4cU=
+	t=1750890021; cv=none; b=q7rab89RP7puqJR7ADTF1r7VSPC/Vfvn/4S/B84J8Y0dAzY1RkZ2/6G/B4T2Abuj5sCNQ6LzZvEmxMUAiUelEeQLkqyyZaqJKLSk+EatnkGZZIlAvAgNwfO0W+uActXOpqG+xaAUtBrWSjdbcyNwyJi/zyh26QWXG6bScVPj81A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750888030; c=relaxed/simple;
-	bh=JAsyW8eZE863eaSb5j9l0uHjRmiL/MJIXmfT/tJtisw=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=byH0UXQxFWyhV0zp91VuhlM+wbEC0pUxZyUkMbqT5OzxRKawOm1tO7qHTpgQF8rWfZOhCUBppDJYgWXGn/lrgavHg3YbysxNAKs2U84M7VgGwblQyTxF6qSMq37Pm+AgBXmQzeDFM3lGdqSwyzY2gcy6Ew9LyAOWZcjVrrfSvGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=el0VK2bj; arc=none smtp.client-ip=209.85.215.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-b0e0c573531so145202a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 14:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1750888028; x=1751492828; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JaElZIlxs13I2jfOVX0lSC6FgKZKsuNp0z88behp5kM=;
-        b=el0VK2bj+ngoUg+5WGO8P95KuLjyYa6RLAz5AxRxya4CaHjcwnB6+UgKaAGXvw2Ou8
-         uBLanXIouFmcfVmPRN1FhzTYy+sHkHT6bfj/ZGihXw6mBLPFgx3gSwVfxrxePuzfCLdg
-         /kyUDTQ9GeNRQ7xUZGcbp43cpZh28lgJ+TpHOmct8XOL9v8LrRJr+aE5j0gWCVcbQniz
-         c0xeJzF72hs/Nh2p4DnY2w+O+7U0QvvtJzPTIZ1kmxILMAE52yI5oEhgqJyIgSBWIpTQ
-         C8eCBGTLQ1cL6xvJ6EWN51VwwDrqgX7kRjp5/vctD/WT1dQ106NfDe0OQAiogwX3ygCS
-         MHqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750888028; x=1751492828;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JaElZIlxs13I2jfOVX0lSC6FgKZKsuNp0z88behp5kM=;
-        b=EeriyhUESRtwUlddIWsB5+F9iGLBe796N2xLgeiW27+EDVNBpBrwdHiNnW+nBkNbbc
-         aNKIC5/7Kvsmrap+csfwLmlpYVwPznoi+SMmbjjz/fMx6UBaBx1buIMBNKpjbPD491Sx
-         1nkRp2sTg7i+Ox4JY/OfQF3cmQ818tebEFOgmnfoMoXvZP50BM/FwXoNW6ujT3bJL+np
-         0J4/oUJlwqpiSJ8IelQqAsOKWjPhy3GDn0okag+W+cmTNtR5aDtoID31CHG9kHB8qdXJ
-         +Wz5ekXXPY0cGszUo558F88eaQiV622l+1Q+RosXshpO8TSR3VkxzAbnYxONyEOeoC2C
-         3lEg==
-X-Forwarded-Encrypted: i=1; AJvYcCWT23zuQ9oXpyY2XEh4gPSi6IQS1MLR0i8mSNHj5vHn1L2yPv/RmvtE896y1/Jd05bjKMjzuvd5/dPnYfy3@vger.kernel.org
-X-Gm-Message-State: AOJu0YyOWqeXXvlofUhlE05x41bU0VnoG1AUkhmZqQflP0QXuxx1qSZU
-	iItGMaMmCXuPLn/GEMYX+TIXI9PDDQroSFGzlurnOusYo9jA072ywc/1qANAYaswreweulft5Yc
-	e+Zwo3CzdnPUkLOVwZ2ORb6aGBA==
-X-Google-Smtp-Source: AGHT+IHaFOtDsXjNCK8tDRGRC6rpZnF1ravk4aYWxE7y5fg1ChEv8b8QXDGShjJ5f1IXZEq0lP4YBKq+9E7DssxT5w==
-X-Received: from pjm6.prod.google.com ([2002:a17:90b:2fc6:b0:312:e266:f849])
- (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:5388:b0:312:e1ec:de44 with SMTP id 98e67ed59e1d1-315f268f485mr5936687a91.27.1750888028344;
- Wed, 25 Jun 2025 14:47:08 -0700 (PDT)
-Date: Wed, 25 Jun 2025 14:47:06 -0700
-In-Reply-To: <20250611133330.1514028-9-tabba@google.com>
+	s=arc-20240116; t=1750890021; c=relaxed/simple;
+	bh=E2X8JFzbatE1FCWlY5YF6I83d2kqH95jUGI4Wns86t8=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XZ2H6YvRYdwnh/8xm1U7nGmTEgGXCgqLC2iE7CXkvmZkPZdzPFGBo9O0aM/pIVueMH9t/KF1RS0vBXKG44UjEIgDgn21uFJ6Enp/6Q1wfNlOnJEQUcaM9y2HtjVrcxdipQERqLQW5+EjmLYlaTf+1PmjPlSmvwt55Tq+dG/Dz/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=oDW9APQE; arc=none smtp.client-ip=79.135.106.102
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1750890011; x=1751149211;
+	bh=E2X8JFzbatE1FCWlY5YF6I83d2kqH95jUGI4Wns86t8=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=oDW9APQEaPN0TF9Pbt6GIgp1fNrQT6QgvtjS6i7PVCoh7VEIsUvk6Lt6iUCuh4C8I
+	 FRi4/y3YXUj+CmU4Un++R5RuYbR1eCYa0f2ToJp7S5h/Hh+cQyRmnrja1O9ti8jDQl
+	 fPkwRn6A5kJ4WJFD6fOsH0GXUgXqvRGkDfLm45m51eF0ZXp34ayUOXa3iEUhc83GVm
+	 p1heVjNaZrEHpqfITArKh+T+Rw8MhUCs0ieNTG+obos1E5hkfBc+pdoCQ99ufxRYwz
+	 THT+32eC163nLE44gpE5zzKvvwuGyX5aG4MeA0YRc0perPypZnqKqvBK+W9UhtyslT
+	 ykjNJ1SNrQEmQ==
+Date: Wed, 25 Jun 2025 22:20:01 +0000
+To: Jonathan Cameron <jic23@kernel.org>
+From: Yassine Oudjana <y.oudjana@protonmail.com>
+Cc: Lars-Peter Clausen <lars@metafoo.de>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, Alexander Sverdlin <alexander.sverdlin@gmail.com>, Sean Nyekjaer <sean@geanix.com>, Javier Carrasco <javier.carrasco.cruz@gmail.com>, Matti Vaittinen <mazziesaccount@gmail.com>, Antoniu Miclaus <antoniu.miclaus@analog.com>, Ramona Gradinariu <ramona.gradinariu@analog.com>, "Yo-Jung (Leo) Lin" <0xff07@gmail.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, =?utf-8?Q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, Danila Tikhonov
+	<danila@jiaxyga.com>, Antoni Pokusinski <apokusinski01@gmail.com>, Vasileios Amoiridis <vassilisamir@gmail.com>, Petar Stoykov <pd.pstoykov@gmail.com>, shuaijie wang <wangshuaijie@awinic.com>, Yasin Lee <yasin.lee.x@gmail.com>, "Borislav Petkov (AMD)" <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, Tony Luck <tony.luck@intel.com>, Pawan Gupta <pawan.kumar.gupta@linux.intel.com>, Ingo Molnar <mingo@kernel.org>, Yassine Oudjana <yassine.oudjana@gmail.com>, linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org, linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, linux-kbuild@vger.kernel.org
+Subject: Re: [PATCH 1/3] net: qrtr: Turn QRTR into a bus
+Message-ID: <ZUlOGBxe4Dky-Qo1EtYMuS0kDRjYdkqex3qgSiFBkFwIdEUpHjsD2pcl3VvMPjD-ZAeqcP5P40AsSfHtv4fJ8Z8stUu4nwYFw0qt3vtf7yc=@protonmail.com>
+In-Reply-To: <20250406170111.7a11437a@jic23-huawei>
+References: <20250406140706.812425-1-y.oudjana@protonmail.com> <20250406140706.812425-2-y.oudjana@protonmail.com> <20250406170111.7a11437a@jic23-huawei>
+Feedback-ID: 6882736:user:proton
+X-Pm-Message-ID: db9bb8d33409b840d6eaf22ce2cef2153ee0ccda
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250611133330.1514028-1-tabba@google.com> <20250611133330.1514028-9-tabba@google.com>
-Message-ID: <diqzv7ojjxyd.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [PATCH v12 08/18] KVM: guest_memfd: Allow host to map guest_memfd pages
-From: Ackerley Tng <ackerleytng@google.com>
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mm@kvack.org, kvmarm@lists.linux.dev
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
-	vannapurve@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
-	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
-	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
-	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
-	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
-	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
-	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
-	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
-	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
-	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
-	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
-	pankaj.gupta@amd.com, ira.weiny@intel.com, tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Fuad Tabba <tabba@google.com> writes:
 
-> This patch enables support for shared memory in guest_memfd, including
-> mapping that memory from host userspace.
->
-> This functionality is gated by the KVM_GMEM_SHARED_MEM Kconfig option,
-> and enabled for a given instance by the GUEST_MEMFD_FLAG_SUPPORT_SHARED
-> flag at creation time.
->
-> Reviewed-by: Gavin Shan <gshan@redhat.com>
-> Acked-by: David Hildenbrand <david@redhat.com>
-> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
->  include/linux/kvm_host.h | 13 +++++++
->  include/uapi/linux/kvm.h |  1 +
->  virt/kvm/Kconfig         |  4 +++
->  virt/kvm/guest_memfd.c   | 73 ++++++++++++++++++++++++++++++++++++++++
->  4 files changed, 91 insertions(+)
->
-> [...]
->
+On Sunday, April 6th, 2025 at 5:01 PM, Jonathan Cameron <jic23@kernel.org> =
+wrote:
 
-Just want to call out here that I believe HWpoison handling (and
-kvm_gmem_error_folio()) remains correct after this patch. Would still
-appreciate a review of the following!
+> On Sun, 06 Apr 2025 14:07:43 +0000
+> Yassine Oudjana y.oudjana@protonmail.com wrote:
+>=20
+> > Implement a QRTR bus to allow for creating drivers for individual QRTR
+> > services. With this in place, devices are dynamically registered for QR=
+TR
+> > services as they become available, and drivers for these devices are
+> > matched using service and instance IDs.
+> >=20
+> > In smd.c, replace all current occurences of qdev with qsdev in order to
+> > distinguish between the newly added QRTR device which represents a QRTR
+> > service with the existing QRTR SMD device which represents the endpoint
+> > through which services are provided.
+> >=20
+> > Signed-off-by: Yassine Oudjana y.oudjana@protonmail.com
+>=20
+> Hi Yassine
+>=20
+> Just took a quick look through.
+>=20
+> It might make more sense to do this with an auxiliary_bus rather
+> than defining a new bus.
+>=20
+> I'd also split out the renames as a precursor patch.
+>=20
+> Various other comments inline.
+>=20
+> Jonathan
 
-> +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
-> +{
-> +	struct inode *inode = file_inode(vmf->vma->vm_file);
-> +	struct folio *folio;
-> +	vm_fault_t ret = VM_FAULT_LOCKED;
-> +
-> +	if (((loff_t)vmf->pgoff << PAGE_SHIFT) >= i_size_read(inode))
-> +		return VM_FAULT_SIGBUS;
-> +
-> +	folio = kvm_gmem_get_folio(inode, vmf->pgoff);
-> +	if (IS_ERR(folio)) {
-> +		int err = PTR_ERR(folio);
-> +
-> +		if (err == -EAGAIN)
-> +			return VM_FAULT_RETRY;
-> +
-> +		return vmf_error(err);
-> +	}
-> +
-> +	if (WARN_ON_ONCE(folio_test_large(folio))) {
-> +		ret = VM_FAULT_SIGBUS;
-> +		goto out_folio;
-> +	}
-> +
-> +	if (!folio_test_uptodate(folio)) {
-> +		clear_highpage(folio_page(folio, 0));
-> +		kvm_gmem_mark_prepared(folio);
-> +	}
-> +
-> +	vmf->page = folio_file_page(folio, vmf->pgoff);
-> +
-> +out_folio:
-> +	if (ret != VM_FAULT_LOCKED) {
-> +		folio_unlock(folio);
-> +		folio_put(folio);
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> [...]
+<...>
 
-This ->fault() callback does not explicitly check for
-folio_test_hwpoison(), but up the call tree, __do_fault() checks for
-HWpoison.
+> > + if (!del_server)
+> > + return -ENOMEM;
+> > +
+> > + del_server->parent =3D qsdev;
+> > + del_server->port =3D port;
+> > +
+> > + INIT_WORK(&del_server->work, qcom_smd_qrtr_del_device_worker);
+> > + schedule_work(&del_server->work);
+> > +
+> > + return 0;
+> > +}
+> > +
+> > +static int qcom_smd_qrtr_device_unregister(struct device *dev, void *d=
+ata)
+> > +{
+> > + device_unregister(dev);
+>=20
+>=20
+> One option that may simplify this is to do the device_unregister() handli=
+ng
+> a devm_action_or_reset() handler that is using the parent device as it's =
+dev
+> but unregistering the children. That way the unregister is called in the
+> reverse order of setup and you only register a handler for those devices
+> registered (rather walking children). I did this in the CXL pmu driver
+> for instance.
 
-If the folio is clean, the folio is removed from the filemap. Fault is
-eventually retried and (hopefully) another non-HWpoison folio will be
-faulted in.
+Not sure I understand this correctly. This function is called for all child=
+ren when
+the parent (the bus) is removed in order to unregister them, so its called =
+for all
+registered devices under the parent. It's just a wrapper for device_unregis=
+ter so
+that it can be used with device_for_each_child. If I register a handler wit=
+h
+devm_add_action_or_reset using the parent device then it seems to me like I=
+ will
+have to add a new function used as handler for that which in turn goes over=
+ the
+children and unregisters them (we always unregister all children since the =
+parent
+will be no more) then I will only be adding an extra layer. I checked the C=
+XL PMU
+driver but I only found devm_add_action_or_reset used for cleaning up objec=
+ts
+associated with the device, not removing child devices.
 
-If the folio is dirty, userspace gets a SIGBUS.
-
-kvm_gmem_error_folio() calls kvm_gmem_invalidate_begin(), which only
-unmaps KVM_FILTER_PRIVATE, but IIUC that's okay since after mmap is
-introduced,
-
-* non-Coco VMs will always zap KVM_DIRECT_ROOTS anyway so the HWpoison
-  folio is still zapped from guest page tables
-    * Unmapping from host userspace page tables is handled in
-      memory_failure(), so the next access will lead to a fault, which
-      is handled using a SIGBUS in __do_fault()
-* Coco VMs can only use guest_memfd for private pages, so there's no
-  change there since private pages still get zapped.
 
