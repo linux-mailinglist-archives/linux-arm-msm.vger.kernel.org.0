@@ -1,163 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-62318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66696AE7B49
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 11:02:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E523AE7B7F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 11:06:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 64A9C5A4C51
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 09:01:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C7CB71611F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 09:06:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7634029AB16;
-	Wed, 25 Jun 2025 09:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82F8D274FD3;
+	Wed, 25 Jun 2025 09:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TDmYPDKA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pud0sBrz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80D829AB02;
-	Wed, 25 Jun 2025 09:01:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FFF270554;
+	Wed, 25 Jun 2025 09:06:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750842081; cv=none; b=EaYFKLt9kAb7d2CEm4wTCdcdA8o2B3HItOuIFbc37tnWDQyJWV+iSW9J51dwj8gD+DdOIXP2Y3HIZPT1sV9RSTOEVxATYgEiSP5K8S7qqJKOALzEjas8jHcthmQSFZEHs51gbah0CuzKFa9fXxSNvztrtYqupCPh7L6UcF/bprU=
+	t=1750842406; cv=none; b=o6grH8MHVextC9qQ/t5XI70gzy9JMn7R4s/7pvTnvMRgUL0nqJtpSpFiemAeU/0pMSaJ4AvdJgRb5QVienSVqtrNgtmnROAfiLSBsODtnXaFol5rpyQeocpFPHM3OEFICkQsGnyEImxNcZ2wbjZOMEzYTj8w8dIyZ4jsUL7/Ebg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750842081; c=relaxed/simple;
-	bh=llIoZ65iZRbE6HKRxtDXoE+2sFnVDysUCy+rkRbLInw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=nJPoF86KI1a9dZjGaF3TYQwhnSPyWkHVjVTPJpr0o9QQ5zLkNki0jv3RFDp5p/b+vdKQQzQK07OX+M3nnsLvgP1GxH5mMvzwRJns9+T6GeVou6DSDQgR0xhW1flpKWz2fruR4T3OYA+XOHUELvD1JVa9qkWcWQ7tHdzN/0BIig0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TDmYPDKA; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55P1q5KG002448;
-	Wed, 25 Jun 2025 09:01:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=EF6AjC4MUUF
-	M1cgFCRP63nmXpijP6PySoR7J70JajKg=; b=TDmYPDKAnoBX3MHJDmhRzgUN/aL
-	wjMZ2OjxuSdJYiHrMxYQr8z9ZvavzuoqnOkaJ4WwoRFnpmLgdwBe0jFIQHAkk0QC
-	ElV4ySsr62BssW9P2pf47hQG+mta+9JS3bqEL9RNyJlnavO3o4eLzDPSNF3maqw7
-	qSImKvSGcwSU+y5s1WUstSGK6Psd4gBC2xerh+Q0AS4ZM3npTr1wt+9DQl2NSGfc
-	oc7VQxOo9YDHd68l9bOSrYPH/o5oTKbbAm+b90JtWIJPvPjG2CoF6HYAE1b0NlRy
-	ke/lkOQJQRlir3YbnBuyvxTxgYN7ac72BqOo9X0aSIejPW4EnJFkhjJ08PQ==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47g7td921d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jun 2025 09:01:02 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 55P910or032353;
-	Wed, 25 Jun 2025 09:01:00 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 47dntmargj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jun 2025 09:01:00 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55P90xxr032337;
-	Wed, 25 Jun 2025 09:00:59 GMT
-Received: from cse-cd02-lnx.ap.qualcomm.com (cse-cd02-lnx.qualcomm.com [10.64.75.246])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 55P90x6U032334
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jun 2025 09:00:59 +0000
-Received: by cse-cd02-lnx.ap.qualcomm.com (Postfix, from userid 4438065)
-	id 25A143864; Wed, 25 Jun 2025 17:00:58 +0800 (CST)
-From: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
-        mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
-        bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
-        kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
-        kw@linux.com
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
-        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-        Ziyue Zhang <quic_ziyuzhan@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v3 4/4] arm64: dts: qcom: sa8775p: add link_down reset for pcie
-Date: Wed, 25 Jun 2025 17:00:48 +0800
-Message-Id: <20250625090048.624399-5-quic_ziyuzhan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250625090048.624399-1-quic_ziyuzhan@quicinc.com>
-References: <20250625090048.624399-1-quic_ziyuzhan@quicinc.com>
+	s=arc-20240116; t=1750842406; c=relaxed/simple;
+	bh=5X5q++377SBr2aeIbyVxNciPfwLkYCFZEZKG7Vm2QAc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hs2w9S4JpPbApfr0br8DIWwVsvstzWYV0HIr6hE4tgLorkoe9RrMbXT8H59ccQKN+Zbav+hb88yo7pVGM701oWfMwm8WCXSVnWSzjlkwK5UC96kVs3wtT8NrhjkB40IoKjb1QPId6zKOys0phzEkw44CoM42aUZx27FkmZHk5M0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pud0sBrz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878ADC4CEEA;
+	Wed, 25 Jun 2025 09:06:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750842405;
+	bh=5X5q++377SBr2aeIbyVxNciPfwLkYCFZEZKG7Vm2QAc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Pud0sBrzfrNAo6/C+4yjG9NxkZGGpdgPcbE4pUDAV7GKaWdhcX4z4SNj2tcCxgFIg
+	 HTe8hVrWrUOwC5m8HkY4Q4GdahmKlhPoNMDISegqI5lDkt8UaTNUeA5l/9Tq2nKbhM
+	 aYwWXYweotACP8YDrszz2oHNie044/11YKuWxM5I0/n6xAEca+Txz+dW63Ybb23fak
+	 cSs/ABqHAXaNTWuyqPemTBYXZKwxNhH6bGft3LQOyoyTuU84/LZYC8j9UxWqqY7D2l
+	 V+eYxNySqCvw1VQib03tpnrsgREGKLGgNwPuYB2YguKPHwG/iCIxMVBHnpwEeaf5bL
+	 A2BATULAhBhOw==
+Date: Wed, 25 Jun 2025 11:06:40 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Stanimir Varbanov <svarbanov@mm-sol.com>,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Laszlo Fiat <laszlo.fiat@proton.me>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org
+Subject: Re: [PATCH v3 4/6] PCI: qcom: Wait PCIE_RESET_CONFIG_WAIT_MS after
+ link-up IRQ
+Message-ID: <aFu8IOsQX66mfveW@ryzen>
+References: <20250613124839.2197945-8-cassel@kernel.org>
+ <20250613124839.2197945-12-cassel@kernel.org>
+ <ebrnndrw7kifuyixh4umos6ozhg3a45ya2ooxrf44xytdpiczs@qtd2l4tc63kt>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=CPYqXQrD c=1 sm=1 tr=0 ts=685bbace cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=UMluCPnEzjiUAf4N7sYA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDA2NyBTYWx0ZWRfXxF7PsBNX5ZT0
- KfSBZ4/fb59o7KkYMBVxxLF2DtloynEMvoJ5HkzhR+uwoQ4yBPkwtPwV2R4Z6cMNANLrQVdRQ9X
- jrnipQcOM1Nnduk6h6cqmcwpMV9lXa7QlvDviiZEE0wnnDG9JHXq5PCasVkDTw6LUKknqmNjSLX
- OtiiFixV4FvbgMikyrbeFHuEV4aEFmvJ0jasr9Dr5m+4QPu9oKJBvvKi1VIY0joYSERrnxJD1ep
- CtXNKCqqPnqLyRlm4ag7FbjggrkI6Zog8UGajGkkf5ncLeWR0QVZCNpQL2NtrvveW9tmDdLqQRR
- 7kND6fnztAIq/9gchEbwo1t2D8+IS7pMj20B3hMX0LQ1Z7MRfEXo2PITcqef7wimiUj+kZ8wxPn
- McAgGu8FOiulhnWH0FsKrtOnp/0cgKi+FpI3BgPBKDkmaVsu5pwPmfKNuL4zq8b/gXMhnsJm
-X-Proofpoint-GUID: dyx6eiLlFOj_jh9uXRcZ1JWQDNoy6omj
-X-Proofpoint-ORIG-GUID: dyx6eiLlFOj_jh9uXRcZ1JWQDNoy6omj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-25_02,2025-06-23_07,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 mlxlogscore=999 lowpriorityscore=0 malwarescore=0
- impostorscore=0 suspectscore=0 clxscore=1015 spamscore=0 priorityscore=1501
- adultscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506250067
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ebrnndrw7kifuyixh4umos6ozhg3a45ya2ooxrf44xytdpiczs@qtd2l4tc63kt>
 
-SA8775p supports 'link_down' reset on hardware, so add it for both pcie0
-and pcie1, which can provide a better user experience.
+On Mon, Jun 23, 2025 at 08:27:19AM -0600, Manivannan Sadhasivam wrote:
+> On Fri, Jun 13, 2025 at 02:48:43PM +0200, Niklas Cassel wrote:
+> > Per PCIe r6.0, sec 6.6.1, software must generally wait a minimum of
+> > 100ms (PCIE_RESET_CONFIG_WAIT_MS) after Link training completes before
+> > sending a Configuration Request.
+> > 
+> > Prior to 36971d6c5a9a ("PCI: qcom: Don't wait for link if we can detect
+> > Link Up"), qcom used dw_pcie_wait_for_link(), which waited between 0
+> > and 90ms after the link came up before we enumerate the bus, and this
+> > was apparently enough for most devices.
+> > 
+> > After 36971d6c5a9a, qcom_pcie_global_irq_thread() started enumeration
+> > immediately when handling the link-up IRQ, and devices (e.g., Laszlo
+> > Fiat's PLEXTOR PX-256M8PeGN NVMe SSD) may not be ready to handle config
+> > requests yet.
+> > 
+> > Delay PCIE_RESET_CONFIG_WAIT_MS after the link-up IRQ before starting
+> > enumeration.
+> > 
+> > Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+> > Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+> > Fixes: 82a823833f4e ("PCI: qcom: Add Qualcomm PCIe controller driver")
+> 
+> Shouldn't 36971d6c5a9a be the fixes commit?
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+See Bjorn's comment:
+https://lore.kernel.org/linux-pci/20250611211456.GA869983@bhelgaas/
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 731bd80fc806..d0a6303cb133 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -7635,8 +7635,11 @@ pcie0: pcie@1c00000 {
- 		iommu-map = <0x0 &pcie_smmu 0x0000 0x1>,
- 			    <0x100 &pcie_smmu 0x0001 0x1>;
- 
--		resets = <&gcc GCC_PCIE_0_BCR>;
--		reset-names = "pci";
-+		resets = <&gcc GCC_PCIE_0_BCR>,
-+			 <&gcc GCC_PCIE_0_LINK_DOWN_BCR>;
-+		reset-names = "pci",
-+			      "link_down";
-+
- 		power-domains = <&gcc PCIE_0_GDSC>;
- 
- 		phys = <&pcie0_phy>;
-@@ -7803,8 +7806,11 @@ pcie1: pcie@1c10000 {
- 		iommu-map = <0x0 &pcie_smmu 0x0080 0x1>,
- 			    <0x100 &pcie_smmu 0x0081 0x1>;
- 
--		resets = <&gcc GCC_PCIE_1_BCR>;
--		reset-names = "pci";
-+		resets = <&gcc GCC_PCIE_1_BCR>,
-+			 <&gcc GCC_PCIE_1_LINK_DOWN_BCR>;
-+		reset-names = "pci",
-+			      "link_down";
-+
- 		power-domains = <&gcc PCIE_1_GDSC>;
- 
- 		phys = <&pcie1_phy>;
--- 
-2.34.1
+	I would argue that 0e898eb8df4e ("PCI: rockchip-dwc: Add Rockchip
+	RK356X host controller driver") is the right Fixes: commit here
+	because dw_pcie_wait_for_link() *never* waited the required time, and
+	it's quite possible that other devices don't work correctly.  The
+	delay was about 90ms - <time required for link training>, so could be
+	significantly less than 100ms.
 
+
+Thus, following Bjorn's comment, to put the commit that introduced the driver
+as the Fixes tag for dw-rockchip, I did the same thing for qcom.
+
+
+Kind regards,
+Niklas
 
