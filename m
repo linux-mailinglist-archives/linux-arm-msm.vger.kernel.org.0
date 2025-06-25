@@ -1,333 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-62288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7E2AAE792F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 09:56:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7B8AAE7951
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 10:01:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5A8A97AD9F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 07:54:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FBD03A7246
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 08:00:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6177C213E74;
-	Wed, 25 Jun 2025 07:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBCAE1EDA09;
+	Wed, 25 Jun 2025 08:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oA7wk0se"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kgdcbtQ+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4583211A3F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 07:55:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE16017A2F8
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 08:01:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750838140; cv=none; b=TXMC3ssBtkV9l8JRpJTkfmbddjZgs0PPBd2AI9ck3bwt85hnwCfczmbmqkcxGpY8nEldqYXXDTEcuO6B6rgfeNYvV2K14P8DUshaaYvo8hsbuEKkJXbl1OoSXWiODOhGftykHoBLK02+dgcZvAQYHKwpxWZC4VrHfjOM412zFSw=
+	t=1750838467; cv=none; b=mcCa2IdK23DOv01O3r51GbR7j6JXPZIj+qU+NGQ4Ll/lHK32Xuc8P5PJSqq0Y45mGfx2MqYZeLUr2zbTGrRwPouO32MGvEnH+Mfx6/D0QNz8ZF+dbFUt/aI7DC13nkIsse4NxWUd/Dar1w/veDKkS5eNZtcr02KFMf8Fz5RcQ3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750838140; c=relaxed/simple;
-	bh=qmAaAgyAvFaRCJNeZygFXPW8o2/QgBY/gsAXcTTt30Q=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=R1oi/rmYROFptdSt7YSOsIiAvmkcnst97wywnVltyCpWWyLv0ZD8Wky+B7gTY27+VXXd8uTDxjIjo0YOC1mdu44XTaURYVXAPlGPy3isvhmf6czVNQLadnq8QJzT3SZs+bzFkxQEissGuPrf343rjl0V0j9aIryPA1ePJGCKesw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oA7wk0se; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55P1pHNt001125
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 07:55:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	10O1gzx2RVhUKUSFNt+AB/dN8LNlejk69sx6Hj6vKMM=; b=oA7wk0seQf8pjVeb
-	fjOxIL1cDnX+v9ER0wE1S59VY9zYVnrb3k28FVF+05lmFLcglzgTykw4YzVCHxg/
-	fsWAtsY2/YoT4MOl38y+7uHEUDh4RfGBCdUFtK+bly+8n2jOMbzyzc6l035G1l+D
-	8X+/iAVqtk9DbWNduhFVycj6u22Ow0ko7v//fwDJTE/k6nvv3kqRdQBzh2/dQyc8
-	7KB5DgjzDGN/v811C1IduIWylWzJAkLiqOrQWwG5aQElh3yolS/MOm3gRG/CP+LM
-	u71Qj0Wn1hc/b60rLYEiRiitl1vrW7l5uJ+Nvc/rCDAruH+nbEHO1WOvdCkB44xY
-	RS4I1w==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47g7td8udx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 07:55:38 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b2fcbd76b61so7797499a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 00:55:37 -0700 (PDT)
+	s=arc-20240116; t=1750838467; c=relaxed/simple;
+	bh=tJ84ame5uiAFGLHTvwxXieWj1I5PmlAvpENctmLN3rM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=d6kO9g6MlklNJojZUNmA23RsMRzKlJzaLoeaZYZhiDVqSxPwP3lso+ywTvcY5JTXjk1ud4E4EOyTKX9kHrMrbGMY77FAvMU9P4bgj82qV8u/ex4DDbAKoxRblsGwmAhY3FLkW8ik6USqnug1wxrUQ02V+VpqlXeKGF/pTT5UMko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=kgdcbtQ+; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4a5ac8fae12so308521cf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 01:01:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1750838465; x=1751443265; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pkejM18C3GfrxytsVF12qg6ifmp82uJ44inAGNHh7OU=;
+        b=kgdcbtQ+MBzu3FVclZ66c4IA7rWz8L6Gco4jld7iRq5c88RrTh3q0wuTokPfuUeVnH
+         Ac/3HjcZMCH39P6sj9uwTodaVImHqvRRzwq0oVlYGOU5a/fFRr7m4fdyFcbw3wLon1Lt
+         X1RR2QvmHpqhzsMdRo4X3I9bqyASC0YZswWW0YzWoDJtbupllSntJm1/3XnejVxjEPiT
+         K44DyqBah5o6CuNpI8aUOCuyzZ+LIX59Z/2/obnIi6M6oTYhV73bdlaVTVV7B4PZhcnP
+         EmApyY8U0ybSQalRjuRqh72EbwDDZrUebLcq8ayeCwgQr8Zz6MwfPO8KAF3JbCfRjhkB
+         xDBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750838137; x=1751442937;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=10O1gzx2RVhUKUSFNt+AB/dN8LNlejk69sx6Hj6vKMM=;
-        b=ojf+/vniK3UsuU8gkhwJ5ykN2oTqfxTWqNtGz6h6IAGow5Re54boTold2Z99Z0220G
-         IoRxm9hYTT7ATCG5+vi+TCazfd2B6ZMfdTdNk8egMeVbzwln7UQdGBtjqJ8nQPzVPLzH
-         kl/rvzwt2l//6GcErTLyRfpixQm8nqGON6ryWtue81SJmmQFyWnFf+3a3GY4MoPyacsU
-         O+29sUjrf/jT83SdBKHxxmYyzqZVeXjlikdpoHdeVyTbi+rUdtSK+rDpydbcGc07Yd40
-         tVYEv4kNcigTrchOyCaZ27my92lTYVstoZd1adtJ2/apxnrXi/ETTuya32IY/LUPLcUL
-         BcFw==
-X-Gm-Message-State: AOJu0YyKl8NzNte0OaJJhEvVQCWpdIgN0rGaoWHCHEXxUXvCENm6CzrA
-	69RmBXTHH0XDVB1WUQedlg62gPckhOL3Ilwm1bwbfWLX7wICZElZhr8UsaYBabdJkPmAFd6trkD
-	dNY1H3CgbVMglrGMrosHPDIE7jJYxxk+J6RfieA+gt/PAC7os315t8vpyxdAeMsAAoln7lxAxjs
-	hjGtA=
-X-Gm-Gg: ASbGncs9cA8+aolulQf+VOpd+T23mQ4f4Fo/IUpmbJ0cXt7YvwfbJht4th2M1/QZLr7
-	Yxv1gBstDOzoxE3xi/iuJmtFc9pd7kJUqHSRhT8VRyq8nTXJQDZcaKIbJ/G2ML2jWMLvNBAD7Ky
-	pA2h1EIegblNe8PDnljldibHXHyaD/opiBxpBZzxz76IG1KuR1ErS7fUq0YoZO4zoIr4r1beGdW
-	oDm5qrohLBxltVxcEzjSbdx4JddKwlPZU+7COSCFbBSQinRPLXT4Hf0eKZqauuBU0NMmboN3Rva
-	5TaYPY20D8BakGT5VVKCQDbN/r5C71EmMto4LVvzTp3Ztktra5S0Iczn48pgd1S4F42Qp7YEDWP
-	ByNo88nO++g==
-X-Received: by 2002:a05:6a21:680b:b0:204:4573:d854 with SMTP id adf61e73a8af0-2207f1adf3bmr3113953637.9.1750838136943;
-        Wed, 25 Jun 2025 00:55:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHC3jHPZgRF6kJlMuOp8DFSDHAfRZ3QhMCmd78xMwOjAaKhLkEJyX5fbMo71k17lpmzCifvGQ==
-X-Received: by 2002:a05:6a21:680b:b0:204:4573:d854 with SMTP id adf61e73a8af0-2207f1adf3bmr3113921637.9.1750838136522;
-        Wed, 25 Jun 2025 00:55:36 -0700 (PDT)
-Received: from yuzha-gv.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-749c8853133sm3707478b3a.129.2025.06.25.00.55.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Jun 2025 00:55:36 -0700 (PDT)
-From: "Yu Zhang(Yuriy)" <yu.zhang@oss.qualcomm.com>
-Date: Wed, 25 Jun 2025 15:55:07 +0800
-Subject: [PATCH v2 2/2] arm64: dts: qcom: qcs615-ride: add WiFi/BT nodes
+        d=1e100.net; s=20230601; t=1750838465; x=1751443265;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pkejM18C3GfrxytsVF12qg6ifmp82uJ44inAGNHh7OU=;
+        b=idOrHK4JwbAGmYVxN2G63YI2EAdywSXmF4jlc2ZUB31yVDJJ2ixSAT1kXHlOfEWjL1
+         R33g+IWwCmPaS6+ULTv5dVpqwZveG40aSzSJUdagEyXCj3btwHnLpGTBZ7XM5qgAG/O5
+         4BuCTvzBnJBcP7ekcWDI0mj4wb9bzShc2JRdwTKSy57d86pPQX9Rn6QDbaSSikf/3lTD
+         kvwAqr5vhaUjsvY6JSPa6hdwxaIi2NJl2thtDPEDHrjQyrq5W+P3DFLnDHY6ZwnweC9O
+         JWsi8XVd2p4za3qDPrV2Qbto+quKsPTSNIevMBN0FpM3xgWVqK1lY0zuO5p5oprJ7nfM
+         bEEw==
+X-Forwarded-Encrypted: i=1; AJvYcCVlKC4p040kbu/40Vq2IJ/riXZ2AqHYn2MeLQfLI3WsCx1MHbVWoYGDZZCOzpSK3m1rCJjosWihNfu7d2AY@vger.kernel.org
+X-Gm-Message-State: AOJu0YyI5KtSTGpVn8iG6tXqE7Dg07rep67vO20KdQVPmcmWU2nzCm68
+	3Pid2ZQOH9sAiM+ykvdewWSPs9jf5CnTTp6ZtXj+JdYKFDxN5r1NzPlZZ1/MBOd/8GzctipL9K1
+	ilJjKS4D2Lqp9BY4MDuaXXykMPjy5KPLQBlcuSS/O
+X-Gm-Gg: ASbGncvyx5dstuD4fV58rrMNLuRRKiRXdsHW6EYZuK952jjCD8C1C93j2db/29mV9IP
+	zJnwelVfgc1OspX934Q1qcS8JPNEv1WERsEbRvjE4qxIExCDl56P2aGf+IDqTf/695D7NqPj8nW
+	rC3P1/PigB7z0lafv8SKu+dSMFlC0Lsi5HoVHtVdBGxLTXZMM/+1GgdfFW1tucHAK9oL+McbxC
+X-Google-Smtp-Source: AGHT+IE2Z7ybLIm8G7t7Cyt3+6pzdghtibzBxlp3eQYjFPTUgErAfVsE5Z7imWnMwgGVA5CdNcPQ+V+dHuEnxerz1hc=
+X-Received: by 2002:a05:622a:9010:b0:4a5:9b0f:9a54 with SMTP id
+ d75a77b69052e-4a7c2378969mr1821891cf.18.1750838464297; Wed, 25 Jun 2025
+ 01:01:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250625-qcs615-v2-2-0f1899647b36@oss.qualcomm.com>
-References: <20250625-qcs615-v2-0-0f1899647b36@oss.qualcomm.com>
-In-Reply-To: <20250625-qcs615-v2-0-0f1899647b36@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Yu Zhang (Yuriy)" <yu.zhang@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1750838128; l=4666;
- i=yu.zhang@oss.qualcomm.com; s=20250625; h=from:subject:message-id;
- bh=qmAaAgyAvFaRCJNeZygFXPW8o2/QgBY/gsAXcTTt30Q=;
- b=F2RjplUhdhDnPLL4TvkSqg+/kunIM+Sryysuj8fqy1bInJdbHRTxcCvmjWlIKszBn6OtXSgMQ
- Tt4NF1M0DbqDFYe/0+38Kgiy1A0Q3XNPkVV6KNnTWbRnMw0XQuWagKF
-X-Developer-Key: i=yu.zhang@oss.qualcomm.com; a=ed25519;
- pk=ZS+pKT1eEx1+Yb0k2iKe8mk1Rk+MUki89iurrz9iucA=
-X-Authority-Analysis: v=2.4 cv=CPYqXQrD c=1 sm=1 tr=0 ts=685bab7a cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=cKvnr5XBRiLjHSnd2BMA:9
- a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDA1OCBTYWx0ZWRfX8JyRTHHOp1bP
- WrV+kQYM99aSRBfH/1ia0L2pVTf7Ur7XLgphUwSoEEnmUUH3dlV22oApX1DWQrCJGSRa6qmJY9E
- 3a9VB83bSrwpXRZZMo/LAcNtvJw/oSQdSqVk2bwAM2unuxaDSeiXxUVHbG8pbqh0lWfPvXUXhyA
- XWYKeXNg5YnmkrKYX0nUraKYvGTCbGEqOyxrbzqKoNPv7i723vbKzFmyYEzS/ezafeOZOCUgGgF
- AJve12TCrwihtqegZBrndyc+sV604Nts9HS4CAbLs1rqMSjW3DSS2hwM3156Kbj2rS1KdfgB9mk
- Mrr55oTi1BAZuOZ7u2put3oQYh5u3/HF9flrnyaoQqe1Idvz+QpNmIQ3v9rQ2PywvixY/hSW/uW
- DjXXCc7asY67VWpUxGrm7Ns6nBKD+OlOak4Wird+IKKnIqgUtATXAdDcYSD5NDrLN9n6IInj
-X-Proofpoint-GUID: 975Hw14WWQ1uerAQZ4YlKR7Wiq-nkShy
-X-Proofpoint-ORIG-GUID: 975Hw14WWQ1uerAQZ4YlKR7Wiq-nkShy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-25_01,2025-06-23_07,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 mlxlogscore=999 lowpriorityscore=0 malwarescore=0
- impostorscore=0 suspectscore=0 clxscore=1011 spamscore=0 priorityscore=1501
- adultscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506250058
+References: <20250611133330.1514028-1-tabba@google.com> <80e062dd-2445-45a6-ba4a-8f5fe3286909@redhat.com>
+ <CA+EHjTx2MUq98=j=5J+GwSJ1gd7ax-RrpS8WhEJg4Lk9_USUmA@mail.gmail.com>
+ <372bbfa5-1869-4bf2-9c16-0b828cdb86f5@redhat.com> <CA+EHjTyxwdu5YhtZRcwb-iR7aaEq1beV+4VWSsv7-X2tDVBkrA@mail.gmail.com>
+ <11b23ea3-cadd-442b-88d7-491bba99dabe@redhat.com> <CA+EHjTyginj74a+A58aAODZ72q9bye5Gm=pTxMmLHrqrRxaSww@mail.gmail.com>
+ <aFrlcYYM5k5kstUO@google.com>
+In-Reply-To: <aFrlcYYM5k5kstUO@google.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Wed, 25 Jun 2025 09:00:27 +0100
+X-Gm-Features: Ac12FXyOZYq0_oSfy0HtoaRPA-7sk9XG35u6SnLqNIC2Y6Zwbb2K7V88hLfiL88
+Message-ID: <CA+EHjTygKUN8xYM10sVHFDpV5GDZJLGK2JaFPbLhB1pHU7jAkw@mail.gmail.com>
+Subject: Re: [PATCH v12 00/18] KVM: Mapping guest_memfd backed memory at the
+ host for software protected VMs
+To: Sean Christopherson <seanjc@google.com>
+Cc: David Hildenbrand <david@redhat.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, 
+	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
+	mail@maciej.szmigiero.name, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
 
-Add a node for the PMU module of the WCN6855 present on the qcs615 ride
-board. Assign its LDO power outputs to the existing WiFi/BT module.
+Thanks Sean,
 
-Signed-off-by: Yu Zhang(Yuriy) <yu.zhang@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/qcs615-ride.dts | 131 +++++++++++++++++++++++++++++++
- 1 file changed, 131 insertions(+)
+On Tue, 24 Jun 2025 at 18:50, Sean Christopherson <seanjc@google.com> wrote:
+>
+> On Tue, Jun 24, 2025, Fuad Tabba wrote:
+> > On Tue, 24 Jun 2025 at 12:44, David Hildenbrand <david@redhat.com> wrote:
+> > >
+> > > On 24.06.25 12:25, Fuad Tabba wrote:
+> > > > Hi David,
+> > > >
+> > > > On Tue, 24 Jun 2025 at 11:16, David Hildenbrand <david@redhat.com> wrote:
+> > > >>
+> > > >> On 24.06.25 12:02, Fuad Tabba wrote:
+> > > >>> Hi,
+> > > >>>
+> > > >>> Before I respin this, I thought I'd outline the planned changes for
+> > > >>> V13, especially since it involves a lot of repainting. I hope that
+> > > >>> by presenting this first, we could reduce the number of times I'll
+> > > >>> need to respin it.
+> > > >>>
+> > > >>> In struct kvm_arch: add bool supports_gmem instead of renaming
+> > > >>> has_private_mem
+> > > >>>
+> > > >>> The guest_memfd flag GUEST_MEMFD_FLAG_SUPPORT_SHARED should be
+> > > >>> called GUEST_MEMFD_FLAG_MMAP
+> > > >>>
+> > > >>> The memslot internal flag KVM_MEMSLOT_SUPPORTS_GMEM_SHARED should be
+> > > >>> called KVM_MEMSLOT_SUPPORTS_GMEM_MMAP
+>
+> This one...
+>
+> > > >>> kvm_arch_supports_gmem_shared_mem() should be called
+> > > >>> kvm_arch_supports_gmem_mmap()
+> > > >>>
+> > > >>> kvm_gmem_memslot_supports_shared() should be called
+> > > >>> kvm_gmem_memslot_supports_mmap()
+>
+> ...and this one are the only names I don't like.  Explanation below.
+>
+> > > >>> Rename  kvm_slot_can_be_private() to kvm_slot_has_gmem(): since
+> > > >>> private does imply that it has gmem
+> > > >>
+> > > >> Right. It's a little more tricky in reality at least with this series:
+> > > >> without in-place conversion, not all gmem can have private memory. But
+> > > >> the places that check kvm_slot_can_be_private() likely only care about
+> > > >> if this memslot is backed by gmem.
+> > > >
+> > > > Exactly. Reading the code, all the places that check
+> > > > kvm_slot_can_be_private() are really checking whether the slot has gmem.
+>
+> Yeah, I'm fine with this change.  There are a few KVM x86 uses where
+> kvm_slot_can_be_private() is slightly better in a vacuum, but in all but one of
+> those cases, the check immediately gates a kvm_gmem_xxx() call.  I.e. when
+> looking at the code as a whole, I think kvm_slot_has_gmem() will be easier for
+> new readers to understand.
+>
+> The only outlier is kvm_mmu_max_mapping_level(), but that'll probably get ripped
+> apart by this series, i.e. I'm guessing kvm_slot_has_gmem() will probably work
+> out better there too.
+>
+> > > > After this series, if a caller is interested in finding out whether a
+> > > > slot can be private could achieve the same effect by checking that a gmem
+> > > > slot doesn't support mmap (i.e., kvm_slot_has_gmem() &&
+> > > > kvm_arch_supports_gmem_mmap() ). If that happens, we can reintroduce
+> > > > kvm_slot_can_be_private() as such.
+> > > >
+> > > > Otherwise, I could keep it and already define it as so. What do you think?
+> > > >
+> > > >> Sean also raised a "kvm_is_memslot_gmem_only()", how did you end up
+> > > >> calling that?
+> > > >
+> > > > Good point, I'd missed that. Isn't it true that
+> > > > kvm_is_memslot_gmem_only() is synonymous (at least for now) with
+> > > > kvm_gmem_memslot_supports_mmap()?
+> > >
+> > > Yes. I think having a simple kvm_is_memslot_gmem_only() helper might
+> > > make fault handling code easier to read, though.
+>
+> Yep, exactly.  The fact that a memslot is bound to a guest_memfd instance that
+> supports mmap() isn't actually what KVM cares about.  The important part is that
+> the userspace_addr in the memslot needs to be ignored when mapping memory into
+> the guest, because the bound guest_memfd is the single source of truth for guest
+> mappings.
+>
+> E.g. userspace could actually point userspace_addr at a completely different
+> mapping, in which case walking the userspace page tables to get the max mapping
+> size would be all kinds of wrong.
+>
+> KVM will still use userspace_addr when access guest memory from within KVM,
+> but that's not dangerous to the host kernel/KVM, only to the guest (and userspace
+> is firmly in the TCB for that side of things).
+>
+> So I think KVM_MEMSLOT_IS_GMEM_ONLY and kvm_is_memslot_gmem_only()?
+>
+> Those names are technically not entirely true, because as above, there is no
+> guarantee that userspace_addr actually points at the bound guest_memfd.  But
+> for all intents and purposes, that will hold true for all non-buggy setups.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-index 011f8ae077c256f079ce1b07720374a9bf721488..69597b6f9d0bccb294a6dcac3fe4eb0e21f2cf7a 100644
---- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-@@ -18,6 +18,7 @@ aliases {
- 		mmc0 = &sdhc_1;
- 		mmc1 = &sdhc_2;
- 		serial0 = &uart0;
-+		serial1 = &uart7;
- 	};
- 
- 	chosen {
-@@ -209,6 +210,83 @@ vreg_l17a: ldo17 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 	};
-+
-+	vreg_conn_1p8: vreg_conn_1p8 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_conn_1p8";
-+		startup-delay-us = <4000>;
-+		enable-active-high;
-+		gpio = <&pm8150_gpios 1 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	vreg_conn_pa: vreg_conn_pa {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_conn_pa";
-+		startup-delay-us = <4000>;
-+		enable-active-high;
-+		gpio = <&pm8150_gpios 6 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	wcn6855-pmu {
-+		compatible = "qcom,wcn6855-pmu";
-+
-+		pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
-+		pinctrl-names = "default";
-+
-+		bt-enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
-+		wlan-enable-gpios = <&tlmm 98 GPIO_ACTIVE_HIGH>;
-+
-+		vddio-supply = <&vreg_conn_pa>;
-+		vddaon-supply = <&vreg_s5a>;
-+		vddpmu-supply = <&vreg_conn_1p8>;
-+		vddrfa0p95-supply = <&vreg_s5a>;
-+		vddrfa1p3-supply = <&vreg_s6a>;
-+		vddrfa1p9-supply = <&vreg_l15a>;
-+		vddpcie1p3-supply = <&vreg_s6a>;
-+		vddpcie1p9-supply = <&vreg_l15a>;
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn";
-+			};
-+
-+			vreg_pmu_aon_0p59: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p59";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p85: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p85";
-+			};
-+
-+			vreg_pmu_btcmx_0p85: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p85";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo5 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo6 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p7: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_1p7";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo8 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo9 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+		};
-+	};
- };
- 
- &gcc {
-@@ -234,6 +312,25 @@ &pcie_phy {
- 	status = "okay";
- };
- 
-+&pcieport0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1103";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+		qcom,ath11k-calibration-variant = "QC_QCS615_Ride";
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-+	};
-+};
-+
- &pm8150_gpios {
- 	usb2_en: usb2-en-state {
- 		pins = "gpio10";
-@@ -257,6 +354,10 @@ &qupv3_id_0 {
- 	status = "okay";
- };
- 
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
- &remoteproc_adsp {
- 	firmware-name = "qcom/qcs615/adsp.mbn";
- 
-@@ -274,6 +375,13 @@ &rpmhcc {
- };
- 
- &tlmm {
-+	bt_en_state: bt-en-state {
-+		pins = "gpio85";
-+		function = "gpio";
-+		output-low;
-+		bias-pull-down;
-+	};
-+
- 	pcie_default_state: pcie-default-state {
- 		clkreq-pins {
- 			pins = "gpio90";
-@@ -296,6 +404,13 @@ wake-pins {
- 			bias-pull-up;
- 		};
- 	};
-+
-+	wlan_en_state: wlan-en-state {
-+		pins = "gpio98";
-+		function = "gpio";
-+		output-low;
-+		bias-pull-down;
-+	};
- };
- 
- &sdhc_1 {
-@@ -336,6 +451,22 @@ &uart0 {
- 	status = "okay";
- };
- 
-+&uart7 {
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn6855-bt";
-+		firmware-name = "QCA6698/hpnv21", "QCA6698/hpbtfw21.tlv";
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+	};
-+};
-+
- &usb_1_hsphy {
- 	vdd-supply = <&vreg_l5a>;
- 	vdda-pll-supply = <&vreg_l12a>;
+Got it. So, to summarize again:
 
--- 
-2.34.1
+    In struct kvm_arch: add `bool supports_gmem` instead of renaming
+`bool has_private_mem`
 
+    The guest_memfd flag GUEST_MEMFD_FLAG_SUPPORT_SHARED becomes
+GUEST_MEMFD_FLAG_MMAP
+
+    The memslot internal flag KVM_MEMSLOT_SUPPORTS_GMEM_SHARED becomes
+KVM_MEMSLOT_GMEM_ONLY
+
+    kvm_gmem_memslot_supports_shared() becomes kvm_memslot_is_gmem_only()
+
+    kvm_arch_supports_gmem_shared_mem() becomes kvm_arch_supports_gmem_mmap()
+
+    kvm_gmem_fault_shared(struct vm_fault *vmf) becomes
+kvm_gmem_fault_user_mapping(struct vm_fault *vmf)
+
+    The capability KVM_CAP_GMEM_SHARED_MEM becomes KVM_CAP_GMEM_MMAP
+
+    The Kconfig CONFIG_KVM_GMEM_SHARED_MEM becomes CONFIG_KVM_GMEM_SUPPORTS_MMAP
+
+What will stay the same as V12:
+
+    CONFIG_KVM_PRIVATE_MEM becomes CONFIG_KVM_GMEM
+
+    CONFIG_KVM_GENERIC_PRIVATE_MEM becomes CONFIG_KVM_GENERIC_GMEM_POPULATE
+
+    kvm_slot_can_be_private() becomes kvm_slot_has_gmem()
+
+Thanks,
+/fuad
 
