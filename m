@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-62280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 889C5AE77A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 09:01:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E96ABAE77B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 09:05:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0DE001BC434C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 07:01:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 81F001BC3C49
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 07:06:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C92251C4A2D;
-	Wed, 25 Jun 2025 07:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A46871F9406;
+	Wed, 25 Jun 2025 07:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iLbygNTJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nH7qaW6J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3533074B1;
-	Wed, 25 Jun 2025 07:01:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1D23074B6;
+	Wed, 25 Jun 2025 07:05:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750834870; cv=none; b=YwQbT2TmHk+Wn22waSYPptA8dosEt/i484G9rpHbpmpuyyTIM7KsHkPIAHXiRgvr/NN62lov+h5UtkyLlK5T5JI5+jSiT9Wy2ZrKc0s2kCW5grFRQ2Bre79yxft+jSxktZAt2Hz5FxYhnrvyW+DOx661cQJe7OrF4CJd+gXUqac=
+	t=1750835146; cv=none; b=prn4gsaXwHcCdbwJGiK5hK5fmu0xzi+sp7oaccyNwS8g34zWSo3/9hilRYjv0U83ycGQD+yRYVZGKoaQ0+TVCvFtaIskUL3Ex20WNdB2X9wTHcWbvr4Y5596LRbEWPc5Z/SHVKMId9OHbE2GqUOlvcKpyVKnLAsea+gFCLDJtO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750834870; c=relaxed/simple;
-	bh=KNaD9WNpMpezEzpF6Wf5xJnjTCe/it9JfR5wVoryt8Q=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=mx3EnCUR/k+sdzjVHD301+0Xe+gtseNPc8srfDbPS32N8Tt+dTg/r4ugeVsWvjo8+PydrEYmXY61GdgtQbNWQxHXdFwfsYeZki6mUkhp9hxVkg0MBc+Ord5D2u1Amv1DP5bucw2KHrWZvNOaWZXgL1DphYe95ZYMZ6RaHwa4Iao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iLbygNTJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF84C4CEEA;
-	Wed, 25 Jun 2025 07:01:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750834870;
-	bh=KNaD9WNpMpezEzpF6Wf5xJnjTCe/it9JfR5wVoryt8Q=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=iLbygNTJddfXZuz4w8BeHSOP+USrDuHqKsSt2cvBjbpZOnzfpis4KiyHsFSqo1JkQ
-	 Trk74in6TSUwkwWftyp0uMeR20IJKy4ZfwqcivZpw2cnOwhX6jhVCRaM4EdC5h4zEF
-	 PpZhp3sQv3HLcmJpEBlJWei7sGeYRqX3Z/hJLK+WjSi0d0Ezvcg4GhTTRewCK7Dgsn
-	 i0VK9DxS11k6cwSyZQ2WpC02R9iWOc4ceax/AGi6DJtiVYWKzgclbMlxqlFaWPe969
-	 pJhaNuZ0GQAoDGDGB7Da3ggP/vEEYEcmo2zbI4IEG/aC/QjRD1n+2PkNeSHP507ZBG
-	 jJKo3DLzDPFbA==
-Message-ID: <930edec1-7403-4ecf-bb17-2e68b8d351f8@kernel.org>
-Date: Wed, 25 Jun 2025 09:01:06 +0200
+	s=arc-20240116; t=1750835146; c=relaxed/simple;
+	bh=C8yOTr2y/ecq+XG3gb4efefaUAO9l4eh1vFoEJY055o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=IG4PmLJ78f1xqiH7LCMrDrpGAs1g1/hnunaVAN4eQu9PZG6xzX6vHwEF8oBXOnJZQPthY7190ZmrT8aCO0gxUry7WXavauZB6wVe9y6knK9CmtBleZ/IXcO2wXqAd5lMKAU7fk890giaMvOl4kT2DnbmFOc2kyjdYlJBMdj6toU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nH7qaW6J; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55P29lH6021627;
+	Wed, 25 Jun 2025 07:05:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	crqnE/nUYztq4F530MZIziu+Af+0tTqHnaVisl8RQhU=; b=nH7qaW6JRu/fPHgO
+	zLxhrYC4sQvoOyMeENQOLdN2V3SMeaJd//vg6rgU6ccv7dXoFVj91X20kxJy/Y8S
+	Pc0HHCYY19RkZfTKuQD8L/ZqNstRX4T07yqknxycCt5tTueMm0NkJuTaj0bObfUC
+	SOvfyhpnl91gPOrXopg+wGXOAlczKDvMMAEwCeoXr6ByaemjllThPkphB3n7jORE
+	h3mZMOMvvYS7GxrOCPOB/Si5cgKCY5Tbkp0EinTTR2FRT/XcSXFClppl6QxeUIvF
+	qVvKJM/sVz4EOqQxgQ1YIOH7doF6qugG4vQG6vxrrU/Y92r/hhKZBJGBuAkQ0tv1
+	brfZsw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f2rpy42n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 25 Jun 2025 07:05:40 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55P75dRg024704
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 25 Jun 2025 07:05:39 GMT
+Received: from [10.253.38.60] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 25 Jun
+ 2025 00:05:35 -0700
+Message-ID: <1ba89074-9614-4f64-ba8b-ca81abc9a24c@quicinc.com>
+Date: Wed, 25 Jun 2025 15:05:32 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,134 +65,110 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: media: qcom,x1e80100-camss: Sort
- interconnects alphabetically
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org
-References: <20250624094253.57441-1-vladimir.zapolskiy@linaro.org>
- <20250624094253.57441-2-vladimir.zapolskiy@linaro.org>
- <aa56b956-95f3-484d-8afa-058925b95bfd@kernel.org>
- <fff77f71-e21b-43b9-9da5-6cf819add970@linaro.org>
- <5a5b78f7-e156-4c5e-8407-b249040e227d@kernel.org>
- <c29385d4-30ea-4774-9cf9-699b08e29800@linaro.org>
- <329b89a4-85a9-496f-8b1b-6239dfc9057b@kernel.org>
+Subject: Re: [PATCH v3 0/4] Add CMN PLL clock controller support for IPQ5424
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
+        <quic_pavir@quicinc.com>, <quic_linchen@quicinc.com>,
+        <quic_leiwei@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250610-qcom_ipq5424_cmnpll-v3-0-ceada8165645@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <329b89a4-85a9-496f-8b1b-6239dfc9057b@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Luo Jie <quic_luoj@quicinc.com>
+In-Reply-To: <20250610-qcom_ipq5424_cmnpll-v3-0-ceada8165645@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=NdDm13D4 c=1 sm=1 tr=0 ts=685b9fc4 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=MhXRct95NpJNHkwvU2wA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDA1MSBTYWx0ZWRfX6je8emwGC5Yc
+ ne1OaQkX+kkDKE1mZkq+UVICA68vU/dwbX2ulFSvp2aaHSLkDjl2xzkuwAB3tDP5gikPWXw6PyZ
+ kG7BCi/hY04y6qk8aYv4yMa1DJVsVwjSHGwanwcrboK+kCcuNZeUbaj5lj3cROVgky0nv6FnRCG
+ swG2UVHJGS9yVLXUwOOrGQkIIEzz9c/f/cBXT/LD7z+fdx8Ghv4pa+QLSrUVy9nz1OZ4Q+uDZbc
+ dCL1WzixmqWDBcdAX6CPREzb0dq3joCWNyTOlLOnlt2tvIUuOSltcPelc8ew4vrz2nkzKhql1pY
+ 4cZdSVJp2xuvVtCeaPPTYYMibcebOAnhW0eXoE+zp85hnbB9wcFpDrq5G/S8rcLINhybaTEkzua
+ CcfYpTmnMduDEjDsdb2+il3RPF+tsXuRdnhZzqjlKjTKUkp5wagaGYfFxsC3aRFyfBvdAv1g
+X-Proofpoint-ORIG-GUID: bajHyGKH0iirpIf91odtumNw2Oib2-8T
+X-Proofpoint-GUID: bajHyGKH0iirpIf91odtumNw2Oib2-8T
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-25_01,2025-06-23_07,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 mlxscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ phishscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=999 adultscore=0
+ clxscore=1015 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506250051
 
-On 25/06/2025 08:58, Krzysztof Kozlowski wrote:
-> On 24/06/2025 15:29, Vladimir Zapolskiy wrote:
->> On 6/24/25 15:04, Krzysztof Kozlowski wrote:
->>> On 24/06/2025 13:38, Vladimir Zapolskiy wrote:
->>>> On 6/24/25 13:10, Krzysztof Kozlowski wrote:
->>>>> On 24/06/2025 11:42, Vladimir Zapolskiy wrote:
->>>>>> Sort the entries of interconnect and interconnect-names lists in the
->>>>>> alphabetical order of values in the latter property.
->>>>>
->>>>> We do not sort these entries alphabetically and you did not explain why
->>>>> you are doing this.
->>>>
->>>> I did it, because I assume that the preference is to sort all named
->>>> values alphanumerically.
->>>
->>> Where is such preference documented?
->>
->> There is no such preference documented, as I stated it was my assumption
->> and it was based on your firm insistance to apply a particular sorting
->> order for regs, clocks and interrupts properties. Apparently you are
+Hi Bjorn,
+
+I wanted to check on this patch series. All review comments
+have been addressed, and there have been no further objections.
+Would you consider merging these patches? Thank you for your
+time and feedback!
+
+Best Regards,
+Jie
+
+On 6/10/2025 6:35 PM, Luo Jie wrote:
+> The CMN PLL block of IPQ5424 is almost same as that of IPQ9574
+> which is currently supported by the driver. The only difference
+> is that the fixed output clocks to NSS and PPE from CMN PLL have
+> a different clock rate. In IPQ5424, the output clocks are supplied
+> to NSS at 300 MHZ and to PPE at 375 MHZ.
 > 
-> Hm? And the rule is by name? I don't think I ever expressed that or
-> insisted on some sorting by name. During previous talks on camss
-> numerous times you ignored the ONLY rule of sorting I was insisting:
-> keep the same as all other devices. That was the one and only rule.
+> This patch series extends the CMN PLL driver to support IPQ5424.
+> It also adds the SoC specific header file to export the CMN PLL
+> output clock specifiers for IPQ5424. The new table of output
+> clocks is added for the CMN PLL of IPQ5424, which is acquired
+> from the device according to the compatible.
 > 
->> fine with out of the same sort order for 'interconnects' values, the
->> criteria of picked properties remains unclear for me.
+> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> ---
+> Changes in v3:
+> - Collect review tags for the DT binding and driver patches.
+> - Rebase onto the latest code to resolve conflicts in the DTS patch.
+> - Link to v2: https://lore.kernel.org/r/20250411-qcom_ipq5424_cmnpll-v2-0-7252c192e078@quicinc.com
 > 
-> I don't understand why it is unclear. That time with Bryan you both
-> received VERY CLEAR feedback from me: there is no such rule of sorting
-> any values. Yet you were pushing the discussion and patchset like there
-> was something.
+> Changes in v2:
+> - Alphanumeric order for the compatible strings in dtbindings.
+> - Add the IPQ5424 SoC specific header file to export the clock specifiers.
+> - Drop the comma of the sentinel entry of the output clock array.
+> - Add Reviewed-by tag on the DTS patches.
+> - Link to v1: https://lore.kernel.org/r/20250321-qcom_ipq5424_cmnpll-v1-0-3ea8e5262da4@quicinc.com
 > 
-Look, the first reply:
+> ---
+> Luo Jie (4):
+>        dt-bindings: clock: qcom: Add CMN PLL support for IPQ5424 SoC
+>        clk: qcom: cmnpll: Add IPQ5424 SoC support
+>        arm64: dts: ipq5424: Add CMN PLL node
+>        arm64: dts: qcom: Update IPQ5424 xo_board to use fixed factor clock
+> 
+>   .../bindings/clock/qcom,ipq9574-cmn-pll.yaml       |  1 +
+>   arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts        | 24 +++++++++++++--
+>   arch/arm64/boot/dts/qcom/ipq5424.dtsi              | 27 ++++++++++++++++-
+>   drivers/clk/qcom/ipq-cmn-pll.c                     | 35 ++++++++++++++++++----
+>   include/dt-bindings/clock/qcom,ipq5424-cmn-pll.h   | 22 ++++++++++++++
+>   5 files changed, 101 insertions(+), 8 deletions(-)
+> ---
+> base-commit: b27cc623e01be9de1580eaa913508b237a7a9673
+> change-id: 20250610-qcom_ipq5424_cmnpll-22b232bb18fd
+> 
+> Best regards,
 
-https://lore.kernel.org/all/65e5796a-8b8d-44f0-aef4-e420083b9d52@kernel.org/
-
-"You are supposed to keep the same order, as much as
-possible."
-
-What rule is unclear here?
-
-Even more precise reply from me:
-
-https://lore.kernel.org/all/8f11c99b-f3ca-4501-aec4-0795643fc3a9@kernel.org/
-
-"I don't imply sorting by name is any better. "
-
-And:
-
-"The only rule is that all
-devices from same family type must have the same order."
-
-
-And now you claim there was from me "firm insistance to apply a
-particular sorting" in context of name?
-
-So again, my entire feedback repeated multiple times during that
-discussion is totally ignored and twisted to some fake new rule of name
-sorting.
-
-Best regards,
-Krzysztof
 
