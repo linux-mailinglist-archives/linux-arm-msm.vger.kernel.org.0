@@ -1,204 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-62634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 502A0AE9C61
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 13:18:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DFFD1AE9CB0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 13:40:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F9C5165733
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 11:18:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D8C3E16507A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 11:40:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7521B27510D;
-	Thu, 26 Jun 2025 11:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69C23275841;
+	Thu, 26 Jun 2025 11:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CgbL3pEl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nhltDRcg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953A7275B0F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 11:17:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFCE27511F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 11:40:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750936648; cv=none; b=rWdGe1Pqccat5PjIOJIvZi3fQOwy6y0GOF2eFw0JQoXf4ccly7bVeaK2UuiJ0tgtFBEOd3PtKandzqVJi9Qv1/wrGO9H9qnEh1Q7zw47XrGH25m6bGVT3/aKo0bju+h9+K/JHQMVk6ANSjgUHhCOVYyJr90amWOUYHGjhy+WUEQ=
+	t=1750938018; cv=none; b=rWaHfiNFaMUWbBLeD4/lujhy9cjlRzC1iJ4k0sotdY+jSjCGeEpNSZuzg/jrrD8jq3jtYHYlnzyuGFgX3rxXlbzgHYPDK3zeVrcn5DwgmaWQSWoXqkj0Lbl0lI8423XfMnIJ8lK0bpLZ3cCJCWCjGypzB4ShfFc7Dm6XSktm5jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750936648; c=relaxed/simple;
-	bh=5MGZdg+vXH2bqcVkQFR7yR65Vui1/Yriyo02DPZvTQI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YEbdTqrF1Hc5TBDX4br481AVjeATTMT/UBHoBezTWvbxIpb0qSbp3N6EOcRlSOCO6JOo7vWw26cKnxCBSaEHECIX32P9/RnCeXRh7g+jVisySYUde5lT49fTZ8YkwfzRWRI0QnB+CneoU/fHVmwkcD6JuTIwDVyQjT60PVD2DLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CgbL3pEl; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-553bbbdc56bso144357e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 04:17:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750936645; x=1751541445; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a6AEqL65FtZQf+2LXaLIM2w9Axgikr/BCU/niUzILgo=;
-        b=CgbL3pEl6nFf57UNDwiR3dug77FHVn9DfzvD4sue5JVSsMSD3ALYYAOkfOPiDVMMmL
-         fUr6EMnPMiDgQf8aGXcpYGx7MRhzQi82nSbCjo51WFehvWvB+KAQXfA01g5Ln1q7z9Tj
-         /38ExWslloxECZ3k7ypqFJE+72KJ3AseyjIsVtN4RvYIde1KygAnnmMB7BRnbS84rcaU
-         bHl8RnuNM7ckoQa7Xuf2kGsrRV3t0Zkcdfgq5d/tsuQODVRzY99n8H6+mmnXc0uTJ3S3
-         fYiKrYkt30qaHehcADjZtnUwzjy70eLgHdQYdyn5p5cB388D0CywFX30HslWvz2eUbx2
-         zZeg==
+	s=arc-20240116; t=1750938018; c=relaxed/simple;
+	bh=Lxv3bobPbxguqV2LQ7hYcX5/yUmzEtL0xJfqCpV1wIg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cPM9By8oyS9BJtk+oL9Uc0ut7apHf3gbZ2p4YPMPN3xnLCiUx7MyHsnoJZVFWjZxx8G3oxcHwQlSYF60g7p+Zv4lBpq27eGrcIWWAFJB9xefCct4lQSzuRkU1pM9nIrkSosT2fTchj162paEVvob5vqIhLBhJcVBDym7iBgmOuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nhltDRcg; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55Q9CxnX026610
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 11:40:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	dT1fvdGe7YM5jDqJFXKfujHv8UGAeLfHoh3jvqgL6rc=; b=nhltDRcgxbaZZHTG
+	AUrg1GRbCzdgl7FluMos7m8yNO5dl6PQ/61Fute8Ke/cpUUAZHf7ZJRx+COhc4dg
+	OQN6hEOPaLEhlFhEioEfR7qa9RUc62MG6ZXPIl8Jk5hC4P6shuPfnIYQjbJZP1sQ
+	iv65/liEZyuggfzqiRvDRtoglBFBO6YwyXbVzrdwrwupQsOyDDCNg+LykQ3PbDgf
+	lS3aoh1ibLUXQQJMdE0KD0CZdcGEqPCSak3GcqtV4drAfpOaF3uiIRxClnO27aAc
+	8CjIuIUDEurC9ynb9hg7JAGZwkuwuHDP6NOVfR41J7Vk6o9svkk0hfIaMN71GqO6
+	W10G8w==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47evc5va1u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 11:40:16 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-31315427249so858361a91.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 04:40:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750936645; x=1751541445;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a6AEqL65FtZQf+2LXaLIM2w9Axgikr/BCU/niUzILgo=;
-        b=D2AjYXuamAoK4Ly9o8srNrkcpHU/GYxwJK7jB8GxEk674Y0Pja+2sMoVb87lPk9Rw/
-         d11DrIjdVM163v0cAXN2KzKzF4JzTyXhQyX/KnbVZ1YUWStslLbb3JUKig3jFNuqvQke
-         MkOSIYiG8//xTaySDTBGtwK2LlggDOOqUx1HCizymqFHCjmdsYu5wZabf9oPE/C5PBuV
-         TWUsXOX4CZPnkz+3266i2T3NKqitOz/lyfi0lRak0qP9r4iNwLE+D1mRYeZf7Y9ZbRik
-         PXQM5fmvWsWi4RnETUWNqNVWV9MWQOq9LEIQD0U6dLNPXZ/ErK/gd5MniM151gwwuKKj
-         Y+QA==
-X-Forwarded-Encrypted: i=1; AJvYcCURPm130EDx7ZLHkVqdy8qHp7tClFwC7+sUgTyPw0nfgvvdNL9tL2cr8aTe2EgtJfQP++H2DiWpRU8wXd2X@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx0H2PS4HVxb9AA81U6Iy/S8+8NyI7oBLJpxDGopJnH6H/dUCbu
-	EtB5k6PPb4E8D+NXESx1JvO2K/wVMVmRcHCpeBCkRdZlF59qAJ1+GJwRrCqPf9HDz7M=
-X-Gm-Gg: ASbGnct6IB4bOWHXzjjtfOaG4zn+sXb6jMbaAvFHVYYQdG7R/FZPRQ4SCyWhtAm83NX
-	htvt8lNomwKvaBwzVrbM5Ne7Eegj1XzpOnNPKuc5QnjzVvk8C5OTKWkomIZrqNLFjGo+KvIUSwq
-	z7njI7JsPPAG9AxGB5Z5rJSJBU247ewbZCOApUBPM8f9NPup/MQErubSc8izavFWvF7/O96P6af
-	6ZFXug1r8DlW+Kn8XOM+RHyAutctC+3QBCfmjTgJurhhmB/to1Zms8/c7/WsQtzblFJ16EVRxmj
-	lQojnqmNrhQ9tPbGGHt2Rh88nr8e4UgmwDu0lu+CGwDRmPmhWMZXzWnbVz/quQDABxZL+MkKQEW
-	avpLgV+NmgboxOxgIvQ69pT9tRAntlijfXuF3WCx9
-X-Google-Smtp-Source: AGHT+IGBJlwN74XgM78qvBOHGnOxNOq6kgysRtY+TPDa6PAvLbg5NOgW6MpVbMWgaDTM0mKf0wSNPQ==
-X-Received: by 2002:a05:6512:3b0b:b0:553:3422:c38b with SMTP id 2adb3069b0e04-554fdcf150bmr787177e87.1.1750936644740;
-        Thu, 26 Jun 2025 04:17:24 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553e41c2d71sm2521048e87.142.2025.06.26.04.17.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jun 2025 04:17:24 -0700 (PDT)
-Message-ID: <ea5d7622-ef9d-4bfc-af64-87bd19664333@linaro.org>
-Date: Thu, 26 Jun 2025 14:17:23 +0300
+        d=1e100.net; s=20230601; t=1750937998; x=1751542798;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dT1fvdGe7YM5jDqJFXKfujHv8UGAeLfHoh3jvqgL6rc=;
+        b=k+mux4o7DVdpA1ztWZSZN8JNwXv7+j2c6J6ax1kfjswmdeki4Y2aeNrK7LmeAv+S8I
+         2yTxzt2xCF4gPvPNOqnFyZv0cRwgOXRAIGA9RBruMkzqkBOiesZ2hUAHlruw3cLC87O9
+         /TUSvfAKFlflbVTo/IYOChH6ejDFgWMBjC5fx6MS8m/DJYEyqJqdfIVi40UZbxaYednG
+         djuWRa5SqIkRjjo5Fe4cI8puX7X+G4I70t0HJlNkfUn/pinBstE/r4RDTup/hpWKUCu+
+         /a6MSThrU1CnlS1jK/RmztBGRcQMTmGsthH1sgJ9cGxvO72VeVJ8Ww02rnQNz05zYf/a
+         exRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWoNocQXdTqJQi8SB2v49SEDPxLWGKH6BwD+wnfDyCI2nCt6F5TLT5WrDM+AwTKam30D7afCAhqhMBMzHUv@vger.kernel.org
+X-Gm-Message-State: AOJu0YzQxI9I2Dfg/nJMIP+cymyNkTfeAqVsNKLVgAjugzZDuT0lUwo6
+	5NOqTvPFHPCQE0CuNvDvQCbEgQ4SZ2Dh0bQHAzl++VY/N2Vu/T3kth3Foyw2rZn+GluHqHYW9RO
+	Q6MSyCF4PC/SQib23WR0zeh/Icw/sBB25D5DocrESntTmQqu5CvbeMVj9a8o75nzK94/8eltykP
+	0tIP4TlhMiawuXkRauoC8xB0N9FCUwMEuarKNRGoBZpz8=
+X-Gm-Gg: ASbGnctewzKhEr8gx/keU+zqzeA/8s1xrxboVGQ0vFaLXmvEimCvCXEkyK3uuI246iL
+	DNLs3X5QmT+ZSFMm/bkBCC7nvXBGGPBaRr5ViB6GML4mxjwyRn4TnOX8DrWtsnvguZG9uiKZLH/
+	+fAn75
+X-Received: by 2002:a17:90b:4cc4:b0:311:b3e7:fb3c with SMTP id 98e67ed59e1d1-31615a727demr4029197a91.31.1750937998026;
+        Thu, 26 Jun 2025 04:39:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEGCGw1uW8CKFNs0exv/LQABjq4l5r8EPg6eTda6AvaEb2kZw0zXQeP6iKYM50KOOF0UDcJWbd1bnLMn0/jBp8=
+X-Received: by 2002:a17:90b:4cc4:b0:311:b3e7:fb3c with SMTP id
+ 98e67ed59e1d1-31615a727demr4029167a91.31.1750937997587; Thu, 26 Jun 2025
+ 04:39:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/4] media: dt-bindings: Add qcom,msm8939-camss
-Content-Language: ru-RU
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Krzysztof Kozlowski <krzk@kernel.org>, vincent.knecht@mailoo.org,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
- phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20250613-camss-8x39-vbif-v5-0-a002301a7730@mailoo.org>
- <20250613-camss-8x39-vbif-v5-3-a002301a7730@mailoo.org>
- <50fa344c-d683-420c-a3b5-837ec6d8e93e@kernel.org>
- <e928a7c5-56d5-4f2b-b667-bdbefb506d1f@linaro.org>
- <0e030c09-0a89-4883-b958-85ddd6831407@kernel.org>
- <d1b0b5c1-a031-4429-bb4b-ad8bc914c971@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <d1b0b5c1-a031-4429-bb4b-ad8bc914c971@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250620-sm8550-correct-vreg_l6n_3p3-vol-v2-1-b397f3e91d7b@oss.qualcomm.com>
+ <aabcf5d1-7380-40c8-896f-6ce37944e97d@oss.qualcomm.com>
+In-Reply-To: <aabcf5d1-7380-40c8-896f-6ce37944e97d@oss.qualcomm.com>
+From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+Date: Thu, 26 Jun 2025 17:09:45 +0530
+X-Gm-Features: Ac12FXyGej7puhbPsuLCEV_dDy34vZtozmvv_Z6e9DnduA7CCbfzjuZzVSFf5I4
+Message-ID: <CADhhZXYZGO7Ns6R4JEyrt43+HGBuVwKz8hRiA7cxeTfg6egVcg@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sm8550: Correct the min/max voltages
+ for vreg_l6n_3p3
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-GUID: ePJOSoR99qXHkfEMkWFdJVtLqicFIEA6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI2MDA5OCBTYWx0ZWRfXxIzm2jyhYwMl
+ kV217SGwxKfXKvd8cqkVpYC44NNfO9QGI7nJa8KSL1KuBHUxxRYh/9dqU9mi435CYkPklthPZg2
+ mufnEk0XCFJ3s1UjiAEy3gkt45U7Sl3Cl1RorItzL70yoUcWakBVFd+NjqwX+BDEENbK0UDCUSh
+ kWb9OPsTJGsU0JlPQofcCMaoT1ESVw1uVHN5d6mMFS6XKCrzhv+KQu7Xyjrq0HgP63DKkPKe6EH
+ rK0xZOSExSQl+pye36+Rtb3OLWyS2HBbJzejjEI1NDNti8wJsznh11e3ESAcNIyk23Zi6shtEDX
+ rqklyFrjOYxeJVrypEihApjaX42goqUNp9j1Phcl3IXvGDj+hcee8GOWzhVo7CyCCLck+Ulu5/w
+ B+iJvBdo9T/m9wv/J9hvQffRLO0EJLJdci2NaX3f5YtISuGqLukFImu2ONUGpI7/navRUw1U
+X-Authority-Analysis: v=2.4 cv=caHSrmDM c=1 sm=1 tr=0 ts=685d31a0 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=Yddgdl0A0T_G1bcxSVYA:9 a=QEXdDO2ut3YA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: ePJOSoR99qXHkfEMkWFdJVtLqicFIEA6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-26_05,2025-06-26_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 mlxlogscore=999 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 adultscore=0 mlxscore=0 spamscore=0
+ malwarescore=0 phishscore=0 clxscore=1015 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506260098
 
-On 6/26/25 13:48, Bryan O'Donoghue wrote:
-> On 26/06/2025 11:28, Krzysztof Kozlowski wrote:
->> On 26/06/2025 12:19, Bryan O'Donoghue wrote:
->>> On 26/06/2025 11:00, Krzysztof Kozlowski wrote:
->>>>> +  reg-names:
->>>>> +    items:
->>>>> +      - const: csi_clk_mux
->>>> No, I already provided arguments in two lengthy discussions - this is
->>>> not sorted by name.
->>>>
->>>> Keep the same order as in previous device, so msm8916 for example. Or
->>>> any other, but listen to some requests to sort it by some arbitrary rule
->>>> which was never communicated by DT maintainers.
->>>
->>> I don't think if you look through the history that you can find a
->>> consistent rule that was used to arrange the registers.
->>>
->>> So we are trying to have a consistent way of doing that. Thats why the
->>> last number of additions have been sort by name, because it seemed to be
->>> the most consistent.
->>
->>
->> Why are we discussing it again? You asked me the same here:
->> https://lore.kernel.org/all/8f11c99b-f3ca-4501-aec4-0795643fc3a9@kernel.org/
->>
->> and I already said - not sorting by name. You take the same order as
->> previous.
->>
->> If you ever want to sort by name, answer to yourself:
->> NO. Take the same order as other existing device.
->>
->> If you ever want to sort by value, answer to yourself:
->> NO.
->>
->> You both came with some new, invented rules of sorting, applied it, and
->> now you claim that "existing devices were sorted like that". What? NO!
->>
->> Best regards,
->> Krzysztof
-> 
-> OK.
-> 
-> Discussed this on Slack with Krzysztof.
+Hi Konrad,
 
-The problem with private communications is that it produces
-sacral knowledge.
+On Mon, Jun 23, 2025 at 4:53=E2=80=AFPM Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> wrote:
+>
+> On 6/20/25 5:29 PM, Kamal Wadhwa wrote:
+> > Voltage regulator 'vreg_l6n_3p3' max-microvolt prop is currently
+> > configured at 3304000uV in different sm8550 board files. However this
+> > is not a valid voltage value for 'pmic5_pldo502ln' type voltage
+> > regulators.
+> >
+> > Check below the max value(3200mV) in the regulator summary for min/max
+> > used as 2800mV/3304mV in DT:-
+> >
+> > logs:
+> >
+> > [    0.294781] vreg_l6n_3p3: Setting 2800000-3304000uV
+> >
+> > regulator summary:
+> >
+> > regulator     use open bypass  opmode   voltage current  min     max
+> > ---------------------------------------------------------------------
+> > ..
+> > vreg_l6n_3p3   0    0    0     normal   2800mV   0mA  2800mV  3200mV
+> > ..
+> >
+> > Correct the min/max value to 3200000uV, as that is the closest valid
+> > value to 3.3V and Hardware team has also confirmed that its good to
+> > support the consumers(camera sensors) of this regulator.
+> >
+> > Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+> > ---
+>
+> FWIW it seems like 3.312v (which is slightly above the previous
+> value) is also supported:
+>
+> static const struct rpmh_vreg_hw_data pmic5_pldo502ln =3D {
+>         .regulator_type =3D VRM,
+>         .ops =3D &rpmh_regulator_vrm_ops,
+>         .voltage_ranges =3D (struct linear_range[]) {
+>                 REGULATOR_LINEAR_RANGE(1800000, 0,  2,  200000),
+>                 REGULATOR_LINEAR_RANGE(2608000, 3,  28, 16000),
+>                 REGULATOR_LINEAR_RANGE(3104000, 29, 30, 96000),
+>                 REGULATOR_LINEAR_RANGE(3312000, 31, 31, 0),
+>         },
+>         .n_linear_ranges =3D 4,
+>         .n_voltages =3D 32,
+>         .pmic_mode_map =3D pmic_mode_map_pmic5_ldo_hpm,
+>         .of_map_mode =3D rpmh_regulator_pmic4_ldo_of_map_mode,
+> };
 
-> 8939 should be like 8916 because these are devices of a similar class.
-> 
+Yes, originally I was planning to share the change for 3304mV -> 3312mV.
+However, while testing, I realized that I would also need changes in
+firmware( to allow for a 3312mV max limit). so during internal discussion
+it was clarified that all the consumers on L6N can work fine with 3.2v.
 
-What's about MSM8953 then?
 
-Please see commit c830aff08d51 ("media: dt-bindings: Add qcom,msm8953-camss").
+>
+> but if the hw folks say we can do with the lower value, it's probably
+> even better
 
-> x1e has a particular order if a new device x1e+1 comes along with a new
-> register then
-> 
+Yes. Thanks for affirming.
 
-> 
-> I think I personally haven't understood what was meant by "devices of a
-> class" but its clearer now.
-> 
+Thanks,
+Kamal
 
-And I still didn't get it, how to read this "devices of a class"?
-
-In particular why is MSM8939 a device of MSM8916 class and MSM8953 is
-not?
-
-For sake of simplicity I list only accepted CAMSS dt bindings:
-
-qcom,msm8916-camss.yaml
-qcom,msm8953-camss.yaml
-qcom,msm8996-camss.yaml
-qcom,sc7280-camss.yaml
-qcom,sc8280xp-camss.yaml
-qcom,sdm660-camss.yaml
-qcom,sdm670-camss.yaml
-qcom,sdm845-camss.yaml
-qcom,sm8250-camss.yaml
-qcom,sm8550-camss.yaml
-qcom,x1e80100-camss.yaml
-
-I kindly ask to select a number of class defining IPs from the list,
-so that all next ones will derive from those only, and not from
-"another class". It's a task for a DT maintainer I presume.
-
-Before completing this and getting a common understanding all next
-work to provide CAMSS suppor for new platforms is not directed by
-any policy, because the policy "do as it's been done before" is
-applied inconsistently.
-
--- 
-Best wishes,
-Vladimir
+>
+> Konrad
 
