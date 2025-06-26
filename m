@@ -1,173 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-62614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92A0EAE9A7B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 11:56:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 301B2AE9A9B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 12:02:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD86A5A4027
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 09:55:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C31BB4A73EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 10:01:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B00A2BF017;
-	Thu, 26 Jun 2025 09:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7878219315;
+	Thu, 26 Jun 2025 10:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HnENumIZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MozhqSKD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B90529C35F;
-	Thu, 26 Jun 2025 09:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E0C1891A9;
+	Thu, 26 Jun 2025 10:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750931762; cv=none; b=YtDzeVGFKfAbIFdw3Z+4cNN9mO1t7CPy8RIEwPEdtZRmgqCt2CR7Twjx0QzVMEy1DDJBfuwa+ZGZDOZlv3HgQ4myzJJyiNCBsoovFEyZD/zlbDbCSyXB1LSQcUKe0260WchSL5M45fH1EKdRs4gKUhEGvyi0PXVwNoySaY+ys+0=
+	t=1750932033; cv=none; b=N6zNoHdFcHQBrfv8jISIgV9RpxI3tIhuhwdkpZcoxL4LulYLUzEmDXoMYWVAmNUKrBelgtrLNlpFEI2ljRvusr86+7lJh4B7WLLFLGIejJvfu8/GkoyPtVI8CLiCVjbyRTQIlQql7jKP+SfKMuTOdgqKNKZcHq3KBf5Y8WOqQus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750931762; c=relaxed/simple;
-	bh=NIdi9vkSfJQtqbtgSmTPBIUYBGUucA44r7jAMoBWtrk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I+lzrRUm/gh4bbyYP9drzsaKM4m95/Z9P2MrLRWF7FL+h/IBUUSdudIL7NePZAGVpjBfBMCiKZcI8di/fX5NolY+1TwkAlfHOS2fbwXW+Yiv2APpj40KeGswCCMFBKOLndp6o/Ht1j055Zah4WqQhBRxI1kQGDPxFvxEIqDG/Fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HnENumIZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91818C4CEF1;
-	Thu, 26 Jun 2025 09:56:01 +0000 (UTC)
+	s=arc-20240116; t=1750932033; c=relaxed/simple;
+	bh=ztHG0MpcdbBlHhSE3ZNvUzBLdwqtfGKtg90w7ScL/pk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JhZp0q8EArCWApCa1SlKOlnIp/4rFH25KsWu8AixmUjL5KH9NbQLG2GbUBFZMgUbJGU0QOYBRt5V1Ko40YzzOjIaKycADB72yYDUNWpgyXxXlUrdh88UhsT1bSQ6MtRtphZ2g/Lywn82UR5/x3EWw+gxczTOq+tyhR+W5XZiRpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MozhqSKD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119BDC4CEEE;
+	Thu, 26 Jun 2025 10:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750931761;
-	bh=NIdi9vkSfJQtqbtgSmTPBIUYBGUucA44r7jAMoBWtrk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HnENumIZ1fVJVgXx+uIFkAExIWrr/yFkI5BgCQKsBLrcN0eNG0YjWT+DYcEaq98qa
-	 x3AICdrkpFbiul9hG1ulv7WFcbaG7YPqRFhkVVygDubPbLK8ZIJkE0MRP2A+ztSqiC
-	 1OkvauffDOxDlz1F0jlM5d8Nsn6d8AXmVUL9Wd5srmTqkJsI9GKJ/SCZWe1fbiYpWw
-	 XOxfdxgwQUTg+IsIyE+gmMY+ED/RbUWNmriWmqNm8eQSwzoJPv/hNKWO+7n8aI6NP1
-	 HNVeHrfPWl1Wecdj3GCXVtM6QfbkP6IE4tSLWf4nOCnY0aNbLGCWpjZva42jpV+HvE
-	 56YSqi4fqJ0+A==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1uUjKr-000000007WP-1woe;
-	Thu, 26 Jun 2025 11:56:01 +0200
-Date: Thu, 26 Jun 2025 11:56:01 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Steev Klimaszewski <steev@kali.org>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-efi@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v4 7/8] firmware: qcom: scm: rework QSEECOM allowlist
-Message-ID: <aF0ZMcVcgHpqsKoG@hovoldconsulting.com>
-References: <20250625-more-qseecom-v4-0-aacca9306cee@oss.qualcomm.com>
- <20250625-more-qseecom-v4-7-aacca9306cee@oss.qualcomm.com>
+	s=k20201202; t=1750932033;
+	bh=ztHG0MpcdbBlHhSE3ZNvUzBLdwqtfGKtg90w7ScL/pk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=MozhqSKDFZ+NssA18e3FYHq21/3we0D4O+FYHMCeHOLifX9P0K30dQvLReNmsfOgi
+	 UhJ9h2X6sAShdeXhxmOemEd7I6o2BpWXYs3BbdzvBCa3VvrXmZp+Tje2pzib+PxScl
+	 iqXJEYe4jDVKXSGD5oMIjUnFf7eAlNlEOW7vDfbgVJ+9LqQ8yPQd5X9dVZQ47FS+ob
+	 bGkCf7OnQ1v2jk2/nhm9xJgQH3zzAaRzttU2t7yDFAs7BUmjcykywrpB9rXMzGCcur
+	 lPgLas4OJW7dXkhew6mkP/EfE9G2CFVzDTJTmBo2tlJHTzIYalGNqEY1wzs1iTmfiD
+	 mLZ5iTlxsxfYA==
+Message-ID: <50fa344c-d683-420c-a3b5-837ec6d8e93e@kernel.org>
+Date: Thu, 26 Jun 2025 12:00:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250625-more-qseecom-v4-7-aacca9306cee@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/4] media: dt-bindings: Add qcom,msm8939-camss
+To: vincent.knecht@mailoo.org, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+ phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20250613-camss-8x39-vbif-v5-0-a002301a7730@mailoo.org>
+ <20250613-camss-8x39-vbif-v5-3-a002301a7730@mailoo.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250613-camss-8x39-vbif-v5-3-a002301a7730@mailoo.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 25, 2025 at 01:53:26AM +0300, Dmitry Baryshkov wrote:
-> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 13/06/2025 11:33, Vincent Knecht via B4 Relay wrote:
+> From: Vincent Knecht <vincent.knecht@mailoo.org>
 > 
-> Listing individual machines in qcom_scm_qseecom_allowlist doesn't scale.
-> Allow it to function as allow and disallow list at the same time by the
-> means of the match->data and list the SoC families instead of devices.
+> Add bindings for qcom,msm8939-camss in order to support the camera
+> subsystem for MSM8939.
 > 
-> In case a particular device has buggy or incompatible firmware user
-> still can disable QSEECOM by specifying qcom_scm.qseecom=off kernel
-> param and (in the longer term) adding machine-specific entry to the
-> qcom_scm_qseecom_allowlist table.
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Drop, you did here some unusual changes.
+
+> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+> ---
+>  .../bindings/media/qcom,msm8939-camss.yaml         | 254 +++++++++++++++++++++
+>  1 file changed, 254 insertions(+)
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-
->  /*
->   * We do not yet support re-entrant calls via the qseecom interface. To prevent
-> - * any potential issues with this, only allow validated machines for now. Users
-> + * any potential issues with this, only allow validated platforms for now. Users
->   * still can manually enable or disable it via the qcom_scm.qseecom modparam.
-> + *
-> + * To disable QSEECOM for a particular machine, add compatible entry and set
-> + * data to &qcom_qseecom_disable.
->   */
->  static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
-> -	{ .compatible = "asus,vivobook-s15" },
-> -	{ .compatible = "asus,zenbook-a14-ux3407qa" },
-> -	{ .compatible = "asus,zenbook-a14-ux3407ra" },
-> -	{ .compatible = "dell,xps13-9345" },
-> -	{ .compatible = "hp,elitebook-ultra-g1q" },
-> -	{ .compatible = "hp,omnibook-x14" },
-> -	{ .compatible = "huawei,gaokun3" },
-> -	{ .compatible = "lenovo,flex-5g" },
-> -	{ .compatible = "lenovo,thinkpad-t14s" },
-> -	{ .compatible = "lenovo,thinkpad-x13s", },
->  	{ .compatible = "lenovo,yoga-c630", .data = &qcom_qseecom_ro_uefi, },
-> -	{ .compatible = "lenovo,yoga-slim7x" },
-> -	{ .compatible = "microsoft,arcata", },
-> -	{ .compatible = "microsoft,blackrock" },
-> -	{ .compatible = "microsoft,romulus13", },
-> -	{ .compatible = "microsoft,romulus15", },
-> -	{ .compatible = "qcom,sc8180x-primus" },
-> +	{ .compatible = "qcom,sc8180x", },
-> +	{ .compatible = "qcom,sc8280xp", },
->  	{ .compatible = "qcom,sc8280xp-crd", .data = &qcom_qseecom_ro_uefi, },
-
-You need to have the machine specific entries before the SoC fallbacks
-for this to work.
-
-Perhaps this should be made more clear in the table by adding a
-separator comment before the SoC entries or similar.
-
-> -	{ .compatible = "qcom,x1e001de-devkit" },
-> -	{ .compatible = "qcom,x1e80100-crd" },
-> -	{ .compatible = "qcom,x1e80100-qcp" },
-> -	{ .compatible = "qcom,x1p42100-crd" },
-> +	{ .compatible = "qcom,sdm845", .data = &qcom_qseecom_disable, },
-> +	{ .compatible = "qcom,x1e80100", },
-> +	{ .compatible = "qcom,x1p42100", },
->  	{ }
->  };
->  
-> @@ -2046,12 +2035,22 @@ static bool qcom_scm_qseecom_machine_is_allowed(struct device *scm_dev,
->  	match = of_match_node(qcom_scm_qseecom_allowlist, np);
->  	of_node_put(np);
->  
-> -	if (match && match->data)
-> +	if (!match) {
-> +		dev_info(scm_dev, "qseecom: untested machine, skipping\n");
-> +		return false;
-> +	}
+> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8939-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8939-camss.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..9fbb4b204ac8728b822864ad8336aa9d826d6b5b
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,msm8939-camss.yaml
+> @@ -0,0 +1,254 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/media/qcom,msm8939-camss.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +	if (match->data)
->  		*quirks = *(unsigned long *)(match->data);
->  	else
->  		*quirks = 0;
->  
-> -	return match;
-> +	if (*quirks & QCOM_QSEECOM_QUIRK_DISABLE) {
-> +		dev_info(scm_dev, "qseecom: disabled by the quirk\n");
-
-Not sure this is needed since it presumably has been disabled because it
-has been tested and found not to work. No need to spam the logs with
-that on every boot.
-
-In any case I don't think you should be referring to "the quirk" which
-makes little sense without looking at the implementation.
-
-> +		return false;
-> +	}
+> +title: Qualcomm MSM8939 Camera Subsystem (CAMSS)
 > +
-> +	return true;
->  }
+> +maintainers:
+> +  - Vincent Knecht <vincent.knecht@mailoo.org>
+> +
+> +description:
+> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,msm8939-camss
+> +
+> +  reg:
+> +    maxItems: 11
+> +
+> +  reg-names:
+> +    items:
+> +      - const: csi_clk_mux
 
-Johan
+No, I already provided arguments in two lengthy discussions - this is
+not sorted by name.
+
+Keep the same order as in previous device, so msm8916 for example. Or
+any other, but listen to some requests to sort it by some arbitrary rule
+which was never communicated by DT maintainers.
+
+
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: csiphy0
+> +      - const: csiphy0_clk_mux
+> +      - const: csiphy1
+> +      - const: csiphy1_clk_mux
+> +      - const: ispif
+> +      - const: vfe0
+> +      - const: vfe0_vbif
+> +
+> +  clocks:
+> +    maxItems: 24
+> +
+> +  clock-names:
+> +    items:
+> +      - const: ahb
+> +      - const: csi0
+> +      - const: csi0_ahb
+> +      - const: csi0_phy
+> +      - const: csi0_pix
+> +      - const: csi0_rdi
+> +      - const: csi1
+> +      - const: csi1_ahb
+> +      - const: csi1_phy
+> +      - const: csi1_pix
+> +      - const: csi1_rdi
+> +      - const: csi2
+> +      - const: csi2_ahb
+> +      - const: csi2_phy
+> +      - const: csi2_pix
+> +      - const: csi2_rdi
+> +      - const: csi_vfe0
+> +      - const: csiphy0_timer
+> +      - const: csiphy1_timer
+> +      - const: ispif_ahb
+> +      - const: top_ahb
+> +      - const: vfe0
+> +      - const: vfe_ahb
+> +      - const: vfe_axi
+> +
+
+Also messed up order.
+
+
+> +  interrupts:
+> +    maxItems: 7
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: csiphy0
+> +      - const: csiphy1
+> +      - const: ispif
+> +      - const: vfe0
+
+As well.
+
+
+
+Best regards,
+Krzysztof
 
