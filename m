@@ -1,124 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-62583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96D44AE96B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 09:26:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09561AE96B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 09:26:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D7BD2164103
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 07:26:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3EA9E4A255B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 07:26:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BE1923B613;
-	Thu, 26 Jun 2025 07:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C657523B634;
+	Thu, 26 Jun 2025 07:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="oYaYAdbq"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Tf9KD+6H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
+Received: from relay16.mail.gandi.net (relay16.mail.gandi.net [217.70.178.236])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF91F1CAA92
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 07:25:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0077B23B60E;
+	Thu, 26 Jun 2025 07:25:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.236
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750922758; cv=none; b=QF/BwRrn3wFdG6uA9Ee67HQ+HL8QA8R6YgLojyqu0AdipWnHoI37OPsxZ1g398YUGjmDzYXHtONtN5PAzFPx9chSzRoZWlp9Fxstqb6RWf9pZognJIaVnp270fN7bwiKC3Mo0kjs4X+48O4jEJyQU8bc8ma0ciNRbJ1xAZX8MGU=
+	t=1750922759; cv=none; b=RonrqPsCJNSvD1EjFC5LT2ieIEg3FpUDlXLHP+NYpkob7PJ4jS1T+IQ+X0YbaBRoBixy2UO438tUsVW1pT1tmmQ0GWV747X29rNu90buTtQN+5BBWfvNIXeoa6IO3WzeNLR4AbXakUmkUjYIZIwdYpNwntrhRsokuU2GwrSm8yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750922758; c=relaxed/simple;
-	bh=zNyireIrzqQGlC1AL/TYgmGwJV4go/9nKXlAZ0XN3sY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
-	 Content-Type:References; b=FbIQHQXbr9T+qUA2QomCg8ZyeEKdh34VMmfxaghvcLofDMwCuBh88DCsw/93cFuWvHHvLcYUiCyO0gCPgroarZpGU0NZkh8YzFFK0IfGphlSK/dS5AmY+duPXH+2HMcx9gxgQemjE2fVGVzu/3Lwx0AOSHYGEXegjgUSQZo41C8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=oYaYAdbq; arc=none smtp.client-ip=210.118.77.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20250626072555euoutp02d3f9b49d2557fb04b3552dbe50dafe67~Mhvge7ms91413714137euoutp02P
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 07:25:55 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20250626072555euoutp02d3f9b49d2557fb04b3552dbe50dafe67~Mhvge7ms91413714137euoutp02P
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1750922755;
-	bh=icw0rjoptkxLHhnrH+Lv9R4VoB6E9eXahaqZ7CRog5w=;
-	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-	b=oYaYAdbqKL2WtognhSMuMRAAXT0Y0KSf50dCqq6ukWVWB+IEaEeZEX8Eq9rmQOlb2
-	 q5xpqqFu/gPa/Fz+zVkig/b6kYXFrH2+DK7CtkuoH/15VztfVkOAfI0CE9NENm03zy
-	 noWlyH1JU8CoXW3Nfph5gUSxKMpqpdq4/OR76dOk=
-Received: from eusmtip2.samsung.com (unknown [203.254.199.222]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20250626072554eucas1p2ae35c30a96ab1ca61b6a3d6a970708ee~Mhvf-XwAx0141401414eucas1p2L;
-	Thu, 26 Jun 2025 07:25:54 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20250626072553eusmtip29447c0f000773f70ea184087c9f48365~MhveVcUnG2361923619eusmtip2e;
-	Thu, 26 Jun 2025 07:25:53 +0000 (GMT)
-Message-ID: <9cb6b7ad-387d-4a0d-9792-25cbbdc6dfed@samsung.com>
-Date: Thu, 26 Jun 2025 09:25:52 +0200
+	s=arc-20240116; t=1750922759; c=relaxed/simple;
+	bh=cP+LS+JT48xAm+OMUAjyBYcTGTWWmH6uA1TAjVp0oik=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZYdXmdNTj24BYwkotJIA8BY/+XSCjSVhUeTf01oqRCNmjOSWk1C+jCXTjfpvgNHt26r3xb3Rz4/Q55Fq4r50ZYkRYlx6ZHVLPMfdNkSCaOqt2GdNDZXJRJUp13T1x3iLZPgGb0WhE2jyFk21vgUW9AlNMKy8EYxlyVHVx3m9CSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Tf9KD+6H; arc=none smtp.client-ip=217.70.178.236
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 6541044A0C;
+	Thu, 26 Jun 2025 07:25:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1750922755;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cP+LS+JT48xAm+OMUAjyBYcTGTWWmH6uA1TAjVp0oik=;
+	b=Tf9KD+6HR5QRq1KpbRFlU6OXd/2oZFt2nMpY3dRF2jQlBntgE/uXldQe4ASkyQuEFeGFpU
+	x54Kx+uyFahHqD3gLmlKtEeKISIFQ3cFUyziK87YXTImfrxfbju0VCXhTsvDnQf8BdN7O8
+	G+zSkknpujMQcnwoCAGu3wP0+pY75y1JNixyG/vHrgLA+Xz2GjaglsXBYqN65JcNmkJ2IG
+	CHr/pRPQ8jqPg5GqRIOY8ZPudj3lLBUSn3TIOdglIrwN8v5Vv1JujssPROvaReJZsZkxOD
+	dkBbPLZ+LpAu3fgJ86CilDjP0TbjiVkr+5k4q4FmlPID1oN06B+OH98gZbKc7w==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Mark Brown <broonie@kernel.org>
+Cc: Gabor Juhos <j4g8y7@gmail.com>,  Md Sadre Alam
+ <quic_mdalam@quicinc.com>,  Varadarajan Narayanan
+ <quic_varada@quicinc.com>,  Sricharan Ramabadhran
+ <quic_srichara@quicinc.com>,  Richard Weinberger <richard@nod.at>,
+  Vignesh Raghavendra <vigneshr@ti.com>,  linux-spi@vger.kernel.org,
+  linux-mtd@lists.infradead.org,  linux-arm-msm@vger.kernel.org,
+  linux-kernel@vger.kernel.org,  Lakshmi Sowjanya D
+ <quic_laksd@quicinc.com>
+Subject: Re: [PATCH v3 0/2] spi: spi-qpic-snand: avoid memory corruption
+In-Reply-To: <aFx7ix0uikB8dkm4@finisterre.sirena.org.uk> (Mark Brown's message
+	of "Wed, 25 Jun 2025 23:43:23 +0100")
+References: <20250618-qpic-snand-avoid-mem-corruption-v3-0-319c71296cda@gmail.com>
+	<aFx7ix0uikB8dkm4@finisterre.sirena.org.uk>
+User-Agent: mu4e 1.12.7; emacs 30.1
+Date: Thu, 26 Jun 2025 09:25:53 +0200
+Message-ID: <8734bnx8u6.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V6 10/10] scsi: ufs: qcom : Refactor phy_power_on/off
- calls
-To: Nitin Rawat <quic_nitirawa@quicinc.com>, Aishwarya
-	<aishwarya.tcv@arm.com>
-Cc: James.Bottomley@HansenPartnership.com, andersson@kernel.org,
-	bvanassche@acm.org, dmitry.baryshkov@oss.qualcomm.com, kishon@kernel.org,
-	konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-scsi@vger.kernel.org, manivannan.sadhasivam@linaro.org,
-	martin.petersen@oracle.com, neil.armstrong@linaro.org,
-	quic_cang@quicinc.com, quic_rdwivedi@quicinc.com, vkoul@kernel.org,
-	broonie@kernel.org
-Content-Language: en-US
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <7e362ee3-a237-4583-97fe-69ffc0d1d90d@quicinc.com>
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250626072554eucas1p2ae35c30a96ab1ca61b6a3d6a970708ee
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20250626072554eucas1p2ae35c30a96ab1ca61b6a3d6a970708ee
-X-EPHeader: CA
-X-CMS-RootMailID: 20250626072554eucas1p2ae35c30a96ab1ca61b6a3d6a970708ee
-References: <9c846734-9267-442d-bba0-578d993650c1@quicinc.com>
-	<20250620214408.11028-1-aishwarya.tcv@arm.com>
-	<7e362ee3-a237-4583-97fe-69ffc0d1d90d@quicinc.com>
-	<CGME20250626072554eucas1p2ae35c30a96ab1ca61b6a3d6a970708ee@eucas1p2.samsung.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvhedtgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffgffkfggtgfgsehtqhertddtreejnecuhfhrohhmpefoihhquhgvlhcutfgrhihnrghluceomhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepffeghfejtdefieeguddukedujeektdeihfelleeuieeuveehkedvleduheeivdefnecukfhppeeltddrkeelrdduieefrdduvdejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepledtrdekledrudeifedruddvjedphhgvlhhopehlohgtrghlhhhoshhtpdhmrghilhhfrhhomhepmhhiqhhuvghlrdhrrgihnhgrlhessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepuddvpdhrtghpthhtohepsghrohhonhhivgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhegghekhiejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepqhhuihgtpghmuggrlhgrmhesqhhuihgtihhntgdrtghomhdprhgtphhtthhopehquhhitggpvhgrrhgruggrsehquhhitghinhgtrdgtohhmpdhrtghpthhtohepqhhuihgtpghsrhhitghhrghrrgesqhhuihgtihhntgdrtghomhdprhgtphhtt
+ hhopehrihgthhgrrhgusehnohgurdgrthdprhgtphhtthhopehvihhgnhgvshhhrhesthhirdgtohhmpdhrtghpthhtoheplhhinhhugidqshhpihesvhhgvghrrdhkvghrnhgvlhdrohhrgh
 
-On 21.06.2025 19:15, Nitin Rawat wrote:
+Hi Mark,
+
+On 25/06/2025 at 23:43:23 +01, Mark Brown <broonie@kernel.org> wrote:
+
+> On Wed, Jun 18, 2025 at 10:22:48PM +0200, Gabor Juhos wrote:
+>> The 'spi-qpic-nand' driver may cause memory corruption under some
+>> circumstances. The first patch in the series changes the driver to
+>> avoid that, whereas the second adds some sanity checks to the common
+>> QPIC code in order to make detecting such errors easier in the future.
+>>=20
+>> Preferably, the two patches should go along in via the SPI tree.
+>> It is not a strict requirement though, in the case the second patch
+>> gets included separately through the MTD tree it reveals the bug
+>> which is fixed in the first patch.
 >
-> On 6/21/2025 3:14 AM, Aishwarya wrote:
->> Hi Nitin,
->>
->> To clarify — the defconfig kernel does boot successfully on our Arm64
->> Qualcomm platforms (RB5 and DB845C). However, starting from
->> next-20250613, we are seeing the following three test failures in the
->> `bootrr` baseline test in our CI environment:
->>
->>    - baseline.bootrr.scsi-disk-device0-probed
->>    - dmesg.alert
->>    - dmesg.emerg
->>
->
-> Hi Aishwarya,
->
-> Thanks for testing and reporting this issue. Can you please
-> test with the attached fix and let me know if it helps.
->
-I also stepped into this issue on the RB5 board and I confirm that that 
-patch fixes it. Thanks!
+> Miquel, are you OK with this plan for merging via the SPI tree?
 
-Feel free to add:
+Absolutely, my Ack is already there, thanks for asking.
 
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-
-
- > ...
-
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
-
+Miqu=C3=A8l
 
