@@ -1,308 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-62676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 395E7AEA12B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 16:48:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2ECA4AEA16B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 16:55:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E59E16B23F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 14:43:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0B06A18899F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 14:49:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 155492EACFE;
-	Thu, 26 Jun 2025 14:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E1FD2EB5BD;
+	Thu, 26 Jun 2025 14:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y/E10TB4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UrW7wgQS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4688E2EAB96
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 14:43:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285D32EAD18
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 14:48:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750948990; cv=none; b=QEt653RtrcO1teKCXXpRCODyii4tJV3BYcVZt/Pl4EhImDNdyKTpeEoZ7nNxfv3umd9oRC+BqMyhPnKzUiHt6kVP8olz0dyMfdVGLi0oZG3vdw1X3T0MDPWsuVzmHBYtp5EkgsoiOC7Y8+od2j92/cPi7iN1ZF4Dc3eOBnm4Dx8=
+	t=1750949302; cv=none; b=cmxW6MKMLWsNCZc2+GiaebxsCZiUmiq+Q3mFHoA6Tg/b+7WL7DV5lM6qroashc9idvsRLso1jDe7kgInI973pmvl6FywfJF+QCg9hwIueMwlxlI9bQneFBnwdJPSLGcTRbm/oAiN4xs76DSAAEz7+sDt8UizmNl2TheZuRg58YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750948990; c=relaxed/simple;
-	bh=0HQe4a5YAaE+Ad0zFk1lrQjmoZlsGV3tH1gFwEFjugE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Gr3jNANdnc6jO7eej6ZhjK05sT7GHjjL6S77Y2AB6NhLxuPiYDKWd7LXG/FQAIDAvDA0ZZR6sZwGd+pXL0woFaUEtNcJ2zwbGE1JPy4hgsXxYK5irZ57MAdNLc7ZxV4O+xdrdZht6+aLP025s85kPaFuSLFk9Cu0lzZrl1IyUWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Y/E10TB4; arc=none smtp.client-ip=209.85.221.49
+	s=arc-20240116; t=1750949302; c=relaxed/simple;
+	bh=aiw8VEIBdfphQwyrfdK4iKbqclBGgU7G8SNbgjBdszU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To; b=nXFOqd1H5+q9mNh2SUCt0Y4Zouoyb73uFus3mqzoO5/rSI2+2RdUlOSQsvrgGJ/V5v170CqclO3uy6Gmwj/voCYvTpnxRCDn7wjgf8bnn0wWMzNf32GffX2a2lVmeA0gYk9FfY45VhOJjVYupMLyj8e1CJMETHqQnVwROgebuR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UrW7wgQS; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a51481a598so599796f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 07:43:06 -0700 (PDT)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45348bff79fso11365785e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 07:48:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1750948985; x=1751553785; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=z831f9YRlmJ4qRXB7hGrw59vzBeO06ggJ4eQEzvfgkY=;
-        b=Y/E10TB4X5IXUSpuyqVHWOf2t6buTOY71jfF9+Kk574uU2JZWQ9xiqQLwxFB49NhDR
-         D2YoescEGNdGCZOH/TGrUjk3Ft9yF3A4QBk+tL7Jv8UijizmaBfr4KSxn59ToFHthWu3
-         OVWxddtnd/CS02Z17HWHZK2PFuU+1zzeQqx2bjsvYrPSv2nKv+8uSPBibnZwI3t6xMWs
-         ttqHHy1IKieAUM1Pb1wgHTuZZMNBY65M/OQYMCKH2eP7Nw9ofKdJ9Nd164sTtiMfbBsm
-         WCl0qJN1K/4RC/WNZQQXmEv0GbXmNnLa7YEvZ7Cj0fGKqP46Qw45lGbvfwMKW6THMA6d
-         /fVQ==
+        d=linaro.org; s=google; t=1750949298; x=1751554098; darn=vger.kernel.org;
+        h=to:from:subject:cc:message-id:date:content-transfer-encoding
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=iJwlXkm7kquT9VL2iSx95X+5Uf83x9tlRzgwBHxTlN8=;
+        b=UrW7wgQScxzg0bjJSKS/HtTHQ3IcilHwo8gSai6kzj001+HRsKBiQvnhHnNXxhoV78
+         TLyqd6ZsE3ZRnZiUnsMAH3tW46N4yV+PxuMLZBBMqzkXkqz+80HAnZH/rmbVKOiA3V0V
+         uIkOz3T/vlv5qdwxlYoBE4CBv9978lwyM0Y4XTy4znWADqGOTRhmaSiTD14UpK8ZvLS+
+         NIoHCwbizuiIlIA/wso0I1ph81guPx3Pkd7Tu6auUNFZmtfSi+aIY1Wq+kPBCDB7Q7/R
+         geR0nVKmpp5vo3NT3lcFeKaPVZ1QrRgZOd3/Yr2WLLbLOwkUcIVshrIwTSJncmWKdixg
+         llrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750948985; x=1751553785;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z831f9YRlmJ4qRXB7hGrw59vzBeO06ggJ4eQEzvfgkY=;
-        b=PhSjaU5OjX5w+uYzyOCpXmUOo4eJpoWh7VvEH/f+AjBjAAacnH76tiVMzyCLrrtd6J
-         GasJDZ9VsINhB+9tBhKnjk3Gjq+8TGz582ceirA8NBMyhhnnCg5dH7n+nyoav+mOr8DF
-         3czDhfsU6UVY79yOzfN+Hbo1hxqrbrx2/IxbXQtHitx1ITUmmf4mammNwh1jKHTTuxIV
-         Cb1A9LQ3odrFTqCzYZEhNMhPQwcsUN89KSpzAw9zlAPFcHeQeOPG1b4ittjeCzZERYuz
-         JI3OubDODbsnMCriucMKRZLGBnDcO7uUXwe5roqG7xWEA6j++5aAUYT097psRk71cU1g
-         BYdQ==
-X-Gm-Message-State: AOJu0YxoQJOtVwA1D57REHu6c1tGxE0cz8n2Wk3galko9JmywyFomVSm
-	oYHJGB5SX0j+KTMqlg0mNIL4g0Xd3oPEVoDSF5/I+9wo7QScU1K83CpAl0LKMWlmHwc=
-X-Gm-Gg: ASbGncvncK1fJxclmAesh0mOgea0ZaSPD2VnnSL/CBcydJlfsXA2yb/Cao9cDM96raC
-	wz7lK+z39HmpodPIcj7lNOfYat2lqT6vA6FEJA0qZsz+qD3TSMZKtJVWaGtYaKSUP20VWYS3AW/
-	7EJxxXCYTFGEwTyMSkiRzjJeWJIlN1xcqUBejufEK/jnaIrfqwIdhbpvV3sKuVfi1ZRk5mPWWIp
-	c5pvAgX4YwUitRFLxfnQKJkig1MGNOZqYGOZ1Kko7kodg+7v4oHjflAAXbvlPvcWOFvUu3xI3Lz
-	HsmWIEpudcu/TkAl1S9WT4vsz3dIrN9uluJoxYgoYouCtsLk952gupwjcHWgsZkCAJ4XQ/hsVdA
-	k8HKpFTbhNoka1zgcn2PG0u19/x8=
-X-Google-Smtp-Source: AGHT+IHMkEIhXu88th1KWxayLdmKeMcAoyNbn8OAmQCdqS96iqF5uFX0aWqA0DysUZKYfz0SmlgVjw==
-X-Received: by 2002:a5d:5889:0:b0:3a5:3b63:58f0 with SMTP id ffacd0b85a97d-3a6ed62e062mr5972463f8f.18.1750948985398;
-        Thu, 26 Jun 2025 07:43:05 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a88c7fab6esm98471f8f.31.2025.06.26.07.43.04
+        d=1e100.net; s=20230601; t=1750949298; x=1751554098;
+        h=to:from:subject:cc:message-id:date:content-transfer-encoding
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iJwlXkm7kquT9VL2iSx95X+5Uf83x9tlRzgwBHxTlN8=;
+        b=RoJDYIwxdM9Yf+dTxrjFc10XHVZwvvgjhNvbCWMMlqTVN5gzpSEQuJW+FZRwxULLMM
+         2wVMU5LRNIhEjVkzxgRL0qgahxSPgHYW37wfTEaUPHo1g6DcpUqKBSTIm2zP3uDjQO33
+         jelWYGOhh+sH/2WGZNzrl49+VduMsxFLk5ciIbowb7w41JYjYVY3wYWfybtZkobdmyjE
+         QLoB8H1fhvLG4vpv0cXG/o0u7iFojBrumZxmOXW3YMpxrHAjB0iDMlmSr5IOMYxPbM9e
+         q070a2qdeRdVaw3jPky1/gpjrcTkq/w9a38ylZDOZZ1C0HuU1LXoayNyzD72b6LKb+6u
+         PYRg==
+X-Forwarded-Encrypted: i=1; AJvYcCWcvkMrhqUd4L9pwY9nvpAFALo1p/tdSbuj3wBn2ThB9m8nSxD9wiNPjve8a2IFm6f6MbxMbpWn57hDEek8@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIbRKRNNd3V3OxjQa2u+J08FpuG0TKclBORIpVZxjQ/nGdp6Dw
+	78Xl06DJCauXZ68Q3+tH1shlHLVi18cQwXC2DG2dx6cndmvRch7ewI7a0ED46OinJgwFx0vH/Dm
+	mF6earkE=
+X-Gm-Gg: ASbGnctSUTKoZMUot+6IAv5cy55wM5DfphD/GLjb1ZwPEKKzi2YkLFuTboWyXmwLYjK
+	V1Y4GVjT79X9wtChhBxkOJO9ysFEkUl2rEbe9as6zNPqYZnhrJRY2HRhhw882fn/eJf4mrou9A2
+	hhrWC6BQvtM1CxEXc3zHRCb+A+YaT5PHnvmQ5aOOCHs2hp2y6Ybzzdbx7bfnYE8nO0LcHntkWnE
+	KkpmyhbyjFfSxXAaZudwKUPkx6pMMrlH5C/hx+DZD556jaKAhA7guKQxuV7/OukLcwoyITfTpty
+	fYtNlUH5rcR5GTci3nB4Fa6cnwQnz+flxIUxiWSQ51f/HCBRAKwLUL8RKt6ACYMCkiaQljO5dwU
+	RSQ==
+X-Google-Smtp-Source: AGHT+IFeME8z8xyt10nAyrnqInmUfp/yZ6rndW5t7mimqK/e6IHzphs36nsFBZGRV/KKh3o/5tTo2w==
+X-Received: by 2002:a05:600c:8b45:b0:440:6a1a:d89f with SMTP id 5b1f17b1804b1-45381a9f5a2mr69583125e9.4.1750949298311;
+        Thu, 26 Jun 2025 07:48:18 -0700 (PDT)
+Received: from localhost ([2a00:2381:fd67:101:6c39:59e6:b76d:825])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538a3b3213sm21843175e9.18.2025.06.26.07.48.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jun 2025 07:43:04 -0700 (PDT)
-Message-ID: <4ef8adb1-df85-4396-a414-469025276a2b@linaro.org>
-Date: Thu, 26 Jun 2025 15:43:02 +0100
+        Thu, 26 Jun 2025 07:48:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/5] media: venus: hfi_plat_v6_lite: Populate decode
- capabilities
-To: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>, krzk+dt@kernel.org,
- quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com, mchehab@kernel.org,
- robh@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
- andersson@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250626135931.700937-1-jorge.ramirez@oss.qualcomm.com>
- <20250626135931.700937-4-jorge.ramirez@oss.qualcomm.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20250626135931.700937-4-jorge.ramirez@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 26 Jun 2025 15:48:17 +0100
+Message-Id: <DAWJQ2NIKY28.1XOG35E4A682G@linaro.org>
+Cc: <linux-wireless@vger.kernel.org>, <jeff.johnson@oss.qualcomm.com>,
+ <linux-arm-msm@vger.kernel.org>
+Subject: [question, bug] regularly disconnecting wifi on RB1 and RB2 boards,
+ ath10
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: <jjohnson@kernel.org>, <ath10k@lists.infradead.org>
+X-Mailer: aerc 0.20.0
 
-On 26/06/2025 14:59, Jorge Ramirez-Ortiz wrote:
-> Add hfi platform file with decoding capabilities for hfi v6_lite.
-> 
-> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-> ---
->   drivers/media/platform/qcom/venus/Makefile    |   2 +-
->   .../media/platform/qcom/venus/hfi_platform.c  |   2 +
->   .../media/platform/qcom/venus/hfi_platform.h  |   1 +
->   .../qcom/venus/hfi_platform_v6_lite.c         | 148 ++++++++++++++++++
->   4 files changed, 152 insertions(+), 1 deletion(-)
->   create mode 100644 drivers/media/platform/qcom/venus/hfi_platform_v6_lite.c
-> 
-> diff --git a/drivers/media/platform/qcom/venus/Makefile b/drivers/media/platform/qcom/venus/Makefile
-> index 91ee6be10292..4a6a942db58b 100644
-> --- a/drivers/media/platform/qcom/venus/Makefile
-> +++ b/drivers/media/platform/qcom/venus/Makefile
-> @@ -5,7 +5,7 @@ venus-core-objs += core.o helpers.o firmware.o \
->   		   hfi_venus.o hfi_msgs.o hfi_cmds.o hfi.o \
->   		   hfi_parser.o pm_helpers.o dbgfs.o \
->   		   hfi_platform.o hfi_platform_v4.o \
-> -		   hfi_platform_v6.o hfi_plat_bufs_v6.o \
-> +		   hfi_platform_v6.o hfi_plat_bufs_v6.o hfi_platform_v6_lite.o \
->   
->   venus-dec-objs += vdec.o vdec_ctrls.o
->   venus-enc-objs += venc.o venc_ctrls.o
-> diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
-> index 643e5aa138f5..f56b8f9946d7 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_platform.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_platform.c
-> @@ -13,6 +13,8 @@ const struct hfi_platform *hfi_platform_get(enum hfi_version version)
->   		return &hfi_plat_v4;
->   	case HFI_VERSION_6XX:
->   		return &hfi_plat_v6;
-> +	case HFI_VERSION_6XX_LITE:
-> +		return &hfi_plat_v6_lite;
->   	default:
->   		break;
->   	}
-> diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
-> index ec89a90a8129..6356e4bd0de2 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_platform.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_platform.h
-> @@ -58,6 +58,7 @@ struct hfi_platform {
->   
->   extern const struct hfi_platform hfi_plat_v4;
->   extern const struct hfi_platform hfi_plat_v6;
-> +extern const struct hfi_platform hfi_plat_v6_lite;
->   
->   const struct hfi_platform *hfi_platform_get(enum hfi_version version);
->   unsigned long hfi_platform_get_codec_vpp_freq(enum hfi_version version, u32 codec,
-> diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6_lite.c b/drivers/media/platform/qcom/venus/hfi_platform_v6_lite.c
-> new file mode 100644
-> index 000000000000..41958a3e353b
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/venus/hfi_platform_v6_lite.c
-> @@ -0,0 +1,148 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2025, The Linux Foundation. All rights reserved.
-> + */
-> +#include "hfi_platform.h"
-> +
-> +static const struct hfi_plat_caps caps[] = {
-> +{
-> +	.codec = HFI_VIDEO_CODEC_H264,
-> +	.domain = VIDC_SESSION_TYPE_DEC,
-> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1080, 1},
-> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> +	.num_caps = 7,
-> +	.pl[0] = {HFI_H264_PROFILE_BASELINE, HFI_H264_LEVEL_1},
-> +	.pl[1] = {HFI_H264_PROFILE_MAIN, HFI_H264_LEVEL_41},
-> +	.pl[2] = {HFI_H264_PROFILE_HIGH, HFI_H264_LEVEL_5},
-> +	.pl[3] = {HFI_H264_PROFILE_CONSTRAINED_BASE, HFI_H264_LEVEL_41},
-> +	.pl[4] = {HFI_H264_PROFILE_CONSTRAINED_HIGH, HFI_H264_LEVEL_41},
-> +	.num_pl = 5,
-> +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> +	.num_fmts = 4,
-> +}, {
-> +	.codec = HFI_VIDEO_CODEC_HEVC,
-> +	.domain = VIDC_SESSION_TYPE_DEC,
-> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1080, 1},
-> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> +	.num_caps = 7,
-> +	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_MAIN},
-> +	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_5 | HFI_HEVC_TIER_MAIN},
-> +	.num_pl = 2,
-> +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> +	.num_fmts = 4,
-> +}, {
-> +	.codec = HFI_VIDEO_CODEC_VP9,
-> +	.domain = VIDC_SESSION_TYPE_DEC,
-> +	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 1920, 1},
-> +	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 1080, 1},
-> +	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 8160, 1},
-> +	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 60000000, 1 },
-> +	.caps[4] = {HFI_CAPABILITY_MBS_PER_SECOND, 64, 244800, 1},
-> +	.caps[5] = {HFI_CAPABILITY_FRAMERATE, 1, 120, 1},
-> +	.caps[6] = {HFI_CAPABILITY_MAX_VIDEOCORES, 0, 1, 1},
-> +	.num_caps = 7,
-> +	.pl[0] = {HFI_VP9_PROFILE_P0, 200},
-> +	.pl[1] = {HFI_VP9_PROFILE_P2_10B, 200},
-> +	.num_pl = 2,
-> +	.fmts[0] = {HFI_BUFFER_OUTPUT, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[1] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12_UBWC},
-> +	.fmts[2] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV12},
-> +	.fmts[3] = {HFI_BUFFER_OUTPUT2, HFI_COLOR_FORMAT_NV21},
-> +	.num_fmts = 4,
-> +} };
-> +
-> +static const struct hfi_plat_caps *get_capabilities(unsigned int *entries)
-> +{
-> +	*entries = ARRAY_SIZE(caps);
-> +	return caps;
-> +}
-> +
-> +static void get_codecs(u32 *enc_codecs, u32 *dec_codecs, u32 *count)
-> +{
-> +	*enc_codecs = 0x0;
-> +	*dec_codecs = HFI_VIDEO_CODEC_H264 | HFI_VIDEO_CODEC_HEVC |
-> +		      HFI_VIDEO_CODEC_VP9;
-> +	*count = 3;
-> +}
-> +
-> +static const struct hfi_platform_codec_freq_data codec_freq_data[] = {
-> +	{ V4L2_PIX_FMT_H264, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> +	{ V4L2_PIX_FMT_HEVC, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> +	{ V4L2_PIX_FMT_VP9, VIDC_SESSION_TYPE_DEC, 440, 0, 440 },
-> +};
-> +
-> +static const struct hfi_platform_codec_freq_data *
-> +get_codec_freq_data(u32 session_type, u32 pixfmt)
-> +{
-> +	const struct hfi_platform_codec_freq_data *data = codec_freq_data;
-> +	unsigned int i, data_size = ARRAY_SIZE(codec_freq_data);
-> +	const struct hfi_platform_codec_freq_data *found = NULL;
-> +
-> +	for (i = 0; i < data_size; i++) {
-> +		if (data[i].pixfmt == pixfmt &&
-> +		    data[i].session_type == session_type) {
-> +			found = &data[i];
-> +			break;
-> +		}
-> +	}
-> +
-> +	return found;
-> +}
-> +
-> +static unsigned long codec_vpp_freq(u32 session_type, u32 codec)
-> +{
-> +	const struct hfi_platform_codec_freq_data *data;
-> +
-> +	data = get_codec_freq_data(session_type, codec);
-> +	if (data)
-> +		return data->vpp_freq;
-> +
-> +	return 0;
-> +}
-> +
-> +static unsigned long codec_vsp_freq(u32 session_type, u32 codec)
-> +{
-> +	const struct hfi_platform_codec_freq_data *data;
-> +
-> +	data = get_codec_freq_data(session_type, codec);
-> +	if (data)
-> +		return data->vsp_freq;
-> +
-> +	return 0;
-> +}
-> +
-> +static unsigned long codec_lp_freq(u32 session_type, u32 codec)
-> +{
-> +	const struct hfi_platform_codec_freq_data *data;
-> +
-> +	data = get_codec_freq_data(session_type, codec);
-> +	if (data)
-> +		return data->low_power_freq;
-> +
-> +	return 0;
-> +}
-> +
-> +const struct hfi_platform hfi_plat_v6_lite = {
-> +	.codec_vpp_freq = codec_vpp_freq,
-> +	.codec_vsp_freq = codec_vsp_freq,
-> +	.codec_lp_freq = codec_lp_freq,
-> +	.codecs = get_codecs,
-> +	.capabilities = get_capabilities,
-> +	.bufreq = hfi_plat_bufreq_v6,
-> +};
+Hi all,
 
-@Dikshita @Vikash happy enough with this ?
+After a long time of testing it seems the problem narrows down to qrb2210 r=
+b1
+and qrb4210 rb2 boards.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+After booting, the board connects to the wifi network and after around ~5-1=
+0
+minutes it loses the connection (nothing in dmesg). A simple ping of anothe=
+r
+machine on the local network doesn't work. After, I guess, around 5000
+seconds the GROUP_KEY_HANDSHAKE_TIMEOUT message is printked:
+
+[ 5064.093748] wlan0: deauthenticated from 8c:58:72:d4:d1:8d (Reason: 16=3D=
+GROUP_KEY_HANDSHAKE_TIMEOUT)
+[ 5067.083790] wlan0: authenticate with 8c:58:72:d4:d1:8d (local address=3D=
+82:95:77:b1:05:a5)
+[ 5067.091971] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
+[ 5067.100192] wlan0: authenticated
+[ 5067.104734] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
+[ 5067.113230] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0x11 sta=
+tus=3D0 aid=3D2)
+[ 5067.193624] wlan0: associated
+
+and after that wireless connection works for ~5-10 minutes and then the cyc=
+le
+repeats. The longer log with more info and some info with firmware versions=
+,
+ids, etc is at the end of this email [1]. Simple wlan0 down and wlan0 up fi=
+xes
+things for a few minutes.
+
+iw wlan0 link reports the following when wireless network is working:
+
+root@rb1:~# iw wlan0 link
+Connected to 8c:58:72:d4:d1:8d (on wlan0)
+        SSID: void
+        freq: 5300
+        RX: 45802 bytes (424 packets)
+        TX: 71260 bytes (125 packets)
+        signal: -66 dBm
+        rx bitrate: 433.3 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 1
+
+bss flags:      short-slot-time
+dtim period:    1
+beacon int:     100
+
+and this when wireless connection doesn't work:
+
+Connected to 8c:58:72:d4:d1:8d (on wlan0)
+        SSID: void
+        freq: 5300
+        RX: 850615 bytes (9623 packets)
+        TX: 20372 bytes (247 packets)
+        signal: -61 dBm
+        rx bitrate: 6.0 MBit/s
+
+    bss flags:      short-slot-time
+    dtim period:    1
+    beacon int:     100
+
+This was tested with three different routers and different wifi networks.
+Other devices here do not exhibit this behaviour.
+
+Any hints on how to debug this? Any debug switches I can toggle to debug th=
+is?
+I am happy to provide more info or test changes/patches if any.
+
+Thanks in advance.
+Best regards,
+Alexey
+
+[1]:
+
+[    7.758934] ath10k_snoc c800000.wifi: qmi chip_id 0x120 chip_family 0x40=
+07 board_id 0xff soc_id 0x40670000
+[    7.769740] ath10k_snoc c800000.wifi: qmi fw_version 0x337703a3 fw_build=
+_timestamp 2023-10-14 01:26 fw_build_id QC_IMAGE_VERSION_STRING=3DWLAN.HL.3=
+.3.7.c2-00931-QCAHLSWMTPLZ-1
+[   11.086123] ath10k_snoc c800000.wifi: wcn3990 hw1.0 target 0x00000008 ch=
+ip_id 0x00000000 sub 0000:0000
+[   11.095622] ath10k_snoc c800000.wifi: kconfig debug 0 debugfs 0 tracing =
+0 dfs 0 testmode 0
+[   11.103998] ath10k_snoc c800000.wifi: firmware ver  api 5 features wowla=
+n,mgmt-tx-by-reference,non-bmi,single-chan-info-per-channel crc32 a79c5b24
+[   11.144810] ath10k_snoc c800000.wifi: htt-ver 3.128 wmi-op 4 htt-op 3 ca=
+l file max-sta 32 raw 0 hwcrypto 1
+[   11.230894] ath10k_snoc c800000.wifi: invalid MAC address; choosing rand=
+om
+[   11.238128] ath: EEPROM regdomain: 0x0
+[   11.242060] ath: EEPROM indicates default country code should be used
+[   11.248582] ath: doing EEPROM country->regdmn map search
+[   11.253950] ath: country maps to regdmn code: 0x3a
+[   11.258805] ath: Country alpha2 being used: US
+[   11.263466] ath: Regpair used: 0x3a
+[   15.355756] wlan0: authenticate with 8c:58:72:d4:d1:8d (local address=3D=
+82:95:77:b1:05:a5)
+[   15.363942] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
+[   15.372142] wlan0: authenticated
+[   15.377928] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
+[   15.386338] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0x11 sta=
+tus=3D0 aid=3D2)
+[   15.466514] wlan0: associated
+[   23.167251] systemd-journald[195]: Oldest entry in /var/log/journal/ec3e=
+0078e5e0499bac67949f3edf3fcf/system.journal is older than the configured fi=
+le retention duration (1month), suggesting rotation.
+[   23.185186] systemd-journald[195]: /var/log/journal/ec3e0078e5e0499bac67=
+949f3edf3fcf/system.journal: Journal header limits reached or header out-of=
+-date, rotating.
+[   31.750177] l5: disabling
+[   31.753382] l11: disabling
+[   31.756385] l16: disabling
+[ 5064.093748] wlan0: deauthenticated from 8c:58:72:d4:d1:8d (Reason: 16=3D=
+GROUP_KEY_HANDSHAKE_TIMEOUT)
+[ 5067.083790] wlan0: authenticate with 8c:58:72:d4:d1:8d (local address=3D=
+82:95:77:b1:05:a5)
+[ 5067.091971] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
+[ 5067.100192] wlan0: authenticated
+[ 5067.104734] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
+[ 5067.113230] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0x11 sta=
+tus=3D0 aid=3D2)
+[ 5067.193624] wlan0: associated
+[10437.346541] wlan0: deauthenticated from 8c:58:72:d4:d1:8d (Reason: 16=3D=
+GROUP_KEY_HANDSHAKE_TIMEOUT)
+[10440.340111] wlan0: authenticate with 8c:58:72:d4:d1:8d (local address=3D=
+82:95:77:b1:05:a5)
+[10440.348408] wlan0: send auth to 8c:58:72:d4:d1:8d (try 1/3)
+[10440.356698] wlan0: authenticated
+[10440.361077] wlan0: associate with 8c:58:72:d4:d1:8d (try 1/3)
+[10440.369516] wlan0: RX AssocResp from 8c:58:72:d4:d1:8d (capab=3D0x11 sta=
+tus=3D0 aid=3D2)
+[10440.446661] wlan0: associated
 
