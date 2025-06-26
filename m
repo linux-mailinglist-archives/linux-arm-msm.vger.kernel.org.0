@@ -1,167 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-62673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8DE1AEA0CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 16:37:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA4F3AEA107
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 16:44:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7300A7A83D5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 14:35:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6A0BF188BE19
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 14:40:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E2F52F0E59;
-	Thu, 26 Jun 2025 14:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A3EB2ED154;
+	Thu, 26 Jun 2025 14:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g9A3ZDMb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y43KUiSx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CE32F0E53;
-	Thu, 26 Jun 2025 14:32:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF962EBDD9
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 14:37:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750948370; cv=none; b=fZ+OHJoB1j+zAyTR2dgEjWxqKHWckABf2SV7wuETgA1KFUIAFoWQa6e1tY0a2o0gLTpxz1050NPRTfaGIm6npurXHsy8kMbbFxBcw901uDdyUg65GGXC4UuZVlmRq4KDyzX2LWDLh6U37TvRzif3R2wvwelN4aifNk8EH+k+uUU=
+	t=1750948670; cv=none; b=N5e7lM25KOhbHEbs+sUOoLi1LL2pAPUs5Bg/n+u3P73CFcGsUAUjm1lx6UznYBFsYdNaNlzbLtaecd9GionhFLsY/XhEGvlrn8wyZ5V3ku2U9PUyta3n5P/rMwkAdWN7uAHHBKmbkptmGnAULFtSKJ/owQvyQkO2AEuB2l8C52Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750948370; c=relaxed/simple;
-	bh=ONPWX20WA6qg25+gxiS1uLXoDdNaK1ZJN5gPDyCRy0w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=iMbD5iAQDwSSYDbYAdCOIGhWdeFpRRVyyw46kJli/TNiT/SXXjuGPabDpn0B4IGi9lVHBcR7+XnCGfUdYCmx98hmzVuYq/CI+xKIzD1Tjk0gdlZ8T0PSkTo4ZD3SJKqQVg6dFaWwRzJdWZ8TpXQ/BsAUARTFWRnHA1S0Sp8EDlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g9A3ZDMb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55QA3nm7013542;
-	Thu, 26 Jun 2025 14:32:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	m4+dSjQjm1WnKHruCfwC33TXgveKpDKLK/3NL0lhC/E=; b=g9A3ZDMbG5qmXP/P
-	4UDmBJtfhmZFlfrE1YIGRa12kqpc2MCMRK3HOwrWR0HkYlRKjw3FQ82bTrDKPk2Y
-	sWiVixvSSwBBF61O5yCwYlqyt9n5wfbcO6eqoGMUY9idoSIuOLPEYQ4YLbKlmkw3
-	17I8gWp0JKNfrlpIlFCy9ERtLzvX/ZcLM93Vq50Eh1EitGznBTDvgU9L6BKzAYd2
-	fp9KoEEjoPcEpzpK36yyU7++hUvFTdAW7qQY1auDbbe78532iCCD2ye5DBDwURn2
-	VmV+5FZmN6a5+pqHlkcKFBkScm2rTPhhUHTyqrLB1nJxYLLVO1JVJG5B4I7IBd7s
-	DWIp8A==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f3bgkm4d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Jun 2025 14:32:35 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55QEWYjS006413
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Jun 2025 14:32:34 GMT
-Received: from nsssdc-sh01-lnx.ap.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 26 Jun 2025 07:32:29 -0700
-From: Luo Jie <quic_luoj@quicinc.com>
-Date: Thu, 26 Jun 2025 22:31:13 +0800
-Subject: [PATCH net-next v5 14/14] MAINTAINERS: Add maintainer for Qualcomm
- PPE driver
+	s=arc-20240116; t=1750948670; c=relaxed/simple;
+	bh=j9P7Y9k+d1qUN1LH7k7uyoyd043tfylXAAkm4D+rmLA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=F8wW3XUObeXdEQfsLAe7GmxQg+f28n/LcOqtrVg3bdiU8701zIobVQfNeCe/Vx38sf1dTH0OVpojjy2tsVmgpWUj6X2ctZPfLyb1XSFS7kIPKL3fH2msZClYfg9Yq7xVyuE0DXp0aHroSZRIipARZJMJcBC36SSqgaWdB0B4br8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y43KUiSx; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4537fdec33bso6829755e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 07:37:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1750948666; x=1751553466; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=S1AOh6zFRHKrc6fml+09g5+eTgQ+NcQY8jLNiJxnmas=;
+        b=y43KUiSxwwUsC+kxWzoN08sFvWosK/wOJl8qGBh+YOa8ybgtHl/6v3hbafXtrW5lOH
+         PpIOl+U0YsoOjiqD9EDOs1pnhBYAAGQ6flw80Osynu81qp9l27KxZdbUqsJZCA1O7w6d
+         +R/r8HRJ1tynzL4MF0BLPX4ZOXyn/MnVRYCpRhpanI1Yzmfa8l01C+aQ87lPz6JaF8x9
+         mflGKNCf1eMt2DjGJAwEnSOX+1Mft1OVzpKrg6vxfKIWefUtHGkz84QnNRMXqKBZxo2X
+         KrEhVsQBu4m3W9gXgbnLQYr/US60WP0BDBBWUEg3W+r/8OybqtmWwxX3HOB/csmjCW/k
+         1UxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750948666; x=1751553466;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=S1AOh6zFRHKrc6fml+09g5+eTgQ+NcQY8jLNiJxnmas=;
+        b=Umwxu+8c8ELJeablY0rI2YEfR77iCqkT14HvMnlgLNtov3luyyRAHqfMKc1kgUo08X
+         FdjHQzfO94FQ0BMg+opa8suOnpYUYN14aKftzdp5lpkkE67pV+MMvgU6xRa2eHeXoH8S
+         ScQ5q5RjVJYo6K9LsytgFk2INSGkzeVw38B41aI+aab4Lodf3PS3s5KOwhEscCRLFGnc
+         DDbrQ9vz73lVEvGcXfMk3Z9A8BS5ll11Xs8UjJ5thrXKjrnBF8GZ2MZDhDoPmyxiSXbE
+         tBDNOPQAUiXYX73vK0bN5wh6WkxDJ1JMHyiq+EcNEAwIDE3Xfks5SZ9ShEEtJ1JNc6PH
+         jE1g==
+X-Gm-Message-State: AOJu0YwlV6wtx140j+4PJV8BMUEA+wyEkxV9t9GRwQ7hndUWL108zmvZ
+	pSxD0AF2r8KTgn+p7h/1nTzkwCtVXtqzM4k0wB6KDaRRftouTRHj9AEL7COoAwjoppA=
+X-Gm-Gg: ASbGncuCpgib50gqbHMgpPGBMROT6BXiTtqw5a4eq1FsguGN3WDTLUUeunFM1yiLo/L
+	c5Eadk5asvyZ7UfHKbYR26UABXcRGUnaWOhIIST2ScTYNIlr4vxJAqAkZHtsWBZ4zjZ7bOzI54F
+	OAEKoJWTEmPd+3xtArKrxmOvTRLrgq7Wtx0qQWWKh3oXFaw4JYn/IFN/6i/LAjw3bfX9mKl12bd
+	w6+ImOPTIquAVeBNjpPo2wnB+xbE9ysGZcN1p6V14OhmGWylqmK9+tA19vGb5VZhgxve01Fv52S
+	55B2h8yyw8RrWzapVwBUeGxcap4J2PaUJzO+PCiehOtc+u+Y92LegiDwCEuHXUtR2Op5AtSmOOH
+	kvwihbVnKYMfsp+gAd5ZegcNKr8Q=
+X-Google-Smtp-Source: AGHT+IHTUDQzELvy6oqBw8zJr8Bm+VBPGXCOgJa1zh4Kjeaae/Qc9Ajc6QxCV0Bm5N0eMq1HGfMA7Q==
+X-Received: by 2002:a05:600c:190b:b0:43c:e70d:44f0 with SMTP id 5b1f17b1804b1-45381ae45d4mr69774515e9.19.1750948665981;
+        Thu, 26 Jun 2025 07:37:45 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538234b30dsm52097475e9.12.2025.06.26.07.37.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Jun 2025 07:37:45 -0700 (PDT)
+Message-ID: <4aa924e9-d570-45eb-b874-133f12d00fd5@linaro.org>
+Date: Thu, 26 Jun 2025 15:37:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 4/5] media: venus: core: Add qcm2290 DT compatible and
+ resource data
+To: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>, krzk+dt@kernel.org,
+ quic_vgarodia@quicinc.com, quic_dikshita@quicinc.com, mchehab@kernel.org,
+ robh@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
+ andersson@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250626135931.700937-1-jorge.ramirez@oss.qualcomm.com>
+ <20250626135931.700937-5-jorge.ramirez@oss.qualcomm.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250626135931.700937-5-jorge.ramirez@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250626-qcom_ipq_ppe-v5-14-95bdc6b8f6ff@quicinc.com>
-References: <20250626-qcom_ipq_ppe-v5-0-95bdc6b8f6ff@quicinc.com>
-In-Reply-To: <20250626-qcom_ipq_ppe-v5-0-95bdc6b8f6ff@quicinc.com>
-To: Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
-	<kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Lei Wei <quic_leiwei@quicinc.com>,
-        Suruchi Agarwal
-	<quic_suruchia@quicinc.com>,
-        Pavithra R <quic_pavir@quicinc.com>,
-        "Simon
- Horman" <horms@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-        Kees Cook
-	<kees@kernel.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        "Philipp
- Zabel" <p.zabel@pengutronix.de>
-CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>,
-        Luo Jie
-	<quic_luoj@quicinc.com>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1750948277; l=880;
- i=quic_luoj@quicinc.com; s=20250209; h=from:subject:message-id;
- bh=ONPWX20WA6qg25+gxiS1uLXoDdNaK1ZJN5gPDyCRy0w=;
- b=PLjLC6sQFruHl8j/3TntePCRC7EQJQScnEWxZ+aCmcSaCtqC+g9PFt6J5GAm750eIW5dZrg33
- FBnwpywC+lfCxEKJF0TvieRquNiIRtDPCyUCbKsqmLb8MvzlA3Um+bq
-X-Developer-Key: i=quic_luoj@quicinc.com; a=ed25519;
- pk=pzwy8bU5tJZ5UKGTv28n+QOuktaWuriznGmriA9Qkfc=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: fTR6SmECYJPksb_WsP5iDm2hT-ftFmmK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI2MDEyMyBTYWx0ZWRfX8lcFdAsZM/cM
- X4s/zIQtsYMinr0AXVd1VPfdem6WeWgUN9ZHsRcqiVkY1MHBWtyRG0rzzgfs0NG1OmdKG3P9ihR
- sY1j9Hb4/118mplOKF5oUROBnoSC1Q9VufFHzxLMIphdCJj0p7z2dtrjPYg4A5hn9kMy2oGWvV0
- TfXnXQQME0rcZcwTA/FSPXP32wbFAw1e3/cQAMUATgtEsLSbJx2gczDVCi3e6CoxNYz6eYS6AE8
- nInLljof0X+hk9aPnR9ZvrJeCX/tOGOx7gi4bUW9s4ZVdkpCrNpmEBuZXWr3N0lgXWn9EpKa3JZ
- 0XGmsFrvFqiWjx3np5OC36uM+JfIYFUbmtUWUcxTKLUflg1OHjGdSi2v+0cfMs6mxepMyOCBD5z
- 2npzP4rkAWXg+286ETvly/jw8EAzBUrItInKNN2C6RiNORJQbZqQIoFA+SfCmf9cxwdoCQri
-X-Authority-Analysis: v=2.4 cv=L4kdQ/T8 c=1 sm=1 tr=0 ts=685d5a03 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=-_PooAnB-Ua2z9syxaEA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: fTR6SmECYJPksb_WsP5iDm2hT-ftFmmK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-26_06,2025-06-26_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0
- adultscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
- spamscore=0 phishscore=0 mlxlogscore=683 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506260123
 
-Add maintainer entry for PPE (Packet Process Engine) driver supported
-for Qualcomm IPQ SoCs.
+On 26/06/2025 14:59, Jorge Ramirez-Ortiz wrote:
+> Add a qcm2290 compatible binding to the venus core.
+> 
+> Video encoding support is not exposed until the relevant hardware
+> capabilities are enabled.
+> 
+> Co-developed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+> ---
+>   drivers/media/platform/qcom/venus/core.c | 39 ++++++++++++++++++++++++
+>   1 file changed, 39 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index 736ef53d988d..f1f211ca1ce2 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -1062,6 +1062,44 @@ static const struct venus_resources sc7280_res = {
+>   	.enc_nodename = "video-encoder",
+>   };
+>   
+> +static const struct freq_tbl qcm2290_freq_table[] = {
+> +	{ 352800, 240000000 },	/* 1920x1088 @ 30 + 1280x720 @ 30 */
+> +	{ 244800, 133000000 },	/* 1920x1088 @ 30 */
+> +};
+> +
+> +static const struct bw_tbl qcm2290_bw_table_dec[] = {
+> +	{ 244800, 2128000, 0, 2128000, 0}, /* 1920x1088 @ 30 */
+> +};
+> +
+> +static const struct venus_resources qcm2290_res = {
+> +	.freq_tbl = qcm2290_freq_table,
+> +	.freq_tbl_size = ARRAY_SIZE(qcm2290_freq_table),
+> +	.bw_tbl_dec = qcm2290_bw_table_dec,
+> +	.bw_tbl_dec_size = ARRAY_SIZE(qcm2290_bw_table_dec),
+> +	.clks = { "core", "iface", "bus", "throttle" },
+> +	.clks_num = 4,
+> +	.vcodec0_clks = { "vcodec0_core", "vcodec0_bus" },
+> +	.vcodec_clks_num = 2,
+> +	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
+> +	.vcodec_pmdomains_num = 2,
+> +	.opp_pmdomain = (const char *[]) { "cx" },
+> +	.vcodec_num = 1,
+> +	.hfi_version = HFI_VERSION_6XX_LITE,
+> +	.vpu_version = VPU_VERSION_AR50_LITE,
+> +	.max_load = 352800,
+> +	.num_vpp_pipes = 1,
+> +	.vmem_id = VIDC_RESOURCE_NONE,
+> +	.vmem_size = 0,
+> +	.vmem_addr = 0,
+> +	.cp_start = 0,
+> +	.cp_size = 0x70800000,
+> +	.cp_nonpixel_start = 0x1000000,
+> +	.cp_nonpixel_size = 0x24800000,
+> +	.dma_mask = 0xe0000000 - 1,
+> +	.fwname = "qcom/venus-6.0/venus.mbn",
+> +	.dec_nodename = "video-decoder",
+> +};
+> +
+>   static const struct of_device_id venus_dt_match[] = {
+>   	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
+>   	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
+> @@ -1072,6 +1110,7 @@ static const struct of_device_id venus_dt_match[] = {
+>   	{ .compatible = "qcom,sc7180-venus", .data = &sc7180_res, },
+>   	{ .compatible = "qcom,sc7280-venus", .data = &sc7280_res, },
+>   	{ .compatible = "qcom,sm8250-venus", .data = &sm8250_res, },
+> +	{ .compatible = "qcom,qcm2290-venus", .data = &qcm2290_res, },
+>   	{ }
+>   };
+>   MODULE_DEVICE_TABLE(of, venus_dt_match);
 
-Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
----
- MAINTAINERS | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b9e58aa296e0..3a4b58352c28 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -20523,6 +20523,14 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
- F:	drivers/mtd/nand/raw/qcom_nandc.c
- 
-+QUALCOMM PPE DRIVER
-+M:	Luo Jie <quic_luoj@quicinc.com>
-+L:	netdev@vger.kernel.org
-+S:	Supported
-+F:	Documentation/devicetree/bindings/net/qcom,ipq9574-ppe.yaml
-+F:	Documentation/networking/device_drivers/ethernet/qualcomm/ppe/ppe.rst
-+F:	drivers/net/ethernet/qualcomm/ppe/
-+
- QUALCOMM QSEECOM DRIVER
- M:	Maximilian Luz <luzmaximilian@gmail.com>
- L:	linux-arm-msm@vger.kernel.org
-
--- 
-2.34.1
-
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
