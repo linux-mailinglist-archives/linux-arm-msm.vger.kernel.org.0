@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-62588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1F4EAE98B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 10:43:39 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E23F4AE98EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 10:50:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ABC731886F74
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 08:43:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 03C677B774B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 08:48:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71AD4291C07;
-	Thu, 26 Jun 2025 08:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D34B4295D96;
+	Thu, 26 Jun 2025 08:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h2AWwBk1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QfVPpkIX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4751D25CC5B;
-	Thu, 26 Jun 2025 08:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F3825B30F;
+	Thu, 26 Jun 2025 08:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750927414; cv=none; b=Au2IhYlSvZCCcIizL0nbCkI+PWm0kPzc6WkZv/63UudCXj0CCmr2d7F8LQnEN+/zAAE74HH5VrjkbK/eTcQo/Llc7ecXMBKkbOCOPzdAn3fX+v2688sD30sDy35fTYfKSAFZenVjLhXSThr90paVZjuqP5ZAqHQUOJtfdauqIxc=
+	t=1750927736; cv=none; b=OuyUKYxsf7rh8fnJWVw9fIC6LvU5hREOCYiJDqyN3GMnf2q2qPbwrpVYFe3akNxbFKFHaM4P/C7rDVuz7EZ/sXLuvqzlCc6SHV5L/1y9KJSw+P7nsjrICrpIo9v9VgHCP6ampNKjb6em5z/WJf2+K/JHko8TCKgjzWoWZmLPJ5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750927414; c=relaxed/simple;
-	bh=B6e2stM+SZstMcO5jf4TpgACbVCAZdQTT6/x1vT1a2E=;
+	s=arc-20240116; t=1750927736; c=relaxed/simple;
+	bh=Uwt3NsX0GNfYi5o7KvMJmNAuuFirfChPcaC6V4I9kis=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=r6xNtbjwtjMO8jGKAo67MKpmz9OtIFAEvipZrHpchW54X3UV4HqKc/P2NKeyJ9JXh+vg3bnPnRm9SLIRHg6jY1kI9l05gkR6CrEcK1glL3JzRmJJEKMUAnIkO+cbPX4+g/x+E5X1kZMhySNkaNGPcSQwSy5l5k+KZzF/lnXQ+SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h2AWwBk1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6736AC4CEEB;
-	Thu, 26 Jun 2025 08:43:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=EeU9RsgnQ58VDD+n7O6tv0UUTYh7LMEVrxRWzmVa3Urea7InjoxFl4O64l3NevmQpnBs9f8111day2YMmtq+sgAETLM/FsokfxkAuAmfUpjrN/XdKaSzT57hmM3TocsCgvLzz+EPXSufmZLwmrdXgroEqHY2WEyy3V34LJ13xys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QfVPpkIX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2C3C4CEF1;
+	Thu, 26 Jun 2025 08:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750927413;
-	bh=B6e2stM+SZstMcO5jf4TpgACbVCAZdQTT6/x1vT1a2E=;
+	s=k20201202; t=1750927736;
+	bh=Uwt3NsX0GNfYi5o7KvMJmNAuuFirfChPcaC6V4I9kis=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=h2AWwBk1dmqeasBI0pSHkn3bcMuesUk/GAszIk1ywgTctzIBmdax3ZDjNa+ptgc3s
-	 irdDO0YuZUSX/eE0mUwp6pXYnV6cLfIbCf31HOqfjYSYa33VYpVmMH98UyG+N2dk+8
-	 g+JmFfFazElHiPXdY2rhpfcgsm5DQx4PMoDH06fSPz9Qn8htypGRips8FdaKWycVDb
-	 Ojjk6Y+d6fZcFJPLJh4derNnAstXutB+xZtqju4a34MesOqDUSMPLUylF3JdLmiiPa
-	 EG+60U0mjrXFPzeudcPOP7yaUY9xTRo3MPqS8aocXQ+ZdRTvVWE14HMcSGRgu0zgXa
-	 k9srYrdm7rapQ==
-Message-ID: <0e632d8a-fdd3-4401-ae6e-a0ac6df61bfe@kernel.org>
-Date: Thu, 26 Jun 2025 10:43:27 +0200
+	b=QfVPpkIX+jWUbuSczOWZ9NquDlgSzicGyHu84P5TiIWRYK43fK2fCiQ0YD/8dchij
+	 2RG4mqh3aUQVg571PhDWOQD/Ct7Mdw3MxJagG0/wzVlzOjxc+3gcMIpOv4u2m0qjRC
+	 E/IH4GtjIRSHHmzyC/CxOpJTzHkr+NrdCP/boNCsIs4qlx66SvO7Fp3U98/u3kEahA
+	 u6I0VE/78chhSv3zqKB2ftZcUwW9pykj/BkeUeQBhNgr38j4LwDYeqq2fakt10pisc
+	 s6i+mEW49MAiRZVVwfm0ioQTVWqOS1um15eHVqcddUtqoDOr/aQpAI/NXjOpYy2ju3
+	 0rFy1oDVdoZmA==
+Message-ID: <eb5cdcb6-7e40-4ed2-9cc6-6eff43da353d@kernel.org>
+Date: Thu, 26 Jun 2025 10:48:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Add support for IQ-8275-evk board
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- "Rob Herring (Arm)" <robh@kernel.org>,
- Umang Chheda <umang.chheda@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- linux-kernel@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>,
- kernel@oss.qualcomm.com, Conor Dooley <conor+dt@kernel.org>,
- devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>
-References: <20250623130420.3981916-1-umang.chheda@oss.qualcomm.com>
- <175069348269.3797007.5540625905808833666.robh@kernel.org>
- <bcfbfaed-e857-44be-86bd-d4e977fd4d27@oss.qualcomm.com>
+Subject: Re: [PATCH 2/3] dt-bindings: mfd: qcom,spmi-pmic: add pm4125 audio
+ codec
+To: Alexey Klimov <alexey.klimov@linaro.org>,
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>
+Cc: Lee Jones <lee@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+References: <20250626-pm4125_audio_codec_v1-v1-0-e52933c429a0@linaro.org>
+ <20250626-pm4125_audio_codec_v1-v1-2-e52933c429a0@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,45 +110,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <bcfbfaed-e857-44be-86bd-d4e977fd4d27@oss.qualcomm.com>
+In-Reply-To: <20250626-pm4125_audio_codec_v1-v1-2-e52933c429a0@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23/06/2025 17:50, Konrad Dybcio wrote:
-> On 6/23/25 5:46 PM, 'Rob Herring (Arm)' via kernel wrote:
->>
->> On Mon, 23 Jun 2025 18:34:18 +0530, Umang Chheda wrote:
->>> This series:
->>>
->>> Add support for Qualcomm's IQ-8275-evk board using QCS8275 SOC.
+On 26/06/2025 01:50, Alexey Klimov wrote:
+> PM4125 has audio codec hardware block. Add pattern for respecive node
+> so the devicetree for those blocks can be validated properly.
 > 
-> [...]
-> 
->>>
->>>  .../devicetree/bindings/arm/qcom.yaml         |   7 +
->>>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->>>  .../boot/dts/qcom/qcs8275-iq-8275-evk.dts     | 241 ++++++++++++++++++
->>>  3 files changed, 249 insertions(+)
->>>  create mode 100644 arch/arm64/boot/dts/qcom/qcs8275-iq-8275-evk.dts
->>>
-> 
-> [...]
-> 
->>
->> New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250623130420.3981916-1-umang.chheda@oss.qualcomm.com:
->>
->> arch/arm64/boot/dts/qcom/msm8916-samsung-gt58.dtb: panel@0 (samsung,lsl080al03): 'port' does not match any of the regexes: '^pinctrl-[0-9]+$'
->> 	from schema $id: http://devicetree.org/schemas/display/panel/samsung,s6d7aa0.yaml#
-> 
-> Seems like a fluke..
-No, it is a correct report. Schema does not allow port and needs to be
-fixed.
+> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
 
-What's more, this would be pointed out if contributor checked their DTS,
-so obviously this never happened.
-
-Internal guideline already asks for it, we asked for it, so why this
-keeps happening?
+Remember to ALWAYS explain the dependencies between patches (merging
+strategy), because this now creates impression is independent patch. It
+is not and should be squashed into previous.
 
 Best regards,
 Krzysztof
