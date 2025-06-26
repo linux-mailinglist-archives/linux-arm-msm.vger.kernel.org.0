@@ -1,130 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-62572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01E12AE931E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 01:58:08 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55E9AAE93AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 03:24:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0FADF165DA9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jun 2025 23:58:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 45F2D7A5F1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 01:23:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC88328727E;
-	Wed, 25 Jun 2025 23:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9457019F127;
+	Thu, 26 Jun 2025 01:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gHQL0dV9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="op0oT2Sr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271C7287274;
-	Wed, 25 Jun 2025 23:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D13194A65
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 01:24:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750895870; cv=none; b=AiwfGyWYegYq0UqvcCbtBzi65Bz0/ptVV3uE7CZoirVhyCjaQPSb6unx0cHMW3uFgt00UFLKVArRzTgKv9y4/YcXmNxl19SfZVKitgh4fRU3QDCpwwN1vb3lODQtakDqbms+KrgR3ZPDzh39nqMdwn+Ye0ZracnCop+vu5tssG0=
+	t=1750901078; cv=none; b=gmmBNGZ1T8fS4OL1EnyGQBlCyg2KNU3I7jUO7i1wui+8EEIpn4n/JHDwx08mqyChcSKgeM1yeIaOtn+TARXONRpiZF/RaXS7Z0/QY0e5V9WT8boY3tUMnQrKNNfDjuuJE7qVfVG2WqUWYuIevW3Z15EhOrBcY7A1BfM2ysTlJ50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750895870; c=relaxed/simple;
-	bh=CkcCjk8IzsSvEHOxb9mbqVNqkfQ5haY3GvAwzUt4bxI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JpixEna3vtHzcuaUggocV1uz+a1z93DoOBcrrk6j93fYDC7fdMnaS+0ipI5zzZbs+5wX6ES1mg5ecMcWmZwkIs+WCugGq2aY6Q5VkTgtGgKzLQ+P0y0bUCJWnIIhKuPflJvx4pqzBPdU9UeO70iKB1tEzcFakFhCQtAXtIZDvQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gHQL0dV9; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750895869; x=1782431869;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=CkcCjk8IzsSvEHOxb9mbqVNqkfQ5haY3GvAwzUt4bxI=;
-  b=gHQL0dV9sCc3ZnlXDFAA0WPKIzbFig+vwBWtXA0wdzBVI8iBeXTkdbow
-   I1CIDkKSzrqSoUL8pJKVouuPSoMMj6CCtFKrUw3rgOGl3LtggjorH7hZB
-   dIVzzLE2EZPvxhABHrgTbskCwvjUMMim8AtuxedN7xF0MXujp/UE7WBJ3
-   mKDp6ilvXgP0xuXJJ/lHE+1gp8thbV1tbcjiY/FJgl2nw9+GO9seZEDh/
-   lSl/+ctsYhLi9nsNKVvdlUNach7WwWmvDLdh8xqeODt/2PxlRuBFcClmO
-   2BovSB7lSRnHCkCOZ9Z+A6MluUgj/qzcufRjfM5OqwxJzdo/pmPyRtRJC
-   A==;
-X-CSE-ConnectionGUID: agVg71CHRZSu1uujeRj99w==
-X-CSE-MsgGUID: pnVuJbe5SXGTQnsz3A4Ltw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="64616235"
-X-IronPort-AV: E=Sophos;i="6.16,266,1744095600"; 
-   d="scan'208";a="64616235"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jun 2025 16:57:49 -0700
-X-CSE-ConnectionGUID: Gy7XcTc0Sc2uOSE6wWY0hg==
-X-CSE-MsgGUID: RulosnoFTIGOmowOtTQoQg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,266,1744095600"; 
-   d="scan'208";a="152884623"
-Received: from lkp-server01.sh.intel.com (HELO e8142ee1dce2) ([10.239.97.150])
-  by fmviesa008.fm.intel.com with ESMTP; 25 Jun 2025 16:57:45 -0700
-Received: from kbuild by e8142ee1dce2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uUZzr-000TYQ-0F;
-	Wed, 25 Jun 2025 23:57:43 +0000
-Date: Thu, 26 Jun 2025 07:56:46 +0800
-From: kernel test robot <lkp@intel.com>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v5 03/14] drm/msm: Use the central UBWC config database
-Message-ID: <202506260718.HOiyc0Mm-lkp@intel.com>
-References: <20250625-topic-ubwc_central-v5-3-e256d18219e2@oss.qualcomm.com>
+	s=arc-20240116; t=1750901078; c=relaxed/simple;
+	bh=UmGP/l8Um9+2msGQYm5eaI/Itrhs9wb11QD4Edoc5NM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XI5XUij0FaxoH4KlKi98zRL1LBohuOIRJ2OTHHJX85MLo9ndvdyveE3TR5tFgQUjouAExXO8q/4iob2Rd6Uk3knO+hiz+e0riyMttm1GWyNI4EAWXD5r29fcxgqjX9pp03eKiTN9hl8V/bYzZUIJOAQBBKm+eW/N3u1Vqn6IBRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=op0oT2Sr; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3a507e88b0aso312552f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jun 2025 18:24:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1750901075; x=1751505875; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=y4u/eN2D/tx7Xb+N1lY9SuoxpnS9Tkv8LbiwG/EEyYE=;
+        b=op0oT2SrJC7PsgepruUXwmrG/iwdAliv7Iqu6EGXmkPPZ2YCmRExAgm3jpYe85C1Gp
+         kfE4erZ154J+0PYmvAZ7vYimtWVotL/ndCxkZD6zr8G79rpmzOZ7/0BFJt/ODRGm2vGF
+         ZKEjfHtC77y7GyFNXpoysx54sSaHSYfR9HtYIQK5ygbCMM/ZrouUU+4Swg9RWqkfve2J
+         r1gHjXyEZUudDz7Inw1oygKMkYrw55z1/swkKAvtaJ+7rJ3HIV4CXrdqhmNj4G/RGE61
+         TAn27LUsG7soY6fbR84zXfo2KpG5MwDQUGq9ZwrRhkCHL+7jJGrSLBAmOG6wJX1ns2FE
+         1rog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750901075; x=1751505875;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y4u/eN2D/tx7Xb+N1lY9SuoxpnS9Tkv8LbiwG/EEyYE=;
+        b=Njzq2sGD3C3rQjPlQkq+7r/dsE9GQdcjFYwSMNaYjouVn9/Q1umbE+J2GaPDZxKoQi
+         +jF3MiV40mwTAQCSDCSx6+LoIrhuXTZOaFXkObtQDkkClh08zy5K7SzO5ROV6lKiA6KZ
+         KORI87UyfpOt4WE+H1tkSmhaYO2Az2txD5z59QKBXsZL7MpFgF2FF+jSd3YNTnFMJsjB
+         qKQ32dVzo8QCwX23/G+wVYa6aem1tnjFciOOthBVoVTTlxOPKYP+YqUqTTPhrFc6HiCP
+         RvKoycCj8yhXtO+VQhXGs6MRn5FQmVZ9DWTUiultfRm3Iws8XecNVuch4lQGrTfMkjl0
+         wb7g==
+X-Forwarded-Encrypted: i=1; AJvYcCXYW02O4ttJDtLMgGa+f2EOsThKQCtN11Xv+TGCAj4UBxJowtealXvt/eCz9oEk0wPKktjNLOCBP/31PQGn@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4khqCbyhdA+P2H3Pg4nQIs1mweLNtjyc+UY1Zd2r18NgNIC3W
+	U5XwNqKCABc0V5ZAkZHTgKs8/HT7eZgnSNnM9n23TzqGff7P8Hk7zOyWo6Elw981Fes=
+X-Gm-Gg: ASbGncv7fPS6HsMcxYJUrSn8JJYasGqgj+0xuZMVbFQnjMF7MrYk6CxsdBTBJOZR+z0
+	EDMPQOaga8wTih+C0U5q+gYpeKE+tISDDLTVN1JXvyrlfoyOxoh1bJC3V1elqYfQ1S7CU6ZZcDp
+	BmHv+Ry845RgS3ROUlSzQR2Qy9u34L6l+6EJiikOvUm/mCTMOlVzNbTJhtHlxPXETRI3SLG5fVl
+	8Uvr8MPpepU9GNnmP6lsPs0nlEqW6zC72Uvis7P43t/yEV4QKjYZfCz3j7w+p+4gqoE9YVFrRaL
+	39HfEo3cHAyh8K9DDx+BpOY5BorqR4gxbnLiGlTZeVRzxzMVqW7T27QmZ86wwYDsDgRbsXl/bGx
+	T7YSbyC/P2+QUzCNQz+2xqlXRdQ9dLxEhqrS/
+X-Google-Smtp-Source: AGHT+IFrQbW0/zunPIUA7/e1au7dH4zXrdfTYnz/u0Sj+eVsjA42PkiE7HAee9HE7uLpQZSciOFkxA==
+X-Received: by 2002:a05:6000:4007:b0:3a5:2599:4178 with SMTP id ffacd0b85a97d-3a6ed5db0b5mr3770688f8f.19.1750901074792;
+        Wed, 25 Jun 2025 18:24:34 -0700 (PDT)
+Received: from sagittarius-a.ht.home (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453823ad01csm34695025e9.22.2025.06.25.18.24.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Jun 2025 18:24:34 -0700 (PDT)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To: bryan.odonoghue@linaro.org
+Cc: mchehab@kernel.org,
+	hverkuil@xs4all.nl,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	vladimir.zapolskiy@linaro.org
+Subject: [PATCH] media: qcom: camss: Remove extraneous -supply postfix on supply names
+Date: Thu, 26 Jun 2025 02:24:33 +0100
+Message-ID: <20250626012433.261328-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250625-topic-ubwc_central-v5-3-e256d18219e2@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Konrad,
+The -supply postfix is wrong but wasn't noticed on the CRD devices or
+indeed the Dell devices, however on Lenovo devices the error comes up.
 
-kernel test robot noticed the following build errors:
+Fixes: 1830cf0f56c3 ("media: qcom: camss: Add x1e80100 specific support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+ drivers/media/platform/qcom/camss/camss.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-[auto build test ERROR on 2ae2aaafb21454f4781c30734959cf223ab486ef]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Konrad-Dybcio/soc-qcom-Add-UBWC-config-provider/20250625-211253
-base:   2ae2aaafb21454f4781c30734959cf223ab486ef
-patch link:    https://lore.kernel.org/r/20250625-topic-ubwc_central-v5-3-e256d18219e2%40oss.qualcomm.com
-patch subject: [PATCH v5 03/14] drm/msm: Use the central UBWC config database
-config: arm-randconfig-002-20250626 (https://download.01.org/0day-ci/archive/20250626/202506260718.HOiyc0Mm-lkp@intel.com/config)
-compiler: clang version 20.1.7 (https://github.com/llvm/llvm-project 6146a88f60492b520a36f8f8f3231e15f3cc6082)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250626/202506260718.HOiyc0Mm-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202506260718.HOiyc0Mm-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/soc/qcom/ubwc_config.c:230:34: error: redefinition of 'qcom_ubwc_config_get_data'
-     230 | const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void)
-         |                                  ^
-   include/linux/soc/qcom/ubwc.h:59:48: note: previous definition is here
-      59 | static inline const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void)
-         |                                                ^
-   1 error generated.
-
-
-vim +/qcom_ubwc_config_get_data +230 drivers/soc/qcom/ubwc_config.c
-
-892fee0dfae7022 Konrad Dybcio 2025-06-25  229  
-892fee0dfae7022 Konrad Dybcio 2025-06-25 @230  const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void)
-
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index 06f42875702f0..ce79cd8d32787 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -2486,8 +2486,8 @@ static const struct resources_icc icc_res_sm8550[] = {
+ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
+ 	/* CSIPHY0 */
+ 	{
+-		.regulators = { "vdd-csiphy-0p8-supply",
+-				"vdd-csiphy-1p2-supply" },
++		.regulators = { "vdd-csiphy-0p8",
++				"vdd-csiphy-1p2" },
+ 		.clock = { "csiphy0", "csiphy0_timer" },
+ 		.clock_rate = { { 300000000, 400000000, 480000000 },
+ 				{ 266666667, 400000000 } },
+@@ -2501,8 +2501,8 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
+ 	},
+ 	/* CSIPHY1 */
+ 	{
+-		.regulators = { "vdd-csiphy-0p8-supply",
+-				"vdd-csiphy-1p2-supply" },
++		.regulators = { "vdd-csiphy-0p8",
++				"vdd-csiphy-1p2" },
+ 		.clock = { "csiphy1", "csiphy1_timer" },
+ 		.clock_rate = { { 300000000, 400000000, 480000000 },
+ 				{ 266666667, 400000000 } },
+@@ -2516,8 +2516,8 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
+ 	},
+ 	/* CSIPHY2 */
+ 	{
+-		.regulators = { "vdd-csiphy-0p8-supply",
+-				"vdd-csiphy-1p2-supply" },
++		.regulators = { "vdd-csiphy-0p8",
++				"vdd-csiphy-1p2" },
+ 		.clock = { "csiphy2", "csiphy2_timer" },
+ 		.clock_rate = { { 300000000, 400000000, 480000000 },
+ 				{ 266666667, 400000000 } },
+@@ -2531,8 +2531,8 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
+ 	},
+ 	/* CSIPHY4 */
+ 	{
+-		.regulators = { "vdd-csiphy-0p8-supply",
+-				"vdd-csiphy-1p2-supply" },
++		.regulators = { "vdd-csiphy-0p8",
++				"vdd-csiphy-1p2" },
+ 		.clock = { "csiphy4", "csiphy4_timer" },
+ 		.clock_rate = { { 300000000, 400000000, 480000000 },
+ 				{ 266666667, 400000000 } },
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.49.0
+
 
