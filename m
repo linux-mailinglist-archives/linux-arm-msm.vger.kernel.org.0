@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-62599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6685FAE9989
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 11:04:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF7DAAE998C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 11:04:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C25F73BB152
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 09:04:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 25ADA3BC56F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 09:04:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2049F2BF3C3;
-	Thu, 26 Jun 2025 09:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A59C42BFC65;
+	Thu, 26 Jun 2025 09:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b1nsrPAO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yr5LUbN0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC74029AB13;
-	Thu, 26 Jun 2025 09:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1512BFC62;
+	Thu, 26 Jun 2025 09:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750928599; cv=none; b=YjwoJmCyRegcWyLIfGYEDaEfImTrxt6Qce1YcGhtqdaAgyDvgJBQSOiEuB6OTdb8WvZsPTnYiOdSfVPIgi9B4O1PfY50RR0U578O/0ugcLE1mLT5XQzM86/UHAvv5FSJfoHR+s6GlkkW8UKM8c54gDLvDnyVvjHXlfIRjqtiaVQ=
+	t=1750928603; cv=none; b=FBBXZXKjVsTTaA1E6MJ9mUWtoptqQvkNh2FxgVIUHxiBYKUgXeWj4DzlKvziJGKlWsMaU23FKxVjtrDZzL6Ctnkyn6mR+X8l6XZKikrvKQ98bsmzhx8+QfkgMqbgqc+v85ZOD1ESXMl82I3mYEhjZpj4XeZRO8PwJg8UJFLMGLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750928599; c=relaxed/simple;
-	bh=GH/kR3kom1SR2DzZhLQydzQqd3+Oq3MgLgPaayrkqBA=;
+	s=arc-20240116; t=1750928603; c=relaxed/simple;
+	bh=Jzp4H5XI2mNdXY7mf+xttkOOu68Xs66xVgu2w4KaY6c=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MTnPAOAtelYHsZwuDqsrvWTavI1Lq5/EdJOvKnIgZGJIZ3bnCElMT5SPowzZ2Noix1Eeigq7KDN2BtDyIqPwulgC63FAyW2w/jCFL9J88gwOJH5bPajHtWtuTnSUpJ58oX4l8oFpnaQBUCu2iysAGrC1cYIKZ0JtND4mzCa4340=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b1nsrPAO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5886DC4CEEB;
-	Thu, 26 Jun 2025 09:03:14 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=IN3SN2uw6W4KG34SIIGQjq/9QNgBqQpys29k1hU7FgECqpoLnKk2L6SeKOyGhbNPNGO8P5OyMIcVAoQ5IDmlsMTjK3mteryfZnyap8fVsot3/0ONMFhYH55TsIKESRlb6HGqIY4//p2CC9P5vfmvrZTDR7IXrhANQXMJDgVins0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yr5LUbN0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED207C4CEEE;
+	Thu, 26 Jun 2025 09:03:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750928598;
-	bh=GH/kR3kom1SR2DzZhLQydzQqd3+Oq3MgLgPaayrkqBA=;
+	s=k20201202; t=1750928603;
+	bh=Jzp4H5XI2mNdXY7mf+xttkOOu68Xs66xVgu2w4KaY6c=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=b1nsrPAOSCTmeNgayHrduwqzmT/KVFvSR/Ii1dc4NjTUTlZlcaR8hHsceZThk3bjW
-	 PYLBfniOwJodXPAOQ91/OsOzi+7FtPbq62bqbg0yUgYWwU+UheOwAbV+nroJiRAXwO
-	 Lyx67t4PajcYblW6uZEFXyzWIomyYRtegNsfpdCD4EvLx+iGm/8sVzuKK3PKauFVVf
-	 eudB0RG/vFjYTInb6j/qPzvcGuQiCT0aI6l9ZqmQ1Cduw8TOo3kNQxXAAC16Y2Etsx
-	 pP9Ok8gthw6E9LVKRtkLqqeaG8GQ+YRj+Nh3VgUGfXDxwiMp3CXkjfo+l5nW7veI4j
-	 OjGVyCE9R/jvg==
+	b=Yr5LUbN0cGNZAIVmhQukkRNo/OFb0Wcf6iXXTkSWk17b2MZ95oAqLR8G+vj1ItFwy
+	 G2l7qNnx4xfWs1Z/h6AZSUl+i3Zwe+zKgWKTLbguhBz0T2Lx1iE1DXfJVWhCw1VbV8
+	 A5mfP+hySGUiPN6AYZDtjuSTDYCWTxVO16qhGtBkDQPwfERKgoDsEgpaZAfXd+5Rcq
+	 NIG+WdodjehTKs/ooLU7ddH8d+qOPR3djN8srzS9WGUAYwkwBBfaftZL2o2ye7+d0h
+	 OpHedXiZhGT6FXVT4q9/Gg0IUDUOS2qoxK0B5dh7rwMysa44W5YW3nj/6Gx5XLi6OV
+	 2/B04bPTS80FQ==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Thu, 26 Jun 2025 11:02:35 +0200
-Subject: [PATCH v6 08/14] drm/msm/a6xx: Replace '2' with BIT(1) in
- level2_swizzling_dis calc
+Date: Thu, 26 Jun 2025 11:02:36 +0200
+Subject: [PATCH v6 09/14] drm/msm/a6xx: Resolve the meaning of
+ rgb565_predicator
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +53,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250626-topic-ubwc_central-v6-8-c94fa9d12040@oss.qualcomm.com>
+Message-Id: <20250626-topic-ubwc_central-v6-9-c94fa9d12040@oss.qualcomm.com>
 References: <20250626-topic-ubwc_central-v6-0-c94fa9d12040@oss.qualcomm.com>
 In-Reply-To: <20250626-topic-ubwc_central-v6-0-c94fa9d12040@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -72,42 +72,76 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1750928557; l=1212;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1750928557; l=2509;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=j6D8eqPjFQVMYlE8pITPkljcLo0t+bJ0APdpU9FQnCs=;
- b=BOfu+52tPJcNiDO+mJs4J8ce+2lXda/W7M0PquCEu8Npolaqn0xFS83OdxYSgyfqC2W2xTLBx
- cEp1riYtNSaAeJTAgHdtBlbHMYhyxEZQT+m4R4prxowklV5jMEs95Pv
+ bh=XfAVKpXihNq5QYjqmv6bbx9jLqRnqYwolc2Cu9hDUvU=;
+ b=6YUdaLT61fiBU42DaWMPWEGLq53/TKHy8iSo99y6DufkOn18c/4H/E5SfxOraSBImKIOY8F+H
+ wDFLj5BQRsxAYN3y/dBxP32Q+Q7ctajCsXmqfHTHtdZHxtW4xHMnUg3
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-ubwc_swizzle is a bitmask. Check for a bit to make it more obvious.
+It's supposed to be on when the UBWC encoder version is >= 4.0.
+Drop the per-GPU assignments.
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 3d345844337608086ffec1998b47b315ada68a97..78782f94ee678e13baa6eb1a009a412e13557d59 100644
+index 78782f94ee678e13baa6eb1a009a412e13557d59..53493f68ead2113143dab594bfedf492014d5aaa 100644
 --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
 +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -686,12 +686,12 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+@@ -610,7 +610,6 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+ 	if (IS_ERR(gpu->common_ubwc_cfg))
+ 		return PTR_ERR(gpu->common_ubwc_cfg);
+ 
+-	gpu->ubwc_config.rgb565_predicator = 0;
+ 	gpu->ubwc_config.min_acc_len = 0;
+ 	gpu->ubwc_config.ubwc_swizzle = 0x6;
+ 	gpu->ubwc_config.macrotile_mode = 0;
+@@ -637,7 +636,6 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+ 
+ 	if (adreno_is_a623(gpu)) {
+ 		gpu->ubwc_config.highest_bank_bit = 16;
+-		gpu->ubwc_config.rgb565_predicator = 1;
+ 		gpu->ubwc_config.macrotile_mode = 1;
+ 	}
+ 
+@@ -651,13 +649,11 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+ 	    adreno_is_a740_family(gpu)) {
+ 		/* TODO: get ddr type from bootloader and use 2 for LPDDR4 */
+ 		gpu->ubwc_config.highest_bank_bit = 16;
+-		gpu->ubwc_config.rgb565_predicator = 1;
+ 		gpu->ubwc_config.macrotile_mode = 1;
+ 	}
+ 
+ 	if (adreno_is_a663(gpu)) {
+ 		gpu->ubwc_config.highest_bank_bit = 13;
+-		gpu->ubwc_config.rgb565_predicator = 1;
+ 		gpu->ubwc_config.macrotile_mode = 1;
+ 		gpu->ubwc_config.ubwc_swizzle = 0x4;
+ 	}
+@@ -686,6 +682,7 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
  	 */
  	BUG_ON(adreno_gpu->ubwc_config.highest_bank_bit < 13);
  	u32 hbb = adreno_gpu->ubwc_config.highest_bank_bit - 13;
-+	u32 level2_swizzling_dis = !(cfg->ubwc_swizzle & BIT(1));
++	bool rgb565_predicator = cfg->ubwc_enc_version >= UBWC_4_0;
+ 	u32 level2_swizzling_dis = !(cfg->ubwc_swizzle & BIT(1));
  	bool ubwc_mode = qcom_ubwc_get_ubwc_mode(cfg);
  	bool amsbc = cfg->ubwc_enc_version >= UBWC_3_0;
- 	u8 uavflagprd_inv = 0;
- 	u32 hbb_hi = hbb >> 2;
- 	u32 hbb_lo = hbb & 3;
--	u32 level2_swizzling_dis = !(adreno_gpu->ubwc_config.ubwc_swizzle & 2);
+@@ -698,7 +695,7 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
  
- 	if (adreno_is_a650_family(adreno_gpu) || adreno_is_a7xx(adreno_gpu))
- 		uavflagprd_inv = 2;
+ 	gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL,
+ 		  level2_swizzling_dis << 12 |
+-		  adreno_gpu->ubwc_config.rgb565_predicator << 11 |
++		  rgb565_predicator << 11 |
+ 		  hbb_hi << 10 | amsbc << 4 |
+ 		  adreno_gpu->ubwc_config.min_acc_len << 3 |
+ 		  hbb_lo << 1 | ubwc_mode);
 
 -- 
 2.50.0
