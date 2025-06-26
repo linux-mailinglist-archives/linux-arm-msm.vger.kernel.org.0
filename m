@@ -1,127 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-62653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A29FAE9FD2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 16:06:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47226AE9FF8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 16:11:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0EA6F7B0976
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 14:04:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 63C81189F525
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 14:07:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 415E62EA161;
-	Thu, 26 Jun 2025 14:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F6CF2E719B;
+	Thu, 26 Jun 2025 14:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qC2UnD8B"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ev7ClxtP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8792E92DD;
-	Thu, 26 Jun 2025 14:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C393528FFEE;
+	Thu, 26 Jun 2025 14:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750946709; cv=none; b=qKWBoaFIlD0C8eNDoSnwZlCLD5wPvvsQPruxJu8EBmJtAOfU/GslW6cFf8W2yDJakOpbkw5dNjmI8eDHSpCe2U1n88WsUghiLmeXHcfvCF++NbDADpje9M/z/49TwFrlftBigOwqd3rUw0onFILuXS8BLjSu1FmpzEFgq9QvgbY=
+	t=1750946849; cv=none; b=S1d6DdRa+mDCwkGqK9W3N1kokNxKkBmKKNcPlafMNLAdzSw4ArVICEi/C4q6bCqgPNgj1N/H4f3MdOkq26xvUaxDePGKtUMWygYkKsI0S92+tutZYunJnE8RP4Rs0NHi6DKQBc/Z0hwagqwS06hpjWUKZA2LfTJD82LEK66HN0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750946709; c=relaxed/simple;
-	bh=+K5n0VGk4TM353jmviQuCJl/tzxvNnr3dzj2b/7AuQk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GHpMXhMvAH5xACJhRAlKOYyaYnchudqlO/n6UHDss41yUA/xsVRS/6BoWWPXzaRWXBrHNk43WHG/7SOZdG2rEkwEEAAPtNJE8IdtzCg/qFlttb7dxAbkiYvvPSwn1GtCX5ILUVBHgA7ncK71rQ4t7TU/WbfBVUw4uWnRW0rPDuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qC2UnD8B; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AB5C4CEED;
-	Thu, 26 Jun 2025 14:05:02 +0000 (UTC)
+	s=arc-20240116; t=1750946849; c=relaxed/simple;
+	bh=vugaHxaDRymq5bGUndV2NZe9c92WDn2WbR2/fd0HKo8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cUsOaLz1vytqtCfVJdK7LnfUS4WDFinYCe/IRhjNRX07bzlx4kTvnSRb792ba4cpootsk1CqikRGTcZ2fTM9xIwtr3ckZB3x2eclVzXIfNpvkN44wgqGeSWuBPUXlmTwCzoyF/CPX3dIdjTtr0dUsHfxCftsgDuqx7azAxOOE6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ev7ClxtP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54761C4CEEB;
+	Thu, 26 Jun 2025 14:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750946708;
-	bh=+K5n0VGk4TM353jmviQuCJl/tzxvNnr3dzj2b/7AuQk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=qC2UnD8Bp0yw+P5bfz7aM7qzZ4eTinyxf/NB1mFB4GDJ3ZE+uw+gOPmzpmFsSgtb9
-	 fZGdvSIv60Ae68wdPc6qizeivAe8kDnlM1OWSi/YgLEwY7Z60EWoPut9sepJiMhXUP
-	 4+lJTvi+uI5BslaLaNam1tJGppwlFLIKZmOeRHtRt64ESBtGP4Fp9w6OmX3h7Acd09
-	 yaDsWigBaXq+cloTin6zsq7yyHBLHc19qZYeM2gOuYa0fdbANpUx553IKpRRrPSIZO
-	 s7Gpc0z1BZPmnuPudS6vhwr989zaSfCaC4q2aAFz3kREwciCFbAAYoBNjhQIQmIhNe
-	 w+ThtjU7u/Tvg==
-Message-ID: <08e3c707-3b39-4b67-ae9d-f9fe65ad210e@kernel.org>
-Date: Thu, 26 Jun 2025 16:05:00 +0200
+	s=k20201202; t=1750946849;
+	bh=vugaHxaDRymq5bGUndV2NZe9c92WDn2WbR2/fd0HKo8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ev7ClxtPUxDc9ERIfEOIyw12j3/zH5Q1JaydKwalSzMY6sdqNBrcHZZ2Qfa6pUBll
+	 HvNxhoe8Cbcl0HRyIoj82k+8C/jdA1V7uXtW/DcYPBKWhZ5TKm6R+rsUXhZDwtOHQa
+	 QusVKn2JFySU43L1KYD5rwBPDx2H4KNrSY/jT5Wtc1Det3FUOzsbvW1y5+XiQJFejO
+	 /ual5H8nQw+vlXYTITxHkDRxtWxGZOeDTv1fJVkl9U+rN9psAwdbv/633mFUHn32EK
+	 WkrXHWONaqRVkOy/3NeAm/GXle2Frs9ByI4zDlKhHuOwllNppr+RN9NVH7A1+KcUKc
+	 /YQT2UVGow8uA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1uUnGD-000000003ap-3QXW;
+	Thu, 26 Jun 2025 16:07:29 +0200
+Date: Thu, 26 Jun 2025 16:07:29 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] firmware: qcom: uefisecapp: add support for R/O
+ UEFI vars
+Message-ID: <aF1UIcrNC5PULiqg@hovoldconsulting.com>
+References: <20250621-more-qseecom-v2-0-6e8f635640c5@oss.qualcomm.com>
+ <20250621-more-qseecom-v2-2-6e8f635640c5@oss.qualcomm.com>
+ <aFloifxONXnQbVg6@hovoldconsulting.com>
+ <aFlps9iUcD42vN4w@hovoldconsulting.com>
+ <diarijcqernpm4v5s6u22jep3gzdrzy7o4dtw5wzmlec75og6y@wlbyjbtvnv3s>
+ <aF0WGmnN_8rvI9n1@hovoldconsulting.com>
+ <zufyvg4hoxxz4i45pynzta3gyglqvecrmeslnpphsgwmtujivl@t2zbdtejt3x4>
+ <aF1Hhs0JAS747SVi@hovoldconsulting.com>
+ <cae5bfbe-9537-4b9d-b026-170063054b35@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 5/5] arm64: dts: qcom: qcm2290: Add venus video node
-To: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>, krzk+dt@kernel.org,
- bryan.odonoghue@linaro.org, quic_vgarodia@quicinc.com,
- quic_dikshita@quicinc.com, mchehab@kernel.org, robh@kernel.org,
- conor+dt@kernel.org, konradybcio@kernel.org, andersson@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250626135931.700937-1-jorge.ramirez@oss.qualcomm.com>
- <20250626135931.700937-6-jorge.ramirez@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250626135931.700937-6-jorge.ramirez@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cae5bfbe-9537-4b9d-b026-170063054b35@oss.qualcomm.com>
 
-On 26/06/2025 15:59, Jorge Ramirez-Ortiz wrote:
-> +
-> +			interconnects = <&mmnrt_virt MASTER_VIDEO_P0 RPM_ALWAYS_TAG
-> +					 &bimc SLAVE_EBI1 RPM_ALWAYS_TAG>,
-> +					<&bimc MASTER_APPSS_PROC RPM_ACTIVE_TAG
-> +					 &config_noc SLAVE_VENUS_CFG RPM_ACTIVE_TAG>;
-> +			interconnect-names = "video-mem",
-> +					     "cpu-cfg";
-> +
-> +			status = "okay";
+On Thu, Jun 26, 2025 at 03:49:32PM +0200, Konrad Dybcio wrote:
+> On 6/26/25 3:13 PM, Johan Hovold wrote:
+> > On Thu, Jun 26, 2025 at 02:15:26PM +0300, Dmitry Baryshkov wrote:
+> >> On Thu, Jun 26, 2025 at 11:42:50AM +0200, Johan Hovold wrote:
+> >>> On Tue, Jun 24, 2025 at 04:13:34AM +0300, Dmitry Baryshkov wrote:
+> >>>> On Mon, Jun 23, 2025 at 04:50:27PM +0200, Johan Hovold wrote:
+> >>>>> On Mon, Jun 23, 2025 at 04:45:30PM +0200, Johan Hovold wrote:
+> >>>
+> >>>>>> Also not sure how useful it is to only be able to read variables,
+> >>>>>> including for the RTC where you'll end up with an RTC that's always
+> >>>>>> slightly off due to drift (even if you can set it when booting into
+> >>>>>> Windows or possibly from the UEFI setup).
+> >>>>>>
+> >>>>>> Don't you have any SDAM blocks in the PMICs that you can use instead for
+> >>>>>> a proper functioning RTC on these machines?
+> >>>>
+> >>>> I'd rather not poke into an SDAM, especially since we don't have docs
+> >>>> which SDAM blocks are used and which are not.
+> >>>
+> >>> You're with Qualcomm now so you should be able to dig up this
+> >>> information like we did for the X13s (even if I'm quite aware that it
+> >>> may still be easier said than done).
+> >>
+> >> I'd rather try to find information on how to update UEFI vars on the
+> >> storage.
+> > 
+> > You can do both, especially if it turns out you won't be able to have
+> > persistent variables on these machines.
+> 
+> The danger here is that we only know what Qualcomm uses these cells
+> for, not necessarily what the vendors with a similar idea could
+> have come up with.
 
-Drop, unless you override existing node, but then this should follow
-standard override-label/phandle syntax.
+Hmm. Good point.
 
-Best regards,
-Krzysztof
+But at least the address we used on sc8280xp appears to be cleared on
+hard reset (holding down the power button) so it can't be used for
+anything that useful it seems.
+
+> This is especially important since (unfortunately without going into
+> detail), you *really* don't want to mess up some existing values in
+> there.
+
+Yeah, I wouldn't pick a random address without getting an ack from
+Qualcomm first.
+
+Johan
 
