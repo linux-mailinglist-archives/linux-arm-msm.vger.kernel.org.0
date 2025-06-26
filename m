@@ -1,137 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-62644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F8EFAE9E5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 15:13:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6E44AE9E9B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 15:24:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 34ACF1C42A67
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 13:14:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2ABC33B107B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 13:24:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35C9E2E540F;
-	Thu, 26 Jun 2025 13:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12BF82E62BC;
+	Thu, 26 Jun 2025 13:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iT7kcXIG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nAKTJ+DD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1262E540B;
-	Thu, 26 Jun 2025 13:13:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36EE22E62B2
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 13:23:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750943623; cv=none; b=p5fa11bDopLlOh4W6VVJ0MU5j6YfJDpIuhPvOeBkM3OFC94++E0i5OwDuc8Y0xo0AjcIAqBCcSkwKWSuln3zTTj/28h1oasZVeQ/2uDoe31j511fj8TpZE1SJS14i9SWIOZyt7lmlrnYdGmmjJXBYtQrk3oggZmK0HpKFtoJEQw=
+	t=1750944225; cv=none; b=WIgSQO+jwLFVJZ5ujx3/nRqO++vwxPSt/7FSyPeLwdiVaDvtTPwqqcCcQ9c7v9tpy/kWFjf1DSsJ68S7ybKKZwbVNn+qV7nmHUjANoi9fj7Bj7B3oBGn4xz985FT4mFuWIsyZFGj3U6FLbRRPAz+TJCx0vZrfKM/EWUoC1XnsWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750943623; c=relaxed/simple;
-	bh=eGe6DgFdnWVzmqfcizRNhuUwNbmovbKrb7hpTd0/7pc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NooJXOEyOZaC4yAkpJ4dnZHgLh28YeBUsobZ6aZX+GIPvVGKOr2XkdXk8c6L9kAfsK3TPGOsYrwzV2Oqg6nvv9PM5YbOkDeZ5b0lktJS6rSkg7wbje2e182UwOBTLO/zgm7gl3a89aJdvMMJymx7NUE+O9x/SXE+VXHOk3nyMyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iT7kcXIG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4043C4CEEB;
-	Thu, 26 Jun 2025 13:13:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750943622;
-	bh=eGe6DgFdnWVzmqfcizRNhuUwNbmovbKrb7hpTd0/7pc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iT7kcXIGtuQWv0kv2WBwECq7p9++xG2lC/+zPx0xDYojnP5/mcnnL2YgLwgX8Xu6s
-	 Q/QqOMG4RwtCIjds4OZSE+RXrZZhwb/YseG7tX3xg1kPetIxYHZGijm2OAXbZdhLNK
-	 gezvMhIMNG41cqWGC+NrBkIA0CddoOI/gdEAiINzP5+r0TWJNnrp8xQid49aqwTdBZ
-	 LzrjgfqKOR/97p8dIbdvfv/rgPJPHTvR1pcKi/vuoNAxvwv4fhN3DDf9zVO47xdL00
-	 GSpZeUk8UZ7TCtBb86MmN27IYQJegrl0LJ1GucTzTpb1s4j67VjPhWMzQZdRCPS8LH
-	 2qUf8uicTelRQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1uUmQA-000000002fg-2GtK;
-	Thu, 26 Jun 2025 15:13:43 +0200
-Date: Thu, 26 Jun 2025 15:13:42 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Maximilian Luz <luzmaximilian@gmail.com>,
+	s=arc-20240116; t=1750944225; c=relaxed/simple;
+	bh=nsHewx2VL2AMVIeqVCjKf9A1TsR7pvGBhC7x1KZydl4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ilW2w+plmrF78fg3OjnCDNC7UGhevLfCCP1iKRgkMIZqmb8begfM/NqV70PevZLAdGXBd/DT691FluV3mFeJdDWf8I73d+TN8pKuNN0G2UhvWKbWYXvLdLbgxHx1QsuQREp7BI2Eoizik05qzbIYTNOpMc7WsEzitU4cMTjonZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nAKTJ+DD; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3a531fcaa05so558234f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 06:23:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1750944222; x=1751549022; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=XvZ6uX77hyNJJ7iBgJDLTyukijUbXgdBZZJDIwJY4lY=;
+        b=nAKTJ+DDcsQlUGpLTZ3oO1kW2uVDYRH/RCk4rIInxZ1Zpjbe4iPIvSOpvvePRV52AA
+         vi2zLLOYxb11oQLDLbSjU/Rv5Q2RxsxRtY1TZ0l0IoIyPNR7z3U91W4ceNoJYdUuqgNO
+         B9C00qhoQOz8b297DnAj5vV6ub+8bTxGTGXNhcbWtQ7Kaw6z9Ltfiuj65Kp9xghhE0+a
+         Whiwe8plbEv3ISxLoGUNxo5x5B9mIBT6lRXBQHxQe0+EXOBucDMsmUUeV074xZhciv81
+         gmCgnSUTpIsrmAWTNWnHMkdzsLKMlo8RHrTSIVEnIwVJWbysSe5GmCCDyajp7HuP53u8
+         S2Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750944222; x=1751549022;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XvZ6uX77hyNJJ7iBgJDLTyukijUbXgdBZZJDIwJY4lY=;
+        b=gsepi5Frahdy6YY4mhKQtgI4n1fhLM+A3vcCDvcOUb8CN72Lp/acPLXorV75PUcpmq
+         SHJf9/5AwdYrUsy8VxsiKCONHB2jDv8L8EK8Gf3zFrSXviyot/il9ApwfVG/h5akSeYI
+         3Mz8aCVsdb/OfEw2gkzRjJWngvRJPR+XVq1nL9QlfzKoYLipwaVG+Ub3T8HlL4IBSd4c
+         6HiMsBBeoRRHgxHxdGjr+uIAl9QavW2aPaZvmTgDHcg9g96/0uL7ZPWw5i42X3bLXA6i
+         LLrwBVb70A2hAkb95aSb2Yljh6ZAsBX150WgfZZgLw7F5Y0oHdqqhmEhHzhjyfbtwK7B
+         7dBA==
+X-Forwarded-Encrypted: i=1; AJvYcCWiKURfMd2nodDeCh2v2mtbUgYmPgXpbYxc8s2eeo6fWVmYwJg+MR9Lw8dA29dFdg5wgSsPlwLlqps5+GHT@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy/hoN+4VXhojie27TBECw7WKf5tw3CARy2jnr6xMvmCTIXEGew
+	c5+Frw3w3GO85CO+kHFh6yzq9sE+IAwzE02Ajo1ig9SvTbJIFU73Gakxc8I8Q4CaP4A=
+X-Gm-Gg: ASbGnct+S3Kxy74T7G4zC7m0NCvjCXr0xiqXPvTYhwyi+gQksDTNSXF/976xr2cL7b8
+	8DW/vNYscuoLAj0A6fjuL2SgJopu/Kygu37DPfScfdmvR2JsNaLqlxjxI8LhDUxBmK/HwhTZzxs
+	mN6FUA6lbpOrxZGWrYWomkZ7GNJUC4jRAw8Qb78SgrJePwSmNZEFZdU6luJm3nn/XN0m6B0JmmF
+	vSflqTqAFhIfh33aPbBMfUltTRn7/qUuAH55dCukrbX3prW8TTXjawaSJd7Eo8F92pqQSwqXTlo
+	Q2Pf+OjwXXtqs7BrT1MTefICFxp0Uad05E/Rq759voY41/AbInIAruzvgRK0xC0z2qJbLuNeC1U
+	ZNKCcDPzhO/ckdZTnitMJ6bWYllyDXT2LAg==
+X-Google-Smtp-Source: AGHT+IHLgWDCWKhldR992iGGgdKmiQvfEEbj/qhGSBInZBEK/oh7BDBrhDGEkY0fPEStJ7yCE/2CSA==
+X-Received: by 2002:a05:6000:310f:b0:3a5:2cb5:642f with SMTP id ffacd0b85a97d-3a6ed64b8cbmr5290102f8f.34.1750944222377;
+        Thu, 26 Jun 2025 06:23:42 -0700 (PDT)
+Received: from toyger.localdomain (p5b29ef66.dip0.t-ipconnect.de. [91.41.239.102])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538a3a57c2sm19868645e9.12.2025.06.26.06.23.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Jun 2025 06:23:41 -0700 (PDT)
+From: Casey Connolly <casey.connolly@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] firmware: qcom: uefisecapp: add support for R/O
- UEFI vars
-Message-ID: <aF1Hhs0JAS747SVi@hovoldconsulting.com>
-References: <20250621-more-qseecom-v2-0-6e8f635640c5@oss.qualcomm.com>
- <20250621-more-qseecom-v2-2-6e8f635640c5@oss.qualcomm.com>
- <aFloifxONXnQbVg6@hovoldconsulting.com>
- <aFlps9iUcD42vN4w@hovoldconsulting.com>
- <diarijcqernpm4v5s6u22jep3gzdrzy7o4dtw5wzmlec75og6y@wlbyjbtvnv3s>
- <aF0WGmnN_8rvI9n1@hovoldconsulting.com>
- <zufyvg4hoxxz4i45pynzta3gyglqvecrmeslnpphsgwmtujivl@t2zbdtejt3x4>
+	Rob Herring <robh@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org
+Cc: Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Casey Connolly <casey.connolly@linaro.org>,
+	devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7280.dtsi: prevent garbage on serial port
+Date: Thu, 26 Jun 2025 15:23:30 +0200
+Message-ID: <20250626132333.351351-1-casey.connolly@linaro.org>
+X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <zufyvg4hoxxz4i45pynzta3gyglqvecrmeslnpphsgwmtujivl@t2zbdtejt3x4>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jun 26, 2025 at 02:15:26PM +0300, Dmitry Baryshkov wrote:
-> On Thu, Jun 26, 2025 at 11:42:50AM +0200, Johan Hovold wrote:
-> > On Tue, Jun 24, 2025 at 04:13:34AM +0300, Dmitry Baryshkov wrote:
-> > > On Mon, Jun 23, 2025 at 04:50:27PM +0200, Johan Hovold wrote:
-> > > > On Mon, Jun 23, 2025 at 04:45:30PM +0200, Johan Hovold wrote:
-> > 
-> > > > > Also not sure how useful it is to only be able to read variables,
-> > > > > including for the RTC where you'll end up with an RTC that's always
-> > > > > slightly off due to drift (even if you can set it when booting into
-> > > > > Windows or possibly from the UEFI setup).
-> > > > > 
-> > > > > Don't you have any SDAM blocks in the PMICs that you can use instead for
-> > > > > a proper functioning RTC on these machines?
-> > > 
-> > > I'd rather not poke into an SDAM, especially since we don't have docs
-> > > which SDAM blocks are used and which are not.
-> > 
-> > You're with Qualcomm now so you should be able to dig up this
-> > information like we did for the X13s (even if I'm quite aware that it
-> > may still be easier said than done).
-> 
-> I'd rather try to find information on how to update UEFI vars on the
-> storage.
+During early boot phases there can be garbage characters on the serial
+RX port unless it is configured as pull-up. Add the pull-up bias and
+mark the rx/tx pinconfs as being necessary for all boot phases.
 
-You can do both, especially if it turns out you won't be able to have
-persistent variables on these machines.
+Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-> Moreover, using the UEFI variable doesn't send the wrong
-> message to other developers (if I remember correctly, I've seen patches
-> poking to semi-random SDAM just because it seemed to be unused).
-
-That's for the Qualcomm maintainers, and the rest of us, to catch during
-review. And people putting random values into devicetrees is
-unfortunately not limited to SDAM addresses.
-
-Furthermore, getting an allocated block of addresses in SDAM for Linux
-could be useful for other things too.
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 64a2abd30100..60e4a311405a 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -5742,13 +5742,16 @@ qup_uart4_rx: qup-uart4-rx-state {
  
-> > > I think the slightly drifted RTC is still much better than ending up
-> > > with an RTC value which is significantly off, because it was set via the
-> > > file modification time.
-> > 
-> > I measured drift of 1 second every 3.5 h on the X13s, so having an
-> > almost correct time with massive drift that cannot be corrected for may
-> > not necessarily be better.
-> 
-> For me it provided a better user experience. Yes, I'm using C630 from
-> time to time, including the kernel development. A drifted but ticking
-> RTC is better than the RTC that rolls backs by several months at a
-> reboot, because of the missing RTC offset info.
+ 			qup_uart5_tx: qup-uart5-tx-state {
+ 				pins = "gpio22";
+ 				function = "qup05";
++				bootph-all;
+ 			};
+ 
+ 			qup_uart5_rx: qup-uart5-rx-state {
+ 				pins = "gpio23";
+ 				function = "qup05";
++				bootph-all;
++				bias-pull-up;
+ 			};
+ 
+ 			qup_uart6_cts: qup-uart6-cts-state {
+ 				pins = "gpio24";
+-- 
+2.50.0
 
-Does it have to roll back? Can't you just keep it running after whatever
-semi-random date it started at? And there is ntp and services like
-fake-hwclock which saves the time on shutdown too.
-
-Anyway, I still do no understand why you seem so reluctant to having a
-proper functioning RTC using an SDAM offset.
-
-Johan
 
