@@ -1,175 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-62590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B40DAE98FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 10:51:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E434DAE995C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 11:02:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CBFAF165476
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 08:51:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BA140167EAC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jun 2025 09:02:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DB53218AB0;
-	Thu, 26 Jun 2025 08:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C35D28C5D2;
+	Thu, 26 Jun 2025 09:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pI0/t2+k"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ehVNkdFM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79FB295530
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 08:51:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5234B1B85FD;
+	Thu, 26 Jun 2025 09:02:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750927915; cv=none; b=uK9P3sKb7JhcijM9uWwesCEtORdD+MsgBUFzRICJ9+AUmBSJ1CcAGWND91iehAcgq381IicSLIdEqGyLrF8QgwpBXhyzmmf9ZOUo1nbSVvGvsZ4OXFZ1oYx7JSswIUMPC0Z/mSk8PGh2Yavs3kNjpPEbrU2D+piohHnGhVNpcos=
+	t=1750928562; cv=none; b=NufyOZ/0cLqXi22uJxBkf4mNwGCm/BNUyJ/9DdhElINJQQp58AsIWnlTcauGUAfB3Np69xfDqizuWbUDsULWBSn9C5JAa/8GOp2KV4Bne4TuL9wewtiXwatNPiwKtmqP7mpQ7Y0kaB2pA7n8Dgu2QiIUP6z4RzJ7q1QFm5/On5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750927915; c=relaxed/simple;
-	bh=aznDneGB5ZSRcgyw+5JpEXuiR1KCupx+SXPzTLp24oo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FrkqsTmBKuh3ucUATVwjdb68WvVMRBx6393yLI0XjTpT7DfZ7XK89DEgNQcxYZ5pkrTRlrbb8ikSjnvnsXnrayhqGgE2xZ94+oAs91qY3xiSYuXVckrjPq2pUrARpQ0/xvMfikQi3z8DqOmszo+U9JQKTYuYP1Gk2XiumjDWRG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pI0/t2+k; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55Q0Dnlv008309
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 08:51:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mgfcLjhJkXI1R1iwfIXHzXxGB6xPeQaB1Fa4Lnbay6g=; b=pI0/t2+k37GowChq
-	slrM9V81tfI3008e9t5Oh19Ci3phkWDQb3qhHYAxkas0x6YnSk+3s52MyTbkoCSu
-	vzA37m/uHeJ6hIHdyNkntoACiZ44lXsG5vPQ1Cs1e4HBrm3UeubKlA462i4TJ8MA
-	5TzOBE6bopGwwW+mLuYhdTKihB/g8p6X0AuSQuiaLwym55smUcsbHi12rCcwCa0/
-	8T0RsZHIKFrTW+M022TZ5bMqLu6EehcHLq1D39hAP/35C5bFVwiygPTXOIfpmeOl
-	JOB+7WTFaIEn8UMgweIhaTJHNdoW4zro6KSY9D+9hj+T/vKtSpgGwsiXdxRoRs2G
-	i9ZzXw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47fbhqs3s3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 08:51:52 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4a5a9791fa9so2746811cf.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 01:51:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750927912; x=1751532712;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mgfcLjhJkXI1R1iwfIXHzXxGB6xPeQaB1Fa4Lnbay6g=;
-        b=cXT2oMkbjGxZOGv0oNeM5SZ5AAh1X06X3WuzLGNj1TvvmmewA9DzafIGTMl3uP4WvA
-         xH5aRjVMSZ9sPUmmI6OM8bXxehULo/8AJ+ef+jJ9YzI9w4MoN0E1999Y8cAAxx87Oo2s
-         p92B6BZmTJ+yVicuwuecHmo7X6pdBc/yfUnGgaO5u5BPcA8fobF6Mmoc7NCJrgFirdLw
-         Ozt31i8yAap4L6+BFDzzcIc26D/3MaItkYpIr7bIZiW9dPB0wjR6F+8JEEGKqHTop5qN
-         4GBPhEMCcR5+FGWeLOsnIusnsiF8DC4Dm9CN4sGgogzO7P3vr9mchknMOtJaYZtyxQ/K
-         8E1w==
-X-Gm-Message-State: AOJu0YzLq5jS48quk5A5QzX8myogUr56s7d7mcI/udbo7B1RPIqXUKyV
-	11Q++GoiXAMJzvYTWWI+qBx8jGDSi7G5BF3yxJKreOFxSJusLvRRrLAog92VpGqihrQcIdmCQTI
-	nRH/Jt10xpmDQ+GLUuI8ou35zHDkHFnnerAnxA7a9KIva/vrmZKVtpDOzK9cA26A5c0P1
-X-Gm-Gg: ASbGncvQ2oJTBiH3yS/sryKUatm5kVRmfnS7kzwKls+QucWSqE/ynkTikUfc1F7jhL9
-	RHctZx2eDJanXgJ4gmy9RpIm4qB8wUfq3hAw+uS/OxbTDKp98LW/nR2THKD6h76ydVYp6DkI+dc
-	OTdBI+YHTeQ4kku9nWcv4TjLTO5EgHmCGRWMOUh0PngLSb7R7Yv+DZskAJT8uv8Ar42oN7sMyFQ
-	GlSTug0NzvoBf9ROxEzuXatXFgPyMhi6g+QZFmiBRCEuYAjdHNbhEsfjHF6b0v+99x9yes0fUCu
-	qqEV3xYeFlxuXDLchJPHOqdC8JegCZDv+bp+KJ5+oE5s5DJsmXvsCK3nNXLDQEDJHmr22zdDsY3
-	yrEc=
-X-Received: by 2002:a05:622a:54f:b0:4a6:fd66:3458 with SMTP id d75a77b69052e-4a7c0a039f4mr40604311cf.10.1750927911792;
-        Thu, 26 Jun 2025 01:51:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEOmDH0KAs+XZortwRNF91JwBtBfCGAk9k2TesPeECiTsTLjvyA5O5SpXyDnT2kgnA3WVQCcg==
-X-Received: by 2002:a05:622a:54f:b0:4a6:fd66:3458 with SMTP id d75a77b69052e-4a7c0a039f4mr40604151cf.10.1750927911085;
-        Thu, 26 Jun 2025 01:51:51 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae0c7994f6asm228368766b.38.2025.06.26.01.51.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jun 2025 01:51:50 -0700 (PDT)
-Message-ID: <688d2d3f-6cb9-43bf-be39-7c7651def3a8@oss.qualcomm.com>
-Date: Thu, 26 Jun 2025 10:51:48 +0200
+	s=arc-20240116; t=1750928562; c=relaxed/simple;
+	bh=KbLsdwb4HpArj4QJSpFyt/yC2KREItkA16Uytq4IACM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=k0QU7VqdwqpQj2uvlgTBVwoa910fdfVVW2a5ZHbNRF7M2F0oyNLoSsSoJnGlQepHBbsT03R3pGYL9s3dVZrZXLPu4HR+8OrWAkOP7C+CoNvkr6almDcOMjzlutqDsrXYmCfHqj8jts/tnMB653PBeGr8vdtM1FQq6qF4K1WTVZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ehVNkdFM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7EE2C4CEEB;
+	Thu, 26 Jun 2025 09:02:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750928562;
+	bh=KbLsdwb4HpArj4QJSpFyt/yC2KREItkA16Uytq4IACM=;
+	h=From:Subject:Date:To:Cc:From;
+	b=ehVNkdFMeKT97WQGZwvIkscsmUQ9ExrIMXzKYH+2z5ywpN2VygpmOMZo/q4PQFhxm
+	 cmgbOWk5S9luBwJN4wv2eSZBOkTo1vmM2Mqf8n5VJtrifTo7mpu3XvACA6U2dShcaY
+	 QcnCqQbEbc43KGlonY2sCm4xoAyn1f2rV3mQfOVLaLhVjuOnBaoJD92kEcQgSwe1XZ
+	 fBOkgXymqgjNBZ9kwtFId6MJ9or60dYIu4AbFdUluSUnc3gInvOOtuWE1zCgxKpddy
+	 TYnhSAbFRcdszHotel3TrqfnyhhtZXFuhkQhb3II5sxVHa+IRSHyTwcwxsbXglPzaz
+	 Dvrq++QvqnZNg==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Subject: [PATCH v6 00/14] Add a single source of truth for UBWC
+ configuration data
+Date: Thu, 26 Jun 2025 11:02:27 +0200
+Message-Id: <20250626-topic-ubwc_central-v6-0-c94fa9d12040@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Add support for IQ-8275-evk board
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        "Rob Herring (Arm)"
- <robh@kernel.org>,
-        Umang Chheda <umang.chheda@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-kernel@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>,
-        kernel@oss.qualcomm.com, Conor Dooley <conor+dt@kernel.org>,
-        devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>
-References: <20250623130420.3981916-1-umang.chheda@oss.qualcomm.com>
- <175069348269.3797007.5540625905808833666.robh@kernel.org>
- <bcfbfaed-e857-44be-86bd-d4e977fd4d27@oss.qualcomm.com>
- <0e632d8a-fdd3-4401-ae6e-a0ac6df61bfe@kernel.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <0e632d8a-fdd3-4401-ae6e-a0ac6df61bfe@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: Hecv9jIbilCgdpRnBWiBil15V9U4y5eH
-X-Authority-Analysis: v=2.4 cv=Id+HWXqa c=1 sm=1 tr=0 ts=685d0a28 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8
- a=p9_aX5AVk4CqX6A2AiYA:9 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
- a=sptkURWiP4Gy88Gu7hUp:22
-X-Proofpoint-GUID: Hecv9jIbilCgdpRnBWiBil15V9U4y5eH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI2MDA3MyBTYWx0ZWRfX9Ap4IBfKKgOw
- Hb0UQNUia4gjwj3kPEhFBb0FAte821kjGFbHdBiKqSuQeppbyVR2GsSrnn+ehp3HrJYduDZacRo
- xibCtkviaqnQyeIef2S7Lb/P+AgWA0wOkcMvfzDV14iHXsYpq9ZwLE5IJRd74HRuIefeDf4fSF9
- LGntxEOSD8fyycnynLfog4he81CYQzw5FcVy+nywU0oqHGSGH6Fu6Z4S2OP61Y+se6wgGaPBIQ0
- TlUWFNkxC1+Gq5UsUN2h5+zEjj1kfKM3gkeMX9pVCglpOaJoCIiofCekuKWCV+uZQRI/6KJ6Fwe
- Eka+9mc9s373P+dF7Z+LEPTtZeyJfKhomoeA1+NPqtnUofso96lGEG4GPoYja9HxAu8E+5O4V6k
- En83YMxEwfm89Gam36pIrHpGapzVbTUGYRXxVr0N9IYAiqVT5s1JRcF2JhF6g/5TSY91luHS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-26_04,2025-06-25_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0 bulkscore=0
- clxscore=1015 impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506260073
+X-B4-Tracking: v=1; b=H4sIAKMMXWgC/3XRwW7DIAwG4FepOI8KDGbpTnuPaZqI46xIbdJCk
+ m2q8u4j7aE5kIul3xLfL5mbSBwDJ/G2u4nIU0ih73JwLztBR999swxNzgIUoLJGyaG/BJJj/UN
+ fxN0Q/UmiIbSqVfrAKPLDS+Q2/N7Rj89Hjnwdsz08l8eQhj7+3YsnvWwfHaiqUsekpZLKIFlCq
+ hnVe5/S/jr6E/Xn8z4PsagTrCRtixIs0oGpJuUVEm9IZi29FiWTJUOVdYgO28ptSHYlQfGCk80
+ SeOt0YwCM9RsSPiUHWJQwSwzoGl1B/hAoSPM8/wOMEezw+AEAAA==
+X-Change-ID: 20250430-topic-ubwc_central-53c540f019e5
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
+ Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1750928557; l=4935;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=KbLsdwb4HpArj4QJSpFyt/yC2KREItkA16Uytq4IACM=;
+ b=YT3dVWVjfNYZJ/2iNP5eqXiaENyeuJYGa6RWMbR2mTTMbfn6mgv+EAHT59FAD1KjbgK3ntV03
+ Ah0AzQ71TdfBj2gyGEz+EAg/OXT2UT11UxIZpApFN9Z5BulLvqaDZtX
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On 6/26/25 10:43 AM, Krzysztof Kozlowski wrote:
-> On 23/06/2025 17:50, Konrad Dybcio wrote:
->> On 6/23/25 5:46 PM, 'Rob Herring (Arm)' via kernel wrote:
->>>
->>> On Mon, 23 Jun 2025 18:34:18 +0530, Umang Chheda wrote:
->>>> This series:
->>>>
->>>> Add support for Qualcomm's IQ-8275-evk board using QCS8275 SOC.
->>
->> [...]
->>
->>>>
->>>>  .../devicetree/bindings/arm/qcom.yaml         |   7 +
->>>>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->>>>  .../boot/dts/qcom/qcs8275-iq-8275-evk.dts     | 241 ++++++++++++++++++
->>>>  3 files changed, 249 insertions(+)
->>>>  create mode 100644 arch/arm64/boot/dts/qcom/qcs8275-iq-8275-evk.dts
->>>>
->>
->> [...]
->>
->>>
->>> New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250623130420.3981916-1-umang.chheda@oss.qualcomm.com:
->>>
->>> arch/arm64/boot/dts/qcom/msm8916-samsung-gt58.dtb: panel@0 (samsung,lsl080al03): 'port' does not match any of the regexes: '^pinctrl-[0-9]+$'
->>> 	from schema $id: http://devicetree.org/schemas/display/panel/samsung,s6d7aa0.yaml#
->>
->> Seems like a fluke..
-> No, it is a correct report. Schema does not allow port and needs to be
-> fixed.
-> 
-> What's more, this would be pointed out if contributor checked their DTS,
-> so obviously this never happened.
-> 
-> Internal guideline already asks for it, we asked for it, so why this
-> keeps happening?
+As discussed a lot in the past, the UBWC config must be coherent across
+a number of IP blocks (currently display and GPU, but it also may/will
+concern camera/video as the drivers evolve).
 
-What I'm saying is, look at the diffstat that I purposefully kept above
-- unless modifying qcom.yaml retriggered it (but not any other errors?)
+So far, we've been trying to keep the values reasonable in each of the
+two drivers separately, but it really make sense to do so, especially
+given certain fields (see [1]) may need to be gathered dynamically.
 
-Konrad
+This series introduces a Single Source of Truth (SSOT) database to be
+consumed by multimedia drivers as needed.
+
+[1] https://lore.kernel.org/linux-arm-msm/20250410-topic-smem_dramc-v2-0-dead15264714@oss.qualcomm.com/
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+Changes in v6:
+- Fix modular build of ubwc_config (oops)
+- Link to v5: https://lore.kernel.org/r/20250625-topic-ubwc_central-v5-0-e256d18219e2@oss.qualcomm.com
+
+Changes in v5:
+- Drop 'RFT'
+- Rebase on 8750 addition
+- Pick up additional rb on patch 4
+- Link to v4: https://lore.kernel.org/r/20250520-topic-ubwc_central-v4-0-2a461d32234a@oss.qualcomm.com
+
+Changes in v4:
+- Stub out qcom_ubwc_config_get_data()
+- Move the select for QCOM_UBWC_CONFIG to DRM_MSM
+- Use a define for UBWC_SWIZZLE_ENABLE_LVL2 in a6xx_gpu.c
+- Pick up tags
+- Link to v3: https://lore.kernel.org/r/20250517-topic-ubwc_central-v3-0-3c8465565f86@oss.qualcomm.com
+
+Changes in v3:
+- Rearrange some patches some more (Dmitry and I talked off-list,
+  hopefully this version is reasonably sane)
+- Throw the error returned by qcom_ubwc_config_get_data(), don't always
+  assume it's -EINVAL (so that we can EPROBE_DEFER in the future if the
+  SMEM driver that provides DDR info decides not to come up..)
+- Scream if ubwc_swizzle doesn't match
+- Drop dropping the ubwc_swizzle override (needs some testing in the wild)
+- Move long statements out of declaration space
+- explicitly define UBWC swizzling levels
+- Fix the SAR2130P omission
+- Pardon the funny ordering, but since it's intended to all go through
+  drm, I attempted to strike a balance between clear, separate
+  changes/fixes and logical succession
+- Link to v2: https://lore.kernel.org/r/20250514-topic-ubwc_central-v2-0-09ecbc0a05ce@oss.qualcomm.com
+
+Changes in v2:
+- Rearrange some patches
+- Don't zeroalloc a copy of ubwc_config, store a full struct inside
+  adreno_gpu instead (temporary solution until we trust the central db
+  on the HBB value)
+- Improve some commit messages
+- Fix up SM6125's config
+- Don't break userspace abi (hbb value)
+- Don't keep mdss_reg_bus_bw in ubwc_config
+- Add the last patch warning if there are inconsistencies (I don't
+  insist on it getting merged, but I think it's a good idea for the
+  time being)
+- Link to v1: https://lore.kernel.org/r/20250508-topic-ubwc_central-v1-0-035c4c5cbe50@oss.qualcomm.com
+
+---
+Konrad Dybcio (14):
+      soc: qcom: Add UBWC config provider
+      drm/msm: Offset MDSS HBB value by 13
+      drm/msm: Use the central UBWC config database
+      drm/msm/a6xx: Get a handle to the common UBWC config
+      drm/msm/a6xx: Resolve the meaning of AMSBC
+      drm/msm/a6xx: Simplify uavflagprd_inv detection
+      drm/msm/a6xx: Resolve the meaning of UBWC_MODE
+      drm/msm/a6xx: Replace '2' with BIT(1) in level2_swizzling_dis calc
+      drm/msm/a6xx: Resolve the meaning of rgb565_predicator
+      drm/msm/a6xx: Simplify min_acc_len calculation
+      soc: qcom: ubwc: Fix SM6125's ubwc_swizzle value
+      soc: qcom: ubwc: Add #defines for UBWC swizzle bits
+      soc: qcom: ubwc: Fill in UBWC swizzle cfg for platforms that lack one
+      drm/msm/adreno: Switch to the common UBWC config struct
+
+ drivers/gpu/drm/msm/Kconfig                 |   1 +
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c       |  20 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 138 +++++------
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c     |   6 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h     |  46 +---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c |   6 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |   7 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |   2 +-
+ drivers/gpu/drm/msm/msm_mdss.c              | 344 +++++-----------------------
+ drivers/gpu/drm/msm/msm_mdss.h              |  29 ---
+ drivers/soc/qcom/Kconfig                    |   8 +
+ drivers/soc/qcom/Makefile                   |   1 +
+ drivers/soc/qcom/ubwc_config.c              | 282 +++++++++++++++++++++++
+ include/linux/soc/qcom/ubwc.h               |  75 ++++++
+ 18 files changed, 535 insertions(+), 441 deletions(-)
+---
+base-commit: 2ae2aaafb21454f4781c30734959cf223ab486ef
+change-id: 20250430-topic-ubwc_central-53c540f019e5
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
 
