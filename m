@@ -1,309 +1,318 @@
-Return-Path: <linux-arm-msm+bounces-62732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77F6FAEB082
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 09:50:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E347AEB0BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 09:59:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10DA41C23867
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 07:50:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E1F64A2434
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 07:59:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C34032264A6;
-	Fri, 27 Jun 2025 07:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3B2922B8D0;
+	Fri, 27 Jun 2025 07:59:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SJPdx+gL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UYDWq6UH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BCA2264A8;
-	Fri, 27 Jun 2025 07:50:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F89226D1D;
+	Fri, 27 Jun 2025 07:59:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751010619; cv=none; b=OPiA9g0WRfacjxY4uTZutHN4EvYU1G43TqogDAq3UGD8/b8iUYoDvxmCLkYr9w2xLO/kxbo93pCdEGwDr6nXWuvItET+DB4oW0O/wLWy+3wtIL3rvKLikgMLsGtLDkHtFPLhUDtPWrpJxthFX4lr9GB+S02ay7UlpmhrrgBCb/c=
+	t=1751011141; cv=none; b=i9hdNMxyR47XLTsekn8OjZ2LIRpndAhXTWWYPB/eBbB12i/fmTHrpFABmgepjPBgB7nPOlVDeoAOC0I5Ed5YtkYzUlydGCfXbYWUlesKjS8kUa+dwGfrh6+zGv3VRUnjSrua+DwU4lS+313NdM//e8XL1cuQa9OJOCbWjYxDZWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751010619; c=relaxed/simple;
-	bh=Z4/lv4IS6ipDfRZW5AAPrjhhB70JxHRntaI60dxPhgM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rsJdB0jLXi6THiPrm0inoK1N9iMEvk3L1bWkNrawz2fUOuV90ugTFMUfhfOtFG6QMsHodPEWUdLPsVH6q1Z7peZJuBdvcrRm1AYPFffoSgD47xJ/AQWWTOYRUT+blk6yJqmiv53u9sDS+W9DQBPh1XCc1uEZXIdJq85yRkkcxXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SJPdx+gL; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55R4DFfZ028699;
-	Fri, 27 Jun 2025 07:50:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zdkB40YhgP4G2OpaHQmOJCHVPGaOSXgufof3fjxY1K0=; b=SJPdx+gLxIINMNnA
-	nMZe2DdW9yZ2Xv+SEg4Mh8J6DetODlWlFv7YmUK+tIelqT19SuB0fKP7IANak3GK
-	nVMaDDy3bZF+cSgmwc1LK+pEWj3VyvnhelXE7RSVcRjubtnCmyucOTVoEPU6GMsL
-	0qHBRMs3Y869V0IPjVS6dkieQu7rcqGHSmkrxCFsN/zbpDlQ2V2icDfLSQQmjtt0
-	tWAfjg1TY/bKfb9Msu6ALXz6F0jFKWe6ClYe5M/tc72EMvsLn4qEckr3KPVKd7Af
-	Sawct/qJ3OtRlvqxBr3yrziwxRDuyBmeLf+yiJOyC3J2LfbZFLuAKGI9aYnhcaGZ
-	ANX/JA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47esa4y7sx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Jun 2025 07:50:03 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55R7o2iw031202
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Jun 2025 07:50:02 GMT
-Received: from [10.253.74.126] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 27 Jun
- 2025 00:49:58 -0700
-Message-ID: <014d535e-ca9c-4707-9ff4-7afdd489b780@quicinc.com>
-Date: Fri, 27 Jun 2025 15:49:55 +0800
+	s=arc-20240116; t=1751011141; c=relaxed/simple;
+	bh=bNv9x2a1Aunm5ZSWXJBFJN6QRl0vJZ4f6hRPK0EsSuw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KEA3YGNrtqKMaU7HrwDw73UX5FZpD9Kxb6YjQqA5cq6N/CgdC6L4LdssK5fXaxqtkSxJCYdCEkC0SlWwy5h7JALVRKSXOA4Kjs4jwHi8VJRe2w+9cRCYCe5KME0y7XFyW8xQ0pBlA1Ppfw5psab+BbUdUt3bfpEVODAoL5/tH8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UYDWq6UH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2985BC4CEE3;
+	Fri, 27 Jun 2025 07:59:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751011141;
+	bh=bNv9x2a1Aunm5ZSWXJBFJN6QRl0vJZ4f6hRPK0EsSuw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=UYDWq6UH8RKYlO7dz6BlumOPIvypvezTUD0EgdvCirg0XAK8icxMlWBFmUlFjulKB
+	 A0g7ViIf9D+F0oVGrj51VejHw92lJTDZ6TEsHxlou5tYBaAnMXIod49o0UaffJBO+l
+	 fbGFqWLq44KRYyMh20JCBWs7aW2QFvziULxilKr96cyrrT32d92Dp1thDNd/nzkEeK
+	 rdJ3AUdz7vWUqAy+udLRLouuRA1shF0UTe/ik00KMtdT0P1optid51sCE8xCQC1uO7
+	 GD9wAHphiyOtSSIRKrr+aMMy2PM9nxRp3tRqLnVDEs15N0HLlyN+cO/u8UgzRqxqUy
+	 k0rQ4u9rURr4Q==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1uV3zA-0000000070q-2Es8;
+	Fri, 27 Jun 2025 09:59:01 +0200
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Georgi Djakov <djakov@kernel.org>
+Cc: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-pm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v4] interconnect: avoid memory allocation when 'icc_bw_lock' is held
+Date: Fri, 27 Jun 2025 09:58:54 +0200
+Message-ID: <20250627075854.26943-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/38] drm/msm/dp: split msm_dp_panel_read_sink_caps()
- into two parts and drop panel drm_edid
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Abhinav Kumar
-	<abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>
-References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
- <20250609-msm-dp-mst-v2-1-a54d8902a23d@quicinc.com>
- <g6wqvbszbrw6gnvxz7cjmhx4rc53kyulcr5wjekfjaisontikl@723odzngtlnd>
- <326bbd02-f414-48e3-a396-4b94f19054f7@quicinc.com>
- <buvgxzf5u5wkj2nxd6rquvcktjmxoclwrkkmxeih6pnikubqe3@yoytvnayvxtv>
-Content-Language: en-US
-From: Yongxing Mou <quic_yongmou@quicinc.com>
-In-Reply-To: <buvgxzf5u5wkj2nxd6rquvcktjmxoclwrkkmxeih6pnikubqe3@yoytvnayvxtv>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=eLYTjGp1 c=1 sm=1 tr=0 ts=685e4d2b cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=E04JO-gUzBZdZbePgc0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: oMio7BAkI8NlZciJyRrtZ7PNPZKOXxWo
-X-Proofpoint-ORIG-GUID: oMio7BAkI8NlZciJyRrtZ7PNPZKOXxWo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDA2MiBTYWx0ZWRfX+WAfJBA6JyhX
- adNA6Rdnzil6sfWBefGRYQq6PsuFC8zTpPY2z6Z93uuM9z13rUkSUvycW5rvvIJPYlocmoUu5Qy
- xWNHLWh+Nc5Tp1n7XkVaNnUcY5bCuOZx2CmPVkc0BVS84nKh0qUbi1+IR+KS1iV2OVXIpBf47As
- +jRnm4FK7zDm5Lhrz3yxGfJ9J2sffPYTpgB7JU3ObZmsZec5YiQM2XqHvpMQt3TnxgrLgU1HfyA
- Rw0u9O3ao/b6JV4FXJ4JJEwFrY7lEwlKRevvuHrBA3tB7Y0LTAZDMfQz4DyJxyhHCFjC8E6SjKi
- 0wzuOxOYR9a5pq/liYuEpuFsCDeQj87p+KX+/NxZACojPmNiIBi/a7iw4oQNIzhIMm3In+B44yf
- BqxFNzfoyZ46NjTXjgGAdWULhkY4dwIKmz7clmASeY4EejkpbN1HdvS8Qp6HebZiQD/gPLA+
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-27_02,2025-06-26_05,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 mlxscore=0 clxscore=1015 mlxlogscore=999
- suspectscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
- adultscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506270062
+
+From: Gabor Juhos <j4g8y7@gmail.com>
+
+The 'icc_bw_lock' mutex is introduced in commit af42269c3523
+("interconnect: Fix locking for runpm vs reclaim") in order to decouple
+serialization of bw aggregation from codepaths that require memory
+allocation.
+
+However commit d30f83d278a9 ("interconnect: core: Add dynamic id
+allocation support") added a devm_kasprintf() call into a path protected
+by the 'icc_bw_lock' which causes the following lockdep warning on
+machines like the Lenovo ThinkPad X13s:
+
+    ======================================================
+    WARNING: possible circular locking dependency detected
+    6.16.0-rc3 #15 Not tainted
+    ------------------------------------------------------
+    (udev-worker)/342 is trying to acquire lock:
+    ffffb973f7ec4638 (fs_reclaim){+.+.}-{0:0}, at: __kmalloc_node_track_caller_noprof+0xa0/0x3e0
+
+    but task is already holding lock:
+    ffffb973f7f7f0e8 (icc_bw_lock){+.+.}-{4:4}, at: icc_node_add+0x44/0x154
+
+    which lock already depends on the new lock.
+
+    the existing dependency chain (in reverse order) is:
+
+    -> #1 (icc_bw_lock){+.+.}-{4:4}:
+           icc_init+0x48/0x108
+           do_one_initcall+0x64/0x30c
+           kernel_init_freeable+0x27c/0x500
+           kernel_init+0x20/0x1d8
+           ret_from_fork+0x10/0x20
+
+    -> #0 (fs_reclaim){+.+.}-{0:0}:
+           __lock_acquire+0x136c/0x2114
+           lock_acquire+0x1c8/0x354
+           fs_reclaim_acquire+0x74/0xa8
+           __kmalloc_node_track_caller_noprof+0xa0/0x3e0
+           devm_kmalloc+0x54/0x124
+           devm_kvasprintf+0x74/0xd4
+           devm_kasprintf+0x58/0x80
+           icc_node_add+0xb4/0x154
+           qcom_osm_l3_probe+0x20c/0x314 [icc_osm_l3]
+           platform_probe+0x68/0xd8
+           really_probe+0xc0/0x38c
+           __driver_probe_device+0x7c/0x160
+           driver_probe_device+0x40/0x110
+           __driver_attach+0xfc/0x208
+           bus_for_each_dev+0x74/0xd0
+           driver_attach+0x24/0x30
+           bus_add_driver+0x110/0x234
+           driver_register+0x60/0x128
+           __platform_driver_register+0x24/0x30
+           osm_l3_driver_init+0x20/0x1000 [icc_osm_l3]
+           do_one_initcall+0x64/0x30c
+           do_init_module+0x58/0x23c
+           load_module+0x1df8/0x1f70
+           init_module_from_file+0x88/0xc4
+           idempotent_init_module+0x188/0x280
+           __arm64_sys_finit_module+0x6c/0xd8
+           invoke_syscall+0x48/0x110
+           el0_svc_common.constprop.0+0xc0/0xe0
+           do_el0_svc+0x1c/0x28
+           el0_svc+0x4c/0x158
+           el0t_64_sync_handler+0xc8/0xcc
+           el0t_64_sync+0x198/0x19c
+
+    other info that might help us debug this:
+
+     Possible unsafe locking scenario:
+
+           CPU0                    CPU1
+           ----                    ----
+      lock(icc_bw_lock);
+                                   lock(fs_reclaim);
+                                   lock(icc_bw_lock);
+      lock(fs_reclaim);
+
+     *** DEADLOCK ***
+
+The icc_node_add() functions is not designed to fail, and as such it
+should not do any memory allocation. In order to avoid this, add a new
+helper function for the name generation to be called by drivers which
+are using the new dynamic id feature.
+
+Fixes: d30f83d278a9 ("interconnect: core: Add dynamic id allocation support")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/r/20250625-icc-bw-lockdep-v3-1-2b8f8b8987c4@gmail.com
+Co-developed-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+
+As Gabor pointed out, the reason he hit this on the IPQ9574 in the first
+place is due to a separate bug which is being fixed here:
+
+	https://lore.kernel.org/all/20250625-icc-dyn-id-fix-v1-1-127cb5498449@gmail.com/
+
+Note that this one (along with the IPQ fix) should go into 6.16-final
+since this fixes a regression in 6.16-rc1 that prevents lockdep from
+being used on a number of Qualcomm platforms (and which risks
+introducing further locking issues).
+
+Johan
 
 
+Changes in v4:
+ - make sure to generate a name also for pre-allocated rpmh nodes
+ - add icc_node_set_name() helper
+ - do not use devres to allocate name
+ - use osm-l3 lockdep splat as example in commit message
+ - Link to v3: https://lore.kernel.org/r/20250625-icc-bw-lockdep-v3-1-2b8f8b8987c4@gmail.com
+ 
+Changes in v3:
+  - move memory allocation out from the icc_node_add() function directly into
+    the users of the dynamic id feature
+  - adjust commit description according to the changes
+  - Link to v2: https://lore.kernel.org/r/20250618-icc-bw-lockdep-v2-1-3223da346765@gmail.com
 
-On 2025/6/25 21:32, Dmitry Baryshkov wrote:
-> On Wed, Jun 25, 2025 at 04:43:55PM +0800, Yongxing Mou wrote:
->>
->>
->> On 2025/6/9 20:41, Dmitry Baryshkov wrote:
->>> On Mon, Jun 09, 2025 at 08:21:20PM +0800, Yongxing Mou wrote:
->>>> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>>>
->>>> In preparation of DP MST where link caps are read for the
->>>> immediate downstream device and the edid is read through
->>>
->>> EDID, not edid. Please review all your patches for up/down case.
->>>
->> Got it. Thanks~
->>>> sideband messaging, split the msm_dp_panel_read_sink_caps() into
->>>> two parts which read the link parameters and the edid parts
->>>> respectively. Also drop the panel drm_edid cached as we actually
->>>> don't need it.
->>>
->>> Also => separate change.
->>>
->> Got it.
->>>>
->>>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>>> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
->>>> ---
->>>>    drivers/gpu/drm/msm/dp/dp_display.c | 13 +++++----
->>>>    drivers/gpu/drm/msm/dp/dp_panel.c   | 55 ++++++++++++++++++++-----------------
->>>>    drivers/gpu/drm/msm/dp/dp_panel.h   |  6 ++--
->>>>    3 files changed, 40 insertions(+), 34 deletions(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->>>> index 6f05a939ce9e648e9601597155999b6f85adfcff..4a9b65647cdef1ed6c3bb851f93df0db8be977af 100644
->>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->>>> @@ -389,7 +389,11 @@ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
->>>>    	dp->link->lttpr_count = msm_dp_display_lttpr_init(dp, dpcd);
->>>> -	rc = msm_dp_panel_read_sink_caps(dp->panel, connector);
->>>> +	rc = msm_dp_panel_read_link_caps(dp->panel);
->>>> +	if (rc)
->>>> +		goto end;
->>>> +
->>>> +	rc = msm_dp_panel_read_edid(dp->panel, connector);
->>>>    	if (rc)
->>>>    		goto end;
->>>> @@ -720,7 +724,6 @@ static int msm_dp_irq_hpd_handle(struct msm_dp_display_private *dp, u32 data)
->>>>    static void msm_dp_display_deinit_sub_modules(struct msm_dp_display_private *dp)
->>>>    {
->>>>    	msm_dp_audio_put(dp->audio);
->>>> -	msm_dp_panel_put(dp->panel);
->>>>    	msm_dp_aux_put(dp->aux);
->>>>    }
->>>> @@ -783,7 +786,7 @@ static int msm_dp_init_sub_modules(struct msm_dp_display_private *dp)
->>>>    		rc = PTR_ERR(dp->ctrl);
->>>>    		DRM_ERROR("failed to initialize ctrl, rc = %d\n", rc);
->>>>    		dp->ctrl = NULL;
->>>> -		goto error_ctrl;
->>>> +		goto error_link;
->>>>    	}
->>>>    	dp->audio = msm_dp_audio_get(dp->msm_dp_display.pdev, dp->catalog);
->>>> @@ -791,13 +794,11 @@ static int msm_dp_init_sub_modules(struct msm_dp_display_private *dp)
->>>>    		rc = PTR_ERR(dp->audio);
->>>>    		pr_err("failed to initialize audio, rc = %d\n", rc);
->>>>    		dp->audio = NULL;
->>>> -		goto error_ctrl;
->>>> +		goto error_link;
->>>>    	}
->>>>    	return rc;
->>>> -error_ctrl:
->>>> -	msm_dp_panel_put(dp->panel);
->>>>    error_link:
->>>>    	msm_dp_aux_put(dp->aux);
->>>>    error:
->>>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
->>>> index 4e8ab75c771b1e3a2d62f75e9993e1062118482b..d9041e235104a74b3cc50ff2e307eae0c4301ef3 100644
->>>> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
->>>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
->>>> @@ -118,14 +118,13 @@ static u32 msm_dp_panel_get_supported_bpp(struct msm_dp_panel *msm_dp_panel,
->>>>    	return min_supported_bpp;
->>>>    }
->>>> -int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
->>>> -	struct drm_connector *connector)
->>>> +int msm_dp_panel_read_link_caps(struct msm_dp_panel *msm_dp_panel)
->>>>    {
->>>>    	int rc, bw_code;
->>>>    	int count;
->>>>    	struct msm_dp_panel_private *panel;
->>>> -	if (!msm_dp_panel || !connector) {
->>>> +	if (!msm_dp_panel) {
->>>>    		DRM_ERROR("invalid input\n");
->>>>    		return -EINVAL;
->>>>    	}
->>>> @@ -160,26 +159,29 @@ int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
->>>>    	rc = drm_dp_read_downstream_info(panel->aux, msm_dp_panel->dpcd,
->>>>    					 msm_dp_panel->downstream_ports);
->>>> -	if (rc)
->>>> -		return rc;
->>>> +	return rc;
->>>> +}
->>>> -	drm_edid_free(msm_dp_panel->drm_edid);
->>>> +int msm_dp_panel_read_edid(struct msm_dp_panel *msm_dp_panel, struct drm_connector *connector)
->>>> +{
->>>> +	struct msm_dp_panel_private *panel;
->>>> +	const struct drm_edid *drm_edid;
->>>> +
->>>> +	panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
->>>> -	msm_dp_panel->drm_edid = drm_edid_read_ddc(connector, &panel->aux->ddc);
->>>> +	drm_edid = drm_edid_read_ddc(connector, &panel->aux->ddc);
->>>> -	drm_edid_connector_update(connector, msm_dp_panel->drm_edid);
->>>> +	drm_edid_connector_update(connector, drm_edid);
->>>> -	if (!msm_dp_panel->drm_edid) {
->>>> +	if (!drm_edid) {
->>>>    		DRM_ERROR("panel edid read failed\n");
->>>>    		/* check edid read fail is due to unplug */
->>>>    		if (!msm_dp_catalog_link_is_connected(panel->catalog)) {
->>>> -			rc = -ETIMEDOUT;
->>>> -			goto end;
->>>> +			return -ETIMEDOUT;
->>>>    		}
->>>>    	}
->>>> -end:
->>>> -	return rc;
->>>> +	return 0;
->>>>    }
->>>>    u32 msm_dp_panel_get_mode_bpp(struct msm_dp_panel *msm_dp_panel,
->>>> @@ -208,15 +210,20 @@ u32 msm_dp_panel_get_mode_bpp(struct msm_dp_panel *msm_dp_panel,
->>>>    int msm_dp_panel_get_modes(struct msm_dp_panel *msm_dp_panel,
->>>>    	struct drm_connector *connector)
->>>>    {
->>>> +	struct msm_dp_panel_private *panel;
->>>> +	const struct drm_edid *drm_edid;
->>>> +
->>>>    	if (!msm_dp_panel) {
->>>>    		DRM_ERROR("invalid input\n");
->>>>    		return -EINVAL;
->>>>    	}
->>>> -	if (msm_dp_panel->drm_edid)
->>>> -		return drm_edid_connector_add_modes(connector);
->>>> +	panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
->>>> +
->>>> +	drm_edid = drm_edid_read_ddc(connector, &panel->aux->ddc);
->>>> +	drm_edid_connector_update(connector, drm_edid);
->>>
->>> If EDID has been read and processed after HPD high event, why do we need
->>> to re-read it again? Are we expecting that EDID will change?
->>>
->> Here we indeed don't need to read the EDID again, so we can directly call
->> drm_edid_connector_add_modes. Thanks.
->>>> -	return 0;
->>>> +	return drm_edid_connector_add_modes(connector);
->>>>    }
->>>>    static u8 msm_dp_panel_get_edid_checksum(const struct edid *edid)
->>>> @@ -229,6 +236,7 @@ static u8 msm_dp_panel_get_edid_checksum(const struct edid *edid)
->>>>    void msm_dp_panel_handle_sink_request(struct msm_dp_panel *msm_dp_panel)
->>>>    {
->>>>    	struct msm_dp_panel_private *panel;
->>>> +	const struct drm_edid *drm_edid;
->>>>    	if (!msm_dp_panel) {
->>>>    		DRM_ERROR("invalid input\n");
->>>> @@ -238,8 +246,13 @@ void msm_dp_panel_handle_sink_request(struct msm_dp_panel *msm_dp_panel)
->>>>    	panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
->>>>    	if (panel->link->sink_request & DP_TEST_LINK_EDID_READ) {
->>>> +		drm_edid = drm_edid_read_ddc(msm_dp_panel->connector, &panel->aux->ddc);
->>>
->>> And again....
->>>
->> Here we need the struct edid,since we drop the cached drm_edid, so we need
->> to read it again. Or we can return the drm_edid from msm_dp_panel_read_edid
->> and pass it to msm_dp_panel_handle_sink_request, then we don't need to read
->> drm_edid here. Emm, I'm still a bit curious why we can't cache the drm_edid?
->> It would help us to access it when needed. Emm, i see other drivers also
->> cache it.
-> 
-> Yes, they can cache EDID. However, in this case we don't even need it at
-> all. This piece needs to be rewritten to use
-> drm_dp_send_real_edid_checksum(), connector->real_edid_checksum.
-> 
-> Corresponding changes can be submitted separately.
-> 
-Got it, thanks, will separate this patch from MST patches..  Even if we 
-use drm_dp_send_real_edid_checksum to send 
-connector->real_edid_checksum, that’s only when the EDID state is incorrect.
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c?h=v6.16-rc3#n1020 
+Changes in v2:
+  - move memory allocation outside of icc_lock
+  - issue a warning and return without modifying the node name in case of
+    memory allocation failure, and adjust the commit description
+  - remove offered tags from Johan and Bryan
+    Note: since I was not sure that that the added WARN_ON() is a substantial
+    change or not, I have removed the offered tags intentionally to be on the
+    safe side
+  - Link to v1: https://lore.kernel.org/r/20250529-icc-bw-lockdep-v1-1-3d714b6a9374@gmail.com
+  
 
-  When the EDID is read correctly, it should send edid->checksum instead.
-> 
+ drivers/interconnect/core.c           | 29 +++++++++++++++++++++++----
+ drivers/interconnect/qcom/icc-rpmh.c  |  7 ++++++-
+ drivers/interconnect/qcom/osm-l3.c    |  7 ++++++-
+ include/linux/interconnect-provider.h |  6 ++++++
+ 4 files changed, 43 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+index 1a41e59c77f8..fdfc755bbd43 100644
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -906,10 +906,35 @@ void icc_node_destroy(int id)
+ 		return;
+ 
+ 	kfree(node->links);
++	if (node->id >= ICC_DYN_ID_START)
++		kfree(node->name);
+ 	kfree(node);
+ }
+ EXPORT_SYMBOL_GPL(icc_node_destroy);
+ 
++/**
++ * icc_node_set_name() - set node name
++ * @node: node
++ * @provider: node provider
++ * @name: node name
++ *
++ * Return: 0 on success, or -ENOMEM on allocation failure
++ */
++int icc_node_set_name(struct icc_node *node, const struct icc_provider *provider, const char *name)
++{
++	if (node->id >= ICC_DYN_ID_START) {
++		node->name = kasprintf(GFP_KERNEL, "%s@%s", name,
++				       dev_name(provider->dev));
++		if (!node->name)
++			return -ENOMEM;
++	} else {
++		node->name = name;
++	}
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(icc_node_set_name);
++
+ /**
+  * icc_link_nodes() - create link between two nodes
+  * @src_node: source node
+@@ -1038,10 +1063,6 @@ void icc_node_add(struct icc_node *node, struct icc_provider *provider)
+ 	node->avg_bw = node->init_avg;
+ 	node->peak_bw = node->init_peak;
+ 
+-	if (node->id >= ICC_DYN_ID_START)
+-		node->name = devm_kasprintf(provider->dev, GFP_KERNEL, "%s@%s",
+-					    node->name, dev_name(provider->dev));
+-
+ 	if (node->avg_bw || node->peak_bw) {
+ 		if (provider->pre_aggregate)
+ 			provider->pre_aggregate(node);
+diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+index 41bfc6e7ee1d..001404e91041 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.c
++++ b/drivers/interconnect/qcom/icc-rpmh.c
+@@ -293,7 +293,12 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+ 			goto err_remove_nodes;
+ 		}
+ 
+-		node->name = qn->name;
++		ret = icc_node_set_name(node, provider, qn->name);
++		if (ret) {
++			icc_node_destroy(node->id);
++			goto err_remove_nodes;
++		}
++
+ 		node->data = qn;
+ 		icc_node_add(node, provider);
+ 
+diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
+index baecbf2533f7..b33f00da1880 100644
+--- a/drivers/interconnect/qcom/osm-l3.c
++++ b/drivers/interconnect/qcom/osm-l3.c
+@@ -236,7 +236,12 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
+ 			goto err;
+ 		}
+ 
+-		node->name = qnodes[i]->name;
++		ret = icc_node_set_name(node, provider, qnodes[i]->name);
++		if (ret) {
++			icc_node_destroy(node->id);
++			goto err;
++		}
++
+ 		/* Cast away const and add it back in qcom_osm_l3_set() */
+ 		node->data = (void *)qnodes[i];
+ 		icc_node_add(node, provider);
+diff --git a/include/linux/interconnect-provider.h b/include/linux/interconnect-provider.h
+index 55cfebc658e6..37093b6e1af9 100644
+--- a/include/linux/interconnect-provider.h
++++ b/include/linux/interconnect-provider.h
+@@ -119,6 +119,7 @@ int icc_std_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+ struct icc_node *icc_node_create_dyn(void);
+ struct icc_node *icc_node_create(int id);
+ void icc_node_destroy(int id);
++int icc_node_set_name(struct icc_node *node, const struct icc_provider *provider, const char *name);
+ int icc_link_nodes(struct icc_node *src_node, struct icc_node **dst_node);
+ int icc_link_create(struct icc_node *node, const int dst_id);
+ void icc_node_add(struct icc_node *node, struct icc_provider *provider);
+@@ -152,6 +153,11 @@ static inline void icc_node_destroy(int id)
+ {
+ }
+ 
++static int icc_node_set_name(struct icc_node *node, const struct icc_provider *provider, const char *name)
++{
++	return -EOPNOTSUPP;
++}
++
+ static inline int icc_link_nodes(struct icc_node *src_node, struct icc_node **dst_node)
+ {
+ 	return -EOPNOTSUPP;
+-- 
+2.49.0
 
 
