@@ -1,150 +1,256 @@
-Return-Path: <linux-arm-msm+bounces-62829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BF40AEBBF7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 17:35:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 790BEAEBC01
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 17:35:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 13C187A68B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 15:33:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E55EE3B9B83
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 15:35:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31B0F2E974D;
-	Fri, 27 Jun 2025 15:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6D562EA745;
+	Fri, 27 Jun 2025 15:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TBq0pIge"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZIh7/9dP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76D12E1C7F;
-	Fri, 27 Jun 2025 15:33:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1A42EA49C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 15:34:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751038419; cv=none; b=DFi85Mj1QzKgdVdWcGX+5jkUCnmloJMhNLSOAX1dcyoewfeh+x1B+t+wMlTbirZ73I1qR2VuB8I+Ltqd22WNAujrXN/6OCWhhyXlfuQ75dKulkBz1zcbySUnLX60Wfvlr9hM2nY8AtBY7dZ75rf/irb1cxrT3+sSnlgn8pAXH4c=
+	t=1751038474; cv=none; b=FD0fRhYmheXhM5z+d8G39WZx42z78Q713a3aRStMgkmnpVIZovp00Ll/eby4cryh6YRu9a6mT/8KmYxGIleXgrLyjAk0FjEbupUm2SBv+PaRI0iK5/Cd/0iNrafdxZ6x+KPS+JNoZvOlUU1V2gItEy9m0iuVA76MC1f6B71PIPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751038419; c=relaxed/simple;
-	bh=7yLqISZi2iOkaYLdO3jaD791BiQle43dMbxx3g6IDjM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=aVRMYSflqG/I+7HAo+Ff4qNu6qEt3Bvex6UYY6a8YR++pVWl6JINPkQcwLK24+GTnT46/8vnuMXwyCXqCtnWcvaFlNrRtrbM1JpNhDvmdcizyEsN5G8L8joqw3qxlXjOg0u64dBkrK5qnk/9SNg01yimGFFnv7zXWYmQDeg6BcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TBq0pIge; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55RC5Yg4014245;
-	Fri, 27 Jun 2025 15:33:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1751038474; c=relaxed/simple;
+	bh=Ew8lpjg2KGw8RUtsdIdGkXQu5umyWwe0BTLTaVIb67w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PubGX2aDgrRmuhYGKP0QwpsxOOT4npnJZ6PVtVxyV8qilBrGLaWA3APd/CFAhwfgJvmN151/ECY8mwH/MTmi+7l9u7r4SOPpZnqMZ5UL/9vXDCC+D1ms+n78TIwvKmhqJdygu85who9ikOXEhjKq3DUI5SkRtpPXd0WRyAHLTkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZIh7/9dP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55RCaEOQ007795
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 15:34:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	tv69h5+7Ly9EksC2Tsf+uzCBpppecTtLheLgqclXCFk=; b=TBq0pIgex6PpX3mP
-	MDMEOZ4/WtADv3ijqmZiLFTQH8W0SzdwKq6ndGwODBWnht4G3+wBUtGhOc0zJRsP
-	emYM6A9RMo4CODveA7vdywZh2wT7HYK0hCZauS4LV0TLmsGrYXeDGzwlsGw90XRp
-	ZSlRVwDqoJGN44KoQVs+1/RKbCCoZ3jTvhQZrxJd7liPk0Qpa6sBA2KJOsQZy3UV
-	Dwk5E12hzXYC02HyvinqWmqxGd5/yKILq29Yb0GT5Dd8t9Sbi4Kyzg2+hVd9OzPi
-	vjGd9jxehmbTeQ9ANzqNUujjibwHjeEixV0YsJ7IRoZG+xkuyMvaetHHt3HSNsfj
-	IHVEKA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47emcn13qf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Jun 2025 15:33:32 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55RFXVx4028121
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Jun 2025 15:33:31 GMT
-Received: from hu-vgarodia-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 27 Jun 2025 08:33:08 -0700
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-Date: Fri, 27 Jun 2025 21:02:42 +0530
-Subject: [PATCH v2 5/5] media: iris: configure DMA device for vb2 queue on
- OUTPUT plane
+	fhpcGE0kY2U2qHSOUrNH4gIXVYCbpgzCRlKlqKyiksA=; b=ZIh7/9dPTaRIKAbz
+	qtcRTfYJUmfDMD/1CB8sEgyGGumkjtTwe+1FCskmH91irz9aLvC7+w8nrjV0yIl5
+	QB0xqTRmG3P3Ft7yR9hK7RMWZYwi2POUq3sly/dUJ48WJWKJ9oC/oYfZUNb7O7vm
+	LRWccN5ciTm5RhWLpEa4ACEx19S+i4nLKISatypp1vBgmGk4bGCx72jy9YNPJfE0
+	o0qY4acjP6oYf70tubxgG7+gVbaXm9gWVcLv0iapLnGrDbi7elYbdiW8YQARPy4E
+	GwNMvpxwKqqfzTXYEUxP9yi+/mXni1WFKeH7ELAXBg4/7DE74URNzH7E2BxvGiH2
+	99Dl+w==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47fbhqwpj1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 15:34:31 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d2038aae69so3721685a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 08:34:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751038470; x=1751643270;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fhpcGE0kY2U2qHSOUrNH4gIXVYCbpgzCRlKlqKyiksA=;
+        b=qh/dys3a6ovYWnNuCQxJEr3pvV/AXvNUdTR6/32XewxqZXz4eGMb7TmSdD+iz/vQ9V
+         k+NzEsvvYND5U9qY8DWdcpirJwMwsOVWqLgFlx4hwjogYxyycsMRKF8rLBKW6wPSLV31
+         xsmmgA1StsQMQwTkxEGF80TQbUoLSIXdUXa6NG9ci1Sw9mIcTHiW0iK8gulCyc+4UGWO
+         Efn9aG4wykbY3ef6WAUoyVdHJORXqvdAKN/zPM/9xVWJHYJTLL02wWzg2tsOSHZ4pk0Z
+         QazqNCE/n51nNV9W7F8ilbSngPnIEOQde+eDoZF9LkiCCWC7dQAxmMuua7Zb2RPSep8c
+         onQA==
+X-Forwarded-Encrypted: i=1; AJvYcCXEA+i/NUB/TIUKrzSYtOfLvlxm2QebtxkL5b4vGj24PYwGehpPXgvnEtxMj5iVKpSDh5h+C37SUhcWzoVW@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzd3ImGOtoNp8I7+4SV79jcYnshSp0ZeW4h+kcBZhwcusPbtMWw
+	W0xY7I27xAYPmWEH8kYer4qwjHOzUUtxZ1QL7gx5UMGBRN7aNL1VWh4nR2CN8S4FMDr87wFxGNl
+	++1nU3gzJOJYYlqXL3LNA8owf/ghW/8fyZDreTaJ7Sq+o4O+gZqZ6zFAkBZCigFP4KYCO
+X-Gm-Gg: ASbGncuA6HBCoV8Dtwc1biyOqbZ3A1otrxC1AGIRby17goY+fmbU+PmvpDVpcZu5aw4
+	phDGPh5ATSlIEJNT84OG6AJtIjmjTsFvI8eNk/O+yxWV0Djc7WexNCSgugJ9MRAPSIOyNo2IFIg
+	JHE0PKzYKModFpo40E3Ikn0A7EuNPssBcry6UcD93AFgdYeyOAmlBNQZFRdyP2/w+CytZRRAG7z
+	koiIrv1UYyOVlPUAIrfclme3ugrIiX7AuwvYtX0T6oUvq+rguSaxYdszJ3sS1SDz5YgIrrPAmJV
+	5tPJeusNaYj8A9vOopYT6kbV6QlDPI/7mwTqk4SDomlKfJqXjYey/DDyw/SrnfHjw4K5Q3VQWCC
+	kzec=
+X-Received: by 2002:a05:620a:4390:b0:7c0:bc63:7b73 with SMTP id af79cd13be357-7d443966417mr201233185a.13.1751038470187;
+        Fri, 27 Jun 2025 08:34:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHzOTtjkZGz3phOnalpunb7y20OgdgwVxcjlA9JNDAl2YYT7eAuxSBmhUwNsqtuPUIJtvAnnQ==
+X-Received: by 2002:a05:620a:4390:b0:7c0:bc63:7b73 with SMTP id af79cd13be357-7d443966417mr201228685a.13.1751038469653;
+        Fri, 27 Jun 2025 08:34:29 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae35363b244sm142288066b.30.2025.06.27.08.34.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Jun 2025 08:34:28 -0700 (PDT)
+Message-ID: <3fbae47b-d20d-426b-a967-b584e32b8c6e@oss.qualcomm.com>
+Date: Fri, 27 Jun 2025 17:34:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20250627-video_cb-v2-5-3931c3f49361@quicinc.com>
-References: <20250627-video_cb-v2-0-3931c3f49361@quicinc.com>
-In-Reply-To: <20250627-video_cb-v2-0-3931c3f49361@quicinc.com>
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar
-	<abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 14/14] arm64: dts: qcom: Add The Fairphone (Gen. 6)
+To: Luca Weiss <luca.weiss@fairphone.com>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
         Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1751038370; l=1047;
- i=quic_vgarodia@quicinc.com; s=20241104; h=from:subject:message-id;
- bh=7yLqISZi2iOkaYLdO3jaD791BiQle43dMbxx3g6IDjM=;
- b=oTbDCzGCYYmLi2iqlXPuX89czjjcSCXKphzW/FFLmzcMlHUO5MP7tyqVoeKFH+x5p2RiqWRUG
- 5VRCRWJCMwPBHl181JFia+8w2GUZPBk0tiRcK6zlL3NT+8rrk7Oj1Vh
-X-Developer-Key: i=quic_vgarodia@quicinc.com; a=ed25519;
- pk=LY9Eqp4KiHWxzGNKGHbwRFEJOfRCSzG/rxQNmvZvaKE=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: EX3SaSJiTpEPEm0ln1RWvh8y23XP2zYo
-X-Proofpoint-ORIG-GUID: EX3SaSJiTpEPEm0ln1RWvh8y23XP2zYo
-X-Authority-Analysis: v=2.4 cv=J+eq7BnS c=1 sm=1 tr=0 ts=685eb9cc cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8
- a=9NI5Io21HBJBbxBAymgA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDEyNSBTYWx0ZWRfX+tryu9OBSq93
- 0wyPibvzF+0o5o4FdRoAw9ZPWJGkNcWDfjEXBfhqQlrRKCZREp7cY25wFKxpo5N/J2j7UDmgxoy
- 90//wu6S27arUfDpDA2koarZifQBGXYQ1P533tgm4GKqn8/uLQI6X16+xhOXmJCudG6F+QpBDZg
- QW0WjXaBu9Moyf/BY3Motbf7oN/3XS3KSgIzSE88xNmu0TWfnKbma+3uvL4FMAKnrjZF9HeJBHH
- Luw6VGf9j1CWLhO6i414sPSr5Mpd3RWUmiwSICAugCGXLhTn7jWkvXg1jN5/8kjBqCAebZMKuBO
- KLI5LndV0MLuGfZJRnUQDh7rXi4RIV6FrqNaen5Y/VS3cLEaE0u4CT9w41uk/bWEai7XdJeJ0oq
- 2v/9FMp1OcDQ8vxFf465d8/Voo5T+oE8TMjgiTcWpl6HHDBjQs9yT2lMC0qJtD5Y5PxTM1cP
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>, Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>,
+        Thomas Gleixner
+ <tglx@linutronix.de>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-mmc@vger.kernel.org
+References: <20250625-sm7635-fp6-initial-v1-0-d9cd322eac1b@fairphone.com>
+ <20250625-sm7635-fp6-initial-v1-14-d9cd322eac1b@fairphone.com>
+ <4200b3b8-5669-4d5a-a509-d23f921b0449@oss.qualcomm.com>
+ <DAXA7TKVM4GI.J6C7M3D1J1XF@fairphone.com>
+ <6d4e77b3-0f92-44dd-b9b0-3129a5f3785b@oss.qualcomm.com>
+ <DAXEA131KUXZ.WTO7PST1F3X6@fairphone.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <DAXEA131KUXZ.WTO7PST1F3X6@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: tryZZV0jkkZzFZ9_8F1TSOmITCf932hn
+X-Authority-Analysis: v=2.4 cv=Id+HWXqa c=1 sm=1 tr=0 ts=685eba07 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=huVnaSGCcg0LVUp1CDwA:9
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: tryZZV0jkkZzFZ9_8F1TSOmITCf932hn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDEyNiBTYWx0ZWRfXwbo2zsVFV5y2
+ brMudzc8uwCggM0t4SUg/Oq+z+m1rrtypxbYzU/FMbgYQKOLSSrZnEDqZGHWUOLSwNfONVcmegi
+ 2E7+RX64VuCgChMOyhfIvR7rlDzsnUEgCUznWaTojxzrNh/0NH2VdqmatZpxVlRbF7THowElTlq
+ TDf5d8bOaAdMJ1/D+mV57Lz9aFlde6nG0ksKPuzMjfh4RjzX13/b4S0elCmA2sc+IXiYGLOTyAg
+ xRXwk0NoDoyi576By2yPvgNO8W9MGZLFqamayMrr2Zv0JpvG1Y5LUgVUUmT39D82gZBhIOhupQg
+ zmrUJPj8rz2CP1bZ8GIrVvBGsFhBjXRj/K3+OA2zE7/GYVo6O0UTCGxb52cgjT5MjGsaAunXDi9
+ ifq4WZaS8X7e8qCTWqMdGnqX6SJ/ETGKHL9+ncwwm4RjaUGP0+h7TZnY1VJqJL9Q1pFkWEgG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-06-27_04,2025-06-26_05,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxlogscore=999 adultscore=0 impostorscore=0 clxscore=1015
- spamscore=0 malwarescore=0 phishscore=0 priorityscore=1501 suspectscore=0
- mlxscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ spamscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0 bulkscore=0
+ clxscore=1015 impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506270125
+ definitions=main-2506270126
 
-While setting up the vb2 queues, assign "non_pixel" device to manage
-OUTPUT plane buffers i.e bitstream buffers incase of decoder. It prefers
-the non_pixel device(np_dev) when available, falling back to core->dev
-otherwise.
+On 6/27/25 4:44 PM, Luca Weiss wrote:
+> On Fri Jun 27, 2025 at 4:34 PM CEST, Konrad Dybcio wrote:
+>> On 6/27/25 1:33 PM, Luca Weiss wrote:
+>>> On Wed Jun 25, 2025 at 4:38 PM CEST, Konrad Dybcio wrote:
+>>>> On 6/25/25 11:23 AM, Luca Weiss wrote:
+>>>>> Add a devicetree for The Fairphone (Gen. 6) smartphone, which is based
+>>>>> on the SM7635 SoC.
+>>>>
+>>>> [...]
+>>>>
+>>>>> +	/* Dummy panel for simple-framebuffer dimension info */
+>>>>> +	panel: panel {
+>>>>> +		compatible = "boe,bj631jhm-t71-d900";
+>>>>> +		width-mm = <65>;
+>>>>> +		height-mm = <146>;
+>>>>> +	};
+>>>>
+>>>> I haven't ran through all the prerequisite-xx-id, but have
+>>>> you submitted a binding for this?
+>>>
+>>> Actually not, kind of forgot about this. I believe I can create a
+>>> (mostly?) complete binding for the panel, but this simple description
+>>> for only width-mm & height-mm will differ from the final one, which will
+>>> have the DSI port, pinctrl, reset-gpios and various supplies.
+>>>
+>>> I think I'll just drop it from v2 and keep it locally only, to get the
+>>> simpledrm scaling right.
+>>
+>> Yeah I think that'd be best in general
+> 
+> Ack
 
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
----
- drivers/media/platform/qcom/iris/iris_vb2.c | 4 ++++
- 1 file changed, 4 insertions(+)
+[...]
 
-diff --git a/drivers/media/platform/qcom/iris/iris_vb2.c b/drivers/media/platform/qcom/iris/iris_vb2.c
-index cdf11feb590b5cb7804db3fcde7282fb1f9f1a1e..01cc337970400d48063c558c1ac039539dbcbaba 100644
---- a/drivers/media/platform/qcom/iris/iris_vb2.c
-+++ b/drivers/media/platform/qcom/iris/iris_vb2.c
-@@ -159,6 +159,10 @@ int iris_vb2_queue_setup(struct vb2_queue *q,
- 	*num_planes = 1;
- 	sizes[0] = f->fmt.pix_mp.plane_fmt[0].sizeimage;
- 
-+	if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT ||
-+	    q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
-+		q->dev = core->np_dev ? core->np_dev : core->dev;
-+
- unlock:
- 	mutex_unlock(&inst->lock);
- 
+>>>>> +&pm8550vs_d {
+>>>>> +	status = "disabled";
+>>>>> +};
+>>>>> +
+>>>>> +&pm8550vs_e {
+>>>>> +	status = "disabled";
+>>>>> +};
+>>>>> +
+>>>>> +&pm8550vs_g {
+>>>>> +	status = "disabled";
+>>>>> +};
+>>>>
+>>>> Hm... perhaps we should disable these by deafult
+>>>
+>>> Do you want me to do this in this patchset, or we clean this up later at
+>>> some point? I'd prefer not adding even more dependencies to my patch
+>>> collection right now.
+>>
+>> I can totally hear that..
+>>
+>> Let's include it in this patchset, right before SoC addition
+>> I don't think there's any pm8550vs users trying to get merged in
+>> parallel so it should be OK
+> 
+> Okay, can do. Disable all of them (_c, _d, _e, _g), and re-enable them
+> in current users? I assume there might also be boards that only have
+> e.g. _d and no _c.
 
--- 
-2.34.1
+I suppose it's only fair to do so, in line with
 
+d37e2646c8a5 ("arm64: dts: qcom: x1e80100-pmics: Enable all SMB2360 separately")
+
+
+>>>>> +&usb_1 {
+>>>>> +	dr_mode = "otg";
+>>>>> +
+>>>>> +	/* USB 2.0 only */
+>>>>
+>>>> Because there's no usb3phy description yet, or due to hw design?
+>>>
+>>> HW design. Funnily enough with clk_ignore_unused this property is not
+>>> needed, and USB(2.0) works fine then. Just when (I assume) the USB3
+>>> clock is turned off which the bootloader has enabled, USB stops working.
+>>
+>> The USB controller has two possible clock sources: the PIPE_CLK that
+>> the QMPPHY outputs, or the UTMI clock (qcom,select-utmi-as-pipe-clk).
+> 
+> So okay like this for you, for a USB2.0-only HW?
+
+Yeah, maybe change the comment to something like:
+
+/* USB 2.0 only (RX/TX lanes physically not routed) */
+
+to avoid getting this question asked again
+
+>> Because you said there's no USB3, I'm assuming DP-over-Type-C won't
+>> be a thing either? :(
+> 
+> Yep. I'd have preferred USB3+DP as well since it's actually quite cool
+> to have with proper Linux. On Android, at least on older versions it's
+> barely usable imo. Can't even properly watch videos on the big screen
+> with that SW stack.
+
+Bummer! Not something we can change though :(
+
+Konrad
 
