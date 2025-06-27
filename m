@@ -1,143 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-62809-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62810-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC40FAEBA66
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 16:51:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3574AEBA98
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 16:59:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 02E453A321E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 14:50:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 926B3165EF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 14:59:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5349F2E889C;
-	Fri, 27 Jun 2025 14:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 713582E888D;
+	Fri, 27 Jun 2025 14:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="qLrUkMA9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OLxcsoBe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865632D97A8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 14:51:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861EB2E7625;
+	Fri, 27 Jun 2025 14:58:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751035870; cv=none; b=qsXdvLLSEXBGOtbRtqNH8xuQSUIo30T/4yzuNEtrIPpCXxbFnswYlBJiRE1gFqZP0z4lI1Tu7IFanKnNJKXwtw45TdmAgc1PJNvBooIaOm73fGv2gloP92fRlT4ajxw+GTsauXCAAdR4u/mcRzZ3TPH1n1Uo71iX463NrvZS4KE=
+	t=1751036324; cv=none; b=LuHrYaxYcZDYkAdoXl4VScxDs7WZvAHv9yA6PMQT8ZjoA52ztgEsfM16QJ+REPUZ1crAlVZ9sC9U70QuMxXHXji82XVyBLXOJk6S0WCM+Rl4EbxxKZNB6Z5GMtGitGjpWTCvBAVJBDJu7zidGln1PugWYFGe08hYIDwD9lZFDGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751035870; c=relaxed/simple;
-	bh=UyBKwHH+NCfy2Fp8odnA/Wo1t4O71TtPU0o1rWMp+Dk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=YCKeKMXEoAxPmGXb15q/GTRDiREzHzJEo6NIxnq7XDSq/z5ur+Lem2K1VmRkZw3K85OjqIggpvcwMeC1ILP6siG9F38aNY/w9o5iRXjsHDQ8gyBpz/aIlQ5Rb4FG2Fp8H1G40WfhgO6DJ9iB0gPn2lK95rtzis8OPcwiyqdEaRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=qLrUkMA9; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-60c79bedc19so2796165a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 07:51:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1751035867; x=1751640667; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pfsIeC1q9ILkZM7mTk4qTsHzqgjpNmZpZamVAmWOEoU=;
-        b=qLrUkMA9b/IsKV7EW0iX5EhQdsu6TvWvqUf/AiBPiG5MsX4HiwyZ1P2LqIcMBPw2VO
-         Jb0qVqBdaey19aCwlVD7/DyU+s+Gir+rHsvH+3Kms0+7c6w0u8EW4+9ak2uwNkFyv6kO
-         cr4IB/H6RYx1I9XQPu7yt4GlowRrLWEeMbb1tJ5a/KmmjXRhJkQ52HwP4RNxVAdNkgut
-         GEzD7LLJ2J+OJEkoCipTOabnyfqrPenXYdrYkVMr5t1E8Puw3p790Se9znPsYQvyADU1
-         k0q8SshVxa4+rXaDaTf8XqxxDhVYHavrB8chfie78lj8Y/6zZ0o2L6UlZpXctch/R6Av
-         SvHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751035867; x=1751640667;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pfsIeC1q9ILkZM7mTk4qTsHzqgjpNmZpZamVAmWOEoU=;
-        b=n7NzIFRJB7bmS1J5RQVFENjZnMGy/NIS+jcwmddAJRlhRg1Azh+DInEF0fdqedLKHg
-         umHLZYyTo3W7vCBqfv9iVcwdLxa43UV2EfRguGoZUCS1cVpYr6O4F56HRK8P0tsReLmA
-         Ubu/qi3i/oopLBpbTWuFTyKTfUNJe2DE8+CvYjnVo2zWhaUbBUqABpdkT5h8itKkD4it
-         IhabKD2chGOxCPANwhXXlztTOR4mLN4hdgMZ8VepKvq+CF/dwpQPqrV0Z1XJm4/AogKk
-         ohAm3pxp6pXAQgAC1SZhv9RONgKHWG185AYe2m/K0jpX55Rz6cSM263cJlehEP67jMy2
-         Xg7A==
-X-Forwarded-Encrypted: i=1; AJvYcCV7rtVDR1v4lSQu4EJF3ZLcLyVX5NCuLnWymoG0efXKHMQnleTDnfP7gx9Lh8k1+OK5Gl3pnwv4dPuUOiaY@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDR2d3E4ZZ/TQC/2AUncif2V/L+0+m2AG7LxZwojkNcf2MXXWw
-	185txhRA1u+o+KZstkSwbKle2fzXxEhAQZVNsZxlNSB/3uSFHUiD9hLhMabwvbRpIS8=
-X-Gm-Gg: ASbGncslHQqH3VxSH472T66C/pWUj53fKoeVwecC0YyZHrW6xAeAhRinzH3Ko7gTBFZ
-	vUAFDUaLvOzvKr7vGT2D5oVoKdiA8St7UhbKlXKUvIHaHFrcjHX8hO1I3OPcc+59tvONFAzJkNa
-	LxHHue9yFcOWSOou9fmp3ZaBA68qFybyqu8I+bWIB8LwVwwIenub0bVydflkWMO06I6mjNmzvzH
-	viUaVCSLh/FWlZO7nMcPrlp9SnbqNs13HyU+R5SOTqAv32RuotSHtR8IrmWBFH+9ZIOujSIPJEY
-	/r4TesJqpuS38qXtsH57jxRPpBWrFgZVQnmHUNsnGP5WRulTNBJPqxrC+aBF5K6pJAg7qtadfnM
-	NKVqe9gH4BCSz7uO97ilYtiVxzKqvJx4=
-X-Google-Smtp-Source: AGHT+IEAV8Vw8kRnlbsTGuoP/oTwShQDEtpR4bSBf4ykT0TKkhmZMTVPe2BEFKyGiSf57dSvw0Wy8A==
-X-Received: by 2002:a17:907:9407:b0:ada:abf7:d0e1 with SMTP id a640c23a62f3a-ae3500bf35dmr329595866b.37.1751035866592;
-        Fri, 27 Jun 2025 07:51:06 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae353c0138bsm134123766b.85.2025.06.27.07.51.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jun 2025 07:51:06 -0700 (PDT)
+	s=arc-20240116; t=1751036324; c=relaxed/simple;
+	bh=IYziUMcQc2l0WrjC52KQUdKcBdCbKEvbSAKgkqLgl0k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=IhhiFRqAwhZLBKhKAEVsLsOiFNwZFCxFXOnI1f+CZNalS7DlFzDDjWttemiZgMRhkUGFduAoU8Vvc8gF0LyrT45830+iio76XDRrhIL761rCWsrz0PoA9fKac5eZBn0nxzsWGfRh3VcK6xvjcVtZu1HPOKFCHr/id37ZPMlb+Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OLxcsoBe; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55RC9hO2011346;
+	Fri, 27 Jun 2025 14:58:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	gkweCfiBn/+1OBVWhFD+keR5SD5p17o52DoHPi+qi/o=; b=OLxcsoBeYVdb/Y/O
+	+CtCVPnGX/q2dUrYIJSN7PH0dnMMrWmmUYH3O4GyGnVDiuuQgTh1ErDmwX5fwKAr
+	9Gl0NRGCTY3sLiXqW2zMncXD4uN2cvBJVHkzzdRAOSNHOdRhRUrBuQmmyYqbNocK
+	dJwvtBXQ9dABorfyhyfmirZ5qoNKUFAZc87gdpKbWDGzttDbVzu/sin9bUuGOLRe
+	oTa81SjLfkYZOS1svyBwfyJJM/E1C5PykOjF3zgGVS8WCDlTQW5JFqRNmqCxUl77
+	hHZ+c0jZtnqhFHmPk16QKbIvviiXlRrPWHnPej3geUkyrwQzI8uwrZPrwcBQfH4H
+	lYN1Kw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f3bgq5j2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Jun 2025 14:58:36 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55REwZQJ000778
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Jun 2025 14:58:35 GMT
+Received: from [10.50.11.187] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 27 Jun
+ 2025 07:58:32 -0700
+Message-ID: <2722e70a-1080-c9f3-eb56-4a6e79084bdc@quicinc.com>
+Date: Fri, 27 Jun 2025 20:28:29 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 27 Jun 2025 16:51:05 +0200
-Message-Id: <DAXEERR0W25W.18J9UZ353AL09@fairphone.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280.dtsi: prevent garbage on
- serial port
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Casey Connolly" <casey.connolly@linaro.org>, "Bjorn Andersson"
- <andersson@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Konrad
- Dybcio" <konradybcio@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Rob Herring" <robh@kernel.org>,
- <cros-qcom-dts-watchers@chromium.org>
-Cc: "Stephan Gerhold" <stephan.gerhold@linaro.org>,
- <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
-References: <20250626132333.351351-1-casey.connolly@linaro.org>
-In-Reply-To: <20250626132333.351351-1-casey.connolly@linaro.org>
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v5 5/5] arm64: dts: qcom: qcm2290: Add venus video node
+To: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+CC: <krzk+dt@kernel.org>, <bryan.odonoghue@linaro.org>,
+        <quic_dikshita@quicinc.com>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <conor+dt@kernel.org>, <konradybcio@kernel.org>,
+        <andersson@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-media@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250626135931.700937-1-jorge.ramirez@oss.qualcomm.com>
+ <20250626135931.700937-6-jorge.ramirez@oss.qualcomm.com>
+ <6e330e8f-5856-ef8e-5fe3-52bd61b59e02@quicinc.com> <aF6PqCY/E6H0Mc2/@trex>
+Content-Language: en-US
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <aF6PqCY/E6H0Mc2/@trex>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: TR9uuurdnKAnQXTs1UT3iuQbljsruGFi
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDEyMiBTYWx0ZWRfX4bv+H6gL7qLN
+ UV8+r2XZpl77MbCuz1YnMzaLwE6dAIBv70AgVJD0OlrcteViOOjW8CQv83o+2p13JWgQmLMav3X
+ AqD8TgABBGahrFBXFdeY191tUoe7ecE5xwte9MLwHWf7FEpUcwUzJjRJTeFTNAuwiAIpmHqPWvf
+ +Tcj4MtLzbC6MFfkzIkg4Mmy59qFVfBjpTJkjWUNn/Nikv75NoHJIQjos1NM6fNG/w1OrRV9a0V
+ gzbiviAbmNNASLd4CkYxJ+ntSKBdis60s3/YrWzSbgTJDrTH7ntMoloJcRsrGYHrSQND3HCeAo8
+ DR4yrqOOAOH+sBqgutqpXIt+dP2G0mIHfd7sYHiT72g5H9jwC2DOXM0QQnNzoWE0yh8weDEHWtV
+ KsErSFo5T0AhKgp+rXOHsw8apWtPCBvCZlBlVwJ2rZ31nem20nuc90e3IPFsHuxPDMcc8ny1
+X-Authority-Analysis: v=2.4 cv=L4kdQ/T8 c=1 sm=1 tr=0 ts=685eb19c cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8
+ a=s3_BAN2U_F-k673gM8kA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: TR9uuurdnKAnQXTs1UT3iuQbljsruGFi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-27_04,2025-06-26_05,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ adultscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ spamscore=0 phishscore=0 mlxlogscore=999 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506270122
 
-Hi Casey,
 
-On Thu Jun 26, 2025 at 3:23 PM CEST, Casey Connolly wrote:
-> During early boot phases there can be garbage characters on the serial
-> RX port unless it is configured as pull-up. Add the pull-up bias and
-> mark the rx/tx pinconfs as being necessary for all boot phases.
-
-Update the subject to remove ".dtsi"?
-
-arm64: dts: qcom: sc7280: prevent garbage on serial port
-
-Regards
-Luca
-
->
-> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/q=
-com/sc7280.dtsi
-> index 64a2abd30100..60e4a311405a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -5742,13 +5742,16 @@ qup_uart4_rx: qup-uart4-rx-state {
-> =20
->  			qup_uart5_tx: qup-uart5-tx-state {
->  				pins =3D "gpio22";
->  				function =3D "qup05";
-> +				bootph-all;
->  			};
-> =20
->  			qup_uart5_rx: qup-uart5-rx-state {
->  				pins =3D "gpio23";
->  				function =3D "qup05";
-> +				bootph-all;
-> +				bias-pull-up;
->  			};
-> =20
->  			qup_uart6_cts: qup-uart6-cts-state {
->  				pins =3D "gpio24";
-
+On 6/27/2025 6:03 PM, Jorge Ramirez wrote:
+> On 27/06/25 17:40:19, Vikash Garodia wrote:
+>>
+>> On 6/26/2025 7:29 PM, Jorge Ramirez-Ortiz wrote:
+>>> Add DT entries for the qcm2290 venus encoder/decoder.
+>>>
+>>> Co-developed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+>>> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+>>> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/qcm2290.dtsi | 57 +++++++++++++++++++++++++++
+>>>  1 file changed, 57 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+>>> index f49ac1c1f8a3..5326c91a0ff0 100644
+>>> --- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+>>> @@ -1628,6 +1628,63 @@ adreno_smmu: iommu@59a0000 {
+>>>  			#iommu-cells = <2>;
+>>>  		};
+>>>  
+>>> +		venus: video-codec@5a00000 {
+>>> +			compatible = "qcom,qcm2290-venus";
+>>> +			reg = <0 0x5a00000 0 0xf0000>;
+>>> +			interrupts = <GIC_SPI 225 IRQ_TYPE_LEVEL_HIGH>;
+>>> +
+>>> +			power-domains = <&gcc GCC_VENUS_GDSC>,
+>>> +					<&gcc GCC_VCODEC0_GDSC>,
+>>> +					<&rpmpd QCM2290_VDDCX>;
+>>> +			power-domain-names = "venus",
+>>> +					     "vcodec0",
+>>> +					     "cx";
+>>> +			operating-points-v2 = <&venus_opp_table>;
+>>> +
+>>> +			clocks = <&gcc GCC_VIDEO_VENUS_CTL_CLK>,
+>>> +				 <&gcc GCC_VIDEO_AHB_CLK>,
+>>> +				 <&gcc GCC_VENUS_CTL_AXI_CLK>,
+>>> +				 <&gcc GCC_VIDEO_THROTTLE_CORE_CLK>,
+>>> +				 <&gcc GCC_VIDEO_VCODEC0_SYS_CLK>,
+>>> +				 <&gcc GCC_VCODEC0_AXI_CLK>;
+>>> +			clock-names = "core",
+>>> +				      "iface",
+>>> +				      "bus",
+>>> +				      "throttle",
+>>> +				      "vcodec0_core",
+>>> +				      "vcodec0_bus";
+>>> +
+>>> +			memory-region = <&pil_video_mem>;
+>>> +			iommus = <&apps_smmu 0x860 0x0>,
+>>> +				 <&apps_smmu 0x880 0x0>,
+>>> +				 <&apps_smmu 0x861 0x04>,
+>>> +				 <&apps_smmu 0x863 0x0>,
+>>> +				 <&apps_smmu 0x804 0xe0>;
+>> keep only the non secure ones.
+> 
+> ok
+> 
+>>> +
+>>> +			interconnects = <&mmnrt_virt MASTER_VIDEO_P0 RPM_ALWAYS_TAG
+>>> +					 &bimc SLAVE_EBI1 RPM_ALWAYS_TAG>,
+>>> +					<&bimc MASTER_APPSS_PROC RPM_ACTIVE_TAG
+>>> +					 &config_noc SLAVE_VENUS_CFG RPM_ACTIVE_TAG>;
+>>> +			interconnect-names = "video-mem",
+>>> +					     "cpu-cfg";
+>>> +
+>>> +			status = "okay";
+>>> +
+>>> +			venus_opp_table: opp-table {
+>>> +				compatible = "operating-points-v2";
+>>> +
+>>> +				opp-133000000 {
+>>> +					opp-hz = /bits/ 64 <133000000>;
+>>> +					required-opps = <&rpmpd_opp_low_svs>;
+>>> +				};
+>> Fix the corner freq value
+> 
+> can you add some reference please?
+> 
+> I took this data from an internal document - not sure why the downstream
+> driver supports different values or where those were taken from (AFAIK
+> they are not supported)
+Most likely you have referred incorrect downstream file. Refer scuba-vidc.dtsi.
+Again, good reference for such cases would IP catalogues and if not, gcc driver
+in this case which have structures defining different corners for video.
+> 
+> 
+>>
+>> Regards,
+>> Vikash
+>>> +
+>>> +				opp-240000000 {
+>>> +					opp-hz = /bits/ 64 <240000000>;
+>>> +					required-opps = <&rpmpd_opp_svs>;
+>>> +				};
+>>> +			};
+>>> +		};
+>>> +
+>>>  		mdss: display-subsystem@5e00000 {
+>>>  			compatible = "qcom,qcm2290-mdss";
+>>>  			reg = <0x0 0x05e00000 0x0 0x1000>;
 
