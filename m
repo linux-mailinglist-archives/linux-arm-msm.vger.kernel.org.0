@@ -1,182 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-62723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1648CAEAF2A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 08:48:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF2DAAEAF4D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 08:56:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6EFA61C2022D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 06:48:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B3BC3B63AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 06:55:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C626219A89;
-	Fri, 27 Jun 2025 06:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AA3C21C166;
+	Fri, 27 Jun 2025 06:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="a0YRaaiX"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="VB/lAK4v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88A4217648;
-	Fri, 27 Jun 2025 06:48:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349EF21A458
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 06:55:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751006904; cv=none; b=F+OEZhMsQdoEoCRyvTD+uAf8AzpUGZXurCCsrHZpCOrD+GSU3d9V7RfVt1gMe3IiC7YyKMAy1XqQ6ey+IFkPlQUgfSWldYTFdXeh8htBtmBaY8tSnPOE1xzMEnA3E1Zr66+L9k7fJourGDF+qjf2uDjsZLv7w0r1fsmjHsj5EVQ=
+	t=1751007356; cv=none; b=gShU/kaBo5dJ4NOTDbBKIlcfAWuXhpi8qEp5Qou3X1NVOGjTbeP1Fouv5M5/SecwRvHfoHsTJ1EbOjSoBk+eEyJRfFw1jrQkj175z7w0nWYK+Z+xx48hjXMf7N7S0NYZIBD1LXkfunxBPvF41Vz8tLpv8Peojoi2vhIsjSpq4QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751006904; c=relaxed/simple;
-	bh=CPmH2UhNzzOyJtYz2BQ/oL4YX14EzvZdOTMg/i8Nq0U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nrg2BCi3tF2EWuqlkvRI1CHcsshg4E8GwKicOVp74ZBQYSl5rcAHhOU4wZNnX9g+b/m0I3FblSMc/Ggl7LMi8wjwXf5WdfieyxsMV5pReiGF6aSeoC2nrmj4OflWZEmoW18ZKvwfPrTiJrl6kvNOmOEe7xIRaDSGv+BNQ+B5zRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=a0YRaaiX; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55R4D6aQ017705;
-	Fri, 27 Jun 2025 06:48:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mSsPZr6Ke43hyQo46CPdW0QQxvYRDMtBeeUW7tXGa8Q=; b=a0YRaaiXK3fy6bYV
-	uxoSsQTQy3ytNXmSWZJ+zd6kNzw9PlvTaTu3Ui7X8TKJZzUreJEtwXw+h67m8KkE
-	W4MDh/QTeGc0nMa4wJOyFS/zhvej0bF4VFlrpCwrD56ZPGGHOHmRPHBzMVJUmeML
-	oacmAe9Yb2+qTcuc9y7cd3Z0jDt+tnPxiBBt8p1cBqRMC93nuKGNgN3g/NNDrrjZ
-	A+fhvWgihFqXCijUnJMp4WWNIG7cdY9KaRQoSYnTDoijSlZiWHWPFBTVeuqBZBC5
-	0bbntNrpwv9rgF7gMkAnucPM9uxamJeBYISjOLI3Lj3P+b0s55I0frlrvzocegYb
-	VWY0/w==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47fdfx425k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Jun 2025 06:48:16 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55R6mFVe014123
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Jun 2025 06:48:15 GMT
-Received: from [10.216.48.74] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 26 Jun
- 2025 23:48:09 -0700
-Message-ID: <f6ae7d50-e021-bc82-741e-935af3a4496b@quicinc.com>
-Date: Fri, 27 Jun 2025 12:18:03 +0530
+	s=arc-20240116; t=1751007356; c=relaxed/simple;
+	bh=HRKYSDD5aEl3fpXcNcNVmNhnN9+cdeRs/Hjz67cr70k=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=PZivwu9STE6nZOIwC8WIH4ICvDcf8tMYK1iPthNxm2uJRg/hmgBGi2T+FWGwJzcE1kXZDUQgHhiHup6EJr8iGNJOVqa/C+km0TAc4It/4CZXmuDP8rlr9WwwQaSKI611w5m4MOUFcqw1wo995oNFzZqXPxvaIULokTkWOpLxIpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=VB/lAK4v; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-adb4e36904bso371283266b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 23:55:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1751007352; x=1751612152; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6OyVyTnLvcUYUCVnJmVzdUrEtcXIeCg0NCslSbzPGUI=;
+        b=VB/lAK4vM7G3sAZEijjfiWt5SIZBy9pfIRGW++FiO++auOKOvSXUCXKzXw0AvYL9dN
+         oSAMsS7ViwEYtotB9aVLNpuA6QBJdBPG9mOXTksBDn6WFp8bZmZYtHIfv+ggoXSsOebM
+         7tmMAIkNkJ/ElZm3BIx7ol/q0a6hWrlts/LJYYqv/XOJTUDAQjnXplDYNIXX0OANqno5
+         hSeSOgl8KoR979VOBSRUjgXE3Fj2/j4055HrlgBF+FNrfNqdgkvJCrnVCE7FVdgqXIyQ
+         PCmnVQu7z7B/nCfHqg2b0p9XYWS6mKpJGqVk0wndAbFGX6v6oNIp1RmxeCid+5KyVgqx
+         JqPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751007352; x=1751612152;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6OyVyTnLvcUYUCVnJmVzdUrEtcXIeCg0NCslSbzPGUI=;
+        b=broLXVw350tRyoMD+LsHZwpIgCA1QMCjjZ1/0hb5ztHF9bGI0xlRmaoosy90biVn2z
+         viIBavN4OJAaxPP8pMkTZ2SpkwQsn0JcobqotKNQB+MGKP72hODHcLMTvDdea3g6AHhI
+         lWGfqK8WNYx8BtzBVtWvakJMhCnyxk0TvTtfOX1aDYt/lQ8PS4n7Cnz7ptzfvXtKAKjb
+         VBXDYsWgLH8BYKo32TZJ36ra75jl9cS/kcwBlbizSFu5CiJtEDEuIVBteBGRxt8Lu4Uy
+         ZM+absOdkhnrMULSUQwS96gyRcP9kUEij0vRcY/WZjBH/Z5UVz46gJRqPawA3cNOBsxj
+         HE7w==
+X-Forwarded-Encrypted: i=1; AJvYcCUaYwOeILFxLCU444qSFrigDYrv0LZZxP5kEieFzW+lMzZ5/pcJ7T1F8OWFDC8Vss9OmYf9+i9c3MVAQPzd@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzn8snXQZQzB03VfFdSWYTtSR3tIXYvA1EMEtz1mR/R/QbRD7Y8
+	kXJA60DQODaXXi0KMwv8VqflXU/Y1NNgWTxk6eSjR+58tGSCFCI7G3v/1DqUiyYcs8c=
+X-Gm-Gg: ASbGncuu0MuiW1P9DXSzO+0K8Jhn2/9vCGMG/I44mFYszCKEuTwtXbXCrSVo8+raaLa
+	qRzyMxSy5XownzP3XcXwNLjBgYF81p1YSLkSQY6sISCHeuWzlUKSLxw5GA/9DJWckeOvdOmmwIb
+	Bs1xJpxwUiCjjQWIQuSLNEUkY3nXhMYQvu+dSR1+NpEPhDGD1JZ2OgP4OMHhiltZzcWyt5+1FHE
+	kJCTHvyk8amNk900S3BR7E6nHaf/aDZAHGxcbyL2TWOKzszYaAvcy1s9xVtJJaef7k9u6OQ6rMU
+	fIQhmf6k0s/PvHu+14cGuz9erf9pKhfMsJX/FL8lcy9W8sTL61O8ZysPJeApGDXUTHuQ0ToYAxA
+	Co6exUwJsb5SW1hEJC9+IXCVsTrW+I+qC
+X-Google-Smtp-Source: AGHT+IFjnOE8NEuOzdjShiuz1TfX1GtkNhAVAt609Dn5g7Pd0R6rLxmR5Tj2cwmvAKPv7UsDwUE7JQ==
+X-Received: by 2002:a17:907:3c89:b0:ae0:d903:2bc1 with SMTP id a640c23a62f3a-ae35019f2e6mr171046566b.49.1751007352601;
+        Thu, 26 Jun 2025 23:55:52 -0700 (PDT)
+Received: from otso.local (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60c8290ffb4sm1019451a12.36.2025.06.26.23.55.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Jun 2025 23:55:52 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v2 0/3] Add support for remoteprocs on SM7635
+Date: Fri, 27 Jun 2025 08:55:41 +0200
+Message-Id: <20250627-sm7635-remoteprocs-v2-0-0fa518f8bf6d@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH V3 1/4] dt-bindings: mmc: Add dll-hsr-list for HS400 and
- HS200 modes
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Sachin Gupta
-	<quic_sachgupt@quicinc.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>, "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-CC: <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <quic_nguyenb@quicinc.com>,
-        <quic_bhaskarv@quicinc.com>, <quic_mapa@quicinc.com>,
-        <quic_nitirawa@quicinc.com>, <quic_sartgarg@quicinc.com>,
-        <kernel@oss.qualcomm.com>
-References: <20250122094707.24859-1-quic_sachgupt@quicinc.com>
- <20250122094707.24859-2-quic_sachgupt@quicinc.com>
- <72b02fd1-5195-4bb0-b01d-5481b49a5680@kernel.org>
- <379e9199-4a9e-cd38-20cb-0fbd76fa33b3@quicinc.com>
- <abdde4ff-eae2-44c4-8608-89c762790549@kernel.org>
-From: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-In-Reply-To: <abdde4ff-eae2-44c4-8608-89c762790549@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 069sUsop3btBy8DGgJZzhcy9wXDqBk3B
-X-Proofpoint-ORIG-GUID: 069sUsop3btBy8DGgJZzhcy9wXDqBk3B
-X-Authority-Analysis: v=2.4 cv=MtZS63ae c=1 sm=1 tr=0 ts=685e3eb0 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8
- a=RBDf3ioivJUjA6cGglgA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDA1MiBTYWx0ZWRfX9lpa1pXDb9Bk
- dGjVD21mfbTT00m4gM9C1BqSOGS9HYpf2PhoOJ4V0VPCdu+Cz+w/Tk3BfX/jgDNrVoWwxLKhYZU
- 8TXJ6F/pkc6wrlyrzoobQaBHpmX1KmuMywMktm4Wq7pcR5GT51RTDPy61WlGW1b9atsPPlM1EMM
- 6BN7aHTdmr+1mOCuzShUEkoVLwRgN8I0hdraE99bCktOjDz2rvqqrkMDjzSwlWxA+R0xUiLg4DK
- qMRLpBjf2goaREdR2Th2+R1tV//cNFLBbQRdS1Pis86TCriOzxe6j3JUANoeTGMocUhOlD4sNyG
- AIvmOzH+pkKu2s0L/QtRvK6IFtXrVzq+ferizxlThhBGTO3HWG/QHYoNNtGUICDI9UAx5SzpDu6
- Hnb8en4Pg75ZhFW3vP9vYHmxRIue1TZDU9XX1+o/Vr3Gu8Spn8E4B17Yw/x0jgKhDVAm8lJV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-27_02,2025-06-26_05,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0 phishscore=0
- mlxlogscore=999 spamscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 mlxscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506270052
+X-B4-Tracking: v=1; b=H4sIAG1AXmgC/22NQQ6CMBBFr0JmbU1b2oKsvIdhAWWQWUCbKSEaw
+ t2tJO5cvpf893dIyIQJmmIHxo0ShSWDvhTgp255oqAhM2iprXRaijRXrrSCcQ4rRg4+CWVuQ+e
+ MrE1fQx5GxpFeZ/TRZp4orYHf58emvvaXs/9ymxJSVKUcXG9VpRDvY0ccp7Dg1YcZ2uM4PuKRx
+ qK4AAAA
+X-Change-ID: 20250620-sm7635-remoteprocs-149da64084b8
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1751007352; l=986;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=HRKYSDD5aEl3fpXcNcNVmNhnN9+cdeRs/Hjz67cr70k=;
+ b=pH1MuTyeCcISIwj8Evc1Kddyilr/htJ3i7P0g83fcN7B7VvBPn5+W5za7kTR2IJUmlQc5yJgO
+ jM5GlQbE+RkAuwkGek1ngqy0p+uMBqjrAOkKxBVRZgkJ+P6UqqgG/XP
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
+Add the bindings and driver for the ADSP, CDSP, MPSS and WPSS on the
+SM7635 SoC.
 
-On 6/26/2025 11:12 PM, Krzysztof Kozlowski wrote:
-> On 26/06/2025 16:16, Ram Prakash Gupta wrote:
->> On 1/22/2025 3:56 PM, Krzysztof Kozlowski wrote:
->>> On 22/01/2025 10:47, Sachin Gupta wrote:
->>>> Document the 'dll-hsr-list' property for MMC device tree bindings.
->>>> The 'dll-hsr-list' property defines the DLL configurations for HS400
->>>> and HS200 modes.
->>>>
->>>> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
->>>> ---
->>>>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 5 +++++
->>>>  1 file changed, 5 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
->>>> index 8b393e26e025..65dc3053df75 100644
->>>> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
->>>> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
->>>> @@ -133,6 +133,11 @@ properties:
->>>>      $ref: /schemas/types.yaml#/definitions/uint32
->>>>      description: platform specific settings for DLL_CONFIG reg.
->>>>  
->>>> +  qcom,dll-hsr-list:
->>>> +    maxItems: 10
->>>> +    $ref: /schemas/types.yaml#/definitions/uint32
->>> uint32 has only one item. Anyway, there is already DLL there, so don't
->>> duplicate or explain why this is different. Explain also why this is not
->>> deducible from the compatible.
->
-> Timeline still amazes me. I will be grumpy on this thread.
->
->> I will change it to reflect array from uint32.
->> There is change with artanis DLL hw addition where it need total of 5 entries
->> (dll_config, dll_config_2, dll_config_3, dll_usr_ctl, ddr_config)
->> for each HS400 and HS200 modes, hence the new addition in dt. And these values
->> are not fixed and varies for every SoC, hence this needs to be passed through
->> dt like it was passed earlier for qcom,dll-config & qcom,ddr-config.
->
-> Eh, no. That's not a valid reason. It's still SoC deducible. Don't bring
-> your downstream practices here, but remove EVERYTHING from downstream
-> and start doing things like upstream is doing.
->
-> Best regards,
-> Krzysztof
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v2:
+- Update default firmware names from .mdt to .mbn
+- Link to v1: https://lore.kernel.org/r/20250625-sm7635-remoteprocs-v1-0-730d6b5171ee@fairphone.com
 
-Sorry I did not get it - you mean to say keep these values in driver file?
-how is it possible to tie these value with only one compatible which can vary
-with every soc or you are suggesting me to make code change in driver for every
-target having artanis dll hw.
+---
+Luca Weiss (3):
+      dt-bindings: remoteproc: qcom,sm8350-pas: document SM7635 MPSS & WPSS
+      dt-bindings: remoteproc: qcom,sm8550-pas: document SM7635 ADSP & CDSP
+      remoteproc: qcom: pas: Add SM7635 remoteproc support
 
-And sorry but considering upstream only this design was put in place, its not
-about downstream, since there are already dll_config and ddr_config which are
-passed through dt, its logical here to pass rest of the dll related parameters
-through dt only.
+ .../bindings/remoteproc/qcom,sm8350-pas.yaml       | 19 +++++++++++
+ .../bindings/remoteproc/qcom,sm8550-pas.yaml       | 37 ++++++++++++++++++++++
+ drivers/remoteproc/qcom_q6v5_pas.c                 | 24 ++++++++++++++
+ 3 files changed, 80 insertions(+)
+---
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+change-id: 20250620-sm7635-remoteprocs-149da64084b8
 
-Thanks,
-Ram
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
 
