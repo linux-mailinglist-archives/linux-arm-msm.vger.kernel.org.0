@@ -1,136 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-62771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 900C4AEB793
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 14:23:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C1F20AEB797
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 14:23:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 557BA1C430ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 12:23:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A48081C4333B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 12:24:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D75F2BEC3D;
-	Fri, 27 Jun 2025 12:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7CD82BDC37;
+	Fri, 27 Jun 2025 12:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iaAia7Bz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cEHFYzri"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B923298248;
-	Fri, 27 Jun 2025 12:23:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DEA2192FC;
+	Fri, 27 Jun 2025 12:23:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751027007; cv=none; b=iUB8C+ByCh1GKzR4SkgjplOgiOid8miBtIXLDmHJbq49Xbr8xonCZYNu5Hfl6rLoFMnechRkX+1fj028XaMttLqY9sELplt7+kWivRcDVhK7HPkJsl/DS8nxXaEZWPPfb6y/SQzj/L/ImGTH5pgoKEQj6F4bZTIJuepOg3ZNrfU=
+	t=1751027025; cv=none; b=rIcx+ZI5jNbki/7eLdMjuxauaV+dCLxyQ6XmF7uJbG2MElTUy54hMmxrRh9xQd5cALt8ebNOekIZLMsqyK1UbG04kb2G7GSuiYUsfcNO1uQtOxzJXeJ96rBqixcxSw1QoQFssX0dPD7idpFC9Ib4NaU2JHoylMpPtYMn29qqfe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751027007; c=relaxed/simple;
-	bh=TKE/PcirYgBaEnKVtc6oY0F6itZHLZa+hSxsQ4xJUJ0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XMyOsNeZyJTrFFitwn69zeJQB9o33GdR+UPfOpRIl5dr8uWhISaZGjY9XoVjBYq3gH6Zayi0egwgSaivKgXMK+ipR5FGZJQhgzUSDJ9z/kOAKl/DR8sQkqrPJgU6DbixynX6KCfwf9VCPUhmiagWx2nYcwdP9uuIbIhNoh+clfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iaAia7Bz; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-451d54214adso14705075e9.3;
-        Fri, 27 Jun 2025 05:23:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751027004; x=1751631804; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8uHDdjuJYEAU1yduIeaRva64ieAw7KTAi6gEOcE+hfA=;
-        b=iaAia7Bz4kXZ0lNWLMftRiRMejO6AFiMgaRJ27Rza3jg11H9wo83qOrV9xnSiIE2R4
-         6qiHkCRVuZzUVWQRr0FnDtFdI/lcNr+/RexxZBNZol7AeRv+8pIArLPJevNQ5xWnkV8o
-         nKx9hEqS2HsygD656x77jmYVy8vjXvfpNsuxaymqNm49M2aNl22ymiyrPBqoUUYXMIG9
-         56CFDwjQTTQZ9zo1EsklQ4qB0DBNNBDvh60L4Bb2ErPZewPcbwgZBYGCU7ydV+X76BMk
-         uvmFr6jN0PYwCI78ssgjp0XNJvv4MzCRIjQO2Nl5wvj061C4k5wm2ej6/dSV4byOD75h
-         cVCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751027004; x=1751631804;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8uHDdjuJYEAU1yduIeaRva64ieAw7KTAi6gEOcE+hfA=;
-        b=MldKRYSIKMJL0uYagKlA0PqyrrbSNKNxzbNfFnq7GkYinzU5tFkniOY0TsGI2cTylj
-         WtWMk4rIXoJ1buJVD+P4eWemWr9d5eJpVI2laHLKbIiB21+oGyrAk299wqtLfjCYUIxL
-         1eabsqpaUZGwxNraPAfv/LH+1hWe5wACuB792TPVGUV4kLMS4vq7RXkQMGqDe24uPLUp
-         QQqBva2XipLL4mNOHpXpDhNLvRU1w+fQVl3lAYawoARU5F2THi2aNLVDDNeKsoM/r8FM
-         tf3KR2wE3hdhBcfsvR6tM6pHQOjPsBFz55/3tRFuHDle1ue1oYarlls1RqFBKvZFyCu1
-         7Jfw==
-X-Forwarded-Encrypted: i=1; AJvYcCUMUfDHrPe/CL4HjtDN9oFFaGKRtlHTDcLoXng4IUEAxRqQNIsx88J3cQodT0UmRTRRsUbdZ/MxthOd7Tyi@vger.kernel.org, AJvYcCWEcxt8Nwc3xt2VR2czdi9D6EWPd/G9nnCHKhSVVOPE8bwaV/wECP7mJ66O1yl4CiQ2o9TkoOBTv2I=@vger.kernel.org, AJvYcCXFMJ0+kB0kn48Hj1j5XO0ihIQNEODzBuAwkMdIh5/sZtT7fGBPaaQtrNdPyz30vNiaw4XF1+AesTynUtHn@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzo8kp5bE4XVEIwL69QV0Jgthib8KJgcZ6rUh8zonB0WptcXAMu
-	4d712fMg6xPEbC8f0LfdvtNPdKLRPdjcJjrqUdqnpS7kP2bUJ44xJJRN+BfbX8jL
-X-Gm-Gg: ASbGncuh/j45iMtu9fQARruyzBi9b1R1V8Smv2U4xsyXWzsgPxmw6jFsP4YMzCEaZuy
-	SWFMOQJnjnRFsH8q5eq55DqADfhQlr3qhgAV3GalV1BA297RXZ5oBcrHxoePi956hv3syKDVKcE
-	0RF76w7HuxvhrT1SlfxekOLBh82/8nQKlPXVfJ6fM5wlGUizXvxa+46uZ4IFKe/WVy6dkc/KHrl
-	u4Mk0r4TZ2LiLOuVhg6juzZBveuRJ0kljmE1ytoy820TVV1uTtIkTQi3aJppDgvQ74sME5o/iFQ
-	hkGV7IB93Y1CCS9M1d69oRRY/0ZZrY7FjblNa3BPiiRxptAzlkgq0n3B7qNdXXfLYE3u4UENdvx
-	eMn+UdWjrSm/VmBT/pBVLFDKYzwY=
-X-Google-Smtp-Source: AGHT+IHHNyiJnortXGltf6dobXUszzMZIiEWCBoSFL/rKagraeF+X9BVsxcCM0pKIkAYOK9PI1rC+A==
-X-Received: by 2002:a05:600c:4446:b0:442:e9eb:cb9e with SMTP id 5b1f17b1804b1-4538ee85917mr28872705e9.26.1751027003516;
-        Fri, 27 Jun 2025 05:23:23 -0700 (PDT)
-Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453823c42e1sm78774495e9.37.2025.06.27.05.23.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jun 2025 05:23:22 -0700 (PDT)
-Message-ID: <85fa756b-9f18-446e-a50a-2aafaa40744c@gmail.com>
-Date: Fri, 27 Jun 2025 14:23:22 +0200
+	s=arc-20240116; t=1751027025; c=relaxed/simple;
+	bh=qahv5Tq7jGF0NN87NRcfiY7/L+h4popzWEl2wIA/lfs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nP//+n6mU2rNfUdQmJM9MS20ZmpRhpwP5LDyKGpQOkk2caBeV2W6iA3VcElGYg6zFxeoikThlr5CJEGZkq2h1qudBBHVu9twzzt1lAx27iz3mR5Xn8oMN13BaWWs4tHz6LFKYw5hnqBLIroxKaAX8hOh2nan1Jmt8Jr3zw6qX9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cEHFYzri; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055C6C4CEE3;
+	Fri, 27 Jun 2025 12:23:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751027025;
+	bh=qahv5Tq7jGF0NN87NRcfiY7/L+h4popzWEl2wIA/lfs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cEHFYzriJIlpqczXymVQz2pn20PPw8mIG5uwsQJm7hv6/D666vHwKsHni7VAQ4vEY
+	 +RsImDw0KQ+70cJwRk22bDVw41KLm37WaXiWSxSEw5W7E77YWrHB9TzibiUSDyMgSH
+	 D004oP8nMRMA9pKw4bj21U3u4Je/8xdKvEvNB7p1Sn0pmILtifdtJXM6dn9ToDly95
+	 WEnMhELaCbp+3grE9GYoahIBOOfZdtKfHhVcPSHV5PkaJtAzhuTFu4anBXhHhBT112
+	 EPY4m425LTmyrHVdwF70/d5D+ydUjmUovSmti39riDiYXGfpVD8iAPZsycu1D1Hc9R
+	 YlE6OEWQ1QQAw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1uV87N-000000004aq-3DSO;
+	Fri, 27 Jun 2025 14:23:45 +0200
+Date: Fri, 27 Jun 2025 14:23:45 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Steev Klimaszewski <steev@kali.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-efi@vger.kernel.org
+Subject: Re: [PATCH v4 5/8] firmware; qcom: scm: enable QSEECOM on SC8280XP
+ CRD
+Message-ID: <aF6NUeNLPrR5vqEf@hovoldconsulting.com>
+References: <20250625-more-qseecom-v4-0-aacca9306cee@oss.qualcomm.com>
+ <20250625-more-qseecom-v4-5-aacca9306cee@oss.qualcomm.com>
+ <e5e3e8f1-4328-4929-825a-3d8e836cf072@oss.qualcomm.com>
+ <95c46d39-5b4a-46dd-aa73-1b3b9bf81019@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] interconnect: avoid memory allocation when
- 'icc_bw_lock' is held
-Content-Language: hu
-To: Johan Hovold <johan@kernel.org>
-Cc: Georgi Djakov <djakov@kernel.org>,
- Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
- Johan Hovold <johan+linaro@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-pm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250625-icc-bw-lockdep-v3-1-2b8f8b8987c4@gmail.com>
- <aFvr1zSkf4KmIcMT@hovoldconsulting.com>
- <aFvuiVX0kMIqXQtZ@hovoldconsulting.com>
- <84b94649-a248-46b0-a401-772aeb8777a2@gmail.com>
- <aFwBYRF0wJwVDdeX@hovoldconsulting.com>
- <ac5ba192-b538-457e-acc4-c2d358b1fd0e@gmail.com>
- <aF0TIWfDI4M1azzc@hovoldconsulting.com>
- <3b90caec-b4c0-47d8-bdd7-1a7abd5e69d9@gmail.com>
- <aF5EPhd5smrmB38Q@hovoldconsulting.com>
- <b960680d-6c5a-4130-b2dd-4ddf1f800430@gmail.com>
- <aF5nv6TQoyfh7wKS@hovoldconsulting.com>
-From: Gabor Juhos <j4g8y7@gmail.com>
-In-Reply-To: <aF5nv6TQoyfh7wKS@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <95c46d39-5b4a-46dd-aa73-1b3b9bf81019@oss.qualcomm.com>
 
-2025. 06. 27. 11:43 keltezéssel, Johan Hovold írta:
-> On Fri, Jun 27, 2025 at 11:36:26AM +0200, Gabor Juhos wrote:
->> 2025. 06. 27. 9:11 keltezéssel, Johan Hovold írta:
->>> On Thu, Jun 26, 2025 at 05:00:42PM +0200, Gabor Juhos wrote:
+On Fri, Jun 27, 2025 at 01:54:37AM +0200, Konrad Dybcio wrote:
+> On 6/27/25 1:34 AM, Konrad Dybcio wrote:
+> > On 6/25/25 12:53 AM, Dmitry Baryshkov wrote:
+> >> As reported by Johan, this platform also doesn't currently support
+> >> updating of the UEFI variables. In preparation to reworking match list
+> >> for QSEECOM mark this platform as supporting QSEECOM with R/O UEFI
+> >> variables.
+> >>
+> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> >> ---
+> >>  drivers/firmware/qcom/qcom_scm.c | 1 +
+> >>  1 file changed, 1 insertion(+)
+> >>
+> >> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> >> index dbb77c3f69ddaa931e7faa73911207a83634bda1..27ef2497089e11b5a902d949de2e16b7443a2ca4 100644
+> >> --- a/drivers/firmware/qcom/qcom_scm.c
+> >> +++ b/drivers/firmware/qcom/qcom_scm.c
+> >> @@ -2005,6 +2005,7 @@ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
+> >>  	{ .compatible = "microsoft,romulus13", },
+> >>  	{ .compatible = "microsoft,romulus15", },
+> >>  	{ .compatible = "qcom,sc8180x-primus" },
+> >> +	{ .compatible = "qcom,sc8280xp-crd", .data = &qcom_qseecom_ro_uefi, },
+> > 
+> > R/W works for me (tm).. the META version may be (inconclusive) 2605
 > 
->>>> Despite the note above, your proposal looks good to me. Would you like to
->>>> send it as a formal patch, or shall I do it?
->>>
->>> I can post it in a bit.
->>
->> Great, just saw the final patch. Thank you!
-> 
-> Here it is for reference:
-> 
-> 	https://lore.kernel.org/lkml/20250627075854.26943-1-johan+linaro@kernel.org/
-> 
-> It looks like Georgi picked up the patch from this thread yesterday,
-> which should be fine as well as I only changed the commit message
-> (replacing the ipc splat with one from sc8280xp) before posting it as
-> v4.
+> Looked at the wrong SoC META table.. the build date is 05/25/2023
 
-Yes, it is fine. I have tested the icc-fixes branch which contains the IPQ9574
-specific patch as well.
+Could be that my machine was not provisioned properly. Do you boot from
+UFS or NVMe?
 
-Regards,
-Gabor
+My fw is also older: 01/10/2022.
+
+Johan
 
