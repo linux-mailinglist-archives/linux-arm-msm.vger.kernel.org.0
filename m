@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-62802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A02E1AEB992
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 16:17:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C750BAEB9F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 16:34:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5ABF71C4866C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 14:18:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E64C94A46ED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 14:34:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D5C62E2656;
-	Fri, 27 Jun 2025 14:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AC2E2E1C69;
+	Fri, 27 Jun 2025 14:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OWQur51X"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="g9kGyX0S"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BAC2E2640
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 14:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FEB3234
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 14:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751033869; cv=none; b=tf/t2jHuMw0mjFUvd2fH1c4vdjAID+XmYpgcaaTEAEAsIcXnvGnuHH6NvID1FMdghj7U5izXQsV0qOF1kJ/2NvKNz/PpY4If7lmFg1t7U1vo9G+SGuhUxr02rC0dC2iHQHVJGsOqDYr9ich92wLqS8FQiM/Y12KOaINbXrm8ndw=
+	t=1751034873; cv=none; b=qrXvJRA7yWTM64hOzapqiLPNpkgtpkUSn3lJmM0qHqc6tA3bo2qQmw561aPA6OH8gHfIA3mrrH5n+YbCWWq8HzHH0nQUyGl2sFA4a4+JLETf8/Sw7fU0w2fUF1cPdZk93HC8ZxQW2fBqhz1u1+k4FxnA+AWlL7WYow4NQBrsEts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751033869; c=relaxed/simple;
-	bh=zePCVTTZriTgcz2f7mmLaWQPErHg2B77GF7rKoYhp0o=;
+	s=arc-20240116; t=1751034873; c=relaxed/simple;
+	bh=y8WWwQD7QAEbVl1ij6mKyN6rfl5lkj802t9FgCkxabI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WJ3Azgy6OxYVcxNT4RAvJOg4/VD87uxQpKtKaZzfyuF9SE0Rlueuzm4bKzqc2KrGplb1f1r56Jj2ZF1lWUZlXWk/dxV6ar6vRyoJL9oSNSESXJn4crDhuKS7CQnLAXsM3KUA9N6VdS9Eb8T+hOsnnklQkfn0oY6bY+YHEokiUP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OWQur51X; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=B2nQRyVpMe64aV5GET10PJ3Wq5XM+6GQbtBGVnPOzEUjwD8286Kcxyf85NQ9FRu+U57lrXZGY7E7PLQeQVT7Vri4a5D55Dow1d9ZQY3aRnKrxjX2Oy312enzunFUckf1nERCwiUIzZquCs4Dzj6PIobKgWgQIiRJQR9JH7UXHgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=g9kGyX0S; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55RCCKL6009867
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 14:17:47 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55RCduUs009923
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 14:34:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GnuTVnZvIjeAKToHVdITKy+P6wscFfw/rq7pHlMa5ys=; b=OWQur51XRMixVkrh
-	PN/SU9qhFVHpmJ5y27FOrx87sLh9aMxyYGPaLpQjum7gla80uaPPdN+C5aiLB8Xo
-	zTZ+vXobWVcetZbyq0k+PwF47epaaLAGjT+jQ8S7L9pRj9AT7G/Hs+NTek85iBQc
-	c6qi+ulKDjnY9h1Um5u+xxrIhLqMOKFVErYP8yOZj0/SZf1o2MWQJeZHYL9pbe2n
-	GDZxeg8dHYwQqAN8gbSir0cwaTLGS3SdERFt1tVcInoUco5w7Md+1xL/pf8hxAi1
-	bbR4uRUPox+eGHSdvfepvfsgoZ2C3O4kJEHM8HwHkw0Y6k7b3KKPylzpx3vM+eXF
-	pqeEvg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47g88fgt7d-1
+	1E10iKKXP8Jigq9QsX9VmVPYxg5Fdzb0t1IfPqsxsEI=; b=g9kGyX0SrxzJSgxU
+	fMyEz0PRGbEHZKYpUIxtxM+1dkkupe9F8q5VSUopcAyD2dHWwX/T5DhqauMK5j3x
+	rd79ABHBHMsyA66zZ93D2n0IDS/Vi5+0Pv7CPABsXYICoBio3GICBQqZwT4aR6lm
+	h3aR21xuFGQaxn8dCCehwAy+4ZIttuZkbBknLk0BHFfhCrIobfeNZe+zEKFhyyN/
+	lDX/eXmoE7heITzvXuG3KR5bfOT6tbv08U9sYw36rBvuYCKK4lPfl7WdqJBV5ZaN
+	1WpGoI6JJ28uOcB1gMHM9dk1vdg1IBRlijSSB1FOYT3JmPQbuemcQ54DiSBko2Vj
+	D/liPA==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47g88fguk8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 14:17:47 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7d0976a24ceso61055485a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 07:17:46 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 14:34:30 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7d41d65f21eso2414785a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 07:34:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751033866; x=1751638666;
+        d=1e100.net; s=20230601; t=1751034869; x=1751639669;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GnuTVnZvIjeAKToHVdITKy+P6wscFfw/rq7pHlMa5ys=;
-        b=bqti8amPTOnviGPSW6A2tF+me1FuvqDGULwIFRomSxgbBpCoeCs1iCnurbqa+KD0Zf
-         kQwSjzepydMQrQYy/rUNUBwdBBD0x0+rAaqxMAJE3FixS3S57Mcf2StDCNtxY0JS5X8Q
-         pk9XVrRuE1/y6SJF1FVTbnHAk2V1UHmO+Vo4POd/MkY7NCiIeCffnHcV8cicRfJwlZgh
-         2CdpnOc1QP9z5x0JRIjZYdzpq9fRN4Oe0kDQlqEc3nPEeMGCcoIfsEHYo4AbgRezs1aj
-         /BtjB79QLT73p+R6itDN2gRrZrXJw85iQIlwHX46Vg0hiXlF/xooTHpzNyXewsO6fH2e
-         SiGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVPXRAikoriCwY0XqE9je2eOz5PtJStBXHaLCtWT96djIUOIui7f92VK5O1FmUHz6ghevFy1Mzqcma6j6uW@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzcr+8rpfiO7OHmansqim8qKGMWlurgn16CIgmsInqgsz7w5FAu
-	PaDAlfsjP9W75ALpVVjzCCmROWWFyNL7YlPL2shBqDxfyU+r1VAKQ4OXDoK1d8ub2KE2zPaJrGT
-	woM1qV6Dh1C+kn1gDt6YgRLok3jH9PS+TAPMdqWZL2X8sNISPCDgP1yJ77ksYMmxbUFGj
-X-Gm-Gg: ASbGnctQQwHJSG3f27CgwyPBQpX9olAAy99BH7JTzPjU467AJpYhRCywmk/Lc7K+lNI
-	mzdMVOwUNGKGnztvENFMyR0nXKW1cOnKqNh5qXSB+hLSAWNcQfl2p6CXutXfihqzCpiuns8BNgT
-	d8BMG8sUXcXF0eNE0edgTXeQCekBpwcPCq+VKzbKTVIkhgWP8VUs3KonzMyMImDi32ZB0cKuPLv
-	PIYnXTnfvNeIsc4g1D3CusLQuBqgG/Em5G3p9J9pjw9qOwOIRC2c+41L5zH5HBFYipnLkj9WJQO
-	VMRU1T2H57I/sjQSRY6mNrAaPMdNnww20QHpj8vDhluyEVlwHRrnQNFaWk1dCwsDB8Z647pPQQa
-	jk8k=
-X-Received: by 2002:a05:620a:258c:b0:7c0:b018:5941 with SMTP id af79cd13be357-7d443974057mr157243285a.7.1751033866050;
-        Fri, 27 Jun 2025 07:17:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE/yzL4fI1NfmfHkKWxrsKgcbCqgcKWs156oq8WGiMjD8v48UX287W+iIfE46rPYR0qqkS8WA==
-X-Received: by 2002:a05:620a:258c:b0:7c0:b018:5941 with SMTP id af79cd13be357-7d443974057mr157237785a.7.1751033864525;
-        Fri, 27 Jun 2025 07:17:44 -0700 (PDT)
+        bh=1E10iKKXP8Jigq9QsX9VmVPYxg5Fdzb0t1IfPqsxsEI=;
+        b=ccrv13EPMy27C2tsAU+gwUsNehV5rxyxAPTpKhDGWRgEllZERkb6pOz9fDCWHjKB1K
+         bRMUNJTc2wNeZ9wvoCl0sYrRIqn2a8tYCdBN7m42F5SwC8ekETXIXU7D6zYWtXB1Cp+m
+         pHhx6hC5fELTlx1ySKJyO6Pajkmxhvs/XEjOx9UoYZU8ab3rRZ9Urs5rHxZ4RJnQFd9V
+         wl9MecRKhT/TXpFKWNJvSZTtt042YkwwIj1zL8SF8QLWSGE3SY0HO7p3ydipScQgmPei
+         +KTbgiWEUNVg17GtOQgmkQo1AynxNgOVAiKEr37+AybX335y2xEeJC5ob/kD9hrdy2Pc
+         n2FA==
+X-Forwarded-Encrypted: i=1; AJvYcCWBYL2Mtm2pcUearDMUfxnjAIOMqgMAzZQKefdCJtA8vQOUCaZys5BeMeCqVizI49NuxWVBafTWFMu3v2e0@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWJ2WTYJ4LxH5Wjwe/+4BmZWAj2Bloq/lKKy/ri1Z7XV3rHed+
+	LQpBjHsYdzbvuJLKTx50F+11Gw8DL+w/IrA2ig9fhDwTQWjvaf0PACPUpyG33hHn6ZzXNbbxf/z
+	Qg1HfoVNnYNpBPkM/NuFwMhXtpcAwUV5fm4rxQ8Fn7aQHMosedXEAqxMLxxU6oSTWOj5I
+X-Gm-Gg: ASbGnctJcDMG4e1wcnSKL8iP98UWAYRcGyRPMZDrGMDTEJkjUZGvMIFY94avDEFAwbx
+	rU/mQ3bkeggQrQCjVAru0MSqFoMTrOJOYuYz9Jw71ouAfFrLja8iFtDBXJY5a0yVv8Kqp+RKGpf
+	7quiGY+BYmJ0ELX+AqGk91gyAHKm50XDwHZG1E7BULCSLpiVEa5ZdBvB0R4pLIC8nrCLCnMcvPA
+	M61L91r7rnIEPJdeqOHtfLuGrCyGVsnrqZDxr5IbaOu3hegBvD4jU9fElTh4AFhYv6lK5Oe4uf5
+	ONE9Z4iwBkFfbIBkUJkBRcIPtA/pcqoG8XrGtoE8EiSDf9IG/73ZAcq7HD8PcX8S65iDMmm8wSk
+	qwyo=
+X-Received: by 2002:a05:620a:684a:b0:7d3:c688:a590 with SMTP id af79cd13be357-7d4438f895dmr150828185a.4.1751034869325;
+        Fri, 27 Jun 2025 07:34:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGL+0Argf/YR+lQnOb5qAOTTQjAM3ncoqVGAETIjGQblJ3e07wKcIT22ODvigY7oQFVVuPf0Q==
+X-Received: by 2002:a05:620a:684a:b0:7d3:c688:a590 with SMTP id af79cd13be357-7d4438f895dmr150824885a.4.1751034868338;
+        Fri, 27 Jun 2025 07:34:28 -0700 (PDT)
 Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae35365a09bsm134701866b.58.2025.06.27.07.17.42
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae353c015c3sm132768266b.100.2025.06.27.07.34.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jun 2025 07:17:43 -0700 (PDT)
-Message-ID: <4a438b20-efaa-48d0-a885-c64e664df9e2@oss.qualcomm.com>
-Date: Fri, 27 Jun 2025 16:17:42 +0200
+        Fri, 27 Jun 2025 07:34:27 -0700 (PDT)
+Message-ID: <6d4e77b3-0f92-44dd-b9b0-3129a5f3785b@oss.qualcomm.com>
+Date: Fri, 27 Jun 2025 16:34:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,33 +90,57 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] soc: qcom: llcc: Add per slice counter and common llcc
- slice descriptor
-To: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>,
+Subject: Re: [PATCH 14/14] arm64: dts: qcom: Add The Fairphone (Gen. 6)
+To: Luca Weiss <luca.weiss@fairphone.com>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>, Vinod Koul <vkoul@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: quic_satyap@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com
-References: <20250626-llcc_refcount-v2-1-d05ec8169734@oss.qualcomm.com>
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>,
+        Thomas Gleixner
+ <tglx@linutronix.de>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-mmc@vger.kernel.org
+References: <20250625-sm7635-fp6-initial-v1-0-d9cd322eac1b@fairphone.com>
+ <20250625-sm7635-fp6-initial-v1-14-d9cd322eac1b@fairphone.com>
+ <4200b3b8-5669-4d5a-a509-d23f921b0449@oss.qualcomm.com>
+ <DAXA7TKVM4GI.J6C7M3D1J1XF@fairphone.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250626-llcc_refcount-v2-1-d05ec8169734@oss.qualcomm.com>
+In-Reply-To: <DAXA7TKVM4GI.J6C7M3D1J1XF@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDExOCBTYWx0ZWRfXyq4wKTWzATMY
- wmMROsxTcNKR2ni6MRB0sd6o17AFWkoEx9cacYxZm9AmtyLuD4NvBdSO8Ql6PRPMN8l6F5eEHjc
- 63P+TlAONDFDVCrt4jMdxDmNaVsXwXztTzERYuLFv5tS47AxrlDD8wPbEwEQf+k6EnFHqDAeuP7
- b8UKEwQUDdJrfZG2IwHD+Xrf+KemE3bUPsF1ySOq/PUjrPQ6GiBCGUSx4PY+NAm/CitbEQFuc7R
- Ko5/Oie4BJtlFPQESKngOnVYWgF2fYMNOP9R/5zQ52yLh5JR/z8Z6TZ7Be1cngjKoPE9vHQ6O4G
- Emizx0L/nTj3lTLNQ28jDwybIjolilua5+H5CyGGf8wDk5ddSV1qb6yZ7n/ScZGkbUuGcAruwNH
- BF8eP1clkGOeTNkpgI31HpZzNBrHVU32+NIO7QIjRcT3XrHp0XIT7ugTB+SLzsWbI5EAJXo8
-X-Proofpoint-ORIG-GUID: hNvIOs1ZXh0ts0UmZdCvGbyNo8xY36Pj
-X-Proofpoint-GUID: hNvIOs1ZXh0ts0UmZdCvGbyNo8xY36Pj
-X-Authority-Analysis: v=2.4 cv=LNNmQIW9 c=1 sm=1 tr=0 ts=685ea80b cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=YlwMA9enDdq0xxmC1vgA:9 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDExOSBTYWx0ZWRfXxHigf2KtNDaA
+ yvMHpp35YzCgvgOQu5MCG97xm8npvOtrIe5CZAH9TAmkquo4ueTioonYXgZV5jCMFOSRqzAlDsJ
+ H+B637saz79DXx0t8qBT4qLtbYIR2iNDBZJD6i+Pu7mErG3iucZx9gHnCAJFh76YQ0taOphx93f
+ PdP2uN+Xnq/S8mU0jHsC5ArEVo5WSbJ8zWVvfElix44ybwOVfXI4QH2QIe4nwZ+W30qgf/jExke
+ mAti2Rog/Q5jNwrDOjo5w4tvglGo63t7c4mVIMw/8c34CaPg2EdrgZp58or5ebtjMTIAVtV/gvp
+ 7irw7QGmWOQ9HHANtFntNhwf+YdPtR7UI1r5q2Eos/90lmI1YjJkAgS2oqLNeG203lLlCaTpKdF
+ 0LY4wj9+Eg08uZgVAnjmaA7OsjmsW/60Pva15qd7xcrkwyzBV7wQTDB/7cxbxAE49wW7Akt3
+X-Proofpoint-ORIG-GUID: lbDjugSAAjgA9KsXclxZPVe0_ld-VBj8
+X-Proofpoint-GUID: lbDjugSAAjgA9KsXclxZPVe0_ld-VBj8
+X-Authority-Analysis: v=2.4 cv=LNNmQIW9 c=1 sm=1 tr=0 ts=685eabf6 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=Sqmq4kN4DPMvB5fHc-YA:9
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-06-27_04,2025-06-26_05,2025-03-28_01
@@ -125,125 +149,132 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  impostorscore=0 mlxscore=0 clxscore=1015 adultscore=0 priorityscore=1501
  lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506270118
+ engine=8.19.0-2505280000 definitions=main-2506270119
 
-On 6/27/25 12:03 AM, Unnathi Chalicheemala wrote:
-> When a client driver calls llcc_slice_getd() multiple times or when
-> multiple client drivers vote for the same slice, there can be mismatch
-> in activate/deactivate count.
+On 6/27/25 1:33 PM, Luca Weiss wrote:
+> On Wed Jun 25, 2025 at 4:38 PM CEST, Konrad Dybcio wrote:
+>> On 6/25/25 11:23 AM, Luca Weiss wrote:
+>>> Add a devicetree for The Fairphone (Gen. 6) smartphone, which is based
+>>> on the SM7635 SoC.
+>>
+>> [...]
+>>
+>>> +	/* Dummy panel for simple-framebuffer dimension info */
+>>> +	panel: panel {
+>>> +		compatible = "boe,bj631jhm-t71-d900";
+>>> +		width-mm = <65>;
+>>> +		height-mm = <146>;
+>>> +	};
+>>
+>> I haven't ran through all the prerequisite-xx-id, but have
+>> you submitted a binding for this?
 > 
-> Add an atomic per-slice counter to track the number of
-> llcc_slice_activate() and llcc_slice_deactivate() calls per slice.
-> Also introduce a common LLCC slice descriptor to ensure consistent
-> tracking of slice usage.
+> Actually not, kind of forgot about this. I believe I can create a
+> (mostly?) complete binding for the panel, but this simple description
+> for only width-mm & height-mm will differ from the final one, which will
+> have the DSI port, pinctrl, reset-gpios and various supplies.
 > 
-> Signed-off-by: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
-> ---
-> Changes in v2:
-> - Dropped bitmap as refcount is replacing it.
-> - Modified commit message to explain problem first.
-> - Moved NULL pointer checks to the beginning in llcc_slice_getd().
-> - Replace incorrect usage of atomic_inc_return() with atomic_inc().
-> - Use devm_kcalloc() to allocate memory for common slice descriptor.
-> - Link to v1: https://lore.kernel.org/all/20241008194636.3075093-1-quic_uchalich@quicinc.com/
-> ---
->  drivers/soc/qcom/llcc-qcom.c       | 60 +++++++++++++++++++++-----------------
->  include/linux/soc/qcom/llcc-qcom.h |  6 ++--
->  2 files changed, 37 insertions(+), 29 deletions(-)
+> I think I'll just drop it from v2 and keep it locally only, to get the
+> simpledrm scaling right.
+
+Yeah I think that'd be best in general
+
 > 
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 192edc3f64dc3eee12ab5ebdb9034cd0e2010891..b0cfdd30967a1a3390a9c0ef6bc01b333244884c 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -3853,30 +3853,25 @@ static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
->  struct llcc_slice_desc *llcc_slice_getd(u32 uid)
->  {
->  	const struct llcc_slice_config *cfg;
-> -	struct llcc_slice_desc *desc;
->  	u32 sz, count;
->  
-> -	if (IS_ERR(drv_data))
-> +	if (IS_ERR(drv_data) || !drv_data)
+>>
+>> [...]
+>>
+>>> +	reserved-memory {
+>>> +		/*
+>>> +		 * ABL is powering down display and controller if this node is
+>>> +		 * not named exactly "splash_region".
+>>> +		 */
+>>> +		splash_region@e3940000 {
+>>> +			reg = <0x0 0xe3940000 0x0 0x2b00000>;
+>>> +			no-map;
+>>> +		};
+>>> +	};
+>>
+>> :/ maybe we can convince ABL not to do it..
+> 
+> Yes, we talked about that. I will look into getting "splash-region" and
+> "splash" also into the ABL (edk2) build for the phone. Still won't
+> resolve that for any other brand of devices.
 
-IS_ERR_OR_NULL()
+Gotta start small! Maybe framebuffer@ would be more """idiomatic"""
+but potayto/potahto
 
->  		return ERR_CAST(drv_data);
->  
-> +	if (IS_ERR_OR_NULL(drv_data->desc) || !drv_data->cfg)
-> +		return ERR_PTR(-ENODEV);
-> +
->  	cfg = drv_data->cfg;
->  	sz = drv_data->cfg_size;
->  
-> -	for (count = 0; cfg && count < sz; count++, cfg++)
-> +	for (count = 0; count < sz; count++, cfg++)
->  		if (cfg->usecase_id == uid)
->  			break;
->  
-> -	if (count == sz || !cfg)
-> +	if (count == sz)
->  		return ERR_PTR(-ENODEV);
->  
-> -	desc = kzalloc(sizeof(*desc), GFP_KERNEL);
-> -	if (!desc)
-> -		return ERR_PTR(-ENOMEM);
-> -
-> -	desc->slice_id = cfg->slice_id;
-> -	desc->slice_size = cfg->max_cap;
-> -
-> -	return desc;
+> 
+>>
+>> [...]
+>>
+>>> +		vreg_l12b: ldo12 {
+>>> +			regulator-name = "vreg_l12b";
+>>> +			/*
+>>> +			 * Skip voltage voting for UFS VCC.
+>>> +			 */
+>>
+>> Why so?
+> 
+> From downstream:
+> 
+> 		/*
+> 		 * This is for UFS Peripheral,which supports 2 variants
+> 		 * UFS 3.1 ,and UFS 2.2 both require different voltages.
+> 		 * Hence preventing voltage voting as per previous targets.
+> 		 */
+> 
+> I haven't (successfully) brought up UFS yet, so I haven't looked more
+> into that.
+> 
+> The storage on FP6 is UFS 3.1 though fwiw.
 
-This hunk looks unrelated to the problem you described and could go
-into a separate commit (can these ever reasonably be NULL, bar
-programmer error?)
-
-> +	return &drv_data->desc[count];
-
-count is a poor name (especially since 'sz' holds the number of slices
-we have), we can change it to just 'i' or something
-
->  }
->  EXPORT_SYMBOL_GPL(llcc_slice_getd);
->  
-> @@ -3887,7 +3882,7 @@ EXPORT_SYMBOL_GPL(llcc_slice_getd);
->  void llcc_slice_putd(struct llcc_slice_desc *desc)
->  {
->  	if (!IS_ERR_OR_NULL(desc))
-> -		kfree(desc);
-> +		WARN(atomic_read(&desc->refcount), " Slice %d is still active\n", desc->slice_id);
->  }
->  EXPORT_SYMBOL_GPL(llcc_slice_putd);
->  
-> @@ -3963,7 +3958,8 @@ int llcc_slice_activate(struct llcc_slice_desc *desc)
->  		return -EINVAL;
->  
->  	mutex_lock(&drv_data->lock);
-> -	if (test_bit(desc->slice_id, drv_data->bitmap)) {
-> +	if ((atomic_read(&desc->refcount)) >= 1) {
-> +		atomic_inc(&desc->refcount);
-
-if (atomic_inc_return(&desc->refcount) > 1)
-
-should do the same thing, in a single call.. but then you'd need
-to roll back below on failure.. but then regmap should never fail
-because it's just sugar syntax for MMIO accesses.. but then we've
-had issues before when regmap core broke.. so many dillemas..
-
->  		mutex_unlock(&drv_data->lock);
-
-You can also switch to scoped guards in a separate commit, which would
-be a very welcome change
+Hm.. can you check what debugfs says about the voltage at runtime
+(on downstream)? I'd assume you won't be shipping two kinds anyway
 
 [...]
 
->  	if (config->activate_on_init) {
-> -		desc.slice_id = config->slice_id;
-> -		ret = llcc_slice_activate(&desc);
-> +		desc = llcc_slice_getd(config->usecase_id);
-> +		if (PTR_ERR_OR_ZERO(desc))
-> +			return -EINVAL;
+>>> +&pm8550vs_d {
+>>> +	status = "disabled";
+>>> +};
+>>> +
+>>> +&pm8550vs_e {
+>>> +	status = "disabled";
+>>> +};
+>>> +
+>>> +&pm8550vs_g {
+>>> +	status = "disabled";
+>>> +};
+>>
+>> Hm... perhaps we should disable these by deafult
+> 
+> Do you want me to do this in this patchset, or we clean this up later at
+> some point? I'd prefer not adding even more dependencies to my patch
+> collection right now.
 
-I don't think it can return a nullptr
+I can totally hear that..
+
+Let's include it in this patchset, right before SoC addition
+I don't think there's any pm8550vs users trying to get merged in
+parallel so it should be OK
+
+[...]
+
+>>> +&usb_1 {
+>>> +	dr_mode = "otg";
+>>> +
+>>> +	/* USB 2.0 only */
+>>
+>> Because there's no usb3phy description yet, or due to hw design?
+> 
+> HW design. Funnily enough with clk_ignore_unused this property is not
+> needed, and USB(2.0) works fine then. Just when (I assume) the USB3
+> clock is turned off which the bootloader has enabled, USB stops working.
+
+The USB controller has two possible clock sources: the PIPE_CLK that
+the QMPPHY outputs, or the UTMI clock (qcom,select-utmi-as-pipe-clk).
+
+Because you said there's no USB3, I'm assuming DP-over-Type-C won't
+be a thing either? :(
 
 Konrad
 
