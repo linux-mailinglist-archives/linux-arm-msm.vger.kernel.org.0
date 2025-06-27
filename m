@@ -1,63 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-62742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB4C4AEB309
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 11:34:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FA5EAEB311
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 11:36:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4787B7AEFCE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 09:33:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2041D189B128
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 09:36:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03F8829552B;
-	Fri, 27 Jun 2025 09:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9348293C5B;
+	Fri, 27 Jun 2025 09:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LoyZXSiE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IlsgBS/2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14466293B5E;
-	Fri, 27 Jun 2025 09:34:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1468F293B5E;
+	Fri, 27 Jun 2025 09:36:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751016870; cv=none; b=YsHLakakBFqqpHa3bBglQwyyKfI5YhO1JmcQLkDVqqhAjZSFuNLm5io/4yRqaCZEcMuf5MIX4bm/2mYX7xuHg3LzAvQg4xnpl2cdEwG9quTIRx2AM/yUneJvNiBS1gtsEaRKE7yY+wB809rvtZ3NUKAGYCqZdYSQAFyLZuCt8aM=
+	t=1751016991; cv=none; b=DHC28Sh88dRxfaOcJzjyoSx3hutcn7BBNFRi+PMQ1U7nuRFn3xBE2kXLoKEccGDmaiS8XYwwfR38kaAVwY4WX5jZTFDtr8kBAWOXkLdxKOhq0y90nHQS0wfqIfUIHakDY+Ywc/IboeqPhCn3lmuktad4AEwIPfZL26tq975eVxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751016870; c=relaxed/simple;
-	bh=8Q8oTM1y51Iie1Mf1I4h1+UZwJPjQB92ik5bHmWnJUg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ITuG2jKbpvrb3pFY4/Lrsp8AnvzVg1Op2gwLJFjJaktsEjZXWHvOfQQ1ahu/J+6g1Zi0l4XbjfxrG2Vw5QolPYaU30IiTV2JDaMK7JPK+uziTMIwbJnt/GTfkIpBfn4ekiuMMU/BbZn0+6j6jkB3ZIe/SS7PKmPNt5Z24QEKYbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LoyZXSiE; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55R4DKaF007920;
-	Fri, 27 Jun 2025 09:34:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	t+uqEwVa29pUgdcj52vQ1NCxmrssiNcqyilQAL85Eu8=; b=LoyZXSiEc4+iYMOJ
-	2q717fEijK6ZacE2C4UqHLy8UkGcCG41Uej30OP1FUTf69JYuhp9Ex0Ed1q9NaVe
-	MlyYbgs1UEu8EVd5O3cp+WPcG4DlZmPQbbUc5+4QX41Kwav6Q92RA6hqhXJQut7U
-	NFbOHxYl02OQHhB9m4rC9eHjDn8Yi2ztlGU4buRiaUPpHL65wGlpoF6eHMxzwi5l
-	YlDmRX1kZq7PoFO+rzgyfguQvDmF5P1Iw2fjKiyLXAtqCyrW9dn+cW+J2PX2BqUn
-	+YoF2qCR3S9AY8WdrSoTOHp3aoFkhgLUh3nJaxaoCmP2xFT3T3Q7bdXOQ2YyHPqm
-	laWURQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47fbhqvqwe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Jun 2025 09:34:24 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55R9YNfe005224
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Jun 2025 09:34:23 GMT
-Received: from [10.253.72.250] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 27 Jun
- 2025 02:34:18 -0700
-Message-ID: <1c6d8e59-eb9b-4230-a7e5-f0ffc30b8877@quicinc.com>
-Date: Fri, 27 Jun 2025 17:34:15 +0800
+	s=arc-20240116; t=1751016991; c=relaxed/simple;
+	bh=Wu9AW5CnKuIsby46cmtnIf8gL/Rv77+ilEl2eeG6L5s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g3U50OybWorbTM5QOLzWJcT8fN58Gaq0E9oDoRb96VT1749XkSopBUaOly99zlG179Gj6x5CGbQOki5UO/hdjviOPKeomnW7zhQwM48PkssV+Eof5V5QoiSunxAoyw/q6n4Mk/A6OAsiUtzVVMKwziDjXmRT2CjbvxOlTV/7zTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IlsgBS/2; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-451dbe494d6so18591045e9.1;
+        Fri, 27 Jun 2025 02:36:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751016988; x=1751621788; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p5fCnamO77K411kdyNNvZ5VlXfxiHYsxT++vTJt6tpU=;
+        b=IlsgBS/2yYOMYp6/BW4tq+sfYA9VyXhrMWdNbq3zdaqktXpmegSns7nHsJWbtexkcN
+         fj8KK/FjtU+hkjckMA0L5bbhxFoXTPw8MthM9zKy9AuE8DBPFnYp4gofHiaarcpE865+
+         3CRW+HheZCsAWK65LGur+dNr7GfV8h1a9qlyBLmaGrvZkJ70kd4SQ/Huu0KGGNyIQL5d
+         KU2HtNxMS68w0yHHKnO7pVsmLIY1CNzvzg186ADIRNmrjYapccmp5d3vi0iOQnlUBaTc
+         pNYMmT7T7vbP/KwXMd7y7+4gCi+mZirzlo8Lq7ykwcAj9YjIfPHZ6h76W4RsSkl6mOEV
+         EXbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751016988; x=1751621788;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p5fCnamO77K411kdyNNvZ5VlXfxiHYsxT++vTJt6tpU=;
+        b=iYFTKeT7XQ80UA6aRfV2AcKHoG7gvYIAP6CWMAAhuiJOXuk8j/mT8VHq17wQRtn4Nm
+         H0OC2GXK5c1My3/JVprVsNZu9uUd4Kp3wG4Lj4xE7AU/GknKlhvYXjZM2cYORO8VOXsC
+         SLXt63hjiysPRdYZVUPcbsuD89TN+41C0zXzeenH5yYYbQJyUXGmXh0zUfs6Eq1inXqC
+         Mgto/u7Q+qlHG5MVObxyWo0bppY0y6EAfsUcJ4l4V/Q6elP7qOzOx4tkC22yHpHO5x0N
+         lXfGdRCa8DMErlQAYwBZoNKbyt4AiCD92ydCsm5SDiW6iaMP4/+b9DdXtpgFFqvQcNwY
+         dLXw==
+X-Forwarded-Encrypted: i=1; AJvYcCUKf7mTbZkWShz8B++ridnTJnbeQTK0d73if+dQKxFYr79KNZyTuWxy+JjLs1uF2ow27asCOwuml41gWJqf@vger.kernel.org, AJvYcCWS5pr1K3byfxlMQQb9yGTI1e6qUPSUTd/xU1LLBw99OINlb/54QFeX2bYnCiLZi2LITqrXM5CDVP/qUcXo@vger.kernel.org, AJvYcCWqh+0NQf7NbvmrSV5vIt9Q2NRpX8HCEN2xfxs1hNAaaXMle8t/cu/4Jhrj0rhvU+rPLnXM7xBUoQM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxK54crk91nX/uaBivXW8T8JU3R/IzOF5QDraJzCFdCa59orDAv
+	agEvfX+IHDm40cXkD1E2L4t19o7RxS0wQ47T1fO8qq7W/IqvVl+W2Tdc
+X-Gm-Gg: ASbGncseFrThhcg+FSsJnZPWGfmHHU9VlJdT9GCsrVR/frWDScVwNmQ4nLPQYgnPbk/
+	t6woiDGd8CR2RNEEtinE/FIv7z5MYBnxHXrEQcQLvhGQL3ShEZt57tbs8vohZhhBNd/X+d3XmxA
+	RBEdXAUJznSFBmvbNZQnjP8Kal5tSfS06AzUSdBIO1ZWCSQjiM324qIrTBDSZ3p3I2ZKluWouTo
+	MQrACSNueQhs6v8hcZjcqgLVselcJ6T7z4O7qiEm7RehCMXScZv6wGz02UZkBByHwmosv2aXsHS
+	7FUldDbvEPhptA1sHqzpx22XlHVR5pVJOuzTOnw4elu2JNbcYu1rVuS9LiULT6YZG6PjiGyJuG+
+	oOuXfCOISQ5Z/6eMtEXzEUTRC/XE=
+X-Google-Smtp-Source: AGHT+IHslSlEJb0qJ8a/g6NKoqQQ/b+PHsN+VXsoOgNq4hHwuu5INnGw1Tk3qJ/8yaYzQ22Rhmjf7Q==
+X-Received: by 2002:a05:6000:2810:b0:3a6:e1bb:a083 with SMTP id ffacd0b85a97d-3a8f4ee111emr1797485f8f.25.1751016988077;
+        Fri, 27 Jun 2025 02:36:28 -0700 (PDT)
+Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538a3a68d7sm45777285e9.14.2025.06.27.02.36.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Jun 2025 02:36:27 -0700 (PDT)
+Message-ID: <b960680d-6c5a-4130-b2dd-4ddf1f800430@gmail.com>
+Date: Fri, 27 Jun 2025 11:36:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,131 +82,69 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/3] Add current load setting for qcom camss csiphy
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <akapatra@quicinc.com>,
-        <hariramp@quicinc.com>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_svankada@quicinc.com>, <quic_depengs@quicinc.com>,
-        <quic_vikramsa@quicinc.com>
-References: <20250620040736.3032667-1-quic_wenmliu@quicinc.com>
- <9deadaaf-7dc7-4616-a6e6-95a5f757779e@linaro.org>
-Content-Language: en-US
-From: Wenmeng Liu <quic_wenmliu@quicinc.com>
-In-Reply-To: <9deadaaf-7dc7-4616-a6e6-95a5f757779e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [PATCH v3] interconnect: avoid memory allocation when
+ 'icc_bw_lock' is held
+Content-Language: hu
+To: Johan Hovold <johan@kernel.org>
+Cc: Georgi Djakov <djakov@kernel.org>,
+ Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+ Johan Hovold <johan+linaro@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-pm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250625-icc-bw-lockdep-v3-1-2b8f8b8987c4@gmail.com>
+ <aFvr1zSkf4KmIcMT@hovoldconsulting.com>
+ <aFvuiVX0kMIqXQtZ@hovoldconsulting.com>
+ <84b94649-a248-46b0-a401-772aeb8777a2@gmail.com>
+ <aFwBYRF0wJwVDdeX@hovoldconsulting.com>
+ <ac5ba192-b538-457e-acc4-c2d358b1fd0e@gmail.com>
+ <aF0TIWfDI4M1azzc@hovoldconsulting.com>
+ <3b90caec-b4c0-47d8-bdd7-1a7abd5e69d9@gmail.com>
+ <aF5EPhd5smrmB38Q@hovoldconsulting.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
+In-Reply-To: <aF5EPhd5smrmB38Q@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4xExga32zVGgEnbqW3uKJCbPkYK5p90z
-X-Authority-Analysis: v=2.4 cv=Id+HWXqa c=1 sm=1 tr=0 ts=685e65a0 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10
- a=lQAp6sCOzUQraW--TEUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 4xExga32zVGgEnbqW3uKJCbPkYK5p90z
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDA3NyBTYWx0ZWRfX15WDCFKBG24m
- xrALDlIf1v/lMkhkJ9GsRneXETPJzqGpJEZFBge42nzIIHlmR0CznK2qEMKOspveCVr8RuPe2y6
- 33PudT3gJrkexYYpA2d5alCxj5mYHulQaBBfTf+g77wEbT9MZjgNk16bBMB16ZyuQigjhjRczNp
- 1Mfn3Ge+CrQMN5wpKByK+mAMrHR8j4SikTCEpJ3eNRolGajNvk9iV0chK0Q9nqlg9ePhwzoU/2z
- aztlKtXc0MCN0OZ2iG1AoOI8ZBGxTLyR5nPNCRVa0ipiUmWCORkWYKl8RlfnJbKKTdKDReyK11J
- h3xXU2qFuW4kE5ElDUQmYTK+qQu1RMs4IM/o1+bNGY33G4tNcXReHdz8XMhbSyckmeEdw+buieS
- DaGxiwZBXBC/lrwFszYRw9VDJ8QnaabSuywcOVJ4KFgvEe1lg193yznh2SN6GUhY0mLQ7YK7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-27_03,2025-06-26_05,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0 bulkscore=0
- clxscore=1015 impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506270077
 
-
-
-On 2025/6/20 16:23, Bryan O'Donoghue wrote:
-> On 20/06/2025 05:07, Wenmeng Liu wrote:
->> Currently qcom camss csiphy drivers don’t set regulator’s currents
->> load properly using Linux regulator framework. This causes every
->> regulator’s initial mode set as HPM (high current mode),
->> which may have higher power consumption.
->> To address this issue, add current configuration for CSIPHY.
+2025. 06. 27. 9:11 keltezéssel, Johan Hovold írta:
+> On Thu, Jun 26, 2025 at 05:00:42PM +0200, Gabor Juhos wrote:
+>> 2025. 06. 26. 11:30 keltezéssel, Johan Hovold írta:
+> 
+>>> Note that this could be extended with a
+>>> name-allocated flag and an appropriate warning somewhere later if anyone
+>>> is worried about drivers failing to use the helper.
+>>>
+>>> Note that we can't use kfree_const() unconditionally as I initially
+>>> intended as apparently some interconnect providers already allocate
+>>> names for non-dynamic nodes.
 >>
->> Wenmeng Liu (3):
->>    media: dt-bindings: Add regulator current load
->>    media: qcom: camss: csiphy: Add regulator current load setting
->>    arm64: dts: qcom: qcs6490-rb3gen2: Add csiphy current support
+>> Not that I want to worry about anything, but for the sake of completeness I have
+>> to note something. Theoretically, freeing the name in icc_node_destroy() could
+>> cause the following on IPQ9574 under some circumstances:
 >>
->>   .../bindings/media/qcom,sc7280-camss.yaml     |  6 ++++
->>   .../qcs6490-rb3gen2-vision-mezzanine.dtso     |  1 +
->>   .../media/platform/qcom/camss/camss-csiphy.c  | 29 +++++++++++++++++++
->>   .../media/platform/qcom/camss/camss-csiphy.h  |  1 +
->>   4 files changed, 37 insertions(+)
+>>   [    4.003692] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffffff80047e4180 pfn:0x447e4
+>>   [    4.008439] flags: 0x0(zone=0)
+>>   [    4.017545] raw: 0000000000000000 fffffffec0000448 ffffff803fdbb518 0000000000000000
+>>   [    4.020480] raw: ffffff80047e4180 0000000000150000 00000000ffffffff 0000000000000000
+>>   [    4.028413] page dumped because: Not a kmalloc allocation
 >>
+>> It is not a problem of your patch though. The root cause of this is the same
+>> as why I saw the lockdep warning on the platform originally. The reason is
+>> that the static node ids used by the 'nsscc-ipq9574' driver are within the
+>> range of dynamic ids. Nevertheless, I have sent a patch [1] to fix that
+>> already.
 > 
-> How are these load-currents determined ?
+> Yeah, I saw that patch of yours the other day. Good that you tracked
+> that down. I'll probably amend the commit message with a comment about
+> why this triggered on IPQ in the first place too.
+> 
+>> Despite the note above, your proposal looks good to me. Would you like to
+>> send it as a formal patch, or shall I do it?
+> 
+> I can post it in a bit.
 
-According to my discussion with hw colleague,current value is decided 
-based on post silicon calibration, this value is fixed for the 
-corresponding chip.
+Great, just saw the final patch. Thank you!
 
-> Looking at other instances of setting current for PHYs
-> 
->   grep -r regulator_set_load * | grep com
->             [git:camss-bugfix-6.17] ✖
-> drivers/phy/qualcomm/phy-qcom-edp.c:    ret = regulator_set_load(edp- 
->  >supplies[0].consumer, 21800); /* 1.2 V vdda-phy */
-> drivers/phy/qualcomm/phy-qcom-edp.c:    ret = regulator_set_load(edp- 
->  >supplies[1].consumer, 36000); /* 0.9 V vdda-pll */
-> drivers/phy/qualcomm/phy-qcom-usb-hs.c:    ret = 
-> regulator_set_load(uphy->v1p8, 50000);
-> drivers/phy/qualcomm/phy-qcom-usb-hs.c:    ret = 
-> regulator_set_load(uphy->v3p3, 50000);
-> drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c:    ret = 
-> regulator_set_load(priv->vregs[VDDA_1P8].consumer, 19000);
-> drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c:    ret = 
-> regulator_set_load(priv->vregs[VDDA_3P3].consumer, 16000);
-> drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c: regulator_set_load(priv- 
->  >vregs[VDDA_1P8].consumer, 0);
-> drivers/phy/qualcomm/phy-qcom-qmp-combo.c:        ret = 
-> regulator_set_load(qmp->vregs[i].consumer,
-> drivers/remoteproc/qcom_q6v5_pas.c:        regulator_set_load(adsp- 
->  >cx_supply, 100000);
-> drivers/remoteproc/qcom_wcnss.c:            
-> regulator_set_load(bulk[i].consumer, info[i].load_uA);
-> drivers/remoteproc/qcom_wcnss_iris.c: regulator_set_load(iris- 
->  >vregs[i].consumer,
-> drivers/remoteproc/qcom_q6v5_mss.c:            ret = 
-> regulator_set_load(regs[i].reg,
-> drivers/remoteproc/qcom_q6v5_mss.c:            
-> regulator_set_load(regs[i].reg, 0);
-> drivers/remoteproc/qcom_q6v5_mss.c:            
-> regulator_set_load(regs[i].reg, 0);
-> drivers/remoteproc/qcom_q6v5_wcss.c:    regulator_set_load(wcss- 
->  >cx_supply, 100000);
-> 
-> I think this is the type of thing we should bury in SoC resources not in 
-> DT.
-> 
-> I can think of how we might want to change the current depending on the 
-> pixel rate.. but then I think that is something we could calculate based 
-> on pixel rate with descriptions as a base in
-> 
-> driver/media/platfrom/qcom/camss/camss.c::static const struct 
-> camss_subdev_resources csiphy_res_SoCNumber[];
-> 
-> ---
-> bod
-> 
-
-Yes, it's more common to put the current value in the code.Will be 
-updated in v2.
-
-Thanks,
-Wenmeng
+Regards,
+Gabor
 
 
