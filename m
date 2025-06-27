@@ -1,398 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-62782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8993AEB7F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 14:44:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8B60AEB805
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 14:46:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3324A64125F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 12:44:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 45EF51C45B74
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 12:47:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A52482D3EF0;
-	Fri, 27 Jun 2025 12:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FFD22D9787;
+	Fri, 27 Jun 2025 12:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="i11h9Hi6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WKGU4jzr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465E22853E0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 12:44:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A83243399;
+	Fri, 27 Jun 2025 12:46:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751028274; cv=none; b=FYQo2UlyIWoi+K4Yr8VjbOc8hRJAA566VDLufYzXcf2pFFQq2HtV4WFNXQB2RMSmoCL1mwGQRHwM9KRVfuIvWvUPrX2Lk9atl8EFYD5aR6K/MOeyVp0YELIz+Ns8Ldalh3YoiB29h6OFQAN4CHen1TGISmeIFZAHFem+f7HojiI=
+	t=1751028398; cv=none; b=coNkJ9t1qwdfbrXm3c2J2lzejaOQpV2NAygAHpZ4k6Qu+8squVoUJm2EA4PL7sPErIfQTggrRWmRrFFL1xq0ksghdqN391f/uN1DPHlQKBQZEzcOH2YXiA1X2Rl3Jt5+HvEipfWWPRL2vfdKj/I4HZ1e18EfPKFp/EhuEBdxexM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751028274; c=relaxed/simple;
-	bh=rQEKGVSFoH/L1t5XQA0tCWSJfWMC9SFAeOpwiRe2Vy8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WKpINqvrRa+G08gTgoHwAr2tme9K4X1eyxHJ5mvfvfcSAAkBQ46TqiNmapFOBXmqPKPnGexTVnwpXhz+48oykyrkquW+QAMCOik/o36jLyf9Fhj3S5e7zm3g10QOG26oOfwXE6kYqe8AgOF7vt6m8hOnzGkoqvJT4S9CYDd3DeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=i11h9Hi6; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55RBVpm8015157
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 12:44:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	NiGNHk8ZmGuLkSms/e3E52/NCPaXLmYD0fKKiCL3D9A=; b=i11h9Hi60sIE8J9v
-	P9eQ0XjA7VAp6IGuEDy4cVfPJXuOirswR4jjqMzEApZDI9fWrot0Ckqk4A31CwcT
-	D4msHAOnmwI48e1e6Tmwj1mRpBh758vQRUoA9vKjA5vsr8I8nLSgfodVgR0HBUeW
-	w9mbaBgvkwJ39h06BZBI/2r0lbXebdUPgK/iuad1tCvRQA8eSQdTrioZZm7z0h8+
-	SGk79fSe9CP+RoVpv1osGGz6KyD+4+MY3xoLgkQ+7reEZHxf1dbQFXInmD/Rzb2r
-	XwV8UsOBGnMfwpbWNyQnow/3s+p3q6ogEQL4c3qgG70yIDL9eKH0X0bn+wg/jqfM
-	TfhlgQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47emcn0mvf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 12:44:31 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7c7c30d8986so578200385a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 05:44:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751028270; x=1751633070;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NiGNHk8ZmGuLkSms/e3E52/NCPaXLmYD0fKKiCL3D9A=;
-        b=gxgTFTASqQs213A6F5gFm+R8BWj2amF8VQPQtNZ+D/UFZRdvtt7EwXRODDh7EhhRBn
-         9IuUTGnZNAADKEi8KaDiV9SUqtqD8egc/7+LgyEiWHTjSc5ADo9T52wbXYT6GYa8ewMh
-         MDDYTTP5C3qCORjO8RytCXqF1xzwMBwqFeehuM3JP4jN/6/jOQFcDzlENSfoUK68aT8v
-         vPn6BzoqEHGQVmzKqBaOvgWY9UGNonul6Txld5DBBvLs2oiS4Nk0H4ro8uz3sUsp0t+T
-         BBN5+pIuE/MI094OzLwAlq68fas17WziJDKcZ3iknkLfLW0A4n8fAu3o+quHSzirSUCU
-         0ivw==
-X-Forwarded-Encrypted: i=1; AJvYcCW38FKyhP2KFLzmnudzlVigv9hAV37jlleV5dKlpKlCZc/pMODjysXB2YNvwVl1sPLcph2HMA7hrbXtfikn@vger.kernel.org
-X-Gm-Message-State: AOJu0YzpgZDy+VxoP6DTg7r5jYgPXwN7HePzcu76MwPojfD4wVF7H9+w
-	DXK+rGZydp8GTi71YwVhxvuZHRr7+VVC5PqiarYagwoNVQLkQbYQdjI7E9SB/BBDFdwwAuHnWH5
-	Vw1BwmqecAzHxkkUav0IT1RoPsPxP7dYySLCcHX971aE6crLYE96eSQ2JgxVQcTjmof5b
-X-Gm-Gg: ASbGncu99mVr9YRkhWxnFBQc+7TMQHEI+mEtdwEUiOBRYvBUJ9D1taS8hJ+YUL0bvba
-	oHjAMlHkjK9adKDTREWCXCzYQpV62cIjdQEiBMwsVyscWZrn94tTRr3mZ1pL9sriXH++AYbwgdP
-	2BApqFIXlEyT33WxZdvRZaXAzlv4XctbHCy3VDZoHbNWF/lntMrgyC4HBNczQmVNWiS8wMmco0a
-	qY7DDziHSZuIqhWBqHWoRWDpx9XKRUGnmElNul9xH/1Eb1Ii+3CKO49e+igiirq71jWSer3B7kZ
-	ukJ7hUC6D8wj5PIeDmwVEM2ijNT+2PGDfFGyrYCoN466Fgs9JSY3bfF2Zpt2FF0YrsIE2AwS
-X-Received: by 2002:a05:620a:2712:b0:7d3:f99b:96ea with SMTP id af79cd13be357-7d4439a678dmr494893785a.40.1751028269527;
-        Fri, 27 Jun 2025 05:44:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFP9ck85sFk8WjIf/d2svxkt1Wd1bdX5L/bBOQhBn5YE9w86XYX/MhBRWyTqY3mZI9Wf+Lxmw==
-X-Received: by 2002:a05:620a:2712:b0:7d3:f99b:96ea with SMTP id af79cd13be357-7d4439a678dmr494887785a.40.1751028268930;
-        Fri, 27 Jun 2025 05:44:28 -0700 (PDT)
-Received: from [10.185.26.70] (37-33-181-83.bb.dnainternet.fi. [37.33.181.83])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5550b24d53esm438250e87.55.2025.06.27.05.44.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jun 2025 05:44:28 -0700 (PDT)
-Message-ID: <26f21464-022b-460a-92f2-0ea626cfd262@oss.qualcomm.com>
-Date: Fri, 27 Jun 2025 15:44:32 +0300
+	s=arc-20240116; t=1751028398; c=relaxed/simple;
+	bh=hdRIwaQfjGhQfLcNXhzn0OydMzDP3qq9qBl4cnmChyc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XX5mC0j83yp+/yJUvoLyXnx3+FKAJORySqsFs5xwRVBuwQHPj/s9ltcDYQQq5tnBvGx2nBj7n7Pqd5SHITzoqtAAudZhnWGeTZfGpgSdw6LUly7ui23BB6/V4lhdh0KeLy15miaCWAZ+9BgY8CzlkaQsc/lzQ1uvzagMOOjCJxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WKGU4jzr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7E0C4CEE3;
+	Fri, 27 Jun 2025 12:46:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751028398;
+	bh=hdRIwaQfjGhQfLcNXhzn0OydMzDP3qq9qBl4cnmChyc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WKGU4jzrOAQ0YhJEF1QiGBDgYvudn1jp2XBz2jhdVuS7y5vYnRfaHhKz0lkSWyF4l
+	 c8B1My0vnbo25JcYJYqaEuIQVlYDoQqh7ozm043LvkflWYSkMlcZGyg+i+a6Nc1Vyn
+	 hBiPJmZdXZ9BF7aCuqeqY82BKTNoKDm+J5RRrc6rZ6mOZtIqmxd5e8oMn8y4qXVEsZ
+	 A9cg1L2LjERIljLumAF3ED17CZxe/B/9Jsijsef3pFoIXaRZXEZG6A869MOWQ/FuDS
+	 7Eh/7LtHcR2ERwlhk0JtDn6TpM3j3lTsqck+oXdRX/s91yhj0uvpYAUjZYiP6PjNZY
+	 nxLapsirq2mOQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1uV8TW-000000004ti-0CrG;
+	Fri, 27 Jun 2025 14:46:38 +0200
+Date: Fri, 27 Jun 2025 14:46:38 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Steev Klimaszewski <steev@kali.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-efi@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v4 6/8] firmware: qcom: scm: add modparam to control
+ QSEECOM enablement
+Message-ID: <aF6Srse7BhDJkQiH@hovoldconsulting.com>
+References: <20250625-more-qseecom-v4-0-aacca9306cee@oss.qualcomm.com>
+ <20250625-more-qseecom-v4-6-aacca9306cee@oss.qualcomm.com>
+ <aF0cyOpkjUI4R3bv@hovoldconsulting.com>
+ <gqoba4uu62sh4qxapqkhlufxnliatevnsqcxvijvb74tposf2b@iyonh347aext>
+ <aF1EDMsw1KQTlteX@hovoldconsulting.com>
+ <cjinqyqn7qgvdoltoywxa2lq6bjyfrotmon3iv24tqt3bpdlpe@3xb2k42ffegj>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/38] drm/msm/dp: remove dp_display's dp_mode and use
- dp_panel's instead
-To: Yongxing Mou <quic_yongmou@quicinc.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
- <20250609-msm-dp-mst-v2-2-a54d8902a23d@quicinc.com>
- <kq6tb2wnte6v5z7uxgzc22kjwcevgvcdluzqbelvnbpbxlkotd@ltlv3u2guj4u>
- <1be2238d-7bb2-4ef9-9c7c-81dab0dcb559@quicinc.com>
- <4jrpa7iyygciuy2k4ydk7cpm5isdrddclljf6gbyvkiqc645tx@idyds4tkstkx>
- <9358a017-81ed-4db7-8e35-955922287c76@quicinc.com>
-Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <9358a017-81ed-4db7-8e35-955922287c76@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: lE0XNaE6IFvgXO9DjVu6onYKypCe_sOC
-X-Proofpoint-ORIG-GUID: lE0XNaE6IFvgXO9DjVu6onYKypCe_sOC
-X-Authority-Analysis: v=2.4 cv=J+eq7BnS c=1 sm=1 tr=0 ts=685e922f cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=a09MB1VsJqAZHPW3esczKA==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=e5mUnYsNAAAA:8 a=COk6AnOGAAAA:8
- a=oBoqDFdXD1tkhslXpxIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22 a=Vxmtnl_E_bksehYqCbjh:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDEwNSBTYWx0ZWRfX/mTtOsWFGBud
- wo9cLN7NrSN9qAtR0ddL53OjuetB6+bnJxCr6ksO0gPOF2QsfBRZUTicie0ugqhnLWQ/bC9KJhC
- xV1UjJRtprNd8dHvIoS3NLHhZT8grUyn7nf81c1dSG/6MiW4MUk/TFP0MrGcD/kbLOit0C1cc81
- pddx7JQVIvPumqPXwSCY7FYygMRHif/AMIK29foUAg60qbhitlYUdlTO4/AOtXOEfd2WcMrWuGV
- v70wg2B4dosiM2juzC8AL7hbr8wL0UVvGrEMa9E8jVIa+CD6kSaNUtBI+i43kcdcCaG2kvMJQV0
- MuBiuLkaAP3aDD2/PMcMRizsIESuRfw0QpuLisy6y/OxOf7xkX9PZTb9uUCEvCnAFFNzKvE3/1E
- Ke2Dg62/w4vaqK1TDTDKbMlKfIyKJFQZYbNGVfLwFmdt1hxzrrdA5YbgvRYlhLZ+sdfF8CuS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-27_04,2025-06-26_05,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxlogscore=999 adultscore=0 impostorscore=0 clxscore=1015
- spamscore=0 malwarescore=0 phishscore=0 priorityscore=1501 suspectscore=0
- mlxscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506270105
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cjinqyqn7qgvdoltoywxa2lq6bjyfrotmon3iv24tqt3bpdlpe@3xb2k42ffegj>
 
-On 27/06/2025 11:40, Yongxing Mou wrote:
+On Fri, Jun 27, 2025 at 02:33:27AM +0300, Dmitry Baryshkov wrote:
+> On Thu, Jun 26, 2025 at 02:58:52PM +0200, Johan Hovold wrote:
+> > On Thu, Jun 26, 2025 at 02:08:23PM +0300, Dmitry Baryshkov wrote:
+> > > On Thu, Jun 26, 2025 at 12:11:20PM +0200, Johan Hovold wrote:
+> > > > On Wed, Jun 25, 2025 at 01:53:25AM +0300, Dmitry Baryshkov wrote:
+> > > > > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > 
+> > > > > In preparation to enabling QSEECOM for the platforms rather than
+> > > > > individual machines provide a mechanism for the user to override default
+> > > > > selection. Allow users to use qcom_scm.qseecom modparam.
+> > > > > 
+> > > > > Setting it to 'force' will enable QSEECOM even if it disabled or not
+> > > > > handled by the allowlist.
+> > > > > 
+> > > > > Setting it to 'off' will forcibly disable the QSEECOM interface,
+> > > > > allowing incompatible machines to function.
+> > > > > 
+> > > > > Setting it to 'roefivars' will enable the QSEECOM interface, making UEFI
+> > > > > variables read-only.
+> > > > > 
+> > > > > All other values mean 'auto', trusting the allowlist in the module.
+> > > > 
+> > > > I don't see the need for this. The kernel should just provide sensible
+> > > > defaults.
+> > > 
+> > > It does provide _defaults_. However with the next commit we mass-enable
+> > > QSEECOM for SoC families, which includes untested WoA devices. If the
+> > > user observes a misbehaviour of the UEFI vars or any other
+> > > QSEECOM-related driver on those platforms, it is much easier to let
+> > > users test and workaround UEFI misbehaviour.
+> > 
+> > You basically know by now which machines supports qseecom and which do
+> > not, right (e.g. UFS storage means non-persistent EFI vars)?
+
+Do you have a theory about why on some platforms, like the one you're
+currently adding support for, writing UEFI variables does not work?
+
+Can you please include that information in the series so we can consider
+alternate routes for replacing the current whitelist with this black and
+white thing you're going for.
+
+Is it related to UFS at all, for example?
+
+> > And it's a pretty bad user experience to have people trying to write
+> > efivariables when setting up a machine and then spend hours trying to
+> > debug why they don't persist after a reboot.
+> > 
+> > I don't think that's fair to users.
 > 
+> So, is it a user or a developer, trying to port Linux to a new hardware?
+> Also, R/O implementation makes it obvious, that the variables do not
+> persist.
+
+A developer enabling support for a new platform can patch the driver and
+does not need a command line option.
+
+If you enable it by default, suddenly a bunch of end-users are going to
+have to debug why storing efi variables silently fails. That would not
+be fair to them.
+
+> > Let whoever brings up a new machine figure this out. It's just one
+> > entry, no scaling issues, and we get accurate information (unless
+> > Qualcomm, who sits on the documentation, is willing to provide it
+> > upfront).
 > 
-> On 2025/6/25 22:03, Dmitry Baryshkov wrote:
->> On Wed, Jun 25, 2025 at 08:34:18PM +0800, Yongxing Mou wrote:
->>>
->>>
->>> On 2025/6/9 20:48, Dmitry Baryshkov wrote:
->>>> On Mon, Jun 09, 2025 at 08:21:21PM +0800, Yongxing Mou wrote:
->>>>> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>>>>
->>>>> dp_display caches the current display mode and then passes it onto
->>>>> the panel to be used for programming the panel params. Remove this
->>>>> two level passing and directly populated the panel's dp_display_mode
->>>>> instead.
->>>>
->>>> - Why do we need to cache / copy it anyway? Can't we just pass the
->>>>     corresponding drm_atomic_state / drm_crtc_state / 
->>>> drm_display_mode ?
->>>>
->>> This part works as follows: .mode_set() copies the adjusted_mode into
->>> msm_dp_display_private->msm_dp_display_mode, and also parses and stores
->>> variables such as v_active_low/h_active_low/out_fmt_is_yuv_420 
->>> and ... When
->>> @drm_bridge_funcs.atomic_enable() is called, it copies
->>> msm_dp_display->msm_dp_mode into dp_panel->msm_dp_mode and initializes
->>> panel_info in msm_dp_display_set_mode(). Then when go to
->>> msm_dp_ctrl_on_stream(), the parameters are updated into the 
->>> corresponding
->>> hardware registers.
->>
->> So, if we do everything during .atomic_enable(), there would be no need
->> to store and/or copy anything. All the data is available and can be used
->> as is.
->>
-> Got it. Let me confirm—can we keep msm_dp_mode or drm_display_mode in 
-> msm_dp_panel? Mabey debug node will use this ..
+> And that's not really scallable. All other parts of a particular device
+> are described by the DT only (that's especially true on the PMIC GLINK
+> machines). If we are to support new laptop in e.g. distro kernel, we
+> need to provide a DT... and a patch for qcom-scm driver. I'd very much
+> prefer to do it other way around: provide a DT and patch qcom-scm if the
+> laptop is any way different from other laptops. E.g. we know that all
+> X1Elite laptops support R/W EFI variables.
 
-Please don't. I really dislike storing drm_atomic_state-related 
-variables in a non-state structure. I think it makes it easier to 
-mistakenly update or to use a stale value.
+But this is just kicking the can and putting the burden on someone else.
+Now a user or distro would need to pass command line parameters after
+spending time debugging why efi variable updates do not persist after a
+reboot.
 
-Debug code already prints modes in debugfs/dri/N/state. If we need any 
-other state-related prints, they should go to the same file.
+If we know with reasonable certainty that all, say X1E, devices works,
+then that that's one thing.
 
->>>
->>> This design has been in place since the first version of the DP 
->>> driver and
->>> has remained largely unchanged.
->>
->> Yes... The point is that you are touching this piece of code anyway,
->> let's make it nicer.
->>
-> Agree with this point.
->>> Originally, the drm_mode would be passed in
->>> two stages: from msm_dp_display->msm_dp_mode to dp_panel- 
->>> >msm_dp_mode. Since
->>> in MST mode each stream requires its own drm_mode and stored in 
->>> dp_panel, we
->>> simplified the two-stage transfer into a single step (.mode_set() do all
->>> things and store in msm_dp_panel). Meanwhile we modified the
->>> msm_dp_display_set_mode function to accept a msm_dp_panel parameter,
->>> allowing the MST bridge funcs' mode_set() to reuse this part code.
->>>
->>> The following patches:
->>> https://patchwork.freedesktop.org/patch/657573/?series=142207&rev=2 and
->>> https://patchwork.freedesktop.org/patch/657593/?series=142207&rev=2,
->>> introduce msm_dp_display_*_helper functions to help reuse common code 
->>> across
->>> MST/SST/eDP drm_bridge_funcs.
->>>
->>> If we drop msm_dp_mode from dp_panel and use drm_display_mode, it might
->>> introduce a large number of changes that are not directly related to 
->>> MST.
->>> Actually i think the presence of msm_dp_display_mode seems to 
->>> simplify the
->>> work in msm_dp_panel_timing_cfg(), this patch series we want to focus 
->>> on MST
->>> parts, so would we consider optimizing them later?
->>
->> Sure... But then you have to change two places. If you optimize it
->> first, you have to touch only place. And it can be even submitted
->> separately.
->>
-> Understood, that’s indeed the case. I just want to prioritize the MST 
-> patch and have it merged first, since it involves changes to lots of 
-> files. Thanks~~
->>>
->>> Thanks~
->>>>>
->>>>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>>>> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
->>>>> ---
->>>>>    drivers/gpu/drm/msm/dp/dp_display.c | 76 +++++++++++++ 
->>>>> +-----------------------
->>>>>    1 file changed, 29 insertions(+), 47 deletions(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/ 
->>>>> msm/dp/dp_display.c
->>>>> index 
->>>>> 4a9b65647cdef1ed6c3bb851f93df0db8be977af..9d2db9cbd2552470a36a63f70f517c35436f7280 100644
->>>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->>>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->>>>> @@ -92,7 +92,6 @@ struct msm_dp_display_private {
->>>>>        struct msm_dp_panel   *panel;
->>>>>        struct msm_dp_ctrl    *ctrl;
->>>>> -    struct msm_dp_display_mode msm_dp_mode;
->>>>>        struct msm_dp msm_dp_display;
->>>>>        /* wait for audio signaling */
->>>>> @@ -806,16 +805,29 @@ static int msm_dp_init_sub_modules(struct 
->>>>> msm_dp_display_private *dp)
->>>>>    }
->>>>>    static int msm_dp_display_set_mode(struct msm_dp *msm_dp_display,
->>>>> -                   struct msm_dp_display_mode *mode)
->>>>> +                   const struct drm_display_mode *adjusted_mode,
->>>>> +                   struct msm_dp_panel *msm_dp_panel)
->>>>>    {
->>>>> -    struct msm_dp_display_private *dp;
->>>>> +    u32 bpp;
->>>>> -    dp = container_of(msm_dp_display, struct 
->>>>> msm_dp_display_private, msm_dp_display);
->>>>> +    drm_mode_copy(&msm_dp_panel->msm_dp_mode.drm_mode, 
->>>>> adjusted_mode);
->>>>> +
->>>>> +    if (msm_dp_display_check_video_test(msm_dp_display))
->>>>> +        bpp = msm_dp_display_get_test_bpp(msm_dp_display);
->>>>> +    else
->>>>> +        bpp = msm_dp_panel->connector->display_info.bpc * 3;
->>>>> +
->>>>> +    msm_dp_panel->msm_dp_mode.bpp = bpp;
->>>>> +
->>>>> +    msm_dp_panel->msm_dp_mode.v_active_low =
->>>>> +        !!(adjusted_mode->flags & DRM_MODE_FLAG_NVSYNC);
->>>>> +    msm_dp_panel->msm_dp_mode.h_active_low =
->>>>> +        !!(adjusted_mode->flags & DRM_MODE_FLAG_NHSYNC);
->>>>> +    msm_dp_panel->msm_dp_mode.out_fmt_is_yuv_420 =
->>>>> +        drm_mode_is_420_only(&msm_dp_panel->connector- 
->>>>> >display_info, adjusted_mode) &&
->>>>> +        msm_dp_panel->vsc_sdp_supported;
->>>>> -    drm_mode_copy(&dp->panel->msm_dp_mode.drm_mode, &mode->drm_mode);
->>>>> -    dp->panel->msm_dp_mode.bpp = mode->bpp;
->>>>> -    dp->panel->msm_dp_mode.out_fmt_is_yuv_420 = mode- 
->>>>> >out_fmt_is_yuv_420;
->>>>> -    msm_dp_panel_init_panel_info(dp->panel);
->>>>> +    msm_dp_panel_init_panel_info(msm_dp_panel);
->>>>>        return 0;
->>>>>    }
->>>>> @@ -1431,10 +1443,13 @@ bool msm_dp_needs_periph_flush(const struct 
->>>>> msm_dp *msm_dp_display,
->>>>>    bool msm_dp_wide_bus_available(const struct msm_dp *msm_dp_display)
->>>>>    {
->>>>>        struct msm_dp_display_private *dp;
->>>>> +    struct msm_dp_panel *dp_panel;
->>>>>        dp = container_of(msm_dp_display, struct 
->>>>> msm_dp_display_private, msm_dp_display);
->>>>> -    if (dp->msm_dp_mode.out_fmt_is_yuv_420)
->>>>> +    dp_panel = dp->panel;
->>>>> +
->>>>> +    if (dp_panel->msm_dp_mode.out_fmt_is_yuv_420)
->>>>>            return false;
->>>>>        return dp->wide_bus_supported;
->>>>> @@ -1496,10 +1511,6 @@ void msm_dp_bridge_atomic_enable(struct 
->>>>> drm_bridge *drm_bridge,
->>>>>        bool force_link_train = false;
->>>>>        msm_dp_display = container_of(dp, struct 
->>>>> msm_dp_display_private, msm_dp_display);
->>>>> -    if (!msm_dp_display->msm_dp_mode.drm_mode.clock) {
->>>>> -        DRM_ERROR("invalid params\n");
->>>>> -        return;
->>>>> -    }
->>>>>        if (dp->is_edp)
->>>>>            msm_dp_hpd_plug_handle(msm_dp_display, 0);
->>>>> @@ -1517,15 +1528,6 @@ void msm_dp_bridge_atomic_enable(struct 
->>>>> drm_bridge *drm_bridge,
->>>>>            return;
->>>>>        }
->>>>> -    rc = msm_dp_display_set_mode(dp, &msm_dp_display->msm_dp_mode);
->>>>> -    if (rc) {
->>>>> -        DRM_ERROR("Failed to perform a mode set, rc=%d\n", rc);
->>>>> -        mutex_unlock(&msm_dp_display->event_mutex);
->>>>> -        return;
->>>>> -    }
->>>>
->>>> It should be done other way around: keep this call and drop
->>>> msm_dp_bridge_mode_set().
->>>>
->>> Emm as reply in last comments..
->>
->> Yep. Drop .mode_set, the callback is even described as deprecated.
->>
-> Thanks, the documentation does state that.
->>>>> -
->>>>> -    hpd_state =  msm_dp_display->hpd_state;
->>>>> -
->>>>>        if (hpd_state == ST_CONNECTED && !dp->power_on) {
->>>>>            msm_dp_display_host_phy_init(msm_dp_display);
->>>>>            force_link_train = true;
->>>>> @@ -1604,33 +1606,13 @@ void msm_dp_bridge_mode_set(struct 
->>>>> drm_bridge *drm_bridge,
->>>>>        msm_dp_display = container_of(dp, struct 
->>>>> msm_dp_display_private, msm_dp_display);
->>>>>        msm_dp_panel = msm_dp_display->panel;
->>>>> -    memset(&msm_dp_display->msm_dp_mode, 0x0, sizeof(struct 
->>>>> msm_dp_display_mode));
->>>>> -
->>>>> -    if (msm_dp_display_check_video_test(dp))
->>>>> -        msm_dp_display->msm_dp_mode.bpp = 
->>>>> msm_dp_display_get_test_bpp(dp);
->>>>> -    else /* Default num_components per pixel = 3 */
->>>>> -        msm_dp_display->msm_dp_mode.bpp = dp->connector- 
->>>>> >display_info.bpc * 3;
->>>>> -
->>>>> -    if (!msm_dp_display->msm_dp_mode.bpp)
->>>>> -        msm_dp_display->msm_dp_mode.bpp = 24; /* Default bpp */
->>>>> -
->>>>> -    drm_mode_copy(&msm_dp_display->msm_dp_mode.drm_mode, 
->>>>> adjusted_mode);
->>>>> -
->>>>> -    msm_dp_display->msm_dp_mode.v_active_low =
->>>>> -        !!(msm_dp_display->msm_dp_mode.drm_mode.flags & 
->>>>> DRM_MODE_FLAG_NVSYNC);
->>>>> -
->>>>> -    msm_dp_display->msm_dp_mode.h_active_low =
->>>>> -        !!(msm_dp_display->msm_dp_mode.drm_mode.flags & 
->>>>> DRM_MODE_FLAG_NHSYNC);
->>>>> -
->>>>> -    msm_dp_display->msm_dp_mode.out_fmt_is_yuv_420 =
->>>>> -        drm_mode_is_420_only(&dp->connector->display_info, 
->>>>> adjusted_mode) &&
->>>>> -        msm_dp_panel->vsc_sdp_supported;
->>>>> +    msm_dp_display_set_mode(dp, adjusted_mode, msm_dp_panel);
->>>>>        /* populate wide_bus_support to different layers */
->>>>> -    msm_dp_display->ctrl->wide_bus_en =
->>>>> -        msm_dp_display->msm_dp_mode.out_fmt_is_yuv_420 ? false : 
->>>>> msm_dp_display->wide_bus_supported;
->>>>> -    msm_dp_display->catalog->wide_bus_en =
->>>>> -        msm_dp_display->msm_dp_mode.out_fmt_is_yuv_420 ? false : 
->>>>> msm_dp_display->wide_bus_supported;
->>>>> +    msm_dp_display->ctrl->wide_bus_en = msm_dp_panel- 
->>>>> >msm_dp_mode.out_fmt_is_yuv_420 ?
->>>>> +        false : msm_dp_display->wide_bus_supported;
->>>>> +    msm_dp_display->catalog->wide_bus_en = msm_dp_panel- 
->>>>> >msm_dp_mode.out_fmt_is_yuv_420 ?
->>>>> +        false : msm_dp_display->wide_bus_supported;
->>>>>    }
->>>>>    void msm_dp_bridge_hpd_enable(struct drm_bridge *bridge)
->>>>>
->>>>> -- 
->>>>> 2.34.1
->>>>>
->>>>
->>>
->>
-> 
+But if this series now enables broken EFI variable support on every
+other device then I don't think that's ok (even if you provide a command
+line parameter that each user now have to pass).
 
+Then I'd rather see a proposal for how to determine which machines
+support this or not, information which was not available when this
+interface was reverse engineered and where a conservative whitelist
+approach made perfect sense.
 
--- 
-With best wishes
-Dmitry
+> Except for X1-CRD, which deserves an entry in the driver.
+
+I think you meant my sc8280xp CRD here.
+
+Johan
 
