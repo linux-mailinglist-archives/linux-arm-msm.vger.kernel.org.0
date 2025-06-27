@@ -1,137 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-62863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEF5EAEBE8F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 19:47:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B9C4AEBEA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 19:55:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D4DED4A7D1B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 17:47:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5B138189895E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 17:55:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD5E72E9ED4;
-	Fri, 27 Jun 2025 17:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A22892EACEE;
+	Fri, 27 Jun 2025 17:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K8WOH50W"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bktBNDHk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05FC38DF9;
-	Fri, 27 Jun 2025 17:46:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14AF2EA742
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 17:55:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751046419; cv=none; b=f6Clcbt5sjFnuJ8g9UqCRpq1ZZVb4GnEYafNcZ2LqTLCdTEvS3GqzGJWfsQVhyrXSEFUKaSVgHXE/SyeVzjl911/jruaFXctPG/JqofUZVRHh82ec42TGkD6wrA2JMEAOWjXIR9nRBJEqbjQDvutVD1y00Knv3G0rbVh0rvMii4=
+	t=1751046935; cv=none; b=CfQHhhqxCV0R/PVZfeqICFMUbfL5A/o7gqSV+QWH/TFKCxpUFXkif4o5TQMr3F6oQSgCXrDuNnMqVncDkhRqRPOsp4pw9W+DevixayM37VMj9TGceotQLQH/pLqOMSWNYFfnqINgbUnM9AhlVHNAdeDeK7fHsw1/NcHiAUQ3yaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751046419; c=relaxed/simple;
-	bh=834LtEDDKmSJjQzk82TMIFq6V2flBM6uUKKjUnRC5r4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NWmITPnw0ZxraJhRmkaM+itBilPlHKLsjmnN4gk+d44yfsTdL59LZdRArDC0fb2Vs5MuhFL/Fcp9reFYQS8YOwBU1nzVcFqb7QmTya/N9MGmhEKery8N5LdpV4+urEeQuFsV4NoCxh227QxthO54luc1liu4x3UJAPEUW9zU3Vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K8WOH50W; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5BDC4CEE3;
-	Fri, 27 Jun 2025 17:46:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751046419;
-	bh=834LtEDDKmSJjQzk82TMIFq6V2flBM6uUKKjUnRC5r4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=K8WOH50W226cAG8yh101MReBaS0kxcmuk6tb3FXa8IGpKPAT8qLaThlDmdgww8Mi1
-	 KKjW/88AdBaQSo933UN9uoLqap1BWIVOFLa+xLbB5OxxXy5jcvi6AtjSrTMLCbyDFf
-	 PLrtWm/rT1ZDbYT2WmQx/LxJmqemJfspgvnn0etju8SNcV8zBbpr4M9cz4pXtzppKO
-	 qEZqe530TgIWsaRmxiBLqWQ9orKqjOq0GxDqZmLX6exil5klt7ozsnPVzWz9iD51iD
-	 OFbyeFdManIJw/jmEri40jKgngZhfEJKTarp+DakNaqGSvv8XFIXFe3fNTtWESqlug
-	 hiUVTxejSJIRg==
-Date: Fri, 27 Jun 2025 10:46:58 -0700
-From: Vinod Koul <vkoul@kernel.org>
-To: srinivas.kandagatla@oss.qualcomm.com
-Cc: broonie@kernel.org, yung-chuan.liao@linux.intel.com,
-	pierre-louis.bossart@linux.dev, lgirdwood@gmail.com, perex@perex.cz,
-	tiwai@suse.com, krzysztof.kozlowski@linaro.org,
-	linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/4] soundwire: bus: add of_sdw_find_device_by_node helper
-Message-ID: <aF7ZEi9qQxshnWed@vaman>
-References: <20250627155103.441547-1-srinivas.kandagatla@oss.qualcomm.com>
- <20250627155103.441547-2-srinivas.kandagatla@oss.qualcomm.com>
+	s=arc-20240116; t=1751046935; c=relaxed/simple;
+	bh=sP55RcNGRtVXAqUW36R17TRg0JabtTdiLcEfMjXZ0rg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=a3MMuIkytknQimdqwNbIAowBVD1N4+7kO0S+To/XmFAQCKnoB4bgpCTj9ONEJhlG6UYoI0Knc3QCjp1oDj4IPLxu9CJNbFraIbnZp3PHc3YcUWXmn/IcsGBq8q/C82jMjPX0o74iixPvNJg0ihnkQ8v/cYuqTYZtwMIHz87dLRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bktBNDHk; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55RCAp1A028793
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 17:55:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xhtPwHF0fTtys7QWflgWfeVzTXfKtMLTUh3g+imGqfM=; b=bktBNDHk6uXDTEkc
+	P3hPdPknqjLUHgdbQBnOxh0EkFLa3qjGh0hsd72BMxnmtzFKmSqT3MZn6H5wQFZn
+	esyndwzb/ajSbcEuCUFWD6HeppBAWxX45VTf5anMua3JjOjDl+mRUxlIT2fh8DNb
+	LFX7XX7JeuSDBYFs12oq1x0qRnbASgbjTqZmYwvKsNNPX9rzMduNHgdttdd4TY79
+	htJBfVjiXzKr++u0m8uUbvkV8dJgth9Zp6qf3fbyWl1ej16lGxZrKGOczkqGWWEO
+	qMsuPvV296TfDskYUzZ1Cu4EyhSKTYnjECJUlJ25z1D0BUiR4jJOgy6b2GMsZpN+
+	HWYIcA==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47hkpbjayu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 17:55:32 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4a804126ed6so1552661cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 10:55:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751046932; x=1751651732;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xhtPwHF0fTtys7QWflgWfeVzTXfKtMLTUh3g+imGqfM=;
+        b=Er5Ix/cxqedllxhkdm7uYP7UuZ0Pv6N3dXAcNu2ENOKC2qMvXhp99ImdkcIniMEnSA
+         x7A+mQb5AP9n9q9cohyLR9zpdeoXC0Sby/gSqWN6rpGqZobz3IUjn1i2QXoI8YNEZOrg
+         /pGS8tYi4BpsNcbbv3cTjNKIf1Jo5FmqGJC37IzXgbiLAx68NhpSO8rtvd15uVe/J7xF
+         rYaRuDepbaqpcRpyBbx7OOML3ZBQNtGfIxZvW3TkJTi/6r18LKqxe68ACnphpiWlyOay
+         oypbGvUiHfolow6oGUNz3ujA8RYrAF5iPzvAm2uhfSfo3Jo4bKca/lRaSDfMEs0s01Z4
+         B6TA==
+X-Forwarded-Encrypted: i=1; AJvYcCVgwOCiC+dl278RbXgZN/uh71Wh/3lYhHoOFpcWrGsFKVdJMWrsCEg7nwB2AhMOB1QZtVv7QFyQpCttlAGI@vger.kernel.org
+X-Gm-Message-State: AOJu0YyRxdymCCqjiLE5U+rf6UopcKiEToyQjio6qkyI/00BxkwewBQh
+	RQNDemYCChsZvcshFsu93c3nLX9C37V87CyPSoguU855KMeOsfjGwRCqUwTRZMDCfh/wGj12Udd
+	Ba0hR653GDgyUz/1k9bhN1SlwDo8lw+cr+MWOGimfq/sFB/5tDAcvKmGQa/s29DodSzdV
+X-Gm-Gg: ASbGncv8F/ZNJJC5DgW5m/V252PTyPn0+nz8Nt8/4eNmjbzsdolGvWAS+FxCFZW3yKU
+	b4fV2OnoYLVTefLqfGDaKNS120h5fdoqlozJIhKDKwAy3/1tGK/5DMUcH7E5wuYilTLDxWg6OrG
+	tV9VpEMcoyz/GAtPvt4gDRbz97UbQ8oW2lCR8sSLd+CsYGe9PsDBtgA9TTBAzP+q61fONXEycw/
+	aNDR8Ws9h4PHrQmkszkEUBm6ojBdUmFongnFJqy+4NjKU5dHtNlTuF1Ym9ifnNslBkubR0nokOg
+	iMiW4tNDxvPuEyvMTG+5aqeZbKukQrD4xLMAAfYKvJZdXlXZaJ0/4BOkcPvjYu92tNCWj33tSPM
+	BFN8=
+X-Received: by 2002:a05:622a:1a0c:b0:472:2122:5a37 with SMTP id d75a77b69052e-4a807390ff1mr1923031cf.4.1751046931757;
+        Fri, 27 Jun 2025 10:55:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEjS6V7nSMnoKIToCQDAP4GKzUa5d91t9ousBqXncQjQ5eyhDeXwLOlzvN8i3GRTqy4F6YNGw==
+X-Received: by 2002:a05:622a:1a0c:b0:472:2122:5a37 with SMTP id d75a77b69052e-4a807390ff1mr1922741cf.4.1751046931099;
+        Fri, 27 Jun 2025 10:55:31 -0700 (PDT)
+Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60c828e1a96sm1778182a12.19.2025.06.27.10.55.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Jun 2025 10:55:30 -0700 (PDT)
+Message-ID: <80912fb3-2af3-48b1-b81c-89bfcdb54841@oss.qualcomm.com>
+Date: Fri, 27 Jun 2025 19:55:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250627155103.441547-2-srinivas.kandagatla@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm/mdp4: Consistently use the "mdp4_" namespace
+To: Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov
+ <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <6b9076268548c52ec371e9ed35fee0dd8fcb46ef.1751044672.git.christophe.jaillet@wanadoo.fr>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <6b9076268548c52ec371e9ed35fee0dd8fcb46ef.1751044672.git.christophe.jaillet@wanadoo.fr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDE0NSBTYWx0ZWRfX6k0s5lbZjB5R
+ Exb8z6Ul0WJiHq3bZThUNSl/fRYe51SiUXQMbPCTIOxv4r4byMs2sqsn9amVSJBDea5xCfXcBZf
+ VxR6vA8qWLWLJ6fMlZWvWtjt6L7SBs6nRM6GerG+k/i+49EVz6wHB4z7TlHRM8x2gLTNr0rKJ+O
+ OeVuvnWuNq0XVd3nE2kZr4qVLC5h0WInC6ZapCdzTLmkaGfm3rnb22JAdfknoGcg96NMXY06i5Q
+ rG8kDPm7zK9Yg+wckzeZ41+WMz+2/wOSFDn5ScyW18ka6KjzHpzZXziJPUZU/2+TFyecZPS8R7F
+ PR3qWHdJcHhuxlptAWvJ9ZWC/XQTL/54KnyRuOZ5tj+OiMDzd8YO3NdVCKKl6VieNi5o2UD2oC1
+ USXPL7W4Vk0zKnWML6IrhPqFuDgZEDXrm+VCCB+ZJEGngr9pC17JAxK5Nvdw53mWgaDqY+6a
+X-Proofpoint-GUID: VkI_6AnnbDsMSp0NFm41XfWrSOA8w5db
+X-Authority-Analysis: v=2.4 cv=AY2xH2XG c=1 sm=1 tr=0 ts=685edb14 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=5MiDvfStR0l9wvLywkEA:9
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-ORIG-GUID: VkI_6AnnbDsMSp0NFm41XfWrSOA8w5db
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-27_05,2025-06-26_05,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 priorityscore=1501 mlxscore=0 mlxlogscore=807 phishscore=0
+ malwarescore=0 lowpriorityscore=0 spamscore=0 adultscore=0 impostorscore=0
+ clxscore=1015 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506270145
 
-On 27-06-25, 16:51, srinivas.kandagatla@oss.qualcomm.com wrote:
-> From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+On 6/27/25 7:18 PM, Christophe JAILLET wrote:
+> Functions and other stuff all start with "mdp4_", except a few ones that
+> start with "mpd4_" (d and p switched)
 > 
-> There has been more than 3 instances of this helper in multiple codec
-> drivers, it does not make sense to keep duplicating this part of code.
+> Make things consistent and use "mdp4_" everywhere.
 > 
-> Lets add a helper of_sdw_find_device_by_node for codec drivers to use it.
-> 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 > ---
->  drivers/soundwire/slave.c     | 6 ++++++
->  include/linux/soundwire/sdw.h | 9 +++++++++
->  2 files changed, 15 insertions(+)
-> 
-> diff --git a/drivers/soundwire/slave.c b/drivers/soundwire/slave.c
-> index d2d99555ec5a..3d4d00188c26 100644
-> --- a/drivers/soundwire/slave.c
-> +++ b/drivers/soundwire/slave.c
-> @@ -273,4 +273,10 @@ int sdw_of_find_slaves(struct sdw_bus *bus)
->  	return 0;
->  }
->  
-> +struct device *of_sdw_find_device_by_node(struct device_node *np)
-> +{
-> +	return bus_find_device_by_of_node(&sdw_bus_type, np);
-> +}
-> +EXPORT_SYMBOL_GPL(of_sdw_find_device_by_node);
 
-Helper for single code lines?? why!
+Nice, thank you
 
-> +
->  MODULE_IMPORT_NS("SND_SOC_SDCA");
-> diff --git a/include/linux/soundwire/sdw.h b/include/linux/soundwire/sdw.h
-> index 2362f621d94c..84d1a101b155 100644
-> --- a/include/linux/soundwire/sdw.h
-> +++ b/include/linux/soundwire/sdw.h
-> @@ -18,6 +18,7 @@
->  
->  struct dentry;
->  struct fwnode_handle;
-> +struct device_node;
->  
->  struct sdw_bus;
->  struct sdw_slave;
-> @@ -1080,6 +1081,8 @@ int sdw_stream_add_slave(struct sdw_slave *slave,
->  int sdw_stream_remove_slave(struct sdw_slave *slave,
->  			    struct sdw_stream_runtime *stream);
->  
-> +struct device *of_sdw_find_device_by_node(struct device_node *np);
-> +
->  int sdw_slave_get_scale_index(struct sdw_slave *slave, u8 *base);
->  
->  /* messaging and data APIs */
-> @@ -1113,6 +1116,12 @@ static inline int sdw_stream_remove_slave(struct sdw_slave *slave,
->  	return -EINVAL;
->  }
->  
-> +static inline struct device *of_sdw_find_device_by_node(struct device_node *np)
-> +{
-> +	WARN_ONCE(1, "SoundWire API is disabled");
-> +	return NULL;
-> +}
-> +
->  /* messaging and data APIs */
->  static inline int sdw_read(struct sdw_slave *slave, u32 addr)
->  {
-> -- 
-> 2.49.0
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
--- 
-~Vinod
+Konrad
+
 
