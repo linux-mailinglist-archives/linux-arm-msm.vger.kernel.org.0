@@ -1,112 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-62786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36789AEB820
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 14:50:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96DFFAEB82C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 14:51:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 89AC83B3EF4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 12:50:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B72C55636BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 12:51:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1907C2BF3E4;
-	Fri, 27 Jun 2025 12:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D47D2D979F;
+	Fri, 27 Jun 2025 12:51:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aWJm1SqE"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IbMBNwYC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEF3BE4A;
-	Fri, 27 Jun 2025 12:50:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA8B2D12FF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 12:51:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751028626; cv=none; b=r1lH0tXTIoln1Cw02yqWRfyKF0FohNwYP12Ldh2B9S0GUXIUsZQHobFV8YTRxir3ZHYqL2vAJbwcXMBaZ9qmf9NF9pNVk30y4hjv4by+74/J/HNbgeiv6N60uCa9kC32SKJ3f9bXCWWjotmC8er6MH71FokWkJeg22QKBCBLzMs=
+	t=1751028699; cv=none; b=Pe1Ck8A1LUDvJ7pgpN3NDyTqZAixOcR5sH0AaT9qLoVfeOWjFlY1jizFfw5Zz5T/SQRANHbR4VyCivxVL9628rOc/7+AkCI6lHC4byC7EcpHNxKFCH1uL+ecJ7qKWLFXyJmfuzACLtoeurcsVcajoY6D0apmuWthnPG6hgoaFKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751028626; c=relaxed/simple;
-	bh=apcScWYertfmVCc5s0nVnezatVqNPQZKD26Xobpb+uA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g9EUCWHcRcCedOesDKV+eXky55cob+cZGdi4W6Kq/sHCw5NXdMawR05UGJKqRChEkJt9K/WdfnjiTgb33jz1NckFL+bLmzhwq50J8vbka/z7JVkKfYKcj6+7TCi19s2QJl7Grd/hzryYxo9Qt0wDEq+e5KlAtROpW1gwkxLkGDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aWJm1SqE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C78CC4CEE3;
-	Fri, 27 Jun 2025 12:50:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751028625;
-	bh=apcScWYertfmVCc5s0nVnezatVqNPQZKD26Xobpb+uA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aWJm1SqETG/HN3wItNy/D0gKz9Nr9hMyfHi0n7kpgWMpOk8ikhBNBt50s2ubCA+AA
-	 jxqqZ8P8k0K1td9tmsAB9A/7fX+ZycBSYTgIXjwTAW/Lrpl5oQxvToL8vjuOpWSc+U
-	 2pVifHdTiWqUiTB2lXSlktwdRkg4VkxCn7BrlUQQZOGXPFYJAPMXOD0ar5C/eOI/YG
-	 K9iMAvBSF6ZA3zZMAfJSdCjbcEo7HVJMC0aZuNp7//JC++xlzasP6FmPI7e8hJ6ucQ
-	 uDtHSkbnvFy77bj5bAgBSW3UvQKJzgt5ph5DCBpCjnGxUunkT29XmwRRpodZoqfwN0
-	 BYiP1CcN+V5hg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1uV8XC-000000004yD-1W3O;
-	Fri, 27 Jun 2025 14:50:26 +0200
-Date: Fri, 27 Jun 2025 14:50:26 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Steev Klimaszewski <steev@kali.org>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-efi@vger.kernel.org
-Subject: Re: [PATCH v4 5/8] firmware; qcom: scm: enable QSEECOM on SC8280XP
- CRD
-Message-ID: <aF6Tkh75LRym8MQY@hovoldconsulting.com>
-References: <20250625-more-qseecom-v4-0-aacca9306cee@oss.qualcomm.com>
- <20250625-more-qseecom-v4-5-aacca9306cee@oss.qualcomm.com>
- <e5e3e8f1-4328-4929-825a-3d8e836cf072@oss.qualcomm.com>
- <95c46d39-5b4a-46dd-aa73-1b3b9bf81019@oss.qualcomm.com>
- <aF6NUeNLPrR5vqEf@hovoldconsulting.com>
- <f55a057d-2cdd-411e-97b9-5ede1300a4e9@oss.qualcomm.com>
+	s=arc-20240116; t=1751028699; c=relaxed/simple;
+	bh=si5pkg3D7M7AemArS/xiRGGpBgK97TaRSQ8mXnLW03I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=e/xB8mxmxlcXednuEfRXWmSnWhTQ6yqs7KQFgSsHdzTxs7lj/HxXTYUdCYZo9yojZAdOgLZ97nrH2VHf+fsxS6dxDFCDoN81TKFt2O70tS6vNt+NtsMVrAs9b51Fm3Vu2b/4UVVHNSzJfEyqrRXy/SO1kBkqa8xoOOb7OmkFkKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IbMBNwYC; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55RBtHRi003247
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 12:51:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=ZrQ8AHkAD30tuUld9m43KAGRDqt8gThRB6o
+	xUrxVwDo=; b=IbMBNwYCkXD5hjWt97lAhSiAVOC6h7oxNUV2kyldYK+XeLJ11DI
+	hwqWLN13j41143FRF0SO817fOdVUt9pSIe7UkdkN9ldbhFw5JWJMXDJiItHDqgZx
+	0kBBkcv4PNCVGBin7uvk5lk1NlXw+TxkqTuC2jUEDbXxuasvtH/wY6bUfTZEXTXp
+	WxfmqAw6qIcQ+rY2+XG0cXbA925UEr4ROCJiJRFvsRrhZVCO86mfLz1MwvMwdPHJ
+	CX+gwA3lY1yLPphga2ENcgDKTJsJ+B7KE6DhXO0nKR08nrrZp2/XrHehbtAKMVDE
+	L/ToiV/xiULMEFu4QhcmYogoP2QYh76eHiA==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47g7tdgvgq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 12:51:37 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b2f103f6074so1426826a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 05:51:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751028697; x=1751633497;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZrQ8AHkAD30tuUld9m43KAGRDqt8gThRB6oxUrxVwDo=;
+        b=WzicA2DZnEH67LpOCdT/FzhYVE89stYsN5V+ByXk/RvGqlY8B7bA6PHB9iONVAnsoZ
+         yUVZ7h0h8EvsC4DH/HAHMOUgm+7+/vdLF4s9Fzkd3Jxm6S407FHc1pLhNDm5yJqai9M7
+         kHMRGcycHXayFaxkBlZH4t3idZLf2bTMCrpGhVXBzPnm6z+iE/vBzOjmlu/dfZTpN5IZ
+         0yI8wEIr2b4+onGQ/cIbxsOK1k+qETmdNilscXLL23xrDl/eg2d+UOVjLrhbjdT1j0y4
+         mANrexiolROSrnhIwff4qwzVl/FLPIvaqVXHzA85MbniHLF3Ab+GJgkCkQth2yybhVt+
+         UTTA==
+X-Gm-Message-State: AOJu0YykhsJ1usaxqDTy8WMbyNIeN7cfG9Xqx2uHPlcPoMQwQS6ndZTM
+	CkcclxrmvOXPGcLxLfLVBquY3yKNqeCeo8nge2G6RoKZP7W84yKOzZNDL5WdY9R9nqvY0sIWAgz
+	F9EQitQKCd6BUtHWC4Xru0ku+4x4T9zzrhVw5SSkwgm6n/KW2ociW3v5xzL4QVbPRuS3e
+X-Gm-Gg: ASbGncumcjW9381+MTSYKWdX393mF/EFkxbLRNhdYN/PygjHXcTTcJCSuddOFDoxCP2
+	UWQ7EwnwaYuLAQeXF4/UG4YWGETDXIB4FdihbmSnrk+HN9lRGs8NsJvGhkluuXL7KAAYbe6QmRr
+	/6PIYobeFn/QROAH7s2P9wHfvuX30sm/WYc02poamwYAe+A8I8DXuyUM0hjVkCDMCf+wxIl9Tp2
+	DWOhYJotLbEOSw1BtDesjkErvzy2BNnTZVS+vCe8g4AOBFM9VWn40V2wgsMlpYDXfQc7HJaREwf
+	5tWdinw/PcYpfEnLlLxqIfT/9Qjz5V1bGEPxWEavKxtfQm4/1j0=
+X-Received: by 2002:a05:6a20:4327:b0:220:7b2e:5b3f with SMTP id adf61e73a8af0-220a16b18d4mr4802829637.19.1751028695844;
+        Fri, 27 Jun 2025 05:51:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF26C8dtDNtXckzHuaNi47xMdSgfo4gkIZBa3WflpXjgfUX5aXrSLsxvdSTRWWbJGV3ZuUfmQ==
+X-Received: by 2002:a05:6a20:4327:b0:220:7b2e:5b3f with SMTP id adf61e73a8af0-220a16b18d4mr4802762637.19.1751028695329;
+        Fri, 27 Jun 2025 05:51:35 -0700 (PDT)
+Received: from hu-kbajaj-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b34e3200874sm1570337a12.69.2025.06.27.05.51.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Jun 2025 05:51:35 -0700 (PDT)
+From: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH v2] usb: misc: qcom_eud: Access EUD_MODE_MANAGER2 through secure calls
+Date: Fri, 27 Jun 2025 18:21:31 +0530
+Message-ID: <20250627125131.27606-1-komal.bajaj@oss.qualcomm.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f55a057d-2cdd-411e-97b9-5ede1300a4e9@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=CPYqXQrD c=1 sm=1 tr=0 ts=685e93d9 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=RCjrDKQIKzBwdYVaOqUA:9 a=x9snwWr2DeNwDh03kgHS:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDEwNiBTYWx0ZWRfX/Z3fIuXocoWA
+ m7kpoG2QWibr+Whfy5bn+hO9jk669LDQGndRpdLdvbPBcTiw3jIW7i/KZsMBJ6Z8oksE6eA/nEu
+ 53nXT+8W59X7q++U8cxs8W4F5zYr1XEL9xnJq2rQABdSHG9nGFd0u4F2WXcUeiuxS3xEjLp7vGH
+ 4PZUYUHkBQlYqoR6QS0PRprsezMdc8LU3lVPcYibHBwpYk7L+kTqJVU4Puip+QZCpqcs/hJ2lSI
+ nwn5H0fO+/rfiI8exzaSWMJvA0pB8A7SqEkWI5V02UdAs8iXuhGKgBPXLY5EkVxqQ5UFsZi6KmJ
+ GtGirnHL3T0Dikqm7MPHtIP8drQ9k8Hz90o0d6dAj1d9fzOO6OFeNC0RNm7f0o3c5bi6qjtDDlv
+ JkGGniQ9ZJl10R07nqhFpH3ofv8LzgyZOMI8uWoChRU8pOY+2X2XVuUN6aZTOmoXzhvxJKI5
+X-Proofpoint-GUID: syg6CLfj6wHtdIottM3cTCxu9VVyjpM2
+X-Proofpoint-ORIG-GUID: syg6CLfj6wHtdIottM3cTCxu9VVyjpM2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-27_04,2025-06-26_05,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 mlxlogscore=999 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 suspectscore=0 clxscore=1011 spamscore=0 priorityscore=1501
+ adultscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506270106
 
-On Fri, Jun 27, 2025 at 02:26:41PM +0200, Konrad Dybcio wrote:
-> On 6/27/25 2:23 PM, Johan Hovold wrote:
-> > On Fri, Jun 27, 2025 at 01:54:37AM +0200, Konrad Dybcio wrote:
-> >> On 6/27/25 1:34 AM, Konrad Dybcio wrote:
-> >>> On 6/25/25 12:53 AM, Dmitry Baryshkov wrote:
+EUD_MODE_MANAGER2 register is mapped to a memory region that is marked
+as read-only for HLOS, enforcing access restrictions that prohibit
+direct memory-mapped writes via writel().
 
-> >>>> As reported by Johan, this platform also doesn't currently support
-> >>>> updating of the UEFI variables. In preparation to reworking match list
-> >>>> for QSEECOM mark this platform as supporting QSEECOM with R/O UEFI
-> >>>> variables.
+Attempts to write to this region from HLOS can result in silent failures
+or memory access violations, particularly when toggling EUD (Embedded
+USB Debugger) state. To ensure secure register access, modify the driver
+to use qcom_scm_io_writel(), which routes the write operation to Qualcomm
+Secure Channel Monitor (SCM). SCM has the necessary permissions to access
+protected memory regions, enabling reliable control over EUD state.
 
-> >>>> +	{ .compatible = "qcom,sc8280xp-crd", .data = &qcom_qseecom_ro_uefi, },
-> >>>
-> >>> R/W works for me (tm).. the META version may be (inconclusive) 2605
-> >>
-> >> Looked at the wrong SoC META table.. the build date is 05/25/2023
-> > 
-> > Could be that my machine was not provisioned properly. Do you boot from
-> > UFS or NVMe?
-> > 
-> > My fw is also older: 01/10/2022.
-> 
-> The machine has UFS, NVME and SPINOR, however the boot log definitely says:
-> 
-> S - Boot Interface: SPI
+SC7280, the only user of EUD is also affected, indicating that this could
+never have worked on a properly fused device.
 
-Mine says:
+Fixes: 9a1bf58ccd44 ("usb: misc: eud: Add driver support for Embedded USB Debugger(EUD)")
+Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+Signed-off-by: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+Changes in v2:
+* Drop separate compatible to be added for secure eud
+* Use secure call to access EUD mode manager register
+* Link to v1: https://lore.kernel.org/all/20240807183205.803847-1-quic_molvera@quicinc.com/
 
-S - Boot Interface: UFS
+ drivers/usb/misc/qcom_eud.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-Johan
+diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
+index 83079c414b4f..30c999c49eb0 100644
+--- a/drivers/usb/misc/qcom_eud.c
++++ b/drivers/usb/misc/qcom_eud.c
+@@ -16,6 +16,8 @@
+ #include <linux/sysfs.h>
+ #include <linux/usb/role.h>
+ 
++#include <linux/firmware/qcom/qcom_scm.h>
++
+ #define EUD_REG_INT1_EN_MASK	0x0024
+ #define EUD_REG_INT_STATUS_1	0x0044
+ #define EUD_REG_CTL_OUT_1	0x0074
+@@ -34,7 +36,7 @@ struct eud_chip {
+ 	struct device			*dev;
+ 	struct usb_role_switch		*role_sw;
+ 	void __iomem			*base;
+-	void __iomem			*mode_mgr;
++	phys_addr_t			mode_mgr;
+ 	unsigned int			int_status;
+ 	int				irq;
+ 	bool				enabled;
+@@ -43,10 +45,14 @@ struct eud_chip {
+ 
+ static int enable_eud(struct eud_chip *priv)
+ {
++	int ret;
++
+ 	writel(EUD_ENABLE, priv->base + EUD_REG_CSR_EUD_EN);
+ 	writel(EUD_INT_VBUS | EUD_INT_SAFE_MODE,
+ 			priv->base + EUD_REG_INT1_EN_MASK);
+-	writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
++	ret = qcom_scm_io_writel(priv->mode_mgr + EUD_REG_EUD_EN2, 1);
++	if (ret)
++		return ret;
+ 
+ 	return usb_role_switch_set_role(priv->role_sw, USB_ROLE_DEVICE);
+ }
+@@ -54,7 +60,7 @@ static int enable_eud(struct eud_chip *priv)
+ static void disable_eud(struct eud_chip *priv)
+ {
+ 	writel(0, priv->base + EUD_REG_CSR_EUD_EN);
+-	writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
++	qcom_scm_io_writel(priv->mode_mgr + EUD_REG_EUD_EN2, 0);
+ }
+ 
+ static ssize_t enable_show(struct device *dev,
+@@ -178,6 +184,7 @@ static void eud_role_switch_release(void *data)
+ static int eud_probe(struct platform_device *pdev)
+ {
+ 	struct eud_chip *chip;
++	struct resource *res;
+ 	int ret;
+ 
+ 	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
+@@ -200,9 +207,10 @@ static int eud_probe(struct platform_device *pdev)
+ 	if (IS_ERR(chip->base))
+ 		return PTR_ERR(chip->base);
+ 
+-	chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
+-	if (IS_ERR(chip->mode_mgr))
+-		return PTR_ERR(chip->mode_mgr);
++	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
++	if (!res)
++		return -ENODEV;
++	chip->mode_mgr = res->start;
+ 
+ 	chip->irq = platform_get_irq(pdev, 0);
+ 	if (chip->irq < 0)
+-- 
+2.48.1
+
 
