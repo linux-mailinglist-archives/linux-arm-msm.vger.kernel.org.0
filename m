@@ -1,152 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-62716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65AFDAEAC50
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 03:28:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2297DAEAC79
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 04:01:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0CDEA3B6433
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 01:28:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 741463AAC52
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 02:01:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5711D41C63;
-	Fri, 27 Jun 2025 01:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 242C518C02;
+	Fri, 27 Jun 2025 02:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DGiJoNa1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f0m/UIwE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE7510F1
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 01:28:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B6A2F1FC4;
+	Fri, 27 Jun 2025 02:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750987734; cv=none; b=rzJ3hKG8d+Wura3/s7atzRspfIaZvqyHFmsXMGA54ZNBamBUprGNi/ANs5OxWiRQoZCEsPRuKPg3/YaG9KdiszOxGxiZRle+/nDP/kMpTX6gWAtj6G1A+y39HKawytPs+xHaD+1TxvdIbEidpfyEboawDuon3Nsz+DDFkVzVvNs=
+	t=1750989695; cv=none; b=mLYXMl8NWDFTorjm+1fSkSTf33AXlHijEyxa1eVAhbUuWPGdgf2l6wdetDb7O5VDGJx3mFfcK1YWzHGFQclqPrE2qk/WYL4RW2+8AdTMiICUntL9+1qw/RsaObxNUhykbZ7tEE1mq+iZJWEb9hbNza3vpIlIBwm0HB9bmmY+5d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750987734; c=relaxed/simple;
-	bh=mLhzT0gbEINjxMyIEBcYQYBQbYT3gPLBbXmxqgDjbXQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AwNoLi+MVq1FWu0cNNeyp7Yt5BlnKbQfbIh2kMA0unImXovMQMQlIevw9DSzmFzsNjqe+rU7yPH6PmfLZZEjBy9RUPLV04mlFPz5RObJrRmS1BAAMxSRsmAVKiTJoJoL2/l0hCV5EC3fQz8tnA+JgTZhGlpp8YgfsKkRI8A3+o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DGiJoNa1; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55QHgmH7019207
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 01:28:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=7BHttPaz4TxUNQzBLNE+418p
-	FfXOu6+pWP6NmmNpoHo=; b=DGiJoNa1uPazrx+2KERUtSEAXuqt4lVnru3pvqJJ
-	J2DFGQVD+8mf+Fl2GVyLhAKu35qYZb8sSEmA1WTSMo0Jt+paxrecMa9BzYPO2Wnm
-	KYffpuY2cfCquGg9F5QyTYfsJwHHOucH5FURTX31/PKx8gYxn0BRN6Gp7mT7A/lr
-	BLtWaRVfMJNeeERQNRTo3utljaZdI1nnWrGe/cs9btcI01h9BslyF+08y0hFXGKe
-	THEzYiPVEtomHF/js31JRvJ927aFAn4gc/NwzgfNid+YfsElOPJc2pjMSfsq0avP
-	G1UtWR4nTF2oGSSpQ2sGFu9qddblmKuJfXZMEBVXsbUFtQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ec26fea5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 01:28:51 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7d3d3f6471cso221778185a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jun 2025 18:28:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750987730; x=1751592530;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+	s=arc-20240116; t=1750989695; c=relaxed/simple;
+	bh=fNMOLkjJEnP8Cdvd71Kj0uBYZCipG7yHl6zNB8V0ebM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ik5CtKED//VC3meGGmAHLn3Um4+CA2Q9T1WCrRZal01YnwLGbe7gxUwMYKbhBfX0a3O2yrLuGY+RMMkFnqAgw6cwzd6KROw0GrutSn1dvZcbLjGrLwyV70Bu/gNUxzByfyn9kLpbDYRXQ6JyhG2t21OF1faXxVIl3bCtCssQYkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f0m/UIwE; arc=none smtp.client-ip=209.85.221.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-530d764149eso488792e0c.1;
+        Thu, 26 Jun 2025 19:01:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750989691; x=1751594491; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7BHttPaz4TxUNQzBLNE+418pFfXOu6+pWP6NmmNpoHo=;
-        b=a5bpgHftK+fr2eCzOl/IgsRsotncUP5fgyfJ9JUOpc19zwzp2GHX5m36Ph0DreBJlu
-         uNlYHAfH4Lh3n9MiIMA3qhHMaDX9QZfalwJA231Ondjx7AaVkBxHn9siKbfia+0vJYVu
-         iDA3zUArwisDdKRTYxx2bpuBVvA6b5sp93/XUorcCIbYShdx+M1gIKr9FBirva3bJmKm
-         6JiTgHiErKJDIzTgmm03iA9Nj3s8DRAbnWLxFqwH7bdH7T5UxF6kv/jvrRHy25yULjRE
-         0BdBx0dNUEcosta0v+/GZM4QcYBhvQzcorwTCzjXx0K8BI31vEDePS/phHR7zuWQGFuS
-         +72w==
-X-Forwarded-Encrypted: i=1; AJvYcCXsMTw/ZNaRXTqgfTALE1hNMcGZZk2+pBwIh7volq31p4OcOa1YggcpgQTWVJmZAJmz8+ocBkssIDO0JpdE@vger.kernel.org
-X-Gm-Message-State: AOJu0YyoN28yu38WsVz+z8hj+/IvKZ9osVZgTNdcAn27FEmaON95wyzp
-	xbU2bu9w0fgChEtCc13o+z5poXqhDnr4swu0FYpj2kShwnb/ZmDbPu68yPvOs65LGdyofr/j4QV
-	zuCYw1frrY3ER/Unucyr82FZftbQxNFbJOOSSQJPewgjBQzDQxcvcBuprEPmFZ9CUhhyb
-X-Gm-Gg: ASbGncuWefqanfJH0OYF+gJablQZ4pPu1wuXyLSDZsnVXZgm0exl8t7A9xV3BG3JB08
-	NSPjyTyksQ93UupetJLo9yZWCyuLU6yyr319fspd4wvYYtvvuDLJLo2DfcWd9dUC6xsUzwbkRyI
-	R/TrgrKg6kLtFWkzbq4wruVgK0ZkC2ArxWlQemfUIhatM0WZDFNotcUO/j2qf7MnAfFyfTjlZeO
-	/NIclzRjLJWS4XhfuW8vx+q+0zFFIMJO9V+mUnvJ5z2cJHIJmH7ioZWs18dXYIEt2Q8cADQqEku
-	K4pBGLiZmiSxLEGKyKylvGz5qpFkDhWQRrfIVX8Ql0HFP4+Lldg75faHPQ5LCcy39v9C+kilK7j
-	F5mjKrUtcOVWZalREBlHDAJqb/TsqRWIlzYk=
-X-Received: by 2002:a05:620a:198a:b0:7d3:ed4d:f1ba with SMTP id af79cd13be357-7d4439b298dmr282411485a.49.1750987730524;
-        Thu, 26 Jun 2025 18:28:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF4mM93pJrmTOiGI3AS8mbJSAOrrA8+GDhMNzP/TNmnR49p+KAgomnY2oA+PJOFrHgpx9euiA==
-X-Received: by 2002:a05:620a:198a:b0:7d3:ed4d:f1ba with SMTP id af79cd13be357-7d4439b298dmr282408685a.49.1750987730124;
-        Thu, 26 Jun 2025 18:28:50 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32cd2ee85e9sm3688701fa.82.2025.06.26.18.28.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Jun 2025 18:28:49 -0700 (PDT)
-Date: Fri, 27 Jun 2025 04:28:46 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] interconnect: qcom: Add SM7635 interconnect provider
- driver
-Message-ID: <2we5y3aimhhizbsr6rvhpvtfkzl35lvpqr5vlhpxzsdcjudlqb@iotpzxpksveq>
-References: <20250625-sm7635-icc-v1-0-8b49200416b0@fairphone.com>
- <20250625-sm7635-icc-v1-2-8b49200416b0@fairphone.com>
+        bh=iv+ULazfCotUfqTUQgUOXEi7/XbND58A2hHC6r5AKlU=;
+        b=f0m/UIwEboLoBA5xRBWN/0ri+5skryLl/MdomrJWZmUh1aqCTSwRCj9SOVMOhuKNtd
+         P8YEp1NgDnbBg+xPHQAjTjjFeYKXZQx6A4xOvOc4brJYYvLEda/H8cetUk5ZJRxMnPac
+         3BvBTYedy0ojlHZ6h2cuQ5tvTswFb5+I8mn+8JhSWpKq8NP1iUb5yjj/ptL6LHGZtz02
+         wXty6KaS/uWMwgh3rZoSquuop91c2B0MOS7PelhVRyTKgRMuX2hmXm4Dh4z5OOCS0EsH
+         /ARgtd6Tj/t9RkhskJiU+7YXdLVr6EcG7rRW7BqYXMyaRrRtavcZp2bOlpMPztUmqDAJ
+         B9Tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750989691; x=1751594491;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iv+ULazfCotUfqTUQgUOXEi7/XbND58A2hHC6r5AKlU=;
+        b=szieqtJCfmYFUJmGf3lkLeF6K9G6d1LUqNQaKiVaIRzAWGfzRkoYx0Z6Wx1ZR73Wse
+         TLPaQrFp2uXgvbCBUEWv6MBkoHSsLbELo45PxhSkV1vhjL96hbFcOxpiOz8L16updUxH
+         Vr4glLbWY9gQzYcztLWtocaZcFD2GYfm8xgyM9nQ9DtDWPNV6rb7okH3tzgwsntCHPYD
+         7O0zcJqczCrkuCjnU4szTjDZkkd5iguon5jVCUurxNrfn9J+TKmiG3iPHLliwR9sDk2R
+         vsI2msZcJSj7W+0AT84216C0PjHjhNndt4Q9RdY1Xh2nvjj9yL7D2/ki0KesvFzpRpLc
+         BvsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU5DFHCmUGH8GtZ4XLww2t+8LyuamYx4iCyzTYQYTWpX9VkuBwJk5QdTDOr4J1OI4CbADzfmEQTmarObNry26jTz7I=@vger.kernel.org, AJvYcCVvZS6jVGLWnFINm4QtVGnEuFR4WCxB+3OTRMh6KW87mdPMteFKAvcFlW2yog2ji9OmmGIOnawDxuW8yrul@vger.kernel.org, AJvYcCWeCLD5k5yaGAq7TraoMw+eHUuNh1R9VLBkKpTLpS781tZz6NOf3RUxXLr6G1a/wyTlRquzaC8EaT20J9l9@vger.kernel.org
+X-Gm-Message-State: AOJu0YwduSZB/0IK6guMNMEW6AATLWJLbnj2pA0KG0bfIVo/1c5ZupNh
+	6O7jlmeU7vJqgqtVHLpssyV8aejioh/MeDLZMijLejO3/MGhT1Ki6xD9d5RGdRAPfwLPh0nvRw0
+	wbZrVsdXTeYPGvluhgRH756oky6wXpDw=
+X-Gm-Gg: ASbGnctMMVOrZAcUKFJkA4EzHvx8FXDodVie3UOlAuyTbPPzDmwDEhYVCV00Gp+oFQS
+	PpBuZgdwAg8VI0e6GzNwyxIc3i/6VYJGD6fMF8dXpK2FXXelTxeYkrKaY3jgVP9H14+QFvsaOWn
+	LeKGyWMrVE7BrUMpJGLMhIQ1CogK7JZQmJPBo6f36/Rg==
+X-Google-Smtp-Source: AGHT+IEfDkUmXmdGNiYTAmO+fSQE3VFxMdbIHmR6wR3Spz90Kei7f1lHrowLtUvc0N5RL+zWLCQWluZ6/tNtS2e7eSo=
+X-Received: by 2002:a05:6122:21a1:b0:531:4041:c4c7 with SMTP id
+ 71dfb90a1353d-5330bfd4563mr1451187e0c.7.1750989691380; Thu, 26 Jun 2025
+ 19:01:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250625-sm7635-icc-v1-2-8b49200416b0@fairphone.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDAwOSBTYWx0ZWRfX7fe8NVcM/SE9
- mEKtIFKo0wYqZoRAZs17esB6RQr3l6ASyPT0ArYHBIv3wOgvErRcz4bWcuL1TrO47dheGgEasUc
- /TmQ5qxCcHNGTlu0pIXGLKNPac2tJ+SVvgpyrjSXBCqGquZf9wbOULD71wHzJskhiCWQ/QeTwSZ
- tifgiPpAiBD73dhL0WlYgzpdUXHMsZXYSgw1yA+K+1Osou+4qrW3etAjYBBTNcmAntm/yqh2xuZ
- oMTsSBoAS6wp5+cxQO5IOb9TwN4djRI253EMmr3+565PpLA1aQDEvqb5VOh2LfHHoEu7dC9ZdEn
- IzxEIfxj0midksF5G2KUzcyG7Lp2QtHxOW3Xyf+VGLzdpee3LRFtID+GyEREW+DkS2FD/yUFsMN
- 89V+M5viZemZSOOyOsGP+cxkZP8kzrf70M1f7pBc6m5ly/REDuK2IFUV79nYwvLneg+yLFKC
-X-Authority-Analysis: v=2.4 cv=XPQwSRhE c=1 sm=1 tr=0 ts=685df3d3 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6IFa9wvqVegA:10 a=6H0WHjuAAAAA:8 a=lAZXaacekHF5OtbiRAEA:9 a=CjuIK1q_8ugA:10
- a=NFOGd7dJGGMPyQGDc5-O:22 a=Soq9LBFxuPC4vsCAQt-j:22
-X-Proofpoint-GUID: RiA2syKW9uTTzcOB_3LxfN9H7oJu3Ldx
-X-Proofpoint-ORIG-GUID: RiA2syKW9uTTzcOB_3LxfN9H7oJu3Ldx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-27_01,2025-06-26_05,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 impostorscore=0 clxscore=1015 suspectscore=0 mlxscore=0
- spamscore=0 phishscore=0 malwarescore=0 mlxlogscore=999 bulkscore=0
- priorityscore=1501 adultscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506270009
+References: <20250618-restricted-pointers-drm-v1-0-781e0d88cd92@linutronix.de> <20250618-restricted-pointers-drm-v1-1-781e0d88cd92@linutronix.de>
+In-Reply-To: <20250618-restricted-pointers-drm-v1-1-781e0d88cd92@linutronix.de>
+From: Inki Dae <daeinki@gmail.com>
+Date: Fri, 27 Jun 2025 11:00:55 +0900
+X-Gm-Features: Ac12FXzQxzyREaVVCRYXuMvFKjupkA98dfTPk38AOS_x9wbPi10kqXkSS64ZqjU
+Message-ID: <CAAQKjZNG73CX8ebxqLgcYRGguGya-9zODL3BTdBDgbgJLJZ9jw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] drm/bridge: samsung-dsim: Don't use %pK through printk
+To: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+Cc: Jagan Teki <jagan@amarulasolutions.com>, Marek Szyprowski <m.szyprowski@samsung.com>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Seung-Woo Kim <sw0312.kim@samsung.com>, Kyungmin Park <kyungmin.park@samsung.com>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 25, 2025 at 11:13:48AM +0200, Luca Weiss wrote:
-> Add driver for the Qualcomm interconnect buses found in SM7635 based
-> platforms. The topology consists of several NoCs that are controlled by
-> a remote processor that collects the aggregated bandwidth for each
-> master-slave pairs.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Hi,
+
+2025=EB=85=84 6=EC=9B=94 18=EC=9D=BC (=EC=88=98) =EC=98=A4=ED=9B=84 4:56, T=
+homas Wei=C3=9Fschuh
+<thomas.weissschuh@linutronix.de>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
+>
+> In the past %pK was preferable to %p as it would not leak raw pointer
+> values into the kernel log.
+> Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
+> the regular %p has been improved to avoid this issue.
+> Furthermore, restricted pointers ("%pK") were never meant to be used
+> through printk(). They can still unintentionally leak raw pointers or
+> acquire sleeping locks in atomic contexts.
+>
+> Switch to the regular pointer formatting which is safer and
+> easier to reason about.
+
+Applied.
+
+Thanks,
+Inki Dae
+
+>
+> Signed-off-by: Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de>
 > ---
->  drivers/interconnect/qcom/Kconfig  |    9 +
->  drivers/interconnect/qcom/Makefile |    2 +
->  drivers/interconnect/qcom/sm7635.c | 1554 ++++++++++++++++++++++++++++++++++++
->  drivers/interconnect/qcom/sm7635.h |  130 +++
->  4 files changed, 1695 insertions(+)
-
-Could you please use dynamic IDs? SA8775p driver has been converted
-already and I've sent series converting the rest of the RPMh drivers to
-dynamic ID allocation.
-
-> 
-
--- 
-With best wishes
-Dmitry
+>  drivers/gpu/drm/bridge/samsung-dsim.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/brid=
+ge/samsung-dsim.c
+> index 0014c497e3fe7d8349a119dbdda30d65d816cccf..bccc88d2594840647d7107c13=
+d69104912087384 100644
+> --- a/drivers/gpu/drm/bridge/samsung-dsim.c
+> +++ b/drivers/gpu/drm/bridge/samsung-dsim.c
+> @@ -1095,7 +1095,7 @@ static void samsung_dsim_send_to_fifo(struct samsun=
+g_dsim *dsi,
+>         bool first =3D !xfer->tx_done;
+>         u32 reg;
+>
+> -       dev_dbg(dev, "< xfer %pK: tx len %u, done %u, rx len %u, done %u\=
+n",
+> +       dev_dbg(dev, "< xfer %p: tx len %u, done %u, rx len %u, done %u\n=
+",
+>                 xfer, length, xfer->tx_done, xfer->rx_len, xfer->rx_done)=
+;
+>
+>         if (length > DSI_TX_FIFO_SIZE)
+> @@ -1293,7 +1293,7 @@ static bool samsung_dsim_transfer_finish(struct sam=
+sung_dsim *dsi)
+>         spin_unlock_irqrestore(&dsi->transfer_lock, flags);
+>
+>         dev_dbg(dsi->dev,
+> -               "> xfer %pK, tx_len %zu, tx_done %u, rx_len %u, rx_done %=
+u\n",
+> +               "> xfer %p, tx_len %zu, tx_done %u, rx_len %u, rx_done %u=
+\n",
+>                 xfer, xfer->packet.payload_length, xfer->tx_done, xfer->r=
+x_len,
+>                 xfer->rx_done);
+>
+>
+> --
+> 2.49.0
+>
+>
 
