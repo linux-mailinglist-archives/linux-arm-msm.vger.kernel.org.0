@@ -1,132 +1,309 @@
-Return-Path: <linux-arm-msm+bounces-62731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BC3FAEB02E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 09:36:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77F6FAEB082
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 09:50:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 289A57AB742
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 07:35:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10DA41C23867
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 07:50:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B964321ADC9;
-	Fri, 27 Jun 2025 07:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C34032264A6;
+	Fri, 27 Jun 2025 07:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SngtEmeg"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SJPdx+gL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E224201004;
-	Fri, 27 Jun 2025 07:36:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BCA2264A8;
+	Fri, 27 Jun 2025 07:50:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751009792; cv=none; b=ADFOzjzk1EBW+mmXCbjlZToPUjaT7dfihtUnIWa+6Pn79EXmhnAWzCUd71vPbe9GWGipbsEJnhgcWqOno3K1TnQ4sv23U5bn2jzAzwi9AD22KGcyUSnaxJkFkg1mfj53g3oIBNzdKdWu/UBfIzBQjzhSbGb0/Avx4IqHhMSt4W8=
+	t=1751010619; cv=none; b=OPiA9g0WRfacjxY4uTZutHN4EvYU1G43TqogDAq3UGD8/b8iUYoDvxmCLkYr9w2xLO/kxbo93pCdEGwDr6nXWuvItET+DB4oW0O/wLWy+3wtIL3rvKLikgMLsGtLDkHtFPLhUDtPWrpJxthFX4lr9GB+S02ay7UlpmhrrgBCb/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751009792; c=relaxed/simple;
-	bh=R7MFiZ9r/m2icBqFE8z942btjxdQ3uI5L9jjyYNHCUk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sl4zZehs/iqXHb38p3tKV0S2TfiatNrkWdRSgPl502ec3/gqwGpqf3D2XazlBpaKAkoFXslotYosW16MNwba37XBt59hyWm51g84xMaDG/MCnY/lmXl1gPVqrgDVPXvqhZfKfKjouNjXEhFNqKHjNWCdEqX2wDob+QkgJE+f5cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SngtEmeg; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751009792; x=1782545792;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=R7MFiZ9r/m2icBqFE8z942btjxdQ3uI5L9jjyYNHCUk=;
-  b=SngtEmegXuBEkY4VT25y9JMPKFNUeFsyWKqyTTaR7xAQeL3MwEzl73Ex
-   /mRfA6D7TQM5LeOsW/bbRNyZXEVSeICxyh/HV0ZiO6I2A+V0wsBac8Efy
-   ojSbWS8NFIS80sYih0a5tizG4PoN26Gx7kgKosFrBmAgwx8okEzy+lelv
-   eCB6GwYS8dOnfkZ9u22ALzxfw0yv0sbJC98PPYRFjWnziyo4W/VrVofbm
-   mrF/RJAJ4jOzfCO2KqZ3JF0wLN1J6QwAoGrESVkxAzLJMoxAgJRorEQMG
-   UCfIaFGPiEwcHnzKmBEofJAlRFoYxS6d/d4s8ICU1RnHKQHoo/5OS3wlL
-   w==;
-X-CSE-ConnectionGUID: wJX46o5SRoO9nxLIynDtgg==
-X-CSE-MsgGUID: qHkfZyK4QNiqY22oiEJnfQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11476"; a="53190634"
-X-IronPort-AV: E=Sophos;i="6.16,269,1744095600"; 
-   d="scan'208";a="53190634"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2025 00:36:31 -0700
-X-CSE-ConnectionGUID: Kh5t6bgAQ1+j0Xkx9PE3SA==
-X-CSE-MsgGUID: j0Uw8pEZQUqEGpTzy5l4rg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,269,1744095600"; 
-   d="scan'208";a="153256700"
-Received: from lkp-server01.sh.intel.com (HELO e8142ee1dce2) ([10.239.97.150])
-  by fmviesa008.fm.intel.com with ESMTP; 27 Jun 2025 00:36:26 -0700
-Received: from kbuild by e8142ee1dce2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uV3dI-000VvV-0Y;
-	Fri, 27 Jun 2025 07:36:24 +0000
-Date: Fri, 27 Jun 2025 15:35:59 +0800
-From: kernel test robot <lkp@intel.com>
-To: Taniya Das <quic_tdas@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev, Ajit Pandey <quic_ajipan@quicinc.com>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Jagadeesh Kona <quic_jkona@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>
-Subject: Re: [PATCH v10 07/10] clk: qcom: gpucc-qcs615: Add QCS615 graphics
- clock controller driver
-Message-ID: <202506271519.GYlfvTOB-lkp@intel.com>
-References: <20250625-qcs615-mm-v10-clock-controllers-v10-7-ec48255f90d8@quicinc.com>
+	s=arc-20240116; t=1751010619; c=relaxed/simple;
+	bh=Z4/lv4IS6ipDfRZW5AAPrjhhB70JxHRntaI60dxPhgM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=rsJdB0jLXi6THiPrm0inoK1N9iMEvk3L1bWkNrawz2fUOuV90ugTFMUfhfOtFG6QMsHodPEWUdLPsVH6q1Z7peZJuBdvcrRm1AYPFffoSgD47xJ/AQWWTOYRUT+blk6yJqmiv53u9sDS+W9DQBPh1XCc1uEZXIdJq85yRkkcxXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SJPdx+gL; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55R4DFfZ028699;
+	Fri, 27 Jun 2025 07:50:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	zdkB40YhgP4G2OpaHQmOJCHVPGaOSXgufof3fjxY1K0=; b=SJPdx+gLxIINMNnA
+	nMZe2DdW9yZ2Xv+SEg4Mh8J6DetODlWlFv7YmUK+tIelqT19SuB0fKP7IANak3GK
+	nVMaDDy3bZF+cSgmwc1LK+pEWj3VyvnhelXE7RSVcRjubtnCmyucOTVoEPU6GMsL
+	0qHBRMs3Y869V0IPjVS6dkieQu7rcqGHSmkrxCFsN/zbpDlQ2V2icDfLSQQmjtt0
+	tWAfjg1TY/bKfb9Msu6ALXz6F0jFKWe6ClYe5M/tc72EMvsLn4qEckr3KPVKd7Af
+	Sawct/qJ3OtRlvqxBr3yrziwxRDuyBmeLf+yiJOyC3J2LfbZFLuAKGI9aYnhcaGZ
+	ANX/JA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47esa4y7sx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Jun 2025 07:50:03 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55R7o2iw031202
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Jun 2025 07:50:02 GMT
+Received: from [10.253.74.126] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 27 Jun
+ 2025 00:49:58 -0700
+Message-ID: <014d535e-ca9c-4707-9ff4-7afdd489b780@quicinc.com>
+Date: Fri, 27 Jun 2025 15:49:55 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250625-qcs615-mm-v10-clock-controllers-v10-7-ec48255f90d8@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/38] drm/msm/dp: split msm_dp_panel_read_sink_caps()
+ into two parts and drop panel drm_edid
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Abhinav Kumar
+	<abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        "Abhinav
+ Kumar" <quic_abhinavk@quicinc.com>
+References: <20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com>
+ <20250609-msm-dp-mst-v2-1-a54d8902a23d@quicinc.com>
+ <g6wqvbszbrw6gnvxz7cjmhx4rc53kyulcr5wjekfjaisontikl@723odzngtlnd>
+ <326bbd02-f414-48e3-a396-4b94f19054f7@quicinc.com>
+ <buvgxzf5u5wkj2nxd6rquvcktjmxoclwrkkmxeih6pnikubqe3@yoytvnayvxtv>
+Content-Language: en-US
+From: Yongxing Mou <quic_yongmou@quicinc.com>
+In-Reply-To: <buvgxzf5u5wkj2nxd6rquvcktjmxoclwrkkmxeih6pnikubqe3@yoytvnayvxtv>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=eLYTjGp1 c=1 sm=1 tr=0 ts=685e4d2b cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=E04JO-gUzBZdZbePgc0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: oMio7BAkI8NlZciJyRrtZ7PNPZKOXxWo
+X-Proofpoint-ORIG-GUID: oMio7BAkI8NlZciJyRrtZ7PNPZKOXxWo
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDA2MiBTYWx0ZWRfX+WAfJBA6JyhX
+ adNA6Rdnzil6sfWBefGRYQq6PsuFC8zTpPY2z6Z93uuM9z13rUkSUvycW5rvvIJPYlocmoUu5Qy
+ xWNHLWh+Nc5Tp1n7XkVaNnUcY5bCuOZx2CmPVkc0BVS84nKh0qUbi1+IR+KS1iV2OVXIpBf47As
+ +jRnm4FK7zDm5Lhrz3yxGfJ9J2sffPYTpgB7JU3ObZmsZec5YiQM2XqHvpMQt3TnxgrLgU1HfyA
+ Rw0u9O3ao/b6JV4FXJ4JJEwFrY7lEwlKRevvuHrBA3tB7Y0LTAZDMfQz4DyJxyhHCFjC8E6SjKi
+ 0wzuOxOYR9a5pq/liYuEpuFsCDeQj87p+KX+/NxZACojPmNiIBi/a7iw4oQNIzhIMm3In+B44yf
+ BqxFNzfoyZ46NjTXjgGAdWULhkY4dwIKmz7clmASeY4EejkpbN1HdvS8Qp6HebZiQD/gPLA+
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-27_02,2025-06-26_05,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 mlxscore=0 clxscore=1015 mlxlogscore=999
+ suspectscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
+ adultscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506270062
 
-Hi Taniya,
 
-kernel test robot noticed the following build warnings:
 
-[auto build test WARNING on 2ae2aaafb21454f4781c30734959cf223ab486ef]
+On 2025/6/25 21:32, Dmitry Baryshkov wrote:
+> On Wed, Jun 25, 2025 at 04:43:55PM +0800, Yongxing Mou wrote:
+>>
+>>
+>> On 2025/6/9 20:41, Dmitry Baryshkov wrote:
+>>> On Mon, Jun 09, 2025 at 08:21:20PM +0800, Yongxing Mou wrote:
+>>>> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>>>
+>>>> In preparation of DP MST where link caps are read for the
+>>>> immediate downstream device and the edid is read through
+>>>
+>>> EDID, not edid. Please review all your patches for up/down case.
+>>>
+>> Got it. Thanks~
+>>>> sideband messaging, split the msm_dp_panel_read_sink_caps() into
+>>>> two parts which read the link parameters and the edid parts
+>>>> respectively. Also drop the panel drm_edid cached as we actually
+>>>> don't need it.
+>>>
+>>> Also => separate change.
+>>>
+>> Got it.
+>>>>
+>>>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>>> Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
+>>>> ---
+>>>>    drivers/gpu/drm/msm/dp/dp_display.c | 13 +++++----
+>>>>    drivers/gpu/drm/msm/dp/dp_panel.c   | 55 ++++++++++++++++++++-----------------
+>>>>    drivers/gpu/drm/msm/dp/dp_panel.h   |  6 ++--
+>>>>    3 files changed, 40 insertions(+), 34 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>>>> index 6f05a939ce9e648e9601597155999b6f85adfcff..4a9b65647cdef1ed6c3bb851f93df0db8be977af 100644
+>>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>>>> @@ -389,7 +389,11 @@ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
+>>>>    	dp->link->lttpr_count = msm_dp_display_lttpr_init(dp, dpcd);
+>>>> -	rc = msm_dp_panel_read_sink_caps(dp->panel, connector);
+>>>> +	rc = msm_dp_panel_read_link_caps(dp->panel);
+>>>> +	if (rc)
+>>>> +		goto end;
+>>>> +
+>>>> +	rc = msm_dp_panel_read_edid(dp->panel, connector);
+>>>>    	if (rc)
+>>>>    		goto end;
+>>>> @@ -720,7 +724,6 @@ static int msm_dp_irq_hpd_handle(struct msm_dp_display_private *dp, u32 data)
+>>>>    static void msm_dp_display_deinit_sub_modules(struct msm_dp_display_private *dp)
+>>>>    {
+>>>>    	msm_dp_audio_put(dp->audio);
+>>>> -	msm_dp_panel_put(dp->panel);
+>>>>    	msm_dp_aux_put(dp->aux);
+>>>>    }
+>>>> @@ -783,7 +786,7 @@ static int msm_dp_init_sub_modules(struct msm_dp_display_private *dp)
+>>>>    		rc = PTR_ERR(dp->ctrl);
+>>>>    		DRM_ERROR("failed to initialize ctrl, rc = %d\n", rc);
+>>>>    		dp->ctrl = NULL;
+>>>> -		goto error_ctrl;
+>>>> +		goto error_link;
+>>>>    	}
+>>>>    	dp->audio = msm_dp_audio_get(dp->msm_dp_display.pdev, dp->catalog);
+>>>> @@ -791,13 +794,11 @@ static int msm_dp_init_sub_modules(struct msm_dp_display_private *dp)
+>>>>    		rc = PTR_ERR(dp->audio);
+>>>>    		pr_err("failed to initialize audio, rc = %d\n", rc);
+>>>>    		dp->audio = NULL;
+>>>> -		goto error_ctrl;
+>>>> +		goto error_link;
+>>>>    	}
+>>>>    	return rc;
+>>>> -error_ctrl:
+>>>> -	msm_dp_panel_put(dp->panel);
+>>>>    error_link:
+>>>>    	msm_dp_aux_put(dp->aux);
+>>>>    error:
+>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+>>>> index 4e8ab75c771b1e3a2d62f75e9993e1062118482b..d9041e235104a74b3cc50ff2e307eae0c4301ef3 100644
+>>>> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+>>>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+>>>> @@ -118,14 +118,13 @@ static u32 msm_dp_panel_get_supported_bpp(struct msm_dp_panel *msm_dp_panel,
+>>>>    	return min_supported_bpp;
+>>>>    }
+>>>> -int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
+>>>> -	struct drm_connector *connector)
+>>>> +int msm_dp_panel_read_link_caps(struct msm_dp_panel *msm_dp_panel)
+>>>>    {
+>>>>    	int rc, bw_code;
+>>>>    	int count;
+>>>>    	struct msm_dp_panel_private *panel;
+>>>> -	if (!msm_dp_panel || !connector) {
+>>>> +	if (!msm_dp_panel) {
+>>>>    		DRM_ERROR("invalid input\n");
+>>>>    		return -EINVAL;
+>>>>    	}
+>>>> @@ -160,26 +159,29 @@ int msm_dp_panel_read_sink_caps(struct msm_dp_panel *msm_dp_panel,
+>>>>    	rc = drm_dp_read_downstream_info(panel->aux, msm_dp_panel->dpcd,
+>>>>    					 msm_dp_panel->downstream_ports);
+>>>> -	if (rc)
+>>>> -		return rc;
+>>>> +	return rc;
+>>>> +}
+>>>> -	drm_edid_free(msm_dp_panel->drm_edid);
+>>>> +int msm_dp_panel_read_edid(struct msm_dp_panel *msm_dp_panel, struct drm_connector *connector)
+>>>> +{
+>>>> +	struct msm_dp_panel_private *panel;
+>>>> +	const struct drm_edid *drm_edid;
+>>>> +
+>>>> +	panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
+>>>> -	msm_dp_panel->drm_edid = drm_edid_read_ddc(connector, &panel->aux->ddc);
+>>>> +	drm_edid = drm_edid_read_ddc(connector, &panel->aux->ddc);
+>>>> -	drm_edid_connector_update(connector, msm_dp_panel->drm_edid);
+>>>> +	drm_edid_connector_update(connector, drm_edid);
+>>>> -	if (!msm_dp_panel->drm_edid) {
+>>>> +	if (!drm_edid) {
+>>>>    		DRM_ERROR("panel edid read failed\n");
+>>>>    		/* check edid read fail is due to unplug */
+>>>>    		if (!msm_dp_catalog_link_is_connected(panel->catalog)) {
+>>>> -			rc = -ETIMEDOUT;
+>>>> -			goto end;
+>>>> +			return -ETIMEDOUT;
+>>>>    		}
+>>>>    	}
+>>>> -end:
+>>>> -	return rc;
+>>>> +	return 0;
+>>>>    }
+>>>>    u32 msm_dp_panel_get_mode_bpp(struct msm_dp_panel *msm_dp_panel,
+>>>> @@ -208,15 +210,20 @@ u32 msm_dp_panel_get_mode_bpp(struct msm_dp_panel *msm_dp_panel,
+>>>>    int msm_dp_panel_get_modes(struct msm_dp_panel *msm_dp_panel,
+>>>>    	struct drm_connector *connector)
+>>>>    {
+>>>> +	struct msm_dp_panel_private *panel;
+>>>> +	const struct drm_edid *drm_edid;
+>>>> +
+>>>>    	if (!msm_dp_panel) {
+>>>>    		DRM_ERROR("invalid input\n");
+>>>>    		return -EINVAL;
+>>>>    	}
+>>>> -	if (msm_dp_panel->drm_edid)
+>>>> -		return drm_edid_connector_add_modes(connector);
+>>>> +	panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
+>>>> +
+>>>> +	drm_edid = drm_edid_read_ddc(connector, &panel->aux->ddc);
+>>>> +	drm_edid_connector_update(connector, drm_edid);
+>>>
+>>> If EDID has been read and processed after HPD high event, why do we need
+>>> to re-read it again? Are we expecting that EDID will change?
+>>>
+>> Here we indeed don't need to read the EDID again, so we can directly call
+>> drm_edid_connector_add_modes. Thanks.
+>>>> -	return 0;
+>>>> +	return drm_edid_connector_add_modes(connector);
+>>>>    }
+>>>>    static u8 msm_dp_panel_get_edid_checksum(const struct edid *edid)
+>>>> @@ -229,6 +236,7 @@ static u8 msm_dp_panel_get_edid_checksum(const struct edid *edid)
+>>>>    void msm_dp_panel_handle_sink_request(struct msm_dp_panel *msm_dp_panel)
+>>>>    {
+>>>>    	struct msm_dp_panel_private *panel;
+>>>> +	const struct drm_edid *drm_edid;
+>>>>    	if (!msm_dp_panel) {
+>>>>    		DRM_ERROR("invalid input\n");
+>>>> @@ -238,8 +246,13 @@ void msm_dp_panel_handle_sink_request(struct msm_dp_panel *msm_dp_panel)
+>>>>    	panel = container_of(msm_dp_panel, struct msm_dp_panel_private, msm_dp_panel);
+>>>>    	if (panel->link->sink_request & DP_TEST_LINK_EDID_READ) {
+>>>> +		drm_edid = drm_edid_read_ddc(msm_dp_panel->connector, &panel->aux->ddc);
+>>>
+>>> And again....
+>>>
+>> Here we need the struct edid,since we drop the cached drm_edid, so we need
+>> to read it again. Or we can return the drm_edid from msm_dp_panel_read_edid
+>> and pass it to msm_dp_panel_handle_sink_request, then we don't need to read
+>> drm_edid here. Emm, I'm still a bit curious why we can't cache the drm_edid?
+>> It would help us to access it when needed. Emm, i see other drivers also
+>> cache it.
+> 
+> Yes, they can cache EDID. However, in this case we don't even need it at
+> all. This piece needs to be rewritten to use
+> drm_dp_send_real_edid_checksum(), connector->real_edid_checksum.
+> 
+> Corresponding changes can be submitted separately.
+> 
+Got it, thanks, will separate this patch from MST patches..  Even if we 
+use drm_dp_send_real_edid_checksum to send 
+connector->real_edid_checksum, that’s only when the EDID state is incorrect.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c?h=v6.16-rc3#n1020 
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Taniya-Das/clk-qcom-clk-alpha-pll-Add-support-for-dynamic-update-for-slewing-PLLs/20250625-184903
-base:   2ae2aaafb21454f4781c30734959cf223ab486ef
-patch link:    https://lore.kernel.org/r/20250625-qcs615-mm-v10-clock-controllers-v10-7-ec48255f90d8%40quicinc.com
-patch subject: [PATCH v10 07/10] clk: qcom: gpucc-qcs615: Add QCS615 graphics clock controller driver
-config: arc-randconfig-r121-20250627 (https://download.01.org/0day-ci/archive/20250627/202506271519.GYlfvTOB-lkp@intel.com/config)
-compiler: arc-linux-gcc (GCC) 13.3.0
-reproduce: (https://download.01.org/0day-ci/archive/20250627/202506271519.GYlfvTOB-lkp@intel.com/reproduce)
+  When the EDID is read correctly, it should send edid->checksum instead.
+> 
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202506271519.GYlfvTOB-lkp@intel.com/
-
-sparse warnings: (new ones prefixed by >>)
->> drivers/clk/qcom/gpucc-qcs615.c:396:15: sparse: sparse: symbol 'gpu_cc_qcs615_hws' was not declared. Should it be static?
-
-vim +/gpu_cc_qcs615_hws +396 drivers/clk/qcom/gpucc-qcs615.c
-
-   395	
- > 396	struct clk_hw *gpu_cc_qcs615_hws[] = {
-   397		[CRC_DIV_PLL0] = &crc_div_pll0.hw,
-   398		[CRC_DIV_PLL1] = &crc_div_pll1.hw,
-   399	};
-   400	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
