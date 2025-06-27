@@ -1,213 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-62810-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62811-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3574AEBA98
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 16:59:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47137AEBAE4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 17:01:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 926B3165EF7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 14:59:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 846C3189E5EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 15:01:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 713582E888D;
-	Fri, 27 Jun 2025 14:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C52052D9EFC;
+	Fri, 27 Jun 2025 15:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OLxcsoBe"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="aP75DBx6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861EB2E7625;
-	Fri, 27 Jun 2025 14:58:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E621922C0
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 15:01:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751036324; cv=none; b=LuHrYaxYcZDYkAdoXl4VScxDs7WZvAHv9yA6PMQT8ZjoA52ztgEsfM16QJ+REPUZ1crAlVZ9sC9U70QuMxXHXji82XVyBLXOJk6S0WCM+Rl4EbxxKZNB6Z5GMtGitGjpWTCvBAVJBDJu7zidGln1PugWYFGe08hYIDwD9lZFDGg=
+	t=1751036466; cv=none; b=RzmgZJZModsrNhqOr9eEXvis4p6+/PSojA+yT0e3RSNmtwzWPdcnqckT2+L1bLvcMt5+uHGYhwCzyP2+bXzr6HkD2DpJPr60E1hvqpCbFElmjJZmrDY93KMzTUW9uGyHSAxy0dC2mqTksgZMQoQhyQL8ME1hL4/95a0BncVjZGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751036324; c=relaxed/simple;
-	bh=IYziUMcQc2l0WrjC52KQUdKcBdCbKEvbSAKgkqLgl0k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=IhhiFRqAwhZLBKhKAEVsLsOiFNwZFCxFXOnI1f+CZNalS7DlFzDDjWttemiZgMRhkUGFduAoU8Vvc8gF0LyrT45830+iio76XDRrhIL761rCWsrz0PoA9fKac5eZBn0nxzsWGfRh3VcK6xvjcVtZu1HPOKFCHr/id37ZPMlb+Fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OLxcsoBe; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55RC9hO2011346;
-	Fri, 27 Jun 2025 14:58:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	gkweCfiBn/+1OBVWhFD+keR5SD5p17o52DoHPi+qi/o=; b=OLxcsoBeYVdb/Y/O
-	+CtCVPnGX/q2dUrYIJSN7PH0dnMMrWmmUYH3O4GyGnVDiuuQgTh1ErDmwX5fwKAr
-	9Gl0NRGCTY3sLiXqW2zMncXD4uN2cvBJVHkzzdRAOSNHOdRhRUrBuQmmyYqbNocK
-	dJwvtBXQ9dABorfyhyfmirZ5qoNKUFAZc87gdpKbWDGzttDbVzu/sin9bUuGOLRe
-	oTa81SjLfkYZOS1svyBwfyJJM/E1C5PykOjF3zgGVS8WCDlTQW5JFqRNmqCxUl77
-	hHZ+c0jZtnqhFHmPk16QKbIvviiXlRrPWHnPej3geUkyrwQzI8uwrZPrwcBQfH4H
-	lYN1Kw==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47f3bgq5j2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Jun 2025 14:58:36 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55REwZQJ000778
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Jun 2025 14:58:35 GMT
-Received: from [10.50.11.187] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 27 Jun
- 2025 07:58:32 -0700
-Message-ID: <2722e70a-1080-c9f3-eb56-4a6e79084bdc@quicinc.com>
-Date: Fri, 27 Jun 2025 20:28:29 +0530
+	s=arc-20240116; t=1751036466; c=relaxed/simple;
+	bh=6ujoqmRO5RyKRytqvKPKVslFAEvxQPuN+1xFG8o9Fcg=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=k6whmkcO8t1JmIp/5xI8wuOhR+VRSuKXau0bPc0gx+JQQ9l1LyWCvqVKpWA9ZkPzWXLxQaaYMCunoV5ZYCXRmQgp4Hde2fRAj/3EHOZIZgTZYTR8QPFj0lfy/oTNybSaTDW/JLTIvQY1qTPni0tKjxwIfTSrp4m0JKIsCC756Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=aP75DBx6; arc=none smtp.client-ip=209.85.215.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-b0e0c573531so1474209a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 08:01:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1751036464; x=1751641264; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=aRAl9wI634BPGjcu8H/zKu0rYl19B+V87gNfnSSPISY=;
+        b=aP75DBx6uydP/g5OUyDAxiuKR5CZq8yJkqF3MlqZQOWuYN1E4ijuZEsZj4FW5f0fsq
+         zqod/u/9O98wwwPPA21zmSyHB1MCJ93yBwxIw6pRGMjp7R/5APnw/XSI44j0ENR8Y+aK
+         mumYmIfIYXkBxh8LAIVm8q+GkU11ocMd9YExCH3uF6ru7Zlz70TybPmamWZFPn+wQCSB
+         xDhFdfbbIwdD6Ues9ir82Mnbl3ZcD8twNiD+D0PM7q7UdvX3HS4AM1fBYsLNpJLeXXuF
+         VyjscDKcA8HQE4/AmggITnK/NA7+ZUAI/gwauApjymi6+G73Dto3IMSde79RqwXmyRbT
+         YEDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751036464; x=1751641264;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aRAl9wI634BPGjcu8H/zKu0rYl19B+V87gNfnSSPISY=;
+        b=GUnrmLD94gILQwHfdJp0GLVXtSSnUpsblCIu+uheh349KPcwWXQPU7WLDWhP9BRfMD
+         cB5lVIacGPP+r3LwdQi7gp8BjtIG0TT2HNzW+y48oPBVlU+bntPmfNQHOqkOHUSf/l9o
+         FKJcxKQm5hqHti1pnumuMatoBumk12ADeqaxuAymwirNrvwca37dI9zKtFcG1Fp0BpMf
+         o2XinSjq95eXzLCz7tfDQ4y/4sS9+p8zgt9bni58x63Vjx/C0BpivSd8mr7bsAIKk/7P
+         dK705pEQHfn6P5zyhm0bEXH4mIIEiiPtn1fQJG/WyPOQQqX6veKnHZOl2pvhHwcNW5GT
+         RNQA==
+X-Forwarded-Encrypted: i=1; AJvYcCUglqbnqNEzbxddYj5YOI13HaBe0BCMM4X00PqA/gU4F68QdVR7LdK8UFSeReMWyudByCeDBdvS81gYGtL4@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVNNVAzDH7n4nSuro8svQIIQqpFeVFpRrYIEC2l6pM2R5WgZUS
+	A4cqfPRelGXtDC5fQpuygNgSozuPBR8u8aQCfMZVtIZEGiAJg7VJ14DayqEE+dPzjLibOoY+0WK
+	D/OWJJCMqORibuC1L0o0zRDoQGw==
+X-Google-Smtp-Source: AGHT+IGurS1FeZxjPsUkkgX6nLcb9gWPD1RB81LRFHPYYM11l8SKTEFiNYBAYv1ewEvWIoDgL2ZOZLZLlNTHAJWkEw==
+X-Received: from pjbnb6.prod.google.com ([2002:a17:90b:35c6:b0:311:8076:14f1])
+ (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:90b:2c90:b0:312:ec3b:82c0 with SMTP id 98e67ed59e1d1-318c9314d79mr4816447a91.29.1751036464315;
+ Fri, 27 Jun 2025 08:01:04 -0700 (PDT)
+Date: Fri, 27 Jun 2025 08:01:02 -0700
+In-Reply-To: <diqz1pr8lndp.fsf@ackerleytng-ctop.c.googlers.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v5 5/5] arm64: dts: qcom: qcm2290: Add venus video node
-To: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
-CC: <krzk+dt@kernel.org>, <bryan.odonoghue@linaro.org>,
-        <quic_dikshita@quicinc.com>, <mchehab@kernel.org>, <robh@kernel.org>,
-        <conor+dt@kernel.org>, <konradybcio@kernel.org>,
-        <andersson@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-media@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250626135931.700937-1-jorge.ramirez@oss.qualcomm.com>
- <20250626135931.700937-6-jorge.ramirez@oss.qualcomm.com>
- <6e330e8f-5856-ef8e-5fe3-52bd61b59e02@quicinc.com> <aF6PqCY/E6H0Mc2/@trex>
-Content-Language: en-US
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <aF6PqCY/E6H0Mc2/@trex>
+Mime-Version: 1.0
+References: <20250611133330.1514028-1-tabba@google.com> <20250611133330.1514028-11-tabba@google.com>
+ <aEyhHgwQXW4zbx-k@google.com> <diqz1pr8lndp.fsf@ackerleytng-ctop.c.googlers.com>
+Message-ID: <diqza55tjkk1.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [PATCH v12 10/18] KVM: x86/mmu: Handle guest page faults for
+ guest_memfd with shared memory
+From: Ackerley Tng <ackerleytng@google.com>
+To: Sean Christopherson <seanjc@google.com>, Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	kvmarm@lists.linux.dev, pbonzini@redhat.com, chenhuacai@kernel.org, 
+	mpe@ellerman.id.au, anup@brainfault.org, paul.walmsley@sifive.com, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, mail@maciej.szmigiero.name, david@redhat.com, 
+	michael.roth@amd.com, wei.w.wang@intel.com, liam.merwick@oracle.com, 
+	isaku.yamahata@gmail.com, kirill.shutemov@linux.intel.com, 
+	suzuki.poulose@arm.com, steven.price@arm.com, quic_eberman@quicinc.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com, peterx@redhat.com, 
+	pankaj.gupta@amd.com, ira.weiny@intel.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: TR9uuurdnKAnQXTs1UT3iuQbljsruGFi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDEyMiBTYWx0ZWRfX4bv+H6gL7qLN
- UV8+r2XZpl77MbCuz1YnMzaLwE6dAIBv70AgVJD0OlrcteViOOjW8CQv83o+2p13JWgQmLMav3X
- AqD8TgABBGahrFBXFdeY191tUoe7ecE5xwte9MLwHWf7FEpUcwUzJjRJTeFTNAuwiAIpmHqPWvf
- +Tcj4MtLzbC6MFfkzIkg4Mmy59qFVfBjpTJkjWUNn/Nikv75NoHJIQjos1NM6fNG/w1OrRV9a0V
- gzbiviAbmNNASLd4CkYxJ+ntSKBdis60s3/YrWzSbgTJDrTH7ntMoloJcRsrGYHrSQND3HCeAo8
- DR4yrqOOAOH+sBqgutqpXIt+dP2G0mIHfd7sYHiT72g5H9jwC2DOXM0QQnNzoWE0yh8weDEHWtV
- KsErSFo5T0AhKgp+rXOHsw8apWtPCBvCZlBlVwJ2rZ31nem20nuc90e3IPFsHuxPDMcc8ny1
-X-Authority-Analysis: v=2.4 cv=L4kdQ/T8 c=1 sm=1 tr=0 ts=685eb19c cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8
- a=s3_BAN2U_F-k673gM8kA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: TR9uuurdnKAnQXTs1UT3iuQbljsruGFi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-27_04,2025-06-26_05,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0
- adultscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
- spamscore=0 phishscore=0 mlxlogscore=999 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506270122
 
+Ackerley Tng <ackerleytng@google.com> writes:
 
-On 6/27/2025 6:03 PM, Jorge Ramirez wrote:
-> On 27/06/25 17:40:19, Vikash Garodia wrote:
+> [...]
+
+>>> +/*
+>>> + * Returns true if the given gfn's private/shared status (in the CoCo sense) is
+>>> + * private.
+>>> + *
+>>> + * A return value of false indicates that the gfn is explicitly or implicitly
+>>> + * shared (i.e., non-CoCo VMs).
+>>> + */
+>>>  static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+>>>  {
+>>> -	return IS_ENABLED(CONFIG_KVM_GMEM) &&
+>>> -	       kvm_get_memory_attributes(kvm, gfn) & KVM_MEMORY_ATTRIBUTE_PRIVATE;
+>>> +	struct kvm_memory_slot *slot;
+>>> +
+>>> +	if (!IS_ENABLED(CONFIG_KVM_GMEM))
+>>> +		return false;
+>>> +
+>>> +	slot = gfn_to_memslot(kvm, gfn);
+>>> +	if (kvm_slot_has_gmem(slot) && kvm_gmem_memslot_supports_shared(slot)) {
+>>> +		/*
+>>> +		 * Without in-place conversion support, if a guest_memfd memslot
+>>> +		 * supports shared memory, then all the slot's memory is
+>>> +		 * considered not private, i.e., implicitly shared.
+>>> +		 */
+>>> +		return false;
 >>
->> On 6/26/2025 7:29 PM, Jorge Ramirez-Ortiz wrote:
->>> Add DT entries for the qcm2290 venus encoder/decoder.
->>>
->>> Co-developed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
->>> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
->>> Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
->>> ---
->>>  arch/arm64/boot/dts/qcom/qcm2290.dtsi | 57 +++++++++++++++++++++++++++
->>>  1 file changed, 57 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
->>> index f49ac1c1f8a3..5326c91a0ff0 100644
->>> --- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
->>> @@ -1628,6 +1628,63 @@ adreno_smmu: iommu@59a0000 {
->>>  			#iommu-cells = <2>;
->>>  		};
->>>  
->>> +		venus: video-codec@5a00000 {
->>> +			compatible = "qcom,qcm2290-venus";
->>> +			reg = <0 0x5a00000 0 0xf0000>;
->>> +			interrupts = <GIC_SPI 225 IRQ_TYPE_LEVEL_HIGH>;
->>> +
->>> +			power-domains = <&gcc GCC_VENUS_GDSC>,
->>> +					<&gcc GCC_VCODEC0_GDSC>,
->>> +					<&rpmpd QCM2290_VDDCX>;
->>> +			power-domain-names = "venus",
->>> +					     "vcodec0",
->>> +					     "cx";
->>> +			operating-points-v2 = <&venus_opp_table>;
->>> +
->>> +			clocks = <&gcc GCC_VIDEO_VENUS_CTL_CLK>,
->>> +				 <&gcc GCC_VIDEO_AHB_CLK>,
->>> +				 <&gcc GCC_VENUS_CTL_AXI_CLK>,
->>> +				 <&gcc GCC_VIDEO_THROTTLE_CORE_CLK>,
->>> +				 <&gcc GCC_VIDEO_VCODEC0_SYS_CLK>,
->>> +				 <&gcc GCC_VCODEC0_AXI_CLK>;
->>> +			clock-names = "core",
->>> +				      "iface",
->>> +				      "bus",
->>> +				      "throttle",
->>> +				      "vcodec0_core",
->>> +				      "vcodec0_bus";
->>> +
->>> +			memory-region = <&pil_video_mem>;
->>> +			iommus = <&apps_smmu 0x860 0x0>,
->>> +				 <&apps_smmu 0x880 0x0>,
->>> +				 <&apps_smmu 0x861 0x04>,
->>> +				 <&apps_smmu 0x863 0x0>,
->>> +				 <&apps_smmu 0x804 0xe0>;
->> keep only the non secure ones.
-> 
-> ok
-> 
->>> +
->>> +			interconnects = <&mmnrt_virt MASTER_VIDEO_P0 RPM_ALWAYS_TAG
->>> +					 &bimc SLAVE_EBI1 RPM_ALWAYS_TAG>,
->>> +					<&bimc MASTER_APPSS_PROC RPM_ACTIVE_TAG
->>> +					 &config_noc SLAVE_VENUS_CFG RPM_ACTIVE_TAG>;
->>> +			interconnect-names = "video-mem",
->>> +					     "cpu-cfg";
->>> +
->>> +			status = "okay";
->>> +
->>> +			venus_opp_table: opp-table {
->>> +				compatible = "operating-points-v2";
->>> +
->>> +				opp-133000000 {
->>> +					opp-hz = /bits/ 64 <133000000>;
->>> +					required-opps = <&rpmpd_opp_low_svs>;
->>> +				};
->> Fix the corner freq value
-> 
-> can you add some reference please?
-> 
-> I took this data from an internal document - not sure why the downstream
-> driver supports different values or where those were taken from (AFAIK
-> they are not supported)
-Most likely you have referred incorrect downstream file. Refer scuba-vidc.dtsi.
-Again, good reference for such cases would IP catalogues and if not, gcc driver
-in this case which have structures defining different corners for video.
-> 
-> 
->>
->> Regards,
->> Vikash
->>> +
->>> +				opp-240000000 {
->>> +					opp-hz = /bits/ 64 <240000000>;
->>> +					required-opps = <&rpmpd_opp_svs>;
->>> +				};
->>> +			};
->>> +		};
->>> +
->>>  		mdss: display-subsystem@5e00000 {
->>>  			compatible = "qcom,qcm2290-mdss";
->>>  			reg = <0x0 0x05e00000 0x0 0x1000>;
+>> Why!?!?  Just make sure KVM_MEMORY_ATTRIBUTE_PRIVATE is mutually exclusive with
+>> mappable guest_memfd.  You need to do that no matter what. 
+>
+> Thanks, I agree that setting KVM_MEMORY_ATTRIBUTE_PRIVATE should be
+> disallowed for gfn ranges whose slot is guest_memfd-only. Missed that
+> out. Where do people think we should check the mutual exclusivity?
+>
+> In kvm_supported_mem_attributes() I'm thiking that we should still allow
+> the use of KVM_MEMORY_ATTRIBUTE_PRIVATE for other non-guest_memfd-only
+> gfn ranges. Or do people think we should just disallow
+> KVM_MEMORY_ATTRIBUTE_PRIVATE for the entire VM as long as one memslot is
+> a guest_memfd-only memslot?
+>
+> If we check mutually exclusivity when handling
+> kvm_vm_set_memory_attributes(), as long as part of the range where
+> KVM_MEMORY_ATTRIBUTE_PRIVATE is requested to be set intersects a range
+> whose slot is guest_memfd-only, the ioctl will return EINVAL.
+>
+
+At yesterday's (2025-06-26) guest_memfd upstream call discussion,
+
+* Fuad brought up a possible use case where within the *same* VM, we
+  want to allow both memslots that supports and does not support mmap in
+  guest_memfd.
+* Shivank suggested a concrete use case for this: the user wants a
+  guest_memfd memslot that supports mmap just so userspace addresses can
+  be used as references for specifying memory policy.
+* Sean then added on that allowing both types of guest_memfd memslots
+  (support and not supporting mmap) will allow the user to have a second
+  layer of protection and ensure that for some memslots, the user
+  expects never to be able to mmap from the memslot.
+
+I agree it will be useful to allow both guest_memfd memslots that
+support and do not support mmap in a single VM.
+
+I think I found an issue with flags, which is that GUEST_MEMFD_FLAG_MMAP
+should not imply that the guest_memfd will provide memory for all guest
+faults within the memslot's gfn range (KVM_MEMSLOT_GMEM_ONLY).
+
+For the use case Shivank raised, if the user wants a guest_memfd memslot
+that supports mmap just so userspace addresses can be used as references
+for specifying memory policy for legacy Coco VMs where shared memory
+should still come from other sources, GUEST_MEMFD_FLAG_MMAP will be set,
+but KVM can't fault shared memory from guest_memfd. Hence,
+GUEST_MEMFD_FLAG_MMAP should not imply KVM_MEMSLOT_GMEM_ONLY.
+
+Thinking forward, if we want guest_memfd to provide (no-mmap) protection
+even for non-CoCo VMs (such that perhaps initial VM image is populated
+and then VM memory should never be mmap-ed at all), we will want
+guest_memfd to be the source of memory even if GUEST_MEMFD_FLAG_MMAP is
+not set.
+
+I propose that we should have a single VM-level flag to solve this (in
+line with Sean's guideline that we should just move towards what we want
+and not support non-existent use cases): something like
+KVM_CAP_PREFER_GMEM.
+
+If KVM_CAP_PREFER_GMEM_MEMORY is set,
+
+* memory for any gfn range in a guest_memfd memslot will be requested
+  from guest_memfd
+* any privacy status queries will also be directed to guest_memfd
+* KVM_MEMORY_ATTRIBUTE_PRIVATE will not be a valid attribute
+
+KVM_CAP_PREFER_GMEM_MEMORY will be orthogonal with no validation on
+GUEST_MEMFD_FLAG_MMAP, which should just purely guard mmap support in
+guest_memfd.
+
+Here's a table that I set up [1]. I believe the proposed
+KVM_CAP_PREFER_GMEM_MEMORY (column 7) lines up with requirements
+(columns 1 to 4) correctly.
+
+[1] https://lpc.events/event/18/contributions/1764/attachments/1409/3710/guest_memfd%20use%20cases%20vs%20guest_memfd%20flags%20and%20privacy%20tracking.pdf
+
+> [...]
+
 
