@@ -1,168 +1,294 @@
-Return-Path: <linux-arm-msm+bounces-62753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCAB3AEB4F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 12:34:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D1F8AEB67C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 13:34:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 294107A8618
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 10:33:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DDAB13BF75A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 11:33:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93158299922;
-	Fri, 27 Jun 2025 10:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FE16299944;
+	Fri, 27 Jun 2025 11:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aZYnrqB9"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="m65ozer2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19DE26B756;
-	Fri, 27 Jun 2025 10:34:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10B2293C67
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 11:33:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751020451; cv=none; b=Cvjh3LRpa0QXXMxdiYklOcozZnTrfegQGTyWOJn6cbMw16/xtdubNBmYb2ojW5fReTKxTE/OZJkK4cvpJahMIG6aN+zqFXBRMgKAnYG2ebA9EUjPNGHWlp4ScIH69KNlJ2NwJtd021XbyMkonPXtqBJATF7wF07T6HG/rdRo/VQ=
+	t=1751024042; cv=none; b=HKgNyuoVEEM/v6lXFMJ6N96mLPTO1fw8t0GE6dkNTh7HWpATwvB/ZCkY8UmQzPbeqFQU9tuadzd4Ca8wnTEjQ1z7bt3oaWcFECEyOMqXdf6h/swp/o+fBazWv4acCQz6tHBZcWXpkZvFRzVuCPmebY/Qjhs1rLUTntZUhKaRXJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751020451; c=relaxed/simple;
-	bh=NJEr28iU7ySNWsWvysGjhjF4BlXU02+p7PrxqHp0KDM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Pfyglehnv2SGTJ+aicqn2OqX+mCc/oN7cFzOXz6zN4LUIADWeezQOm3tKOYbCSP9bgPRwMiRRKEFTyS3Aq7cxH6t2k7byYAzeBdMvnJN5OrRypbRcIVUHMdzUKCK0YC+nwiBqztqYVwgWDgrTPlbf7z3tvF35wf2Kx3/y4lY9KE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aZYnrqB9; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55R4DgCD008739;
-	Fri, 27 Jun 2025 10:34:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3qG4vDhN+pXvVkjr4GfQm6rnWkov+SX8y6P46nqvpMw=; b=aZYnrqB9nXrZRxCp
-	EL7bATJ8bMFRY2w7fWle3V/BqZVqXILGN9CFC7Ab2fFJHo8KjYnXSmP5eFMTzMjz
-	DffdJfX5SURIYXomVp6sjaxOTbi/C4VRyvmlNkb0bC2fLvA8uG9snm9liCJdToGe
-	N7vhign3lOMmQwO8l+RRhJ1UiYjwfD7jgs0R7o80VLlix39wBkYeYjMy/PKLr7uX
-	RsEhx3ZVvr0VOHs/U3DIu//WKt0pM3hPpEBRV0jnMle262xfvcb++i48iEQjpz+j
-	UcJP+kgXcqBLDZ5ku74ykWG7mIgVmrTrjDC6sasAAfl7U7wPL4zbULxdHuU2kbTn
-	vi7G6Q==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47fbhqvw74-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Jun 2025 10:34:04 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55RAY38r000354
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Jun 2025 10:34:03 GMT
-Received: from hu-lxu5-sha.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Fri, 27 Jun 2025 03:34:00 -0700
-From: Ling Xu <quic_lxu5@quicinc.com>
-To: <srini@kernel.org>, <amahesh@qti.qualcomm.com>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <arnd@arndb.de>,
-        <gregkh@linuxfoundation.org>
-CC: <quic_kuiw@quicinc.com>, <ekansh.gupta@oss.qualcomm.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Ling Xu
-	<quic_lxu5@quicinc.com>
-Subject: [PATCH v4 4/4] misc: fastrpc: add support for gdsp remoteproc
-Date: Fri, 27 Jun 2025 16:03:19 +0530
-Message-ID: <20250627103319.2883613-5-quic_lxu5@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250627103319.2883613-1-quic_lxu5@quicinc.com>
-References: <20250627103319.2883613-1-quic_lxu5@quicinc.com>
+	s=arc-20240116; t=1751024042; c=relaxed/simple;
+	bh=nrg/5Cr/Ct/L2mrn4jAnolMDR4V2365AXYCSvZSKjPs=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=Szgy0LbpiSNwj2/givm2KRodXKpf3AoziSDMV3E9IEhJSYPBVkg+fAQa0rTAcWcO6AFofk2zpMOC+kVQB75wVgCQlr5F81GwH/NfAj6foQ2sqi3mTDmMzPqj0isOcR8FseKejT/jbpddMl20Co60B3bZftfkg61V3swZ06D6IzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=m65ozer2; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-ae35f36da9dso79195766b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 04:33:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1751024038; x=1751628838; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8TQIk1vNThf+KbhPSV308tydy65v8ZFP99g2fX+hJzE=;
+        b=m65ozer2x2+YrV6OGSlVtJtLgt3AN5unm8zC2OlARa+S5ZKLL3S0PNEJQhU8PrsbfP
+         TBMJonQayyP0LxMWECp2zT4KNGaHy3mdGnYpuVwrLeaKok4AlEoH4CtWgLr+xnJrgpZ9
+         qOZEZ7pfq0WO8ZuUBwI82SphF0OGKJd+qDG02c+Wf++qW+nwDHeFYdVOWO4DAx4GW4cT
+         NbAk+13orgzXztKq8gEkXb1i1o59oksbsfWDsiO0H9+kKKgLNfLoUCh1fPA/1WcMlEte
+         79k4s3F5a19N+8FYmUdL3Mfvg85txlmbTMh2EjJ07PNjqOSVY5w1whI1uQUjx93Prgtu
+         xJTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751024038; x=1751628838;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8TQIk1vNThf+KbhPSV308tydy65v8ZFP99g2fX+hJzE=;
+        b=rUTXPnJFZtOUqh8AkdGMCylRF6H8E+Cxod5ZlN0wu3FX7oRKEeMsy7XEkm1MeyZ9uI
+         VC/cfpgj6hw8b/438PGnDSwcsIJzGAAXqhxrTP3x8jJ1q1qrCImgiFPbcEoTgiErqcYr
+         /yeP8Wdrw87o/e8EJ2zawjaEJsb+CpQc7Uu7P1SCBiZY4erOX64XcoIunXdrbXEoeLK0
+         KZSgxBmCPGxMDeTeEuRsbYXyVDGAFkGjp2O2f40eUGOH39bGgoe4+ki1SGn/4WV4U9ZL
+         mmHsueYKFGKX8WGKt6QVa/N846Lg9enZF9cyEPbdszu2gq921jOP8hybbFTps7suWanI
+         rgSA==
+X-Forwarded-Encrypted: i=1; AJvYcCUhLbtfu91dz81160hNVnZojQbGnAdjoZZOumlG3JrSrtr6MspgQk6srlfYbqZeHGlC5KypDU8rHrcTvU9t@vger.kernel.org
+X-Gm-Message-State: AOJu0YyoHp3wFHJs5b5kFOLhFjDEj/Ryr9R4EOuZTzpi5/yRUojjuJeF
+	ROq7AYcayA5kw3nbW6spwDhaVsLXDuxtjvYRVuBAloe/u6s/fnqHJRJNZ6ey3SxHYU4=
+X-Gm-Gg: ASbGncuH1Uy1iarcq5820fKlayUPrLcBN2Jdyxn4lSUjxzOioRetDXWGC13UzPblY5m
+	9Z1ytFUIJ1fIYkTP9oLhiEI7SSWs+oP3VgoWKwuzHmiHcpzAI0Owb94bJAXOMiVjibBC7WeOqa6
+	orvoH7E5PO72juza2pcoAH6Nh2Rjg5rfs7yF9AHD3m3qAleV2iwpxrrmcAs1tllY8RZ9B4CBv/K
+	rGd8QTI71KukGGhqkRpsvZ8xFndgyt7caflDhf/wTBneTsdIcdLNvwyvzrfqb19mmez2v5JUTuv
+	JnXLPXQ8YpWfD28WPH2kUDSrCFw7gI5/y3k4Yn3C2dJGsGsrutookK3IKuWTrgsnZxEadlUbcfp
+	ac2XAFeTtHUNtOO4gmfxImHjMqtmqd90=
+X-Google-Smtp-Source: AGHT+IFTB4ZISQsWRjBnTltqxZ+EzRDnHXDtrROSz2QQZgqYVC+7zZ8R4yhdcBmhaWSRI1bSl9PUhg==
+X-Received: by 2002:a17:906:7951:b0:ad8:a935:b905 with SMTP id a640c23a62f3a-ae34fddeae3mr245758066b.22.1751024037927;
+        Fri, 27 Jun 2025 04:33:57 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae353c6bdafsm108070066b.143.2025.06.27.04.33.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Jun 2025 04:33:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4qZbUDNaC49OtDFPDmTmBSXN2qgt2e27
-X-Authority-Analysis: v=2.4 cv=Id+HWXqa c=1 sm=1 tr=0 ts=685e739c cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=6IFa9wvqVegA:10 a=COk6AnOGAAAA:8 a=d01il73eTdEK0Eih25sA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: 4qZbUDNaC49OtDFPDmTmBSXN2qgt2e27
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDA4NSBTYWx0ZWRfX5NMSaEyfuXhg
- CpXOdmIeaBZ+oJkK9Ly5Z7Ik6CKEGQtabDl084/RlTehUA1p10MzycX9MaruCBplDTpsJl2wHCc
- //Cj/z1FNR9IJT76wIdd2keP1y1OZi/BOxLfTVSeuqdCXFKvOFPnY8n/uPXBqt/bEcHc8vtbwVm
- SsofQgfQg4C45TIfpf/8FDhzuc9p/X1WFAh/iLChFgpQAyfp7aGKdTvqyomtKfjTVZlagRU/uHs
- ZB0ruD70m6q1Rk9TUWBuLNTNuAoJ1g++6PuwSQLV+ZZQY9MNwCnE9ceVNwFwvzNV4EGllhLEd1k
- TrvuPmapTd7gDB+uUhnZRsbwoZTnptSBbEUVcfx0mjWQMZnMYDgEEpUJkntv93SlXFjjPUzcHpu
- 3DB/i4Oc0TmlnO2BakT847bSZFl/mpdPpIDCKtlM6c+pgrPMTjGmtqvVtTtlCaBwgmJE6H+1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-27_04,2025-06-26_05,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0 bulkscore=0
- clxscore=1015 impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506270085
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 27 Jun 2025 13:33:56 +0200
+Message-Id: <DAXA7TKVM4GI.J6C7M3D1J1XF@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-crypto@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+ <linux-mmc@vger.kernel.org>
+Subject: Re: [PATCH 14/14] arm64: dts: qcom: Add The Fairphone (Gen. 6)
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Will Deacon"
+ <will@kernel.org>, "Robin Murphy" <robin.murphy@arm.com>, "Joerg Roedel"
+ <joro@8bytes.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Rafael J.
+ Wysocki" <rafael@kernel.org>, "Viresh Kumar" <viresh.kumar@linaro.org>,
+ "Manivannan Sadhasivam" <mani@kernel.org>, "Herbert Xu"
+ <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>,
+ "Vinod Koul" <vkoul@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>,
+ "Konrad Dybcio" <konradybcio@kernel.org>, "Robert Marko"
+ <robimarko@gmail.com>, "Das Srinagesh" <quic_gurus@quicinc.com>, "Thomas
+ Gleixner" <tglx@linutronix.de>, "Jassi Brar" <jassisinghbrar@gmail.com>,
+ "Amit Kucheria" <amitk@kernel.org>, "Thara Gopinath"
+ <thara.gopinath@gmail.com>, "Daniel Lezcano" <daniel.lezcano@linaro.org>,
+ "Zhang Rui" <rui.zhang@intel.com>, "Lukasz Luba" <lukasz.luba@arm.com>,
+ "Ulf Hansson" <ulf.hansson@linaro.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
+References: <20250625-sm7635-fp6-initial-v1-0-d9cd322eac1b@fairphone.com>
+ <20250625-sm7635-fp6-initial-v1-14-d9cd322eac1b@fairphone.com>
+ <4200b3b8-5669-4d5a-a509-d23f921b0449@oss.qualcomm.com>
+In-Reply-To: <4200b3b8-5669-4d5a-a509-d23f921b0449@oss.qualcomm.com>
 
-The fastrpc driver has support for 5 types of remoteprocs. There are
-some products which support GDSP remoteprocs. GDSP is General Purpose
-DSP where tasks can be offloaded. This patch extends the driver to
-support GDSP remoteprocs.
+On Wed Jun 25, 2025 at 4:38 PM CEST, Konrad Dybcio wrote:
+> On 6/25/25 11:23 AM, Luca Weiss wrote:
+>> Add a devicetree for The Fairphone (Gen. 6) smartphone, which is based
+>> on the SM7635 SoC.
+>
+> [...]
+>
+>> +	/* Dummy panel for simple-framebuffer dimension info */
+>> +	panel: panel {
+>> +		compatible =3D "boe,bj631jhm-t71-d900";
+>> +		width-mm =3D <65>;
+>> +		height-mm =3D <146>;
+>> +	};
+>
+> I haven't ran through all the prerequisite-xx-id, but have
+> you submitted a binding for this?
 
-Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
----
- drivers/misc/fastrpc.c      | 5 ++++-
- include/uapi/misc/fastrpc.h | 3 ++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+Actually not, kind of forgot about this. I believe I can create a
+(mostly?) complete binding for the panel, but this simple description
+for only width-mm & height-mm will differ from the final one, which will
+have the DSI port, pinctrl, reset-gpios and various supplies.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index cb9f4be286af..d3d9b9fdbf4c 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -2245,6 +2245,8 @@ static int fastrpc_get_domain_id(const char *domain)
- 		return MDSP_DOMAIN_ID;
- 	else if (!strncmp(domain, "sdsp", 4))
- 		return SDSP_DOMAIN_ID;
-+	else if (!strncmp(domain, "gdsp", 4))
-+		return GDSP_DOMAIN_ID;
- 
- 	return -EINVAL;
- }
-@@ -2319,13 +2321,14 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 	case ADSP_DOMAIN_ID:
- 	case MDSP_DOMAIN_ID:
- 	case SDSP_DOMAIN_ID:
--		/* Unsigned PD offloading is only supported on CDSP*/
-+		/* Unsigned PD offloading is only supported on CDSP and GDSP*/
- 		data->unsigned_support = false;
- 		err = fastrpc_device_register(rdev, data, secure_dsp, domain);
- 		if (err)
- 			goto err_free_data;
- 		break;
- 	case CDSP_DOMAIN_ID:
-+	case GDSP_DOMAIN_ID:
- 		data->unsigned_support = true;
- 		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
- 		err = fastrpc_device_register(rdev, data, true, domain);
-diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
-index b890f8042e86..5ea891615c49 100644
---- a/include/uapi/misc/fastrpc.h
-+++ b/include/uapi/misc/fastrpc.h
-@@ -22,8 +22,9 @@
- #define MDSP_DOMAIN_ID (1)
- #define SDSP_DOMAIN_ID (2)
- #define CDSP_DOMAIN_ID (3)
-+#define GDSP_DOMAIN_ID (4)
- 
--#define FASTRPC_DOMAIN_MAX    3
-+#define FASTRPC_DOMAIN_MAX    4
- 
- /**
-  * enum fastrpc_map_flags - control flags for mapping memory on DSP user process
--- 
-2.34.1
+I think I'll just drop it from v2 and keep it locally only, to get the
+simpledrm scaling right.
+
+>
+> [...]
+>
+>> +	reserved-memory {
+>> +		/*
+>> +		 * ABL is powering down display and controller if this node is
+>> +		 * not named exactly "splash_region".
+>> +		 */
+>> +		splash_region@e3940000 {
+>> +			reg =3D <0x0 0xe3940000 0x0 0x2b00000>;
+>> +			no-map;
+>> +		};
+>> +	};
+>
+> :/ maybe we can convince ABL not to do it..
+
+Yes, we talked about that. I will look into getting "splash-region" and
+"splash" also into the ABL (edk2) build for the phone. Still won't
+resolve that for any other brand of devices.
+
+>
+> [...]
+>
+>> +		vreg_l12b: ldo12 {
+>> +			regulator-name =3D "vreg_l12b";
+>> +			/*
+>> +			 * Skip voltage voting for UFS VCC.
+>> +			 */
+>
+> Why so?
+
+From downstream:
+
+		/*
+		 * This is for UFS Peripheral,which supports 2 variants
+		 * UFS 3.1 ,and UFS 2.2 both require different voltages.
+		 * Hence preventing voltage voting as per previous targets.
+		 */
+
+I haven't (successfully) brought up UFS yet, so I haven't looked more
+into that.
+
+The storage on FP6 is UFS 3.1 though fwiw.
+
+>
+> [...]
+>
+>> +&gpi_dma0 {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&gpi_dma1 {
+>> +	status =3D "okay";
+>> +};
+>
+> These can be enabled in SoC DTSI.. it's possible that the secure=20
+> configuration forbids access to one, but these are generally made
+> per-platform
+
+Ack
+
+>
+> [...]
+>
+>> +&pm8550vs_d {
+>> +	status =3D "disabled";
+>> +};
+>> +
+>> +&pm8550vs_e {
+>> +	status =3D "disabled";
+>> +};
+>> +
+>> +&pm8550vs_g {
+>> +	status =3D "disabled";
+>> +};
+>
+> Hm... perhaps we should disable these by deafult
+
+Do you want me to do this in this patchset, or we clean this up later at
+some point? I'd prefer not adding even more dependencies to my patch
+collection right now.
+
+>
+> [...]
+>
+>> +&pmr735b_gpios {
+>> +	pm8008_reset_n_default: pm8008-reset-n-default-state {
+>> +		pins =3D "gpio3";
+>> +		function =3D PMIC_GPIO_FUNC_NORMAL;
+>> +		bias-pull-down;
+>> +	};
+>> +
+>> +	s1j_enable_default: s1j-enable-default-state {
+>> +		pins =3D "gpio1";
+>> +		function =3D PMIC_GPIO_FUNC_NORMAL;
+>> +		power-source =3D <0>;
+>> +		bias-disable;
+>> +		output-low;
+>> +	};
+>
+> ordering by pin ID makes more sense, here and in tlmm
+>
+> (and is actually written down)
+> https://docs.kernel.org/devicetree/bindings/dts-coding-style.html#order-o=
+f-nodes
+
+Ah, that's news to me. Thanks!
+
+>
+> [...]
+>
+>> +&pon_resin {
+>> +	linux,code =3D <KEY_VOLUMEDOWN>;
+>> +	status =3D "okay";
+>
+> \n before status consistently, please
+
+Ack
+
+>
+> [...]
+>
+>> +&tlmm {
+>> +	/*
+>> +	 * 8-11: Fingerprint SPI
+>> +	 * 13: NC
+>> +	 * 63-64: WLAN UART
+>> +	 */
+>> +	gpio-reserved-ranges =3D <8 4>, <13 1>, <63 2>;
+>
+> Please match the style in x1-crd.dtsi
+
+Ack
+
+>
+> [...]
+>
+>> +&usb_1 {
+>> +	dr_mode =3D "otg";
+>> +
+>> +	/* USB 2.0 only */
+>
+> Because there's no usb3phy description yet, or due to hw design?
+
+HW design. Funnily enough with clk_ignore_unused this property is not
+needed, and USB(2.0) works fine then. Just when (I assume) the USB3
+clock is turned off which the bootloader has enabled, USB stops working.
+
+Regards
+Luca
+
+>
+> Konrad
 
 
