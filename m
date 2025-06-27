@@ -1,109 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-62874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56CAAAEC031
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 21:39:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4805CAEC039
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 21:40:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40EC4189453C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 19:39:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B26E01C6006A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 19:40:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B9C521C190;
-	Fri, 27 Jun 2025 19:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8487220FA94;
+	Fri, 27 Jun 2025 19:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YPGZ7yVd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QQ1rcBXH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE66CA6F;
-	Fri, 27 Jun 2025 19:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5E6CA6F;
+	Fri, 27 Jun 2025 19:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751053137; cv=none; b=udP/JaPdO4b0PlcJa+CTHrYaLhUtBbzhDJJQr+MiJoyKR4mZpoyezb+ImIZsJd+GQR+LsnK61O1RwZ+bz+uT4kPwiIh7Gygn2PtnVSco6WloHeyHsnlPhE+qmipXf2gwOt47OB99kk0bLOgmLRSN48bvsUBAReAnL2wsM3V1UF8=
+	t=1751053209; cv=none; b=gyrH++avsTiD1io13pfFob+7SMPb393L33QGuIdJOyRJUoUekT7w8M0cyybz6kxsbYSCdwaYBLN1l+Fhkm326Yqpzrw1a36JimGnncQ52VlQdteTFIPLAN6Q7NU21a/F4mTybPQ3ZMGLsajE/Rmdq1gb3KVGsGAt1y9CP3rqoLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751053137; c=relaxed/simple;
-	bh=OE8U2vT7ew5Dt6ec8C7hkjuElIoXUc1rAPhJAuZXxG8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jYZ9MYlYWJHDndU7W+ApKdo1uybbfOVWazX6AmqtZ9XF8eEfbdnKEAyqqQzRE4xFtxf4E6BSC+d58jUC1k+6926mhXp3LNQlqqWXMiFIiuuJywH2Z4YauWoCAWTIHstIGQztO8u5eNcZjnywV8BfqTT9jj6kQcNvYa+seZgAPWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YPGZ7yVd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 283C1C4CEF6;
-	Fri, 27 Jun 2025 19:38:49 +0000 (UTC)
+	s=arc-20240116; t=1751053209; c=relaxed/simple;
+	bh=QBQ5PbKZcuWX1G/YfP/veVQZ4ZF54IS/+gFkJ/EWdDY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o9Axn4+2nve9rirFaJBDiuuDaMDCvsTWTRGvJZ1qabpcvEbGYr0xdjJamjnLynPFt95jbpNoiQDidnkYcz4Ns4ws3KJm6xzWPQwuvoJIiJ+HzSjzlDWXYeqj1L5a3YyfAB48MbxGTzMrhyWvUGFsxzk/+u1v0lR4QY3VmY0K9xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QQ1rcBXH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C76E3C4CEE3;
+	Fri, 27 Jun 2025 19:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751053136;
-	bh=OE8U2vT7ew5Dt6ec8C7hkjuElIoXUc1rAPhJAuZXxG8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=YPGZ7yVdxGLbHgm7y1rhDBnfH40vpyGmywbcIuoWgPzSGVZQylVK8pc8sG0H0Ajut
-	 UP99Rzrh9GlJKv7QfNyk+MyyellutDgnFh2R7Xiu3VFkXPC665FsBfbqW+XMSo1uD5
-	 bzXAQxt/ahMTNZ8xI/lRCOJQWDdo2wU2PTESbUseSewXDCcJ8kCrvpqdLWFztEPJtz
-	 20s1yYt99RwhltUaKArwd/16gAMti29MT+Dl593FYEEixbTOWluSnBjT0+14f0GSwn
-	 6ptEsco2UXPqaJvwHSpi0sPzGeIwxY7VCrNi6xKloyRfIMPozR3owMJ4IDbyq0YcJA
-	 cP5xHbmkEl6RA==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Fri, 27 Jun 2025 21:37:58 +0200
-Subject: [PATCH 4/4] clk: qcom: rpmh: Define RPMH_IPA_CLK on QCS615
+	s=k20201202; t=1751053208;
+	bh=QBQ5PbKZcuWX1G/YfP/veVQZ4ZF54IS/+gFkJ/EWdDY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QQ1rcBXHg3aw9LDgs/KzYu8roJFYuFH+VxcwSO/Mk0opubVEpt9SIZa30d1gbhdau
+	 3Pt00B/ImQEwKkR6tyiHphSqGBlzwOaaemO1QoRnI4WadQ+BKRPiHY90HlQIumk/l2
+	 qZ0+EApyeTZcPBg19qzQlNs0b1bjbi4wxSDylK3vS5GUqlR8oCdKCej3pLvqpJRd6w
+	 2JPdL0tlzRu/WCv4UGHQmPaft6ht06WaD7HjToIk9HtiMGylnzwjWYs1WvqjohXNge
+	 UzuoWaVzpju/jUiRxOCH1LLWyv1soBzqG0fKo8Xaf/0hZ8mc+MFkbNDkc/b7yqnYMN
+	 E7no2SG8Ww+4Q==
+Date: Fri, 27 Jun 2025 14:40:08 -0500
+From: Rob Herring <robh@kernel.org>
+To: Sayali Lokhande <quic_sayalil@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V2 2/2] dt-bindings: mmc: Add sdhci compatible for qcs8300
+Message-ID: <20250627194008.GA4055609-robh@kernel.org>
+References: <20250619070224.23428-1-quic_sayalil@quicinc.com>
+ <20250619070224.23428-3-quic_sayalil@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250627-topic-qcs615_icc_ipa-v1-4-dc47596cde69@oss.qualcomm.com>
-References: <20250627-topic-qcs615_icc_ipa-v1-0-dc47596cde69@oss.qualcomm.com>
-In-Reply-To: <20250627-topic-qcs615_icc_ipa-v1-0-dc47596cde69@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Georgi Djakov <djakov@kernel.org>, 
- Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
- Taniya Das <quic_tdas@quicinc.com>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
- Krzysztof Kozlowski <krzk@kernel.org>, linux-clk@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1751053092; l=1036;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=I5Frh8xqHPLbzLba+aZWZ34NiNQSkZoK0uf/p2Aol9Q=;
- b=Z32XgiO7x666mSxR3HDZ8XOdjJnY4rK71nyJqsrpxcHn+wYCGzZNbU5f/KPR/xtsw+CBzt09K
- J0n4xR3/hx/CuaFqaJDWkWSZdn2OqtSxDeCo+dnR0Rmr0Wa3ZKFU/NA
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250619070224.23428-3-quic_sayalil@quicinc.com>
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On Thu, Jun 19, 2025 at 12:32:24PM +0530, Sayali Lokhande wrote:
+> Document the sdhci compatible for Qualcomm qcs8300
+> to support function for emmc on the Soc.
+> 
+> Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-This was previously (mis)represented in the interconnect driver, move
-the resource under the clk-rpmh driver control, just like we did for
-all platforms in the past, see e.g. Commit aa055bf158cd ("clk: qcom:
-rpmh: define IPA clocks where required")
+Bindings come before users.
 
-Fixes: 42a1905a10d6 ("clk: qcom: rpmhcc: Add support for QCS615 Clocks")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- drivers/clk/qcom/clk-rpmh.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index 00fb3e53a388ed24ed76622983eb5bd81a6b7002..e02346bccdc6f26b1a832ed62dbfdc35f271c858 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -825,6 +825,7 @@ static struct clk_hw *qcs615_rpmh_clocks[] = {
- 	[RPMH_RF_CLK1_A]	= &clk_rpmh_rf_clk1_a_ao.hw,
- 	[RPMH_RF_CLK2]		= &clk_rpmh_rf_clk2_a.hw,
- 	[RPMH_RF_CLK2_A]	= &clk_rpmh_rf_clk2_a_ao.hw,
-+	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
- };
- 
- static const struct clk_rpmh_desc clk_rpmh_qcs615 = {
-
--- 
-2.50.0
-
+> 
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> index 2b2cbce2458b..5ba2da8dbc7d 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> @@ -45,6 +45,7 @@ properties:
+>                - qcom,qcm2290-sdhci
+>                - qcom,qcs404-sdhci
+>                - qcom,qcs615-sdhci
+> +              - qcom,qcs8300-sdhci
+>                - qcom,qdu1000-sdhci
+>                - qcom,sar2130p-sdhci
+>                - qcom,sc7180-sdhci
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
 
