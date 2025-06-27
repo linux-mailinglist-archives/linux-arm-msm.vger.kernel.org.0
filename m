@@ -1,256 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-62830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 790BEAEBC01
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 17:35:48 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C810AEBC0C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 17:36:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E55EE3B9B83
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 15:35:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 357441782AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 15:36:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6D562EA745;
-	Fri, 27 Jun 2025 15:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEFC619D093;
+	Fri, 27 Jun 2025 15:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZIh7/9dP"
+	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="seiUzu0J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1A42EA49C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 15:34:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E27602750E7
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 15:35:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751038474; cv=none; b=FD0fRhYmheXhM5z+d8G39WZx42z78Q713a3aRStMgkmnpVIZovp00Ll/eby4cryh6YRu9a6mT/8KmYxGIleXgrLyjAk0FjEbupUm2SBv+PaRI0iK5/Cd/0iNrafdxZ6x+KPS+JNoZvOlUU1V2gItEy9m0iuVA76MC1f6B71PIPw=
+	t=1751038505; cv=none; b=t51BMQAuCiN//ZBHLE8dvSqvHsRFck5Cun9baeQj5xs26dTL7KLbLuiv1YgzrDEfCgHtkpe5utiBNkXLuTx/+mcE4vFGqr0Y24KTiaKR4wVIzZMD25ot6qmzdm1za3bv5KqcJIJKWLkHQezdFaDxdDCaHEbEhJTjtNuUmq/1ZBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751038474; c=relaxed/simple;
-	bh=Ew8lpjg2KGw8RUtsdIdGkXQu5umyWwe0BTLTaVIb67w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PubGX2aDgrRmuhYGKP0QwpsxOOT4npnJZ6PVtVxyV8qilBrGLaWA3APd/CFAhwfgJvmN151/ECY8mwH/MTmi+7l9u7r4SOPpZnqMZ5UL/9vXDCC+D1ms+n78TIwvKmhqJdygu85who9ikOXEhjKq3DUI5SkRtpPXd0WRyAHLTkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZIh7/9dP; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55RCaEOQ007795
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 15:34:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fhpcGE0kY2U2qHSOUrNH4gIXVYCbpgzCRlKlqKyiksA=; b=ZIh7/9dPTaRIKAbz
-	qtcRTfYJUmfDMD/1CB8sEgyGGumkjtTwe+1FCskmH91irz9aLvC7+w8nrjV0yIl5
-	QB0xqTRmG3P3Ft7yR9hK7RMWZYwi2POUq3sly/dUJ48WJWKJ9oC/oYfZUNb7O7vm
-	LRWccN5ciTm5RhWLpEa4ACEx19S+i4nLKISatypp1vBgmGk4bGCx72jy9YNPJfE0
-	o0qY4acjP6oYf70tubxgG7+gVbaXm9gWVcLv0iapLnGrDbi7elYbdiW8YQARPy4E
-	GwNMvpxwKqqfzTXYEUxP9yi+/mXni1WFKeH7ELAXBg4/7DE74URNzH7E2BxvGiH2
-	99Dl+w==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47fbhqwpj1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 15:34:31 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d2038aae69so3721685a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 08:34:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751038470; x=1751643270;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fhpcGE0kY2U2qHSOUrNH4gIXVYCbpgzCRlKlqKyiksA=;
-        b=qh/dys3a6ovYWnNuCQxJEr3pvV/AXvNUdTR6/32XewxqZXz4eGMb7TmSdD+iz/vQ9V
-         k+NzEsvvYND5U9qY8DWdcpirJwMwsOVWqLgFlx4hwjogYxyycsMRKF8rLBKW6wPSLV31
-         xsmmgA1StsQMQwTkxEGF80TQbUoLSIXdUXa6NG9ci1Sw9mIcTHiW0iK8gulCyc+4UGWO
-         Efn9aG4wykbY3ef6WAUoyVdHJORXqvdAKN/zPM/9xVWJHYJTLL02wWzg2tsOSHZ4pk0Z
-         QazqNCE/n51nNV9W7F8ilbSngPnIEOQde+eDoZF9LkiCCWC7dQAxmMuua7Zb2RPSep8c
-         onQA==
-X-Forwarded-Encrypted: i=1; AJvYcCXEA+i/NUB/TIUKrzSYtOfLvlxm2QebtxkL5b4vGj24PYwGehpPXgvnEtxMj5iVKpSDh5h+C37SUhcWzoVW@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzd3ImGOtoNp8I7+4SV79jcYnshSp0ZeW4h+kcBZhwcusPbtMWw
-	W0xY7I27xAYPmWEH8kYer4qwjHOzUUtxZ1QL7gx5UMGBRN7aNL1VWh4nR2CN8S4FMDr87wFxGNl
-	++1nU3gzJOJYYlqXL3LNA8owf/ghW/8fyZDreTaJ7Sq+o4O+gZqZ6zFAkBZCigFP4KYCO
-X-Gm-Gg: ASbGncuA6HBCoV8Dtwc1biyOqbZ3A1otrxC1AGIRby17goY+fmbU+PmvpDVpcZu5aw4
-	phDGPh5ATSlIEJNT84OG6AJtIjmjTsFvI8eNk/O+yxWV0Djc7WexNCSgugJ9MRAPSIOyNo2IFIg
-	JHE0PKzYKModFpo40E3Ikn0A7EuNPssBcry6UcD93AFgdYeyOAmlBNQZFRdyP2/w+CytZRRAG7z
-	koiIrv1UYyOVlPUAIrfclme3ugrIiX7AuwvYtX0T6oUvq+rguSaxYdszJ3sS1SDz5YgIrrPAmJV
-	5tPJeusNaYj8A9vOopYT6kbV6QlDPI/7mwTqk4SDomlKfJqXjYey/DDyw/SrnfHjw4K5Q3VQWCC
-	kzec=
-X-Received: by 2002:a05:620a:4390:b0:7c0:bc63:7b73 with SMTP id af79cd13be357-7d443966417mr201233185a.13.1751038470187;
-        Fri, 27 Jun 2025 08:34:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzOTtjkZGz3phOnalpunb7y20OgdgwVxcjlA9JNDAl2YYT7eAuxSBmhUwNsqtuPUIJtvAnnQ==
-X-Received: by 2002:a05:620a:4390:b0:7c0:bc63:7b73 with SMTP id af79cd13be357-7d443966417mr201228685a.13.1751038469653;
-        Fri, 27 Jun 2025 08:34:29 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae35363b244sm142288066b.30.2025.06.27.08.34.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jun 2025 08:34:28 -0700 (PDT)
-Message-ID: <3fbae47b-d20d-426b-a967-b584e32b8c6e@oss.qualcomm.com>
-Date: Fri, 27 Jun 2025 17:34:24 +0200
+	s=arc-20240116; t=1751038505; c=relaxed/simple;
+	bh=AcJS8zEIgvrM6xzr9e5LCAw5uvraDFnTURDqSsoCQFM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BGIwpxgv5SguCWimX/QcI+dsNTnjp/zkDdLeaxh6Ivr6wGLUYj4XBRPuHRnRG/GVoGdSGXOXwP1NldAMQxEVIhFnI6otb1nxwwVC1mi3b9Z5jw5XPJnAwwxwUZcCb2FbcLMkN/0AIe/FOj9dMUjvYMDyiUOnJebKjXmTUSV5wf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=seiUzu0J; arc=none smtp.client-ip=85.214.250.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
+Received: from 8bytes.org (p4ffe03ae.dip0.t-ipconnect.de [79.254.3.174])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.8bytes.org (Postfix) with ESMTPSA id 14CDF4EFDE;
+	Fri, 27 Jun 2025 17:34:56 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+	s=default; t=1751038496;
+	bh=AcJS8zEIgvrM6xzr9e5LCAw5uvraDFnTURDqSsoCQFM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=seiUzu0J5pF91dl7UmH+KL0pOHeL6IhLuTDNG5qV4eYBzeMpYjoOQxPYKAUdQ/zSB
+	 p/1Q+kRTegEsF4EeKflXx2BbKlxe3TXbX7ID+4m86Xb4Z7LGOEMAG8U75pNF7TAcQY
+	 zzDXOO9Iwd2oBTFQLoNOkxr8Z9vDf2h5wuLP7+XIZrsM6xDdLlME+3DnUhOYvJKmob
+	 XlTz0nlSn3SlHfXEux0utyU+DxxUBtfbLI4uqipNciicL5w7xY0iQLqdgaOCfLhwZG
+	 5lZv8qEaTnkoeyTRTUVK7MPftthtuCwLvBvGf4mgdD9EZc8gwQdYmEAuSlMIvEVBY7
+	 n9Zm58rrh4sBg==
+Date: Fri, 27 Jun 2025 17:34:54 +0200
+From: Joerg Roedel <joro@8bytes.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] iommu/msm: Remove ops->pgsize_bitmap
+Message-ID: <aF66Hifxw2FWOnP9@8bytes.org>
+References: <0-v1-662aad101e51+45-iommu_rm_ops_pgsize_msm_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/14] arm64: dts: qcom: Add The Fairphone (Gen. 6)
-To: Luca Weiss <luca.weiss@fairphone.com>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>, Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>,
-        Thomas Gleixner
- <tglx@linutronix.de>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-mmc@vger.kernel.org
-References: <20250625-sm7635-fp6-initial-v1-0-d9cd322eac1b@fairphone.com>
- <20250625-sm7635-fp6-initial-v1-14-d9cd322eac1b@fairphone.com>
- <4200b3b8-5669-4d5a-a509-d23f921b0449@oss.qualcomm.com>
- <DAXA7TKVM4GI.J6C7M3D1J1XF@fairphone.com>
- <6d4e77b3-0f92-44dd-b9b0-3129a5f3785b@oss.qualcomm.com>
- <DAXEA131KUXZ.WTO7PST1F3X6@fairphone.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <DAXEA131KUXZ.WTO7PST1F3X6@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: tryZZV0jkkZzFZ9_8F1TSOmITCf932hn
-X-Authority-Analysis: v=2.4 cv=Id+HWXqa c=1 sm=1 tr=0 ts=685eba07 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=huVnaSGCcg0LVUp1CDwA:9
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: tryZZV0jkkZzFZ9_8F1TSOmITCf932hn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI3MDEyNiBTYWx0ZWRfXwbo2zsVFV5y2
- brMudzc8uwCggM0t4SUg/Oq+z+m1rrtypxbYzU/FMbgYQKOLSSrZnEDqZGHWUOLSwNfONVcmegi
- 2E7+RX64VuCgChMOyhfIvR7rlDzsnUEgCUznWaTojxzrNh/0NH2VdqmatZpxVlRbF7THowElTlq
- TDf5d8bOaAdMJ1/D+mV57Lz9aFlde6nG0ksKPuzMjfh4RjzX13/b4S0elCmA2sc+IXiYGLOTyAg
- xRXwk0NoDoyi576By2yPvgNO8W9MGZLFqamayMrr2Zv0JpvG1Y5LUgVUUmT39D82gZBhIOhupQg
- zmrUJPj8rz2CP1bZ8GIrVvBGsFhBjXRj/K3+OA2zE7/GYVo6O0UTCGxb52cgjT5MjGsaAunXDi9
- ifq4WZaS8X7e8qCTWqMdGnqX6SJ/ETGKHL9+ncwwm4RjaUGP0+h7TZnY1VJqJL9Q1pFkWEgG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-27_04,2025-06-26_05,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0 bulkscore=0
- clxscore=1015 impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506270126
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0-v1-662aad101e51+45-iommu_rm_ops_pgsize_msm_jgg@nvidia.com>
 
-On 6/27/25 4:44 PM, Luca Weiss wrote:
-> On Fri Jun 27, 2025 at 4:34 PM CEST, Konrad Dybcio wrote:
->> On 6/27/25 1:33 PM, Luca Weiss wrote:
->>> On Wed Jun 25, 2025 at 4:38 PM CEST, Konrad Dybcio wrote:
->>>> On 6/25/25 11:23 AM, Luca Weiss wrote:
->>>>> Add a devicetree for The Fairphone (Gen. 6) smartphone, which is based
->>>>> on the SM7635 SoC.
->>>>
->>>> [...]
->>>>
->>>>> +	/* Dummy panel for simple-framebuffer dimension info */
->>>>> +	panel: panel {
->>>>> +		compatible = "boe,bj631jhm-t71-d900";
->>>>> +		width-mm = <65>;
->>>>> +		height-mm = <146>;
->>>>> +	};
->>>>
->>>> I haven't ran through all the prerequisite-xx-id, but have
->>>> you submitted a binding for this?
->>>
->>> Actually not, kind of forgot about this. I believe I can create a
->>> (mostly?) complete binding for the panel, but this simple description
->>> for only width-mm & height-mm will differ from the final one, which will
->>> have the DSI port, pinctrl, reset-gpios and various supplies.
->>>
->>> I think I'll just drop it from v2 and keep it locally only, to get the
->>> simpledrm scaling right.
->>
->> Yeah I think that'd be best in general
+On Fri, Jun 27, 2025 at 10:02:10AM -0300, Jason Gunthorpe wrote:
+> This driver just uses a constant, put it in domain_alloc_paging and use
+> the domain's value instead of ops during finalise.
 > 
-> Ack
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/msm_iommu.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
 
-[...]
+Applied, thanks.
 
->>>>> +&pm8550vs_d {
->>>>> +	status = "disabled";
->>>>> +};
->>>>> +
->>>>> +&pm8550vs_e {
->>>>> +	status = "disabled";
->>>>> +};
->>>>> +
->>>>> +&pm8550vs_g {
->>>>> +	status = "disabled";
->>>>> +};
->>>>
->>>> Hm... perhaps we should disable these by deafult
->>>
->>> Do you want me to do this in this patchset, or we clean this up later at
->>> some point? I'd prefer not adding even more dependencies to my patch
->>> collection right now.
->>
->> I can totally hear that..
->>
->> Let's include it in this patchset, right before SoC addition
->> I don't think there's any pm8550vs users trying to get merged in
->> parallel so it should be OK
-> 
-> Okay, can do. Disable all of them (_c, _d, _e, _g), and re-enable them
-> in current users? I assume there might also be boards that only have
-> e.g. _d and no _c.
-
-I suppose it's only fair to do so, in line with
-
-d37e2646c8a5 ("arm64: dts: qcom: x1e80100-pmics: Enable all SMB2360 separately")
-
-
->>>>> +&usb_1 {
->>>>> +	dr_mode = "otg";
->>>>> +
->>>>> +	/* USB 2.0 only */
->>>>
->>>> Because there's no usb3phy description yet, or due to hw design?
->>>
->>> HW design. Funnily enough with clk_ignore_unused this property is not
->>> needed, and USB(2.0) works fine then. Just when (I assume) the USB3
->>> clock is turned off which the bootloader has enabled, USB stops working.
->>
->> The USB controller has two possible clock sources: the PIPE_CLK that
->> the QMPPHY outputs, or the UTMI clock (qcom,select-utmi-as-pipe-clk).
-> 
-> So okay like this for you, for a USB2.0-only HW?
-
-Yeah, maybe change the comment to something like:
-
-/* USB 2.0 only (RX/TX lanes physically not routed) */
-
-to avoid getting this question asked again
-
->> Because you said there's no USB3, I'm assuming DP-over-Type-C won't
->> be a thing either? :(
-> 
-> Yep. I'd have preferred USB3+DP as well since it's actually quite cool
-> to have with proper Linux. On Android, at least on older versions it's
-> barely usable imo. Can't even properly watch videos on the big screen
-> with that SW stack.
-
-Bummer! Not something we can change though :(
-
-Konrad
+Queued it right before "iommu: Remove ops->pgsize_bitmap" in the core
+branch.
 
