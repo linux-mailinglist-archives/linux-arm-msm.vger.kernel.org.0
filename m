@@ -1,209 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-62856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91A86AEBE0A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 19:03:32 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DAA6DAEBE1B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 19:05:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C7EF3AC760
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 17:02:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 74BB17AC195
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jun 2025 17:03:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C1A92EA162;
-	Fri, 27 Jun 2025 17:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61F522EAB8D;
+	Fri, 27 Jun 2025 17:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="fCcRrGSN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qh8R7gRo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0D329E115;
-	Fri, 27 Jun 2025 17:03:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531A92EA730
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 17:04:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751043787; cv=none; b=WBfCVi70Wu9Oe92Syz6/Qrick4mhqMabUapTJEB+d4ofL9haP+IzlozobSWCtgzePO8NTgAiT9trtR/RhvODOgXof83BplNKcwXb3rPXoYVn4b9Sr8haq9+qNpp+tq/cSa926/v6SnJifCh0SFcYmjEc3oFyKcE4Cj6FvOOMMbc=
+	t=1751043842; cv=none; b=LsaspKzvcmRIz9D6aAdtivIqRV8HpbbCqQBg1Ik+SAMmqmlfb7ckNWbiVAcgf3AL5QqwqvzIgqW55AOFK0kkK06X4E1K9ZwIwW8SmzZ6kusSYW1ML4Ea1KZ2hBOkTZmVhOwM/oYDYdrfHBr6UxFUph5XHsxayDu/NrumEpRv7sA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751043787; c=relaxed/simple;
-	bh=Gn00Ied9mkn/AcZlIyGTQP64hKJHtvhp70miiHH8N1M=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RLeH7hRrjwBRwn1vAKSGaZMG3uVsJNMagZ5hPie37UawSkQMVQMMs6pnUGYJdXXyRB8+HvVU1Kbu0JnRizgTU4x3WkxhHXsFFKmGbcEVNzTVSPDj+6gRy8W8ZUD66MzQIsGps92voq3A+q5yf7HanFqO10c3F4DNIR5SxGSC9eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=fCcRrGSN; arc=none smtp.client-ip=217.70.183.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id B1DA744350;
-	Fri, 27 Jun 2025 17:02:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1751043777;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=JAnce52V/7SwBr3WQruM3/+NAZWkJnhagjSqlHXqpIA=;
-	b=fCcRrGSN3as1/zQoH2mX7cN5ay6JkjjHj6uY+Su6E4xXpDAJxmy8rmKCgxRjG4rK+Kl3hw
-	7ibhJeoW3YJBaf+bOw5lL9rb2hNcY4CVBZ0aVD3RQwyZyHn7+g5j4PyMJlOLEPuiP12vSJ
-	+s509tkTytzi8jhvwLGK9gUX6/Zz0f5IUI4s3YzbJhVzh4gXlMWHKQsYsfqGkNGCGR+KiK
-	KYO8vNCLDeqg3OPBjehqor0XhVidsSO0rOqkSvPum195Wzzn8pODgQ6hUL4G3gF8LVPrmJ
-	2ON27Whj3Rj4YElvP6C0NrY7/gHK71xrCnkmB2VX7au7GtDFAb1pjHt2eQCeEQ==
-Date: Fri, 27 Jun 2025 19:02:50 +0200
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: Kory Maincent <kory.maincent@bootlin.com>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski
- <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
- <pabeni@redhat.com>, Russell King <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org, Christophe Leroy
- <christophe.leroy@csgroup.eu>, Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>, Heiner Kallweit
- <hkallweit1@gmail.com>, Vladimir Oltean <vladimir.oltean@nxp.com>, Marek
- =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>, Oleksij Rempel
- <o.rempel@pengutronix.de>, =?UTF-8?B?Tmljb2zDsg==?= Veronese
- <nicveronese@gmail.com>, Simon Horman <horms@kernel.org>,
- mwojtas@chromium.org, Antoine Tenart <atenart@kernel.org>,
- devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, Romain
- Gantois <romain.gantois@bootlin.com>, Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: Re: [PATCH net-next v6 03/14] net: phy: Introduce PHY ports
- representation
-Message-ID: <20250627190250.63a1848a@fedora>
-In-Reply-To: <20250513155325.2f423087@kmaincent-XPS-13-7390>
-References: <20250507135331.76021-1-maxime.chevallier@bootlin.com>
-	<20250507135331.76021-4-maxime.chevallier@bootlin.com>
-	<20250513155325.2f423087@kmaincent-XPS-13-7390>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1751043842; c=relaxed/simple;
+	bh=HSdDzpGEZh0Z+ObhrUewY7ZjXhceaEJ5COoUxc2cJis=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Tf/vUP1z0zGCjJbg56LNUib1Q6JBMEwAYN+klWbfSX2XSF7p9xsl6FEh83HUGhlYAWaKNVwsHkQZ8GpM7Lqe5i67ump0Hm7ehAYVSHEoOoAXGXUiY679F80AL3giCxbUheJjJJskfCpk5uG0CQNWkTNjyWi7JygyzVJHsiQV3Us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qh8R7gRo; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a548a73ff2so2169155f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 10:04:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1751043838; x=1751648638; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=C0lM+9jotmOVOM1lf7WJ8vyAHMjEM1wCcsIwWRjnqrk=;
+        b=qh8R7gRoLMJtn8znL8iuP+5EtC9hEvibIe+YPvnaIgeM5vpRLRGSCJP2Lht2b6slpc
+         jsMZbc80LDgYL7ZNF03OxgRqYkiyR1lRWhIEuLRzYd0ILxrI1XH96aKWrMI0LAj61Ivn
+         kOU3M6HY4j+wVp308CByEa0ZGhSjI8WqGvnErI1QqVNWWHmK7pU8dkpcYTHjR37az02y
+         TVOZZ8mV0hs3k5fMOyVi6IpBP5aIdQxTcW3+u+kYsMWHQOE82i57+A88CO3ZtBszmPhY
+         YDTCMvHOgM4OCy9baWXN9xgEankQYFFIo6BrYxyaxbuWmHsGMQsvcLXnOG/vvRNrYmlW
+         YAvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751043838; x=1751648638;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=C0lM+9jotmOVOM1lf7WJ8vyAHMjEM1wCcsIwWRjnqrk=;
+        b=BLLOpflmgIcrx2U4nVqljp8if1jVTsLK2KA1lBy550MOz0bnvjbvj8iXE38KEso6jz
+         O4U6U/h4w3WfMHZMGBr1e8JsSUlm3SgUlBBz75pOCvSXqMDeiS9HvPT56gMgld/zTPb1
+         Gj7YqFDWdnPdIsEpfmSHTg7AL+9pZcBUBisBubPR00eqpPKNMjWTxzbYXNyASs5HWBvI
+         qOUYdVc4gyv01cLomoy6fLAEDkWnOVgcbJ3q0yjIwQRqk/TTb0SnWpbJHJmDv9jTuU/6
+         0RgDFJHtwwExw1r34ameQaizOTcc7gqOajCQ4Kj/cCcyPDxqIisonGg6Mm1p8t0TfIRV
+         81CQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU8hprLvuPfVWiIUzylA/ifX049cJ8CLyNY1D8bWxSouaRl/gbnom4KY92dpknrxBE2FbX/9f2zj1cr85Hc@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw9EZ3C22yCTuKxwF3yuzjkD6CfTEO3zNRUkIU9Mh5K4fby9aWP
+	PWh3h8PyBh+akBGK0LGi1F1J3Zu/oQgAlvRC+Wrt33Pn7INihqN4MUmVA/tReHdoWSw=
+X-Gm-Gg: ASbGncu7J1Brebim/YVcqNqHllEk0xvYUtpdgXS3sLaqlls++OhH5OopLibBjWewqyZ
+	R0dTzjww6/j8qF63aDA9fsiJXrtmfnMHCh1PSOR1FXXcjuICk7gDxPSQ1g/qaBAnSV3/9ArFFT4
+	7R4QM8Vxj7oblVGJ1/BZ5in+D8yKAbwqlNpdhYsAzZzxYOASJ3TQ0kDlNPDicrQQsgFQkkpBZmB
+	9ztm/UvYpPeMt3uYnv2okx7MoRzZguax74S9xdLVYqH6uixvbeAa8aDVX5UdilF3jA1FGoyn+fB
+	/2mVwCn8iqHfO+BXOYNZF7XFZSEzP+unemr9Ar/f2UPJtr52Ovs3lCiKZ7VcRHpCZZ5+VBKMVcR
+	2b07AJ1l2QWh1GxZYtj+Chtm/o9w=
+X-Google-Smtp-Source: AGHT+IEQnYHLVvvRdo07ECuZNx96gkoirCSuaogNuBRIDfH0KzcTC9kqZQWgGcTR8Zpls8/g0XN7fg==
+X-Received: by 2002:a05:6000:481c:b0:3a6:f2a7:d0bb with SMTP id ffacd0b85a97d-3a90d0d6cd6mr3642010f8f.12.1751043838332;
+        Fri, 27 Jun 2025 10:03:58 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538a406489sm57074825e9.27.2025.06.27.10.03.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Jun 2025 10:03:57 -0700 (PDT)
+Message-ID: <ebdbb517-ffa2-422a-989e-a4f19ab0163a@linaro.org>
+Date: Fri, 27 Jun 2025 18:03:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/5] media: iris: use np_dev as preferred DMA device in
+ HFI queue management
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
+ <20250627-video_cb-v3-3-51e18c0ffbce@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250627-video_cb-v3-3-51e18c0ffbce@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefieduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeertdertddvnecuhfhrohhmpeforgigihhmvgcuvehhvghvrghllhhivghruceomhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeevledtvdevueehhfevhfelhfekveeftdfgiedufeffieeltddtgfefuefhueeknecukfhppedvrgdtudemtggsudelmeekugegheemgeeltddtmeeiheeikeemvdelsgdumeelvghfheemvgektgejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegtsgduleemkegugeehmeegledttdemieehieekmedvlegsudemlegvfhehmegvkegtjedphhgvlhhopehfvgguohhrrgdpmhgrihhlfhhrohhmpehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeeftddprhgtphhtthhopehkohhrhidrmhgrihhntggvnhhtsegsohhothhlihhnrdgtohhmpdhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtphhtthhopehnvghtuggvvhesvhhgvghrrdhkvghrnhgvlhdrohhrg
- hdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhhohhmrghsrdhpvghtrgiiiihonhhisegsohhothhlihhnrdgtohhmpdhrtghpthhtoheprghnughrvgifsehluhhnnhdrtghhpdhrtghpthhtohepkhhusggrsehkvghrnhgvlhdrohhrgh
-X-GND-Sasl: maxime.chevallier@bootlin.com
 
-Hi Kory,
-
-On Tue, 13 May 2025 15:53:25 +0200
-Kory Maincent <kory.maincent@bootlin.com> wrote:
-
-> On Wed,  7 May 2025 15:53:19 +0200
-> Maxime Chevallier <maxime.chevallier@bootlin.com> wrote:
+On 27/06/2025 16:48, Vikash Garodia wrote:
+> Update HFI interface queues to use np_dev(preferred non-pixel device)
+> for DMA memory allocation and deallocation if available. This allows
+> platforms with separate DMA domain for non-pixel to use the appropriate
+> device handle when managing HFI queues and SFR regions.
 > 
-> > Ethernet provides a wide variety of layer 1 protocols and standards for
-> > data transmission. The front-facing ports of an interface have their own
-> > complexity and configurability.
-> > 
-> > Introduce a representation of these front-facing ports. The current code
-> > is minimalistic and only support ports controlled by PHY devices, but
-> > the plan is to extend that to SFP as well as raw Ethernet MACs that
-> > don't use PHY devices.
-> > 
-> > This minimal port representation allows describing the media and number
-> > of lanes of a port. From that information, we can derive the linkmodes
-> > usable on the port, which can be used to limit the capabilities of an
-> > interface.
-> > 
-> > For now, the port lanes and medium is derived from devicetree, defined
-> > by the PHY driver, or populated with default values (as we assume that
-> > all PHYs expose at least one port).
-> > 
-> > The typical example is 100M ethernet. 100BaseT can work using only 2
-> > lanes on a Cat 5 cables. However, in the situation where a 10/100/1000
-> > capable PHY is wired to its RJ45 port through 2 lanes only, we have no
-> > way of detecting that. The "max-speed" DT property can be used, but a
-> > more accurate representation can be used :
-> > 
-> > mdi {
-> > 	connector-0 {
-> > 		media = "BaseT";
-> > 		lanes = <2>;
-> > 	};
-> > };
-> > 
-> > From that information, we can derive the max speed reachable on the
-> > port.
-> > 
-> > Another benefit of having that is to avoid vendor-specific DT properties
-> > (micrel,fiber-mode or ti,fiber-mode).
-> > 
-> > This basic representation is meant to be expanded, by the introduction
-> > of port ops, userspace listing of ports, and support for multi-port
-> > devices.
-> > 
-> > Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>  
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> ---
+>   drivers/media/platform/qcom/iris/iris_hfi_queue.c | 20 +++++++++++++-------
+>   1 file changed, 13 insertions(+), 7 deletions(-)
 > 
-> ...
-> 
-> > +	for_each_available_child_of_node_scoped(mdi, port_node) {
-> > +		port = phy_of_parse_port(port_node);
-> > +		if (IS_ERR(port)) {
-> > +			err = PTR_ERR(port);
-> > +			goto out_err;
-> > +		}
-> > +
-> > +		port->parent_type = PHY_PORT_PHY;
-> > +		port->phy = phydev;
-> > +		err = phy_add_port(phydev, port);
-> > +		if (err)
-> > +			goto out_err;  
-> 
-> I think of_node_put(port_node) is missing here.
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_queue.c b/drivers/media/platform/qcom/iris/iris_hfi_queue.c
+> index fac7df0c4d1aec647aeca275ab19651c9ba23733..a31ebe947f525f0d7c09f8b786939d01b62532c3 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_queue.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_queue.c
+> @@ -247,24 +247,27 @@ static void iris_hfi_queue_deinit(struct iris_iface_q_info *iface_q)
+>   int iris_hfi_queues_init(struct iris_core *core)
+>   {
+>   	struct iris_hfi_queue_table_header *q_tbl_hdr;
+> +	struct device *dev;
+>   	u32 queue_size;
+>   
+> +	dev = core->np_dev ? core->np_dev : core->dev;
+> +
 
-I don't think so, this is the _scoped variant so it takes care of
-that for us.
+dev = core->dev;
+if (core->np_dev)
+     dev = core->np_dev;
 
+Is much easier to read.
+
+>   	/* Iris hardware requires 4K queue alignment */
+>   	queue_size = ALIGN((sizeof(*q_tbl_hdr) + (IFACEQ_QUEUE_SIZE * IFACEQ_NUMQ)), SZ_4K);
+> -	core->iface_q_table_vaddr = dma_alloc_attrs(core->dev, queue_size,
+> +	core->iface_q_table_vaddr = dma_alloc_attrs(dev, queue_size,
+>   						    &core->iface_q_table_daddr,
+>   						    GFP_KERNEL, DMA_ATTR_WRITE_COMBINE);
+>   	if (!core->iface_q_table_vaddr) {
+> -		dev_err(core->dev, "queues alloc and map failed\n");
+> +		dev_err(dev, "queues alloc and map failed\n");
+>   		return -ENOMEM;
+>   	}
+>   
+> -	core->sfr_vaddr = dma_alloc_attrs(core->dev, SFR_SIZE,
+> +	core->sfr_vaddr = dma_alloc_attrs(dev, SFR_SIZE,
+>   					  &core->sfr_daddr,
+>   					  GFP_KERNEL, DMA_ATTR_WRITE_COMBINE);
+>   	if (!core->sfr_vaddr) {
+> -		dev_err(core->dev, "sfr alloc and map failed\n");
+> -		dma_free_attrs(core->dev, sizeof(*q_tbl_hdr), core->iface_q_table_vaddr,
+> +		dev_err(dev, "sfr alloc and map failed\n");
+> +		dma_free_attrs(dev, sizeof(*q_tbl_hdr), core->iface_q_table_vaddr,
+>   			       core->iface_q_table_daddr, DMA_ATTR_WRITE_COMBINE);
+>   		return -ENOMEM;
+>   	}
+> @@ -292,6 +295,7 @@ int iris_hfi_queues_init(struct iris_core *core)
+>   
+>   void iris_hfi_queues_deinit(struct iris_core *core)
+>   {
+> +	struct device *dev;
+>   	u32 queue_size;
+>   
+>   	if (!core->iface_q_table_vaddr)
+> @@ -301,7 +305,9 @@ void iris_hfi_queues_deinit(struct iris_core *core)
+>   	iris_hfi_queue_deinit(&core->message_queue);
+>   	iris_hfi_queue_deinit(&core->command_queue);
+>   
+> -	dma_free_attrs(core->dev, SFR_SIZE, core->sfr_vaddr,
+> +	dev = core->np_dev ? core->np_dev : core->dev;
+
+and again
+
+> +
+> +	dma_free_attrs(dev, SFR_SIZE, core->sfr_vaddr,
+>   		       core->sfr_daddr, DMA_ATTR_WRITE_COMBINE);
+>   
+>   	core->sfr_vaddr = NULL;
+> @@ -310,7 +316,7 @@ void iris_hfi_queues_deinit(struct iris_core *core)
+>   	queue_size = ALIGN(sizeof(struct iris_hfi_queue_table_header) +
+>   		(IFACEQ_QUEUE_SIZE * IFACEQ_NUMQ), SZ_4K);
+>   
+> -	dma_free_attrs(core->dev, queue_size, core->iface_q_table_vaddr,
+> +	dma_free_attrs(dev, queue_size, core->iface_q_table_vaddr,
+>   		       core->iface_q_table_daddr, DMA_ATTR_WRITE_COMBINE);
+>   
+>   	core->iface_q_table_vaddr = NULL;
 > 
-> ...
-> 
-> > @@ -1968,6 +1997,7 @@ void phy_trigger_machine(struct phy_device *phydev);
-> >  void phy_mac_interrupt(struct phy_device *phydev);
-> >  void phy_start_machine(struct phy_device *phydev);
-> >  void phy_stop_machine(struct phy_device *phydev);
-> > +  
-> 
-> New empty line here?
+Other than that.
 
-Oops, this will be removed
-
-> > +/**
-> > + * struct phy_port - A representation of a network device physical interface
-> > + *
-> > + * @head: Used by the port's parent to list ports
-> > + * @parent_type: The type of device this port is directly connected to
-> > + * @phy: If the parent is PHY_PORT_PHYDEV, the PHY controlling that port
-> > + * @ops: Callback ops implemented by the port controller
-> > + * @lanes: The number of lanes (diff pairs) this port has, 0 if not
-> > applicable
-> > + * @mediums: Bitmask of the physical mediums this port provides access to
-> > + * @supported: The link modes this port can expose, if this port is MDI (not
-> > MII)
-> > + * @interfaces: The MII interfaces this port supports, if this port is MII
-> > + * @active: Indicates if the port is currently part of the active link.
-> > + * @is_serdes: Indicates if this port is Serialised MII (Media Independent
-> > + *	       Interface), or an MDI (Media Dependent Interface).
-> > + */
-> > +struct phy_port {
-> > +	struct list_head head;
-> > +	enum phy_port_parent parent_type;
-> > +	union {
-> > +		struct phy_device *phy;
-> > +	};  
-> 
-> The union is useless here?
-
-For now yes :( But this will change when adding support for
-non-phy-driver ports.
-
-Maxime
-
-> 
-> Regards,
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
