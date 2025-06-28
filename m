@@ -1,136 +1,356 @@
-Return-Path: <linux-arm-msm+bounces-62919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E8B3AEC8CC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jun 2025 18:36:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63FE1AEC8D3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jun 2025 18:41:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 46D051BC1394
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jun 2025 16:36:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4C9E13A7989
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jun 2025 16:41:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED1C35789D;
-	Sat, 28 Jun 2025 16:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8016A248F5B;
+	Sat, 28 Jun 2025 16:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="KNbszcg2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TlmZpMde"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D7B1DF75B
-	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Jun 2025 16:36:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60306224AE6
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Jun 2025 16:41:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751128576; cv=none; b=k6E1P+IZ194vigqPDZ8+i3QURb+PjEGkK3UVjT+kK6Pz7g1JKIqs9QYFtqWxZ2eHs15B7p7b0R19TjfLVpbpuEb76qGLOi6wn7+Dv1PkX53hJkQ9LHp75qSaUu+dVoR0Qr2pe0aocrOtjgsFcW5hug2U2JBoqf1ekTznrb3WidI=
+	t=1751128896; cv=none; b=NnwrpsTQbLAZlNgTqq1Y4kGpNdSeAZSER4qYYZOW9mti0Z9aL8Pf77sbc6XK4+Lsv31IcZ4lrzwj4L237kj3A3bdKWYTQTvxIAtv5qG44+gWTH/l7KvgRbklBvRwHZzQa8A/dRdi/JaMEyKkmZSKzeT31A2+WP+Chakw46ihwHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751128576; c=relaxed/simple;
-	bh=OwP/lf62mREd1vSSmxVBEiQeT13TbHQ+vptHjo7GqTI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=SWacV4kBb5K3D8GJgMeIcUaL0eOjSdWJW1/ZJA48qgO73v49ZPtR6KYOKgqXWWhfrURJJ1pURoLSiveDRdJyu/auIavGmqLRZWTgh+KMxnHqx+Lx94NFcNASwNorl0n87saP7NCNsvt2c42/A3yVAdksQufSCghc1BbGHWUbXto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=KNbszcg2; arc=none smtp.client-ip=209.85.161.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-611998766c0so433378eaf.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Jun 2025 09:36:13 -0700 (PDT)
+	s=arc-20240116; t=1751128896; c=relaxed/simple;
+	bh=hMKkO5vEgICL6xpPIdKOu3yTFCaz5qJgJPJrZslfaz4=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=Fwh7fqf/7TQoJVUcKuq7ZMDadPowwpy2thavZBA0WgOfftJZHxb+rQD17kj+aaaNyE1pi8IvWH0DA9+rR80qlRIiZjiUmMPvaR5wn2BMdzL8bOSFkdwMVnmxL4DO7vAbtmL6dANPfQPw5YZDWIbmkz+cOKd32eXZ4I50kijm3vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TlmZpMde; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-453647147c6so34048215e9.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Jun 2025 09:41:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1751128573; x=1751733373; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=QuQ4Fw7fDUnS90iOwROBUGe+MKAwoHfg9mWA7eHjYOY=;
-        b=KNbszcg2fo2lg8yofl2GCzCkkL26ABe0x7gUQNC+UODFkqJo7T1L+A5HekKwKofLXv
-         RWqXVLMcw4YrSFuj8lGzP5Qw9bjPP6/ORa4wzK1i8vraYONMAVaRD+kE4bX2iMmyAJZx
-         +bygeb84BiIPWGesrk/fMFpDP1OskRDOIWVG/onRohembvkfWfqA2fPwZkfSZZ7H1iKJ
-         jW1n9ocAWpCjXBY+0khaH67+YsV8Ofjn5FBe4xjMG3CQ4EfSIiX4no8M6WQAv97hS1ij
-         7FsZouBA5LzcVoeSEaeLC7LW+edJylvuBbS1ZbvGwLOQcpj0G83TDRiZKBR9g4SiZRKA
-         UcUA==
+        d=linaro.org; s=google; t=1751128893; x=1751733693; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UBHKswADexFSg9SZEN9SPPg12lVleXq9YO8e2RnWik4=;
+        b=TlmZpMdePhjqL3C9NrIeRvkRH1QxGKR84j33MOy5luTOFXNR6Er20CyBLkVOrBSNt9
+         q3wMvwCpWpe2JE3NQbGIKOzJpL2crAoMQYJYMlw965T6gnEmalZgE1CohX8c0+Juppa6
+         MOtAA2lhzgH9Zz3Td1wsuWI6694cWNqpnPr/bsMPFybtkCxcPA3PfEvpIjqlmmM65Bzf
+         oQ/dHYkMLYZitqzcLMGx7H3zFOUyAw2TtRZQpFm95ZwkzRv4cNn9kGmReGJ5Jqv+tPav
+         GLIJFwJ94gLJeQwsAd+PzXk+24uxsbtM9fYrq9GaEFMtLX2z5vK+600ido1/z2J/d/G9
+         PVOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751128573; x=1751733373;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QuQ4Fw7fDUnS90iOwROBUGe+MKAwoHfg9mWA7eHjYOY=;
-        b=WsmMZ65CUu2YlWBt9qWH1VIX6+KobeidIKiOkjYGMWtFLtXpelJsMUZEEDs2fMPWlx
-         pl+868lKFf3aHhxy5Sr4KKggSvWQsSbl/y6Ujn7ttDl8g1EM5Ud4h0EpmCg8EpF12kLW
-         OK3APOBIRUnPUt6TSHR5M7LEFIBhgfcyMnvdrv75IW32sSIAjTTOHwVv66FMZjx2Vzs4
-         eP8MT3dZGjuRgnemQmipyqPTIo6nWDqQRvfRfvpE9ZfPSqtjPYz0xK18c7hcG0tsVRkQ
-         iuVky5h5rso8HyTceLyzwU7iR/CQHLhRn9cBh/zlBKuuDvPd1DW9+fRlIaHCmQXGiI1c
-         LzQA==
-X-Gm-Message-State: AOJu0YyMFYPLVryT4jHCnzfZ1g5C3LdVaRnvAaXDD9nnUrQIIXyqxT9i
-	Kjk9C/tiCGIVndkHZi3GJ/co/67u7YTmdgCv6Br+J3KDL5/ZQJJ+oWitmOaDZKlLRv4=
-X-Gm-Gg: ASbGnctuVEoGYcwqJAx0ebr+zYKLXzcy0Ml8wk2uc524TGgRnwlGhwkScPrN2DyGQ5/
-	VYF/lNiai9xNNvi9GYqFFq4klqwRdlN7M+94ylElIZyIBqfORpJDgX+Ookirrm03jpua7c4x4iQ
-	FJz9VfpkK+KfiubXP4CMHDHdSF4nHVV8tNJ3/JiWMOEeg4rl7yVrWSGWzYNAutHD+jSCsOK4PIm
-	JyFU71zwA4OnuBkxvrmb3rV1pYMol2THMtGJA0/OHtWkEcQTu9rXsohgLtHg+yIhuN557QA30Gj
-	BZTPdpANlAVU+JW4ho5za1AiaJFgNQih8ohoJQjjevGHfx+i8vZP+d/DitiIb1LKTrhv
-X-Google-Smtp-Source: AGHT+IGh2gll+hAT9vkyWgz+C3DSp6kI/Nkor4In3e9lHUogN6Ibi+9tUPUmM23hw4Dl/y/rFPFEWA==
-X-Received: by 2002:a4a:ec42:0:b0:611:befc:38e5 with SMTP id 006d021491bc7-611befc396emr4059962eaf.4.1751128573140;
-        Sat, 28 Jun 2025 09:36:13 -0700 (PDT)
-Received: from [127.0.1.1] ([2600:8803:e7e4:1d00:3092:a48c:b0c6:cbf4])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-611b848d77fsm585371eaf.14.2025.06.28.09.36.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Jun 2025 09:36:11 -0700 (PDT)
-From: David Lechner <dlechner@baylibre.com>
-Date: Sat, 28 Jun 2025 11:36:01 -0500
-Subject: [PATCH] iio: adc: qcom-vadc: make scale_adc5_fn const
+        d=1e100.net; s=20230601; t=1751128893; x=1751733693;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=UBHKswADexFSg9SZEN9SPPg12lVleXq9YO8e2RnWik4=;
+        b=uDdV3+DCt7VzHPv4UT2+EnTd/CyWC7l4QA8dFhx+zmGBY6xeDnjloeEUQ7hg0B+OYt
+         n2aBS/+vHCEoQO3s6Gaq1zzyZPiVFDvaI9qhWYghyjya+D13ZqFZqmwNJliQEg5AkcXs
+         3wWXvbWt56eknfhm2O0VFCUOv239GbNLCmrvAw72a30xL2Ijte67I+WhCbK41D1Pih/x
+         IK0UlDF6KtwdT2ZHiqrdrBwNuLzr9zI7nz/7dAPiq7rdLjGKB6zxILNp83BY22iQQJG2
+         /c55VVonwBL1g+7W8imxLUCV2dPU/kHEuZsQSNqRi9jZS4ibEiXJjU0awBrAo7LlO8+R
+         a+Dw==
+X-Forwarded-Encrypted: i=1; AJvYcCXLMFPzeG0IF8nYPyisAlkjgbkhgl6Aqz+UdtSue1fceWsgvNNEImz5i3E6jLCX9xlz9AJA5Dj/59Wf9Fn7@vger.kernel.org
+X-Gm-Message-State: AOJu0YwgTui1n5Dkf4l6gDCMsPjhzjVOAiShTqmNE7hKhNQfEPfY99S4
+	NDpU5gPgMW+ZlzAAkDqznLvwgdlksQolmex9xltBAsjhDGrKbTkmyVOxnwb2xvSRwPk=
+X-Gm-Gg: ASbGncvLRtx0eERfZ9KNS9F7jsb5AKSC/ikvYjXUNTf44i9xI1zppoxWtIFEoUUC+GP
+	ozhkmwTf+soe9KRg+qakElbvuM5GMEPKyntCS97Kkys3NHZyQjKgI9s1UUAmXAAMNYcXwvuwfRR
+	WRHNlbRgIo2IWLxtjbjw9O+coAh/MvpHXCHZre06dyGX6nIFj7N1Mmq1PBGkI3zDJfH3O92u0Xj
+	xEmkEzTeVrG2g4O3BcUwRXFCrquYqeQDF0komd2tgXxa2XSIxdGO/Fm48/DXQB9IOx6mhlXQbzI
+	snyPexWp1KRQ5xDtiXidI9H9uGRZ0QpKuBq77OcPNOtIxMfhAw4qrE6FeeX6SBQ7MQ3r
+X-Google-Smtp-Source: AGHT+IGPspfbFRIXYwnlGbxO5bANIYVbkEVbx/P2+MhSPTAeDo5nPhfFjin6tT9OiL1cKpIB3cJmig==
+X-Received: by 2002:a05:600c:138d:b0:442:f97f:8174 with SMTP id 5b1f17b1804b1-45394de29aamr40825505e9.18.1751128892575;
+        Sat, 28 Jun 2025 09:41:32 -0700 (PDT)
+Received: from localhost ([2a02:c7c:7213:c700:e33b:a0ed:df4b:222c])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453823c3a96sm113401565e9.35.2025.06.28.09.41.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 28 Jun 2025 09:41:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250628-iio-const-data-9-v1-1-188ca6e904ee@baylibre.com>
-X-B4-Tracking: v=1; b=H4sIAPAZYGgC/x3MQQqAIBBA0avIrBswIbOuEi1kmmo2GioRhHdPW
- r7F/y9kTsIZZvVC4luyxNDQdwro9OFglK0ZjDaDtsahSESKIRfcfPE4oXWOyLKh0Wto2ZV4l+d
- fLmutH0N6la5iAAAA
-X-Change-ID: 20250628-iio-const-data-9-688cc6e2c7a0
-To: Jonathan Cameron <jic23@kernel.org>, 
- =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, 
- Andy Shevchenko <andy@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, 
- linux-kernel@vger.kernel.org, David Lechner <dlechner@baylibre.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1181; i=dlechner@baylibre.com;
- h=from:subject:message-id; bh=OwP/lf62mREd1vSSmxVBEiQeT13TbHQ+vptHjo7GqTI=;
- b=owEBbQGS/pANAwAKAcLMIAH/AY/AAcsmYgBoYBnz9eKqq8quTOIkwc6SaCszLQlsuCda/9ZoH
- 8AgHhHwI6uJATMEAAEKAB0WIQTsGNmeYg6D1pzYaJjCzCAB/wGPwAUCaGAZ8wAKCRDCzCAB/wGP
- wHNLB/93kelZS5rjf9G8Z2hFczYFXGUdgcOoU0x61Bw4szcN6fynYL17wHfIZNi0ByH1Ny/ughU
- v6MP+cg8Gmv6nsZnip0tcvh+V60hOLa7kxNK2LpZo2Nt6JpiJI/3Z1F3tg6e/dNrrzuAHcfGZr+
- maD5VABiMONhMNhpaKzsqatlx2Z/FzkqQ9XvHpbph1rQ224uuIRjlZDPed/DhAaTPLglGHv5J03
- rIdCcDl+vK94T5PXLa4YGSTeSl+0Dr4elKHuCy4wb0VuSh/DsQX+ySQuZAArlXc1WwGiqd1Y+VK
- yM/FsMB9Z41aIJa+HnOIH5xZSxIARXHe7YSTylu5lwFfqle0
-X-Developer-Key: i=dlechner@baylibre.com; a=openpgp;
- fpr=8A73D82A6A1F509907F373881F8AF88C82F77C03
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 28 Jun 2025 17:41:31 +0100
+Message-Id: <DAYBDV1I7HH0.1GG9U3LI5NQ97@linaro.org>
+Cc: "Srinivas Kandagatla" <srini@kernel.org>, "Liam Girdwood"
+ <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>, "Rob Herring"
+ <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
+ Dooley" <conor+dt@kernel.org>, "Stephen Boyd" <sboyd@kernel.org>, "Lee
+ Jones" <lee@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai"
+ <tiwai@suse.com>, <linux-arm-msm@vger.kernel.org>,
+ <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@oss.qualcomm.com>, "Srinivas Kandagatla"
+ <srinivas.kandagatla@oss.qualcomm.com>
+Subject: Re: [PATCH 1/3] dt-bindings: sound: add bindings for pm4125 audio
+ codec
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Krzysztof Kozlowski" <krzk@kernel.org>
+X-Mailer: aerc 0.20.0
+References: <20250626-pm4125_audio_codec_v1-v1-0-e52933c429a0@linaro.org>
+ <20250626-pm4125_audio_codec_v1-v1-1-e52933c429a0@linaro.org>
+ <wcmalvywoginosy5pp7wskgdzjbwbydividmk4dtwguoltiobf@muw5lzkvgu5c>
+In-Reply-To: <wcmalvywoginosy5pp7wskgdzjbwbydividmk4dtwguoltiobf@muw5lzkvgu5c>
 
-Add const qualifier to struct qcom_adc5_scale_type scale_adc5_fn[]. This
-is read-only data so it can be made const.
+On Thu Jun 26, 2025 at 7:13 AM BST, Krzysztof Kozlowski wrote:
+> On Thu, Jun 26, 2025 at 12:50:29AM +0100, Alexey Klimov wrote:
+>> The audio codec IC is found on Qualcomm PM4125/PM2250 PMIC.
+>> It has TX and RX soundwire slave devices hence two files
+>> are added.
+>>=20
+>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+>> ---
+>>  .../bindings/sound/qcom,pm4125-codec.yaml          | 147 ++++++++++++++=
++++++++
+>>  .../devicetree/bindings/sound/qcom,pm4125-sdw.yaml |  86 ++++++++++++
+>>  2 files changed, 233 insertions(+)
+>>=20
+>> diff --git a/Documentation/devicetree/bindings/sound/qcom,pm4125-codec.y=
+aml b/Documentation/devicetree/bindings/sound/qcom,pm4125-codec.yaml
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..1b6ce8d4397b4c1c048899bd=
+2cc4d02318cc46c9
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,pm4125-codec.yaml
 
-Signed-off-by: David Lechner <dlechner@baylibre.com>
----
- drivers/iio/adc/qcom-vadc-common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+[..]
 
-diff --git a/drivers/iio/adc/qcom-vadc-common.c b/drivers/iio/adc/qcom-vadc-common.c
-index d5209f32adb3e265acd51d56dda32e6d0be42e21..b03cf584b1657ed39a325fcdbdd9dea96f171f8b 100644
---- a/drivers/iio/adc/qcom-vadc-common.c
-+++ b/drivers/iio/adc/qcom-vadc-common.c
-@@ -330,7 +330,7 @@ static int qcom_vadc7_scale_hw_calib_die_temp(
- 				const struct adc5_data *data,
- 				u16 adc_code, int *result_mdec);
- 
--static struct qcom_adc5_scale_type scale_adc5_fn[] = {
-+static const struct qcom_adc5_scale_type scale_adc5_fn[] = {
- 	[SCALE_HW_CALIB_DEFAULT] = {qcom_vadc_scale_hw_calib_volt},
- 	[SCALE_HW_CALIB_THERM_100K_PULLUP] = {qcom_vadc_scale_hw_calib_therm},
- 	[SCALE_HW_CALIB_XOTHERM] = {qcom_vadc_scale_hw_calib_therm},
+>> +  '#sound-dai-cells':
+>> +    const: 1
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - vdd-io-supply
+>> +  - vdd-cp-supply
+>> +  - vdd-mic-bias-supply
+>> +  - vdd-pa-vpos-supply
+>> +  - qcom,tx-device
+>> +  - qcom,rx-device
+>> +  - qcom,micbias1-microvolt
+>> +  - qcom,micbias2-microvolt
+>> +  - qcom,micbias3-microvolt
+>> +  - "#sound-dai-cells"
+>
+> Keep consistent quotes, either ' or "
+>
+>> +
+>> +additionalProperties: false
+>
+> This has to unevaluatedProperties
 
----
-base-commit: 14071b9cf2d751ff9bc8b5e43fa94fbf08aceea1
-change-id: 20250628-iio-const-data-9-688cc6e2c7a0
+Ok for both points, I'll change it.
 
-Best regards,
--- 
-David Lechner <dlechner@baylibre.com>
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/spmi/spmi.h>
+>> +
+>> +    spmi {
+>> +        #address-cells =3D <2>;
+>> +        #size-cells =3D <0>;
+>> +
+>> +        pmic@0 {
+>
+> pmic {
+>
+>> +            compatible =3D "qcom,pm8916", "qcom,spmi-pmic";
+>
+> Drop, you have warnings here.
+>
+>> +            reg =3D <0x0 SPMI_USID>;
+>
+> Drop
 
+Ok to points above, I'll remove it.
+
+>> +            #address-cells =3D <1>;
+>> +            #size-cells =3D <0>;
+>> +
+>> +            audio-codec@f000 {
+>> +                compatible =3D "qcom,pm4125-codec";
+>> +                reg =3D <0xf000>;
+>> +                vdd-io-supply =3D <&pm4125_l15>;
+>> +                vdd-cp-supply =3D <&pm4125_s4>;
+>> +                vdd-pa-vpos-supply =3D <&pm4125_s4>;
+>> +                vdd-mic-bias-supply =3D <&pm4125_l22>;
+>> +                qcom,micbias1-microvolt =3D <1800000>;
+>> +                qcom,micbias2-microvolt =3D <1800000>;
+>> +                qcom,micbias3-microvolt =3D <1800000>;
+>> +                qcom,rx-device =3D <&pm4125_rx>;
+>> +                qcom,tx-device =3D <&pm4125_tx>;
+>> +                #sound-dai-cells =3D <1>;
+>> +            };
+>> +        };
+>> +    };
+>> +
+>> +    /* ... */
+>> +
+>> +    soundwire@a610000 {
+>
+> Drop this and next one.
+
+The audio-codec node supposed to have qcom,{rx,tx}-device properties.
+If I'll drop it then the example doesn't compile well unless I am missing
+something?
+
+For example when I removed soundwire tx node completely and dropped
+qcom,tx-device then:
+
+Documentation/devicetree/bindings/sound/qcom,pm4125-codec.example.dtb: audi=
+o-codec@f000 (qcom,pm4125-codec): 'qcom,tx-device' is a required property
+	from schema $id: http://devicetree.org/schemas/sound/qcom,pm4125-codec.yam=
+l#
+
+Or should it be qcom,tx-device =3D <&null_placeholder_something> ?
+I can't find any examples.
+
+I guess I can drop example from the other file.
+
+>> +        reg =3D <0x0a610000 0x2000>;
+>> +        #address-cells =3D <2>;
+>> +        #size-cells =3D <0>;
+>> +        pm4125_rx: audio-codec@0,4 {
+>> +            compatible =3D "sdw20217010c00";
+>> +            reg =3D <0 4>;
+>> +            qcom,rx-port-mapping =3D <1 3>;
+>> +        };
+>> +    };
+>> +
+>> +    soundwire@a740000 {
+>> +        reg =3D <0x0a740000 0x2000>;
+>> +        #address-cells =3D <2>;
+>> +        #size-cells =3D <0>;
+>> +        pm4125_tx: audio-codec@0,3 {
+>> +            compatible =3D "sdw20217010c00";
+>> +            reg =3D <0 3>;
+>> +            qcom,tx-port-mapping =3D <1 1>;
+>> +        };
+>> +    };
+>> +...
+>> diff --git a/Documentation/devicetree/bindings/sound/qcom,pm4125-sdw.yam=
+l b/Documentation/devicetree/bindings/sound/qcom,pm4125-sdw.yaml
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..7241d2ab5dcf4a0d5f25a75a=
+cb33a335f93d3b5e
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,pm4125-sdw.yaml
+>> @@ -0,0 +1,86 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/sound/qcom,pm4125-sdw.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SoundWire Slave devices on PM4125/PM2250 PMIC audio cod=
+ec.
+>> +
+>> +maintainers:
+>> +  - Alexey Klimov <alexey.klimov@linaro.org>
+>> +
+>> +description: |
+>
+> Drop |
+
+Ack.
+
+>> +  The audio codec IC found on Qualcomm PM4125/PM2250 PMICs.
+>> +  It has RX and TX Soundwire slave devices. This bindings is for the
+>> +  slave devices.
+>
+> Last sentence is redundant and makes no sense. Codec has only slave
+> devices, so how this can be anything else than for slave devices?
+
+This came from other similar files that describe bindings for child codec n=
+odes
+of soundwire nodes. For example from qcom,wcd937x-sdw.yaml.
+Should this be rephrased to "This bindings is for the soundwire slave devic=
+es." ?
+
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: sdw20217010c00
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  qcom,tx-port-mapping:
+>> +    description: |
+>> +      Specifies static port mapping between device and host tx ports.
+>> +      In the order of the device port index which are adc1_port, adc23_=
+port,
+>> +      dmic03_mbhc_port, dmic46_port.
+>> +      Supports maximum 2 tx soundwire ports.
+>> +
+>> +      PM4125 TX Port 1 (ADC1,2 & DMIC0 & MBHC)    <=3D> SWR0 Port 1
+>> +      PM4125 TX Port 2 (ADC1 & DMIC0,1,2 & MBHC)  <=3D> SWR0 Port 2
+>> +
+>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +    minItems: 2
+>> +    maxItems: 2
+>> +    items:
+>> +      enum: [1, 2, 3, 4]
+>> +
+>> +  qcom,rx-port-mapping:
+>> +    description: |
+>> +      Specifies static port mapping between device and host rx ports.
+>> +      In the order of device port index which are hph_port, clsh_port,
+>> +      comp_port, lo_port, dsd port.
+>> +      Supports maximum 2 rx soundwire ports.
+>> +
+>> +      PM4125 RX Port 1 (HPH_L/R)       <=3D=3D>    SWR1 Port 1 (HPH_L/R=
+)
+>> +      PM4125 RX Port 2 (COMP_L/R)      <=3D=3D>    SWR1 Port 3 (COMP_L/=
+R)
+>> +
+>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +    minItems: 2
+>> +    maxItems: 2
+>> +    items:
+>> +      enum: [1, 2, 3, 4, 5]
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>
+> rx and tx are excluding, so this should be here encoded.
+
+Ok, I think I found a way to change it.
+
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    soundwire@a610000 {
+>> +        reg =3D <0x0a610000 0x2000>;
+>> +        #address-cells =3D <2>;
+>> +        #size-cells =3D <0>;
+>> +        pm4125_rx: codec@0,1 {
+>> +            compatible =3D "sdw20217010c00";
+>> +            reg =3D <0 1>;
+>> +            qcom,rx-port-mapping =3D <1 3>;
+>> +        };
+>> +    };
+>> +
+>> +    soundwire@a740000 {
+>> +        reg =3D <0x0a740000 0x2000>;
+>
+> One example is enough, they are the same.
+
+Ok, I'll drop it (see my comment above as well).
+
+Thanks,
+Alexey
 
