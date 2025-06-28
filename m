@@ -1,84 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-62900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59E27AEC4AC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jun 2025 05:42:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6376AEC536
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jun 2025 07:44:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 44B361C24A68
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jun 2025 03:42:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6F0144A4C36
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jun 2025 05:44:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7527A21B9F4;
-	Sat, 28 Jun 2025 03:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADB2D21D3F3;
+	Sat, 28 Jun 2025 05:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QDrCaphj"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aXtRKEP4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1D221B8F5;
-	Sat, 28 Jun 2025 03:42:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E4B21C185
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Jun 2025 05:44:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751082143; cv=none; b=mH4Arz+Wy2X9hfxPkr7EE1aC7juMSnUbR0zxkG3H4sO1Rg592krurQBuOBiQC1+E5vuepbtXTlPE/GXoipjKz5U+gL6vd/YF56ac0wwK0BY7Jc1Tf6LZ1nKI+bGy87GvMe+K2MsTzTXY8g2oFx7bhkTbSV9Rcej5vXEkDTwHsss=
+	t=1751089477; cv=none; b=pmUHOCh+UXYmd6JW98E0uPFvp/PPIbbVviHBFiy9pmiOyOCCUQmwZv2vVG/FzPbefPGQdK1D+WVjkgRpJDEiV8BPbmc5L6XYIKVLgJbJzqM0CVXY20FDH+I2PiqaLYhBhN0bXxGlNksEebradtJhSVyg/hZERTB8njBjbOxWfVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751082143; c=relaxed/simple;
-	bh=ZuMiblNDBB3gmfKlgVRSbs1ULWOfBMWR7pyd2OHXVaU=;
+	s=arc-20240116; t=1751089477; c=relaxed/simple;
+	bh=LOCz/6CnC9GBhCIu9bdP8uuu8MSu0vaUQ3DB4qVBqGk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aemz21msjyl8oCsYTWY7HRY4ewZJSLpe2ur5Qmc/YEnPf0BkYW1XraNDUY+qUOHZNL7YPo9UxrtLjNi3o2lVWJ2ZLQWKrJT+Lof+Nzm7XV+KFGzCJzUGI0I6rzhzmTPeUqfBkR+1XKVpkKNKHBXtiKi+l27xddX+v5KVTH08Fbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QDrCaphj; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751082142; x=1782618142;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ZuMiblNDBB3gmfKlgVRSbs1ULWOfBMWR7pyd2OHXVaU=;
-  b=QDrCaphjxC9UGBgEUthXMqb0SW0+PSZc2C/xMqEUYs/uXTsB68WqvTuV
-   oXmS1JqDclc321XOvNmeP/Wpaf7maA/qKK90yg4Q9bdOkWnO/KzqEFbEt
-   Cl0Ulju217S3ttp93et1r9mWgoPEXHNFD6QCskLQiU78wlgNHg1+azG5Z
-   d8Zn0ncMRwB4JvEHQ7gNLkcQo2iev42awESFaqxiIPVYYiuxwiCCdKX+D
-   OEsLzzKFtOQtvP3+dN+7BHfi2VApkEEjfk37Y+UJp+DDtjIYmvi+2acCp
-   ll8RBcJ3T3d+XHc8kzDxuwObo2LAPxrmSREfngVDHJtzWH4ji2479oXNQ
-   g==;
-X-CSE-ConnectionGUID: WqehKLAxROK0MHtnuB82Jw==
-X-CSE-MsgGUID: +yLArHpaRJehm8zwJYhd8g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11477"; a="63993603"
-X-IronPort-AV: E=Sophos;i="6.16,272,1744095600"; 
-   d="scan'208";a="63993603"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2025 20:42:21 -0700
-X-CSE-ConnectionGUID: SOLbyImkRwSKKMMTn9L0QA==
-X-CSE-MsgGUID: rpWeOH2QRN2oLZyU1oViXA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,272,1744095600"; 
-   d="scan'208";a="176644191"
-Received: from lkp-server01.sh.intel.com (HELO e8142ee1dce2) ([10.239.97.150])
-  by fmviesa002.fm.intel.com with ESMTP; 27 Jun 2025 20:42:16 -0700
-Received: from kbuild by e8142ee1dce2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uVMSD-000Wks-3B;
-	Sat, 28 Jun 2025 03:42:13 +0000
-Date: Sat, 28 Jun 2025 11:42:00 +0800
-From: kernel test robot <lkp@intel.com>
-To: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	andi.shyti@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, gregkh@linuxfoundation.org,
-	jirislaby@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
-	johan+linaro@kernel.org, dianders@chromium.org, agross@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org, linux-spi@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, mukesh.savaliya@oss.qualcomm.com,
-	quic_anupkulk@quicinc.com,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Subject: Re: [PATCH v5 2/5] soc: qcom: geni-se: Add support to load QUP SE
- Firmware via Linux subsystem
-Message-ID: <202506281152.eY0YQpxs-lkp@intel.com>
-References: <20250624095102.1587580-3-viken.dadhaniya@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=INjVf9DxxRKH38MhEv45Fp0TQzCYZf1exzMDd3P2dNH9v6wGq7Bb1PmRCYlDEQ6jBW35dUFHM+yC6aRdYROmbRVf6QwVNH0w1KfD/Alk6FOvUZUoSY0Nsnp2SpoiceMYkrTMwm7nkVhffOFZPSxB7rZarmq2U42l3J42HnVmRwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aXtRKEP4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55S2Y6jV022697
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Jun 2025 05:44:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=kUC7xBVH0d3kUt+KUxi0+JwN
+	EOC+393WJOkT9pG6mLc=; b=aXtRKEP4TFKHtUmtBmzNy022mL9zBvLDkRb6DyTV
+	czwJL78WCRXlIYiqSW4JEKUssrSAp2EdFvZepoEr8Nb5KLUBmEMws1xyq57kdBQ6
+	q7OkNErXx7m+LzkI7r5zJlyf76RqClwyLwGPvmuly92V4jTr0mgccAOH5NboNibq
+	Mn65mplKEY0MgP9z18zUHHvnmYUY+8xCD0XzALk0yS6BD4bNeonQQloU+O08uER5
+	AOohXr8rQknvAUR3hL3h9S7Kaxgty7AgNf7CogJak24XjmPYdy4RVUcowB3CbbLM
+	iNVAKqpUF+mcy/HkPgjdq/sG4H/p25oD8jNWV2q8HVvKdg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j7qm06nx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Jun 2025 05:44:34 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d4133a2081so406405185a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jun 2025 22:44:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751089474; x=1751694274;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kUC7xBVH0d3kUt+KUxi0+JwNEOC+393WJOkT9pG6mLc=;
+        b=WpM7OhtIQ9AefKLY56D1CbC2V2e1FlEaNIejy8x65qWPZxop44BOZ0rgFxs0S9a92z
+         mu9rGzF6irXnKL+kZ36iznqzx3S4nNhvclt2BfU66QKOOZt3fhb8rZVAPQNjkONPeEb6
+         yzBZmpYtNag+MvB3bZs5ugs+lY5Tmj5BB01SQKoEpkoStkgmjJwwkOduq5RDw9ecUEWa
+         69783UW3nt66uy+bI3n4/57X0vYciNIGABwxNdU6p+h5prJ6B9HSsxdAOOGgRCMpKzzW
+         SyAxqOy51OYR2Al4fJ3t4E4uw24DLpZwvvc5nDAlECq7fIU5Ue792tW6VzAsQZq0hU75
+         kpgw==
+X-Forwarded-Encrypted: i=1; AJvYcCXrhEKZI0ly2fH2ADhyQMvla4jh2G8+5psituN+jDY4eSCu6wmirnPq0ADQyBhNWoySo0HoTXdmgU3YW8Td@vger.kernel.org
+X-Gm-Message-State: AOJu0YwbV8CybMlxQ7IFtvPMqioyTAVsO38Ir19NQWcmfk20kcJUagjl
+	35vElcDvXr8V4l/JSoDF/m8Fw/i6NhDH8egcWlw6lmJsRmussb0Q+CoNd32XvPqCSlFRnZ+/y5a
+	eqPgs+NUN0xlWvyjbl3mLZ4yRftqqyFhNNrqIkou7UBNC0S/2ziMMWn43LYww4Vzynav4
+X-Gm-Gg: ASbGncs/kcE2rkLDGNdtZfNG6u3SNeiHF1Ov9vuB8yO+cT1zgT2PCgXI6kERHcGfOk3
+	qq5Af+JLijzPrm4/0qQ5HKIHU2comeZ+SHDv8Y1qIavM/OfP1iItnp02pmIgPTXJv6+JrXNAGD1
+	d5EXKRGAUsuStKZBKtiC4utioduqWlZqDqLO4Gk31Zl+bp20KO0u5lKogveyzJ6JytqQcJY0BYE
+	ou1083U/1t+cxM5pSEgkmPA0ftl1C1u0axDREVOOp+eIBqcPskGhZZoUDYcIU2PZSTS2sBlvbMd
+	LrB80+Z4KYvaayJ8kQtk2AY35fldfk3fjOB9fANIbfzCkFBndmqAFOP6uyv8qzBKrSHwM/Y7sG0
+	xhsUkwvvHYqUJ87CrVcrpaFHK536BnTBxYtQ=
+X-Received: by 2002:a05:620a:284b:b0:7d4:27ff:b7a7 with SMTP id af79cd13be357-7d443993447mr967061385a.48.1751089473628;
+        Fri, 27 Jun 2025 22:44:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHVAxxSrkbOEBKx3cz0+IPQ2g/5OlD0DOAiPlEbJLOnN3L2vQlF5ZPs5hb6q+9b3wUtWW6npQ==
+X-Received: by 2002:a05:620a:284b:b0:7d4:27ff:b7a7 with SMTP id af79cd13be357-7d443993447mr967059185a.48.1751089473192;
+        Fri, 27 Jun 2025 22:44:33 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5550b2d1b2csm685996e87.194.2025.06.27.22.44.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Jun 2025 22:44:32 -0700 (PDT)
+Date: Sat, 28 Jun 2025 08:44:30 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2] usb: misc: qcom_eud: Access EUD_MODE_MANAGER2 through
+ secure calls
+Message-ID: <b7mv4u2parcyzrm67yufuor3cwx265kaoae23rksbbuu4aaayl@7a6xxfmganof>
+References: <20250627125131.27606-1-komal.bajaj@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,109 +100,69 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250624095102.1587580-3-viken.dadhaniya@oss.qualcomm.com>
+In-Reply-To: <20250627125131.27606-1-komal.bajaj@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=C4TpyRP+ c=1 sm=1 tr=0 ts=685f8142 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=6MIUTFbEWCSSVVwswsMA:9 a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: bSJOYQyYoTAtnHkr2oUfC7fsy93nBjDj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI4MDA0NCBTYWx0ZWRfX+QkaqShDlpYq
+ cn2EazPOYEgVWwB/QxJQlPB9hR+I2viTHQUbYBwljkDf/RA8hq9IB8eWZC4PFabZnv1/CIqCOpm
+ f25hitmtuZQzBzWJnuPQcqpv8LH9rcnHO3ETHguKB/0Z32nUQuZ9jVbm79guDvLLvSS483413NG
+ 3WK9WIJ5bywNUBE+SJMR/2AgGWubw3Kd/IPxP3vn7OXugXMF9e3qfTf0YizlNi6TuW06SNwFQzt
+ O4lp61t+cH7LqRgKnO4ZVDmJLZkSP1MeRVtF29QoVLqkyzf0a6Bc67/OlQFxxlm92LSyjKINlp5
+ iMNzk+YX2buibicvb9dvCumRUcFrIGdHKzdvqEguDKka58f2XzbIL8Z1+Ouu8Yg0P//O050BwRT
+ MDwLM+ljw8cJF2b05bRLP1AvRTtlnL5chFwm0mfVKSvScSJ+Y2QNO4Mmm3tHi6iXU2a1UUCE
+X-Proofpoint-GUID: bSJOYQyYoTAtnHkr2oUfC7fsy93nBjDj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-27_05,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ clxscore=1015 priorityscore=1501 spamscore=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506280044
 
-Hi Viken,
+On Fri, Jun 27, 2025 at 06:21:31PM +0530, Komal Bajaj wrote:
+> EUD_MODE_MANAGER2 register is mapped to a memory region that is marked
+> as read-only for HLOS, enforcing access restrictions that prohibit
+> direct memory-mapped writes via writel().
+> 
+> Attempts to write to this region from HLOS can result in silent failures
+> or memory access violations, particularly when toggling EUD (Embedded
+> USB Debugger) state. To ensure secure register access, modify the driver
+> to use qcom_scm_io_writel(), which routes the write operation to Qualcomm
+> Secure Channel Monitor (SCM). SCM has the necessary permissions to access
+> protected memory regions, enabling reliable control over EUD state.
+> 
+> SC7280, the only user of EUD is also affected, indicating that this could
+> never have worked on a properly fused device.
 
-kernel test robot noticed the following build warnings:
+Most likely SC7280 Chrome platforms were fused differently or used a
+different configuration of the TZ.
 
-[auto build test WARNING on andi-shyti/i2c/i2c-host]
-[also build test WARNING on tty/tty-testing tty/tty-next tty/tty-linus broonie-spi/for-next linus/master v6.16-rc3 next-20250627]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+The question is whether there can be other platforms (e.g. SC7180 Chrome
+or SDM845 Cheeza prototypes) which should use direct register access
+instead of going through the SCM.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Viken-Dadhaniya/dt-bindings-qcom-se-common-Add-QUP-Peripheral-specific-properties-for-I2C-SPI-and-SERIAL-bus/20250624-175308
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/andi.shyti/linux.git i2c/i2c-host
-patch link:    https://lore.kernel.org/r/20250624095102.1587580-3-viken.dadhaniya%40oss.qualcomm.com
-patch subject: [PATCH v5 2/5] soc: qcom: geni-se: Add support to load QUP SE Firmware via Linux subsystem
-config: alpha-randconfig-r122-20250628 (https://download.01.org/0day-ci/archive/20250628/202506281152.eY0YQpxs-lkp@intel.com/config)
-compiler: alpha-linux-gcc (GCC) 14.3.0
-reproduce: (https://download.01.org/0day-ci/archive/20250628/202506281152.eY0YQpxs-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202506281152.eY0YQpxs-lkp@intel.com/
-
-sparse warnings: (new ones prefixed by >>)
->> drivers/soc/qcom/qcom-geni-se.c:941:21: sparse: sparse: cast from restricted __le32
->> drivers/soc/qcom/qcom-geni-se.c:941:21: sparse: sparse: restricted __le32 degrades to integer
-
-vim +941 drivers/soc/qcom/qcom-geni-se.c
-
-   891	
-   892	/**
-   893	 * geni_read_elf() - Read an ELF file.
-   894	 * @se: Pointer to the SE resources structure.
-   895	 * @fw: Pointer to the firmware buffer.
-   896	 * @pelfseg: Pointer to the SE-specific ELF header.
-   897	 *
-   898	 * Read the ELF file and output a pointer to the header data, which
-   899	 * contains the firmware data and any other details.
-   900	 *
-   901	 * Return: 0 if successful, otherwise return an error value.
-   902	 */
-   903	static int geni_read_elf(struct geni_se *se, const struct firmware *fw, struct se_fw_hdr **pelfseg)
-   904	{
-   905		const struct elf32_hdr *ehdr;
-   906		struct elf32_phdr *phdrs, *phdr;
-   907		const struct se_fw_hdr *elfseg;
-   908		const u8 *addr;
-   909		int i;
-   910	
-   911		if (!fw || fw->size < sizeof(struct elf32_hdr))
-   912			return -EINVAL;
-   913	
-   914		ehdr = (struct elf32_hdr *)fw->data;
-   915		phdrs = (struct elf32_phdr *)(ehdr + 1);
-   916	
-   917		if (ehdr->e_phnum < 2)
-   918			return -EINVAL;
-   919	
-   920		for (i = 0; i < ehdr->e_phnum; i++) {
-   921			phdr = &phdrs[i];
-   922	
-   923			if (fw->size < phdr->p_offset + phdr->p_filesz)
-   924				return -EINVAL;
-   925	
-   926			if (phdr->p_type != PT_LOAD || !phdr->p_memsz)
-   927				continue;
-   928	
-   929			if (MI_PBT_PAGE_MODE_VALUE(phdr->p_flags) != MI_PBT_NON_PAGED_SEGMENT ||
-   930			    MI_PBT_SEGMENT_TYPE_VALUE(phdr->p_flags) == MI_PBT_HASH_SEGMENT ||
-   931			    MI_PBT_ACCESS_TYPE_VALUE(phdr->p_flags) == MI_PBT_NOTUSED_SEGMENT ||
-   932			    MI_PBT_ACCESS_TYPE_VALUE(phdr->p_flags) == MI_PBT_SHARED_SEGMENT)
-   933				continue;
-   934	
-   935			if (phdr->p_filesz < sizeof(struct se_fw_hdr))
-   936				continue;
-   937	
-   938			addr = fw->data + phdr->p_offset;
-   939			elfseg = (const struct se_fw_hdr *)addr;
-   940	
- > 941			if (cpu_to_le32(elfseg->magic) != MAGIC_NUM_SE || elfseg->version != 1)
-   942				continue;
-   943	
-   944			if (phdr->p_filesz < elfseg->fw_offset +
-   945					     elfseg->fw_size_in_items * sizeof(u32) ||
-   946			    phdr->p_filesz < elfseg->cfg_idx_offset +
-   947					     elfseg->cfg_size_in_items * sizeof(u8) ||
-   948			    phdr->p_filesz < elfseg->cfg_val_offset +
-   949					     elfseg->cfg_size_in_items * sizeof(u32))
-   950				continue;
-   951	
-   952			if (elfseg->serial_protocol != se->protocol)
-   953				continue;
-   954	
-   955			*pelfseg = (struct se_fw_hdr *)addr;
-   956			return 0;
-   957		}
-   958		return -EINVAL;
-   959	}
-   960	
+> 
+> Fixes: 9a1bf58ccd44 ("usb: misc: eud: Add driver support for Embedded USB Debugger(EUD)")
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> Signed-off-by: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+> Changes in v2:
+> * Drop separate compatible to be added for secure eud
+> * Use secure call to access EUD mode manager register
+> * Link to v1: https://lore.kernel.org/all/20240807183205.803847-1-quic_molvera@quicinc.com/
+> 
+>  drivers/usb/misc/qcom_eud.c | 20 ++++++++++++++------
+>  1 file changed, 14 insertions(+), 6 deletions(-)
+> 
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+With best wishes
+Dmitry
 
