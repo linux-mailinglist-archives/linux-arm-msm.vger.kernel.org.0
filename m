@@ -1,84 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-62953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30A43AECD86
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Jun 2025 16:11:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 908E6AECD8B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Jun 2025 16:12:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 416B218941CF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Jun 2025 14:12:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7898818949C4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Jun 2025 14:12:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D40823C508;
-	Sun, 29 Jun 2025 14:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84E2E23F28B;
+	Sun, 29 Jun 2025 14:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PqH0dLnO"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bp7Axe3Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7508023B63F
-	for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 14:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B4823AE66
+	for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 14:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751206079; cv=none; b=UBCifc89/QmwAgvoxAQO8poFro1VrgcJQY5qY54/jQ8X1hYzWhJifYkJCUShSzCXKsWGgqVVdEeZbHOPCA6shdSWVHXWVy7BthMuilqShowWJG5G2lnlQy/b/ZXF/9PXy4VoZj3XEYVHAT1HsVIo0duKUG6yEpuoPUWSvSStQT8=
+	t=1751206082; cv=none; b=f8xVtnzO31bvP7Wn5j2tdDCabO/ohhMJDG1oiM83M5p09WKKh8uG1zj30R6yjF5WMwapYuyUlRHr5OY342h3N0AK5cjY6G6/dNLyUOL3y3vxWulVjb2kW6D5yl0H8APacHujs6bGdjd2nt/cX3m54RqQbuJxBGnQU4CiGdVP4hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751206079; c=relaxed/simple;
-	bh=Xrr+912y5vNYEYCSiqXQ5P/O+VoEFsvl61K5HGKqAeE=;
+	s=arc-20240116; t=1751206082; c=relaxed/simple;
+	bh=YuCHHK211nqpvFmOlpnR7LLsU5KAAseFcypOymve7lM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gbiy2m9w2FIqokF9IZjOJ08/u843xp4HiocTJXk+W3+/5M03uFNGlHGKgwRravrfHwGa9kP6ELiqf5zG3Bj4F6qAjM/Pc2raA7SkikMM2gaGvQsjHD04++vUyRG19EyPMl9kaI2Aur/8g3hnM8fzT5CuMVM3yv9HeXnyGkbXtFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PqH0dLnO; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version; b=Za3WHiQlF3PtNPfWLomEkm2KamVjtlJls/ooQwsgCkAc8RlzLRD/fpWw9+vNOSO3JH6KiGPR1olJJcjXFbh4ZCav0srMZT647vf+cS+eSHTQapPS7ea39yBlsjSKuTYwx0xJItzbqhF3uYH8WttHjIlyHYbZSonBmdy8Vqixa2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bp7Axe3Z; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55TA0Qul005828
-	for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 14:07:56 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55TDOSv8008662
+	for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 14:07:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=/iFe2vNrJqp
-	a0S0dcdbvotV9UbXoILAtHKmoL3TqRPw=; b=PqH0dLnObI0wyLWZYTsxKoc/+lU
-	dhy15XQHsq1x6UU4b1RFHsjSdRAyJJBYd1jFQizvr/NjykuTPoSWZW7/5cRL6oxw
-	tt3l70cJVV5bMH+C/9kWz0mNDequHZVq4xFdgZLdUuQd5mHGKouNhaHZJUfIA+6V
-	bEn5xqC6LKqf9X0rWX4SrxOKPoIp2/TObItb49OB9yZyFQRxkjlDY0FOaYI8xWiw
-	AYnBDqtmTTY5vpbPXi+VK+750vBJHU3EqMRj3Skw0i1Yi3EcyTIQaoB+CIPrnNcA
-	K26RAd2HtcQqiEcfj6RwMAew8JGaMYGxaLBOsDuP9UTRpaKuKb2SFLXj7AA==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j7d9t9du-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=Dn2IbO0/ubD
+	WRHxm3cfadMPbuPKYgkB0YKeKTE62Wnw=; b=bp7Axe3ZmrHKHzgVNwp+Bq+ZX00
+	asBodS0A5L3U1Lq7H4u4AoZq3IXvqdmFXWymOUD+oLWMV+6x4KbIJXzuQn7AT/zY
+	dZv60Z3KBiAUZic1/bj9Kt9XMotRjY3ojrTbccgOrNgDFRsl1DumkVyMOtk0aBZg
+	WCW1PetrErwCqd+uOnK0Ardmw7+QC4Kj7eFzLyKY9Odpm0BZosZbGtvOq0FVqPpR
+	vXGlyUY1myNKgX/ZDIHo2nQov9FzLk3qlwVFn0SVGwZ3PTmWFOQiWCNPcgNYInNx
+	DzBArd2riU/MDBYOuYHKl3/ZIGSHGlRknNVea5NTwpxh3PK86Fw2RXi+vYw==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j7d9t9dw-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 14:07:56 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3138c50d2a0so5692552a91.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 07:07:56 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 14:07:57 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-31218e2d5b0so2458355a91.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 07:07:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751206075; x=1751810875;
+        d=1e100.net; s=20230601; t=1751206076; x=1751810876;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/iFe2vNrJqpa0S0dcdbvotV9UbXoILAtHKmoL3TqRPw=;
-        b=qrE6TtmLVbQZRDDVMDdbvnkAvE31W8qt/dCJlS8PMJnKgyag6z1IZ7PTLe1w0q0Ke+
-         fCKQ/JqnCAZXGIMszcy1xKZ7sB6IsrGIcf0QaoE3CfedY+JvnLQMWx+6HYntoDBQL1vc
-         nbMaBYQ5t+R1ACHOn7MmtpUKS2p0jCxp9Nu0NxC1iPuiDIh4gkzq76CxLM5W1UnPIF0A
-         m3Iu3yqIU/8EBIgqItekce/MNlPVBAu2TegQlpyHvCyD2vJUv5iVCUCdxUdXvJ7BKEPo
-         /eX+1wyZQCA3nQrbC3/29T40CkCTObmE1msxC4Niee3nChUJ7b+T1wXeCbiMbggi/qL7
-         QB1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWuQE5mwMdz5Hpof/+IFSDHY3b4d/EDaTuD5xwPKRoUuGYJnNEnlJNKuMnO0ZUdq+9ngA2Kjp9qsisIDhRh@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYI1o5Ni8lIkslwtWzkvgz4m5oVQZtJkj+Zqghd9YKRr53hydV
-	GkGaxcubOcWePSmYXd+Akba++El3FcA4UT21Z2AX9m5R1Xn6vzgOPnF8h7Dmt6Eu9EJHwz0n/6G
-	Mk7GCLmgqQB19C6CxIf2BvGsUebNaCkEpVU8CBO1J/GeAZ4fa1nrJp/K3ozHHUiAhpQc6
-X-Gm-Gg: ASbGncvdFvutt2ByLBrhyVgOGSR4Rx3b4v24qQAJyp0MPGWxcQbA33cypvQCgtMtCx8
-	PdI799SeCm9lC0byFs1j+Teqe5xYjkFllb2xUZSNqHYTHUZYKjnqCAQKoiz2XQJ56Po0lIMvwCs
-	+PfqMvWjkM/TEmzXd/fJLbP579Yq96tcp4utiZUgqwL+cXP5wFwXjpwDi7VyuT23ebk9Da7tchq
-	DX+b+qNYe/rfJVI38UtalAYHxNH2FtDeaT8EKU8aUAlP6VHou6yU174P1EhKARX6akBGVAdWhzT
-	Uqc7m4GaHeQISr727s1EADoEUOU+8+V6
-X-Received: by 2002:a17:90b:5347:b0:311:ba2e:bdc9 with SMTP id 98e67ed59e1d1-318c930f9c3mr14565171a91.27.1751206074994;
-        Sun, 29 Jun 2025 07:07:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFPDMdsJ611F8y8JvrQrlcinGlj6zhivPonGdvEr/gwskrbg5lpJzq8J57v2DwyMT0wLTqjCw==
-X-Received: by 2002:a17:90b:5347:b0:311:ba2e:bdc9 with SMTP id 98e67ed59e1d1-318c930f9c3mr14565116a91.27.1751206074478;
-        Sun, 29 Jun 2025 07:07:54 -0700 (PDT)
+        bh=Dn2IbO0/ubDWRHxm3cfadMPbuPKYgkB0YKeKTE62Wnw=;
+        b=QZItfVQVo8nT1SNuFSUVd3yWi1QcS7YqwDZQUbmuCf9T4U0wC6XSDNBHiYpHzIPXVo
+         X6JavD5R6mZyjsk+YkuibUr1bktEvI+pn5QmMWHQwj1TMJd7yfx4YwbQd/I/JsGcOopq
+         3H6Or3TZhqyGGowWjfZmTSYWYu43dJ3ol13aGaq5VQAqm8J9a8TfE72lpYavEm4YelpM
+         1wMYO5FnV1xYk9GojYp4hibM+spzZG34TqTu6vJzJn/DHseB0UyASpZXGVzJl/Yi2qT6
+         cRBSgT80PBeDEdXJi11a4z7WCltNM36U6E+0x3S8TrtlkrQNqEK7poeT4MPKvtK2M8Dh
+         cCTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXyn3rrCMbZgju9dgbW8ATj5VeaU9b3UQobURJz3jhB03G8ekQUax//OcTONOjFWL7/x2fgrcH6JHwe4Jjh@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUzZYpNpwMI1aD66sJz/OhN6D5k7GIVAxKP0m8lJxKNj/oubZu
+	wGar1ixlwPdlgHz1/YsAikUYz5XMe7Cc9w10UHIOHDrXeFrEBCbG3adNAmfodbDQsqiMTw5B46h
+	bfpIrdoHrWvO/wxz5MirFXn64dpIB8APRj3asq6TwvLIc3nE8SY1KNUqfujtgVf4lqWlK
+X-Gm-Gg: ASbGncvBgLDXmES/T4fC21VFfUkLrx7L7FZNFuSl3CWPCCyRmI60dI7DC6zeny+kkEx
+	9QhbEB9BTFx8B4koLGWQB/dPJcvydnq8hO53a+id9urmhcl295pMGYqvFYxut5HcJKCTqlb4XUL
+	FqzeCy+6Y0/LNEWXWrihRk5ldhwjgCa4/YVfuOrloJcwQoaV2CEw3h+Y3Gbn65QOzwmE/eXraRK
+	WJUVZuF70//e2mhlboJXOsNEiUKSTnRLHLSHmrh30uM1c/CTcDl3myTQi+l119ZEj1K7ZjRHQ75
+	YkS81HDXiWP8poUVSYJvo7Y2ASwC644F
+X-Received: by 2002:a17:90b:1d4d:b0:311:b0ec:135b with SMTP id 98e67ed59e1d1-318c9264acamr14997357a91.24.1751206076269;
+        Sun, 29 Jun 2025 07:07:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE0YeMc3nI6ml5QBg86+QzQfLpwkSSpiUlWx9O/NZt33gUkqNoK+5koucvNw8/t+8WApQARww==
+X-Received: by 2002:a17:90b:1d4d:b0:311:b0ec:135b with SMTP id 98e67ed59e1d1-318c9264acamr14997321a91.24.1751206075813;
+        Sun, 29 Jun 2025 07:07:55 -0700 (PDT)
 Received: from localhost ([2601:1c0:5000:d5c:5b3e:de60:4fda:e7b1])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-318c14e224csm6959025a91.32.2025.06.29.07.07.53
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-318c13a509asm6958046a91.20.2025.06.29.07.07.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Jun 2025 07:07:54 -0700 (PDT)
+        Sun, 29 Jun 2025 07:07:55 -0700 (PDT)
 From: Rob Clark <robin.clark@oss.qualcomm.com>
 To: dri-devel@lists.freedesktop.org
 Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -93,10 +93,17 @@ Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
         Konrad Dybcio <konradybcio@kernel.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v8 23/42] drm/msm: Mark VM as unusable on GPU hangs
-Date: Sun, 29 Jun 2025 07:03:26 -0700
-Message-ID: <20250629140537.30850-24-robin.clark@oss.qualcomm.com>
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        linux-kernel@vger.kernel.org (open list),
+        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK:Keyword:\bdma_(?:buf|fence|resv)\b),
+        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING FRAMEWORK:Keyword:\bdma_(?:buf|fence|resv)\b)
+Subject: [PATCH v8 24/42] drm/msm: Add _NO_SHARE flag
+Date: Sun, 29 Jun 2025 07:03:27 -0700
+Message-ID: <20250629140537.30850-25-robin.clark@oss.qualcomm.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250629140537.30850-1-robin.clark@oss.qualcomm.com>
 References: <20250629140537.30850-1-robin.clark@oss.qualcomm.com>
@@ -107,19 +114,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI5MDExOSBTYWx0ZWRfXyXBO4RZgsULc
- Krqz0LatsTbSVcQB8S17N1QUNyyXuA5Ku7OnUUIDO+xT4uB22P+S+PBj4e7dUej3mWhnpnLFQRX
- iM9ejzM5HrqBVFxCDguEughZ0T9M8KVzk0pxTL7TZU30/KvwNUmYL3Q/8Jk2SOD/WEPEkAwsCvm
- GwUh54hd0sNuFlKrvp6If7I2a2h9dZjccSnkuM1ySkFre1meBO5P6o9kVtfSIKEBmQZZZGzdemt
- BjGgtb9u5E12/ao3ipyqmfqftYAqYztoK9Z645oSF7322KMYUqpCsMwMnVBKE4TejBQlFQoO16f
- qfsWWNQdPQkpFdrG5K4JtDSk9K0eyIA4U8palOwGG1qmAin9N0O2qy338BP0GbSt2w+sxFbo2fr
- ZLlGwjEnLmcce6dhhrufmTDZBxPiV7B5+v2U/5YDNk6wehAOP7BL3KcswXnwiJ32Jrua65eR
-X-Proofpoint-GUID: ZDHx78Vss5nHde-FS7xSQAhmpJbGaD0n
-X-Authority-Analysis: v=2.4 cv=RrbFLDmK c=1 sm=1 tr=0 ts=686148bc cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=xqWC_Br6kY4A:10 a=6IFa9wvqVegA:10
- a=cm27Pg_UAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=DhdyfM8_h7Qj4WYt2N4A:9
- a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-ORIG-GUID: ZDHx78Vss5nHde-FS7xSQAhmpJbGaD0n
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI5MDExOSBTYWx0ZWRfX2w/kjmOqgND4
+ 8tPJFQBKl08O1Kgq8SIaaLUw8UYm8iM3P8+LqPPyyOcsDI6R2rHd185gbOCA60cDB0rgr3+sZS1
+ 0sziFPyErsdSAVykZ3gkSyalQdJmRjfxh7TLBDLQdzOnvNoC8E9cfs5vP3a9NBJDtctCcFA40nM
+ XwW7rMOl5yD3NorK5b7C1l6yWHMilEsm53X9KOCnjML57dGBV/WbIb9/ZxzSyPEh3e69Cs+ZAP1
+ FBtH8+pwu3vPPkKGVUkNwsdRNFh708Z3JekjqIjyAXDQwYwVAgplC04ixLZs6r53TiV7cm6t3Wq
+ kaewXZaaCvLQLdQxNF0yny/9N68fa1KDXjcoWlbMK0fvC5f4WyPb+7FMdBQ4VQp5o+MpCLgorBM
+ nH3jCzxHWO+XEtg/yIXlMfbtSnJWK7q5aNgW3/Bkvz+UaJQU77tqnZRbhBATmJaLL1pT3TKb
+X-Proofpoint-GUID: fk_gDbKghff0le3fF2WWCCuJOdC3ghCd
+X-Authority-Analysis: v=2.4 cv=RrbFLDmK c=1 sm=1 tr=0 ts=686148bd cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=xqWC_Br6kY4A:10 a=6IFa9wvqVegA:10
+ a=cm27Pg_UAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=5GAAy6agFmV6x6zTEMEA:9
+ a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-ORIG-GUID: fk_gDbKghff0le3fF2WWCCuJOdC3ghCd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-06-27_05,2025-06-27_01,2025-03-28_01
@@ -132,88 +139,159 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
 
 From: Rob Clark <robdclark@chromium.org>
 
-If userspace has opted-in to VM_BIND, then GPU hangs and VM_BIND errors
-will mark the VM as unusable.
+Buffers that are not shared between contexts can share a single resv
+object.  This way drm_gpuvm will not track them as external objects, and
+submit-time validating overhead will be O(1) for all N non-shared BOs,
+instead of O(n).
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Tested-by: Antonino Maniscalco <antomani103@gmail.com>
 Reviewed-by: Antonino Maniscalco <antomani103@gmail.com>
 ---
- drivers/gpu/drm/msm/msm_gem.h        | 17 +++++++++++++++++
- drivers/gpu/drm/msm/msm_gem_submit.c |  3 +++
- drivers/gpu/drm/msm/msm_gpu.c        | 16 ++++++++++++++--
- 3 files changed, 34 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.h       |  1 +
+ drivers/gpu/drm/msm/msm_gem.c       | 21 +++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_gem_prime.c | 15 +++++++++++++++
+ include/uapi/drm/msm_drm.h          | 14 ++++++++++++++
+ 4 files changed, 51 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index b5bf21f62f9d..f2631a8c62b9 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -76,6 +76,23 @@ struct msm_gem_vm {
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 0fe3c9a24baa..9b1ccb2b18f6 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -269,6 +269,7 @@ int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map);
+ void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct iosys_map *map);
+ struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_device *dev,
+ 		struct dma_buf_attachment *attach, struct sg_table *sg);
++struct dma_buf *msm_gem_prime_export(struct drm_gem_object *obj, int flags);
+ int msm_gem_prime_pin(struct drm_gem_object *obj);
+ void msm_gem_prime_unpin(struct drm_gem_object *obj);
  
- 	/** @managed: is this a kernel managed VM? */
- 	bool managed;
-+
-+	/**
-+	 * @unusable: True if the VM has turned unusable because something
-+	 * bad happened during an asynchronous request.
-+	 *
-+	 * We don't try to recover from such failures, because this implies
-+	 * informing userspace about the specific operation that failed, and
-+	 * hoping the userspace driver can replay things from there. This all
-+	 * sounds very complicated for little gain.
-+	 *
-+	 * Instead, we should just flag the VM as unusable, and fail any
-+	 * further request targeting this VM.
-+	 *
-+	 * As an analogy, this would be mapped to a VK_ERROR_DEVICE_LOST
-+	 * situation, where the logical device needs to be re-created.
-+	 */
-+	bool unusable;
- };
- #define to_msm_vm(x) container_of(x, struct msm_gem_vm, base)
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index d16d3012434a..100d159d52e2 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -546,6 +546,9 @@ static int get_and_pin_iova_range_locked(struct drm_gem_object *obj,
  
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 068ca618376c..9562b6343e13 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -681,6 +681,9 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	if (args->pad)
- 		return -EINVAL;
+ 	msm_gem_assert_locked(obj);
  
-+	if (to_msm_vm(ctx->vm)->unusable)
-+		return UERR(EPIPE, dev, "context is unusable");
++	if (to_msm_bo(obj)->flags & MSM_BO_NO_SHARE)
++		return -EINVAL;
 +
- 	/* for now, we just have 3d pipe.. eventually this would need to
- 	 * be more clever to dispatch to appropriate gpu module:
- 	 */
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index c08c942d85a0..0846f6c5169f 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -389,8 +389,20 @@ static void recover_worker(struct kthread_work *work)
+ 	vma = get_vma_locked(obj, vm, range_start, range_end);
+ 	if (IS_ERR(vma))
+ 		return PTR_ERR(vma);
+@@ -1076,6 +1079,14 @@ static void msm_gem_free_object(struct drm_gem_object *obj)
+ 		put_pages(obj);
+ 	}
  
- 	/* Increment the fault counts */
- 	submit->queue->faults++;
--	if (submit->vm)
--		to_msm_vm(submit->vm)->faults++;
-+	if (submit->vm) {
-+		struct msm_gem_vm *vm = to_msm_vm(submit->vm);
++	if (msm_obj->flags & MSM_BO_NO_SHARE) {
++		struct drm_gem_object *r_obj =
++			container_of(obj->resv, struct drm_gem_object, _resv);
 +
-+		vm->faults++;
-+
-+		/*
-+		 * If userspace has opted-in to VM_BIND (and therefore userspace
-+		 * management of the VM), faults mark the VM as unusuable.  This
-+		 * matches vulkan expectations (vulkan is the main target for
-+		 * VM_BIND)
-+		 */
-+		if (!vm->managed)
-+			vm->unusable = true;
++		/* Drop reference we hold to shared resv obj: */
++		drm_gem_object_put(r_obj);
 +	}
++
+ 	drm_gem_object_release(obj);
  
- 	get_comm_cmdline(submit, &comm, &cmd);
+ 	kfree(msm_obj->metadata);
+@@ -1108,6 +1119,15 @@ int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
+ 	if (name)
+ 		msm_gem_object_set_name(obj, "%s", name);
  
++	if (flags & MSM_BO_NO_SHARE) {
++		struct msm_context *ctx = file->driver_priv;
++		struct drm_gem_object *r_obj = drm_gpuvm_resv_obj(ctx->vm);
++
++		drm_gem_object_get(r_obj);
++
++		obj->resv = r_obj->resv;
++	}
++
+ 	ret = drm_gem_handle_create(file, obj, handle);
+ 
+ 	/* drop reference from allocate - handle holds it now */
+@@ -1140,6 +1160,7 @@ static const struct drm_gem_object_funcs msm_gem_object_funcs = {
+ 	.free = msm_gem_free_object,
+ 	.open = msm_gem_open,
+ 	.close = msm_gem_close,
++	.export = msm_gem_prime_export,
+ 	.pin = msm_gem_prime_pin,
+ 	.unpin = msm_gem_prime_unpin,
+ 	.get_sg_table = msm_gem_prime_get_sg_table,
+diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
+index 2e37913d5a6a..4d93f2daeeaa 100644
+--- a/drivers/gpu/drm/msm/msm_gem_prime.c
++++ b/drivers/gpu/drm/msm/msm_gem_prime.c
+@@ -16,6 +16,9 @@ struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj)
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+ 	int npages = obj->size >> PAGE_SHIFT;
+ 
++	if (msm_obj->flags & MSM_BO_NO_SHARE)
++		return ERR_PTR(-EINVAL);
++
+ 	if (WARN_ON(!msm_obj->pages))  /* should have already pinned! */
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -45,6 +48,15 @@ struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_device *dev,
+ 	return msm_gem_import(dev, attach->dmabuf, sg);
+ }
+ 
++
++struct dma_buf *msm_gem_prime_export(struct drm_gem_object *obj, int flags)
++{
++	if (to_msm_bo(obj)->flags & MSM_BO_NO_SHARE)
++		return ERR_PTR(-EPERM);
++
++	return drm_gem_prime_export(obj, flags);
++}
++
+ int msm_gem_prime_pin(struct drm_gem_object *obj)
+ {
+ 	struct page **pages;
+@@ -53,6 +65,9 @@ int msm_gem_prime_pin(struct drm_gem_object *obj)
+ 	if (drm_gem_is_imported(obj))
+ 		return 0;
+ 
++	if (to_msm_bo(obj)->flags & MSM_BO_NO_SHARE)
++		return -EINVAL;
++
+ 	pages = msm_gem_pin_pages_locked(obj);
+ 	if (IS_ERR(pages))
+ 		ret = PTR_ERR(pages);
+diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
+index b974f5a24dbc..1bccc347945c 100644
+--- a/include/uapi/drm/msm_drm.h
++++ b/include/uapi/drm/msm_drm.h
+@@ -140,6 +140,19 @@ struct drm_msm_param {
+ 
+ #define MSM_BO_SCANOUT       0x00000001     /* scanout capable */
+ #define MSM_BO_GPU_READONLY  0x00000002
++/* Private buffers do not need to be explicitly listed in the SUBMIT
++ * ioctl, unless referenced by a drm_msm_gem_submit_cmd.  Private
++ * buffers may NOT be imported/exported or used for scanout (or any
++ * other situation where buffers can be indefinitely pinned, but
++ * cases other than scanout are all kernel owned BOs which are not
++ * visible to userspace).
++ *
++ * In exchange for those constraints, all private BOs associated with
++ * a single context (drm_file) share a single dma_resv, and if there
++ * has been no eviction since the last submit, there are no per-BO
++ * bookeeping to do, significantly cutting the SUBMIT overhead.
++ */
++#define MSM_BO_NO_SHARE      0x00000004
+ #define MSM_BO_CACHE_MASK    0x000f0000
+ /* cache modes */
+ #define MSM_BO_CACHED        0x00010000
+@@ -149,6 +162,7 @@ struct drm_msm_param {
+ 
+ #define MSM_BO_FLAGS         (MSM_BO_SCANOUT | \
+                               MSM_BO_GPU_READONLY | \
++                              MSM_BO_NO_SHARE | \
+                               MSM_BO_CACHE_MASK)
+ 
+ struct drm_msm_gem_new {
 -- 
 2.50.0
 
