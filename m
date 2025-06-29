@@ -1,156 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-62974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-62975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAA80AECE07
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Jun 2025 16:45:24 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F2F4AECE16
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Jun 2025 16:49:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0D2A117032F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Jun 2025 14:45:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A015F7A6201
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Jun 2025 14:48:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 376948460;
-	Sun, 29 Jun 2025 14:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 876531EA7DD;
+	Sun, 29 Jun 2025 14:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oECh7iqW"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TDubuIuz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A692B1D6AA
-	for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 14:45:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D6A2A1CA
+	for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 14:49:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751208322; cv=none; b=P3fnpA4+WHYXX1xPUzgzETnNUUQs8/IhwGhXhjpwuSsTilXwVDlxsIOqGgLYTJlFgC8sh++ZovaWBVvfJ7Pn3VVllzAbUDlzl0/Zmw9E12d36ixAwr/x80C5Xw5Zu6LUFlObUv9znklBPjrdbVsJA5Ufip445mMmuNKTVbMexb4=
+	t=1751208566; cv=none; b=hdJbqkEp9spofy2BBceqntliNTsieDyq5Q4WvR/tG178DPTp93/keS/wwRQIGkRywEEz+XUpAk1BH0ugfixSNUgG6Vo3KYT61VolloRhIPz11mxpsMdMvkey4IvwrSo/sTUCmrVe9g5w8oACIUUVbEiSm1WsRIf/UNC1v9rkdQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751208322; c=relaxed/simple;
-	bh=50naptVv5s/TjZg67luS1eqO7P3Zc5AAOWnLTHPerZA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jqciqytiu6ZA1YK8/6MTEn1Grhk4dDB7ozTbXY38qH7N04gu0LahyTA0yAGYOK3VZVZvjNI+bvrUx6t1lTgBj5QNoYGDOVC00scZMYhbYRRHoBVtcaMwtoVVK63hatLWOxv79oE0Hr+VcZusiursGKEPAoAPnSlC2RchEJ2I1Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oECh7iqW; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55TEfXYh001785
-	for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 14:45:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=U75yw7BMC/S6igk0SQ7PlAp8
-	c+8TFboIWS9Vq7PTNB4=; b=oECh7iqWHwXVcfgXCPhAZwgrgIRSNp1O4g18tRPQ
-	G+cquXTpg7+KbIZ4Bcle76waU/2UcVfVOpAYetxIiGcxg05xJoJptjI1n8+qfQkO
-	crMlx/koLGQ6Nzsym5ASCe4ikNAhAp6YQkjnBAR6rvHGoSGnHqRWrn8jh202q/vK
-	VVF+5OFC1mgxwRNBjQKH0uEeGPRnaQRZRrkhPDkQypXmPSNIFl7A1j6deZbC5Bek
-	ydDRgJ2sYEmcY4gx8V1u57Ea0OKUOJMsM0kiLN2KmtwwXejR81YXUr6f1ayfHRG4
-	Wz/h/Y91x3I/O1pDMB+1+VDZpjeDnanG/84dJY3teCxCog==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j5rq2gt2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 14:45:19 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7d3d3f6471cso199470585a.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 07:45:19 -0700 (PDT)
+	s=arc-20240116; t=1751208566; c=relaxed/simple;
+	bh=cvh/eRSTCF7UEu5QBsgWoqMSWqnvc+vpBtIM/odhqtA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GhKl070c52iUSyqayvK6NkVJfS0WqTKFWWpk2S8N8i7IwDPyYRxPi9XnmEblRyKbzAVWEViuF5KniqPy/ZXjdjicHPo0mc3wYKaTMNbTMUV/Z/pnORZVViIx2rKktQ3ZaF/fCfYgMphWbBs2cfNJQqgOVoKL+sENypGGCBCkxC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TDubuIuz; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1751208563;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FMo4hXlw+x8qKQedb4fDzGU6UZAlnq0HY+9C+6mhqr4=;
+	b=TDubuIuz8AyGxcUtwXXVDp9obA0QPkOv57cViwkdeiVA/JffILnNlFJg/769pKl/IK2pnB
+	AVXgf58SJsY8JAN4rBwQpCYtKFscywnxpdIeX05pOvI9LdzH4T/2vvJRV6HXNs5bNo0An9
+	+irO09ElTxvpzVhdpLM72HhUzSP7AlM=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-587--ghvJt3WMByHmhNv6IpVGw-1; Sun, 29 Jun 2025 10:49:22 -0400
+X-MC-Unique: -ghvJt3WMByHmhNv6IpVGw-1
+X-Mimecast-MFC-AGG-ID: -ghvJt3WMByHmhNv6IpVGw_1751208561
+Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-3a4f3796779so1836382f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jun 2025 07:49:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751208319; x=1751813119;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U75yw7BMC/S6igk0SQ7PlAp8c+8TFboIWS9Vq7PTNB4=;
-        b=jPkTv4kfEZUZd+N3rz8ewpV/A734VKC7hPbfOtXKnk2mHKWvn+MOa+2K71vsSA4dJL
-         klVx/eomLggIUAE+u8L96T/7sBN5yAGmdrflyyj2DslZSiR7Q3EEZYnWhvr6BX16cPzx
-         Sv1xWVgxTbKBmQQ1NunhIWKgwlpngAF34/vXYBDuu4ByHPNVkbunlpUNFKlj1G7DmSS+
-         5dwuYnqpSGOU/DYj8sqySjKVazBrg4KUEmVlC3ak1fwEV5DHaOWBI+B+gZC1TuomvdbU
-         DOEKM+sIX3ogcYxtS/mx9Plvpo3V7S4onwORWPxSQ/CXuuRdwHhvQkwV8+g6ON7tLUP8
-         Rmiw==
-X-Forwarded-Encrypted: i=1; AJvYcCW82BmGhbXyn8E+Iw2W6CC9Bml5pFf55VCAeLL9EhSOeH85ndgdsJ3xzKU6VKbdPXiJQtttzq6vhVBAh2YT@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxa6h8Jsfx/HOuo/+W957x3fTeONwrg37Nn7f9Z3aRMEauEnHVj
-	VxbOweKVZiOtFMZghX+15fyI+1HQJIoNDgYyYyJPOI6d0Cc2tSibb9AaWq60KW71eVwf117+S3w
-	9JwaVNynR7VglG+/x/QHAEgiwa22YTRvcZ6LxQvtmrA1WS7K0AFsETUTox8lbbF6FQGho
-X-Gm-Gg: ASbGnct4dQrllvZ6PeoX1NbftrV0v+vRYOb1vj8dR9I8pH57AnN9QepMifTX3aWx4hX
-	OSL7AW5lPj5r0B91wQ/Lxkq94S6jYm398AH3zN3xIhZtt2KivedDZmNPlbuyptSXSyUuvxDsDPi
-	dOvH8689krn8Wwz+S9cWSaxRvJ/of7llOsXqumhxoYyzls5bawB83L5ckerlBgsdO0whmqGO0/p
-	yrAXK2towk2np6G4ybLBchsSFxupSoEtwfTYjwgr52CQ21Z5IPc6yCLFFNQXBzFdI8DFDKbiFkO
-	w4hdkAcDh8MtmkwyZtL1OS68N0XH4HDVkkoDzOTNXkBhF3otMEBKtt71fjCmqjR0EiBEJaYjcBs
-	G16259oxqf//rJTIbVRDnH7Ys8ud7qssXL80=
-X-Received: by 2002:a05:620a:400c:b0:7c5:5670:bd6f with SMTP id af79cd13be357-7d4439b9679mr1537817785a.53.1751208318636;
-        Sun, 29 Jun 2025 07:45:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCYpAnwJ1rYQ1S233FYjwYu4oJCVh/e3dqa7Xz6LlKsV9YCedkRP+JE+l1W66OWbNHR1zgWw==
-X-Received: by 2002:a05:620a:400c:b0:7c5:5670:bd6f with SMTP id af79cd13be357-7d4439b9679mr1537812885a.53.1751208318157;
-        Sun, 29 Jun 2025 07:45:18 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5550b2cd99esm1137184e87.158.2025.06.29.07.45.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Jun 2025 07:45:17 -0700 (PDT)
-Date: Sun, 29 Jun 2025 17:45:15 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Helen Koike <helen.fornazier@gmail.com>,
-        Vignesh Raman <vignesh.raman@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] drm/ci: Remove sdm845/cheza jobs
-Message-ID: <nij26lzoinzr3cbfmvwzigtxpsjibaudect3i772swbnmyuz5w@2jny5ie3oqw3>
-References: <20250629135843.30097-1-robin.clark@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1751208561; x=1751813361;
+        h=content-transfer-encoding:in-reply-to:organization:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FMo4hXlw+x8qKQedb4fDzGU6UZAlnq0HY+9C+6mhqr4=;
+        b=qecsdJwz5fHGUGEfIynCF01qYCuyDz/URg+P3+mgW7c93ugc8dB+EXrLVwOShW06PT
+         1Vv3r/qrgoV+8GgGxRIFKS1BVfEBLv+lWBfZeRrvx8tglPfk5N6/HyDmquNQEBlKQzvh
+         V/SZ7iE8nQONhVEpbrd8XggxkX8cAAJHCyR0SxNfQYnPoXt0agqmITClfhtomUQpzmUD
+         X/VKdNTrzt9YRdsX729JoZe/Xog6GU2AkulOfj+gDYJH4pDTLJzzW6FpezGAVa96P9pU
+         lMS7+CrJilvqJ/jPmmDjS9l4MN39KvAGNPNtigDdf5Y3oMuGyusUqnXWNjbUpHDBKsoL
+         he2w==
+X-Forwarded-Encrypted: i=1; AJvYcCUKYM2GChzs1ZrX974lB8jDAiEKB8o0w7PrW5s4n8lOebmo0I2Dsrf94bGmkS72zZ/lYCYIJd/CFMQsscjl@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywx2FRUKa7EXvwuoD9puuZC9cxI5wPC1pxQpiSTQPpV7K8zI6c2
+	lkwZiRZomnjTEX5m7JF7Py+z0OBx2VoBCezrpprd+viHrA5eo3ZF+PXNbXHU5PlV4oZGoc03Oz/
+	ThaPUZSRb8H1PcoCfzNsfKEM6L/Car9SIIVhcdG/j+ybw0vxiJq8lpMTi1JVXw56T2Co=
+X-Gm-Gg: ASbGnctfUIq0at0glTDJjP9CoJDLDqgW2qJZuQ6IkqHaUXnJ7Kk5lpN9avqnC9hhznb
+	7E2Dpvq4XtwXICojiFBYSJ4l5BYVxuoRg9OY+7EzZ8yfxUEbkgoXrNPditHzrJWeCJySc2EHXex
+	dIBwoOc0R/zYkm06jWyfbApV+8tz+NbdfDEFIoG+QG4hcnsXa980c3XHJpkuBlKyrU51OuM909Z
+	rQV+KqKHo1iZjrUciIdlPKPUdUY2zwsFN4VTy7JjJVsDZhcTKBbR0J2kUoBRGOX7HyFaka8r9WK
+	xhh/f1KcplpKI6HCymVDFkEwcxrqcuD1zc/g0ZNXnf9XG4I7RvVLTbRPhGHryQ==
+X-Received: by 2002:a05:6000:40c6:b0:3a5:527b:64c6 with SMTP id ffacd0b85a97d-3a90d0d6ce1mr10106116f8f.1.1751208560859;
+        Sun, 29 Jun 2025 07:49:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEglecXEkF/z7cvyPDkLXht+rIkJ5l7TX//baZlvQGm4Pvn+sfnI3+HYTKX4a47o/g4mXZXLQ==
+X-Received: by 2002:a05:6000:40c6:b0:3a5:527b:64c6 with SMTP id ffacd0b85a97d-3a90d0d6ce1mr10106102f8f.1.1751208560423;
+        Sun, 29 Jun 2025 07:49:20 -0700 (PDT)
+Received: from ?IPV6:2a00:79c0:638:3500:abf:b8ff:feee:998b? ([2a00:79c0:638:3500:abf:b8ff:feee:998b])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a88c7fa8aasm7826048f8f.27.2025.06.29.07.49.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 29 Jun 2025 07:49:19 -0700 (PDT)
+Message-ID: <b7fafea0-2a0d-43fd-a3a9-847d61273cee@redhat.com>
+Date: Sun, 29 Jun 2025 16:49:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250629135843.30097-1-robin.clark@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: nBBa_AplLn8xYv08PgjRz1iyVlq5aaDC
-X-Authority-Analysis: v=2.4 cv=eIYTjGp1 c=1 sm=1 tr=0 ts=6861517f cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=zVdBlVQdkfp4bBuhmU0A:9 a=CjuIK1q_8ugA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-GUID: nBBa_AplLn8xYv08PgjRz1iyVlq5aaDC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI5MDEyNCBTYWx0ZWRfXyHmhNXXBIue0
- GDQ5s+hr67pokIQ05NAgN9lqa3/+IY9daQygtBBo1qE+NT8E4exZzOsMq5iXUzxR39PeX5Cigrx
- aLb4VYXnNqQfHQafIJaGSUHWX4ZfnjmjqRAzUNtOF9ZlbUfzO6GHXnPAnm3WENsjYt45DemQEgX
- 43YIITEfLWN8vzAWIm8msgZi8iTUAtvRTYZGLw7GdVTnI3JxqU9YhxiGlM8UmUm+vzcfJg1nN7b
- X+F+7P7lMFPq6Lf7SLE3XJ9t2ZGtcbqN1rPB4oQLZgVTw36C33DElzfHDHoTGmtraFvx8WPwkBy
- OFDjyu+VapuI89ogGHvJUTaEzeRJ+8Jqs9/r4lzYlzE/b94JvvojeqmmHQ4FJsuptzfDrINuLrX
- 6PkFVNJIMdwd6wAodCnRVo/pTYlBiNcri76l1O5Y25aTMCQJoTsuR5sRWAHbwptiG1YJqgXJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-27_05,2025-06-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 mlxlogscore=823 priorityscore=1501 adultscore=0
- mlxscore=0 phishscore=0 bulkscore=0 spamscore=0 suspectscore=0
- lowpriorityscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506290124
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 02/42] drm/gpuvm: Add locking helpers
+To: Rob Clark <robin.clark@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>,
+ Antonino Maniscalco <antomani103@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ open list <linux-kernel@vger.kernel.org>
+References: <20250629140537.30850-1-robin.clark@oss.qualcomm.com>
+ <20250629140537.30850-3-robin.clark@oss.qualcomm.com>
+From: Danilo Krummrich <dakr@redhat.com>
+Content-Language: en-US
+Organization: RedHat
+In-Reply-To: <20250629140537.30850-3-robin.clark@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Jun 29, 2025 at 06:58:41AM -0700, Rob Clark wrote:
-> These runners are no more.  So remove the jobs.
+On 6/29/25 4:03 PM, Rob Clark wrote:
+> For UNMAP/REMAP steps we could be needing to lock objects that are not
+> explicitly listed in the VM_BIND ioctl in order to tear-down unmapped
+> VAs.  These helpers handle locking/preparing the needed objects.
+> 
+> Note that these functions do not strictly require the VM changes to be
+> applied before the next drm_gpuvm_sm_map_lock()/_unmap_lock() call.  In
+> the case that VM changes from an earlier drm_gpuvm_sm_map()/_unmap()
+> call result in a differing sequence of steps when the VM changes are
+> actually applied, it will be the same set of GEM objects involved, so
+> the locking is still correct.
+> 
+> v2: Rename to drm_gpuvm_sm_*_exec_locked() [Danilo]
+> v3: Expand comments to show expected usage, and explain how the usage
+>      is safe in the case of overlapping driver VM_BIND ops.
 > 
 > Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-> ---
->  drivers/gpu/drm/ci/build.sh                   |  17 -
->  drivers/gpu/drm/ci/test.yml                   |  14 -
->  .../gpu/drm/ci/xfails/msm-sdm845-fails.txt    |  29 --
->  .../gpu/drm/ci/xfails/msm-sdm845-flakes.txt   | 139 -------
->  .../gpu/drm/ci/xfails/msm-sdm845-skips.txt    | 350 ------------------
->  5 files changed, 549 deletions(-)
->  delete mode 100644 drivers/gpu/drm/ci/xfails/msm-sdm845-fails.txt
->  delete mode 100644 drivers/gpu/drm/ci/xfails/msm-sdm845-flakes.txt
->  delete mode 100644 drivers/gpu/drm/ci/xfails/msm-sdm845-skips.txt
-> 
+> Tested-by: Antonino Maniscalco <antomani103@gmail.com>
+> Reviewed-by: Antonino Maniscalco <antomani103@gmail.com>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Acked-by: Danilo Krummrich <dakr@kernel.org>
 
-
--- 
-With best wishes
-Dmitry
 
