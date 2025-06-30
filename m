@@ -1,140 +1,300 @@
-Return-Path: <linux-arm-msm+bounces-63037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 569FEAED542
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 09:10:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37EBEAED568
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 09:19:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E87421897B9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 07:10:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 48A591723D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 07:19:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B75D721770D;
-	Mon, 30 Jun 2025 07:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E8011F237A;
+	Mon, 30 Jun 2025 07:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BO/UiaG5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l+eLlrqN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE41A214813
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 07:09:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90714190072;
+	Mon, 30 Jun 2025 07:19:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751267381; cv=none; b=HwM/xpbb1IcujHpYilMzM0iY8TBCGww4D5YyKcelL4OQkJI1Hfj4F//oF8aigyVFxUQediYdYshiVSBad8kDzZfgbj/Q4N5Pv7X/Ak3TkuUBpjIJG1/AMjveLWxS/0r7IRkk3pUUorWaCwjxdt2df+G1lWjj9n3fFxHeCBKVeIA=
+	t=1751267973; cv=none; b=BUbhL7cfMs083mdGlUZd9MYCpCoI7Pl8tXGtA4nUrvBeaj+GZFYc4/3Ve9cpFvYHl3LXMwfcltX9XM9Sefs2chXAgWh8xH6apq0FS9t97fqLFPiybw2GBQAVFSPUm8Uxe413U9Z4BEu85Bh053Oc144d7AGDLuuQBGN8tTwNTNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751267381; c=relaxed/simple;
-	bh=ddiuvGxz83jlR9YKFCde8sWN22f7FfscTfyjv9iN2aU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LKJVun2KOxq12XY7AE0ApI3z6/GvGDh4NcvrSWmahJNmJe2MNcrqy3qENMj3WLUyIkkXTRieOfGP3v/TPqNIWHz7lzdYDYiN26yC3ZoRn+mdZs2heKE7GbTxpw9VMjjCiflqwVQ/UP8AY7jxF8I7dlIV+7y2atMdOgFnsZOw1Q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BO/UiaG5; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a6e8b1fa37so1533649f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 00:09:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751267378; x=1751872178; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rL7MI4aiTt6sLWVA1573aHsEQCSTNCPjbPzbUM2vINQ=;
-        b=BO/UiaG5MrdIT98UwEzy1UBaDJMj3rC9J1FSJglYBmBMmxYNsKhqHiPuoyvJG2oF5l
-         djfNlnLo5lWaC0Sl8jPcgQPt2lumT5J1Qo+pcUpwmAZXRcQ5ndUpb8qZpD/2bvyOMRkP
-         3CpkHCZB4Xu2qxtohitW11EXUUyysaXd+pNcSuHe8mpXjUszUGODQCp6rMzj1aqG43l/
-         Xs+LDh+3BsbHP8LFwHdRVWm8eYfcEekH8Ysho0Gpjd6yyV8QN38RAYRhGhN5fD8DZJUO
-         U4mFCYdZeRVRfd+ummGblsG9dovdo1Gs56M4WX19wqxaYaxl1MO1gjntIgi7IDeOMHOv
-         YMeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751267378; x=1751872178;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rL7MI4aiTt6sLWVA1573aHsEQCSTNCPjbPzbUM2vINQ=;
-        b=McyJs49Wwnz/zGSrpKA4LHsJekG4Ylet9uZ1DutyMB8QMpO36Mf9bCCh+ZfD1PgPOh
-         koH0GqEAyO/r2av3uAbqIDgy6vquDNUKKhGIjFo+Dt8Ds0eeyTNYgxr6EWDofFroNzJB
-         BYwTxrHN7b9L5Qh0Sv03IF+RRzswLydTIxtEWGUkbsiI81YdSvNC+nFeQklkNYr+f6c+
-         lYNviFsY6zYucnWmo52xds4RvKz301P0e73O6bRqH9OKlEVdaun1g6BXAYonH9QdjJ9t
-         w0lBxqmEWF0mGL70p5M3ZvDT7EU9eHo9uYkebKoEJUpqWaq5/LwuxUVm+Pn/2/cvf07p
-         9vKw==
-X-Forwarded-Encrypted: i=1; AJvYcCWqFIQ82XrsL82PN+QrfQlUNFqEOSECnT/ZFMPkxN786FmSFbp6w/DbFhUyJEZUFkDISzeeLIcztxZIpLxH@vger.kernel.org
-X-Gm-Message-State: AOJu0YyF2glflZQjGRux8i1WoqD1hl+Goghj+NeFWZ/BfMJ0+tJOj/tA
-	uktTv0EvctrOcf5nMt6gV/yuRrOIlk8QlqT+rV0NsIoEjAL8pm4kTY16NoAdipDaCOnJC6j8dHE
-	ZQBn+
-X-Gm-Gg: ASbGncvMP1wf3Cv+qQK1bV33IAbSqD3yRtheFuQrq+s/J/8sY7mYUF/+IZJxvO+EB0V
-	ps5ql8jV2aaMkGLG4Fe8iRtJmFAIHpV8Uwn8j1VJS6Fojt+s5pchpriNhbk1U9661VsYFyUZ7pw
-	jeRIlmUncggxHF/HzisHqj5Gr1kPr+03LnVk1ph3FQ6MyFHs3zXyWy0rqtEhDB0JKYNbRs5oLg/
-	N+jkzblMQGhFB9o2PtCPp1MUHhdA89VGePe7LdwYnHVp5iAi3j3u0kAVGOQDm4LSGBIniOWzApp
-	s6wpo90Jzzme4bjc9uyWgxeYvgBLTUhxaby9kYnC2JrjqRvQL2LGFf6T7Bf6QdFR05ZozCGAo65
-	QLULFSyo0
-X-Google-Smtp-Source: AGHT+IGG2/mG1Wh2790HlDLNzSCGs1iMdSzJdT+7KKDDoR78pqdJxJTRqgq2iXVeOJWxsyzsHUkPZg==
-X-Received: by 2002:adf:b649:0:b0:3a4:cf40:ff37 with SMTP id ffacd0b85a97d-3a8f45494cdmr8755726f8f.6.1751267377946;
-        Mon, 30 Jun 2025 00:09:37 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:ef30:5b42:ea56:7d4e:16d2])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453a1914d10sm16366245e9.4.2025.06.30.00.09.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 00:09:37 -0700 (PDT)
-Date: Mon, 30 Jun 2025 09:09:33 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Casey Connolly <casey.connolly@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh@kernel.org>, cros-qcom-dts-watchers@chromium.org,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280.dtsi: prevent garbage on serial
- port
-Message-ID: <aGI4LTPmiKxtrStQ@linaro.org>
-References: <20250626132333.351351-1-casey.connolly@linaro.org>
+	s=arc-20240116; t=1751267973; c=relaxed/simple;
+	bh=ToPQLK8RrAyEB6SvkYVTw/FQSTlaE0A5rAz6vEKN9RQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BySWRgxT+/vgJxQWVR28mS4ZrTXexP2PatACMq6LmDfIiEPimtblf9KxycEH7gs2ons5GtvkTOQAEd60HWzaT7CWUBdPaGDbCvmB/WiryDYZs65iXA2Ob9QOq2SrC+ggLM2fcxmu/dd0a5SSy/IcgNaHKCwujnTOLFOZs5dakQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l+eLlrqN; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55U6GGHU002504;
+	Mon, 30 Jun 2025 07:19:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	BXT9LfuhHHaK3D0qfEOCg3V3HkEMCSsGXlJJRBerDYw=; b=l+eLlrqNKIuhiNyT
+	AVddxClx1G1EpwHPddm8HYW3Rxou9ZjUYR6ErGUQMzng1lHkcrsTqqE7atldAgpB
+	dlH0WB2WzZUJxcihwCebX9zwK249q7MfN6Y738g+7v1DMuXULGdBUyMUhwvL1+T3
+	3lws9UDNfprM+6vyxTA9yimMy4GIAdbbOuIAjzHt8oF79yunJ8iUZpyVp97RV9FS
+	8VHAUUosdoXs/QdkDgORNQDC8kElinVgNatOT6IkhL07QfnGIgGzSDs6Wylj7zHQ
+	dFMqSG+ByGamK1GUfCBiK6sb56yJJ2/tDIxbGc2JNdDhuTPbM/Q+t9VlpTvYd1BQ
+	MahcpQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47kn5j8549-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 30 Jun 2025 07:19:21 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55U7JKCI032309
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 30 Jun 2025 07:19:20 GMT
+Received: from [10.253.38.22] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 30 Jun
+ 2025 00:19:14 -0700
+Message-ID: <8ccd3731-8dbc-4972-a79a-ba78e90ec4a8@quicinc.com>
+Date: Mon, 30 Jun 2025 15:19:12 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250626132333.351351-1-casey.connolly@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] PCI: qcom: Add equalization settings for 8.0 GT/s
+To: Manivannan Sadhasivam <mani@kernel.org>
+CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <jingoohan1@gmail.com>,
+        <lpieralisi@kernel.org>, <kwilczynski@kernel.org>,
+        <bhelgaas@google.com>, <johan+linaro@kernel.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <neil.armstrong@linaro.org>,
+        <abel.vesa@linaro.org>, <kw@linux.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <qiang.yu@oss.qualcomm.com>,
+        <quic_krichai@quicinc.com>, <quic_vbadigan@quicinc.com>
+References: <20250625085801.526669-1-quic_ziyuzhan@quicinc.com>
+ <20250625085801.526669-2-quic_ziyuzhan@quicinc.com>
+ <uakd5br4e5l24xmb6rxqs2drlt3fcmemfjilxo7ozph6vysjzs@ag3wjtic3qfm>
+From: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+In-Reply-To: <uakd5br4e5l24xmb6rxqs2drlt3fcmemfjilxo7ozph6vysjzs@ag3wjtic3qfm>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=KtJN2XWN c=1 sm=1 tr=0 ts=68623a79 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=FO1-HDWkAmQojB1LmXIA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: bBhI4LbnApoQljt5ywTwSiH7_TmMtlTR
+X-Proofpoint-GUID: bBhI4LbnApoQljt5ywTwSiH7_TmMtlTR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjMwMDA1OSBTYWx0ZWRfX1AWcsk9kD/kC
+ 1knmlO6pUltJ/qUCIujK1vv+vz4XmQa1gKTT1dp23N6eupwXKD9ESBtS26dS97uaxA0SPy+zHQa
+ hPQv8e7VnMFxKvtqWpdtuLjhWamYQ13d3gKlLY2X1vIWAINF8DS3bn78ihslS2Bq+FJ6Aq1Ry9H
+ wYZcenxTLkH8aJKmAQi7RxvPaRwf2N9uWbJo59rHJe4xxqJyQm71N38ggESkUDqeTjkM33QV0QH
+ SgqRjqKrl80I3/wLTwJHGVZWrhME/8tV02/negbCLh2W0fL2/ChkJwuASFnmNi8/VCJqWNw0QVr
+ cGiHX2UlZ2l3TNtLIeuIeAvCDZRt/t4ybNLGUH+WBHYlm04naKncjJ2N8hsEKxZEPFvdwFtr8eN
+ /VLGllymQzoFCul0hVlR0Syb7EaC6l+vqgHqELNXvZk8bZMY9lXUQQ2pqxupTFQC9Ox/4Du0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-30_01,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 bulkscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
+ mlxscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
+ clxscore=1015 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506300059
 
-On Thu, Jun 26, 2025 at 03:23:30PM +0200, Casey Connolly wrote:
-> During early boot phases there can be garbage characters on the serial
-> RX port unless it is configured as pull-up. Add the pull-up bias and
-> mark the rx/tx pinconfs as being necessary for all boot phases.
-> 
-> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 64a2abd30100..60e4a311405a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -5742,13 +5742,16 @@ qup_uart4_rx: qup-uart4-rx-state {
->  
->  			qup_uart5_tx: qup-uart5-tx-state {
->  				pins = "gpio22";
->  				function = "qup05";
-> +				bootph-all;
 
-I'd add bias-disable here to have consistent state applied to both pins
-and not just the RX one.
+On 6/25/2025 11:58 PM, Manivannan Sadhasivam wrote:
+> On Wed, Jun 25, 2025 at 04:57:59PM +0800, Ziyue Zhang wrote:
+>> Add lane equalization setting for 8.0 GT/s to enhance link stability and
+>> aviod AER Correctable Errors reported on some platforms (eg. SA8775P).
+>>
+>> 8.0 GT/s and 16.0 GT/s require the same equalization setting. This
+>> setting is programmed into a group of shadow registers, which can be
+>> switched to configure equalization for different speeds by writing 00b,
+>> 01b to `RATE_SHADOW_SEL`.
+>>
+>> Hence program equalization registers in a loop using link speed as index,
+>> so that equalization setting can be programmed for both 8.0 GT/s and
+>> 16.0 GT/s.
+>>
+>> Co-developed-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+>> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+>> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+>> ---
+>>   drivers/pci/controller/dwc/pcie-designware.h  |  1 -
+>>   drivers/pci/controller/dwc/pcie-qcom-common.c | 55 +++++++++++--------
+>>   drivers/pci/controller/dwc/pcie-qcom-common.h |  2 +-
+>>   drivers/pci/controller/dwc/pcie-qcom-ep.c     |  6 +-
+>>   drivers/pci/controller/dwc/pcie-qcom.c        |  6 +-
+>>   5 files changed, 38 insertions(+), 32 deletions(-)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+>> index ce9e18554e42..388306991467 100644
+>> --- a/drivers/pci/controller/dwc/pcie-designware.h
+>> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+>> @@ -127,7 +127,6 @@
+>>   #define GEN3_RELATED_OFF_GEN3_EQ_DISABLE	BIT(16)
+>>   #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT	24
+>>   #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK	GENMASK(25, 24)
+>> -#define GEN3_RELATED_OFF_RATE_SHADOW_SEL_16_0GT	0x1
+>>   
+>>   #define GEN3_EQ_CONTROL_OFF			0x8A8
+>>   #define GEN3_EQ_CONTROL_OFF_FB_MODE		GENMASK(3, 0)
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
+>> index 3aad19b56da8..ed466496f077 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom-common.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
+>> @@ -8,9 +8,11 @@
+>>   #include "pcie-designware.h"
+>>   #include "pcie-qcom-common.h"
+>>   
+>> -void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci)
+>> +void qcom_pcie_common_set_equalization(struct dw_pcie *pci)
+>>   {
+>>   	u32 reg;
+>> +	u16 speed, max_speed = PCIE_SPEED_16_0GT;
+>> +	struct device *dev = pci->dev;
+>>   
+>>   	/*
+>>   	 * GEN3_RELATED_OFF register is repurposed to apply equalization
+>> @@ -19,32 +21,37 @@ void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci)
+>>   	 * determines the data rate for which these equalization settings are
+>>   	 * applied.
+>>   	 */
+>> -	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+>> -	reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
+>> -	reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
+>> -	reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK,
+>> -			  GEN3_RELATED_OFF_RATE_SHADOW_SEL_16_0GT);
+>> -	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
+>> +	if (pcie_link_speed[pci->max_link_speed] < PCIE_SPEED_32_0GT)
+>> +		max_speed = pcie_link_speed[pci->max_link_speed];
+> So the logic here is that you want to limit the max_speed to < 32 GT/s because
+> you are not sure if 32 GT/s or more would require the same settings?
+>
+> If so, why can't you just simply bail out early if the link speed > 16 GT/s and
+> just use pci->max_link_speed directly? Right now, 32 GT/s or more would be
+> skipped implicitly because you have initialized max_speed to PCIE_SPEED_16_0GT.
+>
+> - Mani
 
-Thanks,
-Stephan
+Hi Mani
 
->  			};
->  
->  			qup_uart5_rx: qup-uart5-rx-state {
->  				pins = "gpio23";
->  				function = "qup05";
-> +				bootph-all;
-> +				bias-pull-up;
->  			};
->  
->  			qup_uart6_cts: qup-uart6-cts-state {
->  				pins = "gpio24";
-> -- 
-> 2.50.0
-> 
+I'll update the code according to your feedback in my next submission.
+
+BRs
+
+Ziyue
+
+>>   
+>> -	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
+>> -	reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
+>> -		GEN3_EQ_FMDC_N_EVALS |
+>> -		GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
+>> -		GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
+>> -	reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
+>> -		FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
+>> -		FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
+>> -		FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
+>> -	dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
+>> +	for (speed = PCIE_SPEED_8_0GT; speed <= max_speed; ++speed) {
+>> +		reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+>> +		reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
+>> +		reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
+>> +		reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK,
+>> +			  speed - PCIE_SPEED_8_0GT);
+>> +		dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
+>>   
+>> -	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
+>> -	reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
+>> -		GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
+>> -		GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
+>> -		GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
+>> -	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
+>> +		reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
+>> +		reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
+>> +			GEN3_EQ_FMDC_N_EVALS |
+>> +			GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
+>> +			GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
+>> +		reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
+>> +			FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
+>> +			FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
+>> +			FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
+>> +		dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
+>> +
+>> +		reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
+>> +		reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
+>> +			GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
+>> +			GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
+>> +			GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
+>> +		dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
+>> +	}
+>>   }
+>> -EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_equalization);
+>> +EXPORT_SYMBOL_GPL(qcom_pcie_common_set_equalization);
+>>   
+>>   void qcom_pcie_common_set_16gt_lane_margining(struct dw_pcie *pci)
+>>   {
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.h b/drivers/pci/controller/dwc/pcie-qcom-common.h
+>> index 7d88d29e4766..7f5ca2fd9a72 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom-common.h
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.h
+>> @@ -8,7 +8,7 @@
+>>   
+>>   struct dw_pcie;
+>>   
+>> -void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci);
+>> +void qcom_pcie_common_set_equalization(struct dw_pcie *pci);
+>>   void qcom_pcie_common_set_16gt_lane_margining(struct dw_pcie *pci);
+>>   
+>>   #endif
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+>> index bf7c6ac0f3e3..aaf060bf39d4 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+>> @@ -511,10 +511,10 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+>>   		goto err_disable_resources;
+>>   	}
+>>   
+>> -	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT) {
+>> -		qcom_pcie_common_set_16gt_equalization(pci);
+>> +	qcom_pcie_common_set_equalization(pci);
+>> +
+>> +	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT)
+>>   		qcom_pcie_common_set_16gt_lane_margining(pci);
+>> -	}
+>>   
+>>   	/*
+>>   	 * The physical address of the MMIO region which is exposed as the BAR
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index c789e3f85655..0fcb17ffd2e9 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -298,10 +298,10 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
+>>   {
+>>   	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+>>   
+>> -	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT) {
+>> -		qcom_pcie_common_set_16gt_equalization(pci);
+>> +	qcom_pcie_common_set_equalization(pci);
+>> +
+>> +	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT)
+>>   		qcom_pcie_common_set_16gt_lane_margining(pci);
+>> -	}
+>>   
+>>   	/* Enable Link Training state machine */
+>>   	if (pcie->cfg->ops->ltssm_enable)
+>> -- 
+>> 2.34.1
+>>
 
