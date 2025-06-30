@@ -1,165 +1,254 @@
-Return-Path: <linux-arm-msm+bounces-63044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0940AED688
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 10:03:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F95FAED6B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 10:08:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E1A953ACC34
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 08:01:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 33E3C1889649
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 08:08:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88A5A23E329;
-	Mon, 30 Jun 2025 08:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0771E1DED64;
+	Mon, 30 Jun 2025 08:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="PuMVrUKW"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CrFo9yIV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811FD23AB88
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 08:01:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9711FDE02
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 08:08:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751270514; cv=none; b=go2slkSf4DhOlIUsVod4+2LmseKnUuA63w4xGL07sfh0y2giW0WaAHRl9UptBn53cQaP8RjavhsoZvC0TfiGJiYIxoHUnMqsdaVs32if+FMUD2P9Dof0lGyOtjT0UrfLzGXGyhZg2X1aUYs/+IILavOVJtqAS+rtbuaSsoBzmII=
+	t=1751270883; cv=none; b=Q5J6fbo1PaXdZz/wFu5lUel2CdQ/mhIj5B4gzENAg9GPpY2tzRu9hfKSiWCIO3Z8/3Hy8hz6EfQXNp/CX40eC68SjGJS2Q9Hq5kE0X/1fUD+KUH9v3tImlViAgWu5lqd9OVVOH2/ULPK8GLpzQZrd1yT9L7veKtj6t3KLy0gBoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751270514; c=relaxed/simple;
-	bh=LpPq0O9dCSq2yJKRTchcrI01CNwc9RMMB1sOdqU8n48=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=hi2GuDrEunF+sOENqDH1MPYH9F7CxshA3jdm8Kkhf7js2O3ZWYj1RChRJD0kcpKUOoYHllTgZCvmQyW1TUz+uJilQJKSnrjhCkn3TVnchgC5hyrSoPxRLzx7EntRGkpmBXXKeN+10+PtbtrWdWhTxJ2cELUNXXKn5VFAhykdDWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=PuMVrUKW; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ae0b6532345so1004701666b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 01:01:52 -0700 (PDT)
+	s=arc-20240116; t=1751270883; c=relaxed/simple;
+	bh=0PgIaOQG6u3KOrgNFaZXzQa3bUV78WX2rDWBVVuBqLo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YVctAiNV4s5IyGRWtq+CZ+LtNH2C/cT0TxAm0WEAe1mEr3uTeoywL1RbMKrTvwC9Vl53DYfj7zQLKaMt6s4s+QW/U0pCt2mfl3VQqSLwXKxeA8e7QFGWNAUsv4v0ofTtseNyG6ehcqEdGpRPLMLtSRGRt0p9oymfd1HYgyEcCg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CrFo9yIV; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4a58197794eso358411cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 01:08:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1751270511; x=1751875311; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=google.com; s=20230601; t=1751270881; x=1751875681; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VZWXdKZSSjJqVCAXWFGblQxy/2StWwGGDnAv5AzCETw=;
-        b=PuMVrUKW32bEa9R7TQw7IHxfIrUhxO4ts7j1kHOE+OvGLv07I/8dBOcDKy5AwkQPsO
-         Dm8P+rDqCOUjr1Xr12jvUEnRABphNKJNkYsbylIIe+oKVjipwSrCTDJe8AXHTW/p0PwX
-         2fmZNg3f13y8TH7AnQcosPFDBBCNsvRu6q94CEUgt4nvkAU3BUlajfo9vKNbpwOQb1SU
-         Q2qptM0wAmFx6VGpEv8a6dcns3XepjI7QEvfKvPQG3XXggWonB9PY6f8IyUt30asd1fl
-         Wr5mPCnGzbC0S2BdxJA2rLNzLl0qORehS5OJQuPvOsMRJmJqIp5aR62vA0Bp9l+pI+xY
-         kEtQ==
+        bh=mi/OKB+QroqPI8Z8OCA75lN3eu0FgzMHtdVq7qnuW3M=;
+        b=CrFo9yIVRG3y8Q+LuLhE8amv9GDpEqCgVej9Bs0YBjw1yXXChrTamX87gFEqoIUk9f
+         or7iOwaElVhnd/sgdG176Dkk0QSP0wLHqAfXel+NdJO6Z7T+VdfK1z9NGsG1pOdskicB
+         fve402r/6z2ElsBGkbeqsWcaKadrmggBaVt++Rq1aS0z74j85HR2S4fpvJ8KO4Y9OTtM
+         aYCm08UH6RfL8qqFVZhqI0wFTIZZLQ9vTyM5EKu2zEdL6pjI9prhbKogDYuCdCyEoCem
+         wJ0OOlbw4FyIuIl32+WfvwXzNaDfPiVJgCiiB/314UkiWUBIezB3k/cyHjZ2YbbYsobw
+         FOyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751270511; x=1751875311;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=VZWXdKZSSjJqVCAXWFGblQxy/2StWwGGDnAv5AzCETw=;
-        b=eaY4jbKm7u3cesX6Ft3nqnkDwktAD9KxMkRevhL8BMTDG9le8EIncz+6OVH2E1CrAy
-         Q7RyHfaEvAvC17j/3czQM94z16GQizTQ4alwHVQ+yhEbypKZ9/9j5Rr79JzFNiYxVESQ
-         DrFalDfNqdomE72qzzse0OPodKERIowFZihYGGqURAlCvOdRp5+yPbijaN5wgswidC0v
-         AUHA/Y5RgEGV0W05MVvHHQUmIJ6/1GpqyjhxefuhoWmAZTkD/T6R25cd4gW2XtNCk3QY
-         stzozWbU1JMATJrYJHQWXs/rdP5uSGqVp7NVa4MZSoj5LZBg9CybZYtLnS5uJjYywpv+
-         7Ofg==
-X-Forwarded-Encrypted: i=1; AJvYcCUQueFTFzs+OWLiSf+wJrz3USvne0UZJfQGNuG2qvbnT+srtqVNQ+Bbz8fERwzf+frZkOtz06/O6nKyYXI2@vger.kernel.org
-X-Gm-Message-State: AOJu0YzssMmE6WuCs+32k/0d3rHpDribgPPyrqUiOqdnC5p69RHeUKk7
-	MECLzHukVcK7ZCKK0tVekPXh9zqunh9mqwK1yg6CsdgCWLUqNsVAKysBYS75wX3hMu8=
-X-Gm-Gg: ASbGncu1iKiLGdDI/YgK+0aCsdUBom79o5HWzpjWGQSVFtFQpPBCc4ic2LU5JDYGI7T
-	ORpLOqMOzbFkokLeaRbWWe3X4ycHdDh6tIMaNIPhBRmChYTgEIBu04lt3y1DVcTyM6WcNwj3IFs
-	HHDF2itf1j6K3nZYAPZmlhMkHKpIwFBHC0xJYxCYi3mc8d7LLGGX5gh5ZjGbvEU6yoUkKmtuouS
-	eAHOFuAzNS0Yet7rr120anth6yeaBVfRkrmOI2GRRM2MEnZ6TpaTKKSJQo8/adn7qFzQ7Zo4sBT
-	O16JgHewvphnUmB5I4K/VKFcqAGTXdvN1H0Mkr1rOgL1TuNt6PP4bq5zb51LyflrQ4/VhunyvLG
-	3cLp/OzUscT4r+FwjP7T/kT+knahxAk8t4Ab5qhxqpnowHzyG36aFuOrYQQ27Wisl947Ow/rV73
-	TkeEFRVg==
-X-Google-Smtp-Source: AGHT+IEoVXPzL2X+o6hUB2pvWTzo7iX7ErTJsBfZFxmXtG6Mqo+mQVeD6+zkAYVim486K1lU9hLB1w==
-X-Received: by 2002:a17:906:4783:b0:ae0:a464:99d with SMTP id a640c23a62f3a-ae0d27309d1mr1642905366b.17.1751270496717;
-        Mon, 30 Jun 2025 01:01:36 -0700 (PDT)
-Received: from localhost (2001-1c00-3b8a-ea00-c4de-d39d-05f4-c77a.cable.dynamic.v6.ziggo.nl. [2001:1c00:3b8a:ea00:c4de:d39d:5f4:c77a])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae353c01641sm630119466b.77.2025.06.30.01.01.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Jun 2025 01:01:36 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1751270881; x=1751875681;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mi/OKB+QroqPI8Z8OCA75lN3eu0FgzMHtdVq7qnuW3M=;
+        b=hPZEHUD2wWI7mKoxTcmsX9tZqelyN7DJvU593qZ2Vg8K87wqSIk3RN9dOG7/Gjs5LA
+         IS/SXgkK2OGniFLwxZQaCFdKUuBBMflC1M5uoyaWN3dj/aCDtoA+zBwqCU1lrmS9Qs6t
+         M+mnbE4guZ+YnCJywcGmexoMqtac2Fg2Fbl/Yc4i6S0pTsCCM2blUgtR+mfndJDz2cJF
+         hskIQerXn5dYNqagjqEdZBnT3/PrjcExHVg/74UpG5jQhpWGJIkyXwp/35l22V4Nru+n
+         2FkPJ79CBJlAEXCHCKubf6qnvGW3ZR6OSKpLYfFs4naoTWvdGWz2CPbABKs1rSLPWUpQ
+         qURA==
+X-Forwarded-Encrypted: i=1; AJvYcCVJcYVqbl3Qc6IOq6HjshnwtzZH3fMHqClxgXxiCV0VOhnttjEgt8Whn6EWRWj7vHl7Tv6ZiJZcvrq5aVPw@vger.kernel.org
+X-Gm-Message-State: AOJu0YzBAc4874Y4QpldzC71BZOfVzJfb5IhkbOsR1wRs1GE/h3K9dNq
+	E5EddblKFMmjSLbVlsP9BJNgc9l44GT2TWtKKNafxnddxZ/SJdq/AbK+n+XmEeXvs+bp30E9eKp
+	TzlBG+n4avwJ6gPvVo8cCtsRljeXhTARlRR8r28PO3KNlDWJ/aJX46J5/zxo=
+X-Gm-Gg: ASbGnctYlRRVpu94Q0+ZAT2TO4aJrnhHF+7mpCJljTqqJhu7tU/hxNvOXITbUPAgskM
+	6ldfYJ8KTjl5BvAIF59MPeHa/cV8aTMhzuBn9ut3qpN8w5r6ZZ9ZKAApAofLYSDmRXb/2wrEAwT
+	kI2J15Ody5c9BsYCxFy2QqQdBARQd0fz/EpvVeEHNu7+vvuPy6baxFPkcOTsdcR4UR8Ne8QoiE
+X-Google-Smtp-Source: AGHT+IFQ+H4ctfiCA8/zL6DD6zbPcIGQ0L/p+jZyxVns9qRr/+12U+JsgC2TXDqtvwf6SRug7NRYv389tASYM/vG9wA=
+X-Received: by 2002:ac8:5e08:0:b0:4a7:6ad9:39b4 with SMTP id
+ d75a77b69052e-4a808ffbdf0mr5418201cf.25.1751270880560; Mon, 30 Jun 2025
+ 01:08:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20250611133330.1514028-1-tabba@google.com> <20250611133330.1514028-11-tabba@google.com>
+ <aEyhHgwQXW4zbx-k@google.com> <diqz1pr8lndp.fsf@ackerleytng-ctop.c.googlers.com>
+ <diqza55tjkk1.fsf@ackerleytng-ctop.c.googlers.com>
+In-Reply-To: <diqza55tjkk1.fsf@ackerleytng-ctop.c.googlers.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Mon, 30 Jun 2025 09:07:23 +0100
+X-Gm-Features: Ac12FXx4RLRI7Sn1sliQ6WnveLDaQPnxVwQ-ObC_x8hHp0fzJtRLgEA_BEf2o30
+Message-ID: <CA+EHjTxECJ3=ywbAPvpdA1-pm=stXWqU75mgG1epWaXiUr0raw@mail.gmail.com>
+Subject: Re: [PATCH v12 10/18] KVM: x86/mmu: Handle guest page faults for
+ guest_memfd with shared memory
+To: Ackerley Tng <ackerleytng@google.com>
+Cc: Sean Christopherson <seanjc@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, 
+	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 30 Jun 2025 10:01:35 +0200
-Message-Id: <DAZPKV5DQ1EK.2D4TQE5MIH4K9@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 00/10] Add clock drivers for SM7635
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Luca Weiss" <luca.weiss@fairphone.com>, "Konrad Dybcio"
- <konrad.dybcio@oss.qualcomm.com>, "Bjorn Andersson" <andersson@kernel.org>,
- "Michael Turquette" <mturquette@baylibre.com>, "Stephen Boyd"
- <sboyd@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Konrad Dybcio"
- <konradybcio@kernel.org>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
-References: <20250625-sm7635-clocks-v1-0-ca3120e3a80e@fairphone.com>
- <68056b4a-b1c3-401f-8720-8e0c3cda6249@oss.qualcomm.com>
- <DAXEWQ93VELV.3HJXPNWASYBT7@fairphone.com>
-In-Reply-To: <DAXEWQ93VELV.3HJXPNWASYBT7@fairphone.com>
 
-Hi Konrad,
+Hi Ackerley,
 
-On Fri Jun 27, 2025 at 5:14 PM CEST, Luca Weiss wrote:
-> On Fri Jun 27, 2025 at 5:10 PM CEST, Konrad Dybcio wrote:
->> On 6/25/25 11:12 AM, Luca Weiss wrote:
->>> Document and add the clock drivers for GCC, CAMCC, DISPCC, GPUCC and
->>> VIDEOCC on the SM7635 SoC.
->>>=20
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>> Luca Weiss (10):
->>>       dt-bindings: clock: qcom: document the SM7635 Global Clock Contro=
-ller
->>>       clk: qcom: Add Global Clock controller (GCC) driver for SM7635
->>>       dt-bindings: clock: qcom: document the SM7635 Camera Clock Contro=
-ller
->>>       clk: qcom: Add Camera Clock controller (CAMCC) driver for SM7635
->>>       dt-bindings: clock: qcom: document the SM7635 Display Clock Contr=
-oller
->>>       clk: qcom: Add Display Clock controller (DISPCC) driver for SM763=
-5
->>>       dt-bindings: clock: qcom: document the SM7635 GPU Clock Controlle=
-r
->>>       clk: qcom: Add Graphics Clock controller (GPUCC) driver for SM763=
-5
->>>       dt-bindings: clock: qcom: document the SM7635 Video Clock Control=
-ler
->>>       clk: qcom: Add Video Clock controller (VIDEOCC) driver for SM7635
->>
->> We had a massive yak shaving patchset go in this season, please move
->> the magic settings in .probe to qcom_cc_driver_data {}
+On Fri, 27 Jun 2025 at 16:01, Ackerley Tng <ackerleytng@google.com> wrote:
 >
-> Okay cool, I found them
-> https://lore.kernel.org/linux-arm-msm/174970084192.547582.612305407582982=
-706.b4-ty@kernel.org/
-
-For camcc, gpucc and videocc it seems quite simple to follow these
-changes.
-
-For dispcc I don't know what to do with this line.
-
-	/* Enable clock gating for MDP clocks */
-	regmap_update_bits(regmap, DISP_CC_MISC_CMD, 0x10, 0x10);
-
-Do I just keep the regmap references in this probe function and just
-move the clk_lucid_ole_pll_configure & qcom_branch_set_clk_en to the
-config struct?
-
-And similar for gcc, I can move the qcom_branch_set_clk_en calls there
-but the qcom_cc_register_rcg_dfs needs to be kept.
-
-Does that sound okay, or what exactly is the desired outcome of the
-requested changes?
-
-Regards
-Luca
-
+> Ackerley Tng <ackerleytng@google.com> writes:
 >
->>
->> Konrad
+> > [...]
+>
+> >>> +/*
+> >>> + * Returns true if the given gfn's private/shared status (in the CoC=
+o sense) is
+> >>> + * private.
+> >>> + *
+> >>> + * A return value of false indicates that the gfn is explicitly or i=
+mplicitly
+> >>> + * shared (i.e., non-CoCo VMs).
+> >>> + */
+> >>>  static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+> >>>  {
+> >>> -   return IS_ENABLED(CONFIG_KVM_GMEM) &&
+> >>> -          kvm_get_memory_attributes(kvm, gfn) & KVM_MEMORY_ATTRIBUTE=
+_PRIVATE;
+> >>> +   struct kvm_memory_slot *slot;
+> >>> +
+> >>> +   if (!IS_ENABLED(CONFIG_KVM_GMEM))
+> >>> +           return false;
+> >>> +
+> >>> +   slot =3D gfn_to_memslot(kvm, gfn);
+> >>> +   if (kvm_slot_has_gmem(slot) && kvm_gmem_memslot_supports_shared(s=
+lot)) {
+> >>> +           /*
+> >>> +            * Without in-place conversion support, if a guest_memfd =
+memslot
+> >>> +            * supports shared memory, then all the slot's memory is
+> >>> +            * considered not private, i.e., implicitly shared.
+> >>> +            */
+> >>> +           return false;
+> >>
+> >> Why!?!?  Just make sure KVM_MEMORY_ATTRIBUTE_PRIVATE is mutually exclu=
+sive with
+> >> mappable guest_memfd.  You need to do that no matter what.
+> >
+> > Thanks, I agree that setting KVM_MEMORY_ATTRIBUTE_PRIVATE should be
+> > disallowed for gfn ranges whose slot is guest_memfd-only. Missed that
+> > out. Where do people think we should check the mutual exclusivity?
+> >
+> > In kvm_supported_mem_attributes() I'm thiking that we should still allo=
+w
+> > the use of KVM_MEMORY_ATTRIBUTE_PRIVATE for other non-guest_memfd-only
+> > gfn ranges. Or do people think we should just disallow
+> > KVM_MEMORY_ATTRIBUTE_PRIVATE for the entire VM as long as one memslot i=
+s
+> > a guest_memfd-only memslot?
+> >
+> > If we check mutually exclusivity when handling
+> > kvm_vm_set_memory_attributes(), as long as part of the range where
+> > KVM_MEMORY_ATTRIBUTE_PRIVATE is requested to be set intersects a range
+> > whose slot is guest_memfd-only, the ioctl will return EINVAL.
+> >
+>
+> At yesterday's (2025-06-26) guest_memfd upstream call discussion,
+>
+> * Fuad brought up a possible use case where within the *same* VM, we
+>   want to allow both memslots that supports and does not support mmap in
+>   guest_memfd.
+> * Shivank suggested a concrete use case for this: the user wants a
+>   guest_memfd memslot that supports mmap just so userspace addresses can
+>   be used as references for specifying memory policy.
+> * Sean then added on that allowing both types of guest_memfd memslots
+>   (support and not supporting mmap) will allow the user to have a second
+>   layer of protection and ensure that for some memslots, the user
+>   expects never to be able to mmap from the memslot.
+>
+> I agree it will be useful to allow both guest_memfd memslots that
+> support and do not support mmap in a single VM.
+>
+> I think I found an issue with flags, which is that GUEST_MEMFD_FLAG_MMAP
+> should not imply that the guest_memfd will provide memory for all guest
+> faults within the memslot's gfn range (KVM_MEMSLOT_GMEM_ONLY).
+>
+> For the use case Shivank raised, if the user wants a guest_memfd memslot
+> that supports mmap just so userspace addresses can be used as references
+> for specifying memory policy for legacy Coco VMs where shared memory
+> should still come from other sources, GUEST_MEMFD_FLAG_MMAP will be set,
+> but KVM can't fault shared memory from guest_memfd. Hence,
+> GUEST_MEMFD_FLAG_MMAP should not imply KVM_MEMSLOT_GMEM_ONLY.
+>
+> Thinking forward, if we want guest_memfd to provide (no-mmap) protection
+> even for non-CoCo VMs (such that perhaps initial VM image is populated
+> and then VM memory should never be mmap-ed at all), we will want
+> guest_memfd to be the source of memory even if GUEST_MEMFD_FLAG_MMAP is
+> not set.
+>
+> I propose that we should have a single VM-level flag to solve this (in
+> line with Sean's guideline that we should just move towards what we want
+> and not support non-existent use cases): something like
+> KVM_CAP_PREFER_GMEM.
+>
+> If KVM_CAP_PREFER_GMEM_MEMORY is set,
+>
+> * memory for any gfn range in a guest_memfd memslot will be requested
+>   from guest_memfd
+> * any privacy status queries will also be directed to guest_memfd
+> * KVM_MEMORY_ATTRIBUTE_PRIVATE will not be a valid attribute
+>
+> KVM_CAP_PREFER_GMEM_MEMORY will be orthogonal with no validation on
+> GUEST_MEMFD_FLAG_MMAP, which should just purely guard mmap support in
+> guest_memfd.
+>
+> Here's a table that I set up [1]. I believe the proposed
+> KVM_CAP_PREFER_GMEM_MEMORY (column 7) lines up with requirements
+> (columns 1 to 4) correctly.
+>
+> [1] https://lpc.events/event/18/contributions/1764/attachments/1409/3710/=
+guest_memfd%20use%20cases%20vs%20guest_memfd%20flags%20and%20privacy%20trac=
+king.pdf
 
+I'm not sure this naming helps. What does "prefer" imply here? If the
+caller from user space does not prefer, does it mean that they
+mind/oppose?
+
+Regarding the use case Shivank mentioned, mmaping for policy, while
+the use case is a valid one, the raison d'=C3=AAtre of mmap is to map into
+user space (i.e., fault it in). I would argue that if you opt into
+mmap, you are doing it to be able to access it. To me, that seems like
+something that merits its own flag, rather than mmap. Also, I recall
+that we said that later on, with inplace conversion, that won't be
+even necessary. In other words, this would also be trying to solve a
+problem that we haven't yet encountered and that we have a solution
+for anyway.
+
+I think that, unless anyone disagrees, is to go ahead with the names
+we discussed in the last meeting. They seem to be the ones that make
+the most sense for the upcoming use cases.
+
+Cheers,
+/fuad
+
+
+
+> > [...]
+>
 
