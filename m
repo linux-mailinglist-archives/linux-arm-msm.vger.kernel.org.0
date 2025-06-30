@@ -1,122 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-63114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04103AEE68D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 20:12:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB723AEE6C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 20:31:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C96B23B9926
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 18:12:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8A7B917EA4C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 18:31:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 691B92E3371;
-	Mon, 30 Jun 2025 18:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3241F1E5B62;
+	Mon, 30 Jun 2025 18:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PXsKwFih"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="o2x6xhRI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FEF244676;
-	Mon, 30 Jun 2025 18:12:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907191C7013
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 18:31:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751307139; cv=none; b=aP19ALzXWp8Iisr0HBN+x3zCej5sNDKUCDP9B4UdREpyXEOPYhZRnfqWUmysN51oXJs+QTlS0bgrJ9RrnQ3copxNRMn1ac5/+Yxe9K8NDdO1c79ZIidYOOdGWVFx9XtWIvOW5TVwSZhDTIwwYNlD8IeZ3Oer4aNC9vxc4Djz5Ac=
+	t=1751308283; cv=none; b=ImQ32Y+BeE8boGB5dsvcRQ/j2XwdTa5q3T5SQAQGoaSlZoydUB6q4GtIj0l3+ea6aaTkRgLxNBDiWmKGve2W7JESe4PNlCcymv3W+sg6Q0xWzp/RAwXe/RzmZkpG4JYuS5sYnZKvs1gLJbICXTDx7z9j88jFPbqhUOxFOgkKdwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751307139; c=relaxed/simple;
-	bh=I+kVS3NjR7w6E4QkvIa2eJytYERbIRQvZk5z3WhX438=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GXsl0FVfycPIVH6cvSs5+gRo2hbKijrdC1YxtXxcXkvwYfdXPWk/VBbx5IeWdASiw/SR5SOnJ592jWqjlbAbtAc/JqWs2qaV0CfL78fQp0wh8qMhU8oZMXRP+LDTuGuPADBAtIAFyqy6lBptmq/snDfChgEftpxj/FqDUYjTSvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PXsKwFih; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751307137; x=1782843137;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=I+kVS3NjR7w6E4QkvIa2eJytYERbIRQvZk5z3WhX438=;
-  b=PXsKwFihe7MCEQfrWix+I5nxV4DPKxlBf6zlV2kk6MR3Rco2WB8l6u9c
-   OKv/X6q5DsvPFnmzwVQ+INsKzz4fVgve2YRz0KaaunUmPX/32DkephdZt
-   q51jCWZeGhqrZWIzDi4LGyrgEKUXx0H8rI10Ytc+wAjgqequSi+qDN0dn
-   KBNceO2Y2TcSrJqnzzADla8cGShZoHpKFH8v641cWfbNxSUxAzAqbmFH3
-   N5Kbcga6q25hNKdNQXP+56JQ6u/dal4acVBRZDsAC6la5TJ5XF46yNcK3
-   mjjn4nWD7F1qgySsIOKHYYd1sIlt2yjgw7zTqxe3htLgl0j7lsv/goC2e
-   g==;
-X-CSE-ConnectionGUID: Ms3cCLHSS5O2hkhhfYB5eQ==
-X-CSE-MsgGUID: XwnhJEWITguil5mRgo3lag==
-X-IronPort-AV: E=McAfee;i="6800,10657,11480"; a="78982269"
-X-IronPort-AV: E=Sophos;i="6.16,278,1744095600"; 
-   d="scan'208";a="78982269"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2025 11:12:16 -0700
-X-CSE-ConnectionGUID: AF3thvOhQIG68tifoh0cIw==
-X-CSE-MsgGUID: DnISahm6RA62K58gYs0Uhw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,278,1744095600"; 
-   d="scan'208";a="153622082"
-Received: from lkp-server01.sh.intel.com (HELO e8142ee1dce2) ([10.239.97.150])
-  by fmviesa006.fm.intel.com with ESMTP; 30 Jun 2025 11:12:14 -0700
-Received: from kbuild by e8142ee1dce2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uWIzE-000ZFy-0T;
-	Mon, 30 Jun 2025 18:12:12 +0000
-Date: Tue, 1 Jul 2025 02:11:29 +0800
-From: kernel test robot <lkp@intel.com>
-To: Komal Bajaj <komal.bajaj@oss.qualcomm.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v2] usb: misc: qcom_eud: Access EUD_MODE_MANAGER2 through
- secure calls
-Message-ID: <202507010127.xjmnq7A8-lkp@intel.com>
-References: <20250627125131.27606-1-komal.bajaj@oss.qualcomm.com>
+	s=arc-20240116; t=1751308283; c=relaxed/simple;
+	bh=FLtyhUbuA2aQOuNKgKE+ET2SDkrsNcWeb+kVrzNOdsE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RMvFpH2uklXLNjNm7DIjZ7pVRLctJ3boYXHdvbGk87GUoq8iVB4r+1bKMDlpx05w5xFzK4RddTS0BFkg9LDb1kmxo4f1iFyoMOSG5auslPq9JouJ8dkoOIAB9Tx9bRR8yU1TUmP40NekMzCk9hDMPZTadnqkhZTn6JdJbb/qiC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=o2x6xhRI; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55UFCsQn032109
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 18:31:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	gzGsMAPEQiSZ6GBpzbnmC6RxIkkEvbmXR+O46b196/I=; b=o2x6xhRIr9wXcPLq
+	qOEp9gzGF1n0nfI0DpQB0m1wx1HRns6vbL1qQ9Giq45ujOZ3SOuJERKB+32CryCI
+	oRP5FTEGtsqGIpT/qeiXoV1XQl0CNRFWf36h2TpwG2IaSmVB9CWr7+s/YDpPSAq6
+	uR29rfcpJXiXbEqpVYrFhO6vAaQjF3SJ/GD/Uw3a1F7bZiw10eqdC84AAFv6MHst
+	b7hMpjHBb51/RfEsn4MDsrRM7L4o60c4QzT0SBHegYD8llp8yG/PNcbsIJ8lQYD4
+	2tvZpZxiXm6NMIIB3yNXO4We6EMP7qZaTDDy3NZHqcPqhZQ/3qSBSg9bL7pRzJRE
+	9JfNlQ==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j63k5yy9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 18:31:20 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-74858256d38so2301373b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 11:31:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751308280; x=1751913080;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gzGsMAPEQiSZ6GBpzbnmC6RxIkkEvbmXR+O46b196/I=;
+        b=ZgxjAqSkpOjvvEmLDdYoKtbDKwdTIVzfxSOMQhMk159y3kgi6A+Q+D1znFZL3JHV52
+         t4yDVtlE/zfUwy6ad5UtnJe0Zs0MyurP/ydT/c5IJFSUizqW9LhVR4NrqCEFF0NHBi7W
+         3JOi5ihx3KtKvhkdG6W3VuwXu7YY1Bcc8cl3c5gQsx5bXZ1aK6cZvq4wxKY69dHA8P2e
+         P5JS5NzwG+pjNR5tZsqY9ASyzZnF8NZ2r7CcyQ3QltAm6ffQkkFtZM1zbIHEnvtTvXkJ
+         XQL23G7L53uuf4x/3iK9Xwp9/HPNpCaA641rAIfVhEHt4+94/Te2Uycqi3LrB52w06il
+         PQZA==
+X-Gm-Message-State: AOJu0YzrcCa5fHvISP2yycX2bWe7QzEcaIcJMXmcCEKP8UQmwsUC3XoQ
+	XDYD9C8aTsauTOUmNpv5J/AfUjoLh9bnUps5OAiWVV39yq0B5fFsAsrK+LRwXQhoHSpgRejOvcN
+	LVKBzRoyRwBdmfQWQxWF0AF0wtIOh9bELjwAz6zphdK9jgla2AsWrVTyzmTddViBdg89F
+X-Gm-Gg: ASbGncuFdYF2CHtjRXf366FhCVKPy8Qmg0EkBzDDNqmLIRI+RW1TnLXORHwjC+5plTP
+	WMnzPT1PalGnzHRFP1KQq7zZy5GRU2D9O333fsi7yxCT/apwmNHwFPwICdzvmYSbNRBgn9d6W4w
+	wBXv9NK+9toMfg+v8uZoI75R/a0qn1c77Nncyq9H7jbq1KstFZ2glVxj3j29wJyzW3ESB/3+LQw
+	Iep18LJTEX/dW9rvLPsHfQJkETNxy/uwCAYYTjacSfhrimFy74KamhfCINNVqLESZQvXq8ZP23n
+	y2pNTBD3TGfqbDRk1/4W3QOaS6Rqlcrf1ZVo4RFMIJ5gtdIc4bxhu8otzLI52gkOZptgUlXg
+X-Received: by 2002:a05:6a00:b4b:b0:73d:fa54:afb9 with SMTP id d2e1a72fcca58-74af6eab8cbmr20654060b3a.7.1751308279648;
+        Mon, 30 Jun 2025 11:31:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGxSWLjq9AlGyMrnNBvFpeMkF/I30ekWwyE03Ri1IMvjryC0GFnAJl7hAfryAjdbrXswhyw2A==
+X-Received: by 2002:a05:6a00:b4b:b0:73d:fa54:afb9 with SMTP id d2e1a72fcca58-74af6eab8cbmr20654021b3a.7.1751308279188;
+        Mon, 30 Jun 2025 11:31:19 -0700 (PDT)
+Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74af56e8789sm9539234b3a.144.2025.06.30.11.31.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Jun 2025 11:31:18 -0700 (PDT)
+Message-ID: <4396deb6-049a-4649-afbc-fd20986b118a@oss.qualcomm.com>
+Date: Mon, 30 Jun 2025 12:31:16 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250627125131.27606-1-komal.bajaj@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] irqchip/qcom-irq-combiner: Rename driver struct to end in
+ _driver
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+        Agustin Vega-Frias <agustinv@codeaurora.org>,
+        Marc Zyngier <maz@kernel.org>, Thomas Gleixner <tglx@linutronix.de>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Markus Schneider-Pargmann <msp@baylibre.com>
+References: <20250630172333.73614-2-u.kleine-koenig@baylibre.com>
+ <563db91f-3080-4a45-ba0d-04f415ed90d9@oss.qualcomm.com>
+Content-Language: en-US
+From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+In-Reply-To: <563db91f-3080-4a45-ba0d-04f415ed90d9@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=ZKfXmW7b c=1 sm=1 tr=0 ts=6862d7f8 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=IpJZQVW2AAAA:8 a=p1q8K86rv7LwV1BeAAYA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
+ a=IawgGOuG5U0WyFbmm1f5:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjMwMDE1MSBTYWx0ZWRfX3Wh6yhjxqSG8
+ OasuSa1br7Z1cQKdQM64i3Vl/cqtAuFHHIKInXJRXY0Y3QYy0AtKCcnzYhifclCwSXxVwC1wJS8
+ v79zLUQUwiICmwyVzQ4ISAVfGKKJbh+6rQNyUuQFFGs44eOu9EwHPHvZ8AR8NIph2YnYLRPQWoa
+ yCm2cz/sgEgSMG9MN3LFTHgFn4v/7oNXYY550LN3Ynkzps/83G5N6ak8tlvDwigwR+PVBm3bVxo
+ jxbaxXZb8BCOCuzdVEH90g9y+ZMWKyKz5oW/LQK4fX9JdpAJ+jjM8X+GhyBeDOQPEJw+gpQcmXZ
+ 2XO5Cy7Z7m/hKua2RIpSo7tg5xslSwglI68wkKOqJo8TM/VssGZ5ox+2+a664PI+Dfgw/LoGAkQ
+ 1TzCrr+oEWjvTC776cFV2oeLV/NtS7kxiTYi+/pQ4fsWBcCclI1gBTFUusa1cTXnpLjVCtb6
+X-Proofpoint-ORIG-GUID: LoET03qLTg78Cvz5AE1waXOw7PqbMF1j
+X-Proofpoint-GUID: LoET03qLTg78Cvz5AE1waXOw7PqbMF1j
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-30_04,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 mlxscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506300151
 
-Hi Komal,
+On 6/30/2025 11:25 AM, Konrad Dybcio wrote:
+> 
+> 
+> On 30-Jun-25 19:23, Uwe Kleine-König wrote:
+>> The modpost section mismatch checks are more lax for objects that have a
+>> name that ends in "_probe". This is not justified here though, so rename
+>> the driver struct according to the usual naming choice.
+>>
+>> Note that this change indeed results in modpost identifying a section
+>> mismatch in this driver. This is not a false positive and should be
+>> fixed by either converting the driver to use platform_driver_probe() or
+>> by dropping __init from the .probe() callback. This problem was
+>> introduced in commit f20cc9b00c7b ("irqchip/qcom: Add IRQ combiner
+>> driver").
+>>
+>> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+>> ---
+>> Hello,
+>>
+>> I don't know if platform_driver_probe() works here, it might happen that
+>> the driver is probed before the matching device appears. As I don't have
+>> a machine with such a device I won't create a patch fixing the issue,
+>> but if you have questions don't hesitate to ask.
+>>
+>> Please consider this patch as a bug report and better only apply it when
+>> the issue is addressed to not result in build regressions.
+> 
+> +Jeff is probably the last person on Earth that officially has one
 
-kernel test robot noticed the following build errors:
+We are talking about QDF2400 here?
 
-[auto build test ERROR on usb/usb-testing]
-[also build test ERROR on usb/usb-next usb/usb-linus linus/master v6.16-rc4 next-20250630]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+-Jeff
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Komal-Bajaj/usb-misc-qcom_eud-Access-EUD_MODE_MANAGER2-through-secure-calls/20250627-205244
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-testing
-patch link:    https://lore.kernel.org/r/20250627125131.27606-1-komal.bajaj%40oss.qualcomm.com
-patch subject: [PATCH v2] usb: misc: qcom_eud: Access EUD_MODE_MANAGER2 through secure calls
-config: um-randconfig-r131-20250629 (https://download.01.org/0day-ci/archive/20250701/202507010127.xjmnq7A8-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14+deb12u1) 12.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250701/202507010127.xjmnq7A8-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202507010127.xjmnq7A8-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   /usr/bin/ld: drivers/usb/misc/qcom_eud.o: in function `eud_remove':
->> qcom_eud.c:(.text+0x6da): undefined reference to `qcom_scm_io_writel'
-   /usr/bin/ld: drivers/usb/misc/qcom_eud.o: in function `enable_store':
-   qcom_eud.c:(.text+0x7c7): undefined reference to `qcom_scm_io_writel'
->> /usr/bin/ld: qcom_eud.c:(.text+0x848): undefined reference to `qcom_scm_io_writel'
-   collect2: error: ld returned 1 exit status
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
