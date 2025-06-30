@@ -1,300 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-63038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37EBEAED568
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 09:19:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C7AE8AED5FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 09:45:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 48A591723D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 07:19:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 68B69166737
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 07:45:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E8011F237A;
-	Mon, 30 Jun 2025 07:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D162E23496F;
+	Mon, 30 Jun 2025 07:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l+eLlrqN"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="EPkySk/t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90714190072;
-	Mon, 30 Jun 2025 07:19:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751267973; cv=none; b=BUbhL7cfMs083mdGlUZd9MYCpCoI7Pl8tXGtA4nUrvBeaj+GZFYc4/3Ve9cpFvYHl3LXMwfcltX9XM9Sefs2chXAgWh8xH6apq0FS9t97fqLFPiybw2GBQAVFSPUm8Uxe413U9Z4BEu85Bh053Oc144d7AGDLuuQBGN8tTwNTNU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751267973; c=relaxed/simple;
-	bh=ToPQLK8RrAyEB6SvkYVTw/FQSTlaE0A5rAz6vEKN9RQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=BySWRgxT+/vgJxQWVR28mS4ZrTXexP2PatACMq6LmDfIiEPimtblf9KxycEH7gs2ons5GtvkTOQAEd60HWzaT7CWUBdPaGDbCvmB/WiryDYZs65iXA2Ob9QOq2SrC+ggLM2fcxmu/dd0a5SSy/IcgNaHKCwujnTOLFOZs5dakQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l+eLlrqN; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55U6GGHU002504;
-	Mon, 30 Jun 2025 07:19:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BXT9LfuhHHaK3D0qfEOCg3V3HkEMCSsGXlJJRBerDYw=; b=l+eLlrqNKIuhiNyT
-	AVddxClx1G1EpwHPddm8HYW3Rxou9ZjUYR6ErGUQMzng1lHkcrsTqqE7atldAgpB
-	dlH0WB2WzZUJxcihwCebX9zwK249q7MfN6Y738g+7v1DMuXULGdBUyMUhwvL1+T3
-	3lws9UDNfprM+6vyxTA9yimMy4GIAdbbOuIAjzHt8oF79yunJ8iUZpyVp97RV9FS
-	8VHAUUosdoXs/QdkDgORNQDC8kElinVgNatOT6IkhL07QfnGIgGzSDs6Wylj7zHQ
-	dFMqSG+ByGamK1GUfCBiK6sb56yJJ2/tDIxbGc2JNdDhuTPbM/Q+t9VlpTvYd1BQ
-	MahcpQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47kn5j8549-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Jun 2025 07:19:21 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55U7JKCI032309
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Jun 2025 07:19:20 GMT
-Received: from [10.253.38.22] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 30 Jun
- 2025 00:19:14 -0700
-Message-ID: <8ccd3731-8dbc-4972-a79a-ba78e90ec4a8@quicinc.com>
-Date: Mon, 30 Jun 2025 15:19:12 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255971A3A80;
+	Mon, 30 Jun 2025 07:45:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751269527; cv=pass; b=oU31Hwvoqzdjow6NuVIA6HPeTy6h03jxM3LKUgungDQoKT4gbuPGTf1Fhxj7yAsX7xD+EZdvE8JNATdmcsjuvoPtrcqrpATc2yYyu84cNdPce9AH6hp+tUpoo4xZQuPufuLbxAbdYtdPnJS4x0FyrLcWrzfDaxirL7NfkmaSgIA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751269527; c=relaxed/simple;
+	bh=mKf/7lKyVj1aVkhRIZvQhVcxmA9zMcEzKu3bFymG0Mg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WcAPdIZVDNVPiZ5vXXBA9ADOifCytQuQRgFHn1BmB8LH4p6SXq3xi+f/uxc5J3zp8UIsYWEhhB4B78mPJnrlYRRg4sgLPFKXo87GF+4IOkMXmImRjsKcm+Ae2tMEGg2mMvXk08tkTECTOgDT+wn+Isep7rkWOQo98NSycrFQvIw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=EPkySk/t; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1751269459; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=YPXl96toAc9A81uHYDgb3wzuBuBul39m6GIxCdtHx883TeQtZDvgj/BK4H2XKyL7snXDS+LKXfY7qOyuu/jCIOyWPTyWrPpe+h8ywrtlvGvZBJLTZzBgrzf701ejS7DhtDHKxSfXHnrNKltEf2bvssIp3xWFoL7jSKr8R7t7NVs=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1751269459; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=0W903R8oLS9A2Sxqq1i/Td3ToFCQaML7iQd92xG1QFo=; 
+	b=NSeiL5qXGb1LbteLWZi78rqdeCQI0hr4i7cB4u+2qGPoniIjCkvpOM6mw1Rq2bALtzXX4afBFvqSv4UItrbLDEDI8O3wRHdkbfnkp1+q+4Lby8KE7UgmNkfM5q1Ker0USBWYRnCkH/wM6erCIWBxRywUDpU+IK5yMOnIeT85bnk=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
+	dmarc=pass header.from=<usama.anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1751269459;
+	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Transfer-Encoding:Reply-To;
+	bh=0W903R8oLS9A2Sxqq1i/Td3ToFCQaML7iQd92xG1QFo=;
+	b=EPkySk/t1sw5EqicXIkGaYPIbJB6ogRJvd3A5FHYzs/kpFfCnAZBcndTDx1tUpXN
+	2wrbcQDYR4mgCU9+L+VATv91rCSS/94LVP+ZIR15ea4ylCeZjG2TofjaP91yigaseTU
+	WeQYxaUSdGwwYVhldrR7xEO1nb5xmUYDHds7FL5A=
+Received: by mx.zohomail.com with SMTPS id 1751269457487321.0194901089892;
+	Mon, 30 Jun 2025 00:44:17 -0700 (PDT)
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+To: Manivannan Sadhasivam <mani@kernel.org>,
+	Jeff Johnson <jjohnson@kernel.org>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Youssef Samir <quic_yabdulra@quicinc.com>,
+	Matthew Leung <quic_mattleun@quicinc.com>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Yan Zhen <yanzhen@vivo.com>,
+	Alexander Wilhelm <alexander.wilhelm@westermo.com>,
+	Alex Elder <elder@kernel.org>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Siddartha Mohanadoss <smohanad@codeaurora.org>,
+	Sujeev Dias <sdias@codeaurora.org>,
+	Julia Lawall <julia.lawall@lip6.fr>,
+	John Crispin <john@phrozen.org>,
+	Muna Sinada <quic_msinada@quicinc.com>,
+	Venkateswara Naralasetty <quic_vnaralas@quicinc.com>,
+	Maharaja Kennadyrajan <quic_mkenna@quicinc.com>,
+	mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
+	ath11k@lists.infradead.org
+Cc: kernel@collabora.com
+Subject: [PATCH 0/3] bus: mhi: keep dma buffers through suspend/hibernation cycles
+Date: Mon, 30 Jun 2025 12:43:27 +0500
+Message-Id: <20250630074330.253867-1-usama.anjum@collabora.com>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] PCI: qcom: Add equalization settings for 8.0 GT/s
-To: Manivannan Sadhasivam <mani@kernel.org>
-CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <jingoohan1@gmail.com>,
-        <lpieralisi@kernel.org>, <kwilczynski@kernel.org>,
-        <bhelgaas@google.com>, <johan+linaro@kernel.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <neil.armstrong@linaro.org>,
-        <abel.vesa@linaro.org>, <kw@linux.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <qiang.yu@oss.qualcomm.com>,
-        <quic_krichai@quicinc.com>, <quic_vbadigan@quicinc.com>
-References: <20250625085801.526669-1-quic_ziyuzhan@quicinc.com>
- <20250625085801.526669-2-quic_ziyuzhan@quicinc.com>
- <uakd5br4e5l24xmb6rxqs2drlt3fcmemfjilxo7ozph6vysjzs@ag3wjtic3qfm>
-From: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-In-Reply-To: <uakd5br4e5l24xmb6rxqs2drlt3fcmemfjilxo7ozph6vysjzs@ag3wjtic3qfm>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=KtJN2XWN c=1 sm=1 tr=0 ts=68623a79 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=FO1-HDWkAmQojB1LmXIA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: bBhI4LbnApoQljt5ywTwSiH7_TmMtlTR
-X-Proofpoint-GUID: bBhI4LbnApoQljt5ywTwSiH7_TmMtlTR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjMwMDA1OSBTYWx0ZWRfX1AWcsk9kD/kC
- 1knmlO6pUltJ/qUCIujK1vv+vz4XmQa1gKTT1dp23N6eupwXKD9ESBtS26dS97uaxA0SPy+zHQa
- hPQv8e7VnMFxKvtqWpdtuLjhWamYQ13d3gKlLY2X1vIWAINF8DS3bn78ihslS2Bq+FJ6Aq1Ry9H
- wYZcenxTLkH8aJKmAQi7RxvPaRwf2N9uWbJo59rHJe4xxqJyQm71N38ggESkUDqeTjkM33QV0QH
- SgqRjqKrl80I3/wLTwJHGVZWrhME/8tV02/negbCLh2W0fL2/ChkJwuASFnmNi8/VCJqWNw0QVr
- cGiHX2UlZ2l3TNtLIeuIeAvCDZRt/t4ybNLGUH+WBHYlm04naKncjJ2N8hsEKxZEPFvdwFtr8eN
- /VLGllymQzoFCul0hVlR0Syb7EaC6l+vqgHqELNXvZk8bZMY9lXUQQ2pqxupTFQC9Ox/4Du0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-30_01,2025-06-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
- mlxscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
- clxscore=1015 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506300059
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
+When there is memory pressure during resume and no DMA memory is
+available, the ath11k driver fails to resume. The driver currently
+frees its DMA memory during suspend or hibernate, and attempts to
+re-allocate it during resume. However, if the DMA memory has been
+consumed by other software in the meantime, these allocations can
+fail, leading to critical failures in the WiFi driver. It has been
+reported [1].
 
-On 6/25/2025 11:58 PM, Manivannan Sadhasivam wrote:
-> On Wed, Jun 25, 2025 at 04:57:59PM +0800, Ziyue Zhang wrote:
->> Add lane equalization setting for 8.0 GT/s to enhance link stability and
->> aviod AER Correctable Errors reported on some platforms (eg. SA8775P).
->>
->> 8.0 GT/s and 16.0 GT/s require the same equalization setting. This
->> setting is programmed into a group of shadow registers, which can be
->> switched to configure equalization for different speeds by writing 00b,
->> 01b to `RATE_SHADOW_SEL`.
->>
->> Hence program equalization registers in a loop using link speed as index,
->> so that equalization setting can be programmed for both 8.0 GT/s and
->> 16.0 GT/s.
->>
->> Co-developed-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
->> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
->> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
->> ---
->>   drivers/pci/controller/dwc/pcie-designware.h  |  1 -
->>   drivers/pci/controller/dwc/pcie-qcom-common.c | 55 +++++++++++--------
->>   drivers/pci/controller/dwc/pcie-qcom-common.h |  2 +-
->>   drivers/pci/controller/dwc/pcie-qcom-ep.c     |  6 +-
->>   drivers/pci/controller/dwc/pcie-qcom.c        |  6 +-
->>   5 files changed, 38 insertions(+), 32 deletions(-)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
->> index ce9e18554e42..388306991467 100644
->> --- a/drivers/pci/controller/dwc/pcie-designware.h
->> +++ b/drivers/pci/controller/dwc/pcie-designware.h
->> @@ -127,7 +127,6 @@
->>   #define GEN3_RELATED_OFF_GEN3_EQ_DISABLE	BIT(16)
->>   #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT	24
->>   #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK	GENMASK(25, 24)
->> -#define GEN3_RELATED_OFF_RATE_SHADOW_SEL_16_0GT	0x1
->>   
->>   #define GEN3_EQ_CONTROL_OFF			0x8A8
->>   #define GEN3_EQ_CONTROL_OFF_FB_MODE		GENMASK(3, 0)
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
->> index 3aad19b56da8..ed466496f077 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom-common.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
->> @@ -8,9 +8,11 @@
->>   #include "pcie-designware.h"
->>   #include "pcie-qcom-common.h"
->>   
->> -void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci)
->> +void qcom_pcie_common_set_equalization(struct dw_pcie *pci)
->>   {
->>   	u32 reg;
->> +	u16 speed, max_speed = PCIE_SPEED_16_0GT;
->> +	struct device *dev = pci->dev;
->>   
->>   	/*
->>   	 * GEN3_RELATED_OFF register is repurposed to apply equalization
->> @@ -19,32 +21,37 @@ void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci)
->>   	 * determines the data rate for which these equalization settings are
->>   	 * applied.
->>   	 */
->> -	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
->> -	reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
->> -	reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
->> -	reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK,
->> -			  GEN3_RELATED_OFF_RATE_SHADOW_SEL_16_0GT);
->> -	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
->> +	if (pcie_link_speed[pci->max_link_speed] < PCIE_SPEED_32_0GT)
->> +		max_speed = pcie_link_speed[pci->max_link_speed];
-> So the logic here is that you want to limit the max_speed to < 32 GT/s because
-> you are not sure if 32 GT/s or more would require the same settings?
->
-> If so, why can't you just simply bail out early if the link speed > 16 GT/s and
-> just use pci->max_link_speed directly? Right now, 32 GT/s or more would be
-> skipped implicitly because you have initialized max_speed to PCIE_SPEED_16_0GT.
->
-> - Mani
+Although I have recently fixed several instances [2] [3] to ensure
+DMA memory is not freed once allocated, we continue to receive
+reports of new failures.
 
-Hi Mani
+In this series, 3 more such cases are being fixed. There are still
+some cases which I'm trying to fix. They can be discussed separately.
 
-I'll update the code according to your feedback in my next submission.
+[1] https://lore.kernel.org/all/ead32f5b-730a-4b81-b38f-93d822f990c6@collabora.com
+[2] https://lore.kernel.org/all/20250428080242.466901-1-usama.anjum@collabora.com
+[3] https://lore.kernel.org/all/20250516184952.878726-1-usama.anjum@collabora.com
 
-BRs
+Muhammad Usama Anjum (3):
+  bus: mhi: host: keep bhi buffer through suspend cycle
+  bus: mhi: don't deinitialize and re-initialize again
+  bus: mhi: keep device context through suspend cycles
 
-Ziyue
+ drivers/bus/mhi/host/boot.c            | 19 ++++++++++---------
+ drivers/bus/mhi/host/init.c            | 16 +++++++++++-----
+ drivers/bus/mhi/host/internal.h        |  2 ++
+ drivers/net/wireless/ath/ath11k/core.c |  5 -----
+ include/linux/mhi.h                    |  1 +
+ 5 files changed, 24 insertions(+), 19 deletions(-)
 
->>   
->> -	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
->> -	reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
->> -		GEN3_EQ_FMDC_N_EVALS |
->> -		GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
->> -		GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
->> -	reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
->> -		FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
->> -		FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
->> -		FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
->> -	dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
->> +	for (speed = PCIE_SPEED_8_0GT; speed <= max_speed; ++speed) {
->> +		reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
->> +		reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
->> +		reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
->> +		reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK,
->> +			  speed - PCIE_SPEED_8_0GT);
->> +		dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
->>   
->> -	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
->> -	reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
->> -		GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
->> -		GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
->> -		GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
->> -	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
->> +		reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
->> +		reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
->> +			GEN3_EQ_FMDC_N_EVALS |
->> +			GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
->> +			GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
->> +		reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
->> +			FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
->> +			FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
->> +			FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
->> +		dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
->> +
->> +		reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
->> +		reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
->> +			GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
->> +			GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
->> +			GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
->> +		dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
->> +	}
->>   }
->> -EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_equalization);
->> +EXPORT_SYMBOL_GPL(qcom_pcie_common_set_equalization);
->>   
->>   void qcom_pcie_common_set_16gt_lane_margining(struct dw_pcie *pci)
->>   {
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.h b/drivers/pci/controller/dwc/pcie-qcom-common.h
->> index 7d88d29e4766..7f5ca2fd9a72 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom-common.h
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.h
->> @@ -8,7 +8,7 @@
->>   
->>   struct dw_pcie;
->>   
->> -void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci);
->> +void qcom_pcie_common_set_equalization(struct dw_pcie *pci);
->>   void qcom_pcie_common_set_16gt_lane_margining(struct dw_pcie *pci);
->>   
->>   #endif
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> index bf7c6ac0f3e3..aaf060bf39d4 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> @@ -511,10 +511,10 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
->>   		goto err_disable_resources;
->>   	}
->>   
->> -	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT) {
->> -		qcom_pcie_common_set_16gt_equalization(pci);
->> +	qcom_pcie_common_set_equalization(pci);
->> +
->> +	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT)
->>   		qcom_pcie_common_set_16gt_lane_margining(pci);
->> -	}
->>   
->>   	/*
->>   	 * The physical address of the MMIO region which is exposed as the BAR
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
->> index c789e3f85655..0fcb17ffd2e9 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> @@ -298,10 +298,10 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
->>   {
->>   	struct qcom_pcie *pcie = to_qcom_pcie(pci);
->>   
->> -	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT) {
->> -		qcom_pcie_common_set_16gt_equalization(pci);
->> +	qcom_pcie_common_set_equalization(pci);
->> +
->> +	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT)
->>   		qcom_pcie_common_set_16gt_lane_margining(pci);
->> -	}
->>   
->>   	/* Enable Link Training state machine */
->>   	if (pcie->cfg->ops->ltssm_enable)
->> -- 
->> 2.34.1
->>
+-- 
+2.39.5
+
 
