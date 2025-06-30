@@ -1,171 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-63099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DB50AEE52D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 19:02:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D9506AEE5A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 19:23:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F3E7189DBE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 17:03:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C31B81881BE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 17:24:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 323CC292B34;
-	Mon, 30 Jun 2025 17:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63B0829898C;
+	Mon, 30 Jun 2025 17:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gJuUZCKu"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="OekHvoln"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0955028D831
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 17:02:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1EC286D6F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 17:23:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751302966; cv=none; b=F0WajHua7p27BRe31i8yW1n1Ob7FUKCguwWl1LJVxCZDQtMkmn2iN3kB13NuAmLdSocbxwJkmlSGBTpAryo+h1DPzKyfcNqJEgW/cTvh1cyowgojibayMn0hXMSO1dJO8NsTP6xCJzu8EQ8403vRiPa5mSW8w/o15THkqYTFskQ=
+	t=1751304228; cv=none; b=bW9JK2wtfHQk/hEEbKgF/oUFZa392iqqiCBHuEEvC9h6P3vuBZYtpjJ+qsbB1MVJqXjr0QXszIQiliwaG27mGJ8P/nqKO0+8wF5lL19WSjjm4l/sRa42FdDzWih8lruGPMTqcVg3+Bhs9Tcel18r0klRFKpK16Mj6bhPjObDmoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751302966; c=relaxed/simple;
-	bh=CMyeBEGlwNr4oxYgGYdega85FHznmb5nkXVY1F10Aq4=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=Fp2/W+YENXg//ReqSRVAdvO7Q/QBIxeuf5OT9cpJGFIeZwwlvK1LcD+Ll6gq3SuK58ShJRdnLea6cPwg1TJjsMhiImR56Gw8PqOi4OuZbCE92w1KgiA5GcUPBynTL5gM+p2nOcGp9AIJPLLjLBi2k8+QNuYWIL4oEGs7zstz/jY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gJuUZCKu; arc=none smtp.client-ip=209.85.210.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-736f9e352cbso1354149a34.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 10:02:42 -0700 (PDT)
+	s=arc-20240116; t=1751304228; c=relaxed/simple;
+	bh=+iLdMF3LWPBEWCi1/m9p2rx5jzc1sOFaLqoYEtOs55c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Xo676Wfm4uIPJrC/wVX9PlFHYiZJKYbEdw4FkzkAY9NXLYyYsimxmIyQG8PUVEugbrkzHAlvjEp69h8ZWY5PEoR/5V1iYUxm4qTVOMCA/6yCvrvj2pFuz84BlXrdabOD8yTJNW+TojExChM7SV7ZEonvjE+AvkBcHaGcH4LIPhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=OekHvoln; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ae0b6532345so1119470066b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 10:23:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751302962; x=1751907762; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=s80AY0V8zsRFOqrfnCdCBKawBPLCK4PdIEA9ulbHOXw=;
-        b=gJuUZCKuNRZ2if+XIbC4rfPondOj+yCxFIVhCeBaCYaJMRSkxAFlFAopac5905Obin
-         snPgQoRLHI/YYojWVai88m80NehM0WfxIljeETGg8z7aNVmMr9lRmIpcYufjMXser1Hk
-         owtQjsCRrrJpYHbi+xuKDt/fTHJeeQjXRCxDlv7LiaGeE95Film/fAczFQ+QvN9N81SY
-         tG6etcacMGxntv8KX3qXXKiVwdAP5tv79kh/6yiBNBZ0HajBizZz7jg+xxi3XB+Wmnhj
-         ZnOlkA/4aOf0/bFrAgAQb5Xn3l4IE69vqQ6N3ELkvudz4D+ABh7uYUWx4dSqe7Uq8WbZ
-         2mvA==
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1751304224; x=1751909024; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=DSVonj7bfDqPq3Y3uOWrAoecetVr832ilrAPmyWsTzE=;
+        b=OekHvolnPIXBMcNjkwE401yAYYanM7nU1buv/XlHe+HRitehxMhkUiSB3GvOK5eYhh
+         lppA18pgtRBUSr8hjhPJDunztvZqB7lUdu6UyMYwisK3d5WcFndOBf1iGoHZUsSwBkEx
+         yJHezUJPXdHSOZ7EBXUzk20tmOry4vru79qTWswD0fP/T9IQx+VbrEJkMwPv+4OFfG92
+         rRjgfRlpdtpZdQ4fk8hiCEjdOruq26medHSvnyKVOV+xdYzWmwDOdeQMLIWKh1xApHLc
+         /sR8tun5mIB433b5hX3svtXR1EUs0OkndCriMR12s4tBBHr6wQQ+LOSj1ClywwG5gtDO
+         4eqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751302962; x=1751907762;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1751304224; x=1751909024;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=s80AY0V8zsRFOqrfnCdCBKawBPLCK4PdIEA9ulbHOXw=;
-        b=bWkdF4iKMkEiIMyhKYC/7aFJc1CBhvb/vCJbC3qb0eXvDdigeitzFVNDPf8c0zJ6EN
-         x90nwAZ7CVm316xhJZ5HTbZtH4U5qv5+NjwU//UkLn+UhFE/KJ3fhXWviSdJ0oVqjtsf
-         zOUnoz3DxA7xwK19SR8Y4JK0zHX5M7WeH+2Cf2v3qOnvvRrnX4igSff14hw2OM7WLck5
-         wueanLTTVJH8mntm4Z0o+0x6QrfzidmFlHKYKWv1z6gXlaNaABVN7XpO3gwK4K5D9Yma
-         jN9sUC/aG1KA3A/f+zSnGNTumZK9l2G6+nGPIdpurJcmRdGhZydwqql9HNQisleSuIF5
-         lQZg==
-X-Forwarded-Encrypted: i=1; AJvYcCXcvW/KfIQ8fri4uvQlCrnXFD2srxK1MtWi37eW5YTHAkAKx1L2vANo955j3wogoQNkITa35sTFx00puRnf@vger.kernel.org
-X-Gm-Message-State: AOJu0YwjclVCiZhXbuDSpWUHJCV19sgBollTbOy+RL9gXJX0q6l/yzQB
-	BW0r+3sUNrWDg2I8dSrWQxxDj9o3WEdBE9Z+NMlY1BwY7ZsX2suXlf6efWA1/IlKP88=
-X-Gm-Gg: ASbGnctYRSHSXEbndi/Vx27vAxTVScc21nsMCoXzXAZebWrTd/IrYGF1a1S1tnKBSo0
-	q8pWyjra5/Tist8YRVo5yORin6fUkzjf7YQI6v3rVaj/yQgpJ6bFF7CbtWm7SdlAJmnigGMqMuS
-	6EeELI8ksHvEStWNUI8qGmtj2XQpKrHWBgwXMbXjfI+xF1umdHl4st9jy9H0SpqIxkgLn9gRTC+
-	NOr58iGtfl8uLsW3AbAN5lVIFdywL9rMbpydrzmDaNQ1ur28EOF6KnvATH/LyAShr5yL6553GBW
-	V98dPkC2PTOjpjLLxV/3u57YvVgxoL6oBZBKSa8qU2RUjHiTqT9bjmU7Qfjd1l4RLDxj
-X-Google-Smtp-Source: AGHT+IErtMNluGJqLpQ6IvXLyXXU3xsWHi+RjVcEzBvYxTHuw8Xp0gigRtrByUhZ29F0th2SUN1x/Q==
-X-Received: by 2002:a05:6830:3494:b0:73b:267c:497b with SMTP id 46e09a7af769-73b267c4bf2mr3846280a34.16.1751302961369;
-        Mon, 30 Jun 2025 10:02:41 -0700 (PDT)
-Received: from localhost ([2603:8080:b800:f700:fb67:363d:328:e253])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-73afb122bb7sm1735479a34.60.2025.06.30.10.02.40
+        bh=DSVonj7bfDqPq3Y3uOWrAoecetVr832ilrAPmyWsTzE=;
+        b=akxPrmg2lVVs1tsKSXvW2uI6h9DeeRzD2qb27Jt0WzicX0kM5r0xnGbOqUSGq/f+xs
+         T5dV6/F7RjPWA0TfyoBnotX42vGDtkM4tyjKQHxiLGlH2tJaGbVUYdRlEb88gcKi2qnh
+         pXjXC3a+ek5NG1b6NEsZj94wvZdoLqu7oZymxVal4hV9EIa/Hbxafti/6u3ABMM4kfMq
+         a+Zf6NF4hlAPeq5lnwL11jxsfPSiBVIlyRfxQzqSbHMN2jrdapnfAjxlpvfBHUCIOeeB
+         Q96+qvGEAKZtAcnKcrLBjxg0E+7/iW6AlxXXHWGOeHmzPC25CzfiG0jdidZmldRyt6rf
+         zvIg==
+X-Gm-Message-State: AOJu0YxfzJvKbowGFatVEbSy4sK9sExfW9T8h/NlQIgud5skHWJIWIOy
+	eUiY0LX0xNTfzvnFdfNq43IQtM9rvquRNSRWzGIX1xN6fillSfKLx04qZqCxl26tbjc=
+X-Gm-Gg: ASbGncv6a3nIisV8mdwirsIvXtQC1XIHw5teIRr/uN24cW1yY7g/M7S+ryiDrm+JZ5C
+	CysVfgRsAecSw2Hywp8FI5gIwPwYEjHfxZoZ/s3FOXPkMfNhQo4xw0wqndNi+c+Xz9LMimNT4pz
+	rDtQ2dPN9V7V9RRWxU3RS3FrihbH/CRx8nSs6fhK0jZqzOesF9ZAIdsXief+svOso5eZDZ7H7QN
+	3mr6eLNSNaNdUuSUHEH7dl1mjC94+oDPinm6H2D/32BNxyzSaecRejInrWa0WxkUAMsIYESX30a
+	W5w+tkR+dhw7rBv8bYcYBadN43BcXSX1AUVVz3FBzTOLjTd6XE7JgKTOCyHh4QvzsRdrihSBLs+
+	OmpjMNBI2K2EugLbRMEEgPHJdZ9pN
+X-Google-Smtp-Source: AGHT+IGk3tSIK0h8RzI6ilmKDWkC54Zqo7CgD6HQFghtS+TAD9sYMu+ROZZeAcfJdcRUTYDyOXsQLg==
+X-Received: by 2002:a17:907:9452:b0:ae3:7070:1fc5 with SMTP id a640c23a62f3a-ae3aa2ef4f1mr41979766b.20.1751304223818;
+        Mon, 30 Jun 2025 10:23:43 -0700 (PDT)
+Received: from localhost (p200300f65f06ab0400000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f06:ab04::1b9])
+        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-ae353c015b8sm707074266b.78.2025.06.30.10.23.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 10:02:40 -0700 (PDT)
-Date: Mon, 30 Jun 2025 20:02:39 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: oe-kbuild@lists.linux.dev,
-	Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: lkp@intel.com, oe-kbuild-all@lists.linux.dev, quic_satyap@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	kernel@oss.qualcomm.com,
-	Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
-Subject: Re: [PATCH v2] soc: qcom: llcc: Add per slice counter and common
- llcc slice descriptor
-Message-ID: <b8ce895f-0c7a-4b69-a2ce-27e41af96fb9@suswa.mountain>
+        Mon, 30 Jun 2025 10:23:43 -0700 (PDT)
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Agustin Vega-Frias <agustinv@codeaurora.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Markus Schneider-Pargmann <msp@baylibre.com>
+Subject: [PATCH] irqchip/qcom-irq-combiner: Rename driver struct to end in _driver
+Date: Mon, 30 Jun 2025 19:23:32 +0200
+Message-ID: <20250630172333.73614-2-u.kleine-koenig@baylibre.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250626-llcc_refcount-v2-1-d05ec8169734@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1929; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=+iLdMF3LWPBEWCi1/m9p2rx5jzc1sOFaLqoYEtOs55c=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBoYsgVMRE1+8AhqJ8vM8cILdAL+8lZlZ+NLJtbR KxuXudrQ6mJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCaGLIFQAKCRCPgPtYfRL+ TuRyB/9QjdYDw/9FOLmshYPLnvs9jipUCj6EwLgewoFXBmsXypCVEOuZVozS0LFYihiEfbGcwvW h6p3TIJNDEQymk1lA21HzrqEJ4b/8pfQcR83ZDe5KCvUvRpTo2y7Rzf78YRO47ruoDDetY3dC3v MsU09jXjcSq6GXDjJ9+uUm/2T7h1oX+UL9hfDoJSKX0tft6goz4n3g9AFB7ITCkZdYeZtlSQj+C 712bv6POg6JJRvN+rYAoiWdlXVa44uaxyW97JDoOX2XFG4QP1wtrkh6xKiZxNrIKfSd/O1WvJWe pAVP4nt0lGuNkrzgR+8k1pJMdPWDYx8PsIVtF392vsu7/59j
+X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
 
-Hi Unnathi,
+The modpost section mismatch checks are more lax for objects that have a
+name that ends in "_probe". This is not justified here though, so rename
+the driver struct according to the usual naming choice.
 
-kernel test robot noticed the following build warnings:
+Note that this change indeed results in modpost identifying a section
+mismatch in this driver. This is not a false positive and should be
+fixed by either converting the driver to use platform_driver_probe() or
+by dropping __init from the .probe() callback. This problem was
+introduced in commit f20cc9b00c7b ("irqchip/qcom: Add IRQ combiner
+driver").
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Unnathi-Chalicheemala/soc-qcom-llcc-Add-per-slice-counter-and-common-llcc-slice-descriptor/20250627-060459
-base:   f02769e7f272d6f42b9767f066c5a99afd2338f3
-patch link:    https://lore.kernel.org/r/20250626-llcc_refcount-v2-1-d05ec8169734%40oss.qualcomm.com
-patch subject: [PATCH v2] soc: qcom: llcc: Add per slice counter and common llcc slice descriptor
-config: um-randconfig-r071-20250630 (https://download.01.org/0day-ci/archive/20250630/202506301401.m1NkXwJf-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14+deb12u1) 12.2.0
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+---
+Hello,
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-| Closes: https://lore.kernel.org/r/202506301401.m1NkXwJf-lkp@intel.com/
+I don't know if platform_driver_probe() works here, it might happen that
+the driver is probed before the matching device appears. As I don't have
+a machine with such a device I won't create a patch fixing the issue,
+but if you have questions don't hesitate to ask.
 
-smatch warnings:
-drivers/soc/qcom/llcc-qcom.c:3859 llcc_slice_getd() warn: passing zero to 'ERR_CAST'
+Please consider this patch as a bug report and better only apply it when
+the issue is addressed to not result in build regressions.
 
-vim +/ERR_CAST +3859 drivers/soc/qcom/llcc-qcom.c
+Best regards
+Uwe
 
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3853  struct llcc_slice_desc *llcc_slice_getd(u32 uid)
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3854  {
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3855  	const struct llcc_slice_config *cfg;
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3856  	u32 sz, count;
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3857  
-bc13c2450f770e drivers/soc/qcom/llcc-qcom.c  Unnathi Chalicheemala 2025-06-26  3858  	if (IS_ERR(drv_data) || !drv_data)
+ drivers/irqchip/qcom-irq-combiner.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Why are we adding a NULL check here?  So far as I can see, this
-can only be NULL in probe() between the failed allocation and
-the error handling.  Can actually reach this function during that
-stage of the probe()?
+diff --git a/drivers/irqchip/qcom-irq-combiner.c b/drivers/irqchip/qcom-irq-combiner.c
+index 18e696dc7f4d..e92baf20c7ff 100644
+--- a/drivers/irqchip/qcom-irq-combiner.c
++++ b/drivers/irqchip/qcom-irq-combiner.c
+@@ -266,11 +266,11 @@ static const struct acpi_device_id qcom_irq_combiner_ids[] = {
+ 	{ }
+ };
+ 
+-static struct platform_driver qcom_irq_combiner_probe = {
++static struct platform_driver qcom_irq_combiner_driver = {
+ 	.driver = {
+ 		.name = "qcom-irq-combiner",
+ 		.acpi_match_table = ACPI_PTR(qcom_irq_combiner_ids),
+ 	},
+ 	.probe = combiner_probe,
+ };
+-builtin_platform_driver(qcom_irq_combiner_probe);
++builtin_platform_driver(qcom_irq_combiner_driver);
 
-Also it feels like it's not done consistenly at all.  Why does
-llcc_update_act_ctrl() not check for NULL?
-
-Right now we're returning:
-1) -EPROBE_DEFER if probe hasn't been called
-2) NULL if it hasn't succeeded and we hit a (very narrow) race window
-3) or -EPROBE_DEFER if probe() has failed.
-
-If we really hit a NULL here then we should probably return
--EPROBE_DEFER and not ERR_CAST(NULL).  It needs to be documented.
-Btw, I've written a blog about how NULL and error pointers are
-supposed to work when you use a mix or error pointers and NULL.
-
-https://staticthinking.wordpress.com/2022/08/01/mixing-error-pointers-and-null/
-
-regards,
-dan carpenter
-
-72d1cd033154f5 drivers/soc/qcom/llcc-slice.c Jordan Crouse         2018-12-11 @3859  		return ERR_CAST(drv_data);
-72d1cd033154f5 drivers/soc/qcom/llcc-slice.c Jordan Crouse         2018-12-11  3860  
-bc13c2450f770e drivers/soc/qcom/llcc-qcom.c  Unnathi Chalicheemala 2025-06-26  3861  	if (IS_ERR_OR_NULL(drv_data->desc) || !drv_data->cfg)
-bc13c2450f770e drivers/soc/qcom/llcc-qcom.c  Unnathi Chalicheemala 2025-06-26  3862  		return ERR_PTR(-ENODEV);
-bc13c2450f770e drivers/soc/qcom/llcc-qcom.c  Unnathi Chalicheemala 2025-06-26  3863  
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3864  	cfg = drv_data->cfg;
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3865  	sz = drv_data->cfg_size;
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3866  
-bc13c2450f770e drivers/soc/qcom/llcc-qcom.c  Unnathi Chalicheemala 2025-06-26  3867  	for (count = 0; count < sz; count++, cfg++)
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3868  		if (cfg->usecase_id == uid)
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3869  			break;
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3870  
-bc13c2450f770e drivers/soc/qcom/llcc-qcom.c  Unnathi Chalicheemala 2025-06-26  3871  	if (count == sz)
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3872  		return ERR_PTR(-ENODEV);
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3873  
-bc13c2450f770e drivers/soc/qcom/llcc-qcom.c  Unnathi Chalicheemala 2025-06-26  3874  	return &drv_data->desc[count];
-a3134fb09e0bc5 drivers/soc/qcom/llcc-slice.c Rishabh Bhatnagar     2018-05-23  3875  }
-
+base-commit: 1343433ed38923a21425c602e92120a1f1db5f7a
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.49.0
 
 
