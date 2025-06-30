@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-63047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A5D3AED6F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 10:18:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F20C7AED6FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 10:21:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9BECE7A749C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 08:17:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D8F9F1897B4D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 08:21:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1DBD239E78;
-	Mon, 30 Jun 2025 08:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2B48221286;
+	Mon, 30 Jun 2025 08:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S/8jL3wD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J1wbi9pO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1BF23372C;
-	Mon, 30 Jun 2025 08:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A210F17C220;
+	Mon, 30 Jun 2025 08:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751271504; cv=none; b=pavmEmlcv7Ny4kMXBRrMxjwW+VEFyFwmDli15RXue0a7lnGXr3FuHNnaT55cakXIwA2bF0ZLvJ+4HGvoD81xPsi2ZmsoHje09JemKbNKQiYt4G1K2s6DdI0nVBCjQSCjDFXRCewI7bzGrCedzJJYFjevRYTavpJsn+eI8TdassU=
+	t=1751271683; cv=none; b=flF9Fhk6qGGJedAKwr0Me6pyfZDixbbDaEvwD1xSW/+4YmkB14ZJVrUtlUgYg5KNseyg+Bc/0VCwzWGRdAIrwXWMb7rb4c5ew7/gqKEFvXorgPUkhBclQNhqDokaf4kd307mwJuTIA6btwdJzjGn4U61cUMhrFDo4iHQJbeQtA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751271504; c=relaxed/simple;
-	bh=j7ltbIfwbHD2RuvgWN9X+OZ+WyXQcCJZJc5uSe3nBho=;
+	s=arc-20240116; t=1751271683; c=relaxed/simple;
+	bh=A5KG76MjVqQz4FQ5pKlatgGt40T2Lao+QWmOmHaiFAQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AWJOeeme8yrrtg50FuWvHiigRtSL/jxxjC48o4SGxjVHAvnuIJOZ+0ERUmw0OurhkXmVmFjqRc7KNE0pfbwKy1+MC92v/kzX0jQJ6U9dMyxfEF6uUu4egZzU6/9u10UHWagRklB61LTSoGuYe/FPRohBL1lhoPQ2hXY5DRsqDPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S/8jL3wD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD66C4CEE3;
-	Mon, 30 Jun 2025 08:18:17 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=FggsAYSpamCCa8YlyiJV3EWa1c73RDiyoSwVQYYmWfvNQQgePMUI/famcYg7wys4A5sTxzDnN52EMFS78WMEK/oOTowY/kmEjWpfK99o2r9pwoQlYYDoBi3nVRDuGe+bCgTs5zmUje/duIwsP1QDu+HWtbCx+pZN0hA+qlcw2ZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J1wbi9pO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADD8C4CEE3;
+	Mon, 30 Jun 2025 08:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751271504;
-	bh=j7ltbIfwbHD2RuvgWN9X+OZ+WyXQcCJZJc5uSe3nBho=;
+	s=k20201202; t=1751271683;
+	bh=A5KG76MjVqQz4FQ5pKlatgGt40T2Lao+QWmOmHaiFAQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=S/8jL3wDYJYfVsp33OVdCFo9wk1xmOrpMG100qYWGSu2b6IAabTOVSwrdKavhghzH
-	 S7ul9K4UpAy8NRStYelyjsisJaLcSNEK2UHE91bcFXaWESyaAHYv65DyMyL1zUDeDJ
-	 1FGtHUx4OtdzODQA7DxnpEA9As+rX+Dsy6O34gn7Z6FH/Vtb9XMpnKLQdNmOP4kxsB
-	 5kvhIvhtNnP8gC2ioRmY1lBsEmgbSySwbbZTX87QKJkkBhLHPukS9WswFINUJzP6Qa
-	 p3SUV6M2qIdcuviGsHXSGVxWe6YPys0xcacQ4ognuNrLEmB74txi+kLqXUfwrowj7M
-	 FfBirpar/LdQw==
-Message-ID: <0ece18f0-2160-4cb3-a4a1-d566179f908f@kernel.org>
-Date: Mon, 30 Jun 2025 10:18:15 +0200
+	b=J1wbi9pO9A+MYQ9kNQkKAxOjCi/B89Bc1Fb1ilE6hwaXkh3dwmfZ3oFiZxIeUWbON
+	 gf52/2T6gAeg2pDHbsNglkbvmew1uex2kismgr7xFbTPee3WHP+42PfnTYNZw7ArT/
+	 MS/nas+5orQH0B5ogMi3IZstz/FDl/+XcAYmmCFmLUsc/5O35S1YXnxGaWS1gleQkb
+	 qp6WSacH36DrqgzNse7AIQ/4b3hi0ix970fCN6L0DznRy7n5Z4/+kHc/Hrq0oBs6UZ
+	 qIuRJKfHaI0/4XAsXpNMsGDWd+13hECI5F4r73CcdnwQcw3mqHSoVF+F0PYlHRp1Zm
+	 qFyx6/R4cH/vw==
+Message-ID: <d24b2a88-fda7-4a8a-bb5b-73d8a928ff89@kernel.org>
+Date: Mon, 30 Jun 2025 10:21:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] dt-bindings: mfd: qcom,spmi-pmic: add pm4125 audio
+Subject: Re: [PATCH 1/3] dt-bindings: sound: add bindings for pm4125 audio
  codec
-To: Alexey Klimov <alexey.klimov@linaro.org>,
- Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>
-Cc: Lee Jones <lee@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+To: Alexey Klimov <alexey.klimov@linaro.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+ Lee Jones <lee@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
  Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
  linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org,
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
  Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 References: <20250626-pm4125_audio_codec_v1-v1-0-e52933c429a0@linaro.org>
- <20250626-pm4125_audio_codec_v1-v1-2-e52933c429a0@linaro.org>
- <eb5cdcb6-7e40-4ed2-9cc6-6eff43da353d@kernel.org>
- <DAYBEWESVDJY.1ZDYI58M9OEWX@linaro.org>
+ <20250626-pm4125_audio_codec_v1-v1-1-e52933c429a0@linaro.org>
+ <wcmalvywoginosy5pp7wskgdzjbwbydividmk4dtwguoltiobf@muw5lzkvgu5c>
+ <DAYBDV1I7HH0.1GG9U3LI5NQ97@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,27 +112,68 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <DAYBEWESVDJY.1ZDYI58M9OEWX@linaro.org>
+In-Reply-To: <DAYBDV1I7HH0.1GG9U3LI5NQ97@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 28/06/2025 18:42, Alexey Klimov wrote:
-> On Thu Jun 26, 2025 at 9:48 AM BST, Krzysztof Kozlowski wrote:
->> On 26/06/2025 01:50, Alexey Klimov wrote:
->>> PM4125 has audio codec hardware block. Add pattern for respecive node
->>> so the devicetree for those blocks can be validated properly.
->>>
->>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
->>
->> Remember to ALWAYS explain the dependencies between patches (merging
->> strategy), because this now creates impression is independent patch. It
->> is not and should be squashed into previous.
+On 28/06/2025 18:41, Alexey Klimov wrote:
 > 
-> What's the proper way to describe such dependency?
+>>> +            #address-cells = <1>;
+>>> +            #size-cells = <0>;
+>>> +
+>>> +            audio-codec@f000 {
+>>> +                compatible = "qcom,pm4125-codec";
+>>> +                reg = <0xf000>;
+>>> +                vdd-io-supply = <&pm4125_l15>;
+>>> +                vdd-cp-supply = <&pm4125_s4>;
+>>> +                vdd-pa-vpos-supply = <&pm4125_s4>;
+>>> +                vdd-mic-bias-supply = <&pm4125_l22>;
+>>> +                qcom,micbias1-microvolt = <1800000>;
+>>> +                qcom,micbias2-microvolt = <1800000>;
+>>> +                qcom,micbias3-microvolt = <1800000>;
+>>> +                qcom,rx-device = <&pm4125_rx>;
+>>> +                qcom,tx-device = <&pm4125_tx>;
+>>> +                #sound-dai-cells = <1>;
+>>> +            };
+>>> +        };
+>>> +    };
+>>> +
+>>> +    /* ... */
+>>> +
+>>> +    soundwire@a610000 {
+>>
+>> Drop this and next one.
+> 
+> The audio-codec node supposed to have qcom,{rx,tx}-device properties.
+> If I'll drop it then the example doesn't compile well unless I am missing
+> something?
 
-The best changelog. Acceptable is also cover letter, although some
-people skip cover letters.
+What did you drop and what did I ask to drop?
 
+> 
+> For example when I removed soundwire tx node completely and dropped
+> qcom,tx-device then:
+
+I did not ask to drop qcom,tx-device.
+
+...
+
+> 
+>>> +  The audio codec IC found on Qualcomm PM4125/PM2250 PMICs.
+>>> +  It has RX and TX Soundwire slave devices. This bindings is for the
+>>> +  slave devices.
+>>
+>> Last sentence is redundant and makes no sense. Codec has only slave
+>> devices, so how this can be anything else than for slave devices?
+> 
+> This came from other similar files that describe bindings for child codec nodes
+> of soundwire nodes. For example from qcom,wcd937x-sdw.yaml.
+> Should this be rephrased to "This bindings is for the soundwire slave devices." ?
+
+You just pasted the same, so I don't get how you want to rephrase into
+the same sentence.
+
+> 
 Best regards,
 Krzysztof
 
