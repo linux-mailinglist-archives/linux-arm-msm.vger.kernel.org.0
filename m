@@ -1,147 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-63100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9506AEE5A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 19:23:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08827AEE5BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 19:26:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C31B81881BE4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 17:24:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 39CC5165672
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 17:26:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63B0829898C;
-	Mon, 30 Jun 2025 17:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D99C12E3AFE;
+	Mon, 30 Jun 2025 17:26:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="OekHvoln"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gsn8DnSB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1EC286D6F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 17:23:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436B42E3AEE
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 17:26:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751304228; cv=none; b=bW9JK2wtfHQk/hEEbKgF/oUFZa392iqqiCBHuEEvC9h6P3vuBZYtpjJ+qsbB1MVJqXjr0QXszIQiliwaG27mGJ8P/nqKO0+8wF5lL19WSjjm4l/sRa42FdDzWih8lruGPMTqcVg3+Bhs9Tcel18r0klRFKpK16Mj6bhPjObDmoE=
+	t=1751304362; cv=none; b=WM8Hc4WUhJfCrqlAI2e2sDmt61Y8l4jqnxlR/pFCbVtm0QjDEQ6R6W7fShIfqbK4zpj+kb77nYZQ7eIJrg3T0LlOFiVjMjUtgsQSljZm6wz1GlxNyWR5/pK59D7g6scNz4gmF5crvoP2/n0fSIzy6XOgvmunr/z2tUMMybc3Jn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751304228; c=relaxed/simple;
-	bh=+iLdMF3LWPBEWCi1/m9p2rx5jzc1sOFaLqoYEtOs55c=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Xo676Wfm4uIPJrC/wVX9PlFHYiZJKYbEdw4FkzkAY9NXLYyYsimxmIyQG8PUVEugbrkzHAlvjEp69h8ZWY5PEoR/5V1iYUxm4qTVOMCA/6yCvrvj2pFuz84BlXrdabOD8yTJNW+TojExChM7SV7ZEonvjE+AvkBcHaGcH4LIPhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=OekHvoln; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ae0b6532345so1119470066b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 10:23:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1751304224; x=1751909024; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=DSVonj7bfDqPq3Y3uOWrAoecetVr832ilrAPmyWsTzE=;
-        b=OekHvolnPIXBMcNjkwE401yAYYanM7nU1buv/XlHe+HRitehxMhkUiSB3GvOK5eYhh
-         lppA18pgtRBUSr8hjhPJDunztvZqB7lUdu6UyMYwisK3d5WcFndOBf1iGoHZUsSwBkEx
-         yJHezUJPXdHSOZ7EBXUzk20tmOry4vru79qTWswD0fP/T9IQx+VbrEJkMwPv+4OFfG92
-         rRjgfRlpdtpZdQ4fk8hiCEjdOruq26medHSvnyKVOV+xdYzWmwDOdeQMLIWKh1xApHLc
-         /sR8tun5mIB433b5hX3svtXR1EUs0OkndCriMR12s4tBBHr6wQQ+LOSj1ClywwG5gtDO
-         4eqA==
+	s=arc-20240116; t=1751304362; c=relaxed/simple;
+	bh=RKLmE9OopTDP3cDIv9UafaAGfHR1Ncw27fpbfMQVZW0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SQaF4hqjdUAoCyoIUVFphgIWiwBQodvGms9nCBG4S44AeGnTCG0r+sA22lvE8omTKz3LMDuTOyzuXywD82phK0YJmDFpLyKl9JG1M4Rd52p15ZHwIM5WmB7eHgqSWYp0kjK/wm3LBuH+A3JqN7pjG7xfli4SYRKXmYa2jsk/Ido=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gsn8DnSB; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55UFDV0e032399
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 17:26:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	eb6RGBwtGwTEMjhKa7qwq8iOnfUnQEEqOjqHkByNNI0=; b=gsn8DnSBJ2OPHHDp
+	pIiMKixJUsPFbU62X1TjUACSHdNrR4nact67Luyb3HHbfBkCQIvHYpTdZAwRR/ph
+	4lofHxFzd1RJ+PmwOAjS9mR//u/8pgFj6sieW7zriSUOS+0s1EoqUgGP3ZsZRmkI
+	Y4wm/d+sHKYSR4+2AUDefx4HVNjh7vGMI/JMU5sqd1F8ohllqTzp7lXJnzpgQeJB
+	fWiLiT0nZsBr2R2Dh4oNfDxZXHenL+dNvznHgDweNQG4oNb9Q4SEJEZ0LFa580ku
+	1sgjB7OPkfFS/joI22vFNUfWccgE1q6GQ2DDJzrZ3TWyyRf4V66jVzD90xYjus+Q
+	Y68R5w==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j63k5tjg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 17:26:00 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7d09a3b806aso108388285a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 10:26:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751304224; x=1751909024;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DSVonj7bfDqPq3Y3uOWrAoecetVr832ilrAPmyWsTzE=;
-        b=akxPrmg2lVVs1tsKSXvW2uI6h9DeeRzD2qb27Jt0WzicX0kM5r0xnGbOqUSGq/f+xs
-         T5dV6/F7RjPWA0TfyoBnotX42vGDtkM4tyjKQHxiLGlH2tJaGbVUYdRlEb88gcKi2qnh
-         pXjXC3a+ek5NG1b6NEsZj94wvZdoLqu7oZymxVal4hV9EIa/Hbxafti/6u3ABMM4kfMq
-         a+Zf6NF4hlAPeq5lnwL11jxsfPSiBVIlyRfxQzqSbHMN2jrdapnfAjxlpvfBHUCIOeeB
-         Q96+qvGEAKZtAcnKcrLBjxg0E+7/iW6AlxXXHWGOeHmzPC25CzfiG0jdidZmldRyt6rf
-         zvIg==
-X-Gm-Message-State: AOJu0YxfzJvKbowGFatVEbSy4sK9sExfW9T8h/NlQIgud5skHWJIWIOy
-	eUiY0LX0xNTfzvnFdfNq43IQtM9rvquRNSRWzGIX1xN6fillSfKLx04qZqCxl26tbjc=
-X-Gm-Gg: ASbGncv6a3nIisV8mdwirsIvXtQC1XIHw5teIRr/uN24cW1yY7g/M7S+ryiDrm+JZ5C
-	CysVfgRsAecSw2Hywp8FI5gIwPwYEjHfxZoZ/s3FOXPkMfNhQo4xw0wqndNi+c+Xz9LMimNT4pz
-	rDtQ2dPN9V7V9RRWxU3RS3FrihbH/CRx8nSs6fhK0jZqzOesF9ZAIdsXief+svOso5eZDZ7H7QN
-	3mr6eLNSNaNdUuSUHEH7dl1mjC94+oDPinm6H2D/32BNxyzSaecRejInrWa0WxkUAMsIYESX30a
-	W5w+tkR+dhw7rBv8bYcYBadN43BcXSX1AUVVz3FBzTOLjTd6XE7JgKTOCyHh4QvzsRdrihSBLs+
-	OmpjMNBI2K2EugLbRMEEgPHJdZ9pN
-X-Google-Smtp-Source: AGHT+IGk3tSIK0h8RzI6ilmKDWkC54Zqo7CgD6HQFghtS+TAD9sYMu+ROZZeAcfJdcRUTYDyOXsQLg==
-X-Received: by 2002:a17:907:9452:b0:ae3:7070:1fc5 with SMTP id a640c23a62f3a-ae3aa2ef4f1mr41979766b.20.1751304223818;
-        Mon, 30 Jun 2025 10:23:43 -0700 (PDT)
-Received: from localhost (p200300f65f06ab0400000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f06:ab04::1b9])
-        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-ae353c015b8sm707074266b.78.2025.06.30.10.23.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 10:23:43 -0700 (PDT)
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Agustin Vega-Frias <agustinv@codeaurora.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Markus Schneider-Pargmann <msp@baylibre.com>
-Subject: [PATCH] irqchip/qcom-irq-combiner: Rename driver struct to end in _driver
-Date: Mon, 30 Jun 2025 19:23:32 +0200
-Message-ID: <20250630172333.73614-2-u.kleine-koenig@baylibre.com>
-X-Mailer: git-send-email 2.49.0
+        d=1e100.net; s=20230601; t=1751304359; x=1751909159;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eb6RGBwtGwTEMjhKa7qwq8iOnfUnQEEqOjqHkByNNI0=;
+        b=UTRlJnm6cvI/eMetQ/8UnEi1CVNXsD2gvFtcY0++q9EZPXynDYEfRXTEFH2E3Onkgh
+         +rD8stki+RcRATd0skhzvcC5uCvzToVwtvl0iazNuANrESPS1tgLwJhFacRCif2eCbQc
+         ryGw3x1CPScQZnfMw9Dy0H2HthWfwtbs3mc8ZbdvILU2EgwOrgqoxEf+9Oha5/mg2kB3
+         ylf5yhwV6ILQdM7xT/+YS3fe4g1ktDu/dTGg1vnSOOymLlw4D9IChSMoL04lC0TooLjD
+         vS8ArJOIW8pf2HBh6Q7nWUwCouwxFpwPXFwnwfaeGdZwlQ22xbUfGmwjN/N58Ct3Eyda
+         +Brg==
+X-Gm-Message-State: AOJu0YwXbuaNapp4+Fh77zAHg1SW25rQimP1ohQEKg59umsDn+nssC7L
+	OUmJ6M7oQoj+mHd8c786znb7ZJtqFFyJEDMdfHGMnam3IHGd4gE82nMzX4NbtyP1zIG4hVafIhF
+	eJvSQ0t/Ikr82eOZ1vE3GPyQA+QpqIkTd1l3uFkLTmfz8g8JOtVLRRa4OD9CuJZorfNOQ
+X-Gm-Gg: ASbGncvNKHqur/V038P3whS17Mq9qJMwIBqX2xGnzVxGe/zkRmAiWYaF/jM+4e5HFHh
+	MI9Of3YPuAGzZEDCviaOma+lD32LpdB+4DDdeBC6reF6mMVUtinOrqm1qx4jQUWX3n3Xu8oYHzb
+	GOP5jeo3cKjV5lagPn29F0YViUOKYbgqb2TTfe4dgZTe1t6KX1YubQslNXlTn3XBWH2pjgVSkHA
+	OP2u88lrYxDrTIRbG7NqZ53k0vjfyFt50IZWfQk8oIYKJJ80QM5996Rky0Y48BpfsW5s3pdwr0M
+	hmY7moIsVfpOEgkzZ5knvk4v1WC1btBgs9J/W0kGD0aX1+vQy4uz/ocmytgU/M1WsJDEux9DNhs
+	EXwiCthtJ
+X-Received: by 2002:a05:620a:248c:b0:7c3:e399:328f with SMTP id af79cd13be357-7d44c26d063mr463619285a.11.1751304358929;
+        Mon, 30 Jun 2025 10:25:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFb9DlBcpFd5BQk8Ta6Hv/aVwuTAid0h9o086ihbCHZUqtNdSGoEN128bZOwaskTt3wjs5XBA==
+X-Received: by 2002:a05:620a:248c:b0:7c3:e399:328f with SMTP id af79cd13be357-7d44c26d063mr463617485a.11.1751304358317;
+        Mon, 30 Jun 2025 10:25:58 -0700 (PDT)
+Received: from [192.168.1.114] (83.9.29.190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae353c01620sm717355666b.103.2025.06.30.10.25.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Jun 2025 10:25:57 -0700 (PDT)
+Message-ID: <563db91f-3080-4a45-ba0d-04f415ed90d9@oss.qualcomm.com>
+Date: Mon, 30 Jun 2025 19:25:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] irqchip/qcom-irq-combiner: Rename driver struct to end in
+ _driver
+To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+        Agustin Vega-Frias <agustinv@codeaurora.org>,
+        Marc Zyngier <maz@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+        Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Markus Schneider-Pargmann <msp@baylibre.com>
+References: <20250630172333.73614-2-u.kleine-koenig@baylibre.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250630172333.73614-2-u.kleine-koenig@baylibre.com>
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1929; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=+iLdMF3LWPBEWCi1/m9p2rx5jzc1sOFaLqoYEtOs55c=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBoYsgVMRE1+8AhqJ8vM8cILdAL+8lZlZ+NLJtbR KxuXudrQ6mJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCaGLIFQAKCRCPgPtYfRL+ TuRyB/9QjdYDw/9FOLmshYPLnvs9jipUCj6EwLgewoFXBmsXypCVEOuZVozS0LFYihiEfbGcwvW h6p3TIJNDEQymk1lA21HzrqEJ4b/8pfQcR83ZDe5KCvUvRpTo2y7Rzf78YRO47ruoDDetY3dC3v MsU09jXjcSq6GXDjJ9+uUm/2T7h1oX+UL9hfDoJSKX0tft6goz4n3g9AFB7ITCkZdYeZtlSQj+C 712bv6POg6JJRvN+rYAoiWdlXVa44uaxyW97JDoOX2XFG4QP1wtrkh6xKiZxNrIKfSd/O1WvJWe pAVP4nt0lGuNkrzgR+8k1pJMdPWDYx8PsIVtF392vsu7/59j
-X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=ZKfXmW7b c=1 sm=1 tr=0 ts=6862c8a8 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=fKQzr7EGRj+VoE0XNsDNvQ==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=IpJZQVW2AAAA:8 a=0kSur1atOiepxKs-vqsA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+ a=IawgGOuG5U0WyFbmm1f5:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjMwMDE0MyBTYWx0ZWRfX+flmrl0Qd6vm
+ VUuSWCaxUO5+/i/hqzpefLciJQYRFzV32/9G8Ft7a6CqZCsL8FVdIrOz3zhwuj3c7BemUZ/eWLg
+ 7V/X4R0mhYLSdQy48VWCvKpDAz1CRT7kjfbcwpYnYDdWZ9aBTKr1GaCjekwd0myHZWgnJlM9uVB
+ +Z6E0VMeBBAw2hSgabQ0eujp+S4+Dl5FloGZFmCEsliRT4TdaGW8tLDa1TO6rtiGtKJD3NdLL6t
+ C76LXqcnNH0oe/JF83zUXVUMm9pTsYmQzcw1srgk18u8B/X22xA3P9mkZ4DfUsLoHGL0IHMtY/R
+ XMz9iLWRKO36s8aDoyeCMQJYQ+1+Qu/4OkGrm18eeXf3ypAoMbvPeBQ/ZL8NjZxSLhQijjL+g51
+ 9K92xMe37Y18MiLQl7OP11+/Diw88wyUCosPnAQ5mM+6Qj+c0eBU8iZXZ4p+zb2FZ/2JqONk
+X-Proofpoint-ORIG-GUID: Fwr7m0wKdv2cAMCIwIhmC7mRh-0JRk4M
+X-Proofpoint-GUID: Fwr7m0wKdv2cAMCIwIhmC7mRh-0JRk4M
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-30_04,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 mlxscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506300143
 
-The modpost section mismatch checks are more lax for objects that have a
-name that ends in "_probe". This is not justified here though, so rename
-the driver struct according to the usual naming choice.
 
-Note that this change indeed results in modpost identifying a section
-mismatch in this driver. This is not a false positive and should be
-fixed by either converting the driver to use platform_driver_probe() or
-by dropping __init from the .probe() callback. This problem was
-introduced in commit f20cc9b00c7b ("irqchip/qcom: Add IRQ combiner
-driver").
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
----
-Hello,
+On 30-Jun-25 19:23, Uwe Kleine-König wrote:
+> The modpost section mismatch checks are more lax for objects that have a
+> name that ends in "_probe". This is not justified here though, so rename
+> the driver struct according to the usual naming choice.
+> 
+> Note that this change indeed results in modpost identifying a section
+> mismatch in this driver. This is not a false positive and should be
+> fixed by either converting the driver to use platform_driver_probe() or
+> by dropping __init from the .probe() callback. This problem was
+> introduced in commit f20cc9b00c7b ("irqchip/qcom: Add IRQ combiner
+> driver").
+> 
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+> ---
+> Hello,
+> 
+> I don't know if platform_driver_probe() works here, it might happen that
+> the driver is probed before the matching device appears. As I don't have
+> a machine with such a device I won't create a patch fixing the issue,
+> but if you have questions don't hesitate to ask.
+> 
+> Please consider this patch as a bug report and better only apply it when
+> the issue is addressed to not result in build regressions.
 
-I don't know if platform_driver_probe() works here, it might happen that
-the driver is probed before the matching device appears. As I don't have
-a machine with such a device I won't create a patch fixing the issue,
-but if you have questions don't hesitate to ask.
++Jeff is probably the last person on Earth that officially has one
 
-Please consider this patch as a bug report and better only apply it when
-the issue is addressed to not result in build regressions.
-
-Best regards
-Uwe
-
- drivers/irqchip/qcom-irq-combiner.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/irqchip/qcom-irq-combiner.c b/drivers/irqchip/qcom-irq-combiner.c
-index 18e696dc7f4d..e92baf20c7ff 100644
---- a/drivers/irqchip/qcom-irq-combiner.c
-+++ b/drivers/irqchip/qcom-irq-combiner.c
-@@ -266,11 +266,11 @@ static const struct acpi_device_id qcom_irq_combiner_ids[] = {
- 	{ }
- };
- 
--static struct platform_driver qcom_irq_combiner_probe = {
-+static struct platform_driver qcom_irq_combiner_driver = {
- 	.driver = {
- 		.name = "qcom-irq-combiner",
- 		.acpi_match_table = ACPI_PTR(qcom_irq_combiner_ids),
- 	},
- 	.probe = combiner_probe,
- };
--builtin_platform_driver(qcom_irq_combiner_probe);
-+builtin_platform_driver(qcom_irq_combiner_driver);
-
-base-commit: 1343433ed38923a21425c602e92120a1f1db5f7a
--- 
-2.49.0
-
+Konrad
 
