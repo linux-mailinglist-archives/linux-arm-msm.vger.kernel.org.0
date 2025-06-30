@@ -1,90 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-63109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52449AEE686
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 20:09:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 31CD5AEE687
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 20:09:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2069F7A6CBD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 18:08:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B557164C8D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 18:09:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29B472E54DF;
-	Mon, 30 Jun 2025 18:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA25F2E7171;
+	Mon, 30 Jun 2025 18:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QyCU05It"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oDC+4khs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C8F2E3371
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 18:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226062E6D13
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 18:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751306983; cv=none; b=c6JokNs8PDifpvKYP5BWV3LIdchVJ6TnPmmyoWLy1hzjFA4Warm+J4G/YzKKQWIf2V2/KRhOU2lFs2qdDAvdFO/WZKyodfYhOxG08Av5quZCBVaLqKccTPrQpDFQz5zHHtVEGxG9KEVp5QmwWAq8yNfWCK3cpf5ecPwQ1q8WjZM=
+	t=1751306984; cv=none; b=NFrg/KkV7wnYho/IeGxYkyzmg0TARMlL+dbF995vVlfcTVYwH+bX3QuYjFGt4hmCmzCuAEffiwICLjeC0FgTtLP2PBn/9TmSDc5djlQMMvhlch0w6/t5nWkZs54WJ6kK4AQIQjEE+7aB+taii5/3hVO9/mWyUTrGNAMC6QqdwTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751306983; c=relaxed/simple;
-	bh=ZtVdZj68xncFfk/Vbj09LwBfaWtKYRxqd90JgkWCnN8=;
+	s=arc-20240116; t=1751306984; c=relaxed/simple;
+	bh=CefGHTzw+UL3JFVaquVGmfOZ0f7o6lAdf6wRXh4UMMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rc1UJ3V/3icBfqjZwBfgcFz+8+XVjjEpo3KkCL0Z4agkvKOYLGyk5qJcSMCEFlH6wJPFsSpjIHFmJuErK0SCGFaWFRZuSrwyr37kmn2JJOFu8Vl633isETwMt6ciU2wj/hN7UXEbdqq8RHYIeAoCQPvFpC5Pn0Oav0k5ngOT7M0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QyCU05It; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version; b=B8F23OKrXRbKhSoHzCDb3q8knR9RiF0rV/RsS8WshXLXj1QjWzhS23PQ8vy7RH16KbeG4vSYCxPhB9WmOffal+ccpsvYKwGQbX17hp9ofg9jFSc4rixU25ke6XrWRcXodNGZle/xRMbeIIkC/LD+MHYwgOlSMAuPML3yimdI4xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oDC+4khs; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55UFnlII025163
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 18:09:40 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55UG0Lhq024769
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 18:09:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=55DQSDgU9XN
-	WkZSlf7911sVDtNc0BKCuuJITO8Sc7fo=; b=QyCU05ItWiAZAZNy1fGrl97gOkx
-	SwAUgVexeb8JttYAYuMFiKR4md1DQ/VmlQUT2Q3l9ruhhUNv/7TjpX8hiEMzIq42
-	lVmgRXaBZAU0NhGyUUIS3Y22d7/wRt5HTkL2tOn1HXUzWjpuSSfCg5epJNMql9OQ
-	LiQJ7LrcJa3iCg/FkwEe4NlCA+o1PQ0vBNikoaobwj+iD2Y+ha39jTyenywrriwj
-	7YOKmmHFeaElancx54uPREK9gRWUIPzy9QZQ4ZLgmAjjsc+phD7bu8sv5a9w2QIu
-	JdheTtX3xgVv9qbR7oZswboaSc9IhdH2yWiEzttEjawKJ/TEioBATi2lABA==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47kd64k1ed-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=IJiSwEtwyhG
+	HJ8M0kjstv8lfE+Iqb2Bj/fqH+PX+6CY=; b=oDC+4khsKjw4F7pN8vKdhaZTVBr
+	kO+z1hPQkTTgpmHrBsobY4kPL2HB70BfPVGBkpwPjnAenmfQyzr64xdG520wCjP5
+	KL8FaqkCg2u8O2s3a8sDF8gfVmWKSmlQCXYIC/sjQY7u9H5b4RW3MirKm3mXIQsG
+	r35uM8NWEE1pUavChNGDO7dwyRxn34zp3ob4eTbW5kwHodWL8oHTc2Q7FnfgFLhU
+	AcbMVNJngwNlCc+Nh0YAfrZ3dY8scU6LQRhbB84/2BSiSwzbFS8E7Es7Y+SAkGqU
+	RmvaGimQJ1zBQJgZeH9xFamHaGRFJhEZDkmQ7cq04ZFJTtZsXoRfqiEG88Q==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j8s9dqkd-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 18:09:40 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-237f8d64263so38816635ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 11:09:40 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 18:09:41 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b1ffc678adfso3173160a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 11:09:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751306979; x=1751911779;
+        d=1e100.net; s=20230601; t=1751306980; x=1751911780;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=55DQSDgU9XNWkZSlf7911sVDtNc0BKCuuJITO8Sc7fo=;
-        b=Y/ZyMot8o9vR23R2nT//hZL1XAboZNrv0wS1wMpfgR+UkAgBbTQmU/lWyF5nXKvli/
-         mnEn0d4v913VNqMbwn3V0IiD/AFQpySph/56JgFA7l1U+qVGnQV6npePifzF+AP2+m7N
-         9WTvpIsAOB7l0MGlkshptXrqxhcyJaYTvJgF8rKrPCFtc55oUiG7ScCC5ptyX8Pk3UAX
-         +5gPIfXi/ZXggUnF5RgEQaCinCG/lFKV/SKSWwvJQhDA/DDd43+oyHPRtPs2KGsJB58n
-         0ttZPmcXXPUaacXv3cuiibfDw2t/j/0bLxhsuFyNlbducfX+t+5/s/WNm+zAmz/SDAMA
-         4Gfg==
-X-Gm-Message-State: AOJu0YzOtocrZUlQw9toWBqNQ/+CliKwe0WPyrrNZEv9oHrSmXXs6jJG
-	z6IqntDUZqBlba3LpnygdpCh37ZVqfTdI09iGXnnjVAv6bSMNzlFSQi2OlNppJdLTWD66aCBR6h
-	/ZOmowLIR3syj3G4+VmaxiNo5/Yea5OI/40+whoXAgHZQ8Q4xSYBRwc8rK5rAZj0UqoSM
-X-Gm-Gg: ASbGncszYU1bfroRv+6FPcMJUT3VBW+PcK93cvEoSG9hpYyQun0uRVwJfZNi8z+hBvX
-	fzhEbYV16fusEQWakrhoF6WBfz6cWiALvXe0FV5/GOH7vUJ/ZhnU+cCpRoGCr2nqAySftnpmayh
-	eg1SoadjWMG450BJx+iiaujDx3Dk0fOLm/v/LmPlxNjPjaEGJrK7+9lLpjFFN6MqxMaS1tTKTcN
-	/kkDpLSNyCKcSoeweS2v5smbi5Ro1hxAEBQwSqaD6nKtUpXOLyY3fRedViJg2+DdIfk1ClXA0SQ
-	TVvvz+2R8Y3m8O9FSyqbejAGQPnGw1emGw==
-X-Received: by 2002:a17:903:3d0e:b0:235:f45f:ed53 with SMTP id d9443c01a7336-23ac45e376amr211248845ad.33.1751306979034;
+        bh=IJiSwEtwyhGHJ8M0kjstv8lfE+Iqb2Bj/fqH+PX+6CY=;
+        b=womO1em1wDggIDlJouwb+vz0fcoXdv1lOa8GMzsCGxBpGK+rPPERbuUR34stZcChS7
+         aW3tv870nXKFpBviltq/VPW1fCJcHGqvWNWigHdUES9IYmRpYt7M+vDDUvpNTYHdESCN
+         bCdgA1sV1H/9LpubRXltfmSKc4c0EL84pMmWtoRakabSeAjP3ceWEdnEIU6PzdNIOl0U
+         2pheiuZbFjvHuE/ey9zxkoM9BWC98iDORUzDQAYVtSNYTX2BO3DfLbJfqm7qGFB/b3NQ
+         fSXFimzmU9LGuuwQZM22N2aHzTZhjt7AutuFhfjuO+leae0tcQCMNVTeil+MMR8PfPB5
+         81ZA==
+X-Gm-Message-State: AOJu0Yx3lBNykwESNBqH0kx9pS6krtR8/roFD+vyl2OIK4ExIdgfbdCs
+	xsjPV66OAm8vXXR5fBE9RKSzXu/PN3nmujbWjS6AknNKuo2ohgImLpUheoDM+LWQD54zctUXf/Y
+	faAA1H+UqO8e+9YryUolhAe3Aw/Wk3tZ9J7zfGP0jyWy8OnwyC84FI2ADtbPNUVwNJrXQzEfAz0
+	Av
+X-Gm-Gg: ASbGncuiBPDp0ARSxOnfIvH8OcUkV+XaaOY4ArpFjGbE7bK9EJNN8TImjDgqNxtFRsn
+	VyssgLRtDdgMI6HzGS488b7LaNXBxYd3BoPk5Wp9GBEUOLxjou7ZlOCawjvCx/gvWVwZCFNEuKt
+	sa4jd2Q/4WlUSwqMOs2ifZu+RFulQHHvVDhULnkihgejxn9RMZxaIloBUR6gJ9pVbhQLqhdFPsC
+	0FKIYx3uJeUk8/RdcUULLicYe2CyTQXhlMy5kM9FTcB2RbdolQxdNC9WEtHWEB4uY/AF+ie0Wxq
+	izbkIq900P93a64SzzX+UYr4GAYXN4JK4w==
+X-Received: by 2002:a17:90b:2e04:b0:315:aa28:9501 with SMTP id 98e67ed59e1d1-318c92fc24dmr22258531a91.24.1751306980188;
+        Mon, 30 Jun 2025 11:09:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGtiTNscH74VIL8AiO98nrken82aK/te3q39Fjh+6FmeGfvmFe0oZZxxX0DMuutqqN00TSBpg==
+X-Received: by 2002:a17:90b:2e04:b0:315:aa28:9501 with SMTP id 98e67ed59e1d1-318c92fc24dmr22258492a91.24.1751306979692;
         Mon, 30 Jun 2025 11:09:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEimgSP5MOd1GlXXxOYUtftx/nDjse1hzrKVUKPUaxykf/eRNnjnuj1oXkCdn8EmNGh/YHSYA==
-X-Received: by 2002:a17:903:3d0e:b0:235:f45f:ed53 with SMTP id d9443c01a7336-23ac45e376amr211248575ad.33.1751306978638;
-        Mon, 30 Jun 2025 11:09:38 -0700 (PDT)
 Received: from localhost ([2601:1c0:5000:d5c:5b3e:de60:4fda:e7b1])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23acb3b8ec2sm86706595ad.183.2025.06.30.11.09.38
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-315f5437e97sm13461953a91.40.2025.06.30.11.09.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 11:09:38 -0700 (PDT)
+        Mon, 30 Jun 2025 11:09:39 -0700 (PDT)
 From: Rob Clark <robin.clark@oss.qualcomm.com>
 To: igt-dev@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Rob Clark <rob.clark@oss.qualcomm.com>
-Subject: [PATCH igt 5/9] msm/mapping: Add additional subtests
-Date: Mon, 30 Jun 2025 11:08:59 -0700
-Message-ID: <20250630180903.77990-6-robin.clark@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, Rob Clark <rob.clark@oss.qualcomm.com>
+Subject: [PATCH igt 6/9] msm/mapping: Wait for devcore to become available
+Date: Mon, 30 Jun 2025 11:09:00 -0700
+Message-ID: <20250630180903.77990-7-robin.clark@oss.qualcomm.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250630180903.77990-1-robin.clark@oss.qualcomm.com>
 References: <20250630180903.77990-1-robin.clark@oss.qualcomm.com>
@@ -95,79 +95,86 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Z+PsHGRA c=1 sm=1 tr=0 ts=6862d2e4 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=xqWC_Br6kY4A:10 a=6IFa9wvqVegA:10
- a=cm27Pg_UAAAA:8 a=EUspDBNiAAAA:8 a=uKBAPi6pz9e2o7ac47oA:9
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjMwMDE0NyBTYWx0ZWRfXz2TPPUjuI9ko
- zvYfrya26f8trCvyBvAydrXHsBO9GX9bx22kEAXwhIiqVbj0WYHFXgE8meW/6wbEwcBE89Q5SsM
- mZOeYiKUIOSxSko4+WH/USSnj0fKEgIVQ9/fR3lEoDWjfZV3rTIFv6bb7xRaXoFGaJsnEmjw2Xl
- c7PGmHNtfQkxDEdRzBoCs8HFX4RJ2xWCfzSQmrFwqgzZ2PU9UQmZH+TvvEa0sg/QS+V26m4YGmU
- EQWn8BeboASRGLJpHI+82+ClPlSZEOzpINTm3RCSb98NBf/RYIQMOndEhY/Ja3TNmfeUMR4Vx8m
- 44/aqFJKD3duCjC4iDNgF4LhvxPtpTxpIFZdjZrjcy6AoD+mbJ4UVPMF9or/2ysjsf+kO49kk/S
- sJMPDU60QPpd4aWgQ5ZEJcBBeRKp4V7HukAkQ7BrmEu8u5t15y7CE2U5uhL4PbR8v+7p291x
-X-Proofpoint-GUID: WvlD0l7fKf0Skfx8MQQxsLmwNZI7f5Ji
-X-Proofpoint-ORIG-GUID: WvlD0l7fKf0Skfx8MQQxsLmwNZI7f5Ji
+X-Authority-Analysis: v=2.4 cv=H/Pbw/Yi c=1 sm=1 tr=0 ts=6862d2e5 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=xqWC_Br6kY4A:10 a=6IFa9wvqVegA:10
+ a=EUspDBNiAAAA:8 a=wbXP5UgKaa9MPXhy6qkA:9 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-ORIG-GUID: E8IQJ_hLnNk-KP-Xu3Zb_8KK7nEFraBX
+X-Proofpoint-GUID: E8IQJ_hLnNk-KP-Xu3Zb_8KK7nEFraBX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjMwMDE0NyBTYWx0ZWRfX/b0wJpMeinnC
+ 3MId3iMSk995IW2EJ0InMi4LrSsVLOQ5umTqzeKCPXNWhTP9EZBlp2SIDtiviHSXvH8zvEIlpaJ
+ HyA2doFUtijcvFc5b+MJ7JC3twDE2q0fr3I9lXtNUx4xpi1NExnNn1GhRx1hrwjF5M2W4GopfP2
+ mRCuYzSDvpI3YDtfWMWWjzVtkmyg+aIo8s4f22lfk81fVV47mtfXJjmSNmjh7veQAVckiiC4gbb
+ +a375/wqO0bO3dEXhVxn/36J67NPbPzWSYjS6uL83+OWD9hCPWq3ssRKdiwKoza3gX7wrk5BAce
+ 4WYDD8fzQwatCGp2WDgLPAtqtvUYvyvf2HkFOTCHCPUKXA08Jp8UB/lY4HPN2Kzc6Li/tOcsfdH
+ eCitM599w/5jH3gOJmyWwOvmKKN5cwFKqCp/zWw83pTBtx90QZ7pob/XhDWcgxbIMh2gepAh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-06-30_04,2025-06-27_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0 mlxlogscore=821
- spamscore=0 adultscore=0 mlxscore=0 priorityscore=1501 bulkscore=0
- impostorscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506300147
+ impostorscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
+ priorityscore=1501 clxscore=1015 mlxscore=0 lowpriorityscore=0 spamscore=0
+ adultscore=0 bulkscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506300147
 
-From: Rob Clark <robdclark@chromium.org>
+From: Rob Clark <rob.clark@oss.qualcomm.com>
 
-Test a few additional buffers that userspace should not have access to.
+The devcore could take some time to show up, so add a igt_wait() with
+timeout so we don't fail the test if the devcore is not immediately
+available.
+
+This addresses a source of flakeyness.
 
 Signed-off-by: Rob Clark <rob.clark@oss.qualcomm.com>
 ---
- tests/msm/msm_mapping.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ tests/msm/msm_mapping.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/tests/msm/msm_mapping.c b/tests/msm/msm_mapping.c
-index 5afbcd081fc7..846385bb5206 100644
+index 846385bb5206..03a9e814c931 100644
 --- a/tests/msm/msm_mapping.c
 +++ b/tests/msm/msm_mapping.c
-@@ -253,6 +253,36 @@ igt_main
- 		do_mapping_test(pipe, "shadow", false);
+@@ -42,14 +42,18 @@
+  */
+ 
+ static char *
+-get_and_clear_devcore(void)
++get_and_clear_devcore(int timeout_ms)
+ {
+ 	glob_t glob_buf = {0};
+ 	char *buf = NULL;
+-	int ret, fd;
++	int fd;
+ 
+-	ret = glob("/sys/class/devcoredump/devcd*/data", GLOB_NOSORT, NULL, &glob_buf);
+-	if ((ret == GLOB_NOMATCH) || !glob_buf.gl_pathc)
++	/* The devcore shows up asynchronously, so it might not be
++	 * immediately available:
++	 */
++	if (!igt_wait(glob("/sys/class/devcoredump/devcd*/data",
++			   GLOB_NOSORT, NULL, &glob_buf) != GLOB_NOMATCH,
++		      timeout_ms, 100))
+ 		return NULL;
+ 
+ 	fd = open(glob_buf.gl_pathv[0], O_RDWR);
+@@ -175,7 +179,7 @@ do_mapping_test(struct msm_pipe *pipe, const char *buffername, bool write)
+ 	int fence_fd, ret;
+ 
+ 	/* Clear any existing devcore's: */
+-	while ((devcore = get_and_clear_devcore())) {
++	while ((devcore = get_and_clear_devcore(0))) {
+ 		free(devcore);
  	}
  
-+	igt_describe("Test pwrup_reglist mapping, should be inaccessible");
-+	igt_subtest("pwrup_reglist") {
-+		do_mapping_test(pipe, "pwrup_reglist", true);
-+		do_mapping_test(pipe, "pwrup_reglist", false);
-+	}
-+
-+	igt_describe("Test memptrs mapping, should be inaccessible");
-+	igt_subtest("memptrs") {
-+		/*
-+		 * This test will fail on older GPUs without HW_APRIV, but
-+		 * there isn't a good way to test that from userspace, short
-+		 * of maintaining a giant table.  Probably just easier to
-+		 * list it in xfails or skips for those GPUs.
-+		 */
-+		do_mapping_test(pipe, "memptrs", true);
-+		do_mapping_test(pipe, "memptrs", false);
-+	}
-+
-+	igt_describe("Test 'preempt_record ring0' mapping, should be inaccessible");
-+	igt_subtest("preempt_record_ring0") {
-+		do_mapping_test(pipe, "preempt_record ring0", true);
-+		do_mapping_test(pipe, "preempt_record ring0", false);
-+	}
-+
-+	igt_describe("Test 'preempt_smmu_info ring0' mapping, should be inaccessible");
-+	igt_subtest("preempt_smmu_info_ring0") {
-+		do_mapping_test(pipe, "preempt_smmu_info ring0", true);
-+		do_mapping_test(pipe, "preempt_smmu_info ring0", false);
-+	}
-+
- 	igt_fixture {
- 		igt_msm_pipe_close(pipe);
- 		igt_msm_dev_close(dev);
+@@ -208,7 +212,7 @@ do_mapping_test(struct msm_pipe *pipe, const char *buffername, bool write)
+ 	/* And now we should have gotten a devcore from the iova fault
+ 	 * triggered by the read or write:
+ 	 */
+-	devcore = get_and_clear_devcore();
++	devcore = get_and_clear_devcore(1000);
+ 	igt_fail_on(!devcore);
+ 
+ 	/* Make sure the devcore is from iova fault: */
 -- 
 2.50.0
 
