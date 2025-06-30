@@ -1,165 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-63043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FAC5AED66A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 10:00:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0940AED688
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 10:03:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D27C1899851
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 08:00:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E1A953ACC34
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 08:01:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A550124293B;
-	Mon, 30 Jun 2025 07:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88A5A23E329;
+	Mon, 30 Jun 2025 08:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JXXodVTJ"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="PuMVrUKW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084D22405E5;
-	Mon, 30 Jun 2025 07:58:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811FD23AB88
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 08:01:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751270314; cv=none; b=hD3o4s3ZloB71JqHwwNAXpNAjzGv+DyLMYiHJ1FRiFUWuL6cQlNTE7mmyHmVAc7P42xicMvgpMofcK6nKRbTy+eNAT6dUE6XnzVNws5W24iTJtnc+HnnkWBwNBVaalcgau+ijN3MHsS+kX3y3b0Hj5n/rlogMjI4NJIaZrNBqMM=
+	t=1751270514; cv=none; b=go2slkSf4DhOlIUsVod4+2LmseKnUuA63w4xGL07sfh0y2giW0WaAHRl9UptBn53cQaP8RjavhsoZvC0TfiGJiYIxoHUnMqsdaVs32if+FMUD2P9Dof0lGyOtjT0UrfLzGXGyhZg2X1aUYs/+IILavOVJtqAS+rtbuaSsoBzmII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751270314; c=relaxed/simple;
-	bh=ZZMTRhA3Q5vK75m9Bm+TXk1PAEHuycK5wPjmcJ/x21c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=tZkPHq0DgGvWs+Btlsvxt9+xbfB3ZYtyeg1XB8FP13N1Do4yy7md+hGNq8pOLzrpt4/XdxA/S6iTEPHTbZsK8jr3+xVDn3s2KaxxCh8ECa4iDXH4rqvycSiQz4KmK+7QswWxOzY0g7BMqy352hYbbXX2R7IAzWJqsShSWWNDgA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JXXodVTJ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55U4ph3T015659;
-	Mon, 30 Jun 2025 07:58:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2GI5N/15siM0TnE6K77k2Bo0tTxSu+QdEjI1bUxwSYo=; b=JXXodVTJK1hctFbR
-	Q05TETF0RdiCdNTlb3yPDaDj7fvLcyfJzbvOriAmB+JvkHnsGchWiOqXfeontZDg
-	4a2odNY9jadEfDn7QM+gTEknf1qhcizITH+wAp2p6THaJ5sJTr2t32cWuGyjiqL5
-	UhaCh2xas9RxQsaB3bNu4R2QJa+GbabJa11JpJ7HTdQp+nQpyN+ppFwwPGRGoOiZ
-	oIGgHkIAM81Bujr+4u4KlrcbJgCLvf/7h/xdhFJONMxrkYzPVvYrENEmbdQZ4Tcx
-	GehoINsvg9LMciv82wfUMFJofzVwEHukCW6eaHPQIGUuXV7/PHw70OjH9nx6Esog
-	zas7uQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47kkwrre94-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Jun 2025 07:58:27 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55U7wQ3M004652
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Jun 2025 07:58:26 GMT
-Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 30 Jun
- 2025 00:58:23 -0700
-Message-ID: <4b7b1406-a730-a0eb-1787-63cce6817ba0@quicinc.com>
-Date: Mon, 30 Jun 2025 13:28:20 +0530
+	s=arc-20240116; t=1751270514; c=relaxed/simple;
+	bh=LpPq0O9dCSq2yJKRTchcrI01CNwc9RMMB1sOdqU8n48=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=hi2GuDrEunF+sOENqDH1MPYH9F7CxshA3jdm8Kkhf7js2O3ZWYj1RChRJD0kcpKUOoYHllTgZCvmQyW1TUz+uJilQJKSnrjhCkn3TVnchgC5hyrSoPxRLzx7EntRGkpmBXXKeN+10+PtbtrWdWhTxJ2cELUNXXKn5VFAhykdDWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=PuMVrUKW; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ae0b6532345so1004701666b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 01:01:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1751270511; x=1751875311; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VZWXdKZSSjJqVCAXWFGblQxy/2StWwGGDnAv5AzCETw=;
+        b=PuMVrUKW32bEa9R7TQw7IHxfIrUhxO4ts7j1kHOE+OvGLv07I/8dBOcDKy5AwkQPsO
+         Dm8P+rDqCOUjr1Xr12jvUEnRABphNKJNkYsbylIIe+oKVjipwSrCTDJe8AXHTW/p0PwX
+         2fmZNg3f13y8TH7AnQcosPFDBBCNsvRu6q94CEUgt4nvkAU3BUlajfo9vKNbpwOQb1SU
+         Q2qptM0wAmFx6VGpEv8a6dcns3XepjI7QEvfKvPQG3XXggWonB9PY6f8IyUt30asd1fl
+         Wr5mPCnGzbC0S2BdxJA2rLNzLl0qORehS5OJQuPvOsMRJmJqIp5aR62vA0Bp9l+pI+xY
+         kEtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751270511; x=1751875311;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=VZWXdKZSSjJqVCAXWFGblQxy/2StWwGGDnAv5AzCETw=;
+        b=eaY4jbKm7u3cesX6Ft3nqnkDwktAD9KxMkRevhL8BMTDG9le8EIncz+6OVH2E1CrAy
+         Q7RyHfaEvAvC17j/3czQM94z16GQizTQ4alwHVQ+yhEbypKZ9/9j5Rr79JzFNiYxVESQ
+         DrFalDfNqdomE72qzzse0OPodKERIowFZihYGGqURAlCvOdRp5+yPbijaN5wgswidC0v
+         AUHA/Y5RgEGV0W05MVvHHQUmIJ6/1GpqyjhxefuhoWmAZTkD/T6R25cd4gW2XtNCk3QY
+         stzozWbU1JMATJrYJHQWXs/rdP5uSGqVp7NVa4MZSoj5LZBg9CybZYtLnS5uJjYywpv+
+         7Ofg==
+X-Forwarded-Encrypted: i=1; AJvYcCUQueFTFzs+OWLiSf+wJrz3USvne0UZJfQGNuG2qvbnT+srtqVNQ+Bbz8fERwzf+frZkOtz06/O6nKyYXI2@vger.kernel.org
+X-Gm-Message-State: AOJu0YzssMmE6WuCs+32k/0d3rHpDribgPPyrqUiOqdnC5p69RHeUKk7
+	MECLzHukVcK7ZCKK0tVekPXh9zqunh9mqwK1yg6CsdgCWLUqNsVAKysBYS75wX3hMu8=
+X-Gm-Gg: ASbGncu1iKiLGdDI/YgK+0aCsdUBom79o5HWzpjWGQSVFtFQpPBCc4ic2LU5JDYGI7T
+	ORpLOqMOzbFkokLeaRbWWe3X4ycHdDh6tIMaNIPhBRmChYTgEIBu04lt3y1DVcTyM6WcNwj3IFs
+	HHDF2itf1j6K3nZYAPZmlhMkHKpIwFBHC0xJYxCYi3mc8d7LLGGX5gh5ZjGbvEU6yoUkKmtuouS
+	eAHOFuAzNS0Yet7rr120anth6yeaBVfRkrmOI2GRRM2MEnZ6TpaTKKSJQo8/adn7qFzQ7Zo4sBT
+	O16JgHewvphnUmB5I4K/VKFcqAGTXdvN1H0Mkr1rOgL1TuNt6PP4bq5zb51LyflrQ4/VhunyvLG
+	3cLp/OzUscT4r+FwjP7T/kT+knahxAk8t4Ab5qhxqpnowHzyG36aFuOrYQQ27Wisl947Ow/rV73
+	TkeEFRVg==
+X-Google-Smtp-Source: AGHT+IEoVXPzL2X+o6hUB2pvWTzo7iX7ErTJsBfZFxmXtG6Mqo+mQVeD6+zkAYVim486K1lU9hLB1w==
+X-Received: by 2002:a17:906:4783:b0:ae0:a464:99d with SMTP id a640c23a62f3a-ae0d27309d1mr1642905366b.17.1751270496717;
+        Mon, 30 Jun 2025 01:01:36 -0700 (PDT)
+Received: from localhost (2001-1c00-3b8a-ea00-c4de-d39d-05f4-c77a.cable.dynamic.v6.ziggo.nl. [2001:1c00:3b8a:ea00:c4de:d39d:5f4:c77a])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae353c01641sm630119466b.77.2025.06.30.01.01.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Jun 2025 01:01:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v3 5/5] media: iris: configure DMA device for vb2 queue on
- OUTPUT plane
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dikshita Agarwal
-	<quic_dikshita@quicinc.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        "Mauro
- Carvalho Chehab" <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
- <20250627-video_cb-v3-5-51e18c0ffbce@quicinc.com>
- <d8a1fdd4-0056-480f-ade1-318a34d27204@linaro.org>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <d8a1fdd4-0056-480f-ade1-318a34d27204@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=XeCJzJ55 c=1 sm=1 tr=0 ts=686243a3 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=P-IC7800AAAA:8
- a=COk6AnOGAAAA:8 a=OXM8fBZ5ErSyUVfw0poA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=d3PnA9EDa4IxuAV0gXij:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjMwMDA2NSBTYWx0ZWRfX1BzwmhAllKIG
- sauQ7sM7Gc0vGXqNU6xC8v8Tj0rEYd5X8eJ2fXVVdK6psDhHzIuD3cN2lbwfZO4xrB+78p63i6q
- Ub+rv6r/WX9nIx+0TxhngB4E/PhpWDhhYil03HBoDHIIvA7RbVvfpbjzS05XB+d8CBgPz67T1iA
- zHrOhg8hWjZ7jYoh7BHbP7UcsBRNRW93pW93Wa7c7KksFEmzNd9YXDL5kJ5UFAB4cTXDAbrXuMR
- WiYxIX4mqA3zhGsHjNyP6txlPNz2+jR2qZTsiOX2M2vN08ttlHZS7W3f/9gvyoXMU8YNxPi2Yov
- DHuCQJDPeBntbH5qdAB7oNRSxO+iQ4XkFZKIoD0SbjwP70OMdD8ZBrH+BXODWXPuTBB0nbQ3z9/
- jhmH+4q3MJiRlkaRTRhJiSxZBm99uGMUwY439eiVa4LNGmCvTJssYeQ4GBb/wfkxphCFkGbH
-X-Proofpoint-GUID: upn4LHC0jnaVAxEpG6vyIwUPjp3jdoDp
-X-Proofpoint-ORIG-GUID: upn4LHC0jnaVAxEpG6vyIwUPjp3jdoDp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-30_01,2025-06-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 lowpriorityscore=0 adultscore=0 phishscore=0 mlxlogscore=999
- spamscore=0 impostorscore=0 clxscore=1015 bulkscore=0 malwarescore=0
- suspectscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506300065
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 30 Jun 2025 10:01:35 +0200
+Message-Id: <DAZPKV5DQ1EK.2D4TQE5MIH4K9@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 00/10] Add clock drivers for SM7635
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Luca Weiss" <luca.weiss@fairphone.com>, "Konrad Dybcio"
+ <konrad.dybcio@oss.qualcomm.com>, "Bjorn Andersson" <andersson@kernel.org>,
+ "Michael Turquette" <mturquette@baylibre.com>, "Stephen Boyd"
+ <sboyd@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
+References: <20250625-sm7635-clocks-v1-0-ca3120e3a80e@fairphone.com>
+ <68056b4a-b1c3-401f-8720-8e0c3cda6249@oss.qualcomm.com>
+ <DAXEWQ93VELV.3HJXPNWASYBT7@fairphone.com>
+In-Reply-To: <DAXEWQ93VELV.3HJXPNWASYBT7@fairphone.com>
 
+Hi Konrad,
 
-
-On 6/27/2025 10:38 PM, Bryan O'Donoghue wrote:
-> On 27/06/2025 16:48, Vikash Garodia wrote:
->> While setting up the vb2 queues, assign "non_pixel" device to manage
->> OUTPUT plane buffers i.e bitstream buffers incase of decoder. It prefers
->> the non_pixel device(np_dev) when available, falling back to core->dev
->> otherwise.
+On Fri Jun 27, 2025 at 5:14 PM CEST, Luca Weiss wrote:
+> On Fri Jun 27, 2025 at 5:10 PM CEST, Konrad Dybcio wrote:
+>> On 6/25/25 11:12 AM, Luca Weiss wrote:
+>>> Document and add the clock drivers for GCC, CAMCC, DISPCC, GPUCC and
+>>> VIDEOCC on the SM7635 SoC.
+>>>=20
+>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> ---
+>>> Luca Weiss (10):
+>>>       dt-bindings: clock: qcom: document the SM7635 Global Clock Contro=
+ller
+>>>       clk: qcom: Add Global Clock controller (GCC) driver for SM7635
+>>>       dt-bindings: clock: qcom: document the SM7635 Camera Clock Contro=
+ller
+>>>       clk: qcom: Add Camera Clock controller (CAMCC) driver for SM7635
+>>>       dt-bindings: clock: qcom: document the SM7635 Display Clock Contr=
+oller
+>>>       clk: qcom: Add Display Clock controller (DISPCC) driver for SM763=
+5
+>>>       dt-bindings: clock: qcom: document the SM7635 GPU Clock Controlle=
+r
+>>>       clk: qcom: Add Graphics Clock controller (GPUCC) driver for SM763=
+5
+>>>       dt-bindings: clock: qcom: document the SM7635 Video Clock Control=
+ler
+>>>       clk: qcom: Add Video Clock controller (VIDEOCC) driver for SM7635
 >>
->> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->> ---
->>   drivers/media/platform/qcom/iris/iris_vb2.c | 4 ++++
->>   1 file changed, 4 insertions(+)
+>> We had a massive yak shaving patchset go in this season, please move
+>> the magic settings in .probe to qcom_cc_driver_data {}
+>
+> Okay cool, I found them
+> https://lore.kernel.org/linux-arm-msm/174970084192.547582.612305407582982=
+706.b4-ty@kernel.org/
+
+For camcc, gpucc and videocc it seems quite simple to follow these
+changes.
+
+For dispcc I don't know what to do with this line.
+
+	/* Enable clock gating for MDP clocks */
+	regmap_update_bits(regmap, DISP_CC_MISC_CMD, 0x10, 0x10);
+
+Do I just keep the regmap references in this probe function and just
+move the clk_lucid_ole_pll_configure & qcom_branch_set_clk_en to the
+config struct?
+
+And similar for gcc, I can move the qcom_branch_set_clk_en calls there
+but the qcom_cc_register_rcg_dfs needs to be kept.
+
+Does that sound okay, or what exactly is the desired outcome of the
+requested changes?
+
+Regards
+Luca
+
+>
 >>
->> diff --git a/drivers/media/platform/qcom/iris/iris_vb2.c
->> b/drivers/media/platform/qcom/iris/iris_vb2.c
->> index
->> cdf11feb590b5cb7804db3fcde7282fb1f9f1a1e..01cc337970400d48063c558c1ac039539dbcbaba 100644
->> --- a/drivers/media/platform/qcom/iris/iris_vb2.c
->> +++ b/drivers/media/platform/qcom/iris/iris_vb2.c
->> @@ -159,6 +159,10 @@ int iris_vb2_queue_setup(struct vb2_queue *q,
->>       *num_planes = 1;
->>       sizes[0] = f->fmt.pix_mp.plane_fmt[0].sizeimage;
->>   +    if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT ||
->> +        q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
->> +        q->dev = core->np_dev ? core->np_dev : core->dev;
->> +
->>   unlock:
->>       mutex_unlock(&inst->lock);
->>  
-> 
-> q->dev = core->dev;
-> 
-> if (thing || thing_else)
->     q->dev = core->np_dev;
-when IF condition is not met, q->dev assignment would be unnecessary i.e for
-plane types other than V4L2_BUF_TYPE_VIDEO_OUTPUT. Refer [1] for the dev
-assignment to queue.
+>> Konrad
 
-Regards,
-Vikash
-
-[1]
-https://elixir.bootlin.com/linux/v6.15.3/source/drivers/media/platform/qcom/iris/iris_vidc.c#L106
-> 
-> ---
-> bod
 
