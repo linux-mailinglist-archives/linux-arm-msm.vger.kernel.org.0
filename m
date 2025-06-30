@@ -1,82 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-63096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8BD9AEE31D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 17:56:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A2B3AEE324
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 17:56:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8B997189F8A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 15:56:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4E463189FA01
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 15:57:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BCAC28C2D7;
-	Mon, 30 Jun 2025 15:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69D7228F95F;
+	Mon, 30 Jun 2025 15:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pR3jSoX/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="F2tLCm6O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC4625C6E7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 15:56:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7827290D98
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 15:56:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751298973; cv=none; b=Qseyx9hwoIuKrhrHxYCL2gO35O3HDsHrgZ87DO/aIhBujSjD9KnaAGt6Q8BtZDV349pdZbSYeayZ5yaCIx+vKCryYZWV7NQSw/gECVBWQhPGR4u6c/UluCc2uhnMI3jEciHsAF+HdGcVO+bw0YPr4otc8bnPN+XmvtFLiW0f3Tc=
+	t=1751298989; cv=none; b=BTTxx5v/Mf594NjUCSRCz8d/VBu1DOa3u9vmJmMHU1Sp2QfJqk2UH6Xihykd9YbOTlHEyEhk0PkRDTP1TxA9IOxNKPq/z8rOhMvnJ7RHjUYb7eEgihbn5hDwMgv/DzqFo15PKISuH7GqtS/zM1ct/40TpMLP3hS3M7xs6w+zSqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751298973; c=relaxed/simple;
-	bh=8ChK3GfAZV+x4rh38MnBCrnShQDMfZpC86IijoJOSHM=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=p3kWm9PZQfOmYGmZfUr08uR9uBuNua+S/5se0NDUHdDr5Eq7WUo8A7lKYpuBPMQZGhgjqzQJ0YkFomAAcJx2pIFarbky++Y1/ReV881rAre8guojuAS3s9ihjTS4BDWkKPDc9h8WTWkhCqfrC89Ho2QoGll+29zjaTq811/hQ1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pR3jSoX/; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3a4f379662cso1921232f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 08:56:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751298969; x=1751903769; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:from:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zv1R+liObZffGh9SjCgASb7RNDkNxcrDa1lYYKn/6XI=;
-        b=pR3jSoX/h32/MyPyO4IQsOwR8n8tT9AOg6j47sjfEvP9UwOf0JvtUgVNybkvIj7wbT
-         gLFO1y9SBnZJAup1Og+pR8+PxRHaHG9oIulJ+CplePPXlaHp2AVryPOcfRGJ5ggX+1fO
-         G8bmicBrllpYf2I/1KnQLadFEkRgYigNaGgP3iTuu/A7NkdT+h9AJ79drrNn+QqxtIiC
-         h5RBbKYFdJfC/N+/RX1XAG9COJQlqevikotrzF2BkDaqrEUwlwoP8IoV7sZwQuGs80dF
-         OkW/+eV2bvAQHSoT/6Aav6mSYnhd2XlK/3efkDr7UA5MJrmdabjj97otXLOcLg3WtrDJ
-         XRcw==
+	s=arc-20240116; t=1751298989; c=relaxed/simple;
+	bh=zGLBBCS69S5bewAHvIuxxbqOURYmkIJvrgkWVT8V734=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pIlGGO/F7gpPmMNyvJsw7cb6x9m6nSI2/UPP007zv+h1QQXkEbgCCoy/Vg2RArFkXv2Ooo+Bfl5h+Qy0nB72KepOfUl8ZuLfbsLP5XZmiraxlDmQBXRaciyxaEUvIqUm9OcmoboLZaLtLBdlhs4f0GQHRHc1TW8/QIPZfTc7jM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=F2tLCm6O; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55U8DQkC000415
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 15:56:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	D0Fl5LewKcARD32i6DxdJAAOcn3ZiRpvJ9i+gosfreA=; b=F2tLCm6OVgJ5uM3o
+	+7t/kkc3XyFSQA7vLg6R3KpOKbVMDK2sDZ3waa1SM22IyjoviFRGFE8XzamBmUjY
+	PU2acpGUm+JVTTlD4DbAz3S2kKKuX/2bmgMViYatB+qa2B0pHlC7pELi0v3NxToO
+	9mVK2iBNj9RjGVM8SfBmRUo3TnRBk+V42xUV+Ct+JToMQ6XgpyFx0e83x6w8ufNz
+	TsETeG4+G+b626dPwfu/xheR9fUlvdpAgxfv0cBNKE8eLjpoE1VPNxhSY7JHeK+I
+	3h+Vzsslh0KL/PsFIwBpfhtU8oLnqkczSgV4Ns5G7J7stufuHVwTI5Z5Pa6pStpI
+	4Ah0IQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j7qm5a9t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 15:56:20 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7d3ba561898so41379785a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 08:56:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751298969; x=1751903769;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:from:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=zv1R+liObZffGh9SjCgASb7RNDkNxcrDa1lYYKn/6XI=;
-        b=abDKwB/fsnC9mbyGe/xsZeiXGHi4Wy72Rpf0dEEr3TpEdDKL6mw7WMGebdbefCk9e+
-         kMWOJFihj87Icx0vJ21m1hXxGt2CwwyCN4dhleJZAMtnfuwpwWnTtaSS4VpzCdhaK7aA
-         Hw5zuH0Bh4tmIRmXKBvG8vIw1EeyanDHg/zfT4LyOMQfxNUV/iwbBRfIwoliv8o+PidJ
-         RodxqcD5LCBTlnzMaVfsm89ZkYz7uU3VKoAOnXkzxve238e3D9miSBtD2tYyhNrMr0/G
-         Vw9zkl/1g2fn4DBVhW4DZhy8TIvdo7x728BaXs99YzYsHytsh+phC/12IsIQkYAfs61x
-         N8OQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWtuqCtyiohBCvLxWRXJOLWgTQaZFrrWxitEu9ePsu6dNPiYIigHmuz7N9GsiCMHEeEzP75d3WZlJQEfpDH@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4jKiz1usIm4pIs0X/U3IfMNoS4EyT6NWdnSDALQ3CIm8gXjV5
-	z+eNKs/aCc9lwDpRM8rosuz5EAVedEzUxkq1VjZ2o9pdwV2Cwwws/SVvDKViZmC2zlY=
-X-Gm-Gg: ASbGncv2YAfa5B/xkp1ixJW7/7ii0Ab29jDKctz689B6K5C/6ueMLyZEpVjgq+9K+7y
-	VKepG8FiFz6Y3Mczrp16l6Bp6w7Othz8JTZ0WTKJCpEM3S0aC4eADI2yByvQmH27wFiH6C3ythY
-	GHvIHLFE5s/ICGWxdUmrwgMjRzlJ0mq/ptTQAq2ihfl0NX4bFdpjcxA5b6ERdXTjTb2q0Tr1oI5
-	WkbEwism3PUMkZ0TQq7Zg/QqCht/rWzAm3/ZnaE/JOJJp6Rp4SIiadsS8rVw0TaQEly6/g1maEO
-	BFy4SgC2lJS/3m/LiO8ss6kpMRjgOZZSLSlFth6Nv8Lwby5wVPwBhRFoNGrBNDC4cekBwMsWD3V
-	xkIzkQEHL1n1G0gk2a2wRd6iwOU73eNuNHMkMQdA=
-X-Google-Smtp-Source: AGHT+IHE4ylXr5wj9rjoDDdEAdrOKOzyOqAgxtAzQmMsh7srA/unOgs3g1o+v7xsydxd6r4ya+2ypQ==
-X-Received: by 2002:a05:6000:4182:b0:3a4:f6ba:51c8 with SMTP id ffacd0b85a97d-3a8f482bc72mr12538950f8f.14.1751298968999;
-        Mon, 30 Jun 2025 08:56:08 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:abe8:a49c:efe7:4dfb? ([2a01:e0a:3d9:2080:abe8:a49c:efe7:4dfb])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a892e5979dsm10736736f8f.75.2025.06.30.08.56.07
+        d=1e100.net; s=20230601; t=1751298980; x=1751903780;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=D0Fl5LewKcARD32i6DxdJAAOcn3ZiRpvJ9i+gosfreA=;
+        b=ldYMbtqfa4IhJvYwykC0qSNCtcoMnEVMxuAJen30aBTzvLsVjQbIHOubYdLhVkL4i9
+         6BsclEkXbGkXTusa53MlYH7t86ctjTc+uCs9R263icmKYBKrQfKsBIw0OELPGY0qKIWY
+         41jtVBIgGRscDerFo1da4Ab5ktOqJ0rL+HQObugmmRGKp9C4//vS9Z5rGpuajunhzLfn
+         hWdKI6IG4Kx6IiaVgLRsTGFZip2qx/Fh16ZZVIiStp6GhG7MsAdNeUwxnzbA0CDTuxt8
+         Gdl7ueVBpswPFXXUEx3YdvdjoRpEVHkSKxwy3kvfmExoDnYIqsqpcfUD4Sg0NTRKLauz
+         L6SA==
+X-Forwarded-Encrypted: i=1; AJvYcCX7QuEwdhREqdksVzVu8d7sXz5gPqh2uaXmeuCSa1nYE2y3Zlv/9mIIvxoYx7je2YlT6dZFuaOHmw73xsh3@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz+sQYtSrdmmSdV8r6E78/zGUu43iEV34qvtZ5XXUVsVMDeW/+y
+	qQznw8u1uP57qRWtjIgiAwdZT+ftodkwvfB4PuG9Z3tAAKdOnZtiyJJd7JVGjSdZ52ZhJSfdwXO
+	eora/wRNq0dr55HvTEd2mtkutCK0yLAwd8bSRJ2vcvku54tvMyb5vNw8iiRztuxxCWQ+e
+X-Gm-Gg: ASbGncu4JyY92IreCeD/EH9022MgP86J6QxBfdQHzG2o6Pczalf26HyBQz7Cju+TkG5
+	8mG9gNhmVNKnsLj3JfxxqxxLehvzBmPNWGdyH4yLOY6MATY4Z97VLWA1rtmrskbzOMOlB4FzjVV
+	VIvAfQvGOhUQfWhadcAhmKf1lagxqkXAiUl5VjoLo3CtzWdZh458clo20Yo1uKbHsHI3g11ERT6
+	SxoJdY/LyOiwz5Wcg8C7XTadH5vfGaQ9/6iHBnFVCtberuqOvLvwzm3aR84KwiVLz+7X+G0VqsD
+	Fs3dGgwiigHg8i70+tQ5xWOohI+mouYCSJpAZErYBArD0QR3XvXtW8sSzWhshnpw1DvZbTs/rSb
+	Iw/D+5Z5f
+X-Received: by 2002:a05:620a:690d:b0:7ce:e99e:bc87 with SMTP id af79cd13be357-7d44c21cdd8mr551566785a.6.1751298979909;
+        Mon, 30 Jun 2025 08:56:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEmRmTmwWyC/XAvDEJJwe50p+zxnhcywcSEGqHClp/yN/qqSKZwbpDjpuECX6rKycQCNqvXGA==
+X-Received: by 2002:a05:620a:690d:b0:7ce:e99e:bc87 with SMTP id af79cd13be357-7d44c21cdd8mr551564485a.6.1751298979335;
+        Mon, 30 Jun 2025 08:56:19 -0700 (PDT)
+Received: from [192.168.1.114] (83.9.29.190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae36ffe2981sm484430166b.120.2025.06.30.08.56.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Jun 2025 08:56:07 -0700 (PDT)
-Message-ID: <cb53a9d0-c503-4faf-b17a-ee2ab0764f22@linaro.org>
-Date: Mon, 30 Jun 2025 17:56:07 +0200
+        Mon, 30 Jun 2025 08:56:18 -0700 (PDT)
+Message-ID: <aaaa42ed-989e-43ee-8d45-2908f52e8584@oss.qualcomm.com>
+Date: Mon, 30 Jun 2025 17:56:16 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,159 +90,76 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v3 1/5] media: dt-bindings: add non-pixel property in iris
- schema
-From: Neil Armstrong <neil.armstrong@linaro.org>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
- <20250627-video_cb-v3-1-51e18c0ffbce@quicinc.com>
- <018415b4-ce63-4baa-b8c5-38dc7f5a1fd2@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <018415b4-ce63-4baa-b8c5-38dc7f5a1fd2@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH] drm/ci: Remove sdm845/cheza jobs
+To: rob.clark@oss.qualcomm.com, Doug Anderson <dianders@chromium.org>,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Helen Koike <helen.fornazier@gmail.com>,
+        Vignesh Raman <vignesh.raman@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20250629135843.30097-1-robin.clark@oss.qualcomm.com>
+ <92314f06-e6a8-4882-a31c-914438d7761d@oss.qualcomm.com>
+ <CACSVV01AUOp7vZ7kLt+gwxvfv4CYLtAQg6MhUccygbi1NpVJMg@mail.gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <CACSVV01AUOp7vZ7kLt+gwxvfv4CYLtAQg6MhUccygbi1NpVJMg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=C4TpyRP+ c=1 sm=1 tr=0 ts=6862b3a4 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=fKQzr7EGRj+VoE0XNsDNvQ==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=EUspDBNiAAAA:8 a=_ijeUKsmqluwEKimemEA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: exvC3ucRme2EcZIFxCoZ0QZcgppRJ9iE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjMwMDEzMCBTYWx0ZWRfXz/CbaGXIWQhk
+ OG2XTvFLs754UFTNipTz/ag227UWFO0xGYzYM0ocdrujrmh71yCf5tLSsSo/MqM4PUa1lSlYW4z
+ L/ddyvT6rs40FdpIgqOqU4gucEO3/kCoTMNHHdvyocR+yFC0P5IFYnIdxmiGsVr5CVvPOmeroXN
+ AYaMxiJ9jy8yevAKP0/j1wbTOqHLtXbL6GEzdtpSsgffClskRAmr8lDV7dmUFYW7QW0UghgZo78
+ FV6T+gSx/nS81vmuqv/EG+jArl9X3Hzd5I/lhxd/FkCMXbGW0M6v2Lmwo8dRAwSES7CvvTSBtvh
+ K9dCYnHabhdK9rCNax58H1VUY2PpVwYrl/dKY++xT9otNFEoQQi8AvwQATpdasLWn+67LUoS38j
+ pMgefLHgr3hW1DddjWDRtL4WpdIGO6qmRa5iLqxSU/3io1rI5YXXrJbDbEjL2lNhIpANwvoC
+X-Proofpoint-GUID: exvC3ucRme2EcZIFxCoZ0QZcgppRJ9iE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-30_04,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ clxscore=1015 priorityscore=1501 spamscore=0 mlxscore=0 mlxlogscore=805
+ adultscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506300130
 
-On 30/06/2025 17:48, neil.armstrong@linaro.org wrote:
-> On 27/06/2025 17:48, Vikash Garodia wrote:
->> Existing definition limits the IOVA to an addressable range of 4GiB, and
->> even within that range, some of the space is used by IO registers,
->> thereby limiting the available IOVA to even lesser. Video hardware is
->> designed to emit different stream-ID for pixel and non-pixel buffers,
->> thereby introduce a non-pixel sub node to handle non-pixel stream-ID.
->>
->> With this, both iris and non-pixel device can have IOVA range of 0-4GiB
->> individually. Certain video usecases like higher video concurrency needs
->> IOVA higher than 4GiB.
->>
->> Add reference to the reserve-memory schema, which defines reserved IOVA
->> regions that are *excluded* from addressable range. Video hardware
->> generates different stream IDs based on the predefined range of IOVA
->> addresses. Thereby IOVA addresses for firmware and data buffers need to
->> be non overlapping. For ex. 0x0-0x25800000 address range is reserved for
->> firmware stream-ID, while non-pixel (bitstream) stream-ID can be
->> generated by hardware only when bitstream buffers IOVA address is from
->> 0x25800000-0xe0000000.
->> Non-pixel stream-ID can now be part of the new sub-node, hence iommus in
->> iris node can have either 1 entry for pixel stream-id or 2 entries for
->> pixel and non-pixel stream-ids.
->>
->> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->> ---
->>   .../bindings/media/qcom,sm8550-iris.yaml           | 40 ++++++++++++++++++++--
->>   1 file changed, 38 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
->> index c79bf2101812d83b99704f38b7348a9f728dff44..4dda2c9ca1293baa7aee3b9ee10aff38d280fe05 100644
->> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
->> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
->> @@ -65,10 +65,31 @@ properties:
->>         - const: core
->>     iommus:
->> +    minItems: 1
->>       maxItems: 2
->>     dma-coherent: true
->> +  non-pixel:
->> +    type: object
->> +    additionalProperties: false
->> +
->> +    description:
->> +      Non pixel context bank is needed when video hardware have distinct iommus
->> +      for non pixel buffers. Non pixel buffers are mainly compressed and
->> +      internal buffers.
->> +
->> +    properties:
->> +      iommus:
->> +        maxItems: 1
->> +
->> +      memory-region:
->> +        maxItems: 1
->> +
->> +    required:
->> +      - iommus
->> +      - memory-region
->> +
->>     operating-points-v2: true
->>     opp-table:
->> @@ -86,6 +107,7 @@ required:
->>   allOf:
->>     - $ref: qcom,venus-common.yaml#
->> +  - $ref: /schemas/reserved-memory/reserved-memory.yaml
->>     - if:
->>         properties:
->>           compatible:
->> @@ -117,6 +139,16 @@ examples:
->>       #include <dt-bindings/power/qcom-rpmpd.h>
->>       #include <dt-bindings/power/qcom,rpmhpd.h>
->> +    reserved-memory {
->> +      #address-cells = <2>;
->> +      #size-cells = <2>;
->> +
->> +      iris_resv: reservation-iris {
->> +        iommu-addresses = <&iris_non_pixel 0x0 0x0 0x0 0x25800000>,
->> +                          <&iris_non_pixel 0x0 0xe0000000 0x0 0x20000000>;
->> +      };
->> +    };
->> +
->>       video-codec@aa00000 {
->>           compatible = "qcom,sm8550-iris";
->>           reg = <0x0aa00000 0xf0000>;
->> @@ -144,12 +176,16 @@ examples:
->>           resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>;
->>           reset-names = "bus";
->> -        iommus = <&apps_smmu 0x1940 0x0000>,
->> -                 <&apps_smmu 0x1947 0x0000>;
->> +        iommus = <&apps_smmu 0x1947 0x0000>;
->>           dma-coherent;
->>           operating-points-v2 = <&iris_opp_table>;
->> +        iris_non_pixel: non-pixel {
-> 
-> You can drop the label for this node.
 
-Sorry forget this....
 
-> 
-> Neil
-> 
->> +            iommus = <&apps_smmu 0x1940 0x0000>;
->> +            memory-region = <&iris_resv>;
->> +        };
->> +
->>           iris_opp_table: opp-table {
->>               compatible = "operating-points-v2";
+On 30-Jun-25 15:46, Rob Clark wrote:
+> On Mon, Jun 30, 2025 at 3:34 AM Konrad Dybcio
+> <konrad.dybcio@oss.qualcomm.com> wrote:
 >>
+>>
+>>
+>> On 29-Jun-25 15:58, Rob Clark wrote:
+>>> These runners are no more.  So remove the jobs.
+>>>
+>>> Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+>>> ---
+>>
+>> Do we have anyone using cheza at all anymore then?
 > 
+> Probably not
 
+Adding +Doug +Akhil +Jessica, if we don't have any users, we may
+get rid of it upstream, as it never made it to the outside-outside
+world..
+
+Konrad
 
