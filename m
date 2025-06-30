@@ -1,254 +1,303 @@
-Return-Path: <linux-arm-msm+bounces-63090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97086AEE0FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 16:38:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9AD6AEE15D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 16:48:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 769AB7AB042
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 14:36:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6199D1891148
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jun 2025 14:46:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B6FA2BFC80;
-	Mon, 30 Jun 2025 14:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D78228CF74;
+	Mon, 30 Jun 2025 14:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="aAzFqWMX"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uJz4Uok9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACA629CB48;
-	Mon, 30 Jun 2025 14:33:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8DB28CF5F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 14:44:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751294030; cv=none; b=Ic0SP07izBvkABCb1ETeuPaNK/rcpBWZboWoSuoSYGYGNMEen/vWc90RA4xXB1LVNoZKsU0C86plpFm0FdTDqJFJSe/HzeiQ2AqvNUevhQByI5Iy+clV1/zmrHWq1gzyAYT+aClgztomfroSIE9OeYcQkjIc6AM2Lj1KUPV0mXQ=
+	t=1751294664; cv=none; b=bBeRkWRS68FhPgQf3x0BtbTSgJAONPdNioRDMzZE6TRzyc6o0Ir+GBYkPxZuvX0eYKQtp/rGf6pYOctPFItjpVCZACxNNAy3qzXUGiubtgwnfTCF3yzTnQxjFnoP6Sdb1z7UK6BJH6p0M4+ahOahzi7hDupJnUsKzxIpN7Gu660=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751294030; c=relaxed/simple;
-	bh=PcT8UWZkjwSHUw9cPlxhjyf3U8fcAXUHvrl9KFENEUg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i+HzddYgpfnzrtwOHxPTsgZucgwq8AGkmhPCmL3WML6LtBbFKWr9qd5i9+tdQvmEyOC1DCMrLw3zKsKiv/9+Oy5V/0g+BFvDMWvRhhaPHT7P0gYLwPVZiNt5iaLgUyCPZcuw/QNDaymXOUZrdftIvTQnK/7jEJOvtI9RKKdgcPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=aAzFqWMX; arc=none smtp.client-ip=217.70.183.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id D553644318;
-	Mon, 30 Jun 2025 14:33:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1751294026;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Apu6uy+C7r9DZpfPo98S0/i/narg5WnjIZELOVTCkSI=;
-	b=aAzFqWMXD1X9xkCWnHzTWkW3Xcsmpy7473yg4fIS7lsbpC7HfaNpfTevcyoYFlj+S/Q0Qt
-	7N8w5T/ONlh+9if4nXYORdmB+MkdiYsoEkMXOTlwCoxiRGziJrWLfOCgrW7N3b95t40Kod
-	QQ634oc9eXpRgebWgPkyLV2KTWQO0gm7fW+XnN9FG4azLMtrGX/fx5ScR5lx+RbqijBAJJ
-	qIW8l1TyijL+ocOOv4mcpSFAWWB6cqP49/uqUA6Gs9hnpdhOaahnt/7KCL7p1uj+nEGvww
-	fXNfhKI3/RfqMrboVk4UpPbpksLucbG14kSq1PtmNKa3p82oF2tsrUCxWYKy6g==
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: davem@davemloft.net
-Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	thomas.petazzoni@bootlin.com,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Russell King <linux@armlinux.org.uk>,
-	linux-arm-kernel@lists.infradead.org,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	=?UTF-8?q?K=C3=B6ry=20Maincent?= <kory.maincent@bootlin.com>,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	=?UTF-8?q?Nicol=C3=B2=20Veronese?= <nicveronese@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	mwojtas@chromium.org,
-	Antoine Tenart <atenart@kernel.org>,
-	devicetree@vger.kernel.org,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: [PATCH net-next v7 15/15] Documentation: networking: Document the phy_port infrastructure
-Date: Mon, 30 Jun 2025 16:33:14 +0200
-Message-ID: <20250630143315.250879-16-maxime.chevallier@bootlin.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250630143315.250879-1-maxime.chevallier@bootlin.com>
-References: <20250630143315.250879-1-maxime.chevallier@bootlin.com>
+	s=arc-20240116; t=1751294664; c=relaxed/simple;
+	bh=Cpd21zH982h2AGMdmVSF+i8x16jkxQRASXJ7Tm/3Uxs=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=RXeA0Pcm0HYTvXY77yaCO8wgaldR08zy17Zk6FMtY+7mbSrGA1xpBdWP/DrxFkatbgcZcteqMSApW3FjYf1i2ljZFeeoOmcshd0kIrQhpxdBIa6DOA4FoXSKlS2cydKvrZPAP7gJyQBX6K9VIW+7SEjpcTKPh1uiAXRTz3p6Cek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uJz4Uok9; arc=none smtp.client-ip=209.85.210.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-748f13ef248so1965704b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jun 2025 07:44:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1751294662; x=1751899462; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WDNBu9w19s+kAcSrRe9w5bRPZMQtJhhAx+mG+VBvNKk=;
+        b=uJz4Uok9Mttsx8ypH8TQMpxQ+lGXa//kM2e8MgCgGwHBJOLnLi9bdNtdr7lf0z5IUU
+         K88uKfl7yVfso9PNuxMcrxRZ9630SyJh2Si7mq1JSlqyTw2Q9yEILnnYtndwmrExskuP
+         gBtY2swpCD3EQm6DYI0KX37tNVqpxlNPzoO92hsoVlU8eCjEQr5G6jSR/54xARcPr5Ah
+         2YaZ851CCrPM2eNSA5RA/CsdL2msr6yjPGzhS0vULJshYNpFxG9vEkNCQIFeiJMfGDHX
+         KfH10HU7tyb3hMbfkv+MLIDPBsx/CEN7sRG9ce6LJC5mFm6TRhI2/bbIAy88QzBIwafj
+         2D3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751294662; x=1751899462;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=WDNBu9w19s+kAcSrRe9w5bRPZMQtJhhAx+mG+VBvNKk=;
+        b=qoYJeW8eeErllnB+PBkBTxo+mv/dc28M2ZrOA1D9zbugNVZ/ON4gSxWhw2DeIK74Ix
+         I4oDW0jJW6OCwbnCjqWmhOOH/zRUwxdbxMhEJX6S18nfouCdLM/1/fJyPuZ3zwRzpNL6
+         KwY+fCAFOTkHbZ5O1zbbOS69t0wzdhASak7KRq3RoE33Q4fmbLZKeDy5D4aJ6jnJvh96
+         Y4by1xvEULPukcDGaTcLsELQCPc4QCiK25W35kf5d9wPwoZamXqbIHrR8nOHITZrENU6
+         /M+DX1qA1QkE/zUBG3NQEr2fNzyn1MO3Nid6HiuG2ZR710ZbygpGSy/L814/M8GIiU9k
+         O/hg==
+X-Forwarded-Encrypted: i=1; AJvYcCVi0dIsDuBB1PuxD4HbCsVK5+yOf+leRPnTmVrCjQiyYMv9LKcQli78Ez69jfnF2C1vx46O3ZFP6JT9m71d@vger.kernel.org
+X-Gm-Message-State: AOJu0YzV5/Ve33TSbIuKW0fmavE0EmeD8i2dDdc0zbUl33eayTwWhJ9z
+	hRwced4LVfMQFf5ox/7BuWESzKFkzU1Vy9XkIU7dRnDiIEVGTunK4yBG29miIQYcr9wBKnteqpB
+	yAQUK82tLlp4+oM5mVazwGkyF5w==
+X-Google-Smtp-Source: AGHT+IFunOp0qoSe6XZoJHonOUytaiBByj0BZgN04binEVTRRYUnTm4vU2sNBIU0+S9DVAea3Y9BNG9BxDYxIWzIkQ==
+X-Received: from pghp6.prod.google.com ([2002:a63:fe06:0:b0:b34:c533:cd4e])
+ (user=ackerleytng job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a21:4683:b0:220:245d:a30b with SMTP id adf61e73a8af0-220a17e9d75mr20279198637.38.1751294661741;
+ Mon, 30 Jun 2025 07:44:21 -0700 (PDT)
+Date: Mon, 30 Jun 2025 07:44:20 -0700
+In-Reply-To: <CA+EHjTxECJ3=ywbAPvpdA1-pm=stXWqU75mgG1epWaXiUr0raw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudelhecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepofgrgihimhgvucevhhgvvhgrlhhlihgvrhcuoehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeevgedtffelffelveeuleelgfejfeevvdejhfehgeefgfffvdefteegvedutefftdenucfkphepvdgrtddumegtsgduleemkegugeehmeegledttdemieehieekmedvlegsudemlegvfhehmegvkegtjeenucevlhhushhtvghrufhiiigvpedufeenucfrrghrrghmpehinhgvthepvdgrtddumegtsgduleemkegugeehmeegledttdemieehieekmedvlegsudemlegvfhehmegvkegtjedphhgvlhhopehfvgguohhrrgdrhhhomhgvpdhmrghilhhfrhhomhepmhgrgihimhgvrdgthhgvvhgrlhhlihgvrhessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepfedupdhrtghpthhtohepuggrvhgvmhesuggrvhgvmhhlohhfthdrnhgvthdprhgtphhtthhopehmrgigihhmvgdrtghhvghvrghllhhivghrsegsohhothhlihhnrdgtohhmpdhrtghpthhtohepnhgvthguvghvsehvghgvrhdrk
- hgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhsmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehthhhomhgrshdrphgvthgriiiiohhnihessghoohhtlhhinhdrtghomhdprhgtphhtthhopegrnhgurhgvfieslhhunhhnrdgthhdprhgtphhtthhopehkuhgsrgeskhgvrhhnvghlrdhorhhg
-X-GND-Sasl: maxime.chevallier@bootlin.com
+Mime-Version: 1.0
+References: <20250611133330.1514028-1-tabba@google.com> <20250611133330.1514028-11-tabba@google.com>
+ <aEyhHgwQXW4zbx-k@google.com> <diqz1pr8lndp.fsf@ackerleytng-ctop.c.googlers.com>
+ <diqza55tjkk1.fsf@ackerleytng-ctop.c.googlers.com> <CA+EHjTxECJ3=ywbAPvpdA1-pm=stXWqU75mgG1epWaXiUr0raw@mail.gmail.com>
+Message-ID: <diqzv7odjnln.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [PATCH v12 10/18] KVM: x86/mmu: Handle guest page faults for
+ guest_memfd with shared memory
+From: Ackerley Tng <ackerleytng@google.com>
+To: Fuad Tabba <tabba@google.com>
+Cc: Sean Christopherson <seanjc@google.com>, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-mm@kvack.org, kvmarm@lists.linux.dev, pbonzini@redhat.com, 
+	chenhuacai@kernel.org, mpe@ellerman.id.au, anup@brainfault.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, willy@infradead.org, 
+	akpm@linux-foundation.org, xiaoyao.li@intel.com, yilun.xu@intel.com, 
+	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com, 
+	dmatlack@google.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com, 
+	ira.weiny@intel.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-This documentation aims at describing the main goal of the phy_port
-infrastructure.
+Fuad Tabba <tabba@google.com> writes:
 
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
----
- Documentation/networking/index.rst    |   1 +
- Documentation/networking/phy-port.rst | 111 ++++++++++++++++++++++++++
- MAINTAINERS                           |   1 +
- 3 files changed, 113 insertions(+)
- create mode 100644 Documentation/networking/phy-port.rst
+> Hi Ackerley,
+>
+> On Fri, 27 Jun 2025 at 16:01, Ackerley Tng <ackerleytng@google.com> wrote=
+:
+>>
+>> Ackerley Tng <ackerleytng@google.com> writes:
+>>
+>> > [...]
+>>
+>> >>> +/*
+>> >>> + * Returns true if the given gfn's private/shared status (in the Co=
+Co sense) is
+>> >>> + * private.
+>> >>> + *
+>> >>> + * A return value of false indicates that the gfn is explicitly or =
+implicitly
+>> >>> + * shared (i.e., non-CoCo VMs).
+>> >>> + */
+>> >>>  static inline bool kvm_mem_is_private(struct kvm *kvm, gfn_t gfn)
+>> >>>  {
+>> >>> -   return IS_ENABLED(CONFIG_KVM_GMEM) &&
+>> >>> -          kvm_get_memory_attributes(kvm, gfn) & KVM_MEMORY_ATTRIBUT=
+E_PRIVATE;
+>> >>> +   struct kvm_memory_slot *slot;
+>> >>> +
+>> >>> +   if (!IS_ENABLED(CONFIG_KVM_GMEM))
+>> >>> +           return false;
+>> >>> +
+>> >>> +   slot =3D gfn_to_memslot(kvm, gfn);
+>> >>> +   if (kvm_slot_has_gmem(slot) && kvm_gmem_memslot_supports_shared(=
+slot)) {
+>> >>> +           /*
+>> >>> +            * Without in-place conversion support, if a guest_memfd=
+ memslot
+>> >>> +            * supports shared memory, then all the slot's memory is
+>> >>> +            * considered not private, i.e., implicitly shared.
+>> >>> +            */
+>> >>> +           return false;
+>> >>
+>> >> Why!?!?  Just make sure KVM_MEMORY_ATTRIBUTE_PRIVATE is mutually excl=
+usive with
+>> >> mappable guest_memfd.  You need to do that no matter what.
+>> >
+>> > Thanks, I agree that setting KVM_MEMORY_ATTRIBUTE_PRIVATE should be
+>> > disallowed for gfn ranges whose slot is guest_memfd-only. Missed that
+>> > out. Where do people think we should check the mutual exclusivity?
+>> >
+>> > In kvm_supported_mem_attributes() I'm thiking that we should still all=
+ow
+>> > the use of KVM_MEMORY_ATTRIBUTE_PRIVATE for other non-guest_memfd-only
+>> > gfn ranges. Or do people think we should just disallow
+>> > KVM_MEMORY_ATTRIBUTE_PRIVATE for the entire VM as long as one memslot =
+is
+>> > a guest_memfd-only memslot?
+>> >
+>> > If we check mutually exclusivity when handling
+>> > kvm_vm_set_memory_attributes(), as long as part of the range where
+>> > KVM_MEMORY_ATTRIBUTE_PRIVATE is requested to be set intersects a range
+>> > whose slot is guest_memfd-only, the ioctl will return EINVAL.
+>> >
+>>
+>> At yesterday's (2025-06-26) guest_memfd upstream call discussion,
+>>
+>> * Fuad brought up a possible use case where within the *same* VM, we
+>>   want to allow both memslots that supports and does not support mmap in
+>>   guest_memfd.
+>> * Shivank suggested a concrete use case for this: the user wants a
+>>   guest_memfd memslot that supports mmap just so userspace addresses can
+>>   be used as references for specifying memory policy.
+>> * Sean then added on that allowing both types of guest_memfd memslots
+>>   (support and not supporting mmap) will allow the user to have a second
+>>   layer of protection and ensure that for some memslots, the user
+>>   expects never to be able to mmap from the memslot.
+>>
+>> I agree it will be useful to allow both guest_memfd memslots that
+>> support and do not support mmap in a single VM.
+>>
+>> I think I found an issue with flags, which is that GUEST_MEMFD_FLAG_MMAP
+>> should not imply that the guest_memfd will provide memory for all guest
+>> faults within the memslot's gfn range (KVM_MEMSLOT_GMEM_ONLY).
+>>
+>> For the use case Shivank raised, if the user wants a guest_memfd memslot
+>> that supports mmap just so userspace addresses can be used as references
+>> for specifying memory policy for legacy Coco VMs where shared memory
+>> should still come from other sources, GUEST_MEMFD_FLAG_MMAP will be set,
+>> but KVM can't fault shared memory from guest_memfd. Hence,
+>> GUEST_MEMFD_FLAG_MMAP should not imply KVM_MEMSLOT_GMEM_ONLY.
+>>
+>> Thinking forward, if we want guest_memfd to provide (no-mmap) protection
+>> even for non-CoCo VMs (such that perhaps initial VM image is populated
+>> and then VM memory should never be mmap-ed at all), we will want
+>> guest_memfd to be the source of memory even if GUEST_MEMFD_FLAG_MMAP is
+>> not set.
+>>
+>> I propose that we should have a single VM-level flag to solve this (in
+>> line with Sean's guideline that we should just move towards what we want
+>> and not support non-existent use cases): something like
+>> KVM_CAP_PREFER_GMEM.
+>>
+>> If KVM_CAP_PREFER_GMEM_MEMORY is set,
+>>
+>> * memory for any gfn range in a guest_memfd memslot will be requested
+>>   from guest_memfd
+>> * any privacy status queries will also be directed to guest_memfd
+>> * KVM_MEMORY_ATTRIBUTE_PRIVATE will not be a valid attribute
+>>
+>> KVM_CAP_PREFER_GMEM_MEMORY will be orthogonal with no validation on
+>> GUEST_MEMFD_FLAG_MMAP, which should just purely guard mmap support in
+>> guest_memfd.
+>>
+>> Here's a table that I set up [1]. I believe the proposed
+>> KVM_CAP_PREFER_GMEM_MEMORY (column 7) lines up with requirements
+>> (columns 1 to 4) correctly.
+>>
+>> [1] https://lpc.events/event/18/contributions/1764/attachments/1409/3710=
+/guest_memfd%20use%20cases%20vs%20guest_memfd%20flags%20and%20privacy%20tra=
+cking.pdf
+>
+> I'm not sure this naming helps. What does "prefer" imply here? If the
+> caller from user space does not prefer, does it mean that they
+> mind/oppose?
+>
 
-diff --git a/Documentation/networking/index.rst b/Documentation/networking/index.rst
-index ac90b82f3ce9..f60acc06e3f7 100644
---- a/Documentation/networking/index.rst
-+++ b/Documentation/networking/index.rst
-@@ -96,6 +96,7 @@ Contents:
-    packet_mmap
-    phonet
-    phy-link-topology
-+   phy-port
-    pktgen
-    plip
-    ppp_generic
-diff --git a/Documentation/networking/phy-port.rst b/Documentation/networking/phy-port.rst
-new file mode 100644
-index 000000000000..6d9d46ebe438
---- /dev/null
-+++ b/Documentation/networking/phy-port.rst
-@@ -0,0 +1,111 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+.. _phy_port:
-+
-+=================
-+Ethernet ports
-+=================
-+
-+This document is a basic description of the phy_port infrastructure,
-+introduced to represent physical interfaces of Ethernet devices.
-+
-+Without phy_port, we already have quite a lot of information about what the
-+media-facing interface of a NIC can do and looks like, through the
-+:c:type:`struct ethtool_link_ksettings <ethtool_link_ksettings>` attributes,
-+which includes :
-+
-+ - What the NIC can do through the :c:member:`supported` field
-+ - What the Link Partner advertises through :c:member:`lp_advertising`
-+ - Which features we're advertising through :c:member:`advertising`
-+
-+We also have info about the number of lanes and the PORT type. These settings
-+are built by aggregating together information reported by various devices that
-+are sitting on the link :
-+
-+  - The NIC itself, through the :c:member:`get_link_ksettings` callback
-+  - Precise information from the MAC and PCS by using phylink in the MAC driver
-+  - Information reported by the PHY device
-+  - Information reported by an SFP module (which can itself include a PHY)
-+
-+This model however starts showing its limitations when we consider devices that
-+have more than one media interface. In such a case, only information about the
-+actively used interface is reported, and it's not possible to know what the
-+other interfaces can do. In fact, we have very few information about whether or
-+not there are any other media interfaces.
-+
-+The goal of the phy_port representation is to provide a way of representing a
-+physical interface of a NIC, regardless of what is driving the port (NIC through
-+a firmware, SFP module, Ethernet PHY).
-+
-+Multi-port interfaces examples
-+==============================
-+
-+Several cases of multi-interface NICs have been observed so far :
-+
-+Internal MII Mux::
-+
-+  +------------------+
-+  | SoC              |
-+  |          +-----+ |           +-----+
-+  | +-----+  |     |-------------| PHY |
-+  | | MAC |--| Mux | |   +-----+ +-----+
-+  | +-----+  |     |-----| SFP |
-+  |          +-----+ |   +-----+
-+  +------------------+
-+
-+Internal Mux with internal PHY::
-+
-+  +------------------------+
-+  | SoC                    |
-+  |          +-----+ +-----+
-+  | +-----+  |     |-| PHY |
-+  | | MAC |--| Mux | +-----+   +-----+
-+  | +-----+  |     |-----------| SFP |
-+  |          +-----+       |   +-----+
-+  +------------------------+
-+
-+External Mux::
-+
-+  +---------+
-+  | SoC     |  +-----+  +-----+
-+  |         |  |     |--| PHY |
-+  | +-----+ |  |     |  +-----+
-+  | | MAC |----| Mux |  +-----+
-+  | +-----+ |  |     |--| PHY |
-+  |         |  +-----+  +-----+
-+  |         |     |
-+  |    GPIO-------+
-+  +---------+
-+
-+Double-port PHY::
-+
-+  +---------+
-+  | SoC     | +-----+
-+  |         | |     |--- RJ45
-+  | +-----+ | |     |
-+  | | MAC |---| PHY |   +-----+
-+  | +-----+ | |     |---| SFP |
-+  +---------+ +-----+   +-----+
-+
-+phy_port aims at providing a path to support all the above topologies, by
-+representing the media interfaces in a way that's agnostic to what's driving
-+the interface. the struct phy_port object has its own set of callback ops, and
-+will eventually be able to report its own ksettings::
-+
-+             _____      +------+
-+            (     )-----| Port |
-+ +-----+   (       )    +------+
-+ | MAC |--(   ???   )
-+ +-----+   (       )    +------+
-+            (_____)-----| Port |
-+                        +------+
-+
-+Next steps
-+==========
-+
-+As of writing this documentation, only ports controlled by PHY devices are
-+supported. The next steps will be to add the Netlink API to expose these
-+to userspace and add support for raw ports (controlled by some firmware, and directly
-+managed by the NIC driver).
-+
-+Another parallel task is the introduction of a MII muxing framework to allow the
-+control of non-PHY driver multi-port setups.
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 10d7548d440e..2db2b0d22c6a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -8950,6 +8950,7 @@ F:	Documentation/devicetree/bindings/net/ethernet-connector.yaml
- F:	Documentation/devicetree/bindings/net/ethernet-phy.yaml
- F:	Documentation/devicetree/bindings/net/mdio*
- F:	Documentation/devicetree/bindings/net/qca,ar803x.yaml
-+F:	Documentation/networking/phy-port.rst
- F:	Documentation/networking/phy.rst
- F:	drivers/net/mdio/
- F:	drivers/net/mdio/acpi_mdio.c
--- 
-2.49.0
+Sorry, bad naming.
 
+I used "prefer" because some memslots may not have guest_memfd at
+all. To clarify, a "guest_memfd memslot" is a memslot that has some
+valid guest_memfd fd and offset. The memslot may also have a valid
+userspace_addr configured, either mmap-ed from the same guest_memfd fd
+or from some other backing memory (for legacy CoCo VMs), or NULL for
+userspace_addr.
+
+I meant to have the CAP enable KVM_MEMSLOT_GMEM_ONLY of this patch
+series for all memslots that have some valid guest_memfd fd and offset,
+except if we have a VM-level CAP, KVM_MEMSLOT_GMEM_ONLY should be moved
+to the VM level.
+
+> Regarding the use case Shivank mentioned, mmaping for policy, while
+> the use case is a valid one, the raison d'=C3=AAtre of mmap is to map int=
+o
+> user space (i.e., fault it in). I would argue that if you opt into
+> mmap, you are doing it to be able to access it.
+
+The above is in conflict with what was discussed on 2025-06-26 IIUC.
+
+Shivank brought up the case of enabling mmap *only* to be able to set
+mempolicy using the VMAs, and Sean (IIUC) later agreed we should allow
+userspace to only enable mmap but still disable faults, so that userspace
+is given additional protection, such that even if a (compromised)
+userspace does a private-to-shared conversion, userspace is still not
+allowed to fault in the page.
+
+Hence, if we want to support mmaping just for policy and continue to
+restrict faulting, then GUEST_MEMFD_FLAG_MMAP should not imply
+KVM_MEMSLOT_GMEM_ONLY.
+
+> To me, that seems like
+> something that merits its own flag, rather than mmap. Also, I recall
+> that we said that later on, with inplace conversion, that won't be
+> even necessary.
+
+On x86, as of now I believe we're going with an ioctl that does *not*
+check what the guest prefers and will go ahead to perform the
+private-to-shared conversion, which will go ahead to update
+shareability.
+
+> In other words, this would also be trying to solve a
+> problem that we haven't yet encountered and that we have a solution
+> for anyway.
+>
+
+So we don't have a solution for the use case where userspace wants to
+mmap but never fault for userspace's protection from stray
+private-to-shared conversions, unless we decouple GUEST_MEMFD_FLAG_MMAP
+and KVM_MEMSLOT_GMEM_ONLY.
+
+> I think that, unless anyone disagrees, is to go ahead with the names
+> we discussed in the last meeting. They seem to be the ones that make
+> the most sense for the upcoming use cases.
+>
+
+We could also discuss if we really want to support the use case where
+userspace wants to mmap but never fault for userspace's protection from
+stray private-to-shared conversions.
+
+> Cheers,
+> /fuad
+>
+>
+>
+>> > [...]
+>>
 
