@@ -1,78 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-63249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9933AEFF7A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 18:20:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00344AEFF87
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 18:21:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 113731C05757
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 16:18:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE21A3BC4C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 16:20:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 100A21F03D7;
-	Tue,  1 Jul 2025 16:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F30FE2797B2;
+	Tue,  1 Jul 2025 16:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Whd5ip/9"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LIayuCJZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB771F4CBF
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 16:17:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BDF279355
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 16:20:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751386650; cv=none; b=EcPizXPIkkgn+YCj8WIdUA5o41ra9Bo6xHk+PrpNoFRpo8QhFt+bCgOYv0N495r2ECPSUztsXWneQm+l5F65C922ACqWVi6SLXs34ZyivrGTsCz7xO0U/9qPBq2bpfa7XPCHjJ3LoTbeYf08nZjiaaeXmGbakg2FyL7cRZrrnW4=
+	t=1751386820; cv=none; b=hBVVNnU0MAgT2jRn7OTi0ETvEuxDn/K4iL9srI18bXwLe4Cg/lqPQx8gnsDTDY00ZX3xEcnwI5quAtWnhipfIGHK+4PyMobTk26T7+T7wgEGCIjLs7Qxoyo05IFaECNrjSKJozBT47PZI1nSBQfrgCzhYySooFV6dMemX5hGE1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751386650; c=relaxed/simple;
-	bh=LoZP6vnPKqD4j5OLz6FpScwWiS67X0cjWy4fAx7z3No=;
+	s=arc-20240116; t=1751386820; c=relaxed/simple;
+	bh=3M5nB2E9YcHQNnHX70EgopsKFaxdGgt8GZ249cYL49w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T1Ol1c7JyzUCX8c9B9LqG3Je3KoeIRaK63a6xrgjmDvIEg9iRRoqLVBoquhZXCg9AHGE/JcroPG2+SGaVgOKVMDuLr1cTYaF1wO8cydDEYBHX8O3amnv9qVDuwCDOXREPsgiPh3rIP9DKHxwZey5y5hZ7hK5WZ1T09vn3oPeusM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Whd5ip/9; arc=none smtp.client-ip=192.198.163.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=mGG1rH7mkHzdfsU8EmBj6Y487BpOAg6oaHtb589GnDK2OJm6fUvLX/M6KxkGVwD9LfpwER6kId27XVKUuo1bGQd3xnd6E7CrUbrA+XuXT0pLNPHT/D5qGOiGTxMesUL1h+Ii5dyj9NjaPrRxdhfJbIXcDfeQWiDmlwtkPAgOwFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LIayuCJZ; arc=none smtp.client-ip=192.198.163.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751386648; x=1782922648;
+  t=1751386819; x=1782922819;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=LoZP6vnPKqD4j5OLz6FpScwWiS67X0cjWy4fAx7z3No=;
-  b=Whd5ip/95slhi6E9BMtqTrHkl0e2JSU4kU1dOP6i59gy3QcFtQjAS2P3
-   qrHZjRL1cWL4bx5uGqVWbxcJ9NIHxk+ieRzsCCEr6eibTRLQ0HCjCrgSi
-   lDfWytUMgGEkLADu8LsuoDbR2h70m4Sjx8RON8Lm7ondadpaLRwjtD4pK
-   d5sUbjZvqQ6TYeeSJ7qF1aKnOZDu1Dotl2hj39W7h/t8MK9HZ2JEBbQyv
-   gb50VCJPPphNAcs2bdRybgQsJRkei/HDr4nb3s1+damz0Wd9yJPoDZFl/
-   oQ06Ihvv0hydvrM1YMDhy1trofF1H+NH0rum5o1fPlw8gkrquH3gwKATw
-   g==;
-X-CSE-ConnectionGUID: wDNtzGFQT4aL5zC1Jm3jWg==
-X-CSE-MsgGUID: /BC42rIjTBiacaxlJK0EmQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11481"; a="52893207"
+  bh=3M5nB2E9YcHQNnHX70EgopsKFaxdGgt8GZ249cYL49w=;
+  b=LIayuCJZ5Wf9t5wDgY9BYw1D0t+mzxHcQdpCxkD3K6iePrP84gm+SxxU
+   mip9o3axVqnZOf7kEtoX87T5PPpq+8vwLmZpQ0/prLfOmRE8Ywa/L3Dzn
+   nUYanplGp5FWX9BUoCbrLZZihMmG8ic9bEv9/iC/G/iNXANGW5v8hzNGZ
+   edImh4mNvhrV1q/mGTMXeSDfm5qWM6xIaElmJuXUfuALqlUREXp/Lhz7C
+   F7zmJQOmRHiGeGPtm9x3I661cWJocPg52B3VAYGYmXLKlQCRnQ57obFV6
+   RghvxmTIyPv2MaL6mINYQQMIFnOdE9waHWRVmLQuY3oQLOLYXaS7C9FC8
+   w==;
+X-CSE-ConnectionGUID: +o6zJHCSQvqvi4j4j8as5g==
+X-CSE-MsgGUID: ggbgesotRqmp0DTdeA1xwA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11481"; a="64356356"
 X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; 
-   d="scan'208";a="52893207"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2025 09:17:28 -0700
-X-CSE-ConnectionGUID: OXJT+QJuRYqbN/ydm/hTgg==
-X-CSE-MsgGUID: awzV6v/sRRGdQGecFboR2g==
+   d="scan'208";a="64356356"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2025 09:20:18 -0700
+X-CSE-ConnectionGUID: dSFEQWRlRbq6JBosOBqz9Q==
+X-CSE-MsgGUID: X/DS8NV2QRWI8iZqqT3deA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; 
-   d="scan'208";a="159328015"
+   d="scan'208";a="158379298"
 Received: from kamilkon-desk.igk.intel.com (HELO localhost) ([10.211.136.201])
-  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2025 09:17:26 -0700
-Date: Tue, 1 Jul 2025 18:17:24 +0200
+  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2025 09:20:17 -0700
+Date: Tue, 1 Jul 2025 18:20:14 +0200
 From: Kamil Konieczny <kamil.konieczny@linux.intel.com>
 To: Rob Clark <robin.clark@oss.qualcomm.com>
 Cc: igt-dev@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	Rob Clark <robdclark@chromium.org>,
 	Rob Clark <rob.clark@oss.qualcomm.com>
-Subject: Re: [PATCH igt 5/9] msm/mapping: Add additional subtests
-Message-ID: <20250701161724.y5sqpnw3e4yrd3au@kamilkon-DESK.igk.intel.com>
+Subject: Re: [PATCH igt 6/9] msm/mapping: Wait for devcore to become available
+Message-ID: <20250701162014.u6lhg7g6gcjebofo@kamilkon-DESK.igk.intel.com>
 Mail-Followup-To: Kamil Konieczny <kamil.konieczny@linux.intel.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	igt-dev@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	Rob Clark <robdclark@chromium.org>,
 	Rob Clark <rob.clark@oss.qualcomm.com>
 References: <20250630180903.77990-1-robin.clark@oss.qualcomm.com>
- <20250630180903.77990-6-robin.clark@oss.qualcomm.com>
+ <20250630180903.77990-7-robin.clark@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,74 +79,78 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250630180903.77990-6-robin.clark@oss.qualcomm.com>
+In-Reply-To: <20250630180903.77990-7-robin.clark@oss.qualcomm.com>
 
 Hi Rob,
-On 2025-06-30 at 11:08:59 -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On 2025-06-30 at 11:09:00 -0700, Rob Clark wrote:
+> From: Rob Clark <rob.clark@oss.qualcomm.com>
 
-Fix 'From: ' e-mail, also please add to all subjects 'tests/' prefix:
+Is this the same as 1/9 patch?
 
-[PATCH igt 5/9] tests/msm/msm_mapping: Add additional subtests
+One more nit just spotted, it is useally 'i-g-t' after PATCH:
 
-Please apply that also to other tests in series.
-
-Btw, why not a little more desciription in subject?
-
-[PATCH igt 5/9] tests/msm/msm_mapping: Test inaccessible buffers
+[PATCH i-g-t 6/9] tests/msm/msm_mapping: Wait for devcore to become available
 
 Regards,
 Kamil
 
 > 
-> Test a few additional buffers that userspace should not have access to.
+> The devcore could take some time to show up, so add a igt_wait() with
+> timeout so we don't fail the test if the devcore is not immediately
+> available.
+> 
+> This addresses a source of flakeyness.
 > 
 > Signed-off-by: Rob Clark <rob.clark@oss.qualcomm.com>
 > ---
->  tests/msm/msm_mapping.c | 30 ++++++++++++++++++++++++++++++
->  1 file changed, 30 insertions(+)
+>  tests/msm/msm_mapping.c | 16 ++++++++++------
+>  1 file changed, 10 insertions(+), 6 deletions(-)
 > 
 > diff --git a/tests/msm/msm_mapping.c b/tests/msm/msm_mapping.c
-> index 5afbcd081fc7..846385bb5206 100644
+> index 846385bb5206..03a9e814c931 100644
 > --- a/tests/msm/msm_mapping.c
 > +++ b/tests/msm/msm_mapping.c
-> @@ -253,6 +253,36 @@ igt_main
->  		do_mapping_test(pipe, "shadow", false);
+> @@ -42,14 +42,18 @@
+>   */
+>  
+>  static char *
+> -get_and_clear_devcore(void)
+> +get_and_clear_devcore(int timeout_ms)
+>  {
+>  	glob_t glob_buf = {0};
+>  	char *buf = NULL;
+> -	int ret, fd;
+> +	int fd;
+>  
+> -	ret = glob("/sys/class/devcoredump/devcd*/data", GLOB_NOSORT, NULL, &glob_buf);
+> -	if ((ret == GLOB_NOMATCH) || !glob_buf.gl_pathc)
+> +	/* The devcore shows up asynchronously, so it might not be
+> +	 * immediately available:
+> +	 */
+> +	if (!igt_wait(glob("/sys/class/devcoredump/devcd*/data",
+> +			   GLOB_NOSORT, NULL, &glob_buf) != GLOB_NOMATCH,
+> +		      timeout_ms, 100))
+>  		return NULL;
+>  
+>  	fd = open(glob_buf.gl_pathv[0], O_RDWR);
+> @@ -175,7 +179,7 @@ do_mapping_test(struct msm_pipe *pipe, const char *buffername, bool write)
+>  	int fence_fd, ret;
+>  
+>  	/* Clear any existing devcore's: */
+> -	while ((devcore = get_and_clear_devcore())) {
+> +	while ((devcore = get_and_clear_devcore(0))) {
+>  		free(devcore);
 >  	}
 >  
-> +	igt_describe("Test pwrup_reglist mapping, should be inaccessible");
-> +	igt_subtest("pwrup_reglist") {
-> +		do_mapping_test(pipe, "pwrup_reglist", true);
-> +		do_mapping_test(pipe, "pwrup_reglist", false);
-> +	}
-> +
-> +	igt_describe("Test memptrs mapping, should be inaccessible");
-> +	igt_subtest("memptrs") {
-> +		/*
-> +		 * This test will fail on older GPUs without HW_APRIV, but
-> +		 * there isn't a good way to test that from userspace, short
-> +		 * of maintaining a giant table.  Probably just easier to
-> +		 * list it in xfails or skips for those GPUs.
-> +		 */
-> +		do_mapping_test(pipe, "memptrs", true);
-> +		do_mapping_test(pipe, "memptrs", false);
-> +	}
-> +
-> +	igt_describe("Test 'preempt_record ring0' mapping, should be inaccessible");
-> +	igt_subtest("preempt_record_ring0") {
-> +		do_mapping_test(pipe, "preempt_record ring0", true);
-> +		do_mapping_test(pipe, "preempt_record ring0", false);
-> +	}
-> +
-> +	igt_describe("Test 'preempt_smmu_info ring0' mapping, should be inaccessible");
-> +	igt_subtest("preempt_smmu_info_ring0") {
-> +		do_mapping_test(pipe, "preempt_smmu_info ring0", true);
-> +		do_mapping_test(pipe, "preempt_smmu_info ring0", false);
-> +	}
-> +
->  	igt_fixture {
->  		igt_msm_pipe_close(pipe);
->  		igt_msm_dev_close(dev);
+> @@ -208,7 +212,7 @@ do_mapping_test(struct msm_pipe *pipe, const char *buffername, bool write)
+>  	/* And now we should have gotten a devcore from the iova fault
+>  	 * triggered by the read or write:
+>  	 */
+> -	devcore = get_and_clear_devcore();
+> +	devcore = get_and_clear_devcore(1000);
+>  	igt_fail_on(!devcore);
+>  
+>  	/* Make sure the devcore is from iova fault: */
 > -- 
 > 2.50.0
 > 
