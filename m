@@ -1,104 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-63199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1B2CAEF650
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 13:17:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4846FAEF68E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 13:30:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78B6C3B0274
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 11:16:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 532344444AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 11:29:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17AEE257451;
-	Tue,  1 Jul 2025 11:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C623272E56;
+	Tue,  1 Jul 2025 11:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="G7PDeVf0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dIOPd/uU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA0F235341
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 11:16:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDEC270EBC
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 11:29:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751368620; cv=none; b=qIdWIN3W7Bl7dwZWDtP0itNvNrOlDS12ZLzY/gYTT3youU1NzrSvkh1UczDrdzKTjfDvMzt7znPsbwgruFSaIFxTDSS/PtTDkhPFI3o7yab6VK0/pyVbglyMH1HSLZwEWgj7uI7P9/ZA9TofvtXxvTo5mWJvC1RE3Y8kB7ODHL4=
+	t=1751369392; cv=none; b=kGormtREweLg2GClsx4C15c2JGlDlyX4rUuVXGmBhFThulsR+vKzWVj/ApUBbZGwZpSaSMfMKbWPPpCcefhb5K+vyLyg2c+RCy7ugdep711uPGoNQ5ADZ+VTZfo4XvYGJEj9wZXypcuaaDLOAZsDzd7Vlq98pIr/6Zv/0KCMm1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751368620; c=relaxed/simple;
-	bh=P+AniTQtNOyYYO929SsdBmccebThUXBNEGP0tTQX+Xg=;
+	s=arc-20240116; t=1751369392; c=relaxed/simple;
+	bh=aecfqIgcgMS8NEZYswyAdEeWrhP/4nJk5uApShw52ac=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ow71Ydg4l2xDGwS8idqZJGWGtOZyb/VaJxvcY8pmZQzyp3zmUOEltD7O3v1U8EsGylDq8HNYiOGM02HphgXoYbNf2h3e3EBcklfdX9sajLkBi7a23rOGf7AfnnoU91pZ39aCpIkgecvNH5gPhThkhcQuCfKHy6gWpCQiSw8olMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=G7PDeVf0; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=N9nFjeeMReW/M00D0wrnXfULuYiJ3/Z4igldO+OBNbBGU3jiFR2AOWvz0dxz50QbV6oB9bfEd50YBaKT1sPFDNUgT00iezLu9JOZXlTsfqiuXzYpjmJu2IhzRsTl9jeZXNwhtdRcrSZh4lzjfCVk45TYNZZMDRvvVrZrsyuEZME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dIOPd/uU; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5619LEDc028664
-	for <linux-arm-msm@vger.kernel.org>; Tue, 1 Jul 2025 11:16:58 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5619qgos018588
+	for <linux-arm-msm@vger.kernel.org>; Tue, 1 Jul 2025 11:29:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=A/DsPTsBsBDmT1yFH6Ie1eyY
-	DtQOwvGO1EI9mJaE2Y0=; b=G7PDeVf0vg+kdCXuIrrqktt00oLfENIIZzDDghVl
-	5mZXfMXZI/cDcT7xbYlaYlxK0pmGbFagyxYsJz4dlGTxJmCO88X+5UKQ0fbXZQEC
-	9EiF6/EYmZHAbJtX6LUAwkxBEjXut5t7kwZ25fuGLnWSRuNrnmU1Eq9HqdcF0FwU
-	3gklU5U2xLVkjPGP5IHFTElefB9zKYEttE9O8uzrXm/6btQ8QQJeUCTxvcvKAEVZ
-	Ze2XpYEU43JmoI2qEvSH8Xac8KWNE/7dBgr87I7mhFvchmts9Ox28KzhuoyLbjd6
-	GeDYQ6mjAOrGrYTZPzbV5Dkd0wND7WvEaj5CJM0RP53pXA==
+	:references:subject:to; s=qcppdkim1; bh=HeCUTIvo2J1PhAD2wDzz5Zb5
+	XHzZC9YruSB6ZaOdH04=; b=dIOPd/uUrm1KFxuvaymajs9D5M53DEntgx/u9nzu
+	yQbOgJ1n5XwxciyfA5G3aTNFJwP314unQHYkGGGdAd2w3e+YFUwp1wjNOe7yuQys
+	mwPB4uMJCR242jdy9hjaWPvRRi/7p6yiSADi+3EY5WU6NGy+3RzQo+BRosJKQmfB
+	pnKXC9sTCSedMq4zLhi5gKQcKVGxPaBYlNRuUn4U1OR0uGamvj0PlV0i//3ZYgv8
+	pmDcdocRb1gQlxbUnmRD8SGB/B/LyXtUiQnI5c3Q73pNXKGJcZ/qUMduPtHsnaIN
+	tCjbEZlJC3RBixAoY6Pa2Z9AegRiSw7Qf+r6oMe9TRNpeg==
 Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j7bvrk94-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j8fxgr6y-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 11:16:57 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7d413a10b4cso926865385a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 04:16:57 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 11:29:48 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7d45e0dbee2so348911685a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 04:29:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751368616; x=1751973416;
+        d=1e100.net; s=20230601; t=1751369387; x=1751974187;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A/DsPTsBsBDmT1yFH6Ie1eyYDtQOwvGO1EI9mJaE2Y0=;
-        b=dYTW/ypeUF6tiGcnvXwDeaYWQfOS4MM1JBcywZ4X+iVh1l5SHI4W8IzxQhDRnwYPyv
-         309yNXfxLoWimAb6g6gjD1uYu0PBM04NpgvMzyBxoufNuliqWR/ymIOlWhJiMq5GbRjo
-         V/acCiBCULfm2DmLE3f/+R42DZfs7YQMnvHXhKoKMfIbUV9GYvYxmIKeQMJEM/j/YZW9
-         rbAqXeec+m2ShYzdKE8zjNE48blqTluYJoRZEf3C0fxgAlBSTmsHhftqWCmrPKhIijNv
-         ACWV4gSUASAj72mXTeuv0nP3hP3qXI4+K+sMG5Fj1+Elwo9PX1rSO5SBF8CSF+DJkjQR
-         IsVA==
-X-Forwarded-Encrypted: i=1; AJvYcCWJpTX/iXBudzwg+5DVkcIaclK0BjMTzs9kpelYvFbQcHJ0dfxY1djeCSkfYL1w7S7rXMCsBmZSFU6twnro@vger.kernel.org
-X-Gm-Message-State: AOJu0YwIr7p9lPhFt6IsYGMfG5JFDcdoNFKrpX8eIzaQAs7mXG6CwY5d
-	pcjdFBSgxfmNbdjstTTxUfS0lOe2lqvrjOAtbsi8FQUMAhNU6+8o4D0P9BghX4iQs4Nho6mb+tC
-	X3WqK23ftaqHEbBjNE06wkBIMuyGvTvWr0vMtal88oejh2rMduxBP2wcfuqFM+TMb9YXI
-X-Gm-Gg: ASbGncv5E6qWU/vHad7xGj1MDohwQjKfwcKGQDiJHZLZLU4K4vkY3A2hQxjFb3FjA9L
-	TNgQoB1sjBvautk9kSDM76f4lek6nFvZ7cEJv8I5bt/hvs07C6/rv9WZMTbFNyonCU8sf9xfML7
-	jVZLh9NB1K25ZqEAIWmFaxMh4Upi+A/S+S3hcciOr/2p+H0gIwR9nO8mHt/VZ/mYiesEJ8f31cS
-	/8flIKCvRiLMLO9ANJcva2GjASVLviOpX8l6LDxiqj5r6iVsHvygLvsPjaCQLFZPCvGoKVLa0VQ
-	gv2BuD4J6c1Anhe+gZYwmuEoy9Wm/vcqh3g0vCQZr47KMQ+0lnK4vjmd5HkcKmiVTVltlzMBENn
-	Befz3vMdre3PwfTy+I02NKFuAQ/K6uoC5D8w=
-X-Received: by 2002:a05:620a:2703:b0:7ce:e010:88bb with SMTP id af79cd13be357-7d44392577bmr2261952585a.22.1751368615987;
-        Tue, 01 Jul 2025 04:16:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGZAnQsK8oP+yGp6Y9qLuzqAu6F5wPwMy0Ri51LK9L6uuIylK+nYr9DS+MORAP0pvUs/HHlqg==
-X-Received: by 2002:a05:620a:2703:b0:7ce:e010:88bb with SMTP id af79cd13be357-7d44392577bmr2261947085a.22.1751368615341;
-        Tue, 01 Jul 2025 04:16:55 -0700 (PDT)
+        bh=HeCUTIvo2J1PhAD2wDzz5Zb5XHzZC9YruSB6ZaOdH04=;
+        b=E+elj6bc8Onsj2CywliX6VjxIcV5CVG+zoAWDUm4CL5id6rZ1DpUzwzw2KuEzmzpF2
+         B0wC5l0HPeQeRN8BV6ReH2bZyluD+SCSP7RqvVTYGLWRiuddPc8rEigzFfKVQC08VUYz
+         GTsMy3dulgKDNUciSKKhUDiQSC8TZsuJ5zT2NNyUTlRZ/ZTkcZ5zz9p+7FZ1j150aQm4
+         rOqkZdMt/mh64n4HQk9Ah2SNxNP5m43T9ckGjqjaAL1D8n6mp9w+o2oFqRtv53SpbA/m
+         5TrqHCP/pM8EzZxdwwphb7SKg2d60oTPbdpjI5pD8KbzCjDfetmPCbmiFtUHW/JktfLH
+         +FCg==
+X-Forwarded-Encrypted: i=1; AJvYcCWEM3ijkd7zyY0CMPQ9ubfomxybxvSKMk5MPM2bMg6Xsoot3hEl8BpGmJJDd0QZ8gAsnqtDFArFRv5Vxb16@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw1uLDnzTsqNiqvZsEIeigqTFqspxsrAG6gaHvm94FUESkEITdP
+	Y4snGhjCakfgA9KADv1+QBrSnQynPHvMraEuGVvc6tp6Ksz3wPMjxky8JOId92lyDis6sX/yjwd
+	LDpmEL7QzigNGLpgIGwbxOsgqGlCJJp3qHmLcfMQ+xmr0IGBu1rxomrxXijn/LGLq/+IC
+X-Gm-Gg: ASbGncsSwYeNaGfIIpKc2aDiZ6eaYzjfMq5cMSnr+6w5dJxwToRW/I6dFjnIP0GIxVC
+	fvIpfRs1g5zIX+iJ5kVlY26y9qByvB9Fxi1vmoU5ZloZ1fLsp9yy4At/uTigwd7SSvt1UYYB+2L
+	3dKnxhFVqrwRD49Kn+dj3qrKAeXtNxIdc2kwfeigOZnBOD0pzx9QaME6o1iqqK3/AvqgJXn9+by
+	xwjQWJIbSuKcNH4TIdERbTi2kIzSqFDIjaQaIl8N30oxGaPdKA00aM+5AcaYqltb4IgPYEc7gx4
+	1roiFsNVcWTFbOVwYJys9+u9V3tPDFZtmO+/obH1u+ofsC5vIkHdqn1HWmD5ywbxpK3owgQTDqX
+	g8LbbO4fADOuz4mOmBxlcfmUcQpk33hHG7VA=
+X-Received: by 2002:a05:620a:29ca:b0:7d3:9025:5db7 with SMTP id af79cd13be357-7d44390de6cmr2236946385a.20.1751369387453;
+        Tue, 01 Jul 2025 04:29:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGlEPq2TzJvQkQhhpGX0KRHwjYHWsll+9h6ewOO18Z+pocOSxBGiQFARtIuoG0qr8FCuX/VUA==
+X-Received: by 2002:a05:620a:29ca:b0:7d3:9025:5db7 with SMTP id af79cd13be357-7d44390de6cmr2236942285a.20.1751369386888;
+        Tue, 01 Jul 2025 04:29:46 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32cd2dead99sm15783941fa.22.2025.07.01.04.16.54
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5550b2da80dsm1785087e87.220.2025.07.01.04.29.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 04:16:54 -0700 (PDT)
-Date: Tue, 1 Jul 2025 14:16:52 +0300
+        Tue, 01 Jul 2025 04:29:45 -0700 (PDT)
+Date: Tue, 1 Jul 2025 14:29:44 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/10] Add clock drivers for SM7635
-Message-ID: <w4eujq72uqflqpsqshc7zhu6lkc7owufep2g2rjacvzgj44vmf@auonp4ugbgow>
-References: <20250625-sm7635-clocks-v1-0-ca3120e3a80e@fairphone.com>
- <68056b4a-b1c3-401f-8720-8e0c3cda6249@oss.qualcomm.com>
- <DAXEWQ93VELV.3HJXPNWASYBT7@fairphone.com>
- <DAZPKV5DQ1EK.2D4TQE5MIH4K9@fairphone.com>
+To: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com,
+        stable@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: dts: qcom: qcs615: add missing dt property in
+ QUP SEs
+Message-ID: <3qji4ppbdd5lvalx6qmbr6f7jsvyhyulfshchlya3ajsykbkel@rlu5uwvc2biz>
+References: <20250630064338.2487409-1-viken.dadhaniya@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,91 +100,52 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DAZPKV5DQ1EK.2D4TQE5MIH4K9@fairphone.com>
-X-Proofpoint-GUID: 6-wHee22HUcGC9_36EwGeb-tg6KuhawE
-X-Authority-Analysis: v=2.4 cv=RJCzH5i+ c=1 sm=1 tr=0 ts=6863c3a9 cx=c_pps
+In-Reply-To: <20250630064338.2487409-1-viken.dadhaniya@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAxMDA3MCBTYWx0ZWRfXxLHlowZnZ3B6
+ 9sbm+UA3i5YMtn6yegJbM+ZKBpcaIFtY1RMM0OqdHSgSDj8cPA1JlQlM8972YsA+SE310YL72uV
+ F2yqz27Xw3o9twxIc2XBStInDuRHaFj08WzwXTH7DJU5BVvEzfL5XhS7VUiDD3xDRk2HQpHTx9v
+ AtnXwppUcxLaMZ+TAqPVV5oEbrP661UTYHvVPjoKvhGEnJX030TPl7kAY3XNR2OhvgIe2bUTGKU
+ Ff3XY8AuxTW4d3RLPaokr6/HymDUlQw2IIwAKKI/QtxVYgaGXpp1056S476ZwKIVbzENHANRdHw
+ mOypl8X2l2lrwJ+6u6xjx1hxEGsEf5zDmKylbVMepJO+4zRyfNiFlbV6UmFl3xHmfhWTY3QlILe
+ gI8kgBfxik2xt+nUpobGbgI+CieOqZMTMowAUIGakV6mE06u8Y1xBj5uK6OLNHgzUTmXkMlz
+X-Proofpoint-GUID: Qv-zctI8YrsgRAJt05ocPav2gBBg-szE
+X-Proofpoint-ORIG-GUID: Qv-zctI8YrsgRAJt05ocPav2gBBg-szE
+X-Authority-Analysis: v=2.4 cv=TqPmhCXh c=1 sm=1 tr=0 ts=6863c6ac cx=c_pps
  a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=6H0WHjuAAAAA:8 a=2CDl1CmQ9Cb19c7lbDQA:9
- a=CjuIK1q_8ugA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=Soq9LBFxuPC4vsCAQt-j:22
-X-Proofpoint-ORIG-GUID: 6-wHee22HUcGC9_36EwGeb-tg6KuhawE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAxMDA2OSBTYWx0ZWRfXzyxRtNTlDF/6
- w7YXPRpjIpNdqeRbW/WzMHG/DT6+tzrygpdnBaNE8UImElw8sYN/vbWIS0AQ9uc9y2kXsbpD4R2
- jiYjf03kV5Lf7W3KoMeOgMw1HCNlEaI9w7I/YjuzFkPJ8H+H3/A7F8sLvtY6kJUFw8G8bgS2maM
- iYNgwgYts5eTAx9beNM80eSMKUPBzWhUhQ3d/LXqF6w2/KmV1qCGYGaKVaWYGG/4MbkLFxxEVgZ
- vUsMfwyHWutvt284MIzjiSoKpxL7EfVh3RfC05ltyK3/uFZgcr66lXEIqjnhKrrVwI3cijmu1NW
- 8utiIfHF0eIZhu4l/CyQT4OPz6Wd+GYVkOAOyHs9KeBb88fR5WZyKr46DcyQXPM6cF4jD6t1bCg
- cfWN23AZMCrdev0Y7aBkjG4C319+Vg7L+pC7eI3I0/ffY6luHhUnvDzm2tUZ0NSOqtlXuU6N
+ a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=mQHHEpzZ3wyIVHhDumQA:9
+ a=CjuIK1q_8ugA:10 a=NFOGd7dJGGMPyQGDc5-O:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-01_02,2025-06-27_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 priorityscore=1501 mlxlogscore=892 adultscore=0
- malwarescore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0 phishscore=0
- bulkscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ priorityscore=1501 bulkscore=0 mlxlogscore=717 suspectscore=0 adultscore=0
+ phishscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0
+ impostorscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507010069
+ definitions=main-2507010070
 
-On Mon, Jun 30, 2025 at 10:01:35AM +0200, Luca Weiss wrote:
-> Hi Konrad,
+On Mon, Jun 30, 2025 at 12:13:38PM +0530, Viken Dadhaniya wrote:
+> Add the missing required-opps and operating-points-v2 properties to
+> several I2C, SPI, and UART nodes in the QUP SEs.
 > 
-> On Fri Jun 27, 2025 at 5:14 PM CEST, Luca Weiss wrote:
-> > On Fri Jun 27, 2025 at 5:10 PM CEST, Konrad Dybcio wrote:
-> >> On 6/25/25 11:12 AM, Luca Weiss wrote:
-> >>> Document and add the clock drivers for GCC, CAMCC, DISPCC, GPUCC and
-> >>> VIDEOCC on the SM7635 SoC.
-> >>> 
-> >>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> >>> ---
-> >>> Luca Weiss (10):
-> >>>       dt-bindings: clock: qcom: document the SM7635 Global Clock Controller
-> >>>       clk: qcom: Add Global Clock controller (GCC) driver for SM7635
-> >>>       dt-bindings: clock: qcom: document the SM7635 Camera Clock Controller
-> >>>       clk: qcom: Add Camera Clock controller (CAMCC) driver for SM7635
-> >>>       dt-bindings: clock: qcom: document the SM7635 Display Clock Controller
-> >>>       clk: qcom: Add Display Clock controller (DISPCC) driver for SM7635
-> >>>       dt-bindings: clock: qcom: document the SM7635 GPU Clock Controller
-> >>>       clk: qcom: Add Graphics Clock controller (GPUCC) driver for SM7635
-> >>>       dt-bindings: clock: qcom: document the SM7635 Video Clock Controller
-> >>>       clk: qcom: Add Video Clock controller (VIDEOCC) driver for SM7635
-> >>
-> >> We had a massive yak shaving patchset go in this season, please move
-> >> the magic settings in .probe to qcom_cc_driver_data {}
-> >
-> > Okay cool, I found them
-> > https://lore.kernel.org/linux-arm-msm/174970084192.547582.612305407582982706.b4-ty@kernel.org/
+> Fixes: f6746dc9e379 ("arm64: dts: qcom: qcs615: Add QUPv3 configuration")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+> ---
 > 
-> For camcc, gpucc and videocc it seems quite simple to follow these
-> changes.
+> v1 -> v2:
 > 
-> For dispcc I don't know what to do with this line.
+> - Added Fixes and Cc tag.
 > 
-> 	/* Enable clock gating for MDP clocks */
-> 	regmap_update_bits(regmap, DISP_CC_MISC_CMD, 0x10, 0x10);
+> v1 Link: https://lore.kernel.org/all/20250626102826.3422984-1-viken.dadhaniya@oss.qualcomm.com/
+> ---
+> ---
+>  arch/arm64/boot/dts/qcom/qcs615.dtsi | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
 
-Use clk_regs_configure() callback to set this bit.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-> 
-> Do I just keep the regmap references in this probe function and just
-> move the clk_lucid_ole_pll_configure & qcom_branch_set_clk_en to the
-> config struct?
-> 
-> And similar for gcc, I can move the qcom_branch_set_clk_en calls there
-> but the qcom_cc_register_rcg_dfs needs to be kept.
-
-Would you mind extnding struct qcom_cc_desc with args to call
-qcom_cc_register_rcg_dfs() and call it from qcom_cc_really_probe()?
-
-> 
-> Does that sound okay, or what exactly is the desired outcome of the
-> requested changes?
-> 
-> Regards
-> Luca
-> 
-> >
-> >>
-> >> Konrad
-> 
 
 -- 
 With best wishes
