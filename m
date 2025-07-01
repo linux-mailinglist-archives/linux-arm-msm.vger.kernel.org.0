@@ -1,80 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-63218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 042CAAEF91C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 14:48:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BC65AEF93B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 14:52:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 264F616E400
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 12:48:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C04D3AAEE2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 12:52:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 846BC4A23;
-	Tue,  1 Jul 2025 12:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 201562741B0;
+	Tue,  1 Jul 2025 12:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gd8TZmdp"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mQo39pa/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF161632DD
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 12:48:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D681E515
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 12:52:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751374100; cv=none; b=cBK/X804HgdOcldsWZfl3dYU7ZuKyOQ5eiN4YVq2UkK5bSuRfDZ22Rq9SvFksQpq/zWOeTlbGOyj4xqbHTDMTn+K7SJFaJZqHd3InXGov1jbX4lnEU0scu5kLmJX7Mys5zPtwWONHk9NdzKLcO0F8gnSrsa3nEn/fBt+gD1UGmA=
+	t=1751374362; cv=none; b=SBA8RI4sapq9Zoc/C+1MZCpdi5uAE1oCq6VWmDhjgU6BE7h5giaFvcnVr/E/aBLnuUnPpxgkbiC2GHcRb2UYuGxeyB25+BhlqlhY6BtsreUKjAaNqxRHx+7JpdKYlQilh+wMKsTRzaD8azAWhAaTcOxmXT+wxfDUTyxIk3Ft17s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751374100; c=relaxed/simple;
-	bh=B5sYwCzrOUsbU8d2XsfZDMOWyPI4TT2SG8glzF58Rjg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=p/toIqeADcEwewpLxHhO+fX8YDJq0ysQE61u3Jh8OhPGD1lmiLBvIBSAHbBNvNTM6GnLsNAvyycE36G05lCrbXtGpO75LGFmE8PtLACQlMtHoWvubCRUfPM2xv/ziBkSKXauSO9sKLvP8tWT19h9laMeuzWsz5+rbVIadDj+Iyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gd8TZmdp; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4537deebb01so16703525e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 05:48:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751374097; x=1751978897; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=DFgm4nb9P5q9Y36iXQaitvKFdafFjm+S1uOuQEYApsc=;
-        b=gd8TZmdph5XWeYYTFgghe58oAWYdKEA+sObAWnRWt04NOEcCAuaBXbBEImHKtJTzpx
-         7JVnDNrEMtt8JifbaSoNMNG6Xlf5lrLAN2iiSEbaMnwy3N1ORLvAzypcazItkQU5I9rY
-         77kiFbbHufn+cyE0Qekhj7TZ9d9i4axC2A3/uCWA032M+vcnnfGNB1P8keu4LNuqDkow
-         mUlYBbVG7KVHhTMfPEmlTKsK0X7pJK8M5LynsqGytAfKh8vINIDPyEIhlVv6DfDPeGAu
-         1H58AiuAEdz/TZH0Cv7PKWLc40eUlcOeBlOT/w3aGkmfjr05KuI2Ugl7Yf09X0yOWWxq
-         ps7w==
+	s=arc-20240116; t=1751374362; c=relaxed/simple;
+	bh=s6Km9kqmH3MHprC9cKJQioWs2nxJ+6oprPbTLVcSgX0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uOloRnmmsGZdQH5VQem8FWfWmmHYLjx/jSb5jDaWLK+iOeGv+aBVd27+6MrrVsLmtocWNAC5g9fiJCVHH51EH9DpbV92Bdj+fc3a2g8Ku/X+QQ1BQMxVDEnYz8kcckAieBsilQZwdiZzmZasVHYBaTEf/ZlLmc+Q4IjGJdyPBa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mQo39pa/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 561AUMXa001184
+	for <linux-arm-msm@vger.kernel.org>; Tue, 1 Jul 2025 12:52:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	u1cPDedYpfvPf50klVd2ABP2QmrtcRgKhFzFC6BNJEE=; b=mQo39pa/TId2IopA
+	/ihw15S24Zv6MgtdIVTD4bFPyOQgyHt0ycTmPcyhtkEWFTir1eh4tgUnp19+W9mt
+	tTgXMCRICO/yVkwxQz7lJFX5EhjfgUeUEG1k/8tx0p2xbHQeB1nFrrPjnkqeOj91
+	+MBPrB+9frrqDu+5nufol6ft7Kru3GgZBh7m0weXNcpm5+MDfoBoU+8V3VNdH16G
+	aPQpVrBDeLwkz3qVIl14gxqYaalfJ5YLJEZRInqA+Az+buNpsThHwK2AGUip/Ada
+	qSiCloT3fYGNflm9YqxHbynMUm3gs/CiuDfq8Qx4nNViLxPQXrPOjseJtpDvCYiZ
+	iIO65g==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j7qm8w4s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 12:52:38 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6fd1dcf1c5bso11813876d6.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 05:52:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751374097; x=1751978897;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1751374357; x=1751979157;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DFgm4nb9P5q9Y36iXQaitvKFdafFjm+S1uOuQEYApsc=;
-        b=BQeUpUkHZ6K+otQ5dRryipWxI/4SlER8MiZH55Gpf0vUl9Yb8j/3tLSUHCa0yoWgt5
-         XYj+yuaAWI0JMUGIkWshXxLuU45MWM3Z+cQm/kfSzmT1seisP+QnnA/I6qFnQzZn3SIX
-         K1IjoY956RQQxfLzFunjCvwjobZYyZUtXpYYBB0crRTu1mzp2q7enuQlVgse6jdSFWON
-         aqR/NuaHJ4gSJ5udmConhPneh9WI04tOaPmOVTYG7TNkGpPK09QMyMb6r5JLqfyrtbjz
-         5YqaXeBjyHojk8TlwSk4mqT3GIKYnIV4e5B9U8d1JfHbJDxMLxgmMWRImS2AB3KQajge
-         jqbw==
-X-Forwarded-Encrypted: i=1; AJvYcCXORm0o914AuA/03LRJReugE1Nle1tCRDySfp0tif/9ZYCdciusaJau1IHNh/WD7ymM7xWPXnLNuck7OxkB@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQaVDBnf3sexnbyqyKBMYySM7+j+75nlQWYI3zkZorQZBR0bqv
-	pqyoGmrJmwe/Yvumy9TfMTxPZkkEv3rW5UeqQFqomb6lQopQl7AI+W7IPnJFXGkRn5c=
-X-Gm-Gg: ASbGncuwCp2qR4NR7Pqb5FIJZwNXA/mD5uB/K/Pm6moI3a3KPmJYf7evWeMhqUTA+ji
-	YplNrKbjx4jLkf7DNIrHum9JG26DUOWvN74JtKthOHp68kun2JzcsuUO62aqhibePBzzlY6hULc
-	PUMaXjyuIl4BO1VAWMlGg78QJuh/2xl217WFhBBLpg6ph46+QS963j0ogeQPNlKYe2+u2wICk8d
-	az1UsAzcm2l+QJ2WlsflyYee8ARdNDDa26Y2Q3iBLQ8m/PPrNmX7/HsGaNGTAFPJ9hpFy3Hguzh
-	uTBLj+4wRAadPEz2btw/HKRj9rnFPmZtrtgnVPkBWArAnaAMFnPGSkLSAAciRRcIG44f2tKByaS
-	XmxPM1gIGCyXu/f19YBJ5Y+u2Hgaxy7FVvllJQQ==
-X-Google-Smtp-Source: AGHT+IEBhwcFqQlAPSzSQUtiRdSN/GLV080z0dQVtAlBuMYPKfmioQErq23N/4IGxkxNFd6RD6iFSw==
-X-Received: by 2002:a05:600c:8b01:b0:450:d30e:ff96 with SMTP id 5b1f17b1804b1-4538ee5dc58mr175426545e9.0.1751374096628;
-        Tue, 01 Jul 2025 05:48:16 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538a390d11sm167773995e9.7.2025.07.01.05.48.15
+        bh=u1cPDedYpfvPf50klVd2ABP2QmrtcRgKhFzFC6BNJEE=;
+        b=AjMe18nyizfaWCBcbb6d9xLRk4SkqQ+DpQHGBT6EkuQin/Nbri/EvUb6aCLjNJz2y+
+         uNMaGIRGTW3ClepdoPGovRhZfN4cLaNAn8FcAbvm70Wyv9a/ny/C6b/6DNbOXU80T+13
+         z8cDs6L8PVFbkLto4Xm6t5UW7aCClS7J7T4RAKg4LsFKOUgs290M5Hzwbt78gp0Hx/Mz
+         9Ke9vi4qesksF3Xf8ckn1sPd0HyVARzDNcqbMCHvdrxuJKRWpeJYAmgP95e+8WClKKfg
+         v9aevQ6aFxb+FrH7XTG1Lv/WRW6+fSdv0f4lBG7EPn9xPMawjkfiXdhMxBDMu19jVwjC
+         lN6A==
+X-Gm-Message-State: AOJu0YzNH1JEOJq61Ldml6deMVLkmyHrqTgM/QUkBvwh7tqXi0+1P5z+
+	41N62mu12EM+MyIa75Y99GWoVtwbzh8VObV/oj9K0frlUixbKP4Hfe/Z3ViO9/Ud3VR/DL48sLB
+	ifpbhbpfQ07E9j/g7BXdZAWQqK46nV8WKO+lkaxKoWNThxsA34Ajwz4EsZhE/9RFdqohE
+X-Gm-Gg: ASbGnctLmneupdtL6dFUWI5TE5FneE4Bcd2GdGjRJiLPQTR5FAyXN52AmafXhg0o43b
+	OLIW3XaPzh9LEkFl6lyWBrW3qdw3yk0JD/R9Rw794DKvoUZa5D7R1AIhD3C3Z69RF8Se8qlsf4w
+	fnEXUk/yBj5KV2Dw3Z1m+9Uq9wZVM6dowgIr3A2CT/LMs6eICYj1/lEdzRfS8IcKVsx6cfjZ3ve
+	ukgQjysNXIhYR3UYkOSqtf0jjkdm3vaE7FxD97fYifm7EL5dvubctOjtCq7rcPXR5c8gELoDc0Y
+	5QkEEQlkcCyiF4NVMip9eBPuukHffhZPNcn+0rG1b/yBQQ/dHMqIICicnR5Ui/CAcDDhlBRdelc
+	qJGYrIj2f
+X-Received: by 2002:a05:620a:1a0a:b0:7c0:b3cd:9be0 with SMTP id af79cd13be357-7d467737358mr162009685a.10.1751374357174;
+        Tue, 01 Jul 2025 05:52:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE1Wskn5IkTC5clDFY3RNbkUQKyYUech94l/I/soWezJlddzlgn13MTDenGfT9lXqHy6X8jOg==
+X-Received: by 2002:a05:620a:1a0a:b0:7c0:b3cd:9be0 with SMTP id af79cd13be357-7d467737358mr162008385a.10.1751374356706;
+        Tue, 01 Jul 2025 05:52:36 -0700 (PDT)
+Received: from [192.168.1.114] (83.9.29.190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60c831ff8b3sm7562620a12.67.2025.07.01.05.52.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Jul 2025 05:48:16 -0700 (PDT)
-Message-ID: <d3c56e1c-69fa-4bf0-8257-aa18ff7d33cd@linaro.org>
-Date: Tue, 1 Jul 2025 13:48:14 +0100
+        Tue, 01 Jul 2025 05:52:36 -0700 (PDT)
+Message-ID: <64441b8a-2769-479f-8894-05c4580c96a2@oss.qualcomm.com>
+Date: Tue, 1 Jul 2025 14:52:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,67 +89,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] media: i2c: imx355: Add power management for managed
- resources
-To: Richard Acayan <mailingradian@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Sakari Ailus <sakari.ailus@linux.intel.com>,
- Tianshu Qiu <tian.shu.qiu@intel.com>, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20250630225944.320755-7-mailingradian@gmail.com>
- <BD1H-JCa9XL3c2ph25inGRiOw1mADgqVDBbKWBM8giD8IGia2UIudM4TAJPOLq09nlmGCzZf1YtrH07VyqDqtw==@protonmail.internalid>
- <20250630225944.320755-10-mailingradian@gmail.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH] i2c: qup: jump out of the loop in case of timeout
+To: Yang Xiwen <forbidden405@outlook.com>, Andi Shyti
+ <andi.shyti@kernel.org>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20250616-qca-i2c-v1-1-2a8d37ee0a30@outlook.com>
+ <SEYPR02MB55575E3DE3A107D36F5393AD9644A@SEYPR02MB5557.apcprd02.prod.outlook.com>
 Content-Language: en-US
-In-Reply-To: <20250630225944.320755-10-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <SEYPR02MB55575E3DE3A107D36F5393AD9644A@SEYPR02MB5557.apcprd02.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=C4TpyRP+ c=1 sm=1 tr=0 ts=6863da16 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=fKQzr7EGRj+VoE0XNsDNvQ==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=UqCG9HQmAAAA:8 a=VwQbUJbxAAAA:8
+ a=r0m3sDERyDekZ1TgD0UA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-ORIG-GUID: QhtYabd-T8p96Ybt1uhHEMIpPLxBIwrc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAxMDA4MSBTYWx0ZWRfX08gdDeVjcYZs
+ BeBH+Q94C7DEGXX23c0DXHDRASLJ66IdEECwIOO0gYlA/vxc22VEyQWNeC0ybCPUag02VKLpOgo
+ 5VNjToYypBevS0UJRZ/0cWrJJ1KGhDmht9/0zWabrdhVVaG9pe6+aEcpEUJOtB/Exzn/c+5u5P2
+ op9jiSP73oDc9D8VOQ1jOdSPnw8SYgSnekHbiwYCD4bA8SeaPewEfwsonIf1hAjBtiQ+1K8prVF
+ xO2d71359jzHMV0jFWuimZr4pPMmX7McCTMyJcdMsPbtBLFsFK/Swfu4pSVDoD0GiQhprpICf+P
+ 8nnI6TfCC5yo1nq5RuR3vB/QTHYElMMwTyGw+D7MUYCpexaGuJEuKYXBebe9E4a7jKggjUyFKC6
+ PaYTyQKJ8lOivJcfU1m2xpNk7jNQk2qa5zm7qAvAvIiLI//VAtnBoWYLj7/DDBz04Rx2wr0I
+X-Proofpoint-GUID: QhtYabd-T8p96Ybt1uhHEMIpPLxBIwrc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-01_02,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ clxscore=1015 priorityscore=1501 spamscore=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507010081
 
-On 30/06/2025 23:59, Richard Acayan wrote:
-> +static int imx355_resume(struct device *dev)
-> +{
-> +	struct i2c_client *client = container_of(dev, struct i2c_client, dev);
-> +	struct v4l2_subdev *sd = i2c_get_clientdata(client);
-> +	struct imx355 *imx355 = to_imx355(sd);
-> +	int ret;
-> +
-> +	ret = regulator_bulk_enable(ARRAY_SIZE(imx355->supplies),
-> +				    imx355->supplies);
-> +	if (ret) {
-> +		dev_err(dev, "failed to enable regulators: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	gpiod_set_value_cansleep(imx355->reset_gpio, 1);
-> +
-> +	clk_prepare_enable(imx355->mclk);
-> +	usleep_range(12000, 13000);
-> +
-> +	return 0;
-> +}
 
-I'd say this sequence is out of spec w/r/t your sensor.
 
-Almost certainly should be
+On 28-Jun-25 17:58, Yang Xiwen wrote:
+> On 6/16/2025 12:01 AM, Yang Xiwen via B4 Relay wrote:
+>> From: Yang Xiwen <forbidden405@outlook.com>
+>>
+>> Original logic only sets the return value but doesn't jump out of the
+>> loop if the bus is kept active by a client. This is not expected. A
+>> malicious or buggy i2c client can hang the kernel in this case and
+>> should be avoided. This is observed during a long time test with a
+>> PCA953x GPIO extender.
+>>
+>> Fix it by changing the logic to not only sets the return value, but also
+>> jumps out of the loop and return to the caller with -ETIMEDOUT.
+>>
+>> Cc: stable@vger.kernel.org
+>> Signed-off-by: Yang Xiwen <forbidden405@outlook.com>
+>> ---
+>>   drivers/i2c/busses/i2c-qup.c | 4 +++-
+>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
+>> index 3a36d682ed57..5b053e51f4c9 100644
+>> --- a/drivers/i2c/busses/i2c-qup.c
+>> +++ b/drivers/i2c/busses/i2c-qup.c
+>> @@ -452,8 +452,10 @@ static int qup_i2c_bus_active(struct qup_i2c_dev *qup, int len)
+>>           if (!(status & I2C_STATUS_BUS_ACTIVE))
+>>               break;
+>>   -        if (time_after(jiffies, timeout))
+>> +        if (time_after(jiffies, timeout)) {
+>>               ret = -ETIMEDOUT;
+>> +            break;
+>> +        }
+>>             usleep_range(len, len * 2);
+>>       }
+>>
+>> ---
+>> base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+>> change-id: 20250615-qca-i2c-d41bb61aa59e
+>>
+>> Best regards,
+> 
+> Ping for review. The original logic error is very clear. This patch is also very small and can be reviewed in a short time.
+> 
+> If it insists on waiting for the bit to clear, it should not return -ETIMEDOUT then.
 
-- clock
-- rails
-- reset lines
+'return -ETIMEDOUT' makes sense here, AFAICT
 
-The reset sequence should be
-
-- Assert reset
-- Wait for some amount of time. Either you get this from the spec
-   or you borrow a value from a similar driver...
-   Suggest again what we've done for ov02c10 and ov02e10
-- De-assert reset
-
-Then use these power_on/power_off sequences in your probe discovery, 
-since they will already have error jump labels to do your tidy up.
-
----
-bod
+Konrad
 
