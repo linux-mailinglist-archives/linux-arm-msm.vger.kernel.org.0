@@ -1,215 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-63181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 163E2AEF4CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 12:16:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19088AEF4EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 12:23:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 37B723B3CE9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 10:16:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3677F4A3636
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 10:23:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A8B52580F2;
-	Tue,  1 Jul 2025 10:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43DAA26FA4E;
+	Tue,  1 Jul 2025 10:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="zh96yD3s"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L6B/bv/C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EB626E6E5
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 10:16:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485AC1F3BAE;
+	Tue,  1 Jul 2025 10:23:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751364990; cv=none; b=aYNJkpK1qiVeBr8WOEjzTD5FVF4udTxl6HFFKWgGdNzaRMjao+LlDnKjLWDBxAqGgVydVNG+HfNII6sox+YCpn+24rDwVRdombO2G+VZhUFgyWQGP6Mhbvor911OZ+f9RpNJTlySQslYrfk2dXDjorcbtfvyua1ZbTClJpq6OKc=
+	t=1751365425; cv=none; b=WmP5fC9o5ZgaCKfzifFM3a8rPTPWQn993MoExrGtXQKqp/UpaWazYgzdtxvszf4Kiu3TYLf64pNjnYLYHjAX8e/14GUz6iD0B4fRM+DySDkN4LNsi7xHsowTGUX5UP20YS7z8IWNnIIOPW+kdeVKrfzmtoLEgI8BoCnYYlPSmyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751364990; c=relaxed/simple;
-	bh=2vbNBkeXRi/g9zbIjofBUV/jYjTJHU7Rfds+Aml04H0=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=ZI48qAOr9LQ3hHrNMVplpgDLfNQsBji7z63vbwww6rLCCrHlwBsrbdU5AsTFz8oo34MwL0upfVs/Fkh0HV0l3c3DZZy5ddOERKfwDre3hnzeCWavKy3DOWnkyP3OUvV+Aws8DAlBktveuwg9aMHiOf0LsBdLrlb2+KDHqX0c4dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=zh96yD3s; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-60c5b7cae8bso5175105a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 03:16:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1751364986; x=1751969786; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8xXy8h+9TejItbdqFIzK4yC4mViXvShPTEKGB2PqHcA=;
-        b=zh96yD3skf/xfV03qpXhZd1nGNC115XO4MNv74tXOedn0eHB9Vvo8Rw46RLhfB/oL1
-         zCyZeh6vTszxpAOexV8RLJl8JO1LwfxElToDDOC/ky9Ic3+98LMymGsgN4/Z6wqwMmZl
-         KambGpZFVDIdwsj/lYwDo8d06n9IHCfx1pmR+cH6X66tVAQuezaBJWdm5zrhkIASoslP
-         TsdvZoe67FPJCt/PQGtpwFlvWdMULe/hOWpzunz0o3CTZOP2ctqxKX2zKF0zU5dLBI7C
-         MeuZXZ3n7/xHalaFUm9G+77KNz6RLZcUpX0DSfU68mMFO+R6NnSn1KeBipf85L8BUiVy
-         EphA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751364986; x=1751969786;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=8xXy8h+9TejItbdqFIzK4yC4mViXvShPTEKGB2PqHcA=;
-        b=HdDzTy8vhCVaVi5LPYVwIrwUxp/NQSCXk0e3EjVxenvz0cgfCE/hqfKzLdwDkv/Uvt
-         arE3eL4osYRnC/qU132RKw2QL2VHXCAdwYsdO13lrLiKSuCR5v41r3IwhRseUze+Yk4e
-         8+PC6byQV+tIHkPL2CCkJjng+cy36ZZ8BkM4BTMN7i3X/+IvJN81MSnP12Vj4vI49CTa
-         5kcxIIZ9Ux4c6sb8mBXN7O1TBZZIrJPteiP6QFiyQXSA7dB3pm0AQ5u8NGd+F5bmPQzv
-         5S11kKdX8Yv3p1rgk+kKMfXKz2XBiqADPxM4eqcjmKX7O+nO1il/UE7oJsMhaEDAyjxz
-         IXOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWECAIcf0mPchyg1vS3jngxCtruPZAApaff60srQasoN1YJsUasjhR9EZhrCt0iPAvYCKke3tpqA8jXZaY9@vger.kernel.org
-X-Gm-Message-State: AOJu0YxkXUuv1HTIozjvBDLEi2dcKc7gbxOtZvIGmlqasP1JGXQlXPll
-	i3A3IJ+TP4v6xttHN4AUgmkn2WLA8NMyp5WVBr1udM3a8e6SJzb96kKkOLlYrGimbIk=
-X-Gm-Gg: ASbGncsrIK+AdzLKq81PnQ72UP6NVi9ZpuPisGi5Bku0LD6eJIKnj7SsfFrkkVnEY4j
-	RkqYOgg7BHIZaMCXTPvezfMTx1FWwiViAurLBzP4m+rjpPrnZQowAy1FjjPJ9LvOCmO6Cas7MqL
-	H/aLgG0tT6RzQ+/RD+X6j+o+INT4CCfig6zlLMm9vE04WvLl/2QSfVcX3YRLJxZB0JFx93oFQQi
-	Jh1+hNraMndLLN82Pa0bKHQ7GoH4nuYBV3RN5lHVq92XsuCgYn3H0S7cC9JIUeuoGTk6iUsFsvV
-	nzI64jmCqNOv6sa9T6yCT7fk8xoC/VU8Uwh8mti1yn+mT2gV9ADqU5oKbkYasGYpHyv9+flMYTQ
-	dOYcHh/SBeXEQBKLSKUsoQCfTU/sqJEDNDOgT3ADkvjCn/pEu6IgPteWIEtAh1gxK3WBQpQqJ40
-	Quy+CBBQ==
-X-Google-Smtp-Source: AGHT+IFzOBuC3mZoHMgSDKxYE+Gp2QoQjARO39dkLRc1i2qcYef9U28ETLuq2rRvzxSOj1rllcECwg==
-X-Received: by 2002:a05:6402:2694:b0:60b:fb2c:b7b3 with SMTP id 4fb4d7f45d1cf-60c88a41c83mr12973871a12.0.1751364986494;
-        Tue, 01 Jul 2025 03:16:26 -0700 (PDT)
-Received: from localhost (2001-1c00-3b8a-ea00-c4de-d39d-05f4-c77a.cable.dynamic.v6.ziggo.nl. [2001:1c00:3b8a:ea00:c4de:d39d:5f4:c77a])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60c8320b5aasm7072967a12.76.2025.07.01.03.16.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Jul 2025 03:16:26 -0700 (PDT)
+	s=arc-20240116; t=1751365425; c=relaxed/simple;
+	bh=b58GG1PUJetI3dDN4zmDO00cKecqi5fWe0Ho3y4zR3A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=A3fNSjAtObqu+VWY/rALsKU6MWDCCvehy/PzPZrrSiiArha70EQFDF5cgm8m4RempV7WM+E+sm+4HXcQhzn7x6YZyxU6IPDz9bG2pcOrAFi8tCIum5Ye9P9kDLO5hEMejyeXtsD24vwMzP70EexMKmro8GmhTTFotr1ZTtJHXEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L6B/bv/C; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5619qx5W025373;
+	Tue, 1 Jul 2025 10:23:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	nhcNFYODXWYs5Uhj7FrQv094mSfyCDY5gv6KZUKL8BU=; b=L6B/bv/ClumpbnD5
+	gXx4KpfNocYEwe5Q+YjUilnoCd9mZEMDyLeNDwnFOZiGMMl7FnbkWGDyfanMs+Vp
+	LgEXi1/E1ZJijMQVEO9DA8M0+5Z0viFByyJ4OjpSnH4oRBzqjRC1phXcdDg5yehT
+	AIH1WUK1vclIwC5TiUH3n8hkbTgLYxGQAs3LOADIJS2Tp854P2nsMPHC1KmioRPv
+	3BneLtGLi533hpt067GQFfifR3lijJXafPn3USjkA2o69iFJv3cpoaKg4oLn0zZp
+	kBDo4g+m60BaccXzuDLevw41m0/czGfpx1t/EOjGWCCJMs9rYlXfYg4PsfJZgHsg
+	OVt3Eg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47kd64nne1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 01 Jul 2025 10:23:30 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 561ANTev028916
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 1 Jul 2025 10:23:29 GMT
+Received: from [10.50.58.161] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 1 Jul 2025
+ 03:23:25 -0700
+Message-ID: <79342b8f-4cef-fc48-c40f-5636f868af2e@quicinc.com>
+Date: Tue, 1 Jul 2025 15:53:11 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 01 Jul 2025 12:16:25 +0200
-Message-Id: <DB0N2N5JIUNS.3UFD0C81VYS9F@fairphone.com>
-Subject: Re: [PATCH v2 2/3] dt-bindings: remoteproc: qcom,sm8550-pas:
- document SM7635 ADSP & CDSP
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Krzysztof Kozlowski" <krzk@kernel.org>
-Cc: "Bjorn Andersson" <andersson@kernel.org>, "Mathieu Poirier"
- <mathieu.poirier@linaro.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Manivannan Sadhasivam" <mani@kernel.org>,
- <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
-References: <20250627-sm7635-remoteprocs-v2-0-0fa518f8bf6d@fairphone.com>
- <20250627-sm7635-remoteprocs-v2-2-0fa518f8bf6d@fairphone.com>
- <20250701-pretty-vivacious-panther-540ff4@krzk-bin>
-In-Reply-To: <20250701-pretty-vivacious-panther-540ff4@krzk-bin>
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3 0/5] Introduce "non-pixel" sub node within iris video
+ node
+Content-Language: en-US
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Dikshita Agarwal
+	<quic_dikshita@quicinc.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        "Bryan
+ O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
+ <6c5d9ff2-fa59-4151-99fe-3bddae46b507@linaro.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <6c5d9ff2-fa59-4151-99fe-3bddae46b507@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=Z+PsHGRA c=1 sm=1 tr=0 ts=6863b722 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=qC_FGOx9AAAA:8 a=KKAkSRfTAAAA:8 a=jMYyL5frt0AsD3xASfkA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+ a=fsdK_YakeE02zTmptMdW:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAxMDA2MiBTYWx0ZWRfXzz+E1vl4QJ8u
+ No2RQs6VxCsGeqPYRbWPD/cmxt4wTmPBCWcUzAqTrGmyYbmjEQwPiEBLKIZ2FEWNc3cjE7oCBuq
+ dhsDAqvsDG3arzqG5uxCKZ57gUkwIPePWUnhuu20ctq3bboEowU0CsUFjg7MRqO+I/2IlU+zFC7
+ wmE69YqgM7MmJnNsXe49fNaUUxF4n4AlUwCJGntA6pOpt7yebOT1XDA1SCaW5LNFZmLr/yWTz4I
+ rBOqS8LMwh1NjrUtia4/QfMCz1CnOmW9+b6mEslz5bR5xBshd6/3mo9PxVnCOCr+8MA3UM133gl
+ YvASRuwWKvgq6Eqrpb5+0FrivEDcMqxpnrRLItY45483VCakSDGpXaxbhDhJfeOsyIrjuAWf6d8
+ UB80mWwHhMCEYcVwYAx3lmK8oyLBnFj0aiVbEqZ8nZFgG1+UKEJq+sGfnrKUtsc4COWxkuzu
+X-Proofpoint-GUID: Jep6seOWPGZDc6nkvKDAYfsKnMgF7KPS
+X-Proofpoint-ORIG-GUID: Jep6seOWPGZDc6nkvKDAYfsKnMgF7KPS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-01_02,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0 mlxlogscore=999
+ spamscore=0 adultscore=0 mlxscore=0 priorityscore=1501 bulkscore=0
+ impostorscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507010062
 
-Hi Krzysztof,
 
-On Tue Jul 1, 2025 at 10:14 AM CEST, Krzysztof Kozlowski wrote:
-> On Fri, Jun 27, 2025 at 08:55:43AM +0200, Luca Weiss wrote:
->> Document the ADSP & CDSP remoteprocs on the SM7635 Platform.
->>=20
->> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+On 6/30/2025 11:34 PM, neil.armstrong@linaro.org wrote:
+> On 27/06/2025 17:48, Vikash Garodia wrote:
+>> This series introduces a sub node "non-pixel" within iris video node.
+>> Video driver registers this sub node as a platform device and configure
+>> it for DMA operations. All non pixel buffers, i.e bitstream, HFI queues
+>> and internal buffers related to bitstream processing, would be managed
+>> by this non_pixel device.
+>>
+>> Purpose to add this sub-node:
+>> Iris device limits the IOVA to an addressable range of 4GiB, and even
+>> within that range, some of the space is used by IO registers, thereby
+>> limiting the available IOVA to even lesser. For certain video usecase,
+>> this limited range in not sufficient enough, hence it brings the need to
+>> extend the possibility of higher IOVA range.
+>>
+>> Video hardware is designed to emit different stream-ID for pixel and
+>> non-pixel buffers, thereby introduce a non-pixel sub node to handle
+>> non-pixel stream-ID into a separate platform device.
+>> With this, both iris and non-pixel device can have IOVA range of
+>> approximately 0-4GiB individually for each device, thereby doubling the
+>> range of addressable IOVA.
+>>
+>> Tested on SM8550 and SA8775p hardwares.
+>>
+>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 >> ---
->>  .../bindings/remoteproc/qcom,sm8550-pas.yaml       | 37 +++++++++++++++=
-+++++++
->>  1 file changed, 37 insertions(+)
->>=20
->> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pa=
-s.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
->> index 2dd479cf48217a0799ab4e4318026d8b93c3c995..44cc329be5067ab6cbaa0a46=
-7669cb3f55c7e714 100644
->> --- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
->> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
->> @@ -18,6 +18,8 @@ properties:
->>      oneOf:
->>        - enum:
->>            - qcom,sdx75-mpss-pas
->> +          - qcom,sm7635-adsp-pas
->> +          - qcom,sm7635-cdsp-pas
->
-> I don't understand why this is here and mpss and wpss are in other file.
-> It is supposed to be in one binding file, especiall that:
+>> Changes in v3:
+>> - Add info about change in iommus binding (Thanks Krzysztof)
+>> - Link to v2:
+>> https://lore.kernel.org/r/20250627-video_cb-v2-0-3931c3f49361@quicinc.com
+>>
+>> Changes in v2:
+>> - Add ref to reserve-memory schema and drop it from redefining it in
+>> iris schema (Thanks Krzysztof)
+>> - Drop underscores and add info about non pixel buffers (Thanks Dmitry)
+>> - Link to v1:
+>> https://lore.kernel.org/r/20250620-video_cb-v1-0-9bcac1c8800c@quicinc.com
+>>
+>> ---
+>> Vikash Garodia (5):
+>>        media: dt-bindings: add non-pixel property in iris schema
+>>        media: iris: register and configure non-pixel node as platform device
+>>        media: iris: use np_dev as preferred DMA device in HFI queue management
+>>        media: iris: select appropriate DMA device for internal buffers
+>>        media: iris: configure DMA device for vb2 queue on OUTPUT plane
+>>
+>>   .../bindings/media/qcom,sm8550-iris.yaml           | 40 ++++++++++++++++-
+>>   drivers/media/platform/qcom/iris/iris_buffer.c     | 15 ++++++-
+>>   drivers/media/platform/qcom/iris/iris_core.h       |  2 +
+>>   drivers/media/platform/qcom/iris/iris_hfi_queue.c  | 20 ++++++---
+>>   drivers/media/platform/qcom/iris/iris_probe.c      | 50 +++++++++++++++++++++-
+>>   drivers/media/platform/qcom/iris/iris_vb2.c        |  4 ++
+>>   6 files changed, 119 insertions(+), 12 deletions(-)
+>> ---
+>> base-commit: 8d2b7fde56597ca912f5daaf3ab58915458ba1fc
+>> change-id: 20250619-video_cb-ea872d6e6627
+>>
+>> Best regards,
+> 
+> I tried the patchset on SM8550 QRD and SM8650 QRD/HDK and the system just reboots
+> a few millisecond after probing iris, no error messages nor reboot to sahara mode.
+> 
+> The DT changeset for reference:
+> https://git.codelinaro.org/neil.armstrong/linux/-/commit/e1b3628469c038559a60d310386f006f353e3d59
 
-Is that the idea? (see my reply to my sm8350-pas patch)
+I was able to repro this case, the issue was due to a incorrect node name in
+driver. Fixing the name as per binding, fixes the issue for me. I have made the
+comment in your code branch [1], which should fix it for you as well. Please
+share your observations.
 
->
->>            - qcom,sm8550-adsp-pas
->>            - qcom,sm8550-cdsp-pas
->>            - qcom,sm8550-mpss-pas
->> @@ -165,6 +167,24 @@ allOf:
->>            minItems: 5
->>            maxItems: 5
->> =20
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          enum:
->> +            - qcom,sm7635-adsp-pas
->> +            - qcom,sm7635-cdsp-pas
->
-> it does not fit existing cases!
->
->> +    then:
->> +      properties:
->> +        interrupts:
->> +          minItems: 6
->> +          maxItems: 6
->> +        interrupt-names:
->> +          minItems: 6
->> +          maxItems: 6
->> +        memory-region:
->> +          minItems: 2
->> +          maxItems: 2
->> +
->>    - if:
->>        properties:
->>          compatible:
->> @@ -185,6 +205,7 @@ allOf:
->>          compatible:
->>            contains:
->>              enum:
->> +              - qcom,sm7635-adsp-pas
->>                - qcom,sm8550-adsp-pas
->>                - qcom,sm8650-adsp-pas
->>                - qcom,sm8750-adsp-pas
->
-> sm6350 fits, doesn't it?
+Regards,
+Vikash
 
-Not quite, for sure the firmware-name and memory-region for adsp and
-cdsp on this SoC requires the dtb firmware file as well, apart from that
-it looks similar enough.
+[1]
+https://git.codelinaro.org/neil.armstrong/linux/-/commit/e1b3628469c038559a60d310386f006f353e3d59#note_23930047
 
-I'm also okay with creating a new (after the whole renaming thing)
-qcom,milos-pas.yaml which contains the bindings for all 4 *-pas'es.
-
-Let me know what you want to see in the next version.
-
-Regards
-Luca
-
->
->> @@ -239,6 +260,22 @@ allOf:
->>              - const: mxc
->>              - const: nsp
->> =20
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          enum:
->> +            - qcom,sm7635-cdsp-pas
->> +    then:
->> +      properties:
->> +        power-domains:
->> +          items:
->> +            - description: CX power domain
->> +            - description: MX power domain
->> +        power-domain-names:
->> +          items:
->> +            - const: cx
->> +            - const: mx
->
-> And again this is like sm6350 :/
->
-> Best regards,
-> Krzysztof
-
+> 
+> Neil
 
