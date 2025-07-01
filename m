@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-63280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C7F0AF0265
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 20:01:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9068CAF0267
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 20:02:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3025916AFF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 18:01:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 87C271C07C79
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 18:02:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 786FC1B95B;
-	Tue,  1 Jul 2025 18:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F7CF1EFF8D;
+	Tue,  1 Jul 2025 18:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KD1Q1LAc"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AI6jlCvY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7B01DACA7
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 18:01:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD92D1B95B
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 18:02:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751392883; cv=none; b=tTVelWpgX8jqJsYYSnWWTG0RxzLG6Dv84PWCSuI9CZ697g723w+qWIYOFMDvmNnVCR72tQvnZLPW2bazHFZhKxb1rC227FZjxuHTQEFR4n0K52yOnL3ySjEFVcW/oeimtz7mu8wvGv9o6c/zbpoIQb+qPhOoXaeeDASoW68Zf24=
+	t=1751392943; cv=none; b=GpdHr34g9SymtiEzM8dqf+GrCYEngOj6LIpTsnvWPRhLCsWZ6N33rn6llJ7NUsaua5PqqR5MkxZUOKHJThtLyINHuuK9ZqObWrDsn3esA8axVVMJ3RSWviYS+XJWrCDVwlJPXfvwc/3cq9YSxm3bG+vMPlPnlQrrbAk3AzvvzfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751392883; c=relaxed/simple;
-	bh=oiHyN88BxV5LLHRvPQjfOYp/9uy6yp6oHBhu53Za8sc=;
+	s=arc-20240116; t=1751392943; c=relaxed/simple;
+	bh=AGx4es3QEJk0A3jHFs7HSwzuxOjRzJkN5gEt240fJMk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=SlaUntpVCOi9ZecCrIr1W1hpwRbiHtsxtDRTp3DQjaBppyoAQRtKPPIBi/C7VfH1P1UuFXX8TQ+48+GvhV1b8oiYGMSuqnT0T2eRY2Xmru7hPFqdE8jYWd83VN01+3NBjD1tFuiW0Yx9kHmv/BhO/i2qtUFKHaA5jiMLxnFxGZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KD1Q1LAc; arc=none smtp.client-ip=205.220.168.131
+	 To:Content-Type; b=RetHoghRFNcG1Eq2lpIayYuoqkenVKXAW3kiYWSNfSiuNLLb63XGBuE0BaRjqTFZcb0j2stpEdC4RsR7H/6oVgQvjZDa3ooQSGU2McPVc+8qGP1blKlKFGk50zs/eahGB7Mr+S4pMNnbqcLS922MfUUpHVYfMmQtxriXtBntfZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AI6jlCvY; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 561HeTqC032118
-	for <linux-arm-msm@vger.kernel.org>; Tue, 1 Jul 2025 18:01:21 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 561HNTRr024738
+	for <linux-arm-msm@vger.kernel.org>; Tue, 1 Jul 2025 18:02:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:to; s=
-	qcppdkim1; bh=E08Ymkj00isvwn8MFFMgxGIKeBNJqDWH0W0N9Cm+9UA=; b=KD
-	1Q1LAc0XLplbVj1vNa4FXTpyujgdndAXSVEbt6da9gUp9KWaXfonB1GqhIRGT+GZ
-	eU7r9KrxKr24PeRtPAkh9trvz0KRVNC/iikLDqbJXj2FATGXHI57PG/ZzWaQllmQ
-	RupCf6ZKq0oOA/tkE8Ly3iipIMXBrd5UCLUODgcV+SG5QTPYCAwxVrZgb16HMfi7
-	Zrs5ZCfFZ+GMXCocetTLCZ+MKt/ApCL0lrh9/d21UKV9tUhauaXptYuaqpxEL2TJ
-	DpCXbfzqgdfgq3sN64utbsv07MkS6tD++dRD4hJCwVy3zymv4BnBIXr0gjLqiufR
-	PFOPaYbSmQcei7xelXLg==
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com [209.85.167.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j63k9y95-1
+	qcppdkim1; bh=CQ+/zsTAqe6KKzt7JNCR9p0ICYFm+DFlKaKEBaEu+A4=; b=AI
+	6jlCvYlE+IeehXlbRWz1Yx4zT+SWuAf1UthgpXjnj9yMX7rZWanKAPmhm+kOIADF
+	ZMzp2HZawuaM9y5uoj2uVNe/hZHK0KS3IsndPwKHB+E9YLE/007JV/9gXfkiGPQ6
+	50cmxEml5nkG28gcXacFmjo4iyAWaTR3QOteooByb+5+nWGTB6fGUzuN6x6UAusV
+	Xj/zlLEbUjrzN8kcPfcYbO943vhjQuBsZle0Ow3WGGiEqUJsjZklNCE/H5KBSsjO
+	m/qKTFq0WEJuQw3JBnAhl3h4ubg22meTge89aNtHLs+kFG7I+zie3y/KMcLiXvuy
+	7KBtBXrE21IX23l/WOSg==
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com [209.85.161.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j8s9hvnx-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 18:01:20 +0000 (GMT)
-Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-40b59532098so978697b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 11:01:20 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 18:02:20 +0000 (GMT)
+Received: by mail-oo1-f71.google.com with SMTP id 006d021491bc7-6119947095fso513506eaf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 11:02:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751392879; x=1751997679;
+        d=1e100.net; s=20230601; t=1751392939; x=1751997739;
         h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=E08Ymkj00isvwn8MFFMgxGIKeBNJqDWH0W0N9Cm+9UA=;
-        b=thXifNfJEFzSvz/bcOyYDqXCXp3RRHw1FmFJvP8dMpLzGPMedX7G3gKIXdJUbnqu0i
-         4OM2fijf97QdA/XF7OP54DWJTHkRrXW/35TURufHzb914M3hqF4F1N16Owp+q4FIKi+0
-         dh7Rqs4tVNqF/nIs2wzPspQ/E0LKOPbRBv0icxB9Jd8Tz8HFqUMJCmnWsnjQuQlLTRU2
-         v9kjgx3gvFxQClltDs4uq/cciAou4XnXsfzvw3E4pDoBs8VnJVHu0Ke2h1Otuw7ed7gs
-         k+pqK+yRL46y18LpYplsb/T8m3b6XUm+ipEUUROMAr2z1mK0gTc286UFNbBCWfNf0E20
-         D8HQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVwCsQkw3CL2yydQghpXNR7uHVsp26DArbEnyFnfWzyCcPMlcp4QWbZuS8ffbhfpaWX/tbt2P78U26NHi9B@vger.kernel.org
-X-Gm-Message-State: AOJu0YxTPjwMkUSO3r8Yt3fBNWm8/3sIs2K1cqfejhh7j8cv7jzHP3mI
-	4bE14gV8qdA35wbjbnv2ltUUS/QrQTlDHqtzw5xEV4zaTTl7nzGoyfV+LuUzEUoabpA261hZ2bC
-	+QsdrGe4l4dkSm599MeJ9pvz7McoIEZqHaci2cIk6iCUK15xwkVYyuTaMuvcw6+KfLl4xrwPo1h
-	bxqasdydyQ4ERSGYp1ot6152gZ7gY+0r4CclNBuMoDyYA3WG/WjbY=
-X-Gm-Gg: ASbGnctei8rG7Ae6hqQHRNl5ty44RZbXP0xybJNqatkx2iLf0K5vmCanW8lCfuXbcvo
-	358KVV6hWlulmVpN+gOBJ3+i830YsQykNOsFYvA1vmTbhYEUv15Wd/8MMIPTRDgzsBjCo7qWwPU
-	cwL5JgB4clK55xAdGAW/trP+jH/M6wASLW+gs=
-X-Received: by 2002:a05:6808:1208:b0:408:e6e0:910a with SMTP id 5614622812f47-40b33e1abd7mr14971060b6e.22.1751392879073;
-        Tue, 01 Jul 2025 11:01:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFjqhhJ9WPCGNh5gW+/pqNz4sabEQdLdPjloNPnyLQIyPDtO+reo3m3if0HiBql19pnlFP8rHqGr31iAL5Le2I=
-X-Received: by 2002:a05:6808:1208:b0:408:e6e0:910a with SMTP id
- 5614622812f47-40b33e1abd7mr14970999b6e.22.1751392878425; Tue, 01 Jul 2025
- 11:01:18 -0700 (PDT)
+        bh=CQ+/zsTAqe6KKzt7JNCR9p0ICYFm+DFlKaKEBaEu+A4=;
+        b=h8KafGSfXhyXSvuaV44QiIKpfXSxcojPryeyrd46nrCOxW4yfknocXiBwEvfcON/u3
+         NxpJTZCS9NFM1r6zDcwORS0LewoibtuXyn7M+2c2AmPbOcHPnKoMdkJSJmYUygouFH1T
+         8QA6gf2oySPRVwHWQBDcll+QojermFogCAGL859z1mjExhsklvAgxA2LeKF1Y92ip22R
+         RiRR59TA/gh/oLHY2lFTmuEUL/v4C9tP6b/pLWlYnTl0nFxa3WT7+lWIJ3+10o0Pv7pK
+         lepYheBAzXa0hTdt14A6i/c9QoVt25xkfVgWkZxzWS3mnscYxBRJlDDT9XwSDJSPbgqL
+         UZ3A==
+X-Forwarded-Encrypted: i=1; AJvYcCVasD1eQoaoVYxp4dAyiAc9Oe9VNI6T2k7juhvBGC6HxhvPcHU3aGXy/Bf25jZXuT2GbR1lrJL+ZJe8fDyl@vger.kernel.org
+X-Gm-Message-State: AOJu0YwmE8cBjt4uTqqeEF9h+udY6EynvGew/FisxOQejA+gvLN35+Iv
+	MjnHavhDyXuyQyxZuqp7d+gxq/wY8JkYI/I5Lp5W7Anl/lF/Ir+klIM7gef3+olHFGKuoaj9gTk
+	mhOSzyO5tHcY4+lRwUDyk+YI2P/ZfMhP1T3TI9o29AQrDAz5Oq4IZgPBrVx+aLpx+GZxrf1Ku60
+	TZThkmQ+kcRFOCbrAasGokt+U/hHsiOJV18WYffww1X9w=
+X-Gm-Gg: ASbGnctzRsHXjcDeA6Klm1t1xFUV6JpUUWN9SSLVlgWD+0k0Tp1Pt/Axp7Lzygcx0F6
+	0hZZnl6IBvy0TlCZ6GyVQmUm4du5NcdljGz9rT8OcgMjQKjJIczVimbM5a8dYlt1IYXrmork1fC
+	PfHDzGLm9T76HUI1ZNgEFuvxHQIJOgPoYI694=
+X-Received: by 2002:a05:6820:2089:b0:611:e30a:f9c7 with SMTP id 006d021491bc7-611e30afbaamr6002768eaf.7.1751392939212;
+        Tue, 01 Jul 2025 11:02:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEGLLMPx8gOzV/UHxJmHmm+YJfG0GmnfPmwSBIgSo8SZCDasmY6x5pEdz1Xvh7rP/DSNZL6VK6+oNWw7imEboM=
+X-Received: by 2002:a05:6820:2089:b0:611:e30a:f9c7 with SMTP id
+ 006d021491bc7-611e30afbaamr6002704eaf.7.1751392938612; Tue, 01 Jul 2025
+ 11:02:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,82 +83,130 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250630180903.77990-1-robin.clark@oss.qualcomm.com>
- <20250630180903.77990-8-robin.clark@oss.qualcomm.com> <20250701162114.5gkdr7f5cww23ou4@kamilkon-DESK.igk.intel.com>
-In-Reply-To: <20250701162114.5gkdr7f5cww23ou4@kamilkon-DESK.igk.intel.com>
+ <20250630180903.77990-9-robin.clark@oss.qualcomm.com> <20250701162420.7dndnmld2p73atex@kamilkon-DESK.igk.intel.com>
+In-Reply-To: <20250701162420.7dndnmld2p73atex@kamilkon-DESK.igk.intel.com>
 Reply-To: rob.clark@oss.qualcomm.com
 From: Rob Clark <rob.clark@oss.qualcomm.com>
-Date: Tue, 1 Jul 2025 11:01:06 -0700
-X-Gm-Features: Ac12FXyEkWfkw9gSLZbeNFdYURWOCDuIIzied9_JpHK7kcGSUVi9eXBW_4H2Y1U
-Message-ID: <CACSVV02jA9dFUFuaKAmoOn_wav0V-QrTj4vo6Krr2V4n7MRDKQ@mail.gmail.com>
-Subject: Re: [PATCH igt 7/9] msm/mapping: Handle larger gmem file size
+Date: Tue, 1 Jul 2025 11:02:07 -0700
+X-Gm-Features: Ac12FXyivs6UOMVJtoIllSHU4SZK8oXweiKud8YnoU_KM87ZfFJLhnfpNoVTO3E
+Message-ID: <CACSVV0251in35dD-=hk9oy6USZCxHR-oWFy+Xk+YsSyy_LDYtQ@mail.gmail.com>
+Subject: Re: [PATCH igt 8/9] msm/mapping: Add wait for stall-on-fault to re-arm
 To: Kamil Konieczny <kamil.konieczny@linux.intel.com>,
         Rob Clark <robin.clark@oss.qualcomm.com>,
         igt-dev@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Rob Clark <rob.clark@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=ZKfXmW7b c=1 sm=1 tr=0 ts=68642270 cx=c_pps
- a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
- a=QyXUC8HyAAAA:8 a=EUspDBNiAAAA:8 a=_LjFwpKmhB6XmTo0UT0A:9 a=QEXdDO2ut3YA:10
- a=efpaJB4zofY2dbm2aIRb:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAxMDEyNCBTYWx0ZWRfXwel7ryE1mPzS
- 2zkAKPDLqIDE3E5GS4ZbFxXQz3KjBB6AqRuq9wRmdHAmExXzSB5csfqH1JIQcgPymKGTPHhz3UY
- EyqC5+ASxmej13OuqrAOEfVI8qiP2H9RozSyvnGgLd/GiC4D5kp4FrlciIo9V0xreNf/IZS7ZxY
- miqXWMWxe+lt9odku8ibh3Gqkz8QhN/TKG8Cu4Y2a9WFQ+pEobaVpF7+kCmfdqbhgrCtyGYUH4h
- CBzE7zUD9AVeWXpjMO+UM6Ksz59BWeKa8aoiSDaHC5DxsVlZTu+i5v5UFr7//240CV6EzfEBkr8
- BLP+iS7Lnsb4ockmfHu237ZJX2MrHXL10Hpf0p63PbSOhSiLIEYOHJlGuf+c8+pCyvTlORCURgX
- VkaJMb4d1SZAnaFDWvIdYt5BVZ5n54uWbbgsW/1RnUHGT1DGzAETklbncQzmOKZeag97wC/j
-X-Proofpoint-ORIG-GUID: 50_1Nmci4LDq0tD9bePsNYMOLGWmfEmN
-X-Proofpoint-GUID: 50_1Nmci4LDq0tD9bePsNYMOLGWmfEmN
+X-Authority-Analysis: v=2.4 cv=H/Pbw/Yi c=1 sm=1 tr=0 ts=686422ac cx=c_pps
+ a=V4L7fE8DliODT/OoDI2WOg==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=QyXUC8HyAAAA:8 a=EUspDBNiAAAA:8 a=3PguM2h0FNWI6asSIAsA:9 a=QEXdDO2ut3YA:10
+ a=WZGXeFmKUf7gPmL3hEjn:22
+X-Proofpoint-ORIG-GUID: hRTrgxCYa3DgymtAqWFoyyBZLcvRRRoT
+X-Proofpoint-GUID: hRTrgxCYa3DgymtAqWFoyyBZLcvRRRoT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAxMDEyNCBTYWx0ZWRfX8Jwx5hnljnlN
+ U6fJ5zTM/0V+Pdja5yZIvL85Ena76rcTgF4qAe+0koqCpB3skrhkBoUjuPPOwv8jLEg9iGBSorv
+ 88I5QkZXKyLLMFkPDus/P9ZuPG48rtKmA+xVr1W0axgZp3MCxKzOejvySKqKbx91VvjhamnnwBe
+ 4XvlG0pVSGb+zTIIAjO7NMN/R58GN/llTCbpuq2324N99WDa+qkY5W1PdL7AU+NRHI/B/+IQckj
+ ddudQA7W16oz0h3RpAiBRvtrIioJ+Te7VgD04zLXkZgs0DHM3graTzM9s/5ct2+05t4kJ39gHmC
+ Yu0wN9Uz9EUOgx1tolb5Y4RIxJ2+8Es90T3yJrRoy9Zle3J1jtHvFIWYMXiRfRiewftit2wLFZi
+ ccloha4h954t3Q/1+l8N8NebD3Dxyr/eakZIj+7+tLrwfQtlrRGvj7i0D7ku+K2OOTwjyvIL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-01_02,2025-06-27_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
- impostorscore=0 malwarescore=0 clxscore=1015 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ impostorscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
+ priorityscore=1501 clxscore=1015 mlxscore=0 lowpriorityscore=0 spamscore=0
+ adultscore=0 bulkscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2505280000 definitions=main-2507010124
 
-On Tue, Jul 1, 2025 at 9:21=E2=80=AFAM Kamil Konieczny
+On Tue, Jul 1, 2025 at 9:24=E2=80=AFAM Kamil Konieczny
 <kamil.konieczny@linux.intel.com> wrote:
 >
 > Hi Rob,
-> On 2025-06-30 at 11:09:01 -0700, Rob Clark wrote:
+> On 2025-06-30 at 11:09:02 -0700, Rob Clark wrote:
 > > From: Rob Clark <rob.clark@oss.qualcomm.com>
 > >
-> > If running on a system with full desktop environment, the file will be
-> > much larger than 0x4000 bytes.
-> >
-> > Signed-off-by: Rob Clark <rob.clark@oss.qualcomm.com>
-> > ---
-> >  tests/msm/msm_mapping.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/tests/msm/msm_mapping.c b/tests/msm/msm_mapping.c
-> > index 03a9e814c931..978ea18375dd 100644
-> > --- a/tests/msm/msm_mapping.c
-> > +++ b/tests/msm/msm_mapping.c
-> > @@ -122,7 +122,7 @@ endswith(const char *str, const char *end)
-> >  static uint64_t
-> >  get_bo_addr(int drm_fd, const char *name)
-> >  {
-> > -     char buf[0x4000];
-> > +     char buf[0x80000];
+> > Newer kernels disable stall-on-fault for a grace period, to avoid a
+> > flood of faults causing instability with memory translations that
+> > the hw attempts with the translation stalled.  Fortunately it adds a
 >
-> If it is that big why not malloc() it?
+> Is it system-wide or only for msm driver?
 
-in kernel, for sure.  But userspace stack size is multiple MB at least
+specific to msm
 
 BR,
 -R
 
+> Please improve subject:
+>
+> [PATCH igt 8/9] tests/msm/msm_mapping: Add wait for stall-on-fault to re-=
+arm
+>
+> imho it could be shorter:
+>
+> [PATCH igt 8/9] tests/msm/msm_mapping: Wait for stall-on-fault
+>
 > Regards,
 > Kamil
 >
-> >       char *p =3D buf;
+> > debugfs file so we can know how long we need to wait for stall-on-
+> > fault to be re-enabled.
 > >
-> >       igt_debugfs_read(drm_fd, "gem", buf);
+> > Signed-off-by: Rob Clark <rob.clark@oss.qualcomm.com>
+> > ---
+> >  tests/msm/msm_mapping.c | 29 +++++++++++++++++++++++++++++
+> >  1 file changed, 29 insertions(+)
+> >
+> > diff --git a/tests/msm/msm_mapping.c b/tests/msm/msm_mapping.c
+> > index 978ea18375dd..7e2f5c7eadc8 100644
+> > --- a/tests/msm/msm_mapping.c
+> > +++ b/tests/msm/msm_mapping.c
+> > @@ -74,6 +74,30 @@ get_and_clear_devcore(int timeout_ms)
+> >       return buf;
+> >  }
+> >
+> > +static void
+> > +wait_for_stall_on_fault(int drm_fd)
+> > +{
+> > +     char buf[64] =3D "\0";
+> > +
+> > +     do {
+> > +             int us;
+> > +
+> > +             igt_debugfs_read(drm_fd, "stall_reenable_time_us", buf);
+> > +             if (!strlen(buf)) {
+> > +                     /* Not supported on older kernels: */
+> > +                     return;
+> > +             }
+> > +
+> > +             us =3D atoi(buf);
+> > +             if (!us) {
+> > +                     /* Done waiting: */
+> > +                     return;
+> > +             }
+> > +
+> > +             usleep(us);
+> > +     } while (true);
+> > +}
+> > +
+> >  /*
+> >   * Helper to find named buffer address
+> >   */
+> > @@ -224,6 +248,11 @@ do_mapping_test(struct msm_pipe *pipe, const char =
+*buffername, bool write)
+> >       ret =3D sscanf(s, "  - iova=3D%"PRIx64, &fault_addr);
+> >       igt_fail_on(ret !=3D 1);
+> >       igt_fail_on(addr !=3D fault_addr);
+> > +
+> > +     /* Wait for stall-on-fault to re-enable, otherwise the next sub-t=
+est
+> > +      * would not generate a devcore:
+> > +      */
+> > +     wait_for_stall_on_fault(pipe->dev->fd);
+> >  }
+> >
+> >  /*
 > > --
 > > 2.50.0
 > >
