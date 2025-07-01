@@ -1,186 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-63178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F976AEF485
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 12:08:14 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCE98AEF492
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 12:10:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B44D71889FE3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 10:08:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 62EE47AE1AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 10:09:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EFF7246784;
-	Tue,  1 Jul 2025 10:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83F5224466E;
+	Tue,  1 Jul 2025 10:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ga7vDnwa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V6QhC9oY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6C222CBE9;
-	Tue,  1 Jul 2025 10:07:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEADD18DB35;
+	Tue,  1 Jul 2025 10:10:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751364431; cv=none; b=Yq7yztC3NdswZhPDSWZWlxYeWbV1elsXUvw5DreETSpOoAdqd3DdiaiNr4B3QrrnKqvzV67QA+roxJCwx4f5axC/x03Rd33uUXK+Do0tl/Z02DKxlz+o15TdmGjrLzMNCGvEP0vR6FzJSrsKrmq53Q88AHo8HhZ5x2/gOFeweyA=
+	t=1751364622; cv=none; b=nanKMf3RiEVnXU24euEDHOHoRiBAHUZL4gEmXLSrTmOzpeeJT4XycxF94kO4N+DP4qolaqs+f0swCmOb5fKqVDWeyVKEju31j01tl3e09ebHCcgUZ4sozRo5V94TENOv/q7MZFSyFvwecdMvvw+wFv7rcOnDXWl/j4b2r6El46w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751364431; c=relaxed/simple;
-	bh=OZ2g5bk5l/ia5/l7WYOfBY70SUyoTBPtHB4C3xvBXCU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=El7ACHW7ve00lUPbYh7AZR04i+pmZyGttrCCp2N7LP3tuSu6ik0qxbIub4GNkfx99tCDahDRpQVYjSkgRgv7hnfPW4z9/SBaHlhuT9nvzjrJOluk5bFTOh547B9RUXaYDE2uJUsJzY9PeJqG+pAtFWvW3Wi8/EOMC8SKiNPfEps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ga7vDnwa; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 561A32wM025164;
-	Tue, 1 Jul 2025 10:07:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=FyK5LFBHHZqcYuq8mQ8N2H+f5O/FPp2fVyT
-	E4wUpQaM=; b=ga7vDnwal7T3PMX/UFzD7lFG4CvkrpU4pD7IKz+/WVGPB4KO8LI
-	t57+xKfib092rhxNU3UirQcZAoUcpw+XbGWVB4Wrhub1SYhhz43qbqMBvNzh3C+h
-	l79WBnAfhM9uyYfBZX40Eo1HjODvzLgNIDYubbH7V459hJyNt4BDUqXvOQ+/zOcN
-	8NIgL3PLfsgH6IP8sub3kJv0L//qU9KkAoR2ucd0cff5MSMF60GZmbReJREXCYSG
-	q3cPWe6KVmsUrigGwtHItIYReqqtk8kvC2fpYs7dX7/a+Rk0K+iSYAV3k3+Ya+jp
-	5mYM2/Ky/hLKF0J6OnnLpPQSwuSduzkGLiw==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47kd64nk8p-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Jul 2025 10:07:06 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 561A73QD003058;
-	Tue, 1 Jul 2025 10:07:03 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 47j9fkur7j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Jul 2025 10:07:03 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 561A726n003045;
-	Tue, 1 Jul 2025 10:07:02 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-sartgarg-hyd.qualcomm.com [10.147.242.251])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 561A72Db003037
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Jul 2025 10:07:02 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2339771)
-	id 8F9935C0; Tue,  1 Jul 2025 15:37:01 +0530 (+0530)
-From: Sarthak Garg <quic_sartgarg@quicinc.com>
-To: Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
-        quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com,
-        kernel@oss.qualcomm.com, Sarthak Garg <quic_sartgarg@quicinc.com>
-Subject: [PATCH V3] mmc: sdhci-msm: Ensure SD card power isn't ON when card removed
-Date: Tue,  1 Jul 2025 15:36:59 +0530
-Message-Id: <20250701100659.3310386-1-quic_sartgarg@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1751364622; c=relaxed/simple;
+	bh=Wp7TC5nSz+8PwA/4ATcFGGxnqfSCKNySOL7+6Yn+9OY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=VO50f3w18qUOmt/c8IxmdrpJCeJyU/4qOgo16xPL9gXfu1E1IKy8IPxocyl7jbmrEkJel+XGp9erHMkGwcAkrzDjlWzWxPyGHkhIDWI2vSu0RxJGE0ZKvXwp4ZAGkeQZLv7SIhfxAnsPQTBO4RRc1sTLPWACoeZrIjUtdswayr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V6QhC9oY; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-453398e90e9so24746305e9.1;
+        Tue, 01 Jul 2025 03:10:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751364619; x=1751969419; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+U9qFNfxKwKhoB7NC6h6Lu3o/jexQUeWxNnkfZW9HME=;
+        b=V6QhC9oYAH2DaTZLntnNw6qwCRstXSkLd/3PaCTeqF4SBDKLNSW2SCKmmWRb8SCgYy
+         PF5vFL+Li1fe4hnv67Y53LPYawmDZUJikKEumQL/1jIG/9YulZkhRvPNjHu3BKZYMK5r
+         KoMWcc7RAISnOFvCQ5c5K24ytETKFf6DG9oJZmV6A6/4YFvPClItv+7Io6lPL2G9mDJR
+         TuI6qHnb3IlTvKOGXAqS6Mxz63U9FpyqK1Fy6ApDCVw2ZqKwdPa67egmpS72XjC2b/6z
+         QZ/XU3Px+wIz65XmvgJw6ckbG4Tc2CrRsbJIVLZ0N8aMAMIpVlKiUgOrLmbPKnKoXTGa
+         PUEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751364619; x=1751969419;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+U9qFNfxKwKhoB7NC6h6Lu3o/jexQUeWxNnkfZW9HME=;
+        b=JKevqqAH3p5UDDaHXajk8ygUT297pJq1dVjsM0W49U7nD+dWRjtX6I2bHYlzIlwmx1
+         JCtZ7pUfA/E3Lr72KsGe9EBmmpvo6zs6eMLdb3KHHdF8eCv1OIpkjCtsotDyt567OT59
+         o3D1MUMsP2HncK0l0lMaIQhqkg5a7eO2DwIhX07IeawcKTj4gWWSjhtPqNHso8yOXPQb
+         TkJPJZcyHvRYOzA0vfYKZ6XyFxu5o6Ot13SWbjJPVcdKtNIukuSK0Nn9prtd7j7jodVI
+         Bee/sEbFS2icsQpN12tQ6qm0F+daIwZ+k7iQ0IJ3+HAnI2J837IC23HF/91kqGL1NoD5
+         X2cg==
+X-Forwarded-Encrypted: i=1; AJvYcCUmq9lyK/YzF6LI23XUDsiLyo7Eic+kbkgNQbI7jKU58iLncZmevLafrBD5y3ojpRjcwrOFLJnm6kqwe5qX@vger.kernel.org, AJvYcCXT0c3vIjYf0yK5sZgvNQWitvpmXlu5AWAFmDxcSC+s16KhbimSnULHhNKwkjRLnWP0iFW8JLHpa+CH@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw951dcD4FtnYKV+9vbfvaK8Bh7pY2obqGp3wT2BLxipoq7ffyn
+	MXUFkKuth9zaggW2l8HqcaJdf7Ff6yYu4tQ5X6upfzgJz1KJ19Pqh49niatQ0Q==
+X-Gm-Gg: ASbGncveCiCw95PrtUm/DAmYGsPGrsbzj6E5L82eQu6CSFasPnL214MQ+vPstthjYhC
+	U7rQri3G8I1nuo0Sjb7PmwSShZuw6kw8NahnN6z2vFKecNZxUFfNti7ojimTpEqZc+VlMIhBtrc
+	tIVaygmXAhP3avW5j4lN6dQk4PjOOu+DwR9akILlP78qgKBtCFPO+4iDFQFhL89RRzkIClII6WR
+	DpM/cmsbxrM5nxF/F7fnyrfI1LQKktFGrmUGoUEW3bWNXHXWuhLQJp3CXs6xsTdxIyb3mSOYs3W
+	CoXw5d1mJYrhdMzkvwqaCpZZr86y42hrmepPWnF1eHgQtA+17zg/gMFZZcLQIGpJTLNH27poy9P
+	29MxGyJ3gy87eOb8=
+X-Google-Smtp-Source: AGHT+IEMbn4eAcCLNfXuQ1moFOKF7EXVX4p6uSonTqTbWlvmW6uUlHQpb57mpyLdE9iF1gSGF51JaA==
+X-Received: by 2002:a05:600c:4e07:b0:43c:f629:66f4 with SMTP id 5b1f17b1804b1-454a1082dccmr1535395e9.0.1751364618882;
+        Tue, 01 Jul 2025 03:10:18 -0700 (PDT)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4538233c05csm191321355e9.5.2025.07.01.03.10.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Jul 2025 03:10:18 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Tue, 01 Jul 2025 12:10:13 +0200
+Subject: [PATCH] arm64: dts: qcom: ipq9574-rdp433: remove unused
+ 'sdc-default-state'
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=Z+PsHGRA c=1 sm=1 tr=0 ts=6863b34a cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=QyXUC8HyAAAA:8 a=JiSKitIezqfrhy8bwsYA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAxMDA2MCBTYWx0ZWRfX+coWw37BS9aN
- h5uoeR56dZAFdCwdgSVpb+UoOVzLZAeNANBivLl1sZpqDDC2bawjJDFkv6f+uvh9jPxnSMOvFgg
- jkxLLXNZani04hwp2bR7ffkzx/OlJqN9AYQ+O1H43QM2fAutmoPDu4BeNygmyTUfRhD8zdPpjsK
- KQSyDkWOPTt59KeSci/eKNrDXuzIcyPvz0zMuaYYUGmBs5wQteGmCSk1jm7RydbAR9kJkoJAdQE
- VbpCuygYywgG7Fh2mTS6iDj5R4tWOdGFcses3wm8gGfBLQAxhOJEk2u4gGCbEUdKrPoOQtG9m92
- 8e8rbfScJ/Ir9Jkcgnr9M7AvfiCvs6a86ED6Oy18Gs9YcUYTx8lrd73KPVOLTvZYylHuOFPy0tq
- o/4cRXGm4A2EUNTDZx3hl7a5f/VqBcnvpNxp97Oe80Sl/nzPp+hNl8zYxgvj9Odq9FcVmx+q
-X-Proofpoint-GUID: xjRZCr_2Rhz4iyNpHov5fJ2wQB3KNMfQ
-X-Proofpoint-ORIG-GUID: xjRZCr_2Rhz4iyNpHov5fJ2wQB3KNMfQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-01_02,2025-06-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0 mlxlogscore=999
- spamscore=0 adultscore=0 mlxscore=0 priorityscore=1501 bulkscore=0
- impostorscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507010060
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250701-rdp433-remove-sdc-state-v1-1-ca0f156a42d5@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAS0Y2gC/x3MywqDMBBG4VeRWTuQxGqJryJd2OS3zsILMyIF8
+ d0buvwW51xkUIFRX12kOMVkWwt8XVGax/UDllxMwYXWPZ1nzfujaVixbCfYcmI7xgPcxTC1iD7
+ ld6RS74pJvv/z8LrvHwtWPw1pAAAA
+X-Change-ID: 20250701-rdp433-remove-sdc-state-692f5e91cdb9
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 
-Many mobile phones feature multi-card tray designs, where the same
-tray is used for both SD and SIM cards. If the SD card is placed
-at the outermost location in the tray, the SIM card may come in
-contact with SD card power-supply while removing the tray, possibly
-resulting in SIM damage.
+Since commit 8140d10568a8 ("arm64: dts: qcom: ipq9574: Remove eMMC node"),
+the 'sdc-default-state' pinctrl state is not used so remove that.
 
-To prevent that, make sure the SD card is really inserted by reading
-the Card Detect pin state. If it's not, turn off the power in
-sdhci_msm_check_power_status() and also set the BUS_FAIL power state
-on the controller as part of pwr_irq handling for BUS_ON request.
-
-Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 ---
- Changes from v2:
- As per Konrad Dybcio's comment :
- - Updated commit text
- - Removed READ_ONCE as mmc->ops will be present always
- - Passed the parameter directly to msm_host_writel
- As per Adrian Hunter's comment :
- - Removed get_cd function as not much use now
+Note: dtbcheck produces the warnings below, but those are present even
+without the patch:
 
- Changes from v1:
- As per Adrian Hunter's comment :
- - Removed unrelated changes
- - Created a separate function get_cd for cleaner code
- - Used READ_ONCE when getting mmc->ops to handle card removal cases
- - Reordered if check conditions
+  DTC [C] arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb
+/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: usb@8af8800: interrupt-names: ['pwr_event'] is too short
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: usb@8af8800: interrupts-extended: [[1, 0, 134, 4]] is too short
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
 ---
- drivers/mmc/host/sdhci-msm.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 32 -----------------------------
+ 1 file changed, 32 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index bf91cb96a0ea..f99fb3b096d6 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -1579,6 +1579,7 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
- {
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+	struct mmc_host *mmc = host->mmc;
- 	bool done = false;
- 	u32 val = SWITCHABLE_SIGNALING_VOLTAGE;
- 	const struct sdhci_msm_offset *msm_offset =
-@@ -1636,6 +1637,12 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
- 				 "%s: pwr_irq for req: (%d) timed out\n",
- 				 mmc_hostname(host->mmc), req_type);
- 	}
-+
-+	if ((req_type & REQ_BUS_ON) && mmc->card && !mmc->ops->get_cd(mmc)) {
-+		sdhci_writeb(host, 0, SDHCI_POWER_CONTROL);
-+		host->pwr = 0;
-+	}
-+
- 	pr_debug("%s: %s: request %d done\n", mmc_hostname(host->mmc),
- 			__func__, req_type);
- }
-@@ -1694,6 +1701,13 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
- 		udelay(10);
- 	}
- 
-+	if ((irq_status & CORE_PWRCTL_BUS_ON) && mmc->card &&
-+	    !mmc->ops->get_cd(mmc)) {
-+		msm_host_writel(msm_host, CORE_PWRCTL_BUS_FAIL, host,
-+				msm_offset->core_pwrctl_ctl);
-+		return;
-+	}
-+
- 	/* Handle BUS ON/OFF*/
- 	if (irq_status & CORE_PWRCTL_BUS_ON) {
- 		pwr_state = REQ_BUS_ON;
+diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+index fa7bb521e78603fc4fd6499f398b74c99b018772..5a546a14998b04a4b52abfc12571ec0f793f959b 100644
+--- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
++++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+@@ -128,36 +128,4 @@ wake-n-pins {
+ 			bias-pull-up;
+ 		};
+ 	};
+-
+-	sdc_default_state: sdc-default-state {
+-		clk-pins {
+-			pins = "gpio5";
+-			function = "sdc_clk";
+-			drive-strength = <8>;
+-			bias-disable;
+-		};
+-
+-		cmd-pins {
+-			pins = "gpio4";
+-			function = "sdc_cmd";
+-			drive-strength = <8>;
+-			bias-pull-up;
+-		};
+-
+-		data-pins {
+-			pins = "gpio0", "gpio1", "gpio2",
+-			       "gpio3", "gpio6", "gpio7",
+-			       "gpio8", "gpio9";
+-			function = "sdc_data";
+-			drive-strength = <8>;
+-			bias-pull-up;
+-		};
+-
+-		rclk-pins {
+-			pins = "gpio10";
+-			function = "sdc_rclk";
+-			drive-strength = <8>;
+-			bias-pull-down;
+-		};
+-	};
+ };
+
+---
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+change-id: 20250701-rdp433-remove-sdc-state-692f5e91cdb9
+
+Best regards,
 -- 
-2.34.1
+Gabor Juhos <j4g8y7@gmail.com>
 
 
