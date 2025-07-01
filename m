@@ -1,88 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-63212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBEE5AEF811
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 14:14:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A3D2AEF864
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 14:27:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6678E4A0786
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 12:14:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D4DD14E0760
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 12:27:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2847B2737E2;
-	Tue,  1 Jul 2025 12:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D71A82741CF;
+	Tue,  1 Jul 2025 12:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="adflSpn2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AA5kOqEB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CEC3273806
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 12:13:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282EE2741C2
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 12:23:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751372041; cv=none; b=WGm0mdQze1CYjFZCAee4VpDN5DKPj46PHlUpTHRxz49nlG6cMVU0qwknKyCxZUQges8vvnwo+kkpHZa9nP1c0EX9lWMTH0YSMxIJXyNaIbe0uOdaIgAupYro9gxq1wVE8GQsaSBNpjlUncsSzMVB+9PFNuGbdjIFgGVYMBqsAKM=
+	t=1751372630; cv=none; b=nJo0Y3ob4axRyIN0PFHTR628guCVevD7ILLM46ngIv9gZQEVeoGEKyCNDQoMNEelHLjqRm8EZW2o0xeg4W122rlt3HvCZ/cVz/OkOPbZ+KzmxwXH5CMVifhiFFuoK0ZEHrZPNwNadWcPjKmwaBZ3kExxshB1565m2dRNWnfxZeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751372041; c=relaxed/simple;
-	bh=fc+V5d2QW7CN+ykMr7bx8/ln9xdc8qfTLHTkKZZLnLE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TI7/lhrXD7d4E1YGx6H/AxgxOLR08pmU/lHGBCijuCKYOExrQ9j4YooRA8X4YWaDD/ZxCnGanLr5QUvUBHiYxuL3vupJH0DD4JSlI0r8estmlDLp6bqXiQle06FF51/yzL4wwcNUoiKc+0pq4Wf7Kj7wB9T5b90h15ELdkggIrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=adflSpn2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5619wrJt008139
-	for <linux-arm-msm@vger.kernel.org>; Tue, 1 Jul 2025 12:13:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AVAZKe6MVUqSmIfEve8DecFvZqjhdtqfXn8WNkgPtPk=; b=adflSpn2QBv+mRfF
-	T9Kgjq27zZYwTvH/mIPtYnRLk/yvkQTMVRDKF2PY8vdNEyyyX7RTL9IJ7F2cNoRr
-	Sk93tMuVJbXBkIMEwt0/P2dUTtf6b+5Al8i/icQeg8lViSVA82M4RglDrKYC+fEl
-	CH5YsKnadCLo87N92Rp7repskwDFJwzFZECbR1XZajtCX/mbtxX+VxZIW5wvApBJ
-	zrk4YH6V9w31PfHRpN2MTMLYrELYjtxsW+Lk++TbKIkD4zCwSG7cIFP7JOHHBKyG
-	uUcrkfUgdTIEXAB2VAAWWeDq2sODEHc8TyGxkdLZVucUfOTqpgVCfP5pXng/EGwD
-	aj6qXA==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47kkfmwgwr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 12:13:57 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6fb5f7413beso20446846d6.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 05:13:57 -0700 (PDT)
+	s=arc-20240116; t=1751372630; c=relaxed/simple;
+	bh=NJ124Dp79Lr/97fmwOSr//WxXPtWTp675G0RTga2t9M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=OfSY7V6XNYHRtUq2qvuTYy9UeZB44SlGjsVodbf0iBOy6RPJK6QtU8OCQubXXKCrfjoMwl0HrOFtiwA43ulssY9MENiYOaBBtlItmiAPvF8oHrs8APt8mVQL2hy9vCgUMuJB81X2OfbJ+jFGMsKogHoqKCc8iF/JoaNWZabUQwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AA5kOqEB; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4538bc52a8dso36587665e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 05:23:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1751372626; x=1751977426; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=fP9MBwzFb18vSW3lc2L/Hc8pl9m7MaNHnOhRmIvCcfk=;
+        b=AA5kOqEB4lYVNPXUaCRx7pSNm4iM/jvh0yJqKr/ps3Jp6NVhiFI/oc7uXgr+0rqlZU
+         tiMwgFtitmG1DJMI07e57jqDRAMjczIRLDfk7AN8ZTDqUUxCs4OTGqdg9vrsaKQXuOdl
+         llr/cFAZdvTuWrC4LmSio1SwgkzijmOggMr0KCzUG3tAg4ZBqykTt9Y9tWGvHrL/dYxM
+         Nx1BEzvyhqHL6IfpUJFdNTxFsIQXpjCc4G3OiDUbkkpEVRR5n9y/ely6LCyW4yh1L2rd
+         yPLpjwbwmCKsYz1II1TbkHtz85vDR0n5MgF8kZNFv7C73YYF1vEBO7U3fbV2GKhtPxvC
+         KLMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751372037; x=1751976837;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1751372626; x=1751977426;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AVAZKe6MVUqSmIfEve8DecFvZqjhdtqfXn8WNkgPtPk=;
-        b=GyouCGy+1X/paa1OsCRWWCzca8ZyavFK3mv7esZLUe4OMu11lMCqCj+/EkJVJYRR7T
-         F99pO6Mh7iZ+3OiAU124sWRK/eIgdyVK3cM8s7ccVMU7u2JKzOKPx2NGYdGp+cbl1x8q
-         xXBQUCjcVs3uTh9BwEGwyP88BCmvP07r8NwbaYJdvSryH6tMS7jqnwh+DUzYOJ5z9B9u
-         mXclFl1guAGc053kFcaDeMQPBi8vVnedgMG7rmS7u+4q5AKG5jvQ5nxL8NFORnq60jhr
-         j6P3Bv9I4AiFA/j+AOYQZ/qEZFVGzJ49ZN51JysWvJ7QHDZlHZaE2sIhxQylKKVBGqOe
-         YZfg==
-X-Forwarded-Encrypted: i=1; AJvYcCXLlDSvcftVAhTkds/auUSz8GbQv84PbpGTMAfY5UTPU5IC8qxSzEhLbdE2TWALq6iXjFVD8mCK7LxgEHpV@vger.kernel.org
-X-Gm-Message-State: AOJu0YwAE+PHAX/ckFw3PWLkFB4dyMPCfZ0tSBo/7K2Z87Yn1YJK9lFQ
-	Z0dcyviL5jInp/JxJTSDY3bDzH2IgfnBQdbFFzWPPTUt/6i1tiQHnBwPRbH6YGosY2OkIF0GViE
-	VutY5PYZXieHBDOmM3eUdAUgunESSlF4joM1YbeZOOpV+uiFuYyVCFSBiTqsZ1J8GTGBb
-X-Gm-Gg: ASbGncv/VewW2SYAQ15lDQkHmhK+r1j93L9Hlum5OL1qeDu/w+3nZl4cxUVLcySMVYb
-	QprGF2ARmkFN4aYzBO4k7L7XwG8HXwCdr2ieYen3h5c5jRTDP5/d81uhFaRfhYPMgIj/CCuJc2K
-	9nfUeANdj/hnqVvBS4eaoI0yxSjc/SF0Usoaw5LxAKJfD705ZvMah1IBa2OGoSWaPchoZ8OjlSc
-	cTc4PXUsF9WgcZgsNTMTGuU8d5KAWoQYPHzXD66+1o3NuGGMi1I4JFFECK/EOHgHt9cn+7CbW4O
-	BuKhh+Mw0P4VUpSaD/DmWxskIJ9OZgU4yI7gKUN9x1XFccWyohvPC/Atd2HEsN8BQGRowQyyLo8
-	gInupXeh4
-X-Received: by 2002:a05:620a:43a1:b0:7d3:cad2:ea27 with SMTP id af79cd13be357-7d468a93f78mr96973085a.13.1751372037044;
-        Tue, 01 Jul 2025 05:13:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDi3p+4z356QnL9luRZ4ca2//1Ovbgx/iA7XNkUbzWU0a4/W2qizB5Q3TbSGueW9e6IvS/8g==
-X-Received: by 2002:a05:620a:43a1:b0:7d3:cad2:ea27 with SMTP id af79cd13be357-7d468a93f78mr96971185a.13.1751372036558;
-        Tue, 01 Jul 2025 05:13:56 -0700 (PDT)
-Received: from [192.168.1.114] (83.9.29.190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae353c6b407sm859796766b.117.2025.07.01.05.13.55
+        bh=fP9MBwzFb18vSW3lc2L/Hc8pl9m7MaNHnOhRmIvCcfk=;
+        b=GvyKsgrX2/q4WcyTcwwkKp73ciIu+HIW2zvr0qV8aUjdl95K+o7CJSwivehm8kBRDN
+         mCA/Q6fUWBuI0D8N6gSFa7Rfc3M0BXF3EuNdtdBN+Ourr58bo63xJeFonurxtY1ht2Hu
+         c0ekIq6PiQTstAWngh2IKMrh6Ze8dPNygO9aDPNzuCGufIzDd4tEpubKX7+QslaT+BDx
+         QueQa4d3Dxwe/8U+FKkfQe4pGSivvC98ILc2u8jYUGF32Av9GkQfw17B4EE10RPwWGmR
+         FmGflWNvbcAQAyMPHMmns2vtndnKbQf6PJ9vki5cFdhK/WVOTPID4c8QX4XAmQH4K8o4
+         avng==
+X-Forwarded-Encrypted: i=1; AJvYcCWfVubq1snJ/4A+e5NPsmVEwfWQODNWe8fHgaNuFRiOJDVcHRH06hNcFjQeDfXrouOrcvOfjUZgw5/QIhsa@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfFhuC+JTFLep4PqYYrM8WO8azLZes7B7fepvs07YUPnGHmHuX
+	5KrP3xt8uUNPNSwEirEh0nS1FruFK/epLXH+oQxHlzF9ZVa0qVBENq3otQRfPIL7vXY=
+X-Gm-Gg: ASbGncsVWKgdhVqh9Ik0g8H2bKs/HUB+KOb3mvZA40m++q3iFsxb+WVnmhXMFHKwwHY
+	ucCEN21mvMe+hae2HPIPSrKKFjvQngChVhPsOxBZyEcieLyZ9cJbmbkg/c0TQcfWslE2y4XpZKS
+	OzXKMHx7fE2hYWfRKUIm9KQs20xLgsAlbBLdigSX44XkeK+IwlzRwXuOCyX62iytDg4i9oGIjyl
+	QHoYwpBS3LEahNI9i8TkBVddxBlZhMO3VpmLF0zrTtPNcWyYCvWVQRj6yR9kqFBTSFvZzJv3L0V
+	6tTSYVBNKxQhofQuYmJ3WgkoXM03xj8ueLPbe7xU3uZLHNn/51ejUIMkaBXkOYDbu3qzMxa7M2T
+	kHSbOBG0aZF0GzQFKUhyBw/DsUpsV9xWATfKttQ==
+X-Google-Smtp-Source: AGHT+IF2T/ew6ItA1dECwcwzpkVi16Ul9/UBVeAKXTtxDNk7WlS01HZkQ9dvJOSWDY34euUgABO/8A==
+X-Received: by 2002:a05:600c:358d:b0:450:d367:c385 with SMTP id 5b1f17b1804b1-4538ee5d5f8mr200886185e9.16.1751372626384;
+        Tue, 01 Jul 2025 05:23:46 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538233c05csm194901555e9.5.2025.07.01.05.23.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Jul 2025 05:13:56 -0700 (PDT)
-Message-ID: <bc805145-b63a-4528-9c59-973fbe4961d9@oss.qualcomm.com>
-Date: Tue, 1 Jul 2025 14:13:53 +0200
+        Tue, 01 Jul 2025 05:23:45 -0700 (PDT)
+Message-ID: <488281f6-5e5d-4864-8220-63e2a0b2d7f2@linaro.org>
+Date: Tue, 1 Jul 2025 13:23:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,62 +82,152 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] remoteproc: qcom: pas: Add SM7635 remoteproc
- support
-To: Luca Weiss <luca.weiss@fairphone.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250627-sm7635-remoteprocs-v2-0-0fa518f8bf6d@fairphone.com>
- <20250627-sm7635-remoteprocs-v2-3-0fa518f8bf6d@fairphone.com>
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: sdm670-google-sargo: add imx355
+ front camera
+To: Richard Acayan <mailingradian@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Tianshu Qiu <tian.shu.qiu@intel.com>, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20250630225944.320755-7-mailingradian@gmail.com>
+ <3qGugliBdtpdHGZzR9xh_974TfJigMYERGVAfqmpCqe1R7O0CLU8FzXVcIESzTIc-SKzpk42ZAx5-38eDX00Eg==@protonmail.internalid>
+ <20250630225944.320755-11-mailingradian@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250627-sm7635-remoteprocs-v2-3-0fa518f8bf6d@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20250630225944.320755-11-mailingradian@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: v9YY4fOkp_xuSHOQfLaUUJJVxjVdiHAh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAxMDA3NiBTYWx0ZWRfX5gw/XMIHjOCr
- eAybrp/MpRiEBkC1oO8Rpp3sbzkSkne2pxU2QTpdFEHOEM2SVKvObE16Uxi7uvtXPlw4pjQMEEj
- TLnke0IPyMoW+mvIcoP6XC1ZS0ixopQxUaQff08WlI5lHLTYNW2x72SFZQX1j4bHjoini6j3pvy
- CrdBpGR5Xh+GJp8g6gjWf4fGo31G06l85JBVQVcW7ydZROogWa6F0K0r1FLxiHyUCnkgNT1wEOi
- qBtq/nLP7K9ohGcg4isGmj4WFVrDtR2fFrhiDNXlKyuk7SKU4w1lyGImPzViaTlit1k47cROG4F
- yPFBDi1qe41BVCtk/AsE0KkatfmPYWVweM+wlPpd6G+vCfuB7cdGET29s2xvKzNuC7BRvG6L4ly
- rYmftwl1gKIzn6iPoE0eRJUw6XJ6xmKYrtDbpPWHUokkn7W+BLwQjA9l6wGAgsugjtfZ+qvR
-X-Authority-Analysis: v=2.4 cv=L9sdQ/T8 c=1 sm=1 tr=0 ts=6863d106 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=fKQzr7EGRj+VoE0XNsDNvQ==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=6H0WHjuAAAAA:8 a=EUspDBNiAAAA:8
- a=S-B96e1FEKnLoGXqiSkA:9 a=QEXdDO2ut3YA:10 a=AYr37p2UDEkA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22 a=Soq9LBFxuPC4vsCAQt-j:22
-X-Proofpoint-GUID: v9YY4fOkp_xuSHOQfLaUUJJVxjVdiHAh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-01_02,2025-06-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 phishscore=0 impostorscore=0 priorityscore=1501
- malwarescore=0 lowpriorityscore=0 adultscore=0 suspectscore=0 mlxlogscore=882
- bulkscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507010076
 
-
-
-On 27-Jun-25 08:55, Luca Weiss wrote:
-> Add the different remoteprocs found on SM7635: ADSP, CDSP, MPSS and
-> WPSS.
+On 30/06/2025 23:59, Richard Acayan wrote:
+> The Sony IMX355 is the front camera on the Pixel 3a. It is connected to
+> CSIPHY1 and CCI I2C1, and uses MCLK2. Add support for it.
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 > ---
+>   .../boot/dts/qcom/sdm670-google-sargo.dts     | 112 ++++++++++++++++++
+>   1 file changed, 112 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
+> index d01422844fbf..0af6a440ecbc 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
+> @@ -172,6 +172,34 @@ vreg_s2b_1p05: vreg-s2b-regulator {
+>   		regulator-min-microvolt = <1050000>;
+>   		regulator-max-microvolt = <1050000>;
+>   	};
+> +
+> +	cam_front_ldo: cam-front-ldo-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "cam_front_ldo";
+> +		regulator-min-microvolt = <1352000>;
+> +		regulator-max-microvolt = <1352000>;
+> +		regulator-enable-ramp-delay = <135>;
+> +
+> +		gpios = <&pm660l_gpios 4 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&cam_front_ldo_pin>;
+> +	};
+> +
+> +	cam_vio_ldo: cam-vio-ldo-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "cam_vio_ldo";
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +		regulator-enable-ramp-delay = <233>;
+> +
+> +		gpios = <&pm660_gpios 13 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&cam_vio_pin>;
+> +	};
+>   };
+> 
+>   &apps_rsc {
+> @@ -392,6 +420,58 @@ vreg_bob: bob {
+>   	};
+>   };
+> 
+> +&camss {
+> +	vdda-phy-supply = <&vreg_l1a_1p225>;
 
-With the agreed rename:
+You've got your 1p2 but looks like you are missing your 0p8 supply
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> +	status = "okay";
+> +};
+> +
+> +&camss_endpoint1 {
+> +	clock-lanes = <7>;
+> +	data-lanes = <0 1 2 3>;
+> +	remote-endpoint = <&cam_front_endpoint>;
+> +	status = "okay";
+> +};
 
-Konrad
+This looks not like how the other dts are upstream. Does this work and 
+pass the dt checker ?
+
+Right now upstream wants something like this
+
+&camss {
+         vdda-phy-supply = <&vreg_l5a_0p88>;
+         vdda-pll-supply = <&vreg_l9a_1p2>;
+         status = "okay";
+
+         ports {
+                 /* The port index denotes CSIPHY id i.e. csiphy2 */
+                 port@2 {
+                         csiphy2_ep: endpoint {
+                                 clock-lanes = <7>;
+                                 data-lanes = <0 1 2 3>;
+                                 remote-endpoint = <&imx577_ep>;
+                         };
+                 };
+         };
+};
+
+Can the upstream driver actually consume the dt as you specified above ?
+
+> +
+> +&cci {
+> +	pinctrl-names = "default", "sleep";
+> +	pinctrl-0 = <&cci1_default &cam_mclk_default>;
+> +	pinctrl-1 = <&cci1_sleep>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&cci_i2c1 {
+> +	camera@1a {
+> +		compatible = "sony,imx355";
+> +		reg = <0x1a>;
+> +
+> +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
+> +		clock-names = "mclk";
+> +
+> +		clock-frequency = <19200000>;
+> +
+> +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
+> +		assigned-clock-rates = <24000000>;
+> +
+> +		reset-gpios = <&tlmm 9 GPIO_ACTIVE_HIGH>;
+> +
+> +		vana-supply = <&cam_front_ldo>;
+> +		vdig-supply = <&cam_front_ldo>;
+> +		vio-supply = <&cam_vio_ldo>;
+
+These are the downstream names, taking imx512/477 as a reference point
+
+                 dovdd-supply = <&vreg_l7f_1p8>;
+                 avdd-supply = <&vdc_5v>;
+                 dvdd-supply = <&vdc_5v>;
+
+I'd guess the data sheet probably has better names like that.
+
+---
+bod
 
