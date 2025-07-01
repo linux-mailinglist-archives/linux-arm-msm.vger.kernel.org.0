@@ -1,63 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-63205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DAA2AEF72B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 13:51:01 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B522CAEF79A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 14:00:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C396447B24
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 11:50:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 136C27A9C57
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 11:59:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D3A5276036;
-	Tue,  1 Jul 2025 11:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93EFE2741B7;
+	Tue,  1 Jul 2025 11:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MPBgrhp7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MkpXT2gA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FCE275AFF;
-	Tue,  1 Jul 2025 11:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D308F2737F2
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 11:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751370487; cv=none; b=q58iSdYDDbyIMD8fNXblHV9uEp+N7xJzijQ50TR81rcTqtqsXv4ZJmEYa+rLgl2/fu7bw7nshh44uNhvW/PoKSpW84+ebaxoYjxOj5/tutfxIgV1akuWokW7XcWq8zmsjsJbWtXhCO8T4KwnP654BSp3fuwDFzmabpEa7WCvOUA=
+	t=1751370828; cv=none; b=bkjSMiu308D0iY7md5o/tma6LhrTF5yQryNtyQp3294iYi9XE8tCL9fXZD/72lgxTfCpNzKahm6U4Qwy6TDnRjMLp0invIhGk+ztOH4uhi/0AAjzvqlfVCAQbFiljx2BonDrLMK0/jGg6UFGxeqV/HQjF3EMLkGlh+f49xz/n2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751370487; c=relaxed/simple;
-	bh=mSARHChrsSkZqv4FL5ywNNlM+mfq9RkAadWkjMMswZY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=eaFXdoRa9RxudpZLK6Az5uOsrvowsqD5Enak/E6SBF5YTOO0Cu3BCPeM3UtNTVFS9ETAedsPP7zkgU5KzgMWrT1UAouwToZxTO31bisvnykUXit3l7zJHukww2C0lmowSpBAi+G+QznIXEyrr5XyRjsBPWmfabAb3ieUXCCINuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MPBgrhp7; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5618lCvZ026544;
-	Tue, 1 Jul 2025 11:47:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1751370828; c=relaxed/simple;
+	bh=lfplTRJV/q/OMm+q7mTMyZDq20FwbquibZUlr89u/Vw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=svZd8i0DygWsTeOOuZCJKR6Gr0s1vnPjL2raDbhkAT9249DcUv+aftWDiYb06In+APtQjT7NsJjk7T3edfVG396mO/q6430N0G51TAPnkiT7deHyzHRwDbLzMIkS6KIZYAkZ7gCKC8c6ntPAfki6/LGWJhVqB+PC1WN6JlrgpFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MkpXT2gA; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 561BrQ5i030208
+	for <linux-arm-msm@vger.kernel.org>; Tue, 1 Jul 2025 11:53:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rCGpL5WtLCGHD7lGDK/ISop6wOAMqbvqcoNsJwiihW0=; b=MPBgrhp7EkFMuk/i
-	WvA1LuBdxuKhUs5pH0lkPCj+KvzspP8lCVgVeCn0zUo4mgxPfhWYjB9a3U7PAd56
-	Bo1VuKvFgqBOIFWnInNfxIg9/YFOrK8a8V1iiW/dpwciJPdpf6EoiuFPCsNQUZOn
-	/DogWUZySNf+K7FVN0tz7KuTX0fauaLt2fi12l5J7gDWa4hnxeDHTxqjliJ+lBK6
-	gIWHrLPmxm7N762zm9lPUDEOhBf920q8jRjVqHcsNhmyA584VA8+cbuEy+O2idMw
-	Fp7Urk6tyqY+yb+lkX5ZvVWM0qTfgYy6pPfqSzvDt7yT3Ss2LEKMi7BSBiQHBpsT
-	p1HHtw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j9pcrm2p-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Jul 2025 11:47:54 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 561BlrvZ020980
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 1 Jul 2025 11:47:53 GMT
-Received: from [10.217.222.28] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 1 Jul
- 2025 04:47:47 -0700
-Message-ID: <2455f20c-130c-4f27-9cf4-6411e485b845@quicinc.com>
-Date: Tue, 1 Jul 2025 17:17:44 +0530
+	QpxwNhV8kmBkr08es5SALZ9+EdMkxt7tGYCT2PU2xfs=; b=MkpXT2gAJBzaclE+
+	cMg/d8jiIfvjRAaHVctWYlfjKh+MGU3wDkIEooQWfm6OylembSZQCaMQQmQem8rc
+	KcuwImmFMo+KciPu2OJwh7AM7PURxWt/y5DfklzwPAlkJp4J+Rv0bSrxUIdpQD/9
+	AOfjVBhpXRrvF9/+FvfHoLV2LnvzndRbvXJnlzaWMBcmvjE3XCWA+dwjZR7Ck9Fd
+	8JrxZ6McFi8Esqwi4080mE2WA2XGjRtY16DCbsyxAideclbyK6rU8lQzl9TDI2Uh
+	q9DaT/q4tRhvh7W3vaghhYX59Fnq2nQjJIBpjVbw2aeH7PtSH9sUTzQ6XjfOKdCg
+	Ca30zQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47m02v2tdt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 11:53:46 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4a5b3aac5bfso10520881cf.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 04:53:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751370825; x=1751975625;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QpxwNhV8kmBkr08es5SALZ9+EdMkxt7tGYCT2PU2xfs=;
+        b=gxQosgetbAoe8uai26Bpuq31so6WAG1CF6F3XOGiUmoGTdd05QvQupQPQB/bw3CdEW
+         8N1C8CnYlUzHgaQSGbcN7jviLvj8xPdoa8uzDTrtF+Mran1OEzTrDFWKZFkxL8bonQSZ
+         5/Iai9kFutZXX2BEiIeuHCrqyJA1CN4K64DQe3A10JgsovMae12IOVvJVQmxmZ9dFXTb
+         66e7vVj70esd/mXMNwRNf1AtVKotj46EfUjwTL3Qgi5Zxn1QiR1jOJXQDGfcQ8nAQROi
+         pju9ocrfcCReU/qHpIx1T2lTO1rsp1rJ+cdqW8l5k7b8hOhfVPs3MPhckX6SviJ75MV6
+         AoGg==
+X-Forwarded-Encrypted: i=1; AJvYcCUKhA5qAZwhYfcZLRgKVO0okziFRzZkhcdS0vD7CS4MxQRGHQ2nEoHGVZIJ9Ufv2RZV3Je2rWcVdf3mCgfD@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXBoQxe+F9w3jSS72EfbtcS4x9lcYSwsiELIrkptJvBW3rjnwY
+	9k6DWg/x96CE6NOdp3epZ9U8xxgbMufZa7eOiM4RGWklJ/+uZQZ+pwwbOjsYNxH1mhSNGPApBVj
+	enYVvNPh0is5psv3AVuKh1KBPAQGbAGofwxxeC6lC404kQCI4oz9yQAIWkB30g5lX0WS1
+X-Gm-Gg: ASbGncuQGFfnwp0uZ+1inO2NqgJR1mtXJ2JASsBskoq9+2B4WrpHEh9vyXfBIGgnS5U
+	EgZoUHnKC4LEsB4l3R4XusVp8++lw4s01C7BtED8JO3tOYQWETbRyiFskY2U02dPz1zOstGx+mB
+	QUy6h+k002djFMBnV2/x+Kumy7EMSQYOzqCVxUx5s6AEEr6n9dyfc5JKg/2ltHRi25uR3Gap3mO
+	g7+oANSmhIX2DJnuHFPaYSksTjVqki4O+ENe83/zyt5T1+q5SBoel0Y+Zf4SG6QZRhEtU7ZG2HX
+	nYmJ/tqHAxj3HT1TzD3MItuCC02BToCS7CJUhCwvSpmi2HXu071WcyTnD6uCYCTg3KbLP6oio0O
+	rStZ+71Wm
+X-Received: by 2002:ac8:7f12:0:b0:4a7:4eed:2582 with SMTP id d75a77b69052e-4a832be2468mr13903911cf.4.1751370824584;
+        Tue, 01 Jul 2025 04:53:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWdgLxpAzuiN8smmXG1hbj+2clhnPsKozIAenNYDlGQFDJbhfROsW++8GbvMW+JJgD+uQTCQ==
+X-Received: by 2002:ac8:7f12:0:b0:4a7:4eed:2582 with SMTP id d75a77b69052e-4a832be2468mr13903671cf.4.1751370824063;
+        Tue, 01 Jul 2025 04:53:44 -0700 (PDT)
+Received: from [192.168.1.114] (83.9.29.190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60c8319b155sm7402498a12.52.2025.07.01.04.53.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Jul 2025 04:53:43 -0700 (PDT)
+Message-ID: <9b6de81e-54d4-4448-87f0-5ca83086fc27@oss.qualcomm.com>
+Date: Tue, 1 Jul 2025 13:53:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,129 +90,72 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 08/12] firmware: qcom: tzmem: export shm_bridge
- create/delete
-To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>,
-        Jens Wiklander
-	<jens.wiklander@linaro.org>,
-        Sumit Garg <sumit.garg@kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Apurupa Pattapu
-	<quic_apurupa@quicinc.com>,
-        Kees Cook <kees@kernel.org>,
-        "Gustavo A. R.
- Silva" <gustavoars@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-CC: Harshal Dev <quic_hdev@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <op-tee@lists.trustedfirmware.org>, <linux-kernel@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <linaro-mm-sig@lists.linaro.org>, <linux-doc@vger.kernel.org>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>
-References: <20250526-qcom-tee-using-tee-ss-without-mem-obj-v5-0-024e3221b0b9@oss.qualcomm.com>
- <20250526-qcom-tee-using-tee-ss-without-mem-obj-v5-8-024e3221b0b9@oss.qualcomm.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: clock: qcom,videocc: Add sc8180x
+ compatible
+To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20250701-sc8180x-videocc-dt-v2-0-b05db66cc1f6@quicinc.com>
+ <20250701-sc8180x-videocc-dt-v2-1-b05db66cc1f6@quicinc.com>
 Content-Language: en-US
-From: Kuldeep Singh <quic_kuldsing@quicinc.com>
-In-Reply-To: <20250526-qcom-tee-using-tee-ss-without-mem-obj-v5-8-024e3221b0b9@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250701-sc8180x-videocc-dt-v2-1-b05db66cc1f6@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ztKxMaTHEsgXeingGXCKylzfZjaG2-ty
-X-Proofpoint-ORIG-GUID: ztKxMaTHEsgXeingGXCKylzfZjaG2-ty
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAxMDA3MyBTYWx0ZWRfX74DO11z9dMYF
- 62b2TucWlwr7aP2wLjZ5GJ8VxyRAYqmoReJedk6CNfnGBZJatEM1OJrxmydL4DRvLfDVKk0HSaA
- glGZa43wXvVkw2RNorrrDsT4ohoJw23givoio+J4JT9e/Hl2q/3PXbKXE+zYKGWyQ4nIZf/gX/x
- 0ygEgUAUl4FzOcg4AoT3/bKo4Ebv9c//GZKuU6wOBpOmIJ8xM3KNdFtLFJeJVYgtJ/wQHRhXx5t
- 8smIEsHc/qD5i5mML4oYknS7mIIQko5H7+L0qHY+ISOyaPPxqcBIb2UT8LymslIwxMEQzt9YzTg
- n4t9AjjbkwFN7EiF6/75yhn9k5v8CoFMGTOfN3Gk1JPh9kXi6WPxG7qRXFFayej7yueJMXnlc23
- +VdTOVUtCt62g4uAKYeR/hiM109i/duCv/ogYnnAOajxoeL8VSKAQRXcAvhJEhkPTRXvgCNO
-X-Authority-Analysis: v=2.4 cv=QMFoRhLL c=1 sm=1 tr=0 ts=6863caea cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=T2KzT_qPCcxtbzpLTyEA:9 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAxMDA3MyBTYWx0ZWRfXyHE9Mow+vs2h
+ /hYge1XyuZdoi4GINDqbQAT7wWckutIp4IsFCDAJgH9MFr4n1Ofw3XPIDMLhANsB5kfTkZeMsiM
+ ZyogGY9grmbxEJkXL/UHnH0qgY2tVOug/wInRd/Uf0iY6y/iaNTsizD5Sw+EZFtSvTOQjupO71A
+ Foi8aZaCWXQHQ1qNO+cg8bJTI1xZbzphy7GNGLaXExvb/eOq+Qpo8Epv8xB/qWmhogvDV2b9aiM
+ liunITZNGlPxcN0O6ZxYDfoqLej7riFVe0NuBzhtsevAQHyiSZQWhnseeJldd3VxiYYKbj2pBl4
+ 069w7LWb2MxNemOqPiJcGh4m4JjNjOLeG0U4UVMAKLaKIlBfSHc2FsVv9HsL0eO10hLH3ALZnvC
+ 283/Kgl09kYiofif2v1fEwNWM8PtZuxJMOQHHmJ+MS6v7ieGeZAF2sYaTXuxBucGKS03mHbb
+X-Authority-Analysis: v=2.4 cv=Y8L4sgeN c=1 sm=1 tr=0 ts=6863cc4a cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=fKQzr7EGRj+VoE0XNsDNvQ==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=pJjouIxg0UYB63CLVSoA:9
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: cweq3MPh37brjVfm_Bco46oSUSF4CySM
+X-Proofpoint-ORIG-GUID: cweq3MPh37brjVfm_Bco46oSUSF4CySM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-01_02,2025-06-27_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 bulkscore=0 spamscore=0 adultscore=0
- mlxlogscore=999 mlxscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
- clxscore=1011 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507010073
+ adultscore=0 clxscore=1015 priorityscore=1501 mlxlogscore=719
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0
+ mlxscore=0 spamscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507010073
 
 
-On 5/27/2025 12:26 PM, Amirreza Zarrabi wrote:
-> Anyone with access to contiguous physical memory should be able to
-> share memory with QTEE using shm_bridge.
+
+On 01-Jul-25 13:40, Satya Priya Kakitapalli wrote:
+> The sc8180x video clock controller block is identical to that
+> of sm8150. Add a new compatible string for sc8180x videocc and
+> use sm8150 as fallback.
 > 
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 > ---
->  drivers/firmware/qcom/qcom_tzmem.c       | 57 +++++++++++++++++++++++++-------
->  include/linux/firmware/qcom/qcom_tzmem.h | 15 +++++++++
->  2 files changed, 60 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
-> index 4fe333fd2f07..e9e4f06924ae 100644
-> --- a/drivers/firmware/qcom/qcom_tzmem.c
-> +++ b/drivers/firmware/qcom/qcom_tzmem.c
-> @@ -108,25 +108,61 @@ static int qcom_tzmem_init(void)
->  	return 0;
->  }
->  
-> -static int qcom_tzmem_init_area(struct qcom_tzmem_area *area)
-> +/**
-> + * qcom_tzmem_shm_bridge_create() - Create a SHM bridge.
-> + * @paddr: Physical address of the memory to share.
-> + * @size: Size of the memory to share.
-> + * @handle: Handle to the SHM bridge.
-> + *
-> + * On platforms that support SHM bridge, this function creates a SHM bridge
-> + * for the given memory region with QTEE. The handle returned by this function
-> + * must be passed to qcom_tzmem_shm_bridge_delete() to free the SHM bridge.
-> + *
-> + * Return: On success, returns 0; on failure, returns < 0.
-> + */
-> +int qcom_tzmem_shm_bridge_create(phys_addr_t paddr, size_t size, u64 *handle)
->  {
->  	u64 pfn_and_ns_perm, ipfn_and_s_perm, size_and_flags;
-> -	int ret;
->  
->  	if (!qcom_tzmem_using_shm_bridge)
->  		return 0;
->  
-> -	pfn_and_ns_perm = (u64)area->paddr | QCOM_SCM_PERM_RW;
-> -	ipfn_and_s_perm = (u64)area->paddr | QCOM_SCM_PERM_RW;
-> -	size_and_flags = area->size | (1 << QCOM_SHM_BRIDGE_NUM_VM_SHIFT);
-> +	pfn_and_ns_perm = paddr | QCOM_SCM_PERM_RW;
-> +	ipfn_and_s_perm = paddr | QCOM_SCM_PERM_RW;
-> +	size_and_flags = size | (1 << QCOM_SHM_BRIDGE_NUM_VM_SHIFT);
-> +	if (qcom_scm_shm_bridge_create(pfn_and_ns_perm, ipfn_and_s_perm,
-> +				       size_and_flags, QCOM_SCM_VMID_HLOS,
-> +				       handle))
 
-Can we add a debug log here to ease debugging in future?
-Something like this can also work.
+The yaml checker throws a warning:
 
-pr_err("Shm bridge creation failed, ret: %d, NS PA|Perm: 0x%llx,
-size|flags: 0x%llx\n", ret, pfn_and_ns_perm_flags, size_and_flags);
+make ARCH=arm64 LLVM=1 -j$(nproc) dt_binding_check DT_SCHEMA_FILES="Documentation/devicetree/bindings/clock/qcom,videocc.yaml"
 
-> +		return -EINVAL;
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_tzmem_shm_bridge_create);
+  CHKDT   ./Documentation/devicetree/bindings
+  LINT    ./Documentation/devicetree/bindings
+./Documentation/devicetree/bindings/clock/qcom,videocc.yaml:28:9: [warning] wrong indentation: expected 10 but found 8 (indentation)
+./Documentation/devicetree/bindings/clock/qcom,videocc.yaml:35:9: [warning] wrong indentation: expected 10 but found 8 (indentation)
+  DTEX    Documentation/devicetree/bindings/clock/qcom,videocc.example.dts
+  DTC [C] Documentation/devicetree/bindings/clock/qcom,videocc.example.dtb
 
--- 
-Regards
-Kuldeep
-
+Konrad
 
