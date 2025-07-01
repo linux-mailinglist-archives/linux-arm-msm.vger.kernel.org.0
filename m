@@ -1,149 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-63276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34ECAAF01D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 19:30:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83E0AAF0218
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 19:44:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D85FF520945
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 17:30:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 572CF4A3DED
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 17:44:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE7FF283FD9;
-	Tue,  1 Jul 2025 17:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D3B527F003;
+	Tue,  1 Jul 2025 17:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bUFQL+z4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PFC8LLDa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C099227FB3B
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 17:29:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4DD25C6EC;
+	Tue,  1 Jul 2025 17:44:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751390943; cv=none; b=HUAVP2IVNqz8P/xPiVJQnoMQgt2ZB6r+lrynjetcUylmhX/B6XiLVWLQnpU/4euxzfHSxOXajROCuspHX0IJWTLl0UTm39xy8EaBfRdrvRPKV3hrGYT2g/QmKyK7hPqQWFEa9RXJemC+jVY1DdhWvmHcgs7KhffuGMJM//QwK4o=
+	t=1751391861; cv=none; b=AYjkOZQCZo341Kygcx+rUGnnded8BAdppevYObzRAkRVbtO3hpuVajbQ91xJHlPvmvYGunR1skpiJMOKVLGyQHG1pdL0ysAz8vvtH3XN/0wTk88mhttGpCkj4WV5aul3ndTo51JwQ3d8QLMTB3AuBIPeHeyMdSo+7jkktXicXe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751390943; c=relaxed/simple;
-	bh=f3r9QS6Ff7gAlNMdR46m+asSbUOrL1rpH8x+IyKBwJc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Nqfp5h5hnUUmSfXJfjelEmPNlbOTHREc7PD4C4jmbCwFABx3awVF4Inmc2qzFn8xGf4ZcGk2sBl6D/8XVLEm04Isd5xHaMomeEjeVWRHbZsfNPpgWjkQcPbIWXer+2Q3Nck2hjT3/X6a3Lf86HAO3lS5XU/IBQVpfOZSp1tjnMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bUFQL+z4; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-450cfb790f7so50050515e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 10:29:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751390940; x=1751995740; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/y6Hgcw/oLowryHfdzVYEkIORqp2EL/7QgmBhCk+m8I=;
-        b=bUFQL+z4pJMGbY3T0olgZjpGs3Ppjt7g1gXuW/XiZ/z/eYj0yZZwWrXUrieCxms4nX
-         TwFg3ZSBcPXzN02KBIyhp6EIgbg56qgm48L9b5ZgA44O0p/xsnGRkX9udb/JpiSL3OKV
-         h5meN8vg7N+br3ynt3zhW0UOB5xSYutgX4rSgp7tPFyeh4Wus4GEG47/9UXBVHPOEsvh
-         ePACKkZmJIvpmbS/rMlGMB9I99VWWDnv5tVnrO78IfcC7dVjbCahuViK4Ol2sZLMpO2B
-         2ZkgDsDukg0b/4YgJptaxVgnEq4ZF4qlJql9+Kg6av0I6y8iBXjEeZW1k8xY7QX0S7BE
-         4liQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751390940; x=1751995740;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/y6Hgcw/oLowryHfdzVYEkIORqp2EL/7QgmBhCk+m8I=;
-        b=lXT//55y2tCTIS0y3SL+CdAHzn1IVDl+DCcUW3+5QJoi2W7tJKrmjXLvZObGffXA0T
-         FY7YIseYrB7tg2xf/blZbqheVxxTWZbDTpjOibCTr5HjGMr4LAdmv+pufpFuMw1TrQDD
-         pEE0qfnOJOiSmv2o3MGiSOCUCcjK8pxrZhkKKw9OVDqeXTDmbPnBJjiIB+E8mytYml29
-         sTRYHwu88aZaCe+c2+fJRrF91UyiLD9MqXHIJCTYsfWytY7hWSbZy9XRsNjJZsZjwfXC
-         GNBspZLVPSbgXNA99K1SffXqKLQzX328SBfbBPWACcjQP6fVlYBVZmUbbG1I0qPTHFWr
-         /9Pw==
-X-Forwarded-Encrypted: i=1; AJvYcCVpxJcysF4sJyQeaaK4/gg24h8aOoG0Bjq0+wogtxrhNwSdaNqTJzhdki5w3sQRX2xaWXg/VSrFH8sq9WzJ@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywrh5eRDoy+yYeml2AQD/13HdPG1EqtceQ7KHSnPkO/Snl4lWwj
-	ElaYB57uNVmds+5Rg0WI2z4YQze9RvFVmcnAcDxClsATOASq7t7V+p3IMqLOs6Cflng=
-X-Gm-Gg: ASbGncu3xS18AEaY/VGi5Jxg6LGsmJizWITPIwI5uibODKEqIy3y/++VOdK3k9yGShO
-	dG/mNYTZ+VFNFPRyM8V5h1HgHZiiIJVYG4O/vBfxehZLuizhSCjcEDI3rGqu2219yD1Rq73orkD
-	oVWvKaKVvkHB19BwCRy/yqpZ8wqS5dkVD47O5NYgn0Vh+fBd/JP5JPnZidv2ThkMZAH+vnn3Avr
-	k6gA3+2Cc7vWeGFv3GR+4I3/ZFlC1tu7sPGPM6W53Bcf2DD2HCd1+CVPKaw4smQy8MgRuFzr3l8
-	t0lspKKE2AUUiSBg+jRlObCmznU53G5fGKgy76CDKrRuONO2eeBSjBD5gb3NSw2EOk6dkvk0CuC
-	6pQ==
-X-Google-Smtp-Source: AGHT+IGOjQY9tSAGB2eFqWczvzKFeSwWfbshRjZbRtV8jkqhQWE3SX1v/Q7xboVyabgLEHGsCDwfkw==
-X-Received: by 2002:a05:600c:35c9:b0:453:608:a18b with SMTP id 5b1f17b1804b1-453947d8ff2mr165994175e9.9.1751390940040;
-        Tue, 01 Jul 2025 10:29:00 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2454:ff21:ef41:1425:eda1:87ab:f850])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538234b1b9sm198716175e9.11.2025.07.01.10.28.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 10:28:59 -0700 (PDT)
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Tue, 01 Jul 2025 19:28:38 +0200
-Subject: [PATCH 6/6] arm64: dts: qcom: x1e80100: Add videocc
+	s=arc-20240116; t=1751391861; c=relaxed/simple;
+	bh=T/Oh3jotCzcmLKi13L685F87dDpqLPMtMcQj6fakPvk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I0PEN50NROnUjWt38DdH9Ky7sXElV0pwX6o7tNIfmc8nRVV6qhj4g62bHlu3B3rXxS39N7/xorj1z7kPnY43/16TEPjoksvgOKvxglNyD4julT25aUNCk8b07OyYMNdrp3aX7yOlLF4f6Z+Wkz1mM3y5aZ7Zv2cbT8RuJXaO8+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PFC8LLDa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A33B7C4CEEB;
+	Tue,  1 Jul 2025 17:44:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751391860;
+	bh=T/Oh3jotCzcmLKi13L685F87dDpqLPMtMcQj6fakPvk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PFC8LLDaQCERloxxDdzc9fDp24D33SKAmYgZ1QFEOmzF6jiKiF2fH1EYoGLBTDyic
+	 DAf4tg0M7jTvpKKWO6Bcb9xNER/kpNY8Am6LmTbfe7sVF+DtYDlF35U1Coo3CpV4M7
+	 /Th3Z18z7qwHtMSYuKvYYoGDluKbU7eBxqGLTb2vcV1rZcyfADPAoDl0EaInKSZQMy
+	 +523XjIJeVk/nSgi3w/m0+h4md8zNTFLXti5KrMVtUpNMoC8ixPYLXAhDIboKSx9jS
+	 e17VaG1/Z+x6oAaXb9lBOGsWH7AmAbp/zzL2jDYTGZ/Kq2PWkC1Yc60bP+K5sjuSO+
+	 BX5oEW8zb2ibw==
+Date: Tue, 1 Jul 2025 19:44:17 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: Waqar Hameed <waqar.hameed@axis.com>
+Cc: Vignesh Raghavendra <vigneshr@ti.com>, 
+	Julien Panis <jpanis@baylibre.com>, William Breathitt Gray <wbg@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Peter Rosin <peda@axentia.se>, Jonathan Cameron <jic23@kernel.org>, 
+	David Lechner <dlechner@baylibre.com>, Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>, 
+	Andy Shevchenko <andy@kernel.org>, Cosmin Tanislav <cosmin.tanislav@analog.com>, 
+	Lars-Peter Clausen <lars@metafoo.de>, Michael Hennerich <Michael.Hennerich@analog.com>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Matteo Martelli <matteomartelli3@gmail.com>, 
+	Heiko Stuebner <heiko@sntech.de>, Francesco Dolcini <francesco@dolcini.it>, 
+	=?utf-8?Q?Jo=C3=A3o_Paulo_Gon=C3=A7alves?= <jpaulo.silvagoncalves@gmail.com>, Hugo Villeneuve <hvilleneuve@dimonoff.com>, 
+	Subhajit Ghosh <subhajit.ghosh@tweaklogic.com>, Mudit Sharma <muditsharma.info@gmail.com>, 
+	Gerald Loacker <gerald.loacker@wolfvision.net>, Song Qiang <songqiang1304521@gmail.com>, 
+	Crt Mori <cmo@melexis.com>, Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+	Ulf Hansson <ulf.hansson@linaro.org>, Karol Gugala <kgugala@antmicro.com>, 
+	Mateusz Holenko <mholenko@antmicro.com>, Gabriel Somlo <gsomlo@gmail.com>, Joel Stanley <joel@jms.id.au>, 
+	Claudiu Manoil <claudiu.manoil@nxp.com>, Vladimir Oltean <vladimir.oltean@nxp.com>, 
+	Wei Fang <wei.fang@nxp.com>, Clark Wang <xiaoning.wang@nxp.com>, 
+	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Sebastian Reichel <sre@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, 
+	Jerome Brunet <jbrunet@baylibre.com>, Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	Han Xu <han.xu@nxp.com>, Haibo Chen <haibo.chen@nxp.com>, 
+	Yogesh Gaur <yogeshgaur.83@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, 
+	Souradeep Chowdhury <quic_schowdhu@quicinc.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Peter Ujfalusi <peter.ujfalusi@linux.intel.com>, 
+	Bard Liao <yung-chuan.liao@linux.intel.com>, Ranjani Sridharan <ranjani.sridharan@linux.intel.com>, 
+	Daniel Baluta <daniel.baluta@nxp.com>, Kai Vehmanen <kai.vehmanen@linux.intel.com>, 
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, kernel@axis.com, 
+	linux-iio@vger.kernel.org, linux-omap@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-i2c@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-input@vger.kernel.org, 
+	linux-mmc@vger.kernel.org, imx@lists.linux.dev, netdev@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-samsung-soc@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-pwm@vger.kernel.org, linux-amlogic@lists.infradead.org, linux-spi@vger.kernel.org, 
+	linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
+	sound-open-firmware@alsa-project.org, linux-sound@vger.kernel.org
+Subject: Re: [PATCH] Remove error prints for devm_add_action_or_reset()
+Message-ID: <ylr7cuxldwb24ccenen4khtyddzq3owgzzfblbohkdxb7p7eeo@qpuddn6wrz3x>
+References: <pnd7c0s6ji2.fsf@axis.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250701-x1e-videocc-v1-6-785d393be502@linaro.org>
-References: <20250701-x1e-videocc-v1-0-785d393be502@linaro.org>
-In-Reply-To: <20250701-x1e-videocc-v1-0-785d393be502@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
- Jagadeesh Kona <quic_jkona@quicinc.com>, 
- Konrad Dybcio <konradybcio@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
- Johan Hovold <johan@kernel.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Stefan Schmidt <stefan.schmidt@linaro.org>, linux-arm-msm@vger.kernel.org, 
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.2
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="siz3npg32duy4f54"
+Content-Disposition: inline
+In-Reply-To: <pnd7c0s6ji2.fsf@axis.com>
 
-Add the video clock controller for X1E80100, similar to sm8550.dtsi. It
-provides the needed clocks/power domains for the iris video codec.
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
----
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+--siz3npg32duy4f54
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH] Remove error prints for devm_add_action_or_reset()
+MIME-Version: 1.0
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index a9a7bb676c6f8ac48a2e443d28efdc8c9b5e52c0..890eaaa40184a18bff54f2d750968112a2546d19 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -5,6 +5,7 @@
- 
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
-+#include <dt-bindings/clock/qcom,sm8450-videocc.h>
- #include <dt-bindings/clock/qcom,x1e80100-dispcc.h>
- #include <dt-bindings/clock/qcom,x1e80100-gcc.h>
- #include <dt-bindings/clock/qcom,x1e80100-gpucc.h>
-@@ -5171,6 +5172,20 @@ usb_1_ss1_dwc3_ss: endpoint {
- 			};
- 		};
- 
-+		videocc: clock-controller@aaf0000 {
-+			compatible = "qcom,x1e80100-videocc";
-+			reg = <0 0x0aaf0000 0 0x10000>;
-+			clocks = <&bi_tcxo_div2>,
-+				 <&gcc GCC_QMIP_VIDEO_VCODEC_AHB_CLK>;
-+			power-domains = <&rpmhpd RPMHPD_MMCX>,
-+					<&rpmhpd RPMHPD_MXC>;
-+			required-opps = <&rpmhpd_opp_low_svs>,
-+					<&rpmhpd_opp_low_svs>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
+Hello,
+
+On Tue, Jul 01, 2025 at 05:03:33PM +0200, Waqar Hameed wrote:
+>  drivers/pwm/pwm-meson.c                          | 3 +--
+
+Looking at this driver I tried the following:
+
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index 3809baed42f3..58a2ab74f14c 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -5062,7 +5062,7 @@ static void __dev_probe_failed(const struct device *d=
+ev, int err, bool fatal,
+  *
+  * Returns @err.
+  */
+-int dev_err_probe(const struct device *dev, int err, const char *fmt, ...)
++int _dev_err_probe(const struct device *dev, int err, const char *fmt, ...)
+ {
+ 	va_list vargs;
+=20
+@@ -5075,7 +5075,7 @@ int dev_err_probe(const struct device *dev, int err, =
+const char *fmt, ...)
+=20
+ 	return err;
+ }
+-EXPORT_SYMBOL_GPL(dev_err_probe);
++EXPORT_SYMBOL_GPL(_dev_err_probe);
+=20
+ /**
+  * dev_warn_probe - probe error check and log helper
+diff --git a/include/linux/dev_printk.h b/include/linux/dev_printk.h
+index eb2094e43050..23ef250727f1 100644
+--- a/include/linux/dev_printk.h
++++ b/include/linux/dev_printk.h
+@@ -275,7 +275,13 @@ do {									\
+ 	WARN_ONCE(condition, "%s %s: " format, \
+ 			dev_driver_string(dev), dev_name(dev), ## arg)
+=20
+-__printf(3, 4) int dev_err_probe(const struct device *dev, int err, const =
+char *fmt, ...);
++__printf(3, 4) int _dev_err_probe(const struct device *dev, int err, const=
+ char *fmt, ...);
 +
- 		mdss: display-subsystem@ae00000 {
- 			compatible = "qcom,x1e80100-mdss";
- 			reg = <0 0x0ae00000 0 0x1000>;
++#define dev_err_probe(dev, err, ...) (								\
++	(__builtin_constant_p(err) && err =3D=3D -ENOMEM) ? err : _dev_err_probe(=
+dev, err, __VA_ARGS__)	\
++)
++
++
+ __printf(3, 4) int dev_warn_probe(const struct device *dev, int err, const=
+ char *fmt, ...);
+=20
+ /* Simple helper for dev_err_probe() when ERR_PTR() is to be returned. */
+diff --git a/include/linux/device/devres.h b/include/linux/device/devres.h
+index ae696d10faff..abfa5152b5a7 100644
+--- a/include/linux/device/devres.h
++++ b/include/linux/device/devres.h
+@@ -157,8 +157,11 @@ static inline int __devm_add_action_or_reset(struct de=
+vice *dev, void (*action)(
+ 	int ret;
+=20
+ 	ret =3D __devm_add_action(dev, action, data, name);
+-	if (ret)
++	if (ret) {
++		if (ret !=3D -ENOMEM)
++			__builtin_unreachable();
+ 		action(data);
++	}
+=20
+ 	return ret;
+ }
 
--- 
-2.49.0
+With that
 
+        ret =3D devm_add_action_or_reset(dev, meson_pwm_s4_put_clk,
+                                       meson->channels[i].clk);
+        if (ret)
+                return dev_err_probe(dev, ret,
+                                     "Failed to add clk_put action\n");
+
+=66rom drivers/pwm/pwm-meson.c is optimized to
+
+        ret =3D devm_add_action_or_reset(dev, meson_pwm_s4_put_clk,
+                                       meson->channels[i].clk);
+        if (ret)
+                return ret;
+
+=2E
+
+I would prefer this approach, because a) there is no need to drop all
+dev_err_probe()s after devm_add_action_or_reset() and b) the
+dev_err_probe()s could stay for consistency in the error paths of a
+driver.
+
+Best regards
+Uwe
+
+--siz3npg32duy4f54
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmhkHm4ACgkQj4D7WH0S
+/k40Ugf+IGBhMZPHVoCFXh9jXSPImkCDM81Omc7cyM5CZFFdOO09K82bfGBFD7bF
+X+9ZxJqCFCRmF8AtN+3Z6xmAia7Q4jKwUgvdR/iJY4jMX6uQk49IxGgv9Ux9aAu2
+/jttnDFocIwCi6sjUxxf2HCdfwLPKhfhrl+xNpQ80kh4oBZ+L0X5s6u6Mcsu8V2P
+2O3Q05nJZK/bpCYZNgRHMeg4k71v6nG8eYw2nJ6n7dbTOtj+HnQC3GCfajWFg7mf
+al8FLQxckEkDif0f7yDlSnjUT7oF78eg1G2pf9PDBr9I15efw+TkKSmkr/MIVXJE
+YFLNKMZeRFfoAyzKWfjfpuR/ZUe+3Q==
+=uD6x
+-----END PGP SIGNATURE-----
+
+--siz3npg32duy4f54--
 
