@@ -1,140 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-63256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49B15AEFFA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 18:24:51 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C39DAEFFA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 18:24:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D58BA3B405B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 16:23:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EBE9F7AC97F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 16:23:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11AA1279355;
-	Tue,  1 Jul 2025 16:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C38CD274B5D;
+	Tue,  1 Jul 2025 16:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IFMHXUn2"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IL+2JWEJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329F527B50F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 16:23:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1B326FA62
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 16:24:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751387033; cv=none; b=fvBPUbpbyt+jfRmhvFBSePynjAjJwnSY72I4o3lnW43pgEGW33w5vlVhB30XZGNHicBlHqMx8jTOl6om1+78iXomP9oKokekEK2bd8wgjUTGwrHs+KQLxl9W3T2myfGcx5i6z0Kh8v3l3kzsQ9kgsHToGeXxX7F3sGG3QUqNm5w=
+	t=1751387065; cv=none; b=fkIfe5XaKGYIA2USyWopwBDt34sYLAHJ4cOtrCpK3omFZvpSTgnuHDkQagok3g8s7JhT4TVlmeXJAH4Zzy/Rd1sv5NZQ6oMeVsmMxGJ6D23ImHIslyelJSZB1P9a+Czhpu563Y5uy6aV0k8xxv0r+li/Bunok0FTA3xlMyFd9as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751387033; c=relaxed/simple;
-	bh=TRyKPGlzqNiaAIc+Td0ze+LpUFf6sYZ4Ct+UtsDxJJ8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=mOn97bmKSroY5Qam9DLIH6h919CYJ5W3qNSUG2opJ1NXM3lphEFWicJHnh0nnKa0PkaJJNlSJFarxp0djaYictppjJU43gwCobU2PxlAU2/hsZ4srmrvAkpE6BbsmZzyZrywm9RLITcocBSiemQQnA6JkCwUfUd2xYNi9gV3sqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IFMHXUn2; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-450ccda1a6eso29463745e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 09:23:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751387029; x=1751991829; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=N84p1IfPOnU2LRyJ4jJI6ylTwqJRzAAmh1pUeFRFmtE=;
-        b=IFMHXUn26XoQxgu1PEOhUk+1DwDCC0gLL1fvGvxN6KXwHj83WYK7MaMemjuyu6Bj6C
-         s6kIMqsWWEeY8yBZuvpFt8JZmMrPDXLzxWb21dw+utltdf4Q9XhLNMkuhPzP6MKkXyvU
-         dBcze56B2AcofUbbLP3R0xmh/GJEWkmBoR6NoOIu4g7IW8Gr7tZgju0zBQiknwyUR2IK
-         ue+Vqe7Lp/z/zGd6Q9EBY7megXj46NTu3uPFLZZc78ubpCu7fSmApHW2EONsaOeOAMeK
-         x8JfK+lv1V7mTm2i5A0ZoE7eOfbWSgacnkUcWgy4hR21+6XBUe+RNurXqFZY993daOIe
-         AyUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751387029; x=1751991829;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=N84p1IfPOnU2LRyJ4jJI6ylTwqJRzAAmh1pUeFRFmtE=;
-        b=A1yO0uqTCfpQO2F1eSLTaqGFLoh1ryzKpglaE4w1iRBHffVHY78eP9F19GzVY+9ov8
-         IG+LFTKGOGQvVR4pRm/EnurM27psUL4Tqxdxx/SPSqkmf5HJ5vjy36eFZBRiTyALmVRs
-         HvT6h3Zur8/uZ+I/oqFR6x2fbPXeY/3/IzcWEZx27BRI34HNfNfpWdBhKpvdRCN2BVNt
-         6foqzVrOFiFmUMS2g/LZGFNgin/ixTD1iCoyyp8MPo4UFzpm+OvLJX21Ya18dnm84mk3
-         piddyK0bsgWFmhSDtPfp0upnmOJjTul0KfoutfjnhmLZWBuGFW7AV2TyYtNiewI8iP9r
-         7GoA==
-X-Gm-Message-State: AOJu0YzowXDvmXiWfAIzNICatPZ4srbw3wDOTTA3pajYXdgR8xSDu/ls
-	s8CMoFwpidhdznRxxjabiw8T4sqBfmNy7h39NYvqgOrxVntzdJCkyWI5cQsPQenOMXM=
-X-Gm-Gg: ASbGncunxcFWhhnIwiTTIHMAZZDAlb7hYItvdXPLaIxZDtplHOeDiDI/U3rNEKYPcgl
-	4KxTVDJ/mokmGbHbjdS49PJDF51IYci+rhApy1/R+33Ubcmjrg2R/S+UbDNPNpn1ih3uLJfU3+s
-	vP4D1RfzmxEM4C8kj0HClLGeys9OEM6MuZImGmNRwRiBcK+h/YWEQyqUByOOzWX9Oh9D2pGjpmA
-	OFQ9OIh3eYZKYZbz8ipZ7pLJz3AkLSlzOlMLRpuHtoiHZeZTUdKTURk0+fYhuI94fl62FsWjMOk
-	OfGV1o0PztJHKNtcwjWZB+G9qBCWpp1FLHA7FbYKvCpMnt5OW7F9oY9i+LY9ijzsc3DL61dkouK
-	1Lzg=
-X-Google-Smtp-Source: AGHT+IF76AvC+yZFLcI56pCMDzSJYwqFxY/61zrbScuKifRBlFHkGuW5GbezYGfN5iWuHq0HbK4jxA==
-X-Received: by 2002:a05:600d:7:b0:442:cd03:3e2 with SMTP id 5b1f17b1804b1-4538eedf21cmr160209575e9.2.1751387029430;
-        Tue, 01 Jul 2025 09:23:49 -0700 (PDT)
-Received: from localhost ([2a02:c7c:7213:c700:4dad:b69a:9c81:2e57])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a892e528a9sm13932521f8f.60.2025.07.01.09.23.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Jul 2025 09:23:49 -0700 (PDT)
+	s=arc-20240116; t=1751387065; c=relaxed/simple;
+	bh=1jir6hF7qNaX5vAt6+/hLSpgtvVjNWultV2KwJJ6HvE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OBjW3J7f8X83aFh1Cayu+09h0r/tXT7nkOhLeZf+X9t+EwvbShjaak4ah8pj3CfKGMuTvBp9AOgTc1XLt4CIbQ4gcE1X0+xpcBNLEgeAFpT5K3TXTWxc1LvK5wFym+N/A1tK4vxdZCTsh7wYIy5XnS9CBUJYH8p9v1xzHWbfWkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IL+2JWEJ; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1751387065; x=1782923065;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=1jir6hF7qNaX5vAt6+/hLSpgtvVjNWultV2KwJJ6HvE=;
+  b=IL+2JWEJE4JwweDgLHB0T6YkZliW5EhLB9SxDcTmliJOBBrlAIAJv9/M
+   5tKKnPT+WDxPkTEVHj33OAUNAL0N2J3njSb4jiycUINNj9wnUdKPophEB
+   lOWvd1XJLyiTeHFUOFf0Zf3vuJyHFXXVqMHHTKU/Htm5XLszcv8TrW9U0
+   pM7MTrVZ+gm4Wr1Jfadou1cjAuqn9hYgDwRXz2Km4WXm/0A2m2f0ki2C4
+   gR53Heaiy+DqW67/PCbHnX3+8sU2lM5YiyIv0D3CwmrjRLvpuPeQGqh5b
+   I7+u37SdPxTlo1LglkrAZkaKq4hEIrXKkUJQG6AT2paXp16hK6UoKWIOH
+   w==;
+X-CSE-ConnectionGUID: BFCcg4uFRQmzDXkvVezsxw==
+X-CSE-MsgGUID: ZeDvAPwSTfiNj0/DHj6crg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11481"; a="53767618"
+X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; 
+   d="scan'208";a="53767618"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2025 09:24:24 -0700
+X-CSE-ConnectionGUID: OYZSXrj2R9+K8CIm35iZlw==
+X-CSE-MsgGUID: 0kQUAW5+SDKKSVU98K58vQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; 
+   d="scan'208";a="190996242"
+Received: from kamilkon-desk.igk.intel.com (HELO localhost) ([10.211.136.201])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2025 09:24:23 -0700
+Date: Tue, 1 Jul 2025 18:24:20 +0200
+From: Kamil Konieczny <kamil.konieczny@linux.intel.com>
+To: Rob Clark <robin.clark@oss.qualcomm.com>
+Cc: igt-dev@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	Rob Clark <rob.clark@oss.qualcomm.com>
+Subject: Re: [PATCH igt 8/9] msm/mapping: Add wait for stall-on-fault to
+ re-arm
+Message-ID: <20250701162420.7dndnmld2p73atex@kamilkon-DESK.igk.intel.com>
+Mail-Followup-To: Kamil Konieczny <kamil.konieczny@linux.intel.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	igt-dev@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	Rob Clark <rob.clark@oss.qualcomm.com>
+References: <20250630180903.77990-1-robin.clark@oss.qualcomm.com>
+ <20250630180903.77990-9-robin.clark@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 01 Jul 2025 17:23:48 +0100
-Message-Id: <DB0UVXK5ATOQ.3JOWJ0A1JNIAF@linaro.org>
-Cc: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, "Bartosz Golaszewski"
- <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: qrb4210-rb2: fix GPIO lookup
- flags for i2c SDA and SCL
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Bartosz Golaszewski" <brgl@bgdev.pl>, "Bjorn Andersson"
- <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>
-X-Mailer: aerc 0.20.0
-References: <20250701-qcom-gpio-lookup-open-drain-v1-0-9678c4352f11@linaro.org> <20250701-qcom-gpio-lookup-open-drain-v1-2-9678c4352f11@linaro.org>
-In-Reply-To: <20250701-qcom-gpio-lookup-open-drain-v1-2-9678c4352f11@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250630180903.77990-9-robin.clark@oss.qualcomm.com>
 
-On Tue Jul 1, 2025 at 10:01 AM BST, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> The I2C GPIO bus driver enforces the SDA and SCL pins as open-drain
-> outputs but the lookup flags in the DTS don't reflect that triggering
-> warnings from GPIO core. Add the appropriate flags.
->
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Hi Rob,
+On 2025-06-30 at 11:09:02 -0700, Rob Clark wrote:
+> From: Rob Clark <rob.clark@oss.qualcomm.com>
+> 
+> Newer kernels disable stall-on-fault for a grace period, to avoid a
+> flood of faults causing instability with memory translations that
+> the hw attempts with the translation stalled.  Fortunately it adds a
 
-Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+Is it system-wide or only for msm driver?
 
+Please improve subject:
+
+[PATCH igt 8/9] tests/msm/msm_mapping: Add wait for stall-on-fault to re-arm
+
+imho it could be shorter:
+
+[PATCH igt 8/9] tests/msm/msm_mapping: Wait for stall-on-fault
+
+Regards,
+Kamil
+
+> debugfs file so we can know how long we need to wait for stall-on-
+> fault to be re-enabled.
+> 
+> Signed-off-by: Rob Clark <rob.clark@oss.qualcomm.com>
 > ---
->  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/d=
-ts/qcom/qrb4210-rb2.dts
-> index a37860175d2733214f1b257e84d5cb4821033242..bdf2d66e40c62596b8b024de8=
-33835a0750df35d 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> @@ -5,6 +5,7 @@
-> =20
->  /dts-v1/;
-> =20
-> +#include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/leds/common.h>
->  #include <dt-bindings/sound/qcom,q6afe.h>
->  #include <dt-bindings/sound/qcom,q6asm.h>
-> @@ -65,8 +66,8 @@ hdmi_con: endpoint {
->  	i2c2_gpio: i2c {
->  		compatible =3D "i2c-gpio";
-> =20
-> -		sda-gpios =3D <&tlmm 6 GPIO_ACTIVE_HIGH>;
-> -		scl-gpios =3D <&tlmm 7 GPIO_ACTIVE_HIGH>;
-> +		sda-gpios =3D <&tlmm 6 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-> +		scl-gpios =3D <&tlmm 7 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
->  		#address-cells =3D <1>;
->  		#size-cells =3D <0>;
-> =20
-
+>  tests/msm/msm_mapping.c | 29 +++++++++++++++++++++++++++++
+>  1 file changed, 29 insertions(+)
+> 
+> diff --git a/tests/msm/msm_mapping.c b/tests/msm/msm_mapping.c
+> index 978ea18375dd..7e2f5c7eadc8 100644
+> --- a/tests/msm/msm_mapping.c
+> +++ b/tests/msm/msm_mapping.c
+> @@ -74,6 +74,30 @@ get_and_clear_devcore(int timeout_ms)
+>  	return buf;
+>  }
+>  
+> +static void
+> +wait_for_stall_on_fault(int drm_fd)
+> +{
+> +	char buf[64] = "\0";
+> +
+> +	do {
+> +		int us;
+> +
+> +		igt_debugfs_read(drm_fd, "stall_reenable_time_us", buf);
+> +		if (!strlen(buf)) {
+> +			/* Not supported on older kernels: */
+> +			return;
+> +		}
+> +
+> +		us = atoi(buf);
+> +		if (!us) {
+> +			/* Done waiting: */
+> +			return;
+> +		}
+> +
+> +		usleep(us);
+> +	} while (true);
+> +}
+> +
+>  /*
+>   * Helper to find named buffer address
+>   */
+> @@ -224,6 +248,11 @@ do_mapping_test(struct msm_pipe *pipe, const char *buffername, bool write)
+>  	ret = sscanf(s, "  - iova=%"PRIx64, &fault_addr);
+>  	igt_fail_on(ret != 1);
+>  	igt_fail_on(addr != fault_addr);
+> +
+> +	/* Wait for stall-on-fault to re-enable, otherwise the next sub-test
+> +	 * would not generate a devcore:
+> +	 */
+> +	wait_for_stall_on_fault(pipe->dev->fd);
+>  }
+>  
+>  /*
+> -- 
+> 2.50.0
+> 
 
