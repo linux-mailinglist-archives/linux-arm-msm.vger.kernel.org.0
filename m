@@ -1,63 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-63216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9F2EAEF8BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 14:37:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D2E0AEF909
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 14:44:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6CAD57AB674
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 12:35:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 464DA3A8308
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Jul 2025 12:43:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D68D2749C8;
-	Tue,  1 Jul 2025 12:36:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A495F273D90;
+	Tue,  1 Jul 2025 12:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Tivybn3q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oQ8XjfBp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD55273D94;
-	Tue,  1 Jul 2025 12:36:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11DD18DB27
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Jul 2025 12:43:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751373402; cv=none; b=pQdpH3iWKN8BulwNDC0g9iX8txkzf5SjCFcQIl1+0V2RFz5vTP5uq325vEdFNh/f3/OmZogxkvZqSQMUs96hVGofkmDoki2jBN2jrpz4D4ikCwD/FdFUFr/iNxB14gxUSMny9BrwTi+WMb/nRRAC+XJlJ7GzrDwyQRFE+m9nta0=
+	t=1751373806; cv=none; b=AvsnrOJcigLO2ZN5wNp8XhBS3xMK7QvfVL8yEJwjjZyLfW9+2PHXPliPx2SC5rgLUwuN08KPDIb+RuJ8VqLs/R/YFrW8ZcliywclFzmoKaGj5eXbS9XNcL4asZPlRuyiC6JmWlqvDrSp3h2dX6Ely9og0kvaCz7vwMzf3V4K82M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751373402; c=relaxed/simple;
-	bh=YWeKmkvE2nshyPO+2BHN91uF4zdQRmWK/b609E9Ke5k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=aFhylYJOtmKSZIc4pVfJUcURfvE8MlFYqZra23KqQ/quG4y33LnFJPUG/KHho8OsWOi5vlWjQyB7ouQ9I5EKnNKpeelvZ3PVHqVsWewJPP1BqjogUt74pX8bBuuvS4VFmBbVP8RIMlzpDjX7XtCLWbPm4BW+e91NOsOb8D1x0rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Tivybn3q; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5619q5tJ032421;
-	Tue, 1 Jul 2025 12:36:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	yoARzbA2DxUDKFyYQNcEmf1O1r1hsrMQdeSsxiUJ8+Y=; b=Tivybn3qFcPRcSpl
-	amxACRcHpjj7qOoVJ1hQK7fK/Ag603Q4V3B3xI61jYBSZf01+PzDlMVKQWvVJppJ
-	jMLTGK/WAGz4vQeuzEH/LNrEPYGJPUn6vELGquvpwJf/BdBOW80i/x0yDf/YMK+E
-	xt/8Xjcx5XxgCd2vjrDYJSZdw+JreYZXMX7LGX8r6EjPGWAWMV3poEtTASQRySyB
-	99lT1+1oKnvBycvrJkjzamgog56NUCXCDEM+BCCWWNvjgy9Dwi7eUoabmyAjr8i0
-	ukDwgcbwTqrM0FE7CtNC0b1l/s0d968JmmTv9G4hMwz3HPLdKW6aAxAUIHQH37Wu
-	xheuZQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j63k8ykb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Jul 2025 12:36:27 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 561CaR4m032439
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 1 Jul 2025 12:36:27 GMT
-Received: from [10.235.9.75] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 1 Jul
- 2025 05:36:21 -0700
-Message-ID: <b1d88ceb-9021-4233-abaa-7d742e7a8f58@quicinc.com>
-Date: Tue, 1 Jul 2025 20:36:19 +0800
+	s=arc-20240116; t=1751373806; c=relaxed/simple;
+	bh=7NWxO7PaQI8/4JG0A3Vx4+jVhpSF8WKBKHv2nqV56Ck=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=oDrjViLDn8ao/ozwXRrgztzn//uVLGXxw0s1tB83CB5cEqG4g3/Hmiu8qcgRSG8vjGlTiXa0qOBGMxCS6PK+T/vs9N4L1pGSEKkyf/gFARVM4rzt+QK+fuxZ/OIVUzp+ToCztpY9vGBaWG0QBAlXQNTN03IYCfTfRKB6sWjFJqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oQ8XjfBp; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ae36e88a5daso637906566b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 05:43:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1751373803; x=1751978603; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=vO82p+Ymyw4qd8ylLEXsAIS4Z9o8M8tSvKaMqhmYjc8=;
+        b=oQ8XjfBpvw1Pv2n4JNw1ODJ5YmJXXVaE4qUY/fOmm4FLQguPgLstiDTsKIj3RFabKZ
+         fKYL6spcRYFIYp9a+U9SjyM+CdoclLepxWGwAqcyVQlrhLpNSMdTDfZ0rsjxOO47+gow
+         nBpD2/6Qae1Vn4EVMY3say8QvyahDhv/MVNK/nkyeh+nxiemFj3mbtLSFTpsH0Wx+GT6
+         +WWjGcc6aUemqC0QzUDFtSNCHXiM0oKj6zxYGdmH7idXlzy4NiDIpJGXCWwim3D6ySkS
+         Cd5iiDXIOA5oCBkVHZ4rlznsgqRh1vv+V0UJx7sw8DLx4+Ow/aPo5mQkRKEG/PhSMcaW
+         uixg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751373803; x=1751978603;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vO82p+Ymyw4qd8ylLEXsAIS4Z9o8M8tSvKaMqhmYjc8=;
+        b=uE/NF5ODL6NH0BW7AWbBWjFOr9gYdqmzkBXBlKLe/KDJ8/4p33Hk4h8QViimhW0uDo
+         RIEpQHwdo1tSPwF6Ia4hwHyc1+aMe8FC6Bm2PcYtEguiQFUGH48kE2zO2JH5H3lWjmvi
+         V+cYw+jAUyoSzb5blfIjMaeXfju61egjBf+89F7cdrS7vE6X6eYAvFKZW3zTtCVGZwO0
+         /Dia2LM30WrX+JFStmVXFZ9F4TzN1K1JvRrg4pA5b/K4SrwYcRcufbVCddQ2eZVVkmKo
+         s7QnIf4z/mpsV5Awe5DsJKZ4pjTme1waL4BKSpFc7sduB7VvuZUou8lODlH4N7o3MDMh
+         cjMA==
+X-Forwarded-Encrypted: i=1; AJvYcCUv6POASxwO/KYSBtDORoRAZQIG/3tNLMD5ox0MZww3/h5tVOnpDEXmFsegYUdgyMbqI7biSPCQp8LyXtPb@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJ5pg3g5a1n1zc6ZvNqYct4/rT04DAbXIrGrRzPas+3curxDaL
+	51c3ZgeyFARTZRY7Nzqh3b1CloAQCqYCufR5W5JcUCt7fnBKlh1xa0Dc6207MZGk97c=
+X-Gm-Gg: ASbGncu8KWeIfxM2dq+bsk5YkM8zzB5uDA7ThYj40IHuZfizCnI/gGNXkCfeWHfCJJW
+	HnMcvLu1f670n/L0bGBzGXQdgO6gPw44OR2iRsjNQ7ElHyM/VslkUUAiGaDmKRysQT8u+cUcmiS
+	BU0Ji7Vy08l9jmHkfwh4EaG4aXtQVryDNXyW+OctbzvynlivaTnCFasTlPcaTluDALoBaKT5OCo
+	bq8qJNXxX1TKsyE16jcCLFwHTsbCPAS8KTFS28iyG/KZYajF6Xo74dlvQ1E0o2jwcAEtIO0gJSi
+	VxEZRQHEb5y2imUCRMaViypKhQt/75gQZbm/hfAV3XgsqraSyOl7DA3/oGNE6I4H5k1aTGR22vq
+	OqlBvYBxLg0oVhoJ2hOHFoDUJnbY=
+X-Google-Smtp-Source: AGHT+IE6xeF663Ehtkx+Tn7K0YByRaw3WGT5qhe7eblpPQ0dM4VjdYTgHjq2bWdoW1KfC5x11Xkqkg==
+X-Received: by 2002:a17:907:c78b:b0:ade:cdec:7085 with SMTP id a640c23a62f3a-ae34fee181emr1637881166b.26.1751373803200;
+        Tue, 01 Jul 2025 05:43:23 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae353659fdesm872608566b.69.2025.07.01.05.43.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Jul 2025 05:43:22 -0700 (PDT)
+Message-ID: <177a3018-1170-4c92-8657-32edc165bb47@linaro.org>
+Date: Tue, 1 Jul 2025 13:43:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,121 +82,142 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/8] arm64: dts: qcom: ipq5424: Add NSS clock
- controller node
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Stephen
- Boyd" <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Georgi Djakov
-	<djakov@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Richard Cochran
-	<richardcochran@gmail.com>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        "Catalin
- Marinas" <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Anusha Rao
-	<quic_anusha@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <quic_kkumarcs@quicinc.com>,
-        <quic_linchen@quicinc.com>, <quic_leiwei@quicinc.com>,
-        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>
-References: <20250627-qcom_ipq5424_nsscc-v2-0-8d392f65102a@quicinc.com>
- <20250627-qcom_ipq5424_nsscc-v2-7-8d392f65102a@quicinc.com>
- <cd6f018d-5653-47d8-abd2-a13f780eb38f@oss.qualcomm.com>
- <db1d07f4-f87d-403a-9ab3-bf8e5b9465b3@quicinc.com>
- <a873f197-1ad6-4a7a-ba66-5fef10f32c57@oss.qualcomm.com>
+Subject: Re: [PATCH 2/5] media: i2c: imx355: Support device tree probing and
+ resource management
+To: Richard Acayan <mailingradian@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Tianshu Qiu <tian.shu.qiu@intel.com>, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20250630225944.320755-7-mailingradian@gmail.com>
+ <Vrnknr6oE7SMsU5fexDRxfCdLZypJp6UaPEae_ubAOcQuXsTWz6kOpoQB3jZWXUlEu09hp5XjfLAXD2AhuOK9A==@protonmail.internalid>
+ <20250630225944.320755-9-mailingradian@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-From: Luo Jie <quic_luoj@quicinc.com>
-In-Reply-To: <a873f197-1ad6-4a7a-ba66-5fef10f32c57@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=ZKfXmW7b c=1 sm=1 tr=0 ts=6863d64b cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=wZv0aL5qe_EQj9OG14cA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAxMDA3OCBTYWx0ZWRfXxZa597Slz5L9
- AmdpGrCIOpOtlppRjkZRcFzAdwk3GYMOh5n5ejywGCXzNDOqiWc4XSTbX2KSfeEC+cJserz+OOG
- xE/4H9i4Yu7N68/WGQq+K9L97KsygEckzeREJUoLwTbJV7dDh8z4BoEeukYw7YU4TmfY1AXEp3l
- gM5rKuubfnO8fT8FBvyIU34pLpfX9rabQQIEVcDzTJiWpfU+ORqcmUej6dHME+lDCHaS8QtoKsw
- PiNew8V/KcczMterynlIh+JUy48cdv/TJwCd5oCIABZU/NZ6W3nf639+Tw6e3j9jqS4J+b98Qwr
- tEiuv4HZQOC/PyYIwY+GxHWXje8MkkvGmvOzrWDThI2oSmprzlhacNFN8f5wGjmR7DvOYasdD7O
- fDToPB8HvUM1sLnY1vfSr3tAJQ1E81Tjy3Sb8KTL/DSXYvp1+n+AvpdKy30+eSvVZh0pcNk8
-X-Proofpoint-ORIG-GUID: n4wJd_yJgHq0Rsmgt5mIYaEvtlb0yQJq
-X-Proofpoint-GUID: n4wJd_yJgHq0Rsmgt5mIYaEvtlb0yQJq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-01_02,2025-06-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
- impostorscore=0 malwarescore=0 clxscore=1015 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507010078
+In-Reply-To: <20250630225944.320755-9-mailingradian@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-
-On 7/1/2025 8:10 PM, Konrad Dybcio wrote:
+On 30/06/2025 23:59, Richard Acayan wrote:
+> A device tree compatible makes it possible for this driver to be used on
+> Open Firmware devices. Initialization of resources such as the reset
+> GPIO and voltage regulators can be specified in the device tree and
+> handled by the driver. Add support for this so the Pixel 3a can use the
+> driver.
 > 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>   drivers/media/i2c/imx355.c | 63 ++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 63 insertions(+)
 > 
-> On 01-Jul-25 14:08, Luo Jie wrote:
->>
->>
->> On 6/28/2025 12:27 AM, Konrad Dybcio wrote:
->>> On 6/27/25 2:09 PM, Luo Jie wrote:
->>>> NSS clock controller provides the clocks and resets to the networking
->>>> hardware blocks on the IPQ5424, such as PPE (Packet Process Engine) and
->>>> UNIPHY (PCS) blocks.
->>>>
->>>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
->>>> ---
->>>>    arch/arm64/boot/dts/qcom/ipq5424.dtsi | 30 ++++++++++++++++++++++++++++++
->>>>    1 file changed, 30 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/ipq5424.dtsi b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
->>>> index 2eea8a078595..eb4aa778269c 100644
->>>> --- a/arch/arm64/boot/dts/qcom/ipq5424.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
->>>> @@ -730,6 +730,36 @@ frame@f42d000 {
->>>>                };
->>>>            };
->>>>    +        clock-controller@39b00000 {
->>>> +            compatible = "qcom,ipq5424-nsscc";
->>>> +            reg = <0 0x39b00000 0 0x800>;
->>>
->>> size = 0x100_000
->>>
->>> with that:
->>>
->>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>>
->>> Konrad
->>
->> I initially thought that a block size of 0x800 would be sufficient, as
->> it covers the maximum address range needed for the clock configurations.
->> However, the NSS clock controller block actually occupies an address
->> range of 0x80000. I will update this to 0x80000 in the next version.
->> Thank you for your feedback.
+> diff --git a/drivers/media/i2c/imx355.c b/drivers/media/i2c/imx355.c
+> index b2dce67c0b6b..42bd08e8ac50 100644
+> --- a/drivers/media/i2c/imx355.c
+> +++ b/drivers/media/i2c/imx355.c
+> @@ -3,9 +3,14 @@
 > 
-> 0x80_000 excludes the wrapper region. Please mark it as the entire
-> 0x100_000 that it occupies, no matter if there's anything in there
+>   #include <linux/unaligned.h>
+>   #include <linux/acpi.h>
+> +#include <linux/clk.h>
+> +#include <linux/delay.h>
+> +#include <linux/gpio/consumer.h>
+>   #include <linux/i2c.h>
+>   #include <linux/module.h>
+> +#include <linux/of.h>
+>   #include <linux/pm_runtime.h>
+> +#include <linux/regulator/consumer.h>
+>   #include <media/v4l2-ctrls.h>
+>   #include <media/v4l2-device.h>
+>   #include <media/v4l2-event.h>
+> @@ -121,6 +126,16 @@ struct imx355 {
+>   	 * Protect access to sensor v4l2 controls.
+>   	 */
+>   	struct mutex mutex;
+> +
+> +	struct clk *mclk;
+> +	struct gpio_desc *reset_gpio;
+> +	struct regulator_bulk_data supplies[3];
+> +};
+> +
+> +static const char * const imx355_supply_names[] = {
+> +	"vana",
+> +	"vdig",
+> +	"vio",
+>   };
 > 
-> Konrad
+>   static const struct imx355_reg imx355_global_regs[] = {
+> @@ -1683,6 +1698,7 @@ static struct imx355_hwcfg *imx355_get_hwcfg(struct device *dev)
+>   static int imx355_probe(struct i2c_client *client)
+>   {
+>   	struct imx355 *imx355;
+> +	size_t i;
+>   	int ret;
+> 
+>   	imx355 = devm_kzalloc(&client->dev, sizeof(*imx355), GFP_KERNEL);
+> @@ -1694,6 +1710,42 @@ static int imx355_probe(struct i2c_client *client)
+>   	/* Initialize subdev */
+>   	v4l2_i2c_subdev_init(&imx355->sd, client, &imx355_subdev_ops);
+> 
+> +	for (i = 0; i < ARRAY_SIZE(imx355_supply_names); i++)
+> +		imx355->supplies[i].supply = imx355_supply_names[i];
+> +
+> +	ret = devm_regulator_bulk_get(&client->dev,
+> +				      ARRAY_SIZE(imx355->supplies),
+> +				      imx355->supplies);
+> +	if (ret) {
+> +		dev_err_probe(&client->dev, ret, "could not get regulators");
+> +		return ret;
+> +	}
+> +
+> +	ret = regulator_bulk_enable(ARRAY_SIZE(imx355->supplies),
+> +				    imx355->supplies);
+> +	if (ret) {
+> +		dev_err(&client->dev, "failed to enable regulators: %d\n", ret);
+> +		return ret;
+> +	}
 
-I will update the register region to use the full 0x100_000 range to
-cover the entire area, including the wrapper region, as suggested,
-thanks.
+You should stick to dev_err_probe().
 
+There's no reason to enable the rails this early either, should be in a 
+dedicated power_on() function called in the right place with its own 
+cleanup logic for error - to save us from replicating cleanup with jump 
+labels.
+
+> +
+> +	imx355->reset_gpio = devm_gpiod_get_optional(&client->dev, "reset",
+> +						     GPIOD_OUT_HIGH);
+> +	if (IS_ERR(imx355->reset_gpio)) {
+> +		ret = PTR_ERR(imx355->reset_gpio);
+> +		dev_err_probe(&client->dev, ret, "failed to get gpios");
+> +		goto error_vreg_disable;
+> +	}
+> +
+> +	imx355->mclk = devm_clk_get(&client->dev, "mclk");
+> +	if (IS_ERR(imx355->mclk)) {
+> +		ret = PTR_ERR(imx355->mclk);
+> +		dev_err_probe(&client->dev, ret, "failed to get mclk");
+> +		goto error_vreg_disable;
+> +	}
+> +
+> +	clk_prepare_enable(imx355->mclk);
+> +	usleep_range(12000, 13000);
+This should go into a dedicated power_on() routine which is reusable, so 
+that we have one place to get the power-on sequence right.
+
+Something like drivers/media/i2c/ov02e10.c::ov02e10_power_on()
+
+> +
+>   	/* Check module identity */
+>   	ret = imx355_identify_module(imx355);
+
+If you move identify_module to come after get_hwcfg then all of the 
+above code can be buried inside of get_hwcfg which IMO would be a nice 
+pattern to follow.
+
+driver/media/i2c/ov02[c|e].c
+
+---bod
 
