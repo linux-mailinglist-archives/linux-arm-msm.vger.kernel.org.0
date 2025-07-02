@@ -1,208 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-63355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4AA18AF10E0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 11:58:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23E15AF1176
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 12:17:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 050BE447078
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 09:58:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DA1D97A3B55
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 10:16:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A81B2475C2;
-	Wed,  2 Jul 2025 09:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCDB31DF27E;
+	Wed,  2 Jul 2025 10:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cMJh4pC+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC9F23816C;
-	Wed,  2 Jul 2025 09:58:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EDF24C692
+	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jul 2025 10:17:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751450318; cv=none; b=rvj7JB1YJBp49RF0a2pAoCmSsj/N4LPN8xmXKv9WCgEFzS9XYz5KNrQv8zyXci6qsVpmHUarVfndexxe4XEIY5uK1/fJqvXfivG7cO33xFwj9VkM/PY7ivIBoxEGUJL30ds3wdJQXwLCiCzGsMDwrFJDYAxzSY2RxPKn9185fCg=
+	t=1751451467; cv=none; b=TZLFJ1SdXdOFu4YZnMoIzUQcEX/UoB409BlxwrBA9AmNc4yD+S2HUZ4dePn+SIA2lSFMRrrJgWQVplaQ21iUfOJxCPTJGtjD3dr4iF9t1Z6poLbRDOHlS9zDrno7KmNECUMxgyva21BNTzgtJ8lQrCEfn4O59FiTVcrCeqBN+Zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751450318; c=relaxed/simple;
-	bh=ac1WHXY9uU6sg9VG9LlQUm/TQKiiff0h5oFc/3+SBzY=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D1o5FWMQg66xzNOBz0Px8/T9GIoyqwDXuFCMmW5HS6VoLme9tUfqt3x1dgIbpPhF8tmangdHgyES6Uy87w/C6qLLiPxAGGH+qPbWonAXVjZZHDXxu3EaHHbHBQWvZ9y8345y/6hx5JBHjjecvQAPWEgegBbZn1OrLDzc98PQgxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.18.186.31])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bXFdQ6LTjz6L55h;
-	Wed,  2 Jul 2025 17:55:38 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
-	by mail.maildlp.com (Postfix) with ESMTPS id B5DAB1404FD;
-	Wed,  2 Jul 2025 17:58:31 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 2 Jul
- 2025 11:58:28 +0200
-Date: Wed, 2 Jul 2025 10:58:26 +0100
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-To: Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>
-CC: Jonathan Cameron <jic23@kernel.org>, Waqar Hameed <waqar.hameed@axis.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>, "Julien Panis" <jpanis@baylibre.com>,
-	William Breathitt Gray <wbg@kernel.org>, "Linus Walleij"
-	<linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>, Peter Rosin
-	<peda@axentia.se>, David Lechner <dlechner@baylibre.com>, Nuno
- =?ISO-8859-1?Q?S=E1?= <nuno.sa@analog.com>, Andy Shevchenko
-	<andy@kernel.org>, Cosmin Tanislav <cosmin.tanislav@analog.com>, "Lars-Peter
- Clausen" <lars@metafoo.de>, Michael Hennerich <Michael.Hennerich@analog.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>, Matteo Martelli
-	<matteomartelli3@gmail.com>, Heiko Stuebner <heiko@sntech.de>, Francesco
- Dolcini <francesco@dolcini.it>, =?ISO-8859-1?Q?Jo=E3o?= Paulo
- =?ISO-8859-1?Q?Gon=E7alves?= <jpaulo.silvagoncalves@gmail.com>, Hugo
- Villeneuve <hvilleneuve@dimonoff.com>, Subhajit Ghosh
-	<subhajit.ghosh@tweaklogic.com>, Mudit Sharma <muditsharma.info@gmail.com>,
-	Gerald Loacker <gerald.loacker@wolfvision.net>, Song Qiang
-	<songqiang1304521@gmail.com>, Crt Mori <cmo@melexis.com>, Dmitry Torokhov
-	<dmitry.torokhov@gmail.com>, Ulf Hansson <ulf.hansson@linaro.org>, Karol
- Gugala <kgugala@antmicro.com>, Mateusz Holenko <mholenko@antmicro.com>,
-	Gabriel Somlo <gsomlo@gmail.com>, Joel Stanley <joel@jms.id.au>, Claudiu
- Manoil <claudiu.manoil@nxp.com>, Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Wei Fang <wei.fang@nxp.com>, Clark Wang <xiaoning.wang@nxp.com>, Andrew Lunn
-	<andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, Eric
- Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni
-	<pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
-	<kishon@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
-	<alim.akhtar@samsung.com>, Sebastian Reichel <sre@kernel.org>, "Neil
- Armstrong" <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>, Martin Blumenstingl
-	<martin.blumenstingl@googlemail.com>, Han Xu <han.xu@nxp.com>, Haibo Chen
-	<haibo.chen@nxp.com>, Yogesh Gaur <yogeshgaur.83@gmail.com>, Mark Brown
-	<broonie@kernel.org>, Avri Altman <avri.altman@wdc.com>, Bart Van Assche
-	<bvanassche@acm.org>, "James E.J. Bottomley"
-	<James.Bottomley@hansenpartnership.com>, "Martin K. Petersen"
-	<martin.petersen@oracle.com>, Souradeep Chowdhury
-	<quic_schowdhu@quicinc.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Liam Girdwood <lgirdwood@gmail.com>, "Peter Ujfalusi"
-	<peter.ujfalusi@linux.intel.com>, Bard Liao
-	<yung-chuan.liao@linux.intel.com>, Ranjani Sridharan
-	<ranjani.sridharan@linux.intel.com>, Daniel Baluta <daniel.baluta@nxp.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>, Pierre-Louis Bossart
-	<pierre-louis.bossart@linux.dev>, Jaroslav Kysela <perex@perex.cz>, "Takashi
- Iwai" <tiwai@suse.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
-	<s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, <kernel@axis.com>,
-	<linux-iio@vger.kernel.org>, <linux-omap@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-	<linux-i2c@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-mediatek@lists.infradead.org>, <linux-rockchip@lists.infradead.org>,
-	<linux-input@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-	<imx@lists.linux.dev>, <netdev@vger.kernel.org>,
-	<linux-phy@lists.infradead.org>, <linux-samsung-soc@vger.kernel.org>,
-	<linux-pm@vger.kernel.org>, <linux-pwm@vger.kernel.org>,
-	<linux-amlogic@lists.infradead.org>, <linux-spi@vger.kernel.org>,
-	<linux-scsi@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-usb@vger.kernel.org>, <sound-open-firmware@alsa-project.org>,
-	<linux-sound@vger.kernel.org>, "Joe Perches" <joe@perches.com>, Andy
- Whitcroft <apw@canonical.com>, "Dwaipayan Ray" <dwaipayanray1@gmail.com>,
-	Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Subject: Re: [PATCH] Remove error prints for devm_add_action_or_reset()
-Message-ID: <20250702105826.0000315e@huawei.com>
-In-Reply-To: <jeajjewfbg5qo736imozpghnpxln2pux74aegtqsi57qsbpug2@opndel6zc3m3>
-References: <pnd7c0s6ji2.fsf@axis.com>
-	<ylr7cuxldwb24ccenen4khtyddzq3owgzzfblbohkdxb7p7eeo@qpuddn6wrz3x>
-	<20250701185519.1410e831@jic23-huawei>
-	<jeajjewfbg5qo736imozpghnpxln2pux74aegtqsi57qsbpug2@opndel6zc3m3>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+	s=arc-20240116; t=1751451467; c=relaxed/simple;
+	bh=+6A6wyU6zI45xM0J89Nwmzn/yIxfMgM9fnnSnd48Y0g=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Jtmbeyz59wMBcAsjNdvoXKL8c0RR8FlyLHbMkKelz1Z2R+JIyLtHb4pCMKRm8RYKS2INunQ12K+zjRlor9pwnp2VxF9Dps3bAgchGrVKEsslwNNyA/II2eIaj+WnAJh8qwXE/uRsTzcJMVHZPIjN7xpmBMkPQ+jdz9+abfqvWKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cMJh4pC+; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5626aVWH025373
+	for <linux-arm-msm@vger.kernel.org>; Wed, 2 Jul 2025 10:17:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=B+WepaBZTOBX8Yn9x8dvlB
+	2T3GbomLkPCorGKitur4Y=; b=cMJh4pC+PNVm0o51RMxvflOV79/RjJyhxQ/elg
+	hT1wSVyxuVrOPQB9NhivyZkg2Bxvbtphy9m5w82nqOU373+M/NZ1TNmVtyULaFKw
+	f/CbLIkJ36aj66mdvfpcKH/aaY2VrAylPhYuQ85XWxkOhXGV55GuDkLAYoJ9t9c5
+	rEC3eY8eh1P9Y1sE50XYd7dQsXmu7712pop3Yi3OhPsqJ6Fyq3UAR97n0pwr6p5b
+	+criASfoZggk1gwjzdnUXoYotmW9xihUBJzwVEj4rBJN/kKpvRqinMKz88vNzbPZ
+	ihFAotRB4F8mwQpm/GYWMwlImgEbx4QpwsSNirhSI8DanO0g==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47kd64sdtf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 10:17:44 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-748e6457567so6126735b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 03:17:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751451464; x=1752056264;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B+WepaBZTOBX8Yn9x8dvlB2T3GbomLkPCorGKitur4Y=;
+        b=YHJkQNspm27tBuvob7AkyW4VkqUquRJkHM1QkvOHvUG7PRcPlebU0hPjZ+SVTaI6sO
+         rEO0bCAmCSHgXWQWDOodL+6xvSl2Le1sqRi0V20+5fJaOM0iS5VEYzZjQU7H3710P1Bo
+         0/lVNxIYkUc44pUYZ1VFKgJieuE9B+xoSPqJInuri37Yod7/XFkDreNbBJjE9Iu6j4o+
+         3+D41iLkpyERgUEhNlZ3p8jIkgIUN41ZBIkRQhDRN/E6nqvcJ0DmbS/Vp9Avb8RR+HbP
+         9Uj+E7P3SG2SXKMFlfiSJzfyVpUcwOGVd31cEG4qE6Js6957r7Knb0/MuwrDGKkNhg9I
+         sHKw==
+X-Gm-Message-State: AOJu0YyPMMTkoe5MAVHTHwmQC8XNMz/jMKZ9/Ih0Iwm1dIvel7+6vCjz
+	9TD648+mJHFzlPqEySLTzPYbns4gXKc2sENdw9ieSB3jGlgLvkh49ezcZJ4ByQSnO0yNLSr6IDJ
+	wXS9ngoAaysa3jXMDLTDD8XxwO5ncQsjRxZdPm2kjv/J84X7GIzgME/dw09KBrTQSeHOk
+X-Gm-Gg: ASbGncuv0teNiNh71uz+c4iTJWy168u5d5nN7Zy0ncx+y0fN6NX54VRNo7YdXXjRo4S
+	YV1i3/UTchh4TaQRkZBjsxSoKdl3dgvtskKZORv6OanEEo6iqE0vAq8oIrv1SoMu5UGJDXOSwht
+	1Ox5oSolKP0ctzfgZbIXOKfbWM96XbPvG6Uz3fazRmarm0Kny7n3Wg1EwF4YR9iYDa9pwR3xI6M
+	xJ+Ej6RfJHyEwG7sURRhTfdD+5eX0dv3jYvruYNPK4BglgY3iIE4qmyo7DPUHEMDKpIRKVyCtEf
+	WI/OttVDvjRQn1tr9QN9hKpRjFDIz7hpYow9jCXD4M/IR9RcRFmPC+qfcNRQoBs/Sp7wCnf9Y2b
+	8rxUv99JvExY/nltWzwfrwdhbNaDnq2vipRVpitaEHVElaTp9RrJXVbXcnQ==
+X-Received: by 2002:a05:6a20:734b:b0:220:8ccc:2feb with SMTP id adf61e73a8af0-222ecfaf13dmr3665849637.12.1751451463630;
+        Wed, 02 Jul 2025 03:17:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKvznRZf+yAxKwVacb6nCker3LzQt3QaRDf4NSJfZpVLxTxkqKzyh96xEJjXaH0nxt4iv2yw==
+X-Received: by 2002:a05:6a20:734b:b0:220:8ccc:2feb with SMTP id adf61e73a8af0-222ecfaf13dmr3665811637.12.1751451463214;
+        Wed, 02 Jul 2025 03:17:43 -0700 (PDT)
+Received: from hu-kathirav-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74af55749b9sm14486315b3a.73.2025.07.02.03.17.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jul 2025 03:17:42 -0700 (PDT)
+From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Subject: [PATCH 0/7] Describe the IMEM present in Qualcomm IPQ SoC's
+Date: Wed, 02 Jul 2025 15:47:32 +0530
+Message-Id: <20250702-imem-v1-0-12d49b1ceff0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
- frapeml500008.china.huawei.com (7.182.85.71)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADwHZWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDcwMj3czc1FxdS3NLy8RUcwszQ3MDJaDSgqLUtMwKsDHRsbW1AKoczRV
+ WAAAA
+X-Change-ID: 20250702-imem-9799ae786170
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1751451459; l=1973;
+ i=kathiravan.thirumoorthy@oss.qualcomm.com; s=20230906;
+ h=from:subject:message-id; bh=+6A6wyU6zI45xM0J89Nwmzn/yIxfMgM9fnnSnd48Y0g=;
+ b=r2KB83+Y4w26tgvDWJQfsbypajKxJr2qc1F1ZPIaEewOD5Q+unDAtBr8Z9FqQdMKOYcLpd1Ep
+ EeMfULVm+4FAXSRsgKaNviPfZGBRwgvqOO+B4muiRYraj3C/T2HxcCD
+X-Developer-Key: i=kathiravan.thirumoorthy@oss.qualcomm.com; a=ed25519;
+ pk=xWsR7pL6ch+vdZ9MoFGEaP61JUaRf0XaZYWztbQsIiM=
+X-Authority-Analysis: v=2.4 cv=Z+PsHGRA c=1 sm=1 tr=0 ts=68650748 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=EPM6MFIlYUcrubcLGAcA:9 a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDA4MyBTYWx0ZWRfX6MVizBPMLx0t
+ qu8FVpsIdzQNX1NqzjntxFEnUEHrDYGVsU+pT+RhC8/pM98DsaSqtrcgDRWVnxDKYAw+EcoQLVW
+ 1c/jFtaeWP8HD3L8343+EoJ9hXWxPoTW6hHdBcobMgo0l4tusqJfhcv4vsZOQ2E1WXRKjSnVvmd
+ JQUaGGeGK8v+G9ai6Ob5QhIPrB/lf27B2uvLQU3UnJdY0k0uLo20LgqFasIBWXPqhWINrOFtoKA
+ P1ORvOJQiM9qJy84xFvVDKSJYpaROX/BSWUxegW/Zuh7xIfTVawoC72ceHza+8HnQ3T3khRLclU
+ 6CuxP3fdHbNKmejJRSKhqi/l+pmDW2IjDNhNwg3vtvmBhSipD3JmZoP7XG5MtgWI9Jp4kBPnp0e
+ Qu3Te6asQBKweez/kZdxNl5jThqS1YI4skPeXvs9qOXY19pNROMGjH4JA0o4qT+CZV9qsAkU
+X-Proofpoint-GUID: kAtOU8PaRm9lHr5lxBHj8ESTY4fGM1nB
+X-Proofpoint-ORIG-GUID: kAtOU8PaRm9lHr5lxBHj8ESTY4fGM1nB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-02_01,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0 mlxlogscore=469
+ spamscore=0 adultscore=0 mlxscore=0 priorityscore=1501 bulkscore=0
+ impostorscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507020083
 
-On Wed, 2 Jul 2025 08:54:48 +0200
-Uwe Kleine-K=F6nig <ukleinek@kernel.org> wrote:
+Qualcomm IPQ SoCs also have the IMEM region and used for the various
+debugging purposes like storing system restart reason and so on. As a
+preparatory work, first describe the IMEM region and susbsequently add
+the required features.
 
-> Hello Jonathan,
->=20
-> On Tue, Jul 01, 2025 at 06:55:19PM +0100, Jonathan Cameron wrote:
-> > On Tue, 1 Jul 2025 19:44:17 +0200
-> > Uwe Kleine-K=F6nig <ukleinek@kernel.org> wrote:
-> >  =20
-> > > On Tue, Jul 01, 2025 at 05:03:33PM +0200, Waqar Hameed wrote: =20
-> > > >  drivers/pwm/pwm-meson.c                          | 3 +--   =20
-> > >=20
-> > > Looking at this driver I tried the following: =20
-> >=20
-> > I'm not sure what we actually want here.
-> >=20
-> > My thought when suggesting removing instances of this
-> > particular combination wasn't saving on code size, but rather just
-> > general removal of pointless code that was getting cut and
-> > paste into new drivers and wasting a tiny bit of review bandwidth.
-> > I'd consider it bad practice to have patterns like
-> >=20
-> > void *something =3D kmalloc();
-> > if  (!something)
-> > 	return dev_err_probe(dev, -ENOMEM, ..);
-> >=20
-> > and my assumption was people would take a similar view with
-> > devm_add_action_or_reset().
-> >
-> > It is a bit nuanced to have some cases where we think prints
-> > are reasonable and others where they aren't so I get your
-> > point about consistency. =20
->=20
-> The problem I see is that there are two classes of functions: a) Those
-> that require an error message and b) those that don't. Class b) consists
-> of the functions that can only return success or -ENOMEM and the
-> functions that emit an error message themselves. (And another problem I
-> see is that for the latter the error message is usually non-optimal
-> because the function doesn't know the all details of the request. See my
-> reply to Andy for more details about that rant.)
->=20
-> IMHO what takes away the review bandwidth is that the reviewer has to
-> check which class the failing function is part of. If this effort
-> results in more driver authors not adding an error message after
-> devm_add_action_or_reset() that's nice, but in two months I have
-> forgotten the details of this discussion and I have to recheck if
-> devm_add_action_or_reset() is part of a) or b) and so the burden is
-> still on me.
+In IPQ8074 and IPQ6018, IMEM region size are 0x5FFF and 0x7FFF which are
+little weird. I have cross checked with HW docs as well.
 
-Maybe this is a job for checkpatch, at least for the common cases.
+Across all SoCs, only initial 4KB can be accessed by all the masters in the
+SoC, remaining regions are access protected.
 
-There is already a check for kmalloc etc.
-https://elixir.bootlin.com/linux/v6.16-rc4/source/scripts/checkpatch.pl#L64=
-42
+DT binding patch and IPQ5424 DTS patch are from the series[1]. Dropped
+the Rob's Ack from the binding patch since new entries are added.
 
-+CC Joe (who wrote the allocation functions test years ago) and other check=
-patch
-folk.
+[1]
+https://lore.kernel.org/linux-arm-msm/20250610-wdt_reset_reason-v5-0-2d2835160ab5@oss.qualcomm.com/
 
+Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+---
+Kathiravan Thirumoorthy (7):
+      dt-bindings: sram: qcom,imem: Document Qualcomm IPQ SoC's IMEM compatibles
+      arm64: dts: qcom: ipq8074: Add the IMEM node
+      arm64: dts: qcom: ipq6018: Add the IMEM node
+      arm64: dts: qcom: ipq5018: Add the IMEM node
+      arm64: dts: qcom: ipq9574: Add the IMEM node
+      arm64: dts: qcom: ipq5332: Add the IMEM node
+      arm64: dts: qcom: ipq5424: Add the IMEM node
 
->=20
-> So to give my answer on your question "What do we actually want here?":
-> Please let us get rid of the need to care for a) or b).
->=20
-> > The code size reduction is nice so I'd not be against it as an extra
-> > if the reduction across a kernel builds is significant and enough
-> > people want to keep these non printing prints. =20
->=20
-> To complete implementing my wish all API functions would need to stop to
-> emit an error message. Unfortunately that isn't without downsides
-> because the result is that there are more error strings and so the
-> kernel size is increased. So you have to weight if you prefer individual
-> error messages and easier review/maintenance at the cost of a bigger
-> binary size and more dev_err_probe() calls in drivers eating vertical
-> space in your editor.
->=20
-> I know on which side I am, but I bet we won't find agreement about that
-> in the kernel community ...
+ Documentation/devicetree/bindings/sram/qcom,imem.yaml | 6 ++++++
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi                 | 9 +++++++++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi                 | 9 +++++++++
+ arch/arm64/boot/dts/qcom/ipq5424.dtsi                 | 9 +++++++++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi                 | 9 +++++++++
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi                 | 9 +++++++++
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi                 | 9 +++++++++
+ 7 files changed, 60 insertions(+)
+---
+base-commit: 3f804361f3b9af33e00b90ec9cb5afcc96831e60
+change-id: 20250702-imem-9799ae786170
 
-
->=20
-> Best regards
-> Uwe
->=20
+Best regards,
+-- 
+Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 
 
