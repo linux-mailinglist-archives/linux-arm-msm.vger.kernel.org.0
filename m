@@ -1,448 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-63387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61DA7AF13A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 13:22:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B75EAF13C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 13:24:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A20F63AE556
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 11:21:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 30D644A0F10
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 11:23:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B3E92676CE;
-	Wed,  2 Jul 2025 11:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03968269885;
+	Wed,  2 Jul 2025 11:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lW4FckJN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IHyztj8B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BAE265CC9
-	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jul 2025 11:21:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C524D2620D5;
+	Wed,  2 Jul 2025 11:23:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751455272; cv=none; b=YdTAr5PWiFT8gxnuvXYW4v1N+Vgkv+P1SKMcmNpAitl+aa+d60RucPKMKLwgTBZhicHhejns6/sB5CDYZZzsThDXCGbqwENfn3ERPMnEaATMvDpXZ6DTz9mEgxtTrBYlK+lCy2Xq9x3ffY1IsmMWwDkbELJS/1NseAK+vwK+Jsw=
+	t=1751455398; cv=none; b=FpWOKXWKcHXi9PfrWcbbc8gl2qY1vL/tApMhDtm53koxwbbRq4/+Nj1VOEj2siYiJNq4/aQjqJXfINQd11oxdr1B8DSFqu5c0uFY0T7ZGGaXkU11S/gHEBAJsTtOF1ZUmR9BQt85AXx+FeoT2KgB+6as2+cWcxZNtQplqZ9Nxms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751455272; c=relaxed/simple;
-	bh=A38xSljKc5j/Hin6ltpfaZ+hAhX+pVLlWZ3StYFW/Os=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tobM3pwP13CR5fJh2IvzUGXZcesLlbRtmzN3k2G8OnGnRS/VRdHeZd5WM/fZDKPG8cEA7N4on1G2jI9mh0rlCB8yuM1UyX1SeKq5KKcG0A2a+iPrT3/bEr8minmJf8CjOKFq8ZHfL7dIQ2KMfXMX/bDLZVQqe/e3UwJW0OHZA5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lW4FckJN; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5625dkPQ018581
-	for <linux-arm-msm@vger.kernel.org>; Wed, 2 Jul 2025 11:21:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5F+sTxGPeHZTq3lkD4jSiUbC1PD//qQ0WXLka1L493g=; b=lW4FckJN4KkT4VVY
-	YXhKSvXJZk72xKdxAf6JrPEnJKL4TbgHXu3V62S9zW5XVJMAuWiNl5aE44Zkqxhn
-	E412RAH5khvaxqVc3XXO8sU1CF+cqx3llMik7/Q9WEu3Y/KRnthvZGuMKSSkJRGo
-	gyTTg39oct3thM9ls4NYyTnyKngbtiBzvX72WZazYBoeE+MJWOjqV8tCK8xYL/2Q
-	urqE1BYMmMipqUTTU1JEiZIo8uUltgdAfwxEpl2eUKGu4sr2459BM+TOyqeo8Gey
-	7x0JGjUjjNvbTiQgRYWRLbHKVJv86Y6o22ySkoJWkK9k5biWJIlYdERxLalKL1vj
-	K90umA==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j8fxmg6y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 11:21:09 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-23692793178so58636505ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 04:21:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751455268; x=1752060068;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5F+sTxGPeHZTq3lkD4jSiUbC1PD//qQ0WXLka1L493g=;
-        b=gcuB4rBjwmQmbxV+j+/19XhiXb0XAkwzndOR0KrePr/A/4TJFzHf3/TeWr55yi+jzm
-         asuQBjwZfsSiEk6uFqlAuNQ2koFQ6aYNZlK0fh8T2rzmopX8KXbGA5T0aMseZD1iID8J
-         Ry0i2agbZMpSNA8Lvrf+H9JB0HzBxeFOdM9RDlaFIwzC5KlPGKAJfK30wMk1pVgrd8DA
-         vg9RJidHd8gLh5BYsu3kzj9KCoiWxtYZAd9QIDDmWPZVIenfNaesuigtG3P0TivhG80z
-         TJae1UuuHwalT3WwAGs8izibqlfwUcVQGEoWwFXO7yPLXXuHH7lG4ujLjEvP/tXnIDIe
-         c6kg==
-X-Gm-Message-State: AOJu0Ywh6zglm4jOB9kFUyjZng9GGokv7+Mk64a801oEnnJyYO7NVmc9
-	tFO64vP7DhRyT3eBRab2EvaVlt+nw+s2yxqeqyp3m+77y4vYhB2LYdE6NkChKZEiKBRY6bJd7Ou
-	bdrZUk4jK73QX+pBhlKBu3F/fGndf/co/8Nk/FRil9YC07vRja4N10brjJYazn/lZCUte
-X-Gm-Gg: ASbGncvh8NXYeZ9oyVtHKbKC1ldfii50nPdsG0cSmYV2jA67KCQgHn5AANt9xwM0O3X
-	buEHHBr47aK1r+eTWeA9Ml5Q9f+zPboLNC4XGMkuV76z49pNP5tXRYPlDurDXEl6DbMNEVZJpq5
-	1iidYiHjbAoCMrMgQ53FZGGri9k9GaPS3/dJcT+dELJcEuVohtTnze1IMbFiY2cXlEAXRLjOzJp
-	KrUmpbkyZ0kseCI5II3vprmcaK1TYHvdaKxziXwBgnqPRdyasifmWcO6b3aQ2ywc8CgZ3Fg9Gwh
-	nPsNwKRwnt3j1jVxvt8uW289fd4M39HoYi2cS2XPWleMHuzcgWZqCvdzvA==
-X-Received: by 2002:a17:903:2bcc:b0:234:9ffb:840a with SMTP id d9443c01a7336-23c6e633930mr27990785ad.50.1751455268115;
-        Wed, 02 Jul 2025 04:21:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHC99kPyn5iGagtvBR5otuGrTDjsarDmdzae+VuRgVq4uL7qGj5kRWq2CxJe9BG7h4QzmssDg==
-X-Received: by 2002:a17:903:2bcc:b0:234:9ffb:840a with SMTP id d9443c01a7336-23c6e633930mr27990475ad.50.1751455267603;
-        Wed, 02 Jul 2025 04:21:07 -0700 (PDT)
-Received: from hu-krichai-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23b0b3bc0f1sm83926955ad.171.2025.07.02.04.21.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 04:21:07 -0700 (PDT)
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Date: Wed, 02 Jul 2025 16:50:42 +0530
-Subject: [PATCH v5 2/2] PCI: qcom: Add support for multi-root port
+	s=arc-20240116; t=1751455398; c=relaxed/simple;
+	bh=uWVJD/5l8mfS1+hU0OikvEF+t77G7TqsLYRSI3wmss0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=itf94dfRdyWChWDm2+aHaPiRmeMoZYynhRZrZZuXnKVz8Yu+jCsxWmcTG1P//DW5GvJL3TCN4Z8oDTfRrsJcbkLuXaGDzRbYOqj7jk6EJqpt981qFkGliDs5SxDbyt34D8yYwwheTHs047CBx1cID6cIEmzmPEsigXTy+tAXOGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IHyztj8B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82D2C4CEED;
+	Wed,  2 Jul 2025 11:23:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751455398;
+	bh=uWVJD/5l8mfS1+hU0OikvEF+t77G7TqsLYRSI3wmss0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=IHyztj8Bg9kULRfdfK6nSG0pWeNJjNH4dR5ctWmNYb3sFqPFOtyKOeaOlEjfSltdT
+	 /wnwFaaBjcUKGKIlObJWE7hQX9uootBNapABQKE6GwfwaMMSCW50VrnFS94euYXIvR
+	 f3kTu+ZtHJ4srmqVjQ15s02t1cqtdvNq8vGKvw1d60eVCZs2HrFdQYL1+tprykG03z
+	 v1ELrgp3ovDP3NXgs88mP8gpFDRnLyOGsFnCM0wAOc3H/kR4U81HQRKTn7ju9xXu2O
+	 EVp6XKnyTAQQB3BRx2hVzB1N4Cw3JAWbBDWElYe6e1qvVs8I4GhwWLxLDyR//1hCFW
+	 tdmWTcceUPQyg==
+Message-ID: <6fd3fa34-69e1-484f-ad6f-8caa852f1a6c@kernel.org>
+Date: Wed, 2 Jul 2025 13:23:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/5] media: dt-bindings: add non-pixel property in iris
+ schema
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
+ <20250627-video_cb-v3-1-51e18c0ffbce@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250627-video_cb-v3-1-51e18c0ffbce@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250702-perst-v5-2-920b3d1f6ee1@qti.qualcomm.com>
-References: <20250702-perst-v5-0-920b3d1f6ee1@qti.qualcomm.com>
-In-Reply-To: <20250702-perst-v5-0-920b3d1f6ee1@qti.qualcomm.com>
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com,
-        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1751455253; l=8478;
- i=krichai@qti.qualcomm.com; s=20230907; h=from:subject:message-id;
- bh=A38xSljKc5j/Hin6ltpfaZ+hAhX+pVLlWZ3StYFW/Os=;
- b=KEyzD4fITStC+0DI6bfdOsdIhKEtdcCoBIWQvDZNodbi8J90QIqtBSTwBGyi86z0THNFalP6b
- RnPm9uxD0dWDupBjoDLDzVKkA5PbvJZi52wpW9uFKJ7nJqzgwC/RLy5
-X-Developer-Key: i=krichai@qti.qualcomm.com; a=ed25519;
- pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDA5MiBTYWx0ZWRfXyBE1QPlkHUMp
- p1v1mX/elbjotnlbCEv0vh8AxBmRZbwq/okYvD9R2Pkz5ytAQ8f0FgGbECHDDo5z/9V66sV60Jw
- AZjM/bxuMVHwjlUQXzD08X15LcGdqBs+eI1IfPEfDDd65BLiFcvsj3fS87qH5vipztYLZ0Swfve
- fU+F5TzUl9ta+zN3pMXj4OtrV8HK+IQRURMT1eqoe/BSxOsVrvqeaJgW06nA1YpDWX/eJgLVQDN
- h0c+4yFqGLkKP+Iq356glFAAVk7hYBxET4aabVvCaHTNgYSDHr9veL1g4D3+3XhwiFe4TH5eQKM
- /sxgyxI68yUZ1HFeBMwqwttxtWIitt87VYZS1WAb5NEv9bDLmxTnuViih6ogJ8fCYpIeDALQ08/
- DmnmWsvp35TKl9mPvEZ323oJeYNKf4dXWdqF8/Gga5LIfzt4bIj4NxgHEFGgPFk0E8s8bmrM
-X-Proofpoint-GUID: 57AC2tnY3surbMq8fcc5YlNBabsrws9f
-X-Proofpoint-ORIG-GUID: 57AC2tnY3surbMq8fcc5YlNBabsrws9f
-X-Authority-Analysis: v=2.4 cv=TqPmhCXh c=1 sm=1 tr=0 ts=68651625 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=kQczSkNYjdDqFxC5ROQA:9
- a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-02_01,2025-06-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 mlxlogscore=999 suspectscore=0 adultscore=0
- phishscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0
- impostorscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507020092
 
-Move phy, PERST# handling to root port and provide a way to have multi-port
-logic.
+On 27/06/2025 17:48, Vikash Garodia wrote:
+> +
+>      video-codec@aa00000 {
+>          compatible = "qcom,sm8550-iris";
+>          reg = <0x0aa00000 0xf0000>;
+> @@ -144,12 +176,16 @@ examples:
+>          resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>;
+>          reset-names = "bus";
+>  
+> -        iommus = <&apps_smmu 0x1940 0x0000>,
+> -                 <&apps_smmu 0x1947 0x0000>;
+> +        iommus = <&apps_smmu 0x1947 0x0000>;
 
-Currently, QCOM controllers only support single port, and all properties
-are present in the host bridge node itself. This is incorrect, as
-properties like phys, perst-gpios, etc.. can vary per port and should be
-present in the root port node.
+I missed, that's technically ABI break and nothing in commit msg
+explains that. You need to clearly explain the reasons and impact.
 
-To maintain DT backwards compatibility, fallback to the legacy method of
-parsing the host bridge node if the port parsing fails.
-
-pci-bus-common.yaml uses reset-gpios property for representing PERST#, use
-same property instead of perst-gpios.
-
-Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 178 ++++++++++++++++++++++++++++-----
- 1 file changed, 151 insertions(+), 27 deletions(-)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index f7ed1e010eb6607b2e98a42f0051c47e4de2af93..56d04a15edf8f99f6d3b9bfaa037ff922b521888 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -267,6 +267,12 @@ struct qcom_pcie_cfg {
- 	bool no_l0s;
- };
- 
-+struct qcom_pcie_port {
-+	struct list_head list;
-+	struct gpio_desc *reset;
-+	struct phy *phy;
-+};
-+
- struct qcom_pcie {
- 	struct dw_pcie *pci;
- 	void __iomem *parf;			/* DT parf */
-@@ -279,24 +285,37 @@ struct qcom_pcie {
- 	struct icc_path *icc_cpu;
- 	const struct qcom_pcie_cfg *cfg;
- 	struct dentry *debugfs;
-+	struct list_head ports;
- 	bool suspended;
- 	bool use_pm_opp;
- };
- 
- #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
- 
--static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
-+static void qcom_perst_assert(struct qcom_pcie *pcie, bool assert)
- {
--	gpiod_set_value_cansleep(pcie->reset, 1);
-+	struct qcom_pcie_port *port;
-+	int val = assert ? 1 : 0;
-+
-+	if (list_empty(&pcie->ports))
-+		gpiod_set_value_cansleep(pcie->reset, val);
-+	else
-+		list_for_each_entry(port, &pcie->ports, list)
-+			gpiod_set_value_cansleep(port->reset, val);
-+
- 	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
- }
- 
-+static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
-+{
-+	qcom_perst_assert(pcie, true);
-+}
-+
- static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
- {
- 	/* Ensure that PERST has been asserted for at least 100 ms */
- 	msleep(PCIE_T_PVPERL_MS);
--	gpiod_set_value_cansleep(pcie->reset, 0);
--	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
-+	qcom_perst_assert(pcie, false);
- }
- 
- static int qcom_pcie_start_link(struct dw_pcie *pci)
-@@ -1234,6 +1253,59 @@ static bool qcom_pcie_link_up(struct dw_pcie *pci)
- 	return val & PCI_EXP_LNKSTA_DLLLA;
- }
- 
-+static void qcom_pcie_phy_exit(struct qcom_pcie *pcie)
-+{
-+	struct qcom_pcie_port *port;
-+
-+	if (list_empty(&pcie->ports))
-+		phy_exit(pcie->phy);
-+	else
-+		list_for_each_entry(port, &pcie->ports, list)
-+			phy_exit(port->phy);
-+}
-+
-+static void qcom_pcie_phy_power_off(struct qcom_pcie *pcie)
-+{
-+	struct qcom_pcie_port *port;
-+
-+	if (list_empty(&pcie->ports)) {
-+		phy_power_off(pcie->phy);
-+	} else {
-+		list_for_each_entry(port, &pcie->ports, list)
-+			phy_power_off(port->phy);
-+	}
-+}
-+
-+static int qcom_pcie_phy_power_on(struct qcom_pcie *pcie)
-+{
-+	struct qcom_pcie_port *port;
-+	int ret = 0;
-+
-+	if (list_empty(&pcie->ports)) {
-+		ret = phy_set_mode_ext(pcie->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
-+		if (ret)
-+			return ret;
-+
-+		ret = phy_power_on(pcie->phy);
-+		if (ret)
-+			return ret;
-+	} else {
-+		list_for_each_entry(port, &pcie->ports, list) {
-+			ret = phy_set_mode_ext(port->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
-+			if (ret)
-+				return ret;
-+
-+			ret = phy_power_on(port->phy);
-+			if (ret) {
-+				qcom_pcie_phy_power_off(pcie);
-+				return ret;
-+			}
-+		}
-+	}
-+
-+	return ret;
-+}
-+
- static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- {
- 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-@@ -1246,11 +1318,7 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 	if (ret)
- 		return ret;
- 
--	ret = phy_set_mode_ext(pcie->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
--	if (ret)
--		goto err_deinit;
--
--	ret = phy_power_on(pcie->phy);
-+	ret = qcom_pcie_phy_power_on(pcie);
- 	if (ret)
- 		goto err_deinit;
- 
-@@ -1273,7 +1341,7 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- err_assert_reset:
- 	qcom_ep_reset_assert(pcie);
- err_disable_phy:
--	phy_power_off(pcie->phy);
-+	qcom_pcie_phy_power_off(pcie);
- err_deinit:
- 	pcie->cfg->ops->deinit(pcie);
- 
-@@ -1286,7 +1354,7 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
- 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
- 
- 	qcom_ep_reset_assert(pcie);
--	phy_power_off(pcie->phy);
-+	qcom_pcie_phy_power_off(pcie);
- 	pcie->cfg->ops->deinit(pcie);
- }
- 
-@@ -1631,11 +1699,41 @@ static const struct pci_ecam_ops pci_qcom_ecam_ops = {
- 	}
- };
- 
-+static int qcom_pcie_parse_port(struct qcom_pcie *pcie, struct device_node *node)
-+{
-+	struct device *dev = pcie->pci->dev;
-+	struct qcom_pcie_port *port;
-+	struct gpio_desc *reset;
-+	struct phy *phy;
-+
-+	reset = devm_fwnode_gpiod_get(dev, of_fwnode_handle(node),
-+				      "reset", GPIOD_OUT_HIGH, "PERST#");
-+	if (IS_ERR(reset))
-+		return PTR_ERR(reset);
-+
-+	phy = devm_of_phy_get(dev, node, NULL);
-+	if (IS_ERR(phy))
-+		return PTR_ERR(phy);
-+
-+	port = devm_kzalloc(dev, sizeof(*port), GFP_KERNEL);
-+	if (!port)
-+		return -ENOMEM;
-+
-+	port->reset = reset;
-+	port->phy = phy;
-+	INIT_LIST_HEAD(&port->list);
-+	list_add_tail(&port->list, &pcie->ports);
-+
-+	return 0;
-+}
-+
- static int qcom_pcie_probe(struct platform_device *pdev)
- {
- 	const struct qcom_pcie_cfg *pcie_cfg;
- 	unsigned long max_freq = ULONG_MAX;
-+	struct qcom_pcie_port *port, *tmp;
- 	struct device *dev = &pdev->dev;
-+	struct device_node *of_port;
- 	struct dev_pm_opp *opp;
- 	struct qcom_pcie *pcie;
- 	struct dw_pcie_rp *pp;
-@@ -1701,6 +1799,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 		goto err_pm_runtime_put;
- 	}
- 
-+	INIT_LIST_HEAD(&pcie->ports);
-+
- 	pci->dev = dev;
- 	pci->ops = &dw_pcie_ops;
- 	pp = &pci->pp;
-@@ -1709,12 +1809,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 
- 	pcie->cfg = pcie_cfg;
- 
--	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
--	if (IS_ERR(pcie->reset)) {
--		ret = PTR_ERR(pcie->reset);
--		goto err_pm_runtime_put;
--	}
--
- 	pcie->parf = devm_platform_ioremap_resource_byname(pdev, "parf");
- 	if (IS_ERR(pcie->parf)) {
- 		ret = PTR_ERR(pcie->parf);
-@@ -1737,12 +1831,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 		}
- 	}
- 
--	pcie->phy = devm_phy_optional_get(dev, "pciephy");
--	if (IS_ERR(pcie->phy)) {
--		ret = PTR_ERR(pcie->phy);
--		goto err_pm_runtime_put;
--	}
--
- 	/* OPP table is optional */
- 	ret = devm_pm_opp_of_add_table(dev);
- 	if (ret && ret != -ENODEV) {
-@@ -1789,9 +1877,42 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 
- 	pp->ops = &qcom_pcie_dw_ops;
- 
--	ret = phy_init(pcie->phy);
--	if (ret)
--		goto err_pm_runtime_put;
-+	for_each_available_child_of_node(dev->of_node, of_port) {
-+		ret = qcom_pcie_parse_port(pcie, of_port);
-+		of_node_put(of_port);
-+		if (ret) {
-+			if (ret != -ENOENT) {
-+				dev_err_probe(pci->dev, ret,
-+					      "Failed to parse port nodes %d\n",
-+					      ret);
-+				goto err_port_del;
-+			}
-+			break;
-+		}
-+	}
-+
-+	/*
-+	 * In the case of properties not populated in root port, fallback to the
-+	 * legacy method of parsing the host bridge node. This is to maintain DT
-+	 * backwards compatibility.
-+	 */
-+	if (ret) {
-+		pcie->phy = devm_phy_optional_get(dev, "pciephy");
-+		if (IS_ERR(pcie->phy)) {
-+			ret = PTR_ERR(pcie->phy);
-+			goto err_pm_runtime_put;
-+		}
-+
-+		pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
-+		if (IS_ERR(pcie->reset)) {
-+			ret = PTR_ERR(pcie->reset);
-+			goto err_pm_runtime_put;
-+		}
-+
-+		ret = phy_init(pcie->phy);
-+		if (ret)
-+			goto err_pm_runtime_put;
-+	}
- 
- 	platform_set_drvdata(pdev, pcie);
- 
-@@ -1836,7 +1957,10 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- err_host_deinit:
- 	dw_pcie_host_deinit(pp);
- err_phy_exit:
--	phy_exit(pcie->phy);
-+	qcom_pcie_phy_exit(pcie);
-+err_port_del:
-+	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-+		list_del(&port->list);
- err_pm_runtime_put:
- 	pm_runtime_put(dev);
- 	pm_runtime_disable(dev);
-
--- 
-2.34.1
-
+Best regards,
+Krzysztof
 
