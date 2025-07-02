@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-63394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 940F2AF1471
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 13:47:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57B57AF1492
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 13:52:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 72DF94413B2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 11:47:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C9F41C21D12
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 11:52:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75356264FB4;
-	Wed,  2 Jul 2025 11:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31AD22673B7;
+	Wed,  2 Jul 2025 11:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nd84n7mD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mLEOr6Z5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4483925FA13;
-	Wed,  2 Jul 2025 11:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2564263F22;
+	Wed,  2 Jul 2025 11:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751456864; cv=none; b=Nt50H0p6pgC+rGCQkkYsKnFYjDBrM6MET2kpkTg1O1m12kiHp6JG8kzqSR3HSDTQs/xOdaraouw8iIlz6d5+E3RLik189rlIlWjHHz5ks65PigdOKTrN90OWKhALLYIeP2WFRsGGM+z6pxBtMfxLxcdnpVIcwByblSUpujAh+mU=
+	t=1751457148; cv=none; b=cqXSo1up5Ecc5WvsD+4Sh9JMFLJAOYAjGAHck3uanyQaFf7PsPwiXoEIMKURYBWvpXtpty1BqsgkVskpUAZRr0Cc9ikliwy6nIIxgr+8+fTm/sClCTie/IMNwj5A5jpyG62oUFB6kjLFCZiFZr/TmIiv22NJi0lk5JPk9FegP7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751456864; c=relaxed/simple;
-	bh=DVDj32vYH3IsYWa7gLHueZwqgc/e0bVyJdnoxNDMaYw=;
+	s=arc-20240116; t=1751457148; c=relaxed/simple;
+	bh=Q6FBmj3URmpZCBhCjeD2ZiHzR3DBwUjx+XG7OR8HJGk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uU0XEattLppuUT5IKjYMMl2/pOYc+Xy4ZnqEe8597R+tqReVspHVe1VV1BPjNRBHsARwddyZhF5C34OIppqqpysOHpxRpKlzqojENw0GEKZaTFqtGaczJOGpoimJY/c8p3wtmVnESTqJ1M3VbZrTQCtmd5jFszkbYL8KaGb/5Mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nd84n7mD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273EDC4CEED;
-	Wed,  2 Jul 2025 11:47:38 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=O3lOtVur6Eas+VRmqr18os2frNRyGUefwo+RvEMvA33F7uwDpDsTyQENJGmTHZNtkGYFizqLqitxyHJp7BxiPO2tellcjXjafNJxiiRWgOuc8MUvco+SYfwC/9PZQdv6UhAIM9N2hJIvzVyYibusyityroWWUVMiwzviNMlaH78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mLEOr6Z5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A6FC4CEED;
+	Wed,  2 Jul 2025 11:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751456863;
-	bh=DVDj32vYH3IsYWa7gLHueZwqgc/e0bVyJdnoxNDMaYw=;
+	s=k20201202; t=1751457147;
+	bh=Q6FBmj3URmpZCBhCjeD2ZiHzR3DBwUjx+XG7OR8HJGk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Nd84n7mDJC5s9P4yBSRotP2G8ZgF84nbY2yK8goJ2gpbW6C1q064jKXTB77YFjumd
-	 CHbCMK6wU5Vg7zKy5CkZSbvVUK7mF8Mlaxj+vcBeUDBlm+HKRUCU3UvVwvlH/2miAi
-	 ytp8TxBXLaw3SIYfTQPzyrgqdUPaatDTmHrCfY0vqnqfTfIGGapUlcQFT/Du91xonz
-	 VLQ6BJfG8Ccm7yJjkl+iEu7ojfjjaojWzUGqI7EDcnewcGc3oOVfQXaShJEjkOyk4N
-	 DYfGj0U93vpgwe7jSjdRGHrdFzETDe44ZRc/0gv59PeFHjPsqIy65NzeX4UlsZ9mBZ
-	 f1V7qaROmXVtg==
-Message-ID: <8b88cea4-b9f2-4365-829c-2a255aed6c69@kernel.org>
-Date: Wed, 2 Jul 2025 13:47:36 +0200
+	b=mLEOr6Z5dKaFH5FWtLH77WS6LT7mE5lZILLPL71qW152ID183/QwYuy6laaYIQpl9
+	 hYGOh/VlT+c+eZs+KSrmmtYfiG0zVqzw8TjBKXr0mHpcYk7I2wT0UW/zdrnQHRMIkF
+	 pYTjrHJVSPnZdsONCS6GGScNHt+NeJThIWg8OcpHDV6oUw03y7oiNkL03ivJFzDBpO
+	 uY6NY1rknsqVlNz5ZNS/EcdtcGwFGBRKfllN+zeTIJDN7oLlRMSyrETWsIku8spa21
+	 kNq3oVmuPotr6tQp7LiAZHi6GrtW50PVjZnpOQXuvxFxghjgS4kH5WlfPDuZtL2k6i
+	 pabR9AOH8ggOQ==
+Message-ID: <5ad418d9-8199-43c9-a477-1e3b939c054c@kernel.org>
+Date: Wed, 2 Jul 2025 13:52:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] media: dt-bindings: add non-pixel property in iris
- schema
+Subject: Re: [PATCH v3 0/5] Introduce "non-pixel" sub node within iris video
+ node
 To: Vikash Garodia <quic_vgarodia@quicinc.com>,
  Dikshita Agarwal <quic_dikshita@quicinc.com>,
  Abhinav Kumar <abhinav.kumar@linux.dev>,
@@ -61,9 +61,8 @@ To: Vikash Garodia <quic_vgarodia@quicinc.com>,
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
- <20250627-video_cb-v3-1-51e18c0ffbce@quicinc.com>
- <6fd3fa34-69e1-484f-ad6f-8caa852f1a6c@kernel.org>
- <dc6e82a1-82be-b8b8-31c3-8b85447d4e43@quicinc.com>
+ <5f90547d-945a-4e26-b36c-75f2d8a1af97@kernel.org>
+ <eab8d79f-7188-9537-9176-3e4d22f0978a@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,33 +108,72 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <dc6e82a1-82be-b8b8-31c3-8b85447d4e43@quicinc.com>
+In-Reply-To: <eab8d79f-7188-9537-9176-3e4d22f0978a@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 02/07/2025 13:45, Vikash Garodia wrote:
+On 02/07/2025 13:37, Vikash Garodia wrote:
 > 
-> On 7/2/2025 4:53 PM, Krzysztof Kozlowski wrote:
+> On 7/2/2025 4:48 PM, Krzysztof Kozlowski wrote:
 >> On 27/06/2025 17:48, Vikash Garodia wrote:
->>> +
->>>      video-codec@aa00000 {
->>>          compatible = "qcom,sm8550-iris";
->>>          reg = <0x0aa00000 0xf0000>;
->>> @@ -144,12 +176,16 @@ examples:
->>>          resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>;
->>>          reset-names = "bus";
->>>  
->>> -        iommus = <&apps_smmu 0x1940 0x0000>,
->>> -                 <&apps_smmu 0x1947 0x0000>;
->>> +        iommus = <&apps_smmu 0x1947 0x0000>;
+>>> This series introduces a sub node "non-pixel" within iris video node.
+>>> Video driver registers this sub node as a platform device and configure 
+>>> it for DMA operations. All non pixel buffers, i.e bitstream, HFI queues 
+>>> and internal buffers related to bitstream processing, would be managed 
+>>> by this non_pixel device.
+>>>
+>>> Purpose to add this sub-node:
+>>> Iris device limits the IOVA to an addressable range of 4GiB, and even 
+>>> within that range, some of the space is used by IO registers, thereby 
+>>> limiting the available IOVA to even lesser. For certain video usecase, 
+>>> this limited range in not sufficient enough, hence it brings the need to 
+>>> extend the possibility of higher IOVA range.
+>>>
+>>> Video hardware is designed to emit different stream-ID for pixel and 
+>>> non-pixel buffers, thereby introduce a non-pixel sub node to handle 
+>>> non-pixel stream-ID into a separate platform device.
+>>> With this, both iris and non-pixel device can have IOVA range of 
+>>> approximately 0-4GiB individually for each device, thereby doubling the 
+>>> range of addressable IOVA.
+>>>
+>>> Tested on SM8550 and SA8775p hardwares.
+>>>
+>>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>>> ---
+>>> Changes in v3:
+>>> - Add info about change in iommus binding (Thanks Krzysztof)
 >>
->> I missed, that's technically ABI break and nothing in commit msg
->> explains that. You need to clearly explain the reasons and impact.
-> No, it is not. Interface works well with old or new approach.
+>> Nothing improved in commit msg. You are changing existing device and the
+>> reason for that change is not communicated at all.
+>>
+>> There was big feedback from qualcomm saying that some commit in the past
+>> received review, so future commits can repeat the same stuff. If qcom
+>> approaches that way, sorry, no you need to come with proper commit
+>> description.
+>>
+>> Please align internally how to solve it, because my response that past
+>> imperfect review is not justification for whatever future issues was not
+>> enough.
+> Sure, lets take this as an example and you can suggest to provide a better
+> commit message for this case, it would help me to compare where is the gap. I
+> have tried my best to capture and explain the limitations and how the changes
+> address those limitations. If that is not sufficient, we might have the perfect
+> message from you and compare to find the gaps and improve, I am sorry, but thats
 
+It is not question to me: I did not want imperfectness. Qualcomm
+engineer used issues in existing commits or imperfect commit in
+discussion, so that's my solution. I don't need that perfect commit, but
+it seems if I agree to that, then I will have to defend it later. Well,
+no, I don't want it.
 
-You changed the order of IOMMUs, so yes it is. Which interface works
-well - FreeBSD? Or other? You are changing ABI for every user.
+> how i feel at the moment.
+Sure, I feel confused now as well.
+
+Anyway, in other messages I explained what is missing. You are changing
+existing hardware and you clearly must explain how existing hardware is
+affected, how can we reproduce it, how users are affected.
+
+All these answers.
 
 Best regards,
 Krzysztof
