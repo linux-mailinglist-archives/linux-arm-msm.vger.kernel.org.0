@@ -1,235 +1,293 @@
-Return-Path: <linux-arm-msm+bounces-63322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82AF5AF0D34
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 09:54:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B05DEAF0D5B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 09:59:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6C0416BF4A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 07:54:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84E943A3692
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 07:59:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 577B322FAC3;
-	Wed,  2 Jul 2025 07:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 295D5231849;
+	Wed,  2 Jul 2025 07:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WFmlGPHc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XxZLmhI9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CFF1200BA1;
-	Wed,  2 Jul 2025 07:54:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CDB225A47
+	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jul 2025 07:59:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751442862; cv=none; b=dB1c7XXXCXgl0UerEa1O3+p3bKMCDMvJNXZRSYqH/Ct4sAz1jYnPW2YdC01FYVxtJI3/1tfYRLqweQQl+vIM1nvK44xG9Hhi2s7Z7rtScjOQRVMj/gH4pA3aC1+1Ak/f4Z78EvUZE6O/kVxvZ32bS+pgga/rW9vFyWb0DAMh4+I=
+	t=1751443176; cv=none; b=cJ5KK+z/1W0qhMLvy8CxQFQhqrE9c8xLiyYkCnNBOA5ppXqIWgoU7BodvcoU5d6xDK5MBso9zReXBOevzqP26mxaTa/77CPR5XqDQydNbV7dBbou+0iKvipX1JtAKn3eOuaFcYbtUpO/DWG4JwIckk43aaawTDLCzz0foQji0d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751442862; c=relaxed/simple;
-	bh=rUwUc12CwDq37/2slGik7dRlGZeOaTXSpDsb9W6K1i0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=seWro7qJbYup7GFHmBryUyfZyi21bjRG0TQ+CZ8891D2I9JMrh4nutDvxHDeSGNPrMSsQ+CmWda+BZKloUyPnBbpVUY8UdreAnrSj0KlCxoUkF7kJAqGUyO4dxrMY1LcI5h8kwPyXtaNGAJqyDGt8Uci5l6yvS078UflmaX12Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WFmlGPHc; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751442861; x=1782978861;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=rUwUc12CwDq37/2slGik7dRlGZeOaTXSpDsb9W6K1i0=;
-  b=WFmlGPHcxwX2SUVmyW4anhqDN0rNuxfRwK7E9iwtDHAcNG7n7mt90SIG
-   mK78cNLxHgzP3jnCF5zBRVkB5QsRJEhrlhQmctWpLYDy9hcKUJP6osqIO
-   ITXwPhqMBGIlBPD2tkZ/cmVS0tyfS6Wjljwn5b5AqfAW4+OULwBzvS6Ia
-   VNXeQvB+I9uTDKycbHdAlqDbmLW72LHH0o8b0E1KLE3EpPwUTagjbcNkJ
-   sD5Z8b8zH7l+nmdMuJGYuhw04CIvNLIjNCFTwTpaY5NQuObmC41d0/3rr
-   aJEMHOiMdpkSl/NH+LB91PDo5gtbLJgp6Ar6+xQVimIwHzbUkEPsv6fmh
-   w==;
-X-CSE-ConnectionGUID: erfliI1MQcScn6KMnows+g==
-X-CSE-MsgGUID: 824dVOprSDmNoKTkDgl55Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11481"; a="64326060"
-X-IronPort-AV: E=Sophos;i="6.16,281,1744095600"; 
-   d="scan'208";a="64326060"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jul 2025 00:54:18 -0700
-X-CSE-ConnectionGUID: 98SccRJrQ5yvJqszW1ShBA==
-X-CSE-MsgGUID: 52dATgF7Sy6tK3S06PLKug==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,281,1744095600"; 
-   d="scan'208";a="153636445"
-Received: from smile.fi.intel.com ([10.237.72.52])
-  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jul 2025 00:53:58 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.98.2)
-	(envelope-from <andriy.shevchenko@intel.com>)
-	id 1uWsHv-0000000BrCM-1jUQ;
-	Wed, 02 Jul 2025 10:53:51 +0300
-Date: Wed, 2 Jul 2025 10:53:50 +0300
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>
-Cc: Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Waqar Hameed <waqar.hameed@axis.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Julien Panis <jpanis@baylibre.com>,
-	William Breathitt Gray <wbg@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>, Peter Rosin <peda@axentia.se>,
-	Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Cosmin Tanislav <cosmin.tanislav@analog.com>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Michael Hennerich <Michael.Hennerich@analog.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matteo Martelli <matteomartelli3@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Francesco Dolcini <francesco@dolcini.it>,
-	=?iso-8859-1?Q?Jo=E3o_Paulo_Gon=E7alves?= <jpaulo.silvagoncalves@gmail.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Subhajit Ghosh <subhajit.ghosh@tweaklogic.com>,
-	Mudit Sharma <muditsharma.info@gmail.com>,
-	Gerald Loacker <gerald.loacker@wolfvision.net>,
-	Song Qiang <songqiang1304521@gmail.com>, Crt Mori <cmo@melexis.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Karol Gugala <kgugala@antmicro.com>,
-	Mateusz Holenko <mholenko@antmicro.com>,
-	Gabriel Somlo <gsomlo@gmail.com>, Joel Stanley <joel@jms.id.au>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Wei Fang <wei.fang@nxp.com>, Clark Wang <xiaoning.wang@nxp.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Sebastian Reichel <sre@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Han Xu <han.xu@nxp.com>, Haibo Chen <haibo.chen@nxp.com>,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, kernel@axis.com,
-	linux-iio@vger.kernel.org, linux-omap@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-i2c@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	linux-rockchip@lists.infradead.org, linux-input@vger.kernel.org,
-	linux-mmc@vger.kernel.org, imx@lists.linux.dev,
-	netdev@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-pwm@vger.kernel.org, linux-amlogic@lists.infradead.org,
-	linux-spi@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	sound-open-firmware@alsa-project.org, linux-sound@vger.kernel.org
-Subject: Re: [PATCH] Remove error prints for devm_add_action_or_reset()
-Message-ID: <aGTljgePpiPJq2xj@smile.fi.intel.com>
-References: <pnd7c0s6ji2.fsf@axis.com>
- <ylr7cuxldwb24ccenen4khtyddzq3owgzzfblbohkdxb7p7eeo@qpuddn6wrz3x>
- <CAHp75Ve=Zas8=6YKoPeTRrvjCaTyyRAyJG1gBLripqZgQpfg7g@mail.gmail.com>
- <zxtyk4vly2salnoy3lng2ni7pzu3wg6qnmucadnclfigrd2m2m@i6xcrmvh34r5>
+	s=arc-20240116; t=1751443176; c=relaxed/simple;
+	bh=gnDCYH3Hn3qAACj7Qo3xiFpK9GdpYBFr8S3p280REIc=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=qwx02A6NxAJq80SlWfpuUjyu4alAjf1usvFxpDyV+oI2cDVBemWJ+Q7d/+NMWs47o98WMRpaC7i7J/kNvt4icYnGEsTg5iW1cDU8OHKIljvVjRfMSot7gDugFX3+C0SlhEp/GIXi9Q4CxpHqxYaU8MVCdNPulT9RjLNnU/e6W+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XxZLmhI9; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3a52874d593so3494317f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 00:59:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1751443172; x=1752047972; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=snH0sz36on/n0NeqLeMPuFfp9C4kxwCWauag8h9UTpU=;
+        b=XxZLmhI9R/jPrl3mQxrvDaYg4ySzgae6iOJhOcIjdfIB9qMFPH8bOiuzjC9wwG++BE
+         XNnFtGOXpVllufZEbfRJZ/VBLDUB5nWlc8Le2R+wYJq3uGUGmDmwIklU3WUK6g9qKWIK
+         t0QKqVkq/cdSO6XaJzmVdqZ07nO4JMsYlD0/O2iA5+qK98FTwLKv+MyVcsqGudb0QtTZ
+         9RNq+jbMmsttW9P19Vq3VFN1xXUQ0Pzbhybhn6tYDbIbcsHczU+m3NAq9zpB1kNnnmMt
+         BEc+ebpw5dzVlVcKaqbDu2GlfvKwoBKIAykcWIltHSVxejg4SAm8bQRPOTXNCjtMRNno
+         tTxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751443172; x=1752047972;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=snH0sz36on/n0NeqLeMPuFfp9C4kxwCWauag8h9UTpU=;
+        b=ZwrvHAPDEt9MbQvM54FIgCxkD4UP/l6iIKuczacYo+X9ABfy5UEEuWMxEkM39fv7gF
+         MpV+16c6gRbH2TBfRP4NiTh93RFrtTRNc6+k8RrUCpk3aSrwujO3ZD/C/QSgUTiWfREI
+         oF66JTQkDsKm+7GSIWoUgpzlXhpDXBmz87fbdF45+4h515TiSObmYsyei2nXe2sWJQvJ
+         v5DfaoL34D4uvsf9mJWYzsBTMXsIQRaTxFHWfjTO1Af1AdU9n7hJl8Fuxfzewd1lcPhv
+         R2Es6SaJt5XzMl3j0XydtRvVjtVwwGxesTqtEs3zqmHfDUInGZIQooKBpP+9zCVo9ZhY
+         vorQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWmLttCSklgtEMXVuLjllmFVJovTd+9TPVegluNoYx8aXKzXsn+B+lR7ZQ8W2Vy2s64d1hgOz0YZjAn+fx5@vger.kernel.org
+X-Gm-Message-State: AOJu0YzEUmSVVIhtNmpTkks8rXpGED5qqMRz1tkVVAPYfOYmgkdpMT8f
+	k583Ve7vIjLG5HYkDQi/93nT3XwHyXN41dJ7wABFSvaZ2tVtLB63KHYaawXE8YHNDR9K7s1H0rh
+	k5SPT3aA=
+X-Gm-Gg: ASbGncui/nHBXcvjlC5LD9C4eNuEGjTey7uXfoUgvMcE3Omsk/qbcmU1SnulcFTi5JS
+	PU+HhaHoAJm6FB0AwTOkztGJ9AhshsJiCsoBT/5jRdlhTMlrpVdPHdE2nX1I7s8A9r0PpBm0Vob
+	59PXvHda7344HZUEYuzaE3amKlVUasN4SP6aVz14iPJgMOPwRvC59D1jhyJmeGuUz5LU2cYoZTO
+	uJ11sRc888Mtd+0afUDGtg5CTY/RvBjucKrDP1iqfpZctpnYhca8l6ZZUGenj1kwC1PvNQAnjvH
+	/YGKI6Pt5CFd4M3UBGKwHXonDqlFRAJzzTMd/MikpTeqMRtuLoysJUCSZNMG4EDU5GT9gjK/uTB
+	8IkkLE3rPzNK6v+LKre5o53lgVnZtnoCzrvCgrS4=
+X-Google-Smtp-Source: AGHT+IH2yQ+8hxkY2wYf/wQ6ULhOeVF0K5eQQDgKTPlvcCpJ2aPI+GgAcKmU2H5JLFy9yyhKpvhtAA==
+X-Received: by 2002:a05:6000:4205:b0:3a4:dc42:a0ac with SMTP id ffacd0b85a97d-3b200e2a121mr1241407f8f.49.1751443172178;
+        Wed, 02 Jul 2025 00:59:32 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:50c5:f782:9f70:bac0? ([2a01:e0a:3d9:2080:50c5:f782:9f70:bac0])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a892e5f8e1sm15152992f8f.88.2025.07.02.00.59.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Jul 2025 00:59:31 -0700 (PDT)
+Message-ID: <25afe22d-5165-4f6f-95a5-09d318b07eec@linaro.org>
+Date: Wed, 2 Jul 2025 09:59:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v3 0/5] Introduce "non-pixel" sub node within iris video
+ node
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
+ <6c5d9ff2-fa59-4151-99fe-3bddae46b507@linaro.org>
+ <79342b8f-4cef-fc48-c40f-5636f868af2e@quicinc.com>
+ <cf53e9c1-7d38-4458-8708-a74852cd594c@linaro.org>
+ <ceeaf6ee-2ff7-5f60-2a59-9b5484f3ac5d@quicinc.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <ceeaf6ee-2ff7-5f60-2a59-9b5484f3ac5d@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <zxtyk4vly2salnoy3lng2ni7pzu3wg6qnmucadnclfigrd2m2m@i6xcrmvh34r5>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On Wed, Jul 02, 2025 at 08:10:28AM +0200, Uwe Kleine-König wrote:
-> On Tue, Jul 01, 2025 at 08:57:02PM +0300, Andy Shevchenko wrote:
-> > On Tue, Jul 1, 2025 at 8:44 PM Uwe Kleine-König <ukleinek@kernel.org> wrote:
-> > > On Tue, Jul 01, 2025 at 05:03:33PM +0200, Waqar Hameed wrote:
-
-...
-
-> > > With that
-> > >
-> > >         ret = devm_add_action_or_reset(dev, meson_pwm_s4_put_clk,
-> > >                                        meson->channels[i].clk);
-> > >         if (ret)
-> > >                 return dev_err_probe(dev, ret,
-> > >                                      "Failed to add clk_put action\n");
-> > >
-> > > from drivers/pwm/pwm-meson.c is optimized to
-> > >
-> > >         ret = devm_add_action_or_reset(dev, meson_pwm_s4_put_clk,
-> > >                                        meson->channels[i].clk);
-> > >         if (ret)
-> > >                 return ret;
-> > >
-> > > .
-> > >
-> > > I would prefer this approach, because a) there is no need to drop all
-> > > dev_err_probe()s after devm_add_action_or_reset() and b) the
-> > > dev_err_probe()s could stay for consistency in the error paths of a
-> > > driver.
-> > 
-> > Why do we need a dev_err_probe() after devm_add_action*()? I would
-> > expect that the original call (if needed) can spit out a message.
+On 01/07/2025 18:11, Vikash Garodia wrote:
 > 
-> I'm not a big fan of API functions that emit an error message.
+> On 7/1/2025 6:49 PM, Neil Armstrong wrote:
+>> Hi,
+>>
+>> On 01/07/2025 12:23, Vikash Garodia wrote:
+>>>
+>>> On 6/30/2025 11:34 PM, neil.armstrong@linaro.org wrote:
+>>>> On 27/06/2025 17:48, Vikash Garodia wrote:
+>>>>> This series introduces a sub node "non-pixel" within iris video node.
+>>>>> Video driver registers this sub node as a platform device and configure
+>>>>> it for DMA operations. All non pixel buffers, i.e bitstream, HFI queues
+>>>>> and internal buffers related to bitstream processing, would be managed
+>>>>> by this non_pixel device.
+>>>>>
+>>>>> Purpose to add this sub-node:
+>>>>> Iris device limits the IOVA to an addressable range of 4GiB, and even
+>>>>> within that range, some of the space is used by IO registers, thereby
+>>>>> limiting the available IOVA to even lesser. For certain video usecase,
+>>>>> this limited range in not sufficient enough, hence it brings the need to
+>>>>> extend the possibility of higher IOVA range.
+>>>>>
+>>>>> Video hardware is designed to emit different stream-ID for pixel and
+>>>>> non-pixel buffers, thereby introduce a non-pixel sub node to handle
+>>>>> non-pixel stream-ID into a separate platform device.
+>>>>> With this, both iris and non-pixel device can have IOVA range of
+>>>>> approximately 0-4GiB individually for each device, thereby doubling the
+>>>>> range of addressable IOVA.
+>>>>>
+>>>>> Tested on SM8550 and SA8775p hardwares.
+>>>>>
+>>>>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>>>>> ---
+>>>>> Changes in v3:
+>>>>> - Add info about change in iommus binding (Thanks Krzysztof)
+>>>>> - Link to v2:
+>>>>> https://lore.kernel.org/r/20250627-video_cb-v2-0-3931c3f49361@quicinc.com
+>>>>>
+>>>>> Changes in v2:
+>>>>> - Add ref to reserve-memory schema and drop it from redefining it in
+>>>>> iris schema (Thanks Krzysztof)
+>>>>> - Drop underscores and add info about non pixel buffers (Thanks Dmitry)
+>>>>> - Link to v1:
+>>>>> https://lore.kernel.org/r/20250620-video_cb-v1-0-9bcac1c8800c@quicinc.com
+>>>>>
+>>>>> ---
+>>>>> Vikash Garodia (5):
+>>>>>          media: dt-bindings: add non-pixel property in iris schema
+>>>>>          media: iris: register and configure non-pixel node as platform device
+>>>>>          media: iris: use np_dev as preferred DMA device in HFI queue management
+>>>>>          media: iris: select appropriate DMA device for internal buffers
+>>>>>          media: iris: configure DMA device for vb2 queue on OUTPUT plane
+>>>>>
+>>>>>     .../bindings/media/qcom,sm8550-iris.yaml           | 40 ++++++++++++++++-
+>>>>>     drivers/media/platform/qcom/iris/iris_buffer.c     | 15 ++++++-
+>>>>>     drivers/media/platform/qcom/iris/iris_core.h       |  2 +
+>>>>>     drivers/media/platform/qcom/iris/iris_hfi_queue.c  | 20 ++++++---
+>>>>>     drivers/media/platform/qcom/iris/iris_probe.c      | 50
+>>>>> +++++++++++++++++++++-
+>>>>>     drivers/media/platform/qcom/iris/iris_vb2.c        |  4 ++
+>>>>>     6 files changed, 119 insertions(+), 12 deletions(-)
+>>>>> ---
+>>>>> base-commit: 8d2b7fde56597ca912f5daaf3ab58915458ba1fc
+>>>>> change-id: 20250619-video_cb-ea872d6e6627
+>>>>>
+>>>>> Best regards,
+>>>>
+>>>> I tried the patchset on SM8550 QRD and SM8650 QRD/HDK and the system just
+>>>> reboots
+>>>> a few millisecond after probing iris, no error messages nor reboot to sahara
+>>>> mode.
+>>>>
+>>>> The DT changeset for reference:
+>>>> https://git.codelinaro.org/neil.armstrong/linux/-/commit/e1b3628469c038559a60d310386f006f353e3d59
+>>>
+>>> I was able to repro this case, the issue was due to a incorrect node name in
+>>> driver. Fixing the name as per binding, fixes the issue for me. I have made the
+>>> comment in your code branch [1], which should fix it for you as well. Please
+>>> share your observations.
+>>
+>> Indeed, with:
+>> ============><========================================
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> index 8da2b780395d..06657b42da49 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> @@ -3264,6 +3264,9 @@ &config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
+>>                          iommus = <&apps_smmu 0x1947 0>;
+>>                          dma-coherent;
+>>
+>> +                       #address-cells = <2>;
+>> +                       #size-cells = <2>;
+>> +
+>>                          /*
+>>                           * IRIS firmware is signed by vendors, only
+>>                           * enable in boards where the proper signed firmware
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> index b53a9aa5adbf..7ada62ee411e 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+>> @@ -5011,6 +5011,9 @@ &config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
+>>
+>>                          dma-coherent;
+>>
+>> +                       #address-cells = <2>;
+>> +                       #size-cells = <2>;
+>> +
+>>                          /*
+>>                           * IRIS firmware is signed by vendors, only
+>>                           * enable in boards where the proper signed firmware
+>> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c
+>> b/drivers/media/platform/qcom/iris/iris_probe.c
+>> index 8fe87e30bd40..c57645a60bc4 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_probe.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
+>> @@ -136,7 +136,7 @@ static int iris_init_non_pixel_node(struct iris_core *core)
+>>          struct device_node *np_node;
+>>          int ret;
+>>
+>> -       np_node = of_get_child_by_name(core->dev->of_node, "non_pixel");
+>> +       np_node = of_get_child_by_name(core->dev->of_node, "non-pixel");
+>>          if (!np_node)
+>>                  return 0;
+>>
+>> ============><========================================
+>>
+>> It boots again and I can run some decodes on 8550 and 8650.
+> Nice. Thank you for your efforts in trying out the patches. Would that be ok
+> with you if i can put the tested-by tags in next revision with the amendments ?
 
-We do have that in devm_ioremap*() family. Just saying...
+Sure please add:
 
-> In general the caller knows better what went wrong (here:
-> devm_add_action_or_reset() doesn't know this to be about the clk_put
-> action), so the error message can be more expressive.
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-I'm not sure I was clear about my suggestion. What I argued is something like
-this
+with those changes
 
-devm_foo_alloc()
-{
-	ret = foo_alloc();
-	if (ret)
-		return dev_err_probe();
+Neil
 
-	return devm_add_action_or_reset();
-}
-
-foo_alloc() in my example is left untouched.
-
-> Also in general an API function doesn't know if a failure is fatal or if
-> the consumer handles the failure just well and if the call is part of a
-> driver's .probe() so it's unclear if dev_err_probe() can/should be used.
-> (I admit that the last two probably don't apply to
-> devm_add_action_or_reset() but that's not a good enough reason to
-> make this function special. Every special case is a maintanance burden.)
-
-devm_*() are only supposed to be called in the probe phase. So using
-dev_err_probe() there (implementations) is natural thing to do, if required.
-And see above, we have such cases already.
-
--- 
-With Best Regards,
-Andy Shevchenko
-
+> 
+> Regards,
+> Vikash
+>>
+>> Thanks,
+>> Neil
+>>
+>>>
+>>> Regards,
+>>> Vikash
+>>>
+>>> [1]
+>>> https://git.codelinaro.org/neil.armstrong/linux/-/commit/e1b3628469c038559a60d310386f006f353e3d59#note_23930047
+>>>
+>>>>
+>>>> Neil
+>>
 
 
