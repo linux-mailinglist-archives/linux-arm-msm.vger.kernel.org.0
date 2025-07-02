@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-63462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92ED7AF632F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 22:17:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32173AF6358
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 22:32:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5408A3B33DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 20:17:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EB8133B82AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 20:32:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE04F2DE6FA;
-	Wed,  2 Jul 2025 20:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC757248F54;
+	Wed,  2 Jul 2025 20:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j0HZqPnp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c5aVrgxJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7A42DE6EE;
-	Wed,  2 Jul 2025 20:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99732DE717;
+	Wed,  2 Jul 2025 20:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751487411; cv=none; b=c7rT3cDvRMjC0tfDvNuDEB9y4NaYa2o6W491CCSXA3Wvc3zi2y6mC2q311JqGCPl1MvrQmnEzC4oxy+XFjhxyWKtGFtVU86EDG0th981bUALCjTuNbHkHGhvEbcGuSH4p7fLVatougvfxyEgEtTVTQHp40TYUAgazCMZYJuxvyY=
+	t=1751488348; cv=none; b=Ux2r5MfgzI8uI1NVc7ofEde+1dPiWR+LYX7qse8ClqdEJ4eYzd1fu9AAlg5P83MSZ/SnzAwBV4W8qMzHjHaSsHlWvhjiWSAAGoM4aSImC2Zypt8CRrMZV0+25YeMCc/+paQJEScF9E1Tp0jcRirMCT76SrIFytqlQfdCE4tTsT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751487411; c=relaxed/simple;
-	bh=kKwgqTUxVWwdPmdc+f5tNybuH8KrJ5yHvr4ySbSweco=;
+	s=arc-20240116; t=1751488348; c=relaxed/simple;
+	bh=AQj1KqNi6O1MblNaJlJZf+D7Hyvwx661fg4rUbzcPEk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PItkeiIJG44u/6INTyxMhKPILht2QyEdl8Fqn3jp8e6Fb66SiFLAUgOkAkrBuysKrTdnXc8o48zQFCGk9Dh0Jf6OPqyWV760nfL+ojZ8ZA4cMrOWnCv+E0/tnYdMlO3PS2KMO5crCEfuEesmaEQEVUj3d5KgSoahrdtVohvfKKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j0HZqPnp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C470C4CEE7;
-	Wed,  2 Jul 2025 20:16:46 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=OGqtu9WXB9qPxDUdSsrExsPrTsH0069wu478dQuWDxPdwHcMwIafZuE4V1lYn60r7IeFNsxM/qEeyVm4VucX31RA4IC4nukSYx/1H55g/YjhIPfysZ9L26pda8uBoXljDgvVzFwZ7mlgouFkgJ8r1NwFBXl2BCuRtbmB3cf88WM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c5aVrgxJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F416C4CEE7;
+	Wed,  2 Jul 2025 20:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751487411;
-	bh=kKwgqTUxVWwdPmdc+f5tNybuH8KrJ5yHvr4ySbSweco=;
+	s=k20201202; t=1751488348;
+	bh=AQj1KqNi6O1MblNaJlJZf+D7Hyvwx661fg4rUbzcPEk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=j0HZqPnpyqmitn684wftBUqS8D/8gqCYud30k/xqnoCp1iN/P0IFfll/kT+mecpBF
-	 SJj7I3WIr0Wg6ksoawA1+kHwRfQSfTnRHFi9U0Dn5dd2phxzF1MV7ZvQgaxEK46DMm
-	 tHEEiy7gMoSWEnS9qdOv6S8En5SRuspaneiiIMBV58K1GPyoC4Q64qmmQKun2KASJC
-	 tNUY+DfnesF1+u38s3Ma/caW9blHf5RphalgZwHvrBZwtw7UatpT0FVVvYJDpuhPa4
-	 CBi1smMK+j6E89OIZXmj0pQAlmpw+zbABPDIqXNPRuxWg/SX/O9w0ed45AJz2D+lHu
-	 tajzfy7ak/YNA==
-Message-ID: <e40211c4-8ae3-4aa1-af80-f4a0525a863b@kernel.org>
-Date: Wed, 2 Jul 2025 22:16:44 +0200
+	b=c5aVrgxJxGKr2xUu8ziy+Fu/mIwCiitmsaT49GiTEp9dplVruZg6qmei9buZYRV3U
+	 2nALn0ygDJzbPeys5SGyqZgd9dv0gxXR3VkMXOKJqR8q15KrtlAKfy2RkTnGbJ/Ly5
+	 F5IlpSzI7Ao2yJ/Kfb0F0HWGpdAbihlW7ZoxF20pt8yxWAbgNOngLk5lDyZqLB2ixf
+	 UPVtOborvWksg7N3GZx8jtXyIbJiwBUd87e4Aso9CHZd5GblksYAoZLEDKhy+NvTfi
+	 rTyoUfQ/0vdeklGPJEs67Nn/R7zr7YX/uLx1j15mDfSR4ovbblwUXzUdihLpjAVY3X
+	 EYPJrqvVE/UXA==
+Message-ID: <cf34d7dd-4425-49ec-b430-927c70d1fbc8@kernel.org>
+Date: Wed, 2 Jul 2025 22:32:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,25 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] media: dt-bindings: add non-pixel property in iris
- schema
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+Subject: Re: [PATCH v2 1/3] dt-bindings: remoteproc: qcom,sm8350-pas: document
+ SM7635 MPSS & WPSS
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
- <20250627-video_cb-v3-1-51e18c0ffbce@quicinc.com>
- <19dd2e69-ad13-46f2-b99f-04a5e26f10d3@kernel.org>
- <08c8cdfd-099e-7b90-b163-23ecee3a5da4@quicinc.com>
- <118f2cbe-d8bd-4177-b0d5-91d9f1dbbef0@kernel.org>
- <9f5be122-302d-402f-91f2-675507612d32@oss.qualcomm.com>
- <023038d4-2258-4b2d-a3f9-b817ef0173bc@kernel.org>
- <7aa47821-ed22-2602-f56d-a6d58195e75f@quicinc.com>
+References: <20250627-sm7635-remoteprocs-v2-0-0fa518f8bf6d@fairphone.com>
+ <20250627-sm7635-remoteprocs-v2-1-0fa518f8bf6d@fairphone.com>
+ <20250701-melodic-courageous-mussel-0bed22@krzk-bin>
+ <DB0MZCUM41RA.7Z6461I531VD@fairphone.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -114,19 +109,46 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <7aa47821-ed22-2602-f56d-a6d58195e75f@quicinc.com>
+In-Reply-To: <DB0MZCUM41RA.7Z6461I531VD@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 02/07/2025 18:36, Vikash Garodia wrote:
+On 01/07/2025 12:12, Luca Weiss wrote:
+> Hi Krzysztof,
+> 
+> On Tue Jul 1, 2025 at 10:12 AM CEST, Krzysztof Kozlowski wrote:
+>> On Fri, Jun 27, 2025 at 08:55:42AM +0200, Luca Weiss wrote:
+>>> @@ -91,6 +93,7 @@ allOf:
+>>>        properties:
+>>>          compatible:
+>>>            enum:
+>>> +            - qcom,sm7635-mpss-pas
+>>>              - qcom,sm8350-mpss-pas
+>>>              - qcom,sm8450-mpss-pas
+>>>      then:
+>>> @@ -142,6 +145,22 @@ allOf:
+>>>              - const: cx
+>>>              - const: mxc
+>>>  
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          enum:
+>>> +            - qcom,sm7635-wpss-pas
 >>
->> Also commit msg says "Existing definition limits the IOVA to an
->> addressable range of 4GiB, and" but I do not see such definition in the
->> binding at all. So what does it refer to?
-> Processors based out of 32 bit OS, can serve addresses in range 0-31, which
-> implies 4GiB (2pow31).
-You are not replying to statements. Your commit msg said "existing
-definition". Point me to the binding part saying that.
+>> Everything fits better sm6350 and no need for new if:then: entry, at
+>> least it looks like.
+> 
+> True, that seems to work fine as well. I can add it to the
+> qcom,sm6350-pas.yaml bindings instead of sm8350 in the next version.
+> 
+> To be honest, I don't quite understand what the concept behind the
+> different PAS bindings are, when an SoC should get a new .yaml file, and
+> when to add to an existing one.
+
+It is purely arbitrary way of organizing things, to reduce amount of
+ifs:then: and make things easier to read. Adding ifs: does not make it
+simple. Adding same SoC to multiple bindings does not make it simple.
 
 Best regards,
 Krzysztof
