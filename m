@@ -1,162 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-63313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EBE7AF08CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 04:55:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58C4FAF096A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 05:51:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 51B99440F62
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 02:54:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 989F01C20750
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 03:51:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF6541E0DE8;
-	Wed,  2 Jul 2025 02:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E5DE1DED5F;
+	Wed,  2 Jul 2025 03:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GjESWrA5"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FEi30UPU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AE31D2F42;
-	Wed,  2 Jul 2025 02:54:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BDE53A7
+	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jul 2025 03:51:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751424870; cv=none; b=dIxmq7SqgsOSl/NZAiQThvcBKlLp826q+4qodpfqkjQQQF+w1MGG9ZH25fXaMl4+FpnVEZVzhxc6v6JYw/mct+7TKJX5N1EkvZ+Ep1uQY3GpUSL/GwBp9jw4+dcJ4ULnGVLYCel3ZjxeeEBTzSR9bNBsb75dmOhdAgLaC+JELf4=
+	t=1751428263; cv=none; b=nYD1kUG4Ucja1zfup+YQWjovauuwqOjVyBbYLPD34U9PtyBWKpnQTCPIkMbGQr/YxW7G/1EAAKm1Kpl8xweNOIfKkZBJ1Stt2Xp082ccAhOz62N3tx5NkuL5V5ymlJpEzpX9iN6i08839rksYj22bLVnl/+pcNgeaSwJyC8G+WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751424870; c=relaxed/simple;
-	bh=DsySgbbUQc788joFj5oTItv/GmC10MRZdG1rqdOZQg0=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lzvY99dOdDnIPIiD/m6AmRsg7IYev6Yy8OrbsSQU5JzjFIYJL34NeONSTuk6M9Ib3EtuXaf0tzn+VdyPBv0r/hJ0Vax47RuSGKt0d4zg+j3x0Hv4cxHQHZ3SL84Q6qW/nW7loB9uijUmmkYgyBwiO4YcOhCNgcUCLmva1gYLKjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GjESWrA5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 561HTrRs032748;
-	Wed, 2 Jul 2025 02:54:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1751428263; c=relaxed/simple;
+	bh=Gbuc3GQ5YJqvpK3fI88NEhS8do1N5azsksWGgrAjPfE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dor4igIjplDUU5bDqCdbUA+4id6uDuZ0zg5BVcJQJgZeHZOc8b/ozBATYf7Q0SPyrkMiljDwiznmyCmnEnJ2eZ5AwRznTsdFjbdVPbWZHCpyhFRF9aRMitcDWy3z4B1gOix7PWpRRhdcU8IEu6CihjW5LceC78TbW/NDh9xDxVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FEi30UPU; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 561J3aVM002484
+	for <linux-arm-msm@vger.kernel.org>; Wed, 2 Jul 2025 03:51:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	f7DmUnS+ybl/RnHEOnXU9a4omgJnpLCDyxPhASO9ViA=; b=GjESWrA5YmQqxC/g
-	UDU8Lcf3srqk8+OiI9zukdkuFCLaYVZtcDdT/F/wg8oG4YHq5cRaeAg9tkAll4Sk
-	3Hb7qWRwMEMkGyMr5MuAWio6WChjlslfFR3mBF/1NxuIbZW4Y+Qe4ziHQwo+R3kb
-	3EIqRgdKIgEhYDXeiuoHqJcdepxYmpKeqP910fpE+LoJL542JErpXfLeiNyG53+N
-	V3hYGgTiwMq9Cuf2aMx0PSgEIIFERezlGmawj6riYMRU8qRcFNSqG/a+3y76BX2k
-	lrdPVJGGmp9F2G9iSicLaV+d1l+xKnakaTdUZu/STqptUAMkgzkO/nG5eBMW939q
-	0/iUFQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j7qmawdb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 02 Jul 2025 02:54:23 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5622sMUT031576
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 2 Jul 2025 02:54:22 GMT
-Received: from hu-lxu5-sha.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Tue, 1 Jul 2025 19:54:18 -0700
-From: Ling Xu <quic_lxu5@quicinc.com>
-To: <srini@kernel.org>, <amahesh@qti.qualcomm.com>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <arnd@arndb.de>,
-        <gregkh@linuxfoundation.org>
-CC: <quic_kuiw@quicinc.com>, <ekansh.gupta@oss.qualcomm.com>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Ling Xu
-	<quic_lxu5@quicinc.com>
-Subject: [PATCH v5 4/4] misc: fastrpc: add support for gdsp remoteproc
-Date: Wed, 2 Jul 2025 08:23:41 +0530
-Message-ID: <20250702025341.1473332-5-quic_lxu5@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250702025341.1473332-1-quic_lxu5@quicinc.com>
-References: <20250702025341.1473332-1-quic_lxu5@quicinc.com>
+	B32luW0Sw1ltGtcSblfZe+j06KEyJ9zkhx3k4IlmlpI=; b=FEi30UPUuoSGSfRf
+	M9U5f/XhyVi/oUJ6zB5wflNxRDXDrApWQx1lDehRQjn8KmSxvQflv+4Cpoz8mZgT
+	PPAU++VyU+CMsAlbqwV/FtWKlCfGdm3R7QWpNRGD2XZDp7AZbHFuKubOJFkdYafn
+	qu/CzqXA7gCXNmA6CtNs+pyJmEvBuT9Ai41s0Q28hyLiJvrLFe+22B9fTQ3Ko4em
+	ebX8SFOCZoGe+e2v8tCOlQ2aa4JngI8nlKjjxvIeNkJS6wJ5KoprBC5h4lC2AEtQ
+	uusM6OyG9Pgc6pkZ7NKJGo51Jvkjc2Mxw7zZbRuKqmxTtoPM9UxlDIxYivGoTqSl
+	ekaZNA==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j63kb4w2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 03:50:59 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b3183193374so3103071a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 20:50:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751428259; x=1752033059;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=B32luW0Sw1ltGtcSblfZe+j06KEyJ9zkhx3k4IlmlpI=;
+        b=cK/7WqWHnqOdjAz5wsVui6MmyOcdlrptAczmtM729f+omXkxuvN4VNlFVphg4z1X+S
+         s1trbAz2ODwWlwa9wiY+J0RFIazB1ncRKGmdcGttS3euQaFEvM/0kAC4/TW4xdikwhE8
+         K8gGUfg/II/wuHxTRhzAJHsU2uVzf9xxhFfs36go/UsYYrAh80bUjfvjGfczIE1niu1B
+         WecPLqJ6mLU+nL2SV0AGyBIFSRM8OuaBzVjFgJXxlUAZxxBanoxPC3yy+27Gv9Np+2x3
+         FNDANZ0ZrAmmJx+NQ8niP/1CX7AtCu1bA/0e6M001mnZZ1cmK+AGBNGXp78SwehcsghS
+         kCQA==
+X-Forwarded-Encrypted: i=1; AJvYcCUarDuUPadULuwKP/UgNWYejC5vmArDLOQ+6EoRbFuJ1Rt+QohVPQSn800rxfYwwhPaTdoXoP440DwXtDBe@vger.kernel.org
+X-Gm-Message-State: AOJu0YxsvQ/YE/w1Z6liYCca74fWwShkyJukdMOFXztnXy1KcMsxgCKF
+	MQXPr8xHrZVObanW3u9ode2Wj6yyDC7bX8aMriEp35/dkUfEcVEZuKfsF2rQ98NkqIBeIz8VSG+
+	13ynHHWo0X9gKBoGAE+J2esrdgVGPx02AtaDw9UdLBlsIcBIV0gQNzo3tNUVmLI5MIswd
+X-Gm-Gg: ASbGncuTg56DxFH/I0qyXvd1g1fh9HwqSnv3CGFa6jdnklvp5BEPyBlkGJY2NZ6Fqfc
+	WLOX6XV5GjIwfpfRojvp+qcZ36ek7xRvPVNTYJ8AQHCdaLaGZDBvxpT0/XesAvNztglrhfI1FF2
+	5mw3cXlmoic5+MTpuuiL54FhjIG7wuWdeY3f9+18DgAYgsw0g2AEh2soMqZ3/nVZzDqrkRO14we
+	57jkwciAc0HOcKHw2PxXW1yhH2kUk1IM2GECp8DcV8P6SF+vYajL3U8qaljjBR6alqdl60gpCA5
+	5Pb6qLWy2yFzXperzhyiBtSQSQtKK3J6zpEBxJuwAKtvtkw6tiXQDOrQXO1fbv1GqhnxJs7rRff
+	yHov8ZfWlN82M12o=
+X-Received: by 2002:a05:6a20:7350:b0:222:c961:af1d with SMTP id adf61e73a8af0-222d7dc49eamr2846930637.8.1751428258815;
+        Tue, 01 Jul 2025 20:50:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8idSmfFKyDABY7yM0MVRpAAZkjEtC9DI11EGGNuOUHqgZpQyGDn56ZzZiQmPlDfFVsxkK9g==
+X-Received: by 2002:a05:6a20:7350:b0:222:c961:af1d with SMTP id adf61e73a8af0-222d7dc49eamr2846895637.8.1751428258347;
+        Tue, 01 Jul 2025 20:50:58 -0700 (PDT)
+Received: from [10.133.33.132] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b34e300994asm11767768a12.3.2025.07.01.20.50.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Jul 2025 20:50:58 -0700 (PDT)
+Message-ID: <5f2a900a-3c8e-4b16-bd91-500af7d0315e@oss.qualcomm.com>
+Date: Wed, 2 Jul 2025 11:50:51 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=C4TpyRP+ c=1 sm=1 tr=0 ts=68649f5f cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=d01il73eTdEK0Eih25sA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: Vxyh76GFmH2DEBZRX475t7STpJp5IzUC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDAyMyBTYWx0ZWRfXww/nXG8/9/NG
- aa13q8Q8vSY1RWlFWKTcUwoY93IA0Xj1Wkn8TLgfzlj42CuBpPmnFfZg1kOe71vRrDYuHwDCxa6
- KA2gE9ySNNiKoEXK5RkM1Ne91YXVvoXbg9RlduA0ZbYX4xk6CRSAw406I9VLfNbP2z/RJdb78FD
- Q0XeZjPhjd7TJv16ZB41hTJtltE67J8JFkA9nVJy/QjPj0zsIilNz2PD41Bo2jc6eF3c5pal2pz
- Apj2ixXGn1ghZzUIe1wiXu0u7qP0b5VfLH3LvWlcT+srxkJG7l9L1cMEDPsjP+aTjq5YePvjlU5
- Rbzvq1hk70dGzp5cK0U2ypSzPd0cx5005fUQo2X0GyY8/vH9C6m9hjavq4/vX2QbyXwnntsKsO/
- tqawMMfjtoyNU0DhcoUuOwQwnuZvDfKfAPnEckMiNixxzXtYGP2VwVuby8u3wCu//8ukgcdU
-X-Proofpoint-GUID: Vxyh76GFmH2DEBZRX475t7STpJp5IzUC
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] bus: mhi: don't deinitialize and re-initialize again
+To: Muhammad Usama Anjum <usama.anjum@collabora.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+        Youssef Samir <quic_yabdulra@quicinc.com>,
+        Matthew Leung <quic_mattleun@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
+        Alexander Wilhelm <alexander.wilhelm@westermo.com>,
+        Alex Elder <elder@kernel.org>, Kunwu Chan <chentao@kylinos.cn>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Siddartha Mohanadoss <smohanad@codeaurora.org>,
+        Sujeev Dias <sdias@codeaurora.org>,
+        Julia Lawall <julia.lawall@lip6.fr>, John Crispin <john@phrozen.org>,
+        Muna Sinada <quic_msinada@quicinc.com>,
+        Venkateswara Naralasetty <quic_vnaralas@quicinc.com>,
+        Maharaja Kennadyrajan <quic_mkenna@quicinc.com>, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
+Cc: kernel@collabora.com
+References: <20250630074330.253867-1-usama.anjum@collabora.com>
+ <20250630074330.253867-3-usama.anjum@collabora.com>
+Content-Language: en-US
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+In-Reply-To: <20250630074330.253867-3-usama.anjum@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=ZKfXmW7b c=1 sm=1 tr=0 ts=6864aca3 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=QX4gbG5DAAAA:8 a=UYPn-Rg_fxiY8il1LgUA:9
+ a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22 a=AbAUZ8qAyYyZVLSsDulk:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDAyOSBTYWx0ZWRfX0P6YDtYL7YzL
+ WoRCKE9iQTQkOpYXwd/9uXEBc+C+Lo/D953+ew2dF0SQc6BPhCwSf0tWvW7V1sgfOC6TnfqIKOJ
+ YQ4IEi1LvHcF8+ePwbgVUpCOd1SwUsZWLZqsyLdC/C8Pcspk82RwyETlidSyv+jUOKCu3tlza8C
+ Mpk6ZB8V1r6sHC34hnacHG4jsX1X19bU376lvhcSyfuvvTdqmeQuEI5q3accTd3vrPW46DOn082
+ C58ffDgcx3k3KdxP011kPbgqZHkTFbc0RKcDxjMCmnQbjh/xF8GBvj6J1ACSzTL+96MpKNm5ngZ
+ B05lwY+iNcAEuldGQb1HivUX5PO5GAPwk5rSwiIuj4kOmvjenQYxeGbY1lit/TpxaFmNQfi48eG
+ LEK1XSv223/dDPb2grnnSy8d7ISvthkIOU0gSE5amvL/X9TFV2R3VKlsbSypQSG1fjYTvDLV
+X-Proofpoint-ORIG-GUID: vvbxmxmJ9VpAM5_VDTrTNi_Vw3j-Lgae
+X-Proofpoint-GUID: vvbxmxmJ9VpAM5_VDTrTNi_Vw3j-Lgae
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-01_02,2025-06-27_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1015 priorityscore=1501 spamscore=0 mlxscore=0 mlxlogscore=999
- adultscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507020023
+ adultscore=0 mlxscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
+ impostorscore=0 malwarescore=0 clxscore=1011 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507020029
 
-The fastrpc driver has support for 5 types of remoteprocs. There are
-some products which support GDSP remoteprocs. GDSP is General Purpose
-DSP where tasks can be offloaded. This patch extends the driver to
-support GDSP remoteprocs.
 
-Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
----
- drivers/misc/fastrpc.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 441f5851eb97..2d2242d28d01 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -27,7 +27,8 @@
- #define MDSP_DOMAIN_ID (1)
- #define SDSP_DOMAIN_ID (2)
- #define CDSP_DOMAIN_ID (3)
--#define FASTRPC_DOMAIN_MAX    CDSP_DOMAIN_ID
-+#define GDSP_DOMAIN_ID (4)
-+#define FASTRPC_DOMAIN_MAX    GDSP_DOMAIN_ID
- #define FASTRPC_MAX_SESSIONS	14
- #define FASTRPC_MAX_VMIDS	16
- #define FASTRPC_ALIGN		128
-@@ -2250,6 +2251,8 @@ static int fastrpc_get_domain_id(const char *domain)
- 		return MDSP_DOMAIN_ID;
- 	else if (!strncmp(domain, "sdsp", 4))
- 		return SDSP_DOMAIN_ID;
-+	else if (!strncmp(domain, "gdsp", 4))
-+		return GDSP_DOMAIN_ID;
- 
- 	return -EINVAL;
- }
-@@ -2324,13 +2327,14 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 	case ADSP_DOMAIN_ID:
- 	case MDSP_DOMAIN_ID:
- 	case SDSP_DOMAIN_ID:
--		/* Unsigned PD offloading is only supported on CDSP */
-+		/* Unsigned PD offloading is only supported on CDSP and GDSP */
- 		data->unsigned_support = false;
- 		err = fastrpc_device_register(rdev, data, secure_dsp, domain);
- 		if (err)
- 			goto err_free_data;
- 		break;
- 	case CDSP_DOMAIN_ID:
-+	case GDSP_DOMAIN_ID:
- 		data->unsigned_support = true;
- 		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
- 		err = fastrpc_device_register(rdev, data, true, domain);
--- 
-2.34.1
+On 6/30/2025 3:43 PM, Muhammad Usama Anjum wrote:
+> Don't deinitialize and reinitialize the HAL helpers. The dma memory is
+> deallocated and there is high possibility that we'll not be able to get
+> the same memory allocated from dma when there is high memory pressure.
+> 
+> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
+> 
+> Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+> ---
+>  drivers/net/wireless/ath/ath11k/core.c | 5 -----
+>  1 file changed, 5 deletions(-)
+> 
+> diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+> index 4488e4cdc5e9e..bc4930fe6a367 100644
+> --- a/drivers/net/wireless/ath/ath11k/core.c
+> +++ b/drivers/net/wireless/ath/ath11k/core.c
+> @@ -2213,14 +2213,9 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
+>  	mutex_unlock(&ab->core_lock);
+>  
+>  	ath11k_dp_free(ab);
+> -	ath11k_hal_srng_deinit(ab);
+>  
+>  	ab->free_vdev_map = (1LL << (ab->num_radios * TARGET_NUM_VDEVS(ab))) - 1;
+>  
+> -	ret = ath11k_hal_srng_init(ab);
+> -	if (ret)
+> -		return ret;
+> -
+
+while I agree there is no need of a dealloc/realloc, we can not simply remove calling the
+_deinit()/_init() pair. At least the memset() cleanup to hal parameters (e.g.
+avail_blk_resource, current_blk_index and num_shadow_reg_configured etc.) inside the
+_init() needs to be kept as the later operation needs a clean state of them.
+
+>  	clear_bit(ATH11K_FLAG_CRASH_FLUSH, &ab->dev_flags);
+>  
+>  	ret = ath11k_core_qmi_firmware_ready(ab);
+
+the _deinit() is still getting called in case ath11k_core_qmi_firmware_ready() fails,
+making it a little odd since there is no _init() anymore with this change, though this is
+the way of current logic (I mean the hal is currently deinit in the error path).
+
+Thinking it more, if we hit the error path, seems the only way is to remove ath11k module.
+In that case the _deinit() would be called again in ath11k_pci_remove(), leading to issues
+(at least I see a double free of hal->srng_config). But this is another topic which can be
+fixed in a separate patch.
 
 
