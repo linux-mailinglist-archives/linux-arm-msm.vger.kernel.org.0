@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-63371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1DECAF1251
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 12:48:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D0EADAF1259
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 12:50:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 019A91C40017
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 10:49:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF0C71C40171
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 10:50:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A444256C76;
-	Wed,  2 Jul 2025 10:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1802F259C80;
+	Wed,  2 Jul 2025 10:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nMgCFVXH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="os7lUNOb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED25324DD15;
-	Wed,  2 Jul 2025 10:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06552561AE;
+	Wed,  2 Jul 2025 10:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751453327; cv=none; b=jtb+3vQoiI/TnGr53gwR/f4FW/kpbKbFfDLN4qVgPX6j9gaxLL4ZosxcBEYQHiqtlGhN1+dku4ceL5h4JMwBC1LwB7QMK9QQRECJrBvc8V3feQRW5V/vDeS0aP/FB0a2VoX8PRFpj61MZQKpGQg2GJ1LWAKr+gOOtz2mspk42xA=
+	t=1751453423; cv=none; b=NvO0my0/tK26sf0BOPb8epQBV7sWtZMOx2kzpz6s7zhTqGOxU4XRilg4oWwbb8XOv6eZWdOEpNiRrzBCLsY2M7VqS+84JFNBGRrXEw54J3iN/hjFperE7fT49udIpM9BYTMABlqQj05SrGUGVq6ZaYZuqo/MMVKHXGe0NIumYmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751453327; c=relaxed/simple;
-	bh=vJdn2QMSXcZcb690u8yK41bZcR/TwATYLNVDQSiXwGs=;
+	s=arc-20240116; t=1751453423; c=relaxed/simple;
+	bh=DyW+6QgzAmEPZ24g6lUEalTygwFKnOY2nlQDniCKMZc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nPLG5FAHBrsA4av/pFXoCh1nlBeHN7HTQMZiZIGHzmQJ8CvBbUvm0NsmA1OGAVBgp9hMF0vw1L0G8xwGDCDS/AfYiRTRpOdb3z02Ff4eQn3PJ84kgio+SApshPgZe9ZevkIOc+Pl0JxW1gFu/uUbKROj/mnhemoLRsqlZ7MFcC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nMgCFVXH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A28C4CEED;
-	Wed,  2 Jul 2025 10:48:43 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Bjc8tmblt1jW7Dpx/8en1K64+2B+g/84w1OuXL/qXjn/9f0hSFok44xahQwVuwZoOH6BicyVMT9nuoWnjkUUAqOZF0qC0pGjm+gQtMlFKU7WKKgbnsqea1zEtfkR37F5ZYstu9lhHFWiM9eBClneGgEnY2MJrV/137Ul7tCkc+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=os7lUNOb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78119C4CEED;
+	Wed,  2 Jul 2025 10:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751453326;
-	bh=vJdn2QMSXcZcb690u8yK41bZcR/TwATYLNVDQSiXwGs=;
+	s=k20201202; t=1751453422;
+	bh=DyW+6QgzAmEPZ24g6lUEalTygwFKnOY2nlQDniCKMZc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nMgCFVXH5e4zdVJ/ZP434GtVlDcdW5DEm3u/Jd2WvLZRfCLVf9FbrXeFefnqyv9xx
-	 rzQCM9QheBf/wcKwPLdXQQLqOJoqtuRaqsTwZhOepur53XQUyqlj7hIkAXdxFrv8hJ
-	 4CM1w5kKmD9YAjTQSjzR3RHAS33kj5Qq1hxd+MPQKGA9iOJs7EkadHpqlpEWmst6Uw
-	 TUMEA54G2IJgXjVz/JxfrWynwMd5fs1si7HgZzC1TAz3fH4mBVcGhRz6R6qsvDyCwy
-	 6NNS4kQwVDwoRprmSzq3f9SO71s80X+ZswawycNwPheI9E7CFP4X+h4JGSz2PUIAQ5
-	 GDfxJl4a5taww==
-Message-ID: <e1424499-718a-41c8-b729-0ea96bb6a172@kernel.org>
-Date: Wed, 2 Jul 2025 12:48:41 +0200
+	b=os7lUNObZ2AkHNd8fWP66cNYe/ZekeotD7uoKHCbI+F4+U4ZTDgmIrgMXaTwKKVS1
+	 4yHcLE8vjI3yS/MZFKN7ns+nvVs9kR+i0mEi6fs6sxNJMyTw+w6TFS4BceFlYlDLmL
+	 hsuUMTO9NRhC3S+YUPpL9fAZXGEYEDcgEmUu6dNJ/wf0CqyFifyuVC17Mt1SSkpWn8
+	 WX/8RcH1l8UIaZjhHxKCkBjoqrecMosNlLhAL96ZBJS4fmjHnwm/vtWerVaDhsoP6N
+	 plgerOQbsEfN2AXvWr+x3f/HYRxGY3o6A1IhvfpYyMgRo/pWrYyaz2mx/8BSsOXB2B
+	 x2sY4QGQql5+A==
+Message-ID: <f66611e3-2961-4435-b276-7f13041518cf@kernel.org>
+Date: Wed, 2 Jul 2025 12:50:17 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] dt-bindings: sram: qcom,imem: Document Qualcomm IPQ
- SoC's IMEM compatibles
+Subject: Re: [PATCH 3/7] arm64: dts: qcom: ipq6018: Add the IMEM node
 To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
@@ -59,9 +58,7 @@ To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20250702-imem-v1-0-12d49b1ceff0@oss.qualcomm.com>
- <20250702-imem-v1-1-12d49b1ceff0@oss.qualcomm.com>
- <a68f46f0-8053-4d9f-96f7-55de33bb301f@kernel.org>
- <37695966-1d7c-46c3-9717-30da4e8d1930@oss.qualcomm.com>
+ <20250702-imem-v1-3-12d49b1ceff0@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,56 +104,54 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <37695966-1d7c-46c3-9717-30da4e8d1930@oss.qualcomm.com>
+In-Reply-To: <20250702-imem-v1-3-12d49b1ceff0@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 02/07/2025 12:46, Kathiravan Thirumoorthy wrote:
+On 02/07/2025 12:17, Kathiravan Thirumoorthy wrote:
+> Add the IMEM node to the device tree to extract debugging information
+> like system restart reason, which is populated via IMEM. Define the
+> IMEM region to enable this functionality.
 > 
-> On 7/2/2025 3:49 PM, Krzysztof Kozlowski wrote:
->> On 02/07/2025 12:17, Kathiravan Thirumoorthy wrote:
->>> IMEM is present in the Qualcomm's IPQ SoCs as well. Document the same.
->>>
->>> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
->>> ---
->>>   Documentation/devicetree/bindings/sram/qcom,imem.yaml | 6 ++++++
->>>   1 file changed, 6 insertions(+)
->>
->> Where is the changelog? This is not a v1.
+> As described, overall IMEM region is approximately 32KB but only initial
+> 4KB is accessible by all masters in the SoC.
 > 
-> This is the v1. The series[1] I pointed out describes only for the 
-> IPQ5424 SoC. Since I have added few more SoCs, thought v1 is the 
-> appropriate numbering.
+> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/ipq6018.dtsi | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 > 
-> [1] 
-> https://lore.kernel.org/linux-arm-msm/20250610-wdt_reset_reason-v5-0-2d2835160ab5@oss.qualcomm.com/
+> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> index bfe59b0208415902c69fd0c0c7565d97997d4207..7eca5ba416c2ef5ef1c4e0eb4f58f1ca94fc92f0 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> @@ -659,6 +659,15 @@ qpic_nand: nand-controller@79b0000 {
+>  			status = "disabled";
+>  		};
+>  
+> +		sram@8600000 {
+> +			compatible = "qcom,ipq6018-imem", "syscon", "simple-mfd";
 
-But IPQ5424 is already there, so you reworked that patch.
+No, this is not a simple MFD. Where are any children if this is a MFD?
 
+> +			reg = <0 0x08600000 0 0x7fff>;
+> +			ranges = <0 0 0x08600000 0x7fff>;
+
+Why different style?
+
+> +
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +		};
+> +
+>  		usb3: usb@8af8800 {
+>  			compatible = "qcom,ipq6018-dwc3", "qcom,dwc3";
+>  			reg = <0x0 0x08af8800 0x0 0x400>;
+
+Look here.
 
 > 
->>
->>> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->>> index 72d35e30c439ccf4901d937f838fe7c7a81f33b1..48e2f332e0e9fc9fa4147fa12d9c6c70a77fafda 100644
->>> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->>> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->>> @@ -18,6 +18,12 @@ properties:
->>>       items:
->>>         - enum:
->>>             - qcom,apq8064-imem
->>> +          - qcom,ipq8074-imem
->>> +          - qcom,ipq6018-imem
->>> +          - qcom,ipq5018-imem
->>> +          - qcom,ipq9574-imem
->>> +          - qcom,ipq5332-imem
->>> +          - qcom,ipq5424-imem
->> Random order, no, follow existing style. This applies for every qcom
->> binding and you received such feedbacks in the past.
-> 
-> Apologies — I arranged them based on the evolutionary order of SoCs. 
 
-Where is such ordering documented? How is it expressed in your internal
-guideline for example?
 
 Best regards,
 Krzysztof
