@@ -1,177 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-63450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16386AF6227
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 20:59:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A9CA8AF6244
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 21:01:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6B1311C44F30
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 18:59:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E4901C47686
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 19:01:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54A4D2BE65E;
-	Wed,  2 Jul 2025 18:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F37CC2F7D00;
+	Wed,  2 Jul 2025 19:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rI+mAvpv"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Gz/Pxbg8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD062BE652;
-	Wed,  2 Jul 2025 18:59:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A9C33062
+	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jul 2025 19:00:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751482751; cv=none; b=RgL2USYlYeRVZDKV3jvvMFSNOvR5WKjhipqmbwhDVAbwvkl/RM7jXmiBt5gtUJ716rcl4iTonJZwf6Qv33Ggi0esKLpI70m6hLgRD+r4hQ6nfCTFQXLeaGL6nQeI1FHNODjot+LNCxIaIKEVhOeidosuK3xB0OASjTamurA8tc4=
+	t=1751482846; cv=none; b=WGCVXNzoyUbEE4zu8JQUiZre74O6+WsYXqVHZ/UvPgUXEPytThA5qGKu07LVHdrrMEbZ4q2F9hvVP4cdspXG+e08erPwiBr/OROZGz8ivZrhPhiPgKsXIizbMn9KXxMZALTG4/zzw6BrD996NfOoAMTVnpfNM0N/ZEY74K2cUZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751482751; c=relaxed/simple;
-	bh=G9ajOubBK0mV1nv4EGWaDIXhIH3bnL8BAka8nigN7uQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Pl2zrw8M6kVGk8p3vHQv9E6icBH7z3ghFzXbfAzgJKSpN2Cmp/P6emHQiCKFALjPIxKx6U0bXwK876aW+nUwHOk9+ZTnFW+fRCd2PDP013SbMjLO8dJe8W9MS6o9RL+V4Y1PTPIDxyFip4fS1N+kzL8yThIdH4cnekES0EQAapY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rI+mAvpv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id A5D15C4CEF8;
-	Wed,  2 Jul 2025 18:59:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751482750;
-	bh=G9ajOubBK0mV1nv4EGWaDIXhIH3bnL8BAka8nigN7uQ=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=rI+mAvpvrft9HnBl0xgdMLu13XjHSyZsrQv/vTQtLUXnp24R4Bjfn883IdT3LjWYI
-	 W88bLL5qbf351oioDpzVZv/SmNttP2ShipcJViIHH5riuylM6iIM2kBXeFt23q7Ebz
-	 OjdlAa7RR0cvRAKtKOvmF/glWaxIqqklUJOU8oc/kNpUUr1JXegCk4Qq32IUno/wWv
-	 6f+yQqZnn790RvezHvGxY5bEaNa68NF/OwsynWLgwIkVqOIUWAY2l1P07o8BO45JuZ
-	 GnjxQj5XiVk2kt7hVd4hBcgTaulObqbfettMqRQ8vkNd1tETcIfPufo/TfwAGhEEM1
-	 xomzR/VBmhXTQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98953C83038;
-	Wed,  2 Jul 2025 18:59:10 +0000 (UTC)
-From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
-Date: Wed, 02 Jul 2025 20:59:09 +0200
-Subject: [PATCH 3/3] arm64: dts: qcom: x1-hp-x14: Add support for X1P42100
- HP Omnibook X14
+	s=arc-20240116; t=1751482846; c=relaxed/simple;
+	bh=ZzLpMwX5WzD9jwZ44+XEnxN0FLfWhUHz9Fj27k89SJ4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=IDfJZiOeZs3RjyDk7Tt41g+tzbZWOgoWF5xdv+46m0CJLYD2FRrZpgLCCafEzq9n1WClycZX7bEc9ze1AO41u/WmasMZbu1U7UPrGUyqnJTo6KKFq+mDJtHxtgy1ON2GYSRctxvBVNhr9QkygsektE6m1ZTtvHQ+vMPZRPJfPxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Gz/Pxbg8; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 562DJGA2002460
+	for <linux-arm-msm@vger.kernel.org>; Wed, 2 Jul 2025 19:00:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=+Hi4OFWQN74gf29SCjhq82t1+AZHZTzvICMf6bwxODM=; b=Gz
+	/Pxbg8eKHb4SIWYa3Jpwtgl7ikIocw06njIAMyI42GsMJOQnEn5oIaGxvzq05oQZ
+	dVe1jWW4gBmrjL46GwVZH1vLbyx9ZFs9RH+AEFv+73sXbU74mhY4ca7Pbyc36Xq8
+	GG7QXJwplPhdzNCxvgK2TMcG/YJRzi8msy6/893JULPtwAdpRDvpG9KBH7ciDznK
+	rm5IqeteztpSddQQEN8ZzqTb6/JFc8ApsFphpLlntO34oFXJ/k1QCXHOX435Hcss
+	D1PNr2nv5DNf/oaAicOQOtRGKElEhB+lRt7FtL9pqwM137GKc2eY1RHbhCV4+XTQ
+	3qFr7shggYccs0gDoS4Q==
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com [209.85.167.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j9pcwr75-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 19:00:44 +0000 (GMT)
+Received: by mail-oi1-f197.google.com with SMTP id 5614622812f47-40b99df0be7so648990b6e.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 12:00:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751482843; x=1752087643;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+Hi4OFWQN74gf29SCjhq82t1+AZHZTzvICMf6bwxODM=;
+        b=YXJ/dLo6svl/ieL8OXBTQztBdeQx5IGUDcootrTdW8l4TlhO6wCawpK3OU/+cgzKWt
+         79bUFu2FQHIe80+6F2Yj0txeJllR/gK4oiN9g3wcpWR2uxta9J4rHlJ6OSBDJZqaOUhA
+         pYdeLxL00vQpWqMIcBknloSEG2uELzPtm6EMFI6oPne0EchhGvpTLIVyIqPMmkitmpJk
+         gsn8cWdnY5ERQknOEEJQ8dj44a4AXNjXGD6vQAhgg3Gip8tNsUtz4T39V1jkJldDJnPR
+         hv5yGIYp4oz2DQJpI+KYQKe/mwiWO5aVrVYmo8f4t56gQm+MJqrcPu1GLE1j5VB9Fak0
+         kJFA==
+X-Forwarded-Encrypted: i=1; AJvYcCW7Oj15YeBBEeBYzW1s20/sM1NtNEP+t+vcgKXlC7eMwNYk8E+RPHWPhO+kNfpTA8bw/5M3XmuFW6cdrsLx@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJr6m6buS7Khux5T2DxOelJ4d49y2IizZwWFF0wOir2F6bfMaX
+	9dWmm/XoDs+ygSa2zbxGj+SmAWIDvYitbEd59d2qC/v/ORjOL/GScRb9AerDF7HeSukl4+AzZ2u
+	neuQA0AEvcJJwBUGSt6PETkY62mqJWrrZzFEnODbKH2f0cUWsElLEXdz9MBv3zv5P8XUhLwTU7D
+	/p4w4ebnKLvyqm0qHJUydm5AA1/8RPR0sfLNJ8rrnHMO8=
+X-Gm-Gg: ASbGncuMnWqngbgwqpOSQTzlh3k0Z/IB5fIqPYkYhRVh6pcQH9u3aqokLfNNgVIe69B
+	TKbKw9JC3BOb6vFzDWC4nSGTm+/HRS2AHvWIxRl8C/qJElAjN6eeIms8XzLzieUn16eJ7niRAtY
+	ugMB8oSGI6SO3Cski0KzV0M79uvV8+29Zl0A0=
+X-Received: by 2002:a05:6808:6d8e:b0:404:8e:69c2 with SMTP id 5614622812f47-40bfdf21e90mr295872b6e.0.1751482842901;
+        Wed, 02 Jul 2025 12:00:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHRMcrRIZay6hMAGvVa57iatWkhPq9rIs+Lvfh48yNUeZ9KCbXf+fEf3iNU68YsrjhIhBQGRsdLElq5+I5VUjs=
+X-Received: by 2002:a05:6808:6d8e:b0:404:8e:69c2 with SMTP id
+ 5614622812f47-40bfdf21e90mr295848b6e.0.1751482842545; Wed, 02 Jul 2025
+ 12:00:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250702-hp-x14-x1p-v1-3-219356e83207@oldschoolsolutions.biz>
-References: <20250702-hp-x14-x1p-v1-0-219356e83207@oldschoolsolutions.biz>
-In-Reply-To: <20250702-hp-x14-x1p-v1-0-219356e83207@oldschoolsolutions.biz>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1751482749; l=3024;
- i=jens.glathe@oldschoolsolutions.biz; s=20240919;
- h=from:subject:message-id;
- bh=4qMZRflZvpbOAQk9PzwxdZC2Sz1ND1a5zbEF77TvE3E=;
- b=PBDhD5Cmu3OX5b7d4hrsrMnIQPNHYlmcY7nT7/SGC8W4Wqjx2ZKP5ow6o9VKyuHJv3LXNDosI
- vuw0gwiiRtSArX/IfoSzbLSRijI01iO5TDbGun+44BfcpDJwiET6NyL
-X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
- pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
-X-Endpoint-Received: by B4 Relay for
- jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
-X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Reply-To: jens.glathe@oldschoolsolutions.biz
+References: <20250630180903.77990-1-robin.clark@oss.qualcomm.com>
+ <20250630180903.77990-8-robin.clark@oss.qualcomm.com> <20250701162114.5gkdr7f5cww23ou4@kamilkon-DESK.igk.intel.com>
+ <CACSVV02jA9dFUFuaKAmoOn_wav0V-QrTj4vo6Krr2V4n7MRDKQ@mail.gmail.com> <20250702074835.7pcbjlhczplibowt@kamilkon-DESK.igk.intel.com>
+In-Reply-To: <20250702074835.7pcbjlhczplibowt@kamilkon-DESK.igk.intel.com>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Wed, 2 Jul 2025 12:00:29 -0700
+X-Gm-Features: Ac12FXz-65Bv82tj3yj2dd8MCkuAfc2blW-3OHfQEJHly2NJrDaG4_vgnVPpqaA
+Message-ID: <CACSVV00fGkeGKXviFHVR6Qrz+pXLgVSpqr3-4GqBT2TH_nxxgA@mail.gmail.com>
+Subject: Re: [PATCH igt 7/9] msm/mapping: Handle larger gmem file size
+To: Kamil Konieczny <kamil.konieczny@linux.intel.com>,
+        Rob Clark <rob.clark@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        igt-dev@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-GUID: mtPFwowaN421mGZ6_O78LmvfEdtMALiH
+X-Proofpoint-ORIG-GUID: mtPFwowaN421mGZ6_O78LmvfEdtMALiH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDE1NiBTYWx0ZWRfX//9Lf+DNzRFJ
+ cVqSz3pgGnn0klREvWR3YqGEW1PBZPQwLLJ+hty+0HByO0G7lm0b/eZ0FHmZJMHJNDpq/VT9RmL
+ Vcdanh8ebmZwXVIUIIAdCwSP1ezfyNm0JteaYjNoeWePuHRX/T8S8Q2AAw75Hodscd6F/Uhgwnn
+ zSOpCmFSBauaHt9ntqBcUIPrj68kzUpmw3OPTWABR/zix1LFwjBdDP79K5024/C862lZt66ZY/E
+ mjN1cfKgsJpQdEafMeeJS4cFKfYpGPuI8RyElhoRwaISswywLEwc+KiH6QfXGMrY6iqcRAij1OX
+ K8urp+XUKvHZL5nu6xduOElDpzZKRggKm5Et1y7l8ZzPCZPEpgVIOBqFIof3R5BnrgkkJ+YllkS
+ PqNrnuxbzgxoF1Ss6m6JVGnDzwG4oAUsT5snurrh2csYwEAfQoVQv4FnRb0Ap/Rp6C5qa03J
+X-Authority-Analysis: v=2.4 cv=QMFoRhLL c=1 sm=1 tr=0 ts=686581dc cx=c_pps
+ a=WJcna6AvsNCxL/DJwPP1KA==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=QyXUC8HyAAAA:8 a=EUspDBNiAAAA:8 a=FV7_indNlyCjRKMUmb8A:9 a=QEXdDO2ut3YA:10
+ a=_Y9Zt4tPzoBS9L09Snn2:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-02_03,2025-07-02_04,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 priorityscore=1501 bulkscore=0 spamscore=0 adultscore=0
+ mlxlogscore=989 mlxscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
+ clxscore=1015 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507020156
 
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+On Wed, Jul 2, 2025 at 12:48=E2=80=AFAM Kamil Konieczny
+<kamil.konieczny@linux.intel.com> wrote:
+>
+> Hi Rob,
+> On 2025-07-01 at 11:01:06 -0700, Rob Clark wrote:
+> > On Tue, Jul 1, 2025 at 9:21=E2=80=AFAM Kamil Konieczny
+> > <kamil.konieczny@linux.intel.com> wrote:
+> > >
+> > > Hi Rob,
+> > > On 2025-06-30 at 11:09:01 -0700, Rob Clark wrote:
+> > > > From: Rob Clark <rob.clark@oss.qualcomm.com>
+> > > >
+> > > > If running on a system with full desktop environment, the file will=
+ be
+> > > > much larger than 0x4000 bytes.
+> > > >
+> > > > Signed-off-by: Rob Clark <rob.clark@oss.qualcomm.com>
+> > > > ---
+> > > >  tests/msm/msm_mapping.c | 2 +-
+> > > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > >
+> > > > diff --git a/tests/msm/msm_mapping.c b/tests/msm/msm_mapping.c
+> > > > index 03a9e814c931..978ea18375dd 100644
+> > > > --- a/tests/msm/msm_mapping.c
+> > > > +++ b/tests/msm/msm_mapping.c
+> > > > @@ -122,7 +122,7 @@ endswith(const char *str, const char *end)
+> > > >  static uint64_t
+> > > >  get_bo_addr(int drm_fd, const char *name)
+> > > >  {
+> > > > -     char buf[0x4000];
+> > > > +     char buf[0x80000];
+> > >
+> > > If it is that big why not malloc() it?
+> >
+> > in kernel, for sure.  But userspace stack size is multiple MB at least
+> >
+> > BR,
+> > -R
+>
+> You are reading "gem" debugfs below, so this buffer in igt is in
+> userspace, no need for it to be on stack. Btw you just discovered
+> a bug in igt, imho this function should give sizeof(buf) to caller
+> here to igt_debugfs_read():
+>
+> igt_debugfs_read(drm_fd, "gem", buf, sizeof(buf));
 
-These laptops are the same as the already known 14-fe0xxx models, but
-with a Purwa SoC, SKU number 14-fe1xxx. [1]
+Actually igt_debugfs_read() is a convenience wrapper macro for
+__igt_debugfs_read() which does just this.  But makes
+igt_debugfs_read() more convenient for stack allocated buffers.
 
-The supported features are the same as for the original Omnibook X14:
+BR,
+-R
 
-- Keyboard (no function keys though)
-- Display
-- PWM brightness control
-- Touchpad
-- Touchscreen
-- PCIe ports (pcie4, pcie6a)
-- USB type-c, type-a
-- WCN6855 Wifi-6E
-- WCN6855 Bluetooth
-- ADSP and CDSP
-- X1 GPU
-- GPIO Keys (Lid switch)
-- Audio definition (works via USB and with internal speakers)
-
-https://www.hp.com/us-en/shop/pdp/hp-omnibook-x-laptop-next-gen-ai-pc-14-fe100-14-a4nd1av-1#techSpecs
-
-Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
----
- arch/arm64/boot/dts/qcom/Makefile                  |  2 +
- .../boot/dts/qcom/x1p42100-hp-omnibook-x14.dts     | 44 ++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 4bfa926b6a0850c3c459bcba28129c559d50a7cf..63bf3ccc11124a70efb09782b57970b274d80d49 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -333,3 +333,5 @@ x1p42100-asus-zenbook-a14-el2-dtbs	:= x1p42100-asus-zenbook-a14.dtb x1-el2.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-asus-zenbook-a14.dtb x1p42100-asus-zenbook-a14-el2.dtb
- x1p42100-crd-el2-dtbs	:= x1p42100-crd.dtb x1-el2.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-crd.dtb x1p42100-crd-el2.dtb
-+x1p42100-hp-omnibook-x14-el2-dtbs := x1p42100-hp-omnibook-x14.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-hp-omnibook-x14.dtb x1p42100-hp-omnibook-x14-el2.dtb
-diff --git a/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts b/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts
-new file mode 100644
-index 0000000000000000000000000000000000000000..a6b5faeae27aa69ef07d8b2846ff9e6ffb43c954
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts
-@@ -0,0 +1,44 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2024, Xilin Wu <wuxilin123@gmail.com>
-+ * Copyright (c) 2025 Jens Glathe
-+ */
-+
-+/dts-v1/;
-+
-+#include "x1p42100.dtsi"
-+#include "x1e80100-pmics.dtsi"
-+#include "x1-hp-omnibook-x14.dtsi"
-+/delete-node/ &pmc8380_6;
-+/delete-node/ &pmc8380_6_thermal;
-+/delete-node/ &pm8010;
-+/delete-node/ &pm8010_thermal;
-+
-+/ {
-+	model = "HP Omnibook X 14-fe1";
-+	compatible = "hp,omnibook-x14-fe1", "qcom,x1p42100";
-+	chassis-type = "laptop";
-+};
-+
-+&gpu {
-+	status = "okay";
-+
-+	zap-shader {
-+		firmware-name = "qcom/x1p42100/hp/omnibook-x14/qcdxkmsucpurwa.mbn";
-+	};
-+};
-+
-+&remoteproc_adsp {
-+	firmware-name = "qcom/x1p42100/hp/omnibook-x14/qcadsp8380.mbn",
-+			"qcom/x1p42100/hp/omnibook-x14/adsp_dtbs.elf";
-+
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/x1p42100/hp/omnibook-x14/qccdsp8380.mbn",
-+			"qcom/x1p42100/hp/omnibook-x14/cdsp_dtbs.elf";
-+
-+	status = "okay";
-+};
-
--- 
-2.48.1
-
-
+>
+> Also imho it should be calloc() to avoid garbage later on in buf.
+> Or if it should read all of debugfs node, make it like:
+>
+> int igt_debugfs_read_all(int drm_fd, char *, char **buf);
+>
+> and let it alloc *buf, and later realloc this *buf if needed.
+>
+> Regards,
+> Kamil
+>
+> >
+> > > Regards,
+> > > Kamil
+> > >
+> > > >       char *p =3D buf;
+> > > >
+> > > >       igt_debugfs_read(drm_fd, "gem", buf);
+> > > > --
+> > > > 2.50.0
+> > > >
 
