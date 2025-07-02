@@ -1,144 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-63333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97CA3AF0E59
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 10:46:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C77DAF0E82
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 10:55:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D42C2177DE4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 08:46:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 50770179319
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 08:55:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19ADE242D67;
-	Wed,  2 Jul 2025 08:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59A4723C518;
+	Wed,  2 Jul 2025 08:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="1MLNDAOO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WsRJ9VkZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63ED23E324
-	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jul 2025 08:45:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4F21EDA12;
+	Wed,  2 Jul 2025 08:55:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751445948; cv=none; b=AmIZFrfjzQ0kInOEe9BpqUleb7Gbk5ixPvcyqqjqcLfWWflQICwPchccpy5HjSABCHwN/vAUTyYO+VKb+9fGGDya4tg2zqAeMZVz3vEhLPaNH7iTGPYI7iEryudqvO2+IYQVi0+Wlq5ASf/Pm9nO77KFGuY/aUcEP6GPNj+gHUM=
+	t=1751446549; cv=none; b=HZCfMsdeGc+jdYIu/INbqKe9Lf4EDAghwipKBPGQG6unI5AUqBzRGcJx3+N42p8AojkiPjuhZx13C1OWM2ga/+MJXIVBbCjh96GihfSxhLxL8SaHi6iKomSOeChCNGon428bbSLbaAJS6XElE2IaZNOY4ZYh6Fq164XbuV7BjhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751445948; c=relaxed/simple;
-	bh=OMLzjDb07AyUp83AV0GD0cM+vuaw1gwx03PQmJxw7XE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YRYvHWMQNjdszRYioNTy8WDVG8FtSV9KGM27Jg4js9mwqlcDfFJXBAm4Uc3KdtK0ZaIG/R5T0ENLE1wfXjhBlAflkNbmKoX4VjQSCHeGDb+FDxvpnCzUr0xqq+hWKHrrAn4tgMf48+3395gdXP1IZRThBp3F57BvouRINqE3Dq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=1MLNDAOO; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45377776935so48784015e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 01:45:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1751445944; x=1752050744; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZwPpNwCYln313MFwdNQx7OjpsLCSlHqrL9enedbM0bk=;
-        b=1MLNDAOO5V3ajQwPYXc0hwPq4I4V1CwFyH3ty1HOGgN8oDpDvX1QGwR4qzy6w73Wtl
-         CuG0KFdMTVtfD4zkaJSDLgiGAnSaQG4EW9PnHOENkvd0DYdRHsGSNXkuXlse/jsVNbYO
-         d4JYO/s4beBULto9WLEu8aRDsipro1MN/cS245dJJUi5hq/YyeyUd0M/D6BNRZO75V0W
-         Rt0fOkP16v1mERtOVkxRcKBfnikaudIDaNHqLacQYgtkzY6DjQb2iDWGGKTNuKDPudpD
-         wJf4DxNVO5UuNJ8e0jlIhf8vwu9q7So/loxU+wOsn9Ogz0L2H1XnNwsahCUV6Vnx8OVL
-         TAmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751445944; x=1752050744;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZwPpNwCYln313MFwdNQx7OjpsLCSlHqrL9enedbM0bk=;
-        b=wui5urCgOEnw3Kd25OXL7+6uWADJ7iF9VZAZ60K7yszcytRMefm0LfwlqH09L3GnUw
-         4FZ/1nfIkQ/Ety7FrMBluxoMFpf5r+TNLbbzlt8De6odlvdc92wP2DT8YQKZJXGGXdke
-         xTl94DNxH9Mkldkh9r4TPKUanktf5kRJxej7piTPrK22NdQ+3TW6XR6R1hvf5ycnqjk1
-         0C7Fotst5+OjnU4Q0opP3EE0i6WQ9AtkfaRmRHQtcqdfq2Qcp62vMjrBi6Ekbj7TdOBX
-         5aTOsXR2vBPBcajiwVTBGeV0wZ+2RIOl0XgPnVe7RT6a8YoyGru5jUmjoI09OIJLLcnN
-         7ehA==
-X-Forwarded-Encrypted: i=1; AJvYcCXHKpSOQ9bZe5YfS52xArnPYZOUMII5T2b3EbC+D8Xb2mW9pmxraDDlYnlZYLtPALQVFCT685rCa9ciFwze@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx5GM99RmYqi/pz7Lhd1jG2251+JWeRJcgcFd2LWUIRoww6/oPR
-	IU7CbhHnfinP2StKkaaf/l7fhTw7PtROYyUwLzgqEpMqkIf07W2WO8ge7HitxID88d8=
-X-Gm-Gg: ASbGncvjNEzBQGOfdrk21xQcwor3igewRcSTMKjO0mjoEwuB94is3BqgVnVwwqRTHRw
-	L4sXs7OwQjm0kpvuksyoHDIuaCkvpjsZL38BpactY2IDQaZKBRDZUdwGg57Mc70uIiqqDRR1+mq
-	tCU6mY8eqxzVx8BjQAktE+c5libt0B5UrN7ZlblX6N0kxOALB0f9bQc2cVHsl/J/VA7SdniqyE5
-	XCOKIXoPaF6IR7pZ6p/+/jbvg/J5FiL3S9gHWurdRYUKMCTRIwzqydwfUsgvzVg+isfYY88OqCR
-	J1nu9UfGVXoaX/Kxyo9bAqSLnyUFruuZEXkpgkH0A0eFUa+dmGisag==
-X-Google-Smtp-Source: AGHT+IEFh5AmGgfvsCCKFb1ElEYNehy+umZmo3olYFL9QRSS/S0Dg0pyMclntsqGh93jA274HIA62Q==
-X-Received: by 2002:a05:6000:64f:b0:3ab:27f9:e52 with SMTP id ffacd0b85a97d-3b201203956mr1229163f8f.42.1751445944138;
-        Wed, 02 Jul 2025 01:45:44 -0700 (PDT)
-Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:8827:d0e:25e:834a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a892e52a26sm15620571f8f.51.2025.07.02.01.45.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 01:45:43 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 02 Jul 2025 10:45:35 +0200
-Subject: [PATCH RFC 5/5] pinctrl: qcom: make the pinmuxing strict
+	s=arc-20240116; t=1751446549; c=relaxed/simple;
+	bh=KXcZ5MjsVv5FeDklT4gL8kshsupdk4JCRhhPSMegWL8=;
+	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=h4wHFePbX/yHXavU1yq/EuQ0obVSv6R8yzTqrRGOKZLM0lShN3LHloytBnVaVrRMsCgmVb33HVwRJ6C/iU9KpHEQ/3mgG9cFZd5K97s3BD3Z7we2m9YixChLWpJcdudfvUZ62qnqTQDfqJiNZ+qdMWPzeQ9Y8RB395HRn02Z9QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WsRJ9VkZ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5625ZQwv000438;
+	Wed, 2 Jul 2025 08:55:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	SyHeFQpq79+duYg+ExgYRUkwNCKuH7zD/DRcxP0QkiQ=; b=WsRJ9VkZGLGOq4SN
+	aQlHcAQc8vHKICA1sP0HMxOlzC3wu0qagzS3tQxUvjz2AB942hcEZM94PYzbHcU6
+	sVBjrQxsIbJyQ/cY/0ymk/6Et9N9tIKag/6AS1yMSLsN1djOIr2WbUSBAVxTurOj
+	EqIcfvXYBRuwg8mrOQ52LEr2Pbpg/IiDA5sw5QExC8kH6yVCQOIeoBbsasZ6rWXK
+	XwmbyK/kDLt1X3SGMSFYo/qjCCAzSvaJnKJuaSJn0g3mETc3ZUq1SDtwv5Zrur/N
+	iRfGCpuMPosldYjPV+pbSMXdpYg6YhfHFdTWUYvBSOYf5DqLIpmHvKh1eohZmMoe
+	H2QJxw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j7qmbu81-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 02 Jul 2025 08:55:44 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5628thfG015431
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 2 Jul 2025 08:55:43 GMT
+Received: from [10.217.217.75] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 2 Jul
+ 2025 01:55:40 -0700
+Subject: Re: [PATCH V2 1/2] arm64: dts: qcom: Add eMMC support for qcs8300
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250619070224.23428-1-quic_sayalil@quicinc.com>
+ <20250619070224.23428-2-quic_sayalil@quicinc.com>
+ <d3309e0d-d751-44c4-845c-e05eec4ac75d@oss.qualcomm.com>
+From: Sayali Lokhande <quic_sayalil@quicinc.com>
+Message-ID: <70bb267f-ba06-2b96-dcf6-875a046f1d87@quicinc.com>
+Date: Wed, 2 Jul 2025 14:25:37 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <d3309e0d-d751-44c4-845c-e05eec4ac75d@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250702-pinctrl-gpio-pinfuncs-v1-5-ed2bd0f9468d@linaro.org>
-References: <20250702-pinctrl-gpio-pinfuncs-v1-0-ed2bd0f9468d@linaro.org>
-In-Reply-To: <20250702-pinctrl-gpio-pinfuncs-v1-0-ed2bd0f9468d@linaro.org>
-To: Linus Walleij <linus.walleij@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Alexey Klimov <alexey.klimov@linaro.org>
-Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1076;
- i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=OwkxPIY+ly3qk9K5KMkBmlKJolP2LmYDOd6T4DDMhzY=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBoZPGwiqrlDD6VTQ+SSYTG7O/hq3u765I/ubDxX
- 8PuCC705T+JAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaGTxsAAKCRARpy6gFHHX
- cg2XD/wId1y4HKdHsUrX29XYKcHhJqIjLS8zAw4bFVv0RIqvj+CQcPFNw2UJSfCFt1ise1qc5/V
- He8yFAFvyIMC4UsLm1NpkgYyeZD/3yRiVoh0kVWDnxYm1ebmYXAcNFtC5napCTAYqHI80WOGlTT
- EMuCat7+ZPdRCX3/JBnYzTp0wgRftHo2f03XvXa1DgsC7gC6uHVYpgCdfKTSqM+6+JspxQzSQ/z
- 8m28/fvzBESRQcHuFCAaLUjNwzcpDJ9pB88qZrVDCqDbH4p6X1zZpAx2r2sqoquPh51WGYGorA/
- ZTJ7itByBFIBFAois9/xcIYvwNe6WEoI+VVtzXOtwomeYkjanS4BNsfr3CX7i0RSMGYZnCLMV+6
- SFddbcLoTfsM0zFJ1eoMrNKab9KHOwRjRArrDCu19OhkytIkKeuqXYaW3F0gbRr7BgKd1Kt1qiV
- nGl+9Cf1rEAZ7w1s270OhdONyT2fOLVv3Ub6pAJRK+Qukm49BQdV7zzAh429jc0V8evvj3Wv/wb
- UbfBVFp8Pa8AKhczTqxU3k93l7DXrr6FHDfx54kKucDVvQF/ZcO8f5HL6qmsFelq0h1tILrsMwZ
- zNCEfrLAPbRmb77RC84sfAHKxm5irjcMBsbHnTPxjc3LU6Dl0pLRxrdpScqfNctGxToPwvvUq/8
- 3yS3sy9BjzvRPFQ==
-X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
- fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
+Content-Language: en-US
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=C4TpyRP+ c=1 sm=1 tr=0 ts=6864f410 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
+ a=Uk8Cs81tDJDf_XBjPLYA:9 a=i_Q9kORXkQvSbDlD:21 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: qwoh2jbI9q_2ISO1dCk7MgResB_wv59z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDA3MiBTYWx0ZWRfX1JcNOmlH/kpq
+ gMIbfWXTS2FJ9W+vs7iPkzGzcaZ3OCTHnT+erj0sNiomI3ZoGWspK/zhGA3bgS4c2+JJ/wvD4Il
+ ZMdmbL1bu79nsJCQJam9PeL4tqKqsY7PcP2u6H4NSaXe/bTm2mucEfFgY6xPz90q1HC4PHuHMwY
+ YkHT0odW8RGHhOx2tufr+O1R6jO77ySIi7IxI9prfQW2/DZ9N0mQVQAMpZEKUQWCtQwvnphZHpL
+ 3RRXypneqBRCUZTkF5oKvYuaKaSK26UkyzZNksi+qrt2LPlFP6WWkTNw+mgKdaMqA6hw7ne1t5q
+ ybEaQIMJHhfUpKSn9mJtULF3lbNrrDNh6yGX4IId3pgt0kHAwlqTYgz9AxUSETbAa90juNotIqT
+ vqMQJA6vwLAmUD8ANq7oiLXy5b+krzr/BVZmaDJzGEcwJwZ3BKw7+e0PRXDLmb9357JE8dyn
+X-Proofpoint-GUID: qwoh2jbI9q_2ISO1dCk7MgResB_wv59z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-02_01,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ clxscore=1015 priorityscore=1501 spamscore=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507020072
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-The strict flag in struct pinmux_ops disallows the usage of the same pin
-as a GPIO and for another function. Without it, a rouge user-space
-process with enough privileges (or even a buggy driver) can request a
-used pin as GPIO and drive it, potentially confusing devices or even
-crashing the system. Set it globally for all pinctrl-msm users.
+On 6/23/2025 7:39 PM, Konrad Dybcio wrote:
+> On 6/19/25 9:02 AM, Sayali Lokhande wrote:
+>> Add eMMC support for qcs8300 board.
+>>
+>> Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
+>> ---
+> It's customary to split board and SoC changes into separate commits
+>
+> [...]
+>
+>> +		sdhc_1: mmc@87C4000 {
+> Please use lowercase hex across DT, in all places
+>
+>> +			compatible = "qcom,qcs8300-sdhci", "qcom,sdhci-msm-v5";
+>> +			reg = <0x0 0x87C4000 0x0 0x1000>,
+> To make it easier to compare by eye, we tend to pad the address
+> values to 8 hex digits with leading zeroes, please do so as well
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- drivers/pinctrl/qcom/pinctrl-msm.c | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index bb1e5aca058fc28c3cc823876c8fe7880d66b6fa..8727b8f394a5a2669c0dc8ffe5f1b83d5db526e8 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -302,6 +302,7 @@ static const struct pinmux_ops msm_pinmux_ops = {
- 	.get_function_groups	= msm_get_function_groups,
- 	.gpio_request_enable	= msm_pinmux_request_gpio,
- 	.set_mux		= msm_pinmux_set_mux,
-+	.strict			= true,
- };
- 
- static int msm_config_reg(struct msm_pinctrl *pctrl,
+Sure will do
 
--- 
-2.48.1
 
+>> +			      <0x0 0x87C5000 0x0 0x1000>;
+>> +			reg-names = "hc",
+>> +				    "cqhci";
+>> +
+>> +			interrupts = <GIC_SPI 383 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 521 IRQ_TYPE_LEVEL_HIGH>;
+>> +			interrupt-names = "hc_irq",
+>> +					  "pwr_irq";
+>> +
+>> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
+>> +				 <&gcc GCC_SDCC1_APPS_CLK>,
+>> +				 <&rpmhcc RPMH_CXO_CLK>;
+>> +			clock-names = "iface",
+>> +				      "core",
+>> +				      "xo";
+>> +
+>> +			resets = <&gcc GCC_SDCC1_BCR>;
+>> +
+>> +			power-domains = <&rpmhpd RPMHPD_CX>;
+>> +			operating-points-v2 = <&sdhc1_opp_table>;
+>> +			iommus = <&apps_smmu 0x0 0x0>;
+> In case anyone's wondering, this is actually the correct value
+>
+>> +			interconnects = <&aggre1_noc MASTER_SDC QCOM_ICC_TAG_ALWAYS
+>> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+>> +					 &config_noc SLAVE_SDCC_1 QCOM_ICC_TAG_ACTIVE_ONLY>;
+>> +			interconnect-names = "sdhc-ddr",
+>> +					     "cpu-sdhc";
+> [...]
+>
+>> +			sdc1_state_on: sdc1-on-state {
+>> +				clk-pins {
+>> +					pins = "sdc1_clk";
+>> +					bias-disable;
+>> +					drive-strength = <16>;
+> Please move bias properties under drive-strength for consistency
+
+
+Will do
+
+
+>
+>> +				};
+>> +
+>> +				cmd-pins {
+>> +					pins = "sdc1_cmd";
+>> +					bias-pull-up;
+>> +					drive-strength = <10>;
+>> +				};
+>> +
+>> +				data-pins {
+>> +					pins = "sdc1_data";
+>> +					bias-pull-up;
+>> +					drive-strength = <10>;
+>> +				};
+>> +
+>> +				rclk-pins {
+>> +					pins = "sdc1_rclk";
+>> +					bias-pull-down;
+>> +				};
+>> +			};
+>> +
+>> +			sdc1_state_off: sdc1-off-state {
+>> +				clk-pins {
+>> +					pins = "sdc1_clk";
+>> +					bias-bus-hold;
+> Is bus-hold what we want here? Other platforms do a pull-up/down
+> or disable bias altogether
+
+
+Yes we want bias-bus-hold, same as other qc platforms for example like 
+sc7280.dtsi
+
+
+>
+> Konrad
 
