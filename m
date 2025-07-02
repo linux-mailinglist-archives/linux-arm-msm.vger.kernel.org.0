@@ -1,251 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-63380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF18BAF1362
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 13:13:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E309AF1371
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 13:16:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB558179D55
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 11:13:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A2E5D1767DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 11:16:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C5D0257436;
-	Wed,  2 Jul 2025 11:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8665125F98B;
+	Wed,  2 Jul 2025 11:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="taQoeuCG"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="kXaSjN/V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE75623956E;
-	Wed,  2 Jul 2025 11:13:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.2])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4A9B1C6B4;
+	Wed,  2 Jul 2025 11:16:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751454819; cv=none; b=JOFnTLbuYLFyFw2/vHDyTJUnDisnJ0sWlE1obzVRyHxY+bhK7b6XLpCu3tO8wTUbvpmhtUsZXnDlqLwuUa/XeX7tO+xqE8mULB3KfW+I019g6obm1lfQkjLms001bOotdGMOOAhcUO9ORygvb/xK1KkHllwzAPp27v2gdzLoWKY=
+	t=1751454980; cv=none; b=V2VRm4bEQ8zUNj53xMx1ERxLU80UEzwJCivO8AbhrOuPObMFXUz4EvpcnfW6Sp2cLZIfLNQglSFLAhHzK6M3du379+UexqbxPDf1XED2NhhKFk0qSIc7l0aKZzIe9UHaivR6v8FbkkrlzUhzrX8v1J4P10j2R3hbtgiJqR0pa+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751454819; c=relaxed/simple;
-	bh=/3UcYFAtiHdK/x/wf/hpXgHjxC2DHsZORgWcfa0tL2c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qYMXHrMvaGbHC4/H5KjCtMLsZeD73cF2mply6b8DvZM16bcgcMGJlm4TvSEs1+Gta6YpPNNo3E+alLjUSsEtEST2rbzmS6YpHkVt9xPtOkFo52BLcH62A6LS8gKJe4BKYzzxUKR2Pr2frzV8pXMJ/A2lx3/Ux+UwWNluXQqg9Gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=taQoeuCG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6D2C4CEED;
-	Wed,  2 Jul 2025 11:13:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751454818;
-	bh=/3UcYFAtiHdK/x/wf/hpXgHjxC2DHsZORgWcfa0tL2c=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=taQoeuCGyVGXCF3ArPdIgGKzktogQkojqAiYSWlI2bP0V1r193wDfgwFYXXKaCwRc
-	 nxtGQ0aW4R78AXPSwYeOHTLMG/OiaBjXSP3FBUonzgsLKsjhJxFu+1bmixSEerQcjO
-	 hpLhoyuSWkKAXmDKY2udJknbBCATqzZVDIlPZhWrewbX9zcQYRIrIDGf1lXb/RiKUN
-	 A0DM80KxchAhfTk62BLcIS0ByTjib7oLh/UgW54ifuWhdHK4C349y9L01BDfQ45l9x
-	 ZzZq1H9RV2k9SqtMiNgAzv0hED7aXkEsu86qIR+jujS8FPX0pdhLlyzKCxnhEIdw6a
-	 Mo3ovL6+xnw2w==
-Message-ID: <19dd2e69-ad13-46f2-b99f-04a5e26f10d3@kernel.org>
-Date: Wed, 2 Jul 2025 13:13:33 +0200
+	s=arc-20240116; t=1751454980; c=relaxed/simple;
+	bh=a9LE6Y+vuyYOJr2W2j2JX2kgLXmLCf01k+fEeLX/O4E=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=I2ztDU0WQpanXUrCwNkHIvGxx0z4APhWA/495IwaaTC8ZLF0G+TVszTSPufwOM39kaSJndCqZk3g/89Gsf8p6XExY4maGmgnVihTtUPd9e65lnfyKG1fvH0zNqfICp+iWSuW4L3nsPNp5lwHbBoR/kE4i+ZUNlbzP2wHgXDGXsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=kXaSjN/V; arc=none smtp.client-ip=220.197.31.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=vB
+	oJGHy0ISIe9dsE3K0UfQijWN6qYHy8h2nd32aYn0c=; b=kXaSjN/VSLR+fLQh5x
+	V2uqZSj7SAbIMImSPvPT+DZuz8vNVqIBDBrMAjk/mjtY4Z6hBUCoKfCXi5D0wJJ5
+	5NDs7ZdNZlUGjifdUV094PvRR2s8Z6DpR3FqpRIpaCQ87HKE/vKQpNp8qAMmymq2
+	dvDTRAMKRToNO9p81kIf+JS+E=
+Received: from ProDesk.. (unknown [])
+	by gzsmtp5 (Coremail) with SMTP id QCgvCgCHTGOvFGVoldg0Aw--.49301S2;
+	Wed, 02 Jul 2025 19:15:00 +0800 (CST)
+From: Andy Yan <andyshrk@163.com>
+To: dmitry.baryshkov@oss.qualcomm.com
+Cc: mripard@kernel.org,
+	neil.armstrong@linaro.org,
+	dri-devel@lists.freedesktop.org,
+	dianders@chromium.org,
+	jani.nikula@intel.com,
+	lyude@redhat.com,
+	jonathanh@nvidia.com,
+	p.zabel@pengutronix.de,
+	simona@ffwll.ch,
+	victor.liu@nxp.com,
+	rfoss@kernel.org,
+	chunkuang.hu@kernel.org,
+	cristian.ciocaltea@collabora.com,
+	Laurent.pinchart@ideasonboard.com,
+	linux-arm-msm@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Andy Yan <andyshrk@163.com>
+Subject: [PATCH v2 0/2] Pass down connector to drm bridge detect hook
+Date: Wed,  2 Jul 2025 19:14:42 +0800
+Message-ID: <20250702111453.102539-1-andyshrk@163.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] media: dt-bindings: add non-pixel property in iris
- schema
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
- <20250627-video_cb-v3-1-51e18c0ffbce@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250627-video_cb-v3-1-51e18c0ffbce@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-On 27/06/2025 17:48, Vikash Garodia wrote:
-> Existing definition limits the IOVA to an addressable range of 4GiB, and
-> even within that range, some of the space is used by IO registers,
-> thereby limiting the available IOVA to even lesser. Video hardware is
-> designed to emit different stream-ID for pixel and non-pixel buffers,
-> thereby introduce a non-pixel sub node to handle non-pixel stream-ID.
-> 
-> With this, both iris and non-pixel device can have IOVA range of 0-4GiB
-> individually. Certain video usecases like higher video concurrency needs
-> IOVA higher than 4GiB.
-> 
-> Add reference to the reserve-memory schema, which defines reserved IOVA
-
-No. That schema is always selected. This makes no sense at all.
-
-> regions that are *excluded* from addressable range. Video hardware
-> generates different stream IDs based on the predefined range of IOVA
-> addresses. Thereby IOVA addresses for firmware and data buffers need to
-> be non overlapping. For ex. 0x0-0x25800000 address range is reserved for
-> firmware stream-ID, while non-pixel (bitstream) stream-ID can be
-> generated by hardware only when bitstream buffers IOVA address is from
-> 0x25800000-0xe0000000.
-> Non-pixel stream-ID can now be part of the new sub-node, hence iommus in
-> iris node can have either 1 entry for pixel stream-id or 2 entries for
-> pixel and non-pixel stream-ids.
-> 
-> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> ---
->  .../bindings/media/qcom,sm8550-iris.yaml           | 40 ++++++++++++++++++++--
->  1 file changed, 38 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> index c79bf2101812d83b99704f38b7348a9f728dff44..4dda2c9ca1293baa7aee3b9ee10aff38d280fe05 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> @@ -65,10 +65,31 @@ properties:
->        - const: core
->  
->    iommus:
-> +    minItems: 1
->      maxItems: 2
-
-No, why hardware suddenly has different amount?
-
->  
->    dma-coherent: true
->  
-> +  non-pixel:
-
-Why EXISTING hardware grows?
-
-> +    type: object
-> +    additionalProperties: false
-> +
-> +    description:
-> +      Non pixel context bank is needed when video hardware have distinct iommus
-> +      for non pixel buffers. Non pixel buffers are mainly compressed and
-> +      internal buffers.
-> +
-> +    properties:
-> +      iommus:
-> +        maxItems: 1
-> +
-> +      memory-region:
-> +        maxItems: 1
-> +
-> +    required:
-> +      - iommus
-> +      - memory-region
-> +
->    operating-points-v2: true
->  
->    opp-table:
-> @@ -86,6 +107,7 @@ required:
->  
->  allOf:
->    - $ref: qcom,venus-common.yaml#
-> +  - $ref: /schemas/reserved-memory/reserved-memory.yaml
-
-This makes no sense. how is this device a reserved memory?
-
->    - if:
->        properties:
->          compatible:
-> @@ -117,6 +139,16 @@ examples:
->      #include <dt-bindings/power/qcom-rpmpd.h>
->      #include <dt-bindings/power/qcom,rpmhpd.h>
->  
-> +    reserved-memory {
-> +      #address-cells = <2>;
-> +      #size-cells = <2>;
-
-Why do you need this?
-
-> +
-> +      iris_resv: reservation-iris {
-
-Mixing MMIO and non-MMIO is not the way to go. This is also not relevant
-here. Don't embed other things into your binding example.
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:QCgvCgCHTGOvFGVoldg0Aw--.49301S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxAw48KrWfKF1UWr4UWr15urg_yoW5KF4fpF
+	W2qFyavry0yF4aka1xAF18AF90y3Z7XFWrKry2v3sI93WFvF1UArsxAayrXryDGFyxJr12
+	ywn7GrWxGF12yaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zigTmxUUUUU=
+X-CM-SenderInfo: 5dqg52xkunqiywtou0bp/xtbBkA9+XmhlDvqMnwAAsV
 
 
-> +        iommu-addresses = <&iris_non_pixel 0x0 0x0 0x0 0x25800000>,
-> +                          <&iris_non_pixel 0x0 0xe0000000 0x0 0x20000000>;
-> +      };
-> +    };
-> +
->      video-codec@aa00000 {
->          compatible = "qcom,sm8550-iris";
->          reg = <0x0aa00000 0xf0000>;
-> @@ -144,12 +176,16 @@ examples:
->          resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>;
->          reset-names = "bus";
->  
-> -        iommus = <&apps_smmu 0x1940 0x0000>,
-> -                 <&apps_smmu 0x1947 0x0000>;
-> +        iommus = <&apps_smmu 0x1947 0x0000>;
+In some application scenarios, we hope to get the corresponding
+connector when the bridge's detect hook is invoked.
 
-Why did the device or hardware change? Nothing explains in commit msg
-what is wrong with existing device and existing binding.
+For example, we may want to call drm_dp_read_sink_count_cap(which needs
+a drm_connector) at the dp deteck hook, intel_dp and nouveau_dp do this
+at it's connector's detetc_ctx/detect hook.
 
->          dma-coherent;
->  
->          operating-points-v2 = <&iris_opp_table>;
->  
-> +        iris_non_pixel: non-pixel {
-> +            iommus = <&apps_smmu 0x1940 0x0000>;
-> +            memory-region = <&iris_resv>;
-> +        };
-> +
->          iris_opp_table: opp-table {
->              compatible = "operating-points-v2";
->  
-> 
+But for a bridge driver, it's detect hook is initiated by the connector,
+there is no connector passed down.
 
+In most cases, we can get the connector by
+drm_atomic_get_connector_for_encoder
+if the encoder attached to the bridge is enabled, however there will
+still be some scenarios where the detect hook of the bridge is called
+but the corresponding encoder has not been enabled yet. For instance,
+this occurs when the device is hot plug in for the first time.
 
-Best regards,
-Krzysztof
+Since the call to bridge's detect is initiated by the connector, passing
+down the corresponding connector directly will make things simpler.
+
+Before preparing this patch, we have had some discussions on the details
+here[0].
+
+PATCH1 adjust the dp/hdmi_audio_* callback parameters order, make it
+maintain the same parameter order as get_modes and edid_read.
+PATCH2 add connector to detect hook.
+
+[0]https://patchwork.freedesktop.org/patch/640712/?series=143573&rev=5
+
+Changes in v2:
+- Adjust the dp/hdmi_audio_* callback parameters order.
+
+Andy Yan (2):
+  drm/bridge: Make dp/hdmi_audio_* callback keep the same paramter order
+    with get_modes
+  drm/bridge: Pass down connector to drm bridge detect hook
+
+ drivers/gpu/drm/bridge/adv7511/adv7511.h      | 16 +++----
+ .../gpu/drm/bridge/adv7511/adv7511_audio.c    | 12 +++---
+ drivers/gpu/drm/bridge/adv7511/adv7511_cec.c  |  4 +-
+ drivers/gpu/drm/bridge/adv7511/adv7511_drv.c  |  3 +-
+ drivers/gpu/drm/bridge/analogix/anx7625.c     |  2 +-
+ .../drm/bridge/cadence/cdns-mhdp8546-core.c   |  3 +-
+ drivers/gpu/drm/bridge/chrontel-ch7033.c      |  2 +-
+ drivers/gpu/drm/bridge/display-connector.c    | 11 +++--
+ drivers/gpu/drm/bridge/ite-it6263.c           |  3 +-
+ drivers/gpu/drm/bridge/ite-it6505.c           |  2 +-
+ drivers/gpu/drm/bridge/ite-it66121.c          |  3 +-
+ drivers/gpu/drm/bridge/lontium-lt8912b.c      |  6 +--
+ drivers/gpu/drm/bridge/lontium-lt9611.c       | 15 +++----
+ drivers/gpu/drm/bridge/lontium-lt9611uxc.c    |  3 +-
+ .../bridge/megachips-stdpxxxx-ge-b850v3-fw.c  |  3 +-
+ drivers/gpu/drm/bridge/sii902x.c              |  3 +-
+ drivers/gpu/drm/bridge/simple-bridge.c        |  2 +-
+ drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c  | 14 +++----
+ drivers/gpu/drm/bridge/synopsys/dw-hdmi.c     |  3 +-
+ drivers/gpu/drm/bridge/tc358767.c             |  5 ++-
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c         |  3 +-
+ drivers/gpu/drm/bridge/ti-tfp410.c            |  2 +-
+ drivers/gpu/drm/bridge/ti-tpd12s015.c         |  8 +++-
+ .../gpu/drm/display/drm_bridge_connector.c    | 20 ++++-----
+ drivers/gpu/drm/drm_bridge.c                  |  5 ++-
+ drivers/gpu/drm/mediatek/mtk_dp.c             |  3 +-
+ drivers/gpu/drm/mediatek/mtk_hdmi.c           |  3 +-
+ drivers/gpu/drm/msm/dp/dp_audio.c             |  8 ++--
+ drivers/gpu/drm/msm/dp/dp_audio.h             |  8 ++--
+ drivers/gpu/drm/msm/dp/dp_drm.c               |  3 +-
+ drivers/gpu/drm/msm/hdmi/hdmi.h               | 10 ++---
+ drivers/gpu/drm/msm/hdmi/hdmi_audio.c         |  8 ++--
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c        |  2 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_hpd.c           |  4 +-
+ drivers/gpu/drm/rockchip/rk3066_hdmi.c        |  2 +-
+ drivers/gpu/drm/xlnx/zynqmp_dp.c              |  3 +-
+ include/drm/drm_bridge.h                      | 42 ++++++++++---------
+ 37 files changed, 139 insertions(+), 110 deletions(-)
+
+-- 
+2.43.0
+
+base-commit: 56e5375b23f342dfa3179395aacc1b47395fddf7
+branch: drm-misc-next
+
 
