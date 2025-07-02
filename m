@@ -1,78 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-63321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88935AF0CF3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 09:48:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82AF5AF0D34
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 09:54:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DC4751C22A23
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 07:49:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6C0416BF4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 07:54:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FF211D7E41;
-	Wed,  2 Jul 2025 07:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 577B322FAC3;
+	Wed,  2 Jul 2025 07:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nxaeiP+v"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WFmlGPHc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53673229B21
-	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jul 2025 07:48:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CFF1200BA1;
+	Wed,  2 Jul 2025 07:54:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751442521; cv=none; b=b/PWaRD1ZkG+vZowsSxT19EUB0ipZzayFVpF06H5//KEbn8eepTxln7JZ3rX5owpp8fGHfoXw/vY0L9AZx0cSYz7f3s1VK6YauDWSyUAoa+BbDfg8Uc0BJmhi3MJSLgx5IYvddUtqpUoFaDNG2rzqMDXaYts6XTDkH4rf5wcF+I=
+	t=1751442862; cv=none; b=dB1c7XXXCXgl0UerEa1O3+p3bKMCDMvJNXZRSYqH/Ct4sAz1jYnPW2YdC01FYVxtJI3/1tfYRLqweQQl+vIM1nvK44xG9Hhi2s7Z7rtScjOQRVMj/gH4pA3aC1+1Ak/f4Z78EvUZE6O/kVxvZ32bS+pgga/rW9vFyWb0DAMh4+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751442521; c=relaxed/simple;
-	bh=8+r6USjHakkGa9x52LW2TASzF17holfSL3XmJzvBuz4=;
+	s=arc-20240116; t=1751442862; c=relaxed/simple;
+	bh=rUwUc12CwDq37/2slGik7dRlGZeOaTXSpDsb9W6K1i0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O5ONnDtqgyK2Tr5BP4VlxwR9gtNqR04FSH1ott2eE2n9RTGzkxTY5FXt87ANXGHOiYjsXKv5PhLcawUNCNdAm6J/hWUwXurxKecKg/l8LW92MULGYADQlZzlF4N95AL3fGbs/oBq+PXWraFMmLDPRdqtR4NFQ8GydYXO0ccjn0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nxaeiP+v; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=seWro7qJbYup7GFHmBryUyfZyi21bjRG0TQ+CZ8891D2I9JMrh4nutDvxHDeSGNPrMSsQ+CmWda+BZKloUyPnBbpVUY8UdreAnrSj0KlCxoUkF7kJAqGUyO4dxrMY1LcI5h8kwPyXtaNGAJqyDGt8Uci5l6yvS078UflmaX12Ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WFmlGPHc; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751442519; x=1782978519;
+  t=1751442861; x=1782978861;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:content-transfer-encoding:in-reply-to;
-  bh=8+r6USjHakkGa9x52LW2TASzF17holfSL3XmJzvBuz4=;
-  b=nxaeiP+v01H5p4Ex8QkcOl/VHVU+8+5osb+htaHJjZh5JlgU7BrRcptX
-   2P38cA6zrQEpYCFDhoPUMzBwfeONwA6BlDGkC3XRumTOME4uYhU2ry1vc
-   PspI8/UDr9zUWa9dj3X1VpwvH+HYZgGf2NfCvurh37xOtzfIRTLFLFxUQ
-   NfFGD0mCK2g28/b81XK6FDUe5I3t2c8vVrgliwEWPAQBC9VZ7MB3J/P9T
-   UfWtvq4OtxaAqsnbloE2oVpeIdeHecg7GtwJBkSfcPjHJFqwNgDcqeNGh
-   7GGM7VEmC/EJUE0vx9Be6sCtHwTJ7Zfqw7JvXcI7/oqaCfrKbKGZUf/Rq
-   g==;
-X-CSE-ConnectionGUID: ji49CO2YRkuOqFCuDcveeg==
-X-CSE-MsgGUID: MZyFGxOhR3W7iLnLkP5EZw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11481"; a="56346388"
+  bh=rUwUc12CwDq37/2slGik7dRlGZeOaTXSpDsb9W6K1i0=;
+  b=WFmlGPHcxwX2SUVmyW4anhqDN0rNuxfRwK7E9iwtDHAcNG7n7mt90SIG
+   mK78cNLxHgzP3jnCF5zBRVkB5QsRJEhrlhQmctWpLYDy9hcKUJP6osqIO
+   ITXwPhqMBGIlBPD2tkZ/cmVS0tyfS6Wjljwn5b5AqfAW4+OULwBzvS6Ia
+   VNXeQvB+I9uTDKycbHdAlqDbmLW72LHH0o8b0E1KLE3EpPwUTagjbcNkJ
+   sD5Z8b8zH7l+nmdMuJGYuhw04CIvNLIjNCFTwTpaY5NQuObmC41d0/3rr
+   aJEMHOiMdpkSl/NH+LB91PDo5gtbLJgp6Ar6+xQVimIwHzbUkEPsv6fmh
+   w==;
+X-CSE-ConnectionGUID: erfliI1MQcScn6KMnows+g==
+X-CSE-MsgGUID: 824dVOprSDmNoKTkDgl55Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11481"; a="64326060"
 X-IronPort-AV: E=Sophos;i="6.16,281,1744095600"; 
-   d="scan'208";a="56346388"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jul 2025 00:48:38 -0700
-X-CSE-ConnectionGUID: FLPdzNfrTdOSMKIHVB0vMg==
-X-CSE-MsgGUID: 4IvzLDUHTryv0Qte4LonNQ==
+   d="scan'208";a="64326060"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jul 2025 00:54:18 -0700
+X-CSE-ConnectionGUID: 98SccRJrQ5yvJqszW1ShBA==
+X-CSE-MsgGUID: 52dATgF7Sy6tK3S06PLKug==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,281,1744095600"; 
-   d="scan'208";a="154327063"
-Received: from kamilkon-desk.igk.intel.com (HELO localhost) ([10.211.136.201])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jul 2025 00:48:37 -0700
-Date: Wed, 2 Jul 2025 09:48:35 +0200
-From: Kamil Konieczny <kamil.konieczny@linux.intel.com>
-To: Rob Clark <rob.clark@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, igt-dev@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH igt 7/9] msm/mapping: Handle larger gmem file size
-Message-ID: <20250702074835.7pcbjlhczplibowt@kamilkon-DESK.igk.intel.com>
-Mail-Followup-To: Kamil Konieczny <kamil.konieczny@linux.intel.com>,
-	Rob Clark <rob.clark@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	igt-dev@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-References: <20250630180903.77990-1-robin.clark@oss.qualcomm.com>
- <20250630180903.77990-8-robin.clark@oss.qualcomm.com>
- <20250701162114.5gkdr7f5cww23ou4@kamilkon-DESK.igk.intel.com>
- <CACSVV02jA9dFUFuaKAmoOn_wav0V-QrTj4vo6Krr2V4n7MRDKQ@mail.gmail.com>
+   d="scan'208";a="153636445"
+Received: from smile.fi.intel.com ([10.237.72.52])
+  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jul 2025 00:53:58 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98.2)
+	(envelope-from <andriy.shevchenko@intel.com>)
+	id 1uWsHv-0000000BrCM-1jUQ;
+	Wed, 02 Jul 2025 10:53:51 +0300
+Date: Wed, 2 Jul 2025 10:53:50 +0300
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>
+Cc: Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Waqar Hameed <waqar.hameed@axis.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Julien Panis <jpanis@baylibre.com>,
+	William Breathitt Gray <wbg@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>, Peter Rosin <peda@axentia.se>,
+	Jonathan Cameron <jic23@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Cosmin Tanislav <cosmin.tanislav@analog.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Michael Hennerich <Michael.Hennerich@analog.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matteo Martelli <matteomartelli3@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Francesco Dolcini <francesco@dolcini.it>,
+	=?iso-8859-1?Q?Jo=E3o_Paulo_Gon=E7alves?= <jpaulo.silvagoncalves@gmail.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Subhajit Ghosh <subhajit.ghosh@tweaklogic.com>,
+	Mudit Sharma <muditsharma.info@gmail.com>,
+	Gerald Loacker <gerald.loacker@wolfvision.net>,
+	Song Qiang <songqiang1304521@gmail.com>, Crt Mori <cmo@melexis.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Karol Gugala <kgugala@antmicro.com>,
+	Mateusz Holenko <mholenko@antmicro.com>,
+	Gabriel Somlo <gsomlo@gmail.com>, Joel Stanley <joel@jms.id.au>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Wei Fang <wei.fang@nxp.com>, Clark Wang <xiaoning.wang@nxp.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Sebastian Reichel <sre@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Han Xu <han.xu@nxp.com>, Haibo Chen <haibo.chen@nxp.com>,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	Mark Brown <broonie@kernel.org>, Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>, kernel@axis.com,
+	linux-iio@vger.kernel.org, linux-omap@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linux-i2c@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	linux-rockchip@lists.infradead.org, linux-input@vger.kernel.org,
+	linux-mmc@vger.kernel.org, imx@lists.linux.dev,
+	netdev@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-pwm@vger.kernel.org, linux-amlogic@lists.infradead.org,
+	linux-spi@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	sound-open-firmware@alsa-project.org, linux-sound@vger.kernel.org
+Subject: Re: [PATCH] Remove error prints for devm_add_action_or_reset()
+Message-ID: <aGTljgePpiPJq2xj@smile.fi.intel.com>
+References: <pnd7c0s6ji2.fsf@axis.com>
+ <ylr7cuxldwb24ccenen4khtyddzq3owgzzfblbohkdxb7p7eeo@qpuddn6wrz3x>
+ <CAHp75Ve=Zas8=6YKoPeTRrvjCaTyyRAyJG1gBLripqZgQpfg7g@mail.gmail.com>
+ <zxtyk4vly2salnoy3lng2ni7pzu3wg6qnmucadnclfigrd2m2m@i6xcrmvh34r5>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,68 +158,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACSVV02jA9dFUFuaKAmoOn_wav0V-QrTj4vo6Krr2V4n7MRDKQ@mail.gmail.com>
+In-Reply-To: <zxtyk4vly2salnoy3lng2ni7pzu3wg6qnmucadnclfigrd2m2m@i6xcrmvh34r5>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-Hi Rob,
-On 2025-07-01 at 11:01:06 -0700, Rob Clark wrote:
-> On Tue, Jul 1, 2025 at 9:21 AM Kamil Konieczny
-> <kamil.konieczny@linux.intel.com> wrote:
-> >
-> > Hi Rob,
-> > On 2025-06-30 at 11:09:01 -0700, Rob Clark wrote:
-> > > From: Rob Clark <rob.clark@oss.qualcomm.com>
+On Wed, Jul 02, 2025 at 08:10:28AM +0200, Uwe Kleine-König wrote:
+> On Tue, Jul 01, 2025 at 08:57:02PM +0300, Andy Shevchenko wrote:
+> > On Tue, Jul 1, 2025 at 8:44 PM Uwe Kleine-König <ukleinek@kernel.org> wrote:
+> > > On Tue, Jul 01, 2025 at 05:03:33PM +0200, Waqar Hameed wrote:
+
+...
+
+> > > With that
 > > >
-> > > If running on a system with full desktop environment, the file will be
-> > > much larger than 0x4000 bytes.
+> > >         ret = devm_add_action_or_reset(dev, meson_pwm_s4_put_clk,
+> > >                                        meson->channels[i].clk);
+> > >         if (ret)
+> > >                 return dev_err_probe(dev, ret,
+> > >                                      "Failed to add clk_put action\n");
 > > >
-> > > Signed-off-by: Rob Clark <rob.clark@oss.qualcomm.com>
-> > > ---
-> > >  tests/msm/msm_mapping.c | 2 +-
-> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > from drivers/pwm/pwm-meson.c is optimized to
 > > >
-> > > diff --git a/tests/msm/msm_mapping.c b/tests/msm/msm_mapping.c
-> > > index 03a9e814c931..978ea18375dd 100644
-> > > --- a/tests/msm/msm_mapping.c
-> > > +++ b/tests/msm/msm_mapping.c
-> > > @@ -122,7 +122,7 @@ endswith(const char *str, const char *end)
-> > >  static uint64_t
-> > >  get_bo_addr(int drm_fd, const char *name)
-> > >  {
-> > > -     char buf[0x4000];
-> > > +     char buf[0x80000];
-> >
-> > If it is that big why not malloc() it?
+> > >         ret = devm_add_action_or_reset(dev, meson_pwm_s4_put_clk,
+> > >                                        meson->channels[i].clk);
+> > >         if (ret)
+> > >                 return ret;
+> > >
+> > > .
+> > >
+> > > I would prefer this approach, because a) there is no need to drop all
+> > > dev_err_probe()s after devm_add_action_or_reset() and b) the
+> > > dev_err_probe()s could stay for consistency in the error paths of a
+> > > driver.
+> > 
+> > Why do we need a dev_err_probe() after devm_add_action*()? I would
+> > expect that the original call (if needed) can spit out a message.
 > 
-> in kernel, for sure.  But userspace stack size is multiple MB at least
-> 
-> BR,
-> -R
+> I'm not a big fan of API functions that emit an error message.
 
-You are reading "gem" debugfs below, so this buffer in igt is in
-userspace, no need for it to be on stack. Btw you just discovered
-a bug in igt, imho this function should give sizeof(buf) to caller
-here to igt_debugfs_read():
+We do have that in devm_ioremap*() family. Just saying...
 
-igt_debugfs_read(drm_fd, "gem", buf, sizeof(buf));
+> In general the caller knows better what went wrong (here:
+> devm_add_action_or_reset() doesn't know this to be about the clk_put
+> action), so the error message can be more expressive.
 
-Also imho it should be calloc() to avoid garbage later on in buf.
-Or if it should read all of debugfs node, make it like:
+I'm not sure I was clear about my suggestion. What I argued is something like
+this
 
-int igt_debugfs_read_all(int drm_fd, char *, char **buf);
+devm_foo_alloc()
+{
+	ret = foo_alloc();
+	if (ret)
+		return dev_err_probe();
 
-and let it alloc *buf, and later realloc this *buf if needed.
+	return devm_add_action_or_reset();
+}
 
-Regards,
-Kamil
+foo_alloc() in my example is left untouched.
 
-> 
-> > Regards,
-> > Kamil
-> >
-> > >       char *p = buf;
-> > >
-> > >       igt_debugfs_read(drm_fd, "gem", buf);
-> > > --
-> > > 2.50.0
-> > >
+> Also in general an API function doesn't know if a failure is fatal or if
+> the consumer handles the failure just well and if the call is part of a
+> driver's .probe() so it's unclear if dev_err_probe() can/should be used.
+> (I admit that the last two probably don't apply to
+> devm_add_action_or_reset() but that's not a good enough reason to
+> make this function special. Every special case is a maintanance burden.)
+
+devm_*() are only supposed to be called in the probe phase. So using
+dev_err_probe() there (implementations) is natural thing to do, if required.
+And see above, we have such cases already.
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
 
