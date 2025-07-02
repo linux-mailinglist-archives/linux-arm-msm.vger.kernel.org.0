@@ -1,192 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-63314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58C4FAF096A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 05:51:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 006AEAF0B4E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 08:10:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 989F01C20750
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 03:51:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C42543A3C8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 06:10:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E5DE1DED5F;
-	Wed,  2 Jul 2025 03:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BB791FE46D;
+	Wed,  2 Jul 2025 06:10:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FEi30UPU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NWDG0isC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BDE53A7
-	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jul 2025 03:51:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287C51F4621;
+	Wed,  2 Jul 2025 06:10:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751428263; cv=none; b=nYD1kUG4Ucja1zfup+YQWjovauuwqOjVyBbYLPD34U9PtyBWKpnQTCPIkMbGQr/YxW7G/1EAAKm1Kpl8xweNOIfKkZBJ1Stt2Xp082ccAhOz62N3tx5NkuL5V5ymlJpEzpX9iN6i08839rksYj22bLVnl/+pcNgeaSwJyC8G+WI=
+	t=1751436631; cv=none; b=jUdpKjB9rkaAFy1avxKc1dgBxgCP6dtxlPuqMLAOYBSXLLnwvH1MUK0f946Xu3ZPYJiP2iJq/jFsJ9gJFra3iFiHLDTvp50BmCv9D4cIfzwUTU0F4JY6AnqLTxmGptMro6mBLNY43gbnm5KzATHr5d8JGRfnb6IdU3Y35iacOsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751428263; c=relaxed/simple;
-	bh=Gbuc3GQ5YJqvpK3fI88NEhS8do1N5azsksWGgrAjPfE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dor4igIjplDUU5bDqCdbUA+4id6uDuZ0zg5BVcJQJgZeHZOc8b/ozBATYf7Q0SPyrkMiljDwiznmyCmnEnJ2eZ5AwRznTsdFjbdVPbWZHCpyhFRF9aRMitcDWy3z4B1gOix7PWpRRhdcU8IEu6CihjW5LceC78TbW/NDh9xDxVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FEi30UPU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 561J3aVM002484
-	for <linux-arm-msm@vger.kernel.org>; Wed, 2 Jul 2025 03:51:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	B32luW0Sw1ltGtcSblfZe+j06KEyJ9zkhx3k4IlmlpI=; b=FEi30UPUuoSGSfRf
-	M9U5f/XhyVi/oUJ6zB5wflNxRDXDrApWQx1lDehRQjn8KmSxvQflv+4Cpoz8mZgT
-	PPAU++VyU+CMsAlbqwV/FtWKlCfGdm3R7QWpNRGD2XZDp7AZbHFuKubOJFkdYafn
-	qu/CzqXA7gCXNmA6CtNs+pyJmEvBuT9Ai41s0Q28hyLiJvrLFe+22B9fTQ3Ko4em
-	ebX8SFOCZoGe+e2v8tCOlQ2aa4JngI8nlKjjxvIeNkJS6wJ5KoprBC5h4lC2AEtQ
-	uusM6OyG9Pgc6pkZ7NKJGo51Jvkjc2Mxw7zZbRuKqmxTtoPM9UxlDIxYivGoTqSl
-	ekaZNA==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j63kb4w2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 03:50:59 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b3183193374so3103071a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Jul 2025 20:50:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751428259; x=1752033059;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B32luW0Sw1ltGtcSblfZe+j06KEyJ9zkhx3k4IlmlpI=;
-        b=cK/7WqWHnqOdjAz5wsVui6MmyOcdlrptAczmtM729f+omXkxuvN4VNlFVphg4z1X+S
-         s1trbAz2ODwWlwa9wiY+J0RFIazB1ncRKGmdcGttS3euQaFEvM/0kAC4/TW4xdikwhE8
-         K8gGUfg/II/wuHxTRhzAJHsU2uVzf9xxhFfs36go/UsYYrAh80bUjfvjGfczIE1niu1B
-         WecPLqJ6mLU+nL2SV0AGyBIFSRM8OuaBzVjFgJXxlUAZxxBanoxPC3yy+27Gv9Np+2x3
-         FNDANZ0ZrAmmJx+NQ8niP/1CX7AtCu1bA/0e6M001mnZZ1cmK+AGBNGXp78SwehcsghS
-         kCQA==
-X-Forwarded-Encrypted: i=1; AJvYcCUarDuUPadULuwKP/UgNWYejC5vmArDLOQ+6EoRbFuJ1Rt+QohVPQSn800rxfYwwhPaTdoXoP440DwXtDBe@vger.kernel.org
-X-Gm-Message-State: AOJu0YxsvQ/YE/w1Z6liYCca74fWwShkyJukdMOFXztnXy1KcMsxgCKF
-	MQXPr8xHrZVObanW3u9ode2Wj6yyDC7bX8aMriEp35/dkUfEcVEZuKfsF2rQ98NkqIBeIz8VSG+
-	13ynHHWo0X9gKBoGAE+J2esrdgVGPx02AtaDw9UdLBlsIcBIV0gQNzo3tNUVmLI5MIswd
-X-Gm-Gg: ASbGncuTg56DxFH/I0qyXvd1g1fh9HwqSnv3CGFa6jdnklvp5BEPyBlkGJY2NZ6Fqfc
-	WLOX6XV5GjIwfpfRojvp+qcZ36ek7xRvPVNTYJ8AQHCdaLaGZDBvxpT0/XesAvNztglrhfI1FF2
-	5mw3cXlmoic5+MTpuuiL54FhjIG7wuWdeY3f9+18DgAYgsw0g2AEh2soMqZ3/nVZzDqrkRO14we
-	57jkwciAc0HOcKHw2PxXW1yhH2kUk1IM2GECp8DcV8P6SF+vYajL3U8qaljjBR6alqdl60gpCA5
-	5Pb6qLWy2yFzXperzhyiBtSQSQtKK3J6zpEBxJuwAKtvtkw6tiXQDOrQXO1fbv1GqhnxJs7rRff
-	yHov8ZfWlN82M12o=
-X-Received: by 2002:a05:6a20:7350:b0:222:c961:af1d with SMTP id adf61e73a8af0-222d7dc49eamr2846930637.8.1751428258815;
-        Tue, 01 Jul 2025 20:50:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8idSmfFKyDABY7yM0MVRpAAZkjEtC9DI11EGGNuOUHqgZpQyGDn56ZzZiQmPlDfFVsxkK9g==
-X-Received: by 2002:a05:6a20:7350:b0:222:c961:af1d with SMTP id adf61e73a8af0-222d7dc49eamr2846895637.8.1751428258347;
-        Tue, 01 Jul 2025 20:50:58 -0700 (PDT)
-Received: from [10.133.33.132] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b34e300994asm11767768a12.3.2025.07.01.20.50.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Jul 2025 20:50:58 -0700 (PDT)
-Message-ID: <5f2a900a-3c8e-4b16-bd91-500af7d0315e@oss.qualcomm.com>
-Date: Wed, 2 Jul 2025 11:50:51 +0800
+	s=arc-20240116; t=1751436631; c=relaxed/simple;
+	bh=jTxeZTxuIEmptXyaI8i1uVNMBzq5osaRO+bZp5mu0is=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aQEh/cuomr2gv92L0EEpAWD/3wQ21hMGIoEyAxINUuaSKeg/NxA/mbC5KoEt3zmgfhcPfYuFzszo9bjVCXTjjtOn4IQn1Bc3u0mDbJZ8MV3shW4ZAyk706UWCXkB/D/7mA7E3l/At9uCeyJ+qIP6Z1VcIbSYVuFEiCBS9Ehy1wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NWDG0isC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C363C4CEEE;
+	Wed,  2 Jul 2025 06:10:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751436630;
+	bh=jTxeZTxuIEmptXyaI8i1uVNMBzq5osaRO+bZp5mu0is=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NWDG0isC2uNjFuDe3JPfxbgnNDiLAKGklW9DTAz2P2ytBJL6UdEXbpir70IkxkiAq
+	 SYkAm13wd/ZsySAUN5mpMILP27UykLjLZUAdZ6vezYSbTyP9dQxmkL9u/OyZAYHu/i
+	 X3LQcVAgGFGbEzb+q8Z531JFZRAQo0bpaB0ZDV/3xFobNA5KtUEBq4kNjYPGXQduZI
+	 8oVmPxcqY6payAVFbG7VJsnuXAKVzeVVxQwGG/pG8UoCPEwlLYYuWOpJke1I3ef+M+
+	 8KCc9jnbv0IxFnscmMd4Mw+jJ9Vt7o/dWCo1vsVauS75cHMsFA/slfRWgrJdUO8p+Y
+	 0R/P3vu3ytNbA==
+Date: Wed, 2 Jul 2025 08:10:28 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc: Waqar Hameed <waqar.hameed@axis.com>, 
+	Vignesh Raghavendra <vigneshr@ti.com>, Julien Panis <jpanis@baylibre.com>, 
+	William Breathitt Gray <wbg@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, Peter Rosin <peda@axentia.se>, 
+	Jonathan Cameron <jic23@kernel.org>, David Lechner <dlechner@baylibre.com>, 
+	Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>, 
+	Cosmin Tanislav <cosmin.tanislav@analog.com>, Lars-Peter Clausen <lars@metafoo.de>, 
+	Michael Hennerich <Michael.Hennerich@analog.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Matteo Martelli <matteomartelli3@gmail.com>, 
+	Heiko Stuebner <heiko@sntech.de>, Francesco Dolcini <francesco@dolcini.it>, 
+	=?utf-8?Q?Jo=C3=A3o_Paulo_Gon=C3=A7alves?= <jpaulo.silvagoncalves@gmail.com>, Hugo Villeneuve <hvilleneuve@dimonoff.com>, 
+	Subhajit Ghosh <subhajit.ghosh@tweaklogic.com>, Mudit Sharma <muditsharma.info@gmail.com>, 
+	Gerald Loacker <gerald.loacker@wolfvision.net>, Song Qiang <songqiang1304521@gmail.com>, 
+	Crt Mori <cmo@melexis.com>, Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+	Ulf Hansson <ulf.hansson@linaro.org>, Karol Gugala <kgugala@antmicro.com>, 
+	Mateusz Holenko <mholenko@antmicro.com>, Gabriel Somlo <gsomlo@gmail.com>, Joel Stanley <joel@jms.id.au>, 
+	Claudiu Manoil <claudiu.manoil@nxp.com>, Vladimir Oltean <vladimir.oltean@nxp.com>, 
+	Wei Fang <wei.fang@nxp.com>, Clark Wang <xiaoning.wang@nxp.com>, 
+	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Sebastian Reichel <sre@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, 
+	Jerome Brunet <jbrunet@baylibre.com>, Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	Han Xu <han.xu@nxp.com>, Haibo Chen <haibo.chen@nxp.com>, 
+	Yogesh Gaur <yogeshgaur.83@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, 
+	Souradeep Chowdhury <quic_schowdhu@quicinc.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Peter Ujfalusi <peter.ujfalusi@linux.intel.com>, 
+	Bard Liao <yung-chuan.liao@linux.intel.com>, Ranjani Sridharan <ranjani.sridharan@linux.intel.com>, 
+	Daniel Baluta <daniel.baluta@nxp.com>, Kai Vehmanen <kai.vehmanen@linux.intel.com>, 
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, kernel@axis.com, 
+	linux-iio@vger.kernel.org, linux-omap@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-i2c@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-input@vger.kernel.org, 
+	linux-mmc@vger.kernel.org, imx@lists.linux.dev, netdev@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-samsung-soc@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-pwm@vger.kernel.org, linux-amlogic@lists.infradead.org, linux-spi@vger.kernel.org, 
+	linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
+	sound-open-firmware@alsa-project.org, linux-sound@vger.kernel.org
+Subject: Re: [PATCH] Remove error prints for devm_add_action_or_reset()
+Message-ID: <zxtyk4vly2salnoy3lng2ni7pzu3wg6qnmucadnclfigrd2m2m@i6xcrmvh34r5>
+References: <pnd7c0s6ji2.fsf@axis.com>
+ <ylr7cuxldwb24ccenen4khtyddzq3owgzzfblbohkdxb7p7eeo@qpuddn6wrz3x>
+ <CAHp75Ve=Zas8=6YKoPeTRrvjCaTyyRAyJG1gBLripqZgQpfg7g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] bus: mhi: don't deinitialize and re-initialize again
-To: Muhammad Usama Anjum <usama.anjum@collabora.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-        Youssef Samir <quic_yabdulra@quicinc.com>,
-        Matthew Leung <quic_mattleun@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
-        Alexander Wilhelm <alexander.wilhelm@westermo.com>,
-        Alex Elder <elder@kernel.org>, Kunwu Chan <chentao@kylinos.cn>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Siddartha Mohanadoss <smohanad@codeaurora.org>,
-        Sujeev Dias <sdias@codeaurora.org>,
-        Julia Lawall <julia.lawall@lip6.fr>, John Crispin <john@phrozen.org>,
-        Muna Sinada <quic_msinada@quicinc.com>,
-        Venkateswara Naralasetty <quic_vnaralas@quicinc.com>,
-        Maharaja Kennadyrajan <quic_mkenna@quicinc.com>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
-Cc: kernel@collabora.com
-References: <20250630074330.253867-1-usama.anjum@collabora.com>
- <20250630074330.253867-3-usama.anjum@collabora.com>
-Content-Language: en-US
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-In-Reply-To: <20250630074330.253867-3-usama.anjum@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=ZKfXmW7b c=1 sm=1 tr=0 ts=6864aca3 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=QX4gbG5DAAAA:8 a=UYPn-Rg_fxiY8il1LgUA:9
- a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22 a=AbAUZ8qAyYyZVLSsDulk:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDAyOSBTYWx0ZWRfX0P6YDtYL7YzL
- WoRCKE9iQTQkOpYXwd/9uXEBc+C+Lo/D953+ew2dF0SQc6BPhCwSf0tWvW7V1sgfOC6TnfqIKOJ
- YQ4IEi1LvHcF8+ePwbgVUpCOd1SwUsZWLZqsyLdC/C8Pcspk82RwyETlidSyv+jUOKCu3tlza8C
- Mpk6ZB8V1r6sHC34hnacHG4jsX1X19bU376lvhcSyfuvvTdqmeQuEI5q3accTd3vrPW46DOn082
- C58ffDgcx3k3KdxP011kPbgqZHkTFbc0RKcDxjMCmnQbjh/xF8GBvj6J1ACSzTL+96MpKNm5ngZ
- B05lwY+iNcAEuldGQb1HivUX5PO5GAPwk5rSwiIuj4kOmvjenQYxeGbY1lit/TpxaFmNQfi48eG
- LEK1XSv223/dDPb2grnnSy8d7ISvthkIOU0gSE5amvL/X9TFV2R3VKlsbSypQSG1fjYTvDLV
-X-Proofpoint-ORIG-GUID: vvbxmxmJ9VpAM5_VDTrTNi_Vw3j-Lgae
-X-Proofpoint-GUID: vvbxmxmJ9VpAM5_VDTrTNi_Vw3j-Lgae
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-01_02,2025-06-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
- impostorscore=0 malwarescore=0 clxscore=1011 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507020029
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="k77zpjuydsxyj3qv"
+Content-Disposition: inline
+In-Reply-To: <CAHp75Ve=Zas8=6YKoPeTRrvjCaTyyRAyJG1gBLripqZgQpfg7g@mail.gmail.com>
 
 
+--k77zpjuydsxyj3qv
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH] Remove error prints for devm_add_action_or_reset()
+MIME-Version: 1.0
 
-On 6/30/2025 3:43 PM, Muhammad Usama Anjum wrote:
-> Don't deinitialize and reinitialize the HAL helpers. The dma memory is
-> deallocated and there is high possibility that we'll not be able to get
-> the same memory allocated from dma when there is high memory pressure.
-> 
-> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
-> 
-> Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-> ---
->  drivers/net/wireless/ath/ath11k/core.c | 5 -----
->  1 file changed, 5 deletions(-)
-> 
-> diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
-> index 4488e4cdc5e9e..bc4930fe6a367 100644
-> --- a/drivers/net/wireless/ath/ath11k/core.c
-> +++ b/drivers/net/wireless/ath/ath11k/core.c
-> @@ -2213,14 +2213,9 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
->  	mutex_unlock(&ab->core_lock);
->  
->  	ath11k_dp_free(ab);
-> -	ath11k_hal_srng_deinit(ab);
->  
->  	ab->free_vdev_map = (1LL << (ab->num_radios * TARGET_NUM_VDEVS(ab))) - 1;
->  
-> -	ret = ath11k_hal_srng_init(ab);
-> -	if (ret)
-> -		return ret;
-> -
+Hello Andy,
 
-while I agree there is no need of a dealloc/realloc, we can not simply remove calling the
-_deinit()/_init() pair. At least the memset() cleanup to hal parameters (e.g.
-avail_blk_resource, current_blk_index and num_shadow_reg_configured etc.) inside the
-_init() needs to be kept as the later operation needs a clean state of them.
+On Tue, Jul 01, 2025 at 08:57:02PM +0300, Andy Shevchenko wrote:
+> On Tue, Jul 1, 2025 at 8:44=E2=80=AFPM Uwe Kleine-K=C3=B6nig <ukleinek@ke=
+rnel.org> wrote:
+> > On Tue, Jul 01, 2025 at 05:03:33PM +0200, Waqar Hameed wrote:
+>=20
+> ...
+>=20
+> > With that
+> >
+> >         ret =3D devm_add_action_or_reset(dev, meson_pwm_s4_put_clk,
+> >                                        meson->channels[i].clk);
+> >         if (ret)
+> >                 return dev_err_probe(dev, ret,
+> >                                      "Failed to add clk_put action\n");
+> >
+> > from drivers/pwm/pwm-meson.c is optimized to
+> >
+> >         ret =3D devm_add_action_or_reset(dev, meson_pwm_s4_put_clk,
+> >                                        meson->channels[i].clk);
+> >         if (ret)
+> >                 return ret;
+> >
+> > .
+> >
+> > I would prefer this approach, because a) there is no need to drop all
+> > dev_err_probe()s after devm_add_action_or_reset() and b) the
+> > dev_err_probe()s could stay for consistency in the error paths of a
+> > driver.
+>=20
+> Why do we need a dev_err_probe() after devm_add_action*()? I would
+> expect that the original call (if needed) can spit out a message.
 
->  	clear_bit(ATH11K_FLAG_CRASH_FLUSH, &ab->dev_flags);
->  
->  	ret = ath11k_core_qmi_firmware_ready(ab);
+I'm not a big fan of API functions that emit an error message. In
+general the caller knows better what went wrong (here:
+devm_add_action_or_reset() doesn't know this to be about the clk_put
+action), so the error message can be more expressive.
 
-the _deinit() is still getting called in case ath11k_core_qmi_firmware_ready() fails,
-making it a little odd since there is no _init() anymore with this change, though this is
-the way of current logic (I mean the hal is currently deinit in the error path).
+Also in general an API function doesn't know if a failure is fatal or if
+the consumer handles the failure just well and if the call is part of a
+driver's .probe() so it's unclear if dev_err_probe() can/should be used.
+(I admit that the last two probably don't apply to
+devm_add_action_or_reset() but that's not a good enough reason to
+make this function special. Every special case is a maintanance burden.)
 
-Thinking it more, if we hit the error path, seems the only way is to remove ath11k module.
-In that case the _deinit() would be called again in ath11k_pci_remove(), leading to issues
-(at least I see a double free of hal->srng_config). But this is another topic which can be
-fixed in a separate patch.
+My two =C2=A2,
+Uwe
 
+--k77zpjuydsxyj3qv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmhkzVEACgkQj4D7WH0S
+/k4QBQf9Em2pqsnQTecp04ABJJapZRnih78NLCfEr+OSLp62HS+/R6qdnaueQp3c
+snWhr/KeS8lMJkfhBrRz7mtGC8nKRmUxJX5dVG2x47hs2LAAyBQ528DJscHxvlZf
+GMOpPcMVMCyEE2s+LXKg+027cbqGV3oa60NL6VbzadTPoGrjxEdftDezQftDsxsu
+TGm7XMEbxP+TO6ZdVtF8HmKAfaLmh5QKwXn0D8UCSe8LVjtlvlDD7RI6MNqpHNiH
+yr28f1rCDnAut6qhCa9g3zsSYlmBpztpd56Y3hSn3kLXtVz3OBx+Py7jDsyV/QuU
+NBEpFQGKyurRCKocUTGotAcog+9ozA==
+=azmY
+-----END PGP SIGNATURE-----
+
+--k77zpjuydsxyj3qv--
 
