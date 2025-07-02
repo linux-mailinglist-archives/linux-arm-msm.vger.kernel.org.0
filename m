@@ -1,219 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-63427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C77DEAF5C7C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 17:15:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1304AF5CF2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 17:28:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 006854E37AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 15:15:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7A20D1C45881
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 15:26:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D975A30B9B3;
-	Wed,  2 Jul 2025 15:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 314042D9480;
+	Wed,  2 Jul 2025 15:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RQNWozAT"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b="arvctNSY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315D5309DB6;
-	Wed,  2 Jul 2025 15:15:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751469310; cv=none; b=FEaoBjLEx2nxALr+pf1I2E0FHE3kkuJi5Aso8Vx8DoKIp49HP3GiK6ywwJzFWfPjG7aEcNyTUzcTgIBDrCZ0o7Z6IWrfiJ7M9IUGH79U3iaz+b+kZoeY/eTDRpt5Vdht+q/r5Lm81D7ToKANFuFe3WUxW7N4gDXBWmU3x79oJ5w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751469310; c=relaxed/simple;
-	bh=rMtiv8YhynFvbsomd0RDzdkphRuywmb5Mi8W2Ow6GbE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/DU8TjNZZWzn1Y1oJwhFJrkEMw2bXhKTGwzhiVNyO67sS+ja6qHHEXy4QmOOjvT5Huz0Kkwy0xLEipX7kiyS7E8hWuZVlqXRvOlFrSXqXOvuKUxkw6Ft/xnO9cTKaLNq4g2HVgWr8+ehIfM5ng58es0Hw5ePvdgFx3Aa4VdItI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RQNWozAT; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56289uS1024893;
-	Wed, 2 Jul 2025 15:14:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=e4wK+4rwZxs
-	fbxeM4+gkxG8Wyl3xF7TFhgrE9SEs9zg=; b=RQNWozAT7pTp+mKQhCA7oi/lhtn
-	HMrQEtXirKZcGrqY/Rq741eXGjT1Dr82TRs7CaZgeRvALTRc8kNa4mwDdmjhulch
-	UN+Qs/Q79rUeiTSHBtWI4gWOL+6uMxM14xAM5c+YjiN/NlKakKulp3i0DSzeRy2z
-	XNtwHAOhxHGb9679N7O2k5RBo6Ci1jgu8Y5lCOHRDmyS3TTPWgcJj/9ba25vyFIy
-	4+oXUp4d5gvlfZLNVtV03EpgKZGxe2sXTZ24mx7kPXfKMlzJS1nPAf9UF05aoUeV
-	f7KIiLSFxwiOJZlMiETijkNcuVoKyj53lM2Ivw1EDfLovPj3b8/gpinSzZA==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j8024x5h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 02 Jul 2025 15:14:48 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 562FEihF025534;
-	Wed, 2 Jul 2025 15:14:45 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 47j9fm57pw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Wed, 02 Jul 2025 15:14:44 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 562FEi6R025529;
-	Wed, 2 Jul 2025 15:14:44 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 562FEiUK025525;
-	Wed, 02 Jul 2025 15:14:44 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-	id CB87D61C6C3; Wed,  2 Jul 2025 20:44:43 +0530 (+0530)
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-To: mani@kernel.org, James.Bottomley@HansenPartnership.com,
-        martin.petersen@oracle.com, bvanassche@acm.org,
-        neil.armstrong@linaro.org, konrad.dybcio@oss.qualcomm.com
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-scsi@vger.kernel.org, Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: [PATCH V1 2/2] scsi: ufs: qcom: Enable QUnipro Internal Clock Gating
-Date: Wed,  2 Jul 2025 20:44:41 +0530
-Message-ID: <20250702151441.8061-3-quic_nitirawa@quicinc.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250702151441.8061-1-quic_nitirawa@quicinc.com>
-References: <20250702151441.8061-1-quic_nitirawa@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5583327FD6E;
+	Wed,  2 Jul 2025 15:26:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751469976; cv=pass; b=Tq4rtar0PNX3C4+jp1OF1iaHea31opNBUao6q8KleBym9pRyrNHeu/Id6eiZF1+6O9CODrFg9hlDA0KVjmcT40NTcKs8rRrQE1H9gh/w+edPqHL4iO99nRpHdsIYNhxCALyIMkEFdhKae0tyN8SD29drXLsrB7YarzFKmq7iR+k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751469976; c=relaxed/simple;
+	bh=wQMRoNUnzA9UQB2mB3kuixYX3T0g/KtNqFHwiGUze28=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GNj6G3R/2bOHpCzUKj0+ltsDIslpMEq1/NvIU+/Rtj+XPuBn2Rm4h7aJdZkqaGQs+YjVVXt1Asn6awmRRU16XmTtd+Pt3E5sRnOZB3tyZHe7txzsDhZpQeyA7hCW4BwSKfOcYcUmDTrj48+O6zbsubrccAO0u2h9pVVbKxW4pm8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=usama.anjum@collabora.com header.b=arvctNSY; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1751469894; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=WpmPIDERd62a9YcFDQAaOKN47Tzg/1JmdIjZoGY86x5IWb2DWIs3zTuR9ILYtqEaD/UmXiSsHKy1CZNmVwil0Qxdf6KbIHUqODsUQ2jRLym08lxff3GowMQUqjm/VdGs0SJdu0zvH9lBE2hsh0crhY7aFDyTPr0liefQtd2Mup4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1751469894; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=4NVWTCsF8+Y+0HyJZ6iLTeR9+84JjIwIGI7caUUiPfk=; 
+	b=WTzsVjl8qqQSkPWxm1e1GRZ7vEwVgSeL0jVkZu28Tnz0+WvsjDxEAPHx5DgHvZ/dKXps2gNsK0WbUmgeomIkfShSUmeRPykOI/qr0WCqCDZXi6jzRbSW/ednvlGGall3A0KWJ+hNP1C0fXnKNxtuhZvJHIm2vEUh4hEbo7i+V60=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=usama.anjum@collabora.com;
+	dmarc=pass header.from=<usama.anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1751469894;
+	s=zohomail; d=collabora.com; i=usama.anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=4NVWTCsF8+Y+0HyJZ6iLTeR9+84JjIwIGI7caUUiPfk=;
+	b=arvctNSYqPEhFDsNKsyUzPBgo0Wwowa+zYdl8u38k47zPbYrUyIh6AWxkbB20cD+
+	arRZkRv/dcTwSJF77HtG7MhRcw9Z825S2H33xcMx/6nIEIkNlUHkmonv3tCWixyX6U6
+	+VTlJonTyp6NpNZWKLc9tKj+XkDUsNOQ/9NLFsv4=
+Received: by mx.zohomail.com with SMTPS id 1751469891448470.8632580255727;
+	Wed, 2 Jul 2025 08:24:51 -0700 (PDT)
+Message-ID: <2df35ac2-34f6-4552-8630-5fe380bbdba4@collabora.com>
+Date: Wed, 2 Jul 2025 20:24:45 +0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BpyLdfUUr919O-huM3sd44IzLmdLBFWH
-X-Authority-Analysis: v=2.4 cv=YPWfyQGx c=1 sm=1 tr=0 ts=68654ce8 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=ntjNA1mAdOrbGcrCdYgA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: BpyLdfUUr919O-huM3sd44IzLmdLBFWH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDEyNSBTYWx0ZWRfX0coFgFvjhVrd
- 4NNft5wjBZy4GWC8Xcw3ohEA68tvHJ6xVSDqWp27NHUCa5ljcz6ZNa49/hcbNYNAc5q+7CClXVr
- TEgBNT2tw64xc50z0jEFIn6rlkHE0AvqexgzZriR3rQWQLQt+q/BlAP0jtlMnOKoBS8dUghfjmL
- UMy4LmeYnHRc4pu6CC4RLhtLhqYoxOVHkKj0ViAkiYNIJz3dbTjvJa09AGpBX9Ssy0iaICyN0Q5
- s8OPrPy45BQqF92BxoOZFAzTSuThQeRl0IJTmH5QKAI5T/oyrz4dJKZYKTfjJGIbdHMjpY+ewc5
- uc7MuP16WWO67yQaKYQk4UAWhZYgXQQCqJ730UySK8L3ZqjM3uwyWMCMRluBZ9mHnn8PFBS7MUK
- JeShV5f/IZbiLKWeJl+w5LzjU9DjGDpPKm1u5O/k7dRQRmWvMOPzGvRhBbdh8k3IjzF48PIP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-02_02,2025-07-02_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 mlxlogscore=999 mlxscore=0 malwarescore=0 suspectscore=0
- lowpriorityscore=0 clxscore=1015 impostorscore=0 adultscore=0
- priorityscore=1501 bulkscore=0 phishscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507020125
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] bus: mhi: host: keep bhi buffer through suspend cycle
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+ Jeff Johnson <jjohnson@kernel.org>, Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+ Youssef Samir <quic_yabdulra@quicinc.com>,
+ Matthew Leung <quic_mattleun@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
+ Alexander Wilhelm <alexander.wilhelm@westermo.com>,
+ Alex Elder <elder@kernel.org>, Kunwu Chan <chentao@kylinos.cn>,
+ Siddartha Mohanadoss <smohanad@codeaurora.org>,
+ Sujeev Dias <sdias@codeaurora.org>, Julia Lawall <julia.lawall@lip6.fr>,
+ John Crispin <john@phrozen.org>, Muna Sinada <quic_msinada@quicinc.com>,
+ Venkateswara Naralasetty <quic_vnaralas@quicinc.com>,
+ Maharaja Kennadyrajan <quic_mkenna@quicinc.com>, mhi@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
+ kernel@collabora.com
+References: <20250630074330.253867-1-usama.anjum@collabora.com>
+ <20250630074330.253867-2-usama.anjum@collabora.com>
+ <2025070143-hatchback-roundness-bec2@gregkh>
+Content-Language: en-US
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+In-Reply-To: <2025070143-hatchback-roundness-bec2@gregkh>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 
-Enable internal clock gating for QUnipro by setting the following
-attributes to 1 during host controller initialization:
-- DL_VS_CLK_CFG
-- PA_VS_CLK_CFG_REG
-- DME_VS_CORE_CLK_CTRL.DME_HW_CGC_EN
+Thanks for reviewing!
 
-This change is necessary to support the internal clock gating mechanism
-in Qualcomm UFS host controller.
+On 7/1/25 3:25 PM, Greg Kroah-Hartman wrote:
+> On Mon, Jun 30, 2025 at 12:43:28PM +0500, Muhammad Usama Anjum wrote:
+>> When there is memory pressure, at resume time dma_alloc_coherent()
+>> returns error which in turn fails the loading of firmware and hence
+>> the driver crashes:
+>>
+>> kernel: kworker/u33:5: page allocation failure: order:7,
+>> mode:0xc04(GFP_NOIO|GFP_DMA32), nodemask=(null),cpuset=/,mems_allowed=0
+>> kernel: CPU: 1 UID: 0 PID: 7693 Comm: kworker/u33:5 Not tainted
+>> 6.11.11-valve17-1-neptune-611-g027868a0ac03 #1
+>> 3843143b92e9da0fa2d3d5f21f51beaed15c7d59
+> 
+> Please don't wrap kernel log lines.
+Sorry, missed fixing it. I'll fix it.
 
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 21 +++++++++++++++++++++
- drivers/ufs/host/ufs-qcom.h | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 56 insertions(+)
+> 
+>> kernel: Hardware name: Valve Galileo/Galileo, BIOS F7G0112 08/01/2024
+>> kernel: Workqueue: mhi_hiprio_wq mhi_pm_st_worker [mhi]
+>> kernel: Call Trace:
+>> kernel:  <TASK>
+>> kernel:  dump_stack_lvl+0x4e/0x70
+>> kernel:  warn_alloc+0x164/0x190
+>> kernel:  ? srso_return_thunk+0x5/0x5f
+>> kernel:  ? __alloc_pages_direct_compact+0xaf/0x360
+>> kernel:  __alloc_pages_slowpath.constprop.0+0xc75/0xd70
+>> kernel:  __alloc_pages_noprof+0x321/0x350
+>> kernel:  __dma_direct_alloc_pages.isra.0+0x14a/0x290
+>> kernel:  dma_direct_alloc+0x70/0x270
+>> kernel:  mhi_fw_load_handler+0x126/0x340 [mhi
+>> a96cb91daba500cc77f86bad60c1f332dc3babdf]
+>> kernel:  mhi_pm_st_worker+0x5e8/0xac0 [mhi
+>> a96cb91daba500cc77f86bad60c1f332dc3babdf]
+> 
+> Same here.
+I'll fix it.
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index dfdc52333a96..25b5f83b049c 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -558,11 +558,32 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
-  */
- static void ufs_qcom_enable_hw_clk_gating(struct ufs_hba *hba)
- {
-+	int err = 0;
-+
-+	/* Enable UTP internal clock gating */
- 	ufshcd_rmwl(hba, REG_UFS_CFG2_CGC_EN_ALL, REG_UFS_CFG2_CGC_EN_ALL,
- 		    REG_UFS_CFG2);
+> 
+>> kernel:  ? srso_return_thunk+0x5/0x5f
+>> kernel:  process_one_work+0x17e/0x330
+>> kernel:  worker_thread+0x2ce/0x3f0
+>> kernel:  ? __pfx_worker_thread+0x10/0x10
+>> kernel:  kthread+0xd2/0x100
+>> kernel:  ? __pfx_kthread+0x10/0x10
+>> kernel:  ret_from_fork+0x34/0x50
+>> kernel:  ? __pfx_kthread+0x10/0x10
+>> kernel:  ret_from_fork_asm+0x1a/0x30
+>> kernel:  </TASK>
+>> kernel: Mem-Info:
+>> kernel: active_anon:513809 inactive_anon:152 isolated_anon:0
+>>     active_file:359315 inactive_file:2487001 isolated_file:0
+>>     unevictable:637 dirty:19 writeback:0
+>>     slab_reclaimable:160391 slab_unreclaimable:39729
+>>     mapped:175836 shmem:51039 pagetables:4415
+>>     sec_pagetables:0 bounce:0
+>>     kernel_misc_reclaimable:0
+>>     free:125666 free_pcp:0 free_cma:0
+>>
+>> In above example, if we sum all the consumed memory, it comes out
+>> to be 15.5GB and free memory is ~ 500MB from a total of 16GB RAM.
+>> Even though memory is present. But all of the dma memory has been
+>> exhausted or fragmented.
+>>
+>> Fix it by allocating it only once and then reuse the same allocated
+>> memory. As we'll allocate this memory only once, this memory will stay
+>> allocated.
+>>
+>> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
+>>
+>> Fixes: cd457afb1667 ("bus: mhi: core: Add support for downloading firmware over BHIe")
+> 
+> No cc: stable?
+I'll add stable in v2.
 
- 	/* Ensure that HW clock gating is enabled before next operations */
- 	ufshcd_readl(hba, REG_UFS_CFG2);
-+
-+	/* Enable Unipro internal clock gating */
-+	err = ufshcd_dme_rmw(hba, DL_VS_CLK_CFG_MASK,
-+			     DL_VS_CLK_CFG_MASK, DL_VS_CLK_CFG);
-+	if (err)
-+		goto out;
-+
-+	err = ufshcd_dme_rmw(hba, PA_VS_CLK_CFG_REG_MASK,
-+			     PA_VS_CLK_CFG_REG_MASK, PA_VS_CLK_CFG_REG);
-+	if (err)
-+		goto out;
-+
-+	err = ufshcd_dme_rmw(hba, DME_VS_CORE_CLK_CTRL_DME_HW_CGC_EN,
-+			     DME_VS_CORE_CLK_CTRL_DME_HW_CGC_EN,
-+			     DME_VS_CORE_CLK_CTRL);
-+out:
-+	if (err)
-+		dev_err(hba->dev, "hw clk gating enabled failed\n");
- }
+> 
+>> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+>> ---
+>> Reported here:
+>> https://lore.kernel.org/all/ead32f5b-730a-4b81-b38f-93d822f990c6@collabora.com
+>>
+>> Still a lot of more fixes are required. Hence, I'm not adding closes tag.
+>> ---
+>>  drivers/bus/mhi/host/boot.c     | 19 ++++++++++---------
+>>  drivers/bus/mhi/host/init.c     |  5 +++++
+>>  drivers/bus/mhi/host/internal.h |  2 ++
+>>  include/linux/mhi.h             |  1 +
+>>  4 files changed, 18 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+>> index b3a85aa3c4768..11bb8c12ac597 100644
+>> --- a/drivers/bus/mhi/host/boot.c
+>> +++ b/drivers/bus/mhi/host/boot.c
+>> @@ -302,8 +302,8 @@ static int mhi_fw_load_bhi(struct mhi_controller *mhi_cntrl,
+>>  	return -EIO;
+>>  }
+>>  
+>> -static void mhi_free_bhi_buffer(struct mhi_controller *mhi_cntrl,
+>> -				struct image_info *image_info)
+>> +void mhi_free_bhi_buffer(struct mhi_controller *mhi_cntrl,
+>> +			 struct image_info *image_info)
+>>  {
+>>  	struct mhi_buf *mhi_buf = image_info->mhi_buf;
+>>  
+>> @@ -455,18 +455,19 @@ static enum mhi_fw_load_type mhi_fw_load_type_get(const struct mhi_controller *m
+>>  
+>>  static int mhi_load_image_bhi(struct mhi_controller *mhi_cntrl, const u8 *fw_data, size_t size)
+>>  {
+>> -	struct image_info *image;
+>> +	struct image_info *image = mhi_cntrl->bhi_image;
+>>  	int ret;
+>>  
+>> -	ret = mhi_alloc_bhi_buffer(mhi_cntrl, &image, size);
+>> -	if (ret)
+>> -		return ret;
+>> +	if (!image) {
+> 
+> What prevents image from going away right after you tested it?
+The changed code isn't doing what it should be doing. I'll completely fix in v2. 
 
- static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index 0a5cfc2dd4f7..d8ad3cb3bd1c 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -24,6 +24,15 @@
-
- #define UFS_QCOM_LIMIT_HS_RATE		PA_HS_MODE_B
-
-+/* bit and mask definitions for PA_VS_CLK_CFG_REG attribute */
-+#define PA_VS_CLK_CFG_REG      0x9004
-+#define PA_VS_CLK_CFG_REG_MASK GENMASK(8, 0)
-+
-+/* bit and mask definitions for DL_VS_CLK_CFG attribute */
-+#define DL_VS_CLK_CFG          0xA00B
-+#define DL_VS_CLK_CFG_MASK GENMASK(9, 0)
-+#define DME_VS_CORE_CLK_CTRL_DME_HW_CGC_EN             BIT(9)
-+
- /* QCOM UFS host controller vendor specific registers */
- enum {
- 	REG_UFS_SYS1CLK_1US                 = 0xC0,
-@@ -234,6 +243,32 @@ static inline void ufs_qcom_deassert_reset(struct ufs_hba *hba)
- 	ufshcd_readl(hba, REG_UFS_CFG1);
- }
-
-+/**
-+ * ufshcd_dme_rmw - get modify set a dme attribute
-+ * @hba - per adapter instance
-+ * @mask - mask to apply on read value
-+ * @val - actual value to write
-+ * @attr - dme attribute
-+ */
-+static inline int ufshcd_dme_rmw(struct ufs_hba *hba, u32 mask,
-+				 u32 val, u32 attr)
-+{
-+	u32 cfg = 0;
-+	int err = 0;
-+
-+	err = ufshcd_dme_get(hba, UIC_ARG_MIB(attr), &cfg);
-+	if (err)
-+		goto out;
-+
-+	cfg &= ~mask;
-+	cfg |= (val & mask);
-+
-+	err = ufshcd_dme_set(hba, UIC_ARG_MIB(attr), cfg);
-+
-+out:
-+	return err;
-+}
-+
- /* Host controller hardware version: major.minor.step */
- struct ufs_hw_version {
- 	u16 step;
---
-2.48.1
+> 
+> thanks,
+> 
+> greg k-h
 
 
