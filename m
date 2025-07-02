@@ -1,88 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-63376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52D44AF1331
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 13:06:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FA65AF1334
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 13:07:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9ED594E5A67
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 11:05:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B56391C41A0E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 11:06:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0315221F37;
-	Wed,  2 Jul 2025 11:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B61A269830;
+	Wed,  2 Jul 2025 11:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oOZImIpD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kkn9q4u8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6E425E80B
-	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jul 2025 11:03:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4BF25F97F;
+	Wed,  2 Jul 2025 11:04:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751454198; cv=none; b=s/aoat0SHYk8ysXXq5fRwlFAX3DdpdFMh5k7SfigkrDrS+v7HCFEdmQkAe33LbuygbGeNk4Nxr+He6CsVQz7g9VZ1dfKH/IvOOXny2qjOP+sCkvCR3MFNj9ob/bqUnjW8GKGYNEU+tHelEUQa1lc+GIc6wZvSIYhOo4sK0yOqCo=
+	t=1751454267; cv=none; b=SzjunkxsoFgLFTjv+EJbLN14YdJbjzrr/lnOn01qI+qOUBCGAmta0kuZXc6hsDD2owqTkACrb0hj6HkwK/dqhgK/RzHmcIDsFyf1f49zuFkVXhTO8YqJJRLbcLetUyHCzcqmmkePqGm2KBXx5LibxLNyGJsgH72h5vkPeu5KMLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751454198; c=relaxed/simple;
-	bh=UqsOoiEtRgi2jrNVhPu8IraMKM1WqaHrnLwWkgQObBc=;
+	s=arc-20240116; t=1751454267; c=relaxed/simple;
+	bh=VnrLLpvVSLYOlpdQt2Fw/U4XhbYdJYLDafJ/3N4W8Vc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y+KkVYKw/K9jzqJdzc3hkM5BCtIgZ86wTjRRoPc++oRAuQWjK3nDzuTeZdmkMfVSmBfUh18boak9b9I5V5uDgK85EtSednIkL1kcIT0Xn+ppi7OSSQfmx/BkyCuYJC/159z+nsYRhjbf7fr97nDSPWmlZ4epHoaJNHGgBGJT70k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oOZImIpD; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5626lMJF032128
-	for <linux-arm-msm@vger.kernel.org>; Wed, 2 Jul 2025 11:03:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	iZ0+erNLxw7VuccyfYjtf67X1Uezd2e0x85nHdRkqBc=; b=oOZImIpDzQ5d4D30
-	AfrRTjcIPEq3Z08qYVXJQF1qDlcB8O3CKRwR9qQaPLEDxWfdbu0d+XhbN3Fr4hXa
-	pgqKNrLyujH20Kr+A5zoKjOnCohjAEXmdB9EG+gYDKg20N/p4JsMFedsljJVbH8N
-	YdIeKwuELqtPJMplkT4/OkOoK6d6Y6Bs8UR/8siv5IBE7ftjs3Fkd1aXFrJ5cjwR
-	oE/CtlvBTKmug+LTMvbPCjD7soNQ9xhUp3svfvBhiUAO5lv/QFDOj/+KJUqw8D09
-	Lf1XtNEh1ZNorFHS8pzQxFg9iGDKQeUFwWHR8PExmXfsOX4fh3Z0yD0f5ODgl5ys
-	UY9NzQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j63kceex-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 11:03:16 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7d3ba561898so76992285a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 04:03:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751454195; x=1752058995;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iZ0+erNLxw7VuccyfYjtf67X1Uezd2e0x85nHdRkqBc=;
-        b=kVyfxQ5+KrmfJ5Al6Ndf+72B9atgieVCxc9/Q2mB8pbxrYeOeJ+Tg+b5E0gwEBsxC2
-         /SLJ1+TysGq7nAz5z0eIvwn9iwAXAcVokO8Pwy2p9EqOdF+YelCjFbJVLNjnkd5RV3St
-         F3GCsDg8t7ud2rFrVsKENqfLiYC24fyu9q6ol5BX3yVQI86SNKb1WsrNo2cW3ckKYPQ4
-         uvO5xKIr9bKcwz15Dnh/e4kNdX+PHUiMrdZw2pnQ3a30I6/46pXc6Mr9ffbUczwt+++4
-         Gc0FOXFOZOJNm5TCZ0yMaEgzt+tWiMSOyB3U/vCoTy71DbWoL/mbWgQgKBWXqG45MLkU
-         4gxA==
-X-Forwarded-Encrypted: i=1; AJvYcCWl3UJIX8CPCpZEibStLifZLxYLR5HphaFwjalfeZI9IC2yPaseJ7Br/De8pir4QyxvI4/U12TrMXLrugm0@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8SxFOMtAVYhR+q+GUX3miIAqW3QCGJO/mrCz/yHqapi+3uIu7
-	vQ8ZKlgyARf+JWjWUkHudM5hSQUqcVOTMkLPQ21HA19SzLgwoCiOgn/lpqam0iDv09xBRe++ArB
-	0rJUix08QB862y/+YqWuKDYThbCdvoqCrP+HHAXGL9esu7ptIwTuauisOMhtFuQg6paKs
-X-Gm-Gg: ASbGncuQBXKqrVj/9uADCwtO31u7yJgd4vxOprqzOuxLMZTsGZb9JGRjacamCPTaP26
-	NKUKdVwBKSKaoXx8Gk59ECvVwI3nT3swZJfZFZHNop6fvT4okKcP/UtZweidd2JGmjtHlU75s+k
-	KH4fXJz9dclc8FQWDYKWgDJ027piWQGUtPjH541ep13nVIqzLrAGKWrwGrTRVkNWvlxmPkYbYoP
-	d7Dse1CQk5PKdGNCS2QThlui3nTYoOOYqQLXU+XpdDeaFQ1rhTEE0mPgTbDmimjgCDYQ+NIxdUE
-	qFEFDcso/67S5zerXqxwg3kZpSwnpSh74wFKbMlY++HeCc/Z3S0HcWwYlBqk8vzFWDpw+kPbjwS
-	KCTI=
-X-Received: by 2002:a05:620a:192a:b0:7c5:8ece:8b56 with SMTP id af79cd13be357-7d5c47175d2mr120700485a.4.1751454194973;
-        Wed, 02 Jul 2025 04:03:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJmVaoky9zcbK8IX4+0F2FowsM3fLObjXG5U1FlDD2lNhegepSkRgmdrUwoNZH1FaJWrApHQ==
-X-Received: by 2002:a05:620a:192a:b0:7c5:8ece:8b56 with SMTP id af79cd13be357-7d5c47175d2mr120698785a.4.1751454194496;
-        Wed, 02 Jul 2025 04:03:14 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60c8290eaefsm8869551a12.34.2025.07.02.04.03.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Jul 2025 04:03:13 -0700 (PDT)
-Message-ID: <5a58fb6d-8ddb-4835-9da9-4c449825367f@oss.qualcomm.com>
-Date: Wed, 2 Jul 2025 13:03:11 +0200
+	 In-Reply-To:Content-Type; b=ijZ1+w/IyuM3h5MXYCoFvjmrlGR9Jb9ZAarZSPkKfb84s+qiac83hBfHozFaPITddeqvMziar78XkU4PxobNwkwUYvQ+NdVEDJ3c0zdVqXzkWcqPQZUYJEbnv+g8adgpsylkAhGpYRwnx1cyO7acCmlpTyd50XMJLp+G7C24WM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kkn9q4u8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCEE3C4CEED;
+	Wed,  2 Jul 2025 11:04:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751454266;
+	bh=VnrLLpvVSLYOlpdQt2Fw/U4XhbYdJYLDafJ/3N4W8Vc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Kkn9q4u8iaQeWMYm3tZPKBbdeaME23/2zMEjew2hg1/o4z/q2BSAGydCHCddzP6iE
+	 VXXO0oDaHiZxYCnrmaH3D7kuirLDEYToyHWCkx7SjTGEMA7WPaynTWnpsECWK9+iW3
+	 gBGsj7l1MKv22wg/zD+9+RMheoqgf2ydp9iUYOE96EhSTKXTuWKjRdmC6X9myc6rGB
+	 OeD8yY/W/Z2iRuv7xK/LY6VSEHAp2TeVY2grpjA8OzgpoKgDJ2oaf5cduDpN9sgOD8
+	 HlKVoZwwxS8Abc/1b+gDoSjcXomeocYoUly/KJtSDO7YaRxIKgFj85AcNXM0DXT/Vq
+	 8zfvKlqor7ixw==
+Message-ID: <156729ff-86f6-49a9-8b3c-7d0fd6737fb9@kernel.org>
+Date: Wed, 2 Jul 2025 13:04:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,62 +50,80 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 0/5] pinctrl: introduce the concept of a GPIO pin
- function category
-To: Bartosz Golaszewski <brgl@bgdev.pl>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Alexey Klimov <alexey.klimov@linaro.org>
-Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20250702-pinctrl-gpio-pinfuncs-v1-0-ed2bd0f9468d@linaro.org>
+Subject: Re: [PATCH v3 2/5] media: iris: register and configure non-pixel node
+ as platform device
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
+ <20250627-video_cb-v3-2-51e18c0ffbce@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250702-pinctrl-gpio-pinfuncs-v1-0-ed2bd0f9468d@linaro.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250627-video_cb-v3-2-51e18c0ffbce@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=ZKfXmW7b c=1 sm=1 tr=0 ts=686511f4 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=FT0SUlyUvFbnnB8yFIkA:9
- a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10 a=zZCYzV9kfG8A:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDA4OSBTYWx0ZWRfX7oy61/xOd/9L
- I1jO9CtKhBXo7C5lcVQPM4rJ8wu4iv4jOOzoovGFxKx5wSLPeh03q2o+6Jnk3havjyf6IZcZsRF
- EOWkDM/uYAw9Ku6HjqZlfgvC/F9ZNB9meezjr0onBfOJc1+Cemk0hTuhwyfatp6EREDD9cI+xvs
- 8LXpadHrH0KKA1RaTWNc8OSNfD8n/VmosymgxmDlOMuSgnuOAmpkMq3zB3ElOOCFr2kZm7sLOqq
- DPNZcctp1jxMtllTACiD3f2u2jNFlKmM78X7kOVRbn2jfTtKoLdebXY2y4gCWuPEdllZTU93dIX
- zF48tEBAil5y/mQy6zW3jdDdVvBpoZzf5B1VZG2ijsN3YFzc6fi/two884ix6qb6hryqcjYLnwf
- ozWYogFee/bNx3oIZL+hrIsAO2TEyAqrDTzEjKjzBDtmMBUpTo9n6c0bdVVwBTtAJ91xv8I0
-X-Proofpoint-ORIG-GUID: RI5bGiw10W4k4LxD6OCmuMnXTjJrzmk5
-X-Proofpoint-GUID: RI5bGiw10W4k4LxD6OCmuMnXTjJrzmk5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-02_01,2025-06-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxscore=0 mlxlogscore=762 spamscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
- impostorscore=0 malwarescore=0 clxscore=1015 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507020089
 
-On 7/2/25 10:45 AM, Bartosz Golaszewski wrote:
-> Note: this really is an RFC. Please don't spend too much time revieweing
-> the code in detail. I'd like to figure out if that's a good approach at
-> all first. Also: while I tested it on sm8650-qrd and sc8280xp-crd, the
-> last patch cannot be applied until all Qualcomm platforms are converted.
-> 
-> Problem: when pinctrl core binds pins to a consumer device and the
-> pinmux ops of the underlying driver are marked as strict, the pin in
-> question can no longer be requested as a GPIO using the GPIO descriptor
-> API. It will result in the following error:
-> 
-> [    5.095688] sc8280xp-tlmm f100000.pinctrl: pin GPIO_25 already requested by regulator-edp-3p3; cannot claim for f100000.pinctrl:570
-> [    5.107822] sc8280xp-tlmm f100000.pinctrl: error -EINVAL: pin-25 (f100000.pinctrl:570)
+On 27/06/2025 17:48, Vikash Garodia wrote:
+>  
+> +static int iris_init_non_pixel_node(struct iris_core *core)
+> +{
+> +	struct platform_device_info info;
+> +	struct platform_device *pdev;
+> +	struct device_node *np_node;
+> +	int ret;
+> +
+> +	np_node = of_get_child_by_name(core->dev->of_node, "non_pixel");
 
-I can confirm the above no longer appears on the same SC8280XP CRD with
-this series applied
+Never tested.
 
-Konrad
+Best regards,
+Krzysztof
 
