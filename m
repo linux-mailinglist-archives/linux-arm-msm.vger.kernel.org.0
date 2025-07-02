@@ -1,63 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-63422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32336AF5C60
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 17:13:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32805AF5C65
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 17:13:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A97FE3AC582
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 15:13:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5936C3AFFBC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 15:13:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B10422D3754;
-	Wed,  2 Jul 2025 15:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6389F2D0C85;
+	Wed,  2 Jul 2025 15:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HS3suiYz"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PoNPrgh+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF72C2D3726;
-	Wed,  2 Jul 2025 15:13:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE0B2D3757;
+	Wed,  2 Jul 2025 15:13:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751469214; cv=none; b=Bi5+IncnGkey8cGVwSytLaT8whrNVf49EFG8xwwl12ZTbAhWlWSTtJE5Ttl0tNw5/YrbnTvrDMgBcv40Aj3P/EF5HksM49Ejz8h9ixQQbJJx3clpRtXY9GsyHtWcbZ+SkUcFABJjyjlI183IvUqlOSdv31lVIxxRm85BGzYB/bg=
+	t=1751469218; cv=none; b=uH7dLBSP8zhEqp0ljWutNVkQqqm/CTfLqGJlC1ebnOUsAVPRPYG0GvX9GgKzDMHFDBzUDs0KQprA7tMaoCZjR9dGX0C52mQ5z1iTXP4ct/FEu3CXQ52FZzUT/5M+EB7iFget5Zv1CC4EFaq99h0kdSTEUz5N9LZKoxQH3UV3Fq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751469214; c=relaxed/simple;
-	bh=ztBqQJeSt6XmLxkH8AgL8AaagruSAXxb7MRd1Fe1tqI=;
-	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=Flz43aq527JutCOckd28PMLPbmrqPysZdAOcjvhOZ2ADdX1R1vBTt6rsIhantdKtYD7r7tz1CvTIc32/8ixypb3ju8BnTaiGEo4rDU4bftVt5ynpoIpDYjl61ZcfXE/ZHkwTMlyUdxhwiMnFX92BYJRfxgvufJoZ51LHxXyM/fA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HS3suiYz; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1751469218; c=relaxed/simple;
+	bh=2ihNgJW3++WTyi6alSEFtinXmVxhYwzlX+sssfaXXb8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
+	 In-Reply-To:To:CC; b=LqUOyyEB+Red3/C6BdWgdTZEAntwMTzdtFFbbzh8ubcRY92HH5qLnq4j6phwOr74BIYQdjbCvM+ugmdqw4nxsRvVIQ/F7AmzxwZgu3GVBN24Xw1MNg/Yj+dlL2fU8zEplZN1j31X9Kwqmgvocz7JBvbDOpelAe01Oio16Eo42Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PoNPrgh+; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 562EJM7R024904;
-	Wed, 2 Jul 2025 15:13:29 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 562B7omv012466;
+	Wed, 2 Jul 2025 15:13:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=C1feAWETzSEvnrAm1Fn8O1
-	ECAHwkbb7sCvHiC87JnzY=; b=HS3suiYz/q0buQDqCAy15+nexkexOXKJCEIyvs
-	3O6PEGKaiZJOQCW3eCoPTftryNWf+5sQFyOWn5xqEl9TtLvdwEBSjpMeiiSVMAok
-	uzJveu/J7yGOpYqzStivCdSL+uguxjH8s85gSNrn71d7USOl0b/pyIQ4rTXTpoFi
-	PepvgLCofVsB1jPV1/Q7zomUZ4vjICfHozmppTI6qqav2UfgG7sdHUOKpeyeWJ5S
-	BSFtv5m0BmyJ8qlL7vaRxiwy1MMPDEaoUZ2ORbMti5O0ohxxKIGkEOmzg5zKfsbX
-	UjdIEobJDWF0KtxS/AJG7npbrKDaqKN10mtYTzQZImr56NHw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j8024x28-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	eF60tMOqu7KEBnAfq9o06J+xHNcN1skBpHk8ijDIA+Q=; b=PoNPrgh+rcV6Vn/R
+	YPcLXW/J4Ip7nBWX7hnjNfRWXDkNAW5LGubxA5b4CuJfcikgv3yLzHO/ShrN7zPx
+	T275qjUs25ttdssZXVTytMJU585nHFiqogaJb11xVEcBAIJxU8bm1yKOCrPyyz1j
+	1X8dplRoXqNJPFVBXG5XqYlZt0mdY4oMuYPQ2qm3SgiPsrdJ3EJLLpgkLlEEB9QA
+	VFBdQH04JABSwdHioPfHNrvuj3I6otr0xWE5LfBAU/RIGLVssPr0rd7zmqTwZceQ
+	ow3I6HxAEXcvATShK6RZP0pwYMIt9DHyKGS3tboqbZet2r8ttpQ0wXB25mV5hHhZ
+	WGPgyA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47mw30a4ev-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 02 Jul 2025 15:13:29 +0000 (GMT)
+	Wed, 02 Jul 2025 15:13:33 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 562FDRSn010528
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 562FDWww005600
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 2 Jul 2025 15:13:27 GMT
+	Wed, 2 Jul 2025 15:13:32 GMT
 Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Wed, 2 Jul 2025 08:13:23 -0700
+ 15.2.1748.10; Wed, 2 Jul 2025 08:13:28 -0700
 From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Subject: [PATCH v3 0/2] Add video clock controller DT support for sc8180x
-Date: Wed, 2 Jul 2025 20:43:12 +0530
-Message-ID: <20250702-sc8180x-videocc-dt-v3-0-916d443d8a38@quicinc.com>
+Date: Wed, 2 Jul 2025 20:43:13 +0530
+Subject: [PATCH v3 1/2] dt-bindings: clock: qcom,videocc: Add sc8180x
+ compatible
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,11 +68,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAIhMZWgC/33NwQ6CMAzG8VcxO1vTDhjoyfcwHqQb0oOgGy4Yw
- rs7uBgT4/H/Jf11UsF5cUEdNpPyLkqQvkuRbTeK20t3dSA2tdKoCzQ6g8AVVThCFOt6ZrAD5I4
- zxtJQU1mVDu/eNTKu6OmcupUw9P61/oi0rH+5SECwt5qQKUeDeHw8haXjHfc3tYBRf5AS6SeiA
- aHGwtbGMFNjvpF5nt8Vv0aY+wAAAA==
-X-Change-ID: 20250623-sc8180x-videocc-dt-4ec3c0761f8d
+Message-ID: <20250702-sc8180x-videocc-dt-v3-1-916d443d8a38@quicinc.com>
+References: <20250702-sc8180x-videocc-dt-v3-0-916d443d8a38@quicinc.com>
+In-Reply-To: <20250702-sc8180x-videocc-dt-v3-0-916d443d8a38@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio
 	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -95,56 +95,77 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: QA9b2gclp2hudqi1JZt5ghtNJRQoDo3w
-X-Authority-Analysis: v=2.4 cv=YPWfyQGx c=1 sm=1 tr=0 ts=68654c99 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=CY4I5Krl c=1 sm=1 tr=0 ts=68654c9d cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=yiBUYm-Hlfb03F32K2EA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: QA9b2gclp2hudqi1JZt5ghtNJRQoDo3w
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDEyNSBTYWx0ZWRfXz7lL8mtw3ANp
- AJhjgGOV1lZGR/RDokcPfdfZI33kqF56Kv+mPabzQk+M6plCxXDk2Kzs1u8qayMWrpFlYBAvn8q
- sMSXD85RQaaYk7gZlC30dGsVrRfA9vWBBcSbLtjsDeQRmqUzKQDk3RE2APXghHCT2gd1HsMn6cC
- w03jw9OmgJtctT1Md9VLCeJIGKZn+EocIPW7grjnXNn2tk0kgvvJxr4rk8VSx2bGl4GgmcQBnwO
- Yq0LE8mAVVMsxcgc9kFaFerh+cUp0brlo4BAkCPTdjq/qqG8iOcSHPDvLJBgCNXCACJMojxPyLB
- WCsM0hv99KXOo0rordb2PaQ5LxxdFaefgL6lngg0+jO3rfG8keuos3i/5xfJ5UXF/SB59DsxBwP
- NRn6xEmp5ItjYcqy1PPOtzrPko5C8qxFfksLyKHQrEmVIts7YCpFEQtJhU9adSM1OLyCjrcL
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8
+ a=m3WaDHdJIJcFsLUxIFMA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: J7BdMVlrGgpZLF7n2KxV2oODPxbNRUN2
+X-Proofpoint-GUID: J7BdMVlrGgpZLF7n2KxV2oODPxbNRUN2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDEyNSBTYWx0ZWRfX8o8roVkgv2XJ
+ nvHB7vFVFK8zvbQZKlmrVfArveiOe9Ko8satyG/T7jKgSf/JiATzeJUGkSRoN/Doxwh7/y9OEs2
+ K0/e2Bw6jskFCOzXYUgCWGcKMjLd/0vqLZmNEHkQF5OGZb8ayuExFEItp57YCMpFsAHa+SCxjil
+ G07slW2K88OZPS5XKgzXOPQKk3vG3sBW3kwS4smXbLV54WcfvYpT/Q9xq/ho/h2pDjrgg3tAtSk
+ ttfHWDIssn5OqaA4QMl+owvlvThADlx0gSoYimrUjutWMPMy0786/cQt4WYAz3YTfiektvCsf1F
+ dFqnD2lYXM6C+7lk/u+skPoQl+n9RNE3pBV8g/jjSIiLoILdgSrSaJoZYOEBkgk/KZNY3W5xPHc
+ QRZrJRX91T7F1ogKSD+AFiBB2wDjmS1WHWqPD6aR6Rzh+w63YtnybaeQWp4IydfJG4x55Qug
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-02_02,2025-07-02_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 mlxlogscore=867 mlxscore=0 malwarescore=0 suspectscore=0
- lowpriorityscore=0 clxscore=1015 impostorscore=0 adultscore=0
- priorityscore=1501 bulkscore=0 phishscore=0 classifier=spam authscore=0
+ adultscore=0 mlxlogscore=991 priorityscore=1501 clxscore=1015
+ lowpriorityscore=0 mlxscore=0 phishscore=0 suspectscore=0 bulkscore=0
+ malwarescore=0 impostorscore=0 spamscore=0 classifier=spam authscore=0
  authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2505280000 definitions=main-2507020125
 
+The sc8180x video clock controller block is identical to that
+of sm8150. Add a new compatible string for sc8180x videocc and
+use sm8150 as fallback.
+
 Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 ---
-Changes in v3:
-- Fix the yaml binding indentation warnings.
-- Link to v2: https://lore.kernel.org/r/20250701-sc8180x-videocc-dt-v2-0-b05db66cc1f6@quicinc.com
-
-Changes in v2:
-- Introduce new compatible for sc8180x videocc and use sm8150 as
-  fallback. 
-- Add new patch to update the bindings accordingly.
-- Link to v1: https://lore.kernel.org/r/20250623-sc8180x-videocc-dt-v1-1-9d210c140600@quicinc.com
-
----
-Satya Priya Kakitapalli (2):
-      dt-bindings: clock: qcom,videocc: Add sc8180x compatible
-      arm64: dts: qcom: sc8180x: Add video clock controller node
-
  .../devicetree/bindings/clock/qcom,videocc.yaml       | 19 ++++++++++++-------
- arch/arm64/boot/dts/qcom/sc8180x.dtsi                 | 15 +++++++++++++++
- 2 files changed, 27 insertions(+), 7 deletions(-)
----
-base-commit: 5d4809e25903ab8e74034c1f23c787fd26d52934
-change-id: 20250623-sc8180x-videocc-dt-4ec3c0761f8d
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-Best regards,
+diff --git a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
+index 5f7738d6835c4ba999402e163fc85a07e3a47a5a..b490caaf843243a7a96395fdd2b99972a45679f9 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
+@@ -23,13 +23,17 @@ description: |
+ 
+ properties:
+   compatible:
+-    enum:
+-      - qcom,sc7180-videocc
+-      - qcom,sc7280-videocc
+-      - qcom,sdm845-videocc
+-      - qcom,sm6350-videocc
+-      - qcom,sm8150-videocc
+-      - qcom,sm8250-videocc
++    oneOf:
++      - enum:
++          - qcom,sc7180-videocc
++          - qcom,sc7280-videocc
++          - qcom,sdm845-videocc
++          - qcom,sm6350-videocc
++          - qcom,sm8150-videocc
++          - qcom,sm8250-videocc
++      - items:
++          - const: qcom,sc8180x-videocc
++          - const: qcom,sm8150-videocc
+ 
+   clocks:
+     minItems: 1
+@@ -111,6 +115,7 @@ allOf:
+       properties:
+         compatible:
+           enum:
++            - qcom,sc8180x-videocc
+             - qcom,sm8150-videocc
+     then:
+       properties:
+
 -- 
-Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+2.25.1
 
 
