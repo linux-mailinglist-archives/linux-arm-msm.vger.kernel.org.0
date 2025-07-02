@@ -1,111 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-63418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60864AF5BC6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 16:54:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAF24AF5BF1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 16:59:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E9DC1C4410B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 14:54:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E78FF16C520
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 14:58:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E75D930AACA;
-	Wed,  2 Jul 2025 14:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFB8330B9B3;
+	Wed,  2 Jul 2025 14:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="psjtlS2e"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iIjCKHzV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B158D30AAB5;
-	Wed,  2 Jul 2025 14:53:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A5B30AAD9
+	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jul 2025 14:58:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751468020; cv=none; b=tIx+bK2omLylFPLUWpvUIvQzfsflZQ36KzXmL/ipvaCRG/tL0qq/QuJO8MyydugW/azADFIXFyUi49RBTg0V1TRww9I8UHiMwKq7qlQoTDv+NK6CDhSu7cSYgHK7nLF8379TnAwBzuD9S/Vqpqyy3YfNlCxcg6tujuSAoodGYkQ=
+	t=1751468319; cv=none; b=eT88mSu01vUWyBdwqi4Oat7MtqZF38mQqWazciWxURTdwwQ+oyXxz9zisrSXH7BIkY8hPECztmQn9iVuxOSImvkRyXFTUZb+mXSP5+yXJgDmmr0esWM6cz+bl1UFtcZ3sehrAfqZJHoN/5FW/2R6cWdu8XRBbv/tj4eADgVBrGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751468020; c=relaxed/simple;
-	bh=YB+SqpHJK/1OIVhZqx+TQHSDi0rUKrHSsi1YuF2D9c8=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=M1EkmaR/j4vgE/ZCugR83n3YIr585z8w9KmDy90Jf7kfghArDDWhbmA8M1m9vlIcrDZZseMbEkHDag0r2aDeFQhggT0IQN0WZlXohyBRcJXx2z56QVYu1LNESJV21/Omvn2/d8x1rElWDvYL+B2dNkI5jqnRnb5EnvQCt+2sgrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=psjtlS2e; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FF3C4CEEF;
-	Wed,  2 Jul 2025 14:53:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751468020;
-	bh=YB+SqpHJK/1OIVhZqx+TQHSDi0rUKrHSsi1YuF2D9c8=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=psjtlS2exQUV1FflYSGUEdM+ELbGrJXtQnnS3BYUJMzovaoPoAgVcdNR8Jq6B0iiI
-	 MlJD2yH3V8/SJnwICIv/s/FAwy6WuttwOUcGtgHklBxDeD9i6BmP6/FSQSZRatdaUg
-	 27n9AljlL7ZmXrzFglDngSQfeiO2F6TSAnLNf7Yyj9YMddE6TiBuhalC/80x8dcOVm
-	 LH3c0GVtdeksrTFfHCfTrZgGBnZSeKz0BWRkeu+MLJXsKTl4CON4ndkb5inOG/DlD+
-	 SYT034zlDwtd2oRjGNQ07r9sAgWPzwKHDoBwdbOSb2+uNq5O0JKZNIT2qDgECXJFaw
-	 MFMmqLaxQEkPw==
-From: Mark Brown <broonie@kernel.org>
-To: Srinivas Kandagatla <srini@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- kernel@oss.qualcomm.com
-In-Reply-To: <20250701102915.4016108-1-quic_pkumpatl@quicinc.com>
-References: <20250701102915.4016108-1-quic_pkumpatl@quicinc.com>
-Subject: Re: [PATCH v1 0/2] Add sound card support for QCS8275
-Message-Id: <175146801653.192310.9791150746905326384.b4-ty@kernel.org>
-Date: Wed, 02 Jul 2025 15:53:36 +0100
+	s=arc-20240116; t=1751468319; c=relaxed/simple;
+	bh=jmdo0wtlEM9OGtqiUmj8GSs9s2w3JeA5xOWYKMd/baE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SqYQqO2JfnHRIpG8/P13FHwAFbyINqqjAdl/de6E4u9EbRTDz8oJX3mXNwU8CuJHu8MqsfiwCWakqmq/+miE6hoiWrfZ+zU1XC6xwb/I310DmfrJg86grxULnVYsHt3y76dL29RgJWRXQwG/QjAKqhNATq566zzLokc2xTHsB0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iIjCKHzV; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-450cfb79177so42045095e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 07:58:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1751468314; x=1752073114; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JO+LYkjBSv6Ibw6vZ1z2UPxJ2+RcrEARZpMlMoEjCbw=;
+        b=iIjCKHzVmgD9ddqjWVzRYA66hWINjAVkj+uAh5e+xoNYufqoojFWsAolb4Hh88lmOC
+         6pVKTFkGAGwfPBrz2CNnmUoy4+FdK7pbrwdcqPqSgakMPgnljxc1t6XAcaHuNxfLVIiP
+         WNszDQbv+Cr6HuqdtqxtX65GUBiEA/+1AV/sa37fntaTI7UznF8Deu1MLQfdGwEKw8P8
+         VWea/7OVxY97m+HPrWqMxOzjxpcdufhTElopGmDQBAYKh89NKzZ8Va6tGw/GlzwIq6hr
+         jpVAG0D7E6vbWN+Pguxiu/Qxkupnmk+zQjdz7lKnqxHKs5jD12Wu9cEa3rStz0RbcvwE
+         9OJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751468314; x=1752073114;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JO+LYkjBSv6Ibw6vZ1z2UPxJ2+RcrEARZpMlMoEjCbw=;
+        b=J2sHGEZ6gKBmwZYqsgiuBDTQfqY+lNhDT5V8OwW/WDfgOg6OSYaAmtKU2zezlaDqms
+         jpdgBcZRJE3fuG3CMosDenEo2uSxcJ01J5XF3vqhbsDJju/EZBGOvHH6yyB+YGbqFdRP
+         pabPHlUjYHDiV0oG20ofay9evHteTr3UertZvCLuGe3guwZ/JGKl9p9MgAtNcwqcdS1J
+         5aFBWynGSySRFs5ShQracttf/Mi8Y7Sejppv6/zndW6fyHCKnQzxUojLh8oVjHCgPCJM
+         /6FruHNMll3Ct03PE/gmgpROBbWkx/M7/vigP5fGhmGBDfqMgbfckA4SPHKTNq/FxsoJ
+         uNdw==
+X-Forwarded-Encrypted: i=1; AJvYcCUdTfMEVqHIjSd2LQMApb4I3obYxtTTjlF+bze1eHUAqfB320MiHzs4HKT1OHjH4sx9ax7y1SMZRM5pIsx1@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZWG/s8hF30IAhXBm5iAtQRtch1vWjuiOR+tqvyrIZwbHdPwM6
+	JCf7DydiMs0boeGxoDdw0eUFNySh5HaT79IFSQ/FQcs5DM/wyKvL3q7pmZhIz1K+3dw=
+X-Gm-Gg: ASbGncsVPN22P3FLCNn7Qa7AlBPFfn1X/ELETQsUTOhrGxq5bFVRNE5Hq++PSTqsyoG
+	HvtZAs2j77jYDZFP7gAxqbDKB25oiv8hK1rA+CyZwLoY4Tx++qBgWG1cABj/OY83aJuekorRK8C
+	tKFiMjvev4zd/Zxuu8GcLzKJUoheW7cXbbD83zV/VEo+2FS3vXFsLq5RkXtFTyd+S1KW3H3csww
+	F5Hd/jW7RY+/iWn9YepRAK+Vu3KMnzhsuz5oXcrFBsBlbyoqeJBk9m5iK6c7ILgdoew6KXUIk1G
+	l7Ynrbh7m/8K6xnQjZc54DEgWbSswQ0QI48107oHm3RVn3XhDm/WdHueUhhor20FBMdYUGs1+p1
+	zNGYGii60n4/kd3YPFzzadOGFKClsH4KHnM316sY=
+X-Google-Smtp-Source: AGHT+IG8IhnVjdqSTayA9JUM4Fr5GDQ3JacEz/LaBYGYa1zzNjcnf1n3rb9PZrhs50FB927OOVq7Hw==
+X-Received: by 2002:a05:600c:6389:b0:450:d019:263 with SMTP id 5b1f17b1804b1-454a370c053mr34926805e9.18.1751468314016;
+        Wed, 02 Jul 2025 07:58:34 -0700 (PDT)
+Received: from [192.168.0.34] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454a99668c5sm582525e9.5.2025.07.02.07.58.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Jul 2025 07:58:33 -0700 (PDT)
+Message-ID: <8e7e0b5b-28a0-49db-9acc-f3a4c7d90559@linaro.org>
+Date: Wed, 2 Jul 2025 15:58:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] media: iris: Call correct power off callback in cleanup
+ path
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Hans Verkuil
+ <hverkuil@xs4all.nl>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: stable@vger.kernel.org
+References: <20250702134158.210966-2-krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20250702134158.210966-2-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-cff91
 
-On Tue, 01 Jul 2025 15:59:13 +0530, Prasad Kumpatla wrote:
-> This patchset adds support for sound card on Qualcomm QCS8275 boards.
+On 02/07/2025 14:41, Krzysztof Kozlowski wrote:
+> Driver implements different callbacks for the power off controller
+> (.power_off_controller):
+
+The driver
+
 > 
-> Prasad Kumpatla (2):
->   ASoC: dt-bindings: qcom,qcs8275-snd: Add QCS8275 sound card
->   ASoC: qcom: sc8280xp: Add support for QCS8275
+>   - iris_vpu_power_off_controller,
+>   - iris_vpu33_power_off_controller,
 > 
->  Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 1 +
->  sound/soc/qcom/sc8280xp.c                                | 1 +
->  2 files changed, 2 insertions(+)
+> The generic wrapper for handling power off - iris_vpu_power_off() -
+> calls them via 'iris_platform_data->vpu_ops', so shall the cleanup code
+> in iris_vpu_power_on().
 > 
-> [...]
+> This makes also sense if looking at caller of iris_vpu_power_on(), which
+> unwinds also with the wrapper calling respective platfortm code (unwinds
+> with iris_vpu_power_off()).
 
-Applied to
+platfortm/s//platform
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+> Otherwise power off sequence on the newer VPU3.3 in error path is not
+> complete.
+> 
+> Fixes: c69df5de4ac3 ("media: platform: qcom/iris: add power_off_controller to vpu_ops")
+> Cc: <stable@vger.kernel.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>   drivers/media/platform/qcom/iris/iris_vpu_common.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.c b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> index 268e45acaa7c..42a7c53ce48e 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> @@ -359,7 +359,7 @@ int iris_vpu_power_on(struct iris_core *core)
+>   	return 0;
+>   
+>   err_power_off_ctrl:
+> -	iris_vpu_power_off_controller(core);
+> +	core->iris_platform_data->vpu_ops->power_off_controller(core);
 
-Thanks!
+Correct.
 
-[1/2] ASoC: dt-bindings: qcom,sm8250: Add QCS8275 sound card
-      commit: 3b8dc31715e31ab930d36ef7b98ffc714344e411
-[2/2] ASoC: qcom: sc8280xp: Add support for QCS8275
-      commit: 34d340d48e595f8dfd4e72fe4100d2579dbe4a1a
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+>   err_unvote_icc:
+>   	iris_unset_icc_bw(core);
+>   err:
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
