@@ -1,235 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-63365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39940AF11F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 12:34:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 65DCBAF1208
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 12:36:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 46DE14A0128
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 10:34:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A308524BEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 10:36:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07992253F12;
-	Wed,  2 Jul 2025 10:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F50525F7A4;
+	Wed,  2 Jul 2025 10:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RQ0+mZIp"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nzhSB8Cz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4E5246781;
-	Wed,  2 Jul 2025 10:33:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AD525DCEC;
+	Wed,  2 Jul 2025 10:36:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751452434; cv=none; b=Z8jVb0fj6ByY97qZd1EMMKmUhxXDNd8ty7y//qvOnTAEuUrGSzksocJaImkx97YJjSIY96Sjz7T0PtOM0u+f40p+z/c08epzoNCHDTRGQKLKJhAGQ+bfYZWGS2zMdgx6SZvtcYZnn8Ch4W9WSYksJMMCJ+PrJG+a2zW2kBGGYg4=
+	t=1751452582; cv=none; b=l/ClfyKwVnvENt3TabWNafms5VGzE47gpbSSF3ioDQJ4azT3gnP8plpimB+Cssu1tc259sVCxsJCVN9UmDLU3SsHbz6y6PHPRwUAw7Aj1ObIVjnMOzqAdq7IurnYurdZJYwTQOyBOuFjGCGby6VyNR0j/igvQ50OM2sVlvFLLWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751452434; c=relaxed/simple;
-	bh=Zr4lURcAt0rx9IueClgNCAvtqGi3g4wuS+sj1uYDWIE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=oOtuKmLK6v2j04LjssOSkpdkQ0YZS1cRe5FF0b5yoigfnJ4kb1sMzDQ+EHIpGjRpaZQc+8F4WSY4YR0oRU4OwiKzOpLRHwzCGZvyu4le8iB6bI0ECz3nYYwz+rrisTovlCD524m/q15CGl2aVcxeY5A50E6rkcuw1wc7IMga14M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RQ0+mZIp; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56235evB020939;
-	Wed, 2 Jul 2025 10:33:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	tyuuEW55huNUHGYc+9oBljKgGuuKmVR8um5xHUVVKiE=; b=RQ0+mZIpNSh3Iz8A
-	RhHHe/+V1EIUnRYRbCEqxvllc8tpS6BrYL8QMLhA00tqScPxK2S61Ajr5QW7IyHn
-	69UqGMyj1bg7FxZXrArNwefXmRzc/8eEhUkmA6Yo5ibCoi4ScJ0tUqm97HP3yvkX
-	sKP6xOJASdNFBdRp+pUSu9YELcP0ceE/Mpup9XSxnNB4QNvCnfjce4P8Lz6K8dX6
-	LNVMWDwmrOLcztG1rROXp3+9ncHuXE+94fWNOCJyExgWIG3g/sZq8FKGoO09Y984
-	1fJgj7HbYAxmP3doQUwjBWCjneo+ENIponHFK9sT3jLUYl4iMX8AGUwZLfyim+F4
-	EE3Mmg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47mhxn2xt9-1
+	s=arc-20240116; t=1751452582; c=relaxed/simple;
+	bh=GaZCKY0SU+yrmjqmrkNLz9qIM363CmKL6Yd8iR4z5G4=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=JuvVtvRItcPOImemY8s4G/E2SpdjbwkEU6ZYQoz32gWVUhxSYA1ASt+vIXt0QXlWQztv2J5WpS4bM/d4hO1hV8DwkUqMc+BbnnJzSt5yuAFL13rHh4tLVOS09j4dLXDxa1nxu6aPse53f7yv9DiyJ4jIi10IwUDlq0g+MRswLIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nzhSB8Cz; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5627b6qs019831;
+	Wed, 2 Jul 2025 10:36:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=1Ypy47BdFf3JhOwF9brvNY71Wi2+yZUl3eF
+	9Wbgne7s=; b=nzhSB8Czwd8/urmmIrwK3k5x4yJsc43U9/2Ai9sMRGnpxf/jizY
+	P0fxggTd4Hy+c3OujLH6999RDNtDhZxwRcY4ikI0GB6RTqL9RIYqOvRaCGHKcKx4
+	yantEZ9yO0W0cOjtcF6F9+quPRabLPLzUgCwrZrV4YdZfLcvDL8vlqsrBzAtH9mW
+	EAaG8SuwZC/vE4jBdYTxuWXzdtskJbOrRLf8tYC5y736jJMrskPI+2g7wYkh5RM1
+	eaQ5sTzcfv3hcFxUft4d+78EBop9UNhbv1JN38ixkcD3ASfQZYt/RI9Y7y0+D87P
+	aw2E+//hrPanzbyeF6a23rrXh++182KVpNw==
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47n0h8gm8y-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 02 Jul 2025 10:33:40 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 562AXdZl022880
+	Wed, 02 Jul 2025 10:36:08 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 562Aa6gw003672;
+	Wed, 2 Jul 2025 10:36:06 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 47j9fmbh2u-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 2 Jul 2025 10:33:39 GMT
-Received: from [10.253.36.62] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 2 Jul
- 2025 03:33:33 -0700
-Message-ID: <ade0437b-3c23-4174-b4c5-6c90037abf14@quicinc.com>
-Date: Wed, 2 Jul 2025 18:33:31 +0800
+	Wed, 02 Jul 2025 10:36:06 +0000
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 562Aa58R003658;
+	Wed, 2 Jul 2025 10:36:05 GMT
+Received: from cse-cd02-lnx.ap.qualcomm.com (cse-cd02-lnx.qualcomm.com [10.64.75.246])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 562Aa45i003654
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 02 Jul 2025 10:36:05 +0000
+Received: by cse-cd02-lnx.ap.qualcomm.com (Postfix, from userid 4438065)
+	id B31AF3923; Wed,  2 Jul 2025 18:36:03 +0800 (CST)
+From: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
+        mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
+        bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
+        kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
+        kw@linux.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+Subject: [PATCH v7 0/3] pci: qcom: Add QCS615 PCIe support
+Date: Wed,  2 Jul 2025 18:35:46 +0800
+Message-Id: <20250702103549.712039-1-ziyue.zhang@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] dt-bindings: clock: qcom: Add NSS clock controller
- for IPQ5424 SoC
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Georgi Djakov <djakov@kernel.org>,
-        Philipp Zabel
-	<p.zabel@pengutronix.de>,
-        Richard Cochran <richardcochran@gmail.com>,
-        "Konrad
- Dybcio" <konradybcio@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Anusha Rao <quic_anusha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <quic_kkumarcs@quicinc.com>,
-        <quic_linchen@quicinc.com>, <quic_leiwei@quicinc.com>,
-        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>
-References: <20250627-qcom_ipq5424_nsscc-v2-0-8d392f65102a@quicinc.com>
- <20250627-qcom_ipq5424_nsscc-v2-5-8d392f65102a@quicinc.com>
- <20250701-optimistic-esoteric-swallow-d93fc6@krzk-bin>
-Content-Language: en-US
-From: Luo Jie <quic_luoj@quicinc.com>
-In-Reply-To: <20250701-optimistic-esoteric-swallow-d93fc6@krzk-bin>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDA4NSBTYWx0ZWRfX8ic95YwncjRA
- R4a/ZplQ4CcTmnpeSbBXjN38NorRfGm7Ty1Ot++Z+mRMrbEH9rm4bVxtycdNHSp9qs2NibUFiba
- kjc7NUW4FXBBu43LDB5pY51vR2GQA/dKl1FJsaseUplIdTgdZyMO3i7dTNjVgVkzjbfCIjE7Rl/
- 3Ix9k4evJes1nmfqFZNw0lcj84C4dO0tuPZtHAFUUDLTXcJLlNRPYb7WGY+ysmlTfLV0c+sdl8v
- 4YuekVKu7AqhaSS/CRFirak/41IDSoojDw/IqV/BmHWeTxChg4hDHYl/pW4QSyKyskU5l1B/EB3
- PF/ecM+oIhCfBcFQ7C35HXitpcR1HEUniMkTIPhtm+jEGrtmOWnBbEqGp9WeFC19yOHfYVQkzxc
- aUItSPNWmB+JABtSCmH/8jMDuGsSFA+COQfNGsMpKt2sxLzyGvq+yv1AF81Y2K2MGL2nXb7Z
-X-Authority-Analysis: v=2.4 cv=EbvIQOmC c=1 sm=1 tr=0 ts=68650b04 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=gEfo2CItAAAA:8
- a=COk6AnOGAAAA:8 a=VwQbUJbxAAAA:8 a=l8XhYvs3ogmA2MLIGYEA:9 a=QEXdDO2ut3YA:10
- a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: ZJFKHmu4BoQDsqmwOJcsqj0rTrgYuXIn
-X-Proofpoint-GUID: ZJFKHmu4BoQDsqmwOJcsqj0rTrgYuXIn
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDA4NiBTYWx0ZWRfX9MUvxrgxP8Xb
+ toQEAnLRSA3FlazYhExW9aH4QCCbFKKXzILbPZZkpqte0zHESM0UprV0h9nQljQ0V+aBgqN8EiE
+ BuRV4v0ZWNReiRPTnMaiYFcuTUYsnmIDFgq0br7/af4a1r9otpaWicL01LB4kjwQrHIgo8gVqYi
+ P8KzPn9IXXfg+sRxHCG45VJbvKrpc1iIRh56JnQKvBxHf8jDhwnxLuWbBXwm6ZokavkmOrIDxyF
+ GFtJic7XqsFnuMi0rWjVD9ExcG1zoZInLroG7Z7N6ldRXo6zwITDof1OLA6aUHubCc71C2cjWPw
+ 9lRGp8M4a9LT9rnUOWNX70RpvYfqy1LKPbx9HXpyEOWeRbMf+t/C/ZgcLGGwEj8mOUzft0KRGaK
+ MMtUh2H+0rTnkYHZ0XAjuedYEngHoj4f/+SwvkhoC/0bizTxSKfx9BRNC+u8luj5AuWrItqw
+X-Proofpoint-ORIG-GUID: Rgdtu__xCs89fhYeg_6xEO55jxXCaNGc
+X-Authority-Analysis: v=2.4 cv=L4odQ/T8 c=1 sm=1 tr=0 ts=68650b98 cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=FMqLFO0IG5DNS-mwCd0A:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: Rgdtu__xCs89fhYeg_6xEO55jxXCaNGc
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-02_01,2025-06-27_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=999 lowpriorityscore=0
- malwarescore=0 adultscore=0 clxscore=1015 bulkscore=0 impostorscore=0
- spamscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507020085
+ priorityscore=1501 mlxscore=0 mlxlogscore=793 suspectscore=0 adultscore=0
+ malwarescore=0 spamscore=0 clxscore=1011 bulkscore=0 impostorscore=0
+ phishscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507020086
+
+This series adds document, phy, configs support for PCIe in QCS615.
+
+This series depend on the dt-bindings change
+https://lore.kernel.org/all/20250521-topic-8150_pcie_drop_clocks-v1-0-3d42e84f6453@oss.qualcomm.com/
+
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Signed-off-by: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+---
+Have following changes:
+	- Add a new Document the QCS615 PCIe Controller
+	- Add configurations in devicetree for PCIe, including registers, clocks, interrupts and phy setting sequence.
+	- Add configurations in devicetree for PCIe, platform related gpios, PMIC regulators, etc.
+
+Changes in v7:
+- Add Fixes tag to phy bindings patch (Johan)
+- QCS615 is Gen3 controller but Gen2 phy, so limited max link speed to Gen2.
+- Remove eq-presets-8gts and oppopp-8000000 for only support Gen2.
+- Link to v6: https://lore.kernel.org/all/t6bwkld55a2dcozxz7rxnvdgpjis6oveqzkh4s7nvxgikws4rl@fn2sd7zlabhe/
+
+Changes in v6:
+- Change PCIe equalization setting to one lane
+- Add reviewed by tags
+- Link to v5: https://lore.kernel.org/all/t6bwkld55a2dcozxz7rxnvdgpjis6oveqzkh4s7nvxgikws4rl@fn2sd7zlabhe/
+
+Changes in v5:
+- Drop qcs615-pcie.yaml and use sm8150, as qcs615 is the downgraded
+  version of sm8150, which can share the same yaml.
+- Drop compatible enrty in driver and use sm8150's enrty (Krzysztof)
+- Fix the DT format problem (Konrad)
+- Link to v4: https://lore.kernel.org/all/20250507031559.4085159-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v4:
+- Fixed compile error found by kernel test robot(Krzysztof)
+- Update DT format (Konrad & Krzysztof)
+- Remove QCS8550 compatible use QCS615 compatible only (Konrad)
+- Update phy dt bindings to fix the dtb check errors.
+- Link to v3: https://lore.kernel.org/all/20250310065613.151598-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v3:
+- Update qcs615 dt-bindings to fit the qcom-soc.yaml (Krzysztof & Dmitry)
+- Removed the driver patch and using fallback method (Mani)
+- Update DT format, keep it same with the x1e801000.dtsi (Konrad)
+- Update DT commit message (Bojor)
+- Link to v2: https://lore.kernel.org/all/20241122023314.1616353-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v2:
+- Update commit message for qcs615 phy
+- Update qcs615 phy, using lowercase hex
+- Removed redundant function
+- split the soc dtsi and the platform dts into two changes
+- Link to v1: https://lore.kernel.org/all/20241118082619.177201-1-quic_ziyuzhan@quicinc.com/
+
+Krishna chaitanya chundru (2):
+  arm64: dts: qcom: qcs615: enable pcie
+  arm64: dts: qcom: qcs615-ride: Enable PCIe interface
+
+Ziyue Zhang (1):
+  dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Update pcie phy bindings
+    for QCS615
+
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |   2 +-
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts      |  42 ++++++
+ arch/arm64/boot/dts/qcom/qcs615.dtsi          | 138 ++++++++++++++++++
+ 3 files changed, 181 insertions(+), 1 deletion(-)
 
 
-
-On 7/1/2025 4:22 PM, Krzysztof Kozlowski wrote:
-> On Fri, Jun 27, 2025 at 08:09:21PM +0800, Luo Jie wrote:
->> NSS clock controller provides the clocks and resets to the networking
->> blocks such as PPE (Packet Process Engine) and UNIPHY (PCS) on IPQ5424
->> devices.
->>
->> Add the compatible "qcom,ipq5424-nsscc" support based on the current
->> IPQ9574 NSS clock controller DT binding file. ICC clocks are always
->> provided by the NSS clock controller of IPQ9574 and IPQ5424, so add
->> interconnect-cells as required DT property.
->>
->> Also add master/slave ids for IPQ5424 networking interfaces, which is
->> used by nss-ipq5424 driver for providing interconnect services using
->> icc-clk framework.
->>
->> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
->> ---
->>   .../bindings/clock/qcom,ipq9574-nsscc.yaml         | 70 +++++++++++++++++++---
->>   include/dt-bindings/clock/qcom,ipq5424-nsscc.h     | 65 ++++++++++++++++++++
->>   include/dt-bindings/interconnect/qcom,ipq5424.h    | 13 ++++
->>   include/dt-bindings/reset/qcom,ipq5424-nsscc.h     | 46 ++++++++++++++
->>   4 files changed, 186 insertions(+), 8 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
->> index 17252b6ea3be..0029a148a397 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
->> @@ -4,7 +4,7 @@
->>   $id: http://devicetree.org/schemas/clock/qcom,ipq9574-nsscc.yaml#
->>   $schema: http://devicetree.org/meta-schemas/core.yaml#
->>   
->> -title: Qualcomm Networking Sub System Clock & Reset Controller on IPQ9574
->> +title: Qualcomm Networking Sub System Clock & Reset Controller on IPQ9574 and IPQ5424
->>   
->>   maintainers:
->>     - Bjorn Andersson <andersson@kernel.org>
->> @@ -12,21 +12,29 @@ maintainers:
->>   
->>   description: |
->>     Qualcomm networking sub system clock control module provides the clocks,
->> -  resets on IPQ9574
->> +  resets on IPQ9574 and IPQ5424
->>   
->> -  See also::
->> +  See also:
->> +    include/dt-bindings/clock/qcom,ipq5424-nsscc.h
->>       include/dt-bindings/clock/qcom,ipq9574-nsscc.h
->> +    include/dt-bindings/reset/qcom,ipq5424-nsscc.h
->>       include/dt-bindings/reset/qcom,ipq9574-nsscc.h
->>   
->>   properties:
->>     compatible:
->> -    const: qcom,ipq9574-nsscc
->> +    enum:
->> +      - qcom,ipq5424-nsscc
->> +      - qcom,ipq9574-nsscc
->>   
->>     clocks:
->>       items:
->>         - description: Board XO source
->> -      - description: CMN_PLL NSS 1200MHz (Bias PLL cc) clock source
->> -      - description: CMN_PLL PPE 353MHz (Bias PLL ubi nc) clock source
->> +      - description: CMN_PLL NSS (Bias PLL cc) clock source. This clock rate
->> +          can vary for different IPQ SoCs. For example, it is 1200 MHz on the
->> +          IPQ9574 and 300 MHz on the IPQ5424.
->> +      - description: CMN_PLL PPE (Bias PLL ubi nc) clock source. The clock
->> +          rate can vary for different IPQ SoCs. For example, it is 353 MHz
->> +          on the IPQ9574 and 375 MHz on the IPQ5424
->>         - description: GCC GPLL0 OUT AUX clock source
->>         - description: Uniphy0 NSS Rx clock source
->>         - description: Uniphy0 NSS Tx clock source
->> @@ -42,8 +50,12 @@ properties:
->>     clock-names:
->>       items:
->>         - const: xo
->> -      - const: nss_1200
->> -      - const: ppe_353
->> +      - enum:
->> +          - nss_1200
->> +          - nss
-> 
-> No, that's the same clock.
-
-OK.
-
-> 
-> 
->> +      - enum:
->> +          - ppe_353
->> +          - ppe
-> 
-> No, that's the same clock!
-> 
-> The frequencies are not part of input pin. Input pin tells you this is
-> clock for PPE, not this is clock for PPE 353 and another for PPE xxx.
-> 
-> Best regards,
-> Krzysztof
-> 
-
-Ok. Our only concern with dropping the suffix and using a common name
-was renaming the existing property (initially added for IPQ9574 SoC)
-from 'ppe_353' to 'ppe'. However I do agree that dropping suffix is the
-better approach. Thanks for the suggestion.
+base-commit: 3f804361f3b9af33e00b90ec9cb5afcc96831e60
+-- 
+2.34.1
 
 
