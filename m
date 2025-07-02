@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-63463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32173AF6358
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 22:32:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38A4AAF6360
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 22:34:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EB8133B82AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 20:32:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5757B17977B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 20:34:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC757248F54;
-	Wed,  2 Jul 2025 20:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A42F22D63E0;
+	Wed,  2 Jul 2025 20:33:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c5aVrgxJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P0cJHMNx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99732DE717;
-	Wed,  2 Jul 2025 20:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BC2221F03;
+	Wed,  2 Jul 2025 20:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751488348; cv=none; b=Ux2r5MfgzI8uI1NVc7ofEde+1dPiWR+LYX7qse8ClqdEJ4eYzd1fu9AAlg5P83MSZ/SnzAwBV4W8qMzHjHaSsHlWvhjiWSAAGoM4aSImC2Zypt8CRrMZV0+25YeMCc/+paQJEScF9E1Tp0jcRirMCT76SrIFytqlQfdCE4tTsT8=
+	t=1751488438; cv=none; b=fTHHbyLIMapdnPlnEEoVZ4I2kfan2gYfHdurNFfLbTeE0qObwL7QTDOaR0CutB75D3ElcprV4plZgYl/GLnWrEvicZJyHiQ2XIJfAXEnJMEraZu3TTyLrdFBi7kaAUIIAGT4jOLIwmJDT/U2Ee+vmNxt98LJgp7EiEPik+mZKGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751488348; c=relaxed/simple;
-	bh=AQj1KqNi6O1MblNaJlJZf+D7Hyvwx661fg4rUbzcPEk=;
+	s=arc-20240116; t=1751488438; c=relaxed/simple;
+	bh=gCZxcp80Zc/TvUBmFbhKY2bvAwhVupnUXUBlhnDmqDI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OGqtu9WXB9qPxDUdSsrExsPrTsH0069wu478dQuWDxPdwHcMwIafZuE4V1lYn60r7IeFNsxM/qEeyVm4VucX31RA4IC4nukSYx/1H55g/YjhIPfysZ9L26pda8uBoXljDgvVzFwZ7mlgouFkgJ8r1NwFBXl2BCuRtbmB3cf88WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c5aVrgxJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F416C4CEE7;
-	Wed,  2 Jul 2025 20:32:24 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=B3skri9tooBT2GmPPGOyy/cInbUGPrFki7Gaor2GXuDkwdmksZrvTNIx1kyz044qJkU4WpQm0V/5/+yj7UKAbJXQw63V+59O6ZhjG8F2QJi/VrA/1xsLEidAk7cZJOJ8kWGza0Y9ABMUnPu2pJ0vOyWRXfoVbU81gRLTseYBpP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P0cJHMNx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B0DC4CEE7;
+	Wed,  2 Jul 2025 20:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751488348;
-	bh=AQj1KqNi6O1MblNaJlJZf+D7Hyvwx661fg4rUbzcPEk=;
+	s=k20201202; t=1751488437;
+	bh=gCZxcp80Zc/TvUBmFbhKY2bvAwhVupnUXUBlhnDmqDI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=c5aVrgxJxGKr2xUu8ziy+Fu/mIwCiitmsaT49GiTEp9dplVruZg6qmei9buZYRV3U
-	 2nALn0ygDJzbPeys5SGyqZgd9dv0gxXR3VkMXOKJqR8q15KrtlAKfy2RkTnGbJ/Ly5
-	 F5IlpSzI7Ao2yJ/Kfb0F0HWGpdAbihlW7ZoxF20pt8yxWAbgNOngLk5lDyZqLB2ixf
-	 UPVtOborvWksg7N3GZx8jtXyIbJiwBUd87e4Aso9CHZd5GblksYAoZLEDKhy+NvTfi
-	 rTyoUfQ/0vdeklGPJEs67Nn/R7zr7YX/uLx1j15mDfSR4ovbblwUXzUdihLpjAVY3X
-	 EYPJrqvVE/UXA==
-Message-ID: <cf34d7dd-4425-49ec-b430-927c70d1fbc8@kernel.org>
-Date: Wed, 2 Jul 2025 22:32:22 +0200
+	b=P0cJHMNx98Io1+j6CqWgHphltaTzqD/n4k6LezCCOFYqmSZLPcaHq4sZf//mkWD7E
+	 V181RSGod454zU2b09H4xW52Cxw82+xXAkH3HNmQH6RWxQjkqFjaiPKqIXYfBGQrab
+	 6MCk920pj/UlXppIK4fLL9rkGJyp2uE+YuWSVzO3BsEU9rer1dnsV6XGh4DFEoyZ11
+	 WZKEIgyhn+G5z29KGSyFH+qKdONz3SNwcIrjPN5YIM73PrXymUG98lJkO+jUUATqh8
+	 /oVlT6NVue+vmNfoOJS+4iQTfcKq4QWq2QpROzE2ii8eyrdFWhdgFVrTKnT4vhGD4B
+	 S4mchEqILJiFA==
+Message-ID: <507205ff-fdb8-4f43-ab69-418cfd9da4af@kernel.org>
+Date: Wed, 2 Jul 2025 22:33:50 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: remoteproc: qcom,sm8350-pas: document
- SM7635 MPSS & WPSS
+Subject: Re: [PATCH v2 2/3] dt-bindings: remoteproc: qcom,sm8550-pas: document
+ SM7635 ADSP & CDSP
 To: Luca Weiss <luca.weiss@fairphone.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
  Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
@@ -61,9 +61,9 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
  linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250627-sm7635-remoteprocs-v2-0-0fa518f8bf6d@fairphone.com>
- <20250627-sm7635-remoteprocs-v2-1-0fa518f8bf6d@fairphone.com>
- <20250701-melodic-courageous-mussel-0bed22@krzk-bin>
- <DB0MZCUM41RA.7Z6461I531VD@fairphone.com>
+ <20250627-sm7635-remoteprocs-v2-2-0fa518f8bf6d@fairphone.com>
+ <20250701-pretty-vivacious-panther-540ff4@krzk-bin>
+ <DB0N2N5JIUNS.3UFD0C81VYS9F@fairphone.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,46 +109,40 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <DB0MZCUM41RA.7Z6461I531VD@fairphone.com>
+In-Reply-To: <DB0N2N5JIUNS.3UFD0C81VYS9F@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 01/07/2025 12:12, Luca Weiss wrote:
-> Hi Krzysztof,
-> 
-> On Tue Jul 1, 2025 at 10:12 AM CEST, Krzysztof Kozlowski wrote:
->> On Fri, Jun 27, 2025 at 08:55:42AM +0200, Luca Weiss wrote:
->>> @@ -91,6 +93,7 @@ allOf:
+On 01/07/2025 12:16, Luca Weiss wrote:
+>>>    - if:
 >>>        properties:
 >>>          compatible:
->>>            enum:
->>> +            - qcom,sm7635-mpss-pas
->>>              - qcom,sm8350-mpss-pas
->>>              - qcom,sm8450-mpss-pas
->>>      then:
->>> @@ -142,6 +145,22 @@ allOf:
->>>              - const: cx
->>>              - const: mxc
->>>  
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          enum:
->>> +            - qcom,sm7635-wpss-pas
+>>> @@ -185,6 +205,7 @@ allOf:
+>>>          compatible:
+>>>            contains:
+>>>              enum:
+>>> +              - qcom,sm7635-adsp-pas
+>>>                - qcom,sm8550-adsp-pas
+>>>                - qcom,sm8650-adsp-pas
+>>>                - qcom,sm8750-adsp-pas
 >>
->> Everything fits better sm6350 and no need for new if:then: entry, at
->> least it looks like.
+>> sm6350 fits, doesn't it?
 > 
-> True, that seems to work fine as well. I can add it to the
-> qcom,sm6350-pas.yaml bindings instead of sm8350 in the next version.
-> 
-> To be honest, I don't quite understand what the concept behind the
-> different PAS bindings are, when an SoC should get a new .yaml file, and
-> when to add to an existing one.
+> Not quite, for sure the firmware-name and memory-region for adsp and
+> cdsp on this SoC requires the dtb firmware file as well, apart from that
+> it looks similar enough.
 
-It is purely arbitrary way of organizing things, to reduce amount of
-ifs:then: and make things easier to read. Adding ifs: does not make it
-simple. Adding same SoC to multiple bindings does not make it simple.
+I looked briefly, so indeed it might not fit well. That's on you to
+investigate and find the best candidate which will mean the least amount
+of changes or the simplest binding.
+
+> 
+> I'm also okay with creating a new (after the whole renaming thing)
+> qcom,milos-pas.yaml which contains the bindings for all 4 *-pas'es.
+
+If it does not fit sm6350 or others then yes, new binding it is.
+
+
 
 Best regards,
 Krzysztof
