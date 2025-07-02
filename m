@@ -1,107 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-63432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A3A4AF5D41
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 17:37:40 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7E3CAF5DAF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 17:56:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9234E4E3595
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 15:37:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9D6887A070B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 15:55:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34DC9301155;
-	Wed,  2 Jul 2025 15:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C542A2E7BD5;
+	Wed,  2 Jul 2025 15:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LCGgA+c9"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="cx82pC1A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B972D0C9E;
-	Wed,  2 Jul 2025 15:33:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8153196D8
+	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Jul 2025 15:56:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751470419; cv=none; b=fV1ihhJetIMif23aFqEQScJimd1Ve47+4Ml+LCCkMYZeZrYG+DjLTomuOdHcl3Y97GXuDQeLkPEP/rcPE5fc53LhoG98szXRwB8KssFm2crR69y7xytw9XcCDHsfvXR9MNTIpKXhr63JVFol80+FnDy/D81v7zxuU/FF8HO++Q0=
+	t=1751471799; cv=none; b=HIWkFbh9qluHTkHsEXpkYehbRpWP8q9ZKHbNZ+EuGlVKE6Rtw2EwzYM1eGmuXXubEtaUQGPr6LlBzZl8tu2rDCc2R0K+k2zK31OBFbTur4spDYNHVwXyRqk8SxjZDSelW379QUdm7hrFk15vC7WqDkvE0XDtpV00NQ1UcshB/cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751470419; c=relaxed/simple;
-	bh=m4jNXgT+w4Hs09jExxagGWXs5YRAnZ/7SVfxbiR92Co=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o0jm/UZ2T7m1rShcOdLMkhczFoXvB6gGASUcZ28ncNBqnQ9eS+NOUJ9EzXeTrqyU3aCusaqUtNYrh0DFkRY/GjbMNiEkfY+5ZjQBo4CrPZwey3WlrSY3At0bFNO+Eo2uxD0S4jBBnKGXtLPeIlTv4JOVj1Yizs2J+hFZG3iKmUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LCGgA+c9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77315C4CEE7;
-	Wed,  2 Jul 2025 15:33:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751470418;
-	bh=m4jNXgT+w4Hs09jExxagGWXs5YRAnZ/7SVfxbiR92Co=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LCGgA+c9TFzb/8uksnZ2Tj1ghRaQm6VM0g/MJYbMQ1521YHgfeqEZR7CQJrApug9P
-	 0+Pcpa11cSgNytCUmkvrP7LZzgluUoktRaxJR9yAWJZMlGaWaVhj6fMzpXtx6kUHJy
-	 9jsSwjGpDw2+ryhZoogfhphKmZOiofVVfH5WPa7TgOlkTOCY7pbey7nOH1FvmYPB2R
-	 K3FnnKfK08IF8KdiLIltGVesNdNtPWJreWfJD0QDrXq7/wg/3RPHfJ9vwb9cqOJuJZ
-	 schKz4Wufn+rbeAtuTZnq8+IjUpyqMVVceL85N8aAP1koCkDUawU4C7oGxY39NFkTC
-	 HR4cYpJRstw6g==
-Date: Wed, 2 Jul 2025 21:03:24 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com, quic_mrana@quicinc.com
-Subject: Re: [PATCH v5 2/2] PCI: qcom: Add support for multi-root port
-Message-ID: <ws2kdznvbrvuvb6k4jov5cd4qzvadeaffjqgeso7u72stormlg@2ffiexejkrk6>
-References: <20250702-perst-v5-0-920b3d1f6ee1@qti.qualcomm.com>
- <20250702-perst-v5-2-920b3d1f6ee1@qti.qualcomm.com>
+	s=arc-20240116; t=1751471799; c=relaxed/simple;
+	bh=Gg3Ztw5mbV6LN/f/Ji5k38/KgNR5/X94oaYADowlyfY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ZJe16vmuhkpBA4jHr5AybEmgYZ7ODpeTNpMtmGQkP8RYqLyYkAx3NTKjNIsbLVZMEmA9Gsa1Vr8YlNi1FoyxkqKv+cs1qRQvrSUs3mWPorZjF2KzlcBW59Opi6gBn9GQsPsMjw77gdxFaIRkx1rLbBG2VV3arqYmRn/XIU1V82s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=cx82pC1A; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-60780d74c8cso7823509a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Jul 2025 08:56:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1751471796; x=1752076596; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dCAc2KTVC/KYVThbWt25dTqshZNAwmGCU6+3oetHyms=;
+        b=cx82pC1AG+m5QUG1yiU/TGP+060ba7XsfTWmAlc9psG9McdkjaoECKhDm+DjU4KfWz
+         Zh/bZi8Jzv4gj0+eHKJv0XyiIo3gMaD4FVzVjarKi4w641RlBor/Lrg/W1gkLEKEWXUx
+         BM/xj2S8iQBYB7xZeLtqdNDDkvIWVCo1mYaoCSshGpnCx8piJYYWPmNrEa8AFu4vYc+Q
+         w4KO0BTKT8V/VhCvAuYI3Mv1+OecEVSbGMHRqwNzn9e+5njwiu11gSxdDVyBv/92AIdU
+         OPc3lfGRIXldsT2OZAjjfNEvuLjp0Zz/NJPW7EmoFfFPyHJGKJOlV96nxZ61y8jQmbnp
+         N59g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751471796; x=1752076596;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dCAc2KTVC/KYVThbWt25dTqshZNAwmGCU6+3oetHyms=;
+        b=oeN2vic8QxBu4tpyAu23VTX6mZO2lHYo2Iw+IzwXoLqMyDt80DN69jnHj6vc7SYmMe
+         Zk2mr9bXa5e5j6OlP5+7w1LJWoYmeRLJ+PDD8aU2zz17TPmdpOADfhsJPXignIYkQDWd
+         0d4vQKkXW8bqEZ148XpfoOnISy/PDOm5apLvE4c9dUrDPKtw71BEfEhqvmuhJ7Is3IQF
+         P+qaXIcaWRu/UkHS6O6lpJnGQwaYq7X8DH6sxTIDA3+tejT/a7q1hDbCePU7TaSjYODb
+         RIaH9g4OX2x/DFt5ahs+LWdyngBPPEvHWxQrTklOMVMMq6fZLU8zB2kRPaMdGQGjhfcl
+         WTIg==
+X-Forwarded-Encrypted: i=1; AJvYcCVlO0iuZXy934wnj8lhLlDzqxL6a2A/0YY1KzakbagxhU/74uMkZID8aiwFLdyrchzUzUhVQS682WrP/l3V@vger.kernel.org
+X-Gm-Message-State: AOJu0YzvNrKFbTXYjbeZ6JinC+eYGpisRxZvrFsfiOHmWpyLX0ZLimgS
+	qHVPwPhXBe3oNGvO/bSpLUOiCCReMa9vuxqUi/lOXEukb4TFGD0IqOmgPz6R26Tbq8c=
+X-Gm-Gg: ASbGncsKiHXoqy9yFhxaRFuTQ1GXGATNi4lU5t1d+z5go+yZF3kBroXQsRxmjboZ5u8
+	v/lbCKRT51E3nlmAfuPLTXcS0GOoDmKhZDwYUX3ymv8nzlYWqHTnDIzImePFDxkK6EBu0T4hAp+
+	iaNbEo2CF3LEwNU7iBJYgt4jcpdEZNzM95graAWvzcTibHY+uTjPtYFB/ga15h9iDpR3zVAyTJj
+	0MUX3gwKkVgqVUeRdfhOWYlz5rvJO2CaKaqHMkrespQywb7uGIrKzXtv4JYTLQyqVkiCVIDYTnS
+	dx3FwZCKfKCDUsI/Ga2tqJBh+vDwUkMnGpHqRrwG7FZ4HMZvrxdw7ldQXZRJ6CWSS1BaQ7/ASDK
+	3Z0lk/6dxnftIXgaOHJ9znOuxz8Rj1sZOkePxp7A3hSaMP0bkTJZu+JNpHvmDV6nC1OUyT67O/5
+	VRf5G+KQ4=
+X-Google-Smtp-Source: AGHT+IHXrZ5By/YIGmoOwxks5XDcOiTKWLCdtObMvsXO7AjbA2fZCsAU3x165zE/3s/lKEpePIpfqQ==
+X-Received: by 2002:aa7:d0cf:0:b0:5f3:857f:2b38 with SMTP id 4fb4d7f45d1cf-60e52d021b7mr2841293a12.17.1751471796023;
+        Wed, 02 Jul 2025 08:56:36 -0700 (PDT)
+Received: from otso.local (2001-1c00-3b8a-ea00-c4de-d39d-05f4-c77a.cable.dynamic.v6.ziggo.nl. [2001:1c00:3b8a:ea00:c4de:d39d:5f4:c77a])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60c82909b93sm9151109a12.29.2025.07.02.08.56.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jul 2025 08:56:35 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v2 0/2] Add pinctrl driver for Milos (SM7635)
+Date: Wed, 02 Jul 2025 17:56:15 +0200
+Message-Id: <20250702-sm7635-pinctrl-v2-0-c138624b9924@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250702-perst-v5-2-920b3d1f6ee1@qti.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJ9WZWgC/13MQQ6DIBCF4auYWZcGUah01Xs0LhSHOkkFAsa0M
+ dy91KSbLv+XvG+HhJEwwbXaIeJGibwrIU4VmHlwD2Q0lQbBheRKcJaWi2okC+TMGp9MW2ymTum
+ mVSOUU4ho6XWA9770TGn18X34W/1df5T8p7aacYajHTR2nZK6vdmBYpi9w7PxC/Q55w8FF3fas
+ AAAAA==
+X-Change-ID: 20250620-sm7635-pinctrl-9fe3d869346b
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1751471795; l=979;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=Gg3Ztw5mbV6LN/f/Ji5k38/KgNR5/X94oaYADowlyfY=;
+ b=QBFfi9v+fdzcREV4KRyqPt7V0s/Wzvd6gSLuSqnD6tQpuUCQcoANwHrXEuD7fsiaHVXr8OTSZ
+ rqtj7W1yVuMCAPYLDcEv+iu1wcbPQi/Ll9GhXRJ0eKtc0B1meLKGwzG
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-On Wed, Jul 02, 2025 at 04:50:42PM GMT, Krishna Chaitanya Chundru wrote:
+Document and add the pinctrl driver for the Milos SoC.
 
-[...]
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v2:
+- Rebrand SM7635 to Milos as requested: https://lore.kernel.org/linux-arm-msm/aGMI1Zv6D+K+vWZL@hu-bjorande-lv.qualcomm.com/
+- Link to v1: https://lore.kernel.org/r/20250625-sm7635-pinctrl-v1-0-ebfa9e886594@fairphone.com
 
-> -	ret = phy_init(pcie->phy);
-> -	if (ret)
-> -		goto err_pm_runtime_put;
-> +	for_each_available_child_of_node(dev->of_node, of_port) {
-> +		ret = qcom_pcie_parse_port(pcie, of_port);
-> +		of_node_put(of_port);
-> +		if (ret) {
-> +			if (ret != -ENOENT) {
-> +				dev_err_probe(pci->dev, ret,
-> +					      "Failed to parse port nodes %d\n",
-> +					      ret);
-> +				goto err_port_del;
-> +			}
-> +			break;
-> +		}
-> +	}
-> +
-> +	/*
-> +	 * In the case of properties not populated in root port, fallback to the
-> +	 * legacy method of parsing the host bridge node. This is to maintain DT
-> +	 * backwards compatibility.
-> +	 */
-> +	if (ret) {
-> +		pcie->phy = devm_phy_optional_get(dev, "pciephy");
-> +		if (IS_ERR(pcie->phy)) {
-> +			ret = PTR_ERR(pcie->phy);
-> +			goto err_pm_runtime_put;
+---
+Luca Weiss (2):
+      dt-bindings: pinctrl: document the Milos Top Level Mode Multiplexer
+      pinctrl: qcom: Add Milos pinctrl driver
 
-Shouldn't this and below be err_port_del?
+ .../bindings/pinctrl/qcom,milos-tlmm.yaml          |  133 ++
+ drivers/pinctrl/qcom/Kconfig.msm                   |    8 +
+ drivers/pinctrl/qcom/Makefile                      |    1 +
+ drivers/pinctrl/qcom/pinctrl-milos.c               | 1340 ++++++++++++++++++++
+ 4 files changed, 1482 insertions(+)
+---
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+change-id: 20250620-sm7635-pinctrl-9fe3d869346b
 
-- Mani
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Luca Weiss <luca.weiss@fairphone.com>
+
 
