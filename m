@@ -1,175 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-63403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DEC1AF1512
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 14:11:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04460AF15C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 14:35:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F0D013BACD8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 12:11:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 478761700C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 12:35:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EE9926FA56;
-	Wed,  2 Jul 2025 12:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EEC5266B72;
+	Wed,  2 Jul 2025 12:35:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sRi+xsZ9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jbhTbUlY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B70D23D2A3;
-	Wed,  2 Jul 2025 12:11:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91461E485;
+	Wed,  2 Jul 2025 12:35:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751458300; cv=none; b=GYL8e7FWyecC6yVZj3eusrT5ct3UR0e3R3V5ACji+Up+mIs3wqVkx4X7cuAgLmje1Dp9DCB66cuvjs3kmX+XCFVGkSMqptce+xHEY4L97az0EbqLN5Q3LknGjmyCQeitQiCMD3j6phNXWRca63+zJq54R7Rv98W31MYNlvlDJJk=
+	t=1751459752; cv=none; b=Wu/nGoE5vWZA89oVWSDJ/EDO9gL4w8zPsN2iuaJhLd24jnnw7pYcXjc6Xp3+NLX/PVkCPLE/aC0pKuzVjftls3M/B6uUuOQ8w1EqViNMNYvSZwCvT5tcpwbmrb4TDYYZ179vhuoW1uXl2pKOwe0gFO7Zd8Np7KZRMHbhm7TlIm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751458300; c=relaxed/simple;
-	bh=C6TFBmrfVjExnWTXpHpcNDBsptXWGqMJMSNbdjB9Dsc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GRRnSQvOk0TbakKzreDPrXjdPfNhzFsgUIY9xUQQsq8tBImBrlfH3DRCNwaAyf83eCvtoMeydisdAAccsV3T71tC2BhBSK6RWweMfYO6nk5RY24st4QlKRhapakzWv7NLcJSsZYMoAbQuktXyrqCB2gERxDBU79ArIiRrnN2Dl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sRi+xsZ9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EEB1C4CEED;
-	Wed,  2 Jul 2025 12:11:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751458299;
-	bh=C6TFBmrfVjExnWTXpHpcNDBsptXWGqMJMSNbdjB9Dsc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=sRi+xsZ9QbF3yUiq3dqKYF/zZrk8tOZF45+9yTlxFrJoS5sBraE58BkNmSIofx3Yq
-	 HGCgTyMkOyDjGMSU7hI1YJENxKCTG5XF/+1JdLPu155hvc94K8lFNmTbFdsYvWuac2
-	 FwZh9B7T+GllpGaw2JdtHo8FDQgXureyBOMnE4BX99e3eSpimPHIUIHeEJi54CkPFQ
-	 gziXP66tWp6o29He2NAqbx+kL6n9JhK7BZuxrSWTJULHRu6iRVWrTvlNC68ommt+Lq
-	 BwQcCzavA2Kjb5Z6l6GXdh6DCjFIPsj2aeBM7RrMbLrhbrfTF4Dz0GymJ3P3mfVhdY
-	 eqBAH/vWgG7Yw==
-Message-ID: <1cc6f462-dfd2-46ed-8534-a44812ef1cbd@kernel.org>
-Date: Wed, 2 Jul 2025 14:11:35 +0200
+	s=arc-20240116; t=1751459752; c=relaxed/simple;
+	bh=VTQYWgQLaorrbxmbb+xIR3t+bnZTz+/x9isjksDhFTg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NKr9qEQF8SLXSBjN1xFsOmei+0s24TR4ee0B92ctHoDnY2WA11OpsVKGuX3RtiHyc1JXG/ce6ELepuFe8xHDQJCFJobPj64oPRdYtDMBHb0B2QBf9Io5DJ0gvVFwK/V7JQYHpem1a5DvLQWg9EGz2Ey0eOldJ/mJZM+ivQJLByE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jbhTbUlY; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a57ae5cb17so2922235f8f.0;
+        Wed, 02 Jul 2025 05:35:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751459749; x=1752064549; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jg0LOIPqdIozUkUH06/iHo0/WcHNQMfp9668OgWITsE=;
+        b=jbhTbUlYizjYAE5A9RY61Lgi/9O/+v7mJDg/yEEBaRqnWKcATent1yq24/sJq1J443
+         KtExSFITHrwhGllAtFry0GN3SWVvwthUyyvta1AY5+ftfcS7/UJJcRKh7pCf4NTY7tnh
+         lZaU/JBvwfm7KsnTaMqYoLxC9NRcuIqCdlyuzkxe9qlPQyPKVxG3ExytfCPamTuK9wv6
+         jY0wngKGYclAihmk3XhyfI4xCpf4y86JRVe5WVxzXoKp/2NbPfdJmTU+I9a/KAi4AYsu
+         ghL1nFbZw82L2k7rRMzzMBRozCP+0a5HtYsrXqw7RYnDx+6vvoJmvvq3fBig5moI1weI
+         QIaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751459749; x=1752064549;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jg0LOIPqdIozUkUH06/iHo0/WcHNQMfp9668OgWITsE=;
+        b=jb78UhvkNys2SaCqcfmZaH8kY1Cewt6BvRJaIGf9UbXZ8CGMaJ0/QtXqEOyl8iH7DK
+         2vbjRILqT0ccjs8sgRitlAHiTpKtjUyKQ49ynPscZi6dTv3J7CwDtqq6MR63DKa2BTNj
+         5oOXRCXsYZTv8DIGNTdR267Qf7ClPI1VuvXaJlD/Cb1pNhvZ4MXt2caGaTVGyHBmDTM6
+         at7PNVYAdpI7HqANQ+ISbuNB6v/CyY86X9cm3e+qihA6N2RNkh7ImbOtMehcfhksK7u1
+         dmp2Fh9P6/yc1fYA2r8EdPJxW4CMswbVwcpYvLz+iZmJtKqWLUq2HNubKTBZuT6d8RBQ
+         sHEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU0+WPWu6emBP7xfXH8DPvllJnFIzasC09Mn88XQ2pAbrPFFG0MBMuPv0wAKqXpWE1XIlFzlwVLy4ST@vger.kernel.org, AJvYcCUshQ/3W3PJsGFRrxk7pRaU5rE9GO/y8jiLBLkDX2YpboJqd71WsJdPpdfDWkd8XyqaQHCCId5f2niv6tJX@vger.kernel.org, AJvYcCW9TYctoq3RsrApqKcLv7+NsdO5yteUixL9mWR8w1isMzYY2kBihRoDnqwJLXyA+fLwC2sFnJRgFB+V7+63@vger.kernel.org
+X-Gm-Message-State: AOJu0YxtIE4EEg3zwo0X0oN5vprOS4CG7apWnGXL0muRiyeUd+7CEAF+
+	xh1bqty3MPtgeSqC5/NeEz0+DMC1f6E5zzQbe7rQuN9iF3eE4ZQCYCSk
+X-Gm-Gg: ASbGncudwOQGiAqBEaMSKc459SBVxOxnmZ+qVk2odz7gC7ty2PtGd59LYyVdTvtKqZI
+	Fa3332+LtRxrld0KCEvwWTYjk/zo/IcEVqOpr2kQ9bdEPfUsvrYW8HgcEMekYTsDIuoQSS3DYxv
+	9tUS6fPWoeyimE0RihhSSBdiARNFxkVfG0cLEVdP3EQc6cfXqvlnF9hhuTjlmHoDTQcbwL8fxhU
+	qreq+yo/xbQ4XEar+WEtxwnupSotztfzyJhQh+6XNqJ5i3bDrLykzoZH2UavySe37Cy5JPRzQbU
+	D+ttP4BUCOv3iK01bKrYQKwGvtSLHRdMWTAdnn+Mo+OL54c8WdfC1Z97MQPzbL1FKN4hzwJJzJc
+	BW/jYiJptJ4ecyqU=
+X-Google-Smtp-Source: AGHT+IEZ7JKobG7elvoBdLsbn735VSU4fEnUj1mgXLW4+2+SXlswXfAlX7UhudyRbE0dWHkfsFfn2Q==
+X-Received: by 2002:a05:6000:18ab:b0:3a4:ddde:13e4 with SMTP id ffacd0b85a97d-3b20253882cmr2157966f8f.58.1751459749144;
+        Wed, 02 Jul 2025 05:35:49 -0700 (PDT)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3a892e5f8a0sm16208688f8f.96.2025.07.02.05.35.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jul 2025 05:35:48 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Subject: [PATCH v2 0/2] spi: spi-qpic-snand: enable 8 bits ECC strength
+ support
+Date: Wed, 02 Jul 2025 14:35:22 +0200
+Message-Id: <20250702-qpic-snand-8bit-ecc-v2-0-ae2c17a30bb7@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] media: dt-bindings: add non-pixel property in iris
- schema
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
- <20250627-video_cb-v3-1-51e18c0ffbce@quicinc.com>
- <6fd3fa34-69e1-484f-ad6f-8caa852f1a6c@kernel.org>
- <dc6e82a1-82be-b8b8-31c3-8b85447d4e43@quicinc.com>
- <8b88cea4-b9f2-4365-829c-2a255aed6c69@kernel.org>
- <ae23ebae-3101-4a73-2bbd-0dabb4efaba1@quicinc.com>
- <45fdf98c-32f7-4b5f-889c-6d2f1fa5fbd6@kernel.org>
- <87d0795e-82d5-3274-4909-dd795d082295@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <87d0795e-82d5-3274-4909-dd795d082295@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIonZWgC/22NQQ6CMBBFr0Jm7ZhabVJceQ/DAqYDTCIFWiQaw
+ t2tsHDj8v3kv7dA5CAc4ZotEHiWKL1PoA8ZUFv6hlFcYtBKG6WVxXEQwuhL79BWMiEToSOrLrV
+ T1uQa0nMIXMtrs96LnQOPzySffmMrcerDeyvPp++6R1Lmb2Q+ocLc1GdKoaoic2u6Uh5H6jso1
+ nX9APl+Ot/LAAAA
+X-Change-ID: 20250208-qpic-snand-8bit-ecc-dc804fd08592
+To: Mark Brown <broonie@kernel.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, 
+ Miquel Raynal <miquel.raynal@bootlin.com>, 
+ Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>
+Cc: Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Md Sadre Alam <quic_mdalam@quicinc.com>, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ linux-spi@vger.kernel.org, linux-mtd@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 
-On 02/07/2025 14:08, Vikash Garodia wrote:
-> 
-> On 7/2/2025 5:28 PM, Krzysztof Kozlowski wrote:
->> On 02/07/2025 13:55, Vikash Garodia wrote:
->>>
->>>
->>> On 7/2/2025 5:17 PM, Krzysztof Kozlowski wrote:
->>>> On 02/07/2025 13:45, Vikash Garodia wrote:
->>>>>
->>>>> On 7/2/2025 4:53 PM, Krzysztof Kozlowski wrote:
->>>>>> On 27/06/2025 17:48, Vikash Garodia wrote:
->>>>>>> +
->>>>>>>      video-codec@aa00000 {
->>>>>>>          compatible = "qcom,sm8550-iris";
->>>>>>>          reg = <0x0aa00000 0xf0000>;
->>>>>>> @@ -144,12 +176,16 @@ examples:
->>>>>>>          resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>;
->>>>>>>          reset-names = "bus";
->>>>>>>  
->>>>>>> -        iommus = <&apps_smmu 0x1940 0x0000>,
->>>>>>> -                 <&apps_smmu 0x1947 0x0000>;
->>>>>>> +        iommus = <&apps_smmu 0x1947 0x0000>;
->>>>>>
->>>>>> I missed, that's technically ABI break and nothing in commit msg
->>>>>> explains that. You need to clearly explain the reasons and impact.
->>>>> No, it is not. Interface works well with old or new approach.
->>>>
->>>>
->>>> You changed the order of IOMMUs, so yes it is. Which interface works
->>>> well - FreeBSD? Or other? You are changing ABI for every user.
->>> Why do i need to change, when without changing would work as well ?
->> ? I don't understand. I made a statement, not a question. You are doing
->> this - you are changing the ABI.
->>
->> Which item was the first IOMMU before and which was second?
->>
->> Which item is the first IOMMU now?
-> Old approach - max 2 iommus interface - <SID-A, SID-B>
-> New approach - min 1/max 2, iommu interface - <SID-B>, child - <SID-A>
+This small patch set adds support for 8 bits ECC strength, which widens
+the range of the usable SPI NAND chips with the driver.
 
-So you changed first IOMMU entry, first IOMMU master and that is
-technically ABI break.
+The first one is a preparatory patch which adds some defines which
+allows to avoid using magic values, and the second patch implements
+the actual support.
 
-> 
-> If both works, how is interchanging impacting any existing hardware OR breaking
-> ABI ?
+The series should be integrated via the SPI tree, as that contains
+prerequisite changes.
 
-Because you change the entries. The ordering of lists - not iommus which
-do not matter for Linux here - was discussed many times, so just refer
-to that discussions.
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+Changes in v2:
+  - collect offered tags
+  - rebase on tip of spi/for-6.17
+  - update cover letter
+  - remove 'next' prefix
+  - Link to v1: https://lore.kernel.org/r/20250502-qpic-snand-8bit-ecc-v1-0-95f3cd08bbc5@gmail.com
 
+---
+Gabor Juhos (2):
+      mtd: nand: qpic-common: add defines for ECC_MODE values
+      spi: spi-qpic-snand: add support for 8 bits ECC strength
 
+ drivers/mtd/nand/raw/qcom_nandc.c    |  6 +++---
+ drivers/spi/spi-qpic-snand.c         | 21 ++++++++++++++++-----
+ include/linux/mtd/nand-qpic-common.h |  2 ++
+ 3 files changed, 21 insertions(+), 8 deletions(-)
+---
+base-commit: d2c0e95525216cdc695d0066ee2f70b8adfbc536
+change-id: 20250208-qpic-snand-8bit-ecc-dc804fd08592
 
 Best regards,
-Krzysztof
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
+
 
