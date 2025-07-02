@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-63364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51D40AF1198
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 12:20:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39940AF11F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 12:34:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 509184A5F32
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 10:20:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 46DE14A0128
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 10:34:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3D97255E20;
-	Wed,  2 Jul 2025 10:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07992253F12;
+	Wed,  2 Jul 2025 10:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g9eBEQ9J"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RQ0+mZIp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D5E254B18;
-	Wed,  2 Jul 2025 10:19:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4E5246781;
+	Wed,  2 Jul 2025 10:33:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751451580; cv=none; b=iYrzfD5yn0WXVWbHIRIZVzUCcJv8j8Mfu1rqfLvHvY9p6Gjr925bpDeHhnNIJnblXyYkDfz0g7ZiowW/5hEhyLPHCTcVxcI8upn/l/F5LyrSEekpsX6cxCkl3xxWBW8G4+Lxl1WikUh9Pnnlu61zCSfmQ1CcOIrFaSbn8tLDPJU=
+	t=1751452434; cv=none; b=Z8jVb0fj6ByY97qZd1EMMKmUhxXDNd8ty7y//qvOnTAEuUrGSzksocJaImkx97YJjSIY96Sjz7T0PtOM0u+f40p+z/c08epzoNCHDTRGQKLKJhAGQ+bfYZWGS2zMdgx6SZvtcYZnn8Ch4W9WSYksJMMCJ+PrJG+a2zW2kBGGYg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751451580; c=relaxed/simple;
-	bh=Orzfc9NbJPFzMB+kpICo8Nk0nLdcz5NZlQUaGxGCqkM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hiS7cZ/OkvFFuMOMCLEbDmQFOUUyCpHHUQXoUHcu+FWSv5vIazykujhxrKFqcgOcan7Ysijz/HJCWmvluZ+UCLaydFtnqDRD/E8CKcOoRlO0vBr2kWS1+M05M+XgkZGL0ylR/AdJzkadDGA1RK8Gpvqtmy2z9canRTeLzCtHXxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g9eBEQ9J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C383CC4CEF1;
-	Wed,  2 Jul 2025 10:19:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751451580;
-	bh=Orzfc9NbJPFzMB+kpICo8Nk0nLdcz5NZlQUaGxGCqkM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=g9eBEQ9Jnl1aDOSlbmRpxtU5xztEMHYpfW8nI9RwJ3Twh5/NVwGUQMJwVhQrSgKsz
-	 Nk/73yJE7bmr2y8z4pPZkVFO7bsupDbYSwHSQ1xsfRMcQER3Hf1kPzcxABRfLH1ft0
-	 Lzr+WNWZaYYiCRLftRtOcXtFu6/wFISd3nbLT2AAFF5lgedJfjeBTP/VXAkw8Sna6Z
-	 tadcJrZUoi6mP9ZeZA7AERNfyjTh0XF+ohEH83cuk98HpD2aqx/oV57IRFych05wu7
-	 3n++teW81HvYztBVIdWcNgiNjO9se3pJHb4ebr2deQsgqexEnlW/xs/qZCBqw5Ne9D
-	 Pn+IztZu5T1lA==
-Message-ID: <a68f46f0-8053-4d9f-96f7-55de33bb301f@kernel.org>
-Date: Wed, 2 Jul 2025 12:19:33 +0200
+	s=arc-20240116; t=1751452434; c=relaxed/simple;
+	bh=Zr4lURcAt0rx9IueClgNCAvtqGi3g4wuS+sj1uYDWIE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=oOtuKmLK6v2j04LjssOSkpdkQ0YZS1cRe5FF0b5yoigfnJ4kb1sMzDQ+EHIpGjRpaZQc+8F4WSY4YR0oRU4OwiKzOpLRHwzCGZvyu4le8iB6bI0ECz3nYYwz+rrisTovlCD524m/q15CGl2aVcxeY5A50E6rkcuw1wc7IMga14M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RQ0+mZIp; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56235evB020939;
+	Wed, 2 Jul 2025 10:33:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	tyuuEW55huNUHGYc+9oBljKgGuuKmVR8um5xHUVVKiE=; b=RQ0+mZIpNSh3Iz8A
+	RhHHe/+V1EIUnRYRbCEqxvllc8tpS6BrYL8QMLhA00tqScPxK2S61Ajr5QW7IyHn
+	69UqGMyj1bg7FxZXrArNwefXmRzc/8eEhUkmA6Yo5ibCoi4ScJ0tUqm97HP3yvkX
+	sKP6xOJASdNFBdRp+pUSu9YELcP0ceE/Mpup9XSxnNB4QNvCnfjce4P8Lz6K8dX6
+	LNVMWDwmrOLcztG1rROXp3+9ncHuXE+94fWNOCJyExgWIG3g/sZq8FKGoO09Y984
+	1fJgj7HbYAxmP3doQUwjBWCjneo+ENIponHFK9sT3jLUYl4iMX8AGUwZLfyim+F4
+	EE3Mmg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47mhxn2xt9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 02 Jul 2025 10:33:40 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 562AXdZl022880
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 2 Jul 2025 10:33:39 GMT
+Received: from [10.253.36.62] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 2 Jul
+ 2025 03:33:33 -0700
+Message-ID: <ade0437b-3c23-4174-b4c5-6c90037abf14@quicinc.com>
+Date: Wed, 2 Jul 2025 18:33:31 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,95 +65,171 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] dt-bindings: sram: qcom,imem: Document Qualcomm IPQ
- SoC's IMEM compatibles
-To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250702-imem-v1-0-12d49b1ceff0@oss.qualcomm.com>
- <20250702-imem-v1-1-12d49b1ceff0@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 5/8] dt-bindings: clock: qcom: Add NSS clock controller
+ for IPQ5424 SoC
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+        Philipp Zabel
+	<p.zabel@pengutronix.de>,
+        Richard Cochran <richardcochran@gmail.com>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Anusha Rao <quic_anusha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <quic_kkumarcs@quicinc.com>,
+        <quic_linchen@quicinc.com>, <quic_leiwei@quicinc.com>,
+        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>
+References: <20250627-qcom_ipq5424_nsscc-v2-0-8d392f65102a@quicinc.com>
+ <20250627-qcom_ipq5424_nsscc-v2-5-8d392f65102a@quicinc.com>
+ <20250701-optimistic-esoteric-swallow-d93fc6@krzk-bin>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250702-imem-v1-1-12d49b1ceff0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+From: Luo Jie <quic_luoj@quicinc.com>
+In-Reply-To: <20250701-optimistic-esoteric-swallow-d93fc6@krzk-bin>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDA4NSBTYWx0ZWRfX8ic95YwncjRA
+ R4a/ZplQ4CcTmnpeSbBXjN38NorRfGm7Ty1Ot++Z+mRMrbEH9rm4bVxtycdNHSp9qs2NibUFiba
+ kjc7NUW4FXBBu43LDB5pY51vR2GQA/dKl1FJsaseUplIdTgdZyMO3i7dTNjVgVkzjbfCIjE7Rl/
+ 3Ix9k4evJes1nmfqFZNw0lcj84C4dO0tuPZtHAFUUDLTXcJLlNRPYb7WGY+ysmlTfLV0c+sdl8v
+ 4YuekVKu7AqhaSS/CRFirak/41IDSoojDw/IqV/BmHWeTxChg4hDHYl/pW4QSyKyskU5l1B/EB3
+ PF/ecM+oIhCfBcFQ7C35HXitpcR1HEUniMkTIPhtm+jEGrtmOWnBbEqGp9WeFC19yOHfYVQkzxc
+ aUItSPNWmB+JABtSCmH/8jMDuGsSFA+COQfNGsMpKt2sxLzyGvq+yv1AF81Y2K2MGL2nXb7Z
+X-Authority-Analysis: v=2.4 cv=EbvIQOmC c=1 sm=1 tr=0 ts=68650b04 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=gEfo2CItAAAA:8
+ a=COk6AnOGAAAA:8 a=VwQbUJbxAAAA:8 a=l8XhYvs3ogmA2MLIGYEA:9 a=QEXdDO2ut3YA:10
+ a=sptkURWiP4Gy88Gu7hUp:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: ZJFKHmu4BoQDsqmwOJcsqj0rTrgYuXIn
+X-Proofpoint-GUID: ZJFKHmu4BoQDsqmwOJcsqj0rTrgYuXIn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-02_01,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=999 lowpriorityscore=0
+ malwarescore=0 adultscore=0 clxscore=1015 bulkscore=0 impostorscore=0
+ spamscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507020085
 
-On 02/07/2025 12:17, Kathiravan Thirumoorthy wrote:
-> IMEM is present in the Qualcomm's IPQ SoCs as well. Document the same.
+
+
+On 7/1/2025 4:22 PM, Krzysztof Kozlowski wrote:
+> On Fri, Jun 27, 2025 at 08:09:21PM +0800, Luo Jie wrote:
+>> NSS clock controller provides the clocks and resets to the networking
+>> blocks such as PPE (Packet Process Engine) and UNIPHY (PCS) on IPQ5424
+>> devices.
+>>
+>> Add the compatible "qcom,ipq5424-nsscc" support based on the current
+>> IPQ9574 NSS clock controller DT binding file. ICC clocks are always
+>> provided by the NSS clock controller of IPQ9574 and IPQ5424, so add
+>> interconnect-cells as required DT property.
+>>
+>> Also add master/slave ids for IPQ5424 networking interfaces, which is
+>> used by nss-ipq5424 driver for providing interconnect services using
+>> icc-clk framework.
+>>
+>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+>> ---
+>>   .../bindings/clock/qcom,ipq9574-nsscc.yaml         | 70 +++++++++++++++++++---
+>>   include/dt-bindings/clock/qcom,ipq5424-nsscc.h     | 65 ++++++++++++++++++++
+>>   include/dt-bindings/interconnect/qcom,ipq5424.h    | 13 ++++
+>>   include/dt-bindings/reset/qcom,ipq5424-nsscc.h     | 46 ++++++++++++++
+>>   4 files changed, 186 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
+>> index 17252b6ea3be..0029a148a397 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
+>> @@ -4,7 +4,7 @@
+>>   $id: http://devicetree.org/schemas/clock/qcom,ipq9574-nsscc.yaml#
+>>   $schema: http://devicetree.org/meta-schemas/core.yaml#
+>>   
+>> -title: Qualcomm Networking Sub System Clock & Reset Controller on IPQ9574
+>> +title: Qualcomm Networking Sub System Clock & Reset Controller on IPQ9574 and IPQ5424
+>>   
+>>   maintainers:
+>>     - Bjorn Andersson <andersson@kernel.org>
+>> @@ -12,21 +12,29 @@ maintainers:
+>>   
+>>   description: |
+>>     Qualcomm networking sub system clock control module provides the clocks,
+>> -  resets on IPQ9574
+>> +  resets on IPQ9574 and IPQ5424
+>>   
+>> -  See also::
+>> +  See also:
+>> +    include/dt-bindings/clock/qcom,ipq5424-nsscc.h
+>>       include/dt-bindings/clock/qcom,ipq9574-nsscc.h
+>> +    include/dt-bindings/reset/qcom,ipq5424-nsscc.h
+>>       include/dt-bindings/reset/qcom,ipq9574-nsscc.h
+>>   
+>>   properties:
+>>     compatible:
+>> -    const: qcom,ipq9574-nsscc
+>> +    enum:
+>> +      - qcom,ipq5424-nsscc
+>> +      - qcom,ipq9574-nsscc
+>>   
+>>     clocks:
+>>       items:
+>>         - description: Board XO source
+>> -      - description: CMN_PLL NSS 1200MHz (Bias PLL cc) clock source
+>> -      - description: CMN_PLL PPE 353MHz (Bias PLL ubi nc) clock source
+>> +      - description: CMN_PLL NSS (Bias PLL cc) clock source. This clock rate
+>> +          can vary for different IPQ SoCs. For example, it is 1200 MHz on the
+>> +          IPQ9574 and 300 MHz on the IPQ5424.
+>> +      - description: CMN_PLL PPE (Bias PLL ubi nc) clock source. The clock
+>> +          rate can vary for different IPQ SoCs. For example, it is 353 MHz
+>> +          on the IPQ9574 and 375 MHz on the IPQ5424
+>>         - description: GCC GPLL0 OUT AUX clock source
+>>         - description: Uniphy0 NSS Rx clock source
+>>         - description: Uniphy0 NSS Tx clock source
+>> @@ -42,8 +50,12 @@ properties:
+>>     clock-names:
+>>       items:
+>>         - const: xo
+>> -      - const: nss_1200
+>> -      - const: ppe_353
+>> +      - enum:
+>> +          - nss_1200
+>> +          - nss
 > 
-> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-> ---
->  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
+> No, that's the same clock.
 
+OK.
 
-Where is the changelog? This is not a v1.
+> 
+> 
+>> +      - enum:
+>> +          - ppe_353
+>> +          - ppe
+> 
+> No, that's the same clock!
+> 
+> The frequencies are not part of input pin. Input pin tells you this is
+> clock for PPE, not this is clock for PPE 353 and another for PPE xxx.
+> 
+> Best regards,
+> Krzysztof
+> 
 
-> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> index 72d35e30c439ccf4901d937f838fe7c7a81f33b1..48e2f332e0e9fc9fa4147fa12d9c6c70a77fafda 100644
-> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> @@ -18,6 +18,12 @@ properties:
->      items:
->        - enum:
->            - qcom,apq8064-imem
-> +          - qcom,ipq8074-imem
-> +          - qcom,ipq6018-imem
-> +          - qcom,ipq5018-imem
-> +          - qcom,ipq9574-imem
-> +          - qcom,ipq5332-imem
-> +          - qcom,ipq5424-imem
+Ok. Our only concern with dropping the suffix and using a common name
+was renaming the existing property (initially added for IPQ9574 SoC)
+from 'ppe_353' to 'ppe'. However I do agree that dropping suffix is the
+better approach. Thanks for the suggestion.
 
-Random order, no, follow existing style. This applies for every qcom
-binding and you received such feedbacks in the past.
-
-
-Best regards,
-Krzysztof
 
