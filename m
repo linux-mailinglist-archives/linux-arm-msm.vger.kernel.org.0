@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-63379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7805AAF1349
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 13:08:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF18BAF1362
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 13:13:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C24841C42074
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 11:08:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB558179D55
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Jul 2025 11:13:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5140253956;
-	Wed,  2 Jul 2025 11:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C5D0257436;
+	Wed,  2 Jul 2025 11:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nHceGs0B"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="taQoeuCG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE92229B13;
-	Wed,  2 Jul 2025 11:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE75623956E;
+	Wed,  2 Jul 2025 11:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751454418; cv=none; b=qxNnHt65a4d6xGGr/t/A8x5+V0P32G1+hBHJUVy0QcTiCvt4j72hll0KjhcmajUOBMLMd4+yElOpcuHEdhaQPXT0MSfO/jWVTj5APNS9XL5djflskoU8RX4cTiJm9210+LDXZK5/qqAD+9Tcq/NZVtJFs6RdJieahDLO8S1eseQ=
+	t=1751454819; cv=none; b=JOFnTLbuYLFyFw2/vHDyTJUnDisnJ0sWlE1obzVRyHxY+bhK7b6XLpCu3tO8wTUbvpmhtUsZXnDlqLwuUa/XeX7tO+xqE8mULB3KfW+I019g6obm1lfQkjLms001bOotdGMOOAhcUO9ORygvb/xK1KkHllwzAPp27v2gdzLoWKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751454418; c=relaxed/simple;
-	bh=V4ZvbV+utYGaS+nMrpeovAg5Soy1OoSUqJYfth1mDFw=;
+	s=arc-20240116; t=1751454819; c=relaxed/simple;
+	bh=/3UcYFAtiHdK/x/wf/hpXgHjxC2DHsZORgWcfa0tL2c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dNJGlhDkoI3ZwiDm8FVMPXHfndE0q+ARrPpPKtxt/IbMNzTgbZvkBd1BWGjz4GloBb6FSHa2uYLa5xXlaOaF83nBMmYK40F4An7Hma3M6TyZFM1exv8nRXOJgh1S5JWbmR2BizgJF/tie6saRly/u7I/ZNkx/aWivMAih/DYOaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nHceGs0B; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF71CC4CEED;
-	Wed,  2 Jul 2025 11:06:54 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=qYMXHrMvaGbHC4/H5KjCtMLsZeD73cF2mply6b8DvZM16bcgcMGJlm4TvSEs1+Gta6YpPNNo3E+alLjUSsEtEST2rbzmS6YpHkVt9xPtOkFo52BLcH62A6LS8gKJe4BKYzzxUKR2Pr2frzV8pXMJ/A2lx3/Ux+UwWNluXQqg9Gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=taQoeuCG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6D2C4CEED;
+	Wed,  2 Jul 2025 11:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751454417;
-	bh=V4ZvbV+utYGaS+nMrpeovAg5Soy1OoSUqJYfth1mDFw=;
+	s=k20201202; t=1751454818;
+	bh=/3UcYFAtiHdK/x/wf/hpXgHjxC2DHsZORgWcfa0tL2c=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nHceGs0BnztE7stB9ML2HzIAG4JOJfQBhgTdPzurUNC7hJ+Ula8M22MtwmHN09e2H
-	 sTu6O2pLXXsuZKh+rJBdxd6LJeWpg2NmWqSrDnrxBpijNxRPlNmBpg5ludnZ23uv2J
-	 MIURhA1WmB0pL/e5BesUzIun1eZ6lgl4vk75lMyAVIngtM6VD8r6QiwuruDUEdmENP
-	 Hoe/E5tcRXaXObeBv4ilWlV7JqWHsM/CWaP/V3CTufOXCtgeo6vvlsTGwLVW2yh9oH
-	 lR9srsyhEcH6o/5FdYDYHSu5TP6aF1BueFwbyz7q6fom2qi9WQbDJGuWeF8jgut6Lv
-	 9QIjt2IzBe+HQ==
-Message-ID: <76c87d1b-9f40-44b3-824b-22289b873866@kernel.org>
-Date: Wed, 2 Jul 2025 13:06:52 +0200
+	b=taQoeuCGyVGXCF3ArPdIgGKzktogQkojqAiYSWlI2bP0V1r193wDfgwFYXXKaCwRc
+	 nxtGQ0aW4R78AXPSwYeOHTLMG/OiaBjXSP3FBUonzgsLKsjhJxFu+1bmixSEerQcjO
+	 hpLhoyuSWkKAXmDKY2udJknbBCATqzZVDIlPZhWrewbX9zcQYRIrIDGf1lXb/RiKUN
+	 A0DM80KxchAhfTk62BLcIS0ByTjib7oLh/UgW54ifuWhdHK4C349y9L01BDfQ45l9x
+	 ZzZq1H9RV2k9SqtMiNgAzv0hED7aXkEsu86qIR+jujS8FPX0pdhLlyzKCxnhEIdw6a
+	 Mo3ovL6+xnw2w==
+Message-ID: <19dd2e69-ad13-46f2-b99f-04a5e26f10d3@kernel.org>
+Date: Wed, 2 Jul 2025 13:13:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,10 +50,9 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] Introduce "non-pixel" sub node within iris video
- node
+Subject: Re: [PATCH v3 1/5] media: dt-bindings: add non-pixel property in iris
+ schema
 To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
  Dikshita Agarwal <quic_dikshita@quicinc.com>,
  Abhinav Kumar <abhinav.kumar@linux.dev>,
  Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
@@ -62,8 +61,7 @@ To: Vikash Garodia <quic_vgarodia@quicinc.com>,
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
- <6c5d9ff2-fa59-4151-99fe-3bddae46b507@linaro.org>
- <79342b8f-4cef-fc48-c40f-5636f868af2e@quicinc.com>
+ <20250627-video_cb-v3-1-51e18c0ffbce@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,82 +107,143 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <79342b8f-4cef-fc48-c40f-5636f868af2e@quicinc.com>
+In-Reply-To: <20250627-video_cb-v3-1-51e18c0ffbce@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 01/07/2025 12:23, Vikash Garodia wrote:
+On 27/06/2025 17:48, Vikash Garodia wrote:
+> Existing definition limits the IOVA to an addressable range of 4GiB, and
+> even within that range, some of the space is used by IO registers,
+> thereby limiting the available IOVA to even lesser. Video hardware is
+> designed to emit different stream-ID for pixel and non-pixel buffers,
+> thereby introduce a non-pixel sub node to handle non-pixel stream-ID.
 > 
-> On 6/30/2025 11:34 PM, neil.armstrong@linaro.org wrote:
->> On 27/06/2025 17:48, Vikash Garodia wrote:
->>> This series introduces a sub node "non-pixel" within iris video node.
->>> Video driver registers this sub node as a platform device and configure
->>> it for DMA operations. All non pixel buffers, i.e bitstream, HFI queues
->>> and internal buffers related to bitstream processing, would be managed
->>> by this non_pixel device.
->>>
->>> Purpose to add this sub-node:
->>> Iris device limits the IOVA to an addressable range of 4GiB, and even
->>> within that range, some of the space is used by IO registers, thereby
->>> limiting the available IOVA to even lesser. For certain video usecase,
->>> this limited range in not sufficient enough, hence it brings the need to
->>> extend the possibility of higher IOVA range.
->>>
->>> Video hardware is designed to emit different stream-ID for pixel and
->>> non-pixel buffers, thereby introduce a non-pixel sub node to handle
->>> non-pixel stream-ID into a separate platform device.
->>> With this, both iris and non-pixel device can have IOVA range of
->>> approximately 0-4GiB individually for each device, thereby doubling the
->>> range of addressable IOVA.
->>>
->>> Tested on SM8550 and SA8775p hardwares.
->>>
->>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->>> ---
->>> Changes in v3:
->>> - Add info about change in iommus binding (Thanks Krzysztof)
->>> - Link to v2:
->>> https://lore.kernel.org/r/20250627-video_cb-v2-0-3931c3f49361@quicinc.com
->>>
->>> Changes in v2:
->>> - Add ref to reserve-memory schema and drop it from redefining it in
->>> iris schema (Thanks Krzysztof)
->>> - Drop underscores and add info about non pixel buffers (Thanks Dmitry)
->>> - Link to v1:
->>> https://lore.kernel.org/r/20250620-video_cb-v1-0-9bcac1c8800c@quicinc.com
->>>
->>> ---
->>> Vikash Garodia (5):
->>>        media: dt-bindings: add non-pixel property in iris schema
->>>        media: iris: register and configure non-pixel node as platform device
->>>        media: iris: use np_dev as preferred DMA device in HFI queue management
->>>        media: iris: select appropriate DMA device for internal buffers
->>>        media: iris: configure DMA device for vb2 queue on OUTPUT plane
->>>
->>>   .../bindings/media/qcom,sm8550-iris.yaml           | 40 ++++++++++++++++-
->>>   drivers/media/platform/qcom/iris/iris_buffer.c     | 15 ++++++-
->>>   drivers/media/platform/qcom/iris/iris_core.h       |  2 +
->>>   drivers/media/platform/qcom/iris/iris_hfi_queue.c  | 20 ++++++---
->>>   drivers/media/platform/qcom/iris/iris_probe.c      | 50 +++++++++++++++++++++-
->>>   drivers/media/platform/qcom/iris/iris_vb2.c        |  4 ++
->>>   6 files changed, 119 insertions(+), 12 deletions(-)
->>> ---
->>> base-commit: 8d2b7fde56597ca912f5daaf3ab58915458ba1fc
->>> change-id: 20250619-video_cb-ea872d6e6627
->>>
->>> Best regards,
->>
->> I tried the patchset on SM8550 QRD and SM8650 QRD/HDK and the system just reboots
->> a few millisecond after probing iris, no error messages nor reboot to sahara mode.
->>
->> The DT changeset for reference:
->> https://git.codelinaro.org/neil.armstrong/linux/-/commit/e1b3628469c038559a60d310386f006f353e3d59
+> With this, both iris and non-pixel device can have IOVA range of 0-4GiB
+> individually. Certain video usecases like higher video concurrency needs
+> IOVA higher than 4GiB.
 > 
-> I was able to repro this case, the issue was due to a incorrect node name in
-> driver. Fixing the name as per binding, fixes the issue for me. I have made the
+> Add reference to the reserve-memory schema, which defines reserved IOVA
 
-Because this code was never tested... I found this response now, after I
-briefly look at your code.
+No. That schema is always selected. This makes no sense at all.
+
+> regions that are *excluded* from addressable range. Video hardware
+> generates different stream IDs based on the predefined range of IOVA
+> addresses. Thereby IOVA addresses for firmware and data buffers need to
+> be non overlapping. For ex. 0x0-0x25800000 address range is reserved for
+> firmware stream-ID, while non-pixel (bitstream) stream-ID can be
+> generated by hardware only when bitstream buffers IOVA address is from
+> 0x25800000-0xe0000000.
+> Non-pixel stream-ID can now be part of the new sub-node, hence iommus in
+> iris node can have either 1 entry for pixel stream-id or 2 entries for
+> pixel and non-pixel stream-ids.
+> 
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> ---
+>  .../bindings/media/qcom,sm8550-iris.yaml           | 40 ++++++++++++++++++++--
+>  1 file changed, 38 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> index c79bf2101812d83b99704f38b7348a9f728dff44..4dda2c9ca1293baa7aee3b9ee10aff38d280fe05 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> @@ -65,10 +65,31 @@ properties:
+>        - const: core
+>  
+>    iommus:
+> +    minItems: 1
+>      maxItems: 2
+
+No, why hardware suddenly has different amount?
+
+>  
+>    dma-coherent: true
+>  
+> +  non-pixel:
+
+Why EXISTING hardware grows?
+
+> +    type: object
+> +    additionalProperties: false
+> +
+> +    description:
+> +      Non pixel context bank is needed when video hardware have distinct iommus
+> +      for non pixel buffers. Non pixel buffers are mainly compressed and
+> +      internal buffers.
+> +
+> +    properties:
+> +      iommus:
+> +        maxItems: 1
+> +
+> +      memory-region:
+> +        maxItems: 1
+> +
+> +    required:
+> +      - iommus
+> +      - memory-region
+> +
+>    operating-points-v2: true
+>  
+>    opp-table:
+> @@ -86,6 +107,7 @@ required:
+>  
+>  allOf:
+>    - $ref: qcom,venus-common.yaml#
+> +  - $ref: /schemas/reserved-memory/reserved-memory.yaml
+
+This makes no sense. how is this device a reserved memory?
+
+>    - if:
+>        properties:
+>          compatible:
+> @@ -117,6 +139,16 @@ examples:
+>      #include <dt-bindings/power/qcom-rpmpd.h>
+>      #include <dt-bindings/power/qcom,rpmhpd.h>
+>  
+> +    reserved-memory {
+> +      #address-cells = <2>;
+> +      #size-cells = <2>;
+
+Why do you need this?
+
+> +
+> +      iris_resv: reservation-iris {
+
+Mixing MMIO and non-MMIO is not the way to go. This is also not relevant
+here. Don't embed other things into your binding example.
+
+
+> +        iommu-addresses = <&iris_non_pixel 0x0 0x0 0x0 0x25800000>,
+> +                          <&iris_non_pixel 0x0 0xe0000000 0x0 0x20000000>;
+> +      };
+> +    };
+> +
+>      video-codec@aa00000 {
+>          compatible = "qcom,sm8550-iris";
+>          reg = <0x0aa00000 0xf0000>;
+> @@ -144,12 +176,16 @@ examples:
+>          resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>;
+>          reset-names = "bus";
+>  
+> -        iommus = <&apps_smmu 0x1940 0x0000>,
+> -                 <&apps_smmu 0x1947 0x0000>;
+> +        iommus = <&apps_smmu 0x1947 0x0000>;
+
+Why did the device or hardware change? Nothing explains in commit msg
+what is wrong with existing device and existing binding.
+
+>          dma-coherent;
+>  
+>          operating-points-v2 = <&iris_opp_table>;
+>  
+> +        iris_non_pixel: non-pixel {
+> +            iommus = <&apps_smmu 0x1940 0x0000>;
+> +            memory-region = <&iris_resv>;
+> +        };
+> +
+>          iris_opp_table: opp-table {
+>              compatible = "operating-points-v2";
+>  
+> 
 
 
 Best regards,
