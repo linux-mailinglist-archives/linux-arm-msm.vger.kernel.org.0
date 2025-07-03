@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-63550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67666AF7C4F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 17:33:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86EF8AF7C79
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 17:37:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BD1564A28E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 15:28:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3A899164719
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 15:33:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D753C1DA23;
-	Thu,  3 Jul 2025 15:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF07619F120;
+	Thu,  3 Jul 2025 15:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VE0KPHD4"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ERuujuKv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184791AA1D5
-	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Jul 2025 15:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451C41E4928
+	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Jul 2025 15:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556527; cv=none; b=ZVdpd6hO+sXCym5zG0+aND3FQU8oeKgdv/fi7W/ypuaALLUOYLf9753Jxr8+uiKOXZd3IRovAVA508I7pxdUulUnTZtMFshccxw9tNbUHjcpQ8pDNOcHn2hW9uf4pbRxNWInDfd+zSoJzRXNsT2h08NTiFC3vRIXbq4/H0bkcT4=
+	t=1751556781; cv=none; b=Qd8Fmh72dDhm44vgourrsLQy2Uh/6uXX1j9U5ShphIGrWVGASov/XxhS6iXszc43uMkv+16i2Qhm+neHzdKmRrA/LdxpX4sp4acSVAIVOHx+2Uz5ZG4wLr1lLy8rRb39K79gIFWlUnuhHGI3PMY2OEJlc5x/GhFAOpxIN0SgtpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556527; c=relaxed/simple;
-	bh=8CzUJQpMWoh2iCytXS+C8OvozoPZGZ3UARwoY554gH4=;
+	s=arc-20240116; t=1751556781; c=relaxed/simple;
+	bh=Y2wHdzMkoJpTGZjYvb1zaxVVxIgGPm4mgWwkVnd7HDU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WY4TZAwhkirtjTkiuhuL5frGmRV8ZTogdBRkNLH0aqR7ml+bvqMzwbbvPMewtXc7XmDl9GqlqYfCgZY4DN44sPrEgs/+5SfCaddXaWarKEhd2A1LcTTgpGRkn+N9Psi06QkB+xfx3S2Tr2mka1G4afaSElJFGi28B9A/zvpubzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VE0KPHD4; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=TsMUxxx0FKljWm+rnvtZa1m198nay1NnPnChlOGJIGcpO+Nh6hbDQC7USjQTpQZDbQKwnupyAbMmefI2kAr8tcn5nhvxRep/Ejf4afdlzfliJ90o9dkUYVtyu8cqE2QhQ2YUqqs5BalGQUszhy4xUVli+yLo3yEKA5KUg8rvTYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ERuujuKv; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 563Dfcnf008005
-	for <linux-arm-msm@vger.kernel.org>; Thu, 3 Jul 2025 15:28:45 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 563DXYYb006750
+	for <linux-arm-msm@vger.kernel.org>; Thu, 3 Jul 2025 15:32:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lB3GyQgbImWw0wJtLFROwCUwuZIRVk6wsudtXt6O2WY=; b=VE0KPHD4lxSt/UMe
-	U57ikihOWP3zDwVydsLozE4e8z/gNcvLkWQcryjj2C8iKia7UFSF2o7XAwFTVugR
-	RtNBfHLu4jEddjRHQGg7TMD9Y4NQIwKNmnl9Ff1I2RnCq0nWX/m0eqlciL5J8vTr
-	iQQ+u8N70tqWVyQ0MeTrnuEANVrASRw/Iqf8Yr/JdDiUfYJy7o2TEexI8EwZH1bj
-	EgTmgkze3pkLJ8fKUhcdA29wzRxmu49xtjno87Uy69X+blZYdT4+UDyZBb74qRUm
-	6VjCqAFCLIjd7mQw40dPFeHIVAnXOP50FCv+GUceZyx/+nRPRsxYLEPSvtd7htmo
-	0ifDfQ==
+	wvvGW4Ha6hjLFZe9ISe2jC6fysqV1hVJbJSvtVGuzD8=; b=ERuujuKvjS/U9TZp
+	noGfeXXFZKevkHNhE0cHEflu3eTuvJOGmBT4x1bIOzJx9/ICh0XjqBybOetaEWUo
+	L6LuiMsiNS/dRpeM8FAdWGqMsHwCp8CKqRv5EMiuPXIyFFCb2LWDzx9WxdSWY+5k
+	pHr8Pb5QrzZBxPxpXohyNTt7QM9nKyUsWiR5iK7nIyXqhbZzzs2zXIBYtPDbXT7k
+	fH/q7UTj3sQQZrtHUiEY7V9BLSY8DPjNOVmDzCoX7IZP1pWW25DhffxSPqq1nUCV
+	KZX8GTuoxJFb0o6E1G09+gAHfK7uvc6K1+NVpc3ZM5OcFXRl3EKRz03J53/5qG+k
+	dpLqYw==
 Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47napw36q8-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47napw373h-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jul 2025 15:28:45 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7d3eeb07a05so83809485a.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jul 2025 08:28:44 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jul 2025 15:32:59 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7d097083cc3so207073485a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jul 2025 08:32:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751556524; x=1752161324;
+        d=1e100.net; s=20230601; t=1751556778; x=1752161578;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lB3GyQgbImWw0wJtLFROwCUwuZIRVk6wsudtXt6O2WY=;
-        b=CbIc99t3tdoI08PBA5ci4k5CmdWWF3r5+A+N0SUmeZiKge/7dcO/Bt0BJZyOkMWQXm
-         /d2jAISHCYRQsuNnFIU7+P5C2MO4u+z+APoiAN+5sk4f2hIpKtjhfi5C4siaCh1CofL0
-         h8WsJQ2gOayvvzqJjuOld5vqhNjyfWtVcef7FL1xHBh9FrstyVgb3DlW7sNSrqlR9xAz
-         edulpi8NZksmhzgmPcsLpk2YtKm95awWNI6w+FlcVF/eJGEeot6W+m0fymtgua94Zwax
-         K3v8I7qzxZ2C5KrEi/KGowENmRQ2lJAO40osbZSKw3Lt5cBczB5lHHiJMPaR8dxJbpnx
-         fTsA==
-X-Forwarded-Encrypted: i=1; AJvYcCXePDsILOiEloWmQpGCud0/TRUhy1HLDLTD3yaFtuFnkt3tK3YxmXvv8svAkswZSFnSa+/WzC9WWyGlwffN@vger.kernel.org
-X-Gm-Message-State: AOJu0YwMEd3UT6N2oUDrmu2VW50URgI+Yp6YtATbPSTpnXEMmBSYgnTw
-	EqYuKczCM/UJbhqhPzMMen26aEjW575pxywIut93laMcCAdmxIyeY0WdYoqaM31muKE0G+rpz6a
-	V85Fy8e0oNH3adeOSUldFXImMG0r3imUkUpRxE8KHnWR2SHrqO95Y/n7gPxMN5Ui+xdwv
-X-Gm-Gg: ASbGncvip+Es/RWD/BXxuE2G2++u/4734wH1HWaI1ZYlCbK4K6gvtWbrPSiJbx2Vxix
-	HT3chTXXSovPTKvPf+Kr4MZUOGy7Cv7qA3+zfOydfCpqbIAq/Yif4+qLZCQpnVdsovQCg9iUpaI
-	HkUWLkTdjzrID/5lAaZFefOvKocIoPdZ7wjz5HU6ri4lpoz6cMjcBOP9FizjspTTZH8Xg93S1aE
-	1aRtX+Jq77dJYNTsCaiS/impTkJp78EAbXs/1HnCBJ19OdG4hyQW9rBPLmb7tWpg4wtRinupfp2
-	9VvQHX7j0LkW6Lrvzb0BVmOFqW92ycoHMKcrsf/LOWcGr7qT3y/lrS2sQ5synGE+4Ch6ED37rY+
-	NxUbImg==
-X-Received: by 2002:a05:620a:408a:b0:7c3:bae4:2339 with SMTP id af79cd13be357-7d5c476ce96mr338195185a.11.1751556523388;
-        Thu, 03 Jul 2025 08:28:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYROatQiIdSRndOVo9BLkkhoc+SWGXG6ITnZGJxgqN8bVXUZzt8u+b3n1+LTxv13qnf9jpMQ==
-X-Received: by 2002:a05:620a:408a:b0:7c3:bae4:2339 with SMTP id af79cd13be357-7d5c476ce96mr338192585a.11.1751556522666;
-        Thu, 03 Jul 2025 08:28:42 -0700 (PDT)
+        bh=wvvGW4Ha6hjLFZe9ISe2jC6fysqV1hVJbJSvtVGuzD8=;
+        b=Bac6bWcjEw76Hiz54P5mMhU3R6UJi6WzXcvkOro1woPtZWBmtyVIWEZx3HLhAEgJnX
+         vn4Ut8RYEzpemaEsFGByOTF88JniU7Yt3w7R4AH0RPjN+lg2FxnJLTwCCm6OSOCT0YeG
+         2+zuU/Y5y45aVrsxmJbgIEzfOORJz4pg2tigdcvrjT6QnNazhiNqqIL+Rh0+XOqYW0dW
+         V89nrpxycjyKfM1kPoSRb0X90oWPBUoWLiwlLjPnN+7AmUMfsGENjD3Ah2UHNMxQTU5j
+         ditwbbuCutbUZ0mg5th30dbIhNOmcqq7DnGV4gW/cW3DItqFytgWRNmoaDkYehI/3bQs
+         /grA==
+X-Forwarded-Encrypted: i=1; AJvYcCWh6afud5NoocEC9Ovl1RUSI8B0sgFUQnJwjmJpqmUtkIiG2sViwDJEhMTdGzPNNw6k45cMswgprz4VmEHb@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzi9lJ35FbhBWF3HhooxcOBzYIYvPEkcLxrRBMSlTUNj92hdDpO
+	grDvvF+8wbnl+atZx2omsWX8w0ET7EatNxDRAFaNMNCipFxhzRKvoDFJyAsOuVY4GwBlg4d5x52
+	RV9TaQkwEe6fm1GtPo0J0yNbqIaCZbb3T7Aphwra2rn0mNNOxgqCcJURE8VBUFhWec4s5
+X-Gm-Gg: ASbGncuREaASo/0tEthJmnhKG3Q2xJnMv02JMh4O4IGuxzzkKxy6QoWkH+DpPMf+VUs
+	kdNS4b4+D6cc61fBzX1SjNqAdNKROw4dhVZ7RW88MoSMjtU+SXV3YsPCV8iFYW1k0HIigxxD0uX
+	VHckOvQ9UMHXgPk/PqVwVHKD1DIY9nbsnwc171BHnbxKD/2Cmtw2bznUuDIzOBjojzDx9gmcc4/
+	99nqTo9kiE6BWIwTxHS7MFWZUvEF0aFY8keqJhuJnIVeJAsiLbaP7nIoB6wstBiYnIyr8A09bL1
+	/ZywjwxP8ZhRzW6AuhtwO/XkZDwLgDvt0mcdwS/ZGF5uDd5lvreGezeNpWlVTCDGXwMlRRjTis4
+	OfqT5gg==
+X-Received: by 2002:a05:620a:2788:b0:7d0:a0bd:d7ae with SMTP id af79cd13be357-7d5d3f0201cmr128301185a.5.1751556778124;
+        Thu, 03 Jul 2025 08:32:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEgKXuQm2xeDUpFVPOnRJFFPBfy1u3PKJPqnXeNMitcBiTnYYl0avZkvqAQKwR8Y08DzgmQqw==
+X-Received: by 2002:a05:620a:2788:b0:7d0:a0bd:d7ae with SMTP id af79cd13be357-7d5d3f0201cmr128299885a.5.1751556777554;
+        Thu, 03 Jul 2025 08:32:57 -0700 (PDT)
 Received: from [192.168.1.106] (83.9.29.45.neoplus.adsl.tpnet.pl. [83.9.29.45])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae37e7508fdsm939819166b.106.2025.07.03.08.28.40
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae353c01201sm1313575966b.97.2025.07.03.08.32.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Jul 2025 08:28:41 -0700 (PDT)
-Message-ID: <6840d462-8269-4359-a6e5-d154842b62db@oss.qualcomm.com>
-Date: Thu, 3 Jul 2025 17:28:38 +0200
+        Thu, 03 Jul 2025 08:32:56 -0700 (PDT)
+Message-ID: <d1973316-d6d0-443c-b155-ad8890b8c971@oss.qualcomm.com>
+Date: Thu, 3 Jul 2025 17:32:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,49 +90,32 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] Introduce "non-pixel" sub node within iris video
- node
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
- <5f90547d-945a-4e26-b36c-75f2d8a1af97@kernel.org>
- <eab8d79f-7188-9537-9176-3e4d22f0978a@quicinc.com>
- <5ad418d9-8199-43c9-a477-1e3b939c054c@kernel.org>
- <7b6db4fa-2f73-376d-4eb3-64c1c7e6cda3@quicinc.com>
- <f5ebf0d6-2f0b-45cc-b99a-b786e5df9edc@linaro.org>
- <5qsgbqml367yq6g5vb4lotrzulojqhi5zlwwribze373a63qrn@rxi4kwyt66m2>
- <4f38058d-a2f1-4ac5-b234-228cfb2e85ff@kernel.org>
- <1ad2ca1e-1d57-4ad8-a057-ab0d804f1d49@oss.qualcomm.com>
- <7da769b4-88e9-401f-bb21-0ff123818b9c@kernel.org>
+Subject: Re: [PATCH 1/5] bus: mhi: host: pci_generic: Add SRIOV support for
+ PCIe device
+To: Vivek.Pernamitta@quicinc.com, Manivannan Sadhasivam <mani@kernel.org>
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Vivek Pernamitta <quic_vpernami@quicinc.com>
+References: <20250703-sriov_vdev_next-20250630-v1-0-87071d1047e3@quicinc.com>
+ <20250703-sriov_vdev_next-20250630-v1-1-87071d1047e3@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <7da769b4-88e9-401f-bb21-0ff123818b9c@kernel.org>
+In-Reply-To: <20250703-sriov_vdev_next-20250630-v1-1-87071d1047e3@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=dIKmmPZb c=1 sm=1 tr=0 ts=6866a1ad cx=c_pps
+X-Authority-Analysis: v=2.4 cv=dIKmmPZb c=1 sm=1 tr=0 ts=6866a2ab cx=c_pps
  a=HLyN3IcIa5EE8TELMZ618Q==:117 a=qmfFy4ndMtQ753Zl/n/b/A==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=gHlHN3BjToyBUNvogygA:9
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAzMDEyOSBTYWx0ZWRfX2x5E4ifKH/0r
- PD6CVodseJtd0XpSjdrJRHuYk7NGLrx4XXjKOcaTTGQ7Wi+JEQemY08OYzZt8aLREaZ6FjvCQFd
- SMi71RW9OnFIUHMoEHqVZ1P0pu8BajnVVPFTM0CfEf2BklIlnhJqqpYxb9P+z3pCdlwcfwjehnQ
- 8ZNrF2GOvW9U0zNdUCCFincwXCvfBTc2wqqEmA8cDYn3pfLR2qnxC9Pv2k2nsV52dV6L/PCKrQz
- JdAMuEttivKvaylOszjC3xHDpIr6uJFEdPhlWwdyTGyCGZYJoZNZ6mvgK4NyBKtLKa5GKYTzLdM
- 9BX9Ec3+Dt4PDJSeSkvcz37XTfr8i0J6oQzQU+A4OfPlfTW1JDdzyEX/GQgRef0sKg9Z+FloAXT
- QORbVWl12EgP2ATOUh7HjP7hr+O6rKQaTaarRE3+p07AIelwzLUwX8DrAynqTsM4drtZ4VI5
-X-Proofpoint-GUID: 8fURitAmIe7VtDHEI2giShpnJ3zHnH-1
-X-Proofpoint-ORIG-GUID: 8fURitAmIe7VtDHEI2giShpnJ3zHnH-1
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=COk6AnOGAAAA:8 a=aC6bp7ebQdJ3EfGykbEA:9
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAzMDEyOSBTYWx0ZWRfX1dnAerjYcdQP
+ b8Ef7Y0E/FeivrYG/edJaa08+nEQ3ANr0ooI4N4Jh+8JGUU/XRD3umCO9CrCUFccTujpUsWIuPy
+ o3lfqBf52cAZf4WqfR5TzFrTiI8vT4rBfyqxo1Bcwm2PwPOsYrrS6CTwt/jxfoF5KXpgQGljiFj
+ beiUeMbjOZtyRnOZYeey+nzq9Y5amjAkQuZj65/6vHrciDOR4Se7O5xuMM/GgagRtqhxOjxdNwz
+ gSzPMjg+XHDppZkGtMu3s/0CvhsW5nBmo9S/4Jfp03PZzbKHgaNdWG/cvGocb7QfwjdHXXqflmE
+ cprkO4IJ+QTuVxSJpaFE1JUvegTXNFGQrWkYBf6gxmiAJbNQl2vO+nZIp4qpDlPmu1YJ3TJcqOu
+ WCi/GgrMBXF4VZY24ASJlCsJ3o4k0AwA1lWKiyKUYn8fzfK3U51CMDfHVBiR2ZDiOKu7USDR
+X-Proofpoint-GUID: OQ6Ghc-6rILbieM1eCc_vwXr4Vu5KsHb
+X-Proofpoint-ORIG-GUID: OQ6Ghc-6rILbieM1eCc_vwXr4Vu5KsHb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-03_04,2025-07-02_04,2025-03-28_01
@@ -145,95 +128,31 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
 
 
 
-On 03-Jul-25 14:54, Krzysztof Kozlowski wrote:
-> On 03/07/2025 14:38, Konrad Dybcio wrote:
->>
->>
->> On 03-Jul-25 09:27, Krzysztof Kozlowski wrote:
->>> On 03/07/2025 00:26, Dmitry Baryshkov wrote:
->>>> On Wed, Jul 02, 2025 at 01:06:17PM +0100, Bryan O'Donoghue wrote:
->>>>> On 02/07/2025 13:01, Vikash Garodia wrote:
->>>>>>> Anyway, in other messages I explained what is missing. You are changing
->>>>>>> existing hardware and you clearly must explain how existing hardware is
->>>>>>> affected, how can we reproduce it, how users are affected.
->>>>>> Exactly all of these i have explained in the commit message. The limitation with
->>>>>> existing hardware binding usage and how my new approach mitigates that limition.
->>>>>>
->>>>>> Coming to usecase, i made a generic comment saying usecases which needs higher
->>>>>> IOVA, i can add the explicit detail about usecase like 8k or higher
->>>>>> concurrencies like 32 or higher concurrent sessions.
->>>>>
->>>>> Why not make this change for a new SoC, instead of an existing ?
->>>>
->>>> Because we definitely want to improve support for older SoCs too.
->>>
->>> Older SoCs came with completely new drivers and bindings, instead of
->>> evolving existing Venus, so they for sure came with correct code and
->>> correct binding.
->>
->> No, this is a terrible assumption to make, and we've been
->> through this time and time again - a huge portion of the code
->> submitted in the early days of linux-arm-msm did the bare minimum
+On 03-Jul-25 17:09, Vivek.Pernamitta@quicinc.com wrote:
+> From: Vivek Pernamitta <quic_vpernami@quicinc.com>
 > 
-> We do not talk about early days of linux-arm-msm, but latest where they
-> rejected existing venus drivers and instead insisted on completely new
-> driver iris. This is a new code, so how early days are applicable?
+> Add SRIOV support for PCIe devices.
 > 
->> to present a feature, without giving much thought to the sanity of
->> hw description, be it on a block or platform level.
+> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+> ---
+>  drivers/bus/mhi/host/pci_generic.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> You are saying that iris driver was again shoved without any sanity? It
-> should have never been merged then. Better to grow existing insanity
-> than allow to have two insanities - old venus and new iris.
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 5c01c23d0bcfedd23f975e99845d5fa88940ccde..3e6e2d38935927cf3352c039266cae7cadb4c118 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -1607,7 +1607,8 @@ static struct pci_driver mhi_pci_driver = {
+>  	.remove		= mhi_pci_remove,
+>  	.shutdown	= mhi_pci_shutdown,
+>  	.err_handler	= &mhi_pci_err_handler,
+> -	.driver.pm	= &mhi_pci_pm_ops
+> +	.driver.pm	= &mhi_pci_pm_ops,
+> +	.sriov_configure = pci_sriov_configure_simple
 
-Iris was created with the hard requirement of being compatible with the
-bindings previously consumed by Venus. I think the logical consequences
-of that are rather clear.
-
-
-Perhaps you're saying that the binding for "newer" ("not previously
-supported by venus") platforms should have included that from the start,
-and I agree, that would have been better, but hindsight's always 20/20.
-
-On a flip side, any additional requirements we talk about here, also
-apply (in reality/hw, not talking about current bindings/driver state) to
-every single "older" platform as well, and skipping them is pushing your
-luck every time you access the hardware.
-
-
-I also don't think it's fair to leave them in a permanently-suboptimal
-state just because the initial submission wasn't forward-looking to
-these previously-unimplemented requirements. I'd even say that if we
-want to fix it, we should do it sooner than later, before the bindings
-age and get more users that would care about breakage.
-
-Comparing against downstream, I only really see IOMMU specifics (binding
-SIDs to a PA range, which this series touches upon plus ensuring secure
-buffers are associated with a specific SID, which is done basically the
-same way) and (on some targets) an nvmem-cell for speedbinning.
-Everything else (PDs, clks, icc, irq, etc.), we've already covered.
-
->> That's why we're still adding clocks to mdss, regulators to camera
->> etc. etc. to this day. And it's only going to get worse when there
->> will be a need or will to add S2disk support with register
-> 
-> We speak about iris here only.
-
-Sure, I'm using the other ones as an example to show you the actual
-root cause of the problem. It's the same "the initial bindings
-submission was not perfect and to make better use of the hardware, we
-need to describe more resources / describe them more precisely"
-problem that pops up every now and then and is actually difficult
-to prevent.
-
-Maybe we can have some sort of a broader conversation about whether
-bindings from before SOME_DATE or e.g. not older than N kernel releases
-back should be deemed volatile, but that is a story for another day.
-
-Back to the point, I actually think what this patchset does is
-resonable, especially given the address range and SMMU SID requirements
-that the OS *must* be aware of (or the device will crash after a
-translation fault / security violation).
+If I read things correctly, patches 2-4 are strictly necessary
+for the device to work under SR-IOV, so this patch should come
+*after* all of these fixes
 
 Konrad
 
