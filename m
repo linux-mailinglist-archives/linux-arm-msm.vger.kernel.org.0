@@ -1,176 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-63533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A592AF74BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 14:54:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16565AF74F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 15:05:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 81FFF4A56B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 12:54:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3BF131C82E61
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 13:05:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04D402E3B07;
-	Thu,  3 Jul 2025 12:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4954528B516;
+	Thu,  3 Jul 2025 13:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jlyV5YG6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BEPjVVzG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FA2241679;
-	Thu,  3 Jul 2025 12:54:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E592AF19;
+	Thu,  3 Jul 2025 13:05:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751547255; cv=none; b=NtQ/CCLogwCZ+cyha9XdgbWM/LK2cPWY3w29GpA9XOGrRDR//6xcgHay1Uw+gqPrfzdT6/mCXmuNZYPryyRLS6IQFhRzm10ZEbcz/lVmK3luarijp/hrrBszb7DsQWkOYORAFrI2n3cNB6UrZ909LcQtrJuOONn56fB5XWVoLy8=
+	t=1751547932; cv=none; b=jMACQYpKwFgSoBjmrpAWKjnPthhJN7SHy3Ig4kFp/5wVns+YXRurlumchom4EFg/+vKpv9ViiyKCiSOxSD2It0V8jOZSkVBoWRC5yqxknbZW2AtBzqc/Fu7xDkTnH/BPTjHGLsiyi3mXFhoAJvBuNRIKFknH7PUUGW4MiI4MV+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751547255; c=relaxed/simple;
-	bh=uZT1PH/NL7ne1+Hmi9O24Cr0Ut7ldtw4n3uR0nV8btM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ISYsCdfyfwzesdoCXelUv3hJiMt+qhFDSHWiCdYO4+FhDdBLYn04bG7N2e/AxZ7TF32WiEdUVNn1bTAivh4G+XRkWF8iR4n0AvP5oCViY4Csc30pAz2RnlHNZaKld1gWHnqriiHzIxTk6CInSFH6UNVOq0aB08YIJiiLvNWULco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jlyV5YG6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C29AC4CEF0;
-	Thu,  3 Jul 2025 12:54:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751547255;
-	bh=uZT1PH/NL7ne1+Hmi9O24Cr0Ut7ldtw4n3uR0nV8btM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jlyV5YG6NPXmQ/jQ4hq1gdzEjeWfmO+WQmYrZ0hP26tNU0UWXj5n9qNYXdfqPwTWc
-	 hlotAxxFQFOjH2zjz544Dxm2c7qOTl5UsrdGTHNBQaI7bIpALob/Id0h/hICEl2bGi
-	 yu5yLAH9/HbeE3QULHtqgCR99d6IkiVQ1V0emcNrEASJVnYtoEzieTl45CnuDPnmc4
-	 NYW/uxjsCzdmnuEhi6bFqEyVgCq9BjZxioPJfBKJcvOCY/MDT75j5iewlXcKZ0XXmJ
-	 dJN3U4Iyn5PWwfvelHaCfZ5pkvZnz2G2HVvNnsz0V2GF6kf0J70RUkdA3WF7X4UTZ8
-	 PcBcgZIz4dzww==
-Message-ID: <7da769b4-88e9-401f-bb21-0ff123818b9c@kernel.org>
-Date: Thu, 3 Jul 2025 14:54:10 +0200
+	s=arc-20240116; t=1751547932; c=relaxed/simple;
+	bh=sm3m+p6kC3+00ejw98SpOUZjuVAOus0moJ9LDsSFris=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WLZt3ai33kAsoJPz8V2ZrEZ0dCuJttvt1jTANAfJJ3gN4bKDrHjGSjRRHQdGTIKja1oq2uG5a5Bl1pQX1d9NVKjTg7KDBRw6WiAXQ1+8J+xDT4yzQRuB5GcvwcNs+EHg87O7oXcTDe7PVSpQ6ikzHL+jH1WpZRCwbIncaUqaU7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BEPjVVzG; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 563CxU8R022911;
+	Thu, 3 Jul 2025 13:05:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=yZXE37DVoxiXxny10g4j6TmPnRi4VrKuMBShdSrCbIo=; b=BE
+	PjVVzGAibofbtMKs+bP5oKZURF9V5i0L05Dq+BvheVrfeAKmevbig0jRFLs8Z66M
+	DuqqPFXJqacCRj2lJVvGfAphia4B9knp9C+DmnwPhxK00wZRAe9nQt+fu27FQjC9
+	3Spm20w1NexHJE7ps/u1ElLQuXm9i9Pj+6tcicgmwcEYo5LUrRQGiw0JpYdzBr8D
+	c6y7ivve0uIAzDb6elZx6rKMk9cspypRf+smZWUaB3Z8aJT53yjW9YxX7NAY8aHy
+	nDyNgsva8geo+I1hWP+Wb+qN13nVTcO5S1qCOsVgi3aFfZlE3esZauGWcctEZMoy
+	g98XuBqNcqGZnPvDuSpw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47mhxn77hc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 03 Jul 2025 13:05:20 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 563D5DwC014391
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 3 Jul 2025 13:05:13 GMT
+Received: from jinlmao-gv.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Thu, 3 Jul 2025 06:05:09 -0700
+From: Mao Jinlong <quic_jinlmao@quicinc.com>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+CC: Mao Jinlong <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH v8 0/2] coresight: Add label sysfs node support
+Date: Thu, 3 Jul 2025 21:04:51 +0800
+Message-ID: <20250703130453.4265-1-quic_jinlmao@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] Introduce "non-pixel" sub node within iris video
- node
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
- <5f90547d-945a-4e26-b36c-75f2d8a1af97@kernel.org>
- <eab8d79f-7188-9537-9176-3e4d22f0978a@quicinc.com>
- <5ad418d9-8199-43c9-a477-1e3b939c054c@kernel.org>
- <7b6db4fa-2f73-376d-4eb3-64c1c7e6cda3@quicinc.com>
- <f5ebf0d6-2f0b-45cc-b99a-b786e5df9edc@linaro.org>
- <5qsgbqml367yq6g5vb4lotrzulojqhi5zlwwribze373a63qrn@rxi4kwyt66m2>
- <4f38058d-a2f1-4ac5-b234-228cfb2e85ff@kernel.org>
- <1ad2ca1e-1d57-4ad8-a057-ab0d804f1d49@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <1ad2ca1e-1d57-4ad8-a057-ab0d804f1d49@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAzMDExMCBTYWx0ZWRfX1U+HfRhzbHIA
+ 3sbfWc71VoOW2b7fN/Exd84W5kQUfgo8/+kMhE6JmGcWWuH1w5QIWQRe2aocMNhLRUoa+SxtHuh
+ 5Ty9wZl+2VHkQBdg0L1cCIo0AjZ1DAxoWA28wu5SK8LNXff8cAxVgd6RPCSYa80ILnbqZLyC0lE
+ HzyuSOTFy2pI7/jh+FFo7PlfadO04Vkj/SkaYj8uvvmfD1P0hnOvqtLxS51L3Vvd5kibHZxSpSz
+ /LyWrAEnzdPBVA6WkpBzERT+OrI0ejCvW4ua8/NT6PtOraFYkr7vE2qV7+2QGVP0MjiyT9q542R
+ ilERgGNkpBRfYn8VndftXuzu7ilHCJfq88i4IOKcBEU0/5HF8VeAMtLn1oQdGORUq3tJoC3+1Sp
+ tBMcRVsEi6TE3RC2uj7qpCuiPuDu1SibOTQ4ZAXu+WWfTktH1MeBLoFYL//KQZsrK0v0KwfZ
+X-Authority-Analysis: v=2.4 cv=EbvIQOmC c=1 sm=1 tr=0 ts=68668010 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=3Jbm9Zxj_fdaoH2CIgQA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: hlxxP5mOk5OJ1bvOh0o7duiDq9Ddq3xv
+X-Proofpoint-GUID: hlxxP5mOk5OJ1bvOh0o7duiDq9Ddq3xv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-03_03,2025-07-02_04,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=999 lowpriorityscore=0
+ malwarescore=0 adultscore=0 clxscore=1011 bulkscore=0 impostorscore=0
+ spamscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507030110
 
-On 03/07/2025 14:38, Konrad Dybcio wrote:
-> 
-> 
-> On 03-Jul-25 09:27, Krzysztof Kozlowski wrote:
->> On 03/07/2025 00:26, Dmitry Baryshkov wrote:
->>> On Wed, Jul 02, 2025 at 01:06:17PM +0100, Bryan O'Donoghue wrote:
->>>> On 02/07/2025 13:01, Vikash Garodia wrote:
->>>>>> Anyway, in other messages I explained what is missing. You are changing
->>>>>> existing hardware and you clearly must explain how existing hardware is
->>>>>> affected, how can we reproduce it, how users are affected.
->>>>> Exactly all of these i have explained in the commit message. The limitation with
->>>>> existing hardware binding usage and how my new approach mitigates that limition.
->>>>>
->>>>> Coming to usecase, i made a generic comment saying usecases which needs higher
->>>>> IOVA, i can add the explicit detail about usecase like 8k or higher
->>>>> concurrencies like 32 or higher concurrent sessions.
->>>>
->>>> Why not make this change for a new SoC, instead of an existing ?
->>>
->>> Because we definitely want to improve support for older SoCs too.
->>
->> Older SoCs came with completely new drivers and bindings, instead of
->> evolving existing Venus, so they for sure came with correct code and
->> correct binding.
-> 
-> No, this is a terrible assumption to make, and we've been
-> through this time and time again - a huge portion of the code
-> submitted in the early days of linux-arm-msm did the bare minimum
+Change since V7:
+1. Update the conflict when apply to coresight next.
+2. Update the Date and version in ABI file.
+V7 link: https://patchwork.kernel.org/project/linux-arm-kernel/patch/20250226121926.2687497-3-quic_jinlmao@quicinc.com/
 
-We do not talk about early days of linux-arm-msm, but latest where they
-rejected existing venus drivers and instead insisted on completely new
-driver iris. This is a new code, so how early days are applicable?
+Change since V6:
+1. Update the date and verison in ABI file.
 
-> to present a feature, without giving much thought to the sanity of
-> hw description, be it on a block or platform level.
+Change since V5:
+1. Update the kernel version of ABI files.
+2. Add link of different patch versions.
+V5 link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20241210122253.31926-1-quic_jinlmao@quicinc.com/
 
-You are saying that iris driver was again shoved without any sanity? It
-should have never been merged then. Better to grow existing insanity
-than allow to have two insanities - old venus and new iris.
+Change since V4:
+1. Add label in DT and add label sysfs node for each coresight device.
+V4 link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20240703122340.26864-1-quic_jinlmao@quicinc.com/
 
+Change since V3:
+1. Change device-name to arm,cs-dev-name.
+2. Add arm,cs-dev-name to only CTI and sources' dt-binding.
+V3 link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20240131082628.6288-1-quic_jinlmao@quicinc.com/
 
-> 
-> That's why we're still adding clocks to mdss, regulators to camera
-> etc. etc. to this day. And it's only going to get worse when there
-> will be a need or will to add S2disk support with register
+Change since V2:
+1. Fix the error in coresight core.
+drivers/hwtracing/coresight/coresight-core.c:1775:7: error: assigning to 'char *' from 'const char *' discards qualifiers
 
-We speak about iris here only.
+2. Fix the warning when run dtbinding check.
+Documentation/devicetree/bindings/arm/arm,coresight-cpu-debug.yaml: device-name: missing type definition
+V2 link: https://patchwork.kernel.org/project/linux-arm-msm/cover/20240115164252.26510-1-quic_jinlmao@quicinc.com/
 
+Change since V1:
+1. Change coresight-name to device name.
+2. Add the device-name in coresight dt bindings.
+V1 link: https://patchwork.kernel.org/project/linux-arm-kernel/patch/20230208110716.18321-1-quic_jinlmao@quicinc.com/#25231737
 
+Mao Jinlong (2):
+  dt-bindings: arm: Add label in the coresight components
+  coresight: Add label sysfs node support
 
-Best regards,
-Krzysztof
+ .../testing/sysfs-bus-coresight-devices-cti   |  6 ++++
+ .../sysfs-bus-coresight-devices-funnel        |  6 ++++
+ .../testing/sysfs-bus-coresight-devices-tpdm  |  6 ++++
+ .../bindings/arm/arm,coresight-cti.yaml       |  6 ++++
+ .../arm/arm,coresight-dummy-sink.yaml         |  6 ++++
+ .../arm/arm,coresight-dummy-source.yaml       |  6 ++++
+ .../arm/arm,coresight-dynamic-funnel.yaml     |  6 ++++
+ .../arm/arm,coresight-dynamic-replicator.yaml |  6 ++++
+ .../arm/arm,coresight-static-funnel.yaml      |  6 ++++
+ .../arm/arm,coresight-static-replicator.yaml  |  6 ++++
+ .../bindings/arm/arm,coresight-tmc.yaml       |  6 ++++
+ .../bindings/arm/qcom,coresight-tpda.yaml     |  6 ++++
+ .../bindings/arm/qcom,coresight-tpdm.yaml     |  6 ++++
+ drivers/hwtracing/coresight/coresight-sysfs.c | 32 +++++++++++++++++++
+ 14 files changed, 110 insertions(+)
+
+-- 
+2.17.1
+
 
