@@ -1,145 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-63492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20F3FAF6B8F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 09:30:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EF8BAF6BCA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 09:41:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 187311666D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 07:30:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 66FFC1C46574
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 07:42:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B31A4298CB2;
-	Thu,  3 Jul 2025 07:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 598452989B2;
+	Thu,  3 Jul 2025 07:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cAlO9Lib"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GnITBC+z"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F44D236A9F;
-	Thu,  3 Jul 2025 07:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274C2224AF3;
+	Thu,  3 Jul 2025 07:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751527798; cv=none; b=TyA+gG+nvx4l3Srzvoj2/p9zZEr1433V+9zrxNwKKTBGgrDYN0ntraEJmMPAFs7LjfATCktwW2NXTDF9zIKFy31W5u5nj+6FdFJb4g2e+o8HFasXORZztqrXpMKTSHRdm/x+8XpKiHCODhLcqV+IQjFFAuA5EP+STY+E4RDHKCE=
+	t=1751528512; cv=none; b=u8uyo9P095AgHgjkyRn//zlSSHTSks178LLCKHqW2JJ1pYfUnhOvGMLOyj1kwpNfJWZFZV0B/PEBFg6lW33bFNvJ90dJQSrHT0wMOmsB636NacefOMjGvm71a/7a2fC1Ea59/BGtT5NAJm2IZCiZwrxOJvpTeRUtMFiqoe6u58w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751527798; c=relaxed/simple;
-	bh=AuSpVTLw+I+ijwZH8DDHo/ZkzuiQJlfSGZ2G1OmFwhQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=uHAbCjaiMJnY0IsMUssL7vNBwRnjA8wV4aIi4FRj+v6WD5IOS5SO+S/mcu+doE3KwXh4o0fZ8w/JT3C7lVzneAa+jlZfntSU2GI+I/jjAtdfmR+1Sqz4vY2Y1aqShUlcTkGesQqyiZVVbcgZlmBsUw1cLEpznx2ss0loXOX4m18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cAlO9Lib; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DBEDC4CEE3;
-	Thu,  3 Jul 2025 07:29:55 +0000 (UTC)
+	s=arc-20240116; t=1751528512; c=relaxed/simple;
+	bh=62GHx5qjp4SjOImNUi/iLutYVSnoegTnLhSY38r/7Gs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=it9v6lv5T2en+chLj9hhVHG7+VGWCgAeM9S3wngqKhbGmWlc8Do1jSHLJ3se1h60dX7uMB06Pq0y8eOlNQU0EH8q38aI+IN66SQTXED8bO3BJF4XwN9fphi+XMcfzaKz2Gik44LIB801zy3gjcKyevDjQqrkiNUlyrYAhPRgo+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GnITBC+z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E62DC4CEE3;
+	Thu,  3 Jul 2025 07:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751527798;
-	bh=AuSpVTLw+I+ijwZH8DDHo/ZkzuiQJlfSGZ2G1OmFwhQ=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=cAlO9LibGytd4exJshop0PYbfBcuyxZJQpjV/VfLQCQlq/NW6iYtpLE8GK99Vn/Cp
-	 JCEAuwf0npzl90lWDxL/nRwFn+9kQMjElM7rlcILWYAsHUiQJMGSejWew88b+PQq0G
-	 SL8ZYjgq0Wlc0SUgXiyPtETnDY6ECU6S11NyJCmmBykx3KXc1ivzT/zC3PQ0flNwCy
-	 BR6tlzeYsPLyrTXOfWY2UL7lwqUBM4Qs/w6sEJeyhUxIjCkvdf/Jg6w4IehP8rULo0
-	 fwSmmqsMlekGkojo84ZeyqcPB0C7fWSg36ioW2YbJ19qFXBziQBrJgNDA4E6+VgcRr
-	 9JdimZiKHasww==
-Message-ID: <24dd3e64-958a-41d5-8032-1da91063eaeb@kernel.org>
-Date: Thu, 3 Jul 2025 09:29:53 +0200
+	s=k20201202; t=1751528511;
+	bh=62GHx5qjp4SjOImNUi/iLutYVSnoegTnLhSY38r/7Gs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GnITBC+z2PQjXhBRfw47VJ67SEXPXKP2mbynv0Do6IOM4hqar5O112dzqoG47scS5
+	 iVoVXayQ71XP/Ibpd0NmctrgQ4S99DtI4cS9aUGEU180rCAOXIde229YJJIKeSuoVZ
+	 HOoiG1Bla+PJL4cm/c+0lbLbst3l5vCTeUCoYQ0+D3+4CrjcFeSAQLh+FXifgz7CDs
+	 oXaWqKC4E4lHhELnTQOx9W5aYLfr5oLM6lPLG1ZQxQlwErsQp9ntYkWXQODdn/6fWB
+	 Xfa+BdtVTPw5XdncKj1UVInmwpcrGvq7gPHpPGszDeCd73cwrMUeYyOZNpPV4unGkk
+	 aZEp2XyTdxSvw==
+Date: Thu, 3 Jul 2025 09:41:48 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: document the Milos Top
+ Level Mode Multiplexer
+Message-ID: <20250703-daring-burgundy-limpet-a1c97e@krzk-bin>
+References: <20250702-sm7635-pinctrl-v2-0-c138624b9924@fairphone.com>
+ <20250702-sm7635-pinctrl-v2-1-c138624b9924@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] media: dt-bindings: add non-pixel property in iris
- schema
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com>
- <20250627-video_cb-v3-1-51e18c0ffbce@quicinc.com>
- <19dd2e69-ad13-46f2-b99f-04a5e26f10d3@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <19dd2e69-ad13-46f2-b99f-04a5e26f10d3@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250702-sm7635-pinctrl-v2-1-c138624b9924@fairphone.com>
 
-On 02/07/2025 13:13, Krzysztof Kozlowski wrote:
->> ---
->>  .../bindings/media/qcom,sm8550-iris.yaml           | 40 ++++++++++++++++++++--
->>  1 file changed, 38 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
->> index c79bf2101812d83b99704f38b7348a9f728dff44..4dda2c9ca1293baa7aee3b9ee10aff38d280fe05 100644
->> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
->> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
->> @@ -65,10 +65,31 @@ properties:
->>        - const: core
->>  
->>    iommus:
->> +    minItems: 1
->>      maxItems: 2
-> 
-> No, why hardware suddenly has different amount?
-> 
->>  
->>    dma-coherent: true
->>  
->> +  non-pixel:
-> 
-> Why EXISTING hardware grows?
+On Wed, Jul 02, 2025 at 05:56:16PM +0200, Luca Weiss wrote:
+> Document the Top Level Mode Multiplexer on the Milos Platform.
 
-One more comment here - this entire node is not needed, there is no
-device here being described. Just solve the problem in the main device node.
+What is Milos platform? Does it have some sort of model number how we
+usually expect? Wasn't this SM7325 or similar?
+
+The problem with such new naming that it awfully sounds like family
+names, so just expand the name and explain it.
+
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  .../bindings/pinctrl/qcom,milos-tlmm.yaml          | 133 +++++++++++++++++++++
+>  1 file changed, 133 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..0091204df20a0eca7d0d0e766afcb8d08042b015
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,milos-tlmm.yaml
+> @@ -0,0 +1,133 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,milos-tlmm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. Milos TLMM block
+> +
+> +maintainers:
+> +  - Luca Weiss <luca.weiss@fairphone.com>
+> +
+> +description:
+> +  Top Level Mode Multiplexer pin controller in Qualcomm Milos SoC.
+> +
+> +allOf:
+> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,milos-tlmm
+
+Before you start adding such 'milos' all over the code, you need to
+update the rule for compatible naming. I don't know how thus I would not
+recomment the switch from obvious model number to non-obvious cryptic
+alias.
 
 Best regards,
 Krzysztof
+
 
