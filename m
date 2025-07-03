@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-63485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67DA2AF6B00
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 09:02:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D99E9AF6B04
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 09:03:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3ED9C523914
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 07:02:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D0D05188A18C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 07:03:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A7E923A9A5;
-	Thu,  3 Jul 2025 07:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2097F28F51E;
+	Thu,  3 Jul 2025 07:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pRYT3kCL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eFP0Ic4w"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1AE2F32;
-	Thu,  3 Jul 2025 07:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74FC2F32;
+	Thu,  3 Jul 2025 07:03:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751526152; cv=none; b=g61bXN3O6saBrUdbjrqPmVMEbpBiDvkTUIFWzjtCPG3BwoGYyST5bw2vqjTEDXoLOoZX1XFS2msZjvLueW8U/B9qT2rrz2ExgJVF2DDGkL4uxAkhR5mJGuKzqFSBiV0s8IW6iDfv7rqTmKb1WyMZpurF0AaLkB8cRthgz2u2fdQ=
+	t=1751526194; cv=none; b=cJ4VpSWVsKfnfVypwBwGL6jgtCB64w2DJFzas77iual4Xz4/2wiN5mlkGMf/rwZWlbNutt8EnOb8/ExxzvFffrTpU2P8HPRYAdnGHgBZGYWLBCz8vtpO1pph5kqdpchEkAZPWeHpKliHFvIa42McYd9xxalXThDvDWdXlJDxFWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751526152; c=relaxed/simple;
-	bh=7ztDh0ju2t70qkPn3UcxbGubUYXa6myNkFd7W3IdfWY=;
+	s=arc-20240116; t=1751526194; c=relaxed/simple;
+	bh=EabIagtTGNFQmo6c6cTS90x5NF0eiLauIS+ZJH5NhWw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jPRZBZOhkKVuT+wX4RYaUNM/W0o1StOgag8U2yEGSmZF+8eEA5CWwAC7xVQ2loe703dB6ozneprsq1l85kzezj/p+tVbEc3sPB72BcPpeOOcCtS6rRvrk+BNIk607Uw3HUDtocqusxJVM4yUvGnKpPB/V1UzKrBOMh9RfOkn7g4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pRYT3kCL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403EAC4CEE3;
-	Thu,  3 Jul 2025 07:02:29 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=lh6PihVSuZ+SfoSdJfxhMRqvW50zSPOrVZLWIIJbX7PluPNWThBgyXyv80ch7UT18JCAh23H2CVAm2c5pkKkFdFZSBEtgklPcbAP+Oo1COfRqvEn2l2/dq/J7jFfJFyroNDaLnVQOiOB/oxVcb1C9kOXYNW3yBCidGGYseqXYgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eFP0Ic4w; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617B2C4CEE3;
+	Thu,  3 Jul 2025 07:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751526151;
-	bh=7ztDh0ju2t70qkPn3UcxbGubUYXa6myNkFd7W3IdfWY=;
+	s=k20201202; t=1751526193;
+	bh=EabIagtTGNFQmo6c6cTS90x5NF0eiLauIS+ZJH5NhWw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=pRYT3kCL8/igIl1lgxneLvSitiJfNrFGeJDuNmhDJ+JpCWI5YHXylKwZuwquzeVOp
-	 4+CtIccyeOLvpOa+32Ck6GIuOBxpdAq4B3AXRBtqMVjIhjLgMcTROBUHnYLRrd8bN9
-	 25PPfnhWCJjQ2zPOlx73jWmvHkQv4SGiKXxOUKm0KqvsPT8FYg0hK0YUmdAzxA4X7k
-	 +2X35/X+qakrVYtSzu23pZbB3dPT9ieOGDKWGtiipPyiUbQRtjrG5NNENhO7ogy6DZ
-	 dVukbrPru/M4UY/ob++zxsMqza+XGCtQfmlDcDYLIXAWETsr0mw6xMj2EvqHIsnpYf
-	 e6MNM9n0UQKFQ==
-Message-ID: <6586071b-e914-4ab3-9a5f-3091d654e6a6@kernel.org>
-Date: Thu, 3 Jul 2025 09:02:27 +0200
+	b=eFP0Ic4wzQD8iErp2QUmEzc6T5U7XkKXRxBwVbNExGm1MvN0Sh9FWvIz9b77fGJsb
+	 qsS3iIN7aIRPdhxjguKYdu+ifWvd4+L0o8d2M5Y+LXL0R4BTvzEOWvLLp9WZ4VySzF
+	 WysoHfO1SMlHqTi9v+oZh+99nMqkUwg/tuwxNKaw6sch4lZYiu4irtu8V9E/QaDhF+
+	 Iq5k6o0/qtk4lfW5orBu7jOLfi5CEkiE+jmgG7zwHvYI5On03GiTYtcgN8O0S8ZhJP
+	 3eFEvujkBeWHDv/urZVyuLjyhuKzX9Tw4KRaGlC/DC3vUvTP+ZgiPF7ORGwrLffJdU
+	 j6fxX1uD/0Dag==
+Message-ID: <369fc807-f05e-4837-b623-b718e47fd840@kernel.org>
+Date: Thu, 3 Jul 2025 09:03:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] dt-bindings: arm: qcom: Split HP Omnibook X14 AI
- in SoC variants
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: x1-hp-x14: Commonalize HP
+ Omnibook X14 device tree
 To: jens.glathe@oldschoolsolutions.biz, Bjorn Andersson
  <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -59,7 +59,7 @@ To: jens.glathe@oldschoolsolutions.biz, Bjorn Andersson
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20250703-hp-x14-x1p-v3-0-affe103b4356@oldschoolsolutions.biz>
- <20250703-hp-x14-x1p-v3-1-affe103b4356@oldschoolsolutions.biz>
+ <20250703-hp-x14-x1p-v3-2-affe103b4356@oldschoolsolutions.biz>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,51 +105,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250703-hp-x14-x1p-v3-1-affe103b4356@oldschoolsolutions.biz>
+In-Reply-To: <20250703-hp-x14-x1p-v3-2-affe103b4356@oldschoolsolutions.biz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 03/07/2025 08:59, Jens Glathe via B4 Relay wrote:
 > From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 > 
-> The HP Omnibook X14 AI PC is available in fe0 (Hamoa, x1e80100) and
-> fe1 (Purwa, x1p42100) SKUs. Since they are not completely dtb-compatible,
-> split the model strings in 2 variants:
-> 
-> hp,omnibook-x14-fe0 compatible to qcom,x1e80100
-> hp,omnibook-x14-fe1 compatible to cqom,x1p42100
+> Commonalize the HP Omnibook X14 device tree for derivation of Hamoa (x1e*/x1p6*)
+> and Purwa (x1p4*/x1*) variants. Required because the device trees are not
+> compatible.
 > 
 > Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index ae43b35565808ed27cd8354b9a342545c4a98ed6..d114b7ae4fa7b162a83a152d9bf8d3fc2d74750a 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -1148,7 +1148,7 @@ properties:
->                - asus,zenbook-a14-ux3407ra
->                - dell,xps13-9345
->                - hp,elitebook-ultra-g1q
-> -              - hp,omnibook-x14
+>  arch/arm64/boot/dts/qcom/x1-hp-omnibook-x14.dtsi   | 1549 ++++++++++++++++++++
+>  .../boot/dts/qcom/x1e80100-hp-omnibook-x14.dts     | 1544 +------------------
 
-You just added it half a year ago... Anyway, it  is an ABI now, you
-cannot drop it.
-
-> +              - hp,omnibook-x14-fe0
->                - lenovo,yoga-slim7x
->                - microsoft,romulus13
->                - microsoft,romulus15
-> @@ -1159,6 +1159,7 @@ properties:
->        - items:
->            - enum:
->                - asus,zenbook-a14-ux3407qa
-> +              - hp,omnibook-x14-fe1
-
-This part is fine.
-
-
+Use proper -M/-B/-C arguments for git format-patch (b4 cannot do it in
+the past), so this will be reviewable.
 
 Best regards,
 Krzysztof
