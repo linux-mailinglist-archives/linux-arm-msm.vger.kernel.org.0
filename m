@@ -1,215 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-63479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63481-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A3E5AF6AA6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 08:44:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46F28AF6AEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 09:00:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C27917BCCA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 06:44:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E7E23188F523
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 06:59:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6520292908;
-	Thu,  3 Jul 2025 06:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 129C6295DA6;
+	Thu,  3 Jul 2025 06:59:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sandisk.com header.i=@sandisk.com header.b="m7V4jVf8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DOmfveil"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from esa.hc6817-7.iphmx.com (esa.hc6817-7.iphmx.com [216.71.152.95])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0AB8291C24;
-	Thu,  3 Jul 2025 06:44:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=216.71.152.95
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751525070; cv=fail; b=BpraQ0oLwvAtuBNyO2O/vBZUQ5jTaIahtceSvNADRIRlh1Jc/XgCWKksGj6BhHijEGVM7JYtwXnZMLRVKA99863JihMBEi2hlPLqLHmEfoyhJ4O+UzRxQDvdKfITPOXKUjXZfuIpgv9VGrrVMW1EjTtDI0kyWMJH25L2Ptn4wpI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751525070; c=relaxed/simple;
-	bh=pvyeLY9nO+8d8uP0Is1DCsKI3uCg1RxbDfX5IB4/Vos=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=KmZ0YpOSrxqA+S7uG3UEOJME6T2i+aAla5sUsQ8b2y5B1Z7RDXd7SgqHxST/K92kqe+i7RA/YDSYmWjSBw4hLDuS4g6gENVKEkgZ/bXyXELd7j4Ix0xFRiJ+3ZD+NVe7MX+6gDyOAd9Y7l47x+ZdDF0gd+2IaoWRgCSRdF8QbNY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=sandisk.com; spf=pass smtp.mailfrom=sandisk.com; dkim=pass (2048-bit key) header.d=sandisk.com header.i=@sandisk.com header.b=m7V4jVf8; arc=fail smtp.client-ip=216.71.152.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=sandisk.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sandisk.com
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=sandisk.com; i=@sandisk.com; q=dns/txt;
-  s=dkimnew.sandisk.com; t=1751525069; x=1783061069;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=pvyeLY9nO+8d8uP0Is1DCsKI3uCg1RxbDfX5IB4/Vos=;
-  b=m7V4jVf8UwJFYjI5g8O1RAAM1RD6qUMtrhEFM7DBJ+d1NCAlI8s9J5Ha
-   BPop2554unnS2dUVWNHN+V4WBxRZcXZBJC0SlLhvmIlGaUJlXG6/7jDbK
-   JNM13ZChw7yjQgfgR90ZOVjEkBG1viO3hXsmp0AO408zrdHFe3pqtNB2Y
-   E26TVM/3aDao5CZ7qh3Nh+/+PYu89q6f1U5QWu1/ksiWlSeXmYF0T8j8r
-   tpHT5jx3psRLD2bFbRgnUnbwe4LevuNkedGT10bWe9TJNt4Cn1mK8Ifx1
-   bVO3VsNNeSfpc7l4aLDQXx9wrx6niH1Uule9r0+ZjDhJ05lPEtvY7zAZY
-   g==;
-X-CSE-ConnectionGUID: Ap0ebfP9TA+aAYIU3c4EGQ==
-X-CSE-MsgGUID: mllyo/vRRLimkiJSIBKDXA==
-Received: from mail-bn7nam10on2136.outbound.protection.outlook.com (HELO NAM10-BN7-obe.outbound.protection.outlook.com) ([40.107.92.136])
-  by ob1.hc6817-7.iphmx.com with ESMTP; 02 Jul 2025 23:43:18 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ae9NfCvg6bQ5XaCnJxw6K0rvVfYHGcOEr+TzpS8Kn66vh0NETV+xCSTeBKj5ZZjrXYaVmKzd6sZ/wuY4aItKDrSrPijGVdmhKZjRGlkgbV4Sw+px3R/Wh16KnUoAg5treGFwMLJU6BIc6JVOeehrw5smIt78cDE2JhSYFfj8Ha65FlSSS39EzOYrSdUwGGwHd4LeHN8jdy76O0zfrsF4DXfTQEhu01zElBYihyxSAVkSTvFf9MFQylk7Bt3ShjdVZXh51g/UxVjvJXdVuLwizFj/1bL3dOnvZym4zgbwu8LJ8Unem5Eub7HphEVCMobBrvsccm8fL/zVgIRWMjCa7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=A0Twun3hO+usFKTXfPbNLN3vdKX18sKuNWhcDT3Xjuo=;
- b=Mr/efmrMLIdafyO6eSe0aMP5va9GM1XaTzCwEPbpADSBGHnFAmZH0iCLMcMLlSb13acRFkbotYNj7Uy9wbvVuxLYM8xEvTanUQpKKh0aO8Otm++pNHRYvxt60Ks98f9a/6E4XPwcQsdHjbka0Ke+eS+o9OKCqLHqlmLPS8625TwDZPgFEuwG48lLHxBNbTAriwctHN6Fe8uvh7Q2mAZlbOeFNE6qLK+AYqyVR17Gc+TDLXO4OA1fL6cUcHrQ4zA9W4uOIY7v1+eNZBdtnBKVNR2vufQtDnaP9pOoBVFmqVAbyZe/VHqxzi0s9p9NJNa56lu9SIYQIA6UeN3eUUamrw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=sandisk.com; dmarc=pass action=none header.from=sandisk.com;
- dkim=pass header.d=sandisk.com; arc=none
-Received: from PH7PR16MB6196.namprd16.prod.outlook.com (2603:10b6:510:312::5)
- by SJ2PR16MB5595.namprd16.prod.outlook.com (2603:10b6:a03:586::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.19; Thu, 3 Jul
- 2025 06:43:16 +0000
-Received: from PH7PR16MB6196.namprd16.prod.outlook.com
- ([fe80::5975:403:10ae:a379]) by PH7PR16MB6196.namprd16.prod.outlook.com
- ([fe80::5975:403:10ae:a379%4]) with mapi id 15.20.8901.018; Thu, 3 Jul 2025
- 06:43:16 +0000
-From: Avri Altman <Avri.Altman@sandisk.com>
-To: Nitin Rawat <quic_nitirawa@quicinc.com>, "mani@kernel.org"
-	<mani@kernel.org>, "James.Bottomley@HansenPartnership.com"
-	<James.Bottomley@HansenPartnership.com>, "martin.petersen@oracle.com"
-	<martin.petersen@oracle.com>, "bvanassche@acm.org" <bvanassche@acm.org>,
-	"neil.armstrong@linaro.org" <neil.armstrong@linaro.org>,
-	"konrad.dybcio@oss.qualcomm.com" <konrad.dybcio@oss.qualcomm.com>
-CC: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>
-Subject: RE: [PATCH V1 2/2] scsi: ufs: qcom: Enable QUnipro Internal Clock
- Gating
-Thread-Topic: [PATCH V1 2/2] scsi: ufs: qcom: Enable QUnipro Internal Clock
- Gating
-Thread-Index: AQHb62Q/uwNT6TAT4Ui1d8L+Zkc9KrQf9E5g
-Date: Thu, 3 Jul 2025 06:43:16 +0000
-Message-ID:
- <PH7PR16MB61965FA0A8DFB0877CE51690E543A@PH7PR16MB6196.namprd16.prod.outlook.com>
-References: <20250702151441.8061-1-quic_nitirawa@quicinc.com>
- <20250702151441.8061-3-quic_nitirawa@quicinc.com>
-In-Reply-To: <20250702151441.8061-3-quic_nitirawa@quicinc.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=sandisk.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PH7PR16MB6196:EE_|SJ2PR16MB5595:EE_
-x-ms-office365-filtering-correlation-id: 425ed5f3-c22b-4bfe-35fe-08ddb9fce3dd
-x-ms-exchange-atpmessageproperties: SA
-sndkipoutbound: EOP-TRUE
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|1800799024|376014|7416014|38070700018;
-x-microsoft-antispam-message-info:
- =?us-ascii?Q?Wo18s/smNcKkxWH6cBE2XHVo73O//Mp+o5v40avOCDDrHJRiZJ+o7o6i0kJy?=
- =?us-ascii?Q?0dLMuNKkCUlMWciwxgZwhyqvnn5Nz7ubNiy7jOlo7sttUZkR7GXhRQgPWlIy?=
- =?us-ascii?Q?86euRaHdzeESYa3joxMCYSe/amYblf1WdrnUlSKKlWhkJL2MYVMYBHu+GGiW?=
- =?us-ascii?Q?AjUNwLohte0ldN08NgYCmSJbcM6Ign8+C5ICN4F+0r8BWQkXelT+04l2fL6o?=
- =?us-ascii?Q?XiK4JCsklGFNAgGv3N28FOW+BiggpJEi8ShRNRrd/JOXc2lpGwAnzc97R6gG?=
- =?us-ascii?Q?uxk50A2AisCoeO4BmBa9PGkkVOo0dactxqA48dp3OiSqT4syIsCIjrkb31nu?=
- =?us-ascii?Q?aaduAtNB1tskcJEX9ZfhGoW7EXTNp8s2yv4M5MxOSp6R8M7fsKSMC6WvYh1q?=
- =?us-ascii?Q?oY2x7dRUuJN3m6VhO4BcOkdbk1CuxSglFtZyRTzyL5E+rwsI8HfKOqJ7shgZ?=
- =?us-ascii?Q?M+o5Aey555c87GRCZthHEjEDjdXWF4TsHncQu5pc0hniNhd3kIgmOrokbMY2?=
- =?us-ascii?Q?bvnQbQ0dDns79Mk1vkc6S2u0LNhsEJHupLlSOjhfAgKu7p+PONnM9Q55dNfD?=
- =?us-ascii?Q?vtVI3VKw/wUqywv8+Mvva7mownjnn2cdQL1alPKYUJDs5vjrUctb15JneSOV?=
- =?us-ascii?Q?1FmrwYC5zl56lPufVE0bb1mLow+G3xpmn4rHNRTt+f83HdJvToC3dr9XmMD/?=
- =?us-ascii?Q?Xp+4ZK2v+TPPgdR8G7AUMLfG9DjyY9VqD5s6ia6fGA4ncuHpDssv1ZCslO55?=
- =?us-ascii?Q?sNtuPv4VD82QI2aNQETsxIbi1P/xPEu6Hvk20SbsmtNv1XWORDpGxeszYKvb?=
- =?us-ascii?Q?Up9YUBr08OBwn35qf1CCc6v/OsKSB4knykhLchoBHMjH/T/hVXnwWWayshoh?=
- =?us-ascii?Q?2gtpH+ZCgBi8xMCnKDwABe1M+1DeQUMPdgiibgS7Rz78MhlDikxUIuLrCliB?=
- =?us-ascii?Q?T/X1rAsRKNJuVKeB2lb+yyOtIxX3nGFFfH7AOdMAglJ1TfSukKrqFcLwvNe4?=
- =?us-ascii?Q?0xQP1e8pLP4ptCsejdMII5kkW/kNCaJO2xZh3+eByaU1iwdswsPOx5FrFyhd?=
- =?us-ascii?Q?EN6KzxVjmd6fOM9mg6Ouh9w17KBncrfMHxXhVdpyj1+S48jEKnPPh7zmAMsV?=
- =?us-ascii?Q?psVkz+NQpG5fSVaxRlsu1JbsAIk90itQNTDNHY0Sh9NHefPfK6Plrrj8LXcP?=
- =?us-ascii?Q?saXUAuWYlkfmd6m3er0h1vcnyFXDWTUUuiDF8EzDLL8ZZ5dYX27a360vQadZ?=
- =?us-ascii?Q?LrplQwG4IRV2nmz9ro+YzbThHNGpq6MT8Ounl22LTYLa9AtPLXIeUOBl6slN?=
- =?us-ascii?Q?pxiVjz943vWMiwPg7HceOvRBmRtYjWRKis7dmu+8P67QBhn2SanrQ/rwvCVp?=
- =?us-ascii?Q?lI0am58CQy42nQXMJtkBJkgxia2E7cDZtaEJaXcJyM2/ymWFm8d0fu/t2B5u?=
- =?us-ascii?Q?Z/MerbPqXnJ+xn3Ht4mPiOsVhGnhOfJoxSQ+yS9xiI901cF4aiNc2A=3D=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR16MB6196.namprd16.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?QpyW1QlyRtI5D9BRcBoiSwdwWM2COpz0I4cybAGhLFJFoU4X5qPKEYab1WbC?=
- =?us-ascii?Q?ey2C0if3vGiiCS1GoAjingqe5S03isPe6BHmj5P2WaLeaQbo1ZN8bIZW2TLy?=
- =?us-ascii?Q?dtVetuuByUqVPujI3SYp5rNdJ6VRuMhw/8aitVg8wGBBwaxmO810WtOOYun1?=
- =?us-ascii?Q?6SOosOsYFS4CoWoOj3nLgljwavO6AGNExijoTFmCfd5wKfZ13GLx5oyeD+6m?=
- =?us-ascii?Q?dGcjB+dCSzv3uM45KGSHZLvygrXWgcmOiimM7nUMLuLfQ3NThAl/x5NgXICp?=
- =?us-ascii?Q?X4yttVz5pXOcNdgobBAJ3SAFWdgBrIbVuh8KCgOZVkAzdp0Sddmxso4lh8a+?=
- =?us-ascii?Q?74XI3Vcloi3CUaFOTEyUiNDVIOE62U3kL/DMAJZcR4NfJzie9tCEYQ9gzFW0?=
- =?us-ascii?Q?NcITpHOu+XaUQoPwtaoBaSc+rdyyJPjp6+4+lmsN+wEPG+SK2FLxDpgjh1cw?=
- =?us-ascii?Q?FdW+TgiwofEdjGt8XydcaQd58tXfUxDkg90b4vmiUTsS6xHsaO14lgvDooio?=
- =?us-ascii?Q?F0M5XaieyXXMeNaeri9wQceber9FYDR9UcpJv9nsqGWfjF/ZKm6aWfBXAHzM?=
- =?us-ascii?Q?UTtJ5rS3hEkofiCvMYcTeyhjow1cFY5eQZKl0/g4p9U7Er9Cj8B8LjgQA4FI?=
- =?us-ascii?Q?D6+c+gG2VFOm/vKpCp3IyGiuyX0vYgtvZcnhMsLqBuSma3Bxgt1LOnqUQhD+?=
- =?us-ascii?Q?tcJxRkbh4OWYS6jOM75Vvn3bSh8Q+W7TAykVjpQ9cEBJUxtq3glOuo63HT4r?=
- =?us-ascii?Q?qcJtyo20BYHBWy7F3bDAx6yA1xjN9sCEszSwEN7CFMqi2BsserZgnGOwTLwb?=
- =?us-ascii?Q?XNhSl1vqTHUrqtOh1/F+ftlcvY8w3QAPkvNFYt9QDB5spPT8Mt0s33jQ9zIc?=
- =?us-ascii?Q?0Op/iklbE3kHZuAVt7OqS9waOdZNQ2NgBCqcoaH3E9OAZa4TENZTb2ZgQ3ZG?=
- =?us-ascii?Q?ZBDsjvsY8Uh+TS3s0/0F0cX9a3o1JloY5eP8TcUGLpWkHv0CrkYYBFTdwMa4?=
- =?us-ascii?Q?9n9qYmCW7RsX4QOjjTICbmwqkqJFBLH8MJnScpQpJ84p7K6vlCLVRIgU5JLH?=
- =?us-ascii?Q?WkYiQ/Z+4nAfHxYsNZyLJvjlA4n/1jUEOxAzE8vey5Zc2WsPVzpojq6DBX2/?=
- =?us-ascii?Q?MzSnsTdV358IizwdlRZM8czw5lik4xikVtbuFFtbrXyxK1s5puZatNjKzhb3?=
- =?us-ascii?Q?pKF9BwsWP+WoHelFavorEStd9OTNU4ugEuyC7ihRm9lFaWiCLVapy6RMzMGq?=
- =?us-ascii?Q?7EoOt4bF4aHLIbZMRtDhCHbwVxdMky3Xl1gSXXGoPWEVpM1QbvR+vo1eUVio?=
- =?us-ascii?Q?Ua1QbMm+nTRtXsRbs287fM/n0MKTU0DoqZkkNZkFXvybNZLwdZ0LCKRrafiv?=
- =?us-ascii?Q?Bg9Z1ZBEvo56TnNRgCuq//vvz2Dl8w/RShABD6VVixhCng3gpnkJ+xjaqQGb?=
- =?us-ascii?Q?Qir5/XPo68l05GaAUMMdRzHzfWVSRUvhN7YZbos3e9mDCYcQz1psEg1ZE5lu?=
- =?us-ascii?Q?Z4CypgpyKsLFnMv5QbLS2/Bwi6NrzR0YmQbYuLFoF6xUo74J5cF3nFrxRUxH?=
- =?us-ascii?Q?t+ISEA8azS33DIU7GNqVhRmSP4pmdnr3FJL6rU7q?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43AA292B42;
+	Thu,  3 Jul 2025 06:59:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751525956; cv=none; b=eq6MyvvlNJBPC5mlYMcXInHh9eG4XSFDvETlGL853t0WGNfF4xENpbdlrYGD7Y7hDVQQGur0QgqHyCkkfHWK2Hwm1/LDBTnyRSQoHcKXXYWjxxjvEmy9Zo3Qvff/88x9TUWGz24cbhfoxpoi2ZzO3JH/LztRs5eh5DYngVvGrlQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751525956; c=relaxed/simple;
+	bh=tQJdnJYlTNIs5lgbSl8DiVHPrsh3z/fqveMuaTC90Og=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=iGPe4l/HrVFetRuep78xKfDlqfadBxr6jP1co9ZWMmVJ3QvjogC2QmfoX7wr7VeDhc0UQ7R2gnQLD6FY0oM4HWFBx3LQ+m9fpk2bpLH0ljFPQsxPAZ8C++h15W6IwQE5/034xjzOTAKU/mXvGEtbWZ2GDf2J0yTWP8qo0ioBM3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DOmfveil; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 67F0EC4CEE3;
+	Thu,  3 Jul 2025 06:59:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751525956;
+	bh=tQJdnJYlTNIs5lgbSl8DiVHPrsh3z/fqveMuaTC90Og=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=DOmfveilTtx0t/c5/RwXmiADFbeZITJU5cUD2pWtuxK0Cp0JCkROwyF/gM/kcXWMU
+	 rWLoCurzMjh5rkWxL72rCu5bf1EHoiRZgOR+/qwI73BtqFs7FrQu2vxP9zLBIGYryw
+	 2yRb6bBQzR9Iw8mVAwfQvNByeIXb2fgjUhlmTLDv5mqT7MR7rniSIO2YzH9Au82byZ
+	 OlNLkJ0zSOmjPXzsJVCAoh0fgDA2IZiUgdlA7NsLVYsyvA8OVAm2i1Rwty27UXtO5b
+	 EH8B+SLqqcB3J5hTjmpblMuVAzO6u4rtRN6doOU32ODd07z4BOlK7fk9IYEVdrTHJG
+	 1wuzoT6d04gGA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 537F7C83F03;
+	Thu,  3 Jul 2025 06:59:16 +0000 (UTC)
+From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
+Subject: [PATCH v3 0/3] arm64: dts: qcom: x1-hp-x14: Add support for
+ X1P42100 HP Omnibook X14
+Date: Thu, 03 Jul 2025 08:59:10 +0200
+Message-Id: <20250703-hp-x14-x1p-v3-0-affe103b4356@oldschoolsolutions.biz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	6v64JGMR3gv4MC8BbrQTNacnl4WHiHgVwF2RByB/U04gSRyiqFSrZ03jualrmrbcma+MFTXrSNkZQ0RW/vRuv5KZdamK+iTbS2PyhYvp6fF/wxsnvUsfMN912DCTUNkmNrd5a6kvGpJVjHe8jAmkdP0sAxlgpqlf0uv9DerpkrzuHXAnz/6hXUGBg8igJZKtD7m1HWv0dNVTsT8L2Nk1tl5L2w/nrdUV/oEUijNnVJZcXHe226sI/HP7v/yAF7DNoYH67G2UfqD+cYGzwO+YcEojI+eavDfOBZhUITj4mrpsovK+iZCiMIiviKopOFw/8siFPpIKxkA+ydeR7LxRQuAkM7drTttdStj/mMidybSip3hoy8slxrdBPrliE/vK/2+1U0sRaOJ/0o6ucCVIZea15ipU0td/+vxOQH+1E5GRwVBVukyiQr/AAnPfG4uMOBClWL9UtqLh1buAq8nPvp2jKPk00Q0tjeEdCUZsq01Xfgpr72QFeC6xqh1wah80OER7QUydOLfJdExFMWFkZeP+yT4rbankCFBQhmqQRMg2wBFD+axE4x5nMHwoG9pJ6rbYwy5gd3uGYZ3TxQfqcdd4AnJUiEa+Aw7p4UsIU2F3L/3ZMdZReI6fKLZzbUoGOQCKFxPq8EnqMc0DqjYyhA==
-X-OriginatorOrg: sandisk.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR16MB6196.namprd16.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 425ed5f3-c22b-4bfe-35fe-08ddb9fce3dd
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jul 2025 06:43:16.1797
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7ffe0ff2-35d0-407e-a107-79fc32e84ec4
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 6Tt54OWyJzUOYjlvOCqLGRNrGFxCvPJVEe79NsFJUZrFuvCqxzA0bOFW3y7qXBuCLdJHX+SZHZs4ZlTT/jABJg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR16MB5595
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAD4qZmgC/3XOwQ6DIAyA4VcxnMcCRVB22nssO6jgIDFiwBE34
+ 7uvep6HHv4m/dKVJBu9TeRWrCTa7JMPI4a4FKRzzfiy1BtsAgwkqxhQN9GFlzgTta2AvlRaGa0
+ IHkzR9n45sMcT2/k0h/g57Mz37V8mc8oocC2ksrUAVt3DYFLnQhhSGN4zfpSurf+S3cxw7gA6T
+ S9bWdeG60qfOtu2/QDJ7uTo+QAAAA==
+X-Change-ID: 20250702-hp-x14-x1p-eb32f4696d96
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1751525956; l=2124;
+ i=jens.glathe@oldschoolsolutions.biz; s=20240919;
+ h=from:subject:message-id;
+ bh=tQJdnJYlTNIs5lgbSl8DiVHPrsh3z/fqveMuaTC90Og=;
+ b=IYn8bd9kGEwYlsibDlmnND/7ucFXPmAwIBpJYyW+D9VKz+iOMZp/t1SKVxeyH+VMnaWrftfCr
+ Xp7lo6zh01pB3ck+4C2aOJDK6zT3EkXhNnoc3r15KUSwJTY0YSrttqH
+X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
+ pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
+X-Endpoint-Received: by B4 Relay for
+ jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
+X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Reply-To: jens.glathe@oldschoolsolutions.biz
 
-> +/**
-> + * ufshcd_dme_rmw - get modify set a dme attribute
-> + * @hba - per adapter instance
-> + * @mask - mask to apply on read value
-> + * @val - actual value to write
-> + * @attr - dme attribute
-> + */
-> +static inline int ufshcd_dme_rmw(struct ufs_hba *hba, u32 mask,
-> +                                u32 val, u32 attr) {
-> +       u32 cfg =3D 0;
-> +       int err =3D 0;
-> +
-> +       err =3D ufshcd_dme_get(hba, UIC_ARG_MIB(attr), &cfg);
-> +       if (err)
-> +               goto out;
-> +
-> +       cfg &=3D ~mask;
-> +       cfg |=3D (val & mask);
-> +
-> +       err =3D ufshcd_dme_set(hba, UIC_ARG_MIB(attr), cfg);
-> +
-> +out:
-> +       return err;
-> +}
-Might be useful to share this with other vendors as well. Maybe in ufshcd-p=
-riv.h ?
+This patch series adds support for the HP Omnibook X Laptop 14-fe1xxx. [1]
 
-Thanks,
-Avri
+Since this is actually the same model as the 14-fe0xxx, but with an
+X1P-42-100 SoC (Purwa), it needs a slightly different device tree.
+To have as minimal duplicate definition as possible, the hp X14 gets 
+commonalized into a dtsi (and it stays compatible to the derived 
+device trees, like the Ultrabook G1q). 
+
+The supported features are the same as for the original Omnibook X14:
+
+- Keyboard (no function keys though)
+- Display
+- PWM brightness control
+- Touchpad
+- Touchscreen
+- PCIe ports (pcie4, pcie6a)
+- USB type-c, type-a
+- WCN6855 Wifi-6E
+- WCN6855 Bluetooth
+- ADSP and CDSP
+- X1 GPU
+- GPIO Keys (Lid switch)
+- Audio definition (works via USB and with internal speakers)
+
+[1]: https://www.hp.com/us-en/shop/pdp/hp-omnibook-x-laptop-next-gen-ai-pc-14-fe100-14-a4nd1av-1#techSpecs
+
+Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+---
+Changes in v3:
+- removed copyright strings
+- amended changed commit message  
+- Link to v2: https://lore.kernel.org/r/20250702-hp-x14-x1p-v2-0-af5b588d1979@oldschoolsolutions.biz
+
+Changes in v2:
+- remove pm8010 handling
+- Link to v1: https://lore.kernel.org/r/20250702-hp-x14-x1p-v1-0-219356e83207@oldschoolsolutions.biz
+
+---
+Jens Glathe (3):
+      dt-bindings: arm: qcom: Split HP Omnibook X14 AI in SoC variants
+      arm64: dts: qcom: x1-hp-x14: Commonalize HP Omnibook X14 device tree
+      arm64: dts: qcom: x1-hp-x14: Add support for X1P42100 HP Omnibook X14
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    3 +-
+ arch/arm64/boot/dts/qcom/Makefile                  |    2 +
+ arch/arm64/boot/dts/qcom/x1-hp-omnibook-x14.dtsi   | 1549 ++++++++++++++++++++
+ .../boot/dts/qcom/x1e80100-hp-omnibook-x14.dts     | 1544 +------------------
+ .../boot/dts/qcom/x1p42100-hp-omnibook-x14.dts     |   40 +
+ 5 files changed, 1596 insertions(+), 1542 deletions(-)
+---
+base-commit: 3f804361f3b9af33e00b90ec9cb5afcc96831e60
+change-id: 20250702-hp-x14-x1p-eb32f4696d96
+
+Best regards,
+-- 
+Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+
+
 
