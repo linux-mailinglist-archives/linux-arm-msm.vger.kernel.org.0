@@ -1,329 +1,264 @@
-Return-Path: <linux-arm-msm+bounces-63541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F1DEAF7779
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 16:30:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F692AF77A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 16:34:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7776A544640
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 14:28:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5DE1A188EE96
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 14:34:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0551429B789;
-	Thu,  3 Jul 2025 14:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09CFA2ED841;
+	Thu,  3 Jul 2025 14:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UFx1j7yj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VKMgwNzh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04572EBB95
-	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Jul 2025 14:28:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A152ED159
+	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Jul 2025 14:34:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751552920; cv=none; b=oY/raey5ijIWcN0M7t8nytcsP267AHfJAUosUckQxBiSUvdL3Zo7rcpuEgXZbruMtYGAiuJ8q5szEy2Wpa6Iu52fFqgst1jlrLV6xIJApakzpYSLMXmAW1kUEbK3FCxXaSx9kLpNedQ7Qg6AnyFfjbFi/xSEbWjIx0DC3A5Fw58=
+	t=1751553242; cv=none; b=IAmP+w+k/3uTqHAn284ESOCTfcQ9BFiZrrp8YtEdQo3CZDAiq48ESNKyqdTATmyrfaPultODmLfEiR9jz8NQ3evbbC+xldXw518XZhJveiNw2H6rS7DNO4PHrnu5knFSLmNjE4cizPMqrv6UyssDlfsriuoNXv9RzOEBC9RFsPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751552920; c=relaxed/simple;
-	bh=+9JP73xuImAECbCH/I7OUvnPo7FfdAXNWIVD4e6oZqU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=t5Eb1TWnZKiIXfLhT9XSNGottn+VKXO+nxyGe7VxALJ2p4GipjC+9PkK2CNco/umMg6fw3XmHgTtVZ9WCuE2zpzyvRPGpALJEuvyzehWhTKrMyhfAaZr+4VeNvgHJOaBiVR8an65Wq4Fs0040N2AbNsztNkw6Co3w5MrvM0ndPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UFx1j7yj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 563ALPUV025164
-	for <linux-arm-msm@vger.kernel.org>; Thu, 3 Jul 2025 14:28:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	aPQxTypkDSifWXr1kKb5YoV+sU4Et63WdriVs3pvSJk=; b=UFx1j7yjt7VtX1vf
-	rZk4F/lhAvk2Zig6Ux2YGfDZtX/T549PlaPUYr3+cf9lVZMjt/Nq+gLTd50Tv4Sk
-	TchvAD3U+ijhGb4RN2SCTVyibdVO9NVpbzdUmNUTHmNrYYE5q6XcIbtYSlo1BPSs
-	AVrXwHN8J6c0ovDa/5CqpuNdq9gdaR4lQl5MUicrH9w6//D6bex9F2n9WV2gXe1i
-	cAU4Ig6dd7Ku+IuHJUVGoOJIMs6ZyqTD3qejP8GFEeI68iir7GCMgRhlzfxVkgDy
-	jziOm4hb/lEy57t2IkD/0Z9Zcs2d3YKHu/7WJI710zHS4AUgqKnGBRS0k/wkadMV
-	DklyIw==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47kd64wv3n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jul 2025 14:28:35 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6ff81086f57so63286886d6.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jul 2025 07:28:35 -0700 (PDT)
+	s=arc-20240116; t=1751553242; c=relaxed/simple;
+	bh=03kyA0pVb6l52SRNG9MBMJOKQPrJGBz6gkjmYtj8OjE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=VBVRLw/hWG8ZnZjvcxLPvDGAWKl49wnF7e7hS4aY9aJgx+Wl1l6e6ZFEhqMXp7MjahTILZ2unX2fVUE89RYY7d7KNYYu3RF8OX80nB+UKLUM9z2lXpI+5ALwVXQ5rIS/+6sozfEuWiLmTIkunYwBiU8VaAhfo200n0Jfxh98D+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VKMgwNzh; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a6cd1a6fecso8679660f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jul 2025 07:33:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1751553238; x=1752158038; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GjXQySvNbQPDNTo3lF28HF3pubSLkhOBNLbNwgZuqGk=;
+        b=VKMgwNzhDRPBNnmqoH24w9mTSsrWnr3tR4hW9KEk+A2a6L+PKMGIDXsVcSUS8KyqH8
+         7iBwsBxB9yINkjW1V6WwcC7KvZBP3Yd0BgRGQdMfrwnxo5L9KCnsmEdaH27I+ceDyWQd
+         GfmE2PwyWcIuDWsm/3DdpAZ+NgK451pEK6JRutbiStbUHL3OBdQfY9ujiAPRMfw4vMOU
+         8BqXAydD/Ve+HT6HDHRy7VD7W/1/+oDw4RSn4pXrfMp7HO7lqQRoVQEMtcTMS7MDE6fZ
+         G2OLxAEDh8DD445HxOAkOM4RDo5oxZrwC5hWKJ/lC27KxkhYvCAAJ9Yx7pNZNc1isfno
+         dUZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751552914; x=1752157714;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aPQxTypkDSifWXr1kKb5YoV+sU4Et63WdriVs3pvSJk=;
-        b=wQxPx42sa8W0+XtrLel8ckft0pjNV8Z1AYPFaBT1p9/DtTED2KaCWzvYahkLFsuj1D
-         J4Di1g5I31+I6FT4dUnkSxaiXAPkC3/DWHe43tJLuRv8WWSDX+LWW+ZRm7AHIKkmBZPg
-         jEhN6hYkVEo48gQ5z/G8jXlGaSVqeIYwg6onigqNdPGnzHjOLOaKtp1nGiHKQ3/NF2DQ
-         VJSNahz+X7iDoWF2URD6czF0weq4EEq1uQF/EYITBZ5yTmvi8uoXx8GS+EMZ0+lkA7nB
-         55w0EG8T/adpBiB6k72elIX4Zj7QhDTaQsn5vsvZZ1T3QfVTSdzGDJ8rq/F244NPgDyb
-         UFWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVDFhkWMODRkQF11M6PJm91UCvwYfG0Ts10MIWRfy6ZFXz959pWj5nj3RHZQOmh9SKlbMnKY2eUGFNWk9YX@vger.kernel.org
-X-Gm-Message-State: AOJu0YxZEuPZBvdhMqsErF78M1OMP+Q1BDRsk3sfeKx1Pyz5v9inq7a/
-	mw72GH1ao7FyKNDdp+OkW7FofT458V5goU/2Bl6Pl2R06H+d9JWmpugArlL/UmQEXTI3zMMklVb
-	ePIBXOJGitc7VGmAlk/Xe1/nuyU2W1QhgcreDeYFMPMnYQiQGfPTTFefc5xB3FYmpBxwd+tRkpZ
-	h2oqz68K9tFJvObccb98CXNzZWrztiUIoMSMbS1L7yD7U=
-X-Gm-Gg: ASbGncsGSXnV67dNdwaMBGb2+XxAkdu8jNmx+oH1fZBurEN3cOrbXYGUjfsp/oeLtPd
-	du+RPdHO4aU9Vq2yGfOa4nlV1LMNFDOzXyFYtn4AJT4rSg8Ru58LTPWqbHjSKnNv90lU5lwV8t6
-	+WzPId1Q==
-X-Received: by 2002:ac8:5a13:0:b0:48a:e2ec:a3b4 with SMTP id d75a77b69052e-4a97690de8fmr114049991cf.17.1751552914176;
-        Thu, 03 Jul 2025 07:28:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGhT0FsD7uVl5phvxFI/cNiRm8hqsPWi3kG29UqR5qXmGXlI/kuvyqMq4P1GkE5QfKubdQnQD4c3Jw0sIygX1w=
-X-Received: by 2002:ac8:5a13:0:b0:48a:e2ec:a3b4 with SMTP id
- d75a77b69052e-4a97690de8fmr114049331cf.17.1751552913522; Thu, 03 Jul 2025
- 07:28:33 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1751553238; x=1752158038;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=GjXQySvNbQPDNTo3lF28HF3pubSLkhOBNLbNwgZuqGk=;
+        b=UKYgsw5B/Ujo9BD3UAwrW6NW2jbrfaQFG4vky+CBHhQ66BglJc4qdDry4l3uV1tE5Y
+         SSGFIHVLvy4d+qd0+nWCBvVYuJBOdRiYedB89BrG9CButWpuRcddmaY+L28dGfiAVxHG
+         COuSTN0YMG5Sl/fNc5h7rlZbz/gBI+HOwMSSDCXS6L4O+Le/Vr7gdv3lr6CnEra5QHQY
+         ECn89GlfcC8etEaMkhGDAIQ2t+XBkqUsL7/QuvsJvrZpU/e8hnUxolOdBHZxvdbzgaCr
+         DTdj6jaDacD+5H5ckIFkM3PSCxuuriuJpZqsyZVFCD9/5gargujoN42CBluLlzpR5uC0
+         WqFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUR3BrtNeRy419YQ7OlbAnGQoFmvE0jKCQfhw87zkcaeyMbjVDOEs6v7RVfdeYDeOJxGslPIZ/3MU/Fdolh@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNdevc+jQmcN5k/SdaJ2NfqQk0hhNu8eM+O7uzC2t+g5oZI+Id
+	KS3tUtN8ypDB9IvT8XQruNmp94TKFOcsE1txP8KuP1+uQQTIFGSfcxi4uYaAcFaIGjQ=
+X-Gm-Gg: ASbGncs7xS0zkUmtgVEAuS+T3b0EKj8JnF1IRSWw8bPObfhG39xsJ5GZmVvGcFnwGAG
+	94wMA3SDBDLyv7itS751hEmtE9dUJHiaVo2ERXOnO5KEEUcJkhIE+IJOspKggSJlOuCHyOQjcBB
+	bnrxMd6gNmbsSM942npzEDODjLUixoHFrk7xGe6yXW7OfLuQKd3kGuB7ACjobVf9e7ZZCxgDv/I
+	TVyxve/bzEkZZPsvfCxEQEWAjPk+qXnSy3lzWSWs9a7JCnvFNRb/qyU0bald49v5kdSV0fbixn2
+	RN4aqkqtsnzO6sE3zD2fSmGulG12oce8s/eZpuSbLJwDETOnxknl45s2hPnPDs2xdD/U+0dNied
+	+gpQ=
+X-Google-Smtp-Source: AGHT+IEkKmPmraOjVA+Ipj4FdiIRIhAgsdjmHzAubQC1QTQXyyuQ9VSuovzCK3xLPt4hDBF2X9Urnw==
+X-Received: by 2002:a05:6000:2887:b0:3a5:52cc:5e29 with SMTP id ffacd0b85a97d-3b1fd74c457mr6177782f8f.7.1751553238375;
+        Thu, 03 Jul 2025 07:33:58 -0700 (PDT)
+Received: from localhost ([2a02:c7c:7213:c700:1b28:72bc:31d9:dffd])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a88c7fab6esm19167508f8f.31.2025.07.03.07.33.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Jul 2025 07:33:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20250629085036.765397-1-loic.poulain@oss.qualcomm.com> <yafvivvzvcuyopyisxbkb4cqa3cmv4uzn7df34pwk4kqg2r55n@wx6spgecaw6d>
-In-Reply-To: <yafvivvzvcuyopyisxbkb4cqa3cmv4uzn7df34pwk4kqg2r55n@wx6spgecaw6d>
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Date: Thu, 3 Jul 2025 16:28:21 +0200
-X-Gm-Features: Ac12FXzaTzx9YfkCK84DA6YQHyPZZJRo6PMlwTGV2tIPqFEY4q9HMpAmvGKrPXw
-Message-ID: <CAFEp6-2Z2CLD8AW475AH7FkBrtysXpfnAtWryHWRN+Noh2DZGg@mail.gmail.com>
-Subject: Re: [RESEND PATCH v2] drm/msm/dsi: Fix 14nm DSI PHY PLL Lock issue
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: robin.clark@oss.qualcomm.com, lumag@kernel.org, airlied@gmail.com,
-        simona@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        abhinav.kumar@linux.dev, jessica.zhang@oss.qualcomm.com,
-        sean@poorly.run, marijn.suijten@somainline.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=Z+PsHGRA c=1 sm=1 tr=0 ts=68669393 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
- a=EUspDBNiAAAA:8 a=ae2ZjgFDbcS0OE6Il88A:9 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAzMDEyMiBTYWx0ZWRfX3B835UYLWEnI
- c1xy/0z3welwckE+siRBdS9JX0ZVtbnzYMZrpRATXmGah1pWZwcQtBPVixENIgXqIZxGW87rfAl
- ihfMEVMAsQ/ahbZ4qLGwgRxXB9mJsXp15AVEROuHIgLTH+LyyPcFfObV/GPDRMWaZYfLK6++pBe
- uXo9a0vpE4N+ZtZFpavCyLRr7sDIVKOUxq0I0Ko9vB0Uu12aYC8NtJ8wuqF36A1GZDovFpQjyiB
- b7tK/E7KxkI7ynHVHJwpaoVKxHhBsO8zDB05qEOJpbT3pGfWuOAPupCRJxeD9dKDZTIYwhVbGoH
- BjpcJp7wV+vdHMXI+4e5j7irzxVMjh6xVKZ+U7o+KdUmab56SgbZ/wZtAbtyNKT5zn1i0B5p3J4
- YN9U/1d7DOTNCZPawZzg+q/nJQbVn3FgEU9+fosBT+c9RzcoZoBWEQv1yyVHVZ0ZJ8imIt0Z
-X-Proofpoint-GUID: yXUJ7dU6tdJfQF-zVAYQpcVa8qFUtmXY
-X-Proofpoint-ORIG-GUID: yXUJ7dU6tdJfQF-zVAYQpcVa8qFUtmXY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-03_04,2025-07-02_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0 mlxlogscore=999
- spamscore=0 adultscore=0 mlxscore=0 priorityscore=1501 bulkscore=0
- impostorscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507030122
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 03 Jul 2025 15:33:57 +0100
+Message-Id: <DB2HSWQRGFZM.JVPTBYXCOTKS@linaro.org>
+Cc: "Patrick Lai" <plai@qti.qualcomm.com>, "Annemarie Porter"
+ <annemari@quicinc.com>, <linux-sound@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>, "Krzysztof
+ Kozlowski" <krzysztof.kozlowski@linaro.org>, <kernel@oss.qualcomm.com>,
+ "Ekansh Gupta" <ekansh.gupta@oss.qualcomm.com>, "Pierre-Louis Bossart"
+ <pierre-louis.bossart@linux.dev>
+Subject: Re: [PATCH RFC 2/2] ASoC: qcom: qdsp6/audioreach: add support for
+ offloading raw opus playback
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Srinivas Kandagatla" <srinivas.kandagatla@oss.qualcomm.com>, "Vinod
+ Koul" <vkoul@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Takashi
+ Iwai" <tiwai@suse.com>, "Srinivas Kandagatla" <srini@kernel.org>, "Liam
+ Girdwood" <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>
+X-Mailer: aerc 0.20.0
+References: <20250616-opus_codec_rfc_v1-v1-0-1f70b0a41a70@linaro.org>
+ <20250616-opus_codec_rfc_v1-v1-2-1f70b0a41a70@linaro.org>
+ <c4d934c1-0218-4147-882f-279795bcd1f4@oss.qualcomm.com>
+In-Reply-To: <c4d934c1-0218-4147-882f-279795bcd1f4@oss.qualcomm.com>
 
-Hi Dmitry,
-
-On Sun, Jun 29, 2025 at 4:57=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
+On Wed Jun 18, 2025 at 1:34 PM BST, Srinivas Kandagatla wrote:
 >
-> On Sun, Jun 29, 2025 at 10:50:36AM +0200, Loic Poulain wrote:
-> > To configure and enable the DSI PHY PLL clocks, the MDSS AHB clock must
-> > be active for MMIO operations. Typically, this AHB clock is enabled as
-> > part of the DSI PHY interface enabling (dsi_phy_enable_resource).
-> >
-> > However, since these PLL clocks are registered as clock entities, they
-> > can be enabled independently of the DSI PHY interface, leading to
-> > enabling failures and subsequent warnings:
-> >
-> > ```
-> > msm_dsi_phy 5e94400.phy: [drm:dsi_pll_14nm_vco_prepare] *ERROR* DSI PLL=
- lock failed
-> > ------------[ cut here ]------------
-> > dsi0pllbyte already disabled
-> > WARNING: CPU: 3 PID: 1 at drivers/clk/clk.c:1194 clk_core_disable+0xa4/=
-0xac
-> > CPU: 3 UID: 0 PID: 1 Comm: swapper/0 Tainted:
-> > Tainted: [W]=3DWARN
-> > Hardware name: Qualcomm Technologies, Inc. Robotics RB1 (DT)
-> > pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=3D--)
-> > [...]
-> > ```
-> >
-> > This issue is particularly prevalent at boot time during the disabling =
-of
-> > unused clocks (clk_disable_unused()) which includes enabling the parent
-> > clock(s) when CLK_OPS_PARENT_ENABLE flag is set (this is the case for t=
-he
-> > 14nm DSI PHY PLL consumers).
-> >
-> > To resolve this issue, we move the AHB clock as a PM dependency of the =
-DSI
-> > PHY device (via pm_clk). Since the DSI PHY device is the parent of the =
-PLL
-> > clocks, this resolves the PLL/AHB dependency. Now the AHB clock is enab=
-led
-> > prior the PLL clk_prepare callback, as part of the runtime-resume chain=
-.
-> >
-> > We also eliminate dsi_phy_[enable|disable]_resource functions, which ar=
-e
-> > superseded by runtime PM.
-> >
-> > Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> > ---
-> >  v2: Move AHB clock into a proper PM dep instead of manually toggling i=
+>
+> On 6/16/25 4:26 PM, Alexey Klimov wrote:
+>> Add support for OPUS module, OPUS format ID, media format payload struct
+>> and make it all recognizable by audioreach compress playback path.
+>>=20
+>> At this moment this only supports raw or plain OPUS packets not
+>> encapsulated in container (for instance OGG container). For this usecase
+>> each OPUS packet needs to be prepended with 4-bytes long length field
+>> which is expected to be done by userspace applications. This is
+>> Qualcomm DSP specific requirement.
+>> > This patch is based on earlier work done by
+>> Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>
+> Thanks for picking this up Alexey,
+>
+> Same, co-dev by should be good attribute for such things.
+
+I need your Signed-off-by then and/or permission to use your Sign off.
+
+>> Cc: Annemarie Porter <annemari@quicinc.com>
+>> Cc: Srinivas Kandagatla <srini@kernel.org>
+>> Cc: Vinod Koul <vkoul@kernel.org>
+>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+>> ---
+>>  sound/soc/qcom/qdsp6/audioreach.c | 33 ++++++++++++++++++++++++++++++++=
++
+>>  sound/soc/qcom/qdsp6/audioreach.h | 17 +++++++++++++++++
+>>  sound/soc/qcom/qdsp6/q6apm-dai.c  |  3 ++-
+>>  sound/soc/qcom/qdsp6/q6apm.c      |  3 +++
+>>  4 files changed, 55 insertions(+), 1 deletion(-)
+>>=20
+>> diff --git a/sound/soc/qcom/qdsp6/audioreach.c b/sound/soc/qcom/qdsp6/au=
+dioreach.c
+>> index 4ebaaf736fb98a5a8a58d06416b3ace2504856e1..09e3a4da945d61b6915bf8b6=
+f382c25ae94c5888 100644
+>> --- a/sound/soc/qcom/qdsp6/audioreach.c
+>> +++ b/sound/soc/qcom/qdsp6/audioreach.c
+>> @@ -859,6 +859,7 @@ static int audioreach_set_compr_media_format(struct =
+media_format *media_fmt_hdr,
+>>  	struct payload_media_fmt_aac_t *aac_cfg;
+>>  	struct payload_media_fmt_pcm *mp3_cfg;
+>>  	struct payload_media_fmt_flac_t *flac_cfg;
+>> +	struct payload_media_fmt_opus_t *opus_cfg;
+>> =20
+>>  	switch (mcfg->fmt) {
+>>  	case SND_AUDIOCODEC_MP3:
+>> @@ -901,6 +902,38 @@ static int audioreach_set_compr_media_format(struct=
+ media_format *media_fmt_hdr,
+>>  		flac_cfg->min_frame_size =3D mcfg->codec.options.flac_d.min_frame_siz=
+e;
+>>  		flac_cfg->max_frame_size =3D mcfg->codec.options.flac_d.max_frame_siz=
+e;
+>>  		break;
+>> +	case SND_AUDIOCODEC_OPUS_RAW:
+>> +		media_fmt_hdr->data_format =3D DATA_FORMAT_RAW_COMPRESSED;
+>> +		media_fmt_hdr->fmt_id =3D MEDIA_FMT_ID_OPUS;
+>> +		media_fmt_hdr->payload_size =3D sizeof(struct payload_media_fmt_opus_=
+t);
+>
+> maybe sizeof(*opus_cfg)?
+
+Yes, I can update that.
+
+>> +		p =3D p + sizeof(*media_fmt_hdr);
+>> +		opus_cfg =3D p;
+>> +		/* raw opus packets prepended with 4 bytes of length */
+>> +		opus_cfg->bitstream_format =3D 1;
+>> +		/*
+>> +		 * payload_type:
+>> +		 * 0 -- read metadata from opus stream;
+>> +		 * 1 -- metadata is provided by filling in the struct here.
+>> +		 */
+>> +		opus_cfg->payload_type =3D 1;
+>> +		opus_cfg->version =3D mcfg->codec.options.opus_d.version;
+>> +		opus_cfg->num_channels =3D mcfg->codec.options.opus_d.num_channels;
+>> +		opus_cfg->pre_skip =3D mcfg->codec.options.opus_d.pre_skip;
+>> +		opus_cfg->sample_rate =3D mcfg->codec.options.opus_d.sample_rate;
+>> +		opus_cfg->output_gain =3D mcfg->codec.options.opus_d.output_gain;
+>> +		opus_cfg->mapping_family =3D mcfg->codec.options.opus_d.mapping_famil=
+y;
+>> +		opus_cfg->stream_count =3D mcfg->codec.options.opus_d.stream_count;
+>> +		opus_cfg->coupled_count =3D mcfg->codec.options.opus_d.coupled_count;
+>> +
+>> +		if (mcfg->codec.options.opus_d.num_channels =3D=3D 1) {
+>> +			opus_cfg->channel_mapping[0] =3D PCM_CHANNEL_FL;
+>> +		} else if (mcfg->codec.options.opus_d.num_channels =3D=3D 2) {
+>> +			opus_cfg->channel_mapping[0] =3D PCM_CHANNEL_FL;
+>> +			opus_cfg->channel_mapping[1] =3D PCM_CHANNEL_FR;
+>> +		}
+>
+> Pl use audioreach_set_default_channel_mapping() to fill in the channel
+> mapping data.
+>
+> Why are we not using channel mapping info from the snd_dec_opus struct he=
+re?
+
+Okay, I was re-reading RFC and can't really get my head around this.
+
+So first I came up with something like this:
+
+	switch (opus_cfg->mapping_family) {
+	case 0:
+		if (num_chan =3D=3D 1 || num_chan =3D=3D 2)
+			audioreach_set_default_channel_mapping(ch_map, num_chan);
+		else
+			/* mapping family 0 allows only 1 or 2 channels */
+			return -EINVAL;
+			break;
+		case 1:
+			if (num_chan > 8)
+				return -EINVAL;
+			if (mcfg->codec.options.opus_d.coupled_count > mcfg->codec.options.opus_=
+d.stream_count)
+				return -EINVAL;
+
+			memcpy(ch_map, mcfg->codec.options.opus_d.channel_map, sizeof(mcfg->code=
+c.options.opus_d.channel_map));
+			break;
+		default:
+			/* mapping family 2..255 shouldn't be allowed to playback */
+			return -EOPNOTSUPP;
+		}
+
+but I don't think above is correct at all.
+
+After re-reading the RFC few more times. It looks that channel_mapping in
+opus struct has nothing to do with channel mapping that we need to provide
+to DSP here. The channel mapping maps "decoded" channels to output channels
+and seems to be needed by opus decoder logic and in some sense is internal
+thingy to correctly construct sound for output channel from opus stream(s).
+In other words if output channel is present and valid then channel_mapping
+describes how and which decoded stream or streams (coupled or uncoupled)
+to use for producing sound output for that output channel.
+This is described in https://www.rfc-editor.org/rfc/rfc7845#section-5.1.1
+
+The number of output channels here actually matters for us. We can construc=
 t
-> >      from the PLL clock driver.
-> >
-> >  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 65 +++++++++++----------------
-> >  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h |  1 -
-> >  2 files changed, 25 insertions(+), 41 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/ms=
-m/dsi/phy/dsi_phy.c
-> > index 5973d7325699..015cb579c669 100644
-> > --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> > +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> > @@ -5,6 +5,8 @@
-> >
-> >  #include <linux/clk-provider.h>
-> >  #include <linux/platform_device.h>
-> > +#include <linux/pm_clock.h>
-> > +#include <linux/pm_runtime.h>
-> >  #include <dt-bindings/phy/phy.h>
-> >
-> >  #include "dsi_phy.h"
-> > @@ -511,30 +513,6 @@ int msm_dsi_cphy_timing_calc_v4(struct msm_dsi_dph=
-y_timing *timing,
-> >       return 0;
-> >  }
-> >
-> > -static int dsi_phy_enable_resource(struct msm_dsi_phy *phy)
-> > -{
-> > -     struct device *dev =3D &phy->pdev->dev;
-> > -     int ret;
-> > -
-> > -     ret =3D pm_runtime_resume_and_get(dev);
-> > -     if (ret)
-> > -             return ret;
-> > -
-> > -     ret =3D clk_prepare_enable(phy->ahb_clk);
-> > -     if (ret) {
-> > -             DRM_DEV_ERROR(dev, "%s: can't enable ahb clk, %d\n", __fu=
-nc__, ret);
-> > -             pm_runtime_put_sync(dev);
-> > -     }
-> > -
-> > -     return ret;
-> > -}
-> > -
-> > -static void dsi_phy_disable_resource(struct msm_dsi_phy *phy)
-> > -{
-> > -     clk_disable_unprepare(phy->ahb_clk);
-> > -     pm_runtime_put(&phy->pdev->dev);
-> > -}
-> > -
-> >  static const struct of_device_id dsi_phy_dt_match[] =3D {
-> >  #ifdef CONFIG_DRM_MSM_DSI_28NM_PHY
-> >       { .compatible =3D "qcom,dsi-phy-28nm-hpm",
-> > @@ -696,24 +674,30 @@ static int dsi_phy_driver_probe(struct platform_d=
-evice *pdev)
-> >       if (ret)
-> >               return ret;
-> >
-> > -     phy->ahb_clk =3D msm_clk_get(pdev, "iface");
-> > -     if (IS_ERR(phy->ahb_clk))
-> > -             return dev_err_probe(dev, PTR_ERR(phy->ahb_clk),
-> > -                                  "Unable to get ahb clk\n");
-> > +     platform_set_drvdata(pdev, phy);
-> >
-> > -     ret =3D devm_pm_runtime_enable(&pdev->dev);
-> > +     ret =3D devm_pm_runtime_enable(dev);
-> >       if (ret)
-> >               return ret;
-> >
-> > -     /* PLL init will call into clk_register which requires
-> > -      * register access, so we need to enable power and ahb clock.
-> > -      */
-> > -     ret =3D dsi_phy_enable_resource(phy);
-> > +     ret =3D devm_pm_clk_create(dev);
-> >       if (ret)
-> >               return ret;
-> >
-> > +     ret =3D pm_clk_add(dev, "iface");
->
-> This will break booting the kernel with some old DTS (before 6.0), where
-> we had iface_clk as a DSI PHY clock. Please document it in the commit
-> message.
+mapping for channels that we pass to DSP based just only on the number of
+output channels here and let DSP to figure out how to scatter or downmix or
+upmix them to its own output channels.
 
-Do we want to preserve backward compatibility and introduce some sort
-of msm_pm_clk_add to handle both?
+Conclusion from my understanding:
+-- we shouldn't mess with opus_cfg->channel_mapping here, it is needed for
+the correct operation of decoder, we shouldn't call
+audioreach_set_default_channel_mapping() on it;
+-- mapping output channels to provide the mapping to DSP might require some
+rework or I need to look into this.
 
->
-> > +     if (ret < 0)
-> > +             return dev_err_probe(dev, ret, "Unable to get iface clk\n=
-");
-> > +
-> >       if (phy->cfg->ops.pll_init) {
-> > +             /* PLL init will call into clk_register which requires
-> > +              * register access, so we need to enable power and ahb cl=
-ock.
-> > +              */
->
-> I think with pm_clk this is no longer reuquired. Could you please verify
-> it and drop extra pm_runtime calls from probe?
+Or something else that didn't came up in my mind yet.
 
-Will try.
+Also, I don't have any test files to test mapping_family 1 and some tricky
+cases here. As far as I understand, it works just fine right now with
+mapping_family 0.
 
->
-> > +             ret =3D pm_runtime_resume_and_get(dev);
-> > +             if (ret)
-> > +                     return ret;
-> > +
-> >               ret =3D phy->cfg->ops.pll_init(phy);
-> > +             pm_runtime_put(&pdev->dev);
-> >               if (ret)
-> >                       return dev_err_probe(dev, ret,
-> >                                            "PLL init failed; need separ=
-ate clk driver\n");
-> > @@ -725,18 +709,19 @@ static int dsi_phy_driver_probe(struct platform_d=
-evice *pdev)
-> >               return dev_err_probe(dev, ret,
-> >                                    "Failed to register clk provider\n")=
-;
-> >
-> > -     dsi_phy_disable_resource(phy);
-> > -
-> > -     platform_set_drvdata(pdev, phy);
-> > -
-> >       return 0;
-> >  }
-> >
-> > +static const struct dev_pm_ops dsi_phy_pm_ops =3D {
-> > +     SET_RUNTIME_PM_OPS(pm_clk_suspend, pm_clk_resume, NULL)
-> > +};
-> > +
-> >  static struct platform_driver dsi_phy_platform_driver =3D {
-> >       .probe      =3D dsi_phy_driver_probe,
-> >       .driver     =3D {
-> >               .name   =3D "msm_dsi_phy",
-> >               .of_match_table =3D dsi_phy_dt_match,
-> > +             .pm =3D &dsi_phy_pm_ops,
-> >       },
-> >  };
-> >
-> > @@ -762,7 +747,7 @@ int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
-> >
-> >       dev =3D &phy->pdev->dev;
-> >
-> > -     ret =3D dsi_phy_enable_resource(phy);
-> > +     ret =3D pm_runtime_resume_and_get(dev);
-> >       if (ret) {
-> >               DRM_DEV_ERROR(dev, "%s: resource enable failed, %d\n",
->
-> It would be nice to make error prints to follow the code changes.
+Best regards,
+Alexey
 
-Sure.
-
-Regards,
-Loic
 
