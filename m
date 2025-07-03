@@ -1,111 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-63582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B0F9AF82E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 23:54:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C4CEAF833B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 00:21:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CC72B6E3CC8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 21:53:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA6AE582F7A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Jul 2025 22:21:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CABD0230D14;
-	Thu,  3 Jul 2025 21:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 384F528EA4D;
+	Thu,  3 Jul 2025 22:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LH/PsIz4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s06L0ePE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E7E239E67
-	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Jul 2025 21:54:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577CB24A066
+	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Jul 2025 22:21:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751579662; cv=none; b=f7TqRCRmrGxs5jGd2PUaswtlj+Kh1XGUvItKd/hljtFdXCahlqB4F+ednFH3HlZtFZ0qCDVFgyHROEmbZ95o8ZiKdHQJYkSC4bSWgCKb8MY89dZB8CET1m2X28FpZT2CuVeuPzd4JTQvMy8PFeukS0r9wOVbVDmnL5SyBCQMFeg=
+	t=1751581309; cv=none; b=kfuZOIF9GsfDHs9S9xWazWNA/WOpx7S8UCo3o9NdobwJMcGtypDWY/ijHu/6ZQQSEc0eb1ZibzZaaXcgF2Jp/Fd8fSdpqg6bATK4RS6rdO1LOFPXrs/S58BCeJHtPiojE/IPMYSXje6SDmUN8LRLmkdIJ5+KX8dr+9ULul5uzNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751579662; c=relaxed/simple;
-	bh=LEo27SpxoT6z4tyv6TX/oS4QzkAl1cDA2pfjJ6uCnsA=;
+	s=arc-20240116; t=1751581309; c=relaxed/simple;
+	bh=hXa7xVr03JFbcgBBljLOZWrTDtWUk6UBg/vmRmvPVoo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TGlPjPW4dPCl7z7WdW8jKpo200bmjO9qB+NAnxVAeB3elajDrJZ8QEgQqEOLI8L0/8f53VmAWdH+2fznVECv9unc6O7I3Rg9GYL53dXb7RCPMDwXNEFqetPbO2WAgYvLMMXl5Jt1HbM1vbj0pksm13kbRHGzXePIRRzta8aw2xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LH/PsIz4; arc=none smtp.client-ip=209.85.167.42
+	 To:Cc:Content-Type; b=X5HY1PppJGPxUu1u9tXQLTmfjZ3x7M0fgcMhiZ8O1fTlZJjWyVhTeACdvrG6Yo+yveC1dEusSIOAN1i/xP0lyOQ90Rk3EaHWYMol6driOHV9FbX3pZ42i0Ejzg8XbgfVsQYGYdhNCY63b8xZjxwLdTG4PxMBQRiTwaDolM3hvqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s06L0ePE; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-553b3316160so430035e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jul 2025 14:54:20 -0700 (PDT)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-553d52cb80dso338773e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jul 2025 15:21:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751579659; x=1752184459; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1751581305; x=1752186105; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LEo27SpxoT6z4tyv6TX/oS4QzkAl1cDA2pfjJ6uCnsA=;
-        b=LH/PsIz4Rdp3SZpO6iSO4RMi70OfPm1+90Unk2x8B5XbUjnIHXB7dpdjgq6tDRF+28
-         nkqoaNOm3WVyYFejAqUT+gzgV+eO5EVsTAjxso65fqWpNSZEWs1bWFDm911HaBDkIJxX
-         ZlnBwIR8Mg8d6qTxyA9v7yaLm2erhEbGpWbbO+ChWfUZ3V5QTtTqV5vr0vN3HlBA3ea6
-         hjb2AtcKXgcrANkiWxyB+kiLcknGBofa4bJ82rJk8Bqg6wHOoS9pX3LijxfgEJtonbrO
-         /Pbrmz9e+0+OpNtPdzLOTmXWDV6NYprGu1OKQVYcu4Fsj0iYooRzvTIQ3N35KPgtAeSh
-         JR+g==
+        bh=hXa7xVr03JFbcgBBljLOZWrTDtWUk6UBg/vmRmvPVoo=;
+        b=s06L0ePEV+Ik/W++lG6RnHh2ha8t1mhR9yAbOmBc/IokvzgsMjUYG2PGa5hCfZfyYu
+         7suCgB0NhgU8mGTFAZE3l5VeQRtkAR48nM0X9mIan6GXsHMLV/MI5JL1h2WkOgLa4vjv
+         mKgIldSipKXKAg695Z58qM0JMF0JDcv3nj5MGoG297pVRjK+Sy0CIWOFM6YUBdGn38sF
+         zZEVUROaG/Eggrt/Cemq4QpG/jU1RWDVhm0a0f8iUbxp47Lyn+MmfB3hoKwSXdHwyqtd
+         uJJ2z1pJcgrWs+5Dt1m91CZj1ftxAJMLJkPpw0MVns+3YRo2A5+0nuuD9WohhQN2sQBo
+         87JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751579659; x=1752184459;
+        d=1e100.net; s=20230601; t=1751581305; x=1752186105;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LEo27SpxoT6z4tyv6TX/oS4QzkAl1cDA2pfjJ6uCnsA=;
-        b=U6M1TqDvN94V8pZr8QnWwf+5hW8eWe8LpG9L+thk9ZwOJLJvuplu/CqMWlu7w7SymN
-         7KrRTZVFaDepwaZb4mhT7qsxzup2O7GSuDBCwH5SaH2cDx23X8Se0IBY6FrBHX5TXe5m
-         nSS5zD9DVal+vYIObRw8qlF5wgGvAUy+0oyh9K40alrrvwXkvhmJitmcxbS9R7CBW/xL
-         +nc/gsEP7eIsOU4ewm6C/XN+sNzVvtA3F0+IliYHfgMzNCBrwCcwGc2WzzIzGLukuZdT
-         plzzF++ADPqCHp2SLfBeBKZN+A8ryDp3Uxig9YezrX/8XcikERI0/3ZbwR5ynJ9dXZZ7
-         FPXw==
-X-Forwarded-Encrypted: i=1; AJvYcCWeaC5uD+XNV5ibqZrfVDbt3AUDR5e2dSb1Q/Mhi1cFwEBz4wpxTByEuabPJ5nPNQ2umenB8Sym9kZi9sbK@vger.kernel.org
-X-Gm-Message-State: AOJu0YzLkx7kn4zj7CdLGHVP5k7Hh/e/oKuu5u5uYDiiFO9l2/Fe/zo7
-	iQ3xztI+uCl3yVIflerJ9FsQ4AxLRByh5dilUDi1oLwyGEt5CWAhcX7/ypNblKaDKJdurAyVl0Z
-	OEQ5iPCGWWMy2Gv7Q622D/GHSAYJsYN1ynkYYUyh9Og==
-X-Gm-Gg: ASbGncvb0DMpISfhNMlKgXKyyrwuxulnoYo2Pb6DM0WY8TVd/4EgFEhTwKAB8hgmG0k
-	UFUMaZ19+ssYon6nKgcnGORPAuhhxuNpbxYgLvBrWctEyYpepgz6PRaNo1LEegoUwznVUezM5oA
-	/uwonaDFpprh1XwBQdLyD0fzrHBDg0qUgLlbFpprWRkzw=
-X-Google-Smtp-Source: AGHT+IFckUZv1qDN34YL9xP78RpLLOjoYJYZ+wKY65GHTkc4fwzbahypUbKLt2uekYZ4NWpbxz8d+9N/6fdIiPphiOQ=
-X-Received: by 2002:a05:6512:252a:b0:553:d910:932b with SMTP id
- 2adb3069b0e04-556de26ecdfmr19471e87.46.1751579658980; Thu, 03 Jul 2025
- 14:54:18 -0700 (PDT)
+        bh=hXa7xVr03JFbcgBBljLOZWrTDtWUk6UBg/vmRmvPVoo=;
+        b=Or+gZyqZyn2j6BVC7d2Y5ZXHU0p9N2+cW0ghysghYPB1n9v1dIEV6CUSXxFUkDT81q
+         DKsPPsBQlXVI7t39FqK7JdCyB4dP9m1cYtS7FQdtS8eOkRFxyFROYX9KcDn2CqonQkUR
+         zOGdP2dfPgPrFqjOOhNrLGzc/Gc+7TznLOI3bteK1a11SPnOzz1Y1Hh2Ry2t9q/gQLPr
+         HSzXwcJf3Gf7y100woozXLQugBMHRR2xANXXQE9M8Fbn8WV8nt9vE7hlFcRt9EEGEOEe
+         72NgauVCZDrEclzjxkc7qa0SNXj8O7U0AoVr29fBFMec8P5urXII26nBGtaqCvJSo/E/
+         IH+g==
+X-Forwarded-Encrypted: i=1; AJvYcCV8HprZ9RWPnQv82341JAowPf0BHXiAqXJbC75JzSN8UPDxSlmzisjotzCrivyioboojoT0br7JNAQLiTOr@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUYyglnbDy1P/urW7XwjvgvasMiRq+Qc143uczIhJ1oP6duOVt
+	VtSHrkiWNFSRvZs2Vs46sOEoXIP9t39JHkqFYdmWt+x67ZMzDDfOG/znyXkuJsHiSFnBdkH/DnF
+	ozyC6Mi0ZiqXBtxG8rLA2SC5b70OVZ4ITjL5ATzCioQ==
+X-Gm-Gg: ASbGncvescj1YqzomgTGfhvzk0CfbKzzMjXlfOq37DIFcCEUgm/bvSHf24E2jjWCtU2
+	aLhiO77W1n2rzSZN7+ZUGB0T7FRSNm+7j29HJgbulrklKAihGVyYfxBcdlqv1GmGLdBj8S5JuhU
+	c1R2vPkyBigov5tzeZCPDqK7LgNSFweGxmBWblFdP29rw=
+X-Google-Smtp-Source: AGHT+IEdCJvHXhlmBq1702X71zoM5ng69d7Mh6npUYCQ1PTXuNgk3bG87vuighjDtFReOyDckV1OsZwH3mt/qEZLkiU=
+X-Received: by 2002:a05:6512:3f0c:b0:553:2969:1d6d with SMTP id
+ 2adb3069b0e04-5565baa76a4mr164653e87.13.1751581305466; Thu, 03 Jul 2025
+ 15:21:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250702-sm7635-pinctrl-v2-0-c138624b9924@fairphone.com>
-In-Reply-To: <20250702-sm7635-pinctrl-v2-0-c138624b9924@fairphone.com>
+References: <20250625153711.194208-1-brgl@bgdev.pl> <d92e7c52-eab5-4759-af3f-16b24254bff6@oss.qualcomm.com>
+ <CAMRc=Md=ABd+aSc7DE-2dsR5rMnpnvbetuexw8vmrf7_zzT31Q@mail.gmail.com>
+In-Reply-To: <CAMRc=Md=ABd+aSc7DE-2dsR5rMnpnvbetuexw8vmrf7_zzT31Q@mail.gmail.com>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 3 Jul 2025 23:54:08 +0200
-X-Gm-Features: Ac12FXz8bSnZw_fU0LoXZXBdvuWYVqNdvL-IUi3U2zwuKMo-p81WILsJ1A0gEfI
-Message-ID: <CACRpkdZ8oHJeHydLcMmtttJiKSGybX7vmhgPDEjD_4SDoxvCzg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Add pinctrl driver for Milos (SM7635)
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Date: Fri, 4 Jul 2025 00:21:34 +0200
+X-Gm-Features: Ac12FXyNl8F_EhX9xgzHWQ-gwTL-nTjQtlFOhsSbHuo_tnMvAihEfroUUjENXQE
+Message-ID: <CACRpkdZTXzyROqb3mGoQrsO5X_Y9-yDSU2ESUxivpb=N1WsP-g@mail.gmail.com>
+Subject: Re: [PATCH RFC/RFT] pinctrl: qcom: make the pinmuxing strict
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 2, 2025 at 5:56=E2=80=AFPM Luca Weiss <luca.weiss@fairphone.com=
+On Fri, Jun 27, 2025 at 10:26=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl=
 > wrote:
 
-> Document and add the pinctrl driver for the Milos SoC.
->
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
-> Changes in v2:
-> - Rebrand SM7635 to Milos as requested: https://lore.kernel.org/linux-arm=
--msm/aGMI1Zv6D+K+vWZL@hu-bjorande-lv.qualcomm.com/
-> - Link to v1: https://lore.kernel.org/r/20250625-sm7635-pinctrl-v1-0-ebfa=
-9e886594@fairphone.com
+> Yeah, I would be surprised if nothing broke.It's probably worth
+> looking into the implementation of the strict flag as it makes every
+> muxed pin unavailable as GPIO even if - like in this case - the
+> function *is* "gpio". Of course the "gpio" string has no real meaning
+> to the pinctrl core, it's just a name but it would be awesome if we
+> could say for a given function that this means GPIO and as such should
+> be available to the GPIOLIB API.
 
-The patches look entirely reasonable to me, as long as the DT
-people are on board with the compatibles I will apply the
-patches.
+Can't we just add a special callback to the pinmux_ops for that?
+like
+
+int (*is_gpio_mode) (struct pinctrl_dev *pctldev, unsigned int pin);
+
+That the core code can call to ask the driver if a pin is in GPIO
+mode already? A simple strcmp("gpio", ...) is one way for the
+Qualcomm driver to implement that.
 
 Yours,
 Linus Walleij
