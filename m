@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-63715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92212AF965E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 17:11:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8C53AF9662
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 17:11:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E9361CA4360
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 15:10:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CD5385C0F5C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 15:10:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F20B3093D5;
-	Fri,  4 Jul 2025 15:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15A001BD9C9;
+	Fri,  4 Jul 2025 15:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wT2OD5+I"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TsGzQbFF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523A23093DB
-	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Jul 2025 15:07:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074902C325E
+	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Jul 2025 15:08:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751641668; cv=none; b=t3aTWef/eqSLCr6wiZbtK9WDv30EAOlVKdV53nPnHUknNVctUvFABnHC6ewu0vqL+08kDnpc5FBfAFRWQvptgCwcMENJVvdWm/vVE5v0ocUFeLPVLwdaNzZhKPBDSad5Rxh6dKb1XketubxTzKxQRuBi60xwDYf1+fDautUeAd0=
+	t=1751641709; cv=none; b=PY97JxZTUVv5NT+MoaFW26VgAcEtxhRaYM2L2z0zgu2KYyAW7fd73pgmDyXMBgCWL3m8nZTIYT9Gjn28Usv6oXx3FDluCQheiIe+bmsG/rW346UqWagdWst2sbdnPlzpWrhDfbvUlwHL5F9hn93op0UYtU4FxNwNJH5YVnR7fzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751641668; c=relaxed/simple;
-	bh=q2PI2I6DpmIBa/PZTooLY5T7w0VsVRO6mzyBLjxOd2w=;
+	s=arc-20240116; t=1751641709; c=relaxed/simple;
+	bh=z99ypbhgt7PRN8CNu5zmUrW+s65R4pj9X6lJOs+6Kxc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MX7jY/TpW8Zf4Xqu3sTFeYgrHymAUM5PKL2LZ6hIJnUSAh9bqWNVuDPMlCGOjoXToGEnG51x2tQHCPug8U2vFM9xwiRU40t/7dSRbHcRdUu5FCRSOuqXQNLJwfJst2KsUKmRLMDWrMPb6OpZ1te2X0kc5Z2gSHUHYHDoVRUpmf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wT2OD5+I; arc=none smtp.client-ip=209.85.221.48
+	 In-Reply-To:Content-Type; b=KJd/d18uz7Ow3AbL2vZyHpfeSUBtokpXFocmFopOGFt2M7wS4RmLwzITckCg0iGctTqiooAzpusbQxKQSwfZpw124RW/AQHQlMhCP/+IWEKQEWiJsdnrWbTR1m80sjdd1idxPvccsGJzRbwvFBINthwJghjDd+NPK06781vdlPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TsGzQbFF; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a6d1369d4eso583102f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Jul 2025 08:07:46 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4538bc1cffdso8689915e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Jul 2025 08:08:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751641664; x=1752246464; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1751641706; x=1752246506; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UYKMtLCQMU9Jbn/Hf3wX+1NuY//33AgfBI91LQJ8MGY=;
-        b=wT2OD5+ItIoGdf28wgmaYorskH/4msq9z6DCuxt5QCfhhTARvnlPnXncZlGOa16p5I
-         vJRnqgSdPZXNH8jeXQC/qH2A52A+czVrFr8x4Pv1586GivLRaISaWyLmY/0dTYUzF2/5
-         H9mvVHbjhxEFtkn9oeOcHUHhSP8tmTNiJDJJGKIRsVZf6DeNAFrOC2Y6TbeK1Boj2gGx
-         JkuRqXqNXQf3xwp3mmWdsryxc7y1+XAvKhPxwdXaCNfpOrcp/3M++TisJeOVsN0STLEP
-         PsaHdsaF2aw316Es3AGs1dj9trrFf4kKNUPoJEJugIdOh9HeBsFZ+jvO05LLLKakPnwb
-         /M/w==
+        bh=5JRqGvyBumH802l+nR1KOGYBxhhomQIR/CQn84+0wMY=;
+        b=TsGzQbFF8RL+7dmPk+WF6CWVnx1xG0MJ+6u6RX6i+R7FRtfg1YT8QqsElhddbGaYgz
+         dTqIl751+WFPl5LWNw2W8qTDA1gHOWAZnSZDBOSggvfy/PunxJpl9+4W5q/tQCqwJH5Q
+         joPiAYwHwOc9VJeRTYXARvIPuY6koX9soZm8IpG8N0mV6gggwqcjz6ZfhKTyr0C2G8oy
+         eeOeB9CGobcrcnjrStG52jJ2HUVa/9ss7B71yw5gnArgGVUBecKs66tt35bd/i55G+EZ
+         b7yg9ZLKv4TYEh+h5Fb23zzFzqza9KSTlat/OzpKE1SmfYErxn9u8gVjzWnQrxUNp0Bw
+         eCDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751641664; x=1752246464;
+        d=1e100.net; s=20230601; t=1751641706; x=1752246506;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UYKMtLCQMU9Jbn/Hf3wX+1NuY//33AgfBI91LQJ8MGY=;
-        b=HNwfB7UP0u84ahH9trZmjAuZWig7tHSNvXiQqyhTWWQphsKBMrPdnIMQel5NiZpGC0
-         lypiGvH4qEZZsD3IOAug6tpJblcvfXCiAV4YB8dJQyYs6a37CaMBeVjPDWLYkGCZn37Z
-         wKKVOJvTfkq1tWHhfyK/so20kj5gIUm9eiXBSLktRewR8Xws1/1aDstFvB8AU1eXabW9
-         gh1o6tJCfnnMiM9Bn/gJ4SUSJPfieNun4a/xoQB0EupKvAUea7VVisXug5ICsNOgwrHT
-         xMU1IgBul8P9V/Mk7FufAi4AJgoLikBFqw3X5el07FMOgkNk0fZFE+VbeN1KSnysP6gb
-         T3Rw==
-X-Forwarded-Encrypted: i=1; AJvYcCXrc2wUle2GTOlRkRgQFsmAmSRVswB+OyzxyQnQJw4VjbIjDWtm+K+G70qpGMdDgCpNYHrptY4Hvz9dd8uh@vger.kernel.org
-X-Gm-Message-State: AOJu0YzXifsVcS5bHZBeDO80exwmUFed4gplVHuEV2gieVlAibSuCG5H
-	6HYRfi74/hhSc4KYLxYZzThltvRlV6ap5ci6OLtJAAIhEu1H46h0CHVyMHbu1Yy6Pgc=
-X-Gm-Gg: ASbGnctTVgHRXSZS/D4E2X7+ipD2XNK3PtkPizIEnc5RwH/oIBT8SjBBbyqicCuMJQS
-	U//Nugoz7sfaf8RET+/wg2WxeQTEXttAUKnwOFlfdekP9OaYTM6CDj+EwOUpHwSA9CSSFP48RiW
-	Hrx+nX5glcfFT/sxW74rK+004J/yTsJhKhqSyS4o3yib5Po2Rjp6sKw05BgQ0uUGsuhPQKK9z9U
-	pOaJ2ubw/f2CAyixUO7te8je8LXtLPHxAbM84yBU1TxqEC/IEZrIytVvcgpg+9vDg2T66FPosAd
-	oair6beIh6HXfQiFEjd3MfBTKo6NWVUDPqCpoM+P48xrnMAAUFv3QGa634xIS2ItNliF+m1sVmb
-	/fGg29zx9jlVNdGgaIzBVLv3a8Zs=
-X-Google-Smtp-Source: AGHT+IGCWK6GEjyuYgdWySF7UumkNIAA260ijlRTJDfE/t1th536V8nTvCURxmWZM6UF6IOMpNbQjQ==
-X-Received: by 2002:a05:6000:2890:b0:3a4:cbc6:9db0 with SMTP id ffacd0b85a97d-3b4966046e2mr2935145f8f.51.1751641664468;
-        Fri, 04 Jul 2025 08:07:44 -0700 (PDT)
+        bh=5JRqGvyBumH802l+nR1KOGYBxhhomQIR/CQn84+0wMY=;
+        b=BSY5YBWNdeKPjB3pfUfrlwmjlHet0jn/6t4kZcYn3t+xZ3RCVcPzl6rajHRVHMIYsL
+         o35E3BQwuPMEzXut7PLvhL7LVYcWsNoQZM9EVSmaK2bOaoMGWPQ3HMinqF/HgH+CJKuq
+         R2yMFB+1dUxWYX4dA+ndf6RWgc6L3eDszIiR51+bBRkxR1iAXxvCDQgrLivKqLPAUhX2
+         jcI2LNPagAWILinE2/FbE7nTJjlLH91Km43H58tK+a/aVIL7Gpp5CYL/1Jdwfn8akkcq
+         SvjJvHr3LiS7FxjS/AJvXreQywBjyqpqs42pFaEb9XQvtJDkI/kBaRuTvekfXLSfWUCD
+         Syaw==
+X-Forwarded-Encrypted: i=1; AJvYcCVpHP7uiTe/EKQgFF/+plyToFJXt4i8V+mmCGFcUCQsbxD6JDHbBlNvpzjbL9BfCUK6bFLlN5eH7cZQJWW5@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZ5iBBugeVQM1oOKQNNoJtdlM+k210YRly3fO0BmmrKBpIkcjX
+	lzTpiCgI4ex8nGWqronvbAIKnR6dvy/1s7Ar9cjNu3nmwmYzV/bR2V4rXXvbONAJQJo=
+X-Gm-Gg: ASbGncv1aWphFtrHnR09dWHCkkNtvk/4rLDaqt4Wa1G7LMLtQgOKMV7B6wKm09hdJnb
+	QGtzvgo1otlBjSPOVbTEcokCOQE+PBzPN/awigLOAvrxK2urMjvxQ3DXKqDrE5c3HgPR1B/F7QF
+	BfHJ3qadQMh5+FO5Lb7LDJJdCjRAEWrcYfVPa4iVQCQ9ve3AHMhzf6fjmgWpFPHsT3zcsYqQkTk
+	nWY2ctvBWW8QMvZM55SgnCG0DD6Chz/ToSqfu6hFXnev1R2Mq6+JPc8NlNFIBBl8ct6wCMKDdPU
+	yc7NWUQCadP2RhQfgXpFOa2cZILWtd9NqAi+eTw0UBjspEWppoQpytOd1IMjDIdE45oJlkMJykO
+	Yy1eF+3cLoSjVMaO/eOkT3nPzpmAzSsoxzZvRuQ==
+X-Google-Smtp-Source: AGHT+IEhXyWUKZBqJ1/rbt2q/CXsfjI081WY8MKxoJLn03mwHiCnJ6/2m4+MnYAdB1lvJU/vPxvxlQ==
+X-Received: by 2002:a05:600c:4706:b0:454:a37a:db67 with SMTP id 5b1f17b1804b1-454b4ead1c5mr30539075e9.17.1751641706107;
+        Fri, 04 Jul 2025 08:08:26 -0700 (PDT)
 Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b47225a2e8sm2696936f8f.75.2025.07.04.08.07.42
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454abea60d5sm37229795e9.1.2025.07.04.08.08.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Jul 2025 08:07:43 -0700 (PDT)
-Message-ID: <96f2c5af-9d42-4fb9-a468-ec4d22a76198@linaro.org>
-Date: Fri, 4 Jul 2025 16:07:41 +0100
+        Fri, 04 Jul 2025 08:08:25 -0700 (PDT)
+Message-ID: <93a1f14f-ae25-442c-b495-e66c74193d06@linaro.org>
+Date: Fri, 4 Jul 2025 16:08:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,53 +82,49 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: media: qcom,sm8550-iris: Add X1E80100
- compatible
+Subject: Re: [PATCH 1/6] dt-bindings: clock: qcom,sm8450-videocc: Document
+ X1E80100 compatible
 To: Stephan Gerhold <stephan.gerhold@linaro.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Stefan Schmidt <stefan.schmidt@linaro.org>
-References: <20250704-x1e-iris-v1-1-c3137d979e43@linaro.org>
+ <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Konrad Dybcio <konradybcio@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
+ Johan Hovold <johan@kernel.org>, Stefan Schmidt <stefan.schmidt@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250701-x1e-videocc-v1-0-785d393be502@linaro.org>
+ <20250701-x1e-videocc-v1-1-785d393be502@linaro.org>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250704-x1e-iris-v1-1-c3137d979e43@linaro.org>
+In-Reply-To: <20250701-x1e-videocc-v1-1-785d393be502@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 04/07/2025 14:38, Stephan Gerhold wrote:
-> Iris in X1E80100 is pretty much identical to SM8550. We can use the same
-> firmware image and the same definitions in the driver, so just add
-> qcom,x1e80100-iris to the existing list with qcom,sm8550-iris as fallback
-> compatible.
+On 01/07/2025 18:28, Stephan Gerhold wrote:
+> X1E80100 videocc is largely identical to SM8550, but needs slightly
+> different PLL frequencies. Add a separate qcom,x1e80100-videocc compatible
+> to the existing schema used for SM8550.
 > 
 > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 > ---
->   Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml | 1 +
+>   Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml | 1 +
 >   1 file changed, 1 insertion(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> index c79bf2101812d83b99704f38b7348a9f728dff44..9504d7ea23f4a30fd2d03e8683721641f8b1a115 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-> @@ -20,6 +20,7 @@ properties:
->         - items:
->             - enum:
->                 - qcom,sa8775p-iris
-> +              - qcom,x1e80100-iris
->             - const: qcom,sm8550-iris
->         - enum:
->             - qcom,qcs8300-iris
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> index 0d99178332cb99d3f02f50605e19b9b26e3ec807..fcd2727dae46711650fc8fe71221a06630040026 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> @@ -25,6 +25,7 @@ properties:
+>         - qcom,sm8475-videocc
+>         - qcom,sm8550-videocc
+>         - qcom,sm8650-videocc
+> +      - qcom,x1e80100-videocc
+>   
+>     clocks:
+>       items:
 > 
-> ---
-> base-commit: 26ffb3d6f02cd0935fb9fa3db897767beee1cb2a
-> change-id: 20250704-x1e-iris-4a5d033f4a2d
-> 
-> Best regards,
-
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
