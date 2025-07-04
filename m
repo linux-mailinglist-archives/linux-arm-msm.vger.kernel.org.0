@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-63704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 019A7AF9293
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 14:30:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC9C8AF929E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 14:31:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9961F4A1DBA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 12:30:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18CEE5885D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 12:31:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C68FA2D94A6;
-	Fri,  4 Jul 2025 12:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46A1E2D9EDB;
+	Fri,  4 Jul 2025 12:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e/fsUOQh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gu1+/i46"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961202D94A3;
-	Fri,  4 Jul 2025 12:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FACB2D46AC;
+	Fri,  4 Jul 2025 12:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751632212; cv=none; b=fj0jewxv7Fuqne7ai8Js6WnspkG82HLRAfwvGRoQuePe1PJQInltvd0/3SJK6JO8C1oYwRwWJDG36a6XZITm066Vtcih2BQwUWwZH1e5iSg2TlhpUWbVEpa/Bb4wqjj0BBT/rR/ALCgaFP5a/qrndonan3oDo63DkKOPWuzE8Is=
+	t=1751632239; cv=none; b=rr28O2QUX10XlRDFC+wriLAqwOcJ63D9a6rC8ICNSiUSYXt/Pva83mMZ6HFyXMjXRryA9nHGPjjrQJUvvwssqfUQC1aqd0tGeN9bmTqSGxlaSkG9bPqBoxv+lqlPUy81BkLrio0b4uw2fqfU8aCiPoVdXD9ULJRRIqmXIAO9b9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751632212; c=relaxed/simple;
-	bh=s4u3hYoZy2lhWJsXQ4PocdmXhMcIc6dcQUR7IICROuM=;
+	s=arc-20240116; t=1751632239; c=relaxed/simple;
+	bh=9rZiRzdv9CtJTFc6rhk2cR+OOMU0FF61Txdcw7HIcbA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K2oxkQFtA3+fjV4kWSwvpdnLGvKxJTj8jyhm7+lS7bwSxXvRi7o8llc4i+3QH7+uYE/xHKLMUdD0UuJddG98a13RUFAmiKGojWUBDXcYuBKSaRH+ABUWhKx8t0K1o+23FJfMrBR+Hx5VzarV5r04i/s69qSXqj41KR9D/1MntzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e/fsUOQh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00966C4CEF0;
-	Fri,  4 Jul 2025 12:30:07 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=SktkViYnqGj/Ir88vH5ffN9Hqk+hOLvUscfXTAZMoEkUk7gLXRW6Pfk/MlD2cAk2HYlb1BWFV6XKqVxQbu4pajTWps37a4+9Kaefik+iSRvqxJKNH3gDkb7zlC/binkLGQkL3jG0RvY3NTEqhCEOYTViuvhXQLpAHyhlhqSDh/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gu1+/i46; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75547C4CEE3;
+	Fri,  4 Jul 2025 12:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751632212;
-	bh=s4u3hYoZy2lhWJsXQ4PocdmXhMcIc6dcQUR7IICROuM=;
+	s=k20201202; t=1751632237;
+	bh=9rZiRzdv9CtJTFc6rhk2cR+OOMU0FF61Txdcw7HIcbA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=e/fsUOQhRGGymBBj6Q36Fzm2mBsoyyNvQGV6Yn+gljki7oI+lrtpFTBoH2WXGP6hs
-	 oJY8dsob5zvVkanNg2lq4S1ofrVaukg68KVtudZs/T7oDRMLQURf41EgEscz3J1gmE
-	 F/EVgFdRlYXRw7kveYW1GWCnFtblIZsDVChkqPH02I3UNfOil0Ew9IlR1p4kYNbB4S
-	 A0fDCUzw0wHXG7hh/lpo5MqkLq8wdmmTlo2WKmtS5QzRdT5unzy2cGEpvn1hJi9ZT9
-	 DnXr6dCANL8txgbvVdr6joXb51kkuAM6ZUCMdQ0cj73B993xpXFjBxW5aM0kY7qBhM
-	 aYHi326I57FHQ==
-Message-ID: <59edb982-43bd-4055-b546-f4af17228b72@kernel.org>
-Date: Fri, 4 Jul 2025 14:30:06 +0200
+	b=gu1+/i46XMKNQ6xNFRlzCovm6Nzzrc6XvBQshICMZ+70atFk9Z014eGcqKX6gTBe5
+	 dZUbjJW1r4Nc2AylOyLteMv0Wjps2ahM1mI4c8E8YeSdCIzcBEBw6Hb0dGfV2CAr3i
+	 D2y9Ch6xqd5JQW87kbsW3Y2sniw9G/LQsfKdT/ObSbDLXQ8anHEXhbrgAAlFLusSlX
+	 +QQoSTWEHn/U53HoEGYCT97+AGrwK5O81/diyinGC/wURzBpkhAwYSpx9SVrZXQVp3
+	 VbKacS440ehL6U6+HREuovwzsd/4TDVLPvSN3uuLYxVBQvP5YBccZovC/UYd9QWlDG
+	 w+n75aTREAhsg==
+Message-ID: <0191e184-7dd4-4dc3-957d-f045c5d8de93@kernel.org>
+Date: Fri, 4 Jul 2025 14:30:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/11] dt-bindings: clock: qcom: document the Milos GPU
- Clock Controller
+Subject: Re: [PATCH v2 10/11] dt-bindings: clock: qcom: document the Milos
+ Video Clock Controller
 To: Luca Weiss <luca.weiss@fairphone.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -62,7 +62,7 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250704-sm7635-clocks-v2-0-9e47a7c0d47f@fairphone.com>
- <20250704-sm7635-clocks-v2-8-9e47a7c0d47f@fairphone.com>
+ <20250704-sm7635-clocks-v2-10-9e47a7c0d47f@fairphone.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,12 +108,12 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250704-sm7635-clocks-v2-8-9e47a7c0d47f@fairphone.com>
+In-Reply-To: <20250704-sm7635-clocks-v2-10-9e47a7c0d47f@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 04/07/2025 09:17, Luca Weiss wrote:
-> Add bindings documentation for the Milos (e.g. SM7635) Graphics Clock
+> Add bindings documentation for the Milos (e.g. SM7635) Video Clock
 > Controller.
 > 
 > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
