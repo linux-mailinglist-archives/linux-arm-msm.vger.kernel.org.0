@@ -1,590 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-63647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BCD2AF8BC8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 10:33:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D14FAF8B6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 10:27:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 27E44B429FD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 08:22:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F16918941B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 08:24:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B0542DECA0;
-	Fri,  4 Jul 2025 07:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D930B2DCF69;
+	Fri,  4 Jul 2025 07:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ImNzoyn5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="liuKYEfY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF5B2DA776;
-	Fri,  4 Jul 2025 07:54:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900422DCF55;
+	Fri,  4 Jul 2025 07:54:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751615674; cv=none; b=qMG3QwOPjMYRNpdKXurU1ZdBLOx42ovmxCnb9YLH2xLFEJo8VumxzR8TvItpCsaznXtteHTjxDHMKkJP8k+DAOIKE6sa/J6Fne6PJMI9SpbiiNPdHb8G/8CqSca2/FDtf9pr/iwTuWxJJQpSn85obGoLEd90m13sG+vj6XMB34o=
+	t=1751615673; cv=none; b=XgzX9OoM//BTMqryK0njfU7jdRZHBupU5I+0cr+Pc4ITnq7+biFeAr0gbGxlIFZu/fItInK994nomPPbF2zrhK0DpHawHZd6WP4da4KkqKbgKyUR3/m2NVsivtbrkChkYk3r6euwRBy8Iyr3J2QXcePBx6UtXWgh76F+y4+WoP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751615674; c=relaxed/simple;
-	bh=xYuK9T9+tcQn64AIw71sMLb6RG4OnDJkGt94GjOYXp0=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=CQ956qec/JqOvBEnEWdxQLbM4N+URSWzDuQLDiYxcfX8Iuu7f+gB4qKyuw/AgjygHmMUtiODPYrzlxtNZXhZThXItiMCuNXx/ZflupH9qEnSSbX7heNOOwE3ds53XBB7abP4qPiwhwkPGMj3B76e6OQoaZZZPzGWY6xosjTzrqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ImNzoyn5; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751615671; x=1783151671;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=xYuK9T9+tcQn64AIw71sMLb6RG4OnDJkGt94GjOYXp0=;
-  b=ImNzoyn5QkeNTemk9Y35lx3JtH9bROPuEWHig+YWHSDfsgmYDmbrxQMd
-   fEhP4RV6E5cEhDNeon27+E2xjFERM6/ddbCPDj0VjHNN4KTaEJD/pUuIg
-   H0j5OuOSv53d0DsuuY8buARL8CT2fVwAWTlFZpWg2s36+U3GUhBrDfoCS
-   NGhppPRMrroC8r+lc76Ry9tHJFDb5sf8bbmvRIcKebfp2yvkhyizu6LTM
-   U/KRADHY1BoKlSGDF6SdQhdr41595kCfdMwOyETz98FmS2R0Ie3kFr415
-   6DbEZP1k+BrPnYqW9d4M+IrmEgLHri+BVVQjmLX42jfqJLg9JY6mauBXm
-   w==;
-X-CSE-ConnectionGUID: /x4f9jZlRSuPw3G8MH6V/w==
-X-CSE-MsgGUID: OltbnzLuQmqbkpmgfnqdgQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="76494692"
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; 
-   d="scan'208";a="76494692"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jul 2025 00:54:30 -0700
-X-CSE-ConnectionGUID: QFWajt0PR7SFOZnG7l1PUA==
-X-CSE-MsgGUID: +OWarQq2Sw+E08H/hywhkQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; 
-   d="scan'208";a="158924245"
-Received: from jkrzyszt-mobl2.ger.corp.intel.com (HELO svinhufvud.fi.intel.com) ([10.245.244.244])
-  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jul 2025 00:54:18 -0700
-Received: from svinhufvud.lan (localhost [IPv6:::1])
-	by svinhufvud.fi.intel.com (Postfix) with ESMTP id E8D0944843;
-	Fri,  4 Jul 2025 10:54:15 +0300 (EEST)
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6 krs, Bertel Jungin Aukio 5, 02600 Espoo
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
-To: Elie Morisse <syniurge@gmail.com>,
-	Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Michal Simek <michal.simek@amd.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jan Dabros <jsd@semihalf.com>,
-	Jean Delvare <jdelvare@suse.com>,
-	Dong Aisheng <aisheng.dong@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Ajay Gupta <ajayg@nvidia.com>,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
-	Vignesh R <vigneshr@ti.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-	Chris Brandt <chris.brandt@renesas.com>,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>
-Cc: linux-i2c@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	imx@lists.linux.dev,
-	linux-omap@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com
-Subject: [PATCH 23/80] i2c: Remove redundant pm_runtime_mark_last_busy() calls
-Date: Fri,  4 Jul 2025 10:54:15 +0300
-Message-Id: <20250704075415.3218608-1-sakari.ailus@linux.intel.com>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250704075225.3212486-1-sakari.ailus@linux.intel.com>
-References: <20250704075225.3212486-1-sakari.ailus@linux.intel.com>
+	s=arc-20240116; t=1751615673; c=relaxed/simple;
+	bh=5p7gOND5S78G6c8QwUB05hpS5qSqTn8+V/uQ6I3tCTk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c1Kz1x//uIXl/28XeI3lBrMDGxi8jHqPqn3XJPVWhFp6z5QUsdeE576sOoTjGcUDo28xbMwTExF7j077Pq8woubEj8IKYRnnrquKYMM5c0kfrU3riWnz3NWQ4mnKykDTffuZBFRE9FmSJ1LHY1PuBzjK1vfWeLx2QM8zac1gD4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=liuKYEfY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51210C4CEE3;
+	Fri,  4 Jul 2025 07:54:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751615673;
+	bh=5p7gOND5S78G6c8QwUB05hpS5qSqTn8+V/uQ6I3tCTk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=liuKYEfYk33H3iySy8AibMWijxSIkotOWfcfrcw5YyZGUaSLZgf9bfYCW5W40+5nx
+	 Jb1tiRwm7vt/FF3L8AQYkLoHyZ3b9ImOJEZWJCh9iVLJB/Tmn+78WHNvYOCRigrSP0
+	 5r4ruhr/aeAxBIsd21ZFYpXsZL7cHxnaGbky9Z8GA2rrouvCoNeoeDx+rjTSVfoXDA
+	 ThAQhAcNM5ZAGq4qIEHTbDeWpnOzI66L3XLHDmsJnGflM6CmFjYeZ2dQXr/+y9csct
+	 B2r0BkgupWvBNMtnX3t0qPMaap/lfUXVufxG/vlG5EOtwHFy4VuKHcg3794xre3i0I
+	 vBnDaRp+75VAA==
+Message-ID: <3551dba1-0c5f-4000-8b95-6a04cd81a027@kernel.org>
+Date: Fri, 4 Jul 2025 09:54:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] Enable CTCU device for QCS8300
+To: Jie Gan <quic_jiegan@quicinc.com>, Jie Gan <jie.gan@oss.qualcomm.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250624095905.7609-1-jie.gan@oss.qualcomm.com>
+ <338a9ee1-10aa-4bd2-9b0a-5006ed571bb9@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <338a9ee1-10aa-4bd2-9b0a-5006ed571bb9@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-pm_runtime_put_autosuspend(), pm_runtime_put_sync_autosuspend(),
-pm_runtime_autosuspend() and pm_request_autosuspend() now include a call
-to pm_runtime_mark_last_busy(). Remove the now-reduntant explicit call to
-pm_runtime_mark_last_busy().
+On 25/06/2025 02:59, Jie Gan wrote:
+> 
+> 
+> On 6/24/2025 5:59 PM, Jie Gan wrote:
+>> Enable CTCU device for QCS8300 platform. Add a fallback mechnasim in binding to utilize
+>> the compitable of the SA8775p platform becuase the CTCU for QCS8300 shares same
+>> configurations as SA8775p platform.
+> 
+> Hi dear maintainers,
+> 
+> I just realized it would be more efficient to introduce a common 
+> compatible string for SoCs that include two TMC ETR devices.
+> 
+> Most of these SoCs share the same CTCU data configuration, such as the 
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
----
-The cover letter of the set can be found here
-<URL:https://lore.kernel.org/linux-pm/20250704075225.3212486-1-sakari.ailus@linux.intel.com>.
+"Most" basically disqualifies your idea.
 
-In brief, this patch depends on PM runtime patches adding marking the last
-busy timestamp in autosuspend related functions. The patches are here, on
-rc2:
+> offsets for the ATID and IRQ registers, because they integrate the same 
+> version of the CTCU hardware.
+> 
+> So I propose introducing a common compatible string, 
+> "coresight-ctcu-v2", to simplify the device tree configuration for these 
+> platforms.
 
-        git://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git \
-                pm-runtime-6.17-rc1
+This is explained in writing bindings.
 
- drivers/i2c/busses/i2c-amd-mp2.h           | 1 -
- drivers/i2c/busses/i2c-at91-core.c         | 1 -
- drivers/i2c/busses/i2c-at91-master.c       | 1 -
- drivers/i2c/busses/i2c-cadence.c           | 1 -
- drivers/i2c/busses/i2c-davinci.c           | 2 --
- drivers/i2c/busses/i2c-designware-master.c | 1 -
- drivers/i2c/busses/i2c-hix5hd2.c           | 1 -
- drivers/i2c/busses/i2c-i801.c              | 1 -
- drivers/i2c/busses/i2c-img-scb.c           | 3 ---
- drivers/i2c/busses/i2c-imx-lpi2c.c         | 4 ----
- drivers/i2c/busses/i2c-imx.c               | 3 ---
- drivers/i2c/busses/i2c-mv64xxx.c           | 1 -
- drivers/i2c/busses/i2c-nvidia-gpu.c        | 1 -
- drivers/i2c/busses/i2c-omap.c              | 3 ---
- drivers/i2c/busses/i2c-qcom-cci.c          | 2 --
- drivers/i2c/busses/i2c-qcom-geni.c         | 1 -
- drivers/i2c/busses/i2c-qup.c               | 3 ---
- drivers/i2c/busses/i2c-riic.c              | 2 --
- drivers/i2c/busses/i2c-rzv2m.c             | 1 -
- drivers/i2c/busses/i2c-sprd.c              | 2 --
- drivers/i2c/busses/i2c-stm32f7.c           | 5 -----
- drivers/i2c/busses/i2c-xiic.c              | 1 -
- 22 files changed, 41 deletions(-)
-
-diff --git a/drivers/i2c/busses/i2c-amd-mp2.h b/drivers/i2c/busses/i2c-amd-mp2.h
-index 018a42de8b1e..9b7e9494dd12 100644
---- a/drivers/i2c/busses/i2c-amd-mp2.h
-+++ b/drivers/i2c/busses/i2c-amd-mp2.h
-@@ -207,7 +207,6 @@ static inline void amd_mp2_pm_runtime_get(struct amd_mp2_dev *mp2_dev)
- 
- static inline void amd_mp2_pm_runtime_put(struct amd_mp2_dev *mp2_dev)
- {
--	pm_runtime_mark_last_busy(&mp2_dev->pci_dev->dev);
- 	pm_runtime_put_autosuspend(&mp2_dev->pci_dev->dev);
- }
- 
-diff --git a/drivers/i2c/busses/i2c-at91-core.c b/drivers/i2c/busses/i2c-at91-core.c
-index edc047e3e535..b64adef778d4 100644
---- a/drivers/i2c/busses/i2c-at91-core.c
-+++ b/drivers/i2c/busses/i2c-at91-core.c
-@@ -313,7 +313,6 @@ static int __maybe_unused at91_twi_resume_noirq(struct device *dev)
- 			return ret;
- 	}
- 
--	pm_runtime_mark_last_busy(dev);
- 	pm_request_autosuspend(dev);
- 
- 	at91_init_twi_bus(twi_dev);
-diff --git a/drivers/i2c/busses/i2c-at91-master.c b/drivers/i2c/busses/i2c-at91-master.c
-index 59795c1c24ff..894cedbca99f 100644
---- a/drivers/i2c/busses/i2c-at91-master.c
-+++ b/drivers/i2c/busses/i2c-at91-master.c
-@@ -717,7 +717,6 @@ static int at91_twi_xfer(struct i2c_adapter *adap, struct i2c_msg *msg, int num)
- 
- 	ret = (ret < 0) ? ret : num;
- out:
--	pm_runtime_mark_last_busy(dev->dev);
- 	pm_runtime_put_autosuspend(dev->dev);
- 
- 	return ret;
-diff --git a/drivers/i2c/busses/i2c-cadence.c b/drivers/i2c/busses/i2c-cadence.c
-index 697d095afbe4..0fb728ade92e 100644
---- a/drivers/i2c/busses/i2c-cadence.c
-+++ b/drivers/i2c/busses/i2c-cadence.c
-@@ -1128,7 +1128,6 @@ static int cdns_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 		cdns_i2c_set_mode(CDNS_I2C_MODE_SLAVE, id);
- #endif
- 
--	pm_runtime_mark_last_busy(id->dev);
- 	pm_runtime_put_autosuspend(id->dev);
- 	return ret;
- }
-diff --git a/drivers/i2c/busses/i2c-davinci.c b/drivers/i2c/busses/i2c-davinci.c
-index 6a3d4e9e07f4..a773ba082321 100644
---- a/drivers/i2c/busses/i2c-davinci.c
-+++ b/drivers/i2c/busses/i2c-davinci.c
-@@ -543,7 +543,6 @@ i2c_davinci_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[], int num)
- 	ret = num;
- 
- out:
--	pm_runtime_mark_last_busy(dev->dev);
- 	pm_runtime_put_autosuspend(dev->dev);
- 
- 	return ret;
-@@ -821,7 +820,6 @@ static int davinci_i2c_probe(struct platform_device *pdev)
- 	if (r)
- 		goto err_unuse_clocks;
- 
--	pm_runtime_mark_last_busy(dev->dev);
- 	pm_runtime_put_autosuspend(dev->dev);
- 
- 	return 0;
-diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
-index cbd88ffa5610..181ca0938fb2 100644
---- a/drivers/i2c/busses/i2c-designware-master.c
-+++ b/drivers/i2c/busses/i2c-designware-master.c
-@@ -901,7 +901,6 @@ i2c_dw_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[], int num)
- 	i2c_dw_release_lock(dev);
- 
- done_nolock:
--	pm_runtime_mark_last_busy(dev->dev);
- 	pm_runtime_put_autosuspend(dev->dev);
- 
- 	return ret;
-diff --git a/drivers/i2c/busses/i2c-hix5hd2.c b/drivers/i2c/busses/i2c-hix5hd2.c
-index 370f32974763..f8aa1ea0f9a6 100644
---- a/drivers/i2c/busses/i2c-hix5hd2.c
-+++ b/drivers/i2c/busses/i2c-hix5hd2.c
-@@ -373,7 +373,6 @@ static int hix5hd2_i2c_xfer(struct i2c_adapter *adap,
- 	ret = num;
- 
- out:
--	pm_runtime_mark_last_busy(priv->dev);
- 	pm_runtime_put_autosuspend(priv->dev);
- 	return ret;
- }
-diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
-index a7f89946dad4..58088e9121a1 100644
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -928,7 +928,6 @@ static s32 i801_access(struct i2c_adapter *adap, u16 addr,
- 	 */
- 	iowrite8(SMBHSTSTS_INUSE_STS | STATUS_FLAGS, SMBHSTSTS(priv));
- 
--	pm_runtime_mark_last_busy(&priv->pci_dev->dev);
- 	pm_runtime_put_autosuspend(&priv->pci_dev->dev);
- 	return ret;
- }
-diff --git a/drivers/i2c/busses/i2c-img-scb.c b/drivers/i2c/busses/i2c-img-scb.c
-index a454f9f25146..88192c25c44c 100644
---- a/drivers/i2c/busses/i2c-img-scb.c
-+++ b/drivers/i2c/busses/i2c-img-scb.c
-@@ -1131,7 +1131,6 @@ static int img_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 			break;
- 	}
- 
--	pm_runtime_mark_last_busy(adap->dev.parent);
- 	pm_runtime_put_autosuspend(adap->dev.parent);
- 
- 	return i2c->msg_status ? i2c->msg_status : num;
-@@ -1165,7 +1164,6 @@ static int img_i2c_init(struct img_i2c *i2c)
- 			 "Unknown hardware revision (%d.%d.%d.%d)\n",
- 			 (rev >> 24) & 0xff, (rev >> 16) & 0xff,
- 			 (rev >> 8) & 0xff, rev & 0xff);
--		pm_runtime_mark_last_busy(i2c->adap.dev.parent);
- 		pm_runtime_put_autosuspend(i2c->adap.dev.parent);
- 		return -EINVAL;
- 	}
-@@ -1317,7 +1315,6 @@ static int img_i2c_init(struct img_i2c *i2c)
- 	/* Perform a synchronous sequence to reset the bus */
- 	ret = img_i2c_reset_bus(i2c);
- 
--	pm_runtime_mark_last_busy(i2c->adap.dev.parent);
- 	pm_runtime_put_autosuspend(i2c->adap.dev.parent);
- 
- 	return ret;
-diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
-index 064bc83840a6..6d97998859b1 100644
---- a/drivers/i2c/busses/i2c-imx-lpi2c.c
-+++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
-@@ -362,7 +362,6 @@ static int lpi2c_imx_master_enable(struct lpi2c_imx_struct *lpi2c_imx)
- 	return 0;
- 
- rpm_put:
--	pm_runtime_mark_last_busy(lpi2c_imx->adapter.dev.parent);
- 	pm_runtime_put_autosuspend(lpi2c_imx->adapter.dev.parent);
- 
- 	return ret;
-@@ -376,7 +375,6 @@ static int lpi2c_imx_master_disable(struct lpi2c_imx_struct *lpi2c_imx)
- 	temp &= ~MCR_MEN;
- 	writel(temp, lpi2c_imx->base + LPI2C_MCR);
- 
--	pm_runtime_mark_last_busy(lpi2c_imx->adapter.dev.parent);
- 	pm_runtime_put_autosuspend(lpi2c_imx->adapter.dev.parent);
- 
- 	return 0;
-@@ -1372,7 +1370,6 @@ static int lpi2c_imx_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto rpm_disable;
- 
--	pm_runtime_mark_last_busy(&pdev->dev);
- 	pm_runtime_put_autosuspend(&pdev->dev);
- 
- 	dev_info(&lpi2c_imx->adapter.dev, "LPI2C adapter registered\n");
-@@ -1474,7 +1471,6 @@ static int lpi2c_suspend(struct device *dev)
- 
- static int lpi2c_resume(struct device *dev)
- {
--	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
- 
- 	return 0;
-diff --git a/drivers/i2c/busses/i2c-imx.c b/drivers/i2c/busses/i2c-imx.c
-index 60f5c790ad7c..dcce882f3eba 100644
---- a/drivers/i2c/busses/i2c-imx.c
-+++ b/drivers/i2c/busses/i2c-imx.c
-@@ -1637,7 +1637,6 @@ static int i2c_imx_xfer(struct i2c_adapter *adapter,
- 
- 	result = i2c_imx_xfer_common(adapter, msgs, num, false);
- 
--	pm_runtime_mark_last_busy(i2c_imx->adapter.dev.parent);
- 	pm_runtime_put_autosuspend(i2c_imx->adapter.dev.parent);
- 
- 	return result;
-@@ -1822,7 +1821,6 @@ static int i2c_imx_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		goto clk_notifier_unregister;
- 
--	pm_runtime_mark_last_busy(&pdev->dev);
- 	pm_runtime_put_autosuspend(&pdev->dev);
- 
- 	dev_dbg(&i2c_imx->adapter.dev, "claimed irq %d\n", irq);
-@@ -1928,7 +1926,6 @@ static int i2c_imx_suspend(struct device *dev)
- 
- static int i2c_imx_resume(struct device *dev)
- {
--	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
- 
- 	return 0;
-diff --git a/drivers/i2c/busses/i2c-mv64xxx.c b/drivers/i2c/busses/i2c-mv64xxx.c
-index 8fc26a511320..1acba628e16c 100644
---- a/drivers/i2c/busses/i2c-mv64xxx.c
-+++ b/drivers/i2c/busses/i2c-mv64xxx.c
-@@ -766,7 +766,6 @@ mv64xxx_i2c_xfer_core(struct i2c_adapter *adap, struct i2c_msg msgs[], int num)
- 	drv_data->num_msgs = 0;
- 	drv_data->msgs = NULL;
- 
--	pm_runtime_mark_last_busy(&adap->dev);
- 	pm_runtime_put_autosuspend(&adap->dev);
- 
- 	return ret;
-diff --git a/drivers/i2c/busses/i2c-nvidia-gpu.c b/drivers/i2c/busses/i2c-nvidia-gpu.c
-index 541d808d62d0..14c059b03945 100644
---- a/drivers/i2c/busses/i2c-nvidia-gpu.c
-+++ b/drivers/i2c/busses/i2c-nvidia-gpu.c
-@@ -216,7 +216,6 @@ static int gpu_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
- 		if (status2 < 0)
- 			dev_err(i2cd->dev, "i2c stop failed %d\n", status2);
- 	}
--	pm_runtime_mark_last_busy(i2cd->dev);
- 	pm_runtime_put_autosuspend(i2cd->dev);
- 	return status;
- }
-diff --git a/drivers/i2c/busses/i2c-omap.c b/drivers/i2c/busses/i2c-omap.c
-index 8b01df3cc8e9..d62f15d1acfe 100644
---- a/drivers/i2c/busses/i2c-omap.c
-+++ b/drivers/i2c/busses/i2c-omap.c
-@@ -828,7 +828,6 @@ omap_i2c_xfer_common(struct i2c_adapter *adap, struct i2c_msg msgs[], int num,
- 		omap->set_mpu_wkup_lat(omap->dev, -1);
- 
- out:
--	pm_runtime_mark_last_busy(omap->dev);
- 	pm_runtime_put_autosuspend(omap->dev);
- 	return r;
- }
-@@ -1508,7 +1507,6 @@ omap_i2c_probe(struct platform_device *pdev)
- 	dev_info(omap->dev, "bus %d rev%d.%d at %d kHz\n", adap->nr,
- 		 major, minor, omap->speed);
- 
--	pm_runtime_mark_last_busy(omap->dev);
- 	pm_runtime_put_autosuspend(omap->dev);
- 
- 	return 0;
-@@ -1602,7 +1600,6 @@ static int omap_i2c_suspend(struct device *dev)
- 
- static int omap_i2c_resume(struct device *dev)
- {
--	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
- 
- 	return 0;
-diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-index a3afa11a71a1..e631d79baf14 100644
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -450,7 +450,6 @@ static int cci_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[], int num)
- 		ret = num;
- 
- err:
--	pm_runtime_mark_last_busy(cci->dev);
- 	pm_runtime_put_autosuspend(cci->dev);
- 
- 	return ret;
-@@ -508,7 +507,6 @@ static int __maybe_unused cci_suspend(struct device *dev)
- static int __maybe_unused cci_resume(struct device *dev)
- {
- 	cci_resume_runtime(dev);
--	pm_runtime_mark_last_busy(dev);
- 	pm_request_autosuspend(dev);
- 
- 	return 0;
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 13889f52b6f7..30921e80d30f 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -714,7 +714,6 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
- 	else
- 		ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
- 
--	pm_runtime_mark_last_busy(gi2c->se.dev);
- 	pm_runtime_put_autosuspend(gi2c->se.dev);
- 	gi2c->cur = NULL;
- 	gi2c->err = 0;
-diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-index 6059f585843e..61207ca13890 100644
---- a/drivers/i2c/busses/i2c-qup.c
-+++ b/drivers/i2c/busses/i2c-qup.c
-@@ -1137,7 +1137,6 @@ static int qup_i2c_xfer(struct i2c_adapter *adap,
- 		ret = num;
- out:
- 
--	pm_runtime_mark_last_busy(qup->dev);
- 	pm_runtime_put_autosuspend(qup->dev);
- 
- 	return ret;
-@@ -1622,7 +1621,6 @@ static int qup_i2c_xfer_v2(struct i2c_adapter *adap,
- 	if (ret == 0)
- 		ret = num;
- out:
--	pm_runtime_mark_last_busy(qup->dev);
- 	pm_runtime_put_autosuspend(qup->dev);
- 
- 	return ret;
-@@ -1989,7 +1987,6 @@ static int qup_i2c_suspend(struct device *device)
- static int qup_i2c_resume(struct device *device)
- {
- 	qup_i2c_pm_resume_runtime(device);
--	pm_runtime_mark_last_busy(device);
- 	pm_request_autosuspend(device);
- 	return 0;
- }
-diff --git a/drivers/i2c/busses/i2c-riic.c b/drivers/i2c/busses/i2c-riic.c
-index 9c164a4b9bb9..2b7893b6152e 100644
---- a/drivers/i2c/busses/i2c-riic.c
-+++ b/drivers/i2c/busses/i2c-riic.c
-@@ -206,7 +206,6 @@ static int riic_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[], int num)
- 	}
- 
-  out:
--	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
- 
- 	return riic->err ?: num;
-@@ -452,7 +451,6 @@ static int riic_init_hw(struct riic_dev *riic)
- 
- 	riic_clear_set_bit(riic, ICCR1_IICRST, 0, RIIC_ICCR1);
- 
--	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
- 	return 0;
- }
-diff --git a/drivers/i2c/busses/i2c-rzv2m.c b/drivers/i2c/busses/i2c-rzv2m.c
-index b0e9c0b62429..238714850673 100644
---- a/drivers/i2c/busses/i2c-rzv2m.c
-+++ b/drivers/i2c/busses/i2c-rzv2m.c
-@@ -372,7 +372,6 @@ static int rzv2m_i2c_xfer(struct i2c_adapter *adap,
- 	ret = num;
- 
- out:
--	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
- 
- 	return ret;
-diff --git a/drivers/i2c/busses/i2c-sprd.c b/drivers/i2c/busses/i2c-sprd.c
-index 56b2e5c5fb49..2eddddbc84a1 100644
---- a/drivers/i2c/busses/i2c-sprd.c
-+++ b/drivers/i2c/busses/i2c-sprd.c
-@@ -302,7 +302,6 @@ static int sprd_i2c_xfer(struct i2c_adapter *i2c_adap,
- 	ret = sprd_i2c_handle_msg(i2c_adap, &msgs[im++], 1);
- 
- err_msg:
--	pm_runtime_mark_last_busy(i2c_dev->dev);
- 	pm_runtime_put_autosuspend(i2c_dev->dev);
- 
- 	return ret < 0 ? ret : im;
-@@ -559,7 +558,6 @@ static int sprd_i2c_probe(struct platform_device *pdev)
- 		goto err_rpm_put;
- 	}
- 
--	pm_runtime_mark_last_busy(i2c_dev->dev);
- 	pm_runtime_put_autosuspend(i2c_dev->dev);
- 	return 0;
- 
-diff --git a/drivers/i2c/busses/i2c-stm32f7.c b/drivers/i2c/busses/i2c-stm32f7.c
-index ef15475a7ee1..36843ac5d024 100644
---- a/drivers/i2c/busses/i2c-stm32f7.c
-+++ b/drivers/i2c/busses/i2c-stm32f7.c
-@@ -1757,7 +1757,6 @@ static int stm32f7_i2c_xfer_core(struct i2c_adapter *i2c_adap,
- 	}
- 
- pm_free:
--	pm_runtime_mark_last_busy(i2c_dev->dev);
- 	pm_runtime_put_autosuspend(i2c_dev->dev);
- 
- 	return (ret < 0) ? ret : num;
-@@ -1866,7 +1865,6 @@ static int stm32f7_i2c_smbus_xfer(struct i2c_adapter *adapter, u16 addr,
- 	}
- 
- pm_free:
--	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
- 	return ret;
- }
-@@ -1973,7 +1971,6 @@ static int stm32f7_i2c_reg_slave(struct i2c_client *slave)
- 	if (!stm32f7_i2c_is_slave_registered(i2c_dev))
- 		stm32f7_i2c_enable_wakeup(i2c_dev, false);
- 
--	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
- 
- 	return ret;
-@@ -2011,7 +2008,6 @@ static int stm32f7_i2c_unreg_slave(struct i2c_client *slave)
- 		stm32f7_i2c_enable_wakeup(i2c_dev, false);
- 	}
- 
--	pm_runtime_mark_last_busy(i2c_dev->dev);
- 	pm_runtime_put_autosuspend(i2c_dev->dev);
- 
- 	return 0;
-@@ -2324,7 +2320,6 @@ static int stm32f7_i2c_probe(struct platform_device *pdev)
- 
- 	dev_info(i2c_dev->dev, "STM32F7 I2C-%d bus adapter\n", adap->nr);
- 
--	pm_runtime_mark_last_busy(i2c_dev->dev);
- 	pm_runtime_put_autosuspend(i2c_dev->dev);
- 
- 	return 0;
-diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
-index 607026c921d6..28015d77599d 100644
---- a/drivers/i2c/busses/i2c-xiic.c
-+++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -1349,7 +1349,6 @@ static int xiic_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
- 	mutex_unlock(&i2c->lock);
- 
- out:
--	pm_runtime_mark_last_busy(i2c->dev);
- 	pm_runtime_put_autosuspend(i2c->dev);
- 	return err;
- }
--- 
-2.39.5
-
+Best regards,
+Krzysztof
 
