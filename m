@@ -1,165 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-63662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB406AF8B76
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 10:28:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 682A2AF8B7D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 10:28:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B286A766157
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 08:23:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E88D73A5A28
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 08:24:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02D5D303DF1;
-	Fri,  4 Jul 2025 08:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3CC1307490;
+	Fri,  4 Jul 2025 08:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fnKlNPOh"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="OWJFAgp8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88720303DF3;
-	Fri,  4 Jul 2025 08:07:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB1CF30748A
+	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Jul 2025 08:09:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751616478; cv=none; b=PeSl6DmLw8Qx2V4GnW7v/uWzQSHeQl3pZ5unew0qcjesQ50XPnAPeq5RA/K/dLSJGPHSm42x7j+CL6J2mEK4eZ26Zwn7bN5JA3kt0mZwIh5ebFk+abXiAUrtM9MJnSVhkzz7uZG8dX8T9ghQ4WubzRa1mCsVcB8w0WeggdWzd7k=
+	t=1751616596; cv=none; b=EuRAx8qPIn0hq06DQp/7F11KDYaJ9CfsKdmu1PrkaM2uJHKSbmUUX0hSlcXTQCcgah+tP2VIiE8YsW8Phzxb04zF2bZxIlN8v86aQc9sRlBW+jAxHXVoQbJeKRt4rAHsWrnSxwXr1sdrfwztNJBovheDgRpCNp3dp1kLuj+4fEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751616478; c=relaxed/simple;
-	bh=NWr1oOIG+41ZWyh5ZDCOfjmmHizA+97eiorRh/eZj6Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=EzxLZynjtR71IZxPdZ+dpoFiBQYW2GL8+UF/sDfi130hLewv+EaU3xOVv6byjp0r0fcHYL1slrja7wADOsFnQipYwtdFYr4FBExwm9PiAxWcYjT+abThJz7xnNHQXkM6Zi6xsabzmr6qGMtI6ArOF70z9iDn28AJPYaKHQpHquY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fnKlNPOh; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5644MbAV001970;
-	Fri, 4 Jul 2025 08:07:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IHePxi9vUgRc/04Q5+R0OQJFUO8sltPI8rxPgNFqrDU=; b=fnKlNPOhc4B2a/qz
-	13ujXnCZ+qpIVJcGZbvDCnrR5O0FoWaxxiMwxYTYOh2d314dGkZTcxT91Zd0W3tU
-	0moQTEOzvuiEglP0nXR/A++OPuHWVdydwZT1c3R2QHrLNHAty5OOoFH4VVFxc9M9
-	a1b05h6FzcxOEHr7F+D9SPbJ6aAgGScJ6OtWLHhIKFyIqYgv7UvwlwMRF4XeK1gx
-	axQW9X0ZKeEED2Ycq9hCt6w0blY42g6iZPKngGATCHxCrVz9h9Jaw2m1BJ34P+do
-	NzjN6n7Pp6nWahdeyf311jsCyZ5DJaOzuLfcvFzOGTwCTa6ZwONT+O+vzKgHq2FF
-	dAFWPg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47p7ut0juu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 04 Jul 2025 08:07:48 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56487lfx005607
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 4 Jul 2025 08:07:47 GMT
-Received: from [10.133.33.146] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 4 Jul
- 2025 01:07:43 -0700
-Message-ID: <2e8366b3-c060-4bb8-9704-0a8f41901706@quicinc.com>
-Date: Fri, 4 Jul 2025 16:07:41 +0800
+	s=arc-20240116; t=1751616596; c=relaxed/simple;
+	bh=dlMnnwp1dpnotw8e5/iEHxXbLwDZGkrbADhWsQHKiFs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jTnPMtb74v0t3HHKdCk/blwZWBGyUOrUTrmRvZp/7BebMpLytdiYKzS9f31Dh/LD1jsXvb1HWy4ENmot7pctQIVPQ/7a7kmSvn05+WIcgJm8xWbdew4XX5i44/yfb64taku3buWDssvMbG98nhO9cvZWc1iHuiHzYCVKYBJe28A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=OWJFAgp8; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-55516abe02cso744948e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Jul 2025 01:09:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1751616593; x=1752221393; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dlMnnwp1dpnotw8e5/iEHxXbLwDZGkrbADhWsQHKiFs=;
+        b=OWJFAgp85si9j+xJ8F836ZuzFcvFNeh3M7fKd5Aik+Y4UdJyAv9nFxe5ye3oiNq6MB
+         GMYni1yy6uIhtO/AXVWvijmcq8WxerQ8h0aS3FT4t2awG/KUJEq1w8vF7yQX05IpJS9s
+         zTUlWVdsjIjVm991MSAb11ZukZEX5b/OBmXDKxu2IV80FRl6z9/0HpO/LgqzhUYYrrUg
+         xkfoeuzGssZkZLicEj0uYImlEbaiG/ATI2qxBTy6ytql86e+N2RUrS8e7Ne24qZegy/c
+         MPVDHiHKShBMyel7Rv/HA/NV3VOZBEhHhaSwF+Gri9VrPKKnm0XXNz9CIFLDrZb8kSyF
+         JUTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751616593; x=1752221393;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dlMnnwp1dpnotw8e5/iEHxXbLwDZGkrbADhWsQHKiFs=;
+        b=sQdZLwEch41zfZOWxFJisZtumBpCwxaj4JcabQuqV0DnCOjyfe+dCwg8Li100X+iVJ
+         q4+nr/cWc6edJAo88tPj0e3fdQygN3JPDKWZQuIKbg7OSK97USJaRLalKNcCLZvWuSFt
+         cjZ4YmyrofjAOfx77T8sztOLc0WE3sR9eParYT/AMzrKAJ1tIUJ6Dtjn26lFTS317BwI
+         VsZ/T96W0AIMqL4hlDt5GLkDeefLpZkLCzod0VUVOz2hNDyJ+Le/8FvmjXCBsHINfNu8
+         xiPeiP3ecUjSJF4H8V3ftDjV4pzAcxyMzdpTL4rRbi5l5qDqYVY0ouJsYS35lggfvkDF
+         vr8w==
+X-Forwarded-Encrypted: i=1; AJvYcCUi1WU+IOSDvj/MEs12KfYe9FcZff7yoDeECJZ4Z7v7S00cvsUqH1JL1RGsBmr6m9k18do5hoMFaC30Xrgs@vger.kernel.org
+X-Gm-Message-State: AOJu0YzVtB15pabGvSEaIjqpOpqyNcJonITLtGRo6Z8RTucBdbIO2j2F
+	+jNKedJ+ksGpcH75Ggn5DDJD5T117hirov3jR266ObdURc3VWZ3AF2ib16bmIl9YWRPp2OXBk42
+	6zujKpZh8931qjtgLEoff9zlRbhIg15lqFeBpAxpWFQ==
+X-Gm-Gg: ASbGncueKLTPK0Nc6CegUe+PLb9yoxDFNeqx4Ha4/NmQVhQXXui1fiVh4fyBMbcfhrp
+	at6Q/roiCZy7deuUXiRVpJzvpqRTvmOMZ+XiwdAd8LbtwappunQRDuWq0I9XKuYqzgRug9wk3fM
+	qZ2xKpKI7e6Jkx/JtBj2++XTk7wmzDhVhiJJkJhNjEFW46FO4LsRx8XIlMnsu+299H23NxXSJ8e
+	w==
+X-Google-Smtp-Source: AGHT+IE4LgEsW9jjv71RhSCmOAPvG/Ad9nkwHJ9y2F8Rwu4ip+/5BNS6kZwLHzfjh3sGGG/3P6x2aOFT/NRZcazuhoI=
+X-Received: by 2002:a05:6512:1102:b0:550:e692:611b with SMTP id
+ 2adb3069b0e04-5565baa727cmr572418e87.16.1751616592750; Fri, 04 Jul 2025
+ 01:09:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Enable CTCU device for QCS8300
-To: Krzysztof Kozlowski <krzk@kernel.org>, Jie Gan <jie.gan@oss.qualcomm.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250624095905.7609-1-jie.gan@oss.qualcomm.com>
- <338a9ee1-10aa-4bd2-9b0a-5006ed571bb9@quicinc.com>
- <3551dba1-0c5f-4000-8b95-6a04cd81a027@kernel.org>
-Content-Language: en-US
-From: Jie Gan <quic_jiegan@quicinc.com>
-In-Reply-To: <3551dba1-0c5f-4000-8b95-6a04cd81a027@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA0MDA2MiBTYWx0ZWRfX/BF+3Yf5B6Ky
- t6lIJezPNv2BfcK2HcK7ulHzV9dNaDhoMfmPXtIT8wXQdJfrFlewvak7mK5wihDXMYUvsdmqaWO
- BU2r8yRZT+T3O0gZIXMsbpCbX4uWnrqC6MEqZB0/As626zhb+CccTyXH5XybzStMT/PaSK33HA1
- DC7Yq7Ys83hALPAYINmFJ3rtDcdMtP26MocVwKYwDkA3ai2pirewJXvGc7303s3zmpzWNHb/aXE
- T309NTHkU1gmmV8zhEv9NUm8g48ZdbAt3OeOZzNJ8R92VOyiV6CbxqGSBapR1A+HGL/IzeO5uyr
- 712PF6foY2rH4AIXpciUg6pWSKVcA7fQxwKfU5oY1iVUfQM3abP77phvO9h8DyPa91DNtZdH9t9
- iMg/DmnEwrbU911fii5GSxZqRnlz+PFHWrexkyGMbZbTRdWWR5rlivpln6bWpHZc+lHucPGL
-X-Proofpoint-GUID: DypzU7L9t0IRLgODT16pVnzWX4HHEO0_
-X-Authority-Analysis: v=2.4 cv=Ncfm13D4 c=1 sm=1 tr=0 ts=68678bd4 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
- a=6PWQcI-LByP-Dk_4TF8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: DypzU7L9t0IRLgODT16pVnzWX4HHEO0_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-04_03,2025-07-02_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
- suspectscore=0 priorityscore=1501 mlxlogscore=999 spamscore=0 malwarescore=0
- adultscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507040062
+References: <20250625153711.194208-1-brgl@bgdev.pl> <d92e7c52-eab5-4759-af3f-16b24254bff6@oss.qualcomm.com>
+ <CAMRc=Md=ABd+aSc7DE-2dsR5rMnpnvbetuexw8vmrf7_zzT31Q@mail.gmail.com> <CACRpkdZTXzyROqb3mGoQrsO5X_Y9-yDSU2ESUxivpb=N1WsP-g@mail.gmail.com>
+In-Reply-To: <CACRpkdZTXzyROqb3mGoQrsO5X_Y9-yDSU2ESUxivpb=N1WsP-g@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Fri, 4 Jul 2025 10:09:41 +0200
+X-Gm-Features: Ac12FXzBbjGix2e4hwrUzcQzOAwkz-H-4Z3odNBxk-58uy8AtckdJWtwxkPRDTs
+Message-ID: <CAMRc=MeL3PNJjBQ88L9Hqj+kvHvBDFTe36YR2Oi6OZbLnKEWsg@mail.gmail.com>
+Subject: Re: [PATCH RFC/RFT] pinctrl: qcom: make the pinmuxing strict
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, Jul 4, 2025 at 12:21=E2=80=AFAM Linus Walleij <linus.walleij@linaro=
+.org> wrote:
+>
+> On Fri, Jun 27, 2025 at 10:26=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.=
+pl> wrote:
+>
+> > Yeah, I would be surprised if nothing broke.It's probably worth
+> > looking into the implementation of the strict flag as it makes every
+> > muxed pin unavailable as GPIO even if - like in this case - the
+> > function *is* "gpio". Of course the "gpio" string has no real meaning
+> > to the pinctrl core, it's just a name but it would be awesome if we
+> > could say for a given function that this means GPIO and as such should
+> > be available to the GPIOLIB API.
+>
+> Can't we just add a special callback to the pinmux_ops for that?
+> like
+>
+> int (*is_gpio_mode) (struct pinctrl_dev *pctldev, unsigned int pin);
+>
+> That the core code can call to ask the driver if a pin is in GPIO
+> mode already? A simple strcmp("gpio", ...) is one way for the
+> Qualcomm driver to implement that.
+>
 
+Yeah, this is similar to what I proposed in my RFC except that I went
+with a flag in struct pinfunction. I think it's more future-proof than
+string comparison, especially when we also have functions called
+"egpio" which, while not used now, may also need this (possibly).
 
-On 7/4/2025 3:54 PM, Krzysztof Kozlowski wrote:
-> On 25/06/2025 02:59, Jie Gan wrote:
->>
->>
->> On 6/24/2025 5:59 PM, Jie Gan wrote:
->>> Enable CTCU device for QCS8300 platform. Add a fallback mechnasim in binding to utilize
->>> the compitable of the SA8775p platform becuase the CTCU for QCS8300 shares same
->>> configurations as SA8775p platform.
->>
->> Hi dear maintainers,
->>
->> I just realized it would be more efficient to introduce a common
->> compatible string for SoCs that include two TMC ETR devices.
->>
->> Most of these SoCs share the same CTCU data configuration, such as the
-> 
-> "Most" basically disqualifies your idea.
+It's unfortunate that the struct pinfunction list for given controller
+- while defined globally - does not seem to be stored anywhere in
+pinctrl core data structures. That would allow the core to query these
+things like function name and - in this case - whether it's a GPIO
+without going through pinmux callbacks. Maybe this could be added to
+struct pinctrl_desc?
 
-Okay, it's not a proper expression.
-SoCs included two ETR devices shared same configuration. So I think use 
-a common compatible for these SoCs is make sense for me and dont need to 
-update the dt-binding again and again...
-
-I will send a new patch to address this idea if it's acceptable.
-
-> 
->> offsets for the ATID and IRQ registers, because they integrate the same
->> version of the CTCU hardware.
->>
->> So I propose introducing a common compatible string,
->> "coresight-ctcu-v2", to simplify the device tree configuration for these
->> platforms.
-> 
-> This is explained in writing bindings.
-
-Yeah, explained in the code lines..
-
-Thanks,
-Jie
-
-> 
-> Best regards,
-> Krzysztof
-
+Bart
 
