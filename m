@@ -1,210 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-63678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82A6AAF8D6E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 11:05:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE196AF8DDB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 11:13:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 639ADB43483
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 09:03:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D65BD1C275F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 09:13:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C98902F5C3D;
-	Fri,  4 Jul 2025 08:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D8872DA760;
+	Fri,  4 Jul 2025 09:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tD5RKFLM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fxLeLunk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0A22F5C2C;
-	Fri,  4 Jul 2025 08:58:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CF328D841;
+	Fri,  4 Jul 2025 09:07:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751619521; cv=none; b=BRf30rD8gP4eQPZTChBWV2BXFM/+LzmZqVBrc0iwUlgqGVknGOL4a2j/LbDyUTZ8pJfldIMTczoIPbLMMJUxKlKtE+nFxVhg1JLWetiJZRs3hfWcnssQ1Z8isUkn0bE7RYATxLxZV0tsajE+QzHs9u2kIdsl8FRepg6BAXc+kp8=
+	t=1751620035; cv=none; b=kaF4G6X0yrbr+R/QL13sdUHO4LskM7+mt6s+COoMnjhX7YxCnGOjRsUx3lD9KgBfjmwjYvonH0vno9Wpt9n/8pV5kSwq6q5jXtbDaLCZnFHlNY9qjCEvrsdcJ+6+EupSZmLEWdxWWAjChmeP2yxMrxxY3M0UqKuz7vFRosYDXV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751619521; c=relaxed/simple;
-	bh=d+Wl1jZE/I9B8bdRNnQe1es6PtluF9HhWnQefqznmbA=;
+	s=arc-20240116; t=1751620035; c=relaxed/simple;
+	bh=K/pDT6NEfs9vZStUh/AAp3iRYDEmDGOlly4bnEkujTE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LS0f8radpzHIYSxMopx684edewlET7QuF4BDceWnYbL7YfiwQZnkFe1toaG+OgvIc7ZnWVxRzaN3TDE7kRjQfDpZMyGlUqp4OfRTxuRzWvy6H1PtcIVTH7GA3mv4KsgO+43MXzGmz0Xjv+0wd7TC5llZIRPL+0v2DAFP2MKDmlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tD5RKFLM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B009BC4CEE3;
-	Fri,  4 Jul 2025 08:58:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751619521;
-	bh=d+Wl1jZE/I9B8bdRNnQe1es6PtluF9HhWnQefqznmbA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tD5RKFLMS/H+cinxfjavqH73neq7XUI9RRZyaKOIUC3430nh5tqWQXIAsy9K5qrYj
-	 pwV41HGE4Lbwwrxf0MT2/kwLbqGqAmQSRzf1BnB/so0L8kUAYd2TpE7+pvdNKpxCW1
-	 hIvabZr4gtOqQnK1jVQRCAzan/pfN6qjWfFGZrLY=
-Date: Fri, 4 Jul 2025 10:58:38 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Cc: srini@kernel.org, linux-arm-msm@vger.kernel.org,
-	quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
-	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
-	arnd@arndb.de, dmitry.baryshkov@oss.qualcomm.com
-Subject: Re: [PATCH v1] misc: fastrpc: Add support for userspace allocated
- buffers
-Message-ID: <2025070443-impatient-essay-23ab@gregkh>
-References: <20250704083726.1901705-1-ekansh.gupta@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=nlOd8jU0goUUZgJ1TBG97eueih9Jw/kHepA81aR3RP+MTwYpgVND10YGHrFBy6A+SUp94Akgeou2YxPbZdz0PCcafsGhLWgJOjivSnuIG28VLRzC1bZgX5TGZQmSA7R33ZmF8bWH6axkdCP3sKwQmBIoUZGuHdYG3f6umzywAWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fxLeLunk; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a548a73ff2so677341f8f.0;
+        Fri, 04 Jul 2025 02:07:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751620032; x=1752224832; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VDywWjxdtqgZteOHlklAyHpSbZ7foh31pe/ikqYRz6k=;
+        b=fxLeLunkwj8qY3FzOh1LVQ4z4mtZyL0Sc1t7BB21axAfVGQe1VbPZxBDS7nXsNB8t1
+         wFi8J2jUwwJr2jbWeVExRyaqtNT9rrw2s1Hq4wTFTAjo9qhqpYf10KNP+0tQ1VKtn2Gx
+         Z7UH2Fc6GC/8bCpNMQUU7sxH5OLLa84XrFrLUSwc9XGB5SmVZKpvSiFncIdQuX5b/g5r
+         XA1DNsWq6pL2gC6mVNqH5r1RIrcUSg9jwWs2/eEqqqKeawcZIIYN56pJ6G/XGLESZ6zD
+         XcHB2saL1FZZ38vpg2qhg1ABmXDkSgTHu8nSMDSWRzhc/x4yoDp9HpJARLwVb5WJAbxl
+         GQ4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751620032; x=1752224832;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VDywWjxdtqgZteOHlklAyHpSbZ7foh31pe/ikqYRz6k=;
+        b=pV1TH/tk9gTEVgoiFcoaXAco231bMR+RW0kNgO93tA0IRJSMXvM70mCpekenqey3aW
+         F9zaEjgtPlGsaSHLavjUuM48jbDA5Y5PiuiL8JG18POAeLFfQvqtSiYhJi036ypVybBh
+         944cfa9GW7Kww05ej/BfTILcJUzSoY/yazlNvuLJCRIP8u7jzWmTrGvVxwTqI2WuOkC5
+         A3rUcFIB370fjrqEDzN1ZHcVOnbItCwIaY1XUqMLr9gTskUmpmJCPFEiQZA8pLR+wG8/
+         QYRuBUrGcJ+WxP/aO/HhnvRsxO5ZTr1x1erJcHHbSN0jmZ4cYoKGXSnfcIaRzkhi33Ni
+         MfDA==
+X-Forwarded-Encrypted: i=1; AJvYcCVm1BeyQ7S75s6sLBaTUVQRCx6UFf04KS9ELMPaH1XqYXYnMXSSrSot3iERsQ8R6QngDqEVddjmju+/hYo=@vger.kernel.org, AJvYcCVpIXruhUcoCU5TpVT8LDFlzdvvJ3PSj2UIcozpDr25ZYQWNiXMcDJFjTwT8CM7BGKQS5bPllEBxxmmRvQh@vger.kernel.org, AJvYcCWJo35zE3L/CT5ZKMOOdfJfZgNRC1yf23eu2Qp2+8iOaWVSxDlBZjNamUxip96+1fXoP+UvakLAjQ9bnKA=@vger.kernel.org, AJvYcCXKUZF2SOtL7dNGRSi0m09+OBvC/6cg0BlI/1Ho3WR29Z/AbukVEdzzJ3YfQj5BJ9CpP89Z5gC9Ve9+2N34@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz17CMHMtWKrXmNzdckXsJT+f+j1ie+2gDDTYOp5ihM6ZGgCX5e
+	5Xt53ppIjTK6Zw0rCSsVjjZo6HkKKmCkfNKaHqnOkJXqEVrFJ4hpnYqL
+X-Gm-Gg: ASbGncuIi+UKiqFmUkxvn5oQU1VvrchNtnz/y4zyRJAYzB37Oqtlvkrfl70Dgv4dq/B
+	hHjlHN/KRedNJAUu3q4kLx9TQUnoFBGpvQw4L54lMYhjqVLFZz2n22WGjBtKWAHNJGoDF30HuCs
+	3FatvrOjGS6mm0NCsyJxQpjaKRM6Vic5dDmkqnv1SMYGZDxJNNQVc7nA4acSmqKC1XZPFBO9524
+	jFuCcMvqd37BQiloOjywRxV3TSNXYvacnkeig9nY5O9mswGNrI2Eb5OPRRWy/dYLcFKris7GMV/
+	x0FX42NMRXCUMHWZaHZYwcgddGdBwfSdYMSQfnRCW0P+q+ShaMupb2F5QqvPcB6vEO4jNCfEsNz
+	x2uuYubYnJrlLxwvZghCjPFaagKc2kvaQk0Gj5eGTm6XfyiG4
+X-Google-Smtp-Source: AGHT+IHEPxQdMHTXbR1zyfFVxzPQhYfItopt0GRpKhNC4icZ8avdDH2El8o9lUAz/MQc695EIAp2Fw==
+X-Received: by 2002:a5d:5d8a:0:b0:3a4:e4ee:4c7b with SMTP id ffacd0b85a97d-3b4964f8be8mr1457452f8f.15.1751620031616;
+        Fri, 04 Jul 2025 02:07:11 -0700 (PDT)
+Received: from orome (p200300e41f4e9b00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f4e:9b00:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b47285c9f9sm1967858f8f.93.2025.07.04.02.07.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Jul 2025 02:07:10 -0700 (PDT)
+Date: Fri, 4 Jul 2025 11:07:07 +0200
+From: Thierry Reding <thierry.reding@gmail.com>
+To: Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: Tommaso Merciai <tomm.merciai@gmail.com>, 
+	Martin Hecht <mhecht73@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Sebastian Reichel <sre@kernel.org>, Alain Volmat <alain.volmat@foss.st.com>, 
+	Dave Stevenson <dave.stevenson@raspberrypi.com>, Kieran Bingham <kieran.bingham@ideasonboard.com>, 
+	Umang Jain <umang.jain@ideasonboard.com>, Manivannan Sadhasivam <mani@kernel.org>, 
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Michael Riesch <michael.riesch@collabora.com>, 
+	Mikhail Rudenko <mike.rudenko@gmail.com>, Steve Longerbeam <slongerbeam@gmail.com>, 
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>, Nicholas Roth <nicholas@rothemail.net>, 
+	Benjamin Mugnier <benjamin.mugnier@foss.st.com>, Sylvain Petinot <sylvain.petinot@foss.st.com>, 
+	Paul Elder <paul.elder@ideasonboard.com>, Matt Ranostay <matt@ranostay.sg>, 
+	Nas Chung <nas.chung@chipsnmedia.com>, Jackson Lee <jackson.lee@chipsnmedia.com>, 
+	Dmitry Osipenko <digetx@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Vikash Garodia <quic_vgarodia@quicinc.com>, Dikshita Agarwal <quic_dikshita@quicinc.com>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, Florian Fainelli <florian.fainelli@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Nicolas Dufresne <nicolas.dufresne@collabora.com>, 
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Sean Young <sean@mess.org>, Hans Verkuil <hverkuil@xs4all.nl>, 
+	Matthias Fend <matthias.fend@emfend.at>, Marco Felsch <m.felsch@pengutronix.de>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Ricardo Ribalda <ribalda@chromium.org>, 
+	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-rpi-kernel@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH 41/80] media: Remove redundant
+ pm_runtime_mark_last_busy() calls
+Message-ID: <oanwnvwlfewhtihgxqhxeuyayiqehzryqdsvmq5hku62nn7ri7@favwssinmjjq>
+References: <20250704075225.3212486-1-sakari.ailus@linux.intel.com>
+ <20250704075431.3220262-1-sakari.ailus@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="kwmvyrwxhkrq3xlc"
 Content-Disposition: inline
-In-Reply-To: <20250704083726.1901705-1-ekansh.gupta@oss.qualcomm.com>
+In-Reply-To: <20250704075431.3220262-1-sakari.ailus@linux.intel.com>
 
-On Fri, Jul 04, 2025 at 02:07:26PM +0530, Ekansh Gupta wrote:
-> Support mapping userspace allocated buffers. If userspace allocates a
-> buffer using rpcmem or DMABUF and sends it via a map request, fastrpc
-> will map it to SMMU and DSP. Add support for both map and unmap
-> requests.
-> 
-> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-> ---
->  drivers/misc/fastrpc.c | 188 ++++++++++++++++++++++++++++++++---------
->  1 file changed, 150 insertions(+), 38 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 378923594f02..3c88c8e9ba51 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -1797,17 +1797,16 @@ static int fastrpc_get_dsp_info(struct fastrpc_user *fl, char __user *argp)
->  	return 0;
->  }
->  
-> -static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *buf)
-> +static int fastrpc_req_munmap_dsp(struct fastrpc_user *fl, uintptr_t raddr, u64 size)
 
-uintptr_t is not a valid kernel type, please use our real ones :)
+--kwmvyrwxhkrq3xlc
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 41/80] media: Remove redundant
+ pm_runtime_mark_last_busy() calls
+MIME-Version: 1.0
 
-"*u64"?
+On Fri, Jul 04, 2025 at 10:54:31AM +0300, Sakari Ailus wrote:
+> pm_runtime_put_autosuspend(), pm_runtime_put_sync_autosuspend(),
+> pm_runtime_autosuspend() and pm_request_autosuspend() now include a call
+> to pm_runtime_mark_last_busy(). Remove the now-reduntant explicit call to
+> pm_runtime_mark_last_busy().
+>=20
+> Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+[...]
+>  drivers/media/platform/nvidia/tegra-vde/h264.c           | 2 --
+[...]
 
->  {
->  	struct fastrpc_invoke_args args[1] = { [0] = { 0 } };
->  	struct fastrpc_munmap_req_msg req_msg;
-> -	struct device *dev = fl->sctx->dev;
->  	int err;
->  	u32 sc;
->  
->  	req_msg.client_id = fl->client_id;
-> -	req_msg.size = buf->size;
-> -	req_msg.vaddr = buf->raddr;
-> +	req_msg.size = size;
-> +	req_msg.vaddr = raddr;
->  
->  	args[0].ptr = (u64) (uintptr_t) &req_msg;
->  	args[0].length = sizeof(req_msg);
-> @@ -1815,6 +1814,16 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *
->  	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_MUNMAP, 1, 0);
->  	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc,
->  				      &args[0]);
-> +
-> +	return err;
-> +}
-> +
-> +static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *buf)
-> +{
-> +	struct device *dev = fl->sctx->dev;
-> +	int err;
-> +
-> +	err = fastrpc_req_munmap_dsp(fl, buf->raddr, buf->size);
->  	if (!err) {
->  		dev_dbg(dev, "unmmap\tpt 0x%09lx OK\n", buf->raddr);
->  		spin_lock(&fl->lock);
-> @@ -1831,8 +1840,10 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *
->  static int fastrpc_req_munmap(struct fastrpc_user *fl, char __user *argp)
->  {
->  	struct fastrpc_buf *buf = NULL, *iter, *b;
-> +	struct fastrpc_map *map = NULL, *iterm, *m;
->  	struct fastrpc_req_munmap req;
->  	struct device *dev = fl->sctx->dev;
-> +	int err;
->  
->  	if (copy_from_user(&req, argp, sizeof(req)))
->  		return -EFAULT;
-> @@ -1846,35 +1857,91 @@ static int fastrpc_req_munmap(struct fastrpc_user *fl, char __user *argp)
->  	}
->  	spin_unlock(&fl->lock);
->  
-> -	if (!buf) {
-> -		dev_err(dev, "mmap\t\tpt 0x%09llx [len 0x%08llx] not in list\n",
-> +	if (buf) {
-> +		err = fastrpc_req_munmap_impl(fl, buf);
-> +		if (err) {
-> +			spin_lock(&fl->lock);
-> +			list_add_tail(&buf->node, &fl->mmaps);
-> +			spin_unlock(&fl->lock);
-> +		}
-> +		return err;
-> +	}
-> +
-> +	spin_lock(&fl->lock);
-> +	list_for_each_entry_safe(iterm, m, &fl->maps, node) {
-> +		if (iterm->raddr == req.vaddrout) {
-> +			map = iterm;
-> +			list_del(&iterm->node);
-> +			break;
-> +		}
-> +	}
-> +	spin_unlock(&fl->lock);
-> +	if (!map) {
-> +		dev_dbg(dev, "buffer/map not found addr 0x%09llx, len 0x%08llx\n",
->  			req.vaddrout, req.size);
->  		return -EINVAL;
->  	}
->  
-> -	return fastrpc_req_munmap_impl(fl, buf);
-> +	err = fastrpc_req_munmap_dsp(fl, map->raddr, map->size);
-> +	if (err) {
-> +		dev_dbg(dev, "unmmap\tpt fd = %d, 0x%09llx error\n",  map->fd, map->raddr);
-> +		spin_lock(&fl->lock);
-> +		list_add_tail(&map->node, &fl->maps);
-> +		spin_unlock(&fl->lock);
-> +	} else {
-> +		fastrpc_map_put(map);
-> +	}
-> +	return err;
->  }
->  
-> -static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
-> +static int fastrpc_req_map_dsp(struct fastrpc_user *fl, u64 phys,
-> +			       u64 size, u32 flag, uintptr_t vaddrin,
-> +			       u64 *raddr)
->  {
->  	struct fastrpc_invoke_args args[3] = { [0 ... 2] = { 0 } };
-> -	struct fastrpc_buf *buf = NULL;
->  	struct fastrpc_mmap_req_msg req_msg;
->  	struct fastrpc_mmap_rsp_msg rsp_msg;
->  	struct fastrpc_phy_page pages;
-> -	struct fastrpc_req_mmap req;
-> -	struct device *dev = fl->sctx->dev;
->  	int err;
->  	u32 sc;
->  
-> -	if (copy_from_user(&req, argp, sizeof(req)))
-> -		return -EFAULT;
-> +	req_msg.client_id = fl->client_id;
-> +	req_msg.flags = flag;
-> +	req_msg.vaddr = vaddrin;
-> +	req_msg.num = sizeof(pages);
+Acked-by: Thierry Reding <treding@nvidia.com>
 
-No validation of these user-provided values?  Or did I miss where that
-happens?
+--kwmvyrwxhkrq3xlc
+Content-Type: application/pgp-signature; name="signature.asc"
 
->  
-> -	if (req.flags != ADSP_MMAP_ADD_PAGES && req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR) {
-> -		dev_err(dev, "flag not supported 0x%x\n", req.flags);
-> +	args[0].ptr = (u64)(uintptr_t)&req_msg;
+-----BEGIN PGP SIGNATURE-----
 
-Again, "uintptr_t" isn't for the kernel please.
+iQIzBAABCgAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmhnmbsACgkQ3SOs138+
+s6HR2g/+NoY3pcxcF7vUmDQS013DsHFgpV+Tl+JcGqzntxo7nvqoPqTVCDHLybr8
+bkYad4XE946YrelbKsxzncJn4vZjVB6qrGMujyv65H8WfO7AG6nzlibOIunL8WOd
+Y+uxVe5SBCDS7bajKFtmuEKFnz08e0bpIWOgKkOauDAuEkrbPsqXXYSUxXE+pf0z
+8XTFc6AQAMeg4AQTnDMUYRA1FgHi5ZQCFhedxjKRmXSQd+P8td6GZsvYK427AWyK
+mvKwRu4NPb6FosulEpEctkbpI6ObbN7fAUdjbIlSIHnNm9L/GDApH3zAGn5oGT0q
+m1XodmUsGZHRJt7KEzAqHqx2pzM/ab9UNEJGDaCMzpYGJMjowIYpoVgxubKmwVUV
+YgVNJ0IZL4QrGL5yr1S5XZD0+0pi+vH0nrjX9MewaJyhDebyBNKuifREtuPndWqS
+hXBQXVtSFW/mMCCxyMYmmT6GBNjnbd+vaTiRFGCNz1cds0nz0F3LtGTAg+UjGe7o
+p5+7dWzdafTk8aIeGY6Pozuei+LziegbVWpegNMLkK9TRVwm21bKvhggMay1Fl8z
+R3OBaZKmkHmsqC25vsdaVhwNjFoR36UqmGhXUMnl3gl4aee0lbG6nCqJKBAfCJUa
+dkGr3BlRGwk0DC98kTAVD7TUuwmROlTKR5tlcoLgvi7rPb/C/Ek=
+=tZ0M
+-----END PGP SIGNATURE-----
 
-thanks,
-
-greg k-h
+--kwmvyrwxhkrq3xlc--
 
