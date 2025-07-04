@@ -1,88 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-63608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E0D8AF883B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 08:44:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F095AF88F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 09:17:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E1416E2DE7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 06:43:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 17DD7487E49
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 07:16:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8672261586;
-	Fri,  4 Jul 2025 06:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A5D7279DD6;
+	Fri,  4 Jul 2025 07:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Z9hi0tk2"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="PT3RMI4U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B2C262FD7
-	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Jul 2025 06:43:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2435F210F65
+	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Jul 2025 07:17:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751611424; cv=none; b=t/DYlZPlzX//8bnV4vq9CFfCbROQaOb8l+A26J9fAY6aGn1GpT0hqsQaloLduIyUaBmcCbEX44H8opJ16Q4mtTo6ecusH1jWH7oYwNw56qmcbxZCc+apXDyVvT2kxC0bZbAr4ztjbhqgTYB/p0nYeB/PgKZqd+JrpxPuLWEGbfk=
+	t=1751613436; cv=none; b=SqmCi6fUzvLzSMsYV+XY/u0CdfKBJ7StRag5vFXrcB/hCy5nv4P0O7UlPCui09E/eJnqmKjK4wGa0XebLJV8ieNbcei9f+6O9ZT4W9bZerkN1csicJ3eEzwtKGtHNPZbOVuF0Nw8sUVnjtXED+Hp8cso29p3D6lAdb13yW6r1jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751611424; c=relaxed/simple;
-	bh=Y7okKbQ+abWkqsZR3FSBPtlNKOlDb1SKPlwBBSOrJ0Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OWZW6WkCvdA2k3x3G1j5Pv+7lFtub7WbDYk4JDO7LYT06sCTQYllOOKESwFtE0GTW3qlnloUzR94Qk0Sh+ysJQaFWyQK2l98KlI9itkw0uqOTyMRkd/tdJ5ydwWRbSFNhwpyVEprorcUKQWnPXKfbFqOAKnrIwud+zgGJIDqwbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Z9hi0tk2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5645iBcP018568
-	for <linux-arm-msm@vger.kernel.org>; Fri, 4 Jul 2025 06:43:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XY4mycc9eGNoFjLkdL3V/aOO4QflX+QnXB06ZfuD9dg=; b=Z9hi0tk2usSXxtBv
-	a/zkTBJQruU+zy2J1O6AaO9ZBWZgtSu+WuKV2lGhvFOO2J7vKkXeICUgDz8jL35y
-	MINDQQ1zRIbtihWITwQU4x8TQH3zj9jVA5yWeVVwJHJ3keTGpC30Mhge1l5/B+l4
-	NC5Il/tTedcpzgUcZAKyVGK+T2T8Lz35P7mv5XDVSK/tMpUwAMvkjdZ1Uq5g0vld
-	MpUM3KyeSdVPhjEpEy7OzUKoSDE3u0gRmtF8OHB07uQadQHgtRoTaSRlfKwjprQo
-	r0O5kOdf9YvmkG7IUQU2sToC1Jc3K2e7h65cgOIC5GD733flFSYBOk9WpcwtllzP
-	V++iMQ==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47j8fxtv94-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 04 Jul 2025 06:43:40 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-31218e2d5b0so1303545a91.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Jul 2025 23:43:40 -0700 (PDT)
+	s=arc-20240116; t=1751613436; c=relaxed/simple;
+	bh=uth/TQpjLf3lBUfNxZBkzPLdFlA4ZgzmdxkY4dVv4aM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CpicakN66Gk8Lp9vewY2ojmYflN2uLiGuw7dSaQP8YH0E03vxwQj0MWLdcGZK2qmWZxHzP6WcxbMLQmIXRaKOr6J+2VOcEDwHo3+oZEUCZIWqLRnD7Z1inYPHO5Igugr0cWKz1gNbYEgYxXMyF77OTsP7GLkwFFhJc/EApiRWYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=PT3RMI4U; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ae0c571f137so125019966b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Jul 2025 00:17:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1751613432; x=1752218232; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZOxW8sDZSm4A9YicXJzPnN/tY8ldwMWP8nLye+j8a0A=;
+        b=PT3RMI4U9x9Gjja66CkPgfRaA7d6458nKW68fgMU5QIqTGKEgBZ4DM4ticQ6f8UPt7
+         6kuEw+CFgqXBKXPpTlyDi+wIVYx5ENjKE8bhc7IOrtp4qkQjAFHencB/2FPs7RRyNrh3
+         +J/deWZlarC38+0YUB6KOZuwDd1J9NizYZAHZ1HB5Mm34FWPF9l1MabFxgCPrikvy9cz
+         bVMDRoVH5sPnFh/mKCK9Rb8ivmO+h6ECtxeP4czX0UsluhCliyD/8V01ZCfYjqBSS55U
+         LU9mVLHqmrtlI5UMCj+FTeq3xWTIgBkDuxyxYSgLKoKnPAePlTqpjB+CdP0Jw0GJB67q
+         FINQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751611419; x=1752216219;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XY4mycc9eGNoFjLkdL3V/aOO4QflX+QnXB06ZfuD9dg=;
-        b=PXRQ3AqFAgzPD1SAigQEM2qL41ZLGUbCETyq3gmi1n7zzrYgcUqmjhr1GoSpH1cU+d
-         TW/ItdT9e4OOtY1toxfceoPZXQ9kjCLwXK4IMM5QQs5N03OgwxbHJLmK0LUPBc59bILG
-         oi57bR+vFu2UuwVcSiQQjkq+Spc9YmXr+/HEeW1EBpJ+EilRabKBJxxQDU/zGdl7cAzH
-         NbhcRHsh7Vn9RK9uq+L95q9hJYgaPBJkqHmP4IDP6+MNGj1Pla8wRQDnWpiF4qW36pIi
-         RIEeXLAbEPyMZYTIg5guYB5jVu0g5ecNH6rZBBIQY4iXdVH3NVoNuVQgJ3/FGeaBjKRK
-         y0dw==
-X-Gm-Message-State: AOJu0Yw7Wr3sg8bakAXBnQnkyTUm8oH5q+B8EZLQ2WGiSpid4lqQ9eoi
-	1hN4HOUhB1ArF0tHgzg/5NoUCjs5Igv3BNxuFFjntC5JsMgCZRNoXZCkzkjvjoaBZ/yo1CSzw76
-	EBucGBRo0ob4vaNVcpKbrRYelYI6h86QO9bDsHYP+bo5S7FN+f0R3zzvZy/8KQJz1eC0n
-X-Gm-Gg: ASbGncvWIK/S33R2mSFZzDNzYG5SWbjPwIyZ3H5KQm4th2VKqWmvM1fwki5KmapL7bl
-	+PB6NtCGvq5jJG9LdGjwYRwUx8rxsiOP/1TDwbDXSVlZ6EXiLRmjPyMnLi7VFZbKZ/HnP/jyhuD
-	tABp9Ky+600NyvnYaaicHQQ98ZOwg3zcGrQiSLV26LhA4ynvqsw/ofBHZt3VfLBLyB3gYVgZtE8
-	Z86ANie5xDgZp3KuizJFnY/oOwEfGpk5SpB0QSo/j3zARu6As1whh6SViGt30XnkiW88e1jaZsG
-	UTTZowUVA0PW/rHKHySWzl19LlGglO9pZp3e4S9aOafYCTZxkJhbCWq0JIWmNuwj+I7bLcQUiLK
-	2pXnYzW/tAw==
-X-Received: by 2002:a17:90b:3c50:b0:311:d28a:73ef with SMTP id 98e67ed59e1d1-31aac447bc9mr2535366a91.10.1751611419091;
-        Thu, 03 Jul 2025 23:43:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHPVGGwwAqSgxWpv+FpYeN5/LOE4UCVIYAMsBEHzg/oj6y2VXO0m2Zdc5WReer63LHGOEjuhA==
-X-Received: by 2002:a17:90b:3c50:b0:311:d28a:73ef with SMTP id 98e67ed59e1d1-31aac447bc9mr2535319a91.10.1751611418516;
-        Thu, 03 Jul 2025 23:43:38 -0700 (PDT)
-Received: from yuzha-gv.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31aaae3e24asm1260338a91.5.2025.07.03.23.43.36
+        d=1e100.net; s=20230601; t=1751613432; x=1752218232;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZOxW8sDZSm4A9YicXJzPnN/tY8ldwMWP8nLye+j8a0A=;
+        b=VK5TQKcGLzwi7dTck7uvCIUrO77j/7BiEIXKkdw8+DPQcMeJktxdT5CH2BFQtN11T/
+         HnzbNVw6J8iWIVppD4rNKyPUQCWzEfsoywPPjJWi4Nf5ByhUKaidVTsicv6KhR3ErK1F
+         9cEzFi3+Kpm8JQIyV80fog1QeLsTol2kk6kYn9x0n6Z8XI//q5FkZRq0JD1lHzVC8Hse
+         sV+QEepUF2eVnV4BI/0I9IlzBlGE0wzsp3XzPNWFobRbq8QEpxhEWwR3fvgcCCziZ+rc
+         NzsoqOA9wxQyM1GA3u6q25K/bq/uiNrM2EtEA6lRFKJPuftIDOXMf8INApW1onO0SwZO
+         i4eA==
+X-Forwarded-Encrypted: i=1; AJvYcCWgAqERAfngMZTfrHCMiQU4gwBTp32b2SsWl2I2MrWc7Ud13x8a4i8mz+rfQFeCvBACeVInqHV8ypyAr0zo@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz05EZkNldaXyRtC2Ph7K70/iTvXFd2s0V2lVql8i3HhapshrCH
+	sEOdfLjhii/Dgopkud4qgB+lxDaySqqn7Ypgvn2eXUc7oovAgm7vl6z2OcRyH337ZSY=
+X-Gm-Gg: ASbGncvYfD0Joa1RZX6iqzwLlLtVR+AkdGVKK6aV5P3FRsaI3UHVOx0TTyX6efHr3W4
+	da707lfDRy+Hz395c5QtL9SP3K+Y7qV4vuQTuRTah+V99OkTVO2GGOoRyao9LPaVdXlj5gDYT5B
+	zXRQ6D2pQjnnzVT/1UsRI77IptE/QpZGUM4BFGjOovn/3E9aennCwkiTQX8YikZQO6fTpptEmIS
+	RZ/B43EuwuudxiOciizb/rkFgo7hI0GLFlBfA9Zv9W5qHiFND7OzNqcF7tekzXD4j/cRBYKW9TQ
+	iKod7AcBnIuC/Npo5AFzxhD41l8lzCx703LvcuuXkalayijv/ECizCA62iMXHlNFLBRQh8iNYzO
+	eNzSXsmuPAmCnC5OBK1dUeMMepO6W5APD
+X-Google-Smtp-Source: AGHT+IEqkKAlFA3Wv0a0+O2lG4Gewr8tyBjRmd36nr0j0b20xOn8+R6sxOjM9dV8a5eD98pz9vYk5A==
+X-Received: by 2002:a17:906:6a08:b0:ae3:b654:165b with SMTP id a640c23a62f3a-ae3fbc7da25mr147143366b.24.1751613432382;
+        Fri, 04 Jul 2025 00:17:12 -0700 (PDT)
+Received: from otso.local (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f66d1ae3sm119401766b.7.2025.07.04.00.17.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Jul 2025 23:43:38 -0700 (PDT)
-From: "Yu Zhang(Yuriy)" <yu.zhang@oss.qualcomm.com>
-Date: Fri, 04 Jul 2025 14:43:21 +0800
-Subject: [PATCH v3 2/2] arm64: dts: qcom: qcs615-ride: add WiFi/BT nodes
+        Fri, 04 Jul 2025 00:17:11 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v2 00/11] Add clock drivers for Milos (SM7635)
+Date: Fri, 04 Jul 2025 09:16:52 +0200
+Message-Id: <20250704-sm7635-clocks-v2-0-9e47a7c0d47f@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,245 +83,82 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250704-615-v3-2-6c384e0470f2@oss.qualcomm.com>
-References: <20250704-615-v3-0-6c384e0470f2@oss.qualcomm.com>
-In-Reply-To: <20250704-615-v3-0-6c384e0470f2@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Yu Zhang (Yuriy)" <yu.zhang@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAOR/Z2gC/13OwQ6CMAwG4FchO1sztsDAk+9hOMxRpFE23CbBE
+ N7dCfHi8W/zf+3CAnrCwE7ZwjxOFMjZFMQhY6bX9oZAbcpMcFHwUnAIgyplAebhzD2AKuu6lbJ
+ qjVQsdUaPHc2bd2lS7ilE598bP+Xf6U8q/qQpBw5Gy1xwlLrieO40+bF3Fo/GDaxZd97j85W+j
+ PsNdtUBIe0HiqfM4hxh8xWXqbF+AAMtKwXfAAAA
+X-Change-ID: 20250620-sm7635-clocks-7699d338dc37
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1751611410; l=4826;
- i=yu.zhang@oss.qualcomm.com; s=20250625; h=from:subject:message-id;
- bh=Y7okKbQ+abWkqsZR3FSBPtlNKOlDb1SKPlwBBSOrJ0Y=;
- b=7RXT+Bc91c+xUDmJiV/YiILIGEgvh3KUheky5OeXLU/rnK6J9hUdLnb5VC9QN7fm0afmub8we
- SP1Wi1jLIjMBmdhZ506O64lkHIaBwkE8iQvw+mrIso4Bejy09oJsRNX
-X-Developer-Key: i=yu.zhang@oss.qualcomm.com; a=ed25519;
- pk=ZS+pKT1eEx1+Yb0k2iKe8mk1Rk+MUki89iurrz9iucA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA0MDA1MSBTYWx0ZWRfX7/LiX9QXOgff
- 85TLnsvcaSSCzo4rE/Qsc1rdSLhUdRzORLtDHHZMJS3hGeVQioJkKGtlQdX3dKjFnMukqmkW6Ws
- HYIdc1q4wldLydU9gY5VXP/H+6YZOV0sZPtAz2Scv0UgYNSaHwvs+se59kVqwHCYBSQimKNa79H
- bICNIp0jJy232xbTUacGfa5I+2VwTZpY0gIfsRLPIJAhRGRq8pOID+DGuSvQCLcbhO7k12RzK4+
- LusBKTGmjMXhUF/G1n7gTUuk+amY7PrUyb57nYhD28SuX5tCfPxRlFE7viCT/CcCRUvkOcthm/A
- o56zARtiKnJ0hP8NIMM0O0SEFKSCW6PyKFMEu0wajrL+kO8EY25ATmeh+QGkN+fLsrtY+1qvT9w
- +gL8g5qLidPKEBAC8EB7VWfmLKGP+29oHKVwFmpjoHAGUSw5jLWz1wbNbmmrLHxHml5PODFr
-X-Proofpoint-GUID: yFK-xzXKe9K2S075P3kz8ZskQzBe92nk
-X-Proofpoint-ORIG-GUID: yFK-xzXKe9K2S075P3kz8ZskQzBe92nk
-X-Authority-Analysis: v=2.4 cv=TqPmhCXh c=1 sm=1 tr=0 ts=6867781c cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=cKvnr5XBRiLjHSnd2BMA:9
- a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-04_02,2025-07-02_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 mlxlogscore=999 suspectscore=0 adultscore=0
- phishscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0
- impostorscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507040051
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1751613431; l=2902;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=uth/TQpjLf3lBUfNxZBkzPLdFlA4ZgzmdxkY4dVv4aM=;
+ b=bd8e4tDnMHNsvuFQteHi6X9U/WdUlNYw8STR6kJwPXqS0m6W3BAkimsyn4EelbCoGmkh84Cx0
+ VGHtKQWx6S9B2krWVcZjFHQxgmI84VUcpobGPg6+EqxIZPGXFTZSWkz
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-Add a node for the PMU module of the WCN6855 present on the qcs615 ride
-board. Assign its LDO power outputs to the existing WiFi/BT module.
+Document and add the clock drivers for GCC, CAMCC, DISPCC, GPUCC and
+VIDEOCC on the Milos SoC (e.g. SM7635).
 
-Signed-off-by: Yu Zhang(Yuriy) <yu.zhang@oss.qualcomm.com>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- arch/arm64/boot/dts/qcom/qcs615-ride.dts | 135 +++++++++++++++++++++++++++++++
- 1 file changed, 135 insertions(+)
+Changes in v2:
+- Rebrand SM7635 to Milos as requested: https://lore.kernel.org/linux-arm-msm/aGMI1Zv6D+K+vWZL@hu-bjorande-lv.qualcomm.com/
+- Use new qcom_cc_driver_data to configure e.g. always-on clks instead
+  of in probe function, plus some other related bits from the probe
+  function
+- Add patch to support registering rcg dfs in qcom_cc_really_probe
+- Link to v1: https://lore.kernel.org/r/20250625-sm7635-clocks-v1-0-ca3120e3a80e@fairphone.com
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-index 011f8ae077c256f079ce1b07720374a9bf721488..e21524a8ceffca0c68951d04fa6895cac5bb3d0e 100644
---- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-@@ -18,6 +18,7 @@ aliases {
- 		mmc0 = &sdhc_1;
- 		mmc1 = &sdhc_2;
- 		serial0 = &uart0;
-+		serial1 = &uart7;
- 	};
- 
- 	chosen {
-@@ -209,6 +210,85 @@ vreg_l17a: ldo17 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 	};
-+
-+	vreg_conn_1p8: vreg_conn_1p8 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_conn_1p8";
-+		startup-delay-us = <4000>;
-+		enable-active-high;
-+		gpio = <&pm8150_gpios 1 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	vreg_conn_pa: vreg_conn_pa {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_conn_pa";
-+		startup-delay-us = <4000>;
-+		enable-active-high;
-+		gpio = <&pm8150_gpios 6 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	wcn6855-pmu {
-+		compatible = "qcom,wcn6855-pmu";
-+
-+		pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
-+		pinctrl-names = "default";
-+
-+		bt-enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
-+		wlan-enable-gpios = <&tlmm 98 GPIO_ACTIVE_HIGH>;
-+
-+		vddio-supply = <&vreg_conn_pa>;
-+		vddaon-supply = <&vreg_s5a>;
-+		vddpmu-supply = <&vreg_conn_1p8>;
-+		vddpmumx-supply = <&vreg_conn_1p8>;
-+		vddpmucx-supply = <&vreg_conn_pa>;
-+		vddrfa0p95-supply = <&vreg_s5a>;
-+		vddrfa1p3-supply = <&vreg_s6a>;
-+		vddrfa1p9-supply = <&vreg_l15a>;
-+		vddpcie1p3-supply = <&vreg_s6a>;
-+		vddpcie1p9-supply = <&vreg_l15a>;
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn";
-+			};
-+
-+			vreg_pmu_aon_0p59: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p59";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p85: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p85";
-+			};
-+
-+			vreg_pmu_btcmx_0p85: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p85";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo5 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo6 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p7: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_1p7";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo8 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo9 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+		};
-+	};
- };
- 
- &gcc {
-@@ -234,6 +314,25 @@ &pcie_phy {
- 	status = "okay";
- };
- 
-+&pcie_port0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1103";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+		qcom,calibration-variant = "QC_QCS615_Ride";
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-+	};
-+};
-+
- &pm8150_gpios {
- 	usb2_en: usb2-en-state {
- 		pins = "gpio10";
-@@ -257,6 +356,10 @@ &qupv3_id_0 {
- 	status = "okay";
- };
- 
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
- &remoteproc_adsp {
- 	firmware-name = "qcom/qcs615/adsp.mbn";
- 
-@@ -274,6 +377,13 @@ &rpmhcc {
- };
- 
- &tlmm {
-+	bt_en_state: bt-en-state {
-+		pins = "gpio85";
-+		function = "gpio";
-+		bias-pull-down;
-+		output-low;
-+	};
-+
- 	pcie_default_state: pcie-default-state {
- 		clkreq-pins {
- 			pins = "gpio90";
-@@ -296,6 +406,13 @@ wake-pins {
- 			bias-pull-up;
- 		};
- 	};
-+
-+	wlan_en_state: wlan-en-state {
-+		pins = "gpio98";
-+		function = "gpio";
-+		bias-pull-down;
-+		output-low;
-+	};
- };
- 
- &sdhc_1 {
-@@ -336,6 +453,24 @@ &uart0 {
- 	status = "okay";
- };
- 
-+&uart7 {
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn6855-bt";
-+		firmware-name = "QCA6698/hpnv21", "QCA6698/hpbtfw21.tlv";
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
-+	};
-+};
-+
- &usb_1_hsphy {
- 	vdd-supply = <&vreg_l5a>;
- 	vdda-pll-supply = <&vreg_l12a>;
+---
+Luca Weiss (11):
+      clk: qcom: common: Add support to register rcg dfs in qcom_cc_really_probe
+      dt-bindings: clock: qcom: document the Milos Global Clock Controller
+      clk: qcom: Add Global Clock controller (GCC) driver for Milos
+      dt-bindings: clock: qcom: document the Milos Camera Clock Controller
+      clk: qcom: Add Camera Clock controller (CAMCC) driver for Milos
+      dt-bindings: clock: qcom: document the Milos Display Clock Controller
+      clk: qcom: Add Display Clock controller (DISPCC) driver for Milos
+      dt-bindings: clock: qcom: document the Milos GPU Clock Controller
+      clk: qcom: Add Graphics Clock controller (GPUCC) driver for Milos
+      dt-bindings: clock: qcom: document the Milos Video Clock Controller
+      clk: qcom: Add Video Clock controller (VIDEOCC) driver for Milos
 
+ .../bindings/clock/qcom,milos-camcc.yaml           |   51 +
+ .../bindings/clock/qcom,milos-dispcc.yaml          |   63 +
+ .../devicetree/bindings/clock/qcom,milos-gcc.yaml  |   62 +
+ .../bindings/clock/qcom,milos-videocc.yaml         |   53 +
+ .../bindings/clock/qcom,sm8450-gpucc.yaml          |    2 +
+ drivers/clk/qcom/Kconfig                           |   47 +
+ drivers/clk/qcom/Makefile                          |    5 +
+ drivers/clk/qcom/camcc-milos.c                     | 2161 +++++++++++++
+ drivers/clk/qcom/common.c                          |    8 +
+ drivers/clk/qcom/common.h                          |    2 +
+ drivers/clk/qcom/dispcc-milos.c                    |  974 ++++++
+ drivers/clk/qcom/gcc-milos.c                       | 3225 ++++++++++++++++++++
+ drivers/clk/qcom/gpucc-milos.c                     |  562 ++++
+ drivers/clk/qcom/videocc-milos.c                   |  403 +++
+ include/dt-bindings/clock/qcom,milos-camcc.h       |  131 +
+ include/dt-bindings/clock/qcom,milos-dispcc.h      |   61 +
+ include/dt-bindings/clock/qcom,milos-gcc.h         |  210 ++
+ include/dt-bindings/clock/qcom,milos-gpucc.h       |   56 +
+ include/dt-bindings/clock/qcom,milos-videocc.h     |   36 +
+ 19 files changed, 8112 insertions(+)
+---
+base-commit: b803ad80123e6efccfeeffa7cd37f98f642e37f4
+change-id: 20250620-sm7635-clocks-7699d338dc37
+
+Best regards,
 -- 
-2.34.1
+Luca Weiss <luca.weiss@fairphone.com>
 
 
