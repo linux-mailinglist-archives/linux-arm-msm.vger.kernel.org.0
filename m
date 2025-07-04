@@ -1,220 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-63677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB5D0AF8E02
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 11:16:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 82A6AAF8D6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 11:05:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7B7CCB42BC4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 09:01:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 639ADB43483
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 09:03:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82E242F365B;
-	Fri,  4 Jul 2025 08:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C98902F5C3D;
+	Fri,  4 Jul 2025 08:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="C/+JdCFc"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tD5RKFLM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735BC2EBDF6;
-	Fri,  4 Jul 2025 08:56:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0A22F5C2C;
+	Fri,  4 Jul 2025 08:58:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751619399; cv=none; b=Jp5fmnJciI4CUWPcpd+5DItLUbjX7uaee3dRzQMajYjqE+FJISCS1jaPEB5WKYG4y2DdpVTOy2m9foj8FLGdLcu0A3YMWs4qcl4eV6ryTFV/zxLcNJzR4NRJ61ia+6hBJRe5Ddwzz+Cc5YDAgiUUJbBJJMYiWmcgOTMm5DFSPZ0=
+	t=1751619521; cv=none; b=BRf30rD8gP4eQPZTChBWV2BXFM/+LzmZqVBrc0iwUlgqGVknGOL4a2j/LbDyUTZ8pJfldIMTczoIPbLMMJUxKlKtE+nFxVhg1JLWetiJZRs3hfWcnssQ1Z8isUkn0bE7RYATxLxZV0tsajE+QzHs9u2kIdsl8FRepg6BAXc+kp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751619399; c=relaxed/simple;
-	bh=y1j/5Cpk8bPb641kRnAZ7hwtcYIwzQznPTALWGJ9fVk=;
+	s=arc-20240116; t=1751619521; c=relaxed/simple;
+	bh=d+Wl1jZE/I9B8bdRNnQe1es6PtluF9HhWnQefqznmbA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IfT8b+mUqrZX5T2iiHUdyXFbCbfTeWXnzZ252G7EtDKK/S+rHs+wePyaFRD5CsHQGj6ZR5A+ExwIqiDJnKMhLCaVimwN72APhMn+t1B/+EYWAsqIYIbjw93rGFbPm0jtWpz5wjHL5TJ7d1qbY7Ss0kRmQ1ZU002duXRu9Ox/BFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=C/+JdCFc; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (81-175-209-231.bb.dnainternet.fi [81.175.209.231])
-	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id E1409667;
-	Fri,  4 Jul 2025 10:56:08 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1751619369;
-	bh=y1j/5Cpk8bPb641kRnAZ7hwtcYIwzQznPTALWGJ9fVk=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=LS0f8radpzHIYSxMopx684edewlET7QuF4BDceWnYbL7YfiwQZnkFe1toaG+OgvIc7ZnWVxRzaN3TDE7kRjQfDpZMyGlUqp4OfRTxuRzWvy6H1PtcIVTH7GA3mv4KsgO+43MXzGmz0Xjv+0wd7TC5llZIRPL+0v2DAFP2MKDmlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tD5RKFLM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B009BC4CEE3;
+	Fri,  4 Jul 2025 08:58:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1751619521;
+	bh=d+Wl1jZE/I9B8bdRNnQe1es6PtluF9HhWnQefqznmbA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=C/+JdCFcyFuFUjl0QTjLej9Xh05699NjSblVGkEA7NTpLykJbK7wfxC4CUjBACvZU
-	 vcOGW37478l7BW/3U6xRbSAt7++pBYugym6uc+1NYHApNY6oCyads4kSY9QdMAFwUi
-	 D2owJvVj3WhBx3sQowso2QN7Oy4LeQlR1UdwX6KY=
-Date: Fri, 4 Jul 2025 11:56:04 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Sakari Ailus <sakari.ailus@linux.intel.com>
-Cc: Tommaso Merciai <tomm.merciai@gmail.com>,
-	Martin Hecht <mhecht73@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
-	Umang Jain <umang.jain@ideasonboard.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Michael Riesch <michael.riesch@collabora.com>,
-	Mikhail Rudenko <mike.rudenko@gmail.com>,
-	Steve Longerbeam <slongerbeam@gmail.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Nicholas Roth <nicholas@rothemail.net>,
-	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
-	Sylvain Petinot <sylvain.petinot@foss.st.com>,
-	Paul Elder <paul.elder@ideasonboard.com>,
-	Matt Ranostay <matt@ranostay.sg>,
-	Nas Chung <nas.chung@chipsnmedia.com>,
-	Jackson Lee <jackson.lee@chipsnmedia.com>,
-	Dmitry Osipenko <digetx@gmail.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>, Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Matthias Fend <matthias.fend@emfend.at>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Ricardo Ribalda <ribalda@chromium.org>, linux-media@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH 41/80] media: Remove redundant
- pm_runtime_mark_last_busy() calls
-Message-ID: <20250704085604.GC14736@pendragon.ideasonboard.com>
-References: <20250704075225.3212486-1-sakari.ailus@linux.intel.com>
- <20250704075431.3220262-1-sakari.ailus@linux.intel.com>
+	b=tD5RKFLMS/H+cinxfjavqH73neq7XUI9RRZyaKOIUC3430nh5tqWQXIAsy9K5qrYj
+	 pwV41HGE4Lbwwrxf0MT2/kwLbqGqAmQSRzf1BnB/so0L8kUAYd2TpE7+pvdNKpxCW1
+	 hIvabZr4gtOqQnK1jVQRCAzan/pfN6qjWfFGZrLY=
+Date: Fri, 4 Jul 2025 10:58:38 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Cc: srini@kernel.org, linux-arm-msm@vger.kernel.org,
+	quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
+	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
+	arnd@arndb.de, dmitry.baryshkov@oss.qualcomm.com
+Subject: Re: [PATCH v1] misc: fastrpc: Add support for userspace allocated
+ buffers
+Message-ID: <2025070443-impatient-essay-23ab@gregkh>
+References: <20250704083726.1901705-1-ekansh.gupta@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250704075431.3220262-1-sakari.ailus@linux.intel.com>
+In-Reply-To: <20250704083726.1901705-1-ekansh.gupta@oss.qualcomm.com>
 
-Hi Sakari,
-
-On Fri, Jul 04, 2025 at 10:54:31AM +0300, Sakari Ailus wrote:
-> pm_runtime_put_autosuspend(), pm_runtime_put_sync_autosuspend(),
-> pm_runtime_autosuspend() and pm_request_autosuspend() now include a call
-> to pm_runtime_mark_last_busy(). Remove the now-reduntant explicit call to
-> pm_runtime_mark_last_busy().
+On Fri, Jul 04, 2025 at 02:07:26PM +0530, Ekansh Gupta wrote:
+> Support mapping userspace allocated buffers. If userspace allocates a
+> buffer using rpcmem or DMABUF and sends it via a map request, fastrpc
+> will map it to SMMU and DSP. Add support for both map and unmap
+> requests.
 > 
-> Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 > ---
-> The cover letter of the set can be found here
-> <URL:https://lore.kernel.org/linux-pm/20250704075225.3212486-1-sakari.ailus@linux.intel.com>.
+>  drivers/misc/fastrpc.c | 188 ++++++++++++++++++++++++++++++++---------
+>  1 file changed, 150 insertions(+), 38 deletions(-)
 > 
-> In brief, this patch depends on PM runtime patches adding marking the last
-> busy timestamp in autosuspend related functions. The patches are here, on
-> rc2:
-> 
->         git://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git \
->                 pm-runtime-6.17-rc1
-> 
->  drivers/media/i2c/alvium-csi2.c                          | 1 -
->  drivers/media/i2c/ccs/ccs-core.c                         | 4 ----
->  drivers/media/i2c/dw9768.c                               | 1 -
->  drivers/media/i2c/gc0308.c                               | 3 ---
->  drivers/media/i2c/gc2145.c                               | 3 ---
->  drivers/media/i2c/imx219.c                               | 2 --
->  drivers/media/i2c/imx283.c                               | 3 ---
->  drivers/media/i2c/imx290.c                               | 3 ---
->  drivers/media/i2c/imx296.c                               | 1 -
->  drivers/media/i2c/imx415.c                               | 1 -
->  drivers/media/i2c/mt9m114.c                              | 6 ------
->  drivers/media/i2c/ov4689.c                               | 3 ---
->  drivers/media/i2c/ov5640.c                               | 4 ----
->  drivers/media/i2c/ov5645.c                               | 3 ---
->  drivers/media/i2c/ov64a40.c                              | 4 ----
->  drivers/media/i2c/ov8858.c                               | 2 --
->  drivers/media/i2c/st-mipid02.c                           | 2 --
->  drivers/media/i2c/tc358746.c                             | 5 -----
->  drivers/media/i2c/thp7312.c                              | 4 ----
->  drivers/media/i2c/vd55g1.c                               | 4 ----
->  drivers/media/i2c/vd56g3.c                               | 4 ----
->  drivers/media/i2c/video-i2c.c                            | 4 ----
->  drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c | 4 ----
->  drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c | 5 -----
->  drivers/media/platform/nvidia/tegra-vde/h264.c           | 2 --
->  drivers/media/platform/qcom/iris/iris_hfi_queue.c        | 1 -
->  drivers/media/platform/raspberrypi/pisp_be/pisp_be.c     | 2 --
->  drivers/media/platform/verisilicon/hantro_drv.c          | 1 -
->  drivers/media/rc/gpio-ir-recv.c                          | 1 -
->  29 files changed, 83 deletions(-)
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 378923594f02..3c88c8e9ba51 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -1797,17 +1797,16 @@ static int fastrpc_get_dsp_info(struct fastrpc_user *fl, char __user *argp)
+>  	return 0;
+>  }
+>  
+> -static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *buf)
+> +static int fastrpc_req_munmap_dsp(struct fastrpc_user *fl, uintptr_t raddr, u64 size)
 
-[snip]
+uintptr_t is not a valid kernel type, please use our real ones :)
 
-> diff --git a/drivers/media/i2c/ccs/ccs-core.c b/drivers/media/i2c/ccs/ccs-core.c
-> index 487bcabb4a19..3316639b695e 100644
-> --- a/drivers/media/i2c/ccs/ccs-core.c
-> +++ b/drivers/media/i2c/ccs/ccs-core.c
-> @@ -788,7 +788,6 @@ static int ccs_set_ctrl(struct v4l2_ctrl *ctrl)
+"*u64"?
+
+>  {
+>  	struct fastrpc_invoke_args args[1] = { [0] = { 0 } };
+>  	struct fastrpc_munmap_req_msg req_msg;
+> -	struct device *dev = fl->sctx->dev;
+>  	int err;
+>  	u32 sc;
+>  
+>  	req_msg.client_id = fl->client_id;
+> -	req_msg.size = buf->size;
+> -	req_msg.vaddr = buf->raddr;
+> +	req_msg.size = size;
+> +	req_msg.vaddr = raddr;
+>  
+>  	args[0].ptr = (u64) (uintptr_t) &req_msg;
+>  	args[0].length = sizeof(req_msg);
+> @@ -1815,6 +1814,16 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *
+>  	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_MUNMAP, 1, 0);
+>  	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc,
+>  				      &args[0]);
+> +
+> +	return err;
+> +}
+> +
+> +static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *buf)
+> +{
+> +	struct device *dev = fl->sctx->dev;
+> +	int err;
+> +
+> +	err = fastrpc_req_munmap_dsp(fl, buf->raddr, buf->size);
+>  	if (!err) {
+>  		dev_dbg(dev, "unmmap\tpt 0x%09lx OK\n", buf->raddr);
+>  		spin_lock(&fl->lock);
+> @@ -1831,8 +1840,10 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *
+>  static int fastrpc_req_munmap(struct fastrpc_user *fl, char __user *argp)
+>  {
+>  	struct fastrpc_buf *buf = NULL, *iter, *b;
+> +	struct fastrpc_map *map = NULL, *iterm, *m;
+>  	struct fastrpc_req_munmap req;
+>  	struct device *dev = fl->sctx->dev;
+> +	int err;
+>  
+>  	if (copy_from_user(&req, argp, sizeof(req)))
+>  		return -EFAULT;
+> @@ -1846,35 +1857,91 @@ static int fastrpc_req_munmap(struct fastrpc_user *fl, char __user *argp)
+>  	}
+>  	spin_unlock(&fl->lock);
+>  
+> -	if (!buf) {
+> -		dev_err(dev, "mmap\t\tpt 0x%09llx [len 0x%08llx] not in list\n",
+> +	if (buf) {
+> +		err = fastrpc_req_munmap_impl(fl, buf);
+> +		if (err) {
+> +			spin_lock(&fl->lock);
+> +			list_add_tail(&buf->node, &fl->mmaps);
+> +			spin_unlock(&fl->lock);
+> +		}
+> +		return err;
+> +	}
+> +
+> +	spin_lock(&fl->lock);
+> +	list_for_each_entry_safe(iterm, m, &fl->maps, node) {
+> +		if (iterm->raddr == req.vaddrout) {
+> +			map = iterm;
+> +			list_del(&iterm->node);
+> +			break;
+> +		}
+> +	}
+> +	spin_unlock(&fl->lock);
+> +	if (!map) {
+> +		dev_dbg(dev, "buffer/map not found addr 0x%09llx, len 0x%08llx\n",
+>  			req.vaddrout, req.size);
+>  		return -EINVAL;
 >  	}
 >  
->  	if (pm_status > 0) {
-> -		pm_runtime_mark_last_busy(&client->dev);
->  		pm_runtime_put_autosuspend(&client->dev);
->  	}
+> -	return fastrpc_req_munmap_impl(fl, buf);
+> +	err = fastrpc_req_munmap_dsp(fl, map->raddr, map->size);
+> +	if (err) {
+> +		dev_dbg(dev, "unmmap\tpt fd = %d, 0x%09llx error\n",  map->fd, map->raddr);
+> +		spin_lock(&fl->lock);
+> +		list_add_tail(&map->node, &fl->maps);
+> +		spin_unlock(&fl->lock);
+> +	} else {
+> +		fastrpc_map_put(map);
+> +	}
+> +	return err;
+>  }
+>  
+> -static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+> +static int fastrpc_req_map_dsp(struct fastrpc_user *fl, u64 phys,
+> +			       u64 size, u32 flag, uintptr_t vaddrin,
+> +			       u64 *raddr)
+>  {
+>  	struct fastrpc_invoke_args args[3] = { [0 ... 2] = { 0 } };
+> -	struct fastrpc_buf *buf = NULL;
+>  	struct fastrpc_mmap_req_msg req_msg;
+>  	struct fastrpc_mmap_rsp_msg rsp_msg;
+>  	struct fastrpc_phy_page pages;
+> -	struct fastrpc_req_mmap req;
+> -	struct device *dev = fl->sctx->dev;
+>  	int err;
+>  	u32 sc;
+>  
+> -	if (copy_from_user(&req, argp, sizeof(req)))
+> -		return -EFAULT;
+> +	req_msg.client_id = fl->client_id;
+> +	req_msg.flags = flag;
+> +	req_msg.vaddr = vaddrin;
+> +	req_msg.num = sizeof(pages);
 
-You can now drop the curly braces.
+No validation of these user-provided values?  Or did I miss where that
+happens?
 
 >  
+> -	if (req.flags != ADSP_MMAP_ADD_PAGES && req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR) {
+> -		dev_err(dev, "flag not supported 0x%x\n", req.flags);
+> +	args[0].ptr = (u64)(uintptr_t)&req_msg;
 
-[snip]
+Again, "uintptr_t" isn't for the kernel please.
 
-> diff --git a/drivers/media/i2c/ov64a40.c b/drivers/media/i2c/ov64a40.c
-> index a5da4fe47e0b..15912ecb8d26 100644
-> --- a/drivers/media/i2c/ov64a40.c
-> +++ b/drivers/media/i2c/ov64a40.c
+thanks,
 
-[snip]
-
-> @@ -3330,7 +3328,6 @@ static int ov64a40_set_ctrl(struct v4l2_ctrl *ctrl)
->  	}
->  
->  	if (pm_status > 0) {
-> -		pm_runtime_mark_last_busy(ov64a40->dev);
->  		pm_runtime_put_autosuspend(ov64a40->dev);
->  	}
-
-Same here.
-
->  
-
-[snip]
-
-> diff --git a/drivers/media/rc/gpio-ir-recv.c b/drivers/media/rc/gpio-ir-recv.c
-> index bf6d8fa983bf..161f8919022c 100644
-> --- a/drivers/media/rc/gpio-ir-recv.c
-> +++ b/drivers/media/rc/gpio-ir-recv.c
-> @@ -49,7 +49,6 @@ static irqreturn_t gpio_ir_recv_irq(int irq, void *dev_id)
->  		ir_raw_event_store_edge(gpio_dev->rcdev, val == 1);
->  
->  	if (pmdev) {
-> -		pm_runtime_mark_last_busy(pmdev);
->  		pm_runtime_put_autosuspend(pmdev);
->  	}
-
-And here too.
-
-With that,
-
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-
->  
-
--- 
-Regards,
-
-Laurent Pinchart
+greg k-h
 
