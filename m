@@ -1,124 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-63713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68C34AF95EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 16:47:49 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24DD9AF962F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 17:03:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0E2533B6363
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 14:47:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B791A7AEB1A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 15:01:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9A251A76D4;
-	Fri,  4 Jul 2025 14:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDA491A2C25;
+	Fri,  4 Jul 2025 15:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="T8Ikp5ZM"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GDnSCMJC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34FC5234
-	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Jul 2025 14:47:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AA2228CB5
+	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Jul 2025 15:03:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751640463; cv=none; b=lNjOHxh5TGnX+cHMgP4plw6xcaQEFmbAfnQ2VPlx19Xu5btv/W+PeFToonJFX96FZW3SsUXmihU0vgbaUoOQpQMp7/HTT7TObi9lc1ZDuepy4zQWL+Of9KH7hwojw+yNwHxzotWEDFhYv6V2jka7RJ2gL+xQzsNGDnHNsnYCy9E=
+	t=1751641387; cv=none; b=IAWSYGJniNYmuDpoY+JpFswhELbdFyjcQLXYPiXVQkJklX6vh1jRZd9ggDweKPRcX+lUhSsddmrbSOZ50STSIxhDPzXMa7B4syAxu8uWv8LanPFHjurQ27seKG3Rt+xI6HYADDbg+j6jJauBgsOlN0eS+TMVmPH+fuMqUqyqSjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751640463; c=relaxed/simple;
-	bh=eKKBx7o0N5OUou+fjRI0q8kwinzpESaXSwSaLCSZZ3M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JHR3c3eIKr7IFJCsgV3h+6pPr+IfsaKLp3Iz45DTGl1hwRjZZ+0Vj0V0wDBOU8RauxxWMGPqhirr/T+7blAJAIKnxeyx4r0lcwLiH1kn5fWFjTWyW87fls4+7XAPOD8ccP/r7HmHnZQSuCuJSW9kiYTOjgYlbPlEtFgfCajl4yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=T8Ikp5ZM; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a54700a46eso580628f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Jul 2025 07:47:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1751640459; x=1752245259; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LcqBYfe0a8O+cCCxr9qxFOZy/LUGrHysRh3pGTlrgho=;
-        b=T8Ikp5ZM8w79RcackrCaWMd67e4b2Y4b6rB2ZasiijpOmsU86hJsr0I0Oi3RbkGi6J
-         XGSY6w8m6tJvttoONFLmF46T4l/LNkJTC5ngKejlKDTmVUlWId21nvAWC7cVbG5Gfhoc
-         HMIVv7EFy6LkGYEyUzohMO7jXovTAKjI6YM+3p25kDY2cXBQ4kMfRIX8WIoGrCzR/OIV
-         Oc3B97sKol1IZj1XvtNVTV09gmkqhrWy4ZsPsqXdRCAcDAR5FB4fD5PoisNTflXy4B0I
-         d1DKpgTXmlA3xTUbzP78/u+fBuVMk1B4bdb3OC/Y2Y7MOk1jCZQrRf9r+bXeu3tEI5oa
-         Tq1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751640459; x=1752245259;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LcqBYfe0a8O+cCCxr9qxFOZy/LUGrHysRh3pGTlrgho=;
-        b=vVlmFEPLrQKZtw2PIqhiZGlpEOMXr3+10emI0u1aCyAztyy8HeePM/RT8UDYcZqzsQ
-         N0Yc7aRihHdkBlc79XR/GZfSu9dZt8Aw3e2ggv/kIin+H7qUO9DlQgr9L88jnSilFVzU
-         sZ4vC1kLih8kaX4e9Atf2T803qhL8ByG8mbAmsKGjfwqARFki0rY04yInj0saDE+mTfE
-         yYodjNcZOBetQk9kb/4PhRij7BOsat90MWOmoKJrgM55Wwak6yicdmNaczv5KBc6jm1l
-         kIxOC8a/y3alvMfvzxQugc2HeYn6SZYqohNMqz+CLCiNMuDFPQNi9fJ5CPpyB3gsVRKs
-         zY3Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUJ3t6eHqlSfE31QNs9kWb8bv38WAvGc7fj666ff4RfXo3UozleQnhG0fERLpoitvr+YPso3D/UvQKjTeee@vger.kernel.org
-X-Gm-Message-State: AOJu0YzqrpRWkcM+tzScS1ZtwNwjfkOFiz8f1WOpRxuz+hXZ+NR3iRUW
-	uku96lUpDlnO45NwJnUuRCFSTs7ufiFVcEK3U8/xdfX/A8LqNYYyvpkMQGx0iV4aoso=
-X-Gm-Gg: ASbGncvE0Jhzg4M28143JnoV5Ws82LNElfPV4OeXnAqvyUZxePyJTnMwmZAe4npIEXh
-	ktZlWbZY9S+Sh/UJ6fvEYjHqEq2Xo3FoiYnvpjGbtiqpxXhMoVMt+kI/1gjEVC22xP9hr6nNKWE
-	UivMXn/FT87e7ttEfTeFvA8FPKcYF4SzWTu3p2QuQHZzG0F8p/rvM83ClsWVMYr9l33R62XqoKl
-	v83CB4p/V6NG9v72ZUGxHTLj4JeFVzVlM0VwEoHIGp03q48zWnMALWbJOT3JGyT8hGdXha2uSdx
-	sB6zadefMpt88QlH1Ps1fY7wxb/hSjPf6HkSOuoO5CLKgJOYso62hQ6qZjaeyA==
-X-Google-Smtp-Source: AGHT+IHGtZCWjPLCd8ll7G0W0O7rhS5w+RvGTT6+ns5X11cAJVZ2tzPWQuy6V45xzCWyz1JvOCsyhw==
-X-Received: by 2002:a05:6000:2004:b0:3b3:9ca4:ac8e with SMTP id ffacd0b85a97d-3b4964f7b7emr2517650f8f.44.1751640458912;
-        Fri, 04 Jul 2025 07:47:38 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:876:27c7:55ac:40ab])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b47030c443sm2721539f8f.11.2025.07.04.07.47.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Jul 2025 07:47:38 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc: Shuai Zhang <quic_shuaz@quicinc.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	linux-bluetooth@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH] MAINTAINERS: add a sub-entry for the Qualcomm bluetooth driver
-Date: Fri,  4 Jul 2025 16:47:24 +0200
-Message-ID: <20250704144724.63449-1-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.48.1
+	s=arc-20240116; t=1751641387; c=relaxed/simple;
+	bh=0ktyOx/bslUE4vNSOJazhHNQxHV7lXR7SKrOEQqOjWI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MJ7/DVelWEJCF7DVXcacNdBo7J0b8NvFx2McLEF1v/thXmP8lscav0miY+rkeYWuoZFvTqYSr5zjdAdTAyDSVWNBZ1cxO9rbdW2COzt7xr2zm00ZmjA9zqnrLgW57mSO1HDs/+JlVt8Y6gwhyAfztx+NHeQ0repKtn+JmcnbH8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GDnSCMJC; arc=none smtp.client-ip=198.175.65.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1751641386; x=1783177386;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=0ktyOx/bslUE4vNSOJazhHNQxHV7lXR7SKrOEQqOjWI=;
+  b=GDnSCMJCeVeb22L+jolN7E7tx42GFhFY/RhD+Ww62TfjpYRDzVNjVufN
+   jSQdIr74V1lxyZvyOPDVsR3rnK9m0p2rVVE/Ht2NsPE5cejNY091t66tG
+   NzjD9hnlQLBKJukr65G6IcpG9x9arBX9V9bRETtTZQDpsNFb27NmB6Wta
+   y+H8lA+uHDf9VkgV6dwmgOTEt1QlEel3mwso8g/sQz+C61cg3ut0tuzb+
+   oUsCiTe3zh68LN4mllwjpBQ3YCemeB/PBSFOQXD59BQUEwGYjJLztJpqn
+   ombLHgTxW+VkEEVTFJQ28rg/+fBzhbTgWpzkQW/vQZ4ngf4dsWAQgCuys
+   A==;
+X-CSE-ConnectionGUID: 1sOaBr+iReqh9CzVyMlD5A==
+X-CSE-MsgGUID: AoN/e7S0TJyfh/CkMoYw4w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11484"; a="64225395"
+X-IronPort-AV: E=Sophos;i="6.16,287,1744095600"; 
+   d="scan'208";a="64225395"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jul 2025 08:03:06 -0700
+X-CSE-ConnectionGUID: COlesd7ZS2uq3kxMxRZY4g==
+X-CSE-MsgGUID: UJHmNRV/RyqpCoOR8mvMyQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,287,1744095600"; 
+   d="scan'208";a="155237523"
+Received: from kamilkon-desk.igk.intel.com (HELO localhost) ([10.211.136.201])
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jul 2025 08:03:04 -0700
+Date: Fri, 4 Jul 2025 17:02:48 +0200
+From: Kamil Konieczny <kamil.konieczny@linux.intel.com>
+To: Rob Clark <rob.clark@oss.qualcomm.com>
+Cc: igt-dev@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH i-g-t v2 1/9] tests/msm/msm_mapping: Fix memory leak
+Message-ID: <20250704150248.w4ni6gjhqcs7cjhd@kamilkon-DESK.igk.intel.com>
+Mail-Followup-To: Kamil Konieczny <kamil.konieczny@linux.intel.com>,
+	Rob Clark <rob.clark@oss.qualcomm.com>,
+	igt-dev@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+References: <20250702190249.376313-1-rob.clark@oss.qualcomm.com>
+ <20250702190249.376313-2-rob.clark@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250702190249.376313-2-rob.clark@oss.qualcomm.com>
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Hi Rob,
+On 2025-07-02 at 12:02:41 -0700, Rob Clark wrote:
+> We shouldn't leak the devcore.
+> 
+> Signed-off-by: Rob Clark <rob.clark@oss.qualcomm.com>
 
-Patches modifying drivers/bluetooth/hci_qca.c should be Cc'ed to the
-linux-arm-msm mailing list so that Qualcomm maintainers and reviewers
-can get notified about proposed changes to it. Add a sub-entry that adds
-the mailing list to the list of addresses returned by get_maintainer.pl.
+For whole series this is
+Acked-by: Kamil Konieczny <kamil.konieczny@linux.intel.com>
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- MAINTAINERS | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index fcc77c93f8db..7fee3d38baf8 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -20441,6 +20441,11 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/net/qcom,bam-dmux.yaml
- F:	drivers/net/wwan/qcom_bam_dmux.c
- 
-+QUALCOMM BLUETOOTH DRIVER
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Maintained
-+F:	drivers/bluetooth/hci_qca.c
-+
- QUALCOMM CAMERA SUBSYSTEM DRIVER
- M:	Robert Foss <rfoss@kernel.org>
- M:	Todor Tomov <todor.too@gmail.com>
--- 
-2.48.1
-
+> ---
+>  tests/msm/msm_mapping.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/tests/msm/msm_mapping.c b/tests/msm/msm_mapping.c
+> index ac20ca91d613..1749a670e70d 100644
+> --- a/tests/msm/msm_mapping.c
+> +++ b/tests/msm/msm_mapping.c
+> @@ -215,6 +215,8 @@ do_mapping_test(struct msm_pipe *pipe, const char *buffername, bool write)
+>  	ret = sscanf(s, "  - iova=%"PRIx64, &fault_addr);
+>  	igt_fail_on(ret != 1);
+>  	igt_fail_on(addr != fault_addr);
+> +
+> +	free(devcore);
+>  }
+>  
+>  /*
+> -- 
+> 2.50.0
+> 
 
