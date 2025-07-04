@@ -1,49 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-63768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46268AF99C3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 19:37:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26AFFAF99CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 19:37:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2BE181CC093E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 17:37:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C66541CC093D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 17:37:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6CA02DEA8E;
-	Fri,  4 Jul 2025 17:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCE452F94A6;
+	Fri,  4 Jul 2025 17:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ft2VgfiE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EnlAXUF+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF602DEA8A;
-	Fri,  4 Jul 2025 17:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93BA72F8C58;
+	Fri,  4 Jul 2025 17:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751650577; cv=none; b=eGmd1Qhqr+Yh4VX+ZLEKZww8R8XtLdyx/9wG3XZxH5Kp69CTJd2plyE3nuZfTYsedTMBu/iSfUDDMVvmeYJ9QiimFp8lXVALJePMO+BDrje4hlUZYKOhKfRg/fcN4fqml4R5tc24N324OEB8h95yLeNg4Eh5inusnhNgpR+Fz9M=
+	t=1751650581; cv=none; b=JLWgGCIYqWNo7jbRXvNxuBeNJmysjQD1p5Q4NkX0C0U5Ia6OPXEz6JtdLKg4zIz/8VRen8a1ic9IcCPMhCltt+P4Dj3m6j5zxVwhg8BJYhphCE7Xx2MexQiwdv6ASLnTLPXWtBRcDP57w/EtURxV7HcluQ3kAAzZCr7AtxAGvfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751650577; c=relaxed/simple;
-	bh=YEBPecvN+/+CzyYo7nYN0cP1XFT4QG7XKpKI4CPaGq0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TgMAtgfI8Lb66HHdYE4dF6TFChgWh8IfEQeu8k9J4VZfNfkc04bL1XjTACy8rvSxkXUHkfXj84Ljwa7/UXYfS34rClPob/Mgmzx5zKJXh5FiBW6xB1DSPjVdKNEShPgh/HuMe+XzeB63sF3TaDE1tR6kfIiDnw9HEiRlkPWIO8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ft2VgfiE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4D6C4CEEE;
-	Fri,  4 Jul 2025 17:36:13 +0000 (UTC)
+	s=arc-20240116; t=1751650581; c=relaxed/simple;
+	bh=8jaz+aYQDTWx1my2TCQZNcKLuM37UT8p2RZdSRV9x5E=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=RbW/BCh14dVBqgQ6jhpylgWlgc9J1cNcagT5eJuBnYXBQYtMgYAHbewBfkiRqzUBXVxgJNUUxJMb+TNrD7/gk3hZFRtIAaRTlrSlFdzb17YGy0Q6RUfRSKob+W7ABKkPlll3bBmCiDKIiLClPzt9CkvNfPdaiJFkC3lTtPJrl4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EnlAXUF+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490F0C4CEEE;
+	Fri,  4 Jul 2025 17:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751650577;
-	bh=YEBPecvN+/+CzyYo7nYN0cP1XFT4QG7XKpKI4CPaGq0=;
-	h=From:Subject:Date:To:Cc:From;
-	b=ft2VgfiEegPPZ9c2w2mnNeJIDEKZSYBczaC2FpJ5NNvFxCoMEXfA0P9bKWRHAlGHH
-	 zCDqqAErJfoMG8hizrKuSRNbn3VqHIK0sxp+IxRcvH1AAglDujUTXsqo+I/eaZ5DUV
-	 msMRiyPaFwt8rkzB/0dMCXcOJq8avdhvBAMuefuB5vzMrlLgVSTpn2YNGDy2b9jS5w
-	 T/hRlgzidro77h7h74aCxkwujDh8cgOwI/5fcUHf1P9dbnjQpVZ2ZJRQesySsnqq5E
-	 DFvWsTVwtDuZ/RE7sGoquCcCWc1bH0C4KNq7Y6DuCw4UNdFGH/1Qe9wYsmIJQ9sxvk
-	 472DBKnQbUCkw==
+	s=k20201202; t=1751650581;
+	bh=8jaz+aYQDTWx1my2TCQZNcKLuM37UT8p2RZdSRV9x5E=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=EnlAXUF+/QV1mkeIxWRoZBCR51V5lllijW7S19FOq6wohuuVSIccxZLYR8uLNwaZf
+	 nTIAOAwJ3Pq0PSBOwZzTnrglK4LwZO/xEoqBDavP1jdz7I0ZdFhccQyuAvQcwLO3dJ
+	 1qNMUCq7INGlLuNaMehBgAmFbVxImM/LyvpyG3F73BZ9t2f6oEBi8cQHRp8o0OputO
+	 QzzQ/ciSkVsgXCMcO2S+NTKvVPfSfiz1g7EUN6S2srdeoz3lQ8bY0MCZb0lvUkeMlv
+	 50QsiYLgn0OosRwOi/Pvcoe1uO1Zu6mjCuX06/LmM91brPJTgK1niGXaaY6gctRtIs
+	 a4sxERU4XEo4g==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Subject: [RFC/RFT PATCH 0/5] Clean up UFS(-qcom) MCQ situation
-Date: Fri, 04 Jul 2025 19:36:08 +0200
-Message-Id: <20250704-topic-qcom_ufs_mcq_cleanup-v1-0-c70d01b3d334@oss.qualcomm.com>
+Date: Fri, 04 Jul 2025 19:36:09 +0200
+Subject: [PATCH RFC/RFT 1/5] ufs: ufs-qcom: Fix UFS base region name in MCQ
+ case
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,10 +53,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAgRaGgC/x3MSwqAIBAA0KvErBPsH10lQmSaaqDUtCKI7p60f
- Jv3QCDPFKBLHvB0cWBrIrI0AVy0mUnwGA25zCvZyFIc1jGKHe2mzimoDXeFK2lzOlFQU2elJln
- rFmLgPE18/3k/vO8H/aXYsGwAAAA=
-X-Change-ID: 20250704-topic-qcom_ufs_mcq_cleanup-3e7614ae06a8
+Message-Id: <20250704-topic-qcom_ufs_mcq_cleanup-v1-1-c70d01b3d334@oss.qualcomm.com>
+References: <20250704-topic-qcom_ufs_mcq_cleanup-v1-0-c70d01b3d334@oss.qualcomm.com>
+In-Reply-To: <20250704-topic-qcom_ufs_mcq_cleanup-v1-0-c70d01b3d334@oss.qualcomm.com>
 To: Manivannan Sadhasivam <mani@kernel.org>, 
  "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
  "Martin K. Petersen" <martin.petersen@oracle.com>, 
@@ -68,47 +68,41 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1751650573; l=1343;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1751650573; l=946;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=YEBPecvN+/+CzyYo7nYN0cP1XFT4QG7XKpKI4CPaGq0=;
- b=w1Y00gKqqNBo7rsQJ2hO5Loxvywl8yMjuhjpuKoW3IikHg+X9MywHMMhUlfcy5WgqhvWg7z/I
- oPZ5nW6urgxBSENoC7uKNEpcnnSKzRn0ovIzd4G3PkteEhshKdhldSm
+ bh=IbnTdlJA3DyHgeEuZgss0N7Bjbg2NunWI+vgqCmwlLE=;
+ b=wAIG7O7w+MRGN7Scpx2E1RHI/qWDEKaG7e0L2T7hTqmJCedKoOZIoHGv3+obCLfX93+3xKR8j
+ qfMXgbNws9HB98UE91CqKF47AfexB33vGojNVVqz5fSQ3SiiGbDXfjp
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-The initial implementation was quite messy, including requesting
-regions that do not really exist in hardware (or at least not in the
-way they were described).
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-As we have no users (and the corresponding dt-bindings were never even
-accepted), remove a whole lot of boilerplate code and clean up the
-software's expectations.
+There is no need to reinvent the wheel. There are no users yet, and the
+dt-bindings were never updated to accommodate for this, so fix it while
+we still easily can.
 
-Note that this revision does not fix the bindings defficiency yet.
-
-Compile-tested only & not the best code I've written, but I'm looking
-for feedback whether this approach is acceptable.
-
+Fixes: c263b4ef737e ("scsi: ufs: core: mcq: Configure resource regions")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
-Konrad Dybcio (5):
-      ufs: ufs-qcom: Fix UFS base region name in MCQ case
-      ufs: ufs-qcom: Remove inferred MCQ mappings
-      ufs: ufs-qcom: Don't try to map inexistent regions
-      ufs: ufs-qcom: Rename "mcq_sqd" to "mcq_opr"
-      ufs: ufs-qcom: Kill ufshcd_res_info
+ drivers/ufs/host/ufs-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- drivers/ufs/host/ufs-qcom.c      | 151 ++++++++++-----------------------------
- drivers/ufs/host/ufs-qcom.h      |   4 ++
- drivers/ufs/host/ufshcd-pltfrm.c |   4 +-
- include/ufs/ufshcd.h             |  26 +------
- 4 files changed, 45 insertions(+), 140 deletions(-)
----
-base-commit: 26ffb3d6f02cd0935fb9fa3db897767beee1cb2a
-change-id: 20250704-topic-qcom_ufs_mcq_cleanup-3e7614ae06a8
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 318dca7fe3d735431e252e8a2a699ec1b7a36618..8dd9709cbdeef6ede5faa434fcb853e11950721f 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1899,7 +1899,7 @@ static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
+ 
+ /* Resources */
+ static const struct ufshcd_res_info ufs_res_info[RES_MAX] = {
+-	{.name = "ufs_mem",},
++	{.name = "std",},
+ 	{.name = "mcq",},
+ 	/* Submission Queue DAO */
+ 	{.name = "mcq_sqd",},
 
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+2.50.0
 
 
