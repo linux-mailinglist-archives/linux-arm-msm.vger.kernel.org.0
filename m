@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-63772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D0D8AF99DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 19:39:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1657AF99E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 19:40:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 783B91C22464
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 17:39:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D1042188461C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 17:39:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ED9D326A41;
-	Fri,  4 Jul 2025 17:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3350932624C;
+	Fri,  4 Jul 2025 17:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sdAEb2TI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PF4hQLWU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0350432624C;
-	Fri,  4 Jul 2025 17:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D6B326A68;
+	Fri,  4 Jul 2025 17:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751650591; cv=none; b=OXSTPDlUhfLfoXWKrSw6BRT6WIwDGB6sx8gkEi3e8JBLF34yIEdTCUUCYSY4ysMqbO3tfi0UuqtC8sJP0vKJZRBgRCkX5pwi/VR+yJpX7qRB5VxON7pfkJUcuSTWRBEgizp3xevWLRzxKpNkmX0oBugTelRyFQAJ7QW+IQnX9h4=
+	t=1751650594; cv=none; b=RC3PM0sYF8PKcK7k//bCZynflLZ7tTU2b+YQAmUim8KerjxV3yHMFvA/8vP7iKFokrfaX/sUrggAvKgLxt6d8u36ZI1o1jdLLjQXMpgUN9wvNWfPrOWW6FeCkUe9NpL8CmGIZs2FgB320KTYmGnvxbybxs039lddNa3XpkjCq28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751650591; c=relaxed/simple;
-	bh=z/ePAyDgV+JrevKmvRY2qbMBnHnrNMuxv9BxUeLOU/8=;
+	s=arc-20240116; t=1751650594; c=relaxed/simple;
+	bh=iUgw6SdLRmSY+TxjZGHq9wfHyZUGByUgELpbSlwhZh4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PZSx+yaqmNkk4+gWruSBKPvvLGRerQf8e0WLuaXhs+ApPepbRndZluv0+psCjYkoWXTBQc2KxI/L6cuaCVckubPKaeN33A+V7DS+fsFoTKqck94NfLLy9rWKGS4jKL4tBcaBEyTddIKkFcdyaJCwzZYY4RM6b1/qpqMKrPMPjKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sdAEb2TI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B88C4CEE3;
-	Fri,  4 Jul 2025 17:36:27 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=APnPBUCrpZoLHDa54LL9Enn0gxCfPqqjOxHkkflZFC6UcgsDv2yQyfxWSLq9F/am+Ht4ekkRTWDdBXJrLh/NmbOKiPsgywzSSm/Pb3WrM9G0XWvFrL3La0M4tUFWICteNeJaIprrpcl+6BC5wgREey4VAJB/DNrCHF5arnXw0yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PF4hQLWU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0594BC4CEED;
+	Fri,  4 Jul 2025 17:36:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751650590;
-	bh=z/ePAyDgV+JrevKmvRY2qbMBnHnrNMuxv9BxUeLOU/8=;
+	s=k20201202; t=1751650593;
+	bh=iUgw6SdLRmSY+TxjZGHq9wfHyZUGByUgELpbSlwhZh4=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=sdAEb2TI8bcB6UqeIRvHrwoVIYFfDP4Ypqq/VLNgJTqQESxsxVHyMicuB2wZCzR9Q
-	 vH9iTzTch5iKracBadBQewiZCTsCElxOHZ3Z4ioe44JGcIaiAw+FbNAawZFGH7Fv1y
-	 Pasibw9X5kObGKy9HDVQH3SQs309zUATKhF4f5kWqGiAJnHVKIrLy7d7HRbGwECvJB
-	 GUHQf6EI3ZYUt9n2JSlOeFwbZ2i3eWxLq8UxCxcuqNL04gU8Wkf/b7eCOlC9D87A0Q
-	 /sb5jyUbI/59k+gvFkH2xpC8YNH8JP9K0pdLVLpNhCNMALV92KSp8zd6ZvQH9A9Qt0
-	 +IC4V7jCOLk4Q==
+	b=PF4hQLWUZUFny28qzzSp6+DyN5jEtKu6ueVS13Y5+eQ3AuWNACbGc0vZOomr2SFLm
+	 tEPYUl+UY8W9Bpv+5HfQch/P5UPlk7qmJO//qeSKY2NfMFW5q2O7z1fPGBcmr85CXa
+	 0uvpd3IUXjPOcjNXsmHyMhz/tjE5qKcGogP/k0pxQtsuFzb09ADoWh6gJprdYYaXnT
+	 9JkUwCvWk/iu+xWLMVrQx91Fnv+Lw3Mn7UEbaSlMoX7lKazN5JzbyHeFTCapzD+6Q4
+	 DqaeNqopLp7buSIrFkNeSGM3jXJdCtul7v2ZQWO1Acut/H0htyjnmspRuoyK/lVV1u
+	 6YuU1vDFPWKBw==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Fri, 04 Jul 2025 19:36:12 +0200
-Subject: [PATCH RFC/RFT 4/5] ufs: ufs-qcom: Rename "mcq_sqd" to "mcq_opr"
+Date: Fri, 04 Jul 2025 19:36:13 +0200
+Subject: [PATCH RFC/RFT 5/5] ufs: ufs-qcom: Kill ufshcd_res_info
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,7 +52,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250704-topic-qcom_ufs_mcq_cleanup-v1-4-c70d01b3d334@oss.qualcomm.com>
+Message-Id: <20250704-topic-qcom_ufs_mcq_cleanup-v1-5-c70d01b3d334@oss.qualcomm.com>
 References: <20250704-topic-qcom_ufs_mcq_cleanup-v1-0-c70d01b3d334@oss.qualcomm.com>
 In-Reply-To: <20250704-topic-qcom_ufs_mcq_cleanup-v1-0-c70d01b3d334@oss.qualcomm.com>
 To: Manivannan Sadhasivam <mani@kernel.org>, 
@@ -67,58 +67,66 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1751650573; l=1660;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1751650573; l=1282;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=qHZj5e2FXakjKwnr1HyGKlEMV85hPgCXxGadgTWBQZQ=;
- b=/bIxTkzHhef+/mDC3R0nLPMlb22ChAauHwsgqbkfRAStv8JKwOJWZIa2rUyHIR46w3sea6Mh+
- wndgKe+ths3D87nbUJvwOcFkIECdWjuG1dLVUB+biQLkGj9JT5ICYlr
+ bh=5nEGDwR2LBYGdzzGzrzI3+xVf3CXHgIU3+o0zBEgJ/A=;
+ b=LIvygMW9Oogay8z6+5Uv/Y2zljxt4EikyUxi8v3B+2ZKdMVIMMbqwjsPmLWuU+J6QD1idYsls
+ YDMu7CikclmCxGi1LzVXV3buDpSq1fNjjYXP+5toSQdolgqdP46IvLh
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-SQD is a confusing name for the register block that hosts all the
-opregions, each one of which contains SQD/CQD/SQI/CQI subregions.
-
-Rename it since there are not even dt-bindings for this and therefore
-no users
+This is not used by any driver and doesn't seem like it's going to be.
+Remove it.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- drivers/ufs/host/ufs-qcom.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/ufs/ufshcd.h | 24 ------------------------
+ 1 file changed, 24 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 52dc0da042cb62a6c28b40e429773808299e102f..2953b86029cfa1e5fdaa75e2917cad79576947e2 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1896,21 +1896,21 @@ static int ufs_qcom_mcq_config_resource(struct ufs_hba *hba)
- {
- 	struct platform_device *pdev = to_platform_device(hba->dev);
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
--	struct resource *sqd_res;
-+	struct resource *opr_res;
+diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+index 28132ff759afbd3bf8977bc481da225d95fd461c..e99df617ac31e983d452f8983ea0a5498ed64962 100644
+--- a/include/ufs/ufshcd.h
++++ b/include/ufs/ufshcd.h
+@@ -794,29 +794,6 @@ struct ufs_hba_monitor {
+ 	bool enabled;
+ };
  
- 	hba->mcq_base = devm_platform_ioremap_resource_byname(pdev, "mcq");
- 	if (!hba->mcq_base)
- 		return -EINVAL;
- 
--	sqd_res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mcq_sqd");
--	if (!sqd_res)
-+	opr_res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mcq_opr");
-+	if (!opr_res)
- 		return -EINVAL;
- 
--	host->opr_start_base = devm_ioremap_resource(hba->dev, sqd_res);
-+	host->opr_start_base = devm_ioremap_resource(hba->dev, opr_res);
- 	if (!host->opr_start_base)
- 		return -EINVAL;
- 
--	host->opr_start_off = sqd_res->start - hba->hci_res->start;
-+	host->opr_start_off = opr_res->start - hba->hci_res->start;
- 
- 	host->mcq_vs_base = devm_platform_ioremap_resource_byname(pdev, "mcq_vs");
- 	if (!host->mcq_vs_base)
+-/**
+- * struct ufshcd_res_info_t - MCQ related resource regions
+- *
+- * @name: resource name
+- * @resource: pointer to resource region
+- * @base: register base address
+- */
+-struct ufshcd_res_info {
+-	const char *name;
+-	struct resource *resource;
+-	void __iomem *base;
+-};
+-
+-enum ufshcd_res {
+-	RES_MCQ,
+-	RES_MCQ_SQD,
+-	RES_MCQ_SQIS,
+-	RES_MCQ_CQD,
+-	RES_MCQ_CQIS,
+-	RES_MCQ_VS,
+-	RES_MAX,
+-};
+-
+ /**
+  * struct ufshcd_mcq_opr_info_t - Operation and Runtime registers
+  *
+@@ -1127,7 +1104,6 @@ struct ufs_hba {
+ 	bool lsdb_sup;
+ 	bool mcq_enabled;
+ 	bool mcq_esi_enabled;
+-	struct ufshcd_res_info res[RES_MAX];
+ 	void __iomem *mcq_base;
+ 	struct ufs_hw_queue *uhq;
+ 	struct ufs_hw_queue *dev_cmd_queue;
 
 -- 
 2.50.0
