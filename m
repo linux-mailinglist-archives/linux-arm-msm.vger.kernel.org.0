@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-63622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49D9EAF89CF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 09:44:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7DFCAF89E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 09:47:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EC4EC3B3423
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 07:43:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 43C2C172319
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 07:47:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BA3728137E;
-	Fri,  4 Jul 2025 07:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3B45283FCB;
+	Fri,  4 Jul 2025 07:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JENtlCLl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RiEPqmON"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF27C1DCB09;
-	Fri,  4 Jul 2025 07:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75999282F5;
+	Fri,  4 Jul 2025 07:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751615060; cv=none; b=L5eaLtEQVNWW2h9bc1ghGVqNES7vso3pi+qmZTD9nB9diPWmb0+oS7xrJBEQeMdoHbA5GBGn5jjpv4lcF6RiPNSqH0ExhtdUESW8Jtm37fJ/V8IteJQMC0tS4Vo533hIlDqgk9/UHjAlQLMP8RuvnOabs13kfCJS0/iQH6Nagyc=
+	t=1751615228; cv=none; b=A8Q1eW8u2f/naYQWK5OguOpvoG5Ad+TTe/8tcg5SAMFA9J5PaFIWQPzhac4zryHsEamypqdNebtgupfnJxiJEO+qQOfviCjUxVwT6J4JrhP4fTwXdBo9FUek1cAuxW628b9de9zKPs+xyaLMtpNqfPcI+Tczjh9+e4nKh6IC+Y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751615060; c=relaxed/simple;
-	bh=3py9atRl0Vxy/Um+TpKfDROUTNTZjoIU1e1Qplz+cOY=;
+	s=arc-20240116; t=1751615228; c=relaxed/simple;
+	bh=lddv8ng09qASWJTNkdr/OgIEVP5qtV1K56DlaPa1ptU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B1pRSSBoe0O45fGRnwAvNZoA2B0nXEhUIZ9mVmhu7+WisfTLnjYKpjghTzfkQ5WXY6+R52PteQ5QGcutcbe/pOGusVLE/e2lw1wvDitzxKBRJ3v+O80dF29413LL9uMBHZ6LasoozqnUPUlLNw8ay3cuHgCbSqy3qAHgGlRSJBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JENtlCLl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6CBEC4CEE3;
-	Fri,  4 Jul 2025 07:44:18 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=GJKRKd/xZNlTA9GibCitiRDshkdzwTZVsxt7nERsYvhHdLtcYniXDAheQj0dMOVJRk2Gz2myw/wv8AjN998Qv9jrRMJ14sX6Dclbp9ygTa3eXEIShybwFKg/iSrpzULdLncpZWySPQM+DAwAKo/NObKSVwOS6IU9FZ2hooVDD6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RiEPqmON; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53914C4CEED;
+	Fri,  4 Jul 2025 07:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751615059;
-	bh=3py9atRl0Vxy/Um+TpKfDROUTNTZjoIU1e1Qplz+cOY=;
+	s=k20201202; t=1751615227;
+	bh=lddv8ng09qASWJTNkdr/OgIEVP5qtV1K56DlaPa1ptU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JENtlCLllPsXY9pgenywFH7k4WZgKcwe0zR9F1smsUoqcuXkcf4zBaXTQePWwev3p
-	 d/ORjmX1B41ZyvPm7ibHZ43fGWUBAoT0pJUHOwOe8ZdP2XLtTpMhtyXwP2mE0wBHtK
-	 bDWojGIrLQWroWdNHOVbsS6jybVELM+91vl2AE1Y6G5Ttgiki5FueqFNA8/azZMje3
-	 PUjowvSHLFfrpC2ae9CItQb0e8yu+Tj9sT2F4qiD3DvgmvS26n+l1oqtmUycIiHneu
-	 m2dGWfvqvkMOC7bFsSim/3dd6fPara90LedtTefjSf7udAnZrcmzP44ND3U2rot0oh
-	 Uof1KrA/Fe0kg==
-Date: Fri, 4 Jul 2025 09:44:16 +0200
+	b=RiEPqmON6utZvwz7zzHO7i0AMSvLBdy9bPFtD2DvHveq8OZ9/vJInTNuYgIH/8zzq
+	 yBypQ0NpXphW+hrL/JYR2yFOEzZm77ZZeuDGaUZEouCEr3ZqkFnaAOzxtIkrxPd1Cm
+	 mhwCybWJWmQsZODeMHS6f4peWlEhulhKU0qFZL4VOJm29mbj+HQZpu0mFCgjpNORuO
+	 bLlcviO5MaUprl095jsXB6KMsQDXKrmq5IK4zbk6yIE2twL2FJwchWyHEtuNu6DS2F
+	 7KSjAQDLMAFBfHXLPK9EEUiiTfWf32zgHwZjS0vOgI1viOmfBj/in6ZJ4LnxBA/tEN
+	 DVYWyAKMEkb2Q==
+Date: Fri, 4 Jul 2025 09:47:05 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com, mani@kernel.org, 
-	lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com, 
-	johan+linaro@kernel.org, vkoul@kernel.org, kishon@kernel.org, neil.armstrong@linaro.org, 
-	abel.vesa@linaro.org, kw@linux.com, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
-	linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com, quic_krichai@quicinc.com, 
-	quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v8 1/3] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
- Update pcie phy bindings for QCS615
-Message-ID: <20250704-encouraging-pink-firefly-570be6@krzk-bin>
-References: <20250703095630.669044-1-ziyue.zhang@oss.qualcomm.com>
- <20250703095630.669044-2-ziyue.zhang@oss.qualcomm.com>
+To: Taniya Das <quic_tdas@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>, 
+	Imran Shaik <quic_imrashai@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pm@vger.kernel.org
+Subject: Re: [PATCH v5 1/3] dt-bindings: cpufreq: cpufreq-qcom-hw: Add QCS615
+ compatible
+Message-ID: <20250704-singing-gay-doberman-a1a4a5@krzk-bin>
+References: <20250702-qcs615-mm-cpu-dt-v4-v5-0-df24896cbb26@quicinc.com>
+ <20250702-qcs615-mm-cpu-dt-v4-v5-1-df24896cbb26@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,14 +65,15 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250703095630.669044-2-ziyue.zhang@oss.qualcomm.com>
+In-Reply-To: <20250702-qcs615-mm-cpu-dt-v4-v5-1-df24896cbb26@quicinc.com>
 
-On Thu, Jul 03, 2025 at 02:56:28AM -0700, Ziyue Zhang wrote:
-> QCS615 pcie phy only use 5 clocks, which are aux, cfg_ahb, ref,
-> ref_gen, pipe. So move "qcom,qcs615-qmp-gen3x1-pcie-phy" compatible
-> from 6 clocks' list to 5 clocks' list.
+On Wed, Jul 02, 2025 at 02:43:09PM +0530, Taniya Das wrote:
+> Document compatible for cpufreq hardware on Qualcomm QCS615 platform.
 > 
-> Fixes: 1e889f2bd837 ("dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the QCS615 QMP PCIe PHY Gen3 x1")
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
