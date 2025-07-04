@@ -1,138 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-63717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D246AF9668
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 17:11:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D78D6AF96C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 17:28:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 41D12587474
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 15:10:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A276A3A8697
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Jul 2025 15:27:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFFA430B9AF;
-	Fri,  4 Jul 2025 15:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 497AE306DBE;
+	Fri,  4 Jul 2025 15:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zjL//tdH"
+	dkim=pass (2048-bit key) header.d=mess.org header.i=@mess.org header.b="OZN6bha/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gofer.mess.org (gofer.mess.org [88.97.38.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0532B30B986
-	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Jul 2025 15:09:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567F52F94A4;
+	Fri,  4 Jul 2025 15:26:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=88.97.38.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751641742; cv=none; b=Auaqx0bCHoMIDHy30tDnLyEVI9TDR3oP5fHJzYXVIkpn85bCMZUjoIA3zUU5pqXh+YhHadL2lXFPjOEAe8lbkgUukXr+FejcGjbnr/B+joEXwEEvC+98kjd4WovelYU46qFC1+O50E9qtSBpH9R2U1sl9JJLKBfrQXnhfyujVW8=
+	t=1751642795; cv=none; b=kho35o4mXPgPkJOg1q1Z9EXX1ASz6LhhquX6Kx54V9Zm3XAtHcEOp7yz2euQipq3mrMBltbNaN8ct1NuRrn5Wyq/gmCrD+v2nJdR0O9vRol+v3kgz6EACn795FuRSqha4TFcRlkH6SvGYK+sMn11Mddbyb4EABj+fvqeurJqMfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751641742; c=relaxed/simple;
-	bh=ipnj/ShwN4qWMwlvjTyy3Pk2w7mwcXypC/ulNiTQd8I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fbbE1z7BAvBj+a1r1oac6riQ8YVzVkB4m4ZYkoCOJCK1mox/68DZMKoWofZRbLtRl8OS7pAzJYrkWJAevp58D/yOkozcHJGkKvXsiz+M59pEcZt+jp0TJj1xvsHNAdLKaAilffo+PiEbqzjIeOnTgAH6E1RYN5dGpKmpPTsjgFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zjL//tdH; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3ab112dea41so540747f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Jul 2025 08:09:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751641739; x=1752246539; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WOyFHtQS4VvsDjcbQRHgwxAxnr6aZ/PpVMTdfF6upkw=;
-        b=zjL//tdHwM1nPlxPr0X0VJABfizrP+XW4CC/IqymV0u1mUbOVB5ZFlu8a1B8CPPUhd
-         NToLmjtZMm9wlwcWceHG+gS7pN+MJBX0ZeoOWZWnIazFqtgPbubtTKGZNA03ISF75un1
-         1q/nVz8wY6oo9E9IXgYNCNKpqYGY1RB+jdH86BrTywAI/RPgyIU8INkTOkusfI2n/Bpr
-         2kPxJTG4B1aCA0llDKXSxqSOohL+FOcT0fpXNdn+I6YV5MlM/WWamfzMSaf/ay124h0y
-         3PZgB6WE3ADDSreqeAoh8gpXNvcwj/6hTPuXzQrSnM7HElJ38B5+FoPI9oCnNzcnpg2k
-         7w0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751641739; x=1752246539;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WOyFHtQS4VvsDjcbQRHgwxAxnr6aZ/PpVMTdfF6upkw=;
-        b=EVyyyuuF8o2raEPaN2x3jEtTmFYJUwRpOXkq6nNByAxLOHwxlEG2bo6cAxzlT4KEHH
-         32YSH6IgYfdefVPW4x/8cnBFQPvtt9x1+7uc4X9eJEHX2qra6g4qELFSqHCT8yFkMm2q
-         7Sn6bei6Vct0XprjFpsFNketvhXfcbhL6ecbmEJGd7SxM/RmpSJoUQXdCZLb37pftBG9
-         Cce1tW/3l2Bd/tVl/BBFhdBfuNDYWVVKiM210FdTsPIKcwSNzii6t1pKuKW3qdXi7NL6
-         cg1Z2O3qK4tsB7N9pUg5DGqcy7GWzPiYszj2eQclXY0EDmYSxo8yxCfMZ4XNh2Du9gEM
-         VjdA==
-X-Forwarded-Encrypted: i=1; AJvYcCUVAh46ipN2hooP2aKqulpkpW0mkopzviNNQnyve6P0e0TLVae1mu0eJH9l44u3DGpuzxZm8WSo9wLjRkBj@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJBLwV4zWCR6QRX3gLCH5ThuTaGKYq48bY5Ik05FqDTlCGDlYv
-	fCax0c/FUPSISt2DaqhKEa5YgiuGOgl9QYjEcrcZs9pDw4n8I7OXyMbQGhOrdkj2JMs=
-X-Gm-Gg: ASbGnct1dUn6JOHiBIXHd9QWpkv9teHrXkNhdlvldvBpjXlMOr87aAIwr4rK+z0I36F
-	y33N/4GoZR6qPafbfSAEpELbxMzh4/t9ZF0UKKEnMMcXuvtMFhY6TU/01QnPIbxYSca3sv08f7y
-	XQc111yJmwoTVVQ2fze7XUDwPEKU4vQV4VzVVfP74i5ebIbVZnXXCLVlEaIuVSNRrUKRAv1j8R/
-	6YKmtQFZQ4PBwq6Dg6ePn4SxFvcfDz+I0SaGBNye7Sw1aydspKxDU7hMdHWNkUoD3s7JLrDQ+72
-	L+MvMGrR5dpCcwx80qaiYIqq/ewQtupuvT5sxAwxVkoj71M8ZmSMQafzjr6Nu00UgfVx6OJOBbk
-	VV5nN5C6Qo6l41/U0+/E1xiHIh+c=
-X-Google-Smtp-Source: AGHT+IH9cnwUoqoWS5/qQDudbSz0QU2bdpH6UeAa65SEFEoIDoAtlPs1SdHDTe/5FJH8jfA2orMi5Q==
-X-Received: by 2002:a5d:5e0a:0:b0:3a5:8cdd:c174 with SMTP id ffacd0b85a97d-3b4964f6f85mr2726920f8f.26.1751641739273;
-        Fri, 04 Jul 2025 08:08:59 -0700 (PDT)
-Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b471b975efsm2667049f8f.46.2025.07.04.08.08.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Jul 2025 08:08:58 -0700 (PDT)
-Message-ID: <0b526bee-dd8b-446b-9b79-00fcf811837e@linaro.org>
-Date: Fri, 4 Jul 2025 16:08:57 +0100
+	s=arc-20240116; t=1751642795; c=relaxed/simple;
+	bh=fw+3kHpH71x1Y/Yo4BaIBNzC5KdPfbmT9z0yHAtrnEg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F2yDJU4XJYmo5VtvdVovBN8S8qzAWtqQajQ6QD57Kp4pwxFcMv28fHd6YNBUQco1LOGzRORDJSn8zWSAsVmHqbDAx5KX5PkstvBwaKuwysRCLP1tb9B0iaJWHKUYV4i2LpwkXzNuJOaxvLFXl6UKHmOGCEhFE6elf2ua8F5K0ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mess.org; spf=pass smtp.mailfrom=mess.org; dkim=pass (2048-bit key) header.d=mess.org header.i=@mess.org header.b=OZN6bha/; arc=none smtp.client-ip=88.97.38.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mess.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mess.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mess.org; s=2020;
+	t=1751642202; bh=fw+3kHpH71x1Y/Yo4BaIBNzC5KdPfbmT9z0yHAtrnEg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OZN6bha/FAxDe4H3fOtXJMB05O6PSsOIO8iLAT0AKWh6sAQ6HB3DJiCrUOfFJq89K
+	 JlEVcbJXJWChT72to/oZT3GU/laMbw/fzI0RLjd8Hy4W+YhrBNIcS7FBMyf1Br408n
+	 D+vIYlKlKvQaBNxdLEYY206FNUOmF3WpRVHBHZ1vmtW+7G5wC/1YrvfLV23GVAUdqp
+	 B/az+zmd5IfyH8fsuSPeJ7Tso4Nt+VLxtIvSJqcA5OjODsIW08BHHuUVTWKUjj/mSP
+	 J09uIe2u1xXvKRqvzYMMRCl9G9OAJjjyA8Iaelz6sx05RL8u10fivwd9m8ceR6d7VY
+	 +wjycNZVop6Vg==
+Received: by gofer.mess.org (Postfix, from userid 1000)
+	id 34B531003B9; Fri,  4 Jul 2025 16:16:42 +0100 (BST)
+Date: Fri, 4 Jul 2025 16:16:42 +0100
+From: Sean Young <sean@mess.org>
+To: Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: Tommaso Merciai <tomm.merciai@gmail.com>,
+	Martin Hecht <mhecht73@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Umang Jain <umang.jain@ideasonboard.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Michael Riesch <michael.riesch@collabora.com>,
+	Mikhail Rudenko <mike.rudenko@gmail.com>,
+	Steve Longerbeam <slongerbeam@gmail.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Nicholas Roth <nicholas@rothemail.net>,
+	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
+	Sylvain Petinot <sylvain.petinot@foss.st.com>,
+	Paul Elder <paul.elder@ideasonboard.com>,
+	Matt Ranostay <matt@ranostay.sg>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
+	Jackson Lee <jackson.lee@chipsnmedia.com>,
+	Dmitry Osipenko <digetx@gmail.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Matthias Fend <matthias.fend@emfend.at>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Ricardo Ribalda <ribalda@chromium.org>, linux-media@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH 41/80] media: Remove redundant
+ pm_runtime_mark_last_busy() calls
+Message-ID: <aGfwWkZg48T1tooH@gofer.mess.org>
+References: <20250704075225.3212486-1-sakari.ailus@linux.intel.com>
+ <20250704075431.3220262-1-sakari.ailus@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] clk: qcom: videocc-sm8550: Allow building without
- SM8550/SM8560 GCC
-To: Stephan Gerhold <stephan.gerhold@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>,
- Konrad Dybcio <konradybcio@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
- Johan Hovold <johan@kernel.org>, Stefan Schmidt <stefan.schmidt@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250701-x1e-videocc-v1-0-785d393be502@linaro.org>
- <20250701-x1e-videocc-v1-2-785d393be502@linaro.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250701-x1e-videocc-v1-2-785d393be502@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250704075431.3220262-1-sakari.ailus@linux.intel.com>
 
-On 01/07/2025 18:28, Stephan Gerhold wrote:
->  From the build perspective, the videocc-sm8550 driver doesn't depend on
-> having one of the GCC drivers enabled. It builds just fine without the GCC
-> driver. In practice, it doesn't make much sense to have it enabled without
-> the GCC driver, but currently this extra dependency is inconsistent with
-> most of the other VIDEOCC entries in Kconfig. This can easily cause
-> confusion when you see the VIDEOCC options for some of the SoCs but not for
-> all of them.
+On Fri, Jul 04, 2025 at 10:54:31AM +0300, Sakari Ailus wrote:
+> pm_runtime_put_autosuspend(), pm_runtime_put_sync_autosuspend(),
+> pm_runtime_autosuspend() and pm_request_autosuspend() now include a call
+> to pm_runtime_mark_last_busy(). Remove the now-reduntant explicit call to
+> pm_runtime_mark_last_busy().
 > 
-> Let's just drop the depends line to allow building the videocc driver
-> independent of the GCC selection. Compile testing with randconfig will also
-> benefit from keeping the dependencies minimal.
-> 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 > ---
->   drivers/clk/qcom/Kconfig | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index 36d6e6e1e7f0162d53f02f39125f4593517e0dba..26752bd79f508612347ce79fd3693359d4dd656d 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -1391,7 +1391,6 @@ config SM_VIDEOCC_8350
->   config SM_VIDEOCC_8550
->   	tristate "SM8550 Video Clock Controller"
->   	depends on ARM64 || COMPILE_TEST
-> -	depends on SM_GCC_8550 || SM_GCC_8650
->   	select QCOM_GDSC
->   	help
->   	  Support for the video clock controller on Qualcomm Technologies, Inc.
-> 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+ 
+...
+
+>  diff --git a/drivers/media/rc/gpio-ir-recv.c b/drivers/media/rc/gpio-ir-recv.c
+> index bf6d8fa983bf..161f8919022c 100644
+> --- a/drivers/media/rc/gpio-ir-recv.c
+> +++ b/drivers/media/rc/gpio-ir-recv.c
+> @@ -49,7 +49,6 @@ static irqreturn_t gpio_ir_recv_irq(int irq, void *dev_id)
+>  		ir_raw_event_store_edge(gpio_dev->rcdev, val == 1);
+>  
+>  	if (pmdev) {
+> -		pm_runtime_mark_last_busy(pmdev);
+>  		pm_runtime_put_autosuspend(pmdev);
+>  	}
+
+No need for braces any more - as Laurent already pointed out.
+
+Reviewed-by: Sean Young <sean@mess.org>
+
+
+Sean
 
