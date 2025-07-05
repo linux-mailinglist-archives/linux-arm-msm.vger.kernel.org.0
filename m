@@ -1,148 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-63839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E242AFA1E3
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 22:57:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3E99AFA1EC
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 23:07:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 714D83B054A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 20:57:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42F7D3B9A4F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 21:07:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42CAD23507F;
-	Sat,  5 Jul 2025 20:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52BC2218596;
+	Sat,  5 Jul 2025 21:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ElYaW0ug"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JLXxPCXW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2409211A28
-	for <linux-arm-msm@vger.kernel.org>; Sat,  5 Jul 2025 20:57:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FC31BF58;
+	Sat,  5 Jul 2025 21:07:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751749043; cv=none; b=e8rXmlD4BgRmoYPwalCtA79QfEVsz9rZGRVqfXBE0+fTuLhJd+WvFa8u+ry8xZNLit9wI6/ZXs5iSNdbh93l03TfDY8XRohgPcFfxIwTbPuFmDauEu3djsus9GtDR3OMBDL1hhqNrHbbN9KZVtSxVaW55SKpfc0ov/ngPs2UgE8=
+	t=1751749668; cv=none; b=dTa+da2YMFTxsYhL42MiyzcdtR0Md8gp8jbsQKriJCKPIM/K3BMcLVzS75bO+4qBIij2/m0KRbcEoqdNVV3ifGx048T0wdoWDPY0MbPrTG7yRniPR04XqOpdpbFVvbreeeSwFXe63xRskrEz0e7CyJD6ejjYUGUvaBFWYXXu7To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751749043; c=relaxed/simple;
-	bh=yd3QB9i6892Oi/RELZQPA7eTy1+ck7mvWaDjNXHvHaY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tDUh8ZzhQy1SBxVb9puhu7adBshYkm8XATQvFohwjhdrEhGsVEiefwSMxmCbrd/WHNvJCp7lOnmtBUP5VTEBzmJU3580HYZqkCSj3PZ/riScpaPV3M8fY42/SmlNV11F8hrUhL/JtCwrdrjET8prlghdrYo5f9ES1Jzv+CrClVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ElYaW0ug; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 565KS6u7007166
-	for <linux-arm-msm@vger.kernel.org>; Sat, 5 Jul 2025 20:57:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=ixkjiJJ5xJZnwXwbUy5Cg/AO
-	bRkh+NRxwTSQlLi8b1c=; b=ElYaW0ug6LU0UeA2xfo0yGyIvfeLfPCN7rTkYyhb
-	ZYFBtjWrj4+qPIfe+3wx3aDg3IwmwrOVgGHEeFA2stdx4Wo9EC2/JHd9bdcOL1+A
-	NLd8cC/rrXyDIVVxTbi03o3+B5+nwRa3Y9fg5Adw83+ZfPYu2BCKSpGn9VS16mjI
-	bYIM6lpbrvzryEnKquVFG+c5GFgYeEshxd4qEdkeShd82VqXZdREUA7V+nk/DJi0
-	uzr61JCebhW9udhyFfXviCWrkduuMfxJQ2qRqcZ3amavnvm9p5tLGvKLh1OPFGVf
-	EaqJO2k3bKAxt9hTG5D7GR+47BDd0rqIlF7Z2txQymKX6w==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pw7q1vkv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jul 2025 20:57:20 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7d15c975968so321014385a.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jul 2025 13:57:20 -0700 (PDT)
+	s=arc-20240116; t=1751749668; c=relaxed/simple;
+	bh=av661HLHeLpl9E43D0/bBRcMZa2comXBBsWoJmDD+b0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nwYxViwTF7lHTJU8qd7PcJ27+bDnzkyGKjGMSdN+b4t8PuHOB/D+p22YFotVIB6cMQUaNA/sgRyCtcHgoaF9sgXBeML/+SRkW9iUsBzfkbq3Yok3QQs4GZiYXE+SCznehbx6P2uUJtYsP1knETf/+3wosg4UPq4t/BpnBF+lvoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JLXxPCXW; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-60cc11b34f6so4858971a12.0;
+        Sat, 05 Jul 2025 14:07:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751749665; x=1752354465; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=s0OfBp7ErnlCrO+RdLaJwYOfHNWrwDo8W1tXRttUHFk=;
+        b=JLXxPCXWFnZ/upTZ9j5eijUPYcBb8CYTDIT3xcI1PObhiH0U7WCSjN8k0pyZzz54E0
+         VA3PF/HSi/QzYBP7coC72h66otkUizREt8X/GJVAj8YbGo6lUIcsDLdrOU7ss9mXuXLs
+         o+Hy2oyhKJqtoCPAfUCIU4r9o3qW2QDTOkeufb6H22oVnCZ5PVCUWLUVU92qHplKEE4y
+         lXdQ58ZQfa+nhfXLILaeSDxvI9+wU3DJ9MCu230IDWldHybbNZrTGk6k7DtL+XyjZqPr
+         6jtNYYLxD97xJ9GNcPcusQB1AbOptGUnlDU75KTXFos882wyK+TtiiKkjoOn+rpwuCig
+         Ix5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751749039; x=1752353839;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ixkjiJJ5xJZnwXwbUy5Cg/AObRkh+NRxwTSQlLi8b1c=;
-        b=GNo9lbWSV8JrzDshPltL01hmEhLcx2Vp2WrN8pgUc+4VmY7dEIFQyiZOvLVuJ2wlTn
-         eC2GkxCi354c0IA7jHjd4iEDhwiSJF/XKu8rvlC7neY6i2VYSrxRb1ELQ4cwT4VrxVA3
-         PrN8nkqiaqz7tVg6o2hRnJ5GJ0hbvQlwrlV9Pj1j27jSs3uYXqHfEasOxpxYFe2v3JMK
-         TZXF99jUlJyiH55fcazUl8EbD2h/wYWAojJGau0iq/+3lTyV/Y9+Qd1yUO95+zj80k31
-         tJDwTcIUTnLQYKAP98tYKTcFccS0dVA2YxFs3doPgWHz1DPrNTihD/ohd2yw80K0kGVv
-         mdEg==
-X-Forwarded-Encrypted: i=1; AJvYcCUc6YAozj3aonXfA7ILl8KziU698WQnkxi1EtN5ie5/7qg+jJUNHfdhSox28r4nkMxV8moHFiwS3fEa1Ynq@vger.kernel.org
-X-Gm-Message-State: AOJu0YxjmuGBjJY6y7RWmaPEIYgVCBewb3mk5OOdp+W9uloCpsGhp1zg
-	25uHwn82LDYBLZx5FKA+lXSeacHko0/Qx4IlOYzizaNo7wv9hfVUGcVweY3FbsnahVsUNjqqICk
-	7qiun8aYgnAZclDwSP7RgJaEipQdTMOI8715cDQjxxDxnPPm4Ml8oYD+X/iCXNi+ccVxr
-X-Gm-Gg: ASbGncuSrQGChAwIFn+lt2+pkbI/DIviEJxuh/bp2+baFmeHRPubGLM09mVTa0bYvgB
-	WiQccXAFBIOvKv61AQlTw7PUTjjnoQ9rGTvWsGGvAQUf6VTA26Lcjlvcc04tfivKeN1I5PUI4D3
-	0L+GfkXNFcCLLLxZnC2rT88rpOrhkT8kx0hjGM5+dbXhObCyNt4BRsCEPSUdLFa5nIorFtO6LkQ
-	ACjmz5MNPIhG9FCDa5SUF4ytx7uFu10YdB8bZL9Z5YTVBQ0PEZplcsMLi4C35v4+GZ4ocqmu9it
-	qMmLyLmwcQrw69Qy8ySN6v1AlDXanO1NANwoW0Lmxv9qhg3Na3rFUtX6gAu188V/NGC742hxIPn
-	Ckulc3MN+wPUvzzlpovZdayP+vuhKn4MNeYg=
-X-Received: by 2002:a05:620a:178f:b0:7d0:97a6:4539 with SMTP id af79cd13be357-7d5df10425dmr744839685a.4.1751749039450;
-        Sat, 05 Jul 2025 13:57:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGM59TkO8u8/py6MOdyXPISy6kh3KQYZz44Fii7ZoY06xkcbs1OMh+BhhFj9MBNEaem6Skz6w==
-X-Received: by 2002:a05:620a:178f:b0:7d0:97a6:4539 with SMTP id af79cd13be357-7d5df10425dmr744838785a.4.1751749039059;
-        Sat, 05 Jul 2025 13:57:19 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-556383babd6sm705164e87.32.2025.07.05.13.57.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Jul 2025 13:57:18 -0700 (PDT)
-Date: Sat, 5 Jul 2025 23:57:16 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Luca Weiss <luca@lucaweiss.eu>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/4] remoteproc: qcom_q6v5_pas: Use resource with CX PD
- for MSM8974
-Message-ID: <hwewzj4ygfbb22vxrahjfc3b4oxyagh3nkd26bs3p5k2fcxr6m@mkgtyjkxz3d7>
-References: <20250621-msm8974-rpmpd-switch-v1-0-0a2cb303c446@lucaweiss.eu>
- <20250621-msm8974-rpmpd-switch-v1-2-0a2cb303c446@lucaweiss.eu>
+        d=1e100.net; s=20230601; t=1751749665; x=1752354465;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=s0OfBp7ErnlCrO+RdLaJwYOfHNWrwDo8W1tXRttUHFk=;
+        b=geGYMcXOe39+we2loFwFF6QtQn7QC7Hucae1epkq+H/GutVLtU022GOtL4Jzo31weA
+         cNCZZN4B7W/qPhrdIgXaYv+vJ9Yglw06G0wrI7nGWHEm+w0gtFYxBvZzFHHqRKCdBtbs
+         adkfpj9TGcipPNKB47rLz/w/xsnQ0E5lBU56Dm3c7umnKcYNKBYpZMCmctmg0vKhz7cQ
+         9IYX+bGExtFQSExZvBV25fr66aGJhqJqF5JtVaKB5jDyqjUutsKYsSxUyqb9sXkD9cLY
+         LecmvmeALV4oAvutxRZTdlq5+fg1FQarbTNcpB0s0lnLjt0jHghyheUWuVADxHFnfOV8
+         3+0g==
+X-Forwarded-Encrypted: i=1; AJvYcCVgL+fVYJq3Xi7nzMSW95BlXrk9VpGSAhgYLuxAfqXRPrTq7q3YqS8eBp3aaLwi+7hpkQJwnNJHJCLn@vger.kernel.org, AJvYcCVuF6AO4HLtHaI+seSYxlGczustYlqeCCjQtTY77TEAc8VSXx5ZrEzWgryshVgUNAyeLuWs5F96UWBv49oY@vger.kernel.org, AJvYcCXhjTrp7ZAZPDzWfjd2YnZCy+cc71azaRhJnr6sZCidyxzati+gOaD0D6JVK7zs8tkToR134Y0rWM79MJsOgw==@vger.kernel.org
+X-Gm-Message-State: AOJu0YzeAOi5WalIfbrY4A771bXGj8pZQY/Ebvks1F7n1hhTkE0+z12c
+	yfead68Z8asOsnHU1SF0Sei9CQgkgH12Bv9Ef0NT1T8zStiZAy2Uk0w=
+X-Gm-Gg: ASbGncsIpSBvEndqno3SBp7bltx0Ah1QeIdltGc2uLai2TRg18U2UrJu/YBFBYc/keX
+	/DYpmnZ0o6oiZe8OuQrO578MPRpZeKuvqsIbMbYMuKZdSvVn2q3573/xewn54lYhWeOwzco4iYL
+	Cv1BI0m97upLF1nFFDknm0Jz/6Ml5VfmLwNhji1qlNhQbgHQxgKome4iZpRDs7cz8rzoPrfbh3r
+	RYyS0zWA8tmZ++BweIoiWdrCFYKILIs38r0pOd3vF0HUm8JHrYLDJvWmmnxh0zaXWAmNOca8FdD
+	FdhNd+9BqUNoqe+oQYiGpAgIrlfgVYb9A/2tnxVm8FOjZ7RVN6mIjcbrtnDzoZ6AsOlWirnhCA=
+	=
+X-Google-Smtp-Source: AGHT+IHfo8By6gTM4sQb/mWVes7SFV6BKHWMA92iQ1C2kjF7CVvXbGrhVTrqw1Y5EOO9GItPXBtyog==
+X-Received: by 2002:a17:907:1b28:b0:ae3:6038:ad6f with SMTP id a640c23a62f3a-ae3f801ffffmr804598966b.3.1751749664350;
+        Sat, 05 Jul 2025 14:07:44 -0700 (PDT)
+Received: from [192.168.20.64] ([84.226.118.249])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60fca66e566sm3044739a12.11.2025.07.05.14.07.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 05 Jul 2025 14:07:44 -0700 (PDT)
+Message-ID: <dfcb20e5-17ec-45b5-9cce-b23dfa5028e1@gmail.com>
+Date: Sat, 5 Jul 2025 23:07:43 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250621-msm8974-rpmpd-switch-v1-2-0a2cb303c446@lucaweiss.eu>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA1MDEzOSBTYWx0ZWRfXyQNlfD0tuGh1
- 3Fra2LUoQ6gpXiy5X98qQWYAH4EDKaq5oN1e6c9tFB72t/lYIjOhfcRkus8BKBdtlm5towV5j/+
- xvvI5mAVWfrl3Ec17gwAty1VGYFuWZHYgLlTxmxH89bp3AjLBgbo1+m2+cG8xErICOla4P2USYt
- RT11JIcTylEgi42Rs7AZQ4DWSDWnmGLm6/+x4d0SZJN+Szt35VJaNiwXpeTQX10IGx+4huWSTEq
- 7hHPtXRgd5gNGsuL62C/75Uz1uZ0MnQYlw5vKNPPK6Tyyv6WaTXbxX2DpnfQnJQFRDCWnBRdD8Z
- RjK8CitqapAiKEDxwL+wN2rHfxgn4Wisw1zwIxinpknnNkB0VdmQXAfqKTe8/qZTLtW5mbMjL0G
- QkRO8D8k4f6YnUbxgz32cBrEykIm8nDV9o+ivUbUPQFCxgJNIE5q8TVs2LaiYiUd/NxTIY4H
-X-Proofpoint-GUID: mtRVLrxzRbgBi9pBjEIiHsfKGEVkUlV1
-X-Proofpoint-ORIG-GUID: mtRVLrxzRbgBi9pBjEIiHsfKGEVkUlV1
-X-Authority-Analysis: v=2.4 cv=SOBCVPvH c=1 sm=1 tr=0 ts=686991b0 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Wb1JkmetP80A:10 a=dlmhaOwlAAAA:8 a=l10-tqhT6-g9Bduh0oQA:9 a=CjuIK1q_8ugA:10
- a=NFOGd7dJGGMPyQGDc5-O:22 a=y4cfut4LVr_MrANMpYTh:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-04_07,2025-07-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- impostorscore=0 mlxlogscore=917 mlxscore=0 phishscore=0 malwarescore=0
- adultscore=0 suspectscore=0 spamscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507050139
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/5] Add Dell Inspiron 7441 / Latitude 7455
+ (X1E-80-100)
+To: Val Packett <val@packett.cool>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250701231643.568854-1-val@packett.cool>
+Content-Language: en-US
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+In-Reply-To: <20250701231643.568854-1-val@packett.cool>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Jun 21, 2025 at 03:19:57PM +0200, Luca Weiss wrote:
-> MSM8974 requires the CX power domain, so use the msm8996_adsp_resource
-> which has cx under proxy_pd_names and is otherwise equivalent.
-> 
-> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-> ---
->  drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Hmm. You are modifying the ADSP configuration in the driver, but at the
-same time you've dropped CX supply from the MSS remoteproc.
+On 7/2/25 00:53, Val Packett wrote:
+> This is a series unifying the previous Inspiron[1] and Latitude[2] ones.
+> The laptops turned out to be even more identical than previously thought,
+> with a shared firmware update capsule[3] that refers to the shared codename
+> "Thena", as well as being identical visually (other than the bottom label).
+>
+> Changes since v1:
+>
+> - Added audio (audioreach PR: [4], ALSA UCM: [5])
+> - Removed the copy-pasted comment about WCN regulators being on a
+>    "removable M.2 card" (the board has a *soldered* WiFi module, anyway)
+> - Removed the useless pin comment
+> - Fixed sort order for usb_ nodes
+> - Added missing newlines before status
+> - Changed zap shader node to use &gpu_zap_shader reference
+> - Added raw EDID dump to the eDP panel patch
+> - Changed the USB mux compatible to ps8833
+> - Removed unused i2c busses
+>
+> (Should the dtsi be an 'x1-' one in anticipation of the x1p42100-based
+> Inspiron 5441 / Latitude 5455 models?)
 
--- 
-With best wishes
-Dmitry
+As Inspiron 5441 is already available for sale, and at first glance has 
+only a few differences (different display, x2 instead of x4 speakers), I 
+would say "x1-" makes more sense, unless maintainers disagree.
+
+Regards,
+Alex
+
+
+>
+> [1]: https://lore.kernel.org/all/20250424-qcom-linux-arm64-for-6-16-dell-inspiron14p-v1-0-ace76b31d024@linaro.org/
+> [2]: https://lore.kernel.org/all/20250525095341.12462-2-val@packett.cool/
+> [3]: https://www.dell.com/support/home/en-us/drivers/driversdetails?driverid=x2pvx&oscode=w11a6&productcode=latitude-14-7455-laptop
+> [4]: https://github.com/linux-msm/audioreach-topology/pull/25
+> [5]: https://github.com/alsa-project/alsa-ucm-conf/pull/589
+>
+> Thanks,
+> ~val
+>
+> Bryan O'Donoghue (1):
+>    dt-bindings: arm: qcom: Add Dell Inspiron 14 Plus 7441
+>
+> Val Packett (4):
+>    dt-bindings: arm: qcom: Add Dell Latitude 7455
+>    arm64: dts: qcom: Add support for Dell Inspiron 7441 / Latitude 7455
+>    firmware: qcom: scm: Allow QSEECOM on Dell Inspiron 7441 / Latitude
+>      7455
+>    drm/panel-edp: Add BOE NE14QDM panel for Dell Latitude 7455
+>
+>   .../devicetree/bindings/arm/qcom.yaml         |    2 +
+>   arch/arm64/boot/dts/qcom/Makefile             |    4 +
+>   .../x1e80100-dell-inspiron-14-plus-7441.dts   |   51 +
+>   .../dts/qcom/x1e80100-dell-latitude-7455.dts  |   52 +
+>   .../boot/dts/qcom/x1e80100-dell-thena.dtsi    | 1658 +++++++++++++++++
+>   drivers/firmware/qcom/qcom_scm.c              |    2 +
+>   drivers/gpu/drm/panel/panel-edp.c             |    1 +
+>   7 files changed, 1770 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts
+>   create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts
+>   create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell-thena.dtsi
+>
 
