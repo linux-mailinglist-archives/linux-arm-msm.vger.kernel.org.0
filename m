@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-63801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FB25AF9F9A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 12:03:13 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EDEAAF9F9D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 12:03:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EBC4C16EA82
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 10:03:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BA8264A0C5C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 10:03:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D53D28B4E0;
-	Sat,  5 Jul 2025 10:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E10E28C2A4;
+	Sat,  5 Jul 2025 10:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ggglFIcx"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hlxieKwj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E065328B3EE
-	for <linux-arm-msm@vger.kernel.org>; Sat,  5 Jul 2025 10:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C62A28B3F9
+	for <linux-arm-msm@vger.kernel.org>; Sat,  5 Jul 2025 10:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751709762; cv=none; b=NhFn2097+0fcBlKrVP6j8lx/O7xOqy1Gvr8UvOlmugdsA1gMqONMmgqOAgwWKVtX1XylQGyehgkgy43wkHmHAK3HGXCXLOGglzvBe/HIjWh8Gfl9X7HjGwxgOW5192FRPUu+zMR9N4tEiIASOaHeQlLaLQrguW764lst4lCbEf4=
+	t=1751709764; cv=none; b=WQBvxhjsftD4zDpLy9kpbZgezDNzZtog5i0zuzNCxW4xwXQFh8r99j0NPq7kZldOvIpUUAdVlsP4AfR3E3UPLWOL+AtMG7duLSljyepM56CJarw8ZmykiqQoJ9MxK+saPK4F33A5FuMEV5ayxwbt1jG5Kho3hWTRU0wgbHvUKtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751709762; c=relaxed/simple;
-	bh=7I9SSPEIQPGrnlSdPo9OvtX0dZETia0LBeX4obv+vMM=;
+	s=arc-20240116; t=1751709764; c=relaxed/simple;
+	bh=TPCljJOCE+lAGVk6fcBbNqkJA6qavoaTCAklWifT78M=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nTJUaVoSZ6F5Ie5dywVj9fRr1inR4m8C/q6sV1ogn7t8SghzHxGksJ2/Tobugmzr4NGbV+AdSoXREeevWwDhYlayGy/9NeKSN8+k/okTIZrPa2uLkfhAaUzVM5jNVaQXYTmDnyH3oTMqZGk5natU7RDqh3/O9eDiSeym7/lTqig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ggglFIcx; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=TFDaw3qrcb2Upl3DToNUjC5z4Wi+k9of9ytqkTg7hs11fPS6XnRQItgYTkXtQtDbz+24cKTY0+fD8fuV3h5Q8VgQF21e1gCqv242P211GhfqCz7eKMby0cFIWZdAUL1j+hxxqUsnYvR0zYW4x2h/5qfiJ5X99z9RlPei9psa6h0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hlxieKwj; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5659cvFv009567
-	for <linux-arm-msm@vger.kernel.org>; Sat, 5 Jul 2025 10:02:40 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5655Q98W000305
+	for <linux-arm-msm@vger.kernel.org>; Sat, 5 Jul 2025 10:02:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qr9nHXfoeeoP7fUi7W46pBoaSSHXj9P7KxRVEDWZdAM=; b=ggglFIcx/pxfroXC
-	5pLzjdlKqy8JzrxWDTcgdk2k6qvEZ5aUwq7Y5qqKKzw8Sc8gOS7JZoCPu3sKApPJ
-	nHNMSZfMp6P7fDLuw1cmRXoG4QQJmj3mSEaJAewMUtqsnOeaVxr0HlA7+eIjn/2g
-	T23vDe8jE6hvamIL3N+ibRtwmnj/xcyS0acHnsjF+/Oy3hSF+cbWMfVxr3P6fARU
-	+9JYlIu+L9VFMLyFx+E5emKotmeuiVSeBsZLYIS4Om4qTaiQBz6Q3xQ7oNxCOQVk
-	LC8tmr/vfOlCUnq6pzX9Rpoll9dyHvocgFVRXswWAqwwX8Zu9L38KdpgTlutiXv7
-	YCqMlA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pu2agnbn-1
+	4F90/3W/LUSFn38dXcUegvIFvXJs8yXbN6RnwBBqeTQ=; b=hlxieKwjlAhXJ2wM
+	kaSl17R9dNl5jCLRHVouR96BkS6q+FcU83GvxCa500HtX9zVo/IWYT9hVtR9xqV6
+	XeJ34Gngz9dyxzI4pIHBGB362Q1Di5vJbzvWDenmMrk4bRFqqMB7071oUForoJnB
+	VUq4F+SaVt4Bdb7rwZjFNOth+bHFHX3qGszj9BNOdDSbFh6zUuJB88HU+EWQSMHj
+	Okta6NioMo4Dn1xRX0o5bvODou++SSHDF+hLfwPbDBX9kSp7XszDqmBzCTrHcJ73
+	vlMWDF8SGTJyUh7TYQC4pizU8Phbuuwk+DaItnBEQhhjzUEaaDBg7FQXjpRnGzyK
+	f8P+Hw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pun20mb8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jul 2025 10:02:39 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c7c30d8986so473587185a.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jul 2025 03:02:39 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jul 2025 10:02:41 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7d22790afd2so214484285a.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jul 2025 03:02:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751709759; x=1752314559;
+        d=1e100.net; s=20230601; t=1751709761; x=1752314561;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qr9nHXfoeeoP7fUi7W46pBoaSSHXj9P7KxRVEDWZdAM=;
-        b=m1GCPOwCxOkFlmQFsThXgs3hzAWx3XVkbsMi8k9L0ZRwsuDpH4FzR5EPHaLPNq1R7V
-         b0Qe7MNheMaUQCaubmJPNc1vrscs7P8/m9Z1xDAuL5ubB9m2B/x0EtrolLsMCG00rXDO
-         vI3LkQYZXlc76LEqnCYVt0z6OYwVNjOPbGAXQpWkLVui71R0K73jMa2o09bIfPToEOqS
-         sS17aNl1/A1k5qv550L1qkm8CHldJOpKbAtBw2R0n7xtwIa4VX6qx1x2HaU5+nt1TQrg
-         b+5weILBQeZoEhXDptjF9Zqo8gOc8WQm7Zxp2ce6qqryqYKBZjm9VrMzxyeISiJkw6ix
-         eRkA==
-X-Gm-Message-State: AOJu0YxViRnY24ncvAZFkk34PvOqVg3bwsfjNqn3cDnD5hQw11acVDeE
-	QVox3ziQIgTt1d3Jc9MNSDEH7FK/u9LI86dao2eN/DxZQPYDoj/MX18f2gkhk7L8kfDetxHizaU
-	A2AFMbUUkE0im5daKS3NL54XmhU7oUfPQHxsE+YMsnP7881qq5lDVuJFR0g14zOVZ8rRk
-X-Gm-Gg: ASbGncsqkkiOFvWYpUQlo9YL5hQ1M/s4osvV4gJmt9d13nOQgVTJxtRUXDPBDHKCBgS
-	WNtRY1zjYQo2NdndcBxqlm6WnOCewL7S4qziKUFApV8l9fYV/t4KHD7J9Zj+FDtimIzudl3q+c1
-	Oa+DB8w67ulJkb3dnYFKxQMDpXstunyuM0DgCfEAKzdzSFTOk1ZUEskOs8x8NGsFAEYtTH4j565
-	wl2Z39jUN5dzRh4VHLIR+BZ37rdFcyFTsVUSyzIzUnmvI834XrYJS1SM3xdTCUpv4D/GcRcWx7r
-	dXjFPAPK5LQyHBJlL6aF39Mrg9rAa0dVzzRYb4MDgRlXnvlVAmWk2KstlHPBWhQMy8ccS2HBKM6
-	vRQNvKpnmqUcvo8eZOpTiv9WFaEufp30NeVA=
-X-Received: by 2002:a05:620a:172b:b0:7d4:43cf:68e with SMTP id af79cd13be357-7d5ef9b3303mr240400185a.17.1751709759069;
+        bh=4F90/3W/LUSFn38dXcUegvIFvXJs8yXbN6RnwBBqeTQ=;
+        b=LUshAfomSvvdAW9WvcEi3kNnrvEz48wQq/bcv8YcrDH56iGMT5Plet+86vqhd+1229
+         AbIvNZsq9sr3cdw5BL21hN/V9IowsLYebykR1n75XOerdgfbpv51vqpUEgIKBhSG6Wh2
+         QB75yzPG59q9M6j1PEu0XE/qZ2DJvcI+aD66APor2fRZfHGu5QvyvyF8QBteLLiJ6cYY
+         CpSWJMVSNJOlWPrZT5GGfMT0f6A5VHTBWnznAujlruuGFyeZvlu0R3x5SHIE56ICBT9n
+         iGqmlOWxxIJ7civHsvgSFtyPDFUOrbHPal9Lw9iykt2CsHQ4eLEZoA3GaZ9TfWxjBs4t
+         J96g==
+X-Gm-Message-State: AOJu0Yy/Q7l4RWMxj7tIsqt0KbiL4/ZapwtvIbVUcE7Bec2nmmwrmkhO
+	WzI1TwDfWZkwvLTQ0J6wvySUp1jGwsFXPM8XEoTeIvWmRsE3kz8FYH6aNBBDxR711unJTUyASVw
+	l8aiZGX4bYD24wrI8SAqAdRJ6mg6NZFLbW24pMuWyYRThI1zh19ntJKbEpljB5ypypD3T
+X-Gm-Gg: ASbGnctu95fRtZ7sE0qgbEWppJKLVPeRbgTQgESiasZmsW73DkkyDpDnVN2t1nvtivQ
+	/+DRzeaRebiwAkN0+iiOuRhRuErFYhVA+dkrgJcStx+uw2oS2OvK/olt9R/Som9hFL85oI3Jmhi
+	A2f3Cpb2RqPxrSO09C+jJf2n7OlNhGQrZ45EBxCnfeeVBAl1Msui/o0Xqus1VGCa/I39hu3q2C+
+	02Pej/JwwDzagRgbzIg3wciP8lG/J/z1JTPSWUME07g9U3v3rVzf4y5uvbhql8DgoFUs0iTNDM5
+	dOuD3WL8ezO2uiurKt0TSDOcrBSow7Tb8o9WlRh51I467cSDD8jsqLSJvOX+iG9Ny8ZNBFvs4Do
+	wl2iKKLf/RCq9Dcszy85JGU0BwJmsjWZSD8w=
+X-Received: by 2002:a05:620a:2915:b0:7ca:f02a:4d2b with SMTP id af79cd13be357-7d5dcc7295dmr751766485a.12.1751709760456;
+        Sat, 05 Jul 2025 03:02:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGulStBJHLwU8HwDOIF+guVJVHi5pOC4lXhzr0md3WFCORD6oDXM4sw08Hi8v5tjavsA5Phzg==
+X-Received: by 2002:a05:620a:2915:b0:7ca:f02a:4d2b with SMTP id af79cd13be357-7d5dcc7295dmr751761785a.12.1751709759816;
         Sat, 05 Jul 2025 03:02:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHf15hUu+CzItaoLcjAJ84fZWCepzL5EYNjpa61wso8RvEzFOqMDAKTjeUuqPlu449XIEuPoA==
-X-Received: by 2002:a05:620a:172b:b0:7d4:43cf:68e with SMTP id af79cd13be357-7d5ef9b3303mr240396385a.17.1751709758572;
-        Sat, 05 Jul 2025 03:02:38 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-556384c0558sm526274e87.209.2025.07.05.03.02.36
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-556384c0558sm526274e87.209.2025.07.05.03.02.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Jul 2025 03:02:36 -0700 (PDT)
+        Sat, 05 Jul 2025 03:02:38 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Sat, 05 Jul 2025 13:02:28 +0300
-Subject: [PATCH v4 03/10] drm/msm/mdp4: get rid of mdp4_crtc.id
+Date: Sat, 05 Jul 2025 13:02:29 +0300
+Subject: [PATCH v4 04/10] drm/msm: get rid of msm_drm_private::num_crtcs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,7 +91,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250705-msm-gpu-split-v4-3-fb470c481131@oss.qualcomm.com>
+Message-Id: <20250705-msm-gpu-split-v4-4-fb470c481131@oss.qualcomm.com>
 References: <20250705-msm-gpu-split-v4-0-fb470c481131@oss.qualcomm.com>
 In-Reply-To: <20250705-msm-gpu-split-v4-0-fb470c481131@oss.qualcomm.com>
 To: Rob Clark <robin.clark@oss.qualcomm.com>,
@@ -105,116 +105,156 @@ To: Rob Clark <robin.clark@oss.qualcomm.com>,
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3130;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4457;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=7I9SSPEIQPGrnlSdPo9OvtX0dZETia0LBeX4obv+vMM=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoaPgzNe0zg+PB6a9Y3of8MKVqFfobTxyaNcWi2
- nn50KXTRmqJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaGj4MwAKCRCLPIo+Aiko
- 1RREB/9OJB18bPIclT1wQ2jGSYAG+LMaE5XWr4+F1sbgGdKNnWV6pCa2cT7yR2vPhAvK7ES37OP
- ywXc4klooDiRDycpDQ4u8w90zVU1SgVmdDD/80bBOwmXMQ9EsniGpil30R5QfjvQD6CAh3VYlaR
- xMnTLMraL162cF/M6gFyQy+rZYQXsyPgzP3+nlevTYDDPYYwqjzEJlY6N+1MKXywMzeCF1HbcAn
- SmNFCh4nHglzNYW/i/0AlR7gUsPlf4BcxMzMQISTFD34VgF1I0SQdMASHK8/azSk997wnsD7JJ9
- RFbJW+eCVyUaVy8oaxGRCA10C+jRGcCOIKWWmOLhQ1MceZLF
+ bh=TPCljJOCE+lAGVk6fcBbNqkJA6qavoaTCAklWifT78M=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoaPgzYU4YT/9DG03zg0Djt3R1PL8JY+Bj6d5l7
+ Jy5NeZZsRWJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaGj4MwAKCRCLPIo+Aiko
+ 1RNICACdfxbPAPjg77KvBwb9W88X1WwjulbLAGup29/00hSU5LfPUKuPHIC1AGOb47UA8NQkDgU
+ csHLBA/YtesFD/a8GBOrrsPD/+U4hvdxgz1zB7pCYWEaQ6KkaIV8Ik6dYuq+IM9AyFot6npA+3q
+ kNrQyx4GsanMOM/yabLUABnMF+FN6qLhWWIQuVjaylxysF6nfmQacD+bhsGweItMagZdarQN1Ei
+ t7BBFBE6BsX0MzZu655r3l1k5VNRPfEoni093XRWjYqKspik/l318q1/jC97N3ucZBiNrO96DTZ
+ Uvucvl2Bde5N16GieoyH7eLmNenk4HeTMwhg79l4TGcaM9Ko
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA1MDA2NCBTYWx0ZWRfX8PJSfZE4E5s9
- d+z3zWC2r720SchklGby11fR6m55vbBqeSIc27Qry12rhWY27FEcg3JjP0LJev4oH9TyqPunDXJ
- 6QIu0a8ozD3PcR8muZ6l1i2pO7IcXf4uLKXx9R2gNiiksvmWsWFO+P+bqLjKfxvDXoucS6dxX3w
- QIKwYizIJTdRrbd50x8DUUWOP/d6zE0H31RcJcnwK3PvSb5whSoiKXEIHELts0YBdZZwFEZ6AvV
- jujbtTzcm6of5kwenSkHxrnSLLjHsujAeIyA3Os3q1QxCRmkOW4OnKuW4dVO6tKYCkS2cyC/6cg
- mlJXTB1vkD1yr9sALZt28U5zSMQi8aH8jz4Il4Q9Wise6w7+pKQZlQTCeknkvTWRN73C0I6KP1/
- etAevK/6j/+geUk4x5XZEqpo5tA9A4l5SgyXEAxXBAIEvOfm77RebYreDeoHtturUnuHCFo4
-X-Proofpoint-ORIG-GUID: SQQEoFgo670qJKCHnCTgqApVXe0CM6Ux
-X-Proofpoint-GUID: SQQEoFgo670qJKCHnCTgqApVXe0CM6Ux
-X-Authority-Analysis: v=2.4 cv=erTfzppX c=1 sm=1 tr=0 ts=6868f83f cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=JeS6effYNUkig2QXyjUA:9 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-GUID: TLV6TJla-JyO3xZWqEnzoBBbV7MDLsxD
+X-Authority-Analysis: v=2.4 cv=GdUXnRXL c=1 sm=1 tr=0 ts=6868f841 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=F-HcN3iq_yGV61sY1bgA:9 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-ORIG-GUID: TLV6TJla-JyO3xZWqEnzoBBbV7MDLsxD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA1MDA2NCBTYWx0ZWRfX2fI455MyG+V3
+ FovKVi/dAcBvAlD7qUyl9HKF7ML2mZ94hyM3YpJAaZotoYs2Lmls6W92NeP2HQQZvjWKwOf6MdI
+ fLB11+6ZV27ZvQXYjcvqZN29P2dCIIOrMGfW6VIrsMvcLVVVlQPRCIs2ykxS9eejdiRHQ2AhdlC
+ TcL3lqPiFMhU1EH2A9MJd6Supp8IxZ/cwau2jfnOY04vg67eBdj7IdnRLNSlPEHhDUL2Bq+MGu9
+ 6jEQAMDDVCJiUTbcQfMCc941u6lBIrFvhcwun6640lpuhe9UNjXVQ4m7xyD8c8Rw0+ylI/hEwvd
+ hY5w4O80B94ZFXS3oLCf9rsFuGMSTCHqWK2Y6bvexETl7po8iJmHgMZbd4JwQrh49c5Mie9WR70
+ SCyt5ZS6IeDyemDHFJxQy0kE5jJtLmTzyxcqg3jN9t98FvvPcNAwasVpyownqeL1IEXX4D+Y
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-04_07,2025-07-04_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015 impostorscore=0 spamscore=0 priorityscore=1501
- mlxlogscore=956 bulkscore=0 adultscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507050064
+ bulkscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015
+ malwarescore=0 mlxscore=0 phishscore=0 impostorscore=0 suspectscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507050064
 
-There is no reason to store CRTC id, it's a part of the drm_crtc. Drop
-this member and use drm_crtc.name for the warning message.
+Drop superfluous msm_drm_private::num_crtcs in favour of using
+drm_mode_config::num_crtc or MAX_CRCS as appropriate.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c | 7 ++-----
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c  | 2 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h  | 2 +-
- 3 files changed, 4 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 3 +--
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 3 ---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 4 +---
+ drivers/gpu/drm/msm/msm_drv.h            | 2 --
+ drivers/gpu/drm/msm/msm_kms.c            | 4 ++--
+ 5 files changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-index 2ee03ce2fd398be4f5b101be09c6dfb495324128..da53ca88251e7f184f4a7067fda16d6b426d3c49 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
-@@ -17,7 +17,6 @@
- struct mdp4_crtc {
- 	struct drm_crtc base;
- 	char name[8];
--	int id;
- 	int ovlp;
- 	enum mdp4_dma dma;
- 	bool enabled;
-@@ -539,7 +538,7 @@ static void mdp4_crtc_wait_for_flush_done(struct drm_crtc *crtc)
- 			mdp4_crtc->flushed_mask),
- 		msecs_to_jiffies(50));
- 	if (ret <= 0)
--		dev_warn(dev->dev, "vblank time out, crtc=%d\n", mdp4_crtc->id);
-+		dev_warn(dev->dev, "vblank time out, crtc=%s\n", mdp4_crtc->base.name);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index e63a62664f39d73033e65adab5a90fd43c844a78..7025f521b70e501eefa69ddcdba64d38e0ca5465 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -875,12 +875,11 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
+ 			ret = PTR_ERR(crtc);
+ 			return ret;
+ 		}
+-		priv->num_crtcs++;
+ 	}
  
- 	mdp4_crtc->flushed_mask = 0;
+ 	/* All CRTCs are compatible with all encoders */
+ 	drm_for_each_encoder(encoder, dev)
+-		encoder->possible_crtcs = (1 << priv->num_crtcs) - 1;
++		encoder->possible_crtcs = (1 << dev->mode_config.num_crtc) - 1;
  
-@@ -624,7 +623,7 @@ static void mdp4_crtc_flip_cleanup(struct drm_device *dev, void *ptr)
- 
- /* initialize crtc */
- struct drm_crtc *mdp4_crtc_init(struct drm_device *dev,
--		struct drm_plane *plane, int id, int ovlp_id,
-+		struct drm_plane *plane, int ovlp_id,
- 		enum mdp4_dma dma_id)
- {
- 	struct drm_crtc *crtc = NULL;
-@@ -639,8 +638,6 @@ struct drm_crtc *mdp4_crtc_init(struct drm_device *dev,
- 
- 	crtc = &mdp4_crtc->base;
- 
--	mdp4_crtc->id = id;
--
- 	mdp4_crtc->ovlp = ovlp_id;
- 	mdp4_crtc->dma = dma_id;
- 
+ 	return 0;
+ }
 diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-index 9acde91ad6c37369191e85820e58ee22892a61a5..6d938abe29ee7283de2b1535d3d0159bf09d6dff 100644
+index 6d938abe29ee7283de2b1535d3d0159bf09d6dff..1aa7d65afbd0b4e8a231d1d4ff7a7120e8b7391e 100644
 --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
 +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-@@ -339,7 +339,7 @@ static int modeset_init(struct mdp4_kms *mdp4_kms)
+@@ -297,7 +297,6 @@ static int mdp4_modeset_init_intf(struct mdp4_kms *mdp4_kms,
+ static int modeset_init(struct mdp4_kms *mdp4_kms)
+ {
+ 	struct drm_device *dev = mdp4_kms->dev;
+-	struct msm_drm_private *priv = dev->dev_private;
+ 	struct drm_plane *plane;
+ 	struct drm_crtc *crtc;
+ 	int i, ret;
+@@ -347,8 +346,6 @@ static int modeset_init(struct mdp4_kms *mdp4_kms)
+ 			ret = PTR_ERR(crtc);
  			goto fail;
  		}
+-
+-		priv->num_crtcs++;
+ 	}
  
--		crtc  = mdp4_crtc_init(dev, plane, priv->num_crtcs, i,
-+		crtc  = mdp4_crtc_init(dev, plane, i,
- 				mdp4_crtcs[i]);
- 		if (IS_ERR(crtc)) {
- 			DRM_DEV_ERROR(dev->dev, "failed to construct crtc for %s\n",
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
-index f9d988076337cb6fb63af8e76be59b2eb34ab327..fb348583dc84de5c57c77fdf246894e9334af514 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h
-@@ -185,7 +185,7 @@ void mdp4_crtc_set_config(struct drm_crtc *crtc, uint32_t config);
- void mdp4_crtc_set_intf(struct drm_crtc *crtc, enum mdp4_intf intf, int mixer);
- void mdp4_crtc_wait_for_commit_done(struct drm_crtc *crtc);
- struct drm_crtc *mdp4_crtc_init(struct drm_device *dev,
--		struct drm_plane *plane, int id, int ovlp_id,
-+		struct drm_plane *plane, int ovlp_id,
- 		enum mdp4_dma dma_id);
+ 	/*
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index b6e6bd1f95eebf890a8dced129854e8e19e60c9c..4c9e79fc00e9d8ca8de294c83559e72a2e48d1d2 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -375,7 +375,6 @@ static int modeset_init_intf(struct mdp5_kms *mdp5_kms,
+ static int modeset_init(struct mdp5_kms *mdp5_kms)
+ {
+ 	struct drm_device *dev = mdp5_kms->dev;
+-	struct msm_drm_private *priv = dev->dev_private;
+ 	unsigned int num_crtcs;
+ 	int i, ret, pi = 0, ci = 0;
+ 	struct drm_plane *primary[MAX_BASES] = { NULL };
+@@ -443,7 +442,6 @@ static int modeset_init(struct mdp5_kms *mdp5_kms)
+ 			DRM_DEV_ERROR(dev->dev, "failed to construct crtc %d (%d)\n", i, ret);
+ 			goto fail;
+ 		}
+-		priv->num_crtcs++;
+ 	}
  
- long mdp4_dtv_round_pixclk(struct drm_encoder *encoder, unsigned long rate);
+ 	/*
+@@ -451,7 +449,7 @@ static int modeset_init(struct mdp5_kms *mdp5_kms)
+ 	 * crtcs for the encoders
+ 	 */
+ 	drm_for_each_encoder(encoder, dev)
+-		encoder->possible_crtcs = (1 << priv->num_crtcs) - 1;
++		encoder->possible_crtcs = (1 << dev->mode_config.num_crtc) - 1;
+ 
+ 	return 0;
+ 
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 33d668a18ff3613b40341df540d504ffff65b2a7..88ce305792fd89f280b39bd92888a18abd0343e3 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -175,8 +175,6 @@ struct msm_drm_private {
+ 		struct mutex lock;
+ 	} lru;
+ 
+-	unsigned int num_crtcs;
+-
+ 	struct msm_drm_thread event_thread[MAX_CRTCS];
+ 
+ 	struct notifier_block vmap_notifier;
+diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
+index 9541dd7f56c9ea0f1d63c77b8ad8e7bc8cb46508..a63d014c19039835de47fb3fb610ce67652b5d2c 100644
+--- a/drivers/gpu/drm/msm/msm_kms.c
++++ b/drivers/gpu/drm/msm/msm_kms.c
+@@ -245,7 +245,7 @@ void msm_drm_kms_uninit(struct device *dev)
+ 	flush_workqueue(kms->wq);
+ 
+ 	/* clean up event worker threads */
+-	for (i = 0; i < priv->num_crtcs; i++) {
++	for (i = 0; i < MAX_CRTCS; i++) {
+ 		if (priv->event_thread[i].worker)
+ 			kthread_destroy_worker(priv->event_thread[i].worker);
+ 	}
+@@ -313,7 +313,7 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
+ 		sched_set_fifo(ev_thread->worker->task);
+ 	}
+ 
+-	ret = drm_vblank_init(ddev, priv->num_crtcs);
++	ret = drm_vblank_init(ddev, ddev->mode_config.num_crtc);
+ 	if (ret < 0) {
+ 		DRM_DEV_ERROR(dev, "failed to initialize vblank\n");
+ 		goto err_msm_uninit;
 
 -- 
 2.39.5
