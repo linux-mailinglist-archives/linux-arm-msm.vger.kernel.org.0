@@ -1,180 +1,246 @@
-Return-Path: <linux-arm-msm+bounces-63829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8278DAFA0ED
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 18:08:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D48BAFA118
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 19:54:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0796C1BC05F5
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 16:09:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 15B021C2288E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 17:54:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B423D1FF7C5;
-	Sat,  5 Jul 2025 16:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80FCA20C00E;
+	Sat,  5 Jul 2025 17:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Qti5XGev"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ML1ZvgWs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6761E571B
-	for <linux-arm-msm@vger.kernel.org>; Sat,  5 Jul 2025 16:08:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400201891A9;
+	Sat,  5 Jul 2025 17:54:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751731723; cv=none; b=Mllg3UtdlDAvAhd9PSr5rw3BAY28wEuLQqEne2zKFJz9oascxR6TNMQLFGlYEZuDT3rzBFUvDHtS7OIzzNsHuN4g3g/7ZcaF9iLN2ld8mcG1ANctt0xA8iYU0aBtWG/cZkv+9MITLuH2uL9577k48gFhDY3LVmnpEKjYSWFH4MQ=
+	t=1751738069; cv=none; b=uIdrVwDtP7yBNb+uHtKFj94aW++AJijlVf0dPFRzgczXcs6QAk4q3OYmw9oULVtvn2gKeC5T6Nn+OtoCH7FJ5mRSU2wgXbQVkkusnAO6Zv4V9tjrPLoEbIMWWHtlcJjkPj5kc8HJvbuiIFsAI4MLr203j0rxSruroOpfUX54OFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751731723; c=relaxed/simple;
-	bh=1nHVCwgtw92YQiqaocxAdN057/gIPobtpT6EJm/ltEE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=md+riS4zoUcVu9tOhBLHkONjPf82FXcyN+y5HdcD1HXebVsoYT0+8Ozh/+ArTjki/flqHylV/tVM7Cigosn/uj+JeN1KUMA5J5rzfaaZow04J/ZzkDRHU11z/gKZjHKIdMiFWJAJszurs+MVdoKnQTfJARDN4npmYxWQYugyvMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Qti5XGev; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 565FbSO4018248
-	for <linux-arm-msm@vger.kernel.org>; Sat, 5 Jul 2025 16:08:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=VQQYkVndGStCPetb0u9KBp
-	kX6kw9yPI24YEYcxWZEdI=; b=Qti5XGev3wB1tQ9SAzU+dV5xT98VKholViCmqq
-	yIB2Tu+/ihCmC9cabslWbqFrQPI6J9bR28P4m9n0nrfvBkbkuVEt0CpHrK3ouUgV
-	dBIz1M22Y3DrsA3m7fTCd+jkHxlrbjgzswnb7kCu9rraGE+1xUW+g7LfffMTeQAZ
-	bjl5N2zlYCQ6GL4NTtf4cjjOWtSSrfUaS7PmVZDBTkdrUIXNLFDPwwP2N7juCpxz
-	ctDHXqIHXJsgQz1D80O7js6ddYQ6j0GMwhmGcbAUD9FcGYfqQnnP0qHx5WFa1BuB
-	DLKYJ4HhKebjwPjnK/Ab9Vw2SpPHk1n38t6Jnq5TZb5De2Yw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47psrk1j70-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jul 2025 16:08:40 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4a9af8a0e58so6773131cf.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jul 2025 09:08:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751731718; x=1752336518;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VQQYkVndGStCPetb0u9KBpkX6kw9yPI24YEYcxWZEdI=;
-        b=DXhviFHG1gYeGErRR3LhHr/tXidJ/+rQ5Mkc1PYXWXON2pXALEIjuCauHPtMxP3DNA
-         2p0e+LeihglEbaFNZfPNhW9FEOzRHA9gxFm9ka6yMeE1lhJ9OOyS9YgT7KyWdbUUBgNE
-         79vzNn5tOGpLJHFxU2eI6+D45572BMZnje9ePKeOcWsZDEHpCGAxwwFZkLcO7DY2a1XX
-         QmLaAsui6jorAIM4UUhNlx21Ym8KZxPe4tuThsTcp2+sf/vPn0a88aKdZPypqtNu9pem
-         Q6HxGEBz0T80/oi+RMiBme0VNJS+xzIfM+v41d8DywKPIcY3wWqtu4Rh0F7SUJHQMqTz
-         N0zw==
-X-Forwarded-Encrypted: i=1; AJvYcCXKFz4Bmii56viMg46gighQegBkkJsIsYZQfBcVQcdkU4CDYgZeRVz5crWgiosm9sGGeC2dU1YghZw0zfdW@vger.kernel.org
-X-Gm-Message-State: AOJu0YwBVxVn//FyIRMlTkU7Pgoi1TwuX8dGrpJir0RkSwQre68f7Dcj
-	y6IG5vLvY5DZ7Xy6fXaD8Snc7usmuzW7zmXE/exeZAuB9B5iklD8LJYYJ9ct1OfdKxX9Ju1FS9P
-	+nJU9lOqcM1401PLcnMDWAz6u9u1WUJaFNfoL1lORkZhFOgXwvGkR2Qm0n0AFPKGjVkGe
-X-Gm-Gg: ASbGncvS/BYnbYUwzNECwgyxP17PauuAJyR9uzScTOvhGNfKS1XtC07J3ovhUbmwOW+
-	uqBiL6ikSy4m1ZbsYYK5FvqecuRnSWKiXBmSbB6b0pJ4hwUDWYGup6IUXR7xUK9IWwvcWHYZuJL
-	V/PDfpxMRIKExeuxsKHw6qTv+Mb7a5u++lqNsfKF3XE3AlPDLZhRfDIzahW13BfTq2TvpuDZwZb
-	PAfNlBamSErQnZUWadFB28ITfsDGlNKuK4+VDWH1pin06mT01NTFTQAqz89BdZUf+W2Y4ZkLzxH
-	lcn+Nv9t0BYYPKmsgzvdn6Y/FUl/u8vOfVEr3TMU4y8hseD5W9+R1zI6Mg47r4EsFmbXIbuwviq
-	Kbs7LVUWFuQXroG0UZ3D797+S9yWT/KA5FCA=
-X-Received: by 2002:a05:620a:2b89:b0:7d4:4b92:85e4 with SMTP id af79cd13be357-7d5dcc5e457mr896829585a.14.1751731718468;
-        Sat, 05 Jul 2025 09:08:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH4B2sgfTjCGK/I65unoqaLkmK0M7K7ayKlHuPECNRLfJUUTIjG5F1QyzFuSBOHTi3v6JDljA==
-X-Received: by 2002:a05:620a:2b89:b0:7d4:4b92:85e4 with SMTP id af79cd13be357-7d5dcc5e457mr896825685a.14.1751731717791;
-        Sat, 05 Jul 2025 09:08:37 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55638494f6dsm622779e87.123.2025.07.05.09.08.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Jul 2025 09:08:36 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Sat, 05 Jul 2025 19:08:33 +0300
-Subject: [PATCH v2] iommu/arm-smmu: disable PRR on SM8250
+	s=arc-20240116; t=1751738069; c=relaxed/simple;
+	bh=rICWKtoMH+zyndlY0ZXbsoGpXVyzFl9DyaZBL8qQaao=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Tkqh0PX09v/5gcIymMaPjXq0to6P4oV9REjiop/84w1Dg9jWQqK27+HhbuWlXM0w2ipuH3QlvQEYbWsuETBGViAf3TFlvrOSV6sQEgIspMDj7Of0TcG2kw640UhMhU2IoojkoqeZzUpxBbUjSBRcSXjiPMEXh0wg2te6h+JIKQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ML1ZvgWs; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1751738067; x=1783274067;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=rICWKtoMH+zyndlY0ZXbsoGpXVyzFl9DyaZBL8qQaao=;
+  b=ML1ZvgWsRhwVmeh2sUwnowU3t4R6HJej3rL0PaYoix3gGH6wLCejFYpZ
+   F3durz7P7GEkgEeWjoRZBXlrVfqgnl34/FCCsUSRcqOL6oGEGxhxw4hg6
+   8/fS9OP9DSDt25YlkuYrclvi8BMUf40fQ5KKZHN1Tw5wyIOqiFHObYBFy
+   oTbDzqD4+ze9dsIlANSSAcDMdxFWf5TenD1TtI8JnVXOy3vKfkeIR7KXM
+   +8i4JH0Vmkzv9OKDpmglTy51IUBIfhYvuHC3UieRwUPcSVg9It8l3A0I2
+   l2Y7sJeEHfIrlnbLVcF0FLIjnDc2biIlsFWjV+yjqv3CJnWttNCo7eWIC
+   w==;
+X-CSE-ConnectionGUID: /4ED3BWoQuq+ufeQfq2gQg==
+X-CSE-MsgGUID: SXLn6UnjS0CiOWpwnzJV9Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11485"; a="64711301"
+X-IronPort-AV: E=Sophos;i="6.16,290,1744095600"; 
+   d="scan'208";a="64711301"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jul 2025 10:54:27 -0700
+X-CSE-ConnectionGUID: TZ/utm6MSFeQswsdWm9GjQ==
+X-CSE-MsgGUID: XN4Gx1F1S2GKMc4NbGXj8w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,290,1744095600"; 
+   d="scan'208";a="159128439"
+Received: from lkp-server01.sh.intel.com (HELO 0b2900756c14) ([10.239.97.150])
+  by fmviesa005.fm.intel.com with ESMTP; 05 Jul 2025 10:54:23 -0700
+Received: from kbuild by 0b2900756c14 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uY75h-0004ed-0i;
+	Sat, 05 Jul 2025 17:54:21 +0000
+Date: Sun, 6 Jul 2025 01:53:51 +0800
+From: kernel test robot <lkp@intel.com>
+To: Dmitry Baryshkov <lumag@kernel.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Jordan Crouse <jordan@cosmicpenguin.net>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 11/12] drm/msm/dpu: rewrite
+ _dpu_format_populate_plane_sizes_ubwc()
+Message-ID: <202507060149.j2XwjHut-lkp@intel.com>
+References: <20250705-dpu-formats-v1-11-40f0bb31b8c8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250705-iommu-fix-prr-v2-1-406fecc37cf8@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAABOaWgC/3WMyw6CQAxFf4V0bck8GEhc+R+GBQ6DNBEGO0I0Z
- P7dyt5Nk9N779khBaaQ4FzswGGjRHEWMKcC/NjN94DUC4NRxqlGOaQ4TSsO9MaFGWulKqdvure
- qAtksHCQ6fNdWeKT0ivw59Jv+ff+ZNo0aw9BIaG3ttL/ElMrn2j289Eo50OacvyaKeWCxAAAA
-X-Change-ID: 20250705-iommu-fix-prr-600451b1d304
-To: Rob Clark <robin.clark@oss.qualcomm.com>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
-        Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1682;
- i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=1nHVCwgtw92YQiqaocxAdN057/gIPobtpT6EJm/ltEE=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoaU4EPzKa9ZLkC7fTqOEgSArVBZofNCTdp/Sb5
- 6FwPKWtOt+JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaGlOBAAKCRCLPIo+Aiko
- 1V4XB/9PrB6vncaBwBi4dhAA54NytUNQgDHc1uBL88Sca8J1uPGNjP3dU83pKyS3dPTzWNbWHJi
- P3qCHpO7IpOhZcTOxn6JKQbKHGPbS72HwPfbRcvMyQxau8bTHH56A7zy4XMfbStA460Rv9yXwa3
- q2xwWoZmQwz2UDBAa5VcAHulN4szj+eIHAgAqZRxiD5E9qc519YrQ2WtRGuDtv0Kq9mmVL6Q5wg
- I0OpVpxZsTTEsN6KLKTdEwYISyDMKfyrp0WZrSNmBGxmabvnTGaal/jJ4wZlWFDvxJC4LHBmhn+
- XUC1KVZ6mIhKg1QxzophRU7GtdVBmUqpFs3d9UZlhP9w97dj
-X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-ORIG-GUID: hWwB42BIeqzxBZYY2oOTYbBkhKEyr-3B
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA1MDEwNiBTYWx0ZWRfX8k9+YmnIfwpt
- G9LPz5JIDTBNx7pSYEQ+NqPaN3f1epO/harehQL+ntYxeWABZ4rQ9SSJY/e8fVUqvIKeNZRFXpR
- YQsZbGRoiyt+XS2u1fXOkal5vE8HhNaoAqQ2EiMawhBkMZAiGGzD2VgEGmY+u4RNczHzYEQYmp1
- 5KnNbFydmJanHZFGjGSE4fHn0p0TkJwP1s+ZRLV0x6Q7ZcL9HnO2MX0FCg4IAZF6iTlnNRdUbju
- kRdgCtD8UEGsnsR/ZFBWdO5zR8GNKjVdH9DAg7P1YtuUGf93y3ZA90VMzARA49XTKvY95GRrp2I
- c+N/nP3N+YZ6qPS2l4oNlWDHkayk2D7GzFohJWH6nFhURKoafwapIHo5uYS/R767fGNDwIfNg7L
- uAD6ySHZkpkKwWQOpQU5gA9HEzQPTf76fCQXAxmosdx93z8FsIDuCOS8WxAzEQLHaOdanGW0
-X-Proofpoint-GUID: hWwB42BIeqzxBZYY2oOTYbBkhKEyr-3B
-X-Authority-Analysis: v=2.4 cv=GtBC+l1C c=1 sm=1 tr=0 ts=68694e08 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=RJW-fAkOStluX_mlE74A:9
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-04_07,2025-07-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015 spamscore=0 adultscore=0 phishscore=0 malwarescore=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
- impostorscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507050106
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250705-dpu-formats-v1-11-40f0bb31b8c8@oss.qualcomm.com>
 
-On SM8250 / QRB5165-RB5 using PRR bits resets the device, most likely
-because of the hyp limitations. Disable PRR support on that platform.
+Hi Dmitry,
 
-Fixes: 7f2ef1bfc758 ("iommu/arm-smmu: Add support for PRR bit setup")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
-I currently don't have access to other devices from these generations.
-It might be necessary to apply the same workaround to other platforms.
----
-Changes in v2:
-- Simplify the workaround as the issue seems to be limited to SM8250
-  only (Rob)
-- Link to v1: https://lore.kernel.org/r/20250705-iommu-fix-prr-v1-1-ef725033651c@oss.qualcomm.com
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+kernel test robot noticed the following build warnings:
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 62874b18f6459ad9a8b0542ab81c24e3e745c53d..53d88646476e9f193a6275d9c3ee3d084c215362 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -355,7 +355,8 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
- 	priv->set_prr_addr = NULL;
- 
- 	if (of_device_is_compatible(np, "qcom,smmu-500") &&
--			of_device_is_compatible(np, "qcom,adreno-smmu")) {
-+	    !of_device_is_compatible(np, "qcom,sm8250-smmu-500") &&
-+	    of_device_is_compatible(np, "qcom,adreno-smmu")) {
- 		priv->set_prr_bit = qcom_adreno_smmu_set_prr_bit;
- 		priv->set_prr_addr = qcom_adreno_smmu_set_prr_addr;
- 	}
+[auto build test WARNING on 26ffb3d6f02cd0935fb9fa3db897767beee1cb2a]
 
----
-base-commit: 7244e36657076b597ac21d118be9c0b0f15fc622
-change-id: 20250705-iommu-fix-prr-600451b1d304
+url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-msm-disp-set-num_planes-to-1-for-interleaved-YUV-formats/20250705-104933
+base:   26ffb3d6f02cd0935fb9fa3db897767beee1cb2a
+patch link:    https://lore.kernel.org/r/20250705-dpu-formats-v1-11-40f0bb31b8c8%40oss.qualcomm.com
+patch subject: [PATCH 11/12] drm/msm/dpu: rewrite _dpu_format_populate_plane_sizes_ubwc()
+config: powerpc64-randconfig-003-20250705 (https://download.01.org/0day-ci/archive/20250706/202507060149.j2XwjHut-lkp@intel.com/config)
+compiler: clang version 21.0.0git (https://github.com/llvm/llvm-project 61529d9e36fa86782a2458e6bdeedf7f376ef4b5)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250706/202507060149.j2XwjHut-lkp@intel.com/reproduce)
 
-Best regards,
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202507060149.j2XwjHut-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:79:7: warning: variable 'sclines' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+      79 |                 if (fmt->pixel_format == DRM_FORMAT_NV12 ||
+         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      80 |                     fmt->pixel_format == DRM_FORMAT_P010) {
+         |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:104:4: note: uninitialized use occurs here
+     104 |                         sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
+         |                         ^~~~~~~
+   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:79:3: note: remove the 'if' if its condition is always true
+      79 |                 if (fmt->pixel_format == DRM_FORMAT_NV12 ||
+         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      80 |                     fmt->pixel_format == DRM_FORMAT_P010) {
+         |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:74:31: note: initialize the variable 'sclines' to silence this warning
+      74 |                 unsigned int stride, sclines;
+         |                                             ^
+         |                                              = 0
+>> drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:79:7: warning: variable 'stride' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+      79 |                 if (fmt->pixel_format == DRM_FORMAT_NV12 ||
+         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      80 |                     fmt->pixel_format == DRM_FORMAT_P010) {
+         |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:102:28: note: uninitialized use occurs here
+     102 |                 layout->plane_pitch[0] = stride;
+         |                                          ^~~~~~
+   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:79:3: note: remove the 'if' if its condition is always true
+      79 |                 if (fmt->pixel_format == DRM_FORMAT_NV12 ||
+         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      80 |                     fmt->pixel_format == DRM_FORMAT_P010) {
+         |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:74:22: note: initialize the variable 'stride' to silence this warning
+      74 |                 unsigned int stride, sclines;
+         |                                    ^
+         |                                     = 0
+   2 warnings generated.
+
+
+vim +79 drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+
+    65	
+    66	static int _dpu_format_populate_plane_sizes_ubwc(
+    67			const struct msm_format *fmt,
+    68			struct drm_framebuffer *fb,
+    69			struct dpu_hw_fmt_layout *layout)
+    70	{
+    71		bool meta = MSM_FORMAT_IS_UBWC(fmt);
+    72	
+    73		if (MSM_FORMAT_IS_YUV(fmt)) {
+    74			unsigned int stride, sclines;
+    75			unsigned int y_tile_width, y_tile_height;
+    76			unsigned int y_meta_stride, y_meta_scanlines;
+    77			unsigned int uv_meta_stride, uv_meta_scanlines;
+    78	
+  > 79			if (fmt->pixel_format == DRM_FORMAT_NV12 ||
+    80			    fmt->pixel_format == DRM_FORMAT_P010) {
+    81				if (MSM_FORMAT_IS_DX(fmt)) {
+    82					if (fmt->flags & MSM_FORMAT_FLAG_UNPACK_TIGHT) {
+    83						stride = MSM_MEDIA_ALIGN(fb->width, 192);
+    84						stride = MSM_MEDIA_ALIGN(stride * 4 / 3, 256);
+    85						y_tile_width = 48;
+    86					} else {
+    87						stride = MSM_MEDIA_ALIGN(fb->width * 2, 256);
+    88						y_tile_width = 32;
+    89					}
+    90	
+    91					sclines = MSM_MEDIA_ALIGN(fb->height, 16);
+    92					y_tile_height = 4;
+    93				} else {
+    94					stride = MSM_MEDIA_ALIGN(fb->width, 128);
+    95					y_tile_width = 32;
+    96	
+    97					sclines = MSM_MEDIA_ALIGN(fb->height, 32);
+    98					y_tile_height = 8;
+    99				}
+   100			}
+   101	
+   102			layout->plane_pitch[0] = stride;
+   103			layout->plane_size[0] = MSM_MEDIA_ALIGN(layout->plane_pitch[0] *
+   104				sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
+   105	
+   106			layout->plane_pitch[1] = stride;
+   107			layout->plane_size[1] = MSM_MEDIA_ALIGN(layout->plane_pitch[1] *
+   108				sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
+   109	
+   110			if (!meta)
+   111				return 0;
+   112	
+   113			y_meta_stride = MSM_MEDIA_ROUNDUP(fb->width, y_tile_width);
+   114			layout->plane_pitch[2] = MSM_MEDIA_ALIGN(y_meta_stride, 64);
+   115	
+   116			y_meta_scanlines = MSM_MEDIA_ROUNDUP(fb->height, y_tile_height);
+   117			y_meta_scanlines = MSM_MEDIA_ALIGN(y_meta_scanlines, 16);
+   118			layout->plane_size[2] = MSM_MEDIA_ALIGN(layout->plane_pitch[2] *
+   119				y_meta_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
+   120	
+   121			uv_meta_stride = MSM_MEDIA_ROUNDUP((fb->width+1)>>1, y_tile_width / 2);
+   122			layout->plane_pitch[3] = MSM_MEDIA_ALIGN(uv_meta_stride, 64);
+   123	
+   124			uv_meta_scanlines = MSM_MEDIA_ROUNDUP((fb->height+1)>>1, y_tile_height);
+   125			uv_meta_scanlines = MSM_MEDIA_ALIGN(uv_meta_scanlines, 16);
+   126			layout->plane_size[3] = MSM_MEDIA_ALIGN(layout->plane_pitch[3] *
+   127				uv_meta_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
+   128		} else {
+   129			unsigned int rgb_scanlines, rgb_meta_scanlines, rgb_meta_stride;
+   130	
+   131			layout->plane_pitch[0] = MSM_MEDIA_ALIGN(fb->width * fmt->bpp, 256);
+   132			rgb_scanlines = MSM_MEDIA_ALIGN(fb->height, 16);
+   133			layout->plane_size[0] = MSM_MEDIA_ALIGN(layout->plane_pitch[0] *
+   134				rgb_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
+   135	
+   136			if (!meta)
+   137				return 0;
+   138	
+   139			/* uAPI leaves plane[1] empty and plane[2] as meta */
+   140			layout->num_planes += 1;
+   141	
+   142			rgb_meta_stride = MSM_MEDIA_ROUNDUP(fb->width, 16);
+   143			layout->plane_pitch[2] = MSM_MEDIA_ALIGN(rgb_meta_stride, 64);
+   144	
+   145			rgb_meta_scanlines = MSM_MEDIA_ROUNDUP(fb->height, 4);
+   146			rgb_meta_scanlines = MSM_MEDIA_ALIGN(rgb_meta_scanlines, 16);
+   147	
+   148			layout->plane_size[2] = MSM_MEDIA_ALIGN(layout->plane_pitch[2] *
+   149				rgb_meta_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
+   150		}
+   151	
+   152		return 0;
+   153	}
+   154	
+
 -- 
-With best wishes
-Dmitry
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
