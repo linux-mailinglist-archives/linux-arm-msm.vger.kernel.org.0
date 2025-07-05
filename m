@@ -1,555 +1,1941 @@
-Return-Path: <linux-arm-msm+bounces-63837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADD9FAFA1DD
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 22:45:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BA0CAFA1E1
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 22:52:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A1B9483B6A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 20:44:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8F27848216E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 20:52:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C48920C473;
-	Sat,  5 Jul 2025 20:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C87F20F090;
+	Sat,  5 Jul 2025 20:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mPt3dgtb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iD9iMT/8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58AA81724
-	for <linux-arm-msm@vger.kernel.org>; Sat,  5 Jul 2025 20:44:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA17117CA1B;
+	Sat,  5 Jul 2025 20:52:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751748299; cv=none; b=js5k75y5JGwI6oriw2jp+/p4Opj0QcrlMWWN9ZB9OJY59GOWp4TVItXVg9gULOAEkjCZ35DMJojl/mXs5K2SoPfO03Ge07gx2FdLs+MHo2SJI3K/Nc3fpbv2wf4O8ZAg816QAZYc/Zd6kziHaVkic0UeOSGXvb3rmbNvp81Pqb4=
+	t=1751748766; cv=none; b=D3FNEPtxJp3QFDXA7KIKZuXpWE8DKrxa1iRzGQ0Z59Ji2DKRHM8wvoWwZwJLAM1IXiQOOU77ng/SwGXmtFLfmR/tloec1d7kU+PURZl9IWzLB87BoFJCHQi8p5kevnrwBLsazN3isTyp8dW0sHiDrb6mLGfAOqCWRhjJ0tdSmQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751748299; c=relaxed/simple;
-	bh=VSaDX9FA6Li5z/6Yf9SyPYU9X9rj8zYMKRnf5w0lZUo=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=OqQ6zGUEaVhhY/vxekuF/Wc2EkxGexYbzAaVXcqQtBeVsFIbaPvG1CnUVLjy/Ez+609NJ/zxwctl2AM4THFB7PEiwlOnFrEFoWFMB2qcX9LZkQfa4lNDeKoRjy2QQepQWH9wVD5DJwKJQbiBdfLa6G6a59cnGAP14xdoBwexeP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mPt3dgtb; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5659EKVO002883
-	for <linux-arm-msm@vger.kernel.org>; Sat, 5 Jul 2025 20:44:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:message-id:mime-version:subject:to; s=
-	qcppdkim1; bh=NVOMEBk9XETb8VCTkaF1XJ1ok9rGNFO+jaoA2rVFvDI=; b=mP
-	t3dgtbaWpGOdaECM172JKfBmJI9SQx+62pqlTMDLXn2rCg4NWFQUb/4NMDaaIury
-	d6XdD37nYMd/PkjX8NpEDk0cun4nz26YXFAjX0uVw+LzoX58z8j+cHZro3fzS2NV
-	XGmJt/e10JfaSdZk9IIN2stCwHNNqLdq06SgtBZeJBRVdYdamA6BE0LyLWoQtC7m
-	ZDBvumX9QvIj/ucvqkmK0XqjgbGpwmGCoNdISA/xqJ8EGNAtq7qctIpwHpXQ0MYX
-	CNIopdTdz+5Io+N+lF4qyYOKfvt2Hcm+aQGCzLK2OBQZ8d0MNV3PIADU1IZbUcUz
-	1uGaLAT/t5y4Qdx4VWZg==
-Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com [209.85.160.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pwbd1v9e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jul 2025 20:44:53 +0000 (GMT)
-Received: by mail-oa1-f72.google.com with SMTP id 586e51a60fabf-2e92a214e2eso706482fac.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jul 2025 13:44:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751748292; x=1752353092;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+	s=arc-20240116; t=1751748766; c=relaxed/simple;
+	bh=S7UPyyXwXRmWvnBC2Inj48Mwa0KYMqdHkYYI1ML9stU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lSEmmJCQSTEtL0XrBLSYnvKulEMR0kB7XQ/2/5RQR3uhcZ0pefPwX3Q5w/13CObl2c/fWpbKAyfhqhaoJ0mrggPPmJbQKtr3QiUIMUAylvn/GjNBK/NlqZ/1kIgJPKUDpCaCFH45QErTuoDVFdyQGIpCLbHBGkCko8mVDwvRbkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iD9iMT/8; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ae36dc91dc7so321399666b.2;
+        Sat, 05 Jul 2025 13:52:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751748761; x=1752353561; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NVOMEBk9XETb8VCTkaF1XJ1ok9rGNFO+jaoA2rVFvDI=;
-        b=dAuTwdN6+vfwIkjQlyJwqG+JVY9V0tdQjVP5SpTYWv0pVr8A7Jf+6QT8ECGTG4t6Tq
-         E0paN8oga/m9ZVhOOXIhaQvyzz59UbbCm/Qd5bzaY1IBf6f5J+AUfySs094qUtLno0Pa
-         ZjcPzRgcmTA18r533zW11Uco1ng1i13qXf6uYspFyKY9KVYRnANbG+V+vPa2hj96N/sN
-         hSjg8enefyRdcaWCu7LEVBk88MhJvV3sIEQCvNVr6spPPhmHT5UNr55yb//KYSqiqp9x
-         cyoC4pmoEf5TcH50o0mITusd/wAbFd63Le/S+A+odaVFS9PaYTKE57NuC6PGCjOpXCN7
-         vJ5A==
-X-Forwarded-Encrypted: i=1; AJvYcCVI0v0Y+Hpt6r3trXSpdLxBswq1oKANfJ9YYbty7LBxsydzB8o1BfHpXAcBA2Eg0jXrLAU6+lHB236zunTj@vger.kernel.org
-X-Gm-Message-State: AOJu0YxB5cBxZo/jun5mCIOmlrqbmjq+JC3X6lAHaKhqWQMv1y+FyLgd
-	PlML1WY9wSu+39++4oGJC7Uku+Tt8SM9ztkH54Ek9AFqI1ByUE+bEOOogfLgSFofG29XqoLS8iC
-	YFvcQj3v5hhXTjxCE3nEzHL+DScND/+XIesp1fl/RJJpStZ7u2LgH+5oVXsegpeDr2X590vW4gV
-	fB0MrVk9uNpFHSJ8KhG9VyEPoz8v+wDX8mmeXv2LOiudg=
-X-Gm-Gg: ASbGncvoo+V3aFIHmoIz6ICLny1o60mJk5DCatG6jNbJTOdOzLI3mFvdscP/llX8eZn
-	7X05kBewBbRpiVpCoNEFgGVcNsS3MkdjkZtLvv+Yf7ubAceN0+M/O3MkRd1j22mpcSxyHEzGjTZ
-	qbMaNTELWuqzkujLfTmpBLiE9euwrtxnWkL9s=
-X-Received: by 2002:a05:6808:1895:b0:401:e98b:ee41 with SMTP id 5614622812f47-40d2d5225e3mr2572652b6e.21.1751748292040;
-        Sat, 05 Jul 2025 13:44:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHNuVCZQzVXO4jcbnNnGpDh9AzHxCuaflkcRU1G9PX6aCasDkDyx4Wuc8GgemmJ2NHZJ9KFWzPkCiv541Dr4Q0=
-X-Received: by 2002:a05:6808:1895:b0:401:e98b:ee41 with SMTP id
- 5614622812f47-40d2d5225e3mr2572638b6e.21.1751748291482; Sat, 05 Jul 2025
- 13:44:51 -0700 (PDT)
+        bh=bijjMn3QnNLDKaQKweiAQd/E4HMHowwt1Utf25lzl20=;
+        b=iD9iMT/8VfEITrBqF3kTmdw/ePqSOBKuEazvqAorC9OqehZceuPMCCGgYscCkbr7t9
+         HExM/e6VtSwpm7t7I0JiF6DrPBdWx1AFz+zmWuEtb6hqT6BWYa/GR9dGrAy4mauFgSMf
+         7X2AjfYfhedNff+XW5QMYTBGlWOPqN2U8ZNhPyIJKI5GI4b49UKwfmGqgpWbvCzVajpI
+         4hCPasgOGxcA0thbinOE/av8L+q0dsTarov9XWDsPP6cyHJBFytzTVlylAnw/finTgUL
+         pPDpRm5diGlTWg2NM/8/MECqT28uUcE3x4VmeEt4aVdWdTJByKvkjpUh/3IWgmruWBfM
+         hFYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751748761; x=1752353561;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bijjMn3QnNLDKaQKweiAQd/E4HMHowwt1Utf25lzl20=;
+        b=cgk/ccsLJ63bdgl+7plXUJ4WqWGPBS/ZYK76HY9iDQUXBgfSk223R/BB1xDabmUkSi
+         QeSxT5mSKuXAE2+kmw7uVy/2UivtA2Yd7dLbItVRWmoz6wPosGIcWhbitXcoxK2dHpUk
+         bpcjcJmptcYsGwLsPsuxaewoZmzWQctfyyKxOJ+8R98rlIq8fZrIRXSw+lrkNrB09Fwk
+         +79EPYzijLN6fiIoyQ5okL100zuKBX3BxYH2l/uqRQ61Nb+AzOd/uDEVzUYiRGb++Y84
+         V3IhLsJDsdI+H3NaLps8Z/Z6DNeezg6ebJS6rbIsGfHfPwRIobeIUV0onDFSHSqqxiBu
+         F9Rg==
+X-Forwarded-Encrypted: i=1; AJvYcCVrWWLSc6VSVd93mhX4vMDi8aJ69uPV+Si3OLFK8YYxz57jtijm2sl94Pft7LHewES/Mvp4xel8yqOStaaqhA==@vger.kernel.org, AJvYcCWW1LjvUV55DPpeCE4hGsb72Ro5kGuGA5gRag8HM3n3J3OAzo/rGtQTMDwO1tOet/ne9Mve7yP6GwbviT4R@vger.kernel.org, AJvYcCWaBcOhU9DexVVPXe/Z2UphteDI5A3IoK50pt3hdiLo3gaYwG2o0p2oEKAgzvqHLiMCBWGtCCvn2pnr@vger.kernel.org
+X-Gm-Message-State: AOJu0YyFuUImeCFUqUDwGY5hd8RcbP0tZJNF7t4c7alHcDJnbUNa4tPk
+	4OzY67g3lQuwfRxV+nwbG5wzfHReg4eQUYVrWbMcU4bhY3TxcJO8Sjo=
+X-Gm-Gg: ASbGnctu/hwwG6cqO2DjvbEG76bXPdhc+yNvdxcv1/zXIQMjkKiObxoCt3ou3AQKr55
+	Vmwio5Vf/rqNNGRdkrOWleTxtlZXHO80qeQVrU/iOgIn4ea8KZk71G9A34KmGAXx7EYReBigqoZ
+	KRUUv4s/MglJC68tnVcpFSftIlHoXK41UEMBvRmph3mIi5XVg1ib+Fs1yN+Awt4tDvhu3mz2R7U
+	PShf9buZTAfD8NRqbfUG4ZuDaYFeoOGwosQx9YiL6uPXsgNB8vhjOpZupD5Znl3cvFF/I1GJqJ/
+	vqrKldHmr9yTKqAJ+GqV9tQXx6HHgopYvhzeTPvz1UgaBBf1+cz6m9V7TkC5khk20kAzcwSg9g=
+	=
+X-Google-Smtp-Source: AGHT+IFX1pqyvB2F+P1twoTAratuej01Qp6VdRMRJ/2z2ak0EmEGLRmnRosBI2eKnJkq1FzimDbomw==
+X-Received: by 2002:a17:906:6a16:b0:ae3:c780:b883 with SMTP id a640c23a62f3a-ae3fe82d4d8mr712551866b.54.1751748760148;
+        Sat, 05 Jul 2025 13:52:40 -0700 (PDT)
+Received: from [192.168.20.64] ([84.226.118.249])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f6ac5d69sm401299566b.76.2025.07.05.13.52.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 05 Jul 2025 13:52:39 -0700 (PDT)
+Message-ID: <d6bc3147-b3c3-4c11-8c07-3c1817715930@gmail.com>
+Date: Sat, 5 Jul 2025 22:52:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Robin Clark <robin.clark@oss.qualcomm.com>
-Date: Sat, 5 Jul 2025 13:44:40 -0700
-X-Gm-Features: Ac12FXw2yIXtaB5dcij5_lXphrWSUPOzGla1_eOe-hpI6NnOtkDXI49vgrNQj7I
-Message-ID: <CACSVV0217R+kpoWQJeuYGHf6q_4aFyEJuKa=dZZKOnLQzFwppg@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-next-2025-07-05 for v6.17
-To: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: "open list:DRM DRIVER for Qualcomm Adreno GPUs" <dri-devel@lists.freedesktop.org>,
-        "open list:DRM DRIVER for Qualcomm Adreno GPUs" <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER for Qualcomm Adreno GPUs" <freedreno@lists.freedesktop.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-        Connor Abbott <cwabbott0@gmail.com>,
-        Antonino Maniscalco <antomani103@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Proofpoint-GUID: pIohUjAbp6hv2NK1zJkp7Gsqbs4NAgJX
-X-Proofpoint-ORIG-GUID: pIohUjAbp6hv2NK1zJkp7Gsqbs4NAgJX
-X-Authority-Analysis: v=2.4 cv=e/kGSbp/ c=1 sm=1 tr=0 ts=68698ec5 cx=c_pps
- a=Z3eh007fzM5o9awBa1HkYQ==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
- a=e5mUnYsNAAAA:8 a=Rf3lO9QfSqFDG8CatJQA:9 a=QEXdDO2ut3YA:10
- a=eBU8X_Hb5SQ8N-bgNfv4:22 a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA1MDEzNyBTYWx0ZWRfX3wDSGMPn/qwq
- yme7JhyTww8KZav9HRhmhWZRm5BGS5/EuyhNZ7N0pcc6MRPfc2H6uc8GR4XLT9iJPfHXUDBJbFW
- IBtYU64z3H9/WCqQREzJKTyLc95kN0jcRzwaEPILgGsbLhL8N6DI1TaNSwjMDCqd9YBp2dgnZ2i
- Mp/9GoX1yNhV2f6YUGSy2HeLUqPilVb2pvIUZjZ9EThAanVt0vLaCapeR4s1hnxh3c6AIjO7ceh
- DwRt726gZ6D0JuDeu4hGCTLjoDBo57LW9BqYrkROxJFgyV8aTGnVN1pdu49Q8yJ326ICrohOaWM
- 0HLPENpVLXwNboSuv5uT6LrfHm7st3tbIyYeXRmwSXekYEKzy3KW67KqMkezdRIEaQYc1B0NiM/
- 5Db9nLNw9HorSU++YbvXsn3UaWy5pgqqMRxumWgpMp8aKFvA7sQtAy9zBPD1OsneAa+b58F+
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-04_07,2025-07-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0 impostorscore=0 adultscore=0 mlxlogscore=999
- lowpriorityscore=0 priorityscore=1501 suspectscore=0 mlxscore=0 phishscore=0
- bulkscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507050137
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/5] arm64: dts: qcom: Add support for Dell Inspiron
+ 7441 / Latitude 7455
+To: Val Packett <val@packett.cool>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250701231643.568854-1-val@packett.cool>
+ <20250701231643.568854-4-val@packett.cool>
+Content-Language: en-US
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+In-Reply-To: <20250701231643.568854-4-val@packett.cool>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Dave, Simona,
 
-Pull for v6.17 as described below.  A bit larger this time, bringing
-in VM_BIND support, x1-45 support, x1-85 speedbin support, and sm8750
-kms support.
+On 7/2/25 00:53, Val Packett wrote:
+> Add device trees for both SKUs of the X1E80100 Thena laptop:
+> - Dell Latitude 7455
+> - Dell Inspiron 14 Plus 7441
+>
+> Works:
+> - Wi-Fi (WCN7850 hw2.0)
+> - Bluetooth
+> - USB Type-C x2 (with DP alt mode)
+> - USB Type-A
+> - USB Fingerprint reader
+> - eDP Display (with brightness)
+> - NVMe
+> - SDHC (microSD slot)
+> - Keyboard
+> - Touchpad
+> - Touchscreen
+> - Audio (4 Speakers, 2 DMICs, Combo Jack)
+> - Battery
+>
+> Not included:
+> - Camera
+>
+> Co-authored-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Val Packett <val@packett.cool>
+> ---
+>   arch/arm64/boot/dts/qcom/Makefile             |    4 +
+>   .../x1e80100-dell-inspiron-14-plus-7441.dts   |   51 +
+>   .../dts/qcom/x1e80100-dell-latitude-7455.dts  |   52 +
+>   .../boot/dts/qcom/x1e80100-dell-thena.dtsi    | 1658 +++++++++++++++++
+>   4 files changed, 1765 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts
+>   create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts
+>   create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell-thena.dtsi
+>
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 4bfa926b6a08..d2f932dfcc75 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -315,6 +315,10 @@ x1e80100-asus-zenbook-a14-el2-dtbs	:= x1e80100-asus-zenbook-a14.dtb x1-el2.dtbo
+>   dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-asus-zenbook-a14.dtb x1e80100-asus-zenbook-a14-el2.dtb
+>   x1e80100-crd-el2-dtbs	:= x1e80100-crd.dtb x1-el2.dtbo
+>   dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-crd.dtb x1e80100-crd-el2.dtb
+> +x1e80100-dell-inspiron-14-plus-7441-el2-dtbs	:= x1e80100-dell-inspiron-14-plus-7441.dtb x1-el2.dtbo
+> +dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-dell-inspiron-14-plus-7441.dtb x1e80100-dell-inspiron-14-plus-7441-el2.dtb
+> +x1e80100-dell-latitude-7455-el2-dtbs	:= x1e80100-dell-latitude-7455.dtb x1-el2.dtbo
+> +dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-dell-latitude-7455.dtb x1e80100-dell-latitude-7455-el2.dtb
+>   x1e80100-dell-xps13-9345-el2-dtbs	:= x1e80100-dell-xps13-9345.dtb x1-el2.dtbo
+>   dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-dell-xps13-9345.dtb x1e80100-dell-xps13-9345-el2.dtb
+>   x1e80100-hp-elitebook-ultra-g1q-el2-dtbs := x1e80100-hp-elitebook-ultra-g1q.dtb x1-el2.dtbo
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts
+> new file mode 100644
+> index 000000000000..0ff98752a276
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts
+> @@ -0,0 +1,51 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2025 Val Packett <val@packett.cool>
+> + */
+> +/dts-v1/;
+> +
+> +#include "x1e80100-dell-thena.dtsi"
+> +
+> +/ {
+> +	model = "Dell Inspirion 14 Plus 7441";
 
-The following changes since commit f41830c57bb8e70e283b9db251c95f1270a8279d:
 
-  Merge tag 'drm-misc-next-2025-06-26' of
-https://gitlab.freedesktop.org/drm/misc/kernel into drm-next
-(2025-06-27 09:58:05 +1000)
+Seems you missed one here :)
 
-are available in the Git repository at:
+s/Inspirion/Inspiron/
 
-  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-next-2025-07-05
 
-for you to fetch changes up to 8290d37ad2b087bbcfe65fa5bcaf260e184b250a:
+Regards,
+Alex
 
-  drm/msm: Small function param doc fix (2025-07-05 09:59:12 -0700)
-
-----------------------------------------------------------------
-Updates for v6.17
-
-CI:
-- uprev mesa and ci-templates
-- use shallow clone to speed up build jobs
-- remove sdm845/cheza jobs.  These runners are no more (RIP
-  dear chezas)
-- fix runner tag for i915 cml runners
-- uprev igt to pull in msm test fixes
-
-Core:
-- VM_BIND support!
-- single source of truth for UBWC configuration.  Adds a global soc
-  driver for UBWC config which is used from display and GPU.  (And
-  later vidc/camera/etc)
-- Decouple ties between GPU and KMS, adding a `separate_gpu_kms`
-  modparam to allow the GPU and KMS to bind to separate DRM devices.
-  This should better deal with more exotic SoC configurations where
-  the number of GPUs is different from number of DPUs.  The default
-  behavior is to still come up as a single unified DRM device to
-  avoid surprising userspace.
-
-DP:
-- major rework of the I/O accessors
-
-DPU:
-- use version checks instead of feature bits
-- SM8750 support
-- set min_prefill_lines for SC8180X
-
-DSI:
-- SM8750 support
-
-GPU:
-- speedbin support for X1-85
-- X1-45 support
-
-MDSS:
-- SM8750 support
-
-----------------------------------------------------------------
-Akhil P Oommen (4):
-      drm/msm/adreno: Add speedbin support for X1-85
-      dt-bindings: power: qcom,rpmpd: add Turbo L5 corner
-      dt-bindings: opp: adreno: Update regex of OPP entry
-      drm/msm/adreno: Add Adreno X1-45 support
-
-Connor Abbott (5):
-      drm/msm: Don't use a worker to capture fault devcoredump
-      drm/msm: Delete resume_translation()
-      drm/msm: Temporarily disable stall-on-fault after a page fault
-      drm/msm: Fix CP_RESET_CONTEXT_STATE bitfield names
-      drm/msm/a7xx: Call CP_RESET_CONTEXT_STATE
-
-Dmitry Baryshkov (51):
-      drm/msm/dpu: stop passing mdss_ver to setup_timing_gen()
-      drm/msm/dpu: drop INTF_SC7280_MASK
-      drm/msm/dpu: inline _setup_ctl_ops()
-      drm/msm/dpu: inline _setup_dsc_ops()
-      drm/msm/dpu: inline _setup_dspp_ops()
-      drm/msm/dpu: inline _setup_mixer_ops()
-      drm/msm/dpu: remove DSPP_SC7180_MASK
-      drm/msm/dpu: get rid of DPU_CTL_HAS_LAYER_EXT4
-      drm/msm/dpu: get rid of DPU_CTL_ACTIVE_CFG
-      drm/msm/dpu: get rid of DPU_CTL_FETCH_ACTIVE
-      drm/msm/dpu: get rid of DPU_CTL_DSPP_SUB_BLOCK_FLUSH
-      drm/msm/dpu: get rid of DPU_CTL_VM_CFG
-      drm/msm/dpu: get rid of DPU_DATA_HCTL_EN
-      drm/msm/dpu: get rid of DPU_INTF_STATUS_SUPPORTED
-      drm/msm/dpu: get rid of DPU_INTF_INPUT_CTRL
-      drm/msm/dpu: get rid of DPU_PINGPONG_DSC
-      drm/msm/dpu: get rid of DPU_PINGPONG_DITHER
-      drm/msm/dpu: get rid of DPU_MDP_VSYNC_SEL
-      drm/msm/dpu: get rid of DPU_MDP_PERIPH_0_REMOVED
-      drm/msm/dpu: get rid of DPU_MDP_AUDIO_SELECT
-      drm/msm/dpu: get rid of DPU_MIXER_COMBINED_ALPHA
-      drm/msm/dpu: get rid of DPU_DIM_LAYER
-      drm/msm/dpu: get rid of DPU_DSC_HW_REV_1_2
-      drm/msm/dpu: get rid of DPU_DSC_OUTPUT_CTRL
-      drm/msm/dpu: get rid of DPU_WB_INPUT_CTRL
-      drm/msm/dpu: get rid of DPU_SSPP_QOS_8LVL
-      drm/msm/dpu: drop unused MDP TOP features
-      drm/msm/dpu: drop ununused PINGPONG features
-      drm/msm/dpu: drop ununused MIXER features
-      drm/msm/dpu: move features out of the DPU_HW_BLK_INFO
-      drm/msm/dp: split MMSS_DP_DSC_DTO register write to a separate function
-      drm/msm/dp: read hw revision only once
-      drm/msm/dp: pull I/O data out of msm_dp_catalog_private()
-      drm/msm/dp: move I/O functions to global header
-      drm/msm/dp: move/inline AUX register functions
-      drm/msm/dp: move/inline panel related functions
-      drm/msm/dp: move/inline audio related functions
-      drm/msm/dp: move/inline ctrl register functions
-      drm/msm/dp: move more AUX functions to dp_aux.c
-      drm/msm/dp: move interrupt handling to dp_ctrl
-      drm/msm/dp: drop the msm_dp_catalog module
-      drm/msm: move wq handling to KMS code
-      drm/msm: move helper calls to msm_kms.c
-      drm/msm/mdp4: get rid of mdp4_crtc.id
-      drm/msm: get rid of msm_drm_private::num_crtcs
-      drm/msm: move KMS driver data to msm_kms
-      drm/msm: make it possible to disable KMS-related code.
-      drm/msm: bail out late_init_minor() if it is not a GPU device
-      drm/msm: rearrange symbol selection
-      drm/msm: rework binding of Imageon GPUs
-      drm/msm: enable separate binding of GPU and display devices
-
-James A. MacInnes (2):
-      drm/msm/dp: Disable wide bus support for SDM845
-      drm/msm/disp: Correct porch timing for SDM845
-
-Konrad Dybcio (15):
-      drm/msm/dpu: Fill in min_prefill_lines for SC8180X
-      soc: qcom: Add UBWC config provider
-      drm/msm: Offset MDSS HBB value by 13
-      drm/msm: Use the central UBWC config database
-      drm/msm/a6xx: Get a handle to the common UBWC config
-      drm/msm/a6xx: Resolve the meaning of AMSBC
-      drm/msm/a6xx: Simplify uavflagprd_inv detection
-      drm/msm/a6xx: Resolve the meaning of UBWC_MODE
-      drm/msm/a6xx: Replace '2' with BIT(1) in level2_swizzling_dis calc
-      drm/msm/a6xx: Resolve the meaning of rgb565_predicator
-      drm/msm/a6xx: Simplify min_acc_len calculation
-      soc: qcom: ubwc: Fix SM6125's ubwc_swizzle value
-      soc: qcom: ubwc: Add #defines for UBWC swizzle bits
-      soc: qcom: ubwc: Fill in UBWC swizzle cfg for platforms that lack one
-      drm/msm/adreno: Switch to the common UBWC config struct
-
-Krzysztof Kozlowski (14):
-      drm/msm/dsi/dsi_phy_10nm: Fix missing initial VCO rate
-      dt-bindings: display/msm: dsi-phy-7nm: Add SM8750
-      dt-bindings: display/msm: dsi-controller-main: Add SM8750
-      dt-bindings: display/msm: dp-controller: Add SM8750
-      dt-bindings: display/msm: qcom,sm8650-dpu: Add SM8750
-      dt-bindings: display/msm: qcom,sm8750-mdss: Add SM8750
-      drm/msm/dsi/phy: Add support for SM8750
-      drm/msm/dsi: Add support for SM8750
-      drm/msm/dpu: Add support for SM8750
-      drm/msm/dpu: Consistently use u32 instead of uint32_t
-      drm/msm/dpu: Implement 10-bit color alpha for v12.0 DPU
-      drm/msm/dpu: Implement CTL_PIPE_ACTIVE for v12.0 DPU
-      drm/msm/dpu: Implement LM crossbar for v12.0 DPU
-      drm/msm/mdss: Add support for SM8750
-
-Randy Dunlap (1):
-      drm/msm/dp: add linux/io.h header to fix build errors
-
-Rob Clark (55):
-      drm/msm: Fix a fence leak in submit error path
-      drm/msm: Fix another leak in the submit error path
-      drm/msm: Rename add_components_mdp()
-      drm/msm/adreno: Pass device_node to find_chipid()
-      drm/msm/adreno: Check for recognized GPU before bind
-      drm/msm: Fix inverted WARN_ON() logic
-      Merge remote-tracking branch 'drm/drm-next' into msm-next
-      drm/ci: Remove sdm845/cheza jobs
-      drm/ci: Uprev igt
-      drm/gpuvm: Fix doc comments
-      drm/gpuvm: Add locking helpers
-      drm/gem: Add ww_acquire_ctx support to drm_gem_lru_scan()
-      drm/msm: Rename msm_file_private -> msm_context
-      drm/msm: Improve msm_context comments
-      drm/msm: Rename msm_gem_address_space -> msm_gem_vm
-      drm/msm: Remove vram carveout support
-      drm/msm: Collapse vma allocation and initialization
-      drm/msm: Collapse vma close and delete
-      drm/msm: Don't close VMAs on purge
-      drm/msm: Stop passing vm to msm_framebuffer
-      drm/msm: Refcount framebuffer pins
-      drm/msm: drm_gpuvm conversion
-      drm/msm: Convert vm locking
-      drm/msm: Use drm_gpuvm types more
-      drm/msm: Split out helper to get iommu prot flags
-      drm/msm: Add mmu support for non-zero offset
-      drm/msm: Add PRR support
-      drm/msm: Rename msm_gem_vma_purge() -> _unmap()
-      drm/msm: Drop queued submits on lastclose()
-      drm/msm: Lazily create context VM
-      drm/msm: Add opt-in for VM_BIND
-      drm/msm: Mark VM as unusable on GPU hangs
-      drm/msm: Add _NO_SHARE flag
-      drm/msm: Crashdump prep for sparse mappings
-      drm/msm: rd dumping prep for sparse mappings
-      drm/msm: Crashdump support for sparse
-      drm/msm: rd dumping support for sparse
-      drm/msm: Extract out syncobj helpers
-      drm/msm: Use DMA_RESV_USAGE_BOOKKEEP/KERNEL
-      drm/msm: Add VM_BIND submitqueue
-      drm/msm: Support IO_PGTABLE_QUIRK_NO_WARN_ON
-      drm/msm: Support pgtable preallocation
-      drm/msm: Split out map/unmap ops
-      drm/msm: Add VM_BIND ioctl
-      drm/msm: Add VM logging for VM_BIND updates
-      drm/msm: Add VMA unmap reason
-      drm/msm: Add mmu prealloc tracepoint
-      drm/msm: use trylock for debugfs
-      drm/msm: Bump UAPI version
-      drm/msm: Defer VMA unmap for fb unpins
-      drm/msm: Add VM_BIND throttling
-      drm/msm: Update register xml
-      drm/msm: Clean up split driver features
-      drm/msm: Take the ioctls away from the KMS-only driver
-      drm/msm: Small function param doc fix
-
-Ryan Eatmon (1):
-      drivers: gpu: drm: msm: registers: improve reproducibility
-
-Vignesh Raman (3):
-      drm/ci: python-artifacts: use shallow clone
-      drm/ci: uprev mesa and ci-templates
-      drm/ci: i915: cml: Fix the runner tag
-
-Yuan Chen (1):
-      drm/msm: Add error handling for krealloc in metadata setup
-
- .../bindings/display/msm/dp-controller.yaml        |    4 +
- .../bindings/display/msm/dsi-controller-main.yaml  |   54 +-
- .../bindings/display/msm/dsi-phy-7nm.yaml          |    1 +
- .../bindings/display/msm/qcom,sm8650-dpu.yaml      |    1 +
- .../bindings/display/msm/qcom,sm8750-mdss.yaml     |  470 +++
- .../bindings/opp/opp-v2-qcom-adreno.yaml           |    2 +-
- drivers/gpu/drm/ci/build-igt.sh                    |    2 +-
- drivers/gpu/drm/ci/build.sh                        |   17 +-
- drivers/gpu/drm/ci/build.yml                       |   10 +-
- drivers/gpu/drm/ci/container.yml                   |   30 +-
- drivers/gpu/drm/ci/gitlab-ci.yml                   |   52 +-
- drivers/gpu/drm/ci/igt_runner.sh                   |    1 +
- drivers/gpu/drm/ci/image-tags.yml                  |   20 +-
- drivers/gpu/drm/ci/lava-submit.sh                  |    6 +-
- drivers/gpu/drm/ci/test.yml                        |   47 +-
- .../xfails/msm-sc7180-trogdor-kingoftown-skips.txt |    5 +
- .../msm-sc7180-trogdor-lazor-limozeen-skips.txt    |    5 +
- drivers/gpu/drm/ci/xfails/msm-sdm845-fails.txt     |   29 -
- drivers/gpu/drm/ci/xfails/msm-sdm845-flakes.txt    |  139 -
- drivers/gpu/drm/ci/xfails/msm-sdm845-skips.txt     |  350 --
- drivers/gpu/drm/drm_gem.c                          |   14 +-
- drivers/gpu/drm/drm_gpuvm.c                        |  132 +-
- drivers/gpu/drm/msm/Kconfig                        |   36 +-
- drivers/gpu/drm/msm/Makefile                       |   26 +-
- drivers/gpu/drm/msm/adreno/a2xx_gpu.c              |   25 +-
- drivers/gpu/drm/msm/adreno/a2xx_gpummu.c           |   10 +-
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c              |   17 +-
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c              |   17 +-
- drivers/gpu/drm/msm/adreno/a5xx_debugfs.c          |    4 +-
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |   44 +-
- drivers/gpu/drm/msm/adreno/a5xx_power.c            |    2 +-
- drivers/gpu/drm/msm/adreno/a5xx_preempt.c          |   10 +-
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c          |   48 +-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |   32 +-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h              |    2 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  205 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |    4 +
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |    8 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h        |    2 +-
- drivers/gpu/drm/msm/adreno/a6xx_preempt.c          |   12 +-
- drivers/gpu/drm/msm/adreno/adreno_device.c         |   82 +-
- .../gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h  |    4 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.c            |  154 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   69 +-
- .../drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h    |   49 +-
- .../drm/msm/disp/dpu1/catalog/dpu_12_0_sm8750.h    |  494 +++
- .../drm/msm/disp/dpu1/catalog/dpu_1_14_msm8937.h   |    2 -
- .../drm/msm/disp/dpu1/catalog/dpu_1_15_msm8917.h   |    2 -
- .../drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h   |    2 -
- .../drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h    |    7 -
- .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |    7 -
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h |    7 -
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h |    4 -
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h |   17 +-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h |   11 +-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h |   39 +-
- .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |   44 +-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h |   29 +-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_sm6150.h |   19 +-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h |   16 +-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h |   38 +-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |   14 +-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |    5 -
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h |   16 +-
- .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |    5 -
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h |    6 -
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |   40 +-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |   22 +-
- .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |   46 +-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |   43 +-
- .../drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h    |   49 +-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |   43 +-
- .../drm/msm/disp/dpu1/catalog/dpu_9_1_sar2130p.h   |   43 +-
- .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   |   48 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |   61 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |   22 +-
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |    3 +-
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   19 +-
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |   18 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c        |   20 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h        |    3 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   71 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  103 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  145 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |   21 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c         |   21 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |    3 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c     |    5 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c        |   10 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |   14 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |    5 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c          |  224 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h          |   21 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c     |    5 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |    4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c        |   11 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h        |    6 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c         |   11 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c          |    2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   65 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |    2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |   25 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h          |    2 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |   10 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h             |    2 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c          |   15 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c           |   41 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h           |    2 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c         |   18 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c          |    6 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c           |   36 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c         |   18 +-
- drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c  |   12 +-
- drivers/gpu/drm/msm/dp/dp_audio.c                  |  130 +-
- drivers/gpu/drm/msm/dp/dp_audio.h                  |    7 +-
- drivers/gpu/drm/msm/dp/dp_aux.c                    |  216 +-
- drivers/gpu/drm/msm/dp/dp_aux.h                    |   15 +-
- drivers/gpu/drm/msm/dp/dp_catalog.c                | 1298 -------
- drivers/gpu/drm/msm/dp/dp_catalog.h                |  113 -
- drivers/gpu/drm/msm/dp/dp_ctrl.c                   |  607 +++-
- drivers/gpu/drm/msm/dp/dp_ctrl.h                   |   19 +-
- drivers/gpu/drm/msm/dp/dp_debug.c                  |    5 +-
- drivers/gpu/drm/msm/dp/dp_display.c                |  163 +-
- drivers/gpu/drm/msm/dp/dp_link.c                   |    1 +
- drivers/gpu/drm/msm/dp/dp_panel.c                  |  258 +-
- drivers/gpu/drm/msm/dp/dp_panel.h                  |   13 +-
- drivers/gpu/drm/msm/dp/dp_reg.h                    |   19 +
- drivers/gpu/drm/msm/dsi/dsi.c                      |    4 +-
- drivers/gpu/drm/msm/dsi/dsi.h                      |    2 +
- drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |   14 +
- drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |    1 +
- drivers/gpu/drm/msm/dsi/dsi_host.c                 |   75 +-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |    2 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |    1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c         |    7 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          |   79 +-
- drivers/gpu/drm/msm/hdmi/hdmi.c                    |    9 +-
- drivers/gpu/drm/msm/msm_debugfs.c                  |  129 +-
- drivers/gpu/drm/msm/msm_drv.c                      |  381 +--
- drivers/gpu/drm/msm/msm_drv.h                      |   84 +-
- drivers/gpu/drm/msm/msm_fb.c                       |   33 +-
- drivers/gpu/drm/msm/msm_fbdev.c                    |    2 +-
- drivers/gpu/drm/msm/msm_gem.c                      |  536 ++-
- drivers/gpu/drm/msm/msm_gem.h                      |  296 +-
- drivers/gpu/drm/msm/msm_gem_prime.c                |   65 +
- drivers/gpu/drm/msm/msm_gem_shrinker.c             |  104 +-
- drivers/gpu/drm/msm/msm_gem_submit.c               |  327 +-
- drivers/gpu/drm/msm/msm_gem_vma.c                  | 1514 ++++++++-
- drivers/gpu/drm/msm/msm_gpu.c                      |  228 +-
- drivers/gpu/drm/msm/msm_gpu.h                      |  153 +-
- drivers/gpu/drm/msm/msm_gpu_trace.h                |   14 +
- drivers/gpu/drm/msm/msm_iommu.c                    |  314 +-
- drivers/gpu/drm/msm/msm_kms.c                      |   59 +-
- drivers/gpu/drm/msm/msm_kms.h                      |   48 +-
- drivers/gpu/drm/msm/msm_mdss.c                     |  331 +-
- drivers/gpu/drm/msm/msm_mdss.h                     |   28 -
- drivers/gpu/drm/msm/msm_mmu.h                      |   40 +-
- drivers/gpu/drm/msm/msm_rd.c                       |   62 +-
- drivers/gpu/drm/msm/msm_ringbuffer.c               |   10 +-
- drivers/gpu/drm/msm/msm_submitqueue.c              |   96 +-
- drivers/gpu/drm/msm/msm_syncobj.c                  |  172 +
- drivers/gpu/drm/msm/msm_syncobj.h                  |   37 +
- drivers/gpu/drm/msm/registers/adreno/a6xx.xml      | 3582 ++++----------------
- .../drm/msm/registers/adreno/a6xx_descriptors.xml  |  198 ++
- .../gpu/drm/msm/registers/adreno/a6xx_enums.xml    |  383 +++
- .../drm/msm/registers/adreno/a6xx_perfcntrs.xml    |  600 ++++
- .../gpu/drm/msm/registers/adreno/a7xx_enums.xml    |  223 ++
- .../drm/msm/registers/adreno/a7xx_perfcntrs.xml    | 1030 ++++++
- .../gpu/drm/msm/registers/adreno/adreno_pm4.xml    |  305 +-
- .../gpu/drm/msm/registers/display/dsi_phy_7nm.xml  |   14 +
- drivers/gpu/drm/msm/registers/gen_header.py        |    8 +-
- drivers/soc/qcom/Kconfig                           |    8 +
- drivers/soc/qcom/Makefile                          |    1 +
- drivers/soc/qcom/ubwc_config.c                     |  282 ++
- include/drm/drm_gem.h                              |   10 +-
- include/drm/drm_gpuvm.h                            |    8 +
- include/dt-bindings/power/qcom-rpmpd.h             |    1 +
- include/linux/soc/qcom/ubwc.h                      |   75 +
- include/uapi/drm/msm_drm.h                         |  149 +-
- 179 files changed, 11379 insertions(+), 8072 deletions(-)
- create mode 100644
-Documentation/devicetree/bindings/display/msm/qcom,sm8750-mdss.yaml
- delete mode 100644 drivers/gpu/drm/ci/xfails/msm-sdm845-fails.txt
- delete mode 100644 drivers/gpu/drm/ci/xfails/msm-sdm845-flakes.txt
- delete mode 100644 drivers/gpu/drm/ci/xfails/msm-sdm845-skips.txt
- create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_12_0_sm8750.h
- delete mode 100644 drivers/gpu/drm/msm/dp/dp_catalog.c
- delete mode 100644 drivers/gpu/drm/msm/dp/dp_catalog.h
- delete mode 100644 drivers/gpu/drm/msm/msm_mdss.h
- create mode 100644 drivers/gpu/drm/msm/msm_syncobj.c
- create mode 100644 drivers/gpu/drm/msm/msm_syncobj.h
- create mode 100644 drivers/gpu/drm/msm/registers/adreno/a6xx_descriptors.xml
- create mode 100644 drivers/gpu/drm/msm/registers/adreno/a6xx_enums.xml
- create mode 100644 drivers/gpu/drm/msm/registers/adreno/a6xx_perfcntrs.xml
- create mode 100644 drivers/gpu/drm/msm/registers/adreno/a7xx_enums.xml
- create mode 100644 drivers/gpu/drm/msm/registers/adreno/a7xx_perfcntrs.xml
- create mode 100644 drivers/soc/qcom/ubwc_config.c
- create mode 100644 include/linux/soc/qcom/ubwc.h
+> +	compatible = "dell,inspiron-14-plus-7441", "qcom,x1e80100";
+> +};
+> +
+> +&sound {
+> +	model = "X1E80100-Dell-Inspiron-14p-7441";
+> +};
+> +
+> +&gpu {
+> +	status = "okay";
+> +};
+> +
+> +&gpu_zap_shader {
+> +	firmware-name = "qcom/x1e80100/dell/inspiron-14-plus-7441/qcdxkmsuc8380.mbn";
+> +};
+> +
+> +&i2c8 {
+> +	touchscreen@10 {
+> +		compatible = "hid-over-i2c";
+> +		reg = <0x10>;
+> +
+> +		hid-descr-addr = <0x1>;
+> +		interrupts-extended = <&tlmm 51 IRQ_TYPE_LEVEL_LOW>;
+> +
+> +		pinctrl-0 = <&ts0_default>;
+> +		pinctrl-names = "default";
+> +	};
+> +};
+> +
+> +&remoteproc_adsp {
+> +	firmware-name = "qcom/x1e80100/dell/inspiron-14-plus-7441/qcadsp8380.mbn",
+> +			"qcom/x1e80100/dell/inspiron-14-plus-7441/adsp_dtbs.elf";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&remoteproc_cdsp {
+> +	firmware-name = "qcom/x1e80100/dell/inspiron-14-plus-7441/qccdsp8380.mbn",
+> +			"qcom/x1e80100/dell/inspiron-14-plus-7441/cdsp_dtbs.elf";
+> +
+> +	status = "okay";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts
+> new file mode 100644
+> index 000000000000..b5144a01b5d6
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts
+> @@ -0,0 +1,52 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2025 Val Packett <val@packett.cool>
+> + */
+> +/dts-v1/;
+> +
+> +#include "x1e80100-dell-thena.dtsi"
+> +
+> +/ {
+> +	model = "Dell Latitude 7455";
+> +	compatible = "dell,latitude-7455", "qcom,x1e80100";
+> +};
+> +
+> +&sound {
+> +	model = "X1E80100-Dell-Latitude-7455";
+> +};
+> +
+> +&gpu {
+> +	status = "okay";
+> +};
+> +
+> +&gpu_zap_shader {
+> +	firmware-name = "qcom/x1e80100/dell/latitude-7455/qcdxkmsuc8380.mbn";
+> +};
+> +
+> +&i2c8 {
+> +	/* LXST2021 */
+> +	touchscreen@9 {
+> +		compatible = "hid-over-i2c";
+> +		reg = <0x09>;
+> +
+> +		hid-descr-addr = <0x1>;
+> +		interrupts-extended = <&tlmm 51 IRQ_TYPE_LEVEL_LOW>;
+> +
+> +		pinctrl-0 = <&ts0_default>;
+> +		pinctrl-names = "default";
+> +	};
+> +};
+> +
+> +&remoteproc_adsp {
+> +	firmware-name = "qcom/x1e80100/dell/latitude-7455/qcadsp8380.mbn",
+> +			"qcom/x1e80100/dell/latitude-7455/adsp_dtbs.elf";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&remoteproc_cdsp {
+> +	firmware-name = "qcom/x1e80100/dell/latitude-7455/qccdsp8380.mbn",
+> +			"qcom/x1e80100/dell/latitude-7455/cdsp_dtbs.elf";
+> +
+> +	status = "okay";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-thena.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-dell-thena.dtsi
+> new file mode 100644
+> index 000000000000..c79c2ce6da69
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-thena.dtsi
+> @@ -0,0 +1,1658 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2024 Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+> + * Copyright (c) 2025 Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> + * Copyright (c) 2025 Val Packett <val@packett.cool>
+> + */
+> +
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/input/gpio-keys.h>
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/leds/common.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +
+> +#include "x1e80100.dtsi"
+> +#include "x1e80100-pmics.dtsi"
+> +
+> +/ {
+> +	chassis-type = "laptop";
+> +
+> +	aliases {
+> +		serial0 = &uart14;
+> +	};
+> +
+> +	wcd938x: audio-codec {
+> +		compatible = "qcom,wcd9385-codec";
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&wcd_default>;
+> +
+> +		qcom,micbias1-microvolt = <1800000>;
+> +		qcom,micbias2-microvolt = <1800000>;
+> +		qcom,micbias3-microvolt = <1800000>;
+> +		qcom,micbias4-microvolt = <1800000>;
+> +		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
+> +		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
+> +		qcom,mbhc-headphone-vthreshold-microvolt = <40000>;
+> +		qcom,rx-device = <&wcd_rx>;
+> +		qcom,tx-device = <&wcd_tx>;
+> +
+> +		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
+> +
+> +		vdd-buck-supply = <&vreg_l15b_1p8>;
+> +		vdd-rxtx-supply = <&vreg_l15b_1p8>;
+> +		vdd-io-supply = <&vreg_l15b_1p8>;
+> +		vdd-mic-bias-supply = <&vreg_bob1>;
+> +
+> +		#sound-dai-cells = <1>;
+> +	};
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		pinctrl-0 = <&hall_int_n_default>;
+> +		pinctrl-names = "default";
+> +
+> +		switch-lid {
+> +			gpios = <&tlmm 92 GPIO_ACTIVE_LOW>;
+> +			linux,input-type = <EV_SW>;
+> +			linux,code = <SW_LID>;
+> +			wakeup-source;
+> +			wakeup-event-action = <EV_ACT_DEASSERTED>;
+> +		};
+> +	};
+> +
+> +	pmic-glink {
+> +		compatible = "qcom,x1e80100-pmic-glink",
+> +			     "qcom,sm8550-pmic-glink",
+> +			     "qcom,pmic-glink";
+> +		orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
+> +				    <&tlmm 123 GPIO_ACTIVE_HIGH>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		/* Display-adjacent port */
+> +		connector@0 {
+> +			compatible = "usb-c-connector";
+> +			reg = <0>;
+> +			power-role = "dual";
+> +			data-role = "dual";
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+> +
+> +					pmic_glink_ss0_hs_in: endpoint {
+> +						remote-endpoint = <&usb_1_ss0_dwc3_hs>;
+> +					};
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +
+> +					pmic_glink_ss0_ss_in: endpoint {
+> +						remote-endpoint = <&retimer_ss0_ss_out>;
+> +					};
+> +				};
+> +
+> +				port@2 {
+> +					reg = <2>;
+> +
+> +					pmic_glink_ss0_con_sbu_in: endpoint {
+> +						remote-endpoint = <&retimer_ss0_con_sbu_out>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		/* User-adjacent port */
+> +		connector@1 {
+> +			compatible = "usb-c-connector";
+> +			reg = <1>;
+> +			power-role = "dual";
+> +			data-role = "dual";
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+> +
+> +					pmic_glink_ss1_hs_in: endpoint {
+> +						remote-endpoint = <&usb_1_ss1_dwc3_hs>;
+> +					};
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +
+> +					pmic_glink_ss1_ss_in: endpoint {
+> +						remote-endpoint = <&retimer_ss1_ss_out>;
+> +					};
+> +				};
+> +
+> +				port@2 {
+> +					reg = <2>;
+> +
+> +					pmic_glink_ss1_con_sbu_in: endpoint {
+> +						remote-endpoint = <&retimer_ss1_con_sbu_out>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	leds {
+> +		compatible = "gpio-leds";
+> +
+> +		pinctrl-0 = <&cam_indicator_en>;
+> +		pinctrl-names = "default";
+> +
+> +		led-camera-indicator {
+> +			label = "white:camera-indicator";
+> +			function = LED_FUNCTION_INDICATOR;
+> +			color = <LED_COLOR_ID_WHITE>;
+> +			gpios = <&tlmm 110 GPIO_ACTIVE_HIGH>;
+> +			linux,default-trigger = "none";
+> +			default-state = "off";
+> +			/* Reuse as a panic indicator until we get a "camera on" trigger */
+> +			panic-indicator;
+> +		};
+> +	};
+> +
+> +	reserved-memory {
+> +		linux,cma {
+> +			compatible = "shared-dma-pool";
+> +			size = <0x0 0x8000000>;
+> +			reusable;
+> +			linux,cma-default;
+> +		};
+> +	};
+> +
+> +	sound: sound {
+> +		compatible = "qcom,x1e80100-sndcard";
+> +		audio-routing = "WooferLeft IN", "WSA WSA_SPK1 OUT",
+> +				"TweeterLeft IN", "WSA WSA_SPK2 OUT",
+> +				"WooferRight IN", "WSA2 WSA_SPK1 OUT",
+> +				"TweeterRight IN", "WSA2 WSA_SPK2 OUT",
+> +				"IN1_HPHL", "HPHL_OUT",
+> +				"IN2_HPHR", "HPHR_OUT",
+> +				"AMIC2", "MIC BIAS2",
+> +				"VA DMIC0", "MIC BIAS1",
+> +				"VA DMIC1", "MIC BIAS1",
+> +				"VA DMIC0", "VA MIC BIAS1",
+> +				"VA DMIC1", "VA MIC BIAS1",
+> +				"TX SWR_INPUT1", "ADC2_OUTPUT";
+> +
+> +		wcd-playback-dai-link {
+> +			link-name = "WCD Playback";
+> +
+> +			cpu {
+> +				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
+> +			};
+> +
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +
+> +		wcd-capture-dai-link {
+> +			link-name = "WCD Capture";
+> +
+> +			cpu {
+> +				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
+> +			};
+> +
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +
+> +		wsa-dai-link {
+> +			link-name = "WSA Playback";
+> +
+> +			cpu {
+> +				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&left_woofer>, <&left_tweeter>,
+> +					    <&swr0 0>, <&lpass_wsamacro 0>,
+> +					    <&right_woofer>, <&right_tweeter>,
+> +					    <&swr3 0>, <&lpass_wsa2macro 0>;
+> +			};
+> +
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +
+> +		va-dai-link {
+> +			link-name = "VA Capture";
+> +
+> +			cpu {
+> +				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&lpass_vamacro 0>;
+> +			};
+> +
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +	};
+> +
+> +	vreg_cam_1p8: regulator-cam-1p8 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_CAM_1P8";
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +
+> +		gpio = <&tlmm 91 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&cam_ldo_en>;
+> +		pinctrl-names = "default";
+> +	};
+> +
+> +	vreg_edp_3p3: regulator-edp-3p3 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_EDP_3P3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&tlmm 70 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&edp_reg_en>;
+> +		pinctrl-names = "default";
+> +
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vreg_nvme: regulator-nvme {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_NVME_3P3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&tlmm 18 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&nvme_reg_en>;
+> +		pinctrl-names = "default";
+> +
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vreg_rtmr0_1p15: regulator-rtmr0-1p15 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_RTMR0_1P15";
+> +		regulator-min-microvolt = <1150000>;
+> +		regulator-max-microvolt = <1150000>;
+> +
+> +		gpio = <&pmc8380_5_gpios 8 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&usb0_pwr_1p15_reg_en>;
+> +		pinctrl-names = "default";
+> +
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vreg_rtmr0_1p8: regulator-rtmr0-1p8 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_RTMR0_1P8";
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +
+> +		gpio = <&pm8550ve_9_gpios 8 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&usb0_1p8_reg_en>;
+> +		pinctrl-names = "default";
+> +
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vreg_rtmr0_3p3: regulator-rtmr0-3p3 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_RTMR0_3P3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&pm8550_gpios 11 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&usb0_3p3_reg_en>;
+> +		pinctrl-names = "default";
+> +
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vreg_rtmr1_1p15: regulator-rtmr1-1p15 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_RTMR1_1P15";
+> +		regulator-min-microvolt = <1150000>;
+> +		regulator-max-microvolt = <1150000>;
+> +
+> +		gpio = <&tlmm 188 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&usb1_pwr_1p15_reg_en>;
+> +		pinctrl-names = "default";
+> +
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vreg_rtmr1_1p8: regulator-rtmr1-1p8 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_RTMR1_1P8";
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +
+> +		gpio = <&tlmm 175 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&usb1_pwr_1p8_reg_en>;
+> +		pinctrl-names = "default";
+> +
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vreg_rtmr1_3p3: regulator-rtmr1-3p3 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_RTMR1_3P3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&tlmm 186 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&usb1_pwr_3p3_reg_en>;
+> +		pinctrl-names = "default";
+> +
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vph_pwr: regulator-vph-pwr {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "vph_pwr";
+> +		regulator-min-microvolt = <3700000>;
+> +		regulator-max-microvolt = <3700000>;
+> +
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vreg_wcn_3p3: regulator-wcn-3p3 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_WCN_3P3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&tlmm 214 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&wcn_sw_en>;
+> +		pinctrl-names = "default";
+> +
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vreg_wcn_0p95: regulator-wcn-0p95 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_WCN_0P95";
+> +		regulator-min-microvolt = <950000>;
+> +		regulator-max-microvolt = <950000>;
+> +
+> +		vin-supply = <&vreg_wcn_3p3>;
+> +	};
+> +
+> +	vreg_wcn_1p9: regulator-wcn-1p9 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VREG_WCN_1P9";
+> +		regulator-min-microvolt = <1900000>;
+> +		regulator-max-microvolt = <1900000>;
+> +
+> +		vin-supply = <&vreg_wcn_3p3>;
+> +	};
+> +
+> +	wcn7850-pmu {
+> +		compatible = "qcom,wcn7850-pmu";
+> +
+> +		vdd-supply = <&vreg_wcn_0p95>;
+> +		vddio-supply = <&vreg_l15b_1p8>;
+> +		vddaon-supply = <&vreg_wcn_0p95>;
+> +		vdddig-supply = <&vreg_wcn_0p95>;
+> +		vddrfa1p2-supply = <&vreg_wcn_1p9>;
+> +		vddrfa1p8-supply = <&vreg_wcn_1p9>;
+> +
+> +		wlan-enable-gpios = <&tlmm 117 GPIO_ACTIVE_HIGH>;
+> +		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
+> +
+> +		pinctrl-0 = <&wcn_wlan_bt_en>;
+> +		pinctrl-names = "default";
+> +
+> +		regulators {
+> +			vreg_pmu_rfa_cmn: ldo0 {
+> +				regulator-name = "vreg_pmu_rfa_cmn";
+> +			};
+> +
+> +			vreg_pmu_aon_0p59: ldo1 {
+> +				regulator-name = "vreg_pmu_aon_0p59";
+> +			};
+> +
+> +			vreg_pmu_wlcx_0p8: ldo2 {
+> +				regulator-name = "vreg_pmu_wlcx_0p8";
+> +			};
+> +
+> +			vreg_pmu_wlmx_0p85: ldo3 {
+> +				regulator-name = "vreg_pmu_wlmx_0p85";
+> +			};
+> +
+> +			vreg_pmu_btcmx_0p85: ldo4 {
+> +				regulator-name = "vreg_pmu_btcmx_0p85";
+> +			};
+> +
+> +			vreg_pmu_rfa_0p8: ldo5 {
+> +				regulator-name = "vreg_pmu_rfa_0p8";
+> +			};
+> +
+> +			vreg_pmu_rfa_1p2: ldo6 {
+> +				regulator-name = "vreg_pmu_rfa_1p2";
+> +			};
+> +
+> +			vreg_pmu_rfa_1p8: ldo7 {
+> +				regulator-name = "vreg_pmu_rfa_1p8";
+> +			};
+> +
+> +			vreg_pmu_pcie_0p9: ldo8 {
+> +				regulator-name = "vreg_pmu_pcie_0p9";
+> +			};
+> +
+> +			vreg_pmu_pcie_1p8: ldo9 {
+> +				regulator-name = "vreg_pmu_pcie_1p8";
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&apps_rsc {
+> +	regulators-0 {
+> +		compatible = "qcom,pm8550-rpmh-regulators";
+> +		qcom,pmic-id = "b";
+> +
+> +		vdd-bob1-supply = <&vph_pwr>;
+> +		vdd-bob2-supply = <&vph_pwr>;
+> +		vdd-l1-l4-l10-supply = <&vreg_s4c_1p8>;
+> +		vdd-l2-l13-l14-supply = <&vreg_bob1>;
+> +		vdd-l5-l16-supply = <&vreg_bob1>;
+> +		vdd-l6-l7-supply = <&vreg_bob2>;
+> +		vdd-l8-l9-supply = <&vreg_bob1>;
+> +		vdd-l12-supply = <&vreg_s5j_1p2>;
+> +		vdd-l15-supply = <&vreg_s4c_1p8>;
+> +		vdd-l17-supply = <&vreg_bob2>;
+> +
+> +		vreg_bob1: bob1 {
+> +			regulator-name = "vreg_bob1";
+> +			regulator-min-microvolt = <3008000>;
+> +			regulator-max-microvolt = <3960000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_bob2: bob2 {
+> +			regulator-name = "vreg_bob2";
+> +			regulator-min-microvolt = <2504000>;
+> +			regulator-max-microvolt = <3008000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l1b_1p8: ldo1 {
+> +			regulator-name = "vreg_l1b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2b_3p0: ldo2 {
+> +			regulator-name = "vreg_l2b_3p0";
+> +			regulator-min-microvolt = <3072000>;
+> +			regulator-max-microvolt = <3100000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l4b_1p8: ldo4 {
+> +			regulator-name = "vreg_l4b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l6b_1p8: ldo6 {
+> +			regulator-name = "vreg_l6b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <2960000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l7b_2p8: ldo7 {
+> +			regulator-name = "vreg_l7b_2p8";
+> +			regulator-min-microvolt = <2800000>;
+> +			regulator-max-microvolt = <2800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l8b_3p0: ldo8 {
+> +			regulator-name = "vreg_l8b_3p0";
+> +			regulator-min-microvolt = <3072000>;
+> +			regulator-max-microvolt = <3072000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l9b_2p9: ldo9 {
+> +			regulator-name = "vreg_l9b_2p9";
+> +			regulator-min-microvolt = <2960000>;
+> +			regulator-max-microvolt = <2960000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l12b_1p2: ldo12 {
+> +			regulator-name = "vreg_l12b_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l13b_3p0: ldo13 {
+> +			regulator-name = "vreg_l13b_3p0";
+> +			regulator-min-microvolt = <3072000>;
+> +			regulator-max-microvolt = <3100000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l14b_3p0: ldo14 {
+> +			regulator-name = "vreg_l14b_3p0";
+> +			regulator-min-microvolt = <3072000>;
+> +			regulator-max-microvolt = <3072000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l15b_1p8: ldo15 {
+> +			regulator-name = "vreg_l15b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	regulators-1 {
+> +		compatible = "qcom,pm8550ve-rpmh-regulators";
+> +		qcom,pmic-id = "c";
+> +
+> +		vdd-l1-supply = <&vreg_s5j_1p2>;
+> +		vdd-l2-supply = <&vreg_s1f_0p7>;
+> +		vdd-l3-supply = <&vreg_s1f_0p7>;
+> +		vdd-s4-supply = <&vph_pwr>;
+> +
+> +		vreg_s4c_1p8: smps4 {
+> +			regulator-name = "vreg_s4c_1p8";
+> +			regulator-min-microvolt = <1856000>;
+> +			regulator-max-microvolt = <2000000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l1c_1p2: ldo1 {
+> +			regulator-name = "vreg_l1c_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2c_0p8: ldo2 {
+> +			regulator-name = "vreg_l2c_0p8";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3c_0p8: ldo3 {
+> +			regulator-name = "vreg_l3c_0p8";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	regulators-2 {
+> +		compatible = "qcom,pmc8380-rpmh-regulators";
+> +		qcom,pmic-id = "d";
+> +
+> +		vdd-l1-supply = <&vreg_s1f_0p7>;
+> +		vdd-l2-supply = <&vreg_s1f_0p7>;
+> +		vdd-l3-supply = <&vreg_s4c_1p8>;
+> +		vdd-s1-supply = <&vph_pwr>;
+> +
+> +		vreg_l1d_0p8: ldo1 {
+> +			regulator-name = "vreg_l1d_0p8";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2d_0p9: ldo2 {
+> +			regulator-name = "vreg_l2d_0p9";
+> +			regulator-min-microvolt = <912000>;
+> +			regulator-max-microvolt = <912000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3d_1p8: ldo3 {
+> +			regulator-name = "vreg_l3d_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	regulators-3 {
+> +		compatible = "qcom,pmc8380-rpmh-regulators";
+> +		qcom,pmic-id = "e";
+> +
+> +		vdd-l2-supply = <&vreg_s1f_0p7>;
+> +		vdd-l3-supply = <&vreg_s5j_1p2>;
+> +
+> +		vreg_l2e_0p8: ldo2 {
+> +			regulator-name = "vreg_l2e_0p8";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3e_1p2: ldo3 {
+> +			regulator-name = "vreg_l3e_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	regulators-4 {
+> +		compatible = "qcom,pmc8380-rpmh-regulators";
+> +		qcom,pmic-id = "f";
+> +
+> +		vdd-l1-supply = <&vreg_s5j_1p2>;
+> +		vdd-l2-supply = <&vreg_s5j_1p2>;
+> +		vdd-l3-supply = <&vreg_s5j_1p2>;
+> +		vdd-s1-supply = <&vph_pwr>;
+> +
+> +		vreg_s1f_0p7: smps1 {
+> +			regulator-name = "vreg_s1f_0p7";
+> +			regulator-min-microvolt = <700000>;
+> +			regulator-max-microvolt = <1100000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	regulators-6 {
+> +		compatible = "qcom,pm8550ve-rpmh-regulators";
+> +		qcom,pmic-id = "i";
+> +
+> +		vdd-l1-supply = <&vreg_s4c_1p8>;
+> +		vdd-l2-supply = <&vreg_s5j_1p2>;
+> +		vdd-l3-supply = <&vreg_s1f_0p7>;
+> +		vdd-s1-supply = <&vph_pwr>;
+> +		vdd-s2-supply = <&vph_pwr>;
+> +
+> +		vreg_l1i_1p8: ldo1 {
+> +			regulator-name = "vreg_l1i_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2i_1p2: ldo2 {
+> +			regulator-name = "vreg_l2i_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3i_0p8: ldo3 {
+> +			regulator-name = "vreg_l3i_0p8";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	regulators-7 {
+> +		compatible = "qcom,pm8550ve-rpmh-regulators";
+> +		qcom,pmic-id = "j";
+> +
+> +		vdd-l1-supply = <&vreg_s1f_0p7>;
+> +		vdd-l2-supply = <&vreg_s5j_1p2>;
+> +		vdd-l3-supply = <&vreg_s1f_0p7>;
+> +		vdd-s5-supply = <&vph_pwr>;
+> +
+> +		vreg_s5j_1p2: smps5 {
+> +			regulator-name = "vreg_s5j_1p2";
+> +			regulator-min-microvolt = <1256000>;
+> +			regulator-max-microvolt = <1304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l1j_0p8: ldo1 {
+> +			regulator-name = "vreg_l1j_0p8";
+> +			regulator-min-microvolt = <912000>;
+> +			regulator-max-microvolt = <912000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2j_1p2: ldo2 {
+> +			regulator-name = "vreg_l2j_1p2";
+> +			regulator-min-microvolt = <1256000>;
+> +			regulator-max-microvolt = <1256000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3j_0p8: ldo3 {
+> +			regulator-name = "vreg_l3j_0p8";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +};
+> +
+> +&i2c0 {
+> +	clock-frequency = <400000>;
+> +
+> +	status = "okay";
+> +
+> +	keyboard@5 {
+> +		compatible = "hid-over-i2c";
+> +		reg = <0x5>;
+> +
+> +		hid-descr-addr = <0x20>;
+> +		interrupts-extended = <&tlmm 67 IRQ_TYPE_LEVEL_LOW>;
+> +
+> +		pinctrl-0 = <&kybd_default>;
+> +		pinctrl-names = "default";
+> +
+> +		wakeup-source;
+> +	};
+> +
+> +	touchpad@2c {
+> +		compatible = "hid-over-i2c";
+> +		reg = <0x2c>;
+> +
+> +		hid-descr-addr = <0x20>;
+> +		interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
+> +
+> +		pinctrl-0 = <&tpad_default>;
+> +		pinctrl-names = "default";
+> +
+> +		wakeup-source;
+> +	};
+> +};
+> +
+> +&i2c3 {
+> +	clock-frequency = <400000>;
+> +
+> +	status = "okay";
+> +
+> +	typec-mux@8 {
+> +		compatible = "parade,ps8833", "parade,ps8830";
+> +		reg = <0x8>;
+> +
+> +		clocks = <&rpmhcc RPMH_RF_CLK3>;
+> +
+> +		vdd-supply = <&vreg_rtmr0_1p15>;
+> +		vdd33-supply = <&vreg_rtmr0_3p3>;
+> +		vdd33-cap-supply = <&vreg_rtmr0_3p3>;
+> +		vddar-supply = <&vreg_rtmr0_1p15>;
+> +		vddat-supply = <&vreg_rtmr0_1p15>;
+> +		vddio-supply = <&vreg_rtmr0_1p8>;
+> +
+> +		reset-gpios = <&pm8550_gpios 10 GPIO_ACTIVE_LOW>;
+> +
+> +		pinctrl-0 = <&rtmr0_default>;
+> +		pinctrl-names = "default";
+> +
+> +		retimer-switch;
+> +		orientation-switch;
+> +
+> +		ports {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			port@0 {
+> +				reg = <0>;
+> +
+> +				retimer_ss0_ss_out: endpoint {
+> +					remote-endpoint = <&pmic_glink_ss0_ss_in>;
+> +				};
+> +			};
+> +
+> +			port@1 {
+> +				reg = <1>;
+> +
+> +				retimer_ss0_ss_in: endpoint {
+> +					remote-endpoint = <&usb_1_ss0_qmpphy_out>;
+> +				};
+> +			};
+> +
+> +			port@2 {
+> +				reg = <2>;
+> +
+> +				retimer_ss0_con_sbu_out: endpoint {
+> +					remote-endpoint = <&pmic_glink_ss0_con_sbu_in>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&i2c5 {
+> +	clock-frequency = <400000>;
+> +
+> +	status = "okay";
+> +
+> +	/* EC @0x3b */
+> +
+> +	/* Type A Port */
+> +	eusb3_typea_repeater: redriver@43 {
+> +		compatible = "nxp,ptn3222";
+> +		reg = <0x43>;
+> +		#phy-cells = <0>;
+> +
+> +		vdd3v3-supply = <&vreg_l13b_3p0>;
+> +		vdd1v8-supply = <&vreg_l4b_1p8>;
+> +
+> +		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
+> +
+> +		pinctrl-0 = <&eusb3_reset_n>;
+> +		pinctrl-names = "default";
+> +	};
+> +
+> +	/* Fingerprint scanner */
+> +	eusb5_frp_repeater: redriver@4f {
+> +		compatible = "nxp,ptn3222";
+> +		reg = <0x4f>;
+> +		#phy-cells = <0>;
+> +
+> +		vdd3v3-supply = <&vreg_l13b_3p0>;
+> +		vdd1v8-supply = <&vreg_l4b_1p8>;
+> +
+> +		reset-gpios = <&tlmm 184 GPIO_ACTIVE_LOW>;
+> +
+> +		pinctrl-0 = <&eusb5_reset_n>;
+> +		pinctrl-names = "default";
+> +	};
+> +};
+> +
+> +&i2c7 {
+> +	clock-frequency = <400000>;
+> +
+> +	status = "okay";
+> +
+> +	typec-mux@8 {
+> +		compatible = "parade,ps8833", "parade,ps8830";
+> +		reg = <0x8>;
+> +
+> +		clocks = <&rpmhcc RPMH_RF_CLK4>;
+> +
+> +		vdd-supply = <&vreg_rtmr1_1p15>;
+> +		vdd33-supply = <&vreg_rtmr1_3p3>;
+> +		vdd33-cap-supply = <&vreg_rtmr1_3p3>;
+> +		vddar-supply = <&vreg_rtmr1_1p15>;
+> +		vddat-supply = <&vreg_rtmr1_1p15>;
+> +		vddio-supply = <&vreg_rtmr1_1p8>;
+> +
+> +		reset-gpios = <&tlmm 176 GPIO_ACTIVE_LOW>;
+> +
+> +		pinctrl-0 = <&rtmr1_default>;
+> +		pinctrl-names = "default";
+> +
+> +		retimer-switch;
+> +		orientation-switch;
+> +
+> +		ports {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			port@0 {
+> +				reg = <0>;
+> +
+> +				retimer_ss1_ss_out: endpoint {
+> +					remote-endpoint = <&pmic_glink_ss1_ss_in>;
+> +				};
+> +			};
+> +
+> +			port@1 {
+> +				reg = <1>;
+> +
+> +				retimer_ss1_ss_in: endpoint {
+> +					remote-endpoint = <&usb_1_ss1_qmpphy_out>;
+> +				};
+> +			};
+> +
+> +			port@2 {
+> +				reg = <2>;
+> +
+> +				retimer_ss1_con_sbu_out: endpoint {
+> +					remote-endpoint = <&pmic_glink_ss1_con_sbu_in>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&i2c8 {
+> +	clock-frequency = <400000>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&i2c20 {
+> +	clock-frequency = <400000>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&lpass_tlmm {
+> +	spkr_01_sd_n_active: spkr-01-sd-n-active-state {
+> +		pins = "gpio12";
+> +		function = "gpio";
+> +		drive-strength = <16>;
+> +		bias-disable;
+> +		output-low;
+> +	};
+> +
+> +	spkr_23_sd_n_active: spkr-23-sd-n-active-state {
+> +		pins = "gpio13";
+> +		function = "gpio";
+> +		drive-strength = <16>;
+> +		bias-disable;
+> +		output-low;
+> +	};
+> +};
+> +
+> +&lpass_vamacro {
+> +	pinctrl-0 = <&dmic01_default>;
+> +	pinctrl-names = "default";
+> +
+> +	vdd-micb-supply = <&vreg_l1b_1p8>;
+> +	qcom,dmic-sample-rate = <4800000>;
+> +};
+> +
+> +&mdss {
+> +	status = "okay";
+> +};
+> +
+> +&mdss_dp0 {
+> +	status = "okay";
+> +};
+> +
+> +&mdss_dp0_out {
+> +	data-lanes = <0 1>;
+> +	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
+> +};
+> +
+> +&mdss_dp1 {
+> +	status = "okay";
+> +};
+> +
+> +&mdss_dp1_out {
+> +	data-lanes = <0 1>;
+> +	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
+> +};
+> +
+> +&mdss_dp3 {
+> +	/delete-property/ #sound-dai-cells;
+> +
+> +	status = "okay";
+> +
+> +	aux-bus {
+> +		panel {
+> +			compatible = "edp-panel";
+> +			enable-gpios = <&tlmm 74 GPIO_ACTIVE_HIGH>;
+> +			power-supply = <&vreg_edp_3p3>;
+> +
+> +			pinctrl-0 = <&edp_bl_en>;
+> +			pinctrl-names = "default";
+> +
+> +			port {
+> +				edp_panel_in: endpoint {
+> +					remote-endpoint = <&mdss_dp3_out>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +
+> +			mdss_dp3_out: endpoint {
+> +				data-lanes = <0 1 2 3>;
+> +				link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
+> +
+> +				remote-endpoint = <&edp_panel_in>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss_dp3_phy {
+> +	vdda-phy-supply = <&vreg_l3j_0p8>;
+> +	vdda-pll-supply = <&vreg_l2j_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie4 {
+> +	perst-gpios = <&tlmm 146 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
+> +
+> +	pinctrl-0 = <&pcie4_default>;
+> +	pinctrl-names = "default";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie4_phy {
+> +	vdda-phy-supply = <&vreg_l3i_0p8>;
+> +	vdda-pll-supply = <&vreg_l3e_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie4_port0 {
+> +	wifi@0 {
+> +		compatible = "pci17cb,1107";
+> +		reg = <0x10000 0x0 0x0 0x0 0x0>;
+> +
+> +		vddaon-supply = <&vreg_pmu_aon_0p59>;
+> +		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+> +		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
+> +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+> +		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
+> +		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
+> +		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
+> +		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
+> +		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
+> +	};
+> +};
+> +
+> +&pcie6a {
+> +	perst-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
+> +
+> +	vddpe-3v3-supply = <&vreg_nvme>;
+> +
+> +	pinctrl-0 = <&pcie6a_default>;
+> +	pinctrl-names = "default";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie6a_phy {
+> +	vdda-phy-supply = <&vreg_l1d_0p8>;
+> +	vdda-pll-supply = <&vreg_l2j_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pm8550_gpios {
+> +	rtmr0_default: rtmr0-reset-n-active-state {
+> +		pins = "gpio10";
+> +		function = "normal";
+> +		power-source = <1>; /* 1.8V */
+> +		bias-disable;
+> +		input-disable;
+> +		output-enable;
+> +	};
+> +
+> +	usb0_3p3_reg_en: usb0-3p3-reg-en-state {
+> +		pins = "gpio11";
+> +		function = "normal";
+> +		power-source = <1>; /* 1.8V */
+> +		bias-disable;
+> +		input-disable;
+> +		output-enable;
+> +	};
+> +};
+> +
+> +&pm8550ve_9_gpios {
+> +	usb0_1p8_reg_en: usb0-1p8-reg-en-state {
+> +		pins = "gpio8";
+> +		function = "normal";
+> +		power-source = <1>; /* 1.8V */
+> +		bias-disable;
+> +		input-disable;
+> +		output-enable;
+> +	};
+> +};
+> +
+> +&pmc8380_5_gpios {
+> +	usb0_pwr_1p15_reg_en: usb0-pwr-1p15-reg-en-state {
+> +		pins = "gpio8";
+> +		function = "normal";
+> +		power-source = <1>; /* 1.8V */
+> +		bias-disable;
+> +		input-disable;
+> +		output-enable;
+> +	};
+> +};
+> +
+> +&qupv3_0 {
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_1 {
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_2 {
+> +	status = "okay";
+> +};
+> +
+> +&sdhc_2 {
+> +	cd-gpios = <&tlmm 71 GPIO_ACTIVE_LOW>;
+> +	pinctrl-0 = <&sdc2_default &sdc2_card_det_n>;
+> +	pinctrl-1 = <&sdc2_sleep &sdc2_card_det_n>;
+> +	pinctrl-names = "default", "sleep";
+> +	vmmc-supply = <&vreg_l9b_2p9>;
+> +	vqmmc-supply = <&vreg_l6b_1p8>;
+> +	bus-width = <4>;
+> +	no-sdio;
+> +	no-mmc;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&smb2360_0 {
+> +	status = "okay";
+> +};
+> +
+> +&smb2360_0_eusb2_repeater {
+> +	vdd18-supply = <&vreg_l3d_1p8>;
+> +	vdd3-supply = <&vreg_l2b_3p0>;
+> +};
+> +
+> +&smb2360_1 {
+> +	status = "okay";
+> +};
+> +
+> +&smb2360_1_eusb2_repeater {
+> +	vdd18-supply = <&vreg_l3d_1p8>;
+> +	vdd3-supply = <&vreg_l14b_3p0>;
+> +};
+> +
+> +&swr0 {
+> +	status = "okay";
+> +
+> +	pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
+> +	pinctrl-names = "default";
+> +
+> +	/* WSA8845, Left Woofer */
+> +	left_woofer: speaker@0,0 {
+> +		compatible = "sdw20217020400";
+> +		reg = <0 0>;
+> +		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
+> +		#sound-dai-cells = <0>;
+> +		sound-name-prefix = "WooferLeft";
+> +		vdd-1p8-supply = <&vreg_l15b_1p8>;
+> +		vdd-io-supply = <&vreg_l12b_1p2>;
+> +		qcom,port-mapping = <1 2 3 7 10 13>;
+> +	};
+> +
+> +	/* WSA8845, Left Tweeter */
+> +	left_tweeter: speaker@0,1 {
+> +		compatible = "sdw20217020400";
+> +		reg = <0 1>;
+> +		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
+> +		#sound-dai-cells = <0>;
+> +		sound-name-prefix = "TweeterLeft";
+> +		vdd-1p8-supply = <&vreg_l15b_1p8>;
+> +		vdd-io-supply = <&vreg_l12b_1p2>;
+> +		qcom,port-mapping = <4 5 6 7 11 13>;
+> +	};
+> +};
+> +
+> +&swr1 {
+> +	status = "okay";
+> +
+> +	/* WCD9385 RX */
+> +	wcd_rx: codec@0,4 {
+> +		compatible = "sdw20217010d00";
+> +		reg = <0 4>;
+> +		qcom,rx-port-mapping = <1 2 3 4 5>;
+> +	};
+> +};
+> +
+> +&swr2 {
+> +	status = "okay";
+> +
+> +	/* WCD9385 TX */
+> +	wcd_tx: codec@0,3 {
+> +		compatible = "sdw20217010d00";
+> +		reg = <0 3>;
+> +		qcom,tx-port-mapping = <2 2 3 4>;
+> +	};
+> +};
+> +
+> +&swr3 {
+> +	status = "okay";
+> +
+> +	pinctrl-0 = <&wsa2_swr_active>, <&spkr_23_sd_n_active>;
+> +	pinctrl-names = "default";
+> +
+> +	/* WSA8845, Right Woofer */
+> +	right_woofer: speaker@0,0 {
+> +		compatible = "sdw20217020400";
+> +		reg = <0 0>;
+> +		reset-gpios = <&lpass_tlmm 13 GPIO_ACTIVE_LOW>;
+> +		#sound-dai-cells = <0>;
+> +		sound-name-prefix = "WooferRight";
+> +		vdd-1p8-supply = <&vreg_l15b_1p8>;
+> +		vdd-io-supply = <&vreg_l12b_1p2>;
+> +		qcom,port-mapping = <1 2 3 7 10 13>;
+> +	};
+> +
+> +	/* WSA8845, Right Tweeter */
+> +	right_tweeter: speaker@0,1 {
+> +		compatible = "sdw20217020400";
+> +		reg = <0 1>;
+> +		reset-gpios = <&lpass_tlmm 13 GPIO_ACTIVE_LOW>;
+> +		#sound-dai-cells = <0>;
+> +		sound-name-prefix = "TweeterRight";
+> +		vdd-1p8-supply = <&vreg_l15b_1p8>;
+> +		vdd-io-supply = <&vreg_l12b_1p2>;
+> +		qcom,port-mapping = <4 5 6 7 11 13>;
+> +	};
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <44 4>,  /* SPI11 (TPM) */
+> +			       <76 4>,  /* SPI19 (TZ Protected) */
+> +			       <238 1>; /* UFS Reset */
+> +
+> +	cam_rgb_default: cam-rgb-default-state {
+> +		mclk-pins {
+> +			pins = "gpio100";
+> +			function = "cam_aon";
+> +			drive-strength = <16>;
+> +			bias-disable;
+> +		};
+> +
+> +		reset-n-pins {
+> +			pins = "gpio237";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +	};
+> +
+> +	cam_indicator_en: cam-indicator-en-state {
+> +		pins = "gpio110";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	cam_ldo_en: cam-ldo-en-state {
+> +		pins = "gpio91";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	edp_bl_en: edp-bl-en-state {
+> +		pins = "gpio74";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	edp_reg_en: edp-reg-en-state {
+> +		pins = "gpio70";
+> +		function = "gpio";
+> +		drive-strength = <16>;
+> +		bias-disable;
+> +	};
+> +
+> +	eusb3_reset_n: eusb3-reset-n-state {
+> +		pins = "gpio6";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +		output-low;
+> +	};
+> +
+> +	eusb5_reset_n: eusb5-reset-n-state {
+> +		pins = "gpio184";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +		output-low;
+> +	};
+> +
+> +	hall_int_n_default: hall-int-n-state {
+> +		pins = "gpio92";
+> +		function = "gpio";
+> +
+> +		bias-disable;
+> +	};
+> +
+> +	kybd_default: kybd-default-state {
+> +		pins = "gpio67";
+> +		function = "gpio";
+> +		bias-pull-up;
+> +	};
+> +
+> +	nvme_reg_en: nvme-reg-en-state {
+> +		pins = "gpio18";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	pcie4_default: pcie4-default-state {
+> +		clkreq-n-pins {
+> +			pins = "gpio147";
+> +			function = "pcie4_clk";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		perst-n-pins {
+> +			pins = "gpio146";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +
+> +		wake-n-pins {
+> +			pins = "gpio148";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+> +	pcie6a_default: pcie6a-default-state {
+> +		clkreq-n-pins {
+> +			pins = "gpio153";
+> +			function = "pcie6a_clk";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		perst-n-pins {
+> +			pins = "gpio152";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +
+> +		wake-n-pins {
+> +			pins = "gpio154";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+> +	rtmr1_default: rtmr1-reset-n-active-state {
+> +		pins = "gpio176";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	sdc2_card_det_n: sdc2-card-det-state {
+> +		pins = "gpio71";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-pull-up;
+> +	};
+> +
+> +	tpad_default: tpad-default-state {
+> +		disable-pins {
+> +			pins = "gpio38";
+> +			function = "gpio";
+> +			output-high;
+> +		};
+> +
+> +		int-n-pins {
+> +			pins = "gpio3";
+> +			function = "gpio";
+> +			bias-pull-up;
+> +		};
+> +
+> +		reset-n-pins {
+> +			pins = "gpio52";
+> +			function = "gpio";
+> +			bias-disable;
+> +		};
+> +	};
+> +
+> +	ts0_default: ts0-default-state {
+> +		disable-pins {
+> +			pins = "gpio75";
+> +			function = "gpio";
+> +			output-high;
+> +		};
+> +
+> +		int-n-pins {
+> +			pins = "gpio51";
+> +			function = "gpio";
+> +			bias-pull-up;
+> +		};
+> +
+> +		reset-n-pins {
+> +			/* Technically should be High-Z input */
+> +			pins = "gpio48";
+> +			function = "gpio";
+> +			output-low;
+> +			drive-strength = <2>;
+> +		};
+> +	};
+> +
+> +	usb1_pwr_1p15_reg_en: usb1-pwr-1p15-reg-en-state {
+> +		pins = "gpio188";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	usb1_pwr_1p8_reg_en: usb1-pwr-1p8-reg-en-state {
+> +		pins = "gpio175";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	usb1_pwr_3p3_reg_en: usb1-pwr-3p3-reg-en-state {
+> +		pins = "gpio186";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	wcd_default: wcd-reset-n-active-state {
+> +		pins = "gpio191";
+> +		function = "gpio";
+> +		drive-strength = <16>;
+> +		bias-disable;
+> +		output-low;
+> +	};
+> +
+> +	wcn_sw_en: wcn-sw-en-state {
+> +		pins = "gpio214";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	wcn_wlan_bt_en: wcn-wlan-bt-en-state {
+> +		pins = "gpio116", "gpio117";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +};
+> +
+> +&uart14 {
+> +	status = "okay";
+> +
+> +	bluetooth {
+> +		compatible = "qcom,wcn7850-bt";
+> +		max-speed = <3200000>;
+> +
+> +		vddaon-supply = <&vreg_pmu_aon_0p59>;
+> +		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+> +		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
+> +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+> +		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
+> +		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
+> +		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
+> +	};
+> +};
+> +
+> +&usb_1_ss0 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss0_dwc3 {
+> +	dr_mode = "host";
+> +};
+> +
+> +&usb_1_ss0_dwc3_hs {
+> +	remote-endpoint = <&pmic_glink_ss0_hs_in>;
+> +};
+> +
+> +&usb_1_ss0_hsphy {
+> +	vdd-supply = <&vreg_l3j_0p8>;
+> +	vdda12-supply = <&vreg_l2j_1p2>;
+> +
+> +	phys = <&smb2360_0_eusb2_repeater>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss0_qmpphy {
+> +	vdda-phy-supply = <&vreg_l2j_1p2>;
+> +	vdda-pll-supply = <&vreg_l1j_0p8>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss0_qmpphy_out {
+> +	remote-endpoint = <&retimer_ss0_ss_in>;
+> +};
+> +
+> +&usb_1_ss1 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss1_dwc3 {
+> +	dr_mode = "host";
+> +};
+> +
+> +&usb_1_ss1_dwc3_hs {
+> +	remote-endpoint = <&pmic_glink_ss1_hs_in>;
+> +};
+> +
+> +&usb_1_ss1_hsphy {
+> +	vdd-supply = <&vreg_l3j_0p8>;
+> +	vdda12-supply = <&vreg_l2j_1p2>;
+> +
+> +	phys = <&smb2360_1_eusb2_repeater>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss1_qmpphy {
+> +	vdda-phy-supply = <&vreg_l2j_1p2>;
+> +	vdda-pll-supply = <&vreg_l2d_0p9>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss1_qmpphy_out {
+> +	remote-endpoint = <&retimer_ss1_ss_in>;
+> +};
+> +
+> +&usb_2 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_2_dwc3 {
+> +	dr_mode = "host";
+> +};
+> +
+> +&usb_2_hsphy {
+> +	vdd-supply = <&vreg_l2e_0p8>;
+> +	vdda12-supply = <&vreg_l3e_1p2>;
+> +
+> +	phys = <&eusb5_frp_repeater>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_mp {
+> +	status = "okay";
+> +};
+> +
+> +&usb_mp_dwc3 {
+> +	phys = <&usb_mp_hsphy0>, <&usb_mp_qmpphy0>;
+> +	phy-names = "usb2-0", "usb3-0";
+> +};
+> +
+> +&usb_mp_hsphy0 {
+> +	vdd-supply = <&vreg_l2e_0p8>;
+> +	vdda12-supply = <&vreg_l3e_1p2>;
+> +
+> +	phys = <&eusb3_typea_repeater>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_mp_qmpphy0 {
+> +	vdda-phy-supply = <&vreg_l3e_1p2>;
+> +	vdda-pll-supply = <&vreg_l3c_0p8>;
+> +
+> +	status = "okay";
+> +};
 
