@@ -1,246 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-63830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D48BAFA118
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 19:54:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 831CFAFA11B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 20:05:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 15B021C2288E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 17:54:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E432E481F4D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 18:04:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80FCA20C00E;
-	Sat,  5 Jul 2025 17:54:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA07C20012B;
+	Sat,  5 Jul 2025 18:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ML1ZvgWs"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UjFY4ojF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400201891A9;
-	Sat,  5 Jul 2025 17:54:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16AB616CD33
+	for <linux-arm-msm@vger.kernel.org>; Sat,  5 Jul 2025 18:05:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751738069; cv=none; b=uIdrVwDtP7yBNb+uHtKFj94aW++AJijlVf0dPFRzgczXcs6QAk4q3OYmw9oULVtvn2gKeC5T6Nn+OtoCH7FJ5mRSU2wgXbQVkkusnAO6Zv4V9tjrPLoEbIMWWHtlcJjkPj5kc8HJvbuiIFsAI4MLr203j0rxSruroOpfUX54OFA=
+	t=1751738717; cv=none; b=qVutSPCswuftCmXkjwTrw3RFZVK6iOQZm7vnDhy7B0tOxFekewrHdqYlcDe8aEZpPvOqScT1pkAEa+JhWJ0a8eRnRryAYg4ed/5yYa04O5bDtIK9yIpk6i7NkR/bSA1ndQbBhouMQBLAHKe/7UuFzwkPXAAty/wxYusKx3fT0js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751738069; c=relaxed/simple;
-	bh=rICWKtoMH+zyndlY0ZXbsoGpXVyzFl9DyaZBL8qQaao=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Tkqh0PX09v/5gcIymMaPjXq0to6P4oV9REjiop/84w1Dg9jWQqK27+HhbuWlXM0w2ipuH3QlvQEYbWsuETBGViAf3TFlvrOSV6sQEgIspMDj7Of0TcG2kw640UhMhU2IoojkoqeZzUpxBbUjSBRcSXjiPMEXh0wg2te6h+JIKQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ML1ZvgWs; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751738067; x=1783274067;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=rICWKtoMH+zyndlY0ZXbsoGpXVyzFl9DyaZBL8qQaao=;
-  b=ML1ZvgWsRhwVmeh2sUwnowU3t4R6HJej3rL0PaYoix3gGH6wLCejFYpZ
-   F3durz7P7GEkgEeWjoRZBXlrVfqgnl34/FCCsUSRcqOL6oGEGxhxw4hg6
-   8/fS9OP9DSDt25YlkuYrclvi8BMUf40fQ5KKZHN1Tw5wyIOqiFHObYBFy
-   oTbDzqD4+ze9dsIlANSSAcDMdxFWf5TenD1TtI8JnVXOy3vKfkeIR7KXM
-   +8i4JH0Vmkzv9OKDpmglTy51IUBIfhYvuHC3UieRwUPcSVg9It8l3A0I2
-   l2Y7sJeEHfIrlnbLVcF0FLIjnDc2biIlsFWjV+yjqv3CJnWttNCo7eWIC
-   w==;
-X-CSE-ConnectionGUID: /4ED3BWoQuq+ufeQfq2gQg==
-X-CSE-MsgGUID: SXLn6UnjS0CiOWpwnzJV9Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11485"; a="64711301"
-X-IronPort-AV: E=Sophos;i="6.16,290,1744095600"; 
-   d="scan'208";a="64711301"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jul 2025 10:54:27 -0700
-X-CSE-ConnectionGUID: TZ/utm6MSFeQswsdWm9GjQ==
-X-CSE-MsgGUID: XN4Gx1F1S2GKMc4NbGXj8w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,290,1744095600"; 
-   d="scan'208";a="159128439"
-Received: from lkp-server01.sh.intel.com (HELO 0b2900756c14) ([10.239.97.150])
-  by fmviesa005.fm.intel.com with ESMTP; 05 Jul 2025 10:54:23 -0700
-Received: from kbuild by 0b2900756c14 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uY75h-0004ed-0i;
-	Sat, 05 Jul 2025 17:54:21 +0000
-Date: Sun, 6 Jul 2025 01:53:51 +0800
-From: kernel test robot <lkp@intel.com>
-To: Dmitry Baryshkov <lumag@kernel.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Jordan Crouse <jordan@cosmicpenguin.net>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 11/12] drm/msm/dpu: rewrite
- _dpu_format_populate_plane_sizes_ubwc()
-Message-ID: <202507060149.j2XwjHut-lkp@intel.com>
-References: <20250705-dpu-formats-v1-11-40f0bb31b8c8@oss.qualcomm.com>
+	s=arc-20240116; t=1751738717; c=relaxed/simple;
+	bh=XQVGIRJw3+xHjhRPG4C3JVHMVjLczj49kVy13S2Zu2g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YT+0Flqb/v6Zyzj+1grEYb4y8rXGOliDGt7V8fJjvrRcOeRgRgq+cSpb62m2JUGsCPMZBS5cAqP3XX+KI20oBkcB5IJqAtXZeZ/Da5Sm4LExMHgV3yau7sEcUfXx29naLQJfFUllxJiYsTy1cv7OEJWhcFY3PFIhIHOP+pD4ZFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UjFY4ojF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 565GdRun026958
+	for <linux-arm-msm@vger.kernel.org>; Sat, 5 Jul 2025 18:05:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=V6PpfAkChLbMwzHqqroOnb6IX10ZpWIFhKKMDJenfD8=; b=Uj
+	FY4ojF2Ye/5mhZp9iOid/+tD+pwhZVz6wxJ7h0gdl7rcImRU3ka3jIiSOea2/0OK
+	2vz6zuVkPLaSN3TogUTjNqD9E+2kD/chZvWsvmAv9jEAInCf6OjqX8g5w9e2tt5T
+	qvSxpfXp1KcIizeWrBoIpUY2rd4BWUBpwv90EOehUa2b35t+3eIHiE7XZJ7vCWo0
+	FL7dowoggiAgwZe9JFCyOTBr+c6xa8gVoV8Cj1SEYEj9T2DcjHRB/+t2bJWsYQ2T
+	Xiqr9cTS+ZNeNDsSWwzOROMcsyTp2fxUDKOpOCExl8soAvJH0xlV7OvLtO4cZ2kE
+	b94PUM0kviELH2Dt0C/Q==
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com [209.85.167.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pw7q1ht1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jul 2025 18:05:09 +0000 (GMT)
+Received: by mail-oi1-f197.google.com with SMTP id 5614622812f47-40cf6614bceso1495884b6e.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Jul 2025 11:05:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751738708; x=1752343508;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=V6PpfAkChLbMwzHqqroOnb6IX10ZpWIFhKKMDJenfD8=;
+        b=L51dyAk+5AG1FvAVIR3cwvzFb31BKEiZj4zgz0zwws0wpaUKDOLG/Dkzw8v7RnTKWx
+         H6IayuWoK1zYjxcnKFEZ1VZaUNLoFPETclCQgX3kqOuxUwAiO+ExUA12Bbngy4WI5SQC
+         vS4xQCi6/WhXE/Avg+6nkmW9QDlunVJnq1LkyUC/ytbmK7PQwG5cIdBXH6CsBa+SWLoU
+         pKMc9pTrQKO+Gqsr71SBcgCAqX2fXRDPif4xwHdejzoKcc3XRsnOIACXCha7rQTBb40P
+         lb3guQ7K/swsjJqPkTq0fYxbehxE+0qw45y9ZQaR7t5SnM7M0caNI+fcqwyCow3rgOWu
+         Tk3w==
+X-Forwarded-Encrypted: i=1; AJvYcCWBry/oiQwZzVD+DE6loArIrtiUDHslix5cQ8QPbJhHvVwQpvnZuizp9l4UprkRAVH+dv6xLJOKwxTpzgOY@vger.kernel.org
+X-Gm-Message-State: AOJu0YxA/3DqaOQkyq42MOSJ+ZW1y0D9yuDCYD+af6EiEijLtOoSepMT
+	IqnjB46LUOulcRgSPYK/UXZJiVDldf332mjF+BYS2t2qUPV9w4jqF85pZnZx5ccZIlbkg5SwFuJ
+	1FcBrEdO06xGyJGda9Qcex2v7o55gQstBGxfDqu90Iycqu8u45FO5L6+FQQ2WJiyrRsisTzL1pk
+	z78f+jpECodAEx10BHBeEo4NdD1TG/aQ0Zui5ALEbAzww=
+X-Gm-Gg: ASbGnctDlHzm422dJ/zFlkvoYvERblqW3XE7YJFstf6VOeEn/uIso5r+YUmjnxlmMrL
+	L0UNP99/8hKx2aibamrG20SnWWayJ9vs6tT8JSIWQEWDvnQQMkJpRx/wFseitDCGB4N0qloZ1JG
+	GLFPCnOSYSa2X+1dXV751oI+5e1WefAQ7s7E8=
+X-Received: by 2002:a05:6808:2227:b0:406:67dc:85e5 with SMTP id 5614622812f47-40d073ed168mr4931757b6e.32.1751738707914;
+        Sat, 05 Jul 2025 11:05:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHA1V6eDhxgL68PhGByEGdZ2yGlPoePdjpJUerLbX2cT9JRZ/ymGxWYtpk/nq8tCGPhn0PxFjOVFmscNcrUN+8=
+X-Received: by 2002:a05:6808:2227:b0:406:67dc:85e5 with SMTP id
+ 5614622812f47-40d073ed168mr4931737b6e.32.1751738707518; Sat, 05 Jul 2025
+ 11:05:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250705-dpu-formats-v1-11-40f0bb31b8c8@oss.qualcomm.com>
+References: <20250705-iommu-fix-prr-v2-1-406fecc37cf8@oss.qualcomm.com>
+In-Reply-To: <20250705-iommu-fix-prr-v2-1-406fecc37cf8@oss.qualcomm.com>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Sat, 5 Jul 2025 11:04:56 -0700
+X-Gm-Features: Ac12FXxPGf3OtS1hFIiu8JcWUGDwoozM4YEfH5zfdc7rWndBMdlpthog4m8uuIE
+Message-ID: <CACSVV03E5QZWuyiejY0BkecQbnLFYCOD2btW962XRJ+n4-KfWQ@mail.gmail.com>
+Subject: Re: [PATCH v2] iommu/arm-smmu: disable PRR on SM8250
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Bibek Kumar Patro <quic_bibekkum@quicinc.com>, iommu@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA1MDExOSBTYWx0ZWRfX7HH5+rn9NqIm
+ 6i9Cy1XCoJe1Ssy8A7B/uo5oqszj/UsX/qqiJK45oOIzNsaio3CeTfZJ87hoHhwrkhyIKG9KuAT
+ lmtflv8qx+n3QdylI3ljm49Ze3Ig5/PZlO8wcKyF8bXd+UjfK7NeuHJRG6r7gkP4PEROW7I85Rf
+ QisJfsnFhcOvVQ/KeV+HPBjKAyTxC+Xwr9egV6WnMaJN8aFs5h1kVOGatjYUAFt3diXYZFpEtof
+ /LzxAG913A1G42SboJmwy3bfuTm8hVHuR8SAxeyg0aVfWFfqRlNhqk2L1iX/wkEI99/aGNTC4tp
+ mcs3o5b/FQNPhdDhf2cfn8tYD/N2428I+HPiREAONK6aCh6vGiCPTOYiYIPRzyCAec9I0yl6csH
+ NcCsudz/jnyaBzrVy+a6YNOxMasH6/Lozih2t9y4dKYIcPVMkBEZ13Y0Fsd/7FhMsEKtApms
+X-Proofpoint-GUID: oTfmkk9gOFhFObiKOTy59-3cBkz-uWwe
+X-Proofpoint-ORIG-GUID: oTfmkk9gOFhFObiKOTy59-3cBkz-uWwe
+X-Authority-Analysis: v=2.4 cv=SOBCVPvH c=1 sm=1 tr=0 ts=68696955 cx=c_pps
+ a=WJcna6AvsNCxL/DJwPP1KA==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=2B00_WpXKG7Y0WWvpoAA:9 a=QEXdDO2ut3YA:10
+ a=_Y9Zt4tPzoBS9L09Snn2:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-04_07,2025-07-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ impostorscore=0 mlxlogscore=999 mlxscore=0 phishscore=0 malwarescore=0
+ adultscore=0 suspectscore=0 spamscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507050119
 
-Hi Dmitry,
+On Sat, Jul 5, 2025 at 9:08=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On SM8250 / QRB5165-RB5 using PRR bits resets the device, most likely
+> because of the hyp limitations. Disable PRR support on that platform.
+>
+> Fixes: 7f2ef1bfc758 ("iommu/arm-smmu: Add support for PRR bit setup")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-kernel test robot noticed the following build warnings:
+Reviewed-by: Rob Clark <robin.clark@oss.qualcomm.com>
 
-[auto build test WARNING on 26ffb3d6f02cd0935fb9fa3db897767beee1cb2a]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-msm-disp-set-num_planes-to-1-for-interleaved-YUV-formats/20250705-104933
-base:   26ffb3d6f02cd0935fb9fa3db897767beee1cb2a
-patch link:    https://lore.kernel.org/r/20250705-dpu-formats-v1-11-40f0bb31b8c8%40oss.qualcomm.com
-patch subject: [PATCH 11/12] drm/msm/dpu: rewrite _dpu_format_populate_plane_sizes_ubwc()
-config: powerpc64-randconfig-003-20250705 (https://download.01.org/0day-ci/archive/20250706/202507060149.j2XwjHut-lkp@intel.com/config)
-compiler: clang version 21.0.0git (https://github.com/llvm/llvm-project 61529d9e36fa86782a2458e6bdeedf7f376ef4b5)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250706/202507060149.j2XwjHut-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202507060149.j2XwjHut-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:79:7: warning: variable 'sclines' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
-      79 |                 if (fmt->pixel_format == DRM_FORMAT_NV12 ||
-         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      80 |                     fmt->pixel_format == DRM_FORMAT_P010) {
-         |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:104:4: note: uninitialized use occurs here
-     104 |                         sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-         |                         ^~~~~~~
-   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:79:3: note: remove the 'if' if its condition is always true
-      79 |                 if (fmt->pixel_format == DRM_FORMAT_NV12 ||
-         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      80 |                     fmt->pixel_format == DRM_FORMAT_P010) {
-         |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:74:31: note: initialize the variable 'sclines' to silence this warning
-      74 |                 unsigned int stride, sclines;
-         |                                             ^
-         |                                              = 0
->> drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:79:7: warning: variable 'stride' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
-      79 |                 if (fmt->pixel_format == DRM_FORMAT_NV12 ||
-         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      80 |                     fmt->pixel_format == DRM_FORMAT_P010) {
-         |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:102:28: note: uninitialized use occurs here
-     102 |                 layout->plane_pitch[0] = stride;
-         |                                          ^~~~~~
-   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:79:3: note: remove the 'if' if its condition is always true
-      79 |                 if (fmt->pixel_format == DRM_FORMAT_NV12 ||
-         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      80 |                     fmt->pixel_format == DRM_FORMAT_P010) {
-         |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c:74:22: note: initialize the variable 'stride' to silence this warning
-      74 |                 unsigned int stride, sclines;
-         |                                    ^
-         |                                     = 0
-   2 warnings generated.
-
-
-vim +79 drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-
-    65	
-    66	static int _dpu_format_populate_plane_sizes_ubwc(
-    67			const struct msm_format *fmt,
-    68			struct drm_framebuffer *fb,
-    69			struct dpu_hw_fmt_layout *layout)
-    70	{
-    71		bool meta = MSM_FORMAT_IS_UBWC(fmt);
-    72	
-    73		if (MSM_FORMAT_IS_YUV(fmt)) {
-    74			unsigned int stride, sclines;
-    75			unsigned int y_tile_width, y_tile_height;
-    76			unsigned int y_meta_stride, y_meta_scanlines;
-    77			unsigned int uv_meta_stride, uv_meta_scanlines;
-    78	
-  > 79			if (fmt->pixel_format == DRM_FORMAT_NV12 ||
-    80			    fmt->pixel_format == DRM_FORMAT_P010) {
-    81				if (MSM_FORMAT_IS_DX(fmt)) {
-    82					if (fmt->flags & MSM_FORMAT_FLAG_UNPACK_TIGHT) {
-    83						stride = MSM_MEDIA_ALIGN(fb->width, 192);
-    84						stride = MSM_MEDIA_ALIGN(stride * 4 / 3, 256);
-    85						y_tile_width = 48;
-    86					} else {
-    87						stride = MSM_MEDIA_ALIGN(fb->width * 2, 256);
-    88						y_tile_width = 32;
-    89					}
-    90	
-    91					sclines = MSM_MEDIA_ALIGN(fb->height, 16);
-    92					y_tile_height = 4;
-    93				} else {
-    94					stride = MSM_MEDIA_ALIGN(fb->width, 128);
-    95					y_tile_width = 32;
-    96	
-    97					sclines = MSM_MEDIA_ALIGN(fb->height, 32);
-    98					y_tile_height = 8;
-    99				}
-   100			}
-   101	
-   102			layout->plane_pitch[0] = stride;
-   103			layout->plane_size[0] = MSM_MEDIA_ALIGN(layout->plane_pitch[0] *
-   104				sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-   105	
-   106			layout->plane_pitch[1] = stride;
-   107			layout->plane_size[1] = MSM_MEDIA_ALIGN(layout->plane_pitch[1] *
-   108				sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-   109	
-   110			if (!meta)
-   111				return 0;
-   112	
-   113			y_meta_stride = MSM_MEDIA_ROUNDUP(fb->width, y_tile_width);
-   114			layout->plane_pitch[2] = MSM_MEDIA_ALIGN(y_meta_stride, 64);
-   115	
-   116			y_meta_scanlines = MSM_MEDIA_ROUNDUP(fb->height, y_tile_height);
-   117			y_meta_scanlines = MSM_MEDIA_ALIGN(y_meta_scanlines, 16);
-   118			layout->plane_size[2] = MSM_MEDIA_ALIGN(layout->plane_pitch[2] *
-   119				y_meta_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-   120	
-   121			uv_meta_stride = MSM_MEDIA_ROUNDUP((fb->width+1)>>1, y_tile_width / 2);
-   122			layout->plane_pitch[3] = MSM_MEDIA_ALIGN(uv_meta_stride, 64);
-   123	
-   124			uv_meta_scanlines = MSM_MEDIA_ROUNDUP((fb->height+1)>>1, y_tile_height);
-   125			uv_meta_scanlines = MSM_MEDIA_ALIGN(uv_meta_scanlines, 16);
-   126			layout->plane_size[3] = MSM_MEDIA_ALIGN(layout->plane_pitch[3] *
-   127				uv_meta_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-   128		} else {
-   129			unsigned int rgb_scanlines, rgb_meta_scanlines, rgb_meta_stride;
-   130	
-   131			layout->plane_pitch[0] = MSM_MEDIA_ALIGN(fb->width * fmt->bpp, 256);
-   132			rgb_scanlines = MSM_MEDIA_ALIGN(fb->height, 16);
-   133			layout->plane_size[0] = MSM_MEDIA_ALIGN(layout->plane_pitch[0] *
-   134				rgb_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-   135	
-   136			if (!meta)
-   137				return 0;
-   138	
-   139			/* uAPI leaves plane[1] empty and plane[2] as meta */
-   140			layout->num_planes += 1;
-   141	
-   142			rgb_meta_stride = MSM_MEDIA_ROUNDUP(fb->width, 16);
-   143			layout->plane_pitch[2] = MSM_MEDIA_ALIGN(rgb_meta_stride, 64);
-   144	
-   145			rgb_meta_scanlines = MSM_MEDIA_ROUNDUP(fb->height, 4);
-   146			rgb_meta_scanlines = MSM_MEDIA_ALIGN(rgb_meta_scanlines, 16);
-   147	
-   148			layout->plane_size[2] = MSM_MEDIA_ALIGN(layout->plane_pitch[2] *
-   149				rgb_meta_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-   150		}
-   151	
-   152		return 0;
-   153	}
-   154	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+> ---
+> I currently don't have access to other devices from these generations.
+> It might be necessary to apply the same workaround to other platforms.
+> ---
+> Changes in v2:
+> - Simplify the workaround as the issue seems to be limited to SM8250
+>   only (Rob)
+> - Link to v1: https://lore.kernel.org/r/20250705-iommu-fix-prr-v1-1-ef725=
+033651c@oss.qualcomm.com
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/a=
+rm/arm-smmu/arm-smmu-qcom.c
+> index 62874b18f6459ad9a8b0542ab81c24e3e745c53d..53d88646476e9f193a6275d9c=
+3ee3d084c215362 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -355,7 +355,8 @@ static int qcom_adreno_smmu_init_context(struct arm_s=
+mmu_domain *smmu_domain,
+>         priv->set_prr_addr =3D NULL;
+>
+>         if (of_device_is_compatible(np, "qcom,smmu-500") &&
+> -                       of_device_is_compatible(np, "qcom,adreno-smmu")) =
+{
+> +           !of_device_is_compatible(np, "qcom,sm8250-smmu-500") &&
+> +           of_device_is_compatible(np, "qcom,adreno-smmu")) {
+>                 priv->set_prr_bit =3D qcom_adreno_smmu_set_prr_bit;
+>                 priv->set_prr_addr =3D qcom_adreno_smmu_set_prr_addr;
+>         }
+>
+> ---
+> base-commit: 7244e36657076b597ac21d118be9c0b0f15fc622
+> change-id: 20250705-iommu-fix-prr-600451b1d304
+>
+> Best regards,
+> --
+> With best wishes
+> Dmitry
+>
 
