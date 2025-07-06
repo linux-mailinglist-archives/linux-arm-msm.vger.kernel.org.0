@@ -1,164 +1,297 @@
-Return-Path: <linux-arm-msm+bounces-63840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3E99AFA1EC
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 23:07:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 657F1AFA2E1
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jul 2025 05:43:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42F7D3B9A4F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Jul 2025 21:07:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A7FF817BD73
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jul 2025 03:43:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52BC2218596;
-	Sat,  5 Jul 2025 21:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98FBA1922C0;
+	Sun,  6 Jul 2025 03:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JLXxPCXW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AWTzKb6t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FC31BF58;
-	Sat,  5 Jul 2025 21:07:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0312E3717;
+	Sun,  6 Jul 2025 03:43:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751749668; cv=none; b=dTa+da2YMFTxsYhL42MiyzcdtR0Md8gp8jbsQKriJCKPIM/K3BMcLVzS75bO+4qBIij2/m0KRbcEoqdNVV3ifGx048T0wdoWDPY0MbPrTG7yRniPR04XqOpdpbFVvbreeeSwFXe63xRskrEz0e7CyJD6ejjYUGUvaBFWYXXu7To=
+	t=1751773421; cv=none; b=FHUcVQrxPO4TqydEZF32JqT+KI5vOgOFiXIxkFVCybUPJ3PIKmb8q1h55WnkykriTWne031iaESenI/I1wLdE9y9KbNAMv1HSLIcCnrPPPZTWNb6N+i9zqb698eOdrH0Lu7cbMLiIXZL4K/aZnef6WRwF8lYXd2q9nWB8SfAMhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751749668; c=relaxed/simple;
-	bh=av661HLHeLpl9E43D0/bBRcMZa2comXBBsWoJmDD+b0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nwYxViwTF7lHTJU8qd7PcJ27+bDnzkyGKjGMSdN+b4t8PuHOB/D+p22YFotVIB6cMQUaNA/sgRyCtcHgoaF9sgXBeML/+SRkW9iUsBzfkbq3Yok3QQs4GZiYXE+SCznehbx6P2uUJtYsP1knETf/+3wosg4UPq4t/BpnBF+lvoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JLXxPCXW; arc=none smtp.client-ip=209.85.208.50
+	s=arc-20240116; t=1751773421; c=relaxed/simple;
+	bh=3AMMnlHd1U6wIG7D7DIX4qEiRdedgR7xMDzzdt7Pa2c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sY4llNp19srQM81kM+B8NwsW71OI56pXmPnJ3JeIRk7XIZhTcJLsfyD/SYtNHQlNhcfUt9OQHSNtKvEuw6HAFzCDJD1Brd5SL/QhulyyEQoBtoDp3F1JA9y6GfKBV7Kz4AdjXE0CjS2rHCap/RfpoSh0Qq9udk/cMcbq3pnc60M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AWTzKb6t; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-60cc11b34f6so4858971a12.0;
-        Sat, 05 Jul 2025 14:07:46 -0700 (PDT)
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-235ef62066eso32178655ad.3;
+        Sat, 05 Jul 2025 20:43:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751749665; x=1752354465; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=s0OfBp7ErnlCrO+RdLaJwYOfHNWrwDo8W1tXRttUHFk=;
-        b=JLXxPCXWFnZ/upTZ9j5eijUPYcBb8CYTDIT3xcI1PObhiH0U7WCSjN8k0pyZzz54E0
-         VA3PF/HSi/QzYBP7coC72h66otkUizREt8X/GJVAj8YbGo6lUIcsDLdrOU7ss9mXuXLs
-         o+Hy2oyhKJqtoCPAfUCIU4r9o3qW2QDTOkeufb6H22oVnCZ5PVCUWLUVU92qHplKEE4y
-         lXdQ58ZQfa+nhfXLILaeSDxvI9+wU3DJ9MCu230IDWldHybbNZrTGk6k7DtL+XyjZqPr
-         6jtNYYLxD97xJ9GNcPcusQB1AbOptGUnlDU75KTXFos882wyK+TtiiKkjoOn+rpwuCig
-         Ix5w==
+        d=gmail.com; s=20230601; t=1751773419; x=1752378219; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=692z2j5JqybfGJs3QP4P1sOhZFmW1Px0hlvoTc305Gc=;
+        b=AWTzKb6tQFAg98mGjMPXTABq0yFgpDvD/ryI1Js1NiFt6xvC6s32tvR3S5WVw4rWdz
+         c5riqHOeu+IT3ioU6mokEexgvOQYI+EvFLqqqnxWhued/dtaFIDJEIT4/+CKY0v40bxT
+         Vmv4vvt101PViPnrs8VwqjNbH5jV9fvy9N18CuZez/qK1VTn2WL8rZe7epdLkb4tERqz
+         lGE8kx7p1qMgMQGffQnkqYrdZGy6hqcjeWriaUtuna8vogRFyy3AtYMBOJTygCL90yUj
+         wgXb6ZMtnMF2iSAkBCIFQqSThWmVy/OaVHhodWRXTLvrOUq68lr5KUWTpRF+JqoaHuk2
+         OqQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751749665; x=1752354465;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s0OfBp7ErnlCrO+RdLaJwYOfHNWrwDo8W1tXRttUHFk=;
-        b=geGYMcXOe39+we2loFwFF6QtQn7QC7Hucae1epkq+H/GutVLtU022GOtL4Jzo31weA
-         cNCZZN4B7W/qPhrdIgXaYv+vJ9Yglw06G0wrI7nGWHEm+w0gtFYxBvZzFHHqRKCdBtbs
-         adkfpj9TGcipPNKB47rLz/w/xsnQ0E5lBU56Dm3c7umnKcYNKBYpZMCmctmg0vKhz7cQ
-         9IYX+bGExtFQSExZvBV25fr66aGJhqJqF5JtVaKB5jDyqjUutsKYsSxUyqb9sXkD9cLY
-         LecmvmeALV4oAvutxRZTdlq5+fg1FQarbTNcpB0s0lnLjt0jHghyheUWuVADxHFnfOV8
-         3+0g==
-X-Forwarded-Encrypted: i=1; AJvYcCVgL+fVYJq3Xi7nzMSW95BlXrk9VpGSAhgYLuxAfqXRPrTq7q3YqS8eBp3aaLwi+7hpkQJwnNJHJCLn@vger.kernel.org, AJvYcCVuF6AO4HLtHaI+seSYxlGczustYlqeCCjQtTY77TEAc8VSXx5ZrEzWgryshVgUNAyeLuWs5F96UWBv49oY@vger.kernel.org, AJvYcCXhjTrp7ZAZPDzWfjd2YnZCy+cc71azaRhJnr6sZCidyxzati+gOaD0D6JVK7zs8tkToR134Y0rWM79MJsOgw==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzeAOi5WalIfbrY4A771bXGj8pZQY/Ebvks1F7n1hhTkE0+z12c
-	yfead68Z8asOsnHU1SF0Sei9CQgkgH12Bv9Ef0NT1T8zStiZAy2Uk0w=
-X-Gm-Gg: ASbGncsIpSBvEndqno3SBp7bltx0Ah1QeIdltGc2uLai2TRg18U2UrJu/YBFBYc/keX
-	/DYpmnZ0o6oiZe8OuQrO578MPRpZeKuvqsIbMbYMuKZdSvVn2q3573/xewn54lYhWeOwzco4iYL
-	Cv1BI0m97upLF1nFFDknm0Jz/6Ml5VfmLwNhji1qlNhQbgHQxgKome4iZpRDs7cz8rzoPrfbh3r
-	RYyS0zWA8tmZ++BweIoiWdrCFYKILIs38r0pOd3vF0HUm8JHrYLDJvWmmnxh0zaXWAmNOca8FdD
-	FdhNd+9BqUNoqe+oQYiGpAgIrlfgVYb9A/2tnxVm8FOjZ7RVN6mIjcbrtnDzoZ6AsOlWirnhCA=
+        d=1e100.net; s=20230601; t=1751773419; x=1752378219;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=692z2j5JqybfGJs3QP4P1sOhZFmW1Px0hlvoTc305Gc=;
+        b=G9J+51l7U+2+qJD54bch/u75I49G+4zrutMzs5KmGKi/Aweo71f3vR3uMAQjjgesTC
+         sWcM1hvv0GjkDV/nKUG8Ow0WhYl+LnGj3G3P1YQkjU6ckzhEHEbj6HJqirL3idxS14+/
+         RRl4eDoNtVO7UDjOWduRURszCNUuyHIwcjAVE9gSQv5/fWBpxHANGMDcj77TIttl1gdq
+         V0yHbRZ3LJB/8tC25zOv1+bgEWK9kS9C6lFmjRg87x7r4/q0u0dk2AUDvIvYaQSDXCZO
+         GXf/NTEM02Jk064bkOovBeJitgo3j5J+b8VdJVlyvNTL5GHRfocaKqhPYEWNFuf4QRkr
+         Mcpg==
+X-Forwarded-Encrypted: i=1; AJvYcCU8ML0qjls1jUj2Fl7tnDqpJygjz2Q1KSTkAhh7l13VLDb6MPUUoSLCvZVZxWMbsy0NmhUbPyDgI9Jt+dYX@vger.kernel.org, AJvYcCUsrI1weJo/YLmxK9IPYMxpQ/AeE1IH6w0jTyIcnFMEnbvrkoRXm8JMEhDbe1FCl2XNuxJjGGmMU3T04y2O/w==@vger.kernel.org, AJvYcCV6cpVzPenSMjyM1shrpVGAvvjPgIaQ3b6Om4KbR/yCd1NwfMSM0JVRoppJw9dmfBkzuuwXudpQ4oLL@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDqaYoiDVsLZy86nr8j6N5fM4lgtQlYgyMUs3g1QKr8Uu4BVky
+	wFVZLGpJXCc+5ed0bJaoV9HF1YFkl+emucNDI3FEeJA5Bog03DAJKp0WidoVMg==
+X-Gm-Gg: ASbGncvESZRnBXtiwl1RmID+9a6SCeJAHwEobemLnjDX73+MvIRxITahkifxoJmOvoN
+	hpxPH+XRhU5i6FAcVBrtUpzsCxM2sFC1hy1s7jAVfoIq1iP/pi1aiLa4nWmpcbes7TY4EU1JbKU
+	hpOwgmwVpqqdfEuR8jXa4OETNUpGyj3nHh61JthOJcyeDmeRnLuvTgH72o1pErvjGDw6JVl0Z0G
+	unFqMQi87IBxXBNEiUdPCdNFbINg6D4pRHmGzTPCGYdrfDLjTYQPSmVKR1kaIUlhD/X+XYd63EQ
+	wdVEIkVIO/KbRSbsGkGJZJFF3HeG2B1Q3qk99t9TouVKKtovZejTD7Tlg7uuit1Jc3JFQZKNuA=
 	=
-X-Google-Smtp-Source: AGHT+IHfo8By6gTM4sQb/mWVes7SFV6BKHWMA92iQ1C2kjF7CVvXbGrhVTrqw1Y5EOO9GItPXBtyog==
-X-Received: by 2002:a17:907:1b28:b0:ae3:6038:ad6f with SMTP id a640c23a62f3a-ae3f801ffffmr804598966b.3.1751749664350;
-        Sat, 05 Jul 2025 14:07:44 -0700 (PDT)
-Received: from [192.168.20.64] ([84.226.118.249])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60fca66e566sm3044739a12.11.2025.07.05.14.07.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 05 Jul 2025 14:07:44 -0700 (PDT)
-Message-ID: <dfcb20e5-17ec-45b5-9cce-b23dfa5028e1@gmail.com>
-Date: Sat, 5 Jul 2025 23:07:43 +0200
+X-Google-Smtp-Source: AGHT+IHx+IYrXKr3xB977sY51qAuIeSph3F9p1dTKzgWZE2kmv8QVjP1JAIdDGrLhfrOpI54EvpjOw==
+X-Received: by 2002:a17:902:fc8e:b0:234:c5c1:9b84 with SMTP id d9443c01a7336-23c90fd83c1mr54275325ad.37.1751773419007;
+        Sat, 05 Jul 2025 20:43:39 -0700 (PDT)
+Received: from nuvole.lan ([144.202.86.13])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23c8457e4d2sm57092205ad.148.2025.07.05.20.43.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 05 Jul 2025 20:43:38 -0700 (PDT)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: konrad.dybcio@oss.qualcomm.com
+Cc: aliceryhl@google.com,
+	andersson@kernel.org,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	ebiggers@google.com,
+	ilpo.jarvinen@linux.intel.com,
+	joel.granados@kernel.org,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	len.brown@intel.com,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	lossin@kernel.org,
+	mingo@kernel.org,
+	mitltlatltl@gmail.com,
+	ojeda@kernel.org,
+	robh@kernel.org,
+	sfr@canb.auug.org.au,
+	vanyang@smail.nju.edu.cn,
+	viro@zeniv.linux.org.uk
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc8280xp: Add initial support for Ntmer TW220
+Date: Sun,  6 Jul 2025 11:43:02 +0800
+Message-ID: <20250706034303.5404-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <de111b27-9126-4c03-a7bb-8cce9ea2780e@oss.qualcomm.com>
+References: <de111b27-9126-4c03-a7bb-8cce9ea2780e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/5] Add Dell Inspiron 7441 / Latitude 7455
- (X1E-80-100)
-To: Val Packett <val@packett.cool>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250701231643.568854-1-val@packett.cool>
-Content-Language: en-US
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-In-Reply-To: <20250701231643.568854-1-val@packett.cool>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+On Sat, Jun 28, 2025 at 3:48 AM Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> wrote:
+> On 6/17/25 11:29 AM, Pengyu Luo wrote:
+> > The Ntmer TW220 is a WOS tablet based on the Qualcomm SC8280XP platform,
+> > also known as the Robo&Kala 2-in-1 Laptop. Thanks to Hong for providing
+> > the unlocked device and early development work. This patch adds an
+> > initial device tree to enable basic functionality.
+> >
+> > Currently supported components include:
+> > - Bluetooth & Wi-Fi (board file regeneration required)
+> > - Battery charging (up to 15V/3A fixed PDO) and reporting via pmic-glink
+> > - Flash LEDs (front and rear)
+> > - Hall sensor (lid detection)
+> > - Keyboard (via Bluetooth or USB)
+> > - NVMe SSD
+> > - Power and volume keys
+> > - Simple-framebuffer
+> > - Sound (playback and capture; top-left DMIC only, top-right works only
+> >   on Windows)
+> > - Touchscreen and stylus (requires GPI DMA support [1] and stylus support [2])
+> > - USB Type-C ports
+> >
+> > The following components are currently non-functional:
+> > - Cameras (GalaxyCore GC5035; only sensor ID is detectable, no frames in libcamera;
+> >   partial driver can be found on LKML archives)
+> > - DSI display (blank screen with `dsi_err_worker: status=4`; primary DSI register
+> >   dump included below)
+> > - Stylus wireless charger (CPS4035)
+> > - UCSI over GLINK
+> >
+> > [1]: https://lore.kernel.org/linux-arm-msm/20250617090032.1487382-3-mitltlatltl@gmail.com
+> > [2]: https://lore.kernel.org/linux-input/20250605054855.403487-2-mitltlatltl@gmail.com
+> >
+> > Note: This series does **not** include any confidential material. Those
+> > who wish to run Linux on this device should contact Ntmer, as the
+> > bootloader is locked via secure boot.
+> >
+> > Co-developed-by: Hong Zhu <vanyang@smail.nju.edu.cn>
+> > Signed-off-by: Hong Zhu <vanyang@smail.nju.edu.cn>
+> > Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+> >
+> > dsi_ctrl, reg = <0 0x0ae94000 0 0x400>;
+> > 0xae94000 20050001 000001f3 0000000b dddd1011
+>
+> This is not something we want in the commit log
+>
 
-On 7/2/25 00:53, Val Packett wrote:
-> This is a series unifying the previous Inspiron[1] and Latitude[2] ones.
-> The laptops turned out to be even more identical than previously thought,
-> with a shared firmware update capsule[3] that refers to the shared codename
-> "Thena", as well as being identical visually (other than the bottom label).
->
-> Changes since v1:
->
-> - Added audio (audioreach PR: [4], ALSA UCM: [5])
-> - Removed the copy-pasted comment about WCN regulators being on a
->    "removable M.2 card" (the board has a *soldered* WiFi module, anyway)
-> - Removed the useless pin comment
-> - Fixed sort order for usb_ nodes
-> - Added missing newlines before status
-> - Changed zap shader node to use &gpu_zap_shader reference
-> - Added raw EDID dump to the eDP panel patch
-> - Changed the USB mux compatible to ps8833
-> - Removed unused i2c busses
->
-> (Should the dtsi be an 'x1-' one in anticipation of the x1p42100-based
-> Inspiron 5441 / Latitude 5455 models?)
+I will remove it. I need help, then I attached it, two of my sc8280xp
+devices require dsi to work. Reversing and guessing wasted a lot of
+time. I will appreciate it if qcom could support it.
 
-As Inspiron 5441 is already available for sale, and at first glance has 
-only a few differences (different display, x2 instead of x4 speakers), I 
-would say "x1-" makes more sense, unless maintainers disagree.
+> [...]
+>
+> > +     gpio-leds {
+> > +             compatible = "gpio-leds";
+> > +
+> > +             pinctrl-names = "default";
+> > +             pinctrl-0 = <&camf_indicator_en>, <&camr_indicator_en>;
+>
+> property-n
+> property-names
+>
+> in that order, across the file, please
+>
 
-Regards,
-Alex
+Ack
 
+> [...]
+>
+> > +             wsa-dai-link {
+> > +                     link-name = "WSA Playback";
+> > +
+> > +                     cpu {
+> > +                             sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
+> > +                     };
+> > +
+> > +                     codec {
+>
+> 'co'dec < 'cp'u
+>
+
+Ack
+
+> [...]
+>
+> > +/*
+> > + * cci0_i2c1
+> > + * sda: gpio115, scl: gpio116
+> > + *
+> > + * CAMI ov9234 @36 @48
+> > + *
+> > + * power on sequence
+> > + * gpio7 out low
+> > + * l3q 1p8
+> > + * l6q 2p8
+> > + * l2q 1p2
+> > + * gpio7 out high
+> > + * msleep 5
+> > + * cam_cc_mclk4_clk 2.4MHz (gpio6)
+> > + */
+>
+> It would be useful to enable these buses and set up what we can,
+> otherwise this is quite a lot of text for comments..
+>
+
+Ack
+
+> [...]
+>
+> > +&spi22 {
+> > +     status = "okay";
+> > +     pinctrl-0 = <&spi22_default>;
+> > +     pinctrl-names = "default";
+>
+> status should be the last property (before subnodes), preferably
+> with a newline before it, so:
+>
+> pinctrl-0 = <&spi22_default>;
+> pinctrl-names = "default";
+>
+> status = "okay";
+>
+
+Ack
 
 >
-> [1]: https://lore.kernel.org/all/20250424-qcom-linux-arm64-for-6-16-dell-inspiron14p-v1-0-ace76b31d024@linaro.org/
-> [2]: https://lore.kernel.org/all/20250525095341.12462-2-val@packett.cool/
-> [3]: https://www.dell.com/support/home/en-us/drivers/driversdetails?driverid=x2pvx&oscode=w11a6&productcode=latitude-14-7455-laptop
-> [4]: https://github.com/linux-msm/audioreach-topology/pull/25
-> [5]: https://github.com/alsa-project/alsa-ucm-conf/pull/589
+> > +
+> > +     touchscreen@0 {
+> > +             /*
+> > +              * The ACPI device ID is GXTS7986, its exact suffix is unknown.
+> > +              * The Windows driver suggests it is a GTBerlinB variant and
+> > +              * communicates via HID over SPI, which aligns with the Linux
+> > +              * driver `drivers/hid/hid-goodix-spi.c`.
+> > +              *
+> > +              * However, the HID descriptor read from the device appears
+> > +              * garbled, preventing proper probe with the HID driver. In
+> > +              * contrast, the driver at
+> > +              * `drivers/input/touchscreen/goodix_berlin_spi.c` shares many
+> > +              * similarities and functions correctly with this hardware.
+> > +              *
+> > +              * Therefore, we choose to use the goodix_berlin_spi driver
+> > +              * instead.
 >
-> Thanks,
-> ~val
+> Is this something you could work out with the aforementioned drivers'
+> maintainers?
 >
-> Bryan O'Donoghue (1):
->    dt-bindings: arm: qcom: Add Dell Inspiron 14 Plus 7441
+
+Since the ts device works well, I am still occupied with dsi things,
+I may contact them later.
+
+BTW, could you please review the gpi dma patches, touchscreen depends
+on it, it is still hanging there, thanks in advance.
+https://lore.kernel.org/linux-arm-msm/20250617090032.1487382-3-mitltlatltl@gmail.com
+
+> [...]
 >
-> Val Packett (4):
->    dt-bindings: arm: qcom: Add Dell Latitude 7455
->    arm64: dts: qcom: Add support for Dell Inspiron 7441 / Latitude 7455
->    firmware: qcom: scm: Allow QSEECOM on Dell Inspiron 7441 / Latitude
->      7455
->    drm/panel-edp: Add BOE NE14QDM panel for Dell Latitude 7455
+> > +&pcie4_port0 {
+> > +     wifi@0 {
+> > +             compatible = "pci17cb,1103";
+> > +             reg = <0x10000 0x0 0x0 0x0 0x0>;
+> > +
+> > +             vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
+> > +             vddaon-supply = <&vreg_pmu_aon_0p8>;
+> > +             vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+> > +             vddwlmx-supply = <&vreg_pmu_wlmx_0p8>;
+> > +             vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
+> > +             vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
+> > +             vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
+> > +             vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
+> > +             vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
+> > +
+> > +             /*
+> > +              * bus=pci,vendor=17cb,device=1103,subsystem-vendor=17cb,
+> > +              * subsystem-device=0108,qmi-chip-id=18,qmi-board-id=255
+> > +              *
+> > +              * Regenerate board file, x13s one works well
 >
->   .../devicetree/bindings/arm/qcom.yaml         |    2 +
->   arch/arm64/boot/dts/qcom/Makefile             |    4 +
->   .../x1e80100-dell-inspiron-14-plus-7441.dts   |   51 +
->   .../dts/qcom/x1e80100-dell-latitude-7455.dts  |   52 +
->   .../boot/dts/qcom/x1e80100-dell-thena.dtsi    | 1658 +++++++++++++++++
->   drivers/firmware/qcom/qcom_scm.c              |    2 +
->   drivers/gpu/drm/panel/panel-edp.c             |    1 +
->   7 files changed, 1770 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts
->   create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts
->   create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell-thena.dtsi
+> Please post on the ath11k mailing list and propose and ask for
+> that variant to be included
 >
+
+Ack
+
+Best wishes,
+Pengyu
 
