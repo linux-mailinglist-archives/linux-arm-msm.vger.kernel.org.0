@@ -1,154 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-63863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CE10AFA6B5
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jul 2025 19:09:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D43FDAFA6EE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jul 2025 19:51:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D88B1189AC93
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jul 2025 17:09:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1B1013A30DC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Jul 2025 17:51:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D05C28F930;
-	Sun,  6 Jul 2025 17:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39987288531;
+	Sun,  6 Jul 2025 17:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="KaE/xcLE"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="likQLbt6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD2B2882A9;
-	Sun,  6 Jul 2025 17:09:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C39713CF9C
+	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Jul 2025 17:51:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751821777; cv=none; b=f3SC0jY9D9IgFF+CjZiEasM3XkDtC4B68naslVWHxdupHD3YGVoKEhv69Oap5IwARZs5QsdCR2235qPY+Tgzsy5tawN6yWWmt0HR7PLa8eLgsVrYdMcKbU2DYH5FSGr2cPfZubP7z8zegTOGPk8P7oQzFglmppBsCb2lQ+Fbr+s=
+	t=1751824291; cv=none; b=bo0kjXEw6vMG4FQUgWa91pV+WQqVMYXnDpZhA+e8Hk3n6V3rr0m010gCCVI0ZGpOTlJbWYO7+Mpz4sAURgOhILL/RBx0TvbaGcZI2iHizku3JxdR2F+BqetWKGso6f93Qu5e6r/P1Bp7tFJKOJgqsx5eCkDe2fQ/saVxvfdJUaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751821777; c=relaxed/simple;
-	bh=Hc4ngSAjDssjvAcpzFrGEHUpIrfzVejNbQxf7kJLeqI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SN9VXf1ajYC6mtO2yBvpwX866GGTZ2A+1i7nK73mqrwED5we/LHltBCm3ZjagW09JHxtkW+JGVbbc1nQakBqHOLKn6dFPEoJ7MypOA+H17HJW9xHFWove7A5SVeR6j/GBjVaC63siPQFfHnckWAdKxgN7pIFEVg/aox23HhmNuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=KaE/xcLE; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1751821771; bh=Hc4ngSAjDssjvAcpzFrGEHUpIrfzVejNbQxf7kJLeqI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=KaE/xcLEy7F6wmsYESlPyLsMMBqyc+zSMbYp4TzDG0WqBRQUUit+2lNC1G9MQV6dS
-	 r1oY1p0u6hoc40cyScpu7EwmFGYZfkQyWPl8G8gVbbkhAesQx9PR4FWD6MczYzJIVH
-	 Ctpu5CUCA8hbilzYynuULPM4Gffjh52IahsBNtjE=
-Message-ID: <a1f18aa8-7650-4009-a874-d1d6c69e334d@lucaweiss.eu>
-Date: Sun, 6 Jul 2025 19:09:31 +0200
+	s=arc-20240116; t=1751824291; c=relaxed/simple;
+	bh=dChJTGZn8G3JSF+xUlkCPdn9/tfQniGS7rIMUAbxqiA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pOSb8nzweY850gHBfKuLXfftROdybjsS9a7OKfI10n8UsZ0DClQhwMZR/1Kq9Yay+/9Cu6Y5LgHyk1WZPR43Y24m3bFEkVJasr6eaaErh8ls/QPxeENf15SK5AuHT0r48ujb9F88HCW1Fie2LUrKxcDw53xm6C9M8g5ASc3mh3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=likQLbt6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 566Ccef0024736
+	for <linux-arm-msm@vger.kernel.org>; Sun, 6 Jul 2025 17:22:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=LOX59rWqByosVSw0xaHgEnKypfzIaPx5HQ8Gnd0xkM4=; b=li
+	kQLbt6c6JFl9/yDeu0PLNWkpj1eyrRI2PX8dpIt6o13ESNG6kDR5n/TrGkBAq0aa
+	oWox/26OrYG0SMncLOX5FVSAYf9rFICArt+ure93zCgQMAy9NHZjkdLmsGTES30f
+	nwpQkGZqtDCY6UtkfeWZ7lqg8Lc75TLgeu6EJBqUIgI2O/5KVfUz+Nmc/trADOP9
+	uRFxxqvZVDyYsjDz3P4vfvkytM6qRuJy6YSxEEl8wpPMVwl5njIRrHBPP0DN3G74
+	Yn5DMZyszkq9PGJXtKWCdG/wiqWMcEFpcV9TAJy62tJzH2UP8q6lSp5sSnhyeUJE
+	04OCfiitXFztY1nOanYg==
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com [209.85.167.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pucmdmv1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 06 Jul 2025 17:22:42 +0000 (GMT)
+Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-40d04995b67so539654b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Jul 2025 10:22:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751822561; x=1752427361;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LOX59rWqByosVSw0xaHgEnKypfzIaPx5HQ8Gnd0xkM4=;
+        b=JZQg/CwIBzHUV85cDPMTNMy0+twCgkyxiVA7k/LXj8Bbo7aBt5ckqAYZxxUKi6yN1y
+         qiMjC4ufJiG6BdWTUrsxpU7RVhf3freJIXC6XCKMtmb9Npzlu5Hn6TR634X7uFl+Q8I5
+         +6PsPG1EQZ+H3uhf1FbSnrIJPIcZatij0wqtbxt0aq7VoLYfUZtYkq/C+dffZSnp6OT9
+         UR72zxLv+jJHa/uB93e6gFmvFDdWpvYD0+jf4DO1t5CyAxQiCkGVSkZ/ovWmSUGXIm79
+         TSIjEA7jUCLsWsLqr0d6ZNfkLJO2NU6De+fio2Un3v1Thtezo1dE629nsear0lFv0uYN
+         iiJg==
+X-Forwarded-Encrypted: i=1; AJvYcCUVRCEGpU1EddgPN5JFBEEIaIXdW7D51xSd6DiU5mNK2tbXEFLgc0iRz4Qh/246tZLb16LJLJ/UEaB1dUsx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz3dOl5IdCBtugZMzjKuFvCO+pdu/aaY3nqVWWZDlUIfxpZ+Am9
+	qdeo4KjxNrajB2t9gY/+rHDH5hRWzEwh/NtpWuOW0OYybc8BqXkeXhFUM0x2bdsJ5EjRLNlgWwD
+	PtjXdKXDZQsSOMF+GK5r+GHfMj9npw09gdOHwyelT/3MiSahA4k+mLpCH0n2S0S4YIzFSH3lmDC
+	r+sOo/Sxi/9JjcTsHUQsx1B6IwQeCLF4VpncCb9BnCvj0=
+X-Gm-Gg: ASbGncsKAX3GYbB/O9Nv9fn1s3MPGqjlFF2seesqJCI8yaUM5g+6puwGP4WLJKs5An8
+	XARF2xOkCB3ZY4E5rud1jnGpq4i9KXoCjnUQPVWw4d+fgAod7fG6H3quGSi65xxhBsvzASezudc
+	K0r7rqSeMYhmZoHvri1YehfsWRCiKUx8LFh0g=
+X-Received: by 2002:a05:6808:bc9:b0:40b:3816:6637 with SMTP id 5614622812f47-40d04430f90mr7183401b6e.24.1751822561162;
+        Sun, 06 Jul 2025 10:22:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRx8YlZAXZI87WKI5wrFWMyyqOATVu6msOEMWXwTOG7myzreBVkUpyGxA8QIeqknVC/HOkS5l0RcGzJOGUVA8=
+X-Received: by 2002:a05:6808:bc9:b0:40b:3816:6637 with SMTP id
+ 5614622812f47-40d04430f90mr7183385b6e.24.1751822560811; Sun, 06 Jul 2025
+ 10:22:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v4] remoteproc: qcom_q6v5_mss: support loading MBN file on
- msm8974
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Sibi Sankar <quic_sibis@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- linux-kernel@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20250706-msm8974-fix-mss-v4-1-630907dbd898@oss.qualcomm.com>
-From: Luca Weiss <luca@lucaweiss.eu>
-In-Reply-To: <20250706-msm8974-fix-mss-v4-1-630907dbd898@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250705-iommu-fix-prr-v2-1-406fecc37cf8@oss.qualcomm.com>
+ <c20a9713-6f8d-4c20-a031-dc448404d073@oss.qualcomm.com> <CACSVV02ioJfDyYLj6ASeQwH91n5CGcz+GW0wsupWJaUkJyFmqQ@mail.gmail.com>
+ <CAO9ioeX0ffO8-v-mZaefFbyjOcCqGyu++gFjaMkpHPMyVOwE_Q@mail.gmail.com>
+In-Reply-To: <CAO9ioeX0ffO8-v-mZaefFbyjOcCqGyu++gFjaMkpHPMyVOwE_Q@mail.gmail.com>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Sun, 6 Jul 2025 10:22:30 -0700
+X-Gm-Features: Ac12FXw9ekp3dldeCvMfuxN3qhkGwT6jmeHSunKw3NKlYFi5TZD1Bc0FmrK_Dgs
+Message-ID: <CACSVV03JP-jRAJfB0NYNty=VZFVgrYPDkzkg27YYrgJBu1ymxA@mail.gmail.com>
+Subject: Re: [PATCH v2] iommu/arm-smmu: disable PRR on SM8250
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+        Bibek Kumar Patro <quic_bibekkum@quicinc.com>, iommu@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, Connor Abbott <cwabbott0@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=GdQXnRXL c=1 sm=1 tr=0 ts=686ab0e2 cx=c_pps
+ a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10
+ a=EUspDBNiAAAA:8 a=N1quPeXg1Wl-6W9anc4A:9 a=QEXdDO2ut3YA:10
+ a=efpaJB4zofY2dbm2aIRb:22
+X-Proofpoint-GUID: WFFy8xGZ7R53_Veg-FN0L0stEuopogh2
+X-Proofpoint-ORIG-GUID: WFFy8xGZ7R53_Veg-FN0L0stEuopogh2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA2MDExMSBTYWx0ZWRfX5kqwfrLn1fKm
+ FU1xlU9xVjFxivd9ipREzbNQBWd7VXdOPsBZvrsDAByJk2XHAA9JdSNvxaGh83C2Jb6lcoJXNxN
+ WIyohC6uiKyMxFUAOTEORq9SJ1ObDuGvLrHH1ln2fUyO2bu7N40Zj3GA2m11UQKMHSEZMZ8ZTpA
+ q/lYy1/gi5YupSXA4MNFzUZ5HvpYbvCRk8ZU4TaKBpr8FU4Km2fXCzy26qQlcRV1aEHSyMb1AGU
+ TSM0DDj4+S+Aw73KJyuvJVgqRGM74d3YDeTwECw8g8utNzxSwoq7Ni6cYMw5jdkM1DokXlRKaH0
+ gh7HjdZiuUgdV8fDH9Mw07RC6cB00MCoYSSYHXxpYkp2NRkSx6zrm+G7AxCE5avfLWelHKR8EMF
+ 3NSqLB2FwcMB105WF13x+JnjzNZPY37o1dXhqXq60jKzKQC1WUVdh/lBq60F9uJPo4vB1t1F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-04_07,2025-07-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 clxscore=1015
+ spamscore=0 suspectscore=0 mlxlogscore=626 priorityscore=1501 impostorscore=0
+ malwarescore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507060111
 
-On 06-07-2025 4:47 p.m., Dmitry Baryshkov wrote:
-> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> On MSM8974 / APQ8074, MSM8226 and MSM8926 the MSS requires loading raw
-> MBA image instead of the ELF file. Skip the ELF headers if mba.mbn was
-> specified as the firmware image.
+On Sun, Jul 6, 2025 at 9:38=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Sun, 6 Jul 2025 at 18:20, Rob Clark <rob.clark@oss.qualcomm.com> wrote=
+:
+> >
+> > On Sun, Jul 6, 2025 at 7:22=E2=80=AFAM Akhil P Oommen <akhilpo@oss.qual=
+comm.com> wrote:
+> > >
+> > > On 7/5/2025 9:38 PM, Dmitry Baryshkov wrote:
+> > > > On SM8250 / QRB5165-RB5 using PRR bits resets the device, most like=
+ly
+> > > > because of the hyp limitations. Disable PRR support on that platfor=
+m.
+> > > >
+> > > > Fixes: 7f2ef1bfc758 ("iommu/arm-smmu: Add support for PRR bit setup=
+")
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > >
+> > > Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+> > >
+> > > Unfortunately, there is no way to detect firmware support for PRR saf=
+ely
+> > > from KMD.
+> >
+> > I still am a bit curious about whether it is the ACLTR write that
+> > trips the fw out (doubtful, since we write other bits in that reg
+> > AFAICT) or the PRR_CFG_LADDR/UADDR write that does it.
+>
+> Indeed, write to ACTLR seems to go through, writes (or reads) to
+> PRR_CFG_[LU]ADDR cause a reset.
 
-Appears to work on my msm8974pro-fairphone-fp2!
+ok, that is what I suspected.. I think if we can somehow figure out
+what the inaccessible LADDR/UADDR values are, we can come up with a
+reserved-region workaround
 
-Tested-by: Luca Weiss <luca@lucaweiss.eu> # msm8974pro-fairphone-fp2
+BR,
+-R
 
-[  175.530764] remoteproc remoteproc1: powering up fc880000.remoteproc
-[  175.544439] remoteproc remoteproc1: Booting fw image mba.mbn, size 299792
-[  177.707706] qcom-q6v5-mss fc880000.remoteproc: MBA booted without 
-debug policy, loading mpss
-[  180.375633] remoteproc remoteproc1: remote processor 
-fc880000.remoteproc is now up
-[  180.841751] wwan wwan0: port wwan0at0 attached
-[  180.846972] wwan wwan0: port wwan0at1 attached
-[  181.004199] wwan wwan0: port wwan0qmi0 attached
-(this is with 'firmware-name = "mba.mbn", "modem.mbn";')
-
-I can also test on other MSM8974 devices and MSM8926 if you think that's 
-useful.
-
-Regards
-Luca
-
-> 
-> Fixes: a5a4e02d083d ("remoteproc: qcom: Add support for parsing fw dt bindings")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
-> Changes in v4:
-> - Expanded to cover MSM8226 and MSM8926.
-> - Link to v3: https://lore.kernel.org/r/20250706-msm8974-fix-mss-v3-1-8b5ae61c86a9@oss.qualcomm.com
-> 
-> Changes in v3:
-> - Reverted back to the simple patch from v1
-> - Added define for 0x1000 (Konrad)
-> - Added MBA firmware size check
-> - Corrected the Fixes tag to point to the commit adding firmware-name
->    support
-> - Link to v2: https://lore.kernel.org/r/20230508153524.2371795-1-dmitry.baryshkov@linaro.org
-> 
-> Changes in v2:
-> - Replace fixed offset 0x1000 with the value obtained from ELF headers
-> - Implement ELF validity checks
-> - Link to v1: https://lore.kernel.org/r/20230507172041.2320279-1-dmitry.baryshkov@linaro.org
-> ---
->   drivers/remoteproc/qcom_q6v5_mss.c | 13 ++++++++++++-
->   1 file changed, 12 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index 0c0199fb0e68d6286f1e238d110539554d1d5f14..636f00d481ea80508fc9db28d8e2e225ea52372c 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -498,6 +498,8 @@ static void q6v5_debug_policy_load(struct q6v5 *qproc, void *mba_region)
->   	release_firmware(dp_fw);
->   }
->   
-> +#define MSM8974_B00_OFFSET 0x1000
-> +
->   static int q6v5_load(struct rproc *rproc, const struct firmware *fw)
->   {
->   	struct q6v5 *qproc = rproc->priv;
-> @@ -516,7 +518,16 @@ static int q6v5_load(struct rproc *rproc, const struct firmware *fw)
->   		return -EBUSY;
->   	}
->   
-> -	memcpy(mba_region, fw->data, fw->size);
-> +	if ((qproc->version == MSS_MSM8974 ||
-> +	     qproc->version == MSS_MSM8226 ||
-> +	     qproc->version == MSS_MSM8926) &&
-> +	    fw->size > MSM8974_B00_OFFSET &&
-> +	    !memcmp(fw->data, ELFMAG, SELFMAG))
-> +		memcpy(mba_region,
-> +		       fw->data + MSM8974_B00_OFFSET,
-> +		       fw->size - MSM8974_B00_OFFSET);
-> +	else
-> +		memcpy(mba_region, fw->data, fw->size);
->   	q6v5_debug_policy_load(qproc, mba_region);
->   	memunmap(mba_region);
->   
-> 
-> ---
-> base-commit: b12a9fa1c88a441daa33f15edfa3ded8cd6d3556
-> change-id: 20250706-msm8974-fix-mss-e1b8e114b7e0
-> 
-> Best regards,
-
+> > In the latter
+> > case we could potentially use a reserved-region for the PRR page,
+> > instead of dynamically allocating it (if we knew what values are in
+> > LADDR/UADDR.. I guess 0x0?) to avoid reduced vk functionality on these
+> > devices.  AFAIU the vk extensions that depend on PRR are required for
+> > vkd3d.
+>
+>
+> --
+> With best wishes
+> Dmitry
 
