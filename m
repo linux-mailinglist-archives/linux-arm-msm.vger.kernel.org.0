@@ -1,87 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-63896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1523FAFAE8C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 10:24:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 278BAAFAF28
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 11:02:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5CD6917FA1A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 08:24:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E04204A11D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 09:02:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB92128A3F8;
-	Mon,  7 Jul 2025 08:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8968819F421;
+	Mon,  7 Jul 2025 09:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="i4QqyX4Z"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hcm+tfoB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC8A289E0D
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Jul 2025 08:24:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C17127A462
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Jul 2025 09:01:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751876672; cv=none; b=E+qvDQ0rQaLX4WFImTte/onxWqLRdYmn2/TAeZ6E69ZYNCNoMi9w77bW2Jm41COUviKZfNMI983bDMRuPe4hAiW3xZO3dxHr6hQbbSeRZee0xfAKLOP3iLirKXEgO9wnuNPyFoi4V7wDbq3L6z/04tN62xzzzLaHOB3fN5GwpYU=
+	t=1751878910; cv=none; b=dVMWjQ7imNP1t2Ost+YhSqw90IGh5M6Oz+m+mq6gsJDjzPMKNT2qPIqA9+x+NxtcU3YQFapL/Ei8+x1nXJdPrDw5dJnhl5/1F6IY6mmSbd0EUZncdT+eOUzNI6OPLPU9oobviUad5naFBQ6QZdaTQBob17ZPOCsqeaS5Ot/kUUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751876672; c=relaxed/simple;
-	bh=08f1MgkJS/MdrAG/JH0e1/2zkyJyP2K7GUuU9LnySrc=;
+	s=arc-20240116; t=1751878910; c=relaxed/simple;
+	bh=gn6V7zoAHvd9oT1v8THc1IYnXNnJpXQz9QXw7cnnjM8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pMNQejjAw5EU1ha/Mdwh4jly8HHZwqLVlfCrK3QXiKnRRp8eDoOYPLcBG+MbeEu6ZTg1/Pp51jcjsVRc7unrDQzvUEqVTYSlWmUcgG5L6KPvSAFyyC7903GWaF7VNIKEoCKxuOFJxZ34G0My/z7hS4B5Kg4WmlYaVwlJNXa/IxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=i4QqyX4Z; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=BIVTXoVjih2a0mGNQszZRmuY2Blko7Na4d/eXoLPKekFYS4zEM7WDICAEsqXP/dPBCNm8zVeB93sTU3WNc9W3WcJ/nTABSFlvDXwae79qoothrx8itcHB79a1FIfvc1TsFusMbQhCVmyUGQCvw71QkR+UNn03Ns3PUzl+UEdDOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hcm+tfoB; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 566KVcSF014531
-	for <linux-arm-msm@vger.kernel.org>; Mon, 7 Jul 2025 08:24:30 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 566Nlrbm025745
+	for <linux-arm-msm@vger.kernel.org>; Mon, 7 Jul 2025 09:01:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MbM0Na9BGNYEY76leSiVEoIRTJwjEgEbW28UaU8pTrc=; b=i4QqyX4ZhQI6uWob
-	/5qiPClMeuKoOkZlPichiL69OnNlj8hk6lULpnkN1J1VZo1mjErOEnbqc2wFahFt
-	iNUSOt/kxErcAiLvl4mgN5oKSfJX90zPTo9Zip6pBuQw3WIkMPVFl//ZiksqlZNB
-	/uT/Cs77uHam+gIKPG1kHUJNsG8knQoteP1R1iI6tCQYzqgxMICwn1jjvdt0BSb6
-	OTUuuu7l4/uW1/SZz1zIFAIRDs/XY+HERQgR/F2aySgwXUdIChbHCwiXtP9msLUM
-	3jDEWjhEIrf6hA8nXLQO7IuMBeUe2plDJRrw7nuSyrAKUtBWjBgLAqi0nv/9NvOU
-	8MtIjg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pvtkb20s-1
+	l2e+UXhs3wbpvZ0zHeB++9+5phi56xOkJYBCLVBgJTQ=; b=hcm+tfoBKd0T53Zp
+	7Bh+vvqHx8Ge3ZW05woa/aGjkxGKyrXKjSpjeXSKB1T2AwP/ZHO1oaQdqJhI3O9h
+	B7XMsC3xnAjOWMqwM3ExqEoLfRIPRoHvSwnlPeR5J/OdlQIVtfCfVpBwrfzwiqEh
+	UXrd3SwifmLoo+YWygcrRQpd7Ni8C0n+FTC+b7UB3wm3PyOvF3nUowRNkme007vJ
+	JJH05SwfB0bjzrsjXB5GZa1s5kRD/2EC/HmZ+WtTn6yPUghR/vO3SpsNaSBdBgMZ
+	dLGQpD6VL7M+4LaO+ekFc8n+JuBvs6y1Z+v825Sa6wrtYFtnVCcL3Lr6HWCz7WbY
+	DyqDIQ==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47psdqkx1m-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 08:24:30 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7d0976a24ceso49559285a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 01:24:30 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 09:01:32 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-23536f7c2d7so50349105ad.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 02:01:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751876669; x=1752481469;
+        d=1e100.net; s=20230601; t=1751878819; x=1752483619;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MbM0Na9BGNYEY76leSiVEoIRTJwjEgEbW28UaU8pTrc=;
-        b=meuekmEMKlB6LN+mriYJEU8Y5MWxH7LlnjXNILVKXIGbe1D6A1JWBDzqR92EkDNLpR
-         rR/S/JobbMcEXXdo1vzZPqqACv59g1cthyWmsq1plzMK1MSLLB3s1S5QYhi4Sv3R/ybw
-         dNIrQvPWXShnDAuovs5UoNWDFjWNLv8kdKNaAPyPGsik/HKW8qmZhmiMgggqbG2oopcy
-         CDgha2hDqEuMsrJ2VzzfEwjhPCmkIpI/zeUSPPPcXa4k2kGtiPtByfa42/5I8j+qCE3b
-         SKj7miZ86GMrc2KXoeLGEq3eJWrIlHFyqzZverA5xNWIs5PkFhrxpNShQuO/tF2SKhUd
-         31/g==
-X-Gm-Message-State: AOJu0YwImrlKVkqPiq/0J9NrU7VsvEfyyS8dg4LRrDgUmcPuUxd0mcVg
-	xtOlq5iqS6/nDXplSdfmXXQ++htXiHP049SUm1q9HlS0MkFtgVORjnuBD7G4pGSheWw43Bt6H2J
-	7/3wMtyZKOVQeQK5iKfwTrRYiAPSd4p5LwM9c5SHV98ILFmX1kyddLq2zuH40spb9mcVQ
-X-Gm-Gg: ASbGncuhgXpRSJKsj1hKS7rtN6NiIu6k1v6/N6Qp+SPmSqqvHULIfgJ0SbaTJ6hglVC
-	aJxqLLyKCRlEYs8f4uS4g9/kGZQU/cF+R+ieAY7Zo53lo2XWgtH0cQIFXoAc16meuyDvtGeDFJg
-	l3jnxUgVkT08nbI/dXK7XwflUPbgwjxbgug67DVZ5y2/RSjoyjh6YuxkBuiVsoxUSrhcsh/1gIV
-	kvnOkIE+H1J7vmUIEsSVSpnf93RuMgXKplnOetUJ0OOmsWlTHKWY2ZtqPkl9KZKTKJF+cVv0sps
-	7HLFQvMQEzpzpLXdmw+gUV4FejIT2ARurHGK8fO2QzdJQrSoa5FWNtcprOd/gFIIyuATVTV0332
-	rPoU=
-X-Received: by 2002:a05:622a:8356:b0:4a9:a2d2:5cd6 with SMTP id d75a77b69052e-4a9a2d2634cmr41323311cf.6.1751876669219;
-        Mon, 07 Jul 2025 01:24:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAhUSYigL5oM1altpor3qk4P5f5OHAvNg9UYt6fOM60gyonRu+BrBPx55Xo/pckv1Ovocl8w==
-X-Received: by 2002:a05:622a:8356:b0:4a9:a2d2:5cd6 with SMTP id d75a77b69052e-4a9a2d2634cmr41323171cf.6.1751876668843;
-        Mon, 07 Jul 2025 01:24:28 -0700 (PDT)
-Received: from [192.168.143.225] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f66e8c31sm668150966b.18.2025.07.07.01.24.25
+        bh=l2e+UXhs3wbpvZ0zHeB++9+5phi56xOkJYBCLVBgJTQ=;
+        b=YTxk/+Vw3hdG/V/jxX2aTbeJdTt3ZhWqAxnScaF/1AD3eMOx8fHmXAmgYOO7a5nnfs
+         3VluTbNbYoZklUNTPQcz3PHpG1aUzTKASdIz5ZDy3icztd6kFWd+TL6Mp4dHFDPTPd4h
+         TfiH4RUCm6CgOhpZwjXQ5pYVf0YrUGKAZxlDVQG4DxvkLtG5W0j/ME9etULFiiAaWZW0
+         bK3Q+qmhIttPBU/OLuwBYVekz9rAQQ81Pb1jeoZ/z9MVS+c01oiEfZ5+pTKoplULLIsZ
+         +7/cQl+RMgjH595/Vq6OdgZDcKPXCkYSZPVumEL3eio7wKupIXrwUFMFI7GY0C9O28HT
+         IPiA==
+X-Forwarded-Encrypted: i=1; AJvYcCXV4LkQ/fzJ5WncN+ggcW2vdrvfKuywv+uwTEebolWtT8cVfj6eQuI46sFQDU6ubVcnYyRyUUIss4X6JTgJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YyajiWwprRzy/A/8LLd9njGODJER1a6djtWrp0QBYTyItSfp1uK
+	99yb6xuF1Y5YFcUN8DL0I3tn/1iRBytcbOoIEdxM47PY2VK+P78cti0o3D2nnPPt76TPF083/mG
+	HdBupDmy9yMcmSbXcyMiZsyMlv56jU+e7g3S/6VQpUJc6XOLSh+l5Vvwk4qEd97cfZVP6
+X-Gm-Gg: ASbGncvQbrMouAc0RlS49siKUDAuWlHIxNCxIwlNQucQS5RUyZ4ZBb79JG4t/ZC5jdC
+	vfo6b4gLFFMqkccnuBCNdBc0+FJtP/nxKI1IbiGwm8w6esqXIcBxYnWueEkQHyyrHAgzjdiDH2w
+	zMA0SO5aIMzkOaLximDcKwaUkyqeSDS77Kwz1nZ/b57ciRo3i2Wo7kmqGlhfpFzlgd7tHjuUwhj
+	zlnecryvGW6KQq5aqMCDcL6Gc+RTpmcyOxq+h64BPe4BKY2sSwFIj0Am9C11FBamZhKOtmoYDZX
+	+xdbWjBOTAya5MB9wAXqsM0ORf8x7EpQq9uHjejP3ZmTvfK2KzQ7boRFZdQhKVPXkVoqRrN60rP
+	pvwezYI0EyOrjiTM=
+X-Received: by 2002:a17:903:24c:b0:234:f580:a15 with SMTP id d9443c01a7336-23c8747b74emr197490225ad.14.1751878818848;
+        Mon, 07 Jul 2025 02:00:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFUsHLYRDEjwSty6jv0erqnLMKM6mdS+v4Q42oEsxLYI9QjDOc3bdcxOjWAkuvoUwr2b1Hjvg==
+X-Received: by 2002:a17:903:24c:b0:234:f580:a15 with SMTP id d9443c01a7336-23c8747b74emr197489345ad.14.1751878818295;
+        Mon, 07 Jul 2025 02:00:18 -0700 (PDT)
+Received: from [10.133.33.166] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23c845bde5esm85132675ad.254.2025.07.07.02.00.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Jul 2025 01:24:28 -0700 (PDT)
-Message-ID: <17aa8f1f-f293-4ba8-a947-08d9b3618f5b@oss.qualcomm.com>
-Date: Mon, 7 Jul 2025 10:24:24 +0200
+        Mon, 07 Jul 2025 02:00:17 -0700 (PDT)
+Message-ID: <7b8ea9ba-02ef-4676-a4d3-d088920283c3@oss.qualcomm.com>
+Date: Mon, 7 Jul 2025 17:00:11 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,71 +90,163 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc8180x: modernize MDSS device
- definition
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov
- <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250704-mdss-schema-v1-0-e978e4e73e14@oss.qualcomm.com>
- <20250704-mdss-schema-v1-4-e978e4e73e14@oss.qualcomm.com>
+Subject: Re: [PATCH 2/3] bus: mhi: don't deinitialize and re-initialize again
+To: Muhammad Usama Anjum <usama.anjum@collabora.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+        Youssef Samir <quic_yabdulra@quicinc.com>,
+        Matthew Leung <quic_mattleun@quicinc.com>, Yan Zhen <yanzhen@vivo.com>,
+        Alexander Wilhelm <alexander.wilhelm@westermo.com>,
+        Alex Elder <elder@kernel.org>, Kunwu Chan <chentao@kylinos.cn>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Siddartha Mohanadoss <smohanad@codeaurora.org>,
+        Sujeev Dias <sdias@codeaurora.org>,
+        Julia Lawall <julia.lawall@lip6.fr>, John Crispin <john@phrozen.org>,
+        Muna Sinada <quic_msinada@quicinc.com>,
+        Venkateswara Naralasetty <quic_vnaralas@quicinc.com>,
+        Maharaja Kennadyrajan <quic_mkenna@quicinc.com>, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
+Cc: kernel@collabora.com
+References: <20250630074330.253867-1-usama.anjum@collabora.com>
+ <20250630074330.253867-3-usama.anjum@collabora.com>
+ <5f2a900a-3c8e-4b16-bd91-500af7d0315e@oss.qualcomm.com>
+ <29ba0afa-9a1b-40f9-a174-d03902ea5d3f@collabora.com>
+ <8b9eb6f4-6f0c-458d-b1e6-a1893c35b81d@oss.qualcomm.com>
+ <a92b3d96-0c19-49c2-ad8b-ad31dec973c3@collabora.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250704-mdss-schema-v1-4-e978e4e73e14@oss.qualcomm.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+In-Reply-To: <a92b3d96-0c19-49c2-ad8b-ad31dec973c3@collabora.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA3MDA0NyBTYWx0ZWRfX2EYZgTdOxC0+
- IlWfnHeul4pjdT8xnBHvSOemTK+KJfEFb7iwgk5CYgklylX4S5KGdhy2WsnfHOBFWZTcxbqkC36
- AC8xVlIRpSX04kydmXhRi4XYuMG0qg548x8SJHB8tmS5GbY6p864gcLFpttsLjWBgA+BAFVXQzh
- 5ZpSCKvD8TvH78Jms+lGAYEyTvkjp+dl8iD1KN7UeW02A3rQoXBV7X5aY3yFxO8QlgugEireq2Z
- sRThzX9/4kysbLFWxYFPjG3ma7oOjeYXdkRVklpRSzPzqrLrsQZpTNpcI5RaWL8yde1NhjvigYd
- B8ehtcxKmUbRlNAZnZTBFBEgGsQzWp16rSOfa2rp/Z4RvCmoihV2ZxbFdfP2M17Cff08tKOEYhY
- 0RcM20aaGmcAEX6G13SU5XIMheYv2SqqXwl53lB7Ib6URMynPUTVZwudpkvGgUgW/3ZKufrY
-X-Authority-Analysis: v=2.4 cv=Vq0jA/2n c=1 sm=1 tr=0 ts=686b843e cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=UvoLlU4ym182rRgf1HoA:9
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-ORIG-GUID: DALzcfOChx59VWD6NsjNqazxyyLpXF_g
-X-Proofpoint-GUID: DALzcfOChx59VWD6NsjNqazxyyLpXF_g
+X-Authority-Analysis: v=2.4 cv=ffSty1QF c=1 sm=1 tr=0 ts=686b8cf2 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=QX4gbG5DAAAA:8 a=hobwWvx8PSQhfgLp46UA:9
+ a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22 a=AbAUZ8qAyYyZVLSsDulk:22
+X-Proofpoint-ORIG-GUID: dbiaRXQZissKx7z5zvvLbN3VGTThvM2P
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA3MDA1MSBTYWx0ZWRfX1qYdRK70nK2/
+ gOyI3wDu9J+RY8tJlkefHXhWtzmH4olvcjkLrhqwIpS1BGt8q5vlEsg4qTNJMfDxAuQmo1L25S+
+ R9anVZMcwLcfGT+27BC+Cjd3PWAwjDQxJm64xv18e2/RQ9bmijZ8tQFwdLb50vo9KZIaAvvKvhK
+ STeC2ze2y5HMJa97AeK4952+OC2ni1T0WmO8o+qa8MEacJhO+t2leMlga4UuLdTEcAeNEM9XGzb
+ 4zo+TgSQXRcyX+03nGvQHphQx2ehEtw6UgMIoMjXLarUQkvwwGcXKMGCi3gcLZBD7TFuJ5D2jzG
+ 27iIcZRe7poLjU+it0wWRd1yqf0NM0/efBqaIn0pG/0pE0YJ9uZPDsr8DdNCnxL393PKvLiB3UE
+ 3bjW1VQPb7DqAYT5HvFenPiaX38omPjhUEFcpd9V3tkUy8eY23Jc/G0Jc91xjk/5t3XgwnmP
+X-Proofpoint-GUID: dbiaRXQZissKx7z5zvvLbN3VGTThvM2P
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-07_01,2025-07-07_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
- clxscore=1015 mlxscore=0 malwarescore=0 mlxlogscore=909 impostorscore=0
- suspectscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507070047
+ malwarescore=0 mlxlogscore=999 mlxscore=0 bulkscore=0 priorityscore=1501
+ phishscore=0 clxscore=1015 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ spamscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507070051
 
-On 7/4/25 6:31 PM, Dmitry Baryshkov wrote:
-> Follow the lead of other platforms and update DT description of the MDSS
-> device:
+
+
+On 7/7/2025 4:19 PM, Muhammad Usama Anjum wrote:
+> On 7/3/25 6:59 AM, Baochen Qiang wrote:
+>>
+>>
+>> On 7/3/2025 12:12 AM, Muhammad Usama Anjum wrote:
+>>> Thank you for reviewing.
+>>>
+>>> On 7/2/25 8:50 AM, Baochen Qiang wrote:
+>>>>
+>>>>
+>>>> On 6/30/2025 3:43 PM, Muhammad Usama Anjum wrote:
+>>>>> Don't deinitialize and reinitialize the HAL helpers. The dma memory is
+>>>>> deallocated and there is high possibility that we'll not be able to get
+>>>>> the same memory allocated from dma when there is high memory pressure.
+>>>>>
+>>>>> Tested-on: WCN6855 WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.6
+>>>>>
+>>>>> Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+>>>>> Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+>>>>> ---
+>>>>>  drivers/net/wireless/ath/ath11k/core.c | 5 -----
+>>>>>  1 file changed, 5 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+>>>>> index 4488e4cdc5e9e..bc4930fe6a367 100644
+>>>>> --- a/drivers/net/wireless/ath/ath11k/core.c
+>>>>> +++ b/drivers/net/wireless/ath/ath11k/core.c
+>>>>> @@ -2213,14 +2213,9 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
+>>>>>  	mutex_unlock(&ab->core_lock);
+>>>>>  
+>>>>>  	ath11k_dp_free(ab);
+>>>>> -	ath11k_hal_srng_deinit(ab);
+>>>>>  
+>>>>>  	ab->free_vdev_map = (1LL << (ab->num_radios * TARGET_NUM_VDEVS(ab))) - 1;
+>>>>>  
+>>>>> -	ret = ath11k_hal_srng_init(ab);
+>>>>> -	if (ret)
+>>>>> -		return ret;
+>>>>> -
+>>>>
+>>>> while I agree there is no need of a dealloc/realloc, we can not simply remove calling the
+>>>> _deinit()/_init() pair. At least the memset() cleanup to hal parameters (e.g.
+>>> Why do is it being done in the resume handler? Shouldn't those parameters be cleaned up
+>>> in resume handler? So when device wakes up, its state is already correct.
+>>>
+>>
+>> Hmm... not quite understand your question. Can you elaborate?
 > 
-> - Use generic node names (dislpay-subsystem, display-controller, phy)
->   instead of the platform-specific ones (mdss, mdp, dsi-phy)
-> - Add platform-specific compatible string to DSI controllers.
+> I'm trying to understand the possibility of cleanup of hal in suspend handler. For example:
+> * The driver has been loaded and has been working fine.
+> * The user called suspend. So all devices would be suspended.
+> * In suspend handler of the ath11k, we should do the necessary cleanups of the states
+>   like hal.
+> * When the device would resume after long time, the hal would have the correct state
+>   already. So we'll not need to deinit and init again.
+
+The hal cleanup is not only needed by suspend/resume, but also a step of reset/recover
+process. So If we are moving the cleanup to suspend handler, similar stuff needs to be
+done for reset/recover as well.
+
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
+>>
+>>> I'm not sure why it worked every time when I tested it on my device.
+>>>
+>>>> avail_blk_resource, current_blk_index and num_shadow_reg_configured etc.) inside the
+>>>> _init() needs to be kept as the later operation needs a clean state of them.
+>>> So should we just memset these 3?
+>>
+>> more than them I think. We need to take care of all entries in hal since current code is
+>> memset them all.
+> I see. So memset the whole ath11k hal structure other than the config.
+> 
+>>
+>>>
+>>>
+>>>>
+>>>>>  	clear_bit(ATH11K_FLAG_CRASH_FLUSH, &ab->dev_flags);
+>>>>>  
+>>>>>  	ret = ath11k_core_qmi_firmware_ready(ab);
+>>>>
+>>>> the _deinit() is still getting called in case ath11k_core_qmi_firmware_ready() fails,
+>>>> making it a little odd since there is no _init() anymore with this change, though this is
+>>>> the way of current logic (I mean the hal is currently deinit in the error path).
+>>>>
+>>>> Thinking it more, if we hit the error path, seems the only way is to remove ath11k module.
+>>>> In that case the _deinit() would be called again in ath11k_pci_remove(), leading to issues
+>>>> (at least I see a double free of hal->srng_config). But this is another topic which can be
+>>>> fixed in a separate patch.
+>>>
+>>> I don't think this is the problem as HAL is already initialized when before the system has
+>>> suspended. So by removing deinit() and init() pairs, the HAL still remains initialized. Or
+>>> maybe I've missed something?
+>>
+>> Yeah, it is OK in normal path. However in error path we face issues.
+> For example:
+> * When driver was initialized the first time, the hal was init.
+> * Then system was suspended and hal doesn't get deinit.
+> * At system resume, the hal is already init. We can memset some status variables. But its
+>   initialized already from the first time. (considering this patch that deinit/init have
+>   been removed)
+> * So at this stage if some error occurs and we can call the deinit in the error paths.
+> 
+> 
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
-Konrad
 
