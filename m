@@ -1,167 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-63947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6D3EAFBAF7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 20:43:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DBB3AFBD15
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 23:03:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 14E303A54BC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 18:43:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78440480872
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 21:03:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 338EF264A77;
-	Mon,  7 Jul 2025 18:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE1962853E0;
+	Mon,  7 Jul 2025 21:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I1Gc354h"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="m8mrIAFQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD67F262FF0;
-	Mon,  7 Jul 2025 18:43:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F3C26CE00;
+	Mon,  7 Jul 2025 21:03:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751913812; cv=none; b=FE+1iLnT6ekWPO/MEBUcl766mMJmVnWSvPQ6at5tOpjK2FPSN+LU65xnlfeQcGvZOoaj5nGAoMvA1+nlfwCHBFnq5KKlA2elJm7iuvOHZTjc03cTPWKjhy9FVDPcE1xhjjvJnsoqIFiktu6Ru1T6Vo2NiO794rzao3bvL96/0Ew=
+	t=1751922211; cv=none; b=Ym9im50QDF+Fzehg/KfbtS64+k9T9NDTRMcp3oYb+gMnC62quU1X5ApCIpg4EYahBj9DErHxgCGvabfgW9VDRzWbdSX6vk3WnMRkqG1aErPv2QhuBoNrbuMVTxzs5b+yTG53tFUYdf2RJiNBbpFvTte1WsGkU73QyRrkW9TiBD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751913812; c=relaxed/simple;
-	bh=hrM7TAUwUzWNU7f4k4yx1Gu9ZxX5m6dymI/e327xOKY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UdH406kFvGLfVRdgv9sRdiXwFre76j8Cm1g9IwyPPjVSqlT1gM35Dxa62cG4UwQ6gjWUs9kJJuXwHVJ7Ch8+RYQANshLK/2aQYXGGEcBb7GidrjKeUfE1l3eX/c6C3wmPbyzcJa3pofG8yRVmUD+hcKrGcd6uWwJA0k9bQzhUvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I1Gc354h; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77161C4AF0F;
-	Mon,  7 Jul 2025 18:43:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751913811;
-	bh=hrM7TAUwUzWNU7f4k4yx1Gu9ZxX5m6dymI/e327xOKY=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=I1Gc354hwbuJzz57xuHU0adjTwd//JV0gPzmskPDKzgFi0rUipml8X0O2V6LITrXo
-	 3E8TyhoiOVpRorL5Je7NJYQJm7wFgMsRyX73rzrAPpeRq5Y6mKZ/snvPp9NZnIQljo
-	 EJ/Yb7UdKN5WtGgio8YxdoU+yw6/C05cM08V0Q4zjByYzRZFUAg7rdN4loP5CZ0m7N
-	 DSAIL4wUpN9lWI2/2fezfjt8ic6poJ7CHum+6NsaPgJsidjfva1nIMP/bhQLou0fTs
-	 z74T2zsEVCgOebD+jix36p0L6MdL6vdi5pf9RYqMHBP7hnTRoskg4TuCI+hiEinqgi
-	 MQud3uX4AQx2g==
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-61390809a36so956977eaf.1;
-        Mon, 07 Jul 2025 11:43:31 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUHutvs2AN81vZ6J6Q44DnFjKkFGsfTsMHcGCDetQlgfAE+a3iARkRtgaHwExh0oQKXOXqInpwmGaIa@vger.kernel.org, AJvYcCUo0ZaWXpF053kafWae7MwisDyQ0QlbMGyIEojlRqTWsH/zzJUeuZlDZMDfrevYJcfdo2TjWKJ5CQbL@vger.kernel.org, AJvYcCUwOqRHYxAO9vvknUtTXYhqSAWbZaurZJgn+NEYh+zHE2kW38f5gR3qywEvit0301JGgO9OPe5ce/AEDIjF05AVfA==@vger.kernel.org, AJvYcCV3+1Z22IW6zQmqMbl8WjcjY4zpbRxmlnnsWu0AMqaN4wbXtvSPjJJzFnxyPExWJZytA2r8tkWUJepuONNk@vger.kernel.org, AJvYcCV8JgaoCGEwfMiHrZI9nSaZ6n60BzWuf0DRBxy6tTFSkW7l11jFrnR34rCf/f1Sm72JCA8Y4t6ut8nG@vger.kernel.org, AJvYcCVAjpxXZce9ThTnKCtLFdNDBQJ6dFkbn4E1lYjAjfDgOhxZnbF/BdocT3/7/Xx72aeJrrLnR8FzoqmWAIJ6@vger.kernel.org, AJvYcCVgSUnObPlYLwb1yKcxjJ6OtcDsOYjJv8GIJNvHCYWyU9NYVqL0+ibanlbx80WuXgNgecQz/KhWc8qq@vger.kernel.org, AJvYcCVwzyL4hvT+Ci/bldHrMMZ9+H09l9AT17O5r31rmOXV15IztHMs8HrgsQVTID8q/ieBVikSVCnE2l55gEOZSN9dlYo=@vger.kernel.org, AJvYcCWlv+YsG3nt98nHkqFtTTWakByeRqg32/XeY6IA7Pu5cuU4C6uGVF3b4zLWtJtp74SU7eXQcPIOBuVSfiE=@vger.kernel.org, AJvYcCWtB2OrmkOS
- bK0Vu1CHes+E3pkuD5poesbhjL3HEtVYLVtu4+yn+eOawr5CY21GsbnY2mjbZM5xGzBb@vger.kernel.org, AJvYcCWxW6EtxI1dpYAYx59v5ff2MrnQUsU3u2e+GCDu/FYhc1sWB3lIXnJC2r5lNGqTCeFGSvrgYrVIJkg=@vger.kernel.org, AJvYcCXfL4M0d21XFlYxz9O0xXWGcCpQVj0YtD7X5IBJ7DcmnSDnjD7zrrcwBqRJgWJ992l2yxT/RJNTZmcuOb6i@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4hAwDnHt3HYo7wiMB+zRmQf8Sg4F2mN7dks+B1034Qjsfrx5G
-	1LZ/VxRskxHsyYVoNLwEdExgiATxzrjleqOwKFoUxo6WcMLXhIuIXgLVmlYYohmWqlJFUla1Smw
-	lZT7gDMfj47W4I/CtgAVjjATrj+5zIW0=
-X-Google-Smtp-Source: AGHT+IGWFo0UcD4MojnRdJcVhqk/giYu4pxqlIjmLkAJEnDd4MWXJ9qI/qzV8bVwGlXxOpEoErWIuer/la1NZ2vHba8=
-X-Received: by 2002:a05:6820:c8d:b0:611:e30a:f9c7 with SMTP id
- 006d021491bc7-613c0292e6amr496213eaf.7.1751913810559; Mon, 07 Jul 2025
- 11:43:30 -0700 (PDT)
+	s=arc-20240116; t=1751922211; c=relaxed/simple;
+	bh=AbkzMAYAWERnxiFKRiZtC8lW41jukiC9OACIVaS7/W0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mJPdzlVdiwQLNPhGqjnN2MlSKiVwdi7jgxQUzPdXTVBR6hIEZmEDD2X3EV71w62rUK8JcQs8UysuGE+/QEERzmi/UOGi6CrAHl5Gdhr5vCZGlY6KGAeX6TvmXtMDvuOYyAX+pkC2+Ya+sRQRvvl4mhtS73uazLmDGDzLGPKNqA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=m8mrIAFQ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 567KAMK7011930;
+	Mon, 7 Jul 2025 21:03:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=hnYqspkuEK+pu2xr1vqMUHoCIxhuBQQlYy9
+	QcC7+xec=; b=m8mrIAFQfNqFfLemml0gygmc7sfg4A2iPIxqiqw65KcnCkqMHFC
+	54xpw6y+anJcDkAbqgHmPsZNUqOYgPT2WROtSlATzIWBgMq6Pb7LdIOCZSNw4onR
+	pQ3RTv5cF79B2wjh9my2pYYaiL+QBZTQvFeBJDCEQ+j597dOquPGQ6osv3yXY2fa
+	3tDIoImwn8bKriEnBKIdZ5CDy7Ja//RJrzyd65xW1CJ1v3LMNwYHINyfO7eZyLE4
+	CnBUP4CwU0VYq7J0RWhHwrecc4CILBA4lE3I5W4MrHHISaplplcIHXEblN+osrqe
+	c0PmwAnbQQqS9rQwj+lgJM5YlJpyjh05vLQ==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pucmrmwk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 07 Jul 2025 21:03:07 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 567L33sI015125;
+	Mon, 7 Jul 2025 21:03:03 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 47pw4knn21-1;
+	Mon, 07 Jul 2025 21:03:03 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 567L33jC015120;
+	Mon, 7 Jul 2025 21:03:03 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 567L32mp015117;
+	Mon, 07 Jul 2025 21:03:03 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
+	id 815BF57186C; Tue,  8 Jul 2025 02:33:02 +0530 (+0530)
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+To: mani@kernel.org, James.Bottomley@HansenPartnership.com,
+        martin.petersen@oracle.com, bvanassche@acm.org, avri.altman@wdc.com,
+        ebiggers@google.com, neil.armstrong@linaro.org,
+        konrad.dybcio@oss.qualcomm.com
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-scsi@vger.kernel.org, Nitin Rawat <quic_nitirawa@quicinc.com>
+Subject: [PATCH V2 0/3] scsi: ufs: qcom: Align programming sequence as per HW spec
+Date: Tue,  8 Jul 2025 02:32:57 +0530
+Message-ID: <20250707210300.561-1-quic_nitirawa@quicinc.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250703112708.1621607-1-claudiu.beznea.uj@bp.renesas.com>
- <CAPDyKFoznqfdX7Dvu3VPa5Me10VHGphnRRHrU17w-fie7HrQ5g@mail.gmail.com> <CAJZ5v0gH9ZAK9br58KB0VEtG+4VdwO7vEKtrKbpcYOKnZPf7bg@mail.gmail.com>
-In-Reply-To: <CAJZ5v0gH9ZAK9br58KB0VEtG+4VdwO7vEKtrKbpcYOKnZPf7bg@mail.gmail.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Mon, 7 Jul 2025 20:43:18 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0gZK_JYgXYdbJ9pOBgrMO9sBa=VWP8HGOVV4C2mCOSSWg@mail.gmail.com>
-X-Gm-Features: Ac12FXx21d9hRiF0Pqe_4V96M5MioxLeGCoj8OSAh6lGgwSlfReCuBO8e1tghsQ
-Message-ID: <CAJZ5v0gZK_JYgXYdbJ9pOBgrMO9sBa=VWP8HGOVV4C2mCOSSWg@mail.gmail.com>
-Subject: Re: [PATCH v5 0/3] PM: domains: Detach on device_unbind_cleanup()
-To: Ulf Hansson <ulf.hansson@linaro.org>, Claudiu <claudiu.beznea@tuxon.dev>
-Cc: linux@armlinux.org.uk, gregkh@linuxfoundation.org, 
-	david.m.ertman@intel.com, ira.weiny@intel.com, leon@kernel.org, 
-	dakr@kernel.org, len.brown@intel.com, pavel@kernel.org, andersson@kernel.org, 
-	mturquette@baylibre.com, sboyd@kernel.org, maarten.lankhorst@linux.intel.com, 
-	mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch, 
-	wsa+renesas@sang-engineering.com, mathieu.poirier@linaro.org, 
-	vkoul@kernel.org, yung-chuan.liao@linux.intel.com, 
-	pierre-louis.bossart@linux.dev, broonie@kernel.org, robh@kernel.org, 
-	jirislaby@kernel.org, saravanak@google.com, jic23@kernel.org, 
-	dmitry.torokhov@gmail.com, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	linux-mmc@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
-	linux-sound@vger.kernel.org, linux-spi@vger.kernel.org, 
-	linux-serial@vger.kernel.org, bhelgaas@google.com, geert@linux-m68k.org, 
-	linux-iio@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	fabrizio.castro.jz@renesas.com, 
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=GdQXnRXL c=1 sm=1 tr=0 ts=686c360b cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=Wb1JkmetP80A:10 a=g0woJlExcYKCPppWxPgA:9
+X-Proofpoint-GUID: thcVEDtOMYUrJigDUnVENkmM-Ftxyyy2
+X-Proofpoint-ORIG-GUID: thcVEDtOMYUrJigDUnVENkmM-Ftxyyy2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA3MDE0MSBTYWx0ZWRfX1hKd/UnPWm4d
+ 5GMxp8ABraPTN2uxJXon/fDkiahN9txI7C7HVhS2Tc4mjLKVFl2CZ2bltX/onH6dunTAoztI9JO
+ yiHbeyFR7S7qg9JSkDROq7/HqKxNK9bh9DTDlN+Y9HVQaw7eH6e33FtHLYSo4pEQXyD++VmtTfT
+ sp0cFdeFsqrQeAjGaytmtIFaDshQmbwm71OLRZ7/2iTez/T06qs7Hg7bViz4XeH59KSR3RX6JgB
+ AjGXVs/TM/k4X7CdravTK36TAya/hAGYOVlIfSlpYWHsm0LXDq6yOy/fWin3u7tj1TmdI6rDPAh
+ WK1yqiCyYrb7PtB1vmJUrYry0FTYSCqPZIWfYvakle3SR9wrR9iLs61HUIasrVkhwxvlFM99q/y
+ l+4/RaTSX4Vw43sQWKGxJocJZYmaJXCPW8XBR1GX7gEixNSyZ6zTQ4rXfYdCRGGfMfu2oliA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-07_05,2025-07-07_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 clxscore=1011
+ spamscore=0 suspectscore=0 mlxlogscore=684 priorityscore=1501 impostorscore=0
+ malwarescore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507070141
 
-On Fri, Jul 4, 2025 at 9:53=E2=80=AFPM Rafael J. Wysocki <rafael@kernel.org=
-> wrote:
->
-> On Fri, Jul 4, 2025 at 1:16=E2=80=AFPM Ulf Hansson <ulf.hansson@linaro.or=
-g> wrote:
-> >
-> > On Thu, 3 Jul 2025 at 13:27, Claudiu <claudiu.beznea@tuxon.dev> wrote:
-> > >
-> > > From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-> > >
-> > > Hi,
-> > >
-> > > Series drops the dev_pm_domain_detach() from platform bus remove and
-> > > adds it in device_unbind_cleanup() to avoid runtime resumming the dev=
-ice
-> > > after it was detached from its PM domain.
-> > >
-> > > Please provide your feedback.
-> > >
-> > > Thank you,
-> > > Claudiu
-> > >
-> > > Changes in v5:
-> > > - added PD_FLAG_ATTACH_POWER_ON, PD_FLAG_DETACH_POWER_OFF;
-> > >   due to this a new patch was introduced
-> > >   "PM: domains: Add flags to specify power on attach/detach"
-> > >
-> > > Changes in v4:
-> > > - added a flag in dev_pm_info that is saved in dev_pm_domain_attach()
-> > >   and used in device_unbind_cleanup()
-> > >
-> > > Changes in v3:
-> > > - add devm_pm_domain_attach()
-> > >
-> > > Changes in v2:
-> > > - dropped the devres group open/close approach and use
-> > >   devm_pm_domain_attach()
-> > > - adjusted patch description to reflect the new approach
-> > >
-> > >
-> > > Claudiu Beznea (3):
-> > >   PM: domains: Add flags to specify power on attach/detach
-> > >   PM: domains: Detach on device_unbind_cleanup()
-> > >   driver core: platform: Drop dev_pm_domain_detach() call
-> > >
-> > >  drivers/amba/bus.c                       |  4 ++--
-> > >  drivers/base/auxiliary.c                 |  2 +-
-> > >  drivers/base/dd.c                        |  2 ++
-> > >  drivers/base/platform.c                  |  9 +++------
-> > >  drivers/base/power/common.c              |  9 ++++++---
-> > >  drivers/clk/qcom/apcs-sdx55.c            |  2 +-
-> > >  drivers/gpu/drm/display/drm_dp_aux_bus.c |  2 +-
-> > >  drivers/i2c/i2c-core-base.c              |  2 +-
-> > >  drivers/mmc/core/sdio_bus.c              |  2 +-
-> > >  drivers/rpmsg/rpmsg_core.c               |  2 +-
-> > >  drivers/soundwire/bus_type.c             |  2 +-
-> > >  drivers/spi/spi.c                        |  2 +-
-> > >  drivers/tty/serdev/core.c                |  2 +-
-> > >  include/linux/pm.h                       |  1 +
-> > >  include/linux/pm_domain.h                | 10 ++++++++--
-> > >  15 files changed, 31 insertions(+), 22 deletions(-)
-> > >
-> > > --
-> > > 2.43.0
-> > >
-> >
-> > The series looks good to me, please add:
-> > Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-> >
-> > Rafael, do you intend to pick this via your tree?
->
-> I do in general, but I haven't looked at this version yet.  I'll get
-> to it early next week.
+This patch series adds programming support for Qualcomm UFS
+to align with Hardware Specification.
 
-Now applied as 6.17 material, thanks!
+In this patch series below changes are taken care.
+
+1. Enable QUnipro Internal Clock Gating
+2. Update esi_vec_mask for HW major version >= 6
+
+Changes from v1:
+1. Moved ufshcd_dme_rmw to ufshcd.h as per avri's comment.
+
+Bao D. Nguyen (1):
+  scsi: ufs: ufs-qcom: Update esi_vec_mask for HW major version >= 6
+
+Nitin Rawat (2):
+  scsi: ufs: core: Add ufshcd_dme_rmw to modify DME attributes
+  scsi: ufs: qcom: Enable QUnipro Internal Clock Gating
+
+ drivers/ufs/host/ufs-qcom.c | 24 ++++++++++++++++++++++--
+ drivers/ufs/host/ufs-qcom.h |  9 +++++++++
+ include/ufs/ufshcd.h        | 26 ++++++++++++++++++++++++++
+ 3 files changed, 57 insertions(+), 2 deletions(-)
+
+--
+2.48.1
+
 
