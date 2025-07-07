@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-63918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34BBCAFB1EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 13:05:52 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DFBBAFB243
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 13:29:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 75C053A7CD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 11:05:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8C5527A2627
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 11:28:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D454D28C005;
-	Mon,  7 Jul 2025 11:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21ABE289369;
+	Mon,  7 Jul 2025 11:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sDDxGoey"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nzQ9mSTl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A810C28853E;
-	Mon,  7 Jul 2025 11:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E639015B135;
+	Mon,  7 Jul 2025 11:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751886346; cv=none; b=m9nwOJRMwsbCxcI/9qq42yfIetA44hB9JKlw6Vu9ajW2SNjqGUsA9snF8itFliG7ln9krkh7Ijyg3mdNK/qijAGddSarGvm523IRqZhLC6MnsImHPujaEYCBcdjGjsYJRV3Pk2ngo6GjLg5cC8Iqu41D6yJbpITDhihZLth+Xcs=
+	t=1751887770; cv=none; b=jB+YNOgUTKlhImPc7RP08DPpxoN537KI4s2QEYowOv3ER1AIUZSNs+Ux/RHFdkvNgozxpCEabmgo1SIEFrVA4+2fT8UgzKXcWWzKwrA6qKBF4LxOLAzKOEM/rAmZFmbJkxI8PLV/f3nttDOK1bPcw4bW7tP60RhzH+PqUrs2F4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751886346; c=relaxed/simple;
-	bh=KoMwxI+BjZlkT8Tms2SDNkjYSNzeRufAe/1amGoI+ac=;
+	s=arc-20240116; t=1751887770; c=relaxed/simple;
+	bh=pvrgPbujdZyNCnqS0MoPZy4z92NtoD/434IVrBGaRNc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mb2DKigIYoAKWHlqYtifTYhWJKuoeE5pVr7bYdzkWf7DUH5N+lnGAkj5MV+wpQ0MaelO1tw9S6cWI9YlkKtM2cif6VrFYiAJnGnU9CwndnZQYCh/XkPZRLJia1U1xnfgHm3pAuOQdIgTj4zxP9/XvIxGyOlRtVn8ZMdIc/8Lv30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sDDxGoey; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1431C4CEE3;
-	Mon,  7 Jul 2025 11:05:41 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=mUF5K6KXvEZoSnO8lZOWkHwwu66LQN9adKQYSaxDB1ljMcNS6qIvgz4KlAZt0PmQMySB/WXAVoFQchYXbCjcNm6/SggggnNbDLRr0wCJ+QKXSOzSmBPplj9bXLcN+QWvSDys8+wDtdaAzAxCjTfiQkNZ57TA4ycsix01KLHZGlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nzQ9mSTl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4ADBC4CEE3;
+	Mon,  7 Jul 2025 11:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751886346;
-	bh=KoMwxI+BjZlkT8Tms2SDNkjYSNzeRufAe/1amGoI+ac=;
+	s=k20201202; t=1751887769;
+	bh=pvrgPbujdZyNCnqS0MoPZy4z92NtoD/434IVrBGaRNc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sDDxGoeyD7+j008f4C5gG8JDXIDhNP0oYiiRUsHQHw1XANM4XOzj4BtQ3WRR5Nn0K
-	 WLQ2PaBnbxIIzlNv3K7Ile06rk1m+JjXzF5UOOIs8F8KxsKtXtAULq9PJzo5d1kaxo
-	 caU444uhBlooXbSdeQvgvT8/tOrzFv03nVOss4vwcoBh01qYKDQ0/1z8HNvWeFWIXT
-	 ihr6tAvSPIwYq+TN0y7vd0jE6GXiIDMGZTlGlX4HxAe7bi6VDUGc9t5elocqno+Onm
-	 crt4dZtDXxsWvYAgX2SCmcV72FGyZzew9r+pB2iOAoJINY5GG/OgEc6ykmZmHl6wTS
-	 gBqnE5NypwKLA==
-Date: Mon, 7 Jul 2025 13:05:39 +0200
+	b=nzQ9mSTlqbjPryIzU8C3XJ2bHMoEKQ4PGiXh5kPvsK61snx3Ko7sg4bDQvAmsjNyn
+	 VjBlyc7OVsGY2nwbPevisTcnOZK72lB3PDlNakMUad5FcfmPBbVvdvDypLIGh5uRc9
+	 Q0bIaDP6yBFVAoBnE5RPw0SrJ4O16orY4aRAURr38XAqFX3GWO0SokyG/y9LHLARxi
+	 hG7GbGWrC4zCJmvhUjqO8RheFBQ9GYnPogZwKq6XTG1kRXJ0oXeWcwj/OUXhvcw5+i
+	 eI4LdHoFj/fSjCgPFR2upUo2YoxS57r/w2/C75umpqC6zf9X7F5LaM4bg7gRmYrh9F
+	 /minS3KOUu35Q==
+Date: Mon, 7 Jul 2025 13:29:22 +0200
 From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
 Cc: Bjorn Helgaas <helgaas@kernel.org>,
 	Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
 	Oliver O'Halloran <oohall@gmail.com>,
@@ -64,10 +64,11 @@ Cc: Bjorn Helgaas <helgaas@kernel.org>,
 	linux-riscv@lists.infradead.org
 Subject: Re: [PATCH v4 4/5] PCI: host-common: Add link down handling for host
  bridges
-Message-ID: <aGuqA92VDLK8eRY1@ryzen>
+Message-ID: <aGuvkkeVkezGJWXn@ryzen>
 References: <fr6orvqq62hozn5g3svpyyazdshv4kh4xszchxbmpdcpgp5pg6@mlehmlasbvrm>
  <20250530113404.GA138859@bhelgaas>
  <bixtbu7hzs5rwrgj22ff53souxvpd7vqysktpcnxvd66jrsizf@pelid4rjhips>
+ <aGuqA92VDLK8eRY1@ryzen>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,27 +77,30 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <bixtbu7hzs5rwrgj22ff53souxvpd7vqysktpcnxvd66jrsizf@pelid4rjhips>
+In-Reply-To: <aGuqA92VDLK8eRY1@ryzen>
 
-Hello Mani,
++ Mani's kernel.org email.
 
-On Fri, May 30, 2025 at 09:39:28PM +0530, Manivannan Sadhasivam wrote:
-> On Fri, May 30, 2025 at 06:34:04AM -0500, Bjorn Helgaas wrote:
+On Mon, Jul 07, 2025 at 01:05:39PM +0200, Niklas Cassel wrote:
+> Hello Mani,
 > 
-> > I think pci_host_handle_link_down() should take a Root Port, not a
-> > host bridge, and the controller driver should figure out which port
-> > needs to be recovered, or the controller driver can have its own loop
-> > to recover all of them if it can't figure out which one needs it.
+> On Fri, May 30, 2025 at 09:39:28PM +0530, Manivannan Sadhasivam wrote:
+> > On Fri, May 30, 2025 at 06:34:04AM -0500, Bjorn Helgaas wrote:
 > > 
+> > > I think pci_host_handle_link_down() should take a Root Port, not a
+> > > host bridge, and the controller driver should figure out which port
+> > > needs to be recovered, or the controller driver can have its own loop
+> > > to recover all of them if it can't figure out which one needs it.
+> > > 
+> > 
+> > This should also work. Feel free to drop the relevant commits for v6.16, I can
+> > resubmit them (including dw-rockchip after -rc1).
 > 
-> This should also work. Feel free to drop the relevant commits for v6.16, I can
-> resubmit them (including dw-rockchip after -rc1).
-
-What is the current status of this?
-
-I assume that there is not much time left before 6.17 cut-off.
-
-
-Kind regards,
-Niklas
+> What is the current status of this?
+> 
+> I assume that there is not much time left before 6.17 cut-off.
+> 
+> 
+> Kind regards,
+> Niklas
 
