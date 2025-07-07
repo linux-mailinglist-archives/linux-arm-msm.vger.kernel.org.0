@@ -1,335 +1,301 @@
-Return-Path: <linux-arm-msm+bounces-63875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94DD5AFA9ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 04:51:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CF8BAFAA22
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 05:16:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EA8A57ABE13
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 02:50:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 67E733B8469
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 03:15:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B8FA1DE887;
-	Mon,  7 Jul 2025 02:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42613253F20;
+	Mon,  7 Jul 2025 03:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TDdsYny2"
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="BV0xZYmY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011062.outbound.protection.outlook.com [52.101.65.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF08A1DC9A3
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Jul 2025 02:51:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751856684; cv=none; b=sE5V/0eRtBwzWtHwcO1oK7g5vV7YdiHsz1+a9OGczvGipdRz7J8NOXOPT/Mlezx/6gehcM2A23/Ce9lzDdZVKg2Veg54vaiXcwysWp0Io1zn+3AXI6s0PX0Td0Lv/yfBeUT5Shl5sb/V0YgINES32A6BIlYrgGf1pKzNqSaSp/w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751856684; c=relaxed/simple;
-	bh=kyVxBAUewXc6aAhvBo+dY1wVPRkYXZ2ac+u1Lkih2IE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FOurmqQFGfyIcTj1fGoS66gS6Mnv0Ztt8NJTZSn3VSpHnRzIzvJUN9mdXOX1y971RPTZscU3TN6sLHWWUy0Kkapw6+3KoroiwP0VqmJXPmYBg9WZWZeFju56GZm+zHv4pP02Bu0WsxhoPWUtoT6iPhB6i5etpdI2STYZAzrpedU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TDdsYny2; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 566LvWqW025600
-	for <linux-arm-msm@vger.kernel.org>; Mon, 7 Jul 2025 02:51:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2dXIFfCrLj7q00eAjZeiFB/w8E21rcCty7AVkVZwJII=; b=TDdsYny2zRq/gprw
-	lWod1X09QQtgNrBZnzImXv9OIYPWHLI9k9TDM8Lr2Jf5BbEV/J8SVkdbk29mGILG
-	cifuEyfPBpXdFmK2WinVB95HSLHjdPXaeBbKCnXPS/yoe7sP0Q8piw0m6gwEveMH
-	Av2+028qchtRN95IIB7ams9Bvza13P9ANcpAxxHcwaCNBx+U9VBT5w8xVpZABckl
-	jJQeN+yVAbKZ8vzvp1NyrrgTcs/d/YAzjz1AiVoIXPx1vokjhiE829mjO2lle4tk
-	nwo2qxeAWH+XOQF01kxrbvr77S8szeFAHoE5rrcf1PmukNCiOKumiokR7Zo1iSd+
-	unIuiA==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47pw7q8303-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 07 Jul 2025 02:51:21 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b0e0c573531so1746042a12.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Jul 2025 19:51:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751856681; x=1752461481;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2dXIFfCrLj7q00eAjZeiFB/w8E21rcCty7AVkVZwJII=;
-        b=Axyi46uQ+WREAYa3CxauN6ZwO4zoyFWpmnatWnvGQTShj+xM6XENsEg8WwJGhOG+Sh
-         lqIqw8mD21NJp0nQsxDZR9IjLiWgJ58IvDG3Ez9JQdmd/MWydwcbdKsZHPo4GrrxQYOj
-         vhlxXnaOA/6A6i1e1hGAAMs6LGbQkLkLseM4QFZVOAwVBCOMzXnlDnSVARpJCww03NQW
-         2WQacVccL7Q2DDYfeSt9ml8F2HnwKnzpjhxl1hy+J0+Ju7jCbJh6rCxV0xqDoGHTW04j
-         RkwGjZgU+PfsFA2F3zOb5hR9atEu3k9eaZKyVhYdTzb/nXNIUkiGgbBj+6krI+d8TZom
-         RXVA==
-X-Gm-Message-State: AOJu0YyHjCobN7swB50PqK4lpiKzdkGd5RQZHsMdDMDlfr6CQCF/TpHk
-	TERPP8w/shPmH67mkXSzi1smEiujinI0C5uOJBnj73p9/aIjeHiSmO2hLjJRqzUQC9WxhthjADW
-	h7a69dWj2Xd4DT1pJ46OcG8ipOUYS7URXJi+vpZiyH73J6p1nyQ79cr0+EV4hsfUCi+zA
-X-Gm-Gg: ASbGncvI70m6Vb8//ZfLJPahgFrys/MqkzFlDipKBcSFifmVh9KC8ILShxfXV3yKXyQ
-	dBxY6fbjCmFLug3EOiu1Xe6epvWGCPgA7y6GC6XdB0Azl1ZpNGKgbLGOK+PGcM36DVy2ADTwQFV
-	5XxwYVbAd8PkTz2G9xXvA8xg1vSzTlaVxzSMeVQUMvCmwKVrCzWGSUG6k3BKljBDkJKLf5Pz3/n
-	UlBaP6negaQUQvGLGq4R7Ng0yHOUO6NCmC2+xB7wEpazxHOU7zSuGh1lDYQfpCyczckvLWlJLox
-	YEvODOxLAje38SYpeY1A59TMInNACtLWOQ5M9680Bg7Tdhdl0BWvJLWB5ig5AUro637zUUmke7b
-	UaknX3PecXA==
-X-Received: by 2002:a17:902:d492:b0:234:9656:7db9 with SMTP id d9443c01a7336-23c9100702dmr89591235ad.32.1751856681108;
-        Sun, 06 Jul 2025 19:51:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEjIAi6GzwsdPcvNnpCYlw+yB94nLVnLs8+cJ+kMD4LyNyufFX3LbgRsM2Ooq84uemtfo/0fA==
-X-Received: by 2002:a17:902:d492:b0:234:9656:7db9 with SMTP id d9443c01a7336-23c9100702dmr89591085ad.32.1751856680672;
-        Sun, 06 Jul 2025 19:51:20 -0700 (PDT)
-Received: from yuzha-gv.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23c84593e0asm72478025ad.193.2025.07.06.19.51.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Jul 2025 19:51:20 -0700 (PDT)
-From: "Yu Zhang(Yuriy)" <yu.zhang@oss.qualcomm.com>
-Date: Mon, 07 Jul 2025 10:51:06 +0800
-Subject: [PATCH v4 2/2] arm64: dts: qcom: qcs615-ride: add WiFi/BT nodes
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127A5253340;
+	Mon,  7 Jul 2025 03:16:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.62
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751858176; cv=fail; b=iul01AMaU1uCAdta9AC5xUZYJ9gNSDMTLA1DPvf8zyl5+8ad3vVgA9NzRIMFbyuxtMrmv0KQwkC6U0ECF8inCMUaGuXdlz8xbMAaoXAOHyRuElPYs/O/E8r61G2LSio+wjRjJajw63HjaYSeHph0Oi87E8x07l6E4Bf4A2413Fg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751858176; c=relaxed/simple;
+	bh=GbtwU5ZrkUFuWtnTlsUsOdPpelx3qJKSs1LCcMireTQ=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=fueRptahH4rFTJKYcLtjyASbLLTRJLjjvnkUW4rK9ar1FVb0zTpruyhZj7YQitZMw7XwqNJLM+c597EXiSm356vI67oXCEfQfhHVHa30RKY2OuPKjvwGJ7iOL+uMIFZsZ3M3/+6+lZr5DJGTk9aDciefSiuhKZQTZAQtZjwGjIM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=BV0xZYmY; arc=fail smtp.client-ip=52.101.65.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PvjA77FjtykXDV/d+1SUFl9CVtb1N2rmHDqRPDDUGmBt8ux8IloFPNOKlKbHviRJp0ADobXi5doA1yX0admiOG/hqmfx6nODPV9WPQ01fSj03xaflkbp5NdhWZMZznhjKviWen9ayF8+ghZTyaL2t556cQJEGhTPIn9sHaO/wAx5cVRJxmgsGfaz8b8H14z7Qh5r48MVLU/dhJ10gqdvpueiX23j14tNPU2jtzyeye6JMVLZ3tTrBCXCGViWulMarQUC5hLxtM2g2gxaFGyjn0Z7cnNTKh9AqGYJB7mwfbvS+0Uc7Ys7Msq3gDbYYG1chJcI5PCLIsupklkonS0VZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0u09jcQqGOYfy2odXX0dVg3l60YaklBUIXB2H3Ffwm8=;
+ b=vAkoKbSHrpUbsNru9T++VmzpkFeGRoU9hHyjBP82Hq/VGruu1jV95Xe33hHhB43jebNj7wZQJUVyI/C2gxZQexrT81Jf1u5AspkFtdfy6AxPRxi6LNC2aCEdEf/Y+bQDbc/Hj0Aw339pW8WZ5rf2G5S1qMP7V5kx321KQfOBl5fVPLfNikSntAiHF4ZFXTefp3OC//jPHH5vwF1wFBztqlnvE3ok1l4fnOEOSQeqrJC//GTdN5gB/zsBpTjvK6K3fDxgTftLmOpfdOiEZfxgSlHTumj5gniiW97bmJdsZT5GQSceqZbf3yv+bnE2+bpls5CA9lPGYcMFmB5SqYq6/Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0u09jcQqGOYfy2odXX0dVg3l60YaklBUIXB2H3Ffwm8=;
+ b=BV0xZYmY9+HazPERWBSsTHf1X5Cyri11p3QTkdtYJQjDrEO6QEm33hVhPn70vLziOtkyE+qRPxkb4seV5SXq/YVBbaPADMXSlDURa9eu5IvzXibnln7cyXp6/J2UP93z246BbCa9/yNA9h1DPcemrSeM/pNuqe2VSgUC48PHxmH6lQ4oKGlCmImd3YK9FEPBiqj8e9yB1lztnBArsHIjJ3PQ+0oC0wmli7NBRQwrPbsJMbhnluLiVZTF+uRBO6qM+m9zPelcLzrrsn7USQ2enQkHMn1MpB/GN8hXg56fS8A7bQIjmxHRzp7akTJb3yjh1T45xQWr9UHbkQPkcWUFww==
+Received: from PAXPR04MB8254.eurprd04.prod.outlook.com (2603:10a6:102:1cd::24)
+ by GV1PR04MB10773.eurprd04.prod.outlook.com (2603:10a6:150:202::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.26; Mon, 7 Jul
+ 2025 03:16:11 +0000
+Received: from PAXPR04MB8254.eurprd04.prod.outlook.com
+ ([fe80::2755:55ac:5d6f:4f87]) by PAXPR04MB8254.eurprd04.prod.outlook.com
+ ([fe80::2755:55ac:5d6f:4f87%7]) with mapi id 15.20.8901.018; Mon, 7 Jul 2025
+ 03:16:10 +0000
+From: Ming Qian <ming.qian@nxp.com>
+To: "Rob Herring (Arm)" <robh@kernel.org>, Eagle Zhou <eagle.zhou@nxp.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Vikash Garodia
+	<quic_vgarodia@quicinc.com>, Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>
+CC: "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+Subject: RE: [EXT] [PATCH] media: Use of_reserved_mem_region_to_resource() for
+ "memory-region"
+Thread-Topic: [EXT] [PATCH] media: Use of_reserved_mem_region_to_resource()
+ for "memory-region"
+Thread-Index: AQHb7EkvGzk9b6YC+Eu0QqAZ0zFup7QmAbBQ
+Date: Mon, 7 Jul 2025 03:16:10 +0000
+Message-ID:
+ <PAXPR04MB8254061B8DD71DF865B200D3E74FA@PAXPR04MB8254.eurprd04.prod.outlook.com>
+References: <20250703183451.2074066-1-robh@kernel.org>
+In-Reply-To: <20250703183451.2074066-1-robh@kernel.org>
+Accept-Language: zh-CN, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PAXPR04MB8254:EE_|GV1PR04MB10773:EE_
+x-ms-office365-filtering-correlation-id: af159b29-d8e6-4665-4793-08ddbd049f71
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|366016|376014|19092799006|38070700018;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?zvH2E00/0lGlkDGL72dHpyMkLsn8ygKjtNaXlz/Ve3Pad3WN0y2Xv4p6PUlN?=
+ =?us-ascii?Q?WPVUWCH39e1zw8ygWIbVW55xaoMOXV/EcKLOnJdwWsBQ2gdIFuSCgaRpqdRr?=
+ =?us-ascii?Q?Lz6tGCpwuBZ0EWsyE0VEdP/29aLC7w9yw1dCQrtVWhvVvXok7/QdCEJPwv+R?=
+ =?us-ascii?Q?psyMLmRdYaLHnqtwbLSFP7tLmeygYxpJ/atPpR8OUuGWTFtU+xY1dViyJ/H9?=
+ =?us-ascii?Q?yU3xlRHXdJ9I1sVVUXE3DxKVvRcelzDC6CXWzA9Ng4YVfW1pVTtul7tNgDwd?=
+ =?us-ascii?Q?PGJF03OMiOKknXUkB600LWVBlJblpKddEtJVqa48wZpShL2XY6IRR77OUEIV?=
+ =?us-ascii?Q?owxjJLjEXCm+pueE7TkLPEjuw+2eUntATcRJTBaodmneWYimI41pEpTC9ln9?=
+ =?us-ascii?Q?hrIVWwVRqQ87LwzfYGU2CF17MmxqicVHQe91pV0zn92G8F+NtOIFsoyUWS64?=
+ =?us-ascii?Q?Wmk0P/eKjrfDb3L85jZbSR5j0YjVHXtMRPzYQJNEJmBEggN3lyQ2NeW1j3Ly?=
+ =?us-ascii?Q?Ps/n9EA6MYuOZf3QYJtbdLP7Q1qzmM6lMZiXJWQLE2rBhsrVUOM1LymILWpL?=
+ =?us-ascii?Q?hpalpxFGeb2peuCfvU75KK+8hxkNgUGaHTPstxX1/iUhB/PjSIzg7ASGPUxA?=
+ =?us-ascii?Q?2Xh89RLMBoBxYu+ALbW0GISSKsplvaTFQOnqeOBOe6umCcFfKyq/jCrd9i0S?=
+ =?us-ascii?Q?wznYImNA69Ei13PeunM0TsoLaAMUUrZuAWW02bNZJOzEn/YATwgUYQ6FCjMn?=
+ =?us-ascii?Q?c0MUgCRM+rb23bJULGmn+xAVd68oMXhfuzIX9Ve5QNz4EaY5TmYw3kF5Q0uG?=
+ =?us-ascii?Q?vMe6bSXkHgbu0pgPevcsmwoFg/N82ViAoBFK2MBCQvMjUokTZNs8tuyGFdEH?=
+ =?us-ascii?Q?Oe/2GEQy62L+x1JEhsGTRtZHX/NX+hqy/AoUTPnYvsKaz1YuYIrd21KVeWAi?=
+ =?us-ascii?Q?VrHPhuQJEEx2FRdAvcXc30khKUkp1oosJpJX5AyW1KSJzR3Ite0TtHlMJyMz?=
+ =?us-ascii?Q?cTDT0gE3+hlrUZq2FrB4c1/F9vPoY0WllR7mPrcIeqQEvBAU/YW3Q3AIMi7/?=
+ =?us-ascii?Q?zFNhjlJRwMhgpjmFjFl45pk8tvStW/mUeIbp1qDW8jX+77sE20Ihf622Zdu0?=
+ =?us-ascii?Q?zrX0ecpY3sLiF77vRHFdSa4Oy+7afRVUfUX/wjmCJzbwkVlXEY24sK57Z7TL?=
+ =?us-ascii?Q?jsT5ERux4xKp9a369e0nw4fdlUvjcbRFI2iQ4ZlsrOYfFOjo1iPpnNb/nmyT?=
+ =?us-ascii?Q?o8jPWWSmlUWl9tooGobJUVSXYgpxlgjEi0Z3n+appg74WNcI5/ltFqIQ4xf6?=
+ =?us-ascii?Q?4VjAiF4WR2AIO7XYCre/d1GVyPUDegGwUx47Ojbq9REd8b+EgNt9bReEanQ/?=
+ =?us-ascii?Q?mpK7JaffcuJizb/2qInIIBtq2jtHFnu9Jy6iLwjCbxG0md25LeJigWCyEIBB?=
+ =?us-ascii?Q?FYjqhypRexek8n/ylXZC5nhfz9aOdMF7yVfAEMpeKMWZbT+opcDC2w=3D=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR04MB8254.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(19092799006)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?6AteqDs2V4AL4nzRwzOzW2GuX7R/fwx/0fNjekj5T+H6WlV5jODyEpuii2JE?=
+ =?us-ascii?Q?zkTth5eMHOcdlybWPN22b0TDWOqIsWbh4gp4AT1WWFSUiuBLZ9JGV2nReird?=
+ =?us-ascii?Q?cMKj7+vcn20wqPaIfDmAG4Yi/j4jiDCfiVyQsYufJzxSn3xF5F+OUl1UBpFi?=
+ =?us-ascii?Q?y2dcQeY/9I6p6Tq5t+rf7VZbj4z31Ops+r33Ftgh2ziCYwTMZEo2GKcFdEQ7?=
+ =?us-ascii?Q?MKdySZSG1xvOOKYp0GI6hdbB2ZT+OHxyERb8ocNwwQCub0T0w85zFXh/vta/?=
+ =?us-ascii?Q?5qSij6UD5sijWTW9aYsdFQon9mrwVX7YvUNQd3kwYUGNhFKa+peN5CcPk6N6?=
+ =?us-ascii?Q?9i4BDclUYFQMhb1lC2or4aAOtWnZ9Jymk3JdIPEjGGjUQJ8oDr0cgvKlmVZc?=
+ =?us-ascii?Q?JvuysPZ5ftHWnh1OZ0L59WOQlaO8djAR2onEQPGSGFJ+S0OHVjxpEUV4soYI?=
+ =?us-ascii?Q?WZOBrw+oo5Kpgep+Bh8uQoQ0qs8DHuJvnYGftNiZZlfd8MbI2XXSMl+fgENq?=
+ =?us-ascii?Q?MTueSOz6RMCRMc8Foaj8ZRbTFYPO90fK+dTWYT+h21M0vCCKjCPWeVN6Ky8v?=
+ =?us-ascii?Q?DLxSyGAZh2TBRSO8LI99uyultCVO3U2mRWUn81ro4SHv1cMlAM7U72XyzY7L?=
+ =?us-ascii?Q?Sx80WNz1bnB6833/yLaZo+0q3YjQ9bgTsZgIHbbxSlQmDdusYyiqFwcxIV5L?=
+ =?us-ascii?Q?o6e+5DRl1fgI/1+IOQY6Vzos2b3hyqAzuF+2++A2rTR459CROOJGYTwRqiew?=
+ =?us-ascii?Q?DMYuV4x2PR018OO6j/AMmedEsa26j4RP+SCBq6V64e0RcXodH6Mj/35KNdfm?=
+ =?us-ascii?Q?dqnvgRH0AE/lsJvlyClDt+80RCAfEeVwB4Yr+BMWOCpzt5TrzKwT8naQ4yFR?=
+ =?us-ascii?Q?ZD+SODmRY7HrSI595sJvyKkw1kU9u6sVjotEObM/OnQOfTDpWp9T6bPB9DRv?=
+ =?us-ascii?Q?Fpi9E8Uy4E6qXOfP++Sxbo565jrrmtafP77ES7kOr679ZSe1TzMSgK3a7LkG?=
+ =?us-ascii?Q?CgNn5qBVIByMYoQbAi+PZrfjMFnlG2jfhNEJ0PFo+CXVIqFT3aUYZJDBdRDz?=
+ =?us-ascii?Q?dfto8k23bSXOuf1h8F7lYqfMQmxWC6ERMqsSvGbnRbCFzrXZIZsozPocNx9m?=
+ =?us-ascii?Q?Vr5oDP69UgreBxUnnplNeXsCQCv2OwxPITGvsjTteLeMss1aPo4MMCwR7gD0?=
+ =?us-ascii?Q?6yt3nSlJhTPC9RbPkxaXX99r4hPuiwKhhJhrvrLlyAcYeozb8HvW/w6bYOK3?=
+ =?us-ascii?Q?zokHMVoWxagWHPPgSy3JYGaUq/s2pIzI9wadltrZqmMU542o4G2k1c0xSC5V?=
+ =?us-ascii?Q?5C7TIQOumxZv0awqnGNWC5fnj6JjnVXNAjWmEp3R6MgC4MnLgAdZcjwVOfNr?=
+ =?us-ascii?Q?rE7B5Fibjn1WX4CxT9fVVX9WPrEOCpXJCYgOh25Gxna2Hhag278R8ud2mkaL?=
+ =?us-ascii?Q?2vkvlKqXKFh7eX8ZRa9EbzQJ/y3SIXFw0VVy5nTp5I/9WGbbZuI8TD2PRflN?=
+ =?us-ascii?Q?Ivcr03oVmqGCize8ky8V8FzXV+fWEzgGu3I2cwISUMzBxgSIimGdR3YMXM9p?=
+ =?us-ascii?Q?Co3X5rvDlmf+xe8kPJ0=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250707-615-v4-2-1a2f74d167d7@oss.qualcomm.com>
-References: <20250707-615-v4-0-1a2f74d167d7@oss.qualcomm.com>
-In-Reply-To: <20250707-615-v4-0-1a2f74d167d7@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        "Yu Zhang (Yuriy)" <yu.zhang@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1751856673; l=4817;
- i=yu.zhang@oss.qualcomm.com; s=20250625; h=from:subject:message-id;
- bh=kyVxBAUewXc6aAhvBo+dY1wVPRkYXZ2ac+u1Lkih2IE=;
- b=cxvJOTqKtY6e9u9Enmjfkp6kZ5H1Kx7/Ak+l/12wfHLfS/w4nZHFH0dz49IKggc4ziIWSuOQl
- A+pKo8RfyqpBSPdzM1x9MJN0IWNDFJ8EvlU1U19Y1JnOj7o+3cGZHrN
-X-Developer-Key: i=yu.zhang@oss.qualcomm.com; a=ed25519;
- pk=ZS+pKT1eEx1+Yb0k2iKe8mk1Rk+MUki89iurrz9iucA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA3MDAxNiBTYWx0ZWRfX/UnR50Gp2bz+
- xvHeF30aT5fhiC+QxwEHVbW2eNu/ojd4InSozkerA7jqeqDEJiq595AM+cb5UuE2PRqafwcDeLH
- G14n7WrGwY4MliuhvhmIrh+cWPnL4GmVZkRYEhd2012ho4plQK6ZU0Aavy3XCS/0R1ETiKzQkDr
- 5nsGb5lC4x9RhMgouPAcBChXTQR8VNTIJGXIDmq9luHMtXqOW2/1y7ko18CcXAqHQtvAEWipj8H
- 1HmhtupCVaqInX2eweYfBAPuuXH3RT2DI055zLkeaxA09l+7Yz9qme87qUZv+lD1RK/nruwBB0p
- WdqQKixWmjAZbSREx5nvhyLqztAyIIribdvT2ZnXXPb5t7vMyoRcLHH7CI3YODZZ81IKDMrQj9c
- 8LmWHTK+ui2xxoLWarpLxicjG7N3DZYK9NnAjRKm7+A+i7JsflrxfEj3lS1McLHY2/pggKkd
-X-Proofpoint-GUID: S-7jFG3ihuK8eX3-Hu2o-bd4IKfgcf7m
-X-Proofpoint-ORIG-GUID: S-7jFG3ihuK8eX3-Hu2o-bd4IKfgcf7m
-X-Authority-Analysis: v=2.4 cv=SOBCVPvH c=1 sm=1 tr=0 ts=686b362a cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=cKvnr5XBRiLjHSnd2BMA:9
- a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-04_07,2025-07-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- impostorscore=0 mlxlogscore=999 mlxscore=0 phishscore=0 malwarescore=0
- adultscore=0 suspectscore=0 spamscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507070016
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR04MB8254.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: af159b29-d8e6-4665-4793-08ddbd049f71
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Jul 2025 03:16:10.8401
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: T1Zr9Ql0n7r/zOrzc7WHvF+CoUpAO1xKK3Bojn0VIsMhR/wM80rdaHGl9EhEa54ECsGHRZhtvP1q+afYCFzrjw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR04MB10773
 
-Add a node for the PMU module of the WCN6855 present on the qcs615 ride
-board. Assign its LDO power outputs to the existing WiFi/BT module.
+>-----Original Message-----
+>From: Rob Herring (Arm) <robh@kernel.org>
+>Sent: Friday, July 4, 2025 2:35 AM
+>To: Ming Qian <ming.qian@nxp.com>; Eagle Zhou <eagle.zhou@nxp.com>;
+>Mauro Carvalho Chehab <mchehab@kernel.org>; Vikash Garodia
+><quic_vgarodia@quicinc.com>; Dikshita Agarwal
+><quic_dikshita@quicinc.com>; Abhinav Kumar <abhinav.kumar@linux.dev>;
+>Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>Cc: linux-media@vger.kernel.org; linux-kernel@vger.kernel.org; linux-arm-
+>msm@vger.kernel.org
+>Subject: [EXT] [PATCH] media: Use of_reserved_mem_region_to_resource() for
+>"memory-region"
+>
+>Caution: This is an external email. Please take care when clicking links o=
+r
+>opening attachments. When in doubt, report the message using the 'Report
+>this email' button
+>
+>
+>Use the newly added of_reserved_mem_region_to_resource() function to
+>handle "memory-region" properties.
+>
+>Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+>---
+> drivers/media/platform/amphion/vpu_core.c     | 40 +++++--------------
+> .../media/platform/qcom/iris/iris_firmware.c  | 18 +++------
+>drivers/media/platform/qcom/venus/firmware.c  | 19 +++------
+> 3 files changed, 21 insertions(+), 56 deletions(-)
+>
+>diff --git a/drivers/media/platform/amphion/vpu_core.c
+>b/drivers/media/platform/amphion/vpu_core.c
+>index da00f5fc0e5d..168f0514851e 100644
+>--- a/drivers/media/platform/amphion/vpu_core.c
+>+++ b/drivers/media/platform/amphion/vpu_core.c
+>@@ -10,7 +10,7 @@
+> #include <linux/kernel.h>
+> #include <linux/module.h>
+> #include <linux/of.h>
+>-#include <linux/of_address.h>
+>+#include <linux/of_reserved_mem.h>
+> #include <linux/platform_device.h>
+> #include <linux/slab.h>
+> #include <linux/types.h>
+>@@ -542,47 +542,30 @@ const struct vpu_core_resources
+>*vpu_get_resource(struct vpu_inst *inst)
+>
+> static int vpu_core_parse_dt(struct vpu_core *core, struct device_node *n=
+p)  {
+>-       struct device_node *node;
+>        struct resource res;
+>        int ret;
+>
+>-       if (of_count_phandle_with_args(np, "memory-region", NULL) < 2) {
+>-               dev_err(core->dev, "need 2 memory-region for boot and rpc\=
+n");
+>-               return -ENODEV;
+>+       ret =3D of_reserved_mem_region_to_resource(np, 0, &res);
+>+       if (ret) {
+>+               dev_err(core->dev, "Cannot get boot-region\n");
+>+               return ret;
+>        }
+>
+>-       node =3D of_parse_phandle(np, "memory-region", 0);
+>-       if (!node) {
+>-               dev_err(core->dev, "boot-region of_parse_phandle error\n")=
+;
+>-               return -ENODEV;
+>-       }
+>-       if (of_address_to_resource(node, 0, &res)) {
+>-               dev_err(core->dev, "boot-region of_address_to_resource err=
+or\n");
+>-               of_node_put(node);
+>-               return -EINVAL;
+>-       }
+>        core->fw.phys =3D res.start;
+>        core->fw.length =3D resource_size(&res);
+>
+>-       of_node_put(node);
+>-
+>-       node =3D of_parse_phandle(np, "memory-region", 1);
+>-       if (!node) {
+>-               dev_err(core->dev, "rpc-region of_parse_phandle error\n");
+>-               return -ENODEV;
+>-       }
+>-       if (of_address_to_resource(node, 0, &res)) {
+>-               dev_err(core->dev, "rpc-region of_address_to_resource erro=
+r\n");
+>-               of_node_put(node);
+>-               return -EINVAL;
+>+       ret =3D of_reserved_mem_region_to_resource(np, 1, &res);
+>+       if (ret) {
+>+               dev_err(core->dev, "Cannot get rpc-region\n");
+>+               return ret;
+>        }
+>+
+>        core->rpc.phys =3D res.start;
+>        core->rpc.length =3D resource_size(&res);
+>
+>        if (core->rpc.length < core->res->rpc_size + core->res->fwlog_size=
+) {
+>                dev_err(core->dev, "the rpc-region <%pad, 0x%x> is not eno=
+ugh\n",
+>                        &core->rpc.phys, core->rpc.length);
+>-               of_node_put(node);
+>                return -EINVAL;
+>        }
+>
+>@@ -594,7 +577,6 @@ static int vpu_core_parse_dt(struct vpu_core *core,
+>struct device_node *np)
+>        if (ret !=3D VPU_CORE_MEMORY_UNCACHED) {
+>                dev_err(core->dev, "rpc region<%pad, 0x%x> isn't uncached\=
+n",
+>                        &core->rpc.phys, core->rpc.length);
+>-               of_node_put(node);
+>                return -EINVAL;
+>        }
+>
+>@@ -606,8 +588,6 @@ static int vpu_core_parse_dt(struct vpu_core *core,
+>struct device_node *np)
+>        core->act.length =3D core->rpc.length - core->res->rpc_size - core=
+-
+>>log.length;
+>        core->rpc.length =3D core->res->rpc_size;
+>
+>-       of_node_put(node);
+>-
+>        return 0;
+> }
 
-Signed-off-by: Yu Zhang(Yuriy) <yu.zhang@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/qcs615-ride.dts | 135 +++++++++++++++++++++++++++++++
- 1 file changed, 135 insertions(+)
+Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-index 011f8ae077c256f079ce1b07720374a9bf721488..2df8e7e3c1d3b6d6353a6753b8387c7411edd927 100644
---- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-@@ -18,6 +18,7 @@ aliases {
- 		mmc0 = &sdhc_1;
- 		mmc1 = &sdhc_2;
- 		serial0 = &uart0;
-+		serial1 = &uart7;
- 	};
- 
- 	chosen {
-@@ -47,6 +48,85 @@ regulator-usb2-vbus {
- 		enable-active-high;
- 		regulator-always-on;
- 	};
-+
-+	vreg_conn_1p8: vreg_conn_1p8 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_conn_1p8";
-+		startup-delay-us = <4000>;
-+		enable-active-high;
-+		gpio = <&pm8150_gpios 1 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	vreg_conn_pa: vreg_conn_pa {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_conn_pa";
-+		startup-delay-us = <4000>;
-+		enable-active-high;
-+		gpio = <&pm8150_gpios 6 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	wcn6855-pmu {
-+		compatible = "qcom,wcn6855-pmu";
-+
-+		pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
-+		pinctrl-names = "default";
-+
-+		bt-enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
-+		wlan-enable-gpios = <&tlmm 98 GPIO_ACTIVE_HIGH>;
-+
-+		vddio-supply = <&vreg_conn_pa>;
-+		vddaon-supply = <&vreg_s5a>;
-+		vddpmu-supply = <&vreg_conn_1p8>;
-+		vddpmumx-supply = <&vreg_conn_1p8>;
-+		vddpmucx-supply = <&vreg_conn_pa>;
-+		vddrfa0p95-supply = <&vreg_s5a>;
-+		vddrfa1p3-supply = <&vreg_s6a>;
-+		vddrfa1p9-supply = <&vreg_l15a>;
-+		vddpcie1p3-supply = <&vreg_s6a>;
-+		vddpcie1p9-supply = <&vreg_l15a>;
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn";
-+			};
-+
-+			vreg_pmu_aon_0p59: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p59";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p85: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p85";
-+			};
-+
-+			vreg_pmu_btcmx_0p85: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p85";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo5 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo6 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p7: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_1p7";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo8 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo9 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -234,6 +314,25 @@ &pcie_phy {
- 	status = "okay";
- };
- 
-+&pcie_port0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1103";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+		qcom,calibration-variant = "QC_QCS615_Ride";
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-+	};
-+};
-+
- &pm8150_gpios {
- 	usb2_en: usb2-en-state {
- 		pins = "gpio10";
-@@ -257,6 +356,10 @@ &qupv3_id_0 {
- 	status = "okay";
- };
- 
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
- &remoteproc_adsp {
- 	firmware-name = "qcom/qcs615/adsp.mbn";
- 
-@@ -274,6 +377,13 @@ &rpmhcc {
- };
- 
- &tlmm {
-+	bt_en_state: bt-en-state {
-+		pins = "gpio85";
-+		function = "gpio";
-+		bias-pull-down;
-+		output-low;
-+	};
-+
- 	pcie_default_state: pcie-default-state {
- 		clkreq-pins {
- 			pins = "gpio90";
-@@ -296,6 +406,13 @@ wake-pins {
- 			bias-pull-up;
- 		};
- 	};
-+
-+	wlan_en_state: wlan-en-state {
-+		pins = "gpio98";
-+		function = "gpio";
-+		bias-pull-down;
-+		output-low;
-+	};
- };
- 
- &sdhc_1 {
-@@ -336,6 +453,24 @@ &uart0 {
- 	status = "okay";
- };
- 
-+&uart7 {
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn6855-bt";
-+		firmware-name = "QCA6698/hpnv21", "QCA6698/hpbtfw21.tlv";
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
-+	};
-+};
-+
- &usb_1_hsphy {
- 	vdd-supply = <&vreg_l5a>;
- 	vdda-pll-supply = <&vreg_l12a>;
+Regards,
+Ming
 
--- 
-2.34.1
-
+[snip]
 
