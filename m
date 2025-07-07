@@ -1,63 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-63892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-63893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 384C7AFACFD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 09:23:37 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4ED1AFADDF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 09:59:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7EBE4179271
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 07:23:37 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E86417A2995
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Jul 2025 07:58:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0FD227F006;
-	Mon,  7 Jul 2025 07:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 697C221FF30;
+	Mon,  7 Jul 2025 07:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XS8CmHWf"
+	dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b="R83mDWxd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from fw2.prolan.hu (fw2.prolan.hu [193.68.50.107])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B1BDDA9;
-	Mon,  7 Jul 2025 07:23:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449EB19B3EC;
+	Mon,  7 Jul 2025 07:59:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.68.50.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751873012; cv=none; b=MFpvT+KMdudg7e6Bz86dw3fqMc3G2GngPdtjM32qmzNxmIskOY2jpgtJwj9LSHCXw/LCaRCKKO+/5pxOGEu1OW4mBCTuwqVwJ4Wb4Vih7oYH6leFNJd24JPD569EjagciAv5UA8r7NBobVDeNT7nfQYNrClYxpCOggmBdiVY9PQ=
+	t=1751875167; cv=none; b=AWhHIqcEuRn6dnd5HGjpcpRoMD/ID9nIZpBMuVBY3XVTZx83dkgUmLuKaDBp55k3NYNC8eKphndA0Kvko434YkfiuXcVb1ehRiZeh8MI0fu6PfwfEp2ObRghtlDoQWwgENmaLlln9hlTd+Z0d0GdNElm2yxMIvYObUbwCgnW0yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751873012; c=relaxed/simple;
-	bh=HUd9AZpWY2Jj6Z4Jd0aPQ1dGx6feBUnZazqP6mKMXkQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=mwGW88umHV67shJZr6jnt6YeOqbmmiz8pjkUGnWpgD59JcyAE/2gTKOKvzFcObUcGUf8t/TfiXveGndyBdIB2VPh4U6XBpv9XBij6YhxXBrqNzhq+3kDRPy8QdFZWpPiveu0wPuAVCtvx82Jjev7p1RdOeUePaTyQFAfVxsCaKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XS8CmHWf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 566N0OmC007093;
-	Mon, 7 Jul 2025 07:23:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wYoALE7Vpe4PiccMRf8rXtkjZRheXJho34K7gukBSxo=; b=XS8CmHWfGcfZqY23
-	x4cKIoLyWe0GCsofrpSQr4EMGVtqqD72D9sum4McSGiXImuLBixNAJs3pBiIxOK7
-	jA/3F/AY5EDOSk0Y9NbmbY4Nh2wrEq+Mh2B8x77ExzFaoFqKz7B2F7ISqlDqSUSO
-	lyrmkchaXufrrrD6QX1WZ1jFjXsOEvUF+0vBi/fYYGc8aRMyLH4iGSpkbtt36pNp
-	/qhOJN3hx3+yHCGs8etiR7L0pC3jMQnAFaJZqJZ6ZyRY/PJyB9SQqDx/H69pWw+2
-	BKa4GvLF9LHrhD29TLe/BqEO1STKKbfT8zjvlFWLkO5pn/+nDi1ZmlsWVJIvWCv6
-	K1aIuw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47psrkau19-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 07 Jul 2025 07:23:30 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5677NTQ7015887
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 7 Jul 2025 07:23:29 GMT
-Received: from [10.239.96.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 7 Jul
- 2025 00:23:28 -0700
-Message-ID: <1d912f5c-6712-4d32-b299-a53759269104@quicinc.com>
-Date: Mon, 7 Jul 2025 15:23:25 +0800
+	s=arc-20240116; t=1751875167; c=relaxed/simple;
+	bh=z1aw+j5vhtSH5hM2pv6uTLlW1Ip05M+wekbXCATVdro=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LjuEEBvj6uxRTDpI2dI/Oh2+mRL7nP+f/dXVAwlIah09WaklzDSjfBd9IPM9GhBL5AKUPpD7pUGQNDCkrR5J55bae8k3kq4Py0pct1J3C76du9/G0M1trF0MDRJO2QbnSVSH2sBqb+cg9KOJGW8jv+BBsVDBJQl58Rwhh59TGiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu; spf=pass smtp.mailfrom=prolan.hu; dkim=pass (4096-bit key) header.d=prolan.hu header.i=@prolan.hu header.b=R83mDWxd; arc=none smtp.client-ip=193.68.50.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=prolan.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prolan.hu
+Received: from proxmox-mailgw.intranet.prolan.hu (localhost.localdomain [127.0.0.1])
+	by proxmox-mailgw.intranet.prolan.hu (Proxmox) with ESMTP id 39B99A052C;
+	Mon,  7 Jul 2025 09:59:15 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prolan.hu; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:from:from:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=mail; bh=z8xdzKW5rNMmIpxVldjp
+	zEbs1g+0AxJYKg5PiusbGL8=; b=R83mDWxdCRvxyEooSaTLrR1SaRLQIjEBSws5
+	Ffnj70xK1TqrExqtHqrC6+POUYpkzajjww4psJmL8JG20jw9+RkeG6LD1eq7ayrr
+	agS8/17xD19AHPw4l5KxPM6vZmpmYKuFkJgKk2UfvPmqpdq7Jt0EiS3EboCOqjw4
+	PYuKMtHEdW99qSIdS+z3CKemb5FAS8OPLBfnUuKnmQXEn9f38ti97KEsw7wShp8C
+	tF8k43GqFinf58W93a0xTPMK+DG5xvtMevswupjWyprbYn33HFBNH9ZeNgbKJw/8
+	96AYDgCfb0FFmzvK+eRWSVcgP/vdgfbKeSb1bekzh0m4AsS6xSKVELLAIVrR8ezi
+	nC1aQ+5YWGjllAD20jkJX413u1PUJSwyAoCpt33+M2ZhR6+/ZgaJaY2mfspP63g+
+	osK4c443D7YRGoZLhoOzjVCzIX4VREWHY2veV1YUdfhNEyQY09trj5P1Xj3g1ds+
+	Su01mIM4+n4dEpY5P0DoTVU4NZmh9Yc5QEF6eUUCZvIuttNq4GbUZzXA08jEUMC8
+	Bs7hkNmR03qmkTIGRa6RwRS2JxjAXGRnBOD/Trx7/1zYRG7Od6UN/uK4EeNgtdqF
+	w/hTx7MXFzmgMpN1mXMqSPtfv96o1aSQ2kcpOyMCiwDQEhw7JPPFIqVbIK6J2Osj
+	j1iGiBk=
+Message-ID: <86ccaef5-e55c-4c97-b7c2-6c65d4f6dcda@prolan.hu>
+Date: Mon, 7 Jul 2025 09:59:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,125 +59,47 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] driver: bluetooth: hci_qca: fix ssr fail when BT_EN is
- pulled up by hw
-From: Shuai Zhang <quic_shuaz@quicinc.com>
-To: <linux-bluetooth@vger.kernel.org>
-CC: <quic_bt@quicinc.com>, <linux-arm-msm@vger.kernel.org>
-References: <20250627061707.3631422-1-quic_shuaz@quicinc.com>
- <71aa21d7-795d-4709-899f-4b1feec810b3@quicinc.com>
+Subject: Re: [PATCH v4] i2c: qcom-geni: Add support for GPI DMA
+To: Bjorn Andersson <bjorn.andersson@linaro.org>, Vinod Koul
+	<vkoul@kernel.org>
+CC: Wolfram Sang <wsa@kernel.org>, <linux-arm-msm@vger.kernel.org>, Andy Gross
+	<agross@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>, Douglas Anderson
+	<dianders@chromium.org>, Matthias Kaehlcke <mka@chromium.org>,
+	<linux-i2c@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20211019060158.1482722-1-vkoul@kernel.org>
+ <YYAUfy2ary7ZJfK+@ripper>
 Content-Language: en-US
-In-Reply-To: <71aa21d7-795d-4709-899f-4b1feec810b3@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: qLgG192GZcFi4o0ioo2ZvD5YqYZ1ZsbK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA3MDA0MSBTYWx0ZWRfX355ArjPn9NXM
- S8GsBvzNnvyyF0HS2Kbg+3//TmKQ+hmhcUopRkWgrJL53r7KvaKkP8WQGHxfM23g/xneaKBE5B4
- z6qMlW6vBYyyU3VLiFaS4cSwYVaybK4rueWN5fygMUcDuXbcEx1xsrbbgZrw5uf9KkCDFl8koP7
- UlKNkqBr5WiWapyd/Xl2CqYhxydIvPhs8eY+7wpNm0Fq9G7dgthEwCL5bLVqsm/Gxt3q1PgsXo0
- 9hDyBIFrslwR1roA/MKzfCiRbcgcUxhkGeGJutREt4emA86I/CmTRfqdEA02l9ykXd6mp8klygd
- lVDTwsRMzuOCa5FiwdwMRyOeNSAr4eePSzDKXDEVFKlaeSOYsWyuv2gONeg5sGnTvocXfV1xU6g
- 8cUoj0Z3P96uimmmX2+rJ3W51fDs6f+M8MHoPtuhccVhR9pKNzrP36hVB6KWXwiBE0Jg6peh
-X-Proofpoint-GUID: qLgG192GZcFi4o0ioo2ZvD5YqYZ1ZsbK
-X-Authority-Analysis: v=2.4 cv=GtBC+l1C c=1 sm=1 tr=0 ts=686b75f2 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=zbsBYyxTTkarEyjW37MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-07_01,2025-07-07_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1011 spamscore=0 adultscore=0 phishscore=0 malwarescore=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
- impostorscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507070041
+From: =?UTF-8?B?Q3PDs2vDoXMgQmVuY2U=?= <csokas.bence@prolan.hu>
+In-Reply-To: <YYAUfy2ary7ZJfK+@ripper>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: sinope.intranet.prolan.hu (10.254.0.237) To
+ ATLAS.intranet.prolan.hu (10.254.0.229)
+X-EsetResult: clean, is OK
+X-EsetId: 37303A296767155E65746A
 
-+++
+Hi,
 
-On 2025/7/7 15:22, Shuai Zhang wrote:
-> Dear all
-> 
-> On 2025/6/27 14:17, Shuai Zhang wrote:
->> Q1：
->> If the SoC always enables the bt_en pin via hardware and the driver
->> cannot control the bt_en pin of the SoC chip, then during SSR,
->> the QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits cannot be cleared.
->> This leads to a reset command timeout failure.
->>
->> Fix1：
->> To address this, clear QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits
->> after the coredump collection is complete.
->> Also, add msleep delay to wait for controller to complete SSR.
->>
->> Q2:
->> When the SSR (Sub-System Restart) duration exceeds 2 seconds, it triggers
->> host tx_idle_timeout, which sets host TX state to sleep. due to the
->> hardware pulling up bt_en, the firmware is not downloaded after the SSR.
->> As a result, the controller does not enter sleep mode. Consequently,
->> when the host sends a command afterward, it sends 0xFD to the controller,
->> but the controller does not respond, leading to a command timeout.
->>
->> Fix2:
->> Reset the tx_idle_timer after SSR (Sub-System Restart).
->>
->> Changes in v2:
->> - Modified the format.
->> - Add changes to fix tx_idle_timeout
->> - Link to v1: https://lore.kernel.org/all/20250609105553.3756688-1-quic_shuaz@quicinc.com/
->>
->> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
->> ---
->>  drivers/bluetooth/hci_qca.c | 20 +++++++++++++++++++-
->>  1 file changed, 19 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
->> index 4e56782b0..d415a3f31 100644
->> --- a/drivers/bluetooth/hci_qca.c
->> +++ b/drivers/bluetooth/hci_qca.c
->> @@ -1653,6 +1653,24 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
->>  		skb_queue_purge(&qca->rx_memdump_q);
->>  	}
->>  
->> +	/* If the SoC always enables the bt_en pin via hardware and the driver
->> +	 * cannot control the bt_en pin of the SoC chip, then during SSR,
->> +	 * the QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits cannot be cleared.
->> +	 * This leads to a reset command timeout failure.
->> +	 *
->> +	 * To address this, clear QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits
->> +	 * after the coredump collection is complete.
->> +	 * Also, add msleep delay to wait for controller to complete SSR.
->> +	 */
->> +	if (!test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
->> +		clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
->> +		clear_bit(QCA_IBS_DISABLED, &qca->flags);
->> +		mod_timer(&qca->tx_idle_timer, jiffies +
->> +			  msecs_to_jiffies(qca->tx_idle_delay));
->> +		qca->tx_ibs_state = HCI_IBS_TX_AWAKE;
->> +		msleep(50);
->> +	}
+On 2021. 11. 01. 17:23, Bjorn Andersson wrote:
+>> +	if (ret < 0)
+>> +		goto err_tx;
 >> +
->>  	clear_bit(QCA_HW_ERROR_EVENT, &qca->flags);
->>  }
->>  
->> @@ -2478,7 +2496,7 @@ static int qca_serdev_probe(struct serdev_device *serdev)
->>  			return PTR_ERR(qcadev->susclk);
->>  		}
->>  	}
->> -	
+>> +	gi2c->rx_c = dma_request_chan(gi2c->se.dev, "rx");
+>> +	ret = dev_err_probe(gi2c->se.dev, IS_ERR(gi2c->rx_c), "Failed to get rx DMA ch\n");
+>> +	if (ret < 0)
+>> +		goto err_rx;
 >> +
->>  	err = hci_uart_register_device(&qcadev->serdev_hu, &qca_proto);
->>  	if (err) {
->>  		BT_ERR("serdev registration failed");
+>> +	dev_dbg(gi2c->se.dev, "Grabbed GPI dma channels\n");
+>> +	return 0;
+>> +
+>> +err_rx:
+>> +	dma_release_channel(gi2c->tx_c);
 > 
-> Is there any update?
-> 
-> thanks,
-> Shuai
+> Is there a reason why there's no devm_dma_request_chan()?
+
+Just a heads-up: now there is, in dma/next! It was added in commit 
+08bf1663c21a.
+
+Bence
 
 
